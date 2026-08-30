@@ -32,10 +32,20 @@ jobs:
           cp -r streetlift_tracker/assets build_app/
           cp streetlift_tracker/pubspec.yaml build_app/
 
-      - name: Build APK release
+      - name: Nom affiché « Kalis Track »
+        run: |
+          sed -i 's/android:label="streetlift_tracker"/android:label="Kalis Track"/' \
+            build_app/android/app/src/main/AndroidManifest.xml
+
+      - name: Icônes launcher (adaptatives + monochrome)
         run: |
           cd build_app
           flutter pub get
+          dart run flutter_launcher_icons
+
+      - name: Build APK release
+        run: |
+          cd build_app
           flutter build apk --release
 
       - name: Publier l'APK
