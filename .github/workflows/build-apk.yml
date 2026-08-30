@@ -1,0 +1,46 @@
+name: Build APK
+on:
+  push:
+    branches: ["**"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Décompresser le projet
+        run: unzip -q streetlift_tracker_v33.zip
+
+      - name: Créer le squelette Flutter et injecter les sources
+        run: |
+          flutter create --org fr.tchoupi --project-name streetlift_tracker build_app
+          rm -rf build_app/lib
+          cp -r streetlift_tracker/lib build_app/
+          cp -r streetlift_tracker/assets build_app/
+          cp streetlift_tracker/pubspec.yaml build_app/
+
+      - name: Build APK release
+        run: |
+          cd build_app
+          flutter pub get
+          flutter build apk --release
+
+      - name: Publier l'APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: streetlift-apk
+          path: build_app/build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 30
