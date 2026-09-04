@@ -4,6 +4,9 @@ on:
     branches: ["**"]
   workflow_dispatch:
 
+env:
+  KEYSTORE_PASSWORD: ${{ secrets.KALIS_KEYSTORE_PASSWORD || 'kalistrack2026' }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,6 +33,7 @@ jobs:
           rm -rf build_app/lib
           cp -r streetlift_tracker/lib build_app/
           cp -r streetlift_tracker/assets build_app/
+          cp -r streetlift_tracker/signing build_app/
           cp streetlift_tracker/pubspec.yaml build_app/
 
       - name: Nom affiché « Kalis Track »
@@ -37,20 +41,44 @@ jobs:
           sed -i 's/android:label="streetlift_tracker"/android:label="Kalis Track"/' \
             build_app/android/app/src/main/AndroidManifest.xml
 
-      - name: Icônes launcher (adaptatives + monochrome)
+      - name: Signature stable (clé kalis_track.p12) → mises à jour en place
+        run: |
+          python3 - << 'EOF'
+          import glob, os, re
+          p = glob.glob('build_app/android/app/build.gradle*')[0]
+          s = open(p).read()
+          pw = os.environ['KEYSTORE_PASSWORD']
+          if p.endswith('.kts'):
+              block = ('\n    signingConfigs {\n        create("release") {\n'
+                       '            storeFile = file("../../signing/kalis_track.p12")\n'
+                       f'            storePassword = "{pw}"\n            keyAlias = "kalis"\n'
+                       f'            keyPassword = "{pw}"\n            storeType = "PKCS12"\n        }\n    }\n')
+              s = s.replace('signingConfigs.getByName("debug")', 'signingConfigs.getByName("release")')
+          else:
+              block = ('\n    signingConfigs {\n        release {\n'
+                       '            storeFile file("../../signing/kalis_track.p12")\n'
+                       f'            storePassword "{pw}"\n            keyAlias "kalis"\n'
+                       f'            keyPassword "{pw}"\n            storeType "PKCS12"\n        }\n    }\n')
+              s = s.replace('signingConfigs.debug', 'signingConfigs.release')
+          s = re.sub(r'(android\s*\{)', lambda m: m.group(1) + block, s, count=1)
+          open(p, 'w').write(s)
+          print('Signature release injectée dans', p)
+          EOF
+
+      - name: Icônes launcher
         run: |
           cd build_app
           flutter pub get
           dart run flutter_launcher_icons
 
-      - name: Build APK release
+      - name: Build APK release (versionCode = numéro du run)
         run: |
           cd build_app
-          flutter build apk --release
+          flutter build apk --release --build-number=${{ github.run_number }}
 
       - name: Publier l'APK
         uses: actions/upload-artifact@v4
         with:
-          name: streetlift-apk
+          name: kalis-track-apk
           path: build_app/build/app/outputs/flutter-apk/app-release.apk
           retention-days: 30
