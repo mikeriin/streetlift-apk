@@ -49,17 +49,32 @@ jobs:
           s = open(p).read()
           pw = os.environ['KEYSTORE_PASSWORD']
           if p.endswith('.kts'):
-              block = ('\n    signingConfigs {\n        create("release") {\n'
-                       '            storeFile = file("../../signing/kalis_track.p12")\n'
-                       f'            storePassword = "{pw}"\n            keyAlias = "kalis"\n'
-                       f'            keyPassword = "{pw}"\n            storeType = "PKCS12"\n        }\n    }\n')
+              block = """
+              signingConfigs {
+                  create("release") {
+                      storeFile = file("../../signing/kalis_track.p12")
+                      storePassword = "__PW__"
+                      keyAlias = "kalis"
+                      keyPassword = "__PW__"
+                      storeType = "PKCS12"
+                  }
+              }
+          """
               s = s.replace('signingConfigs.getByName("debug")', 'signingConfigs.getByName("release")')
           else:
-              block = ('\n    signingConfigs {\n        release {\n'
-                       '            storeFile file("../../signing/kalis_track.p12")\n'
-                       f'            storePassword "{pw}"\n            keyAlias "kalis"\n'
-                       f'            keyPassword "{pw}"\n            storeType "PKCS12"\n        }\n    }\n')
+              block = """
+              signingConfigs {
+                  release {
+                      storeFile file("../../signing/kalis_track.p12")
+                      storePassword "__PW__"
+                      keyAlias "kalis"
+                      keyPassword "__PW__"
+                      storeType "PKCS12"
+                  }
+              }
+          """
               s = s.replace('signingConfigs.debug', 'signingConfigs.release')
+          block = block.replace('__PW__', pw)
           s = re.sub(r'(android\s*\{)', lambda m: m.group(1) + block, s, count=1)
           open(p, 'w').write(s)
           print('Signature release injectée dans', p)
