@@ -41,6 +41,44 @@ jobs:
           sed -i 's/android:label="streetlift_tracker"/android:label="Kalis Track"/' \
             build_app/android/app/src/main/AndroidManifest.xml
 
+      - name: Notifications (permissions, receivers) + desugaring Java
+        run: |
+          python3 - << 'EOF'
+          import glob, re
+          # --- AndroidManifest : permissions + receivers de flutter_local_notifications ---
+          mp = 'build_app/android/app/src/main/AndroidManifest.xml'
+          m = open(mp).read()
+          perms = ('    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>\n'
+                   '    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>\n'
+                   '    <uses-permission android:name="android.permission.VIBRATE"/>\n')
+          if 'POST_NOTIFICATIONS' not in m:
+              m = m.replace('    <application', perms + '    <application', 1)
+          receivers = (
+              '        <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />\n'
+              '        <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">\n'
+              '            <intent-filter>\n'
+              '                <action android:name="android.intent.action.BOOT_COMPLETED"/>\n'
+              '                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>\n'
+              '                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>\n'
+              '                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>\n'
+              '            </intent-filter>\n'
+              '        </receiver>\n')
+          if 'ScheduledNotificationReceiver' not in m:
+              m = m.replace('    </application>', receivers + '    </application>', 1)
+          open(mp, 'w').write(m)
+          # --- Gradle : core library desugaring (requis par flutter_local_notifications) ---
+          p = glob.glob('build_app/android/app/build.gradle*')[0]
+          s = open(p).read()
+          if p.endswith('.kts'):
+              s = re.sub(r'(compileOptions\s*\{)', r'\1\n        isCoreLibraryDesugaringEnabled = true', s, count=1)
+              s += '\ndependencies {\n    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")\n}\n'
+          else:
+              s = re.sub(r'(compileOptions\s*\{)', r'\1\n        coreLibraryDesugaringEnabled true', s, count=1)
+              s += "\ndependencies {\n    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'\n}\n"
+          open(p, 'w').write(s)
+          print('Manifest + desugaring OK')
+          EOF
+
       - name: Signature stable (clé kalis_track.p12) → mises à jour en place
         run: |
           python3 - << 'EOF'
