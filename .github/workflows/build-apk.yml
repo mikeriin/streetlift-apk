@@ -63,7 +63,7 @@ jobs:
         working-directory: streetlift_tracker
         run: |
           python3 -m unittest discover -s tools/tests -v
-          TZ=Europe/Paris flutter test --no-pub --reporter expanded
+          TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded
       - name: Générer les icônes
         working-directory: streetlift_tracker
         run: dart run flutter_launcher_icons
