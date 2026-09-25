@@ -49,10 +49,23 @@ jobs:
           git -C .. rev-parse HEAD > ../validation-output/commit.txt
       - name: Installer les composants Android ciblés
         run: |
-          sdkmanager "platforms;android-36" "build-tools;36.0.0" "ndk;28.2.13676358"
+          # L1b-R1 : SDK préinstallé sur ubuntu-24.04, mais sdkmanager hors du PATH.
+          sdk="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
+          test -n "$sdk" && test -d "$sdk"
+          tools="$sdk/cmdline-tools/latest/bin"
+          test -x "$tools/sdkmanager" && test -x "$tools/apkanalyzer"
+          echo "$tools" >> "$GITHUB_PATH"
+          (yes 2>/dev/null || true) | "$tools/sdkmanager" --licenses > /dev/null
+          "$tools/sdkmanager" --install "platforms;android-36" "build-tools;36.0.0" "ndk;28.2.13676358" \
+            > validation-output/sdkmanager-install.log 2>&1 \
+            || { tail -n 40 validation-output/sdkmanager-install.log; exit 1; }
+          test -x "$sdk/build-tools/36.0.0/apksigner" && test -x "$sdk/build-tools/36.0.0/zipalign"
+          test -f "$sdk/build-tools/36.0.0/lib/apksigner.jar"
+          test -f "$sdk/platforms/android-36/android.jar"
+          test -f "$sdk/ndk/28.2.13676358/source.properties"
           flutter --version > validation-output/flutter.txt
           java -version 2> validation-output/java.txt
-          sdkmanager --list_installed > validation-output/android-sdk.txt
+          "$tools/sdkmanager" --list_installed > validation-output/android-sdk.txt
           python3 streetlift_tracker/tools/download_bundletool.py "$RUNNER_TEMP/bundletool.jar"
       - name: Installer les dépendances verrouillées
         working-directory: streetlift_tracker
