@@ -91,7 +91,6 @@ void main() {
   Future<void> close(WidgetTester tester) async {
     await tester.pumpWidget(const SizedBox());
     await tester.pumpAndSettle();
-    await tester.runAsync(store.flush);
   }
 
   test('rouvrir puis revalider garde la date et les saisies', () {
