@@ -1,0 +1,2 @@
+build/app/intermediates/merged_manifests/debug/processDebugManifest/AndroidManifest.xml
+build/app/intermediates/merged_manifest/debug/processDebugMainManifest/AndroidManifest.xml
