@@ -1,4 +1,16 @@
-# Kalis Track 2.5.6 — Boutique de WODs façon jeu
+# Kalis Track 2.5.7 — Boutique de WODs façon jeu
+
+## 2.5.7 — Bloc 2 (S12-S19) révisé (lot LC1)
+
+Contenu d'entraînement des semaines 12 à 19 révisé selon tes décisions du 26/09/2026 ; le reste du programme et la feuille Pilotage ne changent pas.
+
+- **Sans capteur de vitesse** : tempo « Intention maximale » sur muscle-up, traction, dip et squat lestés ; la série s'arrête quand une rep ralentit nettement ou que la marge passe sous le RIR visé.
+- **Séries classiques** en S12, S13, S15 et S19 ; clusters en S14, S16, S17 et S18.
+- **Série de calibrage** (série 1) sur les 4 mouvements principaux, avec la règle d'ajustement de charge et du 1RM ; décharges S15 et S19 : aucune hausse.
+- **Séances resserrées** : 6 lignes par jour au lieu de 9 à 11 (202 lignes retirées, 66 ajoutées). Nouveautés : squat pause 2 s, GtG muscle-up enregistrable en J3 et J5, muscle-ups PdC explosifs en J6, séries de référence d'endurance (0,6 × ton max) suivies des clusters du reste du volume.
+- **S12 = semaine de recalage** : tests max tractions (J4), dips puis pompes (J5), squat 70 kg (J6), en tête de séance. Reporte chaque résultat dans la feuille Pilotage **sans quitter la séance** : menu ⋮ → « Références (feuille Pilotage) ». En revenant, les volumes des lignes suivantes sont déjà recalculés (les reps pré-remplies non validées suivent ; ce que tu as saisi n'est pas écrasé).
+
+Détail : `SUIVI_PROJET.md` (LC1). Tests : `test/lc1_programme_test.dart`, `tools/tests/test_lc1_revision.py`.
 
 ## 2.5.6 — Formats WOD fiables (lot L3b)
 
@@ -148,7 +160,7 @@ Les badges et missions utilisent les séances, séries et résultats déjà enre
 
 ## Continuité des séances
 
-Programme garde les sept jours dans leur ordre, les gestes du slider et les résumés sur appui long. Les 40 semaines, 280 journées et 1 954 exercices du programme, les quinze modes de séance, charges, séries, notes, RIR/RPE, vitesse, chronos, WOD, XP et sauvegardes gardent leur fonctionnement. Les anciennes séances sans date restent consultables.
+Programme garde les sept jours dans leur ordre, les gestes du slider et les résumés sur appui long. Les 40 semaines, 280 journées et 1 818 exercices du programme (1 954 avant la révision LC1 du Bloc 2), les quinze modes de séance, charges, séries, notes, RIR/RPE, vitesse, chronos, WOD, XP et sauvegardes gardent leur fonctionnement. Les anciennes séances sans date restent consultables.
 
 Les données des captures sont simulées uniquement dans les tests. L’application livrée n’ajoute aucune activité de démonstration à ton historique.
 

@@ -733,7 +733,7 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.byType(PilotageScreen), findsOneWidget);
         store.setValue('B17', 33);
-        await tester.pageBack();
+        Navigator.of(tester.element(find.byType(PilotageScreen))).pop();
         await tester.pumpAndSettle();
         expect(find.text(nbsp('2 × 20 reps')), findsOneWidget);
         expect(reps(), ['17', '20']);
@@ -768,7 +768,10 @@ void main() {
       store.logs['S12-J1'] = log;
       final before = log.toJson().toString();
       final exported = store.exportAll();
-      expect(await store.importBackup(exported), ImportStatus.success);
+      expect(
+        await tester.runAsync(() => store.importBackup(exported)),
+        ImportStatus.success,
+      );
       expect(store.logs['S12-J1']!.toJson().toString(), before);
       await tester.pumpWidget(
         page(
