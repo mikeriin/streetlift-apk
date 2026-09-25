@@ -2263,12 +2263,11 @@ class AppStore extends ChangeNotifier {
 
   /// Applique un aperçu confirmé. Si les données locales ont changé depuis
   /// l'aperçu, rien n'est modifié ([ImportStatus.conflict]).
-  Future<ImportStatus> applyImport(ImportPreview preview) =>
-      _commitImport(
-        preview._data,
-        preview._encoded,
-        expectedRevision: preview.localRevision,
-      );
+  Future<ImportStatus> applyImport(ImportPreview preview) => _commitImport(
+    preview._data,
+    preview._encoded,
+    expectedRevision: preview.localRevision,
+  );
 
   Future<ImportStatus> _commitImport(
     _BackupData data,
@@ -3394,9 +3393,8 @@ class ImportPreview {
            meta['exportedAt'] is String
                ? DateTime.tryParse(meta['exportedAt'] as String)
                : null,
-       appVersion = meta['appVersion'] is String
-           ? meta['appVersion'] as String
-           : null,
+       appVersion =
+           meta['appVersion'] is String ? meta['appVersion'] as String : null,
        programSessions =
            data.logs.entries
                .where((e) => e.value.done && !e.key.startsWith('S0-'))

@@ -37,20 +37,20 @@ String _reason(String? code) => switch (code) {
 
 /// Message affiché après un export : un succès seulement si l'écriture a
 /// été confirmée par relecture.
-String exportMessage(FileSaveResult r, {bool unsaved = false}) =>
-    switch (r.status) {
-      FileSaveStatus.saved =>
-        'Sauvegarde enregistrée : ${r.name ?? 'fichier'}'
-            '${r.bytes == null ? '' : ' (${_size(r.bytes!)})'}. '
-            'Fichier non chiffré : garde-le en lieu sûr.'
-            '${unsaved ? ' Il contient des modifications pas encore enregistrées sur le téléphone.' : ''}',
-      FileSaveStatus.unverified =>
-        'Fichier écrit mais non relu : ouvre-le pour vérifier ou refais l’export.',
-      FileSaveStatus.cancelled => 'Export annulé : aucun fichier créé.',
-      FileSaveStatus.failed =>
-        'Export impossible : ${_reason(r.error)}.'
-            '${r.deleted ? ' Le fichier incomplet a été supprimé.' : ''}',
-    };
+String exportMessage(FileSaveResult r, {bool unsaved = false}) => switch (r
+    .status) {
+  FileSaveStatus.saved =>
+    'Sauvegarde enregistrée : ${r.name ?? 'fichier'}'
+        '${r.bytes == null ? '' : ' (${_size(r.bytes!)})'}. '
+        'Fichier non chiffré : garde-le en lieu sûr.'
+        '${unsaved ? ' Il contient des modifications pas encore enregistrées sur le téléphone.' : ''}',
+  FileSaveStatus.unverified =>
+    'Fichier écrit mais non relu : ouvre-le pour vérifier ou refais l’export.',
+  FileSaveStatus.cancelled => 'Export annulé : aucun fichier créé.',
+  FileSaveStatus.failed =>
+    'Export impossible : ${_reason(r.error)}.'
+        '${r.deleted ? ' Le fichier incomplet a été supprimé.' : ''}',
+};
 
 void _say(ScaffoldMessengerState messenger, String text) {
   messenger
@@ -259,10 +259,7 @@ class _Bullet extends StatelessWidget {
     padding: const EdgeInsets.only(bottom: 4),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('•  '),
-        Expanded(child: Text(text)),
-      ],
+      children: [const Text('•  '), Expanded(child: Text(text))],
     ),
   );
 }
@@ -365,7 +362,9 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
                     : ImportChoice.replaceWithoutBackup,
               ),
           child: Text(
-            _backupFirst ? 'Sauvegarder puis remplacer' : 'Remplacer sans sauvegarde',
+            _backupFirst
+                ? 'Sauvegarder puis remplacer'
+                : 'Remplacer sans sauvegarde',
           ),
         ),
       ],
@@ -430,7 +429,9 @@ class _EraseDataDialogState extends State<EraseDataDialog> {
           const _Bullet(
             'le journal : séances du programme et perso, séries, notes, dates',
           ),
-          const _Bullet('les modèles de séances perso et les exercices ajoutés'),
+          const _Bullet(
+            'les modèles de séances perso et les exercices ajoutés',
+          ),
           const _Bullet(
             'les références Pilotage (poids de corps, 1RM, max) : retour aux valeurs du programme',
           ),
@@ -493,7 +494,9 @@ class _EraseDataDialogState extends State<EraseDataDialog> {
               confirmed
                   ? () => Navigator.pop(
                     context,
-                    _exportFirst ? EraseChoice.exportThenErase : EraseChoice.erase,
+                    _exportFirst
+                        ? EraseChoice.exportThenErase
+                        : EraseChoice.erase,
                   )
                   : null,
           child: const Text('Supprimer'),

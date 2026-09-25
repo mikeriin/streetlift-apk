@@ -118,39 +118,45 @@ void main() {
       expect(await a.importBackup(jsonEncode(data)), ImportStatus.success);
     }
 
-    test('export fichier : format 3 daté, réimporté dans un état distinct', () async {
-      await seed(app);
-      final at = DateTime(2026, 9, 25, 20, 36);
-      final file = app.exportForFile(appVersion: '2.5.3', at: at);
-      final meta = jsonDecode(file) as Map<String, dynamic>;
-      expect(meta['format'], 3);
-      expect(meta['exportedAt'], at.toIso8601String());
-      expect(meta['appVersion'], '2.5.3');
-      final source = business(app.exportAll());
-      final rights = Map<String, int>.of(app.unlockedWods);
-      final credits = app.credits;
-      // État de test distinct : autre stockage simulé, autre instance.
-      SharedPreferences.setMockInitialValues({});
-      final other = await relaunch();
-      final checked = other.previewImport(file);
-      expect(checked.status, ImportStatus.success);
-      final preview = checked.preview!;
-      expect(preview.format, 3);
-      expect(preview.exportedAt, at);
-      expect(preview.appVersion, '2.5.3');
-      expect(preview.sessionsDone, app.logs.values.where((l) => l.done).length);
-      expect(preview.archivedSessions, 20);
-      expect(preview.wodResults, 300);
-      expect(preview.wodsUnlocked, 30);
-      expect(preview.legacyGrants, 1);
-      expect(preview.level, app.level);
-      expect(await other.applyImport(preview), ImportStatus.success);
-      expect(business(other.exportAll()), source);
-      expect(other.unlockedWods, rights);
-      expect(other.credits, credits);
-      final again = await relaunch();
-      expect(business(again.exportAll()), source);
-    });
+    test(
+      'export fichier : format 3 daté, réimporté dans un état distinct',
+      () async {
+        await seed(app);
+        final at = DateTime(2026, 9, 25, 20, 36);
+        final file = app.exportForFile(appVersion: '2.5.3', at: at);
+        final meta = jsonDecode(file) as Map<String, dynamic>;
+        expect(meta['format'], 3);
+        expect(meta['exportedAt'], at.toIso8601String());
+        expect(meta['appVersion'], '2.5.3');
+        final source = business(app.exportAll());
+        final rights = Map<String, int>.of(app.unlockedWods);
+        final credits = app.credits;
+        // État de test distinct : autre stockage simulé, autre instance.
+        SharedPreferences.setMockInitialValues({});
+        final other = await relaunch();
+        final checked = other.previewImport(file);
+        expect(checked.status, ImportStatus.success);
+        final preview = checked.preview!;
+        expect(preview.format, 3);
+        expect(preview.exportedAt, at);
+        expect(preview.appVersion, '2.5.3');
+        expect(
+          preview.sessionsDone,
+          app.logs.values.where((l) => l.done).length,
+        );
+        expect(preview.archivedSessions, 20);
+        expect(preview.wodResults, 300);
+        expect(preview.wodsUnlocked, 30);
+        expect(preview.legacyGrants, 1);
+        expect(preview.level, app.level);
+        expect(await other.applyImport(preview), ImportStatus.success);
+        expect(business(other.exportAll()), source);
+        expect(other.unlockedWods, rights);
+        expect(other.credits, credits);
+        final again = await relaunch();
+        expect(business(again.exportAll()), source);
+      },
+    );
 
     test('aperçu : aucune modification, date absente non inventée', () async {
       await app.flush();
@@ -199,17 +205,20 @@ void main() {
       expect(app.exportAll(), before);
     });
 
-    test('données modifiées pendant l’aperçu : conflit sans mutation', () async {
-      final data = backupOf(app)..['pilotage'] = {'B4': 91};
-      final preview = app.previewImport(jsonEncode(data)).preview!;
-      app.toggleWish(app.wods.firstWhere(app.isCatalog));
-      final changed = app.exportAll();
-      expect(await app.applyImport(preview), ImportStatus.conflict);
-      expect(app.exportAll(), changed);
-      final fresh = app.previewImport(jsonEncode(data)).preview!;
-      expect(await app.applyImport(fresh), ImportStatus.success);
-      expect(app.values['B4'], 91);
-    });
+    test(
+      'données modifiées pendant l’aperçu : conflit sans mutation',
+      () async {
+        final data = backupOf(app)..['pilotage'] = {'B4': 91};
+        final preview = app.previewImport(jsonEncode(data)).preview!;
+        app.toggleWish(app.wods.firstWhere(app.isCatalog));
+        final changed = app.exportAll();
+        expect(await app.applyImport(preview), ImportStatus.conflict);
+        expect(app.exportAll(), changed);
+        final fresh = app.previewImport(jsonEncode(data)).preview!;
+        expect(await app.applyImport(fresh), ImportStatus.success);
+        expect(app.values['B4'], 91);
+      },
+    );
 
     test('un simple enregistrement ne crée pas de conflit', () async {
       final data = backupOf(app)..['pilotage'] = {'B4': 92};
@@ -290,22 +299,25 @@ void main() {
       expect(next.storedKeys, {_key});
     });
 
-    test('suppression avec écriture en attente : l’ancien état n’est pas réécrit', () async {
-      await seed(app);
-      final gate = holdWrites(app);
-      app.markSessionDone(8, 1, true); // écriture bloquée
-      app.saveLogs(); // minuterie de sauvegarde différée
-      final erasing = app.eraseAllData();
-      gate.complete(true);
-      expect((await erasing).status, EraseStatus.success);
-      app.debugWriteHook = null;
-      await Future<void>.delayed(const Duration(milliseconds: 700));
-      await app.flush();
-      final saved = jsonDecode(_decode((await disk())!)) as Map;
-      expect(saved['logs'], isEmpty);
-      final next = await relaunch();
-      expect(next.logs, isEmpty);
-    });
+    test(
+      'suppression avec écriture en attente : l’ancien état n’est pas réécrit',
+      () async {
+        await seed(app);
+        final gate = holdWrites(app);
+        app.markSessionDone(8, 1, true); // écriture bloquée
+        app.saveLogs(); // minuterie de sauvegarde différée
+        final erasing = app.eraseAllData();
+        gate.complete(true);
+        expect((await erasing).status, EraseStatus.success);
+        app.debugWriteHook = null;
+        await Future<void>.delayed(const Duration(milliseconds: 700));
+        await app.flush();
+        final saved = jsonDecode(_decode((await disk())!)) as Map;
+        expect(saved['logs'], isEmpty);
+        final next = await relaunch();
+        expect(next.logs, isEmpty);
+      },
+    );
 
     test('suppression partielle signalée, puis reprise complète', () async {
       await seed(app);
@@ -340,8 +352,9 @@ void main() {
       final name = backupFileName(DateTime(2026, 9, 5, 7, 4));
       expect(name, 'kalis-track-sauvegarde-2026-09-05-0704.json');
       expect(
-        RegExp(r'^kalis-track-sauvegarde-\d{4}-\d{2}-\d{2}-\d{4}\.json$')
-            .hasMatch(name),
+        RegExp(
+          r'^kalis-track-sauvegarde-\d{4}-\d{2}-\d{2}-\d{4}\.json$',
+        ).hasMatch(name),
         isTrue,
       );
     });
@@ -487,7 +500,9 @@ void main() {
         'pas une sauvegarde',
       ),
     ]) {
-      testWidgets('import ${open.status.name} : aucune mutation', (tester) async {
+      testWidgets('import ${open.status.name} : aucune mutation', (
+        tester,
+      ) async {
         files.onOpen = (_) async => open;
         final before = store.exportAll();
         await start(tester, (c) => importBackupFile(c, appVersion: 'test'));
@@ -533,8 +548,7 @@ void main() {
     ) async {
       final other = backupOf(store)..['pilotage'] = {'B4': 67};
       files.serve(jsonEncode(other));
-      files.onSave =
-          (_, __) => const FileSaveResult(FileSaveStatus.cancelled);
+      files.onSave = (_, __) => const FileSaveResult(FileSaveStatus.cancelled);
       final before = store.exportAll();
       await start(tester, (c) => importBackupFile(c, appVersion: 'test'));
       expect(find.text('Sauvegarder puis remplacer'), findsOneWidget);
@@ -633,15 +647,17 @@ void main() {
       expect(files.files, hasLength(1));
       expect(store.logs, isEmpty);
       expect(store.storedKeys, {_key});
-      expect(find.textContaining('revenue à son état d’installation'), findsOneWidget);
+      expect(
+        find.textContaining('revenue à son état d’installation'),
+        findsOneWidget,
+      );
       await end(tester);
     });
 
     testWidgets('suppression : export préalable annulé, rien supprimé', (
       tester,
     ) async {
-      files.onSave =
-          (_, __) => const FileSaveResult(FileSaveStatus.cancelled);
+      files.onSave = (_, __) => const FileSaveResult(FileSaveStatus.cancelled);
       final before = store.exportAll();
       await start(tester, (c) => eraseAppData(c, appVersion: 'test'));
       await tester.ensureVisible(find.byType(TextField));
@@ -669,7 +685,10 @@ void main() {
         expect(find.byType(ImportPreviewDialog), findsOneWidget);
         await tester.ensureVisible(find.text('Sauvegarder puis remplacer'));
         await tester.pumpAndSettle();
-        expect(find.text('Sauvegarder puis remplacer').hitTestable(), findsOneWidget);
+        expect(
+          find.text('Sauvegarder puis remplacer').hitTestable(),
+          findsOneWidget,
+        );
         expect(tester.takeException(), isNull);
         await tester.binding.handlePopRoute();
         await tester.pumpAndSettle();
@@ -698,7 +717,9 @@ void main() {
       tester,
     ) async {
       phone(tester);
-      await tester.pumpWidget(page(const SettingsScreen(section: 6), scale: 1.3));
+      await tester.pumpWidget(
+        page(const SettingsScreen(section: 6), scale: 1.3),
+      );
       await tester.pumpAndSettle();
       for (final label in [
         'Exporter une sauvegarde',
