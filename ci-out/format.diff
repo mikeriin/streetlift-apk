@@ -1,880 +1,895 @@
 diff --git a/ci-out/format.diff b/ci-out/format.diff
-index 04faa84..e69de29 100644
+index fcf7c77..e69de29 100644
 --- a/ci-out/format.diff
 +++ b/ci-out/format.diff
-@@ -1,513 +0,0 @@
+@@ -1,880 +0,0 @@
 -diff --git a/ci-out/format.diff b/ci-out/format.diff
--index 1b21dc9..e69de29 100644
+-index 04faa84..e69de29 100644
 ---- a/ci-out/format.diff
 -+++ b/ci-out/format.diff
--@@ -1,500 +0,0 @@
+-@@ -1,513 +0,0 @@
 --diff --git a/ci-out/format.diff b/ci-out/format.diff
---index ad65f9b..e69de29 100644
+--index 1b21dc9..e69de29 100644
 ----- a/ci-out/format.diff
 --+++ b/ci-out/format.diff
---@@ -1,439 +0,0 @@
+--@@ -1,500 +0,0 @@
 ---diff --git a/ci-out/format.diff b/ci-out/format.diff
----index 7c3dddd..e69de29 100644
+---index ad65f9b..e69de29 100644
 ------ a/ci-out/format.diff
 ---+++ b/ci-out/format.diff
----@@ -1,422 +0,0 @@
-----diff --git a/streetlift_tracker/lib/store.dart b/streetlift_tracker/lib/store.dart
-----index 5f6be5d..043eb0e 100644
-------- a/streetlift_tracker/lib/store.dart
-----+++ b/streetlift_tracker/lib/store.dart
-----@@ -795,6 +795,7 @@ class AppStore extends ChangeNotifier {
-----   /// Crédits gagnés = barème par niveau + crédits dérivés du journal
-----   /// (chapitres bouclés, boss vaincus, semaines complètes).
-----   int get creditsEarned => creditsForLevel(level) + game.bonusCredits;
-----+
-----   /// Achats enregistrés + achats en cours (réservés jusqu'à leur résultat).
-----   int get creditsSpent {
-----     var total = unlockedWods.values.fold(0, (a, b) => a + b);
-----@@ -2050,7 +2051,10 @@ class AppStore extends ChangeNotifier {
-----       // Formats 1-2 (avant les crédits v2) : un coût 0 d'un WOD du catalogue
-----       // vient de l'ancienne migration. Il ne devient pas un accès gratuit ;
-----       // il est conservé à part, comme au démarrage (KT-014).
------      if (limits != null && format < 3 && v == 0 && _seedDefaults.containsKey(k)) {
-----+      if (limits != null &&
-----+          format < 3 &&
-----+          v == 0 &&
-----+          _seedDefaults.containsKey(k)) {
-----         nextLegacy[k] = 'import_format_$format';
-----         return;
-----       }
-----@@ -2080,7 +2084,8 @@ class AppStore extends ChangeNotifier {
-----   /// Tailles des collections d'un import, avant toute conversion (KT-015).
-----   static void _checkCollections(Map<String, dynamic> m, ImportLimits limits) {
-----     void cap(Object? value, int limit, String what) {
------      final n = value is Map ? value.length : (value is List ? value.length : 0);
-----+      final n =
-----+          value is Map ? value.length : (value is List ? value.length : 0);
-----       if (n > limit) throw ImportLimitException('Trop de $what.');
-----     }
----- 
-----diff --git a/streetlift_tracker/test/l2_fixtures.dart b/streetlift_tracker/test/l2_fixtures.dart
-----index f424f92..f96d523 100644
-------- a/streetlift_tracker/test/l2_fixtures.dart
-----+++ b/streetlift_tracker/test/l2_fixtures.dart
-----@@ -19,10 +19,11 @@ String gzText(String json) =>
----- /// Données très compressibles : [bytes] espaces dans un JSON valide.
----- String compressibleBomb(int bytes) {
-----   final spaces = Uint8List(bytes)..fillRange(0, bytes, 0x20);
------  final json = BytesBuilder()
------    ..add(utf8.encode('{"kalisTrack":1,"format":3,"pad":"'))
------    ..add(spaces)
------    ..add(utf8.encode('"}'));
-----+  final json =
-----+      BytesBuilder()
-----+        ..add(utf8.encode('{"kalisTrack":1,"format":3,"pad":"'))
-----+        ..add(spaces)
-----+        ..add(utf8.encode('"}'));
-----   return 'gz:${base64Encode(gzip.encode(json.takeBytes()))}';
----- }
----- 
-----@@ -36,7 +37,8 @@ Map<String, dynamic> filledBackup(AppStore app) {
-----     for (final day in week.days) {
-----       if (day.exercises.isEmpty) continue;
-----       final date = app.program.dateFor(week.n, day.j);
------      final at = DateTime(date.year, date.month, date.day, 18).toIso8601String();
-----+      final at =
-----+          DateTime(date.year, date.month, date.day, 18).toIso8601String();
-----       final log = SessionLog(
-----         done: true,
-----         finishedAt: at,
-----@@ -106,9 +108,7 @@ Map<String, dynamic> filledBackup(AppStore app) {
-----   data['logs'] = logs;
-----   data['custom'] = custom;
-----   (data['catalog'] as Map<String, dynamic>)['results'] = results;
------  data['unlocked'] = {
------    for (final w in catalog.take(30)) w.id: app.basePrice(w),
------  };
-----+  data['unlocked'] = {for (final w in catalog.take(30)) w.id: app.basePrice(w)};
-----   return data;
----- }
----- 
-----@@ -134,8 +134,7 @@ Map<String, dynamic> formatV2(AppStore app, Map<String, int> unlocked) => {
-----   'format': 2,
-----   'pilotage': {'B4': 78},
-----   'logs': {
------    'S8-J1':
------        SessionLog(done: true, finishedAt: '2026-09-01T10:00:00').toJson(),
-----+    'S8-J1': SessionLog(done: true, finishedAt: '2026-09-01T10:00:00').toJson(),
-----   },
-----   'settings': AppSettings().toJson(),
-----   'wods': app.wods.map((w) => w.toJson()).toList(),
-----@@ -147,8 +146,7 @@ Map<String, dynamic> formatV1(AppStore app) => {
-----   'kalisTrack': 1,
-----   'pilotage': {'B4': 77},
-----   'logs': {
------    'S9-J2':
------        SessionLog(done: true, finishedAt: '2026-09-02T10:00:00').toJson(),
-----+    'S9-J2': SessionLog(done: true, finishedAt: '2026-09-02T10:00:00').toJson(),
-----   },
-----   'settings': AppSettings().toJson(),
----- };
-----diff --git a/streetlift_tracker/test/l2_persistence_test.dart b/streetlift_tracker/test/l2_persistence_test.dart
-----index e8fe2ad..bc11fa1 100644
-------- a/streetlift_tracker/test/l2_persistence_test.dart
-----+++ b/streetlift_tracker/test/l2_persistence_test.dart
-----@@ -111,45 +111,48 @@ void main() {
-----       expect(app.unlocked(w), isFalse);
-----     });
----- 
------    test('double appui : un seul débit, rien d’annoncé avant l’écriture', () async {
------      final w = affordable(app);
------      final cost = app.wodCost(w);
------      final before = app.credits;
------      final gate = holdWrites(app);
------      final first = app.purchaseWod(w, acceptedCost: cost);
------      final second = app.purchaseWod(w, acceptedCost: cost);
------      expect((await second).status, PurchaseStatus.pending);
------      expect(app.purchasePending(w), isTrue);
------      expect(app.unlocked(w), isFalse);
------      expect(app.credits, before - cost);
------      gate.complete(true);
------      expect((await first).status, PurchaseStatus.success);
------      expect(app.purchasePending(w), isFalse);
------      expect(app.unlocked(w), isTrue);
------      expect(app.credits, before - cost);
------      expect(
------        (await app.purchaseWod(w)).status,
------        PurchaseStatus.alreadyOwned,
------      );
------      expect(app.credits, before - cost);
------    });
-----+    test(
-----+      'double appui : un seul débit, rien d’annoncé avant l’écriture',
-----+      () async {
-----+        final w = affordable(app);
-----+        final cost = app.wodCost(w);
-----+        final before = app.credits;
-----+        final gate = holdWrites(app);
-----+        final first = app.purchaseWod(w, acceptedCost: cost);
-----+        final second = app.purchaseWod(w, acceptedCost: cost);
-----+        expect((await second).status, PurchaseStatus.pending);
-----+        expect(app.purchasePending(w), isTrue);
-----+        expect(app.unlocked(w), isFalse);
-----+        expect(app.credits, before - cost);
-----+        gate.complete(true);
-----+        expect((await first).status, PurchaseStatus.success);
-----+        expect(app.purchasePending(w), isFalse);
-----+        expect(app.unlocked(w), isTrue);
-----+        expect(app.credits, before - cost);
-----+        expect((await app.purchaseWod(w)).status, PurchaseStatus.alreadyOwned);
-----+        expect(app.credits, before - cost);
-----+      },
-----+    );
----- 
------    test('deux WODs : le solde réservé empêche une dépense excessive', () async {
------      expect(app.credits, 3);
------      final pair =
------          app.wods
------              .where((w) => app.isCatalog(w) && app.wodCost(w) == 2)
------              .take(2)
------              .toList();
------      final gate = holdWrites(app);
------      final first = app.purchaseWod(pair[0], acceptedCost: 2);
------      final second = await app.purchaseWod(pair[1], acceptedCost: 2);
------      expect(second.status, PurchaseStatus.insufficientCredits);
------      gate.complete(true);
------      expect((await first).status, PurchaseStatus.success);
------      expect(app.credits, 1);
------      expect(app.unlocked(pair[1]), isFalse);
------    });
-----+    test(
-----+      'deux WODs : le solde réservé empêche une dépense excessive',
-----+      () async {
-----+        expect(app.credits, 3);
-----+        final pair =
-----+            app.wods
-----+                .where((w) => app.isCatalog(w) && app.wodCost(w) == 2)
-----+                .take(2)
-----+                .toList();
-----+        final gate = holdWrites(app);
-----+        final first = app.purchaseWod(pair[0], acceptedCost: 2);
-----+        final second = await app.purchaseWod(pair[1], acceptedCost: 2);
-----+        expect(second.status, PurchaseStatus.insufficientCredits);
-----+        gate.complete(true);
-----+        expect((await first).status, PurchaseStatus.success);
-----+        expect(app.credits, 1);
-----+        expect(app.unlocked(pair[1]), isFalse);
-----+      },
-----+    );
----- 
-----     test('deux WODs abordables ensemble : deux débits exacts', () async {
-----       final one = affordable(app, cost: 1);
-----@@ -200,7 +203,10 @@ void main() {
-----       expect(app.persistenceError.value, isNull);
-----       final next = await relaunch();
-----       expect(next.unlockedWods[w.id], cost);
------      expect(next.wished(next.wods.firstWhere((x) => x.id == other.id)), isTrue);
-----+      expect(
-----+        next.wished(next.wods.firstWhere((x) => x.id == other.id)),
-----+        isTrue,
-----+      );
-----     });
----- 
-----     test('un droit acquis n’est jamais retiré par un achat échoué', () async {
-----@@ -215,22 +221,25 @@ void main() {
-----   });
----- 
-----   group('KT-013 écritures et imports', () {
------    test('deux imports rapprochés : le dernier gagne, copies gardées', () async {
------      final original = app.values['B4'];
------      final a = backupOf(app)..['pilotage'] = {'B4': 81};
------      final b = backupOf(app)..['pilotage'] = {'B4': 82};
------      final first = app.importBackup(jsonEncode(a));
------      final second = app.importBackup(jsonEncode(b));
------      expect(await first, ImportStatus.success);
------      expect(await second, ImportStatus.success);
------      expect(app.values['B4'], 82);
------      expect(_decode((await disk())!), app.exportAll());
------      expect(app.recoveryCopies, hasLength(2));
------      expect(jsonDecode(app.recoveryState(0)!)['pilotage']['B4'], 81);
------      expect(jsonDecode(app.recoveryState(1)!)['pilotage']['B4'], original);
------      final next = await relaunch();
------      expect(next.values['B4'], 82);
------    });
-----+    test(
-----+      'deux imports rapprochés : le dernier gagne, copies gardées',
-----+      () async {
-----+        final original = app.values['B4'];
-----+        final a = backupOf(app)..['pilotage'] = {'B4': 81};
-----+        final b = backupOf(app)..['pilotage'] = {'B4': 82};
-----+        final first = app.importBackup(jsonEncode(a));
-----+        final second = app.importBackup(jsonEncode(b));
-----+        expect(await first, ImportStatus.success);
-----+        expect(await second, ImportStatus.success);
-----+        expect(app.values['B4'], 82);
-----+        expect(_decode((await disk())!), app.exportAll());
-----+        expect(app.recoveryCopies, hasLength(2));
-----+        expect(jsonDecode(app.recoveryState(0)!)['pilotage']['B4'], 81);
-----+        expect(jsonDecode(app.recoveryState(1)!)['pilotage']['B4'], original);
-----+        final next = await relaunch();
-----+        expect(next.values['B4'], 82);
-----+      },
-----+    );
----- 
-----     test('au plus trois copies de récupération', () async {
-----       for (final weight in [71, 72, 73, 74]) {
-----@@ -241,22 +250,25 @@ void main() {
-----       expect(jsonDecode(app.recoveryState(0)!)['pilotage']['B4'], 73);
-----     });
----- 
------    test('un état ancien n’est pas écrit après un import plus récent', () async {
------      final base = backupOf(app)..['pilotage'] = {'B4': 91};
------      final gate = holdWrites(app);
------      app.markSessionDone(8, 1, true); // écriture bloquée
------      final importing = app.importBackup(jsonEncode(base));
------      final w = app.wods.firstWhere(app.isCatalog);
------      app.toggleWish(w); // édition pendant l'import
------      gate.complete(true);
------      expect(await importing, ImportStatus.success);
------      await app.flush();
------      expect(app.values['B4'], 91);
------      expect(_decode((await disk())!), app.exportAll());
------      final next = await relaunch();
------      expect(next.values['B4'], 91);
------      expect(next.exportAll(), app.exportAll());
------    });
-----+    test(
-----+      'un état ancien n’est pas écrit après un import plus récent',
-----+      () async {
-----+        final base = backupOf(app)..['pilotage'] = {'B4': 91};
-----+        final gate = holdWrites(app);
-----+        app.markSessionDone(8, 1, true); // écriture bloquée
-----+        final importing = app.importBackup(jsonEncode(base));
-----+        final w = app.wods.firstWhere(app.isCatalog);
-----+        app.toggleWish(w); // édition pendant l'import
-----+        gate.complete(true);
-----+        expect(await importing, ImportStatus.success);
-----+        await app.flush();
-----+        expect(app.values['B4'], 91);
-----+        expect(_decode((await disk())!), app.exportAll());
-----+        final next = await relaunch();
-----+        expect(next.values['B4'], 91);
-----+        expect(next.exportAll(), app.exportAll());
-----+      },
-----+    );
----- 
-----     test('import pendant un flush : ordre conservé', () async {
-----       final data = backupOf(app)..['pilotage'] = {'B4': 88};
-----@@ -273,9 +285,7 @@ void main() {
----- 
-----     test('achat pendant une sauvegarde : les deux sont écrits', () async {
-----       final w = affordable(app);
------      final wish = app.wods.firstWhere(
------        (x) => app.isCatalog(x) && x.id != w.id,
------      );
-----+      final wish = app.wods.firstWhere((x) => app.isCatalog(x) && x.id != w.id);
-----       final gate = holdWrites(app);
-----       app.toggleWish(wish);
-----       final buying = app.purchaseWod(w, acceptedCost: app.wodCost(w));
-----@@ -364,9 +374,10 @@ void main() {
-----       final before = {ids.free: 0, ids.paid: 1};
-----       expect(app.unlockedWods, {ids.paid: 1});
-----       expect(app.legacyGrants, {ids.free: 'credits_v1'});
------      expect({...app.unlockedWods.keys, ...app.legacyGrants.keys}, {
------        ...before.keys,
------      });
-----+      expect(
-----+        {...app.unlockedWods.keys, ...app.legacyGrants.keys},
-----+        {...before.keys},
-----+      );
-----       expect(app.unlocked(app.wods.firstWhere((w) => w.id == ids.free)), false);
-----       expect(app.creditsSpent, 1);
-----       final saved = backupOf(app);
-----@@ -419,8 +430,7 @@ void main() {
----- 
-----     test('droits anciens : aller-retour sans perte', () async {
-----       final ids = legacyIds(app);
------      final data =
------          backupOf(app)..['legacyGrants'] = {ids.free: 'credits_v1'};
-----+      final data = backupOf(app)..['legacyGrants'] = {ids.free: 'credits_v1'};
-----       expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
-----       final copy = app.exportAll();
-----       expect(await app.importBackup(copy), ImportStatus.success);
-----@@ -507,7 +517,8 @@ void main() {
----- 
-----     test('gzip tronqué, base64 invalide, JSON mal formé', () async {
-----       final valid = gzip.encode(utf8.encode(app.exportAll()));
------      final truncated = 'gz:${base64Encode(valid.sublist(0, valid.length ~/ 2))}';
-----+      final truncated =
-----+          'gz:${base64Encode(valid.sublist(0, valid.length ~/ 2))}';
-----       await rejected(truncated, ImportStatus.invalid);
-----       await rejected('gz:@@@', ImportStatus.invalid);
-----       await rejected('{"kalisTrack":1,', ImportStatus.invalid);
-----@@ -561,31 +572,34 @@ void main() {
-----   });
----- 
-----   group('KT-005 comportement actuel (à arbitrer, non modifié)', () {
------    test('supprimer des séances réduit les crédits gagnés, pas les droits', () async {
------      final keys = <String>[];
------      for (final week in app.program.weeks) {
------        for (final day in week.days) {
------          if (app.level >= 2) break;
------          if (day.exercises.isEmpty) continue;
------          app.markSessionDone(week.n, day.j, true);
------          keys.add(app.sessionKey(week.n, day.j));
-----+    test(
-----+      'supprimer des séances réduit les crédits gagnés, pas les droits',
-----+      () async {
-----+        final keys = <String>[];
-----+        for (final week in app.program.weeks) {
-----+          for (final day in week.days) {
-----+            if (app.level >= 2) break;
-----+            if (day.exercises.isEmpty) continue;
-----+            app.markSessionDone(week.n, day.j, true);
-----+            keys.add(app.sessionKey(week.n, day.j));
-----+          }
-----         }
------      }
------      expect(app.level, greaterThanOrEqualTo(2));
------      final earned = app.creditsEarned;
------      final w = affordable(app);
------      expect((await app.purchaseWod(w)).status, PurchaseStatus.success);
------      for (final key in keys) {
------        app.deleteLog(key);
------      }
------      expect(app.creditsEarned, lessThan(earned));
------      expect(app.unlocked(w), isTrue);
------      // Le plancher à 0 masque un solde négatif éventuel.
------      expect(app.credits, greaterThanOrEqualTo(0));
------      expect(
------        app.credits,
------        (app.creditsEarned - app.creditsSpent).clamp(0, 1 << 30),
------      );
------    });
-----+        expect(app.level, greaterThanOrEqualTo(2));
-----+        final earned = app.creditsEarned;
-----+        final w = affordable(app);
-----+        expect((await app.purchaseWod(w)).status, PurchaseStatus.success);
-----+        for (final key in keys) {
-----+          app.deleteLog(key);
-----+        }
-----+        expect(app.creditsEarned, lessThan(earned));
-----+        expect(app.unlocked(w), isTrue);
-----+        // Le plancher à 0 masque un solde négatif éventuel.
-----+        expect(app.credits, greaterThanOrEqualTo(0));
-----+        expect(
-----+          app.credits,
-----+          (app.creditsEarned - app.creditsSpent).clamp(0, 1 << 30),
-----+        );
-----+      },
-----+    );
-----   });
----- }
-----diff --git a/streetlift_tracker/test/l2_purchase_ui_test.dart b/streetlift_tracker/test/l2_purchase_ui_test.dart
-----index 023ffa1..c62413c 100644
-------- a/streetlift_tracker/test/l2_purchase_ui_test.dart
-----+++ b/streetlift_tracker/test/l2_purchase_ui_test.dart
-----@@ -27,7 +27,8 @@ void main() {
-----   tearDown(() {
-----     store.debugWriteHook = null;
-----     store.persistenceError.value = null;
------    store.unlockedWods.clear(); // isolement : chaque test repart du solde initial
-----+    store.unlockedWods
-----+        .clear(); // isolement : chaque test repart du solde initial
-----   });
----- 
-----   Widget page(Widget child) => MaterialApp(
-----diff --git a/streetlift_tracker/test/store_test.dart b/streetlift_tracker/test/store_test.dart
-----index 69ded72..04b7e7a 100644
-------- a/streetlift_tracker/test/store_test.dart
-----+++ b/streetlift_tracker/test/store_test.dart
-----@@ -26,14 +26,8 @@ void main() {
-----       final wod = app.wods.firstWhere((w) => app.wodCost(w) <= app.credits);
-----       final before = app.credits;
-----       final cost = app.wodCost(wod);
------      expect(
------        (await app.purchaseWod(wod)).status,
------        PurchaseStatus.success,
------      );
------      expect(
------        (await app.purchaseWod(wod)).status,
------        PurchaseStatus.alreadyOwned,
------      );
-----+      expect((await app.purchaseWod(wod)).status, PurchaseStatus.success);
-----+      expect((await app.purchaseWod(wod)).status, PurchaseStatus.alreadyOwned);
-----       await app.flush();
-----       final reloaded = AppStore();
-----       await reloaded.init();
+---@@ -1,439 +0,0 @@
+----diff --git a/ci-out/format.diff b/ci-out/format.diff
+----index 7c3dddd..e69de29 100644
+------- a/ci-out/format.diff
+----+++ b/ci-out/format.diff
+----@@ -1,422 +0,0 @@
+-----diff --git a/streetlift_tracker/lib/store.dart b/streetlift_tracker/lib/store.dart
+-----index 5f6be5d..043eb0e 100644
+-------- a/streetlift_tracker/lib/store.dart
+-----+++ b/streetlift_tracker/lib/store.dart
+-----@@ -795,6 +795,7 @@ class AppStore extends ChangeNotifier {
+-----   /// Crédits gagnés = barème par niveau + crédits dérivés du journal
+-----   /// (chapitres bouclés, boss vaincus, semaines complètes).
+-----   int get creditsEarned => creditsForLevel(level) + game.bonusCredits;
+-----+
+-----   /// Achats enregistrés + achats en cours (réservés jusqu'à leur résultat).
+-----   int get creditsSpent {
+-----     var total = unlockedWods.values.fold(0, (a, b) => a + b);
+-----@@ -2050,7 +2051,10 @@ class AppStore extends ChangeNotifier {
+-----       // Formats 1-2 (avant les crédits v2) : un coût 0 d'un WOD du catalogue
+-----       // vient de l'ancienne migration. Il ne devient pas un accès gratuit ;
+-----       // il est conservé à part, comme au démarrage (KT-014).
+------      if (limits != null && format < 3 && v == 0 && _seedDefaults.containsKey(k)) {
+-----+      if (limits != null &&
+-----+          format < 3 &&
+-----+          v == 0 &&
+-----+          _seedDefaults.containsKey(k)) {
+-----         nextLegacy[k] = 'import_format_$format';
+-----         return;
+-----       }
+-----@@ -2080,7 +2084,8 @@ class AppStore extends ChangeNotifier {
+-----   /// Tailles des collections d'un import, avant toute conversion (KT-015).
+-----   static void _checkCollections(Map<String, dynamic> m, ImportLimits limits) {
+-----     void cap(Object? value, int limit, String what) {
+------      final n = value is Map ? value.length : (value is List ? value.length : 0);
+-----+      final n =
+-----+          value is Map ? value.length : (value is List ? value.length : 0);
+-----       if (n > limit) throw ImportLimitException('Trop de $what.');
+-----     }
+----- 
+-----diff --git a/streetlift_tracker/test/l2_fixtures.dart b/streetlift_tracker/test/l2_fixtures.dart
+-----index f424f92..f96d523 100644
+-------- a/streetlift_tracker/test/l2_fixtures.dart
+-----+++ b/streetlift_tracker/test/l2_fixtures.dart
+-----@@ -19,10 +19,11 @@ String gzText(String json) =>
+----- /// Données très compressibles : [bytes] espaces dans un JSON valide.
+----- String compressibleBomb(int bytes) {
+-----   final spaces = Uint8List(bytes)..fillRange(0, bytes, 0x20);
+------  final json = BytesBuilder()
+------    ..add(utf8.encode('{"kalisTrack":1,"format":3,"pad":"'))
+------    ..add(spaces)
+------    ..add(utf8.encode('"}'));
+-----+  final json =
+-----+      BytesBuilder()
+-----+        ..add(utf8.encode('{"kalisTrack":1,"format":3,"pad":"'))
+-----+        ..add(spaces)
+-----+        ..add(utf8.encode('"}'));
+-----   return 'gz:${base64Encode(gzip.encode(json.takeBytes()))}';
+----- }
+----- 
+-----@@ -36,7 +37,8 @@ Map<String, dynamic> filledBackup(AppStore app) {
+-----     for (final day in week.days) {
+-----       if (day.exercises.isEmpty) continue;
+-----       final date = app.program.dateFor(week.n, day.j);
+------      final at = DateTime(date.year, date.month, date.day, 18).toIso8601String();
+-----+      final at =
+-----+          DateTime(date.year, date.month, date.day, 18).toIso8601String();
+-----       final log = SessionLog(
+-----         done: true,
+-----         finishedAt: at,
+-----@@ -106,9 +108,7 @@ Map<String, dynamic> filledBackup(AppStore app) {
+-----   data['logs'] = logs;
+-----   data['custom'] = custom;
+-----   (data['catalog'] as Map<String, dynamic>)['results'] = results;
+------  data['unlocked'] = {
+------    for (final w in catalog.take(30)) w.id: app.basePrice(w),
+------  };
+-----+  data['unlocked'] = {for (final w in catalog.take(30)) w.id: app.basePrice(w)};
+-----   return data;
+----- }
+----- 
+-----@@ -134,8 +134,7 @@ Map<String, dynamic> formatV2(AppStore app, Map<String, int> unlocked) => {
+-----   'format': 2,
+-----   'pilotage': {'B4': 78},
+-----   'logs': {
+------    'S8-J1':
+------        SessionLog(done: true, finishedAt: '2026-09-01T10:00:00').toJson(),
+-----+    'S8-J1': SessionLog(done: true, finishedAt: '2026-09-01T10:00:00').toJson(),
+-----   },
+-----   'settings': AppSettings().toJson(),
+-----   'wods': app.wods.map((w) => w.toJson()).toList(),
+-----@@ -147,8 +146,7 @@ Map<String, dynamic> formatV1(AppStore app) => {
+-----   'kalisTrack': 1,
+-----   'pilotage': {'B4': 77},
+-----   'logs': {
+------    'S9-J2':
+------        SessionLog(done: true, finishedAt: '2026-09-02T10:00:00').toJson(),
+-----+    'S9-J2': SessionLog(done: true, finishedAt: '2026-09-02T10:00:00').toJson(),
+-----   },
+-----   'settings': AppSettings().toJson(),
+----- };
+-----diff --git a/streetlift_tracker/test/l2_persistence_test.dart b/streetlift_tracker/test/l2_persistence_test.dart
+-----index e8fe2ad..bc11fa1 100644
+-------- a/streetlift_tracker/test/l2_persistence_test.dart
+-----+++ b/streetlift_tracker/test/l2_persistence_test.dart
+-----@@ -111,45 +111,48 @@ void main() {
+-----       expect(app.unlocked(w), isFalse);
+-----     });
+----- 
+------    test('double appui : un seul débit, rien d’annoncé avant l’écriture', () async {
+------      final w = affordable(app);
+------      final cost = app.wodCost(w);
+------      final before = app.credits;
+------      final gate = holdWrites(app);
+------      final first = app.purchaseWod(w, acceptedCost: cost);
+------      final second = app.purchaseWod(w, acceptedCost: cost);
+------      expect((await second).status, PurchaseStatus.pending);
+------      expect(app.purchasePending(w), isTrue);
+------      expect(app.unlocked(w), isFalse);
+------      expect(app.credits, before - cost);
+------      gate.complete(true);
+------      expect((await first).status, PurchaseStatus.success);
+------      expect(app.purchasePending(w), isFalse);
+------      expect(app.unlocked(w), isTrue);
+------      expect(app.credits, before - cost);
+------      expect(
+------        (await app.purchaseWod(w)).status,
+------        PurchaseStatus.alreadyOwned,
+------      );
+------      expect(app.credits, before - cost);
+------    });
+-----+    test(
+-----+      'double appui : un seul débit, rien d’annoncé avant l’écriture',
+-----+      () async {
+-----+        final w = affordable(app);
+-----+        final cost = app.wodCost(w);
+-----+        final before = app.credits;
+-----+        final gate = holdWrites(app);
+-----+        final first = app.purchaseWod(w, acceptedCost: cost);
+-----+        final second = app.purchaseWod(w, acceptedCost: cost);
+-----+        expect((await second).status, PurchaseStatus.pending);
+-----+        expect(app.purchasePending(w), isTrue);
+-----+        expect(app.unlocked(w), isFalse);
+-----+        expect(app.credits, before - cost);
+-----+        gate.complete(true);
+-----+        expect((await first).status, PurchaseStatus.success);
+-----+        expect(app.purchasePending(w), isFalse);
+-----+        expect(app.unlocked(w), isTrue);
+-----+        expect(app.credits, before - cost);
+-----+        expect((await app.purchaseWod(w)).status, PurchaseStatus.alreadyOwned);
+-----+        expect(app.credits, before - cost);
+-----+      },
+-----+    );
+----- 
+------    test('deux WODs : le solde réservé empêche une dépense excessive', () async {
+------      expect(app.credits, 3);
+------      final pair =
+------          app.wods
+------              .where((w) => app.isCatalog(w) && app.wodCost(w) == 2)
+------              .take(2)
+------              .toList();
+------      final gate = holdWrites(app);
+------      final first = app.purchaseWod(pair[0], acceptedCost: 2);
+------      final second = await app.purchaseWod(pair[1], acceptedCost: 2);
+------      expect(second.status, PurchaseStatus.insufficientCredits);
+------      gate.complete(true);
+------      expect((await first).status, PurchaseStatus.success);
+------      expect(app.credits, 1);
+------      expect(app.unlocked(pair[1]), isFalse);
+------    });
+-----+    test(
+-----+      'deux WODs : le solde réservé empêche une dépense excessive',
+-----+      () async {
+-----+        expect(app.credits, 3);
+-----+        final pair =
+-----+            app.wods
+-----+                .where((w) => app.isCatalog(w) && app.wodCost(w) == 2)
+-----+                .take(2)
+-----+                .toList();
+-----+        final gate = holdWrites(app);
+-----+        final first = app.purchaseWod(pair[0], acceptedCost: 2);
+-----+        final second = await app.purchaseWod(pair[1], acceptedCost: 2);
+-----+        expect(second.status, PurchaseStatus.insufficientCredits);
+-----+        gate.complete(true);
+-----+        expect((await first).status, PurchaseStatus.success);
+-----+        expect(app.credits, 1);
+-----+        expect(app.unlocked(pair[1]), isFalse);
+-----+      },
+-----+    );
+----- 
+-----     test('deux WODs abordables ensemble : deux débits exacts', () async {
+-----       final one = affordable(app, cost: 1);
+-----@@ -200,7 +203,10 @@ void main() {
+-----       expect(app.persistenceError.value, isNull);
+-----       final next = await relaunch();
+-----       expect(next.unlockedWods[w.id], cost);
+------      expect(next.wished(next.wods.firstWhere((x) => x.id == other.id)), isTrue);
+-----+      expect(
+-----+        next.wished(next.wods.firstWhere((x) => x.id == other.id)),
+-----+        isTrue,
+-----+      );
+-----     });
+----- 
+-----     test('un droit acquis n’est jamais retiré par un achat échoué', () async {
+-----@@ -215,22 +221,25 @@ void main() {
+-----   });
+----- 
+-----   group('KT-013 écritures et imports', () {
+------    test('deux imports rapprochés : le dernier gagne, copies gardées', () async {
+------      final original = app.values['B4'];
+------      final a = backupOf(app)..['pilotage'] = {'B4': 81};
+------      final b = backupOf(app)..['pilotage'] = {'B4': 82};
+------      final first = app.importBackup(jsonEncode(a));
+------      final second = app.importBackup(jsonEncode(b));
+------      expect(await first, ImportStatus.success);
+------      expect(await second, ImportStatus.success);
+------      expect(app.values['B4'], 82);
+------      expect(_decode((await disk())!), app.exportAll());
+------      expect(app.recoveryCopies, hasLength(2));
+------      expect(jsonDecode(app.recoveryState(0)!)['pilotage']['B4'], 81);
+------      expect(jsonDecode(app.recoveryState(1)!)['pilotage']['B4'], original);
+------      final next = await relaunch();
+------      expect(next.values['B4'], 82);
+------    });
+-----+    test(
+-----+      'deux imports rapprochés : le dernier gagne, copies gardées',
+-----+      () async {
+-----+        final original = app.values['B4'];
+-----+        final a = backupOf(app)..['pilotage'] = {'B4': 81};
+-----+        final b = backupOf(app)..['pilotage'] = {'B4': 82};
+-----+        final first = app.importBackup(jsonEncode(a));
+-----+        final second = app.importBackup(jsonEncode(b));
+-----+        expect(await first, ImportStatus.success);
+-----+        expect(await second, ImportStatus.success);
+-----+        expect(app.values['B4'], 82);
+-----+        expect(_decode((await disk())!), app.exportAll());
+-----+        expect(app.recoveryCopies, hasLength(2));
+-----+        expect(jsonDecode(app.recoveryState(0)!)['pilotage']['B4'], 81);
+-----+        expect(jsonDecode(app.recoveryState(1)!)['pilotage']['B4'], original);
+-----+        final next = await relaunch();
+-----+        expect(next.values['B4'], 82);
+-----+      },
+-----+    );
+----- 
+-----     test('au plus trois copies de récupération', () async {
+-----       for (final weight in [71, 72, 73, 74]) {
+-----@@ -241,22 +250,25 @@ void main() {
+-----       expect(jsonDecode(app.recoveryState(0)!)['pilotage']['B4'], 73);
+-----     });
+----- 
+------    test('un état ancien n’est pas écrit après un import plus récent', () async {
+------      final base = backupOf(app)..['pilotage'] = {'B4': 91};
+------      final gate = holdWrites(app);
+------      app.markSessionDone(8, 1, true); // écriture bloquée
+------      final importing = app.importBackup(jsonEncode(base));
+------      final w = app.wods.firstWhere(app.isCatalog);
+------      app.toggleWish(w); // édition pendant l'import
+------      gate.complete(true);
+------      expect(await importing, ImportStatus.success);
+------      await app.flush();
+------      expect(app.values['B4'], 91);
+------      expect(_decode((await disk())!), app.exportAll());
+------      final next = await relaunch();
+------      expect(next.values['B4'], 91);
+------      expect(next.exportAll(), app.exportAll());
+------    });
+-----+    test(
+-----+      'un état ancien n’est pas écrit après un import plus récent',
+-----+      () async {
+-----+        final base = backupOf(app)..['pilotage'] = {'B4': 91};
+-----+        final gate = holdWrites(app);
+-----+        app.markSessionDone(8, 1, true); // écriture bloquée
+-----+        final importing = app.importBackup(jsonEncode(base));
+-----+        final w = app.wods.firstWhere(app.isCatalog);
+-----+        app.toggleWish(w); // édition pendant l'import
+-----+        gate.complete(true);
+-----+        expect(await importing, ImportStatus.success);
+-----+        await app.flush();
+-----+        expect(app.values['B4'], 91);
+-----+        expect(_decode((await disk())!), app.exportAll());
+-----+        final next = await relaunch();
+-----+        expect(next.values['B4'], 91);
+-----+        expect(next.exportAll(), app.exportAll());
+-----+      },
+-----+    );
+----- 
+-----     test('import pendant un flush : ordre conservé', () async {
+-----       final data = backupOf(app)..['pilotage'] = {'B4': 88};
+-----@@ -273,9 +285,7 @@ void main() {
+----- 
+-----     test('achat pendant une sauvegarde : les deux sont écrits', () async {
+-----       final w = affordable(app);
+------      final wish = app.wods.firstWhere(
+------        (x) => app.isCatalog(x) && x.id != w.id,
+------      );
+-----+      final wish = app.wods.firstWhere((x) => app.isCatalog(x) && x.id != w.id);
+-----       final gate = holdWrites(app);
+-----       app.toggleWish(wish);
+-----       final buying = app.purchaseWod(w, acceptedCost: app.wodCost(w));
+-----@@ -364,9 +374,10 @@ void main() {
+-----       final before = {ids.free: 0, ids.paid: 1};
+-----       expect(app.unlockedWods, {ids.paid: 1});
+-----       expect(app.legacyGrants, {ids.free: 'credits_v1'});
+------      expect({...app.unlockedWods.keys, ...app.legacyGrants.keys}, {
+------        ...before.keys,
+------      });
+-----+      expect(
+-----+        {...app.unlockedWods.keys, ...app.legacyGrants.keys},
+-----+        {...before.keys},
+-----+      );
+-----       expect(app.unlocked(app.wods.firstWhere((w) => w.id == ids.free)), false);
+-----       expect(app.creditsSpent, 1);
+-----       final saved = backupOf(app);
+-----@@ -419,8 +430,7 @@ void main() {
+----- 
+-----     test('droits anciens : aller-retour sans perte', () async {
+-----       final ids = legacyIds(app);
+------      final data =
+------          backupOf(app)..['legacyGrants'] = {ids.free: 'credits_v1'};
+-----+      final data = backupOf(app)..['legacyGrants'] = {ids.free: 'credits_v1'};
+-----       expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
+-----       final copy = app.exportAll();
+-----       expect(await app.importBackup(copy), ImportStatus.success);
+-----@@ -507,7 +517,8 @@ void main() {
+----- 
+-----     test('gzip tronqué, base64 invalide, JSON mal formé', () async {
+-----       final valid = gzip.encode(utf8.encode(app.exportAll()));
+------      final truncated = 'gz:${base64Encode(valid.sublist(0, valid.length ~/ 2))}';
+-----+      final truncated =
+-----+          'gz:${base64Encode(valid.sublist(0, valid.length ~/ 2))}';
+-----       await rejected(truncated, ImportStatus.invalid);
+-----       await rejected('gz:@@@', ImportStatus.invalid);
+-----       await rejected('{"kalisTrack":1,', ImportStatus.invalid);
+-----@@ -561,31 +572,34 @@ void main() {
+-----   });
+----- 
+-----   group('KT-005 comportement actuel (à arbitrer, non modifié)', () {
+------    test('supprimer des séances réduit les crédits gagnés, pas les droits', () async {
+------      final keys = <String>[];
+------      for (final week in app.program.weeks) {
+------        for (final day in week.days) {
+------          if (app.level >= 2) break;
+------          if (day.exercises.isEmpty) continue;
+------          app.markSessionDone(week.n, day.j, true);
+------          keys.add(app.sessionKey(week.n, day.j));
+-----+    test(
+-----+      'supprimer des séances réduit les crédits gagnés, pas les droits',
+-----+      () async {
+-----+        final keys = <String>[];
+-----+        for (final week in app.program.weeks) {
+-----+          for (final day in week.days) {
+-----+            if (app.level >= 2) break;
+-----+            if (day.exercises.isEmpty) continue;
+-----+            app.markSessionDone(week.n, day.j, true);
+-----+            keys.add(app.sessionKey(week.n, day.j));
+-----+          }
+-----         }
+------      }
+------      expect(app.level, greaterThanOrEqualTo(2));
+------      final earned = app.creditsEarned;
+------      final w = affordable(app);
+------      expect((await app.purchaseWod(w)).status, PurchaseStatus.success);
+------      for (final key in keys) {
+------        app.deleteLog(key);
+------      }
+------      expect(app.creditsEarned, lessThan(earned));
+------      expect(app.unlocked(w), isTrue);
+------      // Le plancher à 0 masque un solde négatif éventuel.
+------      expect(app.credits, greaterThanOrEqualTo(0));
+------      expect(
+------        app.credits,
+------        (app.creditsEarned - app.creditsSpent).clamp(0, 1 << 30),
+------      );
+------    });
+-----+        expect(app.level, greaterThanOrEqualTo(2));
+-----+        final earned = app.creditsEarned;
+-----+        final w = affordable(app);
+-----+        expect((await app.purchaseWod(w)).status, PurchaseStatus.success);
+-----+        for (final key in keys) {
+-----+          app.deleteLog(key);
+-----+        }
+-----+        expect(app.creditsEarned, lessThan(earned));
+-----+        expect(app.unlocked(w), isTrue);
+-----+        // Le plancher à 0 masque un solde négatif éventuel.
+-----+        expect(app.credits, greaterThanOrEqualTo(0));
+-----+        expect(
+-----+          app.credits,
+-----+          (app.creditsEarned - app.creditsSpent).clamp(0, 1 << 30),
+-----+        );
+-----+      },
+-----+    );
+-----   });
+----- }
+-----diff --git a/streetlift_tracker/test/l2_purchase_ui_test.dart b/streetlift_tracker/test/l2_purchase_ui_test.dart
+-----index 023ffa1..c62413c 100644
+-------- a/streetlift_tracker/test/l2_purchase_ui_test.dart
+-----+++ b/streetlift_tracker/test/l2_purchase_ui_test.dart
+-----@@ -27,7 +27,8 @@ void main() {
+-----   tearDown(() {
+-----     store.debugWriteHook = null;
+-----     store.persistenceError.value = null;
+------    store.unlockedWods.clear(); // isolement : chaque test repart du solde initial
+-----+    store.unlockedWods
+-----+        .clear(); // isolement : chaque test repart du solde initial
+-----   });
+----- 
+-----   Widget page(Widget child) => MaterialApp(
+-----diff --git a/streetlift_tracker/test/store_test.dart b/streetlift_tracker/test/store_test.dart
+-----index 69ded72..04b7e7a 100644
+-------- a/streetlift_tracker/test/store_test.dart
+-----+++ b/streetlift_tracker/test/store_test.dart
+-----@@ -26,14 +26,8 @@ void main() {
+-----       final wod = app.wods.firstWhere((w) => app.wodCost(w) <= app.credits);
+-----       final before = app.credits;
+-----       final cost = app.wodCost(wod);
+------      expect(
+------        (await app.purchaseWod(wod)).status,
+------        PurchaseStatus.success,
+------      );
+------      expect(
+------        (await app.purchaseWod(wod)).status,
+------        PurchaseStatus.alreadyOwned,
+------      );
+-----+      expect((await app.purchaseWod(wod)).status, PurchaseStatus.success);
+-----+      expect((await app.purchaseWod(wod)).status, PurchaseStatus.alreadyOwned);
+-----       await app.flush();
+-----       final reloaded = AppStore();
+-----       await reloaded.init();
+----diff --git a/ci-out/format.log b/ci-out/format.log
+----index 5926270..1979fe9 100644
+------- a/ci-out/format.log
+----+++ b/ci-out/format.log
+----@@ -1,6 +1 @@
+-----Formatted lib/store.dart
+-----Formatted test/l2_fixtures.dart
+-----Formatted test/l2_persistence_test.dart
+-----Formatted test/l2_purchase_ui_test.dart
+-----Formatted test/store_test.dart
+-----Formatted 76 files (5 changed) in 2.16 seconds.
+----+Formatted 76 files (0 changed) in 1.14 seconds.
 ---diff --git a/ci-out/format.log b/ci-out/format.log
----index 5926270..1979fe9 100644
+---index 1979fe9..4066691 100644
 ------ a/ci-out/format.log
 ---+++ b/ci-out/format.log
----@@ -1,6 +1 @@
-----Formatted lib/store.dart
-----Formatted test/l2_fixtures.dart
-----Formatted test/l2_persistence_test.dart
-----Formatted test/l2_purchase_ui_test.dart
-----Formatted test/store_test.dart
-----Formatted 76 files (5 changed) in 2.16 seconds.
----+Formatted 76 files (0 changed) in 1.14 seconds.
+---@@ -1 +1,2 @@
+----Formatted 76 files (0 changed) in 1.14 seconds.
+---+Formatted test/l2_persistence_test.dart
+---+Formatted 76 files (1 changed) in 2.25 seconds.
+---diff --git a/streetlift_tracker/test/l2_persistence_test.dart b/streetlift_tracker/test/l2_persistence_test.dart
+---index 4403033..f92ed06 100644
+------ a/streetlift_tracker/test/l2_persistence_test.dart
+---+++ b/streetlift_tracker/test/l2_persistence_test.dart
+---@@ -671,22 +671,28 @@ void main() {
+---       expect(app.credits, credits);
+---     });
+--- 
+----    test('migration : le plus haut part du journal, sans créer ni retirer', () async {
+----      final saved = backupOf(app);
+----      expect(saved['creditsEarnedMax'], app.creditsFromJournal);
+----      final old = Map<String, dynamic>.of(saved)..remove('creditsEarnedMax');
+----      expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
+----      expect(app.creditsEarned, app.creditsFromJournal);
+----    });
+---+    test(
+---+      'migration : le plus haut part du journal, sans créer ni retirer',
+---+      () async {
+---+        final saved = backupOf(app);
+---+        expect(saved['creditsEarnedMax'], app.creditsFromJournal);
+---+        final old = Map<String, dynamic>.of(saved)..remove('creditsEarnedMax');
+---+        expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
+---+        expect(app.creditsEarned, app.creditsFromJournal);
+---+      },
+---+    );
+--- 
+----    test('import d’une sauvegarde : son plus haut remplace le courant', () async {
+----      final data = backupOf(app)..['creditsEarnedMax'] = 20;
+----      expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
+----      expect(app.creditsEarned, 20);
+----      final lower = backupOf(app)..['creditsEarnedMax'] = 3;
+----      expect(await app.importBackup(jsonEncode(lower)), ImportStatus.success);
+----      expect(app.creditsEarned, app.creditsFromJournal);
+----    });
+---+    test(
+---+      'import d’une sauvegarde : son plus haut remplace le courant',
+---+      () async {
+---+        final data = backupOf(app)..['creditsEarnedMax'] = 20;
+---+        expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
+---+        expect(app.creditsEarned, 20);
+---+        final lower = backupOf(app)..['creditsEarnedMax'] = 3;
+---+        expect(await app.importBackup(jsonEncode(lower)), ImportStatus.success);
+---+        expect(app.creditsEarned, app.creditsFromJournal);
+---+      },
+---+    );
+--- 
+---     test('plus haut invalide : import refusé', () async {
+---       for (final bad in [-1, 'dix', 1000001]) {
 --diff --git a/ci-out/format.log b/ci-out/format.log
---index 1979fe9..4066691 100644
+--index 4066691..83164c0 100644
 ----- a/ci-out/format.log
 --+++ b/ci-out/format.log
---@@ -1 +1,2 @@
----Formatted 76 files (0 changed) in 1.14 seconds.
---+Formatted test/l2_persistence_test.dart
---+Formatted 76 files (1 changed) in 2.25 seconds.
---diff --git a/streetlift_tracker/test/l2_persistence_test.dart b/streetlift_tracker/test/l2_persistence_test.dart
---index 4403033..f92ed06 100644
------ a/streetlift_tracker/test/l2_persistence_test.dart
---+++ b/streetlift_tracker/test/l2_persistence_test.dart
---@@ -671,22 +671,28 @@ void main() {
---       expect(app.credits, credits);
---     });
--- 
----    test('migration : le plus haut part du journal, sans créer ni retirer', () async {
----      final saved = backupOf(app);
----      expect(saved['creditsEarnedMax'], app.creditsFromJournal);
----      final old = Map<String, dynamic>.of(saved)..remove('creditsEarnedMax');
----      expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
----      expect(app.creditsEarned, app.creditsFromJournal);
----    });
---+    test(
---+      'migration : le plus haut part du journal, sans créer ni retirer',
---+      () async {
---+        final saved = backupOf(app);
---+        expect(saved['creditsEarnedMax'], app.creditsFromJournal);
---+        final old = Map<String, dynamic>.of(saved)..remove('creditsEarnedMax');
---+        expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
---+        expect(app.creditsEarned, app.creditsFromJournal);
---+      },
---+    );
--- 
----    test('import d’une sauvegarde : son plus haut remplace le courant', () async {
----      final data = backupOf(app)..['creditsEarnedMax'] = 20;
----      expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
----      expect(app.creditsEarned, 20);
----      final lower = backupOf(app)..['creditsEarnedMax'] = 3;
----      expect(await app.importBackup(jsonEncode(lower)), ImportStatus.success);
----      expect(app.creditsEarned, app.creditsFromJournal);
----    });
---+    test(
---+      'import d’une sauvegarde : son plus haut remplace le courant',
---+      () async {
---+        final data = backupOf(app)..['creditsEarnedMax'] = 20;
---+        expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
---+        expect(app.creditsEarned, 20);
---+        final lower = backupOf(app)..['creditsEarnedMax'] = 3;
---+        expect(await app.importBackup(jsonEncode(lower)), ImportStatus.success);
---+        expect(app.creditsEarned, app.creditsFromJournal);
---+      },
---+    );
--- 
---     test('plus haut invalide : import refusé', () async {
---       for (final bad in [-1, 'dix', 1000001]) {
+--@@ -1,2 +1 @@
+---Formatted test/l2_persistence_test.dart
+---Formatted 76 files (1 changed) in 2.25 seconds.
+--+Formatted 76 files (0 changed) in 1.97 seconds.
 -diff --git a/ci-out/format.log b/ci-out/format.log
--index 4066691..83164c0 100644
+-index 83164c0..4763272 100644
 ---- a/ci-out/format.log
 -+++ b/ci-out/format.log
--@@ -1,2 +1 @@
---Formatted test/l2_persistence_test.dart
---Formatted 76 files (1 changed) in 2.25 seconds.
--+Formatted 76 files (0 changed) in 1.97 seconds.
+-@@ -1 +1,4 @@
+--Formatted 76 files (0 changed) in 1.97 seconds.
+-+Formatted lib/data_control.dart
+-+Formatted lib/store.dart
+-+Formatted test/l2b_data_control_test.dart
+-+Formatted 79 files (3 changed) in 3.10 seconds.
+-diff --git a/streetlift_tracker/lib/data_control.dart b/streetlift_tracker/lib/data_control.dart
+-index 267d8f1..f7344fe 100644
+---- a/streetlift_tracker/lib/data_control.dart
+-+++ b/streetlift_tracker/lib/data_control.dart
+-@@ -37,20 +37,20 @@ String _reason(String? code) => switch (code) {
+- 
+- /// Message affiché après un export : un succès seulement si l'écriture a
+- /// été confirmée par relecture.
+--String exportMessage(FileSaveResult r, {bool unsaved = false}) =>
+--    switch (r.status) {
+--      FileSaveStatus.saved =>
+--        'Sauvegarde enregistrée : ${r.name ?? 'fichier'}'
+--            '${r.bytes == null ? '' : ' (${_size(r.bytes!)})'}. '
+--            'Fichier non chiffré : garde-le en lieu sûr.'
+--            '${unsaved ? ' Il contient des modifications pas encore enregistrées sur le téléphone.' : ''}',
+--      FileSaveStatus.unverified =>
+--        'Fichier écrit mais non relu : ouvre-le pour vérifier ou refais l’export.',
+--      FileSaveStatus.cancelled => 'Export annulé : aucun fichier créé.',
+--      FileSaveStatus.failed =>
+--        'Export impossible : ${_reason(r.error)}.'
+--            '${r.deleted ? ' Le fichier incomplet a été supprimé.' : ''}',
+--    };
+-+String exportMessage(FileSaveResult r, {bool unsaved = false}) => switch (r
+-+    .status) {
+-+  FileSaveStatus.saved =>
+-+    'Sauvegarde enregistrée : ${r.name ?? 'fichier'}'
+-+        '${r.bytes == null ? '' : ' (${_size(r.bytes!)})'}. '
+-+        'Fichier non chiffré : garde-le en lieu sûr.'
+-+        '${unsaved ? ' Il contient des modifications pas encore enregistrées sur le téléphone.' : ''}',
+-+  FileSaveStatus.unverified =>
+-+    'Fichier écrit mais non relu : ouvre-le pour vérifier ou refais l’export.',
+-+  FileSaveStatus.cancelled => 'Export annulé : aucun fichier créé.',
+-+  FileSaveStatus.failed =>
+-+    'Export impossible : ${_reason(r.error)}.'
+-+        '${r.deleted ? ' Le fichier incomplet a été supprimé.' : ''}',
+-+};
+- 
+- void _say(ScaffoldMessengerState messenger, String text) {
+-   messenger
+-@@ -259,10 +259,7 @@ class _Bullet extends StatelessWidget {
+-     padding: const EdgeInsets.only(bottom: 4),
+-     child: Row(
+-       crossAxisAlignment: CrossAxisAlignment.start,
+--      children: [
+--        const Text('•  '),
+--        Expanded(child: Text(text)),
+--      ],
+-+      children: [const Text('•  '), Expanded(child: Text(text))],
+-     ),
+-   );
+- }
+-@@ -365,7 +362,9 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
+-                     : ImportChoice.replaceWithoutBackup,
+-               ),
+-           child: Text(
+--            _backupFirst ? 'Sauvegarder puis remplacer' : 'Remplacer sans sauvegarde',
+-+            _backupFirst
+-+                ? 'Sauvegarder puis remplacer'
+-+                : 'Remplacer sans sauvegarde',
+-           ),
+-         ),
+-       ],
+-@@ -430,7 +429,9 @@ class _EraseDataDialogState extends State<EraseDataDialog> {
+-           const _Bullet(
+-             'le journal : séances du programme et perso, séries, notes, dates',
+-           ),
+--          const _Bullet('les modèles de séances perso et les exercices ajoutés'),
+-+          const _Bullet(
+-+            'les modèles de séances perso et les exercices ajoutés',
+-+          ),
+-           const _Bullet(
+-             'les références Pilotage (poids de corps, 1RM, max) : retour aux valeurs du programme',
+-           ),
+-@@ -493,7 +494,9 @@ class _EraseDataDialogState extends State<EraseDataDialog> {
+-               confirmed
+-                   ? () => Navigator.pop(
+-                     context,
+--                    _exportFirst ? EraseChoice.exportThenErase : EraseChoice.erase,
+-+                    _exportFirst
+-+                        ? EraseChoice.exportThenErase
+-+                        : EraseChoice.erase,
+-                   )
+-                   : null,
+-           child: const Text('Supprimer'),
+-diff --git a/streetlift_tracker/lib/store.dart b/streetlift_tracker/lib/store.dart
+-index 08a115e..7cc1c1c 100644
+---- a/streetlift_tracker/lib/store.dart
+-+++ b/streetlift_tracker/lib/store.dart
+-@@ -2263,12 +2263,11 @@ class AppStore extends ChangeNotifier {
+- 
+-   /// Applique un aperçu confirmé. Si les données locales ont changé depuis
+-   /// l'aperçu, rien n'est modifié ([ImportStatus.conflict]).
+--  Future<ImportStatus> applyImport(ImportPreview preview) =>
+--      _commitImport(
+--        preview._data,
+--        preview._encoded,
+--        expectedRevision: preview.localRevision,
+--      );
+-+  Future<ImportStatus> applyImport(ImportPreview preview) => _commitImport(
+-+    preview._data,
+-+    preview._encoded,
+-+    expectedRevision: preview.localRevision,
+-+  );
+- 
+-   Future<ImportStatus> _commitImport(
+-     _BackupData data,
+-@@ -3394,9 +3393,8 @@ class ImportPreview {
+-            meta['exportedAt'] is String
+-                ? DateTime.tryParse(meta['exportedAt'] as String)
+-                : null,
+--       appVersion = meta['appVersion'] is String
+--           ? meta['appVersion'] as String
+--           : null,
+-+       appVersion =
+-+           meta['appVersion'] is String ? meta['appVersion'] as String : null,
+-        programSessions =
+-            data.logs.entries
+-                .where((e) => e.value.done && !e.key.startsWith('S0-'))
+-diff --git a/streetlift_tracker/test/l2b_data_control_test.dart b/streetlift_tracker/test/l2b_data_control_test.dart
+-index 9169e9f..2bd45f1 100644
+---- a/streetlift_tracker/test/l2b_data_control_test.dart
+-+++ b/streetlift_tracker/test/l2b_data_control_test.dart
+-@@ -118,39 +118,45 @@ void main() {
+-       expect(await a.importBackup(jsonEncode(data)), ImportStatus.success);
+-     }
+- 
+--    test('export fichier : format 3 daté, réimporté dans un état distinct', () async {
+--      await seed(app);
+--      final at = DateTime(2026, 9, 25, 20, 36);
+--      final file = app.exportForFile(appVersion: '2.5.3', at: at);
+--      final meta = jsonDecode(file) as Map<String, dynamic>;
+--      expect(meta['format'], 3);
+--      expect(meta['exportedAt'], at.toIso8601String());
+--      expect(meta['appVersion'], '2.5.3');
+--      final source = business(app.exportAll());
+--      final rights = Map<String, int>.of(app.unlockedWods);
+--      final credits = app.credits;
+--      // État de test distinct : autre stockage simulé, autre instance.
+--      SharedPreferences.setMockInitialValues({});
+--      final other = await relaunch();
+--      final checked = other.previewImport(file);
+--      expect(checked.status, ImportStatus.success);
+--      final preview = checked.preview!;
+--      expect(preview.format, 3);
+--      expect(preview.exportedAt, at);
+--      expect(preview.appVersion, '2.5.3');
+--      expect(preview.sessionsDone, app.logs.values.where((l) => l.done).length);
+--      expect(preview.archivedSessions, 20);
+--      expect(preview.wodResults, 300);
+--      expect(preview.wodsUnlocked, 30);
+--      expect(preview.legacyGrants, 1);
+--      expect(preview.level, app.level);
+--      expect(await other.applyImport(preview), ImportStatus.success);
+--      expect(business(other.exportAll()), source);
+--      expect(other.unlockedWods, rights);
+--      expect(other.credits, credits);
+--      final again = await relaunch();
+--      expect(business(again.exportAll()), source);
+--    });
+-+    test(
+-+      'export fichier : format 3 daté, réimporté dans un état distinct',
+-+      () async {
+-+        await seed(app);
+-+        final at = DateTime(2026, 9, 25, 20, 36);
+-+        final file = app.exportForFile(appVersion: '2.5.3', at: at);
+-+        final meta = jsonDecode(file) as Map<String, dynamic>;
+-+        expect(meta['format'], 3);
+-+        expect(meta['exportedAt'], at.toIso8601String());
+-+        expect(meta['appVersion'], '2.5.3');
+-+        final source = business(app.exportAll());
+-+        final rights = Map<String, int>.of(app.unlockedWods);
+-+        final credits = app.credits;
+-+        // État de test distinct : autre stockage simulé, autre instance.
+-+        SharedPreferences.setMockInitialValues({});
+-+        final other = await relaunch();
+-+        final checked = other.previewImport(file);
+-+        expect(checked.status, ImportStatus.success);
+-+        final preview = checked.preview!;
+-+        expect(preview.format, 3);
+-+        expect(preview.exportedAt, at);
+-+        expect(preview.appVersion, '2.5.3');
+-+        expect(
+-+          preview.sessionsDone,
+-+          app.logs.values.where((l) => l.done).length,
+-+        );
+-+        expect(preview.archivedSessions, 20);
+-+        expect(preview.wodResults, 300);
+-+        expect(preview.wodsUnlocked, 30);
+-+        expect(preview.legacyGrants, 1);
+-+        expect(preview.level, app.level);
+-+        expect(await other.applyImport(preview), ImportStatus.success);
+-+        expect(business(other.exportAll()), source);
+-+        expect(other.unlockedWods, rights);
+-+        expect(other.credits, credits);
+-+        final again = await relaunch();
+-+        expect(business(again.exportAll()), source);
+-+      },
+-+    );
+- 
+-     test('aperçu : aucune modification, date absente non inventée', () async {
+-       await app.flush();
+-@@ -199,17 +205,20 @@ void main() {
+-       expect(app.exportAll(), before);
+-     });
+- 
+--    test('données modifiées pendant l’aperçu : conflit sans mutation', () async {
+--      final data = backupOf(app)..['pilotage'] = {'B4': 91};
+--      final preview = app.previewImport(jsonEncode(data)).preview!;
+--      app.toggleWish(app.wods.firstWhere(app.isCatalog));
+--      final changed = app.exportAll();
+--      expect(await app.applyImport(preview), ImportStatus.conflict);
+--      expect(app.exportAll(), changed);
+--      final fresh = app.previewImport(jsonEncode(data)).preview!;
+--      expect(await app.applyImport(fresh), ImportStatus.success);
+--      expect(app.values['B4'], 91);
+--    });
+-+    test(
+-+      'données modifiées pendant l’aperçu : conflit sans mutation',
+-+      () async {
+-+        final data = backupOf(app)..['pilotage'] = {'B4': 91};
+-+        final preview = app.previewImport(jsonEncode(data)).preview!;
+-+        app.toggleWish(app.wods.firstWhere(app.isCatalog));
+-+        final changed = app.exportAll();
+-+        expect(await app.applyImport(preview), ImportStatus.conflict);
+-+        expect(app.exportAll(), changed);
+-+        final fresh = app.previewImport(jsonEncode(data)).preview!;
+-+        expect(await app.applyImport(fresh), ImportStatus.success);
+-+        expect(app.values['B4'], 91);
+-+      },
+-+    );
+- 
+-     test('un simple enregistrement ne crée pas de conflit', () async {
+-       final data = backupOf(app)..['pilotage'] = {'B4': 92};
+-@@ -290,22 +299,25 @@ void main() {
+-       expect(next.storedKeys, {_key});
+-     });
+- 
+--    test('suppression avec écriture en attente : l’ancien état n’est pas réécrit', () async {
+--      await seed(app);
+--      final gate = holdWrites(app);
+--      app.markSessionDone(8, 1, true); // écriture bloquée
+--      app.saveLogs(); // minuterie de sauvegarde différée
+--      final erasing = app.eraseAllData();
+--      gate.complete(true);
+--      expect((await erasing).status, EraseStatus.success);
+--      app.debugWriteHook = null;
+--      await Future<void>.delayed(const Duration(milliseconds: 700));
+--      await app.flush();
+--      final saved = jsonDecode(_decode((await disk())!)) as Map;
+--      expect(saved['logs'], isEmpty);
+--      final next = await relaunch();
+--      expect(next.logs, isEmpty);
+--    });
+-+    test(
+-+      'suppression avec écriture en attente : l’ancien état n’est pas réécrit',
+-+      () async {
+-+        await seed(app);
+-+        final gate = holdWrites(app);
+-+        app.markSessionDone(8, 1, true); // écriture bloquée
+-+        app.saveLogs(); // minuterie de sauvegarde différée
+-+        final erasing = app.eraseAllData();
+-+        gate.complete(true);
+-+        expect((await erasing).status, EraseStatus.success);
+-+        app.debugWriteHook = null;
+-+        await Future<void>.delayed(const Duration(milliseconds: 700));
+-+        await app.flush();
+-+        final saved = jsonDecode(_decode((await disk())!)) as Map;
+-+        expect(saved['logs'], isEmpty);
+-+        final next = await relaunch();
+-+        expect(next.logs, isEmpty);
+-+      },
+-+    );
+- 
+-     test('suppression partielle signalée, puis reprise complète', () async {
+-       await seed(app);
+-@@ -340,8 +352,9 @@ void main() {
+-       final name = backupFileName(DateTime(2026, 9, 5, 7, 4));
+-       expect(name, 'kalis-track-sauvegarde-2026-09-05-0704.json');
+-       expect(
+--        RegExp(r'^kalis-track-sauvegarde-\d{4}-\d{2}-\d{2}-\d{4}\.json$')
+--            .hasMatch(name),
+-+        RegExp(
+-+          r'^kalis-track-sauvegarde-\d{4}-\d{2}-\d{2}-\d{4}\.json$',
+-+        ).hasMatch(name),
+-         isTrue,
+-       );
+-     });
+-@@ -487,7 +500,9 @@ void main() {
+-         'pas une sauvegarde',
+-       ),
+-     ]) {
+--      testWidgets('import ${open.status.name} : aucune mutation', (tester) async {
+-+      testWidgets('import ${open.status.name} : aucune mutation', (
+-+        tester,
+-+      ) async {
+-         files.onOpen = (_) async => open;
+-         final before = store.exportAll();
+-         await start(tester, (c) => importBackupFile(c, appVersion: 'test'));
+-@@ -533,8 +548,7 @@ void main() {
+-     ) async {
+-       final other = backupOf(store)..['pilotage'] = {'B4': 67};
+-       files.serve(jsonEncode(other));
+--      files.onSave =
+--          (_, __) => const FileSaveResult(FileSaveStatus.cancelled);
+-+      files.onSave = (_, __) => const FileSaveResult(FileSaveStatus.cancelled);
+-       final before = store.exportAll();
+-       await start(tester, (c) => importBackupFile(c, appVersion: 'test'));
+-       expect(find.text('Sauvegarder puis remplacer'), findsOneWidget);
+-@@ -633,15 +647,17 @@ void main() {
+-       expect(files.files, hasLength(1));
+-       expect(store.logs, isEmpty);
+-       expect(store.storedKeys, {_key});
+--      expect(find.textContaining('revenue à son état d’installation'), findsOneWidget);
+-+      expect(
+-+        find.textContaining('revenue à son état d’installation'),
+-+        findsOneWidget,
+-+      );
+-       await end(tester);
+-     });
+- 
+-     testWidgets('suppression : export préalable annulé, rien supprimé', (
+-       tester,
+-     ) async {
+--      files.onSave =
+--          (_, __) => const FileSaveResult(FileSaveStatus.cancelled);
+-+      files.onSave = (_, __) => const FileSaveResult(FileSaveStatus.cancelled);
+-       final before = store.exportAll();
+-       await start(tester, (c) => eraseAppData(c, appVersion: 'test'));
+-       await tester.ensureVisible(find.byType(TextField));
+-@@ -669,7 +685,10 @@ void main() {
+-         expect(find.byType(ImportPreviewDialog), findsOneWidget);
+-         await tester.ensureVisible(find.text('Sauvegarder puis remplacer'));
+-         await tester.pumpAndSettle();
+--        expect(find.text('Sauvegarder puis remplacer').hitTestable(), findsOneWidget);
+-+        expect(
+-+          find.text('Sauvegarder puis remplacer').hitTestable(),
+-+          findsOneWidget,
+-+        );
+-         expect(tester.takeException(), isNull);
+-         await tester.binding.handlePopRoute();
+-         await tester.pumpAndSettle();
+-@@ -698,7 +717,9 @@ void main() {
+-       tester,
+-     ) async {
+-       phone(tester);
+--      await tester.pumpWidget(page(const SettingsScreen(section: 6), scale: 1.3));
+-+      await tester.pumpWidget(
+-+        page(const SettingsScreen(section: 6), scale: 1.3),
+-+      );
+-       await tester.pumpAndSettle();
+-       for (final label in [
+-         'Exporter une sauvegarde',
 diff --git a/ci-out/format.log b/ci-out/format.log
-index 83164c0..4763272 100644
+index 4763272..070a19c 100644
 --- a/ci-out/format.log
 +++ b/ci-out/format.log
-@@ -1 +1,4 @@
--Formatted 76 files (0 changed) in 1.97 seconds.
-+Formatted lib/data_control.dart
-+Formatted lib/store.dart
-+Formatted test/l2b_data_control_test.dart
-+Formatted 79 files (3 changed) in 3.10 seconds.
-diff --git a/streetlift_tracker/lib/data_control.dart b/streetlift_tracker/lib/data_control.dart
-index 267d8f1..f7344fe 100644
---- a/streetlift_tracker/lib/data_control.dart
-+++ b/streetlift_tracker/lib/data_control.dart
-@@ -37,20 +37,20 @@ String _reason(String? code) => switch (code) {
- 
- /// Message affiché après un export : un succès seulement si l'écriture a
- /// été confirmée par relecture.
--String exportMessage(FileSaveResult r, {bool unsaved = false}) =>
--    switch (r.status) {
--      FileSaveStatus.saved =>
--        'Sauvegarde enregistrée : ${r.name ?? 'fichier'}'
--            '${r.bytes == null ? '' : ' (${_size(r.bytes!)})'}. '
--            'Fichier non chiffré : garde-le en lieu sûr.'
--            '${unsaved ? ' Il contient des modifications pas encore enregistrées sur le téléphone.' : ''}',
--      FileSaveStatus.unverified =>
--        'Fichier écrit mais non relu : ouvre-le pour vérifier ou refais l’export.',
--      FileSaveStatus.cancelled => 'Export annulé : aucun fichier créé.',
--      FileSaveStatus.failed =>
--        'Export impossible : ${_reason(r.error)}.'
--            '${r.deleted ? ' Le fichier incomplet a été supprimé.' : ''}',
--    };
-+String exportMessage(FileSaveResult r, {bool unsaved = false}) => switch (r
-+    .status) {
-+  FileSaveStatus.saved =>
-+    'Sauvegarde enregistrée : ${r.name ?? 'fichier'}'
-+        '${r.bytes == null ? '' : ' (${_size(r.bytes!)})'}. '
-+        'Fichier non chiffré : garde-le en lieu sûr.'
-+        '${unsaved ? ' Il contient des modifications pas encore enregistrées sur le téléphone.' : ''}',
-+  FileSaveStatus.unverified =>
-+    'Fichier écrit mais non relu : ouvre-le pour vérifier ou refais l’export.',
-+  FileSaveStatus.cancelled => 'Export annulé : aucun fichier créé.',
-+  FileSaveStatus.failed =>
-+    'Export impossible : ${_reason(r.error)}.'
-+        '${r.deleted ? ' Le fichier incomplet a été supprimé.' : ''}',
-+};
- 
- void _say(ScaffoldMessengerState messenger, String text) {
-   messenger
-@@ -259,10 +259,7 @@ class _Bullet extends StatelessWidget {
-     padding: const EdgeInsets.only(bottom: 4),
-     child: Row(
-       crossAxisAlignment: CrossAxisAlignment.start,
--      children: [
--        const Text('•  '),
--        Expanded(child: Text(text)),
--      ],
-+      children: [const Text('•  '), Expanded(child: Text(text))],
-     ),
-   );
- }
-@@ -365,7 +362,9 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
-                     : ImportChoice.replaceWithoutBackup,
-               ),
-           child: Text(
--            _backupFirst ? 'Sauvegarder puis remplacer' : 'Remplacer sans sauvegarde',
-+            _backupFirst
-+                ? 'Sauvegarder puis remplacer'
-+                : 'Remplacer sans sauvegarde',
-           ),
-         ),
-       ],
-@@ -430,7 +429,9 @@ class _EraseDataDialogState extends State<EraseDataDialog> {
-           const _Bullet(
-             'le journal : séances du programme et perso, séries, notes, dates',
-           ),
--          const _Bullet('les modèles de séances perso et les exercices ajoutés'),
-+          const _Bullet(
-+            'les modèles de séances perso et les exercices ajoutés',
-+          ),
-           const _Bullet(
-             'les références Pilotage (poids de corps, 1RM, max) : retour aux valeurs du programme',
-           ),
-@@ -493,7 +494,9 @@ class _EraseDataDialogState extends State<EraseDataDialog> {
-               confirmed
-                   ? () => Navigator.pop(
-                     context,
--                    _exportFirst ? EraseChoice.exportThenErase : EraseChoice.erase,
-+                    _exportFirst
-+                        ? EraseChoice.exportThenErase
-+                        : EraseChoice.erase,
-                   )
-                   : null,
-           child: const Text('Supprimer'),
-diff --git a/streetlift_tracker/lib/store.dart b/streetlift_tracker/lib/store.dart
-index 08a115e..7cc1c1c 100644
---- a/streetlift_tracker/lib/store.dart
-+++ b/streetlift_tracker/lib/store.dart
-@@ -2263,12 +2263,11 @@ class AppStore extends ChangeNotifier {
- 
-   /// Applique un aperçu confirmé. Si les données locales ont changé depuis
-   /// l'aperçu, rien n'est modifié ([ImportStatus.conflict]).
--  Future<ImportStatus> applyImport(ImportPreview preview) =>
--      _commitImport(
--        preview._data,
--        preview._encoded,
--        expectedRevision: preview.localRevision,
--      );
-+  Future<ImportStatus> applyImport(ImportPreview preview) => _commitImport(
-+    preview._data,
-+    preview._encoded,
-+    expectedRevision: preview.localRevision,
-+  );
- 
-   Future<ImportStatus> _commitImport(
-     _BackupData data,
-@@ -3394,9 +3393,8 @@ class ImportPreview {
-            meta['exportedAt'] is String
-                ? DateTime.tryParse(meta['exportedAt'] as String)
-                : null,
--       appVersion = meta['appVersion'] is String
--           ? meta['appVersion'] as String
--           : null,
-+       appVersion =
-+           meta['appVersion'] is String ? meta['appVersion'] as String : null,
-        programSessions =
-            data.logs.entries
-                .where((e) => e.value.done && !e.key.startsWith('S0-'))
-diff --git a/streetlift_tracker/test/l2b_data_control_test.dart b/streetlift_tracker/test/l2b_data_control_test.dart
-index 9169e9f..2bd45f1 100644
---- a/streetlift_tracker/test/l2b_data_control_test.dart
-+++ b/streetlift_tracker/test/l2b_data_control_test.dart
-@@ -118,39 +118,45 @@ void main() {
-       expect(await a.importBackup(jsonEncode(data)), ImportStatus.success);
-     }
- 
--    test('export fichier : format 3 daté, réimporté dans un état distinct', () async {
--      await seed(app);
--      final at = DateTime(2026, 9, 25, 20, 36);
--      final file = app.exportForFile(appVersion: '2.5.3', at: at);
--      final meta = jsonDecode(file) as Map<String, dynamic>;
--      expect(meta['format'], 3);
--      expect(meta['exportedAt'], at.toIso8601String());
--      expect(meta['appVersion'], '2.5.3');
--      final source = business(app.exportAll());
--      final rights = Map<String, int>.of(app.unlockedWods);
--      final credits = app.credits;
--      // État de test distinct : autre stockage simulé, autre instance.
--      SharedPreferences.setMockInitialValues({});
--      final other = await relaunch();
--      final checked = other.previewImport(file);
--      expect(checked.status, ImportStatus.success);
--      final preview = checked.preview!;
--      expect(preview.format, 3);
--      expect(preview.exportedAt, at);
--      expect(preview.appVersion, '2.5.3');
--      expect(preview.sessionsDone, app.logs.values.where((l) => l.done).length);
--      expect(preview.archivedSessions, 20);
--      expect(preview.wodResults, 300);
--      expect(preview.wodsUnlocked, 30);
--      expect(preview.legacyGrants, 1);
--      expect(preview.level, app.level);
--      expect(await other.applyImport(preview), ImportStatus.success);
--      expect(business(other.exportAll()), source);
--      expect(other.unlockedWods, rights);
--      expect(other.credits, credits);
--      final again = await relaunch();
--      expect(business(again.exportAll()), source);
--    });
-+    test(
-+      'export fichier : format 3 daté, réimporté dans un état distinct',
-+      () async {
-+        await seed(app);
-+        final at = DateTime(2026, 9, 25, 20, 36);
-+        final file = app.exportForFile(appVersion: '2.5.3', at: at);
-+        final meta = jsonDecode(file) as Map<String, dynamic>;
-+        expect(meta['format'], 3);
-+        expect(meta['exportedAt'], at.toIso8601String());
-+        expect(meta['appVersion'], '2.5.3');
-+        final source = business(app.exportAll());
-+        final rights = Map<String, int>.of(app.unlockedWods);
-+        final credits = app.credits;
-+        // État de test distinct : autre stockage simulé, autre instance.
-+        SharedPreferences.setMockInitialValues({});
-+        final other = await relaunch();
-+        final checked = other.previewImport(file);
-+        expect(checked.status, ImportStatus.success);
-+        final preview = checked.preview!;
-+        expect(preview.format, 3);
-+        expect(preview.exportedAt, at);
-+        expect(preview.appVersion, '2.5.3');
-+        expect(
-+          preview.sessionsDone,
-+          app.logs.values.where((l) => l.done).length,
-+        );
-+        expect(preview.archivedSessions, 20);
-+        expect(preview.wodResults, 300);
-+        expect(preview.wodsUnlocked, 30);
-+        expect(preview.legacyGrants, 1);
-+        expect(preview.level, app.level);
-+        expect(await other.applyImport(preview), ImportStatus.success);
-+        expect(business(other.exportAll()), source);
-+        expect(other.unlockedWods, rights);
-+        expect(other.credits, credits);
-+        final again = await relaunch();
-+        expect(business(again.exportAll()), source);
-+      },
-+    );
- 
-     test('aperçu : aucune modification, date absente non inventée', () async {
-       await app.flush();
-@@ -199,17 +205,20 @@ void main() {
-       expect(app.exportAll(), before);
-     });
- 
--    test('données modifiées pendant l’aperçu : conflit sans mutation', () async {
--      final data = backupOf(app)..['pilotage'] = {'B4': 91};
--      final preview = app.previewImport(jsonEncode(data)).preview!;
--      app.toggleWish(app.wods.firstWhere(app.isCatalog));
--      final changed = app.exportAll();
--      expect(await app.applyImport(preview), ImportStatus.conflict);
--      expect(app.exportAll(), changed);
--      final fresh = app.previewImport(jsonEncode(data)).preview!;
--      expect(await app.applyImport(fresh), ImportStatus.success);
--      expect(app.values['B4'], 91);
--    });
-+    test(
-+      'données modifiées pendant l’aperçu : conflit sans mutation',
-+      () async {
-+        final data = backupOf(app)..['pilotage'] = {'B4': 91};
-+        final preview = app.previewImport(jsonEncode(data)).preview!;
-+        app.toggleWish(app.wods.firstWhere(app.isCatalog));
-+        final changed = app.exportAll();
-+        expect(await app.applyImport(preview), ImportStatus.conflict);
-+        expect(app.exportAll(), changed);
-+        final fresh = app.previewImport(jsonEncode(data)).preview!;
-+        expect(await app.applyImport(fresh), ImportStatus.success);
-+        expect(app.values['B4'], 91);
-+      },
-+    );
- 
-     test('un simple enregistrement ne crée pas de conflit', () async {
-       final data = backupOf(app)..['pilotage'] = {'B4': 92};
-@@ -290,22 +299,25 @@ void main() {
-       expect(next.storedKeys, {_key});
-     });
- 
--    test('suppression avec écriture en attente : l’ancien état n’est pas réécrit', () async {
--      await seed(app);
--      final gate = holdWrites(app);
--      app.markSessionDone(8, 1, true); // écriture bloquée
--      app.saveLogs(); // minuterie de sauvegarde différée
--      final erasing = app.eraseAllData();
--      gate.complete(true);
--      expect((await erasing).status, EraseStatus.success);
--      app.debugWriteHook = null;
--      await Future<void>.delayed(const Duration(milliseconds: 700));
--      await app.flush();
--      final saved = jsonDecode(_decode((await disk())!)) as Map;
--      expect(saved['logs'], isEmpty);
--      final next = await relaunch();
--      expect(next.logs, isEmpty);
--    });
-+    test(
-+      'suppression avec écriture en attente : l’ancien état n’est pas réécrit',
-+      () async {
-+        await seed(app);
-+        final gate = holdWrites(app);
-+        app.markSessionDone(8, 1, true); // écriture bloquée
-+        app.saveLogs(); // minuterie de sauvegarde différée
-+        final erasing = app.eraseAllData();
-+        gate.complete(true);
-+        expect((await erasing).status, EraseStatus.success);
-+        app.debugWriteHook = null;
-+        await Future<void>.delayed(const Duration(milliseconds: 700));
-+        await app.flush();
-+        final saved = jsonDecode(_decode((await disk())!)) as Map;
-+        expect(saved['logs'], isEmpty);
-+        final next = await relaunch();
-+        expect(next.logs, isEmpty);
-+      },
-+    );
- 
-     test('suppression partielle signalée, puis reprise complète', () async {
-       await seed(app);
-@@ -340,8 +352,9 @@ void main() {
-       final name = backupFileName(DateTime(2026, 9, 5, 7, 4));
-       expect(name, 'kalis-track-sauvegarde-2026-09-05-0704.json');
-       expect(
--        RegExp(r'^kalis-track-sauvegarde-\d{4}-\d{2}-\d{2}-\d{4}\.json$')
--            .hasMatch(name),
-+        RegExp(
-+          r'^kalis-track-sauvegarde-\d{4}-\d{2}-\d{2}-\d{4}\.json$',
-+        ).hasMatch(name),
-         isTrue,
-       );
-     });
-@@ -487,7 +500,9 @@ void main() {
-         'pas une sauvegarde',
-       ),
-     ]) {
--      testWidgets('import ${open.status.name} : aucune mutation', (tester) async {
-+      testWidgets('import ${open.status.name} : aucune mutation', (
-+        tester,
-+      ) async {
-         files.onOpen = (_) async => open;
-         final before = store.exportAll();
-         await start(tester, (c) => importBackupFile(c, appVersion: 'test'));
-@@ -533,8 +548,7 @@ void main() {
-     ) async {
-       final other = backupOf(store)..['pilotage'] = {'B4': 67};
-       files.serve(jsonEncode(other));
--      files.onSave =
--          (_, __) => const FileSaveResult(FileSaveStatus.cancelled);
-+      files.onSave = (_, __) => const FileSaveResult(FileSaveStatus.cancelled);
-       final before = store.exportAll();
-       await start(tester, (c) => importBackupFile(c, appVersion: 'test'));
-       expect(find.text('Sauvegarder puis remplacer'), findsOneWidget);
-@@ -633,15 +647,17 @@ void main() {
-       expect(files.files, hasLength(1));
-       expect(store.logs, isEmpty);
-       expect(store.storedKeys, {_key});
--      expect(find.textContaining('revenue à son état d’installation'), findsOneWidget);
-+      expect(
-+        find.textContaining('revenue à son état d’installation'),
-+        findsOneWidget,
-+      );
-       await end(tester);
-     });
- 
-     testWidgets('suppression : export préalable annulé, rien supprimé', (
-       tester,
-     ) async {
--      files.onSave =
--          (_, __) => const FileSaveResult(FileSaveStatus.cancelled);
-+      files.onSave = (_, __) => const FileSaveResult(FileSaveStatus.cancelled);
-       final before = store.exportAll();
-       await start(tester, (c) => eraseAppData(c, appVersion: 'test'));
-       await tester.ensureVisible(find.byType(TextField));
-@@ -669,7 +685,10 @@ void main() {
-         expect(find.byType(ImportPreviewDialog), findsOneWidget);
-         await tester.ensureVisible(find.text('Sauvegarder puis remplacer'));
-         await tester.pumpAndSettle();
--        expect(find.text('Sauvegarder puis remplacer').hitTestable(), findsOneWidget);
-+        expect(
-+          find.text('Sauvegarder puis remplacer').hitTestable(),
-+          findsOneWidget,
-+        );
-         expect(tester.takeException(), isNull);
-         await tester.binding.handlePopRoute();
-         await tester.pumpAndSettle();
-@@ -698,7 +717,9 @@ void main() {
-       tester,
-     ) async {
-       phone(tester);
--      await tester.pumpWidget(page(const SettingsScreen(section: 6), scale: 1.3));
-+      await tester.pumpWidget(
-+        page(const SettingsScreen(section: 6), scale: 1.3),
-+      );
-       await tester.pumpAndSettle();
-       for (final label in [
-         'Exporter une sauvegarde',
+@@ -1,4 +1 @@
+-Formatted lib/data_control.dart
+-Formatted lib/store.dart
+-Formatted test/l2b_data_control_test.dart
+-Formatted 79 files (3 changed) in 3.10 seconds.
++Formatted 79 files (0 changed) in 1.53 seconds.
