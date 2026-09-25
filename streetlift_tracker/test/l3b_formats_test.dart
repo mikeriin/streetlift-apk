@@ -52,15 +52,20 @@ int fnv(List<int> bytes) {
   return h;
 }
 
-WodResult legacy(String at, {int? seconds, int? rounds, int? reps, bool completed = true}) =>
-    WodResult(
-      at: at,
-      score: 'ancien',
-      seconds: seconds,
-      rounds: rounds,
-      reps: reps,
-      completed: completed,
-    );
+WodResult legacy(
+  String at, {
+  int? seconds,
+  int? rounds,
+  int? reps,
+  bool completed = true,
+}) => WodResult(
+  at: at,
+  score: 'ancien',
+  seconds: seconds,
+  rounds: rounds,
+  reps: reps,
+  completed: completed,
+);
 
 WodResult tabataResult(
   Wod w,
@@ -129,28 +134,31 @@ void main() {
       expect(fnv(bytes), baseCatalogFnv);
     });
 
-    test('formats ajoutés : 40 Tabata, 40 AMRAP en blocs, 21 Death by, 1 E5MOM', () {
-      final kinds = <String, List<String>>{};
-      for (final w in catalog) {
-        final f = w.format;
-        if (f != null) (kinds[f.kind] ??= []).add(w.id);
-      }
-      expect(kinds['tabata'], tabataIds);
-      expect(kinds['amrap-blocks'], amrapBlockIds);
-      expect(kinds['death-by'], deathByIds);
-      expect(kinds['emom-reps'], ['seed29']);
-      expect(kinds.keys.toSet(), {
-        'tabata',
-        'amrap-blocks',
-        'death-by',
-        'emom-reps',
-      });
-      // Aucune routine n'est devenue Tabata par son titre.
-      expect(
-        catalog.where((w) => w.name.startsWith('Tabata')).map((w) => w.id),
-        tabataIds,
-      );
-    });
+    test(
+      'formats ajoutés : 40 Tabata, 40 AMRAP en blocs, 21 Death by, 1 E5MOM',
+      () {
+        final kinds = <String, List<String>>{};
+        for (final w in catalog) {
+          final f = w.format;
+          if (f != null) (kinds[f.kind] ??= []).add(w.id);
+        }
+        expect(kinds['tabata'], tabataIds);
+        expect(kinds['amrap-blocks'], amrapBlockIds);
+        expect(kinds['death-by'], deathByIds);
+        expect(kinds['emom-reps'], ['seed29']);
+        expect(kinds.keys.toSet(), {
+          'tabata',
+          'amrap-blocks',
+          'death-by',
+          'emom-reps',
+        });
+        // Aucune routine n'est devenue Tabata par son titre.
+        expect(
+          catalog.where((w) => w.name.startsWith('Tabata')).map((w) => w.id),
+          tabataIds,
+        );
+      },
+    );
 
     test('Tabata : exercices, ordre, durées et lignes conservés', () {
       for (final id in tabataIds) {
@@ -226,11 +234,10 @@ void main() {
       ]);
       expect((phases[14].kind, phases[14].interval), (PhaseKind.work, 7));
       expect((phases[15].kind, phases[15].seconds), (PhaseKind.blockRest, 60));
-      expect((phases.last.kind, phases.last.block, phases.last.interval), (
-        PhaseKind.work,
-        2,
-        7,
-      ));
+      expect(
+        (phases.last.kind, phases.last.block, phases.last.interval),
+        (PhaseKind.work, 2, 7),
+      );
       expect(byId('genx100').header(), contains('13 min 30 s'));
     });
 
@@ -263,19 +270,17 @@ void main() {
       fakeAsync((async) {
         final c = WodClock(now: async.getClock(DateTime(2026)).now);
         c.startPhases(phases);
-        expect((c.phaseIndex, c.phase!.kind, c.phaseRemaining), (
-          0,
-          PhaseKind.work,
-          20,
-        ));
+        expect(
+          (c.phaseIndex, c.phase!.kind, c.phaseRemaining),
+          (0, PhaseKind.work, 20),
+        );
         async.elapse(const Duration(milliseconds: 19800));
         expect((c.phaseIndex, c.phaseRemaining), (0, 1));
         async.elapse(const Duration(milliseconds: 200)); // 20,000 s
-        expect((c.phaseIndex, c.phase!.kind, c.phaseRemaining), (
-          1,
-          PhaseKind.rest,
-          10,
-        ));
+        expect(
+          (c.phaseIndex, c.phase!.kind, c.phaseRemaining),
+          (1, PhaseKind.rest, 10),
+        );
         async.elapse(const Duration(milliseconds: 9800)); // 29,8 s
         expect((c.phaseIndex, c.phaseRemaining), (1, 1));
         async.elapse(const Duration(milliseconds: 400)); // 30,2 s
@@ -315,11 +320,10 @@ void main() {
       now = now.add(const Duration(seconds: 95));
       c.stop(); // force un calcul puis fige
       // 95 s = 3 intervalles de 30 s (90 s) + 5 s d'effort du 4e.
-      expect((c.phaseIndex, c.phase!.kind, c.phase!.interval), (
-        6,
-        PhaseKind.work,
-        3,
-      ));
+      expect(
+        (c.phaseIndex, c.phase!.kind, c.phase!.interval),
+        (6, PhaseKind.work, 3),
+      );
       expect(c.phaseRemaining, 15);
       expect(c.beeps, 0); // transitions anciennes : aucune alerte rejouée
       c.dispose();
@@ -331,11 +335,10 @@ void main() {
         c.startPhases(phases);
         async.elapse(const Duration(seconds: 809));
         expect(c.finished, isFalse);
-        expect((c.phase!.kind, c.phase!.block, c.phase!.interval), (
-          PhaseKind.work,
-          2,
-          7,
-        ));
+        expect(
+          (c.phase!.kind, c.phase!.block, c.phase!.interval),
+          (PhaseKind.work, 2, 7),
+        );
         async.elapse(const Duration(seconds: 1));
         expect(c.finished, isTrue);
         expect(c.elapsed, 810);
@@ -407,14 +410,17 @@ void main() {
       expect(w.best(), isNull);
     });
 
-    test('deux nouveaux résultats : le total le plus haut, égalité = premier', () {
-      final a = tabataResult(w, full(3, [10, 10, 10, 10, 10, 10, 10, 10]));
-      final b = tabataResult(w, full(3, [11, 12, 11, 12, 11, 12, 11, 12]));
-      final c = tabataResult(w, full(3, [11, 20, 20, 20, 20, 20, 20, 20]));
-      w.results = [a, b, c];
-      expect(performance(ScoreRule.tabata, b, w.format), 33);
-      expect(identical(w.best(), b), isTrue); // c égale b : b reste
-    });
+    test(
+      'deux nouveaux résultats : le total le plus haut, égalité = premier',
+      () {
+        final a = tabataResult(w, full(3, [10, 10, 10, 10, 10, 10, 10, 10]));
+        final b = tabataResult(w, full(3, [11, 12, 11, 12, 11, 12, 11, 12]));
+        final c = tabataResult(w, full(3, [11, 20, 20, 20, 20, 20, 20, 20]));
+        w.results = [a, b, c];
+        expect(performance(ScoreRule.tabata, b, w.format), 33);
+        expect(identical(w.best(), b), isTrue); // c égale b : b reste
+      },
+    );
 
     test('ancien temps Tabata : conservé, jamais converti ni comparé', () {
       final old = legacy('2026-09-01T10:00:00', seconds: 600);
@@ -436,32 +442,40 @@ void main() {
     final catalog = AppStore().catalogWods();
     Wod byId(String id) =>
         Wod.fromJson(catalog.firstWhere((w) => w.id == id).toJson());
-    WodResult v(ScoreRule rule, {int? seconds, int? rounds, int? reps, bool completed = true}) =>
-        WodResult(
-          at: '2026-09-10T10:00:00',
-          score: '',
-          seconds: seconds,
-          rounds: rounds,
-          reps: reps,
-          completed: completed,
-          scoring: rule.id,
-        );
+    WodResult v(
+      ScoreRule rule, {
+      int? seconds,
+      int? rounds,
+      int? reps,
+      bool completed = true,
+    }) => WodResult(
+      at: '2026-09-10T10:00:00',
+      score: '',
+      seconds: seconds,
+      rounds: rounds,
+      reps: reps,
+      completed: completed,
+      scoring: rule.id,
+    );
 
-    test('For Time : plus court gagne ; incomplet (arrêt rapide) exclu ; ancien comparable', () {
-      final w = byId('seed4');
-      final quickStop = v(ScoreRule.time, seconds: 30, completed: false);
-      final old = legacy('2026-09-01T10:00:00', seconds: 2400);
-      final fresh = v(ScoreRule.time, seconds: 2300);
-      w.results = [old, quickStop, fresh];
-      expect(identical(w.best(), fresh), isTrue);
-      expect(readRule(w, old), ScoreRule.time);
-      w.results = [old, quickStop];
-      expect(identical(w.best(), old), isTrue);
-      // Égalité : le premier reste.
-      final same = v(ScoreRule.time, seconds: 2400);
-      w.results = [old, same];
-      expect(identical(w.best(), old), isTrue);
-    });
+    test(
+      'For Time : plus court gagne ; incomplet (arrêt rapide) exclu ; ancien comparable',
+      () {
+        final w = byId('seed4');
+        final quickStop = v(ScoreRule.time, seconds: 30, completed: false);
+        final old = legacy('2026-09-01T10:00:00', seconds: 2400);
+        final fresh = v(ScoreRule.time, seconds: 2300);
+        w.results = [old, quickStop, fresh];
+        expect(identical(w.best(), fresh), isTrue);
+        expect(readRule(w, old), ScoreRule.time);
+        w.results = [old, quickStop];
+        expect(identical(w.best(), old), isTrue);
+        // Égalité : le premier reste.
+        final same = v(ScoreRule.time, seconds: 2400);
+        w.results = [old, same];
+        expect(identical(w.best(), old), isTrue);
+      },
+    );
 
     test('AMRAP : rounds puis reps ; interrompu exclu', () {
       final w = byId('seed24');
@@ -500,7 +514,10 @@ void main() {
       w.results = [a, b];
       expect(identical(w.best(), a), isTrue);
       expect(scoreText(w, a), 'Minute 11 réussie');
-      expect(scoreText(w, v(ScoreRule.deathBy, rounds: 0)), 'Aucune minute réussie');
+      expect(
+        scoreText(w, v(ScoreRule.deathBy, rounds: 0)),
+        'Aucune minute réussie',
+      );
     });
 
     test('AMRAP en blocs : total des rounds', () {
@@ -534,7 +551,19 @@ void main() {
     test('entiers seulement, zéro accepté, espaces tolérés', () {
       expect(parseCount('0'), 0);
       expect(parseCount(' 12 '), 12);
-      for (final bad in ['', ' ', '-1', '2.5', '2,5', '1e3', '+3', 'abc', '12 reps', 'NaN', 'Infinity']) {
+      for (final bad in [
+        '',
+        ' ',
+        '-1',
+        '2.5',
+        '2,5',
+        '1e3',
+        '+3',
+        'abc',
+        '12 reps',
+        'NaN',
+        'Infinity',
+      ]) {
         expect(parseCount(bad), isNull, reason: bad);
       }
       expect(parseCount('1000', max: 999), isNull);
@@ -579,56 +608,76 @@ void main() {
         legacy('2026-09-07T12:00:00', seconds: 2300),
         legacy('2026-09-08T12:00:00', seconds: 30, completed: false),
       ]);
-      wod('seed24').results.add(legacy('2026-09-08T09:00:00', rounds: 8, reps: 2));
+      wod(
+        'seed24',
+      ).results.add(legacy('2026-09-08T09:00:00', rounds: 8, reps: 2));
       app.notifyListeners();
     }
 
-    test('XP de record des anciens résultats inchangée (oracle ancienne règle)', () async {
-      seedLegacy();
-      final xp = app.progression.recordXp;
-      expect(xp, oldRecordXp(app.wods));
-      // Tabata 2 + routine 2 + EMOM 2 + Death by 1 + For Time 2 + AMRAP 1.
-      expect(xp, 40 * 10);
-    });
+    test(
+      'XP de record des anciens résultats inchangée (oracle ancienne règle)',
+      () async {
+        seedLegacy();
+        final xp = app.progression.recordXp;
+        expect(xp, oldRecordXp(app.wods));
+        // Tabata 2 + routine 2 + EMOM 2 + Death by 1 + For Time 2 + AMRAP 1.
+        expect(xp, 40 * 10);
+      },
+    );
 
-    test('nouveau Tabata : sauvegardé, exporté, réimporté à l’identique', () async {
-      final w = wod('genx100');
-      app.unlockedWods[w.id] = 0;
-      final r = tabataResult(w, full(3, [9, 9, 8, 9, 9, 9, 9, 10]));
-      expect(await app.recordWodResult(w, r), ResultSave.saved);
-      final data = backupOf(app);
-      final saved =
-          ((data['catalog'] as Map)['results'] as Map)['genx100'] as List;
-      expect(saved.single['scoring'], 'tabata/1');
-      expect(saved.single['intervals'], full(3, [9, 9, 8, 9, 9, 9, 9, 10]));
-      expect(saved.single['reps'], 24);
-      final file = app.exportForFile(appVersion: 'test');
-      for (var i = 0; i < 2; i++) {
-        expect(await app.importBackup(file), ImportStatus.success);
-        expect(wod('genx100').results, hasLength(1));
+    test(
+      'nouveau Tabata : sauvegardé, exporté, réimporté à l’identique',
+      () async {
+        final w = wod('genx100');
+        app.unlockedWods[w.id] = 0;
+        final r = tabataResult(w, full(3, [9, 9, 8, 9, 9, 9, 9, 10]));
+        expect(await app.recordWodResult(w, r), ResultSave.saved);
+        final data = backupOf(app);
+        final saved =
+            ((data['catalog'] as Map)['results'] as Map)['genx100'] as List;
+        expect(saved.single['scoring'], 'tabata/1');
+        expect(saved.single['intervals'], full(3, [9, 9, 8, 9, 9, 9, 9, 10]));
+        expect(saved.single['reps'], 24);
+        final file = app.exportForFile(appVersion: 'test');
+        for (var i = 0; i < 2; i++) {
+          expect(await app.importBackup(file), ImportStatus.success);
+          expect(wod('genx100').results, hasLength(1));
+          expect(
+            jsonEncode(wod('genx100').results.single.toJson()),
+            jsonEncode(r.toJson()),
+          );
+          expect(
+            identical(wod('genx100').best(), wod('genx100').results.single),
+            isTrue,
+          );
+        }
+      },
+    );
+
+    test(
+      'double validation et échec d’écriture : un résultat, une récompense',
+      () async {
+        final w = wod('genx100');
+        app.unlockedWods[w.id] = 0;
+        final attempt = app.startAttempt(w)!;
+        app.debugWriteHook = (_) async => false;
+        final r = tabataResult(w, full(3, [7, 7, 7, 7, 7, 7, 7, 7]));
         expect(
-          jsonEncode(wod('genx100').results.single.toJson()),
-          jsonEncode(r.toJson()),
+          await app.recordWodResult(w, r, attempt: attempt),
+          ResultSave.unsaved,
         );
-        expect(identical(wod('genx100').best(), wod('genx100').results.single), isTrue);
-      }
-    });
-
-    test('double validation et échec d’écriture : un résultat, une récompense', () async {
-      final w = wod('genx100');
-      app.unlockedWods[w.id] = 0;
-      final attempt = app.startAttempt(w)!;
-      app.debugWriteHook = (_) async => false;
-      final r = tabataResult(w, full(3, [7, 7, 7, 7, 7, 7, 7, 7]));
-      expect(await app.recordWodResult(w, r, attempt: attempt), ResultSave.unsaved);
-      final reward = app.consumeReward();
-      app.debugWriteHook = null;
-      final again = tabataResult(w, full(3, [7, 7, 7, 7, 7, 7, 7, 7]));
-      expect(await app.recordWodResult(w, again, attempt: attempt), ResultSave.saved);
-      expect(w.results, hasLength(1));
-      expect(reward, isNotNull);
-      expect(app.consumeReward(), isNull);
-    });
+        final reward = app.consumeReward();
+        app.debugWriteHook = null;
+        final again = tabataResult(w, full(3, [7, 7, 7, 7, 7, 7, 7, 7]));
+        expect(
+          await app.recordWodResult(w, again, attempt: attempt),
+          ResultSave.saved,
+        );
+        expect(w.results, hasLength(1));
+        expect(reward, isNotNull);
+        expect(app.consumeReward(), isNull);
+      },
+    );
 
     test('essai Tabata commencé à 23 h 59, validé à 00 h 01', () async {
       // Seuls les Tabata restent jamais tentés : l'essai du jour en est un.
@@ -660,31 +709,34 @@ void main() {
       expect(app.unlocked(trial), isFalse);
     });
 
-    test('ancienne sauvegarde : import répété sans conversion ni récompense', () async {
-      seedLegacy();
-      final trial = app.trialWod?.id;
-      final weekly = app.weeklyIds;
-      await app.flush();
-      final old = app.exportForFile(appVersion: 'test');
-      final xp = app.progression.totalXp;
-      final grants = Map.of(app.creditGrants);
-      final credits = app.credits;
-      final results = jsonEncode(backupOf(app)['catalog']['results']);
-      for (var i = 0; i < 2; i++) {
-        expect(await app.importBackup(old), ImportStatus.success);
+    test(
+      'ancienne sauvegarde : import répété sans conversion ni récompense',
+      () async {
+        seedLegacy();
+        final trial = app.trialWod?.id;
+        final weekly = app.weeklyIds;
         await app.flush();
-        expect(app.progression.totalXp, xp);
-        expect(app.creditGrants, grants);
-        expect(app.credits, credits);
-        expect(app.trialWod?.id, trial);
-        expect(app.weeklyIds, weekly);
-        expect(jsonEncode(backupOf(app)['catalog']['results']), results);
-        expect(app.consumeReward(), isNull);
-        expect(app.consumeLevelUp(), isNull);
-      }
-      // Anciens résultats intacts, lus sans être réécrits.
-      expect(wod('genx100').results.every((r) => r.scoring == null), isTrue);
-    });
+        final old = app.exportForFile(appVersion: 'test');
+        final xp = app.progression.totalXp;
+        final grants = Map.of(app.creditGrants);
+        final credits = app.credits;
+        final results = jsonEncode(backupOf(app)['catalog']['results']);
+        for (var i = 0; i < 2; i++) {
+          expect(await app.importBackup(old), ImportStatus.success);
+          await app.flush();
+          expect(app.progression.totalXp, xp);
+          expect(app.creditGrants, grants);
+          expect(app.credits, credits);
+          expect(app.trialWod?.id, trial);
+          expect(app.weeklyIds, weekly);
+          expect(jsonEncode(backupOf(app)['catalog']['results']), results);
+          expect(app.consumeReward(), isNull);
+          expect(app.consumeLevelUp(), isNull);
+        }
+        // Anciens résultats intacts, lus sans être réécrits.
+        expect(wod('genx100').results.every((r) => r.scoring == null), isTrue);
+      },
+    );
 
     test('consultation des règles et records : aucune modification', () async {
       seedLegacy();
@@ -703,56 +755,85 @@ void main() {
       expect(app.hasUnsavedChanges, isFalse);
     });
 
-    test('import refusé : règle inconnue, intervalle hors bornes, format incohérent', () async {
-      final base = backupOf(app);
-      Map<String, dynamic> withResult(Map<String, dynamic> r) {
-        final data = jsonDecode(jsonEncode(base)) as Map<String, dynamic>;
-        (data['catalog']['results'] as Map)['genx100'] = [r];
-        return data;
-      }
-      final good = {
-        'at': '2026-09-10T10:00:00',
-        'score': 'x',
-        'completed': true,
-        'scoring': 'tabata/1',
-        'intervals': full(3, [1, 1, 1, 1, 1, 1, 1, 1]),
-      };
-      expect(await app.importBackup(jsonEncode(withResult(good))), ImportStatus.success);
-      for (final bad in [
-        {...good, 'scoring': 'tabata/9'},
-        {...good, 'intervals': full(3, [1, 1, 1, 1, 1, 1, 1, 1000])},
-        {...good, 'intervals': full(3, [1, 1, 1, 1, 1, 1, 1, -1])},
-        {...good, 'intervals': 'beaucoup'},
-        {...good, 'scoring': 3},
-      ]) {
-        final before = app.exportAll();
-        expect(await app.importBackup(jsonEncode(withResult(bad))), ImportStatus.invalid);
-        expect(app.exportAll(), before);
-      }
-      final user = jsonDecode(jsonEncode(base)) as Map<String, dynamic>;
-      (user['catalog']['user'] as List).add({
-        'id': 'u1',
-        'name': 'Perso',
-        'type': 'emom',
-        'rounds': 10,
-        'interval': 60,
-        'lines': ['x'],
-        'format': {'kind': 'tabata', 'movements': ['a'], 'sets': 8, 'work': 20, 'rest': 10, 'blockRest': 60},
-      });
-      expect(await app.importBackup(jsonEncode(user)), ImportStatus.invalid);
-    });
+    test(
+      'import refusé : règle inconnue, intervalle hors bornes, format incohérent',
+      () async {
+        final base = backupOf(app);
+        Map<String, dynamic> withResult(Map<String, dynamic> r) {
+          final data = jsonDecode(jsonEncode(base)) as Map<String, dynamic>;
+          (data['catalog']['results'] as Map)['genx100'] = [r];
+          return data;
+        }
 
-    test('suppression locale : nouveaux scores retirés, rien de restauré', () async {
-      final w = wod('genx100');
-      app.unlockedWods[w.id] = 0;
-      await app.recordWodResult(w, tabataResult(w, full(3, [3, 3, 3, 3, 3, 3, 3, 3])));
-      expect((await app.eraseAllData()).status, EraseStatus.success);
-      expect(wod('genx100').results, isEmpty);
-      final next = AppStore();
-      await next.init();
-      expect(next.wods.firstWhere((x) => x.id == 'genx100').results, isEmpty);
-      next.dispose();
-    });
+        final good = {
+          'at': '2026-09-10T10:00:00',
+          'score': 'x',
+          'completed': true,
+          'scoring': 'tabata/1',
+          'intervals': full(3, [1, 1, 1, 1, 1, 1, 1, 1]),
+        };
+        expect(
+          await app.importBackup(jsonEncode(withResult(good))),
+          ImportStatus.success,
+        );
+        for (final bad in [
+          {...good, 'scoring': 'tabata/9'},
+          {
+            ...good,
+            'intervals': full(3, [1, 1, 1, 1, 1, 1, 1, 1000]),
+          },
+          {
+            ...good,
+            'intervals': full(3, [1, 1, 1, 1, 1, 1, 1, -1]),
+          },
+          {...good, 'intervals': 'beaucoup'},
+          {...good, 'scoring': 3},
+        ]) {
+          final before = app.exportAll();
+          expect(
+            await app.importBackup(jsonEncode(withResult(bad))),
+            ImportStatus.invalid,
+          );
+          expect(app.exportAll(), before);
+        }
+        final user = jsonDecode(jsonEncode(base)) as Map<String, dynamic>;
+        (user['catalog']['user'] as List).add({
+          'id': 'u1',
+          'name': 'Perso',
+          'type': 'emom',
+          'rounds': 10,
+          'interval': 60,
+          'lines': ['x'],
+          'format': {
+            'kind': 'tabata',
+            'movements': ['a'],
+            'sets': 8,
+            'work': 20,
+            'rest': 10,
+            'blockRest': 60,
+          },
+        });
+        expect(await app.importBackup(jsonEncode(user)), ImportStatus.invalid);
+      },
+    );
+
+    test(
+      'suppression locale : nouveaux scores retirés, rien de restauré',
+      () async {
+        final w = wod('genx100');
+        app.unlockedWods[w.id] = 0;
+        await app.recordWodResult(
+          w,
+          tabataResult(w, full(3, [3, 3, 3, 3, 3, 3, 3, 3])),
+        );
+        expect((await app.eraseAllData()).status, EraseStatus.success);
+        expect(wod('genx100').results, isEmpty);
+        final next = AppStore();
+        await next.init();
+        expect(next.wods.firstWhere((x) => x.id == 'genx100').results, isEmpty);
+        next.dispose();
+      },
+    );
   });
 
   // =========================================================================
@@ -813,99 +894,116 @@ void main() {
       return w;
     }
 
-    testWidgets('Tabata de bout en bout à 320 px : phases, fin, saisie, record', (
-      tester,
-    ) async {
-      phone(tester);
-      final semantics = tester.ensureSemantics();
-      final w = owned('genx100');
-      await tester.pumpWidget(page(WodRunScreen(wodId: w.id)));
-      await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('wod-rule')), findsOneWidget);
-      expect(find.text('Valider round'), findsNothing);
-      await tester.tap(find.text('Démarrer'));
-      await tester.pump();
-      String title() =>
-          tester.widget<Text>(find.byKey(const ValueKey('wod-phase'))).data!;
-      String detail() => tester
-          .widget<Text>(find.byKey(const ValueKey('wod-phase-detail')))
-          .data!;
-      String digits() =>
-          tester.widget<Text>(find.byKey(const ValueKey('wod-clock'))).data!;
-      expect(title(), 'EFFORT');
-      expect(detail(), 'Mouvement 1/3 · push-ups · intervalle 1/8');
-      expect(digits(), '0:20');
-      // La phase est annoncée comme région dynamique, pas les chiffres.
-      expect(
-        tester.getSemantics(find.byKey(const ValueKey('wod-phase'))),
-        containsSemantics(label: 'EFFORT', isLiveRegion: true),
-      );
-      await advance(tester, const Duration(seconds: 20));
-      expect(title(), 'REPOS');
-      expect(detail(), contains('ensuite 2/8'));
-      expect(digits(), '0:10');
-      // Pause pendant le repos : rien n'avance.
-      await tester.tap(find.text('Pause'));
-      await advance(tester, const Duration(minutes: 2));
-      expect((title(), digits()), ('REPOS', '0:10'));
-      await tester.tap(find.text('Reprendre'));
-      await advance(tester, const Duration(seconds: 220)); // fin du bloc 1
-      expect(title(), 'REPOS ENTRE MOUVEMENTS');
-      expect(detail(), 'Ensuite : mouvement 2/3 · box jumps');
-      // 240 s → 800 s : dernier effort du dernier mouvement.
-      await advance(tester, const Duration(seconds: 560));
-      expect((title(), detail()), (
-        'EFFORT',
-        'Mouvement 3/3 · hollow rocks · intervalle 8/8',
-      ));
-      expect(digits(), '0:10');
-      await advance(tester, const Duration(seconds: 10));
-      await tester.pumpAndSettle();
-      // Fin : la feuille s'ouvre d'elle-même, vide (aucune rep supposée).
-      expect(find.byType(ScoreSheet), findsOneWidget);
-      for (var b = 0; b < 3; b++) {
-        for (var i = 0; i < 8; i++) {
-          final cell = find.byKey(ValueKey('tabata-$b-$i'));
-          expect(
-            tester.widget<EditableText>(find.descendant(of: cell, matching: find.byType(EditableText))).controller.text,
-            '',
-          );
-          await tester.ensureVisible(cell);
-          await tester.enterText(cell, '${b == 1 && i == 4 ? 0 : 10 + i}');
+    testWidgets(
+      'Tabata de bout en bout à 320 px : phases, fin, saisie, record',
+      (tester) async {
+        phone(tester);
+        final semantics = tester.ensureSemantics();
+        final w = owned('genx100');
+        await tester.pumpWidget(page(WodRunScreen(wodId: w.id)));
+        await tester.pumpAndSettle();
+        expect(find.byKey(const ValueKey('wod-rule')), findsOneWidget);
+        expect(find.text('Valider round'), findsNothing);
+        await tester.tap(find.text('Démarrer'));
+        await tester.pump();
+        String title() =>
+            tester.widget<Text>(find.byKey(const ValueKey('wod-phase'))).data!;
+        String detail() =>
+            tester
+                .widget<Text>(find.byKey(const ValueKey('wod-phase-detail')))
+                .data!;
+        String digits() =>
+            tester.widget<Text>(find.byKey(const ValueKey('wod-clock'))).data!;
+        expect(title(), 'EFFORT');
+        expect(detail(), 'Mouvement 1/3 · push-ups · intervalle 1/8');
+        expect(digits(), '0:20');
+        // La phase est annoncée comme région dynamique, pas les chiffres.
+        expect(
+          tester.getSemantics(find.byKey(const ValueKey('wod-phase'))),
+          containsSemantics(label: 'EFFORT', isLiveRegion: true),
+        );
+        await advance(tester, const Duration(seconds: 20));
+        expect(title(), 'REPOS');
+        expect(detail(), contains('ensuite 2/8'));
+        expect(digits(), '0:10');
+        // Pause pendant le repos : rien n'avance.
+        await tester.tap(find.text('Pause'));
+        await advance(tester, const Duration(minutes: 2));
+        expect((title(), digits()), ('REPOS', '0:10'));
+        await tester.tap(find.text('Reprendre'));
+        await advance(tester, const Duration(seconds: 220)); // fin du bloc 1
+        expect(title(), 'REPOS ENTRE MOUVEMENTS');
+        expect(detail(), 'Ensuite : mouvement 2/3 · box jumps');
+        // 240 s → 800 s : dernier effort du dernier mouvement.
+        await advance(tester, const Duration(seconds: 560));
+        expect(
+          (title(), detail()),
+          ('EFFORT', 'Mouvement 3/3 · hollow rocks · intervalle 8/8'),
+        );
+        expect(digits(), '0:10');
+        await advance(tester, const Duration(seconds: 10));
+        await tester.pumpAndSettle();
+        // Fin : la feuille s'ouvre d'elle-même, vide (aucune rep supposée).
+        expect(find.byType(ScoreSheet), findsOneWidget);
+        for (var b = 0; b < 3; b++) {
+          for (var i = 0; i < 8; i++) {
+            final cell = find.byKey(ValueKey('tabata-$b-$i'));
+            expect(
+              tester
+                  .widget<EditableText>(
+                    find.descendant(
+                      of: cell,
+                      matching: find.byType(EditableText),
+                    ),
+                  )
+                  .controller
+                  .text,
+              '',
+            );
+            await tester.ensureVisible(cell);
+            await tester.enterText(cell, '${b == 1 && i == 4 ? 0 : 10 + i}');
+          }
         }
-      }
-      await tester.pump();
-      expect(
-        tester.widget<Text>(find.byKey(const ValueKey('tabata-block-1'))).data,
-        contains('plus faible : 0'),
-      );
-      // Correction avant confirmation : 0 devient 6.
-      await tester.ensureVisible(find.byKey(const ValueKey('tabata-1-4')));
-      await tester.enterText(find.byKey(const ValueKey('tabata-1-4')), '6');
-      await tester.pump();
-      final save = find.text('Enregistrer');
-      await tester.ensureVisible(save);
-      await tester.tap(save);
-      await tester.tap(save, warnIfMissed: false);
-      await tester.pumpAndSettle();
-      expect(w.results, hasLength(1));
-      final r = w.results.single;
-      expect(r.scoring, 'tabata/1');
-      expect(r.completed, isTrue);
-      expect(tabataMinima(r), [10, 6, 10]);
-      expect(r.reps, 26);
-      expect(r.score, 'Total 26 reps · minimums 10 · 6 · 10');
-      expect(r.seconds, 810);
-      expect(identical(w.best(), r), isTrue);
-      expect(tester.takeException(), isNull);
-      store.consumeReward();
-      store.consumeLevelUp();
-      semantics.dispose();
-      await tester.pumpWidget(const SizedBox());
-      await tester.pumpAndSettle();
-    });
+        await tester.pump();
+        expect(
+          tester
+              .widget<Text>(find.byKey(const ValueKey('tabata-block-1')))
+              .data,
+          contains('plus faible : 0'),
+        );
+        // Correction avant confirmation : 0 devient 6.
+        await tester.ensureVisible(find.byKey(const ValueKey('tabata-1-4')));
+        await tester.enterText(find.byKey(const ValueKey('tabata-1-4')), '6');
+        await tester.pump();
+        final save = find.text('Enregistrer');
+        await tester.ensureVisible(save);
+        await tester.tap(save);
+        await tester.tap(save, warnIfMissed: false);
+        await tester.pumpAndSettle();
+        expect(w.results, hasLength(1));
+        final r = w.results.single;
+        expect(r.scoring, 'tabata/1');
+        expect(r.completed, isTrue);
+        expect(tabataMinima(r), [10, 6, 10]);
+        expect(r.reps, 26);
+        expect(r.score, 'Total 26 reps · minimums 10 · 6 · 10');
+        expect(r.seconds, 810);
+        expect(identical(w.best(), r), isTrue);
+        expect(tester.takeException(), isNull);
+        store.consumeReward();
+        store.consumeLevelUp();
+        semantics.dispose();
+        await tester.pumpWidget(const SizedBox());
+        await tester.pumpAndSettle();
+      },
+    );
 
-    Future<void> openSheet(WidgetTester tester, Wod w, {double scale = 1, double keyboard = 0}) async {
+    Future<void> openSheet(
+      WidgetTester tester,
+      Wod w, {
+      double scale = 1,
+      double keyboard = 0,
+    }) async {
       phone(tester, keyboard: keyboard);
       await tester.pumpWidget(
         page(
@@ -954,7 +1052,9 @@ void main() {
         await tester.tap(save);
         await tester.pumpAndSettle();
         expect(
-          find.text('Intervalles non renseignés : complète-les ou choisis « Incomplet ».'),
+          find.text(
+            'Intervalles non renseignés : complète-les ou choisis « Incomplet ».',
+          ),
           findsOneWidget,
         );
         expect(w.results, isEmpty);
@@ -992,7 +1092,9 @@ void main() {
       }
     });
 
-    testWidgets('For Time : réalisation explicite et time cap respecté', (tester) async {
+    testWidgets('For Time : réalisation explicite et time cap respecté', (
+      tester,
+    ) async {
       final w = owned('seed39'); // time cap 12 min
       await openSheet(tester, w);
       final time = find.byType(TextFormField).first;
@@ -1023,7 +1125,12 @@ void main() {
       await openSheet(tester, w);
       final field = find.byType(TextFormField).first;
       expect(
-        tester.widget<EditableText>(find.descendant(of: field, matching: find.byType(EditableText))).controller.text,
+        tester
+            .widget<EditableText>(
+              find.descendant(of: field, matching: find.byType(EditableText)),
+            )
+            .controller
+            .text,
         '',
       );
       await tester.enterText(field, '16');

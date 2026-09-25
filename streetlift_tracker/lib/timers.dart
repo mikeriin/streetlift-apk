@@ -257,9 +257,7 @@ class WodClock extends ChangeNotifier {
     prepSeconds = math.max(0, prep);
     _phases = List.unmodifiable(list);
     var end = 0;
-    _ends = List.unmodifiable([
-      for (final p in list) end += p.seconds * 1000,
-    ]);
+    _ends = List.unmodifiable([for (final p in list) end += p.seconds * 1000]);
     _duration = end ~/ 1000;
     remaining = _duration;
     phaseIndex = 0;

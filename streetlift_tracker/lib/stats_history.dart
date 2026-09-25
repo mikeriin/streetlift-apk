@@ -159,8 +159,7 @@ class StatsHistoryTile extends StatelessWidget {
                 result.score,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
-              for (final line in resultDetails(entry.wod!, result))
-                Text(line),
+              for (final line in resultDetails(entry.wod!, result)) Text(line),
               const KSection('Notes'),
               Text(
                 result.notes.trim().isEmpty

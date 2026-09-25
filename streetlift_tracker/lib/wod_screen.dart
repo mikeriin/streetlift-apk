@@ -621,8 +621,7 @@ class ScoreSheetState extends State<ScoreSheet> {
     text: widget.elapsed > 0 ? fmtT(widget.elapsed) : '',
   );
   late final main = TextEditingController(
-    text:
-        (rule == ScoreRule.amrap && widget.laps > 0) ? '${widget.laps}' : '',
+    text: (rule == ScoreRule.amrap && widget.laps > 0) ? '${widget.laps}' : '',
   );
   final reps = TextEditingController();
   final notes = TextEditingController();
@@ -671,9 +670,7 @@ class ScoreSheetState extends State<ScoreSheet> {
       cells.every((b) => b.every((c) => c.text.trim().isNotEmpty));
 
   String? _countValidator(String? text, {int max = 1000000}) =>
-      parseCount(text, max: max) == null
-          ? 'Nombre entier de 0 à $max'
-          : null;
+      parseCount(text, max: max) == null ? 'Nombre entier de 0 à $max' : null;
 
   WodResult? _build() {
     final w = widget.wod;
@@ -720,7 +717,9 @@ class ScoreSheetState extends State<ScoreSheet> {
         );
       case ScoreRule.tabata:
         final intervals = _intervals;
-        final minima = tabataMinima(WodResult(at: at, score: '', intervals: intervals));
+        final minima = tabataMinima(
+          WodResult(at: at, score: '', intervals: intervals),
+        );
         final total =
             minima.any((m) => m == null)
                 ? null
@@ -755,9 +754,7 @@ class ScoreSheetState extends State<ScoreSheet> {
         if (completed == null) {
           return 'Indique si le WOD a été terminé en entier.';
         }
-        if (completed == true &&
-            rule == ScoreRule.tabata &&
-            !_tabataFilled) {
+        if (completed == true && rule == ScoreRule.tabata && !_tabataFilled) {
           return 'Intervalles non renseignés : complète-les ou choisis « Incomplet ».';
         }
         return null;
@@ -850,9 +847,7 @@ class ScoreSheetState extends State<ScoreSheet> {
                 controller: main,
                 keyboardType: TextInputType.number,
                 style: KControl.numberStyle,
-                decoration: const InputDecoration(
-                  labelText: 'Rounds complets',
-                ),
+                decoration: const InputDecoration(labelText: 'Rounds complets'),
                 validator: _countValidator,
               ),
               TextFormField(
@@ -888,9 +883,7 @@ class ScoreSheetState extends State<ScoreSheet> {
             controller: main,
             keyboardType: TextInputType.number,
             style: KControl.numberStyle,
-            decoration: InputDecoration(
-              labelText: 'Total de ${format!.unit}',
-            ),
+            decoration: InputDecoration(labelText: 'Total de ${format!.unit}'),
             validator: _countValidator,
           ),
         ];
@@ -929,17 +922,19 @@ class ScoreSheetState extends State<ScoreSheet> {
                       label:
                           '${f.movements[b]}, intervalle ${i + 1} sur ${f.sets}',
                       child: TextFormField(
-                      key: ValueKey('tabata-$b-$i'),
-                      controller: cells[b][i],
-                      keyboardType: TextInputType.number,
-                      style: KControl.numberStyle,
-                      decoration: InputDecoration(labelText: '${i + 1}'),
-                      onChanged: (_) => setState(() {}),
-                      validator: (t) {
-                        if ((t ?? '').trim().isEmpty) return null;
-                        return parseCount(t, max: 999) == null ? '0-999' : null;
-                      },
-                    ),
+                        key: ValueKey('tabata-$b-$i'),
+                        controller: cells[b][i],
+                        keyboardType: TextInputType.number,
+                        style: KControl.numberStyle,
+                        decoration: InputDecoration(labelText: '${i + 1}'),
+                        onChanged: (_) => setState(() {}),
+                        validator: (t) {
+                          if ((t ?? '').trim().isEmpty) return null;
+                          return parseCount(t, max: 999) == null
+                              ? '0-999'
+                              : null;
+                        },
+                      ),
                     ),
                   ),
               ],

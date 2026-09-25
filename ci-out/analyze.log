@@ -1,3 +1,11 @@
 Analyzing streetlift_tracker...                                 
-No issues found! (ran in 22.1s)
-exit=0
+
+   info • Statements in an if should be enclosed in a block • lib/wod_formats.dart:430:9 • curly_braces_in_flow_control_structures
+   info • The import of 'package:streetlift_tracker/persistence.dart' is unnecessary because all of the used elements are also provided by the import of 'package:streetlift_tracker/store.dart' • test/l3b_formats_test.dart:15:8 • unnecessary_import
+   info • The import of 'package:streetlift_tracker/timers.dart' is unnecessary because all of the used elements are also provided by the import of 'package:streetlift_tracker/wod_screen.dart' • test/l3b_formats_test.dart:17:8 • unnecessary_import
+  error • Const variables must be initialized with a constant value • test/l3b_formats_test.dart:26:19 • const_initialized_with_non_constant_value
+  error • Constant expressions don't support 'for' elements • test/l3b_formats_test.dart:27:3 • const_eval_for_element
+  error • Const variables must be initialized with a constant value • test/l3b_formats_test.dart:36:23 • const_initialized_with_non_constant_value
+  error • Constant expressions don't support 'for' elements • test/l3b_formats_test.dart:37:3 • const_eval_for_element
+
+7 issues found. (ran in 23.3s)

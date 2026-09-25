@@ -270,7 +270,10 @@ String phaseDetail(Wod w, WodPhase p) {
     if (p.kind == PhaseKind.blockRest) {
       return 'Ensuite : mouvement ${p.block + 2}/$n · ${f.movements[p.block + 1]}';
     }
-    final next = p.kind == PhaseKind.rest ? ' · ensuite ${p.interval + 2}/${f.sets}' : '';
+    final next =
+        p.kind == PhaseKind.rest
+            ? ' · ensuite ${p.interval + 2}/${f.sets}'
+            : '';
     return 'Mouvement ${p.block + 1}/$n · ${f.movements[p.block]} · intervalle ${p.interval + 1}/${f.sets}$next';
   }
   final n = f.blockMinutes.length;
@@ -416,16 +419,15 @@ List<String> resultDetails(Wod w, WodResult r) {
   switch (rule) {
     case ScoreRule.amrap:
       if (r.rounds != null) {
-        out.add(
-          '${r.rounds} rounds · ${r.reps ?? 0} reps du round en cours',
-        );
+        out.add('${r.rounds} rounds · ${r.reps ?? 0} reps du round en cours');
       }
     case ScoreRule.emomMinutes:
       if (r.rounds != null) {
         out.add('${r.rounds} minutes tenues sur ${w.rounds}');
       }
     case ScoreRule.emomReps:
-      if (r.reps != null) out.add('${r.reps} ${structuredFormat(w)?.unit ?? 'reps'}');
+      if (r.reps != null)
+        out.add('${r.reps} ${structuredFormat(w)?.unit ?? 'reps'}');
     case ScoreRule.deathBy:
       if (r.rounds != null) out.add('Dernière minute réussie : ${r.rounds}');
     case ScoreRule.amrapBlocks:

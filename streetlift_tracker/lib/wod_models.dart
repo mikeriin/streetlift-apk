@@ -191,7 +191,8 @@ class WodFormat {
           blockMinutes.every((m) => m >= 1 && m <= 240) &&
           blockRest >= 0 &&
           blockRest <= 3600,
-    'emom-reps' => type == 'emom' && unit.trim().isNotEmpty && unit.length <= 60,
+    'emom-reps' =>
+      type == 'emom' && unit.trim().isNotEmpty && unit.length <= 60,
     'death-by' => type == 'emom',
     _ => false,
   };
