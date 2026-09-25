@@ -19,32 +19,208 @@ import 'package:streetlift_tracker/store.dart';
 
 /// Identifiants retirés de S12 à S19 (202), relevés sur l'asset 2.5.6.
 const removedIds = <String>[
-  'B2-9', 'B2-12', 'B2-13', 'B2-18', 'B2-21', 'B2-25', 'B2-26', 'B2-31',
-  'B2-33', 'B2-34', 'B2-35', 'B2-37', 'B2-38', 'B2-41', 'B2-43', 'B2-47',
-  'B2-50', 'B2-51', 'B2-53', 'B2-54', 'B2-55', 'B2-58', 'B2-59', 'B2-61',
-  'B2-62', 'B2-63', 'B2-64', 'B2-65', 'B2-67', 'B2-76', 'B2-79', 'B2-80',
-  'B2-85', 'B2-88', 'B2-92', 'B2-93', 'B2-98', 'B2-100', 'B2-101', 'B2-102',
-  'B2-104', 'B2-105', 'B2-110', 'B2-114', 'B2-120', 'B2-121', 'B2-122', 'B2-125',
-  'B2-126', 'B2-128', 'B2-129', 'B2-130', 'B2-132', 'B2-134', 'B2-143', 'B2-146',
-  'B2-147', 'B2-152', 'B2-155', 'B2-159', 'B2-160', 'B2-165', 'B2-167', 'B2-168',
-  'B2-169', 'B2-171', 'B2-172', 'B2-177', 'B2-181', 'B2-187', 'B2-188', 'B2-189',
-  'B2-192', 'B2-193', 'B2-195', 'B2-196', 'B2-197', 'B2-199', 'B2-201', 'B2-210',
-  'B2-213', 'B2-214', 'B2-221', 'B2-225', 'B2-226', 'B2-231', 'B2-233', 'B2-234',
-  'B2-235', 'B2-237', 'B2-238', 'B2-243', 'B2-247', 'B2-253', 'B2-254', 'B2-255',
-  'B2-258', 'B2-259', 'B2-261', 'B2-262', 'B2-263', 'B2-265', 'B2-267', 'B2-276',
-  'B2-279', 'B2-280', 'B2-285', 'B2-288', 'B2-292', 'B2-293', 'B2-298', 'B2-300',
-  'B2-301', 'B2-302', 'B2-304', 'B2-305', 'B2-310', 'B2-314', 'B2-320', 'B2-321',
-  'B2-322', 'B2-325', 'B2-326', 'B2-328', 'B2-329', 'B2-330', 'B2-332', 'B2-334',
-  'B2-343', 'B2-346', 'B2-347', 'B2-352', 'B2-355', 'B2-359', 'B2-360', 'B2-365',
-  'B2-367', 'B2-368', 'B2-369', 'B2-371', 'B2-372', 'B2-377', 'B2-381', 'B2-387',
-  'B2-388', 'B2-389', 'B2-392', 'B2-393', 'B2-395', 'B2-396', 'B2-397', 'B2-399',
-  'B2-401', 'B2-410', 'B2-413', 'B2-414', 'B2-419', 'B2-422', 'B2-426', 'B2-427',
-  'B2-432', 'B2-434', 'B2-435', 'B2-436', 'B2-438', 'B2-439', 'B2-444', 'B2-448',
-  'B2-454', 'B2-455', 'B2-456', 'B2-459', 'B2-460', 'B2-462', 'B2-463', 'B2-464',
-  'B2-466', 'B2-468', 'B2-477', 'B2-480', 'B2-481', 'B2-488', 'B2-492', 'B2-493',
-  'B2-498', 'B2-500', 'B2-501', 'B2-502', 'B2-504', 'B2-505', 'B2-510', 'B2-514',
-  'B2-520', 'B2-521', 'B2-522', 'B2-525', 'B2-526', 'B2-528', 'B2-529', 'B2-530',
-  'B2-532', 'B2-534',
+  'B2-9',
+  'B2-12',
+  'B2-13',
+  'B2-18',
+  'B2-21',
+  'B2-25',
+  'B2-26',
+  'B2-31',
+  'B2-33',
+  'B2-34',
+  'B2-35',
+  'B2-37',
+  'B2-38',
+  'B2-41',
+  'B2-43',
+  'B2-47',
+  'B2-50',
+  'B2-51',
+  'B2-53',
+  'B2-54',
+  'B2-55',
+  'B2-58',
+  'B2-59',
+  'B2-61',
+  'B2-62',
+  'B2-63',
+  'B2-64',
+  'B2-65',
+  'B2-67',
+  'B2-76',
+  'B2-79',
+  'B2-80',
+  'B2-85',
+  'B2-88',
+  'B2-92',
+  'B2-93',
+  'B2-98',
+  'B2-100',
+  'B2-101',
+  'B2-102',
+  'B2-104',
+  'B2-105',
+  'B2-110',
+  'B2-114',
+  'B2-120',
+  'B2-121',
+  'B2-122',
+  'B2-125',
+  'B2-126',
+  'B2-128',
+  'B2-129',
+  'B2-130',
+  'B2-132',
+  'B2-134',
+  'B2-143',
+  'B2-146',
+  'B2-147',
+  'B2-152',
+  'B2-155',
+  'B2-159',
+  'B2-160',
+  'B2-165',
+  'B2-167',
+  'B2-168',
+  'B2-169',
+  'B2-171',
+  'B2-172',
+  'B2-177',
+  'B2-181',
+  'B2-187',
+  'B2-188',
+  'B2-189',
+  'B2-192',
+  'B2-193',
+  'B2-195',
+  'B2-196',
+  'B2-197',
+  'B2-199',
+  'B2-201',
+  'B2-210',
+  'B2-213',
+  'B2-214',
+  'B2-221',
+  'B2-225',
+  'B2-226',
+  'B2-231',
+  'B2-233',
+  'B2-234',
+  'B2-235',
+  'B2-237',
+  'B2-238',
+  'B2-243',
+  'B2-247',
+  'B2-253',
+  'B2-254',
+  'B2-255',
+  'B2-258',
+  'B2-259',
+  'B2-261',
+  'B2-262',
+  'B2-263',
+  'B2-265',
+  'B2-267',
+  'B2-276',
+  'B2-279',
+  'B2-280',
+  'B2-285',
+  'B2-288',
+  'B2-292',
+  'B2-293',
+  'B2-298',
+  'B2-300',
+  'B2-301',
+  'B2-302',
+  'B2-304',
+  'B2-305',
+  'B2-310',
+  'B2-314',
+  'B2-320',
+  'B2-321',
+  'B2-322',
+  'B2-325',
+  'B2-326',
+  'B2-328',
+  'B2-329',
+  'B2-330',
+  'B2-332',
+  'B2-334',
+  'B2-343',
+  'B2-346',
+  'B2-347',
+  'B2-352',
+  'B2-355',
+  'B2-359',
+  'B2-360',
+  'B2-365',
+  'B2-367',
+  'B2-368',
+  'B2-369',
+  'B2-371',
+  'B2-372',
+  'B2-377',
+  'B2-381',
+  'B2-387',
+  'B2-388',
+  'B2-389',
+  'B2-392',
+  'B2-393',
+  'B2-395',
+  'B2-396',
+  'B2-397',
+  'B2-399',
+  'B2-401',
+  'B2-410',
+  'B2-413',
+  'B2-414',
+  'B2-419',
+  'B2-422',
+  'B2-426',
+  'B2-427',
+  'B2-432',
+  'B2-434',
+  'B2-435',
+  'B2-436',
+  'B2-438',
+  'B2-439',
+  'B2-444',
+  'B2-448',
+  'B2-454',
+  'B2-455',
+  'B2-456',
+  'B2-459',
+  'B2-460',
+  'B2-462',
+  'B2-463',
+  'B2-464',
+  'B2-466',
+  'B2-468',
+  'B2-477',
+  'B2-480',
+  'B2-481',
+  'B2-488',
+  'B2-492',
+  'B2-493',
+  'B2-498',
+  'B2-500',
+  'B2-501',
+  'B2-502',
+  'B2-504',
+  'B2-505',
+  'B2-510',
+  'B2-514',
+  'B2-520',
+  'B2-521',
+  'B2-522',
+  'B2-525',
+  'B2-526',
+  'B2-528',
+  'B2-529',
+  'B2-530',
+  'B2-532',
+  'B2-534',
 ];
 
 /// Lignes nouvelles (66) : identifiant → (semaine, jour, nom).
@@ -335,7 +511,11 @@ void main() {
           expect(e.tempo, 'Intention maximale');
           expect(e.cue, contains(noSensor));
           final classic = {12, 13, 15, 19}.contains(n);
-          expect(e.sets.value!.contains('en clusters'), !classic, reason: 'S$n $name');
+          expect(
+            e.sets.value!.contains('en clusters'),
+            !classic,
+            reason: 'S$n $name',
+          );
           if (classic) expect(e.cue.contains('Clusters :'), isFalse);
           if (deload(n)) {
             expect(e.cue, endsWith(deloadNote));
@@ -362,14 +542,10 @@ void main() {
             (5, 'B19', 'Pompes PdC — série de référence'),
           ]) {
             final s = line(n, j, name).sets;
-            expect((s.type, s.prefix, s.coef, s.ref, s.div, s.suffix), (
-              'volume',
-              '1 × ',
-              0.6,
-              ref,
-              1,
-              ' reps',
-            ));
+            expect(
+              (s.type, s.prefix, s.coef, s.ref, s.div, s.suffix),
+              ('volume', '1 × ', 0.6, ref, 1, ' reps'),
+            );
           }
         } else {
           final s = line(12, 4, 'Tractions PdC — séries continues').sets;
@@ -457,34 +633,38 @@ void main() {
       expect(sets(13), 117);
     });
 
-    test('semaine S12 entièrement faite : XP, semaine complète, crédits (L3)', () async {
-      final xp = app.progression.programXp;
-      final grants = Map.of(app.creditGrants);
-      // Dates passées (la semaine réelle S12 est à venir) : la règle dépend
-      // du nombre de journées faites, pas du nombre d'exercices.
-      for (var j = 1; j <= 6; j++) {
-        final log = app.sessionLog(12, j)
-          ..done = true
-          ..finishedAt = '2026-09-${13 + j}T18:00:00';
-        for (final e in app.program.week(12).day(j)!.exercises) {
-          final l = app.exLog(12, j, e);
-          for (final s in l.sets) {
-            s
-              ..reps = '5'
-              ..done = true;
+    test(
+      'semaine S12 entièrement faite : XP, semaine complète, crédits (L3)',
+      () async {
+        final xp = app.progression.programXp;
+        final grants = Map.of(app.creditGrants);
+        // Dates passées (la semaine réelle S12 est à venir) : la règle dépend
+        // du nombre de journées faites, pas du nombre d'exercices.
+        for (var j = 1; j <= 6; j++) {
+          final log =
+              app.sessionLog(12, j)
+                ..done = true
+                ..finishedAt = '2026-09-${13 + j}T18:00:00';
+          for (final e in app.program.week(12).day(j)!.exercises) {
+            final l = app.exLog(12, j, e);
+            for (final s in l.sets) {
+              s
+                ..reps = '5'
+                ..done = true;
+            }
           }
+          expect(log.done, isTrue);
         }
-        expect(log.done, isTrue);
-      }
-      app.saveLogs(immediate: true);
-      await app.flush();
-      expect(app.progression.programXp - xp, 600);
-      expect(app.journalGrants.containsKey('week:2026-09-14'), isTrue);
-      expect(app.creditGrants['week:2026-09-14'], 1);
-      for (final id in grants.keys) {
-        expect(app.creditGrants[id], grants[id]);
-      }
-    });
+        app.saveLogs(immediate: true);
+        await app.flush();
+        expect(app.progression.programXp - xp, 600);
+        expect(app.journalGrants.containsKey('week:2026-09-14'), isTrue);
+        expect(app.creditGrants['week:2026-09-14'], 1);
+        for (final id in grants.keys) {
+          expect(app.creditGrants[id], grants[id]);
+        }
+      },
+    );
   });
 
   group('Séance et journal', () {
@@ -526,46 +706,47 @@ void main() {
       addTearDown(tester.view.resetDevicePixelRatio);
     }
 
-    testWidgets('feuille Pilotage modifiée pendant la séance : volumes recalculés tout de suite', (
-      tester,
-    ) async {
-      phone(tester, const Size(390, 844));
-      final week = store.program.week(12);
-      final day = week.day(4)!;
-      await tester.pumpWidget(page(SessionScreen(week: week, day: day)));
-      await tester.pumpAndSettle();
-      expect(find.text('TEST MAX TRACTIONS PDC'), findsWidgets);
-      await tester.tap(find.text('Suivant'));
-      await tester.pumpAndSettle();
-      expect(find.text(nbsp('2 × 18 reps')), findsOneWidget);
-      final continuous = day.exercises[1];
-      List<String> reps() => [
-        for (final s in store.exLog(12, 4, continuous).sets) s.reps,
-      ];
-      expect(reps(), ['18', '18']);
-      // Première série saisie à la main : jamais écrasée.
-      store.exLog(12, 4, continuous).sets.first.reps = '17';
-      // Report du test (tractions : 33) dans la feuille Pilotage, depuis la
-      // séance : menu → Références.
-      await tester.tap(find.byTooltip('Options de séance'));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Références (feuille Pilotage)'));
-      await tester.pumpAndSettle();
-      expect(find.byType(PilotageScreen), findsOneWidget);
-      store.setValue('B17', 33);
-      await tester.pageBack();
-      await tester.pumpAndSettle();
-      expect(find.text(nbsp('2 × 20 reps')), findsOneWidget);
-      expect(reps(), ['17', '20']);
-      // Nouvelle modification pendant que la page est affichée.
-      store.setValue('B17', 30);
-      await tester.pump();
-      expect(find.text(nbsp('2 × 18 reps')), findsOneWidget);
-      expect(reps(), ['17', '18']);
-      expect(tester.takeException(), isNull);
-      await tester.pumpWidget(const SizedBox());
-      await tester.pumpAndSettle();
-    });
+    testWidgets(
+      'feuille Pilotage modifiée pendant la séance : volumes recalculés tout de suite',
+      (tester) async {
+        phone(tester, const Size(390, 844));
+        final week = store.program.week(12);
+        final day = week.day(4)!;
+        await tester.pumpWidget(page(SessionScreen(week: week, day: day)));
+        await tester.pumpAndSettle();
+        expect(find.text('TEST MAX TRACTIONS PDC'), findsWidgets);
+        await tester.tap(find.text('Suivant'));
+        await tester.pumpAndSettle();
+        expect(find.text(nbsp('2 × 18 reps')), findsOneWidget);
+        final continuous = day.exercises[1];
+        List<String> reps() => [
+          for (final s in store.exLog(12, 4, continuous).sets) s.reps,
+        ];
+        expect(reps(), ['18', '18']);
+        // Première série saisie à la main : jamais écrasée.
+        store.exLog(12, 4, continuous).sets.first.reps = '17';
+        // Report du test (tractions : 33) dans la feuille Pilotage, depuis la
+        // séance : menu → Références.
+        await tester.tap(find.byTooltip('Options de séance'));
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('Références (feuille Pilotage)'));
+        await tester.pumpAndSettle();
+        expect(find.byType(PilotageScreen), findsOneWidget);
+        store.setValue('B17', 33);
+        await tester.pageBack();
+        await tester.pumpAndSettle();
+        expect(find.text(nbsp('2 × 20 reps')), findsOneWidget);
+        expect(reps(), ['17', '20']);
+        // Nouvelle modification pendant que la page est affichée.
+        store.setValue('B17', 30);
+        await tester.pump();
+        expect(find.text(nbsp('2 × 18 reps')), findsOneWidget);
+        expect(reps(), ['17', '18']);
+        expect(tester.takeException(), isNull);
+        await tester.pumpWidget(const SizedBox());
+        await tester.pumpAndSettle();
+      },
+    );
 
     testWidgets('journal S12 avec un identifiant supprimé : lecture intacte', (
       tester,
@@ -590,7 +771,12 @@ void main() {
       expect(await store.importBackup(exported), ImportStatus.success);
       expect(store.logs['S12-J1']!.toJson().toString(), before);
       await tester.pumpWidget(
-        page(SessionHistoryScreen(log: store.logs['S12-J1']!, sessionKey: 'S12-J1')),
+        page(
+          SessionHistoryScreen(
+            log: store.logs['S12-J1']!,
+            sessionKey: 'S12-J1',
+          ),
+        ),
       );
       await tester.pumpAndSettle();
       expect(find.text('TIRAGE VERTICAL PRISE NEUTRE'), findsOneWidget);
@@ -616,7 +802,11 @@ void main() {
           for (final j in [3, 4, 5]) {
             final day = week.day(j)!;
             await tester.pumpWidget(
-              page(SessionScreen(week: week, day: day), scale: scale, dark: dark),
+              page(
+                SessionScreen(week: week, day: day),
+                scale: scale,
+                dark: dark,
+              ),
             );
             await tester.pumpAndSettle();
             for (var p = 0; p < day.exercises.length; p++) {
