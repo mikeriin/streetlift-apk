@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.tchoupi.streetlift_tracker"
-    android:versionCode="54"
-    android:versionName="2.5.3" >
+    android:versionCode="56"
+    android:versionName="2.5.5" >
 
     <uses-sdk
         android:minSdkVersion="21"
@@ -37,9 +37,16 @@
         android:protectionLevel="signature" />
 
     <uses-permission android:name="fr.tchoupi.streetlift_tracker.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-
+    <!--
+ KT-016, décision du propriétaire (option A, 25/09/2026) : sauvegarde
+         Android par défaut, déclarée explicitement. Aucune règle
+         dataExtractionRules / fullBackupContent : sauvegarde cloud Google et
+         transfert d'appareil selon les réglages du téléphone. Contrôlé sur le
+         manifeste final par tools/verify_android_artifacts.py.
+    -->
     <application
         android:name="android.app.Application"
+        android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
         android:extractNativeLibs="true"

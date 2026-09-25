@@ -4,3 +4,5 @@
 18:    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 19:    <uses-permission android:name="android.permission.VIBRATE" />
 39:    <uses-permission android:name="fr.tchoupi.streetlift_tracker.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+43:         dataExtractionRules / fullBackupContent : sauvegarde cloud Google et
+49:        android:allowBackup="true"
