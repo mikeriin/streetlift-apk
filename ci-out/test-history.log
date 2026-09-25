@@ -5,44 +5,17 @@
 00:00 +2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: archive, repos ou séance perso disparue : suppression seule
 00:00 +3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: une séance perso existante peut être rouverte
 00:01 +4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: le bilan rouvre la séance modifiable
-unhandled error during finalization of test:
-/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart
-TestDeviceException(Shell subprocess crashed with SIGTERM (-15).)
-#0      FlutterTesterTestDevice.finished (package:flutter_tools/src/test/flutter_tester_device.dart:255:5)
-<asynchronous suspension>
-#1      FlutterTesterTestDevice.kill (package:flutter_tools/src/test/flutter_tester_device.dart:237:5)
-<asynchronous suspension>
-#2      FlutterPlatform._startTest.<anonymous closure> (package:flutter_tools/src/test/flutter_platform.dart:692:9)
-<asynchronous suspension>
-#3      FlutterPlatform._startTest.finalize (package:flutter_tools/src/test/flutter_platform.dart:593:11)
-<asynchronous suspension>
-#4      Future.wait.<anonymous closure> (dart:async/future.dart:528:21)
-<asynchronous suspension>
-#5      _DefaultShutdownHooks.runShutdownHooks (package:flutter_tools/src/base/process.dart:73:7)
-<asynchronous suspension>
-#6      exitWithHooks (package:flutter_tools/src/base/process.dart:655:3)
-<asynchronous suspension>
-#7      LocalSignals._handleSignal (package:flutter_tools/src/base/signals.dart:150:7)
-<asynchronous suspension>
-
-unhandled error during finalization of test:
-/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart
-PathNotFoundException: Deletion failed, path = '/tmp/flutter_tools.NMYHHI/flutter_test_listener.PNHWIO' (OS Error: No such file or directory, errno = 2)
-#0      _Directory._deleteSync (dart:io/directory_impl.dart:226:7)
-#1      FileSystemEntity.deleteSync (dart:io/file_system_entity.dart:425:7)
-#2      ForwardingFileSystemEntity.deleteSync (package:file/src/forwarding/forwarding_file_system_entity.dart:70:16)
-#3      ErrorHandlingDirectory.deleteSync.<anonymous closure> (package:flutter_tools/src/base/error_handling_io.dart:449:22)
-#4      _runSync (package:flutter_tools/src/base/error_handling_io.dart:550:14)
-#5      ErrorHandlingDirectory.deleteSync (package:flutter_tools/src/base/error_handling_io.dart:448:12)
-#6      FlutterPlatform._createListenerDart.<anonymous closure> (package:flutter_tools/src/test/flutter_platform.dart:789:15)
-#7      FlutterPlatform._startTest.finalize (package:flutter_tools/src/test/flutter_platform.dart:593:26)
-<asynchronous suspension>
-#8      Future.wait.<anonymous closure> (dart:async/future.dart:528:21)
-<asynchronous suspension>
-#9      _DefaultShutdownHooks.runShutdownHooks (package:flutter_tools/src/base/process.dart:73:7)
-<asynchronous suspension>
-#10     exitWithHooks (package:flutter_tools/src/base/process.dart:655:3)
-<asynchronous suspension>
-#11     LocalSignals._handleSignal (package:flutter_tools/src/base/signals.dart:150:7)
-<asynchronous suspension>
-
+00:02 +5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: annuler la correction ne modifie rien
+00:02 +6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: supprimer puis annuler restaure la séance
+00:03 +7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: une archive se supprime sans correction
+00:03 +8: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: hors journal, aucune action d’écriture
+00:03 +9: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: (tearDownAll)
+00:03 +9: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart
+00:04 +9: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart: (setUpAll)
+00:05 +9: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart: historique : mêmes cartes, navigation et données intactes à 320 px, thème true
+00:07 +10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart: historique : mêmes cartes, navigation et données intactes à 320 px, thème false
+00:07 +11: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart: archive perso : nom et valeurs conservés sans inventer une prescription ou des unités
+00:07 +12: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart: une tenue historique garde ses secondes mais aucun chrono
+00:08 +13: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart: (tearDownAll)
+00:08 +13: All tests passed!
+exit=0
