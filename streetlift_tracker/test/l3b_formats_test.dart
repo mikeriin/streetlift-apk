@@ -688,11 +688,26 @@ void main() {
       app.storeClock = () => DateTime(2026, 9, 24, 23, 59);
       final trial = app.trialWod!;
       expect(ruleFor(trial), ScoreRule.tabata);
+      final blocks = trial.format!.movements.length;
+      // Première tentative du jour, partielle ; tentatives illimitées (L3).
+      final first = app.startAttempt(trial)!;
+      expect(
+        await app.recordWodResult(
+          trial,
+          tabataResult(trial, [
+            [4, 4, 4, 4, 4, 4, 4, 4],
+            for (var b = 1; b < blocks; b++) List<int?>.filled(8, null),
+          ], completed: false),
+          attempt: first,
+        ),
+        ResultSave.saved,
+      );
+      // Deuxième tentative lancée à 23 h 59, validée à 00 h 01.
       final attempt = app.startAttempt(trial)!;
       app.storeClock = () => DateTime(2026, 9, 25, 0, 1);
-      expect(app.isTrial(trial), isFalse);
+      expect(app.isTrial(trial), isFalse); // déjà tenté : plus candidat
+      expect(app.canRun(trial), isFalse);
       expect(app.canFinish(trial, attempt), isTrue);
-      final blocks = trial.format!.movements.length;
       final result = tabataResult(
         trial,
         full(blocks, [5, 5, 5, 5, 5, 5, 5, 5]),
@@ -702,9 +717,13 @@ void main() {
         await app.recordWodResult(trial, result, attempt: attempt),
         ResultSave.saved,
       );
-      expect(trial.results.single.scoring, 'tabata/1');
-      expect(trial.results.single.reps, 5 * blocks);
+      expect(trial.results, hasLength(2));
+      expect(trial.results.last.scoring, 'tabata/1');
+      expect(trial.results.last.reps, 5 * blocks);
+      expect(identical(trial.best(), trial.results.last), isTrue);
       expect(app.unlocked(trial), isFalse);
+      // Une nouvelle tentative n'est plus possible.
+      expect(app.startAttempt(trial), isNull);
     });
 
     test(

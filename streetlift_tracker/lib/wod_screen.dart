@@ -406,7 +406,7 @@ class _WodRunScreenState extends State<WodRunScreen> {
                                                       ? clock.toggle()
                                                       : _start(),
                                     ),
-                                    if (wod.type != 'emom' && !clock.phased)
+                                    if (wod.type != 'emom' && phasesOf(wod) == null)
                                       OutlinedButton.icon(
                                         style: OutlinedButton.styleFrom(
                                           foregroundColor: SL.accent,
