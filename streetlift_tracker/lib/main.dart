@@ -210,9 +210,23 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
   void _onPersistenceError() {
     final message = store.persistenceError.value;
     if (message != null && mounted) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(message)));
+      final messenger = ScaffoldMessenger.of(context);
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(message),
+          duration: const Duration(seconds: 8),
+          action: SnackBarAction(
+            label: 'Réessayer',
+            onPressed: () async {
+              if (await store.retrySave()) {
+                messenger.showSnackBar(
+                  const SnackBar(content: Text('Modifications enregistrées.')),
+                );
+              }
+            },
+          ),
+        ),
+      );
     }
   }
 

@@ -26,15 +26,21 @@ void main() {
       final wod = app.wods.firstWhere((w) => app.wodCost(w) <= app.credits);
       final before = app.credits;
       final cost = app.wodCost(wod);
-      expect(app.unlockWod(wod), isTrue);
-      expect(app.unlockWod(wod), isTrue);
+      expect(
+        (await app.purchaseWod(wod)).status,
+        PurchaseStatus.success,
+      );
+      expect(
+        (await app.purchaseWod(wod)).status,
+        PurchaseStatus.alreadyOwned,
+      );
       await app.flush();
       final reloaded = AppStore();
       await reloaded.init();
       final owned = reloaded.wods.firstWhere((w) => w.id == wod.id);
       expect(reloaded.unlocked(owned), isTrue);
       expect(reloaded.credits, before - cost);
-      expect(reloaded.unlockWod(owned), isTrue);
+      expect((await reloaded.purchaseWod(owned)).owned, isTrue);
       expect(reloaded.credits, before - cost);
       await reloaded.flush();
       reloaded.dispose();
@@ -113,7 +119,7 @@ void main() {
     'la sauvegarde compacte conserve les modifications, scores et crédits',
     () async {
       final wod = app.wods.firstWhere((w) => app.wodCost(w) <= app.credits);
-      expect(app.unlockWod(wod), true);
+      expect((await app.purchaseWod(wod)).owned, true);
       wod.lines = ['10 push-ups'];
       app.upsertWod(wod);
       app.addWodResult(

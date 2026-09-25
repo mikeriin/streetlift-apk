@@ -42,10 +42,30 @@ class _WodPreviewScreenState extends State<WodPreviewScreen>
     super.dispose();
   }
 
-  /// Achat : une seule facturation, une seule révélation.
-  void _buy(Wod w) {
-    final owned = store.unlocked(w);
-    if (!store.unlockWod(w) || owned || _celebrated) return;
+  /// Achat au prix affiché : une seule facturation, une seule révélation,
+  /// annoncées seulement après l'enregistrement (KT-002). Le message part
+  /// même si la fiche a été fermée entre-temps.
+  Future<void> _buy(Wod w, int cost) async {
+    if (store.purchasePending(w)) return;
+    final messenger = ScaffoldMessenger.of(context);
+    final result = await store.purchaseWod(w, acceptedCost: cost);
+    final message = switch (result.status) {
+      PurchaseStatus.success =>
+        '« ${w.name} » débloqué : gagné à la sueur. Rejoue-le à volonté.',
+      PurchaseStatus.alreadyOwned || PurchaseStatus.pending => null,
+      PurchaseStatus.insufficientCredits =>
+        'Crédits insuffisants : aucun crédit débité.',
+      PurchaseStatus.priceChanged =>
+        'Le prix vient de changer (${creditsLabel(result.cost ?? cost)}). Vérifie puis réessaie : aucun crédit débité.',
+      PurchaseStatus.failed =>
+        'Achat non enregistré : aucun crédit débité, le WOD reste verrouillé. Réessaie.',
+    };
+    if (message != null) {
+      messenger.showSnackBar(SnackBar(content: Text(message)));
+    }
+    if (result.status != PurchaseStatus.success || !mounted || _celebrated) {
+      return;
+    }
     _celebrated = true;
     if (store.settings.vibration) HapticFeedback.mediumImpact();
     if (MediaQuery.disableAnimationsOf(context)) {
@@ -53,13 +73,6 @@ class _WodPreviewScreenState extends State<WodPreviewScreen>
     } else {
       _reveal.forward(from: 0);
     }
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          '« ${w.name} » débloqué : gagné à la sueur. Rejoue-le à volonté.',
-        ),
-      ),
-    );
   }
 
   void _run(Wod w) {
@@ -407,8 +420,18 @@ class _WodPreviewScreenState extends State<WodPreviewScreen>
               onPressed: () => _run(w),
             )
             : null;
+    final pending = store.purchasePending(w);
     final Widget main =
-        missing == 0
+        pending
+            ? FilledButton.icon(
+              icon: const SizedBox.square(
+                dimension: 18,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+              label: const Text('Achat en cours…'),
+              onPressed: null,
+            )
+            : missing == 0
             ? FilledButton.icon(
               style: FilledButton.styleFrom(
                 backgroundColor: SL.action,
@@ -416,7 +439,7 @@ class _WodPreviewScreenState extends State<WodPreviewScreen>
               ),
               icon: const Icon(Icons.lock_open),
               label: Text('Acheter · ${creditsLabel(cost)}'),
-              onPressed: () => _buy(w),
+              onPressed: () => _buy(w, cost),
             )
             : Container(
               constraints: const BoxConstraints(minHeight: 44),

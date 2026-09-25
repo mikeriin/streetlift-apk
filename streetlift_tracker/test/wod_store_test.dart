@@ -158,7 +158,10 @@ void main() {
       final before = app.credits;
       app.toggleWish(pick);
       expect(app.wished(pick), isTrue);
-      expect(app.unlockWod(pick), isTrue);
+      expect(
+        (await app.purchaseWod(pick, acceptedCost: cost)).status,
+        PurchaseStatus.success,
+      );
       expect(app.wished(pick), isFalse);
       expect(app.unlockedWods[pick.id], cost);
       expect(app.credits, before - cost);

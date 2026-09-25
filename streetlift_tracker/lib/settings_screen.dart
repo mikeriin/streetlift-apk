@@ -321,15 +321,20 @@ class SettingsScreen extends StatelessWidget {
     );
     if (raw == null || !context.mounted) return;
     final messenger = ScaffoldMessenger.of(context);
-    final ok = await store.importAll(raw);
-    if (ok) await Notif.reschedule();
+    final status = await store.importBackup(raw);
+    if (status == ImportStatus.success) await Notif.reschedule();
     messenger.showSnackBar(
       SnackBar(
-        content: Text(
-          ok
-              ? 'Import réussi.'
-              : 'Import impossible : sauvegarde invalide ou écriture refusée. Les données actuelles sont conservées.',
-        ),
+        content: Text(switch (status) {
+          ImportStatus.success =>
+            'Import réussi. Tes données précédentes sont gardées en copie de secours.',
+          ImportStatus.invalid =>
+            'Import impossible : sauvegarde invalide ou incomplète. Les données actuelles sont conservées.',
+          ImportStatus.tooLarge =>
+            'Import impossible : sauvegarde trop volumineuse. Les données actuelles sont conservées.',
+          ImportStatus.writeFailed =>
+            'Import impossible : écriture refusée par le téléphone. Les données actuelles sont conservées.',
+        }),
       ),
     );
   }

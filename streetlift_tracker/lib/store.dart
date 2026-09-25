@@ -12,10 +12,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'game.dart';
 import 'models.dart';
+import 'persistence.dart';
 import 'training_estimate.dart';
 import 'progression.dart';
 import 'wod_generator.dart';
 import 'wod_models.dart';
+
+export 'persistence.dart';
 
 class SetEntry {
   String kg;
@@ -603,9 +606,29 @@ class AppStore extends ChangeNotifier {
   final List<Wod> wods = [];
 
   static const _kState = 'kalis_state_v3';
+  static const _kRecovery = 'kalis_recovery_v1';
+  static const _recoveryLimit = 3;
   final ValueNotifier<String?> persistenceError = ValueNotifier<String?>(null);
+
+  /// File unique des écritures (KT-013) : sauvegardes ordinaires, achats et
+  /// imports s'exécutent dans l'ordre de leur demande.
   Future<void> _pendingWrite = Future<void>.value();
+  Future<void>? _queuedSnapshot;
   bool _initialized = false;
+
+  /// Modifications demandées en mémoire / dernière modification comprise dans
+  /// une écriture acceptée par l'API. L'égalité ne prouve pas la présence sur
+  /// disque après un arrêt brutal : seule une relance le vérifie.
+  int _changeSeq = 0;
+  int _acceptedSeq = 0;
+
+  /// Des modifications en mémoire n'ont pas encore été acceptées par l'API.
+  bool get hasUnsavedChanges => _acceptedSeq < _changeSeq;
+
+  /// Injection d'erreurs d'écriture pour les tests uniquement. Reçoit le
+  /// document encodé ; doit renvoyer le résultat de l'écriture simulée.
+  @visibleForTesting
+  Future<bool> Function(String encoded)? debugWriteHook;
 
   static const _kPilotage = 'pilotage_v1';
   static const _kLogs = 'logs_v1';
@@ -626,6 +649,13 @@ class AppStore extends ChangeNotifier {
 
   /// WODs déverrouillés : id → crédits payés (0 = offert par la migration).
   final Map<String, int> unlockedWods = {};
+
+  /// Droits « coût 0 » antérieurs aux crédits v2, conservés sans donner
+  /// accès, en attente d'arbitrage (KT-014) : id → origine.
+  final Map<String, String> legacyGrants = {};
+
+  /// Achats en cours : id → prix de l'offre acceptée, réservé sur le solde.
+  final Map<String, int> _purchases = {};
 
   Future<void> init() async {
     program = Program.fromJson(
@@ -701,9 +731,17 @@ class AppStore extends ChangeNotifier {
       );
     }
     if ((_prefs.getInt(_kCreditsV) ?? 0) < 2) {
-      // v2 : tous les WODs préchargés se gagnent — les accès offerts par l'ancienne
-      // migration sont retirés (les déverrouillages payés en crédits sont conservés).
-      unlockedWods.removeWhere((k, v) => v == 0);
+      // v2 : tous les WODs préchargés se gagnent. Les accès « coût 0 » offerts
+      // par l'ancienne migration ne donnent plus accès, comme avant L2, mais
+      // sont conservés dans `legacyGrants` en attente d'arbitrage (KT-014).
+      // Les déverrouillages payés en crédits restent acquis.
+      for (final id in [
+        for (final e in unlockedWods.entries)
+          if (e.value == 0) e.key,
+      ]) {
+        unlockedWods.remove(id);
+        legacyGrants[id] = 'credits_v1';
+      }
       await _prefs.setInt(_kCreditsV, 2);
     }
     _rankDifficulty();
@@ -714,7 +752,6 @@ class AppStore extends ChangeNotifier {
   }
 
   // ---------- Crédits de déverrouillage ----------
-  void _saveUnlocked() => _persist();
 
   /// Prix de base par palier : niveaux 1-3 → 1 crédit (Standard), 4-6 → 2
   /// (Avancé), 7-8 → 3 (Élite), 9-10 → 4 (Légende).
@@ -755,18 +792,62 @@ class AppStore extends ChangeNotifier {
   /// Crédits gagnés = barème par niveau + crédits dérivés du journal
   /// (chapitres bouclés, boss vaincus, semaines complètes).
   int get creditsEarned => creditsForLevel(level) + game.bonusCredits;
-  int get creditsSpent => unlockedWods.values.fold(0, (a, b) => a + b);
+  /// Achats enregistrés + achats en cours (réservés jusqu'à leur résultat).
+  int get creditsSpent {
+    var total = unlockedWods.values.fold(0, (a, b) => a + b);
+    _purchases.forEach((id, cost) {
+      if (!unlockedWods.containsKey(id)) total += cost;
+    });
+    return total;
+  }
+
   int get credits => max(0, creditsEarned - creditsSpent);
 
-  bool unlockWod(Wod w) {
-    if (unlocked(w)) return true;
-    final c = wodCost(w);
-    if (credits < c) return false;
-    unlockedWods[w.id] = c;
-    wishlist.remove(w.id);
-    _saveUnlocked();
+  /// Un achat de ce WOD attend le résultat de son écriture.
+  bool purchasePending(Wod w) => _purchases.containsKey(w.id);
+
+  /// Achat au prix de l'offre affichée [acceptedCost] (KT-002). Le droit
+  /// n'est annoncé qu'après l'écriture acceptée ; en cas d'échec, seul ce
+  /// droit est retiré de la mémoire, les autres modifications sont gardées.
+  Future<PurchaseResult> purchaseWod(Wod w, {int? acceptedCost}) async {
+    if (unlocked(w)) return const PurchaseResult(PurchaseStatus.alreadyOwned);
+    if (_purchases.containsKey(w.id)) {
+      return const PurchaseResult(PurchaseStatus.pending);
+    }
+    final cost = wodCost(w);
+    if (acceptedCost != null && acceptedCost != cost) {
+      return PurchaseResult(PurchaseStatus.priceChanged, cost: cost);
+    }
+    if (credits < cost) {
+      return PurchaseResult(PurchaseStatus.insufficientCredits, cost: cost);
+    }
+    _purchases[w.id] = cost;
     notifyListeners();
-    return true;
+    return _serialize(() async {
+      // Un import a pu changer les droits ou le solde pendant l'attente.
+      _purchases.remove(w.id);
+      if (unlockedWods.containsKey(w.id)) {
+        notifyListeners();
+        return const PurchaseResult(PurchaseStatus.alreadyOwned);
+      }
+      if (credits < cost) {
+        notifyListeners();
+        return PurchaseResult(PurchaseStatus.insufficientCredits, cost: cost);
+      }
+      _purchases[w.id] = cost;
+      unlockedWods[w.id] = cost;
+      _changeSeq++;
+      final ok = _initialized && await _commitState();
+      _purchases.remove(w.id);
+      if (!ok) {
+        if (unlockedWods[w.id] == cost) unlockedWods.remove(w.id);
+        notifyListeners();
+        return PurchaseResult(PurchaseStatus.failed, cost: cost);
+      }
+      if (wishlist.remove(w.id)) _persist();
+      notifyListeners();
+      return PurchaseResult(PurchaseStatus.success, cost: cost);
+    });
   }
 
   // ---------- Liste d'envies ----------
@@ -1412,8 +1493,11 @@ class AppStore extends ChangeNotifier {
     need: progression.need,
   );
 
-  /// Possédé : hors catalogue (WOD personnel) ou acheté avec des crédits.
-  bool unlocked(Wod w) => !isCatalog(w) || unlockedWods.containsKey(w.id);
+  /// Possédé : hors catalogue (WOD personnel) ou acheté avec des crédits
+  /// dont l'écriture a été acceptée.
+  bool unlocked(Wod w) =>
+      !isCatalog(w) ||
+      (unlockedWods.containsKey(w.id) && !_purchases.containsKey(w.id));
 
   /// Si le niveau a monté depuis la dernière vérification : (ancien, nouveau,
   /// crédits gagnés), sinon null. À appeler après une séance ou un score.
@@ -1731,6 +1815,7 @@ class AppStore extends ChangeNotifier {
     userExercises: userExercises,
     wods: wods,
     unlocked: unlockedWods,
+    legacyGrants: legacyGrants,
     lastLevel: _lastLevel,
     wishlist: wishlist.toList(),
   );
@@ -1768,6 +1853,7 @@ class AppStore extends ChangeNotifier {
         },
       },
       'unlocked': data.unlocked,
+      if (data.legacyGrants.isNotEmpty) 'legacyGrants': data.legacyGrants,
       'lastLevel': data.lastLevel,
       'wishlist': data.wishlist,
     };
@@ -1776,11 +1862,16 @@ class AppStore extends ChangeNotifier {
   String exportAll() => jsonEncode(_backupJson(_currentBackup()));
   String exportCompact() => _pack(exportAll());
 
-  _BackupData _parseBackup(String raw) {
-    final m = jsonDecode(raw) as Map<String, dynamic>;
+  /// [limits] : import d'un texte externe (KT-015). Sans limites : état
+  /// produit par l'application elle-même, relu au démarrage.
+  _BackupData _parseBackup(String raw, {ImportLimits? limits}) {
+    final m =
+        (limits == null ? jsonDecode(raw) : boundedJsonDecode(raw, limits))
+            as Map<String, dynamic>;
     if (m['kalisTrack'] != 1 || ![1, 2, 3].contains(m['format'] ?? 1)) {
       throw const FormatException('Format de sauvegarde non pris en charge.');
     }
+    if (limits != null) _checkCollections(m, limits);
     // Tout construire et valider AVANT de modifier le store ou le disque.
     final defaults = program.pilotage;
     final nextValues = <String, double>{
@@ -1943,8 +2034,23 @@ class AppStore extends ChangeNotifier {
       }
     }
     final nextUnlocked = <String, int>{};
+    final nextLegacy = <String, String>{};
+    (m['legacyGrants'] as Map<String, dynamic>? ?? {}).forEach((k, v) {
+      if (v is! String || k.isEmpty) {
+        throw const FormatException('Droits anciens invalides.');
+      }
+      nextLegacy[k] = v;
+    });
+    final format = (m['format'] ?? 1) as int;
     (m['unlocked'] as Map<String, dynamic>? ?? {}).forEach((k, v) {
       if (v is! int || v < 0) throw const FormatException('Crédits invalides.');
+      // Formats 1-2 (avant les crédits v2) : un coût 0 d'un WOD du catalogue
+      // vient de l'ancienne migration. Il ne devient pas un accès gratuit ;
+      // il est conservé à part, comme au démarrage (KT-014).
+      if (limits != null && format < 3 && v == 0 && _seedDefaults.containsKey(k)) {
+        nextLegacy[k] = 'import_format_$format';
+        return;
+      }
       nextUnlocked[k] = v;
     });
     final nextWishlist = <String>[];
@@ -1962,9 +2068,57 @@ class AppStore extends ChangeNotifier {
       userExercises: nextUser,
       wods: nextWods,
       unlocked: nextUnlocked,
+      legacyGrants: nextLegacy,
       lastLevel: m['lastLevel'] as int?,
       wishlist: nextWishlist,
     );
+  }
+
+  /// Tailles des collections d'un import, avant toute conversion (KT-015).
+  static void _checkCollections(Map<String, dynamic> m, ImportLimits limits) {
+    void cap(Object? value, int limit, String what) {
+      final n = value is Map ? value.length : (value is List ? value.length : 0);
+      if (n > limit) throw ImportLimitException('Trop de $what.');
+    }
+
+    final logs = m['logs'];
+    cap(logs, limits.maxLogs, 'séances');
+    var sets = 0;
+    if (logs is Map) {
+      for (final log in logs.values) {
+        final ex = log is Map ? log['ex'] : null;
+        if (ex is! Map) continue;
+        for (final e in ex.values) {
+          final list = e is Map ? e['sets'] : null;
+          if (list is List) sets += list.length;
+        }
+      }
+    }
+    if (sets > limits.maxSets) {
+      throw const ImportLimitException('Trop de séries.');
+    }
+    cap(m['custom'], limits.maxEntries, 'séances perso');
+    cap(m['userExercises'], limits.maxEntries, 'exercices perso');
+    cap(m['unlocked'], limits.maxEntries, 'droits WOD');
+    cap(m['legacyGrants'], limits.maxEntries, 'droits anciens');
+    cap(m['wishlist'], limits.maxEntries, 'envies');
+    cap(m['wods'], limits.maxEntries, 'WODs');
+    final catalog = m['catalog'];
+    if (catalog is Map) {
+      cap(catalog['user'], limits.maxEntries, 'WODs perso');
+      cap(catalog['edits'], limits.maxEntries, 'WODs modifiés');
+      cap(catalog['deleted'], limits.maxEntries, 'WODs supprimés');
+      var results = 0;
+      final all = catalog['results'];
+      if (all is Map) {
+        for (final list in all.values) {
+          if (list is List) results += list.length;
+        }
+      }
+      if (results > limits.maxResults) {
+        throw const ImportLimitException('Trop de résultats de WOD.');
+      }
+    }
   }
 
   void _applyBackup(_BackupData data) {
@@ -1988,6 +2142,9 @@ class AppStore extends ChangeNotifier {
     unlockedWods
       ..clear()
       ..addAll(data.unlocked);
+    legacyGrants
+      ..clear()
+      ..addAll(data.legacyGrants);
     wishlist
       ..clear()
       ..addAll(data.wishlist);
@@ -2001,60 +2158,170 @@ class AppStore extends ChangeNotifier {
     _lastLevel = data.lastLevel ?? level;
   }
 
-  Future<bool> importAll(String raw) async {
+  /// Import compatible avec l'API historique : `true` si tout est appliqué.
+  Future<bool> importAll(String raw) async =>
+      await importBackup(raw) == ImportStatus.success;
+
+  /// Remplace toutes les données par une sauvegarde (KT-013 / KT-015).
+  /// Validation complète et bornée avant toute modification ; l'état courant
+  /// (modifications non écrites comprises) est d'abord conservé comme copie
+  /// de récupération ; l'import passe dans la file des écritures et n'est
+  /// appliqué en mémoire qu'après l'écriture acceptée.
+  Future<ImportStatus> importBackup(
+    String raw, {
+    ImportLimits limits = ImportLimits.standard,
+  }) async {
     _BackupData data;
     String encoded;
     try {
-      data = _parseBackup(_unpack(raw.trim())!);
+      data = _parseBackup(boundedUnpack(raw, limits), limits: limits);
       encoded = _pack(jsonEncode(_backupJson(data)));
+    } on ImportLimitException {
+      return ImportStatus.tooLarge;
     } catch (_) {
-      return false;
+      return ImportStatus.invalid;
     }
-    _saveT?.cancel();
-    _saveT = null;
-    await _pendingWrite;
-    final previous = _prefs.getString(_kState);
+    return _serialize(() async {
+      if (!_initialized) return ImportStatus.writeFailed;
+      if (!await _keepRecoveryCopy('import')) {
+        persistenceError.value =
+            'Import interrompu : copie de sécurité impossible. Tes données actuelles sont conservées.';
+        return ImportStatus.writeFailed;
+      }
+      if (!await _writeRaw(encoded)) {
+        persistenceError.value =
+            'La sauvegarde a échoué. Tes données actuelles sont conservées.';
+        return ImportStatus.writeFailed;
+      }
+      _applyBackup(data);
+      _rankDifficulty();
+      // Mémoire et document écrit sont identiques : plus rien d'antérieur à
+      // écrire. Une sauvegarde déjà demandée réécrira simplement cet état.
+      _acceptedSeq = _changeSeq;
+      persistenceError.value = null;
+      notifyListeners();
+      return ImportStatus.success;
+    });
+  }
+
+  /// Copies de récupération (plus récente d'abord), jamais écrasées par un
+  /// seul import : les [_recoveryLimit] dernières sont gardées.
+  @visibleForTesting
+  List<Map<String, dynamic>> get recoveryCopies {
+    final raw = _prefs.getString(_kRecovery);
+    if (raw == null) return const [];
     try {
-      if (!await _prefs.setString(_kState, encoded)) {
-        throw StateError('Écriture refusée');
-      }
+      return [
+        for (final e in jsonDecode(raw) as List)
+          Map<String, dynamic>.from(e as Map),
+      ];
     } catch (_) {
-      // SharedPreferences met aussi à jour son cache avant la réponse native.
-      if (previous != null) {
-        try {
-          await _prefs.setString(_kState, previous);
-        } catch (_) {}
-      }
-      persistenceError.value =
-          'La sauvegarde a échoué. Tes données actuelles sont conservées.';
+      return const [];
+    }
+  }
+
+  /// Document complet d'une copie de récupération, décompressé.
+  @visibleForTesting
+  String? recoveryState(int index) {
+    final copies = recoveryCopies;
+    if (index < 0 || index >= copies.length) return null;
+    return _unpack(copies[index]['state'] as String?);
+  }
+
+  Future<bool> _keepRecoveryCopy(String reason) async {
+    final raw = _prefs.getString(_kRecovery);
+    List<Object?> copies;
+    try {
+      copies = raw == null ? [] : jsonDecode(raw) as List<Object?>;
+    } catch (_) {
+      // Une liste illisible n'est pas écrasée : l'import attend un arbitrage.
       return false;
     }
-    _applyBackup(data);
-    _rankDifficulty();
-    persistenceError.value = null;
-    notifyListeners();
-    return true;
+    final next = [
+      {
+        'at': DateTime.now().toIso8601String(),
+        'reason': reason,
+        'state': _pack(exportAll()),
+      },
+      ...copies.take(_recoveryLimit - 1),
+    ];
+    try {
+      return await _prefs.setString(_kRecovery, jsonEncode(next));
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// Nouvelle tentative après une erreur : `true` si l'état en mémoire est
+  /// désormais accepté par l'API de stockage.
+  Future<bool> retrySave() async {
+    await flush();
+    return !hasUnsavedChanges;
   }
 
   void _persist() {
     if (_initialized) unawaited(_writeSnapshot());
   }
 
+  /// Ajoute une opération à la file unique des écritures.
+  Future<T> _serialize<T>(Future<T> Function() op) {
+    final result = _pendingWrite.then((_) => op());
+    _pendingWrite = result.then<void>((_) {}, onError: (_) {});
+    return result;
+  }
+
+  /// Sauvegarde de l'état courant. Les demandes rapprochées se regroupent en
+  /// une écriture, qui encode l'état au moment où elle s'exécute : un état
+  /// ancien ne peut plus être écrit après un état plus récent.
   Future<void> _writeSnapshot() {
     if (!_initialized) return Future<void>.value();
-    final encoded = _pack(exportAll());
-    _pendingWrite = _pendingWrite.then((_) async {
-      try {
-        if (!await _prefs.setString(_kState, encoded)) {
-          throw StateError('Écriture refusée');
-        }
-        persistenceError.value = null;
-      } catch (_) {
-        persistenceError.value =
-            'Sauvegarde impossible. Exporte tes données puis réessaie.';
-      }
+    _changeSeq++;
+    final queued = _queuedSnapshot;
+    if (queued != null) return queued;
+    return _queuedSnapshot = _serialize(() async {
+      _queuedSnapshot = null;
+      await _commitState();
     });
-    return _pendingWrite;
+  }
+
+  Future<bool> _commitState() async {
+    final seq = _changeSeq;
+    final ok = await _writeRaw(_pack(exportAll()));
+    if (ok) {
+      if (seq > _acceptedSeq) _acceptedSeq = seq;
+      persistenceError.value = null;
+    } else {
+      persistenceError.value =
+          'Sauvegarde impossible. Tes modifications restent sur cet écran : réessaie avant de fermer l’application.';
+    }
+    return ok;
+  }
+
+  /// Écrit le document principal. En cas de refus, le cache de
+  /// SharedPreferences (mis à jour avant la réponse native) retrouve le
+  /// dernier document accepté.
+  Future<bool> _writeRaw(String encoded) async {
+    final previous = _prefs.getString(_kState);
+    var ok = false;
+    try {
+      final hook = debugWriteHook;
+      ok =
+          hook != null
+              ? await hook(encoded)
+              : await _prefs.setString(_kState, encoded);
+    } catch (_) {
+      ok = false;
+    }
+    if (!ok) {
+      try {
+        if (previous == null) {
+          await _prefs.remove(_kState);
+        } else if (_prefs.getString(_kState) != previous) {
+          await _prefs.setString(_kState, previous);
+        }
+      } catch (_) {}
+    }
+    return ok;
   }
 
   // ---------- Pilotage ----------
@@ -2886,6 +3153,7 @@ class _BackupData {
   final List<Map<String, dynamic>> userExercises;
   final List<Wod> wods;
   final Map<String, int> unlocked;
+  final Map<String, String> legacyGrants;
   final int? lastLevel;
   final List<String> wishlist;
   _BackupData({
@@ -2896,6 +3164,7 @@ class _BackupData {
     required this.userExercises,
     required this.wods,
     required this.unlocked,
+    this.legacyGrants = const {},
     this.lastLevel,
     this.wishlist = const [],
   });

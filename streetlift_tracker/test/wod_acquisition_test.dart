@@ -102,7 +102,10 @@ void main() {
     expect(find.textContaining('Acheter ·'), findsNothing);
     expect(find.text('Démarrer'), findsNothing);
     expect(find.text('Terminer'), findsNothing);
-    expect(store.unlockWod(wod), isFalse);
+    expect(
+      (await store.purchaseWod(wod)).status,
+      PurchaseStatus.insufficientCredits,
+    );
     expect(store.credits, before);
     expect(store.unlocked(wod), isFalse);
     await tester.pumpWidget(const SizedBox());

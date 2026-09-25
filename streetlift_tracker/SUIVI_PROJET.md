@@ -1,36 +1,57 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : L1b — KT-010, KT-011, KT-012, KT-019 et validations techniques L1 restantes**  
-**Date : 25 septembre 2026, Europe/Paris — version déclarée : 2.5.1+52 (L1b-R2)**  
-**Statut : L1b-R2 — correctif CI L1b-R1 + fonction demandée « corriger ou supprimer une séance terminée ». Compilation Android et essais sur appareil encore attendus. Aucun autre lot lancé.**
+**Passe actuelle : L1b — KT-010, KT-011, KT-012, KT-019, validations techniques L1 restantes + demande « corriger/supprimer une séance »**  
+**Date : 25 septembre 2026, 18:30 Europe/Paris — version : 2.5.1+52 (versionCode réel fixé par la CI)**  
+**Statut : L1b compilé et contrôlé en CI (run n° 71, succès). Essai sur téléphone L1b à faire par le propriétaire. Aucun autre lot lancé.**
+
+## L1b.0 — État de clôture (remplace les statuts « en attente CI » plus bas)
+
+| Run | Commit | Contenu | Résultat |
+| --- | --- | --- | --- |
+| n° 68 | `bdc7aef` | L1b initial (2.5.0+51) | **Échec** étape 7 : `sdkmanager: command not found` (code 127) |
+| n° 69 | `e0d94bc` | L1b-R1 (2.5.0+51) : chemin SDK + filtres ABI | **Succès**, 21 étapes, 14:36 → 14:48 UTC |
+| n° 70 | `adad2b0` | L1b-R2 (2.5.1+52) : corriger/supprimer une séance | **Échec** étape 9 : formatage (1 ligne de test) |
+| n° 71 | `f7f8518` | L1b-R2 formaté, nettoyage de test corrigé | **Succès**, 21 étapes, 15:59 → 16:11 UTC |
+
+**Run n° 71, preuves CI (statut des étapes lu via l’API GitHub) :** ZIP et copie du workflow identiques ; `verify_project.py` ; composants Android 36 / build-tools 36.0.0 / NDK r28c installés ; `pub get --enforce-lockfile` ; formatage sans changement ; `flutter analyze` sans problème ; tests Python et Flutter réussis ; icônes ; **5 vrais refus Gradle release sans secrets valides** ; restauration et contrôle obligatoires de la clé existante ; APK et AAB release compilés avec le même numéro ; `verify_android_artifacts.py` réussi (certificat APK et AAB = référence, manifestes finaux identité/versions/min 21/cible 36/non débogable, permissions APK = AAB, `bundletool validate`, configuration AAB `PAGE_ALIGNMENT_16K`, `zipalign -P 16`, ELF 64 bits alignés 16 Ko avec contrôle RELRO, mêmes bibliothèques natives APK/AAB, ABI exactement armeabi-v7a/arm64-v8a/x86_64) ; artefacts publiés.
+
+| Artefact run n° 71 | Taille de l’archive GitHub | Empreinte de l’archive GitHub (SHA-256) | Expiration |
+| --- | --- | --- | --- |
+| `kalis-track-apk` | 26 348 376 octets | `4f7d752e7d2e0f1aaa8e21ba8e7ec24e68ad0cc1c4af8f5737ca7465f851fbc4` | 25/10/2026 |
+| `kalis-track-aab` | 27 018 366 octets | `eaefa5f753468dcdcb978addcfd3efefc89d1b6a43b3a07f722b00719fc91291` | 25/10/2026 |
+| `kalis-track-validation` | 23 502 octets | `1679fc9fd5b648ae06edbe0137731731e8acdc4fe1a9333bdd80f66c630c389f` | 25/10/2026 |
+
+Ces empreintes sont celles des archives téléchargeables, pas de l’APK/AAB qu’elles contiennent : les fichiers `kalis-track.apk.sha256`, `kalis-track.aab.sha256`, `build-number.txt` et `android-artifacts.json` sont dans les archives. Le stockage des journaux et artefacts GitHub n’est pas joignable depuis l’environnement de l’assistant : leur contenu n’a pas été relu ici.
+
+Suite Flutter complète exécutée séparément sur le même code (branche temporaire `claude/ci-tools`, sans secrets) : **202 tests réussis, 1 ignoré** (capture optionnelle), sortie 0 ; analyse `No issues found!`. La branche temporaire n’a pas pu être supprimée depuis l’environnement de l’assistant (refus 403) : suppression à faire par le propriétaire, elle ne contient ni secret ni workflow de build.
+
+**Clos par la CI :** KT-010 (cible 36 vérifiée dans le manifeste final), KT-011 (pipeline APK + AAB, contrôles et refus sans secrets démontrés), KT-019 (alignements 16 Ko vérifiés statiquement sur les binaires finaux), gates de formatage/analyse/tests. KT-012 : tests mobiles réussis en CI.
+
+**Restent ouverts :** essai L1b sur téléphone (mise à jour sans désinstallation, données conservées, nouvelle fonction, texte agrandi) ; exécution sur appareil ou émulateur à pages 16 Ko ; autres ABI, Android minimum, grand écran ; KT-005 (solde de crédits qui peut baisser) ; préparation Google Play hors lot ; suppression de la branche temporaire.
 
 ## L1b-R2 — Corriger ou supprimer une séance terminée (demande du propriétaire)
 
-Besoin : une fin de séance validée par erreur rendait les valeurs définitivement non modifiables, l’historique étant en lecture seule depuis R2 et l’accueil ouvrant l’historique pour une journée faite.
+Besoin : une fin de séance validée par erreur rendait les valeurs non modifiables ; l’historique est en lecture seule depuis R2, et l’accueil ouvre l’historique pour une journée faite.
 
 | Élément | Changement |
 | --- | --- |
-| `lib/store.dart` | `correctionPlan(key)` (journée d’entraînement du programme ou séance perso existante ; null pour archive `@`, repos, séance perso supprimée), `reopenSession(key)` (done → false, saisies et `finishedAt` conservés), `deleteLog(key)` / `restoreLog(key, log)` (annulation sans écraser une séance reprise). `markSessionDone(done: true)` réutilise `finishedAt` s’il existe : la date d’origine est conservée après correction. « Repasser en à faire » efface toujours la date. |
-| `lib/session_history.dart` | Menu ⋮ quand l’entrée existe et est terminée : « Corriger les saisies » (désactivé si non rouvrable) et « Supprimer de l’historique ». Carte « Validée par erreur ? » sur la page Bilan. Confirmations explicites ; suppression suivie d’un message avec « Annuler ». Consulter reste sans écriture. |
-| `test/history_correction_test.dart` | 4 tests store + 5 tests widget (320 px, texte 130 %) : réouverture, date conservée, revalidation, annulation, suppression/restauration, archive, entrée absente. |
-| Version | 2.5.1+52 (`pubspec.yaml`, `kAppVersion`) ; le versionCode réel reste calculé par la CI. |
+| `lib/store.dart` | `correctionPlan(key)` (journée d’entraînement du programme ou séance perso existante ; null pour archive `@`, repos, séance perso supprimée) ; `reopenSession(key)` (terminée → en cours, saisies et `finishedAt` conservés) ; `deleteLog(key)` / `restoreLog(key, log)` (annulation sans écraser une séance reprise). `markSessionDone(done: true)` réutilise `finishedAt` s’il existe : la date d’origine est conservée après correction. « Repasser en à faire » efface toujours la date. |
+| `lib/session_history.dart` | Menu ⋮ quand l’entrée existe et est terminée : « Corriger les saisies » (désactivé si non rouvrable) et « Supprimer de l’historique ». Carte « Validée par erreur ? » sur la page Bilan. Confirmations explicites ; suppression suivie d’un message « Annuler ». Consulter reste sans écriture. |
+| `test/history_correction_test.dart` | 4 tests store + 5 tests widget (320 px, texte 130 %) : réouverture, date conservée, revalidation, annulation, suppression/restauration, archive, entrée absente. **9/9 réussis en CI**, avec les 4 tests `history_readonly_test.dart` inchangés. |
+| `README.md`, `pubspec.yaml`, `lib/settings_screen.dart` | Section 2.5.1 ; version 2.5.1+52 et `kAppVersion`. |
 
-Effets sur la progression : pendant une correction, l’XP de séance est retiré (les séries validées restent comptées) ; il revient à la revalidation, avec un nouveau bilan. Une suppression retire XP et bonus dérivés ; les crédits déjà dépensés restent acquis (`unlockedWods` inchangé) ; le solde affiché peut baisser si le niveau baisse (comportement préexistant de « Repasser en à faire », KT-005 toujours ouvert). `_lastLevel` ne redescend pas : pas de seconde cérémonie de niveau après correction.
+Effets sur la progression : pendant une correction, l’XP de séance est retiré (les séries validées restent comptées) ; il revient à la revalidation, avec un nouveau bilan. Une suppression retire l’XP et les bonus dérivés ; les WODs débloqués restent acquis (`unlockedWods` inchangé) ; le solde affiché peut baisser si le niveau baisse (comportement préexistant de « Repasser en à faire », KT-005 ouvert). `_lastLevel` ne redescend pas : pas de seconde cérémonie de niveau après correction.
 
-Contrôles : Flutter/Dart indisponibles localement (hôtes Google bloqués) ; formatage, analyse et tests Flutter exécutés par la CI.
+Incidents de mise au point : run n° 70 refusé par le formatage d’une assertion de test (corrigé à l’identique du formateur Dart 3.7.2). Un test widget bloquait : `tester.runAsync(store.flush)` attendait une écriture créée dans la zone de temps simulée ; nettoyage limité au démontage de l’arbre. Aucun code de l’application modifié pour ces deux corrections.
 
 ## L1b-R1 — Correctif après le premier run CI L1b
 
-Run GitHub Actions du 25/09/2026, commit `bdc7aef5`, runner `ubuntu-24.04` image 20260920.314.1. Étapes réussies : checkout, Java 17.0.20, Flutter 3.29.3, extraction, contrôle ZIP (298 fichiers), `cmp` des deux workflows, `verify_project.py`. **Échec** à « Installer les composants Android ciblés » : `sdkmanager: command not found`, code 127. Aucune étape Flutter, Gradle, signature ou artefact n’a été atteinte ; les secrets n’ont pas été lus.
+Run n° 68, commit `bdc7aef5`, runner `ubuntu-24.04` image 20260920.314.1. Échec à « Installer les composants Android ciblés » : `sdkmanager: command not found`, code 127. Aucune étape Flutter, Gradle, signature ou artefact atteinte ; secrets non lus.
 
-| Problème | Cause | Correction |
-| --- | --- | --- |
-| **R1-A** — `sdkmanager` introuvable (constaté) | Le SDK Android est préinstallé dans `$ANDROID_HOME`, mais `cmdline-tools/latest/bin` n’est pas dans le PATH du runner | Chemin résolu depuis `ANDROID_HOME`/`ANDROID_SDK_ROOT`, présence de `sdkmanager` et `apkanalyzer` contrôlée, dossier ajouté à `GITHUB_PATH`, licences acceptées, installation journalisée dans `sdkmanager-install.log`, puis présence d’`apksigner`, `apksigner.jar`, `zipalign`, plateforme 36 et NDK r28c vérifiée avant de continuer |
-| **R1-B** — ABI x86 hors liste (anticipé à la lecture, non encore observé) | `shared_preferences_android` 2.4.13 dépend d’`androidx.datastore` 1.1.7, qui embarque `libdatastore_shared_counter.so`, y compris en x86. Flutter 3.29.3 ne pose pas de filtre ABI par défaut (ajouté par Flutter 3.35). `verify_android_artifacts.py` n’accepte que `armeabi-v7a`, `arm64-v8a`, `x86_64` et aurait refusé l’APK/AAB | `abiFilters` release limité à `armeabi-v7a`, `arm64-v8a`, `x86_64` dans `android/app/build.gradle.kts`, comme Flutter 3.35. Le contrôleur reste strict, sans modification |
-
-Inchangés : identité, `2.5.0+51`, formule du versionCode, signature, secrets, code Dart, tests, contrôleurs Python, versions Flutter/Java/Gradle/AGP/Kotlin. Contrôles locaux de cette passe : 33 tests Python réussis, contrôle packaging et `verify_project.py` réussis, workflow YAML relu et analysé. Flutter et le SDK Android n’étaient pas disponibles dans cet environnement (hôtes Google bloqués) : ni tests Flutter ni compilation Android refaits ici.
-
-Risque restant identifié : le contrôle ELF 16 Ko s’appliquera aussi à `libdatastore_shared_counter.so` 64 bits. La version 1.1.7 est signalée compatible 16 Ko (la régression publique concerne 1.2.0) ; seul le run CI le prouvera.
+| Problème | Cause | Correction | Preuve |
+| --- | --- | --- | --- |
+| **R1-A** — `sdkmanager` introuvable | SDK préinstallé dans `$ANDROID_HOME`, mais `cmdline-tools/latest/bin` hors du PATH du runner | Chemin résolu depuis `ANDROID_HOME`/`ANDROID_SDK_ROOT`, outils contrôlés, dossier ajouté à `GITHUB_PATH`, licences acceptées, installation journalisée (`sdkmanager-install.log`), présence d’`apksigner`, `apksigner.jar`, `zipalign`, plateforme 36 et NDK r28c vérifiée | Étape 7 réussie aux runs n° 69 et 71 |
+| **R1-B** — ABI x86 hors liste (anticipé) | `shared_preferences_android` 2.4.13 → `androidx.datastore` 1.1.7 embarque `libdatastore_shared_counter.so` en x86 ; Flutter 3.29.3 ne filtre pas les ABI (filtre par défaut depuis Flutter 3.35) ; le contrôleur n’accepte que 3 ABI | `abiFilters` release `armeabi-v7a`, `arm64-v8a`, `x86_64` dans `android/app/build.gradle.kts` ; contrôleur inchangé | Étape 17 réussie aux runs n° 69 et 71 (ABI, ELF 16 Ko et RELRO de toutes les bibliothèques, datastore compris) |
 
 ## L1b.1 — Source réellement utilisée
 
