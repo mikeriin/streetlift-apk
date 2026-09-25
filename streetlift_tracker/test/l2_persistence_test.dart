@@ -671,22 +671,28 @@ void main() {
       expect(app.credits, credits);
     });
 
-    test('migration : le plus haut part du journal, sans créer ni retirer', () async {
-      final saved = backupOf(app);
-      expect(saved['creditsEarnedMax'], app.creditsFromJournal);
-      final old = Map<String, dynamic>.of(saved)..remove('creditsEarnedMax');
-      expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
-      expect(app.creditsEarned, app.creditsFromJournal);
-    });
+    test(
+      'migration : le plus haut part du journal, sans créer ni retirer',
+      () async {
+        final saved = backupOf(app);
+        expect(saved['creditsEarnedMax'], app.creditsFromJournal);
+        final old = Map<String, dynamic>.of(saved)..remove('creditsEarnedMax');
+        expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
+        expect(app.creditsEarned, app.creditsFromJournal);
+      },
+    );
 
-    test('import d’une sauvegarde : son plus haut remplace le courant', () async {
-      final data = backupOf(app)..['creditsEarnedMax'] = 20;
-      expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
-      expect(app.creditsEarned, 20);
-      final lower = backupOf(app)..['creditsEarnedMax'] = 3;
-      expect(await app.importBackup(jsonEncode(lower)), ImportStatus.success);
-      expect(app.creditsEarned, app.creditsFromJournal);
-    });
+    test(
+      'import d’une sauvegarde : son plus haut remplace le courant',
+      () async {
+        final data = backupOf(app)..['creditsEarnedMax'] = 20;
+        expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
+        expect(app.creditsEarned, 20);
+        final lower = backupOf(app)..['creditsEarnedMax'] = 3;
+        expect(await app.importBackup(jsonEncode(lower)), ImportStatus.success);
+        expect(app.creditsEarned, app.creditsFromJournal);
+      },
+    );
 
     test('plus haut invalide : import refusé', () async {
       for (final bad in [-1, 'dix', 1000001]) {
