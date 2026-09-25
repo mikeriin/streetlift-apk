@@ -7,7 +7,7 @@ import 'notifications.dart';
 import 'notification_settings.dart';
 import 'store.dart';
 
-const kAppVersion = '2.5.1';
+const kAppVersion = '2.5.2';
 
 class SettingsScreen extends StatelessWidget {
   final int? section;

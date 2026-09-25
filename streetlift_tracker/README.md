@@ -1,4 +1,15 @@
-# Kalis Track 2.5.1 — Boutique de WODs façon jeu
+# Kalis Track 2.5.2 — Boutique de WODs façon jeu
+
+## Correctifs 2.5.2 — sauvegarde et achats (lot L2)
+
+- **Achat confirmé seulement une fois enregistré.** Le bouton passe en « Achat en cours… », le prix est réservé sur le solde, puis le déblocage (révélation, message) n’est annoncé qu’après l’écriture acceptée. Écriture refusée : message explicite, aucun crédit débité, WOD toujours verrouillé, nouvelle tentative possible. Double appui : un seul débit. Deux achats rapprochés : jamais au-delà du solde. Prix changé entre l’affichage et l’appui : rien n’est débité.
+- **Une seule file d’écritures.** Sauvegardes ordinaires, achats et imports passent dans le même ordre ; chaque écriture encode l’état au moment où elle s’exécute : un état ancien ne peut plus être écrit après un plus récent. Après une erreur, les modifications restent en mémoire, l’alerte propose **Réessayer**.
+- **Import plus sûr.** Validation complète avant tout changement ; l’état courant est d’abord gardé en copie de secours (les trois dernières sont conservées) ; import appliqué seulement après son écriture. Messages distincts : sauvegarde invalide, trop volumineuse, écriture refusée.
+- **Imports bornés.** Texte ≤ 8 Mio de caractères, JSON décompressé ≤ 32 Mio (contrôlé pendant la décompression), ≤ 2 millions de valeurs, textes ≤ 100 000 caractères, ≤ 20 000 séances, ≤ 500 000 séries, ≤ 100 000 résultats de WOD, ≤ 20 000 entrées par autre collection. Une sauvegarde représentative (40 semaines entièrement saisies, 60 séances perso, 300 résultats) pèse 1 037 555 octets de JSON et 49 183 caractères compactée.
+- **Droits WOD anciens préservés.** Les accès « coût 0 » de l’ancienne migration ne sont plus effacés : ils sont gardés à part (`legacyGrants`), sans donner accès, en attente d’arbitrage. Un import au format 1 ou 2 les traite de la même façon ; un droit à coût 0 d’une sauvegarde format 3 reste acquis.
+
+Tests : `test/l2_persistence_test.dart`, `test/l2_purchase_ui_test.dart`, jeux de données `test/l2_fixtures.dart`.
+
 
 ## Nouveauté 2.5.1 — corriger ou supprimer une séance terminée
 
