@@ -123,15 +123,23 @@ class _Credits extends StoreWidget {
           ? '« ${target.name} » est à ta portée'
           : 'Plus que ${creditsLabel(missing)} pour « ${target.name} »';
     }
+    if (store.credits < 0) {
+      return 'Tes prochains gains comblent d’abord ce déficit';
+    }
     final trial = store.trialWod;
-    if (trial != null) return 'Essai du jour offert : « ${trial.name} »';
+    if (trial != null && !store.unlocked(trial)) {
+      return 'Essai du jour offert : « ${trial.name} »';
+    }
     return 'À utiliser dans le catalogue';
   }
 
   @override
   Widget build(BuildContext context) => KMenuTile(
     icon: Icons.toll_rounded,
-    title: '${store.credits} crédit${store.credits > 1 ? 's' : ''} WOD',
+    title:
+        store.credits >= 0
+            ? '${store.credits} crédit${store.credits > 1 ? 's' : ''} WOD'
+            : 'WOD : ${creditDeficitLabel(store.credits)}',
     subtitle: _subtitle(),
     onTap:
         () => Navigator.push(

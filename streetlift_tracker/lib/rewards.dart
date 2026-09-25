@@ -81,7 +81,7 @@ void checkLevelUp(BuildContext context, {Future<void>? after}) {
             ],
           ),
           content: Text(
-            'Niveau ${up.from} → ${up.to} · ${store.progression.rank.title}\n+${up.credits} crédit${up.credits > 1 ? 's' : ''} de déverrouillage — ${store.credits} disponible${store.credits > 1 ? 's' : ''}.',
+            'Niveau ${up.from} → ${up.to} · ${store.progression.rank.title}\n+${up.credits} crédit${up.credits > 1 ? 's' : ''} de déverrouillage — ${store.credits >= 0 ? '${store.credits} disponible${store.credits > 1 ? 's' : ''}' : creditDeficitLabel(store.credits)}.',
           ),
           actions: [
             TextButton(
@@ -496,7 +496,7 @@ class _Ceremony extends StatelessWidget {
             ),
           const SizedBox(height: 10),
           Text(
-            '+${r.creditsGained} crédit${r.creditsGained > 1 ? 's' : ''} WOD · ${store.credits} disponible${store.credits > 1 ? 's' : ''}',
+            '+${r.creditsGained} crédit${r.creditsGained > 1 ? 's' : ''} WOD · ${store.credits >= 0 ? '${store.credits} disponible${store.credits > 1 ? 's' : ''}' : creditDeficitLabel(store.credits)}',
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Colors.white,

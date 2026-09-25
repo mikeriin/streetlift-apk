@@ -584,7 +584,9 @@ class _WodCatalogScreenState extends State<WodCatalogScreen> {
             const SizedBox(width: 8),
             Expanded(
               child: Text(
-                '${store.credits} crédit${store.credits > 1 ? 's' : ''} disponible${store.credits > 1 ? 's' : ''}',
+                store.credits >= 0
+                    ? '${store.credits} crédit${store.credits > 1 ? 's' : ''} disponible${store.credits > 1 ? 's' : ''}'
+                    : 'Solde : ${creditDeficitLabel(store.credits)}',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
             ),
@@ -601,6 +603,13 @@ class _WodCatalogScreenState extends State<WodCatalogScreen> {
       const CreditsCard(),
       if (target != null) WishGoalCard(wod: target),
       if (trial != null) WodHero(wod: trial),
+      if (trial == null)
+        KCard(
+          child: Text(
+            'Pas d’essai du jour : aucun WOD jamais tenté ne reste à découvrir. Le prochain choix a lieu demain.',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ),
       if (weekly.isNotEmpty)
         StoreRail(
           title: 'Vitrine de la semaine · −1 crédit',

@@ -3,7 +3,13 @@
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <!-- KT-016, décision du propriétaire (option A, 25/09/2026) : sauvegarde
+         Android par défaut, déclarée explicitement. Aucune règle
+         dataExtractionRules / fullBackupContent : sauvegarde cloud Google et
+         transfert d'appareil selon les réglages du téléphone. Contrôlé sur le
+         manifeste final par tools/verify_android_artifacts.py. -->
     <application
+        android:allowBackup="true"
         android:label="Kalis Track"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

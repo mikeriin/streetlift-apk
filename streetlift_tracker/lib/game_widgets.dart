@@ -453,7 +453,7 @@ class CharacterCard extends StoreWidget {
                 icon: Icons.shield_outlined,
               ),
               KBadge(
-                '${p.earnedBadges} badges · ${store.credits} crédits',
+                '${p.earnedBadges} badges · ${store.credits >= 0 ? '${store.credits} crédits' : creditDeficitLabel(store.credits)}',
                 color: KPalette.light,
               ),
             ],
@@ -540,7 +540,9 @@ void showCharacterSheet(BuildContext context) {
     Text(
       '${p.remaining} XP avant le niveau ${p.level + 1} et +${p.nextCredits} crédit${p.nextCredits > 1 ? 's' : ''} WOD.',
     ),
-    Text('${store.credits} crédits disponibles · ${p.totalXp} XP cumulés'),
+    Text(
+      '${store.credits >= 0 ? '${store.credits} crédits disponibles' : creditDeficitLabel(store.credits)} · ${p.totalXp} XP cumulés',
+    ),
     const KSection('Attributs'),
     Center(child: AttributeRadar(sheet: g.sheet, size: 170)),
     for (final a in g.sheet.attributes) ...[

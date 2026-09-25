@@ -178,7 +178,9 @@ void main() {
       for (final data in [
         formatV1(app),
         formatV2(app, {}),
-        backupOf(app)..['creditsEarnedMax'] = 9,
+        backupOf(app)
+          ..remove('creditGrants')
+          ..['creditsEarnedMax'] = 9,
       ]) {
         final preview = app.previewImport(jsonEncode(data)).preview!;
         expect(await app.applyImport(preview), ImportStatus.success);

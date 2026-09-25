@@ -10,6 +10,10 @@ class WodResult {
   String notes;
   bool completed;
   String? prescription;
+
+  /// Tentative dont ce score est la finalisation (KT-003) : une même
+  /// tentative ne produit jamais deux résultats.
+  String? attempt;
   WodResult({
     required this.at,
     required this.score,
@@ -19,6 +23,7 @@ class WodResult {
     this.notes = '',
     this.completed = true,
     this.prescription,
+    this.attempt,
   });
 
   Map<String, dynamic> toJson() => {
@@ -30,6 +35,7 @@ class WodResult {
     'notes': notes,
     'completed': completed,
     if (prescription != null) 'prescription': prescription,
+    if (attempt != null) 'attempt': attempt,
   };
   WodResult.fromJson(Map<String, dynamic> j)
     : at = j['at'] as String,
@@ -39,7 +45,8 @@ class WodResult {
       reps = j['reps'] as int?,
       notes = j['notes'] as String? ?? '',
       completed = j['completed'] as bool? ?? true,
-      prescription = j['prescription'] as String?;
+      prescription = j['prescription'] as String?,
+      attempt = j['attempt'] as String?;
 }
 
 /// Types : fortime · rounds · amrap · emom · routine

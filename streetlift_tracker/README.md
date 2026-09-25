@@ -1,4 +1,22 @@
-# Kalis Track 2.5.2 — Boutique de WODs façon jeu
+# Kalis Track 2.5.4 — Boutique de WODs façon jeu
+
+## 2.5.4 — Sauvegarde Android : choix explicite
+
+Choix retenu : la **sauvegarde Android par défaut** est conservée et désormais déclarée (`android:allowBackup="true"`, sans règle de filtrage). Si la sauvegarde Google est activée sur le téléphone, Android peut copier les données de l’application et les restaurer à la réinstallation ; le transfert vers un nouveau téléphone les inclut. Le comportement ne change pas ; il est maintenant contrôlé à chaque build sur le manifeste final (aucune dépendance ne peut le modifier en silence). L’export par fichier reste la copie que tu contrôles.
+
+
+## Nouveautés 2.5.3 — tes données sous ton contrôle (lot L2b)
+
+Dans **Réglages → Sauvegardes** :
+
+- **Exporter une sauvegarde** : le sélecteur de fichiers d’Android s’ouvre, tu choisis l’emplacement (téléphone, carte, Drive…). Nom proposé : `kalis-track-sauvegarde-AAAA-MM-JJ-HHMM.json`, sans nom ni donnée sportive. Aucun fichier existant n’est écrasé (Android ajoute un numéro). Le succès n’est annoncé qu’après écriture **et relecture identique** du fichier ; annulation, accès refusé, emplacement indisponible ou écriture incomplète sont signalés (un fichier incomplet est supprimé). Le fichier est du JSON **non chiffré** : garde-le en lieu sûr.
+- **Importer une sauvegarde** : choisis un fichier ; il est lu dans les limites de L2 (8 Mio), validé, puis un **aperçu** montre ce qu’il contient réellement (format, date d’export si le fichier l’indique, séances, résultats, WODs débloqués, niveau calculé) face à tes données actuelles. Rien ne change avant ta confirmation. Par défaut, tes données actuelles sont d’abord exportées dans un fichier ; si cet export est annulé ou échoue, l’import n’a pas lieu. « Remplacer sans sauvegarde » est un choix explicite. Si tes données changent pendant l’aperçu, une nouvelle confirmation est demandée.
+- **Copier / Coller une sauvegarde** : le presse-papiers reste disponible et passe par le même aperçu.
+- **Sauvegarde Android** : explication du comportement réel (l’application ne désactive pas la sauvegarde du système, qu’elle ne peut ni déclencher ni vérifier).
+- **Zone sensible → Supprimer les données de l’application** : liste précise de ce qui est supprimé et de ce qui ne l’est pas, export préalable proposé, confirmation en tapant `SUPPRIMER`. L’application revient à son état d’installation (journal, séances perso, références, résultats, crédits, WODs débloqués, envies, réglages, copies internes, anciennes clés de migration, rappels) ; le programme et le catalogue restent. Une suppression incomplète est signalée comme telle.
+
+Aucune permission de stockage n’est ajoutée : le sélecteur système donne accès au seul fichier choisi. Tests : `test/l2b_data_control_test.dart`.
+
 
 ## Correctifs 2.5.2 — sauvegarde et achats (lot L2)
 

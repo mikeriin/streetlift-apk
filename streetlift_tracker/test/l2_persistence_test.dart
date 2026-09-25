@@ -683,12 +683,17 @@ void main() {
     );
 
     test(
-      'import d’une sauvegarde : son plus haut remplace le courant',
+      'import d’une sauvegarde L2 : son plus haut remplace le courant',
       () async {
-        final data = backupOf(app)..['creditsEarnedMax'] = 20;
+        // Sauvegarde L2 : pas encore de registre des gains (L3).
+        final data = backupOf(app)
+          ..remove('creditGrants')
+          ..['creditsEarnedMax'] = 20;
         expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
         expect(app.creditsEarned, 20);
-        final lower = backupOf(app)..['creditsEarnedMax'] = 3;
+        final lower = backupOf(app)
+          ..remove('creditGrants')
+          ..['creditsEarnedMax'] = 3;
         expect(await app.importBackup(jsonEncode(lower)), ImportStatus.success);
         expect(app.creditsEarned, app.creditsFromJournal);
       },

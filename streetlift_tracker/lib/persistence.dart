@@ -38,6 +38,18 @@ class PurchaseResult {
       status == PurchaseStatus.success || status == PurchaseStatus.alreadyOwned;
 }
 
+/// Validation d'un score de WOD (KT-003).
+enum ResultSave {
+  /// Résultat enregistré et écriture acceptée.
+  saved,
+
+  /// Résultat gardé en mémoire mais écriture refusée : à réessayer.
+  unsaved,
+
+  /// Ni WOD jouable, ni tentative autorisée ouverte : rien d'enregistré.
+  denied,
+}
+
 /// Résultat d'un import (KT-013 / KT-015).
 enum ImportStatus {
   success,

@@ -1,8 +1,111 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : L2 — Sauvegarde et achats (KT-002, KT-013, KT-014, KT-015, KT-005)**  
-**Date : 25 septembre 2026, Europe/Paris — version : 2.5.2+53 (versionCode réel fixé par la CI de build)**  
-**Statut : L2 implémenté, arbitrages KT-005 (option C) et KT-014 (règle d'usage) appliqués ; formatage, analyse et suite Flutter complète réussis en CI sur branche temporaire (sans build APK). Build signé et essai téléphone L2 en attente. L2b, L3 et la refonte ne sont pas lancés.**
+**Passe actuelle : L2b — Contrôle utilisateur des données (KT-021, partie L2b de KT-016)**  
+**Date : 25 septembre 2026, Europe/Paris — version : 2.5.4+55 (versionCode réel fixé par la CI de build)**  
+**Statut : export/import par fichier, aperçu, sauvegarde préalable et suppression locale implémentés et publiés (2.5.3, run n° 73). Politique Android : option A décidée par le propriétaire et appliquée (2.5.4). Essais sur téléphone et test de restauration Android non faits. L3 et la refonte ne sont pas lancés.**
+
+## L2b.0 — Base et résultats repris
+
+| Élément | Valeur | Nature de la preuve |
+| --- | --- | --- |
+| Base | `streetlift_tracker_v33.zip` de `main`, commit `1013d18` (L2), **1 300 886 octets**, SHA-256 `e252be1bcbce16619712aaf3ebc2388774b2303418f991b85a4772a88f555747`, racine `streetlift_tracker/`, 303 fichiers, version 2.5.2+53 | Vérifié octet pour octet avec la livraison L2 ; archive gardée intacte, travail sur copie |
+| Build L2 | Run n° 72, `1013d18`, 21 étapes réussies (tests, refus sans secrets, signature, APK/AAB, contrôles finaux) | Résultat GitHub |
+| Tests L2 | 245 réussis, 1 ignoré | Tests automatiques (CI, branche temporaire) |
+| Essai téléphone L1b et L2 | **Non rapporté** | — |
+| Décisions déjà prises | KT-005 option C ; KT-014 règle d'usage ; publication sur `main` et build à chaque mise à jour ; branche temporaire autorisée pour la CI | Déclarations du propriétaire |
+| Résultats L1 confirmés par le propriétaire | Compilation et ouverture, certificat et artefact, mise à jour sans désinstallation, données conservées | Déclaration du propriétaire (inchangée) |
+
+**Contrôle préalable** : la compilation L2 est prouvée (run n° 72) ; la conservation des données après mise à jour **n'a pas encore été vérifiée sur téléphone** pour L2. L2b ne modifie pas le format du document interne (seuls des champs optionnels du *fichier* exporté s'ajoutent). Ordre recommandé : installer L2 (run n° 72) et vérifier les données, puis installer L2b ; ou, au minimum, faire un export avant d'installer L2b (protocole de `LIVRAISON_L2b.md`).
+
+## L2b.1 — Changements
+
+| Élément | Implémenté | Testé automatiquement | Vérifié sur appareil | En attente de décision |
+| --- | --- | --- | --- | --- |
+| Export par fichier (`ACTION_CREATE_DOCUMENT`) | Oui | Oui (parcours Dart, sélecteur simulé) ; code natif compilé en CI | Non | Non |
+| Import par fichier (`ACTION_OPEN_DOCUMENT`) + aperçu + confirmation | Oui | Oui (sélecteur simulé) | Non | Non |
+| Sauvegarde proposée avant remplacement | Oui | Oui | Non | Non |
+| Conflit si données modifiées pendant l'aperçu | Oui | Oui | Non | Non |
+| Presse-papiers conservé, via le même aperçu | Oui | Oui | Non | Non |
+| Suppression locale confirmée | Oui | Oui (stockage simulé, relance simulée) | Non | Non |
+| Texte « Sauvegarde Android » conforme au comportement | Oui | Présence à l'écran testée | Non | — |
+| Politique de sauvegarde Android (KT-016) | Option A déclarée (2.5.4) | Contrôle du manifeste source et des manifestes finaux APK/AAB | Non (restauration à tester) | Non : A décidée |
+
+**Code**
+- `android/.../MainActivity.kt` : canal `kalis_track/backup_files`. Création et ouverture par le sélecteur système, **sans permission**. Écriture en mode `wt`, puis relecture et comparaison SHA-256 : réponses `saved`, `unverified`, `cancelled` ou erreur (`denied`, `unavailable`, `io`, `partial`, `interrupted`, `busy`, `noPicker`). Un fichier incomplet est supprimé (`DocumentsContract.deleteDocument`). La lecture est bornée : elle s'arrête au-delà de la limite, sans se fier à la taille annoncée ni à l'extension. Le traitement se fait hors du fil principal, et le contenu n'est jamais journalisé.
+- `lib/backup_files.dart` : abstraction `BackupFiles` (remplaçable en test) et nom de fichier `kalis-track-sauvegarde-AAAA-MM-JJ-HHMM.json`.
+- `lib/store.dart` :
+  - `dataRevision` : ne compte que les vraies modifications. Un simple enregistrement ou un passage en arrière-plan ne la change pas.
+  - `previewImport` : aucune mutation ; le document validé est conservé.
+  - `applyImport` : transaction L2, avec vérification de révision dans la file (`ImportStatus.conflict`).
+  - `importBackup` : repose sur les mêmes fonctions (un seul chemin d'import).
+  - `exportForFile` : format 3, plus `exportedAt` et `appVersion` optionnels.
+  - `eraseAllData` : passe par la file d'écritures. Il écrit d'abord un état neuf, puis retire toutes les autres clés, et renvoie un statut `success`, `partial` ou `failed` avec la liste des clés restantes (noms seulement).
+  - Après un import, ni cérémonie de niveau ni bilan en attente.
+- `lib/data_control.dart` : parcours d'export, d'import (fichier et texte) et de suppression ; dialogues `ImportPreviewDialog` et `EraseDataDialog`. Un message remplace le précédent (sans cela, les messages s'empilaient en file : défaut trouvé par les tests).
+- `lib/settings_screen.dart` : section Sauvegardes (Exporter, Importer, Copier, Coller, Sauvegarde Android), puis « Zone sensible » séparée avec « Supprimer les données de l'application ».
+- `lib/persistence.dart` : `ImportStatus.conflict`, `EraseStatus`, `EraseResult`.
+
+**Format** : le fichier reste au format 3, lisible par les versions précédentes, qui ignorent les champs inconnus. Champs optionnels : `exportedAt`, `appVersion` (L2b), `legacyGrants`, `creditsEarnedMax` (L2). Le document interne est inchangé.
+
+**Traitement des modifications en attente à l'export** : `flush()` est d'abord appelé. Si des modifications ne sont toujours pas acceptées par le stockage, le fichier contient l'état affiché, et le message le dit.
+
+**Inventaire supprimé** : `kalis_state_v3` (remplacé par l'état neuf), `kalis_recovery_v1`, anciennes clés (`pilotage_v1`, `logs_v1`, `settings_v1`, `custom_sessions_v1`, `user_exercises_v1`, `wods_v1`, `wods_user_v2`, `wods_del_v2`, `wods_edit_v2`, `wod_results_v2`, `wods_seed_v`, `level_seen`, `unlocked_wods_v1`, `credits_v`), et **toute autre clé** du fichier de préférences de l'application. En mémoire : caches, achats en cours, bilan en attente, plus haut des crédits. Rappels : replanifiés avec les réglages par défaut (rappels désactivés), donc les rappels de l'application sont annulés. Aucun fichier temporaire n'est créé par l'export ou l'import.
+
+**Reprise** : si l'état neuf n'est pas écrit, rien n'est supprimé (`failed`). S'il est écrit mais que des clés restent, le statut `partial` est annoncé et l'action peut être relancée. Une interruption pendant le retrait des clés laisse au pire des copies internes, jamais d'anciennes données dans le document principal. Les anciennes clés étant retirées, aucune migration ne peut restaurer les données.
+
+## L2b.2 — Politique de sauvegarde Android (KT-016) : option A décidée
+
+**Décision du propriétaire (25/09/2026) : option A**, sauvegarde Android par défaut, rendue explicite. Appliqué en 2.5.4 :
+- `android:allowBackup="true"` déclaré dans le manifeste, avec un commentaire ; aucune règle `dataExtractionRules`, `fullBackupContent` ni `backupAgent` ;
+- contrôle ajouté à `tools/verify_project.py` (manifeste source) ;
+- contrôle ajouté à `tools/verify_android_artifacts.py` sur les manifestes **finaux** de l'APK et de l'AAB (fusion des dépendances comprise). Le build échoue si la politique change ;
+- 4 cas ajoutés aux tests Python : attribut absent, `false`, règles ajoutées.
+
+Le comportement ne change pas : le défaut Android s'appliquait déjà. Le texte « Sauvegarde Android » des Réglages décrit ce comportement. Reste ouvert : le test de restauration réelle sur appareil de test (`bmgr`), protocole 2 de `LIVRAISON_L2b.md`.
+
+Analyse ayant servi à la décision :
+
+**Constat** : manifeste principal et **manifeste fusionné** (build debug en CI, `processDebugMainManifest`) sans `allowBackup`, `dataExtractionRules`, `fullBackupContent` ni `backupAgent`. Aucune dépendance n'en ajoute. `targetSdk` est 36, `minSdk` 21. Les données de l'application tiennent dans un seul fichier SharedPreferences, copies de secours comprises.
+
+Sources consultées le 25/09/2026 :
+- [\<application\>, mise à jour du 21/08/2026](https://developer.android.com/guide/topics/manifest/application-element) : `allowBackup` vaut `true` par défaut ; `false` désactive la sauvegarde cloud, mais « sur certains appareils, on ne peut pas désactiver la migration d'appareil à appareil » pour les apps ciblant Android 12+.
+- [Auto Backup, mise à jour du 26/02/2026](https://developer.android.com/identity/data/autobackup) : les préférences sont incluses par défaut ; la sauvegarde a lieu au plus toutes les 24 h, appareil inactif, en Wi-Fi, si l'utilisateur l'a activée ; 25 Mo par application ; chiffrement côté client sur Android 9+ si un verrouillage d'écran existe ; restauration à l'installation ; `dataExtractionRules` sépare `cloud-backup` et `device-transfer` (section absente : transfert entièrement autorisé).
+- [Documents et autres fichiers, mise à jour du 16/09/2026](https://developer.android.com/training/data-storage/shared/documents-files) : `ACTION_CREATE_DOCUMENT` et `ACTION_OPEN_DOCUMENT` ne demandent aucune permission ; pas d'écrasement (numéro ajouté).
+
+**Comportement actuel déduit** (non observé sur appareil) : si l'utilisateur a activé la sauvegarde Google, les données, copies de secours comprises, peuvent être copiées dans le cloud et restaurées à la réinstallation ; le transfert vers un nouveau téléphone les inclut.
+
+| Option | Perte ou vol du téléphone | Nouveau téléphone | Confidentialité | Ce que l'application contrôle |
+| --- | --- | --- | --- | --- |
+| **A. Défaut actuel, rendu explicite** | Restauration possible si la sauvegarde Google est active | Transfert inclus | Copie chez Google, chiffrée côté client seulement si verrouillage d'écran (Android 9+) ; une copie peut survivre quelques jours à une suppression locale | Rien ; texte d'information seulement |
+| **B. `allowBackup="false"`** | Aucune restauration : seul l'export manuel protège | Transfert encore possible sur certains appareils (Android 12+) | Aucune copie cloud | Désactivation cloud seulement |
+| **C. Règles explicites** : cloud seulement si chiffrement côté client (`requireFlags="clientSideEncryption"`), transfert d'appareil inclus ; `dataExtractionRules` (Android 12+) et `fullBackupContent` (≤ 11) | Restauration si la sauvegarde Google est active **et** l'écran verrouillé | Transfert inclus | Pas de copie cloud non chiffrée | Filtrage déclaratif ; ni déclenchement, ni vérification, ni effacement |
+
+Aucune option ne permet à l'application de déclencher, vérifier ou effacer une copie cloud. Aucun interrupteur n'est donc ajouté. Recommandation technique : **C**, à valider, puis à tester par restauration sur appareil de test (`bmgr`, protocole de `LIVRAISON_L2b.md`).
+
+## L2b.3 — Tests
+
+| Niveau | Résultat |
+| --- | --- |
+| Nouveaux tests `l2b_data_control_test.dart` | 33 : 13 sur le store (instances isolées), 20 sur les écrans (320 px ; texte 100, 130, 200 % ; thèmes clair et sombre ; bouton retour) |
+| Test adapté | `ui_refactor_test` : les actions presse-papiers s'appellent désormais « Copier / Coller la sauvegarde » ; assertions conservées |
+| CI branche temporaire (sans secret) | Formatage : 79 fichiers, 0 changement ; `flutter analyze` sans problème ; tests ciblés 84/84 ; **suite complète 278 réussis, 1 ignoré** ; **build Android debug réussi** (code natif compilé), manifeste fusionné extrait |
+| Build signé 2.5.3 | Run n° 73, commit `74ff8e3`, 21 étapes réussies (résultat GitHub) |
+| 2.5.4 (option A) | Python 33/33 en local, dont 4 nouveaux cas KT-016 ; résultat du build dans le rapport de livraison |
+| Python | 33/33 en local |
+| Sélecteur de fichiers | **Simulé** en test ; accès natif **non exécuté** sur appareil |
+| Redémarrage | Relance simulée (nouvelle instance) ; redémarrage réel non exécuté |
+| Restauration Android (cloud, transfert) | **Non exécutée** |
+
+## L2b.4 — Limites et suites
+
+- Le sélecteur de fichiers, l'écriture relue et la lecture bornée sont compilés mais **pas encore exécutés sur un appareil** : les tests simulent le sélecteur.
+- Si Android détruit l'application pendant que le sélecteur est ouvert, l'opération est perdue et doit être refaite (réponse `interrupted` si l'activité se ferme).
+- Une relecture impossible donne `unverified`, jamais un succès. Certains fournisseurs cloud écrivent en différé : le fichier relu localement ne prouve pas l'envoi au cloud.
+- L'export n'est pas chiffré (JSON lisible) ; aucun chiffrement artisanal n'a été ajouté.
+- L'import reste un remplacement complet (contrat L2) : pas de fusion, pas de nouvelle règle de crédits.
+- La suppression ne touche ni les fichiers exportés, ni les copies cloud ou de transfert Android, ni les autorisations système. Aucun effacement physique irrécupérable n'est promis.
+- Politique de sauvegarde Android : option A appliquée (L2b.2) ; restauration réelle non testée.
+- Publication : ZIP sur `main` et build signé à chaque mise à jour, sur instruction du propriétaire. Le résultat du run figure dans `LIVRAISON_L2b.md`, écrit après la publication.
 
 ## L2.0 — Base retenue
 

@@ -801,19 +801,73 @@ class AppStore extends ChangeNotifier {
   /// dérivés (chapitres bouclés, boss vaincus, semaines complètes).
   int get creditsFromJournal => creditsForLevel(level) + game.bonusCredits;
 
-  /// Plus haut total de crédits gagnés déjà enregistré (KT-005, option C).
-  int _earnedMax = 0;
+  /// Registre des gains de crédits déjà attribués (KT-005, option C,
+  /// registre par gain approuvé le 25/09/2026) : identifiant du gain →
+  /// crédits. Un gain n'est payé qu'une fois et n'est jamais repris ;
+  /// `carry:*` conserve un surplus historique non attribuable (migration).
+  final Map<String, int> creditGrants = {};
 
-  /// Crédits gagnés, jamais repris : corriger ou supprimer une performance
-  /// fait varier l'XP et le niveau, pas les crédits déjà acquis. Refaire une
-  /// performance supprimée ne redonne rien tant que le journal ne dépasse pas
-  /// ce plus haut.
-  int get creditsEarned => max(creditsFromJournal, _earnedMax);
+  static final _grantKey = RegExp(
+    r'^(?:level:[1-9]\d{0,3}|chapter:[\w-]{1,32}|boss:[\w-]{1,32}|week:\d{4}-\d{2}-\d{2}|carry:[\w-]{1,32})$',
+  );
+
+  /// Gains que le journal actuel justifie : chaque palier de niveau atteint,
+  /// chapitre bouclé, boss vaincu et semaine complète (par son lundi).
+  Map<String, int> get journalGrants {
+    final out = <String, int>{};
+    for (var n = 1; n <= level; n++) {
+      out['level:$n'] =
+          creditsForLevel(n) - (n == 1 ? 0 : creditsForLevel(n - 1));
+    }
+    final g = game;
+    for (final c in g.chapters) {
+      if (c.complete) out['chapter:${c.key}'] = GameState.creditsPerChapter;
+    }
+    for (final b in g.bosses) {
+      if (b.defeated) out['boss:${b.id}'] = GameState.creditsPerBoss;
+    }
+    for (final w in progression.weeks.values) {
+      if (w.sessions + w.wods >= 3) {
+        out['week:${_dayString(w.monday)}'] = GameState.creditsPerFullWeek;
+      }
+    }
+    return out;
+  }
+
+  /// Crédits gagnés : gains enregistrés + gains nouveaux du journal pas
+  /// encore enregistrés. Corriger ou supprimer une performance fait varier
+  /// l'XP et le niveau, jamais ce total ; refaire une performance supprimée
+  /// ne repaie pas un gain déjà enregistré, une activité nouvelle oui.
+  int get creditsEarned {
+    var total = creditGrants.values.fold(0, (a, b) => a + b);
+    journalGrants.forEach((id, amount) {
+      if (!creditGrants.containsKey(id)) total += amount;
+    });
+    return total;
+  }
+
+  /// Enregistre les gains nouveaux (appelé à chaque écriture acceptée).
+  void _recordGrants() {
+    journalGrants.forEach((id, amount) => creditGrants.putIfAbsent(id, () => amount));
+  }
+
+  /// Migration d'un état sans registre (avant L3) : les gains justifiés par
+  /// le journal, plus l'éventuel surplus du plus haut L2 (`creditsEarnedMax`),
+  /// conservé tel quel. Aucun crédit créé ni retiré.
+  void _migrateGrants(int? earnedMax) {
+    creditGrants
+      ..clear()
+      ..addAll(journalGrants);
+    final known = creditGrants.values.fold(0, (a, b) => a + b);
+    if (earnedMax != null && earnedMax > known) {
+      creditGrants['carry:l2'] = earnedMax - known;
+    }
+  }
 
   /// Isolement des tests qui vident le journal entre deux cas : sans cela,
-  /// l'option C garde les crédits gagnés par le cas précédent.
+  /// le registre garde les gains du cas précédent.
   @visibleForTesting
-  void debugResetEarnedCredits() => _earnedMax = 0;
+  void debugResetEarnedCredits() => creditGrants.clear();
 
   /// Achats enregistrés + achats en cours (réservés jusqu'à leur résultat).
   int get creditsSpent {
@@ -824,7 +878,11 @@ class AppStore extends ChangeNotifier {
     return total;
   }
 
-  int get credits => max(0, creditsEarned - creditsSpent);
+  /// Solde réel : peut être négatif si les dépenses dépassent les gains
+  /// enregistrés (ancienne sauvegarde, ancien calcul). Le déficit est
+  /// affiché, jamais masqué ; aucun achat possible tant qu'il n'est pas
+  /// comblé par de nouveaux gains (arbitrage du 25/09/2026).
+  int get credits => creditsEarned - creditsSpent;
 
   /// Un achat de ce WOD attend le résultat de son écriture.
   bool purchasePending(Wod w) => _purchases.containsKey(w.id);
@@ -961,71 +1019,213 @@ class AppStore extends ChangeNotifier {
     return out;
   }
 
-  String? _trialKey;
-  Wod? _trial;
+  // Essai du jour et vitrine : état explicite, sauvegardé (KT-004). Une
+  // sélection n'est remplacée qu'à une date strictement postérieure : une
+  // navigation, un achat, un niveau ou un recul d'horloge ne la relancent pas.
+  String? _trialDay;
+  String? _trialId;
+  String? _weekOf;
+  List<String> _weeklyIdsStored = const [];
 
-  /// Essai du jour : un WOD verrouillé, hors vitrine, proche de ton niveau,
-  /// jamais tenté (ou seulement aujourd'hui), jouable gratuitement jusqu'à
-  /// minuit. Un WOD tenté aujourd'hui reste l'essai du jour quoi qu'il
-  /// arrive (niveau, autres résultats) : le terminer ne fait pas apparaître
-  /// un second essai. Il change à minuit.
-  Wod? get trialWod {
-    final key = _dayKey;
-    if (_trialKey != key) {
-      final t = targetWodLevel;
-      final today = civilDay(storeClock());
-      bool sameDay(WodResult r) {
-        final at = DateTime.tryParse(r.at);
-        return at != null && civilDay(at) == today;
-      }
+  static String _dayString(DateTime civil) =>
+      civil.toIso8601String().substring(0, 10);
 
-      bool fresh(Wod w) => w.results.every(sameDay);
-      bool tried(Wod w) => w.results.isNotEmpty && fresh(w);
-      _trial =
+  String get _today => _dayString(civilDay(storeClock()));
+
+  /// Sélection de l'essai d'un jour (règles approuvées) : WOD du catalogue
+  /// verrouillé, hors vitrine, jamais tenté ; à ton niveau ±1, sinon ±2,
+  /// sinon tout le catalogue ; aucun candidat → pas d'essai ce jour-là.
+  String? _selectTrial(String day) {
+    final t = targetWodLevel;
+    final exclude = {..._weeklyIdsStored};
+    for (final spread in const [1, 2, 99]) {
+      final pick =
           _pick(
-            'trial|$key',
+            'trial|$day',
             1,
-            prefer: (w) => fresh(w) && ((w.level - t).abs() <= 1 || tried(w)),
-            rank: (w) => tried(w) ? 0 : 1,
-            exclude: weeklyIds,
-          ).firstOrNull;
-      _trialKey = key;
+            prefer: (w) => w.results.isEmpty && (w.level - t).abs() <= spread,
+            exclude: exclude,
+          ).where((w) => w.results.isEmpty && (w.level - t).abs() <= spread);
+      if (pick.isNotEmpty) return pick.first.id;
     }
-    return _trial;
+    return null;
   }
 
-  bool isTrial(Wod w) => trialWod?.id == w.id;
+  /// Essai du jour : fixé pour toute la journée civile locale, même si le
+  /// WOD est acheté, tenté ou si le niveau change. Jouable sans limite de
+  /// tentatives jusqu'à minuit (règle approuvée). Null : aucun candidat.
+  Wod? get trialWod {
+    _ensureSelection();
+    final id = _trialId;
+    if (id == null) return null;
+    final cached = _trialWodCache;
+    if (cached != null && cached.id == id) return cached;
+    for (final w in wods) {
+      if (w.id == id) return _trialWodCache = w;
+    }
+    return null;
+  }
+
+  Wod? _trialWodCache;
+
+  /// Établit, si la date locale est strictement postérieure, la vitrine de
+  /// la semaine puis l'essai du jour ; remplace dans la vitrine un WOD
+  /// acheté par le suivant. Toute nouvelle sélection est sauvegardée.
+  void _ensureSelection() {
+    _ensureWeekly();
+    final today = _today;
+    if (_trialDay == null || today.compareTo(_trialDay!) > 0) {
+      final migrating = _trialDay == null;
+      _trialDay = today;
+      _trialId =
+          (migrating ? _migratedTrial(today) : null) ?? _selectTrial(today);
+      _trialWodCache = null;
+      _saveSelection();
+    }
+  }
+
+  /// Migration sans sélection sauvegardée (état antérieur à L3) : un WOD
+  /// verrouillé déjà joué aujourd'hui était l'essai du jour ; il le reste.
+  /// Aucun autre historique d'essai n'est inventé.
+  String? _migratedTrial(String today) {
+    for (final w in wods) {
+      if (!isCatalog(w) || unlockedWods.containsKey(w.id)) continue;
+      final playedToday = w.results.any((r) {
+        final at = DateTime.tryParse(r.at);
+        return at != null && _dayString(civilDay(at)) == today;
+      });
+      if (playedToday) return w.id;
+    }
+    return null;
+  }
+
+  /// Aucun essai possible aujourd'hui (aucun WOD admissible).
+  bool get noTrialToday => trialWod == null;
+
+  bool isTrial(Wod w) {
+    _ensureSelection();
+    return _trialId == w.id;
+  }
 
   /// Jouable maintenant : débloqué, ou essai du jour.
   bool canRun(Wod w) => unlocked(w) || isTrial(w);
 
-  String? _weeklyKey;
-  List<Wod> _weekly = const [];
-  Set<String> _weeklyIdSet = const {};
-
   /// Vitrine de la semaine : trois WODs verrouillés de formats différents,
-  /// à ton niveau (jusqu'à deux crans au-dessus), à −1 crédit du lundi au
-  /// dimanche. La sélection ne dépend que de la semaine et des WODs
-  /// possédés : un WOD acheté laisse sa place au suivant.
+  /// fixés du lundi au dimanche. Règle existante (README 2.5.0) : un WOD
+  /// acheté laisse sa place au suivant ; le remplaçant est lui aussi fixé.
   List<Wod> get weeklyPicks {
-    final key = '$_weekKey|${unlockedWods.length}';
-    if (_weeklyKey != key) {
-      final t = targetWodLevel;
-      _weekly = _pick(
-        'weekly|$_weekKey',
-        3,
-        prefer: (w) => w.level >= t - 1 && w.level <= t + 2,
-        distinctTypes: true,
-      );
-      _weeklyIdSet = {for (final w in _weekly) w.id};
-      _weeklyKey = key;
+    _ensureWeekly();
+    return [
+      for (final id in _weeklyIdsStored)
+        for (final w in wods)
+          if (w.id == id) w,
+    ];
+  }
+
+  void _ensureWeekly() {
+    final week = _dayString(mondayOf(storeClock()));
+    if (_weekOf == null || week.compareTo(_weekOf!) > 0) {
+      _weekOf = week;
+      _weeklyIdsStored = [
+        for (final w in _pickWeekly(week, const {})) w.id,
+      ];
+      _saveSelection();
     }
-    return _weekly;
+    if (!_weeklyIdsStored.any(unlockedWods.containsKey)) return;
+    final kept = [
+      for (final id in _weeklyIdsStored)
+        if (!unlockedWods.containsKey(id)) id,
+    ];
+    final replacements = _pickWeekly(
+      _weekOf!,
+      {..._weeklyIdsStored, if (_trialId != null) _trialId!},
+      count: _weeklyIdsStored.length - kept.length,
+      avoidTypes: {
+        for (final w in wods)
+          if (kept.contains(w.id)) w.type,
+      },
+    );
+    _weeklyIdsStored = [...kept, for (final w in replacements) w.id];
+    _saveSelection();
+  }
+
+  List<Wod> _pickWeekly(
+    String week,
+    Set<String> exclude, {
+    int count = 3,
+    Set<String> avoidTypes = const {},
+  }) {
+    final t = targetWodLevel;
+    final picks = _pick(
+      'weekly|$week',
+      count + avoidTypes.length,
+      prefer: (w) => w.level >= t - 1 && w.level <= t + 2,
+      exclude: exclude,
+      distinctTypes: true,
+    );
+    final preferred = [
+      for (final w in picks)
+        if (!avoidTypes.contains(w.type)) w,
+    ];
+    return [
+      ...preferred,
+      for (final w in picks)
+        if (avoidTypes.contains(w.type)) w,
+    ].take(count).toList();
   }
 
   Set<String> get weeklyIds {
-    weeklyPicks;
-    return _weeklyIdSet;
+    _ensureWeekly();
+    return _weeklyIdsStored.toSet();
+  }
+
+  /// Une sélection établie (à la première lecture du jour ou de la
+  /// semaine) est sauvegardée aussitôt.
+  void _saveSelection() {
+    if (_initialized) unawaited(_writeSnapshot());
+  }
+
+  // ---------- Tentatives de WOD (KT-003) ----------
+  /// Tentatives en cours, en mémoire : le droit de terminer est attaché à
+  /// une tentative autorisée à son lancement, pas à l'heure de validation.
+  /// Il ne survit pas à la fermeture de l'écran ni au processus (reprise
+  /// générale : L4b).
+  final Map<String, ({String wodId, DateTime startedAt})> _attempts = {};
+
+  /// Démarre une tentative si le WOD est jouable maintenant.
+  String? startAttempt(Wod w) {
+    if (!canRun(w)) return null;
+    final id = _newUid();
+    _attempts[id] = (wodId: w.id, startedAt: storeClock());
+    return id;
+  }
+
+  /// Terminer : WOD jouable, ou tentative autorisée encore ouverte.
+  bool canFinish(Wod w, String? attempt) =>
+      canRun(w) || (attempt != null && _attempts[attempt]?.wodId == w.id);
+
+  /// Abandon (sortie de l'écran) : la tentative ne peut plus être validée.
+  void abandonAttempt(String? attempt) {
+    if (attempt != null) _attempts.remove(attempt);
+  }
+
+  /// Validation d'un score : un seul résultat par tentative ; succès annoncé
+  /// seulement si l'écriture est acceptée. En cas d'échec, le résultat reste
+  /// en mémoire (rien n'est perdu) et [retrySave] le réessaie.
+  Future<ResultSave> recordWodResult(
+    Wod w,
+    WodResult r, {
+    String? attempt,
+  }) async {
+    if (attempt != null && w.results.any((x) => x.attempt == attempt)) {
+      return await retrySave() ? ResultSave.saved : ResultSave.unsaved;
+    }
+    if (!canFinish(w, attempt)) return ResultSave.denied;
+    r.attempt = attempt;
+    addWodResult(w, r);
+    _attempts.remove(attempt);
+    await flush();
+    return hasUnsavedChanges ? ResultSave.unsaved : ResultSave.saved;
   }
 
   String? _recoKey;
@@ -1429,8 +1629,6 @@ class AppStore extends ChangeNotifier {
   void notifyListeners() {
     _progression = null;
     _game = null;
-    _trialKey = null;
-    _weeklyKey = null;
     _recoKey = null;
     super.notifyListeners();
   }
@@ -1728,6 +1926,7 @@ class AppStore extends ChangeNotifier {
   /// Aucun écran de création ou de modification n’expose cette opération.
   @visibleForTesting
   void upsertWod(Wod w) {
+    _trialWodCache = null;
     _statsCache.remove(w.id);
     _wodEstimates.remove(w.id);
     final i = wods.indexWhere((x) => x.id == w.id);
@@ -1842,6 +2041,11 @@ class AppStore extends ChangeNotifier {
     legacyGrants: legacyGrants,
     lastLevel: _lastLevel,
     earnedMax: creditsEarned,
+    creditGrants: creditGrants,
+    trialDay: _trialDay,
+    trialId: _trialId,
+    weekOf: _weekOf,
+    weeklyIds: _weeklyIdsStored,
     wishlist: wishlist.toList(),
   );
 
@@ -1881,6 +2085,11 @@ class AppStore extends ChangeNotifier {
       if (data.legacyGrants.isNotEmpty) 'legacyGrants': data.legacyGrants,
       'lastLevel': data.lastLevel,
       if (data.earnedMax != null) 'creditsEarnedMax': data.earnedMax,
+      if (data.creditGrants != null) 'creditGrants': data.creditGrants,
+      if (data.trialDay != null)
+        'trialOfDay': {'day': data.trialDay, 'wod': data.trialId},
+      if (data.weekOf != null)
+        'weeklyShowcase': {'week': data.weekOf, 'ids': data.weeklyIds},
       'wishlist': data.wishlist,
     };
   }
@@ -2030,7 +2239,8 @@ class AppStore extends ChangeNotifier {
         throw const FormatException('WOD invalide.');
       }
       for (final r in w.results) {
-        if (DateTime.tryParse(r.at) == null ||
+        if ((r.attempt?.length ?? 0) > 64 ||
+            DateTime.tryParse(r.at) == null ||
             (r.seconds ?? 0) < 0 ||
             (r.rounds ?? 0) < 0 ||
             (r.reps ?? 0) < 0) {
@@ -2099,6 +2309,46 @@ class AppStore extends ChangeNotifier {
         (earnedMax is! int || earnedMax < 0 || earnedMax > 1000000)) {
       throw const FormatException('Crédits gagnés invalides.');
     }
+    Map<String, int>? grants;
+    final rawGrants = m['creditGrants'];
+    if (rawGrants != null) {
+      if (rawGrants is! Map) throw const FormatException('Registre invalide.');
+      grants = {};
+      rawGrants.forEach((k, v) {
+        if (k is! String || !_grantKey.hasMatch(k) || v is! int || v < 0 ||
+            v > 1000000) {
+          throw const FormatException('Registre de crédits invalide.');
+        }
+        grants![k] = v;
+      });
+    }
+    final dayRe = RegExp(r'^\d{4}-\d{2}-\d{2}$');
+    String? trialDay, trialId, weekOf;
+    var weekly = <String>[];
+    final trial = m['trialOfDay'];
+    if (trial != null) {
+      if (trial is! Map ||
+          trial['day'] is! String ||
+          !dayRe.hasMatch(trial['day'] as String) ||
+          (trial['wod'] != null && trial['wod'] is! String)) {
+        throw const FormatException('Essai du jour invalide.');
+      }
+      trialDay = trial['day'] as String;
+      trialId = trial['wod'] as String?;
+    }
+    final showcase = m['weeklyShowcase'];
+    if (showcase != null) {
+      if (showcase is! Map ||
+          showcase['week'] is! String ||
+          !dayRe.hasMatch(showcase['week'] as String) ||
+          showcase['ids'] is! List ||
+          (showcase['ids'] as List).length > 3 ||
+          (showcase['ids'] as List).any((e) => e is! String)) {
+        throw const FormatException('Vitrine invalide.');
+      }
+      weekOf = showcase['week'] as String;
+      weekly = (showcase['ids'] as List).cast<String>();
+    }
     return _BackupData(
       values: nextValues,
       logs: nextLogs,
@@ -2110,6 +2360,11 @@ class AppStore extends ChangeNotifier {
       legacyGrants: nextLegacy,
       lastLevel: m['lastLevel'] as int?,
       earnedMax: earnedMax,
+      creditGrants: grants,
+      trialDay: trialDay,
+      trialId: trialId,
+      weekOf: weekOf,
+      weeklyIds: weekly,
       wishlist: nextWishlist,
     );
   }
@@ -2142,6 +2397,7 @@ class AppStore extends ChangeNotifier {
     cap(m['userExercises'], limits.maxEntries, 'exercices perso');
     cap(m['unlocked'], limits.maxEntries, 'droits WOD');
     cap(m['legacyGrants'], limits.maxEntries, 'droits anciens');
+    cap(m['creditGrants'], limits.maxEntries, 'gains de crédits');
     cap(m['wishlist'], limits.maxEntries, 'envies');
     cap(m['wods'], limits.maxEntries, 'WODs');
     final catalog = m['catalog'];
@@ -2197,9 +2453,23 @@ class AppStore extends ChangeNotifier {
     pilotageEpoch++;
     themeMode.value = settings.theme;
     _lastLevel = data.lastLevel ?? level;
-    // Absent (sauvegarde antérieure) : le journal fait référence, sans créer
-    // ni retirer de crédit.
-    _earnedMax = data.earnedMax ?? 0;
+    _trialDay = data.trialDay;
+    _trialId = data.trialId;
+    _trialWodCache = null;
+    _weekOf = data.weekOf;
+    _weeklyIdsStored = List.of(data.weeklyIds);
+    _attempts.clear();
+    // Registre absent (état antérieur à L3) : migration explicite, sur un
+    // catalogue classé (les XP de WOD dépendent du niveau des WODs).
+    final grants = data.creditGrants;
+    if (grants == null) {
+      _rankDifficulty();
+      _migrateGrants(data.earnedMax);
+    } else {
+      creditGrants
+        ..clear()
+        ..addAll(grants);
+    }
   }
 
   /// Import compatible avec l'API historique : `true` si tout est appliqué.
@@ -2342,7 +2612,6 @@ class AppStore extends ChangeNotifier {
       }
       _applyBackup(fresh);
       _rankDifficulty();
-      _earnedMax = 0;
       _lastLevel = 1;
       _pendingReward = null;
       _purchases.clear();
@@ -2387,6 +2656,7 @@ class AppStore extends ChangeNotifier {
       wods: [for (final w in _seedDefaults.values) Wod.fromJson(w.toJson())],
       unlocked: {},
       lastLevel: 1,
+      creditGrants: {},
     );
   }
 
@@ -2496,8 +2766,8 @@ class AppStore extends ChangeNotifier {
 
   Future<bool> _commitState() async {
     final seq = _changeSeq;
-    // Les crédits gagnés atteints jusqu'ici sont acquis (KT-005, option C).
-    _earnedMax = creditsEarned;
+    // Les gains nouveaux du journal sont acquis (KT-005, registre par gain).
+    _recordGrants();
     final ok = await _writeRaw(_pack(exportAll()));
     if (ok) {
       if (seq > _acceptedSeq) _acceptedSeq = seq;
@@ -3379,6 +3649,10 @@ class ImportPreview {
   final int level, xp;
   final int? creditsEarnedMax;
 
+  /// Crédits gagnés enregistrés dans le registre (null : sauvegarde
+  /// antérieure à L3, registre reconstruit à l'import).
+  final int? creditsGranted;
+
   ImportPreview._({
     required _BackupData data,
     required String encoded,
@@ -3412,6 +3686,10 @@ class ImportPreview {
        legacyGrants = data.legacyGrants.length,
        wishlist = data.wishlist.length,
        creditsEarnedMax = data.earnedMax,
+       creditsGranted = data.creditGrants?.values.fold<int>(
+         0,
+         (a, b) => a + b,
+       ),
        level = progression.level,
        xp = progression.totalXp;
 
@@ -3430,6 +3708,9 @@ class _BackupData {
   final Map<String, String> legacyGrants;
   final int? lastLevel;
   final int? earnedMax;
+  final Map<String, int>? creditGrants;
+  final String? trialDay, trialId, weekOf;
+  final List<String> weeklyIds;
   final List<String> wishlist;
   _BackupData({
     required this.values,
@@ -3442,9 +3723,18 @@ class _BackupData {
     this.legacyGrants = const {},
     this.lastLevel,
     this.earnedMax,
+    this.creditGrants,
+    this.trialDay,
+    this.trialId,
+    this.weekOf,
+    this.weeklyIds = const [],
     this.wishlist = const [],
   });
 }
+
+/// Solde négatif affiché tel quel (KT-005) : jamais masqué par un zéro.
+String creditDeficitLabel(int balance) =>
+    'déficit de ${-balance} crédit${-balance > 1 ? 's' : ''}';
 
 /// Singleton global — simple et suffisant pour cette app.
 final AppStore store = AppStore();

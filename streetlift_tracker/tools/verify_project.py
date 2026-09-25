@@ -27,7 +27,12 @@ def verify(root=ROOT, signing=False):
         ET.parse(path)
     manifest = ET.parse(root / 'android/app/src/main/AndroidManifest.xml')
     ns = '{http://schemas.android.com/apk/res/android}'
-    assert manifest.find('application').get(ns + 'label') == 'Kalis Track'
+    application = manifest.find('application')
+    assert application.get(ns + 'label') == 'Kalis Track'
+    # KT-016 option A : sauvegarde Android par défaut, déclarée explicitement.
+    assert application.get(ns + 'allowBackup') == 'true', 'allowBackup doit rester "true" (KT-016, option A)'
+    for attribute in ('dataExtractionRules', 'fullBackupContent', 'backupAgent'):
+        assert application.get(ns + attribute) is None, f'{attribute} non prévu par la décision KT-016'
     permissions = {item.get(ns + 'name') for item in manifest.findall('uses-permission')}
     assert {
         'android.permission.POST_NOTIFICATIONS',

@@ -48,6 +48,10 @@ class WodRunScreen extends StatefulWidget {
 class _WodRunScreenState extends State<WodRunScreen> {
   final clock = WodClock();
 
+  /// Tentative autorisée au lancement du chrono (KT-003) : elle garde le
+  /// droit de valider son score même si l'essai du jour change à minuit.
+  String? _attempt;
+
   Wod get w => store.wods.firstWhere((x) => x.id == widget.wodId);
 
   @override
@@ -62,6 +66,7 @@ class _WodRunScreenState extends State<WodRunScreen> {
 
   @override
   void dispose() {
+    store.abandonAttempt(_attempt);
     keepAwake(false);
     clock.removeListener(_onClock);
     clock.dispose();
@@ -81,7 +86,9 @@ class _WodRunScreenState extends State<WodRunScreen> {
   }
 
   void _start() {
-    if (!store.canRun(w)) return;
+    if (!store.canFinish(w, _attempt)) return;
+    _attempt ??= store.startAttempt(w);
+    if (_attempt == null) return;
     _prompted = false;
     final wod = w;
     if (wod.type == 'amrap') {
@@ -105,7 +112,7 @@ class _WodRunScreenState extends State<WodRunScreen> {
   }
 
   Future<void> _score() async {
-    if (!mounted || _scoreOpen || !store.canRun(w)) return;
+    if (!mounted || _scoreOpen || !store.canFinish(w, _attempt)) return;
     _scoreOpen = true;
     clock.stop();
     final wod = w;
@@ -126,11 +133,49 @@ class _WodRunScreenState extends State<WodRunScreen> {
           ),
     );
     if (!mounted) return;
+    if (result == null) {
+      setState(() => _scoreOpen = false);
+      return;
+    }
+    final nav = Navigator.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    // La feuille reste « ouverte » pendant l'enregistrement : pas de second
+    // score pour la même tentative.
+    final saved = await store.recordWodResult(wod, result, attempt: _attempt);
+    if (!mounted) return;
     setState(() => _scoreOpen = false);
-    if (result == null) return;
-    store.addWodResult(wod, result);
+    if (saved == ResultSave.denied) {
+      messenger.showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Score non enregistré : cette tentative n’est plus ouverte.',
+          ),
+        ),
+      );
+      return;
+    }
+    _attempt = null;
     clock.reset();
-    checkLevelUp(context);
+    if (saved == ResultSave.saved) {
+      checkLevelUp(context);
+      return;
+    }
+    messenger.showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 10),
+        content: const Text(
+          'Score gardé mais pas encore enregistré sur le téléphone : réessaie avant de fermer l’application.',
+        ),
+        action: SnackBarAction(
+          label: 'Réessayer',
+          onPressed: () async {
+            if (await store.retrySave() && nav.mounted) {
+              checkLevelUp(nav.context);
+            }
+          },
+        ),
+      ),
+    );
   }
 
   Future<void> _leave() async {
@@ -155,6 +200,8 @@ class _WodRunScreenState extends State<WodRunScreen> {
           ),
     );
     if (ok == true && mounted) {
+      store.abandonAttempt(_attempt);
+      _attempt = null;
       setState(() => _allowExit = true);
       Navigator.pop(context);
     }
@@ -169,8 +216,9 @@ class _WodRunScreenState extends State<WodRunScreen> {
           return const KScreen(body: SizedBox.shrink());
         }
         final wod = w;
-        // Débloqué ou essai du jour : sinon la fiche d'achat tient lieu d'accès.
-        if (!store.canRun(wod)) {
+        // Débloqué, essai du jour ou tentative déjà autorisée : sinon la fiche
+        // d'achat tient lieu d'accès.
+        if (!store.canFinish(wod, _attempt)) {
           return WodPreviewScreen(wodId: wod.id);
         }
         final c = wodColor(wod.type);
@@ -523,9 +571,13 @@ class _ScoreSheetState extends State<_ScoreSheet> {
         : null;
   }
 
+  bool _sent = false;
+
   void _save() {
-    if (!form.currentState!.validate()) return;
-    final at = DateTime.now().toIso8601String();
+    // Double appui : un seul score renvoyé, la feuille ne se ferme qu'une fois.
+    if (_sent || !form.currentState!.validate()) return;
+    _sent = true;
+    final at = store.storeClock().toIso8601String();
     if (widget.wod.timed) {
       final seconds = parseT(time.text)!;
       Navigator.pop(

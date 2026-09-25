@@ -909,11 +909,12 @@ class WishGoalCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           KProgressBar(
-            value: cost == 0 ? 1.0 : store.credits / cost,
+            value: cost == 0 ? 1.0 : (store.credits / cost).clamp(0.0, 1.0),
             height: 7,
             color: missing == 0 ? SL.success : SL.accent,
             semanticsLabel: 'Crédits pour ${wod.name}',
-            semanticsValue: '${math.min(store.credits, cost)} sur $cost',
+            semanticsValue:
+                '${math.min(math.max(store.credits, 0), cost)} sur $cost',
           ),
           const SizedBox(height: 6),
           Text(
@@ -962,7 +963,9 @@ class CreditsCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '$credits crédit${credits > 1 ? 's' : ''} WOD',
+                      credits >= 0
+                          ? '$credits crédit${credits > 1 ? 's' : ''} WOD'
+                          : 'Solde : ${creditDeficitLabel(credits)}',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
@@ -985,6 +988,13 @@ class CreditsCard extends StatelessWidget {
             semanticsValue: '${lp.inLevel} sur ${lp.need} XP',
           ),
           const SizedBox(height: 8),
+          if (credits < 0) ...[
+            Text(
+              'Tes dépenses dépassent les gains enregistrés (souvent après l’import d’une ancienne sauvegarde). Tes WODs restent acquis ; tes prochains gains comblent d’abord ce déficit avant un nouvel achat.',
+              style: TextStyle(color: SL.action, fontSize: 12.5),
+            ),
+            const SizedBox(height: 6),
+          ],
           Text(
             'Gagne des crédits en progressant. Achète un WOD, rejoue-le à volonté : rien n\u2019est jamais retiré.',
             style: Theme.of(context).textTheme.bodySmall,
@@ -1042,12 +1052,17 @@ Future<void> showCreditRules(BuildContext context) {
     rule(
       Icons.bolt_rounded,
       'Essai du jour offert',
-      'Un WOD à l\u2019affiche, jouable jusqu\u2019à minuit. Terminé, il coûte 1 crédit de moins.',
+      'Un WOD jamais tenté, choisi pour la journée, jouable autant de fois que tu veux jusqu\u2019à minuit ; une tentative lancée avant minuit peut être terminée après. Terminé, il coûte 1 crédit de moins.',
     ),
     rule(
       Icons.storefront_rounded,
       'Vitrine de la semaine',
-      'Trois WODs à −1 crédit, du lundi au dimanche. Pas de stock limité, pas de compte à rebours truqué.',
+      'Trois WODs à −1 crédit, du lundi au dimanche. Un WOD acheté laisse sa place au suivant. Pas de stock limité, pas de compte à rebours truqué.',
+    ),
+    rule(
+      Icons.verified_rounded,
+      'Un gain n\u2019est payé qu\u2019une fois, et jamais repris',
+      'Corriger ou supprimer une séance ne retire aucun crédit. Refaire une séance supprimée ne repaie pas un palier, un chapitre, un boss ou une semaine déjà payés ; une nouvelle semaine complète, si.',
     ),
     rule(
       Icons.lock_open_rounded,

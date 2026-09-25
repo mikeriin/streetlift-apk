@@ -87,7 +87,7 @@ class StatsLevelCard extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         Text(
-          '${progress.earnedBadges} badges · ${store.credits} crédits WOD',
+          '${progress.earnedBadges} badges · ${store.credits >= 0 ? '${store.credits} crédits WOD' : creditDeficitLabel(store.credits)}',
           style: const TextStyle(color: KPalette.light, fontSize: 11),
         ),
       ],
@@ -110,7 +110,9 @@ void showStatsLevel(BuildContext context) {
     Text(
       '${p.remaining} XP avant le niveau ${p.level + 1} et +${p.nextCredits} crédit${p.nextCredits > 1 ? 's' : ''} WOD.',
     ),
-    Text('${store.credits} crédits disponibles · ${p.totalXp} XP cumulés'),
+    Text(
+      '${store.credits >= 0 ? '${store.credits} crédits disponibles' : creditDeficitLabel(store.credits)} · ${p.totalXp} XP cumulés',
+    ),
     const KSection('Tes rangs'),
     for (final rank in progressRanks)
       ListTile(

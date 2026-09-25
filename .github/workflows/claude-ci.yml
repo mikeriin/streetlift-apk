@@ -40,11 +40,11 @@ jobs:
           git commit -q -m "Résultats CI ${GITHUB_JOB} $(date -u +%H:%M:%S)" || exit 0
           git pull -q --rebase origin claude/ci-tools || true
           git push -q origin HEAD:claude/ci-tools
-      - name: Tests ciblés (L2b)
+      - name: Tests ciblés (L3)
         if: always()
         working-directory: streetlift_tracker
         run: |
-          TZ=Europe/Paris timeout 420 flutter test --no-pub --timeout 45s --reporter expanded test/l2b_data_control_test.dart test/ui_refactor_test.dart test/l2_persistence_test.dart > ../ci-out/test-history.log 2>&1; echo "exit=$?" >> ../ci-out/test-history.log
+          TZ=Europe/Paris timeout 420 flutter test --no-pub --timeout 45s --reporter expanded test/l3_economy_test.dart test/wod_store_test.dart test/reward_flow_test.dart test/l2_persistence_test.dart test/l2b_data_control_test.dart > ../ci-out/test-history.log 2>&1; echo "exit=$?" >> ../ci-out/test-history.log
       - name: Publier tests ciblés
         if: always()
         run: *push

@@ -49,6 +49,11 @@ def manifest_info(xml, build_number, version_name):
                           ('version_name', version_name), ('min_sdk', '21'),
                           ('target_sdk', '36'), ('debuggable', 'false')]:
         require(info[key] == expected, f'Manifeste : {key} inattendu ({info[key]}).')
+    # KT-016 option A, vérifiée sur le manifeste final fusionné (dépendances comprises).
+    backup = info['application_attributes']
+    require(backup.get('allowBackup') == 'true', 'Manifeste : allowBackup doit être "true" (KT-016).')
+    for attribute in ('dataExtractionRules', 'fullBackupContent', 'backupAgent'):
+        require(attribute not in backup, f'Manifeste : {attribute} non prévu par la décision KT-016.')
     return info
 
 

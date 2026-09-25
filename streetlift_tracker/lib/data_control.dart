@@ -324,6 +324,12 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
           ),
           _Line('Niveau calculé', 'niveau ${p.level} · ${p.xp} XP'),
           _Line(
+            'Crédits gagnés',
+            p.creditsGranted == null
+                ? 'non enregistrés dans ce fichier : recalculés depuis son journal'
+                : '${p.creditsGranted} (registre du fichier)',
+          ),
+          _Line(
             'Séances perso',
             '${p.customTemplates} modèles · ${p.userExercises} exercices ajoutés',
           ),

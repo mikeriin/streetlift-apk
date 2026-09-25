@@ -26,13 +26,14 @@ def elf(align=16384, relro=(0x4000, 0x4000), load_size=0x8000):
 
 
 def manifest(**changes):
-    fields = dict(package=PACKAGE, code='123', version='2.5.0', minimum='21', target='36', debug='false')
+    fields = dict(package=PACKAGE, code='123', version='2.5.0', minimum='21', target='36', debug='false',
+                  backup='android:allowBackup="true"')
     fields.update(changes)
     return '''<manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="{package}" android:versionCode="{code}" android:versionName="{version}">
       <uses-sdk android:minSdkVersion="{minimum}" android:targetSdkVersion="{target}"/>
       <uses-permission android:name="android.permission.VIBRATE"/>
-      <application android:debuggable="{debug}"><activity android:name=".MainActivity" android:exported="true"/></application>
+      <application android:debuggable="{debug}" {backup}><activity android:name=".MainActivity" android:exported="true"/></application>
       </manifest>'''.format(**fields)
 
 
@@ -41,7 +42,10 @@ class ArtifactTests(unittest.TestCase):
         result = manifest_info(manifest(), 123, '2.5.0')
         self.assertEqual(result['permissions'], ['android.permission.VIBRATE'])
         self.assertEqual(result['components'][0]['exported'], 'true')
-        for changes in [dict(package='other'), dict(code='124'), dict(version='2.5.1'), dict(minimum='23'), dict(target='35'), dict(debug='true')]:
+        for changes in [dict(package='other'), dict(code='124'), dict(version='2.5.1'), dict(minimum='23'), dict(target='35'), dict(debug='true'),
+                        dict(backup=''), dict(backup='android:allowBackup="false"'),
+                        dict(backup='android:allowBackup="true" android:dataExtractionRules="@xml/rules"'),
+                        dict(backup='android:allowBackup="true" android:fullBackupContent="@xml/rules"')]:
             with self.subTest(changes=changes), self.assertRaises(ValueError):
                 manifest_info(manifest(**changes), 123, '2.5.0')
         with self.assertRaises(ValueError):
