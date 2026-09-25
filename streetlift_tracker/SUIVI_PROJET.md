@@ -39,8 +39,8 @@
 | --- | --- |
 | État initial (L1b-R2, run n° 71 et suite complète) | 202 réussis, 1 ignoré |
 | Nouveaux tests | `l2_persistence_test.dart` (41 : 8 achats, 9 écritures/imports, 10 droits historiques, 8 imports bornés, 6 contrat KT-005 option C), `l2_purchase_ui_test.dart` (2 widget à 320 px), jeux `l2_fixtures.dart` (neuf, rempli, perso répétées, achats normaux/remisés, coût 0, formats 1/2/3, dégradés, bombe de compression contrôlée) |
-| Tests existants adaptés | `store_test`, `wod_store_test`, `wod_acquisition_test` : appel `unlockWod` → `await purchaseWod`, assertions conservées (un seul débit, prix remisé figé, refus faute de crédits) |
-| CI branche temporaire `claude/ci-tools` (sans secret, sans build) | Formatage appliqué ; `flutter analyze` : No issues found ; tests ciblés 77/77 ; **suite complète 238 réussis, 1 ignoré**, sortie 0 |
+| Tests existants adaptés | `store_test`, `wod_store_test`, `wod_acquisition_test` : appel `unlockWod` → `await purchaseWod`, assertions conservées (un seul débit, prix remisé figé, refus faute de crédits). `reward_flow_test` : son `setUp` vide le journal entre deux cas ; il remet aussi à zéro le plus haut des crédits (`debugResetEarnedCredits`, tests uniquement), sans quoi l'option C garde les crédits du cas précédent. Aucune assertion retirée. |
+| CI branche temporaire `claude/ci-tools` (sans secret, sans build), arbre final | Formatage : 76 fichiers, 0 changement ; `flutter analyze` : No issues found ; tests ciblés 84/84 ; **suite complète 245 réussis, 1 ignoré**, sortie 0 |
 | Python | 33/33 en local (outils inchangés) |
 | Erreurs simulées | Refus d'écriture, cache modifié puis refus, écritures suspendues (Completer) : oui, via `debugWriteHook` |
 | Stockage réel / redémarrage réel / arrêt brutal / appareil | **Non exécutés.** « Relance » des tests = nouvelle instance relisant le stockage simulé |

@@ -51,11 +51,35 @@ enum ImportStatus {
   /// La copie de récupération ou la nouvelle sauvegarde n'a pas été écrite :
   /// l'état courant est conservé.
   writeFailed,
+
+  /// Les données locales ont changé depuis l'aperçu confirmé : rien n'est
+  /// modifié, une nouvelle confirmation est nécessaire (L2b).
+  conflict,
+}
+
+/// Résultat d'une suppression des données de l'application (L2b).
+enum EraseStatus {
+  /// Données remplacées par un état neuf et toutes les autres clés retirées.
+  success,
+
+  /// État neuf écrit, mais des clés n'ont pas pu être retirées : à relancer.
+  partial,
+
+  /// Rien n'a été supprimé : l'état neuf n'a pas pu être écrit.
+  failed,
+}
+
+class EraseResult {
+  final EraseStatus status;
+
+  /// Clés de stockage encore présentes (hors état neuf), jamais leur contenu.
+  final List<String> remaining;
+  const EraseResult(this.status, {this.remaining = const []});
 }
 
 /// Limites d'import. Une sauvegarde représentative (40 semaines du
 /// programme entièrement saisies, 60 séances perso, 300 résultats de WOD)
-/// pèse environ 1,5 Mo de JSON (mesuré par
+/// pèse 1 037 555 octets de JSON et 71 374 valeurs (mesure de
 /// `test/l2_persistence_test.dart`) : chaque limite laisse au moins un
 /// facteur 10 de marge, sans permettre une expansion démesurée.
 class ImportLimits {

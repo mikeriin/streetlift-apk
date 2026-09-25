@@ -418,11 +418,11 @@ void main() {
     await tester.tap(find.text('Sauvegardes'));
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
-      find.text('Exporter une sauvegarde'),
+      find.text('Copier la sauvegarde'),
       350,
       scrollable: find.byType(Scrollable).first,
     );
-    await tester.tap(find.text('Exporter une sauvegarde'));
+    await tester.tap(find.text('Copier la sauvegarde'));
     await tester.pumpAndSettle();
     expect(clipboard, store.exportCompact());
     expect(
@@ -430,11 +430,11 @@ void main() {
       findsOneWidget,
     );
     await tester.scrollUntilVisible(
-      find.text('Importer une sauvegarde'),
+      find.text('Coller une sauvegarde'),
       150,
       scrollable: find.byType(Scrollable).first,
     );
-    await tester.tap(find.text('Importer une sauvegarde'));
+    await tester.tap(find.text('Coller une sauvegarde'));
     await tester.pumpAndSettle();
     expect(find.byType(AlertDialog), findsOneWidget);
     expect(find.text('Colle le texte exporté ici'), findsOneWidget);

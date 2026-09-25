@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'app_theme.dart';
+import 'data_control.dart';
 import 'ui.dart';
-import 'notifications.dart';
 import 'notification_settings.dart';
 import 'store.dart';
 
-const kAppVersion = '2.5.2';
+const kAppVersion = '2.5.3';
 
 class SettingsScreen extends StatelessWidget {
   final int? section;
@@ -175,11 +175,26 @@ class SettingsScreen extends StatelessWidget {
           const NotificationSettingsPanel(),
           const _Sec('Sauvegardes'),
           _Action(
-            icon: Icons.upload_rounded,
+            icon: Icons.save_alt_rounded,
             color: SL.accent,
             title: 'Exporter une sauvegarde',
             subtitle:
-                'Copie tout (pilotage, journal, séances, WODs, réglages) dans le presse-papiers',
+                'Fichier à l’emplacement de ton choix : pilotage, journal, séances, WODs, crédits, réglages. Non chiffré.',
+            onTap: () => exportBackupFile(context, appVersion: kAppVersion),
+          ),
+          _Action(
+            icon: Icons.file_open_outlined,
+            color: SL.accent,
+            title: 'Importer une sauvegarde',
+            subtitle:
+                'Depuis un fichier : aperçu du contenu, puis confirmation avant de remplacer tes données',
+            onTap: () => importBackupFile(context, appVersion: kAppVersion),
+          ),
+          _Action(
+            icon: Icons.copy_rounded,
+            color: SL.accent,
+            title: 'Copier la sauvegarde',
+            subtitle: 'Même contenu, en texte, dans le presse-papiers',
             onTap: () async {
               try {
                 await Clipboard.setData(
@@ -208,11 +223,26 @@ class SettingsScreen extends StatelessWidget {
             },
           ),
           _Action(
-            icon: Icons.download_rounded,
+            icon: Icons.content_paste_rounded,
             color: SL.accent,
-            title: 'Importer une sauvegarde',
-            subtitle: 'Remplace les données actuelles par un export collé',
+            title: 'Coller une sauvegarde',
+            subtitle: 'Depuis un texte copié : même aperçu, même confirmation',
             onTap: () => _import(context),
+          ),
+          const _Tile(
+            title: 'Sauvegarde Android',
+            subtitle:
+                'L’application ne désactive pas la sauvegarde du système. Si la sauvegarde Google est activée sur ton téléphone, Android peut y copier les données de l’application (au plus une fois par 24 h, en Wi-Fi, à l’arrêt) et les restaurer à la réinstallation ou lors d’un transfert vers un nouveau téléphone. L’application ne peut ni la déclencher, ni la vérifier, ni l’effacer : l’export ci-dessus est la copie que tu contrôles.',
+          ),
+          const KSection('Zone sensible'),
+          _Action(
+            icon: Icons.delete_forever_outlined,
+            color: Theme.of(context).colorScheme.error,
+            danger: true,
+            title: 'Supprimer les données de l’application',
+            subtitle:
+                'Remet l’application à son état d’installation, après confirmation. Export préalable proposé.',
+            onTap: () => eraseAppData(context, appVersion: kAppVersion),
           ),
           const _Sec('À propos'),
           _Tile(
@@ -244,7 +274,7 @@ class SettingsScreen extends StatelessWidget {
           'Célébrations et objectif de la semaine',
           'Écran et unités de charge',
           'Rappels et alertes',
-          'Exporter ou retrouver tes données',
+          'Exporter, restaurer ou supprimer tes données',
           'Version et contenu du programme',
         ];
         assert(
@@ -319,24 +349,8 @@ class SettingsScreen extends StatelessWidget {
       context: context,
       builder: (_) => const _ImportDialog(),
     );
-    if (raw == null || !context.mounted) return;
-    final messenger = ScaffoldMessenger.of(context);
-    final status = await store.importBackup(raw);
-    if (status == ImportStatus.success) await Notif.reschedule();
-    messenger.showSnackBar(
-      SnackBar(
-        content: Text(switch (status) {
-          ImportStatus.success =>
-            'Import réussi. Tes données précédentes sont gardées en copie de secours.',
-          ImportStatus.invalid =>
-            'Import impossible : sauvegarde invalide ou incomplète. Les données actuelles sont conservées.',
-          ImportStatus.tooLarge =>
-            'Import impossible : sauvegarde trop volumineuse. Les données actuelles sont conservées.',
-          ImportStatus.writeFailed =>
-            'Import impossible : écriture refusée par le téléphone. Les données actuelles sont conservées.',
-        }),
-      ),
-    );
+    if (raw == null || raw.isEmpty || !context.mounted) return;
+    await confirmAndImport(context, raw, appVersion: kAppVersion);
   }
 }
 
@@ -362,7 +376,7 @@ class _ImportDialogState extends State<_ImportDialog> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Text(
-            'Cette sauvegarde remplacera les données actuelles. Exporte-les d’abord si tu veux les conserver.',
+            'Un aperçu du contenu s’affichera avant tout remplacement de tes données.',
           ),
           const SizedBox(height: 12),
           TextField(
@@ -382,7 +396,7 @@ class _ImportDialogState extends State<_ImportDialog> {
       ),
       FilledButton(
         onPressed: () => Navigator.pop(context, text.text.trim()),
-        child: const Text('Importer'),
+        child: const Text('Voir l’aperçu'),
       ),
     ],
   );
@@ -526,16 +540,22 @@ class _Action extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback onTap;
+
+  /// Action destructive : bordure de la couleur d'erreur, séparée des
+  /// opérations courantes.
+  final bool danger;
   const _Action({
     required this.icon,
     required this.color,
     required this.title,
     required this.subtitle,
     required this.onTap,
+    this.danger = false,
   });
   @override
   Widget build(BuildContext context) => KCard(
     padding: EdgeInsets.zero,
+    outline: danger ? color : null,
     child: ListTile(
       onTap: onTap,
       leading: Icon(icon, color: color),

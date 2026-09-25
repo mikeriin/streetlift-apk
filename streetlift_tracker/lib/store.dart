@@ -867,6 +867,7 @@ class AppStore extends ChangeNotifier {
         notifyListeners();
         return PurchaseResult(PurchaseStatus.failed, cost: cost);
       }
+      _dataRevision++;
       if (wishlist.remove(w.id)) _persist();
       notifyListeners();
       return PurchaseResult(PurchaseStatus.success, cost: cost);
@@ -2214,18 +2215,71 @@ class AppStore extends ChangeNotifier {
     String raw, {
     ImportLimits limits = ImportLimits.standard,
   }) async {
-    _BackupData data;
-    String encoded;
+    final result = previewImport(raw, limits: limits);
+    final preview = result.preview;
+    if (preview == null) return result.status;
+    return _commitImport(preview._data, preview._encoded);
+  }
+
+  /// Révision des données métier : augmente à chaque modification réelle
+  /// (pas lors d'un simple enregistrement ou d'un passage en arrière-plan).
+  int get dataRevision => _dataRevision;
+  int _dataRevision = 0;
+
+  /// Lecture, validation et résumé d'une sauvegarde, sans aucune
+  /// modification (L2b). Le texte validé est conservé : l'import confirmé
+  /// applique exactement ce contenu.
+  ({ImportStatus status, ImportPreview? preview}) previewImport(
+    String raw, {
+    ImportLimits limits = ImportLimits.standard,
+  }) {
     try {
-      data = _parseBackup(boundedUnpack(raw, limits), limits: limits);
-      encoded = _pack(jsonEncode(_backupJson(data)));
+      final text = boundedUnpack(raw, limits);
+      final data = _parseBackup(text, limits: limits);
+      final meta = jsonDecode(text) as Map<String, dynamic>;
+      return (
+        status: ImportStatus.success,
+        preview: ImportPreview._(
+          data: data,
+          encoded: _pack(jsonEncode(_backupJson(data))),
+          meta: meta,
+          progression: Progression.calculate(
+            logs: data.logs,
+            catalog: data.wods,
+            program: program,
+            now: DateTime.now(),
+          ),
+          customWods:
+              data.wods.where((w) => !_seedDefaults.containsKey(w.id)).length,
+          localRevision: _dataRevision,
+        ),
+      );
     } on ImportLimitException {
-      return ImportStatus.tooLarge;
+      return (status: ImportStatus.tooLarge, preview: null);
     } catch (_) {
-      return ImportStatus.invalid;
+      return (status: ImportStatus.invalid, preview: null);
     }
+  }
+
+  /// Applique un aperçu confirmé. Si les données locales ont changé depuis
+  /// l'aperçu, rien n'est modifié ([ImportStatus.conflict]).
+  Future<ImportStatus> applyImport(ImportPreview preview) =>
+      _commitImport(
+        preview._data,
+        preview._encoded,
+        expectedRevision: preview.localRevision,
+      );
+
+  Future<ImportStatus> _commitImport(
+    _BackupData data,
+    String encoded, {
+    int? expectedRevision,
+  }) {
     return _serialize(() async {
       if (!_initialized) return ImportStatus.writeFailed;
+      if (expectedRevision != null && expectedRevision != _dataRevision) {
+        return ImportStatus.conflict;
+      }
       if (!await _keepRecoveryCopy('import')) {
         persistenceError.value =
             'Import interrompu : copie de sécurité impossible. Tes données actuelles sont conservées.';
@@ -2238,6 +2292,11 @@ class AppStore extends ChangeNotifier {
       }
       _applyBackup(data);
       _rankDifficulty();
+      // Aucune cérémonie de niveau ni bilan pour des acquis déjà présents
+      // dans la sauvegarde restaurée.
+      _lastLevel = max(_lastLevel, level);
+      _pendingReward = null;
+      _dataRevision++;
       // Mémoire et document écrit sont identiques : plus rien d'antérieur à
       // écrire. Une sauvegarde déjà demandée réécrira simplement cet état.
       _acceptedSeq = _changeSeq;
@@ -2245,6 +2304,91 @@ class AppStore extends ChangeNotifier {
       notifyListeners();
       return ImportStatus.success;
     });
+  }
+
+  /// Contenu d'un fichier de sauvegarde : format 3 actuel, avec la date
+  /// d'export et la version de l'application (champs optionnels, ignorés
+  /// par les versions précédentes). Instantané synchrone de la mémoire.
+  String exportForFile({required String appVersion, DateTime? at}) {
+    final data = _backupJson(_currentBackup());
+    data['exportedAt'] = (at ?? DateTime.now()).toIso8601String();
+    data['appVersion'] = appVersion;
+    return jsonEncode(data);
+  }
+
+  /// Injection d'échecs de retrait de clé pour les tests uniquement.
+  @visibleForTesting
+  Future<bool> Function(String key)? debugRemoveHook;
+
+  /// Clés de stockage de l'application (noms seulement), pour l'inventaire
+  /// de suppression.
+  @visibleForTesting
+  Set<String> get storedKeys => _prefs.getKeys();
+
+  /// Supprime toutes les données locales de l'application (L2b) : un état
+  /// neuf remplace d'abord le document principal, puis toutes les autres
+  /// clés (copies de récupération, anciennes clés de migration) sont
+  /// retirées. Passe dans la file des écritures : une sauvegarde demandée
+  /// plus tôt s'exécute avant, une demandée plus tard écrit l'état neuf.
+  Future<EraseResult> eraseAllData() {
+    _saveT?.cancel();
+    _saveT = null;
+    return _serialize(() async {
+      if (!_initialized) return const EraseResult(EraseStatus.failed);
+      final fresh = _freshData();
+      if (!await _writeRaw(_pack(jsonEncode(_backupJson(fresh))))) {
+        persistenceError.value =
+            'Suppression impossible : écriture refusée. Tes données sont intactes.';
+        return const EraseResult(EraseStatus.failed);
+      }
+      _applyBackup(fresh);
+      _rankDifficulty();
+      _earnedMax = 0;
+      _lastLevel = 1;
+      _pendingReward = null;
+      _purchases.clear();
+      _dataRevision++;
+      _acceptedSeq = _changeSeq;
+      final remaining = <String>[];
+      for (final key in _prefs.getKeys().toList()) {
+        if (key == _kState) continue;
+        var removed = false;
+        try {
+          final hook = debugRemoveHook;
+          removed = hook != null ? await hook(key) : await _prefs.remove(key);
+        } catch (_) {
+          removed = false;
+        }
+        if (!removed || _prefs.containsKey(key)) remaining.add(key);
+      }
+      persistenceError.value = null;
+      notifyListeners();
+      return EraseResult(
+        remaining.isEmpty ? EraseStatus.success : EraseStatus.partial,
+        remaining: remaining,
+      );
+    });
+  }
+
+  /// État d'une installation neuve : références du programme, catalogue
+  /// embarqué d'origine, aucun journal, aucun droit, réglages par défaut.
+  _BackupData _freshData() {
+    final defaults = program.pilotage;
+    return _BackupData(
+      values: {
+        'B4': defaults.bodyweight,
+        for (final l in defaults.mainLifts) l.ref: l.oneRm,
+        for (final r in defaults.repMax) r.ref: r.max,
+        for (final a in defaults.accessories) a.ref: a.refLoad,
+      },
+      logs: {},
+      settings: AppSettings(),
+      custom: [],
+      userExercises: [],
+      wods: [for (final w in _seedDefaults.values) Wod.fromJson(w.toJson())],
+      unlocked: {},
+      lastLevel: 1,
+    );
   }
 
   /// Copies de récupération (plus récente d'abord), jamais écrasées par un
@@ -2303,6 +2447,7 @@ class AppStore extends ChangeNotifier {
   }
 
   void _persist() {
+    _dataRevision++;
     if (_initialized) unawaited(_writeSnapshot());
   }
 
@@ -3055,6 +3200,7 @@ class AppStore extends ChangeNotifier {
   /// Persistance différée (600 ms) : l'encodage JSON du journal complet ne
   /// tourne plus sur le thread d'interface à chaque coche ou frappe.
   void saveLogs({bool immediate = false, bool affectsProgression = true}) {
+    _dataRevision++;
     _saveT?.cancel();
     if (immediate) {
       _flushLogs();
@@ -3072,7 +3218,8 @@ class AppStore extends ChangeNotifier {
   void _flushLogs() {
     _saveT?.cancel();
     _saveT = null;
-    _persist();
+    // La révision a déjà été comptée par [saveLogs] au moment du changement.
+    if (_initialized) unawaited(_writeSnapshot());
   }
 
   /// À appeler quand l'app passe en arrière-plan.
@@ -3211,6 +3358,67 @@ class AppStore extends ChangeNotifier {
     persistenceError.dispose();
     super.dispose();
   }
+}
+
+/// Aperçu d'une sauvegarde validée (L2b) : uniquement des informations
+/// réellement présentes dans le fichier, jamais déduites de son nom.
+class ImportPreview {
+  final _BackupData _data;
+  final String _encoded;
+
+  /// Révision des données locales au moment de l'aperçu.
+  final int localRevision;
+
+  final int format;
+
+  /// Date d'export enregistrée dans le fichier (null : non enregistrée).
+  final DateTime? exportedAt;
+  final String? appVersion;
+  final int programSessions, customSessionsDone, archivedSessions;
+  final int customTemplates, userExercises, wodResults, customWods;
+  final int wodsUnlocked, creditsPaid, legacyGrants, wishlist;
+  final int level, xp;
+  final int? creditsEarnedMax;
+
+  ImportPreview._({
+    required _BackupData data,
+    required String encoded,
+    required Map<String, dynamic> meta,
+    required Progression progression,
+    required this.customWods,
+    required this.localRevision,
+  }) : _data = data,
+       _encoded = encoded,
+       format = (meta['format'] ?? 1) as int,
+       exportedAt =
+           meta['exportedAt'] is String
+               ? DateTime.tryParse(meta['exportedAt'] as String)
+               : null,
+       appVersion = meta['appVersion'] is String
+           ? meta['appVersion'] as String
+           : null,
+       programSessions =
+           data.logs.entries
+               .where((e) => e.value.done && !e.key.startsWith('S0-'))
+               .length,
+       customSessionsDone =
+           data.logs.entries
+               .where((e) => e.value.done && e.key.startsWith('S0-'))
+               .length,
+       archivedSessions = data.logs.keys.where((k) => k.contains('@')).length,
+       customTemplates = data.custom.length,
+       userExercises = data.userExercises.length,
+       wodResults = data.wods.fold(0, (n, w) => n + w.results.length),
+       wodsUnlocked = data.unlocked.length,
+       creditsPaid = data.unlocked.values.fold(0, (a, b) => a + b),
+       legacyGrants = data.legacyGrants.length,
+       wishlist = data.wishlist.length,
+       creditsEarnedMax = data.earnedMax,
+       level = progression.level,
+       xp = progression.totalXp;
+
+  /// Séances terminées au total.
+  int get sessionsDone => programSessions + customSessionsDone;
 }
 
 class _BackupData {

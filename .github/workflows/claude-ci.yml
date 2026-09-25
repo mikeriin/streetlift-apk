@@ -40,12 +40,30 @@ jobs:
           git commit -q -m "Résultats CI ${GITHUB_JOB} $(date -u +%H:%M:%S)" || exit 0
           git pull -q --rebase origin claude/ci-tools || true
           git push -q origin HEAD:claude/ci-tools
-      - name: Tests ciblés (L2)
+      - name: Tests ciblés (L2b)
         if: always()
         working-directory: streetlift_tracker
         run: |
-          TZ=Europe/Paris timeout 420 flutter test --no-pub --timeout 45s --reporter expanded test/l2_persistence_test.dart test/l2_purchase_ui_test.dart test/store_test.dart test/wod_store_test.dart test/wod_acquisition_test.dart > ../ci-out/test-history.log 2>&1; echo "exit=$?" >> ../ci-out/test-history.log
+          TZ=Europe/Paris timeout 420 flutter test --no-pub --timeout 45s --reporter expanded test/l2b_data_control_test.dart test/ui_refactor_test.dart test/l2_persistence_test.dart > ../ci-out/test-history.log 2>&1; echo "exit=$?" >> ../ci-out/test-history.log
       - name: Publier tests ciblés
+        if: always()
+        run: *push
+      - name: Compilation Android debug (code natif) et manifeste fusionné
+        if: always()
+        working-directory: streetlift_tracker
+        run: |
+          sdk="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
+          tools="$sdk/cmdline-tools/latest/bin"
+          (yes 2>/dev/null || true) | "$tools/sdkmanager" --licenses > /dev/null
+          "$tools/sdkmanager" --install "platforms;android-36" "build-tools;36.0.0" "ndk;28.2.13676358" > /dev/null 2>&1 || true
+          chmod +x android/gradlew || true
+          timeout 1500 flutter build apk --debug --no-pub --target-platform android-arm64 > ../ci-out/android-debug.log 2>&1; echo "exit=$?" >> ../ci-out/android-debug.log
+          find build/app/intermediates -name AndroidManifest.xml | grep -i merged > ../ci-out/manifest-paths.txt || true
+          manifest="$(grep -i 'merged_manifest/' ../ci-out/manifest-paths.txt | head -1)"
+          if [ -n "$manifest" ]; then cp "$manifest" ../ci-out/merged-manifest-debug.xml; fi
+          grep -n -i "allowBackup\|dataExtractionRules\|fullBackupContent\|backupAgent\|hasFragileUserData\|<uses-permission" ../ci-out/merged-manifest-debug.xml > ../ci-out/backup-attributes.txt || echo "aucun attribut de sauvegarde trouvé" > ../ci-out/backup-attributes.txt
+          tail -n 5 ../ci-out/android-debug.log
+      - name: Publier compilation Android
         if: always()
         run: *push
       - name: Suite complète
