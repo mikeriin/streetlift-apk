@@ -1,0 +1,16 @@
+diff --git a/streetlift_tracker/test/history_correction_test.dart b/streetlift_tracker/test/history_correction_test.dart
+index 38d73ac..0f4f982 100644
+--- a/streetlift_tracker/test/history_correction_test.dart
++++ b/streetlift_tracker/test/history_correction_test.dart
+@@ -246,10 +246,7 @@ void main() {
+       find.widgetWithText(PopupMenuItem<String>, 'Corriger les saisies'),
+     );
+     expect(item.enabled, isFalse);
+-    expect(
+-      find.text('Supprimer de l’historique'),
+-      findsOneWidget,
+-    );
++    expect(find.text('Supprimer de l’historique'), findsOneWidget);
+     await close(tester);
+   });
+ 

@@ -246,10 +246,7 @@ void main() {
       find.widgetWithText(PopupMenuItem<String>, 'Corriger les saisies'),
     );
     expect(item.enabled, isFalse);
-    expect(
-      find.text('Supprimer de l’historique'),
-      findsOneWidget,
-    );
+    expect(find.text('Supprimer de l’historique'), findsOneWidget);
     await close(tester);
   });
 
