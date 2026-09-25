@@ -52,9 +52,11 @@ String exportMessage(FileSaveResult r, {bool unsaved = false}) => switch (r
         '${r.deleted ? ' Le fichier incomplet a été supprimé.' : ''}',
 };
 
+/// Un message remplace le précédent : les étapes d'un même parcours
+/// (préparation, export, import, suppression) ne s'empilent pas en file.
 void _say(ScaffoldMessengerState messenger, String text) {
   messenger
-    ..hideCurrentSnackBar()
+    ..clearSnackBars()
     ..showSnackBar(
       SnackBar(content: Text(text), duration: const Duration(seconds: 6)),
     );
