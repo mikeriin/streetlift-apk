@@ -1,4 +1,13 @@
-# Kalis Track 2.5.5 — Boutique de WODs façon jeu
+# Kalis Track 2.5.6 — Boutique de WODs façon jeu
+
+## 2.5.6 — Formats WOD fiables (lot L3b)
+
+- **Tabata de bout en bout.** Les 40 Tabata du catalogue ont un vrai déroulement : 8 efforts de 20 s séparés par 10 s de repos, 1 min entre deux mouvements, fin au dernier effort (3 mouvements : 13 min 30 s ; 4 : 18 min 20 s). L'écran nomme la phase en toutes lettres (« EFFORT », « REPOS », « REPOS ENTRE MOUVEMENTS »), le mouvement et l'intervalle ; pause et reprise figent la phase ; pas de rafale de bips au retour dans l'application.
+- **Score Tabata conforme à la consigne.** Tu saisis tes reps de chaque intervalle ; l'application prend le plus faible de chaque mouvement (0 compte) et additionne ces minimums. Case vide = non renseignée, jamais zéro ; un Tabata incomplet reste dans l'historique sans devenir un record.
+- **Une règle de score par format, affichée.** For Time et rounds : temps le plus court, et tu indiques toi-même si le WOD est terminé (un arrêt rapide ne devient plus un record) ; au-delà du time cap, résultat incomplet. AMRAP : rounds + reps. EMOM : minutes tenues sur N (plus de valeur pré-remplie). Death by : dernière minute réussie. E5MOM tractions : total de tractions. AMRAP en blocs : total des rounds, avec un chrono par blocs. Routines sans règle écrite : temps noté, sans record.
+- **Anciens résultats intacts.** Rien n'est converti ni supprimé ; un ancien temps de Tabata ou un ancien score d'EMOM reste dans l'historique avec son explication, sans être comparé aux nouveaux. L'XP déjà gagnée ne bouge pas.
+
+Contrats détaillés : `docs/WOD_FORMATS.md`. Tests : `test/l3b_formats_test.dart`.
 
 ## 2.5.5 — Essai du jour, vitrine et crédits fiabilisés (lot L3)
 

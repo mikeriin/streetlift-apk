@@ -1,8 +1,105 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : L3 — Économie et essai WOD (KT-003, KT-004, KT-005)**  
-**Date : 25 septembre 2026, Europe/Paris — version : 2.5.5+56 (versionCode réel fixé par la CI de build)**  
-**Statut : tentative d'essai après minuit, essai du jour et vitrine persistés, registre des gains de crédits et déficit visible implémentés et testés automatiquement ; publication et build dans `LIVRAISON_L3.md`. Aucune vérification sur téléphone pour L3. L3b, le démarrage du programme et la refonte ne sont pas lancés.**
+**Passe actuelle : L3b — Formats WOD (KT-008)**  
+**Date : 26 septembre 2026, Europe/Paris — version : 2.5.6+57 (versionCode réel fixé par la CI de build)**  
+**Statut : Tabata corrigé de bout en bout (définition explicite, chrono par phases, saisie par intervalle, score, records, anciens résultats) ; règles de score centralisées pour tous les formats présents ; testé automatiquement. Publication et build : `LIVRAISON_L3b.md`. Aucune vérification sur téléphone. L4, L4b et la refonte ne sont pas lancés.**
+
+## L3b.0 — Base et contrôle préalable
+
+| Élément | Valeur | Nature de la preuve |
+| --- | --- | --- |
+| Base | `streetlift_tracker_v33.zip` de la livraison L3 2.5.5 (= `main`, commit `0b36c56`), **1 344 898 octets**, SHA-256 `76c9ef4987fc98ec130c2e92ad3daac993ab02367b1a58e32f0ca171d6f12f41`, racine unique `streetlift_tracker/`, 308 fichiers, version 2.5.5+56 | Vérifié (identique à l'archive livrée en L3) ; source intacte, travail sur copie |
+| Build 2.5.5 | Run n° 75 réussi (APK, AAB, validation) | Résultat GitHub |
+| État initial des tests (base) | **306 réussis, 1 ignoré** ; format et analyse sans problème ; build Android debug réussi | Tests automatiques (CI, branche temporaire, commit `29e9c85`) |
+| Essais téléphone L1b, L2, L2b, L3 | **Non rapportés** | — |
+| Décisions L3b du propriétaire (25/09/2026) | Tabata : repos entre mouvements à la place du 10 s, fin au dernier effort ; score = total des minimums ; routine sans règle = temps noté sans record ; EMOM sans règle = minutes tenues sur N | Déclarations du propriétaire |
+| Décisions antérieures conservées | KT-005 option C + registre par gain ; déficit affiché ; essai illimité jusqu'à minuit ; KT-014 ; KT-016 option A ; publication sur `main` à chaque mise à jour | Déclarations du propriétaire |
+
+**Contrôle préalable** : aucun échec bloquant de compilation, de conservation ou de comptabilité dans la base (tests et build verts). La conservation des données après mise à jour **n'est toujours pas constatée sur téléphone** depuis L1 : exporter une sauvegarde avant d'installer 2.5.6 (protocole de `LIVRAISON_L3b.md`). L3b n'écrit aucune migration : les anciens résultats restent tels quels.
+
+## L3b.1 — Contrats
+
+Contrats complets, exemples, règles de comparaison et anciens résultats : **`docs/WOD_FORMATS.md`**. Résumé :
+
+| Format (nombre) | Avant L3b (code) | Règle retenue | Origine de la règle |
+| --- | --- | --- | --- |
+| For Time (313), rounds (194) | Temps le plus court ; « terminé » coché par défaut | Temps le plus court ; réalisation **choisie explicitement** ; terminé au-delà du cap refusé | Code existant + consigne |
+| AMRAP (118) | Rounds + reps ; toujours « terminé » | Rounds + reps ; arrêt anticipé = incomplet | Consigne (« score = rounds + reps ») |
+| EMOM (148 génériques) | Rounds + reps, rounds pré-remplis par le temps | Minutes tenues sur N, jamais pré-rempli | Propriétaire |
+| E5MOM `seed29` | Rounds + reps | Total de tractions | Consigne (« objectif total tractions ») |
+| Death by (21) | Rounds + reps | Dernière minute réussie | Consigne (« score = dernière minute réussie ») |
+| **Tabata (40)** | **Routine : chrono montant, temps le plus court = record** | Phases 8 × 20 s / 10 s, 60 s entre mouvements, fin au dernier effort ; saisie par intervalle ; total des minimums | Consigne + propriétaire |
+| AMRAP en blocs (40) | Routine au temps | Phases ; total des rounds | Consigne (« score = total des rounds ») |
+| Autres routines (125) | Temps le plus court = record | Temps noté, sans record | Propriétaire |
+
+## L3b.2 — Changements
+
+| Ticket / point | Corrigé dans le code | Testé automatiquement | Vérifié sur appareil | En attente d'arbitrage |
+| --- | --- | --- | --- | --- |
+| KT-008 Tabata (définition, chrono, saisie, score, records, historique) | **Oui** | **Oui** | Non | Non |
+| Règles des autres formats (For Time, rounds, AMRAP, EMOM, Death by, E5MOM, AMRAP en blocs, routines) | **Oui** | **Oui** (règle, saisie, record ; runner complet pour Tabata) | Non | Précision EMOM « terminé » à confirmer (voir `docs/WOD_FORMATS.md` §1) |
+| Anciens résultats (lecture historique, XP inchangée) | **Oui** | **Oui** (oracle ancienne règle) | Non | Non |
+
+**Code**
+- `lib/wod_formats.dart` (**nouveau**) : règles de score versionnées (`ScoreRule`, id `tabata/1`…), règle du WOD (`ruleFor`), lecture d'un résultat (`readRule`), valeur comparable (`performance`, jamais de valeur par défaut), record (`bestResult`, égalité = premier), groupes d'XP de record (`recordGroup`, ancienne règle conservée pour les anciens résultats), phases (`phasesOf`), libellés (règle en clair, phase, détail, texte du score, note historique).
+- `lib/wod_models.dart` : `WodFormat` (définition structurée : `tabata`, `amrap-blocks`, `emom-reps`, `death-by`), `Wod.format`, `WodResult.scoring` et `WodResult.intervals` (sérialisés seulement s'ils existent), `best()` délègue à `bestResult` ; `seed29` porte `emom-reps`.
+- `lib/wod_generator.dart` : familles 6 (AMRAP en blocs), 10 (Tabata, lignes écrites depuis la définition) et 11 (Death by) portent leur format. Aucune autre valeur ne change.
+- `lib/timers.dart` : `WodClock.startPhases` (phase déduite du temps actif, préparation hors durée, alerte seulement si la transition date de moins de 1,5 s, compteurs d'alertes).
+- `lib/wod_screen.dart` : runner par phases (nom de la phase annoncé seul, position, temps de phase et total), horloge du store ; `ScoreSheet` selon la règle (cases Tabata, réalisation explicite, bornes, zéro ≠ vide, time cap) ; notes historiques dans la liste des résultats ; `parseCount`.
+- `lib/progression.dart` : XP de record par groupe de comparaison.
+- `lib/store.dart` : validation d'import (`scoring` connu, `intervals` 0-999, ≤ 20 × 50, `format` cohérent).
+- `lib/stats_history.dart`, `lib/wod_preview.dart` : détail du résultat et règle en clair.
+- `tools/wod_catalog_snapshot.dart` (**nouveau**) : instantané du catalogue pour comparer avant/après.
+- `pubspec.yaml`, `lib/settings_screen.dart` : 2.5.6+57. `docs/WOD_FORMATS.md` (**nouveau**), `README.md`, ce suivi.
+
+**WOD modifiés** : seulement l'ajout de la clé `format` sur 102 WODs (40 Tabata, 40 AMRAP en blocs, 21 Death by, `seed29`). Définitions comparées avant/après : les 1 000 autres champs identiques (instantanés CI, empreinte vérifiée par test).
+
+**Inchangés** : identifiants, prix, barèmes, bonus, XP de tentative, crédits et registre, essai et vitrine, droits, favoris, file d'écritures, export/import (format 3), suppression locale, workflow `build-apk.yml`, identifiant et signature.
+
+## L3b.3 — Tests
+
+| Niveau | Résultat |
+| --- | --- |
+| État initial | 306 réussis, 1 ignoré (base 2.5.5) |
+| Nouveaux tests `l3b_formats_test.dart` | 41 : catalogue (5), phases (3), chrono simulé (6), score Tabata (4), autres formats (8), saisie des nombres (1), store/sauvegarde/XP/L2/L3 (8), écrans (6, dont 320 px, 130 % et 200 %, clavier ouvert) |
+| Tests adaptés | `screens_test` « score invalide… » : choix « Terminé en entier » ajouté (un For Time n'est plus supposé terminé), assertion ajoutée sur ce message ; `l3_economy_test` (écran à minuit) : remplissage de la feuille selon le format de l'essai (`test/support/score_sheet.dart`). Aucune assertion retirée |
+| Défauts trouvés par les tests et corrigés | Région dynamique qui englobait tout le chrono (annonce à chaque seconde) ; bouton « Valider round » visible avant le départ d'un Tabata |
+| CI branche temporaire (sans secret) | Formatage : 83 fichiers, 0 changement restant ; `flutter analyze` sans problème ; tests ciblés (L3b, chrono, écrans, L3, progression, stats, boutique, estimation) **155/155** ; **suite complète 347 réussis, 1 ignoré** (306 + 41 ; aucun test retiré) ; **build Android debug réussi** ; instantané du catalogue : seules les 102 clés `format` diffèrent |
+| Python | 33/33 en local ; `verify_project.py` réussi |
+| Appareil | **Aucun essai** |
+
+### Cas importants
+
+| Données de départ | Action | Valeur attendue | Valeur observée (test) |
+| --- | --- | --- | --- |
+| Tabata `genx100` (3 mvts) | Phases | 47 phases, 810 s, dernier = effort 8/8 du 3e mouvement | Conforme |
+| Chrono Tabata | 19,8 s → 20,0 s → 29,8 s → 30,2 s | Effort (1 s) → repos (10 s) → repos (1 s) → effort 2/8 ; 2 bips | Conforme |
+| Chrono Tabata | Retour après 95 s en un rafraîchissement | Effort 4/8, 15 s restantes, 0 bip rejoué | Conforme |
+| Chrono Tabata | 809 s puis 810 s puis +30 s | Fin à 810 s, une alarme, 46 bips au total | Conforme |
+| Fin découverte 90 s trop tard | Rafraîchissement | Terminé, 0 alarme, 0 bip | Conforme |
+| Runner 320 px | Démarrer, pause 2 min en repos, fin | Phase et chiffres figés en pause ; feuille ouverte vide ; minimums 10 · 6 · 10 → « Total 26 reps » ; record | Conforme |
+| Saisie 8/8/8 avec un 0 | Minimum | 0 compté | Conforme |
+| Saisie incomplète déclarée terminée | Enregistrer | Refus : « Intervalles non renseignés… » | Conforme |
+| Saisie incomplète « Incomplet » (130 %, 200 %, clavier) | Enregistrer | Résultat partiel, minimums « 4 · — · — · — », pas de record | Conforme |
+| Cases « -1 », « 2.5 », « abc », « 1000 » | Enregistrer | Refus « 0-999 », rien enregistré | Conforme |
+| Deux Tabata 30 et 33, puis 33 | Record | Le premier 33 | Conforme |
+| Ancien Tabata au temps (600 s) | Lecture, nouveau Tabata | Conservé tel quel, non comparé ; le nouveau devient record | Conforme |
+| Anciens résultats sur 6 familles | Calcul de l'XP | 400 XP de record, égal à l'ancienne règle (oracle) | Conforme |
+| Sauvegarde ancienne | Import × 2 | XP, crédits, registre, essai, vitrine et résultats identiques ; aucune récompense | Conforme |
+| Nouveau Tabata | Export puis import × 2 | `scoring`, `intervals`, `reps` identiques ; un seul résultat | Conforme |
+| Écriture refusée | Réessai | Un résultat, une récompense | Conforme |
+| Essai Tabata relancé à 23 h 59 | Validation à 00 h 01 | Enregistré (2e résultat), non acquis, plus de nouvelle tentative | Conforme |
+| Import `tabata/9`, intervalle 1000 ou -1, format Tabata sur un EMOM | Import | Refusé, rien modifié | Conforme |
+| For Time cap 12 min | 12:30 « terminé » | Refus « Au-delà du time cap » ; 11:40 accepté | Conforme |
+| EMOM 15 | Feuille | Champ vide ; 16 refusé ; 0 accepté (« 0/15 minutes tenues ») | Conforme |
+
+## L3b.4 — Limites et suites
+
+- Chrono et tentative non restaurés après destruction du processus (**L4b**). Aucune persistance ajoutée.
+- L'estimation de durée affichée sur les tuiles et la fiche (« ~ x min ») reste celle du modèle d'estimation ; la durée exacte du Tabata figure dans l'entête du format.
+- Précision EMOM (« terminé » = mené à son terme) à confirmer ; changement simple si tu préfères « terminé = toutes les minutes tenues ».
+- Ambiguïtés de texte du catalogue conservées (Death by, HYROX EMOM 30, notes génériques) : `docs/WOD_FORMATS.md` §7.
+- Branche temporaire `claude/ci-tools` toujours présente : à supprimer par le propriétaire.
 
 ## L3.0 — Base et contrôle préalable
 

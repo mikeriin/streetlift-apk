@@ -10,6 +10,7 @@ import 'models.dart';
 import 'rewards.dart' show checkLevelUp;
 import 'store.dart';
 import 'estimate_view.dart';
+import 'pilotage_screen.dart';
 
 const _tab = [FontFeature.tabularFigures()];
 
@@ -220,6 +221,14 @@ class _SessionScreenState extends State<SessionScreen> {
             onSelected: (value) {
               if (value == 'clear') _confirmClear();
               if (value == 'instructions') _instructions();
+              // Report d'un test (S2, S12…) dans la feuille Pilotage sans
+              // quitter la séance : même écran que depuis STATS.
+              if (value == 'pilotage') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const PilotageScreen()),
+                );
+              }
             },
             itemBuilder:
                 (_) => [
@@ -228,6 +237,10 @@ class _SessionScreenState extends State<SessionScreen> {
                       value: 'instructions',
                       child: Text('Consignes de séance'),
                     ),
+                  const PopupMenuItem(
+                    value: 'pilotage',
+                    child: Text('Références (feuille Pilotage)'),
+                  ),
                   const PopupMenuItem(
                     value: 'clear',
                     child: Text('Effacer l’historique'),
@@ -412,6 +425,65 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       if (!widget.readOnly) _prefill(widget.exs[k], specs[k], logs[k]);
       if (logs[k].note.isNotEmpty) _notesOpen.add(k);
     }
+    if (!widget.readOnly) {
+      _planned = [
+        for (var k = 0; k < widget.exs.length; k++)
+          store.plannedReps(widget.exs[k], specs[k], logs[k].sets.length),
+      ];
+      _signature = _labels();
+      store.addListener(_onStore);
+    }
+  }
+
+  @override
+  void dispose() {
+    if (!widget.readOnly) store.removeListener(_onStore);
+    super.dispose();
+  }
+
+  // ---- Feuille Pilotage modifiée pendant la séance (LC1) ----
+  // Les volumes (séries continues, séries de référence, clusters) suivent
+  // les maxima : la page se recalcule aussitôt, et les reps pré-remplies des
+  // séries non validées suivent le nouveau volume. Une saisie de
+  // l'utilisateur (valeur différente du pré-remplissage) n'est jamais écrasée.
+  List<List<int?>> _planned = const [];
+  String _signature = '';
+
+  String _labels() => [
+    for (final e in widget.exs) '${store.setsLabel(e)}|${store.loadLabel(e)}',
+  ].join('\n');
+
+  void _onStore() {
+    if (!mounted) return;
+    final signature = _labels();
+    if (signature == _signature) return;
+    _signature = signature;
+    var changed = false;
+    for (var k = 0; k < widget.exs.length; k++) {
+      if (widget.exs[k].sets.type != 'volume') continue;
+      final next = store.plannedReps(
+        widget.exs[k],
+        specs[k],
+        logs[k].sets.length,
+      );
+      final previous = _planned[k];
+      for (var i = 0; i < logs[k].sets.length; i++) {
+        final set = logs[k].sets[i];
+        if (set.done || i >= previous.length || i >= next.length) continue;
+        if (previous[i] != null &&
+            next[i] != null &&
+            set.reps == '${previous[i]}' &&
+            previous[i] != next[i]) {
+          set.reps = '${next[i]}';
+          changed = true;
+        }
+      }
+      _planned[k] = next;
+    }
+    setState(() {
+      if (changed) epoch++;
+    });
+    if (changed) store.saveLogs(affectsProgression: false);
   }
 
   void _prefill(Exercise ex, LogSpec sp, ExerciseLog log) {

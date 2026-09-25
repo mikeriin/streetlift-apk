@@ -81,7 +81,8 @@ void main() {
         }
       }
     }
-    expect(count, 1954);
+    // LC1 (KT-037) : 1 954 − 202 lignes retirées + 66 nouvelles (S12-S19).
+    expect(count, 1818);
   });
 
   test('les semaines suivent les jours civils aux changements d’heure', () {

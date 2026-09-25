@@ -353,7 +353,7 @@ void main() {
       expect(app.exerciseEstimate(e).rest.low, 300);
     });
     test(
-      'aucun nombre non fini ou négatif dans les 1954 exercices et 1 000 WODs',
+      'aucun nombre non fini ou négatif dans les 1818 exercices et 1 000 WODs',
       () {
         final estimates = [
           for (final w in app.program.weeks)
