@@ -19,10 +19,11 @@ String gzText(String json) =>
 /// Données très compressibles : [bytes] espaces dans un JSON valide.
 String compressibleBomb(int bytes) {
   final spaces = Uint8List(bytes)..fillRange(0, bytes, 0x20);
-  final json = BytesBuilder()
-    ..add(utf8.encode('{"kalisTrack":1,"format":3,"pad":"'))
-    ..add(spaces)
-    ..add(utf8.encode('"}'));
+  final json =
+      BytesBuilder()
+        ..add(utf8.encode('{"kalisTrack":1,"format":3,"pad":"'))
+        ..add(spaces)
+        ..add(utf8.encode('"}'));
   return 'gz:${base64Encode(gzip.encode(json.takeBytes()))}';
 }
 
@@ -36,7 +37,8 @@ Map<String, dynamic> filledBackup(AppStore app) {
     for (final day in week.days) {
       if (day.exercises.isEmpty) continue;
       final date = app.program.dateFor(week.n, day.j);
-      final at = DateTime(date.year, date.month, date.day, 18).toIso8601String();
+      final at =
+          DateTime(date.year, date.month, date.day, 18).toIso8601String();
       final log = SessionLog(
         done: true,
         finishedAt: at,
@@ -106,9 +108,7 @@ Map<String, dynamic> filledBackup(AppStore app) {
   data['logs'] = logs;
   data['custom'] = custom;
   (data['catalog'] as Map<String, dynamic>)['results'] = results;
-  data['unlocked'] = {
-    for (final w in catalog.take(30)) w.id: app.basePrice(w),
-  };
+  data['unlocked'] = {for (final w in catalog.take(30)) w.id: app.basePrice(w)};
   return data;
 }
 
@@ -134,8 +134,7 @@ Map<String, dynamic> formatV2(AppStore app, Map<String, int> unlocked) => {
   'format': 2,
   'pilotage': {'B4': 78},
   'logs': {
-    'S8-J1':
-        SessionLog(done: true, finishedAt: '2026-09-01T10:00:00').toJson(),
+    'S8-J1': SessionLog(done: true, finishedAt: '2026-09-01T10:00:00').toJson(),
   },
   'settings': AppSettings().toJson(),
   'wods': app.wods.map((w) => w.toJson()).toList(),
@@ -147,8 +146,7 @@ Map<String, dynamic> formatV1(AppStore app) => {
   'kalisTrack': 1,
   'pilotage': {'B4': 77},
   'logs': {
-    'S9-J2':
-        SessionLog(done: true, finishedAt: '2026-09-02T10:00:00').toJson(),
+    'S9-J2': SessionLog(done: true, finishedAt: '2026-09-02T10:00:00').toJson(),
   },
   'settings': AppSettings().toJson(),
 };

@@ -795,6 +795,7 @@ class AppStore extends ChangeNotifier {
   /// Crédits gagnés = barème par niveau + crédits dérivés du journal
   /// (chapitres bouclés, boss vaincus, semaines complètes).
   int get creditsEarned => creditsForLevel(level) + game.bonusCredits;
+
   /// Achats enregistrés + achats en cours (réservés jusqu'à leur résultat).
   int get creditsSpent {
     var total = unlockedWods.values.fold(0, (a, b) => a + b);
@@ -2050,7 +2051,10 @@ class AppStore extends ChangeNotifier {
       // Formats 1-2 (avant les crédits v2) : un coût 0 d'un WOD du catalogue
       // vient de l'ancienne migration. Il ne devient pas un accès gratuit ;
       // il est conservé à part, comme au démarrage (KT-014).
-      if (limits != null && format < 3 && v == 0 && _seedDefaults.containsKey(k)) {
+      if (limits != null &&
+          format < 3 &&
+          v == 0 &&
+          _seedDefaults.containsKey(k)) {
         nextLegacy[k] = 'import_format_$format';
         return;
       }
@@ -2080,7 +2084,8 @@ class AppStore extends ChangeNotifier {
   /// Tailles des collections d'un import, avant toute conversion (KT-015).
   static void _checkCollections(Map<String, dynamic> m, ImportLimits limits) {
     void cap(Object? value, int limit, String what) {
-      final n = value is Map ? value.length : (value is List ? value.length : 0);
+      final n =
+          value is Map ? value.length : (value is List ? value.length : 0);
       if (n > limit) throw ImportLimitException('Trop de $what.');
     }
 

@@ -26,14 +26,8 @@ void main() {
       final wod = app.wods.firstWhere((w) => app.wodCost(w) <= app.credits);
       final before = app.credits;
       final cost = app.wodCost(wod);
-      expect(
-        (await app.purchaseWod(wod)).status,
-        PurchaseStatus.success,
-      );
-      expect(
-        (await app.purchaseWod(wod)).status,
-        PurchaseStatus.alreadyOwned,
-      );
+      expect((await app.purchaseWod(wod)).status, PurchaseStatus.success);
+      expect((await app.purchaseWod(wod)).status, PurchaseStatus.alreadyOwned);
       await app.flush();
       final reloaded = AppStore();
       await reloaded.init();

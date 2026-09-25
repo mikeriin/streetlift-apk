@@ -27,7 +27,8 @@ void main() {
   tearDown(() {
     store.debugWriteHook = null;
     store.persistenceError.value = null;
-    store.unlockedWods.clear(); // isolement : chaque test repart du solde initial
+    store.unlockedWods
+        .clear(); // isolement : chaque test repart du solde initial
   });
 
   Widget page(Widget child) => MaterialApp(
