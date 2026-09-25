@@ -12,9 +12,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
-import 'package:streetlift_tracker/persistence.dart';
 import 'package:streetlift_tracker/store.dart';
-import 'package:streetlift_tracker/timers.dart';
 import 'package:streetlift_tracker/wod_formats.dart';
 import 'package:streetlift_tracker/wod_models.dart';
 import 'package:streetlift_tracker/wod_screen.dart';
@@ -23,7 +21,7 @@ import 'l2_fixtures.dart';
 
 /// Les 40 Tabata du catalogue (générateur, famille 10), relevés sur la base
 /// 2.5.5 par `tools/wod_catalog_snapshot.dart`.
-const tabataIds = [
+final tabataIds = [
   for (final base in [100, 220, 340, 460])
     for (var k = 0; k < 10; k++) 'genx${base + k}',
 ];
@@ -33,7 +31,7 @@ const deathByIds = [
   'genx236', 'genx237', 'genx351', 'genx352', 'genx355', 'genx357',
   'genx470', 'genx475', 'genx479',
 ];
-const amrapBlockIds = [
+final amrapBlockIds = [
   for (final base in [60, 180, 300, 420])
     for (var k = 0; k < 10; k++) 'genx${base + k}',
 ];

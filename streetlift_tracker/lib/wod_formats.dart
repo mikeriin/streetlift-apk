@@ -426,8 +426,9 @@ List<String> resultDetails(Wod w, WodResult r) {
         out.add('${r.rounds} minutes tenues sur ${w.rounds}');
       }
     case ScoreRule.emomReps:
-      if (r.reps != null)
+      if (r.reps != null) {
         out.add('${r.reps} ${structuredFormat(w)?.unit ?? 'reps'}');
+      }
     case ScoreRule.deathBy:
       if (r.rounds != null) out.add('Dernière minute réussie : ${r.rounds}');
     case ScoreRule.amrapBlocks:
