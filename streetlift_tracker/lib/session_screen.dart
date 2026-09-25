@@ -273,10 +273,18 @@ class _SessionScreenState extends State<SessionScreen> {
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
                             ),
-                            TextButton.icon(
-                              onPressed: _chooseExercise,
-                              icon: const Icon(Icons.list_alt, size: 18),
-                              label: const Text('Exercices'),
+                            // Texte agrandi (200 %) sur 320 px : le bouton
+                            // partage la ligne au lieu de la faire déborder.
+                            Flexible(
+                              child: TextButton.icon(
+                                onPressed: _chooseExercise,
+                                icon: const Icon(Icons.list_alt, size: 18),
+                                label: const Text(
+                                  'Exercices',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
                             ),
                           ],
                         ),
