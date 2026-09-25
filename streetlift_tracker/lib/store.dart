@@ -848,7 +848,9 @@ class AppStore extends ChangeNotifier {
 
   /// Enregistre les gains nouveaux (appelé à chaque écriture acceptée).
   void _recordGrants() {
-    journalGrants.forEach((id, amount) => creditGrants.putIfAbsent(id, () => amount));
+    journalGrants.forEach(
+      (id, amount) => creditGrants.putIfAbsent(id, () => amount),
+    );
   }
 
   /// Migration d'un état sans registre (avant L3) : les gains justifiés par
@@ -1039,13 +1041,12 @@ class AppStore extends ChangeNotifier {
     final t = targetWodLevel;
     final exclude = {..._weeklyIdsStored};
     for (final spread in const [1, 2, 99]) {
-      final pick =
-          _pick(
-            'trial|$day',
-            1,
-            prefer: (w) => w.results.isEmpty && (w.level - t).abs() <= spread,
-            exclude: exclude,
-          ).where((w) => w.results.isEmpty && (w.level - t).abs() <= spread);
+      final pick = _pick(
+        'trial|$day',
+        1,
+        prefer: (w) => w.results.isEmpty && (w.level - t).abs() <= spread,
+        exclude: exclude,
+      ).where((w) => w.results.isEmpty && (w.level - t).abs() <= spread);
       if (pick.isNotEmpty) return pick.first.id;
     }
     return null;
@@ -1126,9 +1127,7 @@ class AppStore extends ChangeNotifier {
     final week = _dayString(mondayOf(storeClock()));
     if (_weekOf == null || week.compareTo(_weekOf!) > 0) {
       _weekOf = week;
-      _weeklyIdsStored = [
-        for (final w in _pickWeekly(week, const {})) w.id,
-      ];
+      _weeklyIdsStored = [for (final w in _pickWeekly(week, const {})) w.id];
       _saveSelection();
     }
     if (!_weeklyIdsStored.any(unlockedWods.containsKey)) return;
@@ -2315,7 +2314,10 @@ class AppStore extends ChangeNotifier {
       if (rawGrants is! Map) throw const FormatException('Registre invalide.');
       grants = {};
       rawGrants.forEach((k, v) {
-        if (k is! String || !_grantKey.hasMatch(k) || v is! int || v < 0 ||
+        if (k is! String ||
+            !_grantKey.hasMatch(k) ||
+            v is! int ||
+            v < 0 ||
             v > 1000000) {
           throw const FormatException('Registre de crédits invalide.');
         }
@@ -3686,10 +3688,7 @@ class ImportPreview {
        legacyGrants = data.legacyGrants.length,
        wishlist = data.wishlist.length,
        creditsEarnedMax = data.earnedMax,
-       creditsGranted = data.creditGrants?.values.fold<int>(
-         0,
-         (a, b) => a + b,
-       ),
+       creditsGranted = data.creditGrants?.values.fold<int>(0, (a, b) => a + b),
        level = progression.level,
        xp = progression.totalXp;
 

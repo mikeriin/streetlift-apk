@@ -1,3 +1,5 @@
 Analyzing streetlift_tracker...                                 
-No issues found! (ran in 16.9s)
-exit=0
+
+warning • The declaration '_weekKey' isn't referenced • lib/store.dart:981:14 • unused_element
+
+1 issue found. (ran in 22.8s)

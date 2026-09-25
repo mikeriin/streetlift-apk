@@ -68,22 +68,25 @@ void main() {
 
     // ---------------- KT-004 : essai du jour ----------------
 
-    test('essai du jour : jamais tenté, fixé malgré niveau, référence, notification', () async {
-      final trial = app.trialWod!;
-      expect(trial.results, isEmpty);
-      expect(app.unlocked(trial), isFalse);
-      expect(app.weeklyIds, isNot(contains(trial.id)));
-      app.notifyListeners();
-      app.setValue('B4', 70);
-      for (final (w, d) in trainingDays(app).take(3)) {
-        session(app, w, d, '2026-09-24T09:00:00');
-      }
-      app.notifyListeners();
-      expect(app.level, greaterThanOrEqualTo(2));
-      expect(app.trialWod!.id, trial.id);
-      final next = await relaunch(at(2026, 9, 24, 20));
-      expect(next.trialWod!.id, trial.id);
-    });
+    test(
+      'essai du jour : jamais tenté, fixé malgré niveau, référence, notification',
+      () async {
+        final trial = app.trialWod!;
+        expect(trial.results, isEmpty);
+        expect(app.unlocked(trial), isFalse);
+        expect(app.weeklyIds, isNot(contains(trial.id)));
+        app.notifyListeners();
+        app.setValue('B4', 70);
+        for (final (w, d) in trainingDays(app).take(3)) {
+          session(app, w, d, '2026-09-24T09:00:00');
+        }
+        app.notifyListeners();
+        expect(app.level, greaterThanOrEqualTo(2));
+        expect(app.trialWod!.id, trial.id);
+        final next = await relaunch(at(2026, 9, 24, 20));
+        expect(next.trialWod!.id, trial.id);
+      },
+    );
 
     test('tentatives illimitées le jour même, résultat ne change rien', () {
       final trial = app.trialWod!;
@@ -101,38 +104,47 @@ void main() {
       expect(app.startAttempt(trial), isNotNull);
     });
 
-    test('achat de l’essai : acquis aussitôt, aucun second essai gratuit', () async {
-      final trial = app.trialWod!;
-      final cost = app.wodCost(trial);
-      expect(cost, lessThanOrEqualTo(app.credits));
-      final result = await app.purchaseWod(trial, acceptedCost: cost);
-      expect(result.status, PurchaseStatus.success);
-      expect(app.unlocked(trial), isTrue);
-      expect(app.trialWod!.id, trial.id);
-      final free = app.wods.where((w) => app.canRun(w) && !app.unlocked(w));
-      expect(free, isEmpty);
-      app.notifyListeners();
-      expect(app.wods.where((w) => app.canRun(w) && !app.unlocked(w)), isEmpty);
-    });
-
-    test('essai terminé puis acheté : remise d’essai appliquée, prix figé', () async {
-      final trial = app.trialWod!;
-      final base = app.basePrice(trial);
-      app.addWodResult(
-        trial,
-        WodResult(at: '2026-09-24T11:00:00', score: '5:00', seconds: 300),
-      );
-      final cost = app.wodCost(trial);
-      expect(cost, base == 1 ? 1 : base - 1);
-      if (cost <= app.credits) {
-        expect(
-          (await app.purchaseWod(trial, acceptedCost: cost)).status,
-          PurchaseStatus.success,
-        );
-        expect(app.unlockedWods[trial.id], cost);
+    test(
+      'achat de l’essai : acquis aussitôt, aucun second essai gratuit',
+      () async {
+        final trial = app.trialWod!;
+        final cost = app.wodCost(trial);
+        expect(cost, lessThanOrEqualTo(app.credits));
+        final result = await app.purchaseWod(trial, acceptedCost: cost);
+        expect(result.status, PurchaseStatus.success);
+        expect(app.unlocked(trial), isTrue);
         expect(app.trialWod!.id, trial.id);
-      }
-    });
+        final free = app.wods.where((w) => app.canRun(w) && !app.unlocked(w));
+        expect(free, isEmpty);
+        app.notifyListeners();
+        expect(
+          app.wods.where((w) => app.canRun(w) && !app.unlocked(w)),
+          isEmpty,
+        );
+      },
+    );
+
+    test(
+      'essai terminé puis acheté : remise d’essai appliquée, prix figé',
+      () async {
+        final trial = app.trialWod!;
+        final base = app.basePrice(trial);
+        app.addWodResult(
+          trial,
+          WodResult(at: '2026-09-24T11:00:00', score: '5:00', seconds: 300),
+        );
+        final cost = app.wodCost(trial);
+        expect(cost, base == 1 ? 1 : base - 1);
+        if (cost <= app.credits) {
+          expect(
+            (await app.purchaseWod(trial, acceptedCost: cost)).status,
+            PurchaseStatus.success,
+          );
+          expect(app.unlockedWods[trial.id], cost);
+          expect(app.trialWod!.id, trial.id);
+        }
+      },
+    );
 
     test('jour suivant, recul d’horloge, heure d’hiver, année', () {
       final day1 = app.trialWod!.id;
@@ -156,18 +168,24 @@ void main() {
       expect(app.trialWod!.id, isNot(dec));
     });
 
-    test('aucun candidat : pas d’essai, aucun WOD déjà tenté proposé', () async {
-      for (final w in app.wods.where(app.isCatalog)) {
-        w.results.add(
-          WodResult(at: '2026-09-20T10:00:00', score: '1:00', seconds: 60),
+    test(
+      'aucun candidat : pas d’essai, aucun WOD déjà tenté proposé',
+      () async {
+        for (final w in app.wods.where(app.isCatalog)) {
+          w.results.add(
+            WodResult(at: '2026-09-20T10:00:00', score: '1:00', seconds: 60),
+          );
+        }
+        app.notifyListeners();
+        app.storeClock = at(2026, 9, 25);
+        expect(app.trialWod, isNull);
+        expect(app.noTrialToday, isTrue);
+        expect(
+          app.wods.where((w) => app.canRun(w) && !app.unlocked(w)),
+          isEmpty,
         );
-      }
-      app.notifyListeners();
-      app.storeClock = at(2026, 9, 25);
-      expect(app.trialWod, isNull);
-      expect(app.noTrialToday, isTrue);
-      expect(app.wods.where((w) => app.canRun(w) && !app.unlocked(w)), isEmpty);
-    });
+      },
+    );
 
     test('niveau élargi (±2 puis catalogue) avant l’absence d’essai', () {
       final t = app.targetWodLevel;
@@ -185,56 +203,66 @@ void main() {
       expect((trial.level - t).abs(), greaterThan(1));
     });
 
-    test('ancienne sauvegarde sans sélection : WOD joué aujourd’hui gardé', () async {
-      final w = app.wods.firstWhere(
-        (x) => app.isCatalog(x) && x.results.isEmpty && !app.unlocked(x),
-      );
-      final data = backupOf(app)
-        ..remove('trialOfDay')
-        ..remove('weeklyShowcase');
-      final wods =
-          ((data['catalog'] as Map)['results'] as Map<String, dynamic>);
-      wods[w.id] = [
-        WodResult(at: '2026-09-24T08:00:00', score: '3:00', seconds: 180)
-            .toJson(),
-      ];
-      expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
-      final results = app.wods.fold(0, (n, x) => n + x.results.length);
-      expect(app.trialWod!.id, w.id);
-      expect(app.wods.fold(0, (n, x) => n + x.results.length), results);
-    });
+    test(
+      'ancienne sauvegarde sans sélection : WOD joué aujourd’hui gardé',
+      () async {
+        final w = app.wods.firstWhere(
+          (x) => app.isCatalog(x) && x.results.isEmpty && !app.unlocked(x),
+        );
+        final data =
+            backupOf(app)
+              ..remove('trialOfDay')
+              ..remove('weeklyShowcase');
+        final wods =
+            ((data['catalog'] as Map)['results'] as Map<String, dynamic>);
+        wods[w.id] = [
+          WodResult(
+            at: '2026-09-24T08:00:00',
+            score: '3:00',
+            seconds: 180,
+          ).toJson(),
+        ];
+        expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
+        final results = app.wods.fold(0, (n, x) => n + x.results.length);
+        expect(app.trialWod!.id, w.id);
+        expect(app.wods.fold(0, (n, x) => n + x.results.length), results);
+      },
+    );
 
     // ---------------- KT-004 : vitrine ----------------
 
-    test('vitrine : fixée malgré niveau et relance, remplacement après achat', () async {
-      final ids = app.weeklyPicks.map((w) => w.id).toList();
-      expect(ids, hasLength(3));
-      for (final (w, d) in trainingDays(app).take(3)) {
-        session(app, w, d, '2026-09-22T09:00:00');
-      }
-      app.notifyListeners();
-      expect(app.weeklyPicks.map((w) => w.id).toList(), ids);
-      final pick = app.weeklyPicks.firstWhere(
-        (w) => app.wodCost(w) <= app.credits,
-      );
-      final cost = app.wodCost(pick);
-      expect(cost, app.basePrice(pick) == 1 ? 1 : app.basePrice(pick) - 1);
-      expect(
-        (await app.purchaseWod(pick, acceptedCost: cost)).status,
-        PurchaseStatus.success,
-      );
-      expect(app.unlockedWods[pick.id], cost);
-      final after = app.weeklyPicks.map((w) => w.id).toList();
-      expect(after, hasLength(3));
-      expect(after, isNot(contains(pick.id)));
-      expect(after, isNot(contains(app.trialWod!.id)));
-      expect(after.where(ids.contains), hasLength(2));
-      final next = await relaunch(at(2026, 9, 27, 22));
-      expect(next.weeklyPicks.map((w) => w.id).toList(), after);
-      next.storeClock = at(2026, 9, 28, 8);
-      expect(next.weeklyPicks.map((w) => w.id).toList(), isNot(after));
-      expect(next.unlockedWods[pick.id], cost);
-    });
+    test(
+      'vitrine : fixée malgré niveau et relance, remplacement après achat',
+      () async {
+        final ids = app.weeklyPicks.map((w) => w.id).toList();
+        expect(ids, hasLength(3));
+        for (final (w, d) in trainingDays(app).take(3)) {
+          session(app, w, d, '2026-09-22T09:00:00');
+        }
+        app.notifyListeners();
+        expect(app.weeklyPicks.map((w) => w.id).toList(), ids);
+        final pick = app.weeklyPicks.firstWhere(
+          (w) => app.wodCost(w) <= app.credits,
+        );
+        final cost = app.wodCost(pick);
+        expect(cost, app.basePrice(pick) == 1 ? 1 : app.basePrice(pick) - 1);
+        expect(
+          (await app.purchaseWod(pick, acceptedCost: cost)).status,
+          PurchaseStatus.success,
+        );
+        expect(app.unlockedWods[pick.id], cost);
+        final after = app.weeklyPicks.map((w) => w.id).toList();
+        expect(after, hasLength(3));
+        expect(after, isNot(contains(pick.id)));
+        expect(after, isNot(contains(app.trialWod!.id)));
+        expect(after.where(ids.contains), hasLength(2));
+        final next = await relaunch(at(2026, 9, 27, 22));
+        expect(next.weeklyPicks.map((w) => w.id).toList(), after);
+        next.storeClock = at(2026, 9, 28, 8);
+        expect(next.weeklyPicks.map((w) => w.id).toList(), isNot(after));
+        expect(next.unlockedWods[pick.id], cost);
+      },
+    );
 
     test('vitrine : changement d’année (lundi 28/12 → lundi 04/01)', () {
       app.storeClock = at(2026, 12, 30);
@@ -262,11 +290,27 @@ void main() {
     test('sélections invalides refusées à l’import', () async {
       for (final bad in [
         {'trialOfDay': 'hier'},
-        {'trialOfDay': {'day': '24/09/2026', 'wod': 'x'}},
-        {'weeklyShowcase': {'week': '2026-09-21', 'ids': [1, 2]}},
-        {'weeklyShowcase': {'week': '2026-09-21', 'ids': ['a', 'b', 'c', 'd']}},
-        {'creditGrants': {'bonus:x': 99}},
-        {'creditGrants': {'level:2': -2}},
+        {
+          'trialOfDay': {'day': '24/09/2026', 'wod': 'x'},
+        },
+        {
+          'weeklyShowcase': {
+            'week': '2026-09-21',
+            'ids': [1, 2],
+          },
+        },
+        {
+          'weeklyShowcase': {
+            'week': '2026-09-21',
+            'ids': ['a', 'b', 'c', 'd'],
+          },
+        },
+        {
+          'creditGrants': {'bonus:x': 99},
+        },
+        {
+          'creditGrants': {'level:2': -2},
+        },
       ]) {
         final data = backupOf(app)..addAll(bad);
         expect(
@@ -279,76 +323,93 @@ void main() {
 
     // ---------------- KT-003 : tentative à cheval sur minuit ----------------
 
-    test('tentative lancée à 23 h 59, validée à 00 h 01 : un seul résultat', () async {
-      app.storeClock = at(2026, 9, 24, 23, 59);
-      final trial = app.trialWod!;
-      final attempt = app.startAttempt(trial)!;
-      app.storeClock = at(2026, 9, 25, 0, 1);
-      expect(app.trialWod!.id, isNot(trial.id));
-      expect(app.canRun(trial), isFalse);
-      expect(app.canFinish(trial, attempt), isTrue);
-      expect(app.canFinish(trial, 'autre'), isFalse);
-      final r = WodResult(at: '2026-09-25T00:01:00', score: '8:00', seconds: 480);
-      expect(
-        await app.recordWodResult(trial, r, attempt: attempt),
-        ResultSave.saved,
-      );
-      expect(trial.results.single.attempt, attempt);
-      // Double validation de la même tentative : aucun second résultat.
-      final again = WodResult(at: '2026-09-25T00:01:02', score: '8:00');
-      expect(
-        await app.recordWodResult(trial, again, attempt: attempt),
-        ResultSave.saved,
-      );
-      expect(trial.results, hasLength(1));
-      expect(app.canFinish(trial, attempt), isFalse);
-      expect(app.unlocked(trial), isFalse);
-      final next = await relaunch(at(2026, 9, 25, 9));
-      final saved = next.wods.firstWhere((w) => w.id == trial.id);
-      expect(saved.results.single.attempt, attempt);
-    });
+    test(
+      'tentative lancée à 23 h 59, validée à 00 h 01 : un seul résultat',
+      () async {
+        app.storeClock = at(2026, 9, 24, 23, 59);
+        final trial = app.trialWod!;
+        final attempt = app.startAttempt(trial)!;
+        app.storeClock = at(2026, 9, 25, 0, 1);
+        expect(app.trialWod!.id, isNot(trial.id));
+        expect(app.canRun(trial), isFalse);
+        expect(app.canFinish(trial, attempt), isTrue);
+        expect(app.canFinish(trial, 'autre'), isFalse);
+        final r = WodResult(
+          at: '2026-09-25T00:01:00',
+          score: '8:00',
+          seconds: 480,
+        );
+        expect(
+          await app.recordWodResult(trial, r, attempt: attempt),
+          ResultSave.saved,
+        );
+        expect(trial.results.single.attempt, attempt);
+        // Double validation de la même tentative : aucun second résultat.
+        final again = WodResult(at: '2026-09-25T00:01:02', score: '8:00');
+        expect(
+          await app.recordWodResult(trial, again, attempt: attempt),
+          ResultSave.saved,
+        );
+        expect(trial.results, hasLength(1));
+        expect(app.canFinish(trial, attempt), isFalse);
+        expect(app.unlocked(trial), isFalse);
+        final next = await relaunch(at(2026, 9, 25, 9));
+        final saved = next.wods.firstWhere((w) => w.id == trial.id);
+        expect(saved.results.single.attempt, attempt);
+      },
+    );
 
-    test('après minuit sans tentative ouverte : refus, rien enregistré', () async {
-      app.storeClock = at(2026, 9, 24, 23, 59);
-      final trial = app.trialWod!;
-      final attempt = app.startAttempt(trial)!;
-      app.abandonAttempt(attempt);
-      app.storeClock = at(2026, 9, 25, 0, 1);
-      final r = WodResult(at: '2026-09-25T00:01:00', score: '8:00');
-      expect(
-        await app.recordWodResult(trial, r, attempt: attempt),
-        ResultSave.denied,
-      );
-      expect(trial.results, isEmpty);
-      expect(app.startAttempt(trial), isNull);
-    });
+    test(
+      'après minuit sans tentative ouverte : refus, rien enregistré',
+      () async {
+        app.storeClock = at(2026, 9, 24, 23, 59);
+        final trial = app.trialWod!;
+        final attempt = app.startAttempt(trial)!;
+        app.abandonAttempt(attempt);
+        app.storeClock = at(2026, 9, 25, 0, 1);
+        final r = WodResult(at: '2026-09-25T00:01:00', score: '8:00');
+        expect(
+          await app.recordWodResult(trial, r, attempt: attempt),
+          ResultSave.denied,
+        );
+        expect(trial.results, isEmpty);
+        expect(app.startAttempt(trial), isNull);
+      },
+    );
 
-    test('écriture refusée puis reprise : un résultat, une récompense', () async {
-      app.storeClock = at(2026, 9, 24, 23, 59);
-      final trial = app.trialWod!;
-      final attempt = app.startAttempt(trial)!;
-      app.storeClock = at(2026, 9, 25, 0, 1);
-      app.debugWriteHook = (_) async => false;
-      final r = WodResult(at: '2026-09-25T00:01:00', score: '8:00', seconds: 480);
-      expect(
-        await app.recordWodResult(trial, r, attempt: attempt),
-        ResultSave.unsaved,
-      );
-      expect(trial.results, hasLength(1));
-      final reward = app.consumeReward();
-      app.debugWriteHook = null;
-      expect(
-        await app.recordWodResult(
-          trial,
-          WodResult(at: '2026-09-25T00:02:00', score: '8:00'),
-          attempt: attempt,
-        ),
-        ResultSave.saved,
-      );
-      expect(trial.results, hasLength(1));
-      expect(app.consumeReward(), isNull);
-      expect(reward, isNotNull);
-    });
+    test(
+      'écriture refusée puis reprise : un résultat, une récompense',
+      () async {
+        app.storeClock = at(2026, 9, 24, 23, 59);
+        final trial = app.trialWod!;
+        final attempt = app.startAttempt(trial)!;
+        app.storeClock = at(2026, 9, 25, 0, 1);
+        app.debugWriteHook = (_) async => false;
+        final r = WodResult(
+          at: '2026-09-25T00:01:00',
+          score: '8:00',
+          seconds: 480,
+        );
+        expect(
+          await app.recordWodResult(trial, r, attempt: attempt),
+          ResultSave.unsaved,
+        );
+        expect(trial.results, hasLength(1));
+        final reward = app.consumeReward();
+        app.debugWriteHook = null;
+        expect(
+          await app.recordWodResult(
+            trial,
+            WodResult(at: '2026-09-25T00:02:00', score: '8:00'),
+            attempt: attempt,
+          ),
+          ResultSave.saved,
+        );
+        expect(trial.results, hasLength(1));
+        expect(app.consumeReward(), isNull);
+        expect(reward, isNotNull);
+      },
+    );
 
     test('achat du WOD pendant la tentative : validation normale', () async {
       final trial = app.trialWod!;
@@ -371,16 +432,19 @@ void main() {
 
     // ---------------- KT-005 : registre des gains ----------------
 
-    test('registre : 3 crédits offerts enregistrés, notifications sans effet', () async {
-      await app.flush();
-      expect(app.creditGrants, {'level:1': 3});
-      for (var i = 0; i < 5; i++) {
-        app.notifyListeners();
-      }
-      await app.flush();
-      expect(app.creditGrants, {'level:1': 3});
-      expect(app.creditsEarned, 3);
-    });
+    test(
+      'registre : 3 crédits offerts enregistrés, notifications sans effet',
+      () async {
+        await app.flush();
+        expect(app.creditGrants, {'level:1': 3});
+        for (var i = 0; i < 5; i++) {
+          app.notifyListeners();
+        }
+        await app.flush();
+        expect(app.creditGrants, {'level:1': 3});
+        expect(app.creditsEarned, 3);
+      },
+    );
 
     test('suppression puis réintroduction : aucun gain repayé', () async {
       final days = trainingDays(app).take(3).toList();
@@ -430,49 +494,65 @@ void main() {
       expect(app.creditsEarned, earned + 1);
     });
 
-    test('palier baissé puis atteint de nouveau : payé une seule fois', () async {
-      final days = trainingDays(app).take(6).toList();
-      for (final (w, d) in days) {
-        session(app, w, d, '2026-08-${10 + days.indexOf((w, d)) * 7}T18:00:00');
-      }
-      app.notifyListeners();
-      await app.flush();
-      final level = app.level;
-      expect(level, greaterThanOrEqualTo(3));
-      final earned = app.creditsEarned;
-      for (final (w, d) in days) {
-        app.deleteLog(app.sessionKey(w, d));
-      }
-      await app.flush();
-      expect(app.level, 1);
-      for (final (w, d) in days) {
-        session(app, w, d, '2026-08-${10 + days.indexOf((w, d)) * 7}T18:00:00');
-      }
-      app.notifyListeners();
-      await app.flush();
-      expect(app.level, level);
-      expect(app.creditsEarned, earned);
-    });
+    test(
+      'palier baissé puis atteint de nouveau : payé une seule fois',
+      () async {
+        final days = trainingDays(app).take(6).toList();
+        for (final (w, d) in days) {
+          session(
+            app,
+            w,
+            d,
+            '2026-08-${10 + days.indexOf((w, d)) * 7}T18:00:00',
+          );
+        }
+        app.notifyListeners();
+        await app.flush();
+        final level = app.level;
+        expect(level, greaterThanOrEqualTo(3));
+        final earned = app.creditsEarned;
+        for (final (w, d) in days) {
+          app.deleteLog(app.sessionKey(w, d));
+        }
+        await app.flush();
+        expect(app.level, 1);
+        for (final (w, d) in days) {
+          session(
+            app,
+            w,
+            d,
+            '2026-08-${10 + days.indexOf((w, d)) * 7}T18:00:00',
+          );
+        }
+        app.notifyListeners();
+        await app.flush();
+        expect(app.level, level);
+        expect(app.creditsEarned, earned);
+      },
+    );
 
-    test('correction de séance : XP retirée puis rendue, crédits stables', () async {
-      final days = trainingDays(app).take(2).toList();
-      for (final (w, d) in days) {
-        session(app, w, d, '2026-09-01T18:00:00');
-      }
-      app.notifyListeners();
-      await app.flush();
-      final credits = app.credits;
-      final xp = app.xp;
-      final key = app.sessionKey(days.first.$1, days.first.$2);
-      expect(app.reopenSession(key), isTrue);
-      await app.flush();
-      expect(app.xp, lessThan(xp));
-      expect(app.credits, credits);
-      app.markSessionDone(days.first.$1, days.first.$2, true);
-      await app.flush();
-      expect(app.xp, xp);
-      expect(app.credits, credits);
-    });
+    test(
+      'correction de séance : XP retirée puis rendue, crédits stables',
+      () async {
+        final days = trainingDays(app).take(2).toList();
+        for (final (w, d) in days) {
+          session(app, w, d, '2026-09-01T18:00:00');
+        }
+        app.notifyListeners();
+        await app.flush();
+        final credits = app.credits;
+        final xp = app.xp;
+        final key = app.sessionKey(days.first.$1, days.first.$2);
+        expect(app.reopenSession(key), isTrue);
+        await app.flush();
+        expect(app.xp, lessThan(xp));
+        expect(app.credits, credits);
+        app.markSessionDone(days.first.$1, days.first.$2, true);
+        await app.flush();
+        expect(app.xp, xp);
+        expect(app.credits, credits);
+      },
+    );
 
     test('import répété du même état : aucun nouveau gain', () async {
       for (final (w, d) in trainingDays(app).take(3)) {
@@ -489,34 +569,45 @@ void main() {
       }
     });
 
-    test('import d’un état plus ancien : remplacement, pas de fusion', () async {
-      final older = app.exportForFile(appVersion: 'test');
-      for (final (w, d) in trainingDays(app).take(3)) {
-        session(app, w, d, '2026-08-31T18:00:00');
-      }
-      app.notifyListeners();
-      await app.flush();
-      expect(app.creditsEarned, greaterThan(3));
-      expect(await app.importBackup(older), ImportStatus.success);
-      expect(app.creditsEarned, 3);
-      expect(app.creditGrants, {'level:1': 3});
-    });
+    test(
+      'import d’un état plus ancien : remplacement, pas de fusion',
+      () async {
+        final older = app.exportForFile(appVersion: 'test');
+        for (final (w, d) in trainingDays(app).take(3)) {
+          session(app, w, d, '2026-08-31T18:00:00');
+        }
+        app.notifyListeners();
+        await app.flush();
+        expect(app.creditsEarned, greaterThan(3));
+        expect(await app.importBackup(older), ImportStatus.success);
+        expect(app.creditsEarned, 3);
+        expect(app.creditGrants, {'level:1': 3});
+      },
+    );
 
-    test('migration L2 : surplus conservé, répétable sans nouveau gain', () async {
-      final data = backupOf(app)
-        ..remove('creditGrants')
-        ..['creditsEarnedMax'] = 17;
-      for (var i = 0; i < 2; i++) {
-        expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
-        expect(app.creditGrants, {'level:1': 3, 'carry:l2': 14});
-        expect(app.creditsEarned, 17);
-      }
-      final old = backupOf(app)
-        ..remove('creditGrants')
-        ..remove('creditsEarnedMax');
-      expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
-      expect(app.creditGrants, {'level:1': 3});
-    });
+    test(
+      'migration L2 : surplus conservé, répétable sans nouveau gain',
+      () async {
+        final data =
+            backupOf(app)
+              ..remove('creditGrants')
+              ..['creditsEarnedMax'] = 17;
+        for (var i = 0; i < 2; i++) {
+          expect(
+            await app.importBackup(jsonEncode(data)),
+            ImportStatus.success,
+          );
+          expect(app.creditGrants, {'level:1': 3, 'carry:l2': 14});
+          expect(app.creditsEarned, 17);
+        }
+        final old =
+            backupOf(app)
+              ..remove('creditGrants')
+              ..remove('creditsEarnedMax');
+        expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
+        expect(app.creditGrants, {'level:1': 3});
+      },
+    );
 
     test('ancien format 2 : registre reconstruit depuis son journal', () async {
       final data = formatV2(app, {});
@@ -525,25 +616,28 @@ void main() {
       expect(app.creditsEarned, app.creditsFromJournal);
     });
 
-    test('état incohérent : déficit visible, droits gardés, achat bloqué', () async {
-      final paid = purchases(app); // 3 + 2 = 5 crédits dépensés
-      final data = backupOf(app)..['unlocked'] = paid;
-      expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
-      expect(app.creditsEarned, 3);
-      expect(app.creditsSpent, 5);
-      expect(app.credits, -2);
-      expect(creditDeficitLabel(app.credits), 'déficit de 2 crédits');
-      for (final id in paid.keys) {
-        expect(app.unlocked(app.wods.firstWhere((w) => w.id == id)), isTrue);
-      }
-      final cheap = app.wods.firstWhere(
-        (w) => app.isCatalog(w) && !app.unlocked(w) && app.wodCost(w) == 1,
-      );
-      expect(
-        (await app.purchaseWod(cheap)).status,
-        PurchaseStatus.insufficientCredits,
-      );
-    });
+    test(
+      'état incohérent : déficit visible, droits gardés, achat bloqué',
+      () async {
+        final paid = purchases(app); // 3 + 2 = 5 crédits dépensés
+        final data = backupOf(app)..['unlocked'] = paid;
+        expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
+        expect(app.creditsEarned, 3);
+        expect(app.creditsSpent, 5);
+        expect(app.credits, -2);
+        expect(creditDeficitLabel(app.credits), 'déficit de 2 crédits');
+        for (final id in paid.keys) {
+          expect(app.unlocked(app.wods.firstWhere((w) => w.id == id)), isTrue);
+        }
+        final cheap = app.wods.firstWhere(
+          (w) => app.isCatalog(w) && !app.unlocked(w) && app.wodCost(w) == 1,
+        );
+        expect(
+          (await app.purchaseWod(cheap)).status,
+          PurchaseStatus.insufficientCredits,
+        );
+      },
+    );
 
     test('suppression locale : registre et sélections non restaurés', () async {
       for (final (w, d) in trainingDays(app).take(3)) {
