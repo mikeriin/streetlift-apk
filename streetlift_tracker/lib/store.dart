@@ -734,13 +734,18 @@ class AppStore extends ChangeNotifier {
       );
     }
     if ((_prefs.getInt(_kCreditsV) ?? 0) < 2) {
-      // v2 : tous les WODs préchargés se gagnent. Les accès « coût 0 » offerts
-      // par l'ancienne migration ne donnent plus accès, comme avant L2, mais
-      // sont conservés dans `legacyGrants` en attente d'arbitrage (KT-014).
-      // Les déverrouillages payés en crédits restent acquis.
+      // v2 : tous les WODs préchargés se gagnent. Règle KT-014 : un accès
+      // « coût 0 » de l'ancienne migration reste acquis, gratuitement, si le
+      // WOD a au moins un résultat enregistré (droit établi par l'usage) ;
+      // sinon il est archivé dans `legacyGrants`, sans accès. Les
+      // déverrouillages payés en crédits restent acquis.
+      final used = {
+        for (final w in wods)
+          if (w.results.isNotEmpty) w.id,
+      };
       for (final id in [
         for (final e in unlockedWods.entries)
-          if (e.value == 0) e.key,
+          if (e.value == 0 && !used.contains(e.key)) e.key,
       ]) {
         unlockedWods.remove(id);
         legacyGrants[id] = 'credits_v1';
@@ -792,9 +797,18 @@ class AppStore extends ChangeNotifier {
   /// Barème par niveau (voir [Progression.creditsForLevel]).
   int creditsForLevel(int l) => Progression.creditsForLevel(l);
 
-  /// Crédits gagnés = barème par niveau + crédits dérivés du journal
-  /// (chapitres bouclés, boss vaincus, semaines complètes).
-  int get creditsEarned => creditsForLevel(level) + game.bonusCredits;
+  /// Crédits gagnés selon le journal actuel : barème du niveau + crédits
+  /// dérivés (chapitres bouclés, boss vaincus, semaines complètes).
+  int get creditsFromJournal => creditsForLevel(level) + game.bonusCredits;
+
+  /// Plus haut total de crédits gagnés déjà enregistré (KT-005, option C).
+  int _earnedMax = 0;
+
+  /// Crédits gagnés, jamais repris : corriger ou supprimer une performance
+  /// fait varier l'XP et le niveau, pas les crédits déjà acquis. Refaire une
+  /// performance supprimée ne redonne rien tant que le journal ne dépasse pas
+  /// ce plus haut.
+  int get creditsEarned => max(creditsFromJournal, _earnedMax);
 
   /// Achats enregistrés + achats en cours (réservés jusqu'à leur résultat).
   int get creditsSpent {
@@ -1821,6 +1835,7 @@ class AppStore extends ChangeNotifier {
     unlocked: unlockedWods,
     legacyGrants: legacyGrants,
     lastLevel: _lastLevel,
+    earnedMax: creditsEarned,
     wishlist: wishlist.toList(),
   );
 
@@ -1859,6 +1874,7 @@ class AppStore extends ChangeNotifier {
       'unlocked': data.unlocked,
       if (data.legacyGrants.isNotEmpty) 'legacyGrants': data.legacyGrants,
       'lastLevel': data.lastLevel,
+      if (data.earnedMax != null) 'creditsEarnedMax': data.earnedMax,
       'wishlist': data.wishlist,
     };
   }
@@ -2046,15 +2062,20 @@ class AppStore extends ChangeNotifier {
       nextLegacy[k] = v;
     });
     final format = (m['format'] ?? 1) as int;
+    final used = {
+      for (final w in nextWods)
+        if (w.results.isNotEmpty) w.id,
+    };
     (m['unlocked'] as Map<String, dynamic>? ?? {}).forEach((k, v) {
       if (v is! int || v < 0) throw const FormatException('Crédits invalides.');
       // Formats 1-2 (avant les crédits v2) : un coût 0 d'un WOD du catalogue
-      // vient de l'ancienne migration. Il ne devient pas un accès gratuit ;
-      // il est conservé à part, comme au démarrage (KT-014).
+      // vient de l'ancienne migration. Même règle qu'au démarrage (KT-014) :
+      // acquis s'il a été joué, sinon archivé sans accès.
       if (limits != null &&
           format < 3 &&
           v == 0 &&
-          _seedDefaults.containsKey(k)) {
+          _seedDefaults.containsKey(k) &&
+          !used.contains(k)) {
         nextLegacy[k] = 'import_format_$format';
         return;
       }
@@ -2067,6 +2088,11 @@ class AppStore extends ChangeNotifier {
       }
       if (!nextWishlist.contains(id)) nextWishlist.add(id);
     }
+    final earnedMax = m['creditsEarnedMax'];
+    if (earnedMax != null &&
+        (earnedMax is! int || earnedMax < 0 || earnedMax > 1000000)) {
+      throw const FormatException('Crédits gagnés invalides.');
+    }
     return _BackupData(
       values: nextValues,
       logs: nextLogs,
@@ -2077,6 +2103,7 @@ class AppStore extends ChangeNotifier {
       unlocked: nextUnlocked,
       legacyGrants: nextLegacy,
       lastLevel: m['lastLevel'] as int?,
+      earnedMax: earnedMax,
       wishlist: nextWishlist,
     );
   }
@@ -2164,6 +2191,9 @@ class AppStore extends ChangeNotifier {
     pilotageEpoch++;
     themeMode.value = settings.theme;
     _lastLevel = data.lastLevel ?? level;
+    // Absent (sauvegarde antérieure) : le journal fait référence, sans créer
+    // ni retirer de crédit.
+    _earnedMax = data.earnedMax ?? 0;
   }
 
   /// Import compatible avec l'API historique : `true` si tout est appliqué.
@@ -2317,6 +2347,8 @@ class AppStore extends ChangeNotifier {
 
   Future<bool> _commitState() async {
     final seq = _changeSeq;
+    // Les crédits gagnés atteints jusqu'ici sont acquis (KT-005, option C).
+    _earnedMax = creditsEarned;
     final ok = await _writeRaw(_pack(exportAll()));
     if (ok) {
       if (seq > _acceptedSeq) _acceptedSeq = seq;
@@ -3186,6 +3218,7 @@ class _BackupData {
   final Map<String, int> unlocked;
   final Map<String, String> legacyGrants;
   final int? lastLevel;
+  final int? earnedMax;
   final List<String> wishlist;
   _BackupData({
     required this.values,
@@ -3197,6 +3230,7 @@ class _BackupData {
     required this.unlocked,
     this.legacyGrants = const {},
     this.lastLevel,
+    this.earnedMax,
     this.wishlist = const [],
   });
 }

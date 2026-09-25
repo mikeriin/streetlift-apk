@@ -1,8 +1,74 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : L1b — KT-010, KT-011, KT-012, KT-019, validations techniques L1 restantes + demande « corriger/supprimer une séance »**  
-**Date : 25 septembre 2026, 18:30 Europe/Paris — version : 2.5.1+52 (versionCode réel fixé par la CI)**  
-**Statut : L1b compilé et contrôlé en CI (run n° 71, succès). Essai sur téléphone L1b à faire par le propriétaire. Aucun autre lot lancé.**
+**Passe actuelle : L2 — Sauvegarde et achats (KT-002, KT-013, KT-014, KT-015 ; contrat KT-005 proposé)**  
+**Date : 25 septembre 2026, Europe/Paris — version : 2.5.2+53 (versionCode réel fixé par la CI de build)**  
+**Statut : L2 implémenté ; formatage, analyse et 238 tests Flutter réussis en CI sur branche temporaire (sans build APK). Build signé, essai téléphone L2 et arbitrages KT-005 / KT-014 en attente. L2b, L3 et la refonte ne sont pas lancés.**
+
+## L2.0 — Base retenue
+
+| Élément | Valeur |
+| --- | --- |
+| Source | `streetlift_tracker_v33.zip` de `main`, commit `f7f8518` (L1b-R2), **1 277 631 octets**, SHA-256 `53474eabc64cffaeddce571808774cfc5824fb4f4bf206af74447b7e5ebcb0ed`, racine `streetlift_tracker/`, 299 fichiers, version 2.5.1+52 |
+| Provenance | Même archive que celle compilée par le run n° 71 (succès, 21 étapes). `SUIVI_PROJET.md` remplacé par la version livrée séparément après L1b (plus récente que la copie interne, écart documenté dans LIVRAISON_L1b) |
+| Travail | Copie extraite ; archive source gardée en lecture seule, intacte |
+| État L1b | Compilé et contrôlé en CI (run n° 71). **Essai téléphone L1b non encore rapporté** : non compté comme validé. Il est repris dans le protocole L2 |
+| Résultats L1 déjà confirmés par le propriétaire | Compilation et ouverture, contrôle du certificat et artefact GitHub, installation en mise à jour sans désinstallation, historique/séances/crédits/WOD acquis/réglages conservés. Conservés tels quels, non transformés en preuve L1b |
+
+## L2.1 — Lecture ciblée (constats vérifiés dans le code L1b-R2)
+
+- **KT-002 confirmé** : `unlockWod` modifiait `unlockedWods`, lançait une écriture non attendue, renvoyait `true` ; `wod_preview.dart` jouait révélation et message aussitôt.
+- **KT-013 confirmé, plus grave que l'audit** : chaque sauvegarde ordinaire encodait l'état **au moment de la demande** et s'enchaînait sur `_pendingWrite` ; `importAll` attendait cette file sans s'y inscrire, puis écrivait. Une sauvegarde demandée pendant cet import (état antérieur encodé) pouvait être écrite **après** l'import : mémoire importée, disque ancien. Pas de copie de l'état remplacé. L'import annulait aussi le minuteur de sauvegarde différée.
+- **Défaut de test révélé** : la file s'enchaînait sur un `Future` créé dans la zone du démarrage ; dans une zone de test à horloge simulée, la suite n'était jamais exécutée (cause réelle du blocage de test observé en L1b-R2).
+- **KT-014 confirmé** : branche d'anciennes préférences (`credits_v < 2`) : `unlockedWods.removeWhere(v == 0)`, suppression définitive. À l'inverse, un import format 1/2 contenant des coûts 0 les gardait comme accès gratuits : deux règles contradictoires.
+- **KT-015 confirmé** : `_unpack` décompressait sans plafond ; aucune limite globale de taille, de valeurs ou de collections avant analyse.
+- **KT-005 inchangé** : crédits = barème(niveau) + bonus dérivés − achats, plancher 0.
+
+## L2.2 — Changements
+
+| Ticket | Code | Comportement retenu |
+| --- | --- | --- |
+| KT-002 | `store.dart` : `purchaseWod(w, acceptedCost)` → `PurchaseResult` (`success`, `alreadyOwned`, `pending`, `insufficientCredits`, `priceChanged`, `failed`), `purchasePending`, réservation dans `creditsSpent`, `unlocked()` faux tant que l'écriture n'est pas acceptée. `unlockWod` synchrone supprimé. `wod_preview.dart` : bouton « Achat en cours… », message par état, révélation seulement après succès, message affiché même si la fiche est fermée. | Prix payé = offre affichée, sinon `priceChanged` sans débit. Double appui : `pending`, un seul débit. Achats simultanés : le solde réservé empêche toute dépense excessive. Échec : seul ce droit est retiré de la mémoire (s'il vaut encore ce prix) ; les modifications faites pendant l'attente sont gardées ; le cache SharedPreferences revient au dernier document accepté. Un droit déjà acquis n'est jamais retiré. |
+| KT-013 | `store.dart` : file explicite `_serialize` (démarrée par microtâche dans la zone de l'appelant) ; sauvegardes regroupées et encodées **à l'exécution** ; `_writeRaw` rétablit le cache en cas de refus ; compteurs `_changeSeq` / `_acceptedSeq`, `hasUnsavedChanges`, `retrySave()` ; `importBackup` dans la file, copie de récupération préalable (`kalis_recovery_v1`, 3 dernières), application en mémoire seulement après écriture acceptée ; liste de copies illisible → import suspendu, rien écrasé. `main.dart` : alerte d'erreur avec **Réessayer**. `debugWriteHook` (tests uniquement) pour injecter refus et délais. | Distinction explicite : modification en mémoire (`_changeSeq`), écriture acceptée par l'API (`_acceptedSeq`), conservation après relance (vérifiée seulement en relisant le stockage, dans les tests par nouvelle instance ; sur téléphone par le protocole). Aucune garantie de durabilité à l'arrêt brutal n'est déclarée : SharedPreferences 2.5.3 ne la promet pas. Le stockage n'est pas remplacé. |
+| KT-014 | `store.dart` : `legacyGrants` (id → origine), exporté/importé (clé optionnelle `legacyGrants`, ignorée par les anciennes versions). Migration `credits_v < 2` : coûts 0 déplacés dans `legacyGrants` au lieu d'être effacés. Import formats 1-2 : coûts 0 du catalogue → `legacyGrants` (`import_format_N`). Format 3 : coûts 0 gardés comme droits établis. | Accès inchangés par rapport à avant L2 pour la migration (pas d'accès), aucune donnée détruite, aucun accès gratuit créé depuis une source ancienne ambiguë. **Arbitrage propriétaire requis** : rendre ou non l'accès aux `legacyGrants`. |
+| KT-015 | `persistence.dart` : `ImportLimits` (valeurs standard ci-dessous), `boundedUnpack` (base64 puis gzip par morceaux de 16 Kio vers un tampon qui refuse de dépasser la limite **pendant** le flux), `boundedJsonDecode` (compte valeurs et longueur des textes pendant l'analyse) ; `_checkCollections` avant conversion. `settings_screen.dart` : messages distincts (invalide / trop volumineuse / écriture refusée). | Limites : texte 8 Mio car. ; JSON décompressé 32 Mio ; 2 000 000 valeurs ; texte isolé 100 000 car. ; 20 000 séances ; 500 000 séries ; 100 000 résultats WOD ; 20 000 entrées par autre collection. Mesure représentative (40 semaines entièrement saisies, 60 séances perso dont 20 répétées, 300 résultats, 30 achats) : **1 037 555 octets de JSON, 49 183 caractères compactée, 71 374 valeurs** : marge ≥ 30× sur chaque limite. Le démarrage relit l'état produit par l'application sans ces limites (une grosse histoire légitime ne bloque jamais l'ouverture). |
+| KT-005 | Aucun changement de comptabilité. Tests de caractérisation du comportement actuel. | Contrat proposé en L2.4, décision du propriétaire attendue. |
+
+## L2.3 — Tests
+
+| Niveau | Résultat |
+| --- | --- |
+| État initial (L1b-R2, run n° 71 et suite complète) | 202 réussis, 1 ignoré |
+| Nouveaux tests | `l2_persistence_test.dart` (34 : 8 achats, 9 écritures/imports, 8 droits historiques, 8 imports bornés, 1 caractérisation KT-005), `l2_purchase_ui_test.dart` (2 widget à 320 px), jeux `l2_fixtures.dart` (neuf, rempli, perso répétées, achats normaux/remisés, coût 0, formats 1/2/3, dégradés, bombe de compression contrôlée) |
+| Tests existants adaptés | `store_test`, `wod_store_test`, `wod_acquisition_test` : appel `unlockWod` → `await purchaseWod`, assertions conservées (un seul débit, prix remisé figé, refus faute de crédits) |
+| CI branche temporaire `claude/ci-tools` (sans secret, sans build) | Formatage appliqué ; `flutter analyze` : No issues found ; tests ciblés 77/77 ; **suite complète 238 réussis, 1 ignoré**, sortie 0 |
+| Python | 33/33 en local (outils inchangés) |
+| Erreurs simulées | Refus d'écriture, cache modifié puis refus, écritures suspendues (Completer) : oui, via `debugWriteHook` |
+| Stockage réel / redémarrage réel / arrêt brutal / appareil | **Non exécutés.** « Relance » des tests = nouvelle instance relisant le stockage simulé |
+| Build APK/AAB signé L2 | **Non exécuté** : `main` non modifié conformément au lot |
+
+## L2.4 — KT-005 : contrat de conservation des crédits (proposition, non appliquée)
+
+Décisions déjà prises dans cette conversation : correction d'une séance = XP retiré puis rendu à la revalidation ; suppression = XP et bonus retirés, droits WOD gardés ; `_lastLevel` ne redescend pas. **Aucune décision n'a été prise sur les crédits.**
+
+Barème actuel : niveau atteint à `25 × (n − 1) × (n + 4)` XP (N2 = 150, N3 = 350, N4 = 600, N5 = 900) ; crédits de niveau `1 + 2n + 3⌊n/5⌋` (N4 = 9, N5 = 14) ; bonus chapitre +3, boss +5, semaine complète +1.
+
+**Exemple** : 900 XP (N5 → 14) + 3 semaines complètes (+3) = 17 gagnés ; 15 dépensés ; solde 2. Suppression d'une séance du programme (−100 XP de base, la semaine redevient incomplète) → 800 XP (N4 → 9) + 2 = 11 gagnés.
+
+| Option | Solde affiché après suppression | Gain répété (supprimer puis refaire) | Import | Migration |
+| --- | --- | --- | --- | --- |
+| **A. Journal seul (actuel, rendu explicite)** | 11 − 15 = **−4**, affiché « dette de 4 » au lieu de 0 ; les 5 crédits du prochain niveau servent d'abord à la combler | Impossible : tout est recalculé | Remplace tout, cohérent | Aucune ; seul l'affichage change |
+| **B. Plus haut atteint (« jamais repris »)** : `gagnés = max(calcul actuel, plus haut enregistré)` | 17 − 15 = **2**, inchangé | Impossible : refaire la séance ramène le calcul à 17, sous le plafond | Le plus haut est exporté ; un import le remplace comme le reste | Au premier lancement, plus haut = calcul actuel (aucun crédit créé, aucun retiré) ; nouvelle clé optionnelle |
+| **C. Hybride** : B pour les crédits, XP/niveau recalculés comme aujourd'hui | 2 ; niveau affiché N4 | Impossible | Comme B | Comme B |
+
+Points à trancher : 1) option A, B ou C ; 2) en B/C, le niveau peut-il redescendre sous le niveau ayant donné les crédits (C : oui) ; 3) les `legacyGrants` (KT-014) comptent-ils comme dépensés à 0 s'ils redeviennent des accès. Scénarios de test prêts à écrire pour l'option choisie : suppression, correction, import d'une sauvegarde plus ancienne, reprise après échec, deux imports.
+
+## L2.5 — Limites et suites
+
+- Import = remplacement complet (droits compris), comme annoncé dans le dialogue ; l'état remplacé est gardé en copie. **Restauration d'une copie : pas d'écran**, prévue en L2b avec l'export/import par fichier.
+- Les copies de récupération vivent dans le même stockage SharedPreferences : elles ne protègent pas contre la perte de ce stockage.
+- Démarrage avec un document principal illisible : écran d'erreur, données laissées intactes (comportement inchangé) ; reprise depuis une copie en L2b.
+- Achat interrompu par la fermeture du processus : seul ce qui a été accepté par l'API peut subsister ; aucun essai sur appareil.
+- Arrêt brutal et durabilité disque : non démontrés.
 
 ## L1b.0 — État de clôture (remplace les statuts « en attente CI » plus bas)
 

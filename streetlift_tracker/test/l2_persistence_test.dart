@@ -9,6 +9,7 @@ import 'dart:io' show gzip;
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:streetlift_tracker/progression.dart';
 import 'package:streetlift_tracker/store.dart';
 import 'package:streetlift_tracker/wod_models.dart';
 
@@ -389,6 +390,42 @@ void main() {
       expect(next.unlockedWods, {ids.paid: 1});
     });
 
+    test('migration crédits v1 : un WOD joué reste acquis à coût 0', () async {
+      final ids = legacyIds(app);
+      await app.flush();
+      app.dispose();
+      SharedPreferences.setMockInitialValues({
+        'unlocked_wods_v1': jsonEncode({ids.free: 0, ids.paid: 0}),
+        'wod_results_v2': jsonEncode({
+          ids.paid: [
+            WodResult(at: '2025-05-01T10:00:00', score: '9:30').toJson(),
+          ],
+        }),
+        'credits_v': 1,
+      });
+      app = AppStore();
+      await app.init();
+      expect(app.unlockedWods, {ids.paid: 0});
+      expect(app.legacyGrants, {ids.free: 'credits_v1'});
+      expect(app.unlocked(app.wods.firstWhere((w) => w.id == ids.paid)), true);
+      expect(app.creditsSpent, 0);
+    });
+
+    test('import format 2 : WOD joué acquis, non joué archivé', () async {
+      final ids = legacyIds(app);
+      final data = formatV2(app, {ids.free: 0, ids.paid: 0});
+      for (final w in data['wods'] as List) {
+        if ((w as Map)['id'] == ids.paid) {
+          w['results'] = [
+            WodResult(at: '2025-05-01T10:00:00', score: '9:30').toJson(),
+          ];
+        }
+      }
+      expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
+      expect(app.unlockedWods, {ids.paid: 0});
+      expect(app.legacyGrants, {ids.free: 'import_format_2'});
+    });
+
     test('import format 2 : coût 0 isolé, prix payés conservés', () async {
       final ids = legacyIds(app);
       final data = formatV2(app, {ids.free: 0, ids.paid: 2});
@@ -571,35 +608,91 @@ void main() {
     });
   });
 
-  group('KT-005 comportement actuel (à arbitrer, non modifié)', () {
-    test(
-      'supprimer des séances réduit les crédits gagnés, pas les droits',
-      () async {
-        final keys = <String>[];
-        for (final week in app.program.weeks) {
-          for (final day in week.days) {
-            if (app.level >= 2) break;
-            if (day.exercises.isEmpty) continue;
-            app.markSessionDone(week.n, day.j, true);
-            keys.add(app.sessionKey(week.n, day.j));
-          }
+  group('KT-005 crédits jamais repris (option C)', () {
+    /// Journées validées jusqu'au niveau 2, dans l'ordre du programme.
+    List<(int, int)> reachLevel2(AppStore a) {
+      final done = <(int, int)>[];
+      for (final week in a.program.weeks) {
+        for (final day in week.days) {
+          if (a.level >= 2) return done;
+          if (day.exercises.isEmpty) continue;
+          a.markSessionDone(week.n, day.j, true);
+          done.add((week.n, day.j));
         }
-        expect(app.level, greaterThanOrEqualTo(2));
-        final earned = app.creditsEarned;
-        final w = affordable(app);
-        expect((await app.purchaseWod(w)).status, PurchaseStatus.success);
-        for (final key in keys) {
-          app.deleteLog(key);
-        }
-        expect(app.creditsEarned, lessThan(earned));
-        expect(app.unlocked(w), isTrue);
-        // Le plancher à 0 masque un solde négatif éventuel.
-        expect(app.credits, greaterThanOrEqualTo(0));
-        expect(
-          app.credits,
-          (app.creditsEarned - app.creditsSpent).clamp(0, 1 << 30),
-        );
-      },
-    );
+      }
+      return done;
+    }
+
+    test('supprimer baisse XP et niveau, pas les crédits gagnés', () async {
+      final days = reachLevel2(app);
+      await app.flush();
+      final earned = app.creditsEarned;
+      expect(earned, greaterThan(Progression.creditsForLevel(1)));
+      final w = affordable(app);
+      expect((await app.purchaseWod(w)).status, PurchaseStatus.success);
+      final balance = app.credits;
+      for (final (week, day) in days) {
+        app.deleteLog(app.sessionKey(week, day));
+      }
+      await app.flush();
+      expect(app.level, 1);
+      expect(app.creditsFromJournal, lessThan(earned));
+      expect(app.creditsEarned, earned);
+      expect(app.credits, balance);
+      expect(app.unlocked(w), isTrue);
+      final next = await relaunch();
+      expect(next.level, 1);
+      expect(next.credits, balance);
+    });
+
+    test('refaire une performance supprimée ne redonne rien', () async {
+      final days = reachLevel2(app);
+      await app.flush();
+      final earned = app.creditsEarned;
+      for (final (week, day) in days) {
+        app.deleteLog(app.sessionKey(week, day));
+      }
+      await app.flush();
+      reachLevel2(app);
+      await app.flush();
+      expect(app.creditsEarned, earned);
+    });
+
+    test('corriger une séance ne fait pas varier les crédits', () async {
+      final days = reachLevel2(app);
+      await app.flush();
+      final credits = app.credits;
+      final key = app.sessionKey(days.last.$1, days.last.$2);
+      expect(app.reopenSession(key), isTrue);
+      await app.flush();
+      expect(app.credits, credits);
+      app.markSessionDone(days.last.$1, days.last.$2, true);
+      await app.flush();
+      expect(app.credits, credits);
+    });
+
+    test('migration : le plus haut part du journal, sans créer ni retirer', () async {
+      final saved = backupOf(app);
+      expect(saved['creditsEarnedMax'], app.creditsFromJournal);
+      final old = Map<String, dynamic>.of(saved)..remove('creditsEarnedMax');
+      expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
+      expect(app.creditsEarned, app.creditsFromJournal);
+    });
+
+    test('import d’une sauvegarde : son plus haut remplace le courant', () async {
+      final data = backupOf(app)..['creditsEarnedMax'] = 20;
+      expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
+      expect(app.creditsEarned, 20);
+      final lower = backupOf(app)..['creditsEarnedMax'] = 3;
+      expect(await app.importBackup(jsonEncode(lower)), ImportStatus.success);
+      expect(app.creditsEarned, app.creditsFromJournal);
+    });
+
+    test('plus haut invalide : import refusé', () async {
+      for (final bad in [-1, 'dix', 1000001]) {
+        final data = backupOf(app)..['creditsEarnedMax'] = bad;
+        expect(await app.importBackup(jsonEncode(data)), ImportStatus.invalid);
+      }
+    });
   });
 }
