@@ -1,0 +1,2905 @@
+// Store global : Pilotage éditable + journal de séances, persistés localement.
+// Les calculs de charge reproduisent exactement les formules du classeur v3.3.
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io' show gzip;
+import 'dart:math' show max;
+import 'dart:ui' show Color;
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'game.dart';
+import 'models.dart';
+import 'training_estimate.dart';
+import 'progression.dart';
+import 'wod_generator.dart';
+import 'wod_models.dart';
+
+class SetEntry {
+  String kg;
+  String reps;
+  String rir;
+  String v; // vitesse (VBT), lifts principaux
+  bool done;
+  String? completedAt;
+  SetEntry({
+    this.kg = '',
+    this.reps = '',
+    this.rir = '',
+    this.v = '',
+    this.done = false,
+    this.completedAt,
+  });
+
+  Map<String, dynamic> toJson() => {
+    'kg': kg,
+    'reps': reps,
+    'rir': rir,
+    'v': v,
+    'done': done,
+    'completedAt': completedAt,
+  };
+  SetEntry.fromJson(Map<String, dynamic> j)
+    : kg = j['kg'] as String? ?? '',
+      reps = j['reps'] as String? ?? '',
+      rir = j['rir'] as String? ?? '',
+      v = j['v'] as String? ?? '',
+      done = j['done'] as bool? ?? false,
+      completedAt = j['completedAt'] as String?;
+}
+
+class ExerciseLog {
+  List<SetEntry> sets;
+  String note;
+  bool? showKg; // null = règle automatique
+  bool? showRir;
+  bool? showV;
+  ExerciseLog({
+    List<SetEntry>? sets,
+    this.note = '',
+    this.showKg,
+    this.showRir,
+    this.showV,
+  }) : sets = sets ?? [];
+
+  void addSet() => sets.add(SetEntry());
+  bool removeLastSet() {
+    if (sets.length <= 1 || sets.last.done) return false;
+    sets.removeLast();
+    return true;
+  }
+
+  Map<String, dynamic> toJson() => {
+    'sets': sets.map((s) => s.toJson()).toList(),
+    'note': note,
+    'showKg': showKg,
+    'showRir': showRir,
+    'showV': showV,
+  };
+  ExerciseLog.fromJson(Map<String, dynamic> j)
+    : sets =
+          ((j['sets'] as List?) ?? [])
+              .map((s) => SetEntry.fromJson(s as Map<String, dynamic>))
+              .toList(),
+      note = j['note'] as String? ?? '',
+      showKg = j['showKg'] as bool?,
+      showRir = j['showRir'] as bool?,
+      showV = j['showV'] as bool?;
+}
+
+class SessionLog {
+  bool done;
+  String? finishedAt; // ISO
+  String? title; // libellé lisible (ex. « S8 · J1 » ou nom de séance perso)
+  Map<String, ExerciseLog> ex;
+  Map<String, String> exerciseNames;
+  String? customId;
+  SessionLog({
+    this.done = false,
+    this.finishedAt,
+    this.title,
+    Map<String, ExerciseLog>? ex,
+    Map<String, String>? exerciseNames,
+    this.customId,
+  }) : ex = ex ?? {},
+       exerciseNames = exerciseNames ?? {};
+
+  Map<String, dynamic> toJson() => {
+    'done': done,
+    'finishedAt': finishedAt,
+    'title': title,
+    'customId': customId,
+    'exerciseNames': exerciseNames,
+    'ex': ex.map((k, v) => MapEntry(k, v.toJson())),
+  };
+  SessionLog.fromJson(Map<String, dynamic> j)
+    : done = j['done'] as bool? ?? false,
+      finishedAt = j['finishedAt'] as String?,
+      title = j['title'] as String?,
+      customId = j['customId'] as String?,
+      exerciseNames = Map<String, String>.from(
+        j['exerciseNames'] as Map? ?? {},
+      ),
+      ex = ((j['ex'] as Map<String, dynamic>?) ?? {}).map(
+        (k, v) => MapEntry(k, ExerciseLog.fromJson(v as Map<String, dynamic>)),
+      );
+}
+
+// ===================== RÉGLAGES =====================
+
+class AppSettings {
+  int defaultRest; // s, appliqué quand l'exercice n'a pas de repos
+  bool autoTimer; // lancer le repos à la validation d'une série
+  bool sound;
+  bool vibration;
+  int prepSec; // décompte « prêt » avant EMOM/AMRAP/HIIT
+  bool rpe; // afficher RPE au lieu de RIR
+  bool lb; // afficher les charges en livres
+  bool prefill; // pré-remplir la charge suggérée
+  bool wakelock; // écran allumé pendant la séance
+  String theme; // system | dark | light
+  bool trackRir; // colonne RIR/RPE affichée par défaut
+  bool trackVelocity; // colonne vitesse (VBT) affichée par défaut sur les lifts
+  bool notifOn; // rappel quotidien de la séance du jour
+  int notifHour;
+  int notifMinute;
+  bool notifSkipRest; // pas de rappel les jours de repos
+  bool celebrations; // écran de récompenses et cérémonie de niveau
+  int weeklyGoal; // objectif de jours actifs par semaine ; 0 = adaptatif
+  String title; // titre affiché sur la feuille de personnage ; '' = rang
+
+  AppSettings({
+    this.defaultRest = 90,
+    this.autoTimer = true,
+    this.sound = true,
+    this.vibration = true,
+    this.prepSec = 5,
+    this.rpe = false,
+    this.lb = false,
+    this.prefill = true,
+    this.wakelock = true,
+    this.theme = 'dark',
+    this.trackRir = false,
+    this.trackVelocity = false,
+    this.notifOn = false,
+    this.notifHour = 7,
+    this.notifMinute = 30,
+    this.notifSkipRest = true,
+    this.celebrations = true,
+    this.weeklyGoal = 0,
+    this.title = '',
+  });
+
+  Map<String, dynamic> toJson() => {
+    'defaultRest': defaultRest,
+    'autoTimer': autoTimer,
+    'sound': sound,
+    'vibration': vibration,
+    'prepSec': prepSec,
+    'rpe': rpe,
+    'lb': lb,
+    'prefill': prefill,
+    'wakelock': wakelock,
+    'theme': theme,
+    'trackRir': trackRir,
+    'trackVelocity': trackVelocity,
+    'notifOn': notifOn,
+    'notifHour': notifHour,
+    'notifMinute': notifMinute,
+    'notifSkipRest': notifSkipRest,
+    'celebrations': celebrations,
+    'weeklyGoal': weeklyGoal,
+    'title': title,
+  };
+  AppSettings.fromJson(Map<String, dynamic> j)
+    : defaultRest = j['defaultRest'] as int? ?? 90,
+      autoTimer = j['autoTimer'] as bool? ?? true,
+      sound = j['sound'] as bool? ?? true,
+      vibration = j['vibration'] as bool? ?? true,
+      prepSec = j['prepSec'] as int? ?? 5,
+      rpe = j['rpe'] as bool? ?? false,
+      lb = j['lb'] as bool? ?? false,
+      prefill = j['prefill'] as bool? ?? true,
+      wakelock = j['wakelock'] as bool? ?? true,
+      theme = j['theme'] as String? ?? 'dark',
+      trackRir = j['trackRir'] as bool? ?? false,
+      trackVelocity = j['trackVelocity'] as bool? ?? false,
+      notifOn = j['notifOn'] as bool? ?? false,
+      notifHour = j['notifHour'] as int? ?? 7,
+      notifMinute = j['notifMinute'] as int? ?? 30,
+      notifSkipRest = j['notifSkipRest'] as bool? ?? true,
+      celebrations = j['celebrations'] as bool? ?? true,
+      weeklyGoal = j['weeklyGoal'] as int? ?? 0,
+      title = j['title'] as String? ?? '';
+}
+
+// ===================== SÉANCES PERSONNALISÉES =====================
+
+/// Modes d'exécution disponibles pour les séances personnalisées.
+class ExecMode {
+  final String id;
+  final String label;
+  final String desc;
+  final List<String> fields; // paramètres à afficher dans l'éditeur
+  const ExecMode(this.id, this.label, this.desc, this.fields);
+}
+
+const execModes = <ExecMode>[
+  ExecMode(
+    'classic',
+    'Classique',
+    'Séries × répétitions, repos entre les séries.',
+    ['series', 'reps'],
+  ),
+  ExecMode(
+    'myo',
+    'Myo-reps',
+    'Série d\u2019activation proche de l\u2019échec, puis mini-séries avec micro-repos.',
+    ['actReps', 'miniReps', 'minis', 'intra'],
+  ),
+  ExecMode(
+    'cluster',
+    'Cluster',
+    'Chaque série est découpée en mini-blocs séparés de quelques secondes.',
+    ['series', 'miniReps', 'minis', 'intra'],
+  ),
+  ExecMode(
+    'emom',
+    'EMOM',
+    'Un bloc de travail au top de chaque intervalle (Every Minute On the Minute).',
+    ['rounds', 'interval', 'reps'],
+  ),
+  ExecMode(
+    'amrap',
+    'AMRAP',
+    'Un maximum de travail dans la durée fixée (As Many Reps As Possible).',
+    ['duree'],
+  ),
+  ExecMode(
+    'iso',
+    'Isométrie',
+    'Tenues statiques chronométrées (holds, gainage, overcoming iso).',
+    ['series', 'hold'],
+  ),
+  ExecMode(
+    'hiit',
+    'Intervalles',
+    'Alternance effort/repos chronométrée (HIIT, Tabata).',
+    ['rounds', 'work', 'restI'],
+  ),
+  ExecMode(
+    'pyramide',
+    'Pyramide',
+    'Répétitions croissantes ou décroissantes, ex. 12-10-8-6.',
+    ['pyr'],
+  ),
+  ExecMode(
+    'tabata',
+    'Tabata',
+    'Huit intervalles de 20 s d\u2019effort et 10 s de repos, soit 4 minutes.',
+    ['rounds', 'work', 'restI'],
+  ),
+  ExecMode(
+    'deathby',
+    'Death by',
+    'Une rep de plus à chaque minute, jusqu\u2019à ne plus tenir l\u2019intervalle.',
+    ['startReps', 'step', 'interval', 'rounds'],
+  ),
+  ExecMode(
+    'maxreps',
+    'Séries au max',
+    'Chaque série jusqu\u2019à l\u2019échec technique, repos fixe entre les séries.',
+    ['series'],
+  ),
+  ExecMode(
+    'maxhold',
+    'Tenues au max',
+    'Tenues jusqu\u2019au lâcher (dead-hang, L-sit, planche), chronométrées.',
+    ['series'],
+  ),
+  ExecMode(
+    'tempo',
+    'Tempo',
+    'Séries × reps avec cadence imposée, ex. 3-1-1-0 (descente, bas, montée, haut).',
+    ['series', 'reps', 'tempo'],
+  ),
+  ExecMode(
+    'dropset',
+    'Drop set',
+    'Série proche de l\u2019échec puis paliers immédiats à charge ou difficulté réduite.',
+    ['series', 'reps', 'drops'],
+  ),
+  ExecMode(
+    'density',
+    'Densité',
+    'Un maximum de séries de N reps dans la durée fixée, repos libre.',
+    ['duree', 'reps'],
+  ),
+];
+
+/// Valeurs par défaut propres à un mode (prioritaires sur celles du champ).
+const modeDefaults = <String, Map<String, int>>{
+  'tabata': {'rounds': 8, 'work': 20, 'restI': 10},
+  'deathby': {'startReps': 1, 'step': 1, 'interval': 60, 'rounds': 20},
+  'density': {'duree': 10, 'reps': 5},
+  'dropset': {'series': 3, 'reps': 8, 'drops': 2},
+  'maxreps': {'series': 3},
+  'maxhold': {'series': 3},
+  'tempo': {'series': 4, 'reps': 6},
+};
+
+ExecMode modeById(String id) =>
+    execModes.firstWhere((m) => m.id == id, orElse: () => execModes.first);
+
+int _uidCounter = 0;
+String _newUid() =>
+    '${DateTime.now().microsecondsSinceEpoch.toRadixString(36)}-${_uidCounter++}';
+
+class CustomExercise {
+  String
+  uid; // stable : les logs y restent rattachés même après réordonnancement
+  String name;
+  String mode; // id ExecMode
+  Map<String, dynamic> p; // paramètres du mode
+  double? kg;
+  int? rest; // s
+  String note;
+  CustomExercise({
+    String? uid,
+    required this.name,
+    this.mode = 'classic',
+    Map<String, dynamic>? p,
+    this.kg,
+    this.rest,
+    this.note = '',
+  }) : uid = uid ?? _newUid(),
+       p = p ?? {};
+
+  Map<String, dynamic> toJson() => {
+    'uid': uid,
+    'name': name,
+    'mode': mode,
+    'p': p,
+    'kg': kg,
+    'rest': rest,
+    'note': note,
+  };
+  CustomExercise.fromJson(Map<String, dynamic> j)
+    : uid = j['uid'] as String? ?? _newUid(),
+      name = j['name'] as String,
+      mode = j['mode'] as String? ?? 'classic',
+      p = Map<String, dynamic>.from(j['p'] as Map? ?? {}),
+      kg = j['kg'] == null ? null : (j['kg'] as num).toDouble(),
+      rest = j['rest'] as int?,
+      note = j['note'] as String? ?? '';
+
+  int _pi(String k, int d) => ((p[k] as num?)?.toInt() ?? d).clamp(
+    k == 'restI' || k == 'intra' ? 0 : 1,
+    3600,
+  );
+  String _ps(String k, String d) {
+    final v = p[k];
+    return v is String && v.trim().isNotEmpty ? v : d;
+  }
+
+  /// Libellé « Séries × Reps » selon le mode.
+  String setsText() {
+    switch (mode) {
+      case 'myo':
+        return '1×${_pi('actReps', 12)} puis ${_pi('minis', 4)}×(${_pi('miniReps', 4)}) · ${_pi('intra', 15)} s intra';
+      case 'cluster':
+        return '${_pi('series', 4)}×(${_pi('minis', 3)}×${_pi('miniReps', 2)}) · ${_pi('intra', 20)} s intra';
+      case 'emom':
+        return 'EMOM ${_pi('rounds', 10)}×${_pi('interval', 60)} s · ${_pi('reps', 5)} reps';
+      case 'amrap':
+        return 'AMRAP ${_pi('duree', 8)} min';
+      case 'iso':
+        return '${_pi('series', 3)}×${_pi('hold', 30)} s';
+      case 'hiit':
+        return '${_pi('rounds', 8)}× (${_pi('work', 30)} s effort / ${_pi('restI', 30)} s repos)';
+      case 'pyramide':
+        return _ps('pyr', '12-10-8-6');
+      case 'tabata':
+        return '${_pi('rounds', 8)}× (${_pi('work', 20)} s effort / ${_pi('restI', 10)} s repos)';
+      case 'deathby':
+        return 'EMOM ${_pi('rounds', 20)}×${_pi('interval', 60)} s · Death by ${_pi('startReps', 1)} + ${_pi('step', 1)} / min';
+      case 'maxreps':
+        return '${_pi('series', 3)}×MAX';
+      case 'maxhold':
+        return '${_pi('series', 3)}×MAX tenue';
+      case 'tempo':
+        return '${_pi('series', 4)}×${_pi('reps', 6)} · tempo ${_ps('tempo', '3-1-1-0')}';
+      case 'dropset':
+        return '${_pi('series', 3)}×(${_pi('reps', 8)} + ${_pi('drops', 2)} palier${_pi('drops', 2) > 1 ? 's' : ''})';
+      case 'density':
+        return 'Densité ${_pi('duree', 10)} min · séries de ${_pi('reps', 5)}';
+      default:
+        return '${_pi('series', 4)}×${_pi('reps', 8)}';
+    }
+  }
+
+  int forcedSets() {
+    switch (mode) {
+      case 'myo':
+        return 1 + _pi('minis', 4);
+      case 'cluster':
+        return _pi('series', 4);
+      case 'emom':
+      case 'amrap':
+      case 'hiit':
+        return 1;
+      case 'iso':
+        return _pi('series', 3);
+      case 'pyramide':
+        return _ps('pyr', '12-10-8-6').split(RegExp(r'[-/ ]+')).length;
+      case 'tabata':
+      case 'deathby':
+      case 'density':
+        return 1;
+      case 'maxreps':
+      case 'maxhold':
+        return _pi('series', 3);
+      case 'tempo':
+        return _pi('series', 4);
+      case 'dropset':
+        return _pi('series', 3) * (1 + _pi('drops', 2));
+      default:
+        return _pi('series', 4);
+    }
+  }
+
+  Map<String, dynamic>? timerSpec() {
+    switch (mode) {
+      case 'emom':
+        return {
+          'type': 'emom',
+          'rounds': _pi('rounds', 10),
+          'interval': _pi('interval', 60),
+        };
+      case 'amrap':
+        return {'type': 'amrap', 'sec': _pi('duree', 8) * 60};
+      case 'hiit':
+        return {
+          'type': 'hiit',
+          'rounds': _pi('rounds', 8),
+          'work': _pi('work', 30),
+          'rest': _pi('restI', 30),
+        };
+      case 'iso':
+        return {'type': 'hold', 'sec': _pi('hold', 30)};
+      case 'cluster':
+        return {'type': 'hold', 'sec': _pi('intra', 20)};
+      case 'tabata':
+        return {
+          'type': 'hiit',
+          'rounds': _pi('rounds', 8),
+          'work': _pi('work', 20),
+          'rest': _pi('restI', 10),
+        };
+      case 'deathby':
+        return {
+          'type': 'emom',
+          'rounds': _pi('rounds', 20),
+          'interval': _pi('interval', 60),
+        };
+      case 'density':
+        return {'type': 'amrap', 'sec': _pi('duree', 10) * 60};
+    }
+    return null;
+  }
+
+  Exercise toExercise(int index) {
+    final m = modeById(mode);
+    // « Tenues au max » force la saisie chronométrée ; « Tempo » affiche la
+    // cadence comme le programme.
+    final tempo =
+        mode == 'maxhold'
+            ? 'Isométrie'
+            : mode == 'tempo'
+            ? _ps('tempo', '3-1-1-0')
+            : '';
+    return Exercise.manual(
+      id: 'CU-$uid',
+      name: name,
+      setsText: setsText(),
+      intensity: mode == 'classic' ? '' : m.label,
+      kg: kg,
+      rest: rest == null ? '' : '$rest s',
+      restSec: rest,
+      tempo: tempo,
+      cue: note.isEmpty ? m.desc : note,
+      forcedSets: forcedSets(),
+      timer: timerSpec(),
+    );
+  }
+}
+
+class CustomSession {
+  String id; // numérique unique (clé de journal S0-J<id>)
+  String name;
+  List<CustomExercise> items;
+  CustomSession({
+    required this.id,
+    required this.name,
+    List<CustomExercise>? items,
+  }) : items = items ?? [];
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'items': items.map((e) => e.toJson()).toList(),
+  };
+  CustomSession.fromJson(Map<String, dynamic> j)
+    : id = j['id'] as String,
+      name = j['name'] as String,
+      items =
+          ((j['items'] as List?) ?? [])
+              .map((e) => CustomExercise.fromJson(e as Map<String, dynamic>))
+              .toList();
+
+  /// Adaptateur vers le runner de séance existant (semaine 0 = perso).
+  WeekPlan toWeekPlan() {
+    final exs = <Exercise>[];
+    for (var i = 0; i < items.length; i++) {
+      exs.add(items[i].toExercise(i));
+    }
+    return WeekPlan.manual(
+      n: 0,
+      block: name,
+      color: const Color(0xFF4FA3C7),
+      days: [DayPlan.manual(j: int.parse(id), title: name, exercises: exs)],
+    );
+  }
+}
+
+/// Nature de la saisie d'un exercice, déduite des données.
+class LogSpec {
+  final String
+  kind; // reps | repsMax | hold | holdMax | duration | interval | emom | amrap
+  final int? seconds; // tenue (hold) ou durée totale (duration / emom)
+  final int? intra; // micro-repos myo-reps / clusters
+  final bool myo;
+  final bool cluster;
+  final String
+  rowPrefix; // M (myo) · C (cluster) · É (échelle) · R (round) · T (test)
+  const LogSpec(
+    this.kind, {
+    this.seconds,
+    this.intra,
+    this.myo = false,
+    this.cluster = false,
+    this.rowPrefix = '',
+  });
+  bool get timed => kind == 'hold' || kind == 'holdMax' || kind == 'duration';
+}
+
+class AppStore extends ChangeNotifier {
+  late final Program program;
+  late final SharedPreferences _prefs;
+
+  /// Valeurs Pilotage éditables : PdC (B4), 1RM (B8-B11), max reps (B16-B20),
+  /// charges de référence accessoires (B25-B45).
+  final Map<String, double> values = {};
+
+  /// Reps de référence des accessoires (colonne D, non éditable).
+  final Map<String, int> refReps = {};
+
+  final Map<String, SessionLog> logs = {};
+
+  /// Incrémenté à chaque reset pour forcer le rafraîchissement des champs.
+  int pilotageEpoch = 0;
+
+  AppSettings settings = AppSettings();
+
+  /// Ne change qu'au changement de thème : évite de reconstruire MaterialApp
+  /// à chaque notification du store.
+  final ValueNotifier<String> themeMode = ValueNotifier<String>('system');
+  final List<Map<String, dynamic>> dbExercises = []; // base embarquée
+  final List<Map<String, dynamic>> userExercises =
+      []; // ajoutés par l'utilisateur
+  final List<CustomSession> customSessions = [];
+  final List<Wod> wods = [];
+
+  static const _kState = 'kalis_state_v3';
+  final ValueNotifier<String?> persistenceError = ValueNotifier<String?>(null);
+  Future<void> _pendingWrite = Future<void>.value();
+  bool _initialized = false;
+
+  static const _kPilotage = 'pilotage_v1';
+  static const _kLogs = 'logs_v1';
+  static const _kSettings = 'settings_v1';
+  static const _kCustom = 'custom_sessions_v1';
+  static const _kUserEx = 'user_exercises_v1';
+  static const _kWodsLegacy =
+      'wods_v1'; // ancien format (catalogue entier dupliqué)
+  static const _kWodsUser = 'wods_user_v2'; // WODs créés par l'utilisateur
+  static const _kWodsDel = 'wods_del_v2'; // ids de WODs préchargés supprimés
+  static const _kWodsEdit =
+      'wods_edit_v2'; // id préchargé → définition modifiée
+  static const _kWodResults = 'wod_results_v2'; // id → résultats (compressé)
+  static const _kSeedV = 'wods_seed_v';
+  static const _kLastLevel = 'level_seen';
+  static const _kUnlocked = 'unlocked_wods_v1';
+  static const _kCreditsV = 'credits_v';
+
+  /// WODs déverrouillés : id → crédits payés (0 = offert par la migration).
+  final Map<String, int> unlockedWods = {};
+
+  Future<void> init() async {
+    program = Program.fromJson(
+      jsonDecode(await _loadGz('assets/programme_v33.json.gz'))
+          as Map<String, dynamic>,
+    );
+    _prefs = await SharedPreferences.getInstance();
+
+    // Défauts depuis le JSON du classeur.
+    final p = program.pilotage;
+    values['B4'] = p.bodyweight;
+    for (final l in p.mainLifts) {
+      values[l.ref] = l.oneRm;
+    }
+    for (final m in p.repMax) {
+      values[m.ref] = m.max;
+    }
+    for (final a in p.accessories) {
+      values[a.ref] = a.refLoad;
+      refReps[a.ref] = a.refReps;
+    }
+
+    for (final e
+        in jsonDecode(await _loadGz('assets/exercises_db.json.gz')) as List) {
+      dbExercises.add(Map<String, dynamic>.from(e as Map));
+    }
+    final saved = _prefs.getString(_kState);
+    if (saved != null) {
+      _applyBackup(_parseBackup(_unpack(saved)!));
+      _rankDifficulty();
+      _initialized = true;
+      return;
+    }
+
+    // Écrase avec les valeurs sauvegardées.
+    final sp = _prefs.getString(_kPilotage);
+    if (sp != null) {
+      final m = jsonDecode(sp) as Map<String, dynamic>;
+      m.forEach((k, v) => values[k] = (v as num).toDouble());
+    }
+    final sl = _unpack(_prefs.getString(_kLogs));
+    if (sl != null) {
+      final m = jsonDecode(sl) as Map<String, dynamic>;
+      m.forEach(
+        (k, v) => logs[k] = SessionLog.fromJson(v as Map<String, dynamic>),
+      );
+    }
+
+    // Base d'exercices embarquée (gzip) + exercices utilisateur.
+    final su = _prefs.getString(_kUserEx);
+    if (su != null) {
+      for (final e in jsonDecode(su) as List) {
+        userExercises.add(Map<String, dynamic>.from(e as Map));
+      }
+    }
+    final ss = _prefs.getString(_kSettings);
+    if (ss != null) {
+      settings = AppSettings.fromJson(jsonDecode(ss) as Map<String, dynamic>);
+    }
+    themeMode.value = settings.theme;
+    final sc = _prefs.getString(_kCustom);
+    if (sc != null) {
+      for (final e in jsonDecode(sc) as List) {
+        customSessions.add(CustomSession.fromJson(e as Map<String, dynamic>));
+      }
+    }
+    await _loadWods();
+    _lastLevel = _prefs.getInt(_kLastLevel) ?? level;
+    final su2 = _prefs.getString(_kUnlocked);
+    if (su2 != null) {
+      (jsonDecode(su2) as Map<String, dynamic>).forEach(
+        (k, v) => unlockedWods[k] = (v as num).toInt(),
+      );
+    }
+    if ((_prefs.getInt(_kCreditsV) ?? 0) < 2) {
+      // v2 : tous les WODs préchargés se gagnent — les accès offerts par l'ancienne
+      // migration sont retirés (les déverrouillages payés en crédits sont conservés).
+      unlockedWods.removeWhere((k, v) => v == 0);
+      await _prefs.setInt(_kCreditsV, 2);
+    }
+    _rankDifficulty();
+    _initialized = true;
+    // Migration vers une seule écriture atomique. Les anciennes clés restent
+    // disponibles pour récupérer les données si la migration est interrompue.
+    await flush();
+  }
+
+  // ---------- Crédits de déverrouillage ----------
+  void _saveUnlocked() => _persist();
+
+  /// Prix de base par palier : niveaux 1-3 → 1 crédit (Standard), 4-6 → 2
+  /// (Avancé), 7-8 → 3 (Élite), 9-10 → 4 (Légende).
+  /// Les WOD personnels des anciennes sauvegardes restent possédés.
+  int basePrice(Wod w) {
+    if (!isCatalog(w)) return 0;
+    if (w.level <= 3) return 1;
+    if (w.level <= 6) return 2;
+    if (w.level <= 8) return 3;
+    return 4;
+  }
+
+  /// Prix affiché : prix de base moins la vitrine de la semaine (−1) et
+  /// moins un essai terminé (−1), jamais sous 1 crédit. Le prix payé est
+  /// figé à l'achat : une remise passée ne change pas un solde.
+  int wodCost(Wod w) {
+    if (!isCatalog(w)) return 0;
+    var price = basePrice(w);
+    if (unlocked(w)) return price;
+    if (weeklyIds.contains(w.id)) price -= 1;
+    if (triedAndDone(w)) price -= 1;
+    return max(1, price);
+  }
+
+  /// Remise en cours sur un WOD verrouillé (0 = plein tarif).
+  int discountOf(Wod w) => unlocked(w) ? 0 : basePrice(w) - wodCost(w);
+
+  /// Un WOD essayé et terminé (essai du jour) reste verrouillé mais garde
+  /// ses résultats et coûte 1 crédit de moins.
+  bool triedAndDone(Wod w) => w.results.any((r) => r.completed);
+
+  /// Crédits manquants pour un WOD verrouillé (0 = abordable).
+  int missingFor(Wod w) => max(0, wodCost(w) - credits);
+
+  /// Barème par niveau (voir [Progression.creditsForLevel]).
+  int creditsForLevel(int l) => Progression.creditsForLevel(l);
+
+  /// Crédits gagnés = barème par niveau + crédits dérivés du journal
+  /// (chapitres bouclés, boss vaincus, semaines complètes).
+  int get creditsEarned => creditsForLevel(level) + game.bonusCredits;
+  int get creditsSpent => unlockedWods.values.fold(0, (a, b) => a + b);
+  int get credits => max(0, creditsEarned - creditsSpent);
+
+  bool unlockWod(Wod w) {
+    if (unlocked(w)) return true;
+    final c = wodCost(w);
+    if (credits < c) return false;
+    unlockedWods[w.id] = c;
+    wishlist.remove(w.id);
+    _saveUnlocked();
+    notifyListeners();
+    return true;
+  }
+
+  // ---------- Liste d'envies ----------
+  /// Ids de WODs mis de côté ; le moins cher tient lieu de prochain objectif.
+  final Set<String> wishlist = {};
+
+  bool wished(Wod w) => wishlist.contains(w.id);
+
+  void toggleWish(Wod w) {
+    if (!wishlist.remove(w.id)) wishlist.add(w.id);
+    _persist();
+    notifyListeners();
+  }
+
+  /// WODs de la liste encore verrouillés, du moins cher au plus cher.
+  List<Wod> get wishedWods {
+    final out = [
+      for (final w in wods)
+        if (wishlist.contains(w.id) && !unlocked(w)) w,
+    ]..sort((a, b) {
+      final c = wodCost(a).compareTo(wodCost(b));
+      if (c != 0) return c;
+      final l = a.level.compareTo(b.level);
+      return l != 0 ? l : a.name.compareTo(b.name);
+    });
+    return out;
+  }
+
+  /// Prochain objectif : le WOD souhaité le moins cher, ou null.
+  Wod? get wishTarget => wishedWods.isEmpty ? null : wishedWods.first;
+
+  // ---------- Vitrine : sélections déterministes ----------
+  /// Horloge de la vitrine (remplaçable dans les tests) : les sélections du
+  /// jour et de la semaine ne dépendent que de la date et du journal.
+  DateTime Function() storeClock = DateTime.now;
+
+  static int _fnv(String s) {
+    var h = 0x811C9DC5;
+    for (final c in s.codeUnits) {
+      h ^= c;
+      h = (h * 0x01000193) & 0xFFFFFFFF;
+    }
+    return h;
+  }
+
+  String get _dayKey => civilDay(storeClock()).toIso8601String();
+  String get _weekKey => mondayOf(storeClock()).toIso8601String();
+
+  /// Niveau de WOD « à ta mesure » : niveau global de la feuille de
+  /// personnage (1-10, même échelle que la difficulté du catalogue).
+  int get targetWodLevel => game.sheet.powerLevel.clamp(1, 10);
+
+  /// Sélection déterministe parmi les WODs verrouillés du catalogue : les
+  /// candidats préférés d'abord, puis les autres ; à l'intérieur, par [rank]
+  /// croissant (0 par défaut) puis par empreinte de « sel|id ».
+  List<Wod> _pick(
+    String salt,
+    int count, {
+    required bool Function(Wod) prefer,
+    int Function(Wod)? rank,
+    Set<String> exclude = const {},
+    bool distinctTypes = false,
+  }) {
+    final pool = [
+      for (final w in wods)
+        if (isCatalog(w) && !unlocked(w) && !exclude.contains(w.id)) w,
+    ];
+    final keys = {for (final w in pool) w.id: _fnv('$salt|${w.id}')};
+    final rankOf = rank;
+    int byKey(Wod a, Wod b) {
+      if (rankOf != null) {
+        final r = rankOf(a).compareTo(rankOf(b));
+        if (r != 0) return r;
+      }
+      return keys[a.id]!.compareTo(keys[b.id]!);
+    }
+
+    final preferred = pool.where(prefer).toList()..sort(byKey);
+    final rest = pool.where((w) => !prefer(w)).toList()..sort(byKey);
+    final out = <Wod>[];
+    final types = <String>{};
+    for (final w in preferred.followedBy(rest)) {
+      if (distinctTypes && !types.add(w.type)) continue;
+      out.add(w);
+      if (out.length == count) break;
+    }
+    return out;
+  }
+
+  String? _trialKey;
+  Wod? _trial;
+
+  /// Essai du jour : un WOD verrouillé, hors vitrine, proche de ton niveau,
+  /// jamais tenté (ou seulement aujourd'hui), jouable gratuitement jusqu'à
+  /// minuit. Un WOD tenté aujourd'hui reste l'essai du jour quoi qu'il
+  /// arrive (niveau, autres résultats) : le terminer ne fait pas apparaître
+  /// un second essai. Il change à minuit.
+  Wod? get trialWod {
+    final key = _dayKey;
+    if (_trialKey != key) {
+      final t = targetWodLevel;
+      final today = civilDay(storeClock());
+      bool sameDay(WodResult r) {
+        final at = DateTime.tryParse(r.at);
+        return at != null && civilDay(at) == today;
+      }
+
+      bool fresh(Wod w) => w.results.every(sameDay);
+      bool tried(Wod w) => w.results.isNotEmpty && fresh(w);
+      _trial =
+          _pick(
+            'trial|$key',
+            1,
+            prefer: (w) => fresh(w) && ((w.level - t).abs() <= 1 || tried(w)),
+            rank: (w) => tried(w) ? 0 : 1,
+            exclude: weeklyIds,
+          ).firstOrNull;
+      _trialKey = key;
+    }
+    return _trial;
+  }
+
+  bool isTrial(Wod w) => trialWod?.id == w.id;
+
+  /// Jouable maintenant : débloqué, ou essai du jour.
+  bool canRun(Wod w) => unlocked(w) || isTrial(w);
+
+  String? _weeklyKey;
+  List<Wod> _weekly = const [];
+  Set<String> _weeklyIdSet = const {};
+
+  /// Vitrine de la semaine : trois WODs verrouillés de formats différents,
+  /// à ton niveau (jusqu'à deux crans au-dessus), à −1 crédit du lundi au
+  /// dimanche. La sélection ne dépend que de la semaine et des WODs
+  /// possédés : un WOD acheté laisse sa place au suivant.
+  List<Wod> get weeklyPicks {
+    final key = '$_weekKey|${unlockedWods.length}';
+    if (_weeklyKey != key) {
+      final t = targetWodLevel;
+      _weekly = _pick(
+        'weekly|$_weekKey',
+        3,
+        prefer: (w) => w.level >= t - 1 && w.level <= t + 2,
+        distinctTypes: true,
+      );
+      _weeklyIdSet = {for (final w in _weekly) w.id};
+      _weeklyKey = key;
+    }
+    return _weekly;
+  }
+
+  Set<String> get weeklyIds {
+    weeklyPicks;
+    return _weeklyIdSet;
+  }
+
+  String? _recoKey;
+  List<Wod> _reco = const [];
+
+  /// « À ta mesure » : WODs verrouillés à ton niveau (±1), hors essai et
+  /// vitrine, renouvelés chaque jour.
+  List<Wod> recommended({int count = 8}) {
+    final key = '$_dayKey|$count|${unlockedWods.length}';
+    if (_recoKey != key) {
+      final t = targetWodLevel;
+      final trial = trialWod?.id;
+      _reco = _pick(
+        'reco|$_dayKey',
+        count,
+        prefer: (w) => (w.level - t).abs() <= 1,
+        exclude: {...weeklyIds, if (trial != null) trial},
+      );
+      _recoKey = key;
+    }
+    return _reco;
+  }
+
+  /// Secondes avant minuit (fin de l'essai du jour).
+  Duration get untilMidnight {
+    final now = storeClock();
+    final midnight = DateTime(now.year, now.month, now.day + 1);
+    return midnight.difference(now);
+  }
+
+  /// Jours entiers avant le prochain lundi (changement de vitrine).
+  int get daysUntilNewWeek {
+    final now = storeClock();
+    return 8 - now.weekday;
+  }
+
+  // ---------- Aperçu d'un WOD : volume, charge de travail, muscles ----------
+  static final _splitRe = RegExp(r'\s*(?:\+|·|(?<!\d),(?!\d)|\s/\s| et )\s*');
+  static final _partRe = RegExp(
+    r'''^(\d+(?:[.,]\d+)?)\s*(km|min|m|s|"|'|″|′)?(?![A-Za-zÀ-ÿ])\s*(.*)$''',
+  );
+  static final _ladderRe = RegExp(r'^(\d+(?:-\d+){2,})\s+(.*)$');
+
+  List<int> _scheme(String text) {
+    final nums = _numRe.allMatches(text).map((m) => int.parse(m[0]!)).toList();
+    if (text.contains('/') || nums.isEmpty) return const [];
+    if (text.contains('…') || text.contains('→') || text.contains('...')) {
+      if (nums.length < 2) return const [];
+      final step =
+          nums.length > 2
+              ? nums[1] - nums[0]
+              : (nums.last >= nums.first ? 1 : -1);
+      if (step == 0 || (nums.last - nums.first) * step < 0) return const [];
+      final count = (nums.last - nums.first).abs() ~/ step.abs() + 1;
+      return List.generate(
+        count > 1000 ? 1000 : count,
+        (i) => nums.first + i * step,
+      );
+    }
+    return nums;
+  }
+
+  /// Analyse le mouvement, sans compter les numéros de minute, charges,
+  /// annotations par côté ou temps de repos comme des répétitions.
+  List<({int reps, int meters, String text})> _parseLine(Wod w, String line) {
+    var text = line.trim().replaceAll('–', '-').replaceAll('−', '-');
+    final shared = RegExp(
+      r'^(\d+)\s+rounds?[^:]*:\s*(.*)$',
+      caseSensitive: false,
+    ).firstMatch(text);
+    if (shared != null) {
+      final factor = int.parse(shared[1]!);
+      return [
+        for (final p in _parseLine(w, shared[2]!))
+          (reps: p.reps * factor, meters: p.meters * factor, text: p.text),
+      ];
+    }
+    text = text.replaceFirst(
+      RegExp(
+        r'^(?:min\b[^:]*|cash in|cash out|finisher|amrap\s+\d+\s*min)\s*:\s*',
+        caseSensitive: false,
+      ),
+      '',
+    );
+    final block = RegExp(r'^(\d+)\s*[×x]\s*\((.*?)\)(.*)$').firstMatch(text);
+    if (block != null) {
+      final factor = int.parse(block[1]!);
+      return [
+        for (final p in _parseLine(w, block[2]!))
+          (reps: p.reps * factor, meters: p.meters * factor, text: p.text),
+        ..._parseLine(w, block[3]!),
+      ];
+    }
+    final ladder = _ladderRe.firstMatch(text);
+    if (ladder != null) {
+      return [
+        (
+          reps: _scheme(ladder[1]!).fold(0, (a, b) => a + b),
+          meters: 0,
+          text: ladder[2]!,
+        ),
+      ];
+    }
+    final out = <({int reps, int meters, String text})>[];
+    for (final raw in text.split(_splitRe)) {
+      final part = raw.trim();
+      if (part.isEmpty || _restRe.hasMatch(part.toLowerCase())) continue;
+      final m = _partRe.firstMatch(part);
+      if (m != null) {
+        final n = double.parse(m[1]!.replaceAll(',', '.'));
+        final unit = m[2];
+        final move = (m[3] ?? '').trim();
+        if (unit == 'm' || unit == 'km') {
+          final repetitions = _scheme(w.scheme).length;
+          out.add((
+            reps: 0,
+            meters:
+                (n * (unit == 'km' ? 1000 : 1)).round() * max(1, repetitions),
+            text: move.isEmpty ? 'run' : move,
+          ));
+        } else if (unit == null &&
+            move.isNotEmpty &&
+            !_restRe.hasMatch(move.toLowerCase())) {
+          out.add((reps: n.round(), meters: 0, text: move));
+        }
+        continue;
+      }
+      if (_maxRe.hasMatch(part.toLowerCase())) {
+        out.add((
+          reps: 15,
+          meters: 0,
+          text: part.replaceAll(_maxStripRe, '').trim(),
+        ));
+      } else if (w.scheme.isNotEmpty) {
+        final sum = _scheme(w.scheme).fold(0, (a, b) => a + b);
+        if (sum > 0) out.add((reps: sum, meters: 0, text: part));
+      }
+    }
+    return out;
+  }
+
+  // ---------- Score historique de classement du catalogue ----------
+  // Points par répétition selon le type de mouvement (poids de corps, barre,
+  // skills, implements), majorés par le lest, l'enchaînement de mouvements qui
+  // sollicitent la même chaîne, les contraintes (unbroken), le format (rounds,
+  // repos, AMRAP, EMOM) et les distances. Conservé pour les niveaux et crédits ;
+  // les volumes et durées présentés à l'utilisateur viennent de TrainingEstimator.
+  static final _moves = <(RegExp, double, String, bool)>[
+    // (motif, points par rep ou par 100 m, catégorie, poids de corps)
+    (RegExp(r'muscle.?up|\bmu\b'), 4.5, 'pull', true),
+    (RegExp(r'hspu|handstand'), 3.2, 'push', true),
+    (RegExp(r'wall walk'), 3.5, 'push', true),
+    (RegExp(r'dragon'), 3.0, 'core', true),
+    (RegExp(r'pistol'), 2.2, 'legs', true),
+    (RegExp(r'front lever|planche'), 5.0, 'pull', true),
+    (RegExp(r'burpee.{0,12}(box|over|broad|plate)'), 2.2, 'meta', true),
+    (RegExp(r'devil press'), 2.5, 'meta', false),
+    (RegExp(r'burpee'), 1.7, 'meta', true),
+    (RegExp(r'snatch|clean|thruster'), 2.0, 'meta', false),
+    (RegExp(r'toes.?to.?bar|t2b'), 1.5, 'core', true),
+    (RegExp(r'rows? barre|ring row|row(s)? aux anneaux'), 0.9, 'pull', true),
+    (RegExp(r'pull.?up|chin.?up|traction'), 1.7, 'pull', true),
+    (RegExp(r'\bdip'), 1.4, 'push', true),
+    (RegExp(r'archer|diamond|pike|d[ée]clin'), 1.3, 'push', true),
+    (RegExp(r'push.?up|pompe'), 1.0, 'push', true),
+    (RegExp(r'wall.?ball'), 1.1, 'meta', false),
+    (RegExp(r'kettlebell|kb swing|swing'), 0.9, 'meta', false),
+    (RegExp(r'goblet'), 1.0, 'legs', false),
+    (RegExp(r'sandbag lunge'), 1.2, 'legs', false),
+    (RegExp(r'box jump|squat jump|jumping lunge|saut'), 0.9, 'legs', true),
+    (RegExp(r'lunge|fente|step.?up|step.?over'), 0.5, 'legs', true),
+    (RegExp(r'squat'), 0.5, 'legs', true),
+    (RegExp(r'double.?under'), 0.25, 'meta', true),
+    (
+      RegExp(r'mountain climber|jumping jack|plank|shoulder tap'),
+      0.4,
+      'core',
+      true,
+    ),
+    (RegExp(r'sit.?up|v.?up|hollow|leg raise|crunch|abdo'), 0.5, 'core', true),
+    (RegExp(r'farmer|carry'), 12.0, 'carry', false),
+    (RegExp(r'\bcal\b'), 1.0, 'erg', false),
+    (RegExp(r'\brun\b|course|sprint|footing'), 7.5, 'erg', true),
+    (RegExp(r'\brow\b|rameur'), 6.0, 'erg', false),
+    (RegExp(r'ski'), 6.0, 'erg', false),
+    (RegExp(r'bike|erg\b|v[ée]lo'), 2.0, 'erg', false),
+  ];
+
+  /// Secondes par répétition (ou par 100 m) — durée estimée et rounds d'AMRAP.
+  static final _secs = <(RegExp, double)>[
+    (RegExp(r'muscle.?up|\bmu\b|front lever|planche'), 5.0),
+    (RegExp(r'hspu|handstand|wall walk|dragon'), 4.0),
+    (RegExp(r'burpee|devil'), 4.0),
+    (RegExp(r'pull.?up|chin.?up|traction|toes|t2b|pistol'), 3.0),
+    (RegExp(r'wall.?ball|snatch|clean|thruster'), 3.0),
+    (RegExp(r'\bdip|archer|diamond|pike|goblet|sandbag'), 2.5),
+    (
+      RegExp(r'push.?up|pompe|box jump|squat jump|jumping|swing|kettlebell'),
+      2.0,
+    ),
+    (RegExp(r'double.?under'), 0.5),
+    (RegExp(r'\bcal\b'), 4.0),
+    (RegExp(r'farmer|carry'), 40.0),
+    (RegExp(r'\brun\b|course|sprint|footing|\brow\b|rameur|ski'), 25.0),
+    (RegExp(r'bike|erg\b|v[ée]lo'), 12.0),
+  ];
+
+  /// (points par unité, catégorie, poids de corps) pour un texte de mouvement.
+  (double, String, bool) _movePoints(String text) {
+    final l = text.toLowerCase();
+    if (RegExp(r'^cal(?:ories)?\b').hasMatch(l)) return (1.0, 'erg', false);
+    for (final (re, pts, cat, bw) in _moves) {
+      if (re.hasMatch(l)) return (pts, cat, bw);
+    }
+    return (0.8, 'meta', true);
+  }
+
+  double _moveSeconds(String text) {
+    final l = text.toLowerCase();
+    for (final (re, sec) in _secs) {
+      if (re.hasMatch(l)) return sec;
+    }
+    return 1.5; // squats, fentes, sit-ups, gainage…
+  }
+
+  static final _kgRe = RegExp(r'(\d+(?:[.,]\d+)?)\s*kg');
+  static final _unbrokenRe = RegExp(r'unbroken|sans pause|enchaîn');
+  static final _rangeRe = RegExp(r'min\s*(\d+)\s*-\s*(\d+)');
+  static final _rotRe = RegExp(r'^min\s*\d+\s*,');
+  static final _restRe = RegExp(r'^(rest|repos)');
+  static final _maxRe = RegExp(r'\bmax\b');
+  static final _maxStripRe = RegExp(r'max( de)?', caseSensitive: false);
+  static final _numRe = RegExp(r'\d+');
+
+  double _lineSeconds(
+    Wod w,
+    String line, [
+    List<({int reps, int meters, String text})>? parsed,
+  ]) {
+    var t = 0.0;
+    for (final p in parsed ?? _parseLine(w, line)) {
+      final sec = _moveSeconds(p.text);
+      t +=
+          p.meters > 0 ? p.meters / 100 * (sec >= 12 ? sec : 25) : p.reps * sec;
+    }
+
+    return t + 5; // transition
+  }
+
+  /// Points d'une ligne (un round) : lest, enchaînement, contraintes, multiplicateur « 3 × (…) ».
+  double _linePoints(
+    Wod w,
+    String line,
+    String? prevCat,
+    void Function(String) setPrevCat, [
+    List<({int reps, int meters, String text})>? parsed,
+  ]) {
+    var total = 0.0;
+    final parts = parsed ?? _parseLine(w, line);
+    var cat = prevCat;
+    for (final p in parts) {
+      final (pts, category, bw) = _movePoints(p.text);
+      var v = p.meters > 0 ? p.meters / 100 * pts : p.reps * pts;
+      if (p.meters > 0 && category != 'erg' && category != 'carry') {
+        v = p.meters / 20 * pts; // burpees broad jump, fentes en mètres
+      }
+      final kg = _kgRe.firstMatch(p.text.toLowerCase());
+      if (kg != null && bw) {
+        v *=
+            1 +
+            double.parse(kg.group(1)!.replaceAll(',', '.')) /
+                40; // lest sur un mouvement au poids de corps
+      }
+      if (cat != null && cat == category && category != 'erg') {
+        v *= 1.15; // même chaîne enchaînée
+      }
+      cat = category;
+      total += v;
+    }
+    if (parts.length >= 3) total *= 1.10; // complexe enchaîné sans pause
+    if (_unbrokenRe.hasMatch(line.toLowerCase())) total *= 1.2;
+
+    setPrevCat(cat ?? '');
+    return total;
+  }
+
+  ({int points, int minutes, String level}) wodStats(Wod w) {
+    final cached = _statsCache[w.id];
+    final legacy =
+        cached != null && _statsDefinitions[w.id] == _defJson(w)
+            ? cached
+            : _computeStats(w);
+    final estimate = wodEstimate(w);
+    final st = (
+      points: legacy.points,
+      minutes: max(1, (estimate.elapsed.midpoint / 60).ceil()),
+      level: legacy.level,
+    );
+    _statsCache[w.id] = st;
+    _statsDefinitions[w.id] = _defJson(w);
+    return st;
+  }
+
+  ({int points, int minutes, String level}) _computeStats(Wod w) {
+    String? prev;
+    final perLine = <double>[];
+    var roundSec = 0.0;
+    for (final line in w.lines) {
+      final parsed = _parseLine(w, line);
+      perLine.add(
+        _linePoints(w, line, prev, (c) => prev = c.isEmpty ? null : c, parsed),
+      );
+      roundSec += _lineSeconds(w, line, parsed);
+    }
+    final roundPts = perLine.fold(0.0, (a, b) => a + b);
+    double total;
+    int minutes;
+    if (w.type == 'amrap') {
+      final rounds = max(1.0, w.minutes * 60 / max(20.0, roundSec + 10));
+      total = roundPts * rounds * 1.1;
+      minutes = w.minutes;
+    } else if (w.type == 'emom') {
+      final ranged = <double>[];
+      var anyRange = false, rotation = false;
+      for (var i = 0; i < w.lines.length; i++) {
+        final l = w.lines[i].toLowerCase();
+        final m = _rangeRe.firstMatch(l);
+        if (m != null) {
+          anyRange = true;
+          ranged.add(
+            perLine[i] * (int.parse(m.group(2)!) - int.parse(m.group(1)!) + 1),
+          );
+        } else {
+          if (_rotRe.hasMatch(l) || l.contains('altern')) rotation = true;
+          ranged.add(perLine[i]);
+        }
+      }
+      if (anyRange) {
+        total = ranged.fold(0.0, (a, b) => a + b);
+      } else if (rotation) {
+        total = 0;
+        for (var i = 0; i < perLine.length; i++) {
+          final visits =
+              w.rounds ~/ perLine.length +
+              (i < w.rounds % perLine.length ? 1 : 0);
+          total += perLine[i] * visits;
+        }
+      } else {
+        total = roundPts * w.rounds; // tout à chaque intervalle
+      }
+      total *= 1.15; // horloge fixe, aucun repos choisi
+      minutes = ((w.rounds * w.interval) / 60).round();
+    } else {
+      final r = (w.type == 'rounds' && w.rounds > 0) ? w.rounds : 1;
+      total = roundPts * r * (w.scheme.isNotEmpty ? 1.1 : 1.0);
+      if (r > 1) {
+        total *= w.restSec == 0 ? 1.08 : (w.restSec >= 90 ? 0.95 : 1.0);
+      }
+      minutes = ((roundSec * r + (r - 1) * w.restSec) / 60).round().clamp(
+        1,
+        240,
+      );
+      if (w.minutes > 0 && minutes > w.minutes) minutes = w.minutes;
+    }
+    final pts = total.round();
+    final lvl =
+        pts < 200
+            ? 'Légère'
+            : pts < 400
+            ? 'Modérée'
+            : pts < 700
+            ? 'Élevée'
+            : 'Très élevée';
+    return (points: pts, minutes: minutes, level: lvl);
+  }
+
+  /// Sollicitation musculaire d'un WOD (mêmes clés que la carte hebdomadaire).
+  Map<String, double> wodMuscles(Wod w) => plannedMuscles(wodEstimate(w));
+
+  // ---------- Progression (XP, niveaux, déverrouillage) ----------
+  int _lastLevel = 1;
+
+  Progression? _progression;
+  DateTime? _progressionDay;
+  Progression get progression {
+    final now = DateTime.now();
+    final day = civilDay(now);
+    if (_progression == null || _progressionDay != day) {
+      _progression = Progression.calculate(
+        logs: logs,
+        catalog: wods,
+        program: program,
+        now: now,
+      );
+      _progressionDay = day;
+    }
+    return _progression!;
+  }
+
+  @override
+  void notifyListeners() {
+    _progression = null;
+    _game = null;
+    _trialKey = null;
+    _weeklyKey = null;
+    _recoKey = null;
+    super.notifyListeners();
+  }
+
+  // ---------- Couche jeu (dérivée, jamais persistée) ----------
+  GameState? _game;
+  Progression? _gameSource;
+
+  /// Recalculée dès que la progression l'est. Le jour civil ne suffit pas :
+  /// après minuit, si `progression` était lue en premier, elle mettait à jour
+  /// `_progressionDay` et le jeu de la veille restait servi.
+  GameState get game {
+    final p = progression;
+    if (_game == null || !identical(_gameSource, p)) {
+      _game = GameState.compute(
+        progression: p,
+        program: program,
+        logs: logs,
+        refs: values,
+        wods: wods,
+        isDone: isDone,
+        now: DateTime.now(),
+        manualWeeklyGoal: settings.weeklyGoal,
+      );
+      _gameSource = p;
+    }
+    return _game!;
+  }
+
+  /// Titre affiché sur la feuille de personnage : celui choisi s'il est
+  /// obtenu, sinon le rang.
+  String get displayTitle {
+    final chosen = settings.title;
+    if (chosen.isNotEmpty &&
+        game.titles.any((t) => t.earned && t.name == chosen)) {
+      return chosen;
+    }
+    return progression.rank.title;
+  }
+
+  RewardSummary? _pendingReward;
+
+  /// Bilan de la dernière séance ou du dernier score enregistré, consommé par
+  /// l'écran de récompenses (une seule fois).
+  RewardSummary? consumeReward() {
+    final r = _pendingReward;
+    _pendingReward = null;
+    return r;
+  }
+
+  /// Records battus par les séries validées d'une séance face à l'historique
+  /// des autres séances.
+  List<RecordHit> sessionRecords(String key) {
+    final log = logs[key];
+    if (log == null) return const [];
+    final bests = exerciseBests(logs, excludeKey: key);
+    final out = <RecordHit>[];
+    final seen = <String>{};
+    for (final ex in log.ex.entries) {
+      final name = log.exerciseNames[ex.key];
+      if (name == null) continue;
+      RecordHit? best;
+      for (final set in ex.value.sets.where((s) => s.done)) {
+        final hit = recordFor(bests, name, set.kg, set.reps);
+        if (hit != null && (best == null || hit.current > best.current)) {
+          best = hit;
+        }
+      }
+      if (best != null && seen.add(name)) out.add(best);
+    }
+    return out;
+  }
+
+  /// Record battu par une série en cours de séance (séance `key` exclue de
+  /// l'historique), pour la bannière en direct.
+  RecordHit? liveRecord(String key, String exercise, String kg, String reps) =>
+      recordFor(exerciseBests(logs, excludeKey: key), exercise, kg, reps);
+
+  int get xp => progression.totalXp;
+  static int needFor(int l) => Progression.needFor(l);
+  int get level => progression.level;
+  ({int inLevel, int need}) get levelProgress => (
+    inLevel: progression.inLevel,
+    need: progression.need,
+  );
+
+  /// Possédé : hors catalogue (WOD personnel) ou acheté avec des crédits.
+  bool unlocked(Wod w) => !isCatalog(w) || unlockedWods.containsKey(w.id);
+
+  /// Si le niveau a monté depuis la dernière vérification : (ancien, nouveau,
+  /// crédits gagnés), sinon null. À appeler après une séance ou un score.
+  ({int from, int to, int credits})? consumeLevelUp() {
+    final now = level;
+    if (now <= _lastLevel) return null;
+    final from = _lastLevel;
+    _lastLevel = now;
+    _persist();
+    return (
+      from: from,
+      to: now,
+      credits: creditsForLevel(now) - creditsForLevel(from),
+    );
+  }
+
+  // ---------- WODs ----------
+  // Le catalogue préchargé vit dans le code ; on ne persiste que les WODs créés,
+  // les suppressions, les modifications d'un préchargé et les résultats.
+  /// Catalogue complet : sélection (préchargés) + première série générée
+  /// (jusqu'à 500) + deuxième série générée (500 de plus, ids « genx… »).
+  List<Wod> catalogWods() {
+    final seeds = allSeedWods();
+    return [
+      ...seeds,
+      ...generateWods(generatedCount(seeds.length)),
+      ...generateWodsV2(generatedCountV2),
+    ];
+  }
+
+  late final Map<String, Wod> _seedDefaults = {
+    for (final w in catalogWods()) w.id: w,
+  };
+
+  /// Définition JSON de chaque WOD préchargé, calculée une fois : la
+  /// sauvegarde compare le millier de WODs du catalogue à leur version
+  /// d'origine à chaque écriture, sans réencoder l'original.
+  late final Map<String, String> _seedJson = {
+    for (final e in _seedDefaults.entries) e.key: _defJson(e.value),
+  };
+
+  /// Définition comparable (sans résultats ni niveau, qui est recalculé).
+  static Map<String, dynamic> _definition(Wod w) => {
+    'id': w.id,
+    'name': w.name,
+    'type': w.type,
+    'rounds': w.rounds,
+    'restSec': w.restSec,
+    'minutes': w.minutes,
+    'interval': w.interval,
+    'scheme': w.scheme,
+    'lines': w.lines,
+    'notes': w.notes,
+    'source': w.source,
+  };
+  static String _defJson(Wod w) => jsonEncode(_definition(w));
+
+  bool isCatalog(Wod w) => _seedDefaults.containsKey(w.id);
+  bool isGenerated(Wod w) => w.id.startsWith('gen');
+
+  Future<void> _loadWods() async {
+    wods.clear();
+    final legacy = _prefs.getString(_kWodsLegacy);
+    if (legacy != null) {
+      await _migrateLegacyWods(legacy);
+    }
+    final deleted =
+        ((jsonDecode(_prefs.getString(_kWodsDel) ?? '[]') as List).map(
+          (e) => e.toString(),
+        )).toSet();
+    final edits =
+        jsonDecode(_prefs.getString(_kWodsEdit) ?? '{}')
+            as Map<String, dynamic>;
+    final results =
+        jsonDecode(_unpack(_prefs.getString(_kWodResults)) ?? '{}')
+            as Map<String, dynamic>;
+    for (final seed in _seedDefaults.values) {
+      if (deleted.contains(seed.id)) continue;
+      final w =
+          edits.containsKey(seed.id)
+              ? Wod.fromJson(edits[seed.id] as Map<String, dynamic>)
+              : Wod.fromJson(seed.toJson());
+      w.results = _resultsOf(results, w.id);
+      wods.add(w);
+    }
+    for (final e in jsonDecode(_prefs.getString(_kWodsUser) ?? '[]') as List) {
+      final w = Wod.fromJson(e as Map<String, dynamic>);
+      w.results = _resultsOf(results, w.id);
+      wods.insert(0, w);
+    }
+    await _prefs.setInt(_kSeedV, 4);
+  }
+
+  /// Classement du catalogue (déciles), disponible avant tout déverrouillage.
+  void rankCatalog() {
+    _rankDifficulty();
+    notifyListeners();
+  }
+
+  // ---------- Difficulté automatique (déciles du catalogue) ----------
+  List<double> _levelCuts = const [];
+  final Map<String, String> _statsDefinitions = {};
+  final Map<String, ({String key, TrainingEstimate value})> _wodEstimates = {};
+  final Map<String, ({int points, int minutes, String level})> _statsCache = {};
+
+  double difficultyScore(Wod w) => _computeStats(w).points.toDouble();
+
+  /// Classe tout le catalogue par déciles de score → niveau 1-10, et applique le
+  /// même barème aux WODs de l'utilisateur.
+  void _rankDifficulty() {
+    final scores = [
+      for (final w in _seedDefaults.values) _computeStats(w).points.toDouble(),
+    ]..sort();
+    if (scores.length >= 10) {
+      _levelCuts = [
+        for (var k = 1; k < 10; k++) scores[(scores.length * k / 10).floor()],
+      ];
+    }
+    for (final w in wods) {
+      w.level = levelFor(w);
+    }
+  }
+
+  int levelFor(Wod w) {
+    if (_levelCuts.isEmpty) return w.level;
+    final sc = difficultyScore(w);
+    var lvl = 1;
+    for (final c in _levelCuts) {
+      if (sc >= c) lvl++;
+    }
+    return lvl.clamp(1, 10);
+  }
+
+  List<WodResult> _resultsOf(Map<String, dynamic> all, String id) =>
+      ((all[id] as List?) ?? [])
+          .map((r) => WodResult.fromJson(r as Map<String, dynamic>))
+          .toList();
+
+  /// Ancien format : liste complète (catalogue + perso + résultats) → nouveau format.
+  Future<void> _migrateLegacyWods(String raw) async {
+    final old =
+        (jsonDecode(raw) as List)
+            .map((e) => Wod.fromJson(e as Map<String, dynamic>))
+            .toList();
+    final present = old.map((w) => w.id).toSet();
+    final known = [
+      for (var k = 1; k <= 30; k++) 'seed$k',
+    ]; // fournées 1 et 2 uniquement
+    final deleted = [
+      for (final id in known)
+        if (!present.contains(id)) id,
+    ];
+    final user = <Map<String, dynamic>>[];
+    final edits = <String, dynamic>{};
+    final results = <String, dynamic>{};
+    for (final w in old) {
+      if (w.results.isNotEmpty) {
+        results[w.id] = w.results.map((r) => r.toJson()).toList();
+      }
+      final seed = _seedDefaults[w.id];
+      if (seed == null) {
+        user.add(_definition(w));
+      } else {
+        if (w.level == 1 && seed.level != 1) {
+          w.level = seed.level; // niveaux de la fournée 2
+        }
+        if (_defJson(w) != _defJson(seed)) {
+          edits[w.id] = _definition(w);
+        }
+      }
+    }
+    await _prefs.setString(_kWodsDel, jsonEncode(deleted));
+    await _prefs.setString(_kWodsEdit, jsonEncode(edits));
+    await _prefs.setString(_kWodsUser, jsonEncode(user));
+    await _prefs.setString(_kWodResults, _pack(jsonEncode(results)));
+  }
+
+  void _saveWods() {
+    _persist();
+    notifyListeners();
+  }
+
+  void _saveWodResults() => _persist();
+
+  // ---------- Compression des gros blobs (gzip + base64) ----------
+  static String _pack(String s) =>
+      s.length < 1500 ? s : 'gz:${base64Encode(gzip.encode(utf8.encode(s)))}';
+  static String? _unpack(String? s) {
+    if (s == null) return null;
+    if (!s.startsWith('gz:')) return s;
+    return utf8.decode(gzip.decode(base64Decode(s.substring(3))));
+  }
+
+  static Future<String> _loadGz(String asset) async {
+    final data = await rootBundle.load(asset);
+    return utf8.decode(
+      gzip.decode(
+        data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes),
+      ),
+    );
+  }
+
+  /// Données de test et compatibilité des anciennes prescriptions sauvegardées.
+  /// Aucun écran de création ou de modification n’expose cette opération.
+  @visibleForTesting
+  void upsertWod(Wod w) {
+    _statsCache.remove(w.id);
+    _wodEstimates.remove(w.id);
+    final i = wods.indexWhere((x) => x.id == w.id);
+    if (i >= 0) {
+      wods[i] = w;
+    } else {
+      wods.insert(0, w);
+    }
+    w.level = levelFor(w);
+    _saveWods();
+  }
+
+  void addWodResult(Wod w, WodResult r) {
+    final before = progression;
+    final creditsBefore = credits;
+    r.prescription ??= w.prescriptionKey;
+    w.results.add(r);
+    _saveWodResults();
+    notifyListeners();
+    final after = progression;
+    if (after.totalXp <= before.totalXp) return;
+    _pendingReward = RewardSummary.build(
+      before: before,
+      after: after,
+      heading: r.completed ? 'WOD terminé' : 'Tentative enregistrée',
+      title: w.name,
+      creditsBefore: creditsBefore,
+      creditsAfter: credits,
+      baseXp: 80,
+      baseLabel: 'Tentative WOD',
+    );
+  }
+
+  void deleteWodResult(Wod w, WodResult r) {
+    w.results.remove(r);
+    _saveWodResults();
+    notifyListeners();
+  }
+
+  // ---------- Réglages ----------
+  void saveSettings() {
+    _persist();
+    if (themeMode.value != settings.theme) themeMode.value = settings.theme;
+    notifyListeners();
+  }
+
+  String get effortLabel => settings.rpe ? 'RPE' : 'RIR';
+
+  // ---------- Base d'exercices ----------
+  List<Map<String, dynamic>>? _allEx;
+  List<Map<String, dynamic>> get allExercises =>
+      _allEx ??= [...dbExercises, ...userExercises];
+
+  void addUserExercise(String name, String group, String equip) {
+    userExercises.add({'n': name, 'g': group, 'eq': equip});
+    _allEx = null;
+    _muscleIndex = null;
+    _persist();
+    notifyListeners();
+  }
+
+  // ---------- Séances personnalisées ----------
+  void _saveCustom() {
+    _persist();
+    notifyListeners();
+  }
+
+  String newSessionId() {
+    var id = DateTime.now().microsecondsSinceEpoch;
+    while (customSessions.any((s) => s.id == '$id')) {
+      id++;
+    }
+    return '$id';
+  }
+
+  void upsertSession(CustomSession s) {
+    final i = customSessions.indexWhere((x) => x.id == s.id);
+    if (i >= 0) {
+      customSessions[i] = s;
+    } else {
+      customSessions.add(s);
+    }
+    _saveCustom();
+  }
+
+  void deleteSession(CustomSession s) {
+    customSessions.removeWhere((x) => x.id == s.id);
+    logs.removeWhere(
+      (k, v) => k == 'S0-J${s.id}' || k.startsWith('S0-J${s.id}@'),
+    );
+    _saveCustom();
+    saveLogs(immediate: true);
+  }
+
+  void duplicateSession(CustomSession s) {
+    final copy = CustomSession.fromJson(s.toJson());
+    copy.id = newSessionId();
+    copy.name = '${s.name} (copie)';
+    customSessions.add(copy);
+    _saveCustom();
+  }
+
+  // ---------- Sauvegarde : un document, une écriture atomique ----------
+  _BackupData _currentBackup() => _BackupData(
+    values: values,
+    logs: logs,
+    settings: settings,
+    custom: customSessions,
+    userExercises: userExercises,
+    wods: wods,
+    unlocked: unlockedWods,
+    lastLevel: _lastLevel,
+    wishlist: wishlist.toList(),
+  );
+
+  Map<String, dynamic> _backupJson(_BackupData data) {
+    final edits = <String, dynamic>{};
+    final user = <Map<String, dynamic>>[];
+    final present = data.wods.map((w) => w.id).toSet();
+    for (final w in data.wods) {
+      if (!_seedDefaults.containsKey(w.id)) {
+        user.add(_definition(w));
+      } else if (_defJson(w) != _seedJson[w.id]) {
+        edits[w.id] = _definition(w);
+      }
+    }
+    return {
+      'kalisTrack': 1,
+      'format': 3,
+      'pilotage': data.values,
+      'logs': data.logs.map((k, v) => MapEntry(k, v.toJson())),
+      'settings': data.settings.toJson(),
+      'custom': data.custom.map((s) => s.toJson()).toList(),
+      'userExercises': data.userExercises,
+      'catalog': {
+        'deleted': [
+          for (final id in _seedDefaults.keys)
+            if (!present.contains(id)) id,
+        ],
+        'edits': edits,
+        'user': user,
+        'results': {
+          for (final w in data.wods)
+            if (w.results.isNotEmpty)
+              w.id: w.results.map((r) => r.toJson()).toList(),
+        },
+      },
+      'unlocked': data.unlocked,
+      'lastLevel': data.lastLevel,
+      'wishlist': data.wishlist,
+    };
+  }
+
+  String exportAll() => jsonEncode(_backupJson(_currentBackup()));
+  String exportCompact() => _pack(exportAll());
+
+  _BackupData _parseBackup(String raw) {
+    final m = jsonDecode(raw) as Map<String, dynamic>;
+    if (m['kalisTrack'] != 1 || ![1, 2, 3].contains(m['format'] ?? 1)) {
+      throw const FormatException('Format de sauvegarde non pris en charge.');
+    }
+    // Tout construire et valider AVANT de modifier le store ou le disque.
+    final defaults = program.pilotage;
+    final nextValues = <String, double>{
+      'B4': defaults.bodyweight,
+      for (final l in defaults.mainLifts) l.ref: l.oneRm,
+      for (final r in defaults.repMax) r.ref: r.max,
+      for (final a in defaults.accessories) a.ref: a.refLoad,
+    };
+    (m['pilotage'] as Map<String, dynamic>).forEach((k, v) {
+      final n = (v as num).toDouble();
+      if (!n.isFinite || n < 0 || n > 10000 || (k == 'B4' && n == 0)) {
+        throw const FormatException('Valeur de pilotage invalide.');
+      }
+      nextValues[k] = n;
+    });
+    final nextLogs = (m['logs'] as Map<String, dynamic>).map(
+      (k, v) => MapEntry(k, SessionLog.fromJson(v as Map<String, dynamic>)),
+    );
+    final nextSettings = AppSettings.fromJson(
+      m['settings'] as Map<String, dynamic>,
+    );
+    if (!['system', 'dark', 'light'].contains(nextSettings.theme) ||
+        nextSettings.notifHour < 0 ||
+        nextSettings.notifHour > 23 ||
+        nextSettings.notifMinute < 0 ||
+        nextSettings.notifMinute > 59 ||
+        nextSettings.prepSec < 0 ||
+        nextSettings.prepSec > 60 ||
+        nextSettings.defaultRest < 0 ||
+        nextSettings.defaultRest > 3600) {
+      throw const FormatException('Réglages invalides.');
+    }
+    final nextCustom =
+        ((m['custom'] as List?) ?? [])
+            .map((e) => CustomSession.fromJson(e as Map<String, dynamic>))
+            .toList();
+    final ids = <String>{};
+    for (final session in nextCustom) {
+      if (int.tryParse(session.id) == null ||
+          !ids.add(session.id) ||
+          session.name.trim().isEmpty ||
+          session.items.length > 1000) {
+        throw const FormatException('Séance personnalisée invalide.');
+      }
+      final exerciseIds = <String>{};
+      for (final ex in session.items) {
+        if (ex.name.trim().isEmpty ||
+            !exerciseIds.add(ex.uid) ||
+            !execModes.any((m) => m.id == ex.mode) ||
+            (ex.kg != null && (!ex.kg!.isFinite || ex.kg!.abs() > 10000)) ||
+            (ex.rest != null && (ex.rest! < 0 || ex.rest! > 86400))) {
+          throw const FormatException('Exercice personnalisé invalide.');
+        }
+        for (final entry in ex.p.entries) {
+          if (entry.key == 'pyr') {
+            if (entry.value is! String ||
+                !RegExp(
+                  r'^\d+(?:[-/ ]+\d+)*$',
+                ).hasMatch((entry.value as String).trim())) {
+              throw const FormatException('Pyramide invalide.');
+            }
+          } else if (entry.value is! num ||
+              !(entry.value as num).isFinite ||
+              (entry.value as num) <
+                  (['intra', 'restI'].contains(entry.key) ? 0 : 1) ||
+              (entry.value as num) > 3600 ||
+              (entry.value as num) % 1 != 0) {
+            throw const FormatException('Paramètre de séance invalide.');
+          }
+        }
+      }
+    }
+    final nextUser =
+        ((m['userExercises'] as List?) ?? [])
+            .map((e) => Map<String, dynamic>.from(e as Map))
+            .toList();
+    for (final ex in nextUser) {
+      if (ex['n'] is! String ||
+          (ex['n'] as String).trim().isEmpty ||
+          ex['g'] is! String ||
+          ex['eq'] is! String) {
+        throw const FormatException('Base d’exercices invalide.');
+      }
+    }
+    final nextWods = <Wod>[];
+    if (m['format'] == 3) {
+      final catalog = m['catalog'] as Map<String, dynamic>;
+      final deleted = (catalog['deleted'] as List).cast<String>().toSet();
+      final edits = catalog['edits'] as Map<String, dynamic>;
+      final results = catalog['results'] as Map<String, dynamic>;
+      for (final seed in _seedDefaults.values) {
+        if (deleted.contains(seed.id)) continue;
+        final w = Wod.fromJson(
+          (edits[seed.id] as Map<String, dynamic>?) ?? seed.toJson(),
+        );
+        if (w.id != seed.id) {
+          throw const FormatException('Identifiant de WOD incohérent.');
+        }
+        w.results = _resultsOf(results, w.id);
+        nextWods.add(w);
+      }
+      for (final e in catalog['user'] as List) {
+        final w = Wod.fromJson(e as Map<String, dynamic>);
+        w.results = _resultsOf(results, w.id);
+        nextWods.add(w);
+      }
+    } else {
+      nextWods.addAll(
+        ((m['wods'] as List?) ??
+                _seedDefaults.values.map((w) => w.toJson()).toList())
+            .map((e) => Wod.fromJson(e as Map<String, dynamic>)),
+      );
+    }
+    final wodIds = <String>{};
+    for (final w in nextWods) {
+      if (!wodIds.add(w.id) ||
+          w.id.isEmpty ||
+          w.name.trim().isEmpty ||
+          !wodTypes.containsKey(w.type) ||
+          w.rounds < 0 ||
+          w.rounds > 3600 ||
+          w.interval <= 0 ||
+          w.interval > 86400 ||
+          w.minutes < 0 ||
+          w.minutes > 1440 ||
+          w.restSec < 0 ||
+          w.restSec > 86400 ||
+          (w.type == 'emom' && w.rounds == 0) ||
+          (w.type == 'amrap' && w.minutes == 0)) {
+        throw const FormatException('WOD invalide.');
+      }
+      for (final r in w.results) {
+        if (DateTime.tryParse(r.at) == null ||
+            (r.seconds ?? 0) < 0 ||
+            (r.rounds ?? 0) < 0 ||
+            (r.reps ?? 0) < 0) {
+          throw const FormatException('Résultat invalide.');
+        }
+      }
+    }
+    for (final entry in nextLogs.entries) {
+      if (!RegExp(r'^S\d+-J\d+(?:@.+)?$').hasMatch(entry.key)) {
+        throw const FormatException('Identifiant de séance invalide.');
+      }
+      final log = entry.value;
+      if (log.finishedAt != null &&
+          DateTime.tryParse(log.finishedAt!) == null) {
+        throw const FormatException('Date de séance invalide.');
+      }
+      for (final ex in log.ex.values) {
+        if (ex.sets.length > 1000) {
+          throw const FormatException('Trop de séries.');
+        }
+        for (final set in ex.sets) {
+          if (set.completedAt != null &&
+              DateTime.tryParse(set.completedAt!) == null) {
+            throw const FormatException('Date de série invalide.');
+          }
+        }
+      }
+    }
+    final nextUnlocked = <String, int>{};
+    (m['unlocked'] as Map<String, dynamic>? ?? {}).forEach((k, v) {
+      if (v is! int || v < 0) throw const FormatException('Crédits invalides.');
+      nextUnlocked[k] = v;
+    });
+    final nextWishlist = <String>[];
+    for (final id in (m['wishlist'] as List?) ?? const []) {
+      if (id is! String) {
+        throw const FormatException('Liste d’envies invalide.');
+      }
+      if (!nextWishlist.contains(id)) nextWishlist.add(id);
+    }
+    return _BackupData(
+      values: nextValues,
+      logs: nextLogs,
+      settings: nextSettings,
+      custom: nextCustom,
+      userExercises: nextUser,
+      wods: nextWods,
+      unlocked: nextUnlocked,
+      lastLevel: m['lastLevel'] as int?,
+      wishlist: nextWishlist,
+    );
+  }
+
+  void _applyBackup(_BackupData data) {
+    _progression = null;
+    values
+      ..clear()
+      ..addAll(data.values);
+    logs
+      ..clear()
+      ..addAll(data.logs);
+    settings = data.settings;
+    customSessions
+      ..clear()
+      ..addAll(data.custom);
+    userExercises
+      ..clear()
+      ..addAll(data.userExercises);
+    wods
+      ..clear()
+      ..addAll(data.wods);
+    unlockedWods
+      ..clear()
+      ..addAll(data.unlocked);
+    wishlist
+      ..clear()
+      ..addAll(data.wishlist);
+    _allEx = null;
+    _muscleIndex = null;
+    _statsCache.clear();
+    _wodEstimates.clear();
+    _statsDefinitions.clear();
+    pilotageEpoch++;
+    themeMode.value = settings.theme;
+    _lastLevel = data.lastLevel ?? level;
+  }
+
+  Future<bool> importAll(String raw) async {
+    _BackupData data;
+    String encoded;
+    try {
+      data = _parseBackup(_unpack(raw.trim())!);
+      encoded = _pack(jsonEncode(_backupJson(data)));
+    } catch (_) {
+      return false;
+    }
+    _saveT?.cancel();
+    _saveT = null;
+    await _pendingWrite;
+    final previous = _prefs.getString(_kState);
+    try {
+      if (!await _prefs.setString(_kState, encoded)) {
+        throw StateError('Écriture refusée');
+      }
+    } catch (_) {
+      // SharedPreferences met aussi à jour son cache avant la réponse native.
+      if (previous != null) {
+        try {
+          await _prefs.setString(_kState, previous);
+        } catch (_) {}
+      }
+      persistenceError.value =
+          'La sauvegarde a échoué. Tes données actuelles sont conservées.';
+      return false;
+    }
+    _applyBackup(data);
+    _rankDifficulty();
+    persistenceError.value = null;
+    notifyListeners();
+    return true;
+  }
+
+  void _persist() {
+    if (_initialized) unawaited(_writeSnapshot());
+  }
+
+  Future<void> _writeSnapshot() {
+    if (!_initialized) return Future<void>.value();
+    final encoded = _pack(exportAll());
+    _pendingWrite = _pendingWrite.then((_) async {
+      try {
+        if (!await _prefs.setString(_kState, encoded)) {
+          throw StateError('Écriture refusée');
+        }
+        persistenceError.value = null;
+      } catch (_) {
+        persistenceError.value =
+            'Sauvegarde impossible. Exporte tes données puis réessaie.';
+      }
+    });
+    return _pendingWrite;
+  }
+
+  // ---------- Pilotage ----------
+  void setValue(String ref, double v) {
+    if (!values.containsKey(ref) ||
+        !v.isFinite ||
+        v < 0 ||
+        v > 10000 ||
+        (ref == 'B4' && v == 0)) {
+      return;
+    }
+    if (values[ref] == v) return;
+    values[ref] = v;
+    _persist();
+    notifyListeners();
+  }
+
+  void resetPilotage() {
+    pilotageEpoch++;
+    final p = program.pilotage;
+    values['B4'] = p.bodyweight;
+    for (final l in p.mainLifts) {
+      values[l.ref] = l.oneRm;
+    }
+    for (final m in p.repMax) {
+      values[m.ref] = m.max;
+    }
+    for (final a in p.accessories) {
+      values[a.ref] = a.refLoad;
+    }
+    _persist();
+    notifyListeners();
+  }
+
+  // ---------- Calculs (répliques des formules Excel) ----------
+  double _round(double x, double step) => (x / step).round() * step;
+
+  /// Charge suggérée en kg, ou null si non applicable.
+  double? loadFor(Exercise e) {
+    final s = e.load;
+    switch (s.type) {
+      case 'fixed':
+        return s.kg;
+      case 'system':
+        final pdc = values['B4']!;
+        final rm = values[s.ref!] ?? 0;
+        final raw = (pdc + rm) * s.pct! - pdc;
+        final r = _round(raw, 2.5);
+        return r < 0 ? 0.0 : r;
+      case 'barbell':
+        return _round((values[s.ref ?? 'B11'] ?? 0) * s.pct!, 2.5);
+      case 'acc':
+        final ref = values[s.ref!] ?? 0;
+        final rr = refReps[s.ref!] ?? 10;
+        final raw = ref * (1 + (rr + 2) / 30) / (1 + (s.dayReps! + 2) / 30);
+        return _round(raw, s.step!);
+      default:
+        return null;
+    }
+  }
+
+  String loadLabel(Exercise e) {
+    final kg = loadFor(e);
+    if (kg == null) return '—';
+    if (kg <= 0) return 'PdC';
+    if (settings.lb) {
+      final lb = kg * 2.20462;
+      return '${lb.toStringAsFixed(lb == lb.roundToDouble() ? 0 : 1)}\u00A0lb';
+    }
+    final t =
+        kg == kg.roundToDouble()
+            ? kg.toInt().toString()
+            : kg.toStringAsFixed(1).replaceAll('.', ',');
+    return '$t\u00A0kg';
+  }
+
+  TrainingEstimate exerciseEstimate(Exercise e) {
+    double? maximum;
+    final name = e.name.toLowerCase();
+    final ref =
+        name.contains('muscle')
+            ? 'B16'
+            : name.contains('traction')
+            ? 'B17'
+            : name.contains('dip')
+            ? 'B18'
+            : name.contains('pompe')
+            ? 'B19'
+            : name.contains('squat')
+            ? 'B20'
+            : null;
+    if (ref != null) maximum = values[ref];
+    return TrainingEstimator.exercise(
+      e,
+      prescription: setsLabel(e),
+      kg: loadFor(e),
+      defaultRest: settings.defaultRest,
+      repMax: maximum,
+    );
+  }
+
+  TrainingEstimate dayEstimate(DayPlan day) {
+    final out = TrainingEstimate();
+    final blocks = groups(day);
+    for (var i = 0; i < blocks.length; i++) {
+      final block = blocks[i];
+      final estimates = block.map(exerciseEstimate).toList();
+      for (var j = 0; j < block.length; j++) {
+        out.details.add((
+          title: splitName(block[j].name).$1,
+          estimate: estimates[j],
+        ));
+      }
+      final combined = TrainingEstimate();
+      for (final e in estimates) {
+        combined.add(e);
+      }
+      if (block.length > 1) {
+        final first = estimates.first, second = estimates.last;
+        if (logSpec(block.first).kind == 'emom' &&
+            logSpec(block.last).kind == 'emom' &&
+            first.clock?.high == second.clock?.high) {
+          // Both movements share the same clock, as in the session runner.
+          final seconds = first.elapsed.high;
+          final work = (first.work.midpoint + second.work.midpoint).clamp(
+            0.0,
+            seconds,
+          );
+          combined.work = Span.exact(work);
+          combined.transitions = Span.zero;
+          combined.rest = Span.exact(seconds - work);
+          out.notes.add('Les EMOM enchaînés partagent la même horloge.');
+        } else {
+          // One recovery between supersets, never one recovery per movement.
+          combined.rest = Span(
+            max(first.rest.low, second.rest.low),
+            max(first.rest.high, second.rest.high),
+          );
+          combined.transitions =
+              combined.transitions +
+              const Span(3, 8).times(max(first.sets, second.sets));
+          out.notes.add('Exercices enchaînés : un seul repos entre les tours.');
+        }
+      }
+      out.add(combined);
+      if (i > 0 && combined.elapsed.high > 0) {
+        out.transitions = out.transitions + const Span(30, 60);
+      }
+    }
+    if (out.elapsed.high > 0) {
+      out.notes.add(
+        'Transitions : 30–60 s entre exercices. Échauffement non prescrit et pauses libres non inclus.',
+      );
+    }
+    return out;
+  }
+
+  TrainingEstimate wodEstimate(Wod w) {
+    // Le calcul ne dépend que de la prescription et de ses résultats.
+    final key = jsonEncode([
+      w.prescriptionKey,
+      w.results.map((r) => r.toJson()).toList(),
+    ]);
+    final cached = _wodEstimates[w.id];
+    if (cached?.key == key) return cached!.value;
+    final estimate = TrainingEstimator.wod(w);
+    if (_wodEstimates.length >= 1024) {
+      _wodEstimates.remove(_wodEstimates.keys.first);
+    }
+    _wodEstimates[w.id] = (key: key, value: estimate);
+    return estimate;
+  }
+
+  Map<String, double> plannedMuscles(TrainingEstimate estimate) {
+    final out = <String, double>{};
+    final names = [
+      ...estimate.movements.map((m) => m.name),
+      ...estimate.details.map((e) => e.title),
+    ];
+    for (final name in names) {
+      for (final group in groupsFor(name)) {
+        out[group] = 1;
+      }
+    }
+    return out;
+  }
+
+  /// Rendu de la colonne « Séries × Reps » (les volumes suivent tes maxima).
+  String setsLabel(Exercise e) {
+    final s = e.sets;
+    if (s.type == 'volume') {
+      final ref = values[s.ref!] ?? 0;
+      final n = (s.coef! * ref / s.div!).round();
+      return '${s.prefix}$n${s.suffix}';
+    }
+    return s.value ?? '';
+  }
+
+  /// Nombre de lignes de séries à afficher dans le logger.
+  int setCount(Exercise e) {
+    if (e.forcedSets != null) return e.forcedSets!.clamp(1, 1000);
+    final txt = setsLabel(e);
+    final low = txt.toLowerCase().trim();
+    if (e.interval != null) return 1;
+    if (low.startsWith('emom')) return 1;
+    if (RegExp(r'^(\d+)(?:-(\d+))?\s*min$').hasMatch(low)) return 1;
+    final myo = RegExp(r'puis\s*(\d+)\s*[×x]').firstMatch(txt);
+    if (myo != null) return 1 + int.parse(myo.group(1)!);
+    if (low.contains('montée')) return 6; // 3 paliers de montée + 3 tentatives
+    final lead = RegExp(r'^(\d+)\s*(?:[×x]|rounds?|échelles?)').firstMatch(low);
+    if (lead != null) return int.parse(lead.group(1)!);
+    return 1;
+  }
+
+  // ---------- Affichage ----------
+  /// Titre court + sous-titre : « POMPES PDC — SÉRIES LONGUES — ENCHAÎNÉ… »
+  /// → (« Pompes PdC », « séries longues · enchaîné après les dips »).
+  (String, String) splitName(String name) {
+    final parts = name.split(RegExp(r'\s+—\s+'));
+    final title = parts.first.trim();
+    final rest = parts
+        .skip(1)
+        .map((p) => p.trim())
+        .where((p) => p.isNotEmpty)
+        .join(' · ');
+    return (title, rest);
+  }
+
+  /// Colonne kg : lestable (charge suggérée > 0 ou « lesté » dans le nom)
+  /// ou déjà renseignée, sauf préférence explicite de l'exercice.
+  bool showKgFor(Exercise e, ExerciseLog log) {
+    if (log.showKg != null) return log.showKg!;
+    if (log.sets.any((s) => s.kg.trim().isNotEmpty)) return true;
+    final kg = loadFor(e);
+    if (kg != null && kg > 0) return true;
+    return e.name.toLowerCase().contains('lest');
+  }
+
+  bool showRirFor(ExerciseLog log) =>
+      log.showRir ??
+      (settings.trackRir || log.sets.any((s) => s.rir.trim().isNotEmpty));
+
+  bool showVFor(Exercise e, ExerciseLog log) =>
+      log.showV ??
+      ((settings.trackVelocity && e.main) ||
+          log.sets.any((s) => s.v.trim().isNotEmpty));
+
+  /// Dernière performance loggée pour le même exercice (même jour, semaine
+  /// précédente ayant un journal) — programme uniquement.
+  ({int week, ExerciseLog log})? previousLog(int week, int j, Exercise e) {
+    if (week <= 1 || week > program.weeks.length) return null;
+    final title = splitName(e.name).$1.toLowerCase();
+    for (var w = week - 1; w >= 1; w--) {
+      final sl = logs[sessionKey(w, j)];
+      if (sl == null) continue;
+      final day = program.week(w).day(j);
+      if (day == null) continue;
+      for (final px in day.exercises) {
+        if (splitName(px.name).$1.toLowerCase() != title) continue;
+        final l = sl.ex[px.id];
+        if (l != null && l.sets.any((s) => s.done)) return (week: w, log: l);
+      }
+    }
+    return null;
+  }
+
+  /// Résumé compact d'un journal : « 10 kg × 3 · 3 · 3 » ou « 39 · 37 · 35 ».
+  String summarize(ExerciseLog l, {bool kg = true}) {
+    final done = l.sets.where((s) => s.done).toList();
+    if (done.isEmpty) return '';
+    final kgs = done.map((s) => s.kg.trim()).where((k) => k.isNotEmpty).toSet();
+    final reps = done
+        .map((s) => s.reps.trim().isEmpty ? '–' : s.reps.trim())
+        .join(' · ');
+    if (kg && kgs.length == 1) return '${kgs.first}\u00A0kg × $reps';
+    if (kg && kgs.length > 1) {
+      return done
+          .map(
+            (s) =>
+                '${s.kg.trim().isEmpty ? 'PdC' : '${s.kg.trim()}\u00A0kg'}×${s.reps.trim()}',
+          )
+          .join(' · ');
+    }
+    return reps;
+  }
+
+  // ---------- Groupes musculaires ----------
+  static final List<(RegExp, List<String>)> _kw = [
+    (RegExp(r'muscle.?up|\bmu\b'), ['dos', 'pectoraux', 'triceps']),
+    (
+      RegExp(
+        r'traction|pull.?up|chin.?up|row|tirage|face pull|dead.?hang|scapul|\blat\b',
+      ),
+      ['dos', 'biceps'],
+    ),
+    (RegExp(r'\bdip'), ['pectoraux', 'triceps']),
+    (
+      RegExp(r'pompe|push.?up|hspu|handstand|pike|développé|bench|press'),
+      ['pectoraux', 'triceps', 'épaules'],
+    ),
+    (
+      RegExp(
+        r'squat|fente|lunge|pistol|box jump|step.?up|leg extension|presse',
+      ),
+      ['quadriceps', 'fessiers'],
+    ),
+    (
+      RegExp(r'soulevé|deadlift|rdl|hip thrust|nordic|leg curl|good morning'),
+      ['ischios', 'fessiers'],
+    ),
+    (RegExp(r'burpee'), ['pectoraux', 'quadriceps', 'gainage']),
+    (
+      RegExp(
+        r'sit.?up|abdo|hollow|gainage|plank|planche \(|leg raise|toes|crunch|ab wheel|pallof|dragon|l-sit|v-sit|superman',
+      ),
+      ['gainage'],
+    ),
+    (
+      RegExp(
+        r'\brun\b|course|sprint|row(er|ing machine)|rameur|bike|ski|corde|jump|mountain',
+      ),
+      ['mollets', 'quadriceps'],
+    ),
+    (RegExp(r'curl'), ['biceps', 'avant-bras']),
+    (RegExp(r'triceps|extension|kickback'), ['triceps']),
+    (
+      RegExp(
+        r'élévation|rotation|oiseau|ytw|pull-apart|dislocation|shoulder|épaule|militaire',
+      ),
+      ['épaules'],
+    ),
+    (RegExp(r'poignet|wrist|farmer|false grip|hang'), ['avant-bras']),
+    (RegExp(r'mollet|calf'), ['mollets']),
+    (
+      RegExp(r'front lever|planche|skin the cat|atr|wall walk'),
+      ['dos', 'épaules', 'gainage'],
+    ),
+  ];
+
+  static const muscleGroups = [
+    'pectoraux',
+    'épaules',
+    'biceps',
+    'triceps',
+    'avant-bras',
+    'gainage',
+    'dos',
+    'quadriceps',
+    'ischios',
+    'fessiers',
+    'mollets',
+  ];
+
+  Map<String, List<String>>? _muscleIndex;
+
+  /// Index paresseux : pas de parcours de toute la base pour chaque série.
+  List<String> groupsFor(String name) {
+    final t = splitName(name).$1.toLowerCase();
+    _muscleIndex ??= {
+      for (final e in allExercises)
+        (e['n'] as String).toLowerCase():
+            (e['g'] as String)
+                .split(',')
+                .map((g) => g.trim())
+                .where(muscleGroups.contains)
+                .toList(),
+    };
+    final exact = _muscleIndex![t];
+    if (exact != null && exact.isNotEmpty) return exact;
+    for (final (re, gs) in _kw) {
+      if (re.hasMatch(t)) return gs;
+    }
+    return const [];
+  }
+
+  /// Les séries sont attribuées à leur date de validation. Les anciens logs
+  /// utilisent la fin de séance, ou la date planifiée si la séance est en cours.
+  Map<String, double> weeklyMuscles([DateTime? at]) {
+    final now = at ?? DateTime.now();
+    final monday = DateTime(now.year, now.month, now.day - now.weekday + 1);
+    final out = <String, double>{for (final g in muscleGroups) g: 0};
+    bool inWeek(DateTime? date) =>
+        date != null && !date.isBefore(monday) && !date.isAfter(now);
+    void add(List<String> gs, double sets) {
+      for (var i = 0; i < gs.length; i++) {
+        out[gs[i]] = (out[gs[i]] ?? 0) + sets * (i == 0 ? 1.0 : 0.6);
+      }
+    }
+
+    for (final entry in logs.entries) {
+      final sl = entry.value;
+      final key = RegExp(r'^S(\d+)-J(\d+)').firstMatch(entry.key);
+      if (key == null) continue;
+      final week = int.parse(key[1]!), day = int.parse(key[2]!);
+      final names = Map<String, String>.of(sl.exerciseNames);
+      DateTime? fallback = DateTime.tryParse(sl.finishedAt ?? '');
+      if (week > 0 && week <= program.weeks.length) {
+        final plan = program.week(week).day(day);
+        if (plan != null) {
+          for (final ex in plan.exercises) {
+            names.putIfAbsent(ex.id, () => ex.name);
+          }
+          fallback ??= program.dateFor(week, day);
+        }
+      } else if (week == 0) {
+        for (final cs in customSessions.where(
+          (c) => c.id == (sl.customId ?? '$day'),
+        )) {
+          for (final ex in cs.items) {
+            names.putIfAbsent('CU-${ex.uid}', () => ex.name);
+          }
+        }
+      }
+      for (final ex in sl.ex.entries) {
+        final name = names[ex.key];
+        if (name == null) continue;
+        final n =
+            ex.value.sets
+                .where(
+                  (set) =>
+                      set.done &&
+                      inWeek(
+                        DateTime.tryParse(set.completedAt ?? '') ?? fallback,
+                      ),
+                )
+                .length;
+        if (n > 0) add(groupsFor(name), n.toDouble());
+      }
+    }
+    for (final w in wods) {
+      for (final r in w.results) {
+        if (!inWeek(DateTime.tryParse(r.at)) ||
+            (!r.completed && (r.rounds ?? 0) == 0)) {
+          continue;
+        }
+        final rounds =
+            w.type == 'rounds' && w.rounds > 0
+                ? (r.rounds ?? w.rounds).clamp(1, w.rounds)
+                : (r.rounds ?? 1).clamp(1, 3600);
+        for (final line in w.lines) {
+          for (final part
+              in TrainingEstimator.parseLine(
+                line,
+                repScheme: w.scheme,
+              ).movements) {
+            add(groupsFor(part.name), 0.5 * rounds);
+          }
+        }
+      }
+    }
+    return out;
+  }
+
+  // ---------- Nature de la saisie ----------
+  LogSpec logSpec(Exercise e) {
+    final low = setsLabel(e).toLowerCase().trim();
+    final nm = e.name.toLowerCase();
+    final tp = e.tempo.toLowerCase();
+    final tm = e.timer;
+    if (tm != null) {
+      switch (tm['type'] as String) {
+        case 'hiit':
+          return const LogSpec('interval');
+        case 'emom':
+          return LogSpec(
+            'emom',
+            seconds: (tm['rounds'] as int) * (tm['interval'] as int),
+          );
+        case 'amrap':
+          return LogSpec('amrap', seconds: tm['sec'] as int);
+        case 'hold':
+          if (low.contains('intra')) {
+            return LogSpec(
+              'reps',
+              intra: tm['sec'] as int,
+              cluster: true,
+              rowPrefix: 'C',
+            );
+          }
+          return LogSpec('hold', seconds: tm['sec'] as int);
+      }
+    }
+    if (e.interval != null) return const LogSpec('interval');
+    final emom = RegExp(r'^emom\s*(\d+)\s*min').firstMatch(low);
+    if (emom != null) {
+      return LogSpec('emom', seconds: int.parse(emom.group(1)!) * 60);
+    }
+    if (low.contains('cluster')) {
+      final mi = RegExp(r'\((\d+)\s*s intra\)').firstMatch(low);
+      return LogSpec(
+        'reps',
+        intra: mi == null ? 30 : int.parse(mi.group(1)!),
+        cluster: true,
+        rowPrefix: 'C',
+      );
+    }
+    if (RegExp(r'^1\s*[×x].*puis\s*\d+\s*[×x]').hasMatch(low)) {
+      final intra = RegExp(r'(\d+)\s*s intra').firstMatch(low);
+      return LogSpec(
+        'reps',
+        intra: intra == null ? (e.restSec ?? 10) : int.parse(intra.group(1)!),
+        myo: true,
+        rowPrefix: 'M',
+      );
+    }
+    final hold = RegExp(
+      r'^\d+\s*[×x]\s*(\d+)(?:-(\d+))?\s*s\b',
+    ).firstMatch(low);
+    if (hold != null) {
+      return LogSpec(
+        'hold',
+        seconds: int.parse(hold.group(2) ?? hold.group(1)!),
+      );
+    }
+    if (low.contains('max')) {
+      final iso =
+          tp.contains('isom') ||
+          nm.contains('hang') ||
+          nm.contains('hold') ||
+          nm.contains('tenue');
+      return LogSpec(iso ? 'holdMax' : 'repsMax');
+    }
+    final dur = RegExp(r'^(\d+)(?:-(\d+))?\s*min$').firstMatch(low);
+    if (dur != null) {
+      return LogSpec(
+        'duration',
+        seconds: int.parse(dur.group(2) ?? dur.group(1)!) * 60,
+      );
+    }
+    if (low.contains('échelle')) return const LogSpec('reps', rowPrefix: 'É');
+    if (low.contains('round')) return const LogSpec('reps', rowPrefix: 'R');
+    if (low.contains('montée')) return const LogSpec('reps', rowPrefix: 'T');
+    return const LogSpec('reps');
+  }
+
+  /// Reps prévues par ligne de série, déduites du libellé (null = pas de cible).
+  /// « 5×4 » → 4 · « 3×12-15 » → 12 · « 4 × 17 reps » → 17 · myo : activation puis
+  /// minis · clusters : reps par cluster · pyramide « 12-10-8-6 » · échelles « de 7 à 1 »
+  /// → 28 · montée en singles → 1 · EMOM 12 min × 5 reps → 60.
+  List<int?> plannedReps(Exercise e, LogSpec sp, int n) {
+    final low = setsLabel(e).toLowerCase().trim();
+    final out = List<int?>.filled(n, null);
+    int? num(RegExp r, {int g = 1}) {
+      final m = r.firstMatch(low);
+      return m == null ? null : int.tryParse(m.group(g)!);
+    }
+
+    if (sp.kind == 'emom') {
+      final c = RegExp(
+        r'emom\s*(\d+)\s*[×x]\s*\d+\s*s.*?(\d+)\s*reps',
+      ).firstMatch(low);
+      final m = RegExp(r'(\d+)\s*min.*?(\d+)\s*reps').firstMatch(low);
+      final mm = c ?? m;
+      if (mm != null && n > 0) {
+        out[0] = int.parse(mm.group(1)!) * int.parse(mm.group(2)!);
+      }
+      return out;
+    }
+    if (sp.kind != 'reps') return out;
+    if (sp.myo) {
+      final act = num(RegExp(r'^1\s*[×x]\s*(\d+)'));
+      final mini = num(RegExp(r'puis\s*\d+\s*[×x]\s*\(?(\d+)'));
+      for (var i = 0; i < n; i++) {
+        out[i] = i == 0 ? act : mini;
+      }
+      return out;
+    }
+    if (sp.cluster) {
+      final cm = RegExp(r'\((\d+)\s*[×x]\s*(\d+)\)').firstMatch(low);
+      if (cm != null) {
+        return List.filled(
+          n,
+          int.parse(cm.group(1)!) * int.parse(cm.group(2)!),
+        );
+      }
+      return List.filled(n, num(RegExp(r'^\d+\s*[×x]\s*(\d+)')));
+    }
+    if (RegExp(r'^\d+(?:\s*-\s*\d+){2,}$').hasMatch(low)) {
+      final parts = low.split(RegExp(r'\s*-\s*')).map(int.tryParse).toList();
+      for (var i = 0; i < n; i++) {
+        out[i] = i < parts.length ? parts[i] : parts.last;
+      }
+      return out;
+    }
+    final lad = num(RegExp(r'de\s*(\d+)\s*à\s*1'));
+    if (lad != null) return List.filled(n, lad * (lad + 1) ~/ 2);
+    if (low.contains('montée')) return List.filled(n, 1);
+    final std = num(RegExp(r'^\d+\s*[×x]\s*(\d+)'));
+    if (std != null) return List.filled(n, std);
+    return out;
+  }
+
+  /// Libellé de la ligne de série (Act / M1… · C1… · É1… · R1… · Mont./Tent.).
+  String setLabel(LogSpec sp, int i) {
+    if (sp.myo) return i == 0 ? 'Act' : 'M$i';
+    switch (sp.rowPrefix) {
+      case 'C':
+        return 'C${i + 1}';
+      case 'É':
+        return 'É${i + 1}';
+      case 'R':
+        return 'R${i + 1}';
+      case 'T':
+        return i < 3 ? 'Mo${i + 1}' : 'T${i - 2}';
+    }
+    return '${i + 1}';
+  }
+
+  /// Repos à lancer après la série `i` (0-based) sur `total` ; null = aucun
+  /// chrono automatique. La dernière série lance aussi son repos : c'est la
+  /// transition vers l'exercice suivant. Les myo-reps enchaînent le
+  /// micro-repos, puis le repos complet à la fin.
+  int? restAfterSet(Exercise e, LogSpec sp, int i, int total) {
+    final r = e.rest.toLowerCase();
+    if (r.trim() == '—') return null;
+    if (r.contains('après') || r.contains('au total')) return null;
+    final def = settings.defaultRest > 0 ? settings.defaultRest : null;
+    final last = i >= total - 1;
+    if (sp.myo) {
+      if (!last) return sp.intra;
+      // « 10 s intra » décrit le micro-repos : le repos final est le défaut.
+      if (r.contains('intra')) return def;
+    }
+    return TrainingEstimator.duration(e.rest)?.high.round() ?? e.restSec ?? def;
+  }
+
+  /// Regroupe les exercices enchaînés (ex. dips → pompes) sur une même page.
+  List<List<Exercise>> groups(DayPlan d) {
+    final out = <List<Exercise>>[];
+    var i = 0;
+    while (i < d.exercises.length) {
+      final e = d.exercises[i];
+      if (i + 1 < d.exercises.length &&
+          d.exercises[i + 1].name.toLowerCase().contains('enchaîn')) {
+        out.add([e, d.exercises[i + 1]]);
+        i += 2;
+      } else {
+        out.add([e]);
+        i += 1;
+      }
+    }
+    return out;
+  }
+
+  // ---------- Journal ----------
+  String sessionKey(int week, int j) => 'S$week-J$j';
+
+  SessionLog sessionLog(int week, int j) =>
+      logs.putIfAbsent(sessionKey(week, j), () => SessionLog());
+
+  ExerciseLog exLog(int week, int j, Exercise e) {
+    final s = sessionLog(week, j);
+    s.exerciseNames[e.id] = e.name;
+    if (week == 0) s.customId = '$j';
+    return s.ex.putIfAbsent(e.id, () {
+      final n = setCount(e);
+      return ExerciseLog(sets: List.generate(n, (_) => SetEntry()));
+    });
+  }
+
+  Timer? _saveT;
+
+  /// Persistance différée (600 ms) : l'encodage JSON du journal complet ne
+  /// tourne plus sur le thread d'interface à chaque coche ou frappe.
+  void saveLogs({bool immediate = false, bool affectsProgression = true}) {
+    _saveT?.cancel();
+    if (immediate) {
+      _flushLogs();
+    } else {
+      _saveT = Timer(const Duration(milliseconds: 600), _flushLogs);
+    }
+    if (affectsProgression) {
+      notifyListeners();
+    } else {
+      // Modifier une note ou une charge ne recalcule pas tous les badges.
+      super.notifyListeners();
+    }
+  }
+
+  void _flushLogs() {
+    _saveT?.cancel();
+    _saveT = null;
+    _persist();
+  }
+
+  /// À appeler quand l'app passe en arrière-plan.
+  Future<void> flush() {
+    _saveT?.cancel();
+    _saveT = null;
+    return _writeSnapshot();
+  }
+
+  /// Efface tout l'historique d'une séance : séries, notes, statut « fait ».
+  void clearSession(int week, int j) {
+    logs.remove(sessionKey(week, j));
+    saveLogs(immediate: true);
+  }
+
+  void markSessionDone(int week, int j, bool done, {String? title}) {
+    final s = sessionLog(week, j);
+    final wasDone = s.done;
+    final before = progression;
+    final creditsBefore = credits;
+    final goal = game.sessionGoal;
+    s.done = done;
+    // Une séance rouverte pour correction garde sa date de fin d'origine :
+    // semaine, série et historique ne se déplacent pas au jour de la retouche.
+    final finishedAt = s.finishedAt ?? DateTime.now().toIso8601String();
+    s.finishedAt = done ? finishedAt : null;
+    if (title != null) s.title = title;
+    saveLogs(immediate: true);
+    if (!done || wasDone) return;
+    final training =
+        week == 0
+            ? s.ex.isNotEmpty
+            : (program.weeks.any((w) => w.n == week) &&
+                (program.week(week).day(j)?.exercises.isNotEmpty ?? false));
+    if (!training) return;
+    var total = 0, ok = 0;
+    for (final ex in s.ex.values) {
+      total += ex.sets.length;
+      ok += ex.sets.where((x) => x.done).length;
+    }
+    final after = progression;
+    if (after.totalXp <= before.totalXp) return;
+    _pendingReward = RewardSummary.build(
+      before: before,
+      after: after,
+      heading: 'Séance validée',
+      title: title ?? s.title ?? sessionKey(week, j),
+      creditsBefore: creditsBefore,
+      creditsAfter: credits,
+      baseXp: week == 0 ? 60 : 100,
+      baseLabel: week == 0 ? 'Séance personnelle' : 'Journée du programme',
+      records: sessionRecords(sessionKey(week, j)),
+      goalReached: total == 0 ? null : ok / total >= goal - 1e-9,
+    );
+  }
+
+  bool isDone(int week, int j) => logs[sessionKey(week, j)]?.done ?? false;
+
+  // ---------- Correction depuis l'historique ----------
+
+  /// Séance à rouvrir pour corriger une entrée terminée du journal : journée
+  /// d'entraînement du programme, ou séance perso qui existe encore. Null pour
+  /// une archive (clé « …@uid »), un jour de repos ou une séance supprimée :
+  /// seule la suppression reste alors proposée.
+  ({WeekPlan week, DayPlan day})? correctionPlan(String key) {
+    if (logs[key]?.done != true) return null;
+    final match = RegExp(r'^S(\d+)-J(\d+)$').firstMatch(key);
+    if (match == null) return null;
+    final n = int.parse(match[1]!), j = int.parse(match[2]!);
+    if (n == 0) {
+      for (final session in customSessions) {
+        if (int.tryParse(session.id) != j || session.items.isEmpty) continue;
+        final plan = session.toWeekPlan();
+        return (week: plan, day: plan.days.first);
+      }
+      return null;
+    }
+    for (final week in program.weeks) {
+      if (week.n != n) continue;
+      final day = week.day(j);
+      if (day == null || day.exercises.isEmpty) return null;
+      return (week: week, day: day);
+    }
+    return null;
+  }
+
+  /// Repasse une séance terminée en cours, saisies et date de fin conservées.
+  /// Son XP de séance est retiré jusqu'à la nouvelle validation.
+  bool reopenSession(String key) {
+    final log = logs[key];
+    if (log == null || !log.done) return false;
+    log.done = false;
+    saveLogs(immediate: true);
+    return true;
+  }
+
+  /// Retire une entrée du journal et la renvoie pour permettre l'annulation.
+  SessionLog? deleteLog(String key) {
+    final removed = logs.remove(key);
+    if (removed != null) saveLogs(immediate: true);
+    return removed;
+  }
+
+  /// Annulation d'une suppression : n'écrase jamais une séance recommencée
+  /// entre-temps sous la même clé.
+  bool restoreLog(String key, SessionLog log) {
+    if (logs.containsKey(key)) return false;
+    logs[key] = log;
+    saveLogs(immediate: true);
+    return true;
+  }
+
+  int get completedCount => program.weeks.fold(
+    0,
+    (n, w) => n + w.days.where((d) => isDone(w.n, d.j)).length,
+  );
+
+  void restartCustomSession(CustomSession session) {
+    final key = 'S0-J${session.id}';
+    final previous = logs[key];
+    if (previous != null && previous.done) {
+      previous.customId = session.id;
+      for (final ex in session.items) {
+        previous.exerciseNames.putIfAbsent('CU-${ex.uid}', () => ex.name);
+      }
+      logs['$key@${_newUid()}'] = previous;
+    }
+    logs.remove(key);
+    saveLogs(immediate: true);
+  }
+
+  @override
+  void dispose() {
+    _saveT?.cancel();
+    themeMode.dispose();
+    persistenceError.dispose();
+    super.dispose();
+  }
+}
+
+class _BackupData {
+  final Map<String, double> values;
+  final Map<String, SessionLog> logs;
+  final AppSettings settings;
+  final List<CustomSession> custom;
+  final List<Map<String, dynamic>> userExercises;
+  final List<Wod> wods;
+  final Map<String, int> unlocked;
+  final int? lastLevel;
+  final List<String> wishlist;
+  _BackupData({
+    required this.values,
+    required this.logs,
+    required this.settings,
+    required this.custom,
+    required this.userExercises,
+    required this.wods,
+    required this.unlocked,
+    this.lastLevel,
+    this.wishlist = const [],
+  });
+}
+
+/// Singleton global — simple et suffisant pour cette app.
+final AppStore store = AppStore();
