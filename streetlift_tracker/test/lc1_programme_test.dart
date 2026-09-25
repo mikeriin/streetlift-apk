@@ -814,7 +814,10 @@ void main() {
             await tester.pumpAndSettle();
             for (var p = 0; p < day.exercises.length; p++) {
               expect(tester.takeException(), isNull, reason: 'S12 J$j page $p');
-              await tester.tap(find.text('Suivant'));
+              // « Suivant », puis « Bilan » sur la dernière page.
+              await tester.tap(
+                find.widgetWithIcon(FilledButton, Icons.chevron_right),
+              );
               await tester.pumpAndSettle();
             }
             await tester.pumpWidget(const SizedBox());

@@ -1,8 +1,90 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : L3b — Formats WOD (KT-008)**  
-**Date : 26 septembre 2026, Europe/Paris — version : 2.5.6+57 (versionCode réel fixé par la CI de build)**  
-**Statut : Tabata corrigé de bout en bout (définition explicite, chrono par phases, saisie par intervalle, score, records, anciens résultats) ; règles de score centralisées pour tous les formats présents ; testé automatiquement. Publication et build : `LIVRAISON_L3b.md`. Aucune vérification sur téléphone. L4, L4b et la refonte ne sont pas lancés.**
+**Passe actuelle : LC1 — Révision du contenu du Bloc 2, S12 à S19 (KT-037, P1)**  
+**Date : 26 septembre 2026, Europe/Paris — version : 2.5.7+58 (versionCode réel fixé par la CI de build)**  
+**Statut : contenu S12-S19 révisé selon les décisions du propriétaire du 26/09/2026 ; reste du programme et feuille Pilotage identiques ; recalcul des volumes pendant une séance corrigé ; testé automatiquement. Publication et build : `LIVRAISON_LC1.md`. Aucune vérification sur téléphone. L4 et suivants ne sont pas lancés.**
+
+## LC1.0 — Base
+
+| Élément | Valeur | Nature de la preuve |
+| --- | --- | --- |
+| Base | `streetlift_tracker_v33.zip` L3b (= `main`, commit `d614567`), **1 377 724 octets**, SHA-256 `b471b73a37d27862ed418195a001a8c94429d593e4fdec25d170e539325ff566`, racine unique `streetlift_tracker/`, 313 fichiers, version **2.5.6+57** | Vérifié ; source intacte, travail sur copie |
+| Build 2.5.6 | Run n° 76 réussi | Résultat GitHub |
+| État initial | Arbre identique à celui testé pour L3b : formatage 0 changement, `flutter analyze` sans problème, **347 réussis, 1 ignoré**, build debug réussi ; Python 33/33 et `verify_project.py` réussis en local sur la base | CI (branche temporaire, L3b) + local |
+| Asset d'entrée | `assets/programme_v33.json.gz` : JSON décompressé 815 022 octets, SHA-256 `0330e9a6…d7d4` (1 954 exercices) | Vérifié par le script |
+| Essais téléphone L1b → L3b | **Non rapportés** | — |
+| Décisions LC1 | Section 3 de la demande du 26/09/2026 (R1 à R6, contenu jour par jour) | Déclaration du propriétaire |
+
+**Version** : la demande indique « 2.5.6 » et une mise à jour « par-dessus 2.5.5 », mais 2.5.6 est déjà publiée (L3b, run n° 76). Pour que « Réglages → À propos » distingue les deux contenus, cette livraison porte **2.5.7+58** ; elle s'installe par-dessus 2.5.6 (ou 2.5.5).
+
+**Classeur du propriétaire désynchronisé** : l'asset est désormais la référence. `tools/xlsx_to_json.py` régénérerait l'ancien contenu S12-S19 : il ne doit plus être lancé sur le classeur actuel. Toute révision passe par un script déterministe sur l'asset (ici `tools/lc1_revision_s12_s19.py`).
+
+## LC1.1 — Changements
+
+**Script** `tools/lc1_revision_s12_s19.py` : vérifie l'empreinte de l'entrée (JSON 2.5.6), refuse une seconde exécution (« Révision LC1 déjà appliquée »), contrôle chaque liste d'origine jour par jour, applique la section 3, vérifie l'empreinte de sortie (SHA-256 du JSON révisé `399450dc…5328`) et l'intégrité du reste, écrit le `.gz` de façon reproductible (niveau 9, horodatage nul). Aucune nouvelle formule ni nouveau type : `text`, `volume`, `barbell`, `acc`, `fixed` existants.
+
+**Identifiants** : lignes conservées ou modifiées → identifiant inchangé ; 202 identifiants retirés ; 66 lignes nouvelles `B2-L1-001` à `B2-L1-066`, attribuées dans l'ordre semaine → jour → position, jamais réutilisées. Total : 1 954 − 202 + 66 = **1 818** exercices.
+
+| Jour | Supprimé (S12-S19) | Modifié (identifiant conservé) | Ajouté (`B2-L1-…`) |
+| --- | --- | --- | --- |
+| **J1** | Tirage vertical prise neutre, rotations externes, scapular pull-ups | MU lesté et traction lestée (R1-R3) ; rowing 3×8 (2×8) ; curl EZ 2×10 (1×10), RIR 2, 90 s, consigne, charge acc 10 reps ; face pulls 3×18 (2×18) ; poignet (2×15 en décharge) ; conduite sans GtG | — |
+| **J2** | Dips à résistance accommodante (absents des décharges), développé couché, YTW, poignet | Dip lesté (R1-R3) ; pompes lestées et développé militaire 3×8 (2×8) ; extension triceps en myo-reps 1×12-15 puis 4×(4) (2×(4)), 10 s intra, consigne ; rotations externes 2×15/bras | — |
+| **J3** | Fentes marchées, hip thrust, mollets debout, hollow body hold, pallof press, poignet | Back squat (R1-R3) ; conduite « GtG : 3 × 4 muscle-ups PdC répartis dans la journée. » | Squat pause 2 s (2×4 ; 1×4) ; GtG muscle-up (3×4 ; 2×3), dernière ligne |
+| **J4** | Tirage horizontal poulie, scapular pull-ups ; S12 : tractions PdC — clusters | S13-S19 : tractions clusters, coefficient − 0,6, consigne ; rowing haltère 3×10 (2×10) ; curl marteau 2×12 (1×12), RIR 2, 90 s, acc 12 reps ; dead-hang 2× (1×) max effort ; face pulls 3×18 (2×18) | S12 : test max tractions, tractions séries continues (2 × round(1,2 × B17 / 2)) ; S13-S19 : série de référence 1 × round(0,6 × B17) ; toutes : poignet (copie de J1) |
+| **J5** | Extension triceps, rotations externes, poignet ; S12 : dips et pompes clusters | S13-S19 : dips et pompes clusters (coef. − 0,6, consigne), pompes renommées « Pompes PdC — clusters » (voir LC1.3) ; conduite GtG | S12 : tests max dips puis pompes (repos 5 min) ; S13-S19 : séries de référence dips (0,6 × B18) et pompes (0,6 × B19) ; toutes : GtG |
+| **J6** | Isométrie transition, excentriques lestés, négatifs, transitions à l'élastique, isométrie bas de dip, false grip hold, HIIT court ; S12 : squat endurance | Titre « PUISSANCE MU + SQUAT ENDURANCE » ; conduite ; tractions explosives 4×3 (3×3) + consigne +5 kg | Muscle-ups PdC explosifs 4×3 (3×2) ; S12 : test max squat @ 70 kg |
+| **S12** | — | Conduites J1-J6 : « SEMAINE DE RECALAGE — sortie de décharge. » ; J4-J6 : « Test en tête de séance… » | — |
+
+Entre parenthèses : valeurs des décharges S15 et S19. R1 : tempo « Intention maximale », phrase VBT remplacée. R2 : séries classiques S12, S13, S15, S19 (y compris le muscle-up lesté en S15/S19, règle transversale), clusters S14, S16-S18. R3 : calibrage en fin de consigne (S12-S14, S16-S18) ; « Décharge : aucune hausse de charge. » en S15 et S19.
+
+**Application** (`lib/session_screen.dart`, plus petit périmètre) :
+- **Constat** : les tests de S2 alimentent la feuille Pilotage par **saisie manuelle** (« Résultat → Pilotage!B17 »), écran RÉFÉRENCES accessible seulement depuis STATS : impossible pendant une séance sans la quitter, et la page d'exercice ne se reconstruisait pas après une modification des maxima (volumes et reps pré-remplies restaient anciens). **Bloquant pour S12 : corrigé.**
+- Menu de séance ⋮ → « Références (feuille Pilotage) » : ouvre le **même écran** de saisie (mécanisme de S2 réutilisé).
+- La page d'exercice écoute le store : dès qu'un maximum change, séries × reps et charges affichées sont recalculées ; les reps **pré-remplies** des séries non validées suivent le nouveau volume ; une valeur saisie par l'utilisateur n'est jamais écrasée.
+- Règle GtG sur la feuille Pilotage : l'écran n'en affiche pas ; rien à ajouter.
+
+**Autres fichiers** : `test/lc1_programme_test.dart` (**nouveau**), `tools/tests/test_lc1_revision.py` (**nouveau**) ; totaux justifiés 1 954 → 1 818 dans `test/store_test.dart`, `tools/verify_project.py`, `tools/tests/test_tools.py` (et le titre d'un test de `test/training_estimate_test.dart`) ; `pubspec.yaml`, `lib/settings_screen.dart` (2.5.7+58) ; `README.md` ; ce suivi.
+
+## LC1.2 — Tests et scénarios
+
+| Niveau | Résultat |
+| --- | --- |
+| Python | ⟨PY⟩ |
+| CI branche temporaire | ⟨CI⟩ |
+| Appareil | **Aucun essai** |
+
+| Données de départ | Action | Valeur attendue | Valeur observée (test) |
+| --- | --- | --- | --- |
+| Asset 2.5.6 | Script LC1 | 1 954 → 1 818, SHA-256 du JSON `399450dc…5328` | Conforme |
+| Asset révisé | Script relancé | Échec « Révision LC1 déjà appliquée », rien écrit | Conforme |
+| Asset révisé | Semaines 1-11, 20-40, Pilotage, méta | SHA-256 canonique `04ffcab8…e89b`, identique à 2.5.6 | Conforme |
+| Programme | Identifiants | 202 retirés (liste exacte), 66 ajoutés (liste exacte, noms, semaine, jour) | Conforme |
+| Maxima 30 / 70 / 65 / 25 | Volumes | S12 continues 2 × 18 ; réf. tractions 1 × 18 ; clusters S13/S14/S15/S18 5 × 8/10/5/11 ; réf. dips 1 × 42 ; clusters 5 × 20/22/11/25 ; réf. pompes 1 × 39 ; clusters 5 × 10/12/5/14 ; squat 70 S13 3 × 10 | Conforme |
+| Maxima 33 / 80 / 70 / 30 | Volumes | 2 × 20 ; 1 × 20 ; 5 × 9/11/5/12 ; 1 × 48 ; 5 × 22/26/13/29 ; 1 × 42 ; 5 × 11/13/5/15 ; 3 × 12 | Conforme |
+| 1RM squat 120 kg | Squat pause | 80 kg | Conforme |
+| Séance S12 J4, page séries continues (2 × 18, reps 18/18), 1re série corrigée à 17 | Menu → Références → tractions 33 → retour | 2 × 20 affiché, reps 17/20 ; puis 30 → 2 × 18, reps 17/18 | Conforme |
+| Journal S12 J1 avec `B2-9` (supprimé) | Export/import, ouverture de l'historique | Nom « Tirage vertical prise neutre », séries 65 kg × 10/9 intactes | Conforme |
+| S12 J1-J6 faits | XP, semaine, crédits | +600 XP de séance, semaine complète (gain `week:` enregistré), gains existants inchangés | Conforme |
+| S12 J3, J4, J5 | Rendu 390×844 et 320×720, 130 % et 200 %, clair et sombre | Aucune erreur de rendu, toutes les pages parcourues | Conforme |
+
+**XP et économie** : aucun barème modifié. Une séance du programme vaut toujours 100 XP (indépendante du nombre d'exercices) ; semaine complète, chapitres et boss dépendent des journées faites : inchangés. **Changement d'équilibrage** (pas une correction de calcul) : séries planifiées d'une semaine de montée 198 → **117** (S12 : 102), donc le compteur de séries validées (badges « séries », mission hebdomadaire « 20 séries ») progresse moins vite ; la mission reste atteignable.
+
+## LC1.3 — Limites et points signalés
+
+- **Classeur désynchronisé** pour S12-S19 ; contenu **non validé par un préparateur physique extérieur**.
+- **Série de référence « fixe pendant tout le bloc »** (R6) : aucun type existant ne fige une valeur à une date ; elle suit le maximum de la feuille Pilotage. Elle reste fixe tant que le maximum n'est pas modifié (seul le test de S12 le met à jour dans le bloc).
+- **Calibrage (R3) et charge suggérée** : +5 kg sur le 1RM change la charge suggérée du pourcentage prévu (ex. 82 % : +4,1 kg, arrondi à 2,5), pas forcément de +5 kg ; pour les séries suivantes du jour, saisis la charge à la main comme le dit la règle.
+- **Pompes clusters renommées** « Pompes PdC — clusters » (nom de la section 3) : avec l'ancien suffixe « — enchaîné après les dips », l'application aurait enchaîné cette ligne avec la série de référence des pompes (regroupement par nom). Identifiant conservé.
+- **Incohérences de texte appliquées telles quelles** (contenu non rediscuté) :
+  - S12 J6 : la conduite dit « Test en tête de séance » mais le test de squat est en 3e position (liste de la section 3) ;
+  - S15/S19 : la conduite J3/J5 annonce « GtG : 3 × 4 » alors que la ligne GtG de décharge est 2×3 ;
+  - test max pompes S12 : la consigne S2 recopiée contient « Ton 60 estimé est probablement faux au vu de tes 80 dips… » (propre à S2), et « comme en S2 » alors que le repos passe de ≥ 20 min à 5 min ;
+  - tests S12 dips/pompes/squat : « Résultat → Pilotage!B18 » puis « Résultat → maximum … » (double mention) ;
+  - MU lesté : « 1re rep moche → … bascule excentriques » alors que les excentriques de transition sont retirés de J6 ;
+  - conduite J3 : « HSR coude » alors que le travail poignet est retiré de J3.
+- Extension triceps J2 en myo-reps : référence de charge fixée à 13 reps (comme les autres lignes myo-reps) ; non précisé dans la demande.
+- Nouvelles lignes de séries continues et de référence marquées « principales » (comme les clusters qu'elles complètent) ; tests au format de S2 (non principaux).
+- Branche temporaire `claude/ci-tools` toujours présente.
 
 ## L3b.0 — Base et contrôle préalable
 
