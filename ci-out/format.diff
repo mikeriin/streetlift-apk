@@ -1,16 +1,29 @@
-diff --git a/streetlift_tracker/test/history_correction_test.dart b/streetlift_tracker/test/history_correction_test.dart
-index 38d73ac..0f4f982 100644
---- a/streetlift_tracker/test/history_correction_test.dart
-+++ b/streetlift_tracker/test/history_correction_test.dart
-@@ -246,10 +246,7 @@ void main() {
-       find.widgetWithText(PopupMenuItem<String>, 'Corriger les saisies'),
-     );
-     expect(item.enabled, isFalse);
--    expect(
--      find.text('Supprimer de l’historique'),
--      findsOneWidget,
--    );
-+    expect(find.text('Supprimer de l’historique'), findsOneWidget);
-     await close(tester);
-   });
- 
+diff --git a/ci-out/format.diff b/ci-out/format.diff
+index a1af939..e69de29 100644
+--- a/ci-out/format.diff
++++ b/ci-out/format.diff
+@@ -1,16 +0,0 @@
+-diff --git a/streetlift_tracker/test/history_correction_test.dart b/streetlift_tracker/test/history_correction_test.dart
+-index 38d73ac..0f4f982 100644
+---- a/streetlift_tracker/test/history_correction_test.dart
+-+++ b/streetlift_tracker/test/history_correction_test.dart
+-@@ -246,10 +246,7 @@ void main() {
+-       find.widgetWithText(PopupMenuItem<String>, 'Corriger les saisies'),
+-     );
+-     expect(item.enabled, isFalse);
+--    expect(
+--      find.text('Supprimer de l’historique'),
+--      findsOneWidget,
+--    );
+-+    expect(find.text('Supprimer de l’historique'), findsOneWidget);
+-     await close(tester);
+-   });
+- 
+diff --git a/ci-out/format.log b/ci-out/format.log
+index 93720be..1a3950b 100644
+--- a/ci-out/format.log
++++ b/ci-out/format.log
+@@ -1,2 +1 @@
+-Formatted test/history_correction_test.dart
+-Formatted 72 files (1 changed) in 2.07 seconds.
++Formatted 72 files (0 changed) in 2.05 seconds.
