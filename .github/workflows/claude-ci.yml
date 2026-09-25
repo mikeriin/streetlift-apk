@@ -8,10 +8,14 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: claude-ci
+  cancel-in-progress: true
+
 jobs:
   check:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -19,21 +23,36 @@ jobs:
           flutter-version: '3.29.3'
           channel: stable
           cache: true
-      - name: Format, analyse, tests (sans secrets)
+      - name: Format et analyse
         working-directory: streetlift_tracker
         run: |
           mkdir -p ../ci-out
           flutter pub get --enforce-lockfile > ../ci-out/pub.log 2>&1 || true
           dart format lib test > ../ci-out/format.log 2>&1 || true
-          git diff --stat > ../ci-out/format-diff-stat.txt || true
           git diff > ../ci-out/format.diff || true
           flutter analyze --no-pub > ../ci-out/analyze.log 2>&1; echo "exit=$?" >> ../ci-out/analyze.log
-          TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded > ../ci-out/test.log 2>&1; echo "exit=$?" >> ../ci-out/test.log
-          tail -n 5 ../ci-out/test.log
-      - name: Renvoyer les résultats sur la branche
-        run: |
+      - name: Publier format/analyse
+        if: always()
+        run: &push |
           git config user.name "claude-ci"
           git config user.email "claude-ci@users.noreply.github.com"
-          git add ci-out streetlift_tracker/lib streetlift_tracker/test
-          git commit -m "Résultats CI $(date -u +%H:%M:%S)"
-          git push origin HEAD:claude/ci-tools
+          git add -A ci-out streetlift_tracker/lib streetlift_tracker/test
+          git commit -q -m "Résultats CI ${GITHUB_JOB} $(date -u +%H:%M:%S)" || exit 0
+          git pull -q --rebase origin claude/ci-tools || true
+          git push -q origin HEAD:claude/ci-tools
+      - name: Tests ciblés (historique)
+        if: always()
+        working-directory: streetlift_tracker
+        run: |
+          TZ=Europe/Paris timeout 240 flutter test --no-pub --timeout 45s --reporter expanded test/history_correction_test.dart test/history_readonly_test.dart > ../ci-out/test-history.log 2>&1; echo "exit=$?" >> ../ci-out/test-history.log
+      - name: Publier tests ciblés
+        if: always()
+        run: *push
+      - name: Suite complète
+        if: always()
+        working-directory: streetlift_tracker
+        run: |
+          TZ=Europe/Paris timeout 900 flutter test --no-pub --timeout 45s --reporter expanded > ../ci-out/test.log 2>&1; echo "exit=$?" >> ../ci-out/test.log
+      - name: Publier suite complète
+        if: always()
+        run: *push
