@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'alerts.dart';
 import 'store.dart';
+import 'wod_formats.dart';
 
 class TimerCtl extends ChangeNotifier {
   final DateTime Function() now;
@@ -177,6 +178,31 @@ class WodClock extends ChangeNotifier {
   int _accMs = 0, _duration = 0;
   int? _restEndMs;
 
+  /// Déroulement par phases (Tabata, AMRAP en blocs) : la phase en cours
+  /// se déduit du temps actif cumulé. Un rafraîchissement tardif ne
+  /// prolonge donc aucune phase et ne rejoue aucune transition.
+  List<WodPhase> _phases = const [];
+  List<int> _ends = const [];
+  int phaseIndex = -1, phaseRemaining = 0, prepSeconds = 0;
+
+  WodPhase? get phase =>
+      phaseIndex >= 0 && phaseIndex < _phases.length
+          ? _phases[phaseIndex]
+          : null;
+  bool get phased => _phases.isNotEmpty;
+  int get phaseCount => _phases.length;
+
+  /// Temps écoulé hors préparation.
+  int get workElapsed => math.max(0, elapsed - prepSeconds);
+
+  /// Une alerte n'est jouée que si sa transition vient d'avoir lieu : pas
+  /// de rafale de bips anciens au retour dans l'application.
+  static const staleMs = 1500;
+
+  /// Alertes déclenchées (bips de transition, alarmes de fin) : le son et
+  /// la vibration suivent ensuite les réglages. Compteurs lus par les tests.
+  int beeps = 0, alarms = 0;
+
   int get _activeMs =>
       _accMs +
       (running ? math.max(0, now().difference(_startAt!).inMilliseconds) : 0);
@@ -217,6 +243,30 @@ class WodClock extends ChangeNotifier {
     _run();
   }
 
+  /// Démarre un déroulement par phases, précédé d'une préparation de
+  /// [prep] secondes (réglage « Préparation »), hors durée du WOD.
+  void startPhases(List<WodPhase> phases, {int prep = 0}) {
+    final list = [
+      if (prep > 0) WodPhase(PhaseKind.prep, prep),
+      for (final p in phases)
+        if (p.seconds > 0) p,
+    ];
+    if (list.isEmpty) return;
+    reset();
+    countdown = true;
+    prepSeconds = math.max(0, prep);
+    _phases = List.unmodifiable(list);
+    var end = 0;
+    _ends = List.unmodifiable([
+      for (final p in list) end += p.seconds * 1000,
+    ]);
+    _duration = end ~/ 1000;
+    remaining = _duration;
+    phaseIndex = 0;
+    phaseRemaining = list.first.seconds;
+    _run();
+  }
+
   void toggle() {
     if (!started || finished) return;
     if (running) {
@@ -254,6 +304,10 @@ class WodClock extends ChangeNotifier {
     active.value = false;
     elapsed = remaining = restLeft = round = 0;
     emomRound = emomRounds = emomInterval = capSec = 0;
+    _phases = const [];
+    _ends = const [];
+    phaseIndex = -1;
+    phaseRemaining = prepSeconds = 0;
     _accMs = _duration = 0;
     _startAt = null;
     _restEndMs = null;
@@ -264,7 +318,15 @@ class WodClock extends ChangeNotifier {
   void _tick() {
     if (!running) return;
     final ms = _activeMs;
-    final old = (elapsed, remaining, restLeft, emomRound, capHit);
+    final old = (
+      elapsed,
+      remaining,
+      restLeft,
+      emomRound,
+      capHit,
+      phaseIndex,
+      phaseRemaining,
+    );
     elapsed = ms ~/ 1000;
     var beep = false;
     if (_restEndMs != null) {
@@ -280,14 +342,34 @@ class WodClock extends ChangeNotifier {
         elapsed = _duration;
         remaining = restLeft = 0;
         if (emomRounds > 0) emomRound = emomRounds;
+        final late = ms - _duration * 1000;
+        if (phased) {
+          phaseIndex = _phases.length - 1;
+          phaseRemaining = 0;
+        }
         running = false;
         finished = true;
         _t?.cancel();
-        alertAlarm();
+        if (!phased || late < staleMs) {
+          alarms++;
+          alertAlarm();
+        }
         notifyListeners();
         return;
       }
-      if (emomRounds > 0) {
+      if (phased) {
+        var i = 0;
+        while (i < _ends.length - 1 && ms >= _ends[i]) {
+          i++;
+        }
+        if (i != phaseIndex) {
+          final start = i == 0 ? 0 : _ends[i - 1];
+          beep = beep || ms - start < staleMs;
+          phaseIndex = i;
+        }
+        phaseRemaining = ((_ends[i] - ms) / 1000).ceil();
+        remaining = ((_duration * 1000 - ms) / 1000).ceil();
+      } else if (emomRounds > 0) {
         final next = ms ~/ (emomInterval * 1000) + 1;
         beep = beep || next > emomRound;
         emomRound = next;
@@ -297,11 +379,24 @@ class WodClock extends ChangeNotifier {
       }
     } else if (capSec > 0 && !capHit && elapsed >= capSec) {
       capHit = true;
+      alarms++;
       alertAlarm();
       beep = false;
     }
-    if (beep) alertBeep();
-    if (old != (elapsed, remaining, restLeft, emomRound, capHit)) {
+    if (beep) {
+      beeps++;
+      alertBeep();
+    }
+    if (old !=
+        (
+          elapsed,
+          remaining,
+          restLeft,
+          emomRound,
+          capHit,
+          phaseIndex,
+          phaseRemaining,
+        )) {
       notifyListeners();
     }
   }

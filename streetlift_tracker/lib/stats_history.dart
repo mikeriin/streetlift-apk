@@ -3,6 +3,7 @@ import 'app_theme.dart';
 import 'session_history.dart';
 import 'store.dart';
 import 'ui.dart';
+import 'wod_formats.dart';
 import 'stats_data.dart';
 import 'stats_widgets.dart';
 
@@ -158,14 +159,8 @@ class StatsHistoryTile extends StatelessWidget {
                 result.score,
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
-              if (result.seconds != null)
-                Text(
-                  'Temps enregistré : ${Duration(seconds: result.seconds!).inMinutes} min ${result.seconds! % 60} s',
-                ),
-              if (result.rounds != null)
-                Text(
-                  '${result.rounds} tours${result.reps == null ? '' : ' · ${result.reps} répétitions supplémentaires'}',
-                ),
+              for (final line in resultDetails(entry.wod!, result))
+                Text(line),
               const KSection('Notes'),
               Text(
                 result.notes.trim().isEmpty

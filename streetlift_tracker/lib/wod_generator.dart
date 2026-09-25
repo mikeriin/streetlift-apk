@@ -643,6 +643,11 @@ Wod generateWodV2(int i) {
         lines: lines,
         notes:
             'Reprends chaque bloc où tu t\u2019es arrêté ; score = total des rounds. $note',
+        // Déroulement et score explicites (L3b) : mêmes valeurs que les lignes.
+        format: WodFormat.amrapBlocks(
+          blockMinutes: [for (var k = 0; k < blocks; k++) base + k],
+          blockRest: 120,
+        ),
       );
     case 7: // EMOM en rotation
       final rounds = 12 + 3 * r.nextInt(3) + (tier >= 7 ? 3 : 0);
@@ -706,17 +711,27 @@ Wod generateWodV2(int i) {
         take(_core2),
         if (tier >= 5) take(_meta2),
       ];
+      // Définition explicite (L3b) ; les lignes affichées en découlent.
+      final tabata = WodFormat.tabata(
+        movements: [for (final m in pool) m.n],
+        sets: 8,
+        work: 20,
+        rest: 10,
+        blockRest: 60,
+      );
       return Wod(
         id: id,
         name: 'Tabata × ${pool.length} · ${join(pool)}',
         type: 'routine',
-        restSec: 60,
+        restSec: tabata.blockRest,
         source: 'kalis',
         lines: [
-          for (final m in pool) '8 × (max ${m.n} en 20 s) · 10 s de repos',
+          for (final m in tabata.movements)
+            '${tabata.sets} × (max $m en ${tabata.work} s) · ${tabata.rest} s de repos',
         ],
         notes:
             'Un Tabata par mouvement, 1 min de repos entre deux. Score = reps du plus faible intervalle, par mouvement. $note',
+        format: tabata,
       );
     default: // Death by
       final m = take(
@@ -736,6 +751,7 @@ Wod generateWodV2(int i) {
         rounds: rounds,
         interval: 60,
         source: 'kalis',
+        format: const WodFormat.deathBy(),
         lines: [
           block(1, third),
           block(third + 1, 2 * third),

@@ -15,6 +15,7 @@ import 'models.dart';
 import 'persistence.dart';
 import 'training_estimate.dart';
 import 'progression.dart';
+import 'wod_formats.dart';
 import 'wod_generator.dart';
 import 'wod_models.dart';
 
@@ -2245,12 +2246,26 @@ class AppStore extends ChangeNotifier {
           (w.type == 'amrap' && w.minutes == 0)) {
         throw const FormatException('WOD invalide.');
       }
+      // Format structuré : seulement cohérent avec le type (L3b).
+      if (w.format != null && !w.format!.validFor(w.type)) {
+        throw const FormatException('Format de WOD invalide.');
+      }
       for (final r in w.results) {
+        final blocks = r.intervals;
         if ((r.attempt?.length ?? 0) > 64 ||
             DateTime.tryParse(r.at) == null ||
             (r.seconds ?? 0) < 0 ||
             (r.rounds ?? 0) < 0 ||
-            (r.reps ?? 0) < 0) {
+            (r.reps ?? 0) < 0 ||
+            // Règle de score : inconnue = fichier d'une autre version.
+            (r.scoring != null && ScoreRule.byId(r.scoring) == null) ||
+            (blocks != null &&
+                (blocks.length > 20 ||
+                    blocks.any(
+                      (b) =>
+                          b.length > 50 ||
+                          b.any((v) => v != null && (v < 0 || v > 999)),
+                    )))) {
           throw const FormatException('Résultat invalide.');
         }
       }

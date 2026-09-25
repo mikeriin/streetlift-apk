@@ -11,6 +11,7 @@ import 'ui.dart';
 import 'estimate_view.dart';
 import 'muscle_body.dart';
 import 'store.dart';
+import 'wod_formats.dart';
 import 'wod_models.dart';
 import 'wod_screen.dart';
 import 'wod_store.dart';
@@ -283,6 +284,16 @@ class _WodPreviewScreenState extends State<WodPreviewScreen>
                         ),
                       ),
                     ],
+                    const SizedBox(height: 6),
+                    Text(
+                      ruleText(w),
+                      key: const ValueKey('preview-rule'),
+                      style: const TextStyle(
+                        fontSize: 12.5,
+                        height: 1.4,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ],
                 ),
               ),

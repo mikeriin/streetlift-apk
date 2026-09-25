@@ -16,6 +16,7 @@ import 'package:streetlift_tracker/wod_preview.dart';
 import 'package:streetlift_tracker/wod_screen.dart';
 
 import 'l2_fixtures.dart';
+import 'support/score_sheet.dart';
 
 DateTime Function() at(int y, int m, int d, [int h = 10, int min = 0]) =>
     () => DateTime(y, m, d, h, min);
@@ -699,6 +700,8 @@ void main() {
       await tester.ensureVisible(find.text('Terminer'));
       await tester.tap(find.text('Terminer'));
       await tester.pumpAndSettle();
+      // Feuille de score L3b : champs selon le format de l'essai du jour.
+      await fillScoreSheet(tester);
       final save = find.text('Enregistrer');
       await tester.ensureVisible(save);
       await tester.tap(save);

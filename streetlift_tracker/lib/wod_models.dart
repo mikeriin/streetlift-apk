@@ -1,6 +1,8 @@
 // Modèles WOD (For Time, rounds, AMRAP, EMOM, routine libre) + WODs préchargés.
 import 'dart:convert';
 
+import 'wod_formats.dart';
+
 class WodResult {
   String at; // ISO
   String score; // texte affiché (ex. « 12:34 » ou « 7 rounds + 5 »)
@@ -14,6 +16,16 @@ class WodResult {
   /// Tentative dont ce score est la finalisation (KT-003) : une même
   /// tentative ne produit jamais deux résultats.
   String? attempt;
+
+  /// Règle de score sous laquelle ce résultat a été saisi (L3b), par ex.
+  /// `tabata/1`. Absente : résultat antérieur à 2.5.6, lu selon
+  /// `readRule` (voir `wod_formats.dart`), jamais réécrit.
+  String? scoring;
+
+  /// Tabata : répétitions saisies par intervalle, un tableau par mouvement.
+  /// `null` = intervalle non renseigné (différent de 0 répétition).
+  List<List<int?>>? intervals;
+
   WodResult({
     required this.at,
     required this.score,
@@ -24,6 +36,8 @@ class WodResult {
     this.completed = true,
     this.prescription,
     this.attempt,
+    this.scoring,
+    this.intervals,
   });
 
   Map<String, dynamic> toJson() => {
@@ -36,6 +50,9 @@ class WodResult {
     'completed': completed,
     if (prescription != null) 'prescription': prescription,
     if (attempt != null) 'attempt': attempt,
+    if (scoring != null) 'scoring': scoring,
+    if (intervals != null)
+      'intervals': [for (final block in intervals!) List<int?>.of(block)],
   };
   WodResult.fromJson(Map<String, dynamic> j)
     : at = j['at'] as String,
@@ -46,7 +63,138 @@ class WodResult {
       notes = j['notes'] as String? ?? '',
       completed = j['completed'] as bool? ?? true,
       prescription = j['prescription'] as String?,
-      attempt = j['attempt'] as String?;
+      attempt = j['attempt'] as String?,
+      scoring = j['scoring'] as String?,
+      intervals =
+          j['intervals'] == null
+              ? null
+              : [
+                for (final block in j['intervals'] as List)
+                  [for (final v in block as List) v as int?],
+              ];
+}
+
+/// Définition structurée d'un format dont la consigne fixe un déroulement
+/// ou une règle de score que les champs génériques ne décrivent pas (L3b).
+/// Elle vient du catalogue embarqué (générateur, WOD préchargé), jamais
+/// d'une analyse du texte.
+class WodFormat {
+  /// `tabata` · `amrap-blocks` · `emom-reps` · `death-by`.
+  final String kind;
+
+  /// Tabata : un bloc d'intervalles par mouvement, dans l'ordre.
+  final List<String> movements;
+
+  /// Tabata : intervalles par bloc, secondes d'effort, secondes de repos
+  /// entre deux intervalles. `blockRest` : repos entre deux blocs (Tabata,
+  /// AMRAP en blocs).
+  final int sets, work, rest, blockRest;
+
+  /// AMRAP en blocs : durée de chaque bloc, en minutes.
+  final List<int> blockMinutes;
+
+  /// EMOM compté en répétitions : ce qui est compté (ex. « tractions »).
+  final String unit;
+
+  const WodFormat.tabata({
+    required this.movements,
+    required this.sets,
+    required this.work,
+    required this.rest,
+    required this.blockRest,
+  }) : kind = 'tabata',
+       blockMinutes = const [],
+       unit = '';
+
+  const WodFormat.amrapBlocks({
+    required this.blockMinutes,
+    required this.blockRest,
+  }) : kind = 'amrap-blocks',
+       movements = const [],
+       sets = 0,
+       work = 0,
+       rest = 0,
+       unit = '';
+
+  const WodFormat.emomReps(this.unit)
+    : kind = 'emom-reps',
+      movements = const [],
+      blockMinutes = const [],
+      sets = 0,
+      work = 0,
+      rest = 0,
+      blockRest = 0;
+
+  const WodFormat.deathBy()
+    : kind = 'death-by',
+      movements = const [],
+      blockMinutes = const [],
+      sets = 0,
+      work = 0,
+      rest = 0,
+      blockRest = 0,
+      unit = '';
+
+  const WodFormat._(
+    this.kind,
+    this.movements,
+    this.sets,
+    this.work,
+    this.rest,
+    this.blockRest,
+    this.blockMinutes,
+    this.unit,
+  );
+
+  Map<String, dynamic> toJson() => {
+    'kind': kind,
+    if (movements.isNotEmpty) 'movements': movements,
+    if (sets > 0) 'sets': sets,
+    if (work > 0) 'work': work,
+    if (rest > 0) 'rest': rest,
+    if (blockRest > 0) 'blockRest': blockRest,
+    if (blockMinutes.isNotEmpty) 'blockMinutes': blockMinutes,
+    if (unit.isNotEmpty) 'unit': unit,
+  };
+
+  factory WodFormat.fromJson(Map<String, dynamic> j) => WodFormat._(
+    j['kind'] as String,
+    [for (final m in (j['movements'] as List?) ?? const []) m as String],
+    j['sets'] as int? ?? 0,
+    j['work'] as int? ?? 0,
+    j['rest'] as int? ?? 0,
+    j['blockRest'] as int? ?? 0,
+    [for (final m in (j['blockMinutes'] as List?) ?? const []) m as int],
+    j['unit'] as String? ?? '',
+  );
+
+  /// Définition utilisable pour un WOD de ce type ; sinon le WOD garde la
+  /// règle générique de son type.
+  bool validFor(String type) => switch (kind) {
+    'tabata' =>
+      type == 'routine' &&
+          movements.isNotEmpty &&
+          movements.length <= 20 &&
+          movements.every((m) => m.trim().isNotEmpty && m.length <= 200) &&
+          sets >= 1 &&
+          sets <= 50 &&
+          work >= 1 &&
+          work <= 3600 &&
+          rest >= 0 &&
+          rest <= 3600 &&
+          blockRest >= 0 &&
+          blockRest <= 3600,
+    'amrap-blocks' =>
+      type == 'routine' &&
+          blockMinutes.isNotEmpty &&
+          blockMinutes.length <= 20 &&
+          blockMinutes.every((m) => m >= 1 && m <= 240) &&
+          blockRest >= 0 &&
+          blockRest <= 3600,
+    'emom-reps' => type == 'emom' && unit.trim().isNotEmpty && unit.length <= 60,
+    'death-by' => type == 'emom',
+    _ => false,
+  };
 }
 
 /// Types : fortime · rounds · amrap · emom · routine
@@ -73,6 +221,10 @@ class Wod {
   int level; // niveau requis pour le déverrouiller (1 = libre)
   List<WodResult> results;
 
+  /// Format structuré (Tabata, AMRAP en blocs, EMOM compté en reps, Death
+  /// by) : fixé par le catalogue, hors définition modifiable.
+  WodFormat? format;
+
   Wod({
     required this.id,
     required this.name,
@@ -87,6 +239,7 @@ class Wod {
     this.source = '',
     this.level = 1,
     List<WodResult>? results,
+    this.format,
   }) : lines = lines ?? [],
        results = results ?? [];
 
@@ -104,6 +257,7 @@ class Wod {
     'source': source,
     'level': level,
     'results': results.map((r) => r.toJson()).toList(),
+    if (format != null) 'format': format!.toJson(),
   };
   Wod.fromJson(Map<String, dynamic> j)
     : id = j['id'] as String,
@@ -121,7 +275,11 @@ class Wod {
       results =
           ((j['results'] as List?) ?? [])
               .map((r) => WodResult.fromJson(r as Map<String, dynamic>))
-              .toList();
+              .toList(),
+      format =
+          j['format'] == null
+              ? null
+              : WodFormat.fromJson(j['format'] as Map<String, dynamic>);
 
   /// Les résultats ne calibrent que la prescription réellement effectuée.
   String get prescriptionKey => jsonEncode({
@@ -135,10 +293,12 @@ class Wod {
     'notes': notes,
   });
 
-  String get typeLabel => wodTypes[type] ?? type;
+  String get typeLabel => formatLabel(this) ?? wodTypes[type] ?? type;
 
   /// Résumé de l'entête (ex. « 5 rounds · repos 1 min · cap 20 min »).
   String header() {
+    final structured = formatHeader(this);
+    if (structured != null) return structured;
     final p = <String>[];
     if (type == 'amrap') p.add('$minutes min');
     if (type == 'emom') p.add('$rounds × $interval s');
@@ -153,30 +313,16 @@ class Wod {
     return p.join(' · ');
   }
 
+  /// Types au chronomètre montant dans l'ancien modèle (avant L3b) : sert
+  /// encore à l'estimation de durée et à la lecture des anciens résultats.
+  /// Le runner et la saisie suivent `ruleFor` / `phasesOf`.
   bool get timed => type == 'fortime' || type == 'rounds' || type == 'routine';
 
-  /// Meilleur résultat : temps mini pour les formats chronométrés,
-  /// rounds+reps maxi pour l'AMRAP, sinon le dernier.
-  WodResult? best() {
-    WodResult? best;
-    for (final r in results) {
-      if (!r.completed) continue;
-      if (timed) {
-        if (r.seconds == null || r.seconds! <= 0) continue;
-        if (best == null || r.seconds! < best.seconds!) best = r;
-      } else if (type == 'amrap' || type == 'emom') {
-        if (r.rounds == null || r.rounds! < 0) continue;
-        if (best == null ||
-            r.rounds! > best.rounds! ||
-            (r.rounds == best.rounds && (r.reps ?? 0) > (best.reps ?? 0))) {
-          best = r;
-        }
-      } else {
-        best = r;
-      }
-    }
-    return best;
-  }
+  /// Record selon la règle de score actuelle du WOD (`wod_formats.dart`) :
+  /// seuls les résultats complets saisis ou lus sous cette règle comptent ;
+  /// à égalité, le premier résultat reste le record. Null : aucun résultat
+  /// comparable, ou format sans classement.
+  WodResult? best() => bestResult(this);
 }
 
 /// WODs préchargés (les 19 « en stock » de Gaël).
@@ -576,6 +722,8 @@ List<Wod> seedWodsV2() => [
     rounds: 5,
     interval: 300,
     level: 7,
+    // Consigne : « Objectif total tractions » → score = total de tractions.
+    format: const WodFormat.emomReps('tractions'),
     lines: [
       '20 burpees',
       '30 pompes',

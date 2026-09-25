@@ -161,14 +161,24 @@ void main() {
       await tester.tap(find.text('Terminer'));
       await tester.pumpAndSettle();
       await tester.enterText(find.byType(TextFormField).first, '1:99');
+      await tester.ensureVisible(find.text('Enregistrer'));
       await tester.tap(find.text('Enregistrer'));
       await tester.pumpAndSettle();
       expect(
         find.text('Saisis un temps valide supérieur à zéro.'),
         findsOneWidget,
       );
+      // L3b : un For Time n'est jamais supposé terminé ; choix explicite.
+      expect(
+        find.text('Indique si le WOD a été terminé en entier.'),
+        findsOneWidget,
+      );
       expect(wod.results, isEmpty);
       await tester.enterText(find.byType(TextFormField).first, '1:20');
+      await tester.ensureVisible(find.text('Terminé en entier'));
+      await tester.tap(find.text('Terminé en entier'));
+      await tester.pump();
+      await tester.ensureVisible(find.text('Enregistrer'));
       await tester.tap(find.text('Enregistrer'));
       await tester.pumpAndSettle();
       expect(wod.results.length, 1);

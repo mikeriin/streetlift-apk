@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'models.dart';
 import 'store.dart' show SessionLog;
+import 'wod_formats.dart';
 import 'wod_models.dart';
 
 // Ces rangs expriment la progression dans l'application, pas une mesure physique.
@@ -361,7 +362,11 @@ class Progression {
         if (atA == null || atB == null) return a.at.compareTo(b.at);
         return atA.compareTo(atB);
       });
-      WodResult? best;
+      // Records par groupe de comparaison (L3b) : résultats lus sous la même
+      // règle de score. Les anciens résultats d'une règle qui a changé gardent
+      // l'ancienne lecture : leur XP de record est inchangée.
+      final best = <String, WodResult>{};
+      final format = structuredFormat(wod);
       for (final result in results) {
         final at = parsePast(result.at);
         if (result.completed && at != null) {
@@ -370,13 +375,25 @@ class Progression {
           bucket(at).wods++;
           active(at);
         }
-        if (!_validPerformance(wod, result)) continue;
-        if (best == null) {
-          best = result;
+        final group = recordGroup(wod, result);
+        if (group == null) continue;
+        final legacy = group == 'legacy';
+        final rule = legacy ? null : ScoreRule.byId(group)!;
+        final valid =
+            legacy
+                ? legacyValid(wod, result)
+                : result.completed &&
+                    performance(rule!, result, format) != null;
+        if (!valid) continue;
+        final current = best[group];
+        if (current == null) {
+          best[group] = result;
           recordXp +=
               40; // Première référence : compatible avec l'ancien bonus.
-        } else if (_beats(wod, result, best)) {
-          best = result;
+        } else if (legacy
+            ? legacyBeats(wod, result, current)
+            : beats(rule!, result, current, format)) {
+          best[group] = result;
           if (at != null) {
             recordXp += 40;
             records++;
@@ -456,18 +473,3 @@ class Progression {
     );
   }
 }
-
-bool _validPerformance(Wod wod, WodResult r) {
-  if (!r.completed) return false;
-  if (wod.timed) return r.seconds != null && r.seconds! > 0;
-  return (wod.type == 'amrap' || wod.type == 'emom') &&
-      r.rounds != null &&
-      r.rounds! >= 0;
-}
-
-bool _beats(Wod wod, WodResult value, WodResult best) =>
-    wod.timed
-        ? value.seconds! < best.seconds!
-        : value.rounds! > best.rounds! ||
-            (value.rounds == best.rounds &&
-                (value.reps ?? 0) > (best.reps ?? 0));
