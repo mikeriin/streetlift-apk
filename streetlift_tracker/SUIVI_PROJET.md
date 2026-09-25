@@ -1,8 +1,107 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : L2b — Contrôle utilisateur des données (KT-021, partie L2b de KT-016)**  
-**Date : 25 septembre 2026, Europe/Paris — version : 2.5.4+55 (versionCode réel fixé par la CI de build)**  
-**Statut : export/import par fichier, aperçu, sauvegarde préalable et suppression locale implémentés et publiés (2.5.3, run n° 73). Politique Android : option A décidée par le propriétaire et appliquée (2.5.4). Essais sur téléphone et test de restauration Android non faits. L3 et la refonte ne sont pas lancés.**
+**Passe actuelle : L3 — Économie et essai WOD (KT-003, KT-004, KT-005)**  
+**Date : 25 septembre 2026, Europe/Paris — version : 2.5.5+56 (versionCode réel fixé par la CI de build)**  
+**Statut : tentative d'essai après minuit, essai du jour et vitrine persistés, registre des gains de crédits et déficit visible implémentés et testés automatiquement ; publication et build dans `LIVRAISON_L3.md`. Aucune vérification sur téléphone pour L3. L3b, le démarrage du programme et la refonte ne sont pas lancés.**
+
+## L3.0 — Base et contrôle préalable
+
+| Élément | Valeur | Nature de la preuve |
+| --- | --- | --- |
+| Base | `streetlift_tracker_v33.zip` de la livraison L2b 2.5.4 (= `main`, commit `83d05d5`), **1 324 959 octets**, SHA-256 `8563cbb5ed3e5e76ebb076957d234b4f13135cc740adb855a32f33a7bb616a53`, racine unique `streetlift_tracker/`, 306 fichiers, version 2.5.4+55 | Vérifié ; archive gardée intacte, travail sur une copie |
+| Build 2.5.4 | Run n° 74, réussi | Résultat GitHub |
+| Tests L2b | 278 réussis, 1 ignoré ; build Android debug réussi | Tests automatiques (CI, branche temporaire) |
+| Essais téléphone L1b, L2, L2b | **Non rapportés** | — |
+| Décisions L3 du propriétaire (25/09/2026) | Tentatives d'essai illimitées jusqu'à minuit ; sans candidat : élargir le niveau, sinon pas d'essai ; registre par gain ; déficit affiché | Déclarations du propriétaire (questions posées pendant L3) |
+| Décisions antérieures conservées | KT-005 option C ; KT-014 règle d'usage ; KT-016 option A ; publication sur `main` et build à chaque mise à jour | Déclarations du propriétaire |
+
+**Contrôle préalable** : la conservation des données après mise à jour n'a pas été vérifiée sur téléphone depuis L1. L3 ajoute des champs au document interne (`creditGrants`, `trialOfDay`, `weeklyShowcase`, `attempt`) ; les versions antérieures les ignorent. Faire un **export avant d'installer 2.5.5** (protocole de `LIVRAISON_L3.md`).
+
+## L3.1 — Contrat
+
+Le contrat complet (règles approuvées, choix d'implémentation, limites, propositions en attente) est dans **`docs/CONTRAT_L3.md`**. Résumé :
+
+| Sujet | Comportement actuel (avant L3) | Règle approuvée | Décision manquante |
+| --- | --- | --- | --- |
+| Essai lancé avant minuit | Score refusé après minuit, fiche d'achat affichée | Terminer et enregistrer la tentative engagée, sans acquisition ni accès illimité | Aucune |
+| Tentatives d'essai | Illimitées de fait, non écrit | Illimitées jusqu'à minuit | Aucune |
+| Essai du jour | Recalculé selon l'état ; pouvait changer après achat ou changement de niveau | Un par jour civil local, jamais tenté, stable ; persisté | Aucune |
+| Achat de l'essai | Un autre essai pouvait apparaître | Acquis aussitôt, aucun second essai gratuit | Aucune |
+| Plus de candidat | WOD déjà tenté proposé | ±2, puis catalogue, sinon pas d'essai + message | Aucune |
+| Vitrine | Dépendait du niveau courant | Lundi-dimanche, stable ; un WOD acheté laisse sa place au suivant (README) | Aucune |
+| Crédits (KT-005) | L2 : plus haut total ; une vraie nouvelle semaine sous ce plus haut ne payait rien | Registre par gain : payé une fois, jamais repris | Aucune |
+| Dépensé > gagné | Solde borné à 0 | Déficit affiché, achats bloqués, droits gardés | Aucune |
+| Import | Remplacement | Remplacement, pas de fusion | Aucune |
+| Horloge manipulée | Non traité | — | Limites documentées ; contre-mesure non demandée |
+| Tentative après redémarrage | Non | Hors L3 (L4b) | L4b |
+
+## L3.2 — Changements
+
+| Ticket | Corrigé dans le code | Testé automatiquement | Vérifié sur appareil | En attente d'arbitrage |
+| --- | --- | --- | --- | --- |
+| KT-003 — essai commencé avant minuit | **Oui** | **Oui** (store + écran, horloge contrôlée) | Non | Non (persistance de la tentative : L4b) |
+| KT-004 — essai du jour et vitrine stables | **Oui** | **Oui** (jour, semaine, année, heure d'hiver, recul d'horloge, migration) | Non | Non (limites d'horloge documentées) |
+| KT-005 — comptabilité des crédits | **Oui** | **Oui** (registre, doublons, paliers, import, migration, déficit) | Non | Non |
+
+**Code**
+- `lib/store.dart`
+  - **Tentatives** : `startAttempt`, `canFinish`, `abandonAttempt`, `recordWodResult` (renvoie `ResultSave.saved`, `unsaved` ou `denied`). Un résultat porte l'identifiant de sa tentative ; un second envoi ne crée rien et relance seulement l'écriture en attente.
+  - **Sélections persistées** : `_trialDay/_trialId` et `_weekOf/_weeklyIdsStored`, établis à la première lecture, écrits dans la file L2, jamais recalculés par une notification. Essai : `_selectTrial` (jamais tenté, ±1 → ±2 → catalogue, hors vitrine), `_migratedTrial` (reprise d'un essai joué aujourd'hui) ; vitrine : `_ensureWeekly` (remplacement d'un WOD acheté). Nouveau choix seulement si la date locale est strictement postérieure.
+  - **Registre des gains** : `creditGrants` (`level:N`, `chapter:…`, `boss:…`, `week:<lundi>`, `carry:l2`), `journalGrants`, `creditsEarned` (registre + gains du journal non inscrits), inscription à chaque écriture acceptée et au chargement, `_grantsSnapshot` pour un export identique avant et après écriture, `_migrateGrants` (état sans registre, surplus L2 conservé). `credits` n'est plus borné à 0. Remplace `_earnedMax`.
+  - **Sauvegarde** (format 3) : champs optionnels `creditGrants`, `trialOfDay`, `weeklyShowcase`, `attempt` validés à l'import (bornes, clés, dates) ; `creditsEarnedMax` toujours écrit pour les versions 2.5.2-2.5.4 ; l'aperçu d'import donne le total du registre du fichier.
+  - `_applyBackup` classe le catalogue avant tout calcul de progression (corrige un calcul possible sur catalogue non classé lors de la migration).
+- `lib/wod_screen.dart` : tentative ouverte au démarrage, abandonnée en quittant ; l'écran ne bascule plus sur la fiche d'achat tant que la tentative est ouverte ; score enregistré via `recordWodResult`, récompense après écriture acceptée, message « Réessayer » sinon ; feuille de score protégée contre le double appui, heure = horloge du store.
+- `lib/persistence.dart` : `ResultSave`. `lib/wod_models.dart` : `WodResult.attempt`.
+- Déficit et essai dans l'interface : `wod_store.dart` (carte de crédits, règles des crédits), `wod_catalog.dart` (message « Pas d'essai du jour »), `arsenal_screen.dart`, `game_widgets.dart`, `stats_progression.dart`, `rewards.dart`, `data_control.dart` (aperçu d'import).
+- `pubspec.yaml`, `lib/settings_screen.dart` : 2.5.5+56.
+- Documentation : `README.md` (section 2.5.5), `docs/CONTRAT_L3.md`, ce suivi.
+- Tests : `test/l3_economy_test.dart` (nouveau) ; `test/l2_persistence_test.dart` et `test/l2b_data_control_test.dart` adaptés (voir L3.3).
+
+**Inchangés** : barème, prix, bonus, remises et plancher ; file d'écritures, copies de secours, bornes d'import, aperçu, conflit, suppression ; workflow `build-apk.yml` ; identifiant et signature.
+
+## L3.3 — Tests
+
+| Niveau | Résultat |
+| --- | --- |
+| Nouveaux tests `l3_economy_test.dart` | 28 : 27 sur le store (instances isolées, horloge `storeClock` contrôlée), 1 widget (tentative 23 h 59 → 00 h 01 sur l'écran réel) |
+| Tests adaptés | `l2_persistence_test` « import d'une sauvegarde L2 : son plus haut remplace le courant » et `l2b_data_control_test` « formats historiques et sauvegarde L2 acceptés » : le fichier simulé retire désormais `creditGrants`, pour rester une vraie sauvegarde L2 (sans registre). Assertions inchangées |
+| Défauts trouvés par les tests et corrigés | Export différent avant et après une écriture (le registre n'était complété qu'à l'écriture) : 7 tests L2b en échec au premier passage ; registre vide après suppression des données |
+| CI branche temporaire (sans secret) | Formatage : 80 fichiers, 0 changement ; `flutter analyze` sans problème ; tests ciblés (L3, boutique, récompenses, L2, L2b) **127/127** ; **suite complète 306 réussis, 1 ignoré** (278 + 28 nouveaux ; aucun test retiré, un renommé) ; **build Android debug réussi** ; manifeste fusionné : `allowBackup="true"` |
+| Build signé 2.5.5 | Voir `LIVRAISON_L3.md` (résultat GitHub) |
+| Python | 33/33 en local ; `verify_project.py` réussi |
+| Appareil | **Aucun essai** |
+
+### Scénarios
+
+| État initial | Action | Résultat attendu | Résultat observé (test automatique) |
+| --- | --- | --- | --- |
+| Essai du jour non acheté, 23 h 59 | Démarrer, attendre 00 h 01, terminer, enregistrer (double appui) | Un seul résultat, lié à la tentative ; WOD non acquis ; rouvrir = fiche d'achat | Conforme (test widget) |
+| Tentative ouverte puis écran quitté | Revenir après minuit | Aucun score possible, rien d'enregistré | Conforme |
+| Écriture refusée au score | Réessayer | Un résultat, une récompense, aucun succès annoncé avant | Conforme |
+| Essai du jour choisi | Changer niveau/références, notifier, relancer | Même essai | Conforme |
+| Essai terminé | Acheter | Acquis aussitôt, remise d'essai, aucun autre essai ce jour | Conforme |
+| Essai choisi le 24/09 | Horloge au 25/09 ; au 23/09 ; 25/10 (heure d'hiver) ; 31/12 → 01/01 | Nouveau choix au jour suivant ; aucun au recul ; jour civil respecté | Conforme |
+| Tous les WODs du catalogue tentés | Jour suivant | Pas d'essai ; aucun WOD tenté jouable ; message dans la boutique | Conforme pour le store ; message non testé à l'écran |
+| Aucun candidat à ±1 | Ouvrir la boutique | Choix à ±2, puis catalogue | Conforme |
+| Sauvegarde sans sélection, WOD joué aujourd'hui | Importer | Ce WOD reste l'essai du jour | Conforme |
+| Vitrine de la semaine | Changer niveau, relancer ; acheter un WOD | Stable ; le WOD acheté remplacé par un autre | Conforme |
+| Lundi 28/12/2026 | Lundi 04/01/2027 | Nouvelle vitrine | Conforme |
+| Semaine complète payée | Supprimer puis refaire les séances | Aucun gain de plus | Conforme |
+| Semaine supprimée | Nouvelle semaine complète réelle | +1 | Conforme |
+| Palier perdu | Atteint de nouveau | Rien de plus | Conforme |
+| Sauvegarde L2 (plus haut 17, journal 3) | Importer deux fois | `level:1 = 3`, `carry:l2 = 14`, identique | Conforme |
+| État récent | Importer un état plus ancien | Registre et achats de l'ancien état (remplacement) | Conforme |
+| Dépenses 5, gains 3 | Ouvrir la boutique, acheter | « déficit de 2 crédits », achat refusé, WODs gardés | Conforme |
+| Données remplies | Supprimer les données, relancer | Registre `level:1 = 3`, sélections refaites | Conforme |
+
+## L3.4 — Limites et suites
+
+- La tentative d'essai vit en mémoire : si Android arrête l'application pendant l'essai, elle est perdue et ne peut plus être terminée après minuit. Chrono et reprise : **L4b**.
+- Horloge : avancer la date donne plus tôt l'essai et la vitrine suivants ; la reculer ne les refait pas. Aucun crédit n'en découle. Pas de contre-mesure (application hors ligne).
+- Import = remplacement complet, registre et sélections compris ; un fichier ancien peut rendre un autre essai le jour même (en remplaçant toutes les données).
+- Le déficit ne se résorbe que par de nouveaux gains ; aucun crédit compensatoire n'a été décidé.
+- Aucune vérification sur téléphone ; la mise à jour depuis 2.5.4 avec données réelles reste à constater (protocole de `LIVRAISON_L3.md`).
+- Branche temporaire `claude/ci-tools` toujours présente : à supprimer par le propriétaire.
 
 ## L2b.0 — Base et résultats repris
 

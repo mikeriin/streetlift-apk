@@ -1,4 +1,15 @@
-# Kalis Track 2.5.4 — Boutique de WODs façon jeu
+# Kalis Track 2.5.5 — Boutique de WODs façon jeu
+
+## 2.5.5 — Essai du jour, vitrine et crédits fiabilisés (lot L3)
+
+- **Essai commencé avant minuit : il se termine.** Un essai lancé à 23 h 59 peut être fini et son score enregistré après minuit. Le droit vaut pour cette tentative seulement : quitter l’écran l’abandonne, et le WOD ne devient pas acquis. Un score n’est enregistré qu’une fois, même en appuyant deux fois ou en réessayant après une erreur d’écriture ; la récompense n’apparaît qu’une fois le score sauvegardé.
+- **Un seul essai par jour, qui ne change plus.** L’essai du jour est fixé à la première ouverture de la journée et enregistré (il fait partie de la sauvegarde). Tentatives illimitées jusqu’à minuit. L’acheter le rend acquis tout de suite, sans faire apparaître un autre essai gratuit. Toujours un WOD jamais tenté : au niveau ±1, sinon ±2, sinon dans tout le catalogue ; s’il n’en reste aucun, pas d’essai ce jour-là (message dans la boutique).
+- **Vitrine fixée pour la semaine.** Choisie le premier affichage de la semaine et enregistrée ; seul un WOD acheté laisse sa place au suivant. Reculer l’horloge ne refait ni l’essai ni la vitrine.
+- **Crédits : chaque gain payé une fois.** Chaque gain (palier de niveau, chapitre, boss, semaine complète) est inscrit dans un registre sauvegardé. Corriger ou supprimer une activité ne retire rien ; la refaire ne repaie rien ; une vraie nouvelle semaine complète rapporte bien son crédit. Les prix payés et les WODs acquis ne changent jamais.
+- **Déficit affiché.** Si une ancienne sauvegarde dépense plus qu’elle n’a gagné, le solde indique « déficit de N crédits » au lieu de 0 ; les achats attendent de nouveaux gains, les WODs acquis restent acquis.
+- **Anciennes sauvegardes.** Registre reconstruit depuis le journal, surplus L2 conservé ; aucun crédit créé ni retiré. L’import reste un remplacement complet.
+
+Contrat détaillé : `docs/CONTRAT_L3.md`. Tests : `test/l3_economy_test.dart`.
 
 ## 2.5.4 — Sauvegarde Android : choix explicite
 
@@ -24,7 +35,7 @@ Aucune permission de stockage n’est ajoutée : le sélecteur système donne ac
 - **Une seule file d’écritures.** Sauvegardes ordinaires, achats et imports passent dans le même ordre ; chaque écriture encode l’état au moment où elle s’exécute : un état ancien ne peut plus être écrit après un plus récent. Après une erreur, les modifications restent en mémoire, l’alerte propose **Réessayer**.
 - **Import plus sûr.** Validation complète avant tout changement ; l’état courant est d’abord gardé en copie de secours (les trois dernières sont conservées) ; import appliqué seulement après son écriture. Messages distincts : sauvegarde invalide, trop volumineuse, écriture refusée.
 - **Imports bornés.** Texte ≤ 8 Mio de caractères, JSON décompressé ≤ 32 Mio (contrôlé pendant la décompression), ≤ 2 millions de valeurs, textes ≤ 100 000 caractères, ≤ 20 000 séances, ≤ 500 000 séries, ≤ 100 000 résultats de WOD, ≤ 20 000 entrées par autre collection. Une sauvegarde représentative (40 semaines entièrement saisies, 60 séances perso, 300 résultats) pèse 1 037 555 octets de JSON et 49 183 caractères compactée.
-- **Crédits gagnés jamais repris.** Corriger ou supprimer une séance, un score ou une semaine fait varier l’XP et le niveau, mais plus le total de crédits gagnés : l’application retient le plus haut total atteint (`creditsEarnedMax`, exporté avec la sauvegarde). Refaire une performance supprimée ne redonne rien tant que ce plus haut n’est pas dépassé. Au premier lancement, ce plus haut part du calcul actuel : aucun crédit créé ni retiré.
+- **Crédits gagnés jamais repris.** Corriger ou supprimer une séance, un score ou une semaine fait varier l’XP et le niveau, mais plus le total de crédits gagnés : l’application retient le plus haut total atteint (`creditsEarnedMax`, exporté avec la sauvegarde). Refaire une performance supprimée ne redonne rien tant que ce plus haut n’est pas dépassé. Au premier lancement, ce plus haut part du calcul actuel : aucun crédit créé ni retiré. *Remplacé en 2.5.5 par le registre des gains.*
 - **Droits WOD anciens.** Les accès « coût 0 » de l’ancienne migration ne sont plus effacés. Un WOD déjà joué (au moins un résultat) reste acquis, gratuitement ; les autres sont archivés à part (`legacyGrants`), sans accès, pour ne pas rendre tout le catalogue gratuit. Même règle pour un import au format 1 ou 2 ; un droit à coût 0 d’une sauvegarde format 3 reste acquis.
 
 Tests : `test/l2_persistence_test.dart`, `test/l2_purchase_ui_test.dart`, jeux de données `test/l2_fixtures.dart`.
