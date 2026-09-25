@@ -611,8 +611,11 @@ class AppStore extends ChangeNotifier {
   final ValueNotifier<String?> persistenceError = ValueNotifier<String?>(null);
 
   /// File unique des écritures (KT-013) : sauvegardes ordinaires, achats et
-  /// imports s'exécutent dans l'ordre de leur demande.
-  Future<void> _pendingWrite = Future<void>.value();
+  /// imports s'exécutent un par un, dans l'ordre de leur demande. La file est
+  /// relancée dans la zone de l'appelant : elle ne dépend d'aucun Future créé
+  /// ailleurs (un Future terminé dans une autre zone y reporterait la suite).
+  final List<Future<void> Function()> _writeQueue = [];
+  bool _draining = false;
   Future<void>? _queuedSnapshot;
   bool _initialized = false;
 
@@ -792,7 +795,6 @@ class AppStore extends ChangeNotifier {
   /// Crédits gagnés = barème par niveau + crédits dérivés du journal
   /// (chapitres bouclés, boss vaincus, semaines complètes).
   int get creditsEarned => creditsForLevel(level) + game.bonusCredits;
-
   /// Achats enregistrés + achats en cours (réservés jusqu'à leur résultat).
   int get creditsSpent {
     var total = unlockedWods.values.fold(0, (a, b) => a + b);
@@ -2048,10 +2050,7 @@ class AppStore extends ChangeNotifier {
       // Formats 1-2 (avant les crédits v2) : un coût 0 d'un WOD du catalogue
       // vient de l'ancienne migration. Il ne devient pas un accès gratuit ;
       // il est conservé à part, comme au démarrage (KT-014).
-      if (limits != null &&
-          format < 3 &&
-          v == 0 &&
-          _seedDefaults.containsKey(k)) {
+      if (limits != null && format < 3 && v == 0 && _seedDefaults.containsKey(k)) {
         nextLegacy[k] = 'import_format_$format';
         return;
       }
@@ -2081,8 +2080,7 @@ class AppStore extends ChangeNotifier {
   /// Tailles des collections d'un import, avant toute conversion (KT-015).
   static void _checkCollections(Map<String, dynamic> m, ImportLimits limits) {
     void cap(Object? value, int limit, String what) {
-      final n =
-          value is Map ? value.length : (value is List ? value.length : 0);
+      final n = value is Map ? value.length : (value is List ? value.length : 0);
       if (n > limit) throw ImportLimitException('Trop de $what.');
     }
 
@@ -2268,11 +2266,32 @@ class AppStore extends ChangeNotifier {
     if (_initialized) unawaited(_writeSnapshot());
   }
 
-  /// Ajoute une opération à la file unique des écritures.
+  /// Ajoute une opération à la file unique des écritures. Elle démarre au
+  /// plus tôt dans une microtâche : jamais pendant l'appel qui l'ajoute.
   Future<T> _serialize<T>(Future<T> Function() op) {
-    final result = _pendingWrite.then((_) => op());
-    _pendingWrite = result.then<void>((_) {}, onError: (_) {});
-    return result;
+    final done = Completer<T>();
+    _writeQueue.add(() async {
+      try {
+        done.complete(await op());
+      } catch (error, stack) {
+        done.completeError(error, stack);
+      }
+    });
+    if (!_draining) {
+      _draining = true;
+      scheduleMicrotask(_drainWrites);
+    }
+    return done.future;
+  }
+
+  Future<void> _drainWrites() async {
+    try {
+      while (_writeQueue.isNotEmpty) {
+        await _writeQueue.removeAt(0)();
+      }
+    } finally {
+      _draining = false;
+    }
   }
 
   /// Sauvegarde de l'état courant. Les demandes rapprochées se regroupent en
@@ -2283,10 +2302,12 @@ class AppStore extends ChangeNotifier {
     _changeSeq++;
     final queued = _queuedSnapshot;
     if (queued != null) return queued;
-    return _queuedSnapshot = _serialize(() async {
+    final next = _serialize(() async {
       _queuedSnapshot = null;
       await _commitState();
     });
+    _queuedSnapshot = next;
+    return next;
   }
 
   Future<bool> _commitState() async {
