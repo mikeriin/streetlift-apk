@@ -102,6 +102,9 @@ void main() {
   });
   setUp(() {
     store.logs.clear();
+    // Journal vidé = nouvel utilisateur : les crédits gagnés, jamais repris
+    // (KT-005, option C), repartent aussi du journal.
+    store.debugResetEarnedCredits();
     store.unlockedWods.clear();
     store.consumeReward();
     store.notifyListeners();

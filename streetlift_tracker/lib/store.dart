@@ -810,6 +810,11 @@ class AppStore extends ChangeNotifier {
   /// ce plus haut.
   int get creditsEarned => max(creditsFromJournal, _earnedMax);
 
+  /// Isolement des tests qui vident le journal entre deux cas : sans cela,
+  /// l'option C garde les crédits gagnés par le cas précédent.
+  @visibleForTesting
+  void debugResetEarnedCredits() => _earnedMax = 0;
+
   /// Achats enregistrés + achats en cours (réservés jusqu'à leur résultat).
   int get creditsSpent {
     var total = unlockedWods.values.fold(0, (a, b) => a + b);
