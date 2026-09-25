@@ -111,45 +111,48 @@ void main() {
       expect(app.unlocked(w), isFalse);
     });
 
-    test('double appui : un seul débit, rien d’annoncé avant l’écriture', () async {
-      final w = affordable(app);
-      final cost = app.wodCost(w);
-      final before = app.credits;
-      final gate = holdWrites(app);
-      final first = app.purchaseWod(w, acceptedCost: cost);
-      final second = app.purchaseWod(w, acceptedCost: cost);
-      expect((await second).status, PurchaseStatus.pending);
-      expect(app.purchasePending(w), isTrue);
-      expect(app.unlocked(w), isFalse);
-      expect(app.credits, before - cost);
-      gate.complete(true);
-      expect((await first).status, PurchaseStatus.success);
-      expect(app.purchasePending(w), isFalse);
-      expect(app.unlocked(w), isTrue);
-      expect(app.credits, before - cost);
-      expect(
-        (await app.purchaseWod(w)).status,
-        PurchaseStatus.alreadyOwned,
-      );
-      expect(app.credits, before - cost);
-    });
+    test(
+      'double appui : un seul débit, rien d’annoncé avant l’écriture',
+      () async {
+        final w = affordable(app);
+        final cost = app.wodCost(w);
+        final before = app.credits;
+        final gate = holdWrites(app);
+        final first = app.purchaseWod(w, acceptedCost: cost);
+        final second = app.purchaseWod(w, acceptedCost: cost);
+        expect((await second).status, PurchaseStatus.pending);
+        expect(app.purchasePending(w), isTrue);
+        expect(app.unlocked(w), isFalse);
+        expect(app.credits, before - cost);
+        gate.complete(true);
+        expect((await first).status, PurchaseStatus.success);
+        expect(app.purchasePending(w), isFalse);
+        expect(app.unlocked(w), isTrue);
+        expect(app.credits, before - cost);
+        expect((await app.purchaseWod(w)).status, PurchaseStatus.alreadyOwned);
+        expect(app.credits, before - cost);
+      },
+    );
 
-    test('deux WODs : le solde réservé empêche une dépense excessive', () async {
-      expect(app.credits, 3);
-      final pair =
-          app.wods
-              .where((w) => app.isCatalog(w) && app.wodCost(w) == 2)
-              .take(2)
-              .toList();
-      final gate = holdWrites(app);
-      final first = app.purchaseWod(pair[0], acceptedCost: 2);
-      final second = await app.purchaseWod(pair[1], acceptedCost: 2);
-      expect(second.status, PurchaseStatus.insufficientCredits);
-      gate.complete(true);
-      expect((await first).status, PurchaseStatus.success);
-      expect(app.credits, 1);
-      expect(app.unlocked(pair[1]), isFalse);
-    });
+    test(
+      'deux WODs : le solde réservé empêche une dépense excessive',
+      () async {
+        expect(app.credits, 3);
+        final pair =
+            app.wods
+                .where((w) => app.isCatalog(w) && app.wodCost(w) == 2)
+                .take(2)
+                .toList();
+        final gate = holdWrites(app);
+        final first = app.purchaseWod(pair[0], acceptedCost: 2);
+        final second = await app.purchaseWod(pair[1], acceptedCost: 2);
+        expect(second.status, PurchaseStatus.insufficientCredits);
+        gate.complete(true);
+        expect((await first).status, PurchaseStatus.success);
+        expect(app.credits, 1);
+        expect(app.unlocked(pair[1]), isFalse);
+      },
+    );
 
     test('deux WODs abordables ensemble : deux débits exacts', () async {
       final one = affordable(app, cost: 1);
@@ -200,7 +203,10 @@ void main() {
       expect(app.persistenceError.value, isNull);
       final next = await relaunch();
       expect(next.unlockedWods[w.id], cost);
-      expect(next.wished(next.wods.firstWhere((x) => x.id == other.id)), isTrue);
+      expect(
+        next.wished(next.wods.firstWhere((x) => x.id == other.id)),
+        isTrue,
+      );
     });
 
     test('un droit acquis n’est jamais retiré par un achat échoué', () async {
@@ -215,22 +221,25 @@ void main() {
   });
 
   group('KT-013 écritures et imports', () {
-    test('deux imports rapprochés : le dernier gagne, copies gardées', () async {
-      final original = app.values['B4'];
-      final a = backupOf(app)..['pilotage'] = {'B4': 81};
-      final b = backupOf(app)..['pilotage'] = {'B4': 82};
-      final first = app.importBackup(jsonEncode(a));
-      final second = app.importBackup(jsonEncode(b));
-      expect(await first, ImportStatus.success);
-      expect(await second, ImportStatus.success);
-      expect(app.values['B4'], 82);
-      expect(_decode((await disk())!), app.exportAll());
-      expect(app.recoveryCopies, hasLength(2));
-      expect(jsonDecode(app.recoveryState(0)!)['pilotage']['B4'], 81);
-      expect(jsonDecode(app.recoveryState(1)!)['pilotage']['B4'], original);
-      final next = await relaunch();
-      expect(next.values['B4'], 82);
-    });
+    test(
+      'deux imports rapprochés : le dernier gagne, copies gardées',
+      () async {
+        final original = app.values['B4'];
+        final a = backupOf(app)..['pilotage'] = {'B4': 81};
+        final b = backupOf(app)..['pilotage'] = {'B4': 82};
+        final first = app.importBackup(jsonEncode(a));
+        final second = app.importBackup(jsonEncode(b));
+        expect(await first, ImportStatus.success);
+        expect(await second, ImportStatus.success);
+        expect(app.values['B4'], 82);
+        expect(_decode((await disk())!), app.exportAll());
+        expect(app.recoveryCopies, hasLength(2));
+        expect(jsonDecode(app.recoveryState(0)!)['pilotage']['B4'], 81);
+        expect(jsonDecode(app.recoveryState(1)!)['pilotage']['B4'], original);
+        final next = await relaunch();
+        expect(next.values['B4'], 82);
+      },
+    );
 
     test('au plus trois copies de récupération', () async {
       for (final weight in [71, 72, 73, 74]) {
@@ -241,22 +250,25 @@ void main() {
       expect(jsonDecode(app.recoveryState(0)!)['pilotage']['B4'], 73);
     });
 
-    test('un état ancien n’est pas écrit après un import plus récent', () async {
-      final base = backupOf(app)..['pilotage'] = {'B4': 91};
-      final gate = holdWrites(app);
-      app.markSessionDone(8, 1, true); // écriture bloquée
-      final importing = app.importBackup(jsonEncode(base));
-      final w = app.wods.firstWhere(app.isCatalog);
-      app.toggleWish(w); // édition pendant l'import
-      gate.complete(true);
-      expect(await importing, ImportStatus.success);
-      await app.flush();
-      expect(app.values['B4'], 91);
-      expect(_decode((await disk())!), app.exportAll());
-      final next = await relaunch();
-      expect(next.values['B4'], 91);
-      expect(next.exportAll(), app.exportAll());
-    });
+    test(
+      'un état ancien n’est pas écrit après un import plus récent',
+      () async {
+        final base = backupOf(app)..['pilotage'] = {'B4': 91};
+        final gate = holdWrites(app);
+        app.markSessionDone(8, 1, true); // écriture bloquée
+        final importing = app.importBackup(jsonEncode(base));
+        final w = app.wods.firstWhere(app.isCatalog);
+        app.toggleWish(w); // édition pendant l'import
+        gate.complete(true);
+        expect(await importing, ImportStatus.success);
+        await app.flush();
+        expect(app.values['B4'], 91);
+        expect(_decode((await disk())!), app.exportAll());
+        final next = await relaunch();
+        expect(next.values['B4'], 91);
+        expect(next.exportAll(), app.exportAll());
+      },
+    );
 
     test('import pendant un flush : ordre conservé', () async {
       final data = backupOf(app)..['pilotage'] = {'B4': 88};
@@ -273,9 +285,7 @@ void main() {
 
     test('achat pendant une sauvegarde : les deux sont écrits', () async {
       final w = affordable(app);
-      final wish = app.wods.firstWhere(
-        (x) => app.isCatalog(x) && x.id != w.id,
-      );
+      final wish = app.wods.firstWhere((x) => app.isCatalog(x) && x.id != w.id);
       final gate = holdWrites(app);
       app.toggleWish(wish);
       final buying = app.purchaseWod(w, acceptedCost: app.wodCost(w));
@@ -364,9 +374,10 @@ void main() {
       final before = {ids.free: 0, ids.paid: 1};
       expect(app.unlockedWods, {ids.paid: 1});
       expect(app.legacyGrants, {ids.free: 'credits_v1'});
-      expect({...app.unlockedWods.keys, ...app.legacyGrants.keys}, {
-        ...before.keys,
-      });
+      expect(
+        {...app.unlockedWods.keys, ...app.legacyGrants.keys},
+        {...before.keys},
+      );
       expect(app.unlocked(app.wods.firstWhere((w) => w.id == ids.free)), false);
       expect(app.creditsSpent, 1);
       final saved = backupOf(app);
@@ -419,8 +430,7 @@ void main() {
 
     test('droits anciens : aller-retour sans perte', () async {
       final ids = legacyIds(app);
-      final data =
-          backupOf(app)..['legacyGrants'] = {ids.free: 'credits_v1'};
+      final data = backupOf(app)..['legacyGrants'] = {ids.free: 'credits_v1'};
       expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
       final copy = app.exportAll();
       expect(await app.importBackup(copy), ImportStatus.success);
@@ -507,7 +517,8 @@ void main() {
 
     test('gzip tronqué, base64 invalide, JSON mal formé', () async {
       final valid = gzip.encode(utf8.encode(app.exportAll()));
-      final truncated = 'gz:${base64Encode(valid.sublist(0, valid.length ~/ 2))}';
+      final truncated =
+          'gz:${base64Encode(valid.sublist(0, valid.length ~/ 2))}';
       await rejected(truncated, ImportStatus.invalid);
       await rejected('gz:@@@', ImportStatus.invalid);
       await rejected('{"kalisTrack":1,', ImportStatus.invalid);
@@ -561,31 +572,34 @@ void main() {
   });
 
   group('KT-005 comportement actuel (à arbitrer, non modifié)', () {
-    test('supprimer des séances réduit les crédits gagnés, pas les droits', () async {
-      final keys = <String>[];
-      for (final week in app.program.weeks) {
-        for (final day in week.days) {
-          if (app.level >= 2) break;
-          if (day.exercises.isEmpty) continue;
-          app.markSessionDone(week.n, day.j, true);
-          keys.add(app.sessionKey(week.n, day.j));
+    test(
+      'supprimer des séances réduit les crédits gagnés, pas les droits',
+      () async {
+        final keys = <String>[];
+        for (final week in app.program.weeks) {
+          for (final day in week.days) {
+            if (app.level >= 2) break;
+            if (day.exercises.isEmpty) continue;
+            app.markSessionDone(week.n, day.j, true);
+            keys.add(app.sessionKey(week.n, day.j));
+          }
         }
-      }
-      expect(app.level, greaterThanOrEqualTo(2));
-      final earned = app.creditsEarned;
-      final w = affordable(app);
-      expect((await app.purchaseWod(w)).status, PurchaseStatus.success);
-      for (final key in keys) {
-        app.deleteLog(key);
-      }
-      expect(app.creditsEarned, lessThan(earned));
-      expect(app.unlocked(w), isTrue);
-      // Le plancher à 0 masque un solde négatif éventuel.
-      expect(app.credits, greaterThanOrEqualTo(0));
-      expect(
-        app.credits,
-        (app.creditsEarned - app.creditsSpent).clamp(0, 1 << 30),
-      );
-    });
+        expect(app.level, greaterThanOrEqualTo(2));
+        final earned = app.creditsEarned;
+        final w = affordable(app);
+        expect((await app.purchaseWod(w)).status, PurchaseStatus.success);
+        for (final key in keys) {
+          app.deleteLog(key);
+        }
+        expect(app.creditsEarned, lessThan(earned));
+        expect(app.unlocked(w), isTrue);
+        // Le plancher à 0 masque un solde négatif éventuel.
+        expect(app.credits, greaterThanOrEqualTo(0));
+        expect(
+          app.credits,
+          (app.creditsEarned - app.creditsSpent).clamp(0, 1 << 30),
+        );
+      },
+    );
   });
 }
