@@ -26,6 +26,7 @@ import 'package:streetlift_tracker/set_validation.dart';
 import 'package:streetlift_tracker/store.dart';
 import 'package:streetlift_tracker/timers.dart';
 import 'package:streetlift_tracker/wod_formats.dart';
+import 'package:streetlift_tracker/wod_models.dart';
 import 'package:streetlift_tracker/wod_screen.dart';
 
 const _key = 'kalis_state_v3';
@@ -108,20 +109,11 @@ void main() {
       expect(check('reps', SetEntry(reps: '7,5')).field, SetField.value);
       expect(check('reps', SetEntry(reps: '8', kg: 'abc')).field, SetField.kg);
       expect(check('reps', SetEntry(reps: '8', kg: '-15')).ok, isTrue);
+      expect(check('reps', SetEntry(reps: '8', rir: '2,3')).field, SetField.effort);
+      expect(check('reps', SetEntry(reps: '8', v: '0')).field, SetField.velocity);
       expect(
-        check('reps', SetEntry(reps: '8', rir: '2,3')).field,
-        SetField.effort,
-      );
-      expect(
-        check('reps', SetEntry(reps: '8', v: '0')).field,
-        SetField.velocity,
-      );
-      expect(
-        checkSet(
-          const LogSpec('reps'),
-          SetEntry(reps: '8', rir: '0'),
-          rpe: true,
-        ).field,
+        checkSet(const LogSpec('reps'), SetEntry(reps: '8', rir: '0'), rpe: true)
+            .field,
         SetField.effort,
       );
       expect(
@@ -188,10 +180,7 @@ void main() {
       expect(after, xp); // XP de séance au moment de la fin, pas par série
       await app.flush();
       final next = await relaunch();
-      expect(
-        next.logs[app.sessionKey(w.n, d.j)]!.ex[ex.id]!.sets[0].done,
-        isTrue,
-      );
+      expect(next.logs[app.sessionKey(w.n, d.j)]!.ex[ex.id]!.sets[0].done, isTrue);
     });
 
     test('série validée puis modifiée : repasse non validée si invalide', () {
@@ -256,13 +245,7 @@ void main() {
       expect(resume.done, greaterThan(0));
       expect(resume.day.j, d.j);
       // Une séance seulement ouverte (brouillon pré-rempli) n'est pas en cours.
-      final (w2, d2) = (
-        next.program.week(w.n + 1),
-        next.program
-            .week(w.n + 1)
-            .days
-            .firstWhere((x) => x.exercises.isNotEmpty),
-      );
+      final (w2, d2) = (next.program.week(w.n + 1), next.program.week(w.n + 1).days.firstWhere((x) => x.exercises.isNotEmpty));
       next.exLog(w2.n, d2.j, d2.exercises.first).sets.first.reps = '8';
       expect(next.inProgress(next.sessionKey(w2.n, d2.j)), isFalse);
       expect(next.sessionsInProgress, hasLength(1));
@@ -295,101 +278,84 @@ void main() {
       expect(app.logs[app.sessionKey(w.n, d.j)]!.finishedAt, finished);
     });
 
-    test(
-      'écriture refusée : pas de bilan, séries gardées ; nouvel essai',
-      () async {
-        final (w, d) = _repsDay(app);
-        final ex = d.exercises.first;
-        final log = app.exLog(w.n, d.j, ex);
-        log.sets[0].reps = '8';
-        app.toggleSet(log, 0, app.logSpec(ex));
-        await app.flush();
-        final stored = (await SharedPreferences.getInstance()).getString(_key);
-        app.debugWriteHook = (_) async => false;
-        expect(await app.finishSession(w.n, d.j), ResultSave.unsaved);
-        expect(app.consumeReward(), isNull);
-        expect(log.sets[0].done, isTrue);
-        expect((await SharedPreferences.getInstance()).getString(_key), stored);
-        // Fermeture à ce moment : le dernier état confirmé = séance en cours.
-        final crashed = await relaunch();
-        expect(crashed.isDone(w.n, d.j), isFalse);
-        expect(crashed.inProgress(crashed.sessionKey(w.n, d.j)), isTrue);
-        app.debugWriteHook = null;
-        expect(await app.finishSession(w.n, d.j), ResultSave.saved);
-        final reward = app.consumeReward();
-        expect(reward, isNotNull);
-        expect(app.consumeReward(), isNull);
-        // Fermeture après l'écriture, avant l'affichage du bilan : séance
-        // terminée, gains au registre ; aucun gain supplémentaire au relancement.
-        final after = await relaunch();
-        expect(after.isDone(w.n, d.j), isTrue);
-        expect(after.xp, app.xp);
-        expect(after.credits, app.credits);
-        expect(after.consumeReward(), isNull);
-        expect(await after.finishSession(w.n, d.j), ResultSave.saved);
-        expect(after.consumeReward(), isNull);
-        expect(after.xp, app.xp);
-      },
-    );
+    test('écriture refusée : pas de bilan, séries gardées ; nouvel essai', () async {
+      final (w, d) = _repsDay(app);
+      final ex = d.exercises.first;
+      final log = app.exLog(w.n, d.j, ex);
+      log.sets[0].reps = '8';
+      app.toggleSet(log, 0, app.logSpec(ex));
+      await app.flush();
+      final stored = (await SharedPreferences.getInstance()).getString(_key);
+      app.debugWriteHook = (_) async => false;
+      expect(await app.finishSession(w.n, d.j), ResultSave.unsaved);
+      expect(app.consumeReward(), isNull);
+      expect(log.sets[0].done, isTrue);
+      expect((await SharedPreferences.getInstance()).getString(_key), stored);
+      // Fermeture à ce moment : le dernier état confirmé = séance en cours.
+      final crashed = await relaunch();
+      expect(crashed.isDone(w.n, d.j), isFalse);
+      expect(crashed.inProgress(crashed.sessionKey(w.n, d.j)), isTrue);
+      app.debugWriteHook = null;
+      expect(await app.finishSession(w.n, d.j), ResultSave.saved);
+      final reward = app.consumeReward();
+      expect(reward, isNotNull);
+      expect(app.consumeReward(), isNull);
+      // Fermeture après l'écriture, avant l'affichage du bilan : séance
+      // terminée, gains au registre ; aucun gain supplémentaire au relancement.
+      final after = await relaunch();
+      expect(after.isDone(w.n, d.j), isTrue);
+      expect(after.xp, app.xp);
+      expect(after.credits, app.credits);
+      expect(after.consumeReward(), isNull);
+      expect(await after.finishSession(w.n, d.j), ResultSave.saved);
+      expect(after.consumeReward(), isNull);
+      expect(after.xp, app.xp);
+    });
 
-    test(
-      'reprise après minuit : dates de séries gardées, fin datée à la fin',
-      () async {
-        final (w, d) = _repsDay(app);
-        final ex = d.exercises.first;
-        final log = app.exLog(w.n, d.j, ex);
-        now = DateTime(2026, 9, 26, 23, 50);
-        log.sets[0].reps = '8';
-        app.toggleSet(log, 0, app.logSpec(ex));
-        await app.flush();
-        now = DateTime(2026, 9, 27, 0, 10);
-        final next = await relaunch();
-        final key = next.sessionKey(w.n, d.j);
-        expect(
-          next.logs[key]!.ex[ex.id]!.sets[0].completedAt,
-          '2026-09-26T23:50:00.000',
-        );
-        await next.finishSession(w.n, d.j);
-        expect(next.logs[key]!.finishedAt, '2026-09-27T00:10:00.000');
-        expect(
-          next.logs[key]!.ex[ex.id]!.sets[0].completedAt,
-          '2026-09-26T23:50:00.000',
-        );
-        expect(next.program.start, DateTime(2026, 7, 13)); // calendrier L4
-      },
-    );
+    test('reprise après minuit : dates de séries gardées, fin datée à la fin', () async {
+      final (w, d) = _repsDay(app);
+      final ex = d.exercises.first;
+      final log = app.exLog(w.n, d.j, ex);
+      now = DateTime(2026, 9, 26, 23, 50);
+      log.sets[0].reps = '8';
+      app.toggleSet(log, 0, app.logSpec(ex));
+      await app.flush();
+      now = DateTime(2026, 9, 27, 0, 10);
+      final next = await relaunch();
+      final key = next.sessionKey(w.n, d.j);
+      expect(next.logs[key]!.ex[ex.id]!.sets[0].completedAt, '2026-09-26T23:50:00.000');
+      await next.finishSession(w.n, d.j);
+      expect(next.logs[key]!.finishedAt, '2026-09-27T00:10:00.000');
+      expect(next.logs[key]!.ex[ex.id]!.sets[0].completedAt, '2026-09-26T23:50:00.000');
+      expect(next.program.start, DateTime(2026, 7, 13)); // calendrier L4
+    });
 
-    test(
-      'séance perso répétée : ancienne occurrence archivée, jamais écrasée',
-      () async {
-        final session = CustomSession(
-          id: app.newSessionId(),
-          name: 'Perso test',
-          items: [CustomExercise(uid: 'a1', name: 'Tractions')],
-        );
-        app.upsertSession(session);
-        final plan = session.toWeekPlan();
-        final day = plan.days.first;
-        final ex = day.exercises.first;
-        final log = app.exLog(0, day.j, ex);
-        log.sets[0].reps = '10';
-        app.toggleSet(log, 0, app.logSpec(ex));
-        expect(await app.finishSession(0, day.j), ResultSave.saved);
-        app.consumeReward();
-        final first = jsonEncode(app.logs['S0-J${session.id}']!.toJson());
-        app.restartCustomSession(session);
-        session.items.first.name = 'Tractions modifiées';
-        app.upsertSession(session);
-        final archives = app.logs.keys.where(
-          (k) => k.startsWith('S0-J${session.id}@'),
-        );
-        expect(archives, hasLength(1));
-        expect(jsonEncode(app.logs[archives.single]!.toJson()), first);
-        expect(app.logs.containsKey('S0-J${session.id}'), isFalse);
-        final again = app.exLog(0, day.j, ex);
-        expect(again.sets.every((s) => !s.done), isTrue);
-      },
-    );
+    test('séance perso répétée : ancienne occurrence archivée, jamais écrasée', () async {
+      final session = CustomSession(
+        id: app.newSessionId(),
+        name: 'Perso test',
+        items: [CustomExercise(uid: 'a1', name: 'Tractions')],
+      );
+      app.upsertSession(session);
+      final plan = session.toWeekPlan();
+      final day = plan.days.first;
+      final ex = day.exercises.first;
+      final log = app.exLog(0, day.j, ex);
+      log.sets[0].reps = '10';
+      app.toggleSet(log, 0, app.logSpec(ex));
+      expect(await app.finishSession(0, day.j), ResultSave.saved);
+      app.consumeReward();
+      final first = jsonEncode(app.logs['S0-J${session.id}']!.toJson());
+      app.restartCustomSession(session);
+      session.items.first.name = 'Tractions modifiées';
+      app.upsertSession(session);
+      final archives = app.logs.keys.where((k) => k.startsWith('S0-J${session.id}@'));
+      expect(archives, hasLength(1));
+      expect(jsonEncode(app.logs[archives.single]!.toJson()), first);
+      expect(app.logs.containsKey('S0-J${session.id}'), isFalse);
+      final again = app.exLog(0, day.j, ex);
+      expect(again.sets.every((s) => !s.done), isTrue);
+    });
   });
 
   // ===================================================================
@@ -474,47 +440,44 @@ void main() {
       });
     });
 
-    test(
-      'point sûr : reprise en pause, absence non comptée, aucune alerte',
-      () {
-        fakeAsync((async) {
-          var wall = DateTime(2026, 9, 26, 12);
-          final c = WodClock(now: () => wall);
-          const phases = [
-            WodPhase(PhaseKind.work, 20),
-            WodPhase(PhaseKind.rest, 10),
-            WodPhase(PhaseKind.work, 20),
-          ];
-          c.startPhases(phases);
-          wall = wall.add(const Duration(seconds: 25));
-          async.elapse(const Duration(milliseconds: 200));
-          final point = c.checkpoint();
-          expect(point['ms'], 25000);
-          expect(point.keys, isNot(contains('startedAt')));
-          c.dispose();
-          // Nouveau processus, 2 h plus tard, horloge monotone repartie de 0 :
-          // aucun repère ancien n'est réutilisé.
-          wall = wall.add(const Duration(hours: 2));
-          final d = WodClock(now: () => wall, mono: () => 0);
-          d.startPhases(phases);
-          d.resumePaused(ms: point['ms'] as int);
-          expect(d.running, isFalse);
-          expect(d.started, isTrue);
-          expect(d.phaseIndex, 1);
-          expect(d.phaseRemaining, 5);
-          expect(d.beeps + d.alarms, 0);
-          wall = wall.add(const Duration(seconds: 3));
-          async.elapse(const Duration(seconds: 1));
-          expect(d.phaseRemaining, 5); // en pause
-          d.toggle();
-          wall = wall.add(const Duration(seconds: 5));
-          async.elapse(const Duration(milliseconds: 200));
-          expect(d.phaseIndex, 2);
-          expect(d.beeps, 1);
-          d.dispose();
-        });
-      },
-    );
+    test('point sûr : reprise en pause, absence non comptée, aucune alerte', () {
+      fakeAsync((async) {
+        var wall = DateTime(2026, 9, 26, 12);
+        final c = WodClock(now: () => wall);
+        const phases = [
+          WodPhase(PhaseKind.work, 20),
+          WodPhase(PhaseKind.rest, 10),
+          WodPhase(PhaseKind.work, 20),
+        ];
+        c.startPhases(phases);
+        wall = wall.add(const Duration(seconds: 25));
+        async.elapse(const Duration(milliseconds: 200));
+        final point = c.checkpoint();
+        expect(point['ms'], 25000);
+        expect(point.keys, isNot(contains('startedAt')));
+        c.dispose();
+        // Nouveau processus, 2 h plus tard, horloge monotone repartie de 0 :
+        // aucun repère ancien n'est réutilisé.
+        wall = wall.add(const Duration(hours: 2));
+        final d = WodClock(now: () => wall, mono: () => 0);
+        d.startPhases(phases);
+        d.resumePaused(ms: point['ms'] as int);
+        expect(d.running, isFalse);
+        expect(d.started, isTrue);
+        expect(d.phaseIndex, 1);
+        expect(d.phaseRemaining, 5);
+        expect(d.beeps + d.alarms, 0);
+        wall = wall.add(const Duration(seconds: 3));
+        async.elapse(const Duration(seconds: 1));
+        expect(d.phaseRemaining, 5); // en pause
+        d.toggle();
+        wall = wall.add(const Duration(seconds: 5));
+        async.elapse(const Duration(milliseconds: 200));
+        expect(d.phaseIndex, 2);
+        expect(d.beeps, 1);
+        d.dispose();
+      });
+    });
 
     test('chrono de tenue terminé : la série n’est pas validée', () {
       fakeAsync((async) {
@@ -559,51 +522,41 @@ void main() {
       return next;
     }
 
-    test(
-      'essai lancé avant minuit, processus détruit, fini après minuit',
-      () async {
-        final trial = app.trialWod!;
-        final attempt = app.startAttempt(trial)!;
-        app.checkpointWod(attempt, {
-          'ms': 400000,
-          'laps': <int>[120, 250],
-          'round': 2,
-          'capHit': false,
-          'finished': false,
-        }, app.dataEpoch);
-        await app.flush();
-        now = DateTime(2026, 9, 27, 0, 20);
-        final next = await relaunch();
-        final w = next.wods.firstWhere((x) => x.id == trial.id);
-        expect(next.activeWod?.attempt, attempt);
-        expect(next.activeWod?.ms, 400000);
-        expect(next.activeWod?.laps, [120, 250]);
-        expect(next.canFinish(w, attempt), isTrue); // droit de finir gardé
-        final before = w.results.length;
-        final r = WodResult(
-          at: now.toIso8601String(),
-          score: '6:40',
-          seconds: 400,
-        );
-        expect(
-          await next.recordWodResult(w, r, attempt: attempt),
-          ResultSave.saved,
-        );
-        expect(next.activeWod, isNull);
-        expect(
-          await next.recordWodResult(
-            w,
-            WodResult(at: now.toIso8601String(), score: '6:40', seconds: 400),
-            attempt: attempt,
-          ),
-          ResultSave.saved,
-        );
-        expect(w.results.length, before + 1); // une tentative, un résultat
-        expect(next.unlocked(w), isFalse); // aucune acquisition
-        final again = await relaunch();
-        expect(again.activeWod, isNull);
-      },
-    );
+    test('essai lancé avant minuit, processus détruit, fini après minuit', () async {
+      final trial = app.trialWod!;
+      final attempt = app.startAttempt(trial)!;
+      app.checkpointWod(attempt, {
+        'ms': 400000,
+        'laps': <int>[120, 250],
+        'round': 2,
+        'capHit': false,
+        'finished': false,
+      }, app.dataEpoch);
+      await app.flush();
+      now = DateTime(2026, 9, 27, 0, 20);
+      final next = await relaunch();
+      final w = next.wods.firstWhere((x) => x.id == trial.id);
+      expect(next.activeWod?.attempt, attempt);
+      expect(next.activeWod?.ms, 400000);
+      expect(next.activeWod?.laps, [120, 250]);
+      expect(next.canFinish(w, attempt), isTrue); // droit de finir gardé
+      final before = w.results.length;
+      final r = WodResult(at: now.toIso8601String(), score: '6:40', seconds: 400);
+      expect(await next.recordWodResult(w, r, attempt: attempt), ResultSave.saved);
+      expect(next.activeWod, isNull);
+      expect(
+        await next.recordWodResult(
+          w,
+          WodResult(at: now.toIso8601String(), score: '6:40', seconds: 400),
+          attempt: attempt,
+        ),
+        ResultSave.saved,
+      );
+      expect(w.results.length, before + 1); // une tentative, un résultat
+      expect(next.unlocked(w), isFalse); // aucune acquisition
+      final again = await relaunch();
+      expect(again.activeWod, isNull);
+    });
 
     test('un seul WOD chronométré à la fois ; abandon explicite', () async {
       final a = app.wods.firstWhere(app.isCatalog);
@@ -620,54 +573,44 @@ void main() {
       expect(app.activeWod, isNull);
     });
 
-    test(
-      'export sans chrono ; import et effacement l’annulent ; point obsolète ignoré',
-      () async {
-        final w = app.wods.firstWhere(app.isCatalog);
-        app.unlockedWods[w.id] = 0;
-        final attempt = app.startAttempt(w)!;
-        final epoch = app.dataEpoch;
-        await app.flush();
-        final state =
-            jsonDecode(
-                  utf8.decode(
-                    gzip.decode(
-                      base64Decode(
-                        (await SharedPreferences.getInstance())
-                            .getString(_key)!
-                            .substring(3),
-                      ),
-                    ),
-                  ),
-                )
-                as Map<String, dynamic>;
-        expect(state['activeWod']?['attempt'], attempt);
-        final exported = jsonDecode(app.exportAll()) as Map<String, dynamic>;
-        expect(exported.containsKey('activeWod'), isFalse);
-        // Un fichier contenant quand même un chrono : ignoré à l'import.
-        exported['activeWod'] = state['activeWod'];
-        expect(
-          await app.importBackup(jsonEncode(exported)),
-          ImportStatus.success,
-        );
-        expect(app.activeWod, isNull);
-        expect(app.canFinish(w, attempt), isTrue); // débloqué dans le fichier
-        app.checkpointWod(attempt, {
-          'ms': 5000,
-          'laps': <int>[],
-          'round': 0,
-          'capHit': false,
-          'finished': false,
-        }, epoch);
-        expect(app.activeWod, isNull); // écran de l'ancien état : ignoré
-        final other = app.startAttempt(w)!;
-        expect(app.activeWod?.attempt, other);
-        expect((await app.eraseAllData()).status, EraseStatus.success);
-        expect(app.activeWod, isNull);
-        final next = await relaunch();
-        expect(next.activeWod, isNull);
-      },
-    );
+    test('export sans chrono ; import et effacement l’annulent ; point obsolète ignoré', () async {
+      final w = app.wods.firstWhere(app.isCatalog);
+      app.unlockedWods[w.id] = 0;
+      final attempt = app.startAttempt(w)!;
+      final epoch = app.dataEpoch;
+      await app.flush();
+      final state = jsonDecode(
+        utf8.decode(
+          gzip.decode(
+            base64Decode(
+              (await SharedPreferences.getInstance()).getString(_key)!.substring(3),
+            ),
+          ),
+        ),
+      ) as Map<String, dynamic>;
+      expect(state['activeWod']?['attempt'], attempt);
+      final exported = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+      expect(exported.containsKey('activeWod'), isFalse);
+      // Un fichier contenant quand même un chrono : ignoré à l'import.
+      exported['activeWod'] = state['activeWod'];
+      expect(await app.importBackup(jsonEncode(exported)), ImportStatus.success);
+      expect(app.activeWod, isNull);
+      expect(app.canFinish(w, attempt), isTrue); // débloqué dans le fichier
+      app.checkpointWod(attempt, {
+        'ms': 5000,
+        'laps': <int>[],
+        'round': 0,
+        'capHit': false,
+        'finished': false,
+      }, epoch);
+      expect(app.activeWod, isNull); // écran de l'ancien état : ignoré
+      final other = app.startAttempt(w)!;
+      expect(app.activeWod?.attempt, other);
+      expect((await app.eraseAllData()).status, EraseStatus.success);
+      expect(app.activeWod, isNull);
+      final next = await relaunch();
+      expect(next.activeWod, isNull);
+    });
 
     test('chrono illisible : ignoré, le reste des données chargé', () async {
       final (w, d) = _repsDay(app);
@@ -678,37 +621,30 @@ void main() {
       await app.flush();
       final prefs = await SharedPreferences.getInstance();
       final raw = prefs.getString(_key)!;
-      final m =
-          jsonDecode(utf8.decode(gzip.decode(base64Decode(raw.substring(3)))))
-              as Map<String, dynamic>;
+      final m = jsonDecode(
+        utf8.decode(gzip.decode(base64Decode(raw.substring(3)))),
+      ) as Map<String, dynamic>;
       m['activeWod'] = {'v': 1, 'attempt': 'x', 'wod': 'inconnu', 'ms': -5};
       await prefs.setString(_key, jsonEncode(m));
       final next = await relaunch();
       expect(next.activeWod, isNull);
       expect(next.activeWodUnreadable, isTrue);
-      expect(
-        next.logs[next.sessionKey(w.n, d.j)]!.ex[ex.id]!.sets[0].done,
-        isTrue,
-      );
+      expect(next.logs[next.sessionKey(w.n, d.j)]!.ex[ex.id]!.sets[0].done, isTrue);
     });
 
-    test(
-      'ancienne sauvegarde sans chrono : importée, rien de synthétisé',
-      () async {
-        final (w, d) = _repsDay(app);
-        final old = jsonDecode(app.exportAll()) as Map<String, dynamic>;
-        old['logs'] = {
-          app.sessionKey(w.n, d.j):
-              SessionLog(
-                done: true,
-                finishedAt: '2026-08-01T18:00:00.000',
-              ).toJson(),
-        };
-        expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
-        expect(app.activeWod, isNull);
-        expect(app.sessionsInProgress, isEmpty);
-      },
-    );
+    test('ancienne sauvegarde sans chrono : importée, rien de synthétisé', () async {
+      final (w, d) = _repsDay(app);
+      final old = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+      old['logs'] = {
+        app.sessionKey(w.n, d.j): SessionLog(
+          done: true,
+          finishedAt: '2026-08-01T18:00:00.000',
+        ).toJson(),
+      };
+      expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
+      expect(app.activeWod, isNull);
+      expect(app.sessionsInProgress, isEmpty);
+    });
   });
 
   // ===================================================================
@@ -804,38 +740,34 @@ void main() {
       await tester.runAsync(() => store.flush());
     });
 
-    testWidgets(
-      'reprise : rouverte sur l’exercice en cours, badge et bandeau',
-      (tester) async {
-        phone(tester, const Size(390, 844));
-        final (w, d) = _repsDay(store);
-        final groups = store.groups(d);
-        if (groups.length < 2) return;
-        for (final ex in groups.first) {
-          final log = store.exLog(w.n, d.j, ex);
-          for (var i = 0; i < log.sets.length; i++) {
-            log.sets[i].reps = '5';
-            now = now.add(const Duration(minutes: 1));
-            store.toggleSet(log, i, store.logSpec(ex));
-          }
+    testWidgets('reprise : rouverte sur l’exercice en cours, badge et bandeau', (
+      tester,
+    ) async {
+      phone(tester, const Size(390, 844));
+      final (w, d) = _repsDay(store);
+      final groups = store.groups(d);
+      if (groups.length < 2) return;
+      for (final ex in groups.first) {
+        final log = store.exLog(w.n, d.j, ex);
+        for (var i = 0; i < log.sets.length; i++) {
+          log.sets[i].reps = '5';
+          now = now.add(const Duration(minutes: 1));
+          store.toggleSet(log, i, store.logSpec(ex));
         }
-        final key = store.sessionKey(w.n, d.j);
-        expect(store.inProgress(key), isTrue);
-        await tester.pumpWidget(page(SessionScreen(week: w, day: d)));
-        await tester.pumpAndSettle();
-        expect(find.textContaining('2 / ${groups.length}'), findsOneWidget);
-        await tester.pumpWidget(const SizedBox());
-        await tester.pumpWidget(page(const Scaffold(body: ResumeBanner())));
-        await tester.pump();
-        expect(find.byKey(ValueKey('resume-$key')), findsOneWidget);
-        expect(
-          find.textContaining(RegExp(r'\d+/\d+ séries validées')),
-          findsOneWidget,
-        );
-        await tester.pumpWidget(const SizedBox());
-        await tester.runAsync(() => store.flush());
-      },
-    );
+      }
+      final key = store.sessionKey(w.n, d.j);
+      expect(store.inProgress(key), isTrue);
+      await tester.pumpWidget(page(SessionScreen(week: w, day: d)));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('2 / ${groups.length}'), findsOneWidget);
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpWidget(page(const Scaffold(body: ResumeBanner())));
+      await tester.pump();
+      expect(find.byKey(ValueKey('resume-$key')), findsOneWidget);
+      expect(find.textContaining(RegExp(r'\d+/\d+ séries validées')), findsOneWidget);
+      await tester.pumpWidget(const SizedBox());
+      await tester.runAsync(() => store.flush());
+    });
 
     testWidgets('fin : écriture refusée → réessayer ; bilan une seule fois', (
       tester,
@@ -862,8 +794,7 @@ void main() {
       );
       await tester.pumpAndSettle();
       final groups = store.groups(d);
-      final pageCtl =
-          tester.widget<PageView>(find.byType(PageView)).controller!;
+      final pageCtl = tester.widget<PageView>(find.byType(PageView)).controller!;
       pageCtl.jumpToPage(groups.length);
       await tester.pumpAndSettle();
       store.debugWriteHook = (_) async => false;
@@ -883,106 +814,95 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(SessionScreen), findsNothing);
       expect(store.isDone(w.n, d.j), isTrue);
-      expect(
-        store.consumeReward(),
-        isNull,
-      ); // déjà présenté (réglage : bandeau)
+      expect(store.consumeReward(), isNull); // déjà présenté (réglage : bandeau)
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets(
-      'notification répétée : une seule séance ouverte ; journée faite → historique',
-      (tester) async {
-        phone(tester, const Size(390, 844));
-        final (w, d) = _repsDay(store);
-        final nav = GlobalKey<NavigatorState>();
-        await tester.pumpWidget(
-          MaterialApp(
-            navigatorKey: nav,
-            theme: buildTheme(true),
-            locale: const Locale('fr'),
-            supportedLocales: const [Locale('fr')],
-            localizationsDelegates: GlobalMaterialLocalizations.delegates,
-            home: const Scaffold(body: SizedBox()),
-          ),
-        );
-        final before = store.exportAll();
-        openProgramDay(nav.currentState!, w, d);
-        openProgramDay(nav.currentState!, w, d); // même frame
-        await tester.pumpAndSettle();
-        openProgramDay(nav.currentState!, w, d); // à chaud, déjà ouverte
-        await tester.pumpAndSettle();
-        expect(find.byType(SessionScreen), findsOneWidget);
-        // Une autre journée : la première est refermée (brouillon gardé).
-        final other = w.days.lastWhere(
-          (x) => x.exercises.isNotEmpty && x.j != d.j,
-        );
-        openProgramDay(nav.currentState!, w, other);
-        await tester.pumpAndSettle();
-        expect(find.byType(SessionScreen), findsOneWidget);
-        nav.currentState!.pop();
-        await tester.pumpAndSettle();
-        // Journée faite : historique, sans nouvelle occurrence ni écriture.
-        store.logs[store.sessionKey(w.n, d.j)] = SessionLog(
-          done: true,
-          finishedAt: '2026-09-20T18:00:00.000',
-        );
-        final done = store.exportAll();
-        openProgramDay(nav.currentState!, w, d);
-        await tester.pumpAndSettle();
-        expect(find.byType(SessionHistoryScreen), findsOneWidget);
-        openProgramDay(nav.currentState!, w, d);
-        await tester.pumpAndSettle();
-        expect(find.byType(SessionHistoryScreen), findsOneWidget);
-        expect(store.exportAll(), done);
-        expect(before, isNotEmpty);
-        await tester.pumpWidget(const SizedBox());
-        await tester.runAsync(() => store.flush());
-      },
-    );
+    testWidgets('notification répétée : une seule séance ouverte ; journée faite → historique', (
+      tester,
+    ) async {
+      phone(tester, const Size(390, 844));
+      final (w, d) = _repsDay(store);
+      final nav = GlobalKey<NavigatorState>();
+      await tester.pumpWidget(
+        MaterialApp(
+          navigatorKey: nav,
+          theme: buildTheme(true),
+          locale: const Locale('fr'),
+          supportedLocales: const [Locale('fr')],
+          localizationsDelegates: GlobalMaterialLocalizations.delegates,
+          home: const Scaffold(body: SizedBox()),
+        ),
+      );
+      final before = store.exportAll();
+      openProgramDay(nav.currentState!, w, d);
+      openProgramDay(nav.currentState!, w, d); // même frame
+      await tester.pumpAndSettle();
+      openProgramDay(nav.currentState!, w, d); // à chaud, déjà ouverte
+      await tester.pumpAndSettle();
+      expect(find.byType(SessionScreen), findsOneWidget);
+      // Une autre journée : la première est refermée (brouillon gardé).
+      final other = w.days.lastWhere((x) => x.exercises.isNotEmpty && x.j != d.j);
+      openProgramDay(nav.currentState!, w, other);
+      await tester.pumpAndSettle();
+      expect(find.byType(SessionScreen), findsOneWidget);
+      nav.currentState!.pop();
+      await tester.pumpAndSettle();
+      // Journée faite : historique, sans nouvelle occurrence ni écriture.
+      store.logs[store.sessionKey(w.n, d.j)] = SessionLog(
+        done: true,
+        finishedAt: '2026-09-20T18:00:00.000',
+      );
+      final done = store.exportAll();
+      openProgramDay(nav.currentState!, w, d);
+      await tester.pumpAndSettle();
+      expect(find.byType(SessionHistoryScreen), findsOneWidget);
+      openProgramDay(nav.currentState!, w, d);
+      await tester.pumpAndSettle();
+      expect(find.byType(SessionHistoryScreen), findsOneWidget);
+      expect(store.exportAll(), done);
+      expect(before, isNotEmpty);
+      await tester.pumpWidget(const SizedBox());
+      await tester.runAsync(() => store.flush());
+    });
 
-    testWidgets(
-      'historique : consulter, défiler, changer de thème ne modifie rien',
-      (tester) async {
-        phone(tester, const Size(320, 720));
-        final (w, d) = _repsDay(store);
-        final ex = d.exercises.first;
-        final log = store.exLog(w.n, d.j, ex);
-        log.sets[0]
-          ..reps = '8'
-          ..kg = '20';
-        store.toggleSet(log, 0, store.logSpec(ex));
-        log.note = 'note témoin';
-        await tester.runAsync(() => store.finishSession(w.n, d.j));
-        store.consumeReward();
-        await tester.runAsync(() => store.flush());
-        final before = store.exportAll();
-        final saved = (await tester.runAsync(
-          () async => (await SharedPreferences.getInstance()).getString(_key),
-        ));
-        final entry = store.logs[store.sessionKey(w.n, d.j)]!;
-        for (final dark in [true, false]) {
-          await tester.pumpWidget(
-            page(
-              SessionHistoryScreen(log: entry, week: w, day: d),
-              dark: dark,
-              scale: 1.3,
-            ),
-          );
-          await tester.pumpAndSettle();
-          await tester.drag(find.byType(PageView), const Offset(-300, 0));
-          await tester.pumpAndSettle();
-          expect(tester.takeException(), isNull);
-        }
-        await tester.pumpWidget(const SizedBox());
-        await tester.pumpAndSettle();
-        expect(store.exportAll(), before);
-        final after = await tester.runAsync(
-          () async => (await SharedPreferences.getInstance()).getString(_key),
+    testWidgets('historique : consulter, défiler, changer de thème ne modifie rien', (
+      tester,
+    ) async {
+      phone(tester, const Size(320, 720));
+      final (w, d) = _repsDay(store);
+      final ex = d.exercises.first;
+      final log = store.exLog(w.n, d.j, ex);
+      log.sets[0]
+        ..reps = '8'
+        ..kg = '20';
+      store.toggleSet(log, 0, store.logSpec(ex));
+      log.note = 'note témoin';
+      await tester.runAsync(() => store.finishSession(w.n, d.j));
+      store.consumeReward();
+      await tester.runAsync(() => store.flush());
+      final before = store.exportAll();
+      final saved = (await tester.runAsync(
+        () async => (await SharedPreferences.getInstance()).getString(_key),
+      ));
+      final entry = store.logs[store.sessionKey(w.n, d.j)]!;
+      for (final dark in [true, false]) {
+        await tester.pumpWidget(
+          page(SessionHistoryScreen(log: entry, week: w, day: d), dark: dark, scale: 1.3),
         );
-        expect(after, saved);
-      },
-    );
+        await tester.pumpAndSettle();
+        await tester.drag(find.byType(PageView), const Offset(-300, 0));
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull);
+      }
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpAndSettle();
+      expect(store.exportAll(), before);
+      final after = await tester.runAsync(
+        () async => (await SharedPreferences.getInstance()).getString(_key),
+      );
+      expect(after, saved);
+    });
 
     testWidgets('WOD retrouvé en pause au dernier point sûr (Tabata)', (
       tester,
@@ -1016,32 +936,17 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('wod-restored')), findsOneWidget);
-      expect(
-        find.textContaining('Chrono retrouvé en pause à 0:25'),
-        findsOneWidget,
-      );
-      expect(
-        tester.widget<Text>(find.byKey(const ValueKey('wod-phase'))).data,
-        'REPOS',
-      );
-      expect(
-        tester.widget<Text>(find.byKey(const ValueKey('wod-clock'))).data,
-        '0:05',
-      );
+      expect(find.textContaining('Chrono retrouvé en pause à 0:25'), findsOneWidget);
+      expect(tester.widget<Text>(find.byKey(const ValueKey('wod-phase'))).data, 'REPOS');
+      expect(tester.widget<Text>(find.byKey(const ValueKey('wod-clock'))).data, '0:05');
       expect(find.text('Reprendre'), findsOneWidget);
       now = now.add(const Duration(minutes: 30));
       await tester.pump(const Duration(seconds: 1));
-      expect(
-        tester.widget<Text>(find.byKey(const ValueKey('wod-clock'))).data,
-        '0:05',
-      );
+      expect(tester.widget<Text>(find.byKey(const ValueKey('wod-clock'))).data, '0:05');
       await tester.tap(find.text('Reprendre'));
       now = now.add(const Duration(seconds: 5));
       await tester.pump(const Duration(milliseconds: 250));
-      expect(
-        tester.widget<Text>(find.byKey(const ValueKey('wod-phase'))).data,
-        'EFFORT',
-      );
+      expect(tester.widget<Text>(find.byKey(const ValueKey('wod-phase'))).data, 'EFFORT');
       expect(find.byKey(const ValueKey('wod-restored')), findsNothing);
       expect(store.activeWod?.attempt, attempt);
       expect(store.activeWod!.ms, greaterThanOrEqualTo(25000));
@@ -1073,9 +978,7 @@ void main() {
             page(SessionScreen(week: w, day: d), scale: scale, dark: dark),
           );
           await tester.pumpAndSettle();
-          await tester.ensureVisible(
-            find.byTooltip('Valider la série 1').first,
-          );
+          await tester.ensureVisible(find.byTooltip('Valider la série 1').first);
           await tester.tap(find.byTooltip('Valider la série 1').first);
           await tester.pump();
           expect(find.textContaining('pour valider la série'), findsOneWidget);
@@ -1083,15 +986,7 @@ void main() {
           store.settings.prefill = true;
           log.sets[0].reps = '5';
           store.toggleSet(log, 0, store.logSpec(ex));
-          await tester.pumpWidget(
-            page(
-              const Scaffold(
-                body: SingleChildScrollView(child: ResumeBanner()),
-              ),
-              scale: scale,
-              dark: dark,
-            ),
-          );
+          await tester.pumpWidget(page(const Scaffold(body: SingleChildScrollView(child: ResumeBanner())), scale: scale, dark: dark));
           await tester.pump();
           expect(tester.takeException(), isNull);
           await tester.pumpWidget(const SizedBox());
