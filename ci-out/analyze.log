@@ -1,3 +1,5 @@
 Analyzing streetlift_tracker...                                 
-No issues found! (ran in 23.3s)
-exit=0
+
+   info • The import of 'package:streetlift_tracker/app_theme.dart' is unnecessary because all of the used elements are also provided by the import of 'package:streetlift_tracker/main.dart' • test/l4_depart_test.dart:15:8 • unnecessary_import
+
+1 issue found. (ran in 17.4s)
