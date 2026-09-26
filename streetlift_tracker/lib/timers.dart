@@ -510,7 +510,9 @@ class WodClock extends ChangeNotifier {
   void _recompute(int ms) {
     elapsed = ms ~/ 1000;
     restLeft =
-        _restEndMs == null ? 0 : math.max(0, ((_restEndMs! - ms) / 1000).ceil());
+        _restEndMs == null
+            ? 0
+            : math.max(0, ((_restEndMs! - ms) / 1000).ceil());
     if (!countdown) return;
     if (phased) {
       var i = 0;
@@ -523,7 +525,10 @@ class WodClock extends ChangeNotifier {
     } else if (emomRounds > 0) {
       final next = math.min(emomRounds, ms ~/ (emomInterval * 1000) + 1);
       emomRound = next;
-      remaining = math.max(0, ((next * emomInterval * 1000 - ms) / 1000).ceil());
+      remaining = math.max(
+        0,
+        ((next * emomInterval * 1000 - ms) / 1000).ceil(),
+      );
     } else {
       remaining = math.max(0, ((_duration * 1000 - ms) / 1000).ceil());
     }
