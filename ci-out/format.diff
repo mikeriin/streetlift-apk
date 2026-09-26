@@ -1,9 +1,10 @@
- ci-out/analyze.log      |    18 -
- ci-out/captures.log     |    23 -
- ci-out/commit.txt       |     2 +-
- ci-out/format-full.diff | 23601 ----------------------------------------------
- ci-out/format.diff      |    48 -
- ci-out/format.log       |    13 +-
- ci-out/python.log       |    15 -
- ci-out/test-l5c.log     |   356 -
- 8 files changed, 2 insertions(+), 24074 deletions(-)
+ ci-out/analyze.log                  |     3 -
+ ci-out/captures.log                 |  3092 ----
+ ci-out/commit.txt                   |     2 +-
+ ci-out/format-full.diff             | 24130 -------------------------------
+ ci-out/format.diff                  |     9 -
+ ci-out/format.log                   |     3 +-
+ ci-out/python.log                   |    15 -
+ ci-out/test-l5c.log                 | 26369 ----------------------------------
+ streetlift_tracker/lib/levelup.dart |    47 +-
+ 9 files changed, 27 insertions(+), 53643 deletions(-)

@@ -95,6 +95,7 @@ class LevelProgressNumber extends StatelessWidget {
       painter.dispose();
       return width;
     }
+
     final width = math.max(
       88.0,
       measure('NIV.', label) + 7 + measure('$level', number) + 2,
@@ -102,29 +103,29 @@ class LevelProgressNumber extends StatelessWidget {
     return SizedBox(
       width: width,
       child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.alphabetic,
-              children: [
-                Text('NIV.', style: label),
-                const SizedBox(width: 7),
-                Text('$level', style: number),
-              ],
-            ),
-            const SizedBox(height: 7),
-            // Couleur unie de la dominante, bord net avec la piste.
-            KProgressBar(
-              value: progress,
-              height: 4,
-              color: colors.p.action,
-              semanticsLabel: 'Progression vers le niveau suivant',
-            ),
-          ],
-        ),
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Text('NIV.', style: label),
+              const SizedBox(width: 7),
+              Text('$level', style: number),
+            ],
+          ),
+          const SizedBox(height: 7),
+          // Couleur unie de la dominante, bord net avec la piste.
+          KProgressBar(
+            value: progress,
+            height: 4,
+            color: colors.p.action,
+            semanticsLabel: 'Progression vers le niveau suivant',
+          ),
+        ],
+      ),
     );
   }
 }
