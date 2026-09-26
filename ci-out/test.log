@@ -1,0 +1,670 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: le changement d’heure conserve 7h30 et change correctement l’instant UTC
+00:01 +2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: supprime les anciennes alarmes et celles des séances terminées, sans toucher aux autres
+00:01 +3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: notification désactivée ou programme terminé ne crée aucune alarme
+00:01 +4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: les blocages globaux et du canal sont diagnostiqués
+00:01 +5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: un refus de l’heure précise garde des rappels approximatifs
+00:01 +6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: révocation entre vérification et planification : repli sans abandon des rappels
+00:02 +7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: les erreurs restent lisibles et une nouvelle tentative répare le service
+Kalis notifications: Bad state: init_native_error
+Kalis notifications: Bad state: schedule_native_error
+00:02 +8: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: désactiver pendant une planification ne laisse aucun rappel quotidien
+00:02 +9: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: ne recrée pas les mêmes alarmes inutilement mais une réparation forcée les restaure
+00:02 +10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: les tests immédiat et différé ne dépendent pas de la période du programme
+00:02 +11: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: tap après démarrage à froid : bonne séance, payload invalide ignoré
+00:02 +12: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: une séance terminée en cours d’utilisation annule automatiquement son rappel
+00:03 +13: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart
+00:04 +13: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:06 +14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) aperçu : aucune modification, date absente non inventée
+00:07 +15: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) formats historiques et sauvegarde L2 acceptés
+00:07 +16: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) fichiers invalides, tronqués, trop gros ou format inconnu
+00:07 +17: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) données modifiées pendant l’aperçu : conflit sans mutation
+00:07 +18: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) un simple enregistrement ne crée pas de conflit
+00:08 +19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) import avec une écriture en attente : disque = mémoire
+00:08 +20: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) restauration : ni cérémonie, ni bilan, ni nouveau débit
+00:08 +21: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression : tout est retiré, aucune résurrection
+00:09 +22: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression avec écriture en attente : l’ancien état n’est pas réécrit
+00:11 +23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression partielle signalée, puis reprise complète
+00:12 +24: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression refusée à l’écriture : données intactes
+00:12 +25: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) nom de fichier daté, sans donnée personnelle
+00:12 +26: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran (setUpAll)
+00:12 +26: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran export réussi : fichier daté, contenu métier identique
+00:14 +27: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran export cancelled : Export annulé
+00:14 +28: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran export failed : accès refusé
+00:15 +29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran export failed : indisponible
+00:16 +30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran export unverified : non relu
+00:16 +31: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran import cancelled : aucune mutation
+00:17 +32: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran import tooLarge : aucune mutation
+00:17 +33: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran import failed : aucune mutation
+00:17 +34: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran import opened : aucune mutation
+00:18 +35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran fichier non Kalis Track : refusé sans aperçu
+00:18 +36: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran aperçu annulé puis bouton retour : aucune mutation
+00:19 +37: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable échouée : import non effectué
+00:20 +38: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable puis remplacement confirmé
+00:21 +39: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran remplacement sans sauvegarde : choix explicite
+00:22 +40: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran données modifiées pendant l’aperçu : reconfirmation
+00:24 +41: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran suppression : annulation, confirmation tapée, effacement
+00:25 +42: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran suppression : export préalable annulé, rien supprimé
+00:25 +43: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran dialogues à 320 px, texte 200 %, thème sombre true
+00:26 +44: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran dialogues à 320 px, texte 200 %, thème sombre false
+00:27 +45: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran Réglages : actions présentes, zone sensible séparée
+00:27 +46: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran (tearDownAll)
+00:28 +46: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart
+00:28 +46: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-002 achats achat normal au prix accepté, conservé après relance
+00:29 +47: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-002 achats crédits insuffisants : aucun débit, stockage inchangé
+00:29 +48: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-002 achats prix modifié depuis l’offre : aucun débit
+00:30 +49: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-002 achats double appui : un seul débit, rien d’annoncé avant l’écriture
+00:30 +50: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-002 achats deux WODs : le solde réservé empêche une dépense excessive
+00:30 +51: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-002 achats deux WODs abordables ensemble : deux débits exacts
+00:30 +52: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-002 achats écriture refusée puis nouvelle tentative réussie
+00:31 +53: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-002 achats un droit acquis n’est jamais retiré par un achat échoué
+00:31 +54: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports deux imports rapprochés : le dernier gagne, copies gardées
+00:31 +55: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports au plus trois copies de récupération
+00:32 +56: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports un état ancien n’est pas écrit après un import plus récent
+00:32 +57: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports import pendant un flush : ordre conservé
+00:32 +58: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports achat pendant une sauvegarde : les deux sont écrits
+00:32 +59: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports échec d’écriture : mémoire gardée, reprise explicite
+00:33 +60: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports import refusé à l’écriture : état et stockage inchangés
+00:33 +61: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports import dégradé : rejet complet, aucune copie ni écriture
+00:33 +62: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports liste de copies illisible : import suspendu, rien écrasé
+00:33 +63: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques migration crédits v1 : coût 0 conservé à part, sans accès
+00:34 +64: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques migration crédits v1 : un WOD joué reste acquis à coût 0
+00:34 +65: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques import format 2 : WOD joué acquis, non joué archivé
+00:34 +66: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques import format 2 : coût 0 isolé, prix payés conservés
+00:34 +67: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques format 3 : un droit établi à coût 0 reste acquis
+00:34 +68: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques format 1 importable
+00:35 +69: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques achats normaux et remisés : aller-retour exact
+00:35 +70: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques droits anciens : aller-retour sans perte
+00:35 +71: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques utilisateur neuf : export réimporté à l’identique
+00:36 +72: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques séances perso répétées : archives et XP conservées
+00:36 +73: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-015 imports bornés sauvegarde représentative acceptée, marges mesurées
+L2 représentatif : JSON 958628 o, compact 47263 car., 65925 valeurs
+00:38 +74: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-015 imports bornés texte trop long
+00:38 +75: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-015 imports bornés décompression excessive arrêtée pendant le flux
+00:38 +76: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-015 imports bornés gzip tronqué, base64 invalide, JSON mal formé
+00:38 +77: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-015 imports bornés structure invalide
+00:38 +78: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-015 imports bornés trop de valeurs, textes trop longs
+00:39 +79: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-015 imports bornés trop de séances, séries, résultats ou entrées
+00:39 +80: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-015 imports bornés limites standard documentées
+00:39 +81: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-005 crédits jamais repris (option C) supprimer baisse XP et niveau, pas les crédits gagnés
+00:39 +82: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-005 crédits jamais repris (option C) refaire une performance supprimée ne redonne rien
+00:40 +83: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-005 crédits jamais repris (option C) corriger une séance ne fait pas varier les crédits
+00:40 +84: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-005 crédits jamais repris (option C) migration : le plus haut part du journal, sans créer ni retirer
+00:40 +85: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-005 crédits jamais repris (option C) import d’une sauvegarde L2 : son plus haut remplace le courant
+00:40 +86: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-005 crédits jamais repris (option C) plus haut invalide : import refusé
+00:40 +87: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/persistence_screen_test.dart
+00:41 +87: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/persistence_screen_test.dart: (setUpAll)
+00:42 +87: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/persistence_screen_test.dart: saisie et notes sont enregistrées sans changer de page
+00:43 +88: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/persistence_screen_test.dart: (tearDownAll)
+00:43 +88: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart
+00:44 +88: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: Programme révisé (asset) 1 812 exercices ; LC1 : 202 suppressions et 66 ajouts ; LC1b : 7 et 1
+00:45 +89: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: Programme révisé (asset) S12 à S19 : lignes, ordre, séries et règles R1 à R4 (section 3)
+00:45 +90: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: Programme révisé (asset) volumes calculés : maxima actuels puis modifiés
+00:46 +91: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: Programme révisé (asset) squat pause : 0,67 × 120 kg → 80 kg (arrondi 2,5 kg)
+00:46 +92: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: Programme révisé (asset) LC1b : S11·J6 au format du J6 de S12, squat endurance S11 gardé
+00:46 +93: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: Programme révisé (asset) séries planifiées S12/S13 (effet sur le compteur de séries)
+00:46 +94: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: Programme révisé (asset) semaine S12 entièrement faite : XP, semaine complète, crédits (L3)
+00:46 +95: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: Séance et journal (setUpAll)
+00:46 +95: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: Séance et journal feuille Pilotage modifiée pendant la séance : volumes recalculés tout de suite
+00:48 +96: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: Séance et journal journal S12 avec un identifiant supprimé : lecture intacte
+00:49 +97: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: Séance et journal LC1b : journal S11·J6 avec un identifiant supprimé, séance du jour
+00:50 +98: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 390×844, texte 130 %, sombre
+00:52 +99: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 320×720, texte 200 %, clair
+00:54 +100: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 320×720, texte 130 %, sombre
+00:55 +101: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 390×844, texte 200 %, sombre
+00:57 +102: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: Séance et journal (tearDownAll)
+00:57 +102: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart
+00:57 +102: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: (setUpAll)
+00:58 +102: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: sélecteur à 390.0 px, texte 100 % : 2 colonne(s)
+01:00 +103: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: sélecteur à 600.0 px, texte 100 % : 3 colonne(s)
+01:00 +104: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: sélecteur à 320.0 px, texte 100 % : 2 colonne(s)
+01:00 +105: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: sélecteur à 390.0 px, texte 130 % : 2 colonne(s)
+01:00 +106: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: sélecteur à 390.0 px, texte 200 % : 1 colonne(s)
+01:01 +107: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: sélecteur à 320.0 px, texte 200 % : 1 colonne(s)
+01:01 +108: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: sélection lisible sans la couleur et sémantique de choix unique
+01:01 +109: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: choix rapides dans l’écran : le dernier gagne
+01:01 +110: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: échec d’écriture : choix affiché, message « non enregistrés »
+01:01 +111: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: changer de couleur garde onglet, semaine, route, saisies et journal
+01:03 +112: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: mode Système : la luminosité suit le téléphone, pas la couleur
+01:03 +113: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: les six couleurs × clair/sombre : accueil et réglages sans erreur
+01:06 +114: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: (tearDownAll)
+01:06 +114: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart
+01:06 +114: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart: (setUpAll)
+01:07 +114: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart: sept cartes accessibles, séance du jour développée et appui court direct
+01:09 +115: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart: la semaine complète reste visible et ordonnée, avec ses statuts
+01:09 +116: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart: appui long sur le slider choisit directement une semaine
+01:10 +117: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart: appui court sur une séance faite ouvre son historique sans modifier les saisies
+01:10 +118: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart: appui long sur une carte compacte ouvre le résumé sans lancer ni effacer
+01:10 +119: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart: appui court ouvre le détail ; glisser atteint les bornes sans ouvrir de fiche
+01:11 +120: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart: la fiche semaine donne accès au choix de semaine et conserve les gestes des cartes
+01:11 +121: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart: balayage, clavier et conservation de la semaine dans les onglets
+01:12 +122: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart: la navigation libère la place du clavier dans STATS
+01:13 +123: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart: résumé à 320 px avec texte 130 %, thème true
+01:13 +124: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart: résumé à 320 px avec texte 130 %, thème false
+01:13 +125: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart: un jour de récupération garde un résumé lisible et reste ouvrable
+01:13 +126: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart: (tearDownAll)
+01:13 +126: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/visual_capture_test.dart
+01:14 +126: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/visual_capture_test.dart: rendus bordeaux et anthracite : écrans, thèmes et largeur compacte
+01:14 +126 ~1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart
+01:14 +126 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) les fixtures sont présentes
+01:14 +127 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) accessories.json
+01:14 +128 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) accessories_first.json
+01:14 +129 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) accessories_locked.json
+01:14 +130 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) atypical_confirmed.json
+01:14 +131 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) atypical_high.json
+01:14 +132 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) atypical_isolated.json
+01:14 +133 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) fatigue.json
+01:14 +134 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) grid.json
+01:14 +135 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) grid_custom.json
+01:14 +136 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) in_session.json
+01:14 +137 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) legacy_effort.json
+01:15 +138 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) no_bodyweight.json
+01:15 +139 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) pain_active.json
+01:15 +140 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) pain_carry.json
+01:15 +141 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) pain_carry_control.json
+01:15 +142 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) pain_double.json
+01:15 +143 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) pain_single.json
+01:15 +144 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) replay_basic.json
+01:15 +145 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) sim_2003.json
+01:15 +146 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) sim_4001.json
+01:15 +147 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) sim_6002.json
+01:15 +148 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) squat_rest.json
+01:15 +149 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) structure.json
+01:15 +150 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) structure_cap.json
+01:15 +151 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) structure_decline.json
+01:15 +152 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) structure_deload_week.json
+01:15 +153 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D24 — exemples chiffrés de la demande (poids du corps 71,5 kg) traction +32,5 → +35 (cible + 1) ou +37,5 (cible + 2)
+01:15 +154 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D24 — exemples chiffrés de la demande (poids du corps 71,5 kg) muscle-up +5 → +6,25 ou +8,75
+01:15 +155 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D24 — exemples chiffrés de la demande (poids du corps 71,5 kg) squat 97,5 → 100 ou 102,5
+01:15 +156 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D24 — exemples chiffrés de la demande (poids du corps 71,5 kg) baisses : deux séries dures, série ratée (−3 % / −6 %)
+01:15 +157 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D24 — exemples chiffrés de la demande (poids du corps 71,5 kg) décharge, douleur, verrou, refus : aucune hausse
+01:15 +158 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D25 — jour de fatigue bandes −5 / −7,5 / −10 % et questionnaire
+01:15 +159 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D23 — grilles du matériel haltères par 1 kg jusqu’à 10 kg puis par 2 kg
+01:15 +160 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D23 — grilles du matériel poulies par 2,5 lb (unité native), lest 1,25 kg, barre 2,5 kg
+01:15 +161 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D23 — grilles du matériel valeur en livres enregistrée au centième de kg : la progression avance d’un cran
+01:15 +162 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D9 — échelle et valeurs héritées six niveaux, du plus dur au plus facile, stockés en RIR
+01:15 +163 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D9 — échelle et valeurs héritées RIR / RPE hérités ; valeurs non interprétables
+01:15 +164 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Rejeu complet = cache incrémental (au centième) replay_basic.json
+01:15 +165 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Rejeu complet = cache incrémental (au centième) sim_4001.json
+01:15 +166 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Rejeu complet = cache incrémental (au centième) sim_6002.json
+01:15 +167 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Rejeu complet = cache incrémental (au centième) une correction passée impose le rejeu complet
+01:15 +168 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Rejeu complet = cache incrémental (au centième) pesée rétroactive ou repère modifié : rejeu complet
+01:15 +169 ~1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart
+01:15 +169 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: palettes six familles, rouge par défaut, identifiants stables
+01:15 +170 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: palettes le Rouge Kalis garde exactement les valeurs historiques
+01:15 +171 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: palettes 12 combinaisons : textes, fonds pleins et éléments lisibles
+01:15 +172 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: palettes rôles fixes et neutres identiques dans toutes les palettes
+01:15 +173 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: palettes thème Material : dominante et luminosité indépendantes
+01:15 +174 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence AppSettings : absent, inconnu ou mauvais type → rouge
+01:16 +175 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence installation neuve : rouge
+01:16 +176 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence choix retrouvé à la réouverture, thème indépendant
+01:17 +177 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence choix rapides : le dernier est retrouvé
+01:17 +178 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence échec d’écriture : choix affiché, erreur visible, disque intact
+01:18 +179 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence export : la préférence est incluse
+01:18 +180 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence import d’une sauvegarde sans préférence : rouge, reste conservé
+01:18 +181 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence import d’une valeur inconnue : rouge, sans refuser la sauvegarde
+01:19 +182 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence suppression locale : retour au rouge
+01:19 +183 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence changer de couleur ne touche ni XP, ni crédits, ni droits, ni dates
+01:19 +184 ~1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart
+01:20 +184 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart: principaux écrans : rendus comparables avant / après L5
+01:20 +184 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart
+01:21 +184 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart: (setUpAll)
+01:21 +184 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart: onglets : transition visible et navigation rapide sans perdre STATS
+01:23 +185 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart: réduire les animations rend les onglets et le sélecteur STATS immédiats
+01:23 +186 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart: une saisie survit au passage en animations réduites pendant une transition de page
+01:24 +187 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart: les textes de la palette gardent un contraste minimal de 4,5
+01:24 +188 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart: (tearDownAll)
+01:24 +188 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart
+01:24 +188 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: économie paliers, prix de base et plancher à 1 crédit
+01:25 +189 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: économie essai du jour : verrouillé, jouable, stable dans la journée
+01:25 +190 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: économie vitrine de la semaine : trois formats, −1 crédit, même toute la semaine
+01:26 +191 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: économie à ta mesure : verrouillés, autour du niveau, hors essai et vitrine
+01:26 +192 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: économie un achat fige le prix remisé et vide la liste d’envies
+01:26 +193 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: économie liste d’envies : prochain objectif, persistance, sauvegarde
+01:27 +194 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: écrans (setUpAll)
+01:27 +194 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: écrans la vitrine ouvre le catalogue et s’efface devant une recherche
+01:29 +195 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: écrans l’essai du jour se lance sans achat depuis sa fiche, texte 1.0
+01:29 +196 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: écrans achat : révélation en place, puis lancement, liste vidée, texte 1.0
+01:29 +197 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: écrans l’essai du jour se lance sans achat depuis sa fiche, texte 1.3
+01:29 +198 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: écrans achat : révélation en place, puis lancement, liste vidée, texte 1.3
+01:30 +199 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: écrans l’essai du jour se lance sans achat depuis sa fiche, texte 2.0
+01:30 +200 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: écrans achat : révélation en place, puis lancement, liste vidée, texte 2.0
+01:30 +201 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: écrans boutique et fiches à 320 px, texte 1.3
+01:30 +202 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: écrans boutique et fiches à 320 px, texte 2.0
+01:31 +203 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: écrans (tearDownAll)
+01:31 +203 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/redesign_test.dart
+01:31 +203 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/redesign_test.dart: (setUpAll)
+01:32 +203 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/redesign_test.dart: les réglages de chrono restent enregistrés après retour au menu
+01:34 +204 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/redesign_test.dart: les quatre destinations ont un libellé visible et conservent leur état
+01:34 +205 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/redesign_test.dart: (tearDownAll)
+01:34 +205 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart
+01:35 +205 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: (setUpAll)
+01:36 +205 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+01:38 +206 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: cartes, notes et saisies survivent aux boutons et au sélecteur d’exercices
+01:39 +207 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: les exercices enchaînés ont chacun leur carte et leur note
+01:40 +208 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: les séances et éditeurs suivent une rotation et une grande largeur
+01:41 +209 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: un WOD verrouillé garde ses mouvements visibles au-dessus du message de crédits
+01:41 +210 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème true
+01:43 +211 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème false
+01:44 +212 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: cinq séries, charge et effort restent visibles sans défilement
+01:44 +213 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: les actions de sauvegarde ouvrent l’export et l’import
+01:44 +214 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: recherche et paramètres restent utilisables avec le clavier
+01:45 +215 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: (tearDownAll)
+01:45 +215 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/stats_test.dart
+01:46 +215 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/stats_test.dart: (setUpAll)
+01:46 +215 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/stats_test.dart: le journal fusionne séances et WOD sans supprimer les dates manquantes
+01:47 +216 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/stats_test.dart: le niveau ouvre Parcours dans le seul onglet STATS
+01:48 +217 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/stats_test.dart: recherche, filtre et rubrique STATS survivent aux changements d’onglet
+01:49 +218 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/stats_test.dart: historique : filtres WOD, notes et lecture seule des séances
+01:50 +219 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/stats_test.dart: les références restent modifiables et reviennent aux performances
+01:50 +220 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/stats_test.dart: un palier se met à jour depuis les séances, sa consultation ne donne pas de XP
+01:50 +221 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/stats_test.dart: les commandes STATS et les paliers sont nommés pour le lecteur d’écran
+01:51 +222 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/stats_test.dart: STATS lisible à 320 px et texte 130 %, thème true
+01:52 +223 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/stats_test.dart: STATS lisible à 320 px et texte 130 %, thème false
+01:52 +224 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/stats_test.dart: (tearDownAll)
+01:52 +224 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart
+01:53 +224 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: séries, tempo exact et repos uniquement entre les séries
+01:53 +225 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: repos composé et fourchettes sont conservés
+01:53 +226 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: unilatéral : deux côtés ; charge par haltère explicitée
+01:53 +227 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: tenues ne deviennent pas des répétitions
+01:53 +228 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: myo et clusters comptent chaque micro-repos
+01:53 +229 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: HIIT : même durée que le chrono, sans dernier repos
+01:53 +230 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: WOD : repos inline, durées et charges décimales
+01:53 +231 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: blocs imbriqués et multiplicateurs suffixés
+01:53 +232 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: échelle : distance par tour et somme des répétitions
+01:53 +233 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: EMOM : plages, rotation et récupération dans le temps fixe
+01:53 +234 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: E2MOM respecte la durée des intervalles
+01:53 +235 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: AMRAP fractionné : durée exacte, tous les repos conservés
+01:53 +236 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: rounds : n moins un repos ; cap distinct du temps de complétion
+01:53 +237 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: calories et distances ne sont ni des répétitions ni du tonnage
+01:53 +238 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: une prescription inconnue est signalée sans inventer un volume
+01:53 +239 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: EMOM : cash in et cash out sont hors des trente créneaux
+01:53 +240 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: prescriptions croisées et distances dans les consignes
+01:53 +241 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: blocs répétés avec repos et unités ne perdent pas de distance
+01:53 +242 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: les prescriptions ouvertes restent explicitement partielles
+01:53 +243 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: les historiques anciens et les prescriptions modifiées ne calibrent pas
+01:53 +244 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: échelles bornées dans une ligne et consigne sans repos
+01:53 +245 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: les efforts courts sont affichés en secondes
+01:53 +246 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: une échelle gigantesque est bornée avant itération
+01:53 +247 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: intégration programme le cache se renouvelle après modification ou résultat
+01:54 +248 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: intégration programme les supersets partagent leur repos et les EMOM leur horloge
+01:54 +249 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: intégration programme le repos 2 min 30 corrige aussi le chrono automatique
+01:55 +250 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: intégration programme aucun nombre non fini ou négatif dans les 1812 exercices et 1 000 WODs
+01:56 +251 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart
+01:56 +251 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Calendrier personnel (modèle) (setUpAll)
+01:57 +251 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Calendrier personnel (modèle) sans départ : aucune date inventée, semaine 1 affichée
+01:57 +252 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Calendrier personnel (modèle) départ un mercredi : J1 = mercredi, 280 jours, fin S40 · J7
+01:57 +253 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Calendrier personnel (modèle) changement d’heure (25/10/2026) : jours civils, pas 24 h
+01:57 +254 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Calendrier personnel (modèle) fin de mois, d’année et 29 février
+01:57 +255 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Calendrier personnel (modèle) ancien journal sans date : ancrage d’origine, indépendant du départ
+01:57 +256 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Calendrier personnel (modèle) dates civiles strictes (AAAA-MM-JJ)
+01:57 +257 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Calendrier personnel (modèle) (tearDownAll)
+01:57 +257 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Installation neuve et installations existantes installation neuve : non démarrée, références inconnues
+01:58 +258 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Installation neuve et installations existantes première ouverture interrompue avant la sauvegarde : neuve
+01:58 +259 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Installation neuve et installations existantes ancienne installation (réglages, aucune séance) : calendrier du 13/07/2026
+01:58 +260 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Installation neuve et installations existantes ancienne installation : ses références personnelles priment
+01:58 +261 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Installation neuve et installations existantes état 2.5.7 : semaine, dates, références, séances, crédits conservés ; migration idempotente
+01:59 +262 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Installation neuve et installations existantes effacement complet : programme non démarré, références inconnues
+01:59 +263 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Choix du départ bornes incluses : −280 jours et +365 jours
+01:59 +264 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Choix du départ départ futur non lundi + références partielles : persistés, rien d’autre créé
+02:00 +265 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Choix du départ départ passé : reprise à la bonne semaine
+02:00 +266 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Choix du départ référence invalide : rien n’est modifié
+02:00 +267 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Choix du départ écriture refusée : départ non annoncé, état rétabli, nouvel essai
+02:00 +268 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Choix du départ double confirmation : un seul état, aucune séance dupliquée
+02:00 +269 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Choix du départ installation existante : changer la date ne touche ni séances, ni dates réelles, ni récompenses
+02:01 +270 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Résultats L3b résultats WOD (règle de score, intervalles) intacts après migration, relance et changement de départ
+02:01 +271 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Sauvegardes aller-retour 2.5.8 : départ, provenance et références intacts
+02:01 +272 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Sauvegardes sauvegarde d’un utilisateur non démarré : restaurée telle quelle
+02:02 +273 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Sauvegardes ancienne sauvegarde : migrée (13/07/2026, références « à vérifier »), jamais « aujourd’hui »
+02:02 +274 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Sauvegardes fichier invalide : refusé, départ et références inchangés
+02:02 +275 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Références (KT-007) inconnue : charge et volume « à renseigner », jamais calculés sur 0
+02:02 +276 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Références (KT-007) renseignée explicitement, même égale à l’ancienne valeur embarquée
+02:03 +277 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Références (KT-007) historique : confirmée sans changer la valeur, ou « Je ne sais pas »
+02:03 +278 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Références (KT-007) attributs : indisponibles ou partiels, jamais un poids arbitraire
+02:03 +279 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Références (KT-007) valeurs hors domaine refusées, valeur précédente gardée
+02:03 +280 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Références (KT-007) saisie : virgule, point, vide, texte, non finie, bornes
+02:03 +281 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Références (KT-007) affichage en livres : les références restent en kg, sans dérive
+02:03 +282 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Rappels (setUpAll)
+02:03 +282 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Rappels non démarré : aucun rappel
+02:04 +283 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Rappels départ futur : premier rappel le jour de S1 · J1, aucun avant
+02:04 +284 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Rappels changement de départ : mêmes identifiants replanifiés, aucun doublon
+02:04 +285 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Rappels (tearDownAll)
+02:04 +285 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Rappels : erreurs et ouverture (setUpAll)
+02:04 +285 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Rappels : erreurs et ouverture échec de programmation : visible, départ conservé, reprise possible
+Kalis notifications: Bad state: schedule_native_error
+02:04 +286 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Rappels : erreurs et ouverture ancienne notification après changement de départ : même journée S · J, à froid et à chaud
+02:04 +287 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Rappels : erreurs et ouverture (tearDownAll)
+02:04 +287 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Comparaison avant / après (migration synthétique) (setUpAll)
+02:04 +287 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Comparaison avant / après (migration synthétique) utilisateur avancé : semaine, dates, séances, références, récompenses, rappels
+L4-COMPARE migration {"semaine":"S11 · J6","depart":"2026-07-13","origine":"migration","datesS11":"21/09→27/09/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"credits":63,"gains":63,"droitsWod":0,"rappels":204,"premierRappel":"S11-J7 2026-09-27T07:30"}
+L4-COMPARE relance {"semaine":"S11 · J6","depart":"2026-07-13","origine":"migration","datesS11":"21/09→27/09/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"credits":63,"gains":63,"droitsWod":0,"rappels":204,"premierRappel":"S11-J7 2026-09-27T07:30"}
+L4-COMPARE depart-21-09 {"semaine":"S1 · J6","depart":"2026-09-21","origine":"user","datesS11":"30/11→06/12/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"credits":63,"gains":63,"droitsWod":0,"rappels":220,"premierRappel":"S1-J7 2026-09-27T07:30"}
+02:05 +288 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Comparaison avant / après (migration synthétique) (tearDownAll)
+02:05 +288 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans (setUpAll)
+02:05 +288 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans premier départ : date, référence saisie, les autres inconnues
+02:06 +289 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans « Plus tard » et retour système : rien n’est enregistré
+02:07 +290 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans saisie invalide : message, aucun enregistrement
+02:07 +291 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans écriture refusée : message, écran conservé, nouvel essai
+02:07 +292 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans installation existante : aperçu de l’effet, puis changement
+02:07 +293 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans même date : bouton inactif, rien à replanifier
+02:08 +294 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans séance : référence manquante nommée, rien de calculé à sa place
+02:08 +295 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans bandeau de l’accueil : non démarré, avant, pendant, après
+02:08 +296 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans Références : inconnue, à vérifier, confirmée, « Je ne sais pas »
+02:09 +297 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans accueil non démarré 320 px · 200 % : bandeau dans la liste, journées accessibles
+02:09 +298 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans accueil non démarré 390 px · 100 % : bandeau dans la liste, journées accessibles
+02:09 +299 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans rendu 320 px · 130 % · clair : sans débordement
+02:10 +300 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans rendu 320 px · 200 % · sombre : sans débordement
+02:10 +301 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans rendu 320 px · 200 % · clair : sans débordement
+02:10 +302 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans rendu 390 px · 100 % · sombre : sans débordement
+02:10 +303 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: Écrans (tearDownAll)
+02:10 +303 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart
+02:11 +303 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: le simulateur Dart reproduit les athlètes de la référence Python
+02:11 +304 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C1 — erreur < 3 % après 6 séances depuis un a priori juste
+02:11 +305 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C2 — convergence en ≤ 6 séances depuis un a priori faux de ±15 %
+02:12 +306 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C3 — un mauvais jour isolé (−8 %) déplace l’estimation de < 1 %
+02:12 +307 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C4 — biais de RIR appris à ±0,5 près après 2 tests
+02:12 +308 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C5, C6 — pas d’oscillation, plafonds D20 / D24 jamais dépassés
+02:12 +309 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C7 — rejeu complet = cache incrémental, au centième de kg
+02:12 +310 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/startup_test.dart
+02:13 +310 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/startup_test.dart: ouverture deux secondes : drapeau en bas, logo centre puis en-tête, accueil protégé
+02:14 +311 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/startup_test.dart: chargement lent : pas d’accueil prématuré ni saut de logo
+02:14 +312 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/startup_test.dart: une erreur d’initialisation reste visible
+02:14 +313 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/startup_test.dart: réduire les animations supprime le déplacement et garde deux secondes
+02:14 +314 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart
+02:15 +314 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: les seuils de niveaux conservent exactement la courbe existante
+02:15 +315 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: les crédits continuent de récompenser les paliers après le niveau 10
+02:16 +316 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: un profil vide commence au niveau 1 sans récompenses fantômes
+02:16 +317 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: une journée de repos conserve le barème historique mais ne donne pas de bonus sportif
+02:16 +318 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: les quatre missions se cumulent une seule fois et comptent des jours distincts
+02:16 +319 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: les bonus des semaines précédentes restent présents au changement de semaine
+02:16 +320 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: la régularité accepte les repos et donne le badge quatre semaines
+02:17 +321 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: une semaine entièrement manquée coupe la série actuelle, pas le meilleur historique
+02:17 +322 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: chaque amélioration stricte gagne son bonus, ni égalité ni tentative inachevée
+02:17 +323 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: AMRAP compare les rounds avant les répétitions pour récompenser les records
+02:17 +324 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: les dates futures ne donnent pas de badges ou de missions en avance
+02:17 +325 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: la suppression d’un événement retire ses bonus sans état de récompense dupliqué
+02:17 +326 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: la migration conserve données, déverrouillages, XP de base et bonus après deux imports
+02:18 +327 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: le cache se met à jour après une validation et son annulation
+02:18 +328 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: les semaines civiles restent correctes autour du passage à l’heure d’hiver
+02:18 +329 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_screens_test.dart
+02:18 +329 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_screens_test.dart: (setUpAll)
+02:19 +329 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_screens_test.dart: la pastille ouvre la progression depuis l’accueil
+02:21 +330 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème true
+02:22 +331 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème false
+02:22 +332 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_screens_test.dart: un canal désactivé est visible et propose le bon réglage Android
+02:22 +333 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_screens_test.dart: les rappels restent configurables sans boutons de test
+02:23 +334 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_screens_test.dart: (tearDownAll)
+02:23 +334 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart
+02:23 +334 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: courbe par morceaux : bornes et interpolation
+02:23 +335 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: records : 1RM estimé lesté et reps au poids de corps, séance exclue
+02:23 +336 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: série avec boucliers : gagnés toutes les 3 semaines, consommés sur un trou
+02:23 +337 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: rareté des badges par bonus
+02:23 +338 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: avec le programme objectif hebdo adaptatif : entre 2 et les journées du programme
+02:24 +339 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: avec le programme campagne : 6 chapitres, 4 boss, 4 saisons, crédits dérivés à zéro
+02:24 +340 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: avec le programme un boss vaincu et un chapitre bouclé donnent titres et crédits
+02:24 +341 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: avec le programme bilan de récompenses : XP, badge, défi et niveau
+02:25 +342 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: avec le programme une séance terminée laisse un bilan à consommer une seule fois
+02:25 +343 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/screens_test.dart
+02:26 +343 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/screens_test.dart: (setUpAll)
+02:26 +343 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+02:27 +344 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/screens_test.dart: le bouton effacer vide aussi le champ de recherche
+02:28 +345 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/screens_test.dart: un jour de repos actualise son bouton immédiatement
+02:28 +346 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/screens_test.dart: le chrono long tient sur un écran de 320 px
+02:28 +347 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/screens_test.dart: écrans principaux à 320 px, thème sombre
+02:29 +348 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/screens_test.dart: écrans principaux à 320 px, thème clair
+02:30 +349 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/screens_test.dart: aperçu depuis le runner revient au même chrono
+02:30 +350 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/screens_test.dart: score invalide reste ouvert, annulation puis score valide sans doublon
+02:31 +351 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/screens_test.dart: (tearDownAll)
+02:31 +351 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart
+02:31 +351 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: un achat WOD ne débite qu’une fois et reste acquis après rechargement
+02:32 +352 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: nouvelle installation sombre, préférences de thème existantes conservées
+02:32 +353 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: le catalogue de 1 000 WODs est classé avant utilisation
+02:33 +354 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: les données du programme et chaque prescription sont exploitables
+02:34 +355 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: les semaines suivent les jours civils aux changements d’heure
+02:34 +356 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: un import invalide tardif ne modifie aucune donnée
+02:34 +357 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: la sauvegarde compacte conserve les modifications, scores et crédits
+02:34 +358 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: les anciens exports v2 restent importables
+02:35 +359 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: migration des préférences v33 vers la nouvelle sauvegarde
+02:35 +360 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: import : caches, thème et champs de Pilotage sont renouvelés
+02:35 +361 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: une séance perso répétée conserve les deux occurrences et leurs XP
+02:35 +362 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: l’avancement du programme exclut les séances perso et les clés hors programme
+02:35 +363 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: les muscles suivent la date réelle, même dans une autre semaine du programme
+02:36 +364 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: les nouveaux identifiants sont uniques sans délai entre créations
+02:36 +365 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: les montées en singles ne sont pas des myo-reps
+02:36 +366 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: le micro-repos personnalisé est distinct du repos entre séries
+02:36 +367 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: Pilotage refuse les valeurs non finies ou négatives
+02:36 +368 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: modifier une ligne de matériel invalide le cache à longueur identique
+02:36 +369 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: les déciles ne dépendent pas des suppressions personnelles
+02:36 +370 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: le parseur ignore les numéros de minute
+02:36 +371 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: les décimales, blocs multipliés et abréviations MU sont reconnus
+02:36 +372 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: import refuse les versions futures et chronos invalides
+02:37 +373 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart
+02:37 +373 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: (setUpAll)
+02:38 +373 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: rouvrir puis revalider garde la date et les saisies
+02:38 +374 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: annuler une suppression n’écrase pas une séance reprise
+02:38 +375 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: archive, repos ou séance perso disparue : suppression seule
+02:38 +376 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: une séance perso existante peut être rouverte
+02:38 +377 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: le bilan rouvre la séance modifiable
+02:40 +378 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: annuler la correction ne modifie rien
+02:41 +379 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: supprimer puis annuler restaure la séance
+02:41 +380 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: une archive se supprime sans correction
+02:41 +381 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: hors journal, aucune action d’écriture
+02:41 +382 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: (tearDownAll)
+02:41 +382 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart
+02:42 +382 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart: (setUpAll)
+02:43 +382 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart: D8/D9 : validation → six boutons, un tap choisit et valide ; D24 : suggestion appliquée
+02:45 +383 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart: fiche fermée sans choix : la série reste non validée ; « Garder ma charge » retenu
+02:46 +384 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart: D14/D25 : questionnaire facultatif, jour de fatigue proposé puis accepté (320 px, texte 200 %)
+02:47 +385 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart: « Passer » masque le questionnaire pour la séance
+02:47 +386 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart: D5 b : fin de séance → bilan Koach (douleur, propositions), puis retour
+02:47 +387 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart: D6, KT-036 : activation expliquée ; questionnaires après information
+02:48 +388 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart: écrans Koach sans débordement 390 px, texte 100 %
+02:50 +389 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart: écrans Koach sans débordement 390 px, texte 130 %
+02:51 +390 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart: écrans Koach sans débordement 390 px, texte 200 %
+02:52 +391 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart: écrans Koach sans débordement 320 px, texte 100 %
+02:54 +392 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart: écrans Koach sans débordement 320 px, texte 130 %
+02:55 +393 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart: écrans Koach sans débordement 320 px, texte 200 %
+02:56 +394 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart: (tearDownAll)
+02:56 +394 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart
+02:56 +394 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart: validation des temps
+02:56 +395 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart: un résultat incomplet ou nul ne devient pas un record
+02:56 +396 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart: AMRAP : priorité aux rounds, même au-delà de 1000 reps
+02:56 +397 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart: le chronomètre garde les fractions de seconde entre pauses
+02:56 +398 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart: un lap prend le temps exact, sans dépendre du dernier rafraîchissement
+02:56 +399 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart: AMRAP terminé garde sa durée cible après arrière-plan
+02:56 +400 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart: EMOM rattrape les intervalles et ne recommence pas après la fin
+02:56 +401 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart: le repos inter-rounds est figé pendant une pause
+02:56 +402 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart: le bouton Round ne peut pas compter pendant le repos
+02:56 +403 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart: un compte à rebours vide ne plante pas et les repos nuls sont ignorés
+02:56 +404 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart: le chrono max fige le temps exact au clic Stop
+02:56 +405 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart: le micro-repos ne rajoute pas un décompte de préparation
+02:56 +406 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart
+02:57 +406 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: A. Saisie : règles de format (KT-009) charge : virgule, point, blancs, assistance ; ambigus refusés
+02:57 +407 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: A. Saisie : règles de format (KT-009) reps, secondes, minutes : entiers sans unité
+02:57 +408 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: A. Saisie : règles de format (KT-009) RIR et RPE : échelles distinctes, pas de 0,5
+02:57 +409 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: A. Saisie : règles de format (KT-009) valeur obligatoire ; zéro seulement pour un test max
+02:57 +410 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: A/B/D. Store : coche, reprise, fin coche refusée : rien validé, texte gardé ; puis acceptée
+02:58 +411 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: A/B/D. Store : coche, reprise, fin série validée puis modifiée : repasse non validée si invalide
+02:58 +412 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: A/B/D. Store : coche, reprise, fin suggestion affichée ≠ performance ; livres sans conversion
+02:59 +413 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: A/B/D. Store : coche, reprise, fin séance en cours : même occurrence, page de reprise, bandeau
+02:59 +414 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: A/B/D. Store : coche, reprise, fin fin : un seul bilan, double appel sans double gain
+02:59 +415 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: A/B/D. Store : coche, reprise, fin écriture refusée : pas de bilan, séries gardées ; nouvel essai
+03:00 +416 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: A/B/D. Store : coche, reprise, fin reprise après minuit : dates de séries gardées, fin datée à la fin
+03:00 +417 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: A/B/D. Store : coche, reprise, fin séance perso répétée : ancienne occurrence archivée, jamais écrasée
+03:00 +418 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: C. Temps : horloge murale bornée par l’horloge monotone heure reculée d’une heure : le repos continue de décompter
+03:00 +419 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: C. Temps : horloge murale bornée par l’horloge monotone veille de l’appareil : l’heure murale compte le temps passé
+03:00 +420 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: C. Temps : horloge murale bornée par l’horloge monotone rafraîchissements manqués : bonne phase, aucune rafale
+03:00 +421 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: C. Temps : horloge murale bornée par l’horloge monotone pauses répétées et frontière de phase exacte
+03:00 +422 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: C. Temps : horloge murale bornée par l’horloge monotone point sûr : reprise en pause, absence non comptée, aucune alerte
+03:00 +423 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: C. Temps : horloge murale bornée par l’horloge monotone chrono de tenue terminé : la série n’est pas validée
+03:00 +424 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: F/G. WOD en cours : persistance, import, minuit essai lancé avant minuit, relance simulée, fini après minuit
+03:01 +425 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: F/G. WOD en cours : persistance, import, minuit un seul WOD chronométré à la fois ; abandon explicite
+03:01 +426 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: F/G. WOD en cours : persistance, import, minuit export sans chrono ; import et effacement l’annulent ; point obsolète ignoré
+03:01 +427 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: F/G. WOD en cours : persistance, import, minuit chrono illisible : ignoré, le reste des données chargé
+03:01 +428 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: F/G. WOD en cours : persistance, import, minuit ancienne sauvegarde sans chrono : importée, rien de synthétisé
+03:01 +429 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: Écrans (setUpAll)
+03:02 +429 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: Écrans coche refusée : message nommant le champ, saisie gardée
+03:03 +430 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: Écrans reprise : rouverte sur l’exercice en cours, badge et bandeau
+03:03 +431 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: Écrans fin : écriture refusée → réessayer ; bilan une seule fois
+03:04 +432 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: Écrans notification répétée : une seule séance ouverte ; journée faite → historique
+03:04 +433 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: Écrans historique : consulter, défiler, changer de thème ne modifie rien
+03:05 +434 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: Écrans WOD retrouvé en pause au dernier point sûr (Tabata)
+03:05 +435 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: Écrans rendu 320 px · 130 % : message d’erreur, bandeau, clavier
+03:05 +436 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: Écrans rendu 320 px · 200 % : message d’erreur, bandeau, clavier
+03:05 +437 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: Écrans (tearDownAll)
+03:05 +437 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart
+03:06 +437 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart: (setUpAll)
+03:07 +437 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart: historique : mêmes cartes, navigation et données intactes à 320 px, thème true
+03:09 +438 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart: historique : mêmes cartes, navigation et données intactes à 320 px, thème false
+03:09 +439 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart: archive perso : nom et valeurs conservés sans inventer une prescription ou des unités
+03:09 +440 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart: une tenue historique garde ses secondes mais aucun chrono
+03:09 +441 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart: (tearDownAll)
+03:09 +441 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/level_fill_test.dart
+03:10 +441 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/level_fill_test.dart: NIV. précède le niveau et la barre représente son avancement
+03:11 +442 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_purchase_ui_test.dart
+03:11 +442 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_purchase_ui_test.dart: (setUpAll)
+03:12 +442 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_purchase_ui_test.dart: attente affichée, rien de confirmé, fermeture sans erreur
+03:13 +443 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_purchase_ui_test.dart: écriture refusée : message, WOD verrouillé, achat possible
+03:13 +444 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_purchase_ui_test.dart: (tearDownAll)
+03:13 +444 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart
+03:14 +444 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart: rouge par défaut : rendus comparables avant / après L5-C
+03:14 +444 ~3: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/search_test.dart
+03:15 +444 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/search_test.dart: normalisation : accents, casse, ponctuation, tirets conservés
+03:15 +445 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/search_test.dart: recherche : synonymes FR / EN, plusieurs termes, préfixes
+03:15 +446 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/search_test.dart: pertinence : le titre pèse plus que les lignes
+03:15 +447 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/search_test.dart: index : un document n’est reconstruit que si sa clé change
+03:15 +448 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/search_test.dart: deuxième série : 500 WODs distincts, ids et noms uniques
+03:15 +449 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/search_test.dart: première série inchangée : ids gen0… et même premier WOD
+03:15 +450 ~3: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart
+03:15 +450 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement désactivé par défaut ; export identique à 2.5.9 tant qu’il n’a jamais servi
+03:16 +451 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement état 2.5.x relu : rien de réécrit, Koach désactivé
+03:17 +452 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement première activation : repère initial daté, première pesée, échelle figée
+03:17 +453 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement sauvegarde 3.0.0 : section koach et champs de série, relue à l’identique
+03:18 +454 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement sauvegarde 2.x importée : rien de synthétisé ; export 3.0.0 au format 3
+03:18 +455 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement import : section Koach ou difficulté hors contrat refusée ; démarrage : entrée illisible ignorée, le reste chargé
+03:18 +456 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement effacement des données : Koach remis à l’état neuf
+03:19 +457 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement export après activation relu par l’import strict (clé ancienne, poids hors pesée) ; réactivation : valeurs modifiées datées
+03:19 +458 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement import strict : horodatage ou détail de décision hors contrat refusé ; démarrage : entrée ignorée et comptée
+03:19 +459 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement séance effacée : ses réponses et décisions Koach aussi ; suppression annulée : rétablies
+03:19 +460 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement cache : une frappe dans la séance en cours ne recalcule rien ; une séance terminée corrigée, si
+03:19 +461 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement D26 : allègement levé à la main, daté
+03:19 +462 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement KT-036 : réponses supprimables seules, incluses dans l’export
+03:20 +463 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D8, D9, D11, D13, D33, D12 — séries et saisies D8 : difficulté exigée sur la première et la dernière série des mouvements principaux
+03:20 +464 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D8, D9, D11, D13, D33, D12 — séries et saisies D9 : RIR/RPE hérités lus avec l’échelle figée ; non interprétables = borne
+03:20 +465 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D8, D9, D11, D13, D33, D12 — séries et saisies D11 : série écartée gardée au journal, XP inchangée, hors estimation
+03:20 +466 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D8, D9, D11, D13, D33, D12 — séries et saisies D13 : repos réel < 80 % du prescrit → série hors estimation
+03:20 +467 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D8, D9, D11, D13, D33, D12 — séries et saisies D33 : saisie manuelle = mesure datée, regroupée sur 30 s ; poids du corps = pesée du jour
+03:20 +468 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D8, D9, D11, D13, D33, D12 — séries et saisies D12 : pesée la plus récente = poids du corps ; rappel après 7 jours
+03:20 +469 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D8, D9, D11, D13, D33, D12 — séries et saisies D2 : séances perso et WOD ignorés ; cache du store = rejeu complet
+03:20 +470 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D24, D7, D6, D25, D26 — pendant la séance D24 : suggestion après la série 1, appliquée aux séries restantes
+03:21 +471 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D24, D7, D6, D25, D26 — pendant la séance D7 : refus mémorisé, hausse non reproposée ; une baisse de sécurité reste possible
+03:21 +472 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D24, D7, D6, D25, D26 — pendant la séance D6 : verrou « Garder ma valeur » et Koach désactivé : aucune suggestion
+03:21 +473 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D24, D7, D6, D25, D26 — pendant la séance D25 : jour de fatigue : séries restantes réduites, charges gardées, aucune hausse
+03:21 +474 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D24, D7, D6, D25, D26 — pendant la séance D26 : douleur > 3/10 : aucune hausse ; deux séances de suite : allègement proposé, puis levé
+03:21 +475 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: Bilan (D5 b), historique (KT-029), objectifs (D27), structure (D28) bilan : valeur acceptée d’un tap, datée ; historique des séances inchangé
+03:21 +476 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: Bilan (D5 b), historique (KT-029), objectifs (D27), structure (D28) D27 : étape = cible 12 mois au départ + 12 mois ; objectif final saisi, modifiable
+03:21 +477 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: Bilan (D5 b), historique (KT-029), objectifs (D27), structure (D28) D28 : option désactivée par défaut ; adaptation acceptée = couche datée et réversible
+03:22 +478 ~3: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_palettes_capture_test.dart
+03:22 +478 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_palettes_capture_test.dart: six couleurs × clair/sombre
+03:22 +478 ~4: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart
+03:23 +478 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) essai du jour : jamais tenté, fixé malgré niveau, référence, notification
+03:24 +479 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) tentatives illimitées le jour même, résultat ne change rien
+03:24 +480 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) achat de l’essai : acquis aussitôt, aucun second essai gratuit
+03:25 +481 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) essai terminé puis acheté : remise d’essai appliquée, prix figé
+03:25 +482 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) jour suivant, recul d’horloge, heure d’hiver, année
+03:25 +483 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) aucun candidat : pas d’essai, aucun WOD déjà tenté proposé
+03:25 +484 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) niveau élargi (±2 puis catalogue) avant l’absence d’essai
+03:25 +485 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) ancienne sauvegarde sans sélection : WOD joué aujourd’hui gardé
+03:25 +486 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) vitrine : fixée malgré niveau et relance, remplacement après achat
+03:26 +487 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) vitrine : changement d’année (lundi 28/12 → lundi 04/01)
+03:26 +488 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) export/import : essai et vitrine conservés à l’identique
+03:26 +489 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) sélections invalides refusées à l’import
+03:26 +490 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) tentative lancée à 23 h 59, validée à 00 h 01 : un seul résultat
+03:26 +491 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) après minuit sans tentative ouverte : refus, rien enregistré
+03:27 +492 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) écriture refusée puis reprise : un résultat, une récompense
+03:27 +493 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) achat du WOD pendant la tentative : validation normale
+03:27 +494 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) registre : 3 crédits offerts enregistrés, notifications sans effet
+03:27 +495 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) suppression puis réintroduction : aucun gain repayé
+03:27 +496 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) nouvelle semaine réelle après une suppression : +1 payé
+03:27 +497 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) palier baissé puis atteint de nouveau : payé une seule fois
+03:27 +498 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) correction de séance : XP retirée puis rendue, crédits stables
+03:27 +499 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) import répété du même état : aucun nouveau gain
+03:28 +500 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) import d’un état plus ancien : remplacement, pas de fusion
+03:28 +501 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) migration L2 : surplus conservé, répétable sans nouveau gain
+03:28 +502 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) ancien format 2 : registre reconstruit depuis son journal
+03:29 +503 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) état incohérent : déficit visible, droits gardés, achat bloqué
+03:29 +504 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Store L3 (instances isolées, horloge contrôlée) suppression locale : registre et sélections non restaurés
+03:29 +505 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Écran WOD : tentative à cheval sur minuit (setUpAll)
+03:29 +505 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Écran WOD : tentative à cheval sur minuit écran reconstruit après minuit, score enregistré une fois
+03:31 +506 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: Écran WOD : tentative à cheval sur minuit (tearDownAll)
+03:31 +506 ~4: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart
+03:32 +506 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Catalogue : définitions explicites, rien d’autre ne bouge définitions 2.5.5 identiques octet pour octet (hors format)
+03:32 +507 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Catalogue : définitions explicites, rien d’autre ne bouge formats ajoutés : 40 Tabata, 40 AMRAP en blocs, 21 Death by, 1 E5MOM
+03:32 +508 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Catalogue : définitions explicites, rien d’autre ne bouge Tabata : exercices, ordre, durées et lignes conservés
+03:32 +509 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Catalogue : définitions explicites, rien d’autre ne bouge règle de chaque famille
+03:32 +510 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Catalogue : définitions explicites, rien d’autre ne bouge format incohérent avec le type : ignoré (règle du type)
+03:32 +511 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Tabata : chronologie des phases 3 mouvements : 47 phases, 810 s, fin au dernier effort
+03:32 +512 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Tabata : chronologie des phases 4 mouvements : 1 100 s
+03:32 +513 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Tabata : chronologie des phases AMRAP en blocs : 4-5-6 min, 2 min entre deux
+03:32 +514 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: WodClock par phases (horloge simulée) transitions juste avant, au moment exact et après
+03:32 +515 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: WodClock par phases (horloge simulée) pause et reprise pendant l’effort et le repos
+03:32 +516 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: WodClock par phases (horloge simulée) rafraîchissement tardif : pas de phase prolongée, pas de rafale
+03:32 +517 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: WodClock par phases (horloge simulée) dernier effort : fin unique, sans dernier repos
+03:32 +518 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: WodClock par phases (horloge simulée) fin découverte tard : pas d’alarme ancienne
+03:32 +519 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: WodClock par phases (horloge simulée) préparation : hors durée du WOD
+03:32 +520 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Tabata : score et comparaison minimum par mouvement, zéro compté, total des minimums
+03:32 +521 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Tabata : score et comparaison champ manquant : partiel, jamais complété ni classé
+03:32 +522 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Tabata : score et comparaison deux nouveaux résultats : le total le plus haut, égalité = premier
+03:32 +523 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Tabata : score et comparaison ancien temps Tabata : conservé, jamais converti ni comparé
+03:32 +524 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Autres formats : règle, validité, sens de comparaison For Time : plus court gagne ; incomplet (arrêt rapide) exclu ; ancien comparable
+03:32 +525 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Autres formats : règle, validité, sens de comparaison AMRAP : rounds puis reps ; interrompu exclu
+03:32 +526 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Autres formats : règle, validité, sens de comparaison EMOM : minutes tenues ; ancien « rounds + reps » à part
+03:32 +527 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Autres formats : règle, validité, sens de comparaison E5MOM : total de tractions
+03:32 +528 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Autres formats : règle, validité, sens de comparaison Death by : dernière minute réussie
+03:32 +529 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Autres formats : règle, validité, sens de comparaison AMRAP en blocs : total des rounds
+03:32 +530 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Autres formats : règle, validité, sens de comparaison routine sans règle : temps noté, jamais de record
+03:32 +531 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Autres formats : règle, validité, sens de comparaison valeur absente : aucune performance inventée
+03:32 +532 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Saisie : nombres entiers seulement, zéro accepté, espaces tolérés
+03:32 +533 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Store : sauvegarde, import, XP et garanties L2/L3 XP de record des anciens résultats inchangée (oracle ancienne règle)
+03:33 +534 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Store : sauvegarde, import, XP et garanties L2/L3 nouveau Tabata : sauvegardé, exporté, réimporté à l’identique
+03:33 +535 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Store : sauvegarde, import, XP et garanties L2/L3 double validation et échec d’écriture : un résultat, une récompense
+03:34 +536 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Store : sauvegarde, import, XP et garanties L2/L3 essai Tabata commencé à 23 h 59, validé à 00 h 01
+03:34 +537 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Store : sauvegarde, import, XP et garanties L2/L3 ancienne sauvegarde : import répété sans conversion ni récompense
+03:34 +538 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Store : sauvegarde, import, XP et garanties L2/L3 consultation des règles et records : aucune modification
+03:34 +539 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Store : sauvegarde, import, XP et garanties L2/L3 import refusé : règle inconnue, intervalle hors bornes, format incohérent
+03:35 +540 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Store : sauvegarde, import, XP et garanties L2/L3 suppression locale : nouveaux scores retirés, rien de restauré
+03:35 +541 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Écrans : runner Tabata et feuilles de score (setUpAll)
+03:35 +541 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Écrans : runner Tabata et feuilles de score Tabata de bout en bout à 320 px : phases, fin, saisie, record
+03:39 +542 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Écrans : runner Tabata et feuilles de score Tabata partiel à 130 %, clavier ouvert
+03:40 +543 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Écrans : runner Tabata et feuilles de score Tabata partiel à 200 %, clavier ouvert
+03:41 +544 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Écrans : runner Tabata et feuilles de score Tabata : saisies invalides refusées
+03:42 +545 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Écrans : runner Tabata et feuilles de score For Time : réalisation explicite et time cap respecté
+03:42 +546 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Écrans : runner Tabata et feuilles de score EMOM : aucune minute pré-remplie, borne à N
+03:42 +547 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: Écrans : runner Tabata et feuilles de score (tearDownAll)
+03:42 +547 ~4: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_acquisition_test.dart
+03:43 +547 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_acquisition_test.dart: (setUpAll)
+03:43 +547 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_acquisition_test.dart: Arsenal propose les séances libres et les WOD du catalogue
+03:45 +548 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_acquisition_test.dart: achat en crédits unique, puis lancement sans éditeur
+03:46 +549 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_acquisition_test.dart: sans crédits suffisants, même la route chrono exige un achat
+03:46 +550 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_acquisition_test.dart: les anciens WOD restent jouables avec leurs scores, hors du catalogue
+03:46 +551 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_acquisition_test.dart: (tearDownAll)
+03:46 +551 ~4: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_off_test.dart
+03:47 +551 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_off_test.dart: instantané de référence : 5 jeux × 1 812 exercices
+03:48 +552 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_off_test.dart: Koach jamais activé : charges, séries et saisies identiques à 2.x
+03:49 +553 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_off_test.dart: Koach utilisé puis désactivé : identique à 2.x
+03:49 +554 ~4: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart
+03:50 +554 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: (setUpAll)
+03:51 +554 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: la pastille de l’accueil suit un passage de niveau
+03:52 +555 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: le solde de crédits de l’Arsenal suit un passage de niveau
+03:52 +556 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: la carte d’objectif hebdo de l’Aperçu suit une séance validée
+03:52 +557 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: un StoreWidget const se reconstruit puis se désabonne
+03:52 +558 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: fin de séance ouverte sans vérification au retour : bilan affiché, décompte lancé après la fermeture de la séance
+03:53 +559 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: un rappel ouvre la séance, ou son historique une fois faite
+03:54 +560 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: le décompte part de zéro et va jusqu’au gain complet
+03:54 +561 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: « Réduire les animations » affiche le bilan final sans attendre
+03:54 +562 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: récompense à 320 px, texte 1.3 : actions par défilement
+03:54 +563 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: récompense à 320 px, texte 2.0 : actions par défilement
+03:54 +564 ~4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: (tearDownAll)
+03:54 +564 ~4: All tests passed!
+exit=0
