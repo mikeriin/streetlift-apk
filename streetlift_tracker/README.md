@@ -1,4 +1,20 @@
-# Kalis Track 2.5.9 — Boutique de WODs façon jeu
+# Kalis Track 3.0.0 — Koach, ajustement des charges sur le téléphone
+
+## 3.0.0 — Koach (lot L7)
+
+**Koach** (Kalis Coach) suit tes séries du programme de 40 semaines et te propose des ajustements de charge. Il est **désactivé par défaut** : active-le dans Réglages → Koach (une explication s'affiche d'abord). Désactivé, l'application fonctionne exactement comme en 2.5.9.
+
+- **Difficulté de la série** : six niveaux, d'« Échec » à « Facile », chacun avec « encore N » (répétitions encore possibles). Koach actif, elle est demandée sur la première et la dernière série des quatre mouvements principaux (muscle-up, traction, dip lestés, back squat) : un tap choisit et valide. Mode avancé : RIR ou RPE dans la colonne habituelle. Sous chaque série validée, la difficulté notée reste modifiable, et une série peut être **écartée** (incident) : elle reste au journal, XP comprise, sans compter dans les estimations.
+- **Pendant la séance** : après la série 1, si elle était plus facile ou plus dure que le RIR visé, Koach propose la charge des séries restantes, avec la raison en une ligne (« +2,5 kg — série 1 à Soutenu, visé Dur ») : « Appliquer » ou « Garder ma charge ». Jamais de hausse en semaine de décharge, avec une douleur notée au-dessus de 3/10 ou un jour de fatigue accepté.
+- **Jour de fatigue** : si la série 1 est nettement sous ton niveau habituel (ou sommeil court, forme basse), Koach propose de réduire le volume restant de 15 à 30 %, charges maintenues.
+- **Fin de séance** : bilan Koach avant le bilan de récompenses. Les valeurs de la feuille Pilotage (1RM, maxima, charges des accessoires) ne changent **jamais sans ton accord** : chaque proposition s'accepte ou se refuse d'un tap, avec sa raison ; une valeur peut être verrouillée (« Garder ma valeur »).
+- **STATS › Performances → Koach** : 1RM estimés avec leur incertitude, courbe, projection vers ton étape (cible 12 mois du programme) et ton objectif final (à saisir), statut écrit (« dans les temps », « en retard »…), maxima d'endurance, historique daté des valeurs, pesées.
+- **Pesées datées** : ton poids du jour sert au calcul des mouvements lestés ; rappel sur l'accueil après 7 jours sans pesée.
+- **Matériel** : incréments de tes haltères, disques, barre, poulies (en livres) et machines, modifiables ; les charges suivent ta grille.
+- **Options** : questionnaires facultatifs (sommeil, forme, douleur), après une information claire, supprimables à tout moment ; « Koach adapte la structure » (désactivé par défaut) : ±1 série par mouvement ou décharge anticipée pour la semaine suivante, annulable.
+- **Tes données** : tout est calculé et conservé sur ton téléphone, sans compte ni connexion. Les données Koach sont dans l'export de sauvegarde et effacées avec les données de l'application. Mise à jour depuis 2.5.x : rien n'est réécrit, Koach reste désactivé jusqu'à ce que tu l'actives.
+
+Koach produit des **estimations d'entraînement**, sans garantie de résultat ; ses paramètres restent à éprouver sur le terrain (voir `docs/CONTRAT_L7.md` §11). Détail : `docs/CONTRAT_L7.md`, `docs/CONFIDENTIALITE_KOACH.md`, `SUIVI_PROJET.md` (L7), `LIVRAISON_L7.md`. Tests : `test/l7_*_test.dart`, `tools/tests/test_koach_reference.py`.
 
 ## 2.5.9 — Séances fiables et reprise (lot L4b)
 
