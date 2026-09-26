@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
-import 'store.dart';
 import 'store_widget.dart';
 import 'ui.dart';
 import 'motion.dart';
@@ -75,17 +74,20 @@ class StatsScreenState extends State<StatsScreen>
   }
 
   @override
-  // L6 : différé tant que l'onglet est masqué (voir store_widget.dart).
-  Widget build(BuildContext context) => StoreBuilder(
+  Widget build(BuildContext context) => Builder(
     builder: (context) {
+      // L6 : seules les sections lisent le store. Chacune se reconstruit à
+      // chaque notification tant qu'elle est affichée ; une section ou un
+      // onglet STATS masqué diffère jusqu'à son retour à l'écran (voir
+      // store_widget.dart).
       final pages = <Widget>[
-        StatsOverview(onSection: selectSection),
+        StoreBuilder(builder: (_) => StatsOverview(onSection: selectSection)),
         // ignore: prefer_const_constructors
-        StatsProgression(),
+        StoreBuilder(builder: (_) => StatsProgression()),
         // ignore: prefer_const_constructors
-        StatsPerformance(),
+        StoreBuilder(builder: (_) => StatsPerformance()),
         // ignore: prefer_const_constructors
-        StatsHistory(),
+        StoreBuilder(builder: (_) => StatsHistory()),
       ];
       final help = IconButton(
         tooltip: 'Comprendre les XP',

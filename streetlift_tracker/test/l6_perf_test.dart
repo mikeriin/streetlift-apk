@@ -200,6 +200,10 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('nav-1')));
       await tester.pumpAndSettle();
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('stats-section-3')),
+      );
+      await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('stats-section-3')));
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('nav-2')));
@@ -248,6 +252,10 @@ void main() {
         await tester.pumpAndSettle();
       }
       await tester.tap(find.byKey(const ValueKey('nav-1')));
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(
+        find.byKey(const ValueKey('stats-section-3')),
+      );
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('stats-section-3')));
       await tester.pumpAndSettle();

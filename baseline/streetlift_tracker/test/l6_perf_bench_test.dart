@@ -54,6 +54,14 @@ void _emit(Map<String, Object?> row) {
 
 double _ms(Stopwatch sw) => sw.elapsedMicroseconds / 1000.0;
 
+/// Ferme une instance après ses écritures en attente : une écriture tardive
+/// d'une instance fermée ne doit pas atteindre le stockage simulé du profil
+/// suivant (elle remplaçait le document chargé ensuite).
+Future<void> _close(AppStore app) async {
+  await app.flush();
+  app.dispose();
+}
+
 String _fnv(String text) {
   var hash = 0xcbf29ce484222325;
   for (final unit in utf8.encode(text)) {
@@ -127,9 +135,9 @@ Future<void> _prepareProfiles() async {
       _stateKey,
     );
     _exports[profile] = app.exportAll();
-    app.dispose();
+    await _close(app);
   }
-  seed.dispose();
+  await _close(seed);
 }
 
 Future<AppStore> _loaded(String profile) async {
@@ -207,7 +215,9 @@ void main() {
           'xp': p.totalXp,
           'level': app.level,
           'credits': app.credits,
-          'wodLevels': _fnv([for (final w in app.wods) '${w.id}:${w.level}'].join(',')),
+          'wodLevels': _fnv(
+            [for (final w in app.wods) '${w.id}:${w.level}'].join(','),
+          ),
           'estimates': _fnv(
             [
               for (final w in app.wods)
@@ -215,7 +225,9 @@ void main() {
             ].join(','),
           ),
           'history': _fnv(
-            [for (final e in statsHistory(app)) '${e.id}|${e.title}|${e.at}'].join(','),
+            [
+              for (final e in statsHistory(app)) '${e.id}|${e.title}|${e.at}',
+            ].join(','),
           ),
           'muscles': _fnv('${app.weeklyMuscles(DateTime(2026, 3, 25, 23))}'),
           'bests': _fnv(
@@ -233,7 +245,7 @@ void main() {
           'unit': 'digest',
           'values': parts,
         });
-        app.dispose();
+        await _close(app);
       }
     });
 
@@ -248,7 +260,7 @@ void main() {
           final sw = Stopwatch()..start();
           await app.init();
           sw.stop();
-          app.dispose();
+          await _close(app);
           return _ms(sw);
         });
       }
@@ -294,7 +306,7 @@ void main() {
         sw.stop();
         return _ms(sw);
       }, extra: {'wods': heavy.wods.length});
-      heavy.dispose();
+      await _close(heavy);
       await _measure('catalog.wodStats.all', 'long', () async {
         final sw = Stopwatch()..start();
         for (final w in app.wods) {
@@ -312,7 +324,7 @@ void main() {
         sw.stop();
         return _ms(sw);
       });
-      app.dispose();
+      await _close(app);
     });
 
     test('STATS : dérivés recalculés après une modification', () async {
@@ -351,7 +363,7 @@ void main() {
           sw.stop();
           return _ms(sw);
         });
-        app.dispose();
+        await _close(app);
       }
     });
 
@@ -418,7 +430,7 @@ void main() {
             }, n: 5);
           }
           await app.flush();
-          app.dispose();
+          await _close(app);
         }
       },
     );
@@ -481,6 +493,10 @@ void main() {
             firstStats.add(await timedPump());
             await tester.pumpAndSettle();
             for (var i = 1; i < 4; i++) {
+              await tester.ensureVisible(
+                find.byKey(ValueKey('stats-section-$i')),
+              );
+              await tester.pumpAndSettle();
               await tester.tap(find.byKey(ValueKey('stats-section-$i')));
               sections.add(await timedPump());
               await tester.pumpAndSettle();
@@ -684,7 +700,7 @@ void main() {
         now: DateTime(2026, 9, 26, 12),
       );
       expect(p.totalXp, greaterThan(0), reason: profile);
-      app.dispose();
+      await _close(app);
     }
   });
 }
