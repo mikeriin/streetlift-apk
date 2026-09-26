@@ -1,5 +1,3 @@
 Analyzing streetlift_tracker...                                 
-
-   info • Statements in an if should be enclosed in a block • test/l5c_ecrans_capture_test.dart:179:11 • curly_braces_in_flow_control_structures
-
-1 issue found. (ran in 22.1s)
+No issues found! (ran in 23.5s)
+exit=0

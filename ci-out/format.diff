@@ -1,9 +1,9 @@
- ci-out/analyze.log                                 |     3 -
- ci-out/captures.log                                |  1368 --
+ ci-out/analyze.log                                 |     5 -
+ ci-out/captures.log                                |    25 -
  ci-out/commit.txt                                  |     2 +-
- ci-out/format-full.diff                            | 20080 -------------------
- ci-out/format.diff                                 |     8 -
- ci-out/format.log                                  |     3 +-
+ ci-out/format-full.diff                            | 21827 -------------------
+ ci-out/format.diff                                 |     9 -
+ ci-out/format.log                                  |     2 +-
  ci-out/python.log                                  |    15 -
- .../test/l5c_ecrans_capture_test.dart              |   279 +-
- 8 files changed, 144 insertions(+), 21614 deletions(-)
+ .../test/l5c_ecrans_capture_test.dart              |   278 +-
+ 8 files changed, 142 insertions(+), 22021 deletions(-)
