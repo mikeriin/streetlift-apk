@@ -1,8 +1,90 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : L4b — Séances et reprise (KT-009, KT-018, P1)**  
-**Date : 26 septembre 2026, Europe/Paris — version : 2.5.9+60 (versionCode réel fixé par la CI de build)**  
-**Statut : validation des saisies, reprise des séances et des WOD interrompus, fin de séance confirmée par l'écriture, ouverture par rappel dédoublonnée : corrigés dans le code selon tes décisions du 26/09/2026 et testés automatiquement ; compilés. Aucune vérification sur téléphone, aucune destruction réelle du processus Android. Publication et build : `LIVRAISON_L4b.md`. L5 non lancé.**
+**Passe actuelle : L7 — Koach, moteur d'autorégulation local (KT-024 à KT-036)**  
+**Date : 26 septembre 2026, Europe/Paris — version : 3.0.0+61 (versionCode réel fixé par la CI de build)**  
+**Statut : Koach (estimation du 1RM et des maxima depuis le journal, suggestions pendant la séance, propositions au bilan, fatigue, douleur, objectifs, structure en option, pesées, matériel, questionnaires facultatifs) corrigé dans le code selon tes décisions D1-D37 du 26/09/2026 et testé automatiquement (moteur Dart = référence Python sur 24 cas, simulations, store, écrans, Koach désactivé = 2.x sur 1 818 exercices) ; compilé. Aucune vérification sur téléphone. Paramètres du modèle à éprouver sur le terrain et à faire valider par un préparateur physique compétent ; qualification juridique des questionnaires non tranchée. Publication et build : `LIVRAISON_L7.md`.**
+
+## L7.0 — Base et état initial
+
+| Élément | Valeur | Nature de la preuve |
+| --- | --- | --- |
+| Base | `streetlift_tracker_v33.zip` **L4b** (= `main`, commit `f71c360`), **1 469 701 octets**, SHA-256 `0e6aa29c61777408fc1819cac48a5b1c7465d18a09b8e325c13a06d33c5467ca`, racine unique `streetlift_tracker/`, **2.5.9+60** | Vérifié (fichier et `main` identiques) ; source intacte, travail sur copie |
+| Build 2.5.9 | Run n° 79 réussi (APK/AAB signés) | Résultat GitHub (lecture publique de l'API) |
+| État initial | Arbre L4b inchangé, branche temporaire `claude/ci-tools` (commit `3d57246`) : formatage 0 changement, `flutter analyze` sans problème, **442 réussis, 1 ignoré**, build Android debug réussi ; Python 39/39 | CI (sans secret) |
+| Instantané 2.x | Charges, libellés, volumes, séries, saisie, reps prévues et repos des 1 818 exercices pour 5 jeux de références et d'unités, capturés sur l'arbre L4b inchangé (commit `71d75dc`) → `test/fixtures/l7_2x_snapshot.json.gz` (générateur temporaire non livré) | CI |
+| Défaut bloquant préalable | Aucun | Constat |
+| Écarts avec la demande | « 1 954 entrées » : le programme compte **1 818** exercices depuis LC1 (contrôle fait sur 1 818) ; table « Repères RIR ↔ % » de la feuille Pilotage **absente** de l'archive (a priori ajusté sur les couples prescrits par le programme) ; singles « RIR 0 · ~95-97 % » incohérents par définition (écartés de l'ajustement) ; numérotation : ce « L7 » (Koach) n'est pas le « L7 — Candidate et publication » du plan A0 (§5 plus bas), qui reste à planifier | `docs/CONTRAT_L7.md` §1 |
+| Essais téléphone L1b → L4b | **Non rapportés** : rien n'est marqué « vérifié sur appareil » | — |
+
+## L7.1 — Décisions appliquées et choix exposés
+
+Les 37 décisions du 26/09/2026 sont appliquées telles quelles ; le tableau complet (règle, choix d'implémentation modifiable) est dans `docs/CONTRAT_L7.md` §2. Choix faits dans ce cadre, exposés et modifiables :
+
+| Point | Choix | Pourquoi |
+| --- | --- | --- |
+| Interrupteur (D6) | **Désactivé par défaut**, installation neuve comme mise à jour ; explication avant activation | Rien ne change pour un utilisateur 2.x sans action |
+| Plafonds D20 | En **masse système** (poids du corps + lest, ou barre), × semaines depuis le dernier changement (max 4) | Un % du lest seul n'a pas de sens au muscle-up (lest proche de 0) |
+| Allègement douleur D26 | −20 % des **charges prescrites** du mouvement, temporaire ; ni la valeur de pilotage ni l'estimation ne bougent | Réversible, levé quand la douleur redescend ≤ 3/10 (proposition) ou à la main |
+| Décharge anticipée D28 | Séries × 0,6 (min 1), charges −10 %, semaine suivante, couche datée annulable | Paramètres non fixés par la demande |
+| Incrément « machine » D23 | 2,5 kg (leg curl, mollets) | Matériel non listé par la demande ; modifiable dans Réglages → Koach → Matériel |
+| Sommeil D14 | Saisi par tranche (< 5 h … > 8 h), valeur centrale enregistrée | Saisie en un tap ; seuil D25 « < 5 h » conservé |
+| Ajouts justifiés par simulation | Effet de jour 5 %, séance atypique mise en attente, série ratée n = r + 0,5, test + ½ incrément, biais sur 21 jours, σ_k = 4, hystérésis 0,75 incrément | Mesurés un par un (ablation, contrat §8) |
+| Cache incrémental | Repris seulement si événements **et contexte** (pesées, références, repères initiaux, paramètres) sont inchangés | Défaut trouvé pendant l'intégration : une pesée rétroactive laissait l'estimation calculée avec l'ancien poids (corrigé, testé en Python et en Dart) |
+
+Décisions manquantes (non bloquantes, choix ci-dessus appliqués) : contrat §12.
+
+## L7.2 — Changements
+
+**Nouveaux fichiers**
+- `lib/koach_engine.dart` : moteur (Kalman 1D par mouvement en masse système, courbe %1RM(n), biais de RIR, courbe personnelle ancrée sur les tests, endurance, bornes inférieures, séance atypique, D24, D25, D26, D27, D28, grilles D23, échelle D9, rejeu et cache incrémental).
+- `lib/koach_data.dart` (section `koach` de la sauvegarde, bornes, lecture stricte à l'import / tolérante au démarrage), `lib/koach_program.dart` (annotations), `lib/koach_store.dart` (extension du store : entrées du moteur, décisions, pesées, objectifs, structure, charges avec Koach).
+- `lib/koach_widgets.dart` (fiche de difficulté, ligne Koach des séries, suggestion, fatigue, questionnaire, calibrage, pesée, rappel d'accueil), `lib/koach_screens.dart` (bilan Koach, écran Koach avec courbe, objectifs, matériel, pesées, informations d'activation et des questionnaires).
+- `assets/koach_program.json.gz` (généré par `tools/koach_annotate.py` ; asset du programme inchangé, empreinte LC1 vérifiée).
+- `tools/koach_reference.py`, `tools/koach_simulation.py`, `tools/koach_annotate.py`, `tools/tests/test_koach_reference.py` ; `test/fixtures/koach/*.json` (24 cas partagés), `test/fixtures/l7_2x_snapshot.json.gz`.
+- `docs/CONTRAT_L7.md`, `docs/CONFIDENTIALITE_KOACH.md`, `LIVRAISON_L7.md`.
+
+**Fichiers modifiés** (chaque branche conditionnée à Koach actif, sinon comportement 2.x)
+- `lib/store.dart` : `SetEntry.effort` / `excluded`, `ExerciseLog.prescribed` / `koach` (écrits seulement s'ils existent) ; champs Koach du store ; chargement des annotations ; sauvegarde (`koach` écrit seulement si Koach a servi), import (section stricte, difficulté 0-5 par pas de 0,5), démarrage (tolérant, entrées ignorées comptées), effacement ; `toggleSet(…, exercise:, week:)` (D8, prescription datée) ; `setValue` et `configureStart` (D12, D33) ; `loadFor`, `sessionLoad`, `loadLabel(week:)`, `kgFieldText` (D23, D26, D28) ; `exLog` (D28) ; aperçu d'import (Koach).
+- `lib/session_screen.dart` : fiche de difficulté à la validation, lignes Koach sous les séries validées (appui long sur le numéro), suggestion et fiche, fatigue, questionnaire, calibrage, prescription datée en historique, bilan Koach avant le bilan de récompenses, charges de la semaine.
+- `lib/settings_screen.dart` (section Koach, 3.0.0), `lib/stats_performance.dart` (tuile Koach), `lib/home_screen.dart` (rappel de pesée), `lib/data_control.dart` (aperçu d'import).
+- `pubspec.yaml` (3.0.0+61, asset `koach_program.json.gz`) ; `README.md` ; ce suivi.
+- Workflow `build-apk.yml` **inchangé** (copie du projet identique à `.github/workflows/` de `main`). Aucune dépendance ajoutée. Aucun test existant modifié.
+
+## L7.3 — Tests
+
+| Niveau | Résultat |
+| --- | --- |
+| Python | **{PY_TESTS}** (dont 10 Koach : sorties des 24 fixtures à jour, exemples D24, cache = rejeu, contexte du cache, critères de simulation, annotations = libellés sur 1 818 entrées) ; `verify_project.py` réussi |
+| CI branche temporaire (sans secret), commit `{CI_COMMIT}` | Formatage : **{FORMAT}** ; `flutter analyze` sans problème ; tests L7 **{L7_TESTS}** ; **suite complète {FULL_TESTS}** (442 existants inchangés + {NEW_TESTS} nouveaux ; aucun test existant retiré, désactivé ni modifié) ; **build Android debug {DEBUG_BUILD}** |
+| Défauts trouvés par les tests et corrigés | cache incrémental insensible à une pesée rétroactive (Python et Dart) ; appel d'extension par une variable (erreur d'analyse) ; courbe sans nœud d'accessibilité propre (lecteur d'écran) |
+| Appareil | **Non exécuté** (protocole dans `LIVRAISON_L7.md`) |
+
+| Fichier | Couverture |
+| --- | --- |
+| `test/l7_koach_engine_test.dart` | Dart = Python sur les 24 fixtures (±0,01 kg, décisions exactes) ; exemples chiffrés D24 (traction +32,5 → +35 / +37,5 ; muscle-up +5 → +6,25 / +8,75 ; squat 97,5 → 100 / 102,5), baisses, décharge / douleur / verrou / refus ; bandes D25 ; grilles D23 ; échelle D9 et valeurs héritées ; cache = rejeu, correction, pesée rétroactive, repère modifié |
+| `test/l7_koach_simulation_test.dart` | Générateur Dart = Python (athlètes identiques) ; critères C1-C7 |
+| `test/l7_koach_store_test.dart` | 22 cas : désactivé par défaut et export identique à 2.5.9, état 2.5.x relu sans réécriture, activation (repère initial, pesée, échelle figée), sauvegarde 3.0.0 relue et importée à l'identique, sauvegarde 2.x importée, import strict / démarrage tolérant, effacement, suppression des réponses ; D8, D9, D11, D13, D33, D12, D2, cache du store = rejeu ; D24, D7, D6, D25, D26 ; bilan (valeur acceptée datée, journal inchangé), D27, D28 |
+| `test/l7_koach_off_test.dart` | Koach jamais activé, puis utilisé (matériel, verrou, allègement, adaptations) et désactivé : 5 jeux × 1 818 exercices identiques à l'instantané 2.x ; journal sans difficulté exigée ni prescription |
+| `test/l7_koach_screens_test.dart` | Six boutons à la validation (fiche fermée = non validée), suggestion appliquée / refusée, série écartée, questionnaire et « Passer », jour de fatigue, fin de séance → bilan Koach → retour, activation expliquée, questionnaires après information ; 6 écrans Koach + séance sans débordement à 390 × 844 et 320 × 720, texte 100 / 130 / 200 %, défilement par gestes, libellés d'accessibilité |
+
+Simulations (60 athlètes par cas, graines fixées ; contrat §8) : C1 2,25 % / 3,26 % (p95 / max, seuil 3 %), C2 2,33 % / 3,52 %, C3 0,49 % / 1,08 % (seuil 1 %), C4 0,45 / 0,61 RIR (seuil 0,5), C5 1, C6 0, C7 0 kg. Ces résultats dépendent du modèle simulé : ce ne sont pas des preuves d'efficacité.
+
+## L7.4 — Limites, validations restantes, publication
+
+| Statut | Éléments |
+| --- | --- |
+| **Corrigé dans le code** | KT-024 à KT-036 selon D1-D37 (tableau §2 du contrat) |
+| **Testé automatiquement** | Voir L7.3 (CI sans secret ; build signé : `LIVRAISON_L7.md`) |
+| **Vérifié sur appareil** | **Rien** |
+| **Reste à valider** | Essais sur téléphone (protocole `LIVRAISON_L7.md`) ; paramètres du modèle par un préparateur physique compétent (σ_jour 5 %, seuil atypique 5 %, bruit des séries, fenêtre du biais, a priori de k tiré des libellés, plafonds D20, bandes D25, allègement D26, décharge D28, incrément machine) ; qualification juridique des questionnaires et du poids (`docs/CONFIDENTIALITE_KOACH.md` §6) ; saisie par toi de tes objectifs finaux (D27, valeurs dans `LIVRAISON_L7.md`) |
+
+- **Identifiabilité** : sans test 1RM, 1RM, courbe et biais de RIR ne sont pas séparables (contrat §4.3) ; la courbe personnelle bouge surtout autour des tests (S1, S25, S39).
+- **Incidents non signalés** : dégradent l'estimation (simulation : ≈ 7 % au p95) ; « série écartée » est essentielle.
+- **Performance** : l'état est recalculé à chaque changement du journal (cache par révision et par jour, reprise incrémentale) ; non mesuré sur téléphone.
+- **Accessibilité** : 320 px, texte 200 %, libellés TalkBack testés en widget ; TalkBack réel non essayé.
+- Branche temporaire `claude/ci-tools` toujours présente (suppression par le propriétaire).
+
+**L4b (clos)** — séances fiables et reprise (KT-009, KT-018) corrigées dans le code et testées automatiquement ; publication et build : `LIVRAISON_L4b.md` (2.5.9+60, `main` `f71c360`, run n° 79 réussi). Aucune vérification sur téléphone.
 
 ## L4b.0 — Base
 

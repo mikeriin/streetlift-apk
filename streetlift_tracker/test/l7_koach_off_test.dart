@@ -37,11 +37,8 @@ Map<String, (Map<String, double>, bool)> _configs(AppStore app) {
           e.key: switch (e.key) {
             'B4' => 80.0,
             'B8' || 'B9' || 'B10' || 'B11' => (e.value * 1.2),
-            'B16' ||
-            'B17' ||
-            'B18' ||
-            'B19' ||
-            'B20' => (e.value * 1.1).roundToDouble(),
+            'B16' || 'B17' || 'B18' || 'B19' || 'B20' =>
+              (e.value * 1.1).roundToDouble(),
             _ => e.value * 0.9,
           },
       },
@@ -86,7 +83,9 @@ void main() {
       jsonDecode(
             utf8.decode(
               gzip.decode(
-                File('test/fixtures/l7_2x_snapshot.json.gz').readAsBytesSync(),
+                File(
+                  'test/fixtures/l7_2x_snapshot.json.gz',
+                ).readAsBytesSync(),
               ),
             ),
           )
@@ -144,7 +143,8 @@ void main() {
     }
   });
 
-  test('Koach jamais activé : charges, séries et saisies identiques à 2.x', () {
+  test('Koach jamais activé : charges, séries et saisies identiques à 2.x',
+      () {
     expect(app.koach.enabled, isFalse);
     compareAll('jamais activé');
   });
@@ -156,20 +156,14 @@ void main() {
     app.enableKoach();
     // Tout ce qui modifie les charges ou les séries quand Koach est actif.
     app.setKoachEquipment('plate', {'step': 2.5});
-    app.setKoachEquipment('dumbbell', {
-      'small': 2,
-      'threshold': 12,
-      'large': 4,
-    });
+    app.setKoachEquipment('dumbbell', {'small': 2, 'threshold': 12, 'large': 4});
     app.setKoachEquipment('pulley', {'step': 5, 'unit': 'lb'});
     app.toggleKoachLock('B8');
     app.koach.painRelief['pull'] = '2026-09-20T18:00:00';
     app.setKoachStructure(true);
-    final pull = app.program
-        .week(5)
-        .day(1)!
-        .exercises
-        .firstWhere((e) => e.id == 'B1-73');
+    final pull = app.program.week(5).day(1)!.exercises.firstWhere(
+      (e) => e.id == 'B1-73',
+    );
     app.acceptKoachStructure({
       'id': 'W5|sets|pull',
       'week': 5,

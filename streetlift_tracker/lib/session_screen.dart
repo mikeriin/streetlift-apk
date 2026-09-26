@@ -807,12 +807,20 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         widget.day.exercises.isNotEmpty &&
         widget.exs.first.id == widget.day.exercises.first.id;
     final level = store.koachFatigueLevel(w, j, widget.day.exercises);
+    final cut =
+        level > 0
+            ? store
+                .koachFatigueCut(w, j, widget.day.exercises, level)
+                .values
+                .fold<int>(0, (a, b) => a + b)
+            : 0;
     return [
       if (first && store.koachAskBefore(w, j))
         KoachQuestionsCard(sessionKey: key),
-      if (level > 0)
+      if (cut > 0)
         KoachFatigueCard(
           level: level,
+          sets: cut,
           onAccept: () {
             store.acceptKoachFatigue(w, j, widget.day.exercises, level);
             setState(() => epoch++);
@@ -1110,6 +1118,31 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       style: TextStyle(color: SL.dim, fontSize: 12.5),
                     ),
                 ],
+                if (!readOnly &&
+                    store.koachOn &&
+                    store.koachReliefFor(ex) != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 6),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Koach : allègement en cours (charges −20 %, '
+                            'isométries 5 × 30-45 s)',
+                            key: ValueKey('koach-relief-${ex.id}'),
+                            style: TextStyle(color: SL.dim, fontSize: 12.5),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            store.liftKoachPainRelief(store.koachReliefFor(ex)!);
+                            setState(() {});
+                          },
+                          child: const Text('Lever'),
+                        ),
+                      ],
+                    ),
+                  ),
                 if (!readOnly &&
                     store.koachOn &&
                     store.koachAdaptationsFor(widget.week.n, ex).isNotEmpty)
@@ -1841,10 +1874,14 @@ class _SetRowState extends State<_SetRow> {
               children: [
                 const SizedBox(width: _wLabel + 6),
                 if (widget.showRir)
-                  _f(rir, (t) {
-                    e.rir = t;
-                    store.koachRirEdited(e);
-                  }, label: widget.readOnly ? 'Effort' : store.effortLabel),
+                  _f(
+                    rir,
+                    (t) {
+                      e.rir = t;
+                      store.koachRirEdited(e);
+                    },
+                    label: widget.readOnly ? 'Effort' : store.effortLabel,
+                  ),
                 if (widget.showRir && widget.showV) _gap,
                 if (widget.showV) _f(v, (t) => e.v = t, label: 'Vitesse (m/s)'),
                 SizedBox(

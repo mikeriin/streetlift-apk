@@ -122,10 +122,7 @@ void main() {
     // Facile pour Soutenu visé : suggestion pour les séries restantes.
     await scrollToAction(tester, find.byKey(const ValueKey('koach-apply')));
     expect(find.textContaining('au lieu de'), findsOneWidget);
-    expect(
-      find.textContaining('série 1 à Facile, visé Soutenu'),
-      findsOneWidget,
-    );
+    expect(find.textContaining('série 1 à Facile, visé Soutenu'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('koach-apply')));
     await tester.pumpAndSettle();
     expect(log.sets[1].kg, '3.75');
@@ -187,10 +184,11 @@ void main() {
       tester,
       find.byKey(const ValueKey('koach-fatigue-accept')),
     );
-    expect(find.textContaining('volume de 30 %'), findsOneWidget);
+    expect(find.textContaining('−30 % de volume'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('koach-fatigue-accept')));
     await tester.pumpAndSettle();
-    expect(store.logs['S3-J1']!.ex[mu]!.sets.length, 3); // 4 × 0,7 → 3
+    // 33 séries × 0,3 = 10 retirées, réparties depuis la fin de la séance.
+    expect(store.logs['S3-J1']!.ex[mu]!.sets.length, 3);
     expect(find.byKey(const ValueKey('koach-fatigue')), findsNothing);
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox());
@@ -240,7 +238,9 @@ void main() {
       ),
     );
     nav.currentState!.push(
-      MaterialPageRoute<void>(builder: (_) => SessionScreen(week: w3, day: d1)),
+      MaterialPageRoute<void>(
+        builder: (_) => SessionScreen(week: w3, day: d1),
+      ),
     );
     await tester.pumpAndSettle();
     final pageCtl = tester.widget<PageView>(find.byType(PageView)).controller!;
@@ -279,10 +279,7 @@ void main() {
     await tester.tap(find.byType(Switch).first);
     await tester.pumpAndSettle();
     expect(find.text('Activer Koach ?'), findsOneWidget);
-    expect(
-      find.textContaining('Rien ne change sans ton accord'),
-      findsOneWidget,
-    );
+    expect(find.textContaining('Rien ne change sans ton accord'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('koach-activate')));
     await tester.pumpAndSettle();
     expect(store.koachOn, isTrue);
@@ -364,8 +361,7 @@ void main() {
         final curve = find.bySemanticsLabel(RegExp('Courbe de l’estimation'));
         final list = find.byWidgetPredicate(
           (widget) =>
-              widget is Scrollable &&
-              widget.axisDirection == AxisDirection.down,
+              widget is Scrollable && widget.axisDirection == AxisDirection.down,
         );
         for (var i = 0; i < 25 && curve.evaluate().isEmpty; i++) {
           await tester.drag(list.first, const Offset(0, -200));

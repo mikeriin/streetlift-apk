@@ -5,6 +5,9 @@
 // n'intervient (D6). Contrat : docs/CONTRAT_L7.md.
 part of 'store.dart';
 
+/// Séance du programme (semaine ≥ 1) : seules comptées par Koach (D2).
+final RegExp _koachKeyRe = RegExp(r'^S([1-9]\d*)-J\d+$');
+
 /// Mouvements principaux (clés de la feuille Pilotage).
 const koachMovementNames = {
   'mu': 'Muscle-up lesté',
@@ -45,6 +48,12 @@ extension KoachStore on AppStore {
   // ---------------------------------------------------------------- options
   /// Première activation : repère initial daté (valeurs actuelles), première
   /// pesée, échelle des RIR/RPE déjà saisis figée (contrat §3.3, §10).
+  ///
+  /// Réactivation : une valeur modifiée pendant que Koach était désactivé
+  /// (aucune mesure enregistrée alors) devient une saisie datée ; un poids
+  /// du corps modifié devient la pesée du jour. Seules les références du
+  /// programme actuel sont historisées (les clés d'anciennes sauvegardes,
+  /// conservées telles quelles, seraient refusées à l'import).
   void enableKoach() {
     if (koach.enabled) return;
     koach.enabled = true;
@@ -52,18 +61,29 @@ extension KoachStore on AppStore {
     koach.legacyScale ??= settings.rpe ? 'rpe' : 'rir';
     final now = storeClock();
     final at = ke.wallIso(now);
+    final known = koachKnownRefs;
     for (final entry in values.entries) {
-      if (entry.key == 'B4') continue;
-      final known = koach.history.any(
-        (h) => h.ref == entry.key && h.source == 'initial',
-      );
-      if (!known) {
+      if (entry.key == 'B4' || !known.contains(entry.key)) continue;
+      PilotageEvent? last;
+      for (final h in koach.history) {
+        if (h.ref == entry.key) last = h;
+      }
+      if (last == null) {
         koach.history.add(PilotageEvent(at, entry.key, entry.value, 'initial'));
+      } else if (last.value != entry.value) {
+        koach.history.add(PilotageEvent(at, entry.key, entry.value, 'manual'));
       }
     }
     final bw = values['B4'];
-    if (bw != null && koach.weighIns.isEmpty) {
-      koach.weighIns.add(WeighIn(ke.civilIso(now), bw));
+    if (bw != null &&
+        bw >= 20 &&
+        bw <= 400 &&
+        (koach.weighIns.isEmpty || koach.weighIns.last.kg != bw)) {
+      final day = ke.civilIso(now);
+      koach.weighIns
+        ..removeWhere((w) => w.date == day)
+        ..add(WeighIn(day, bw))
+        ..sort((a, b) => a.date.compareTo(b.date));
     }
     _koachSave();
   }
@@ -246,6 +266,8 @@ extension KoachStore on AppStore {
   void _koachRecordManual(String ref, double v) {
     final now = storeClock();
     if (ref == 'B4') {
+      // Même domaine que les pesées (20-400 kg), sinon pas de mesure.
+      if (v < 20 || v > 400) return;
       final day = ke.civilIso(now);
       koach.weighIns
         ..removeWhere((w) => w.date == day)
@@ -278,8 +300,8 @@ extension KoachStore on AppStore {
         'ref': l.ref,
         'bodyweight': body,
         'k': koachProgram.kPrior[l.key] ?? 22.4,
-        'grid':
-            ((eq[body ? 'plate' : 'barbell'] as Map)['step'] as num).toDouble(),
+        'grid': ((eq[body ? 'plate' : 'barbell'] as Map)['step'] as num)
+            .toDouble(),
       };
     }
     throw ArgumentError(movement);
@@ -433,19 +455,50 @@ extension KoachStore on AppStore {
     return null;
   }
 
+  /// Empreinte de ce qui entre dans le rejeu : séances du programme
+  /// terminées (séries comprises) et révision des données hors journal
+  /// (références, réglages, données Koach : `_persist`). Une frappe dans
+  /// une séance en cours ne la change pas : pas de recalcul à chaque saisie.
+  int _koachFingerprint() {
+    var h = _koachAuxRevision;
+    for (final e in logs.entries) {
+      final log = e.value;
+      if (!log.done || !_koachKeyRe.hasMatch(e.key)) continue;
+      h = Object.hash(h, e.key, log.finishedAt);
+      for (final x in log.ex.entries) {
+        h = Object.hash(h, x.key);
+        for (final s in x.value.sets) {
+          h = Object.hash(
+            h,
+            s.done,
+            s.kg,
+            s.reps,
+            s.rir,
+            s.effort,
+            s.excluded,
+            s.completedAt,
+          );
+        }
+      }
+    }
+    return h;
+  }
+
   /// État de Koach recalculé depuis le journal (D31), cache incrémental
-  /// identique au rejeu complet (test).
+  /// identique au rejeu complet (test), repris tant que l'empreinte et le
+  /// jour sont inchangés.
   ke.KoachState koachState() {
     final day = ke.civilIso(storeClock());
+    final print = _koachFingerprint();
     final cached = _koachCache;
     if (cached != null &&
-        _koachCacheRevision == _dataRevision &&
+        _koachCacheRevision == print &&
         _koachCacheDay == day) {
       return cached;
     }
     final state = ke.replayIncremental(koachInput(), cached);
     _koachCache = state;
-    _koachCacheRevision = _dataRevision;
+    _koachCacheRevision = print;
     _koachCacheDay = day;
     return state;
   }
@@ -543,12 +596,7 @@ extension KoachStore on AppStore {
   );
 
   /// Suggestion de charge pour les séries restantes, ou null.
-  ke.KSuggestion? koachSuggestion(
-    int week,
-    int day,
-    Exercise e,
-    ExerciseLog log,
-  ) {
+  ke.KSuggestion? koachSuggestion(int week, int day, Exercise e, ExerciseLog log) {
     if (!koachOn || week < 1 || !koachStrength(e)) return null;
     final a = koachAnnotation(e)!;
     final key = sessionKey(week, day);
@@ -560,7 +608,7 @@ extension KoachStore on AppStore {
             d.status == 'refused' &&
             d.detail['session'] == key &&
             d.detail['exercise'] == e.id)
-          d.detail['direction'] as String,
+          if (d.detail['direction'] case final String direction) direction,
     ];
     final lift = _koachLift(a.movement!);
     final sug = ke.inSession(
@@ -731,6 +779,52 @@ extension KoachStore on AppStore {
     return level;
   }
 
+  /// Séries non validées à retirer pour un jour de fatigue (D25) : la part
+  /// [level] du volume de la séance (au moins une série), prises une à une
+  /// en fin d'exercice, de la fin de la séance vers le début, en gardant
+  /// au moins une série par exercice. Exercice → nombre de séries retirées.
+  Map<String, int> koachFatigueCut(
+    int week,
+    int day,
+    List<Exercise> exercises,
+    double level,
+  ) {
+    final key = sessionKey(week, day);
+    final total = <String, int>{};
+    final removable = <String, int>{};
+    for (final e in exercises) {
+      final sets = logs[key]?.ex[e.id]?.sets;
+      final n = sets?.length ?? koachSetCount(week, e);
+      var trailing = 0;
+      if (sets == null) {
+        trailing = n;
+      } else {
+        for (var i = sets.length - 1; i >= 0 && !sets[i].done; i--) {
+          trailing++;
+        }
+      }
+      total[e.id] = n;
+      removable[e.id] = math.min(trailing, n - 1);
+    }
+    final volume = total.values.fold<int>(0, (a, b) => a + b);
+    var left = math.max(1, (volume * level).round());
+    final cut = <String, int>{};
+    var progress = true;
+    while (left > 0 && progress) {
+      progress = false;
+      for (final e in exercises.reversed) {
+        if (left == 0) break;
+        final done = cut[e.id] ?? 0;
+        if (done < (removable[e.id] ?? 0)) {
+          cut[e.id] = done + 1;
+          left--;
+          progress = true;
+        }
+      }
+    }
+    return cut;
+  }
+
   /// Volume réduit sur les séries non validées restantes ; charges
   /// maintenues ; hausses D24 coupées pour la journée.
   void acceptKoachFatigue(
@@ -740,10 +834,12 @@ extension KoachStore on AppStore {
     double level,
   ) {
     final key = sessionKey(week, day);
+    final cut = koachFatigueCut(week, day, exercises, level);
     for (final e in exercises) {
+      final n = cut[e.id] ?? 0;
+      if (n == 0) continue;
       final log = exLog(week, day, e);
-      final target = math.max(1, (log.sets.length * (1 - level)).round());
-      while (log.sets.length > target && !log.sets.last.done) {
+      for (var i = 0; i < n && log.sets.length > 1 && !log.sets.last.done; i++) {
         log.sets.removeLast();
       }
     }
@@ -773,6 +869,32 @@ extension KoachStore on AppStore {
     _koachSave();
   }
 
+  // --------------------------------------- séance effacée ou supprimée
+  /// Réponses et décisions liées à une séance effacée (sinon elles
+  /// s'appliqueraient à la séance refaite sous la même clé). [stash] :
+  /// conservées pour une annulation ([_koachRestoreSession]).
+  void _koachForgetSession(String key, {bool stash = false}) {
+    final answers = koach.answers.remove(key);
+    final decisions = [
+      for (final d in koach.decisions)
+        if (d.id.startsWith('$key|')) d,
+    ];
+    koach.decisions.removeWhere((d) => d.id.startsWith('$key|'));
+    koachSkipped.remove(key);
+    if (stash) {
+      _koachStash[key] = (answers: answers, decisions: decisions);
+    }
+    if (answers != null || decisions.isNotEmpty) _koachSave();
+  }
+
+  void _koachRestoreSession(String key) {
+    final kept = _koachStash.remove(key);
+    if (kept == null) return;
+    if (kept.answers != null) koach.answers[key] = kept.answers!;
+    koach.decisions.addAll(kept.decisions);
+    _koachSave();
+  }
+
   // ------------------------------------------------ questionnaires (D14)
   /// KT-036 : suppression des seules réponses aux questionnaires.
   void clearKoachAnswers() {
@@ -783,11 +905,6 @@ extension KoachStore on AppStore {
 
   SessionAnswers koachAnswers(String key) =>
       koach.answers.putIfAbsent(key, SessionAnswers.new);
-
-  bool koachAnswered(String key) {
-    final a = koach.answers[key];
-    return a != null && (a.sleep != null || a.form != null);
-  }
 
   /// Questionnaire d'avant séance proposé : actif, séance du programme pas
   /// encore commencée, ni répondu ni passé.
@@ -829,10 +946,9 @@ extension KoachStore on AppStore {
   /// Mouvements principaux réalisés dans une séance (questionnaire douleur).
   List<String> koachMovementsDone(int week, int day) {
     final log = logs[sessionKey(week, day)];
-    final plan =
-        week >= 1 && week <= program.weeks.length
-            ? program.week(week).day(day)
-            : null;
+    final plan = week >= 1 && week <= program.weeks.length
+        ? program.week(week).day(day)
+        : null;
     if (log == null || plan == null) return const [];
     final out = <String>[];
     for (final e in plan.exercises) {
@@ -889,6 +1005,30 @@ extension KoachStore on AppStore {
     return best;
   }
 
+  /// D26 : allègement levé à la main, sans attendre une douleur ≤ 3/10.
+  void liftKoachPainRelief(String movement) {
+    if (koach.painRelief.remove(movement) == null) return;
+    final at = ke.wallIso(storeClock());
+    koach.decisions.add(
+      KoachDecision(
+        at,
+        'manual|painEnd|$movement|$at',
+        'painEnd',
+        'accepted',
+        {'movement': movement, 'source': 'manual'},
+      ),
+    );
+    _koachSave();
+  }
+
+  /// Mouvement dont l'allègement douleur s'applique à cet exercice.
+  String? koachReliefFor(Exercise e) {
+    final a = koachAnnotation(e);
+    if (a?.cat != 'strength' || !e.main) return null;
+    final m = a!.movement;
+    return m != null && koach.painRelief.containsKey(m) ? m : null;
+  }
+
   void acceptKoachProposal(Map<String, dynamic> p) {
     final at = ke.wallIso(storeClock());
     final kind = p['kind'] as String;
@@ -936,7 +1076,7 @@ extension KoachStore on AppStore {
     final kind = p['kind'];
     if (kind == 'pain') {
       return '${koachMovementName(p['movement'] as String)} : allègement de '
-          '20 % des charges et isométries 5 × 30-45 s (règle 6).';
+          '20 % des charges prescrites et isométries 5 × 30-45 s.';
     }
     if (kind == 'painEnd') {
       return '${koachMovementName(p['movement'] as String)} : reprendre les '
@@ -945,8 +1085,17 @@ extension KoachStore on AppStore {
     final ref = p['ref'] as String;
     final unit =
         program.pilotage.repMax.any((r) => r.ref == ref) ? 'reps' : 'kg';
-    final from = koachKg((p['from'] as num).toDouble());
-    final to = koachKg((p['to'] as num).toDouble());
+    final a = (p['from'] as num).toDouble(), b = (p['to'] as num).toDouble();
+    final from = koachKg(a);
+    final to = koachKg(b);
+    // Poulies en livres (D23) : valeurs natives du matériel, kg rappelés.
+    final kind = koachProgram.accessories[ref]?.equipment;
+    final eq = koach.equipmentSettings;
+    if (kind != null && (eq[kind] as Map?)?['unit'] == 'lb') {
+      String lb(double kg) => koachKg(ke.r2(ke.toNative(kg, kind, eq)));
+      return '${referenceLabel(ref)} : ${lb(a)} → ${lb(b)} lb '
+          '($from → $to kg)';
+    }
     return '${referenceLabel(ref)} : $from → $to $unit';
   }
 
@@ -1090,7 +1239,9 @@ extension KoachStore on AppStore {
     for (final ad in _koachAdaptations(week)) {
       if (ad.kind == 'sets' && ad.exercise == e.id) {
         n = math.max(1, n + ad.delta);
-      } else if (ad.kind == 'deload' && a?.cat == 'strength' && e.main) {
+      } else if (ad.kind == 'deload' &&
+          a?.cat == 'strength' &&
+          e.main) {
         n = math.max(1, (n * ad.sets).round());
       }
     }
@@ -1163,13 +1314,5 @@ extension KoachStore on AppStore {
       default:
         return null;
     }
-  }
-
-  /// Unité native du matériel (poulies en livres : D23).
-  bool koachNativeLb(Exercise e) {
-    if (e.load.type != 'acc') return false;
-    final kind = koachProgram.accessories[e.load.ref]?.equipment;
-    if (kind == null) return false;
-    return (koach.equipmentSettings[kind] as Map)['unit'] == 'lb';
   }
 }

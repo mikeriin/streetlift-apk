@@ -307,6 +307,16 @@ class SettingsScreen extends StatelessWidget {
                 }
               },
             ),
+            // Entrées illisibles ignorées au démarrage : signalées ici même
+            // si Koach a été désactivé par la lecture (contrat §3.4).
+            if (store.koachLoadIssues > 0)
+              _Tile(
+                title: 'Données Koach partiellement relues',
+                subtitle:
+                    '${store.koachLoadIssues} entrée(s) illisible(s) ignorée(s) '
+                    'à l’ouverture ; le reste est chargé. Ton export de '
+                    'sauvegarde contient les données relues.',
+              ),
             if (store.koach.enabled) ...[
               _Tile(
                 title: 'Difficulté des séries',
@@ -339,16 +349,6 @@ class SettingsScreen extends StatelessWidget {
                   }
                 },
               ),
-              if (store.koach.answers.isNotEmpty)
-                _Action(
-                  icon: Icons.delete_sweep_outlined,
-                  color: SL.accent,
-                  title: 'Supprimer mes réponses aux questionnaires',
-                  subtitle:
-                      '${store.koach.answers.length} séance(s) : sommeil, '
-                      'forme et douleur',
-                  onTap: () => _clearAnswers(context),
-                ),
               _Sw(
                 'Koach adapte la structure',
                 'Propose ±1 série par mouvement ou une décharge anticipée '
@@ -384,19 +384,6 @@ class SettingsScreen extends StatelessWidget {
                     ),
               ),
               _Action(
-                icon: Icons.monitor_weight_outlined,
-                color: SL.accent,
-                title: 'Pesées',
-                subtitle: 'Poids du corps daté, rappel chaque semaine',
-                onTap:
-                    () => Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (_) => const KoachWeighInsScreen(),
-                      ),
-                    ),
-              ),
-              _Action(
                 icon: Icons.hardware_outlined,
                 color: SL.accent,
                 title: 'Matériel',
@@ -411,6 +398,32 @@ class SettingsScreen extends StatelessWidget {
                     ),
               ),
             ],
+            // Données existantes : consultables et supprimables même Koach
+            // désactivé (KT-036).
+            if (store.koach.enabled || store.koach.weighIns.isNotEmpty)
+              _Action(
+                icon: Icons.monitor_weight_outlined,
+                color: SL.accent,
+                title: 'Pesées',
+                subtitle: 'Poids du corps daté, rappel chaque semaine',
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (_) => const KoachWeighInsScreen(),
+                      ),
+                    ),
+              ),
+            if (store.koach.answers.isNotEmpty)
+              _Action(
+                icon: Icons.delete_sweep_outlined,
+                color: SL.accent,
+                title: 'Supprimer mes réponses aux questionnaires',
+                subtitle:
+                    '${store.koach.answers.length} séance(s) : sommeil, '
+                    'forme et douleur',
+                onTap: () => _clearAnswers(context),
+              ),
             const _Tile(
               title: 'Confidentialité',
               subtitle:

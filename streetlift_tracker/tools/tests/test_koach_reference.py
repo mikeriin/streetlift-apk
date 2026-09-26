@@ -82,6 +82,22 @@ class KoachReferenceTests(unittest.TestCase):
         moved['references'] = dict(inp['references'], B9=inp['references'].get('B9', 0) + 5)
         close(kr.summarize(kr.replay(moved)), kr.summarize(kr.replay_incremental(moved, cache)), 'repère')
 
+    def test_pain_carried_to_next_bilan_and_lb_steps(self):
+        # D26 : douleur > 3/10 notée à S3, rien de noté à S4 → aucune hausse
+        # au bilan de S4 ; le témoin sans douleur propose une hausse.
+        carry = json.loads((FIXTURES / 'pain_carry.json').read_text(encoding='utf-8'))
+        control = json.loads((FIXTURES / 'pain_carry_control.json').read_text(encoding='utf-8'))
+        up = [p for p in kr.run_case(control)['proposals'] if p['ref'] == 'B8']
+        self.assertTrue(up and up[0]['to'] > up[0]['from'])
+        self.assertFalse([p for p in kr.run_case(carry)['proposals']
+                          if p['ref'] == 'B8' and p['to'] > p['from']])
+        # 45 lb enregistrés au centième de kg (20,41) : le cran suivant est
+        # 47,5 lb (la progression ne reste pas bloquée).
+        eq = kr.DEFAULT_EQUIPMENT
+        self.assertAlmostEqual(kr.grid_next(20.41, 'pulley', eq, True), 47.5 * kr.LB_KG, places=6)
+        self.assertAlmostEqual(kr.grid_next(31.75, 'pulley', eq, True), 72.5 * kr.LB_KG, places=6)
+        self.assertAlmostEqual(kr.grid_next(20.41, 'pulley', eq, False), 42.5 * kr.LB_KG, places=6)
+
     def test_simulation_criteria(self):
         rep = ks.criteria(n=30)
         for key, (name, v95, vmax, limit) in rep.items():

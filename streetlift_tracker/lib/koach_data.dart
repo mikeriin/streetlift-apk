@@ -10,6 +10,28 @@ import 'koach_engine.dart' show defaultEquipment, parseDt;
 
 final RegExp _dayRe = RegExp(r'^\d{4}-\d{2}-\d{2}$');
 
+/// Horodatage local écrit par l'application (« AAAA-MM-JJTHH:MM[:SS[.f]] »).
+final RegExp _atRe = RegExp(
+  r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,6})?)?$',
+);
+
+bool _okAt(Object? v) => v is String && _atRe.hasMatch(v) && parseDt(v) != null;
+
+/// Détail d'une décision : valeurs simples seulement, bornées.
+bool _okDetail(Object? v) {
+  if (v == null) return true;
+  if (v is! Map || v.length > 20) return false;
+  for (final e in v.entries) {
+    final k = e.key, x = e.value;
+    if (k is! String || k.length > 40) return false;
+    if (x == null || x is bool) continue;
+    if (x is num && x.isFinite) continue;
+    if (x is String && x.length <= 200) continue;
+    return false;
+  }
+  return true;
+}
+
 double _d(Object? v) => (v as num).toDouble();
 
 bool _okNum(Object? v, double lo, double hi) =>
@@ -183,7 +205,8 @@ class KoachData {
     'questionnaires': questionnaires,
     if (legacyScale != null) 'legacyScale': legacyScale,
     if (introSeen) 'introSeen': true,
-    if (weighIns.isNotEmpty) 'weighIns': [for (final w in weighIns) w.toJson()],
+    if (weighIns.isNotEmpty)
+      'weighIns': [for (final w in weighIns) w.toJson()],
     if (history.isNotEmpty) 'history': [for (final h in history) h.toJson()],
     if (decisions.isNotEmpty)
       'decisions': [for (final d in decisions) d.toJson()],
@@ -259,9 +282,14 @@ class KoachData {
     List<Object?> list(String k, int limit) {
       final v = raw[k];
       if (v == null) return const [];
-      if (v is! List || v.length > limit) {
+      if (v is! List) {
         bad(k);
         return const [];
+      }
+      if (v.length > limit) {
+        // Import : refusé ; démarrage : les plus récentes sont gardées.
+        bad(k);
+        return v.sublist(v.length - limit);
       }
       return v;
     }
@@ -282,12 +310,16 @@ class KoachData {
     out.weighIns.sort((a, b) => a.date.compareTo(b.date));
     for (final e in list('history', 5000)) {
       if (e is Map &&
-          e['at'] is String &&
-          parseDt(e['at'] as String) != null &&
+          _okAt(e['at']) &&
           e['ref'] is String &&
           knownRefs.contains(e['ref']) &&
           _okNum(e['value'], 0, 10000) &&
-          const ['initial', 'manual', 'koach', 'test'].contains(e['source'])) {
+          const [
+            'initial',
+            'manual',
+            'koach',
+            'test',
+          ].contains(e['source'])) {
         out.history.add(
           PilotageEvent(
             e['at'] as String,
@@ -302,8 +334,7 @@ class KoachData {
     }
     for (final e in list('decisions', 10000)) {
       if (e is Map &&
-          e['at'] is String &&
-          parseDt(e['at'] as String) != null &&
+          _okAt(e['at']) &&
           e['id'] is String &&
           (e['id'] as String).isNotEmpty &&
           (e['id'] as String).length <= 200 &&
@@ -316,7 +347,7 @@ class KoachData {
             'structure',
           ].contains(e['kind']) &&
           (e['status'] == 'accepted' || e['status'] == 'refused') &&
-          (e['detail'] == null || e['detail'] is Map)) {
+          _okDetail(e['detail'])) {
         out.decisions.add(
           KoachDecision(
             e['at'] as String,
@@ -370,11 +401,7 @@ class KoachData {
           if (pain != null) {
             if (pain is Map) {
               pain.forEach((m, n) {
-                if (m is String &&
-                    movements.contains(m) &&
-                    n is int &&
-                    n >= 0 &&
-                    n <= 10) {
+                if (m is String && movements.contains(m) && n is int && n >= 0 && n <= 10) {
                   a.pain[m] = n;
                 } else {
                   bad('douleur');
@@ -407,12 +434,7 @@ class KoachData {
               } else {
                 ok = false;
               }
-            } else if (const [
-                  'small',
-                  'threshold',
-                  'large',
-                  'step',
-                ].contains(kk) &&
+            } else if (const ['small', 'threshold', 'large', 'step'].contains(kk) &&
                 _okNum(vv, 0.01, 50)) {
               m[kk as String] = _d(vv);
             } else {
@@ -462,9 +484,9 @@ class KoachData {
     for (final e in list('adaptations', 1000)) {
       if (e is Map &&
           e['id'] is String &&
+          (e['id'] as String).length <= 200 &&
           ids.add(e['id'] as String) &&
-          e['at'] is String &&
-          parseDt(e['at'] as String) != null &&
+          _okAt(e['at']) &&
           e['week'] is int &&
           (e['week'] as int) >= 1 &&
           (e['week'] as int) <= 40 &&
@@ -476,7 +498,7 @@ class KoachData {
           (e['sets'] == null || _okNum(e['sets'], 0.1, 1)) &&
           (e['load'] == null || _okNum(e['load'], 0, 0.5)) &&
           (e['status'] == 'active' || e['status'] == 'reverted') &&
-          (e['revertedAt'] == null || e['revertedAt'] is String)) {
+          (e['revertedAt'] == null || _okAt(e['revertedAt']))) {
         out.adaptations.add(
           Adaptation(
             id: e['id'] as String,
@@ -502,11 +524,8 @@ class KoachData {
         bad('allègement');
       } else {
         relief.forEach((k, v) {
-          if (k is String &&
-              movements.contains(k) &&
-              v is String &&
-              parseDt(v) != null) {
-            out.painRelief[k] = v;
+          if (k is String && movements.contains(k) && _okAt(v)) {
+            out.painRelief[k] = v as String;
           } else {
             bad('allègement');
           }
@@ -520,6 +539,9 @@ class KoachData {
   KoachData copy({
     required Set<String> knownRefs,
     required Set<String> movements,
-  }) =>
-      KoachData.fromJson(toJson(), knownRefs: knownRefs, movements: movements);
+  }) => KoachData.fromJson(
+    toJson(),
+    knownRefs: knownRefs,
+    movements: movements,
+  );
 }

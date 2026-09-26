@@ -350,14 +350,13 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
           ),
           // L7 : les réponses aux questionnaires (données de santé
           // potentielles) sont nommées avant l'import.
-          _Line(
-            'Koach',
-            !p.koachPresent
-                ? 'non utilisé dans ce fichier'
-                : '${p.koachEnabled ? 'activé' : 'désactivé'} · '
-                    '${p.koachWeighIns} pesée(s) · '
-                    '${p.koachAnswers} séance(s) avec questionnaire',
-          ),
+          if (p.koachPresent)
+            _Line(
+              'Koach',
+              '${p.koachEnabled ? 'activé' : 'désactivé'} · '
+                  '${p.koachWeighIns} pesée(s) · '
+                  '${p.koachAnswers} séance(s) avec questionnaire',
+            ),
           const SizedBox(height: 12),
           Text('Sur ce téléphone', style: heading),
           const SizedBox(height: 8),

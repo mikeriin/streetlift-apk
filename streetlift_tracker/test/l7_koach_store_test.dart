@@ -55,17 +55,16 @@ void main() {
     app.settings.sound = app.settings.vibration = false;
     app.program.start = DateTime(2026, 7, 13);
     app.startOrigin = 'user';
-    for (final e
-        in {
-          'B4': 71.5,
-          'B8': 32.5,
-          'B9': 45.0,
-          'B10': 10.0,
-          'B11': 110.0,
-          'B16': 10.0,
-          'B17': 30.0,
-          'B25': 70.0,
-        }.entries) {
+    for (final e in {
+      'B4': 71.5,
+      'B8': 32.5,
+      'B9': 45.0,
+      'B10': 10.0,
+      'B11': 110.0,
+      'B16': 10.0,
+      'B17': 30.0,
+      'B25': 70.0,
+    }.entries) {
       app.values[e.key] = e.value;
       app.refStatus[e.key] = 'set';
     }
@@ -146,20 +145,12 @@ void main() {
         ..kg = '5'
         ..reps = '6';
       // Koach désactivé : aucune difficulté exigée, aucune prescription.
-      expect(
-        app.toggleSet(log, 0, app.logSpec(e), exercise: e, week: 3).ok,
-        isTrue,
-      );
+      expect(app.toggleSet(log, 0, app.logSpec(e), exercise: e, week: 3).ok,
+          isTrue);
       final m = jsonDecode(app.exportAll()) as Map<String, dynamic>;
       expect(m.containsKey('koach'), isFalse);
       final exLog = ((m['logs'] as Map)['S3-J1'] as Map)['ex'][pull] as Map;
-      expect(exLog.keys.toSet(), {
-        'sets',
-        'note',
-        'showKg',
-        'showRir',
-        'showV',
-      });
+      expect(exLog.keys.toSet(), {'sets', 'note', 'showKg', 'showRir', 'showV'});
       expect((exLog['sets'] as List).first.keys.toSet(), {
         'kg',
         'reps',
@@ -191,10 +182,7 @@ void main() {
       expect(app.koachOn, isTrue);
       expect(app.koach.legacyScale, 'rpe');
       final initial = app.koach.history.where((h) => h.source == 'initial');
-      expect(
-        initial.map((h) => h.ref).toSet(),
-        app.values.keys.toSet()..remove('B4'),
-      );
+      expect(initial.map((h) => h.ref).toSet(), app.values.keys.toSet()..remove('B4'));
       expect(initial.every((h) => h.at == '2026-07-20T18:00:00'), isTrue);
       expect(app.koach.weighIns.single.date, '2026-07-20');
       expect(app.koach.weighIns.single.kg, 71.5);
@@ -245,10 +233,12 @@ void main() {
       final sets =
           ((m['logs'] as Map)['S3-J1'] as Map)['ex'][pull]['sets'] as List;
       expect([for (final s in sets) (s as Map)['effort']], [3, 2.5, null, 2]);
-      expect(
-        [for (final s in sets) (s as Map).containsKey('excluded')],
-        [false, false, true, false],
-      );
+      expect([for (final s in sets) (s as Map).containsKey('excluded')], [
+        false,
+        false,
+        true,
+        false,
+      ]);
       expect(
         ((m['logs'] as Map)['S3-J1'] as Map)['ex'][pull]['prescribed'],
         isA<String>(),
@@ -334,6 +324,129 @@ void main() {
       expect(jsonDecode(app.exportAll()), isNot(contains('koach')));
     });
 
+    test('export après activation relu par l’import strict (clé ancienne, '
+        'poids hors pesée) ; réactivation : valeurs modifiées datées', () {
+      // Référence d'une ancienne sauvegarde, conservée « historique ».
+      app.values['B99'] = 5;
+      app.refStatus['B99'] = 'historic';
+      app.values['B4'] = 15; // valeur de pilotage acceptée, hors pesée
+      app.enableKoach();
+      expect(app.koach.history.any((h) => h.ref == 'B99'), isFalse);
+      expect(app.koach.weighIns, isEmpty);
+      app.setValue('B4', 15.5);
+      expect(app.koach.weighIns, isEmpty);
+      expect(app.previewImport(app.exportAll()).status, ImportStatus.success);
+      // Désactivé : rien n'est enregistré ; réactivé : saisie datée.
+      app.setValue('B4', 72);
+      app.disableKoach();
+      now = now.add(const Duration(days: 3));
+      app.setValue('B8', 40);
+      app.setValue('B4', 74);
+      expect(app.koach.history.last.value, isNot(40));
+      app.enableKoach();
+      final last = app.koach.history.lastWhere((h) => h.ref == 'B8');
+      expect((last.value, last.source), (40.0, 'manual'));
+      expect(app.koach.weighIns.last.kg, 74);
+      expect(app.koach.weighIns.last.date, '2026-07-23');
+      expect(app.previewImport(app.exportAll()).status, ImportStatus.success);
+    });
+
+    test('import strict : horodatage ou détail de décision hors contrat '
+        'refusé ; démarrage : entrée ignorée et comptée', () async {
+      app.enableKoach();
+      final good = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+      final badAt = jsonDecode(jsonEncode(good)) as Map<String, dynamic>;
+      ((badAt['koach'] as Map)['history'] as List).add({
+        'at': '2026-07-20T18:00:00-garbage',
+        'ref': 'B8',
+        'value': 35,
+        'source': 'manual',
+      });
+      expect(app.previewImport(jsonEncode(badAt)).status, ImportStatus.invalid);
+      final badDetail = jsonDecode(jsonEncode(good)) as Map<String, dynamic>;
+      (badDetail['koach'] as Map)['decisions'] = [
+        {
+          'at': '2026-07-20T18:00:00',
+          'id': 'S3-J1|P0-85|1|up',
+          'kind': 'inSession',
+          'status': 'refused',
+          'detail': {
+            'session': 'S3-J1',
+            'exercise': 'P0-85',
+            'direction': {'up': true},
+          },
+        },
+      ];
+      expect(
+        app.previewImport(jsonEncode(badDetail)).status,
+        ImportStatus.invalid,
+      );
+      await app.flush();
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_key, jsonEncode(badAt));
+      final next = await relaunch(flush: false);
+      expect(next.koachLoadIssues, 1);
+      expect(next.koach.history.length, app.koach.history.length);
+      expect(next.koachOn, isTrue);
+    });
+
+    test('séance effacée : ses réponses et décisions Koach aussi ; '
+        'suppression annulée : rétablies', () async {
+      app.enableKoach();
+      app.setKoachQuestionnaires(true);
+      now = w3d1;
+      app.setKoachAnswers('S3-J1', sleep: 4.5, form: 3);
+      doSets(3, 1, pull, [('5', '6', 5)]);
+      final e = ex(3, 1, pull);
+      final log = app.exLog(3, 1, e);
+      app.refuseKoachSuggestion(3, 1, e, log, app.koachSuggestion(3, 1, e, log)!);
+      app.clearSession(3, 1);
+      expect(app.koach.answers.containsKey('S3-J1'), isFalse);
+      expect(app.koach.decisions.where((d) => d.id.startsWith('S3-J1|')), isEmpty);
+      // Séance refaite sous la même clé : suggestion de nouveau possible.
+      doSets(3, 1, pull, [('5', '6', 5)]);
+      final again = app.exLog(3, 1, e);
+      expect(app.koachSuggestion(3, 1, e, again), isNotNull);
+      await finish(3, 1);
+      app.setKoachPain('S3-J1', 'pull', 6);
+      final removed = app.deleteLog('S3-J1')!;
+      expect(app.koach.answers.containsKey('S3-J1'), isFalse);
+      expect(app.restoreLog('S3-J1', removed), isTrue);
+      expect(app.koach.answers['S3-J1']!.pain['pull'], 6);
+    });
+
+    test('cache : une frappe dans la séance en cours ne recalcule rien ; une '
+        'séance terminée corrigée, si', () async {
+      app.enableKoach();
+      await twoStrongSessions();
+      final before = app.koachState();
+      now = DateTime(2026, 8, 3, 20);
+      final e = ex(5, 1, 'B1-73');
+      final log = app.exLog(5, 1, e);
+      log.sets[0].kg = '7';
+      app.saveLogs(affectsProgression: false);
+      expect(identical(app.koachState(), before), isTrue);
+      app.logs['S4-J1']!.ex['B1-7']!.sets[0].reps = '6';
+      app.saveLogs(affectsProgression: false);
+      final after = app.koachState();
+      expect(identical(after, before), isFalse);
+      _same(ke.summarize(after), ke.summarize(ke.replay(app.koachInput())));
+    });
+
+    test('D26 : allègement levé à la main, daté', () {
+      app.enableKoach();
+      app.koach.painRelief['pull'] = '2026-07-20T18:00:00';
+      final e = ex(5, 1, 'B1-73');
+      expect(app.koachReliefFor(e), 'pull');
+      expect(app.sessionLoad(5, e), 2.5);
+      app.liftKoachPainRelief('pull');
+      expect(app.koach.painRelief, isEmpty);
+      expect(app.koachReliefFor(e), isNull);
+      expect(app.sessionLoad(5, e), 3.75);
+      expect(app.koach.decisions.last.kind, 'painEnd');
+      expect(app.koach.decisions.last.detail['source'], 'manual');
+    });
+
     test('KT-036 : réponses supprimables seules, incluses dans l’export', () {
       app.enableKoach();
       app.setKoachQuestionnaires(true);
@@ -390,10 +503,8 @@ void main() {
       final r = ex(3, 1, row);
       final rl = app.exLog(3, 1, r);
       rl.sets[0].reps = '10';
-      expect(
-        app.toggleSet(rl, 0, app.logSpec(r), exercise: r, week: 3).ok,
-        isTrue,
-      );
+      expect(app.toggleSet(rl, 0, app.logSpec(r), exercise: r, week: 3).ok,
+          isTrue);
       // Sans l'exercice (appel 2.x) : règle 2.x.
       final m = ex(3, 1, mu);
       final ml = app.exLog(3, 1, m);
@@ -412,10 +523,8 @@ void main() {
       app.koach.legacyScale = 'rir';
       expect(app.koachRir(SetEntry(rir: '8')), 5);
       expect(app.koachEffortLabel(SetEntry(effort: 2)), 'Dur · encore 2');
-      expect(
-        app.koachEffortLabel(SetEntry(effort: 5)),
-        'Facile · encore 5 ou plus',
-      );
+      expect(app.koachEffortLabel(SetEntry(effort: 5)),
+          'Facile · encore 5 ou plus');
     });
 
     test('D11 : série écartée gardée au journal, XP inchangée, hors '
@@ -451,28 +560,25 @@ void main() {
       _same(ke.summarize(app.koachState()), ke.summarize(ke.replay(undone)));
     });
 
-    test(
-      'D13 : repos réel < 80 % du prescrit → série hors estimation',
-      () async {
-        app.enableKoach();
-        now = w3d1;
-        final e = ex(3, 1, pull);
-        final log = app.exLog(3, 1, e);
-        final spec = app.logSpec(e);
-        final gaps = [0, 5, 1, 5]; // minutes depuis la série précédente
-        for (var i = 0; i < 4; i++) {
-          now = now.add(Duration(minutes: gaps[i]));
-          log.sets[i]
-            ..kg = '5'
-            ..reps = '6'
-            ..effort = 3;
-          expect(app.toggleSet(log, i, spec, exercise: e, week: 3).ok, isTrue);
-        }
-        await finish(3, 1);
-        // Série 3 : 1 min de repos pour 5 min prescrites (< 4 min).
-        expect(app.koachState().tracks['pull']!.validSets, 3);
-      },
-    );
+    test('D13 : repos réel < 80 % du prescrit → série hors estimation', () async {
+      app.enableKoach();
+      now = w3d1;
+      final e = ex(3, 1, pull);
+      final log = app.exLog(3, 1, e);
+      final spec = app.logSpec(e);
+      final gaps = [0, 5, 1, 5]; // minutes depuis la série précédente
+      for (var i = 0; i < 4; i++) {
+        now = now.add(Duration(minutes: gaps[i]));
+        log.sets[i]
+          ..kg = '5'
+          ..reps = '6'
+          ..effort = 3;
+        expect(app.toggleSet(log, i, spec, exercise: e, week: 3).ok, isTrue);
+      }
+      await finish(3, 1);
+      // Série 3 : 1 min de repos pour 5 min prescrites (< 4 min).
+      expect(app.koachState().tracks['pull']!.validSets, 3);
+    });
 
     test('D33 : saisie manuelle = mesure datée, regroupée sur 30 s ; poids '
         'du corps = pesée du jour', () {
@@ -522,69 +628,62 @@ void main() {
       expect(app.koach.weighIns.first.kg, 70);
     });
 
-    test(
-      'D2 : séances perso et WOD ignorés ; cache du store = rejeu complet',
-      () async {
-        app.enableKoach();
-        app.logs['S0-J1'] = SessionLog(
-          done: true,
-          finishedAt: '2026-07-21T18:00:00.000',
-          ex: {
-            pull: ExerciseLog(
-              sets: [SetEntry(kg: '50', reps: '6', effort: 3, done: true)],
-            ),
-          },
-        );
-        await twoStrongSessions();
-        final keys = [
-          for (final s in app.koachInput()['sessions'] as List)
-            (s as Map)['key'],
-        ];
-        expect(keys, ['S3-J1', 'S4-J1']);
-        _same(
-          ke.summarize(app.koachState()),
-          ke.summarize(ke.replay(app.koachInput())),
-        );
-        // Pesée rétroactive : même résultat que le rejeu complet.
-        app.addWeighIn(DateTime(2026, 7, 26), 75);
-        _same(
-          ke.summarize(app.koachState()),
-          ke.summarize(ke.replay(app.koachInput())),
-        );
-      },
-    );
+    test('D2 : séances perso et WOD ignorés ; cache du store = rejeu complet',
+        () async {
+      app.enableKoach();
+      app.logs['S0-J1'] = SessionLog(
+        done: true,
+        finishedAt: '2026-07-21T18:00:00.000',
+        ex: {
+          pull: ExerciseLog(
+            sets: [SetEntry(kg: '50', reps: '6', effort: 3, done: true)],
+          ),
+        },
+      );
+      await twoStrongSessions();
+      final keys = [
+        for (final s in app.koachInput()['sessions'] as List)
+          (s as Map)['key'],
+      ];
+      expect(keys, ['S3-J1', 'S4-J1']);
+      _same(
+        ke.summarize(app.koachState()),
+        ke.summarize(ke.replay(app.koachInput())),
+      );
+      // Pesée rétroactive : même résultat que le rejeu complet.
+      app.addWeighIn(DateTime(2026, 7, 26), 75);
+      _same(
+        ke.summarize(app.koachState()),
+        ke.summarize(ke.replay(app.koachInput())),
+      );
+    });
   });
 
   // =====================================================================
   group('D24, D7, D6, D25, D26 — pendant la séance', () {
-    test(
-      'D24 : suggestion après la série 1, appliquée aux séries restantes',
-      () {
-        app.enableKoach();
-        now = w3d1;
-        doSets(3, 1, pull, [('5', '6', 5)]);
-        final e = ex(3, 1, pull);
-        final log = app.exLog(3, 1, e);
-        final sug = app.koachSuggestion(3, 1, e, log)!;
-        // Facile (5) pour Soutenu visé (3) : +6 % de 76,5 kg, plafond +5 kg,
-        // arrondi inférieur à 1,25 kg → 8,75 kg.
-        expect(sug.direction, 'up');
-        expect(sug.reason, 'easy2');
-        expect(sug.from, 5);
-        expect(sug.kg, 8.75);
-        expect(
-          app.koachReason(e, log, sug),
-          '+3,75 kg — série 1 à Facile, visé Soutenu',
-        );
-        app.applyKoachSuggestion(3, 1, e, log, sug);
-        expect([for (final s in log.sets) s.kg], ['5', '8.75', '8.75', '8.75']);
-        expect(log.koach, contains('appliqué'));
-        expect(app.koachSuggestion(3, 1, e, log), isNull);
-        expect(app.koach.decisions.last.status, 'accepted');
-        // Rien d'autre n'a changé (D4).
-        expect(app.values['B8'], 32.5);
-      },
-    );
+    test('D24 : suggestion après la série 1, appliquée aux séries restantes',
+        () {
+      app.enableKoach();
+      now = w3d1;
+      doSets(3, 1, pull, [('5', '6', 5)]);
+      final e = ex(3, 1, pull);
+      final log = app.exLog(3, 1, e);
+      final sug = app.koachSuggestion(3, 1, e, log)!;
+      // Facile (5) pour Soutenu visé (3) : +6 % de 76,5 kg, plafond +5 kg,
+      // arrondi inférieur à 1,25 kg → 8,75 kg.
+      expect(sug.direction, 'up');
+      expect(sug.reason, 'easy2');
+      expect(sug.from, 5);
+      expect(sug.kg, 8.75);
+      expect(app.koachReason(e, log, sug), '+3,75 kg — série 1 à Facile, visé Soutenu');
+      app.applyKoachSuggestion(3, 1, e, log, sug);
+      expect([for (final s in log.sets) s.kg], ['5', '8.75', '8.75', '8.75']);
+      expect(log.koach, contains('appliqué'));
+      expect(app.koachSuggestion(3, 1, e, log), isNull);
+      expect(app.koach.decisions.last.status, 'accepted');
+      // Rien d'autre n'a changé (D4).
+      expect(app.values['B8'], 32.5);
+    });
 
     test('D7 : refus mémorisé, hausse non reproposée ; une baisse de sécurité '
         'reste possible', () {
@@ -625,10 +724,8 @@ void main() {
       expect(app.koachSuggestion(3, 1, e, log), isNotNull);
       app.disableKoach();
       expect(app.koachSuggestion(3, 1, e, log), isNull);
-      expect(
-        app.koachFatigueLevel(3, 1, app.program.week(3).day(1)!.exercises),
-        0,
-      );
+      expect(app.koachFatigueLevel(3, 1, app.program.week(3).day(1)!.exercises),
+          0);
     });
 
     test('D25 : jour de fatigue : séries restantes réduites, charges '
@@ -643,10 +740,18 @@ void main() {
       expect(level, 0.3);
       doSets(3, 1, pull, [('5', '6', 5)]);
       expect(app.koachAskBefore(3, 1), isFalse);
+      // 33 séries prévues × 0,3 = 10 séries retirées, une par exercice en
+      // partant de la fin de la séance, deux au dernier ; la série validée
+      // et au moins une série par exercice restent.
+      final cut = app.koachFatigueCut(3, 1, day.exercises, level);
+      expect(cut.values.fold<int>(0, (a, b) => a + b), 10);
+      expect(cut[day.exercises.last.id], 2);
+      expect(cut[mu], 1);
       app.acceptKoachFatigue(3, 1, day.exercises, level);
       final e = ex(3, 1, pull);
       final log = app.exLog(3, 1, e);
-      expect(log.sets.length, 3); // 4 × 0,7 = 2,8 → 3 séries
+      expect(log.sets.length, 3);
+      expect(app.exLog(3, 1, ex(3, 1, mu)).sets.length, 3);
       expect(log.sets.first.done, isTrue);
       expect(app.koachSuggestion(3, 1, e, log), isNull);
       expect(app.koachFatigueLevel(3, 1, day.exercises), 0);
@@ -686,121 +791,111 @@ void main() {
       doSets(5, 1, w5pull.id, [('2,5', '5', 3)]);
       await finish(5, 1);
       app.setKoachPain('S5-J1', 'pull', 2);
-      final end =
-          app
-              .koachProposals('S5-J1')
-              .where((p) => p['kind'] == 'painEnd')
-              .single;
+      final end = app
+          .koachProposals('S5-J1')
+          .where((p) => p['kind'] == 'painEnd')
+          .single;
       app.acceptKoachProposal(end);
       expect(app.koach.painRelief, isEmpty);
     });
   });
 
   // =====================================================================
-  group(
-    'Bilan (D5 b), historique (KT-029), objectifs (D27), structure (D28)',
-    () {
-      test('bilan : valeur acceptée d’un tap, datée ; historique des séances '
-          'inchangé', () async {
-        app.enableKoach();
-        await twoStrongSessions();
-        final proposals = app.koachProposals('S4-J1');
-        final p = proposals.firstWhere((p) => p['ref'] == 'B8');
-        expect(p['kind'], 'value');
-        expect((p['to'] as num) > (p['from'] as num), isTrue);
-        final prescribed = app.logs['S3-J1']!.ex[pull]!.prescribed;
-        expect(prescribed, isNotNull);
-        final loads = [for (final s in app.logs['S3-J1']!.ex[pull]!.sets) s.kg];
-        app.acceptKoachProposal(p);
-        expect(app.values['B8'], (p['to'] as num).toDouble());
-        expect(app.refStatus['B8'], 'set');
-        expect(app.koach.history.last.source, 'koach');
-        expect(app.koach.history.last.ref, 'B8');
-        expect(
-          app.koachProposals('S4-J1').any((q) => q['id'] == p['id']),
-          isFalse,
-        );
-        // Le journal garde ce qui était prescrit et réalisé à la date.
-        expect(app.logs['S3-J1']!.ex[pull]!.prescribed, prescribed);
-        expect([
-          for (final s in app.logs['S3-J1']!.ex[pull]!.sets) s.kg,
-        ], loads);
-        // Refus : daté, non reproposé.
-        for (final q in app.koachProposals('S4-J1')) {
-          app.refuseKoachProposal(q);
-        }
-        expect(app.koachProposals('S4-J1'), isEmpty);
-        expect(app.koachLastSession, 'S4-J1');
-      });
+  group('Bilan (D5 b), historique (KT-029), objectifs (D27), structure (D28)',
+      () {
+    test('bilan : valeur acceptée d’un tap, datée ; historique des séances '
+        'inchangé', () async {
+      app.enableKoach();
+      await twoStrongSessions();
+      final proposals = app.koachProposals('S4-J1');
+      final p = proposals.firstWhere((p) => p['ref'] == 'B8');
+      expect(p['kind'], 'value');
+      expect((p['to'] as num) > (p['from'] as num), isTrue);
+      final prescribed = app.logs['S3-J1']!.ex[pull]!.prescribed;
+      expect(prescribed, isNotNull);
+      final loads = [for (final s in app.logs['S3-J1']!.ex[pull]!.sets) s.kg];
+      app.acceptKoachProposal(p);
+      expect(app.values['B8'], (p['to'] as num).toDouble());
+      expect(app.refStatus['B8'], 'set');
+      expect(app.koach.history.last.source, 'koach');
+      expect(app.koach.history.last.ref, 'B8');
+      expect(app.koachProposals('S4-J1').any((q) => q['id'] == p['id']),
+          isFalse);
+      // Le journal garde ce qui était prescrit et réalisé à la date.
+      expect(app.logs['S3-J1']!.ex[pull]!.prescribed, prescribed);
+      expect([for (final s in app.logs['S3-J1']!.ex[pull]!.sets) s.kg], loads);
+      // Refus : daté, non reproposé.
+      for (final q in app.koachProposals('S4-J1')) {
+        app.refuseKoachProposal(q);
+      }
+      expect(app.koachProposals('S4-J1'), isEmpty);
+      expect(app.koachLastSession, 'S4-J1');
+    });
 
-      test('D27 : étape = cible 12 mois au départ + 12 mois ; objectif final '
-          'saisi, modifiable', () {
-        app.enableKoach();
-        final stage = app.koachObjective('B8', 'stage');
-        expect(stage.target, 65);
-        expect(stage.date, DateTime(2027, 7, 13));
-        expect(app.koachObjective('B8', 'final').target, isNull);
-        app.setKoachObjective('B8', 'final', 75, DateTime(2027, 12, 31));
-        final fin = app.koachObjective('B8', 'final');
-        expect(fin.target, 75);
-        expect(fin.date, DateTime(2027, 12, 31));
-        app.setKoachObjective('B8', 'stage', 50, DateTime(2027, 1, 31));
-        expect(app.koachObjective('B8', 'stage').target, 50);
-        app.setKoachObjective('B8', 'stage', null, null);
-        expect(app.koachObjective('B8', 'stage').target, 65);
-        final inp = app.koachInput();
-        expect(((inp['objectives'] as Map)['B8'] as Map)['final'], {
-          'target': 75.0,
-          'date': '2027-12-31',
-        });
-      });
+    test('D27 : étape = cible 12 mois au départ + 12 mois ; objectif final '
+        'saisi, modifiable', () {
+      app.enableKoach();
+      final stage = app.koachObjective('B8', 'stage');
+      expect(stage.target, 65);
+      expect(stage.date, DateTime(2027, 7, 13));
+      expect(app.koachObjective('B8', 'final').target, isNull);
+      app.setKoachObjective('B8', 'final', 75, DateTime(2027, 12, 31));
+      final fin = app.koachObjective('B8', 'final');
+      expect(fin.target, 75);
+      expect(fin.date, DateTime(2027, 12, 31));
+      app.setKoachObjective('B8', 'stage', 50, DateTime(2027, 1, 31));
+      expect(app.koachObjective('B8', 'stage').target, 50);
+      app.setKoachObjective('B8', 'stage', null, null);
+      expect(app.koachObjective('B8', 'stage').target, 65);
+      final inp = app.koachInput();
+      expect(
+        ((inp['objectives'] as Map)['B8'] as Map)['final'],
+        {'target': 75.0, 'date': '2027-12-31'},
+      );
+    });
 
-      test('D28 : option désactivée par défaut ; adaptation acceptée = couche '
-          'datée et réversible', () {
-        app.enableKoach();
-        expect(app.koach.structure, isFalse);
-        expect(app.koachStructureProposals(), isEmpty);
-        final day = app.program.week(5).day(1)!;
-        final main = ex(5, 1, 'B1-73'); // traction 5×8
-        final base = app.setCount(main);
-        expect(base, 5);
-        app.setKoachStructure(true);
-        app.acceptKoachStructure({
-          'id': 'W5|sets|pull',
-          'week': 5,
-          'kind': 'sets',
-          'movement': 'pull',
-          'exercise': main.id,
-          'delta': 1,
-        });
-        expect(app.koachSetCount(5, main), base + 1);
-        expect(app.exLog(5, day.j, main).sets.length, 6);
-        expect(app.koachAdaptationText(5, main), '+1 série cette semaine');
-        app.setKoachStructure(false);
-        expect(app.koachSetCount(5, main), base); // option coupée : programme
-        app.setKoachStructure(true);
-        final load = app.sessionLoad(5, main)!;
-        expect(load, 3.75);
-        app.acceptKoachStructure({
-          'id': 'W5|deload',
-          'week': 5,
-          'kind': 'deload',
-          'movement': 'pull',
-          'sets': 0.6,
-          'load': 0.10,
-        });
-        // Décharge anticipée : 3,38 × 0,9 = 3,04 → 2,5 kg ; 5 × 0,6 = 3 séries.
-        expect(app.sessionLoad(5, main), 2.5);
-        expect(app.koachSetCount(5, main), 4); // (5 + 1) × 0,6 = 3,6 → 4
-        app.revertKoachAdaptation('W5|deload');
-        app.revertKoachAdaptation('W5|sets|pull');
-        expect(app.koachSetCount(5, main), base);
-        expect(app.sessionLoad(5, main), load);
-        expect(
-          app.koach.adaptations.every((a) => a.status == 'reverted'),
-          isTrue,
-        );
+    test('D28 : option désactivée par défaut ; adaptation acceptée = couche '
+        'datée et réversible', () {
+      app.enableKoach();
+      expect(app.koach.structure, isFalse);
+      expect(app.koachStructureProposals(), isEmpty);
+      final day = app.program.week(5).day(1)!;
+      final main = ex(5, 1, 'B1-73'); // traction 5×8
+      final base = app.setCount(main);
+      expect(base, 5);
+      app.setKoachStructure(true);
+      app.acceptKoachStructure({
+        'id': 'W5|sets|pull',
+        'week': 5,
+        'kind': 'sets',
+        'movement': 'pull',
+        'exercise': main.id,
+        'delta': 1,
       });
-    },
-  );
+      expect(app.koachSetCount(5, main), base + 1);
+      expect(app.exLog(5, day.j, main).sets.length, 6);
+      expect(app.koachAdaptationText(5, main), '+1 série cette semaine');
+      app.setKoachStructure(false);
+      expect(app.koachSetCount(5, main), base); // option coupée : programme
+      app.setKoachStructure(true);
+      final load = app.sessionLoad(5, main)!;
+      expect(load, 3.75);
+      app.acceptKoachStructure({
+        'id': 'W5|deload',
+        'week': 5,
+        'kind': 'deload',
+        'movement': 'pull',
+        'sets': 0.6,
+        'load': 0.10,
+      });
+      // Décharge anticipée : 3,38 × 0,9 = 3,04 → 2,5 kg ; 5 × 0,6 = 3 séries.
+      expect(app.sessionLoad(5, main), 2.5);
+      expect(app.koachSetCount(5, main), 4); // (5 + 1) × 0,6 = 3,6 → 4
+      app.revertKoachAdaptation('W5|deload');
+      app.revertKoachAdaptation('W5|sets|pull');
+      expect(app.koachSetCount(5, main), base);
+      expect(app.sessionLoad(5, main), load);
+      expect(app.koach.adaptations.every((a) => a.status == 'reverted'), isTrue);
+    });
+  });
 }

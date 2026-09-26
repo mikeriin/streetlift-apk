@@ -388,10 +388,14 @@ void showKoachDetails(
 /// Jour de fatigue probable (D25) : volume réduit, charges maintenues.
 class KoachFatigueCard extends StatelessWidget {
   final double level;
+
+  /// Séries non validées retirées si la proposition est acceptée.
+  final int sets;
   final VoidCallback onAccept, onRefuse;
   const KoachFatigueCard({
     super.key,
     required this.level,
+    required this.sets,
     required this.onAccept,
     required this.onRefuse,
   });
@@ -413,8 +417,8 @@ class KoachFatigueCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'Réduire le volume de ${(level * 100).round()} % sur les séries '
-            'restantes ?',
+            'Retirer $sets série${sets > 1 ? 's' : ''} non validée'
+            '${sets > 1 ? 's' : ''} (−${(level * 100).round()} % de volume) ?',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w700,
@@ -423,8 +427,9 @@ class KoachFatigueCard extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Text(
-            'Charges maintenues, aucune tentative lourde aujourd’hui. Tu peux '
-            'aussi continuer comme prévu.',
+            'Séries retirées en fin d’exercice, de la fin de la séance vers le '
+            'début ; charges maintenues, aucune tentative lourde aujourd’hui. '
+            'Tu peux aussi continuer comme prévu.',
             style: TextStyle(color: SL.dim, fontSize: 13),
           ),
           const SizedBox(height: 10),
@@ -679,10 +684,7 @@ class KoachWeighInBanner extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _koachHeader(
-          'Koach · pesée de la semaine',
-          icon: Icons.monitor_weight_outlined,
-        ),
+        _koachHeader('Koach · pesée de la semaine', icon: Icons.monitor_weight_outlined),
         const SizedBox(height: 6),
         Text(
           'Ton poids du corps sert au calcul des mouvements lestés. Dernière '

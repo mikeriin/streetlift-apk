@@ -688,6 +688,16 @@ class AppStore extends ChangeNotifier {
   int _koachCacheRevision = -1;
   String _koachCacheDay = '';
 
+  /// Révision des données hors journal (références, réglages, Koach).
+  int _koachAuxRevision = 0;
+
+  /// Données Koach d'une séance supprimée, gardées pour l'annulation.
+  final Map<
+    String,
+    ({SessionAnswers? answers, List<KoachDecision> decisions})
+  >
+  _koachStash = {};
+
   static const _kState = 'kalis_state_v3';
   static const _kRecovery = 'kalis_recovery_v1';
   static const _recoveryLimit = 3;
@@ -2819,6 +2829,7 @@ class AppStore extends ChangeNotifier {
     koach = data.koach;
     koachLoadIssues = data.koachIssues;
     koachSkipped.clear();
+    _koachStash.clear();
     _koachCache = null;
     _koachCacheRevision = -1;
     _allEx = null;
@@ -3102,6 +3113,7 @@ class AppStore extends ChangeNotifier {
 
   void _persist() {
     _dataRevision++;
+    _koachAuxRevision++;
     if (_initialized) unawaited(_writeSnapshot());
   }
 
@@ -4062,9 +4074,11 @@ class AppStore extends ChangeNotifier {
     return _writeSnapshot();
   }
 
-  /// Efface tout l'historique d'une séance : séries, notes, statut « fait ».
+  /// Efface tout l'historique d'une séance : séries, notes, statut « fait »
+  /// (et, L7, ses réponses et décisions Koach).
   void clearSession(int week, int j) {
     logs.remove(sessionKey(week, j));
+    KoachStore(this)._koachForgetSession(sessionKey(week, j));
     saveLogs(immediate: true);
   }
 
@@ -4323,7 +4337,10 @@ class AppStore extends ChangeNotifier {
   /// Retire une entrée du journal et la renvoie pour permettre l'annulation.
   SessionLog? deleteLog(String key) {
     final removed = logs.remove(key);
-    if (removed != null) saveLogs(immediate: true);
+    if (removed != null) {
+      KoachStore(this)._koachForgetSession(key, stash: true);
+      saveLogs(immediate: true);
+    }
     return removed;
   }
 
@@ -4332,6 +4349,7 @@ class AppStore extends ChangeNotifier {
   bool restoreLog(String key, SessionLog log) {
     if (logs.containsKey(key)) return false;
     logs[key] = log;
+    KoachStore(this)._koachRestoreSession(key);
     saveLogs(immediate: true);
     return true;
   }

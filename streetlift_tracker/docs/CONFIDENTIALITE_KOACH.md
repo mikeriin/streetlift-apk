@@ -34,7 +34,7 @@ Boutons : « Ne pas activer » / « J'ai compris, activer ». La douleur au-dess
 
 | Lieu | Contenu | Contrôle de l'utilisateur |
 | --- | --- | --- |
-| Stockage privé de l'application (document `kalis_state_v3`) | Toutes les données du §2 | Réglages → Sauvegardes → « Supprimer les données de l'application » (tout, y compris Koach) ; Réglages → Koach → « Supprimer mes réponses aux questionnaires » (sommeil, forme, douleur seuls) ; suppression d'une pesée (écran Pesées) |
+| Stockage privé de l'application (document `kalis_state_v3`) | Toutes les données du §2 | Réglages → Sauvegardes → « Supprimer les données de l'application » (tout, y compris Koach) ; Réglages → Koach → « Supprimer mes réponses aux questionnaires » (sommeil, forme, douleur seuls ; visible dès qu'une réponse existe, même Koach désactivé) ; suppression d'une pesée (écran Pesées, accessible tant qu'une pesée existe) ; « Effacer l'historique » d'une séance efface aussi ses réponses et décisions Koach |
 | Fichier d'export (emplacement choisi par l'utilisateur), texte copié | Section `koach` et champs de série | Fichier **non chiffré** (déjà indiqué dans l'application) : l'utilisateur choisit où il le range et avec qui il le partage |
 | Sauvegarde Android (Google), si activée sur le téléphone | Données de l'application, dont Koach (décision KT-016 : sauvegarde système conservée) | Paramètres Android ; l'application ne peut ni la déclencher, ni la vérifier, ni l'effacer (texte déjà présent dans Réglages → Sauvegardes) |
 

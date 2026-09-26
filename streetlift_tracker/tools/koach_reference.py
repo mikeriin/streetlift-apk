@@ -95,6 +95,7 @@ PARAMS = {
 }
 
 EPS = 1e-9
+SNAP = 0.02  # tolérance de recalage sur la grille (unité native)
 LB_KG = 0.45359237
 DAY = 86400.0
 
@@ -263,6 +264,11 @@ def grid_next(kg, kind, equipment, up):
         return max(ceil_grid(kg, small) - small, 0.0)
     step = e['step']
     native = to_native(kg, kind, equipment)
+    # Valeur enregistrée au centième de kg : en livres, un cran peut être
+    # manqué de 0,01 lb ; recalage sur le cran le plus proche (± 0,02).
+    snapped = near_grid(native, step)
+    if abs(native - snapped) <= SNAP:
+        native = snapped
     if up:
         nxt = floor_grid(native, step) + step
     else:
@@ -1011,7 +1017,6 @@ def proposals(inp, state, session_key):
     refs = inp.get('references', {})
     equipment = inp.get('equipment') or DEFAULT_EQUIPMENT
     locks = set(inp.get('locks') or [])
-    pains = inp.get('pain') or {}
     sess = None
     for s in inp['sessions']:
         if s['key'] == session_key:
@@ -1024,7 +1029,6 @@ def proposals(inp, state, session_key):
     now = parse_dt(inp['now'])
     bw_now = state['bw_now']
     day_bw = bodyweight_at(inp.get('weighIns', []), day_of(t), refs.get('B4'))
-    here = pains.get(session_key) or {}
     out = []
     for lift in inp['lifts']:
         key, ref = lift['key'], lift['ref']
@@ -1039,7 +1043,7 @@ def proposals(inp, state, session_key):
             continue
         grid = lift['grid']
         bw = bw_now if lift['bodyweight'] else 0.0
-        painful = (here.get(key) or 0) > P['pain_threshold']
+        painful = _last_pain_above(inp, P, key, session_key)
         test_best = None
         for ex in exs:
             if ex['cat'] != 'test1rm':
@@ -1156,8 +1160,9 @@ def _accessory_proposals(inp, P, sess, session_key, equipment, locks):
                 success = False
         if success and not a.get('prevention'):
             val = grid_next(cur, a['equipment'], equipment, True)
-            out.append({'id': session_key + '|' + ref, 'ref': ref, 'kind': 'value', 'from': r2(cur),
-                        'to': r2(val), 'source': 'koach', 'reason': 'accUp'})
+            if r2(val) > r2(cur):
+                out.append({'id': session_key + '|' + ref, 'ref': ref, 'kind': 'value', 'from': r2(cur),
+                            'to': r2(val), 'source': 'koach', 'reason': 'accUp'})
         elif failed:
             prev_failed = False
             for i in range(len(order) - 1, -1, -1):
@@ -1178,15 +1183,28 @@ def _accessory_proposals(inp, P, sess, session_key, equipment, locks):
                 break
             if prev_failed:
                 val = grid_next(cur, a['equipment'], equipment, False)
-                if val < cur - EPS:
+                if r2(val) < r2(cur):
                     out.append({'id': session_key + '|' + ref, 'ref': ref, 'kind': 'value', 'from': r2(cur),
                                 'to': r2(val), 'source': 'koach', 'reason': 'accDown'})
     return out
 
 
+def _last_pain_above(inp, P, key, session_key):
+    """D26 : dernière douleur notée pour ce mouvement jusqu'à cette séance
+    comprise, au-dessus du seuil → aucune hausse au bilan."""
+    pains = inp.get('pain') or {}
+    order = [k for _, k, _ in sorted_sessions(inp)]
+    idx = order.index(session_key) if session_key in order else len(order) - 1
+    for j in range(idx, -1, -1):
+        q = pains.get(order[j]) or {}
+        if key in q:
+            return (q[key] or 0) > P['pain_threshold']
+    return False
+
+
 def _pain_proposals(inp, P, session_key):
     """D26 : douleur > 3/10 deux séances de suite sur un mouvement →
-    allègement de 20 % + isométries (règle 6)."""
+    allègement de 20 % + isométries."""
     pains = inp.get('pain') or {}
     here = pains.get(session_key) or {}
     order = [key for _, key, _ in sorted_sessions(inp)]

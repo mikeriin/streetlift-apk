@@ -25,7 +25,7 @@ Nature des preuves : « simulation » = `tools/koach_simulation.py` et `test/l7_
 | D1 grand public | Aucun paramètre du propriétaire codé en dur ; ses valeurs sont des **données** à saisir | Incréments D23 du propriétaire proposés comme défauts modifiables (demandé) ; objectifs finaux vides par défaut |
 | D2 périmètre | Programme 40 semaines seulement ; séances perso et WOD ignorés | Clés `S0-J*` et WOD exclues du rejeu |
 | D3 nom | « Koach », jamais « IA », aucun vocabulaire médical, aucune promesse | Textes relus (§7) |
-| D4 validation | Aucune valeur de pilotage modifiée sans un tap | Seules `acceptProposal` et la saisie manuelle écrivent une valeur |
+| D4 validation | Aucune valeur de pilotage modifiée sans un tap | Seules l'acceptation d'une proposition (`acceptKoachProposal`), la saisie manuelle et une pesée (poids du corps, `addWeighIn`) écrivent une valeur |
 | D5 moments | (a) après la série 1 d'un mouvement principal, et aux déclencheurs D24 suivants ; (b) au bilan | Bilan Koach ouvert après la fin enregistrée d'une séance du programme ; propositions retrouvables dans l'écran Koach |
 | D6 interrupteur, verrou | Koach désactivé = 2.x ; verrou « Garder ma charge » | **Désactivé par défaut** (installation neuve et mise à jour) jusqu'à activation explicite ; verrou par **référence Pilotage** (B8… / B25…) |
 | D7 refus | Refus daté, non reproposé dans la séance ; les séries restent des données | Refus mémorisé par (séance, exercice, sens) : une hausse refusée n'est plus proposée, une baisse de sécurité (série ratée) peut l'être |
@@ -42,8 +42,8 @@ Nature des preuves : « simulation » = `tools/koach_simulation.py` et `test/l7_
 | D22 accessoires | Double progression ; `prevention` jamais augmentés | « Deux séances de suite » = cette séance et la précédente contenant la même référence |
 | D23 incréments | Haltères 1 kg ≤ 10 kg puis 2 kg ; lest 1,25 kg ; barre 2,5 kg ; poulies 2,5 lb (affichage kg selon réglage) | Type « machine » ajouté (leg curl, mollets) : 2,5 kg par défaut, **à confirmer** |
 | D24 prescription | Règles et exemples chiffrés (§5) | RIR **déclaré** (lisible dans la raison affichée) ; base = charge de la dernière série validée ; aucune hausse en semaine de décharge (règle R3 du programme), douleur D26 ni jour de fatigue accepté |
-| D25 jour de fatigue | −15 / −25 / −30 % de volume ; charges maintenues ; aucune tentative lourde | Réduction des séries non validées restantes de la séance ; hausses D24 coupées pour la journée |
-| D26 douleur | > 3/10 : aucune hausse à la séance suivante ; deux séances de suite : −20 % + isométries 5 × 30-45 s ; jamais l'arrêt ; rappel professionnel de santé | −20 % = **allègement temporaire des charges prescrites** du mouvement (ni la valeur de pilotage ni l'estimation ne changent), levé quand la douleur redescend ≤ 3/10 ou à la main ; isométries = consigne affichée |
+| D25 jour de fatigue | −15 / −25 / −30 % de volume ; charges maintenues ; aucune tentative lourde | Part du volume **de la séance** (au moins une série), retirée parmi les séries non validées, une à une en fin d'exercice, de la fin de la séance vers le début, au moins une série par exercice ; nombre de séries affiché avant acceptation ; hausses D24 coupées pour la journée |
+| D26 douleur | > 3/10 : aucune hausse à la séance suivante ; deux séances de suite : −20 % + isométries 5 × 30-45 s ; jamais l'arrêt ; rappel professionnel de santé | « Dernière douleur notée » (séance et bilan, jusqu'à la séance concernée comprise) ; −20 % = **allègement temporaire des charges prescrites** du mouvement (lest ou barre ; ni la valeur de pilotage ni l'estimation ne changent), levé par proposition quand la douleur redescend ≤ 3/10 ou à la main (« Lever » sur la carte de l'exercice et dans l'écran Koach) ; isométries = consigne affichée. **À confirmer** : au poids du corps seul, l'allègement du lest n'a pas d'effet (voir §12) |
 | D27 objectifs | Étape = « cible 12 mois » au départ + 12 mois ; final = saisi | Étape par défaut = cibles du programme ; valeurs finales du propriétaire à saisir par lui (LIVRAISON_L7) |
 | D28 structure | Désactivée par défaut ; ±1 série / mouvement / semaine ; ±15 % du volume ; jamais décharge/tests/prévention ; ≥ 6 semaines de données | Propositions pour la **semaine suivante** ; (c) = unité des propositions (a) ; décharge anticipée = séries × 0,6 (min 1), charges −10 % ; couche datée, réversible |
 | D29 incertitude | σ > 5 % → série de calibrage proposée | Message sur la carte du mouvement (format du jour, difficulté à noter) |
@@ -88,6 +88,8 @@ Les versions 2.x ignorent ces clés à l'import. `rir` (texte libre) et `v` sont
 | `objectives` | `{réf: {stage: {target, date}, final: {target, date}}}` (modifications seulement) | 0-10 000 ; date AAAA-MM-JJ |
 | `adaptations` | `[{id, at, week, kind, movement, exercise?, delta?, sets?, load?, status}]` | semaine 1-40 ; delta ±1 |
 | `painRelief` | `{mouvement: horodatage d'acceptation}` | mouvements connus |
+
+Horodatages (`at`, `revertedAt`, `painRelief`) : `AAAA-MM-JJTHH:MM[:SS[.fff]]` exactement ; détail d'une décision : 20 clés au plus, valeurs simples (texte ≤ 200 caractères, nombre fini, booléen). Au démarrage, une liste plus longue que sa borne garde ses entrées les plus récentes (entrées ignorées comptées et signalées dans Réglages → Koach et l'écran Koach).
 
 **Absente** (installation 2.x, Koach jamais activé) : rien n'est écrit, l'export est identique à 2.5.9. Import : section invalide → import refusé (règle L2) ; au démarrage, une entrée illisible est ignorée avec un message, le reste est chargé. Aucune remise à zéro silencieuse ; l'effacement L2b remet `koach` à l'état neuf.
 
@@ -205,7 +207,9 @@ Informatif (dépend du modèle, jamais une preuve d'efficacité) : incidents **n
 
 `tools/koach_reference.py` (bibliothèque standard) et `lib/koach_engine.dart` implémentent les mêmes fonctions (rejeu, cache, propositions, D24, D25, D26, D27, D28, grilles, échelle héritée) ; fixtures JSON partagées `test/fixtures/koach/*.json` (entrées + sorties Python) : le test Dart exige ±0,01 kg (et égalité exacte des décisions) ; le test Python vérifie que les sorties attendues sont à jour. Simulations : même générateur (mulberry32 + Box-Muller) dans les deux langages.
 
-**Cache incrémental (D34)** : l'état est repris seulement si la liste des événements (séances faites, saisies manuelles) prolonge celle du cache **et** si le contexte du rejeu est inchangé : pesées (même rétroactives), références, repères initiaux, mouvements, paramètres (`contextSignature`). Sans cette seconde condition, une pesée ajoutée à une date passée laissait l'estimation calculée avec l'ancien poids (défaut trouvé pendant l'intégration, corrigé dans les deux langages, test dédié Python et Dart). Dans l'application, l'état est en outre mis en cache par révision des données et par jour.
+**Cache incrémental (D34)** : l'état est repris seulement si la liste des événements (séances faites, saisies manuelles) prolonge celle du cache **et** si le contexte du rejeu est inchangé : pesées (même rétroactives), références, repères initiaux, mouvements, paramètres (`contextSignature`). Sans cette seconde condition, une pesée ajoutée à une date passée laissait l'estimation calculée avec l'ancien poids (défaut trouvé pendant l'intégration, corrigé dans les deux langages, test dédié Python et Dart). Dans l'application, l'état calculé est repris tant que l'empreinte des séances du programme terminées (séries comprises), la révision des données hors journal et le jour sont inchangés : une frappe dans la séance en cours ne provoque aucun recalcul.
+
+**Grilles en livres** : une valeur enregistrée au centième de kg peut tomber 0,01 lb sous un cran (45 lb = 20,4117 kg enregistrés 20,41) ; la charge suivante ou précédente part du cran le plus proche (tolérance 0,02 unité native), sinon la progression restait bloquée (défaut relevé en revue, corrigé dans les deux langages, cas ajoutés aux fixtures). Une proposition d'accessoire sans changement au centième n'est jamais faite.
 
 ## 9 bis. Branchement dans l'application
 
@@ -239,5 +243,6 @@ Koach désactivé : aucun de ces chemins n'intervient ; comparaison automatique 
 1. Valeur par défaut de l'interrupteur (retenu : désactivé, activation explicite).
 2. Incrément des machines guidées (retenu : 2,5 kg).
 3. Paramètres de la décharge anticipée D28 (retenu : séries × 0,6, charges −10 %).
-4. D26 : allègement des charges prescrites (retenu) plutôt qu'une baisse de la valeur de pilotage.
+4. D26 : allègement des charges prescrites (retenu) plutôt qu'une baisse de la valeur de pilotage. Appliqué au lest (ou à la barre) : sans lest, aucun effet ; avec un petit lest, l'effet est faible en masse soulevée (traction S5 : 3,75 → 2,5 kg, soit < 2 % de la masse système). Variante possible : −20 % de la masse soulevée (assistance élastique au besoin).
 5. Plafond D20 exprimé en masse système (retenu) plutôt qu'en lest.
+6. D28 : même question pour la décharge anticipée (−10 % appliqué au lest ou à la barre).
