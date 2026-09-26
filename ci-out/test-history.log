@@ -8,83 +8,109 @@
 00:00 +5: Calendrier personnel (modèle) dates civiles strictes (AAAA-MM-JJ)
 00:00 +6: Calendrier personnel (modèle) (tearDownAll)
 00:00 +6: Installation neuve et installations existantes installation neuve : non démarrée, références inconnues
-00:00 +7: Installation neuve et installations existantes première ouverture interrompue avant la sauvegarde : neuve
+00:01 +7: Installation neuve et installations existantes première ouverture interrompue avant la sauvegarde : neuve
 00:01 +8: Installation neuve et installations existantes ancienne installation (réglages, aucune séance) : calendrier du 13/07/2026
 00:01 +9: Installation neuve et installations existantes ancienne installation : ses références personnelles priment
-00:01 +10: Installation neuve et installations existantes état 2.5.7 : semaine, dates, références, séances, crédits conservés ; migration idempotente
-00:01 +11: Installation neuve et installations existantes effacement complet : programme non démarré, références inconnues
-00:01 +12: Choix du départ bornes incluses : −280 jours et +365 jours
-00:01 +13: Choix du départ départ futur non lundi + références partielles : persistés, rien d’autre créé
-00:02 +14: Choix du départ départ passé : reprise à la bonne semaine
-00:02 +15: Choix du départ référence invalide : rien n’est modifié
-00:02 +16: Choix du départ écriture refusée : départ non annoncé, état rétabli, nouvel essai
-00:02 +17: Choix du départ double confirmation : un seul état, aucune séance dupliquée
-00:02 +18: Choix du départ installation existante : changer la date ne touche ni séances, ni dates réelles, ni récompenses
-00:02 +19: Sauvegardes aller-retour 2.5.8 : départ, provenance et références intacts
-00:03 +20: Sauvegardes sauvegarde d’un utilisateur non démarré : restaurée telle quelle
-00:03 +21: Sauvegardes ancienne sauvegarde : migrée (13/07/2026, références « à vérifier »), jamais « aujourd’hui »
-00:03 +22: Sauvegardes fichier invalide : refusé, départ et références inchangés
-00:04 +23: Références (KT-007) inconnue : charge et volume « à renseigner », jamais calculés sur 0
-00:04 +24: Références (KT-007) renseignée explicitement, même égale à l’ancienne valeur embarquée
-00:04 +25: Références (KT-007) historique : confirmée sans changer la valeur, ou « Je ne sais pas »
-00:04 +26: Références (KT-007) valeurs hors domaine refusées, valeur précédente gardée
-00:04 +27: Références (KT-007) saisie : virgule, point, vide, texte, non finie, bornes
-00:04 +28: Références (KT-007) affichage en livres : les références restent en kg, sans dérive
-00:04 +29: Rappels (setUpAll)
-00:04 +29: Rappels non démarré : aucun rappel
-00:04 +30: Rappels départ futur : premier rappel le jour de S1 · J1, aucun avant
-00:05 +31: Rappels changement de départ : mêmes identifiants replanifiés, aucun doublon
-00:05 +32: Rappels (tearDownAll)
-00:05 +32: Rappels : erreurs et ouverture (setUpAll)
-00:05 +32: Rappels : erreurs et ouverture échec de programmation : visible, départ conservé, reprise possible
+00:02 +10: Installation neuve et installations existantes état 2.5.7 : semaine, dates, références, séances, crédits conservés ; migration idempotente
+00:02 +11: Installation neuve et installations existantes effacement complet : programme non démarré, références inconnues
+00:02 +12: Choix du départ bornes incluses : −280 jours et +365 jours
+00:02 +13: Choix du départ départ futur non lundi + références partielles : persistés, rien d’autre créé
+00:03 +14: Choix du départ départ passé : reprise à la bonne semaine
+00:03 +15: Choix du départ référence invalide : rien n’est modifié
+00:03 +16: Choix du départ écriture refusée : départ non annoncé, état rétabli, nouvel essai
+00:03 +17: Choix du départ double confirmation : un seul état, aucune séance dupliquée
+00:03 +18: Choix du départ installation existante : changer la date ne touche ni séances, ni dates réelles, ni récompenses
+00:04 +19: Sauvegardes aller-retour 2.5.8 : départ, provenance et références intacts
+00:04 +20: Sauvegardes sauvegarde d’un utilisateur non démarré : restaurée telle quelle
+00:04 +21: Sauvegardes ancienne sauvegarde : migrée (13/07/2026, références « à vérifier »), jamais « aujourd’hui »
+00:04 +22: Sauvegardes fichier invalide : refusé, départ et références inchangés
+00:05 +23: Références (KT-007) inconnue : charge et volume « à renseigner », jamais calculés sur 0
+00:05 +24: Références (KT-007) renseignée explicitement, même égale à l’ancienne valeur embarquée
+00:05 +25: Références (KT-007) historique : confirmée sans changer la valeur, ou « Je ne sais pas »
+00:05 +26: Références (KT-007) attributs : indisponibles ou partiels, jamais un poids arbitraire
+00:06 +27: Références (KT-007) valeurs hors domaine refusées, valeur précédente gardée
+00:06 +28: Références (KT-007) saisie : virgule, point, vide, texte, non finie, bornes
+00:06 +29: Références (KT-007) affichage en livres : les références restent en kg, sans dérive
+00:06 +30: Rappels (setUpAll)
+00:06 +30: Rappels non démarré : aucun rappel
+00:06 +31: Rappels départ futur : premier rappel le jour de S1 · J1, aucun avant
+00:06 +32: Rappels changement de départ : mêmes identifiants replanifiés, aucun doublon
+00:06 +33: Rappels (tearDownAll)
+00:06 +33: Rappels : erreurs et ouverture (setUpAll)
+00:06 +33: Rappels : erreurs et ouverture échec de programmation : visible, départ conservé, reprise possible
 Kalis notifications: Bad state: schedule_native_error
-00:05 +33: Rappels : erreurs et ouverture ancienne notification après changement de départ : même journée S · J, à froid et à chaud
-00:05 +34: Rappels : erreurs et ouverture (tearDownAll)
-00:05 +34: Comparaison avant / après (migration synthétique) (setUpAll)
-00:05 +34: Comparaison avant / après (migration synthétique) utilisateur avancé : semaine, dates, séances, références, récompenses, rappels
+00:06 +34: Rappels : erreurs et ouverture ancienne notification après changement de départ : même journée S · J, à froid et à chaud
+00:07 +35: Rappels : erreurs et ouverture (tearDownAll)
+00:07 +35: Comparaison avant / après (migration synthétique) (setUpAll)
+00:07 +35: Comparaison avant / après (migration synthétique) utilisateur avancé : semaine, dates, séances, références, récompenses, rappels
 L4-COMPARE migration {"semaine":"S11 · J6","depart":"2026-07-13","origine":"migration","datesS11":"21/09→27/09/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"credits":63,"gains":63,"droitsWod":0,"rappels":204,"premierRappel":"S11-J7 2026-09-27T07:30"}
 L4-COMPARE relance {"semaine":"S11 · J6","depart":"2026-07-13","origine":"migration","datesS11":"21/09→27/09/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"credits":63,"gains":63,"droitsWod":0,"rappels":204,"premierRappel":"S11-J7 2026-09-27T07:30"}
 L4-COMPARE depart-21-09 {"semaine":"S1 · J6","depart":"2026-09-21","origine":"user","datesS11":"30/11→06/12/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"credits":63,"gains":63,"droitsWod":0,"rappels":220,"premierRappel":"S1-J7 2026-09-27T07:30"}
-00:05 +35: Comparaison avant / après (migration synthétique) (tearDownAll)
-00:05 +35: Écrans (setUpAll)
-00:05 +35: Écrans premier départ : date, référence saisie, les autres inconnues
-00:06 +36: Écrans « Plus tard » et retour système : rien n’est enregistré
-00:07 +37: Écrans saisie invalide : message, aucun enregistrement
-00:07 +38: Écrans écriture refusée : message, écran conservé, nouvel essai
-00:07 +39: Écrans installation existante : aperçu de l’effet, puis changement
-00:07 +40: Écrans même date : bouton inactif, rien à replanifier
-00:07 +41: Écrans bandeau de l’accueil : non démarré, avant, pendant, après
-00:07 +42: Écrans Références : inconnue, à vérifier, confirmée, « Je ne sais pas »
-══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
-The following assertion was thrown running a test:
-The finder "Found 0 widgets with key [<'B4-unknown'>]: []" (used in a call to "tap()") could not
-find any matching widgets.
+00:07 +36: Comparaison avant / après (migration synthétique) (tearDownAll)
+00:07 +36: Écrans (setUpAll)
+00:07 +36: Écrans premier départ : date, référence saisie, les autres inconnues
+00:09 +37: Écrans « Plus tard » et retour système : rien n’est enregistré
+00:10 +38: Écrans saisie invalide : message, aucun enregistrement
+00:10 +39: Écrans écriture refusée : message, écran conservé, nouvel essai
+00:10 +40: Écrans installation existante : aperçu de l’effet, puis changement
+00:10 +41: Écrans même date : bouton inactif, rien à replanifier
+00:10 +42: Écrans bandeau de l’accueil : non démarré, avant, pendant, après
+00:10 +43: Écrans Références : inconnue, à vérifier, confirmée, « Je ne sais pas »
 
-When the exception was thrown, this was the stack:
-#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2009:7)
+Warning: A call to tap() with finder "Found 1 widget with key [<'B4-unknown'>]: [
+  TextButton-[<'B4-unknown'>](dependencies: [InheritedCupertinoTheme, MediaQuery, _InheritedTheme, _LocalizationsScope-[GlobalKey#82674], _ScrollableScope], state: _ButtonStyleState#a8650),
+]" derived an Offset (Offset(134.0, 28.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+The finder corresponds to this RenderBox: RenderSemanticsAnnotations#e6c01 relayoutBoundary=up17
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#92f86(TextSpan(inherit: true, color: Color(alpha: 1.0000, red: 0.9569, green: 0.9569, blue: 0.9569, colorSpace: ColorSpace.sRGB), family: Roboto, size: 19.0, weight: 700, letterSpacing: -0.5, "RÉFÉRENCES")), RenderParagraph#89a6b@Offset(118.0, 5.5), _RenderAppBarTitleBox#b87ab@Offset(118.0, 5.5), RenderSemanticsAnnotations#ff65f@Offset(118.0, 5.5), RenderCustomMultiChildLayoutBox#42da4@Offset(134.0, 28.0), RenderCustomSingleChildLayoutBox#a6d70@Offset(134.0, 28.0), RenderClipRect#8f83c@Offset(134.0, 28.0), RenderPadding#77daa@Offset(134.0, 28.0), RenderPositionedBox#856ad@Offset(134.0, 28.0), RenderSemanticsAnnotations#288f4@Offset(134.0, 28.0), _RenderInkFeatures#9e776@Offset(134.0, 28.0), RenderPhysicalModel#7a951@Offset(134.0, 28.0), RenderAnnotatedRegion<SystemUiOverlayStyle>#efd7e@Offset(134.0, 28.0), RenderSemanticsAnnotations#33c6c@Offset(134.0, 28.0), RenderConstrainedBox#31a62@Offset(134.0, 28.0), RenderCustomMultiChildLayoutBox#25b9a@Offset(134.0, 28.0), _RenderInkFeatures#17d21@Offset(134.0, 28.0), RenderPhysicalModel#fc309@Offset(134.0, 28.0), RenderSemanticsAnnotations#6eb4c@Offset(134.0, 28.0), RenderRepaintBoundary#18444@Offset(134.0, 28.0), RenderIgnorePointer#7d48f@Offset(134.0, 28.0), RenderAnimatedOpacity#670b1@Offset(134.0, 28.0), RenderRepaintBoundary#bbbd1@Offset(134.0, 28.0), RenderSemanticsAnnotations#8ed81@Offset(134.0, 28.0), RenderOffstage#c813f@Offset(134.0, 28.0), RenderSemanticsAnnotations#68796@Offset(134.0, 28.0), _RenderTheater#597c1@Offset(134.0, 28.0), RenderAbsorbPointer#e40bf@Offset(134.0, 28.0), RenderPointerListener#fbad3@Offset(134.0, 28.0), RenderSemanticsAnnotations#8959a@Offset(134.0, 28.0), RenderCustomPaint#f1f26@Offset(134.0, 28.0), RenderSemanticsAnnotations#b87cb@Offset(134.0, 28.0), RenderSemanticsAnnotations#ec92f@Offset(134.0, 28.0), RenderTapRegionSurface#8a871@Offset(134.0, 28.0), RenderSemanticsAnnotations#5d080@Offset(134.0, 28.0), RenderSemanticsAnnotations#9929b@Offset(134.0, 28.0), RenderSemanticsAnnotations#92b88@Offset(134.0, 28.0), HitTestEntry<HitTestTarget>#4fd2f(_ReusableRenderView#3a195), HitTestEntry<HitTestTarget>#dcd3b(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2077:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1861:12)
 #2      WidgetController.tap (package:flutter_test/src/controller.dart:1041:7)
-#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart:1266:22)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart:1301:22)
 <asynchronous suspension>
 #4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
 <asynchronous suspension>
 #5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
 <asynchronous suspension>
+#6      StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "tap()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: 'unknown'
+  Actual: 'set'
+   Which: is different.
+          Expected: unknown
+            Actual: set
+                    ^
+           Differ at offset 0
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart:1303:9)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
 <asynchronous suspension>
 (elided one frame from package:stack_trace)
 
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart line 1303
 The test description was:
   Références : inconnue, à vérifier, confirmée, « Je ne sais pas »
 ════════════════════════════════════════════════════════════════════════════════════════════════════
-00:08 +42 -1: Écrans Références : inconnue, à vérifier, confirmée, « Je ne sais pas » [E]
+00:11 +43 -1: Écrans Références : inconnue, à vérifier, confirmée, « Je ne sais pas » [E]
   Test failed. See exception logs above.
   The test description was: Références : inconnue, à vérifier, confirmée, « Je ne sais pas »
   
-00:08 +42 -1: Écrans accueil non démarré 320 px · 200 % : bandeau dans la liste, journées accessibles
-00:08 +43 -1: Écrans accueil non démarré 390 px · 100 % : bandeau dans la liste, journées accessibles
-00:08 +44 -1: Écrans rendu 320 px · 130 % · clair : sans débordement
-00:08 +45 -1: Écrans rendu 320 px · 200 % · sombre : sans débordement
-00:08 +46 -1: Écrans rendu 320 px · 200 % · clair : sans débordement
-00:09 +47 -1: Écrans rendu 390 px · 100 % · sombre : sans débordement
-00:09 +48 -1: Écrans (tearDownAll)
-00:09 +48 -1: Some tests failed.
+00:11 +43 -1: Écrans accueil non démarré 320 px · 200 % : bandeau dans la liste, journées accessibles
+00:11 +44 -1: Écrans accueil non démarré 390 px · 100 % : bandeau dans la liste, journées accessibles
+00:12 +45 -1: Écrans rendu 320 px · 130 % · clair : sans débordement
+00:12 +46 -1: Écrans rendu 320 px · 200 % · sombre : sans débordement
+00:12 +47 -1: Écrans rendu 320 px · 200 % · clair : sans débordement
+00:12 +48 -1: Écrans rendu 390 px · 100 % · sombre : sans débordement
+00:13 +49 -1: Écrans (tearDownAll)
+00:13 +49 -1: Some tests failed.
