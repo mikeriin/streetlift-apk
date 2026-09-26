@@ -23,25 +23,25 @@
 00:03 +21: F/G. WOD en cours : persistance, import, minuit chrono illisible : ignoré, le reste des données chargé
 00:03 +22: F/G. WOD en cours : persistance, import, minuit ancienne sauvegarde sans chrono : importée, rien de synthétisé
 00:03 +23: Écrans (setUpAll)
-00:04 +23: Écrans coche refusée : message nommant le champ, saisie gardée
+00:03 +23: Écrans coche refusée : message nommant le champ, saisie gardée
 00:05 +24: Écrans reprise : rouverte sur l’exercice en cours, badge et bandeau
 00:05 +25: Écrans fin : écriture refusée → réessayer ; bilan une seule fois
 00:06 +26: Écrans notification répétée : une seule séance ouverte ; journée faite → historique
 00:06 +27: Écrans historique : consulter, défiler, changer de thème ne modifie rien
-00:07 +28: Écrans WOD retrouvé en pause au dernier point sûr (Tabata)
+00:06 +28: Écrans WOD retrouvé en pause au dernier point sûr (Tabata)
 00:07 +29: Écrans rendu 320 px · 130 % : message d’erreur, bandeau, clavier
 00:07 +30: Écrans rendu 320 px · 200 % : message d’erreur, bandeau, clavier
 
 Warning: A call to tap() with finder "Found 1 widget with widget matching predicate (ignoring all but first): [
-  Tooltip("Valider la série 1", dependencies: [InheritedCupertinoTheme, _InheritedTheme, _LocalizationsScope-[GlobalKey#8b5b2], _ScrollableScope], state: TooltipState#6d1c8),
+  Tooltip("Valider la série 1", dependencies: [InheritedCupertinoTheme, _InheritedTheme, _LocalizationsScope-[GlobalKey#fed26], _ScrollableScope], state: TooltipState#70705),
 ]" derived an Offset (Offset(266.0, 679.5)) that would not hit test on the specified widget.
 Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
-The finder corresponds to this RenderBox: _RenderLayoutSurrogateProxyBox#36fef
-The hit test result at that offset is: HitTestResult(_RenderInkFeatures#5c899@Offset(266.0, 679.5), RenderPhysicalModel#db245@Offset(266.0, 679.5), RenderSemanticsAnnotations#01563@Offset(266.0, 679.5), RenderRepaintBoundary#8fe19@Offset(266.0, 679.5), RenderIgnorePointer#09f10@Offset(266.0, 679.5), RenderAnimatedOpacity#c02e5@Offset(266.0, 679.5), RenderRepaintBoundary#8d112@Offset(266.0, 679.5), RenderSemanticsAnnotations#f259f@Offset(266.0, 679.5), RenderOffstage#07526@Offset(266.0, 679.5), RenderSemanticsAnnotations#7bfbf@Offset(266.0, 679.5), _RenderTheater#9ad78@Offset(266.0, 679.5), RenderAbsorbPointer#28fd0@Offset(266.0, 679.5), RenderPointerListener#92fc0@Offset(266.0, 679.5), RenderSemanticsAnnotations#71953@Offset(266.0, 679.5), RenderCustomPaint#19fff@Offset(266.0, 679.5), RenderSemanticsAnnotations#757a7@Offset(266.0, 679.5), RenderSemanticsAnnotations#c63f0@Offset(266.0, 679.5), RenderTapRegionSurface#38e90@Offset(266.0, 679.5), RenderSemanticsAnnotations#c0658@Offset(266.0, 679.5), RenderSemanticsAnnotations#0dffa@Offset(266.0, 679.5), RenderSemanticsAnnotations#dd5f2@Offset(266.0, 679.5), HitTestEntry<HitTestTarget>#1a4ec(_ReusableRenderView#cf3b8), HitTestEntry<HitTestTarget>#54c22(<AutomatedTestWidgetsFlutterBinding>))
+The finder corresponds to this RenderBox: _RenderLayoutSurrogateProxyBox#72605
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#2db9c(TextSpan(inherit: false, color: Color(alpha: 1.0000, red: 0.9569, green: 0.9569, blue: 0.9569, colorSpace: ColorSpace.sRGB), family: MaterialIcons, size: 20.0, height: 1.0x, leadingDistribution: even, "")), RenderParagraph#62aeb@Offset(16.0, 7.5), RenderPositionedBox#32615@Offset(16.0, 7.5), RenderConstrainedBox#d197b@Offset(16.0, 7.5), RenderExcludeSemantics#183e1@Offset(16.0, 7.5), RenderSemanticsAnnotations#c9cc8@Offset(16.0, 7.5), RenderFlex#321cb@Offset(216.0, 11.5), RenderPositionedBox#82843@Offset(228.0, 11.5), RenderPadding#064cf@Offset(246.0, 23.5), RenderPointerListener#79a11@Offset(246.0, 23.5), RenderSemanticsAnnotations#3200a@Offset(246.0, 23.5), RenderMouseRegion#5351f@Offset(246.0, 23.5), RenderSemanticsAnnotations#9893f@Offset(246.0, 23.5), _RenderInkFeatures#2da83@Offset(246.0, 23.5), RenderCustomPaint#ed1aa@Offset(246.0, 23.5), RenderPhysicalShape#105de@Offset(246.0, 23.5), RenderConstrainedBox#309d0@Offset(246.0, 23.5), _RenderInputPadding#2cf68@Offset(246.0, 23.5), RenderSemanticsAnnotations#b9dec@Offset(246.0, 23.5), RenderFlex#a26fa@Offset(246.0, 113.5), _RenderLayoutBuilder#26512@Offset(246.0, 113.5), RenderConstrainedBox#1a6ee@Offset(246.0, 113.5), RenderPositionedBox#b464b@Offset(246.0, 113.5), RenderConstrainedBox#81957@Offset(246.0, 113.5), RenderPadding#9eb6c@Offset(266.0, 123.5), RenderConstrainedBox#83208@Offset(266.0, 123.5), RenderPositionedBox#792ca@Offset(266.0, 123.5), RenderPadding#cbc41@Offset(266.0, 123.5), _RenderInkFeatures#9292d@Offset(266.0, 123.5), RenderPhysicalModel#bd2c1@Offset(266.0, 123.5), RenderCustomMultiChildLayoutBox#89919@Offset(266.0, 679.5), _RenderInkFeatures#168d2@Offset(266.0, 679.5), RenderPhysicalModel#20d6f@Offset(266.0, 679.5), RenderSemanticsAnnotations#9ef8f@Offset(266.0, 679.5), RenderRepaintBoundary#67e07@Offset(266.0, 679.5), RenderIgnorePointer#a9dbf@Offset(266.0, 679.5), RenderAnimatedOpacity#79ad1@Offset(266.0, 679.5), RenderRepaintBoundary#1cfb9@Offset(266.0, 679.5), RenderSemanticsAnnotations#4d033@Offset(266.0, 679.5), RenderOffstage#d0666@Offset(266.0, 679.5), RenderSemanticsAnnotations#0f72a@Offset(266.0, 679.5), _RenderTheater#a565c@Offset(266.0, 679.5), RenderAbsorbPointer#a0001@Offset(266.0, 679.5), RenderPointerListener#40fde@Offset(266.0, 679.5), RenderSemanticsAnnotations#8f5a8@Offset(266.0, 679.5), RenderCustomPaint#6399c@Offset(266.0, 679.5), RenderSemanticsAnnotations#21fd9@Offset(266.0, 679.5), RenderSemanticsAnnotations#cc702@Offset(266.0, 679.5), RenderTapRegionSurface#f191b@Offset(266.0, 679.5), RenderSemanticsAnnotations#b3941@Offset(266.0, 679.5), RenderSemanticsAnnotations#02344@Offset(266.0, 679.5), RenderSemanticsAnnotations#5e1a3@Offset(266.0, 679.5), HitTestEntry<HitTestTarget>#c71fb(_ReusableRenderView#cda0c), HitTestEntry<HitTestTarget>#c0b41(<AutomatedTestWidgetsFlutterBinding>))
 #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2077:25)
 #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1861:12)
 #2      WidgetController.tap (package:flutter_test/src/controller.dart:1041:7)
-#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart:1086:24)
+#3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart:1088:24)
 <asynchronous suspension>
 #4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
 <asynchronous suspension>
@@ -60,7 +60,7 @@ Expected: exactly one matching candidate
    Which: means none were found but one was expected
 
 When the exception was thrown, this was the stack:
-#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart:1088:11)
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart:1090:11)
 <asynchronous suspension>
 #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
 <asynchronous suspension>
@@ -70,7 +70,7 @@ When the exception was thrown, this was the stack:
 (elided one frame from package:stack_trace)
 
 This was caught by the test expectation on the following line:
-  file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart line 1088
+  file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart line 1090
 The test description was:
   rendu 320 px · 200 % : message d’erreur, bandeau, clavier
 ════════════════════════════════════════════════════════════════════════════════════════════════════
