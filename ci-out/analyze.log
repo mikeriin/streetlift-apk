@@ -1,5 +1,3 @@
 Analyzing streetlift_tracker...                                 
-
-warning • The declaration '_stored' isn't referenced • test/l7_koach_store_test.dart:19:22 • unused_element
-
-1 issue found. (ran in 22.6s)
+No issues found! (ran in 22.2s)
+exit=0
