@@ -570,6 +570,12 @@ void main() {
     });
 
     test('trop de valeurs, textes trop longs', () async {
+      // L4 : références saisies (état neuf = aucune référence), pour un
+      // export de taille comparable à celui d'avant L4.
+      for (final ref in app.referenceRefs) {
+        app.setValue(ref, 1);
+      }
+      await app.flush();
       final raw = app.exportAll();
       await rejected(
         raw,

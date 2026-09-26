@@ -18,6 +18,10 @@ void main() {
     app = AppStore();
     await app.init();
     app.settings.notifOn = true;
+    // L4 : une installation neuve n'a pas de rappel avant son départ ; ces
+    // scénarios portent sur une installation existante (calendrier du
+    // 13/07/2026). Cas « non démarré » : test/l4_depart_test.dart.
+    app.program.start = DateTime(2026, 7, 13);
     backend = FakeNotifications();
     service = NotificationService(app, backend, now: () => now);
     tzdata.initializeTimeZones();

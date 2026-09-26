@@ -296,7 +296,10 @@ void main() {
       expect(next.logs, isEmpty);
       expect(next.isDone(9, 1), isFalse);
       expect(next.unlockedWods, isEmpty);
-      expect(next.values['B4'], next.program.pilotage.bodyweight);
+      // L4 (KT-006/007) : l'état d'installation n'a ni départ ni références ;
+      // les valeurs embarquées ne sont plus présentées comme les siennes.
+      expect(next.values, isEmpty);
+      expect(next.program.scheduled, isFalse);
       expect(next.settings.toJson(), AppSettings().toJson());
       expect(next.storedKeys, {_key});
     });

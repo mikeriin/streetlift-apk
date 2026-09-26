@@ -690,6 +690,10 @@ class AppStore extends ChangeNotifier {
     _kCustom,
     _kUserEx,
     _kWodsLegacy,
+    _kWodsUser,
+    _kWodsDel,
+    _kWodsEdit,
+    _kWodResults,
     _kUnlocked,
     _kLastLevel,
   };
@@ -2222,8 +2226,10 @@ class AppStore extends ChangeNotifier {
         }
         nextStatus[e.key] = e.value as String;
       }
-      if (nextStatus.length != nextValues.length) {
-        throw const FormatException('Provenance de référence manquante.');
+      // Valeur présente sans provenance (fichier retouché à la main) :
+      // conservée et utilisée, mais « à vérifier », jamais « renseignée ».
+      for (final k in nextValues.keys) {
+        nextStatus.putIfAbsent(k, () => 'historic');
       }
       // Une clé hors du tableau actuel ne peut venir que d'une ancienne
       // sauvegarde : conservée telle quelle, jamais « renseignée ».

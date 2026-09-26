@@ -86,6 +86,8 @@ void main() {
   });
 
   test('les semaines suivent les jours civils aux changements d’heure', () {
+    // L4 : calendrier d'une installation existante (départ 13/07/2026).
+    app.program.start = DateTime(2026, 7, 13);
     for (var w = 1; w <= 40; w++) {
       expect(app.program.weekFor(app.program.dateFor(w, 1)), w);
       expect(app.program.weekFor(app.program.dateFor(w, 7)), w);

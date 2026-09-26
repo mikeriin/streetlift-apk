@@ -36,7 +36,9 @@ Map<String, dynamic> filledBackup(AppStore app) {
   for (final week in app.program.weeks) {
     for (final day in week.days) {
       if (day.exercises.isEmpty) continue;
-      final date = app.program.dateFor(week.n, day.j);
+      // Historique d'un utilisateur existant : calendrier d'origine
+      // (13/07/2026), indépendant du départ de l'instance de test (L4).
+      final date = app.program.legacyDateFor(week.n, day.j);
       final at =
           DateTime(date.year, date.month, date.day, 18).toIso8601String();
       final log = SessionLog(

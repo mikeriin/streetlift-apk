@@ -616,7 +616,13 @@ void main() {
     });
 
     test('squat pause : 0,67 × 120 kg → 80 kg (arrondi 2,5 kg)', () {
-      expect(app.values['B11'], 120);
+      // L4 : 120 kg est la valeur du classeur, saisie ici explicitement
+      // (une installation neuve n'a aucune référence).
+      expect(
+        app.program.pilotage.mainLifts.firstWhere((l) => l.ref == 'B11').oneRm,
+        120,
+      );
+      app.setValue('B11', 120);
       final e = line(12, 3, 'Squat pause 2 s');
       expect(app.loadFor(e), 80);
       expect(app.loadLabel(e), '80 kg');
@@ -681,6 +687,19 @@ void main() {
     setUp(() {
       store.logs.clear();
       store.resetPilotage();
+      // L4 : références inconnues après remise à zéro ; ces scénarios
+      // utilisent les valeurs du classeur, saisies explicitement.
+      final p = store.program.pilotage;
+      store.setValue('B4', p.bodyweight);
+      for (final l in p.mainLifts) {
+        store.setValue(l.ref, l.oneRm);
+      }
+      for (final m in p.repMax) {
+        store.setValue(m.ref, m.max);
+      }
+      for (final a in p.accessories) {
+        store.setValue(a.ref, a.refLoad);
+      }
     });
 
     Widget page(Widget child, {double scale = 1, bool dark = true}) =>

@@ -16,6 +16,10 @@ void main() {
   setUpAll(() async {
     SharedPreferences.setMockInitialValues({});
     await store.init();
+    // L4 : ces parcours portent sur une installation existante, sur le
+    // calendrier d'origine (départ 13/07/2026).
+    store.program.start = DateTime(2026, 7, 13);
+    store.startOrigin = 'migration';
     store.settings
       ..sound = false
       ..vibration = false

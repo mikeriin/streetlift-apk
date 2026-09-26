@@ -228,6 +228,9 @@ void main() {
   testWidgets(
     'les références restent modifiables et reviennent aux performances',
     (tester) async {
+      // L4 : références inconnues sur une installation neuve ; ce scénario
+      // modifie une référence déjà renseignée.
+      store.setValue('B8', 30);
       final original = store.values['B8']!;
       await open(
         tester,
