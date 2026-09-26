@@ -1,4 +1,14 @@
-# Kalis Track 3.0.1 — Koach, ajustement des charges sur le téléphone
+# Kalis Track 3.0.2 — Finition visuelle et couleur au choix
+
+## 3.0.2 — Finition globale et six couleurs (lot L5)
+
+- **Couleur dominante au choix** : Réglages → Apparence → « Couleur dominante ». Six couleurs gratuites, hors ligne : Rouge Kalis (par défaut, inchangé), Jaune, Vert, Violet, Orange, Turquoise. Le choix s'applique tout de suite, sans redémarrer, et reste enregistré. Il est indépendant du thème Clair / Sombre / Système.
+- **Ce qui change de couleur** : boutons, sélection, liens, jauges (dont la barre de niveau), carte du jour, décor. **Ce qui ne change pas** : erreurs et suppressions, validations, phases des chronos, rangs et rareté des badges, graphiques, couvertures WOD, logo et icône de l'application.
+- **PROGRAMME** : semaine, bloc et dates affichés sous le curseur, avec un bouton « Semaines » ; « En cours » écrit sur une séance commencée ; textes de la carte du jour agrandis ; titres complets sur petit écran et grand texte ; « NIV. » suit la taille de texte du téléphone.
+- **Grand texte (jusqu'à 200 %)** : titres de page sans mot coupé, choix du thème empilés, cartes du personnage et des crédits réorganisées, branches du parcours empilées, champs des références lisibles.
+- Sauvegardes : la couleur fait partie des réglages exportés. Une ancienne sauvegarde (sans couleur) ou une couleur inconnue donne le rouge, sans refuser l'import. Aucune autre donnée n'est modifiée.
+
+Détail : `SUIVI_PROJET.md` (L5), `REFONTE_UI.md`. Tests : `test/l5c_couleur_test.dart`, `test/l5c_selecteur_test.dart` ; rendus : `test/l5c_*_capture_test.dart` (avec `--dart-define=KALIS_CAPTURE=true`).
 
 ## 3.0.1 — S11·J6 au nouveau format du J6 (lot LC1b)
 

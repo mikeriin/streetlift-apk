@@ -355,10 +355,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: KList(
                     key: const PageStorageKey('programme-scroll'),
                     controller: _scroll,
-                    gap: MediaQuery.sizeOf(context).height < 800 ? 4 : 8,
+                    // L5 : la ligne de semaine prend ~46 px ; écarts un peu
+                    // resserrés pour que la semaine entière reste visible
+                    // sur un téléphone de 844 px de haut.
+                    gap:
+                        MediaQuery.sizeOf(context).height < 800
+                            ? 4
+                            : MediaQuery.sizeOf(context).height < 900
+                            ? 6
+                            : 8,
                     padding: const EdgeInsets.fromLTRB(
                       KSpace.page,
-                      8,
+                      4,
                       KSpace.page,
                       12,
                     ),
