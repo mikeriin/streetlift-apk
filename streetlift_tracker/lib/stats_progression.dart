@@ -232,6 +232,58 @@ class StatsProgression extends StatefulWidget {
 
 class _StatsProgressionState extends State<StatsProgression> {
   int _branch = 0;
+
+  Widget _branchButton(
+    BuildContext context,
+    int index,
+    String label,
+    IconData icon, {
+    required bool stacked,
+  }) {
+    final selected = _branch == index;
+    final button = Semantics(
+      selected: selected,
+      child: OutlinedButton(
+        key: ValueKey('stats-branch-$index'),
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+          backgroundColor: selected ? SL.action : SL.card,
+          foregroundColor: selected ? SL.onAction : SL.dim,
+          side: BorderSide(color: selected ? SL.action : SL.line),
+        ),
+        onPressed: () => setState(() => _branch = index),
+        child:
+            stacked
+                ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(icon, size: 21),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: Text(label, style: const TextStyle(fontSize: 12)),
+                    ),
+                  ],
+                )
+                : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(icon, size: 21),
+                    const SizedBox(height: 5),
+                    Text(label, style: const TextStyle(fontSize: 12)),
+                  ],
+                ),
+      ),
+    );
+    if (stacked) {
+      return Padding(padding: const EdgeInsets.only(bottom: 8), child: button);
+    }
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: index == 1 ? 4 : 0),
+        child: button,
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     final p = store.progression;
@@ -291,52 +343,36 @@ class _StatsProgressionState extends State<StatsProgression> {
                 ],
               ),
             ),
-            SizedBox(
-              height: 24,
-              child: CustomPaint(painter: _TreeFork(SL.line, 3)),
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            // L5 : au-delà de 150 % de texte, les trois branches s'empilent
+            // (libellé en entier) au lieu de trois boutons trop étroits.
+            if (MediaQuery.textScalerOf(context).scale(10) <= 15)
+              SizedBox(
+                height: 24,
+                child: CustomPaint(painter: _TreeFork(SL.line, 3)),
+              )
+            else
+              const SizedBox(height: 12),
+            Flex(
+              direction:
+                  MediaQuery.textScalerOf(context).scale(10) > 15
+                      ? Axis.vertical
+                      : Axis.horizontal,
+              crossAxisAlignment:
+                  MediaQuery.textScalerOf(context).scale(10) > 15
+                      ? CrossAxisAlignment.stretch
+                      : CrossAxisAlignment.start,
               children: [
                 for (final (index, label, icon) in [
                   (0, 'Pratique', Icons.fitness_center_rounded),
                   (1, 'Rythme', Icons.event_repeat_rounded),
                   (2, 'Défis', Icons.bolt_rounded),
                 ])
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: index == 1 ? 4 : 0,
-                      ),
-                      child: Semantics(
-                        selected: _branch == index,
-                        child: OutlinedButton(
-                          key: ValueKey('stats-branch-$index'),
-                          style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 4,
-                              vertical: 12,
-                            ),
-                            backgroundColor:
-                                _branch == index ? SL.action : SL.card,
-                            foregroundColor:
-                                _branch == index ? SL.onAction : SL.dim,
-                            side: BorderSide(
-                              color: _branch == index ? SL.action : SL.line,
-                            ),
-                          ),
-                          onPressed: () => setState(() => _branch = index),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(icon, size: 21),
-                              const SizedBox(height: 5),
-                              Text(label, style: const TextStyle(fontSize: 12)),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                  _branchButton(
+                    context,
+                    index,
+                    label,
+                    icon,
+                    stacked: MediaQuery.textScalerOf(context).scale(10) > 15,
                   ),
               ],
             ),

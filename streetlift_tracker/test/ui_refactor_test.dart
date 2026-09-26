@@ -422,6 +422,11 @@ void main() {
       350,
       scrollable: find.byType(Scrollable).first,
     );
+    // L5 : titre de page sans mot coupé, la page est plus courte ; le
+    // défilement par pas peut s'arrêter sur un élément construit mais sous
+    // le bord de l'écran. On l'amène réellement à l'écran avant l'appui.
+    await tester.ensureVisible(find.text('Copier la sauvegarde'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Copier la sauvegarde'));
     await tester.pumpAndSettle();
     expect(clipboard, store.exportCompact());
@@ -434,6 +439,8 @@ void main() {
       150,
       scrollable: find.byType(Scrollable).first,
     );
+    await tester.ensureVisible(find.text('Coller une sauvegarde'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Coller une sauvegarde'));
     await tester.pumpAndSettle();
     expect(find.byType(AlertDialog), findsOneWidget);

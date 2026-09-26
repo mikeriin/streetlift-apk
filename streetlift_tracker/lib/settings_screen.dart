@@ -496,7 +496,7 @@ class SettingsScreen extends StatelessWidget {
           Icons.info_outline_rounded,
         ];
         const descriptions = [
-          'Bordeaux, clair ou sombre',
+          'Couleur dominante, clair ou sombre',
           'Colonnes, effort et pré-remplissage',
           'Repos, décompte et signaux',
           'Célébrations et objectif de la semaine',
