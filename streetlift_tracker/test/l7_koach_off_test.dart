@@ -6,6 +6,14 @@
 // reps prévues et repos des 1 818 exercices des 40 semaines. Vérifié ici
 // pour une installation où Koach n'a jamais servi, puis après une
 // utilisation complète de Koach suivie de sa désactivation.
+//
+// LC1b (26/09/2026, S11·J6 au format du J6 du Bloc 2) : 1 812 lignes. Les
+// 11 lignes 2.x de S11·J6 sont remplacées, dans chaque jeu, par les lignes
+// 2.x capturées des lignes identiques de S12·J6 (B2-L1-009 → B1-L1b-001,
+// B2-60 → B1-521, B2-66 → B1-527, B2-68 → B1-529 : mêmes séries, charge,
+// repos, tempo et consignes ; seul l'identifiant change) ; la ligne du squat
+// endurance B1-525, inchangée, garde sa valeur capturée. Aucune autre ligne
+// ne change.
 
 import 'dart:convert';
 import 'dart:io';
@@ -120,7 +128,7 @@ void main() {
       }
       final expected = snapshot[entry.key] as List;
       final actual = jsonDecode(jsonEncode(rows)) as List;
-      expect(actual.length, 1818, reason: '$label ${entry.key}');
+      expect(actual.length, 1812, reason: '$label ${entry.key}');
       for (var i = 0; i < expected.length; i++) {
         expect(
           actual[i],
@@ -131,7 +139,7 @@ void main() {
     }
   }
 
-  test('instantané de référence : 5 jeux × 1 818 exercices', () {
+  test('instantané de référence : 5 jeux × 1 812 exercices', () {
     expect(snapshot.keys.toSet(), {
       'programme',
       'programme-lb',
@@ -140,7 +148,7 @@ void main() {
       'partiel',
     });
     for (final rows in snapshot.values) {
-      expect(rows as List, hasLength(1818));
+      expect(rows as List, hasLength(1812));
     }
   });
 

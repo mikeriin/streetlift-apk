@@ -21,7 +21,7 @@ def verify(root=ROOT, signing=False):
                 assert ex['id'] not in ids, f"Exercice dupliqué : {ex['id']}"
                 ids.add(ex['id'])
     # LC1 (KT-037) : 1 954 − 202 lignes retirées + 66 nouvelles en S12-S19.
-    assert len(ids) == 1818, 'Programme incomplet'
+    assert len(ids) == 1812, 'Programme incomplet'  # LC1b : 1 818 − 7 + 1
     exercises = json.loads(gzip.decompress((root / 'assets/exercises_db.json.gz').read_bytes()))
     assert all(isinstance(e[k], str) for e in exercises for k in ('n', 'g', 'eq'))
     for path in (root / 'android/app/src/main/res').rglob('*.xml'):

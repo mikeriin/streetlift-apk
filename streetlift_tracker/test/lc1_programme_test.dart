@@ -4,6 +4,8 @@
 // des maxima explicites, le recalcul pendant une séance après modification
 // de la feuille Pilotage, la lecture d'un journal contenant un identifiant
 // supprimé, et la cohérence semaine complète / XP / crédits (L3).
+// LC1b (suite de KT-037, 26/09/2026) : S11·J6 au format du J6 du Bloc 2,
+// squat endurance de S11 conservé (`tools/lc1b_s11_j6.py`) ; S12·J6 inchangé.
 // Données synthétiques et stockage simulé uniquement.
 
 import 'package:flutter/material.dart';
@@ -293,6 +295,17 @@ const addedLines = <String, (int, int, String)>{
   'B2-L1-066': (19, 6, 'Muscle-ups PdC explosifs'),
 };
 
+/// LC1b : identifiants retirés de S11·J6 (7).
+const lc1bRemovedIds = <String>[
+  'B1-519',
+  'B1-520',
+  'B1-522',
+  'B1-523',
+  'B1-524',
+  'B1-526',
+  'B1-528',
+];
+
 const mu = 'MUSCLE-UP LESTÉ — lift n°1, avant tout tirage';
 const pull = 'TRACTION LESTÉE — lift principal';
 const dip = 'DIP LESTÉ — lift principal';
@@ -431,7 +444,7 @@ void main() {
     Exercise line(int n, int j, String name) =>
         app.program.week(n).day(j)!.exercises.firstWhere((e) => e.name == name);
 
-    test('1 818 exercices ; 202 suppressions et 66 ajouts exacts', () {
+    test('1 812 exercices ; LC1 : 202 suppressions et 66 ajouts ; LC1b : 7 et 1', () {
       final where = <String, (int, int, String)>{};
       for (final w in app.program.weeks) {
         for (final d in w.days) {
@@ -441,11 +454,17 @@ void main() {
           }
         }
       }
-      expect(where, hasLength(1818));
+      // LC1 : 1 954 − 202 + 66 = 1 818 ; LC1b (S11·J6) : 1 818 − 7 + 1.
+      expect(where, hasLength(1812));
       expect(1954 - removedIds.length + addedLines.length, 1818);
-      for (final id in removedIds) {
+      expect(1818 - lc1bRemovedIds.length + 1, 1812);
+      for (final id in [...removedIds, ...lc1bRemovedIds]) {
         expect(where.containsKey(id), isFalse, reason: id);
       }
+      expect(where['B1-L1b-001'], (11, 6, 'Muscle-ups PdC explosifs'));
+      expect([for (final id in where.keys) if (id.contains('L1b')) id], [
+        'B1-L1b-001',
+      ]);
       final added = {
         for (final e in where.entries)
           if (e.key.startsWith('B2-L1-')) e.key: e.value,
@@ -628,6 +647,59 @@ void main() {
       expect(app.loadLabel(e), '80 kg');
     });
 
+    test('LC1b : S11·J6 au format du J6 de S12, squat endurance S11 gardé', () {
+      final day = app.program.week(11).day(6)!;
+      final s12 = app.program.week(12).day(6)!;
+      expect(day.title, 'PUISSANCE MU + SQUAT ENDURANCE');
+      expect(day.cycle, 'DELOAD');
+      expect(
+        day.conduite,
+        startsWith(
+          'CONDUITE J6 — Muscle-up au poids de corps et tirage explosif, squat endurance. AUCUNE charge maximale. | ',
+        ),
+      );
+      expect(day.conduite.contains('Test'), isFalse);
+      expect([for (final e in day.exercises) e.id], [
+        'B1-L1b-001',
+        'B1-521',
+        'B1-525',
+        'B1-527',
+        'B1-529',
+      ]);
+      expect([for (final e in day.exercises) e.name], [
+        'Muscle-ups PdC explosifs',
+        'Tractions explosives poitrine-barre',
+        'Squat endurance @ 70 kg',
+        'Leg raises lestés (suspendu)',
+        'Mobilité épaules + poignets',
+      ]);
+      // Même format que S12·J6, sauf le squat (test max en S12 seulement).
+      for (final i in [0, 1, 3, 4]) {
+        final a = day.exercises[i], b = s12.exercises[i];
+        expect(
+          (a.name, a.sets.value, a.intensity, a.rest, a.tempo, a.cue),
+          (b.name, b.sets.value, b.intensity, b.rest, b.tempo, b.cue),
+          reason: a.id,
+        );
+        expect(app.setCount(a), app.setCount(b), reason: a.id);
+        expect(app.loadLabel(a), app.loadLabel(b), reason: a.id);
+      }
+      expect(s12.exercises[2].name, 'TEST MAX SQUAT @ 70 kg');
+      final squat70 = day.exercises[2];
+      expect(squat70.main, isTrue);
+      expect(squat70.intensity, 'Sous-maximal, RIR 3');
+      expect(
+        (squat70.sets.coef, squat70.sets.ref, squat70.sets.div),
+        (0.9, 'B20', 3),
+      );
+      // 3 × (0,9 × max) / 3 : max 25 → 3 × 8, max 30 → 3 × 9.
+      app.setValue('B20', 25);
+      expect(app.setsLabel(squat70), '3 × 8 reps');
+      app.setValue('B20', 30);
+      expect(app.setsLabel(squat70), '3 × 9 reps');
+      expect(app.loadLabel(squat70), '70 kg');
+    });
+
     test('séries planifiées S12/S13 (effet sur le compteur de séries)', () {
       int sets(int n) => [
         for (var j = 1; j <= 6; j++)
@@ -806,6 +878,46 @@ void main() {
       expect(find.text('9'), findsOneWidget);
       expect(store.logs['S12-J1']!.toJson().toString(), before);
       expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets('LC1b : journal S11·J6 avec un identifiant supprimé, séance du jour', (
+      tester,
+    ) async {
+      phone(tester, const Size(320, 720));
+      final old = SessionLog(
+        done: true,
+        finishedAt: '2026-09-20T18:00:00',
+        exerciseNames: {'B1-520': 'Excentriques de transition LESTÉS'},
+        ex: {
+          'B1-520': ExerciseLog(
+            sets: [SetEntry(kg: '12,5', reps: '3', done: true)],
+          ),
+        },
+      );
+      store.logs['S11-J6'] = old;
+      final before = old.toJson().toString();
+      await tester.pumpWidget(
+        page(SessionHistoryScreen(log: old, sessionKey: 'S11-J6')),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('EXCENTRIQUES DE TRANSITION LESTÉS'), findsOneWidget);
+      expect(store.logs['S11-J6']!.toJson().toString(), before);
+      store.logs.remove('S11-J6');
+      // Séance S11·J6 au nouveau format : 5 pages, texte 200 %.
+      final week = store.program.week(11);
+      final day = week.day(6)!;
+      await tester.pumpWidget(
+        page(SessionScreen(week: week, day: day), scale: 2),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('MUSCLE-UPS PDC EXPLOSIFS'), findsWidgets);
+      for (var p = 0; p < day.exercises.length; p++) {
+        expect(tester.takeException(), isNull, reason: 'S11 J6 page $p');
+        await tester.tap(find.byIcon(Icons.chevron_right).last);
+        await tester.pumpAndSettle();
+      }
       await tester.pumpWidget(const SizedBox());
       await tester.pumpAndSettle();
     });

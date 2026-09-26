@@ -130,7 +130,7 @@ class KoachAnnotationTests(unittest.TestCase):
                         self.assertEqual(entry.get('rirTargetMax'), int(m.group(2)) if m.group(2) else None, ex['id'])
                     else:
                         self.assertNotIn('rirTarget', entry, ex['id'])
-        self.assertEqual(count, 1818)
+        self.assertEqual(count, 1812)  # LC1b : 1 818 − 7 + 1
 
     def test_curve_prior_and_incoherent_singles_excluded(self):
         self.assertEqual(self.data['curve']['mu']['k'], 28.0)
@@ -153,7 +153,7 @@ class KoachAnnotationTests(unittest.TestCase):
         self.assertEqual(self.data['accessories']['B34']['equipment'], 'pulley')
 
     def test_programme_asset_untouched(self):
-        # L'asset reste celui de LC1 (empreinte vérifiée par test_lc1_revision).
+        # Asset LC1 puis LC1b (empreintes vérifiées par test_lc1_revision et test_lc1b_s11_j6).
         raw = gzip.decompress((ROOT / 'assets' / 'programme_v33.json.gz').read_bytes())
         self.assertNotIn(b'rirTarget', raw)
 

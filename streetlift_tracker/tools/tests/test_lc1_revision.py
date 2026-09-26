@@ -1,10 +1,16 @@
-"""LC1 (KT-037) : script de révision S12-S19 et asset livré."""
+"""LC1 (KT-037) : script de révision S12-S19 et asset livré.
+
+Depuis LC1b (S11·J6 au format du J6 du Bloc 2, `tools/lc1b_s11_j6.py`),
+l'asset livré n'est plus la sortie brute de LC1 : les contrôles LC1 portent
+sur l'asset LC1 reconstruit à l'identique (asset livré + S11·J6 d'origine,
+`fixtures/lc1_s11_j6.json`), dont l'empreinte est vérifiée. Aucune valeur
+attendue n'a changé ; `test_lc1b_s11_j6.py` contrôle l'asset livré.
+"""
 import copy
 import gzip
 import hashlib
 import json
 from pathlib import Path
-import shutil
 import subprocess
 import sys
 import tempfile
@@ -15,13 +21,23 @@ sys.path.insert(0, str(TOOLS))
 import lc1_revision_s12_s19 as lc1  # noqa: E402
 
 ASSET = TOOLS.parent / 'assets' / 'programme_v33.json.gz'
+S11_J6 = Path(__file__).resolve().parent / 'fixtures' / 'lc1_s11_j6.json'
 # Méta, Pilotage et semaines 1-11 / 20-40 de l'asset 2.5.6 (JSON canonique,
 # clés triées) : ils ne doivent pas bouger.
 UNTOUCHED_SHA256 = '04ffcab8f56dc05788624426a7e921e6cd64b15fb502951b942c39ab3735e89b'
 
 
-def load():
+def shipped():
     return json.loads(gzip.decompress(ASSET.read_bytes()))
+
+
+def load():
+    """Asset LC1 : asset livré dont S11·J6 reprend son contenu d'origine."""
+    data = shipped()
+    week = next(w for w in data['weeks'] if w['n'] == 11)
+    week['days'] = [json.loads(S11_J6.read_text()) if d['j'] == 6 else d
+                    for d in week['days']]
+    return data
 
 
 def untouched(data):
@@ -55,7 +71,8 @@ class Lc1RevisionTests(unittest.TestCase):
     def test_cli_second_run_fails_without_writing(self):
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / 'programme_v33.json.gz'
-            shutil.copy(ASSET, target)
+            _, raw = lc1.sha256_json(load())
+            target.write_bytes(gzip.compress(raw, compresslevel=9, mtime=0))
             before = target.read_bytes()
             result = subprocess.run(
                 [sys.executable, str(TOOLS / 'lc1_revision_s12_s19.py'), '--assets', tmp],

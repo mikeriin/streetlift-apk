@@ -1,4 +1,18 @@
-# Kalis Track 3.0.0 — Koach, ajustement des charges sur le téléphone
+# Kalis Track 3.0.1 — Koach, ajustement des charges sur le téléphone
+
+## 3.0.1 — S11·J6 au nouveau format du J6 (lot LC1b)
+
+À ta demande du 26/09/2026, la séance **S11·J6** (semaine de décharge) prend dès aujourd'hui le format du J6 du Bloc 2 (« PUISSANCE MU + SQUAT ENDURANCE ») :
+
+1. Muscle-ups PdC explosifs — 4×3, 2 min (nouvelle ligne `B1-L1b-001`)
+2. Tractions explosives poitrine-barre — 4×3 (5×3 auparavant), consigne du Bloc 2
+3. Squat endurance @ 70 kg — **inchangé** : 3 × (0,9 × ton max à 70 kg), RIR 3 ; le test max squat reste en S12·J6
+4. Leg raises lestés (suspendu) — 3×10 (2×10 auparavant)
+5. Mobilité épaules + poignets — 10 min
+
+Retirés de S11·J6 : isométries transition MU et bas de dip, excentriques de transition lestés, négatifs de muscle-up, transitions à l'élastique, false grip hold, HIIT court. Séries prévues de la séance : 33 → 15. **S12·J6 et le reste du programme ne changent pas.** Le programme compte 1 812 exercices (1 818 − 7 + 1). Un journal déjà enregistré avec un exercice retiré reste lisible tel quel.
+
+Détail : `SUIVI_PROJET.md` (LC1b), script `tools/lc1b_s11_j6.py`.
 
 ## 3.0.0 — Koach (lot L7)
 
@@ -199,7 +213,7 @@ Les badges et missions utilisent les séances, séries et résultats déjà enre
 
 ## Continuité des séances
 
-Programme garde les sept jours dans leur ordre, les gestes du slider et les résumés sur appui long. Les 40 semaines, 280 journées et 1 818 exercices du programme (1 954 avant la révision LC1 du Bloc 2), les quinze modes de séance, charges, séries, notes, RIR/RPE, vitesse, chronos, WOD, XP et sauvegardes gardent leur fonctionnement. Les anciennes séances sans date restent consultables.
+Programme garde les sept jours dans leur ordre, les gestes du slider et les résumés sur appui long. Les 40 semaines, 280 journées et 1 812 exercices du programme (1 954 avant la révision LC1 du Bloc 2, 1 818 avant LC1b), les quinze modes de séance, charges, séries, notes, RIR/RPE, vitesse, chronos, WOD, XP et sauvegardes gardent leur fonctionnement. Les anciennes séances sans date restent consultables.
 
 Les données des captures sont simulées uniquement dans les tests. L’application livrée n’ajoute aucune activité de démonstration à ton historique.
 
