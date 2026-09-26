@@ -1,4 +1,17 @@
 00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart
+test/l4b_seances_test.dart:583:19: Error: Method not found: 'WodResult'.
+        final r = WodResult(
+                  ^^^^^^^^^
+test/l4b_seances_test.dart:596:13: Error: Method not found: 'WodResult'.
+            WodResult(at: now.toIso8601String(), score: '6:40', seconds: 400),
+            ^^^^^^^^^
 00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart [E]
-  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart": Does not exist.
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: test/l4b_seances_test.dart:583:19: Error: Method not found: 'WodResult'.
+          final r = WodResult(
+                    ^^^^^^^^^
+  test/l4b_seances_test.dart:596:13: Error: Method not found: 'WodResult'.
+              WodResult(at: now.toIso8601String(), score: '6:40', seconds: 400),
+              ^^^^^^^^^
+  .
 00:00 +0 -1: Some tests failed.
