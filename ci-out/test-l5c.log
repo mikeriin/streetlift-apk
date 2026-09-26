@@ -1,0 +1,97 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:03 +1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) aperçu : aucune modification, date absente non inventée
+00:03 +2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) formats historiques et sauvegarde L2 acceptés
+00:04 +3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) fichiers invalides, tronqués, trop gros ou format inconnu
+00:04 +4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) données modifiées pendant l’aperçu : conflit sans mutation
+00:04 +5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) un simple enregistrement ne crée pas de conflit
+00:04 +6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) import avec une écriture en attente : disque = mémoire
+00:04 +7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) restauration : ni cérémonie, ni bilan, ni nouveau débit
+00:05 +8: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression : tout est retiré, aucune résurrection
+00:06 +9: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression avec écriture en attente : l’ancien état n’est pas réécrit
+00:07 +10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression partielle signalée, puis reprise complète
+00:08 +11: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression refusée à l’écriture : données intactes
+00:09 +12: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Store L2b (instances isolées) nom de fichier daté, sans donnée personnelle
+00:09 +13: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran (setUpAll)
+00:09 +13: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran export réussi : fichier daté, contenu métier identique
+00:11 +14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran export cancelled : Export annulé
+00:11 +15: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran export failed : accès refusé
+00:12 +16: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran export failed : indisponible
+00:12 +17: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran export unverified : non relu
+00:13 +18: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran import cancelled : aucune mutation
+00:14 +19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran import tooLarge : aucune mutation
+00:14 +20: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran import failed : aucune mutation
+00:14 +21: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran import opened : aucune mutation
+00:15 +22: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran fichier non Kalis Track : refusé sans aperçu
+00:15 +23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran aperçu annulé puis bouton retour : aucune mutation
+00:16 +24: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable échouée : import non effectué
+00:17 +25: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable puis remplacement confirmé
+00:18 +26: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran remplacement sans sauvegarde : choix explicite
+00:19 +27: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran données modifiées pendant l’aperçu : reconfirmation
+00:20 +28: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran suppression : annulation, confirmation tapée, effacement
+00:21 +29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran suppression : export préalable annulé, rien supprimé
+00:22 +30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran dialogues à 320 px, texte 200 %, thème sombre true
+00:23 +31: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran dialogues à 320 px, texte 200 %, thème sombre false
+00:24 +32: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran Réglages : actions présentes, zone sensible séparée
+00:24 +33: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: Parcours à l’écran (tearDownAll)
+00:24 +33: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart
+00:25 +33: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: palettes six familles, rouge par défaut, identifiants stables
+00:25 +34: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: palettes le Rouge Kalis garde exactement les valeurs historiques
+00:25 +35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: palettes 12 combinaisons : textes, fonds pleins et éléments lisibles
+00:25 +36: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: palettes rôles fixes et neutres identiques dans toutes les palettes
+00:25 +37: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: palettes thème Material : dominante et luminosité indépendantes
+00:26 +38: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence AppSettings : absent, inconnu ou mauvais type → rouge
+00:26 +39: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence installation neuve : rouge
+00:26 +40: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence choix retrouvé à la réouverture, thème indépendant
+00:27 +41: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence choix rapides : le dernier est retrouvé
+00:28 +42: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence échec d’écriture : choix affiché, erreur visible, disque intact
+00:28 +43: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence export : la préférence est incluse
+00:28 +44: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence import d’une sauvegarde sans préférence : rouge, reste conservé
+00:28 +45: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence import d’une valeur inconnue : rouge, sans refuser la sauvegarde
+00:29 +46: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence suppression locale : retour au rouge
+00:29 +47: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence changer de couleur ne touche ni XP, ni crédits, ni droits, ni dates
+00:30 +48: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart
+00:31 +48: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart: principaux écrans : rendus comparables avant / après L5
+00:31 +48 ~1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_palettes_capture_test.dart
+00:32 +48 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_palettes_capture_test.dart: six couleurs × clair/sombre
+00:32 +48 ~2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart
+00:32 +48 ~2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart: rouge par défaut : rendus comparables avant / après L5-C
+00:32 +48 ~3: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart
+00:33 +48 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: (setUpAll)
+00:34 +48 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: sélecteur à 390.0 px, texte 100 % : 2 colonne(s)
+00:35 +49 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: sélecteur à 600.0 px, texte 100 % : 3 colonne(s)
+00:36 +50 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: sélecteur à 320.0 px, texte 100 % : 2 colonne(s)
+00:36 +51 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: sélecteur à 390.0 px, texte 130 % : 2 colonne(s)
+00:36 +52 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: sélecteur à 390.0 px, texte 200 % : 1 colonne(s)
+00:36 +53 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: sélecteur à 320.0 px, texte 200 % : 1 colonne(s)
+00:37 +54 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: sélection lisible sans la couleur et sémantique de choix unique
+00:37 +55 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: choix rapides dans l’écran : le dernier gagne
+00:37 +56 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: échec d’écriture : choix affiché, message « non enregistrés »
+00:37 +57 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: changer de couleur garde onglet, semaine, route, saisies et journal
+00:39 +58 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: mode Système : la luminosité suit le téléphone, pas la couleur
+00:39 +59 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: les six couleurs × clair/sombre : accueil et réglages sans erreur
+00:41 +60 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: (tearDownAll)
+00:41 +60 ~3: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/level_fill_test.dart
+00:42 +60 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/level_fill_test.dart: NIV. précède le niveau et la barre représente son avancement
+00:43 +61 ~3: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart
+00:44 +61 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart: (setUpAll)
+00:45 +61 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart: onglets : transition visible et navigation rapide sans perdre STATS
+00:46 +62 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart: réduire les animations rend les onglets et le sélecteur STATS immédiats
+00:47 +63 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart: une saisie survit au passage en animations réduites pendant une transition de page
+00:47 +64 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart: les textes de la palette gardent un contraste minimal de 4,5
+00:47 +65 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart: (tearDownAll)
+00:47 +65 ~3: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart
+00:48 +65 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: (setUpAll)
+00:48 +65 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:51 +66 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: cartes, notes et saisies survivent aux boutons et au sélecteur d’exercices
+00:52 +67 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: les exercices enchaînés ont chacun leur carte et leur note
+00:52 +68 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: les séances et éditeurs suivent une rotation et une grande largeur
+00:53 +69 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: un WOD verrouillé garde ses mouvements visibles au-dessus du message de crédits
+00:53 +70 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème true
+00:55 +71 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème false
+00:56 +72 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: cinq séries, charge et effort restent visibles sans défilement
+00:57 +73 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: les actions de sauvegarde ouvrent l’export et l’import
+00:57 +74 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: recherche et paramètres restent utilisables avec le clavier
+00:57 +75 ~3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: (tearDownAll)
+00:57 +75 ~3: All tests passed!
+exit=0
