@@ -1,0 +1,84 @@
+name: Claude CI temporaire (banc de mesure L6, base contre candidate)
+
+on:
+  push:
+    branches: [claude/ci-tools]
+    paths: [perf-run]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: claude-perf
+  cancel-in-progress: true
+
+jobs:
+  bench:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29.3'
+          channel: stable
+          cache: true
+      - name: Environnement
+        run: |
+          out="perf-out/$(awk 'NR==1{print $1}' perf-run | tr -dc 'A-Za-z0-9_-' | head -c 40)"
+          echo "OUT=$out" >> "$GITHUB_ENV"
+          rm -rf "$out" && mkdir -p "$out"
+          {
+            echo "commit=$(git rev-parse HEAD)"
+            echo "date=$(date -u +%FT%TZ)"
+            flutter --version
+            lscpu | grep -E 'Model name|^CPU\(s\)|MHz' || true
+            free -m | head -2
+            echo "base_lib=$(cd baseline/streetlift_tracker && find lib test -type f | sort | xargs sha256sum | sha256sum)"
+            echo "cand_lib=$(cd streetlift_tracker && find lib test -type f | sort | xargs sha256sum | sha256sum)"
+            echo "fixture=$(sha256sum streetlift_tracker/test/support/perf_fixtures.dart streetlift_tracker/test/l6_perf_bench_test.dart)"
+            cmp baseline/streetlift_tracker/test/support/perf_fixtures.dart streetlift_tracker/test/support/perf_fixtures.dart && echo "fixtures identiques"
+            cmp baseline/streetlift_tracker/test/l6_perf_bench_test.dart streetlift_tracker/test/l6_perf_bench_test.dart && echo "banc identique"
+          } > "$OUT/environment.txt" 2>&1
+          cat "$OUT/environment.txt"
+      - name: Dépendances verrouillées (base et candidate)
+        run: |
+          (cd baseline/streetlift_tracker && flutter pub get --enforce-lockfile) > "$OUT/pub.log" 2>&1
+          (cd streetlift_tracker && flutter pub get --enforce-lockfile) >> "$OUT/pub.log" 2>&1
+          tail -3 "$OUT/pub.log"
+      - name: Mesures alternées
+        run: |
+          rounds="$(grep -o 'rounds=[0-9]*' perf-run | cut -d= -f2)"
+          rounds="${rounds:-3}"
+          n="$(grep -o 'n=[0-9]*' perf-run | cut -d= -f2)"
+          n="${n:-9}"
+          root="$PWD"
+          run_side() {
+            side="$1"; r="$2"
+            dir=streetlift_tracker; [ "$side" = base ] && dir=baseline/streetlift_tracker
+            file="$root/$OUT/${side}-r${r}.jsonl"
+            (cd "$dir" && TZ=Europe/Paris timeout 1500 flutter test --no-pub --timeout none \
+              --dart-define=KALIS_PERF=true --dart-define=KALIS_PERF_N="$n" \
+              --dart-define=KALIS_PERF_LABEL="$side" --dart-define=KALIS_PERF_OUT="$file" \
+              test/l6_perf_bench_test.dart) > "$root/$OUT/${side}-r${r}.log" 2>&1
+            echo "$side r$r exit=$?" >> "$root/$OUT/runs.txt"
+          }
+          for r in $(seq 1 "$rounds"); do
+            if [ $((r % 2)) -eq 1 ]; then run_side base "$r"; run_side cand "$r"
+            else run_side cand "$r"; run_side base "$r"; fi
+          done
+          cat "$OUT/runs.txt"
+      - name: Synthèse
+        if: always()
+        run: |
+          python3 streetlift_tracker/tools/perf_compare.py "$OUT" > "$OUT/compare.log" 2>&1; echo "exit=$?" >> "$OUT/compare.log"
+          tail -60 "$OUT/compare.log"
+      - name: Publier
+        if: always()
+        run: |
+          git config user.name "claude-ci"
+          git config user.email "claude-ci@users.noreply.github.com"
+          git add -A perf-out
+          git commit -q -m "Mesures L6 $(date -u +%H:%M:%S)" || exit 0
+          git pull -q --rebase origin claude/ci-tools || true
+          git push -q origin HEAD:claude/ci-tools
