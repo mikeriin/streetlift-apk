@@ -3,7 +3,7 @@ name: Claude CI temporaire (format, analyse, tests)
 on:
   push:
     branches: [claude/ci-tools]
-    paths: [streetlift_tracker/**, .github/workflows/claude-ci.yml]
+    paths: [streetlift_tracker/**, .github/workflows/claude-ci.yml, ci-mode]
 
 permissions:
   contents: write
@@ -15,7 +15,7 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -23,15 +23,22 @@ jobs:
           flutter-version: '3.29.3'
           channel: stable
           cache: true
+      - name: Mode
+        id: mode
+        run: |
+          mode="$(cat ci-mode 2>/dev/null || echo full)"
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
+          rm -rf ci-out && mkdir -p ci-out
+          echo "$mode" > ci-out/mode.txt
+          git rev-parse HEAD > ci-out/commit.txt
       - name: Format et analyse
         working-directory: streetlift_tracker
         run: |
-          mkdir -p ../ci-out
-          flutter pub get --enforce-lockfile > ../ci-out/pub.log 2>&1 || true
-          dart format lib test > ../ci-out/format.log 2>&1 || true
-          git diff > ../ci-out/format.diff || true
+          flutter pub get --enforce-lockfile > ../ci-out/pub.log 2>&1; echo "exit=$?" >> ../ci-out/pub.log
+          dart format lib test > ../ci-out/format.log 2>&1; echo "exit=$?" >> ../ci-out/format.log
+          git diff --stat > ../ci-out/format.diff 2>&1 || true
+          git diff > ../ci-out/format-full.diff 2>&1 || true
           flutter analyze --no-pub > ../ci-out/analyze.log 2>&1; echo "exit=$?" >> ../ci-out/analyze.log
-          dart run tools/wod_catalog_snapshot.dart > ../ci-out/catalog.jsonl 2> ../ci-out/catalog.err || true
       - name: Publier format/analyse
         if: always()
         run: &push |
@@ -41,25 +48,36 @@ jobs:
           git commit -q -m "Résultats CI ${GITHUB_JOB} $(date -u +%H:%M:%S)" || exit 0
           git pull -q --rebase origin claude/ci-tools || true
           git push -q origin HEAD:claude/ci-tools
-      - name: Tests ciblés (L4b)
+      - name: Python
         if: always()
         working-directory: streetlift_tracker
         run: |
-          TZ=Europe/Paris timeout 420 flutter test --no-pub --timeout 45s --reporter expanded test/l4b_seances_test.dart > ../ci-out/test-history.log 2>&1; echo "exit=$?" >> ../ci-out/test-history.log
+          python3 -m unittest discover -s tools/tests > ../ci-out/python.log 2>&1; echo "exit=$?" >> ../ci-out/python.log
+          python3 tools/verify_project.py >> ../ci-out/python.log 2>&1; echo "verify exit=$?" >> ../ci-out/python.log
+      - name: Tests ciblés (L7)
+        if: always()
+        working-directory: streetlift_tracker
+        run: |
+          files="$(ls test/l7_*_test.dart 2>/dev/null || true)"
+          if [ -n "$files" ]; then
+            TZ=Europe/Paris timeout 600 flutter test --no-pub --timeout 60s --reporter expanded $files > ../ci-out/test-l7.log 2>&1; echo "exit=$?" >> ../ci-out/test-l7.log
+          else
+            echo "aucun test L7" > ../ci-out/test-l7.log
+          fi
       - name: Publier tests ciblés
         if: always()
         run: *push
-      - name: Mesure avant (code LC1 2.5.7 inchangé)
-        if: always() && hashFiles('lc1_base/streetlift_tracker/pubspec.yaml') != ''
-        working-directory: lc1_base/streetlift_tracker
+      - name: Suite complète
+        if: always() && steps.mode.outputs.mode == 'full'
+        working-directory: streetlift_tracker
         run: |
-          flutter pub get --enforce-lockfile > ../../ci-out/before-pub.log 2>&1 || true
-          TZ=Europe/Paris timeout 300 flutter test --no-pub --reporter expanded test/lc1_snapshot_test.dart > ../../ci-out/before.log 2>&1; echo "exit=$?" >> ../../ci-out/before.log
-      - name: Publier mesure avant
+          TZ=Europe/Paris timeout 1500 flutter test --no-pub --timeout 60s --reporter expanded > ../ci-out/test.log 2>&1; echo "exit=$?" >> ../ci-out/test.log
+          grep -E "^[0-9:+ ~-]+: (Some tests failed|All tests passed)|^\+[0-9]+" ../ci-out/test.log | tail -3 > ../ci-out/test-summary.txt || true
+      - name: Publier suite complète
         if: always()
         run: *push
-      - name: Compilation Android debug (code natif) et manifeste fusionné
-        if: always() && hashFiles('ci-android') != ''
+      - name: Compilation Android debug
+        if: always() && steps.mode.outputs.mode == 'full'
         working-directory: streetlift_tracker
         run: |
           sdk="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
@@ -68,19 +86,7 @@ jobs:
           "$tools/sdkmanager" --install "platforms;android-36" "build-tools;36.0.0" "ndk;28.2.13676358" > /dev/null 2>&1 || true
           chmod +x android/gradlew || true
           timeout 1500 flutter build apk --debug --no-pub --target-platform android-arm64 > ../ci-out/android-debug.log 2>&1; echo "exit=$?" >> ../ci-out/android-debug.log
-          find build/app/intermediates -name AndroidManifest.xml | grep -i merged > ../ci-out/manifest-paths.txt || true
-          manifest="$(grep -i 'merged_manifest/' ../ci-out/manifest-paths.txt | head -1)"
-          if [ -n "$manifest" ]; then cp "$manifest" ../ci-out/merged-manifest-debug.xml; fi
-          grep -n -i "allowBackup\|dataExtractionRules\|fullBackupContent\|backupAgent\|hasFragileUserData\|<uses-permission" ../ci-out/merged-manifest-debug.xml > ../ci-out/backup-attributes.txt || echo "aucun attribut de sauvegarde trouvé" > ../ci-out/backup-attributes.txt
           tail -n 5 ../ci-out/android-debug.log
       - name: Publier compilation Android
-        if: always()
-        run: *push
-      - name: Suite complète
-        if: always()
-        working-directory: streetlift_tracker
-        run: |
-          TZ=Europe/Paris timeout 900 flutter test --no-pub --timeout 45s --reporter expanded > ../ci-out/test.log 2>&1; echo "exit=$?" >> ../ci-out/test.log
-      - name: Publier suite complète
         if: always()
         run: *push

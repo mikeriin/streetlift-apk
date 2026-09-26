@@ -1,8 +1,89 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : L4 — Départ du programme (KT-006, KT-007, P1)**  
-**Date : 26 septembre 2026, Europe/Paris — version : 2.5.8+59 (versionCode réel fixé par la CI de build)**  
-**Statut : départ personnel (S1 · J1 = date choisie) et références « non renseignées / renseignées / à vérifier » corrigés dans le code selon tes décisions du 26/09/2026 ; installation existante migrée sans rien déplacer ; testé automatiquement. Publication et build : `LIVRAISON_L4.md`. Aucune vérification sur téléphone. L4b non lancé.**
+**Passe actuelle : L4b — Séances et reprise (KT-009, KT-018, P1)**  
+**Date : 26 septembre 2026, Europe/Paris — version : 2.5.9+60 (versionCode réel fixé par la CI de build)**  
+**Statut : validation des saisies, reprise des séances et des WOD interrompus, fin de séance confirmée par l'écriture, ouverture par rappel dédoublonnée : corrigés dans le code selon tes décisions du 26/09/2026 et testés automatiquement ; compilés. Aucune vérification sur téléphone, aucune destruction réelle du processus Android. Publication et build : `LIVRAISON_L4b.md`. L5 non lancé.**
+
+## L4b.0 — Base
+
+| Élément | Valeur | Nature de la preuve |
+| --- | --- | --- |
+| Base | `streetlift_tracker_v33.zip` **L4** (= `main`, commit `ad1bbd4`), **1 436 941 octets**, SHA-256 `66e259b6bb36c8d74338971fe27641bdd9320dc6be0d85a8bcabb2b4f384869a`, racine unique `streetlift_tracker/`, **2.5.8+59** | Vérifié (fichier et `main` identiques) ; source intacte, travail sur copie |
+| Build 2.5.8 | Run n° 78 réussi (APK/AAB signés) | Résultat GitHub |
+| État initial | Arbre L4 : formatage, analyse sans problème, **411 réussis, 1 ignoré**, build debug réussi ; Python 39/39 | CI (L4) + local |
+| Défaut bloquant préalable | Aucun défaut ouvert de compilation, de calendrier ou de conservation : pas de correctif isolé préalable | Constat |
+| Essais téléphone L1b → L4 | **Non rapportés** : rien n'est marqué « vérifié sur appareil » | — |
+
+## L4b.1 — Constats A0 et examen ciblé
+
+| Constat | Classement | Scénario / fichiers | Traitement |
+| --- | --- | --- | --- |
+| Coche d'une série sans validation (KT-009) | **Défaut confirmé** | `session_screen.dart` `_checkSet` basculait `done` sans contrôle : série validée vide ou avec « 8 reps » (sans valeur lisible) ; charge « 1e3 » lue 1 000 kg ou « Infinity » par `double.tryParse` (`game.dart` `_kg`), donc comptée dans les records | Corrigé : `set_validation.dart`, `AppStore.toggleSet/revalidateSet` |
+| Import sans validation numérique des séries | Conservé volontairement | `_parseBackup` | Anciennes données lues telles quelles (compatibilité) ; seules les nouvelles coches sont vérifiées |
+| Chronos uniquement en mémoire (KT-018) | **Défaut confirmé** pour le WOD (tentative L3 et chrono perdus à la destruction) ; repos : conforme à la décision (non relancé) | `timers.dart`, `wod_screen.dart` | Point sûr WOD persisté (`activeWod`) |
+| Séances après destruction | **Déjà partiellement corrigé** (L2) : journal écrit après 600 ms ; pas de repère « en cours », ouverture sur le 1er exercice | `store.dart` `saveLogs`, `session_screen.dart` | État « en cours » dérivé, page de reprise, bandeau |
+| Fin de séance annoncée avant l'écriture | **Défaut confirmé** | `_FinishPage` : `markSessionDone` sans attente, retour et bilan immédiats | `finishSession` + « Réessayer l'enregistrement » |
+| Rappel touché alors que la séance est ouverte | **Défaut confirmé** | `openProgramDay` empilait toujours une nouvelle route (double appui, rappel à chaud) | Registre des écrans de journée |
+| Repos : heure système reculée | **Défaut confirmé** | `TimerCtl` : échéance en heure murale → repos rallongé d'une heure | Durées bornées par l'horloge monotone |
+| Repos : bip ancien rejoué au retour | **Défaut confirmé** | `TimerCtl._tick` bipait une fois quelle que soit l'ancienneté de la transition | Alerte seulement si < 1,5 s |
+| Repli approximatif si l'alarme exacte est refusée | Déjà présent (A0), testé | `notifications.dart`, `notifications_test.dart` | Inchangé |
+| Historique modifié par consultation | Déjà corrigé (L1b-R2 : copie détachée) | `session_history.dart` | Test de non-mutation ajouté |
+
+## L4b.2 — Décisions (tes déclarations du 26/09/2026)
+
+| Arbitrage | Décision |
+| --- | --- |
+| WOD après destruction / arrêt forcé / redémarrage | Pause au dernier temps sûr ; tentative et droit de finir retrouvés ; « Reprendre » (absence non comptée) ou saisir le score |
+| Repos entre séries après destruction | Non relancé ; séance rouverte sur l'exercice en cours ; verrouillage : le repos continue à l'heure réelle |
+| Valeur d'une série | Obligatoire pour valider ; kg / RIR-RPE / vitesse facultatifs mais vérifiés ; 0 seulement pour un test max ; lest négatif accepté |
+| Séances en cours | Fonctionnement actuel + reprise visible : plusieurs brouillons, quitter ≠ abandonner, fin partielle possible (XP inchangée), badge « En cours », abandon = « Effacer l'historique », un seul WOD chronométré |
+
+Décisions prises par l'IA dans ce cadre (exposées, modifiables) : série validée puis rendue invalide → repasse non validée ; correction depuis l'historique → ouverture sur le 1er exercice (pas la page de reprise) ; un rappel vers une autre journée referme la séance ouverte (brouillon gardé) ; point sûr WOD toutes les 15 s de temps actif ; RIR 0-99 et RPE 1-10 par pas de 0,5 ; |kg| ≤ 10 000 (borne technique déjà utilisée à l'import).
+
+## L4b.3 — Changements
+
+- **`lib/set_validation.dart`** (**nouveau**) : contrat des champs, `parseLoadKg`, `parseWholeNumber`, `parseEffort`, `parseVelocity`, `checkSet` (champ fautif + message).
+- **`lib/store.dart`** : `toggleSet` / `revalidateSet` (validation métier, heure de validation = horloge du store) ; `finishSession` (bilan mis de côté jusqu'à l'écriture acceptée) ; `inProgress`, `sessionsInProgress`, `resumePage` ; tentative WOD : `startAttempt(replace:)` (un seul WOD actif), `activeWod` + `checkpointWod` + `_restoreActiveWod` (lecture stricte, illisible → ignoré, reste chargé), `abandonAttempt` efface le point sûr, `recordWodResult` l'efface dans la même écriture, `dataEpoch` (import / effacement) ; document local = export + `activeWod` (`_stateDocument`) ; `finishedAt` suit l'horloge du store ; `realClock`.
+- **`lib/timers.dart`** : `ElapsedClock` (heure murale bornée par l'horloge monotone du processus), `TimerCtl` réécrit sur le temps écoulé (rattrapage des phases, alerte récente seulement, recul d'heure sans effet), `WodClock` sur `ElapsedClock`, `checkpoint()` / `resumePaused()`.
+- **`lib/wod_screen.dart`** : reprise en pause (carte « Chrono retrouvé… »), WOD modifié → score seul, points sûrs (départ, pause, round, phase, minute EMOM, fin, 15 s), dialogue « Un WOD est déjà en cours », texte de sortie (abandon explicite).
+- **`lib/session_screen.dart`** : coche via `toggleSet`, message sous la série (icône + texte, région annoncée), revalidation à la frappe, ouverture sur la page de reprise, page de fin avec attente de l'écriture et « Réessayer l'enregistrement », registre `openDayRoutes`.
+- **`lib/home_screen.dart`** : `openProgramDay` sans empilement ; badge « Séance en cours » ; bandeau « À reprendre ». **`lib/resume_banner.dart`** (**nouveau**). **`lib/session_history.dart`** : enregistrement de l'écran, correction ouverte au 1er exercice. **`lib/arsenal_screen.dart`** : étiquette « EN COURS ».
+- `pubspec.yaml`, `lib/settings_screen.dart` (2.5.9+60), `README.md`, `docs/SEANCES_ET_REPRISE.md` (**nouveau**), ce suivi. Workflow `build-apk.yml` **inchangé**. Aucun test existant modifié.
+
+## L4b.4 — Tests
+
+| Niveau | Résultat |
+| --- | --- |
+| Python | **39/39** en local ; `verify_project.py` réussi (1 818 exercices) |
+| CI branche temporaire (sans secret), run n° 39, commit `aeb8fde` | Formatage 89 fichiers, **0 changement** ; `flutter analyze` sans problème ; tests L4b **31/31** ; **suite complète 442 réussis, 1 ignoré** (411 + 31 ; aucun test existant retiré, désactivé ni modifié) ; **build Android debug réussi** |
+| Défauts trouvés par les tests et corrigés | une correction depuis l'historique ouvrait la page de reprise (test existant `history_correction_test`) → ouverture au 1er exercice |
+| Appareil, destruction Android, arrêt forcé, redémarrage | **Non exécutés** (protocoles dans `LIVRAISON_L4b.md`) |
+
+Couverture de `test/l4b_seances_test.dart` (horloges murale et monotone injectées, stockage simulé, données synthétiques ; « relance » = nouvelle instance du store sur le même stockage) :
+
+| Matrice | Tests |
+| --- | --- |
+| **A. Saisie** | virgule/point, blancs et insécables, assistance « -10 » / « −7,5 », « 1.250 » « 72 5 » « 1e3 » « NaN » « Infinity » « 72,5 kg » refusés ; entiers sans unité ; RIR et RPE sur leurs échelles ; valeur obligatoire, 0 seulement en test max ; coche refusée (texte gardé) puis acceptée ; décocher/recocher sans gain ; série validée modifiée → non validée ; suggestion ≠ performance ; livres sans conversion ; écran : champ nommé, message effacé à la frappe |
+| **B. Parcours** | séance en cours retrouvée après relance (même clé, page de reprise, bandeau, badge) ; séance seulement ouverte non « en cours » ; séance perso répétée (archive intacte, modèle renommé) ; reprise après minuit ; historique consulté sans mutation (export et stockage identiques, 2 thèmes, défilement) |
+| **C. Temps** | heure reculée d'1 h (monotone), veille (heure murale), rafraîchissements manqués (bonne phase, 0 bip ancien, 1 bip récent), 4 pauses et frontière de phase à la milliseconde, point sûr → nouveau processus 2 h plus tard avec monotone repartie à 0 (en pause, aucune alerte, absence non comptée), tenue terminée ≠ série validée |
+| **D. Finalisation** | double demande parallèle (un bilan, XP / registre / date de fin inchangés) ; écriture refusée → pas de bilan, relance = en cours, nouvel essai = un bilan, relance après écriture = aucun gain ni bilan ; écran : « Réessayer l'enregistrement », double appui |
+| **E. Navigation** | rappel ×3 (dont 2 dans la même image) → une séance ; autre journée → la première refermée ; journée faite → historique sans écriture ; charge utile invalide / hors programme : test L4 du service |
+| **F. Conservation** | export sans chrono ; chrono dans un fichier importé ignoré ; import et effacement l'annulent ; point sûr d'un écran de l'ancien état ignoré ; chrono illisible → ignoré, reste chargé ; ancienne sauvegarde sans chrono → rien de synthétisé ; calendrier L4 inchangé |
+| **G. WOD** | Tabata retrouvé en pause (phase, chiffres, aucun bip, 30 min sans effet, « Reprendre », sortie = abandon) ; essai lancé à 23 h 50 terminé après minuit (une tentative, un résultat, aucune acquisition) ; un seul WOD chronométré, abandon explicite |
+| **Écrans** | 320 px à 130 % (clavier ouvert) et 200 %, clair/sombre : message d'erreur et bandeau sans débordement ; message annoncé comme région dynamique |
+
+## L4b.5 — Limites et suites
+
+- **Aucun essai sur appareil**, aucune destruction réelle du processus, aucun arrêt forcé ni redémarrage réels : la « relance » des tests est une nouvelle instance du store sur le même stockage simulé. Protocoles dans `LIVRAISON_L4b.md`.
+- **Alertes pendant l'absence** : repos, transitions et fin de WOD sont des sons de l'application ; processus suspendu ou détruit → non joués. Seuls les rappels du programme sont des alarmes natives.
+- **Horloge monotone** : `Stopwatch` du VM Dart = `CLOCK_MONOTONIC` sur Android (s'arrête en veille profonde) ; l'heure murale reste la mesure principale ; un saut d'heure en avant est compté comme une veille. Une horloge incluant la veille (`SystemClock.elapsedRealtime`) demanderait un canal natif : non ajouté (proposition, non nécessaire aux règles approuvées).
+- **Perte possible** : 600 ms de frappes avant une destruction ; pour un WOD, le temps actif depuis le dernier point sûr (≤ 15 s).
+- **Célébration** : présentée au plus une fois, en mémoire ; une destruction pendant le bilan ne le rejoue pas (gains conservés).
+- **Réglage « écran allumé »** : appliqué à l'ouverture de la séance ou du WOD, pas pendant.
+- Séance perso dont le modèle est supprimé : son brouillon reste dans le journal mais n'est pas proposé dans « À reprendre ».
+- Branche temporaire `claude/ci-tools` toujours présente (suppression par le propriétaire).
+
+**L4 (clos)** — départ personnel (S1 · J1 = date choisie) et références « non renseignées / renseignées / à vérifier » corrigés dans le code selon tes décisions du 26/09/2026 ; installation existante migrée sans rien déplacer ; testé automatiquement. Publication et build : `LIVRAISON_L4.md` (2.5.8+59, `main` `ad1bbd4`, run n° 78 réussi). Aucune vérification sur téléphone.
 
 ## L4.0 — Base
 
