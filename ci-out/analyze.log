@@ -1,7 +1,3 @@
 Analyzing streetlift_tracker...                                 
-
-   info • Statements in an if should be enclosed in a block • lib/profile.dart:893:5 • curly_braces_in_flow_control_structures
-   info • Use 'const' with the constructor to improve performance • lib/profile_screens.dart:981:9 • prefer_const_constructors
-warning • Unused import: 'package:streetlift_tracker/models.dart' • test/l8_profile_test.dart:11:8 • unused_import
-
-3 issues found. (ran in 25.8s)
+No issues found! (ran in 24.0s)
+exit=0
