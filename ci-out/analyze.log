@@ -1,9 +1,3 @@
 Analyzing streetlift_tracker...                                 
-
-warning • The declaration '_koachBeforeCheck' isn't referenced • lib/koach_store.dart:131:12 • unused_element
-  error • An extension override can only be used to access instance members • lib/store.dart:3377:15 • extension_override_without_access
-  error • An extension override can only be used to access instance members • lib/store.dart:3404:15 • extension_override_without_access
-  error • An extension override can only be used to access instance members • lib/store.dart:4019:17 • extension_override_without_access
-  error • An extension override can only be used to access instance members • lib/store.dart:4091:15 • extension_override_without_access
-
-5 issues found. (ran in 23.8s)
+No issues found! (ran in 17.5s)
+exit=0

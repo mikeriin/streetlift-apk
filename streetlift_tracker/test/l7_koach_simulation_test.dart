@@ -80,7 +80,13 @@ class SimPoint {
   final inp = <String, dynamic>{
     'now': ts(0, 0),
     'lifts': [
-      {'key': 'pull', 'ref': 'B8', 'bodyweight': true, 'k': kPrior, 'grid': 1.25},
+      {
+        'key': 'pull',
+        'ref': 'B8',
+        'bodyweight': true,
+        'k': kPrior,
+        'grid': 1.25,
+      },
     ],
     'repmax': <dynamic>[],
     'accessories': <dynamic>[],
@@ -119,8 +125,22 @@ class SimPoint {
         'plannedReps': 1,
         'cluster': false,
         'sets': [
-          {'kg': r2(best * 0.8), 'reps': 1, 'rir': null, 'excluded': false, 'done': true, 'at': ts(day, 0)},
-          {'kg': r2(best), 'reps': 1, 'rir': null, 'excluded': false, 'done': true, 'at': ts(day, 5)},
+          {
+            'kg': r2(best * 0.8),
+            'reps': 1,
+            'rir': null,
+            'excluded': false,
+            'done': true,
+            'at': ts(day, 0),
+          },
+          {
+            'kg': r2(best),
+            'reps': 1,
+            'rir': null,
+            'excluded': false,
+            'done': true,
+            'at': ts(day, 5),
+          },
         ],
       });
     } else {
@@ -201,7 +221,12 @@ class SimPoint {
     final tr = state.tracks['pull']!;
     double? applied;
     final before = pil;
-    final weeks = weeksSinceChange(inp, 'B8', parseDt(inp['now'] as String)!, koachParams);
+    final weeks = weeksSinceChange(
+      inp,
+      'B8',
+      parseDt(inp['now'] as String)!,
+      koachParams,
+    );
     if (koach) {
       for (final pr in proposals(inp, state, sess['key'] as String)) {
         if (pr['ref'] == 'B8') {
