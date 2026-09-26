@@ -54,6 +54,15 @@ void _emit(Map<String, Object?> row) {
 
 double _ms(Stopwatch sw) => sw.elapsedMicroseconds / 1000.0;
 
+String _fnv(String text) {
+  var hash = 0xcbf29ce484222325;
+  for (final unit in utf8.encode(text)) {
+    hash ^= unit;
+    hash *= 0x100000001b3; // débordement 64 bits voulu
+  }
+  return hash.toUnsigned(64).toRadixString(16);
+}
+
 Future<void> _measure(
   String scenario,
   String profile,
@@ -176,6 +185,55 @@ void main() {
     tearDownAll(() {
       if (_failures.isNotEmpty) {
         fail('Mesures en échec : ${_failures.join(' ; ')}');
+      }
+    });
+
+    // Empreinte des résultats métier : identique sur la base et la
+    // candidate si les optimisations ne changent aucun résultat (export,
+    // XP, niveau, crédits, niveaux des WOD, estimations, historique STATS,
+    // carte musculaire). Hachage FNV-1a 64 bits, sans dépendance.
+    test('empreinte des résultats métier', () async {
+      for (final profile in perfProfiles) {
+        final app = await _loaded(profile);
+        final now = DateTime(2026, 9, 26, 12);
+        final p = Progression.calculate(
+          logs: app.logs,
+          catalog: app.wods,
+          program: app.program,
+          now: now,
+        );
+        final parts = <String, Object?>{
+          'export': _fnv(app.exportAll()),
+          'xp': p.totalXp,
+          'level': app.level,
+          'credits': app.credits,
+          'wodLevels': _fnv([for (final w in app.wods) '${w.id}:${w.level}'].join(',')),
+          'estimates': _fnv(
+            [
+              for (final w in app.wods)
+                '${w.id}:${app.wodEstimate(w).durationLabel}:${app.wodStats(w)}',
+            ].join(','),
+          ),
+          'history': _fnv(
+            [for (final e in statsHistory(app)) '${e.id}|${e.title}|${e.at}'].join(','),
+          ),
+          'muscles': _fnv('${app.weeklyMuscles(DateTime(2026, 3, 25, 23))}'),
+          'bests': _fnv(
+            [
+              for (final e in exerciseBests(app.logs).entries)
+                '${e.key}:${e.value.bestE1rm}:${e.value.bestReps}',
+            ].join(','),
+          ),
+          'recommended': _fnv(app.recommended().map((w) => w.id).join(',')),
+        };
+        _emit({
+          'scenario': 'digest',
+          'profile': profile,
+          'status': 'ok',
+          'unit': 'digest',
+          'values': parts,
+        });
+        app.dispose();
       }
     });
 
@@ -411,28 +469,31 @@ void main() {
             return _ms(sw);
           }, n: 5);
 
-          // Premier affichage de STATS puis de chaque section.
-          await tester.pumpWidget(const SizedBox());
-          await tester.pumpWidget(const SLApp());
-          await tester.pumpAndSettle();
-          final firstStats = <double>[];
-          await tester.tap(find.byKey(const ValueKey('nav-1')));
-          firstStats.add(await timedPump());
-          await tester.pumpAndSettle();
-          final sections = <double>[];
-          for (var i = 1; i < 4; i++) {
-            await tester.tap(find.byKey(ValueKey('stats-section-$i')));
-            sections.add(await timedPump());
+          // Premier affichage de STATS puis de chaque section, trois fois
+          // par exécution (application recréée à chaque fois).
+          final firstStats = <double>[], sections = <double>[];
+          final arsenal = <double>[], back = <double>[];
+          for (var k = 0; k < 3; k++) {
+            await tester.pumpWidget(const SizedBox());
+            await tester.pumpWidget(const SLApp());
+            await tester.pumpAndSettle();
+            await tester.tap(find.byKey(const ValueKey('nav-1')));
+            firstStats.add(await timedPump());
+            await tester.pumpAndSettle();
+            for (var i = 1; i < 4; i++) {
+              await tester.tap(find.byKey(ValueKey('stats-section-$i')));
+              sections.add(await timedPump());
+              await tester.pumpAndSettle();
+            }
+            await tester.tap(find.byKey(const ValueKey('nav-0')));
+            arsenal.add(await timedPump());
+            await tester.pumpAndSettle();
+            await tester.tap(find.byKey(const ValueKey('nav-3')));
+            await tester.pumpAndSettle();
+            await tester.tap(find.byKey(const ValueKey('nav-2')));
+            back.add(await timedPump());
             await tester.pumpAndSettle();
           }
-          await tester.tap(find.byKey(const ValueKey('nav-0')));
-          final arsenal = await timedPump();
-          await tester.pumpAndSettle();
-          await tester.tap(find.byKey(const ValueKey('nav-3')));
-          await tester.pumpAndSettle();
-          await tester.tap(find.byKey(const ValueKey('nav-2')));
-          final back = await timedPump();
-          await tester.pumpAndSettle();
           _emit({
             'scenario': 'ui.nav.firstVisit',
             'profile': profile,
@@ -441,8 +502,8 @@ void main() {
             'values': {
               'stats': firstStats,
               'statsSections': sections,
-              'arsenal': [arsenal],
-              'programmeReturn': [back],
+              'arsenal': arsenal,
+              'programmeReturn': back,
             },
           });
 
@@ -457,50 +518,58 @@ void main() {
           await tester.tap(find.byKey(const ValueKey('nav-2')));
           await tester.pumpAndSettle();
 
-          // Séance ouverte par-dessus les quatre onglets visités.
+          // Séance ouverte par-dessus les quatre onglets visités : saisies,
+          // validations, puis retour aux onglets. Quatre séances par
+          // exécution.
           final week = store.program.weeks.last;
           final day = week.days.firstWhere((d) => d.exercises.isNotEmpty);
-          store.logs.remove(store.sessionKey(week.n, day.j));
-          appNavigator.currentState!.push(
-            MaterialPageRoute<void>(
-              builder: (_) => SessionScreen(week: week, day: day),
-            ),
-          );
-          await tester.pumpAndSettle();
           final exercise = day.exercises.first;
-          final log = store.exLog(week.n, day.j, exercise);
-          var reps = 1;
-          await _measure('ui.session.keystroke', profile, () async {
-            log.sets.first.reps = '${reps++ % 20 + 1}';
-            store.saveLogs(affectsProgression: false);
-            return timedPump();
-          }, n: 15);
-          final spec = store.logSpec(exercise);
-          log.sets.first
-            ..kg = '50'
-            ..reps = '5'
-            ..rir = '2';
-          await _measure('ui.session.toggleSet', profile, () async {
-            store.toggleSet(log, 0, spec);
-            return timedPump();
-          }, n: 10);
-          await tester.pump(const Duration(seconds: 1));
-          await tester.runAsync(store.flush);
-          // Retour aux onglets après la séance : première image puis
-          // animation complète (les onglets masqués y sont à jour).
-          appNavigator.currentState!.pop();
-          final popFirst = await timedPump();
-          final settle = Stopwatch()..start();
-          await tester.pumpAndSettle();
-          settle.stop();
+          final keystrokes = <double>[], toggles = <double>[];
+          final popFirst = <double>[], popSettle = <double>[];
+          for (var k = 0; k < 4; k++) {
+            store.logs.remove(store.sessionKey(week.n, day.j));
+            appNavigator.currentState!.push(
+              MaterialPageRoute<void>(
+                builder: (_) => SessionScreen(week: week, day: day),
+              ),
+            );
+            await tester.pumpAndSettle();
+            final log = store.exLog(week.n, day.j, exercise);
+            for (var i = 0; i < 6; i++) {
+              log.sets.first.reps = '${i + 1}';
+              store.saveLogs(affectsProgression: false);
+              final t = await timedPump();
+              if (i >= 1) keystrokes.add(t); // la première sert d'échauffement
+            }
+            final spec = store.logSpec(exercise);
+            log.sets.first
+              ..kg = '50'
+              ..reps = '5'
+              ..rir = '2';
+            for (var i = 0; i < 3; i++) {
+              store.toggleSet(log, 0, spec);
+              final t = await timedPump();
+              if (i >= 1) toggles.add(t);
+            }
+            await tester.pump(const Duration(seconds: 1));
+            await tester.runAsync(store.flush);
+            appNavigator.currentState!.pop();
+            popFirst.add(await timedPump());
+            final settle = Stopwatch()..start();
+            await tester.pumpAndSettle();
+            settle.stop();
+            popSettle.add(_ms(settle));
+          }
           _emit({
-            'scenario': 'ui.session.pop',
+            'scenario': 'ui.session',
             'profile': profile,
             'status': 'ok',
             'unit': 'ms',
             'values': {
-              'firstFrame': [popFirst],
-              'settle': [_ms(settle)],
+              'keystroke': keystrokes,
+              'toggleSet': toggles,
+              'popFirstFrame': popFirst,
+              'popSettle': popSettle,
             },
           });
 

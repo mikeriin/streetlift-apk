@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
 import 'store.dart';
+import 'store_widget.dart';
 import 'ui.dart';
 import 'motion.dart';
 import 'stats_navigation.dart';
@@ -74,9 +75,9 @@ class StatsScreenState extends State<StatsScreen>
   }
 
   @override
-  Widget build(BuildContext context) => ListenableBuilder(
-    listenable: store,
-    builder: (context, _) {
+  // L6 : différé tant que l'onglet est masqué (voir store_widget.dart).
+  Widget build(BuildContext context) => StoreBuilder(
+    builder: (context) {
       final pages = <Widget>[
         StatsOverview(onSection: selectSection),
         // ignore: prefer_const_constructors

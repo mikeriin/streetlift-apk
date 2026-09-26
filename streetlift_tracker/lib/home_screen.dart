@@ -11,6 +11,7 @@ import 'session_screen.dart';
 import 'program_start.dart';
 import 'resume_banner.dart';
 import 'store.dart';
+import 'store_widget.dart';
 import 'ui.dart';
 import 'motion.dart';
 
@@ -285,9 +286,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => ListenableBuilder(
-    listenable: store,
-    builder: (context, _) {
+  // L6 : différé tant que l'onglet est masqué (voir store_widget.dart).
+  Widget build(BuildContext context) => StoreBuilder(
+    builder: (context) {
       final w = store.program.week(week), current = store.program.weekFor(now);
       final colors = ProgrammeColors.of(context);
       final compactHeader = MediaQuery.textScalerOf(context).scale(10) <= 13;

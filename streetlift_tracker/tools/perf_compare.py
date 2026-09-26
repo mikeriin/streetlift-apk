@@ -7,15 +7,18 @@ Lit les fichiers JSON Lines produits par ``test/l6_perf_bench_test.dart``
 - ``summary.csv`` : une ligne par (scénario, profil, sous-mesure) ;
 - ``summary.md``  : le même tableau lisible.
 
-Règle de conclusion, volontairement prudente (pas de test de signification) :
+Règle de conclusion, volontairement prudente (pas de test de signification),
+calibrée sur une comparaison A/A (même code des deux côtés) où des écarts de
+médiane jusqu'à ~27 % sont apparus entre processus :
 
-- « amélioration » : médiane candidate <= 0,90 x médiane de base ET
-  intervalles interquartiles disjoints (Q3 candidate < Q1 base) ;
-- « régression »   : symétrique (médiane >= 1,10 x et Q1 candidate > Q3 base) ;
+- « amélioration » : au moins 8 observations par côté, médiane candidate
+  <= 0,80 x médiane de base, intervalles interquartiles disjoints
+  (Q3 candidate < Q1 base) ET médiane candidate inférieure à la médiane de
+  base dans CHAQUE manche (les manches alternent l'ordre base/candidate) ;
+- « régression »   : symétrique (>= 1,25 x, Q1 candidate > Q3 base, chaque
+  manche plus lente) ;
+- moins de 8 observations : « non concluant (n < 8) » ;
 - sinon « gain non démontré » (écart confondu avec la variabilité).
-
-Avec moins de 8 observations par côté, Q1/Q3 sont remplacés par min/max
-(disjonction complète exigée).
 
 Usage :
     python3 tools/perf_compare.py DOSSIER_DES_JSONL [--base base] [--cand cand]
@@ -54,24 +57,42 @@ def describe(values: list[float]) -> dict:
     }
 
 
-def conclude(base: dict, cand: dict) -> str:
+def conclude(base: dict, cand: dict, rounds: list[tuple[float, float]]) -> str:
+    """[rounds] : (médiane base, médiane candidate) de chaque manche."""
     if base.get("n", 0) == 0 or cand.get("n", 0) == 0:
         return "non mesuré"
+    if base["n"] < 8 or cand["n"] < 8:
+        return "non concluant (n < 8)"
     if base["median"] <= 0:
         return "gain non démontré"
     ratio = cand["median"] / base["median"]
-    if ratio <= 0.90 and cand["q3"] < base["q1"]:
+    faster = bool(rounds) and all(c < b for b, c in rounds)
+    slower = bool(rounds) and all(c > b for b, c in rounds)
+    if ratio <= 0.80 and cand["q3"] < base["q1"] and faster:
         return "amélioration"
-    if ratio >= 1.10 and cand["q1"] > base["q3"]:
+    if ratio >= 1.25 and cand["q1"] > base["q3"] and slower:
         return "régression"
     return "gain non démontré"
 
 
-def load(folder: Path) -> tuple[dict, list[dict], list[dict]]:
-    """(valeurs[(scénario, profil, clé)][label] -> liste, métas, échecs)."""
+def _round_of(file_name: str) -> str:
+    """« base-r3.jsonl » -> « r3 »."""
+    stem = file_name.rsplit(".", 1)[0]
+    return stem.split("-", 1)[1] if "-" in stem else stem
+
+
+per_round: dict = {}
+
+
+def load(folder: Path) -> tuple[dict, list[dict], list[dict], dict]:
+    """(valeurs[(scénario, profil, clé)][label] -> liste, métas, échecs,
+    empreintes[profil][label] -> liste de dictionnaires)."""
     values: dict = {}
     metas: list[dict] = []
     failures: list[dict] = []
+    digests: dict = {}
+    global per_round
+    per_round = {}
     for path in sorted(folder.glob("*.jsonl")):
         for line in path.read_text(encoding="utf-8").splitlines():
             if not line.strip():
@@ -83,6 +104,11 @@ def load(folder: Path) -> tuple[dict, list[dict], list[dict]]:
                 continue
             if row.get("status") != "ok":
                 failures.append(row)
+                continue
+            if row.get("unit") == "digest":
+                digests.setdefault(row["profile"], {}).setdefault(
+                    row["label"], []
+                ).append(row["values"])
                 continue
             if row.get("unit") != "ms":
                 # Mesures hors durée (mémoire hôte) : conservées brutes.
@@ -98,7 +124,44 @@ def load(folder: Path) -> tuple[dict, list[dict], list[dict]]:
                 values.setdefault(key, {}).setdefault(row["label"], []).extend(
                     float(x) for x in vals
                 )
-    return values, metas, failures
+                per_round.setdefault(key, {}).setdefault(
+                    (row["label"], _round_of(path.name)), []
+                ).extend(float(x) for x in vals)
+    return values, metas, failures, digests
+
+
+def compare_digests(digests: dict, base: str, cand: str) -> list[str]:
+    """Lignes Markdown : empreintes identiques ou non, par profil et champ."""
+    out = []
+    for profile, sides in sorted(digests.items()):
+        seen_b = sides.get(base, [])
+        seen_c = sides.get(cand, [])
+        if not seen_b or not seen_c:
+            out.append(f"| {profile} | — | non mesuré |")
+            continue
+        stable_b = all(d == seen_b[0] for d in seen_b)
+        stable_c = all(d == seen_c[0] for d in seen_c)
+        for key in sorted(set(seen_b[0]) | set(seen_c[0])):
+            same = seen_b[0].get(key) == seen_c[0].get(key)
+            verdict = "identique" if same else "DIFFÉRENT"
+            if not (stable_b and stable_c):
+                verdict += " (instable entre exécutions)"
+            out.append(
+                f"| {profile} | {key} | {verdict} ({seen_b[0].get(key)} / {seen_c[0].get(key)}) |"
+            )
+    return out
+
+
+def _rounds(scenario, profile, sub, args) -> list[tuple[float, float]]:
+    data = per_round.get((scenario, profile, sub), {})
+    names = sorted({r for (_, r) in data})
+    out = []
+    for r in names:
+        b = data.get((args.base, r))
+        c = data.get((args.cand, r))
+        if b and c:
+            out.append((statistics.median(b), statistics.median(c)))
+    return out
 
 
 def main(argv: list[str]) -> int:
@@ -108,7 +171,9 @@ def main(argv: list[str]) -> int:
     parser.add_argument("--cand", default="cand")
     args = parser.parse_args(argv)
     folder = Path(args.folder)
-    values, metas, failures = load(folder)
+    values, metas, failures, digests = load(folder)
+    digest_lines = compare_digests(digests, args.base, args.cand)
+    different = any("DIFFÉRENT" in line for line in digest_lines)
     rows = []
     for (scenario, profile, sub), sides in sorted(values.items()):
         b = describe(sides.get(args.base, []))
@@ -133,7 +198,9 @@ def main(argv: list[str]) -> int:
                     else ""
                 ),
                 "conclusion": (
-                    "brut (hors comparaison)" if unit == "bytes" else conclude(b, c)
+                    "brut (hors comparaison)"
+                    if unit == "bytes"
+                    else conclude(b, c, _rounds(scenario, profile, sub, args))
                 ),
             }
         )
@@ -159,6 +226,15 @@ def main(argv: list[str]) -> int:
             f"{r['cand_median']} [{r['cand_min']}–{r['cand_max']}] | {r['ratio']} | "
             f"{r['conclusion']} |"
         )
+    if digest_lines:
+        lines += [
+            "",
+            "## Résultats métier (empreintes base / candidate)",
+            "",
+            "| Profil | Champ | Verdict (base / candidate) |",
+            "| --- | --- | --- |",
+            *digest_lines,
+        ]
     if failures:
         lines += ["", "## Mesures en échec", ""]
         for f in failures:
@@ -185,7 +261,7 @@ def main(argv: list[str]) -> int:
         lines.append(f"- Document stocké (caractères) : {sizes}")
     (folder / "summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("\n".join(lines))
-    return 1 if failures else 0
+    return 1 if failures or different else 0
 
 
 if __name__ == "__main__":

@@ -9,6 +9,7 @@ import 'notification_settings.dart';
 import 'pilotage_screen.dart';
 import 'program_start.dart';
 import 'store.dart';
+import 'store_widget.dart';
 
 const kAppVersion = '3.0.2';
 
@@ -18,9 +19,9 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: store,
-      builder: (context, _) {
+    // L6 : différé tant que l'onglet est masqué (voir store_widget.dart).
+    return StoreBuilder(
+      builder: (context) {
         final s = store.settings;
         void save() => store.saveSettings();
         final items = <Widget>[

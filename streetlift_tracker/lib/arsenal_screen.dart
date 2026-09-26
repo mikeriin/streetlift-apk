@@ -19,9 +19,9 @@ class ArsenalScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: store,
-      builder: (context, _) {
+    // L6 : différé tant que l'onglet est masqué (voir store_widget.dart).
+    return StoreBuilder(
+      builder: (context) {
         final sessions = store.customSessions;
         final wods = store.wods;
         final unlockedWods = [

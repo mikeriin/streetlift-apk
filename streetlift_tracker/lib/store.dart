@@ -1768,10 +1768,11 @@ class AppStore extends ChangeNotifier {
 
   ({int points, int minutes, String level}) wodStats(Wod w) {
     final cached = _statsCache[w.id];
-    final legacy =
-        cached != null && _statsDefinitions[w.id] == _defJson(w)
-            ? cached
-            : _computeStats(w);
+    final known = _statsDefinitions[w.id];
+    // L6 : comparaison champ à champ (voir [_sameDefinition]) au lieu de
+    // deux encodages JSON par appel.
+    final same = known != null && _sameDefinition(known, w);
+    final legacy = cached != null && same ? cached : _computeStats(w);
     final estimate = wodEstimate(w);
     final st = (
       points: legacy.points,
@@ -1779,7 +1780,7 @@ class AppStore extends ChangeNotifier {
       level: legacy.level,
     );
     _statsCache[w.id] = st;
-    _statsDefinitions[w.id] = _defJson(w);
+    if (!same) _statsDefinitions[w.id] = _definitionCopy(w);
     return st;
   }
 
@@ -2008,13 +2009,6 @@ class AppStore extends ChangeNotifier {
     for (final w in catalogWods()) w.id: w,
   };
 
-  /// Définition JSON de chaque WOD préchargé, calculée une fois : la
-  /// sauvegarde compare le millier de WODs du catalogue à leur version
-  /// d'origine à chaque écriture, sans réencoder l'original.
-  late final Map<String, String> _seedJson = {
-    for (final e in _seedDefaults.entries) e.key: _defJson(e.value),
-  };
-
   /// Définition comparable (sans résultats ni niveau, qui est recalculé).
   static Map<String, dynamic> _definition(Wod w) => {
     'id': w.id,
@@ -2030,6 +2024,41 @@ class AppStore extends ChangeNotifier {
     'source': w.source,
   };
   static String _defJson(Wod w) => jsonEncode(_definition(w));
+
+  /// Même définition, sans rien encoder : équivalent exact de
+  /// `_defJson(a) == _defJson(b)`, les champs de [_definition] étant des
+  /// textes, des entiers et une liste de textes (égalité JSON = égalité de
+  /// valeur). L6 (KT-023) : la sauvegarde compare le millier de WOD du
+  /// catalogue à leur version d'origine à chaque écriture ; elle encodait
+  /// chacun en JSON.
+  static bool _sameDefinition(Wod a, Wod b) =>
+      a.id == b.id &&
+      a.name == b.name &&
+      a.type == b.type &&
+      a.rounds == b.rounds &&
+      a.restSec == b.restSec &&
+      a.minutes == b.minutes &&
+      a.interval == b.interval &&
+      a.scheme == b.scheme &&
+      a.notes == b.notes &&
+      a.source == b.source &&
+      listEquals(a.lines, b.lines);
+
+  /// Copie de la seule définition (sans résultats, niveau ni format), pour
+  /// détecter plus tard une modification sans conserver de JSON.
+  static Wod _definitionCopy(Wod w) => Wod(
+    id: w.id,
+    name: w.name,
+    type: w.type,
+    rounds: w.rounds,
+    restSec: w.restSec,
+    minutes: w.minutes,
+    interval: w.interval,
+    scheme: w.scheme,
+    lines: List<String>.of(w.lines),
+    notes: w.notes,
+    source: w.source,
+  );
 
   bool isCatalog(Wod w) => _seedDefaults.containsKey(w.id);
   bool isGenerated(Wod w) => w.id.startsWith('gen');
@@ -2075,8 +2104,8 @@ class AppStore extends ChangeNotifier {
 
   // ---------- Difficulté automatique (déciles du catalogue) ----------
   List<double> _levelCuts = const [];
-  final Map<String, String> _statsDefinitions = {};
-  final Map<String, ({String key, TrainingEstimate value})> _wodEstimates = {};
+  final Map<String, Wod> _statsDefinitions = {};
+  final Map<String, _EstimateEntry> _wodEstimates = {};
   final Map<String, ({int points, int minutes, String level})> _statsCache = {};
 
   double difficultyScore(Wod w) => _computeStats(w).points.toDouble();
@@ -2084,22 +2113,31 @@ class AppStore extends ChangeNotifier {
   /// Classe tout le catalogue par déciles de score → niveau 1-10, et applique le
   /// même barème aux WODs de l'utilisateur.
   void _rankDifficulty() {
-    final scores = [
-      for (final w in _seedDefaults.values) _computeStats(w).points.toDouble(),
-    ]..sort();
+    // L6 : le score d'un WOD ne dépend que de sa définition. Celui de chaque
+    // WOD préchargé est calculé une fois et réutilisé pour son exemplaire du
+    // catalogue tant que la définition est identique (il était recalculé).
+    final seedScores = <String, double>{
+      for (final w in _seedDefaults.values)
+        w.id: _computeStats(w).points.toDouble(),
+    };
+    final scores = seedScores.values.toList()..sort();
     if (scores.length >= 10) {
       _levelCuts = [
         for (var k = 1; k < 10; k++) scores[(scores.length * k / 10).floor()],
       ];
     }
     for (final w in wods) {
-      w.level = levelFor(w);
+      final seed = _seedDefaults[w.id];
+      final known =
+          seed != null && _sameDefinition(seed, w) ? seedScores[w.id] : null;
+      w.level = _levelForScore(w, known ?? difficultyScore(w));
     }
   }
 
-  int levelFor(Wod w) {
+  int levelFor(Wod w) => _levelForScore(w, difficultyScore(w));
+
+  int _levelForScore(Wod w, double sc) {
     if (_levelCuts.isEmpty) return w.level;
-    final sc = difficultyScore(w);
     var lvl = 1;
     for (final c in _levelCuts) {
       if (sc >= c) lvl++;
@@ -2317,7 +2355,7 @@ class AppStore extends ChangeNotifier {
     for (final w in data.wods) {
       if (!_seedDefaults.containsKey(w.id)) {
         user.add(_definition(w));
-      } else if (_defJson(w) != _seedJson[w.id]) {
+      } else if (!_sameDefinition(w, _seedDefaults[w.id]!)) {
         edits[w.id] = _definition(w);
       }
     }
@@ -3552,17 +3590,21 @@ class AppStore extends ChangeNotifier {
 
   TrainingEstimate wodEstimate(Wod w) {
     // Le calcul ne dépend que de la prescription et de ses résultats.
-    final key = jsonEncode([
-      w.prescriptionKey,
-      w.results.map((r) => r.toJson()).toList(),
-    ]);
+    // L6 (KT-023) : mêmes champs que la clé JSON d'origine
+    // (`prescriptionKey` + résultats), comparés sans rien encoder ; la
+    // clé était reconstruite à chaque affichage d'une tuile ou filtre.
     final cached = _wodEstimates[w.id];
-    if (cached?.key == key) return cached!.value;
+    if (cached != null && cached.matches(w)) return cached.value;
     final estimate = TrainingEstimator.wod(w);
-    if (_wodEstimates.length >= 1024) {
+    // Une entrée par WOD : borne au moins égale au nombre de WOD, sinon un
+    // passage sur tout le catalogue (tri ou filtre par durée) évinçait
+    // chaque entrée avant sa réutilisation dès 25 WOD personnels.
+    final bound = max(1024, wods.length + 64);
+    while (_wodEstimates.length >= bound) {
       _wodEstimates.remove(_wodEstimates.keys.first);
     }
-    _wodEstimates[w.id] = (key: key, value: estimate);
+    _wodEstimates.remove(w.id);
+    _wodEstimates[w.id] = _EstimateEntry(w, estimate);
     return estimate;
   }
 
@@ -4684,3 +4726,83 @@ String creditDeficitLabel(int balance) =>
 
 /// Singleton global — simple et suffisant pour cette app.
 final AppStore store = AppStore();
+
+/// Entrée du cache des estimations WOD (L6, KT-023) : copie des champs
+/// qui composaient la clé JSON d'origine (`Wod.prescriptionKey` et tous
+/// les champs exportés des résultats), comparés champ à champ. Même
+/// validité que l'ancienne clé, sans l'encoder à chaque lecture.
+class _EstimateEntry {
+  final String type, scheme, notes;
+  final int rounds, restSec, minutes, interval;
+  final List<String> lines;
+  final List<WodResult> results;
+  final TrainingEstimate value;
+
+  _EstimateEntry(Wod w, this.value)
+    : type = w.type,
+      scheme = w.scheme,
+      notes = w.notes,
+      rounds = w.rounds,
+      restSec = w.restSec,
+      minutes = w.minutes,
+      interval = w.interval,
+      lines = List<String>.of(w.lines),
+      results = [for (final r in w.results) _copy(r)];
+
+  static WodResult _copy(WodResult r) => WodResult(
+    at: r.at,
+    score: r.score,
+    seconds: r.seconds,
+    rounds: r.rounds,
+    reps: r.reps,
+    notes: r.notes,
+    completed: r.completed,
+    prescription: r.prescription,
+    attempt: r.attempt,
+    scoring: r.scoring,
+    intervals:
+        r.intervals == null
+            ? null
+            : [for (final block in r.intervals!) List<int?>.of(block)],
+  );
+
+  static bool _sameResult(WodResult a, WodResult b) {
+    if (a.at != b.at ||
+        a.score != b.score ||
+        a.seconds != b.seconds ||
+        a.rounds != b.rounds ||
+        a.reps != b.reps ||
+        a.notes != b.notes ||
+        a.completed != b.completed ||
+        a.prescription != b.prescription ||
+        a.attempt != b.attempt ||
+        a.scoring != b.scoring) {
+      return false;
+    }
+    final x = a.intervals, y = b.intervals;
+    if (x == null || y == null) return x == null && y == null;
+    if (x.length != y.length) return false;
+    for (var i = 0; i < x.length; i++) {
+      if (!listEquals(x[i], y[i])) return false;
+    }
+    return true;
+  }
+
+  bool matches(Wod w) {
+    if (w.type != type ||
+        w.rounds != rounds ||
+        w.restSec != restSec ||
+        w.minutes != minutes ||
+        w.interval != interval ||
+        w.scheme != scheme ||
+        w.notes != notes ||
+        !listEquals(w.lines, lines) ||
+        w.results.length != results.length) {
+      return false;
+    }
+    for (var i = 0; i < results.length; i++) {
+      if (!_sameResult(w.results[i], results[i])) return false;
+    }
+    return true;
+  }
+}
