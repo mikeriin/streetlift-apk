@@ -183,8 +183,7 @@ class KoachData {
     'questionnaires': questionnaires,
     if (legacyScale != null) 'legacyScale': legacyScale,
     if (introSeen) 'introSeen': true,
-    if (weighIns.isNotEmpty)
-      'weighIns': [for (final w in weighIns) w.toJson()],
+    if (weighIns.isNotEmpty) 'weighIns': [for (final w in weighIns) w.toJson()],
     if (history.isNotEmpty) 'history': [for (final h in history) h.toJson()],
     if (decisions.isNotEmpty)
       'decisions': [for (final d in decisions) d.toJson()],
@@ -288,12 +287,7 @@ class KoachData {
           e['ref'] is String &&
           knownRefs.contains(e['ref']) &&
           _okNum(e['value'], 0, 10000) &&
-          const [
-            'initial',
-            'manual',
-            'koach',
-            'test',
-          ].contains(e['source'])) {
+          const ['initial', 'manual', 'koach', 'test'].contains(e['source'])) {
         out.history.add(
           PilotageEvent(
             e['at'] as String,
@@ -376,7 +370,11 @@ class KoachData {
           if (pain != null) {
             if (pain is Map) {
               pain.forEach((m, n) {
-                if (m is String && movements.contains(m) && n is int && n >= 0 && n <= 10) {
+                if (m is String &&
+                    movements.contains(m) &&
+                    n is int &&
+                    n >= 0 &&
+                    n <= 10) {
                   a.pain[m] = n;
                 } else {
                   bad('douleur');
@@ -409,7 +407,12 @@ class KoachData {
               } else {
                 ok = false;
               }
-            } else if (const ['small', 'threshold', 'large', 'step'].contains(kk) &&
+            } else if (const [
+                  'small',
+                  'threshold',
+                  'large',
+                  'step',
+                ].contains(kk) &&
                 _okNum(vv, 0.01, 50)) {
               m[kk as String] = _d(vv);
             } else {
@@ -517,9 +520,6 @@ class KoachData {
   KoachData copy({
     required Set<String> knownRefs,
     required Set<String> movements,
-  }) => KoachData.fromJson(
-    toJson(),
-    knownRefs: knownRefs,
-    movements: movements,
-  );
+  }) =>
+      KoachData.fromJson(toJson(), knownRefs: knownRefs, movements: movements);
 }
