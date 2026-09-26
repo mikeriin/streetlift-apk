@@ -1,0 +1,101 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) les fixtures sont présentes
+00:00 +1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) accessories.json
+00:00 +2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) accessories_first.json
+00:00 +3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) accessories_locked.json
+00:00 +4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) atypical_confirmed.json
+00:00 +5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) atypical_high.json
+00:00 +6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) atypical_isolated.json
+00:00 +7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) fatigue.json
+00:00 +8: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) grid.json
+00:00 +9: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) grid_custom.json
+00:00 +10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) in_session.json
+00:00 +11: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) legacy_effort.json
+00:00 +12: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) no_bodyweight.json
+00:00 +13: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) pain_active.json
+00:00 +14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) pain_carry.json
+00:00 +15: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) pain_carry_control.json
+00:00 +16: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) pain_double.json
+00:00 +17: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) pain_single.json
+00:00 +18: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) replay_basic.json
+00:00 +19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) sim_2003.json
+00:00 +20: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) sim_4001.json
+00:00 +21: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) sim_6002.json
+00:00 +22: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) squat_rest.json
+00:00 +23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) structure.json
+00:00 +24: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) structure_cap.json
+00:00 +25: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) structure_decline.json
+00:00 +26: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) structure_deload_week.json
+00:00 +27: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D24 — exemples chiffrés de la demande (poids du corps 71,5 kg) traction +32,5 → +35 (cible + 1) ou +37,5 (cible + 2)
+00:00 +28: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D24 — exemples chiffrés de la demande (poids du corps 71,5 kg) muscle-up +5 → +6,25 ou +8,75
+00:00 +29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D24 — exemples chiffrés de la demande (poids du corps 71,5 kg) squat 97,5 → 100 ou 102,5
+00:00 +30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D24 — exemples chiffrés de la demande (poids du corps 71,5 kg) baisses : deux séries dures, série ratée (−3 % / −6 %)
+00:00 +31: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D24 — exemples chiffrés de la demande (poids du corps 71,5 kg) décharge, douleur, verrou, refus : aucune hausse
+00:00 +32: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D25 — jour de fatigue bandes −5 / −7,5 / −10 % et questionnaire
+00:00 +33: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D23 — grilles du matériel haltères par 1 kg jusqu’à 10 kg puis par 2 kg
+00:00 +34: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D23 — grilles du matériel poulies par 2,5 lb (unité native), lest 1,25 kg, barre 2,5 kg
+00:00 +35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D23 — grilles du matériel valeur en livres enregistrée au centième de kg : la progression avance d’un cran
+00:00 +36: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D9 — échelle et valeurs héritées six niveaux, du plus dur au plus facile, stockés en RIR
+00:00 +37: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D9 — échelle et valeurs héritées RIR / RPE hérités ; valeurs non interprétables
+00:00 +38: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Rejeu complet = cache incrémental (au centième) replay_basic.json
+00:00 +39: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Rejeu complet = cache incrémental (au centième) sim_4001.json
+00:00 +40: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Rejeu complet = cache incrémental (au centième) sim_6002.json
+00:00 +41: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Rejeu complet = cache incrémental (au centième) une correction passée impose le rejeu complet
+00:00 +42: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Rejeu complet = cache incrémental (au centième) pesée rétroactive ou repère modifié : rejeu complet
+00:00 +43: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_off_test.dart
+lib/koach_store.dart:1099:11: Error: 'kind' is already declared in this scope.
+    final kind = koachProgram.accessories[ref]?.equipment;
+          ^^^^
+lib/koach_store.dart:1083:11: Context: Previous declaration of 'kind'.
+    final kind = p['kind'];
+          ^^^^
+00:00 +43 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_off_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_off_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_off_test.dart: lib/koach_store.dart:1099:11: Error: 'kind' is already declared in this scope.
+      final kind = koachProgram.accessories[ref]?.equipment;
+            ^^^^
+  lib/koach_store.dart:1083:11: Context: Previous declaration of 'kind'.
+      final kind = p['kind'];
+            ^^^^
+  .
+00:00 +43 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart
+lib/koach_store.dart:1099:11: Error: 'kind' is already declared in this scope.
+    final kind = koachProgram.accessories[ref]?.equipment;
+          ^^^^
+lib/koach_store.dart:1083:11: Context: Previous declaration of 'kind'.
+    final kind = p['kind'];
+          ^^^^
+00:07 +43 -2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart: lib/koach_store.dart:1099:11: Error: 'kind' is already declared in this scope.
+      final kind = koachProgram.accessories[ref]?.equipment;
+            ^^^^
+  lib/koach_store.dart:1083:11: Context: Previous declaration of 'kind'.
+      final kind = p['kind'];
+            ^^^^
+  .
+00:07 +43 -2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart
+00:08 +43 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: le simulateur Dart reproduit les athlètes de la référence Python
+00:08 +44 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C1 — erreur < 3 % après 6 séances depuis un a priori juste
+00:08 +45 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C2 — convergence en ≤ 6 séances depuis un a priori faux de ±15 %
+00:09 +46 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C3 — un mauvais jour isolé (−8 %) déplace l’estimation de < 1 %
+00:09 +47 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C4 — biais de RIR appris à ±0,5 près après 2 tests
+00:09 +48 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C5, C6 — pas d’oscillation, plafonds D20 / D24 jamais dépassés
+00:09 +49 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C7 — rejeu complet = cache incrémental, au centième de kg
+00:10 +50 -2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart
+lib/koach_store.dart:1099:11: Error: 'kind' is already declared in this scope.
+    final kind = koachProgram.accessories[ref]?.equipment;
+          ^^^^
+lib/koach_store.dart:1083:11: Context: Previous declaration of 'kind'.
+    final kind = p['kind'];
+          ^^^^
+00:10 +50 -3: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: lib/koach_store.dart:1099:11: Error: 'kind' is already declared in this scope.
+      final kind = koachProgram.accessories[ref]?.equipment;
+            ^^^^
+  lib/koach_store.dart:1083:11: Context: Previous declaration of 'kind'.
+      final kind = p['kind'];
+            ^^^^
+  .
+00:10 +50 -3: Some tests failed.
