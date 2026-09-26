@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'app_theme.dart';
 import 'data_control.dart';
+import 'koach_screens.dart';
 import 'ui.dart';
 import 'notification_settings.dart';
 import 'pilotage_screen.dart';
@@ -280,6 +281,144 @@ class SettingsScreen extends StatelessWidget {
                   ),
                 ),
           ),
+          // Koach (L7, KT-033, KT-036) : désactivé tant que l'utilisateur ne
+          // l'a pas activé (D6) ; questionnaires après information (D14).
+          const _Sec('Koach'),
+          if (!store.koachProgram.available)
+            const _Tile(
+              title: 'Koach indisponible',
+              subtitle:
+                  'Annotations du programme illisibles : l’application '
+                  'fonctionne sans Koach.',
+            )
+          else ...[
+            _Sw(
+              'Koach',
+              store.koach.enabled
+                  ? 'Actif : estimations et propositions de charge à partir '
+                      'de tes séries du programme'
+                  : 'Désactivé : l’application fonctionne comme avant',
+              store.koach.enabled,
+              (v) async {
+                if (v) {
+                  await showKoachActivation(context);
+                } else {
+                  store.disableKoach();
+                }
+              },
+            ),
+            if (store.koach.enabled) ...[
+              _Tile(
+                title: 'Difficulté des séries',
+                subtitle:
+                    store.koach.advanced
+                        ? 'Avancée : RIR ou RPE saisi dans la colonne '
+                            '(RIR = 10 − RPE)'
+                        : 'Simple : six niveaux, d’Échec à Facile',
+                below: SegmentedButton<bool>(
+                  expandedInsets: EdgeInsets.zero,
+                  showSelectedIcon: false,
+                  segments: const [
+                    ButtonSegment(value: false, label: Text('Simple')),
+                    ButtonSegment(value: true, label: Text('Avancée')),
+                  ],
+                  selected: {store.koach.advanced},
+                  onSelectionChanged:
+                      (sel) => store.setKoachAdvanced(sel.single),
+                ),
+              ),
+              _Sw(
+                'Questionnaires (facultatif)',
+                'Sommeil et forme avant la séance, douleur au bilan',
+                store.koach.questionnaires == 'on',
+                (v) async {
+                  if (v) {
+                    await showKoachQuestionnaireInfo(context);
+                  } else {
+                    store.setKoachQuestionnaires(false);
+                  }
+                },
+              ),
+              if (store.koach.answers.isNotEmpty)
+                _Action(
+                  icon: Icons.delete_sweep_outlined,
+                  color: SL.accent,
+                  title: 'Supprimer mes réponses aux questionnaires',
+                  subtitle:
+                      '${store.koach.answers.length} séance(s) : sommeil, '
+                      'forme et douleur',
+                  onTap: () => _clearAnswers(context),
+                ),
+              _Sw(
+                'Koach adapte la structure',
+                'Propose ±1 série par mouvement ou une décharge anticipée '
+                    'pour la semaine suivante (désactivé par défaut)',
+                store.koach.structure,
+                store.setKoachStructure,
+              ),
+              _Action(
+                key: const ValueKey('settings-koach-screen'),
+                icon: Icons.insights_rounded,
+                color: SL.accent,
+                title: 'Écran Koach',
+                subtitle: 'Estimations, objectifs, propositions et historique',
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (_) => const KoachScreen(),
+                      ),
+                    ),
+              ),
+              _Action(
+                icon: Icons.flag_circle_outlined,
+                color: SL.accent,
+                title: 'Objectifs',
+                subtitle: 'Étape et objectif final par mouvement',
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (_) => const KoachObjectivesScreen(),
+                      ),
+                    ),
+              ),
+              _Action(
+                icon: Icons.monitor_weight_outlined,
+                color: SL.accent,
+                title: 'Pesées',
+                subtitle: 'Poids du corps daté, rappel chaque semaine',
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (_) => const KoachWeighInsScreen(),
+                      ),
+                    ),
+              ),
+              _Action(
+                icon: Icons.hardware_outlined,
+                color: SL.accent,
+                title: 'Matériel',
+                subtitle:
+                    'Incréments : haltères, lest, barre, poulies, machines',
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (_) => const KoachEquipmentScreen(),
+                      ),
+                    ),
+              ),
+            ],
+            const _Tile(
+              title: 'Confidentialité',
+              subtitle:
+                  'Tout est calculé et conservé sur ce téléphone, sans compte '
+                  'ni connexion. Les données Koach figurent dans l’export et '
+                  'sont effacées avec les données de l’application.',
+            ),
+          ],
           const _Sec('À propos'),
           _Tile(
             title: 'Kalis Track $kAppVersion',
@@ -302,6 +441,7 @@ class SettingsScreen extends StatelessWidget {
           Icons.notifications_none_rounded,
           Icons.cloud_outlined,
           Icons.flag_outlined,
+          Icons.insights_rounded,
           Icons.info_outline_rounded,
         ];
         const descriptions = [
@@ -313,6 +453,7 @@ class SettingsScreen extends StatelessWidget {
           'Rappels et alertes',
           'Exporter, restaurer ou supprimer tes données',
           'Date de départ et références',
+          'Estimations et propositions de charge',
           'Version et contenu du programme',
         ];
         assert(
@@ -390,6 +531,32 @@ class SettingsScreen extends StatelessWidget {
     if (raw == null || raw.isEmpty || !context.mounted) return;
     await confirmAndImport(context, raw, appVersion: kAppVersion);
   }
+}
+
+/// KT-036 : suppression des seules réponses aux questionnaires.
+Future<void> _clearAnswers(BuildContext context) async {
+  final ok = await showDialog<bool>(
+    context: context,
+    builder:
+        (ctx) => AlertDialog(
+          title: const Text('Supprimer tes réponses ?'),
+          content: const Text(
+            'Sommeil, forme et douleur de toutes les séances seront effacés. '
+            'Séances, séries et valeurs de pilotage ne changent pas.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('Annuler'),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: const Text('Supprimer'),
+            ),
+          ],
+        ),
+  );
+  if (ok == true) store.clearKoachAnswers();
 }
 
 class _ImportDialog extends StatefulWidget {

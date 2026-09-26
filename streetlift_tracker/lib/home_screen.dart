@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'app_theme.dart';
 import 'estimate_view.dart';
+import 'koach_widgets.dart' show KoachWeighInBanner;
 import 'levelup.dart';
 import 'models.dart';
 import 'muscle_body.dart';
@@ -348,6 +349,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       if (ProgramStartBanner.visible(store.program, now))
                         ProgramStartBanner(now: now, padding: EdgeInsets.zero),
                       if (ResumeBanner.visible) const ResumeBanner(),
+                      if (store.koachWeighInDue) const KoachWeighInBanner(),
                       for (final d in w.days) card(d),
                     ],
                   ),

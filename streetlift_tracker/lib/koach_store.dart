@@ -128,6 +128,15 @@ extension KoachStore on AppStore {
       koachStrength(e) &&
       (index == 0 || index == log.sets.length - 1);
 
+  /// La validation de cette série attend la difficulté (D8) : exigée, ni
+  /// choisie ni lisible dans le champ RIR/RPE.
+  bool koachNeedsEffort(Exercise e, ExerciseLog log, int index) {
+    if (!koachEffortRequired(e, log, index)) return false;
+    final s = log.sets[index];
+    return s.effort == null &&
+        ke.parseLegacyEffort(s.rir, settings.rpe ? 'rpe' : 'rir') == null;
+  }
+
   SetCheck _koachBeforeCheck(Exercise e, ExerciseLog log, int index) {
     final s = log.sets[index];
     if (s.effort == null) {
@@ -212,6 +221,12 @@ extension KoachStore on AppStore {
     _koachSave();
   }
 
+  /// « Plus tard » : rappel masqué jusqu'à la prochaine ouverture.
+  void koachWeighInSnooze() {
+    koachWeighInLater = true;
+    notifyListeners();
+  }
+
   void removeWeighIn(String date) {
     koach.weighIns.removeWhere((w) => w.date == date);
     _koachSave();
@@ -219,7 +234,7 @@ extension KoachStore on AppStore {
 
   /// Rappel de pesée hebdomadaire (dans l'application, jamais notifié).
   bool get koachWeighInDue {
-    if (!koachOn) return false;
+    if (!koachOn || koachWeighInLater) return false;
     if (koach.weighIns.isEmpty) return true;
     final last = ke.parseDt(koach.weighIns.last.date)!;
     final today = ke.parseDt(ke.civilIso(storeClock()))!;
@@ -263,8 +278,8 @@ extension KoachStore on AppStore {
         'ref': l.ref,
         'bodyweight': body,
         'k': koachProgram.kPrior[l.key] ?? 22.4,
-        'grid':
-            ((eq[body ? 'plate' : 'barbell'] as Map)['step'] as num).toDouble(),
+        'grid': ((eq[body ? 'plate' : 'barbell'] as Map)['step'] as num)
+            .toDouble(),
       };
     }
     throw ArgumentError(movement);
@@ -435,6 +450,58 @@ extension KoachStore on AppStore {
     return state;
   }
 
+  /// Charge affichée d'une suggestion : « 35 kg » (lest ou barre), « PdC ».
+  String koachLoadText(Exercise e, double kg) {
+    if (kg <= 0 && e.load.type == 'system') return 'PdC';
+    if (settings.lb) {
+      final lb = kg * 2.20462;
+      return '${lb.toStringAsFixed(lb == lb.roundToDouble() ? 0 : 1)}\u00A0lb';
+    }
+    return '${koachKg(kg)}\u00A0kg';
+  }
+
+  /// Estimation actuelle d'un mouvement, en valeur de pilotage (lest ou
+  /// barre) avec son incertitude.
+  ({double value, double sd, bool lest})? koachEstimate(String movement) {
+    final state = koachState();
+    final tr = state.tracks[movement];
+    if (tr == null) return null;
+    final body = _koachLift(movement)['bodyweight'] == true;
+    final bw = state.bwNow ?? koachBodyweightNow ?? 0;
+    return (value: body ? tr.x - bw : tr.x, sd: tr.sd, lest: body);
+  }
+
+  /// Points de la courbe d'un mouvement, en valeur de pilotage (lest :
+  /// masse système − pesée applicable à la date ; barre : masse).
+  List<({DateTime at, double value, double sd, String kind})> koachSeries(
+    String movement,
+  ) {
+    final tr = koachState().tracks[movement];
+    if (tr == null) return const [];
+    final body = _koachLift(movement)['bodyweight'] == true;
+    final weigh = [for (final w in koach.weighIns) w.toJson()];
+    final out = <({DateTime at, double value, double sd, String kind})>[];
+    for (final pt in tr.series) {
+      final t = ke.parseDt(pt.at);
+      final at = DateTime.tryParse(pt.at);
+      if (t == null || at == null) continue;
+      final bw =
+          body
+              ? (ke.bodyweightAt(weigh, ke.dayOf(t), values['B4']) ?? 0.0)
+              : 0.0;
+      out.add((at: at, value: pt.x - bw, sd: pt.sd, kind: pt.kind));
+    }
+    return out;
+  }
+
+  /// « 1RM estimé : 36,25 kg de lest (± 2,5 kg). »
+  String koachEstimateText(String movement) {
+    final e = koachEstimate(movement);
+    if (e == null) return 'Pas encore d’estimation pour ce mouvement.';
+    return '1RM estimé : ${koachKg(ke.r2(e.value))} kg'
+        '${e.lest ? ' de lest' : ''} (± ${koachKg(ke.r2(e.sd))} kg).';
+  }
+
   /// D29 : estimation trop incertaine (σ > 5 %) ou inexistante.
   bool koachUncertain(String movement) {
     final tr = koachState().tracks[movement];
@@ -476,12 +543,7 @@ extension KoachStore on AppStore {
   );
 
   /// Suggestion de charge pour les séries restantes, ou null.
-  ke.KSuggestion? koachSuggestion(
-    int week,
-    int day,
-    Exercise e,
-    ExerciseLog log,
-  ) {
+  ke.KSuggestion? koachSuggestion(int week, int day, Exercise e, ExerciseLog log) {
     if (!koachOn || week < 1 || !koachStrength(e)) return null;
     final a = koachAnnotation(e)!;
     final key = sessionKey(week, day);
@@ -707,6 +769,13 @@ extension KoachStore on AppStore {
   }
 
   // ------------------------------------------------ questionnaires (D14)
+  /// KT-036 : suppression des seules réponses aux questionnaires.
+  void clearKoachAnswers() {
+    koach.answers.clear();
+    koachSkipped.clear();
+    _koachSave();
+  }
+
   SessionAnswers koachAnswers(String key) =>
       koach.answers.putIfAbsent(key, SessionAnswers.new);
 
@@ -755,10 +824,9 @@ extension KoachStore on AppStore {
   /// Mouvements principaux réalisés dans une séance (questionnaire douleur).
   List<String> koachMovementsDone(int week, int day) {
     final log = logs[sessionKey(week, day)];
-    final plan =
-        week >= 1 && week <= program.weeks.length
-            ? program.week(week).day(day)
-            : null;
+    final plan = week >= 1 && week <= program.weeks.length
+        ? program.week(week).day(day)
+        : null;
     if (log == null || plan == null) return const [];
     final out = <String>[];
     for (final e in plan.exercises) {
@@ -1016,12 +1084,23 @@ extension KoachStore on AppStore {
     for (final ad in _koachAdaptations(week)) {
       if (ad.kind == 'sets' && ad.exercise == e.id) {
         n = math.max(1, n + ad.delta);
-      } else if (ad.kind == 'deload' && a?.cat == 'strength' && e.main) {
+      } else if (ad.kind == 'deload' &&
+          a?.cat == 'strength' &&
+          e.main) {
         n = math.max(1, (n * ad.sets).round());
       }
     }
     return n;
   }
+
+  /// « +1 série cette semaine » ; « décharge anticipée : séries × 0,6… ».
+  String koachAdaptationText(int week, Exercise e) => [
+    for (final ad in koachAdaptationsFor(week, e))
+      ad.kind == 'deload'
+          ? 'décharge anticipée (séries × ${koachKg(ad.sets)}, charges '
+              '−${(ad.load * 100).round()} %)'
+          : '${ad.delta > 0 ? '+1' : '−1'} série cette semaine',
+  ].join(' · ');
 
   /// Adaptation(s) de la semaine concernant cet exercice (affichage).
   List<Adaptation> koachAdaptationsFor(int week, Exercise e) {

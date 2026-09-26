@@ -10,7 +10,11 @@ import 'models.dart';
 import 'rewards.dart' show checkLevelUp;
 import 'store.dart';
 import 'estimate_view.dart';
+import 'koach_engine.dart' as ke show KSuggestion;
+import 'koach_screens.dart' show KoachReviewScreen;
+import 'koach_widgets.dart';
 import 'pilotage_screen.dart';
+import 'set_validation.dart' show checkSet;
 
 const _tab = [FontFeature.tabularFigures()];
 
@@ -499,7 +503,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   String _signature = '';
 
   String _labels() => [
-    for (final e in widget.exs) '${store.setsLabel(e)}|${store.loadLabel(e)}',
+    for (final e in widget.exs)
+      '${store.setsLabel(e)}|${store.loadLabel(e, week: widget.week.n)}',
   ].join('\n');
 
   void _onStore() {
@@ -556,12 +561,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       }
     }
     if (sp.kind == 'duration' || sp.kind == 'interval') return;
-    final kg = store.loadFor(ex);
+    final kg = store.sessionLoad(widget.week.n, ex);
     if (kg != null && kg > 0) {
-      final t =
-          kg == kg.roundToDouble()
-              ? kg.toInt().toString()
-              : kg.toStringAsFixed(1);
+      final t = store.kgFieldText(kg);
       for (final s in log.sets) {
         if (s.kg.isEmpty && !s.done) s.kg = t;
       }
@@ -601,15 +603,34 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   /// Problème de saisie affiché sous une série (KT-009) : (exercice, série).
   final Map<(int, int), SetCheck> _issues = {};
 
-  void _checkSet(int k, int i) {
+  Future<void> _checkSet(int k, int i) async {
     if (widget.readOnly) return;
     final ex = widget.exs[k];
     final sp = specs[k];
     final log = logs[k];
     final s = log.sets[i];
+    // Koach (D8) : difficulté exigée sur cette série → fiche en six boutons,
+    // un tap choisit et valide. Fiche fermée : rien ne change.
+    if (!s.done &&
+        store.koachNeedsEffort(ex, log, i) &&
+        checkSet(sp, s, rpe: store.settings.rpe).ok) {
+      final choice = await showEffortSheet(
+        context,
+        title: 'Série ${store.setLabel(sp, i)} · difficulté',
+        validating: true,
+      );
+      if (!mounted || choice?.rir == null) return;
+      s.effort = choice!.rir;
+    }
     // Validation métier (store) : la coche n'est acceptée qu'avec une saisie
     // valide ; sinon le texte reste tel quel et le champ est nommé.
-    final check = store.toggleSet(log, i, sp);
+    final check = store.toggleSet(
+      log,
+      i,
+      sp,
+      exercise: ex,
+      week: widget.week.n,
+    );
     setState(() {
       if (check.ok) {
         _issues.remove((k, i));
@@ -696,6 +717,114 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     });
   }
 
+  // ---- Koach (L7) ----
+  /// Fiche d'une série validée : difficulté, série écartée (D9, D11).
+  Future<void> _editEffort(int k, int i) async {
+    final log = logs[k];
+    final s = log.sets[i];
+    final choice = await showEffortSheet(
+      context,
+      title: 'Série ${store.setLabel(specs[k], i)}',
+      current: s.effort ?? store.koachRir(s),
+      excluded: s.excluded,
+    );
+    if (choice == null || !mounted) return;
+    if (choice.rir != s.effort) store.setEffort(log, i, choice.rir);
+    if (choice.excluded != s.excluded) store.toggleExcluded(log, i);
+    setState(() {});
+  }
+
+  void _koachApply(int k, ke.KSuggestion sug) {
+    store.applyKoachSuggestion(
+      widget.week.n,
+      widget.day.j,
+      widget.exs[k],
+      logs[k],
+      sug,
+    );
+    setState(() => epoch++);
+  }
+
+  void _koachKeep(int k, ke.KSuggestion sug) {
+    store.refuseKoachSuggestion(
+      widget.week.n,
+      widget.day.j,
+      widget.exs[k],
+      logs[k],
+      sug,
+    );
+    setState(() {});
+  }
+
+  void _koachDetails(int k, ke.KSuggestion sug) {
+    final ex = widget.exs[k];
+    final a = store.koachAnnotation(ex)!;
+    showKoachDetails(
+      context,
+      title: 'Koach · ${store.splitName(ex.name).$1}',
+      lines: [
+        store.koachReason(ex, logs[k], sug),
+        koachRuleText(sug),
+        store.koachEstimateText(a.movement!),
+        'Masse soulevée : poids du corps + lest (muscle-up, traction, dip) '
+            'ou barre (squat). « Garder ma charge » est retenu pour la séance.',
+      ],
+    );
+  }
+
+  /// Cartes Koach d'un mouvement principal : incertitude, suggestion.
+  List<Widget> _koachCards(int k) {
+    final ex = widget.exs[k];
+    final log = logs[k];
+    if (!store.koachOn || !store.koachStrength(ex)) return const [];
+    final movement = store.koachAnnotation(ex)!.movement!;
+    final sug =
+        log.sets.any((s) => !s.done)
+            ? store.koachSuggestion(widget.week.n, widget.day.j, ex, log)
+            : null;
+    return [
+      if (store.koachUncertain(movement)) const KoachCalibrationNote(),
+      if (sug != null)
+        KoachSuggestionCard(
+          load: store.koachLoadText(ex, sug.kg),
+          from: store.koachLoadText(ex, sug.from),
+          reason: store.koachReason(ex, log, sug),
+          onApply: () => _koachApply(k, sug),
+          onKeep: () => _koachKeep(k, sug),
+          onDetails: () => _koachDetails(k, sug),
+        ),
+    ];
+  }
+
+  /// Carte « jour de fatigue » et questionnaire d'avant séance.
+  List<Widget> _koachTop() {
+    if (widget.readOnly || !store.koachOn || widget.week.n < 1) {
+      return const [];
+    }
+    final w = widget.week.n, j = widget.day.j;
+    final key = store.sessionKey(w, j);
+    final first =
+        widget.day.exercises.isNotEmpty &&
+        widget.exs.first.id == widget.day.exercises.first.id;
+    final level = store.koachFatigueLevel(w, j, widget.day.exercises);
+    return [
+      if (first && store.koachAskBefore(w, j))
+        KoachQuestionsCard(sessionKey: key),
+      if (level > 0)
+        KoachFatigueCard(
+          level: level,
+          onAccept: () {
+            store.acceptKoachFatigue(w, j, widget.day.exercises, level);
+            setState(() => epoch++);
+          },
+          onRefuse: () {
+            store.refuseKoachFatigue(w, j, level);
+            setState(() {});
+          },
+        ),
+    ];
+  }
+
   void _reusePrevious(int k, ExerciseLog prev) {
     if (widget.readOnly) return;
     final log = logs[k];
@@ -752,6 +881,16 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
     padding: const EdgeInsets.fromLTRB(KSpace.page, 2, KSpace.page, 10),
     children: [
+      // Koach (L7) : reconstruit à chaque changement du store.
+      if (!widget.readOnly && store.koachOn)
+        ListenableBuilder(
+          listenable: store,
+          builder:
+              (context, _) => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: _koachTop(),
+              ),
+        ),
       for (var k = 0; k < widget.exs.length; k++) ...[
         if (k > 0) const SizedBox(height: 12),
         _block(k),
@@ -788,10 +927,18 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         readOnly
             ? log.sets.any((s) => s.kg.isNotEmpty)
             : !noLoad && store.showKgFor(ex, log);
+    final koachSets =
+        sp.kind == 'reps' &&
+        (readOnly
+            ? log.sets.any((s) => s.effort != null || s.excluded)
+            : store.koachOn && store.koachAnnotation(ex)?.cat != null);
     final showRir =
         readOnly
             ? log.sets.any((s) => s.rir.isNotEmpty)
-            : sp.kind == 'reps' && store.showRirFor(log);
+            : sp.kind == 'reps' &&
+                (log.showRir ??
+                    (store.showRirFor(log) ||
+                        (koachSets && store.koach.advanced)));
     final showV =
         readOnly
             ? log.sets.any((s) => s.v.isNotEmpty)
@@ -801,7 +948,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final loadLabel =
         readOnly
             ? (recordedLoads.length == 1 ? '${recordedLoads.single} kg' : '—')
-            : store.loadLabel(ex);
+            : store.loadLabel(ex, week: widget.week.n);
     final showBigLoad =
         (readOnly || !noLoad) &&
         loadLabel != '—' &&
@@ -948,6 +1095,31 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       _chip('Repos final ${fmt(finalRest)}', SL.dim),
                   ],
                 ),
+                if (readOnly &&
+                    (log.prescribed != null || log.koach != null)) ...[
+                  const SizedBox(height: 6),
+                  if (log.prescribed != null)
+                    Text(
+                      'Prescrit ce jour-là : ${log.prescribed}',
+                      key: ValueKey('prescribed-${ex.id}'),
+                      style: TextStyle(color: SL.dim, fontSize: 12.5),
+                    ),
+                  if (log.koach != null)
+                    Text(
+                      log.koach!,
+                      style: TextStyle(color: SL.dim, fontSize: 12.5),
+                    ),
+                ],
+                if (!readOnly &&
+                    store.koachOn &&
+                    store.koachAdaptationsFor(widget.week.n, ex).isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 6),
+                    child: Text(
+                      'Koach : ${store.koachAdaptationText(widget.week.n, ex)}',
+                      style: TextStyle(color: SL.dim, fontSize: 12.5),
+                    ),
+                  ),
                 if (prev != null) ...[
                   const SizedBox(height: 6),
                   InkWell(
@@ -1032,7 +1204,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             valueLabel: unresolved ? 'VALEUR' : null,
             effortLabel: readOnly ? 'EFFORT' : null,
           ),
-          for (var i = 0; i < log.sets.length; i++)
+          for (var i = 0; i < log.sets.length; i++) ...[
             _SetRow(
               key: ValueKey('${ex.id}-$i-$epoch'),
               label: store.setLabel(sp, i),
@@ -1045,6 +1217,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               issue: _issues[(k, i)],
               onEdited: readOnly ? null : () => _edited(k, i),
               onCheck: readOnly ? null : () => _checkSet(k, i),
+              onLongPressLabel:
+                  !readOnly && koachSets && log.sets[i].done
+                      ? () => _editEffort(k, i)
+                      : null,
               onTimer:
                   readOnly
                       ? null
@@ -1064,6 +1240,19 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       )
                       : null,
             ),
+            if (koachSets &&
+                log.sets[i].done &&
+                (!readOnly ||
+                    log.sets[i].effort != null ||
+                    log.sets[i].excluded))
+              KoachSetLine(
+                setLabel: store.setLabel(sp, i),
+                effort: store.koachEffortLabel(log.sets[i]),
+                excluded: log.sets[i].excluded,
+                onTap: readOnly ? null : () => _editEffort(k, i),
+              ),
+          ],
+          if (!readOnly) ..._koachCards(k),
           if (readOnly && log.sets.isEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -1384,10 +1573,14 @@ class _SetRow extends StatefulWidget {
   /// Saisie refusée à la coche (KT-009) : champ et explication.
   final SetCheck? issue;
   final VoidCallback? onEdited;
+
+  /// Koach (D11) : appui long sur le numéro d'une série validée.
+  final VoidCallback? onLongPressLabel;
   const _SetRow({
     super.key,
     this.issue,
     this.onEdited,
+    this.onLongPressLabel,
     required this.label,
     required this.entry,
     required this.spec,
@@ -1511,14 +1704,23 @@ class _SetRowState extends State<_SetRow> {
             children: [
               SizedBox(
                 width: _wLabel,
-                child: Text(
-                  widget.label,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: done ? SL.success : SL.dim,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12.5,
-                    fontFeatures: _tab,
+                child: GestureDetector(
+                  onLongPress: widget.onLongPressLabel,
+                  child: Semantics(
+                    onLongPressHint:
+                        widget.onLongPressLabel == null
+                            ? null
+                            : 'difficulté ou série écartée',
+                    child: Text(
+                      widget.label,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: done ? SL.success : SL.dim,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12.5,
+                        fontFeatures: _tab,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -1532,7 +1734,10 @@ class _SetRowState extends State<_SetRow> {
               ),
               if (widget.showRir && !compact) ...[
                 _gap,
-                _f(rir, (t) => e.rir = t, flex: 2),
+                _f(rir, (t) {
+                  e.rir = t;
+                  store.koachRirEdited(e);
+                }, flex: 2),
               ],
               if (widget.showV && !compact) ...[_gap, _f(v, (t) => e.v = t)],
               _gap,
@@ -1638,7 +1843,10 @@ class _SetRowState extends State<_SetRow> {
                 if (widget.showRir)
                   _f(
                     rir,
-                    (t) => e.rir = t,
+                    (t) {
+                      e.rir = t;
+                      store.koachRirEdited(e);
+                    },
                     label: widget.readOnly ? 'Effort' : store.effortLabel,
                   ),
                 if (widget.showRir && widget.showV) _gap,
@@ -1838,6 +2046,17 @@ class _FinishPageState extends State<_FinishPage> {
     // (accueil, Arsenal, notification de rappel). Son décompte attend que la
     // séance soit refermée et sauvegardée.
     nav.pop();
+    // Koach (D5 b) : douleur facultative et propositions, avant le bilan.
+    if (KoachReviewScreen.hasContent(week.n, day.j)) {
+      await closing;
+      if (!nav.mounted) return;
+      await nav.push(
+        MaterialPageRoute<void>(
+          builder: (_) => KoachReviewScreen(week: week.n, day: day.j),
+        ),
+      );
+      if (!nav.mounted) return;
+    }
     checkLevelUp(nav.context, after: closing);
   }
 

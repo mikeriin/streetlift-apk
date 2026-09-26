@@ -681,6 +681,9 @@ class AppStore extends ChangeNotifier {
   /// Questionnaires passés pendant cette ouverture (non persisté).
   final Set<String> koachSkipped = {};
 
+  /// Rappel de pesée reporté pendant cette ouverture (non persisté).
+  bool koachWeighInLater = false;
+
   ke.KoachState? _koachCache;
   int _koachCacheRevision = -1;
   String _koachCacheDay = '';
