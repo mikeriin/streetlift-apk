@@ -1,20 +1,23 @@
  ci-out/analyze.log                                 |     3 -
+ ci-out/android-debug.log                           |    12 -
  ci-out/commit.txt                                  |     2 +-
- ci-out/format-full.diff                            | 10523 -------------------
+ ci-out/format-full.diff                            | 12963 -------------------
  ci-out/format.diff                                 |    20 -
- ci-out/format.log                                  |     2 +-
+ ci-out/format.log                                  |     3 +-
  ci-out/python.log                                  |    15 -
- ci-out/test-l7.log                                 |   246 -
- ci-out/test.log                                    |   775 --
+ ci-out/test-l7.log                                 |    94 -
+ ci-out/test-summary.txt                            |     1 -
+ ci-out/test.log                                    |   623 -
  streetlift_tracker/lib/koach_data.dart             |    30 +-
  streetlift_tracker/lib/koach_engine.dart           |    64 +-
- streetlift_tracker/lib/koach_screens.dart          |    88 +-
- streetlift_tracker/lib/koach_store.dart            |    22 +-
+ streetlift_tracker/lib/koach_screens.dart          |    82 +-
+ streetlift_tracker/lib/koach_store.dart            |    39 +-
  streetlift_tracker/lib/koach_widgets.dart          |     5 +-
- streetlift_tracker/lib/session_screen.dart         |    12 +-
+ streetlift_tracker/lib/session_screen.dart         |    16 +-
+ streetlift_tracker/lib/store.dart                  |     5 +-
  streetlift_tracker/test/l7_koach_engine_test.dart  |    68 +-
  streetlift_tracker/test/l7_koach_off_test.dart     |    28 +-
  streetlift_tracker/test/l7_koach_screens_test.dart |    17 +-
  .../test/l7_koach_simulation_test.dart             |    33 +-
- streetlift_tracker/test/l7_koach_store_test.dart   |   426 +-
- 19 files changed, 457 insertions(+), 11922 deletions(-)
+ streetlift_tracker/test/l7_koach_store_test.dart   |   439 +-
+ 22 files changed, 479 insertions(+), 14083 deletions(-)

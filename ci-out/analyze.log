@@ -1,3 +1,6 @@
 Analyzing streetlift_tracker...                                 
-No issues found! (ran in 18.8s)
-exit=0
+
+warning • The value of the local variable 'kind' isn't used • lib/koach_store.dart:1099:11 • unused_local_variable
+  error • The name 'kind' is already defined • lib/koach_store.dart:1099:11 • duplicate_definition
+
+2 issues found. (ran in 23.6s)
