@@ -2284,6 +2284,7 @@ class AppStore extends ChangeNotifier {
     if (active != null) m['activeWod'] = active.toJson();
     return jsonEncode(m);
   }
+
   String exportCompact() => _pack(exportAll());
 
   /// [limits] : import d'un texte externe (KT-015). Sans limites : état
@@ -4102,7 +4103,8 @@ class AppStore extends ChangeNotifier {
         for (final set in log.ex[e.id]?.sets ?? const <SetEntry>[]) {
           if (!set.done) continue;
           final at = DateTime.tryParse(set.completedAt ?? '');
-          if (page < 0 || (at != null && (last == null || !at.isBefore(last)))) {
+          if (page < 0 ||
+              (at != null && (last == null || !at.isBefore(last)))) {
             page = g;
             last = at ?? last;
           }
