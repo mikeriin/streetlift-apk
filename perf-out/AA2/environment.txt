@@ -1,0 +1,16 @@
+commit=23e4e2a63841e96f091c1d0a8a983f49ca22f2d1
+date=2026-09-26T16:18:26Z
+Flutter 3.29.3 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision ea121f8859 (1 year, 6 months ago) • 2025-04-11 19:10:07 +0000
+Engine • revision cf56914b32
+Tools • Dart 3.7.2 • DevTools 2.42.3
+CPU(s):                                  2
+Model name:                              AMD EPYC 7763 64-Core Processor
+               total        used        free      shared  buff/cache   available
+Mem:            7938        1502        2170          45        4625        6435
+base_lib=eea065ab06d8e082b15e31e05b55fdb7b3d5e27346273c26013ac44e61b05867  -
+cand_lib=ead8dc2efac43741c5d20b8f4672302b7ee59cb1032b3ce2de47f0aaea49dcce  -
+fixture=b22726f9b2457db504104aa3fb85ce731ec832c218d2ad9bb88388c06d9fb7da  streetlift_tracker/test/support/perf_fixtures.dart
+7233c93d8bf94eb0114b572eb46b2f68f222b95d272050c7a488c4d806709276  streetlift_tracker/test/l6_perf_bench_test.dart
+baseline/streetlift_tracker/test/support/perf_fixtures.dart streetlift_tracker/test/support/perf_fixtures.dart differ: byte 4817, line 142
+baseline/streetlift_tracker/test/l6_perf_bench_test.dart streetlift_tracker/test/l6_perf_bench_test.dart differ: byte 6822, line 213
