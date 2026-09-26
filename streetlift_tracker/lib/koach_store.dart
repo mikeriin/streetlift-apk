@@ -1301,12 +1301,13 @@ extension KoachStore on AppStore {
       case 'system':
         final pdc = values['B4']!;
         final rm = values[s.ref!] ?? 0;
-        final lest = ((pdc + rm) * s.pct! - pdc) * f;
+        final lest = ((pdc + rm) * ProfileStore(this).profilePct(s) - pdc) * f;
         final g = ((eq['plate'] as Map)['step'] as num).toDouble();
         final r = f < 1 ? ke.floorGrid(lest, g) : ke.nearGrid(lest, g);
         return r < 0 ? 0.0 : r;
       case 'barbell':
-        final bar = (values[s.ref ?? 'B11'] ?? 0) * s.pct! * f;
+        final bar =
+            (values[s.ref ?? 'B11'] ?? 0) * ProfileStore(this).profilePct(s) * f;
         final g = ((eq['barbell'] as Map)['step'] as num).toDouble();
         return f < 1 ? ke.floorGrid(bar, g) : ke.nearGrid(bar, g);
       case 'acc':

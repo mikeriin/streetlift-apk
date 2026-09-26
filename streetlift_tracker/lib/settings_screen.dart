@@ -8,10 +8,11 @@ import 'ui.dart';
 import 'notification_settings.dart';
 import 'pilotage_screen.dart';
 import 'program_start.dart';
+import 'profile_screens.dart';
 import 'store.dart';
 import 'store_widget.dart';
 
-const kAppVersion = '3.0.3';
+const kAppVersion = '3.1.0';
 
 class SettingsScreen extends StatelessWidget {
   final int? section;
@@ -287,6 +288,26 @@ class SettingsScreen extends StatelessWidget {
             onTap: () => eraseAppData(context, appVersion: kAppVersion),
           ),
           const _Sec('Programme'),
+          // L8 : profil, santé et mode prudent (KT-038 à KT-043).
+          _Action(
+            key: const ValueKey('settings-profile'),
+            icon: Icons.person_outline,
+            color: SL.accent,
+            title: 'Profil',
+            subtitle: switch ((store.profile, store.caution.active)) {
+              (null, _) =>
+                store.needsProfileConfirmation
+                    ? 'Pré-rempli, à vérifier · rien ne change sans toi'
+                    : 'À créer',
+              (_, true) => 'Objectifs, disponibilités, santé · mode prudent',
+              _ => 'Objectifs, disponibilités, lieux, santé',
+            },
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(builder: (_) => const ProfileScreen()),
+                ),
+          ),
           _Action(
             key: const ValueKey('settings-program-start'),
             icon: Icons.event_rounded,

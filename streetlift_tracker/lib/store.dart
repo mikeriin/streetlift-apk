@@ -17,6 +17,7 @@ import 'koach_engine.dart' as ke;
 import 'koach_program.dart';
 import 'models.dart';
 import 'persistence.dart';
+import 'profile.dart';
 import 'training_estimate.dart';
 import 'progression.dart';
 import 'set_validation.dart';
@@ -27,9 +28,11 @@ import 'wod_models.dart';
 export 'koach_data.dart';
 export 'koach_program.dart';
 export 'persistence.dart';
+export 'profile.dart';
 export 'set_validation.dart' show SetCheck, SetField;
 
 part 'koach_store.dart';
+part 'profile_store.dart';
 
 class SetEntry {
   String kg;
@@ -687,6 +690,13 @@ class AppStore extends ChangeNotifier {
   /// persistées ; estimations et propositions recalculées depuis le
   /// journal, jamais sauvegardées (D31). Contrat : docs/CONTRAT_L7.md.
   KoachData koach = KoachData();
+
+  /// Profil (L8, KT-038) : null tant qu'il n'a été ni créé au démarrage
+  /// ni confirmé (installation existante). Contrat : docs/CONTRAT_L8.md.
+  UserProfile? profile;
+
+  /// Entrées du profil illisibles ignorées au dernier démarrage.
+  int profileLoadIssues = 0;
 
   /// Annotations du programme pour Koach (asset généré, lecture seule).
   /// Vide si l'asset est illisible : Koach reste alors indisponible.
@@ -2346,6 +2356,7 @@ class AppStore extends ChangeNotifier {
     weeklyIds: _weeklyIdsStored,
     wishlist: wishlist.toList(),
     koach: koach,
+    profile: profile,
   );
 
   Map<String, dynamic> _backupJson(_BackupData data) {
@@ -2404,6 +2415,9 @@ class AppStore extends ChangeNotifier {
       // L7 : section écrite seulement si Koach a servi (export identique à
       // 2.5.9 sinon) ; ignorée par les versions antérieures.
       if (!data.koach.pristine) 'koach': data.koach.toJson(),
+      // L8 : profil écrit seulement s'il existe (export identique à 3.0.x
+      // sinon) ; ignoré par les versions antérieures.
+      if (data.profile != null) 'profile': data.profile!.toJson(),
     };
   }
 
@@ -2693,6 +2707,13 @@ class AppStore extends ChangeNotifier {
       strict: limits != null,
       issues: koachIssues,
     );
+    // L8 : profil. Import strict ; démarrage tolérant (entrée ignorée).
+    final profileIssues = <String>[];
+    final nextProfile = UserProfile.fromJson(
+      m['profile'],
+      strict: limits != null,
+      issues: profileIssues,
+    );
     final nextUnlocked = <String, int>{};
     final nextLegacy = <String, String>{};
     (m['legacyGrants'] as Map<String, dynamic>? ?? {}).forEach((k, v) {
@@ -2798,6 +2819,8 @@ class AppStore extends ChangeNotifier {
       wishlist: nextWishlist,
       koach: nextKoach,
       koachIssues: koachIssues.length,
+      profile: nextProfile,
+      profileIssues: profileIssues.length,
     );
   }
 
@@ -2884,6 +2907,8 @@ class AppStore extends ChangeNotifier {
       ..addAll(data.wishlist);
     koach = data.koach;
     koachLoadIssues = data.koachIssues;
+    profile = data.profile;
+    profileLoadIssues = data.profileIssues;
     koachSkipped.clear();
     _koachStash.clear();
     _koachCache = null;
@@ -3453,11 +3478,14 @@ class AppStore extends ChangeNotifier {
       case 'system':
         final pdc = values['B4']!; // présence vérifiée (loadNeedsReference)
         final rm = values[s.ref!] ?? 0;
-        final raw = (pdc + rm) * s.pct! - pdc;
+        final raw = (pdc + rm) * ProfileStore(this).profilePct(s) - pdc;
         final r = _round(raw, 2.5);
         return r < 0 ? 0.0 : r;
       case 'barbell':
-        return _round((values[s.ref ?? 'B11'] ?? 0) * s.pct!, 2.5);
+        return _round(
+          (values[s.ref ?? 'B11'] ?? 0) * ProfileStore(this).profilePct(s),
+          2.5,
+        );
       case 'acc':
         final ref = values[s.ref!] ?? 0;
         final rr = refReps[s.ref!] ?? 10;
@@ -4527,6 +4555,10 @@ class ImportPreview {
 
   /// Séances avec réponses aux questionnaires (sommeil, forme, douleur).
   int get koachAnswers => _data.koach.answers.length;
+
+  /// L8 : profil présent dans le fichier, et réponses de santé.
+  bool get profilePresent => _data.profile != null;
+  bool get profileHealth => _data.profile?.health.hasHealthContent ?? false;
 }
 
 class _BackupData {
@@ -4551,6 +4583,10 @@ class _BackupData {
   /// L7 : décisions Koach (neuves si la section est absente).
   final KoachData koach;
   final int koachIssues;
+
+  /// L8 : profil (null si la section est absente).
+  final UserProfile? profile;
+  final int profileIssues;
   _BackupData({
     required this.values,
     required this.refStatus,
@@ -4573,6 +4609,8 @@ class _BackupData {
     this.wishlist = const [],
     KoachData? koach,
     this.koachIssues = 0,
+    this.profile,
+    this.profileIssues = 0,
   }) : koach = koach ?? KoachData();
 }
 

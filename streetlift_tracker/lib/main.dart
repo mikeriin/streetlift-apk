@@ -19,6 +19,7 @@ import 'arsenal_screen.dart';
 import 'stats_screen.dart';
 import 'stats_navigation.dart';
 import 'settings_screen.dart';
+import 'profile_screens.dart';
 import 'store.dart';
 
 Future<void> main() async {
@@ -28,7 +29,7 @@ Future<void> main() async {
   runApp(
     AppStartup(
       initialization: store.init(),
-      appBuilder: (_) => const SLApp(),
+      appBuilder: (_) => const SLApp(profileGate: true),
       errorBuilder:
           (error, stack) => _InitErrorApp(error: '$error', stack: '$stack'),
       isDark:
@@ -155,7 +156,12 @@ final appNavigator = GlobalKey<NavigatorState>();
 /// reconstruit l'arbre existant sans le recréer : navigation, routes
 /// ouvertes, saisies, séance et chronos gardent leur état.
 class SLApp extends StatefulWidget {
-  const SLApp({super.key});
+  /// L8 : démarrage court (installation neuve) ou confirmation du profil
+  /// (installation existante) avant l'accueil. Activé par [main] ; les
+  /// tests de parcours existants construisent l'application sans ce
+  /// premier écran, les tests L8 l'activent.
+  final bool profileGate;
+  const SLApp({super.key, this.profileGate = false});
 
   @override
   State<SLApp> createState() => _SLAppState();
@@ -236,7 +242,7 @@ class _SLAppState extends State<SLApp> with WidgetsBindingObserver {
         SL.accentSpec = accent;
         return child ?? const SizedBox.shrink();
       },
-      home: const RootNav(),
+      home: widget.profileGate ? const ProfileGate(child: RootNav()) : const RootNav(),
     );
   }
 }

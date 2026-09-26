@@ -1,8 +1,92 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : L5 — Finition globale et six couleurs dominantes (version candidate)**  
+**Passe actuelle : L6 — Performance (KT-023), version candidate**  
+**Date : 26 septembre 2026, Europe/Paris — version : 3.0.3+64 (versionCode réel fixé par la CI de build)**  
+**Statut : version candidate L6 : reconstructions des zones masquées différées, caches WOD corrigés, comparaisons de sauvegarde sans JSON. Apparence, données, format de sauvegarde et règles métier inchangés. Testé en CI sur l'arbre livré (format sans changement, analyse sans problème, **570 tests Dart réussis, 12 ignorés** — rendus et banc facultatifs —, Python 63/63, `verify_project.py`, compilation Android debug) ; banc hôte A/B ; rendus L5 rejoués (79/81 identiques au pixel, 2 = horloge). Aucune mesure sur téléphone. Mesures : `docs/PERFORMANCE.md`. ZIP, publication et build signé : `LIVRAISON_L6.md`.**
+
+## L6.0 — Demande, base et outils
+
+| Élément | Valeur | Nature de la preuve |
+| --- | --- | --- |
+| Demande | `prompt_L6_performance_globale_kalis_track.txt` (26/09/2026, 17 h 57) : mesurer, optimiser les coûts justifiés, vérifier ; autorisation d'appliquer les optimisations locales et vérifiables sans validation écran par écran ; une livraison globale ; ne pas refaire L5, ne pas lancer L7 | Déclaration du propriétaire |
+| Arbitrages demandés (26/09/2026, 18 h 0x) | 1) Exécution des tests et mesures sur la branche temporaire `claude/ci-tools` : **oui** (le prompt dit « aucun dépôt distant modifié », mais Flutter n'est pas installable ici). 2) Publication : **« Publier sur main + build »** (consigne permanente, confirmée pour L6 malgré le prompt qui la réservait à L7) | Réponses du propriétaire |
+| Base | `streetlift_tracker_v33.zip` **L5 3.0.2+63** : 1 741 593 octets, 377 fichiers, racine `streetlift_tracker/`, SHA-256 `95a1578cf35f92e5839f1b3f814e5ea2b4aa7ae6c10e4a2f21f47f8f9061fd0c` (recalculé, identique à `LIVRAISON_L5_GLOBALE.md`), tirée de `main` `6e94618` ; `build-apk.yml` identique à celui de `main` | Recalcul dans cette passe |
+| Début de L6 existant | Aucun (ni section L6, ni `docs/PERFORMANCE.md`) | Lecture du suivi |
+| Confirmations disponibles | Aucun résultat d'essai sur téléphone transmis pour L5 (ni pour les lots précédents). L'autorisation de passer à L6 ne valide pas L5 : ses vérifications téléphone restent ouvertes | Historique des échanges |
+| Blocage préalable | Aucun : la base compile, s'analyse et passe ses tests (état initial ci-dessous) | CI |
+| Outils | Pas de Flutter local (proxy : `storage.googleapis.com`, `pub.dev` refusés). Flutter 3.29.3 / Dart 3.7.2 en CI GitHub (runners 2 vCPU). Émulateur Android sur runner : voir L6.3. Aucun téléphone relié | Constaté |
+| État initial des tests (base + banc, commit `2f0293c`) | Format 0 changement, analyse sans problème, **564 réussis, 11 ignorés** (4 rendus L5 + 7 tests du banc, facultatifs), Python 58/58, compilation debug | CI run n° 69 |
+
+## L6.1 — Optimisations conservées
+
+| # | Coût initial (preuve) | Cause | Modification | Risque et parade | Résultat |
+| --- | --- | --- | --- | --- | --- |
+| O1 | Chaque notification du store (une frappe dans une série en est une) reconstruisait les onglets visités même masqués : 93 ms (hôte) par frappe et 152–175 ms par validation, séance ouverte par-dessus les 4 onglets ; STATS affiché : 114–165 ms par notification | IndexedStack et routes gardent les onglets montés ; `ListenableBuilder(store)` ne tient pas compte de la visibilité | `lib/store_widget.dart` : `StoreBuilder` et `StoreWidget` notent la notification quand la zone est masquée (`TickerMode` désactivé : onglet non affiché, section STATS non affichée, route recouverte) et se reconstruisent une fois dès qu'elle redevient visible, avant d'être peinte. Visibilité lue par `TickerMode.getNotifier` (sans dépendance : un changement d'onglet sans modification ne reconstruit rien). Utilisé par PROGRAMME, STATS (par section), ARSENAL, RÉGLAGES et les cartes `StoreWidget` | Zone restée périmée : tests « à jour dès la première image » (onglet, section, retour de séance). Changement de couleur/mode : chemin L5 inchangé (`_refreshDescendants` marque tout), rendus identiques | Frappe et validation : plus d'image nécessaire (0,04–0,08 ms). STATS visible : 16 ms. **Contrepartie** : la première image du retour d'une séance coûte ~40 ms de plus (une reconstruction de l'onglet affiché, au lieu d'une par frappe) |
+| O2 | Estimation d'un WOD : clé JSON reconstruite à chaque lecture (10,7 ms pour 1 000 lectures en cache) ; cache FIFO borné à 1 024 : avec 1 050 WOD, chaque passage complet recalcule tout (117 ms) | Clé = `jsonEncode(prescription, résultats)` ; borne inférieure au nombre de WOD | `_EstimateEntry` : copie des mêmes champs, comparée champ à champ (même validité que l'ancienne clé) ; borne = max(1 024, nombre de WOD + 64) ; l'entrée mise à jour passe en fin de file | Estimation périmée : tests de mutation sur place (lignes, intervalle, notes, tours, résultats ajoutés/modifiés/supprimés, intervalles Tabata) ; valeurs = calcul direct | 0,21–0,27 ms le passage complet ; empreintes des estimations identiques |
+| O3 | Sauvegarde : 1 000 WOD du catalogue encodés en JSON à chaque écriture pour les comparer à l'original ; `wodStats` : deux encodages par appel (18 ms pour tout le catalogue) | Comparaison par chaîne JSON | `_sameDefinition` : comparaison champ à champ, équivalent exact (textes, entiers, liste de textes) ; `_statsDefinitions` garde une copie de définition au lieu d'un JSON ; `_seedJson` supprimé | Modification non détectée : tests (nom, ligne à nombre constant, intervalle, retour à l'identique) ; export identique (empreintes) | Encodage de sauvegarde : 4,0 → 0,45 ms (neuf), 8,8 → 4,7 ms (régulier) ; `wodStats` : 18 → 0,74 ms |
+| O4 | Classement du catalogue (démarrage, import) : 23 ms | Chaque score de WOD calculé deux fois | Score du WOD d'origine réutilisé si la définition est identique | Niveau faux : test « niveau = calcul direct » (WOD modifié, WOD perso) ; empreinte des niveaux identique | 12,2 ms |
+
+Aucune optimisation n'a été retirée après mesure. Aucun changement de schéma, de stockage, de framework d'état, de dépendance ou de chaîne Flutter/Android ; format de sauvegarde 3 inchangé.
+
+## L6.2 — Examinés, conservés tels quels
+
+| Parcours | Constat | Décision |
+| --- | --- | --- |
+| Chronomètres | `WodClock` (200 ms) ne notifie que si l'affichage change ; `TimerCtl` (1 s) n'est écouté que par la barre du chrono ; règles de temps L4b (horloge monotone, rattrapage) | Rien à gagner démontré ; inchangés |
+| Écriture | File unique, regroupement des demandes, accusé de l'API, restauration du document précédent en cas d'échec (L2/L2b) | Inchangée (seule la comparaison des WOD est plus légère). Encodage + compression d'un long journal : 35–121 ms (hôte) par écriture, différée de 600 ms. Le déplacer hors du fil de l'interface demanderait une copie de l'état et une gestion d'ordre ; **proposition** non appliquée |
+| Progression / jeu | 13,5 ms (long) à 42 ms (chargé), hôte, après chaque validation | Inchangés ; désormais calculés une fois à l'écriture ou à l'affichage, plus dans les onglets masqués |
+| Carte musculaire (`weeklyMuscles`) | 11–35 ms (hôte), lit toute l'histoire | Inchangée ; n'est plus recalculée quand la section Performances est masquée |
+| Flou du dock | `BackdropFilter` (σ 20) sous un fond opaque à 94 % | Conservé (effet approuvé). Son coût GPU n'est pas mesurable sans appareil ; le supprimer changerait le rendu : **proposition à mesurer sur téléphone**, non appliquée |
+| Démarrage des données | 43–387 ms (hôte) selon le profil ; écart base/candidate non démontré hors classement | Inchangé |
+| Catalogue (écran) | Ouverture, recherche, défilement : gain non démontré | Inchangé |
+
+## L6.3 — Mesures
+
+Résumé : `docs/PERFORMANCE.md` §4 à §7. Résultats bruts : `validation/3.0.3/perf-host-AB3/` (12 fichiers JSON Lines, journaux, synthèse), A/A de calibrage : `validation/3.0.3/perf-host-AA3/`, rendus : `validation/3.0.3/rendus-L5-L6.txt`.
+
+**Émulateur (niveau 3) : non exécuté.** Banc dans l'application livré (`tools/perf_device/` : APK profile dont le point d'entrée est un test `integration_test`, résultats `Stopwatch` et `FrameTiming` ; lancement du processus par `am start -W`). APK profile x86_64 de l'application et du banc construits en CI pour la base et la candidate, banc analysé sans problème ; l'émulateur n'a pas démarré (2 tentatives : API 34 en 600 s, API 30 en 1 500 s). Aucune durée d'émulateur rapportée. **Téléphone (niveau 4) : non mesuré** ; protocole : `docs/PERFORMANCE.md` §8.
+
+## L6.4 — Tests
+
+| Contrôle | Résultat | Où |
+| --- | --- | --- |
+| Formatage | 109 fichiers, 0 changement | CI, commit `ebff3c6` (lib, test, pubspec identiques au ZIP) |
+| Analyse | No issues found | idem |
+| Suite complète | **570 réussis, 12 ignorés** (4 rendus facultatifs, 8 tests du banc), 0 échec | idem |
+| Tests ciblés rejoués | 155 réussis, 11 ignorés : `l6_*`, `l5c_*`, `motion`, `ui_refactor`, `level_fill`, `l2b_data_control`, `programme`, `l4_depart`, `reward_flow` | idem |
+| Python | 63/63 (dont 5 nouveaux : `test_perf_compare.py`) ; `verify_project.py` : 40 semaines, 280 jours, 1 812 exercices | idem |
+| Android | `flutter build apk --debug` (arm64) réussi | idem |
+| Rendus L5 rejoués sur la candidate | 81 rendus (rouge avant/après, 13 écrans × clair/sombre, 15 écrans à 320 px × 200 %, **6 couleurs × clair/sombre**, sélecteur) : **79 identiques au pixel** ; 2 diffèrent seulement par le compte à rebours de la boutique (« encore 6 h 51 » / « encore 4 h 21 ») | `tools/compare_renders.py`, CI |
+| Résultats métier | 40 empreintes sur 40 identiques (4 profils) | Banc AB3 |
+
+Nouveaux tests (`test/l6_perf_test.dart`, 6) : export (modification à nombre de lignes constant, retour à l'identique, niveau et résultats hors définition) ; estimation WOD (réutilisation, 12 mutations sur place, égalité au calcul direct, nom hors clé) ; plus de 1 024 WOD (second passage réutilisé) ; statistiques et niveaux = calcul direct ; STATS masqué à jour dès la première image ; séance par-dessus les onglets (≥ 40 notifications différées, historique à jour dès la première image du retour, une reconstruction par zone). Aucun test retiré ni affaibli.
+
+Contrats rejoués par la suite complète (non modifiés) : sauvegarde échouée, achats doublés, écritures concurrentes (L2) ; import/export, limites, suppression locale (L2b) ; essai à minuit, sélection stable, résultat unique (L3) ; départ et références (L4) ; brouillons, reprise, chronos (L4b) ; Koach (L7) ; six couleurs, modes, préférence après réouverture, 320 px, texte 200 %, sémantique (L5).
+
+## L6.5 — KT-023
+
+| Volet | État |
+| --- | --- |
+| Code amélioré | Oui : O1 à O4 |
+| Équivalence fonctionnelle testée | Oui : 6 tests L6, suite complète, empreintes métier, rendus L5 |
+| Mesures hôte | Oui : banc A/B, 6 manches (JIT, pas un téléphone) |
+| Mesures appareil | Non : émulateur non démarré (2 tentatives), aucun téléphone ; banc et protocole livrés |
+| Validation utilisateur | Non (à faire, 5 vérifications de `LIVRAISON_L6.md`) |
+
+KT-023 reste **ouvert** : aucune mesure sur téléphone, régression mesurée de la première image au retour de séance à confirmer sur appareil, flou du dock et écriture d'un long journal à mesurer.
+
+## L6.6 — Limites et suites
+
+- Aucune mesure sur téléphone ; aucune mesure de batterie. Le banc hôte tourne en JIT/debug, sans GPU.
+- La première image du retour d'une séance est plus lourde (une reconstruction de l'onglet affiché) ; l'animation de retour complète +34 % (long) sur l'hôte.
+- Propositions non appliquées : écriture d'un long journal hors du fil de l'interface ; mesure du flou du dock sur téléphone avant toute décision de design.
+- Branche temporaire `claude/ci-tools` : à supprimer de ton côté.
+
+# Historique conservé — L5 (3.0.2)
+
+**Passe : L5 — Finition globale et six couleurs dominantes (version candidate 3.0.2, publiée sur `main`, build n° 83)**  
 **Date : 26 septembre 2026, Europe/Paris — version : 3.0.2+63 (versionCode réel fixé par la CI de build)**  
-**Statut : ⟨STATUT⟩**
+**Statut : version candidate globale L5 : six couleurs dominantes (rouge par défaut) et finition des écrans, sans changement de données hors la préférence de couleur. Testé en CI sur l'arbre livré (format sans changement, analyse sans problème, **564 tests Dart réussis, 4 ignorés** — 3 rendus facultatifs et l'ancien rendu 2.5.0 —, Python 58/58, `verify_project.py`, compilation Android debug) ; rendus Flutter de test produits ; aucune vérification sur téléphone. ZIP, publication et build signé : `LIVRAISON_L5_GLOBALE.md`.**
 
 ## L5.0 — Demande, base et outils
 
@@ -40,7 +124,22 @@
 
 ## L5.3 — Tests
 
-⟨TESTS⟩
+| Contrôle | Résultat | Où |
+| --- | --- | --- |
+| État initial (base 3.0.1) | 537 tests Dart réussis, 1 ignoré (LC1b, run n° 81) ; rendus « avant » produits sur la base avec les mêmes tests de rendu | CI, branche temporaire |
+| Formatage | 106 fichiers, 0 changement | CI, commit `d5cf393` (arbre identique au ZIP pour `lib/`, `test/`, `pubspec.yaml`) |
+| Analyse | No issues found | idem |
+| Suite complète | **564 réussis, 4 ignorés** (tests de rendu facultatifs), 0 échec | idem |
+| Tests ciblés rejoués | 149 réussis, 3 ignorés : `l5c_*`, `motion_test`, `ui_refactor_test`, `level_fill_test`, `l2b_data_control_test`, `programme_test`, `l4_depart_test`, `reward_flow_test` | idem |
+| Python | 58/58 ; `verify_project.py` : 40 semaines, 280 jours, 1 812 exercices, 505 exercices de base | idem |
+| Android | `flutter build apk --debug` (arm64) réussi | idem |
+| Rendus Flutter de test | 3 fichiers de rendu, tous sans exception : rouge avant/après (5 vues × 2 modes), 13 écrans × 2 modes + PROGRAMME 320 × 200 %, 15 écrans à 320 × 200 %, 6 couleurs × 2 modes × (PROGRAMME, RÉGLAGES), sélecteur et PROGRAMME Jaune à 320 × 200 % | idem ; images livrées à part |
+
+Nouveaux tests (27) :
+- `test/l5c_couleur_test.dart` (15) : six familles et repli rouge ; valeurs historiques exactes du rouge ; **12 combinaisons** : contrastes calculés (accent ≥ 4,5 sur 5 fonds, texte sur principale et sur vive ≥ 4,5, puce sélectionnée ≥ 4,5, `onPrimary` ≥ 4,5, vive ≥ 3 sur le fond sauf rouge sombre documenté, jauges visibles) ; rôles fixes identiques dans toutes les palettes ; thème Material par combinaison ; préférence : neuve, réouverture, indépendance du mode, choix rapides, échec d'écriture puis reprise, export, ancienne sauvegarde sans champ, valeur inconnue sans refus, suppression locale, XP/crédits/droits/dates/journal inchangés.
+- `test/l5c_selecteur_test.dart` (12) : grille à 320/390/600 px et 100/130/200 % (colonnes, 48 px, pas de débordement), sémantique (bouton, groupe exclusif, coché), choix rapides dans l'écran, message « non enregistrés », changement de couleur avec route de séance empilée et saisie en cours (mêmes objets d'état, texte conservé, composant recoloré, **journal identique**), mode Système (luminosité suivie, couleur conservée), six couleurs × clair/sombre dans l'application.
+- Tests existants adaptés : `ui_refactor_test.dart` (« les actions de sauvegarde ») : `ensureVisible` avant deux appuis, la page étant plus courte (titre sans mot coupé). Aucune assertion retirée, aucun test désactivé ; la garantie « semaine entière visible à 390 × 844 » (`programme_test.dart`) est conservée — elle a conduit à placer la semaine dans l'en-tête.
+
 
 ## L5.4 — Limites et suites
 

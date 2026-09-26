@@ -12,6 +12,7 @@ import 'store.dart';
 import 'estimate_view.dart';
 import 'koach_engine.dart' as ke show KSuggestion;
 import 'koach_screens.dart' show KoachReviewScreen;
+import 'profile_screens.dart' show showProgressiveQuestion;
 import 'koach_widgets.dart';
 import 'pilotage_screen.dart';
 import 'set_validation.dart' show checkSet;
@@ -1103,6 +1104,25 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       _chip('Repos final ${fmt(finalRest)}', SL.dim),
                   ],
                 ),
+                // L8 (KT-041) : consigne du mode prudent.
+                if (!readOnly && store.cautionNote(ex) != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 6),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(Icons.shield_outlined, size: 16, color: SL.accent),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: Text(
+                            store.cautionNote(ex)!,
+                            key: ValueKey('caution-${ex.id}'),
+                            style: TextStyle(color: SL.dim, fontSize: 12.5),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 if (readOnly &&
                     (log.prescribed != null || log.koach != null)) ...[
                   const SizedBox(height: 6),
@@ -2088,6 +2108,15 @@ class _FinishPageState extends State<_FinishPage> {
           builder: (_) => KoachReviewScreen(week: week.n, day: day.j),
         ),
       );
+      if (!nav.mounted) return;
+    }
+    // L8 (KT-040) : au plus une question progressive, après la séance.
+    final key = store.sessionKey(week.n, day.j);
+    final question = store.progressiveQuestionFor(key);
+    if (question != null) {
+      await closing;
+      if (!nav.mounted) return;
+      await showProgressiveQuestion(nav.context, question, key);
       if (!nav.mounted) return;
     }
     checkLevelUp(nav.context, after: closing);

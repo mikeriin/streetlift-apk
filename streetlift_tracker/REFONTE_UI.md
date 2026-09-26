@@ -4,6 +4,8 @@ Mise à jour : 26 septembre 2026. Base **3.0.1+62** (LC1b, SHA-256 `615bb1b0…d
 
 **Autorisation en vigueur** : prompt `prompt_L5_global_tous_ecrans_kalis_track.txt` (26/09/2026, 15 h 58). Il remplace la proposition préalable (L5-A) et la validation écran par écran : finition de tous les écrans et six couleurs autorisées directement. Cette autorisation porte sur le travail, **pas** sur la validation du résultat, qui reste à faire sur téléphone.
 
+**L6 — Performance (3.0.3+64, 26/09/2026)** : aucun changement visuel voulu ni constaté. Les 81 rendus de test L5 (rouge avant/après, 13 écrans × clair/sombre, 15 écrans à 320 px × 200 %, 6 couleurs × clair/sombre, sélecteur) ont été rejoués sur la candidate : 79 identiques au pixel, 2 (catalogue WOD clair/sombre) ne diffèrent que par le compte à rebours de la boutique (`validation/3.0.3/rendus-L5-L6.txt`). Changement de comportement non visuel : un onglet ou une section STATS masqué se met à jour en réapparaissant (et non plus en arrière-plan) ; le changement de couleur ou de mode garde son chemin L5. Téléphone : Non.
+
 Colonnes : **Autorisé** (demande du propriétaire) · **Codé** · **Tests** (exécutés en CI sur cette version) · **Rendu** (rendu Flutter de test vérifié ; ni capture d'APK ni essai sur appareil) · **Téléphone** (validation du propriétaire, toujours « Non » à la livraison).
 
 ## Décisions de couleur (historique conservé)
