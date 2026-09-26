@@ -70,12 +70,16 @@ jobs:
         run: |
           rm -rf ../ci-out/captures && mkdir -p ../ci-out/captures
           : > ../ci-out/captures.log
-          while read -r file tag; do
+          while read -r file tag src; do
             [ -z "$file" ] && continue
             TZ=Europe/Paris timeout 1200 flutter test --no-pub --timeout 600s --reporter expanded \
               --dart-define=KALIS_CAPTURE=true --dart-define=KALIS_CAPTURE_TAG="${tag:-apres}" \
               --dart-define=KALIS_CAPTURE_DIR=../ci-out/captures "$file" >> ../ci-out/captures.log 2>&1
             echo "exit $file=$?" >> ../ci-out/captures.log
+            if [ -n "$src" ] && [ -d "$src" ]; then
+              for f in "$src"/*.png; do cp "$f" "../ci-out/captures/${tag}_$(basename "$f")"; done
+              rm -rf "$src"
+            fi
           done < ../ci-captures
           ls -la ../ci-out/captures >> ../ci-out/captures.log
       - name: Publier tests ciblés
