@@ -827,6 +827,17 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                     ),
                   ],
                 ),
+                if (!readOnly)
+                  if (store.missingReference(ex) case final ref?)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 6),
+                      child: Text(
+                        'Référence non renseignée : ${store.referenceLabel(ref)}. '
+                        'Menu ⋮ → Références quand tu la connais ; rien n’est calculé à sa place.',
+                        key: ValueKey('missing-ref-${ex.id}'),
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
                 const SizedBox(height: 6),
                 Wrap(
                   spacing: 6,

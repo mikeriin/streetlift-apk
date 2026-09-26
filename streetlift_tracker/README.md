@@ -1,4 +1,15 @@
-# Kalis Track 2.5.7 — Boutique de WODs façon jeu
+# Kalis Track 2.5.8 — Boutique de WODs façon jeu
+
+## 2.5.8 — Ton départ, tes références (lot L4)
+
+- **Nouvelle installation** : le programme n'est plus calé sur la date du créateur. L'accueil propose « Choisir mon départ » : la date choisie devient ta séance S1 · J1, quel que soit le jour (jusqu'à 280 jours en arrière pour une reprise, jusqu'à un an à l'avance). « Plus tard » est possible ; tant que le départ n'est pas choisi, les semaines restent consultables et aucun rappel n'est envoyé.
+- **Références** : aucune valeur n'est inventée. Poids du corps, 1RM et maxima sont « non renseignés » tant que tu ne les saisis pas (« Je ne sais pas » accepté, aucun test maximal exigé) ; les charges et volumes concernés affichent « à renseigner », les attributs « indisponible » ou « calcul partiel ».
+- **Installation existante** : rien ne bouge. Ton calendrier (départ du 13/07/2026), ta semaine en cours, tes séances et leurs dates, tes crédits, tes WODs et tes résultats sont conservés ; tes références restent utilisées, marquées « à vérifier » (« C'est bien ma valeur » quand tu veux).
+- **Changer de départ** : Réglages → Programme → Départ du programme, avec l'effet affiché avant de confirmer (« S11 · J6 → S1 · J6 ») ; les séances faites gardent leur semaine, leur jour et leur date réelle ; les rappels sont replanifiés.
+- **Fin du programme** : après S40 · J7, « Programme terminé » ; aucun nouveau cycle.
+- Sauvegardes : le départ et la provenance des références sont exportés et restaurés ; une ancienne sauvegarde garde le calendrier du 13/07/2026.
+
+Détail : `docs/DEPART_PROGRAMME.md`, `SUIVI_PROJET.md` (L4). Tests : `test/l4_depart_test.dart`.
 
 ## 2.5.7 — Bloc 2 (S12-S19) révisé (lot LC1)
 
