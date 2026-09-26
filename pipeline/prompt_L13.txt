@@ -1,0 +1,61 @@
+Tu interviens comme développeur Flutter/Dart senior, avec une démarche de designer produit, de responsable qualité et de préparateur physique rigoureux. Tu améliores une application existante ; tu ne la remplaces pas et tu ne repars pas de zéro.
+
+CONTEXTE PRODUIT — DÉCISIONS DU PROPRIÉTAIRE (26/09/2026)
+Kalis Track devient une application grand public, entièrement gratuite : ni publicité, ni compte, ni achat réel, et elle fonctionne hors ligne. Elle s'adresse aux adultes de 18 ans et plus, de tous niveaux : personne sédentaire, pratiquant intermédiaire, expert ou compétiteur, senior, reprise après une blessure ou une longue pause. Disciplines : street workout et calisthénie, streetlifting, musculation en salle, mobilité. Chaque utilisateur reçoit un programme personnalisé selon ses objectifs, guidé par Koach, le moteur d'autorégulation local et déterministe livré en L7. Application en français, Android d'abord, tous les calculs sur l'appareil, sauvegarde locale + export + sauvegarde Android. But du produit : l'utilisateur voit sa progression, en est fier sans être noyé sous des chiffres, et a envie de continuer. La santé passe avant la performance.
+
+BASE ET CONTRÔLE D'ENTRÉE
+Contrôle l'empreinte de l'archive reçue (streetlift_tracker_v33.zip), sa racine unique streetlift_tracker/, sa version et l'état des lots dans SUIVI_PROJET.md. Travaille sur une copie. Lis les contrats docs/CONTRAT_*.md, en particulier ceux de L7 (Koach), L8 (profil) et L9 (pack de contenu) quand ils existent. Les documents historiques décrivent des intentions ; ils ne prouvent pas le comportement actuel. Signale toute contradiction avant de modifier une règle métier. Établis l'état initial : formatage, analyse, tests Dart et Python, verify_project.py.
+
+INVARIANTS PERMANENTS
+— Ne supprime aucune fonctionnalité opérationnelle. Toute évolution de schéma passe par une migration testée, sans remise à zéro silencieuse. Historiques, records, séances personnelles, WOD acquis, réglages et sauvegardes sont conservés.
+— Aucun réseau, compte, cloud, outil d'analyse d'usage, SDK de suivi, publicité ni paiement. Aucun modèle d'IA en ligne, aucune bibliothèque d'apprentissage automatique : les règles sont locales, déterministes, sous forme de fonctions pures testables, avec l'horloge injectée.
+— Aucun vocabulaire médical, aucun diagnostic, aucune promesse de résultat. Les estimations sont des repères d'entraînement, pas des mesures de santé.
+— Économie (XP, niveaux, crédits, boutique) : aucune modification de barème sans proposition chiffrée séparée, validée par le propriétaire. Invariants de KT-005 (registre des gains, option C) conservés.
+— Les WOD restent un bonus : ils ne font pas partie du programme personnalisé.
+— Identifiant Android et chaîne de signature inchangés ; aucun secret reproduit.
+— Pas d'illustrations de scène (décision du propriétaire, 26/09/2026 : elles alourdiraient l'interface) : icônes et typographie existantes uniquement. Les seuls visuels ajoutés sont les démonstrations animées d'exercices (L9/L9b).
+— Accessibilité : écrans de 320 px, texte à 130 % et 200 %, TalkBack, information jamais portée par la couleur seule, réglage de réduction des animations respecté. Identité visuelle conservée : bordeaux #6B0C0C, accent #A61717, fonds #121212 et #1E1E1E, textes #F4F4F4 et #8A8A8A, vert #388E3C réservé à la validation, titres principaux en majuscules.
+— Identifiants KT stables ; ce lot crée uniquement les tickets indiqués ci-dessous.
+
+MISSION — LOT L13 : SANTÉ, SÉCURITÉ, CONFORMITÉ ET TEST FERMÉ — VERSION 4.3.0
+
+Prérequis : L12 livré. Ce lot prépare la publication grand public ; il complète la mission de finalisation existante sans la remplacer.
+Tickets : KT-072 (nutrition et récupération), KT-073 (douleur et situations particulières), KT-074 (audit du vocabulaire et de la finalité), KT-075 (RGPD et données de santé), KT-076 (déclarations Google Play), KT-077 (registre de validation du contenu), KT-078 (test fermé).
+
+1. NUTRITION ET RÉCUPÉRATION (KT-072)
+Conseils généraux seulement : protéines réparties sur les repas, hydratation, sommeil, régularité. Aucun calcul de calories ni de macros, aucun objectif de poids, aucun conseil de restriction. Koach utilise le sommeil et la forme s'ils sont renseignés (L7), sans jamais les exiger.
+
+2. DOULEUR ET SITUATIONS PARTICULIÈRES (KT-073)
+Audit de bout en bout : douleur → exercice remplacé ou charge réduite, jamais de diagnostic, renvoi vers un professionnel si la douleur persiste plus de 2 séances ou si un signal d'alerte apparaît (douleur thoracique, malaise, essoufflement anormal, douleur irradiante). Grossesse, hypertension, problème cardiaque, 65 ans et plus : mode prudent (L8) et avis médical conseillé, sans programme spécifique.
+
+3. VOCABULAIRE ET FINALITÉ (KT-074)
+Relis tous les textes de l'application : bien-être et entraînement uniquement, aucune allégation médicale, de prévention de maladie ni de traitement. Un logiciel à finalité médicale relève de la réglementation européenne sur les dispositifs médicaux : documente pourquoi Kalis Track reste hors de ce champ, avec source et date. Avertissement clair au démarrage et dans « À propos ».
+
+4. RGPD ET DONNÉES DE SANTÉ (KT-075)
+Cartographie finale des données (saisies, stockées, exportées, sauvegardées par Android, transmises par les dépendances). Données de santé : consentement explicite (L8), minimisation, export, suppression, durée de conservation. Politique de confidentialité à jour, accessible dans l'application, prête à être hébergée publiquement (URL à fournir par le propriétaire : champ de la liste de publication, jamais inventé). Vérification que 18 ans et plus est appliqué partout.
+
+5. DÉCLARATIONS GOOGLE PLAY (KT-076)
+Prépare le visuel Google Play 1024 × 500 à partir de la marque existante (tools/generate_brand.py) : fond uni bordeaux #6B0C0C et logo, sans illustration ni texte superflu. Prépare les réponses Data Safety, la déclaration des applications de santé et de remise en forme, la classification du contenu et le public cible (18 ans et plus). Vérifie chaque exigence en vigueur avec source et date de consultation ; sans accès, indique « non vérifié ».
+
+6. REGISTRE DE VALIDATION DU CONTENU (KT-077)
+Registre consolidé de tout ce qui mériterait la relecture d'un professionnel diplômé (seuils de niveau, volumes, reprises, précautions, questionnaire de santé, paramètres de Koach, contenu du pack L9). Le propriétaire a décidé de ne pas faire relire en V1 : la limite est écrite clairement, avec l'impact et la prochaine action.
+
+7. TEST FERMÉ (KT-078)
+Vérifie la règle actuelle de Google Play pour les comptes développeur personnels récents (nombre de testeurs et durée du test fermé ; à la dernière connaissance du propriétaire : 12 testeurs pendant 14 jours), avec source et date. Prépare : le message d'invitation des testeurs, le mode d'emploi d'installation par Google Play, un retour intégré à l'application (formulaire local exporté volontairement par le partage Android, sans serveur), la liste des scénarios à tester par profil (débutant, intermédiaire, expert, senior), le tableau de suivi des retours et les critères de passage en production.
+
+TESTS SPÉCIFIQUES : parcours de douleur et de signal d'alerte ; mode prudent pour chaque situation particulière ; aucun texte d'allégation (recherche automatique d'une liste de termes interdits, documentée) ; export et suppression complets des données de santé ; consentement refusé puis accordé puis retiré ; formulaire de retour exporté sans donnée non choisie.
+
+TESTER SANS TRICHER
+Commence par l'état initial. Chaque défaut corrigé reçoit si possible un test de régression. Aucune assertion supprimée, aucun test désactivé, aucune fenêtre de test agrandie ; une adaptation légitime à une nouvelle interface est expliquée. Tests d'écran à 390×844 et 320×720 avec défilement réel, texte à 130 % et 200 %, thèmes clair et sombre. Horloges et fixtures contrôlées pour tout ce qui dépend des dates. Contrôles attendus : dart format --output=none --set-exit-if-changed lib test ; flutter pub get --enforce-lockfile ; flutter analyze --no-pub ; python3 -m unittest discover -s tools/tests -v ; TZ=Europe/Paris flutter test --no-pub ; verify_project.py ; build signé APK et AAB par la CI. Si Flutter, le SDK, un appareil ou les secrets manquent, ne prétends pas avoir exécuté le contrôle : indique son statut exact.
+
+MÉTHODE ET LIVRABLES
+Ordre : état initial → contrat docs/CONTRAT_L13.md (règles, paramètres, formats, migration, limites, décisions manquantes) → implémentation par tickets → régressions complètes. Pose tes questions uniquement si c'est bloquant, et continue les parties indépendantes. Ne mélange pas une refonte visuelle globale avec une migration de données dans un changement impossible à contrôler.
+Livre :
+— le projet complet dans streetlift_tracker_v33.zip, racine streetlift_tracker/, 25 000 000 octets au maximum, sans caches, build/, .dart_tool/, APK/AAB ni secrets ;
+— la version 4.3.0 (pubspec et réglages) ;
+— SUIVI_PROJET.md complété (L13.0 base, L13.1 contrat, L13.2 changements par ticket, L13.3 tests et scénarios, L13.4 limites et suites) ; README.md (section 4.3.0) ; docs/CONTRAT_L13.md ; LIVRAISON_L13.md (export avant installation, mise à jour par-dessus la version précédente, vérifications sur téléphone) ; la liste précise des fichiers modifiés ;
+— le workflow build-apk.yml s'il est modifié, sans divergence entre la copie du projet et .github/workflows/ ;
+— la publication du ZIP sur main du dépôt GitHub mikeriin/streetlift-apk, le lancement du build signé et la vérification du run (numéro, étapes, artefacts) avant de livrer.
+Le statut final distingue « corrigé dans le code », « testé automatiquement », « vérifié sur appareil » et « reste à valider ». Le contenu sportif n'a pas été relu par un professionnel diplômé (décision du propriétaire) : signale dans le registre de validation chaque règle ou paramètre qui demanderait cette relecture. Ne promets aucun gain de performance ni aucun bénéfice de santé.
+
+Commence maintenant par le contrôle de la base et l'état initial, rédige le contrat, puis implémente. Si tout ne tient pas dans une passe, livre un lot cohérent, complet et utilisable, avec l'état exact du reste.

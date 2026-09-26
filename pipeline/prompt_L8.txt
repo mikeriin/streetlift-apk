@@ -1,0 +1,79 @@
+Tu interviens comme développeur Flutter/Dart senior, avec une démarche de designer produit, de responsable qualité et de préparateur physique rigoureux. Tu améliores une application existante ; tu ne la remplaces pas et tu ne repars pas de zéro.
+
+CONTEXTE PRODUIT — DÉCISIONS DU PROPRIÉTAIRE (26/09/2026)
+Kalis Track devient une application grand public, entièrement gratuite : ni publicité, ni compte, ni achat réel, et elle fonctionne hors ligne. Elle s'adresse aux adultes de 18 ans et plus, de tous niveaux : personne sédentaire, pratiquant intermédiaire, expert ou compétiteur, senior, reprise après une blessure ou une longue pause. Disciplines : street workout et calisthénie, streetlifting, musculation en salle, mobilité. Chaque utilisateur reçoit un programme personnalisé selon ses objectifs, guidé par Koach, le moteur d'autorégulation local et déterministe livré en L7. Application en français, Android d'abord, tous les calculs sur l'appareil, sauvegarde locale + export + sauvegarde Android. But du produit : l'utilisateur voit sa progression, en est fier sans être noyé sous des chiffres, et a envie de continuer. La santé passe avant la performance.
+
+BASE ET CONTRÔLE D'ENTRÉE
+Contrôle l'empreinte de l'archive reçue (streetlift_tracker_v33.zip), sa racine unique streetlift_tracker/, sa version et l'état des lots dans SUIVI_PROJET.md. Travaille sur une copie. Lis les contrats docs/CONTRAT_*.md, en particulier ceux de L7 (Koach), L8 (profil) et L9 (pack de contenu) quand ils existent. Les documents historiques décrivent des intentions ; ils ne prouvent pas le comportement actuel. Signale toute contradiction avant de modifier une règle métier. Établis l'état initial : formatage, analyse, tests Dart et Python, verify_project.py.
+
+INVARIANTS PERMANENTS
+— Ne supprime aucune fonctionnalité opérationnelle. Toute évolution de schéma passe par une migration testée, sans remise à zéro silencieuse. Historiques, records, séances personnelles, WOD acquis, réglages et sauvegardes sont conservés.
+— Aucun réseau, compte, cloud, outil d'analyse d'usage, SDK de suivi, publicité ni paiement. Aucun modèle d'IA en ligne, aucune bibliothèque d'apprentissage automatique : les règles sont locales, déterministes, sous forme de fonctions pures testables, avec l'horloge injectée.
+— Aucun vocabulaire médical, aucun diagnostic, aucune promesse de résultat. Les estimations sont des repères d'entraînement, pas des mesures de santé.
+— Économie (XP, niveaux, crédits, boutique) : aucune modification de barème sans proposition chiffrée séparée, validée par le propriétaire. Invariants de KT-005 (registre des gains, option C) conservés.
+— Les WOD restent un bonus : ils ne font pas partie du programme personnalisé.
+— Identifiant Android et chaîne de signature inchangés ; aucun secret reproduit.
+— Pas d'illustrations de scène (décision du propriétaire, 26/09/2026 : elles alourdiraient l'interface) : icônes et typographie existantes uniquement. Les seuls visuels ajoutés sont les démonstrations animées d'exercices (L9/L9b).
+— Accessibilité : écrans de 320 px, texte à 130 % et 200 %, TalkBack, information jamais portée par la couleur seule, réglage de réduction des animations respecté. Identité visuelle conservée : bordeaux #6B0C0C, accent #A61717, fonds #121212 et #1E1E1E, textes #F4F4F4 et #8A8A8A, vert #388E3C réservé à la validation, titres principaux en majuscules.
+— Identifiants KT stables ; ce lot crée uniquement les tickets indiqués ci-dessous.
+
+MISSION — LOT L8 : PROFIL, DÉMARRAGE PROGRESSIF ET QUESTIONNAIRE DE SANTÉ PRÉALABLE — VERSION 3.1.0
+
+Prérequis : L4 (date de départ du programme) et L7 (Koach) livrés. L8 étend le démarrage de L4 sans le casser : un utilisateur existant garde ses dates, son historique et ses valeurs.
+Tickets : KT-038 (modèle de profil), KT-039 (questionnaire de démarrage court), KT-040 (questions progressives), KT-041 (questionnaire de santé préalable et mode prudent), KT-042 (consentement et données de santé), KT-043 (migration du propriétaire).
+
+1. MODÈLE DE PROFIL (KT-038)
+Profil versionné. Chaque réponse est datée et porte une source : déclarée, estimée par Koach, mesurée par un test. Champs de la V1 (principe de minimisation) :
+— année de naissance (âge : contrôle 18 ans et plus et mode prudent à partir de 65 ans) ; poids (nécessaire au calcul poids du corps + lest), historique daté repris de L7 ;
+— objectif principal + objectif secondaire facultatif, avec une pondération (par défaut 70/30, réglable par pas de 10) ;
+— ancienneté d'entraînement ; jours disponibles, jours précis, durée par séance ;
+— lieux d'entraînement (maison sans matériel, maison équipée, parc de street workout, salle), avec le matériel de chaque lieu (liste normalisée du pack L9) et le lieu habituel de chaque jour ;
+— blessures et limitations : zone, gêne de 0 à 10, depuis quand ;
+— exercices aimés et détestés ;
+— métier physique, sommeil habituel, stress (facultatifs) ;
+— motivation profonde, « pourquoi je m'entraîne » (facultatif, texte court) ;
+— mode d'autonomie (Guidé / Assisté / Expert) et ton de Koach (Bienveillant / Exigeant / Neutre).
+Le sexe et la taille ne sont pas demandés en V1 : aucune règle ne les utilise. Le niveau n'est pas une donnée déclarée figée : Koach le déduit par mouvement (L10).
+Toute modification du profil émet un événement « profil modifié » qu'utilisera la régénération du programme (L10) ; en L8, elle est seulement enregistrée et affichée.
+
+2. DÉMARRAGE COURT, 2 MINUTES AU MAXIMUM (KT-039)
+Écrans : bienvenue → 18 ans et plus → objectif(s) → disponibilités → lieux et matériel → repère de niveau → questionnaire de santé → mode et ton → récapitulatif. Aucune illustration : icônes existantes et texte clair.
+— Objectifs V1 actifs : Forme et santé, Force, Endurance en répétitions, Préparation d'un test ou d'une compétition à une date donnée (l'utilisateur choisit les épreuves, leurs cibles et la date). « Forme et santé » est proposé en premier et présélectionné quand le repère de niveau est débutant ou novice. Le catalogue est extensible par données : Prise de muscle, Figures et Énergie existent dans le modèle mais sont désactivés en V1.
+— Repère de niveau : question concrète par mouvement de référence (ex. « Combien de pompes d'affilée ? 0 / 1-9 / 10-24 / 25-44 / 45 et plus »), jamais une étiquette abstraite (« débutant ») seule.
+— Valeurs par défaut selon le repère : débutant et novice → Guidé + Bienveillant ; intermédiaire → Assisté + Neutre ; avancé et expert → Assisté + Exigeant. Mode Expert uniquement sur choix de l'utilisateur.
+— Moins de 18 ans : message neutre et bienveillant expliquant que l'application est réservée aux adultes ; aucune donnée enregistrée.
+
+3. QUESTIONS PROGRESSIVES (KT-040)
+Les informations facultatives sont demandées par Koach au fil du temps : au plus une question, à la fin d'une séance validée, toujours « plus tard » ou « ne plus demander ». Jamais pendant une séance ni pendant un chrono. Ordre de priorité documenté dans le contrat (ex. ancienneté → exercices détestés → sommeil → motivation).
+
+4. QUESTIONNAIRE DE SANTÉ PRÉALABLE ET MODE PRUDENT (KT-041)
+Questionnaire court d'aptitude à l'activité physique, inspiré du PAR-Q+. Vérifie la licence du PAR-Q+ (source et date) avant d'en reprendre la formulation exacte ; à défaut, rédige des questions équivalentes et signale-les au registre de validation.
+Une réponse « oui », une gêne > 3/10, 65 ans et plus, une grossesse ou un problème cardiaque ou de tension déclaré → mode prudent :
+— pas de test maximal, pas de série à moins de 3 RIR sur les mouvements principaux, pas de charge supérieure à 80 % du 1RM estimé ;
+— conseil clair de demander l'avis d'un médecin avant de s'entraîner intensément ;
+— l'utilisateur peut indiquer qu'il a reçu l'accord de son médecin (réponse datée) pour lever le mode prudent ;
+— aucun programme médical ni diagnostic.
+Si l'utilisateur ne répond pas au questionnaire, le mode prudent s'applique par défaut.
+
+5. CONSENTEMENT ET DONNÉES DE SANTÉ (KT-042)
+Les réponses de santé, les blessures, le sommeil et la douleur peuvent être des données de santé (article 9 du RGPD). Information claire avant la collecte, consentement explicite et révocable, finalité unique (adapter l'entraînement), stockage local seulement, inclusion dans l'export et dans la suppression des données. Refus du consentement : l'application fonctionne en mode prudent, sans ces champs. Mets à jour la cartographie des données et la politique de confidentialité préparatoire.
+
+6. MIGRATION DU PROPRIÉTAIRE (KT-043)
+Profil pré-rempli à partir de la feuille Pilotage, de ses objectifs (L7 : étape au 13/07/2027, objectif final au 31/12/2027), de son programme de 40 semaines et de son historique ; écran de confirmation. Aucune date, valeur ou donnée d'historique modifiée. Test sur des fixtures d'état réel 3.0.0.
+
+TESTS SPÉCIFIQUES : démarrage complet en moins de 2 minutes (nombre d'écrans et de taps mesuré) ; refus des moins de 18 ans sans aucune écriture ; chaque déclencheur du mode prudent ; levée par accord médical ; refus du consentement ; questions progressives (au plus 1 par séance, jamais pendant une séance) ; migration du propriétaire ; import d'une sauvegarde 3.0.0.
+
+TESTER SANS TRICHER
+Commence par l'état initial. Chaque défaut corrigé reçoit si possible un test de régression. Aucune assertion supprimée, aucun test désactivé, aucune fenêtre de test agrandie ; une adaptation légitime à une nouvelle interface est expliquée. Tests d'écran à 390×844 et 320×720 avec défilement réel, texte à 130 % et 200 %, thèmes clair et sombre. Horloges et fixtures contrôlées pour tout ce qui dépend des dates. Contrôles attendus : dart format --output=none --set-exit-if-changed lib test ; flutter pub get --enforce-lockfile ; flutter analyze --no-pub ; python3 -m unittest discover -s tools/tests -v ; TZ=Europe/Paris flutter test --no-pub ; verify_project.py ; build signé APK et AAB par la CI. Si Flutter, le SDK, un appareil ou les secrets manquent, ne prétends pas avoir exécuté le contrôle : indique son statut exact.
+
+MÉTHODE ET LIVRABLES
+Ordre : état initial → contrat docs/CONTRAT_L8.md (règles, paramètres, formats, migration, limites, décisions manquantes) → implémentation par tickets → régressions complètes. Pose tes questions uniquement si c'est bloquant, et continue les parties indépendantes. Ne mélange pas une refonte visuelle globale avec une migration de données dans un changement impossible à contrôler.
+Livre :
+— le projet complet dans streetlift_tracker_v33.zip, racine streetlift_tracker/, 25 000 000 octets au maximum, sans caches, build/, .dart_tool/, APK/AAB ni secrets ;
+— la version 3.1.0 (pubspec et réglages) ;
+— SUIVI_PROJET.md complété (L8.0 base, L8.1 contrat, L8.2 changements par ticket, L8.3 tests et scénarios, L8.4 limites et suites) ; README.md (section 3.1.0) ; docs/CONTRAT_L8.md ; LIVRAISON_L8.md (export avant installation, mise à jour par-dessus la version précédente, vérifications sur téléphone) ; la liste précise des fichiers modifiés ;
+— le workflow build-apk.yml s'il est modifié, sans divergence entre la copie du projet et .github/workflows/ ;
+— la publication du ZIP sur main du dépôt GitHub mikeriin/streetlift-apk, le lancement du build signé et la vérification du run (numéro, étapes, artefacts) avant de livrer.
+Le statut final distingue « corrigé dans le code », « testé automatiquement », « vérifié sur appareil » et « reste à valider ». Le contenu sportif n'a pas été relu par un professionnel diplômé (décision du propriétaire) : signale dans le registre de validation chaque règle ou paramètre qui demanderait cette relecture. Ne promets aucun gain de performance ni aucun bénéfice de santé.
+
+Commence maintenant par le contrôle de la base et l'état initial, rédige le contrat, puis implémente. Si tout ne tient pas dans une passe, livre un lot cohérent, complet et utilisable, avec l'état exact du reste.

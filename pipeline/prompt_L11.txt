@@ -1,0 +1,68 @@
+Tu interviens comme développeur Flutter/Dart senior, avec une démarche de designer produit, de responsable qualité et de préparateur physique rigoureux. Tu améliores une application existante ; tu ne la remplaces pas et tu ne repars pas de zéro.
+
+CONTEXTE PRODUIT — DÉCISIONS DU PROPRIÉTAIRE (26/09/2026)
+Kalis Track devient une application grand public, entièrement gratuite : ni publicité, ni compte, ni achat réel, et elle fonctionne hors ligne. Elle s'adresse aux adultes de 18 ans et plus, de tous niveaux : personne sédentaire, pratiquant intermédiaire, expert ou compétiteur, senior, reprise après une blessure ou une longue pause. Disciplines : street workout et calisthénie, streetlifting, musculation en salle, mobilité. Chaque utilisateur reçoit un programme personnalisé selon ses objectifs, guidé par Koach, le moteur d'autorégulation local et déterministe livré en L7. Application en français, Android d'abord, tous les calculs sur l'appareil, sauvegarde locale + export + sauvegarde Android. But du produit : l'utilisateur voit sa progression, en est fier sans être noyé sous des chiffres, et a envie de continuer. La santé passe avant la performance.
+
+BASE ET CONTRÔLE D'ENTRÉE
+Contrôle l'empreinte de l'archive reçue (streetlift_tracker_v33.zip), sa racine unique streetlift_tracker/, sa version et l'état des lots dans SUIVI_PROJET.md. Travaille sur une copie. Lis les contrats docs/CONTRAT_*.md, en particulier ceux de L7 (Koach), L8 (profil) et L9 (pack de contenu) quand ils existent. Les documents historiques décrivent des intentions ; ils ne prouvent pas le comportement actuel. Signale toute contradiction avant de modifier une règle métier. Établis l'état initial : formatage, analyse, tests Dart et Python, verify_project.py.
+
+INVARIANTS PERMANENTS
+— Ne supprime aucune fonctionnalité opérationnelle. Toute évolution de schéma passe par une migration testée, sans remise à zéro silencieuse. Historiques, records, séances personnelles, WOD acquis, réglages et sauvegardes sont conservés.
+— Aucun réseau, compte, cloud, outil d'analyse d'usage, SDK de suivi, publicité ni paiement. Aucun modèle d'IA en ligne, aucune bibliothèque d'apprentissage automatique : les règles sont locales, déterministes, sous forme de fonctions pures testables, avec l'horloge injectée.
+— Aucun vocabulaire médical, aucun diagnostic, aucune promesse de résultat. Les estimations sont des repères d'entraînement, pas des mesures de santé.
+— Économie (XP, niveaux, crédits, boutique) : aucune modification de barème sans proposition chiffrée séparée, validée par le propriétaire. Invariants de KT-005 (registre des gains, option C) conservés.
+— Les WOD restent un bonus : ils ne font pas partie du programme personnalisé.
+— Identifiant Android et chaîne de signature inchangés ; aucun secret reproduit.
+— Pas d'illustrations de scène (décision du propriétaire, 26/09/2026 : elles alourdiraient l'interface) : icônes et typographie existantes uniquement. Les seuls visuels ajoutés sont les démonstrations animées d'exercices (L9/L9b).
+— Accessibilité : écrans de 320 px, texte à 130 % et 200 %, TalkBack, information jamais portée par la couleur seule, réglage de réduction des animations respecté. Identité visuelle conservée : bordeaux #6B0C0C, accent #A61717, fonds #121212 et #1E1E1E, textes #F4F4F4 et #8A8A8A, vert #388E3C réservé à la validation, titres principaux en majuscules.
+— Identifiants KT stables ; ce lot crée uniquement les tickets indiqués ci-dessous.
+
+MISSION — LOT L11 : KOACH ÉTENDU — ADAPTATION AU JOUR LE JOUR — VERSION 4.1.0
+
+Prérequis : L10 livré. Toutes les décisions de L7 restent valables (validation, verrous, plafonds, rejeu déterministe).
+Tickets : KT-058 (séance compressée), KT-059 (variante selon le matériel et échange d'exercice), KT-060 (séances manquées, vacances, maladie), KT-061 (adaptation à l'assiduité), KT-062 (détection de plateau), KT-063 (modes d'autonomie), KT-064 (charge de séance simplifiée).
+
+1. « J'AI SEULEMENT N MINUTES » (KT-058)
+Avant ou pendant la séance, l'utilisateur indique le temps disponible. Koach recompose : échauffement minimal de 3 minutes, mouvements principaux conservés avec au moins 2/3 de leurs séries, accessoires regroupés par deux sans conflit musculaire, retrait des exercices de plus faible priorité ; prévention réduite à 1 série mais jamais supprimée. Durée recalculée par training_estimate.dart ; aperçu des différences avant validation.
+
+2. MATÉRIEL ABSENT ET ÉCHANGE D'EXERCICE (KT-059)
+— Changement de lieu ponctuel (voyage, hôtel, parc) → variante équivalente de toute la séance, même type de mouvement, difficulté ±1.
+— Échange d'un exercice (machine prise, douleur, envie) → 3 propositions classées : même type de mouvement, difficulté ±1, matériel disponible, contrainte articulaire ≤ l'original si le motif est une douleur, jamais un exercice détesté. La première série du substitut sert de calibrage (RIR cible conservé ; charge initiale prudente estimée depuis un exercice apparenté).
+
+3. SÉANCES MANQUÉES, VACANCES, MALADIE (KT-060)
+— Le plan glisse ; aucune séance « rattrapée » en double.
+— Reprise selon la durée d'arrêt : 7 à 13 jours → charges −10 % et −1 série sur les mouvements principaux pendant 1 séance par mouvement ; 14 à 27 jours → −20 % et une série de calibrage ; 28 jours et plus → −30 % et une semaine de calibrage (tests légers de L10).
+— Mode vacances : calendrier en pause, séances d'entretien facultatives (2 × 20 minutes sans matériel).
+— Mode maladie : pause ; au retour, première semaine à volume −30 % et RIR +1 ; message invitant à consulter si les symptômes persistent. Aucune question sur la nature de la maladie.
+
+4. ADAPTATION À L'ASSIDUITÉ (KT-061)
+Taux de séances faites sur 4 semaines glissantes : < 60 % → proposer une séance de moins par semaine ou des séances 20 % plus courtes ; 60 à 89 % → rien ; ≥ 90 % pendant 2 cycles avec progression → proposer une séance de plus si l'utilisateur le souhaite. Principe : un programme tenu vaut mieux qu'un programme optimal abandonné. Jamais de message culpabilisant.
+
+5. PLATEAU (KT-062)
+Pente de l'estimation (1RM ou maximum de répétitions) < +0,5 % par semaine pendant 3 semaines, avec une assiduité ≥ 80 % et sans signal de fatigue → intervention proposée selon le niveau : débutant → point technique et variation des répétitions ; intermédiaire → changement de plage de répétitions ou de variante ; avancé et expert → décharge puis nouveau bloc orienté sur le point faible.
+
+6. MODES D'AUTONOMIE (KT-063)
+— Guidé : les baisses et adaptations de sécurité sont appliquées automatiquement, avec un message et une annulation possible ; les hausses sont appliquées si le RIR le justifie clairement (RIR visé + 2) ; aucune validation demandée pendant la séance.
+— Assisté : comportement de L7, tout est proposé et validé d'un tap.
+— Expert : tout est manuel, les suggestions de Koach restent visibles.
+Changement de mode à tout moment.
+
+7. CHARGE DE SÉANCE SIMPLIFIÉE (KT-064)
+Pour les modes Guidé et Assisté des débutants et novices : à la fin de la séance, une seule question de difficulté globale sur 10 (échelle avec libellés clairs). Charge de séance = difficulté × durée en minutes. Si la charge d'une semaine dépasse 1,5 fois la moyenne des 4 semaines précédentes → message de prudence et proposition d'alléger. C'est un simple repère, pas une prédiction de blessure. Le RIR par série reste facultatif pour ces profils ; Koach combine les deux signaux quand les deux existent.
+
+TESTS SPÉCIFIQUES : compression à 20, 30 et 45 minutes (durée respectée, principaux conservés) ; échange pour douleur (contrainte articulaire ≤) ; reprises à 7, 14 et 28 jours ; vacances et maladie ; les trois seuils d'assiduité ; détection de plateau (vrai positif, pas de faux positif pendant une décharge) ; les trois modes d'autonomie avec annulation ; charge de séance et seuil de 1,5 ; rejeu déterministe après chaque adaptation.
+
+TESTER SANS TRICHER
+Commence par l'état initial. Chaque défaut corrigé reçoit si possible un test de régression. Aucune assertion supprimée, aucun test désactivé, aucune fenêtre de test agrandie ; une adaptation légitime à une nouvelle interface est expliquée. Tests d'écran à 390×844 et 320×720 avec défilement réel, texte à 130 % et 200 %, thèmes clair et sombre. Horloges et fixtures contrôlées pour tout ce qui dépend des dates. Contrôles attendus : dart format --output=none --set-exit-if-changed lib test ; flutter pub get --enforce-lockfile ; flutter analyze --no-pub ; python3 -m unittest discover -s tools/tests -v ; TZ=Europe/Paris flutter test --no-pub ; verify_project.py ; build signé APK et AAB par la CI. Si Flutter, le SDK, un appareil ou les secrets manquent, ne prétends pas avoir exécuté le contrôle : indique son statut exact.
+
+MÉTHODE ET LIVRABLES
+Ordre : état initial → contrat docs/CONTRAT_L11.md (règles, paramètres, formats, migration, limites, décisions manquantes) → implémentation par tickets → régressions complètes. Pose tes questions uniquement si c'est bloquant, et continue les parties indépendantes. Ne mélange pas une refonte visuelle globale avec une migration de données dans un changement impossible à contrôler.
+Livre :
+— le projet complet dans streetlift_tracker_v33.zip, racine streetlift_tracker/, 25 000 000 octets au maximum, sans caches, build/, .dart_tool/, APK/AAB ni secrets ;
+— la version 4.1.0 (pubspec et réglages) ;
+— SUIVI_PROJET.md complété (L11.0 base, L11.1 contrat, L11.2 changements par ticket, L11.3 tests et scénarios, L11.4 limites et suites) ; README.md (section 4.1.0) ; docs/CONTRAT_L11.md ; LIVRAISON_L11.md (export avant installation, mise à jour par-dessus la version précédente, vérifications sur téléphone) ; la liste précise des fichiers modifiés ;
+— le workflow build-apk.yml s'il est modifié, sans divergence entre la copie du projet et .github/workflows/ ;
+— la publication du ZIP sur main du dépôt GitHub mikeriin/streetlift-apk, le lancement du build signé et la vérification du run (numéro, étapes, artefacts) avant de livrer.
+Le statut final distingue « corrigé dans le code », « testé automatiquement », « vérifié sur appareil » et « reste à valider ». Le contenu sportif n'a pas été relu par un professionnel diplômé (décision du propriétaire) : signale dans le registre de validation chaque règle ou paramètre qui demanderait cette relecture. Ne promets aucun gain de performance ni aucun bénéfice de santé.
+
+Commence maintenant par le contrôle de la base et l'état initial, rédige le contrat, puis implémente. Si tout ne tient pas dans une passe, livre un lot cohérent, complet et utilisable, avec l'état exact du reste.

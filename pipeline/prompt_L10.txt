@@ -1,0 +1,84 @@
+Tu interviens comme développeur Flutter/Dart senior, avec une démarche de designer produit, de responsable qualité et de préparateur physique rigoureux. Tu améliores une application existante ; tu ne la remplaces pas et tu ne repars pas de zéro.
+
+CONTEXTE PRODUIT — DÉCISIONS DU PROPRIÉTAIRE (26/09/2026)
+Kalis Track devient une application grand public, entièrement gratuite : ni publicité, ni compte, ni achat réel, et elle fonctionne hors ligne. Elle s'adresse aux adultes de 18 ans et plus, de tous niveaux : personne sédentaire, pratiquant intermédiaire, expert ou compétiteur, senior, reprise après une blessure ou une longue pause. Disciplines : street workout et calisthénie, streetlifting, musculation en salle, mobilité. Chaque utilisateur reçoit un programme personnalisé selon ses objectifs, guidé par Koach, le moteur d'autorégulation local et déterministe livré en L7. Application en français, Android d'abord, tous les calculs sur l'appareil, sauvegarde locale + export + sauvegarde Android. But du produit : l'utilisateur voit sa progression, en est fier sans être noyé sous des chiffres, et a envie de continuer. La santé passe avant la performance.
+
+BASE ET CONTRÔLE D'ENTRÉE
+Contrôle l'empreinte de l'archive reçue (streetlift_tracker_v33.zip), sa racine unique streetlift_tracker/, sa version et l'état des lots dans SUIVI_PROJET.md. Travaille sur une copie. Lis les contrats docs/CONTRAT_*.md, en particulier ceux de L7 (Koach), L8 (profil) et L9 (pack de contenu) quand ils existent. Les documents historiques décrivent des intentions ; ils ne prouvent pas le comportement actuel. Signale toute contradiction avant de modifier une règle métier. Établis l'état initial : formatage, analyse, tests Dart et Python, verify_project.py.
+
+INVARIANTS PERMANENTS
+— Ne supprime aucune fonctionnalité opérationnelle. Toute évolution de schéma passe par une migration testée, sans remise à zéro silencieuse. Historiques, records, séances personnelles, WOD acquis, réglages et sauvegardes sont conservés.
+— Aucun réseau, compte, cloud, outil d'analyse d'usage, SDK de suivi, publicité ni paiement. Aucun modèle d'IA en ligne, aucune bibliothèque d'apprentissage automatique : les règles sont locales, déterministes, sous forme de fonctions pures testables, avec l'horloge injectée.
+— Aucun vocabulaire médical, aucun diagnostic, aucune promesse de résultat. Les estimations sont des repères d'entraînement, pas des mesures de santé.
+— Économie (XP, niveaux, crédits, boutique) : aucune modification de barème sans proposition chiffrée séparée, validée par le propriétaire. Invariants de KT-005 (registre des gains, option C) conservés.
+— Les WOD restent un bonus : ils ne font pas partie du programme personnalisé.
+— Identifiant Android et chaîne de signature inchangés ; aucun secret reproduit.
+— Pas d'illustrations de scène (décision du propriétaire, 26/09/2026 : elles alourdiraient l'interface) : icônes et typographie existantes uniquement. Les seuls visuels ajoutés sont les démonstrations animées d'exercices (L9/L9b).
+— Accessibilité : écrans de 320 px, texte à 130 % et 200 %, TalkBack, information jamais portée par la couleur seule, réglage de réduction des animations respecté. Identité visuelle conservée : bordeaux #6B0C0C, accent #A61717, fonds #121212 et #1E1E1E, textes #F4F4F4 et #8A8A8A, vert #388E3C réservé à la validation, titres principaux en majuscules.
+— Identifiants KT stables ; ce lot crée uniquement les tickets indiqués ci-dessous.
+
+MISSION — LOT L10 : GÉNÉRATEUR DE PROGRAMME PERSONNALISÉ — VERSION 4.0.0
+
+C'est un changement d'architecture : le programme n'est plus un fichier embarqué fixe mais une instance générée et stockée pour chaque utilisateur. D'où la version 4.0.0.
+Prérequis : L7, L8 et L9b livrés.
+Tickets : KT-050 (architecture et migration), KT-051 (niveaux et calibrage), KT-052 (modèles de périodisation), KT-053 (répartition hebdomadaire et durée), KT-054 (choix des exercices), KT-055 (volume par groupe musculaire), KT-056 (échauffements et travail spécifique), KT-057 (régénération et explications).
+
+1. ARCHITECTURE (KT-050)
+— ProgramInstance : version du générateur, graine, instantané des entrées (profil, état Koach, pack), semaines, séances, exercices, prescriptions, dates prévues ; persistée et exportée. Les séances passées sont figées à leur date ; seule la suite peut être régénérée.
+— Générateur : fonction pure (entrées + graine → programme). Reproductible au bit près ; tests de référence.
+— Méthode hybride (décision du propriétaire) : modèles de périodisation écrits sous forme de données (assets versionnés), choix des exercices et des volumes par règles.
+— Le programme de 40 semaines du propriétaire devient le modèle « Expert streetlifting ». Il reste adapté au propriétaire ; un utilisateur aux objectifs et au niveau équivalents peut recevoir un programme très proche, voire identique. Migration du propriétaire : son instance reproduit exactement son programme actuel (LC1 compris), avec ses dates, son historique et son état Koach. Test d'égalité sur les 40 semaines.
+
+2. NIVEAUX ET CALIBRAGE (KT-051)
+— Niveau déterminé PAR MOUVEMENT de référence (poussée, tirage, squat, charnière, gainage), à partir de valeurs mesurables. Propositions à valider au registre :
+  pompes 0-9 débutant, 10-24 novice, 25-44 intermédiaire, 45-69 avancé, 70 et plus expert ;
+  tractions 0, 1-5, 6-12, 13-20, 21 et plus ;
+  squat (1RM / poids du corps) < 0,75, 0,75-1,25, 1,25-1,6, 1,6-2,0, > 2,0 ;
+  lests en traction et dip en % du poids du corps pour les avancés et experts.
+  Niveau global = médiane des niveaux par mouvement ; il sert seulement au choix de la périodisation et des valeurs par défaut, jamais à juger l'utilisateur.
+— Calibrage (décision du propriétaire) : les 1 à 2 premières semaines comportent des tests légers intégrés en tête de séance (séries jusqu'à RIR 2-3, jamais d'échec ni de 1RM ; mode prudent respecté). Leurs résultats fixent les points d'entrée dans les chaînes de progression et les références de Koach.
+— Passage de niveau : quand les critères sont atteints sur 2 séances, la périodisation suivante l'intègre au prochain cycle (jamais au milieu d'un cycle).
+
+3. PÉRIODISATION (KT-052)
+— Choisie automatiquement selon le niveau, avec une explication visible (décision du propriétaire) : débutant et novice → progression linéaire (+1 rep ou +1 incrément par séance réussie) ; intermédiaire → charges et répétitions variées d'une séance à l'autre (ondulation quotidienne ou hebdomadaire) ; avancé et expert → blocs accumulation / intensification / réalisation.
+— Horizon : objectif daté → macrocycle jusqu'à la date, avec affûtage final (volume −40 à −60 % sur 7 à 14 jours, intensité maintenue) ; sans date → cycles de 4 à 6 semaines (3 à 5 semaines de charge + 1 décharge + mini-tests), regénérés en fin de cycle depuis l'état de Koach.
+— Objectif secondaire : pondération appliquée au volume hebdomadaire (70/30 par défaut).
+— Objectif « Forme et santé » (actif en V1) : corps entier à chaque séance, tous les types de mouvement couverts chaque semaine (poussée, tirage, squat, charnière, fente, gainage, mobilité), RIR 2 à 4 (jamais d'échec), progression linéaire douce puis ondulation, volume de départ du niveau réduit de 2 séries par groupe musculaire. Travail spécifique : circuits à faible impact de 6 à 10 minutes en fin de séance (densité modérée, sans saut pour le mode prudent) et 5 minutes de mobilité. Repères de progrès affichés : répétitions sur les mouvements de référence, étapes de chaîne franchies, régularité ; jamais de poids ni d'apparence physique.
+
+4. RÉPARTITION ET DURÉE (KT-053)
+— L'utilisateur choisit sa répartition ou laisse Koach décider (décision du propriétaire). Règles par défaut : 2 jours → corps entier ×2 ; 3 → corps entier ×3 ; 4 → haut/bas ×2 ; 5 → haut/bas + poussée/tirage/jambes ; 6 → poussée/tirage/jambes ×2 ou modèle streetlifting. Au moins 48 h entre deux séances lourdes sur un même type de mouvement.
+— La durée estimée de chaque séance (training_estimate.dart existant, échauffement compris) reste dans ±10 % de la durée disponible ; sinon, retrait des exercices de plus faible priorité.
+
+5. CHOIX DES EXERCICES (KT-054)
+Contraintes strictes : matériel du lieu du jour ; prérequis atteints ; position dans la chaîne de progression ; exercices détestés exclus (substitut équivalent) ; précautions liées aux blessures (contrainte articulaire de la zone concernée ≤ 1 si gêne > 3/10) ; mode prudent. Figures incluses seulement si elles servent l'objectif (ex. muscle-up pour le streetlifting ou l'endurance). Variété : rotation des variantes d'accessoires à chaque cycle, mouvements principaux stables. Chaque exercice retenu a une démonstration animée.
+
+6. VOLUME PAR GROUPE MUSCULAIRE (KT-055)
+Séries difficiles (RIR ≤ 3) par groupe musculaire et par semaine, au départ : débutant 6, novice 8, intermédiaire 10, avancé 12, expert 14. Koach ajuste de ±2 séries par cycle selon la tendance de performance et, en mode Expert seulement, selon le retour facultatif par muscle (courbatures, congestion, performance). Plafond : départ + 6. Les groupes de l'objectif prioritaire sont servis en premier.
+
+7. ÉCHAUFFEMENTS ET TRAVAIL SPÉCIFIQUE (KT-056)
+— Échauffement généré à chaque séance, de 5 à 10 minutes : 3 minutes d'activation générale, mobilité des articulations sollicitées ensuite, séries de montée en charge sur le premier mouvement principal (40 % × 5, 60 % × 3, 75 % × 2, 85 % × 1 de la charge de travail, selon l'intensité du jour).
+— Travail spécifique ajouté dans les séances selon l'objectif (décision du propriétaire), pas sous forme de WOD : endurance → blocs de densité sur le mouvement cible (EMOM, AMRAP court, échelles) ; préparation datée → simulations partielles puis complètes des épreuves, espacées et affûtées.
+
+8. RÉGÉNÉRATION ET EXPLICATIONS (KT-057)
+— Changement d'objectif, de lieu, de matériel ou de disponibilités → proposition de régénération de la suite à partir d'aujourd'hui, avec un aperçu « ce qui change » ; application après validation (mode Guidé : appliquée automatiquement, annulable pendant 7 jours). Historique jamais modifié.
+— Une ligne « pourquoi » par séance et par exercice, adaptée au niveau (débutant : simple et concret ; expert : technique).
+
+TESTS SPÉCIFIQUES
+— Tests par propriétés sur 10 000 profils aléatoires (graines fixées) : matériel toujours disponible ; aucun exercice contre-indiqué ; prérequis respectés ; durée dans ±10 % ; volume dans les bornes ; mouvements de l'objectif travaillés au moins 2 fois par semaine (sauf modèle expert qui en dispose autrement) ; décharge au moins toutes les 6 semaines ; 48 h entre séances lourdes d'un même type ; démonstration présente ; génération déterministe.
+— 13 profils types générés et exportés en document lisible pour relecture par le propriétaire : sédentaire de 45 ans à la maison sans matériel, objectif Forme et santé ; sédentaire de 58 ans au parc, 2 séances de 30 minutes, objectif Forme et santé ; femme de 30 ans débutante en salle ; senior de 67 ans en mode prudent ; homme de 35 ans intermédiaire au parc ; reprise après 6 mois d'arrêt ; préparation d'un test physique dans 10 semaines ; endurance tractions à 3 jours par semaine ; expert streetlifting (propriétaire) ; objectif double 70/30 ; séances de 30 minutes ; épaule douloureuse à 5/10 ; changement de lieu en cours de cycle.
+— Migration du propriétaire : égalité exacte avec son programme actuel.
+
+TESTER SANS TRICHER
+Commence par l'état initial. Chaque défaut corrigé reçoit si possible un test de régression. Aucune assertion supprimée, aucun test désactivé, aucune fenêtre de test agrandie ; une adaptation légitime à une nouvelle interface est expliquée. Tests d'écran à 390×844 et 320×720 avec défilement réel, texte à 130 % et 200 %, thèmes clair et sombre. Horloges et fixtures contrôlées pour tout ce qui dépend des dates. Contrôles attendus : dart format --output=none --set-exit-if-changed lib test ; flutter pub get --enforce-lockfile ; flutter analyze --no-pub ; python3 -m unittest discover -s tools/tests -v ; TZ=Europe/Paris flutter test --no-pub ; verify_project.py ; build signé APK et AAB par la CI. Si Flutter, le SDK, un appareil ou les secrets manquent, ne prétends pas avoir exécuté le contrôle : indique son statut exact.
+
+MÉTHODE ET LIVRABLES
+Ordre : état initial → contrat docs/CONTRAT_L10.md (règles, paramètres, formats, migration, limites, décisions manquantes) → implémentation par tickets → régressions complètes. Pose tes questions uniquement si c'est bloquant, et continue les parties indépendantes. Ne mélange pas une refonte visuelle globale avec une migration de données dans un changement impossible à contrôler.
+Livre :
+— le projet complet dans streetlift_tracker_v33.zip, racine streetlift_tracker/, 25 000 000 octets au maximum, sans caches, build/, .dart_tool/, APK/AAB ni secrets ;
+— la version 4.0.0 (pubspec et réglages) ;
+— SUIVI_PROJET.md complété (L10.0 base, L10.1 contrat, L10.2 changements par ticket, L10.3 tests et scénarios, L10.4 limites et suites) ; README.md (section 4.0.0) ; docs/CONTRAT_L10.md ; LIVRAISON_L10.md (export avant installation, mise à jour par-dessus la version précédente, vérifications sur téléphone) ; la liste précise des fichiers modifiés ;
+— le workflow build-apk.yml s'il est modifié, sans divergence entre la copie du projet et .github/workflows/ ;
+— la publication du ZIP sur main du dépôt GitHub mikeriin/streetlift-apk, le lancement du build signé et la vérification du run (numéro, étapes, artefacts) avant de livrer.
+Le statut final distingue « corrigé dans le code », « testé automatiquement », « vérifié sur appareil » et « reste à valider ». Le contenu sportif n'a pas été relu par un professionnel diplômé (décision du propriétaire) : signale dans le registre de validation chaque règle ou paramètre qui demanderait cette relecture. Ne promets aucun gain de performance ni aucun bénéfice de santé.
+
+Commence maintenant par le contrôle de la base et l'état initial, rédige le contrat, puis implémente. Si tout ne tient pas dans une passe, livre un lot cohérent, complet et utilisable, avec l'état exact du reste.

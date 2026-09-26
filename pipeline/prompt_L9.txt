@@ -1,0 +1,44 @@
+MISSION — LOT L9 : PACK DE CONTENU KALIS TRACK v1 (BASE D'EXERCICES ENRICHIE, PROGRESSIONS, DÉMONSTRATIONS ANIMÉES)
+
+Tu interviens comme ingénieur de données, développeur et préparateur physique rigoureux. Ce lot produit un pack de données autonome, SANS modifier l'application : il est réalisé en parallèle des lots applicatifs en cours et sera intégré plus tard (lot L9b). Travaille dans un dossier kalis_content_pack/ indépendant.
+
+CONTEXTE PRODUIT (décisions du propriétaire, 26/09/2026) : application grand public gratuite, en français, pour adultes de tous niveaux (du sédentaire au compétiteur, seniors et reprises compris). Disciplines : street workout et calisthénie, streetlifting, musculation en salle, mobilité. Programme personnalisé généré sur l'appareil par des règles déterministes (lot L10), piloté par Koach (L7). Le pack est la matière première de ce générateur : sa qualité détermine directement celle des programmes.
+
+ENTRÉES FOURNIES
+— assets/exercises_db.json.gz de l'application (505 exercices ; champs actuels : n = nom, g = groupe musculaire, eq = matériel) ;
+— assets/programme_v33.json.gz (programme de 40 semaines du propriétaire ; noms d'exercices à rattacher) ;
+
+TICKETS : KT-044 (schéma v2 et enrichissement), KT-045 (arbres de progression), KT-046 (données de posture et moteur de rendu de référence), KT-047 (outil de relecture), KT-048 (couverture et validation), KT-049 (licences et sources).
+
+1. SCHÉMA v2 D'UN EXERCICE (KT-044)
+Pour chaque exercice : id stable (slug ASCII, jamais réutilisé) ; nom (français) ; alias ; muscles primaires et secondaires (liste normalisée) ; type de mouvement (poussée horizontale, poussée verticale, tirage horizontal, tirage vertical, squat, charnière de hanche, fente, gainage anti-extension, gainage anti-rotation, gainage anti-flexion latérale, portés, locomotion, mobilité, figure statique, figure dynamique, conditionnement) ; plan et vue principale ; unilatéral (oui/non) ; mode de charge (poids de corps, lest, barre, haltères, machine, poulie, élastique, assistance) ; mesure (répétitions, temps, distance) ; difficulté de 1 à 10, calibrée pour un adulte non entraîné au poids de corps ; prérequis (ids + seuil, ex. « pompes ≥ 10 ») ; contrainte articulaire de 0 à 3 par zone (épaule, coude, poignet, rachis lombaire, rachis cervical, hanche, genou, cheville) ; étiquettes de précaution (ex. « éviter si douleur épaule antérieure ») ; matériel requis (liste normalisée) et lieux compatibles (maison sans matériel, maison équipée, parc de street workout, salle) ; 3 points clés de consigne, 2 erreurs fréquentes, respiration ; substitutions (même type de mouvement, difficulté ±1) ; référence de posture (section 3) ; source et licence de chaque champ.
+Rattache chacun des 505 exercices actuels (table de correspondance ancien nom → id) et chaque exercice du programme de 40 semaines. Ajoute les exercices manquants nécessaires aux progressions et à la mobilité. Signale les doublons et les exercices non conformes, sans les supprimer.
+
+2. ARBRES DE PROGRESSION (KT-045)
+Graphe orienté de progressions et régressions, avec seuils de passage mesurables (ex. « 3 × 8 propres → étape suivante »). Chaînes minimales : pompes (du mur à la pompe à un bras), tractions (de la suspension et du tirage australien aux tractions lestées), dips (sur banc → barres → lestés), squat (squat assisté → squat → pistol ; et back squat), charnière (pont fessier → soulevé de terre roumain), gainage, muscle-up, front lever, planche, équilibre sur les mains, L-sit, drapeau, mobilité épaules, hanches et chevilles. Aucun cycle dans une chaîne, aucune étape orpheline, chaque étape atteignable depuis une entrée « débutant complet ».
+
+3. DÉMONSTRATIONS ANIMÉES PAR DONNÉES DE POSTURE (KT-046)
+Chaque exercice est représenté par un squelette 2D animé, pas par une image : cohérence totale, anatomie contrôlée, animation, poids négligeable, adaptation aux thèmes.
+— Squelette : tête, cou, épaules, coudes, poignets, bassin, hanches, genoux, chevilles, pointes de pied (côtés gauche et droit). Repère normalisé : unité = taille du personnage, origine au sol sous le centre de masse.
+— Longueurs de segments constantes d'une image clé à l'autre (tolérance 2 %) : c'est un test automatique.
+— Amplitudes articulaires plausibles (bornes par articulation, test automatique) ; contacts respectés (mains sur la barre quand l'exercice l'exige, pieds au sol).
+— 2 à 4 images clés par exercice, avec la durée de chaque phase (tempo) et le mode de boucle (aller-retour ou cycle) ; vue de profil ou de face selon ce qui montre le mieux le geste ; symétrie gérée pour les exercices unilatéraux.
+— Accessoires paramétrés : barre fixe, barres parallèles, anneaux, banc, box, barre chargée, haltères, kettlebell, élastique, poulie, mur, sol.
+— Couleurs par RÔLES, jamais par valeurs fixes, car l'application propose 6 couleurs dominantes (L5-C) et deux modes (clair, sombre) : muscles travaillés = rôle « accent » ; corps = rôle « neutre moyen » ; accessoires = rôle « neutre contrasté » (clair sur fond sombre, foncé sur fond clair). Le moteur de référence permet de basculer entre les 6 palettes et les deux modes pour la relecture. Aplats uniquement, sans dégradé ni ombre, style sobre, cohérent avec l'interface de l'application. La liste des muscles est aussi écrite en texte (jamais par la couleur seule).
+— Moteur de rendu de référence en HTML/SVG/JavaScript autonome (sans dépendance réseau), avec interpolation et courbes d'accélération documentées : c'est la spécification que le moteur Flutter reproduira en L9b. Version statique (images clés côte à côte) pour le réglage de réduction des animations.
+Couverture : 100 % des exercices du pack ; priorité aux 150 exercices les plus utilisés par les programmes (liste justifiée).
+
+4. OUTIL DE RELECTURE (KT-047)
+Un fichier HTML autonome : galerie filtrable (type de mouvement, difficulté, lieu, matériel, précautions), fiche complète, animation, arbre de progression cliquable, boutons « valider » / « à corriger » avec commentaire, export JSON des relectures. Le propriétaire relira avec cet outil ; une seconde passe intégrera ses corrections.
+
+5. COUVERTURE ET VALIDATION (KT-048)
+Scripts Python avec tests unitaires : validation du schéma ; graphes sans cycle et sans orphelin ; prérequis atteignables ; posture conforme (longueurs, amplitudes, contacts) ; matrice de couverture pour le générateur (pour chaque type de mouvement × lieu × tranche de difficulté 1-3 / 4-6 / 7-10 : au moins 3 exercices, ou manque signalé) ; substitutions disponibles pour chaque exercice dans chaque lieu compatible ; correspondance complète avec les 505 exercices et le programme de 40 semaines.
+
+6. SOURCES ET LICENCES (KT-049)
+Le propriétaire autorise un enrichissement généré par toi ET l'usage de sources externes sous licence. Privilégie le domaine public et les licences sans obligation (CC0, Unlicense). Une licence CC-BY impose une attribution (écran de mentions à prévoir) ; une licence CC-BY-SA impose le partage à l'identique de la base dérivée : ne l'utilise pas sans décision du propriétaire. Vérifie chaque licence avec sa source et sa date de consultation ; sans vérification possible, n'importe pas la donnée. Rédige licences.md (source, licence, champs concernés, obligations). Tout contenu généré par toi est marqué comme tel.
+
+LIMITES
+Le contenu n'est pas relu par un professionnel diplômé (décision du propriétaire) : produis un registre des points à faire valider (difficultés, seuils, précautions, contraintes articulaires). Aucun vocabulaire médical, aucun diagnostic : les précautions sont des consignes d'entraînement.
+
+LIVRABLES
+kalis_content_pack_v1.zip contenant : exercises_v2.json, progressions.json, poses.json, mapping_v1_to_v2.json, coverage_report.md, validation_register.md, licences.md, renderer_reference/ (moteur de rendu HTML), review_tool.html, tools/ (scripts et tests Python), CONTRAT_L9.md (schémas complets, conventions, versions), et un README expliquant l'intégration prévue en L9b. Indique les résultats exacts des tests. Commence par analyser les 505 exercices existants et propose le schéma dans le contrat, puis produis le pack.

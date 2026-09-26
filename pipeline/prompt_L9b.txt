@@ -1,0 +1,52 @@
+Tu interviens comme développeur Flutter/Dart senior, avec une démarche de designer produit, de responsable qualité et de préparateur physique rigoureux. Tu améliores une application existante ; tu ne la remplaces pas et tu ne repars pas de zéro.
+
+CONTEXTE PRODUIT — DÉCISIONS DU PROPRIÉTAIRE (26/09/2026)
+Kalis Track devient une application grand public, entièrement gratuite : ni publicité, ni compte, ni achat réel, et elle fonctionne hors ligne. Elle s'adresse aux adultes de 18 ans et plus, de tous niveaux : personne sédentaire, pratiquant intermédiaire, expert ou compétiteur, senior, reprise après une blessure ou une longue pause. Disciplines : street workout et calisthénie, streetlifting, musculation en salle, mobilité. Chaque utilisateur reçoit un programme personnalisé selon ses objectifs, guidé par Koach, le moteur d'autorégulation local et déterministe livré en L7. Application en français, Android d'abord, tous les calculs sur l'appareil, sauvegarde locale + export + sauvegarde Android. But du produit : l'utilisateur voit sa progression, en est fier sans être noyé sous des chiffres, et a envie de continuer. La santé passe avant la performance.
+
+BASE ET CONTRÔLE D'ENTRÉE
+Contrôle l'empreinte de l'archive reçue (streetlift_tracker_v33.zip), sa racine unique streetlift_tracker/, sa version et l'état des lots dans SUIVI_PROJET.md. Travaille sur une copie. Lis les contrats docs/CONTRAT_*.md, en particulier ceux de L7 (Koach), L8 (profil) et L9 (pack de contenu) quand ils existent. Les documents historiques décrivent des intentions ; ils ne prouvent pas le comportement actuel. Signale toute contradiction avant de modifier une règle métier. Établis l'état initial : formatage, analyse, tests Dart et Python, verify_project.py.
+
+INVARIANTS PERMANENTS
+— Ne supprime aucune fonctionnalité opérationnelle. Toute évolution de schéma passe par une migration testée, sans remise à zéro silencieuse. Historiques, records, séances personnelles, WOD acquis, réglages et sauvegardes sont conservés.
+— Aucun réseau, compte, cloud, outil d'analyse d'usage, SDK de suivi, publicité ni paiement. Aucun modèle d'IA en ligne, aucune bibliothèque d'apprentissage automatique : les règles sont locales, déterministes, sous forme de fonctions pures testables, avec l'horloge injectée.
+— Aucun vocabulaire médical, aucun diagnostic, aucune promesse de résultat. Les estimations sont des repères d'entraînement, pas des mesures de santé.
+— Économie (XP, niveaux, crédits, boutique) : aucune modification de barème sans proposition chiffrée séparée, validée par le propriétaire. Invariants de KT-005 (registre des gains, option C) conservés.
+— Les WOD restent un bonus : ils ne font pas partie du programme personnalisé.
+— Identifiant Android et chaîne de signature inchangés ; aucun secret reproduit.
+— Pas d'illustrations de scène (décision du propriétaire, 26/09/2026 : elles alourdiraient l'interface) : icônes et typographie existantes uniquement. Les seuls visuels ajoutés sont les démonstrations animées d'exercices (L9/L9b).
+— Accessibilité : écrans de 320 px, texte à 130 % et 200 %, TalkBack, information jamais portée par la couleur seule, réglage de réduction des animations respecté. Identité visuelle conservée : bordeaux #6B0C0C, accent #A61717, fonds #121212 et #1E1E1E, textes #F4F4F4 et #8A8A8A, vert #388E3C réservé à la validation, titres principaux en majuscules.
+— Identifiants KT stables ; ce lot crée uniquement les tickets indiqués ci-dessous.
+
+MISSION — LOT L9b : INTÉGRATION DU PACK DE CONTENU — VERSION 3.2.0
+
+Prérequis : L8 livré ; kalis_content_pack_v1.zip (L9) relu par le propriétaire (corrections intégrées). Contrôle son empreinte et sa version.
+Tickets : KT-079 (base d'exercices v2), KT-080 (démonstrations animées), KT-081 (réservé : illustrations de scène, reportées par le propriétaire), KT-082 (Arsenal, recherche et fiches).
+
+1. BASE D'EXERCICES v2 (KT-079)
+Remplace l'asset exercises_db par exercises_v2 + progressions + poses, en conservant la correspondance avec les anciens noms (mapping_v1_to_v2.json) : aucune séance personnelle, aucun historique ni aucun record ne perd son exercice. Migration testée sur des fixtures réelles. Les exercices du programme de 40 semaines sont rattachés à leur id v2.
+
+2. DÉMONSTRATIONS ANIMÉES (KT-080)
+Moteur de rendu Flutter (CustomPainter) qui reproduit exactement le moteur de référence HTML du pack : mêmes images clés, même interpolation, mêmes courbes d'accélération, mêmes couleurs selon le thème. Couleurs par rôles, comme les illustrations (palette active et mode). Test de concordance : pour 20 exercices et 5 instants par animation, positions des articulations identiques à 0,5 % près entre Dart et la référence (fixtures exportées par le pack). Réglage de réduction des animations → images clés statiques. Coût mesuré (images par seconde en profile, mémoire) sur la liste la plus longue.
+
+3. MENTIONS
+Écran de mentions : sources et licences du pack (licences.md).
+
+4. ARSENAL, RECHERCHE ET FICHES (KT-082)
+Fiche exercice : démonstration animée, points clés, erreurs fréquentes, respiration, muscles (texte), précautions, progressions et régressions navigables. Recherche et filtres par type de mouvement, lieu, matériel, difficulté. La création de séances personnelles utilise la base v2 ; les séances existantes restent intactes.
+
+TESTS SPÉCIFIQUES : migration v1 → v2 sans perte ; concordance du rendu ; recoloration des démonstrations pour les 6 palettes × 2 modes (tests de référence et contraste) ; fiches à 320 px et 200 % ; réduction des animations ; recherche sur les nouveaux champs.
+
+TESTER SANS TRICHER
+Commence par l'état initial. Chaque défaut corrigé reçoit si possible un test de régression. Aucune assertion supprimée, aucun test désactivé, aucune fenêtre de test agrandie ; une adaptation légitime à une nouvelle interface est expliquée. Tests d'écran à 390×844 et 320×720 avec défilement réel, texte à 130 % et 200 %, thèmes clair et sombre. Horloges et fixtures contrôlées pour tout ce qui dépend des dates. Contrôles attendus : dart format --output=none --set-exit-if-changed lib test ; flutter pub get --enforce-lockfile ; flutter analyze --no-pub ; python3 -m unittest discover -s tools/tests -v ; TZ=Europe/Paris flutter test --no-pub ; verify_project.py ; build signé APK et AAB par la CI. Si Flutter, le SDK, un appareil ou les secrets manquent, ne prétends pas avoir exécuté le contrôle : indique son statut exact.
+
+MÉTHODE ET LIVRABLES
+Ordre : état initial → contrat docs/CONTRAT_L9b.md (règles, paramètres, formats, migration, limites, décisions manquantes) → implémentation par tickets → régressions complètes. Pose tes questions uniquement si c'est bloquant, et continue les parties indépendantes. Ne mélange pas une refonte visuelle globale avec une migration de données dans un changement impossible à contrôler.
+Livre :
+— le projet complet dans streetlift_tracker_v33.zip, racine streetlift_tracker/, 25 000 000 octets au maximum, sans caches, build/, .dart_tool/, APK/AAB ni secrets ;
+— la version 3.2.0 (pubspec et réglages) ;
+— SUIVI_PROJET.md complété (L9b.0 base, L9b.1 contrat, L9b.2 changements par ticket, L9b.3 tests et scénarios, L9b.4 limites et suites) ; README.md (section 3.2.0) ; docs/CONTRAT_L9b.md ; LIVRAISON_L9b.md (export avant installation, mise à jour par-dessus la version précédente, vérifications sur téléphone) ; la liste précise des fichiers modifiés ;
+— le workflow build-apk.yml s'il est modifié, sans divergence entre la copie du projet et .github/workflows/ ;
+— la publication du ZIP sur main du dépôt GitHub mikeriin/streetlift-apk, le lancement du build signé et la vérification du run (numéro, étapes, artefacts) avant de livrer.
+Le statut final distingue « corrigé dans le code », « testé automatiquement », « vérifié sur appareil » et « reste à valider ». Le contenu sportif n'a pas été relu par un professionnel diplômé (décision du propriétaire) : signale dans le registre de validation chaque règle ou paramètre qui demanderait cette relecture. Ne promets aucun gain de performance ni aucun bénéfice de santé.
+
+Commence maintenant par le contrôle de la base et l'état initial, rédige le contrat, puis implémente. Si tout ne tient pas dans une passe, livre un lot cohérent, complet et utilisable, avec l'état exact du reste.
