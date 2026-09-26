@@ -45,7 +45,7 @@ jobs:
         if: always()
         working-directory: streetlift_tracker
         run: |
-          TZ=Europe/Paris timeout 420 flutter test --no-pub --timeout 45s --reporter expanded test/zz_diag_test.dart > ../ci-out/test-history.log 2>&1; echo "exit=$?" >> ../ci-out/test-history.log
+          TZ=Europe/Paris timeout 420 flutter test --no-pub --timeout 45s --reporter expanded test/l4b_seances_test.dart > ../ci-out/test-history.log 2>&1; echo "exit=$?" >> ../ci-out/test-history.log
       - name: Publier tests ciblés
         if: always()
         run: *push
