@@ -164,7 +164,8 @@ class KoachReviewScreen extends StatelessWidget {
                 'Douleur pendant la séance',
                 subtitle: 'Facultatif · 0 = aucune, 10 = maximale',
               ),
-              for (final m in movements) _PainCard(sessionKey: key, movement: m),
+              for (final m in movements)
+                _PainCard(sessionKey: key, movement: m),
             ],
             const KSection('Propositions'),
             if (proposals.isEmpty)
@@ -231,8 +232,11 @@ class _PainCard extends StatelessWidget {
                   tooltip: 'Douleur $i sur 10',
                   selected: v == i,
                   onSelected:
-                      (on) =>
-                          store.setKoachPain(sessionKey, movement, on ? i : null),
+                      (on) => store.setKoachPain(
+                        sessionKey,
+                        movement,
+                        on ? i : null,
+                      ),
                 ),
             ],
           ),
@@ -463,7 +467,8 @@ class KoachScreen extends StatelessWidget {
                 ref: l.ref,
                 name: l.name,
                 movement: l.key,
-                objectives: (objectives[l.ref] as Map?)?.cast<String, dynamic>(),
+                objectives:
+                    (objectives[l.ref] as Map?)?.cast<String, dynamic>(),
               ),
             const KSection(
               'Endurance · maximum estimé',
@@ -473,7 +478,8 @@ class KoachScreen extends StatelessWidget {
               _RepCard(
                 ref: r.ref,
                 name: r.name,
-                objectives: (objectives[r.ref] as Map?)?.cast<String, dynamic>(),
+                objectives:
+                    (objectives[r.ref] as Map?)?.cast<String, dynamic>(),
               ),
             const KSection('Historique des valeurs'),
             ..._history(),
@@ -549,7 +555,8 @@ String _objectiveLine(
   final observed = (st?['observed'] as num?)?.toDouble();
   final required = (st?['required'] as num?)?.toDouble();
   final pace = [
-    if (observed != null) 'rythme ${observed >= 0 ? '+' : '−'}${koachKg(observed.abs())} $unit/sem.',
+    if (observed != null)
+      'rythme ${observed >= 0 ? '+' : '−'}${koachKg(observed.abs())} $unit/sem.',
     if (required != null && st?['status'] != 'reached')
       'requis ${required >= 0 ? '+' : '−'}${koachKg(required.abs())}',
   ].join(', ');
@@ -602,18 +609,26 @@ class _LiftCard extends StatelessWidget {
               points: series,
               unit: 'kg',
               slope: slope,
-              stage: stage.target == null || stage.date == null
-                  ? null
-                  : (stage.date!, stage.target!),
-              finalGoal: fin.target == null || fin.date == null
-                  ? null
-                  : (fin.date!, fin.target!),
+              stage:
+                  stage.target == null || stage.date == null
+                      ? null
+                      : (stage.date!, stage.target!),
+              finalGoal:
+                  fin.target == null || fin.date == null
+                      ? null
+                      : (fin.date!, fin.target!),
               now: store.storeClock(),
             ),
           ],
           const SizedBox(height: 8),
-          Text(_objectiveLine(ref, 'stage', objectives, 'kg'), style: _dimSmall()),
-          Text(_objectiveLine(ref, 'final', objectives, 'kg'), style: _dimSmall()),
+          Text(
+            _objectiveLine(ref, 'stage', objectives, 'kg'),
+            style: _dimSmall(),
+          ),
+          Text(
+            _objectiveLine(ref, 'final', objectives, 'kg'),
+            style: _dimSmall(),
+          ),
           SwitchListTile.adaptive(
             key: ValueKey('koach-lock-$ref'),
             contentPadding: EdgeInsets.zero,
@@ -665,8 +680,14 @@ class _RepCard extends StatelessWidget {
             style: _dimSmall(),
           ),
           const SizedBox(height: 6),
-          Text(_objectiveLine(ref, 'stage', objectives, 'reps'), style: _dimSmall()),
-          Text(_objectiveLine(ref, 'final', objectives, 'reps'), style: _dimSmall()),
+          Text(
+            _objectiveLine(ref, 'stage', objectives, 'reps'),
+            style: _dimSmall(),
+          ),
+          Text(
+            _objectiveLine(ref, 'final', objectives, 'reps'),
+            style: _dimSmall(),
+          ),
           SwitchListTile.adaptive(
             key: ValueKey('koach-lock-$ref'),
             contentPadding: EdgeInsets.zero,
@@ -784,14 +805,11 @@ class _CurvePainter extends CustomPainter {
       t.difference(t0).inMinutes / span * size.width,
       size.height - (v - lo) / (hi - lo) * size.height,
     );
-    final g = Paint()
-      ..color = grid
-      ..strokeWidth = 1;
-    canvas.drawLine(
-      Offset(0, size.height),
-      Offset(size.width, size.height),
-      g,
-    );
+    final g =
+        Paint()
+          ..color = grid
+          ..strokeWidth = 1;
+    canvas.drawLine(Offset(0, size.height), Offset(size.width, size.height), g);
     final top = at(points.first.at, points.first.value + points.first.sd);
     final bandPath = Path()..moveTo(top.dx, top.dy);
     for (final p in points) {
@@ -831,9 +849,10 @@ class _CurvePainter extends CustomPainter {
       final weeks = t1.difference(points.last.at).inHours / (24 * 7);
       final end = at(t1, points.last.value + s * weeks);
       final start = at(points.last.at, points.last.value);
-      final dash = Paint()
-        ..color = line.withValues(alpha: .7)
-        ..strokeWidth = 1.5;
+      final dash =
+          Paint()
+            ..color = line.withValues(alpha: .7)
+            ..strokeWidth = 1.5;
       const n = 24;
       for (var i = 0; i < n; i += 2) {
         canvas.drawLine(
@@ -903,7 +922,8 @@ class KoachWeighInsScreen extends StatelessWidget {
                   title: Text('${koachKg(w.kg)} kg'),
                   subtitle: Text(koachDate(DateTime.parse(w.date))),
                   trailing: IconButton(
-                    tooltip: 'Supprimer la pesée du ${koachDate(DateTime.parse(w.date))}',
+                    tooltip:
+                        'Supprimer la pesée du ${koachDate(DateTime.parse(w.date))}',
                     icon: const Icon(Icons.delete_outline),
                     onPressed: () => store.removeWeighIn(w.date),
                   ),
@@ -955,7 +975,8 @@ class KoachEquipmentScreen extends StatelessWidget {
     final v = await showKoachNumberDialog(
       context,
       title: '${_equipmentNames[kind]} · ${_equipmentFields[field]}',
-      label: 'Valeur (${(store.koach.equipmentSettings[kind] as Map)['unit'] ?? 'kg'})',
+      label:
+          'Valeur (${(store.koach.equipmentSettings[kind] as Map)['unit'] ?? 'kg'})',
       initial: current,
       min: 0.01,
       max: 50,
@@ -1148,8 +1169,7 @@ class KoachObjectivesScreen extends StatelessWidget {
     final o = store.koachObjective(ref, level);
     final target = await showKoachNumberDialog(
       context,
-      title:
-          '$name · ${level == 'stage' ? 'étape' : 'objectif final'} ($unit)',
+      title: '$name · ${level == 'stage' ? 'étape' : 'objectif final'} ($unit)',
       label: 'Cible ($unit)',
       initial: o.target,
       min: 0,
@@ -1160,8 +1180,7 @@ class KoachObjectivesScreen extends StatelessWidget {
     final date = await showDatePicker(
       context: context,
       helpText: 'Date de l’objectif',
-      initialDate:
-          o.date ?? DateTime(today.year + 1, today.month, today.day),
+      initialDate: o.date ?? DateTime(today.year + 1, today.month, today.day),
       firstDate: DateTime(today.year - 1),
       lastDate: DateTime(today.year + 5, 12, 31),
     );
@@ -1174,8 +1193,7 @@ class KoachObjectivesScreen extends StatelessWidget {
     listenable: store,
     builder: (context, _) {
       final rows = [
-        for (final l in store.program.pilotage.mainLifts)
-          (l.ref, l.name, 'kg'),
+        for (final l in store.program.pilotage.mainLifts) (l.ref, l.name, 'kg'),
         for (final r in store.program.pilotage.repMax) (r.ref, r.name, 'reps'),
       ];
       return KScreen(
