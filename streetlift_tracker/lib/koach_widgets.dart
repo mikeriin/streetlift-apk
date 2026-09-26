@@ -684,7 +684,10 @@ class KoachWeighInBanner extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _koachHeader('Koach · pesée de la semaine', icon: Icons.monitor_weight_outlined),
+        _koachHeader(
+          'Koach · pesée de la semaine',
+          icon: Icons.monitor_weight_outlined,
+        ),
         const SizedBox(height: 6),
         Text(
           'Ton poids du corps sert au calcul des mouvements lestés. Dernière '

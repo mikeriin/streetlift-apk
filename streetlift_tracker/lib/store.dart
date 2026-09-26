@@ -692,10 +692,7 @@ class AppStore extends ChangeNotifier {
   int _koachAuxRevision = 0;
 
   /// Données Koach d'une séance supprimée, gardées pour l'annulation.
-  final Map<
-    String,
-    ({SessionAnswers? answers, List<KoachDecision> decisions})
-  >
+  final Map<String, ({SessionAnswers? answers, List<KoachDecision> decisions})>
   _koachStash = {};
 
   static const _kState = 'kalis_state_v3';
