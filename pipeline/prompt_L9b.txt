@@ -25,7 +25,9 @@ Tickets : KT-079 (base d'exercices v2), KT-080 (démonstrations animées), KT-08
 1. BASE D'EXERCICES v2 (KT-079)
 Remplace l'asset exercises_db par exercises_v2 + progressions + poses, en conservant la correspondance avec les anciens noms (mapping_v1_to_v2.json) : aucune séance personnelle, aucun historique ni aucun record ne perd son exercice. Migration testée sur des fixtures réelles. Les exercices du programme de 40 semaines sont rattachés à leur id v2.
 
-2. DÉMONSTRATIONS ANIMÉES (KT-080)
+2. DÉMONSTRATIONS ANIMÉES ET ATLAS MUSCULAIRE (KT-080)
+Le pack est en version interne 2.0.0 (refonte L9R) : silhouette anatomique volumétrique calculée par cinématique et atlas SVG d'environ 90 muscles (muscles.json, atlas.svg). Un exercice marqué « démonstration indisponible » affiche l'atlas et les consignes, sans animation.
+— Atlas : affiché dans la fiche exercice (muscles primaires, secondaires, stabilisateurs, avec légende texte) ; il remplace aussi la carte musculaire de STATS (lib/muscle_body.dart) en conservant l'agrégation par les 11 groupes actuels et la rampe d'intensité existante ; tests de non-régression des données de STATS.
 Moteur de rendu Flutter (CustomPainter) qui reproduit exactement le moteur de référence HTML du pack : mêmes images clés, même interpolation, mêmes courbes d'accélération, mêmes couleurs selon le thème. Couleurs par rôles, comme les illustrations (palette active et mode). Test de concordance : pour 20 exercices et 5 instants par animation, positions des articulations identiques à 0,5 % près entre Dart et la référence (fixtures exportées par le pack). Réglage de réduction des animations → images clés statiques. Coût mesuré (images par seconde en profile, mémoire) sur la liste la plus longue.
 
 3. MENTIONS

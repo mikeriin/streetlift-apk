@@ -40,7 +40,7 @@ L4b, L7, LC1b, L5 et L6 ont été faits hors pipeline. Le pipeline commence à L
 | Lot | Version prérequise sur main | Produit | Suivant |
 | --- | --- | --- | --- |
 | L9 | toute (lecture seule de main) | pack sur la branche `content-pack` (orpheline) + outil de relecture publié comme artefact claude.ai avec une base partagée pour enregistrer les relectures (skill `artifact-capabilities`) | aucun : notification `Kalis Track L9 : pack prêt, relecture requise` avec le lien de l'artefact |
-| L9-passe2 | toute | lit les relectures (outil ArtifactData, ou fichier fourni dans le texte de lancement), corrige, pousse `kalis_content_pack_v1_final.zip` sur `content-pack` | L9b **si** main est en 3.1.0 ; sinon rien (L8 lancera L9b) |
+| L9R (remplace la passe 2) | toute | `pipeline/prompt_L9R.txt` : refonte v2 (sources croisées, atlas ~90 muscles, silhouette anatomique calculée, contrôle visuel) → `kalis_content_pack_v2_candidat.zip`, nouvelle relecture ; après validation du propriétaire seulement : `kalis_content_pack_v1_final.zip` | L9b **si** main est en 3.1.0 après validation ; sinon rien (L8 lancera L9b) |
 | L8 | livraison L6 présente sur main (section L6 de SUIVI_PROJET.md) ; sinon notification « L8 en attente de L6 » et arrêt | 3.1.0 | L9b **si** `content-pack` contient `kalis_content_pack_v1_final.zip` ; sinon notification « L8 livré ; L9b attend la relecture du pack » |
 | L9b | 3.1.0 + pack final | 3.2.0 | L10 ; notification : « point d'installation conseillé » |
 | L10 | 3.2.0 | 4.0.0 | L11 |
