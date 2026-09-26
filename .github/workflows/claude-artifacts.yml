@@ -1,0 +1,49 @@
+name: Claude CI temporaire (relevé d'un build signé)
+
+on:
+  push:
+    branches: [claude/ci-tools]
+    paths: [artifact-run]
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  report:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Télécharger les rapports du build (sans secret de signature)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          run="$(tr -dc '0-9' < artifact-run)"
+          out="ci-out/build-$run"
+          mkdir -p "$out"
+          gh run view "$run" -R "$GITHUB_REPOSITORY" --json number,status,conclusion,headSha,jobs,createdAt,updatedAt,url > "$out/run.json" 2> "$out/run.err" || true
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run/artifacts" > "$out/artifacts.json" 2> "$out/artifacts.err" || true
+          gh run download "$run" -R "$GITHUB_REPOSITORY" -n kalis-track-validation -D val > "$out/download-validation.log" 2>&1 || true
+          ls -laR val > "$out/validation-files.txt" 2>&1 || true
+          for f in android-artifacts.json commit.txt build-number.txt inputs.sha256 flutter.txt; do
+            cp "val/$f" "$out/" 2>/dev/null || true
+          done
+          tail -n 5 val/flutter-tests.log > "$out/flutter-tests-tail.txt" 2>/dev/null || true
+          tail -n 8 val/python-tests.log > "$out/python-tests-tail.txt" 2>/dev/null || true
+          tail -n 3 val/analyze.log > "$out/analyze-tail.txt" 2>/dev/null || true
+          gh run download "$run" -R "$GITHUB_REPOSITORY" -n kalis-track-apk -D apk > "$out/download-apk.log" 2>&1 || true
+          ls -la apk > "$out/apk-files.txt" 2>&1 || true
+          cat apk/*.sha256 > "$out/apk.sha256" 2>/dev/null || true
+          gh run download "$run" -R "$GITHUB_REPOSITORY" -n kalis-track-aab -D aab > "$out/download-aab.log" 2>&1 || true
+          ls -la aab > "$out/aab-files.txt" 2>&1 || true
+          cat aab/*.sha256 > "$out/aab.sha256" 2>/dev/null || true
+      - name: Publier le relevé
+        if: always()
+        run: |
+          git config user.name "claude-ci"
+          git config user.email "claude-ci@users.noreply.github.com"
+          git add -A ci-out
+          git commit -q -m "Relevé du build $(tr -dc '0-9' < artifact-run)" || exit 0
+          git pull -q --rebase origin claude/ci-tools || true
+          git push -q origin HEAD:claude/ci-tools
