@@ -284,6 +284,7 @@ class _StatsProgressionState extends State<StatsProgression> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     final p = store.progression;

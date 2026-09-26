@@ -1,6 +1,6 @@
  ci-out/analyze.log                                 |     3 -
  ci-out/captures.log                                |    82 -
- ci-out/captures/apres_320_200pct_catalogue_wod.png |   Bin 99931 -> 0 bytes
+ ci-out/captures/apres_320_200pct_catalogue_wod.png |   Bin 113703 -> 0 bytes
  ci-out/captures/apres_320_200pct_chrono_wod.png    |   Bin 72204 -> 0 bytes
  .../captures/apres_320_200pct_depart_programme.png |   Bin 110226 -> 0 bytes
  .../captures/apres_320_200pct_editeur_seance.png   |   Bin 99087 -> 0 bytes
@@ -8,15 +8,15 @@
  .../apres_320_200pct_fiche_wod_verrouille.png      |   Bin 190987 -> 0 bytes
  .../apres_320_200pct_historique_seance.png         |   Bin 94407 -> 0 bytes
  ci-out/captures/apres_320_200pct_references.png    |   Bin 115822 -> 0 bytes
- ci-out/captures/apres_320_200pct_reglages.png      |   Bin 76335 -> 0 bytes
- .../apres_320_200pct_reglages_chronometres.png     |   Bin 93645 -> 0 bytes
+ ci-out/captures/apres_320_200pct_reglages.png      |   Bin 79809 -> 0 bytes
+ .../apres_320_200pct_reglages_chronometres.png     |   Bin 95979 -> 0 bytes
  ci-out/captures/apres_320_200pct_seance.png        |   Bin 86057 -> 0 bytes
- ci-out/captures/apres_320_200pct_stats_apercu.png  |   Bin 96143 -> 0 bytes
- .../captures/apres_320_200pct_stats_historique.png |   Bin 95647 -> 0 bytes
+ ci-out/captures/apres_320_200pct_stats_apercu.png  |   Bin 92386 -> 0 bytes
+ .../captures/apres_320_200pct_stats_historique.png |   Bin 101901 -> 0 bytes
  .../captures/apres_320_200pct_stats_parcours.png   |   Bin 112409 -> 0 bytes
  .../apres_320_200pct_stats_performances.png        |   Bin 109892 -> 0 bytes
- ci-out/captures/apres_catalogue_wod_clair.png      |   Bin 278971 -> 0 bytes
- ci-out/captures/apres_catalogue_wod_sombre.png     |   Bin 269563 -> 0 bytes
+ ci-out/captures/apres_catalogue_wod_clair.png      |   Bin 279122 -> 0 bytes
+ ci-out/captures/apres_catalogue_wod_sombre.png     |   Bin 269646 -> 0 bytes
  ci-out/captures/apres_chrono_wod_clair.png         |   Bin 102458 -> 0 bytes
  ci-out/captures/apres_chrono_wod_sombre.png        |   Bin 98610 -> 0 bytes
  ci-out/captures/apres_depart_programme_clair.png   |   Bin 113796 -> 0 bytes
@@ -72,11 +72,11 @@
  ci-out/captures/selecteur_320_200pct_clair.png     |   Bin 102560 -> 0 bytes
  ci-out/captures/selecteur_320_200pct_sombre.png    |   Bin 92487 -> 0 bytes
  ci-out/commit.txt                                  |     2 +-
- ci-out/format-full.diff                            | 54337 -------------------
- ci-out/format.diff                                 |    75 -
- ci-out/format.log                                  |     4 +-
+ ci-out/format-full.diff                            | 55109 -------------------
+ ci-out/format.diff                                 |    82 -
+ ci-out/format.log                                  |     5 +-
+ ci-out/mode.txt                                    |     2 +-
  ci-out/python.log                                  |    15 -
- ci-out/test-l5c.log                                |    97 -
- streetlift_tracker/lib/settings_screen.dart        |    34 +-
- streetlift_tracker/lib/wod_store.dart              |    58 +-
- 81 files changed, 50 insertions(+), 54657 deletions(-)
+ ci-out/test-l5c.log                                |   144 -
+ streetlift_tracker/lib/stats_progression.dart      |     1 +
+ 81 files changed, 5 insertions(+), 55440 deletions(-)
