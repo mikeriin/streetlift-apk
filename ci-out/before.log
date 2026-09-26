@@ -1,0 +1,7 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/lc1_base/streetlift_tracker/test/lc1_snapshot_test.dart
+00:00 +0: (setUpAll)
+00:00 +0: instantané 2.5.7
+L4-BEFORE {"semaine":"S11 · J6","datesS11":"21/09→27/09/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"references":31,"xp":7870,"niveau":16,"credits":63,"gains":63,"droitsWod":0,"rappels":204,"premierRappel":"S11-J7 2026-09-27T07:30"}
+00:00 +1: (tearDownAll)
+00:00 +1: All tests passed!
+exit=0
