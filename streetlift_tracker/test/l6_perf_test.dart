@@ -219,13 +219,14 @@ void main() {
       await tester.pump();
       expect(entry('S0-J9601'), findsOneWidget);
 
-      // Onglet visible : reconstruit aussitôt, rien de différé.
-      final deferred = StoreRebuildStats.deferred;
+      // Section visible : reconstruite aussitôt (les zones encore masquées,
+      // PROGRAMME et la section Aperçu, continuent de différer).
+      final rebuilt = StoreRebuildStats.rebuilds;
       store.logs['S0-J9602'] = doneLog('Visible L6');
       store.saveLogs(immediate: true);
       await tester.pump();
       expect(entry('S0-J9602'), findsOneWidget);
-      expect(StoreRebuildStats.deferred, deferred);
+      expect(StoreRebuildStats.rebuilds, greaterThan(rebuilt));
 
       store.logs
         ..remove('S0-J9601')

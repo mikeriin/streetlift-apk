@@ -1,0 +1,82 @@
+name: Claude CI temporaire (banc L6 sur émulateur, profile AOT)
+
+on:
+  push:
+    branches: [claude/ci-tools]
+    paths: [device-run]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: claude-device
+  cancel-in-progress: true
+
+jobs:
+  device:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+      - name: KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          ls -l /dev/kvm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29.3'
+          channel: stable
+          cache: true
+      - name: Composants Android
+        run: |
+          out="device-out/$(awk 'NR==1{print $1}' device-run | tr -dc 'A-Za-z0-9_-' | head -c 40)"
+          echo "DEVICE_OUT=$out" >> "$GITHUB_ENV"
+          echo "DEVICE_ROUNDS=$(grep -o 'rounds=[0-9]*' device-run | cut -d= -f2)" >> "$GITHUB_ENV"
+          rm -rf "$out" && mkdir -p "$out"
+          sdk="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
+          tools="$sdk/cmdline-tools/latest/bin"
+          (yes 2>/dev/null || true) | "$tools/sdkmanager" --licenses > /dev/null
+          "$tools/sdkmanager" --install "platforms;android-36" "build-tools;36.0.0" "ndk;28.2.13676358" > "$out/sdkmanager.log" 2>&1
+      - name: APK profile x86_64 (application réelle, base et candidate)
+        run: |
+          set +e
+          mkdir -p apk
+          for side in base cand; do
+            dir=streetlift_tracker; [ "$side" = base ] && dir=baseline/streetlift_tracker
+            (cd "$dir" && flutter pub get --enforce-lockfile && timeout 1800 flutter build apk --profile --no-pub --target-platform android-x64) > "$DEVICE_OUT/build-$side.log" 2>&1
+            echo "build $side exit=$?" >> "$DEVICE_OUT/runs.txt"
+            cp "$dir/build/app/outputs/flutter-apk/app-profile.apk" "apk/$side.apk" || true
+            ls -l "apk/$side.apk" >> "$DEVICE_OUT/runs.txt" 2>&1 || true
+          done
+          for side in base cand; do
+            dir=streetlift_tracker; [ "$side" = base ] && dir=baseline/streetlift_tracker
+            BUILD_ONLY=1 APK_OUT="$PWD/apk/bench-$side.apk" timeout 1800 \
+              bash streetlift_tracker/tools/perf_device/run_device_bench.sh "$dir" "$side-build" "$DEVICE_OUT"
+            echo "bench build $side exit=$?" >> "$DEVICE_OUT/runs.txt"
+          done
+          sha256sum apk/*.apk >> "$DEVICE_OUT/runs.txt" 2>&1 || true
+          cat "$DEVICE_OUT/runs.txt"
+      - name: Émulateur et mesures
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          arch: x86_64
+          target: google_apis
+          disable-animations: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: bash ci-device.sh
+      - name: Publier
+        if: always()
+        run: |
+          git config user.name "claude-ci"
+          git config user.email "claude-ci@users.noreply.github.com"
+          git add -A device-out
+          git commit -q -m "Mesures L6 émulateur $(date -u +%H:%M:%S)" || exit 0
+          git pull -q --rebase origin claude/ci-tools || true
+          git push -q origin HEAD:claude/ci-tools

@@ -9,6 +9,14 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+# L6 (KT-023) : le banc sur appareil dépend de `integration_test` et
+# `flutter_driver`, ajoutés seulement dans la copie temporaire créée par
+# tools/perf_device/run_device_bench.sh, qui l'analyse et le compile
+# (`flutter analyze` puis `flutter drive`). Il n'est pas analysable ici.
+analyzer:
+  exclude:
+    - tools/perf_device/**
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
