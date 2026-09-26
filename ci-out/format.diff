@@ -1,12 +1,30 @@
- ci-out/analyze.log       |     3 -
- ci-out/android-debug.log |    12 -
- ci-out/commit.txt        |     2 +-
- ci-out/format-full.diff  | 16743 ---------------------------------------------
- ci-out/format.diff       |    20 -
- ci-out/format.log        |    14 +-
- ci-out/mode.txt          |     2 +-
- ci-out/python.log        |    15 -
- ci-out/test-l7.log       |   102 -
- ci-out/test-summary.txt  |     1 -
- ci-out/test.log          |   631 --
- 11 files changed, 3 insertions(+), 17542 deletions(-)
+ ci-out/analyze.log                               |     3 -
+ ci-out/build-36241179613/aab-files.txt           |     5 -
+ ci-out/build-36241179613/aab.sha256              |     1 -
+ ci-out/build-36241179613/analyze-tail.txt        |     2 -
+ ci-out/build-36241179613/android-artifacts.json  |   253 -
+ ci-out/build-36241179613/apk-files.txt           |     5 -
+ ci-out/build-36241179613/apk.sha256              |     1 -
+ ci-out/build-36241179613/artifacts.err           |     0
+ ci-out/build-36241179613/artifacts.json          |     1 -
+ ci-out/build-36241179613/build-number.txt        |     1 -
+ ci-out/build-36241179613/commit.txt              |     1 -
+ ci-out/build-36241179613/download-aab.log        |     0
+ ci-out/build-36241179613/download-apk.log        |     0
+ ci-out/build-36241179613/download-validation.log |     0
+ ci-out/build-36241179613/flutter-tests-tail.txt  |     5 -
+ ci-out/build-36241179613/flutter.txt             |     4 -
+ ci-out/build-36241179613/inputs.sha256           |     3 -
+ ci-out/build-36241179613/python-tests-tail.txt   |     8 -
+ ci-out/build-36241179613/run.err                 |     0
+ ci-out/build-36241179613/run.json                |     1 -
+ ci-out/build-36241179613/validation-files.txt    |    31 -
+ ci-out/commit.txt                                |     2 +-
+ ci-out/format-full.diff                          | 17619 ---------------------
+ ci-out/format.diff                               |    12 -
+ ci-out/format.log                                |     3 +-
+ ci-out/mode.txt                                  |     2 +-
+ ci-out/python.log                                |    15 -
+ ci-out/test-l7.log                               |   102 -
+ streetlift_tracker/test/lc1_programme_test.dart  |   168 +-
+ 29 files changed, 92 insertions(+), 18156 deletions(-)

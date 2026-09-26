@@ -444,36 +444,43 @@ void main() {
     Exercise line(int n, int j, String name) =>
         app.program.week(n).day(j)!.exercises.firstWhere((e) => e.name == name);
 
-    test('1 812 exercices ; LC1 : 202 suppressions et 66 ajouts ; LC1b : 7 et 1', () {
-      final where = <String, (int, int, String)>{};
-      for (final w in app.program.weeks) {
-        for (final d in w.days) {
-          for (final e in d.exercises) {
-            expect(where.containsKey(e.id), isFalse, reason: e.id);
-            where[e.id] = (w.n, d.j, e.name);
+    test(
+      '1 812 exercices ; LC1 : 202 suppressions et 66 ajouts ; LC1b : 7 et 1',
+      () {
+        final where = <String, (int, int, String)>{};
+        for (final w in app.program.weeks) {
+          for (final d in w.days) {
+            for (final e in d.exercises) {
+              expect(where.containsKey(e.id), isFalse, reason: e.id);
+              where[e.id] = (w.n, d.j, e.name);
+            }
           }
         }
-      }
-      // LC1 : 1 954 − 202 + 66 = 1 818 ; LC1b (S11·J6) : 1 818 − 7 + 1.
-      expect(where, hasLength(1812));
-      expect(1954 - removedIds.length + addedLines.length, 1818);
-      expect(1818 - lc1bRemovedIds.length + 1, 1812);
-      for (final id in [...removedIds, ...lc1bRemovedIds]) {
-        expect(where.containsKey(id), isFalse, reason: id);
-      }
-      expect(where['B1-L1b-001'], (11, 6, 'Muscle-ups PdC explosifs'));
-      expect([for (final id in where.keys) if (id.contains('L1b')) id], [
-        'B1-L1b-001',
-      ]);
-      final added = {
-        for (final e in where.entries)
-          if (e.key.startsWith('B2-L1-')) e.key: e.value,
-      };
-      expect(added, addedLines);
-      expect(addedLines.keys, [
-        for (var i = 1; i <= 66; i++) 'B2-L1-${i.toString().padLeft(3, '0')}',
-      ]);
-    });
+        // LC1 : 1 954 − 202 + 66 = 1 818 ; LC1b (S11·J6) : 1 818 − 7 + 1.
+        expect(where, hasLength(1812));
+        expect(1954 - removedIds.length + addedLines.length, 1818);
+        expect(1818 - lc1bRemovedIds.length + 1, 1812);
+        for (final id in [...removedIds, ...lc1bRemovedIds]) {
+          expect(where.containsKey(id), isFalse, reason: id);
+        }
+        expect(where['B1-L1b-001'], (11, 6, 'Muscle-ups PdC explosifs'));
+        expect(
+          [
+            for (final id in where.keys)
+              if (id.contains('L1b')) id,
+          ],
+          ['B1-L1b-001'],
+        );
+        final added = {
+          for (final e in where.entries)
+            if (e.key.startsWith('B2-L1-')) e.key: e.value,
+        };
+        expect(added, addedLines);
+        expect(addedLines.keys, [
+          for (var i = 1; i <= 66; i++) 'B2-L1-${i.toString().padLeft(3, '0')}',
+        ]);
+      },
+    );
 
     test('S12 à S19 : lignes, ordre, séries et règles R1 à R4 (section 3)', () {
       for (var n = 12; n <= 19; n++) {
@@ -659,20 +666,20 @@ void main() {
         ),
       );
       expect(day.conduite.contains('Test'), isFalse);
-      expect([for (final e in day.exercises) e.id], [
-        'B1-L1b-001',
-        'B1-521',
-        'B1-525',
-        'B1-527',
-        'B1-529',
-      ]);
-      expect([for (final e in day.exercises) e.name], [
-        'Muscle-ups PdC explosifs',
-        'Tractions explosives poitrine-barre',
-        'Squat endurance @ 70 kg',
-        'Leg raises lestés (suspendu)',
-        'Mobilité épaules + poignets',
-      ]);
+      expect(
+        [for (final e in day.exercises) e.id],
+        ['B1-L1b-001', 'B1-521', 'B1-525', 'B1-527', 'B1-529'],
+      );
+      expect(
+        [for (final e in day.exercises) e.name],
+        [
+          'Muscle-ups PdC explosifs',
+          'Tractions explosives poitrine-barre',
+          'Squat endurance @ 70 kg',
+          'Leg raises lestés (suspendu)',
+          'Mobilité épaules + poignets',
+        ],
+      );
       // Même format que S12·J6, sauf le squat (test max en S12 seulement).
       for (final i in [0, 1, 3, 4]) {
         final a = day.exercises[i], b = s12.exercises[i];
@@ -882,45 +889,46 @@ void main() {
       await tester.pumpAndSettle();
     });
 
-    testWidgets('LC1b : journal S11·J6 avec un identifiant supprimé, séance du jour', (
-      tester,
-    ) async {
-      phone(tester, const Size(320, 720));
-      final old = SessionLog(
-        done: true,
-        finishedAt: '2026-09-20T18:00:00',
-        exerciseNames: {'B1-520': 'Excentriques de transition LESTÉS'},
-        ex: {
-          'B1-520': ExerciseLog(
-            sets: [SetEntry(kg: '12,5', reps: '3', done: true)],
-          ),
-        },
-      );
-      store.logs['S11-J6'] = old;
-      final before = old.toJson().toString();
-      await tester.pumpWidget(
-        page(SessionHistoryScreen(log: old, sessionKey: 'S11-J6')),
-      );
-      await tester.pumpAndSettle();
-      expect(find.text('EXCENTRIQUES DE TRANSITION LESTÉS'), findsOneWidget);
-      expect(store.logs['S11-J6']!.toJson().toString(), before);
-      store.logs.remove('S11-J6');
-      // Séance S11·J6 au nouveau format : 5 pages, texte 200 %.
-      final week = store.program.week(11);
-      final day = week.day(6)!;
-      await tester.pumpWidget(
-        page(SessionScreen(week: week, day: day), scale: 2),
-      );
-      await tester.pumpAndSettle();
-      expect(find.text('MUSCLE-UPS PDC EXPLOSIFS'), findsWidgets);
-      for (var p = 0; p < day.exercises.length; p++) {
-        expect(tester.takeException(), isNull, reason: 'S11 J6 page $p');
-        await tester.tap(find.byIcon(Icons.chevron_right).last);
+    testWidgets(
+      'LC1b : journal S11·J6 avec un identifiant supprimé, séance du jour',
+      (tester) async {
+        phone(tester, const Size(320, 720));
+        final old = SessionLog(
+          done: true,
+          finishedAt: '2026-09-20T18:00:00',
+          exerciseNames: {'B1-520': 'Excentriques de transition LESTÉS'},
+          ex: {
+            'B1-520': ExerciseLog(
+              sets: [SetEntry(kg: '12,5', reps: '3', done: true)],
+            ),
+          },
+        );
+        store.logs['S11-J6'] = old;
+        final before = old.toJson().toString();
+        await tester.pumpWidget(
+          page(SessionHistoryScreen(log: old, sessionKey: 'S11-J6')),
+        );
         await tester.pumpAndSettle();
-      }
-      await tester.pumpWidget(const SizedBox());
-      await tester.pumpAndSettle();
-    });
+        expect(find.text('EXCENTRIQUES DE TRANSITION LESTÉS'), findsOneWidget);
+        expect(store.logs['S11-J6']!.toJson().toString(), before);
+        store.logs.remove('S11-J6');
+        // Séance S11·J6 au nouveau format : 5 pages, texte 200 %.
+        final week = store.program.week(11);
+        final day = week.day(6)!;
+        await tester.pumpWidget(
+          page(SessionScreen(week: week, day: day), scale: 2),
+        );
+        await tester.pumpAndSettle();
+        expect(find.text('MUSCLE-UPS PDC EXPLOSIFS'), findsWidgets);
+        for (var p = 0; p < day.exercises.length; p++) {
+          expect(tester.takeException(), isNull, reason: 'S11 J6 page $p');
+          await tester.tap(find.byIcon(Icons.chevron_right).last);
+          await tester.pumpAndSettle();
+        }
+        await tester.pumpWidget(const SizedBox());
+        await tester.pumpAndSettle();
+      },
+    );
 
     for (final (size, scale, dark) in [
       (const Size(390, 844), 1.3, true),

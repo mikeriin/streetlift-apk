@@ -1,5 +1,0 @@
-03:29 +532 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: « Réduire les animations » affiche le bilan final sans attendre
-03:29 +533 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: récompense à 320 px, texte 1.3 : actions par défilement
-03:29 +534 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: récompense à 320 px, texte 2.0 : actions par défilement
-03:29 +535 ~1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: (tearDownAll)
-03:29 +535 ~1: All tests passed!
