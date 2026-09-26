@@ -1,17 +1,15 @@
 00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/zz_diag_test.dart
-test/zz_diag_test.dart:20:10: Error: 'WeekPlan' isn't a type.
-    late WeekPlan w;
-         ^^^^^^^^
-test/zz_diag_test.dart:21:10: Error: 'DayPlan' isn't a type.
-    late DayPlan d;
-         ^^^^^^^
-00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/zz_diag_test.dart [E]
-  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/zz_diag_test.dart":
-  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/zz_diag_test.dart: test/zz_diag_test.dart:20:10: Error: 'WeekPlan' isn't a type.
-      late WeekPlan w;
-           ^^^^^^^^
-  test/zz_diag_test.dart:21:10: Error: 'DayPlan' isn't a type.
-      late DayPlan d;
-           ^^^^^^^
-  .
-00:00 +0 -1: Some tests failed.
+00:00 +0: diag
+DIAG exercise Pompes PdC — très léger group 1
+DIAG scrollable AxisDirection.right
+DIAG scrollable AxisDirection.down
+DIAG scrollable AxisDirection.right
+DIAG scrollable AxisDirection.right
+DIAG scrollable AxisDirection.right
+DIAG tooltip before Rect.fromLTRB(244.0, 657.5, 288.0, 701.5)
+DIAG pageview Rect.fromLTRB(0.0, 182.0, 320.0, 556.0)
+DIAG tooltip after Rect.fromLTRB(244.0, 223.5, 288.0, 267.5)
+DIAG listview Rect.fromLTRB(0.0, 182.0, 320.0, 556.0)
+DIAG exc null
+00:01 +1: All tests passed!
+exit=0
