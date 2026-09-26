@@ -1,0 +1,8 @@
+
+Fichiers : base-r1.jsonl, cand-r1.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s | p | ms | 2 | 10.5 [10.0–11.0] | 2 | 1.05 [1.0–1.1] | 0.1 | non concluant (n < 8) |
+programme_v33.json: 13 -> 33 octets
+programme_v33.json: 13 -> 33 octets
