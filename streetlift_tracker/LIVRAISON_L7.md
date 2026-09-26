@@ -72,7 +72,7 @@ L'étape (cible 12 mois du programme, 12 mois après ton départ) est remplie pa
 
 ## 6. Fichiers
 
-Nouveaux : `lib/koach_engine.dart`, `lib/koach_data.dart`, `lib/koach_program.dart`, `lib/koach_store.dart`, `lib/koach_widgets.dart`, `lib/koach_screens.dart`, `assets/koach_program.json.gz`, `tools/koach_reference.py`, `tools/koach_simulation.py`, `tools/koach_annotate.py`, `tools/tests/test_koach_reference.py`, `test/l7_koach_engine_test.dart`, `test/l7_koach_simulation_test.dart`, `test/l7_koach_store_test.dart`, `test/l7_koach_off_test.dart`, `test/l7_koach_screens_test.dart`, `test/fixtures/koach/*.json` (24), `test/fixtures/l7_2x_snapshot.json.gz`, `docs/CONTRAT_L7.md`, `docs/CONFIDENTIALITE_KOACH.md`, `LIVRAISON_L7.md`.
+Nouveaux : `lib/koach_engine.dart`, `lib/koach_data.dart`, `lib/koach_program.dart`, `lib/koach_store.dart`, `lib/koach_widgets.dart`, `lib/koach_screens.dart`, `assets/koach_program.json.gz`, `tools/koach_reference.py`, `tools/koach_simulation.py`, `tools/koach_annotate.py`, `tools/tests/test_koach_reference.py`, `test/l7_koach_engine_test.dart`, `test/l7_koach_simulation_test.dart`, `test/l7_koach_store_test.dart`, `test/l7_koach_off_test.dart`, `test/l7_koach_screens_test.dart`, `test/fixtures/koach/*.json` (26), `test/fixtures/l7_2x_snapshot.json.gz`, `docs/CONTRAT_L7.md`, `docs/CONFIDENTIALITE_KOACH.md`, `LIVRAISON_L7.md`.
 
 Modifiés : `lib/store.dart`, `lib/session_screen.dart`, `lib/settings_screen.dart`, `lib/stats_performance.dart`, `lib/home_screen.dart`, `lib/data_control.dart`, `pubspec.yaml`, `README.md`, `SUIVI_PROJET.md`.
 
