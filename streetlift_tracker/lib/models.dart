@@ -315,8 +315,7 @@ class Program {
   bool beforeStart(DateTime date) => (offsetOf(date) ?? 0) < 0;
 
   /// Après S40·J7 (false sans départ).
-  bool afterEnd(DateTime date) =>
-      (offsetOf(date) ?? -1) >= weeks.length * 7;
+  bool afterEnd(DateTime date) => (offsetOf(date) ?? -1) >= weeks.length * 7;
 
   /// J courant : J1 = jour du départ, J7 = départ + 6 jours (pas forcément
   /// un lundi). Sans départ : 1.

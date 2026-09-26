@@ -334,15 +334,15 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
             '${p.customTemplates} modèles · ${p.userExercises} exercices ajoutés',
           ),
           _Line('Liste d’envies', '${p.wishlist}'),
-          _Line(
-            'Départ du programme',
-            switch ((p.programStart, p.startOrigin)) {
-              (null, _) => 'non démarré',
-              (final d?, 'migration') =>
-                'S1 · J1 le ${civilDateLabel(d)} (calendrier d’origine)',
-              (final d?, _) => 'S1 · J1 le ${civilDateLabel(d)}',
-            },
-          ),
+          _Line('Départ du programme', switch ((
+            p.programStart,
+            p.startOrigin,
+          )) {
+            (null, _) => 'non démarré',
+            (final d?, 'migration') =>
+              'S1 · J1 le ${civilDateLabel(d)} (calendrier d’origine)',
+            (final d?, _) => 'S1 · J1 le ${civilDateLabel(d)}',
+          }),
           _Line(
             'Références',
             '${p.referencesSet} renseignées'

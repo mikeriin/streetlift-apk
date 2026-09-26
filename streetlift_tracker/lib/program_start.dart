@@ -95,9 +95,7 @@ class _ProgramStartScreenState extends State<ProgramStartScreen> {
     super.initState();
     _pending = !store.program.scheduled;
     final today = _civil(store.storeClock());
-    final proposed = _civil(
-      widget.initialDate ?? store.program.start ?? today,
-    );
+    final proposed = _civil(widget.initialDate ?? store.program.start ?? today);
     _date = store.startAllowed(proposed) ? proposed : today;
     if (_pending) {
       for (final f in _startFields()) {
@@ -122,9 +120,7 @@ class _ProgramStartScreenState extends State<ProgramStartScreen> {
     final picked = await showDatePicker(
       context: context,
       initialDate: _date,
-      firstDate: today.subtract(
-        const Duration(days: AppStore.startPastDays),
-      ),
+      firstDate: today.subtract(const Duration(days: AppStore.startPastDays)),
       lastDate: today.add(const Duration(days: AppStore.startFutureDays)),
       helpText: 'DATE DE S1 · J1',
       cancelText: 'Annuler',
@@ -245,7 +241,9 @@ class _ProgramStartScreenState extends State<ProgramStartScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    current == null ? 'Date de S1 · J1' : 'Nouvelle date de S1 · J1',
+                    current == null
+                        ? 'Date de S1 · J1'
+                        : 'Nouvelle date de S1 · J1',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 6),
@@ -269,7 +267,9 @@ class _ProgramStartScreenState extends State<ProgramStartScreen> {
                       key: const ValueKey('start-preview'),
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Fin prévue (S$weeks · J7) : ${longCivilDate(end)}'),
+                        Text(
+                          'Fin prévue (S$weeks · J7) : ${longCivilDate(end)}',
+                        ),
                         const SizedBox(height: 4),
                         Text(switch (positionNow) {
                           'avant le départ' =>
@@ -419,8 +419,7 @@ class ProgramStartBanner extends StatelessWidget {
           'Choisis la date de ta première séance (S1 · J1). En attendant, tu peux parcourir les semaines.';
       action = 'Choisir mon départ';
     } else if (p.beforeStart(now)) {
-      final days =
-          Program.civilIndex(start) - Program.civilIndex(_civil(now));
+      final days = Program.civilIndex(start) - Program.civilIndex(_civil(now));
       title = 'Départ le ${longCivilDate(start)}';
       body =
           'S1 · J1 dans $days jour${days > 1 ? 's' : ''}. Aucun rappel avant cette date.';
@@ -432,9 +431,9 @@ class ProgramStartBanner extends StatelessWidget {
     } else {
       return const SizedBox.shrink();
     }
-    void open() => Navigator.of(context).push(
-      MaterialPageRoute<bool>(builder: (_) => const ProgramStartScreen()),
-    );
+    void open() => Navigator.of(
+      context,
+    ).push(MaterialPageRoute<bool>(builder: (_) => const ProgramStartScreen()));
     return Padding(
       padding: const EdgeInsets.fromLTRB(KSpace.page, 0, KSpace.page, 8),
       child: Semantics(
