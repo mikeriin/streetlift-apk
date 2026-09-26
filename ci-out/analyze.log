@@ -1,11 +1,3 @@
 Analyzing streetlift_tracker...                                 
-
-   info • Don't invoke 'print' in production code • test/zz_diag_test.dart:53:5 • avoid_print
-   info • Don't invoke 'print' in production code • test/zz_diag_test.dart:57:7 • avoid_print
-   info • Don't invoke 'print' in production code • test/zz_diag_test.dart:59:5 • avoid_print
-   info • Don't invoke 'print' in production code • test/zz_diag_test.dart:60:5 • avoid_print
-   info • Don't invoke 'print' in production code • test/zz_diag_test.dart:63:5 • avoid_print
-   info • Don't invoke 'print' in production code • test/zz_diag_test.dart:64:5 • avoid_print
-   info • Don't invoke 'print' in production code • test/zz_diag_test.dart:65:5 • avoid_print
-
-7 issues found. (ran in 23.3s)
+No issues found! (ran in 14.7s)
+exit=0
