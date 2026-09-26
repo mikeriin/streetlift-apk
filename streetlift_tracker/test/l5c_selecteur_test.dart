@@ -67,7 +67,8 @@ void main() {
   tearDown(resetAppearance);
 
   for (final (width, scale, columns) in [
-    (390.0, 1.0, 3),
+    (390.0, 1.0, 2),
+    (600.0, 1.0, 3),
     (320.0, 1.0, 2),
     (390.0, 1.3, 2),
     (390.0, 2.0, 1),

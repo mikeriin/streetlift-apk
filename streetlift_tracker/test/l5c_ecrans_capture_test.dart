@@ -15,6 +15,7 @@ import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/pilotage_screen.dart';
 import 'package:streetlift_tracker/program_start.dart';
 import 'package:streetlift_tracker/session_history.dart';
+import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/settings_screen.dart';
 import 'package:streetlift_tracker/stats_navigation.dart';
 import 'package:streetlift_tracker/stats_screen.dart';
@@ -177,6 +178,27 @@ void main() {
         }
         if (error != null) {
           debugPrint('ERREUR programme 320 200 % $mode : $error');
+        }
+      }
+      // Petits écrans et grand texte : 320 × 720 à 200 %, mode sombre.
+      final week = store.program.week(12);
+      final compact = <String, Widget>{
+        'seance': SessionScreen(week: week, day: week.day(4)!),
+        'reglages': const SettingsScreen(),
+        ...pages,
+      };
+      for (final page in compact.entries) {
+        await show(page.value, true, size: const Size(320, 720), text: 2);
+        final error = tester.takeException();
+        if (captureEnabled) {
+          await savePng(
+            tester,
+            boundary,
+            '${_tag}_320_200pct_${page.key}${error == null ? '' : '_ERREUR'}',
+          );
+        }
+        if (error != null) {
+          debugPrint('ERREUR ${page.key} 320 200 % : $error');
         }
       }
       await tester.pumpWidget(const SizedBox());

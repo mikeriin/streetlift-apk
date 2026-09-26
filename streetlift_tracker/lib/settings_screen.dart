@@ -640,7 +640,9 @@ class _AccentPicker extends StatelessWidget {
   final ValueChanged<String> onSelected;
   const _AccentPicker({required this.selected, required this.onSelected});
 
-  static const double _minOptionWidth = 96, _spacing = 8;
+  // 2 colonnes sur téléphone (320 à 400 px), 3 sur grand écran ; 1 colonne
+  // dès 150 % de texte à 320 px. Un nom tient sans coupure de mot.
+  static const double _minOptionWidth = 118, _spacing = 8;
 
   @override
   Widget build(BuildContext context) {
@@ -748,7 +750,7 @@ class _AccentOption extends StatelessWidget {
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: 48),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: Row(
                 children: [
                   Container(
@@ -778,7 +780,7 @@ class _AccentOption extends StatelessWidget {
                       spec.label,
                       style: TextStyle(
                         color: SL.text,
-                        fontSize: 13.5,
+                        fontSize: 13,
                         fontWeight:
                             selected ? FontWeight.w700 : FontWeight.w500,
                       ),

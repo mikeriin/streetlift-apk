@@ -736,15 +736,20 @@ class KMenuTile extends StatelessWidget {
     child: ListTile(
       minVerticalPadding: 14,
       onTap: onTap,
-      leading: Container(
-        width: 42,
-        height: 42,
-        decoration: BoxDecoration(
-          color: SL.accentTint,
-          borderRadius: BorderRadius.circular(22),
-        ),
-        child: Icon(icon, color: SL.accent, size: 22),
-      ),
+      // L5 : repère décoratif retiré au-delà de 150 % de texte, pour que le
+      // titre ne soit pas coupé au milieu d'un mot sur écran étroit.
+      leading:
+          MediaQuery.textScalerOf(context).scale(10) > 15
+              ? null
+              : Container(
+                width: 42,
+                height: 42,
+                decoration: BoxDecoration(
+                  color: SL.accentTint,
+                  borderRadius: BorderRadius.circular(22),
+                ),
+                child: Icon(icon, color: SL.accent, size: 22),
+              ),
       title: Text(title),
       subtitle: Text(subtitle),
       trailing: Icon(Icons.chevron_right_rounded, color: SL.dim),

@@ -398,7 +398,8 @@ class _WeekHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final label = dates.replaceAll('→', ' → ');
+    // Tiret demi-cadratin : présent dans toutes les polices de l'interface.
+    final label = dates.replaceAll('→', ' – ');
     final info = Semantics(
       button: true,
       label: 'Semaine ${week.n}, ${week.block}, $label',
@@ -713,9 +714,11 @@ class _DayCard extends StatelessWidget {
             : icon;
     // Titre sur une ligne dans la mise en page de référence (la semaine
     // entière tient à l'écran) ; deux lignes sur écran étroit ou grand texte.
+    final textScale = MediaQuery.textScalerOf(context).scale(10) / 10;
     final titleLines =
-        MediaQuery.sizeOf(context).width < 360 ||
-                MediaQuery.textScalerOf(context).scale(10) > 11
+        textScale > 1.5
+            ? 3
+            : MediaQuery.sizeOf(context).width < 360 || textScale > 1.1
             ? 2
             : 1;
     return Semantics(
