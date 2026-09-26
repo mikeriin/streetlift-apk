@@ -60,7 +60,7 @@ class StatsLevelCard extends StatelessWidget {
                 fontSize: 46,
                 height: 1,
                 fontWeight: FontWeight.w700,
-                fontFeatures: [FontFeature.tabularFigures()],
+                fontFeatures: const [FontFeature.tabularFigures()],
               ),
             ),
             const SizedBox(width: 8),

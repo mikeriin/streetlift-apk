@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
-import 'package:streetlift_tracker/persistence.dart';
 import 'package:streetlift_tracker/store.dart';
 
 double contrast(Color a, Color b) {
@@ -360,8 +359,9 @@ void main() {
       () async {
         for (final week in app.program.weeks.take(2)) {
           for (final day in week.days) {
-            if (day.exercises.isNotEmpty)
+            if (day.exercises.isNotEmpty) {
               app.markSessionDone(week.n, day.j, true);
+            }
           }
         }
         await app.flush();

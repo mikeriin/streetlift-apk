@@ -280,13 +280,13 @@ class SL {
 
 class ProgrammeColors {
   final bool dark;
-  final KAccentSpec accent;
-  const ProgrammeColors(this.dark, [this.accent = KAccentSpec.rouge]);
+  final KAccentSpec spec;
+  const ProgrammeColors(this.dark, [this.spec = KAccentSpec.rouge]);
   factory ProgrammeColors.of(BuildContext context) => ProgrammeColors(
     Theme.of(context).brightness == Brightness.dark,
     SL.accentSpec,
   );
-  KPalette get p => KPalette(dark, accent);
+  KPalette get p => KPalette(dark, spec);
   Color get card => p.card;
   Color get accent => p.accent;
   Color get muted => p.dim;

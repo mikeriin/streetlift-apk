@@ -816,7 +816,7 @@ class _DayCard extends StatelessWidget {
                                       height: 1.15,
                                       fontWeight: FontWeight.w600,
                                       letterSpacing: -.5,
-                                      fontFeatures: [
+                                      fontFeatures: const [
                                         FontFeature.tabularFigures(),
                                       ],
                                     ),

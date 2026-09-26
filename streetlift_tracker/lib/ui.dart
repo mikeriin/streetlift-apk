@@ -600,7 +600,7 @@ class KProgressCard extends StatelessWidget {
         ),
         if (onTap != null)
           Padding(
-            padding: EdgeInsets.only(left: 6),
+            padding: const EdgeInsets.only(left: 6),
             child: Tooltip(
               message: 'Ma progression',
               child: Icon(Icons.chevron_right, color: SL.onBrand, size: 20),

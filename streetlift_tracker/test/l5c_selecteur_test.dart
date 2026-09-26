@@ -291,7 +291,7 @@ void main() {
       expect(theme().brightness, Brightness.dark);
       expect(
         theme().colorScheme.primary,
-        KPalette(true, KAccentSpec.orange).accent,
+        const KPalette(true, KAccentSpec.orange).accent,
       );
       expect(SL.dark, isTrue);
       tester.platformDispatcher.platformBrightnessTestValue = Brightness.light;
@@ -299,7 +299,7 @@ void main() {
       expect(theme().brightness, Brightness.light);
       expect(
         theme().colorScheme.primary,
-        KPalette(false, KAccentSpec.orange).accent,
+        const KPalette(false, KAccentSpec.orange).accent,
       );
       expect(SL.dark, isFalse);
       expect(SL.accentSpec, same(KAccentSpec.orange));
