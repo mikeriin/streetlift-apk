@@ -1,0 +1,356 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart
+lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+  Color get accent => p.accent;
+            ^^^^^^
+lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+  final KAccentSpec accent;
+                    ^^^^^^
+lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+  KPalette get p => KPalette(dark, accent);
+                                   ^
+00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+    Color get accent => p.accent;
+              ^^^^^^
+  lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+    final KAccentSpec accent;
+                      ^^^^^^
+  lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+    KPalette get p => KPalette(dark, accent);
+                                     ^
+  .
+00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart
+00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/zone.dart 1429:19                     _CustomZone.runUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+  Color get accent => p.accent;
+            ^^^^^^
+lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+  final KAccentSpec accent;
+                    ^^^^^^
+lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+  KPalette get p => KPalette(dark, accent);
+                                   ^
+00:00 +0 -2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+    Color get accent => p.accent;
+              ^^^^^^
+  lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+    final KAccentSpec accent;
+                      ^^^^^^
+  lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+    KPalette get p => KPalette(dark, accent);
+                                     ^
+  .
+00:00 +0 -2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart
+00:00 +0 -2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/zone.dart 1429:19                     _CustomZone.runUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+  Color get accent => p.accent;
+            ^^^^^^
+lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+  final KAccentSpec accent;
+                    ^^^^^^
+lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+  KPalette get p => KPalette(dark, accent);
+                                   ^
+00:00 +0 -3: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart: lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+    Color get accent => p.accent;
+              ^^^^^^
+  lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+    final KAccentSpec accent;
+                      ^^^^^^
+  lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+    KPalette get p => KPalette(dark, accent);
+                                     ^
+  .
+00:00 +0 -3: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_palettes_capture_test.dart
+00:00 +0 -3: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/zone.dart 1429:19                     _CustomZone.runUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+  Color get accent => p.accent;
+            ^^^^^^
+lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+  final KAccentSpec accent;
+                    ^^^^^^
+lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+  KPalette get p => KPalette(dark, accent);
+                                   ^
+00:00 +0 -4: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_palettes_capture_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_palettes_capture_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_palettes_capture_test.dart: lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+    Color get accent => p.accent;
+              ^^^^^^
+  lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+    final KAccentSpec accent;
+                      ^^^^^^
+  lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+    KPalette get p => KPalette(dark, accent);
+                                     ^
+  .
+00:00 +0 -4: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart
+00:00 +0 -4: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/zone.dart 1429:19                     _CustomZone.runUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+  Color get accent => p.accent;
+            ^^^^^^
+lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+  final KAccentSpec accent;
+                    ^^^^^^
+lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+  KPalette get p => KPalette(dark, accent);
+                                   ^
+00:00 +0 -5: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart: lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+    Color get accent => p.accent;
+              ^^^^^^
+  lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+    final KAccentSpec accent;
+                      ^^^^^^
+  lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+    KPalette get p => KPalette(dark, accent);
+                                     ^
+  .
+00:00 +0 -5: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart
+00:00 +0 -5: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/zone.dart 1429:19                     _CustomZone.runUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+  Color get accent => p.accent;
+            ^^^^^^
+lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+  final KAccentSpec accent;
+                    ^^^^^^
+lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+  KPalette get p => KPalette(dark, accent);
+                                   ^
+00:00 +0 -6: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+    Color get accent => p.accent;
+              ^^^^^^
+  lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+    final KAccentSpec accent;
+                      ^^^^^^
+  lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+    KPalette get p => KPalette(dark, accent);
+                                     ^
+  .
+00:00 +0 -6: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/level_fill_test.dart
+00:00 +0 -6: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+  Color get accent => p.accent;
+            ^^^^^^
+lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+  final KAccentSpec accent;
+                    ^^^^^^
+lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+  KPalette get p => KPalette(dark, accent);
+                                   ^
+00:00 +0 -7: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/level_fill_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/level_fill_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/level_fill_test.dart: lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+    Color get accent => p.accent;
+              ^^^^^^
+  lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+    final KAccentSpec accent;
+                      ^^^^^^
+  lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+    KPalette get p => KPalette(dark, accent);
+                                     ^
+  .
+00:00 +0 -7: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart
+00:00 +0 -7: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+  Color get accent => p.accent;
+            ^^^^^^
+lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+  final KAccentSpec accent;
+                    ^^^^^^
+lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+  KPalette get p => KPalette(dark, accent);
+                                   ^
+00:00 +0 -8: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart: lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+    Color get accent => p.accent;
+              ^^^^^^
+  lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+    final KAccentSpec accent;
+                      ^^^^^^
+  lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+    KPalette get p => KPalette(dark, accent);
+                                     ^
+  .
+00:00 +0 -8: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart
+00:00 +0 -8: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+  Color get accent => p.accent;
+            ^^^^^^
+lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+  final KAccentSpec accent;
+                    ^^^^^^
+lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+  KPalette get p => KPalette(dark, accent);
+                                   ^
+00:00 +0 -9: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+    Color get accent => p.accent;
+              ^^^^^^
+  lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+    final KAccentSpec accent;
+                      ^^^^^^
+  lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+    KPalette get p => KPalette(dark, accent);
+                                     ^
+  .
+00:00 +0 -9: Some tests failed.

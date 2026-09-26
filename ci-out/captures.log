@@ -1,0 +1,23 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart
+lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+  Color get accent => p.accent;
+            ^^^^^^
+lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+  final KAccentSpec accent;
+                    ^^^^^^
+lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+  KPalette get p => KPalette(dark, accent);
+                                   ^
+00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart: lib/app_theme.dart:291:13: Error: 'accent' is already declared in this scope.
+    Color get accent => p.accent;
+              ^^^^^^
+  lib/app_theme.dart:283:21: Context: Previous declaration of 'accent'.
+    final KAccentSpec accent;
+                      ^^^^^^
+  lib/app_theme.dart:289:36: Error: Can't use 'accent' because it is declared more than once.
+    KPalette get p => KPalette(dark, accent);
+                                     ^
+  .
+00:00 +0 -1: Some tests failed.
