@@ -145,7 +145,20 @@ RecordHit? recordFor(
 class GameAttribute {
   final String id, label, hint;
   final int score; // 0-100
-  const GameAttribute(this.id, this.label, this.score, this.hint);
+
+  /// Entrées manquantes (KT-007) : `available` faux = aucune entrée, score
+  /// sans valeur ; [note] explique ce qui manque (aussi pour un calcul
+  /// partiel). Formules inchangées.
+  final bool available;
+  final String? note;
+  const GameAttribute(
+    this.id,
+    this.label,
+    this.score,
+    this.hint, {
+    this.available = true,
+    this.note,
+  });
 
   /// Niveau d'attribut 1-10 (un niveau tous les 10 points).
   int get level => (1 + score ~/ 10).clamp(1, 10);
@@ -258,6 +271,14 @@ class CharacterSheet {
       );
     }
     final forceScore = force.isEmpty ? 0 : _mean(force);
+    final forceNote =
+        !hasBw
+            ? 'Indisponible : renseigne ton poids du corps et au moins une charge de référence (Références).'
+            : force.isEmpty
+            ? 'Indisponible : aucune charge de référence renseignée (Références).'
+            : force.length < 4
+            ? 'Calcul partiel : ${force.length} référence${force.length > 1 ? 's' : ''} de force sur 4.'
+            : null;
 
     // --- Endurance : maxima de répétitions au poids de corps + WODs terminés.
     final endurance = <int>[];
@@ -295,6 +316,12 @@ class CharacterSheet {
       (120, 100),
     ]);
     reps('B20', [(0, 0), (5, 10), (15, 40), (25, 65), (40, 90), (50, 100)]);
+    final enduranceNote =
+        endurance.isEmpty
+            ? 'Maxima en répétitions non renseignés (Références) : seuls les WODs terminés comptent.'
+            : endurance.length < 5
+            ? 'Calcul partiel : ${endurance.length} maximum${endurance.length > 1 ? 's' : ''} sur 5.'
+            : null;
     var enduranceScore = endurance.isEmpty ? 0 : _mean(endurance);
     enduranceScore = math.min(
       100,
@@ -348,12 +375,15 @@ class CharacterSheet {
         'Force',
         forceScore,
         'Lest relatif au poids de corps sur tractions, dips, muscle-up et squat (références Pilotage).',
+        available: force.isNotEmpty,
+        note: forceNote,
       ),
       GameAttribute(
         'endurance',
         'Endurance',
         enduranceScore,
         'Maxima de répétitions au poids de corps et WODs terminés.',
+        note: enduranceNote,
       ),
       GameAttribute(
         'technique',

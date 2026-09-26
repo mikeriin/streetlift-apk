@@ -201,7 +201,7 @@ class AttributeRadar extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Semantics(
     label:
-        'Attributs : ${sheet.attributes.map((a) => '${a.label} ${a.score} sur 100').join(', ')}.',
+        'Attributs : ${sheet.attributes.map((a) => a.available ? '${a.label} ${a.score} sur 100' : '${a.label} indisponible').join(', ')}.',
     child: ExcludeSemantics(
       child: SizedBox(
         width: size,
@@ -490,14 +490,15 @@ class _AttributeRow extends StatelessWidget {
           color: Colors.white,
           track: Colors.white.withValues(alpha: .2),
           semanticsLabel: a.label,
-          semanticsValue: '${a.score} sur 100, niveau ${a.level}',
+          semanticsValue:
+              a.available ? '${a.score} sur 100, niveau ${a.level}' : 'indisponible',
         ),
       ),
       const SizedBox(width: 8),
       SizedBox(
         width: 26,
         child: Text(
-          '${a.level}',
+          a.available ? '${a.level}' : '—',
           textAlign: TextAlign.right,
           style: const TextStyle(
             color: Colors.white,
@@ -550,19 +551,27 @@ void showCharacterSheet(BuildContext context) {
         children: [
           Expanded(
             child: Text(
-              '${a.label} · niveau ${a.level}',
+              a.available ? '${a.label} · niveau ${a.level}' : '${a.label} · indisponible',
               style: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
-          Text('${a.score} / 100'),
+          Text(a.available ? '${a.score} / 100' : '—'),
         ],
       ),
       StatsBar(
-        value: a.fraction,
+        value: a.available ? a.fraction : 0,
         label: a.label,
-        description: '${a.score} sur 100',
+        description: a.available ? '${a.score} sur 100' : 'indisponible',
       ),
       Text(a.hint, style: Theme.of(context).textTheme.bodySmall),
+      if (a.note != null)
+        Text(
+          a.note!,
+          key: ValueKey('attribute-note-${a.id}'),
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
     ],
     const Text(
       'Les attributs se recalculent depuis tes références Pilotage, ton journal et tes WODs. Ils décrivent ton parcours, pas une norme.',
