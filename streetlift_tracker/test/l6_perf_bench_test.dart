@@ -207,7 +207,9 @@ void main() {
           'xp': p.totalXp,
           'level': app.level,
           'credits': app.credits,
-          'wodLevels': _fnv([for (final w in app.wods) '${w.id}:${w.level}'].join(',')),
+          'wodLevels': _fnv(
+            [for (final w in app.wods) '${w.id}:${w.level}'].join(','),
+          ),
           'estimates': _fnv(
             [
               for (final w in app.wods)
@@ -215,7 +217,9 @@ void main() {
             ].join(','),
           ),
           'history': _fnv(
-            [for (final e in statsHistory(app)) '${e.id}|${e.title}|${e.at}'].join(','),
+            [
+              for (final e in statsHistory(app)) '${e.id}|${e.title}|${e.at}',
+            ].join(','),
           ),
           'muscles': _fnv('${app.weeklyMuscles(DateTime(2026, 3, 25, 23))}'),
           'bests': _fnv(

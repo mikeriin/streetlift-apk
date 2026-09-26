@@ -147,9 +147,12 @@ Map<String, dynamic>? perfBackup(AppStore app, String profile) {
       var clock = DateTime(date.year, date.month, date.day, 7);
       String nextSet() => _iso(clock = clock.add(const Duration(seconds: 150)));
       final finished = _iso(
-        DateTime(date.year, date.month, date.day, 7).add(
-          Duration(seconds: 150 * items.length * 4 + 300),
-        ),
+        DateTime(
+          date.year,
+          date.month,
+          date.day,
+          7,
+        ).add(Duration(seconds: 150 * items.length * 4 + 300)),
       );
       return SessionLog(
         done: true,

@@ -101,9 +101,12 @@ void main() {
       changed(() => w.results.first.seconds = 600);
       changed(() => w.results.first.notes = 'corrigé');
       changed(() => w.results.first.completed = false);
-      changed(() => w.results.first.intervals = [
-        [1, null, 3],
-      ]);
+      changed(
+        () =>
+            w.results.first.intervals = [
+              [1, null, 3],
+            ],
+      );
       changed(() => w.results.first.intervals![0][1] = 2);
       changed(() => w.results.removeLast());
       // Le nom ne fait pas partie de la clé d'origine (inchangé en L6).
@@ -180,9 +183,8 @@ void main() {
 
     SessionLog doneLog(String title) => SessionLog(
       done: true,
-      finishedAt: DateTime.now()
-          .subtract(const Duration(hours: 2))
-          .toIso8601String(),
+      finishedAt:
+          DateTime.now().subtract(const Duration(hours: 2)).toIso8601String(),
       title: title,
     );
 
