@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
 import 'brand.dart';
@@ -700,7 +702,7 @@ class KPageIntro extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              KWordFitText(
                 title.toUpperCase(),
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
@@ -715,6 +717,50 @@ class KPageIntro extends StatelessWidget {
         if (trailing != null) ...[const SizedBox(width: 12), trailing!],
       ],
     ),
+  );
+}
+
+/// Titre qui garde ses mots entiers (L5). Sur écran étroit avec un grand
+/// texte, si le mot le plus large ne tient pas sur une ligne, la taille de
+/// ce titre baisse juste assez pour le loger, sans descendre sous celle du
+/// texte courant à l'échelle choisie (15 px × échelle). Le titre reste sur
+/// plusieurs lignes : rien n'est coupé ni masqué.
+class KWordFitText extends StatelessWidget {
+  final String text;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+  const KWordFitText(this.text, {super.key, this.style, this.textAlign});
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      final base = DefaultTextStyle.of(context).style.merge(style);
+      final size = base.fontSize ?? 14;
+      final scaler = MediaQuery.textScalerOf(context);
+      var fitted = base;
+      if (constraints.maxWidth.isFinite && size > 15) {
+        var widest = 0.0;
+        for (final word in text.split(RegExp(r'\s+'))) {
+          if (word.isEmpty) continue;
+          final painter = TextPainter(
+            text: TextSpan(text: word, style: base),
+            textDirection: Directionality.of(context),
+            textScaler: scaler,
+            maxLines: 1,
+          )..layout();
+          widest = math.max(widest, painter.width);
+          painter.dispose();
+        }
+        if (widest > constraints.maxWidth) {
+          final factor = math.max(
+            15 / size,
+            constraints.maxWidth / widest * .98,
+          );
+          fitted = base.copyWith(fontSize: size * factor);
+        }
+      }
+      return Text(text, style: fitted, textAlign: textAlign);
+    },
   );
 }
 

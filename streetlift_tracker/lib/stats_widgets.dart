@@ -107,7 +107,10 @@ Future<void> statsSheet(
             (context, controller) => KList(
               controller: controller,
               children: [
-                Text(title, style: Theme.of(context).textTheme.titleLarge),
+                KWordFitText(
+                  title,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
                 ...children,
               ],
             ),

@@ -332,50 +332,42 @@ class CharacterCard extends StoreWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              RankInsignia(
+          Builder(
+            builder: (context) {
+              final insignia = RankInsignia(
                 rankIndex: rankIndexOf(p.rank),
                 prestige: GameState.prestigeOf(p.level),
                 size: 54,
                 light: true,
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'TON PERSONNAGE',
-                      style: TextStyle(
-                        color: SL.onBrandSoft,
-                        fontSize: 10,
-                        letterSpacing: 1.1,
-                        fontWeight: FontWeight.w600,
-                      ),
+              );
+              final title = Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'TON PERSONNAGE',
+                    style: TextStyle(
+                      color: SL.onBrandSoft,
+                      fontSize: 10,
+                      letterSpacing: 1.1,
+                      fontWeight: FontWeight.w600,
                     ),
-                    const SizedBox(height: 4),
-                    // L5 : retour à la ligne plutôt que réduction du titre.
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        store.displayTitle,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: SL.onBrand,
-                          fontSize: 22,
-                          fontWeight: FontWeight.w700,
-                          height: 1.15,
-                        ),
-                      ),
+                  ),
+                  const SizedBox(height: 4),
+                  // L5 : retour à la ligne plutôt que réduction du titre.
+                  Text(
+                    store.displayTitle,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: SL.onBrand,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                      height: 1.15,
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 10),
-              Column(
+                  ),
+                ],
+              );
+              final level = Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
@@ -398,8 +390,30 @@ class CharacterCard extends StoreWidget {
                     ),
                   ),
                 ],
-              ),
-            ],
+              );
+              // L5 : au-delà de 150 % de texte, le titre passe sous l'insigne
+              // et le niveau, sur toute la largeur (plus de mot coupé).
+              if (MediaQuery.textScalerOf(context).scale(10) > 15) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(children: [insignia, const Spacer(), level]),
+                    const SizedBox(height: 10),
+                    title,
+                  ],
+                );
+              }
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  insignia,
+                  const SizedBox(width: 14),
+                  Expanded(child: title),
+                  const SizedBox(width: 10),
+                  level,
+                ],
+              );
+            },
           ),
           const SizedBox(height: 16),
           KProgressBar(

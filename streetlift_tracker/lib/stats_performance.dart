@@ -26,7 +26,7 @@ class StatsPerformance extends StatelessWidget {
       key: const PageStorageKey('stats-performance-scroll'),
       children: [
         const SizedBox(height: 4),
-        Text(
+        KWordFitText(
           'Des repères pour avancer',
           style: Theme.of(context).textTheme.titleLarge,
         ),

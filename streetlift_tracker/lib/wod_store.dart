@@ -946,7 +946,14 @@ class CreditsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          Builder(
+            builder: (context) {
+              final large = MediaQuery.textScalerOf(context).scale(10) > 15;
+              final earn = TextButton(
+                onPressed: () => showCreditRules(context),
+                child: const Text('Gagner'),
+              );
+              final row = Row(
             children: [
               Container(
                 width: 40,
@@ -975,11 +982,17 @@ class CreditsCard extends StatelessWidget {
                   ],
                 ),
               ),
-              TextButton(
-                onPressed: () => showCreditRules(context),
-                child: const Text('Gagner'),
-              ),
+              if (!large) earn,
             ],
+          );
+              // L5 : grand texte, « Gagner » passe sous le solde.
+              return large
+                  ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [row, earn],
+                  )
+                  : row;
+            },
           ),
           const SizedBox(height: 8),
           KProgressBar(

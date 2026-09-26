@@ -38,7 +38,7 @@ class _StatsHistoryState extends State<StatsHistory> {
       key: const PageStorageKey('stats-history-scroll'),
       children: [
         const SizedBox(height: 4),
-        Text(
+        KWordFitText(
           'Ton journal d’entraînement',
           style: Theme.of(context).textTheme.titleLarge,
         ),

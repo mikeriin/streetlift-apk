@@ -32,7 +32,35 @@ class SettingsScreen extends StatelessWidget {
               'system' => 'Système : suit le thème du téléphone',
               _ => 'Sombre : fond anthracite, lisible en extérieur',
             },
-            below: SegmentedButton<String>(
+            // L5 : au-delà de 150 % de texte, trois choix empilés plutôt que
+            // trois segments où « Système » était coupé en deux.
+            below:
+                MediaQuery.textScalerOf(context).scale(10) > 15
+                    ? Column(
+                      children: [
+                        for (final (value, label) in const [
+                          ('system', 'Système'),
+                          ('dark', 'Sombre'),
+                          ('light', 'Clair'),
+                        ])
+                          RadioListTile<String>(
+                            key: ValueKey('theme-$value'),
+                            value: value,
+                            groupValue:
+                                ['system', 'dark', 'light'].contains(s.theme)
+                                    ? s.theme
+                                    : 'system',
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(label),
+                            onChanged: (selected) {
+                              if (selected == null) return;
+                              s.theme = selected;
+                              save();
+                            },
+                          ),
+                      ],
+                    )
+                    : SegmentedButton<String>(
               expandedInsets: EdgeInsets.zero,
               showSelectedIcon: false,
               segments: const [

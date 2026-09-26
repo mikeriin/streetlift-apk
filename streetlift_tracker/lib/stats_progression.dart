@@ -248,7 +248,7 @@ class _StatsProgressionState extends State<StatsProgression> {
       key: const PageStorageKey('stats-journey-scroll'),
       children: [
         const SizedBox(height: 4),
-        Text(
+        KWordFitText(
           'Ton arbre de progression',
           style: Theme.of(context).textTheme.titleLarge,
         ),
