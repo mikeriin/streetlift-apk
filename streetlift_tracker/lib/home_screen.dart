@@ -277,7 +277,6 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: const KTopBar(leading: LevelPill()),
         body: Column(
           children: [
-            ProgramStartBanner(now: now),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: KSpace.page),
               child: _WeekSlider(
@@ -314,7 +313,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       KSpace.page,
                       12,
                     ),
-                    children: [for (final d in w.days) card(d)],
+                    children: [
+                      // Dans la liste : lisible à 200 % sans écraser les
+                      // journées (départ à choisir, à venir, terminé).
+                      if (ProgramStartBanner.visible(store.program, now))
+                        ProgramStartBanner(now: now, padding: EdgeInsets.zero),
+                      for (final d in w.days) card(d),
+                    ],
                   ),
                 ),
               ),

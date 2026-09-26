@@ -405,7 +405,17 @@ class _ReferenceField extends StatelessWidget {
 /// programme terminé. Rien pendant le programme.
 class ProgramStartBanner extends StatelessWidget {
   final DateTime now;
-  const ProgramStartBanner({super.key, required this.now});
+  final EdgeInsetsGeometry padding;
+  const ProgramStartBanner({
+    super.key,
+    required this.now,
+    this.padding = const EdgeInsets.fromLTRB(KSpace.page, 0, KSpace.page, 8),
+  });
+
+  /// Le bandeau a quelque chose à dire : départ à choisir, à venir ou
+  /// programme terminé.
+  static bool visible(Program p, DateTime now) =>
+      !p.scheduled || p.beforeStart(now) || p.afterEnd(now);
 
   @override
   Widget build(BuildContext context) {
@@ -435,7 +445,7 @@ class ProgramStartBanner extends StatelessWidget {
       context,
     ).push(MaterialPageRoute<bool>(builder: (_) => const ProgramStartScreen()));
     return Padding(
-      padding: const EdgeInsets.fromLTRB(KSpace.page, 0, KSpace.page, 8),
+      padding: padding,
       child: Semantics(
         container: true,
         child: KCard(
