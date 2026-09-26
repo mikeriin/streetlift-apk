@@ -954,37 +954,37 @@ class CreditsCard extends StatelessWidget {
                 child: const Text('Gagner'),
               );
               final row = Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: SL.accentTint,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(Icons.toll_rounded, color: SL.accent),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      credits >= 0
-                          ? '$credits crédit${credits > 1 ? 's' : ''} WOD'
-                          : 'Solde : ${creditDeficitLabel(credits)}',
-                      style: Theme.of(context).textTheme.titleMedium,
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: SL.accentTint,
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    Text(
-                      'Niveau ${store.level + 1} dans ${lp.need - lp.inLevel} XP : +$next crédit${next > 1 ? 's' : ''}',
-                      style: TextStyle(color: SL.dim, fontSize: 12),
+                    child: Icon(Icons.toll_rounded, color: SL.accent),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          credits >= 0
+                              ? '$credits crédit${credits > 1 ? 's' : ''} WOD'
+                              : 'Solde : ${creditDeficitLabel(credits)}',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        Text(
+                          'Niveau ${store.level + 1} dans ${lp.need - lp.inLevel} XP : +$next crédit${next > 1 ? 's' : ''}',
+                          style: TextStyle(color: SL.dim, fontSize: 12),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              if (!large) earn,
-            ],
-          );
+                  ),
+                  if (!large) earn,
+                ],
+              );
               // L5 : grand texte, « Gagner » passe sous le solde.
               return large
                   ? Column(

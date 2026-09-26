@@ -61,23 +61,23 @@ class SettingsScreen extends StatelessWidget {
                       ],
                     )
                     : SegmentedButton<String>(
-              expandedInsets: EdgeInsets.zero,
-              showSelectedIcon: false,
-              segments: const [
-                ButtonSegment(value: 'system', label: Text('Système')),
-                ButtonSegment(value: 'dark', label: Text('Sombre')),
-                ButtonSegment(value: 'light', label: Text('Clair')),
-              ],
-              selected: {
-                ['system', 'dark', 'light'].contains(s.theme)
-                    ? s.theme
-                    : 'system',
-              },
-              onSelectionChanged: (selected) {
-                s.theme = selected.single;
-                save();
-              },
-            ),
+                      expandedInsets: EdgeInsets.zero,
+                      showSelectedIcon: false,
+                      segments: const [
+                        ButtonSegment(value: 'system', label: Text('Système')),
+                        ButtonSegment(value: 'dark', label: Text('Sombre')),
+                        ButtonSegment(value: 'light', label: Text('Clair')),
+                      ],
+                      selected: {
+                        ['system', 'dark', 'light'].contains(s.theme)
+                            ? s.theme
+                            : 'system',
+                      },
+                      onSelectionChanged: (selected) {
+                        s.theme = selected.single;
+                        save();
+                      },
+                    ),
           ),
           // L5-C : indépendant du thème ; appliqué tout de suite, enregistré
           // avec les autres réglages.
