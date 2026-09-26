@@ -487,7 +487,17 @@ class Context:
 
 def new_state():
     return {'bias': {'b': 0.0, 'P': None, 'updates': 0}, 'tracks': {}, 'rtracks': {},
-            'fatigue': {}, 'signatures': []}
+            'fatigue': {}, 'signatures': [], 'context': ''}
+
+
+def context_signature(inp):
+    """Tout ce qui, hors événements, influence le rejeu : pesées (même
+    rétroactives), références, repères initiaux, mouvements, paramètres.
+    Un changement impose le rejeu complet (cache incrémental exact)."""
+    initial = [h for h in (inp.get('history') or []) if h.get('source') == 'initial']
+    return json.dumps([inp.get('params'), inp.get('lifts'), inp.get('repmax'),
+                       inp.get('weighIns'), inp.get('references'), initial],
+                      sort_keys=True)
 
 
 def _track_for(ctx, state, lift, t):
@@ -555,6 +565,7 @@ def apply_event(ctx, state, ev):
 def replay(inp):
     ctx = Context(inp)
     state = new_state()
+    state['context'] = context_signature(inp)
     for ev in event_list(inp):
         apply_event(ctx, state, ev)
     return finish(ctx, state)
@@ -566,7 +577,8 @@ def replay_incremental(inp, cached):
     ctx = Context(inp)
     events = event_list(inp)
     sigs = [event_signature(e) for e in events]
-    if cached is not None:
+    context = context_signature(inp)
+    if cached is not None and cached.get('context') == context:
         old = cached['signatures']
         if len(old) <= len(sigs) and sigs[:len(old)] == old:
             state = copy.deepcopy(cached)
@@ -574,6 +586,7 @@ def replay_incremental(inp, cached):
                 apply_event(ctx, state, ev)
             return finish(ctx, state)
     state = new_state()
+    state['context'] = context
     for ev in events:
         apply_event(ctx, state, ev)
     return finish(ctx, state)

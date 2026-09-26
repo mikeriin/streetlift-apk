@@ -81,18 +81,19 @@ void main() {
 
   group('D24 — exemples chiffrés de la demande (poids du corps 71,5 kg)', () {
     const p = koachParams;
-    KSuggestion? after(double kg, int rir, bool body, double grid) => inSession(
-      p,
-      {'bodyweight': body},
-      [
-        {'kg': kg, 'reps': 4, 'rir': rir},
-      ],
-      2,
-      4,
-      body ? 71.5 : null,
-      grid,
-      const {},
-    );
+    KSuggestion? after(double kg, int rir, bool body, double grid) =>
+        inSession(
+          p,
+          {'bodyweight': body},
+          [
+            {'kg': kg, 'reps': 4, 'rir': rir},
+          ],
+          2,
+          4,
+          body ? 71.5 : null,
+          grid,
+          const {},
+        );
 
     test('traction +32,5 → +35 (cible + 1) ou +37,5 (cible + 2)', () {
       expect(after(32.5, 3, true, 1.25)!.kg, 35.0);
@@ -139,11 +140,7 @@ void main() {
         1.25,
         const {},
       );
-      expect(
-        one,
-        isNull,
-        reason: 'une seule série dure : peut être un incident',
-      );
+      expect(one, isNull, reason: 'une seule série dure : peut être un incident');
       final missed = inSession(
         p,
         {'bodyweight': true},
@@ -205,23 +202,8 @@ void main() {
 
   group('D25 — jour de fatigue', () {
     const p = koachParams;
-    double level(
-      double mass,
-      int reps,
-      double rir, {
-      double? sleep,
-      double? form,
-    }) => fatigueLevel(
-      p,
-      110,
-      mass,
-      reps,
-      rir,
-      0,
-      22.4,
-      sleep: sleep,
-      form: form,
-    );
+    double level(double mass, int reps, double rir, {double? sleep, double? form}) =>
+        fatigueLevel(p, 110, mass, reps, rir, 0, 22.4, sleep: sleep, form: form);
 
     test('bandes −5 / −7,5 / −10 % et questionnaire', () {
       // 1RM de la série 1 = masse × (1 + (n − 1) / 22,4).
@@ -253,10 +235,14 @@ void main() {
 
   group('D9 — échelle et valeurs héritées', () {
     test('six niveaux, du plus dur au plus facile, stockés en RIR', () {
-      expect(
-        [for (final e in effortScale) e.label],
-        ['Échec', 'Très dur', 'Dur', 'Soutenu', 'Modéré', 'Facile'],
-      );
+      expect([for (final e in effortScale) e.label], [
+        'Échec',
+        'Très dur',
+        'Dur',
+        'Soutenu',
+        'Modéré',
+        'Facile',
+      ]);
       expect([for (final e in effortScale) e.rir], [0, 1, 2, 3, 4, 5]);
       expect(effortScale[2].more, 'encore 2');
     });
@@ -274,11 +260,7 @@ void main() {
   });
 
   group('Rejeu complet = cache incrémental (au centième)', () {
-    for (final name in [
-      'replay_basic.json',
-      'sim_4001.json',
-      'sim_6002.json',
-    ]) {
+    for (final name in ['replay_basic.json', 'sim_4001.json', 'sim_6002.json']) {
       test(name, () {
         final inp = _load(name)['input'] as Map<String, dynamic>;
         final sessions = inp['sessions'] as List;
@@ -305,6 +287,32 @@ void main() {
         summarize(replay(changed)),
         summarize(replayIncremental(changed, cache)),
         'correction',
+      );
+    });
+
+    test('pesée rétroactive ou repère modifié : rejeu complet', () {
+      final inp = _load('replay_basic.json')['input'] as Map<String, dynamic>;
+      final cache = replay(inp);
+      final heavier = jsonDecode(jsonEncode(inp)) as Map<String, dynamic>;
+      ((heavier['weighIns'] as List)[0] as Map)['kg'] = 80.0;
+      final inc = replayIncremental(heavier, cache);
+      _same(summarize(replay(heavier)), summarize(inc), 'pesée');
+      expect(
+        (summarize(inc)['lifts'] as Map)['mu'],
+        isNot(equals((summarize(cache)['lifts'] as Map)['mu'])),
+      );
+      final moved = jsonDecode(jsonEncode(inp)) as Map<String, dynamic>;
+      for (final h in moved['history'] as List) {
+        if ((h as Map)['source'] == 'initial') {
+          h['value'] = (h['value'] as num) + 5;
+        }
+      }
+      (moved['references'] as Map)['B9'] =
+          ((moved['references'] as Map)['B9'] as num) + 5;
+      _same(
+        summarize(replay(moved)),
+        summarize(replayIncremental(moved, cache)),
+        'repère',
       );
     });
   });

@@ -1,7 +1,7 @@
 name: streetlift_tracker
 description: "Kalis Track — suivi d'entraînement calisthénie et streetlifting : programme guidé, séances perso, WOD, chronos, pilotage recalculable."
 publish_to: 'none'
-version: 2.5.9+60
+version: 3.0.0+61
 
 environment:
   sdk: '>=3.7.0 <4.0.0'
@@ -38,6 +38,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/programme_v33.json.gz
+    - assets/koach_program.json.gz
     - assets/exercises_db.json.gz
     - assets/sounds/beep.wav
     - assets/sounds/alarm.wav
