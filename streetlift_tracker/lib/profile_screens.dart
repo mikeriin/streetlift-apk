@@ -296,7 +296,9 @@ class _ProfileFlowState extends State<ProfileFlow> {
         ..consentAt = at;
     }
     if (h.consentGiven) {
-      final complete = kHealthQuestions.every((q) => _answers.containsKey(q.id));
+      final complete = kHealthQuestions.every(
+        (q) => _answers.containsKey(q.id),
+      );
       final changed =
           _answers.length != h.answers.length ||
           _answers.entries.any((e) => h.answers[e.key] != e.value);
@@ -351,8 +353,7 @@ class _ProfileFlowState extends State<ProfileFlow> {
           ],
     });
     put('dayPlace', {
-      for (final d in _days.toList()..sort())
-        '$d': _placeFor(d),
+      for (final d in _days.toList()..sort()) '$d': _placeFor(d),
     });
     put('benchmarks', Map<String, int>.of(_bench));
     put('autonomy', _autonomy);
@@ -374,7 +375,9 @@ class _ProfileFlowState extends State<ProfileFlow> {
     final w = _weightValue;
     final before = store.currentBodyweight;
     store.saveProfile(p);
-    if (w != null && !w.isNaN && (before == null || (w - before).abs() > 1e-9)) {
+    if (w != null &&
+        !w.isNaN &&
+        (before == null || (w - before).abs() > 1e-9)) {
       store.addWeighIn(_now, w);
     }
     if (_editing) {
@@ -800,7 +803,8 @@ class _ProfileFlowState extends State<ProfileFlow> {
                     label: Text(kWeekdayShort[d - 1]),
                     selected: _days.contains(d),
                     onSelected:
-                        (v) => setState(() => v ? _days.add(d) : _days.remove(d)),
+                        (v) =>
+                            setState(() => v ? _days.add(d) : _days.remove(d)),
                   ),
                 ),
             ],
@@ -941,8 +945,7 @@ class _ProfileFlowState extends State<ProfileFlow> {
                 for (var i = 0; i < b.bands.length; i++) (i, b.bands[i]),
               ],
               selected: (i) => _bench[b.id] == i,
-              onSelected:
-                  (i, v) => v ? _bench[b.id] = i : _bench.remove(b.id),
+              onSelected: (i, v) => v ? _bench[b.id] = i : _bench.remove(b.id),
             ),
           ],
         ),
@@ -1680,7 +1683,10 @@ Future<void> showProgressiveQuestion(
                 chips(kExperience),
               ),
               'sleep' => ('Combien dors-tu en général ?', chips(kSleep)),
-              'stress' => ('Ton niveau de stress en ce moment ?', chips(kStress)),
+              'stress' => (
+                'Ton niveau de stress en ce moment ?',
+                chips(kStress),
+              ),
               'physicalJob' => (
                 'Ton métier est-il physique ?',
                 chips(const [(true, 'Oui'), (false, 'Non')]),
@@ -1753,10 +1759,12 @@ Future<void> showProgressiveQuestion(
   text.dispose();
   if (question == 'motivation' && raw.isNotEmpty) value = raw;
   if ((question == 'liked' || question == 'disliked') && raw.isNotEmpty) {
-    value = [
-      for (final s in raw.split(','))
-        if (s.trim().isNotEmpty) s.trim().length > 60 ? s.trim().substring(0, 60) : s.trim(),
-    ].take(30).toList();
+    value =
+        [
+          for (final s in raw.split(','))
+            if (s.trim().isNotEmpty)
+              s.trim().length > 60 ? s.trim().substring(0, 60) : s.trim(),
+        ].take(30).toList();
   }
   if (result == 'never') {
     store.answerProgressive(question, sessionKey, never: true);

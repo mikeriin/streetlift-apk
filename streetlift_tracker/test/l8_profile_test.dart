@@ -25,8 +25,7 @@ UserProfile _profile({
     ..consent = consent
     ..consentAt = consent == null ? null : _at;
   if (consent == 'given') {
-    final a =
-        answers ?? {for (final q in kHealthQuestions) q.id: false};
+    final a = answers ?? {for (final q in kHealthQuestions) q.id: false};
     p.health.answers.addAll(a);
     if (a.isNotEmpty) p.health.answeredAt = _at;
   }
@@ -50,12 +49,17 @@ void main() {
   group('modèle (KT-038)', () {
     test('aller-retour JSON identique, sources et dates conservées', () {
       final p = _profile()..addEvent(_at, ['days']);
-      p.setField('eventGoal', {
-        'date': '2027-06-01',
-        'items': [
-          {'id': 'pull_1rm', 'target': 40.0},
-        ],
-      }, _at, source: 'estimated');
+      p.setField(
+        'eventGoal',
+        {
+          'date': '2027-06-01',
+          'items': [
+            {'id': 'pull_1rm', 'target': 40.0},
+          ],
+        },
+        _at,
+        source: 'estimated',
+      );
       final json = jsonEncode(p.toJson());
       final back = UserProfile.fromJson(jsonDecode(json), strict: true)!;
       expect(jsonEncode(back.toJson()), json);
@@ -145,9 +149,13 @@ void main() {
       );
       expect(evaluateCaution(_profile(birthYear: 1962), now).active, isFalse);
       // Gêne > 3/10 (3 ne déclenche pas).
-      final p3 = _profile()..health.injuries.add(const Injury('knee', 3, '2026-09-01', _at));
+      final p3 =
+          _profile()
+            ..health.injuries.add(const Injury('knee', 3, '2026-09-01', _at));
       expect(evaluateCaution(p3, now).active, isFalse);
-      final p4 = _profile()..health.injuries.add(const Injury('knee', 4, '2026-09-01', _at));
+      final p4 =
+          _profile()
+            ..health.injuries.add(const Injury('knee', 4, '2026-09-01', _at));
       expect(evaluateCaution(p4, now).reasons, ['discomfort']);
       // Questionnaire sans réponse, consentement refusé.
       expect(
@@ -161,9 +169,9 @@ void main() {
     });
 
     test('accord du médecin daté : lève, puis une nouvelle gêne remet', () {
-      final p = _profile(answers: {
-        for (final q in kHealthQuestions) q.id: q.id == 'joint',
-      });
+      final p = _profile(
+        answers: {for (final q in kHealthQuestions) q.id: q.id == 'joint'},
+      );
       expect(evaluateCaution(p, now).clearable, isTrue);
       p.health.clearanceAt = '2026-09-26T11:00:00';
       final c = evaluateCaution(p, now);
@@ -196,11 +204,7 @@ void main() {
       p.later['disliked'] = profileAt(now);
       expect(nextProgressiveQuestion(p, 'S1-J2', now), 'liked');
       expect(
-        nextProgressiveQuestion(
-          p,
-          'S2-J1',
-          now.add(const Duration(days: 8)),
-        ),
+        nextProgressiveQuestion(p, 'S2-J1', now.add(const Duration(days: 8))),
         'disliked',
       );
       expect(nextProgressiveQuestion(null, 'S1-J1', now), isNull);
@@ -246,15 +250,16 @@ void main() {
     void setRefs() {
       app.program.start = DateTime(2026, 7, 13);
       app.startOrigin = 'user';
-      for (final e in {
-        'B4': 72.0,
-        'B8': 40.0,
-        'B9': 50.0,
-        'B10': 10.0,
-        'B11': 120.0,
-        'B17': 20.0,
-        'B19': 40.0,
-      }.entries) {
+      for (final e
+          in {
+            'B4': 72.0,
+            'B8': 40.0,
+            'B9': 50.0,
+            'B10': 10.0,
+            'B11': 120.0,
+            'B17': 20.0,
+            'B19': 40.0,
+          }.entries) {
         app.values[e.key] = e.value;
         app.refStatus[e.key] = 'set';
       }
@@ -263,7 +268,8 @@ void main() {
     Map<String, String> loads() => {
       for (final w in app.program.weeks)
         for (final d in w.days)
-          for (final e in d.exercises) '${w.n}-${d.j}-${e.id}': app.loadLabel(e),
+          for (final e in d.exercises)
+            '${w.n}-${d.j}-${e.id}': app.loadLabel(e),
     };
 
     test('installation neuve sans profil : export identique à 3.0.x', () {
@@ -313,8 +319,7 @@ void main() {
               final expected =
                   s.type == 'barbell'
                       ? (app.values[s.ref ?? 'B11']! * .8 / 2.5).round() * 2.5
-                      : (((72 + app.values[s.ref!]!) * .8 - 72) / 2.5)
-                              .round() *
+                      : (((72 + app.values[s.ref!]!) * .8 - 72) / 2.5).round() *
                           2.5;
               expect(
                 app.loadFor(e),
@@ -340,9 +345,9 @@ void main() {
       setRefs();
       final before = loads();
       app.saveProfile(
-        _profile(answers: {
-          for (final q in kHealthQuestions) q.id: q.id == 'heart',
-        }),
+        _profile(
+          answers: {for (final q in kHealthQuestions) q.id: q.id == 'heart'},
+        ),
       );
       expect(app.caution.active, isTrue);
       expect(loads(), isNot(before));
@@ -355,8 +360,9 @@ void main() {
     });
 
     test('refus puis retrait du consentement : santé effacée, prudent', () {
-      final p = _profile()
-        ..health.injuries.add(const Injury('knee', 2, '2026-09-01', _at));
+      final p =
+          _profile()
+            ..health.injuries.add(const Injury('knee', 2, '2026-09-01', _at));
       p.setField('sleep', '7to8', _at);
       app.saveProfile(p);
       expect(app.profile!.health.hasHealthContent, isTrue);
@@ -413,64 +419,67 @@ void main() {
       expect(app.profile!.never, {'disliked'});
     });
 
-    test('migration du propriétaire (KT-043) : pré-rempli, rien modifié', () async {
-      // État réel type 3.0.0 : historique complet, références, départ
-      // d'origine, objectifs Koach (étape 13/07/2027, final 31/12/2027).
-      final state = filledBackup(app);
-      state['programStart'] = {
-        'status': 'set',
-        'date': '2026-07-13',
-        'origin': 'migration',
-      };
-      expect(
-        await app.importBackup(jsonEncode(state)),
-        ImportStatus.success,
-      );
-      for (final e in {'B4': 72.0, 'B17': 30.0, 'B19': 65.0}.entries) {
-        app.values[e.key] = e.value;
-        app.refStatus[e.key] = 'set';
-      }
-      for (final ref in ['B8', 'B9', 'B10', 'B11']) {
-        app.setKoachObjective(ref, 'final', 100, DateTime(2027, 12, 31));
-      }
-      await app.flush();
-      final before = backupOf(app);
-      expect(app.needsProfileConfirmation, isTrue);
-      final draft = app.ownerDraft();
-      expect(jsonEncode(backupOf(app)), jsonEncode(before));
-      expect(draft.origin, 'migration');
-      expect(draft.stringValue('goalPrimary'), 'event');
-      final ev = draft.value('eventGoal') as Map;
-      expect(ev['date'], '2027-12-31');
-      expect((ev['items'] as List).length, 4);
-      expect(draft.fields['eventGoal']!.source, 'estimated');
-      expect(draft.benchmarks, isNotEmpty);
-      expect(draft.intValue('birthYear'), isNull);
-      // Confirmation : seul le profil s'ajoute.
-      draft.setField('birthYear', 1990, profileAt(clock));
-      draft.health
-        ..consent = 'given'
-        ..consentAt = profileAt(clock)
-        ..answeredAt = profileAt(clock)
-        ..answers.addAll({for (final q in kHealthQuestions) q.id: false});
-      app.saveProfile(draft);
-      final after = backupOf(app);
-      expect(after.remove('profile'), isNotNull);
-      expect(jsonEncode(after), jsonEncode(before));
-      expect(app.caution.active, isFalse);
-      final next = await relaunch();
-      expect(next.profile!.origin, 'migration');
-      expect(next.program.start, DateTime(2026, 7, 13));
-    });
+    test(
+      'migration du propriétaire (KT-043) : pré-rempli, rien modifié',
+      () async {
+        // État réel type 3.0.0 : historique complet, références, départ
+        // d'origine, objectifs Koach (étape 13/07/2027, final 31/12/2027).
+        final state = filledBackup(app);
+        state['programStart'] = {
+          'status': 'set',
+          'date': '2026-07-13',
+          'origin': 'migration',
+        };
+        expect(await app.importBackup(jsonEncode(state)), ImportStatus.success);
+        for (final e in {'B4': 72.0, 'B17': 30.0, 'B19': 65.0}.entries) {
+          app.values[e.key] = e.value;
+          app.refStatus[e.key] = 'set';
+        }
+        for (final ref in ['B8', 'B9', 'B10', 'B11']) {
+          app.setKoachObjective(ref, 'final', 100, DateTime(2027, 12, 31));
+        }
+        await app.flush();
+        final before = backupOf(app);
+        expect(app.needsProfileConfirmation, isTrue);
+        final draft = app.ownerDraft();
+        expect(jsonEncode(backupOf(app)), jsonEncode(before));
+        expect(draft.origin, 'migration');
+        expect(draft.stringValue('goalPrimary'), 'event');
+        final ev = draft.value('eventGoal') as Map;
+        expect(ev['date'], '2027-12-31');
+        expect((ev['items'] as List).length, 4);
+        expect(draft.fields['eventGoal']!.source, 'estimated');
+        expect(draft.benchmarks, isNotEmpty);
+        expect(draft.intValue('birthYear'), isNull);
+        // Confirmation : seul le profil s'ajoute.
+        draft.setField('birthYear', 1990, profileAt(clock));
+        draft.health
+          ..consent = 'given'
+          ..consentAt = profileAt(clock)
+          ..answeredAt = profileAt(clock)
+          ..answers.addAll({for (final q in kHealthQuestions) q.id: false});
+        app.saveProfile(draft);
+        final after = backupOf(app);
+        expect(after.remove('profile'), isNotNull);
+        expect(jsonEncode(after), jsonEncode(before));
+        expect(app.caution.active, isFalse);
+        final next = await relaunch();
+        expect(next.profile!.origin, 'migration');
+        expect(next.program.start, DateTime(2026, 7, 13));
+      },
+    );
 
-    test('étape par défaut sans objectif final : date 12 mois après le départ', () {
-      setRefs();
-      app.logs['S1-J1'] = SessionLog(
-        done: true,
-        finishedAt: '2026-07-13T18:00:00',
-      );
-      final d = app.ownerDraft();
-      expect((d.value('eventGoal') as Map)['date'], '2027-07-13');
-    });
+    test(
+      'étape par défaut sans objectif final : date 12 mois après le départ',
+      () {
+        setRefs();
+        app.logs['S1-J1'] = SessionLog(
+          done: true,
+          finishedAt: '2026-07-13T18:00:00',
+        );
+        final d = app.ownerDraft();
+        expect((d.value('eventGoal') as Map)['date'], '2027-07-13');
+      },
+    );
   });
 }

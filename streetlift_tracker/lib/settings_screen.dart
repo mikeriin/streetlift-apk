@@ -305,7 +305,9 @@ class SettingsScreen extends StatelessWidget {
             onTap:
                 () => Navigator.push(
                   context,
-                  MaterialPageRoute<void>(builder: (_) => const ProfileScreen()),
+                  MaterialPageRoute<void>(
+                    builder: (_) => const ProfileScreen(),
+                  ),
                 ),
           ),
           _Action(

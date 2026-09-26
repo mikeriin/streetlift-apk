@@ -242,7 +242,10 @@ class _SLAppState extends State<SLApp> with WidgetsBindingObserver {
         SL.accentSpec = accent;
         return child ?? const SizedBox.shrink();
       },
-      home: widget.profileGate ? const ProfileGate(child: RootNav()) : const RootNav(),
+      home:
+          widget.profileGate
+              ? const ProfileGate(child: RootNav())
+              : const RootNav(),
     );
   }
 }

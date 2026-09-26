@@ -376,10 +376,11 @@ void main() {
   testWidgets('écran Profil : accord du médecin daté, retrait du '
       'consentement', (tester) async {
     phone(tester);
-    final p = store.newProfileDraft()
-      ..setField('birthYear', 1980, '2026-09-26T10:00:00')
-      ..setField('autonomy', 'assisted', '2026-09-26T10:00:00')
-      ..setField('tone', 'neutral', '2026-09-26T10:00:00');
+    final p =
+        store.newProfileDraft()
+          ..setField('birthYear', 1980, '2026-09-26T10:00:00')
+          ..setField('autonomy', 'assisted', '2026-09-26T10:00:00')
+          ..setField('tone', 'neutral', '2026-09-26T10:00:00');
     p.health
       ..consent = 'given'
       ..consentAt = '2026-09-26T10:00:00'
@@ -391,7 +392,10 @@ void main() {
     await tester.pumpWidget(page(const ProfileScreen()));
     await tester.pumpAndSettle();
     expect(find.text('Mode prudent activé'), findsOneWidget);
-    await scrollToAction(tester, find.byKey(const ValueKey('profile-clearance')));
+    await scrollToAction(
+      tester,
+      find.byKey(const ValueKey('profile-clearance')),
+    );
     await tester.tap(find.byKey(const ValueKey('profile-clearance')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('clearance-confirm')));

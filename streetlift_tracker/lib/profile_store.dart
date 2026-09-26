@@ -108,7 +108,8 @@ extension ProfileStore on AppStore {
     final p = profile?.copy();
     if (p == null) return;
     p.health
-      ..consent = given ? 'given' : (p.health.consentGiven ? 'withdrawn' : 'refused')
+      ..consent =
+          given ? 'given' : (p.health.consentGiven ? 'withdrawn' : 'refused')
       ..consentAt = _nowAt;
     if (!given) {
       p.health.clearContent();
@@ -185,7 +186,12 @@ extension ProfileStore on AppStore {
     // Objectifs L7 : étape (12 mois après le départ) et objectif final.
     final items = <Map<String, dynamic>>[];
     DateTime? date;
-    const ids = {'B8': 'pull_1rm', 'B9': 'dip_1rm', 'B10': 'mu_1rm', 'B11': 'squat_1rm'};
+    const ids = {
+      'B8': 'pull_1rm',
+      'B9': 'dip_1rm',
+      'B10': 'mu_1rm',
+      'B11': 'squat_1rm',
+    };
     for (final l in program.pilotage.mainLifts) {
       final id = ids[l.ref];
       if (id == null) continue;
@@ -245,7 +251,14 @@ extension ProfileStore on AppStore {
       'places',
       {
         'park': ['pullup_bar', 'dip_bars', 'weight_belt'],
-        'gym': ['pullup_bar', 'dip_bars', 'barbell', 'rack', 'bench', 'weight_belt'],
+        'gym': [
+          'pullup_bar',
+          'dip_bars',
+          'barbell',
+          'rack',
+          'bench',
+          'weight_belt',
+        ],
       },
       at,
       source: 'estimated',

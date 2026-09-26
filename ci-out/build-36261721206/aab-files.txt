@@ -1,5 +1,0 @@
-total 27660
-drwxr-xr-x  2 runner runner     4096 Sep 26 18:28 .
-drwxr-xr-x 12 runner runner     4096 Sep 26 18:28 ..
--rw-r--r--  1 runner runner 28310916 Sep 26 18:28 kalis-track.aab
--rw-r--r--  1 runner runner       82 Sep 26 18:28 kalis-track.aab.sha256

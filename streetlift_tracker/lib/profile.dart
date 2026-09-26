@@ -46,7 +46,11 @@ class GoalSpec {
 const kGoals = <GoalSpec>[
   GoalSpec('health', 'Forme et santé', 'Bouger régulièrement, sans excès'),
   GoalSpec('strength', 'Force', 'Soulever ou tirer plus lourd'),
-  GoalSpec('endurance', 'Endurance en répétitions', 'Enchaîner plus de répétitions'),
+  GoalSpec(
+    'endurance',
+    'Endurance en répétitions',
+    'Enchaîner plus de répétitions',
+  ),
   GoalSpec(
     'event',
     'Préparer un test ou une compétition',
@@ -359,7 +363,8 @@ class HealthData {
 
   /// Questionnaire complet (toutes les questions ont une réponse).
   bool get complete =>
-      answeredAt != null && kHealthQuestions.every((q) => answers.containsKey(q.id));
+      answeredAt != null &&
+      kHealthQuestions.every((q) => answers.containsKey(q.id));
 
   bool get hasHealthContent =>
       answers.isNotEmpty || clearanceAt != null || injuries.isNotEmpty;
@@ -636,10 +641,11 @@ class UserProfile {
   String? get level => levelFromBenchmarks(benchmarks);
 
   UserProfile copy() {
-    final p = UserProfile(origin: origin, createdAt: createdAt)
-      ..version = version
-      ..health = health.copy()
-      ..lastAskedSession = lastAskedSession;
+    final p =
+        UserProfile(origin: origin, createdAt: createdAt)
+          ..version = version
+          ..health = health.copy()
+          ..lastAskedSession = lastAskedSession;
     p.fields.addAll(fields);
     p.events.addAll(events);
     p.never.addAll(never);
@@ -649,7 +655,12 @@ class UserProfile {
 
   /// Écrit un champ ; renvoie vrai si la valeur a changé. Un champ de santé
   /// est refusé sans consentement.
-  bool setField(String key, Object? v, String at, {String source = 'declared'}) {
+  bool setField(
+    String key,
+    Object? v,
+    String at, {
+    String source = 'declared',
+  }) {
     if (kHealthFields.contains(key) && !health.consentGiven) return false;
     if (v == null) return fields.remove(key) != null;
     if (validateField(key, v) != null) {
@@ -824,7 +835,9 @@ class UserProfile {
               _okAt(e['at']) &&
               e['fields'] is List &&
               (e['fields'] as List).length <= 40 &&
-              (e['fields'] as List).every((x) => x is String && x.length <= 40)) {
+              (e['fields'] as List).every(
+                (x) => x is String && x.length <= 40,
+              )) {
             p.events.add((
               at: e['at'] as String,
               fields: (e['fields'] as List).cast<String>(),
@@ -876,7 +889,8 @@ class UserProfile {
 }
 
 Object? _copyJson(Object? v) {
-  if (v is Map) return {for (final e in v.entries) '${e.key}': _copyJson(e.value)};
+  if (v is Map)
+    return {for (final e in v.entries) '${e.key}': _copyJson(e.value)};
   if (v is List) return [for (final e in v) _copyJson(e)];
   return v;
 }
