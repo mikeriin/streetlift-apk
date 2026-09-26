@@ -8,61 +8,62 @@
 00:00 +5: Calendrier personnel (modèle) dates civiles strictes (AAAA-MM-JJ)
 00:00 +6: Calendrier personnel (modèle) (tearDownAll)
 00:00 +6: Installation neuve et installations existantes installation neuve : non démarrée, références inconnues
-00:00 +7: Installation neuve et installations existantes première ouverture interrompue avant la sauvegarde : neuve
-00:00 +8: Installation neuve et installations existantes ancienne installation (réglages, aucune séance) : calendrier du 13/07/2026
+00:01 +7: Installation neuve et installations existantes première ouverture interrompue avant la sauvegarde : neuve
+00:01 +8: Installation neuve et installations existantes ancienne installation (réglages, aucune séance) : calendrier du 13/07/2026
 00:01 +9: Installation neuve et installations existantes ancienne installation : ses références personnelles priment
-00:01 +10: Installation neuve et installations existantes état 2.5.7 : semaine, dates, références, séances, crédits conservés ; migration idempotente
-00:01 +11: Installation neuve et installations existantes effacement complet : programme non démarré, références inconnues
-00:01 +12: Choix du départ bornes incluses : −280 jours et +365 jours
-00:01 +13: Choix du départ départ futur non lundi + références partielles : persistés, rien d’autre créé
-00:01 +14: Choix du départ départ passé : reprise à la bonne semaine
-00:01 +15: Choix du départ référence invalide : rien n’est modifié
-00:01 +16: Choix du départ écriture refusée : départ non annoncé, état rétabli, nouvel essai
-00:01 +17: Choix du départ double confirmation : un seul état, aucune séance dupliquée
-00:02 +18: Choix du départ installation existante : changer la date ne touche ni séances, ni dates réelles, ni récompenses
-00:02 +19: Sauvegardes aller-retour 2.5.8 : départ, provenance et références intacts
-00:02 +20: Sauvegardes sauvegarde d’un utilisateur non démarré : restaurée telle quelle
-00:02 +21: Sauvegardes ancienne sauvegarde : migrée (13/07/2026, références « à vérifier »), jamais « aujourd’hui »
-00:02 +22: Sauvegardes fichier invalide : refusé, départ et références inchangés
-00:02 +23: Références (KT-007) inconnue : charge et volume « à renseigner », jamais calculés sur 0
-00:02 +24: Références (KT-007) renseignée explicitement, même égale à l’ancienne valeur embarquée
-00:03 +25: Références (KT-007) historique : confirmée sans changer la valeur, ou « Je ne sais pas »
-00:03 +26: Références (KT-007) attributs : indisponibles ou partiels, jamais un poids arbitraire
-00:03 +27: Références (KT-007) valeurs hors domaine refusées, valeur précédente gardée
-00:03 +28: Références (KT-007) saisie : virgule, point, vide, texte, non finie, bornes
-00:03 +29: Références (KT-007) affichage en livres : les références restent en kg, sans dérive
-00:03 +30: Rappels (setUpAll)
-00:03 +30: Rappels non démarré : aucun rappel
-00:03 +31: Rappels départ futur : premier rappel le jour de S1 · J1, aucun avant
-00:03 +32: Rappels changement de départ : mêmes identifiants replanifiés, aucun doublon
-00:03 +33: Rappels (tearDownAll)
-00:03 +33: Rappels : erreurs et ouverture (setUpAll)
-00:03 +33: Rappels : erreurs et ouverture échec de programmation : visible, départ conservé, reprise possible
+00:02 +10: Installation neuve et installations existantes état 2.5.7 : semaine, dates, références, séances, crédits conservés ; migration idempotente
+00:02 +11: Installation neuve et installations existantes effacement complet : programme non démarré, références inconnues
+00:02 +12: Choix du départ bornes incluses : −280 jours et +365 jours
+00:02 +13: Choix du départ départ futur non lundi + références partielles : persistés, rien d’autre créé
+00:03 +14: Choix du départ départ passé : reprise à la bonne semaine
+00:03 +15: Choix du départ référence invalide : rien n’est modifié
+00:03 +16: Choix du départ écriture refusée : départ non annoncé, état rétabli, nouvel essai
+00:03 +17: Choix du départ double confirmation : un seul état, aucune séance dupliquée
+00:03 +18: Choix du départ installation existante : changer la date ne touche ni séances, ni dates réelles, ni récompenses
+00:04 +19: Résultats L3b résultats WOD (règle de score, intervalles) intacts après migration, relance et changement de départ
+00:04 +20: Sauvegardes aller-retour 2.5.8 : départ, provenance et références intacts
+00:04 +21: Sauvegardes sauvegarde d’un utilisateur non démarré : restaurée telle quelle
+00:05 +22: Sauvegardes ancienne sauvegarde : migrée (13/07/2026, références « à vérifier »), jamais « aujourd’hui »
+00:05 +23: Sauvegardes fichier invalide : refusé, départ et références inchangés
+00:05 +24: Références (KT-007) inconnue : charge et volume « à renseigner », jamais calculés sur 0
+00:06 +25: Références (KT-007) renseignée explicitement, même égale à l’ancienne valeur embarquée
+00:06 +26: Références (KT-007) historique : confirmée sans changer la valeur, ou « Je ne sais pas »
+00:06 +27: Références (KT-007) attributs : indisponibles ou partiels, jamais un poids arbitraire
+00:06 +28: Références (KT-007) valeurs hors domaine refusées, valeur précédente gardée
+00:06 +29: Références (KT-007) saisie : virgule, point, vide, texte, non finie, bornes
+00:06 +30: Références (KT-007) affichage en livres : les références restent en kg, sans dérive
+00:06 +31: Rappels (setUpAll)
+00:06 +31: Rappels non démarré : aucun rappel
+00:07 +32: Rappels départ futur : premier rappel le jour de S1 · J1, aucun avant
+00:07 +33: Rappels changement de départ : mêmes identifiants replanifiés, aucun doublon
+00:07 +34: Rappels (tearDownAll)
+00:07 +34: Rappels : erreurs et ouverture (setUpAll)
+00:07 +34: Rappels : erreurs et ouverture échec de programmation : visible, départ conservé, reprise possible
 Kalis notifications: Bad state: schedule_native_error
-00:03 +34: Rappels : erreurs et ouverture ancienne notification après changement de départ : même journée S · J, à froid et à chaud
-00:03 +35: Rappels : erreurs et ouverture (tearDownAll)
-00:03 +35: Comparaison avant / après (migration synthétique) (setUpAll)
-00:03 +35: Comparaison avant / après (migration synthétique) utilisateur avancé : semaine, dates, séances, références, récompenses, rappels
+00:07 +35: Rappels : erreurs et ouverture ancienne notification après changement de départ : même journée S · J, à froid et à chaud
+00:07 +36: Rappels : erreurs et ouverture (tearDownAll)
+00:07 +36: Comparaison avant / après (migration synthétique) (setUpAll)
+00:07 +36: Comparaison avant / après (migration synthétique) utilisateur avancé : semaine, dates, séances, références, récompenses, rappels
 L4-COMPARE migration {"semaine":"S11 · J6","depart":"2026-07-13","origine":"migration","datesS11":"21/09→27/09/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"credits":63,"gains":63,"droitsWod":0,"rappels":204,"premierRappel":"S11-J7 2026-09-27T07:30"}
 L4-COMPARE relance {"semaine":"S11 · J6","depart":"2026-07-13","origine":"migration","datesS11":"21/09→27/09/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"credits":63,"gains":63,"droitsWod":0,"rappels":204,"premierRappel":"S11-J7 2026-09-27T07:30"}
 L4-COMPARE depart-21-09 {"semaine":"S1 · J6","depart":"2026-09-21","origine":"user","datesS11":"30/11→06/12/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"credits":63,"gains":63,"droitsWod":0,"rappels":220,"premierRappel":"S1-J7 2026-09-27T07:30"}
-00:04 +36: Comparaison avant / après (migration synthétique) (tearDownAll)
-00:04 +36: Écrans (setUpAll)
-00:04 +36: Écrans premier départ : date, référence saisie, les autres inconnues
-00:05 +37: Écrans « Plus tard » et retour système : rien n’est enregistré
-00:05 +38: Écrans saisie invalide : message, aucun enregistrement
-00:05 +39: Écrans écriture refusée : message, écran conservé, nouvel essai
-00:05 +40: Écrans installation existante : aperçu de l’effet, puis changement
-00:05 +41: Écrans même date : bouton inactif, rien à replanifier
-00:06 +42: Écrans séance : référence manquante nommée, rien de calculé à sa place
-00:06 +43: Écrans bandeau de l’accueil : non démarré, avant, pendant, après
-00:06 +44: Écrans Références : inconnue, à vérifier, confirmée, « Je ne sais pas »
-00:06 +45: Écrans accueil non démarré 320 px · 200 % : bandeau dans la liste, journées accessibles
-00:06 +46: Écrans accueil non démarré 390 px · 100 % : bandeau dans la liste, journées accessibles
-00:06 +47: Écrans rendu 320 px · 130 % · clair : sans débordement
-00:07 +48: Écrans rendu 320 px · 200 % · sombre : sans débordement
-00:07 +49: Écrans rendu 320 px · 200 % · clair : sans débordement
-00:07 +50: Écrans rendu 390 px · 100 % · sombre : sans débordement
-00:07 +51: Écrans (tearDownAll)
-00:07 +51: All tests passed!
+00:08 +37: Comparaison avant / après (migration synthétique) (tearDownAll)
+00:08 +37: Écrans (setUpAll)
+00:08 +37: Écrans premier départ : date, référence saisie, les autres inconnues
+00:09 +38: Écrans « Plus tard » et retour système : rien n’est enregistré
+00:10 +39: Écrans saisie invalide : message, aucun enregistrement
+00:10 +40: Écrans écriture refusée : message, écran conservé, nouvel essai
+00:11 +41: Écrans installation existante : aperçu de l’effet, puis changement
+00:11 +42: Écrans même date : bouton inactif, rien à replanifier
+00:11 +43: Écrans séance : référence manquante nommée, rien de calculé à sa place
+00:12 +44: Écrans bandeau de l’accueil : non démarré, avant, pendant, après
+00:12 +45: Écrans Références : inconnue, à vérifier, confirmée, « Je ne sais pas »
+00:12 +46: Écrans accueil non démarré 320 px · 200 % : bandeau dans la liste, journées accessibles
+00:12 +47: Écrans accueil non démarré 390 px · 100 % : bandeau dans la liste, journées accessibles
+00:13 +48: Écrans rendu 320 px · 130 % · clair : sans débordement
+00:13 +49: Écrans rendu 320 px · 200 % · sombre : sans débordement
+00:13 +50: Écrans rendu 320 px · 200 % · clair : sans débordement
+00:13 +51: Écrans rendu 390 px · 100 % · sombre : sans débordement
+00:14 +52: Écrans (tearDownAll)
+00:14 +52: All tests passed!
 exit=0
