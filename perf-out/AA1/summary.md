@@ -1,8 +1,0 @@
-# Banc hôte L6 — synthèse
-
-Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
-
-Fichiers : 
-
-| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |

@@ -39,8 +39,8 @@ jobs:
             echo "fixture=$(sha256sum streetlift_tracker/test/support/perf_fixtures.dart streetlift_tracker/test/l6_perf_bench_test.dart)"
             cmp baseline/streetlift_tracker/test/support/perf_fixtures.dart streetlift_tracker/test/support/perf_fixtures.dart && echo "fixtures identiques"
             cmp baseline/streetlift_tracker/test/l6_perf_bench_test.dart streetlift_tracker/test/l6_perf_bench_test.dart && echo "banc identique"
-          } > "$OUT/environment.txt" 2>&1
-          cat "$OUT/environment.txt"
+          } > "$out/environment.txt" 2>&1
+          cat "$out/environment.txt"
       - name: Dépendances verrouillées (base et candidate)
         run: |
           (cd baseline/streetlift_tracker && flutter pub get --enforce-lockfile) > "$OUT/pub.log" 2>&1
