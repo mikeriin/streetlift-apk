@@ -1,3 +1,6 @@
 Analyzing streetlift_tracker...                                 
-No issues found! (ran in 22.9s)
-exit=0
+
+  error • The function 'WodResult' isn't defined • test/l4b_seances_test.dart:583:19 • undefined_function
+  error • The function 'WodResult' isn't defined • test/l4b_seances_test.dart:596:13 • undefined_function
+
+2 issues found. (ran in 22.2s)
