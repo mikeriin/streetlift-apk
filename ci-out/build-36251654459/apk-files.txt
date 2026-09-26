@@ -1,0 +1,5 @@
+total 26996
+drwxr-xr-x 2 runner runner     4096 Sep 26 15:36 .
+drwxr-xr-x 8 runner runner     4096 Sep 26 15:36 ..
+-rw-r--r-- 1 runner runner 27630559 Sep 26 15:36 kalis-track.apk
+-rw-r--r-- 1 runner runner       82 Sep 26 15:36 kalis-track.apk.sha256
