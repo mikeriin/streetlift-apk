@@ -34,20 +34,22 @@ Map<String, dynamic> _json(AppStore app) =>
     jsonDecode(app.exportAll()) as Map<String, dynamic>;
 
 /// Exercice du programme dont la charge dépend du poids du corps et d'un 1RM.
-Exercise _systemExercise(Program p) => [
-  for (final w in p.weeks)
-    for (final d in w.days)
-      for (final e in d.exercises)
-        if (e.load.type == 'system') e,
-].first;
+Exercise _systemExercise(Program p) =>
+    [
+      for (final w in p.weeks)
+        for (final d in w.days)
+          for (final e in d.exercises)
+            if (e.load.type == 'system') e,
+    ].first;
 
 /// Exercice dont le volume suit un maximum en répétitions.
-Exercise _volumeExercise(Program p) => [
-  for (final w in p.weeks)
-    for (final d in w.days)
-      for (final e in d.exercises)
-        if (e.sets.type == 'volume') e,
-].first;
+Exercise _volumeExercise(Program p) =>
+    [
+      for (final w in p.weeks)
+        for (final d in w.days)
+          for (final e in d.exercises)
+            if (e.sets.type == 'volume') e,
+    ].first;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -167,11 +169,14 @@ void main() {
       expect(p.dateFor(1, 2), DateTime(2026, 2, 1));
     });
 
-    test('ancien journal sans date : ancrage d’origine, indépendant du départ', () {
-      p.start = DateTime(2026, 9, 30);
-      expect(p.legacyDateFor(1, 1), _anchor);
-      expect(p.legacyDateFor(3, 2), DateTime(2026, 7, 28));
-    });
+    test(
+      'ancien journal sans date : ancrage d’origine, indépendant du départ',
+      () {
+        p.start = DateTime(2026, 9, 30);
+        expect(p.legacyDateFor(1, 1), _anchor);
+        expect(p.legacyDateFor(3, 2), DateTime(2026, 7, 28));
+      },
+    );
 
     test('dates civiles strictes (AAAA-MM-JJ)', () {
       expect(parseCivilDate('2028-02-29'), DateTime(2028, 2, 29));
@@ -204,11 +209,14 @@ void main() {
       expect(again.values, isEmpty);
     });
 
-    test('première ouverture interrompue avant la sauvegarde : neuve', () async {
-      final app = await launch({'wods_seed_v': 4, 'credits_v': 2});
-      expect(app.program.scheduled, isFalse);
-      expect(app.values, isEmpty);
-    });
+    test(
+      'première ouverture interrompue avant la sauvegarde : neuve',
+      () async {
+        final app = await launch({'wods_seed_v': 4, 'credits_v': 2});
+        expect(app.program.scheduled, isFalse);
+        expect(app.values, isEmpty);
+      },
+    );
 
     test(
       'ancienne installation (réglages, aucune séance) : calendrier du 13/07/2026',
@@ -229,22 +237,22 @@ void main() {
         expect(again.values, app.values);
         expect(again.refStatus, app.refStatus);
         await again.flush();
-        expect(
-          (await SharedPreferences.getInstance()).getString(_key),
-          json,
-        );
+        expect((await SharedPreferences.getInstance()).getString(_key), json);
       },
     );
 
-    test('ancienne installation : ses références personnelles priment', () async {
-      final app = await launch({
-        'pilotage_v1': jsonEncode({'B4': 77.0, 'B8': 20.0}),
-      });
-      expect(app.values['B4'], 77.0);
-      expect(app.values['B8'], 20.0);
-      expect(app.refProvenance('B4'), 'historic');
-      expect(app.program.start, _anchor);
-    });
+    test(
+      'ancienne installation : ses références personnelles priment',
+      () async {
+        final app = await launch({
+          'pilotage_v1': jsonEncode({'B4': 77.0, 'B8': 20.0}),
+        });
+        expect(app.values['B4'], 77.0);
+        expect(app.values['B8'], 20.0);
+        expect(app.refProvenance('B4'), 'historic');
+        expect(app.program.start, _anchor);
+      },
+    );
 
     test(
       'état 2.5.7 : semaine, dates, références, séances, crédits conservés ; migration idempotente',
@@ -290,19 +298,22 @@ void main() {
       },
     );
 
-    test('effacement complet : programme non démarré, références inconnues', () async {
-      final app = await launch({
-        'settings_v1': jsonEncode(AppSettings().toJson()),
-      });
-      final result = await app.eraseAllData();
-      expect(result.status, isNot(EraseStatus.failed));
-      expect(app.program.scheduled, isFalse);
-      expect(app.values, isEmpty);
-      expect(app.refStatus, isEmpty);
-      final again = await relaunch();
-      expect(again.program.scheduled, isFalse);
-      expect(again.values, isEmpty);
-    });
+    test(
+      'effacement complet : programme non démarré, références inconnues',
+      () async {
+        final app = await launch({
+          'settings_v1': jsonEncode(AppSettings().toJson()),
+        });
+        final result = await app.eraseAllData();
+        expect(result.status, isNot(EraseStatus.failed));
+        expect(app.program.scheduled, isFalse);
+        expect(app.values, isEmpty);
+        expect(app.refStatus, isEmpty);
+        final again = await relaunch();
+        expect(again.program.scheduled, isFalse);
+        expect(again.values, isEmpty);
+      },
+    );
   });
 
   group('Choix du départ', () {
@@ -317,10 +328,7 @@ void main() {
         StartSave.outOfRange,
       );
       expect(app.program.scheduled, isFalse);
-      expect(
-        await app.configureStart(DateTime(2025, 12, 20)),
-        StartSave.saved,
-      );
+      expect(await app.configureStart(DateTime(2025, 12, 20)), StartSave.saved);
       expect(app.program.weekFor(_today), 40);
     });
 
@@ -361,10 +369,7 @@ void main() {
 
     test('départ passé : reprise à la bonne semaine', () async {
       final app = await launch({});
-      expect(
-        await app.configureStart(DateTime(2026, 8, 31)),
-        StartSave.saved,
-      );
+      expect(await app.configureStart(DateTime(2026, 8, 31)), StartSave.saved);
       expect(app.program.weekFor(_today), 4);
       expect(app.program.dayFor(_today), 6);
     });
@@ -389,45 +394,51 @@ void main() {
       expect(app.values, isEmpty);
     });
 
-    test('écriture refusée : départ non annoncé, état rétabli, nouvel essai', () async {
-      final app = await launch({});
-      final stored = (await SharedPreferences.getInstance()).getString(_key);
-      app.debugWriteHook = (_) async => false;
-      final failed = await app.configureStart(
-        DateTime(2026, 9, 28),
-        references: {'B4': 70},
-      );
-      expect(failed, StartSave.unsaved);
-      expect(app.program.scheduled, isFalse);
-      expect(app.startOrigin, '');
-      expect(app.values, isEmpty);
-      expect(app.refStatus, isEmpty);
-      expect((await SharedPreferences.getInstance()).getString(_key), stored);
-      app.debugWriteHook = null;
-      expect(
-        await app.configureStart(
+    test(
+      'écriture refusée : départ non annoncé, état rétabli, nouvel essai',
+      () async {
+        final app = await launch({});
+        final stored = (await SharedPreferences.getInstance()).getString(_key);
+        app.debugWriteHook = (_) async => false;
+        final failed = await app.configureStart(
           DateTime(2026, 9, 28),
           references: {'B4': 70},
-        ),
-        StartSave.saved,
-      );
-      final again = await relaunch();
-      expect(again.program.start, DateTime(2026, 9, 28));
-      expect(again.values, {'B4': 70.0});
-    });
+        );
+        expect(failed, StartSave.unsaved);
+        expect(app.program.scheduled, isFalse);
+        expect(app.startOrigin, '');
+        expect(app.values, isEmpty);
+        expect(app.refStatus, isEmpty);
+        expect((await SharedPreferences.getInstance()).getString(_key), stored);
+        app.debugWriteHook = null;
+        expect(
+          await app.configureStart(
+            DateTime(2026, 9, 28),
+            references: {'B4': 70},
+          ),
+          StartSave.saved,
+        );
+        final again = await relaunch();
+        expect(again.program.start, DateTime(2026, 9, 28));
+        expect(again.values, {'B4': 70.0});
+      },
+    );
 
-    test('double confirmation : un seul état, aucune séance dupliquée', () async {
-      final app = await launch({});
-      final results = await Future.wait([
-        app.configureStart(DateTime(2026, 9, 28)),
-        app.configureStart(DateTime(2026, 9, 28)),
-      ]);
-      expect(results, [StartSave.saved, StartSave.saved]);
-      expect(app.program.start, DateTime(2026, 9, 28));
-      expect(app.logs, isEmpty);
-      final again = await relaunch();
-      expect(again.program.start, DateTime(2026, 9, 28));
-    });
+    test(
+      'double confirmation : un seul état, aucune séance dupliquée',
+      () async {
+        final app = await launch({});
+        final results = await Future.wait([
+          app.configureStart(DateTime(2026, 9, 28)),
+          app.configureStart(DateTime(2026, 9, 28)),
+        ]);
+        expect(results, [StartSave.saved, StartSave.saved]);
+        expect(app.program.start, DateTime(2026, 9, 28));
+        expect(app.logs, isEmpty);
+        final again = await relaunch();
+        expect(again.program.start, DateTime(2026, 9, 28));
+      },
+    );
 
     test(
       'installation existante : changer la date ne touche ni séances, ni dates réelles, ni récompenses',
@@ -483,40 +494,46 @@ void main() {
   });
 
   group('Sauvegardes', () {
-    test('aller-retour 2.5.8 : départ, provenance et références intacts', () async {
-      final app = await launch({});
-      await app.configureStart(
-        DateTime(2026, 10, 5),
-        references: {'B4': 68.5, 'B17': 12},
-      );
-      final exported = app.exportAll();
-      final target = await launch({
-        'settings_v1': jsonEncode(AppSettings().toJson()),
-      });
-      expect(target.program.start, _anchor);
-      final status = await target.importBackup(exported);
-      expect(status, ImportStatus.success);
-      expect(target.program.start, DateTime(2026, 10, 5));
-      expect(target.startOrigin, 'user');
-      expect(target.values, {'B4': 68.5, 'B17': 12.0});
-      expect(target.refStatus, {'B4': 'set', 'B17': 'set'});
-      expect(jsonDecode(target.exportAll())['programStart'], {
-        'status': 'set',
-        'date': '2026-10-05',
-        'origin': 'user',
-      });
-    });
+    test(
+      'aller-retour 2.5.8 : départ, provenance et références intacts',
+      () async {
+        final app = await launch({});
+        await app.configureStart(
+          DateTime(2026, 10, 5),
+          references: {'B4': 68.5, 'B17': 12},
+        );
+        final exported = app.exportAll();
+        final target = await launch({
+          'settings_v1': jsonEncode(AppSettings().toJson()),
+        });
+        expect(target.program.start, _anchor);
+        final status = await target.importBackup(exported);
+        expect(status, ImportStatus.success);
+        expect(target.program.start, DateTime(2026, 10, 5));
+        expect(target.startOrigin, 'user');
+        expect(target.values, {'B4': 68.5, 'B17': 12.0});
+        expect(target.refStatus, {'B4': 'set', 'B17': 'set'});
+        expect(jsonDecode(target.exportAll())['programStart'], {
+          'status': 'set',
+          'date': '2026-10-05',
+          'origin': 'user',
+        });
+      },
+    );
 
-    test('sauvegarde d’un utilisateur non démarré : restaurée telle quelle', () async {
-      final app = await launch({});
-      final exported = app.exportAll();
-      final target = await launch({
-        'settings_v1': jsonEncode(AppSettings().toJson()),
-      });
-      expect(await target.importBackup(exported), ImportStatus.success);
-      expect(target.program.scheduled, isFalse);
-      expect(target.values, isEmpty);
-    });
+    test(
+      'sauvegarde d’un utilisateur non démarré : restaurée telle quelle',
+      () async {
+        final app = await launch({});
+        final exported = app.exportAll();
+        final target = await launch({
+          'settings_v1': jsonEncode(AppSettings().toJson()),
+        });
+        expect(await target.importBackup(exported), ImportStatus.success);
+        expect(target.program.scheduled, isFalse);
+        expect(target.values, isEmpty);
+      },
+    );
 
     test(
       'ancienne sauvegarde : migrée (13/07/2026, références « à vérifier »), jamais « aujourd’hui »',
@@ -542,10 +559,7 @@ void main() {
 
     test('fichier invalide : refusé, départ et références inchangés', () async {
       final app = await launch({});
-      await app.configureStart(
-        DateTime(2026, 9, 28),
-        references: {'B4': 70},
-      );
+      await app.configureStart(DateTime(2026, 9, 28), references: {'B4': 70});
       final good = _json(app);
       Map<String, dynamic> variant(void Function(Map<String, dynamic>) edit) {
         final m = jsonDecode(jsonEncode(good)) as Map<String, dynamic>;
@@ -554,11 +568,35 @@ void main() {
       }
 
       final bad = [
-        variant((m) => m['programStart'] = {'status': 'set', 'date': '2027-02-29', 'origin': 'user'}),
-        variant((m) => m['programStart'] = {'status': 'set', 'date': '1999-12-27', 'origin': 'user'}),
-        variant((m) => m['programStart'] = {'status': 'set', 'date': '2026-09-28', 'origin': 'autre'}),
+        variant(
+          (m) =>
+              m['programStart'] = {
+                'status': 'set',
+                'date': '2027-02-29',
+                'origin': 'user',
+              },
+        ),
+        variant(
+          (m) =>
+              m['programStart'] = {
+                'status': 'set',
+                'date': '1999-12-27',
+                'origin': 'user',
+              },
+        ),
+        variant(
+          (m) =>
+              m['programStart'] = {
+                'status': 'set',
+                'date': '2026-09-28',
+                'origin': 'autre',
+              },
+        ),
         variant((m) => m['programStart'] = {'status': 'set'}),
-        variant((m) => m['programStart'] = {'status': 'pending', 'date': '2026-09-28'}),
+        variant(
+          (m) =>
+              m['programStart'] = {'status': 'pending', 'date': '2026-09-28'},
+        ),
         variant((m) => m['programStart'] = {'status': 'plus tard'}),
         variant((m) => m['programStart'] = '2026-09-28'),
         variant((m) => m['referenceStatus'] = {'B4': 'confirmed'}),
@@ -580,8 +618,13 @@ void main() {
         expect(app.refStatus, {'B4': 'set'});
       }
       // Valeur sans provenance (fichier retouché) : gardée « à vérifier ».
-      final undocumented = variant((m) => m['referenceStatus'] = <String, dynamic>{});
-      expect(await app.importBackup(jsonEncode(undocumented)), ImportStatus.success);
+      final undocumented = variant(
+        (m) => m['referenceStatus'] = <String, dynamic>{},
+      );
+      expect(
+        await app.importBackup(jsonEncode(undocumented)),
+        ImportStatus.success,
+      );
       expect(app.values, {'B4': 70.0});
       expect(app.refStatus, {'B4': 'historic'});
       // Clé d'une ancienne version, gardée « à vérifier » : acceptée.
@@ -598,78 +641,99 @@ void main() {
   });
 
   group('Références (KT-007)', () {
-    test('inconnue : charge et volume « à renseigner », jamais calculés sur 0', () async {
-      final app = await launch({});
-      final load = _systemExercise(app.program);
-      final volume = _volumeExercise(app.program);
-      expect(app.loadFor(load), isNull);
-      expect(app.loadLabel(load), 'à renseigner');
-      expect(app.missingReference(load), 'B4');
-      expect(app.setsLabel(volume), contains('?'));
-      final sp = app.logSpec(volume);
-      expect(
-        app.plannedReps(volume, sp, app.setCount(volume)).whereType<int>(),
-        isEmpty,
-      );
-      // Partielle : poids du corps seul, 1RM toujours inconnu.
-      app.setValue('B4', 75);
-      expect(app.loadFor(load), isNull);
-      expect(app.missingReference(load), load.load.ref);
-      app.setValue(load.load.ref!, 20);
-      expect(app.loadFor(load), isNotNull);
-      expect(app.loadNeedsReference(load), isFalse);
-      app.setValue(volume.sets.ref!, 20);
-      expect(app.setsLabel(volume), isNot(contains('?')));
-    });
+    test(
+      'inconnue : charge et volume « à renseigner », jamais calculés sur 0',
+      () async {
+        final app = await launch({});
+        final load = _systemExercise(app.program);
+        final volume = _volumeExercise(app.program);
+        expect(app.loadFor(load), isNull);
+        expect(app.loadLabel(load), 'à renseigner');
+        expect(app.missingReference(load), 'B4');
+        expect(app.setsLabel(volume), contains('?'));
+        final sp = app.logSpec(volume);
+        expect(
+          app.plannedReps(volume, sp, app.setCount(volume)).whereType<int>(),
+          isEmpty,
+        );
+        // Partielle : poids du corps seul, 1RM toujours inconnu.
+        app.setValue('B4', 75);
+        expect(app.loadFor(load), isNull);
+        expect(app.missingReference(load), load.load.ref);
+        app.setValue(load.load.ref!, 20);
+        expect(app.loadFor(load), isNotNull);
+        expect(app.loadNeedsReference(load), isFalse);
+        app.setValue(volume.sets.ref!, 20);
+        expect(app.setsLabel(volume), isNot(contains('?')));
+      },
+    );
 
-    test('renseignée explicitement, même égale à l’ancienne valeur embarquée', () async {
-      final legacy = await launch({
-        'settings_v1': jsonEncode(AppSettings().toJson()),
-      });
-      final embedded = legacy.values['B8']!;
-      final app = await launch({});
-      app.setValue('B8', embedded);
-      expect(app.refProvenance('B8'), 'set');
-      expect(app.values['B8'], embedded);
-      await app.flush();
-      final again = await relaunch();
-      expect(again.refProvenance('B8'), 'set');
-    });
+    test(
+      'renseignée explicitement, même égale à l’ancienne valeur embarquée',
+      () async {
+        final legacy = await launch({
+          'settings_v1': jsonEncode(AppSettings().toJson()),
+        });
+        final embedded = legacy.values['B8']!;
+        final app = await launch({});
+        app.setValue('B8', embedded);
+        expect(app.refProvenance('B8'), 'set');
+        expect(app.values['B8'], embedded);
+        await app.flush();
+        final again = await relaunch();
+        expect(again.refProvenance('B8'), 'set');
+      },
+    );
 
-    test('historique : confirmée sans changer la valeur, ou « Je ne sais pas »', () async {
-      final app = await launch({
-        'pilotage_v1': jsonEncode({'B4': 77.0}),
-      });
-      app.confirmReference('B4');
-      expect(app.refProvenance('B4'), 'set');
-      expect(app.values['B4'], 77.0);
-      app.clearReference('B8');
-      expect(app.refProvenance('B8'), 'unknown');
-      expect(app.values.containsKey('B8'), isFalse);
-      app.resetPilotage();
-      expect(app.values, isEmpty);
-      await app.flush();
-      final again = await relaunch();
-      expect(again.values, isEmpty);
-      expect(again.program.start, _anchor); // calendrier jamais touché
-    });
+    test(
+      'historique : confirmée sans changer la valeur, ou « Je ne sais pas »',
+      () async {
+        final app = await launch({
+          'pilotage_v1': jsonEncode({'B4': 77.0}),
+        });
+        app.confirmReference('B4');
+        expect(app.refProvenance('B4'), 'set');
+        expect(app.values['B4'], 77.0);
+        app.clearReference('B8');
+        expect(app.refProvenance('B8'), 'unknown');
+        expect(app.values.containsKey('B8'), isFalse);
+        app.resetPilotage();
+        expect(app.values, isEmpty);
+        await app.flush();
+        final again = await relaunch();
+        expect(again.values, isEmpty);
+        expect(again.program.start, _anchor); // calendrier jamais touché
+      },
+    );
 
-    test('attributs : indisponibles ou partiels, jamais un poids arbitraire', () async {
-      final app = await launch({});
-      expect(app.game.sheet.force.available, isFalse);
-      expect(app.game.sheet.force.note, startsWith('Indisponible'));
-      expect(app.game.sheet.endurance.note, startsWith('Maxima en répétitions'));
-      app.setValue('B8', 20);
-      expect(app.game.sheet.force.available, isFalse); // poids du corps inconnu
-      app.setValue('B4', 72);
-      final force = app.game.sheet.force;
-      expect(force.available, isTrue);
-      expect(force.note, 'Calcul partiel : 1 référence de force sur 4.');
-      // Formule inchangée : (72 + 20) / 72 sur la courbe existante.
-      expect(force.score, greaterThan(0));
-      app.setValue('B17', 30);
-      expect(app.game.sheet.endurance.note, 'Calcul partiel : 1 maximum sur 5.');
-    });
+    test(
+      'attributs : indisponibles ou partiels, jamais un poids arbitraire',
+      () async {
+        final app = await launch({});
+        expect(app.game.sheet.force.available, isFalse);
+        expect(app.game.sheet.force.note, startsWith('Indisponible'));
+        expect(
+          app.game.sheet.endurance.note,
+          startsWith('Maxima en répétitions'),
+        );
+        app.setValue('B8', 20);
+        expect(
+          app.game.sheet.force.available,
+          isFalse,
+        ); // poids du corps inconnu
+        app.setValue('B4', 72);
+        final force = app.game.sheet.force;
+        expect(force.available, isTrue);
+        expect(force.note, 'Calcul partiel : 1 référence de force sur 4.');
+        // Formule inchangée : (72 + 20) / 72 sur la courbe existante.
+        expect(force.score, greaterThan(0));
+        app.setValue('B17', 30);
+        expect(
+          app.game.sheet.endurance.note,
+          'Calcul partiel : 1 maximum sur 5.',
+        );
+      },
+    );
 
     test('valeurs hors domaine refusées, valeur précédente gardée', () async {
       final app = await launch({});
@@ -700,23 +764,26 @@ void main() {
       expect(formatReference(80), '80');
     });
 
-    test('affichage en livres : les références restent en kg, sans dérive', () async {
-      final app = await launch({});
-      app.setValue('B4', 72.5);
-      app.setValue('B8', 17.5);
-      final load = _systemExercise(app.program);
-      app.setValue(load.load.ref!, 30);
-      final kg = app.loadFor(load);
-      for (var i = 0; i < 5; i++) {
-        app.settings.lb = !app.settings.lb;
-        app.saveSettings();
-      }
-      expect(app.values['B4'], 72.5);
-      expect(app.values['B8'], 17.5);
-      expect(app.loadFor(load), kg);
-      app.settings.lb = true;
-      if (kg! > 0) expect(app.loadLabel(load), contains('lb'));
-    });
+    test(
+      'affichage en livres : les références restent en kg, sans dérive',
+      () async {
+        final app = await launch({});
+        app.setValue('B4', 72.5);
+        app.setValue('B8', 17.5);
+        final load = _systemExercise(app.program);
+        app.setValue(load.load.ref!, 30);
+        final kg = app.loadFor(load);
+        for (var i = 0; i < 5; i++) {
+          app.settings.lb = !app.settings.lb;
+          app.saveSettings();
+        }
+        expect(app.values['B4'], 72.5);
+        expect(app.values['B8'], 17.5);
+        expect(app.loadFor(load), kg);
+        app.settings.lb = true;
+        if (kg! > 0) expect(app.loadLabel(load), contains('lb'));
+      },
+    );
   });
 
   group('Rappels', () {
@@ -729,172 +796,222 @@ void main() {
       expect(planReminders(app, now), isEmpty);
     });
 
-    test('départ futur : premier rappel le jour de S1 · J1, aucun avant', () async {
-      final app = await launch({});
-      app.settings
-        ..notifOn = true
-        ..notifSkipRest = false;
-      await app.configureStart(DateTime(2026, 10, 1));
-      final plan = planReminders(
-        app,
-        now,
-        location: tz.getLocation('Europe/Paris'),
-      );
-      expect(plan.first.payload, 'S1-J1');
-      expect(
-        [plan.first.at.year, plan.first.at.month, plan.first.at.day],
-        [2026, 10, 1],
-      );
-      expect(plan.length, 280);
-      expect(plan.map((r) => r.id).toSet().length, plan.length);
-    });
+    test(
+      'départ futur : premier rappel le jour de S1 · J1, aucun avant',
+      () async {
+        final app = await launch({});
+        app.settings
+          ..notifOn = true
+          ..notifSkipRest = false;
+        await app.configureStart(DateTime(2026, 10, 1));
+        final plan = planReminders(
+          app,
+          now,
+          location: tz.getLocation('Europe/Paris'),
+        );
+        expect(plan.first.payload, 'S1-J1');
+        expect(
+          [plan.first.at.year, plan.first.at.month, plan.first.at.day],
+          [2026, 10, 1],
+        );
+        expect(plan.length, 280);
+        expect(plan.map((r) => r.id).toSet().length, plan.length);
+      },
+    );
 
-    test('changement de départ : mêmes identifiants replanifiés, aucun doublon', () async {
-      final app = await launch({
-        'settings_v1': jsonEncode(AppSettings().toJson()),
-      });
-      app.settings
-        ..notifOn = true
-        ..notifSkipRest = false;
-      final backend = FakeNotifications();
-      final service = NotificationService(app, backend, now: () => now);
-      addTearDown(service.dispose);
-      service.bind();
-      await service.reschedule();
-      final firstIds = Set.of(backend.pending);
-      expect(firstIds, isNotEmpty);
-      expect(await app.configureStart(DateTime(2026, 9, 28)), StartSave.saved);
-      await service.reschedule();
-      final byId = <int, PlannedReminder>{};
-      for (final s in backend.scheduled) {
-        byId[s.reminder.id] = s.reminder;
-      }
-      final s1j1 = byId[1001]!;
-      expect([s1j1.at.month, s1j1.at.day], [9, 28]);
-      expect(
-        backend.pending.every((id) => id >= 1001 && id <= 1280),
-        isTrue,
-      );
-      expect(backend.pending.length, 280);
-    });
+    test(
+      'changement de départ : mêmes identifiants replanifiés, aucun doublon',
+      () async {
+        final app = await launch({
+          'settings_v1': jsonEncode(AppSettings().toJson()),
+        });
+        app.settings
+          ..notifOn = true
+          ..notifSkipRest = false;
+        final backend = FakeNotifications();
+        final service = NotificationService(app, backend, now: () => now);
+        addTearDown(service.dispose);
+        service.bind();
+        await service.reschedule();
+        final firstIds = Set.of(backend.pending);
+        expect(firstIds, isNotEmpty);
+        expect(
+          await app.configureStart(DateTime(2026, 9, 28)),
+          StartSave.saved,
+        );
+        await service.reschedule();
+        final byId = <int, PlannedReminder>{};
+        for (final s in backend.scheduled) {
+          byId[s.reminder.id] = s.reminder;
+        }
+        final s1j1 = byId[1001]!;
+        expect([s1j1.at.month, s1j1.at.day], [9, 28]);
+        expect(backend.pending.every((id) => id >= 1001 && id <= 1280), isTrue);
+        expect(backend.pending.length, 280);
+      },
+    );
   });
 
   group('Rappels : erreurs et ouverture', () {
     final now = DateTime.utc(2026, 9, 26, 8);
     setUpAll(tzdata.initializeTimeZones);
 
-    test('échec de programmation : visible, départ conservé, reprise possible', () async {
-      final app = await launch({});
-      app.settings.notifOn = true;
-      final backend = FakeNotifications()..failSchedule = true;
-      final service = NotificationService(app, backend, now: () => now);
-      addTearDown(service.dispose);
-      expect(await app.configureStart(DateTime(2026, 9, 28)), StartSave.saved);
-      await service.reschedule();
-      expect(service.status.value.error, isNotNull);
-      expect(app.program.start, DateTime(2026, 9, 28));
-      expect(app.hasUnsavedChanges, isFalse);
-      backend.failSchedule = false;
-      await service.reschedule();
-      expect(service.status.value.error, isNull);
-      expect(service.status.value.count, greaterThan(0));
-      expect(app.program.start, DateTime(2026, 9, 28));
-    });
+    test(
+      'échec de programmation : visible, départ conservé, reprise possible',
+      () async {
+        final app = await launch({});
+        app.settings.notifOn = true;
+        final backend = FakeNotifications()..failSchedule = true;
+        final service = NotificationService(app, backend, now: () => now);
+        addTearDown(service.dispose);
+        expect(
+          await app.configureStart(DateTime(2026, 9, 28)),
+          StartSave.saved,
+        );
+        await service.reschedule();
+        expect(service.status.value.error, isNotNull);
+        expect(app.program.start, DateTime(2026, 9, 28));
+        expect(app.hasUnsavedChanges, isFalse);
+        backend.failSchedule = false;
+        await service.reschedule();
+        expect(service.status.value.error, isNull);
+        expect(service.status.value.count, greaterThan(0));
+        expect(app.program.start, DateTime(2026, 9, 28));
+      },
+    );
 
-    test('ancienne notification après changement de départ : même journée S · J, à froid et à chaud', () async {
-      final app = await launch({
-        'settings_v1': jsonEncode(AppSettings().toJson()),
-      });
-      final opened = <(int, int)>[];
-      final backend = FakeNotifications()..launchPayload = 'S11-J6';
-      final service =
-          NotificationService(app, backend, now: () => now)
-            ..onOpen = (w, d) => opened.add((w, d));
-      addTearDown(service.dispose);
-      expect(await app.configureStart(DateTime(2026, 9, 21)), StartSave.saved);
-      await service.init(); // ouverture à froid
-      backend.open!('S2-J3'); // ouverture à chaud
-      backend.open!('S41-J1'); // hors programme : ignorée
-      backend.open!('2026-09-28'); // format inconnu : ignoré
-      expect(opened, [(11, 6), (2, 3)]);
-    });
+    test(
+      'ancienne notification après changement de départ : même journée S · J, à froid et à chaud',
+      () async {
+        final app = await launch({
+          'settings_v1': jsonEncode(AppSettings().toJson()),
+        });
+        final opened = <(int, int)>[];
+        final backend = FakeNotifications()..launchPayload = 'S11-J6';
+        final service = NotificationService(app, backend, now: () => now)
+          ..onOpen = (w, d) => opened.add((w, d));
+        addTearDown(service.dispose);
+        expect(
+          await app.configureStart(DateTime(2026, 9, 21)),
+          StartSave.saved,
+        );
+        await service.init(); // ouverture à froid
+        backend.open!('S2-J3'); // ouverture à chaud
+        backend.open!('S41-J1'); // hors programme : ignorée
+        backend.open!('2026-09-28'); // format inconnu : ignoré
+        expect(opened, [(11, 6), (2, 3)]);
+      },
+    );
   });
 
   group('Comparaison avant / après (migration synthétique)', () {
     setUpAll(tzdata.initializeTimeZones);
-    test('utilisateur avancé : semaine, dates, séances, références, récompenses, rappels', () async {
-      final legacy = await legacyState();
-      // Utilisateur avancé : S1 à S10 faites à la date prévue d'origine.
-      final logs = legacy['logs'] as Map<String, dynamic>;
-      final base = (await launch({})).program;
-      for (var w = 1; w <= 10; w++) {
-        for (final d in base.week(w).days.where((d) => d.exercises.isNotEmpty)) {
-          final date = base.legacyDateFor(w, d.j);
-          logs.putIfAbsent(
-            'S$w-J${d.j}',
-            () =>
-                SessionLog(
-                  done: true,
-                  finishedAt:
-                      DateTime(date.year, date.month, date.day, 18).toIso8601String(),
-                  title: 'S$w · J${d.j}',
-                ).toJson(),
-          );
+    test(
+      'utilisateur avancé : semaine, dates, séances, références, récompenses, rappels',
+      () async {
+        final legacy = await legacyState();
+        // Utilisateur avancé : S1 à S10 faites à la date prévue d'origine.
+        final logs = legacy['logs'] as Map<String, dynamic>;
+        final base = (await launch({})).program;
+        for (var w = 1; w <= 10; w++) {
+          for (final d in base
+              .week(w)
+              .days
+              .where((d) => d.exercises.isNotEmpty)) {
+            final date = base.legacyDateFor(w, d.j);
+            logs.putIfAbsent(
+              'S$w-J${d.j}',
+              () =>
+                  SessionLog(
+                    done: true,
+                    finishedAt:
+                        DateTime(
+                          date.year,
+                          date.month,
+                          date.day,
+                          18,
+                        ).toIso8601String(),
+                    title: 'S$w · J${d.j}',
+                  ).toJson(),
+            );
+          }
         }
-      }
-      final app = await launch({_key: jsonEncode(legacy)});
-      app.settings
-        ..notifOn = true
-        ..notifSkipRest = false;
-      String snapshot(AppStore a) {
-        final plan = planReminders(
-          a,
-          DateTime.utc(2026, 9, 26, 8),
-          location: tz.getLocation('Europe/Paris'),
-        );
-        return jsonEncode({
-          'semaine': 'S${a.program.weekFor(_today)} · J${a.program.dayFor(_today)}',
-          'depart': a.program.start == null ? null : civilDateString(a.program.start!),
-          'origine': a.startOrigin,
-          'datesS11': a.program.weekDates(11),
-          'seances': a.logs.length,
-          'S6-J4': a.logs['S6-J4']?.finishedAt,
-          'S1-J2': a.logs['S1-J2']?.finishedAt,
-          'B4': a.values['B4'],
-          'B8': a.values['B8'],
-          'provenanceB4': a.refProvenance('B4'),
-          'xp': a.xp,
-          'niveau': a.level,
-          'credits': a.credits,
-          'gains': a.creditGrants.values.fold<int>(0, (x, y) => x + y),
-          'droitsWod': a.unlockedWods.length,
-          'rappels': plan.length,
-          'premierRappel': plan.isEmpty ? null : '${plan.first.payload} ${plan.first.at.toIso8601String().substring(0, 16)}',
-        });
-      }
+        final app = await launch({_key: jsonEncode(legacy)});
+        app.settings
+          ..notifOn = true
+          ..notifSkipRest = false;
+        String snapshot(AppStore a) {
+          final plan = planReminders(
+            a,
+            DateTime.utc(2026, 9, 26, 8),
+            location: tz.getLocation('Europe/Paris'),
+          );
+          return jsonEncode({
+            'semaine':
+                'S${a.program.weekFor(_today)} · J${a.program.dayFor(_today)}',
+            'depart':
+                a.program.start == null
+                    ? null
+                    : civilDateString(a.program.start!),
+            'origine': a.startOrigin,
+            'datesS11': a.program.weekDates(11),
+            'seances': a.logs.length,
+            'S6-J4': a.logs['S6-J4']?.finishedAt,
+            'S1-J2': a.logs['S1-J2']?.finishedAt,
+            'B4': a.values['B4'],
+            'B8': a.values['B8'],
+            'provenanceB4': a.refProvenance('B4'),
+            'xp': a.xp,
+            'niveau': a.level,
+            'credits': a.credits,
+            'gains': a.creditGrants.values.fold<int>(0, (x, y) => x + y),
+            'droitsWod': a.unlockedWods.length,
+            'rappels': plan.length,
+            'premierRappel':
+                plan.isEmpty
+                    ? null
+                    : '${plan.first.payload} ${plan.first.at.toIso8601String().substring(0, 16)}',
+          });
+        }
 
-      final migrated = snapshot(app);
-      await app.flush();
-      final relaunched = snapshot(await relaunch());
-      expect(relaunched, migrated);
-      expect(await app.configureStart(DateTime(2026, 9, 21)), StartSave.saved);
-      final moved = snapshot(app);
-      // ignore: avoid_print
-      print('L4-COMPARE migration $migrated');
-      // ignore: avoid_print
-      print('L4-COMPARE relance $relaunched');
-      // ignore: avoid_print
-      print('L4-COMPARE depart-21-09 $moved');
-      final a = jsonDecode(migrated) as Map<String, dynamic>;
-      final b = jsonDecode(moved) as Map<String, dynamic>;
-      expect(a['semaine'], 'S11 · J6');
-      expect(a['depart'], '2026-07-13');
-      expect(a['datesS11'], '21/09→27/09/2026');
-      expect(b['semaine'], 'S1 · J6');
-      for (final k in ['seances', 'S6-J4', 'S1-J2', 'B4', 'B8', 'provenanceB4', 'xp', 'niveau', 'credits', 'gains', 'droitsWod']) {
-        expect(b[k], a[k], reason: k);
-      }
-    });
+        final migrated = snapshot(app);
+        await app.flush();
+        final relaunched = snapshot(await relaunch());
+        expect(relaunched, migrated);
+        expect(
+          await app.configureStart(DateTime(2026, 9, 21)),
+          StartSave.saved,
+        );
+        final moved = snapshot(app);
+        // ignore: avoid_print
+        print('L4-COMPARE migration $migrated');
+        // ignore: avoid_print
+        print('L4-COMPARE relance $relaunched');
+        // ignore: avoid_print
+        print('L4-COMPARE depart-21-09 $moved');
+        final a = jsonDecode(migrated) as Map<String, dynamic>;
+        final b = jsonDecode(moved) as Map<String, dynamic>;
+        expect(a['semaine'], 'S11 · J6');
+        expect(a['depart'], '2026-07-13');
+        expect(a['datesS11'], '21/09→27/09/2026');
+        expect(b['semaine'], 'S1 · J6');
+        for (final k in [
+          'seances',
+          'S6-J4',
+          'S1-J2',
+          'B4',
+          'B8',
+          'provenanceB4',
+          'xp',
+          'niveau',
+          'credits',
+          'gains',
+          'droitsWod',
+        ]) {
+          expect(b[k], a[k], reason: k);
+        }
+      },
+    );
   });
 
   group('Écrans', () {
@@ -960,7 +1077,8 @@ void main() {
                 onPressed:
                     () => Navigator.of(context).push(
                       MaterialPageRoute<bool>(
-                        builder: (_) => ProgramStartScreen(initialDate: initial),
+                        builder:
+                            (_) => ProgramStartScreen(initialDate: initial),
                       ),
                     ),
                 child: const Text('ouvrir'),
@@ -969,30 +1087,40 @@ void main() {
           ),
     );
 
-    testWidgets('premier départ : date, référence saisie, les autres inconnues', (
-      tester,
-    ) async {
-      phone(tester, const Size(390, 844));
-      await tester.pumpWidget(page(host(DateTime(2026, 9, 30))));
-      await tester.tap(find.text('ouvrir'));
-      await tester.pumpAndSettle();
-      expect(find.text('mercredi 30 septembre 2026'), findsOneWidget);
-      expect(find.textContaining('Fin prévue (S40 · J7) : mardi 6 juillet 2027'), findsOneWidget);
-      expect(find.byKey(const ValueKey('start-current')), findsNothing);
-      await reveal(tester, find.byKey(const ValueKey('start-ref-B4')));
-      await tester.enterText(find.byKey(const ValueKey('start-ref-B4')), '72,5');
-      await tester.tap(find.byKey(const ValueKey('start-confirm')));
-      await tester.tap(find.byKey(const ValueKey('start-confirm')), warnIfMissed: false);
-      await tester.runAsync(() => store.flush());
-      await tester.pumpAndSettle();
-      expect(find.byType(ProgramStartScreen), findsNothing);
-      expect(store.program.start, DateTime(2026, 9, 30));
-      expect(store.startOrigin, 'user');
-      expect(store.values, {'B4': 72.5});
-      expect(store.refStatus, {'B4': 'set'});
-      expect(reschedules, 1);
-      expect(find.textContaining('Départ enregistré'), findsOneWidget);
-    });
+    testWidgets(
+      'premier départ : date, référence saisie, les autres inconnues',
+      (tester) async {
+        phone(tester, const Size(390, 844));
+        await tester.pumpWidget(page(host(DateTime(2026, 9, 30))));
+        await tester.tap(find.text('ouvrir'));
+        await tester.pumpAndSettle();
+        expect(find.text('mercredi 30 septembre 2026'), findsOneWidget);
+        expect(
+          find.textContaining('Fin prévue (S40 · J7) : mardi 6 juillet 2027'),
+          findsOneWidget,
+        );
+        expect(find.byKey(const ValueKey('start-current')), findsNothing);
+        await reveal(tester, find.byKey(const ValueKey('start-ref-B4')));
+        await tester.enterText(
+          find.byKey(const ValueKey('start-ref-B4')),
+          '72,5',
+        );
+        await tester.tap(find.byKey(const ValueKey('start-confirm')));
+        await tester.tap(
+          find.byKey(const ValueKey('start-confirm')),
+          warnIfMissed: false,
+        );
+        await tester.runAsync(() => store.flush());
+        await tester.pumpAndSettle();
+        expect(find.byType(ProgramStartScreen), findsNothing);
+        expect(store.program.start, DateTime(2026, 9, 30));
+        expect(store.startOrigin, 'user');
+        expect(store.values, {'B4': 72.5});
+        expect(store.refStatus, {'B4': 'set'});
+        expect(reschedules, 1);
+        expect(find.textContaining('Départ enregistré'), findsOneWidget);
+      },
+    );
 
     testWidgets('« Plus tard » et retour système : rien n’est enregistré', (
       tester,
@@ -1017,7 +1145,9 @@ void main() {
       expect(reschedules, 0);
     });
 
-    testWidgets('saisie invalide : message, aucun enregistrement', (tester) async {
+    testWidgets('saisie invalide : message, aucun enregistrement', (
+      tester,
+    ) async {
       phone(tester, const Size(390, 844));
       await tester.pumpWidget(page(host(DateTime(2026, 9, 30))));
       await tester.tap(find.text('ouvrir'));
@@ -1070,7 +1200,12 @@ void main() {
       expect(find.byKey(const ValueKey('start-ref-B4')), findsNothing);
       await reveal(tester, find.byKey(const ValueKey('start-impact')));
       expect(find.textContaining('S11 · J6 → S1 · J6'), findsOneWidget);
-      expect(find.textContaining('gardent leur semaine, leur jour et leur date réelle'), findsOneWidget);
+      expect(
+        find.textContaining(
+          'gardent leur semaine, leur jour et leur date réelle',
+        ),
+        findsOneWidget,
+      );
       await tester.tap(find.byKey(const ValueKey('start-confirm')));
       await tester.runAsync(() => store.flush());
       await tester.pumpAndSettle();
@@ -1080,7 +1215,9 @@ void main() {
       expect(reschedules, 1);
     });
 
-    testWidgets('même date : bouton inactif, rien à replanifier', (tester) async {
+    testWidgets('même date : bouton inactif, rien à replanifier', (
+      tester,
+    ) async {
       phone(tester, const Size(390, 844));
       store.program.start = _anchor;
       store.startOrigin = 'migration';
@@ -1094,45 +1231,47 @@ void main() {
       expect(find.byKey(const ValueKey('start-impact')), findsNothing);
     });
 
-    testWidgets('séance : référence manquante nommée, rien de calculé à sa place', (
-      tester,
-    ) async {
-      phone(tester, const Size(390, 844));
-      final (week, day) = [
-        for (final w in store.program.weeks)
-          for (final d in w.days)
-            if (d.exercises.isNotEmpty &&
-                d.exercises.first.load.type == 'system')
-              (w, d),
-      ].first;
-      final ex = day.exercises.first;
-      final semantics = tester.ensureSemantics();
-      await tester.pumpWidget(page(SessionScreen(week: week, day: day)));
-      await tester.pumpAndSettle();
-      expect(find.byKey(ValueKey('missing-ref-${ex.id}')), findsOneWidget);
-      expect(
-        find.bySemanticsLabel(
-          RegExp('Référence non renseignée : Poids du corps'),
-        ),
-        findsOneWidget,
-      );
-      // Appui : Références s'ouvre, sans quitter la séance.
-      await tester.tap(find.byKey(ValueKey('missing-ref-${ex.id}')));
-      await tester.pumpAndSettle();
-      expect(find.byType(PilotageScreen), findsOneWidget);
-      Navigator.of(tester.element(find.byType(PilotageScreen))).pop();
-      await tester.pumpAndSettle();
-      semantics.dispose();
-      store.setValue('B4', 72);
-      store.setValue(ex.load.ref!, 20);
-      await tester.pump();
-      expect(find.byKey(ValueKey('missing-ref-${ex.id}')), findsNothing);
-      expect(tester.takeException(), isNull);
-      await tester.pumpWidget(const SizedBox());
-      await tester.pumpAndSettle();
-      store.logs.clear();
-      await tester.runAsync(() => store.flush());
-    });
+    testWidgets(
+      'séance : référence manquante nommée, rien de calculé à sa place',
+      (tester) async {
+        phone(tester, const Size(390, 844));
+        final (week, day) =
+            [
+              for (final w in store.program.weeks)
+                for (final d in w.days)
+                  if (d.exercises.isNotEmpty &&
+                      d.exercises.first.load.type == 'system')
+                    (w, d),
+            ].first;
+        final ex = day.exercises.first;
+        final semantics = tester.ensureSemantics();
+        await tester.pumpWidget(page(SessionScreen(week: week, day: day)));
+        await tester.pumpAndSettle();
+        expect(find.byKey(ValueKey('missing-ref-${ex.id}')), findsOneWidget);
+        expect(
+          find.bySemanticsLabel(
+            RegExp('Référence non renseignée : Poids du corps'),
+          ),
+          findsOneWidget,
+        );
+        // Appui : Références s'ouvre, sans quitter la séance.
+        await tester.tap(find.byKey(ValueKey('missing-ref-${ex.id}')));
+        await tester.pumpAndSettle();
+        expect(find.byType(PilotageScreen), findsOneWidget);
+        Navigator.of(tester.element(find.byType(PilotageScreen))).pop();
+        await tester.pumpAndSettle();
+        semantics.dispose();
+        store.setValue('B4', 72);
+        store.setValue(ex.load.ref!, 20);
+        await tester.pump();
+        expect(find.byKey(ValueKey('missing-ref-${ex.id}')), findsNothing);
+        expect(tester.takeException(), isNull);
+        await tester.pumpWidget(const SizedBox());
+        await tester.pumpAndSettle();
+        store.logs.clear();
+        await tester.runAsync(() => store.flush());
+      },
+    );
 
     testWidgets('bandeau de l’accueil : non démarré, avant, pendant, après', (
       tester,
@@ -1155,55 +1294,62 @@ void main() {
       await show(DateTime(2026, 10, 5, 7));
       expect(find.byKey(const ValueKey('program-start-banner')), findsNothing);
       await show(DateTime(2027, 7, 12));
-      expect(find.text('Programme terminé le dimanche 11 juillet 2027'), findsOneWidget);
+      expect(
+        find.text('Programme terminé le dimanche 11 juillet 2027'),
+        findsOneWidget,
+      );
       expect(find.textContaining('aucun nouveau cycle'), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('program-start-banner')));
       await tester.pumpAndSettle();
       expect(find.byType(ProgramStartScreen), findsNothing);
     });
 
-    testWidgets('Références : inconnue, à vérifier, confirmée, « Je ne sais pas »', (
-      tester,
-    ) async {
-      phone(tester, const Size(390, 844));
-      store.values['B4'] = 77;
-      store.refStatus['B4'] = 'historic';
-      await tester.pumpWidget(page(const PilotageScreen()));
-      await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('references-historic')), findsOneWidget);
-      expect(
-        tester.widget<Text>(find.byKey(const ValueKey('B4-provenance'))).data,
-        'À vérifier · valeur d’une version précédente',
-      );
-      final lift = store.program.pilotage.mainLifts.first.ref;
-      await reveal(tester, find.byKey(ValueKey('$lift-provenance')));
-      expect(
-        tester.widget<Text>(find.byKey(ValueKey('$lift-provenance'))).data,
-        'Non renseigné',
-      );
-      await tester.scrollUntilVisible(
-        find.byKey(const ValueKey('B4-confirm')),
-        -200,
-        scrollable: find.byType(Scrollable).first,
-      );
-      await tester.tap(find.byKey(const ValueKey('B4-confirm')));
-      await tester.pump();
-      expect(store.refProvenance('B4'), 'set');
-      expect(store.values['B4'], 77.0);
-      expect(find.byKey(const ValueKey('B4-provenance')), findsNothing);
-      // La carte d'information « à vérifier » disparaît : la liste remonte.
-      await tester.scrollUntilVisible(
-        find.byKey(const ValueKey('B4-unknown')),
-        -200,
-        scrollable: find.byType(Scrollable).first,
-      );
-      await tester.ensureVisible(find.byKey(const ValueKey('B4-unknown')));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const ValueKey('B4-unknown')));
-      await tester.pump();
-      expect(store.refProvenance('B4'), 'unknown');
-      await tester.runAsync(() => store.flush());
-    });
+    testWidgets(
+      'Références : inconnue, à vérifier, confirmée, « Je ne sais pas »',
+      (tester) async {
+        phone(tester, const Size(390, 844));
+        store.values['B4'] = 77;
+        store.refStatus['B4'] = 'historic';
+        await tester.pumpWidget(page(const PilotageScreen()));
+        await tester.pumpAndSettle();
+        expect(
+          find.byKey(const ValueKey('references-historic')),
+          findsOneWidget,
+        );
+        expect(
+          tester.widget<Text>(find.byKey(const ValueKey('B4-provenance'))).data,
+          'À vérifier · valeur d’une version précédente',
+        );
+        final lift = store.program.pilotage.mainLifts.first.ref;
+        await reveal(tester, find.byKey(ValueKey('$lift-provenance')));
+        expect(
+          tester.widget<Text>(find.byKey(ValueKey('$lift-provenance'))).data,
+          'Non renseigné',
+        );
+        await tester.scrollUntilVisible(
+          find.byKey(const ValueKey('B4-confirm')),
+          -200,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.tap(find.byKey(const ValueKey('B4-confirm')));
+        await tester.pump();
+        expect(store.refProvenance('B4'), 'set');
+        expect(store.values['B4'], 77.0);
+        expect(find.byKey(const ValueKey('B4-provenance')), findsNothing);
+        // La carte d'information « à vérifier » disparaît : la liste remonte.
+        await tester.scrollUntilVisible(
+          find.byKey(const ValueKey('B4-unknown')),
+          -200,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.ensureVisible(find.byKey(const ValueKey('B4-unknown')));
+        await tester.pumpAndSettle();
+        await tester.tap(find.byKey(const ValueKey('B4-unknown')));
+        await tester.pump();
+        expect(store.refProvenance('B4'), 'unknown');
+        await tester.runAsync(() => store.flush());
+      },
+    );
 
     for (final (size, scale) in [
       (const Size(320, 720), 2.0),
@@ -1261,7 +1407,11 @@ void main() {
           phone(tester, size);
           final semantics = tester.ensureSemantics();
           await tester.pumpWidget(
-            page(ProgramStartScreen(initialDate: DateTime(2026, 9, 30)), scale: scale, dark: dark),
+            page(
+              ProgramStartScreen(initialDate: DateTime(2026, 9, 30)),
+              scale: scale,
+              dark: dark,
+            ),
           );
           await tester.pumpAndSettle();
           expect(tester.takeException(), isNull);
@@ -1277,25 +1427,48 @@ void main() {
           store.startOrigin = 'migration';
           await tester.pumpWidget(const SizedBox());
           await tester.pumpWidget(
-            page(ProgramStartScreen(initialDate: DateTime(2026, 9, 21)), scale: scale, dark: dark),
+            page(
+              ProgramStartScreen(initialDate: DateTime(2026, 9, 21)),
+              scale: scale,
+              dark: dark,
+            ),
           );
           await tester.pumpAndSettle();
           expect(tester.takeException(), isNull);
-          expect(find.bySemanticsLabel(RegExp('Changer la date')), findsOneWidget);
+          expect(
+            find.bySemanticsLabel(RegExp('Changer la date')),
+            findsOneWidget,
+          );
           await tester.pumpWidget(
-            page(Scaffold(body: ListView(children: [ProgramStartBanner(now: DateTime(2027, 7, 12))])), scale: scale, dark: dark),
+            page(
+              Scaffold(
+                body: ListView(
+                  children: [ProgramStartBanner(now: DateTime(2027, 7, 12))],
+                ),
+              ),
+              scale: scale,
+              dark: dark,
+            ),
           );
           await tester.pumpAndSettle();
           expect(tester.takeException(), isNull);
           store.program.start = null;
           await tester.pumpWidget(
-            page(Scaffold(body: ListView(children: [ProgramStartBanner(now: _today)])), scale: scale, dark: dark),
+            page(
+              Scaffold(
+                body: ListView(children: [ProgramStartBanner(now: _today)]),
+              ),
+              scale: scale,
+              dark: dark,
+            ),
           );
           await tester.pumpAndSettle();
           expect(tester.takeException(), isNull);
           store.values['B4'] = 77;
           store.refStatus['B4'] = 'historic';
-          await tester.pumpWidget(page(const PilotageScreen(), scale: scale, dark: dark));
+          await tester.pumpWidget(
+            page(const PilotageScreen(), scale: scale, dark: dark),
+          );
           await tester.pumpAndSettle();
           expect(tester.takeException(), isNull);
           semantics.dispose();

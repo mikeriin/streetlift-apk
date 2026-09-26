@@ -825,41 +825,41 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                   ex,
                   readOnly,
                   Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    if (showBigLoad) ...[
-                      Flexible(
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            loadLabel,
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.w500,
-                              color: accent,
-                              height: 1,
-                              fontFeatures: _tab,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      if (showBigLoad) ...[
+                        Flexible(
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              loadLabel,
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w500,
+                                color: accent,
+                                height: 1,
+                                fontFeatures: _tab,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                    ],
-                    Expanded(
-                      child: Text(
-                        readOnly
-                            ? '${log.sets.where((s) => s.done).length} / ${log.sets.length} séries validées'
-                            : nbsp(store.setsLabel(ex)),
-                        style: TextStyle(
-                          fontSize: showBigLoad ? 16 : 20,
-                          fontWeight: FontWeight.w600,
-                          color: showBigLoad ? SL.text : accent,
-                          fontFeatures: _tab,
+                        const SizedBox(width: 12),
+                      ],
+                      Expanded(
+                        child: Text(
+                          readOnly
+                              ? '${log.sets.where((s) => s.done).length} / ${log.sets.length} séries validées'
+                              : nbsp(store.setsLabel(ex)),
+                          style: TextStyle(
+                            fontSize: showBigLoad ? 16 : 20,
+                            fontWeight: FontWeight.w600,
+                            color: showBigLoad ? SL.text : accent,
+                            fontFeatures: _tab,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Wrap(

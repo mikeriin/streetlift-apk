@@ -491,7 +491,9 @@ class _AttributeRow extends StatelessWidget {
           track: Colors.white.withValues(alpha: .2),
           semanticsLabel: a.label,
           semanticsValue:
-              a.available ? '${a.score} sur 100, niveau ${a.level}' : 'indisponible',
+              a.available
+                  ? '${a.score} sur 100, niveau ${a.level}'
+                  : 'indisponible',
         ),
       ),
       const SizedBox(width: 8),
@@ -551,7 +553,9 @@ void showCharacterSheet(BuildContext context) {
         children: [
           Expanded(
             child: Text(
-              a.available ? '${a.label} · niveau ${a.level}' : '${a.label} · indisponible',
+              a.available
+                  ? '${a.label} · niveau ${a.level}'
+                  : '${a.label} · indisponible',
               style: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
@@ -568,9 +572,9 @@ void showCharacterSheet(BuildContext context) {
         Text(
           a.note!,
           key: ValueKey('attribute-note-${a.id}'),
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            fontWeight: FontWeight.w600,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
         ),
     ],
     const Text(
