@@ -327,7 +327,9 @@ class Progression {
         final day = int.parse(match[2]!);
         if (week >= 1 && week <= program.weeks.length && day >= 1 && day <= 7) {
           plan = program.week(week).day(day);
-          fallback = program.dateFor(week, day);
+          // Ancienne séance sans date enregistrée : date prévue par l'ancrage
+          // d'origine, indépendante d'un départ modifié ensuite (KT-006).
+          fallback = program.legacyDateFor(week, day);
         }
       }
       // Une vieille sauvegarde sans date peut utiliser la date du programme.

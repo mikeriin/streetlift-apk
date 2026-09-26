@@ -334,11 +334,31 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
             '${p.customTemplates} modèles · ${p.userExercises} exercices ajoutés',
           ),
           _Line('Liste d’envies', '${p.wishlist}'),
+          _Line(
+            'Départ du programme',
+            switch ((p.programStart, p.startOrigin)) {
+              (null, _) => 'non démarré',
+              (final d?, 'migration') =>
+                'S1 · J1 le ${civilDateLabel(d)} (calendrier d’origine)',
+              (final d?, _) => 'S1 · J1 le ${civilDateLabel(d)}',
+            },
+          ),
+          _Line(
+            'Références',
+            '${p.referencesSet} renseignées'
+                '${p.referencesHistoric == 0 ? '' : ' · ${p.referencesHistoric} à vérifier'}',
+          ),
           const SizedBox(height: 12),
           Text('Sur ce téléphone', style: heading),
           const SizedBox(height: 8),
           _Line('Séances terminées', '$done'),
           _Line('WODs débloqués', '${store.unlockedWods.length}'),
+          _Line(
+            'Départ du programme',
+            store.program.start == null
+                ? 'non démarré'
+                : 'S1 · J1 le ${civilDateLabel(store.program.start!)}',
+          ),
           const SizedBox(height: 12),
           Text(
             'L’import remplace toutes tes données actuelles : journal, séances perso, références, résultats, crédits, WODs débloqués, liste d’envies et réglages. Aucune fusion.',

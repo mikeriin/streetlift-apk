@@ -26,7 +26,8 @@ List<PlannedReminder> planReminders(
   DateTime now, {
   tz.Location? location,
 }) {
-  if (!app.settings.notifOn) return [];
+  // Pas de rappel sans départ confirmé (KT-006) : aucune date inventée.
+  if (!app.settings.notifOn || !app.program.scheduled) return [];
   final result = <PlannedReminder>[];
   for (final week in app.program.weeks) {
     for (final day in week.days) {
@@ -269,8 +270,12 @@ class NotificationService {
             .map((e) => e.key)
             .toList()
           ..sort();
+    // Le départ fait partie de la signature : le changer replanifie les
+    // mêmes identifiants S·J (pas de doublon), sans attendre un autre signal.
+    final start = app.program.start;
     final signature =
-        '${s.notifOn}|${s.notifHour}|${s.notifMinute}|${s.notifSkipRest}|$done';
+        '${s.notifOn}|${s.notifHour}|${s.notifMinute}|${s.notifSkipRest}|'
+        '${start == null ? '-' : civilDateString(start)}|$done';
     if (signature == _source) return;
     _source = signature;
     unawaited(reschedule());

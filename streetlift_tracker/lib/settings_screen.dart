@@ -5,9 +5,11 @@ import 'app_theme.dart';
 import 'data_control.dart';
 import 'ui.dart';
 import 'notification_settings.dart';
+import 'pilotage_screen.dart';
+import 'program_start.dart';
 import 'store.dart';
 
-const kAppVersion = '2.5.7';
+const kAppVersion = '2.5.8';
 
 class SettingsScreen extends StatelessWidget {
   final int? section;
@@ -244,6 +246,40 @@ class SettingsScreen extends StatelessWidget {
                 'Remet l’application à son état d’installation, après confirmation. Export préalable proposé.',
             onTap: () => eraseAppData(context, appVersion: kAppVersion),
           ),
+          const _Sec('Programme'),
+          _Action(
+            key: const ValueKey('settings-program-start'),
+            icon: Icons.event_rounded,
+            color: SL.accent,
+            title: 'Départ du programme',
+            subtitle: switch ((store.program.start, store.startOrigin)) {
+              (null, _) => 'Non défini · choisis la date de S1 · J1',
+              (final d?, 'migration') =>
+                'S1 · J1 le ${longCivilDate(d)} · calendrier d’origine conservé',
+              (final d?, _) => 'S1 · J1 le ${longCivilDate(d)}',
+            },
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute<bool>(
+                    builder: (_) => const ProgramStartScreen(),
+                  ),
+                ),
+          ),
+          _Action(
+            icon: Icons.tune_rounded,
+            color: SL.accent,
+            title: 'Références',
+            subtitle:
+                'Poids du corps, 1RM, maxima et accessoires · non renseigné accepté',
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (_) => const PilotageScreen(),
+                  ),
+                ),
+          ),
           const _Sec('À propos'),
           _Tile(
             title: 'Kalis Track $kAppVersion',
@@ -265,6 +301,7 @@ class SettingsScreen extends StatelessWidget {
           Icons.fitness_center_rounded,
           Icons.notifications_none_rounded,
           Icons.cloud_outlined,
+          Icons.flag_outlined,
           Icons.info_outline_rounded,
         ];
         const descriptions = [
@@ -275,6 +312,7 @@ class SettingsScreen extends StatelessWidget {
           'Écran et unités de charge',
           'Rappels et alertes',
           'Exporter, restaurer ou supprimer tes données',
+          'Date de départ et références',
           'Version et contenu du programme',
         ];
         assert(
@@ -545,6 +583,7 @@ class _Action extends StatelessWidget {
   /// opérations courantes.
   final bool danger;
   const _Action({
+    super.key,
     required this.icon,
     required this.color,
     required this.title,

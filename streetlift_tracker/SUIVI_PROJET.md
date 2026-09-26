@@ -38,6 +38,7 @@
 Entre parenthèses : valeurs des décharges S15 et S19. R1 : tempo « Intention maximale », phrase VBT remplacée. R2 : séries classiques S12, S13, S15, S19 (y compris le muscle-up lesté en S15/S19, règle transversale), clusters S14, S16-S18. R3 : calibrage en fin de consigne (S12-S14, S16-S18) ; « Décharge : aucune hausse de charge. » en S15 et S19.
 
 **Application** (`lib/session_screen.dart`, plus petit périmètre) :
+- En-tête de séance : le bouton « Exercices » partage la ligne (libellé abrégé si besoin) au lieu de déborder à 320 px / 200 % (défaut préexistant, présent sur toutes les semaines).
 - **Constat** : les tests de S2 alimentent la feuille Pilotage par **saisie manuelle** (« Résultat → Pilotage!B17 »), écran RÉFÉRENCES accessible seulement depuis STATS : impossible pendant une séance sans la quitter, et la page d'exercice ne se reconstruisait pas après une modification des maxima (volumes et reps pré-remplies restaient anciens). **Bloquant pour S12 : corrigé.**
 - Menu de séance ⋮ → « Références (feuille Pilotage) » : ouvre le **même écran** de saisie (mécanisme de S2 réutilisé).
 - La page d'exercice écoute le store : dès qu'un maximum change, séries × reps et charges affichées sont recalculées ; les reps **pré-remplies** des séries non validées suivent le nouveau volume ; une valeur saisie par l'utilisateur n'est jamais écrasée.
@@ -49,8 +50,9 @@ Entre parenthèses : valeurs des décharges S15 et S19. R1 : tempo « Intention 
 
 | Niveau | Résultat |
 | --- | --- |
-| Python | ⟨PY⟩ |
-| CI branche temporaire | ⟨CI⟩ |
+| Python | **39/39** en local (33 + 6 nouveaux `test_lc1_revision.py`) ; `verify_project.py` réussi (1 818 exercices) ; script LC1 relancé : échec propre « déjà appliquée » |
+| CI branche temporaire (sans secret) | Formatage 84 fichiers, 0 changement ; `flutter analyze` sans problème ; tests ciblés (LC1, store, estimation, historique, programme, jeu, progression, écrans) **109/109** ; **suite complète 359 réussis, 1 ignoré** (347 + 12 nouveaux ; aucun test retiré, un titre mis à jour) ; **build Android debug réussi** |
+| Défauts trouvés par les tests et corrigés | En-tête de séance (« Exercice n / N » + « Exercices ») débordant de 18 px à 320 px et texte 200 % — **préexistant** (reproduit sur S8 inchangée), corrigé car il touchait toutes les pages S12 ; tests : retour de page et import hors horloge simulée |
 | Appareil | **Aucun essai** |
 
 | Données de départ | Action | Valeur attendue | Valeur observée (test) |

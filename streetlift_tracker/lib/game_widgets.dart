@@ -877,7 +877,13 @@ class MainQuestCard extends StoreWidget {
             const SizedBox(width: 10),
             Expanded(
               child: Text(
-                'Quête principale : reprendre le programme, ou une séance personnelle depuis l\u2019Arsenal.',
+                !program.scheduled
+                    ? 'Quête principale : choisir ton départ depuis l\u2019accueil, ou une séance personnelle depuis l\u2019Arsenal.'
+                    : program.beforeStart(now)
+                    ? 'Quête principale : ton programme démarre le ${civilDateLabel(program.start!)}. En attendant, une séance personnelle depuis l\u2019Arsenal.'
+                    : program.afterEnd(now)
+                    ? 'Programme terminé : ton historique reste consultable. Séances personnelles depuis l\u2019Arsenal.'
+                    : 'Quête principale : reprendre le programme, ou une séance personnelle depuis l\u2019Arsenal.',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),

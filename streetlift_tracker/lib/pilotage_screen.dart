@@ -15,7 +15,7 @@ class PilotageScreen extends StatelessWidget {
         title: const Text('RÉFÉRENCES'),
         actions: [
           IconButton(
-            tooltip: 'Rétablir les références initiales',
+            tooltip: 'Effacer toutes mes références',
             icon: const Icon(Icons.restore),
             onPressed:
                 () => showDialog(
@@ -23,9 +23,9 @@ class PilotageScreen extends StatelessWidget {
                   builder:
                       (ctx) => AlertDialog(
                         backgroundColor: SL.surface,
-                        title: const Text('Rétablir les défauts ?'),
+                        title: const Text('Effacer tes références ?'),
                         content: const Text(
-                          'Les références de départ du programme seront restaurées. Tes séances enregistrées sont conservées.',
+                          'Toutes tes références repassent à « non renseigné » : les charges et volumes qui en dépendent afficheront « à renseigner ». Tes séances, ton historique et tes récompenses sont conservés.',
                         ),
                         actions: [
                           TextButton(
@@ -37,7 +37,7 @@ class PilotageScreen extends StatelessWidget {
                               store.resetPilotage();
                               Navigator.pop(ctx);
                             },
-                            child: const Text('Rétablir'),
+                            child: const Text('Effacer'),
                           ),
                         ],
                       ),
@@ -52,10 +52,24 @@ class PilotageScreen extends StatelessWidget {
               children: [
                 KCard(
                   child: Text(
-                    'Tes références ajustent le programme. Enregistrement automatique.',
+                    'Tes références ajustent le programme. Enregistrement automatique. '
+                    'Laisse une valeur « non renseignée » si tu ne la connais pas : '
+                    'les charges et volumes liés l’indiqueront, sans rien inventer. '
+                    'Lest = charge ajoutée au poids du corps ; back squat = barre totale.',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
+                if (store.referenceRefs.any(
+                  (r) => store.refProvenance(r) == 'historic',
+                ))
+                  KCard(
+                    key: const ValueKey('references-historic'),
+                    child: Text(
+                      'Valeurs marquées « à vérifier » : elles viennent d’une version précédente '
+                      'et restent utilisées telles quelles. Confirme-les ou corrige-les quand tu veux.',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
                 const _NumTile(
                   label: 'Poids de corps',
                   refCell: 'B4',
@@ -95,8 +109,23 @@ class PilotageScreen extends StatelessWidget {
   }
 }
 
+/// Affichage d'une référence avec virgule décimale (« 72,5 »).
+String formatReference(double v) => _n(v);
+
 String _n(double v) =>
-    v == v.roundToDouble() ? v.toInt().toString() : v.toString();
+    v == v.roundToDouble()
+        ? v.toInt().toString()
+        : v.toString().replaceAll('.', ',');
+
+/// Saisie d'une référence : virgule ou point, deux décimales au plus,
+/// 0 à 10 000 (poids du corps > 0). Vide, texte, valeur non finie : null.
+double? parseReference(String? text, String ref) {
+  final t = (text ?? '').trim();
+  if (!RegExp(r'^\d{1,5}(?:[.,]\d{1,2})?$').hasMatch(t)) return null;
+  final v = double.parse(t.replaceAll(',', '.'));
+  if (!v.isFinite || v > 10000 || (ref == 'B4' && v == 0)) return null;
+  return v;
+}
 
 class _SectionTitle extends StatelessWidget {
   final String t;
@@ -119,30 +148,69 @@ class _NumTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final v = store.values[refCell] ?? 0;
+    final provenance = store.refProvenance(refCell);
+    final v = store.values[refCell];
     final labelContent = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label, style: Theme.of(context).textTheme.titleMedium),
         const SizedBox(height: 2),
         Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
+        if (provenance != 'set') ...[
+          const SizedBox(height: 4),
+          Text(
+            provenance == 'unknown'
+                ? 'Non renseigné'
+                : 'À vérifier · valeur d’une version précédente',
+            key: ValueKey('$refCell-provenance'),
+            style: TextStyle(
+              color: SL.action,
+              fontWeight: FontWeight.w600,
+              fontSize: 12,
+            ),
+          ),
+        ],
+        Wrap(
+          spacing: 4,
+          children: [
+            if (provenance == 'historic')
+              TextButton(
+                key: ValueKey('$refCell-confirm'),
+                onPressed: () => store.confirmReference(refCell),
+                child: const Text('C’est bien ma valeur'),
+              ),
+            if (provenance != 'unknown')
+              TextButton(
+                key: ValueKey('$refCell-unknown'),
+                onPressed: () => store.clearReference(refCell),
+                child: const Text('Je ne sais pas'),
+              ),
+          ],
+        ),
       ],
     );
     final field = TextFormField(
       key: ValueKey('$refCell-${store.pilotageEpoch}'),
-      initialValue: _n(v),
+      initialValue: v == null ? '' : _n(v),
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       textInputAction: TextInputAction.done,
       textAlign: TextAlign.center,
       textAlignVertical: TextAlignVertical.center,
       style: KControl.numberStyle,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator:
+          (t) =>
+              (t ?? '').trim().isEmpty || parseReference(t, refCell) != null
+                  ? null
+                  : 'Nombre (ex. 72,5)',
       decoration: logDeco(suffix: unit.startsWith('kg') ? 'kg' : unit).copyWith(
         labelText: label,
+        hintText: '—',
         floatingLabelBehavior: FloatingLabelBehavior.never,
       ),
       onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
       onChanged: (t) {
-        final d = double.tryParse(t.replaceAll(',', '.'));
+        final d = parseReference(t, refCell);
         if (d != null) store.setValue(refCell, d);
       },
     );

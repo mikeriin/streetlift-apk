@@ -590,6 +590,32 @@ class AppStore extends ChangeNotifier {
   /// Reps de référence des accessoires (colonne D, non éditable).
   final Map<String, int> refReps = {};
 
+  /// Provenance de chaque référence renseignée (KT-007) :
+  /// `set` = saisie ou confirmée par l'utilisateur, `historic` = valeur
+  /// d'une installation ou sauvegarde antérieure à 2.5.8, provenance non
+  /// documentée (conservée et utilisée telle quelle). Une référence absente
+  /// de [values] est « non renseignée » : aucun calcul ne la remplace.
+  final Map<String, String> refStatus = {};
+
+  /// Origine du départ du programme : `user` (choisi) ou `migration`
+  /// (ancrage historique 13/07/2026 d'une installation existante).
+  String startOrigin = '';
+
+  /// Références éditables : poids du corps, 1RM, maxima, accessoires.
+  List<String> get referenceRefs => [
+    'B4',
+    for (final l in program.pilotage.mainLifts) l.ref,
+    for (final r in program.pilotage.repMax) r.ref,
+    for (final a in program.pilotage.accessories) a.ref,
+  ];
+
+  /// Référence connue (renseignée ou historique).
+  bool refKnown(String ref) => values.containsKey(ref);
+
+  /// `unknown`, `set` ou `historic`.
+  String refProvenance(String ref) =>
+      values.containsKey(ref) ? (refStatus[ref] ?? 'historic') : 'unknown';
+
   final Map<String, SessionLog> logs = {};
 
   /// Incrémenté à chaque reset pour forcer le rafraîchissement des champs.
@@ -651,6 +677,40 @@ class AppStore extends ChangeNotifier {
   static const _kUnlocked = 'unlocked_wods_v1';
   static const _kCreditsV = 'credits_v';
 
+  /// Clés qu'écrivait une installation antérieure au document unique (ou
+  /// une copie de secours) : preuve d'une installation existante. Les clés
+  /// du catalogue et de version écrites au tout premier lancement n'en
+  /// font pas partie (installation neuve interrompue avant sa première
+  /// sauvegarde).
+  static const _existingKeys = {
+    _kRecovery,
+    _kPilotage,
+    _kLogs,
+    _kSettings,
+    _kCustom,
+    _kUserEx,
+    _kWodsLegacy,
+    _kUnlocked,
+    _kLastLevel,
+  };
+
+  /// Références embarquées (classeur du créateur) : seulement pour migrer
+  /// une installation ou une sauvegarde antérieure à 2.5.8, qui les
+  /// utilisait déjà. Jamais pour un nouvel utilisateur.
+  void _defaultReferences(Map<String, double> out) {
+    final p = program.pilotage;
+    out['B4'] = p.bodyweight;
+    for (final l in p.mainLifts) {
+      out[l.ref] = l.oneRm;
+    }
+    for (final m in p.repMax) {
+      out[m.ref] = m.max;
+    }
+    for (final a in p.accessories) {
+      out[a.ref] = a.refLoad;
+    }
+  }
+
   /// WODs déverrouillés : id → crédits payés (0 = offert par la migration).
   final Map<String, int> unlockedWods = {};
 
@@ -668,17 +728,8 @@ class AppStore extends ChangeNotifier {
     );
     _prefs = await SharedPreferences.getInstance();
 
-    // Défauts depuis le JSON du classeur.
     final p = program.pilotage;
-    values['B4'] = p.bodyweight;
-    for (final l in p.mainLifts) {
-      values[l.ref] = l.oneRm;
-    }
-    for (final m in p.repMax) {
-      values[m.ref] = m.max;
-    }
     for (final a in p.accessories) {
-      values[a.ref] = a.refLoad;
       refReps[a.ref] = a.refReps;
     }
 
@@ -694,11 +745,27 @@ class AppStore extends ChangeNotifier {
       return;
     }
 
+    // Installation antérieure au document unique (clés d'origine) : elle
+    // utilisait le calendrier d'ancrage et les références embarquées, qui
+    // restent en place (KT-006/007). Sans aucune de ces clés, l'installation
+    // est réellement neuve : programme non démarré, références inconnues.
+    final existing = _prefs.getKeys().any(_existingKeys.contains);
+    if (existing) {
+      _defaultReferences(values);
+      program.start = program.anchorMonday;
+      startOrigin = 'migration';
+    } else {
+      program.start = null;
+      startOrigin = '';
+    }
     // Écrase avec les valeurs sauvegardées.
     final sp = _prefs.getString(_kPilotage);
     if (sp != null) {
       final m = jsonDecode(sp) as Map<String, dynamic>;
       m.forEach((k, v) => values[k] = (v as num).toDouble());
+    }
+    for (final ref in values.keys) {
+      refStatus[ref] = 'historic';
     }
     final sl = _unpack(_prefs.getString(_kLogs));
     if (sl != null) {
@@ -2040,6 +2107,9 @@ class AppStore extends ChangeNotifier {
   // ---------- Sauvegarde : un document, une écriture atomique ----------
   _BackupData _currentBackup() => _BackupData(
     values: values,
+    refStatus: refStatus,
+    start: program.start,
+    startOrigin: startOrigin,
     logs: logs,
     settings: settings,
     custom: customSessions,
@@ -2072,6 +2142,17 @@ class AppStore extends ChangeNotifier {
       'kalisTrack': 1,
       'format': 3,
       'pilotage': data.values,
+      // KT-007 : provenance de chaque référence renseignée (absente = non
+      // renseignée). KT-006 : départ personnel (S1·J1, date civile).
+      'referenceStatus': data.refStatus,
+      'programStart':
+          data.start == null
+              ? {'status': 'pending'}
+              : {
+                'status': 'set',
+                'date': civilDateString(data.start!),
+                'origin': data.startOrigin,
+              },
       'logs': data.logs.map((k, v) => MapEntry(k, v.toJson())),
       'settings': data.settings.toJson(),
       'custom': data.custom.map((s) => s.toJson()).toList(),
@@ -2116,13 +2197,14 @@ class AppStore extends ChangeNotifier {
     }
     if (limits != null) _checkCollections(m, limits);
     // Tout construire et valider AVANT de modifier le store ou le disque.
-    final defaults = program.pilotage;
-    final nextValues = <String, double>{
-      'B4': defaults.bodyweight,
-      for (final l in defaults.mainLifts) l.ref: l.oneRm,
-      for (final r in defaults.repMax) r.ref: r.max,
-      for (final a in defaults.accessories) a.ref: a.refLoad,
-    };
+    // Sauvegarde 2.5.8+ : seules les références renseignées, avec leur
+    // provenance. Sauvegarde antérieure : elle utilisait les références
+    // embarquées, complétées par ses valeurs ; toutes deviennent
+    // « historiques » (conservées, utilisées, jamais requalifiées).
+    final withStatus = m.containsKey('referenceStatus');
+    final known = referenceRefs.toSet();
+    final nextValues = <String, double>{};
+    if (!withStatus) _defaultReferences(nextValues);
     (m['pilotage'] as Map<String, dynamic>).forEach((k, v) {
       final n = (v as num).toDouble();
       if (!n.isFinite || n < 0 || n > 10000 || (k == 'B4' && n == 0)) {
@@ -2130,6 +2212,54 @@ class AppStore extends ChangeNotifier {
       }
       nextValues[k] = n;
     });
+    final nextStatus = <String, String>{};
+    if (withStatus) {
+      final raw = m['referenceStatus'] as Map<String, dynamic>;
+      for (final e in raw.entries) {
+        if (!nextValues.containsKey(e.key) ||
+            (e.value != 'set' && e.value != 'historic')) {
+          throw const FormatException('Provenance de référence invalide.');
+        }
+        nextStatus[e.key] = e.value as String;
+      }
+      if (nextStatus.length != nextValues.length) {
+        throw const FormatException('Provenance de référence manquante.');
+      }
+      // Une clé hors du tableau actuel ne peut venir que d'une ancienne
+      // sauvegarde : conservée telle quelle, jamais « renseignée ».
+      for (final k in nextValues.keys) {
+        if (!known.contains(k) && nextStatus[k] != 'historic') {
+          throw const FormatException('Référence inconnue.');
+        }
+      }
+    } else {
+      for (final k in nextValues.keys) {
+        nextStatus[k] = 'historic';
+      }
+    }
+    // Départ du programme : absent = sauvegarde antérieure à 2.5.8, qui
+    // suivait l'ancrage du 13/07/2026 ; jamais remplacé par aujourd'hui.
+    DateTime? nextStart = program.anchorMonday;
+    var nextOrigin = 'migration';
+    final startJson = m['programStart'];
+    if (startJson != null) {
+      final sj = startJson as Map<String, dynamic>;
+      if (sj['status'] == 'pending' && sj.length == 1) {
+        nextStart = null;
+        nextOrigin = '';
+      } else if (sj['status'] == 'set') {
+        nextStart = parseCivilDate(sj['date']);
+        nextOrigin = sj['origin'] as String? ?? '';
+        if (nextStart == null ||
+            nextStart.year < 2000 ||
+            nextStart.year > 2100 ||
+            (nextOrigin != 'user' && nextOrigin != 'migration')) {
+          throw const FormatException('Départ du programme invalide.');
+        }
+      } else {
+        throw const FormatException('Départ du programme invalide.');
+      }
+    }
     final nextLogs = (m['logs'] as Map<String, dynamic>).map(
       (k, v) => MapEntry(k, SessionLog.fromJson(v as Map<String, dynamic>)),
     );
@@ -2376,6 +2506,9 @@ class AppStore extends ChangeNotifier {
     }
     return _BackupData(
       values: nextValues,
+      refStatus: nextStatus,
+      start: nextStart,
+      startOrigin: nextOrigin,
       logs: nextLogs,
       settings: nextSettings,
       custom: nextCustom,
@@ -2448,6 +2581,11 @@ class AppStore extends ChangeNotifier {
     values
       ..clear()
       ..addAll(data.values);
+    refStatus
+      ..clear()
+      ..addAll(data.refStatus);
+    program.start = data.start;
+    startOrigin = data.startOrigin;
     logs
       ..clear()
       ..addAll(data.logs);
@@ -2672,14 +2810,13 @@ class AppStore extends ChangeNotifier {
   /// État d'une installation neuve : références du programme, catalogue
   /// embarqué d'origine, aucun journal, aucun droit, réglages par défaut.
   _BackupData _freshData() {
-    final defaults = program.pilotage;
+    // État d'installation neuve (L2b) : programme non démarré, références
+    // non renseignées (KT-006/007).
     return _BackupData(
-      values: {
-        'B4': defaults.bodyweight,
-        for (final l in defaults.mainLifts) l.ref: l.oneRm,
-        for (final r in defaults.repMax) r.ref: r.max,
-        for (final a in defaults.accessories) a.ref: a.refLoad,
-      },
+      values: {},
+      refStatus: {},
+      start: null,
+      startOrigin: '',
       logs: {},
       settings: AppSettings(),
       custom: [],
@@ -2838,35 +2975,167 @@ class AppStore extends ChangeNotifier {
   }
 
   // ---------- Pilotage ----------
+  /// Référence saisie par l'utilisateur : elle devient « renseignée ».
+  /// Refus silencieux d'une valeur hors domaine (vide, non finie, négative,
+  /// poids du corps nul, > 10 000) : la valeur précédente est gardée.
   void setValue(String ref, double v) {
-    if (!values.containsKey(ref) ||
+    if (!referenceRefs.contains(ref) ||
         !v.isFinite ||
         v < 0 ||
         v > 10000 ||
         (ref == 'B4' && v == 0)) {
       return;
     }
-    if (values[ref] == v) return;
+    if (values[ref] == v && refStatus[ref] == 'set') return;
     values[ref] = v;
+    refStatus[ref] = 'set';
     _persist();
     notifyListeners();
   }
 
-  void resetPilotage() {
-    pilotageEpoch++;
-    final p = program.pilotage;
-    values['B4'] = p.bodyweight;
-    for (final l in p.mainLifts) {
-      values[l.ref] = l.oneRm;
-    }
-    for (final m in p.repMax) {
-      values[m.ref] = m.max;
-    }
-    for (final a in p.accessories) {
-      values[a.ref] = a.refLoad;
-    }
+  /// « C'est bien ma valeur » : une référence historique devient renseignée,
+  /// sans changer sa valeur.
+  void confirmReference(String ref) {
+    if (!values.containsKey(ref) || refStatus[ref] == 'set') return;
+    refStatus[ref] = 'set';
     _persist();
     notifyListeners();
+  }
+
+  /// « Je ne sais pas » : la référence redevient non renseignée ; les
+  /// calculs qui en dépendent l'indiquent au lieu de la remplacer.
+  void clearReference(String ref) {
+    if (!values.containsKey(ref)) return;
+    values.remove(ref);
+    refStatus.remove(ref);
+    pilotageEpoch++;
+    _persist();
+    notifyListeners();
+  }
+
+  /// Toutes les références redeviennent « non renseignées » (les valeurs
+  /// embarquées sont celles du créateur, pas celles de l'utilisateur).
+  /// Séances, historique et récompenses ne changent pas.
+  void resetPilotage() {
+    pilotageEpoch++;
+    values.clear();
+    refStatus.clear();
+    _persist();
+    notifyListeners();
+  }
+
+  /// La charge suggérée dépend d'une référence non renseignée.
+  bool loadNeedsReference(Exercise e) {
+    final s = e.load;
+    return switch (s.type) {
+      'system' => !values.containsKey('B4') || !values.containsKey(s.ref),
+      'barbell' => !values.containsKey(s.ref ?? 'B11'),
+      'acc' => !values.containsKey(s.ref),
+      _ => false,
+    };
+  }
+
+  /// Première référence manquante pour calculer la charge ou le volume d'un
+  /// exercice, null si le calcul est possible.
+  String? missingReference(Exercise e) {
+    final s = e.load;
+    final needs = <String>[
+      if (s.type == 'system') ...['B4', s.ref!],
+      if (s.type == 'barbell') s.ref ?? 'B11',
+      if (s.type == 'acc') s.ref!,
+      if (e.sets.type == 'volume') e.sets.ref!,
+    ];
+    for (final ref in needs) {
+      if (!values.containsKey(ref)) return ref;
+    }
+    return null;
+  }
+
+  /// Libellé d'une référence (« Traction lestée (1RM) », « Tractions (max) »).
+  String referenceLabel(String ref) {
+    final p = program.pilotage;
+    if (ref == 'B4') return 'Poids du corps';
+    for (final l in p.mainLifts) {
+      if (l.ref == ref) return '${l.name} (1RM)';
+    }
+    for (final r in p.repMax) {
+      if (r.ref == ref) return '${r.name} (max)';
+    }
+    for (final a in p.accessories) {
+      if (a.ref == ref) return a.name;
+    }
+    return ref;
+  }
+
+  // ---------- Départ du programme (KT-006) ----------
+  /// Bornes du départ choisi (décision du 26/09/2026) : jusqu'à 280 jours
+  /// dans le passé (reprise en cours de programme), un an dans le futur.
+  static const startPastDays = 280, startFutureDays = 365;
+
+  /// Le départ proposé est-il dans les bornes, par rapport à aujourd'hui ?
+  bool startAllowed(DateTime date) {
+    final today = Program.civilIndex(storeClock());
+    final d = Program.civilIndex(date);
+    return d >= today - startPastDays && d <= today + startFutureDays;
+  }
+
+  /// Enregistre le départ (S1·J1 = [date], quel que soit le jour) et, le
+  /// cas échéant, les références saisies (null = « Je ne sais pas »).
+  /// Rien n'est considéré comme configuré tant que l'écriture n'est pas
+  /// acceptée : en cas d'échec, l'état précédent est rétabli en mémoire.
+  /// Aucune séance, aucun résultat, aucune récompense n'est créé.
+  Future<StartSave> configureStart(
+    DateTime date, {
+    Map<String, double?> references = const {},
+  }) async {
+    final day = DateTime(date.year, date.month, date.day);
+    if (!startAllowed(day)) return StartSave.outOfRange;
+    for (final e in references.entries) {
+      final v = e.value;
+      if (!referenceRefs.contains(e.key) ||
+          (v != null &&
+              (!v.isFinite ||
+                  v < 0 ||
+                  v > 10000 ||
+                  (e.key == 'B4' && v == 0)))) {
+        return StartSave.invalid;
+      }
+    }
+    final previous = (
+      start: program.start,
+      origin: startOrigin,
+      values: Map<String, double>.of(values),
+      status: Map<String, String>.of(refStatus),
+    );
+    program.start = day;
+    startOrigin = 'user';
+    references.forEach((ref, v) {
+      if (v == null) {
+        values.remove(ref);
+        refStatus.remove(ref);
+      } else {
+        values[ref] = v;
+        refStatus[ref] = 'set';
+      }
+    });
+    pilotageEpoch++;
+    _dataRevision++;
+    _changeSeq++;
+    notifyListeners();
+    final ok = _initialized && await _serialize(_commitState);
+    if (ok) return StartSave.saved;
+    // Écriture refusée : pas de départ annoncé, l'état précédent revient.
+    program.start = previous.start;
+    startOrigin = previous.origin;
+    values
+      ..clear()
+      ..addAll(previous.values);
+    refStatus
+      ..clear()
+      ..addAll(previous.status);
+    pilotageEpoch++;
+    notifyListeners();
+    return StartSave.unsaved;
   }
 
   // ---------- Calculs (répliques des formules Excel) ----------
@@ -2875,11 +3144,13 @@ class AppStore extends ChangeNotifier {
   /// Charge suggérée en kg, ou null si non applicable.
   double? loadFor(Exercise e) {
     final s = e.load;
+    // Référence non renseignée : aucune charge inventée (KT-007).
+    if (loadNeedsReference(e)) return null;
     switch (s.type) {
       case 'fixed':
         return s.kg;
       case 'system':
-        final pdc = values['B4']!;
+        final pdc = values['B4']!; // présence vérifiée (loadNeedsReference)
         final rm = values[s.ref!] ?? 0;
         final raw = (pdc + rm) * s.pct! - pdc;
         final r = _round(raw, 2.5);
@@ -2898,6 +3169,7 @@ class AppStore extends ChangeNotifier {
 
   String loadLabel(Exercise e) {
     final kg = loadFor(e);
+    if (kg == null && loadNeedsReference(e)) return 'à renseigner';
     if (kg == null) return '—';
     if (kg <= 0) return 'PdC';
     if (settings.lb) {
@@ -3026,7 +3298,9 @@ class AppStore extends ChangeNotifier {
   String setsLabel(Exercise e) {
     final s = e.sets;
     if (s.type == 'volume') {
-      final ref = values[s.ref!] ?? 0;
+      final ref = values[s.ref!];
+      // Maximum non renseigné : volume à renseigner, jamais calculé sur 0.
+      if (ref == null) return '${s.prefix}?${s.suffix}';
       final n = (s.coef! * ref / s.div!).round();
       return '${s.prefix}$n${s.suffix}';
     }
@@ -3237,7 +3511,7 @@ class AppStore extends ChangeNotifier {
           for (final ex in plan.exercises) {
             names.putIfAbsent(ex.id, () => ex.name);
           }
-          fallback ??= program.dateFor(week, day);
+          fallback ??= program.legacyDateFor(week, day);
         }
       } else if (week == 0) {
         for (final cs in customSessions.where(
@@ -3723,10 +3997,25 @@ class ImportPreview {
 
   /// Séances terminées au total.
   int get sessionsDone => programSessions + customSessionsDone;
+
+  /// Départ du programme contenu dans le fichier (null : non démarré).
+  DateTime? get programStart => _data.start;
+
+  /// 'user', 'migration' (calendrier d'origine) ou '' (non démarré).
+  String get startOrigin => _data.startOrigin;
+
+  /// Références renseignées / héritées à vérifier dans le fichier.
+  int get referencesSet =>
+      _data.refStatus.values.where((s) => s == 'set').length;
+  int get referencesHistoric =>
+      _data.refStatus.values.where((s) => s == 'historic').length;
 }
 
 class _BackupData {
   final Map<String, double> values;
+  final Map<String, String> refStatus;
+  final DateTime? start;
+  final String startOrigin;
   final Map<String, SessionLog> logs;
   final AppSettings settings;
   final List<CustomSession> custom;
@@ -3742,6 +4031,9 @@ class _BackupData {
   final List<String> wishlist;
   _BackupData({
     required this.values,
+    required this.refStatus,
+    required this.start,
+    required this.startOrigin,
     required this.logs,
     required this.settings,
     required this.custom,
@@ -3758,6 +4050,27 @@ class _BackupData {
     this.weeklyIds = const [],
     this.wishlist = const [],
   });
+}
+
+/// « 2026-09-28 » : date civile, sans heure ni fuseau.
+String civilDateString(DateTime d) =>
+    '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+
+/// « 28/09/2026 ».
+String civilDateLabel(DateTime d) =>
+    '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}/${d.year}';
+
+/// Date civile « AAAA-MM-JJ » stricte (29/02 seulement les années
+/// bissextiles) ; null sinon.
+DateTime? parseCivilDate(Object? raw) {
+  if (raw is! String || !RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(raw)) {
+    return null;
+  }
+  final y = int.parse(raw.substring(0, 4));
+  final mo = int.parse(raw.substring(5, 7));
+  final d = int.parse(raw.substring(8, 10));
+  final date = DateTime(y, mo, d);
+  return date.year == y && date.month == mo && date.day == d ? date : null;
 }
 
 /// Solde négatif affiché tel quel (KT-005) : jamais masqué par un zéro.

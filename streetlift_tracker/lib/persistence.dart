@@ -51,6 +51,9 @@ enum ResultSave {
 }
 
 /// Résultat d'un import (KT-013 / KT-015).
+/// Départ du programme (KT-006) : `saved` seulement une fois écrit.
+enum StartSave { saved, unsaved, outOfRange, invalid }
+
 enum ImportStatus {
   success,
 

@@ -199,10 +199,14 @@ class CharacterSheet {
     required StreakInfo streak,
     required List<Wod> wods,
   }) {
-    final bw = (refs['B4'] ?? 0) > 0 ? refs['B4']! : 70.0;
+    // Poids du corps non renseigné : aucun rapport de force calculé (pas de
+    // poids arbitraire, KT-007). Formules inchangées quand il est connu.
+    final bwRef = refs['B4'];
+    final bw = bwRef != null && bwRef > 0 ? bwRef : 0.0;
+    final hasBw = bw > 0;
     // --- Force : ratios (poids de corps + lest) / poids de corps.
     final force = <int>[];
-    final pull = refs['B8'];
+    final pull = hasBw ? refs['B8'] : null;
     if (pull != null) {
       force.add(
         curveScore((bw + pull) / bw, [
@@ -215,7 +219,7 @@ class CharacterSheet {
         ]),
       );
     }
-    final dip = refs['B9'];
+    final dip = hasBw ? refs['B9'] : null;
     if (dip != null) {
       force.add(
         curveScore((bw + dip) / bw, [
@@ -228,7 +232,7 @@ class CharacterSheet {
         ]),
       );
     }
-    final mu = refs['B10'];
+    final mu = hasBw ? refs['B10'] : null;
     if (mu != null) {
       force.add(
         curveScore((bw + mu) / bw, [
@@ -240,7 +244,7 @@ class CharacterSheet {
         ]),
       );
     }
-    final squat = refs['B11'];
+    final squat = hasBw ? refs['B11'] : null;
     if (squat != null) {
       force.add(
         curveScore(squat / bw, [
@@ -310,13 +314,15 @@ class CharacterSheet {
       }
     }
     var technique = 11 * families.length;
-    if (mu != null) {
+    // Lest au muscle-up : ne dépend pas du poids du corps.
+    final muLoad = refs['B10'];
+    if (muLoad != null) {
       technique +=
-          mu >= 20
+          muLoad >= 20
               ? 40
-              : mu >= 10
+              : muLoad >= 10
               ? 30
-              : mu > 0
+              : muLoad > 0
               ? 20
               : 12;
     }

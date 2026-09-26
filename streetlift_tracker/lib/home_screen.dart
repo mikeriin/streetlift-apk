@@ -7,6 +7,7 @@ import 'models.dart';
 import 'muscle_body.dart';
 import 'session_history.dart';
 import 'session_screen.dart';
+import 'program_start.dart';
 import 'store.dart';
 import 'ui.dart';
 import 'motion.dart';
@@ -96,9 +97,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     return ListTile(
                       selected: w.n == week,
                       leading: CircleAvatar(child: Text('${w.n}')),
-                      title: Text('Semaine ${w.n} · ${w.dates}'),
+                      title: Text(
+                        'Semaine ${w.n} · ${store.program.weekDates(w.n)}',
+                      ),
                       subtitle: Text(
-                        w.n == store.program.weekFor(now)
+                        store.program.containsDate(now) &&
+                                w.n == store.program.weekFor(now)
                             ? '${w.block} · Semaine actuelle'
                             : w.block,
                       ),
@@ -129,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     'Semaine ${w.n}',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  Text(w.dates.replaceAll('→', ' au ')),
+                  Text(store.program.weekDates(w.n).replaceAll('→', ' au ')),
                   Text(w.block, style: TextStyle(color: SL.accent)),
                   if (w.days.first.cycle.isNotEmpty) Text(w.days.first.cycle),
                   Text(
@@ -159,7 +163,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     ),
-                  if (w.n != store.program.weekFor(now))
+                  if (store.program.containsDate(now) &&
+                      w.n != store.program.weekFor(now))
                     TextButton(
                       onPressed: () {
                         Navigator.pop(sheetContext);
@@ -272,6 +277,7 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: const KTopBar(leading: LevelPill()),
         body: Column(
           children: [
+            ProgramStartBanner(now: now),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: KSpace.page),
               child: _WeekSlider(

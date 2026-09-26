@@ -240,9 +240,17 @@ class PilotageDefaults {
 }
 
 class Program {
+  /// Lundi d'ancrage du classeur d'origine (13/07/2026). Ce n'est plus le
+  /// calendrier de tout le monde (KT-006) : il ne sert qu'à migrer les
+  /// installations et sauvegardes antérieures à 2.5.8, qui l'utilisaient, et
+  /// à dater les anciennes séances sans date enregistrée ([legacyDateFor]).
   final DateTime anchorMonday;
   final PilotageDefaults pilotage;
   final List<WeekPlan> weeks;
+
+  /// Départ personnel : date civile de S1·J1 (état utilisateur, sauvegardé).
+  /// Null : programme non démarré, aucune date prévue.
+  DateTime? start;
 
   Program.fromJson(Map<String, dynamic> j)
     : anchorMonday = DateTime.parse(j['meta']['anchorMonday'] as String),
@@ -256,32 +264,73 @@ class Program {
 
   WeekPlan week(int n) => weeks.firstWhere((w) => w.n == n);
 
-  /// Semaine du programme correspondant à une date (bornée 1..40).
+  /// Le calendrier personnel est défini.
+  bool get scheduled => start != null;
+
+  /// Numéro de jour civil (indépendant de l'heure et du fuseau : le passage
+  /// à l'heure d'été ou d'hiver ne décale aucun jour).
+  static int civilIndex(DateTime d) =>
+      DateTime.utc(d.year, d.month, d.day).millisecondsSinceEpoch ~/ 86400000;
+
+  /// Jours écoulés depuis S1·J1 (négatif avant le départ), null sans départ.
+  int? offsetOf(DateTime date) =>
+      start == null ? null : civilIndex(date) - civilIndex(start!);
+
+  /// Semaine du programme correspondant à une date (bornée 1..40 ; 1 sans
+  /// départ). Utiliser [containsDate] pour savoir si la date est dedans.
   int weekFor(DateTime date) {
-    // Compare des jours civils : le changement d'heure ne doit pas décaler
-    // le lundi dans la semaine précédente (journée de 23 ou 25 heures).
-    final d0 = DateTime.utc(
-      anchorMonday.year,
-      anchorMonday.month,
-      anchorMonday.day,
-    );
-    final d1 = DateTime.utc(date.year, date.month, date.day);
-    final w = (d1.difference(d0).inDays / 7).floor() + 1;
+    final o = offsetOf(date);
+    if (o == null) return 1;
+    final w = (o / 7).floor() + 1;
     return w.clamp(1, weeks.length);
   }
 
-  DateTime dateFor(int week, int day) => DateTime(
+  /// Date civile prévue d'une journée. Uniquement avec un départ défini :
+  /// sans calendrier personnel, aucune date n'est inventée.
+  DateTime dateFor(int week, int day) {
+    final s = start;
+    if (s == null) {
+      throw StateError('Programme non démarré : aucune date prévue.');
+    }
+    return DateTime(s.year, s.month, s.day + (week - 1) * 7 + day - 1);
+  }
+
+  /// Date prévue d'une journée selon l'ancrage d'origine : seulement pour
+  /// les anciennes séances sans date enregistrée (installations ≤ 2.5.7).
+  DateTime legacyDateFor(int week, int day) => DateTime(
     anchorMonday.year,
     anchorMonday.month,
     anchorMonday.day + (week - 1) * 7 + day - 1,
   );
 
+  /// Dernier jour prévu (S40·J7), null sans départ.
+  DateTime? get endDate => start == null ? null : dateFor(weeks.length, 7);
+
   bool containsDate(DateTime date) {
-    final day = DateTime(date.year, date.month, date.day);
-    return !day.isBefore(dateFor(1, 1)) &&
-        day.isBefore(dateFor(weeks.length + 1, 1));
+    final o = offsetOf(date);
+    return o != null && o >= 0 && o < weeks.length * 7;
   }
 
-  /// J courant (lundi = J1 … dimanche = J7).
-  int dayFor(DateTime date) => date.weekday;
+  /// Avant S1·J1 (false sans départ).
+  bool beforeStart(DateTime date) => (offsetOf(date) ?? 0) < 0;
+
+  /// Après S40·J7 (false sans départ).
+  bool afterEnd(DateTime date) =>
+      (offsetOf(date) ?? -1) >= weeks.length * 7;
+
+  /// J courant : J1 = jour du départ, J7 = départ + 6 jours (pas forcément
+  /// un lundi). Sans départ : 1.
+  int dayFor(DateTime date) {
+    final o = offsetOf(date);
+    if (o == null) return 1;
+    return o % 7 + 1;
+  }
+
+  /// « 28/09 → 04/10/2026 » : dates de la semaine selon le départ personnel.
+  String weekDates(int n) {
+    if (start == null) return 'dates à définir';
+    String two(int v) => v.toString().padLeft(2, '0');
+    final a = dateFor(n, 1), b = dateFor(n, 7);
+    return '${two(a.day)}/${two(a.month)}→${two(b.day)}/${two(b.month)}/${b.year}';
+  }
 }

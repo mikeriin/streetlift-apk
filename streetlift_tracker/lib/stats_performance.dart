@@ -70,25 +70,31 @@ class StatsPerformance extends StatelessWidget {
           style: Theme.of(context).textTheme.bodySmall,
         ),
         for (final lift in defaults.mainLifts)
-          _Target(
-            name: lift.name,
-            unit: lift.unit,
-            start: lift.oneRm,
-            target: lift.target,
-            current: store.values[lift.ref] ?? lift.oneRm,
-          ),
+          if (store.refKnown(lift.ref))
+            _Target(
+              name: lift.name,
+              unit: lift.unit,
+              start: lift.oneRm,
+              target: lift.target,
+              current: store.values[lift.ref]!,
+            )
+          else
+            _Unknown(lift.name),
         const KSection(
           'Endurance',
           subtitle: 'Maximum de répétitions au poids de corps',
         ),
         for (final rep in defaults.repMax)
-          _Target(
-            name: rep.name,
-            unit: 'rép.',
-            start: rep.max,
-            target: rep.target,
-            current: store.values[rep.ref] ?? rep.max,
-          ),
+          if (store.refKnown(rep.ref))
+            _Target(
+              name: rep.name,
+              unit: 'rép.',
+              start: rep.max,
+              target: rep.target,
+              current: store.values[rep.ref]!,
+            )
+          else
+            _Unknown(rep.name),
         const KSection(
           'Muscles sollicités',
           subtitle: 'Cette semaine · séries et WOD enregistrés',
@@ -135,6 +141,27 @@ class StatsPerformance extends StatelessWidget {
       ],
     );
   }
+}
+
+/// Référence non renseignée (KT-007) : pas de jauge calculée sur une valeur
+/// inventée.
+class _Unknown extends StatelessWidget {
+  final String name;
+  const _Unknown(this.name);
+  @override
+  Widget build(BuildContext context) => KCard(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(name, style: Theme.of(context).textTheme.titleMedium),
+        const SizedBox(height: 6),
+        Text(
+          'Non renseigné · à compléter dans Références quand tu le connais.',
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+      ],
+    ),
+  );
 }
 
 class _Target extends StatelessWidget {
