@@ -3,7 +3,7 @@ name: Claude CI temporaire (format, analyse, tests)
 on:
   push:
     branches: [claude/ci-tools]
-    paths: [streetlift_tracker/**, .github/workflows/claude-ci.yml, ci-mode]
+    paths: [streetlift_tracker/**, .github/workflows/claude-ci.yml, ci-mode, ci-captures]
 
 permissions:
   contents: write
@@ -54,16 +54,30 @@ jobs:
         run: |
           python3 -m unittest discover -s tools/tests > ../ci-out/python.log 2>&1; echo "exit=$?" >> ../ci-out/python.log
           python3 tools/verify_project.py >> ../ci-out/python.log 2>&1; echo "verify exit=$?" >> ../ci-out/python.log
-      - name: Tests ciblés (L7)
-        if: always()
+      - name: Tests ciblés (L5-C)
+        if: always() && steps.mode.outputs.mode != 'captures'
         working-directory: streetlift_tracker
         run: |
-          files="$(ls test/l7_*_test.dart 2>/dev/null || true)"
+          files="$(ls test/l5c_*_test.dart test/motion_test.dart test/ui_refactor_test.dart test/level_fill_test.dart test/l2b_data_control_test.dart 2>/dev/null || true)"
           if [ -n "$files" ]; then
-            TZ=Europe/Paris timeout 600 flutter test --no-pub --timeout 60s --reporter expanded $files > ../ci-out/test-l7.log 2>&1; echo "exit=$?" >> ../ci-out/test-l7.log
+            TZ=Europe/Paris timeout 900 flutter test --no-pub --timeout 90s --reporter expanded $files > ../ci-out/test-l5c.log 2>&1; echo "exit=$?" >> ../ci-out/test-l5c.log
           else
-            echo "aucun test L7" > ../ci-out/test-l7.log
+            echo "aucun test L5-C" > ../ci-out/test-l5c.log
           fi
+      - name: Captures (rendus Flutter de test)
+        if: always() && hashFiles('ci-captures') != ''
+        working-directory: streetlift_tracker
+        run: |
+          rm -rf ../ci-out/captures && mkdir -p ../ci-out/captures
+          : > ../ci-out/captures.log
+          while read -r file tag; do
+            [ -z "$file" ] && continue
+            TZ=Europe/Paris timeout 1200 flutter test --no-pub --timeout 600s --reporter expanded \
+              --dart-define=KALIS_CAPTURE=true --dart-define=KALIS_CAPTURE_TAG="${tag:-apres}" \
+              --dart-define=KALIS_CAPTURE_DIR=../ci-out/captures "$file" >> ../ci-out/captures.log 2>&1
+            echo "exit $file=$?" >> ../ci-out/captures.log
+          done < ../ci-captures
+          ls -la ../ci-out/captures >> ../ci-out/captures.log
       - name: Publier tests ciblés
         if: always()
         run: *push

@@ -1,6 +1,68 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : L7 — Koach, moteur d'autorégulation local (KT-024 à KT-036)**  
+**Passe actuelle : LC1b — S11·J6 au format du J6 du Bloc 2 (suite de KT-037)**  
+**Date : 26 septembre 2026, Europe/Paris — version : 3.0.1+62 (versionCode réel fixé par la CI de build)**  
+**Statut : contenu de la séance S11·J6 modifié dans l'asset embarqué à ta demande (séance du jour), par un script déterministe vérifié ; S12·J6 et le reste du programme inchangés (vérifié). Testé automatiquement en CI (format, analyse, 537 tests Dart réussis et 1 ignoré, Python 58/58, build debug) ; aucune vérification sur téléphone. Publication et build signé : `LIVRAISON_LC1b.md`.**
+
+## LC1b.0 — Demande, base et décisions
+
+| Élément | Valeur | Nature de la preuve |
+| --- | --- | --- |
+| Demande | « Je veux tester le nouveau format du j6 de la semaine prochaine aujourd'hui (j6 de cette semaine), modifie le programme pour appliquer le changement de la séance d'aujourd'hui. » Aujourd'hui 26/09/2026 = **S11·J6** (départ 13/07/2026, semaine de décharge) ; semaine prochaine = S12·J6 | Déclaration du propriétaire |
+| Décisions (questions posées) | Squat : **garder le squat endurance de S11** (3 × 0,9 × max à 70 kg, RIR 3), le test max squat reste en S12·J6 ; S12·J6 : **inchangé** | Réponses du propriétaire |
+| Base | `streetlift_tracker_v33.zip` **L7 3.0.0+61** (= `main`, commit `c30c691`), 1 694 580 octets, SHA-256 `36a87190f54ddd56b214fa7671e6a308c4e61c5cfca49f7c501254344a5ce59f`, racine unique `streetlift_tracker/` ; build run n° 80 réussi | Livraison précédente de cette conversation |
+| Volumes retenus | Ceux de S12·J6 (MU 4×3, tractions 4×3, leg raises 3×10) : c'est le format que tu veux tester. La décharge porte sur le squat (gardé à 0,9) et sur le volume total de la séance (33 → 15 séries prévues). Le programme applique en décharge du Bloc 2 (S15, S19) des volumes plus bas (MU 3×2, tractions 3×3, leg raises 2×10) : non appliqués ici | Choix exposé |
+| Numérotation | « LC2 » est réservé au contenu S20-S25 (feuille de route) : ce lot est **LC1b**, rattaché à KT-037 ; aucun nouveau ticket | Feuille de route |
+
+## LC1b.1 — Changements
+
+**Script** `tools/lc1b_s11_j6.py` (même modèle que LC1) : l'entrée doit être l'asset LC1 (SHA-256 du JSON `399450dc…5328`), une seconde exécution est refusée (« déjà appliquée »), la sortie est comparée à son empreinte (`144869b3d42eb4293f3670f99a23806bc745debbe3ebe54c96b3ad31e5c5c4b2`) avant écriture ; il vérifie que seul S11·J6 change (Pilotage, métadonnées, en-têtes de semaine, 279 autres journées dont S12·J6 identiques) et que les identifiants restent uniques.
+
+**S11·J6** (« SKILL MUSCLE-UP + POINTS FAIBLES » → « PUISSANCE MU + SQUAT ENDURANCE », cycle DELOAD gardé ; conduite : celle des J6 du Bloc 2, sans mention de test ni de GtG, échauffement et collagène inchangés) :
+
+| # | Ligne | Identifiant | Avant | Après |
+| --- | --- | --- | --- | --- |
+| 1 | Muscle-ups PdC explosifs | `B1-L1b-001` (nouveau) | — | copie exacte de `B2-L1-009` (S12·J6) : 4×3, 2 min, explosif |
+| 2 | Tractions explosives poitrine-barre | `B1-521` (gardé) | 5×3 | 4×3, consigne S12 (+5 kg si le sternum touche facilement) — copie de `B2-60` |
+| 3 | Squat endurance @ 70 kg | `B1-525` (gardé) | 3 × 0,9 × max, RIR 3 | **inchangé** |
+| 4 | Leg raises lestés (suspendu) | `B1-527` (gardé) | 2×10 | 3×10 — copie de `B2-66` |
+| 5 | Mobilité épaules + poignets | `B1-529` (gardé) | 10 min | inchangé (= `B2-68`) |
+
+Retirés (identifiants jamais réutilisés) : `B1-519` isométrie transition MU, `B1-520` excentriques de transition lestés, `B1-522` négatifs MU, `B1-523` transitions élastique, `B1-524` isométrie bas de dip, `B1-526` false grip hold, `B1-528` HIIT court. Total : 1 818 − 7 + 1 = **1 812** exercices.
+
+**Journal** : une séance déjà enregistrée avec un identifiant retiré reste lisible à l'identique (noms du journal) ; rien n'est réattribué. Si tu as déjà ouvert la séance S11·J6 avant la mise à jour, les séries saisies sur les anciennes lignes restent dans le journal mais ne s'affichent plus dans la séance au nouveau format.
+
+**Économie** : aucun barème modifié. **Koach** : `assets/koach_program.json.gz` régénéré (`tools/koach_annotate.py`) ; 1 290 exercices annotés, catégories inchangées (accessoire 918, endurance 151, force 136, test d'endurance 19, test 1RM 12), courbes inchangées.
+
+**Attentes figées mises à jour (aucune assertion retirée, aucun test désactivé)** :
+- `tools/tests/test_lc1_revision.py` : les contrôles LC1 portent sur l'asset LC1 **reconstruit** (asset livré + S11·J6 d'origine, `tools/tests/fixtures/lc1_s11_j6.json`) ; toutes les valeurs attendues (empreintes LC1, partie intacte `04ffcab8…`, 1 818) sont inchangées ;
+- `tools/tests/test_lc1b_s11_j6.py` (**nouveau**, 8 tests) : entrée = sortie LC1, asset livré = sortie attendue, script = asset livré, seul S11·J6 change, contenu ligne par ligne, identifiants, second passage refusé, entrée inattendue refusée, CLI ;
+- totaux 1 818 → 1 812 justifiés dans `tools/verify_project.py`, `tools/tests/test_tools.py`, `tools/tests/test_koach_reference.py`, `test/store_test.dart`, `test/lc1_programme_test.dart` (comptes LC1 gardés, compte LC1b ajouté), titre d'un test de `test/training_estimate_test.dart` ;
+- `test/lc1_programme_test.dart` : test du contenu S11·J6 (lignes, format identique à S12·J6 hors squat, volume du squat pour des maxima explicites) et test d'écran (journal S11·J6 avec l'identifiant retiré `B1-520` lisible, séance S11·J6 parcourue à 320 px et texte 200 %) ;
+- instantané 2.x `test/fixtures/l7_2x_snapshot.json.gz` : dans les 5 jeux, les 11 lignes de S11·J6 sont remplacées par les lignes 2.x déjà capturées des lignes identiques de S12·J6 (identifiant seul changé) et la ligne `B1-525` capturée ; les 1 807 autres lignes sont identiques octet pour octet (vérifié). Le test compare toujours les 5 jeux ligne par ligne.
+
+Version : `pubspec.yaml` et `lib/settings_screen.dart` → **3.0.1+62** ; `README.md` ; ce suivi.
+
+## LC1b.2 — Tests
+
+| Contrôle | Résultat | Où |
+| --- | --- | --- |
+| Formatage | 1 fichier reformaté par la CI (`test/lc1_programme_test.dart`), recopié ; arbre livré = arbre testé (hors ce suivi) | CI (branche temporaire, commit `e1b5f03`) |
+| `flutter analyze` | Aucun problème | CI |
+| Tests Dart | **537 réussis, 1 ignoré** (535 + 2 nouveaux LC1b) ; `l7_koach_off_test.dart` : 5 jeux × 1 812 lignes égales à l'instantané | CI |
+| Python | **58/58** (50 + 8 `test_lc1b_s11_j6.py`) ; `verify_project.py` : 40 semaines, 280 jours, 1 812 exercices, 505 exercices de la base | CI + local |
+| Script LC1b | Appliqué une fois (1 818 → 1 812), second passage refusé proprement | Local |
+| Build debug Android | Réussi | CI |
+
+## LC1b.3 — Limites
+
+- Aucune vérification sur téléphone. Avant d'installer : export des données, puis contrôle que l'historique est conservé.
+- Classeur Excel du propriétaire désormais aussi désynchronisé pour S11·J6 (l'asset est la référence, comme depuis LC1).
+- Si, après la séance, tu veux revenir à l'ancien S11·J6 ou appliquer les volumes de décharge S15/S19, c'est un nouveau passage du même type (script vérifié).
+
+---
+
+**Passe L7 — Koach, moteur d'autorégulation local (KT-024 à KT-036)**  
 **Date : 26 septembre 2026, Europe/Paris — version : 3.0.0+61 (versionCode réel fixé par la CI de build)**  
 **Statut : Koach (estimation du 1RM et des maxima depuis le journal, suggestions pendant la séance, propositions au bilan, fatigue, douleur, objectifs, structure en option, pesées, matériel, questionnaires facultatifs) corrigé dans le code selon tes décisions D1-D37 du 26/09/2026 et testé automatiquement (moteur Dart = référence Python sur 26 cas, simulations, store, écrans, Koach désactivé = 2.x sur 1 818 exercices) ; compilé. Aucune vérification sur téléphone. Paramètres du modèle à éprouver sur le terrain et à faire valider par un préparateur physique compétent ; qualification juridique des questionnaires non tranchée. Publication et build : `LIVRAISON_L7.md`.**
 
