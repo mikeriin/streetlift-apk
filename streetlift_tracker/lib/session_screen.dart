@@ -46,7 +46,16 @@ void unregisterDayRoute(Route<dynamic>? route) =>
 class SessionScreen extends StatefulWidget {
   final WeekPlan week;
   final DayPlan day;
-  const SessionScreen({super.key, required this.week, required this.day});
+
+  /// Ouvrir sur l'exercice en cours (reprise). Faux pour une correction
+  /// depuis l'historique : on repart du premier exercice.
+  final bool resume;
+  const SessionScreen({
+    super.key,
+    required this.week,
+    required this.day,
+    this.resume = true,
+  });
 
   @override
   State<SessionScreen> createState() => _SessionScreenState();
@@ -67,7 +76,10 @@ class _SessionScreenState extends State<SessionScreen> {
     groups = store.groups(widget.day);
     // Reprise : même occurrence (même clé de journal), ouverte sur
     // l'exercice en cours. Le repos n'est pas relancé (décision 26/09).
-    page = store.resumePage(widget.week.n, widget.day.j, groups);
+    page =
+        widget.resume
+            ? store.resumePage(widget.week.n, widget.day.j, groups)
+            : 0;
     pageCtl = PageController(initialPage: page);
     if (store.settings.wakelock) keepAwake(true);
   }

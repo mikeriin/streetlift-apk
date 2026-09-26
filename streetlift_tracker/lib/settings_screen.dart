@@ -9,7 +9,7 @@ import 'pilotage_screen.dart';
 import 'program_start.dart';
 import 'store.dart';
 
-const kAppVersion = '2.5.8';
+const kAppVersion = '2.5.9';
 
 class SettingsScreen extends StatelessWidget {
   final int? section;

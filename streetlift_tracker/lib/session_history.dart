@@ -214,7 +214,8 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
     if (!store.reopenSession(key)) return;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute<void>(
-        builder: (_) => SessionScreen(week: plan.week, day: plan.day),
+        builder:
+            (_) => SessionScreen(week: plan.week, day: plan.day, resume: false),
       ),
     );
   }

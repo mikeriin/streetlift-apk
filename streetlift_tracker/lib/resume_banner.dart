@@ -53,7 +53,7 @@ class ResumeBanner extends StatelessWidget {
             if (wod != null && wodName != null)
               line(
                 'WOD en cours : $wodName · chrono en pause à '
-                    '${fmtT(wod.ms ~/ 1000)}',
+                '${fmtT(wod.ms ~/ 1000)}',
                 'Reprendre',
                 () => Navigator.of(context).push(
                   MaterialPageRoute<void>(
@@ -81,7 +81,7 @@ class ResumeBanner extends StatelessWidget {
             if (store.activeWodUnreadable)
               line(
                 'Un chrono WOD en cours n’a pas pu être relu : il est ignoré, '
-                    'tes séances, résultats et crédits sont intacts.',
+                'tes séances, résultats et crédits sont intacts.',
                 'OK',
                 () {
                   store.activeWodUnreadable = false;
