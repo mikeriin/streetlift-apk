@@ -1,15 +1,36 @@
-00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/zz_diag_test.dart
-00:00 +0: diag
-DIAG exercise Pompes PdC — très léger group 1
-DIAG scrollable AxisDirection.right
-DIAG scrollable AxisDirection.down
-DIAG scrollable AxisDirection.right
-DIAG scrollable AxisDirection.right
-DIAG scrollable AxisDirection.right
-DIAG tooltip before Rect.fromLTRB(244.0, 657.5, 288.0, 701.5)
-DIAG pageview Rect.fromLTRB(0.0, 182.0, 320.0, 556.0)
-DIAG tooltip after Rect.fromLTRB(244.0, 223.5, 288.0, 267.5)
-DIAG listview Rect.fromLTRB(0.0, 182.0, 320.0, 556.0)
-DIAG exc null
-00:01 +1: All tests passed!
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart
+00:00 +0: A. Saisie : règles de format (KT-009) charge : virgule, point, blancs, assistance ; ambigus refusés
+00:00 +1: A. Saisie : règles de format (KT-009) reps, secondes, minutes : entiers sans unité
+00:00 +2: A. Saisie : règles de format (KT-009) RIR et RPE : échelles distinctes, pas de 0,5
+00:00 +3: A. Saisie : règles de format (KT-009) valeur obligatoire ; zéro seulement pour un test max
+00:00 +4: A/B/D. Store : coche, reprise, fin coche refusée : rien validé, texte gardé ; puis acceptée
+00:00 +5: A/B/D. Store : coche, reprise, fin série validée puis modifiée : repasse non validée si invalide
+00:00 +6: A/B/D. Store : coche, reprise, fin suggestion affichée ≠ performance ; livres sans conversion
+00:00 +7: A/B/D. Store : coche, reprise, fin séance en cours : même occurrence, page de reprise, bandeau
+00:01 +8: A/B/D. Store : coche, reprise, fin fin : un seul bilan, double appel sans double gain
+00:01 +9: A/B/D. Store : coche, reprise, fin écriture refusée : pas de bilan, séries gardées ; nouvel essai
+00:01 +10: A/B/D. Store : coche, reprise, fin reprise après minuit : dates de séries gardées, fin datée à la fin
+00:01 +11: A/B/D. Store : coche, reprise, fin séance perso répétée : ancienne occurrence archivée, jamais écrasée
+00:01 +12: C. Temps : horloge murale bornée par l’horloge monotone heure reculée d’une heure : le repos continue de décompter
+00:01 +13: C. Temps : horloge murale bornée par l’horloge monotone veille de l’appareil : l’heure murale compte le temps passé
+00:01 +14: C. Temps : horloge murale bornée par l’horloge monotone rafraîchissements manqués : bonne phase, aucune rafale
+00:01 +15: C. Temps : horloge murale bornée par l’horloge monotone pauses répétées et frontière de phase exacte
+00:01 +16: C. Temps : horloge murale bornée par l’horloge monotone point sûr : reprise en pause, absence non comptée, aucune alerte
+00:01 +17: C. Temps : horloge murale bornée par l’horloge monotone chrono de tenue terminé : la série n’est pas validée
+00:01 +18: F/G. WOD en cours : persistance, import, minuit essai lancé avant minuit, processus détruit, fini après minuit
+00:01 +19: F/G. WOD en cours : persistance, import, minuit un seul WOD chronométré à la fois ; abandon explicite
+00:01 +20: F/G. WOD en cours : persistance, import, minuit export sans chrono ; import et effacement l’annulent ; point obsolète ignoré
+00:02 +21: F/G. WOD en cours : persistance, import, minuit chrono illisible : ignoré, le reste des données chargé
+00:02 +22: F/G. WOD en cours : persistance, import, minuit ancienne sauvegarde sans chrono : importée, rien de synthétisé
+00:02 +23: Écrans (setUpAll)
+00:02 +23: Écrans coche refusée : message nommant le champ, saisie gardée
+00:03 +24: Écrans reprise : rouverte sur l’exercice en cours, badge et bandeau
+00:03 +25: Écrans fin : écriture refusée → réessayer ; bilan une seule fois
+00:03 +26: Écrans notification répétée : une seule séance ouverte ; journée faite → historique
+00:03 +27: Écrans historique : consulter, défiler, changer de thème ne modifie rien
+00:03 +28: Écrans WOD retrouvé en pause au dernier point sûr (Tabata)
+00:04 +29: Écrans rendu 320 px · 130 % : message d’erreur, bandeau, clavier
+00:04 +30: Écrans rendu 320 px · 200 % : message d’erreur, bandeau, clavier
+00:04 +31: Écrans (tearDownAll)
+00:04 +31: All tests passed!
 exit=0
