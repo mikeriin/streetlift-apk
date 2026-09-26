@@ -1,17 +1,192 @@
 00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart
-test/l4b_seances_test.dart:583:19: Error: Method not found: 'WodResult'.
-        final r = WodResult(
-                  ^^^^^^^^^
-test/l4b_seances_test.dart:596:13: Error: Method not found: 'WodResult'.
-            WodResult(at: now.toIso8601String(), score: '6:40', seconds: 400),
-            ^^^^^^^^^
-00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart [E]
-  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart":
-  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: test/l4b_seances_test.dart:583:19: Error: Method not found: 'WodResult'.
-          final r = WodResult(
-                    ^^^^^^^^^
-  test/l4b_seances_test.dart:596:13: Error: Method not found: 'WodResult'.
-              WodResult(at: now.toIso8601String(), score: '6:40', seconds: 400),
-              ^^^^^^^^^
-  .
-00:00 +0 -1: Some tests failed.
+00:00 +0: A. Saisie : règles de format (KT-009) charge : virgule, point, blancs, assistance ; ambigus refusés
+00:00 +1: A. Saisie : règles de format (KT-009) reps, secondes, minutes : entiers sans unité
+00:00 +2: A. Saisie : règles de format (KT-009) RIR et RPE : échelles distinctes, pas de 0,5
+00:00 +3: A. Saisie : règles de format (KT-009) valeur obligatoire ; zéro seulement pour un test max
+00:00 +4: A/B/D. Store : coche, reprise, fin coche refusée : rien validé, texte gardé ; puis acceptée
+00:00 +4 -1: A/B/D. Store : coche, reprise, fin coche refusée : rien validé, texte gardé ; puis acceptée [E]
+  FormatException: Départ du programme invalide.
+  package:streetlift_tracker/store.dart 2365:11  AppStore._parseBackup
+  package:streetlift_tracker/store.dart 749:20   AppStore.init
+  
+00:00 +4 -1: A/B/D. Store : coche, reprise, fin série validée puis modifiée : repasse non validée si invalide
+00:01 +5 -1: A/B/D. Store : coche, reprise, fin suggestion affichée ≠ performance ; livres sans conversion
+00:01 +5 -2: A/B/D. Store : coche, reprise, fin suggestion affichée ≠ performance ; livres sans conversion [E]
+  Expected: <1>
+    Actual: <0>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 474:18  expect
+  test/l4b_seances_test.dart 228:7                    main.<fn>.<fn>
+  
+00:01 +5 -2: A/B/D. Store : coche, reprise, fin séance en cours : même occurrence, page de reprise, bandeau
+00:01 +5 -3: A/B/D. Store : coche, reprise, fin séance en cours : même occurrence, page de reprise, bandeau [E]
+  FormatException: Départ du programme invalide.
+  package:streetlift_tracker/store.dart 2365:11  AppStore._parseBackup
+  package:streetlift_tracker/store.dart 749:20   AppStore.init
+  
+00:01 +5 -3: A/B/D. Store : coche, reprise, fin fin : un seul bilan, double appel sans double gain
+00:01 +5 -4: A/B/D. Store : coche, reprise, fin fin : un seul bilan, double appel sans double gain [E]
+  Expected: '2026-09-26T18:00:00.000'
+    Actual: '2026-09-26T09:05:10.674883'
+     Which: is different.
+            Expected: ... 026-09-26T18:00:00.0 ...
+              Actual: ... 026-09-26T09:05:10.6 ...
+                                    ^
+             Differ at offset 11
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 474:18  expect
+  test/l4b_seances_test.dart 288:7                    main.<fn>.<fn>
+  
+00:01 +5 -4: A/B/D. Store : coche, reprise, fin écriture refusée : pas de bilan, séries gardées ; nouvel essai
+00:02 +5 -5: A/B/D. Store : coche, reprise, fin écriture refusée : pas de bilan, séries gardées ; nouvel essai [E]
+  FormatException: Départ du programme invalide.
+  package:streetlift_tracker/store.dart 2365:11  AppStore._parseBackup
+  package:streetlift_tracker/store.dart 749:20   AppStore.init
+  
+00:02 +5 -5: A/B/D. Store : coche, reprise, fin reprise après minuit : dates de séries gardées, fin datée à la fin
+00:02 +5 -6: A/B/D. Store : coche, reprise, fin reprise après minuit : dates de séries gardées, fin datée à la fin [E]
+  FormatException: Départ du programme invalide.
+  package:streetlift_tracker/store.dart 2365:11  AppStore._parseBackup
+  package:streetlift_tracker/store.dart 749:20   AppStore.init
+  
+00:02 +5 -6: A/B/D. Store : coche, reprise, fin séance perso répétée : ancienne occurrence archivée, jamais écrasée
+00:02 +6 -6: C. Temps : horloge murale bornée par l’horloge monotone heure reculée d’une heure : le repos continue de décompter
+00:02 +7 -6: C. Temps : horloge murale bornée par l’horloge monotone veille de l’appareil : l’heure murale compte le temps passé
+00:02 +8 -6: C. Temps : horloge murale bornée par l’horloge monotone rafraîchissements manqués : bonne phase, aucune rafale
+00:02 +8 -7: C. Temps : horloge murale bornée par l’horloge monotone rafraîchissements manqués : bonne phase, aucune rafale [E]
+  Expected: 'REPOS 3/4'
+    Actual: 'EFFORT 4/4'
+     Which: is different.
+            Expected: REPOS 3/4
+              Actual: EFFORT 4/4 ...
+                      ^
+             Differ at offset 0
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 474:18  expect
+  test/l4b_seances_test.dart 438:9                    main.<fn>.<fn>.<fn>
+  package:fake_async/fake_async.dart 182:54           FakeAsync.run.<fn>.<fn>
+  dart:async                                          runZoned
+  package:clock/src/default.dart 52:10                withClock
+  package:fake_async/fake_async.dart 182:22           FakeAsync.run.<fn>
+  dart:async                                          runZoned
+  package:fake_async/fake_async.dart 182:7            FakeAsync.run
+  package:fake_async/fake_async.dart 41:41            fakeAsync
+  test/l4b_seances_test.dart 432:7                    main.<fn>.<fn>
+  
+00:02 +8 -7: C. Temps : horloge murale bornée par l’horloge monotone pauses répétées et frontière de phase exacte
+00:02 +9 -7: C. Temps : horloge murale bornée par l’horloge monotone point sûr : reprise en pause, absence non comptée, aucune alerte
+00:02 +10 -7: C. Temps : horloge murale bornée par l’horloge monotone chrono de tenue terminé : la série n’est pas validée
+00:02 +11 -7: F/G. WOD en cours : persistance, import, minuit essai lancé avant minuit, processus détruit, fini après minuit
+00:02 +12 -7: F/G. WOD en cours : persistance, import, minuit un seul WOD chronométré à la fois ; abandon explicite
+00:02 +13 -7: F/G. WOD en cours : persistance, import, minuit export sans chrono ; import et effacement l’annulent ; point obsolète ignoré
+00:03 +13 -8: F/G. WOD en cours : persistance, import, minuit export sans chrono ; import et effacement l’annulent ; point obsolète ignoré [E]
+  FormatException: Invalid character (at character 10)
+  alisTrack":1,"format":3,"pilotage":{},"referenceStatus":{},"programStart":{...
+           ^
+  
+  dart:convert                       base64Decode
+  test/l4b_seances_test.dart 636:23  main.<fn>.<fn>
+  
+00:03 +13 -8: F/G. WOD en cours : persistance, import, minuit chrono illisible : ignoré, le reste des données chargé
+00:03 +13 -9: F/G. WOD en cours : persistance, import, minuit chrono illisible : ignoré, le reste des données chargé [E]
+  FormatException: Invalid character (at character 10)
+  alisTrack":1,"format":3,"pilotage":{},"referenceStatus":{},"programStart":{...
+           ^
+  
+  dart:convert                       base64Decode
+  test/l4b_seances_test.dart 683:46  main.<fn>.<fn>
+  
+00:03 +13 -9: F/G. WOD en cours : persistance, import, minuit ancienne sauvegarde sans chrono : importée, rien de synthétisé
+00:03 +14 -9: Écrans (setUpAll)
+00:03 +14 -9: Écrans coche refusée : message nommant le champ, saisie gardée
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.first (dart:core/iterable.dart:645:7)
+#1      _FirstFinderMixin.filter (package:flutter_test/src/finders.dart:1340:28)
+#3      Iterable.isEmpty (dart:core/iterable.dart:542:33)
+#4      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2008:18)
+#5      WidgetController.getCenter (package:flutter_test/src/controller.dart:1861:12)
+#6      WidgetController.tap (package:flutter_test/src/controller.dart:1041:7)
+#7      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart:786:20)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 2 frames from dart:async-patch and package:stack_trace)
+
+The test description was:
+  coche refusée : message nommant le champ, saisie gardée
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:05 +14 -10: Écrans coche refusée : message nommant le champ, saisie gardée [E]
+  Test failed. See exception logs above.
+  The test description was: coche refusée : message nommant le champ, saisie gardée
+  
+00:05 +14 -10: Écrans reprise : rouverte sur l’exercice en cours, badge et bandeau
+00:05 +15 -10: Écrans fin : écriture refusée → réessayer ; bilan une seule fois
+00:06 +16 -10: Écrans notification répétée : une seule séance ouverte ; journée faite → historique
+00:06 +17 -10: Écrans historique : consulter, défiler, changer de thème ne modifie rien
+00:07 +18 -10: Écrans WOD retrouvé en pause au dernier point sûr (Tabata)
+00:07 +19 -10: Écrans rendu 320 px · 130 % : message d’erreur, bandeau, clavier
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.first (dart:core/iterable.dart:645:7)
+#1      _FirstFinderMixin.filter (package:flutter_test/src/finders.dart:1340:28)
+#3      Iterable.single (dart:core/iterable.dart:676:13)
+#4      WidgetController.element (package:flutter_test/src/controller.dart:864:30)
+#5      WidgetController.ensureVisible (package:flutter_test/src/controller.dart:2301:32)
+#6      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart:1077:24)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 2 frames from dart:async-patch and package:stack_trace)
+
+The test description was:
+  rendu 320 px · 130 % : message d’erreur, bandeau, clavier
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:08 +19 -11: Écrans rendu 320 px · 130 % : message d’erreur, bandeau, clavier [E]
+  Test failed. See exception logs above.
+  The test description was: rendu 320 px · 130 % : message d’erreur, bandeau, clavier
+  
+00:08 +19 -11: Écrans rendu 320 px · 200 % : message d’erreur, bandeau, clavier
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.first (dart:core/iterable.dart:645:7)
+#1      _FirstFinderMixin.filter (package:flutter_test/src/finders.dart:1340:28)
+#3      Iterable.single (dart:core/iterable.dart:676:13)
+#4      WidgetController.element (package:flutter_test/src/controller.dart:864:30)
+#5      WidgetController.ensureVisible (package:flutter_test/src/controller.dart:2301:32)
+#6      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart:1077:24)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided 2 frames from dart:async-patch and package:stack_trace)
+
+The test description was:
+  rendu 320 px · 200 % : message d’erreur, bandeau, clavier
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:09 +19 -12: Écrans rendu 320 px · 200 % : message d’erreur, bandeau, clavier [E]
+  Test failed. See exception logs above.
+  The test description was: rendu 320 px · 200 % : message d’erreur, bandeau, clavier
+  
+00:09 +19 -12: Écrans (tearDownAll)
+00:09 +19 -12: Some tests failed.
