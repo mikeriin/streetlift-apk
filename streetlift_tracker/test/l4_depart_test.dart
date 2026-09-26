@@ -21,6 +21,7 @@ import 'package:streetlift_tracker/progression.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/program_start.dart';
 import 'package:streetlift_tracker/store.dart';
+import 'package:streetlift_tracker/wod_models.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -491,6 +492,40 @@ void main() {
         expect(p.totalXp, before.xp);
       },
     );
+  });
+
+  group('Résultats L3b', () {
+    test('résultats WOD (règle de score, intervalles) intacts après migration, relance et changement de départ', () async {
+      final app = await launch({
+        'settings_v1': jsonEncode(AppSettings().toJson()),
+      });
+      final w = app.wods.firstWhere(app.isCatalog);
+      app.addWodResult(
+        w,
+        WodResult(
+          at: '2026-09-20T10:00:00.000',
+          score: '12:34',
+          seconds: 754,
+          scoring: 'tabata/1',
+          intervals: [
+            [10, null, 8],
+          ],
+        ),
+      );
+      await app.flush();
+      String results(AppStore a) => jsonEncode([
+        for (final x in a.wods)
+          if (x.results.isNotEmpty) {x.id: x.results.map((r) => r.toJson()).toList()},
+      ]);
+      final before = results(app);
+      final again = await relaunch();
+      expect(results(again), before);
+      expect(await again.configureStart(DateTime(2026, 9, 28)), StartSave.saved);
+      expect(results(again), before);
+      final target = await launch({});
+      expect(await target.importBackup(again.exportAll()), ImportStatus.success);
+      expect(results(target), before);
+    });
   });
 
   group('Sauvegardes', () {
