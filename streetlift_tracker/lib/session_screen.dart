@@ -1841,14 +1841,10 @@ class _SetRowState extends State<_SetRow> {
               children: [
                 const SizedBox(width: _wLabel + 6),
                 if (widget.showRir)
-                  _f(
-                    rir,
-                    (t) {
-                      e.rir = t;
-                      store.koachRirEdited(e);
-                    },
-                    label: widget.readOnly ? 'Effort' : store.effortLabel,
-                  ),
+                  _f(rir, (t) {
+                    e.rir = t;
+                    store.koachRirEdited(e);
+                  }, label: widget.readOnly ? 'Effort' : store.effortLabel),
                 if (widget.showRir && widget.showV) _gap,
                 if (widget.showV) _f(v, (t) => e.v = t, label: 'Vitesse (m/s)'),
                 SizedBox(

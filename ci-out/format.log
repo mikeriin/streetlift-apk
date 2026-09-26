@@ -1,7 +1,10 @@
 Formatted lib/koach_data.dart
 Formatted lib/koach_engine.dart
+Formatted lib/koach_screens.dart
 Formatted lib/koach_store.dart
+Formatted lib/koach_widgets.dart
+Formatted lib/session_screen.dart
 Formatted test/l7_koach_engine_test.dart
 Formatted test/l7_koach_simulation_test.dart
-Formatted 95 files (5 changed) in 1.80 seconds.
+Formatted 97 files (8 changed) in 3.13 seconds.
 exit=0

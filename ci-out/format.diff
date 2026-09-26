@@ -1,13 +1,19 @@
- ci-out/analyze.log                                 |    9 -
+ ci-out/analyze.log                                 |    3 -
  ci-out/commit.txt                                  |    2 +-
- ci-out/format-full.diff                            | 2147 --------------------
- ci-out/format.diff                                 |   14 -
- ci-out/format.log                                  |    2 +-
+ ci-out/format-full.diff                            | 2737 --------------------
+ ci-out/format.diff                                 |   13 -
+ ci-out/format.log                                  |    5 +-
+ ci-out/mode.txt                                    |    2 +-
  ci-out/python.log                                  |   15 -
  ci-out/test-l7.log                                 |   51 -
+ ci-out/test-summary.txt                            |    1 -
+ ci-out/test.log                                    |  580 -----
  streetlift_tracker/lib/koach_data.dart             |   30 +-
  streetlift_tracker/lib/koach_engine.dart           |   64 +-
+ streetlift_tracker/lib/koach_screens.dart          |   88 +-
  streetlift_tracker/lib/koach_store.dart            |   22 +-
+ streetlift_tracker/lib/koach_widgets.dart          |    5 +-
+ streetlift_tracker/lib/session_screen.dart         |   12 +-
  streetlift_tracker/test/l7_koach_engine_test.dart  |   68 +-
  .../test/l7_koach_simulation_test.dart             |   33 +-
- 12 files changed, 137 insertions(+), 2320 deletions(-)
+ 18 files changed, 202 insertions(+), 3529 deletions(-)
