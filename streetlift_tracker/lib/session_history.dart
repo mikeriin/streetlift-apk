@@ -114,9 +114,21 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
 
   @override
   void dispose() {
+    unregisterDayRoute(_route);
     _pages.dispose();
     _unusedTimer.dispose();
     super.dispose();
+  }
+
+  Route<dynamic>? _route;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _route ??= ModalRoute.of(context);
+    // Historique d'une journée : une notification ou un second appui y
+    // ramène au lieu d'empiler un autre écran (KT-018).
+    if (_key != null) registerDayRoute(_key!, _route);
   }
 
   void _go(int page) {

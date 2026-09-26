@@ -1,8 +1,120 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : LC1 — Révision du contenu du Bloc 2, S12 à S19 (KT-037, P1)**  
-**Date : 26 septembre 2026, Europe/Paris — version : 2.5.7+58 (versionCode réel fixé par la CI de build)**  
-**Statut : contenu S12-S19 révisé selon les décisions du propriétaire du 26/09/2026 ; reste du programme et feuille Pilotage identiques ; recalcul des volumes pendant une séance corrigé ; testé automatiquement. Publication et build : `LIVRAISON_LC1.md`. Aucune vérification sur téléphone. L4 et suivants ne sont pas lancés.**
+**Passe actuelle : L4 — Départ du programme (KT-006, KT-007, P1)**  
+**Date : 26 septembre 2026, Europe/Paris — version : 2.5.8+59 (versionCode réel fixé par la CI de build)**  
+**Statut : départ personnel (S1 · J1 = date choisie) et références « non renseignées / renseignées / à vérifier » corrigés dans le code selon tes décisions du 26/09/2026 ; installation existante migrée sans rien déplacer ; testé automatiquement. Publication et build : `LIVRAISON_L4.md`. Aucune vérification sur téléphone. L4b non lancé.**
+
+## L4.0 — Base
+
+| Élément | Valeur | Nature de la preuve |
+| --- | --- | --- |
+| Base retenue | `streetlift_tracker_v33.zip` **LC1** (= `main`, commit `043a1d2`), **1 401 617 octets**, SHA-256 `822ebbd656aedab9b76fa5e347c42dfbbd74ae4db2e912aa2d1865402c867a77`, racine unique `streetlift_tracker/`, 316 fichiers, **2.5.7+58** | Vérifié ; source intacte, travail sur copie |
+| Écart avec la demande | La demande cite « la dernière livraison L3b ». LC1 (révision S12-S19) a été livrée **après** L3b dans cette conversation, construite sur L3b, et publiée (run n° 77) : c'est elle qui est installable. Repartir de L3b aurait retiré le contenu S12-S19 révisé. **Divergence signalée** : le programme compte **1 818** exercices (LC1), pas 1 954. | Constat |
+| État initial | Arbre LC1 : formatage 0 changement, `flutter analyze` sans problème, **359 réussis, 1 ignoré**, build debug réussi ; Python 39/39 ; `verify_project.py` 1 818 exercices | CI (branche temporaire, LC1) + local |
+| Défaut bloquant préalable | Aucun défaut de compilation ou de conservation des données ouvert : aucun correctif isolé nécessaire avant la migration | Constat |
+| Essais téléphone L1b → LC1 | **Non rapportés** : rien n'est marqué « vérifié sur appareil » | — |
+
+## L4.1 — Décisions (déclarations du propriétaire, 26/09/2026)
+
+| Arbitrage | Décision | Appliqué |
+| --- | --- | --- |
+| Date de départ | « Date = S1 · J1, tout jour » | `Program.start`, J1 = jour choisi |
+| Bornes | « Passé ≤ 280 j, futur ≤ 1 an, report » | `AppStore.startPastDays = 280`, `startFutureDays = 365`, bouton « Plus tard » |
+| Références inconnues | « Inconnu par défaut + « Je ne sais pas » » ; accessoires à compléter plus tard | Aucune valeur embarquée copiée ; `referenceStatus` |
+| Installation existante | « Garder + modifiable sans remise à zéro » : départ = 13/07/2026, références gardées « historiques » et utilisées, vérification proposée jamais imposée ; changement de départ dans Réglages avec aperçu ; séances faites gardées (même S·J, mêmes dates réelles) ; rappels replanifiés | Migration + écran « Départ du programme » |
+
+**Arbitrages encore ouverts** : aucun pour L4. Points exposés (non tranchés, comportement antérieur conservé) : §L4.4.
+
+## L4.2 — Changements
+
+**Modèle et calendrier** (`lib/models.dart`) : `Program.start` (date civile, `null` = non démarré) ; `dateFor` refuse sans départ ; `weekFor` / `dayFor` / `containsDate` / `beforeStart` / `afterEnd` / `endDate` / `weekDates` sur jours civils (`civilIndex`) ; `legacyDateFor` (ancrage 13/07/2026) réservé aux anciennes séances sans date. Les dates textuelles de l'asset ne sont plus affichées ; l'asset n'est pas modifié.
+
+**Store** (`lib/store.dart`) :
+- Installation neuve (aucune clé d'une version antérieure) : non démarrée, références vides. Installation ≤ 2.5.7 (document unique sans `programStart`, ou anciennes clés) : départ 13/07/2026, origine `migration`, références conservées « historiques ». Les clés écrites au tout premier lancement (catalogue, version des crédits) ne comptent pas : une première ouverture interrompue reste neuve.
+- `referenceStatus` (`set` / `historic`), `startOrigin` ; `setValue` (domaine vérifié, « renseignée »), `confirmReference`, `clearReference` (« Je ne sais pas »), `resetPilotage` (toutes non renseignées) ; `loadNeedsReference` / `missingReference` / `referenceLabel`.
+- `configureStart(date, references)` : bornes, validation, application, **écriture par la file L2** ; succès seulement après écriture acceptée ; échec → état précédent rétabli, `StartSave.unsaved`.
+- Sauvegarde : `programStart` et `referenceStatus` (format 3, champs optionnels) ; import : ancienne sauvegarde migrée, fichier récent restauré tel quel, invalide refusé en entier (§ docs) ; aperçu d'import : départ du fichier et du téléphone, références renseignées / à vérifier ; effacement L2b : état d'installation.
+- Charges et volumes : « à renseigner » / « N × ? reps » quand la référence manque ; aucune pré-saisie de répétitions calculée sur 0.
+
+**Calculs dérivés** : `lib/progression.dart` (repli de date des anciennes séances = ancrage d'origine, indépendant du départ) ; `lib/game.dart` (plus de poids de 70 kg par défaut : force indisponible sans poids du corps, calcul partiel signalé ; technique à partir du lest muscle-up) ; `lib/notifications.dart` (aucun rappel sans départ ; départ dans la signature de planification → replanification sans doublon).
+
+**Écrans** : `lib/program_start.dart` (**nouveau** : écran « Départ du programme », bandeau d'accueil) ; `lib/home_screen.dart` (bandeau dans la liste des journées, dates de semaine personnelles, « semaine actuelle » seulement dans le programme) ; `lib/settings_screen.dart` (section « Programme » : départ, références ; 2.5.8) ; `lib/pilotage_screen.dart` (provenance, « C'est bien ma valeur », « Je ne sais pas », champ vide si inconnu, virgule décimale, convention lest / barre) ; `lib/session_screen.dart` (charge / volume sans référence : la référence manquante est nommée — infobulle, lecteur d'écran — et un appui ouvre Références, sans ligne supplémentaire) ; `lib/stats_performance.dart` (cartes « Non renseigné ») ; `lib/game_widgets.dart` (attribut « indisponible », quête principale selon l'état du calendrier) ; `lib/data_control.dart` (aperçu d'import) ; `lib/persistence.dart` (`StartSave`).
+
+**Tests modifiés (sans retrait d'assertion de comportement conservé)** — chaque fois parce qu'une instance de test neuve est désormais une installation neuve (non démarrée, sans référence) :
+
+| Fichier | Modification | Justification |
+| --- | --- | --- |
+| `test/l2_fixtures.dart` | historique rempli daté par `legacyDateFor` | mêmes dates qu'avant (calendrier d'origine) ; `dateFor` refuse sans départ |
+| `test/notifications_test.dart` | `setUp` : départ 13/07/2026 | scénarios d'une installation existante ; cas non démarré ajouté en L4 |
+| `test/store_test.dart` | test des changements d'heure : départ 13/07/2026 | idem |
+| `test/programme_test.dart` | `setUpAll` : départ 13/07/2026, origine migration | parcours d'accueil en semaine 8 |
+| `test/lc1_programme_test.dart` | valeurs du classeur saisies explicitement ; 120 kg vérifié dans l'asset puis saisi | les références ne sont plus copiées ; assertion de l'asset conservée |
+| `test/stats_test.dart` | référence B8 renseignée avant de la modifier | scénario « modifier une référence existante » |
+| `test/l2_persistence_test.dart` | limite de nœuds : références saisies avant l'export | export de taille comparable à avant L4 |
+| `test/l2b_data_control_test.dart` | après effacement : aucune référence, non démarré (au lieu du poids embarqué) | **changement de règle voulu** (KT-007) |
+
+**Autres** : `test/l4_depart_test.dart` (**nouveau**) ; `docs/DEPART_PROGRAMME.md` (**nouveau**) ; `pubspec.yaml` (2.5.8+59) ; `README.md` ; ce suivi. Workflow `build-apk.yml` **inchangé**.
+
+## L4.3 — Tests et comparaisons
+
+| Niveau | Résultat |
+| --- | --- |
+| Python | **39/39** en local ; `verify_project.py` réussi (1 818 exercices, 280 jours) |
+| CI branche temporaire (sans secret) | Formatage 86 fichiers (1 fichier de test remis en forme par la CI, arbre livré = arbre testé) ; `flutter analyze` sans problème ; tests L4 **52/52** ; **suite complète 411 réussis, 1 ignoré** (359 + 52 ; aucun test retiré ni désactivé) ; **build Android debug réussi** (run CI n° 30, commit `88785e0`) |
+| Mesure « avant » | code LC1 inchangé + `lc1_snapshot_test.dart` (même état synthétique), exécuté en CI : 1/1 |
+| Défauts trouvés par les tests et corrigés | bandeau d'accueil au-dessus de la liste : à 320 px / 200 %, il aurait écrasé les journées (débordement de 103 px) → placé dans la liste ; ligne « référence non renseignée » en séance : repoussait les 5 séries sous le pli à 360 × 760 (test existant) → nommée par infobulle / lecteur d'écran sans ligne supplémentaire ; provenance manquante dans un fichier retouché : refus trop strict → valeur gardée « à vérifier » |
+| Appareil | **Aucun essai** |
+
+Couverture de `test/l4_depart_test.dart` (**52 tests**, horloge `storeClock` fixée au 26/09/2026 10 h, stockage simulé, données synthétiques) :
+
+| Exigence | Tests |
+| --- | --- |
+| Installation neuve à une autre date que l'ancrage ; première ouverture interrompue | non démarrée, références vides, export `pending`, relance identique |
+| Départ confirmé / différé / futur / passé ; bornes | −280 et +365 inclus, −281 / +366 refusés ; « Plus tard » ; futur (jeudi 01/10) ; passé (31/08 → S4 · J6 aujourd'hui) ; 20/12/2025 → S40, fin |
+| Jour non lundi, limites de semaine | départ mercredi : J1 = mercredi, S2 · J1 le mercredi suivant, 23 h 59 / 0 h 05 |
+| Mois, année, 29 février, heure d'été / d'hiver | 29/12/2026 → 01/01/2027 ; 26/02/2028 → 29/02 puis 01/03 ; 31/01 ; 25/10/2026 et 28/03/2027 |
+| Début S1, fin S40, avant, après | `endDate` = S40 · J7 ; après : S40, jamais S41 ; bandeau avant / pendant (absent) / après |
+| Utilisateur avancé migré ; ancienne installation sans séance ; migration deux fois | état 2.5.7 : S11, dates réelles, références, XP, crédits, droits identiques ; réglages seuls → 13/07/2026 ; relance → même état et même document |
+| Sauvegardes anciennes / récentes / invalides / aller-retour | 2.5.8 ↔ 2.5.8 ; non démarré restauré tel quel ; ancienne → 13/07/2026 « à vérifier », aperçu ; 11 fichiers invalides refusés sans rien modifier ; clé inconnue « à vérifier » conservée en aller-retour |
+| Références inconnues / partielles / explicites / historiques ; valeur égale à l'ancienne valeur embarquée | « à renseigner », « ? », aucune pré-saisie ; PdC seul insuffisant ; saisie = « renseignée » ; confirmation sans changement de valeur ; « Je ne sais pas » ; tout effacer (calendrier gardé) |
+| Unités et saisies locales | virgule, point, vide, texte, `NaN`, `Infinity`, `1e3`, négatif, 3 décimales, 10 000 / 10 000,5 ; livres : valeurs en kg inchangées après 5 bascules |
+| Annulation, double confirmation, échec d'écriture puis nouvel essai | magasin et écran : « Plus tard », retour système, double appui, écriture refusée (message, écran gardé, état rétabli), nouvel essai |
+| Persistance après relance | départ, origine, références, provenances |
+| Rappels | aucun sans départ ; premier le jour de S1 · J1 ; changement → mêmes identifiants, 280, aucun doublon ; échec natif visible, départ conservé, reprise ; ancienne notification → même S · J, à froid et à chaud, hors programme ignorée |
+| Aucune création par migration ou changement de date | séances, XP, niveau, crédits, gains, droits identiques ; semaines civiles de progression identiques |
+| Sélections L3, résultats L3b | essai du jour et vitrine identiques après changement ; résultat WOD (`tabata/1`, intervalles) identique après migration, relance, changement de départ et import |
+| Écrans | premier départ ; installation existante (aperçu « S11 · J6 → S1 · J6 ») ; même date (bouton inactif) ; Références (provenance) ; séance (référence manquante nommée, appui → Références) ; accueil non démarré ; 320 px à 130 % et 200 %, 390 px, clair / sombre, clavier ouvert, libellés accessibles |
+
+**Comparaison avant / après** — même état synthétique (utilisateur avancé : S1 à S10 faites à leur date prévue, une séance ancienne sans date, poids 81,5 kg, traction lestée 32,5 kg, autres références du classeur), le 26/09/2026 10 h, rappels 7 h 30, Europe/Paris. « Avant » = code LC1 2.5.7 **inchangé** exécuté en CI ; « après » = 2.5.8.
+
+| Mesure | Avant (2.5.7, code LC1) | Après migration (2.5.8) | Après relance | Après changement de départ au 21/09/2026 |
+| --- | --- | --- | --- | --- |
+| Semaine affichée | S11 · J6 | S11 · J6 | S11 · J6 | S1 · J6 (voulu) |
+| Départ / origine | ancrage 13/07/2026 | 13/07/2026 · migration | idem | 21/09/2026 · user |
+| Dates prévues S11 | 21/09→27/09/2026 | 21/09→27/09/2026 | idem | 30/11→06/12/2026 |
+| Séances (clés S·J) | 60 | 60 | 60 | 60, mêmes clés |
+| Date réelle S6-J4 | 2026-08-20T19:00 | 2026-08-20T19:00 | idem | 2026-08-20T19:00 |
+| Séance S1-J2 sans date | sans date | sans date (repli 14/07/2026) | idem | sans date (repli inchangé) |
+| Poids du corps / traction lestée | 81,5 / 32,5 kg | 81,5 / 32,5 kg, « à vérifier » | idem | idem |
+| XP / niveau | 7 870 / 16 | 7 870 / 16 | 7 870 / 16 | 7 870 / 16 |
+| Crédits disponibles / gains enregistrés | 63 / 63 | 63 / 63 | 63 / 63 | 63 / 63 |
+| Droits WOD | 0 | 0 | 0 | 0 |
+| Rappels (tous les jours, 7 h 30) | 204, premier S11-J7 le 27/09 | 204, premier S11-J7 le 27/09 | idem | 220, premier S1-J7 le 27/09 (S1-S10 faites : pas de rappel) |
+
+Aucune valeur « après migration » ne diffère de « avant ». Le changement de départ ne modifie que la semaine affichée, les dates prévues et les rappels.
+
+## L4.4 — Limites et points exposés
+
+- **Aucun essai sur appareil** : parcours, rappels natifs, sélecteur de date et migration réelle de ton installation restent à vérifier (protocoles dans `LIVRAISON_L4.md`).
+- **Titres de saison** « Touche-à-tout » et « Gardien du repos » : calculés sur la saison **en cours**, ils suivent la position dans le calendrier (comportement antérieur). Aucun crédit n'en dépend. Changer de départ peut les faire passer d'obtenu à non obtenu (ou l'inverse) : effet métier hors contrat L3, **exposé, non tranché**.
+- **Objectif hebdomadaire automatique** : plafond = journées de la semaine de programme courante ; suit le calendrier. Crédits de semaine complète (semaine civile) non concernés.
+- **Départ avancé avant des séances faites** : ces journées restent faites (clé S·J), leurs rappels ne sont pas recréés — conforme à la décision (« mêmes S·J »).
+- **Référence manquante en séance** : nommée par l'infobulle (appui long), le lecteur d'écran et l'écran Références ; pas de ligne visible supplémentaire, pour garder les 5 séries visibles sans défilement à 360 × 760.
+- Ancien fichier de sauvegarde avec une clé de référence inconnue : conservée « à vérifier », non affichée.
+- Validation générale des séries, reprise après destruction du processus : **L4b** (non lancé).
+- Branche temporaire `claude/ci-tools` toujours présente (suppression par le propriétaire).
+
+**LC1 (clos)** — contenu S12-S19 révisé selon les décisions du propriétaire du 26/09/2026 ; reste du programme et feuille Pilotage identiques ; recalcul des volumes pendant une séance corrigé ; testé automatiquement. Publication et build : `LIVRAISON_LC1.md` (2.5.7+58, `main` `043a1d2`, run n° 77 réussi). Aucune vérification sur téléphone.
 
 ## LC1.0 — Base
 

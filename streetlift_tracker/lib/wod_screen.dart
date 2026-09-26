@@ -52,7 +52,26 @@ class WodRunScreen extends StatefulWidget {
 
 class _WodRunScreenState extends State<WodRunScreen> {
   /// Horloge du store : contrôlable en test, comme la date des résultats.
-  final clock = WodClock(now: () => store.storeClock());
+  /// Heure réelle : bornée par l'horloge monotone du processus (KT-018).
+  final clock = WodClock(
+    now: () => store.storeClock(),
+    mono: store.realClock ? processMonotonicMicros : null,
+  );
+
+  /// Données dont dépend cet écran : un import ou un effacement ultérieur
+  /// l'empêche d'écrire un point sûr (KT-018).
+  final int _epoch = store.dataEpoch;
+
+  /// Chrono retrouvé après une interruption (process détruit, arrêt forcé,
+  /// redémarrage) : remis en pause au dernier point sûr.
+  ActiveWod? _restored;
+
+  /// WOD modifié depuis le lancement : chrono non repris, score seul.
+  bool _clockLost = false;
+
+  bool _restoring = false;
+  ({bool running, int round, int phase, int emom, bool finished, int saved})?
+  _last;
 
   /// Tentative autorisée au lancement du chrono (KT-003) : elle garde le
   /// droit de valider son score même si l'essai du jour change à minuit.
@@ -68,10 +87,72 @@ class _WodRunScreenState extends State<WodRunScreen> {
       keepAwake(true);
     }
     clock.addListener(_onClock);
+    final pending = store.activeWod;
+    if (pending != null && pending.wodId == widget.wodId) _restore(pending);
+  }
+
+  /// Reprise d'une tentative interrompue (décision du 26/09/2026) : même
+  /// tentative (droit de finir conservé, y compris un essai lancé avant
+  /// minuit), chrono en pause au temps du dernier point sûr.
+  void _restore(ActiveWod pending) {
+    _attempt = pending.attempt;
+    if (pending.ms == 0) return; // lancée puis interrompue avant 1er point
+    _restored = pending;
+    if (!store.sameDefinition(pending)) {
+      _clockLost = true;
+      return;
+    }
+    _restoring = true;
+    _configure(w);
+    clock.resumePaused(
+      ms: pending.ms,
+      laps: pending.laps,
+      round: pending.round,
+      restEndMs: pending.restEndMs,
+      capHit: pending.capHit,
+    );
+    _prompted = pending.finished;
+    _restoring = false;
+    _last = _state(clock.activeMs);
+  }
+
+  ({bool running, int round, int phase, int emom, bool finished, int saved})
+  _state(int saved) => (
+    running: clock.running,
+    round: clock.round,
+    phase: clock.phaseIndex,
+    emom: clock.emomRound,
+    finished: clock.finished,
+    saved: saved,
+  );
+
+  /// Point sûr aux changements utiles (départ, pause, reprise, round,
+  /// phase, minute d'EMOM, fin) et toutes les 15 s de temps actif : jamais
+  /// à chaque rafraîchissement.
+  void _checkpoint() {
+    final attempt = _attempt;
+    if (_restoring || attempt == null || !clock.started) return;
+    final ms = clock.activeMs;
+    final last = _last;
+    final next = _state(last?.saved ?? 0);
+    final changed =
+        last == null ||
+        next.running != last.running ||
+        next.round != last.round ||
+        next.phase != last.phase ||
+        next.emom != last.emom ||
+        next.finished != last.finished ||
+        ms - last.saved >= 15000;
+    if (!changed) return;
+    store.checkpointWod(attempt, clock.checkpoint(), _epoch);
+    _last = _state(ms);
   }
 
   @override
   void dispose() {
+    // Fermeture de l'écran (sortie confirmée, ou chrono jamais démarré) :
+    // abandon explicite. Une destruction du processus n'appelle pas ceci :
+    // le point sûr reste et la tentative est reprise au relancement.
     store.abandonAttempt(_attempt);
     keepAwake(false);
     clock.removeListener(_onClock);
@@ -83,6 +164,7 @@ class _WodRunScreenState extends State<WodRunScreen> {
   bool _scoreOpen = false;
   bool _allowExit = false;
   void _onClock() {
+    _checkpoint();
     if (mounted && clock.finished && !_prompted && !_scoreOpen) {
       _prompted = true;
       Future.microtask(() {
@@ -91,12 +173,52 @@ class _WodRunScreenState extends State<WodRunScreen> {
     }
   }
 
-  void _start() {
+  Future<void> _start() async {
     if (!store.canFinish(w, _attempt)) return;
-    _attempt ??= store.startAttempt(w);
+    if (_attempt == null) {
+      final other = store.activeWod;
+      var replace = false;
+      if (other != null && other.wodId != w.id) {
+        final name =
+            store.wods.where((x) => x.id == other.wodId).firstOrNull?.name ??
+            'un WOD';
+        replace =
+            await showDialog<bool>(
+              context: context,
+              builder:
+                  (ctx) => AlertDialog(
+                    title: const Text('Un WOD est déjà en cours'),
+                    content: Text(
+                      '$name : chrono en pause à ${fmtT(other.ms ~/ 1000)}. '
+                      'Démarrer celui-ci abandonne l’autre tentative (ses '
+                      'résultats déjà enregistrés restent).',
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(ctx, false),
+                        child: const Text('Annuler'),
+                      ),
+                      FilledButton(
+                        onPressed: () => Navigator.pop(ctx, true),
+                        child: const Text('Abandonner et démarrer'),
+                      ),
+                    ],
+                  ),
+            ) ??
+            false;
+        if (!replace || !mounted) return;
+      }
+      _attempt = store.startAttempt(w, replace: replace);
+    }
     if (_attempt == null) return;
     _prompted = false;
-    final wod = w;
+    _restored = null;
+    _clockLost = false;
+    _last = null;
+    _configure(w);
+  }
+
+  void _configure(Wod wod) {
     final phases = phasesOf(wod);
     if (phases != null) {
       clock.startPhases(phases, prep: store.settings.prepSec);
@@ -131,7 +253,12 @@ class _WodRunScreenState extends State<WodRunScreen> {
       builder:
           (_) => ScoreSheet(
             wod: wod,
-            elapsed: clock.phased ? clock.workElapsed : clock.elapsed,
+            elapsed:
+                _clockLost
+                    ? _restored!.ms ~/ 1000
+                    : clock.phased
+                    ? clock.workElapsed
+                    : clock.elapsed,
             laps: clock.round,
             clockFinished: clock.finished,
             capHit: clock.capHit,
@@ -160,6 +287,8 @@ class _WodRunScreenState extends State<WodRunScreen> {
       return;
     }
     _attempt = null;
+    _restored = null;
+    _clockLost = false;
     clock.reset();
     if (saved == ResultSave.saved) {
       checkLevelUp(context);
@@ -190,7 +319,7 @@ class _WodRunScreenState extends State<WodRunScreen> {
           (ctx) => AlertDialog(
             title: const Text('Quitter le WOD ?'),
             content: const Text(
-              'Le chrono sera arrêté. Enregistre ton score avant de quitter si tu veux le conserver.',
+              'La tentative sera abandonnée : le chrono s’arrête et ne pourra pas être repris. Enregistre ton score avant si tu veux le garder ; tes résultats déjà enregistrés restent.',
             ),
             actions: [
               TextButton(
@@ -233,7 +362,7 @@ class _WodRunScreenState extends State<WodRunScreen> {
           listenable: clock.active,
           builder:
               (context, _) => PopScope(
-                canPop: _allowExit || !clock.started,
+                canPop: _allowExit || !(clock.started || _clockLost),
                 onPopInvokedWithResult: (didPop, result) {
                   if (!didPop) _leave();
                 },
@@ -264,6 +393,39 @@ class _WodRunScreenState extends State<WodRunScreen> {
                   ),
                   body: KList(
                     children: [
+                      // ----- reprise après interruption (KT-018) -----
+                      ListenableBuilder(
+                        listenable: clock,
+                        builder: (context, _) {
+                          final r = _restored;
+                          if (r == null ||
+                              clock.running ||
+                              !(clock.started || _clockLost)) {
+                            return const SizedBox.shrink();
+                          }
+                          final at = TimeOfDay.fromDateTime(r.savedAt);
+                          final time =
+                              '${at.hour.toString().padLeft(2, '0')}:${at.minute.toString().padLeft(2, '0')}';
+                          return Semantics(
+                            container: true,
+                            liveRegion: true,
+                            child: KCard(
+                              key: const ValueKey('wod-restored'),
+                              accent: SL.action,
+                              child: Text(
+                                _clockLost
+                                    ? 'Tentative retrouvée, mais ce WOD a été modifié depuis : '
+                                        'le chrono ne peut pas reprendre. Temps enregistré : '
+                                        '${fmtT(r.ms ~/ 1000)}. « Terminer » pour saisir ton score.'
+                                    : 'Chrono retrouvé en pause à ${fmtT(r.ms ~/ 1000)}, '
+                                        'dernier point enregistré à $time. Le temps passé hors '
+                                        'de l’application n’est pas compté. « Reprendre » pour '
+                                        'continuer, ou « Terminer » pour saisir ton score.',
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                       // ----- chrono -----
                       ListenableBuilder(
                         listenable: clock,
@@ -433,7 +595,10 @@ class _WodRunScreenState extends State<WodRunScreen> {
                                       ),
                                       icon: const Icon(Icons.check_circle),
                                       label: const Text('Terminer'),
-                                      onPressed: clock.started ? _score : null,
+                                      onPressed:
+                                          clock.started || _clockLost
+                                              ? _score
+                                              : null,
                                     ),
                                     TextButton.icon(
                                       onPressed:

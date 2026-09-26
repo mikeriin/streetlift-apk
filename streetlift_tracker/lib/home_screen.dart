@@ -8,6 +8,7 @@ import 'muscle_body.dart';
 import 'session_history.dart';
 import 'session_screen.dart';
 import 'program_start.dart';
+import 'resume_banner.dart';
 import 'store.dart';
 import 'ui.dart';
 import 'motion.dart';
@@ -17,18 +18,45 @@ import 'motion.dart';
 /// la fin de séance ; au retour, le navigateur vérifie un niveau gagné hors
 /// bilan (jour de repos validé…) : ce contexte reste valable même si l'écran
 /// d'origine a été reconstruit entre-temps.
+///
+/// Une journée déjà ouverte n'est jamais empilée une seconde fois (clic
+/// répété, notification à chaud) : on revient à son écran. Une autre
+/// journée ouverte est d'abord refermée : son brouillon reste (fermer un
+/// écran n'est pas abandonner). Aucune occurrence, série ni récompense
+/// n'est créée par l'ouverture.
 Future<void> openProgramDay(NavigatorState nav, WeekPlan w, DayPlan d) async {
-  final log = store.logs[store.sessionKey(w.n, d.j)];
+  final key = store.sessionKey(w.n, d.j);
+  final active = [
+    for (final e in openDayRoutes)
+      if (e.route.isActive && identical(e.route.navigator, nav)) e,
+  ];
+  final same = active.where((e) => e.key == key).lastOrNull;
+  if (same != null) {
+    nav.popUntil((r) => identical(r, same.route));
+    return;
+  }
+  if (active.isNotEmpty) {
+    final first = active.first.route;
+    nav.popUntil((r) => identical(r, first));
+    if (first.isCurrent) nav.pop();
+  }
+  final log = store.logs[key];
   final root = nav.context;
-  await nav.push<void>(
-    MaterialPageRoute(
-      builder:
-          (_) =>
-              log?.done == true
-                  ? SessionHistoryScreen(log: log!, week: w, day: d)
-                  : SessionScreen(week: w, day: d),
-    ),
+  final route = MaterialPageRoute<void>(
+    builder:
+        (_) =>
+            log?.done == true
+                ? SessionHistoryScreen(log: log!, week: w, day: d)
+                : SessionScreen(week: w, day: d),
   );
+  // Enregistrée avant la première image : un second appel dans la même
+  // frame retrouve déjà cette route.
+  registerDayRoute(key, route);
+  try {
+    await nav.push<void>(route);
+  } finally {
+    unregisterDayRoute(route);
+  }
   if (root.mounted) checkLevelUp(root);
 }
 
@@ -270,6 +298,7 @@ class _HomeScreenState extends State<HomeScreen> {
         day: d,
         isToday: d.j == today,
         done: store.isDone(w.n, d.j),
+        inProgress: store.inProgress(store.sessionKey(w.n, d.j)),
         onOpen: () => _open(w, d),
         onSummary: () => _summary(w, d),
       );
@@ -318,6 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       // journées (départ à choisir, à venir, terminé).
                       if (ProgramStartBanner.visible(store.program, now))
                         ProgramStartBanner(now: now, padding: EdgeInsets.zero),
+                      if (ResumeBanner.visible) const ResumeBanner(),
                       for (final d in w.days) card(d),
                     ],
                   ),
@@ -520,13 +550,14 @@ class _WeekSliderState extends State<_WeekSlider> {
 class _DayCard extends StatelessWidget {
   final WeekPlan week;
   final DayPlan day;
-  final bool isToday, done;
+  final bool isToday, done, inProgress;
   final VoidCallback onOpen, onSummary;
   const _DayCard({
     required this.week,
     required this.day,
     required this.isToday,
     required this.done,
+    this.inProgress = false,
     required this.onOpen,
     required this.onSummary,
   });
@@ -538,11 +569,27 @@ class _DayCard extends StatelessWidget {
     final estimate = isToday && !recovery ? store.dayEstimate(day) : null;
     final foreground = isToday ? Colors.white : SL.text;
     final secondary = isToday ? KPalette.light : SL.dim;
-    final status = done ? 'Séance effectuée' : 'Séance à faire';
+    final status =
+        done
+            ? 'Séance effectuée'
+            : inProgress
+            ? 'Séance en cours'
+            : 'Séance à faire';
     final statusIcon = Icon(
-      done ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
+      done
+          ? Icons.check_circle_rounded
+          : inProgress
+          ? Icons.timelapse_rounded
+          : Icons.radio_button_unchecked_rounded,
+      key: ValueKey('day-status-${day.j}'),
+      semanticLabel: status,
       size: 20,
-      color: done ? (isToday ? KPalette.light : SL.success) : secondary,
+      color:
+          done
+              ? (isToday ? KPalette.light : SL.success)
+              : inProgress
+              ? (isToday ? KPalette.light : SL.accent)
+              : secondary,
     );
     return Semantics(
       button: true,
@@ -557,7 +604,12 @@ class _DayCard extends StatelessWidget {
               : '${estimate.durationLabel}, ${day.exercises.length} exercices, ${estimate.sets.round()} séries, ${estimate.volumeLabel}',
       onTap: onOpen,
       onLongPress: onSummary,
-      onTapHint: done ? 'Afficher l’historique' : 'Ouvrir la séance',
+      onTapHint:
+          done
+              ? 'Afficher l’historique'
+              : inProgress
+              ? 'Reprendre la séance'
+              : 'Ouvrir la séance',
       onLongPressHint: 'Afficher le résumé',
       child: ExcludeSemantics(
         child: KCard(

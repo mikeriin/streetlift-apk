@@ -1,7 +1,0 @@
-   Woah! You appear to be trying to run flutter as root.
-   We strongly recommend running the flutter tool without superuser privileges.
-  /
-📎
-00:00 +0: loading /workspace/scratch/d48e8511f22e/project/streetlift_tracker/test/visual_capture_test.dart
-00:00 +0: rendus bordeaux : écrans, thèmes et largeur compacte
-00:05 +1: All tests passed!

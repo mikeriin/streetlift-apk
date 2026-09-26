@@ -27,6 +27,22 @@ String nbsp(String t) => t.replaceAllMapped(
 
 // ============================ SÉANCE =====================================
 
+/// Écrans de journée ouverts (séance ou historique), du plus ancien au plus
+/// récent : une notification ou un appui répété ramène à l'écran existant au
+/// lieu d'empiler une seconde séance (KT-018).
+final List<({String key, Route<dynamic> route})> openDayRoutes = [];
+
+/// Enregistre l'écran de journée [key] (si ce n'est déjà fait).
+void registerDayRoute(String key, Route<dynamic>? route) {
+  if (route == null || openDayRoutes.any((e) => identical(e.route, route))) {
+    return;
+  }
+  openDayRoutes.add((key: key, route: route));
+}
+
+void unregisterDayRoute(Route<dynamic>? route) =>
+    openDayRoutes.removeWhere((e) => identical(e.route, route));
+
 class SessionScreen extends StatefulWidget {
   final WeekPlan week;
   final DayPlan day;
@@ -38,9 +54,10 @@ class SessionScreen extends StatefulWidget {
 
 class _SessionScreenState extends State<SessionScreen> {
   final ctl = TimerCtl();
-  final pageCtl = PageController();
+  late final PageController pageCtl;
   late final List<List<Exercise>> groups;
   int page = 0;
+  Route<dynamic>? _route;
 
   int get nPages => groups.length;
 
@@ -48,11 +65,23 @@ class _SessionScreenState extends State<SessionScreen> {
   void initState() {
     super.initState();
     groups = store.groups(widget.day);
+    // Reprise : même occurrence (même clé de journal), ouverte sur
+    // l'exercice en cours. Le repos n'est pas relancé (décision 26/09).
+    page = store.resumePage(widget.week.n, widget.day.j, groups);
+    pageCtl = PageController(initialPage: page);
     if (store.settings.wakelock) keepAwake(true);
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _route ??= ModalRoute.of(context);
+    registerDayRoute(store.sessionKey(widget.week.n, widget.day.j), _route);
+  }
+
+  @override
   void dispose() {
+    unregisterDayRoute(_route);
     keepAwake(false);
     store.flush();
     ctl.dispose();
@@ -557,18 +586,30 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     );
   }
 
+  /// Problème de saisie affiché sous une série (KT-009) : (exercice, série).
+  final Map<(int, int), SetCheck> _issues = {};
+
   void _checkSet(int k, int i) {
     if (widget.readOnly) return;
     final ex = widget.exs[k];
     final sp = specs[k];
     final log = logs[k];
     final s = log.sets[i];
+    // Validation métier (store) : la coche n'est acceptée qu'avec une saisie
+    // valide ; sinon le texte reste tel quel et le champ est nommé.
+    final check = store.toggleSet(log, i, sp);
     setState(() {
-      s.done = !s.done;
-      s.completedAt = s.done ? DateTime.now().toIso8601String() : null;
+      if (check.ok) {
+        _issues.remove((k, i));
+      } else {
+        _issues[(k, i)] = check;
+      }
     });
+    if (!check.ok) {
+      if (store.settings.vibration) HapticFeedback.heavyImpact();
+      return;
+    }
     if (store.settings.vibration) HapticFeedback.lightImpact();
-    store.saveLogs();
     if (s.done) _celebrateRecord(ex, s);
     if (!s.done || !store.settings.autoTimer) return;
     if (widget.exs.length == 2 && k == 0) {
@@ -624,6 +665,23 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           ),
         ),
       );
+  }
+
+  /// Une série déjà validée puis modifiée repasse « non validée » si sa
+  /// saisie n'est plus valide ; un problème affiché disparaît dès la frappe.
+  void _edited(int k, int i) {
+    final check = store.revalidateSet(logs[k], i, specs[k]);
+    if (check == null && !_issues.containsKey((k, i))) return;
+    setState(() {
+      if (check == null) {
+        _issues.remove((k, i));
+      } else {
+        _issues[(k, i)] = SetCheck.error(
+          check.field!,
+          'Série repassée non validée. ${check.message}',
+        );
+      }
+    });
   }
 
   void _reusePrevious(int k, ExerciseLog prev) {
@@ -972,6 +1030,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               showRir: showRir,
               showV: showV,
               readOnly: readOnly,
+              issue: _issues[(k, i)],
+              onEdited: readOnly ? null : () => _edited(k, i),
               onCheck: readOnly ? null : () => _checkSet(k, i),
               onTimer:
                   readOnly
@@ -1308,8 +1368,14 @@ class _SetRow extends StatefulWidget {
   final bool readOnly;
   final VoidCallback? onCheck;
   final VoidCallback? onTimer;
+
+  /// Saisie refusée à la coche (KT-009) : champ et explication.
+  final SetCheck? issue;
+  final VoidCallback? onEdited;
   const _SetRow({
     super.key,
+    this.issue,
+    this.onEdited,
     required this.label,
     required this.entry,
     required this.spec,
@@ -1404,6 +1470,7 @@ class _SetRowState extends State<_SetRow> {
               onChanged: (text) {
                 on(text);
                 store.saveLogs(affectsProgression: false);
+                widget.onEdited?.call();
               },
             ),
           ),
@@ -1529,6 +1596,28 @@ class _SetRowState extends State<_SetRow> {
               ),
             ],
           ),
+          if (widget.issue?.message case final message?)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(_wLabel + 6, 2, 0, 2),
+              child: Semantics(
+                container: true,
+                liveRegion: true,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(Icons.error_outline, size: 16, color: SL.danger),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        message,
+                        key: ValueKey('set-issue-${widget.label}'),
+                        style: TextStyle(color: SL.danger, fontSize: 12.5),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           if (compact && (widget.showRir || widget.showV)) ...[
             const SizedBox(height: 4),
             Row(
@@ -1683,16 +1772,62 @@ class _TimerBar extends StatelessWidget {
 
 // ------------------------- FIN & JOUR DE REPOS ---------------------------
 
-class _FinishPage extends StatelessWidget {
+class _FinishPage extends StatefulWidget {
   final WeekPlan week;
   final DayPlan day;
   const _FinishPage({required this.week, required this.day});
+
+  @override
+  State<_FinishPage> createState() => _FinishPageState();
+}
+
+class _FinishPageState extends State<_FinishPage> {
+  WeekPlan get week => widget.week;
+  DayPlan get day => widget.day;
+
+  /// Enregistrement en cours : un second appui ne relance rien.
+  bool _saving = false;
+
+  /// Séance terminée en mémoire mais écriture refusée : à réessayer.
+  bool _unsaved = false;
 
   @override
   Widget build(BuildContext context) => ListenableBuilder(
     listenable: store,
     builder: (context, _) => _build(context),
   );
+
+  /// Fin de séance : le bilan n'est présenté qu'après l'écriture acceptée.
+  Future<void> _finish(String title) async {
+    if (_saving) return;
+    setState(() => _saving = true);
+    final nav = Navigator.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final closing = ModalRoute.of(context)?.completed;
+    final result = await store.finishSession(week.n, day.j, title: title);
+    if (!mounted) return;
+    setState(() {
+      _saving = false;
+      _unsaved = result != ResultSave.saved;
+    });
+    if (result != ResultSave.saved) {
+      messenger.showSnackBar(
+        const SnackBar(
+          duration: Duration(seconds: 8),
+          content: Text(
+            'Séance terminée mais pas encore enregistrée sur le téléphone : '
+            'tes séries sont gardées. Réessaie avant de fermer l’application.',
+          ),
+        ),
+      );
+      return;
+    }
+    // Le bilan part d'ici, quel que soit l'écran qui a ouvert la séance
+    // (accueil, Arsenal, notification de rappel). Son décompte attend que la
+    // séance soit refermée et sauvegardée.
+    nav.pop();
+    checkLevelUp(nav.context, after: closing);
+  }
 
   Widget _build(BuildContext context) {
     final log = store.sessionLog(week.n, day.j);
@@ -1755,30 +1890,48 @@ class _FinishPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 22),
-            FilledButton.icon(
-              style: FilledButton.styleFrom(
-                backgroundColor: log.done ? SL.card : SL.bordeaux,
-                foregroundColor: log.done ? SL.dim : Colors.white,
-                minimumSize: const Size(220, KControl.buttonHeight),
+            if (log.done && _unsaved)
+              FilledButton.icon(
+                key: const ValueKey('finish-retry'),
+                style: FilledButton.styleFrom(
+                  backgroundColor: SL.bordeaux,
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(220, KControl.buttonHeight),
+                ),
+                icon: const Icon(Icons.sync_problem),
+                label: Text(
+                  _saving ? 'Enregistrement…' : 'Réessayer l’enregistrement',
+                ),
+                onPressed: _saving ? null : () => _finish(title),
+              )
+            else
+              FilledButton.icon(
+                key: const ValueKey('finish-session'),
+                style: FilledButton.styleFrom(
+                  backgroundColor: log.done ? SL.card : SL.bordeaux,
+                  foregroundColor: log.done ? SL.dim : Colors.white,
+                  minimumSize: const Size(220, KControl.buttonHeight),
+                ),
+                icon: Icon(log.done ? Icons.undo : Icons.check_circle),
+                label: Text(
+                  _saving
+                      ? 'Enregistrement…'
+                      : log.done
+                      ? 'Repasser en « à faire »'
+                      : 'Terminer la séance',
+                ),
+                onPressed:
+                    _saving
+                        ? null
+                        : log.done
+                        ? () => store.markSessionDone(
+                          week.n,
+                          day.j,
+                          false,
+                          title: title,
+                        )
+                        : () => _finish(title),
               ),
-              icon: Icon(log.done ? Icons.undo : Icons.check_circle),
-              label: Text(
-                log.done ? 'Repasser en « à faire »' : 'Terminer la séance',
-              ),
-              onPressed: () {
-                final wasDone = log.done;
-                store.markSessionDone(week.n, day.j, !wasDone, title: title);
-                if (wasDone) return;
-                // Le bilan part d'ici, quel que soit l'écran qui a ouvert la
-                // séance (accueil, Arsenal, notification de rappel) : il ne
-                // dépend plus d'un appel au retour. Son décompte attend que
-                // la séance soit refermée et sauvegardée.
-                final nav = Navigator.of(context);
-                final closing = ModalRoute.of(context)?.completed;
-                nav.pop();
-                checkLevelUp(nav.context, after: closing);
-              },
-            ),
           ],
         ),
       ),

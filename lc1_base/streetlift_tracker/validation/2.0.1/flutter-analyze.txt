@@ -1,6 +1,0 @@
-   Woah! You appear to be trying to run flutter as root.
-   We strongly recommend running the flutter tool without superuser privileges.
-  /
-📎
-Analyzing streetlift_tracker...                                 
-No issues found! (ran in 1.9s)

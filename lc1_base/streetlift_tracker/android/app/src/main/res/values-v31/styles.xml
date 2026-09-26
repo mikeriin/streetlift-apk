@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="KalisLaunchApi31" parent="@style/KalisLaunchBase">
-        <item name="android:windowSplashScreenBackground">@color/launch_background_color</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
-    </style>
-    <style name="LaunchTheme" parent="@style/KalisLaunchApi31" />
-</resources>

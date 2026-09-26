@@ -458,7 +458,12 @@ class _SessionTile extends StatelessWidget {
       title: s.name,
       subtitle:
           '${s.items.length} exercice${s.items.length > 1 ? 's' : ''}${modes.isEmpty ? '' : ' · $modes'}',
-      tag: done ? 'FAIT ✓' : null,
+      tag:
+          done
+              ? 'FAIT ✓'
+              : store.inProgress('S0-J${s.id}')
+              ? 'EN COURS'
+              : null,
       onTap: () => _run(context),
       onLongPress:
           () => _actions(

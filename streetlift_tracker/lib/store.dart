@@ -15,11 +15,13 @@ import 'models.dart';
 import 'persistence.dart';
 import 'training_estimate.dart';
 import 'progression.dart';
+import 'set_validation.dart';
 import 'wod_formats.dart';
 import 'wod_generator.dart';
 import 'wod_models.dart';
 
 export 'persistence.dart';
+export 'set_validation.dart' show SetCheck, SetField;
 
 class SetEntry {
   String kg;
@@ -743,8 +745,10 @@ class AppStore extends ChangeNotifier {
     }
     final saved = _prefs.getString(_kState);
     if (saved != null) {
-      _applyBackup(_parseBackup(_unpack(saved)!));
+      Map<String, dynamic>? raw;
+      _applyBackup(_parseBackup(_unpack(saved)!, rawMap: (m) => raw = m));
       _rankDifficulty();
+      _restoreActiveWod(raw?['activeWod']);
       _initialized = true;
       return;
     }
@@ -1049,6 +1053,10 @@ class AppStore extends ChangeNotifier {
   /// jour et de la semaine ne dépendent que de la date et du journal.
   DateTime Function() storeClock = DateTime.now;
 
+  /// Horloge réelle (non remplacée par un test) : les chronos peuvent alors
+  /// s'appuyer aussi sur l'horloge monotone du processus.
+  bool get realClock => identical(storeClock, DateTime.now);
+
   static int _fnv(String s) {
     var h = 0x811C9DC5;
     for (final c in s.codeUnits) {
@@ -1271,21 +1279,98 @@ class AppStore extends ChangeNotifier {
   /// générale : L4b).
   final Map<String, ({String wodId, DateTime startedAt})> _attempts = {};
 
-  /// Démarre une tentative si le WOD est jouable maintenant.
-  String? startAttempt(Wod w) {
+  /// Démarre une tentative si le WOD est jouable maintenant. Un seul WOD
+  /// chronométré à la fois (décision du 26/09/2026) : si une autre tentative
+  /// est en cours, rien ne démarre sans [replace] (qui l'abandonne ; ses
+  /// anciens résultats restent).
+  String? startAttempt(Wod w, {bool replace = false}) {
     if (!canRun(w)) return null;
+    final other = activeWod;
+    if (other != null) {
+      if (!replace) return null;
+      abandonAttempt(other.attempt);
+    }
     final id = _newUid();
     _attempts[id] = (wodId: w.id, startedAt: storeClock());
+    activeWod = ActiveWod(
+      attempt: id,
+      wodId: w.id,
+      definition: _fnv(_defJson(w)),
+      startedAt: storeClock(),
+      savedAt: storeClock(),
+      ms: 0,
+    );
+    _persist();
     return id;
+  }
+
+  // ---------- Chrono WOD en cours (KT-018) ----------
+  /// Tentative et dernier point sûr de son chrono, gardés dans le document
+  /// local : retrouvés après destruction du processus, arrêt forcé ou
+  /// redémarrage. Remis **en pause** au temps enregistré (décision du
+  /// 26/09/2026) ; le temps hors de l'application n'est pas compté.
+  ActiveWod? activeWod;
+
+  /// Un chrono en cours n'a pas pu être relu au démarrage : il est ignoré,
+  /// le reste des données est chargé normalement.
+  bool activeWodUnreadable = false;
+
+  /// Change à chaque remplacement des données (import, effacement) : un
+  /// écran ouvert sur l'ancien état ne peut plus écrire de point sûr.
+  int dataEpoch = 0;
+
+  /// Enregistre un point sûr (démarrage, pause, round, phase, fin, puis
+  /// toutes les 15 s). Ignoré si la tentative n'est plus ouverte ou si les
+  /// données ont été remplacées depuis [epoch].
+  void checkpointWod(String attempt, Map<String, dynamic> point, int epoch) {
+    final current = activeWod;
+    if (epoch != dataEpoch ||
+        current == null ||
+        current.attempt != attempt ||
+        !_attempts.containsKey(attempt)) {
+      return;
+    }
+    activeWod = current.withPoint(point, storeClock());
+    _persist();
+  }
+
+  /// Le WOD a-t-il la même définition qu'au lancement de la tentative ?
+  bool sameDefinition(ActiveWod a) {
+    for (final w in wods) {
+      if (w.id == a.wodId) return _fnv(_defJson(w)) == a.definition;
+    }
+    return false;
+  }
+
+  void _restoreActiveWod(Object? raw) {
+    activeWod = null;
+    if (raw == null) return;
+    try {
+      final a = ActiveWod.fromJson(raw as Map<String, dynamic>);
+      if (!wods.any((w) => w.id == a.wodId)) {
+        throw const FormatException('WOD absent.');
+      }
+      activeWod = a;
+      _attempts[a.attempt] = (wodId: a.wodId, startedAt: a.startedAt);
+    } catch (_) {
+      activeWodUnreadable = true;
+    }
   }
 
   /// Terminer : WOD jouable, ou tentative autorisée encore ouverte.
   bool canFinish(Wod w, String? attempt) =>
       canRun(w) || (attempt != null && _attempts[attempt]?.wodId == w.id);
 
-  /// Abandon (sortie de l'écran) : la tentative ne peut plus être validée.
+  /// Abandon explicite (sortie confirmée de l'écran) : la tentative ne peut
+  /// plus être validée et son chrono n'est plus repris. Les résultats déjà
+  /// enregistrés ne sont pas touchés.
   void abandonAttempt(String? attempt) {
-    if (attempt != null) _attempts.remove(attempt);
+    if (attempt == null) return;
+    _attempts.remove(attempt);
+    if (activeWod?.attempt == attempt) {
+      activeWod = null;
+      _persist();
+    }
   }
 
   /// Validation d'un score : un seul résultat par tentative ; succès annoncé
@@ -1301,6 +1386,8 @@ class AppStore extends ChangeNotifier {
     }
     if (!canFinish(w, attempt)) return ResultSave.denied;
     r.attempt = attempt;
+    // Même écriture : le résultat remplace le chrono en cours.
+    if (attempt != null && activeWod?.attempt == attempt) activeWod = null;
     addWodResult(w, r);
     _attempts.remove(attempt);
     await flush();
@@ -2188,14 +2275,28 @@ class AppStore extends ChangeNotifier {
   }
 
   String exportAll() => jsonEncode(_backupJson(_currentBackup()));
+
+  /// Document local : la sauvegarde exportée plus le chrono WOD en cours
+  /// (KT-018), qui reste propre à cet appareil (jamais exporté ni importé).
+  String _stateDocument() {
+    final m = _backupJson(_currentBackup());
+    final active = activeWod;
+    if (active != null) m['activeWod'] = active.toJson();
+    return jsonEncode(m);
+  }
   String exportCompact() => _pack(exportAll());
 
   /// [limits] : import d'un texte externe (KT-015). Sans limites : état
   /// produit par l'application elle-même, relu au démarrage.
-  _BackupData _parseBackup(String raw, {ImportLimits? limits}) {
+  _BackupData _parseBackup(
+    String raw, {
+    ImportLimits? limits,
+    void Function(Map<String, dynamic>)? rawMap,
+  }) {
     final m =
         (limits == null ? jsonDecode(raw) : boundedJsonDecode(raw, limits))
             as Map<String, dynamic>;
+    rawMap?.call(m);
     if (m['kalisTrack'] != 1 || ![1, 2, 3].contains(m['format'] ?? 1)) {
       throw const FormatException('Format de sauvegarde non pris en charge.');
     }
@@ -2628,6 +2729,10 @@ class AppStore extends ChangeNotifier {
     _weekOf = data.weekOf;
     _weeklyIdsStored = List.of(data.weeklyIds);
     _attempts.clear();
+    // Import, effacement : l'état remplacé n'a plus de chrono en cours, et
+    // les écrans encore ouverts sur l'ancien état ne peuvent plus l'écrire.
+    activeWod = null;
+    dataEpoch++;
     // Registre : calculé sur un catalogue classé (les XP de WOD dépendent
     // du niveau des WODs), donc après classement et sans progression mise
     // en cache avant celui-ci.
@@ -2942,7 +3047,7 @@ class AppStore extends ChangeNotifier {
     final seq = _changeSeq;
     // Les gains nouveaux du journal sont acquis (KT-005, registre par gain).
     _recordGrants();
-    final ok = await _writeRaw(_pack(exportAll()));
+    final ok = await _writeRaw(_pack(_stateDocument()));
     if (ok) {
       if (seq > _acceptedSeq) _acceptedSeq = seq;
       persistenceError.value = null;
@@ -3815,6 +3920,41 @@ class AppStore extends ChangeNotifier {
     saveLogs(immediate: true);
   }
 
+  // ---------- Séries (KT-009) ----------
+  /// Coche ou décoche une série. La coche n'est acceptée qu'avec une saisie
+  /// valide pour le mode (voir `set_validation.dart`) : un pré-remplissage
+  /// devient une performance seulement ici. Refus : rien ne change, le
+  /// texte saisi est gardé.
+  SetCheck toggleSet(ExerciseLog log, int index, LogSpec spec) {
+    final s = log.sets[index];
+    if (s.done) {
+      s.done = false;
+      s.completedAt = null;
+      saveLogs();
+      return const SetCheck.ok();
+    }
+    final check = checkSet(spec, s, rpe: settings.rpe);
+    if (!check.ok) return check;
+    s.done = true;
+    s.completedAt = storeClock().toIso8601String();
+    saveLogs();
+    return check;
+  }
+
+  /// Après la modification d'une série déjà validée : si sa saisie n'est
+  /// plus valide, elle repasse « non validée » (jamais de série terminée
+  /// avec une valeur invalide). Renvoie le problème, ou null.
+  SetCheck? revalidateSet(ExerciseLog log, int index, LogSpec spec) {
+    final s = log.sets[index];
+    if (!s.done) return null;
+    final check = checkSet(spec, s, rpe: settings.rpe);
+    if (check.ok) return null;
+    s.done = false;
+    s.completedAt = null;
+    saveLogs();
+    return check;
+  }
+
   void markSessionDone(int week, int j, bool done, {String? title}) {
     final s = sessionLog(week, j);
     final wasDone = s.done;
@@ -3857,6 +3997,124 @@ class AppStore extends ChangeNotifier {
   }
 
   bool isDone(int week, int j) => logs[sessionKey(week, j)]?.done ?? false;
+
+  // ---------- Fin de séance (KT-018) ----------
+  /// Bilans calculés dont l'écriture a été refusée : présentés seulement
+  /// après une écriture acceptée (jamais de fin annoncée trop tôt).
+  final Map<String, RewardSummary> _unsavedRewards = {};
+
+  /// Termine une séance et attend l'écriture. `saved` : séance terminée et
+  /// enregistrée, bilan prêt ([consumeReward]). `unsaved` : terminée en
+  /// mémoire, écriture refusée ; saisies gardées, nouvel appel = nouvelle
+  /// tentative d'écriture, sans second bilan ni second gain (XP dérivée du
+  /// journal, crédits au registre L3 par identifiant).
+  Future<ResultSave> finishSession(int week, int j, {String? title}) async {
+    final key = sessionKey(week, j);
+    if (!isDone(week, j)) {
+      markSessionDone(week, j, true, title: title);
+      final reward = _pendingReward;
+      _pendingReward = null;
+      if (reward != null) _unsavedRewards[key] = reward;
+    }
+    await flush();
+    if (hasUnsavedChanges) return ResultSave.unsaved;
+    final reward = _unsavedRewards.remove(key);
+    if (reward != null) _pendingReward = reward;
+    return ResultSave.saved;
+  }
+
+  // ---------- Séances en cours (KT-018) ----------
+  /// Séance en cours : journal non terminé avec une activité réelle (une
+  /// série validée ou une note). Ouvrir une séance ou afficher des
+  /// suggestions n'en fait pas une séance en cours.
+  bool inProgress(String key) {
+    final log = logs[key];
+    if (log == null || log.done) return false;
+    return log.ex.values.any(
+      (e) => e.note.trim().isNotEmpty || e.sets.any((s) => s.done),
+    );
+  }
+
+  /// Séances à reprendre, la plus récente d'abord. Une séance perso dont le
+  /// modèle a été supprimé n'est pas proposée (son journal reste intact).
+  List<SessionResume> get sessionsInProgress {
+    final out = <SessionResume>[];
+    for (final entry in logs.entries) {
+      final match = RegExp(r'^S(\d+)-J(\d+)$').firstMatch(entry.key);
+      if (match == null || !inProgress(entry.key)) continue;
+      final n = int.parse(match[1]!), j = int.parse(match[2]!);
+      WeekPlan? week;
+      DayPlan? day;
+      String title;
+      if (n == 0) {
+        final session =
+            customSessions.where((c) => int.tryParse(c.id) == j).firstOrNull;
+        if (session == null || session.items.isEmpty) continue;
+        week = session.toWeekPlan();
+        day = week.days.first;
+        title = session.name;
+      } else {
+        if (n > program.weeks.length) continue;
+        week = program.week(n);
+        day = week.day(j);
+        if (day == null || day.exercises.isEmpty) continue;
+        title = 'S$n · J$j — ${day.title}';
+      }
+      var done = 0, total = 0;
+      DateTime? last;
+      for (final e in entry.value.ex.values) {
+        total += e.sets.length;
+        for (final set in e.sets.where((x) => x.done)) {
+          done++;
+          final at = DateTime.tryParse(set.completedAt ?? '');
+          if (at != null && (last == null || at.isAfter(last))) last = at;
+        }
+      }
+      out.add(
+        SessionResume(
+          key: entry.key,
+          week: week,
+          day: day,
+          title: title,
+          done: done,
+          total: total,
+          last: last,
+        ),
+      );
+    }
+    out.sort((a, b) {
+      final x = a.last, y = b.last;
+      if (x == null || y == null) return x == null ? 1 : -1;
+      return y.compareTo(x);
+    });
+    return out;
+  }
+
+  /// Page de reprise : groupe de la dernière série validée, ou le suivant
+  /// s'il est complet (le bilan après le dernier). 0 sans série validée.
+  int resumePage(int week, int j, List<List<Exercise>> groups) {
+    final log = logs[sessionKey(week, j)];
+    if (log == null || log.done) return 0;
+    var page = -1;
+    DateTime? last;
+    for (var g = 0; g < groups.length; g++) {
+      for (final e in groups[g]) {
+        for (final set in log.ex[e.id]?.sets ?? const <SetEntry>[]) {
+          if (!set.done) continue;
+          final at = DateTime.tryParse(set.completedAt ?? '');
+          if (page < 0 || (at != null && (last == null || !at.isBefore(last)))) {
+            page = g;
+            last = at ?? last;
+          }
+        }
+      }
+    }
+    if (page < 0) return 0;
+    final complete = groups[page].every(
+      (e) => (log.ex[e.id]?.sets ?? const <SetEntry>[]).every((x) => x.done),
+    );
+    return complete ? page + 1 : page;
+  }
 
   // ---------- Correction depuis l'historique ----------
 
@@ -4056,6 +4314,129 @@ class _BackupData {
     this.weeklyIds = const [],
     this.wishlist = const [],
   });
+}
+
+/// Séance à reprendre (bandeau de l'accueil).
+class SessionResume {
+  final String key, title;
+  final WeekPlan week;
+  final DayPlan day;
+  final int done, total;
+  final DateTime? last;
+  const SessionResume({
+    required this.key,
+    required this.week,
+    required this.day,
+    required this.title,
+    required this.done,
+    required this.total,
+    required this.last,
+  });
+}
+
+/// Tentative WOD en cours et son dernier point sûr (KT-018). Aucun repère
+/// d'horloge n'est gardé : seulement du temps déjà compté.
+class ActiveWod {
+  final String attempt, wodId;
+
+  /// Empreinte de la définition du WOD au lancement : un WOD modifié depuis
+  /// ne reprend pas son chrono (seul le score reste possible).
+  final int definition;
+  final DateTime startedAt, savedAt;
+  final int ms;
+  final List<int> laps;
+  final int round;
+  final int? restEndMs;
+  final bool capHit, finished;
+  const ActiveWod({
+    required this.attempt,
+    required this.wodId,
+    required this.definition,
+    required this.startedAt,
+    required this.savedAt,
+    required this.ms,
+    this.laps = const [],
+    this.round = 0,
+    this.restEndMs,
+    this.capHit = false,
+    this.finished = false,
+  });
+
+  ActiveWod withPoint(Map<String, dynamic> p, DateTime at) => ActiveWod(
+    attempt: attempt,
+    wodId: wodId,
+    definition: definition,
+    startedAt: startedAt,
+    savedAt: at,
+    ms: p['ms'] as int,
+    laps: List<int>.of(p['laps'] as List<int>),
+    round: p['round'] as int,
+    restEndMs: p['restEndMs'] as int?,
+    capHit: p['capHit'] as bool,
+    finished: p['finished'] as bool,
+  );
+
+  Map<String, dynamic> toJson() => {
+    'v': 1,
+    'attempt': attempt,
+    'wod': wodId,
+    'definition': definition,
+    'startedAt': startedAt.toIso8601String(),
+    'savedAt': savedAt.toIso8601String(),
+    'ms': ms,
+    'laps': laps,
+    'round': round,
+    if (restEndMs != null) 'restEndMs': restEndMs,
+    'capHit': capHit,
+    'finished': finished,
+  };
+
+  /// Lecture stricte et bornée : toute incohérence lève FormatException.
+  factory ActiveWod.fromJson(Map<String, dynamic> j) {
+    const day = 86400 * 1000;
+    int whole(Object? v, {int max = day}) {
+      if (v is! int || v < 0 || v > max) {
+        throw const FormatException('Chrono en cours invalide.');
+      }
+      return v;
+    }
+
+    DateTime date(Object? v) {
+      final d = v is String ? DateTime.tryParse(v) : null;
+      if (d == null) throw const FormatException('Date invalide.');
+      return d;
+    }
+
+    final attempt = j['attempt'], wod = j['wod'];
+    if (j['v'] != 1 ||
+        attempt is! String ||
+        attempt.isEmpty ||
+        attempt.length > 64 ||
+        wod is! String ||
+        wod.isEmpty ||
+        j['definition'] is! int ||
+        j['laps'] is! List ||
+        (j['laps'] as List).length > 1000 ||
+        j['capHit'] is! bool ||
+        j['finished'] is! bool) {
+      throw const FormatException('Chrono en cours invalide.');
+    }
+    final ms = whole(j['ms']);
+    final laps = [for (final l in j['laps'] as List) whole(l, max: 86400)];
+    return ActiveWod(
+      attempt: attempt,
+      wodId: wod,
+      definition: j['definition'] as int,
+      startedAt: date(j['startedAt']),
+      savedAt: date(j['savedAt']),
+      ms: ms,
+      laps: laps,
+      round: whole(j['round'], max: 100000),
+      restEndMs: j['restEndMs'] == null ? null : whole(j['restEndMs']),
+      capHit: j['capHit'] as bool,
+      finished: j['finished'] as bool,
+    );
+  }
 }
 
 /// « 2026-09-28 » : date civile, sans heure ni fuseau.

@@ -1,4 +1,0 @@
-Compilation Android release tentée avec Flutter 3.29.3, Java 17 et le SDK Android 36.
-Résultat : échec au téléchargement de Gradle 8.13, avant compilation Android.
-Erreur : java.net.SocketException: Network is unreachable.
-Aucun APK produit. Identité Android et signature conservées ; utiliser le workflow GitHub livré.

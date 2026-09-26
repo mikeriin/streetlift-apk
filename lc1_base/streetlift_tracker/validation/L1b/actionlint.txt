@@ -1,3 +1,0 @@
-actionlint 1.7.7 -shellcheck='' .github/workflows/build-apk.yml
-Code de sortie 0 ; aucune erreur signalée.
-Shellcheck non exécuté. Ce contrôle statique ne constitue pas un run GitHub Actions.
