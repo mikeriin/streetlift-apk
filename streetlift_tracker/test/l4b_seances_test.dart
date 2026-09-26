@@ -579,7 +579,7 @@ void main() {
     }
 
     test(
-      'essai lancé avant minuit, processus détruit, fini après minuit',
+      'essai lancé avant minuit, relance simulée, fini après minuit',
       () async {
         final trial = app.trialWod!;
         final attempt = app.startAttempt(trial)!;
@@ -817,7 +817,7 @@ void main() {
         phone(tester, const Size(390, 844));
         final (w, d) = _repsDay(store);
         final groups = store.groups(d);
-        if (groups.length < 2) return;
+        expect(groups.length, greaterThan(1));
         for (final ex in groups.first) {
           final log = store.exLog(w.n, d.j, ex);
           for (var i = 0; i < log.sets.length; i++) {

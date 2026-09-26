@@ -1,4 +1,16 @@
-# Kalis Track 2.5.8 — Boutique de WODs façon jeu
+# Kalis Track 2.5.9 — Boutique de WODs façon jeu
+
+## 2.5.9 — Séances fiables et reprise (lot L4b)
+
+- **Séries validées pour de vrai** : une série ne se coche qu'avec une valeur valide (reps, secondes ou minutes ; 0 seulement pour un test max). Charge avec virgule ou point, négative pour une assistance ; RIR et RPE vérifiés chacun sur son échelle. Si quelque chose ne va pas, le champ est nommé sous la série et ta saisie reste. Une série modifiée avec une valeur invalide repasse « non validée ».
+- **Suggestion ≠ performance** : les reps et charges pré-remplies, comme un chrono de tenue terminé, ne comptent qu'une fois la série cochée.
+- **Reprise** : une séance commencée est marquée « En cours » et proposée dans « À reprendre » sur l'accueil ; elle rouvre sur l'exercice où tu en étais, avec tes séries. Le repos n'est pas relancé.
+- **WOD interrompu** (application tuée, arrêt forcé, redémarrage) : la tentative est retrouvée, chrono en pause au dernier temps enregistré ; « Reprendre » ou « Terminer » pour saisir le score. Un essai commencé avant minuit peut toujours être terminé. Un seul WOD chronométré à la fois.
+- **Fin de séance** : le bilan ne s'affiche qu'une fois la séance enregistrée ; en cas d'échec, « Réessayer l'enregistrement », sans double gain.
+- **Rappels** : toucher un rappel ramène à la séance déjà ouverte au lieu d'en empiler une seconde ; une journée faite ouvre son historique.
+- Chronos : un changement d'heure en arrière ne fait plus remonter un repos ; au retour dans l'application, aucune rafale de bips anciens.
+
+Détail : `docs/SEANCES_ET_REPRISE.md`, `SUIVI_PROJET.md` (L4b). Tests : `test/l4b_seances_test.dart`.
 
 ## 2.5.8 — Ton départ, tes références (lot L4)
 
