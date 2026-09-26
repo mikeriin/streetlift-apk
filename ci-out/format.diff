@@ -1,12 +1,12 @@
- ci-out/analyze.log                               |   3 -
- ci-out/android-debug.log                         |  12 -
- ci-out/commit.txt                                |   2 +-
- ci-out/format-full.diff                          |   0
- ci-out/format.log                                |   3 +-
- ci-out/mode.txt                                  |   2 +-
- ci-out/python.log                                |  15 -
- ci-out/test-l7.log                               |   1 -
- ci-out/test-summary.txt                          |   1 -
- ci-out/test.log                                  | 531 -----------------------
- streetlift_tracker/test/l7_2x_snapshot_test.dart |   7 +-
- 11 files changed, 9 insertions(+), 568 deletions(-)
+ ci-out/analyze.log                                 |   3 -
+ ci-out/commit.txt                                  |   2 +-
+ ci-out/format-full.diff                            | 657 ---------------------
+ ci-out/format.diff                                 |  12 -
+ ci-out/format.log                                  |   6 +-
+ ci-out/l7_2x_snapshot.json                         |   1 -
+ ci-out/python.log                                  |  15 -
+ ci-out/test-l7.log                                 |   4 -
+ streetlift_tracker/lib/koach_engine.dart           |  67 ++-
+ streetlift_tracker/test/l7_koach_engine_test.dart  |  68 ++-
+ .../test/l7_koach_simulation_test.dart             |  33 +-
+ 11 files changed, 114 insertions(+), 754 deletions(-)

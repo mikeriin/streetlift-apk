@@ -1,3 +1,6 @@
 Analyzing streetlift_tracker...                                 
-No issues found! (ran in 25.8s)
-exit=0
+
+  error • The argument type 'num' can't be assigned to the parameter type 'double'.  • lib/koach_engine.dart:1016:21 • argument_type_not_assignable
+   info • Statements in an if should be enclosed in a block • lib/koach_engine.dart:1736:5 • curly_braces_in_flow_control_structures
+
+2 issues found. (ran in 19.3s)

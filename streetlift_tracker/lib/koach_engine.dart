@@ -136,8 +136,7 @@ double kErfc(double x) {
                                                           (1.48851587 +
                                                               t *
                                                                   (-0.82215223 +
-                                                                      t *
-                                                                          0.17087277))))))));
+                                                                      t * 0.17087277))))))));
   final ans = t * math.exp(poly);
   return x >= 0 ? ans : 2.0 - ans;
 }
@@ -553,7 +552,11 @@ bool isFailed(Map<String, dynamic> ex, Map<String, dynamic> st) {
 
 /// Masse système : poids de corps + lest (tractions, dips, muscle-up),
 /// charge de la barre (squat).
-double? liftMass(Map<String, dynamic> lift, Map<String, dynamic> st, double? bw) {
+double? liftMass(
+  Map<String, dynamic> lift,
+  Map<String, dynamic> st,
+  double? bw,
+) {
   final kg = _dn(st['kg']);
   if (lift['bodyweight'] == true) {
     if (bw == null) return null;
@@ -580,10 +583,7 @@ List<KEvent> eventList(Map<String, dynamic> inp) {
     if (h['source'] != 'manual') continue;
     final th = parseDt(h['at'] as String?);
     if (th != null) {
-      events.add((
-        KEvent(th, 0, '${h['ref']}@${h['at']}', h),
-        events.length,
-      ));
+      events.add((KEvent(th, 0, '${h['ref']}@${h['at']}', h), events.length));
     }
   }
   events.sort((a, b) {
@@ -597,8 +597,7 @@ List<KEvent> eventList(Map<String, dynamic> inp) {
   return [for (final e in events) e.$1];
 }
 
-String eventSignature(KEvent ev) =>
-    jsonEncode([ev.t, ev.kind, ev.key, ev.obj]);
+String eventSignature(KEvent ev) => jsonEncode([ev.t, ev.kind, ev.key, ev.obj]);
 
 // ---------------------------------------------------------------------------
 // Rejeu (KT-026, KT-027) et cache incrémental (KT-034)
@@ -622,9 +621,7 @@ class KContext {
       lifts = _list(inp['lifts']),
       liftByRef = {for (final l in _list(inp['lifts'])) l['ref'] as String: l},
       repmax = _list(inp['repmax']),
-      repByRef = {
-        for (final r in _list(inp['repmax'])) r['ref'] as String: r,
-      },
+      repByRef = {for (final r in _list(inp['repmax'])) r['ref'] as String: r},
       sessions = sortedSessions(inp) {
     final raw = _list(inp['history']);
     final order = List<int>.generate(raw.length, (i) => i);
@@ -989,9 +986,7 @@ void _processSession(
       tr.p = _sq(p['end_test']! * testMax);
       tr.lastMeasure = t;
       tr.addWeek(week);
-      anchors.add(
-        _Anchor('endtest', ref, testMax.toDouble(), p['end_test']!),
-      );
+      anchors.add(_Anchor('endtest', ref, testMax.toDouble(), p['end_test']!));
     } else {
       Map<String, dynamic>? first;
       int? best;
@@ -1065,8 +1060,7 @@ void _kRefit(KTrack tr, Map<String, double> p) {
   if (suu <= 1e-12) return;
   final kLs = sun / suu;
   final sigN2 =
-      _sq(p['rir_noise_sd']!) +
-      _sq(tr.kPrior * p['sigma_day']! * (1.0 + mu));
+      _sq(p['rir_noise_sd']!) + _sq(tr.kPrior * p['sigma_day']! * (1.0 + mu));
   final vLs = sigN2 / suu;
   final w0 = 1.0 / _sq(p['k_prior_sd']!);
   final k = (tr.kPrior * w0 + kLs / vLs) / (w0 + 1.0 / vLs);
@@ -1246,7 +1240,13 @@ class KSuggestion {
   final double kg, from, delta;
   final String direction; // up | down
   final String reason; // easy1 | easy2 | twoHard | missed | missed2
-  const KSuggestion(this.kg, this.from, this.delta, this.direction, this.reason);
+  const KSuggestion(
+    this.kg,
+    this.from,
+    this.delta,
+    this.direction,
+    this.reason,
+  );
 
   Map<String, dynamic> toJson() => {
     'kg': kg,
@@ -1361,7 +1361,8 @@ List<Map<String, dynamic>> proposals(
   String sessionKey,
 ) {
   final p = paramsOf(inp);
-  final refs = ((inp['references'] as Map?) ?? const {}).cast<String, dynamic>();
+  final refs =
+      ((inp['references'] as Map?) ?? const {}).cast<String, dynamic>();
   final equipment =
       (inp['equipment'] as Map?)?.cast<String, dynamic>() ??
       Map<String, dynamic>.from(defaultEquipment);
@@ -1531,7 +1532,8 @@ List<Map<String, dynamic>> _accessoryProposals(
   Set<String> locks,
 ) {
   final out = <Map<String, dynamic>>[];
-  final refs = ((inp['references'] as Map?) ?? const {}).cast<String, dynamic>();
+  final refs =
+      ((inp['references'] as Map?) ?? const {}).cast<String, dynamic>();
   final order = sortedSessions(inp);
   final t = sessionTime(sess)!;
   for (final a in _list(inp['accessories'])) {
@@ -1665,7 +1667,8 @@ bool painBlocks(Map<String, dynamic> inp, String key) {
   final pains = (inp['pain'] as Map?)?.cast<String, dynamic>() ?? const {};
   final order = sortedSessions(inp);
   for (var i = order.length - 1; i >= 0; i--) {
-    final q = (pains[order[i].key] as Map?)?.cast<String, dynamic>() ?? const {};
+    final q =
+        (pains[order[i].key] as Map?)?.cast<String, dynamic>() ?? const {};
     if (q.containsKey(key)) return (_dn(q[key]) ?? 0) > p['pain_threshold']!;
   }
   return false;
@@ -1729,7 +1732,8 @@ Map<String, dynamic> objectiveStatus(
   final weeksLeft = (targetDay - nowDay) / 7.0;
   if (weeksLeft <= 0) return {'status': 'past'};
   final required = (target - current) / weeksLeft;
-  if (slope == null) return {'status': 'insufficient', 'required': r2(required)};
+  if (slope == null)
+    return {'status': 'insufficient', 'required': r2(required)};
   final ratio = slope / required;
   final status =
       ratio < p['late']!
@@ -1750,17 +1754,13 @@ Map<String, dynamic> objectives(Map<String, dynamic> inp, KoachState state) {
   final now = parseDt(inp['now'] as String?)!;
   final nowDay = dayOf(now);
   final bw = state.bwNow ?? 0.0;
-  final goals = (inp['objectives'] as Map?)?.cast<String, dynamic>() ?? const {};
+  final goals =
+      (inp['objectives'] as Map?)?.cast<String, dynamic>() ?? const {};
   final out = <String, dynamic>{};
 
   void one(String ref, KTrack tr, double off) {
     final cur = tr.x - off;
-    final slope = slopePerWeek(
-      tr.series,
-      now,
-      p['slope_weeks']!.toInt(),
-      off,
-    );
+    final slope = slopePerWeek(tr.series, now, p['slope_weeks']!.toInt(), off);
     final res = <String, dynamic>{};
     final g = (goals[ref] as Map?)?.cast<String, dynamic>() ?? const {};
     for (final level in const ['stage', 'final']) {
@@ -2020,7 +2020,14 @@ Map<String, dynamic> runCase(Map<String, dynamic> kase) {
         () {
           final c = (raw as Map).cast<String, dynamic>();
           return c.containsKey('up')
-              ? r2(gridNext(_num(c['kg']), c['kind'] as String, eq, c['up'] == true))
+              ? r2(
+                gridNext(
+                  _num(c['kg']),
+                  c['kind'] as String,
+                  eq,
+                  c['up'] == true,
+                ),
+              )
               : r2(gridRound(_num(c['kg']), c['kind'] as String, eq));
         }(),
     ];
