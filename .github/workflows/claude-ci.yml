@@ -49,6 +49,15 @@ jobs:
       - name: Publier tests ciblés
         if: always()
         run: *push
+      - name: Mesure avant (code LC1 2.5.7 inchangé)
+        if: always() && hashFiles('lc1_base/streetlift_tracker/pubspec.yaml') != ''
+        working-directory: lc1_base/streetlift_tracker
+        run: |
+          flutter pub get --enforce-lockfile > ../../ci-out/before-pub.log 2>&1 || true
+          TZ=Europe/Paris timeout 300 flutter test --no-pub --reporter expanded test/lc1_snapshot_test.dart > ../../ci-out/before.log 2>&1; echo "exit=$?" >> ../../ci-out/before.log
+      - name: Publier mesure avant
+        if: always()
+        run: *push
       - name: Compilation Android debug (code natif) et manifeste fusionné
         if: always() && hashFiles('ci-android') != ''
         working-directory: streetlift_tracker

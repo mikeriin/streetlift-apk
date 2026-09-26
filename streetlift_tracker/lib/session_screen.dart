@@ -527,6 +527,36 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     }
   }
 
+  /// Charge ou volume sans sa référence (KT-007) : « à renseigner » / « ? »
+  /// reste à sa place (pas de ligne en plus) ; la référence manquante est
+  /// nommée pour le lecteur d'écran et l'infobulle, et un appui ouvre
+  /// Références. Rien n'est calculé à sa place.
+  Widget _missingReference(Exercise ex, bool readOnly, Widget child) {
+    final ref = readOnly ? null : store.missingReference(ex);
+    if (ref == null) return child;
+    final message =
+        'Référence non renseignée : ${store.referenceLabel(ref)}. '
+        'Touche pour ouvrir Références.';
+    return Tooltip(
+      key: ValueKey('missing-ref-${ex.id}'),
+      message: message,
+      excludeFromSemantics: true,
+      child: Semantics(
+        button: true,
+        label: message,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap:
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const PilotageScreen()),
+              ),
+          child: child,
+        ),
+      ),
+    );
+  }
+
   void _checkSet(int k, int i) {
     if (widget.readOnly) return;
     final ex = widget.exs[k];
@@ -791,7 +821,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                   ],
                 ),
                 const SizedBox(height: 6),
-                Row(
+                _missingReference(
+                  ex,
+                  readOnly,
+                  Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     if (showBigLoad) ...[
@@ -827,17 +860,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                     ),
                   ],
                 ),
-                if (!readOnly)
-                  if (store.missingReference(ex) case final ref?)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 6),
-                      child: Text(
-                        'Référence non renseignée : ${store.referenceLabel(ref)}. '
-                        'Menu ⋮ → Références quand tu la connais ; rien n’est calculé à sa place.',
-                        key: ValueKey('missing-ref-${ex.id}'),
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ),
+                ),
                 const SizedBox(height: 6),
                 Wrap(
                   spacing: 6,
