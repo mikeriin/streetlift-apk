@@ -1,0 +1,261 @@
+{
+ "description": "Grilles personnalisées",
+ "equipment": {
+  "barbell": {
+   "step": 5.0
+  },
+  "dumbbell": {
+   "large": 2.5,
+   "small": 0.5,
+   "threshold": 5.0
+  },
+  "machine": {
+   "step": 5.0,
+   "unit": "lb"
+  },
+  "plate": {
+   "step": 0.5
+  },
+  "pulley": {
+   "step": 5.0,
+   "unit": "kg"
+  }
+ },
+ "expected": {
+  "grid": [
+   10.0,
+   7.5,
+   10.0,
+   7.5,
+   12.5,
+   7.5,
+   12.5,
+   10.0,
+   12.5,
+   10.0,
+   15.0,
+   12.5,
+   1.5,
+   0.5,
+   25.0,
+   15.0,
+   25.0,
+   20.0,
+   20.0,
+   10.0,
+   75.0,
+   70.0,
+   70.5,
+   71.0,
+   70.31,
+   70.31,
+   10.0,
+   10.0,
+   9.5,
+   10.0,
+   10.0,
+   10.5,
+   10.0,
+   10.0,
+   11.0,
+   12.5,
+   15.0,
+   13.0,
+   20.0,
+   20.0,
+   20.0
+  ]
+ },
+ "grid": [
+  {
+   "kg": 8.0,
+   "kind": "dumbbell",
+   "up": true
+  },
+  {
+   "kg": 8.0,
+   "kind": "dumbbell",
+   "up": false
+  },
+  {
+   "kg": 9.5,
+   "kind": "dumbbell",
+   "up": true
+  },
+  {
+   "kg": 9.5,
+   "kind": "dumbbell",
+   "up": false
+  },
+  {
+   "kg": 10.0,
+   "kind": "dumbbell",
+   "up": true
+  },
+  {
+   "kg": 10.0,
+   "kind": "dumbbell",
+   "up": false
+  },
+  {
+   "kg": 11.0,
+   "kind": "dumbbell",
+   "up": true
+  },
+  {
+   "kg": 11.0,
+   "kind": "dumbbell",
+   "up": false
+  },
+  {
+   "kg": 12.0,
+   "kind": "dumbbell",
+   "up": true
+  },
+  {
+   "kg": 12.0,
+   "kind": "dumbbell",
+   "up": false
+  },
+  {
+   "kg": 14.0,
+   "kind": "dumbbell",
+   "up": true
+  },
+  {
+   "kg": 14.0,
+   "kind": "dumbbell",
+   "up": false
+  },
+  {
+   "kg": 1.0,
+   "kind": "dumbbell",
+   "up": true
+  },
+  {
+   "kg": 1.0,
+   "kind": "dumbbell",
+   "up": false
+  },
+  {
+   "kg": 20.0,
+   "kind": "pulley",
+   "up": true
+  },
+  {
+   "kg": 20.0,
+   "kind": "pulley",
+   "up": false
+  },
+  {
+   "kg": 20.41,
+   "kind": "pulley",
+   "up": true
+  },
+  {
+   "kg": 20.41,
+   "kind": "pulley",
+   "up": false
+  },
+  {
+   "kg": 15.0,
+   "kind": "pulley",
+   "up": true
+  },
+  {
+   "kg": 15.0,
+   "kind": "pulley",
+   "up": false
+  },
+  {
+   "kg": 70.0,
+   "kind": "barbell",
+   "up": true
+  },
+  {
+   "kg": 71.3,
+   "kind": "barbell",
+   "up": false
+  },
+  {
+   "kg": 70.0,
+   "kind": "plate",
+   "up": true
+  },
+  {
+   "kg": 71.3,
+   "kind": "plate",
+   "up": false
+  },
+  {
+   "kg": 70.0,
+   "kind": "machine",
+   "up": true
+  },
+  {
+   "kg": 71.3,
+   "kind": "machine",
+   "up": false
+  },
+  {
+   "kg": 9.4,
+   "kind": "dumbbell"
+  },
+  {
+   "kg": 9.4,
+   "kind": "pulley"
+  },
+  {
+   "kg": 9.4,
+   "kind": "plate"
+  },
+  {
+   "kg": 10.6,
+   "kind": "dumbbell"
+  },
+  {
+   "kg": 10.6,
+   "kind": "pulley"
+  },
+  {
+   "kg": 10.6,
+   "kind": "plate"
+  },
+  {
+   "kg": 11.2,
+   "kind": "dumbbell"
+  },
+  {
+   "kg": 11.2,
+   "kind": "pulley"
+  },
+  {
+   "kg": 11.2,
+   "kind": "plate"
+  },
+  {
+   "kg": 13.0,
+   "kind": "dumbbell"
+  },
+  {
+   "kg": 13.0,
+   "kind": "pulley"
+  },
+  {
+   "kg": 13.0,
+   "kind": "plate"
+  },
+  {
+   "kg": 20.2,
+   "kind": "dumbbell"
+  },
+  {
+   "kg": 20.2,
+   "kind": "pulley"
+  },
+  {
+   "kg": 20.2,
+   "kind": "plate"
+  }
+ ]
+}
