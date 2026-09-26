@@ -1,3 +1,13 @@
 Analyzing streetlift_tracker...                                 
-No issues found! (ran in 21.8s)
-exit=0
+
+  error • Undefined class 'WeekPlan' • test/zz_diag_test.dart:20:10 • undefined_class
+  error • Undefined class 'DayPlan' • test/zz_diag_test.dart:21:10 • undefined_class
+   info • Don't invoke 'print' in production code • test/zz_diag_test.dart:52:5 • avoid_print
+   info • Don't invoke 'print' in production code • test/zz_diag_test.dart:56:7 • avoid_print
+   info • Don't invoke 'print' in production code • test/zz_diag_test.dart:58:5 • avoid_print
+   info • Don't invoke 'print' in production code • test/zz_diag_test.dart:59:5 • avoid_print
+   info • Don't invoke 'print' in production code • test/zz_diag_test.dart:62:5 • avoid_print
+   info • Don't invoke 'print' in production code • test/zz_diag_test.dart:63:5 • avoid_print
+   info • Don't invoke 'print' in production code • test/zz_diag_test.dart:64:5 • avoid_print
+
+9 issues found. (ran in 18.3s)
