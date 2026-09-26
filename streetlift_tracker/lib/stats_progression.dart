@@ -30,10 +30,10 @@ class StatsLevelCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'TON NIVEAU',
                     style: TextStyle(
-                      color: KPalette.light,
+                      color: SL.onBrandSoft,
                       fontSize: 10,
                       letterSpacing: 1.1,
                       fontWeight: FontWeight.w600,
@@ -42,8 +42,8 @@ class StatsLevelCard extends StatelessWidget {
                   const SizedBox(height: 6),
                   Text(
                     progress.rank.title,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: SL.onBrand,
                       fontSize: 26,
                       fontWeight: FontWeight.w700,
                       height: 1.15,
@@ -55,8 +55,8 @@ class StatsLevelCard extends StatelessWidget {
             const SizedBox(width: 14),
             Text(
               '${progress.level}',
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: SL.onBrand,
                 fontSize: 46,
                 height: 1,
                 fontWeight: FontWeight.w700,
@@ -64,9 +64,9 @@ class StatsLevelCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
-            const Icon(
+            Icon(
               Icons.chevron_right_rounded,
-              color: Colors.white,
+              color: SL.onBrand,
               size: 20,
             ),
           ],
@@ -75,20 +75,20 @@ class StatsLevelCard extends StatelessWidget {
         KProgressBar(
           value: progress.fraction,
           height: 5,
-          color: Colors.white,
-          track: Colors.white.withValues(alpha: .2),
+          color: SL.onBrand,
+          track: SL.onBrand.withValues(alpha: .2),
           semanticsLabel: 'Progression du niveau',
           semanticsValue: '${progress.inLevel} sur ${progress.need} XP',
         ),
         const SizedBox(height: 9),
         Text(
           '${progress.remaining} XP avant le niveau ${progress.level + 1}',
-          style: const TextStyle(color: Colors.white, fontSize: 12),
+          style: TextStyle(color: SL.onBrand, fontSize: 12),
         ),
         const SizedBox(height: 5),
         Text(
           '${progress.earnedBadges} badges · ${store.credits >= 0 ? '${store.credits} crédits WOD' : creditDeficitLabel(store.credits)}',
-          style: const TextStyle(color: KPalette.light, fontSize: 11),
+          style: TextStyle(color: SL.onBrandSoft, fontSize: 11),
         ),
       ],
     ),
@@ -324,7 +324,7 @@ class _StatsProgressionState extends State<StatsProgression> {
                             backgroundColor:
                                 _branch == index ? SL.action : SL.card,
                             foregroundColor:
-                                _branch == index ? Colors.white : SL.dim,
+                                _branch == index ? SL.onAction : SL.dim,
                             side: BorderSide(
                               color: _branch == index ? SL.action : SL.line,
                             ),
@@ -420,7 +420,7 @@ class _BadgeChain extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               color: SL.dim,
-              fontSize: 10,
+              fontSize: 11,
               letterSpacing: .8,
               fontWeight: FontWeight.w700,
             ),

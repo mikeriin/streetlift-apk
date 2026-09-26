@@ -361,7 +361,7 @@ Future<void> _confirmDelete(
           ),
           FilledButton(
             style: FilledButton.styleFrom(
-              backgroundColor: SL.action,
+              backgroundColor: SL.alert,
               foregroundColor: KPalette.light,
             ),
             onPressed: () {

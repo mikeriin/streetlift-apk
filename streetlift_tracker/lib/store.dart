@@ -167,6 +167,16 @@ class SessionLog {
 
 // ===================== RÉGLAGES =====================
 
+/// Couleurs dominantes enregistrables (L5-C), dans l'ordre du sélecteur.
+/// Mêmes identifiants que `KAccentSpec.all` (vérifié par les tests).
+const kAccentIds = ['rouge', 'jaune', 'vert', 'violet', 'orange', 'turquoise'];
+
+/// Repli explicite vers le rouge : champ absent (état antérieur à L5-C),
+/// valeur inconnue ou d'un autre type. Ne rend jamais une sauvegarde
+/// invalide à lui seul.
+String normalizeAccent(Object? value) =>
+    value is String && kAccentIds.contains(value) ? value : 'rouge';
+
 class AppSettings {
   int defaultRest; // s, appliqué quand l'exercice n'a pas de repos
   bool autoTimer; // lancer le repos à la validation d'une série
@@ -187,6 +197,7 @@ class AppSettings {
   bool celebrations; // écran de récompenses et cérémonie de niveau
   int weeklyGoal; // objectif de jours actifs par semaine ; 0 = adaptatif
   String title; // titre affiché sur la feuille de personnage ; '' = rang
+  String accent; // couleur dominante (L5-C), voir kAccentIds
 
   AppSettings({
     this.defaultRest = 90,
@@ -208,6 +219,7 @@ class AppSettings {
     this.celebrations = true,
     this.weeklyGoal = 0,
     this.title = '',
+    this.accent = 'rouge',
   });
 
   Map<String, dynamic> toJson() => {
@@ -230,6 +242,7 @@ class AppSettings {
     'celebrations': celebrations,
     'weeklyGoal': weeklyGoal,
     'title': title,
+    'accent': accent,
   };
   AppSettings.fromJson(Map<String, dynamic> j)
     : defaultRest = j['defaultRest'] as int? ?? 90,
@@ -250,7 +263,8 @@ class AppSettings {
       notifSkipRest = j['notifSkipRest'] as bool? ?? true,
       celebrations = j['celebrations'] as bool? ?? true,
       weeklyGoal = j['weeklyGoal'] as int? ?? 0,
-      title = j['title'] as String? ?? '';
+      title = j['title'] as String? ?? '',
+      accent = normalizeAccent(j['accent']);
 }
 
 // ===================== SÉANCES PERSONNALISÉES =====================
@@ -660,6 +674,9 @@ class AppStore extends ChangeNotifier {
   /// Ne change qu'au changement de thème : évite de reconstruire MaterialApp
   /// à chaque notification du store.
   final ValueNotifier<String> themeMode = ValueNotifier<String>('system');
+
+  /// Couleur dominante (L5-C) : même principe que [themeMode], indépendante.
+  final ValueNotifier<String> accentMode = ValueNotifier<String>('rouge');
   final List<Map<String, dynamic>> dbExercises = []; // base embarquée
   final List<Map<String, dynamic>> userExercises =
       []; // ajoutés par l'utilisateur
@@ -865,6 +882,7 @@ class AppStore extends ChangeNotifier {
       settings = AppSettings.fromJson(jsonDecode(ss) as Map<String, dynamic>);
     }
     themeMode.value = settings.theme;
+    accentMode.value = settings.accent;
     final sc = _prefs.getString(_kCustom);
     if (sc != null) {
       for (final e in jsonDecode(sc) as List) {
@@ -2206,6 +2224,9 @@ class AppStore extends ChangeNotifier {
   void saveSettings() {
     _persist();
     if (themeMode.value != settings.theme) themeMode.value = settings.theme;
+    if (accentMode.value != settings.accent) {
+      accentMode.value = settings.accent;
+    }
     notifyListeners();
   }
 
@@ -2836,6 +2857,7 @@ class AppStore extends ChangeNotifier {
     _statsDefinitions.clear();
     pilotageEpoch++;
     themeMode.value = settings.theme;
+    accentMode.value = settings.accent;
     _lastLevel = data.lastLevel ?? level;
     _trialDay = data.trialDay;
     _trialId = data.trialId;
@@ -4374,6 +4396,7 @@ class AppStore extends ChangeNotifier {
   void dispose() {
     _saveT?.cancel();
     themeMode.dispose();
+    accentMode.dispose();
     persistenceError.dispose();
     super.dispose();
   }

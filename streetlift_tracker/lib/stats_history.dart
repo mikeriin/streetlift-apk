@@ -125,7 +125,7 @@ class StatsHistoryTile extends StatelessWidget {
             record
                 ? CircleAvatar(
                   backgroundColor: SL.action,
-                  foregroundColor: KPalette.light,
+                  foregroundColor: SL.onActionSoft,
                   child: const Icon(Icons.emoji_events_outlined),
                 )
                 : Icon(

@@ -416,13 +416,15 @@ class KFieldGrid extends StatelessWidget {
   );
 }
 
-/// Jauge de la charte : remplissage bordeaux → rouge d'action (le bout de la
-/// jauge est toujours le rouge vif), piste neutre, extrémités arrondies.
-/// `color` impose un remplissage uni (validation en vert, blanc sur bordeaux).
+/// Jauge de la charte : remplissage principale → vive de la couleur
+/// dominante (L5-C), piste neutre, extrémités arrondies. `color` impose un
+/// remplissage uni (validation en vert, blanc sur bordeaux) ; `gradient`
+/// impose un dégradé fixe (chronos : rouge historique).
 class KProgressBar extends StatelessWidget {
   final double value;
   final double height;
   final Color? color, track;
+  final List<Color>? gradient;
   final String? semanticsLabel, semanticsValue;
   const KProgressBar({
     super.key,
@@ -430,6 +432,7 @@ class KProgressBar extends StatelessWidget {
     this.height = 5,
     this.color,
     this.track,
+    this.gradient,
     this.semanticsLabel,
     this.semanticsValue,
   });
@@ -459,7 +462,7 @@ class KProgressBar extends StatelessWidget {
                   color: color,
                   gradient:
                       color == null
-                          ? const LinearGradient(colors: SL.gradient)
+                          ? LinearGradient(colors: gradient ?? SL.gradient)
                           : null,
                   borderRadius: radius,
                 ),
@@ -533,8 +536,8 @@ class KProgressCard extends StatelessWidget {
             children: [
               Text(
                 '$level',
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: SL.onBrand,
                   fontSize: 42,
                   height: 1.1,
                   fontWeight: FontWeight.w700,
@@ -542,11 +545,11 @@ class KProgressCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 3),
-              const Text(
+              Text(
                 'NIVEAU',
                 style: TextStyle(
-                  color: KPalette.light,
-                  fontSize: 9,
+                  color: SL.onBrandSoft,
+                  fontSize: 11,
                   letterSpacing: 1.2,
                 ),
               ),
@@ -560,8 +563,8 @@ class KProgressCard extends StatelessWidget {
             children: [
               Text(
                 '$credits CRÉDIT${credits > 1 ? 'S' : ''}',
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: SL.onBrand,
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
                   letterSpacing: .5,
@@ -570,8 +573,8 @@ class KProgressCard extends StatelessWidget {
               const SizedBox(height: 3),
               Text(
                 'Niveau $level · $rank',
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: SL.onBrand,
                   fontSize: 12.5,
                   fontWeight: FontWeight.w600,
                 ),
@@ -580,8 +583,8 @@ class KProgressCard extends StatelessWidget {
               KProgressBar(
                 height: 4,
                 value: need == 0 ? 0 : (inLevel / need).clamp(0.0, 1.0),
-                color: Colors.white,
-                track: Colors.white.withValues(alpha: .2),
+                color: SL.onBrand,
+                track: SL.onBrand.withValues(alpha: .2),
                 semanticsLabel: 'Progression du niveau',
                 semanticsValue: '$inLevel sur $need XP',
               ),
@@ -590,17 +593,17 @@ class KProgressCard extends StatelessWidget {
                 detailed
                     ? '$inLevel / $need XP · ${need - inLevel} XP avant le niveau ${level + 1}'
                     : 'Niveau ${level + 1} dans ${need - inLevel} XP',
-                style: const TextStyle(color: Colors.white, fontSize: 11.5),
+                style: TextStyle(color: SL.onBrand, fontSize: 11.5),
               ),
             ],
           ),
         ),
         if (onTap != null)
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(left: 6),
             child: Tooltip(
               message: 'Ma progression',
-              child: Icon(Icons.chevron_right, color: Colors.white, size: 20),
+              child: Icon(Icons.chevron_right, color: SL.onBrand, size: 20),
             ),
           ),
       ],
@@ -645,13 +648,22 @@ class KBanner extends StatelessWidget {
 class KTopBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leading;
   final List<Widget> actions;
-  const KTopBar({super.key, this.leading, this.actions = const []});
+
+  /// Hauteur de la barre : 70 par défaut ; l'appelant l'agrandit quand son
+  /// contenu suit la taille de texte du téléphone (niveau de PROGRAMME).
+  final double height;
+  const KTopBar({
+    super.key,
+    this.leading,
+    this.actions = const [],
+    this.height = 70,
+  });
   @override
-  Size get preferredSize => const Size.fromHeight(70);
+  Size get preferredSize => Size.fromHeight(height);
   @override
   Widget build(BuildContext context) => AppBar(
     automaticallyImplyLeading: false,
-    toolbarHeight: 70,
+    toolbarHeight: height,
     titleSpacing: KSpace.page,
     title:
         leading ??

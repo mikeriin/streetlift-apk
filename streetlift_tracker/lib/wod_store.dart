@@ -831,7 +831,7 @@ class WodHero extends StatelessWidget {
                     FilledButton.icon(
                       style: FilledButton.styleFrom(
                         backgroundColor: SL.action,
-                        foregroundColor: KPalette.light,
+                        foregroundColor: SL.onActionSoft,
                       ),
                       onPressed: () => runWod(context, wod),
                       icon: const Icon(Icons.bolt_rounded),
@@ -991,7 +991,7 @@ class CreditsCard extends StatelessWidget {
           if (credits < 0) ...[
             Text(
               'Tes dépenses dépassent les gains enregistrés (souvent après l’import d’une ancienne sauvegarde). Tes WODs restent acquis ; tes prochains gains comblent d’abord ce déficit avant un nouvel achat.',
-              style: TextStyle(color: SL.action, fontSize: 12.5),
+              style: TextStyle(color: SL.danger, fontSize: 12.5),
             ),
             const SizedBox(height: 6),
           ],

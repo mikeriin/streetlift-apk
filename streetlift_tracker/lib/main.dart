@@ -125,43 +125,118 @@ class _InitErrorApp extends StatelessWidget {
   );
 }
 
-// Thèmes construits une seule fois (ThemeData est coûteux à recréer).
-final ThemeData _lightTheme = buildTheme(false);
-final ThemeData _darkTheme = buildTheme(true);
+// Thèmes construits une seule fois par couleur dominante et luminosité
+// (ThemeData est coûteux à recréer) : 12 combinaisons au plus.
+final Map<String, ThemeData> _themes = {};
+
+/// Thème d'une combinaison, sans modifier la palette courante de [SL]
+/// ([buildTheme] la positionne pour les usages directs et les tests).
+ThemeData themeFor(bool dark, KAccentSpec accent) =>
+    _themes.putIfAbsent('${accent.id}-$dark', () {
+      final previousDark = SL.dark, previousAccent = SL.accentSpec;
+      final theme = buildTheme(dark, accent);
+      SL.dark = previousDark;
+      SL.accentSpec = previousAccent;
+      return theme;
+    });
+
+/// Luminosité effective : réglage de l'application, ou téléphone en mode
+/// « Système ». Indépendante de la couleur dominante.
+bool effectiveDark(String theme) =>
+    theme == 'dark' ||
+    (theme == 'system' &&
+        WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+            Brightness.dark);
 
 final appNavigator = GlobalKey<NavigatorState>();
 
-class SLApp extends StatelessWidget {
+/// Application : thème clair/sombre/système et couleur dominante (L5-C)
+/// sont deux réglages indépendants. Un changement de l'un ou de l'autre
+/// reconstruit l'arbre existant sans le recréer : navigation, routes
+/// ouvertes, saisies, séance et chronos gardent leur état.
+class SLApp extends StatefulWidget {
   const SLApp({super.key});
 
   @override
+  State<SLApp> createState() => _SLAppState();
+}
+
+class _SLAppState extends State<SLApp> with WidgetsBindingObserver {
+  late final Listenable _appearance = Listenable.merge([
+    store.themeMode,
+    store.accentMode,
+  ]);
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _appearance.addListener(_onAppearance);
+  }
+
+  @override
+  void dispose() {
+    _appearance.removeListener(_onAppearance);
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  void _sync() {
+    SL.accentSpec = KAccentSpec.byId(store.accentMode.value);
+    SL.dark = effectiveDark(store.themeMode.value);
+  }
+
+  void _onAppearance() {
+    if (!mounted) return;
+    setState(_sync);
+    _refreshDescendants();
+  }
+
+  @override
+  void didChangePlatformBrightness() {
+    super.didChangePlatformBrightness();
+    if (mounted && store.themeMode.value == 'system') _onAppearance();
+  }
+
+  /// Une partie des écrans lit la palette par [SL] sans dépendre du thème :
+  /// on les marque à reconstruire (routes empilées comprises). Aucun
+  /// élément n'est recréé, aucun état n'est perdu.
+  void _refreshDescendants() {
+    void mark(Element element) {
+      element.markNeedsBuild();
+      element.visitChildren(mark);
+    }
+
+    (context as Element).visitChildren(mark);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<String>(
-      valueListenable: store.themeMode,
-      builder: (context, t, _) {
-        final mode =
-            t == 'dark'
-                ? ThemeMode.dark
-                : t == 'light'
-                ? ThemeMode.light
-                : ThemeMode.system;
-        return MaterialApp(
-          navigatorKey: appNavigator,
-          title: 'Kalis Track',
-          locale: const Locale('fr'),
-          supportedLocales: const [Locale('fr')],
-          localizationsDelegates: GlobalMaterialLocalizations.delegates,
-          debugShowCheckedModeBanner: false,
-          themeMode: mode,
-          theme: _lightTheme,
-          darkTheme: _darkTheme,
-          builder: (context, child) {
-            SL.dark = Theme.of(context).brightness == Brightness.dark;
-            return child ?? const SizedBox.shrink();
-          },
-          home: const RootNav(),
-        );
+    _sync();
+    final t = store.themeMode.value;
+    final accent = SL.accentSpec;
+    final mode =
+        t == 'dark'
+            ? ThemeMode.dark
+            : t == 'light'
+            ? ThemeMode.light
+            : ThemeMode.system;
+    return MaterialApp(
+      navigatorKey: appNavigator,
+      title: 'Kalis Track',
+      locale: const Locale('fr'),
+      supportedLocales: const [Locale('fr')],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      debugShowCheckedModeBanner: false,
+      themeMode: mode,
+      theme: themeFor(false, accent),
+      darkTheme: themeFor(true, accent),
+      builder: (context, child) {
+        SL.dark = Theme.of(context).brightness == Brightness.dark;
+        SL.accentSpec = accent;
+        return child ?? const SizedBox.shrink();
       },
+      home: const RootNav(),
     );
   }
 }
@@ -183,6 +258,7 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
     StatsNavigation.bind(this, _openStats);
     WidgetsBinding.instance.addObserver(this);
     store.themeMode.addListener(_onTheme);
+    store.accentMode.addListener(_onTheme);
     store.persistenceError.addListener(_onPersistenceError);
   }
 
@@ -191,6 +267,7 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
     StatsNavigation.unbind(this);
     WidgetsBinding.instance.removeObserver(this);
     store.themeMode.removeListener(_onTheme);
+    store.accentMode.removeListener(_onTheme);
     store.persistenceError.removeListener(_onPersistenceError);
     super.dispose();
   }
@@ -249,6 +326,7 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
     final platformDark =
         MediaQuery.platformBrightnessOf(context) == Brightness.dark;
     SL.dark = t == 'dark' || (t == 'system' && platformDark);
+    SL.accentSpec = KAccentSpec.byId(store.settings.accent);
     // Reconstruit aussi les composants historiques qui lisent la palette SL.
     final pages = [
       // ignore: prefer_const_constructors

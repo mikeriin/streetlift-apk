@@ -1,5 +1,7 @@
 // Pastille de niveau (accueil) ; l'écran de récompenses et la cérémonie de
 // niveau vivent dans rewards.dart, ré-exportés ici pour les écrans existants.
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import 'app_theme.dart';
@@ -56,26 +58,30 @@ class LevelProgressNumber extends StatelessWidget {
     required this.progress,
   });
 
+  /// Hauteur de barre d'en-tête nécessaire à ce bloc pour une taille de
+  /// texte donnée (L5 : le niveau suit la taille de texte du téléphone).
+  static double headerHeight(BuildContext context) =>
+      math.max(70, MediaQuery.textScalerOf(context).scale(30) + 35);
+
   @override
   Widget build(BuildContext context) {
     final colors = ProgrammeColors.of(context);
-    return SizedBox(
-      width: 88,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.centerLeft,
-            child: Row(
+    // L5 : plus de réduction forcée (FittedBox, taille de texte figée) ;
+    // « NIV. » reste avant le chiffre, la barre dessous, en couleur unie.
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minWidth: 88),
+      child: IntrinsicWidth(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
                   'NIV.',
-                  textScaler: TextScaler.noScaling,
                   style: TextStyle(
                     color: colors.muted,
                     fontSize: 12,
@@ -86,7 +92,6 @@ class LevelProgressNumber extends StatelessWidget {
                 const SizedBox(width: 7),
                 Text(
                   '$level',
-                  textScaler: TextScaler.noScaling,
                   style: TextStyle(
                     color: SL.text,
                     fontSize: 30,
@@ -98,14 +103,16 @@ class LevelProgressNumber extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-          const SizedBox(height: 7),
-          KProgressBar(
-            value: progress,
-            height: 4,
-            semanticsLabel: 'Progression vers le niveau suivant',
-          ),
-        ],
+            const SizedBox(height: 7),
+            // Couleur unie de la dominante, bord net avec la piste.
+            KProgressBar(
+              value: progress,
+              height: 4,
+              color: colors.p.action,
+              semanticsLabel: 'Progression vers le niveau suivant',
+            ),
+          ],
+        ),
       ),
     );
   }

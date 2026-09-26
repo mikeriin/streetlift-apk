@@ -308,7 +308,7 @@ class _RewardScreenState extends State<RewardScreen>
                   key: const ValueKey('reward-continue'),
                   style: FilledButton.styleFrom(
                     backgroundColor: SL.bordeaux,
-                    foregroundColor: Colors.white,
+                    foregroundColor: SL.onBrand,
                     minimumSize: const Size(220, KControl.buttonHeight),
                   ),
                   onPressed: () => Navigator.pop(context),
@@ -472,8 +472,8 @@ class _Ceremony extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             r.promotion ? 'PROMOTION' : 'NIVEAU SUPÉRIEUR',
-            style: const TextStyle(
-              color: KPalette.light,
+            style: TextStyle(
+              color: SL.onBrandSoft,
               fontSize: 11,
               letterSpacing: 1.6,
               fontWeight: FontWeight.w700,
@@ -483,8 +483,8 @@ class _Ceremony extends StatelessWidget {
           Text(
             r.promotion ? rank.title : 'Niveau ${r.levelAfter}',
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: SL.onBrand,
               fontSize: 28,
               fontWeight: FontWeight.w800,
             ),
@@ -492,14 +492,14 @@ class _Ceremony extends StatelessWidget {
           if (r.promotion)
             Text(
               'Niveau ${r.levelAfter}',
-              style: const TextStyle(color: KPalette.light, fontSize: 13),
+              style: TextStyle(color: SL.onBrandSoft, fontSize: 13),
             ),
           const SizedBox(height: 10),
           Text(
             '+${r.creditsGained} crédit${r.creditsGained > 1 ? 's' : ''} WOD · ${store.credits >= 0 ? '${store.credits} disponible${store.credits > 1 ? 's' : ''}' : creditDeficitLabel(store.credits)}',
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: SL.onBrand,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -546,12 +546,8 @@ class _Appear extends StatelessWidget {
 class _ConfettiPainter extends CustomPainter {
   final double t;
   const _ConfettiPainter(this.t);
-  static const _colors = [
-    KPalette.burgundy,
-    KPalette.actionRed,
-    KPalette.lightRed,
-    KPalette.light,
-  ];
+  // Couleurs de la dominante (décor), lues au dessin.
+  static List<Color> get _colors => SL.confetti;
   @override
   void paint(Canvas canvas, Size size) {
     // Les 36 premiers pour cent laissent la jauge se remplir d'abord.

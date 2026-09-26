@@ -12,7 +12,8 @@ import 'app_theme.dart';
 Color heat(double t) {
   final v = t.clamp(0.0, 1.0);
   if (v <= 0) return SL.faint;
-  final top = SL.dark ? SL.accent : KPalette.actionRed;
+  // Échelle de données : rouge historique, indépendant de la dominante.
+  final top = SL.dark ? KPalette.lightRed : KPalette.actionRed;
   return Color.lerp(KPalette.burgundy, top, .15 + .85 * v)!;
 }
 

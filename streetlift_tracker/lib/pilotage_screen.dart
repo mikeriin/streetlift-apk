@@ -164,7 +164,7 @@ class _NumTile extends StatelessWidget {
                 : 'À vérifier · valeur d’une version précédente',
             key: ValueKey('$refCell-provenance'),
             style: TextStyle(
-              color: SL.action,
+              color: SL.danger,
               fontWeight: FontWeight.w600,
               fontSize: 12,
             ),
@@ -203,16 +203,22 @@ class _NumTile extends StatelessWidget {
               (t ?? '').trim().isEmpty || parseReference(t, refCell) != null
                   ? null
                   : 'Nombre (ex. 72,5)',
-      decoration: logDeco(suffix: unit.startsWith('kg') ? 'kg' : unit).copyWith(
-        labelText: label,
-        hintText: '—',
-        floatingLabelBehavior: FloatingLabelBehavior.never,
+      // L5 : le nom de la référence est à côté du champ ; dans le champ, il
+      // était tronqué (« Poids de cor… ») et masquait « — ». TalkBack le lit
+      // toujours par la sémantique ci-dessous.
+      decoration: logDeco(
+        hint: '—',
+        suffix: unit.startsWith('kg') ? 'kg' : unit,
       ),
       onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
       onChanged: (t) {
         final d = parseReference(t, refCell);
         if (d != null) store.setValue(refCell, d);
       },
+    );
+    final labelledField = Semantics(
+      label: label,
+      child: field,
     );
     return KCard(
       child: LayoutBuilder(
@@ -223,14 +229,14 @@ class _NumTile extends StatelessWidget {
           if (stacked) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [labelContent, const SizedBox(height: 6), field],
+              children: [labelContent, const SizedBox(height: 6), labelledField],
             );
           }
           return Row(
             children: [
               Expanded(child: labelContent),
               const SizedBox(width: 12),
-              SizedBox(width: 110, child: field),
+              SizedBox(width: 110, child: labelledField),
             ],
           );
         },

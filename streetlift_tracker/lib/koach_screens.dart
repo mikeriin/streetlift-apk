@@ -769,8 +769,8 @@ class KoachCurve extends StatelessWidget {
             stage: stage,
             finalGoal: finalGoal,
             now: now,
-            line: SL.accent,
-            band: SL.accent.withValues(alpha: .16),
+            line: SL.redAccent, // courbe de données : rouge fixe (L5-C)
+            band: SL.redAccent.withValues(alpha: .16),
             goal: SL.text,
             grid: SL.dim.withValues(alpha: .35),
           ),

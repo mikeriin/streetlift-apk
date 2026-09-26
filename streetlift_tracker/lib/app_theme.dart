@@ -33,6 +33,109 @@ class KControl {
   );
 }
 
+/// Couleur dominante choisie par l'utilisateur (L5-C, 26/09/2026).
+///
+/// Six familles au choix, le Rouge Kalis restant la valeur par défaut. Chaque
+/// famille remplit les trois rôles historiques du rouge : [principal] (rôle
+/// du bordeaux : boutons pleins, carte du jour, bandeaux, jauges),
+/// [vivid] (rôle du rouge d'action : sélection, curseur, interrupteurs) et
+/// [bright] (accent textuel sur fond sombre). Les couleurs porteuses d'un sens
+/// indépendant (erreurs, validation, chronos, rangs, données, couvertures)
+/// ne dépendent pas de ce choix : voir les rôles fixes de [KPalette].
+///
+/// Le Jaune est trop clair pour du texte blanc : il porte du #121212, et en
+/// mode clair sa sélection et son accent passent à l'or foncé #7A5800.
+@immutable
+class KAccentSpec {
+  /// Identifiant stable enregistré dans les réglages (`accent`).
+  final String id;
+  final String label;
+  final Color principal, vivid, bright;
+
+  /// Texte posé sur [principal] / [vivid] ; null = tons clairs historiques
+  /// (blanc ou #F4F4F4 selon l'élément).
+  final Color? onPrincipal, onVivid;
+
+  /// Variantes du mode clair quand la teinte n'y est pas lisible.
+  final Color? vividLight, accentLight, onVividLight, decorLight;
+  final List<Color>? gaugeLight;
+
+  const KAccentSpec({
+    required this.id,
+    required this.label,
+    required this.principal,
+    required this.vivid,
+    required this.bright,
+    this.onPrincipal,
+    this.onVivid,
+    this.vividLight,
+    this.accentLight,
+    this.onVividLight,
+    this.decorLight,
+    this.gaugeLight,
+  });
+
+  static const rouge = KAccentSpec(
+    id: 'rouge',
+    label: 'Rouge Kalis',
+    principal: KPalette.burgundy,
+    vivid: KPalette.actionRed,
+    bright: KPalette.lightRed,
+  );
+  static const jaune = KAccentSpec(
+    id: 'jaune',
+    label: 'Jaune',
+    principal: Color(0xFFE6B000),
+    vivid: Color(0xFFF5C400),
+    bright: Color(0xFFF5C400),
+    onPrincipal: KPalette.black,
+    onVivid: KPalette.black,
+    vividLight: Color(0xFF7A5800),
+    accentLight: Color(0xFF7A5800),
+    decorLight: Color(0xFFE6B000),
+    gaugeLight: [Color(0xFF7A5800), Color(0xFF8A6500)],
+  );
+  static const vert = KAccentSpec(
+    id: 'vert',
+    label: 'Vert',
+    principal: Color(0xFF0B4D33),
+    vivid: Color(0xFF157A4E),
+    bright: Color(0xFF4EC08A),
+  );
+  static const violet = KAccentSpec(
+    id: 'violet',
+    label: 'Violet',
+    principal: Color(0xFF44146B),
+    vivid: Color(0xFF8240C4),
+    bright: Color(0xFFB38CF2),
+  );
+  static const orange = KAccentSpec(
+    id: 'orange',
+    label: 'Orange',
+    principal: Color(0xFF6E2E05),
+    vivid: Color(0xFFA84707),
+    bright: Color(0xFFF2924A),
+  );
+  static const turquoise = KAccentSpec(
+    id: 'turquoise',
+    label: 'Turquoise',
+    principal: Color(0xFF08494F),
+    vivid: Color(0xFF0E7479),
+    bright: Color(0xFF3EC4C4),
+  );
+
+  /// Ordre d'affichage du sélecteur.
+  static const all = [rouge, jaune, vert, violet, orange, turquoise];
+  static const defaultId = 'rouge';
+
+  /// Palette d'un identifiant ; absent, inconnu ou d'un autre type : rouge.
+  static KAccentSpec byId(Object? id) =>
+      all.firstWhere((a) => a.id == id, orElse: () => rouge);
+
+  /// Identifiant enregistrable : repli explicite vers le rouge.
+  static String normalize(Object? id) => byId(id).id;
+}
+
 /// Bordeaux, anthracite et vert.
 ///
 /// Rôles de la charte : #6B0C0C fait avancer la séance (boutons pleins, cartes
@@ -42,6 +145,9 @@ class KControl {
 /// textuel sombre est donc une teinte claire du rouge d'action (#E85959,
 /// 4,8:1 sur #1E1E1E), le clair conserve le bordeaux (12:1 sur blanc).
 class KPalette {
+  /// Rouge Kalis : valeurs historiques, aussi utilisées par les rôles fixes
+  /// (alertes, chronos, rangs, données, couvertures WOD) quelle que soit la
+  /// couleur dominante choisie.
   static const burgundy = Color(0xFF6B0C0C);
   static const actionRed = Color(0xFFA61717);
   static const black = Color(0xFF121212);
@@ -50,8 +156,12 @@ class KPalette {
   static const light = Color(0xFFF4F4F4);
   static const green = Color(0xFF388E3C);
   static const lightRed = Color(0xFFE85959);
+
+  /// Dégradé historique des données (graphiques d'intensité, chronos).
+  static const redGradient = [burgundy, actionRed];
   final bool dark;
-  const KPalette(this.dark);
+  final KAccentSpec a;
+  const KPalette(this.dark, [this.a = KAccentSpec.rouge]);
   Color get bg => dark ? black : light;
   Color get surface => dark ? charcoal : Colors.white;
   Color get card => dark ? charcoal : Colors.white;
@@ -59,14 +169,44 @@ class KPalette {
   Color get dim => dark ? gray : const Color(0xFF616161);
 
   /// Dominante : actions principales, jauges, cartes de marque.
-  Color get bordeaux => burgundy;
+  Color get bordeaux => a.principal;
 
-  /// États actifs, records, alertes de chrono (fond ou contour, pas texte
-  /// sur fond sombre).
-  Color get action => actionRed;
+  /// États actifs, sélection, records (fond ou contour, pas texte sur fond
+  /// sombre). Les alertes de chrono et les suppressions utilisent [alert].
+  Color get action => dark ? a.vivid : (a.vividLight ?? a.vivid);
 
   /// Accent lisible en texte et icônes sur toutes les surfaces.
-  Color get accent => dark ? lightRed : burgundy;
+  Color get accent => dark ? a.bright : (a.accentLight ?? a.principal);
+
+  /// Texte sur [bordeaux] : blanc (`onBrand`) ou blanc cassé
+  /// (`onBrandSoft`) selon l'élément historique ; #121212 pour le Jaune.
+  Color get onBrand => a.onPrincipal ?? Colors.white;
+  Color get onBrandSoft => a.onPrincipal ?? light;
+
+  Color? get _onVivid =>
+      dark || a.vividLight == null ? a.onVivid : a.onVividLight;
+
+  /// Texte sur [action].
+  Color get onAction => _onVivid ?? Colors.white;
+  Color get onActionSoft => _onVivid ?? light;
+
+  /// Icônes décoratives vives (flamme de série, boss, confettis).
+  Color get decor => dark ? a.bright : (a.decorLight ?? a.bright);
+
+  /// Jauges de la charte (dont les barres de progression du niveau).
+  List<Color> get gauge =>
+      dark ? [a.principal, a.vivid] : (a.gaugeLight ?? [a.principal, a.vivid]);
+
+  /// Confettis de célébration.
+  List<Color> get confetti => [a.principal, a.vivid, a.bright, light];
+
+  // ----- Rôles fixes : indépendants de la couleur dominante -----
+
+  /// Alertes de chrono, confirmations de suppression (fond ou contour).
+  Color get alert => actionRed;
+
+  /// Accent rouge historique : phases de chrono, rareté, données.
+  Color get redAccent => dark ? lightRed : burgundy;
 
   /// Teinte de fond derrière un élément accentué (puces, icônes de menu).
   Color get accentTint => accent.withValues(alpha: dark ? .14 : .10);
@@ -91,7 +231,7 @@ class KPalette {
 
 class SL {
   static bool dark = true;
-  static KPalette get _palette => KPalette(dark);
+  static KPalette get _palette => KPalette(dark, accentSpec);
   static Color get bg => _palette.bg;
   static Color get surface => _palette.surface;
   static Color get card => _palette.card;
@@ -115,16 +255,36 @@ class SL {
   static Color get formFill => _palette.formFill;
   static Color get formBorder => _palette.formBorder;
 
-  /// Dégradé bordeaux → rouge d'action des jauges et graphiques.
-  static const List<Color> gradient = [KPalette.burgundy, KPalette.actionRed];
+  static Color get onBrand => _palette.onBrand;
+  static Color get onBrandSoft => _palette.onBrandSoft;
+  static Color get onAction => _palette.onAction;
+  static Color get onActionSoft => _palette.onActionSoft;
+  static Color get decor => _palette.decor;
+  static Color get alert => _palette.alert;
+  static Color get redAccent => _palette.redAccent;
+  static List<Color> get confetti => _palette.confetti;
+
+  /// Couleur dominante courante (L5-C) ; synchronisée par l'application.
+  static KAccentSpec accentSpec = KAccentSpec.rouge;
+
+  /// Texte à poser sur [bg] quand c'est une couleur dominante pleine.
+  static Color onFill(Color bg) =>
+      bg == action ? onActionSoft : (bg == bordeaux ? onBrandSoft : KPalette.light);
+
+  /// Dégradé des jauges (dominante) ; les graphiques de données gardent
+  /// [KPalette.redGradient].
+  static List<Color> get gradient => _palette.gauge;
 }
 
 class ProgrammeColors {
   final bool dark;
-  const ProgrammeColors(this.dark);
-  factory ProgrammeColors.of(BuildContext context) =>
-      ProgrammeColors(Theme.of(context).brightness == Brightness.dark);
-  KPalette get p => KPalette(dark);
+  final KAccentSpec accent;
+  const ProgrammeColors(this.dark, [this.accent = KAccentSpec.rouge]);
+  factory ProgrammeColors.of(BuildContext context) => ProgrammeColors(
+    Theme.of(context).brightness == Brightness.dark,
+    SL.accentSpec,
+  );
+  KPalette get p => KPalette(dark, accent);
   Color get card => p.card;
   Color get accent => p.accent;
   Color get muted => p.dim;
@@ -134,9 +294,10 @@ class ProgrammeColors {
   Color get circle => p.faint;
   Color get onAccent => p.onAccent;
 
-  /// Curseur de semaine : rouge d'action, libellé blanc cassé.
+  /// Curseur de semaine : vive de la dominante, libellé blanc cassé
+  /// (#121212 sur le Jaune).
   Color get slider => p.action;
-  Color get onSlider => KPalette.light;
+  Color get onSlider => p.onActionSoft;
 }
 
 InputDecoration logDeco({String? hint, String? suffix}) => InputDecoration(
@@ -164,9 +325,10 @@ InputDecoration logDeco({String? hint, String? suffix}) => InputDecoration(
   ),
 );
 
-ThemeData buildTheme(bool dark) {
+ThemeData buildTheme(bool dark, [KAccentSpec accent = KAccentSpec.rouge]) {
   SL.dark = dark;
-  final p = KPalette(dark);
+  SL.accentSpec = accent;
+  final p = KPalette(dark, accent);
   final scheme = (dark ? const ColorScheme.dark() : const ColorScheme.light())
       .copyWith(
         primary: p.accent,
@@ -193,7 +355,8 @@ ThemeData buildTheme(bool dark) {
         error: p.danger,
         inverseSurface: dark ? KPalette.light : KPalette.black,
         onInverseSurface: dark ? KPalette.black : KPalette.light,
-        inversePrimary: dark ? p.bordeaux : KPalette.lightRed,
+        inversePrimary:
+            dark ? (accent.accentLight ?? accent.principal) : accent.bright,
       );
   OutlineInputBorder border(Color c, [double width = 1]) => OutlineInputBorder(
     borderRadius: BorderRadius.circular(KControl.radius),
@@ -270,7 +433,7 @@ ThemeData buildTheme(bool dark) {
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
         backgroundColor: p.bordeaux,
-        foregroundColor: KPalette.light,
+        foregroundColor: p.onBrandSoft,
         minimumSize: const Size(48, 48),
         iconSize: 20,
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
@@ -335,9 +498,11 @@ ThemeData buildTheme(bool dark) {
         fontSize: 13,
         fontWeight: FontWeight.w500,
       ),
+      // L5-C : en sombre, libellé blanc cassé (l'accent sur sa teinte restait
+      // à 4,04:1 en rouge) ; la coche et le fond gardent l'accent.
       secondaryLabelStyle: TextStyle(
         fontFamily: 'Roboto',
-        color: p.accent,
+        color: dark ? p.text : p.accent,
         fontSize: 13,
         fontWeight: FontWeight.w600,
       ),
@@ -364,7 +529,7 @@ ThemeData buildTheme(bool dark) {
     ),
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith(
-        (s) => s.contains(WidgetState.selected) ? Colors.white : p.dim,
+        (s) => s.contains(WidgetState.selected) ? p.onAction : p.dim,
       ),
       trackColor: WidgetStateProperty.resolveWith(
         (s) => s.contains(WidgetState.selected) ? p.action : p.faint,
@@ -388,7 +553,7 @@ ThemeData buildTheme(bool dark) {
           (s) => s.contains(WidgetState.selected) ? p.action : p.faint,
         ),
         foregroundColor: WidgetStateProperty.resolveWith(
-          (s) => s.contains(WidgetState.selected) ? Colors.white : p.dim,
+          (s) => s.contains(WidgetState.selected) ? p.onAction : p.dim,
         ),
         side: const WidgetStatePropertyAll(BorderSide.none),
         textStyle: const WidgetStatePropertyAll(

@@ -124,7 +124,7 @@ class _SessionScreenState extends State<SessionScreen> {
               ),
               FilledButton(
                 style: FilledButton.styleFrom(
-                  backgroundColor: SL.action,
+                  backgroundColor: SL.alert,
                   foregroundColor: KPalette.light,
                 ),
                 onPressed: () {
@@ -683,13 +683,13 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           backgroundColor: SL.bordeaux,
           content: Row(
             children: [
-              const Icon(Icons.emoji_events_rounded, color: Colors.white),
+              Icon(Icons.emoji_events_rounded, color: SL.onBrand),
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
                   'RECORD · ${store.splitName(ex.name).$1} · ${hit.label}',
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: SL.onBrand,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -1421,7 +1421,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         child: FilledButton.icon(
           style: FilledButton.styleFrom(
             backgroundColor: c,
-            foregroundColor: KPalette.light,
+            foregroundColor: SL.onFill(c),
           ),
           icon: Icon(ic),
           label: Text(label),
@@ -1914,18 +1914,19 @@ class _TimerBar extends StatelessWidget {
             ctl.label == 'TENUE' ||
             ctl.label == 'MAX';
         // Chiffres en blanc cassé (charte) ; le libellé porte l'état :
-        // vert = terminé, rouge d'alerte = effort, accent = repos.
+        // vert = terminé, rouge d'alerte = effort, accent = repos. Couleurs
+        // de phase fixes : elles ne suivent pas la couleur dominante (L5-C).
         final labelColor =
             done
                 ? SL.success
                 : effort
                 ? SL.danger
-                : SL.accent;
+                : SL.redAccent;
         final fill =
             done
                 ? SL.success
                 : effort
-                ? SL.action
+                ? SL.alert
                 : null;
         return Container(
           margin: const EdgeInsets.fromLTRB(16, 4, 16, 6),
@@ -1934,7 +1935,7 @@ class _TimerBar extends StatelessWidget {
             color: SL.surface,
             border:
                 effort && ctl.running
-                    ? Border.all(color: SL.action, width: 2)
+                    ? Border.all(color: SL.alert, width: 2)
                     : null,
             borderRadius: BorderRadius.circular(28),
           ),
@@ -1947,6 +1948,7 @@ class _TimerBar extends StatelessWidget {
                   value: done ? 1 : frac,
                   height: 5,
                   color: fill,
+                  gradient: KPalette.redGradient,
                   track: SL.progressTrack,
                   semanticsLabel: 'Chrono ${ctl.label}',
                 ),
@@ -2157,7 +2159,7 @@ class _FinishPageState extends State<_FinishPage> {
                 key: const ValueKey('finish-retry'),
                 style: FilledButton.styleFrom(
                   backgroundColor: SL.bordeaux,
-                  foregroundColor: Colors.white,
+                  foregroundColor: SL.onBrand,
                   minimumSize: const Size(220, KControl.buttonHeight),
                 ),
                 icon: const Icon(Icons.sync_problem),
@@ -2171,7 +2173,7 @@ class _FinishPageState extends State<_FinishPage> {
                 key: const ValueKey('finish-session'),
                 style: FilledButton.styleFrom(
                   backgroundColor: log.done ? SL.card : SL.bordeaux,
-                  foregroundColor: log.done ? SL.dim : Colors.white,
+                  foregroundColor: log.done ? SL.dim : SL.onBrand,
                   minimumSize: const Size(220, KControl.buttonHeight),
                 ),
                 icon: Icon(log.done ? Icons.undo : Icons.check_circle),

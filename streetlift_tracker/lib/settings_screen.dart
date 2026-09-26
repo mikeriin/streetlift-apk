@@ -10,7 +10,7 @@ import 'pilotage_screen.dart';
 import 'program_start.dart';
 import 'store.dart';
 
-const kAppVersion = '3.0.1';
+const kAppVersion = '3.0.2';
 
 class SettingsScreen extends StatelessWidget {
   final int? section;
@@ -28,9 +28,9 @@ class SettingsScreen extends StatelessWidget {
           _Tile(
             title: 'Thème',
             subtitle: switch (s.theme) {
-              'light' => 'Clair : fond blanc cassé, bordeaux conservé',
+              'light' => 'Clair : fond blanc cassé',
               'system' => 'Système : suit le thème du téléphone',
-              _ => 'Sombre : anthracite et bordeaux, lisible en extérieur',
+              _ => 'Sombre : fond anthracite, lisible en extérieur',
             },
             below: SegmentedButton<String>(
               expandedInsets: EdgeInsets.zero,
@@ -50,6 +50,16 @@ class SettingsScreen extends StatelessWidget {
                 save();
               },
             ),
+          ),
+          // L5-C : indépendant du thème ; appliqué tout de suite, enregistré
+          // avec les autres réglages.
+          _AccentPicker(
+            selected: s.accent,
+            onSelected: (id) {
+              if (s.accent == id) return;
+              s.accent = id;
+              save();
+            },
           ),
           const _Sec('Saisie des séries'),
           _Sw(
@@ -621,6 +631,168 @@ class _ImportDialogState extends State<_ImportDialog> {
 }
 
 // ---------- composants uniformes (mêmes marges, mêmes hauteurs) ----------
+
+/// Couleur dominante (L5-C) : six options nommées, choix unique. La sélection
+/// se lit sans la couleur (coche, contour, graisse) ; grille de 3, 2 ou 1
+/// colonnes selon la largeur et la taille du texte.
+class _AccentPicker extends StatelessWidget {
+  final String selected;
+  final ValueChanged<String> onSelected;
+  const _AccentPicker({required this.selected, required this.onSelected});
+
+  static const double _minOptionWidth = 96, _spacing = 8;
+
+  @override
+  Widget build(BuildContext context) {
+    final current = KAccentSpec.byId(selected);
+    final text = Theme.of(context).textTheme;
+    return KCard(
+      key: const ValueKey('accent-picker'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text('Couleur dominante', style: text.titleMedium),
+          const SizedBox(height: 2),
+          Text(
+            '${current.label} · boutons, sélection et accents. Erreurs, '
+            'validations, chronos, rangs et graphiques gardent leurs couleurs.',
+            key: const ValueKey('accent-summary'),
+            style: text.bodySmall,
+          ),
+          ValueListenableBuilder<String?>(
+            valueListenable: store.persistenceError,
+            builder:
+                (context, error, _) =>
+                    error == null
+                        ? const SizedBox.shrink()
+                        : Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: Text(
+                            'Choix affiché, mais les réglages ne sont pas '
+                            'encore enregistrés : utilise « Réessayer » dans '
+                            'le message d’erreur.',
+                            key: const ValueKey('accent-unsaved'),
+                            style: TextStyle(color: SL.danger, fontSize: 12.5),
+                          ),
+                        ),
+          ),
+          const SizedBox(height: KSpace.gap),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final minWidth = MediaQuery.textScalerOf(
+                context,
+              ).scale(_minOptionWidth);
+              final columns = ((constraints.maxWidth + _spacing) /
+                      (minWidth + _spacing))
+                  .floor()
+                  .clamp(1, 3);
+              final width =
+                  (constraints.maxWidth - (columns - 1) * _spacing) / columns;
+              return Wrap(
+                spacing: _spacing,
+                runSpacing: _spacing,
+                children: [
+                  for (final spec in KAccentSpec.all)
+                    SizedBox(
+                      width: width,
+                      child: _AccentOption(
+                        spec: spec,
+                        selected: spec.id == current.id,
+                        onTap: () => onSelected(spec.id),
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AccentOption extends StatelessWidget {
+  final KAccentSpec spec;
+  final bool selected;
+  final VoidCallback onTap;
+  const _AccentOption({
+    required this.spec,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final radius = BorderRadius.circular(16);
+    return Semantics(
+      key: ValueKey('accent-${spec.id}'),
+      button: true,
+      inMutuallyExclusiveGroup: true,
+      checked: selected,
+      selected: selected,
+      label: spec.label,
+      onTap: onTap,
+      excludeSemantics: true,
+      child: Material(
+        color: SL.faint,
+        shape: RoundedRectangleBorder(
+          borderRadius: radius,
+          side: BorderSide(
+            color: selected ? SL.text : Colors.transparent,
+            width: 2,
+          ),
+        ),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: radius,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 48),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              child: Row(
+                children: [
+                  Container(
+                    width: 22,
+                    height: 22,
+                    decoration: BoxDecoration(
+                      color: spec.vivid,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: SL.dim.withValues(alpha: .45),
+                        width: 1,
+                      ),
+                    ),
+                    child:
+                        selected
+                            ? Icon(
+                              Icons.check_rounded,
+                              key: ValueKey('accent-check-${spec.id}'),
+                              size: 16,
+                              color: spec.onVivid ?? Colors.white,
+                            )
+                            : null,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      spec.label,
+                      style: TextStyle(
+                        color: SL.text,
+                        fontSize: 13.5,
+                        fontWeight:
+                            selected ? FontWeight.w700 : FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class _Sec extends StatelessWidget {
   final String t;

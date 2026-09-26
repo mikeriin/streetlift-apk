@@ -443,7 +443,7 @@ class _WodRunScreenState extends State<WodRunScreen> {
                               clock.capHit
                                   ? SL.danger
                                   : (clock.running && clock.restLeft == 0
-                                      ? c
+                                      ? SL.redAccent
                                       : SL.text);
                           String sub = '';
                           if (phase != null) {
@@ -465,7 +465,7 @@ class _WodRunScreenState extends State<WodRunScreen> {
                           }
                           if (clock.capHit) sub = 'TIME CAP  ·  $sub';
                           return KCard(
-                            outline: clock.capHit ? SL.action : null,
+                            outline: clock.capHit ? SL.alert : null,
                             child: Column(
                               children: [
                                 if (phase != null && !clock.finished) ...[
@@ -484,7 +484,7 @@ class _WodRunScreenState extends State<WodRunScreen> {
                                       style: TextStyle(
                                         color:
                                             phase.kind == PhaseKind.work
-                                                ? c
+                                                ? SL.redAccent
                                                 : SL.text,
                                         fontWeight: FontWeight.w800,
                                         fontSize: 18,
@@ -541,7 +541,7 @@ class _WodRunScreenState extends State<WodRunScreen> {
                                         foregroundColor:
                                             clock.running
                                                 ? SL.text
-                                                : Colors.white,
+                                                : SL.onBrand,
                                         side:
                                             clock.running
                                                 ? BorderSide(
@@ -691,7 +691,7 @@ class _WodRunScreenState extends State<WodRunScreen> {
                                 identical(r, best)
                                     ? CircleAvatar(
                                       backgroundColor: SL.action,
-                                      foregroundColor: KPalette.light,
+                                      foregroundColor: SL.onActionSoft,
                                       child: const Icon(Icons.emoji_events),
                                     )
                                     : Icon(Icons.timer_outlined, color: SL.dim),

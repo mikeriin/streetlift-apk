@@ -371,7 +371,7 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
           const SizedBox(height: 12),
           Text(
             'L’import remplace toutes tes données actuelles : journal, séances perso, références, résultats, crédits, WODs débloqués, liste d’envies, réglages et données Koach. Aucune fusion.',
-            style: TextStyle(color: SL.action, fontWeight: FontWeight.w600),
+            style: TextStyle(color: SL.danger, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 8),
           CheckboxListTile(

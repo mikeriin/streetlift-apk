@@ -446,7 +446,7 @@ class _WodPreviewScreenState extends State<WodPreviewScreen>
             ? FilledButton.icon(
               style: FilledButton.styleFrom(
                 backgroundColor: SL.action,
-                foregroundColor: KPalette.light,
+                foregroundColor: SL.onActionSoft,
               ),
               icon: const Icon(Icons.lock_open),
               label: Text('Acheter · ${creditsLabel(cost)}'),

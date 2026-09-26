@@ -22,7 +22,7 @@ import 'ui.dart';
 
 Color rarityColor(BadgeRarity r) => switch (r) {
   BadgeRarity.commun => SL.dim,
-  BadgeRarity.rare => SL.accent,
+  BadgeRarity.rare => SL.redAccent, // rareté : code fixe (L5-C)
   BadgeRarity.epique => KPalette.actionRed,
   BadgeRarity.legendaire => SL.success,
 };
@@ -206,7 +206,9 @@ class AttributeRadar extends StatelessWidget {
       child: SizedBox(
         width: size,
         height: size,
-        child: CustomPaint(painter: _RadarPainter(sheet, light)),
+        child: CustomPaint(
+          painter: _RadarPainter(sheet, light, SL.dark, SL.accentSpec.id),
+        ),
       ),
     ),
   );
@@ -215,7 +217,11 @@ class AttributeRadar extends StatelessWidget {
 class _RadarPainter extends CustomPainter {
   final CharacterSheet sheet;
   final bool light;
-  const _RadarPainter(this.sheet, this.light);
+
+  /// Mode et couleur dominante lus par [paint] : un changement redessine.
+  final bool dark;
+  final String accent;
+  const _RadarPainter(this.sheet, this.light, this.dark, this.accent);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -225,7 +231,7 @@ class _RadarPainter extends CustomPainter {
         Paint()
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1
-          ..color = (light ? KPalette.light : SL.dim).withValues(alpha: .35);
+          ..color = (light ? SL.onBrandSoft : SL.dim).withValues(alpha: .35);
     Offset at(int axis, double f) {
       final a = -math.pi / 2 + axis * math.pi / 2;
       return Offset(c.dx + r * f * math.cos(a), c.dy + r * f * math.sin(a));
@@ -277,7 +283,7 @@ class _RadarPainter extends CustomPainter {
       Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2
-        ..color = light ? KPalette.light : KPalette.lightRed,
+        ..color = light ? SL.onBrandSoft : KPalette.lightRed,
     );
     final labels = ['F', 'E', 'R', 'T'];
     for (var i = 0; i < 4; i++) {
@@ -286,7 +292,7 @@ class _RadarPainter extends CustomPainter {
         text: TextSpan(
           text: labels[i],
           style: TextStyle(
-            color: light ? KPalette.light : SL.dim,
+            color: light ? SL.onBrandSoft : SL.dim,
             fontSize: 10,
             fontWeight: FontWeight.w700,
           ),
@@ -300,6 +306,8 @@ class _RadarPainter extends CustomPainter {
   @override
   bool shouldRepaint(_RadarPainter old) =>
       old.light != light ||
+      old.dark != dark ||
+      old.accent != accent ||
       old.sheet.attributes.map((a) => a.score).join() !=
           sheet.attributes.map((a) => a.score).join();
 }
@@ -338,27 +346,25 @@ class CharacterCard extends StoreWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'TON PERSONNAGE',
                       style: TextStyle(
-                        color: KPalette.light,
+                        color: SL.onBrandSoft,
                         fontSize: 10,
                         letterSpacing: 1.1,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     const SizedBox(height: 4),
-                    // Réduit plutôt que couper : un titre long reste lisible
-                    // sur un écran étroit avec une grande police.
-                    FittedBox(
-                      fit: BoxFit.scaleDown,
+                    // L5 : retour à la ligne plutôt que réduction du titre.
+                    Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         store.displayTitle,
-                        maxLines: 1,
-                        softWrap: false,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: SL.onBrand,
                           fontSize: 22,
                           fontWeight: FontWeight.w700,
                           height: 1.15,
@@ -372,10 +378,10 @@ class CharacterCard extends StoreWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Text(
+                  Text(
                     'NIV.',
                     style: TextStyle(
-                      color: KPalette.light,
+                      color: SL.onBrandSoft,
                       fontSize: 10,
                       letterSpacing: 1,
                       fontWeight: FontWeight.w600,
@@ -383,8 +389,8 @@ class CharacterCard extends StoreWidget {
                   ),
                   Text(
                     '${p.level}',
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: SL.onBrand,
                       fontSize: 40,
                       height: 1,
                       fontWeight: FontWeight.w700,
@@ -399,8 +405,8 @@ class CharacterCard extends StoreWidget {
           KProgressBar(
             value: p.fraction,
             height: 6,
-            color: Colors.white,
-            track: Colors.white.withValues(alpha: .2),
+            color: SL.onBrand,
+            track: SL.onBrand.withValues(alpha: .2),
             semanticsLabel: 'Progression du niveau',
             semanticsValue: '${p.inLevel} sur ${p.need} XP',
           ),
@@ -409,7 +415,7 @@ class CharacterCard extends StoreWidget {
             next == null
                 ? '${p.remaining} XP avant le niveau ${p.level + 1} · rang maximal atteint'
                 : '${p.remaining} XP avant le niveau ${p.level + 1} · ${next.title} au niveau ${next.level}',
-            style: const TextStyle(color: Colors.white, fontSize: 12),
+            style: TextStyle(color: SL.onBrand, fontSize: 12),
           ),
           const SizedBox(height: 16),
           LayoutBuilder(
@@ -444,17 +450,17 @@ class CharacterCard extends StoreWidget {
             children: [
               KBadge(
                 'Série ${g.streak.weeks} sem.',
-                color: KPalette.light,
+                color: SL.onBrandSoft,
                 icon: Icons.local_fire_department_rounded,
               ),
               KBadge(
                 '${g.streak.shields} bouclier${g.streak.shields > 1 ? 's' : ''}',
-                color: KPalette.light,
+                color: SL.onBrandSoft,
                 icon: Icons.shield_outlined,
               ),
               KBadge(
                 '${p.earnedBadges} badges · ${store.credits >= 0 ? '${store.credits} crédits' : creditDeficitLabel(store.credits)}',
-                color: KPalette.light,
+                color: SL.onBrandSoft,
               ),
             ],
           ),
@@ -476,8 +482,8 @@ class _AttributeRow extends StatelessWidget {
           a.label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            color: KPalette.light,
+          style: TextStyle(
+            color: SL.onBrandSoft,
             fontSize: 11.5,
             fontWeight: FontWeight.w600,
           ),
@@ -487,8 +493,8 @@ class _AttributeRow extends StatelessWidget {
         child: KProgressBar(
           value: a.fraction,
           height: 5,
-          color: Colors.white,
-          track: Colors.white.withValues(alpha: .2),
+          color: SL.onBrand,
+          track: SL.onBrand.withValues(alpha: .2),
           semanticsLabel: a.label,
           semanticsValue:
               a.available
@@ -502,8 +508,8 @@ class _AttributeRow extends StatelessWidget {
         child: Text(
           a.available ? '${a.level}' : '—',
           textAlign: TextAlign.right,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: SL.onBrand,
             fontSize: 12,
             fontWeight: FontWeight.w700,
             fontFeatures: [FontFeature.tabularFigures()],
@@ -737,7 +743,7 @@ class _Ring extends StatelessWidget {
         ExcludeSemantics(
           child: CustomPaint(
             size: Size(size, size),
-            painter: _RingPainter(fraction, color ?? KPalette.actionRed),
+            painter: _RingPainter(fraction, color ?? SL.action),
           ),
         ),
         child,
@@ -801,7 +807,7 @@ class StreakCard extends StoreWidget {
         children: [
           Icon(
             Icons.local_fire_department_rounded,
-            color: s.weeks > 0 ? KPalette.lightRed : SL.dim,
+            color: s.weeks > 0 ? SL.decor : SL.dim,
             size: 34,
           ),
           const SizedBox(width: 12),
@@ -1191,7 +1197,7 @@ class BossCard extends StoreWidget {
         children: [
           Icon(
             Icons.sports_martial_arts_rounded,
-            color: started ? KPalette.lightRed : SL.accent,
+            color: started ? SL.decor : SL.accent,
             size: 34,
           ),
           const SizedBox(width: 12),

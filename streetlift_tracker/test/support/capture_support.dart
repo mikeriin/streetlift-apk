@@ -27,9 +27,7 @@ Future<void> loadCaptureFonts() async {
   for (final family in ['Roboto', 'Ahem']) {
     final loader = FontLoader(family);
     for (final file in fonts) {
-      loader.addFont(
-        Future.value(ByteData.sublistView(file.readAsBytesSync())),
-      );
+      loader.addFont(Future.value(ByteData.sublistView(file.readAsBytesSync())));
     }
     await loader.load();
   }
@@ -49,8 +47,7 @@ Future<void> precacheCaptureImages(WidgetTester tester) async {
     final context = tester.element(find.byType(MaterialApp).first);
     await Future.wait([
       precacheImage(const AssetImage('assets/icon/logo_mark.png'), context),
-      for (final file
-          in Directory('assets/muscles').listSync().whereType<File>())
+      for (final file in Directory('assets/muscles').listSync().whereType<File>())
         if (file.path.endsWith('.png'))
           precacheImage(AssetImage(file.path), context),
     ]);
@@ -59,11 +56,7 @@ Future<void> precacheCaptureImages(WidgetTester tester) async {
 }
 
 /// Écrit le contenu de [boundary] en PNG (densité 2).
-Future<void> savePng(
-  WidgetTester tester,
-  GlobalKey boundary,
-  String name,
-) async {
+Future<void> savePng(WidgetTester tester, GlobalKey boundary, String name) async {
   final render =
       boundary.currentContext!.findRenderObject()! as RenderRepaintBoundary;
   await tester.runAsync(() async {

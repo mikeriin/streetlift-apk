@@ -239,7 +239,7 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
               ),
               FilledButton(
                 style: FilledButton.styleFrom(
-                  backgroundColor: SL.action,
+                  backgroundColor: SL.alert,
                   foregroundColor: KPalette.light,
                 ),
                 onPressed: () => Navigator.pop(ctx, true),

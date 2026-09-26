@@ -304,7 +304,10 @@ class _HomeScreenState extends State<HomeScreen> {
         onSummary: () => _summary(w, d),
       );
       return KScreen(
-        appBar: const KTopBar(leading: LevelPill()),
+        appBar: KTopBar(
+          leading: const LevelPill(),
+          height: LevelProgressNumber.headerHeight(context),
+        ),
         body: Column(
           children: [
             Padding(
@@ -314,6 +317,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 count: store.program.weeks.length,
                 color: colors.slider,
                 onChanged: _selectWeek,
+                onDetails: () => _weekDetails(w),
+                onChoose: _pickWeek,
+              ),
+            ),
+            // L5 : semaine, bloc et dates visibles ; choix d'une semaine en
+            // un appui (l'appui long et le glissement restent disponibles).
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                KSpace.page,
+                0,
+                KSpace.page,
+                2,
+              ),
+              child: _WeekHeader(
+                week: w,
+                dates: store.program.weekDates(w.n),
                 onDetails: () => _weekDetails(w),
                 onChoose: _pickWeek,
               ),
@@ -361,6 +380,87 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     },
   );
+}
+
+/// Titre de la semaine affichée (L5) : numéro, bloc et dates, avec un
+/// bouton visible pour choisir une autre semaine. Passe sur deux lignes sur
+/// écran étroit ou avec un grand texte.
+class _WeekHeader extends StatelessWidget {
+  final WeekPlan week;
+  final String dates;
+  final VoidCallback onDetails, onChoose;
+  const _WeekHeader({
+    required this.week,
+    required this.dates,
+    required this.onDetails,
+    required this.onChoose,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final label = dates.replaceAll('→', ' → ');
+    final info = Semantics(
+      button: true,
+      label: 'Semaine ${week.n}, ${week.block}, $label',
+      onTapHint: 'Afficher le détail de la semaine',
+      excludeSemantics: true,
+      child: InkWell(
+        key: const ValueKey('week-header'),
+        onTap: onDetails,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'SEMAINE ${week.n}',
+                key: const ValueKey('week-title'),
+                style: TextStyle(
+                  color: SL.text,
+                  fontSize: 16,
+                  height: 1.2,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: .3,
+                ),
+              ),
+              Text(
+                '${week.block} · $label',
+                style: TextStyle(color: SL.dim, fontSize: 12.5, height: 1.3),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    final choose = TextButton.icon(
+      key: const ValueKey('week-choose'),
+      onPressed: onChoose,
+      icon: const Icon(Icons.calendar_month_outlined),
+      label: const Text('Semaines'),
+    );
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final stacked =
+            constraints.maxWidth < 300 ||
+            MediaQuery.textScalerOf(context).scale(10) > 13;
+        if (stacked) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [info, choose],
+          );
+        }
+        return Row(
+          children: [
+            Expanded(child: info),
+            const SizedBox(width: 8),
+            choose,
+          ],
+        );
+      },
+    );
+  }
 }
 
 /// Appui court : détails ; long : choix. Glissement et clavier : semaine.
@@ -569,15 +669,21 @@ class _DayCard extends StatelessWidget {
     final compact = MediaQuery.sizeOf(context).height < 800;
     final recovery = day.exercises.isEmpty;
     final estimate = isToday && !recovery ? store.dayEstimate(day) : null;
-    final foreground = isToday ? Colors.white : SL.text;
-    final secondary = isToday ? KPalette.light : SL.dim;
+    final foreground = isToday ? SL.onBrand : SL.text;
+    final secondary = isToday ? SL.onBrandSoft : SL.dim;
     final status =
         done
             ? 'Séance effectuée'
             : inProgress
             ? 'Séance en cours'
             : 'Séance à faire';
-    final statusIcon = Icon(
+    final statusColor =
+        done
+            ? (isToday ? SL.onBrandSoft : SL.success)
+            : inProgress
+            ? (isToday ? SL.onBrandSoft : SL.accent)
+            : secondary;
+    final icon = Icon(
       done
           ? Icons.check_circle_rounded
           : inProgress
@@ -586,13 +692,36 @@ class _DayCard extends StatelessWidget {
       key: ValueKey('day-status-${day.j}'),
       semanticLabel: status,
       size: 20,
-      color:
-          done
-              ? (isToday ? KPalette.light : SL.success)
-              : inProgress
-              ? (isToday ? KPalette.light : SL.accent)
-              : secondary,
+      color: statusColor,
     );
+    // L5 : une séance commencée est écrite, pas seulement signalée par
+    // l'icône (fait / à faire restent des icônes, lues par TalkBack).
+    final statusIcon =
+        inProgress && !done
+            ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'En cours',
+                  key: ValueKey('day-in-progress-${day.j}'),
+                  style: TextStyle(
+                    color: statusColor,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                icon,
+              ],
+            )
+            : icon;
+    // Titre sur une ligne dans la mise en page de référence (la semaine
+    // entière tient à l'écran) ; deux lignes sur écran étroit ou grand texte.
+    final titleLines =
+        MediaQuery.sizeOf(context).width < 360 ||
+                MediaQuery.textScalerOf(context).scale(10) > 11
+            ? 2
+            : 1;
     return Semantics(
       button: true,
       selected: isToday,
@@ -638,7 +767,7 @@ class _DayCard extends StatelessWidget {
                               'J${day.j} · AUJOURD’HUI',
                               style: TextStyle(
                                 color: secondary,
-                                fontSize: 10,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w600,
                                 letterSpacing: .9,
                               ),
@@ -685,8 +814,8 @@ class _DayCard extends StatelessWidget {
                                 children: [
                                   Text(
                                     estimate.durationLabel,
-                                    style: const TextStyle(
-                                      color: Colors.white,
+                                    style: TextStyle(
+                                      color: SL.onBrand,
                                       fontSize: 25,
                                       height: 1.15,
                                       fontWeight: FontWeight.w600,
@@ -701,7 +830,7 @@ class _DayCard extends StatelessWidget {
                                     'Estimé · repos inclus',
                                     style: TextStyle(
                                       color: secondary,
-                                      fontSize: 10,
+                                      fontSize: 12,
                                     ),
                                   ),
                                   const SizedBox(height: 8),
@@ -718,7 +847,7 @@ class _DayCard extends StatelessWidget {
                                     estimate.volumeLabel,
                                     style: TextStyle(
                                       color: secondary,
-                                      fontSize: 11,
+                                      fontSize: 12,
                                     ),
                                   ),
                                 ],
@@ -734,7 +863,7 @@ class _DayCard extends StatelessWidget {
                                 data: store.plannedMuscles(estimate),
                                 height: compact ? 90 : 110,
                                 labels: false,
-                                tint: KPalette.light,
+                                tint: SL.onBrandSoft,
                                 glow: false,
                               ),
                             ),
@@ -760,7 +889,7 @@ class _DayCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             day.title,
-                            maxLines: 1,
+                            maxLines: titleLines,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               color: foreground,
