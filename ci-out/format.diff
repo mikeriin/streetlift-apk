@@ -1,5 +1,26 @@
  ci-out/analyze.log                                 |     3 -
- ci-out/captures.log                                |    82 -
+ ci-out/android-debug.log                           |    12 -
+ ci-out/build-36251654459/aab-files.txt             |     5 -
+ ci-out/build-36251654459/aab.sha256                |     1 -
+ ci-out/build-36251654459/analyze-tail.txt          |     2 -
+ ci-out/build-36251654459/android-artifacts.json    |   253 -
+ ci-out/build-36251654459/apk-files.txt             |     5 -
+ ci-out/build-36251654459/apk.sha256                |     1 -
+ ci-out/build-36251654459/artifacts.err             |     0
+ ci-out/build-36251654459/artifacts.json            |     1 -
+ ci-out/build-36251654459/build-number.txt          |     1 -
+ ci-out/build-36251654459/commit.txt                |     1 -
+ ci-out/build-36251654459/download-aab.log          |     0
+ ci-out/build-36251654459/download-apk.log          |     0
+ ci-out/build-36251654459/download-validation.log   |     0
+ ci-out/build-36251654459/flutter-tests-tail.txt    |     5 -
+ ci-out/build-36251654459/flutter.txt               |     4 -
+ ci-out/build-36251654459/inputs.sha256             |     3 -
+ ci-out/build-36251654459/python-tests-tail.txt     |     8 -
+ ci-out/build-36251654459/run.err                   |     0
+ ci-out/build-36251654459/run.json                  |     1 -
+ ci-out/build-36251654459/validation-files.txt      |    31 -
+ ci-out/captures.log                                |    96 -
  ci-out/captures/apres_320_200pct_catalogue_wod.png |   Bin 113703 -> 0 bytes
  ci-out/captures/apres_320_200pct_chrono_wod.png    |   Bin 72204 -> 0 bytes
  .../captures/apres_320_200pct_depart_programme.png |   Bin 110226 -> 0 bytes
@@ -15,8 +36,8 @@
  .../captures/apres_320_200pct_stats_historique.png |   Bin 101901 -> 0 bytes
  .../captures/apres_320_200pct_stats_parcours.png   |   Bin 106608 -> 0 bytes
  .../apres_320_200pct_stats_performances.png        |   Bin 109892 -> 0 bytes
- ci-out/captures/apres_catalogue_wod_clair.png      |   Bin 279120 -> 0 bytes
- ci-out/captures/apres_catalogue_wod_sombre.png     |   Bin 269675 -> 0 bytes
+ ci-out/captures/apres_catalogue_wod_clair.png      |   Bin 279419 -> 0 bytes
+ ci-out/captures/apres_catalogue_wod_sombre.png     |   Bin 269717 -> 0 bytes
  ci-out/captures/apres_chrono_wod_clair.png         |   Bin 102458 -> 0 bytes
  ci-out/captures/apres_chrono_wod_sombre.png        |   Bin 98610 -> 0 bytes
  ci-out/captures/apres_depart_programme_clair.png   |   Bin 113796 -> 0 bytes
@@ -35,6 +56,16 @@
  ci-out/captures/apres_references_sombre.png        |   Bin 151685 -> 0 bytes
  .../captures/apres_reglages_chronometres_clair.png |   Bin 108450 -> 0 bytes
  .../apres_reglages_chronometres_sombre.png         |   Bin 94459 -> 0 bytes
+ ci-out/captures/apres_rouge_arsenal_clair.png      |   Bin 148403 -> 0 bytes
+ ci-out/captures/apres_rouge_arsenal_sombre.png     |   Bin 140557 -> 0 bytes
+ ci-out/captures/apres_rouge_programme_clair.png    |   Bin 159215 -> 0 bytes
+ ci-out/captures/apres_rouge_programme_sombre.png   |   Bin 156445 -> 0 bytes
+ ci-out/captures/apres_rouge_reglages_clair.png     |   Bin 126531 -> 0 bytes
+ ci-out/captures/apres_rouge_reglages_sombre.png    |   Bin 117374 -> 0 bytes
+ ci-out/captures/apres_rouge_seance_clair.png       |   Bin 68909 -> 0 bytes
+ ci-out/captures/apres_rouge_seance_sombre.png      |   Bin 68183 -> 0 bytes
+ ci-out/captures/apres_rouge_stats_clair.png        |   Bin 148667 -> 0 bytes
+ ci-out/captures/apres_rouge_stats_sombre.png       |   Bin 141876 -> 0 bytes
  ci-out/captures/apres_stats_apercu_clair.png       |   Bin 150053 -> 0 bytes
  ci-out/captures/apres_stats_apercu_sombre.png      |   Bin 142589 -> 0 bytes
  ci-out/captures/apres_stats_historique_clair.png   |   Bin 126909 -> 0 bytes
@@ -72,10 +103,13 @@
  ci-out/captures/selecteur_320_200pct_clair.png     |   Bin 102560 -> 0 bytes
  ci-out/captures/selecteur_320_200pct_sombre.png    |   Bin 92487 -> 0 bytes
  ci-out/commit.txt                                  |     2 +-
- ci-out/format-full.diff                            | 58516 -------------------
- ci-out/format.diff                                 |    93 -
- ci-out/format.log                                  |     2 +-
- ci-out/mode.txt                                    |     2 +-
+ ci-out/format-full.diff                            | 59250 -------------------
+ ci-out/format.diff                                 |    81 -
+ ci-out/format.log                                  |     4 +-
  ci-out/python.log                                  |    15 -
  ci-out/test-l5c.log                                |   192 -
- 80 files changed, 3 insertions(+), 58904 deletions(-)
+ ci-out/test-summary.txt                            |     1 -
+ ci-out/test.log                                    |   670 -
+ streetlift_tracker/test/l6_perf_bench_test.dart    |   506 +-
+ streetlift_tracker/test/support/perf_fixtures.dart |    10 +-
+ 114 files changed, 266 insertions(+), 60898 deletions(-)

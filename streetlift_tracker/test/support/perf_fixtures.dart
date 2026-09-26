@@ -139,7 +139,9 @@ Map<String, dynamic>? perfBackup(AppStore app, String profile) {
       for (var e = 0; e < count; e++)
         CustomExercise(uid: 'p${i}x$e', name: names[e % names.length]),
     ];
-    custom.add(CustomSession(id: '$i', name: 'Perso $i', items: items).toJson());
+    custom.add(
+      CustomSession(id: '$i', name: 'Perso $i', items: items).toJson(),
+    );
     SessionLog occurrence(int n) {
       final date = perfStart.add(Duration(days: (i * 3 + n * 11) % 270));
       final at = _iso(DateTime(date.year, date.month, date.day, 7));
@@ -218,7 +220,11 @@ Map<String, dynamic>? perfBackup(AppStore app, String profile) {
           'minutes': 0,
           'interval': 60,
           'scheme': '',
-          'lines': ['${10 + i % 10} pompes', '${5 + i % 5} tractions', '20 squats'],
+          'lines': [
+            '${10 + i % 10} pompes',
+            '${5 + i % 5} tractions',
+            '20 squats',
+          ],
           'notes': '',
           'source': 'Perso',
         },
