@@ -1,0 +1,15 @@
+.......................................
+----------------------------------------------------------------------
+Ran 39 tests in 1.316s
+
+OK
+OK : apk-absents, refus Gradle attendu observé.
+OK : aab-absents, refus Gradle attendu observé.
+OK : apk-sans-mot-de-passe, refus Gradle attendu observé.
+OK : aab-sans-conteneur, refus Gradle attendu observé.
+OK : apk-base64-invalide, refus Gradle attendu observé.
+programme_v33.json: 13 -> 33 octets
+programme_v33.json: 13 -> 33 octets
+exit=0
+OK : 40 semaines, 280 jours, 1818 exercices du programme, 505 exercices de la base.
+verify exit=0
