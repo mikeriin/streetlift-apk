@@ -1,8 +1,157 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : LC1b — S11·J6 au format du J6 du Bloc 2 (suite de KT-037)**  
-**Date : 26 septembre 2026, Europe/Paris — version : 3.0.1+62 (versionCode réel fixé par la CI de build)**  
-**Statut : contenu de la séance S11·J6 modifié dans l'asset embarqué à ta demande (séance du jour), par un script déterministe vérifié ; S12·J6 et le reste du programme inchangés (vérifié). Testé automatiquement en CI (format, analyse, 537 tests Dart réussis et 1 ignoré, Python 58/58, build debug) ; aucune vérification sur téléphone. Publication et build signé : `LIVRAISON_LC1b.md`.**
+**Passe actuelle : L5 — Finition globale et six couleurs dominantes (version candidate)**  
+**Date : 26 septembre 2026, Europe/Paris — version : 3.0.2+63 (versionCode réel fixé par la CI de build)**  
+**Statut : ⟨STATUT⟩**
+
+## L5.0 — Demande, base et outils
+
+| Élément | Valeur | Nature de la preuve |
+| --- | --- | --- |
+| Demandes | 1) prompt L5 V2 (proposition L5-A, livrée à 15 h 3x) ; 2) « le bleu → variante jaune ; barre de progression du niveau aussi » (15 h 43) ; 3) validation des six palettes et du sélecteur, L5-C seul (15 h 47) ; 4) « même procédure que d'habitude, valider sur GitHub pour que j'aie mon .apk » (15 h 50) ; 5) `prompt_L5_global_tous_ecrans_kalis_track.txt` : finition de tous les écrans, sans validation écran par écran, une seule version candidate (15 h 58) | Déclarations du propriétaire |
+| Arbitrages appliqués sans arrêt | Le prompt global cite « Bleu » : la décision explicite de 15 h 43 (Jaune) est conservée. « Aucun dépôt distant modifié » : la demande de 15 h 50 (publication et build comme d'habitude) prime, comme pour les lots précédents. Indicateur NIV. : barre unie de la dominante (règle « sans dégradé » + « barre du niveau aussi »). Marque K inchangée (question Q2 sans réponse : option proposée) | Choix exposés |
+| Base | `streetlift_tracker_v33.zip` **LC1b 3.0.1+62**, 1 705 958 octets, 371 fichiers, racine unique `streetlift_tracker/`, SHA-256 `615bb1b0e97c670581149505b1b16ea9cf01eac9a4b4573d9d207a4e6e7dd38d` (recalculé ; identique à `LIVRAISON_LC1b.md` ; copie tirée de `main` `ec9ca97`). Aucune modification L5 antérieure dans la base (L5-A n'était qu'un document) | Recalcul dans cette passe |
+| Outils | Pas de Flutter local (proxy : `storage.googleapis.com` et `pub.dev` refusés). Formatage, analyse, tests Dart, tests Python, compilation Android debug et **rendus Flutter de test** exécutés en CI GitHub sur la branche temporaire `claude/ci-tools` ; build signé par le workflow `build-apk.yml` sur `main` | Constaté |
+| État initial | Rendus « avant » de la base (même fixture) : 5 onglets/écrans + 13 écrans × clair/sombre + PROGRAMME 320 px × 200 % | CI (runs de la branche temporaire) |
+
+## L5.1 — Six couleurs dominantes (L5-C)
+
+- `lib/app_theme.dart` : `KAccentSpec` (six palettes, identifiants stables `rouge`, `jaune`, `vert`, `violet`, `orange`, `turquoise`, repli rouge) ; `KPalette(dark, accent)` : rôles de la dominante (`bordeaux` = principale, `action` = vive, `accent`, `accentTint`, `onBrand`/`onBrandSoft`, `onAction`/`onActionSoft`, `decor`, `gauge`, `confetti`) et rôles fixes (`alert`, `redAccent`, `success`, `danger`, `logo`, neutres) ; `buildTheme(dark, accent)` ; `SL.accentSpec`. Le Rouge Kalis reproduit exactement les valeurs historiques (vérifié par test).
+- Nuances : voir `REFONTE_UI.md` (tableau). Jaune : texte `#121212` sur la couleur ; en clair, vive et accent en or foncé `#7A5800` (le jaune sur fond clair n'atteint que 1,5 à 1,8:1).
+- `lib/main.dart` : `SLApp` écoute le thème **et** la couleur (deux notifiers indépendants), thèmes mis en cache par combinaison (12 au plus), suit la luminosité du téléphone en mode Système ; au changement, tout l'arbre est marqué à reconstruire **sans être recréé** (routes empilées, saisies, séance, chronos, tentative WOD conservés ; aucune nouvelle clé de route).
+- `lib/store.dart` : `AppSettings.accent` (défaut `rouge`), `normalizeAccent` (absent, inconnu, mauvais type → rouge, sans refuser l'import), `accentMode`, synchronisé au chargement, à l'import, à la suppression locale et à l'enregistrement des réglages. Export : champ `accent` dans `settings` (format 3 inchangé ; les anciennes versions l'ignorent). **Seule extension de données du lot.**
+- `lib/settings_screen.dart` : « Couleur dominante » sous « Thème » : six options nommées (pastille, nom), sélection par coche + contour + gras, sémantique de choix unique (bouton, groupe exclusif, coché) ; grille 2 colonnes sur téléphone, 3 sur grand écran, 1 au-delà de 150 % à 320 px ; cibles ≥ 48 px ; message « Choix affiché, mais les réglages ne sont pas encore enregistrés… » en cas d'échec d'écriture (le message global « Réessayer » existant reste la reprise).
+- Répartition des couleurs dans `lib/` : dominante pour les accents d'interface ; **fixes** : confirmations destructrices (`session_screen`, `arsenal_screen`, `session_history` → `SL.alert`), chronos de série et de WOD (`SL.redAccent`, `SL.alert`, dégradé rouge fixe), avertissements écrits (`pilotage_screen`, `data_control`, `wod_store` → `SL.danger`, 2,19 → 7,83:1 en sombre), rareté des badges, radar, carte musculaire, courbe Koach, barres STATS, couvertures WOD. Textes posés sur la couleur (carte du jour, cartes de marque, boutons, bandeaux) → `onBrand`/`onAction` (#121212 sur le Jaune). Puces sélectionnées en sombre : libellé `#F4F4F4` (4,04 → 12,86:1 en rouge).
+- Barres de progression du niveau : suivent la dominante ; l'indicateur NIV. de PROGRAMME est une barre **unie**.
+
+## L5.2 — Finition des écrans
+
+| Zone | Résultat | Preuve |
+| --- | --- | --- |
+| PROGRAMME | **Amélioré** : semaine, dates et bloc dans l'en-tête (« SEMAINE N ▾ », un appui ouvre le choix des 40 semaines ; curseur, glissement et appui long inchangés) ; avec un grand texte (> 130 %), ligne pleine en tête de liste avec le bouton « Semaines » ; titres des journées 1 ligne (référence, la semaine entière reste visible à 390 × 844), 2 lignes (< 360 px ou > 110 %), 3 lignes (> 150 %) ; carte du jour sans texte < 12 px ; « En cours » écrit ; « NIV. » et chiffre suivent la taille de texte (retrait de `TextScaler.noScaling` et `FittedBox`), barre d'en-tête plus haute si besoin | Tests existants (`programme_test.dart` : semaine entière visible à 390 × 844, statuts, 320 px) + rendus |
+| Réglages | **Amélioré** : sélecteur de couleur ; sous-titres du Thème sans « bordeaux » ; description « Couleur dominante, clair ou sombre » ; au-delà de 150 % : Thème en trois choix empilés, tuiles de menu sans icône décorative (plus de titre coupé) | Tests + rendus 320 × 200 % |
+| Titres de page et de section | **Amélioré** : `KWordFitText` (titres `KPageIntro`, intros STATS, feuilles) garde les mots entiers ; si le mot le plus large ne tient pas, la taille du titre baisse juste assez, jamais sous 15 px × échelle | Rendus 320 × 200 % (« RÉGLAGES », « CHRONOMÈTRES », « d'entraînement ») |
+| STATS | **Amélioré** : carte personnage (titre sous l'insigne > 150 %), branches du parcours empilées > 150 %, titres de section 11 px, puce sélectionnée lisible ; graphiques inchangés | Rendus avant/après |
+| Références | **Amélioré** : champ « — kg » au lieu du nom tronqué (« Poids de cor… »), nom lu par TalkBack ; « Non renseigné » lisible | Rendus |
+| Boutique | **Amélioré** : carte de crédits, « Gagner » sous le solde > 150 % ; sinon **conservé** (rendus identiques en rouge) | Rendus |
+| Séance, historique, ARSENAL, éditeur, fiches et chrono WOD, départ du programme, sous-pages de réglages | **Conservés** après vérification (rendus identiques pixel à pixel en rouge à 390 × 844, hors horloge affichée) ; couleurs réparties comme en L5.1 | Comparaison de rendus |
+| Démarrage, erreur au lancement, bilan/récompenses, dialogues d'import/suppression, Koach | **Conservés**, couleurs réparties ; non rendus dans cette passe | Suite complète |
+| Dock | **Conservé** (libellé actif limité à 115 %, conception validée) | Limite documentée |
+
+## L5.3 — Tests
+
+⟨TESTS⟩
+
+## L5.4 — Limites et suites
+
+- Aucun essai sur téléphone, aucun essai TalkBack réel ; captures = rendus Flutter de test (moteur de test, polices du SDK), pas des captures d'APK.
+- Rendus non produits : démarrage, écran d'erreur, bilan et cérémonie, dialogues d'import/suppression, écrans Koach, notifications.
+- Libellé du dock limité à 115 % ; grands chiffres (chrono 72 px, charge 28 px) toujours réduits par `FittedBox` s'ils ne tiennent pas (le nombre reste entier).
+- À 320 px et 200 %, un titre de ligne d'historique (« ENDURANCE ») peut encore passer à la ligne au milieu du mot.
+- Rouge vif historique sur `#121212` : 2,46:1 (sous 3:1), gardé pour l'identité ; les cinq autres couleurs passent 3:1.
+- Contrastes = calcul WCAG 2.x (luminance relative) sur les valeurs du code, pas une mesure à l'écran ; pas une certification.
+- Branche temporaire `claude/ci-tools` à supprimer de ton côté (droits insuffisants).
+
+# Historique conservé — L5-A (proposition du 26/09/2026, livrée hors ZIP)
+
+### L5-A.0 — Demande, base et capacités
+
+| Élément | Valeur | Nature de la preuve |
+| --- | --- | --- |
+| Demande | Compléter L5 : chaque utilisateur choisit la couleur dominante parmi six (rouge actuel, bleu, vert, violet, orange, turquoise) ; rouge par défaut ; couleur et mode clair/sombre/système indépendants ; proposition seulement, sans code ; prompt `prompt_L5_finition_visuelle_couleurs_kalis_track_v2.txt` qui remplace le précédent prompt L5 | Déclaration du propriétaire (26/09/2026) |
+| Base | `streetlift_tracker_v33.zip` **LC1b 3.0.1+62**, 1 705 958 octets, 371 fichiers, racine unique `streetlift_tracker/`, SHA-256 `615bb1b0e97c670581149505b1b16ea9cf01eac9a4b4573d9d207a4e6e7dd38d` | Recalculé dans cette passe ; identique à `LIVRAISON_LC1b.md`. Copie obtenue depuis `main` (commit `ec9ca97`), où cette livraison a été publiée : l'identité est prouvée par l'empreinte, le dépôt n'est pas adopté comme nouvelle référence |
+| Validations connues de la base | CI run n° 81 : format, analyse, 537 tests Dart réussis et 1 ignoré, Python 58/58, build signé réussi | Résultat GitHub repris de LC1b, non rejoué ici |
+| Essai sur téléphone | Aucun (LC1b, L7, L4b non vérifiés sur appareil) | — |
+| État L5 trouvé | Aucune section L5, aucun inventaire L5-A ni sous-lot L5 dans la base ; `REFONTE_UI.md` portait encore la checklist 2.5.0 | Lecture de `SUIVI_PROJET.md`, `REFONTE_UI.md`, `docs/` |
+| Rendu Flutter | **Non exécuté.** Flutter absent de l'environnement et non installable : le proxy refuse `storage.googleapis.com` et `pub.dev` (réponse 403). Un rendu par la CI GitHub reste possible mais demande de pousser une branche temporaire : non fait dans une passe de proposition | Commandes exécutées dans cette passe |
+| Retour du propriétaire (26/09/2026, 15 h 43) | « Le bleu change le pour une variante jaune, penser à changer la couleur de la barre de progression du niveau aussi » → Bleu remplacé par Jaune ; Q1 tranché en B (les barres de progression du niveau suivent la dominante). Pas encore d'accord global sur L5-C | Déclaration du propriétaire |
+| Visuels fournis | **Maquettes HTML** (page « Kalis Track · Couleur dominante »), construites d'après le code ; ni capture de l'APK, ni rendu Flutter | — |
+
+Portée volontairement limitée : l'inventaire L5-A complet des écrans n'existait pas. Il n'est pas refait en entier ici : cette passe couvre l'inventaire des couleurs de toute l'application (nécessaire à L5-C) et l'écran PROGRAMME (pilote). Les autres zones (démarrage, séance, historique, Arsenal, boutique, WOD, STATS, réglages L2b) restent à inventorier au moment de leur sous-lot.
+
+### L5-A.1 — Décisions visuelles retrouvées (conservées)
+
+- Navigation ARSENAL, STATS, PROGRAMME, RÉGLAGES, libellés visibles ; semaine sélectionnée et états conservés (L4b).
+- Rouge historique : `#6B0C0C` dominante, `#A61717` accent/actif, `#E85959` accent textuel en sombre (4,8:1 sur `#1E1E1E`, commentaire de `app_theme.dart`), fonds `#121212/#1E1E1E`, vert `#388E3C` réservé à la validation.
+- Titres principaux en majuscules ; K sans fond ; pas d'AVANT/ARRIÈRE sur l'accueil.
+- Niveau : 1.8.7 « chiffres pleins, sans contour ni dégradé » ; 2.0.1 (décision plus récente) « NIV. » à gauche et barre d'avancement dessous. **Conflit résolu** : la règle « sans dégradé » visait le remplissage des chiffres (aujourd'hui en couleur de texte, sans dégradé) ; la barre ajoutée en 2.0.1 utilise le dégradé de la charte. Rien n'est changé.
+- Couvertures WOD : dégradé autorisé (la règle du niveau ne s'y étend pas).
+- **Évolution autorisée le 26/09/2026** : la dominante rouge unique devient le choix par défaut parmi six dominantes sélectionnables. Les nuances des cinq alternatives sont une proposition non validée.
+- **26/09/2026, 15 h 43** : les six familles deviennent rouge, **jaune**, vert, violet, orange, turquoise (le bleu est retiré) ; les barres de progression du niveau suivent la dominante. L'insigne de rang et la rareté des badges gardent leurs couleurs.
+
+### L5-A.2 — Inventaire des couleurs (inspection statique de `lib/`)
+
+Les couleurs sont centralisées dans `lib/app_theme.dart` : `KPalette` (constantes et rôles), `SL` (accesseurs statiques, mode lu dans `SL.dark`), `ProgrammeColors`, `buildTheme` (thème Material). Une seule couleur écrite en dur ailleurs : `store.dart:589` (`#4FA3C7`, séances perso). Occurrences relevées (hors `app_theme.dart` pour les constantes) : `SL.accent` 98, `SL.success` 52, `SL.action` 22, `SL.bordeaux` 16, constantes `KPalette.burgundy/actionRed/lightRed` 23.
+
+Constat important : `SL.action` (#A61717) sert à la fois d'état actif (sélection, curseur, points de séance) **et** de couleur d'alerte (confirmations de suppression dans `session_screen.dart:127`, `arsenal_screen.dart:364`, `session_history.dart:242` ; chrono d'effort `session_screen.dart:1922-1937` ; avertissements écrits). L5-C doit donc séparer les usages, pas remplacer le rouge partout.
+
+| Groupe | Proposition |
+| --- | --- |
+| Boutons pleins, bandeaux, carte du jour, cartes de marque, sélection (onglets, dock, segments, interrupteurs, curseur), liens et icônes d'accent, champ actif, puces, boutons d'action WOD, chronos de mode (lancement), records, jauges de missions/envies, décor (flamme, boss, anneau hebdo, confettis) | Suit la dominante |
+| Erreurs, suppression, confirmations destructrices | Rouge fixe |
+| Avertissements écrits (`pilotage_screen.dart:167`, `data_control.dart:374`, `wod_store.dart:994`) | Rouge « danger » fixe (ajustement, voir L5-A.3) |
+| Validation et succès | Vert fixe |
+| Chronomètres : phases effort/repos/terminé, time cap, chiffres du chrono WOD | Couleurs actuelles fixes |
+| Barres de progression du niveau (barre NIV. `levelup.dart`, jauge d'XP `rewards.dart`, jauge d'XP `wod_store.dart:985`) | Suit la dominante (Q1 tranché : B) |
+| Insigne de rang, rareté des badges | Couleurs actuelles fixes |
+| Textes et icônes posés sur la dominante (92 occurrences de blanc / `#F4F4F4` à classer, dont une partie sur des surfaces fixes comme les couvertures WOD) | « Texte sur dominante » : `#F4F4F4`, ou `#121212` pour le Jaune |
+| Graphiques et données (barres STATS, radar, carte musculaire), couvertures et rubans WOD, couleurs de blocs et de séances perso | Couleurs actuelles fixes |
+| Marque K dans l'app et animation d'ouverture | Inchangée (Q2) |
+| Icône Android, écran natif | Non touchés |
+| Fonds, surfaces, textes, gris | Inchangés, selon clair/sombre |
+
+Risque à vérifier (non reproduit) : les widgets qui lisent `SL.*` sans dépendre de `Theme.of` ne se redessinent pas seuls ; un basculement du mode Système pendant une séance ouverte (route poussée) peut laisser des couleurs mélangées. L5-C prévoit un rafraîchissement de tout l'arbre au changement, sans recréer les états.
+
+### L5-A.3 — Contrastes (calcul WCAG 2.x sur les valeurs du code, pas une mesure sur rendu)
+
+Formule de luminance relative WCAG 2.x ; seuils 4,5:1 (texte) et 3:1 (composants, critère 1.4.11). Ce n'est pas une certification.
+
+| Constat (rouge actuel) | Mesure | Proposition |
+| --- | --- | --- |
+| Avertissements écrits en `#A61717` sur `#1E1E1E` (sombre) | **2,19:1** | Rôle « danger » fixe : `#F09B9B` (7,83:1) en sombre, inchangé en clair |
+| Libellé de puce sélectionnée (`#E85959` sur teinte 14 %), sombre | **4,04:1** | Libellé `#F4F4F4` (12,86:1), coche et fond gardent l'accent |
+| `#A61717` comme élément d'interface sur `#121212` | 2,46:1 | Conservé (identité) ; état aussi porté par libellé, position, pouce blanc |
+
+### L5-A.4 — Proposition L5-C : six palettes
+
+| Palette (id) | Principale | Vive | Accent sombre | Texte sur principale | Texte sur vive | Vive sur `#121212` | Accent sur `#1E1E1E` |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Rouge Kalis (`rouge`, défaut) | `#6B0C0C` | `#A61717` | `#E85959` | 11,34 | 7,62 | 2,46 | 4,77 |
+| Jaune (`jaune`) | `#E6B000` | `#F5C400` (sombre) · `#7A5800` (clair) | `#F5C400` | 9,43 (texte `#121212`) | 11,40 (texte `#121212`, sombre) · 6,51 (blanc, clair) | 11,40 | 10,14 |
+| Vert (`vert`) | `#0B4D33` | `#157A4E` | `#4EC08A` | 8,99 | 5,35 | 3,50 | 7,33 |
+| Violet (`violet`) | `#44146B` | `#8240C4` | `#B38CF2` | 12,25 | 6,04 | 3,10 | 6,31 |
+| Orange (`orange`) | `#6E2E05` | `#A84707` | `#F2924A` | 9,29 | 5,88 | 3,18 | 7,13 |
+| Turquoise (`turquoise`) | `#08494F` | `#0E7479` | `#3EC4C4` | 9,20 | 5,54 | 3,38 | 7,86 |
+
+Rôles : principale = rôle du bordeaux (et accent en clair) ; vive = rôle de `#A61717` pour l'état actif ; accent sombre = accent textuel en sombre. Jaune : texte `#121212` sur la principale et sur la vive en sombre ; en clair, vive et accent passent à l'or foncé `#7A5800` (5,92:1 sur `#F4F4F4`, 5,63:1 sur teinte), car le jaune sur fond clair n'atteint que 1,5 à 1,8:1 ; jauge de niveau en clair `#7A5800 → #8A6500` (3,88:1 sur la piste `#DCDCDC`). Jaune séparé de l'Orange (ΔE76 42 à 51). Vert : distinct du vert de validation mais proche (ΔE76 14 à 21) ; la validation garde coche et libellé. Orange : distinct du rouge d'erreur (ΔE 22 à 39).
+
+Sélecteur : RÉGLAGES → Apparence, sous « Thème » ; six options nommées (pastille + nom), grille 3/2/1 colonnes selon largeur et texte, 48 px minimum, sélection marquée par coche, contour 2 px et gras, groupe à choix unique pour TalkBack ; application immédiate sans redémarrage ; en cas d'échec d'écriture, couleur affichée, message existant avec « Réessayer » et mention « Choix non enregistré ». Sous-titres du Thème reformulés sans « bordeaux ».
+
+Données : champ `accent` dans `AppSettings` (`rouge|jaune|vert|violet|orange|turquoise`) ; absent → rouge ; inconnu ou mauvais type → rouge **sans refuser l'import** (contrairement à `theme`, dont une valeur inconnue refuse la sauvegarde aujourd'hui) ; export/import avec les réglages (remplacement complet) ; suppression locale → rouge ; les anciennes versions ignorent le champ. Aucune autre donnée modifiée.
+
+Mise en œuvre prévue (après accord) : palettes et rôles dans `app_theme.dart` (`KPalette(dark, accent)`, rôles « texte sur principale / sur vive » et nuances par mode, nécessaires au Jaune ; rôles fixes nommés pour alerte, rang et données), cache des 12 `ThemeData`, écoute combinée mode + couleur dans `SLApp`, sélecteur dans `settings_screen.dart`, champ dans `store.dart`. Pas de nouvelle dépendance. Pas de flash au démarrage : l'application est construite après la lecture des réglages ; l'animation d'ouverture (avant lecture) reste inchangée.
+
+Tests prévus : rôles de couleur pour les 12 combinaisons ; contrastes calculés en test ; sélecteur à 390/320 px, 130/200 %, sémantique ; changement de couleur pendant une saisie, une séance et un chrono sans perte ni fausse performance ; réouverture ; échec d'écriture ; choix rapides (dernier gagne) ; ancienne sauvegarde sans champ ; valeur inconnue ; export/import ; suppression ; XP, crédits, WOD acquis et dates inchangés ; `reward_flow_test.dart` et `wod_store_test.dart` rejoués ; en rouge, comparaison avant/après limitée aux ajustements annoncés.
+
+**Arbitrages** — Q1 barres de progression du niveau : **tranché B** (suivent la dominante, 26/09/2026). Q2 marque K en clair : ouvert, A (proposé) rester bordeaux, B suivre la nuance principale.
+
+### L5-A.5 — Proposition du pilote PROGRAMME (après L5-C)
+
+Inspection statique de `lib/home_screen.dart` et `lib/levelup.dart` ; aucune capture.
+
+| Réf. | Constat | Changement proposé | Inchangé |
+| --- | --- | --- | --- |
+| P1 | Dates et bloc de la semaine absents de l'écran ; choisir une semaine demande un appui long ou deux étapes | Ligne « SEMAINE 12 · Bloc 2 — Force · 28/09 → 04/10 » sous le curseur, bouton visible « Semaines » | Curseur, glissement, appui long, feuilles existantes |
+| P2 | Titres des journées sur 1 ligne (coupés à 320 px et dès 130 %) | 2 lignes | Ordre, carte du jour, actions |
+| P3 | Textes de 10 px sur la carte du jour | 12 px minimum | Contenu de la carte |
+| P4 | « En cours » porté par une icône seule | Mot « En cours » à côté de l'icône | Icônes fait/à faire |
+| P5 | `LevelProgressNumber` : `TextScaler.noScaling` + `FittedBox` (KT-020) | NIV. et chiffre suivent la taille de texte ; en-tête plus haut | NIV. avant le chiffre, barre dessous (sa couleur relève de L5-C) |
+
+Composants partagés : `LevelProgressNumber` seulement (en-tête PROGRAMME, `level_fill_test.dart`). Hors pilote : `FittedBox` du dock (`nav_bar.dart`), autre sous-lot.
+
+### L5-A.6 — Fichiers de cette passe
+
+Modifiés (livrés séparément, hors ZIP) : `SUIVI_PROJET.md`, `REFONTE_UI.md`. Créés hors projet : `NOTE_L5A.md`, page de proposition (maquettes). Aucun autre fichier du projet modifié ; pas de ZIP, pas d'APK, pas de publication.
 
 ## LC1b.0 — Demande, base et décisions
 
@@ -1687,7 +1836,7 @@ Un défaut technique local pourra être corrigé dans son lot après autorisatio
 5. **Économie.** Pas de changement arbitraire d'XP/niveaux/crédits/prix. Barème actuel : `1 + 2 × niveau + 3 × floor(niveau/5)` ; bonus actuels chapitre +3, boss +5, semaine complète +1 ; prix catalogue de base 1 à 4, remises avec plancher 1. L'incohérence KT-005 exige une décision, pas une retouche discrète du barème.
 6. **WOD.** Acquis avec crédits ; essai temporaire comme exception. Pas de création libre de WOD ajoutée. Les séances personnelles et contenus anciens restent compatibles.
 7. **Fonctionnement local.** Pas de paiement, abonnement, publicité, compte obligatoire, cloud applicatif ou analytics ajoutés sans validation. La sauvegarde Android est un sujet distinct.
-8. **Navigation et identité visuelle.** ARSENAL, STATS, PROGRAMME, RÉGLAGES ; suivi/pilotage/progression regroupés dans STATS. Bordeaux `#6B0C0C`, rouge d'action `#A61717`, anthracites `#121212/#1E1E1E`, thèmes clair/sombre/système.
+8. **Navigation et identité visuelle.** ARSENAL, STATS, PROGRAMME, RÉGLAGES ; suivi/pilotage/progression regroupés dans STATS. Bordeaux `#6B0C0C`, rouge d'action `#A61717`, anthracites `#121212/#1E1E1E`, thèmes clair/sombre/système. *Évolution du 26/09/2026 (L5, 3.0.2) : ce rouge reste la couleur dominante par défaut ; chaque utilisateur peut en choisir une parmi six (rouge, jaune, vert, violet, orange, turquoise ; le bleu, d'abord prévu, a été remplacé par le jaune le même jour), indépendamment du thème clair/sombre/système.*
 9. **Choix visuels du cahier des charges.** Titres principaux en majuscules ; marque K sans fond dans les transitions prévues ; indicateur de niveau sans contour ni dégradé, progression à séparation nette ; ne pas réintroduire AVANT/ARRIÈRE. Cette contrainte de dégradé ne s'étend pas automatiquement aux couvertures WOD.
 10. **Validation honnête.** Tests à dimensions réalistes, sans retirer d'assertions pour obtenir du vert. Ancien rapport, analyse statique, build, test automatique et essai appareil restent des preuves différentes.
 
