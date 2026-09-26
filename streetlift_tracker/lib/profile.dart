@@ -889,8 +889,9 @@ class UserProfile {
 }
 
 Object? _copyJson(Object? v) {
-  if (v is Map)
+  if (v is Map) {
     return {for (final e in v.entries) '${e.key}': _copyJson(e.value)};
+  }
   if (v is List) return [for (final e in v) _copyJson(e)];
   return v;
 }

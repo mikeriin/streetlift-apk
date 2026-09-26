@@ -175,8 +175,9 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('flow-next-age')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('minor-message')), findsOneWidget);
+    // Attente au-delà du délai de sauvegarde (600 ms) : rien de demandé.
     await tester.pump(const Duration(seconds: 2));
-    await store.flush();
+    expect(store.hasUnsavedChanges, isFalse);
     expect(writes, 0);
     expect(store.profile, isNull);
     expect(store.koach.weighIns, isEmpty);
@@ -324,12 +325,12 @@ void main() {
       await tester.pumpAndSettle();
       await tap('flow-next-age');
       await tap('flow-goal-event');
-      await tap('flow-event-item-pullups_max');
       await tap('flow-goal2-strength');
       await tap('flow-weight-plus');
       await tap('flow-event-date');
       await tester.tap(find.text('OK'));
       await tester.pumpAndSettle();
+      await tap('flow-event-item-pullups_max');
       await tap('flow-next-goals');
       for (final d in [1, 2, 4, 6]) {
         await tap('flow-day-$d');
@@ -355,7 +356,7 @@ void main() {
       await tap('flow-autonomy-expert');
       await tap('flow-next-mode');
       // Né en 1958 : 65 ans et plus → mode prudent.
-      expect(find.text('Mode prudent activé'), findsOneWidget);
+      await scrollToAction(tester, find.text('Mode prudent activé'));
       await tap('flow-next-recap');
       expect(find.text('ACCUEIL'), findsOneWidget);
       expect(store.profile!.stringValue('autonomy'), 'expert');

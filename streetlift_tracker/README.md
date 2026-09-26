@@ -1,4 +1,18 @@
-# Kalis Track 3.0.3 — Performance mesurée
+# Kalis Track 3.1.0 — Profil et démarrage
+
+## 3.1.0 — Profil, démarrage court et questionnaire de santé (lot L8)
+
+- **Démarrage court** (installation neuve, 2 minutes au plus) : bienvenue → âge → objectifs → disponibilités → lieux et matériel → repère de niveau (« Combien de pompes d'affilée ? ») → santé → mode et ton → récapitulatif. Rien n'est enregistré avant le récapitulatif.
+- **Réservée aux 18 ans et plus** : en dessous, un message l'explique et aucune donnée n'est enregistrée.
+- **Objectifs V1** : Forme et santé (proposé en premier), Force, Endurance en répétitions, Préparer un test ou une compétition (épreuves, cibles et date). Objectif secondaire facultatif, répartition 70/30 réglable par pas de 10.
+- **Questionnaire de santé** (8 questions, rédaction propre à Kalis Track) après une information claire et ton accord explicite. Une réponse « oui », une gêne au-dessus de 3/10, 65 ans et plus, une grossesse, un problème de cœur ou de tension, un refus ou une absence de réponse → **mode prudent** : pas de test maximal, au moins 3 répétitions en réserve et charges plafonnées à 80 % du 1RM sur les mouvements principaux, conseil de demander l'avis d'un médecin. « J'ai l'accord de mon médecin » (déclaration datée) le lève.
+- **Tes données de santé** restent sur le téléphone, figurent dans l'export et sont effacées avec les données de l'application ; accord révocable à tout moment (Réglages → Profil), ce qui les efface.
+- **Questions progressives** : une seule question au plus, à la fin d'une séance validée (jamais pendant), avec « Plus tard » et « Ne plus demander ».
+- **Installation existante** : ton profil est pré-rempli (feuille Pilotage, objectifs Koach, programme, historique) ; tu le vérifies et le confirmes (ou « Plus tard »). **Aucune date, valeur ni séance n'est modifiée**, et tant que tu n'as pas confirmé, l'application se comporte exactement comme 3.0.3.
+- Réglages → **Profil** : consultation, modification, origine de chaque réponse (déclarée, estimée, mesurée), historique « profil modifié ».
+
+Détail : `docs/CONTRAT_L8.md`, `docs/CONFIDENTIALITE.md`, `SUIVI_PROJET.md` (L8). Tests : `test/l8_profile_test.dart`, `test/l8_profile_screens_test.dart`.
+
 
 ## 3.0.3 — Performance (lot L6)
 

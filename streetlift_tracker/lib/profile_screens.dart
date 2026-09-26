@@ -978,9 +978,9 @@ class _ProfileFlowState extends State<ProfileFlow> {
         ),
       ),
       if (_consent == 'refused')
-        KCard(
-          key: const ValueKey('flow-refused'),
-          child: const Text(
+        const KCard(
+          key: ValueKey('flow-refused'),
+          child: Text(
             'D’accord : aucune donnée de santé ne sera enregistrée. '
             '$kCautionAdvice Tu pourras donner ton accord plus tard dans '
             'Réglages → Profil.',
