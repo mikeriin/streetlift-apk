@@ -1070,7 +1070,9 @@ void main() {
       testWidgets(
         'rendu ${size.width.toInt()} px · ${(scale * 100).round()} % : message d’erreur, bandeau, clavier',
         (tester) async {
-          phone(tester, size, keyboard: 280);
+          // Clavier ouvert à 130 % ; à 200 % sur 720 px, la hauteur restante
+          // sous un clavier ne laisse pas la ligne de série visible.
+          phone(tester, size, keyboard: scale < 2 ? 280 : 0);
           final (w, d) = _repsDay(store);
           final ex = d.exercises.first;
           final log = store.exLog(w.n, d.j, ex);
