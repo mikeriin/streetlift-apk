@@ -1,9 +1,48 @@
- ci-out/analyze.log                                 |     5 -
- ci-out/captures.log                                |    25 -
+ ci-out/analyze.log                                 |     3 -
+ ci-out/captures.log                                |    35 -
+ ci-out/captures/avant_catalogue_wod_clair.png      |   Bin 279203 -> 0 bytes
+ ci-out/captures/avant_catalogue_wod_sombre.png     |   Bin 269785 -> 0 bytes
+ ci-out/captures/avant_chrono_wod_clair.png         |   Bin 102458 -> 0 bytes
+ ci-out/captures/avant_chrono_wod_sombre.png        |   Bin 98610 -> 0 bytes
+ ci-out/captures/avant_depart_programme_clair.png   |   Bin 113796 -> 0 bytes
+ ci-out/captures/avant_depart_programme_sombre.png  |   Bin 103660 -> 0 bytes
+ ci-out/captures/avant_editeur_seance_clair.png     |   Bin 60012 -> 0 bytes
+ ci-out/captures/avant_editeur_seance_sombre.png    |   Bin 58390 -> 0 bytes
+ ci-out/captures/avant_fiche_wod_acquis_clair.png   |   Bin 282113 -> 0 bytes
+ ci-out/captures/avant_fiche_wod_acquis_sombre.png  |   Bin 271384 -> 0 bytes
+ .../captures/avant_fiche_wod_verrouille_clair.png  |   Bin 292932 -> 0 bytes
+ .../captures/avant_fiche_wod_verrouille_sombre.png |   Bin 284716 -> 0 bytes
+ ci-out/captures/avant_historique_seance_clair.png  |   Bin 87393 -> 0 bytes
+ ci-out/captures/avant_historique_seance_sombre.png |   Bin 86034 -> 0 bytes
+ .../captures/avant_programme_320_200pct_clair.png  |   Bin 125923 -> 0 bytes
+ .../captures/avant_programme_320_200pct_sombre.png |   Bin 123163 -> 0 bytes
+ ci-out/captures/avant_references_clair.png         |   Bin 179930 -> 0 bytes
+ ci-out/captures/avant_references_sombre.png        |   Bin 158612 -> 0 bytes
+ .../captures/avant_reglages_chronometres_clair.png |   Bin 108450 -> 0 bytes
+ .../avant_reglages_chronometres_sombre.png         |   Bin 94459 -> 0 bytes
+ ci-out/captures/avant_stats_apercu_clair.png       |   Bin 150053 -> 0 bytes
+ ci-out/captures/avant_stats_apercu_sombre.png      |   Bin 142589 -> 0 bytes
+ ci-out/captures/avant_stats_historique_clair.png   |   Bin 126909 -> 0 bytes
+ ci-out/captures/avant_stats_historique_sombre.png  |   Bin 117523 -> 0 bytes
+ ci-out/captures/avant_stats_parcours_clair.png     |   Bin 145750 -> 0 bytes
+ ci-out/captures/avant_stats_parcours_sombre.png    |   Bin 134744 -> 0 bytes
+ ci-out/captures/avant_stats_performances_clair.png |   Bin 154191 -> 0 bytes
+ .../captures/avant_stats_performances_sombre.png   |   Bin 139584 -> 0 bytes
  ci-out/commit.txt                                  |     2 +-
- ci-out/format-full.diff                            | 21827 -------------------
+ ci-out/format-full.diff                            | 22233 -------------------
  ci-out/format.diff                                 |     9 -
- ci-out/format.log                                  |     2 +-
+ ci-out/format.log                                  |    12 +-
+ ci-out/mode.txt                                    |     2 +-
  ci-out/python.log                                  |    15 -
+ streetlift_tracker/lib/app_theme.dart              |     4 +-
+ streetlift_tracker/lib/home_screen.dart            |     6 +-
+ streetlift_tracker/lib/pilotage_screen.dart        |    11 +-
+ streetlift_tracker/lib/rewards.dart                |     5 +-
+ streetlift_tracker/lib/stats_progression.dart      |     6 +-
+ streetlift_tracker/test/l5c_couleur_test.dart      |   203 +-
  .../test/l5c_ecrans_capture_test.dart              |   278 +-
- 8 files changed, 142 insertions(+), 22021 deletions(-)
+ .../test/l5c_palettes_capture_test.dart            |     6 +-
+ .../test/l5c_rouge_capture_test.dart               |   119 +-
+ streetlift_tracker/test/l5c_selecteur_test.dart    |   229 +-
+ .../test/support/capture_support.dart              |    13 +-
+ 47 files changed, 479 insertions(+), 22712 deletions(-)

@@ -76,7 +76,11 @@ void main() {
     for (final spec in KAccentSpec.all) {
       for (final dark in [true, false]) {
         final mode = dark ? 'sombre' : 'clair';
-        await show(RootNav(referenceDate: DateTime(2026, 9, 30, 9)), spec, dark);
+        await show(
+          RootNav(referenceDate: DateTime(2026, 9, 30, 9)),
+          spec,
+          dark,
+        );
         if (captureEnabled) {
           await savePng(tester, boundary, 'palette_${spec.id}_programme_$mode');
         }

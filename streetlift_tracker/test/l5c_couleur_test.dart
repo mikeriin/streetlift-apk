@@ -152,28 +152,39 @@ void main() {
           expect(t.brightness, dark ? Brightness.dark : Brightness.light);
           expect(t.colorScheme.primary, p.accent);
           expect(t.colorScheme.error, p.danger);
-          expect(t.filledButtonTheme.style!.backgroundColor!.resolve({}),
-              p.bordeaux);
-          expect(t.filledButtonTheme.style!.foregroundColor!.resolve({}),
-              p.onBrandSoft);
           expect(
-            t.segmentedButtonTheme.style!.backgroundColor!
-                .resolve({WidgetState.selected}),
+            t.filledButtonTheme.style!.backgroundColor!.resolve({}),
+            p.bordeaux,
+          );
+          expect(
+            t.filledButtonTheme.style!.foregroundColor!.resolve({}),
+            p.onBrandSoft,
+          );
+          expect(
+            t.segmentedButtonTheme.style!.backgroundColor!.resolve({
+              WidgetState.selected,
+            }),
             p.action,
           );
           expect(
-            t.segmentedButtonTheme.style!.foregroundColor!
-                .resolve({WidgetState.selected}),
+            t.segmentedButtonTheme.style!.foregroundColor!.resolve({
+              WidgetState.selected,
+            }),
             p.onAction,
           );
-          expect(t.chipTheme.secondaryLabelStyle!.color,
-              dark ? p.text : p.accent);
+          expect(
+            t.chipTheme.secondaryLabelStyle!.color,
+            dark ? p.text : p.accent,
+          );
           expect(
             t.checkboxTheme.fillColor!.resolve({WidgetState.selected}),
             KPalette.green,
           );
           expect(
-            contrast(t.colorScheme.inversePrimary, t.colorScheme.inverseSurface),
+            contrast(
+              t.colorScheme.inversePrimary,
+              t.colorScheme.inverseSurface,
+            ),
             greaterThanOrEqualTo(4.5),
           );
           expect(SL.accentSpec, same(a));
@@ -261,24 +272,27 @@ void main() {
       expect((await relaunch()).settings.accent, 'jaune');
     });
 
-    test('échec d’écriture : choix affiché, erreur visible, disque intact', () async {
-      app.settings.accent = 'vert';
-      app.saveSettings();
-      await app.flush();
-      app.debugWriteHook = (_) async => false;
-      app.settings.accent = 'turquoise';
-      app.saveSettings();
-      await app.flush();
-      expect(app.accentMode.value, 'turquoise');
-      expect(app.persistenceError.value, isNotNull);
-      expect(app.hasUnsavedChanges, isTrue);
-      expect((await relaunch()).settings.accent, 'vert');
-      app.debugWriteHook = null;
-      app.saveSettings();
-      expect(await app.retrySave(), isTrue);
-      expect(app.persistenceError.value, isNull);
-      expect((await relaunch()).settings.accent, 'turquoise');
-    });
+    test(
+      'échec d’écriture : choix affiché, erreur visible, disque intact',
+      () async {
+        app.settings.accent = 'vert';
+        app.saveSettings();
+        await app.flush();
+        app.debugWriteHook = (_) async => false;
+        app.settings.accent = 'turquoise';
+        app.saveSettings();
+        await app.flush();
+        expect(app.accentMode.value, 'turquoise');
+        expect(app.persistenceError.value, isNotNull);
+        expect(app.hasUnsavedChanges, isTrue);
+        expect((await relaunch()).settings.accent, 'vert');
+        app.debugWriteHook = null;
+        app.saveSettings();
+        expect(await app.retrySave(), isTrue);
+        expect(app.persistenceError.value, isNull);
+        expect((await relaunch()).settings.accent, 'turquoise');
+      },
+    );
 
     test('export : la préférence est incluse', () async {
       app.settings.accent = 'orange';
@@ -287,39 +301,48 @@ void main() {
       expect((data['settings'] as Map)['accent'], 'orange');
     });
 
-    test('import d’une sauvegarde sans préférence : rouge, reste conservé', () async {
-      app.settings
-        ..theme = 'light'
-        ..defaultRest = 150
-        ..accent = 'violet';
-      app.saveSettings();
-      final data = jsonDecode(app.exportAll()) as Map<String, dynamic>;
-      (data['settings'] as Map).remove('accent');
-      final other = await relaunch();
-      other.settings.accent = 'jaune';
-      other.saveSettings();
-      expect(await other.importBackup(jsonEncode(data)), ImportStatus.success);
-      expect(other.settings.accent, 'rouge');
-      expect(other.accentMode.value, 'rouge');
-      expect(other.settings.theme, 'light');
-      expect(other.settings.defaultRest, 150);
-    });
+    test(
+      'import d’une sauvegarde sans préférence : rouge, reste conservé',
+      () async {
+        app.settings
+          ..theme = 'light'
+          ..defaultRest = 150
+          ..accent = 'violet';
+        app.saveSettings();
+        final data = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+        (data['settings'] as Map).remove('accent');
+        final other = await relaunch();
+        other.settings.accent = 'jaune';
+        other.saveSettings();
+        expect(
+          await other.importBackup(jsonEncode(data)),
+          ImportStatus.success,
+        );
+        expect(other.settings.accent, 'rouge');
+        expect(other.accentMode.value, 'rouge');
+        expect(other.settings.theme, 'light');
+        expect(other.settings.defaultRest, 150);
+      },
+    );
 
-    test('import d’une valeur inconnue : rouge, sans refuser la sauvegarde', () async {
-      final data = jsonDecode(app.exportAll()) as Map<String, dynamic>;
-      (data['settings'] as Map)['accent'] = 'magenta';
-      (data['settings'] as Map)['defaultRest'] = 120;
-      expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
-      expect(app.settings.accent, 'rouge');
-      expect(app.settings.defaultRest, 120);
-      // Aller-retour d'une valeur connue.
-      (data['settings'] as Map)['accent'] = 'turquoise';
-      expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
-      expect(app.settings.accent, 'turquoise');
-      expect(app.accentMode.value, 'turquoise');
-      await app.flush();
-      expect((await relaunch()).settings.accent, 'turquoise');
-    });
+    test(
+      'import d’une valeur inconnue : rouge, sans refuser la sauvegarde',
+      () async {
+        final data = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+        (data['settings'] as Map)['accent'] = 'magenta';
+        (data['settings'] as Map)['defaultRest'] = 120;
+        expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
+        expect(app.settings.accent, 'rouge');
+        expect(app.settings.defaultRest, 120);
+        // Aller-retour d'une valeur connue.
+        (data['settings'] as Map)['accent'] = 'turquoise';
+        expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
+        expect(app.settings.accent, 'turquoise');
+        expect(app.accentMode.value, 'turquoise');
+        await app.flush();
+        expect((await relaunch()).settings.accent, 'turquoise');
+      },
+    );
 
     test('suppression locale : retour au rouge', () async {
       app.settings.accent = 'vert';
@@ -332,33 +355,37 @@ void main() {
       expect((await relaunch()).settings.accent, 'rouge');
     });
 
-    test('changer de couleur ne touche ni XP, ni crédits, ni droits, ni dates', () async {
-      for (final week in app.program.weeks.take(2)) {
-        for (final day in week.days) {
-          if (day.exercises.isNotEmpty) app.markSessionDone(week.n, day.j, true);
+    test(
+      'changer de couleur ne touche ni XP, ni crédits, ni droits, ni dates',
+      () async {
+        for (final week in app.program.weeks.take(2)) {
+          for (final day in week.days) {
+            if (day.exercises.isNotEmpty)
+              app.markSessionDone(week.n, day.j, true);
+          }
         }
-      }
-      await app.flush();
-      final xp = app.levelProgress.inLevel, level = app.level;
-      final credits = app.credits, earned = app.creditsEarned;
-      final unlocked = Map.of(app.unlockedWods);
-      final start = app.program.start;
-      final logs = jsonEncode((jsonDecode(app.exportAll()) as Map)['logs']);
-      for (final id in kAccentIds) {
-        app.settings.accent = id;
-        app.saveSettings();
-      }
-      await app.flush();
-      final next = await relaunch();
-      for (final a in [app, next]) {
-        expect(a.level, level);
-        expect(a.levelProgress.inLevel, xp);
-        expect(a.credits, credits);
-        expect(a.creditsEarned, earned);
-        expect(a.unlockedWods, unlocked);
-        expect(a.program.start, start);
-        expect(jsonEncode((jsonDecode(a.exportAll()) as Map)['logs']), logs);
-      }
-    });
+        await app.flush();
+        final xp = app.levelProgress.inLevel, level = app.level;
+        final credits = app.credits, earned = app.creditsEarned;
+        final unlocked = Map.of(app.unlockedWods);
+        final start = app.program.start;
+        final logs = jsonEncode((jsonDecode(app.exportAll()) as Map)['logs']);
+        for (final id in kAccentIds) {
+          app.settings.accent = id;
+          app.saveSettings();
+        }
+        await app.flush();
+        final next = await relaunch();
+        for (final a in [app, next]) {
+          expect(a.level, level);
+          expect(a.levelProgress.inLevel, xp);
+          expect(a.credits, credits);
+          expect(a.creditsEarned, earned);
+          expect(a.unlockedWods, unlocked);
+          expect(a.program.start, start);
+          expect(jsonEncode((jsonDecode(a.exportAll()) as Map)['logs']), logs);
+        }
+      },
+    );
   });
 }

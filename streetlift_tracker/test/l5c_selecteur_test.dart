@@ -106,53 +106,63 @@ void main() {
     );
   }
 
-  testWidgets('sélection lisible sans la couleur et sémantique de choix unique', (
-    tester,
-  ) async {
-    screen(tester, const Size(390, 844));
-    await tester.pumpWidget(settingsPage(dark: true));
-    await tester.pumpAndSettle();
-    final handle = tester.ensureSemantics();
-    expect(find.byKey(const ValueKey('accent-check-rouge')), findsOneWidget);
-    expect(find.byKey(const ValueKey('accent-check-jaune')), findsNothing);
-    expect(
-      tester.getSemantics(find.byKey(const ValueKey('accent-rouge'))),
-      containsSemantics(
-        label: 'Rouge Kalis',
-        isButton: true,
-        isInMutuallyExclusiveGroup: true,
-        hasCheckedState: true,
-        isChecked: true,
-        hasTapAction: true,
-      ),
-    );
-    expect(
-      tester.getSemantics(find.byKey(const ValueKey('accent-jaune'))),
-      containsSemantics(
-        label: 'Jaune',
-        isInMutuallyExclusiveGroup: true,
-        hasCheckedState: true,
-        isChecked: false,
-      ),
-    );
-    handle.dispose();
-    await tester.tap(find.byKey(const ValueKey('accent-jaune')));
-    await tester.pumpAndSettle();
-    expect(store.settings.accent, 'jaune');
-    expect(store.accentMode.value, 'jaune');
-    expect(store.settings.theme, 'dark');
-    await tester.pumpWidget(settingsPage(dark: true, accent: KAccentSpec.jaune));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('accent-check-jaune')), findsOneWidget);
-    expect(find.byKey(const ValueKey('accent-check-rouge')), findsNothing);
-    expect(find.textContaining('Jaune ·'), findsOneWidget);
-  });
+  testWidgets(
+    'sélection lisible sans la couleur et sémantique de choix unique',
+    (tester) async {
+      screen(tester, const Size(390, 844));
+      await tester.pumpWidget(settingsPage(dark: true));
+      await tester.pumpAndSettle();
+      final handle = tester.ensureSemantics();
+      expect(find.byKey(const ValueKey('accent-check-rouge')), findsOneWidget);
+      expect(find.byKey(const ValueKey('accent-check-jaune')), findsNothing);
+      expect(
+        tester.getSemantics(find.byKey(const ValueKey('accent-rouge'))),
+        containsSemantics(
+          label: 'Rouge Kalis',
+          isButton: true,
+          isInMutuallyExclusiveGroup: true,
+          hasCheckedState: true,
+          isChecked: true,
+          hasTapAction: true,
+        ),
+      );
+      expect(
+        tester.getSemantics(find.byKey(const ValueKey('accent-jaune'))),
+        containsSemantics(
+          label: 'Jaune',
+          isInMutuallyExclusiveGroup: true,
+          hasCheckedState: true,
+          isChecked: false,
+        ),
+      );
+      handle.dispose();
+      await tester.tap(find.byKey(const ValueKey('accent-jaune')));
+      await tester.pumpAndSettle();
+      expect(store.settings.accent, 'jaune');
+      expect(store.accentMode.value, 'jaune');
+      expect(store.settings.theme, 'dark');
+      await tester.pumpWidget(
+        settingsPage(dark: true, accent: KAccentSpec.jaune),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('accent-check-jaune')), findsOneWidget);
+      expect(find.byKey(const ValueKey('accent-check-rouge')), findsNothing);
+      expect(find.textContaining('Jaune ·'), findsOneWidget);
+    },
+  );
 
   testWidgets('choix rapides dans l’écran : le dernier gagne', (tester) async {
     screen(tester, const Size(390, 844));
     await tester.pumpWidget(settingsPage(dark: false));
     await tester.pumpAndSettle();
-    for (final id in ['vert', 'violet', 'orange', 'turquoise', 'jaune', 'vert']) {
+    for (final id in [
+      'vert',
+      'violet',
+      'orange',
+      'turquoise',
+      'jaune',
+      'vert',
+    ]) {
       await tester.tap(find.byKey(ValueKey('accent-$id')));
       await tester.pump();
     }
@@ -235,7 +245,9 @@ void main() {
           '14',
         );
         expect(
-          Theme.of(tester.element(find.byType(SessionScreen))).colorScheme.primary,
+          Theme.of(
+            tester.element(find.byType(SessionScreen)),
+          ).colorScheme.primary,
           KPalette(true, spec).accent,
         );
         // Composant qui lit la palette sans dépendre du thème, dans une
@@ -262,69 +274,74 @@ void main() {
     },
   );
 
-  testWidgets('mode Système : la luminosité suit le téléphone, pas la couleur', (
-    tester,
-  ) async {
-    screen(tester, const Size(390, 844));
-    addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
-    store.settings
-      ..theme = 'system'
-      ..accent = 'orange';
-    store.saveSettings();
-    tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
-    await tester.pumpWidget(const SLApp());
-    await tester.pumpAndSettle();
-    final home = tester.state(find.byType(HomeScreen));
-    ThemeData theme() => Theme.of(tester.element(find.byType(HomeScreen)));
-    expect(theme().brightness, Brightness.dark);
-    expect(theme().colorScheme.primary, KPalette(true, KAccentSpec.orange).accent);
-    expect(SL.dark, isTrue);
-    tester.platformDispatcher.platformBrightnessTestValue = Brightness.light;
-    await tester.pumpAndSettle();
-    expect(theme().brightness, Brightness.light);
-    expect(
-      theme().colorScheme.primary,
-      KPalette(false, KAccentSpec.orange).accent,
-    );
-    expect(SL.dark, isFalse);
-    expect(SL.accentSpec, same(KAccentSpec.orange));
-    expect(store.settings.accent, 'orange');
-    expect(store.settings.theme, 'system');
-    expect(tester.state(find.byType(HomeScreen)), same(home));
-    expect(tester.takeException(), isNull);
-    await tester.pumpWidget(const SizedBox());
-    await tester.pumpAndSettle();
-  });
+  testWidgets(
+    'mode Système : la luminosité suit le téléphone, pas la couleur',
+    (tester) async {
+      screen(tester, const Size(390, 844));
+      addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
+      store.settings
+        ..theme = 'system'
+        ..accent = 'orange';
+      store.saveSettings();
+      tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
+      await tester.pumpWidget(const SLApp());
+      await tester.pumpAndSettle();
+      final home = tester.state(find.byType(HomeScreen));
+      ThemeData theme() => Theme.of(tester.element(find.byType(HomeScreen)));
+      expect(theme().brightness, Brightness.dark);
+      expect(
+        theme().colorScheme.primary,
+        KPalette(true, KAccentSpec.orange).accent,
+      );
+      expect(SL.dark, isTrue);
+      tester.platformDispatcher.platformBrightnessTestValue = Brightness.light;
+      await tester.pumpAndSettle();
+      expect(theme().brightness, Brightness.light);
+      expect(
+        theme().colorScheme.primary,
+        KPalette(false, KAccentSpec.orange).accent,
+      );
+      expect(SL.dark, isFalse);
+      expect(SL.accentSpec, same(KAccentSpec.orange));
+      expect(store.settings.accent, 'orange');
+      expect(store.settings.theme, 'system');
+      expect(tester.state(find.byType(HomeScreen)), same(home));
+      expect(tester.takeException(), isNull);
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpAndSettle();
+    },
+  );
 
-  testWidgets('les six couleurs × clair/sombre : accueil et réglages sans erreur', (
-    tester,
-  ) async {
-    screen(tester, const Size(360, 780));
-    await tester.pumpWidget(const SLApp());
-    await tester.pumpAndSettle();
-    for (final spec in KAccentSpec.all) {
-      for (final theme in ['dark', 'light']) {
-        store.settings
-          ..theme = theme
-          ..accent = spec.id;
-        store.saveSettings();
-        await tester.pumpAndSettle();
-        await tester.tap(find.byKey(const ValueKey('nav-2')));
-        await tester.pumpAndSettle();
-        final t = Theme.of(tester.element(find.byType(HomeScreen)));
-        final p = KPalette(theme == 'dark', spec);
-        expect(t.colorScheme.primary, p.accent);
-        expect(SL.accentSpec, same(spec));
-        await tester.tap(find.byKey(const ValueKey('nav-3')));
-        await tester.pumpAndSettle();
-        expect(
-          find.byKey(ValueKey('accent-check-${spec.id}')),
-          findsOneWidget,
-        );
-        expect(tester.takeException(), isNull, reason: '${spec.id} $theme');
+  testWidgets(
+    'les six couleurs × clair/sombre : accueil et réglages sans erreur',
+    (tester) async {
+      screen(tester, const Size(360, 780));
+      await tester.pumpWidget(const SLApp());
+      await tester.pumpAndSettle();
+      for (final spec in KAccentSpec.all) {
+        for (final theme in ['dark', 'light']) {
+          store.settings
+            ..theme = theme
+            ..accent = spec.id;
+          store.saveSettings();
+          await tester.pumpAndSettle();
+          await tester.tap(find.byKey(const ValueKey('nav-2')));
+          await tester.pumpAndSettle();
+          final t = Theme.of(tester.element(find.byType(HomeScreen)));
+          final p = KPalette(theme == 'dark', spec);
+          expect(t.colorScheme.primary, p.accent);
+          expect(SL.accentSpec, same(spec));
+          await tester.tap(find.byKey(const ValueKey('nav-3')));
+          await tester.pumpAndSettle();
+          expect(
+            find.byKey(ValueKey('accent-check-${spec.id}')),
+            findsOneWidget,
+          );
+          expect(tester.takeException(), isNull, reason: '${spec.id} $theme');
+        }
       }
-    }
-    await tester.pumpWidget(const SizedBox());
-    await tester.pumpAndSettle();
-  });
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpAndSettle();
+    },
+  );
 }

@@ -1,3 +1,13 @@
+Formatted lib/app_theme.dart
+Formatted lib/home_screen.dart
+Formatted lib/pilotage_screen.dart
+Formatted lib/rewards.dart
+Formatted lib/stats_progression.dart
+Formatted test/l5c_couleur_test.dart
 Formatted test/l5c_ecrans_capture_test.dart
-Formatted 103 files (1 changed) in 2.84 seconds.
+Formatted test/l5c_palettes_capture_test.dart
+Formatted test/l5c_rouge_capture_test.dart
+Formatted test/l5c_selecteur_test.dart
+Formatted test/support/capture_support.dart
+Formatted 106 files (11 changed) in 3.92 seconds.
 exit=0

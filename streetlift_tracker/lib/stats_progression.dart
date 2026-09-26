@@ -64,11 +64,7 @@ class StatsLevelCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
-            Icon(
-              Icons.chevron_right_rounded,
-              color: SL.onBrand,
-              size: 20,
-            ),
+            Icon(Icons.chevron_right_rounded, color: SL.onBrand, size: 20),
           ],
         ),
         const SizedBox(height: 18),

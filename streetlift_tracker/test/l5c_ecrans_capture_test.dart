@@ -30,156 +30,158 @@ const _tag = String.fromEnvironment('KALIS_CAPTURE_TAG', defaultValue: 'apres');
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  testWidgets('principaux écrans : rendus comparables avant / après L5', (
-    tester,
-  ) async {
-    SharedPreferences.setMockInitialValues({});
-    await store.init();
-    store.settings
-      ..sound = false
-      ..vibration = false
-      ..wakelock = false
-      ..autoTimer = false;
-    store.program.start = DateTime(2026, 7, 13);
-    final done = DateTime(2026, 9, 21, 18);
-    for (final (week, day) in [(11, 1), (11, 2), (11, 4)]) {
-      store.sessionLog(week, day)
-        ..done = true
-        ..title = 'S$week · ${store.program.week(week).day(day)!.title}'
-        ..finishedAt = done.add(Duration(days: day)).toIso8601String();
-      for (final exercise in store.program
-          .week(week)
-          .day(day)!
-          .exercises
-          .take(4)) {
-        for (final set in store.exLog(week, day, exercise).sets) {
-          set
-            ..done = true
-            ..kg = '15'
-            ..reps = '6'
-            ..completedAt = done.toIso8601String();
+  testWidgets(
+    'principaux écrans : rendus comparables avant / après L5',
+    (tester) async {
+      SharedPreferences.setMockInitialValues({});
+      await store.init();
+      store.settings
+        ..sound = false
+        ..vibration = false
+        ..wakelock = false
+        ..autoTimer = false;
+      store.program.start = DateTime(2026, 7, 13);
+      final done = DateTime(2026, 9, 21, 18);
+      for (final (week, day) in [(11, 1), (11, 2), (11, 4)]) {
+        store.sessionLog(week, day)
+          ..done = true
+          ..title = 'S$week · ${store.program.week(week).day(day)!.title}'
+          ..finishedAt = done.add(Duration(days: day)).toIso8601String();
+        for (final exercise in store.program
+            .week(week)
+            .day(day)!
+            .exercises
+            .take(4)) {
+          for (final set in store.exLog(week, day, exercise).sets) {
+            set
+              ..done = true
+              ..kg = '15'
+              ..reps = '6'
+              ..completedAt = done.toIso8601String();
+          }
         }
       }
-    }
-    final wod = Wod(
-      id: 'capture_wod',
-      name: 'Push & Pull',
-      type: 'amrap',
-      minutes: 12,
-      lines: ['5 tractions', '10 pompes', '15 squats'],
-    );
-    store.upsertWod(wod);
-    store.notifyListeners();
-    await loadCaptureFonts();
-    tester.view.devicePixelRatio = 1;
-    tester.view.padding = const FakeViewPadding(top: 24, bottom: 24);
-    addTearDown(tester.view.reset);
-    final boundary = GlobalKey();
-    var serial = 0;
-    Future<void> show(
-      Widget home,
-      bool dark, {
-      Size size = const Size(390, 844),
-      double text = 1,
-    }) async {
-      tester.view.physicalSize = size;
-      store.settings.theme = dark ? 'dark' : 'light';
-      await tester.pumpWidget(
-        RepaintBoundary(
-          key: boundary,
-          child: MaterialApp(
-            key: ValueKey(serial++),
-            locale: const Locale('fr'),
-            supportedLocales: const [Locale('fr')],
-            localizationsDelegates: GlobalMaterialLocalizations.delegates,
-            debugShowCheckedModeBanner: false,
-            theme: buildTheme(dark),
-            builder:
-                (context, child) => MediaQuery(
-                  data: MediaQuery.of(
-                    context,
-                  ).copyWith(textScaler: TextScaler.linear(text)),
-                  child: child!,
-                ),
-            home: home,
-          ),
-        ),
+      final wod = Wod(
+        id: 'capture_wod',
+        name: 'Push & Pull',
+        type: 'amrap',
+        minutes: 12,
+        lines: ['5 tractions', '10 pompes', '15 squats'],
       );
-      await tester.pumpAndSettle();
-      await precacheCaptureImages(tester);
-    }
+      store.upsertWod(wod);
+      store.notifyListeners();
+      await loadCaptureFonts();
+      tester.view.devicePixelRatio = 1;
+      tester.view.padding = const FakeViewPadding(top: 24, bottom: 24);
+      addTearDown(tester.view.reset);
+      final boundary = GlobalKey();
+      var serial = 0;
+      Future<void> show(
+        Widget home,
+        bool dark, {
+        Size size = const Size(390, 844),
+        double text = 1,
+      }) async {
+        tester.view.physicalSize = size;
+        store.settings.theme = dark ? 'dark' : 'light';
+        await tester.pumpWidget(
+          RepaintBoundary(
+            key: boundary,
+            child: MaterialApp(
+              key: ValueKey(serial++),
+              locale: const Locale('fr'),
+              supportedLocales: const [Locale('fr')],
+              localizationsDelegates: GlobalMaterialLocalizations.delegates,
+              debugShowCheckedModeBanner: false,
+              theme: buildTheme(dark),
+              builder:
+                  (context, child) => MediaQuery(
+                    data: MediaQuery.of(
+                      context,
+                    ).copyWith(textScaler: TextScaler.linear(text)),
+                    child: child!,
+                  ),
+              home: home,
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        await precacheCaptureImages(tester);
+      }
 
-    // WOD du catalogue non acquis, le plus cher (crédits insuffisants si
-    // possible ; sinon fiche d'achat).
-    final catalog = [
-      for (final w in store.wods)
-        if (store.isCatalog(w) && !store.unlocked(w)) w,
-    ]..sort((a, b) => store.wodCost(b).compareTo(store.wodCost(a)));
-    final locked = catalog.first.id;
-    final pages = <String, Widget>{
-      'stats_apercu': const StatsScreen(),
-      'stats_parcours': const StatsScreen(
-        initialSection: StatsSection.journey,
-      ),
-      'stats_performances': const StatsScreen(
-        initialSection: StatsSection.performance,
-      ),
-      'stats_historique': const StatsScreen(
-        initialSection: StatsSection.history,
-      ),
-      'historique_seance': SessionHistoryScreen(
-        log: store.sessionLog(11, 1),
-        week: store.program.week(11),
-        day: store.program.week(11).day(1),
-      ),
-      'editeur_seance': SessionEditor(
-        session: CustomSession(id: 'capture_session', name: 'Haut du corps'),
-      ),
-      'catalogue_wod': const WodCatalogScreen(),
-      'fiche_wod_acquis': WodPreviewScreen(wodId: wod.id),
-      'fiche_wod_verrouille': WodPreviewScreen(wodId: locked),
-      'chrono_wod': WodRunScreen(wodId: wod.id),
-      'references': const PilotageScreen(),
-      'depart_programme': ProgramStartScreen(
-        initialDate: DateTime(2026, 7, 13),
-      ),
-      'reglages_chronometres': const SettingsScreen(section: 2),
-    };
-    for (final dark in [true, false]) {
-      final mode = dark ? 'sombre' : 'clair';
-      for (final page in pages.entries) {
-        await show(page.value, dark);
+      // WOD du catalogue non acquis, le plus cher (crédits insuffisants si
+      // possible ; sinon fiche d'achat).
+      final catalog = [
+        for (final w in store.wods)
+          if (store.isCatalog(w) && !store.unlocked(w)) w,
+      ]..sort((a, b) => store.wodCost(b).compareTo(store.wodCost(a)));
+      final locked = catalog.first.id;
+      final pages = <String, Widget>{
+        'stats_apercu': const StatsScreen(),
+        'stats_parcours': const StatsScreen(
+          initialSection: StatsSection.journey,
+        ),
+        'stats_performances': const StatsScreen(
+          initialSection: StatsSection.performance,
+        ),
+        'stats_historique': const StatsScreen(
+          initialSection: StatsSection.history,
+        ),
+        'historique_seance': SessionHistoryScreen(
+          log: store.sessionLog(11, 1),
+          week: store.program.week(11),
+          day: store.program.week(11).day(1),
+        ),
+        'editeur_seance': SessionEditor(
+          session: CustomSession(id: 'capture_session', name: 'Haut du corps'),
+        ),
+        'catalogue_wod': const WodCatalogScreen(),
+        'fiche_wod_acquis': WodPreviewScreen(wodId: wod.id),
+        'fiche_wod_verrouille': WodPreviewScreen(wodId: locked),
+        'chrono_wod': WodRunScreen(wodId: wod.id),
+        'references': const PilotageScreen(),
+        'depart_programme': ProgramStartScreen(
+          initialDate: DateTime(2026, 7, 13),
+        ),
+        'reglages_chronometres': const SettingsScreen(section: 2),
+      };
+      for (final dark in [true, false]) {
+        final mode = dark ? 'sombre' : 'clair';
+        for (final page in pages.entries) {
+          await show(page.value, dark);
+          final error = tester.takeException();
+          if (captureEnabled) {
+            await savePng(
+              tester,
+              boundary,
+              '${_tag}_${page.key}_$mode${error == null ? '' : '_ERREUR'}',
+            );
+          }
+          if (error != null) {
+            debugPrint('ERREUR ${page.key} $mode : $error');
+          }
+        }
+        await show(
+          RootNav(referenceDate: DateTime(2026, 9, 30, 9)),
+          dark,
+          size: const Size(320, 720),
+          text: 2,
+        );
         final error = tester.takeException();
         if (captureEnabled) {
           await savePng(
             tester,
             boundary,
-            '${_tag}_${page.key}_$mode${error == null ? '' : '_ERREUR'}',
+            '${_tag}_programme_320_200pct_$mode${error == null ? '' : '_ERREUR'}',
           );
         }
         if (error != null) {
-          debugPrint('ERREUR ${page.key} $mode : $error');
+          debugPrint('ERREUR programme 320 200 % $mode : $error');
         }
       }
-      await show(
-        RootNav(referenceDate: DateTime(2026, 9, 30, 9)),
-        dark,
-        size: const Size(320, 720),
-        text: 2,
-      );
-      final error = tester.takeException();
-      if (captureEnabled) {
-        await savePng(
-          tester,
-          boundary,
-          '${_tag}_programme_320_200pct_$mode${error == null ? '' : '_ERREUR'}',
-        );
-      }
-      if (error != null) {
-        debugPrint('ERREUR programme 320 200 % $mode : $error');
-      }
-    }
-    await tester.pumpWidget(const SizedBox());
-    await tester.pumpAndSettle();
-  }, skip: !captureEnabled);
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpAndSettle();
+    },
+    skip: !captureEnabled,
+  );
 }

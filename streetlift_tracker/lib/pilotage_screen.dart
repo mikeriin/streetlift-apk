@@ -216,10 +216,7 @@ class _NumTile extends StatelessWidget {
         if (d != null) store.setValue(refCell, d);
       },
     );
-    final labelledField = Semantics(
-      label: label,
-      child: field,
-    );
+    final labelledField = Semantics(label: label, child: field);
     return KCard(
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -229,7 +226,11 @@ class _NumTile extends StatelessWidget {
           if (stacked) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [labelContent, const SizedBox(height: 6), labelledField],
+              children: [
+                labelContent,
+                const SizedBox(height: 6),
+                labelledField,
+              ],
             );
           }
           return Row(

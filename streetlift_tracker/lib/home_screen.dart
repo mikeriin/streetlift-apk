@@ -452,11 +452,7 @@ class _WeekHeader extends StatelessWidget {
           );
         }
         return Row(
-          children: [
-            Expanded(child: info),
-            const SizedBox(width: 8),
-            choose,
-          ],
+          children: [Expanded(child: info), const SizedBox(width: 8), choose],
         );
       },
     );

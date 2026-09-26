@@ -269,7 +269,9 @@ class SL {
 
   /// Texte à poser sur [bg] quand c'est une couleur dominante pleine.
   static Color onFill(Color bg) =>
-      bg == action ? onActionSoft : (bg == bordeaux ? onBrandSoft : KPalette.light);
+      bg == action
+          ? onActionSoft
+          : (bg == bordeaux ? onBrandSoft : KPalette.light);
 
   /// Dégradé des jauges (dominante) ; les graphiques de données gardent
   /// [KPalette.redGradient].

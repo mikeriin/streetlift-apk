@@ -1,3 +1,18 @@
 Analyzing streetlift_tracker...                                 
-No issues found! (ran in 23.5s)
-exit=0
+
+  error • The name 'accent' is already defined • lib/app_theme.dart:291:13 • duplicate_definition
+   info • Use 'const' literals as arguments to constructors of '@immutable' classes • lib/game_widgets.dart:397:37 • prefer_const_literals_to_create_immutables
+   info • Use 'const' with the constructor to improve performance • lib/game_widgets.dart:397:38 • prefer_const_constructors
+   info • Use 'const' literals as arguments to constructors of '@immutable' classes • lib/game_widgets.dart:515:27 • prefer_const_literals_to_create_immutables
+   info • Use 'const' with the constructor to improve performance • lib/game_widgets.dart:515:28 • prefer_const_constructors
+   info • Use 'const' literals as arguments to constructors of '@immutable' classes • lib/home_screen.dart:819:53 • prefer_const_literals_to_create_immutables
+   info • Use 'const' with the constructor to improve performance • lib/home_screen.dart:820:41 • prefer_const_constructors
+   info • Use 'const' literals as arguments to constructors of '@immutable' classes • lib/stats_progression.dart:63:31 • prefer_const_literals_to_create_immutables
+   info • Use 'const' with the constructor to improve performance • lib/stats_progression.dart:63:32 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • lib/ui.dart:603:22 • prefer_const_constructors
+   info • The import of 'package:streetlift_tracker/persistence.dart' is unnecessary because all of the used elements are also provided by the import of 'package:streetlift_tracker/store.dart' • test/l5c_couleur_test.dart:13:8 • unnecessary_import
+   info • Statements in an if should be enclosed in a block • test/l5c_couleur_test.dart:364:15 • curly_braces_in_flow_control_structures
+   info • Use 'const' with the constructor to improve performance • test/l5c_selecteur_test.dart:294:9 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance • test/l5c_selecteur_test.dart:302:9 • prefer_const_constructors
+
+14 issues found. (ran in 22.3s)

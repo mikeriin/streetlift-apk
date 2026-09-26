@@ -498,10 +498,7 @@ class _Ceremony extends StatelessWidget {
           Text(
             '+${r.creditsGained} crédit${r.creditsGained > 1 ? 's' : ''} WOD · ${store.credits >= 0 ? '${store.credits} disponible${store.credits > 1 ? 's' : ''}' : creditDeficitLabel(store.credits)}',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: SL.onBrand,
-              fontWeight: FontWeight.w700,
-            ),
+            style: TextStyle(color: SL.onBrand, fontWeight: FontWeight.w700),
           ),
         ],
       ),
