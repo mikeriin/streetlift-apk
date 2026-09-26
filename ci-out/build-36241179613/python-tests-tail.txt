@@ -1,0 +1,8 @@
+OK
+OK : apk-absents, refus Gradle attendu observé.
+OK : aab-absents, refus Gradle attendu observé.
+OK : apk-sans-mot-de-passe, refus Gradle attendu observé.
+OK : aab-sans-conteneur, refus Gradle attendu observé.
+OK : apk-base64-invalide, refus Gradle attendu observé.
+programme_v33.json: 13 -> 33 octets
+programme_v33.json: 13 -> 33 octets
