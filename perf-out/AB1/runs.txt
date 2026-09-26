@@ -1,0 +1,10 @@
+base r1 exit=0
+cand r1 exit=0
+cand r2 exit=0
+base r2 exit=0
+base r3 exit=0
+cand r3 exit=0
+cand r4 exit=0
+base r4 exit=0
+base r5 exit=0
+cand r5 exit=0

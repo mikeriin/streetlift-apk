@@ -1,0 +1,79 @@
+scenario,profile,unit,base_n,base_median,base_min,base_max,cand_n,cand_median,cand_min,cand_max,ratio,conclusion
+catalog.estimate.pass2,charge,ms,45,72.117,41.766,203.469,45,0.145,0.115,0.22,0.002,amélioration
+catalog.estimate.pass2,long,ms,45,8.364,6.409,20.257,45,0.157,0.122,0.625,0.019,amélioration
+catalog.generate,-,ms,45,2.115,2.037,2.644,45,2.422,2.085,5.011,1.145,gain non démontré
+catalog.rank,long,ms,45,14.248,13.41,16.8,45,8.026,7.153,11.164,0.563,amélioration
+catalog.recommended,long,ms,45,13.393,12.85,23.525,45,13.513,13.095,29.871,1.009,gain non démontré
+catalog.wodStats.all,long,ms,45,11.381,11.143,19.58,45,0.492,0.363,0.904,0.043,amélioration
+derive.progression,charge,ms,45,23.656,22.672,24.877,45,23.737,23.169,25.912,1.003,gain non démontré
+derive.progression,long,ms,45,7.583,7.249,9.798,45,7.65,7.335,10.775,1.009,gain non démontré
+derive.progression,neuf,ms,45,0.047,0.022,0.45,45,0.023,0.02,0.104,0.489,gain non démontré
+derive.progression,regulier,ms,45,2.063,1.948,2.679,45,2.032,1.964,2.648,0.985,gain non démontré
+derive.progression+game,charge,ms,45,33.964,32.567,40.558,45,33.948,33.275,36.44,1.0,gain non démontré
+derive.progression+game,long,ms,45,12.859,12.17,14.942,45,13.013,12.513,14.276,1.012,gain non démontré
+derive.progression+game,neuf,ms,45,0.181,0.082,0.516,45,0.164,0.084,3.742,0.906,gain non démontré
+derive.progression+game,regulier,ms,45,3.635,3.435,4.305,45,3.677,3.478,4.062,1.012,gain non démontré
+import.apply,charge,ms,25,525.604,468.901,601.826,25,486.174,451.685,531.676,0.925,gain non démontré
+import.apply,long,ms,25,225.251,155.738,258.724,25,189.974,130.803,212.838,0.843,gain non démontré
+import.apply,regulier,ms,25,68.989,65.289,139.389,25,47.771,45.431,99.518,0.692,amélioration
+import.preview,charge,ms,25,263.513,242.225,309.529,25,252.071,223.416,280.417,0.957,gain non démontré
+import.preview,long,ms,25,76.824,65.713,100.86,25,72.89,59.63,88.931,0.949,gain non démontré
+import.preview,regulier,ms,25,22.542,18.684,38.79,25,17.158,16.183,41.547,0.761,gain non démontré
+save.encode.exportAll,charge,ms,45,48.978,38.601,72.972,45,44.972,30.897,65.385,0.918,gain non démontré
+save.encode.exportAll,long,ms,45,13.102,12.287,32.627,45,10.157,9.231,26.8,0.775,amélioration
+save.encode.exportAll,neuf,ms,45,2.438,2.336,2.96,45,0.121,0.109,0.181,0.05,amélioration
+save.encode.exportAll,regulier,ms,45,5.263,4.874,6.604,45,2.74,2.571,10.316,0.521,amélioration
+save.keystroke+flush,charge,ms,45,87.715,67.741,119.512,45,75.997,60.06,95.472,0.866,gain non démontré
+save.keystroke+flush,long,ms,45,24.512,22.333,38.71,45,22.674,19.395,39.437,0.925,gain non démontré
+save.keystroke+flush,neuf,ms,45,2.624,2.506,3.491,45,0.28,0.234,0.405,0.107,amélioration
+save.keystroke+flush,regulier,ms,45,8.47,8.076,22.542,45,6.297,5.699,17.054,0.743,amélioration
+save.toggleSet+derive+flush,charge,ms,45,138.259,115.989,164.976,45,125.44,113.469,157.424,0.907,gain non démontré
+save.toggleSet+derive+flush,long,ms,45,39.865,37.375,75.397,45,36.317,32.59,67.302,0.911,gain non démontré
+save.toggleSet+derive+flush,neuf,ms,45,4.586,2.799,15.831,45,0.774,0.485,2.168,0.169,amélioration
+save.toggleSet+derive+flush,regulier,ms,45,13.491,11.629,33.463,45,9.806,9.395,25.319,0.727,amélioration
+stats.exerciseBests,charge,ms,45,6.283,5.927,7.544,45,6.247,5.926,6.532,0.994,gain non démontré
+stats.exerciseBests,long,ms,45,3.545,3.321,4.87,45,3.621,3.24,4.155,1.021,gain non démontré
+stats.exerciseBests,neuf,ms,45,0.0,0.0,0.0,45,0.0,0.0,0.0,,gain non démontré
+stats.exerciseBests,regulier,ms,45,0.997,0.914,1.352,45,1.041,0.913,1.772,1.044,gain non démontré
+stats.history,charge,ms,45,3.279,3.183,4.684,45,3.331,3.181,3.841,1.016,gain non démontré
+stats.history,long,ms,45,0.884,0.74,2.08,45,0.915,0.739,1.606,1.035,gain non démontré
+stats.history,neuf,ms,45,0.022,0.017,0.062,45,0.02,0.016,0.048,0.909,gain non démontré
+stats.history,regulier,ms,45,0.301,0.159,0.826,45,0.188,0.154,0.401,0.625,amélioration
+stats.weeklyMuscles,charge,ms,45,19.509,18.803,28.327,45,19.357,18.948,23.486,0.992,gain non démontré
+stats.weeklyMuscles,long,ms,45,6.372,5.833,10.05,45,6.465,5.828,10.354,1.015,gain non démontré
+stats.weeklyMuscles,neuf,ms,45,0.032,0.025,0.066,45,0.031,0.024,0.416,0.969,gain non démontré
+stats.weeklyMuscles,regulier,ms,45,1.721,1.611,2.285,45,1.694,1.62,2.199,0.984,gain non démontré
+store.init,charge,ms,45,249.585,230.067,282.409,45,235.423,218.447,265.694,0.943,gain non démontré
+store.init,long,ms,45,104.312,92.253,159.297,45,121.083,79.842,174.864,1.161,gain non démontré
+store.init,neuf,ms,45,48.492,36.966,103.941,45,32.634,24.246,88.936,0.673,gain non démontré
+store.init,regulier,ms,45,81.788,56.642,152.752,45,58.711,41.273,107.821,0.718,gain non démontré
+ui.appearance.switch,charge,ms,25,263.083,179.213,484.635,25,254.538,181.894,430.242,0.968,gain non démontré
+ui.appearance.switch,long,ms,25,144.232,97.807,279.891,25,128.386,97.871,305.52,0.89,gain non démontré
+ui.catalog.open,charge,ms,25,52.02,49.408,143.95,25,54.141,51.312,59.492,1.041,gain non démontré
+ui.catalog.open,long,ms,25,61.849,54.307,137.772,25,67.054,60.602,147.149,1.084,gain non démontré
+ui.catalog.scroll60,charge,ms,25,20.285,19.322,24.306,25,21.034,18.463,24.632,1.037,gain non démontré
+ui.catalog.scroll60,long,ms,25,31.925,29.844,44.481,25,32.027,27.184,58.674,1.003,gain non démontré
+ui.catalog.search,charge,ms,25,27.086,22.637,116.524,25,27.989,24.73,135.401,1.033,gain non démontré
+ui.catalog.search,long,ms,25,39.144,30.93,117.314,25,42.309,35.702,96.891,1.081,gain non démontré
+ui.firstFrame,charge,ms,25,33.425,27.182,42.581,25,31.771,29.032,162.835,0.951,gain non démontré
+ui.firstFrame,long,ms,25,59.339,45.829,123.825,25,60.477,44.675,82.128,1.019,gain non démontré
+ui.memory.rss10cycles,charge,bytes,10,668381184.0,624238592,720293888,10,702402560.0,632340480,753135616,1.051,brut (hors comparaison)
+ui.memory.rss10cycles,long,bytes,10,514408448.0,463814656,549404672,10,491763712.0,458354688,548646912,0.956,brut (hors comparaison)
+ui.nav.firstVisit.arsenal,charge,ms,15,71.924,62.042,285.681,15,73.116,63.987,173.592,1.017,gain non démontré
+ui.nav.firstVisit.programmeReturn,charge,ms,15,68.088,54.825,216.762,15,84.891,57.811,162.129,1.247,gain non démontré
+ui.nav.firstVisit.stats,charge,ms,15,21.97,18.415,55.001,15,31.131,18.478,89.999,1.417,gain non démontré
+ui.nav.firstVisit.statsSections,charge,ms,45,53.169,14.329,147.992,45,46.315,14.01,109.523,0.871,gain non démontré
+ui.nav.firstVisit.arsenal,long,ms,15,105.168,80.222,306.023,15,110.398,75.137,304.699,1.05,gain non démontré
+ui.nav.firstVisit.programmeReturn,long,ms,15,84.474,65.348,174.105,15,82.141,58.769,195.49,0.972,gain non démontré
+ui.nav.firstVisit.stats,long,ms,15,75.115,28.371,200.991,15,69.649,28.29,185.508,0.927,gain non démontré
+ui.nav.firstVisit.statsSections,long,ms,45,68.511,25.365,206.503,45,77.885,24.524,206.968,1.137,gain non démontré
+ui.session.keystroke,charge,ms,100,58.106,48.146,214.242,100,0.026,0.022,0.736,0.0,amélioration
+ui.session.popFirstFrame,charge,ms,20,13.55,8.844,22.583,20,42.313,29.561,155.295,3.123,régression
+ui.session.popSettle,charge,ms,20,110.203,79.817,257.852,20,127.984,84.929,215.007,1.161,gain non démontré
+ui.session.toggleSet,charge,ms,40,110.405,88.714,311.876,40,0.026,0.023,2.696,0.0,amélioration
+ui.session.keystroke,long,ms,100,61.492,38.201,140.062,100,0.05,0.03,0.099,0.001,amélioration
+ui.session.popFirstFrame,long,ms,20,13.133,9.85,32.889,20,58.337,16.703,110.384,4.442,régression
+ui.session.popSettle,long,ms,20,40.404,35.71,96.9,20,56.54,40.584,123.494,1.399,régression
+ui.session.toggleSet,long,ms,40,82.842,62.141,211.403,40,0.05,0.034,0.114,0.001,amélioration
+ui.stats.visibleNotify,charge,ms,50,101.625,89.355,324.238,50,82.441,76.347,264.628,0.811,gain non démontré
+ui.stats.visibleNotify,long,ms,50,78.206,59.571,179.535,50,49.585,43.394,81.543,0.634,amélioration

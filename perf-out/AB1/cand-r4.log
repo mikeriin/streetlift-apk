@@ -1,0 +1,91 @@
+
+::group::✅ L6 banc hôte (setUpAll)
+KALIS_PERF {"label":"cand","scenario":"meta","profile":"-","status":"ok","dart":"3.7.2 (stable) (Tue Mar 11 04:27:50 2025 -0700) on \"linux_x64\"","os":"linux Linux 6.17.0-1022-azure #22-Ubuntu SMP Mon Jul 27 17:24:03 UTC 2026","cpus":2,"n":9,"warmup":2,"seed":20260926,"inventory":{"neuf":{"seances":0,"series":0,"resultatsWod":0,"wodPerso":0},"regulier":{"seances":86,"series":1877,"resultatsWod":40,"wodPerso":0,"wodModifies":0,"achats":10,"seancesPersoModeles":20},"long":{"seances":320,"series":6587,"resultatsWod":300,"wodPerso":0,"wodModifies":0,"achats":30,"seancesPersoModeles":60},"charge":{"seances":840,"series":20347,"resultatsWod":1500,"wodPerso":50,"wodModifies":30,"achats":150,"seancesPersoModeles":150}},"storedBytes":{"neuf":0,"regulier":30511,"long":103911,"charge":283335},"exportBytes":{"regulier":256718,"long":919942,"charge":2916052}}
+::endgroup::
+::group::✅ L6 banc hôte empreinte des résultats métier
+KALIS_PERF {"label":"cand","scenario":"digest","profile":"neuf","status":"ok","unit":"digest","values":{"export":"24e5920facda1d25","xp":0,"level":1,"credits":3,"wodLevels":"4137b7190bb9a8f7","estimates":"527ad85574e530f8","history":"-340d631b7bdddcdb","muscles":"3a392c97dd457cb6","bests":"-340d631b7bdddcdb","recommended":"6fa61ffa929209a3"}}
+KALIS_PERF {"label":"cand","scenario":"digest","profile":"regulier","status":"ok","unit":"digest","values":{"export":"1421c5e759f2d86b","xp":0,"level":1,"credits":3,"wodLevels":"4137b7190bb9a8f7","estimates":"527ad85574e530f8","history":"-340d631b7bdddcdb","muscles":"3a392c97dd457cb6","bests":"-340d631b7bdddcdb","recommended":"6fa61ffa929209a3"}}
+KALIS_PERF {"label":"cand","scenario":"digest","profile":"long","status":"ok","unit":"digest","values":{"export":"29492838ba63ce10","xp":70135,"level":51,"credits":111,"wodLevels":"4137b7190bb9a8f7","estimates":"527ad85574e530f8","history":"-e4f854e47a64d82","muscles":"-4adf6367afc0a2a","bests":"-12b9593e787b9f58","recommended":"-69e8b78a735b219a"}}
+KALIS_PERF {"label":"cand","scenario":"digest","profile":"charge","status":"ok","unit":"digest","values":{"export":"-6659f4e7323d2581","xp":70135,"level":51,"credits":111,"wodLevels":"4137b7190bb9a8f7","estimates":"527ad85574e530f8","history":"-e4f854e47a64d82","muscles":"-4adf6367afc0a2a","bests":"-12b9593e787b9f58","recommended":"-69e8b78a735b219a"}}
+::endgroup::
+::group::✅ L6 banc hôte démarrage : lecture du stockage, migrations, catalogue
+KALIS_PERF {"label":"cand","scenario":"store.init","profile":"neuf","status":"ok","unit":"ms","warmup":2,"values":[82.973,37.107,27.336,31.446,29.363,24.768,65.619,45.896,27.762]}
+KALIS_PERF {"label":"cand","scenario":"store.init","profile":"regulier","status":"ok","unit":"ms","warmup":2,"values":[59.807,51.527,102.486,58.236,45.106,100.74,56.312,45.111,94.886]}
+KALIS_PERF {"label":"cand","scenario":"store.init","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[113.782,113.397,126.464,83.823,146.739,128.296,90.717,125.568,87.78]}
+KALIS_PERF {"label":"cand","scenario":"store.init","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[240.428,261.512,234.361,218.447,236.948,231.626,228.632,222.892,249.582]}
+::endgroup::
+::group::✅ L6 banc hôte catalogue : génération et estimations
+KALIS_PERF {"label":"cand","scenario":"catalog.generate","profile":"-","status":"ok","unit":"ms","warmup":2,"values":[2.12,2.098,2.104,2.856,2.402,2.096,2.085,2.476,2.101],"wods":1000}
+KALIS_PERF {"label":"cand","scenario":"catalog.rank","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[7.632,7.433,7.621,7.494,9.277,7.67,7.382,7.475,7.658]}
+KALIS_PERF {"label":"cand","scenario":"catalog.estimate.pass2","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[0.155,0.137,0.133,0.125,0.138,0.138,0.127,0.122,0.145],"wods":1000}
+KALIS_PERF {"label":"cand","scenario":"catalog.estimate.pass2","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[0.122,0.144,0.155,0.137,0.145,0.154,0.115,0.117,0.12],"wods":1050}
+KALIS_PERF {"label":"cand","scenario":"catalog.wodStats.all","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[0.471,0.456,0.388,0.417,0.521,0.429,0.403,0.363,0.43]}
+KALIS_PERF {"label":"cand","scenario":"catalog.recommended","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[13.897,13.306,13.229,13.269,13.705,13.095,13.176,13.187,13.554]}
+::endgroup::
+::group::✅ L6 banc hôte STATS : dérivés recalculés après une modification
+KALIS_PERF {"label":"cand","scenario":"derive.progression","profile":"neuf","status":"ok","unit":"ms","warmup":2,"values":[0.022,0.024,0.022,0.021,0.022,0.021,0.021,0.022,0.022]}
+KALIS_PERF {"label":"cand","scenario":"derive.progression+game","profile":"neuf","status":"ok","unit":"ms","warmup":2,"values":[0.131,0.1,0.085,0.086,0.084,1.665,0.121,0.221,0.114]}
+KALIS_PERF {"label":"cand","scenario":"stats.history","profile":"neuf","status":"ok","unit":"ms","warmup":2,"values":[0.024,0.02,0.048,0.019,0.019,0.019,0.019,0.02,0.02]}
+KALIS_PERF {"label":"cand","scenario":"stats.exerciseBests","profile":"neuf","status":"ok","unit":"ms","warmup":2,"values":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]}
+KALIS_PERF {"label":"cand","scenario":"stats.weeklyMuscles","profile":"neuf","status":"ok","unit":"ms","warmup":2,"values":[0.028,0.031,0.027,0.028,0.03,0.024,0.025,0.028,0.026]}
+KALIS_PERF {"label":"cand","scenario":"derive.progression","profile":"regulier","status":"ok","unit":"ms","warmup":2,"values":[2.009,2.001,2.314,2.038,2.011,2.013,2.001,2.021,2.117]}
+KALIS_PERF {"label":"cand","scenario":"derive.progression+game","profile":"regulier","status":"ok","unit":"ms","warmup":2,"values":[3.554,3.523,3.735,3.685,3.832,3.744,3.858,3.527,3.505]}
+KALIS_PERF {"label":"cand","scenario":"stats.history","profile":"regulier","status":"ok","unit":"ms","warmup":2,"values":[0.316,0.288,0.164,0.158,0.227,0.192,0.154,0.169,0.155]}
+KALIS_PERF {"label":"cand","scenario":"stats.exerciseBests","profile":"regulier","status":"ok","unit":"ms","warmup":2,"values":[1.552,1.542,1.177,1.092,0.986,1.022,1.419,1.01,0.953]}
+KALIS_PERF {"label":"cand","scenario":"stats.weeklyMuscles","profile":"regulier","status":"ok","unit":"ms","warmup":2,"values":[1.642,1.645,1.647,1.664,1.675,1.823,1.752,1.639,1.634]}
+KALIS_PERF {"label":"cand","scenario":"derive.progression","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[7.56,7.696,7.545,7.643,7.502,7.688,7.679,7.502,7.757]}
+KALIS_PERF {"label":"cand","scenario":"derive.progression+game","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[12.714,12.707,12.638,12.773,13.091,12.829,12.737,12.709,13.349]}
+KALIS_PERF {"label":"cand","scenario":"stats.history","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[0.777,1.12,1.296,1.522,0.808,0.867,0.755,0.872,0.776]}
+KALIS_PERF {"label":"cand","scenario":"stats.exerciseBests","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[3.765,3.521,3.474,3.786,3.506,3.847,3.52,3.697,3.549]}
+KALIS_PERF {"label":"cand","scenario":"stats.weeklyMuscles","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[6.044,7.605,5.938,5.969,6.441,5.927,6.256,6.688,9.171]}
+KALIS_PERF {"label":"cand","scenario":"derive.progression","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[23.169,23.761,23.416,23.559,23.581,23.428,23.692,23.38,23.709]}
+KALIS_PERF {"label":"cand","scenario":"derive.progression+game","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[33.711,33.416,33.94,33.425,33.839,34.235,33.275,35.641,33.7]}
+KALIS_PERF {"label":"cand","scenario":"stats.history","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[3.274,3.283,3.279,3.841,3.274,3.422,3.279,3.288,3.553]}
+KALIS_PERF {"label":"cand","scenario":"stats.exerciseBests","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[6.328,6.247,6.085,6.414,6.353,6.216,6.166,6.483,6.262]}
+KALIS_PERF {"label":"cand","scenario":"stats.weeklyMuscles","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[19.028,22.872,19.883,18.973,18.948,19.101,19.042,18.974,19.398]}
+::endgroup::
+::group::✅ L6 banc hôte persistance : saisie, validation, écriture, export, import
+KALIS_PERF {"label":"cand","scenario":"save.keystroke+flush","profile":"neuf","status":"ok","unit":"ms","warmup":2,"values":[0.316,0.34,0.293,0.278,0.318,0.277,0.276,0.38,0.317]}
+KALIS_PERF {"label":"cand","scenario":"save.encode.exportAll","profile":"neuf","status":"ok","unit":"ms","warmup":2,"values":[0.138,0.125,0.126,0.123,0.119,0.172,0.157,0.127,0.116]}
+KALIS_PERF {"label":"cand","scenario":"save.toggleSet+derive+flush","profile":"neuf","status":"ok","unit":"ms","warmup":2,"values":[0.611,0.552,0.821,0.809,0.968,0.825,2.013,0.906,0.806]}
+KALIS_PERF {"label":"cand","scenario":"save.keystroke+flush","profile":"regulier","status":"ok","unit":"ms","warmup":2,"values":[5.861,7.006,17.054,9.865,8.222,6.205,6.279,6.483,6.079]}
+KALIS_PERF {"label":"cand","scenario":"save.encode.exportAll","profile":"regulier","status":"ok","unit":"ms","warmup":2,"values":[2.749,3.526,2.716,2.633,2.602,2.571,2.73,2.972,2.604]}
+KALIS_PERF {"label":"cand","scenario":"save.toggleSet+derive+flush","profile":"regulier","status":"ok","unit":"ms","warmup":2,"values":[9.419,9.758,9.436,9.953,9.395,9.759,13.165,21.024,25.197]}
+KALIS_PERF {"label":"cand","scenario":"import.preview","profile":"regulier","status":"ok","unit":"ms","warmup":2,"values":[28.05,16.516,16.25,16.37,18.426]}
+KALIS_PERF {"label":"cand","scenario":"import.apply","profile":"regulier","status":"ok","unit":"ms","warmup":2,"values":[47.199,91.597,57.558,48.621,47.659]}
+KALIS_PERF {"label":"cand","scenario":"save.keystroke+flush","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[20.591,26.56,32.028,19.629,21.496,21.806,24.345,29.335,22.765]}
+KALIS_PERF {"label":"cand","scenario":"save.encode.exportAll","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[12.356,9.411,10.157,11.645,9.531,10.525,12.638,26.8,11.543]}
+KALIS_PERF {"label":"cand","scenario":"save.toggleSet+derive+flush","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[37.861,45.452,60.309,33.858,34.571,35.665,36.479,65.578,38.115]}
+KALIS_PERF {"label":"cand","scenario":"import.preview","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[71.159,88.931,61.26,83.272,65.547]}
+KALIS_PERF {"label":"cand","scenario":"import.apply","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[151.908,205.567,191.273,134.104,192.87]}
+KALIS_PERF {"label":"cand","scenario":"save.keystroke+flush","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[66.134,75.997,85.227,71.21,67.673,78.341,77.215,67.794,78.511]}
+KALIS_PERF {"label":"cand","scenario":"save.encode.exportAll","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[34.14,59.888,30.897,57.369,37.846,56.11,38.186,59.431,45.194]}
+KALIS_PERF {"label":"cand","scenario":"save.toggleSet+derive+flush","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[128.914,120.382,142.318,121.615,113.469,136.442,119.332,115.638,132.999]}
+KALIS_PERF {"label":"cand","scenario":"import.preview","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[260.327,223.416,258.276,234.672,226.531]}
+KALIS_PERF {"label":"cand","scenario":"import.apply","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[486.54,493.272,471.715,474.761,451.685]}
+::endgroup::
+::group::✅ L6 banc hôte — écrans (moteur de test, sans GPU) parcours long
+KALIS_PERF {"label":"cand","scenario":"ui.firstFrame","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[68.31,74.728,60.042,47.156,45.52]}
+KALIS_PERF {"label":"cand","scenario":"ui.nav.firstVisit","profile":"long","status":"ok","unit":"ms","values":{"stats":[185.508,56.485,28.684],"statsSections":[61.49,101.12,176.405,46.287,102.134,111.45,25.009,36.841,53.451],"arsenal":[304.699,123.051,75.137],"programmeReturn":[110.158,82.141,58.769]}}
+KALIS_PERF {"label":"cand","scenario":"ui.stats.visibleNotify","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[81.543,57.017,51.407,54.984,50.464,45.884,44.747,51.332,43.958,48.946]}
+KALIS_PERF {"label":"cand","scenario":"ui.session","profile":"long","status":"ok","unit":"ms","values":{"keystroke":[0.037,0.032,0.031,0.031,0.032,0.053,0.056,0.059,0.048,0.087,0.051,0.05,0.052,0.055,0.055,0.032,0.032,0.033,0.053,0.058],"toggleSet":[0.035,0.035,0.057,0.054,0.058,0.052,0.036,0.056],"popFirstFrame":[110.384,27.874,81.207,37.597],"popSettle":[59.62,47.921,59.798,43.215]}}
+KALIS_PERF {"label":"cand","scenario":"ui.catalog.open","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[147.149,63.681,62.891,65.255,65.108]}
+KALIS_PERF {"label":"cand","scenario":"ui.catalog.search","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[66.326,36.23,96.891,39.253,35.702]}
+KALIS_PERF {"label":"cand","scenario":"ui.catalog.scroll60","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[38.341,30.772,28.343,28.596,41.484]}
+KALIS_PERF {"label":"cand","scenario":"ui.appearance.switch","profile":"long","status":"ok","unit":"ms","warmup":2,"values":[143.796,127.299,193.703,136.789,97.955]}
+KALIS_PERF {"label":"cand","scenario":"ui.memory.rss10cycles","profile":"long","status":"ok","unit":"bytes","values":[474083328,492552192],"note":"RSS hôte avant/après 10 cycles, GC non forcé"}
+::endgroup::
+::group::✅ L6 banc hôte — écrans (moteur de test, sans GPU) parcours charge
+KALIS_PERF {"label":"cand","scenario":"ui.firstFrame","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[33.456,35.115,31.771,30.233,30.977]}
+KALIS_PERF {"label":"cand","scenario":"ui.nav.firstVisit","profile":"charge","status":"ok","unit":"ms","values":{"stats":[32.17,23.071,20.941],"statsSections":[18.845,54.778,61.953,15.727,41.722,59.84,18.684,44.306,63.536],"arsenal":[145.929,68.066,76.045],"programmeReturn":[88.092,59.785,82.053]}}
+KALIS_PERF {"label":"cand","scenario":"ui.stats.visibleNotify","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[171.735,130.455,82.822,81.545,80.06,83.92,83.854,84.117,87.444,93.896]}
+KALIS_PERF {"label":"cand","scenario":"ui.session","profile":"charge","status":"ok","unit":"ms","values":{"keystroke":[0.024,0.022,0.022,0.023,0.022,0.06,0.028,0.023,0.024,0.024,0.024,0.023,0.023,0.023,0.023,0.056,0.036,0.041,0.048,0.037],"toggleSet":[0.024,0.024,0.025,0.025,0.024,2.696,0.026,0.025],"popFirstFrame":[72.182,59.495,45.976,37.017],"popSettle":[167.705,180.757,178.474,84.929]}}
+KALIS_PERF {"label":"cand","scenario":"ui.catalog.open","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[56.058,53.555,54.227,54.141,52.761]}
+KALIS_PERF {"label":"cand","scenario":"ui.catalog.search","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[25.378,29.237,26.982,26.217,45.806]}
+KALIS_PERF {"label":"cand","scenario":"ui.catalog.scroll60","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[21.598,19.779,18.879,20.365,21.712]}
+KALIS_PERF {"label":"cand","scenario":"ui.appearance.switch","profile":"charge","status":"ok","unit":"ms","warmup":2,"values":[254.538,430.242,198.472,259.344,181.894]}
+KALIS_PERF {"label":"cand","scenario":"ui.memory.rss10cycles","profile":"charge","status":"ok","unit":"bytes","values":[705110016,699695104],"note":"RSS hôte avant/après 10 cycles, GC non forcé"}
+::endgroup::
+✅ L6 banc hôte — cohérence des profils
+
+🎉 8 tests passed.
