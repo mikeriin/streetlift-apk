@@ -40,6 +40,9 @@ const _warm = 2;
 
 final _failures = <String>[];
 
+/// Le store global de l'application n'est initialisé qu'une fois.
+var _globalReady = false;
+
 void _emit(Map<String, Object?> row) {
   final line = jsonEncode({'label': _label, ...row});
   // ignore: avoid_print
@@ -221,6 +224,19 @@ void main() {
         sw.stop();
         return _ms(sw);
       }, extra: {'wods': app.wods.length});
+      final heavy = await _loaded('charge');
+      await _measure('catalog.estimate.pass2', 'charge', () async {
+        for (final w in heavy.wods) {
+          heavy.wodEstimate(w);
+        }
+        final sw = Stopwatch()..start();
+        for (final w in heavy.wods) {
+          heavy.wodEstimate(w);
+        }
+        sw.stop();
+        return _ms(sw);
+      }, extra: {'wods': heavy.wods.length});
+      heavy.dispose();
       await _measure('catalog.wodStats.all', 'long', () async {
         final sw = Stopwatch()..start();
         for (final w in app.wods) {
@@ -361,8 +377,9 @@ void main() {
             SharedPreferences.setMockInitialValues({
               _stateKey: _stored[profile]!,
             });
-            if (store.program.weeks.isEmpty) {
+            if (!_globalReady) {
               await store.init();
+              _globalReady = true;
             } else {
               expect(await store.importAll(_exports[profile]!), isTrue);
             }
@@ -429,6 +446,17 @@ void main() {
             },
           });
 
+          // STATS visible (section Historique) : une notification du store
+          // reconstruit l'écran affiché (travail utile, doit rester à jour).
+          await tester.tap(find.byKey(const ValueKey('nav-1')));
+          await tester.pumpAndSettle();
+          await _measure('ui.stats.visibleNotify', profile, () async {
+            store.notifyListeners();
+            return timedPump();
+          }, n: 10);
+          await tester.tap(find.byKey(const ValueKey('nav-2')));
+          await tester.pumpAndSettle();
+
           // Séance ouverte par-dessus les quatre onglets visités.
           final week = store.program.weeks.last;
           final day = week.days.firstWhere((d) => d.exercises.isNotEmpty);
@@ -458,8 +486,23 @@ void main() {
           }, n: 10);
           await tester.pump(const Duration(seconds: 1));
           await tester.runAsync(store.flush);
+          // Retour aux onglets après la séance : première image puis
+          // animation complète (les onglets masqués y sont à jour).
           appNavigator.currentState!.pop();
+          final popFirst = await timedPump();
+          final settle = Stopwatch()..start();
           await tester.pumpAndSettle();
+          settle.stop();
+          _emit({
+            'scenario': 'ui.session.pop',
+            'profile': profile,
+            'status': 'ok',
+            'unit': 'ms',
+            'values': {
+              'firstFrame': [popFirst],
+              'settle': [_ms(settle)],
+            },
+          });
 
           // Catalogue WOD complet : ouverture, recherche, filtre, défilement.
           await _measure('ui.catalog.open', profile, () async {

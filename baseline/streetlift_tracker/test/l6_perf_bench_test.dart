@@ -40,6 +40,9 @@ const _warm = 2;
 
 final _failures = <String>[];
 
+/// Le store global de l'application n'est initialisé qu'une fois.
+var _globalReady = false;
+
 void _emit(Map<String, Object?> row) {
   final line = jsonEncode({'label': _label, ...row});
   // ignore: avoid_print
@@ -210,22 +213,30 @@ void main() {
       });
       // Estimations de tout le catalogue : deux passages successifs (le
       // second devrait profiter du cache s'il couvre tout le catalogue).
-      await _measure(
-        'catalog.estimate.pass2',
-        'long',
-        () async {
-          for (final w in app.wods) {
-            app.wodEstimate(w);
-          }
-          final sw = Stopwatch()..start();
-          for (final w in app.wods) {
-            app.wodEstimate(w);
-          }
-          sw.stop();
-          return _ms(sw);
-        },
-        extra: {'wods': app.wods.length},
-      );
+      await _measure('catalog.estimate.pass2', 'long', () async {
+        for (final w in app.wods) {
+          app.wodEstimate(w);
+        }
+        final sw = Stopwatch()..start();
+        for (final w in app.wods) {
+          app.wodEstimate(w);
+        }
+        sw.stop();
+        return _ms(sw);
+      }, extra: {'wods': app.wods.length});
+      final heavy = await _loaded('charge');
+      await _measure('catalog.estimate.pass2', 'charge', () async {
+        for (final w in heavy.wods) {
+          heavy.wodEstimate(w);
+        }
+        final sw = Stopwatch()..start();
+        for (final w in heavy.wods) {
+          heavy.wodEstimate(w);
+        }
+        sw.stop();
+        return _ms(sw);
+      }, extra: {'wods': heavy.wods.length});
+      heavy.dispose();
       await _measure('catalog.wodStats.all', 'long', () async {
         final sw = Stopwatch()..start();
         for (final w in app.wods) {
@@ -286,276 +297,310 @@ void main() {
       }
     });
 
-    test('persistance : saisie, validation, écriture, export, import', () async {
-      for (final profile in perfProfiles) {
-        final app = await _loaded(profile);
-        final log = _openSet(app);
-        var reps = 1;
-        // Saisie d'une série (note/charge) : notification sans recalcul
-        // des badges, puis écriture complète attendue (accusé de l'API).
-        await _measure('save.keystroke+flush', profile, () async {
-          log.sets.first.reps = '${reps++ % 20 + 1}';
-          final sw = Stopwatch()..start();
-          app.saveLogs(affectsProgression: false);
-          await app.flush();
-          sw.stop();
-          expect(app.hasUnsavedChanges, isFalse);
-          return _ms(sw);
-        });
-        await _measure('save.encode.exportAll', profile, () async {
-          final sw = Stopwatch()..start();
-          app.exportAll();
-          sw.stop();
-          return _ms(sw);
-        });
-        // Validation d'une série : invalide progression/jeu, relus comme
-        // le fait l'écran, puis écriture attendue.
-        final spec = app.logSpec(
-          app.program.weeks.last.days
-              .firstWhere((d) => d.exercises.isNotEmpty)
-              .exercises
-              .first,
-        );
-        log.sets.first
-          ..kg = '50'
-          ..reps = '5'
-          ..rir = '2';
-        await _measure('save.toggleSet+derive+flush', profile, () async {
-          final sw = Stopwatch()..start();
-          app.toggleSet(log, 0, spec);
-          app.game;
-          app.credits;
-          await app.flush();
-          sw.stop();
-          return _ms(sw);
-        });
-        if (profile != 'neuf') {
-          final text = _exports[profile]!;
-          await _measure('import.preview', profile, () async {
+    test(
+      'persistance : saisie, validation, écriture, export, import',
+      () async {
+        for (final profile in perfProfiles) {
+          final app = await _loaded(profile);
+          final log = _openSet(app);
+          var reps = 1;
+          // Saisie d'une série (note/charge) : notification sans recalcul
+          // des badges, puis écriture complète attendue (accusé de l'API).
+          await _measure('save.keystroke+flush', profile, () async {
+            log.sets.first.reps = '${reps++ % 20 + 1}';
             final sw = Stopwatch()..start();
-            final r = app.previewImport(text);
+            app.saveLogs(affectsProgression: false);
+            await app.flush();
             sw.stop();
-            expect(r.preview, isNotNull);
+            expect(app.hasUnsavedChanges, isFalse);
             return _ms(sw);
-          }, n: 5);
-          await _measure('import.apply', profile, () async {
+          });
+          await _measure('save.encode.exportAll', profile, () async {
             final sw = Stopwatch()..start();
-            final ok = await app.importAll(text);
+            app.exportAll();
             sw.stop();
-            expect(ok, isTrue);
             return _ms(sw);
-          }, n: 5);
+          });
+          // Validation d'une série : invalide progression/jeu, relus comme
+          // le fait l'écran, puis écriture attendue.
+          final spec = app.logSpec(
+            app.program.weeks.last.days
+                .firstWhere((d) => d.exercises.isNotEmpty)
+                .exercises
+                .first,
+          );
+          log.sets.first
+            ..kg = '50'
+            ..reps = '5'
+            ..rir = '2';
+          await _measure('save.toggleSet+derive+flush', profile, () async {
+            final sw = Stopwatch()..start();
+            app.toggleSet(log, 0, spec);
+            app.game;
+            app.credits;
+            await app.flush();
+            sw.stop();
+            return _ms(sw);
+          });
+          if (profile != 'neuf') {
+            final text = _exports[profile]!;
+            await _measure('import.preview', profile, () async {
+              final sw = Stopwatch()..start();
+              final r = app.previewImport(text);
+              sw.stop();
+              expect(r.preview, isNotNull);
+              return _ms(sw);
+            }, n: 5);
+            await _measure('import.apply', profile, () async {
+              final sw = Stopwatch()..start();
+              final ok = await app.importAll(text);
+              sw.stop();
+              expect(ok, isTrue);
+              return _ms(sw);
+            }, n: 5);
+          }
+          await app.flush();
+          app.dispose();
         }
-        await app.flush();
-        app.dispose();
-      }
-    });
+      },
+    );
   });
 
-  group('L6 banc hôte — écrans (moteur de test, sans GPU)', skip: !_enabled, () {
-    for (final profile in ['long', 'charge']) {
-      testWidgets('parcours $profile', (tester) async {
-        await tester.runAsync(() async {
-          if (_stored.isEmpty) await _prepareProfiles();
-          SharedPreferences.setMockInitialValues({
-            _stateKey: _stored[profile]!,
+  group(
+    'L6 banc hôte — écrans (moteur de test, sans GPU)',
+    skip: !_enabled,
+    () {
+      for (final profile in ['long', 'charge']) {
+        testWidgets('parcours $profile', (tester) async {
+          await tester.runAsync(() async {
+            if (_stored.isEmpty) await _prepareProfiles();
+            SharedPreferences.setMockInitialValues({
+              _stateKey: _stored[profile]!,
+            });
+            if (!_globalReady) {
+              await store.init();
+              _globalReady = true;
+            } else {
+              expect(await store.importAll(_exports[profile]!), isTrue);
+            }
+            store.settings
+              ..sound = false
+              ..vibration = false
+              ..wakelock = false
+              ..autoTimer = false
+              ..celebrations = false;
           });
-          if (store.program.weeks.isEmpty) {
-            await store.init();
-          } else {
-            expect(await store.importAll(_exports[profile]!), isTrue);
+          tester.view.physicalSize = const Size(390, 844);
+          tester.view.devicePixelRatio = 1;
+          addTearDown(tester.view.reset);
+
+          Future<double> timedPump([Duration? d]) async {
+            final sw = Stopwatch()..start();
+            await tester.pump(d);
+            sw.stop();
+            return _ms(sw);
           }
-          store.settings
-            ..sound = false
-            ..vibration = false
-            ..wakelock = false
-            ..autoTimer = false
-            ..celebrations = false;
-        });
-        tester.view.physicalSize = const Size(390, 844);
-        tester.view.devicePixelRatio = 1;
-        addTearDown(tester.view.reset);
 
-        Future<double> timedPump([Duration? d]) async {
-          final sw = Stopwatch()..start();
-          await tester.pump(d);
-          sw.stop();
-          return _ms(sw);
-        }
-
-        // Premier écran utile (PROGRAMME) une fois les données chargées.
-        await _measure('ui.firstFrame', profile, () async {
-          await tester.pumpWidget(const SizedBox());
-          final sw = Stopwatch()..start();
-          await tester.pumpWidget(const SLApp());
-          sw.stop();
-          await tester.pumpAndSettle();
-          return _ms(sw);
-        }, n: 5);
-
-        // Premier affichage de STATS puis de chaque section.
-        await tester.pumpWidget(const SizedBox());
-        await tester.pumpWidget(const SLApp());
-        await tester.pumpAndSettle();
-        final firstStats = <double>[];
-        await tester.tap(find.byKey(const ValueKey('nav-1')));
-        firstStats.add(await timedPump());
-        await tester.pumpAndSettle();
-        final sections = <double>[];
-        for (var i = 1; i < 4; i++) {
-          await tester.tap(find.byKey(ValueKey('stats-section-$i')));
-          sections.add(await timedPump());
-          await tester.pumpAndSettle();
-        }
-        await tester.tap(find.byKey(const ValueKey('nav-0')));
-        final arsenal = await timedPump();
-        await tester.pumpAndSettle();
-        await tester.tap(find.byKey(const ValueKey('nav-3')));
-        await tester.pumpAndSettle();
-        await tester.tap(find.byKey(const ValueKey('nav-2')));
-        final back = await timedPump();
-        await tester.pumpAndSettle();
-        _emit({
-          'scenario': 'ui.nav.firstVisit',
-          'profile': profile,
-          'status': 'ok',
-          'unit': 'ms',
-          'values': {
-            'stats': firstStats,
-            'statsSections': sections,
-            'arsenal': [arsenal],
-            'programmeReturn': [back],
-          },
-        });
-
-        // Séance ouverte par-dessus les quatre onglets visités.
-        final week = store.program.weeks.last;
-        final day = week.days.firstWhere((d) => d.exercises.isNotEmpty);
-        store.logs.remove(store.sessionKey(week.n, day.j));
-        appNavigator.currentState!.push(
-          MaterialPageRoute<void>(
-            builder: (_) => SessionScreen(week: week, day: day),
-          ),
-        );
-        await tester.pumpAndSettle();
-        final exercise = day.exercises.first;
-        final log = store.exLog(week.n, day.j, exercise);
-        var reps = 1;
-        await _measure('ui.session.keystroke', profile, () async {
-          log.sets.first.reps = '${reps++ % 20 + 1}';
-          store.saveLogs(affectsProgression: false);
-          return timedPump();
-        }, n: 15);
-        final spec = store.logSpec(exercise);
-        log.sets.first
-          ..kg = '50'
-          ..reps = '5'
-          ..rir = '2';
-        await _measure('ui.session.toggleSet', profile, () async {
-          store.toggleSet(log, 0, spec);
-          return timedPump();
-        }, n: 10);
-        await tester.pump(const Duration(seconds: 1));
-        await tester.runAsync(store.flush);
-        appNavigator.currentState!.pop();
-        await tester.pumpAndSettle();
-
-        // Catalogue WOD complet : ouverture, recherche, filtre, défilement.
-        await _measure('ui.catalog.open', profile, () async {
-          appNavigator.currentState!.push(
-            MaterialPageRoute<void>(builder: (_) => const WodCatalogScreen()),
-          );
-          final t = await timedPump();
-          await tester.pumpAndSettle();
-          appNavigator.currentState!.pop();
-          await tester.pumpAndSettle();
-          return t;
-        }, n: 5);
-        appNavigator.currentState!.push(
-          MaterialPageRoute<void>(builder: (_) => const WodCatalogScreen()),
-        );
-        await tester.pumpAndSettle();
-        final search = find.byType(TextField).first;
-        await _measure('ui.catalog.search', profile, () async {
-          await tester.enterText(search, 'burpee');
-          final t = await timedPump();
-          await tester.enterText(search, '');
-          await tester.pump();
-          return t;
-        }, n: 5);
-        final chip = find.text('< 15 min');
-        if (chip.evaluate().isNotEmpty) {
-          await _measure('ui.catalog.filterShort', profile, () async {
-            await tester.tap(chip.first);
-            final t = await timedPump();
-            await tester.tap(chip.first);
-            await tester.pump();
-            return t;
+          // Premier écran utile (PROGRAMME) une fois les données chargées.
+          await _measure('ui.firstFrame', profile, () async {
+            await tester.pumpWidget(const SizedBox());
+            final sw = Stopwatch()..start();
+            await tester.pumpWidget(const SLApp());
+            sw.stop();
+            await tester.pumpAndSettle();
+            return _ms(sw);
           }, n: 5);
-        }
-        await _measure('ui.catalog.scroll60', profile, () async {
-          final list = find.byType(Scrollable).first;
-          final sw = Stopwatch()..start();
-          await tester.fling(list, const Offset(0, -3000), 4000);
-          for (var i = 0; i < 60; i++) {
-            await tester.pump(const Duration(milliseconds: 16));
+
+          // Premier affichage de STATS puis de chaque section.
+          await tester.pumpWidget(const SizedBox());
+          await tester.pumpWidget(const SLApp());
+          await tester.pumpAndSettle();
+          final firstStats = <double>[];
+          await tester.tap(find.byKey(const ValueKey('nav-1')));
+          firstStats.add(await timedPump());
+          await tester.pumpAndSettle();
+          final sections = <double>[];
+          for (var i = 1; i < 4; i++) {
+            await tester.tap(find.byKey(ValueKey('stats-section-$i')));
+            sections.add(await timedPump());
+            await tester.pumpAndSettle();
           }
-          sw.stop();
+          await tester.tap(find.byKey(const ValueKey('nav-0')));
+          final arsenal = await timedPump();
           await tester.pumpAndSettle();
-          await tester.fling(list, const Offset(0, 6000), 8000);
+          await tester.tap(find.byKey(const ValueKey('nav-3')));
           await tester.pumpAndSettle();
-          return _ms(sw);
-        }, n: 5);
-        appNavigator.currentState!.pop();
-        await tester.pumpAndSettle();
+          await tester.tap(find.byKey(const ValueKey('nav-2')));
+          final back = await timedPump();
+          await tester.pumpAndSettle();
+          _emit({
+            'scenario': 'ui.nav.firstVisit',
+            'profile': profile,
+            'status': 'ok',
+            'unit': 'ms',
+            'values': {
+              'stats': firstStats,
+              'statsSections': sections,
+              'arsenal': [arsenal],
+              'programmeReturn': [back],
+            },
+          });
 
-        // Changement de dominante et de mode (écran PROGRAMME, onglets
-        // visités) : un aller-retour mesuré frame par frame.
-        await _measure('ui.appearance.switch', profile, () async {
-          store.settings.accent = 'vert';
-          store.saveSettings();
-          final a = await timedPump();
-          store.settings.accent = 'rouge';
-          store.saveSettings();
-          await tester.pump();
-          return a;
-        }, n: 5);
+          // STATS visible (section Historique) : une notification du store
+          // reconstruit l'écran affiché (travail utile, doit rester à jour).
+          await tester.tap(find.byKey(const ValueKey('nav-1')));
+          await tester.pumpAndSettle();
+          await _measure('ui.stats.visibleNotify', profile, () async {
+            store.notifyListeners();
+            return timedPump();
+          }, n: 10);
+          await tester.tap(find.byKey(const ValueKey('nav-2')));
+          await tester.pumpAndSettle();
 
-        // Mémoire de l'hôte (processus flutter_tester, JIT) : ordre de
-        // grandeur seulement, le ramasse-miettes n'est pas forcé.
-        final rssBefore = ProcessInfo.currentRss;
-        for (var i = 0; i < 10; i++) {
-          appNavigator.currentState!.push(
-            MaterialPageRoute<void>(builder: (_) => const WodCatalogScreen()),
-          );
-          await tester.pumpAndSettle();
-          appNavigator.currentState!.pop();
-          await tester.pumpAndSettle();
+          // Séance ouverte par-dessus les quatre onglets visités.
+          final week = store.program.weeks.last;
+          final day = week.days.firstWhere((d) => d.exercises.isNotEmpty);
+          store.logs.remove(store.sessionKey(week.n, day.j));
           appNavigator.currentState!.push(
             MaterialPageRoute<void>(
               builder: (_) => SessionScreen(week: week, day: day),
             ),
           );
           await tester.pumpAndSettle();
+          final exercise = day.exercises.first;
+          final log = store.exLog(week.n, day.j, exercise);
+          var reps = 1;
+          await _measure('ui.session.keystroke', profile, () async {
+            log.sets.first.reps = '${reps++ % 20 + 1}';
+            store.saveLogs(affectsProgression: false);
+            return timedPump();
+          }, n: 15);
+          final spec = store.logSpec(exercise);
+          log.sets.first
+            ..kg = '50'
+            ..reps = '5'
+            ..rir = '2';
+          await _measure('ui.session.toggleSet', profile, () async {
+            store.toggleSet(log, 0, spec);
+            return timedPump();
+          }, n: 10);
+          await tester.pump(const Duration(seconds: 1));
+          await tester.runAsync(store.flush);
+          // Retour aux onglets après la séance : première image puis
+          // animation complète (les onglets masqués y sont à jour).
+          appNavigator.currentState!.pop();
+          final popFirst = await timedPump();
+          final settle = Stopwatch()..start();
+          await tester.pumpAndSettle();
+          settle.stop();
+          _emit({
+            'scenario': 'ui.session.pop',
+            'profile': profile,
+            'status': 'ok',
+            'unit': 'ms',
+            'values': {
+              'firstFrame': [popFirst],
+              'settle': [_ms(settle)],
+            },
+          });
+
+          // Catalogue WOD complet : ouverture, recherche, filtre, défilement.
+          await _measure('ui.catalog.open', profile, () async {
+            appNavigator.currentState!.push(
+              MaterialPageRoute<void>(builder: (_) => const WodCatalogScreen()),
+            );
+            final t = await timedPump();
+            await tester.pumpAndSettle();
+            appNavigator.currentState!.pop();
+            await tester.pumpAndSettle();
+            return t;
+          }, n: 5);
+          appNavigator.currentState!.push(
+            MaterialPageRoute<void>(builder: (_) => const WodCatalogScreen()),
+          );
+          await tester.pumpAndSettle();
+          final search = find.byType(TextField).first;
+          await _measure('ui.catalog.search', profile, () async {
+            await tester.enterText(search, 'burpee');
+            final t = await timedPump();
+            await tester.enterText(search, '');
+            await tester.pump();
+            return t;
+          }, n: 5);
+          final chip = find.text('< 15 min');
+          if (chip.evaluate().isNotEmpty) {
+            await _measure('ui.catalog.filterShort', profile, () async {
+              await tester.tap(chip.first);
+              final t = await timedPump();
+              await tester.tap(chip.first);
+              await tester.pump();
+              return t;
+            }, n: 5);
+          }
+          await _measure('ui.catalog.scroll60', profile, () async {
+            final list = find.byType(Scrollable).first;
+            final sw = Stopwatch()..start();
+            await tester.fling(list, const Offset(0, -3000), 4000);
+            for (var i = 0; i < 60; i++) {
+              await tester.pump(const Duration(milliseconds: 16));
+            }
+            sw.stop();
+            await tester.pumpAndSettle();
+            await tester.fling(list, const Offset(0, 6000), 8000);
+            await tester.pumpAndSettle();
+            return _ms(sw);
+          }, n: 5);
           appNavigator.currentState!.pop();
           await tester.pumpAndSettle();
-        }
-        _emit({
-          'scenario': 'ui.memory.rss10cycles',
-          'profile': profile,
-          'status': 'ok',
-          'unit': 'bytes',
-          'values': [rssBefore, ProcessInfo.currentRss],
-          'note': 'RSS hôte avant/après 10 cycles, GC non forcé',
-        });
 
-        await tester.pump(const Duration(seconds: 1));
-        await tester.runAsync(store.flush);
-        await tester.pumpWidget(const SizedBox());
-        await tester.pumpAndSettle();
-      });
-    }
-  });
+          // Changement de dominante et de mode (écran PROGRAMME, onglets
+          // visités) : un aller-retour mesuré frame par frame.
+          await _measure('ui.appearance.switch', profile, () async {
+            store.settings.accent = 'vert';
+            store.saveSettings();
+            final a = await timedPump();
+            store.settings.accent = 'rouge';
+            store.saveSettings();
+            await tester.pump();
+            return a;
+          }, n: 5);
+
+          // Mémoire de l'hôte (processus flutter_tester, JIT) : ordre de
+          // grandeur seulement, le ramasse-miettes n'est pas forcé.
+          final rssBefore = ProcessInfo.currentRss;
+          for (var i = 0; i < 10; i++) {
+            appNavigator.currentState!.push(
+              MaterialPageRoute<void>(builder: (_) => const WodCatalogScreen()),
+            );
+            await tester.pumpAndSettle();
+            appNavigator.currentState!.pop();
+            await tester.pumpAndSettle();
+            appNavigator.currentState!.push(
+              MaterialPageRoute<void>(
+                builder: (_) => SessionScreen(week: week, day: day),
+              ),
+            );
+            await tester.pumpAndSettle();
+            appNavigator.currentState!.pop();
+            await tester.pumpAndSettle();
+          }
+          _emit({
+            'scenario': 'ui.memory.rss10cycles',
+            'profile': profile,
+            'status': 'ok',
+            'unit': 'bytes',
+            'values': [rssBefore, ProcessInfo.currentRss],
+            'note': 'RSS hôte avant/après 10 cycles, GC non forcé',
+          });
+
+          await tester.pump(const Duration(seconds: 1));
+          await tester.runAsync(store.flush);
+          await tester.pumpWidget(const SizedBox());
+          await tester.pumpAndSettle();
+        });
+      }
+    },
+  );
 
   // Rappelle que la progression est calculée par les deux versions de la
   // même manière (sanity : aucun profil ne doit donner une progression vide

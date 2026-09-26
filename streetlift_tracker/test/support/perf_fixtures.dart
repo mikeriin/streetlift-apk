@@ -88,12 +88,11 @@ Map<String, dynamic>? perfBackup(AppStore app, String profile) {
     for (final day in week.days) {
       if (day.exercises.isEmpty) continue;
       final date = perfStart.add(Duration(days: (week.n - 1) * 7 + day.j - 1));
-      final at = _iso(DateTime(date.year, date.month, date.day, 18));
-      final log = SessionLog(
-        done: true,
-        finishedAt: at,
-        title: 'S${week.n} · J${day.j}',
-      );
+      // Chaque série a sa propre heure de validation (toutes les 2 min 30),
+      // comme dans l'application ; la séance se termine après la dernière.
+      var clock = DateTime(date.year, date.month, date.day, 17);
+      String nextSet() => _iso(clock = clock.add(const Duration(seconds: 150)));
+      final log = SessionLog(done: true, title: 'S${week.n} · J${day.j}');
       for (final ex in day.exercises) {
         log.exerciseNames[ex.id] = ex.name;
         log.ex[ex.id] = ExerciseLog(
@@ -104,12 +103,13 @@ Map<String, dynamic>? perfBackup(AppStore app, String profile) {
               reps: '${3 + r.next(10)}',
               rir: '${r.next(4)}',
               done: true,
-              completedAt: at,
+              completedAt: nextSet(),
             ),
           ),
           note: notes ? 'Note synthétique ${r.next(1000)}' : '',
         );
       }
+      log.finishedAt = _iso(clock.add(const Duration(minutes: 5)));
       logs[app.sessionKey(week.n, day.j)] = log.toJson();
     }
   }
@@ -144,10 +144,16 @@ Map<String, dynamic>? perfBackup(AppStore app, String profile) {
     );
     SessionLog occurrence(int n) {
       final date = perfStart.add(Duration(days: (i * 3 + n * 11) % 270));
-      final at = _iso(DateTime(date.year, date.month, date.day, 7));
+      var clock = DateTime(date.year, date.month, date.day, 7);
+      String nextSet() => _iso(clock = clock.add(const Duration(seconds: 150)));
+      final finished = _iso(
+        DateTime(date.year, date.month, date.day, 7).add(
+          Duration(seconds: 150 * items.length * 4 + 300),
+        ),
+      );
       return SessionLog(
         done: true,
-        finishedAt: at,
+        finishedAt: finished,
         title: 'Perso $i',
         customId: '$i',
         exerciseNames: {for (final e in items) 'CU-${e.uid}': e.name},
@@ -160,7 +166,7 @@ Map<String, dynamic>? perfBackup(AppStore app, String profile) {
                   kg: r.next(3) == 0 ? _kg(r) : '',
                   reps: '${5 + r.next(15)}',
                   done: true,
-                  completedAt: at,
+                  completedAt: nextSet(),
                 ),
               ),
               note: notes ? 'Perso ${r.next(1000)}' : '',
