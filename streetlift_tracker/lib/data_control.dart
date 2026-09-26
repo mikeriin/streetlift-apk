@@ -348,6 +348,16 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
             '${p.referencesSet} renseignées'
                 '${p.referencesHistoric == 0 ? '' : ' · ${p.referencesHistoric} à vérifier'}',
           ),
+          // L7 : les réponses aux questionnaires (données de santé
+          // potentielles) sont nommées avant l'import.
+          _Line(
+            'Koach',
+            !p.koachPresent
+                ? 'non utilisé dans ce fichier'
+                : '${p.koachEnabled ? 'activé' : 'désactivé'} · '
+                    '${p.koachWeighIns} pesée(s) · '
+                    '${p.koachAnswers} séance(s) avec questionnaire',
+          ),
           const SizedBox(height: 12),
           Text('Sur ce téléphone', style: heading),
           const SizedBox(height: 8),
@@ -361,7 +371,7 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
           ),
           const SizedBox(height: 12),
           Text(
-            'L’import remplace toutes tes données actuelles : journal, séances perso, références, résultats, crédits, WODs débloqués, liste d’envies et réglages. Aucune fusion.',
+            'L’import remplace toutes tes données actuelles : journal, séances perso, références, résultats, crédits, WODs débloqués, liste d’envies, réglages et données Koach. Aucune fusion.',
             style: TextStyle(color: SL.action, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 8),

@@ -182,7 +182,7 @@ class SettingsScreen extends StatelessWidget {
             color: SL.accent,
             title: 'Exporter une sauvegarde',
             subtitle:
-                'Fichier à l’emplacement de ton choix : pilotage, journal, séances, WODs, crédits, réglages. Non chiffré.',
+                'Fichier à l’emplacement de ton choix : pilotage, journal, séances, WODs, crédits, réglages, Koach. Non chiffré.',
             onTap: () => exportBackupFile(context, appVersion: kAppVersion),
           ),
           _Action(

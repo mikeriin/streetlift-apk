@@ -81,13 +81,13 @@ Les versions 2.x ignorent ces clés à l'import. `rir` (texte libre) et `v` sont
 | `legacyScale` | `rir` / `rpe` / absent | énuméré |
 | `weighIns` | `[{date: AAAA-MM-JJ, kg}]`, une par jour | 20-400 kg, ≤ 2 000 |
 | `history` | `[{at, ref, value, source}]`, source `initial` / `manual` / `koach` / `test` | référence connue, 0-10 000, ≤ 5 000 |
-| `decisions` | `[{at, id, kind, status, …}]`, kind `value` / `pain` / `fatigue` / `inSession` / `structure`, status `accepted` / `refused` | ≤ 10 000 |
+| `decisions` | `[{at, id, kind, status, detail?}]`, kind `value` / `pain` / `painEnd` / `fatigue` / `inSession` / `structure`, status `accepted` / `refused` ; identifiant stable (ex. `S3-J1\|P0-85\|1\|up`, `S4-J1\|B8`) | ≤ 10 000, identifiant ≤ 200 caractères |
 | `locks` | références verrouillées | références connues |
-| `questionnaires` (séances) | `{clé S·J: {sleep 0-24, form 0-10, pain {mouvement: 0-10}}}` | ≤ 400 séances |
+| `answers` (séances) | `{clé S·J: {sleep 0-24, form 0-10, pain {mouvement: 0-10}}}` ; sommeil saisi par tranche (< 5 h, 5-6, 6-7, 7-8, > 8 h : valeur centrale 4,5 … 8,5 enregistrée) | ≤ 400 séances |
 | `equipment` | incréments D23 | > 0, ≤ 50 |
 | `objectives` | `{réf: {stage: {target, date}, final: {target, date}}}` (modifications seulement) | 0-10 000 ; date AAAA-MM-JJ |
 | `adaptations` | `[{id, at, week, kind, movement, exercise?, delta?, sets?, load?, status}]` | semaine 1-40 ; delta ±1 |
-| `painRelief` | `{mouvement: {since}}` | mouvements connus |
+| `painRelief` | `{mouvement: horodatage d'acceptation}` | mouvements connus |
 
 **Absente** (installation 2.x, Koach jamais activé) : rien n'est écrit, l'export est identique à 2.5.9. Import : section invalide → import refusé (règle L2) ; au démarrage, une entrée illisible est ignorée avec un message, le reste est chargé. Aucune remise à zéro silencieuse ; l'effacement L2b remet `koach` à l'état neuf.
 
@@ -163,10 +163,11 @@ Exemples vérifiés par test (poids 71,5 kg) : traction +32,5 → **+35** (cible
 
 ## 7. Interface (KT-033) et confidentialité (KT-036)
 
-- Réglages → **Koach** : interrupteur (explication au premier usage), difficulté simple ou avancée (RIR/RPE), questionnaires (information préalable), « Koach adapte la structure » (désactivé), matériel, objectifs, pesées.
-- Séance : ✓ sur une série qui exige la difficulté → choix en 6 boutons (libellé + « encore N »), un tap valide ; ailleurs, bouton « Difficulté » facultatif ; suggestion + raison en une ligne, « Appliquer » / « Garder ma charge » ; fiche au tap.
-- Bilan Koach : douleur (facultatif), propositions « Accepter » / « Refuser » / « Tout accepter ».
-- STATS › Performances → Koach : courbe du 1RM estimé (bande d'incertitude, projection vers l'étape et l'objectif final, statut en texte), maxima d'endurance, historique daté des valeurs (manuelle, Koach, test).
+- Réglages → **Koach** : interrupteur (explication au premier usage), difficulté simple ou avancée (RIR/RPE), questionnaires (information préalable, « Supprimer mes réponses »), « Koach adapte la structure » (désactivé), écran Koach, objectifs, pesées, matériel, confidentialité.
+- Séance : ✓ sur une série qui exige la difficulté → choix en 6 boutons (libellé + « encore N »), un tap choisit et valide, fiche fermée = série non validée ; sous chaque série validée d'un exercice suivi par Koach, ligne « Dur · encore 2 » (ou « Difficulté non notée ») qui ouvre la même fiche, avec « Série écartée (incident) » ; appui long sur le numéro de série : même fiche ; mode avancé : colonne RIR/RPE affichée, la difficulté suit la dernière saisie ; suggestion + raison en une ligne, « Appliquer » / « Garder ma charge » ; fiche au tap (règle appliquée, estimation, rappel « tu restes seul juge ») ; message de calibrage (D29) ; questionnaire d'avant séance (1re page, avant la 1re série) ; carte « jour de fatigue probable » ; adaptation de structure de la semaine rappelée sur la carte de l'exercice.
+- Bilan Koach (après la fin enregistrée, avant le bilan de récompenses) : douleur par mouvement principal réalisé (facultatif), propositions « Accepter » / « Refuser » / « Tout accepter », propositions de structure.
+- STATS › Performances → Koach : propositions en attente, structure (adaptations annulables), courbe du 1RM estimé en lest ou barre (bande d'incertitude, mesures, projection au rythme observé, repères d'étape et d'objectif final ; même contenu en texte pour le lecteur d'écran), statut des objectifs en texte, « Garder ma valeur » (verrou), maxima d'endurance, historique daté des valeurs (repère initial, saisie, proposition acceptée, test), pesées.
+- Accueil : rappel de pesée après 7 jours sans pesée (Koach actif), « Noter mon poids » / « Plus tard ».
 - Accessibilité : 320 px, texte 130-200 %, libellés TalkBack ; statut toujours écrit (jamais la couleur seule).
 - **Données de santé potentielles** : sommeil, forme, douleur. Information claire avant activation ; strictement facultatifs ; inclus dans l'export et la suppression ; restent sur le téléphone. Documents préparatoires et points à faire valider : `docs/CONFIDENTIALITE_KOACH.md`.
 
@@ -177,7 +178,7 @@ Athlète fictif de 71,5 kg, 1RM système 110 kg, une séance de traction lestée
 | Critère | Seuil | Résultat retenu (p95 / max) |
 | --- | --- | --- |
 | C1 erreur après 6 séances, a priori juste (progression, plateau, baisse) | < 3 % | 2,25 % / 3,26 % |
-| C2 erreur après 6 séances, a priori faux ±15 % (Koach actif) | < 3 % | 2,49 % / 5,53 % |
+| C2 erreur après 6 séances, a priori faux ±15 % (Koach actif) | < 3 % | 2,33 % / 3,52 % |
 | C3 déplacement par un mauvais jour isolé (−8 %) | < 1 % | 0,49 % / 1,08 % |
 | C4 biais de RIR après 2 tests (biais −1, 0, +1) | ±0,5 RIR | 0,45 / 0,61 |
 | C5 changements de sens des propositions / 4 séances (plateau) | ≤ 1 | 1 |
@@ -203,6 +204,20 @@ Informatif (dépend du modèle, jamais une preuve d'efficacité) : incidents **n
 ## 9. Référence Python et recoupement
 
 `tools/koach_reference.py` (bibliothèque standard) et `lib/koach_engine.dart` implémentent les mêmes fonctions (rejeu, cache, propositions, D24, D25, D26, D27, D28, grilles, échelle héritée) ; fixtures JSON partagées `test/fixtures/koach/*.json` (entrées + sorties Python) : le test Dart exige ±0,01 kg (et égalité exacte des décisions) ; le test Python vérifie que les sorties attendues sont à jour. Simulations : même générateur (mulberry32 + Box-Muller) dans les deux langages.
+
+**Cache incrémental (D34)** : l'état est repris seulement si la liste des événements (séances faites, saisies manuelles) prolonge celle du cache **et** si le contexte du rejeu est inchangé : pesées (même rétroactives), références, repères initiaux, mouvements, paramètres (`contextSignature`). Sans cette seconde condition, une pesée ajoutée à une date passée laissait l'estimation calculée avec l'ancien poids (défaut trouvé pendant l'intégration, corrigé dans les deux langages, test dédié Python et Dart). Dans l'application, l'état est en outre mis en cache par révision des données et par jour.
+
+## 9 bis. Branchement dans l'application
+
+| Élément | Fichier | Rôle |
+| --- | --- | --- |
+| Données | `lib/koach_data.dart` | Section `koach` (lecture stricte à l'import, tolérante au démarrage avec compte des entrées ignorées), bornes §3.4 |
+| Annotations | `lib/koach_program.dart`, `assets/koach_program.json.gz` | Catégorie, référence, mouvement, RIR visé, matériel, type de semaine, k a priori |
+| Store | `lib/koach_store.dart` (extension de `AppStore`, même bibliothèque que `store.dart`) | Entrée normalisée du moteur (séances du programme faites seulement), état en cache, suggestions et propositions, décisions, pesées, objectifs, structure, charges avec Koach |
+| Points d'entrée 2.x | `lib/store.dart` | `toggleSet(…, exercise:, week:)` (D8, prescription datée), `setValue` (D33), `loadFor` / `sessionLoad` / `loadLabel(week:)` (D23, D26, D28), `exLog` (D28), sauvegarde / import / effacement (KT-034) — chaque branche conditionnée à Koach actif |
+| Interface | `lib/koach_widgets.dart`, `lib/koach_screens.dart`, `lib/session_screen.dart`, `lib/settings_screen.dart`, `lib/stats_performance.dart`, `lib/home_screen.dart` | §7 |
+
+Koach désactivé : aucun de ces chemins n'intervient ; comparaison automatique avec un instantané 2.x des 1 818 exercices (charges, libellés, volumes, séries, saisie, reps prévues, repos) pour 5 jeux de références et d'unités, avant activation et après une utilisation complète suivie de la désactivation (`test/l7_koach_off_test.dart`).
 
 ## 10. Migration 2.5.x → 3.0.0 (KT-034)
 

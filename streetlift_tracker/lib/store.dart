@@ -4439,6 +4439,14 @@ class ImportPreview {
       _data.refStatus.values.where((s) => s == 'set').length;
   int get referencesHistoric =>
       _data.refStatus.values.where((s) => s == 'historic').length;
+
+  /// L7 : section Koach du fichier (absente = Koach jamais utilisé).
+  bool get koachPresent => !_data.koach.pristine;
+  bool get koachEnabled => _data.koach.enabled;
+  int get koachWeighIns => _data.koach.weighIns.length;
+
+  /// Séances avec réponses aux questionnaires (sommeil, forme, douleur).
+  int get koachAnswers => _data.koach.answers.length;
 }
 
 class _BackupData {
