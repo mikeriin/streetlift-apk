@@ -40,8 +40,11 @@ void main() {
             e.key: switch (e.key) {
               'B4' => 80.0,
               'B8' || 'B9' || 'B10' || 'B11' => (e.value * 1.2),
-              'B16' || 'B17' || 'B18' || 'B19' || 'B20' => (e.value * 1.1)
-                  .roundToDouble(),
+              'B16' ||
+              'B17' ||
+              'B18' ||
+              'B19' ||
+              'B20' => (e.value * 1.1).roundToDouble(),
               _ => e.value * 0.9,
             },
         },
