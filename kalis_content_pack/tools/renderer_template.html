@@ -1,0 +1,65 @@
+<title>Moteur de rendu Kalis</title>
+<style>
+:root{--bg:#F4F4F4;--surface:#FFFFFF;--line:#DAD8D6;--text:#121212;--dim:#5E5B59;--focus:#1F5FBF;
+  --body:system-ui,-apple-system,"Segoe UI",sans-serif;--mono:ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#121212;--surface:#1C1B1B;--line:#363333;--text:#F2F0EF;--dim:#A19C99;--focus:#7FB0FF}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#121212;--surface:#1C1B1B;--line:#363333;--text:#F2F0EF;--dim:#A19C99;--focus:#7FB0FF}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font:14px/1.5 var(--body);margin:0;padding-inline:16px;padding-block:16px 40px}
+h1{font-size:22px;margin:0 0 4px}
+p{max-width:70ch;color:var(--dim);margin:0 0 12px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+select,button{font:inherit;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:5px 8px;max-width:100%}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+figure{margin:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+figure svg{width:100%;height:auto;display:block}
+figcaption{font-size:12px;color:var(--dim);padding:4px 8px}
+.kt-strip{display:flex;gap:4px;overflow-x:auto}.kt-kf{flex:1 0 140px}
+pre{font-family:var(--mono);font-size:12px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto}
+</style>
+<h1>Moteur de rendu de référence Kalis Track</h1>
+<p>Démonstrations par squelette 2D animé : une pose par exercice, 6 couleurs dominantes × 2 modes, rôles de couleur accent / neutre moyen / neutre contrasté. Spécification du moteur Flutter du lot L9b (voir <code>kt_pose.js</code> et CONTRAT_L9.md).</p>
+<div class="bar">
+  <label for="ex">Exercice</label><select id="ex"></select>
+  <button id="toggle">Images fixes</button>
+</div>
+<div class="grid" id="grid"></div>
+<h2 style="font-size:16px">Images clés (version sans animation)</h2>
+<div id="strip"></div>
+<h2 style="font-size:16px">Chronologie</h2>
+<pre id="tl"></pre>
+<script>/*__RENDERER__*/</script>
+<script>
+var D = /*__DATA__*/null;
+(function () {
+  var sel = document.getElementById("ex"), grid = document.getElementById("grid"), players = [], still = false;
+  var ids = Object.keys(D.poses.exercices).sort(function (a, b) { return D.noms[a].localeCompare(D.noms[b], "fr"); });
+  sel.innerHTML = ids.map(function (i) { return '<option value="' + i + '">' + D.noms[i].replace(/</g, "&lt;") + "</option>"; }).join("");
+  sel.value = D.poses.exercices["traction-pronation"] ? "traction-pronation" : ids[0];
+  function pose(id) {
+    var p = D.poses.exercices[id], g = D.poses.gabarits[p.gabarit];
+    return { view: g.vue, loop: g.boucle, props: g.accessoires.concat(p.accessoires), highlight: p.segments_accent,
+      keyframes: g.images_cles.map(function (k) { return { label: k.label, angles: k.angles, anchor: k.anchor, pelvis: k.bassin, hold: k.hold, dur: k.dur }; }) };
+  }
+  function show() {
+    players.forEach(function (p) { p.destroy(); }); players = []; grid.innerHTML = "";
+    var id = sel.value, p = pose(id);
+    ["sombre", "clair"].forEach(function (mode) {
+      Object.keys(KTPose.ACCENTS).forEach(function (acc) {
+        var f = document.createElement("figure"), s = document.createElement("div");
+        f.appendChild(s); var c = document.createElement("figcaption"); c.textContent = KTPose.ACCENTS[acc].label + " · " + mode; f.appendChild(c);
+        grid.appendChild(f);
+        var pl = new KTPose.Player(s, p, { accent: acc, mode: mode, highlight: p.highlight, label: D.noms[id] });
+        if (!still) pl.play(); players.push(pl);
+      });
+    });
+    document.getElementById("strip").innerHTML = KTPose.staticStrip(p, { accent: "rouge", mode: "sombre", highlight: p.highlight, label: D.noms[id] });
+    document.getElementById("tl").textContent = "gabarit : " + D.poses.exercices[id].gabarit + "\nboucle : " + p.loop + "\ndurée du cycle : " +
+      KTPose.duration(p).toFixed(2) + " s\n" + KTPose.timeline(p).map(function (s) { return "image " + s.a + " tenue " + s.hold + " s → image " + s.b + " en " + s.dur + " s (sinus entrée-sortie)"; }).join("\n");
+  }
+  sel.onchange = show;
+  document.getElementById("toggle").onclick = function () { still = !still; this.textContent = still ? "Animer" : "Images fixes"; players.forEach(function (p) { still ? p.pause() : p.play(); }); };
+  show();
+})();
+</script>

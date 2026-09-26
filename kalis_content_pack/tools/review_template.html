@@ -1,0 +1,515 @@
+<title>Relecture Kalis Track</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F4F4F4;--surface:#FFFFFF;--surface2:#ECEBEA;--line:#DAD8D6;--text:#121212;--dim:#5E5B59;
+  --accent:#8E1414;--accent-soft:rgba(142,20,20,.09);--ok:#2C7230;--ok-soft:rgba(44,114,48,.12);
+  --warn:#9A5B00;--warn-soft:rgba(154,91,0,.13);--focus:#1F5FBF;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;--body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
+  --bg:#121212;--surface:#1C1B1B;--surface2:#262424;--line:#363333;--text:#F2F0EF;--dim:#A19C99;
+  --accent:#E85959;--accent-soft:rgba(232,89,89,.14);--ok:#64AA67;--ok-soft:rgba(100,170,103,.16);
+  --warn:#E0A64A;--warn-soft:rgba(224,166,74,.16);--focus:#7FB0FF;}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#121212;--surface:#1C1B1B;--surface2:#262424;--line:#363333;--text:#F2F0EF;--dim:#A19C99;
+  --accent:#E85959;--accent-soft:rgba(232,89,89,.14);--ok:#64AA67;--ok-soft:rgba(100,170,103,.16);
+  --warn:#E0A64A;--warn-soft:rgba(224,166,74,.16);--focus:#7FB0FF;}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font:14px/1.5 var(--body);margin:0;padding-inline:16px;padding-block:0 40px}
+h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:.01em;text-wrap:balance;margin:0}
+button,select,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:14px 10px;border-bottom:1px solid var(--line);display:grid;gap:10px}
+.brand{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px}
+.brand h1{font-size:30px;line-height:1}
+.brand .sub{color:var(--dim);font-size:13px}
+.progress{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:var(--mono);font-size:12px}
+.bar{flex:1 1 220px;height:8px;border-radius:4px;background:var(--surface2);overflow:hidden;display:flex;min-width:0}
+.bar i{display:block;height:100%}
+.bar .v{background:var(--ok)}.bar .c{background:var(--warn)}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:1px 8px;border-radius:999px;font-size:12px;font-family:var(--mono);white-space:nowrap}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}.pill.fix{background:var(--warn-soft);color:var(--warn)}.pill.todo{background:var(--surface2);color:var(--dim)}
+.pill.acc{background:var(--accent-soft);color:var(--accent)}
+.sync{color:var(--dim)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.controls label{font-size:12px;color:var(--dim);display:flex;gap:6px;align-items:center}
+select,input[type=search],input[type=number]{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:5px 8px;min-width:0}
+input[type=search]{flex:1 1 200px}
+input[type=number]{width:56px}
+.btn{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:5px 12px;cursor:pointer}
+.btn:hover{border-color:var(--dim)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg);font-weight:600}
+.tabs{display:flex;gap:4px}
+.tab{background:none;border:0;border-bottom:2px solid transparent;padding:6px 10px;cursor:pointer;font-family:var(--display);font-size:18px;color:var(--dim)}
+.tab[aria-selected="true"]{color:var(--text);border-color:var(--accent)}
+.swatches{display:flex;gap:4px}
+.sw{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);cursor:pointer;padding:0}
+.sw[aria-pressed="true"]{border-color:var(--text)}
+main{display:grid;gap:16px;padding-top:14px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+@media (min-width:1000px){.layout.open{grid-template-columns:minmax(0,1fr) minmax(420px,520px)}}
+.count{color:var(--dim);font-size:12px;font-family:var(--mono)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px;display:grid;gap:4px;cursor:pointer;text-align:left}
+.card:hover{border-color:var(--dim)}
+.card[aria-current="true"]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.card .th{aspect-ratio:1.25;max-width:100%;border-radius:5px;overflow:hidden;background:var(--surface2)}
+.card .th svg{width:100%;height:100%;display:block}
+.card .nm{font-weight:600;font-size:13px;line-height:1.25}
+.card .meta{display:flex;flex-wrap:wrap;gap:4px;align-items:center;font-size:11px;color:var(--dim)}
+.diff{font-family:var(--mono);font-size:11px;padding:0 5px;border:1px solid var(--line);border-radius:4px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:14px}
+.panel>*{flex-shrink:0}
+@media (min-width:1000px){.panel{position:sticky;top:calc(env(safe-area-inset-top,0px) + 190px);max-height:calc(100vh - 210px);overflow:auto}}
+.panel h2{font-size:28px;line-height:1.05}
+.panel .head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.stage{border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+.stage svg{width:100%;height:auto;display:block;max-height:340px}
+.kt-strip{display:flex;gap:4px;overflow-x:auto}
+.kt-kf{margin:0;flex:1 0 110px}
+.kt-kf svg{width:100%;height:auto;display:block}
+.kt-kf figcaption{font-size:11px;color:var(--dim);text-align:center;padding:2px}
+.sec{display:grid;gap:6px}
+.sec h3{font-size:15px;text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
+dl.kv{display:grid;grid-template-columns:max-content 1fr;gap:3px 12px;margin:0;font-size:13px}
+dl.kv dt{color:var(--dim)}dl.kv dd{margin:0}
+ul.clean{margin:0;padding-left:18px}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:0 8px;font-size:12px;background:none}
+button.chip{cursor:pointer}button.chip:hover{border-color:var(--accent);color:var(--accent)}
+.stress{display:grid;grid-template-columns:max-content 1fr max-content;gap:3px 8px;align-items:center;font-size:12px}
+.meter{display:flex;gap:2px}.meter i{width:18px;height:6px;border-radius:2px;background:var(--surface2)}.meter i.on{background:var(--accent)}
+.note{background:var(--warn-soft);color:var(--text);border-radius:6px;padding:8px 10px;font-size:13px}
+.review{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:8px}
+.review .row{display:flex;flex-wrap:wrap;gap:8px}
+.choice{border:1px solid var(--line);border-radius:6px;padding:6px 12px;cursor:pointer;background:var(--surface)}
+.choice[aria-pressed="true"].ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);font-weight:600}
+.choice[aria-pressed="true"].fix{background:var(--warn-soft);border-color:var(--warn);color:var(--warn);font-weight:600}
+textarea{width:100%;min-height:70px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px;resize:vertical}
+.msg{font-size:12px;color:var(--dim);min-height:18px}
+.chain{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:10px}
+.chains{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.steps li{display:grid;grid-template-columns:18px 1fr;gap:8px}
+.steps .dot{position:relative}
+.steps .dot::before{content:"";position:absolute;left:5px;top:8px;width:8px;height:8px;border-radius:50%;background:var(--dim)}
+.steps li:not(:last-child) .dot::after{content:"";position:absolute;left:8px;top:18px;bottom:-6px;width:2px;background:var(--line)}
+.steps li.cur .dot::before{background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.steps .st{padding-bottom:8px}
+.steps button{background:none;border:0;padding:0;text-align:left;cursor:pointer;font-weight:600}
+.steps button:hover{color:var(--accent)}
+.steps .th{font-size:12px;color:var(--dim);font-family:var(--mono)}
+.empty{color:var(--dim);padding:24px 0}
+.export{display:grid;gap:8px}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.mono{font-family:var(--mono);font-size:12px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="top">
+  <div class="brand"><h1>Relecture Kalis Track</h1><span class="sub" id="sub">Pack de contenu v1 · lot L9</span></div>
+  <div class="progress" id="progress"></div>
+  <div class="controls">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-ex" aria-selected="true">Exercices</button>
+      <button class="tab" role="tab" id="tab-ch" aria-selected="false">Arbres</button>
+      <button class="tab" role="tab" id="tab-io" aria-selected="false">Export</button>
+    </div>
+    <span style="flex:1"></span>
+    <label>Couleur <span class="swatches" id="swatches"></span></label>
+    <label for="demoMode">Démo <select id="demoMode"><option value="auto">thème de la page</option><option value="sombre">sombre</option><option value="clair">clair</option></select></label>
+    <label><input type="checkbox" id="reduce"> images fixes</label>
+  </div>
+  <div class="controls" id="filters">
+    <input type="search" id="q" placeholder="Rechercher un exercice, un alias, un identifiant" aria-label="Recherche">
+    <select id="fType" aria-label="Type de mouvement"></select>
+    <label for="fMin">Difficulté <input type="number" id="fMin" min="1" max="10" value="1"> à <input type="number" id="fMax" min="1" max="10" value="10" aria-label="Difficulté maximale"></label>
+    <select id="fLieu" aria-label="Lieu"></select>
+    <select id="fMat" aria-label="Matériel"></select>
+    <select id="fPrec" aria-label="Précaution"></select>
+    <select id="fStat" aria-label="Statut de relecture">
+      <option value="">tous statuts</option><option value="todo">à relire</option><option value="valide">validés</option><option value="a_corriger">à corriger</option>
+    </select>
+    <select id="fOrig" aria-label="Origine">
+      <option value="">toutes origines</option><option value="base_v1">base v1</option><option value="ajout_l9">ajouts L9</option><option value="nc">avec non-conformité</option><option value="doublon">doublons</option><option value="prio">150 prioritaires</option>
+    </select>
+  </div>
+</header>
+
+<main>
+  <section id="view-ex">
+    <div class="layout" id="layout">
+      <div>
+        <p class="count" id="count"></p>
+        <div class="grid" id="grid"></div>
+      </div>
+      <aside class="panel" id="panel" hidden aria-live="polite"></aside>
+    </div>
+  </section>
+  <section id="view-ch" hidden>
+    <div class="chains" id="chains"></div>
+  </section>
+  <section id="view-io" hidden>
+    <div class="panel export">
+      <h2>Export des relectures</h2>
+      <p id="ioMode"></p>
+      <div class="row controls">
+        <button class="btn primary" id="btnSave">Enregistrer le fichier JSON</button>
+        <button class="btn" id="btnCopy">Copier le JSON</button>
+        <label class="btn" for="imp">Importer un fichier JSON</label>
+        <input type="file" id="imp" accept="application/json,.json" class="visually-hidden">
+      </div>
+      <p class="msg" id="ioMsg"></p>
+      <textarea id="ioText" readonly rows="14" aria-label="Relectures au format JSON" class="mono"></textarea>
+    </div>
+  </section>
+</main>
+
+<script>/*__RENDERER__*/</script>
+<script>
+var PACK = /*__DATA__*/null;
+(function () {
+  "use strict";
+  var EX = PACK.exercices, BY = {}, VOC = PACK.vocabulaires, POSES = PACK.poses, CH = PACK.chaines;
+  EX.forEach(function (e) { BY[e.id] = e; });
+  var PRIO = {}; (PACK.prioritaires || []).forEach(function (id) { PRIO[id] = true; });
+  var CHAINS_OF = {}; CH.forEach(function (c) { c.etapes.forEach(function (s) { (CHAINS_OF[s.id] = CHAINS_OF[s.id] || []).push(c); }); });
+  var reviews = {};            // id -> {statut, commentaire, maj}
+  var db = null, dl = null, storeMode = "local";
+  var state = { accent: "rouge", demo: "auto", reduce: false, sel: null, tab: "ex" };
+  var LS = "kt-l9-relectures";
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* stockage indisponible */ } }
+  try { var saved = JSON.parse(lsGet(LS) || "{}"); if (saved && typeof saved === "object") reviews = saved; } catch (e) { reviews = {}; }
+  try { var pref = JSON.parse(lsGet("kt-l9-prefs") || "{}"); Object.assign(state, pref.accent ? { accent: pref.accent } : {}, pref.demo ? { demo: pref.demo } : {}, pref.reduce ? { reduce: true } : {}); } catch (e) { }
+  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) state.reduce = true;
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function lab(map, k) { return (map && map[k]) || k; }
+  function isDark() {
+    var t = document.documentElement.getAttribute("data-theme");
+    if (t) return t === "dark";
+    return window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+  function demoMode() { return state.demo === "auto" ? (isDark() ? "sombre" : "clair") : state.demo; }
+  function savePrefs() { lsSet("kt-l9-prefs", JSON.stringify({ accent: state.accent, demo: state.demo, reduce: state.reduce })); }
+
+  function poseFor(id) {
+    var p = POSES.exercices[id]; if (!p) return null;
+    var g = POSES.gabarits[p.gabarit];
+    return { view: g.vue, loop: g.boucle, props: (g.accessoires || []).concat(p.accessoires || []), highlight: p.segments_accent,
+      keyframes: g.images_cles.map(function (k) { return { label: k.label, angles: k.angles, anchor: k.anchor, pelvis: k.bassin, hold: k.hold, dur: k.dur }; }) };
+  }
+  function statusOf(id) { var r = reviews[id]; return r ? r.statut : "todo"; }
+  function pillFor(id) {
+    var s = statusOf(id);
+    return s === "valide" ? '<span class="pill ok">validé</span>' : s === "a_corriger" ? '<span class="pill fix">à corriger</span>' : '<span class="pill todo">à relire</span>';
+  }
+
+  /* ---------- filtres ---------- */
+  function fillSelect(el, first, map, keys) {
+    el.innerHTML = '<option value="">' + esc(first) + "</option>" + keys.map(function (k) { return '<option value="' + esc(k) + '">' + esc(lab(map, k)) + "</option>"; }).join("");
+  }
+  var usedTypes = Object.keys(VOC.types_mouvement).filter(function (t) { return EX.some(function (e) { return e.type_mouvement === t; }); });
+  fillSelect($("fType"), "tous types", VOC.types_mouvement, usedTypes);
+  fillSelect($("fLieu"), "tous lieux", VOC.lieux, Object.keys(VOC.lieux));
+  var matMap = {}; Object.keys(VOC.materiel).forEach(function (k) { matMap[k] = VOC.materiel[k].libelle; });
+  fillSelect($("fMat"), "tout matériel", matMap, Object.keys(matMap).filter(function (m) { return EX.some(function (e) { return e.materiel.indexOf(m) >= 0; }); }));
+  var precShort = {}; Object.keys(VOC.precautions).forEach(function (k) { precShort[k] = k.replace(/_/g, " "); });
+  fillSelect($("fPrec"), "toutes précautions", precShort, Object.keys(precShort));
+
+  function norm(s) { return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
+  function filtered() {
+    var q = norm($("q").value.trim()), t = $("fType").value, lo = +$("fMin").value || 1, hi = +$("fMax").value || 10;
+    var li = $("fLieu").value, ma = $("fMat").value, pr = $("fPrec").value, st = $("fStat").value, or = $("fOrig").value;
+    return EX.filter(function (e) {
+      if (q && norm(e.nom + " " + e.alias.join(" ") + " " + e.id).indexOf(q) < 0) return false;
+      if (t && e.type_mouvement !== t) return false;
+      if (e.difficulte < lo || e.difficulte > hi) return false;
+      if (li && e.lieux.indexOf(li) < 0) return false;
+      if (ma && e.materiel.indexOf(ma) < 0) return false;
+      if (pr && e.precautions.indexOf(pr) < 0) return false;
+      if (st && statusOf(e.id) !== st) return false;
+      if (or === "base_v1" || or === "ajout_l9") { if (e.origine !== or) return false; }
+      if (or === "nc" && !e.non_conformites.length) return false;
+      if (or === "doublon" && !e.doublon_de) return false;
+      if (or === "prio" && !PRIO[e.id]) return false;
+      return true;
+    });
+  }
+
+  /* ---------- galerie ---------- */
+  var thumbCache = {};
+  function thumb(id) {
+    var key = id + "|" + state.accent + "|" + demoMode();
+    if (thumbCache[key]) return thumbCache[key];
+    var p = poseFor(id);
+    var k = p.keyframes.length > 1 ? 1 : 0;
+    var svg = KTPose.svgFor(p, KTPose.poseOf(p.keyframes[k], p.view), { accent: state.accent, mode: demoMode(), highlight: p.highlight, label: BY[id].nom });
+    return (thumbCache[key] = svg);
+  }
+  var io = "IntersectionObserver" in window ? new IntersectionObserver(function (ents) {
+    ents.forEach(function (en) { if (en.isIntersecting) { var el = en.target; el.innerHTML = thumb(el.getAttribute("data-id")); io.unobserve(el); } });
+  }, { rootMargin: "400px" }) : null;
+  function renderGrid() {
+    var list = filtered();
+    $("count").textContent = list.length + " exercice" + (list.length > 1 ? "s" : "") + " affiché" + (list.length > 1 ? "s" : "") + " sur " + EX.length;
+    var g = $("grid");
+    if (!list.length) { g.innerHTML = '<p class="empty">Aucun exercice ne correspond à ces filtres.</p>'; return; }
+    g.innerHTML = list.map(function (e, i) {
+      return '<button class="card" data-id="' + e.id + '" aria-current="' + (state.sel === e.id) + '"><div class="th" data-id="' + e.id + '">' + (i < 24 || !io ? thumb(e.id) : "") +
+        '</div><span class="nm">' + esc(e.nom) + '</span><span class="meta"><span class="diff">niv. ' + e.difficulte + "</span>" + esc(lab(VOC.types_mouvement, e.type_mouvement)) +
+        "</span><span class=\"meta\">" + pillFor(e.id) + (e.non_conformites.length ? '<span class="pill fix">non-conformité</span>' : "") + (e.origine === "ajout_l9" ? '<span class="pill acc">ajout L9</span>' : "") + "</span></button>";
+    }).join("");
+    if (io) g.querySelectorAll(".th").forEach(function (el) { if (!el.innerHTML) io.observe(el); });
+  }
+  $("grid").addEventListener("click", function (ev) {
+    var c = ev.target.closest(".card"); if (c) openEx(c.getAttribute("data-id"));
+  });
+
+  /* ---------- fiche ---------- */
+  var player = null;
+  function link(id) { var e = BY[id]; return e ? '<button class="chip" data-go="' + id + '">' + esc(e.nom) + " · " + e.difficulte + "</button>" : esc(id); }
+  function openEx(id, noScroll) {
+    state.sel = id; var e = BY[id]; if (!e) return;
+    if (state.tab !== "ex") setTab("ex");
+    var P = $("panel"); P.hidden = false; $("layout").classList.add("open");
+    var r = reviews[id] || {};
+    var z = VOC.zones, st = e.contrainte_articulaire;
+    var stress = Object.keys(z).map(function (k) {
+      var v = st[k], m = ""; for (var i = 1; i <= 3; i++) m += '<i class="' + (i <= v ? "on" : "") + '"></i>';
+      return "<span>" + esc(z[k]) + '</span><span class="meter" aria-hidden="true">' + m + '</span><span class="mono">' + v + "/3</span>";
+    }).join("");
+    var subs = Object.keys(VOC.lieux).map(function (l) {
+      var s = e.substitutions[l] || [];
+      return "<dt>" + esc(VOC.lieux[l]) + (e.substitutions_elargies && e.substitutions_elargies.indexOf(l) >= 0 ? " (élargie)" : "") + "</dt><dd class=\"chips\">" + (s.length ? s.map(link).join("") : '<span class="count">aucune</span>') + "</dd>";
+    }).join("");
+    var chains = (CHAINS_OF[id] || []).map(function (c) { return chainHtml(c, id); }).join("");
+    P.innerHTML =
+      '<div class="head"><div><h2>' + esc(e.nom) + '</h2><div class="count">' + esc(e.id) + (e.alias.length ? " · alias : " + esc(e.alias.join(", ")) : "") + "</div></div>" +
+      '<button class="btn" id="close" aria-label="Fermer la fiche">Fermer</button></div>' +
+      '<div class="stage" id="stage"></div>' +
+      '<div class="controls"><button class="btn" id="play">' + (state.reduce ? "Animer" : "Pause") + "</button><span class=\"count\">Vue " + esc(e.vue) + " · gabarit " + esc(POSES.exercices[id].gabarit) + " · boucle " + esc(POSES.gabarits[POSES.exercices[id].gabarit].boucle) + "</span></div>" +
+      (e.non_conformites.length ? '<div class="note"><strong>Non-conformité signalée :</strong> ' + e.non_conformites.map(esc).join(" ") + "</div>" : "") +
+      (e.doublon_de ? '<div class="note">Doublon probable de ' + link(e.doublon_de) + "</div>" : "") +
+      '<div class="sec"><h3>Identité</h3><dl class="kv">' +
+      "<dt>Type</dt><dd>" + esc(lab(VOC.types_mouvement, e.type_mouvement)) + "</dd>" +
+      "<dt>Difficulté</dt><dd><strong>" + e.difficulte + "</strong> / 10</dd>" +
+      "<dt>Plan, vue</dt><dd>" + esc(e.plan) + ", " + esc(e.vue) + (e.unilateral ? " · unilatéral" : "") + "</dd>" +
+      "<dt>Charge</dt><dd>" + esc(lab(VOC.modes_charge, e.mode_charge)) + " · mesure : " + esc(lab(VOC.mesures, e.mesure)) + "</dd>" +
+      "<dt>Muscles</dt><dd><strong>" + e.muscles_primaires.map(function (m) { return esc(lab(VOC.muscles, m)); }).join(", ") + "</strong>" +
+      (e.muscles_secondaires.length ? " ; secondaires : " + e.muscles_secondaires.map(function (m) { return esc(lab(VOC.muscles, m)); }).join(", ") : "") + "</dd>" +
+      "<dt>Matériel</dt><dd>" + e.materiel.map(function (m) { return esc(matMap[m] || m); }).join(", ") + "</dd>" +
+      "<dt>Lieux</dt><dd>" + e.lieux.map(function (l) { return esc(VOC.lieux[l]); }).join(", ") + "</dd>" +
+      "<dt>Rôle</dt><dd>" + esc(e.role) + (e.generateur ? " · utilisable par le générateur" : " · exclu du générateur") + "</dd>" +
+      (e.methodes.length ? "<dt>Méthodes</dt><dd>" + e.methodes.map(esc).join(", ") + "</dd>" : "") +
+      (e.v1 ? "<dt>Base v1</dt><dd>" + esc(e.v1.nom) + " · « " + esc(e.v1.groupe) + " » · « " + esc(e.v1.materiel) + " »</dd>" : "<dt>Origine</dt><dd>ajout L9</dd>") +
+      "</dl></div>" +
+      '<div class="sec"><h3>Consignes</h3><ul class="clean">' + e.points_cles.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ul>" +
+      "<div><strong>Erreurs fréquentes :</strong></div><ul class=\"clean\">" + e.erreurs_frequentes.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ul>" +
+      "<div><strong>Respiration :</strong> " + esc(e.respiration) + "</div></div>" +
+      '<div class="sec"><h3>Contrainte articulaire</h3><div class="stress">' + stress + "</div></div>" +
+      '<div class="sec"><h3>Précautions</h3>' + (e.precautions.length ? '<ul class="clean">' + e.precautions.map(function (p) { return "<li>" + esc(VOC.precautions[p] || p) + "</li>"; }).join("") + "</ul>" : '<span class="count">aucune</span>') + "</div>" +
+      '<div class="sec"><h3>Prérequis et suites</h3><dl class="kv">' +
+      "<dt>Prérequis</dt><dd class=\"chips\">" + (e.prerequis.length ? e.prerequis.map(function (p) { return link(p.id) + '<span class="count">' + esc(p.seuil) + "</span>"; }).join("") : '<span class="count">aucun</span>') + "</dd>" +
+      "<dt>Régressions</dt><dd class=\"chips\">" + (e.regressions.length ? e.regressions.map(link).join("") : '<span class="count">aucune</span>') + "</dd>" +
+      "<dt>Progressions</dt><dd class=\"chips\">" + (e.progressions.length ? e.progressions.map(link).join("") : '<span class="count">aucune</span>') + "</dd>" +
+      (e.variante_de ? "<dt>Variante de</dt><dd class=\"chips\">" + link(e.variante_de) + "</dd>" : "") + "</dl></div>" +
+      (chains ? '<div class="sec"><h3>Arbres de progression</h3>' + chains + "</div>" : "") +
+      '<div class="sec"><h3>Substitutions par lieu</h3><dl class="kv">' + subs + "</dl></div>" +
+      '<div class="review"><h3 style="font-size:20px">Ta relecture</h3>' +
+      '<div class="row"><button class="choice ok" id="bOk" aria-pressed="' + (r.statut === "valide") + '">Valider</button>' +
+      '<button class="choice fix" id="bFix" aria-pressed="' + (r.statut === "a_corriger") + '">À corriger</button>' +
+      (r.statut ? '<button class="btn" id="bClear">Effacer</button>' : "") + "</div>" +
+      '<label for="cmt" class="count">Commentaire (ce qui est faux et la correction souhaitée)</label><textarea id="cmt" placeholder="Exemple : difficulté 4 plutôt que 6 ; ajouter « coudes serrés » dans les points clés">' + esc(r.commentaire || "") + "</textarea>" +
+      '<div class="row"><button class="btn primary" id="bSave">Enregistrer le commentaire</button><button class="btn" id="bNext">Suivant à relire</button></div>' +
+      '<p class="msg" id="rmsg">' + (r.maj ? "Dernière relecture : " + esc(new Date(r.maj).toLocaleString("fr-FR")) : "") + "</p></div>";
+    startPlayer(id);
+    $("close").onclick = function () { P.hidden = true; $("layout").classList.remove("open"); state.sel = null; if (player) player.pause(); renderGrid(); };
+    $("play").onclick = function () {
+      if (state.reduce) { state.reduce = false; $("reduce").checked = false; savePrefs(); startPlayer(id); this.textContent = "Pause"; return; }
+      if (player.playing) { player.pause(); this.textContent = "Lecture"; } else { player.play(); this.textContent = "Pause"; }
+    };
+    $("bOk").onclick = function () { setReview(id, "valide"); };
+    $("bFix").onclick = function () { setReview(id, "a_corriger"); };
+    if ($("bClear")) $("bClear").onclick = function () { setReview(id, null); };
+    $("bSave").onclick = function () { setReview(id, (reviews[id] && reviews[id].statut) || "a_corriger", true); };
+    $("bNext").onclick = function () {
+      var list = filtered(), i = list.findIndex(function (x) { return x.id === id; });
+      for (var k = 1; k <= list.length; k++) { var n = list[(i + k) % list.length]; if (statusOf(n.id) === "todo") { openEx(n.id); return; } }
+      $("rmsg").textContent = "Tous les exercices affichés ont été relus.";
+    };
+    document.querySelectorAll(".card").forEach(function (c) { c.setAttribute("aria-current", String(c.getAttribute("data-id") === id)); });
+    if (!noScroll && window.innerWidth < 1000) P.scrollIntoView({ behavior: "auto", block: "start" });
+  }
+  function startPlayer(id) {
+    if (player) player.destroy();
+    var el = $("stage"); if (!el) return;
+    var p = poseFor(id);
+    player = new KTPose.Player(el, p, { accent: state.accent, mode: demoMode(), highlight: p.highlight, label: BY[id].nom, reduceMotion: state.reduce });
+    if (!state.reduce) player.play();
+  }
+  document.addEventListener("click", function (ev) {
+    var b = ev.target.closest("[data-go]"); if (b) { ev.preventDefault(); openEx(b.getAttribute("data-go")); }
+  });
+
+  function chainHtml(c, cur) {
+    var r = reviews["chaine--" + c.id] || {};
+    return '<div class="chain"><div class="head" style="display:flex;justify-content:space-between;gap:8px"><strong>' + esc(c.titre) + "</strong>" +
+      (r.statut === "valide" ? '<span class="pill ok">arbre validé</span>' : r.statut === "a_corriger" ? '<span class="pill fix">arbre à corriger</span>' : '<span class="pill todo">arbre à relire</span>') +
+      '</div><ol class="steps">' + c.etapes.map(function (s) {
+        var e = BY[s.id];
+        return '<li class="' + (s.id === cur ? "cur" : "") + '"><span class="dot" aria-hidden="true"></span><div class="st"><button data-go="' + s.id + '">' + esc(e ? e.nom : s.id) + "</button> " +
+          '<span class="diff">niv. ' + (e ? e.difficulte : "?") + "</span> " + pillFor(s.id) +
+          (s.seuil_passage ? '<div class="th">passage : ' + esc(s.seuil_passage.texte) + "</div>" : "") + "</div></li>";
+      }).join("") + "</ol>" +
+      (cur ? "" : '<div class="row controls"><button class="choice ok" data-chain="' + c.id + '" data-s="valide" aria-pressed="' + (r.statut === "valide") + '">Valider l\'arbre</button>' +
+        '<button class="choice fix" data-chain="' + c.id + '" data-s="a_corriger" aria-pressed="' + (r.statut === "a_corriger") + '">À corriger</button></div>' +
+        '<textarea data-cc="' + c.id + '" aria-label="Commentaire sur l\'arbre ' + esc(c.titre) + '" placeholder="Ordre des étapes, seuils de passage, étape manquante">' + esc(r.commentaire || "") + "</textarea>") + "</div>";
+  }
+  function renderChains() {
+    $("chains").innerHTML = CH.map(function (c) { return chainHtml(c, null); }).join("");
+  }
+  $("chains").addEventListener("click", function (ev) {
+    var b = ev.target.closest("[data-chain]"); if (!b) return;
+    var id = b.getAttribute("data-chain"), ta = document.querySelector('[data-cc="' + id + '"]');
+    setReview("chaine--" + id, b.getAttribute("data-s"), false, ta ? ta.value : "");
+  });
+
+  /* ---------- enregistrement ---------- */
+  function setReview(id, statut, fromComment, comment) {
+    var cmtEl = $("cmt");
+    var c = comment !== undefined ? comment : (cmtEl && state.sel === id ? cmtEl.value.trim() : ((reviews[id] || {}).commentaire || ""));
+    if (!statut) { delete reviews[id]; }
+    else reviews[id] = { statut: statut, commentaire: c, maj: new Date().toISOString() };
+    lsSet(LS, JSON.stringify(reviews));
+    thumbCache = thumbCache; // inchangé
+    persist(id);
+    renderProgress();
+    if (id.indexOf("chaine--") === 0) { renderChains(); return; }
+    renderGrid(); openEx(id, true);
+    var m = $("rmsg"); if (m) m.textContent = statut ? (statut === "valide" ? "Validé." : "Marqué à corriger.") + (storeMode === "partage" ? " Enregistré dans la base partagée." : " Enregistré dans ce navigateur ; pense à exporter.") : "Relecture effacée.";
+  }
+  var pending = Promise.resolve();
+  function persist(id) {
+    if (!db) return;
+    var r = reviews[id];
+    var ref = db.collection("relectures").doc(id);
+    pending = pending.then(function () {
+      return r ? ref.set({ cible: id.indexOf("chaine--") === 0 ? "chaine" : "exercice", id: id, statut: r.statut, commentaire: r.commentaire || "", maj: r.maj,
+        nom: id.indexOf("chaine--") === 0 ? id.slice(8) : (BY[id] ? BY[id].nom : id) }) : ref.delete();
+    }).catch(function (e) {
+      $("sync").textContent = "Échec d'enregistrement partagé (" + (e && e.code || "erreur") + ") : la relecture reste dans ce navigateur.";
+    });
+  }
+  function renderProgress() {
+    var v = 0, c = 0;
+    EX.forEach(function (e) { var s = statusOf(e.id); if (s === "valide") v++; else if (s === "a_corriger") c++; });
+    var n = EX.length, todo = n - v - c;
+    var cv = CH.filter(function (x) { return (reviews["chaine--" + x.id] || {}).statut; }).length;
+    $("progress").innerHTML = '<span class="pill ok">' + v + " validés</span><span class=\"pill fix\">" + c + " à corriger</span><span class=\"pill todo\">" + todo + " à relire</span>" +
+      '<span class="bar" role="img" aria-label="' + v + " validés et " + c + " à corriger sur " + n + '"><i class="v" style="width:' + (100 * v / n) + '%"></i><i class="c" style="width:' + (100 * c / n) + '%"></i></span>' +
+      '<span class="pill todo">arbres relus ' + cv + "/" + CH.length + '</span><span class="sync" id="sync">' + (storeMode === "partage" ? "Base partagée : relectures enregistrées en ligne" : "Mode local : relectures dans ce navigateur") + "</span>";
+  }
+
+  /* ---------- export / import ---------- */
+  function exportObj() {
+    var list = Object.keys(reviews).sort().map(function (k) {
+      var r = reviews[k]; var isC = k.indexOf("chaine--") === 0;
+      return { cible: isC ? "chaine" : "exercice", id: isC ? k.slice(8) : k, nom: isC ? k.slice(8) : (BY[k] ? BY[k].nom : k), statut: r.statut, commentaire: r.commentaire || "", maj: r.maj };
+    });
+    return { format: "kalis-relectures", version_pack: PACK.version, exporte_le: new Date().toISOString(), total_exercices: EX.length, relectures: list };
+  }
+  function refreshIO() {
+    $("ioText").value = JSON.stringify(exportObj(), null, 1);
+    $("ioMode").textContent = storeMode === "partage"
+      ? "Les relectures sont enregistrées dans la base partagée de cette page : Claude les lira directement pour la seconde passe. L'export reste disponible comme copie de sécurité."
+      : "Cette copie de l'outil fonctionne hors ligne : les relectures restent dans ce navigateur. Exporte le fichier et joins-le au lancement de la seconde passe.";
+  }
+  $("btnSave").onclick = function () {
+    var data = JSON.stringify(exportObj(), null, 1), name = "kalis_relectures_" + new Date().toISOString().slice(0, 10) + ".json";
+    if (dl) { dl.save({ filename: name, data: data }).then(function () { $("ioMsg").textContent = "Fichier proposé à l'enregistrement."; }, function () { $("ioMsg").textContent = "Enregistrement refusé ou indisponible : utilise « Copier le JSON »."; }); return; }
+    try { var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([data], { type: "application/json" })); a.download = name; document.body.appendChild(a); a.click(); a.remove(); $("ioMsg").textContent = "Fichier " + name + " enregistré."; }
+    catch (e) { $("ioMsg").textContent = "Téléchargement indisponible : utilise « Copier le JSON »."; }
+  };
+  $("btnCopy").onclick = function () {
+    var t = $("ioText"); t.value = JSON.stringify(exportObj(), null, 1);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(t.value).then(function () { $("ioMsg").textContent = "JSON copié."; }, function () { t.select(); $("ioMsg").textContent = "Copie refusée : le texte est sélectionné, copie-le manuellement."; });
+    } else { t.select(); $("ioMsg").textContent = "Le texte est sélectionné : copie-le manuellement."; }
+  };
+  $("imp").onchange = function () {
+    var f = this.files && this.files[0]; if (!f) return;
+    var rd = new FileReader();
+    rd.onload = function () {
+      try {
+        var o = JSON.parse(rd.result), n = 0;
+        (o.relectures || []).forEach(function (r) {
+          var k = r.cible === "chaine" ? "chaine--" + r.id : r.id;
+          if (r.statut === "valide" || r.statut === "a_corriger") { reviews[k] = { statut: r.statut, commentaire: r.commentaire || "", maj: r.maj || new Date().toISOString() }; persist(k); n++; }
+        });
+        lsSet(LS, JSON.stringify(reviews)); renderProgress(); renderGrid(); refreshIO();
+        $("ioMsg").textContent = n + " relecture(s) importée(s).";
+      } catch (e) { $("ioMsg").textContent = "Fichier illisible : il faut un export JSON de cet outil."; }
+    };
+    rd.readAsText(f);
+  };
+
+  /* ---------- onglets, préférences ---------- */
+  function setTab(t) {
+    state.tab = t;
+    ["ex", "ch", "io"].forEach(function (k) { $("view-" + k).hidden = k !== t; $("tab-" + k).setAttribute("aria-selected", String(k === t)); });
+    $("filters").hidden = t !== "ex";
+    if (t === "ch") renderChains();
+    if (t === "io") refreshIO();
+  }
+  $("tab-ex").onclick = function () { setTab("ex"); };
+  $("tab-ch").onclick = function () { setTab("ch"); };
+  $("tab-io").onclick = function () { setTab("io"); };
+  $("swatches").innerHTML = Object.keys(KTPose.ACCENTS).map(function (k) {
+    var a = KTPose.ACCENTS[k];
+    return '<button class="sw" data-acc="' + k + '" title="' + esc(a.label) + '" aria-label="Couleur ' + esc(a.label) + '" aria-pressed="' + (k === state.accent) + '" style="background:' + a.dark + '"></button>';
+  }).join("");
+  $("swatches").onclick = function (ev) {
+    var b = ev.target.closest("[data-acc]"); if (!b) return;
+    state.accent = b.getAttribute("data-acc"); savePrefs();
+    document.querySelectorAll(".sw").forEach(function (s) { s.setAttribute("aria-pressed", String(s === b)); });
+    refreshDemo();
+  };
+  $("demoMode").value = state.demo;
+  $("demoMode").onchange = function () { state.demo = this.value; savePrefs(); refreshDemo(); };
+  $("reduce").checked = state.reduce;
+  $("reduce").onchange = function () { state.reduce = this.checked; savePrefs(); if (state.sel) openEx(state.sel, true); };
+  function refreshDemo() { renderGrid(); if (state.sel) openEx(state.sel, true); }
+  ["q", "fType", "fMin", "fMax", "fLieu", "fMat", "fPrec", "fStat", "fOrig"].forEach(function (id) { $(id).addEventListener("input", renderGrid); });
+  if (window.matchMedia) matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () { if (state.demo === "auto") refreshDemo(); });
+
+  $("sub").textContent = "Pack de contenu v" + PACK.version + " · " + EX.length + " exercices · " + CH.length + " arbres · lot L9";
+  renderProgress(); renderGrid();
+  var first = (location.hash || "").slice(1);
+  openEx(BY[first] ? first : "pompes", true);
+
+  /* ---------- base partagée (si la page est publiée avec la capacité db) ---------- */
+  if (window.claude && typeof window.claude.use === "function") {
+    window.claude.use("downloads").then(function (d) { dl = d; }, function () { });
+    window.claude.use("db").then(function (d) {
+      if (!d) return;
+      db = d; storeMode = "partage"; renderProgress();
+      d.collection("relectures").limit(1000).onSnapshot(function (snap) {
+        var remote = {};
+        snap.docs.forEach(function (doc) { var x = doc.data(); if (x && x.statut) remote[doc.id] = { statut: x.statut, commentaire: x.commentaire || "", maj: x.maj }; });
+        // les relectures locales non encore partagées sont envoyées une fois
+        Object.keys(reviews).forEach(function (k) { if (!remote[k]) persist(k); });
+        Object.keys(remote).forEach(function (k) { if (!reviews[k] || (remote[k].maj || "") >= (reviews[k].maj || "")) reviews[k] = remote[k]; });
+        lsSet(LS, JSON.stringify(reviews));
+        renderProgress(); renderGrid();
+        if (state.tab === "ch") renderChains();
+      }, function (e) { storeMode = "local"; db = null; renderProgress(); });
+    }, function () { });
+  }
+})();
+</script>

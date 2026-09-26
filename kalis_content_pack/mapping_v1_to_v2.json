@@ -1,0 +1,2566 @@
+{
+ "version": "1.0.0",
+ "base_v1": {
+  "Ab wheel": {
+   "id": "ab-wheel",
+   "canonique": "ab-wheel"
+  },
+  "Ab wheel debout": {
+   "id": "ab-wheel-debout",
+   "canonique": "ab-wheel-debout"
+  },
+  "Abducteurs machine": {
+   "id": "abducteurs-machine",
+   "canonique": "abducteurs-machine"
+  },
+  "Adducteurs machine": {
+   "id": "adducteurs-machine",
+   "canonique": "adducteurs-machine"
+  },
+  "Arch rocks": {
+   "id": "arch-rocks",
+   "canonique": "arch-rocks"
+  },
+  "Archer rows anneaux": {
+   "id": "archer-rows-anneaux",
+   "canonique": "archer-rows-anneaux"
+  },
+  "Around the world (suspendu)": {
+   "id": "around-the-world-suspendu",
+   "canonique": "around-the-world-suspendu"
+  },
+  "Assault bike": {
+   "id": "assault-bike",
+   "canonique": "echo-bike-calories"
+  },
+  "Assault bike — sprints": {
+   "id": "assault-bike-sprints",
+   "canonique": "assault-bike-sprints"
+  },
+  "ATR (équilibre)": {
+   "id": "atr-equilibre",
+   "canonique": "atr-equilibre"
+  },
+  "ATR dos au mur (tenue)": {
+   "id": "atr-dos-au-mur-tenue",
+   "canonique": "atr-dos-au-mur-tenue"
+  },
+  "ATR poitrine au mur (tenue)": {
+   "id": "atr-poitrine-au-mur-tenue",
+   "canonique": "atr-poitrine-au-mur-tenue"
+  },
+  "Australian pull-ups (rows barre basse)": {
+   "id": "australian-pull-ups-rows-barre-basse",
+   "canonique": "australian-pull-ups-rows-barre-basse"
+  },
+  "Back lever advanced tuck": {
+   "id": "back-lever-advanced-tuck",
+   "canonique": "back-lever-advanced-tuck"
+  },
+  "Back lever complet": {
+   "id": "back-lever-complet",
+   "canonique": "back-lever-complet"
+  },
+  "Back lever straddle": {
+   "id": "back-lever-straddle",
+   "canonique": "back-lever-straddle"
+  },
+  "Back lever tuck": {
+   "id": "back-lever-tuck",
+   "canonique": "back-lever-tuck"
+  },
+  "Back squat": {
+   "id": "back-squat",
+   "canonique": "back-squat"
+  },
+  "Bar dips (dips à la barre fixe)": {
+   "id": "bar-dips-dips-a-la-barre-fixe",
+   "canonique": "bar-dips-dips-a-la-barre-fixe"
+  },
+  "Bar dips lestés": {
+   "id": "bar-dips-lestes",
+   "canonique": "bar-dips-lestes"
+  },
+  "Battle ropes": {
+   "id": "battle-ropes",
+   "canonique": "battle-ropes"
+  },
+  "Bear crawl": {
+   "id": "bear-crawl",
+   "canonique": "bear-crawl"
+  },
+  "Bicycle crunchs": {
+   "id": "bicycle-crunchs",
+   "canonique": "bicycle-crunchs"
+  },
+  "Bilan": {
+   "id": "bilan",
+   "canonique": "bilan"
+  },
+  "Bird dog": {
+   "id": "bird-dog",
+   "canonique": "bird-dog"
+  },
+  "Body saw (sliders)": {
+   "id": "body-saw-sliders",
+   "canonique": "body-saw-sliders"
+  },
+  "Box jumps": {
+   "id": "box-jumps",
+   "canonique": "box-jumps"
+  },
+  "Box jumps step-down": {
+   "id": "box-jumps-step-down",
+   "canonique": "box-jumps-step-down"
+  },
+  "Box squat": {
+   "id": "box-squat",
+   "canonique": "box-squat"
+  },
+  "Box step-overs": {
+   "id": "box-step-overs",
+   "canonique": "box-step-overs"
+  },
+  "Bridge (pont dorsal)": {
+   "id": "bridge-pont-dorsal",
+   "canonique": "bridge-pont-dorsal"
+  },
+  "Broad jumps (sauts en longueur)": {
+   "id": "broad-jumps-sauts-en-longueur",
+   "canonique": "broad-jumps-sauts-en-longueur"
+  },
+  "Burpees": {
+   "id": "burpees",
+   "canonique": "burpees"
+  },
+  "Burpees box jump-over": {
+   "id": "burpees-box-jump-over",
+   "canonique": "burpees-box-jump-over"
+  },
+  "Burpees broad jump": {
+   "id": "burpees-broad-jump",
+   "canonique": "burpees-broad-jump"
+  },
+  "Burpees lestés (gilet)": {
+   "id": "burpees-lestes-gilet",
+   "canonique": "burpees-lestes-gilet"
+  },
+  "Burpees over the bar": {
+   "id": "burpees-over-the-bar",
+   "canonique": "burpees-over-the-bar"
+  },
+  "Burpees pull-up": {
+   "id": "burpees-pull-up",
+   "canonique": "burpees-pull-up"
+  },
+  "Butterfly pull-ups": {
+   "id": "butterfly-pull-ups",
+   "canonique": "butterfly-pull-ups"
+  },
+  "Chest-to-bar kipping": {
+   "id": "chest-to-bar-kipping",
+   "canonique": "chest-to-bar-kipping"
+  },
+  "Chin-up lesté": {
+   "id": "chin-up-leste",
+   "canonique": "chin-up-leste"
+  },
+  "Ciseaux (scissors)": {
+   "id": "ciseaux-scissors",
+   "canonique": "ciseaux-scissors"
+  },
+  "Clamshell élastique": {
+   "id": "clamshell-elastique",
+   "canonique": "clamshell-elastique"
+  },
+  "Clean & jerk": {
+   "id": "clean-et-jerk",
+   "canonique": "clean-et-jerk"
+  },
+  "Contraste français": {
+   "id": "contraste-francais",
+   "canonique": "contraste-francais"
+  },
+  "Copenhagen plank": {
+   "id": "copenhagen-plank",
+   "canonique": "copenhagen-plank"
+  },
+  "Corde à sauter": {
+   "id": "corde-a-sauter",
+   "canonique": "corde-a-sauter"
+  },
+  "Course à pied (footing)": {
+   "id": "course-a-pied-footing",
+   "canonique": "course-a-pied-footing"
+  },
+  "Course — fartlek": {
+   "id": "course-fartlek",
+   "canonique": "course-fartlek"
+  },
+  "Course — fractionné 200 m": {
+   "id": "course-fractionne-200-m",
+   "canonique": "course-fractionne-200-m"
+  },
+  "Course — fractionné 400 m": {
+   "id": "course-fractionne-400-m",
+   "canonique": "course-fractionne-400-m"
+  },
+  "Crab walk": {
+   "id": "crab-walk",
+   "canonique": "crab-walk"
+  },
+  "Crunchs inversés": {
+   "id": "crunchs-inverses",
+   "canonique": "crunchs-inverses"
+  },
+  "Crunchs lestés": {
+   "id": "crunchs-lestes",
+   "canonique": "crunchs-lestes"
+  },
+  "Crunchs poulie haute": {
+   "id": "crunchs-poulie-haute",
+   "canonique": "crunchs-poulie-haute"
+  },
+  "Cuban press": {
+   "id": "cuban-press",
+   "canonique": "cuban-press"
+  },
+  "Curl araignée": {
+   "id": "curl-araignee",
+   "canonique": "curl-araignee"
+  },
+  "Curl barre EZ": {
+   "id": "curl-barre-ez",
+   "canonique": "curl-barre-ez"
+  },
+  "Curl concentration": {
+   "id": "curl-concentration",
+   "canonique": "curl-concentration"
+  },
+  "Curl élastique": {
+   "id": "curl-elastique",
+   "canonique": "curl-elastique"
+  },
+  "Curl haltères": {
+   "id": "curl-halteres",
+   "canonique": "curl-halteres"
+  },
+  "Curl incliné": {
+   "id": "curl-incline",
+   "canonique": "curl-incline"
+  },
+  "Curl marteau": {
+   "id": "curl-marteau",
+   "canonique": "curl-marteau"
+  },
+  "Curl marteau (par haltère)": {
+   "id": "curl-marteau-par-haltere",
+   "canonique": "curl-marteau"
+  },
+  "Curl poignet": {
+   "id": "curl-poignet",
+   "canonique": "curl-poignet"
+  },
+  "Curl poulie basse": {
+   "id": "curl-poulie-basse",
+   "canonique": "curl-poulie-basse"
+  },
+  "Curl pronation (reverse curl)": {
+   "id": "curl-pronation-reverse-curl",
+   "canonique": "curl-pronation-reverse-curl"
+  },
+  "Curl pupitre (Larry Scott)": {
+   "id": "curl-pupitre-larry-scott",
+   "canonique": "curl-pupitre-larry-scott"
+  },
+  "Curl Zottman": {
+   "id": "curl-zottman",
+   "canonique": "curl-zottman"
+  },
+  "Dead bug": {
+   "id": "dead-bug",
+   "canonique": "dead-bug"
+  },
+  "Dead-hang": {
+   "id": "dead-hang",
+   "canonique": "dead-hang"
+  },
+  "Dead-hang lesté ou PdC": {
+   "id": "dead-hang-leste-ou-pdc",
+   "canonique": "dead-hang-leste-ou-pdc"
+  },
+  "Dead-hang serviette": {
+   "id": "dead-hang-serviette",
+   "canonique": "dead-hang-serviette"
+  },
+  "Dead-hang une main": {
+   "id": "dead-hang-une-main",
+   "canonique": "dead-hang-une-main"
+  },
+  "Développé Arnold": {
+   "id": "developpe-arnold",
+   "canonique": "developpe-arnold"
+  },
+  "Développé couché": {
+   "id": "developpe-couche",
+   "canonique": "developpe-couche"
+  },
+  "Développé couché haltères": {
+   "id": "developpe-couche-halteres",
+   "canonique": "developpe-couche-halteres"
+  },
+  "Développé couché pause": {
+   "id": "developpe-couche-pause",
+   "canonique": "developpe-couche-pause"
+  },
+  "Développé couché prise serrée": {
+   "id": "developpe-couche-prise-serree",
+   "canonique": "developpe-couche-prise-serree"
+  },
+  "Développé décliné": {
+   "id": "developpe-decline",
+   "canonique": "developpe-decline"
+  },
+  "Développé haltères assis": {
+   "id": "developpe-halteres-assis",
+   "canonique": "developpe-halteres-assis"
+  },
+  "Développé incliné": {
+   "id": "developpe-incline",
+   "canonique": "developpe-incline"
+  },
+  "Développé incliné haltères": {
+   "id": "developpe-incline-halteres",
+   "canonique": "developpe-incline-halteres"
+  },
+  "Développé kettlebell (par bras)": {
+   "id": "developpe-kettlebell-par-bras",
+   "canonique": "developpe-kettlebell-par-bras"
+  },
+  "Développé militaire assis": {
+   "id": "developpe-militaire-assis",
+   "canonique": "developpe-militaire-assis"
+  },
+  "Développé militaire debout": {
+   "id": "developpe-militaire-debout",
+   "canonique": "developpe-militaire-debout"
+  },
+  "Développé militaire haltères debout": {
+   "id": "developpe-militaire-halteres-debout",
+   "canonique": "developpe-militaire-halteres-debout"
+  },
+  "Devil press": {
+   "id": "devil-press",
+   "canonique": "devil-press"
+  },
+  "Dip": {
+   "id": "dip",
+   "canonique": "dips"
+  },
+  "Dip Lesté": {
+   "id": "dip-leste",
+   "canonique": "dips-lestes"
+  },
+  "Dips": {
+   "id": "dips",
+   "canonique": "dips"
+  },
+  "Dips à résistance accommodante (élastique depuis le sol)": {
+   "id": "dips-a-resistance-accommodante-elastique-depuis-le-sol",
+   "canonique": "dips-a-resistance-accommodante-elastique-depuis-le-sol"
+  },
+  "Dips assistés élastique": {
+   "id": "dips-assistes-elastique",
+   "canonique": "dips-assistes-elastique"
+  },
+  "Dips aux anneaux": {
+   "id": "dips-aux-anneaux",
+   "canonique": "dips-aux-anneaux"
+  },
+  "Dips aux anneaux lestés": {
+   "id": "dips-aux-anneaux-lestes",
+   "canonique": "dips-aux-anneaux-lestes"
+  },
+  "Dips aux anneaux RTO (tournés)": {
+   "id": "dips-aux-anneaux-rto-tournes",
+   "canonique": "dips-aux-anneaux-rto-tournes"
+  },
+  "Dips bulgares (prise large)": {
+   "id": "dips-bulgares-prise-large",
+   "canonique": "dips-bulgares-prise-large"
+  },
+  "Dips coréens": {
+   "id": "dips-coreens",
+   "canonique": "dips-coreens"
+  },
+  "Dips excentriques lestés": {
+   "id": "dips-excentriques-lestes",
+   "canonique": "dips-excentriques-lestes"
+  },
+  "Dips explosifs": {
+   "id": "dips-explosifs",
+   "canonique": "dips-explosifs"
+  },
+  "Dips isométriques mi-course": {
+   "id": "dips-isometriques-mi-course",
+   "canonique": "dips-isometriques-mi-course"
+  },
+  "Dips lestés": {
+   "id": "dips-lestes",
+   "canonique": "dips-lestes"
+  },
+  "Dips lestés cluster": {
+   "id": "dips-lestes-cluster",
+   "canonique": "dips-lestes-cluster"
+  },
+  "Dips lestés pause": {
+   "id": "dips-lestes-pause",
+   "canonique": "dips-lestes-pause"
+  },
+  "Dips lestés tempo": {
+   "id": "dips-lestes-tempo",
+   "canonique": "dips-lestes-tempo"
+  },
+  "Dips lestés — singles lourds": {
+   "id": "dips-lestes-singles-lourds",
+   "canonique": "dips-lestes-singles-lourds"
+  },
+  "Dips négatifs": {
+   "id": "dips-negatifs",
+   "canonique": "dips-negatifs"
+  },
+  "Dips pause basse": {
+   "id": "dips-pause-basse",
+   "canonique": "dips-pause-basse"
+  },
+  "Dips PdC": {
+   "id": "dips-pdc",
+   "canonique": "dips"
+  },
+  "Dips sur banc (triceps)": {
+   "id": "dips-sur-banc-triceps",
+   "canonique": "dips-sur-banc-triceps"
+  },
+  "Dips tempo (3 s excentrique)": {
+   "id": "dips-tempo-3-s-excentrique",
+   "canonique": "dips-tempo-3-s-excentrique"
+  },
+  "Dislocations épaules bâton": {
+   "id": "dislocations-epaules-baton",
+   "canonique": "dislocations-epaules-baton"
+  },
+  "Dislocations épaules élastique": {
+   "id": "dislocations-epaules-elastique",
+   "canonique": "dislocations-epaules-elastique"
+  },
+  "Double-unders": {
+   "id": "double-unders",
+   "canonique": "double-unders"
+  },
+  "Dragon flag (progression)": {
+   "id": "dragon-flag-progression",
+   "canonique": "dragon-flag-progression"
+  },
+  "Dragon flag complet": {
+   "id": "dragon-flag-complet",
+   "canonique": "dragon-flag-complet"
+  },
+  "Dragon flag négatif": {
+   "id": "dragon-flag-negatif",
+   "canonique": "dragon-flag-negatif"
+  },
+  "Écarté haltères": {
+   "id": "ecarte-halteres",
+   "canonique": "ecarte-halteres"
+  },
+  "Écarté poulie vis-à-vis": {
+   "id": "ecarte-poulie-vis-a-vis",
+   "canonique": "ecarte-poulie-vis-a-vis"
+  },
+  "Echo bike (calories)": {
+   "id": "echo-bike-calories",
+   "canonique": "echo-bike-calories"
+  },
+  "Élévations en ATR (tenue)": {
+   "id": "elevations-en-atr-tenue",
+   "canonique": "elevations-en-atr-tenue"
+  },
+  "Élévations frontales": {
+   "id": "elevations-frontales",
+   "canonique": "elevations-frontales"
+  },
+  "Élévations latérales": {
+   "id": "elevations-laterales",
+   "canonique": "elevations-laterales"
+  },
+  "Élévations latérales (par haltère)": {
+   "id": "elevations-laterales-par-haltere",
+   "canonique": "elevations-laterales"
+  },
+  "Élévations latérales élastique": {
+   "id": "elevations-laterales-elastique",
+   "canonique": "elevations-laterales-elastique"
+  },
+  "Élévations latérales poulie": {
+   "id": "elevations-laterales-poulie",
+   "canonique": "elevations-laterales-poulie"
+  },
+  "Enrouleur de poignet (wrist roller)": {
+   "id": "enrouleur-de-poignet-wrist-roller",
+   "canonique": "enrouleur-de-poignet-wrist-roller"
+  },
+  "Étirements chaîne postérieure": {
+   "id": "etirements-chaine-posterieure",
+   "canonique": "etirements-chaine-posterieure"
+  },
+  "Étirements fléchisseurs de hanche": {
+   "id": "etirements-flechisseurs-de-hanche",
+   "canonique": "etirements-flechisseurs-de-hanche"
+  },
+  "Excentrique de transition muscle-up": {
+   "id": "excentrique-de-transition-muscle-up",
+   "canonique": "excentrique-de-transition-muscle-up"
+  },
+  "Excentriques de transition LESTÉS": {
+   "id": "excentriques-de-transition-lestes",
+   "canonique": "excentriques-de-transition-lestes"
+  },
+  "Extension corde": {
+   "id": "extension-corde",
+   "canonique": "extension-triceps-poulie-corde"
+  },
+  "Extension poignet": {
+   "id": "extension-poignet",
+   "canonique": "extension-poignet"
+  },
+  "Extension poignet barre": {
+   "id": "extension-poignet-barre",
+   "canonique": "extension-poignet-barre"
+  },
+  "Extension triceps couché (barre EZ)": {
+   "id": "extension-triceps-couche-barre-ez",
+   "canonique": "barre-au-front-ez"
+  },
+  "Extension triceps haltère à deux mains": {
+   "id": "extension-triceps-haltere-a-deux-mains",
+   "canonique": "extension-triceps-haltere-a-deux-mains"
+  },
+  "Extension triceps nuque": {
+   "id": "extension-triceps-nuque",
+   "canonique": "extension-triceps-nuque"
+  },
+  "Extension triceps poulie": {
+   "id": "extension-triceps-poulie",
+   "canonique": "extension-triceps-poulie"
+  },
+  "Extension triceps poulie corde": {
+   "id": "extension-triceps-poulie-corde",
+   "canonique": "extension-triceps-poulie-corde"
+  },
+  "Extension triceps unilatérale poulie": {
+   "id": "extension-triceps-unilaterale-poulie",
+   "canonique": "extension-triceps-unilaterale-poulie"
+  },
+  "Extensions de doigts élastique": {
+   "id": "extensions-de-doigts-elastique",
+   "canonique": "extensions-de-doigts-elastique"
+  },
+  "Face pulls": {
+   "id": "face-pulls",
+   "canonique": "face-pulls"
+  },
+  "Face pulls aux anneaux": {
+   "id": "face-pulls-aux-anneaux",
+   "canonique": "face-pulls-aux-anneaux"
+  },
+  "Face pulls élastique": {
+   "id": "face-pulls-elastique",
+   "canonique": "face-pulls-elastique"
+  },
+  "False grip hang": {
+   "id": "false-grip-hang",
+   "canonique": "false-grip-hang"
+  },
+  "False grip hold (anneaux ou barre)": {
+   "id": "false-grip-hold-anneaux-ou-barre",
+   "canonique": "false-grip-hold-anneaux-ou-barre"
+  },
+  "Farmer hold (tenue)": {
+   "id": "farmer-hold-tenue",
+   "canonique": "farmer-hold-tenue"
+  },
+  "Farmer walk": {
+   "id": "farmer-walk",
+   "canonique": "farmer-walk"
+  },
+  "Farmer walk kettlebells": {
+   "id": "farmer-walk-kettlebells",
+   "canonique": "farmer-walk-kettlebells"
+  },
+  "Farmer walk lourd (trap bar)": {
+   "id": "farmer-walk-lourd-trap-bar",
+   "canonique": "farmer-walk-lourd-trap-bar"
+  },
+  "Fentes arrière": {
+   "id": "fentes-arriere",
+   "canonique": "fentes-arriere"
+  },
+  "Fentes avant": {
+   "id": "fentes-avant",
+   "canonique": "fentes-avant"
+  },
+  "Fentes bulgares": {
+   "id": "fentes-bulgares",
+   "canonique": "fentes-bulgares"
+  },
+  "Fentes déficit": {
+   "id": "fentes-deficit",
+   "canonique": "fentes-deficit"
+  },
+  "Fentes latérales": {
+   "id": "fentes-laterales",
+   "canonique": "fentes-laterales"
+  },
+  "Fentes marchées": {
+   "id": "fentes-marchees",
+   "canonique": "fentes-marchees"
+  },
+  "Fentes marchées (par haltère)": {
+   "id": "fentes-marchees-par-haltere",
+   "canonique": "fentes-marchees-halteres"
+  },
+  "Fentes marchées haltères": {
+   "id": "fentes-marchees-halteres",
+   "canonique": "fentes-marchees-halteres"
+  },
+  "Fentes marchées lestées (sac)": {
+   "id": "fentes-marchees-lestees-sac",
+   "canonique": "fentes-marchees-lestees-sac"
+  },
+  "Fentes sautées": {
+   "id": "fentes-sautees",
+   "canonique": "fentes-sautees"
+  },
+  "Floor press": {
+   "id": "floor-press",
+   "canonique": "floor-press"
+  },
+  "Flutter kicks": {
+   "id": "flutter-kicks",
+   "canonique": "flutter-kicks"
+  },
+  "Foam roller (auto-massage)": {
+   "id": "foam-roller-auto-massage",
+   "canonique": "foam-roller-auto-massage"
+  },
+  "Front lever advanced tuck": {
+   "id": "front-lever-advanced-tuck",
+   "canonique": "front-lever-advanced-tuck"
+  },
+  "Front lever complet": {
+   "id": "front-lever-complet",
+   "canonique": "front-lever-complet"
+  },
+  "Front lever hold à l'élastique": {
+   "id": "front-lever-hold-a-l-elastique",
+   "canonique": "front-lever-hold-a-l-elastique"
+  },
+  "Front lever négatif": {
+   "id": "front-lever-negatif",
+   "canonique": "front-lever-negatif"
+  },
+  "Front lever one leg": {
+   "id": "front-lever-one-leg",
+   "canonique": "front-lever-one-leg"
+  },
+  "Front lever pull-ups (tuck)": {
+   "id": "front-lever-pull-ups-tuck",
+   "canonique": "front-lever-pull-ups-tuck"
+  },
+  "Front lever raises": {
+   "id": "front-lever-raises",
+   "canonique": "front-lever-raises"
+  },
+  "Front lever straddle": {
+   "id": "front-lever-straddle",
+   "canonique": "front-lever-straddle"
+  },
+  "Front lever tuck": {
+   "id": "front-lever-tuck",
+   "canonique": "front-lever-tuck"
+  },
+  "Front squat": {
+   "id": "front-squat",
+   "canonique": "front-squat"
+  },
+  "German hang (tenue)": {
+   "id": "german-hang-tenue",
+   "canonique": "german-hang-tenue"
+  },
+  "Good mornings": {
+   "id": "good-mornings",
+   "canonique": "good-mornings"
+  },
+  "Hack squat": {
+   "id": "hack-squat",
+   "canonique": "hack-squat"
+  },
+  "Half burpees": {
+   "id": "half-burpees",
+   "canonique": "half-burpees"
+  },
+  "Hand gripper": {
+   "id": "hand-gripper",
+   "canonique": "hand-gripper"
+  },
+  "Handstand push-ups (mur)": {
+   "id": "handstand-push-ups-mur",
+   "canonique": "handstand-push-ups-mur"
+  },
+  "Handstand walk (marche en ATR)": {
+   "id": "handstand-walk-marche-en-atr",
+   "canonique": "handstand-walk-marche-en-atr"
+  },
+  "Hang clean": {
+   "id": "hang-clean",
+   "canonique": "hang-clean"
+  },
+  "High knees (montées de genoux)": {
+   "id": "high-knees-montees-de-genoux",
+   "canonique": "high-knees-montees-de-genoux"
+  },
+  "HIIT course 30/30": {
+   "id": "hiit-course-30-30",
+   "canonique": "hiit-course-30-30"
+  },
+  "HIIT court": {
+   "id": "hiit-court",
+   "canonique": "hiit-court"
+  },
+  "Hip thrust": {
+   "id": "hip-thrust",
+   "canonique": "hip-thrust"
+  },
+  "Hip thrust unilatéral": {
+   "id": "hip-thrust-unilateral",
+   "canonique": "hip-thrust-unilateral"
+  },
+  "Hollow body hold": {
+   "id": "hollow-body-hold",
+   "canonique": "hollow-body-hold"
+  },
+  "Hollow hold lesté": {
+   "id": "hollow-hold-leste",
+   "canonique": "hollow-hold-leste"
+  },
+  "Hollow rocks": {
+   "id": "hollow-rocks",
+   "canonique": "hollow-rocks"
+  },
+  "HSPU freestanding (progression)": {
+   "id": "hspu-freestanding-progression",
+   "canonique": "hspu-freestanding-progression"
+  },
+  "HSPU kipping": {
+   "id": "hspu-kipping",
+   "canonique": "hspu-kipping"
+  },
+  "HSPU stricts en déficit": {
+   "id": "hspu-stricts-en-deficit",
+   "canonique": "hspu-stricts-en-deficit"
+  },
+  "Human flag (drapeau)": {
+   "id": "human-flag-drapeau",
+   "canonique": "human-flag-drapeau"
+  },
+  "Human flag tuck": {
+   "id": "human-flag-tuck",
+   "canonique": "human-flag-tuck"
+  },
+  "Hyperextensions (banc 45°)": {
+   "id": "hyperextensions-banc-45",
+   "canonique": "hyperextensions-banc-45"
+  },
+  "Ice cream makers": {
+   "id": "ice-cream-makers",
+   "canonique": "ice-cream-makers"
+  },
+  "Inchworms": {
+   "id": "inchworms",
+   "canonique": "inchworms"
+  },
+  "Isométrie bas de dip": {
+   "id": "isometrie-bas-de-dip",
+   "canonique": "isometrie-bas-de-dip"
+  },
+  "Isométrie maximale": {
+   "id": "isometrie-maximale",
+   "canonique": "isometrie-bas-de-dip"
+  },
+  "Jefferson curl": {
+   "id": "jefferson-curl",
+   "canonique": "jefferson-curl"
+  },
+  "JM press": {
+   "id": "jm-press",
+   "canonique": "jm-press"
+  },
+  "Jumping jacks": {
+   "id": "jumping-jacks",
+   "canonique": "jumping-jacks"
+  },
+  "Kettlebell clean": {
+   "id": "kettlebell-clean",
+   "canonique": "kettlebell-clean"
+  },
+  "Kettlebell clean & press": {
+   "id": "kettlebell-clean-et-press",
+   "canonique": "kettlebell-clean-et-press"
+  },
+  "Kettlebell snatch": {
+   "id": "kettlebell-snatch",
+   "canonique": "kettlebell-snatch"
+  },
+  "Kettlebell swing": {
+   "id": "kettlebell-swing",
+   "canonique": "kettlebell-swing"
+  },
+  "Kettlebell swing une main": {
+   "id": "kettlebell-swing-une-main",
+   "canonique": "kettlebell-swing-une-main"
+  },
+  "Kettlebell windmill": {
+   "id": "kettlebell-windmill",
+   "canonique": "kettlebell-windmill"
+  },
+  "Kick-back fessiers poulie": {
+   "id": "kick-back-fessiers-poulie",
+   "canonique": "kick-back-fessiers-poulie"
+  },
+  "Kickback triceps": {
+   "id": "kickback-triceps",
+   "canonique": "kickback-triceps"
+  },
+  "Kipping pull-ups": {
+   "id": "kipping-pull-ups",
+   "canonique": "kipping-pull-ups"
+  },
+  "Knee raises suspendu": {
+   "id": "knee-raises-suspendu",
+   "canonique": "knee-raises-suspendu"
+  },
+  "Knees to elbows": {
+   "id": "knees-to-elbows",
+   "canonique": "knees-to-elbows"
+  },
+  "L-sit": {
+   "id": "l-sit",
+   "canonique": "l-sit"
+  },
+  "L-sit à la barre fixe (tenue)": {
+   "id": "l-sit-a-la-barre-fixe-tenue",
+   "canonique": "l-sit-a-la-barre-fixe-tenue"
+  },
+  "L-sit au sol (tenue)": {
+   "id": "l-sit-au-sol-tenue",
+   "canonique": "l-sit-au-sol-tenue"
+  },
+  "L-sit tuck (tenue)": {
+   "id": "l-sit-tuck-tenue",
+   "canonique": "l-sit-tuck-tenue"
+  },
+  "Landmine press": {
+   "id": "landmine-press",
+   "canonique": "landmine-press"
+  },
+  "Landmine rotations": {
+   "id": "landmine-rotations",
+   "canonique": "landmine-rotations"
+  },
+  "Leg curl": {
+   "id": "leg-curl",
+   "canonique": "leg-curl"
+  },
+  "Leg curl sliders": {
+   "id": "leg-curl-sliders",
+   "canonique": "leg-curl-sliders"
+  },
+  "Leg curl swiss ball": {
+   "id": "leg-curl-swiss-ball",
+   "canonique": "leg-curl-swiss-ball"
+  },
+  "Leg extension": {
+   "id": "leg-extension",
+   "canonique": "leg-extension"
+  },
+  "Leg raises lestés": {
+   "id": "leg-raises-lestes",
+   "canonique": "leg-raises-lestes"
+  },
+  "Leg raises lestés (suspendu)": {
+   "id": "leg-raises-lestes-suspendu",
+   "canonique": "leg-raises-lestes-suspendu"
+  },
+  "Leg raises suspendu": {
+   "id": "leg-raises-suspendu",
+   "canonique": "leg-raises-suspendu"
+  },
+  "Man makers": {
+   "id": "man-makers",
+   "canonique": "man-makers"
+  },
+  "Manna progression": {
+   "id": "manna-progression",
+   "canonique": "manna-progression"
+  },
+  "Marche de récupération": {
+   "id": "marche-de-recuperation",
+   "canonique": "marche-de-recuperation"
+  },
+  "Marche latérale élastique (monster walk)": {
+   "id": "marche-laterale-elastique-monster-walk",
+   "canonique": "marche-laterale-elastique-monster-walk"
+  },
+  "Marche lestée (ruck)": {
+   "id": "marche-lestee-ruck",
+   "canonique": "marche-lestee-ruck"
+  },
+  "Marche ou vélo très léger": {
+   "id": "marche-ou-velo-tres-leger",
+   "canonique": "marche-ou-velo-tres-leger"
+  },
+  "Marche rapide": {
+   "id": "marche-rapide",
+   "canonique": "marche-rapide"
+  },
+  "Mobilité complète": {
+   "id": "mobilite-complete",
+   "canonique": "mobilite-complete"
+  },
+  "Mobilité épaules + poignets": {
+   "id": "mobilite-epaules-poignets",
+   "canonique": "mobilite-epaules-poignets"
+  },
+  "Mobilité hanches (90/90)": {
+   "id": "mobilite-hanches-90-90",
+   "canonique": "mobilite-hanches-90-90"
+  },
+  "Mobilité thoracique (cat-cow, rotations)": {
+   "id": "mobilite-thoracique-cat-cow-rotations",
+   "canonique": "mobilite-thoracique-cat-cow-rotations"
+  },
+  "Mollets assis": {
+   "id": "mollets-assis",
+   "canonique": "mollets-assis"
+  },
+  "Mollets debout": {
+   "id": "mollets-debout",
+   "canonique": "mollets-debout"
+  },
+  "Mollets debout barre": {
+   "id": "mollets-debout-barre",
+   "canonique": "mollets-debout-barre"
+  },
+  "Mollets sur presse": {
+   "id": "mollets-sur-presse",
+   "canonique": "mollets-sur-presse"
+  },
+  "Mollets unilatéraux sur marche": {
+   "id": "mollets-unilateraux-sur-marche",
+   "canonique": "mollets-unilateraux-sur-marche"
+  },
+  "Mountain climbers": {
+   "id": "mountain-climbers",
+   "canonique": "mountain-climbers"
+  },
+  "Muscle-up": {
+   "id": "muscle-up",
+   "canonique": "muscle-up"
+  },
+  "Muscle-up aux anneaux": {
+   "id": "muscle-up-aux-anneaux",
+   "canonique": "muscle-up-aux-anneaux"
+  },
+  "Muscle-up aux anneaux strict": {
+   "id": "muscle-up-aux-anneaux-strict",
+   "canonique": "muscle-up-aux-anneaux-strict"
+  },
+  "Muscle-up kipping": {
+   "id": "muscle-up-kipping",
+   "canonique": "muscle-up-kipping"
+  },
+  "Muscle-up lesté": {
+   "id": "muscle-up-leste",
+   "canonique": "muscle-up-leste"
+  },
+  "Muscle-up lesté cluster": {
+   "id": "muscle-up-leste-cluster",
+   "canonique": "muscle-up-leste-cluster"
+  },
+  "Muscle-up lesté — singles": {
+   "id": "muscle-up-leste-singles",
+   "canonique": "muscle-up-leste-singles"
+  },
+  "Muscle-up négatif lesté": {
+   "id": "muscle-up-negatif-leste",
+   "canonique": "muscle-up-negatif-leste"
+  },
+  "Muscle-up strict": {
+   "id": "muscle-up-strict",
+   "canonique": "muscle-up-strict"
+  },
+  "Négatif de muscle-up": {
+   "id": "negatif-de-muscle-up",
+   "canonique": "negatifs-de-muscle-up"
+  },
+  "Négatifs de muscle-up": {
+   "id": "negatifs-de-muscle-up",
+   "canonique": "negatifs-de-muscle-up"
+  },
+  "Négatifs de muscle-up complets": {
+   "id": "negatifs-de-muscle-up-complets",
+   "canonique": "negatifs-de-muscle-up"
+  },
+  "Nordic curl (excentrique)": {
+   "id": "nordic-curl-excentrique",
+   "canonique": "nordic-curl-excentrique"
+  },
+  "Nordic curl assisté élastique": {
+   "id": "nordic-curl-assiste-elastique",
+   "canonique": "nordic-curl-assiste-elastique"
+  },
+  "Oiseau (élévations buste penché)": {
+   "id": "oiseau-elevations-buste-penche",
+   "canonique": "oiseau-elevations-buste-penche"
+  },
+  "Oiseau à la poulie": {
+   "id": "oiseau-a-la-poulie",
+   "canonique": "oiseau-a-la-poulie"
+  },
+  "Overhead carry": {
+   "id": "overhead-carry",
+   "canonique": "overhead-carry"
+  },
+  "Pallof press": {
+   "id": "pallof-press",
+   "canonique": "pallof-press"
+  },
+  "Pallof press élastique": {
+   "id": "pallof-press-elastique",
+   "canonique": "pallof-press-elastique"
+  },
+  "Pec deck": {
+   "id": "pec-deck",
+   "canonique": "pec-deck"
+  },
+  "Pike push-ups": {
+   "id": "pike-push-ups",
+   "canonique": "pike-push-ups"
+  },
+  "Pike push-ups surélevés (pieds sur banc)": {
+   "id": "pike-push-ups-sureleves-pieds-sur-banc",
+   "canonique": "pike-push-ups-sureleves-pieds-sur-banc"
+  },
+  "Pinch grip disques (tenue)": {
+   "id": "pinch-grip-disques-tenue",
+   "canonique": "pinch-grip-disques-tenue"
+  },
+  "Pistol squat": {
+   "id": "pistol-squat",
+   "canonique": "pistol-squat"
+  },
+  "Pistol squat assisté": {
+   "id": "pistol-squat-assiste",
+   "canonique": "pistol-squat-assiste"
+  },
+  "Pistol squat lesté": {
+   "id": "pistol-squat-leste",
+   "canonique": "pistol-squat-leste"
+  },
+  "Planche (gainage)": {
+   "id": "planche-gainage",
+   "canonique": "planche-gainage"
+  },
+  "Planche advanced tuck": {
+   "id": "planche-advanced-tuck",
+   "canonique": "planche-advanced-tuck"
+  },
+  "Planche avec sortie (walkout)": {
+   "id": "planche-avec-sortie-walkout",
+   "canonique": "planche-avec-sortie-walkout"
+  },
+  "Planche bras tendus + taps": {
+   "id": "planche-bras-tendus-taps",
+   "canonique": "planche-bras-tendus-taps"
+  },
+  "Planche latérale": {
+   "id": "planche-laterale",
+   "canonique": "planche-laterale"
+  },
+  "Planche latérale lestée": {
+   "id": "planche-laterale-lestee",
+   "canonique": "planche-laterale-lestee"
+  },
+  "Planche lean": {
+   "id": "planche-lean",
+   "canonique": "planche-lean"
+  },
+  "Planche lean à l'élastique": {
+   "id": "planche-lean-a-l-elastique",
+   "canonique": "planche-lean-a-l-elastique"
+  },
+  "Planche lestée (gainage)": {
+   "id": "planche-lestee-gainage",
+   "canonique": "planche-lestee-gainage"
+  },
+  "Planche RKC (coudes)": {
+   "id": "planche-rkc-coudes",
+   "canonique": "planche-rkc-coudes"
+  },
+  "Planche straddle": {
+   "id": "planche-straddle",
+   "canonique": "planche-straddle"
+  },
+  "Plate pinch carry": {
+   "id": "plate-pinch-carry",
+   "canonique": "plate-pinch-carry"
+  },
+  "Pompes": {
+   "id": "pompes",
+   "canonique": "pompes"
+  },
+  "Pompes à genoux": {
+   "id": "pompes-a-genoux",
+   "canonique": "pompes-a-genoux"
+  },
+  "Pompes archer": {
+   "id": "pompes-archer",
+   "canonique": "pompes-archer"
+  },
+  "Pompes aux anneaux": {
+   "id": "pompes-aux-anneaux",
+   "canonique": "pompes-aux-anneaux"
+  },
+  "Pompes aux anneaux RTO": {
+   "id": "pompes-aux-anneaux-rto",
+   "canonique": "pompes-aux-anneaux-rto"
+  },
+  "Pompes déclinées": {
+   "id": "pompes-declinees",
+   "canonique": "pompes-declinees"
+  },
+  "Pompes déficit (poignées)": {
+   "id": "pompes-deficit-poignees",
+   "canonique": "pompes-deficit-poignees"
+  },
+  "Pompes diamant": {
+   "id": "pompes-diamant",
+   "canonique": "pompes-diamant"
+  },
+  "Pompes diamant surélevées": {
+   "id": "pompes-diamant-surelevees",
+   "canonique": "pompes-diamant-surelevees"
+  },
+  "Pompes explosives (clap)": {
+   "id": "pompes-explosives-clap",
+   "canonique": "pompes-explosives-clap"
+  },
+  "Pompes hindu": {
+   "id": "pompes-hindu",
+   "canonique": "pompes-hindu"
+  },
+  "Pompes inclinées (mains surélevées)": {
+   "id": "pompes-inclinees-mains-surelevees",
+   "canonique": "pompes-inclinees-mains-surelevees"
+  },
+  "Pompes lestées": {
+   "id": "pompes-lestees",
+   "canonique": "pompes-lestees"
+  },
+  "Pompes lestées (lest ajouté)": {
+   "id": "pompes-lestees-lest-ajoute",
+   "canonique": "pompes-lestees"
+  },
+  "Pompes pause au sol": {
+   "id": "pompes-pause-au-sol",
+   "canonique": "pompes-pause-au-sol"
+  },
+  "Pompes PdC": {
+   "id": "pompes-pdc",
+   "canonique": "pompes"
+  },
+  "Pompes pliométriques (mains sur boxes)": {
+   "id": "pompes-pliometriques-mains-sur-boxes",
+   "canonique": "pompes-pliometriques-mains-sur-boxes"
+  },
+  "Pompes prise large": {
+   "id": "pompes-prise-large",
+   "canonique": "pompes-prise-large"
+  },
+  "Pompes prise serrée": {
+   "id": "pompes-prise-serree",
+   "canonique": "pompes-prise-serree"
+  },
+  "Pompes pseudo-planche": {
+   "id": "pompes-pseudo-planche",
+   "canonique": "pompes-pseudo-planche"
+  },
+  "Pompes spiderman": {
+   "id": "pompes-spiderman",
+   "canonique": "pompes-spiderman"
+  },
+  "Pompes sur les poings": {
+   "id": "pompes-sur-les-poings",
+   "canonique": "pompes-sur-les-poings"
+  },
+  "Pompes surélevées (pieds sur banc)": {
+   "id": "pompes-surelevees-pieds-sur-banc",
+   "canonique": "pompes-declinees"
+  },
+  "Pompes tempo": {
+   "id": "pompes-tempo",
+   "canonique": "pompes-tempo"
+  },
+  "Pompes typewriter": {
+   "id": "pompes-typewriter",
+   "canonique": "pompes-typewriter"
+  },
+  "Pompes une main (progression)": {
+   "id": "pompes-une-main-progression",
+   "canonique": "pompes-une-main-progression"
+  },
+  "Pont fessier au sol": {
+   "id": "pont-fessier-au-sol",
+   "canonique": "pont-fessier-au-sol"
+  },
+  "Pont fessier une jambe": {
+   "id": "pont-fessier-une-jambe",
+   "canonique": "pont-fessier-une-jambe"
+  },
+  "Power clean": {
+   "id": "power-clean",
+   "canonique": "power-clean"
+  },
+  "Presse à cuisses": {
+   "id": "presse-a-cuisses",
+   "canonique": "presse-a-cuisses"
+  },
+  "Pronation / supination haltère": {
+   "id": "pronation-supination-haltere",
+   "canonique": "pronation-supination-haltere"
+  },
+  "Prone Y raises": {
+   "id": "prone-y-raises",
+   "canonique": "prone-y-raises"
+  },
+  "Pseudo-planche hold": {
+   "id": "pseudo-planche-hold",
+   "canonique": "pseudo-planche-hold"
+  },
+  "Pull-apart élastique": {
+   "id": "pull-apart-elastique",
+   "canonique": "pull-apart-elastique"
+  },
+  "Pull-over poulie": {
+   "id": "pull-over-poulie",
+   "canonique": "pull-over-poulie"
+  },
+  "Push jerk": {
+   "id": "push-jerk",
+   "canonique": "push-jerk"
+  },
+  "Push press": {
+   "id": "push-press",
+   "canonique": "push-press"
+  },
+  "Push press haltères": {
+   "id": "push-press-halteres",
+   "canonique": "push-press-halteres"
+  },
+  "Rack pulls": {
+   "id": "rack-pulls",
+   "canonique": "rack-pulls"
+  },
+  "Rameur": {
+   "id": "rameur",
+   "canonique": "rameur"
+  },
+  "Rameur — intervalles 500 m": {
+   "id": "rameur-intervalles-500-m",
+   "canonique": "rameur-intervalles-500-m"
+  },
+  "Relevés de jambes au sol": {
+   "id": "releves-de-jambes-au-sol",
+   "canonique": "releves-de-jambes-au-sol"
+  },
+  "Repos actif": {
+   "id": "repos-actif",
+   "canonique": "repos-actif"
+  },
+  "Respiration / cohérence cardiaque": {
+   "id": "respiration-coherence-cardiaque",
+   "canonique": "respiration-coherence-cardiaque"
+  },
+  "Reverse hyper": {
+   "id": "reverse-hyper",
+   "canonique": "reverse-hyper"
+  },
+  "Rice bucket (seau de riz)": {
+   "id": "rice-bucket-seau-de-riz",
+   "canonique": "rice-bucket-seau-de-riz"
+  },
+  "Rollout barre": {
+   "id": "rollout-barre",
+   "canonique": "rollout-barre"
+  },
+  "Rotations externes (par haltère)": {
+   "id": "rotations-externes-par-haltere",
+   "canonique": "rotations-externes-par-haltere"
+  },
+  "Rotations externes élastique": {
+   "id": "rotations-externes-elastique",
+   "canonique": "rotations-externes-elastique"
+  },
+  "Rotations internes élastique": {
+   "id": "rotations-internes-elastique",
+   "canonique": "rotations-internes-elastique"
+  },
+  "Rowing barre penché": {
+   "id": "rowing-barre-penche",
+   "canonique": "rowing-barre-penche"
+  },
+  "Rowing haltère appui poitrine": {
+   "id": "rowing-haltere-appui-poitrine",
+   "canonique": "rowing-haltere-appui-poitrine"
+  },
+  "Rowing haltère unilatéral (par haltère)": {
+   "id": "rowing-haltere-unilateral-par-haltere",
+   "canonique": "rowing-unilateral-haltere"
+  },
+  "Rowing haltères penché": {
+   "id": "rowing-halteres-penche",
+   "canonique": "rowing-halteres-penche"
+  },
+  "Rowing kettlebell": {
+   "id": "rowing-kettlebell",
+   "canonique": "rowing-kettlebell"
+  },
+  "Rowing Meadows": {
+   "id": "rowing-meadows",
+   "canonique": "rowing-meadows"
+  },
+  "Rowing Pendlay": {
+   "id": "rowing-pendlay",
+   "canonique": "rowing-pendlay"
+  },
+  "Rowing T-bar": {
+   "id": "rowing-t-bar",
+   "canonique": "rowing-t-bar"
+  },
+  "Rowing unilatéral haltère": {
+   "id": "rowing-unilateral-haltere",
+   "canonique": "rowing-unilateral-haltere"
+  },
+  "Rows archer barre basse": {
+   "id": "rows-archer-barre-basse",
+   "canonique": "rows-archer-barre-basse"
+  },
+  "Rows aux anneaux": {
+   "id": "rows-aux-anneaux",
+   "canonique": "rows-aux-anneaux"
+  },
+  "Rows aux sangles (TRX)": {
+   "id": "rows-aux-sangles-trx",
+   "canonique": "rows-aux-sangles-trx"
+  },
+  "Rows barre basse pieds surélevés": {
+   "id": "rows-barre-basse-pieds-sureleves",
+   "canonique": "rows-barre-basse-pieds-sureleves"
+  },
+  "Rows une main anneaux": {
+   "id": "rows-une-main-anneaux",
+   "canonique": "rows-une-main-anneaux"
+  },
+  "Russian dips": {
+   "id": "russian-dips",
+   "canonique": "russian-dips"
+  },
+  "Russian twists": {
+   "id": "russian-twists",
+   "canonique": "russian-twists"
+  },
+  "Russian twists lestés": {
+   "id": "russian-twists-lestes",
+   "canonique": "russian-twists-lestes"
+  },
+  "Sandbag carry": {
+   "id": "sandbag-carry",
+   "canonique": "sandbag-carry"
+  },
+  "Sandbag clean": {
+   "id": "sandbag-clean",
+   "canonique": "sandbag-clean"
+  },
+  "Sandbag squat (bear hug)": {
+   "id": "sandbag-squat-bear-hug",
+   "canonique": "sandbag-squat-bear-hug"
+  },
+  "Sauts à la corde unipodaux": {
+   "id": "sauts-a-la-corde-unipodaux",
+   "canonique": "sauts-a-la-corde-unipodaux"
+  },
+  "Sauts de mollets (pogo)": {
+   "id": "sauts-de-mollets-pogo",
+   "canonique": "sauts-de-mollets-pogo"
+  },
+  "Sauts en contrebas (depth jumps)": {
+   "id": "sauts-en-contrebas-depth-jumps",
+   "canonique": "sauts-en-contrebas-depth-jumps"
+  },
+  "Scapular pull-ups": {
+   "id": "scapular-pull-ups",
+   "canonique": "scapular-pull-ups"
+  },
+  "Scapular pull-ups lestés": {
+   "id": "scapular-pull-ups-lestes",
+   "canonique": "scapular-pull-ups-lestes"
+  },
+  "Scapular push-ups": {
+   "id": "scapular-push-ups",
+   "canonique": "scapular-push-ups"
+  },
+  "Serratus push-ups (protraction)": {
+   "id": "serratus-push-ups-protraction",
+   "canonique": "scapular-push-ups"
+  },
+  "Shoulder taps en ATR": {
+   "id": "shoulder-taps-en-atr",
+   "canonique": "shoulder-taps-en-atr"
+  },
+  "Shrimp squat": {
+   "id": "shrimp-squat",
+   "canonique": "shrimp-squat"
+  },
+  "Shrugs barre": {
+   "id": "shrugs-barre",
+   "canonique": "shrugs-barre"
+  },
+  "Shrugs haltères": {
+   "id": "shrugs-halteres",
+   "canonique": "shrugs-halteres"
+  },
+  "Shuttle runs (navettes)": {
+   "id": "shuttle-runs-navettes",
+   "canonique": "shuttle-runs-navettes"
+  },
+  "Side bend haltère": {
+   "id": "side-bend-haltere",
+   "canonique": "side-bend-haltere"
+  },
+  "Sissy squat": {
+   "id": "sissy-squat",
+   "canonique": "sissy-squat"
+  },
+  "Sissy squat assisté": {
+   "id": "sissy-squat-assiste",
+   "canonique": "sissy-squat-assiste"
+  },
+  "Sit-ups": {
+   "id": "sit-ups",
+   "canonique": "sit-ups"
+  },
+  "Sit-ups butterfly": {
+   "id": "sit-ups-butterfly",
+   "canonique": "sit-ups-butterfly"
+  },
+  "Sit-ups GHD": {
+   "id": "sit-ups-ghd",
+   "canonique": "sit-ups-ghd"
+  },
+  "Skater squat": {
+   "id": "skater-squat",
+   "canonique": "skater-squat"
+  },
+  "Skaters": {
+   "id": "skaters",
+   "canonique": "skaters"
+  },
+  "SkiErg": {
+   "id": "skierg",
+   "canonique": "skierg"
+  },
+  "Skin the cat": {
+   "id": "skin-the-cat",
+   "canonique": "skin-the-cat"
+  },
+  "Slam ball": {
+   "id": "slam-ball",
+   "canonique": "slam-ball"
+  },
+  "Sled drag arrière": {
+   "id": "sled-drag-arriere",
+   "canonique": "sled-drag-arriere"
+  },
+  "Sled pull (traîneau, corde)": {
+   "id": "sled-pull-traineau-corde",
+   "canonique": "sled-pull-traineau-corde"
+  },
+  "Sled push": {
+   "id": "sled-push",
+   "canonique": "sled-push"
+  },
+  "Snatch (arraché)": {
+   "id": "snatch-arrache",
+   "canonique": "snatch-arrache"
+  },
+  "Soulevé de terre": {
+   "id": "souleve-de-terre",
+   "canonique": "souleve-de-terre"
+  },
+  "Soulevé de terre jambes tendues": {
+   "id": "souleve-de-terre-jambes-tendues",
+   "canonique": "souleve-de-terre-jambes-tendues"
+  },
+  "Soulevé de terre kettlebell": {
+   "id": "souleve-de-terre-kettlebell",
+   "canonique": "souleve-de-terre-kettlebell"
+  },
+  "Soulevé de terre roumain": {
+   "id": "souleve-de-terre-roumain",
+   "canonique": "souleve-de-terre-roumain"
+  },
+  "Soulevé de terre sumo": {
+   "id": "souleve-de-terre-sumo",
+   "canonique": "souleve-de-terre-sumo"
+  },
+  "Soulevé de terre trap bar": {
+   "id": "souleve-de-terre-trap-bar",
+   "canonique": "souleve-de-terre-trap-bar"
+  },
+  "Soulevé de terre unilatéral haltère": {
+   "id": "souleve-de-terre-unilateral-haltere",
+   "canonique": "souleve-de-terre-unilateral-haltere"
+  },
+  "Sprint": {
+   "id": "sprint",
+   "canonique": "sprint"
+  },
+  "Sprint en côte": {
+   "id": "sprint-en-cote",
+   "canonique": "sprint-en-cote"
+  },
+  "Squat 1 ¼": {
+   "id": "squat-1-14",
+   "canonique": "squat-1-14"
+  },
+  "Squat au poids de corps": {
+   "id": "squat-au-poids-de-corps",
+   "canonique": "squat-au-poids-de-corps"
+  },
+  "Squat bulgare haltères": {
+   "id": "squat-bulgare-halteres",
+   "canonique": "fentes-bulgares"
+  },
+  "Squat bulgare lesté (gilet)": {
+   "id": "squat-bulgare-leste-gilet",
+   "canonique": "squat-bulgare-leste-gilet"
+  },
+  "Squat cosaque": {
+   "id": "squat-cosaque",
+   "canonique": "squat-cosaque"
+  },
+  "Squat endurance @ 70 kg": {
+   "id": "squat-endurance-70-kg",
+   "canonique": "squat-endurance-70-kg"
+  },
+  "Squat gobelet": {
+   "id": "squat-gobelet",
+   "canonique": "squat-gobelet"
+  },
+  "Squat overhead": {
+   "id": "squat-overhead",
+   "canonique": "squat-overhead"
+  },
+  "Squat pause": {
+   "id": "squat-pause",
+   "canonique": "squat-pause"
+  },
+  "Squat sauté": {
+   "id": "squat-saute",
+   "canonique": "squat-saute"
+  },
+  "Squat sauté lesté": {
+   "id": "squat-saute-leste",
+   "canonique": "squat-saute-leste"
+  },
+  "Squat sumo haltère": {
+   "id": "squat-sumo-haltere",
+   "canonique": "squat-sumo-haltere"
+  },
+  "Squat tempo": {
+   "id": "squat-tempo",
+   "canonique": "squat-tempo"
+  },
+  "Squat Zercher": {
+   "id": "squat-zercher",
+   "canonique": "squat-zercher"
+  },
+  "Squat — walkout lourd": {
+   "id": "squat-walkout-lourd",
+   "canonique": "squat-walkout-lourd"
+  },
+  "Step-ups": {
+   "id": "step-ups",
+   "canonique": "step-ups"
+  },
+  "Step-ups hauts (box)": {
+   "id": "step-ups-hauts-box",
+   "canonique": "step-ups-hauts-box"
+  },
+  "Step-ups lestés": {
+   "id": "step-ups-lestes",
+   "canonique": "step-ups-lestes"
+  },
+  "Straight-arm pulldown": {
+   "id": "straight-arm-pulldown",
+   "canonique": "straight-arm-pulldown"
+  },
+  "Suitcase carry": {
+   "id": "suitcase-carry",
+   "canonique": "suitcase-carry"
+  },
+  "Superman dynamique": {
+   "id": "superman-dynamique",
+   "canonique": "superman-dynamique"
+  },
+  "Superman hold": {
+   "id": "superman-hold",
+   "canonique": "superman-hold"
+  },
+  "Support hold anneaux/barres": {
+   "id": "support-hold-anneaux-barres",
+   "canonique": "support-hold-anneaux-barres"
+  },
+  "Support hold lesté": {
+   "id": "support-hold-leste",
+   "canonique": "support-hold-leste"
+  },
+  "Suspension active (active hang)": {
+   "id": "suspension-active-active-hang",
+   "canonique": "suspension-active-active-hang"
+  },
+  "Tapis incliné (marche)": {
+   "id": "tapis-incline-marche",
+   "canonique": "tapis-incline-marche"
+  },
+  "Tate press": {
+   "id": "tate-press",
+   "canonique": "tate-press"
+  },
+  "Test 1Rm Back Squat": {
+   "id": "test-1rm-back-squat",
+   "canonique": "test-1rm-back-squat"
+  },
+  "Test 1RM Développé couché": {
+   "id": "test-1rm-developpe-couche",
+   "canonique": "test-1rm-developpe-couche"
+  },
+  "Test 1Rm Dip Lesté": {
+   "id": "test-1rm-dip-leste",
+   "canonique": "test-1rm-dip-leste"
+  },
+  "Test 1RM Front squat": {
+   "id": "test-1rm-front-squat",
+   "canonique": "test-1rm-front-squat"
+  },
+  "Test 1Rm Muscle-Up Lesté": {
+   "id": "test-1rm-muscle-up-leste",
+   "canonique": "test-1rm-muscle-up-leste"
+  },
+  "Test 1RM Soulevé de terre": {
+   "id": "test-1rm-souleve-de-terre",
+   "canonique": "test-1rm-souleve-de-terre"
+  },
+  "Test 1Rm Traction Lestée": {
+   "id": "test-1rm-traction-lestee",
+   "canonique": "test-1rm-traction-lestee"
+  },
+  "Test 2 km rameur": {
+   "id": "test-2-km-rameur",
+   "canonique": "test-2-km-rameur"
+  },
+  "Test 5 km course": {
+   "id": "test-5-km-course",
+   "canonique": "test-5-km-course"
+  },
+  "Test Cooper 12 min": {
+   "id": "test-cooper-12-min",
+   "canonique": "test-cooper-12-min"
+  },
+  "Test max burpees 3 min": {
+   "id": "test-max-burpees-3-min",
+   "canonique": "test-max-burpees-3-min"
+  },
+  "Test max dead-hang": {
+   "id": "test-max-dead-hang",
+   "canonique": "test-max-dead-hang"
+  },
+  "TEST MAX DIPS PdC": {
+   "id": "test-max-dips-pdc",
+   "canonique": "test-max-dips-pdc"
+  },
+  "Test max handstand hold": {
+   "id": "test-max-handstand-hold",
+   "canonique": "test-max-handstand-hold"
+  },
+  "Test max L-sit": {
+   "id": "test-max-l-sit",
+   "canonique": "test-max-l-sit"
+  },
+  "TEST MAX MUSCLE-UPS PdC": {
+   "id": "test-max-muscle-ups-pdc",
+   "canonique": "test-max-muscle-ups-pdc"
+  },
+  "TEST MAX POMPES PdC": {
+   "id": "test-max-pompes-pdc",
+   "canonique": "test-max-pompes-pdc"
+  },
+  "TEST MAX SQUAT @ 70 kg": {
+   "id": "test-max-squat-70-kg",
+   "canonique": "test-max-squat-70-kg"
+  },
+  "TEST MAX TRACTIONS PdC": {
+   "id": "test-max-tractions-pdc",
+   "canonique": "test-max-tractions-pdc"
+  },
+  "Thruster": {
+   "id": "thruster",
+   "canonique": "thruster"
+  },
+  "Thruster haltères": {
+   "id": "thruster-halteres",
+   "canonique": "thruster-halteres"
+  },
+  "Tibialis raises": {
+   "id": "tibialis-raises",
+   "canonique": "tibialis-raises"
+  },
+  "Tirage bûcheron à la barre fixe": {
+   "id": "tirage-bucheron-a-la-barre-fixe",
+   "canonique": "tirage-bucheron-a-la-barre-fixe"
+  },
+  "Tirage horizontal poulie": {
+   "id": "tirage-horizontal-poulie",
+   "canonique": "tirage-horizontal-poulie"
+  },
+  "Tirage horizontal unilatéral poulie": {
+   "id": "tirage-horizontal-unilateral-poulie",
+   "canonique": "tirage-horizontal-unilateral-poulie"
+  },
+  "Tirage menton barre": {
+   "id": "tirage-menton-barre",
+   "canonique": "tirage-menton-barre"
+  },
+  "Tirage menton haltères": {
+   "id": "tirage-menton-halteres",
+   "canonique": "tirage-menton-halteres"
+  },
+  "Tirage vertical prise neutre": {
+   "id": "tirage-vertical-prise-neutre",
+   "canonique": "tirage-vertical-prise-neutre"
+  },
+  "Tirage vertical pronation": {
+   "id": "tirage-vertical-pronation",
+   "canonique": "tirage-vertical-pronation"
+  },
+  "Tirage vertical supination": {
+   "id": "tirage-vertical-supination",
+   "canonique": "tirage-vertical-supination"
+  },
+  "Tirage vertical unilatéral": {
+   "id": "tirage-vertical-unilateral",
+   "canonique": "tirage-vertical-unilateral"
+  },
+  "Toes to bar": {
+   "id": "toes-to-bar",
+   "canonique": "toes-to-bar"
+  },
+  "Toes to bar kipping": {
+   "id": "toes-to-bar-kipping",
+   "canonique": "toes-to-bar-kipping"
+  },
+  "Toes to bar strict": {
+   "id": "toes-to-bar-strict",
+   "canonique": "toes-to-bar-strict"
+  },
+  "Traction à la serviette": {
+   "id": "traction-a-la-serviette",
+   "canonique": "traction-a-la-serviette"
+  },
+  "Traction archer": {
+   "id": "traction-archer",
+   "canonique": "traction-archer"
+  },
+  "Traction assistée élastique": {
+   "id": "traction-assistee-elastique",
+   "canonique": "traction-assistee-elastique"
+  },
+  "Traction autour du monde": {
+   "id": "traction-autour-du-monde",
+   "canonique": "traction-autour-du-monde"
+  },
+  "Traction aux anneaux": {
+   "id": "traction-aux-anneaux",
+   "canonique": "traction-aux-anneaux"
+  },
+  "Traction aux anneaux prise neutre": {
+   "id": "traction-aux-anneaux-prise-neutre",
+   "canonique": "traction-aux-anneaux"
+  },
+  "Traction commando": {
+   "id": "traction-commando",
+   "canonique": "traction-commando"
+  },
+  "Traction excentrique lestée": {
+   "id": "traction-excentrique-lestee",
+   "canonique": "traction-excentrique-lestee"
+  },
+  "Traction explosive": {
+   "id": "traction-explosive",
+   "canonique": "traction-explosive"
+  },
+  "Traction haute explosive (high pull-up)": {
+   "id": "traction-haute-explosive-high-pull-up",
+   "canonique": "traction-haute-explosive-high-pull-up"
+  },
+  "Traction isométrique (menton au-dessus)": {
+   "id": "traction-isometrique-menton-au-dessus",
+   "canonique": "traction-isometrique-menton-au-dessus"
+  },
+  "Traction isométrique 90°": {
+   "id": "traction-isometrique-90",
+   "canonique": "traction-isometrique-90"
+  },
+  "Traction L-sit": {
+   "id": "traction-l-sit",
+   "canonique": "traction-l-sit"
+  },
+  "Traction lestée": {
+   "id": "traction-lestee",
+   "canonique": "traction-lestee"
+  },
+  "Traction lestée cluster": {
+   "id": "traction-lestee-cluster",
+   "canonique": "traction-lestee-cluster"
+  },
+  "Traction lestée élastique (accommodante)": {
+   "id": "traction-lestee-elastique-accommodante",
+   "canonique": "traction-lestee-elastique-accommodante"
+  },
+  "Traction lestée pause": {
+   "id": "traction-lestee-pause",
+   "canonique": "traction-lestee-pause"
+  },
+  "Traction lestée tempo": {
+   "id": "traction-lestee-tempo",
+   "canonique": "traction-lestee-tempo"
+  },
+  "Traction lestée — singles lourds": {
+   "id": "traction-lestee-singles-lourds",
+   "canonique": "traction-lestee-singles-lourds"
+  },
+  "Traction négative lente": {
+   "id": "traction-negative-lente",
+   "canonique": "traction-negative-lente"
+  },
+  "Traction pause haute": {
+   "id": "traction-pause-haute",
+   "canonique": "traction-pause-haute"
+  },
+  "Traction poitrine-barre": {
+   "id": "traction-poitrine-barre",
+   "canonique": "traction-poitrine-barre"
+  },
+  "Traction prise large": {
+   "id": "traction-prise-large",
+   "canonique": "traction-prise-large"
+  },
+  "Traction prise mixte": {
+   "id": "traction-prise-mixte",
+   "canonique": "traction-prise-mixte"
+  },
+  "Traction prise neutre": {
+   "id": "traction-prise-neutre",
+   "canonique": "traction-prise-neutre"
+  },
+  "Traction prise serrée": {
+   "id": "traction-prise-serree",
+   "canonique": "traction-prise-serree"
+  },
+  "Traction pronation": {
+   "id": "traction-pronation",
+   "canonique": "traction-pronation"
+  },
+  "Traction sternum": {
+   "id": "traction-sternum",
+   "canonique": "traction-sternum"
+  },
+  "Traction supination": {
+   "id": "traction-supination",
+   "canonique": "traction-supination"
+  },
+  "Traction tempo (3 s excentrique)": {
+   "id": "traction-tempo-3-s-excentrique",
+   "canonique": "traction-tempo-3-s-excentrique"
+  },
+  "Traction typewriter": {
+   "id": "traction-typewriter",
+   "canonique": "traction-typewriter"
+  },
+  "Traction une main (assistée)": {
+   "id": "traction-une-main-assistee",
+   "canonique": "traction-une-main-assistee"
+  },
+  "Traction une main (négative)": {
+   "id": "traction-une-main-negative",
+   "canonique": "traction-une-main-negative"
+  },
+  "Tractions explosives poitrine-barre": {
+   "id": "tractions-explosives-poitrine-barre",
+   "canonique": "tractions-explosives-poitrine-barre"
+  },
+  "Tractions PdC": {
+   "id": "tractions-pdc",
+   "canonique": "traction-pronation"
+  },
+  "Transition muscle-up à l'élastique": {
+   "id": "transition-muscle-up-a-l-elastique",
+   "canonique": "transitions-de-muscle-up-a-l-elastique"
+  },
+  "Transition muscle-up assistée pieds au sol": {
+   "id": "transition-muscle-up-assistee-pieds-au-sol",
+   "canonique": "transition-muscle-up-assistee-pieds-au-sol"
+  },
+  "Transitions de muscle-up à l'élastique": {
+   "id": "transitions-de-muscle-up-a-l-elastique",
+   "canonique": "transitions-de-muscle-up-a-l-elastique"
+  },
+  "Travail poignet excentrique (haltère)": {
+   "id": "travail-poignet-excentrique-haltere",
+   "canonique": "travail-poignet-excentrique-haltere"
+  },
+  "Tuck jumps": {
+   "id": "tuck-jumps",
+   "canonique": "tuck-jumps"
+  },
+  "Tuck planche": {
+   "id": "tuck-planche",
+   "canonique": "tuck-planche"
+  },
+  "Tuck-ups": {
+   "id": "tuck-ups",
+   "canonique": "tuck-ups"
+  },
+  "Turkish get-up": {
+   "id": "turkish-get-up",
+   "canonique": "turkish-get-up"
+  },
+  "V-sit (tenue)": {
+   "id": "v-sit-tenue",
+   "canonique": "v-sit-tenue"
+  },
+  "V-sit progression": {
+   "id": "v-sit-progression",
+   "canonique": "v-sit-progression"
+  },
+  "V-ups": {
+   "id": "v-ups",
+   "canonique": "v-ups"
+  },
+  "Vélo — intervalles": {
+   "id": "velo-intervalles",
+   "canonique": "velo-intervalles"
+  },
+  "Wall balls": {
+   "id": "wall-balls",
+   "canonique": "wall-balls"
+  },
+  "Wall sit (chaise)": {
+   "id": "wall-sit-chaise",
+   "canonique": "wall-sit-chaise"
+  },
+  "Wall slides (glissés au mur)": {
+   "id": "wall-slides-glisses-au-mur",
+   "canonique": "wall-slides-glisses-au-mur"
+  },
+  "Wall walks": {
+   "id": "wall-walks",
+   "canonique": "wall-walks"
+  },
+  "Windshield wipers (essuie-glaces)": {
+   "id": "windshield-wipers-essuie-glaces",
+   "canonique": "windshield-wipers-essuie-glaces"
+  },
+  "Woodchop poulie": {
+   "id": "woodchop-poulie",
+   "canonique": "woodchop-poulie"
+  },
+  "Wrist push-ups (poignets)": {
+   "id": "wrist-push-ups-poignets",
+   "canonique": "wrist-push-ups-poignets"
+  },
+  "YTW à plat ventre (banc incliné)": {
+   "id": "ytw-a-plat-ventre-banc-incline",
+   "canonique": "ytw-a-plat-ventre-banc-incline"
+  },
+  "YTW allongé": {
+   "id": "ytw-allonge",
+   "canonique": "ytw-a-plat-ventre-banc-incline"
+  },
+  "Z-press": {
+   "id": "z-press",
+   "canonique": "z-press"
+  }
+ },
+ "programme_v33": {
+  "Ab wheel": {
+   "id": "ab-wheel",
+   "methodes": [],
+   "occurrences": 34,
+   "correspondance": "exacte"
+  },
+  "BACK SQUAT — lift principal": {
+   "id": "back-squat",
+   "methodes": [],
+   "occurrences": 34,
+   "correspondance": "analyse_du_nom"
+  },
+  "BILAN — report des résultats": {
+   "id": "bilan",
+   "methodes": [],
+   "occurrences": 6,
+   "correspondance": "analyse_du_nom"
+  },
+  "Contraste français — muscle-up": {
+   "id": "muscle-up-leste",
+   "methodes": [
+    "contraste"
+   ],
+   "occurrences": 10,
+   "correspondance": "analyse_du_nom"
+  },
+  "Contraste français — squat": {
+   "id": "back-squat",
+   "methodes": [
+    "contraste"
+   ],
+   "occurrences": 10,
+   "correspondance": "analyse_du_nom"
+  },
+  "Curl barre EZ": {
+   "id": "curl-barre-ez",
+   "methodes": [],
+   "occurrences": 34,
+   "correspondance": "exacte"
+  },
+  "Curl marteau (par haltère)": {
+   "id": "curl-marteau-par-haltere",
+   "methodes": [],
+   "occurrences": 34,
+   "correspondance": "exacte"
+  },
+  "DIP LESTÉ — lift principal": {
+   "id": "dips-lestes",
+   "methodes": [],
+   "occurrences": 34,
+   "correspondance": "analyse_du_nom"
+  },
+  "Dead-hang lesté ou PdC": {
+   "id": "dead-hang-leste-ou-pdc",
+   "methodes": [],
+   "occurrences": 34,
+   "correspondance": "exacte"
+  },
+  "Dip — simulation d'essai compétition": {
+   "id": "dips-lestes",
+   "methodes": [
+    "simulation_competition"
+   ],
+   "occurrences": 6,
+   "correspondance": "analyse_du_nom"
+  },
+  "Dips PdC — EMOM": {
+   "id": "dips",
+   "methodes": [
+    "emom"
+   ],
+   "occurrences": 2,
+   "correspondance": "analyse_du_nom"
+  },
+  "Dips PdC — clusters": {
+   "id": "dips",
+   "methodes": [
+    "clusters"
+   ],
+   "occurrences": 17,
+   "correspondance": "analyse_du_nom"
+  },
+  "Dips PdC — série de référence": {
+   "id": "dips",
+   "methodes": [
+    "serie_reference"
+   ],
+   "occurrences": 7,
+   "correspondance": "analyse_du_nom"
+  },
+  "Dips PdC — séries longues": {
+   "id": "dips",
+   "methodes": [
+    "series_longues"
+   ],
+   "occurrences": 13,
+   "correspondance": "analyse_du_nom"
+  },
+  "Dips PdC — échelles dégressives": {
+   "id": "dips",
+   "methodes": [
+    "echelles"
+   ],
+   "occurrences": 1,
+   "correspondance": "analyse_du_nom"
+  },
+  "Dips à résistance accommodante (élastique depuis le sol)": {
+   "id": "dips-a-resistance-accommodante-elastique-depuis-le-sol",
+   "methodes": [],
+   "occurrences": 4,
+   "correspondance": "exacte"
+  },
+  "Développé couché": {
+   "id": "developpe-couche",
+   "methodes": [],
+   "occurrences": 26,
+   "correspondance": "exacte"
+  },
+  "Développé militaire debout": {
+   "id": "developpe-militaire-debout",
+   "methodes": [],
+   "occurrences": 34,
+   "correspondance": "exacte"
+  },
+  "Excentriques de transition LESTÉS": {
+   "id": "excentriques-de-transition-lestes",
+   "methodes": [],
+   "occurrences": 25,
+   "correspondance": "exacte"
+  },
+  "Extension triceps poulie corde": {
+   "id": "extension-triceps-poulie-corde",
+   "methodes": [],
+   "occurrences": 60,
+   "correspondance": "exacte"
+  },
+  "Face pulls": {
+   "id": "face-pulls",
+   "methodes": [],
+   "occurrences": 80,
+   "correspondance": "exacte"
+  },
+  "False grip hold (anneaux ou barre)": {
+   "id": "false-grip-hold-anneaux-ou-barre",
+   "methodes": [],
+   "occurrences": 25,
+   "correspondance": "exacte"
+  },
+  "Fentes marchées (par haltère)": {
+   "id": "fentes-marchees-par-haltere",
+   "methodes": [],
+   "occurrences": 26,
+   "correspondance": "exacte"
+  },
+  "GtG muscle-up — dans la journée": {
+   "id": "muscle-up",
+   "methodes": [
+    "gtg"
+   ],
+   "occurrences": 16,
+   "correspondance": "analyse_du_nom"
+  },
+  "HIIT court": {
+   "id": "hiit-court",
+   "methodes": [],
+   "occurrences": 28,
+   "correspondance": "exacte"
+  },
+  "Hip thrust": {
+   "id": "hip-thrust",
+   "methodes": [],
+   "occurrences": 26,
+   "correspondance": "exacte"
+  },
+  "Hollow body hold": {
+   "id": "hollow-body-hold",
+   "methodes": [],
+   "occurrences": 29,
+   "correspondance": "exacte"
+  },
+  "Isométrie maximale — bas de dip": {
+   "id": "isometrie-bas-de-dip",
+   "methodes": [],
+   "occurrences": 25,
+   "correspondance": "analyse_du_nom"
+  },
+  "Isométrie maximale — transition MU, 3 angles": {
+   "id": "isometrie-de-transition-muscle-up",
+   "methodes": [
+    "isometrie_multi_angles"
+   ],
+   "occurrences": 25,
+   "correspondance": "analyse_du_nom"
+  },
+  "Leg curl": {
+   "id": "leg-curl",
+   "methodes": [],
+   "occurrences": 34,
+   "correspondance": "exacte"
+  },
+  "Leg raises lestés (suspendu)": {
+   "id": "leg-raises-lestes-suspendu",
+   "methodes": [],
+   "occurrences": 34,
+   "correspondance": "exacte"
+  },
+  "MUSCLE-UP LESTÉ — lift n°1, avant tout tirage": {
+   "id": "muscle-up-leste",
+   "methodes": [],
+   "occurrences": 34,
+   "correspondance": "analyse_du_nom"
+  },
+  "Marche ou vélo très léger": {
+   "id": "marche-ou-velo-tres-leger",
+   "methodes": [
+    "tres_leger"
+   ],
+   "occurrences": 6,
+   "correspondance": "exacte"
+  },
+  "Mobilité complète": {
+   "id": "mobilite-complete",
+   "methodes": [],
+   "occurrences": 3,
+   "correspondance": "exacte"
+  },
+  "Mobilité épaules + poignets": {
+   "id": "mobilite-epaules-poignets",
+   "methodes": [],
+   "occurrences": 64,
+   "correspondance": "exacte"
+  },
+  "Mollets debout": {
+   "id": "mollets-debout",
+   "methodes": [],
+   "occurrences": 26,
+   "correspondance": "exacte"
+  },
+  "Muscle-ups PdC explosifs": {
+   "id": "muscle-up",
+   "methodes": [
+    "explosif"
+   ],
+   "occurrences": 9,
+   "correspondance": "analyse_du_nom"
+  },
+  "Négatifs de muscle-up": {
+   "id": "negatifs-de-muscle-up",
+   "methodes": [],
+   "occurrences": 3,
+   "correspondance": "exacte"
+  },
+  "Négatifs de muscle-up complets": {
+   "id": "negatifs-de-muscle-up-complets",
+   "methodes": [],
+   "occurrences": 25,
+   "correspondance": "exacte"
+  },
+  "Pallof press": {
+   "id": "pallof-press",
+   "methodes": [],
+   "occurrences": 29,
+   "correspondance": "exacte"
+  },
+  "Pompes PdC — EMOM — enchaîné après les dips": {
+   "id": "pompes",
+   "methodes": [
+    "emom",
+    "enchaine"
+   ],
+   "occurrences": 2,
+   "correspondance": "analyse_du_nom"
+  },
+  "Pompes PdC — clusters": {
+   "id": "pompes",
+   "methodes": [
+    "clusters"
+   ],
+   "occurrences": 7,
+   "correspondance": "analyse_du_nom"
+  },
+  "Pompes PdC — clusters — enchaîné après les dips": {
+   "id": "pompes",
+   "methodes": [
+    "clusters",
+    "enchaine"
+   ],
+   "occurrences": 10,
+   "correspondance": "analyse_du_nom"
+  },
+  "Pompes PdC — série de référence": {
+   "id": "pompes",
+   "methodes": [
+    "serie_reference"
+   ],
+   "occurrences": 7,
+   "correspondance": "analyse_du_nom"
+  },
+  "Pompes PdC — séries longues — enchaîné après les dips": {
+   "id": "pompes",
+   "methodes": [
+    "series_longues",
+    "enchaine"
+   ],
+   "occurrences": 13,
+   "correspondance": "analyse_du_nom"
+  },
+  "Pompes PdC — très léger": {
+   "id": "pompes",
+   "methodes": [
+    "tres_leger"
+   ],
+   "occurrences": 9,
+   "correspondance": "analyse_du_nom"
+  },
+  "Pompes PdC — échelles dégressives — enchaîné après les dips": {
+   "id": "pompes",
+   "methodes": [
+    "echelles",
+    "enchaine"
+   ],
+   "occurrences": 1,
+   "correspondance": "analyse_du_nom"
+  },
+  "Pompes lestées (lest ajouté)": {
+   "id": "pompes-lestees-lest-ajoute",
+   "methodes": [],
+   "occurrences": 34,
+   "correspondance": "exacte"
+  },
+  "Repos actif": {
+   "id": "repos-actif",
+   "methodes": [],
+   "occurrences": 3,
+   "correspondance": "exacte"
+  },
+  "Rotations externes (par haltère)": {
+   "id": "rotations-externes-par-haltere",
+   "methodes": [],
+   "occurrences": 107,
+   "correspondance": "exacte"
+  },
+  "Rowing barre penché": {
+   "id": "rowing-barre-penche",
+   "methodes": [],
+   "occurrences": 46,
+   "correspondance": "exacte"
+  },
+  "Rowing haltère unilatéral (par haltère)": {
+   "id": "rowing-haltere-unilateral-par-haltere",
+   "methodes": [],
+   "occurrences": 34,
+   "correspondance": "exacte"
+  },
+  "Scapular pull-ups": {
+   "id": "scapular-pull-ups",
+   "methodes": [],
+   "occurrences": 52,
+   "correspondance": "exacte"
+  },
+  "Soulevé de terre roumain": {
+   "id": "souleve-de-terre-roumain",
+   "methodes": [],
+   "occurrences": 34,
+   "correspondance": "exacte"
+  },
+  "Squat endurance @ 70 kg": {
+   "id": "squat-endurance-70-kg",
+   "methodes": [],
+   "occurrences": 33,
+   "correspondance": "exacte"
+  },
+  "Squat pause 2 s": {
+   "id": "squat-pause",
+   "methodes": [
+    "pause"
+   ],
+   "occurrences": 8,
+   "correspondance": "analyse_du_nom"
+  },
+  "TEST 1RM BACK SQUAT — seul lift lourd du jour": {
+   "id": "test-1rm-back-squat",
+   "methodes": [
+    "test_1rm"
+   ],
+   "occurrences": 3,
+   "correspondance": "analyse_du_nom"
+  },
+  "TEST 1RM DIP LESTÉ — seul lift lourd du jour": {
+   "id": "test-1rm-dip-leste",
+   "methodes": [
+    "test_1rm"
+   ],
+   "occurrences": 3,
+   "correspondance": "analyse_du_nom"
+  },
+  "TEST 1RM MUSCLE-UP LESTÉ — seul lift lourd du jour": {
+   "id": "test-1rm-muscle-up-leste",
+   "methodes": [
+    "test_1rm"
+   ],
+   "occurrences": 3,
+   "correspondance": "analyse_du_nom"
+  },
+  "TEST 1RM TRACTION LESTÉE — seul lift lourd du jour": {
+   "id": "test-1rm-traction-lestee",
+   "methodes": [
+    "test_1rm"
+   ],
+   "occurrences": 3,
+   "correspondance": "analyse_du_nom"
+  },
+  "TEST MAX DIPS PdC": {
+   "id": "test-max-dips-pdc",
+   "methodes": [],
+   "occurrences": 4,
+   "correspondance": "exacte"
+  },
+  "TEST MAX MUSCLE-UPS PdC": {
+   "id": "test-max-muscle-ups-pdc",
+   "methodes": [],
+   "occurrences": 3,
+   "correspondance": "exacte"
+  },
+  "TEST MAX POMPES PdC": {
+   "id": "test-max-pompes-pdc",
+   "methodes": [],
+   "occurrences": 4,
+   "correspondance": "exacte"
+  },
+  "TEST MAX SQUAT @ 70 kg": {
+   "id": "test-max-squat-70-kg",
+   "methodes": [],
+   "occurrences": 4,
+   "correspondance": "exacte"
+  },
+  "TEST MAX TRACTIONS PdC": {
+   "id": "test-max-tractions-pdc",
+   "methodes": [],
+   "occurrences": 4,
+   "correspondance": "exacte"
+  },
+  "TRACTION LESTÉE — lift principal": {
+   "id": "traction-lestee",
+   "methodes": [],
+   "occurrences": 34,
+   "correspondance": "analyse_du_nom"
+  },
+  "Tirage horizontal poulie": {
+   "id": "tirage-horizontal-poulie",
+   "methodes": [],
+   "occurrences": 26,
+   "correspondance": "exacte"
+  },
+  "Tirage vertical prise neutre": {
+   "id": "tirage-vertical-prise-neutre",
+   "methodes": [],
+   "occurrences": 26,
+   "correspondance": "exacte"
+  },
+  "Tractions PdC — EMOM": {
+   "id": "traction-pronation",
+   "methodes": [
+    "emom"
+   ],
+   "occurrences": 2,
+   "correspondance": "analyse_du_nom"
+  },
+  "Tractions PdC — clusters": {
+   "id": "traction-pronation",
+   "methodes": [
+    "clusters"
+   ],
+   "occurrences": 17,
+   "correspondance": "analyse_du_nom"
+  },
+  "Tractions PdC — série de référence": {
+   "id": "traction-pronation",
+   "methodes": [
+    "serie_reference"
+   ],
+   "occurrences": 7,
+   "correspondance": "analyse_du_nom"
+  },
+  "Tractions PdC — séries continues": {
+   "id": "traction-pronation",
+   "methodes": [
+    "series_continues"
+   ],
+   "occurrences": 1,
+   "correspondance": "analyse_du_nom"
+  },
+  "Tractions PdC — séries longues": {
+   "id": "traction-pronation",
+   "methodes": [
+    "series_longues"
+   ],
+   "occurrences": 13,
+   "correspondance": "analyse_du_nom"
+  },
+  "Tractions PdC — échelles dégressives": {
+   "id": "traction-pronation",
+   "methodes": [
+    "echelles"
+   ],
+   "occurrences": 1,
+   "correspondance": "analyse_du_nom"
+  },
+  "Tractions explosives poitrine-barre": {
+   "id": "tractions-explosives-poitrine-barre",
+   "methodes": [],
+   "occurrences": 34,
+   "correspondance": "exacte"
+  },
+  "Transitions de muscle-up à l'élastique": {
+   "id": "transitions-de-muscle-up-a-l-elastique",
+   "methodes": [],
+   "occurrences": 25,
+   "correspondance": "exacte"
+  },
+  "Travail poignet excentrique (haltère)": {
+   "id": "travail-poignet-excentrique-haltere",
+   "methodes": [],
+   "occurrences": 120,
+   "correspondance": "exacte"
+  },
+  "YTW à plat ventre (banc incliné)": {
+   "id": "ytw-a-plat-ventre-banc-incline",
+   "methodes": [],
+   "occurrences": 26,
+   "correspondance": "exacte"
+  },
+  "Élévations latérales (par haltère)": {
+   "id": "elevations-laterales-par-haltere",
+   "methodes": [],
+   "occurrences": 77,
+   "correspondance": "exacte"
+  }
+ },
+ "note": "canonique = identifiant à utiliser quand l'entrée v1 est un doublon signalé."
+}
