@@ -1,4 +1,14 @@
-# Kalis Track 3.0.2 — Finition visuelle et couleur au choix
+# Kalis Track 3.0.3 — Performance mesurée
+
+## 3.0.3 — Performance (lot L6)
+
+- **Onglets masqués** : pendant une séance (ou sur un autre onglet), une saisie ne reconstruit plus PROGRAMME, STATS, ARSENAL et RÉGLAGES cachés derrière. Chaque zone masquée se met à jour une seule fois, dès qu'elle réapparaît. Une section STATS masquée fait de même.
+- **Catalogue WOD** : durées estimées, difficultés et niveaux réutilisés tant que le WOD ne change pas (le cache couvrait mal plus de 1 024 WOD, et chaque lecture réencodait le WOD).
+- **Sauvegarde** : la comparaison des 1 000 WOD du catalogue avec leur version d'origine ne réencode plus chacun en JSON à chaque écriture. Même document écrit, mêmes garanties (file d'écriture, accusé, erreurs).
+- Rien ne change à l'écran ni dans les données : mêmes couleurs, mêmes textes, même format de sauvegarde, mêmes résultats (vérifié par empreintes sur quatre jeux de données).
+
+Détail et mesures : `docs/PERFORMANCE.md`, `SUIVI_PROJET.md` (L6). Tests : `test/l6_perf_test.dart` ; banc : `test/l6_perf_bench_test.dart` (avec `--dart-define=KALIS_PERF=true`), `tools/perf_compare.py`, `tools/perf_device/`.
+
 
 ## 3.0.2 — Finition globale et six couleurs (lot L5)
 
