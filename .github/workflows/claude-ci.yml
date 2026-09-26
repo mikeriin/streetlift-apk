@@ -58,7 +58,7 @@ jobs:
         if: always() && steps.mode.outputs.mode != 'captures'
         working-directory: streetlift_tracker
         run: |
-          files="$(ls test/l5c_*_test.dart test/motion_test.dart test/ui_refactor_test.dart test/level_fill_test.dart test/l2b_data_control_test.dart 2>/dev/null || true)"
+          files="$(ls test/l5c_*_test.dart test/motion_test.dart test/ui_refactor_test.dart test/level_fill_test.dart test/l2b_data_control_test.dart test/programme_test.dart test/l4_depart_test.dart test/reward_flow_test.dart 2>/dev/null || true)"
           if [ -n "$files" ]; then
             TZ=Europe/Paris timeout 900 flutter test --no-pub --timeout 90s --reporter expanded $files > ../ci-out/test-l5c.log 2>&1; echo "exit=$?" >> ../ci-out/test-l5c.log
           else

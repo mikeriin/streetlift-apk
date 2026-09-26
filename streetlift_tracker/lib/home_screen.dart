@@ -290,6 +290,13 @@ class _HomeScreenState extends State<HomeScreen> {
     builder: (context, _) {
       final w = store.program.week(week), current = store.program.weekFor(now);
       final colors = ProgrammeColors.of(context);
+      final compactHeader = MediaQuery.textScalerOf(context).scale(10) <= 13;
+      final header = _WeekHeader(
+        week: w,
+        dates: store.program.weekDates(w.n),
+        onChoose: _pickWeek,
+        compact: compactHeader,
+      );
       final today =
           store.program.containsDate(now) && current == week
               ? store.program.dayFor(now)
@@ -304,8 +311,20 @@ class _HomeScreenState extends State<HomeScreen> {
         onSummary: () => _summary(w, d),
       );
       return KScreen(
+        // L5 : semaine, bloc et dates visibles, choix d'une semaine en un
+        // appui. Dans l'en-tête à taille de texte courante (la semaine
+        // entière reste visible) ; en tête de liste avec un grand texte.
         appBar: KTopBar(
-          leading: const LevelPill(),
+          leading:
+              compactHeader
+                  ? Row(
+                    children: [
+                      const LevelPill(),
+                      const SizedBox(width: 12),
+                      Expanded(child: header),
+                    ],
+                  )
+                  : const LevelPill(),
           height: LevelProgressNumber.headerHeight(context),
         ),
         body: Column(
@@ -317,22 +336,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 count: store.program.weeks.length,
                 color: colors.slider,
                 onChanged: _selectWeek,
-                onDetails: () => _weekDetails(w),
-                onChoose: _pickWeek,
-              ),
-            ),
-            // L5 : semaine, bloc et dates visibles ; choix d'une semaine en
-            // un appui (l'appui long et le glissement restent disponibles).
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                KSpace.page,
-                0,
-                KSpace.page,
-                2,
-              ),
-              child: _WeekHeader(
-                week: w,
-                dates: store.program.weekDates(w.n),
                 onDetails: () => _weekDetails(w),
                 onChoose: _pickWeek,
               ),
@@ -355,22 +358,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: KList(
                     key: const PageStorageKey('programme-scroll'),
                     controller: _scroll,
-                    // L5 : la ligne de semaine prend ~46 px ; écarts un peu
-                    // resserrés pour que la semaine entière reste visible
-                    // sur un téléphone de 844 px de haut.
-                    gap:
-                        MediaQuery.sizeOf(context).height < 800
-                            ? 4
-                            : MediaQuery.sizeOf(context).height < 900
-                            ? 6
-                            : 8,
+                    gap: MediaQuery.sizeOf(context).height < 800 ? 4 : 8,
                     padding: const EdgeInsets.fromLTRB(
                       KSpace.page,
-                      4,
+                      8,
                       KSpace.page,
                       12,
                     ),
                     children: [
+                      if (!compactHeader) header,
                       // Dans la liste : lisible à 200 % sans écraser les
                       // journées (départ à choisir, à venir, terminé).
                       if (ProgramStartBanner.visible(store.program, now))
@@ -390,80 +386,107 @@ class _HomeScreenState extends State<HomeScreen> {
   );
 }
 
-/// Titre de la semaine affichée (L5) : numéro, bloc et dates, avec un
-/// bouton visible pour choisir une autre semaine. Passe sur deux lignes sur
-/// écran étroit ou avec un grand texte.
+/// Titre de la semaine affichée (L5) : numéro, dates et bloc ; un appui
+/// ouvre le choix de la semaine. Version compacte dans l'en-tête (deux
+/// lignes, flèche de liste déroulante) ; avec un grand texte, ligne pleine
+/// en tête de liste avec le bouton « Semaines ».
 class _WeekHeader extends StatelessWidget {
   final WeekPlan week;
   final String dates;
-  final VoidCallback onDetails, onChoose;
+  final VoidCallback onChoose;
+  final bool compact;
   const _WeekHeader({
     required this.week,
     required this.dates,
-    required this.onDetails,
     required this.onChoose,
+    required this.compact,
   });
 
   @override
   Widget build(BuildContext context) {
     // Tiret demi-cadratin : présent dans toutes les polices de l'interface.
     final label = dates.replaceAll('→', ' – ');
-    final info = Semantics(
-      button: true,
-      label: 'Semaine ${week.n}, ${week.block}, $label',
-      onTapHint: 'Afficher le détail de la semaine',
-      excludeSemantics: true,
-      child: InkWell(
-        key: const ValueKey('week-header'),
-        onTap: onDetails,
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'SEMAINE ${week.n}',
-                key: const ValueKey('week-title'),
-                style: TextStyle(
-                  color: SL.text,
-                  fontSize: 16,
-                  height: 1.2,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: .3,
-                ),
+    if (compact) {
+      return Semantics(
+        button: true,
+        label: 'Semaine ${week.n}, $label, ${week.block}',
+        onTapHint: 'Choisir une semaine',
+        excludeSemantics: true,
+        child: InkWell(
+          key: const ValueKey('week-choose'),
+          onTap: onChoose,
+          borderRadius: BorderRadius.circular(12),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 48),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          'SEMAINE ${week.n}',
+                          key: const ValueKey('week-title'),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: SL.text,
+                            fontSize: 15,
+                            height: 1.2,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: .3,
+                          ),
+                        ),
+                      ),
+                      Icon(
+                        Icons.arrow_drop_down_rounded,
+                        size: 22,
+                        color: SL.accent,
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '$label · ${week.block}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(color: SL.dim, fontSize: 12, height: 1.3),
+                  ),
+                ],
               ),
-              Text(
-                '${week.block} · $label',
-                style: TextStyle(color: SL.dim, fontSize: 12.5, height: 1.3),
-              ),
-            ],
+            ),
           ),
         ),
-      ),
-    );
-    final choose = TextButton.icon(
-      key: const ValueKey('week-choose'),
-      onPressed: onChoose,
-      icon: const Icon(Icons.calendar_month_outlined),
-      label: const Text('Semaines'),
-    );
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final stacked =
-            constraints.maxWidth < 300 ||
-            MediaQuery.textScalerOf(context).scale(10) > 13;
-        if (stacked) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [info, choose],
-          );
-        }
-        return Row(
-          children: [Expanded(child: info), const SizedBox(width: 8), choose],
-        );
-      },
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'SEMAINE ${week.n}',
+          key: const ValueKey('week-title'),
+          style: TextStyle(
+            color: SL.text,
+            fontSize: 16,
+            height: 1.2,
+            fontWeight: FontWeight.w700,
+            letterSpacing: .3,
+          ),
+        ),
+        Text(
+          '${week.block} · $label',
+          style: TextStyle(color: SL.dim, fontSize: 12.5, height: 1.3),
+        ),
+        TextButton.icon(
+          key: const ValueKey('week-choose'),
+          onPressed: onChoose,
+          icon: const Icon(Icons.calendar_month_outlined),
+          label: const Text('Semaines'),
+        ),
+      ],
     );
   }
 }
