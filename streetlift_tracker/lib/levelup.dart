@@ -66,12 +66,42 @@ class LevelProgressNumber extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = ProgrammeColors.of(context);
+    final label = TextStyle(
+      color: colors.muted,
+      fontSize: 12,
+      fontWeight: FontWeight.w600,
+      letterSpacing: .8,
+    );
+    final number = TextStyle(
+      color: SL.text,
+      fontSize: 30,
+      height: 1,
+      fontWeight: FontWeight.w700,
+      letterSpacing: -1,
+      fontFeatures: const [FontFeature.tabularFigures()],
+    );
     // L5 : plus de réduction forcée (FittedBox, taille de texte figée) ;
     // « NIV. » reste avant le chiffre, la barre dessous, en couleur unie.
-    return ConstrainedBox(
-      constraints: const BoxConstraints(minWidth: 88),
-      child: IntrinsicWidth(
-        child: Column(
+    // Largeur : celle du texte à la taille choisie, 88 au minimum.
+    final scaler = MediaQuery.textScalerOf(context);
+    double measure(String text, TextStyle style) {
+      final painter = TextPainter(
+        text: TextSpan(text: text, style: style),
+        textDirection: TextDirection.ltr,
+        textScaler: scaler,
+        maxLines: 1,
+      )..layout();
+      final width = painter.width;
+      painter.dispose();
+      return width;
+    }
+    final width = math.max(
+      88.0,
+      measure('NIV.', label) + 7 + measure('$level', number) + 2,
+    );
+    return SizedBox(
+      width: width,
+      child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -80,27 +110,9 @@ class LevelProgressNumber extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [
-                Text(
-                  'NIV.',
-                  style: TextStyle(
-                    color: colors.muted,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: .8,
-                  ),
-                ),
+                Text('NIV.', style: label),
                 const SizedBox(width: 7),
-                Text(
-                  '$level',
-                  style: TextStyle(
-                    color: SL.text,
-                    fontSize: 30,
-                    height: 1,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: -1,
-                    fontFeatures: const [FontFeature.tabularFigures()],
-                  ),
-                ),
+                Text('$level', style: number),
               ],
             ),
             const SizedBox(height: 7),
@@ -113,7 +125,6 @@ class LevelProgressNumber extends StatelessWidget {
             ),
           ],
         ),
-      ),
     );
   }
 }
