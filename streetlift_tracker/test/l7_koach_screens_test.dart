@@ -122,10 +122,7 @@ void main() {
     // Facile pour Soutenu visé : suggestion pour les séries restantes.
     await scrollToAction(tester, find.byKey(const ValueKey('koach-apply')));
     expect(find.textContaining('au lieu de'), findsOneWidget);
-    expect(
-      find.textContaining('série 1 à Facile, visé Soutenu'),
-      findsOneWidget,
-    );
+    expect(find.textContaining('série 1 à Facile, visé Soutenu'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('koach-apply')));
     await tester.pumpAndSettle();
     expect(log.sets[1].kg, '3.75');
@@ -240,7 +237,9 @@ void main() {
       ),
     );
     nav.currentState!.push(
-      MaterialPageRoute<void>(builder: (_) => SessionScreen(week: w3, day: d1)),
+      MaterialPageRoute<void>(
+        builder: (_) => SessionScreen(week: w3, day: d1),
+      ),
     );
     await tester.pumpAndSettle();
     final pageCtl = tester.widget<PageView>(find.byType(PageView)).controller!;
@@ -279,10 +278,7 @@ void main() {
     await tester.tap(find.byType(Switch).first);
     await tester.pumpAndSettle();
     expect(find.text('Activer Koach ?'), findsOneWidget);
-    expect(
-      find.textContaining('Rien ne change sans ton accord'),
-      findsOneWidget,
-    );
+    expect(find.textContaining('Rien ne change sans ton accord'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('koach-activate')));
     await tester.pumpAndSettle();
     expect(store.koachOn, isTrue);
@@ -361,11 +357,10 @@ void main() {
         await tester.pumpAndSettle();
         // Liste paresseuse : la courbe de la traction est atteinte en
         // défilant (gestes réels), puis lue par le lecteur d'écran.
-        final curve = find.bySemanticsLabel(RegExp(r'^Courbe de l’estimation'));
+        final curve = find.bySemanticsLabel(RegExp('Courbe de l’estimation'));
         final list = find.byWidgetPredicate(
           (widget) =>
-              widget is Scrollable &&
-              widget.axisDirection == AxisDirection.down,
+              widget is Scrollable && widget.axisDirection == AxisDirection.down,
         );
         for (var i = 0; i < 25 && curve.evaluate().isEmpty; i++) {
           await tester.drag(list.first, const Offset(0, -200));
