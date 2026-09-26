@@ -1,5 +1,3 @@
 Analyzing streetlift_tracker...                                 
-
-warning • Unused import: 'store.dart' • lib/stats_screen.dart:3:8 • unused_import
-
-1 issue found. (ran in 24.1s)
+No issues found! (ran in 20.9s)
+exit=0

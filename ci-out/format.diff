@@ -1,12 +1,11 @@
- ci-out/analyze.log                                 |     3 -
- ci-out/commit.txt                                  |     2 +-
- ci-out/format-full.diff                            | 62834 -------------------
- ci-out/format.diff                                 |    13 -
- ci-out/format.log                                  |     4 +-
- ci-out/mode.txt                                    |     2 +-
- ci-out/python.log                                  |    15 -
- ci-out/test-l5c.log                                |   192 -
- streetlift_tracker/test/l6_perf_bench_test.dart    |     8 +-
- streetlift_tracker/test/l6_perf_test.dart          |    14 +-
- streetlift_tracker/test/support/perf_fixtures.dart |     9 +-
- 11 files changed, 25 insertions(+), 63071 deletions(-)
+ ci-out/analyze.log                        |     5 -
+ ci-out/android-debug.log                  |    12 -
+ ci-out/commit.txt                         |     2 +-
+ ci-out/format-full.diff                   | 63194 ----------------------------
+ ci-out/format.diff                        |    12 -
+ ci-out/format.log                         |     4 +-
+ ci-out/python.log                         |    70 -
+ ci-out/test-l5c.log                       |   192 -
+ ci-out/test.log                           |   782 -
+ streetlift_tracker/test/l6_perf_test.dart |     8 +-
+ 10 files changed, 4 insertions(+), 64277 deletions(-)
