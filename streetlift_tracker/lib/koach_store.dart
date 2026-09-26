@@ -263,8 +263,8 @@ extension KoachStore on AppStore {
         'ref': l.ref,
         'bodyweight': body,
         'k': koachProgram.kPrior[l.key] ?? 22.4,
-        'grid':
-            ((eq[body ? 'plate' : 'barbell'] as Map)['step'] as num).toDouble(),
+        'grid': ((eq[body ? 'plate' : 'barbell'] as Map)['step'] as num)
+            .toDouble(),
       };
     }
     throw ArgumentError(movement);
@@ -476,12 +476,7 @@ extension KoachStore on AppStore {
   );
 
   /// Suggestion de charge pour les séries restantes, ou null.
-  ke.KSuggestion? koachSuggestion(
-    int week,
-    int day,
-    Exercise e,
-    ExerciseLog log,
-  ) {
+  ke.KSuggestion? koachSuggestion(int week, int day, Exercise e, ExerciseLog log) {
     if (!koachOn || week < 1 || !koachStrength(e)) return null;
     final a = koachAnnotation(e)!;
     final key = sessionKey(week, day);
@@ -755,10 +750,9 @@ extension KoachStore on AppStore {
   /// Mouvements principaux réalisés dans une séance (questionnaire douleur).
   List<String> koachMovementsDone(int week, int day) {
     final log = logs[sessionKey(week, day)];
-    final plan =
-        week >= 1 && week <= program.weeks.length
-            ? program.week(week).day(day)
-            : null;
+    final plan = week >= 1 && week <= program.weeks.length
+        ? program.week(week).day(day)
+        : null;
     if (log == null || plan == null) return const [];
     final out = <String>[];
     for (final e in plan.exercises) {
@@ -1016,7 +1010,9 @@ extension KoachStore on AppStore {
     for (final ad in _koachAdaptations(week)) {
       if (ad.kind == 'sets' && ad.exercise == e.id) {
         n = math.max(1, n + ad.delta);
-      } else if (ad.kind == 'deload' && a?.cat == 'strength' && e.main) {
+      } else if (ad.kind == 'deload' &&
+          a?.cat == 'strength' &&
+          e.main) {
         n = math.max(1, (n * ad.sets).round());
       }
     }

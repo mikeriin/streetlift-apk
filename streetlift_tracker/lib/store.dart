@@ -3374,8 +3374,7 @@ class AppStore extends ChangeNotifier {
     // Référence non renseignée : aucune charge inventée (KT-007).
     if (loadNeedsReference(e)) return null;
     // L7 : Koach actif, grille du matériel (D23) et allègement (D26).
-    final k = KoachStore(this);
-    if (k.koachOn) return k.koachLoadFor(e);
+    if (KoachStore(this).koachOn) return KoachStore(this).koachLoadFor(e);
     switch (s.type) {
       case 'fixed':
         return s.kg;
@@ -3401,8 +3400,9 @@ class AppStore extends ChangeNotifier {
   /// plus, Koach actif, les adaptations acceptées de la semaine (D28).
   double? sessionLoad(int week, Exercise e) {
     if (loadNeedsReference(e)) return null;
-    final k = KoachStore(this);
-    if (k.koachOn && week >= 1) return k.koachLoadFor(e, week: week);
+    if (KoachStore(this).koachOn && week >= 1) {
+      return KoachStore(this).koachLoadFor(e, week: week);
+    }
     return loadFor(e);
   }
 
@@ -4016,9 +4016,11 @@ class AppStore extends ChangeNotifier {
     s.exerciseNames[e.id] = e.name;
     if (week == 0) s.customId = '$j';
     return s.ex.putIfAbsent(e.id, () {
-      final k = KoachStore(this);
       // L7 (D28) : adaptations de structure acceptées pour la semaine.
-      final n = k.koachOn && week >= 1 ? k.koachSetCount(week, e) : setCount(e);
+      final n =
+          KoachStore(this).koachOn && week >= 1
+              ? KoachStore(this).koachSetCount(week, e)
+              : setCount(e);
       return ExerciseLog(sets: List.generate(n, (_) => SetEntry()));
     });
   }
@@ -4088,12 +4090,11 @@ class AppStore extends ChangeNotifier {
     }
     final check = checkSet(spec, s, rpe: settings.rpe);
     if (!check.ok) return check;
-    final k = KoachStore(this);
-    if (exercise != null && k.koachOn) {
-      final effort = k._koachBeforeCheck(exercise, log, index);
+    if (exercise != null && KoachStore(this).koachOn) {
+      final effort = KoachStore(this)._koachBeforeCheck(exercise, log, index);
       if (!effort.ok) return effort;
       if (week != null && week >= 1) {
-        log.prescribed ??= k.koachPrescription(exercise, week);
+        log.prescribed ??= KoachStore(this).koachPrescription(exercise, week);
       }
     }
     s.done = true;
