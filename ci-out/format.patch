@@ -1,0 +1,31 @@
+diff --git a/integration_test/moteur_3d_test.dart b/integration_test/moteur_3d_test.dart
+index 850c1cc..9ca2851 100644
+--- a/integration_test/moteur_3d_test.dart
++++ b/integration_test/moteur_3d_test.dart
+@@ -224,9 +224,7 @@ void main() {
+     await shot('m1_5_moteur3d_clair');
+     final light = await sceneStats(tester, false);
+     report['rendu_clair'] = light;
+-    data['m1_releve.json'] = const JsonEncoder.withIndent(
+-      '  ',
+-    ).convert(report);
++    data['m1_releve.json'] = const JsonEncoder.withIndent('  ').convert(report);
+     check(light, 'clair');
+     expect(
+       light['figure'] as double,
+diff --git a/test/m1_engine3d_test.dart b/test/m1_engine3d_test.dart
+index aff2ad0..3ac667e 100644
+--- a/test/m1_engine3d_test.dart
++++ b/test/m1_engine3d_test.dart
+@@ -94,7 +94,10 @@ void main() {
+         for (var i = 0; i < 60; i++) frame(5000 + i * 166, 8),
+         frame(15500, 30),
+       ];
+-      final stats = FrameStats.fromTimings(timings, const Duration(seconds: 10));
++      final stats = FrameStats.fromTimings(
++        timings,
++        const Duration(seconds: 10),
++      );
+       expect(stats.frames, 60);
+       expect(stats.fps, closeTo(6, 1e-9));
+       expect(stats.meanMs, closeTo(8, 1e-9));

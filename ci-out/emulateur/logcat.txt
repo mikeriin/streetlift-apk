@@ -1,259 +1,241 @@
-09-27 17:30:21.353 V/GraphicsEnvironment( 1583):   angle_gl_driver_selection_pkgs=[]
-09-27 17:30:21.353 V/GraphicsEnvironment( 1583):   angle_gl_driver_selection_values=[]
-09-27 17:30:21.419 I/EGL_emulation( 1203): Opening libGLESv1_CM_emulation.so
-09-27 17:30:21.424 V/GraphicsEnvironment( 1629):   angle_gl_driver_selection_pkgs=[]
-09-27 17:30:21.424 V/GraphicsEnvironment( 1629):   angle_gl_driver_selection_values=[]
-09-27 17:30:21.443 I/EGL_emulation( 1203): Opening libGLESv2_emulation.so
-09-27 17:30:36.767 D/nativeloader( 1678): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:30:37.655 V/GraphicsEnvironment( 1678):   angle_gl_driver_selection_pkgs=[]
-09-27 17:30:37.655 V/GraphicsEnvironment( 1678):   angle_gl_driver_selection_values=[]
-09-27 17:30:39.691 W/WifiConnectivityManager(  558): mConnectedSingleSavedNetworkSingleScanScheduleSec is not configured! Using default scan schedule
-09-27 17:30:39.691 W/WifiConnectivityManager(  558): mConnectedSingleSavedNetworkSingleScanType is not configured! Using default scan types
-09-27 17:30:39.720 I/BLASTSyncEngine(  558): Unfinished container: ActivityRecord{b62a345 u0 com.google.android.googlesdksetup/.DefaultActivity t6}
-09-27 17:30:39.720 I/BLASTSyncEngine(  558):   ActivityRecord{b62a345 u0 com.google.android.googlesdksetup/.DefaultActivity t6} is relaunching
-09-27 17:30:39.720 I/BLASTSyncEngine(  558): Unfinished container: Task{31cba9a #6 type=home A=10170:com.google.android.googlesdksetup}
-09-27 17:30:39.720 I/BLASTSyncEngine(  558):   ActivityRecord{b62a345 u0 com.google.android.googlesdksetup/.DefaultActivity t6} is relaunching
-09-27 17:30:39.748 V/WindowManager(  558):         {WCT{RemoteToken{6043d31 Task{31cba9a #6 type=home A=10170:com.google.android.googlesdksetup}}} m=OPEN f=MOVE_TO_TOP leash=Surface(name=Task=6)/@0x118054a sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1},
-09-27 17:30:40.278 V/GraphicsEnvironment( 1821):   angle_gl_driver_selection_pkgs=[]
-09-27 17:30:40.279 V/GraphicsEnvironment( 1821):   angle_gl_driver_selection_values=[]
-09-27 17:30:40.621 E/GoogleSdkSetup( 1597): Unable to add Wi-Fi network "AndroidWifi".
-09-27 17:30:40.798 I/GoogleSdkSetup( 1597): Setting system screen_off_timeout to be 2147483647 ms
-09-27 17:30:40.939 V/GraphicsEnvironment( 1826):   angle_gl_driver_selection_pkgs=[]
-09-27 17:30:40.939 V/GraphicsEnvironment( 1826):   angle_gl_driver_selection_values=[]
-09-27 17:30:41.108 D/WifiClientModeImpl[54277:wlan0](  558): connectToUserSelectNetwork netId 0, uid 10170, package com.google.android.googlesdksetup, forceReconnect = false, isUserSelected = false, attributionTag = null
-09-27 17:30:41.912 V/GraphicsEnvironment( 1872):   angle_gl_driver_selection_pkgs=[]
-09-27 17:30:41.912 V/GraphicsEnvironment( 1872):   angle_gl_driver_selection_values=[]
-09-27 17:30:43.558 V/WindowManagerShell(  935): Transition requested (#6): android.os.BinderProxy@3cbeb68 TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=6 displayId=0 isRunning=false baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10800100 cmp=com.google.android.googlesdksetup/.DefaultActivity } baseActivity=null topActivity=null origActivity=null realActivity=ComponentInfo{com.google.android.googlesdksetup/com.google.android.googlesdksetup.DefaultActivity} numActivities=0 lastActiveTime=51923 supportsMultiWindow=false resizeMode=0 isResizeable=false minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@9fd1b81} topActivityType=2 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 136 - 0, 0) topActivityInfo=null launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 6 }
-09-27 17:30:43.704 I/ActivityThread( 1597): ApplicationInfo updating for com.google.android.googlesdksetup, new timestamp: 54163
-09-27 17:30:43.714 W/GoogleSdkSetup( 1597): Already provisioned, remove itself.
-09-27 17:30:43.715 W/ActivityTaskManager(  558): Duplicate finish request for r=ActivityRecord{b62a345 u0 com.google.android.googlesdksetup/.DefaultActivity t6 f}}
-09-27 17:30:46.350 W/system_server(  558): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleSdkSetup/GoogleSdkSetup.apk' with 1 weak references
-09-27 17:30:46.609 W/gle.android.gms( 1678): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
-09-27 17:30:47.120 I/EGL_emulation(  558): Opening libGLESv1_CM_emulation.so
-09-27 17:30:47.120 I/EGL_emulation(  558): Opening libGLESv2_emulation.so
-09-27 17:30:47.992 W/AppSearchIcing(  558): icing-search-engine.cc:321: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
-09-27 17:30:48.136 V/AconfigFlags( 1678): Read Aconfig default flag value com.android.graphics.surfaceflinger.flags.vulkan_renderengine = false
-09-27 17:30:48.564 V/WindowManager(  558): Sent Transition (#6) createdAt=09-27 17:30:43.554 via request=TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=6 displayId=0 isRunning=false baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10800100 cmp=com.google.android.googlesdksetup/.DefaultActivity } baseActivity=null topActivity=null origActivity=null realActivity=ComponentInfo{com.google.android.googlesdksetup/com.google.android.googlesdksetup.DefaultActivity} numActivities=0 lastActiveTime=51923 supportsMultiWindow=false resizeMode=0 isResizeable=false minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{6043d31 Task{31cba9a #6 type=home A=10170:com.google.android.googlesdksetup}}} topActivityType=2 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 136 - 0, 0) topActivityInfo=null launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 6 }
-09-27 17:30:50.349 D/nativeloader( 2102): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:30:50.450 V/GraphicsEnvironment( 2102):   angle_gl_driver_selection_pkgs=[]
-09-27 17:30:50.450 V/GraphicsEnvironment( 2102):   angle_gl_driver_selection_values=[]
-09-27 17:30:50.830 D/nativeloader( 2130): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:30:51.175 V/GraphicsEnvironment( 2130):   angle_gl_driver_selection_pkgs=[]
-09-27 17:30:51.175 V/GraphicsEnvironment( 2130):   angle_gl_driver_selection_values=[]
-09-27 17:30:51.872 W/AppSearchIcing(  558): icing-search-engine.cc:321: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
-09-27 17:30:52.508 V/GraphicsEnvironment( 2181):   angle_gl_driver_selection_pkgs=[]
-09-27 17:30:52.508 V/GraphicsEnvironment( 2181):   angle_gl_driver_selection_values=[]
-09-27 17:30:53.434 D/nativeloader( 2206): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:30:53.697 V/GraphicsEnvironment( 2206):   angle_gl_driver_selection_pkgs=[]
-09-27 17:30:53.697 V/GraphicsEnvironment( 2206):   angle_gl_driver_selection_values=[]
-09-27 17:30:53.891 I/Role    (  558): com.google.android.googlesdksetup not qualified for android.app.role.HOME due to missing RequiredComponent{mIntentFilterData=IntentFilterData{mAction='android.intent.action.MAIN', mCategories='[android.intent.category.HOME]', mDataScheme='null', mDataType='null'}, mMinTargetSdkVersion=1, mFlags='0', mPermission='null', mQueryFlags=0, mMetaData=[]}
-09-27 17:30:53.891 I/RoleControllerServiceImpl(  558): Removing package that no longer qualifies for the role, package: com.google.android.googlesdksetup, role: android.app.role.HOME
-09-27 17:30:55.603 D/ActivityManager(  558): freezing 1597 com.google.android.googlesdksetup
-09-27 17:30:55.739 V/AconfigFlags( 1678): Read Aconfig default flag value com.android.graphics.surfaceflinger.flags.vulkan_renderengine = false
-09-27 17:30:55.801 D/CarrierSvcBindHelper( 1102): onPackageModified: com.google.android.googlesdksetup
-09-27 17:30:55.806 D/ImsResolver( 1102): maybeAddedImsService, packageName: com.google.android.googlesdksetup
-09-27 17:30:56.168 D/ShortcutService(  558): changing package: com.google.android.googlesdksetup userId0
-09-27 17:30:56.168 D/ShortcutService(  558): handlePackageChanged: com.google.android.googlesdksetup user=0
-09-27 17:30:56.168 D/ShortcutService(  558): rescanPackageIfNeeded 0@com.google.android.googlesdksetup, forceRescan=true , isNewApp=true
-09-27 17:30:56.169 D/ShortcutService(  558): Package com.google.android.googlesdksetup has 0 manifest shortcut(s), and 0 share target(s)
-09-27 17:30:56.194 V/GraphicsEnvironment( 2260):   angle_gl_driver_selection_pkgs=[]
-09-27 17:30:56.194 V/GraphicsEnvironment( 2260):   angle_gl_driver_selection_values=[]
-09-27 17:30:58.463 V/GraphicsEnvironment( 2280):   angle_gl_driver_selection_pkgs=[]
-09-27 17:30:58.463 V/GraphicsEnvironment( 2280):   angle_gl_driver_selection_values=[]
-09-27 17:31:03.368 V/GraphicsEnvironment( 2305):   angle_gl_driver_selection_pkgs=[]
-09-27 17:31:03.368 V/GraphicsEnvironment( 2305):   angle_gl_driver_selection_values=[]
-09-27 17:31:03.900 I/AiAiEcho( 1429): AppFetcherImpl onPackageChanged com.google.android.googlesdksetup.
-09-27 17:31:03.914 I/AiAiEcho( 1429): AppIndexer Package:[com.google.android.googlesdksetup] UserProfile:[0] Enabled:[true].
-09-27 17:31:04.024 I/AiAiEcho( 1429): AppFetcherImplV2 updateApps package:[com.google.android.googlesdksetup], userId:[0], reason:[package is updated.].
-09-27 17:31:04.552 D/nativeloader( 2351): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:31:04.581 V/GraphicsEnvironment( 2351):   angle_gl_driver_selection_pkgs=[]
-09-27 17:31:04.582 V/GraphicsEnvironment( 2351):   angle_gl_driver_selection_values=[]
-09-27 17:31:06.847 D/nativeloader( 2377): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:31:07.245 V/GraphicsEnvironment( 2377):   angle_gl_driver_selection_pkgs=[]
-09-27 17:31:07.245 V/GraphicsEnvironment( 2377):   angle_gl_driver_selection_values=[]
-09-27 17:31:11.431 D/nativeloader( 2472): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:31:11.511 V/GraphicsEnvironment( 2472):   angle_gl_driver_selection_pkgs=[]
-09-27 17:31:11.511 V/GraphicsEnvironment( 2472):   angle_gl_driver_selection_values=[]
-09-27 17:31:12.308 I/EGL_emulation( 1678): Opening libGLESv1_CM_emulation.so
-09-27 17:31:12.309 I/EGL_emulation( 1678): Opening libGLESv2_emulation.so
-09-27 17:31:13.977 I/EGL_emulation( 1678): Opening libGLESv1_CM_emulation.so
-09-27 17:31:13.977 I/EGL_emulation( 1678): Opening libGLESv2_emulation.so
-09-27 17:31:14.120 I/NnApiDriverManager( 1678): Registering application with GPU 'Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0))' by 'Google (Google Inc. (Google))' [CONTEXT service_id=301 ]
-09-27 17:31:16.907 V/GraphicsEnvironment( 2511):   angle_gl_driver_selection_pkgs=[]
-09-27 17:31:16.907 V/GraphicsEnvironment( 2511):   angle_gl_driver_selection_values=[]
-09-27 17:31:20.802 V/GraphicsEnvironment( 2564):   angle_gl_driver_selection_pkgs=[]
-09-27 17:31:20.802 V/GraphicsEnvironment( 2564):   angle_gl_driver_selection_values=[]
-09-27 17:31:30.467 V/GraphicsEnvironment( 2615):   angle_gl_driver_selection_pkgs=[]
-09-27 17:31:30.467 V/GraphicsEnvironment( 2615):   angle_gl_driver_selection_values=[]
-09-27 17:31:34.187 I/lowmemorykiller(  146): Kill 'com.google.android.googlesdksetup' (1597), uid 10170, oom_score_adj 965 to free 110316kB rss, 9600kB swap; reason: low watermark is breached
-09-27 17:31:34.488 I/StatusBarManagerService(  558): binder died for pkg=com.google.android.googlesdksetup
-09-27 17:31:35.187 I/ActivityManager(  558): Process com.google.android.googlesdksetup (pid 1597) has died: cch+65 CEM 
-09-27 17:31:36.310 D/PackageUpdatedTask( 1203): Package updated: mOp=UPDATE packages=[com.google.android.googlesdksetup]
-09-27 17:31:36.538 W/AllAppsList( 1203): updatePromiseInstallInfo: no Activities matched updated package, removing all apps from package=com.google.android.googlesdksetup
-09-27 17:31:39.283 V/GraphicsEnvironment( 2691):   angle_gl_driver_selection_pkgs=[]
-09-27 17:31:39.283 V/GraphicsEnvironment( 2691):   angle_gl_driver_selection_values=[]
-09-27 17:31:43.763 D/nativeloader( 2724): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:31:43.983 V/GraphicsEnvironment( 2724):   angle_gl_driver_selection_pkgs=[]
-09-27 17:31:43.983 V/GraphicsEnvironment( 2724):   angle_gl_driver_selection_values=[]
-09-27 17:31:46.134 D/nativeloader( 2801): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:31:46.196 V/GraphicsEnvironment( 2801):   angle_gl_driver_selection_pkgs=[]
-09-27 17:31:46.196 V/GraphicsEnvironment( 2801):   angle_gl_driver_selection_values=[]
-09-27 17:31:54.150 V/GraphicsEnvironment( 2890):   angle_gl_driver_selection_pkgs=[]
-09-27 17:31:54.150 V/GraphicsEnvironment( 2890):   angle_gl_driver_selection_values=[]
-09-27 17:31:55.027 V/GraphicsEnvironment( 2928):   angle_gl_driver_selection_pkgs=[]
-09-27 17:31:55.027 V/GraphicsEnvironment( 2928):   angle_gl_driver_selection_values=[]
-09-27 17:31:57.085 D/nativeloader( 2968): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:31:57.111 V/GraphicsEnvironment( 2968):   angle_gl_driver_selection_pkgs=[]
-09-27 17:31:57.111 V/GraphicsEnvironment( 2968):   angle_gl_driver_selection_values=[]
-09-27 17:31:57.970 D/nativeloader( 3018): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:31:58.462 V/GraphicsEnvironment( 3018):   angle_gl_driver_selection_pkgs=[]
-09-27 17:31:58.462 V/GraphicsEnvironment( 3018):   angle_gl_driver_selection_values=[]
-09-27 17:31:59.849 V/GraphicsEnvironment( 3048):   angle_gl_driver_selection_pkgs=[]
-09-27 17:31:59.849 V/GraphicsEnvironment( 3048):   angle_gl_driver_selection_values=[]
-09-27 17:32:01.201 V/GraphicsEnvironment( 3069):   angle_gl_driver_selection_pkgs=[]
-09-27 17:32:01.201 V/GraphicsEnvironment( 3069):   angle_gl_driver_selection_values=[]
-09-27 17:32:01.221 I/GoogleSettingsUtils( 1678): Updated ID in checkin_id_token file [CONTEXT service_id=130 ]
-09-27 17:32:01.675 V/GraphicsEnvironment( 3084):   angle_gl_driver_selection_pkgs=[]
-09-27 17:32:01.675 V/GraphicsEnvironment( 3084):   angle_gl_driver_selection_values=[]
-09-27 17:32:02.095 D/nativeloader( 3095): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:32:03.103 V/GraphicsEnvironment( 3095):   angle_gl_driver_selection_pkgs=[]
-09-27 17:32:03.103 V/GraphicsEnvironment( 3095):   angle_gl_driver_selection_values=[]
-09-27 17:32:04.351 V/GraphicsEnvironment( 3131):   angle_gl_driver_selection_pkgs=[]
-09-27 17:32:04.351 V/GraphicsEnvironment( 3131):   angle_gl_driver_selection_values=[]
-09-27 17:32:09.805 D/nativeloader( 3238): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:32:09.916 V/GraphicsEnvironment( 3238):   angle_gl_driver_selection_pkgs=[]
-09-27 17:32:09.916 V/GraphicsEnvironment( 3238):   angle_gl_driver_selection_values=[]
-09-27 17:32:11.855 V/GraphicsEnvironment( 3261):   angle_gl_driver_selection_pkgs=[]
-09-27 17:32:11.855 V/GraphicsEnvironment( 3261):   angle_gl_driver_selection_values=[]
-09-27 17:32:14.168 V/GraphicsEnvironment( 3282):   angle_gl_driver_selection_pkgs=[]
-09-27 17:32:14.168 V/GraphicsEnvironment( 3282):   angle_gl_driver_selection_values=[]
-09-27 17:32:17.055 V/GraphicsEnvironment( 3302):   angle_gl_driver_selection_pkgs=[]
-09-27 17:32:17.055 V/GraphicsEnvironment( 3302):   angle_gl_driver_selection_values=[]
-09-27 17:32:19.690 V/GraphicsEnvironment( 3318):   angle_gl_driver_selection_pkgs=[]
-09-27 17:32:19.692 V/GraphicsEnvironment( 3318):   angle_gl_driver_selection_values=[]
-09-27 17:32:21.553 V/GraphicsEnvironment( 3356):   angle_gl_driver_selection_pkgs=[]
-09-27 17:32:21.553 V/GraphicsEnvironment( 3356):   angle_gl_driver_selection_values=[]
-09-27 17:32:23.939 W/gle.android.gms( 1678): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
-09-27 17:32:24.619 D/nativeloader( 3408): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:32:24.680 V/GraphicsEnvironment( 3408):   angle_gl_driver_selection_pkgs=[]
-09-27 17:32:24.680 V/GraphicsEnvironment( 3408):   angle_gl_driver_selection_values=[]
-09-27 17:32:27.543 V/GraphicsEnableAngleCtrl( 1104): Value of persist.graphics.egl is: 
-09-27 17:32:28.410 V/GraphicsEnableAngleCtrl( 1104): Value of persist.graphics.egl is: 
-09-27 17:32:29.122 D/PrefCtrlListHelper( 1104): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
-09-27 17:32:29.185 D/PrefCtrlListHelper( 1104): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
-09-27 17:32:34.615 D/PrefCtrlListHelper( 1104): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
-09-27 17:32:38.108 V/GraphicsEnvironment( 3547):   angle_gl_driver_selection_pkgs=[]
-09-27 17:32:38.108 V/GraphicsEnvironment( 3547):   angle_gl_driver_selection_values=[]
-09-27 17:32:38.268 D/nativeloader( 3535): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:32:38.271 D/nativeloader( 3557): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:32:38.286 D/nativeloader( 3558): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:32:38.346 V/GraphicsEnvironment( 3535):   angle_gl_driver_selection_pkgs=[]
-09-27 17:32:38.346 V/GraphicsEnvironment( 3535):   angle_gl_driver_selection_values=[]
-09-27 17:32:38.555 V/GraphicsEnvironment( 3558):   angle_gl_driver_selection_pkgs=[]
-09-27 17:32:38.555 V/GraphicsEnvironment( 3558):   angle_gl_driver_selection_values=[]
-09-27 17:32:38.622 V/GraphicsEnvironment( 3557):   angle_gl_driver_selection_pkgs=[]
-09-27 17:32:38.623 V/GraphicsEnvironment( 3557):   angle_gl_driver_selection_values=[]
-09-27 17:32:39.797 D/nativeloader( 3578): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:32:40.718 V/GraphicsEnvironment( 3578):   angle_gl_driver_selection_pkgs=[]
-09-27 17:32:40.718 V/GraphicsEnvironment( 3578):   angle_gl_driver_selection_values=[]
-09-27 17:32:42.898 I/EGL_emulation( 3095): Opening libGLESv1_CM_emulation.so
-09-27 17:32:42.903 I/EGL_emulation( 3095): Opening libGLESv2_emulation.so
-09-27 17:32:44.207 D/Backup  ( 3535): [BackupGoogleSettingsIO] Back up or restore entry point is not enabled
-09-27 17:32:44.352 I/ebvk$a  ( 3535): Unable to retrieve flag snapshot for com.google.android.gms.googlesettings#com.google.android.gms, using defaults.
-09-27 17:32:46.692 W/.apps.wellbeing( 2472): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
-09-27 17:32:46.695 W/.apps.wellbeing( 2472): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
-09-27 17:32:50.759 D/Backup  ( 3535): [BackupGoogleSettingsIO] Back up or restore entry point is not enabled
-09-27 17:32:51.927 I/EGL_emulation( 3095): Opening libGLESv1_CM_emulation.so
-09-27 17:32:51.929 I/EGL_emulation( 3095): Opening libGLESv2_emulation.so
-09-27 17:32:55.507 I/EGL_emulation( 3095): Opening libGLESv1_CM_emulation.so
-09-27 17:32:55.507 I/EGL_emulation( 3095): Opening libGLESv2_emulation.so
-09-27 17:32:56.825 I/BugleShortcuts( 3558): Clearing shortcuts for DB recreation
-09-27 17:32:59.163 I/Bugle   ( 3558): BugleStartup: Registering SIM change receiver...
-09-27 17:32:59.193 I/Bugle   ( 3558): BugleStartup: Updating app config...
-09-27 17:32:59.321 I/Bugle   ( 3558): BugleStartup: Done with SIM change receiver & app config.
-09-27 17:32:59.321 I/Bugle   ( 3558): BugleStartup: Handling shared prefs upgrade & Load MMS Configuration...
-09-27 17:32:59.776 I/EGL_emulation( 3095): Opening libGLESv1_CM_emulation.so
-09-27 17:32:59.776 I/EGL_emulation( 3095): Opening libGLESv2_emulation.so
-09-27 17:33:00.067 I/BugleBackup( 3558): Registering preference change listener for "buglesub_1".
-09-27 17:33:00.099 I/BugleSimStateTracker( 3558): Updating PhoneSimState
-09-27 17:33:00.684 I/BugleSimStateTracker( 3558): Is carrier config for identified carrier: true
-09-27 17:33:00.982 I/Bugle   ( 3558): BugleStartup: Initializing RCS availability...
-09-27 17:33:01.589 I/BugleSimStateTracker( 3558): Looking up Fi through package names.
-09-27 17:33:01.892 I/Bugle   ( 3558): BugleStartup: Done with RCS availability.
-09-27 17:33:01.893 I/Bugle   ( 3558): BugleStartup: Done initializing with enabled individual init failures.
-09-27 17:33:02.098 I/BugleSearch( 3558): Queues icing index rebuild work item. [CONTEXT class_name="IcingSyncManagerListener" ]
-09-27 17:33:02.179 I/BugleSimStateTracker( 3558): default call SIM: redacted-pii:sim_id[chars:20,last3:897], default sms SIM redacted-pii:sim_id[chars:20,last3:897]. default data SIM redacted-pii:sim_id[chars:20,last3:897].
-09-27 17:33:02.717 I/BugleSimStateTracker( 3558): Looking up Fi through package names.
-09-27 17:33:03.006 I/BugleSimStateTracker( 3558): allNewlyBuiltSimSubscriptionInfos (simId, loggableGuid): [(redacted-pii:sim_id[chars:20,last3:897], 32a8d861-b2bd-4f46-bd46-469bb9ca8d20)]
-09-27 17:33:03.147 I/BugleSimStateTracker( 3558): Storing updatedSimSubscriptionInfos: [(redacted-pii:sim_id[chars:20,last3:897], 32a8d861-b2bd-4f46-bd46-469bb9ca8d20)]
-09-27 17:33:03.625 I/NnApiDriverManager( 1678): Registering application with GPU 'Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0))' by 'Google (Google Inc. (Google))' [CONTEXT service_id=301 ]
-09-27 17:33:03.649 I/BugleSimStateTracker( 3558): Default call SIM changed. Broadcasting SIM SWAP. Old simId redacted-pii:sim_id[chars:0,last3:], new simId: redacted-pii:sim_id[chars:20,last3:897]
-09-27 17:33:03.690 I/BugleSimStateTracker( 3558): Default SMS SIM changed. Old simId redacted-pii:sim_id[chars:0,last3:], new simId: redacted-pii:sim_id[chars:20,last3:897]
-09-27 17:33:03.709 I/BugleSimStateTracker( 3558): Broadcasting SIM_LOADED event for newly loaded SIMs: [(redacted-pii:sim_id[chars:20,last3:897], 32a8d861-b2bd-4f46-bd46-469bb9ca8d20)]
-09-27 17:33:04.126 I/BugleRcsProvisioning( 3558): BugleSystemBindingManager: onBootComplete
-09-27 17:33:04.927 W/gle.android.gms( 1678): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
-09-27 17:33:05.352 W/ssioncontroller(  936): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
-09-27 17:33:07.724 I/BugleBackup( 3558): Registering preference change listener for "buglesub_-1".
-09-27 17:33:09.393 I/EGL_emulation( 3095): Opening libGLESv1_CM_emulation.so
-09-27 17:33:09.457 I/EGL_emulation( 3095): Opening libGLESv2_emulation.so
-09-27 17:33:11.932 D/nativeloader( 3844): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:33:12.140 V/GraphicsEnvironment( 3844):   angle_gl_driver_selection_pkgs=[]
-09-27 17:33:12.140 V/GraphicsEnvironment( 3844):   angle_gl_driver_selection_values=[]
-09-27 17:33:14.196 I/EGL_emulation( 3095): Opening libGLESv1_CM_emulation.so
-09-27 17:33:14.196 I/EGL_emulation( 3095): Opening libGLESv2_emulation.so
-09-27 17:33:30.253 W/gle.android.gms( 1678): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
-09-27 17:33:31.397 I/EGL_emulation( 3095): Opening libGLESv1_CM_emulation.so
-09-27 17:33:31.397 I/EGL_emulation( 3095): Opening libGLESv2_emulation.so
-09-27 17:33:32.122 I/NnApiDriverManager( 1678): Registering application with GPU 'Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0))' by 'Google (Google Inc. (Google))' [CONTEXT service_id=301 ]
-09-27 17:33:35.496 I/EGL_emulation( 3095): Opening libGLESv1_CM_emulation.so
-09-27 17:33:35.499 I/EGL_emulation( 3095): Opening libGLESv2_emulation.so
-09-27 17:33:36.563 W/gle.android.gms( 1678): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
-09-27 17:33:38.969 W/.apps.wellbeing( 2472): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
-09-27 17:33:38.975 W/.apps.wellbeing( 2472): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
-09-27 17:33:44.765 V/GraphicsEnvironment( 4112):   angle_gl_driver_selection_pkgs=[]
-09-27 17:33:44.766 V/GraphicsEnvironment( 4112):   angle_gl_driver_selection_values=[]
-09-27 17:33:44.871 V/GraphicsEnvironment( 4073):   angle_gl_driver_selection_pkgs=[]
-09-27 17:33:44.871 V/GraphicsEnvironment( 4073):   angle_gl_driver_selection_values=[]
-09-27 17:33:45.014 I/FlutterActivityAndFragmentDelegate( 4073): If you are attempting to set --start-paused via Intent extras to launch a Flutter component outside of using the Flutter CLI, note that support for setting engine flags on Android via Intent will soon be dropped; see https://github.com/flutter/flutter/issues/180686 for more information on this breaking change. To migrate, set --start-paused or any other flags specified via Intent extras on the command line instead or see https://github.com/flutter/flutter/blob/main/docs/engine/Flutter-Android-Engine-Flags.md for alternative methods.
-09-27 17:33:45.051 D/FlutterJNI( 4073): Beginning load of flutter...
-09-27 17:33:45.260 D/nativeloader( 4073): Load /data/app/~~j0f2FifaQW_NlMdrCyqLPA==/fr.tchoupi.streetlift_tracker-CKfTM237VBGa7Pjj12nzDg==/base.apk!/lib/x86_64/libflutter.so using ns clns-7 from class loader (caller=/data/app/~~j0f2FifaQW_NlMdrCyqLPA==/fr.tchoupi.streetlift_tracker-CKfTM237VBGa7Pjj12nzDg==/base.apk): ok
-09-27 17:33:45.264 D/FlutterJNI( 4073): flutter (null) was loaded normally!
-09-27 17:33:47.127 I/ResourceExtractor( 4073): Extracted baseline resource assets/flutter_assets/kernel_blob.bin
-09-27 17:33:47.133 I/ResourceExtractor( 4073): Extracted baseline resource assets/flutter_assets/vm_snapshot_data
-09-27 17:33:47.270 I/ResourceExtractor( 4073): Extracted baseline resource assets/flutter_assets/isolate_snapshot_data
-09-27 17:33:47.382 I/EGL_emulation( 4073): Opening libGLESv1_CM_emulation.so
-09-27 17:33:47.382 I/EGL_emulation( 4073): Opening libGLESv2_emulation.so
-09-27 17:33:47.766 I/flutter ( 4073): [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
-09-27 17:33:48.060 I/flutter ( 4073): The Dart VM service is listening on http://127.0.0.1:39373/ocw1fSnzjDY=/
-09-27 17:33:49.761 D/FlutterRenderer( 4073): Width is zero. 0,0
-09-27 17:33:50.721 D/FlutterRenderer( 4073): Width is zero. 0,0
-09-27 17:33:51.249 D/FlutterJNI( 4073): Sending viewport metrics to the engine.
-09-27 17:33:51.838 I/BugleRcsProvisioning( 3558): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
-09-27 17:33:52.905 I/BugleRcsProvisioning( 3558): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
-09-27 17:33:56.867 I/BugleRcsProvisioning( 3558): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
-09-27 17:33:58.540 W/.apps.wellbeing( 2472): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
-09-27 17:33:58.546 W/.apps.wellbeing( 2472): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
-09-27 17:33:59.825 D/FlutterJNI( 4073): Sending viewport metrics to the engine.
-09-27 17:34:01.024 I/BugleRcsProvisioning( 3558): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
-09-27 17:34:01.654 I/BugleRcsProvisioning( 3558): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
-09-27 17:34:01.721 I/flutter ( 4073): 00:00 +0: (setUpAll)
-09-27 17:34:04.622 I/flutter ( 4073): 00:02 +1: Réglages › À propos › Moteur 3D, thème sombre
-09-27 17:34:04.894 V/GraphicsEnableAngleCtrl( 1104): Value of persist.graphics.egl is: 
-09-27 17:34:05.291 V/GraphicsEnableAngleCtrl( 1104): Value of persist.graphics.egl is: 
-09-27 17:34:05.698 D/PrefCtrlListHelper( 1104): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
-09-27 17:34:05.706 D/PrefCtrlListHelper( 1104): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
-09-27 17:34:09.182 D/nativeloader( 4250): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
-09-27 17:34:09.254 V/GraphicsEnvironment( 4250):   angle_gl_driver_selection_pkgs=[]
-09-27 17:34:09.254 V/GraphicsEnvironment( 4250):   angle_gl_driver_selection_values=[]
-09-27 17:34:09.336 D/PrefCtrlListHelper( 1104): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
-09-27 17:34:15.763 I/EGL_emulation(  558): Opening libGLESv1_CM_emulation.so
-09-27 17:34:15.768 I/EGL_emulation(  558): Opening libGLESv2_emulation.so
-09-27 17:34:32.901 I/EGL_emulation( 3095): Opening libGLESv1_CM_emulation.so
-09-27 17:34:32.902 I/EGL_emulation( 3095): Opening libGLESv2_emulation.so
-09-27 17:34:40.748 I/EGL_emulation( 3095): Opening libGLESv1_CM_emulation.so
-09-27 17:34:40.758 I/EGL_emulation( 3095): Opening libGLESv2_emulation.so
-09-27 17:35:18.649 F/libc    ( 2472): Fatal signal 6 (SIGABRT), code -6 (SI_TKILL) in tid 4147 (Blocking Thread), pid 2472 (.apps.wellbeing)
-09-27 17:35:21.933 W/gle.android.gms( 1678): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
-09-27 17:35:25.103 W/AppSearchIcing(  558): icing-search-engine.cc:321: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
-09-27 17:35:27.251 I/EGL_emulation(  558): Opening libGLESv1_CM_emulation.so
-09-27 17:35:27.255 I/EGL_emulation(  558): Opening libGLESv2_emulation.so
+09-27 18:53:03.810 V/GraphicsEnvironment( 1567):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:03.810 V/GraphicsEnvironment( 1567):   angle_gl_driver_selection_values=[]
+09-27 18:53:03.933 I/EGL_emulation( 1148): Opening libGLESv1_CM_emulation.so
+09-27 18:53:03.938 I/EGL_emulation( 1148): Opening libGLESv2_emulation.so
+09-27 18:53:04.130 V/GraphicsEnvironment( 1654):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:04.130 V/GraphicsEnvironment( 1654):   angle_gl_driver_selection_values=[]
+09-27 18:53:04.225 W/WifiConnectivityManager(  562): mConnectedSingleSavedNetworkSingleScanScheduleSec is not configured! Using default scan schedule
+09-27 18:53:04.231 W/WifiConnectivityManager(  562): mConnectedSingleSavedNetworkSingleScanType is not configured! Using default scan types
+09-27 18:53:04.409 D/WifiClientModeImpl[32908:wlan0](  562): connectToUserSelectNetwork netId 0, uid 10171, package com.google.android.googlesdksetup, forceReconnect = false, isUserSelected = false, attributionTag = null
+09-27 18:53:04.426 I/GoogleSdkSetup( 1579): Setting system screen_off_timeout to be 2147483647 ms
+09-27 18:53:04.634 V/GraphicsEnvironment( 1694):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:04.634 V/GraphicsEnvironment( 1694):   angle_gl_driver_selection_values=[]
+09-27 18:53:19.144 I/ActivityThread( 1579): ApplicationInfo updating for com.google.android.googlesdksetup, new timestamp: 35482
+09-27 18:53:19.616 V/GraphicsEnvironment( 1856):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:19.616 V/GraphicsEnvironment( 1856):   angle_gl_driver_selection_values=[]
+09-27 18:53:19.753 V/GraphicsEnvironment( 1932):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:19.756 V/GraphicsEnvironment( 1932):   angle_gl_driver_selection_values=[]
+09-27 18:53:22.091 D/nativeloader( 2018): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 18:53:22.492 V/GraphicsEnvironment( 2018):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:22.496 V/GraphicsEnvironment( 2018):   angle_gl_driver_selection_values=[]
+09-27 18:53:22.500 I/EGL_emulation(  562): Opening libGLESv1_CM_emulation.so
+09-27 18:53:22.502 I/EGL_emulation(  562): Opening libGLESv2_emulation.so
+09-27 18:53:23.315 W/.gms.persistent( 1223): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 18:53:23.582 W/AppSearchIcing(  562): icing-search-engine.cc:321: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
+09-27 18:53:23.652 V/AconfigFlags( 1549): Read Aconfig default flag value com.android.graphics.surfaceflinger.flags.vulkan_renderengine = false
+09-27 18:53:23.826 W/system_server(  562): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleSdkSetup/GoogleSdkSetup.apk' with 1 weak references
+09-27 18:53:24.254 I/WindowManager(  562):   Force finishing ActivityRecord{46ee5fd u0 com.google.android.googlesdksetup/.DefaultActivity t6 f}}
+09-27 18:53:24.254 W/ActivityTaskManager(  562): Duplicate finish request for r=ActivityRecord{46ee5fd u0 com.google.android.googlesdksetup/.DefaultActivity t6 f}}
+09-27 18:53:24.761 D/nativeloader( 2111): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 18:53:24.905 V/GraphicsEnvironment( 2111):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:24.905 V/GraphicsEnvironment( 2111):   angle_gl_driver_selection_values=[]
+09-27 18:53:25.301 V/AconfigFlags( 1549): Read Aconfig default flag value com.android.graphics.surfaceflinger.flags.vulkan_renderengine = false
+09-27 18:53:26.634 V/GraphicsEnvironment( 2210):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:26.634 V/GraphicsEnvironment( 2210):   angle_gl_driver_selection_values=[]
+09-27 18:53:27.705 V/GraphicsEnvironment( 2211):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:27.706 V/GraphicsEnvironment( 2211):   angle_gl_driver_selection_values=[]
+09-27 18:53:29.177 I/AiAiEcho( 1444): AppFetcherImpl onPackageChanged com.google.android.googlesdksetup.
+09-27 18:53:29.178 I/AiAiEcho( 1444): AppIndexer Package:[com.google.android.googlesdksetup] UserProfile:[0] Enabled:[true].
+09-27 18:53:29.178 I/AiAiEcho( 1444): AppFetcherImplV2 updateApps package:[com.google.android.googlesdksetup], userId:[0], reason:[package is updated.].
+09-27 18:53:29.512 W/gle.android.gms( 1549): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 18:53:30.089 D/CarrierSvcBindHelper( 1094): onPackageModified: com.google.android.googlesdksetup
+09-27 18:53:30.219 D/nativeloader( 2329): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 18:53:30.833 V/GraphicsEnvironment( 2314):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:30.833 V/GraphicsEnvironment( 2314):   angle_gl_driver_selection_values=[]
+09-27 18:53:30.947 V/GraphicsEnvironment( 2329):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:30.947 V/GraphicsEnvironment( 2329):   angle_gl_driver_selection_values=[]
+09-27 18:53:31.099 D/ImsResolver( 1094): maybeAddedImsService, packageName: com.google.android.googlesdksetup
+09-27 18:53:32.218 I/Role    (  562): com.google.android.googlesdksetup not qualified for android.app.role.HOME due to missing RequiredComponent{mIntentFilterData=IntentFilterData{mAction='android.intent.action.MAIN', mCategories='[android.intent.category.HOME]', mDataScheme='null', mDataType='null'}, mMinTargetSdkVersion=1, mFlags='0', mPermission='null', mQueryFlags=0, mMetaData=[]}
+09-27 18:53:32.218 I/RoleControllerServiceImpl(  562): Removing package that no longer qualifies for the role, package: com.google.android.googlesdksetup, role: android.app.role.HOME
+09-27 18:53:32.754 V/SafetyCenterRefreshTrac(  562): Refresh with id: b9ce5b1e-52a6-41ba-a504-90b2161874b2_0 completed for source id: GoogleSecurityUpdates, user id: 0, duration: PT20.411S, successful: true, data changed: true, tracking: true, now 1 tracked sources in flight
+09-27 18:53:32.787 V/GraphicsEnvironment( 2360):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:32.787 V/GraphicsEnvironment( 2360):   angle_gl_driver_selection_values=[]
+09-27 18:53:34.455 W/.googlesdksetup( 1579): Cleared Reference was only reachable from finalizer (only reported once)
+09-27 18:53:34.498 W/.googlesdksetup( 1579): ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-neutral-GRui.frro' with 2 weak references
+09-27 18:53:34.498 W/.googlesdksetup( 1579): ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-accent-xpSt.frro' with 2 weak references
+09-27 18:53:34.498 W/.googlesdksetup( 1579): ApkAssets: Deleting an ApkAssets object '/data/resource-cache/com.android.systemui-dynamic-5Stm.frro' with 2 weak references
+09-27 18:53:34.597 D/ActivityManager(  562): freezing 1579 com.google.android.googlesdksetup
+09-27 18:53:35.847 I/EGL_emulation( 1549): Opening libGLESv1_CM_emulation.so
+09-27 18:53:35.847 I/EGL_emulation( 1549): Opening libGLESv2_emulation.so
+09-27 18:53:36.289 V/GraphicsEnvironment( 2448):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:36.289 V/GraphicsEnvironment( 2448):   angle_gl_driver_selection_values=[]
+09-27 18:53:36.737 W/AppSearchIcing(  562): icing-search-engine.cc:321: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
+09-27 18:53:40.343 V/GraphicsEnvironment( 2518):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:40.343 V/GraphicsEnvironment( 2518):   angle_gl_driver_selection_values=[]
+09-27 18:53:40.448 D/nativeloader( 2556): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 18:53:40.866 I/EGL_emulation( 1549): Opening libGLESv1_CM_emulation.so
+09-27 18:53:40.867 I/EGL_emulation( 1549): Opening libGLESv2_emulation.so
+09-27 18:53:40.985 V/GraphicsEnvironment( 2556):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:40.985 V/GraphicsEnvironment( 2556):   angle_gl_driver_selection_values=[]
+09-27 18:53:41.787 I/NnApiDriverManager( 1549): Registering application with GPU 'Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0))' by 'Google (Google Inc. (Google))' [CONTEXT service_id=301 ]
+09-27 18:53:42.093 D/nativeloader( 2601): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 18:53:42.640 V/GraphicsEnvironment( 2601):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:42.640 V/GraphicsEnvironment( 2601):   angle_gl_driver_selection_values=[]
+09-27 18:53:43.959 D/PackageUpdatedTask( 1148): Package updated: mOp=UPDATE packages=[com.google.android.googlesdksetup]
+09-27 18:53:43.959 W/AllAppsList( 1148): updatePromiseInstallInfo: no Activities matched updated package, removing all apps from package=com.google.android.googlesdksetup
+09-27 18:53:44.349 D/nativeloader( 2627): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 18:53:44.508 V/GraphicsEnvironment( 2627):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:44.508 V/GraphicsEnvironment( 2627):   angle_gl_driver_selection_values=[]
+09-27 18:53:46.812 D/ShortcutService(  562): changing package: com.google.android.googlesdksetup userId0
+09-27 18:53:46.813 D/ShortcutService(  562): handlePackageChanged: com.google.android.googlesdksetup user=0
+09-27 18:53:46.813 D/ShortcutService(  562): rescanPackageIfNeeded 0@com.google.android.googlesdksetup, forceRescan=true , isNewApp=true
+09-27 18:53:46.813 D/ShortcutService(  562): Package com.google.android.googlesdksetup has 0 manifest shortcut(s), and 0 share target(s)
+09-27 18:53:49.121 V/GraphicsEnvironment( 2686):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:49.121 V/GraphicsEnvironment( 2686):   angle_gl_driver_selection_values=[]
+09-27 18:53:53.717 V/GraphicsEnvironment( 2748):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:53.717 V/GraphicsEnvironment( 2748):   angle_gl_driver_selection_values=[]
+09-27 18:53:53.836 V/GraphicsEnvironment( 2745):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:53.836 V/GraphicsEnvironment( 2745):   angle_gl_driver_selection_values=[]
+09-27 18:53:55.283 V/GraphicsEnvironment( 2779):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:55.283 V/GraphicsEnvironment( 2779):   angle_gl_driver_selection_values=[]
+09-27 18:53:56.683 D/nativeloader( 2835): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 18:53:56.744 V/GraphicsEnvironment( 2835):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:56.744 V/GraphicsEnvironment( 2835):   angle_gl_driver_selection_values=[]
+09-27 18:53:57.913 D/nativeloader( 2863): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 18:53:58.443 V/GraphicsEnvironment( 2863):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:58.443 V/GraphicsEnvironment( 2863):   angle_gl_driver_selection_values=[]
+09-27 18:53:58.997 V/GraphicsEnvironment( 2885):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:58.998 V/GraphicsEnvironment( 2885):   angle_gl_driver_selection_values=[]
+09-27 18:53:59.460 V/GraphicsEnvironment( 2903):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:59.460 V/GraphicsEnvironment( 2903):   angle_gl_driver_selection_values=[]
+09-27 18:53:59.526 V/GraphicsEnvironment( 2901):   angle_gl_driver_selection_pkgs=[]
+09-27 18:53:59.526 V/GraphicsEnvironment( 2901):   angle_gl_driver_selection_values=[]
+09-27 18:53:59.935 W/gle.android.gms( 1549): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 18:54:00.080 V/GraphicsEnvironment( 2927):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:00.080 V/GraphicsEnvironment( 2927):   angle_gl_driver_selection_values=[]
+09-27 18:54:00.565 D/nativeloader( 2942): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 18:54:00.945 V/GraphicsEnvironment( 2942):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:00.945 V/GraphicsEnvironment( 2942):   angle_gl_driver_selection_values=[]
+09-27 18:54:01.195 V/GraphicsEnvironment( 2962):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:01.195 V/GraphicsEnvironment( 2962):   angle_gl_driver_selection_values=[]
+09-27 18:54:01.738 V/GraphicsEnvironment( 2976):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:01.739 V/GraphicsEnvironment( 2976):   angle_gl_driver_selection_values=[]
+09-27 18:54:02.656 V/GraphicsEnvironment( 2998):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:02.656 V/GraphicsEnvironment( 2998):   angle_gl_driver_selection_values=[]
+09-27 18:54:02.866 I/NnApiDriverManager( 1549): Registering application with GPU 'Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0))' by 'Google (Google Inc. (Google))' [CONTEXT service_id=301 ]
+09-27 18:54:03.110 V/GraphicsEnvironment( 3014):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:03.110 V/GraphicsEnvironment( 3014):   angle_gl_driver_selection_values=[]
+09-27 18:54:04.301 V/GraphicsEnvironment( 3068):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:04.301 V/GraphicsEnvironment( 3068):   angle_gl_driver_selection_values=[]
+09-27 18:54:06.044 D/nativeloader( 3179): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 18:54:06.064 V/GraphicsEnvironment( 3179):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:06.064 V/GraphicsEnvironment( 3179):   angle_gl_driver_selection_values=[]
+09-27 18:54:07.563 D/PrefCtrlListHelper( 1095): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
+09-27 18:54:07.721 D/PrefCtrlListHelper( 1095): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
+09-27 18:54:07.726 D/PrefCtrlListHelper( 1095): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
+09-27 18:54:07.989 V/GraphicsEnableAngleCtrl( 1095): Value of persist.graphics.egl is: 
+09-27 18:54:10.097 V/GraphicsEnableAngleCtrl( 1095): Value of persist.graphics.egl is: 
+09-27 18:54:10.547 I/EGL_emulation( 2556): Opening libGLESv1_CM_emulation.so
+09-27 18:54:10.550 I/EGL_emulation( 2556): Opening libGLESv2_emulation.so
+09-27 18:54:12.788 D/nativeloader( 3341): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 18:54:12.951 V/GraphicsEnvironment( 3341):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:12.952 V/GraphicsEnvironment( 3341):   angle_gl_driver_selection_values=[]
+09-27 18:54:13.066 D/nativeloader( 3380): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 18:54:13.076 D/nativeloader( 3362): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 18:54:13.086 D/nativeloader( 3356): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 18:54:13.098 V/GraphicsEnvironment( 3362):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:13.098 V/GraphicsEnvironment( 3362):   angle_gl_driver_selection_values=[]
+09-27 18:54:13.133 V/GraphicsEnvironment( 3368):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:13.135 V/GraphicsEnvironment( 3368):   angle_gl_driver_selection_values=[]
+09-27 18:54:13.156 V/GraphicsEnvironment( 3380):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:13.156 V/GraphicsEnvironment( 3380):   angle_gl_driver_selection_values=[]
+09-27 18:54:13.228 V/GraphicsEnvironment( 3356):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:13.228 V/GraphicsEnvironment( 3356):   angle_gl_driver_selection_values=[]
+09-27 18:54:13.413 W/.apps.wellbeing( 1350): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 18:54:13.441 W/.apps.wellbeing( 1350): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
+09-27 18:54:13.923 D/Backup  ( 3362): [BackupGoogleSettingsIO] Back up or restore entry point is not enabled
+09-27 18:54:13.993 I/ebvk$a  ( 3362): Unable to retrieve flag snapshot for com.google.android.gms.googlesettings#com.google.android.gms, using defaults.
+09-27 18:54:14.146 I/BugleShortcuts( 3341): Clearing shortcuts for DB recreation
+09-27 18:54:14.698 D/Backup  ( 3362): [BackupGoogleSettingsIO] Back up or restore entry point is not enabled
+09-27 18:54:15.363 W/gle.android.gms( 1549): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 18:54:16.214 I/EGL_emulation( 2556): Opening libGLESv1_CM_emulation.so
+09-27 18:54:16.215 I/EGL_emulation( 2556): Opening libGLESv2_emulation.so
+09-27 18:54:16.689 I/GoogleSettingsUtils( 1549): Updated ID in checkin_id_token file [CONTEXT service_id=130 ]
+09-27 18:54:20.367 I/NnApiDriverManager( 1549): Registering application with GPU 'Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0))' by 'Google (Google Inc. (Google))' [CONTEXT service_id=301 ]
+09-27 18:54:20.549 I/BugleSearch( 3341): Queues icing index rebuild work item. [CONTEXT class_name="IcingSyncManagerListener" ]
+09-27 18:54:20.556 I/GoogleSettingsUtils( 1549): Updating Android ID in Gservices [CONTEXT service_id=130 ]
+09-27 18:54:20.586 I/BugleRcsProvisioning( 3341): BugleSystemBindingManager: onBootComplete
+09-27 18:54:23.171 I/BugleBackup( 3341): Registering preference change listener for "buglesub_-1".
+09-27 18:54:23.561 I/lowmemorykiller(  151): Kill 'com.google.android.googlesdksetup' (1579), uid 10171, oom_score_adj 999 to free 82952kB rss, 31872kB swap; reason: low watermark is breached
+09-27 18:54:23.592 I/StatusBarManagerService(  562): binder died for pkg=com.google.android.googlesdksetup
+09-27 18:54:23.606 I/ActivityManager(  562): Process com.google.android.googlesdksetup (pid 1579) has died: cch+99 CEM 
+09-27 18:54:23.608 I/BugleBackup( 3341): Registering preference change listener for "buglesub_1".
+09-27 18:54:23.844 D/nativeloader( 3621): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 18:54:23.926 V/GraphicsEnvironment( 3621):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:23.926 V/GraphicsEnvironment( 3621):   angle_gl_driver_selection_values=[]
+09-27 18:54:24.781 W/gle.android.gms( 1549): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 18:54:27.988 W/.apps.wellbeing( 1350): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 18:54:27.991 W/.apps.wellbeing( 1350): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
+09-27 18:54:28.226 I/EGL_emulation( 2556): Opening libGLESv1_CM_emulation.so
+09-27 18:54:28.226 I/EGL_emulation( 2556): Opening libGLESv2_emulation.so
+09-27 18:54:28.696 I/Bugle   ( 3341): BugleStartup: Registering SIM change receiver...
+09-27 18:54:28.697 I/Bugle   ( 3341): BugleStartup: Updating app config...
+09-27 18:54:28.898 I/Bugle   ( 3341): BugleStartup: Done with SIM change receiver & app config.
+09-27 18:54:28.898 I/Bugle   ( 3341): BugleStartup: Handling shared prefs upgrade & Load MMS Configuration...
+09-27 18:54:29.329 I/BugleSimStateTracker( 3341): Updating PhoneSimState
+09-27 18:54:29.329 I/Bugle   ( 3341): BugleStartup: Initializing RCS availability...
+09-27 18:54:29.330 I/Bugle   ( 3341): BugleStartup: Done with RCS availability.
+09-27 18:54:29.330 I/Bugle   ( 3341): BugleStartup: Done initializing with enabled individual init failures.
+09-27 18:54:29.420 I/BugleSimStateTracker( 3341): Is carrier config for identified carrier: true
+09-27 18:54:29.643 I/BugleSimStateTracker( 3341): Looking up Fi through package names.
+09-27 18:54:29.668 I/BugleSimStateTracker( 3341): default call SIM: redacted-pii:sim_id[chars:20,last3:897], default sms SIM redacted-pii:sim_id[chars:20,last3:897]. default data SIM redacted-pii:sim_id[chars:20,last3:897].
+09-27 18:54:29.833 I/BugleSimStateTracker( 3341): Looking up Fi through package names.
+09-27 18:54:29.995 I/BugleSimStateTracker( 3341): allNewlyBuiltSimSubscriptionInfos (simId, loggableGuid): [(redacted-pii:sim_id[chars:20,last3:897], adcd556d-dfe7-4ecc-8290-dabb1fcac101)]
+09-27 18:54:30.032 I/BugleSimStateTracker( 3341): Storing updatedSimSubscriptionInfos: [(redacted-pii:sim_id[chars:20,last3:897], adcd556d-dfe7-4ecc-8290-dabb1fcac101)]
+09-27 18:54:30.118 V/GraphicsEnvironment( 3729):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:30.118 V/GraphicsEnvironment( 3729):   angle_gl_driver_selection_values=[]
+09-27 18:54:30.246 I/BugleSimStateTracker( 3341): Default call SIM changed. Broadcasting SIM SWAP. Old simId redacted-pii:sim_id[chars:0,last3:], new simId: redacted-pii:sim_id[chars:20,last3:897]
+09-27 18:54:30.323 I/BugleSimStateTracker( 3341): Default SMS SIM changed. Old simId redacted-pii:sim_id[chars:0,last3:], new simId: redacted-pii:sim_id[chars:20,last3:897]
+09-27 18:54:30.335 I/BugleSimStateTracker( 3341): Broadcasting SIM_LOADED event for newly loaded SIMs: [(redacted-pii:sim_id[chars:20,last3:897], adcd556d-dfe7-4ecc-8290-dabb1fcac101)]
+09-27 18:54:30.651 I/BugleRcsProvisioning( 3341): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-27 18:54:30.730 I/BugleRcsProvisioning( 3341): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-27 18:54:30.837 V/GraphicsEnvironment( 3783):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:30.837 V/GraphicsEnvironment( 3783):   angle_gl_driver_selection_values=[]
+09-27 18:54:30.895 V/GraphicsEnvironment( 3785):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:30.895 V/GraphicsEnvironment( 3785):   angle_gl_driver_selection_values=[]
+09-27 18:54:30.996 I/BugleRcsProvisioning( 3341): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-27 18:54:32.517 W/.apps.wellbeing( 1350): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
+09-27 18:54:33.324 I/EGL_emulation( 2556): Opening libGLESv1_CM_emulation.so
+09-27 18:54:33.325 I/EGL_emulation( 2556): Opening libGLESv2_emulation.so
+09-27 18:54:43.036 W/.apps.wellbeing( 1350): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 18:54:43.039 W/.apps.wellbeing( 1350): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
+09-27 18:54:45.085 I/BugleRcsProvisioning( 3341): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-27 18:54:45.978 D/nativeloader( 4007): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 18:54:45.989 V/GraphicsEnvironment( 4007):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:45.989 V/GraphicsEnvironment( 4007):   angle_gl_driver_selection_values=[]
+09-27 18:54:47.585 W/gle.android.gms( 1549): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 18:54:54.331 V/GraphicsEnvironment( 4138):   angle_gl_driver_selection_pkgs=[]
+09-27 18:54:54.331 V/GraphicsEnvironment( 4138):   angle_gl_driver_selection_values=[]
+09-27 18:54:54.792 I/FlutterActivityAndFragmentDelegate( 4138): If you are attempting to set --start-paused via Intent extras to launch a Flutter component outside of using the Flutter CLI, note that support for setting engine flags on Android via Intent will soon be dropped; see https://github.com/flutter/flutter/issues/180686 for more information on this breaking change. To migrate, set --start-paused or any other flags specified via Intent extras on the command line instead or see https://github.com/flutter/flutter/blob/main/docs/engine/Flutter-Android-Engine-Flags.md for alternative methods.
+09-27 18:54:54.822 D/FlutterJNI( 4138): Beginning load of flutter...
+09-27 18:54:54.929 D/nativeloader( 4138): Load /data/app/~~oQWAwXyHfz1vQ5BaPKxWNA==/fr.tchoupi.streetlift_tracker-CMCrnta_1bX7EErm4NINpQ==/base.apk!/lib/x86_64/libflutter.so using ns clns-7 from class loader (caller=/data/app/~~oQWAwXyHfz1vQ5BaPKxWNA==/fr.tchoupi.streetlift_tracker-CMCrnta_1bX7EErm4NINpQ==/base.apk): ok
+09-27 18:54:54.930 D/FlutterJNI( 4138): flutter (null) was loaded normally!
+09-27 18:54:56.423 I/ResourceExtractor( 4138): Extracted baseline resource assets/flutter_assets/kernel_blob.bin
+09-27 18:54:56.424 I/ResourceExtractor( 4138): Extracted baseline resource assets/flutter_assets/vm_snapshot_data
+09-27 18:54:56.505 I/ResourceExtractor( 4138): Extracted baseline resource assets/flutter_assets/isolate_snapshot_data
+09-27 18:54:56.588 I/EGL_emulation( 4138): Opening libGLESv1_CM_emulation.so
+09-27 18:54:56.590 I/EGL_emulation( 4138): Opening libGLESv2_emulation.so
+09-27 18:54:56.660 I/flutter ( 4138): [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
+09-27 18:54:56.734 I/flutter ( 4138): The Dart VM service is listening on http://127.0.0.1:37903/ZELt3iuKpvQ=/
+09-27 18:54:57.196 W/.apps.wellbeing( 1350): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 18:54:57.198 W/.apps.wellbeing( 1350): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
+09-27 18:54:57.630 D/FlutterRenderer( 4138): Width is zero. 0,0
+09-27 18:54:57.926 D/FlutterRenderer( 4138): Width is zero. 0,0
+09-27 18:54:57.955 D/FlutterJNI( 4138): Sending viewport metrics to the engine.
+09-27 18:54:58.510 I/BugleRcsProvisioning( 3341): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-27 18:55:00.289 D/FlutterJNI( 4138): Sending viewport metrics to the engine.
+09-27 18:55:01.587 W/ssioncontroller(  922): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
+09-27 18:55:01.990 I/EGL_emulation( 2556): Opening libGLESv1_CM_emulation.so
+09-27 18:55:01.990 I/EGL_emulation( 2556): Opening libGLESv2_emulation.so
+09-27 18:55:02.705 I/flutter ( 4138): 00:00 +0: (setUpAll)
+09-27 18:55:03.882 I/flutter ( 4138): 00:01 +1: Réglages › À propos › Moteur 3D, thème sombre
+09-27 18:55:12.928 W/gle.android.gms( 1549): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 18:55:16.702 W/PlatformConfigurator( 1223): Update for unknown DeviceConfig package com.google.android.gms.googlesettings#com.google.android.gms [CONTEXT service_id=204 ]
+09-27 18:55:16.702 W/PlatformConfigurator( 1223): daaf: No package exists for config package: com.google.android.gms.googlesettings#com.google.android.gms
+09-27 18:55:25.309 I/EGL_emulation( 2556): Opening libGLESv1_CM_emulation.so
+09-27 18:55:25.310 I/EGL_emulation( 2556): Opening libGLESv2_emulation.so
+09-27 18:55:51.940 I/flutter ( 4138): 00:49 +2: Moteur 3D, thème clair
+09-27 18:55:52.864 D/FlutterJNI( 4138): Sending viewport metrics to the engine.
+09-27 18:56:05.348 I/flutter ( 4138): 01:02 +3: (tearDownAll)
+09-27 18:56:05.498 I/flutter ( 4138): 01:02 +4: All tests passed!
+09-27 18:56:08.013 W/AppSearchIcing(  562): icing-search-engine.cc:321: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.

@@ -1,2 +1,6 @@
 Analyzing streetlift_tracker...                                 
-No issues found! (ran in 21.0s)
+
+  error • Undefined class 'FrameTiming'. Try changing the name to the name of an existing class, or creating a class with the name 'FrameTiming' • test/m1_engine3d_test.dart:83:7 • undefined_class
+  error • The function 'FrameTiming' isn't defined. Try importing the library that defines 'FrameTiming', correcting the name to the name of an existing function, or defining a function named 'FrameTiming' • test/m1_engine3d_test.dart:83:53 • undefined_function
+
+2 issues found. (ran in 17.7s)
