@@ -11,116 +11,63 @@ Alternatively, use the flag "--android-skip-build-dependency-validation" to bypa
 Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/settings.gradle), by a plugin with the id of com.android.application. 
 If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
 
-Running Gradle task 'assembleDebug'...                             87.2s
+Running Gradle task 'assembleDebug'...                             90.4s
 ✓ Built build/app/outputs/flutter-apk/app-debug.apk
 Installing build/app/outputs/flutter-apk/app-debug.apk...           3.6s
-D/FlutterRenderer( 4086): Width is zero. 0,0
-W/HWUI    ( 4086): Unknown dataspace 0
-D/ProfileInstaller( 4086): Installing profile for fr.tchoupi.streetlift_tracker
-I/WindowExtensionsImpl( 4086): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
-D/FlutterRenderer( 4086): Width is zero. 0,0
-I/eetlift_tracker( 4086): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
-D/FlutterJNI( 4086): Sending viewport metrics to the engine.
-I/eetlift_tracker( 4086): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
-W/HWUI    ( 4086): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
-W/HWUI    ( 4086): Failed to initialize 101010-2 format, error = EGL_SUCCESS
-I/Gralloc4( 4086): mapper 4.x is not supported
-I/Choreographer( 4086): Skipped 129 frames!  The application may be doing too much work on its main thread.
-D/FlutterJNI( 4086): Sending viewport metrics to the engine.
-VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:40303/U2QF2AfMT3g=/
-VMServiceFlutterDriver: Isolate found with number: 3817256257515391
-VMServiceFlutterDriver: Isolate 3817256257515391 is runnable.
+D/FlutterRenderer( 3950): Width is zero. 0,0
+D/FlutterJNI( 3950): Sending viewport metrics to the engine.
+W/HWUI    ( 3950): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 3950): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 3950): mapper 4.x is not supported
+I/Choreographer( 3950): Skipped 157 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 3950): Sending viewport metrics to the engine.
+D/ProfileInstaller( 3950): Installing profile for fr.tchoupi.streetlift_tracker
+I/eetlift_tracker( 3950): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:35969/sUBJvbw_cgw=/
+VMServiceFlutterDriver: Isolate found with number: 4608959800636495
+VMServiceFlutterDriver: Isolate 4608959800636495 is runnable.
 VMServiceFlutterDriver: Isolate is paused at start.
 VMServiceFlutterDriver: Attempting to resume isolate
-I/flutter ( 4086): 00:00 +0: (setUpAll)
+I/flutter ( 3950): 00:00 +0: (setUpAll)
 VMServiceFlutterDriver: Connected to Flutter application.
-I/flutter ( 4086): 00:01 +1: Réglages › À propos › Moteur 3D, thème sombre
-I/Choreographer( 4086): Skipped 81 frames!  The application may be doing too much work on its main thread.
-I/Choreographer( 4086): Skipped 65 frames!  The application may be doing too much work on its main thread.
-I/eetlift_tracker( 4086): Background concurrent mark compact GC freed 1986KB AllocSpace bytes, 3(60KB) LOS objects, 49% free, 2644KB/5288KB, paused 49us,1.109ms total 260.093ms
-D/EGL_emulation( 4086): app_time_stats: avg=1291.34ms min=165.87ms max=4118.13ms count=4
-W/WindowOnBackDispatcher( 4086): OnBackInvokedCallback is not enabled for the application.
-W/WindowOnBackDispatcher( 4086): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
-D/EGL_emulation( 4086): app_time_stats: avg=370.85ms min=252.17ms max=493.07ms count=3
-D/EGL_emulation( 4086): app_time_stats: avg=554.64ms min=373.23ms max=736.05ms count=2
-D/EGL_emulation( 4086): app_time_stats: avg=1129.99ms min=1129.99ms max=1129.99ms count=1
-D/EGL_emulation( 4086): app_time_stats: avg=723.32ms min=212.27ms max=1628.19ms count=3
-D/EGL_emulation( 4086): app_time_stats: avg=15987.74ms min=15987.74ms max=15987.74ms count=1
-D/EGL_emulation( 4086): app_time_stats: avg=1076.33ms min=987.02ms max=1165.63ms count=2
-D/EGL_emulation( 4086): app_time_stats: avg=800.59ms min=737.43ms max=863.74ms count=2
-D/EGL_emulation( 4086): app_time_stats: avg=1004.32ms min=971.83ms max=1036.81ms count=2
-D/EGL_emulation( 4086): app_time_stats: avg=842.88ms min=749.03ms max=936.73ms count=2
-D/EGL_emulation( 4086): app_time_stats: avg=910.52ms min=880.39ms max=940.65ms count=2
-D/EGL_emulation( 4086): app_time_stats: avg=1032.67ms min=957.72ms max=1107.61ms count=2
-D/EGL_emulation( 4086): app_time_stats: avg=840.23ms min=691.34ms max=989.11ms count=2
-D/EGL_emulation( 4086): app_time_stats: avg=896.32ms min=868.08ms max=924.56ms count=2
-D/EGL_emulation( 4086): app_time_stats: avg=668.33ms min=466.12ms max=870.55ms count=2
-D/EGL_emulation( 4086): app_time_stats: avg=1653.77ms min=1653.77ms max=1653.77ms count=1
-D/EGL_emulation( 4086): app_time_stats: avg=868.69ms min=770.08ms max=967.31ms count=2
-I/flutter ( 4086): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
-I/flutter ( 4086): The following TestFailure was thrown running a test:
-I/flutter ( 4086): Expected: a value greater than <0>
-I/flutter ( 4086):   Actual: <0>
-I/flutter ( 4086):    Which: is not a value greater than <0>
-I/flutter ( 4086): 
-I/flutter ( 4086): When the exception was thrown, this was the stack:
-I/flutter ( 4086): #4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/integration_test/moteur_3d_test.dart:201:5)
-I/flutter ( 4086): <asynchronous suspension>
-I/flutter ( 4086): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
-I/flutter ( 4086): <asynchronous suspension>
-I/flutter ( 4086): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
-I/flutter ( 4086): <asynchronous suspension>
-I/flutter ( 4086): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
-I/flutter ( 4086): <asynchronous suspension>
-I/flutter ( 4086): 
-I/flutter ( 4086): This was caught by the test expectation on the following line:
-I/flutter ( 4086):   file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/integration_test/moteur_3d_test.dart line 201
-I/flutter ( 4086): The test description was:
-I/flutter ( 4086):   Réglages › À propos › Moteur 3D, thème sombre
-I/flutter ( 4086): ════════════════════════════════════════════════════════════════════════════════════════════════════
-I/flutter ( 4086): 00:51 +1: Réglages › À propos › Moteur 3D, thème sombre [E]
-I/flutter ( 4086):   Test failed. See exception logs above.
-I/flutter ( 4086):   The test description was: Réglages › À propos › Moteur 3D, thème sombre
-I/flutter ( 4086):   
-I/flutter ( 4086): 00:51 +1 -1: Moteur 3D, thème clair
-D/EGL_emulation( 4086): app_time_stats: avg=2155.04ms min=2155.04ms max=2155.04ms count=1
-D/FlutterJNI( 4086): Sending viewport metrics to the engine.
-D/EGL_emulation( 4086): app_time_stats: avg=385.15ms min=181.56ms max=603.05ms count=3
-D/EGL_emulation( 4086): app_time_stats: avg=233.59ms min=48.18ms max=666.28ms count=5
-D/EGL_emulation( 4086): app_time_stats: avg=829.03ms min=815.01ms max=843.05ms count=2
-D/EGL_emulation( 4086): app_time_stats: avg=430.48ms min=214.91ms max=646.04ms count=2
-D/EGL_emulation( 4086): app_time_stats: avg=1090.52ms min=1090.52ms max=1090.52ms count=1
-D/EGL_emulation( 4086): app_time_stats: avg=991.30ms min=358.67ms max=1623.93ms count=2
-D/EGL_emulation( 4086): app_time_stats: avg=787.71ms min=664.37ms max=911.05ms count=2
-D/EGL_emulation( 4086): app_time_stats: avg=994.96ms min=290.00ms max=1699.91ms count=2
-D/EGL_emulation( 4086): app_time_stats: avg=788.12ms min=717.23ms max=859.00ms count=2
-I/flutter ( 4086): 01:05 +2 -1: (tearDownAll)
-I/flutter ( 4086): 01:05 +3 -1: Some tests failed.
-Failure Details:
-Failure in method: Réglages › À propos › Moteur 3D, thème sombre
-══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
-The following TestFailure was thrown running a test:
-Expected: a value greater than <0>
-  Actual: <0>
-   Which: is not a value greater than <0>
-
-When the exception was thrown, this was the stack:
-#4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/integration_test/moteur_3d_test.dart:201:5)
-<asynchronous suspension>
-#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
-<asynchronous suspension>
-#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
-<asynchronous suspension>
-#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
-<asynchronous suspension>
-
-This was caught by the test expectation on the following line:
-  file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/integration_test/moteur_3d_test.dart line 201
-The test description was:
-  Réglages › À propos › Moteur 3D, thème sombre
-═════════════════════════════════════════════════════════════════
-
-end of failure 1
-
-
-
+I/flutter ( 3950): 00:02 +1: Réglages › À propos › Moteur 3D, thème sombre
+I/Choreographer( 3950): Skipped 121 frames!  The application may be doing too much work on its main thread.
+I/Choreographer( 3950): Skipped 35 frames!  The application may be doing too much work on its main thread.
+I/eetlift_tracker( 3950): Background concurrent mark compact GC freed 1986KB AllocSpace bytes, 3(60KB) LOS objects, 49% free, 2644KB/5288KB, paused 49us,1.453ms total 108.513ms
+D/EGL_emulation( 3950): app_time_stats: avg=2203.86ms min=284.31ms max=5656.74ms count=3
+W/WindowOnBackDispatcher( 3950): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 3950): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 3950): app_time_stats: avg=339.28ms min=234.50ms max=533.80ms count=3
+D/EGL_emulation( 3950): app_time_stats: avg=517.65ms min=337.89ms max=844.53ms count=3
+D/EGL_emulation( 3950): app_time_stats: avg=1961.85ms min=1961.85ms max=1961.85ms count=1
+D/EGL_emulation( 3950): app_time_stats: avg=1361.97ms min=1361.97ms max=1361.97ms count=1
+D/EGL_emulation( 3950): app_time_stats: avg=16206.80ms min=16206.80ms max=16206.80ms count=1
+D/EGL_emulation( 3950): app_time_stats: avg=1190.26ms min=1190.26ms max=1190.26ms count=1
+D/EGL_emulation( 3950): app_time_stats: avg=1747.13ms min=1747.13ms max=1747.13ms count=1
+D/EGL_emulation( 3950): app_time_stats: avg=1106.15ms min=1106.15ms max=1106.15ms count=1
+D/EGL_emulation( 3950): app_time_stats: avg=481.92ms min=167.74ms max=796.09ms count=2
+D/EGL_emulation( 3950): app_time_stats: avg=1051.95ms min=140.69ms max=1963.21ms count=2
+D/EGL_emulation( 3950): app_time_stats: avg=773.75ms min=772.39ms max=775.10ms count=2
+D/EGL_emulation( 3950): app_time_stats: avg=905.47ms min=905.47ms max=905.47ms count=1
+D/EGL_emulation( 3950): app_time_stats: avg=942.00ms min=918.81ms max=965.18ms count=2
+D/EGL_emulation( 3950): app_time_stats: avg=1022.18ms min=1022.18ms max=1022.18ms count=1
+D/EGL_emulation( 3950): app_time_stats: avg=1187.70ms min=1187.70ms max=1187.70ms count=1
+D/EGL_emulation( 3950): app_time_stats: avg=552.97ms min=230.53ms max=875.41ms count=2
+D/EGL_emulation( 3950): app_time_stats: avg=490.19ms min=146.84ms max=833.53ms count=2
+D/EGL_emulation( 3950): app_time_stats: avg=1177.36ms min=432.99ms max=1921.73ms count=2
+D/EGL_emulation( 3950): app_time_stats: avg=822.36ms min=754.78ms max=889.93ms count=2
+I/flutter ( 3950): 00:55 +2: Moteur 3D, thème clair
+D/EGL_emulation( 3950): app_time_stats: avg=286.90ms min=208.56ms max=438.77ms count=4
+D/FlutterJNI( 3950): Sending viewport metrics to the engine.
+I/eetlift_tracker( 3950): NativeAlloc concurrent mark compact GC freed 633KB AllocSpace bytes, 2(40KB) LOS objects, 49% free, 2732KB/5464KB, paused 12.504ms,33.447ms total 606.514ms
+D/EGL_emulation( 3950): app_time_stats: avg=301.34ms min=170.16ms max=671.38ms count=5
+D/EGL_emulation( 3950): app_time_stats: avg=1084.43ms min=758.59ms max=1410.27ms count=2
+D/EGL_emulation( 3950): app_time_stats: avg=909.95ms min=861.29ms max=958.62ms count=2
+D/EGL_emulation( 3950): app_time_stats: avg=1222.78ms min=1222.78ms max=1222.78ms count=1
+D/EGL_emulation( 3950): app_time_stats: avg=845.85ms min=825.60ms max=866.09ms count=2
+D/EGL_emulation( 3950): app_time_stats: avg=771.40ms min=732.15ms max=810.64ms count=2
+D/EGL_emulation( 3950): app_time_stats: avg=989.65ms min=369.00ms max=1610.29ms count=2
+I/flutter ( 3950): 01:09 +3: (tearDownAll)
+I/flutter ( 3950): 01:09 +4: All tests passed!
+All tests passed.
+D/EGL_emulation( 3950): app_time_stats: avg=836.09ms min=830.89ms max=841.29ms count=2
