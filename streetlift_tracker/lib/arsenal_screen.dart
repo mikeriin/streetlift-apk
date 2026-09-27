@@ -57,8 +57,7 @@ class ArsenalScreen extends StatelessWidget {
               KMenuTile(
                 icon: Icons.menu_book_outlined,
                 title: 'Exercices',
-                subtitle:
-                    'Fiches, démonstrations, muscles et progressions',
+                subtitle: 'Fiches, démonstrations, muscles et progressions',
                 onTap:
                     () => Navigator.push(
                       context,

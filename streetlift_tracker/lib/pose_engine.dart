@@ -190,9 +190,7 @@ class PoseAnimation {
 
 /// Cinématique directe depuis le bassin.
 Joints poseFk(Map<String, double> ang, String view, [Offset? pelvis]) {
-  final a = <String, double>{
-    for (final k in poseAngleKeys) k: ang[k] ?? 0,
-  };
+  final a = <String, double>{for (final k in poseAngleKeys) k: ang[k] ?? 0};
   if (!ang.containsKey('n')) a['n'] = a['t']!;
   if (!ang.containsKey('p')) a['p'] = a['t']!;
   final p0 = pelvis ?? Offset.zero;

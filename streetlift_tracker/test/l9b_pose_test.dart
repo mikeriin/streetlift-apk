@@ -252,34 +252,37 @@ void main() {
       final anim = animationOf('pompes');
       await tester.pumpWidget(host(PoseDemo(pose: anim, label: 'Pompes')));
       final first = tester.widget<CustomPaint>(
-        find.descendant(
-          of: find.byType(PoseDemo),
-          matching: find.byType(CustomPaint),
-        ).first,
+        find
+            .descendant(
+              of: find.byType(PoseDemo),
+              matching: find.byType(CustomPaint),
+            )
+            .first,
       );
       final j0 = (first.painter! as PosePainter).joints;
       await tester.pump(const Duration(milliseconds: 900));
       final later = tester.widget<CustomPaint>(
-        find.descendant(
-          of: find.byType(PoseDemo),
-          matching: find.byType(CustomPaint),
-        ).first,
+        find
+            .descendant(
+              of: find.byType(PoseDemo),
+              matching: find.byType(CustomPaint),
+            )
+            .first,
       );
       final j1 = (later.painter! as PosePainter).joints;
-      expect(
-        j0.keys.any((k) => (j0[k]! - j1[k]!).distance > 1e-3),
-        isTrue,
-      );
+      expect(j0.keys.any((k) => (j0[k]! - j1[k]!).distance > 1e-3), isTrue);
       // Pause : la pose ne bouge plus.
       await tester.tap(find.byTooltip('Mettre en pause'));
       await tester.pump();
       final paused =
           (tester
                       .widget<CustomPaint>(
-                        find.descendant(
-                          of: find.byType(PoseDemo),
-                          matching: find.byType(CustomPaint),
-                        ).first,
+                        find
+                            .descendant(
+                              of: find.byType(PoseDemo),
+                              matching: find.byType(CustomPaint),
+                            )
+                            .first,
                       )
                       .painter!
                   as PosePainter)
@@ -288,10 +291,12 @@ void main() {
       final still =
           (tester
                       .widget<CustomPaint>(
-                        find.descendant(
-                          of: find.byType(PoseDemo),
-                          matching: find.byType(CustomPaint),
-                        ).first,
+                        find
+                            .descendant(
+                              of: find.byType(PoseDemo),
+                              matching: find.byType(CustomPaint),
+                            )
+                            .first,
                       )
                       .painter!
                   as PosePainter)
@@ -303,9 +308,7 @@ void main() {
       await tester.pumpWidget(const SizedBox());
     });
 
-    testWidgets('réduction des animations : images clés fixes', (
-      tester,
-    ) async {
+    testWidgets('réduction des animations : images clés fixes', (tester) async {
       final anim = animationOf('pompes');
       await tester.pumpWidget(
         host(PoseDemo(pose: anim, label: 'Pompes'), reduce: true),

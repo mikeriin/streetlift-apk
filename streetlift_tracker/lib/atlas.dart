@@ -64,9 +64,10 @@ class AtlasPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final s = (size.width / atlasViewWidth) < (size.height / atlasViewHeight)
-        ? size.width / atlasViewWidth
-        : size.height / atlasViewHeight;
+    final s =
+        (size.width / atlasViewWidth) < (size.height / atlasViewHeight)
+            ? size.width / atlasViewWidth
+            : size.height / atlasViewHeight;
     final o = Offset(
       (size.width - atlasViewWidth * s) / 2,
       (size.height - atlasViewHeight * s) / 2,
@@ -200,7 +201,8 @@ class ExerciseAtlas extends StatelessWidget {
     final label = [
       if (primaires.isNotEmpty) 'Principaux : ${names(primaires)}',
       if (secondaires.isNotEmpty) 'Secondaires : ${names(secondaires)}',
-      if (stabilisateurs.isNotEmpty) 'Stabilisateurs : ${names(stabilisateurs)}',
+      if (stabilisateurs.isNotEmpty)
+        'Stabilisateurs : ${names(stabilisateurs)}',
       if (etires.isNotEmpty) 'Étirés : ${names(etires)}',
     ].join('. ');
     Widget view(String v, String title) => Expanded(
@@ -263,7 +265,10 @@ class AtlasRoleLegend extends StatelessWidget {
       children: [
         item(
           'Principal (plein)',
-          BoxDecoration(color: SL.accent, borderRadius: BorderRadius.circular(3)),
+          BoxDecoration(
+            color: SL.accent,
+            borderRadius: BorderRadius.circular(3),
+          ),
         ),
         item(
           'Secondaire (atténué)',

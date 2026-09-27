@@ -1,3 +1,7 @@
 Analyzing streetlift_tracker...                                 
-No issues found! (ran in 24.0s)
-exit=0
+
+  error • The name 'num' isn't a type, so it can't be used in an 'as' expression • lib/pose_engine.dart:126:18 • cast_to_non_type
+  error • The name 'num' isn't a type, so it can't be used in an 'as' expression • lib/pose_engine.dart:127:39 • cast_to_non_type
+   info • Use a function declaration rather than a variable assignment to bind a function to a name • test/l9b_content_test.dart:164:11 • prefer_function_declarations_over_variables
+
+3 issues found. (ran in 24.6s)

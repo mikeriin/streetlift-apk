@@ -1,2 +1,11 @@
-Formatted 114 files (0 changed) in 3.01 seconds.
+Formatted lib/arsenal_screen.dart
+Formatted lib/atlas.dart
+Formatted lib/atlas_data.dart
+Formatted lib/exercise_screens.dart
+Formatted lib/muscle_body.dart
+Formatted lib/pose_engine.dart
+Formatted lib/pose_painter.dart
+Formatted test/l9b_content_test.dart
+Formatted test/l9b_pose_test.dart
+Formatted 123 files (9 changed) in 3.46 seconds.
 exit=0

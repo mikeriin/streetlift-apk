@@ -127,34 +127,37 @@ void main() {
       }
     });
 
-    test('historique complet et séances perso : aucune perte au rechargement', () async {
-      SharedPreferences.setMockInitialValues({});
-      final app = AppStore()..storeClock = () => DateTime(2026, 9, 27, 10);
-      await app.init();
-      final data = filledBackup(app);
-      expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
-      await app.flush();
-      final before = jsonDecode(app.exportAll()) as Map<String, dynamic>;
-      final weekly = app.weeklyMuscles(DateTime(2026, 8, 20));
-      app.dispose();
+    test(
+      'historique complet et séances perso : aucune perte au rechargement',
+      () async {
+        SharedPreferences.setMockInitialValues({});
+        final app = AppStore()..storeClock = () => DateTime(2026, 9, 27, 10);
+        await app.init();
+        final data = filledBackup(app);
+        expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
+        await app.flush();
+        final before = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+        final weekly = app.weeklyMuscles(DateTime(2026, 8, 20));
+        app.dispose();
 
-      final next = AppStore()..storeClock = () => DateTime(2026, 9, 27, 10);
-      await next.init();
-      final after = jsonDecode(next.exportAll()) as Map<String, dynamic>;
-      for (final k in const ['logs', 'custom', 'userExercises']) {
-        expect(after[k], before[k], reason: k);
-      }
-      expect(next.weeklyMuscles(DateTime(2026, 8, 20)), weekly);
-      // Chaque exercice saisi reste rattaché à la base (ou reste personnel).
-      var resolved = 0;
-      for (final log in next.logs.values) {
-        for (final name in log.exerciseNames.values) {
-          if (next.exerciseIdFor(name) != null) resolved++;
+        final next = AppStore()..storeClock = () => DateTime(2026, 9, 27, 10);
+        await next.init();
+        final after = jsonDecode(next.exportAll()) as Map<String, dynamic>;
+        for (final k in const ['logs', 'custom', 'userExercises']) {
+          expect(after[k], before[k], reason: k);
         }
-      }
-      expect(resolved, greaterThan(1000));
-      next.dispose();
-    });
+        expect(next.weeklyMuscles(DateTime(2026, 8, 20)), weekly);
+        // Chaque exercice saisi reste rattaché à la base (ou reste personnel).
+        var resolved = 0;
+        for (final log in next.logs.values) {
+          for (final name in log.exerciseNames.values) {
+            if (next.exerciseIdFor(name) != null) resolved++;
+          }
+        }
+        expect(resolved, greaterThan(1000));
+        next.dispose();
+      },
+    );
   });
 
   group('recherche et filtres (KT-082)', () {
@@ -199,7 +202,10 @@ void main() {
         const ExerciseFilters(lieu: 'parc_street_workout'),
       );
       expect(parc, isNotEmpty);
-      expect(parc.every((e) => e.lieux.contains('parc_street_workout')), isTrue);
+      expect(
+        parc.every((e) => e.lieux.contains('parc_street_workout')),
+        isTrue,
+      );
       final tirage = searchExercises(
         index(),
         '',
@@ -208,7 +214,8 @@ void main() {
       expect(tirage, isNotEmpty);
       expect(
         tirage.every(
-          (e) => e.type == 'tirage_vertical' && e.materiel.contains('barre_fixe'),
+          (e) =>
+              e.type == 'tirage_vertical' && e.materiel.contains('barre_fixe'),
         ),
         isTrue,
       );
@@ -219,8 +226,11 @@ void main() {
       );
       expect(avance.every((e) => e.difficulte >= 7), isTrue);
       expect(
-        searchExercises(index(), 'traction', const ExerciseFilters(niveau: 1))
-            .every((e) => e.difficulte <= 3),
+        searchExercises(
+          index(),
+          'traction',
+          const ExerciseFilters(niveau: 1),
+        ).every((e) => e.difficulte <= 3),
         isTrue,
       );
     });

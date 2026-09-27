@@ -16,10 +16,9 @@ import 'store.dart';
 import 'ui.dart';
 
 /// Ouvre la fiche d'un exercice de la base v2.
-Future<void> openExerciseSheet(BuildContext context, String id) =>
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (_) => ExerciseSheetScreen(id: id)),
-    );
+Future<void> openExerciseSheet(BuildContext context, String id) => Navigator.of(
+  context,
+).push(MaterialPageRoute<void>(builder: (_) => ExerciseSheetScreen(id: id)));
 
 // ------------------------------- recherche ---------------------------------
 
@@ -137,12 +136,13 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
         options: index.typeLabels,
         onChanged:
             (v) => setState(
-              () => _f = ExerciseFilters(
-                type: v,
-                lieu: _f.lieu,
-                materiel: _f.materiel,
-                niveau: _f.niveau,
-              ),
+              () =>
+                  _f = ExerciseFilters(
+                    type: v,
+                    lieu: _f.lieu,
+                    materiel: _f.materiel,
+                    niveau: _f.niveau,
+                  ),
             ),
       ),
       const SizedBox(height: KSpace.gap),
@@ -152,12 +152,13 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
         options: index.lieuLabels,
         onChanged:
             (v) => setState(
-              () => _f = ExerciseFilters(
-                type: _f.type,
-                lieu: v,
-                materiel: _f.materiel,
-                niveau: _f.niveau,
-              ),
+              () =>
+                  _f = ExerciseFilters(
+                    type: _f.type,
+                    lieu: v,
+                    materiel: _f.materiel,
+                    niveau: _f.niveau,
+                  ),
             ),
       ),
       const SizedBox(height: KSpace.gap),
@@ -167,12 +168,13 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
         options: materiel,
         onChanged:
             (v) => setState(
-              () => _f = ExerciseFilters(
-                type: _f.type,
-                lieu: _f.lieu,
-                materiel: v,
-                niveau: _f.niveau,
-              ),
+              () =>
+                  _f = ExerciseFilters(
+                    type: _f.type,
+                    lieu: _f.lieu,
+                    materiel: v,
+                    niveau: _f.niveau,
+                  ),
             ),
       ),
       const SizedBox(height: KSpace.gap),
@@ -182,12 +184,13 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
         options: difficultyBandLabels,
         onChanged:
             (v) => setState(
-              () => _f = ExerciseFilters(
-                type: _f.type,
-                lieu: _f.lieu,
-                materiel: _f.materiel,
-                niveau: v,
-              ),
+              () =>
+                  _f = ExerciseFilters(
+                    type: _f.type,
+                    lieu: _f.lieu,
+                    materiel: _f.materiel,
+                    niveau: v,
+                  ),
             ),
       ),
       Padding(
@@ -228,10 +231,7 @@ class _ExerciseTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListTile(
     contentPadding: EdgeInsets.zero,
-    title: Text(
-      entry.nom,
-      style: const TextStyle(fontWeight: FontWeight.w600),
-    ),
+    title: Text(entry.nom, style: const TextStyle(fontWeight: FontWeight.w600)),
     subtitle: Text(
       '${index.typeLabels[entry.type] ?? entry.type} · '
       'difficulté ${entry.difficulte}/10'

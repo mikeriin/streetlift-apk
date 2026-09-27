@@ -37,7 +37,9 @@ Map<String, List<AtlasFill>> heatAtlasFills(
     final v = t[e.value.groupe] ?? 0;
     if (v <= 0.02) continue;
     final color =
-        tint == null ? heat(v) : Color.lerp(KPalette.gray, tint, .45 + .55 * v)!;
+        tint == null
+            ? heat(v)
+            : Color.lerp(KPalette.gray, tint, .45 + .55 * v)!;
     out[e.key] = [
       if (glow && v > 0.35) AtlasFill(color, opacity: .45 * v, blur: true),
       AtlasFill(color),

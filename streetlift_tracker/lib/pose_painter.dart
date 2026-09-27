@@ -66,8 +66,10 @@ class PosePainter extends CustomPainter {
   late double _s;
   late Offset _o;
 
-  Offset _p(Offset q) =>
-      Offset((q.dx - viewBox[0]) * _s + _o.dx, (-q.dy - viewBox[1]) * _s + _o.dy);
+  Offset _p(Offset q) => Offset(
+    (q.dx - viewBox[0]) * _s + _o.dx,
+    (-q.dy - viewBox[1]) * _s + _o.dy,
+  );
 
   Path _poly(List<Offset> pts) =>
       Path()..addPolygon([for (final q in pts) _p(q)], true);
@@ -115,11 +117,7 @@ class PosePainter extends CustomPainter {
     for (final sh in poseBodyShapes(pose.view, joints)) {
       final base = sh.far ? roles.neutreMoyenLoin : roles.neutreMoyen;
       if (sh.circle != null) {
-        canvas.drawCircle(
-          _p(sh.circle!.$1),
-          sh.circle!.$2 * _s,
-          _fill(base),
-        );
+        canvas.drawCircle(_p(sh.circle!.$1), sh.circle!.$2 * _s, _fill(base));
       } else {
         canvas.drawPath(_poly(sh.all!), _fill(base));
       }
@@ -163,9 +161,10 @@ class PosePainter extends CustomPainter {
       canvas.drawLine(_p(a), _p(b), paint);
       return;
     }
-    final path = Path()
-      ..moveTo(_p(a).dx, _p(a).dy)
-      ..lineTo(_p(b).dx, _p(b).dy);
+    final path =
+        Path()
+          ..moveTo(_p(a).dx, _p(a).dy)
+          ..lineTo(_p(b).dx, _p(b).dy);
     canvas.drawPath(dashPath(path, 0.03 * _s, 0.02 * _s), paint);
   }
 
@@ -243,10 +242,20 @@ class PosePainter extends CustomPainter {
             );
             canvas.drawRRect(r, _fill(roles.neutreContraste, 0.35));
           case 'barre_fixe':
-            _line(canvas, Offset(x - 0.5, 0), Offset(x - 0.5, y), 0.02,
-                opacity: 0.5);
-            _line(canvas, Offset(x - 0.5, y), Offset(x, y), 0.012,
-                opacity: 0.5);
+            _line(
+              canvas,
+              Offset(x - 0.5, 0),
+              Offset(x - 0.5, y),
+              0.02,
+              opacity: 0.5,
+            );
+            _line(
+              canvas,
+              Offset(x - 0.5, y),
+              Offset(x, y),
+              0.012,
+              opacity: 0.5,
+            );
             _circle(canvas, Offset(x, y), 0.022, fill: true);
           case 'anneaux':
             _line(canvas, Offset(x, y + 0.03), Offset(x, y + 0.55), 0.01);
@@ -269,9 +278,18 @@ class PosePainter extends CustomPainter {
           case 'banc':
             final w = p.opt('w') ?? 0.55;
             _rect(canvas, x, y - 0.035, w, 0.035, fill: true);
-            _line(canvas, Offset(x + 0.05, 0), Offset(x + 0.05, y - 0.035), 0.02);
-            _line(canvas, Offset(x + w - 0.05, 0),
-                Offset(x + w - 0.05, y - 0.035), 0.02);
+            _line(
+              canvas,
+              Offset(x + 0.05, 0),
+              Offset(x + 0.05, y - 0.035),
+              0.02,
+            );
+            _line(
+              canvas,
+              Offset(x + w - 0.05, 0),
+              Offset(x + w - 0.05, y - 0.035),
+              0.02,
+            );
           case 'box':
             _rect(canvas, x, 0, p.opt('w') ?? 0.3, p.opt('h') ?? 0.3);
           case 'mur':
@@ -280,8 +298,13 @@ class PosePainter extends CustomPainter {
             _line(canvas, Offset(x, 0), Offset(x, 1.3), 0.03);
           case 'poulie':
             _circle(canvas, Offset(x, y), 0.03);
-            _line(canvas, Offset(x, 0), Offset(x, math.max(y, 1.1)), 0.02,
-                opacity: 0.45);
+            _line(
+              canvas,
+              Offset(x, 0),
+              Offset(x, math.max(y, 1.1)),
+              0.02,
+              opacity: 0.45,
+            );
             for (final k in p.to) {
               if (j[k] != null) _line(canvas, Offset(x, y), j[k]!, 0.008);
             }
@@ -299,12 +322,21 @@ class PosePainter extends CustomPainter {
           case 'cale':
             _rect(canvas, x - 0.03, 0, 0.06, 0.08, fill: true);
           case 'rameur':
-            _line(canvas, const Offset(-0.8, 0.12), const Offset(0.35, 0.12),
-                0.02);
+            _line(
+              canvas,
+              const Offset(-0.8, 0.12),
+              const Offset(0.35, 0.12),
+              0.02,
+            );
             _rect(canvas, 0.25, 0, 0.12, 0.3);
           case 'velo':
             _circle(canvas, const Offset(0.35, 0.18), 0.16);
-            _line(canvas, const Offset(0, 0.55), const Offset(0.35, 0.18), 0.02);
+            _line(
+              canvas,
+              const Offset(0, 0.55),
+              const Offset(0.35, 0.18),
+              0.02,
+            );
             _line(canvas, Offset.zero, const Offset(0, 0.55), 0.02);
           case 'traineau':
             _rect(canvas, x - 0.12, 0, 0.24, 0.16);
@@ -316,12 +348,23 @@ class PosePainter extends CustomPainter {
             for (final k in p.to) {
               final a = j[k];
               if (a == null) continue;
-              _quad(canvas, a, Offset((a.dx + x) / 2, a.dy + 0.25),
-                  Offset(x, y), 0.015);
+              _quad(
+                canvas,
+                a,
+                Offset((a.dx + x) / 2, a.dy + 0.25),
+                Offset(x, y),
+                0.015,
+              );
             }
           case 'sol_surelevé' || 'marche':
-            _rect(canvas, x, 0, p.opt('w') ?? 0.4, p.opt('h') ?? 0.2,
-                fill: true);
+            _rect(
+              canvas,
+              x,
+              0,
+              p.opt('w') ?? 0.4,
+              p.opt('h') ?? 0.2,
+              fill: true,
+            );
         }
       } else if (p.between != null) {
         final a = j[p.between![0]], b = j[p.between![1]];
@@ -335,7 +378,9 @@ class PosePainter extends CustomPainter {
           final hx = (a.dx + b.dx) / 2, hy = (a.dy + b.dy) / 2;
           final footY = math.min(j['pied_g']!.dy, j['pied_d']!.dy);
           final other =
-              footY > 0.03 ? footY - 0.04 : j['tete']!.dy + poseHeadRadius + 0.06;
+              footY > 0.03
+                  ? footY - 0.04
+                  : j['tete']!.dy + poseHeadRadius + 0.06;
           final cy = (hy + other) / 2, ry = (hy - other).abs() / 2;
           final c = _p(Offset(hx, cy));
           canvas.drawOval(
@@ -355,22 +400,46 @@ class PosePainter extends CustomPainter {
             _circle(canvas, q, _plateR);
             _circle(canvas, q, 0.016, fill: true);
           case 'barre_vue_face':
-            _line(canvas, Offset(q.dx - 0.55, q.dy), Offset(q.dx + 0.55, q.dy),
-                0.016);
-            _rect(canvas, q.dx - 0.62, q.dy - _plateR, 0.05, 2 * _plateR,
-                fill: true);
-            _rect(canvas, q.dx + 0.57, q.dy - _plateR, 0.05, 2 * _plateR,
-                fill: true);
+            _line(
+              canvas,
+              Offset(q.dx - 0.55, q.dy),
+              Offset(q.dx + 0.55, q.dy),
+              0.016,
+            );
+            _rect(
+              canvas,
+              q.dx - 0.62,
+              q.dy - _plateR,
+              0.05,
+              2 * _plateR,
+              fill: true,
+            );
+            _rect(
+              canvas,
+              q.dx + 0.57,
+              q.dy - _plateR,
+              0.05,
+              2 * _plateR,
+              fill: true,
+            );
           case 'halteres':
-            _line(canvas, Offset(q.dx - 0.05, q.dy), Offset(q.dx + 0.05, q.dy),
-                0.012);
+            _line(
+              canvas,
+              Offset(q.dx - 0.05, q.dy),
+              Offset(q.dx + 0.05, q.dy),
+              0.012,
+            );
             _rect(canvas, q.dx - 0.06, q.dy - 0.03, 0.025, 0.06, fill: true);
             _rect(canvas, q.dx + 0.035, q.dy - 0.03, 0.025, 0.06, fill: true);
           case 'kettlebell':
             _circle(canvas, Offset(q.dx, q.dy - 0.075), 0.05, fill: true);
-            _quad(canvas, Offset(q.dx - 0.03, q.dy - 0.04),
-                Offset(q.dx, q.dy + 0.02), Offset(q.dx + 0.03, q.dy - 0.04),
-                0.012);
+            _quad(
+              canvas,
+              Offset(q.dx - 0.03, q.dy - 0.04),
+              Offset(q.dx, q.dy + 0.02),
+              Offset(q.dx + 0.03, q.dy - 0.04),
+              0.012,
+            );
           case 'lest':
             final b = j['bassin']!;
             _line(canvas, b, Offset(b.dx, b.dy - 0.14), 0.006);
@@ -493,7 +562,9 @@ class _PoseDemoState extends State<PoseDemo>
   Widget build(BuildContext context) {
     final roles = PoseRoles.current();
     final kfs = widget.pose.keyframes;
-    final steps = [for (var i = 0; i < kfs.length; i++) '${i + 1}. ${kfs[i].label}'];
+    final steps = [
+      for (var i = 0; i < kfs.length; i++) '${i + 1}. ${kfs[i].label}',
+    ];
     final semantics =
         'Démonstration : ${widget.label}. '
         '${_animated ? (_playing ? 'Animation en cours' : 'Animation en pause') : 'Images fixes'} ; '
@@ -516,7 +587,9 @@ class _PoseDemoState extends State<PoseDemo>
                     children: [
                       SizedBox(
                         height:
-                            kfs.length == 1 ? widget.height : widget.height * .62,
+                            kfs.length == 1
+                                ? widget.height
+                                : widget.height * .62,
                         child: _frame(poseOf(kfs[i], widget.pose.view), roles),
                       ),
                       const SizedBox(height: 4),
@@ -553,7 +626,9 @@ class _PoseDemoState extends State<PoseDemo>
             child: IconButton(
               tooltip: _playing ? 'Mettre en pause' : 'Reprendre',
               icon: Icon(
-                _playing ? Icons.pause_circle_outline : Icons.play_circle_outline,
+                _playing
+                    ? Icons.pause_circle_outline
+                    : Icons.play_circle_outline,
               ),
               onPressed: () {
                 setState(() => _playing = !_playing);
