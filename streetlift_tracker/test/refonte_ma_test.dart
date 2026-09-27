@@ -2,7 +2,6 @@
 // 3.1.0, profil ajouté), calques de groupes, démonstrations découpées.
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -119,18 +118,19 @@ void main() {
       for (final (x, y) in [(0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1)]) {
         expect(alpha(x, y), 0);
       }
-      // pixels de bord (alpha partiel) : sombres comme le contour de la face
+      // pixels de bord (alpha partiel franc) : sombres comme le contour de la
+      // face ; un liseré clair (fond blanc mal détouré) serait > 110
       var edge = 0, light = 0, opaque = 0;
       for (var i = 0; i < px.length; i += 4) {
         final a = px[i + 3];
         if (a == 255) opaque++;
-        if (a == 0 || a == 255) continue;
+        if (a <= 16 || a >= 200) continue;
         edge++;
-        if (a > 64 && px[i] > 110) light++;
+        if (px[i] > 110) light++;
       }
       expect(opaque, greaterThan(40000));
       expect(edge, greaterThan(100));
-      expect(light, lessThan(edge ~/ 50 + 3));
+      expect(light, lessThan(edge ~/ 100 + 1));
     });
   });
 

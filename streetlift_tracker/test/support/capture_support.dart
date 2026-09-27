@@ -59,16 +59,17 @@ Future<void> precacheCaptureImages(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
-/// Écrit le contenu de [boundary] en PNG (densité 2).
+/// Écrit le contenu de [boundary] en PNG (densité 2 par défaut).
 Future<void> savePng(
   WidgetTester tester,
   GlobalKey boundary,
-  String name,
-) async {
+  String name, {
+  double pixelRatio = 2,
+}) async {
   final render =
       boundary.currentContext!.findRenderObject()! as RenderRepaintBoundary;
   await tester.runAsync(() async {
-    final image = await render.toImage(pixelRatio: 2);
+    final image = await render.toImage(pixelRatio: pixelRatio);
     final png = await image.toByteData(format: ui.ImageByteFormat.png);
     final file = File('$captureDir/$name.png');
     await file.parent.create(recursive: true);

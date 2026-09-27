@@ -156,12 +156,13 @@ void main() {
           padding: const EdgeInsets.all(6),
           child: Wrap(spacing: 10, runSpacing: 6, children: blocks),
         ),
-        Size(2 * 4 * cell + 22, 6 * (cell + 22) + 12),
+        const Size(2 * 4 * cell + 22, 6 * (cell + 22) + 12),
       );
       await savePng(
         tester,
         boundary,
         'revue/planche_${s.toString().padLeft(2, '0')}',
+        pixelRatio: 1,
       );
     }
     File('$captureDir/revue/index.txt')
