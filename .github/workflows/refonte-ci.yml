@@ -1,0 +1,74 @@
+name: Contrôles refonte muscles et animations (temporaire)
+
+on:
+  push:
+    branches: [claude/ci-refonte]
+    paths: [streetlift_tracker/**, .github/workflows/refonte-ci.yml, ci-demande.txt]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: claude-ci-refonte
+  cancel-in-progress: true
+
+jobs:
+  controles:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29.3'
+          channel: stable
+          cache: true
+      - name: Formatage, analyse, tests, rendus
+        working-directory: streetlift_tracker
+        run: |
+          set +e
+          out=../refonte-out
+          rm -rf $out && mkdir -p $out/captures
+          demande=$(cat ../ci-demande.txt 2>/dev/null || echo tout)
+          echo "demande=$demande" > $out/demande.txt
+          flutter --version > $out/flutter.txt 2>&1
+          flutter pub get --enforce-lockfile > $out/pub.log 2>&1; echo "exit=$?" >> $out/pub.log
+          dart format --output=none --set-exit-if-changed lib test > $out/format.log 2>&1; echo "exit=$?" >> $out/format.log
+          # formatage appliqué et renvoyé sur la branche (à reporter localement)
+          dart format lib test > /dev/null 2>&1
+          flutter analyze --no-pub > $out/analyze.log 2>&1; echo "exit=$?" >> $out/analyze.log
+          python3 -m pip install --quiet numpy scipy pillow > /dev/null 2>&1
+          python3 -m unittest discover -s tools/tests > $out/python.log 2>&1; echo "exit=$?" >> $out/python.log
+          python3 tools/verify_project.py >> $out/python.log 2>&1; echo "verify_exit=$?" >> $out/python.log
+          TZ=Europe/Paris flutter test --no-pub --timeout 300s --reporter expanded test/refonte_ma_test.dart > $out/refonte.log 2>&1; echo "exit=$?" >> $out/refonte.log
+          if [ "$demande" != "rapide" ]; then
+            TZ=Europe/Paris timeout 2400 flutter test --no-pub --timeout 2000s --reporter expanded \
+              --dart-define=KALIS_CAPTURE=true --dart-define=KALIS_CAPTURE_DIR=../refonte-out/captures \
+              test/refonte_ma_capture_test.dart > $out/captures.log 2>&1; echo "exit=$?" >> $out/captures.log
+          fi
+          exit 0
+      - name: Publier
+        if: always()
+        run: &push |
+          git config user.name "claude-ci"
+          git config user.email "claude-ci@users.noreply.github.com"
+          git add -A refonte-out streetlift_tracker/lib streetlift_tracker/test
+          git commit -q -m "CI refonte ${GITHUB_JOB} $(date -u +%H:%M:%S)" || exit 0
+          git pull -q --rebase origin claude/ci-refonte || true
+          git push -q origin HEAD:claude/ci-refonte
+      - name: Suite de tests complète
+        if: always()
+        working-directory: streetlift_tracker
+        run: |
+          set +e
+          demande=$(cat ../ci-demande.txt 2>/dev/null || echo tout)
+          if [ "$demande" = "tout" ] || [ "$demande" = "suite" ]; then
+            TZ=Europe/Paris timeout 2400 flutter test --no-pub --timeout 60s --reporter expanded > ../refonte-out/test.log 2>&1; echo "exit=$?" >> ../refonte-out/test.log
+            grep -E "^[0-9]+:[0-9]+ .*(\+[0-9]+|-[0-9]+)" ../refonte-out/test.log | tail -3 > ../refonte-out/test-summary.txt
+            grep -E "\[E\]|FAILED|Some tests failed" ../refonte-out/test.log | head -60 >> ../refonte-out/test-summary.txt
+            grep -E "REFONTE_PERF|L9B_PERF" ../refonte-out/test.log >> ../refonte-out/test-summary.txt
+          fi
+          exit 0
+      - name: Publier la suite
+        if: always()
+        run: *push

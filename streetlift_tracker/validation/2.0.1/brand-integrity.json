@@ -1,0 +1,19 @@
+{
+  "original_alpha_preserved": true,
+  "foreground_rgb": [
+    [
+      1048576,
+      [
+        108,
+        26,
+        26
+      ]
+    ]
+  ],
+  "source_alpha_sha256": "1db711589ec8dd832ba1a304c00caec512920d81e47fe76e355ea102c89a3199",
+  "dimensions": [
+    1024,
+    1024
+  ],
+  "brand": "#6C1A1A"
+}
