@@ -22,5 +22,7 @@ Modèle Claude : Opus 5.5 pour tous les lots, effort accru demandé sur M5 (sque
 - Blocage CI du 27/09 (quota Actions) levé par le propriétaire : dépôt rendu public.
 - CI 3D : `FLUTTER_BEFORE` = version Flutter du ZIP de main (3.47.5 désormais) pour les rendus de référence.
 
+- Réponse du propriétaire (27/09/2026) : téléphone **compatible, 120 images/s** sur l'écran Moteur 3D → pipeline relancé (M2).
+
 ## En attente du propriétaire
-- Réponse à M1 : Réglages › À propos › Moteur 3D sur ton téléphone — « Compatible » ou non, et les images/s. Si compatible avec ≥ 45 images/s, le pipeline reprend avec M2 ; sinon options (repli logiciel, autre moteur, arrêt) proposées ici.
+(aucune)

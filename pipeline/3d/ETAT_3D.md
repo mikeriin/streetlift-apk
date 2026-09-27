@@ -28,4 +28,4 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M18 | 5.17.0 | — | — | — | à faire |
 | M19 | 5.18.0 | — | — | — | à faire |
 
-Compatibilité du téléphone du propriétaire (réponse attendue après M1) : en attente (5.0.0 livrée le 27/09/2026)
+Compatibilité du téléphone du propriétaire (réponse attendue après M1) : **Compatible, 120 images/s** (réponse du propriétaire, 27/09/2026, sur 5.0.0) → pipeline relancé pour M2.
