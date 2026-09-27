@@ -1,0 +1,1445 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart
+lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      accent: state == StepState.current ? SL.accent : null,
+                       ^^^^^^^^^
+lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+          Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                     ^^^^^^^^^
+lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  state == StepState.reached && day != null
+                           ^^^^^^^^^
+lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.current && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.next && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+ - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+Try adding a wildcard pattern or cases that match 'StepState.reached'.
+    final (icon, label) = switch (state) {
+                                  ^
+00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        accent: state == StepState.current ? SL.accent : null,
+                         ^^^^^^^^^
+  lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+            Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                       ^^^^^^^^^
+  lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                    state == StepState.reached && day != null
+                             ^^^^^^^^^
+  lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.current && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.next && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+   - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+  Try adding a wildcard pattern or cases that match 'StepState.reached'.
+      final (icon, label) = switch (state) {
+                                    ^
+  .
+00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart
+00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/zone.dart 1429:19                     _CustomZone.runUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      accent: state == StepState.current ? SL.accent : null,
+                       ^^^^^^^^^
+lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+          Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                     ^^^^^^^^^
+lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  state == StepState.reached && day != null
+                           ^^^^^^^^^
+lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.current && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.next && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+ - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+Try adding a wildcard pattern or cases that match 'StepState.reached'.
+    final (icon, label) = switch (state) {
+                                  ^
+00:00 +0 -2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        accent: state == StepState.current ? SL.accent : null,
+                         ^^^^^^^^^
+  lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+            Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                       ^^^^^^^^^
+  lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                    state == StepState.reached && day != null
+                             ^^^^^^^^^
+  lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.current && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.next && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+   - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+  Try adding a wildcard pattern or cases that match 'StepState.reached'.
+      final (icon, label) = switch (state) {
+                                    ^
+  .
+00:00 +0 -2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart
+00:00 +0 -2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/zone.dart 1429:19                     _CustomZone.runUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+00:00 +0 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: palettes six familles, rouge par défaut, identifiants stables
+00:00 +1 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: palettes le Rouge Kalis garde exactement les valeurs historiques
+00:00 +2 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: palettes 12 combinaisons : textes, fonds pleins et éléments lisibles
+00:00 +3 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: palettes rôles fixes et neutres identiques dans toutes les palettes
+00:00 +4 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: palettes thème Material : dominante et luminosité indépendantes
+00:00 +5 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence AppSettings : absent, inconnu ou mauvais type → rouge
+00:00 +6 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence installation neuve : rouge
+00:00 +7 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence choix retrouvé à la réouverture, thème indépendant
+00:01 +8 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence choix rapides : le dernier est retrouvé
+00:01 +9 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence échec d’écriture : choix affiché, erreur visible, disque intact
+00:02 +10 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence export : la préférence est incluse
+00:02 +11 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence import d’une sauvegarde sans préférence : rouge, reste conservé
+00:02 +12 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence import d’une valeur inconnue : rouge, sans refuser la sauvegarde
+00:02 +13 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence suppression locale : retour au rouge
+00:03 +14 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: préférence changer de couleur ne touche ni XP, ni crédits, ni droits, ni dates
+00:03 +15 -2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart
+lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      accent: state == StepState.current ? SL.accent : null,
+                       ^^^^^^^^^
+lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+          Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                     ^^^^^^^^^
+lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  state == StepState.reached && day != null
+                           ^^^^^^^^^
+lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.current && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.next && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+ - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+Try adding a wildcard pattern or cases that match 'StepState.reached'.
+    final (icon, label) = switch (state) {
+                                  ^
+00:09 +15 -3: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart: lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        accent: state == StepState.current ? SL.accent : null,
+                         ^^^^^^^^^
+  lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+            Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                       ^^^^^^^^^
+  lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                    state == StepState.reached && day != null
+                             ^^^^^^^^^
+  lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.current && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.next && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+   - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+  Try adding a wildcard pattern or cases that match 'StepState.reached'.
+      final (icon, label) = switch (state) {
+                                    ^
+  .
+00:09 +15 -3: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_palettes_capture_test.dart
+00:09 +15 -3: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/zone.dart 1429:19                     _CustomZone.runUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      accent: state == StepState.current ? SL.accent : null,
+                       ^^^^^^^^^
+lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+          Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                     ^^^^^^^^^
+lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  state == StepState.reached && day != null
+                           ^^^^^^^^^
+lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.current && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.next && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+ - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+Try adding a wildcard pattern or cases that match 'StepState.reached'.
+    final (icon, label) = switch (state) {
+                                  ^
+00:15 +15 -4: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_palettes_capture_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_palettes_capture_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_palettes_capture_test.dart: lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        accent: state == StepState.current ? SL.accent : null,
+                         ^^^^^^^^^
+  lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+            Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                       ^^^^^^^^^
+  lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                    state == StepState.reached && day != null
+                             ^^^^^^^^^
+  lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.current && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.next && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+   - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+  Try adding a wildcard pattern or cases that match 'StepState.reached'.
+      final (icon, label) = switch (state) {
+                                    ^
+  .
+00:15 +15 -4: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart
+00:16 +15 -4: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/zone.dart 1429:19                     _CustomZone.runUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      accent: state == StepState.current ? SL.accent : null,
+                       ^^^^^^^^^
+lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+          Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                     ^^^^^^^^^
+lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  state == StepState.reached && day != null
+                           ^^^^^^^^^
+lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.current && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.next && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+ - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+Try adding a wildcard pattern or cases that match 'StepState.reached'.
+    final (icon, label) = switch (state) {
+                                  ^
+00:22 +15 -5: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart: lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        accent: state == StepState.current ? SL.accent : null,
+                         ^^^^^^^^^
+  lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+            Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                       ^^^^^^^^^
+  lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                    state == StepState.reached && day != null
+                             ^^^^^^^^^
+  lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.current && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.next && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+   - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+  Try adding a wildcard pattern or cases that match 'StepState.reached'.
+      final (icon, label) = switch (state) {
+                                    ^
+  .
+00:22 +15 -5: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart
+00:22 +15 -5: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      accent: state == StepState.current ? SL.accent : null,
+                       ^^^^^^^^^
+lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+          Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                     ^^^^^^^^^
+lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  state == StepState.reached && day != null
+                           ^^^^^^^^^
+lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.current && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.next && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+ - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+Try adding a wildcard pattern or cases that match 'StepState.reached'.
+    final (icon, label) = switch (state) {
+                                  ^
+00:28 +15 -6: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        accent: state == StepState.current ? SL.accent : null,
+                         ^^^^^^^^^
+  lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+            Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                       ^^^^^^^^^
+  lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                    state == StepState.reached && day != null
+                             ^^^^^^^^^
+  lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.current && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.next && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+   - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+  Try adding a wildcard pattern or cases that match 'StepState.reached'.
+      final (icon, label) = switch (state) {
+                                    ^
+  .
+00:28 +15 -6: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l6_perf_bench_test.dart
+00:28 +15 -6: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      accent: state == StepState.current ? SL.accent : null,
+                       ^^^^^^^^^
+lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+          Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                     ^^^^^^^^^
+lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  state == StepState.reached && day != null
+                           ^^^^^^^^^
+lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.current && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.next && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+ - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+Try adding a wildcard pattern or cases that match 'StepState.reached'.
+    final (icon, label) = switch (state) {
+                                  ^
+00:34 +15 -7: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l6_perf_bench_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l6_perf_bench_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l6_perf_bench_test.dart: lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        accent: state == StepState.current ? SL.accent : null,
+                         ^^^^^^^^^
+  lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+            Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                       ^^^^^^^^^
+  lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                    state == StepState.reached && day != null
+                             ^^^^^^^^^
+  lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.current && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.next && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+   - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+  Try adding a wildcard pattern or cases that match 'StepState.reached'.
+      final (icon, label) = switch (state) {
+                                    ^
+  .
+00:34 +15 -7: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l6_perf_test.dart
+00:34 +15 -7: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      accent: state == StepState.current ? SL.accent : null,
+                       ^^^^^^^^^
+lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+          Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                     ^^^^^^^^^
+lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  state == StepState.reached && day != null
+                           ^^^^^^^^^
+lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.current && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.next && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+ - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+Try adding a wildcard pattern or cases that match 'StepState.reached'.
+    final (icon, label) = switch (state) {
+                                  ^
+00:40 +15 -8: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l6_perf_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l6_perf_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l6_perf_test.dart: lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        accent: state == StepState.current ? SL.accent : null,
+                         ^^^^^^^^^
+  lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+            Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                       ^^^^^^^^^
+  lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                    state == StepState.reached && day != null
+                             ^^^^^^^^^
+  lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.current && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.next && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+   - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+  Try adding a wildcard pattern or cases that match 'StepState.reached'.
+      final (icon, label) = switch (state) {
+                                    ^
+  .
+00:40 +15 -8: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/level_fill_test.dart
+00:40 +15 -8: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      accent: state == StepState.current ? SL.accent : null,
+                       ^^^^^^^^^
+lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+          Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                     ^^^^^^^^^
+lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  state == StepState.reached && day != null
+                           ^^^^^^^^^
+lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.current && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.next && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+ - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+Try adding a wildcard pattern or cases that match 'StepState.reached'.
+    final (icon, label) = switch (state) {
+                                  ^
+00:46 +15 -9: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/level_fill_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/level_fill_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/level_fill_test.dart: lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        accent: state == StepState.current ? SL.accent : null,
+                         ^^^^^^^^^
+  lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+            Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                       ^^^^^^^^^
+  lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                    state == StepState.reached && day != null
+                             ^^^^^^^^^
+  lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.current && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.next && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+   - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+  Try adding a wildcard pattern or cases that match 'StepState.reached'.
+      final (icon, label) = switch (state) {
+                                    ^
+  .
+00:46 +15 -9: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart
+00:46 +15 -9: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      accent: state == StepState.current ? SL.accent : null,
+                       ^^^^^^^^^
+lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+          Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                     ^^^^^^^^^
+lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  state == StepState.reached && day != null
+                           ^^^^^^^^^
+lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.current && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.next && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+ - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+Try adding a wildcard pattern or cases that match 'StepState.reached'.
+    final (icon, label) = switch (state) {
+                                  ^
+00:52 +15 -10: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart: lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        accent: state == StepState.current ? SL.accent : null,
+                         ^^^^^^^^^
+  lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+            Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                       ^^^^^^^^^
+  lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                    state == StepState.reached && day != null
+                             ^^^^^^^^^
+  lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.current && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.next && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+   - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+  Try adding a wildcard pattern or cases that match 'StepState.reached'.
+      final (icon, label) = switch (state) {
+                                    ^
+  .
+00:52 +15 -10: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart
+00:52 +15 -10: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      accent: state == StepState.current ? SL.accent : null,
+                       ^^^^^^^^^
+lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+          Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                     ^^^^^^^^^
+lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  state == StepState.reached && day != null
+                           ^^^^^^^^^
+lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.current && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.next && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+ - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+Try adding a wildcard pattern or cases that match 'StepState.reached'.
+    final (icon, label) = switch (state) {
+                                  ^
+00:58 +15 -11: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart: lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        accent: state == StepState.current ? SL.accent : null,
+                         ^^^^^^^^^
+  lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+            Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                       ^^^^^^^^^
+  lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                    state == StepState.reached && day != null
+                             ^^^^^^^^^
+  lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.current && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.next && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+   - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+  Try adding a wildcard pattern or cases that match 'StepState.reached'.
+      final (icon, label) = switch (state) {
+                                    ^
+  .
+00:58 +15 -11: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart
+00:58 +15 -11: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      accent: state == StepState.current ? SL.accent : null,
+                       ^^^^^^^^^
+lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+          Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                     ^^^^^^^^^
+lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  state == StepState.reached && day != null
+                           ^^^^^^^^^
+lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.current && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.next && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+ - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+Try adding a wildcard pattern or cases that match 'StepState.reached'.
+    final (icon, label) = switch (state) {
+                                  ^
+01:04 +15 -12: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        accent: state == StepState.current ? SL.accent : null,
+                         ^^^^^^^^^
+  lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+            Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                       ^^^^^^^^^
+  lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                    state == StepState.reached && day != null
+                             ^^^^^^^^^
+  lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.current && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.next && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+   - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+  Try adding a wildcard pattern or cases that match 'StepState.reached'.
+      final (icon, label) = switch (state) {
+                                    ^
+  .
+01:04 +15 -12: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart
+01:04 +15 -12: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Error: the Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 895:11    DefaultResidentCompiler._compile.<fn>
+  dart:async/zone.dart 1538:47                     _rootRunUnary
+  dart:async/future_impl.dart 932:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 961:13               Future._propagateToListeners
+  dart:async/future_impl.dart 846:9                Future._propagateToListeners
+  dart:async/future_impl.dart 712:5                Future._completeWithValue
+  dart:async/future_impl.dart 792:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone.dart 1525:13                     _rootRun
+  dart:async/zone.dart 1422:19                     _CustomZone.run
+  dart:async/zone.dart 1321:7                      _CustomZone.runGuarded
+  dart:async/zone.dart 1362:23                     _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:21         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 128:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 195:5      _RawReceivePort._handleMessage
+  
+lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.current => (Icons.radio_button_checked, 'en cours'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ^^^^^^^^^
+lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+      accent: state == StepState.current ? SL.accent : null,
+                       ^^^^^^^^^
+lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+          Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                     ^^^^^^^^^
+lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  state == StepState.reached && day != null
+                           ^^^^^^^^^
+lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.current && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                if (state == StepState.next && t != null)
+                             ^^^^^^^^^
+lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+ - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+Try adding a wildcard pattern or cases that match 'StepState.reached'.
+    final (icon, label) = switch (state) {
+                                  ^
+01:10 +15 -13: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: lib/motivation_screens.dart:873:7: Error: Not a constant expression.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:873:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.reached => (Icons.check_circle_outline, 'atteinte'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: Not a constant expression.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:874:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.current => (Icons.radio_button_checked, 'en cours'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: Not a constant expression.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:875:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: Not a constant expression.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:876:7: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        StepState.locked => (Icons.lock_outline, 'à venir'),
+        ^^^^^^^^^
+  lib/motivation_screens.dart:882:24: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+        accent: state == StepState.current ? SL.accent : null,
+                         ^^^^^^^^^
+  lib/motivation_screens.dart:886:38: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+            Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+                                       ^^^^^^^^^
+  lib/motivation_screens.dart:897:28: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                    state == StepState.reached && day != null
+                             ^^^^^^^^^
+  lib/motivation_screens.dart:901:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.current && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:903:30: Error: 'StepState' is imported from both 'package:flutter/src/material/stepper.dart' and 'package:streetlift_tracker/motivation.dart'.
+                  if (state == StepState.next && t != null)
+                               ^^^^^^^^^
+  lib/motivation_screens.dart:872:35: Error: The type 'StepState' is not exhaustively matched by the switch cases since it doesn't match 'StepState.reached'.
+   - 'StepState' is from 'package:streetlift_tracker/motivation.dart' ('lib/motivation.dart').
+  Try adding a wildcard pattern or cases that match 'StepState.reached'.
+      final (icon, label) = switch (state) {
+                                    ^
+  .
+01:10 +15 -13: Some tests failed.
