@@ -1,0 +1,20 @@
+{
+  "organisation_a_par_muscle": {
+    "appels_de_dessin": 182,
+    "images": 8,
+    "images_par_s": 0.6666666666666666,
+    "temps_moyen_ms": 3255.8367499999995,
+    "p99_ms": 3539.548,
+    "construction_ui_moyenne_ms": 41.328688000000035,
+    "rendu_gpu_moyen_ms": 1219.1335920000004
+  },
+  "organisation_b_fusion": {
+    "appels_de_dessin": 8,
+    "images": 7,
+    "images_par_s": 0.5833333333333334,
+    "temps_moyen_ms": 3613.931285714286,
+    "p99_ms": 3831.237,
+    "construction_ui_moyenne_ms": 12.461449999999997,
+    "rendu_gpu_moyen_ms": 1298.8977916666665
+  }
+}

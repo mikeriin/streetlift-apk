@@ -1,6 +1,2 @@
 Analyzing streetlift_tracker...                                 
-
-   info • Invalid use of a private type in a public API. Try making the private type public, or making the API that uses the private type also be private • lib/mannequin_3d.dart:305:9 • library_private_types_in_public_api
-   info • The parameter name 'old' doesn't match the name 'oldWidget' in the overridden method. Try changing the name to 'oldWidget' • lib/mannequin_3d.dart:593:36 • avoid_renaming_method_parameters
-
-2 issues found. (ran in 17.2s)
+No issues found! (ran in 11.2s)
