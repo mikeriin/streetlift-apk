@@ -1,0 +1,42 @@
+MISSION — KALIS TRACK : REFONTE MUSCLES ET ANIMATIONS (BRANCHE SÉPARÉE, FUSION SUR ACCORD DU PROPRIÉTAIRE)
+
+Tu interviens comme développeur Flutter/Dart senior, illustrateur et animateur 2D. Suis `pipeline/PIPELINE.md` (démarrage, économie, décisions, notifications), avec les règles propres à ce lot ci-dessous, qui priment.
+
+0. CONTEXTE ET ENTRÉES
+— Demande du propriétaire (27/09/2026) : (1) les muscles doivent s'afficher avec les illustrations anatomiques historiques de l'application (face / dos, calques par groupe, rampe bordeaux → rouge, halo), y compris le résumé des groupes travaillés dans la semaine (STATS) ; (2) toutes les animations d'exercices doivent être revues et refaites avec ces illustrations ; une vue de profil dans le même style doit être ajoutée.
+— Un premier essai de Codex est sur la branche `codex/retablir-carte-musculaire-et-animations`, dossier `codex_export/` (export texte : `refonte.patch` + `assets_base64.txt` + `reconstruct.py`, base `main` 5d38177, version 4.0.0). Aperçu et contrôles faits le 27/09 (branche `claude/preview-refonte`, dossier `preview-out/`) :
+  • BON, à reprendre : restauration des 18 PNG de 3.1.0 (`assets/muscles/`), `MuscleHeatmap` historique pour STATS, carte des fiches agrégeant les 81 muscles en 11 groupes (principaux 1 / secondaires 0,62 / stabilisateurs 0,35 / étirés 0,25), liste texte conservée.
+  • À JETER : sa vue de profil (`profile_*.png`, `tools/muscles_profile.py`) : blocs polygonaux, style sans rapport avec face / dos.
+  • NON FAIT : les animations restent la silhouette polygonale de la v2 (seules couleurs et contours changés).
+  • DÉFAUTS : formatage fait avec une autre version de Dart (4 fichiers refusés par `dart format --set-exit-if-changed` sous Flutter 3.29.3) ; `flutter analyze` en erreur (`heatAtlasFills` supprimée alors que `test/l9b_content_test.dart` l'utilise).
+— Image de profil fournie par le propriétaire (générée dans ChatGPT, validée par lui) : `pipeline/inputs/refonte/profil_source_chatgpt.png` (941 × 1672, fond blanc, personnage tourné vers la gauche). C'est LA référence de la vue de profil.
+
+1. BRANCHE ET BASE
+— Crée `refonte/muscles-animations` depuis le `main` le plus récent (le pipeline publie encore L12 puis L13 sur main pendant ton travail). Reprends la partie « bonne » de Codex (reconstruis-la avec `reconstruct.py` puis applique-la sur la base actuelle, conflits résolus), sans sa vue de profil.
+— Tous tes commits vont sur cette branche. Pour la CI (formatage, analyse, tests, captures), utilise ta propre branche temporaire `claude/ci-refonte` (modèle : `.github/workflows/preview.yml` de `claude/preview-refonte`) — jamais `claude/ci-tools`, utilisée par le pipeline.
+— INTERDIT sans accord écrit du propriétaire : pousser sur `main`, fusionner, lancer un autre lot.
+
+2. CARTE MUSCULAIRE (reprise Codex, corrigée)
+— STATS : rendu identique à 3.1.0 avec les données actuelles. Fiche exercice : carte face / dos / profil avec les intensités ci-dessus et la liste texte. Rampe historique bordeaux → rouge, indépendante de la couleur dominante (décision L5).
+— Corrige le formatage (Flutter 3.29.3 / Dart de la CI) et l'erreur d'analyse (garde `heatAtlasFills` ou adapte le test sans retirer d'assertion ; justifie).
+
+3. VUE DE PROFIL À PARTIR DE L'IMAGE DU PROPRIÉTAIRE
+— Détoure le fond blanc (transparence propre, sans liseré), recadre, mets à l'échelle à 760 px de haut (largeur proportionnelle), harmonise les niveaux de gris et le noir des contours avec `front_base.png` / `back_base.png` (comparaison d'histogrammes), sans redessiner le personnage : `assets/muscles/profile_base.png`.
+— Crée les calques de groupes visibles de profil (au minimum épaules, pectoraux, dos, biceps, triceps, avant-bras, gainage, fessiers, quadriceps, ischios, mollets), alignés au pixel, en segmentant les régions musculaires de l'image (même méthode que `tools/muscles_from_reference.py`, à adapter ; outil livré et relançable). Complète `meta.json`.
+— Contrôle visuel obligatoire : planche face / dos / profil côte à côte, puis chaque calque surligné seul (rends en PNG et REGARDE les images). Corrige tant qu'une région est mal attribuée.
+
+4. ANIMATIONS RECONSTRUITES AVEC LES ILLUSTRATIONS
+— Remplace la silhouette polygonale par une animation « découpée » (cutout) : découpe `front_base`, `back_base` et `profile_base` (et leurs calques) en segments (tête, cou, tronc, bassin, bras, avant-bras, mains, cuisses, jambes, pieds), avec pivots aux articulations et recouvrements soignés (pas de trou ni de cassure visible aux coudes, épaules, hanches, genoux) ; membre éloigné légèrement assombri en profil.
+— Anime ces segments avec la cinématique existante du pack (`assets/content/poses.*`, `lib/pose_engine.dart` : images clés, angles, interpolation, accessoires, contacts) ; mise à l'échelle des segments sur les longueurs du modèle.
+— Vues : profil pour les mouvements dans le plan sagittal ; face pour les mouvements frontaux ; AJOUTE la vue de dos (même cinématique que la face, rendue avec `back_base`) pour les exercices dont les muscles principaux sont postérieurs (dorsaux, trapèzes, fessiers, ischios…). Documente la règle de choix.
+— Les muscles travaillés sont surlignés sur les segments pendant le mouvement (calques, même rampe que la carte).
+— Passe en revue TOUS les exercices : planche d'images clés rendue et REGARDÉE pour chacun ; exercice reconnaissable, amplitude, contacts avec le matériel, matériel à l'échelle, sens du mouvement. Un exercice que tu ne rends pas juste garde le statut `statique` ou `indisponible` (jamais d'animation fausse). Réduction des animations Android respectée (images clés fixes), animation fluide, coût mesuré (images par seconde en test, mémoire des textures).
+
+5. CONTRÔLES
+Sur `claude/ci-refonte` avec Flutter 3.29.3 : `dart format --output=none --set-exit-if-changed lib test`, `flutter analyze`, suite Dart complète, Python (`tools/tests`, `verify_project.py`), plus nouveaux tests (alignement des calques, transparence, correspondance muscles → groupes, rendu STATS identique à 3.1.0 sur données de test, rendu sans exception de chaque animation, choix de vue). Aucune assertion retirée, aucun test désactivé. Puis pousse le ZIP (`streetlift_tracker_v33.zip`, format habituel, `package_release.py --check`) sur `refonte/muscles-animations` : le workflow `build-apk.yml` s'y déclenche ; vérifie que le run réussit. Version : numéro de correctif suivant celui de main au moment du push (pubspec et réglages), README et SUIVI_PROJET complétés.
+
+6. APERÇU POUR LE PROPRIÉTAIRE (il est sur téléphone)
+— 3 exercices tirés au hasard (graine indiquée) : un en vue de face, un en vue de dos, un en vue de profil ; pour chacun, un GIF d'une boucle complète et la planche des images clés ; plus une capture du résumé STATS de la semaine et d'une fiche exercice ; la planche face / dos / profil. Tous rendus par le vrai code (captures Flutter en CI).
+— Publie une page claude.ai (outil Artifact ; charge d'abord la skill artifact-design) « Aperçu refonte muscles » qui montre ces images et GIF, lisible sur téléphone, avec la liste des changements, les résultats des contrôles et le lien du run de build.
+— Écris `LIVRAISON_REFONTE_MA.md` (projet claude.ai via l'outil Projects si disponible, et `pipeline/livraisons/`), mets à jour `pipeline/ETAT.md`, puis notifie : « Kalis Track refonte muscles : aperçu prêt, accord de fusion requis » avec le lien de la page.
+— Attends la réponse dans cette session. À l'accord écrit du propriétaire seulement : mets la branche à jour avec le dernier main, relance les contrôles, fusionne sur main, vérifie le build signé, notifie. Sans accord : ne fais rien de plus.
