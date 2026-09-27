@@ -1,0 +1,9 @@
+LOT M19 — NETTOYAGE : REPLI, SUPPRESSION DU MOTEUR 2D, FLUIDITÉ, POIDS
+Rôle : développeur Flutter senior, performance. Une seule action : terminer la transition proprement.
+
+— Repli appareils incompatibles (décision du propriétaire) : carte 2D historique pour les muscles, et postures fixes du mannequin dessinées par un rendu logiciel (Canvas.drawVertices sur une version allégée du maillage, éclairage par matcap, tri des triangles) à partir des mêmes clips — aucune image embarquée en masse. Testé en forçant l'absence de Flutter GPU.
+— Supprime le moteur de démonstration 2D devenu inutile (`pose_cutout.dart`, `pose_painter.dart`, parties de `pose_engine.dart`, ressources `assets/muscles/anim/`, poses 2D du pack si plus lues) SEULEMENT pour ce qui n'est plus utilisé par aucun écran ni par le repli ; conserve les images historiques utilisées par le repli. Tests adaptés sans retirer d'assertion sur des fonctions conservées.
+— Fluidité : profilage sur émulateur des écrans 3D (fiche, STATS, séance, Anatomie, listes), corrections, chiffres avant / après.
+— Poids : APK avant M1 / après M19, détail par ressource ; objectif ≤ +10 Mo, tolérance +20 Mo.
+— Page de suivi : bilan du pipeline (exercices convertis / postures / indisponibles, poids, performances, limites).
+— Version 5.18.0. Fin du pipeline : ne relance pas la tâche ; notifie « Pipeline mannequin 3D terminé — installer v5.18.0 ».

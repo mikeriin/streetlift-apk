@@ -1,0 +1,10 @@
+LOT M13 — CONVERSION EN 3D : GAINAGE, FLEXION DU TRONC, MOBILITé
+Rôle : biomécanicien et technical animator. Une seule action : convertir en animations 3D la famille d'exercices ci-dessous avec la chaîne de M6, et les brancher dans l'application.
+
+Périmètre : types `gainage_anti_extension`, `gainage_anti_rotation`, `gainage_anti_flexion_laterale`, `flexion_tronc` et `mobilite` (environ 103 exercices), hors ceux déjà convertis.
+
+— Pour chaque exercice : fiche biomécanique vérifiée ou complétée (sources notées), `tools/anatomy/animate.py`, contrôles automatiques, planche des images clés sous la vue par défaut et en 3/4 REGARDÉE avec la checklist de M6 (reconnaissable, amplitude, contacts, matériel à l'échelle, sens, posture sûre, lest visible si lesté). Deux corrections au plus ; ensuite l'exercice garde sa démonstration actuelle (ou une posture fixe juste) et figure dans la liste « à reprendre » de la livraison. Jamais d'animation fausse.
+— Travaille par petits groupes de variantes proches (même gabarit de mouvement) pour réutiliser les réglages ; si le temps manque, livre les exercices terminés et l'état exact du reste (le lot suivant ne les reprend pas : note-les dans DECISIONS_3D.md pour une reprise).
+— Mets à jour le registre `assets/anatomy/clips/index.json` ; poids ajouté mesuré (budget §2).
+— Page de suivi : 4 GIF représentatifs + la liste des exercices convertis / à reprendre.
+— Version 5.12.0.

@@ -1,0 +1,19 @@
+LOT M2 — MODÈLE ANATOMIQUE D'EXÉCUTION ET ÉCRAN ANATOMIE
+Rôle : technical artist Blender (bpy) et développeur Flutter 3D. Une seule action : le mannequin statique existe dans l'application et s'explore.
+
+1. Fabrication du modèle (`tools/anatomy/build_model.py`, relançable)
+— Source : `models/full-body-male-mobile.glb` et `maps/full-body-map.json` du dépôt slfresh/fitmitwith-anatomy-atlas (commit noté, SHA-256 vérifié), copiés dans `tools/anatomy/source/` avec ATTRIBUTION.txt et la licence.
+— Garde les muscles superficiels, le squelette d'appui et les tissus utiles ; retire les muscles profonds invisibles (liste consignée) ; retire l'aponévrose des obliques devant le droit de l'abdomen (comme la page de référence) ; remplace la tête écorchée par une tête sombre et lisse de même encombrement (mains et pieds : volumes sombres simplifiés, comme les images historiques). Décime vers ≤ 60 000 triangles sans trou ni facette visible (contrôle visuel).
+— Organisation pour la mise en évidence : choisis entre (a) une maille par muscle et par côté, (b) maillage fusionné + identifiant de muscle par sommet lu par un matériau `.fmat`. Mesure les deux sur l'émulateur (temps d'image, appels de dessin) et garde la plus rapide qui permet le toucher par muscle. Consigne la mesure.
+— Sorties : `assets/anatomy/mannequin.glb` (converti par les build hooks de flutter_scene), `assets/anatomy/muscles_map.json` : pour chaque région, id, côté, nom français, groupe parmi les 11 groupes de l'application, correspondance avec les muscles du pack (`assets/content`, clé `muscles`). Reprends les noms français et la correspondance des groupes de la page de référence ; complète pour les muscles du pack absents de la page.
+— Tests Python : chaque muscle du pack visible en surface a au moins une région ; aucune région sans groupe ; budget de triangles ; SHA-256 de la source.
+
+2. Application
+— Widget réutilisable `Mannequin3D` (fichier `lib/mannequin_3d.dart`) : charge le modèle une fois (cache), vues Face / Dos / Profil / 3/4 avec transition, rotation libre au doigt, rendu à la demande, intensités par muscle (rampe et halo du §2), réglages respectés, repli si Flutter GPU absent (carte 2D historique `MuscleHeatmap` / `ExerciseAtlas`).
+— Écran « Anatomie » accessible depuis la page d'accueil ou le menu le plus logique de l'application (justifie) : mannequin, boutons de vues, choix d'un des 11 groupes pour le mettre en évidence, nom du muscle au toucher (bulle discrète).
+— Réglages › Affichage 3D : « Nom du muscle au toucher » (activé), « Os visibles » (activé), « Halo » (activé).
+— « Sources et licences » : crédits CC BY-SA 4.0 du modèle (texte exact), `assets/anatomy/ATTRIBUTION.md`.
+— L'écran « Moteur 3D » affiche désormais le mannequin pour la mesure.
+
+3. Contrôles propres au lot
+Captures face / dos / profil / 3/4, un groupe allumé, sombre et clair, à côté de `front_base.png` / `back_base.png` : REGARDE-les ; style cohérent (gris mat, tête sombre, halo sobre). Poids ajouté à l'APK mesuré. Version 5.1.0.

@@ -1,0 +1,10 @@
+LOT M3 — FICHE EXERCICE : MANNEQUIN FIXE AVEC LES MUSCLES DE L'EXERCICE
+Rôle : développeur Flutter. Une seule action : chaque fiche exercice montre le mannequin 3D avec ses muscles mis en évidence.
+
+— Dans la fiche exercice (`lib/exercise_screens.dart`), remplace la carte musculaire 2D (face/dos/profil) par `Mannequin3D`, pose neutre, muscles du pack avec intensités principal 1 / secondaire 0,62 / stabilisateur 0,35 (et « étirés » s'ils existent : 0,25, teinte distincte documentée), vue de départ choisie pour montrer au mieux les muscles principaux (règle écrite et testée : postérieurs → dos, antérieurs → face, mixtes → 3/4).
+— La démonstration animée existante (2D) reste à sa place : ce lot ne touche pas aux animations.
+— Liste des muscles en texte conservée sous le mannequin ; le toucher d'un muscle respecte le réglage.
+— Performance : ouvrir une fiche ne doit pas saccader (modèle en cache, rendu à la demande) ; mesure sur l'émulateur l'ouverture de 20 fiches d'affilée (temps, mémoire).
+— Repli appareil incompatible : carte 2D historique actuelle.
+— Tests : correspondance muscles du pack → régions pour TOUS les exercices (aucun muscle du pack sans région, sinon liste justifiée) ; règle de vue ; widget sans exception pour un échantillon de 50 exercices.
+— Captures : 6 fiches variées (tirage, poussée, jambes, gainage, figure, isolation), sombre et clair ; REGARDE-les. Version 5.2.0.

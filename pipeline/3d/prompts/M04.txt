@@ -1,0 +1,9 @@
+LOT M4 — STATS : RÉSUMÉ HEBDOMADAIRE SUR LE MANNEQUIN
+Rôle : développeur Flutter, visualisation de données. Une seule action : le résumé des groupes travaillés dans la semaine s'affiche sur le mannequin 3D.
+
+— Dans STATS (`lib/stats_*.dart`), remplace la carte 2D du résumé hebdomadaire par `Mannequin3D` : intensité de chaque groupe = même calcul et même normalisation que la carte actuelle (réutilise le code des données, ne change pas les chiffres), rampe et halo du §2, vues Face / Dos (bascule) et rotation au doigt.
+— Légende chiffrée conservée (volume ou séries par groupe, en texte) ; accessibilité inchangée.
+— Performance : STATS reste fluide au défilement (mannequin rendu à la demande ; si le coût est trop élevé dans une liste, image fixe du rendu mise en cache et régénérée seulement quand les données changent — mesure et justifie).
+— Repli appareil incompatible : carte 2D historique.
+— Tests : mêmes valeurs d'intensité qu'avant sur des données de test (comparaison chiffrée), widget sans exception, semaine vide.
+— Captures : semaine type, semaine vide, sombre et clair ; REGARDE-les. Version 5.3.0.

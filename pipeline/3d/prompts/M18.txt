@@ -1,0 +1,8 @@
+LOT M18 — APERÇU AU CHOIX ET AU REMPLACEMENT D'UN EXERCICE
+Rôle : développeur Flutter. Une seule action : quand l'utilisateur choisit ou remplace un exercice, il voit le mouvement avant de valider.
+
+— Listes de choix et de remplacement (générateur, remplacement Koach, recherche, arsenal : repère-les dans le code) : aperçu animé du mannequin au toucher long ou dans une zone d'aperçu (choix justifié selon l'écran), une seule animation active à la fois, les autres en vignette fixe mise en cache.
+— Vignettes fixes : rendu du mannequin à la posture clé de l'exercice, générées à la demande et mises en cache sur l'appareil (taille bornée, invalidation à la mise à jour du registre), jamais d'images embarquées en masse.
+— Défilement fluide avec 100 éléments (mesure en émulateur).
+— Tests : cache (taille, invalidation), une seule animation active, repli 2D.
+— Captures : liste de remplacement avec aperçu ; REGARDE-les. Version 5.17.0.

@@ -1,0 +1,8 @@
+LOT M16 — FANTÔME DES ERREURS FRÉQUENTES
+Rôle : biomécanicien, animateur, développeur Flutter. Une seule action : montrer, à côté du bon geste, l'erreur fréquente la plus importante d'un exercice.
+
+— Choisis dans les « erreurs » du pack, pour les exercices convertis, celles qui se montrent par le mouvement (genoux qui rentrent au squat, dos arrondi au soulevé, épaules qui montent en traction, coudes qui s'écartent aux dips, bassin qui s'affaisse en gainage…). Priorité : exercices du programme du propriétaire, puis les plus fréquents ; au moins 40 exercices.
+— Pour chacune : clip « erreur » calculé par la chaîne de M6 (écart articulaire documenté, même tempo), vérifié et REGARDÉ.
+— Fiche : bouton « Erreur fréquente » ; le mannequin juste reste opaque, le fantôme de l'erreur est superposé en rouge translucide (même rampe, faible opacité, sans halo), synchronisé ; libellé de l'erreur et consigne de correction en texte. Réduction des animations : images fixes comparées.
+— Tests : présence des clips, synchronisation, accessibilité (le texte dit l'erreur).
+— Captures et GIF de 4 erreurs ; REGARDE-les. Version 5.15.0.

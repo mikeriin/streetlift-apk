@@ -1,0 +1,8 @@
+LOT M17 — SÉANCE EN COURS : ANIMATION DE L'EXERCICE ACTUEL
+Rôle : développeur Flutter, designer d'interaction. Une seule action : pendant une séance, l'écran montre le mannequin qui fait l'exercice en cours.
+
+— Écran de séance (`lib/session_screen.dart` et écrans de WOD si pertinent) : mannequin animé compact de l'exercice en cours (3D si converti, sinon démonstration actuelle), muscles mis en évidence, touchable pour l'agrandir (lecteur complet de M7). Il ne doit jamais gêner la saisie des séries, les chronos ni les boutons existants : disposition testée sur petits écrans (360 × 640 dp) et grands écrans.
+— Réglage « Démonstration pendant la séance » (activé par défaut) ; pendant un chrono de repos, l'animation montre l'exercice suivant.
+— Économie : pause pendant la saisie, écran verrouillé ou appli en arrière-plan ; mesure de la batterie et du temps d'image sur une séance simulée de 45 min en émulateur (consigne les chiffres).
+— Tests : séance complète simulée sans exception, bascule d'exercice, réglage désactivé.
+— Captures : début de série, repos, petit écran ; REGARDE-les. Version 5.16.0.

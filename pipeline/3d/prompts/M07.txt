@@ -1,0 +1,9 @@
+LOT M7 — LECTEUR COMPLET ET INTENSITÉ PAR PHASE
+Rôle : développeur Flutter, designer d'interaction. Une seule action : le lecteur d'animation devient complet, sur les exercices déjà convertis.
+
+— Contrôles sous le mannequin animé : lecture / pause, curseur de temps (glisser = parcourir le mouvement), nom de la phase en cours et son tempo (ex. « Descente · 3 s »), boutons de vues. Grandes cibles tactiles (≥ 48 dp), libellés accessibles.
+— Intensité par phase (décision du propriétaire) : muscles principaux plus vifs en concentrique, plus doux en excentrique, pulsation lente en isométrie ; les secondaires et stabilisateurs suivent en proportion. Transitions douces, jamais de clignotement (respect des recommandations d'accessibilité sur les flashs). Loi de modulation écrite dans `docs/ANIMATION_3D.md` et testée.
+— Réduction des animations Android : pas de lecture automatique ; images clés fixes de début et de fin de chaque phase, parcourables au curseur.
+— Économie : pause hors écran, en arrière-plan et après 60 s sans interaction (reprise au toucher).
+— Tests : modulation par phase, curseur ↔ temps, réduction des animations, cycle de vie (pause/reprise).
+— Captures sur les 3 pilotes (phases différentes, sombre et clair) + GIF ; REGARDE-les. Version 5.6.0.

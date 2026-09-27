@@ -1,0 +1,17 @@
+LOT M6 — MATÉRIEL 3D, CHAÎNE DE CALCUL DES ANIMATIONS, 3 EXERCICES PILOTES
+Rôle : biomécanicien, technical animator Blender, développeur Flutter. Une seule action : construire la chaîne qui transforme une fiche biomécanique en animation 3D juste, et la prouver sur 3 exercices.
+
+1. Matériel (`tools/anatomy/build_equipment.py`)
+Bibliothèque sobre, gris neutres cohérents avec le mannequin, dimensions réelles : barre de traction (Ø 28 mm, 2,30 m du sol), barres parallèles (Ø 45 mm, écart 55 cm, 1,40 m), anneaux (Ø 28 mm), banc plat et inclinable, barre olympique (Ø 28 mm, 2,20 m, disques Ø 45 cm), haltères, kettlebell, élastiques, box, sol ; ceinture et gilet de lest. Chaque élément a ses points de contact nommés (prise, appui, assise). Poids total mesuré.
+
+2. Chaîne d'animation (`tools/anatomy/animate.py`, relançable exercice par exercice)
+— Entrée : la fiche biomécanique de l'exercice dans le pack (`assets/content` : phases, angles articulaires de début et de fin, prise, contacts, trajectoire de la charge, tempo). Si la fiche manque ou est incomplète, complète-la dans un fichier source versionné (`tools/anatomy/fiches/<id>.json`, sources notées).
+— Calcul dans Blender : angles imposés + cinématique inverse pour tenir les contacts (mains sur la prise, pieds au sol, charge sur les trapèzes…), équilibre (centre de masse au-dessus de l'appui quand le sujet est debout), jamais d'image clé placée à l'œil.
+— Sortie compacte : `assets/anatomy/clips/<id>.json.gz` (rotations d'os en quaternions par image clé, phases avec leur type concentrique / excentrique / isométrique, tempo, matériel et ses positions, vue par défaut), ≤ 5 Ko ; lecture en Dart par interpolation sphérique, testable sans GPU.
+— Contrôles automatiques : longueurs constantes, limites articulaires du rig, contacts à 1 cm, aucune pénétration dans le matériel ni dans le corps, amplitude complète selon la fiche, trajectoire de la charge conforme, sens du mouvement.
+— Contrôle visuel : planche des images clés sous la vue par défaut et en 3/4, REGARDÉE ; checklist : exercice reconnaissable, amplitude, contacts, matériel à l'échelle, sens, posture sûre.
+
+3. Application : les 3 pilotes
+— Traction pronation, dips aux barres parallèles, back squat : dans leur fiche, la démonstration 2D est remplacée par le mannequin animé en boucle (lecture automatique, tempo réel, muscles de l'exercice mis en évidence, matériel), vue par défaut automatique, rotation au doigt. Les autres exercices gardent la démonstration 2D.
+— Registre `assets/anatomy/clips/index.json` : exercices convertis, statut, date, contrôles passés. L'application choisit 3D si l'exercice y figure, sinon 2D.
+— Captures et GIF d'une boucle pour chaque pilote ; REGARDE-les. Version 5.5.0.

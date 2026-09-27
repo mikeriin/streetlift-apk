@@ -1,0 +1,21 @@
+LOT M1 — SOCLE 3D : FLUTTER ≥ 3.47, FLUTTER GPU, CI 3D, ÉCRAN « MOTEUR 3D »
+Rôle : développeur Flutter/Android senior, ingénieur CI. Une seule action : rendre l'application capable d'afficher de la 3D, sans rien changer d'autre pour l'utilisateur.
+
+1. Montée de version
+— Flutter : dernière stable ≥ 3.47 (note la version exacte et le Dart associé). Mets à jour `.github/workflows/build-apk.yml` (version épinglée, rien d'autre : signature, secrets et étapes de vérification inchangés), `pubspec.yaml` (contraintes SDK, dépendances à jour compatibles), Gradle / AGP / Kotlin / minSdk si la nouvelle version l'exige (justifie chaque changement ; identifiant et signature inchangés).
+— Adapte le code et les tests aux changements de l'analyseur et du formateur, sans retirer d'assertion ni désactiver de test. Les captures de référence éventuellement décalées par le nouveau moteur de rendu sont régénérées et REGARDÉES (aucune régression visuelle réelle).
+— Ajoute flutter_scene (dernière version compatible) et active Flutter GPU dans `android/app/src/main/AndroidManifest.xml` (`io.flutter.embedding.android.EnableFlutterGPU` = true). Impeller reste le moteur par défaut.
+
+2. CI 3D
+— Crée `.github/workflows/ci-3d.yml`, déclenché uniquement par un push sur `claude/ci-3d` : formatage, analyse, tests Dart et Python, build debug, puis test d'intégration sur émulateur Android (`reactivecircus/android-emulator-runner`, API 34 ou plus, x86_64, GPU `swiftshader_indirect` ou `host` selon ce qui rend Flutter GPU) avec captures d'écran recommitées sur `claude/ci-3d` (dossier `ci-out/`), plus un relevé des temps d'image (moyenne, 99e centile).
+— Établis la méthode de capture qui marche vraiment pour flutter_scene (essaie d'abord `flutter test`, puis l'émulateur) et documente-la dans `docs/CI_3D.md` du ZIP : les lots suivants l'utiliseront telle quelle. Si aucune méthode ne rend Flutter GPU en CI, c'est un blocage (e) : notifie.
+
+3. Écran « Moteur 3D » (Réglages › À propos › Moteur 3D)
+— Rendu test flutter_scene : une figure simple (cube ou icosaèdre éclairé, gris mat, halo rouge historique en bloom) qui tourne, rotation au doigt.
+— Diagnostic lisible : « Compatible » / « Non compatible » (Flutter GPU disponible ou non, API graphique, modèle de l'appareil, version d'Android), images par seconde, temps d'image moyen et 99e centile sur 10 s. Si Flutter GPU est absent : message clair, aucun plantage.
+— Cet écran restera l'outil de mesure des lots suivants (il affichera plus tard le mannequin).
+
+4. Livraison et ATTENTE
+— Version 5.0.0 ; contrôles §4 ; publication §7 ; crée la page « Suivi mannequin 3D » (§6) et note son lien dans ETAT_3D.md.
+— Exception au mode automatique : NE relance PAS le pipeline. Notifie : « Kalis Track M1 livré — v5.0.0. Installe-la puis ouvre Réglages › À propos › Moteur 3D et réponds ici : compatible ou non, et les images/s ». Attends la réponse dans cette session.
+— Réponse « compatible » (avec des images/s ≥ 45) : consigne-la dans ETAT_3D.md et relance le pipeline. Sinon : consigne, écris dans DECISIONS_3D.md les options (poursuivre avec le repli logiciel en priorité, changer de moteur, arrêter) avec ta recommandation, notifie et arrête-toi.

@@ -1,0 +1,15 @@
+LOT M5 — SQUELETTE D'ANIMATION ET PEAU DU MODÈLE (EFFORT ACCRU)
+Rôle : rigger et technical artist Blender, anatomiste du mouvement. Une seule action : le mannequin peut prendre n'importe quelle posture humaine sans déchirure.
+
+1. Squelette (`tools/anatomy/build_rig.py`, relançable)
+— Squelette placé sur les repères anatomiques du modèle (le squelette d'appui du modèle donne les centres articulaires) : bassin, 3 segments de rachis (lombaire, thoracique bas, thoracique haut), cou, tête, clavicules, scapulas (élévation/abaissement, protraction/rétraction, sonnette : indispensables pour tractions, dips, muscle-up), bras, avant-bras (pronation/supination sur l'avant-bras), mains (doigts regroupés en 2 os : poing / main ouverte), cuisses, jambes, pieds, orteils. ≤ 40 os. Axes et limites articulaires notés en degrés, d'après des références d'amplitude (sources notées).
+— Poids de peau : automatiques puis corrigés aux zones critiques (épaule/deltoïde/pectoral/grand dorsal, coude, poignet, hanche/fessiers, genou, rachis). Les os du modèle suivent leur segment sans déformation. Muscles biarticulaires répartis de façon crédible.
+— Exporte le mannequin riggé (`assets/anatomy/mannequin.glb`, même organisation de mise en évidence qu'en M2) et `assets/anatomy/rig.json` (os, parents, axes, limites, longueurs).
+
+2. Contrôles de déformation (script Python + rendus Blender REGARDÉS)
+— Postures extrêmes de test : bras levés verticalement, bras en extension arrière maximale, coude fléchi à 150°, squat complet, hanche fléchie à 120° jambe tendue, rachis en flexion / extension / rotation, suspension à une barre (scapulas élevées), appui bas de dip. Pour chacune : planche face / dos / profil / 3/4. Aucune déchirure, interpénétration visible ou volume effondré ; corrige et recommence.
+— Tests : longueurs d'os constantes, limites respectées, poids normalisés, aucun sommet sans poids.
+
+3. Application
+— Écran Anatomie : sélecteur « Posture » avec 4 postures de référence (debout, suspendu à la barre, squat bas, planche de gainage) et transition douce ; mise en évidence et toucher toujours justes sur le modèle déformé.
+— Captures des 4 postures sous 4 vues ; REGARDE-les. Version 5.4.0.
