@@ -1,4 +1,20 @@
-# Kalis Track 4.0.0 — Programme personnalisé
+# Kalis Track 4.1.0 — Koach s'adapte à ta journée
+
+## 4.1.0 — Adaptation au jour le jour (lot L11)
+
+- **« J'ai seulement… minutes »** (menu de la séance, avant ou pendant) : Koach recompose la séance — échauffement de 3 minutes, mouvements principaux gardés avec au moins 2/3 de leurs séries, accessoires enchaînés deux par deux sans conflit musculaire, prévention à 1 série (jamais supprimée), exercices les moins prioritaires retirés. Aperçu des différences avant de valider ; « Séance complète » pour revenir.
+- **Échanger un exercice** (machine prise, gêne, envie) : 3 propositions classées, même type de mouvement, difficulté proche, matériel disponible, jamais un exercice que tu détestes ; en cas de douleur, contrainte articulaire égale ou moindre. La première série sert de calibrage. **Je m'entraîne ailleurs** : toute la séance adaptée au matériel d'un autre lieu.
+- **Le plan glisse** : une séance manquée n'est jamais doublée ; Koach propose de reprendre là où tu t'es arrêté (annulable). **Vacances** et **maladie** : calendrier et rappels en pause ; séances d'entretien facultatives en vacances ; au retour de maladie, une semaine plus légère.
+- **Reprise après un arrêt** : 7-13 jours → charges −10 % et une série de moins ; 14-27 jours → −20 % et série de calibrage ; 28 jours et plus → −30 % et semaine de calibrage.
+- **Assiduité** : sous 60 % des séances faites sur 4 semaines, Koach propose d'alléger (une séance de moins ou des séances 20 % plus courtes) ; au-dessus de 90 % avec progression, une séance de plus si tu le souhaites. **Palier** détecté (moins de +0,5 % par semaine pendant 3 semaines) : conseil selon ton niveau.
+- **Modes de Koach** (Réglages → Adaptation au quotidien) : Guidé (Koach applique les baisses et adaptations de sécurité, avec « Annuler »), Assisté (tu valides d'un tap, comme avant), Expert (tout est manuel, suggestions visibles). **Ton installation reste en Assisté** tant que tu n'as rien choisi.
+- **Débutant ou novice** : une seule question en fin de séance, la difficulté globale sur 10 ; une semaine nettement plus chargée que d'habitude donne un message de prudence (un simple repère).
+- Rien n'est réécrit dans ton historique ; aucune donnée n'est migrée. Contenu sportif **non relu par un professionnel diplômé** : des repères d'entraînement, aucune promesse de résultat.
+
+Détail : `docs/CONTRAT_L11.md`, `SUIVI_PROJET.md` (L11). Tests : `test/l11_*_test.dart`.
+
+
+# Historique — Kalis Track 4.0.0 — Programme personnalisé
 
 ## 4.0.0 — Générateur de programme personnalisé (lot L10)
 

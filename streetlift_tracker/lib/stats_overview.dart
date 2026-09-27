@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
 import 'game_widgets.dart';
+import 'motivation_screens.dart' show ProgressScreen;
 import 'progression.dart';
 import 'store.dart';
 import 'ui.dart';
@@ -131,6 +132,20 @@ class StatsOverview extends StatelessWidget {
           title: 'Tout ton historique',
           subtitle: 'Séances, résultats WOD et notes',
           onTap: () => onSection(StatsSection.history),
+        ),
+        // L12 (KT-065) : victoires, figures, étapes franchies, partage.
+        KMenuTile(
+          key: const ValueKey('stats-motiv-progress'),
+          icon: Icons.emoji_events_outlined,
+          title: 'Mes progrès',
+          subtitle: 'Victoires, figures, étapes franchies et partage',
+          onTap:
+              () => Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (_) => const ProgressScreen(),
+                ),
+              ),
         ),
       ],
     );

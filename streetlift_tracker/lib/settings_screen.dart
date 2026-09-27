@@ -6,6 +6,7 @@ import 'app_theme.dart';
 import 'data_control.dart';
 import 'exercise_screens.dart';
 import 'koach_screens.dart';
+import 'motivation_screens.dart' show MotivSettingsScreen;
 import 'ui.dart';
 import 'notification_settings.dart';
 import 'pilotage_screen.dart';
@@ -15,7 +16,7 @@ import 'profile_screens.dart';
 import 'store.dart';
 import 'store_widget.dart';
 
-const kAppVersion = '4.1.0';
+const kAppVersion = '4.2.0';
 
 class SettingsScreen extends StatelessWidget {
   final int? section;
@@ -344,6 +345,22 @@ class SettingsScreen extends StatelessWidget {
                 () => Navigator.push(
                   context,
                   MaterialPageRoute<void>(builder: (_) => const AdaptScreen()),
+                ),
+          ),
+          // L12 : motivation et progression visible (KT-065 à KT-071).
+          _Action(
+            key: const ValueKey('settings-motiv'),
+            icon: Icons.emoji_events_outlined,
+            color: SL.accent,
+            title: 'Motivation et progression',
+            subtitle:
+                'Ton ${const {'kind': 'bienveillant', 'demanding': 'exigeant', 'neutral': 'neutre'}[store.koachTone]} · progrès, figures, bilans',
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (_) => const MotivSettingsScreen(),
+                  ),
                 ),
           ),
           _Action(

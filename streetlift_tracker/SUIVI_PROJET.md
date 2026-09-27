@@ -1,6 +1,69 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : L10 — Générateur de programme personnalisé (KT-050 à KT-057), version 4.0.0**  
+**Passe actuelle : L11 — Koach étendu, adaptation au jour le jour (KT-058 à KT-064), version 4.1.0**  
+**Date : 27 septembre 2026, Europe/Paris — version : 4.1.0+68 (versionCode réel fixé par la CI de build)**  
+**Statut : lot L11 exécuté par le pipeline automatisé (sans échange en direct). Corrigé dans le code et testé automatiquement en CI (voir L11.3) ; build signé : `LIVRAISON_L11.md` ; rien n'est vérifié sur téléphone.**
+
+## L11.0 — Base
+
+| Élément | Valeur | Preuve |
+| --- | --- | --- |
+| Demande | `pipeline/prompt_L11.txt` (branche `pipeline`), règles `pipeline/PIPELINE.md` | Pipeline du propriétaire |
+| Base | `streetlift_tracker_v33.zip` **4.0.0+67** (L10), `main` `5d38177`, 2 137 835 octets, SHA-256 `2cd7c9a595bc5a3eb293b587db708c26f826865d68d9fe902dee40a94850affc` (identique à `LIVRAISON_L10.md`), racine unique `streetlift_tracker/` | Recalcul |
+| Prérequis | L7 (Koach), L8 (profil), L9b (pack), L10 (générateur) livrés | Sections ci-dessous |
+| État initial | `lib/`, `test/`, `assets/`, `tools/` identiques à l'arbre du dernier passage CI de L10 (`dc9e3bd`) : format sans changement, analyse sans problème, 689 réussis / 12 ignorés, Python 72/72, `verify_project.py`, build debug | Comparaison de fichiers ; CI L10 |
+| Outils | Pas de Flutter local (proxy) ; CI sur la branche temporaire `claude/ci-tools` ; Python 3.11 local ; aucun téléphone | Constaté |
+
+## L11.1 — Contrat
+
+`docs/CONTRAT_L11.md` : base et contradictions (§1 : « le plan glisse » face à la décision L4 « pas de décalage automatique », mode Guidé face à L7 D4, RIR facultatif face à L7 D8, « 2 cycles », séance de plus ou de moins sur le programme de 40 semaines, niveau novice du plateau, rappels pendant une pause), 14 décisions par défaut réversibles (§2), règles et paramètres (§3-8), format de la section `adapt` et absence de migration (§9), registre de validation (§10), limites (§11).
+
+## L11.2 — Changements par ticket
+
+| Ticket | Changement |
+| --- | --- |
+| KT-058 | `compressSession` (pur) : échauffement 3 min, prévention 1 série, accessoires enchaînés sans conflit musculaire, retrait des moins prioritaires, principaux vers 2/3 ; durées par exercice de `training_estimate.dart` ; menu de séance « J'ai seulement… minutes » avec aperçu des différences, application pendant la séance (séries validées gardées, journaux vides retirés), « Séance complète » |
+| KT-059 | `swapCandidates` (pur) : même type, difficulté ±1, matériel, groupe commun, contrainte articulaire ≤ en cas de douleur, jamais détesté, 3 propositions classées ; charge prudente (`prudentLoad`) ; menus « Échanger un exercice » et « Je m'entraîne ailleurs » ; substitut journalisé `origine~pack` |
+| KT-060 | Reprise (`resumeRule`, `resumeEpisode`, `resumeAppliesTo`) appliquée aux charges (`sessionLoad(..., day:)`) et séries des mouvements principaux ; plan qui glisse (`slideProposal`, départ décalé, annulable) ; pauses vacances et maladie (rappels suspendus, glissement au retour, semaine de maladie × 0,7 et RIR +1), séance d'entretien sans matériel ajoutée aux séances perso |
+| KT-061 | Taux sur 4 semaines glissantes (`adherenceRate`, `adherenceAdvice`) ; cartes de l'accueil : une séance de moins (programme généré : jours du profil puis régénération L10) ou séances 20 % plus courtes ; une séance de plus |
+| KT-062 | Estimation hebdomadaire par mouvement principal, `plateauDetected` (pente, assiduité, fatigue, décharge), intervention par niveau ; décharge programmée la semaine suivante (séries × 0,6, charges −10 %) |
+| KT-063 | `autonomyAction`, `safetyApplied` ; Guidé : baisses et hausse nette appliquées après la série avec « Annuler », jour de fatigue appliqué, baisses acceptées au bilan (annulables) ; Expert : suggestion sans bouton ; écran « Adaptation au quotidien » (Réglages) ; profil migré jamais choisi → Assisté |
+| KT-064 | Question de difficulté globale (débutant, novice ; Guidé, Assisté) ; charge = difficulté × durée ; prudence > 1,5 × moyenne des 4 semaines précédentes ; allègement de fin de semaine ; RIR facultatif pour ces profils |
+
+Fichiers : nouveaux `lib/koach_adapt.dart`, `lib/adapt_store.dart`, `lib/adapt_screens.dart`, `docs/CONTRAT_L11.md`, `test/l11_adapt_test.dart`, `test/l11_store_test.dart`, `test/l11_screens_test.dart` ; modifiés `lib/store.dart` (section `adapt`, charges de séance, estimation de la séance adaptée), `lib/koach_store.dart` (modes, annulations, RIR facultatif, RIR +1 après maladie), `lib/models.dart` (`Exercise.adapted`, `role`, `exId`, `SetsSpec.withCount`, `DayPlan.adapted`), `lib/session_screen.dart` (séance adaptée, menu, bandeau, mode Guidé, question de fin), `lib/koach_screens.dart` (bilan : baisses appliquées d'office en Guidé), `lib/koach_widgets.dart` (suggestion sans bouton en Expert), `lib/home_screen.dart` (cartes), `lib/settings_screen.dart` (entrée, version 4.1.0), `lib/notifications.dart` (pause), `lib/session_history.dart` (exercices échangés retrouvés), `pubspec.yaml` (4.1.0+68), `README.md`, ce suivi. Workflow `build-apk.yml` **inchangé**. Aucune dépendance ajoutée. Aucun test existant modifié.
+
+## L11.3 — Tests et scénarios
+
+| Contrôle | Résultat | Où |
+| --- | --- | --- |
+| Formatage | Reformatage par la CI repris tel quel ; passage final : aucun changement de code | CI `claude/ci-tools`, commit `57d48f6` |
+| Analyse | No issues found | idem |
+| Suite complète | **758 réussis, 12 ignorés**, 0 échec (689 existants inchangés + 69 L11) | idem |
+| Tests ciblés L5/L6 rejoués | 155 réussis, 11 ignorés (identiques à L10) | idem |
+| Python | 72/72 ; `verify_project.py` : 40 semaines, 1 812 exercices du programme, 625 exercices de la base | idem |
+| Android | `flutter build apk --debug` : réussi (APK debug arm64 compilé, commit CI `57d48f6`) ; build signé : `LIVRAISON_L11.md` | CI |
+
+Tests L11 : compression à 20, 30 et 45 minutes (durée respectée, principaux gardés ≥ 2/3, prévention à 1 série, paires sans conflit, monotonie, pendant la séance, durée impossible signalée, déterminisme) ; échange pour douleur sur trois types de mouvement (contrainte articulaire ≤ pour chaque articulation), exercice détesté exclu, charge prudente ; reprises à 7, 14 et 28 jours (bornes, une séance par mouvement, semaine de calibrage) dans le store ; maladie (pause, rappels suspendus, plan qui glisse, × 0,7 la première semaine) et vacances (séance d'entretien sans doublon) ; les trois seuils d'assiduité ; plateau vrai positif et aucun faux positif pendant une décharge, avec fatigue, assiduité faible ou progression ; les trois modes d'autonomie (table, changement, profil migré, annulation d'une baisse acceptée d'office, adaptation de reprise annulée) ; charge de séance et seuil de 1,5 (1,4 → rien, 1,6 → prudence) ; export identique sans adaptation, import strict ; **rejeu déterministe** : après reprise, compression et échange, relance du store → même séance (exercices, séries, charges) ; écrans (séance recomposée, Adaptation au quotidien, carte de pause, question de difficulté) à 390 × 844 et 320 × 720, texte 130 et 200 %, clair et sombre, défilement réel.
+
+Défaut trouvé par la CI et corrigé : le bandeau d'adaptation (reprise proposée) occupait trop de hauteur dans l'en-tête de séance à 320 px et texte 200 % (`l7_koach_screens_test.dart` ne trouvait plus « Valider la série 1 ») → bandeau d'une ligne, détails et boutons dans une feuille. Une remarque d'analyse (accolades) corrigée.
+
+## L11.4 — Limites et suites
+
+| Statut | Éléments |
+| --- | --- |
+| Corrigé dans le code | KT-058 à KT-064 |
+| Testé automatiquement | Voir L11.3 |
+| Vérifié sur appareil | **Rien** |
+| Reste à valider | Essais téléphone (`LIVRAISON_L11.md`) ; décisions D-L11-01 à D-L11-14 (`docs/CONTRAT_L11.md` §2) ; registre de validation (§10) |
+
+- Un exercice échangé n'alimente pas l'estimation Koach ; le plateau utilise sa propre estimation hebdomadaire.
+- « Nouveau bloc orienté sur le point faible » après une décharge : régénération manuelle (Mon programme).
+- Les WOD ne comptent pas comme jours d'entraînement pour la reprise.
+- Branche temporaire `claude/ci-tools` toujours présente.
+
+---
+
+**Passe précédente : L10 — Générateur de programme personnalisé (KT-050 à KT-057), version 4.0.0**  
 **Date : 27 septembre 2026, Europe/Paris — version : 4.0.0+67 (versionCode réel fixé par la CI de build)**  
 **Statut : lot L10 exécuté par le pipeline automatisé (sans échange en direct). Corrigé dans le code et testé automatiquement en CI (voir L10.3) ; build signé : `LIVRAISON_L10.md` ; rien n'est vérifié sur téléphone.**
 

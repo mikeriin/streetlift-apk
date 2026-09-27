@@ -487,9 +487,30 @@ extension AdaptStore on AppStore {
   Map<String, dynamic>? _adaptPlan(int week, int j) {
     final o = adapt.sessions[sessionKey(week, j)];
     if (o?['minutes'] != null) return o;
-    if (!adaptInfo(week, j).shorter) return null;
+    if (adaptInfo(week, j).shorter) {
+      final base = _adaptDayPlan(week, j);
+      return base == null ? null : _shorterPlan(week, base);
+    }
+    // L12 (KT-071) : parcours d'habitude des débutants, séances ramenées à
+    // 20 minutes (ou moins selon les disponibilités) les 4 premières
+    // semaines ; désactivable dans Motivation et progression.
+    final habit = MotivStore(this).motivHabitMinutesFor(week, j);
+    if (habit == null) return null;
     final base = _adaptDayPlan(week, j);
-    return base == null ? null : _shorterPlan(week, base);
+    return base == null ? null : _minutesPlan(week, base, habit);
+  }
+
+  /// Compression automatique à [minutes] (parcours d'habitude).
+  Map<String, dynamic>? _minutesPlan(int week, DayPlan base, int minutes) {
+    final key = sessionKey(week, base.j);
+    return _adaptCached('habit|$key|$minutes', () {
+      final plan = compressSession(
+        _cItems(week, base),
+        minutes,
+        started: _adaptStarted(key),
+      );
+      return plan.unchanged ? null : plan.toJson();
+    });
   }
 
   /// Éléments de compression d'une séance (séries validées comprises).
