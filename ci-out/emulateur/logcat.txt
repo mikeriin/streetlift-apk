@@ -1,0 +1,613 @@
+09-27 16:50:16.996 D/nativeloader( 1590): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:50:17.280 I/EGL_emulation( 1213): Opening libGLESv1_CM_emulation.so
+09-27 16:50:17.281 I/EGL_emulation( 1213): Opening libGLESv2_emulation.so
+09-27 16:50:18.090 V/GraphicsEnvironment( 1590):   angle_gl_driver_selection_pkgs=[]
+09-27 16:50:18.090 V/GraphicsEnvironment( 1590):   angle_gl_driver_selection_values=[]
+09-27 16:50:18.274 V/GraphicsEnvironment( 1645):   angle_gl_driver_selection_pkgs=[]
+09-27 16:50:18.275 V/GraphicsEnvironment( 1645):   angle_gl_driver_selection_values=[]
+09-27 16:50:19.096 E/GoogleSdkSetup( 1610): Unable to add Wi-Fi network "AndroidWifi".
+09-27 16:50:19.229 I/GoogleSdkSetup( 1610): Setting system screen_off_timeout to be 2147483647 ms
+09-27 16:50:19.494 V/GraphicsEnvironment( 1763):   angle_gl_driver_selection_pkgs=[]
+09-27 16:50:19.494 V/GraphicsEnvironment( 1763):   angle_gl_driver_selection_values=[]
+09-27 16:50:20.566 V/GraphicsEnvironment( 1800):   angle_gl_driver_selection_pkgs=[]
+09-27 16:50:20.566 V/GraphicsEnvironment( 1800):   angle_gl_driver_selection_values=[]
+09-27 16:50:20.791 V/GraphicsEnvironment( 1785):   angle_gl_driver_selection_pkgs=[]
+09-27 16:50:20.791 V/GraphicsEnvironment( 1785):   angle_gl_driver_selection_values=[]
+09-27 16:50:20.922 V/GraphicsEnvironment( 1782):   angle_gl_driver_selection_pkgs=[]
+09-27 16:50:20.922 V/GraphicsEnvironment( 1782):   angle_gl_driver_selection_values=[]
+09-27 16:50:21.252 I/BLASTSyncEngine(  560): Unfinished container: Task{d8f7389 #6 type=home A=10170:com.google.android.googlesdksetup}
+09-27 16:50:21.253 I/BLASTSyncEngine(  560):   ActivityRecord{8c424 u0 com.google.android.googlesdksetup/.DefaultActivity t6} is relaunching
+09-27 16:50:21.253 I/BLASTSyncEngine(  560): Unfinished container: ActivityRecord{8c424 u0 com.google.android.googlesdksetup/.DefaultActivity t6}
+09-27 16:50:21.254 I/BLASTSyncEngine(  560):   ActivityRecord{8c424 u0 com.google.android.googlesdksetup/.DefaultActivity t6} is relaunching
+09-27 16:50:21.625 V/WindowManager(  560):         {WCT{RemoteToken{955d241 Task{d8f7389 #6 type=home A=10170:com.google.android.googlesdksetup}}} m=OPEN f=MOVE_TO_TOP leash=Surface(name=Task=6)/@0x66c4374 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0 taskParent=-1},
+09-27 16:50:23.348 W/WifiConnectivityManager(  560): mConnectedSingleSavedNetworkSingleScanScheduleSec is not configured! Using default scan schedule
+09-27 16:50:23.351 W/WifiConnectivityManager(  560): mConnectedSingleSavedNetworkSingleScanType is not configured! Using default scan types
+09-27 16:50:24.899 V/WindowManagerShell(  930): Transition requested (#6): android.os.BinderProxy@e90741b TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=6 displayId=0 isRunning=false baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10800100 cmp=com.google.android.googlesdksetup/.DefaultActivity } baseActivity=null topActivity=null origActivity=null realActivity=ComponentInfo{com.google.android.googlesdksetup/com.google.android.googlesdksetup.DefaultActivity} numActivities=0 lastActiveTime=52407 supportsMultiWindow=false resizeMode=0 isResizeable=false minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@ec3d9b8} topActivityType=2 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 136 - 0, 0) topActivityInfo=null launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 6 }
+09-27 16:50:24.975 I/ActivityThread( 1610): ApplicationInfo updating for com.google.android.googlesdksetup, new timestamp: 54448
+09-27 16:50:24.984 W/GoogleSdkSetup( 1610): Already provisioned, remove itself.
+09-27 16:50:24.996 W/ActivityTaskManager(  560): Duplicate finish request for r=ActivityRecord{8c424 u0 com.google.android.googlesdksetup/.DefaultActivity t6 f}}
+09-27 16:50:26.313 I/EGL_emulation(  560): Opening libGLESv1_CM_emulation.so
+09-27 16:50:26.313 I/EGL_emulation(  560): Opening libGLESv2_emulation.so
+09-27 16:50:27.509 W/AppSearchIcing(  560): icing-search-engine.cc:321: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
+09-27 16:50:29.945 V/WindowManager(  560): Sent Transition (#6) createdAt=09-27 16:50:24.861 via request=TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=6 displayId=0 isRunning=false baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10800100 cmp=com.google.android.googlesdksetup/.DefaultActivity } baseActivity=null topActivity=null origActivity=null realActivity=ComponentInfo{com.google.android.googlesdksetup/com.google.android.googlesdksetup.DefaultActivity} numActivities=0 lastActiveTime=52407 supportsMultiWindow=false resizeMode=0 isResizeable=false minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{955d241 Task{d8f7389 #6 type=home A=10170:com.google.android.googlesdksetup}}} topActivityType=2 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 136 - 0, 0) topActivityInfo=null launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 6 }
+09-27 16:50:30.570 W/gle.android.gms( 1590): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 16:50:32.976 D/nativeloader( 2105): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:50:33.122 V/GraphicsEnvironment( 2105):   angle_gl_driver_selection_pkgs=[]
+09-27 16:50:33.122 V/GraphicsEnvironment( 2105):   angle_gl_driver_selection_values=[]
+09-27 16:50:34.332 W/AppSearchIcing(  560): icing-search-engine.cc:321: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
+09-27 16:50:35.031 D/nativeloader( 2160): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:50:35.135 I/Role    (  560): com.google.android.googlesdksetup not qualified for android.app.role.HOME due to missing RequiredComponent{mIntentFilterData=IntentFilterData{mAction='android.intent.action.MAIN', mCategories='[android.intent.category.HOME]', mDataScheme='null', mDataType='null'}, mMinTargetSdkVersion=1, mFlags='0', mPermission='null', mQueryFlags=0, mMetaData=[]}
+09-27 16:50:35.172 I/RoleControllerServiceImpl(  560): Removing package that no longer qualifies for the role, package: com.google.android.googlesdksetup, role: android.app.role.HOME
+09-27 16:50:35.222 V/GraphicsEnvironment( 2160):   angle_gl_driver_selection_pkgs=[]
+09-27 16:50:35.223 V/GraphicsEnvironment( 2160):   angle_gl_driver_selection_values=[]
+09-27 16:50:36.598 V/SafetyCenterRefreshTrac(  560): Refresh with id: adcbbaae-09d2-4f0a-9a12-fc324eb6a20f_0 completed for source id: GoogleSecurityUpdates, user id: 0, duration: PT27.234S, successful: true, data changed: true, tracking: true, now 1 tracked sources in flight
+09-27 16:50:36.730 D/CarrierSvcBindHelper( 1081): onPackageModified: com.google.android.googlesdksetup
+09-27 16:50:37.097 D/ActivityManager(  560): freezing 1610 com.google.android.googlesdksetup
+09-27 16:50:37.900 V/GraphicsEnvironment( 2185):   angle_gl_driver_selection_pkgs=[]
+09-27 16:50:37.900 V/GraphicsEnvironment( 2185):   angle_gl_driver_selection_values=[]
+09-27 16:50:38.053 V/AconfigFlags( 1590): Read Aconfig default flag value com.android.graphics.surfaceflinger.flags.vulkan_renderengine = false
+09-27 16:50:41.263 V/GraphicsEnvironment( 2204):   angle_gl_driver_selection_pkgs=[]
+09-27 16:50:41.263 V/GraphicsEnvironment( 2204):   angle_gl_driver_selection_values=[]
+09-27 16:50:43.569 W/system_server(  560): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleSdkSetup/GoogleSdkSetup.apk' with 1 weak references
+09-27 16:50:43.684 V/GraphicsEnvironment( 2251):   angle_gl_driver_selection_pkgs=[]
+09-27 16:50:43.684 V/GraphicsEnvironment( 2251):   angle_gl_driver_selection_values=[]
+09-27 16:50:43.788 D/ImsResolver( 1081): maybeAddedImsService, packageName: com.google.android.googlesdksetup
+09-27 16:50:45.322 V/GraphicsEnvironment( 2319):   angle_gl_driver_selection_pkgs=[]
+09-27 16:50:45.322 V/GraphicsEnvironment( 2319):   angle_gl_driver_selection_values=[]
+09-27 16:50:45.511 I/EGL_emulation( 1590): Opening libGLESv1_CM_emulation.so
+09-27 16:50:45.515 I/EGL_emulation( 1590): Opening libGLESv2_emulation.so
+09-27 16:50:47.139 D/nativeloader( 2337): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:50:47.339 V/GraphicsEnvironment( 2337):   angle_gl_driver_selection_pkgs=[]
+09-27 16:50:47.339 V/GraphicsEnvironment( 2337):   angle_gl_driver_selection_values=[]
+09-27 16:50:47.526 D/PackageUpdatedTask( 1213): Package updated: mOp=UPDATE packages=[com.google.android.googlesdksetup]
+09-27 16:50:47.531 W/AllAppsList( 1213): updatePromiseInstallInfo: no Activities matched updated package, removing all apps from package=com.google.android.googlesdksetup
+09-27 16:50:47.764 V/AconfigFlags( 1590): Read Aconfig default flag value com.android.graphics.surfaceflinger.flags.vulkan_renderengine = false
+09-27 16:50:48.736 V/GraphicsEnvironment( 2364):   angle_gl_driver_selection_pkgs=[]
+09-27 16:50:48.736 V/GraphicsEnvironment( 2364):   angle_gl_driver_selection_values=[]
+09-27 16:50:52.625 I/EGL_emulation( 1590): Opening libGLESv1_CM_emulation.so
+09-27 16:50:52.706 I/EGL_emulation( 1590): Opening libGLESv2_emulation.so
+09-27 16:50:54.227 I/NnApiDriverManager( 1590): Registering application with GPU 'Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0))' by 'Google (Google Inc. (Google))' [CONTEXT service_id=301 ]
+09-27 16:50:55.887 V/GraphicsEnvironment( 2449):   angle_gl_driver_selection_pkgs=[]
+09-27 16:50:55.888 V/GraphicsEnvironment( 2449):   angle_gl_driver_selection_values=[]
+09-27 16:50:57.895 D/nativeloader( 2496): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:50:58.160 V/GraphicsEnvironment( 2496):   angle_gl_driver_selection_pkgs=[]
+09-27 16:50:58.160 V/GraphicsEnvironment( 2496):   angle_gl_driver_selection_values=[]
+09-27 16:50:59.382 D/AndroidRuntime( 1213): Shutting down VM
+09-27 16:50:59.385 E/AndroidRuntime( 1213): FATAL EXCEPTION: main
+09-27 16:50:59.385 E/AndroidRuntime( 1213): Process: com.google.android.apps.nexuslauncher, PID: 1213
+09-27 16:50:59.385 E/AndroidRuntime( 1213): java.lang.NullPointerException: mNativeObject of Surface(name=TaskFragment{8580d3c mode=fullscreen})/@0x716203d is null. Have you called release() already?
+09-27 16:50:59.385 E/AndroidRuntime( 1213): 	at android.view.SurfaceControl.checkNotReleased(SurfaceControl.java:1600)
+09-27 16:50:59.385 E/AndroidRuntime( 1213): 	at android.view.SurfaceControl.-$$Nest$mcheckNotReleased(Unknown Source:0)
+09-27 16:50:59.385 E/AndroidRuntime( 1213): 	at android.view.SurfaceControl$Transaction.reparent(SurfaceControl.java:3475)
+09-27 16:50:59.385 E/AndroidRuntime( 1213): 	at com.google.android.apps.nexuslauncher.overlay.d.a(go/retraceme 31f9979659277bb965985aff1272c33e3c3c9e755b77166d20a2465454178f2c:25)
+09-27 16:50:59.385 E/AndroidRuntime( 1213): 	at com.google.android.apps.nexuslauncher.overlay.b.run(go/retraceme 31f9979659277bb965985aff1272c33e3c3c9e755b77166d20a2465454178f2c:91)
+09-27 16:50:59.385 E/AndroidRuntime( 1213): 	at android.os.Handler.handleCallback(Handler.java:959)
+09-27 16:50:59.385 E/AndroidRuntime( 1213): 	at android.os.Handler.dispatchMessage(Handler.java:100)
+09-27 16:50:59.385 E/AndroidRuntime( 1213): 	at android.os.Looper.loopOnce(Looper.java:232)
+09-27 16:50:59.385 E/AndroidRuntime( 1213): 	at android.os.Looper.loop(Looper.java:317)
+09-27 16:50:59.385 E/AndroidRuntime( 1213): 	at android.app.ActivityThread.main(ActivityThread.java:8705)
+09-27 16:50:59.385 E/AndroidRuntime( 1213): 	at java.lang.reflect.Method.invoke(Native Method)
+09-27 16:50:59.385 E/AndroidRuntime( 1213): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+09-27 16:50:59.385 E/AndroidRuntime( 1213): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:886)
+09-27 16:51:00.215 D/nativeloader( 2508): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:51:00.268 V/GraphicsEnvironment( 2508):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:00.268 V/GraphicsEnvironment( 2508):   angle_gl_driver_selection_values=[]
+09-27 16:51:01.842 V/GraphicsEnvironment( 2576):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:01.842 V/GraphicsEnvironment( 2576):   angle_gl_driver_selection_values=[]
+09-27 16:51:02.213 I/EGL_emulation( 2576): Opening libGLESv1_CM_emulation.so
+09-27 16:51:02.215 I/EGL_emulation( 2576): Opening libGLESv2_emulation.so
+09-27 16:51:10.904 I/lowmemorykiller(  140): Kill 'com.google.android.googlesdksetup' (1610), uid 10170, oom_score_adj 945 to free 93640kB rss, 26240kB swap; reason: low watermark is breached
+09-27 16:51:12.019 I/StatusBarManagerService(  560): binder died for pkg=com.google.android.googlesdksetup
+09-27 16:51:12.019 I/ActivityManager(  560): Process com.google.android.googlesdksetup (pid 1610) has died: cch+55 CEM 
+09-27 16:51:12.201 V/GraphicsEnvironment( 2687):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:12.201 V/GraphicsEnvironment( 2687):   angle_gl_driver_selection_values=[]
+09-27 16:51:12.565 I/EGL_emulation( 2576): Opening libGLESv1_CM_emulation.so
+09-27 16:51:12.566 I/EGL_emulation( 2576): Opening libGLESv2_emulation.so
+09-27 16:51:13.290 I/EGL_emulation( 2576): Opening libGLESv1_CM_emulation.so
+09-27 16:51:13.294 I/EGL_emulation( 2576): Opening libGLESv2_emulation.so
+09-27 16:51:13.471 D/nativeloader( 2706): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:51:14.139 V/GraphicsEnvironment( 2706):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:14.139 V/GraphicsEnvironment( 2706):   angle_gl_driver_selection_values=[]
+09-27 16:51:14.311 W/AppSearchIcing(  560): icing-search-engine.cc:321: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
+09-27 16:51:14.663 D/ShortcutService(  560): changing package: com.google.android.googlesdksetup userId0
+09-27 16:51:14.663 D/ShortcutService(  560): handlePackageChanged: com.google.android.googlesdksetup user=0
+09-27 16:51:14.663 D/ShortcutService(  560): rescanPackageIfNeeded 0@com.google.android.googlesdksetup, forceRescan=true , isNewApp=true
+09-27 16:51:14.699 D/ShortcutService(  560): Package com.google.android.googlesdksetup has 0 manifest shortcut(s), and 0 share target(s)
+09-27 16:51:18.675 W/.apps.wellbeing( 1391): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 16:51:18.676 W/.apps.wellbeing( 1391): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
+09-27 16:51:21.762 V/GraphicsEnvironment( 2764):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:21.762 V/GraphicsEnvironment( 2764):   angle_gl_driver_selection_values=[]
+09-27 16:51:33.276 V/GraphicsEnvironment( 2828):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:33.276 V/GraphicsEnvironment( 2828):   angle_gl_driver_selection_values=[]
+09-27 16:51:35.879 V/GraphicsEnvironment( 2865):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:35.879 V/GraphicsEnvironment( 2865):   angle_gl_driver_selection_values=[]
+09-27 16:51:36.719 D/nativeloader( 2902): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:51:36.735 V/GraphicsEnvironment( 2902):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:36.735 V/GraphicsEnvironment( 2902):   angle_gl_driver_selection_values=[]
+09-27 16:51:37.415 D/nativeloader( 2935): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:51:37.713 V/GraphicsEnvironment( 2935):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:37.713 V/GraphicsEnvironment( 2935):   angle_gl_driver_selection_values=[]
+09-27 16:51:41.410 D/nativeloader( 2989): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:51:41.596 I/GoogleSettingsUtils( 1590): Updated ID in checkin_id_token file [CONTEXT service_id=130 ]
+09-27 16:51:41.664 V/GraphicsEnvironment( 2989):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:41.664 V/GraphicsEnvironment( 2989):   angle_gl_driver_selection_values=[]
+09-27 16:51:41.985 W/gle.android.gms( 1590): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 16:51:44.191 V/GraphicsEnvironment( 3034):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:44.191 V/GraphicsEnvironment( 3034):   angle_gl_driver_selection_values=[]
+09-27 16:51:44.503 I/GoogleSettingsUtils( 1590): Updating Android ID in Gservices [CONTEXT service_id=130 ]
+09-27 16:51:46.356 V/GraphicsEnvironment( 3056):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:46.377 V/GraphicsEnvironment( 3056):   angle_gl_driver_selection_values=[]
+09-27 16:51:47.623 V/GraphicsEnvironment( 3048):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:47.623 V/GraphicsEnvironment( 3048):   angle_gl_driver_selection_values=[]
+09-27 16:51:48.699 I/GoogleSettingsUtils( 1590): Updating Android ID in Gservices [CONTEXT service_id=130 ]
+09-27 16:51:49.380 V/GraphicsEnvironment( 3120):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:49.380 V/GraphicsEnvironment( 3120):   angle_gl_driver_selection_values=[]
+09-27 16:51:49.816 D/nativeloader( 3142): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:51:49.824 V/GraphicsEnvironment( 3142):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:49.825 V/GraphicsEnvironment( 3142):   angle_gl_driver_selection_values=[]
+09-27 16:51:49.979 D/nativeloader( 3161): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:51:49.998 V/GraphicsEnvironment( 3161):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:49.998 V/GraphicsEnvironment( 3161):   angle_gl_driver_selection_values=[]
+09-27 16:51:51.409 V/GraphicsEnvironment( 3206):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:51.409 V/GraphicsEnvironment( 3206):   angle_gl_driver_selection_values=[]
+09-27 16:51:53.813 V/GraphicsEnvironment( 3242):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:53.813 V/GraphicsEnvironment( 3242):   angle_gl_driver_selection_values=[]
+09-27 16:51:57.740 V/GraphicsEnvironment( 3280):   angle_gl_driver_selection_pkgs=[]
+09-27 16:51:57.743 V/GraphicsEnvironment( 3280):   angle_gl_driver_selection_values=[]
+09-27 16:52:00.161 V/GraphicsEnvironment( 3329):   angle_gl_driver_selection_pkgs=[]
+09-27 16:52:00.161 V/GraphicsEnvironment( 3329):   angle_gl_driver_selection_values=[]
+09-27 16:52:03.213 V/GraphicsEnvironment( 3349):   angle_gl_driver_selection_pkgs=[]
+09-27 16:52:03.214 V/GraphicsEnvironment( 3349):   angle_gl_driver_selection_values=[]
+09-27 16:52:06.021 D/nativeloader( 3385): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:52:06.098 V/GraphicsEnvironment( 3385):   angle_gl_driver_selection_pkgs=[]
+09-27 16:52:06.098 V/GraphicsEnvironment( 3385):   angle_gl_driver_selection_values=[]
+09-27 16:52:07.448 W/gle.android.gms( 1590): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 16:52:08.858 D/PrefCtrlListHelper( 1090): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
+09-27 16:52:08.933 D/PrefCtrlListHelper( 1090): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
+09-27 16:52:08.942 D/PrefCtrlListHelper( 1090): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
+09-27 16:52:10.949 V/GraphicsEnableAngleCtrl( 1090): Value of persist.graphics.egl is: 
+09-27 16:52:14.659 V/GraphicsEnableAngleCtrl( 1090): Value of persist.graphics.egl is: 
+09-27 16:52:16.829 W/gle.android.gms( 1590): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 16:52:17.147 D/nativeloader( 3559): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:52:17.352 V/GraphicsEnvironment( 3559):   angle_gl_driver_selection_pkgs=[]
+09-27 16:52:17.352 V/GraphicsEnvironment( 3559):   angle_gl_driver_selection_values=[]
+09-27 16:52:18.087 D/nativeloader( 3544): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:52:18.294 D/nativeloader( 3539): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:52:18.403 V/GraphicsEnvironment( 3544):   angle_gl_driver_selection_pkgs=[]
+09-27 16:52:18.403 V/GraphicsEnvironment( 3544):   angle_gl_driver_selection_values=[]
+09-27 16:52:18.614 D/nativeloader( 3597): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:52:18.640 V/GraphicsEnvironment( 3585):   angle_gl_driver_selection_pkgs=[]
+09-27 16:52:18.640 V/GraphicsEnvironment( 3585):   angle_gl_driver_selection_values=[]
+09-27 16:52:19.200 V/GraphicsEnvironment( 3597):   angle_gl_driver_selection_pkgs=[]
+09-27 16:52:19.200 V/GraphicsEnvironment( 3597):   angle_gl_driver_selection_values=[]
+09-27 16:52:19.231 V/GraphicsEnvironment( 3539):   angle_gl_driver_selection_pkgs=[]
+09-27 16:52:19.231 V/GraphicsEnvironment( 3539):   angle_gl_driver_selection_values=[]
+09-27 16:52:19.285 V/GraphicsEnvironment( 3608):   angle_gl_driver_selection_pkgs=[]
+09-27 16:52:19.287 V/GraphicsEnvironment( 3608):   angle_gl_driver_selection_values=[]
+09-27 16:52:20.928 W/ssioncontroller(  931): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
+09-27 16:52:21.694 D/Backup  ( 3559): [BackupGoogleSettingsIO] Back up or restore entry point is not enabled
+09-27 16:52:21.810 I/ebvk$a  ( 3559): Unable to retrieve flag snapshot for com.google.android.gms.googlesettings#com.google.android.gms, using defaults.
+09-27 16:52:26.047 I/BugleShortcuts( 3539): Clearing shortcuts for DB recreation
+09-27 16:52:28.033 D/Backup  ( 3559): [BackupGoogleSettingsIO] Back up or restore entry point is not enabled
+09-27 16:52:30.817 W/.apps.wellbeing( 1391): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 16:52:30.819 W/.apps.wellbeing( 1391): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
+09-27 16:52:33.573 I/EGL_emulation( 2902): Opening libGLESv1_CM_emulation.so
+09-27 16:52:33.573 I/EGL_emulation( 2902): Opening libGLESv2_emulation.so
+09-27 16:52:34.146 I/EGL_emulation( 2902): Opening libGLESv1_CM_emulation.so
+09-27 16:52:34.149 I/EGL_emulation( 2902): Opening libGLESv2_emulation.so
+09-27 16:52:34.667 I/BugleRcsProvisioning( 3539): BugleSystemBindingManager: onBootComplete
+09-27 16:52:34.713 I/BugleSearch( 3539): Queues icing index rebuild work item. [CONTEXT class_name="IcingSyncManagerListener" ]
+09-27 16:52:35.917 I/BugleBackup( 3539): Registering preference change listener for "buglesub_-1".
+09-27 16:52:35.927 I/BugleBackup( 3539): Registering preference change listener for "buglesub_1".
+09-27 16:52:36.692 I/Bugle   ( 3539): BugleStartup: Registering SIM change receiver...
+09-27 16:52:36.693 I/Bugle   ( 3539): BugleStartup: Updating app config...
+09-27 16:52:36.744 I/Bugle   ( 3539): BugleStartup: Done with SIM change receiver & app config.
+09-27 16:52:36.744 I/Bugle   ( 3539): BugleStartup: Handling shared prefs upgrade & Load MMS Configuration...
+09-27 16:52:36.809 I/BugleSimStateTracker( 3539): Updating PhoneSimState
+09-27 16:52:37.231 D/nativeloader( 3857): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:52:37.381 V/GraphicsEnvironment( 3857):   angle_gl_driver_selection_pkgs=[]
+09-27 16:52:37.381 V/GraphicsEnvironment( 3857):   angle_gl_driver_selection_values=[]
+09-27 16:52:37.424 I/Bugle   ( 3539): BugleStartup: Initializing RCS availability...
+09-27 16:52:37.658 I/Bugle   ( 3539): BugleStartup: Done with RCS availability.
+09-27 16:52:37.658 I/Bugle   ( 3539): BugleStartup: Done initializing with enabled individual init failures.
+09-27 16:52:37.941 I/BugleSimStateTracker( 3539): Is carrier config for identified carrier: true
+09-27 16:52:38.743 I/EGL_emulation( 2902): Opening libGLESv1_CM_emulation.so
+09-27 16:52:38.743 I/EGL_emulation( 2902): Opening libGLESv2_emulation.so
+09-27 16:52:38.768 I/BugleSimStateTracker( 3539): Looking up Fi through package names.
+09-27 16:52:40.120 I/BugleSimStateTracker( 3539): default call SIM: redacted-pii:sim_id[chars:20,last3:897], default sms SIM redacted-pii:sim_id[chars:20,last3:897]. default data SIM redacted-pii:sim_id[chars:20,last3:897].
+09-27 16:52:40.432 I/BugleSimStateTracker( 3539): Looking up Fi through package names.
+09-27 16:52:40.462 I/BugleSimStateTracker( 3539): allNewlyBuiltSimSubscriptionInfos (simId, loggableGuid): [(redacted-pii:sim_id[chars:20,last3:897], dcde8e33-e9e5-4eee-94a5-ec50e53f8ec9)]
+09-27 16:52:40.464 I/BugleSimStateTracker( 3539): Storing updatedSimSubscriptionInfos: [(redacted-pii:sim_id[chars:20,last3:897], dcde8e33-e9e5-4eee-94a5-ec50e53f8ec9)]
+09-27 16:52:40.503 I/BugleSimStateTracker( 3539): Default call SIM changed. Broadcasting SIM SWAP. Old simId redacted-pii:sim_id[chars:0,last3:], new simId: redacted-pii:sim_id[chars:20,last3:897]
+09-27 16:52:40.509 I/BugleSimStateTracker( 3539): Default SMS SIM changed. Old simId redacted-pii:sim_id[chars:0,last3:], new simId: redacted-pii:sim_id[chars:20,last3:897]
+09-27 16:52:40.510 I/BugleSimStateTracker( 3539): Broadcasting SIM_LOADED event for newly loaded SIMs: [(redacted-pii:sim_id[chars:20,last3:897], dcde8e33-e9e5-4eee-94a5-ec50e53f8ec9)]
+09-27 16:52:40.585 I/EGL_emulation( 2902): Opening libGLESv1_CM_emulation.so
+09-27 16:52:40.594 I/EGL_emulation( 2902): Opening libGLESv2_emulation.so
+09-27 16:52:41.378 I/EGL_emulation( 2902): Opening libGLESv1_CM_emulation.so
+09-27 16:52:41.383 I/EGL_emulation( 2902): Opening libGLESv2_emulation.so
+09-27 16:52:48.549 W/gle.android.gms( 1590): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 16:52:50.646 I/EGL_emulation( 2902): Opening libGLESv1_CM_emulation.so
+09-27 16:52:50.657 I/EGL_emulation( 2902): Opening libGLESv2_emulation.so
+09-27 16:52:56.024 I/NnApiDriverManager( 1590): Registering application with GPU 'Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0))' by 'Google (Google Inc. (Google))' [CONTEXT service_id=301 ]
+09-27 16:52:58.857 W/gle.android.gms( 1590): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 16:53:00.368 I/EGL_emulation( 2902): Opening libGLESv1_CM_emulation.so
+09-27 16:53:00.387 I/EGL_emulation( 2902): Opening libGLESv2_emulation.so
+09-27 16:53:04.352 I/EGL_emulation( 2902): Opening libGLESv1_CM_emulation.so
+09-27 16:53:04.357 I/EGL_emulation( 2902): Opening libGLESv2_emulation.so
+09-27 16:53:07.395 I/EGL_emulation( 2902): Opening libGLESv1_CM_emulation.so
+09-27 16:53:07.396 I/EGL_emulation( 2902): Opening libGLESv2_emulation.so
+09-27 16:53:07.486 W/.apps.wellbeing( 1391): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 16:53:07.487 W/.apps.wellbeing( 1391): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
+09-27 16:53:13.124 W/gle.android.gms( 1590): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 16:53:13.404 I/NnApiDriverManager( 1590): Registering application with GPU 'Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0))' by 'Google (Google Inc. (Google))' [CONTEXT service_id=301 ]
+09-27 16:53:19.471 V/GraphicsEnvironment( 4108):   angle_gl_driver_selection_pkgs=[]
+09-27 16:53:19.471 V/GraphicsEnvironment( 4108):   angle_gl_driver_selection_values=[]
+09-27 16:53:20.717 I/BugleRcsProvisioning( 3539): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-27 16:53:25.250 V/GraphicsEnvironment( 4148):   angle_gl_driver_selection_pkgs=[]
+09-27 16:53:25.250 V/GraphicsEnvironment( 4148):   angle_gl_driver_selection_values=[]
+09-27 16:53:25.887 I/FlutterActivityAndFragmentDelegate( 4148): If you are attempting to set --start-paused via Intent extras to launch a Flutter component outside of using the Flutter CLI, note that support for setting engine flags on Android via Intent will soon be dropped; see https://github.com/flutter/flutter/issues/180686 for more information on this breaking change. To migrate, set --start-paused or any other flags specified via Intent extras on the command line instead or see https://github.com/flutter/flutter/blob/main/docs/engine/Flutter-Android-Engine-Flags.md for alternative methods.
+09-27 16:53:25.924 D/FlutterJNI( 4148): Beginning load of flutter...
+09-27 16:53:26.046 W/.apps.wellbeing( 1391): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 16:53:26.148 W/.apps.wellbeing( 1391): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
+09-27 16:53:26.160 D/nativeloader( 4148): Load /data/app/~~Vo4h6I95PPddUtbXXo_M2w==/fr.tchoupi.streetlift_tracker-fpaBc_MWP8fGkgPDn7-ghQ==/base.apk!/lib/x86_64/libflutter.so using ns clns-7 from class loader (caller=/data/app/~~Vo4h6I95PPddUtbXXo_M2w==/fr.tchoupi.streetlift_tracker-fpaBc_MWP8fGkgPDn7-ghQ==/base.apk): ok
+09-27 16:53:26.161 D/FlutterJNI( 4148): flutter (null) was loaded normally!
+09-27 16:53:26.776 I/BugleRcsProvisioning( 3539): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-27 16:53:27.837 I/ResourceExtractor( 4148): Extracted baseline resource assets/flutter_assets/kernel_blob.bin
+09-27 16:53:27.838 I/ResourceExtractor( 4148): Extracted baseline resource assets/flutter_assets/vm_snapshot_data
+09-27 16:53:27.981 I/ResourceExtractor( 4148): Extracted baseline resource assets/flutter_assets/isolate_snapshot_data
+09-27 16:53:28.035 I/NnApiDriverManager( 1590): Registering application with GPU 'Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0))' by 'Google (Google Inc. (Google))' [CONTEXT service_id=301 ]
+09-27 16:53:28.209 I/EGL_emulation( 4148): Opening libGLESv1_CM_emulation.so
+09-27 16:53:28.212 I/EGL_emulation( 4148): Opening libGLESv2_emulation.so
+09-27 16:53:28.451 I/BugleRcsProvisioning( 3539): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-27 16:53:28.511 I/flutter ( 4148): The Dart VM service is listening on http://127.0.0.1:44463/WOnejXSqTUM=/
+09-27 16:53:28.523 I/flutter ( 4148): [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
+09-27 16:53:29.295 I/BugleRcsProvisioning( 3539): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-27 16:53:30.629 I/BugleRcsProvisioning( 3539): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-27 16:53:31.398 D/FlutterRenderer( 4148): Width is zero. 0,0
+09-27 16:53:32.499 D/FlutterRenderer( 4148): Width is zero. 0,0
+09-27 16:53:32.831 D/FlutterJNI( 4148): Sending viewport metrics to the engine.
+09-27 16:53:33.735 I/EGL_emulation( 2902): Opening libGLESv1_CM_emulation.so
+09-27 16:53:33.744 I/EGL_emulation( 2902): Opening libGLESv2_emulation.so
+09-27 16:53:37.185 I/BugleRcsProvisioning( 3539): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-27 16:53:39.343 D/FlutterJNI( 4148): Sending viewport metrics to the engine.
+09-27 16:53:40.765 I/flutter ( 4148): 00:00 +0: (setUpAll)
+09-27 16:53:41.656 D/PrefCtrlListHelper( 1090): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
+09-27 16:53:41.748 D/PrefCtrlListHelper( 1090): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
+09-27 16:53:42.732 D/PrefCtrlListHelper( 1090): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
+09-27 16:53:43.023 V/GraphicsEnableAngleCtrl( 1090): Value of persist.graphics.egl is: 
+09-27 16:53:44.671 I/flutter ( 4148): 00:03 +1: Réglages › À propos › Moteur 3D, thème sombre
+09-27 16:53:45.407 D/nativeloader( 4303): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-27 16:53:45.538 V/GraphicsEnvironment( 4303):   angle_gl_driver_selection_pkgs=[]
+09-27 16:53:45.538 V/GraphicsEnvironment( 4303):   angle_gl_driver_selection_values=[]
+09-27 16:53:45.926 V/GraphicsEnableAngleCtrl( 1090): Value of persist.graphics.egl is: 
+09-27 16:53:59.806 I/EGL_emulation( 2902): Opening libGLESv1_CM_emulation.so
+09-27 16:53:59.806 I/EGL_emulation( 2902): Opening libGLESv2_emulation.so
+09-27 16:54:09.727 W/.apps.wellbeing( 1391): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 16:54:09.746 W/.apps.wellbeing( 1391): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
+09-27 16:54:29.915 W/gle.android.gms( 1590): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 16:54:32.384 I/EGL_emulation( 2902): Opening libGLESv1_CM_emulation.so
+09-27 16:54:32.387 I/EGL_emulation( 2902): Opening libGLESv2_emulation.so
+09-27 16:55:03.627 I/NnApiDriverManager( 1590): Registering application with GPU 'Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0))' by 'Google (Google Inc. (Google))' [CONTEXT service_id=301 ]
+09-27 16:55:03.631 I/EGL_emulation( 2902): Opening libGLESv1_CM_emulation.so
+09-27 16:55:03.631 I/EGL_emulation( 2902): Opening libGLESv2_emulation.so
+09-27 16:55:17.388 W/gle.android.gms( 1590): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-27 16:55:29.453 I/flutter ( 4148): ══╡ EXCEPTION CAUGHT BY WIDGETS LIBRARY ╞═══════════════════════════════════════════════════════════
+09-27 16:55:29.458 I/flutter ( 4148): The following assertion was thrown building RawGestureDetector(state:
+09-27 16:55:29.460 I/flutter ( 4148): RawGestureDetectorState#1b527(gestures: [pan], behavior: opaque)):
+09-27 16:55:29.460 I/flutter ( 4148): _SceneViewState is a SingleTickerProviderStateMixin but multiple tickers were created.
+09-27 16:55:29.464 I/flutter ( 4148): A SingleTickerProviderStateMixin can only be used as a TickerProvider once.
+09-27 16:55:29.467 I/flutter ( 4148): If a State is used for multiple AnimationController objects, or if it is passed to other objects and
+09-27 16:55:29.472 I/flutter ( 4148): those objects might use it more than one time in total, then instead of mixing in a
+09-27 16:55:29.478 I/flutter ( 4148): SingleTickerProviderStateMixin, use a regular TickerProviderStateMixin.
+09-27 16:55:29.478 I/flutter ( 4148): 
+09-27 16:55:29.478 I/flutter ( 4148): The relevant error-causing widget was:
+09-27 16:55:29.478 I/flutter ( 4148):   GestureDetector-[<'engine3d-view'>]
+09-27 16:55:29.478 I/flutter ( 4148):   GestureDetector:file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/lib/engine3d.dart:440:15
+09-27 16:55:29.478 I/flutter ( 4148): 
+09-27 16:55:29.478 I/flutter ( 4148): When the exception was thrown, this was the stack:
+09-27 16:55:29.479 I/flutter ( 4148): #0      SingleTickerProviderStateMixin.createTicker.<anonymous closure> (package:flutter/src/widgets/ticker_provider.dart:335:7)
+09-27 16:55:29.479 I/flutter ( 4148): #1      SingleTickerProviderStateMixin.createTicker (package:flutter/src/widgets/ticker_provider.dart:348:6)
+09-27 16:55:29.479 I/flutter ( 4148): #2      _SceneViewState.didUpdateWidget (package:flutter_scene/src/widgets/scene_view.dart:398:36)
+09-27 16:55:29.639 I/flutter ( 4148): #3      StatefulElement.update (package:flutter/src/widgets/framework.dart:6004:55)
+09-27 16:55:29.639 I/flutter ( 4148): #4      Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.639 I/flutter ( 4148): #5      SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.639 I/flutter ( 4148): #6      Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.639 I/flutter ( 4148): #7      SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.639 I/flutter ( 4148): #8      Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.639 I/flutter ( 4148): #9      SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.639 I/flutter ( 4148): #10     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.639 I/flutter ( 4148): #11     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.639 I/flutter ( 4148): #12     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+09-27 16:55:29.639 I/flutter ( 4148): #13     Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.639 I/flutter ( 4148): #14     StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+09-27 16:55:29.639 I/flutter ( 4148): #15     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.639 I/flutter ( 4148): #16     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.639 I/flutter ( 4148): #17     Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.640 I/flutter ( 4148): #18     StatelessElement.update (package:flutter/src/widgets/framework.dart:5908:5)
+09-27 16:55:29.640 I/flutter ( 4148): #19     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.640 I/flutter ( 4148): #20     SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.640 I/flutter ( 4148): #21     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.640 I/flutter ( 4148): #22     SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.640 I/flutter ( 4148): #23     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.640 I/flutter ( 4148): #24     SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.640 I/flutter ( 4148): #25     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.646 I/flutter ( 4148): #26     SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.646 I/flutter ( 4148): #27     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.646 I/flutter ( 4148): #28     SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.646 I/flutter ( 4148): #29     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.647 I/flutter ( 4148): #30     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.647 I/flutter ( 4148): #31     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+09-27 16:55:29.647 I/flutter ( 4148): #32     Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.647 I/flutter ( 4148): #33     StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+09-27 16:55:29.647 I/flutter ( 4148): #34     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.647 I/flutter ( 4148): #35     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.647 I/flutter ( 4148): #36     Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.647 I/flutter ( 4148): #37     ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:29.647 I/flutter ( 4148): #38     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.647 I/flutter ( 4148): #39     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.647 I/flutter ( 4148): #40     Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.647 I/flutter ( 4148): #41     ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:29.647 I/flutter ( 4148): #42     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.649 I/flutter ( 4148): #43     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.649 I/flutter ( 4148): #44     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+09-27 16:55:29.649 I/flutter ( 4148): #45     Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.650 I/flutter ( 4148): #46     StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+09-27 16:55:29.650 I/flutter ( 4148): #47     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.650 I/flutter ( 4148): #48     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.650 I/flutter ( 4148): #49     Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.650 I/flutter ( 4148): #50     StatelessElement.update (package:flutter/src/widgets/framework.dart:5908:5)
+09-27 16:55:29.650 I/flutter ( 4148): #51     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.650 I/flutter ( 4148): #52     SliverMultiBoxAdaptorElement.updateChild (package:flutter/src/widgets/sliver.dart:1092:37)
+09-27 16:55:29.650 I/flutter ( 4148): #53     SliverMultiBoxAdaptorElement.performRebuild.processElement (package:flutter/src/widgets/sliver.dart:985:35)
+09-27 16:55:29.650 I/flutter ( 4148): #54     Iterable.forEach (dart:core/iterable.dart:366:35)
+09-27 16:55:29.650 I/flutter ( 4148): #55     SliverMultiBoxAdaptorElement.performRebuild (package:flutter/src/widgets/sliver.dart:1038:24)
+09-27 16:55:29.650 I/flutter ( 4148): #56     SliverMultiBoxAdaptorElement.update (package:flutter/src/widgets/sliver.dart:961:7)
+09-27 16:55:29.650 I/flutter ( 4148): #57     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.650 I/flutter ( 4148): #58     SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.650 I/flutter ( 4148): #59     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.650 I/flutter ( 4148): #60     Element.updateChildren (package:flutter/src/widgets/framework.dart:4204:32)
+09-27 16:55:29.650 I/flutter ( 4148): #61     MultiChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7308:17)
+09-27 16:55:29.650 I/flutter ( 4148): #62     _ViewportElement.update (package:flutter/src/widgets/viewport.dart:293:11)
+09-27 16:55:29.650 I/flutter ( 4148): #63     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.650 I/flutter ( 4148): #64     SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.650 I/flutter ( 4148): #65     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.658 I/flutter ( 4148): #66     SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.658 I/flutter ( 4148): #67     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.658 I/flutter ( 4148): #68     SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.658 I/flutter ( 4148): #69     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.659 I/flutter ( 4148): #70     SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.659 I/flutter ( 4148): #71     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.659 I/flutter ( 4148): #72     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.659 I/flutter ( 4148): #73     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+09-27 16:55:29.659 I/flutter ( 4148): #74     Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.659 I/flutter ( 4148): #75     StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+09-27 16:55:29.659 I/flutter ( 4148): #76     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.659 I/flutter ( 4148): #77     SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.659 I/flutter ( 4148): #78     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.659 I/flutter ( 4148): #79     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.659 I/flutter ( 4148): #80     Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.659 I/flutter ( 4148): #81     ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:29.659 I/flutter ( 4148): #82     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.678 I/flutter ( 4148): #83     SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.679 I/flutter ( 4148): #84     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.680 I/flutter ( 4148): #85     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.680 I/flutter ( 4148): #86     Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.680 I/flutter ( 4148): #87     ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:29.681 I/flutter ( 4148): #88     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.681 I/flutter ( 4148): #89     SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.681 I/flutter ( 4148): #90     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.682 I/flutter ( 4148): #91     SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.682 I/flutter ( 4148): #92     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.683 I/flutter ( 4148): #93     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.683 I/flutter ( 4148): #94     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+09-27 16:55:29.685 I/flutter ( 4148): #95     Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.686 I/flutter ( 4148): #96     StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+09-27 16:55:29.686 I/flutter ( 4148): #97     Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.686 I/flutter ( 4148): #98     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.686 I/flutter ( 4148): #99     Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.692 I/flutter ( 4148): #100    StatelessElement.update (package:flutter/src/widgets/framework.dart:5908:5)
+09-27 16:55:29.692 I/flutter ( 4148): #101    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.696 I/flutter ( 4148): #102    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:29.698 I/flutter ( 4148): #103    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.698 I/flutter ( 4148): #104    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.698 I/flutter ( 4148): #105    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+09-27 16:55:29.698 I/flutter ( 4148): #106    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.698 I/flutter ( 4148): #107    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+09-27 16:55:29.700 I/flutter ( 4148): #108    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.700 I/flutter ( 4148): #109    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.700 I/flutter ( 4148): #110    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.700 I/flutter ( 4148): #111    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:29.700 I/flutter ( 4148): #112    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.700 I/flutter ( 4148): #113    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.700 I/flutter ( 4148): #114    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+09-27 16:55:29.700 I/flutter ( 4148): #115    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.700 I/flutter ( 4148): #116    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+09-27 16:55:29.700 I/flutter ( 4148): #117    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.700 I/flutter ( 4148): #118    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.700 I/flutter ( 4148): #119    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+09-27 16:55:29.700 I/flutter ( 4148): #120    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.701 I/flutter ( 4148): #121    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+09-27 16:55:29.701 I/flutter ( 4148): #122    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.701 I/flutter ( 4148): #123    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.706 I/flutter ( 4148): #124    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.706 I/flutter ( 4148): #125    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:29.706 I/flutter ( 4148): #126    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.706 I/flutter ( 4148): #127    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.707 I/flutter ( 4148): #128    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.707 I/flutter ( 4148): #129    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:29.720 I/flutter ( 4148): #130    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:29.720 I/flutter ( 4148): #131    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:29.720 I/flutter ( 4148): #132    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:29.721 I/flutter ( 4148): #133    StatelessElement.update (package:flutter/src/widgets/framework.dart:5908:5)
+09-27 16:55:29.900 I/flutter ( 4148): 01:49 +1: Réglages › À propos › Moteur 3D, thème sombre [E]
+09-27 16:55:29.901 I/flutter ( 4148):   Test failed. See exception logs above.
+09-27 16:55:29.901 I/flutter ( 4148):   The test description was: Réglages › À propos › Moteur 3D, thème sombre
+09-27 16:55:29.922 I/flutter ( 4148):   
+09-27 16:55:29.967 I/flutter ( 4148): 01:49 +1 -1: Moteur 3D, thème clair
+09-27 16:55:30.745 I/flutter ( 4148): 01:49 +1 -1: Réglages › À propos › Moteur 3D, thème sombre
+09-27 16:55:30.748 I/flutter ( 4148): #134    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.748 I/flutter ( 4148): #135    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.748 I/flutter ( 4148): #136    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.750 I/flutter ( 4148): #137    StatelessElement.update (package:flutter/src/widgets/framework.dart:5908:5)
+09-27 16:55:30.750 I/flutter ( 4148): #138    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.750 I/flutter ( 4148): #139    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:30.751 I/flutter ( 4148): #140    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.751 I/flutter ( 4148): #141    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:30.755 I/flutter ( 4148): #142    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.755 I/flutter ( 4148): #143    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:30.755 I/flutter ( 4148): #144    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.755 I/flutter ( 4148): #145    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.755 I/flutter ( 4148): #146    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.755 I/flutter ( 4148): #147    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:30.755 I/flutter ( 4148): #148    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.755 I/flutter ( 4148): #149    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:30.755 I/flutter ( 4148): #150    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.755 I/flutter ( 4148): #151    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.755 I/flutter ( 4148): #152    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.756 I/flutter ( 4148): #153    StatelessElement.update (package:flutter/src/widgets/framework.dart:5908:5)
+09-27 16:55:30.756 I/flutter ( 4148): #154    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.756 I/flutter ( 4148): #155    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.756 I/flutter ( 4148): #156    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.756 I/flutter ( 4148): #157    StatelessElement.update (package:flutter/src/widgets/framework.dart:5908:5)
+09-27 16:55:30.756 I/flutter ( 4148): #158    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.756 I/flutter ( 4148): #159    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.756 I/flutter ( 4148): #160    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.756 I/flutter ( 4148): #161    StatelessElement.update (package:flutter/src/widgets/framework.dart:5908:5)
+09-27 16:55:30.771 I/flutter ( 4148): #162    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.771 I/flutter ( 4148): #163    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.771 I/flutter ( 4148): #164    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.771 I/flutter ( 4148): #165    StatelessElement.update (package:flutter/src/widgets/framework.dart:5908:5)
+09-27 16:55:30.771 I/flutter ( 4148): #166    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.771 I/flutter ( 4148): #167    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.771 I/flutter ( 4148): #168    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.771 I/flutter ( 4148): #169    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:30.771 I/flutter ( 4148): #170    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.771 I/flutter ( 4148): #171    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.771 I/flutter ( 4148): #172    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.771 I/flutter ( 4148): #173    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:30.771 I/flutter ( 4148): #174    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.771 I/flutter ( 4148): #175    Element.updateChildren (package:flutter/src/widgets/framework.dart:4204:32)
+09-27 16:55:30.771 I/flutter ( 4148): #176    MultiChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7308:17)
+09-27 16:55:30.771 I/flutter ( 4148): #177    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.771 I/flutter ( 4148): #178    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.771 I/flutter ( 4148): #179    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.771 I/flutter ( 4148): #180    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:30.771 I/flutter ( 4148): #181    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.772 I/flutter ( 4148): #182    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.772 I/flutter ( 4148): #183    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+09-27 16:55:30.776 I/flutter ( 4148): #184    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.777 I/flutter ( 4148): #185    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+09-27 16:55:30.777 I/flutter ( 4148): #186    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.777 I/flutter ( 4148): #187    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.777 I/flutter ( 4148): #188    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.777 I/flutter ( 4148): #189    StatelessElement.update (package:flutter/src/widgets/framework.dart:5908:5)
+09-27 16:55:30.777 I/flutter ( 4148): #190    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.777 I/flutter ( 4148): #191    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.777 I/flutter ( 4148): #192    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.777 I/flutter ( 4148): #193    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:30.777 I/flutter ( 4148): #194    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.777 I/flutter ( 4148): #195    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.777 I/flutter ( 4148): #196    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+09-27 16:55:30.777 I/flutter ( 4148): #197    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.777 I/flutter ( 4148): #198    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+09-27 16:55:30.777 I/flutter ( 4148): #199    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.777 I/flutter ( 4148): #200    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:30.811 I/flutter ( 4148): #201    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.811 I/flutter ( 4148): #202    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.811 I/flutter ( 4148): #203    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.811 I/flutter ( 4148): #204    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:30.811 I/flutter ( 4148): #205    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.811 I/flutter ( 4148): #206    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+09-27 16:55:30.811 I/flutter ( 4148): #207    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.811 I/flutter ( 4148): #208    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.811 I/flutter ( 4148): #209    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+09-27 16:55:30.811 I/flutter ( 4148): #210    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.811 I/flutter ( 4148): #211    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+09-27 16:55:30.819 I/flutter ( 4148): #212    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.819 I/flutter ( 4148): #213    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.820 I/flutter ( 4148): #214    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+09-27 16:55:30.820 I/flutter ( 4148): #215    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.820 I/flutter ( 4148): #216    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+09-27 16:55:30.820 I/flutter ( 4148): #217    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.820 I/flutter ( 4148): #218    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.820 I/flutter ( 4148): #219    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.820 I/flutter ( 4148): #220    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:30.820 I/flutter ( 4148): #221    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.820 I/flutter ( 4148): #222    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.820 I/flutter ( 4148): #223    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.820 I/flutter ( 4148): #224    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:30.820 I/flutter ( 4148): #225    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.820 I/flutter ( 4148): #226    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.820 I/flutter ( 4148): #227    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.820 I/flutter ( 4148): #228    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:30.820 I/flutter ( 4148): #229    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.820 I/flutter ( 4148): #230    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.820 I/flutter ( 4148): #231    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+09-27 16:55:30.820 I/flutter ( 4148): #232    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.821 I/flutter ( 4148): #233    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+09-27 16:55:30.822 I/flutter ( 4148): #234    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.822 I/flutter ( 4148): #235    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.822 I/flutter ( 4148): #236    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.822 I/flutter ( 4148): #237    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+09-27 16:55:30.822 I/flutter ( 4148): #238    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.822 I/flutter ( 4148): #239    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.822 I/flutter ( 4148): #240    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+09-27 16:55:30.823 I/flutter ( 4148): #241    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.823 I/flutter ( 4148): #242    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+09-27 16:55:30.823 I/flutter ( 4148): #243    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.823 I/flutter ( 4148): #244    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.823 I/flutter ( 4148): #245    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.823 I/flutter ( 4148): #246    StatelessElement.update (package:flutter/src/widgets/framework.dart:5908:5)
+09-27 16:55:30.823 I/flutter ( 4148): #247    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+09-27 16:55:30.823 I/flutter ( 4148): #248    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+09-27 16:55:30.823 I/flutter ( 4148): #249    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+09-27 16:55:30.823 I/flutter ( 4148): #250    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+09-27 16:55:30.823 I/flutter ( 4148): #251    BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2763:15)
+09-27 16:55:30.824 I/flutter ( 4148): #252    BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2820:11)
+09-27 16:55:30.825 I/flutter ( 4148): #253    BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3124:18)
+09-27 16:55:30.825 I/flutter ( 4148): #254    WidgetsBinding.drawFrame (package:flutter/src/widgets/binding.dart:1571:21)
+09-27 16:55:30.825 I/flutter ( 4148): #255    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+09-27 16:55:30.825 I/flutter ( 4148): #256    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+09-27 16:55:30.825 I/flutter ( 4148): #257    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+09-27 16:55:30.825 I/flutter ( 4148): #258    LiveTestWidgetsFlutterBinding.handleDrawFrame (package:flutter_test/src/binding.dart:2812:13)
+09-27 16:55:30.825 I/flutter ( 4148): #259    SchedulerBinding._handleDrawFrame (package:flutter/src/scheduler/binding.dart:1198:5)
+09-27 16:55:30.825 I/flutter ( 4148): #263    _invoke (dart:ui/hooks.dart:443:10)
+09-27 16:55:30.825 I/flutter ( 4148): #264    PlatformDispatcher._drawFrame (dart:ui/platform_dispatcher.dart:450:5)
+09-27 16:55:30.825 I/flutter ( 4148): #265    _drawFrame (dart:ui/hooks.dart:413:31)
+09-27 16:55:30.826 I/flutter ( 4148): (elided 3 frames from dart:async)
+09-27 16:55:30.826 I/flutter ( 4148): 
+09-27 16:55:30.826 I/flutter ( 4148): ════════════════════════════════════════════════════════════════════════════════════════════════════
+09-27 16:55:39.692 I/flutter ( 4148): 01:58 +1 -1: Moteur 3D, thème clair
+09-27 16:55:39.693 I/flutter ( 4148): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+09-27 16:55:39.698 I/flutter ( 4148): The following StateError was thrown running a test:
+09-27 16:55:39.698 I/flutter ( 4148): Bad state: No element
+09-27 16:55:39.698 I/flutter ( 4148): 
+09-27 16:55:39.698 I/flutter ( 4148): When the exception was thrown, this was the stack:
+09-27 16:55:39.698 I/flutter ( 4148): #0      Iterable.single (dart:core/iterable.dart:694:25)
+09-27 16:55:39.698 I/flutter ( 4148): #1      WidgetController.state (package:flutter_test/src/controller.dart:932:42)
+09-27 16:55:39.698 I/flutter ( 4148): #2      main.screen (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/integration_test/moteur_3d_test.dart:98:14)
+09-27 16:55:39.699 I/flutter ( 4148): #3      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/integration_test/moteur_3d_test.dart:208:33)
+09-27 16:55:39.699 I/flutter ( 4148): #4      main.waitFor (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/integration_test/moteur_3d_test.dart:92:46)
+09-27 16:55:39.699 I/flutter ( 4148): #5      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/integration_test/moteur_3d_test.dart:208:11)
+09-27 16:55:39.699 I/flutter ( 4148): <asynchronous suspension>
+09-27 16:55:39.699 I/flutter ( 4148): #6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+09-27 16:55:39.729 I/flutter ( 4148): <asynchronous suspension>
+09-27 16:55:39.730 I/flutter ( 4148): #7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+09-27 16:55:39.730 I/flutter ( 4148): <asynchronous suspension>
+09-27 16:55:39.731 I/flutter ( 4148): #8      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+09-27 16:55:39.733 I/flutter ( 4148): <asynchronous suspension>
+09-27 16:55:39.738 I/flutter ( 4148): 
+09-27 16:55:39.742 I/flutter ( 4148): The test description was:
+09-27 16:55:39.743 I/flutter ( 4148):   Moteur 3D, thème clair
+09-27 16:55:39.743 I/flutter ( 4148): ════════════════════════════════════════════════════════════════════════════════════════════════════
+09-27 16:55:39.743 I/flutter ( 4148): 01:58 +1 -1: Moteur 3D, thème clair [E]
+09-27 16:55:39.743 I/flutter ( 4148):   Test failed. See exception logs above.
+09-27 16:55:39.743 I/flutter ( 4148):   The test description was: Moteur 3D, thème clair
+09-27 16:55:39.743 I/flutter ( 4148):   
+09-27 16:55:39.755 I/flutter ( 4148): 01:59 +1 -2: (tearDownAll)
+09-27 16:55:40.291 I/flutter ( 4148): 01:59 +2 -2: Some tests failed.
+09-27 16:55:41.552 W/PlatformConfigurator( 3142): Update for unknown DeviceConfig package com.google.android.gms.googlesettings#com.google.android.gms [CONTEXT service_id=204 ]
+09-27 16:55:41.552 W/PlatformConfigurator( 3142): daaf: No package exists for config package: com.google.android.gms.googlesettings#com.google.android.gms
+09-27 16:55:43.459 W/AppSearchIcing(  560): icing-search-engine.cc:321: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
+09-27 16:55:47.173 I/EGL_emulation(  560): Opening libGLESv1_CM_emulation.so
+09-27 16:55:47.175 I/EGL_emulation(  560): Opening libGLESv2_emulation.so
