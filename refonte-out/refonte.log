@@ -8,7 +8,7 @@
 00:01 +6: démonstrations découpées choix de la vue : profil, face ou dos selon les muscles
 00:01 +7: démonstrations découpées segments posés exactement sur les articulations du modèle
 00:01 +8: démonstrations découpées rendu sans exception de chaque animation, corps dessiné
-00:02 +9: démonstrations découpées coût : images par seconde (test) et mémoire des textures
-REFONTE_PERF images=240 moyenne_us=2281 ips=438 textures_octets=6340608
+00:01 +9: démonstrations découpées coût : images par seconde (test) et mémoire des textures
+REFONTE_PERF images=240 moyenne_us=1595 ips=627 textures_octets=6340608
 00:02 +10: All tests passed!
 exit=0
