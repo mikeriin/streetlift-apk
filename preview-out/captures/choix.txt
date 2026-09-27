@@ -1,0 +1,3 @@
+face skaters vue=face gabarit=fente.laterale duree=2.90 images_cles=2
+profil rowing-halteres-penche vue=profil gabarit=rowing.haltere duree=2.50 images_cles=2
+profil2 squat-bulgare-halteres vue=profil gabarit=fente.bulgare duree=2.90 images_cles=2

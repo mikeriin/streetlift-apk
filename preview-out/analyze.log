@@ -1,0 +1,6 @@
+Analyzing streetlift_tracker...                                 
+
+  error • The function 'heatAtlasFills' isn't defined • test/l9b_content_test.dart:263:21 • undefined_function
+
+1 issue found. (ran in 24.7s)
+exit=1
