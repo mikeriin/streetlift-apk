@@ -1,6 +1,6 @@
-# Livraison — refonte muscles et animations (Kalis Track 4.2.1)
+# Livraison — refonte muscles et animations (Kalis Track 4.3.1)
 
-**Statut : prêt, fusion sur `main` en attente de l'accord écrit du propriétaire.** Rien n'est poussé sur `main`.
+**Statut : fusionnée sur `main` le 27/09/2026 en 4.3.1 (`7f07e2e`), build signé n°94 réussi. Rien n'est vérifié sur téléphone.**
 
 | Élément | Valeur |
 | --- | --- |
@@ -29,3 +29,11 @@ D-MA-01 à D-MA-04 dans `pipeline/DECISIONS_EN_ATTENTE.md` (règle de vue de dos
 
 ## Consigne du propriétaire (27/09/2026, dans la session)
 Accord de fusion sous conditions : attendre « Kalis Track 4.3.0 (L13) » sur main, réappliquer la refonte sur les SOURCES du ZIP 4.3.0 (jamais en remplaçant le ZIP), vérifier par diff que tous les fichiers de L13 sont conservés, version 4.3.1, relancer format, analyse, suite complète et captures, pousser sur main en avance rapide uniquement, vérifier le build signé, notifier.
+
+## Fusion (27/09/2026)
+- `main` contenait « Kalis Track 4.3.0 (L13) » (`1a39f91`). ZIP 4.3.0 extrait ; refonte réappliquée sur les sources (fusion à trois voies depuis 4.2.0), jamais en remplaçant le ZIP.
+- Diff : les 26 fichiers modifiés par L13 sont présents ; 22 identiques à 4.3.0 ; les 4 communs (README, SUIVI, `pubspec.yaml`, `settings_screen.dart`) gardent tout L13, seuls la version, deux lignes d'assets et les en-têtes de documentation changent. Le ZIP 4.3.1 ne diffère de 4.3.0 que par les fichiers de la refonte.
+- Version 4.3.1+71. CI `claude/ci-refonte` : format sans changement, analyse sans problème, suite complète 846 réussis / 13 ignorés / 0 échec, tests refonte 11/11, captures OK, Python 82/82, `verify_project.py` OK.
+- ZIP : 544 fichiers, 3 832 030 octets, SHA-256 `7682fd44a7c74b651c3ef2acb2009b2fad4a952a830a9a31e378a96c02d6ca89`, `--check` OK.
+- Push sur `main` en avance rapide (`1a39f91..7f07e2e`, sans --force). Build signé : run n°94 réussi — https://github.com/mikeriin/streetlift-apk/actions/runs/36327156905
+- **Effet de bord** : ce push a annulé le build de L13 (run n°93, même groupe de concurrence `kalis-apk-refs/heads/main`). Le build n°94 contient tout L13 et a réussi ; la livraison L13 doit citer le run n°94 (4.3.1) comme build signé.

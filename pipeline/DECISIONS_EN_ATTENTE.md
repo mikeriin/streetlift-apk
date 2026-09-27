@@ -1,7 +1,7 @@
 # Décisions en attente
 
-## Refonte muscles et animations (4.2.1, branche `refonte/muscles-animations`) — accord de fusion requis
-- **D-MA-00 Fusion sur `main`** : **faite** — 4.3.1 sur main (`7f07e2e`, run 94 réussi), construite sur 4.3.0 (constaté par L13, 27/09/2026). Texte d'origine : bloquante. Aperçu, contrôles et build dans `livraisons/LIVRAISON_REFONTE_MA.md`. Réponds « ok fusion » dans la session du lot.
+## Refonte muscles et animations (4.3.1, fusionnée) — à relire (non bloquant)
+- **D-MA-00 Fusion** : faite le 27/09/2026 en 4.3.1 (`7f07e2e`, build n°94), sur accord écrit, après L13.
 - **D-MA-01 Vue de dos** : choisie quand les muscles principaux postérieurs sont plus nombreux que les antérieurs (latéraux non comptés). Résultat : 2 exercices (side bend, planche latérale avec abduction) ; drapeaux et planches latérales restent de face. Option : forcer le dos pour les drapeaux (dorsaux). Recommandation : garder.
 - **D-MA-02 18 exercices revus** (animation fausse avec la cinématique du pack) : 11 développés en image fixe position haute, leg curl et leg extension en image fixe, 5 sans démonstration (presse à cuisses, sled push, rowing appui poitrine, transition de muscle-up pieds au sol, sauts en contrebas). Proposition pour une passe du pack : corriger la position basse des gabarits `banc.couche`, `banc.pause`, `banc.floor`, `banc.incline` (bras sous le niveau des épaules, avant-bras vertical), donner une vraie flexion à `assis.leg_curl` / `assis.leg_extension`, replacer plateau, traîneau et banc d'appui, ajouter sol et caisse ; les exercices reviendraient alors en animation.
 - **D-MA-03 Générateur de programme** : il lit toujours le statut du pack, ces 18 exercices y comptent comme « animés » (références figées des tests L10). Option : lui faire lire le statut revu (programmes générés légèrement différents).
