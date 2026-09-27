@@ -14,17 +14,17 @@
   },
   "rendu_sombre": {
     "pixels": 77841,
-    "figure": 0.47735769067714956,
-    "rouge": 0.10195141377937077,
-    "gris": 0.22509988309502704,
-    "couleurs": 174
+    "figure": 0.42720417260826554,
+    "rouge": 0.09465448799475855,
+    "gris": 0.22486864248917665,
+    "couleurs": 144
   },
   "mesure": {
-    "images": 1,
+    "images": 0,
     "duree_ms": 10000,
-    "images_par_s": 0.1,
-    "temps_moyen_ms": 1143.015,
-    "p99_ms": 1143.015
+    "images_par_s": 0.0,
+    "temps_moyen_ms": 0.0,
+    "p99_ms": 0.0
   },
   "rendu_clair": {
     "pixels": 77841,
