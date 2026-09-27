@@ -1,4 +1,4 @@
 graine=20260927
-face copenhagen-plank-a-levier-long duree=2.00 images=36 images_cles=1
+face jumping-jacks duree=0.60 images=36 images_cles=2
 dos side-bend-haltere duree=2.50 images=36 images_cles=2
-profil l-sit-au-sol-tenue duree=2.00 images=36 images_cles=1
+profil rows-aux-anneaux duree=2.50 images=36 images_cles=2
