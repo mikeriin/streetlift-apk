@@ -205,7 +205,9 @@ void main() {
     for (final view in const ['face', 'dos', 'profil']) {
       final pool = [
         for (final id in ids)
+          // exercices réellement animés (au moins deux images clés)
           if (statutOf(id) == 'disponible' &&
+              animationOf(id).keyframes.length > 1 &&
               cutoutViewOf(animationOf(id)) == view)
             id,
       ];
