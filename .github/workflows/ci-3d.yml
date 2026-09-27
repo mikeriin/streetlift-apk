@@ -20,8 +20,8 @@ concurrency:
 
 env:
   FLUTTER_VERSION: "3.47.5"
-  # Version de référence de main avant M1, pour comparer les rendus de test.
-  FLUTTER_BEFORE: "3.29.3"
+  # Version Flutter du ZIP de main (rendus de test de référence du lot).
+  FLUTTER_BEFORE: "3.47.5"
 
 jobs:
   checks:
