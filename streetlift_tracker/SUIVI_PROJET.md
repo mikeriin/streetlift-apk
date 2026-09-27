@@ -1,5 +1,70 @@
 # Kalis Track — Suivi du projet
 
+**Passe actuelle : L8 — Profil, démarrage progressif et questionnaire de santé préalable (KT-038 à KT-043), version 3.1.0**  
+**Date : 26 septembre 2026, Europe/Paris — version : 3.1.0+65 (versionCode réel fixé par la CI de build)**  
+**Statut : lot L8 exécuté par le pipeline automatisé (sans échange en direct). Corrigé dans le code et testé automatiquement en CI (voir L8.3) ; build signé : `LIVRAISON_L8.md` ; rien n'est vérifié sur téléphone.**
+
+## L8.0 — Base
+
+| Élément | Valeur | Preuve |
+| --- | --- | --- |
+| Demande | `pipeline/prompt_L8.txt` (branche `pipeline`), règles `pipeline/PIPELINE.md` | Pipeline du propriétaire |
+| Base | `streetlift_tracker_v33.zip` **3.0.3+64** (L6), `main` `8e8f6d1`, 1 941 350 octets, SHA-256 `87b8a6bb06eadd01b5915dea9114e07323427814684a60ea880c5bacf888cf98`, racine unique `streetlift_tracker/` | Recalcul |
+| Prérequis | L4 (départ) et L7 (Koach) livrés ; section L6 présente dans ce suivi | Lecture |
+| État initial | Celui de L6 sur le même arbre (CI : format 0 changement, analyse sans problème, 570 réussis / 12 ignorés, Python 63/63, `verify_project.py`, build debug). Tests ciblés L5/L6 rejoués sur la candidate : 155 réussis / 11 ignorés, identiques | CI L6 et L8 |
+| Outils | Pas de Flutter local ; CI sur la branche temporaire `claude/ci-tools` ; aucun téléphone | Constaté |
+
+## L8.1 — Contrat
+
+`docs/CONTRAT_L8.md` : contradictions relevées (§1), dix décisions par défaut réversibles (§2), format de la section `profile` (§3), démarrage (§4), questionnaire et mode prudent (§5), consentement (§6), questions progressives (§7), migration (§8), registre de validation (§9), limites (§10). Politique préparatoire et cartographie : `docs/CONFIDENTIALITE.md`. **PAR-Q+** : conditions consultées le 26/09/2026 (eparmedx.com, *Terms and Conditions*) — modification et intégration dans un produit interdites sans accord écrit ; formulation **non reprise**, questions équivalentes rédigées et inscrites au registre.
+
+## L8.2 — Changements par ticket
+
+| Ticket | Changement |
+| --- | --- |
+| KT-038 | `lib/profile.dart` : profil versionné (v1), réponses datées avec source (déclarée / estimée / mesurée), champs V1 (sans sexe ni taille), catalogue d'objectifs extensible (Prise de muscle, Figures, Énergie désactivés), lieux et matériel normalisés, événement « profil modifié ». Section `profile` de la sauvegarde écrite seulement si un profil existe ; import strict, démarrage tolérant |
+| KT-039 | `lib/profile_screens.dart` : démarrage en 9 écrans, rien d'écrit avant le récapitulatif ; refus des moins de 18 ans sans écriture ; repère concret (pompes, tractions) ; valeurs par défaut du mode et du ton ; premier écran activé par `main()` (`SLApp(profileGate: true)`) |
+| KT-040 | Une question au plus à la fin d'une séance validée (`session_screen.dart`, après le bilan Koach) ; « Plus tard » (7 jours), « Ne plus demander » ; ordre documenté |
+| KT-041 | Questionnaire (8 questions), mode prudent : plafond 80 % du 1RM sur B8-B11 (chemins 2.x et Koach, `store.dart`, `koach_store.dart`), consignes « pas de test maximal » et « 3 RIR » dans la séance, conseil médical, levée par accord daté |
+| KT-042 | Information préalable, consentement explicite et révocable (effacement), export, suppression des données ; `docs/CONFIDENTIALITE.md` |
+| KT-043 | `ownerDraft()` : profil pré-rempli (objectifs L7, programme, historique, feuille Pilotage) ; écran de confirmation au lancement (« Plus tard ») et dans Réglages → Profil ; seule la section `profile` s'ajoute |
+
+Fichiers : nouveaux `lib/profile.dart`, `lib/profile_store.dart`, `lib/profile_screens.dart`, `test/l8_profile_test.dart`, `test/l8_profile_screens_test.dart`, `docs/CONTRAT_L8.md`, `docs/CONFIDENTIALITE.md` ; modifiés `lib/store.dart` (section `profile`, plafond), `lib/koach_store.dart` (plafond), `lib/main.dart` (premier écran), `lib/settings_screen.dart` (Réglages → Profil, version 3.1.0), `lib/session_screen.dart` (consigne prudente, question progressive), `pubspec.yaml` (3.1.0+65), `README.md`, ce suivi. Workflow `build-apk.yml` **inchangé**. Aucune dépendance ajoutée. Aucun test existant modifié.
+
+## L8.3 — Tests et scénarios
+
+| Contrôle | Résultat | Où |
+| --- | --- | --- |
+| Formatage | 114 fichiers, 0 changement | CI `claude/ci-tools`, commit `0facb5d` (lib, test, pubspec identiques au ZIP) |
+| Analyse | No issues found | idem |
+| Suite complète | **598 réussis, 12 ignorés** (570 existants inchangés + 28 L8), 0 échec | idem |
+| Tests ciblés L5/L6 rejoués | 155 réussis, 11 ignorés (identiques à L6) | idem |
+| Python | 63/63 ; `verify_project.py` : 40 semaines, 280 jours, 1 812 exercices | idem |
+| Android | `flutter build apk --debug` réussi (arbre du commit `e524976` ; les corrections suivantes ne touchent que `const` et une accolade) | CI |
+| Démarrage mesuré | **9 écrans, 24 taps, 1 saisie** (parcours type : 3 jours, 8 réponses de santé) ; durée estimée ≈ 75 s | `test/l8_profile_screens_test.dart` |
+
+Défauts trouvés par la première passe CI et corrigés : 3 remarques d'analyse (accolade, `const`, import inutile) ; 4 tests L8 mal écrits (écriture comptée par un `flush()` du test lui-même ; défilement vers une carte déjà dépassée ; texte hors de la zone construite de la liste). Aucun défaut du code applicatif révélé ; aucune assertion affaiblie (l'absence d'écriture est vérifiée par `hasUnsavedChanges` et le compteur d'écritures, après le délai de sauvegarde).
+
+Nouveaux tests : `test/l8_profile_test.dart` (19 : modèle, mode prudent, questions progressives, store, migration, import/export) ; `test/l8_profile_screens_test.dart` (9 : démarrage, mineur, refus du consentement, migration, 3 formats d'écran, Profil, question progressive).
+
+Scénarios couverts : démarrage complet (écrans et taps mesurés) ; refus des moins de 18 ans et de « 18 ans pas encore fêtés » sans écriture ; chaque déclencheur (7 « oui », cœur/tension, grossesse, 65 ans, gêne 4/10 vs 3/10, sans réponse, refus) ; plafond vérifié sur toutes les charges du programme (autres charges identiques) ; levée par accord daté et caducité après une nouvelle gêne ; refus et retrait du consentement (effacement vérifié dans l'export) ; questions progressives (une par séance, ordre, report, refus, santé sans consentement) ; migration sur un état 3.0.0 rempli (export identique hormis `profile`, départ conservé après relance) ; import d'une sauvegarde 3.0.0 sans profil ; import d'un profil hors contrat refusé ; effacement. Écrans à 390 × 844 et 320 × 720, texte 100 / 130 / 200 %, clair et sombre, défilement par gestes.
+
+## L8.4 — Limites et suites
+
+| Statut | Éléments |
+| --- | --- |
+| Corrigé dans le code | KT-038 à KT-043 |
+| Testé automatiquement | Voir L8.3 |
+| Vérifié sur appareil | **Rien** |
+| Reste à valider | Essais téléphone (`LIVRAISON_L8.md`) ; registre de validation (`docs/CONTRAT_L8.md` §9) : questions de santé, seuils du mode prudent, tranches du repère, qualification RGPD ; durée réelle du démarrage |
+
+- Le profil n'a pas encore d'effet sur le programme (régénération : L10) ; seul le mode prudent agit.
+- Le mode prudent plafonne la charge affichée ; une série saisie plus lourde n'est pas bloquée.
+- Matériel normalisé provisoire, à rattacher au pack L9 (L9b).
+- Branche temporaire `claude/ci-tools` toujours présente.
+
+# Historique conservé — L6 (3.0.3)
+
 **Passe actuelle : L6 — Performance (KT-023), version candidate**  
 **Date : 26 septembre 2026, Europe/Paris — version : 3.0.3+64 (versionCode réel fixé par la CI de build)**  
 **Statut : version candidate L6 : reconstructions des zones masquées différées, caches WOD corrigés, comparaisons de sauvegarde sans JSON. Apparence, données, format de sauvegarde et règles métier inchangés. Testé en CI sur l'arbre livré (format sans changement, analyse sans problème, **570 tests Dart réussis, 12 ignorés** — rendus et banc facultatifs —, Python 63/63, `verify_project.py`, compilation Android debug) ; banc hôte A/B ; rendus L5 rejoués (79/81 identiques au pixel, 2 = horloge). Aucune mesure sur téléphone. Mesures : `docs/PERFORMANCE.md`. ZIP, publication et build signé : `LIVRAISON_L6.md`.**

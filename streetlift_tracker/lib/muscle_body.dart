@@ -1,11 +1,12 @@
-// Carte des groupes musculaires — illustration anatomique (face / dos) :
-// image de base grise + un calque de teinte par groupe (assets/muscles/*.png),
-// coloré selon l'intensité avec un halo doux.
-import 'dart:ui' as ui;
-
+// Carte des groupes musculaires (STATS, accueil, WOD) — L9b : dessinée avec
+// l'atlas du pack de contenu (lib/atlas_data.dart) à la place des calques PNG.
+// Données inchangées : agrégation par les 11 groupes de l'application, même
+// rampe d'intensité ; chaque muscle de l'atlas est rattaché à son groupe.
 import 'package:flutter/material.dart';
 
 import 'app_theme.dart';
+import 'atlas.dart';
+import 'atlas_data.dart';
 
 /// Rampe d'intensité de la charte : bordeaux (léger) → rouge (intense).
 /// En sombre, le haut de la rampe prend la teinte d'accent pour rester visible.
@@ -17,43 +18,33 @@ Color heat(double t) {
   return Color.lerp(KPalette.burgundy, top, .15 + .85 * v)!;
 }
 
-const _fileKeys = {
-  'pectoraux': 'pectoraux',
-  'épaules': 'epaules',
-  'biceps': 'biceps',
-  'triceps': 'triceps',
-  'avant-bras': 'avant_bras',
-  'gainage': 'gainage',
-  'dos': 'dos',
-  'quadriceps': 'quadriceps',
-  'ischios': 'ischios',
-  'fessiers': 'fessiers',
-  'mollets': 'mollets',
+/// Groupes réellement dessinés dans chaque vue de l'atlas.
+final muscleMasks = {
+  'front': atlasGroupsIn('face'),
+  'back': atlasGroupsIn('dos'),
 };
-const _ratio = {'front': 281 / 760, 'back': 283 / 760};
 
-// Seuls ces masques existent dans l'atlas : pas de biceps au dos, par exemple.
-const muscleMasks = {
-  'front': {
-    'pectoraux',
-    'épaules',
-    'biceps',
-    'avant-bras',
-    'gainage',
-    'dos',
-    'quadriceps',
-    'mollets',
-  },
-  'back': {
-    'épaules',
-    'triceps',
-    'avant-bras',
-    'dos',
-    'ischios',
-    'fessiers',
-    'mollets',
-  },
-};
+const _atlasView = {'front': 'face', 'back': 'dos'};
+
+/// Remplissages de l'atlas pour une intensité par groupe (0-1).
+Map<String, List<AtlasFill>> heatAtlasFills(
+  Map<String, double> t, {
+  Color? tint,
+  bool glow = false,
+}) {
+  final out = <String, List<AtlasFill>>{};
+  for (final e in atlasMuscles.entries) {
+    final v = t[e.value.groupe] ?? 0;
+    if (v <= 0.02) continue;
+    final color =
+        tint == null ? heat(v) : Color.lerp(KPalette.gray, tint, .45 + .55 * v)!;
+    out[e.key] = [
+      if (glow && v > 0.35) AtlasFill(color, opacity: .45 * v, blur: true),
+      AtlasFill(color),
+    ];
+  }
+  return out;
+}
 
 class MuscleHeatmap extends StatelessWidget {
   final Map<String, double> data;
@@ -76,28 +67,13 @@ class MuscleHeatmap extends StatelessWidget {
     final t = {
       for (final e in data.entries) e.key: max == 0 ? 0.0 : e.value / max,
     };
+    final fills = heatAtlasFills(t, tint: tint, glow: glow);
     return SizedBox(
       height: height,
       child: Row(
         children: [
-          Expanded(
-            child: _View(
-              view: 'front',
-              t: t,
-              labels: labels,
-              tint: tint,
-              glow: glow,
-            ),
-          ),
-          Expanded(
-            child: _View(
-              view: 'back',
-              t: t,
-              labels: labels,
-              tint: tint,
-              glow: glow,
-            ),
-          ),
+          Expanded(child: _View(view: 'front', fills: fills, labels: labels)),
+          Expanded(child: _View(view: 'back', fills: fills, labels: labels)),
         ],
       ),
     );
@@ -106,80 +82,26 @@ class MuscleHeatmap extends StatelessWidget {
 
 class _View extends StatelessWidget {
   final String view;
-  final Map<String, double> t;
+  final Map<String, List<AtlasFill>> fills;
   final bool labels;
-  final Color? tint;
-  final bool glow;
-  const _View({
-    required this.view,
-    required this.t,
-    required this.labels,
-    this.tint,
-    required this.glow,
-  });
+  const _View({required this.view, required this.fills, required this.labels});
 
   @override
   Widget build(BuildContext context) {
-    final entries =
-        t.entries
-            .where((e) => e.value > 0.02 && muscleMasks[view]!.contains(e.key))
-            .toList();
     return Column(
       children: [
         Expanded(
           child: Center(
             child: AspectRatio(
-              aspectRatio: _ratio[view]!,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Image.asset(
-                    'assets/muscles/${view}_base.png',
-                    fit: BoxFit.fill,
-                    filterQuality: FilterQuality.medium,
-                    gaplessPlayback: true,
-                  ),
-                  // halo sous les groupes chauds
-                  for (final e in entries)
-                    if (glow && e.value > 0.35)
-                      ImageFiltered(
-                        imageFilter: ui.ImageFilter.blur(sigmaX: 7, sigmaY: 7),
-                        child: Opacity(
-                          opacity: 0.45 * e.value,
-                          child: Image.asset(
-                            'assets/muscles/${view}_${_fileKeys[e.key]}.png',
-                            fit: BoxFit.fill,
-                            color:
-                                tint == null
-                                    ? heat(e.value)
-                                    : Color.lerp(
-                                      KPalette.gray,
-                                      tint,
-                                      .45 + .55 * e.value,
-                                    ),
-                            colorBlendMode: BlendMode.modulate,
-                            gaplessPlayback: true,
-                          ),
-                        ),
-                      ),
-                  // calques teintés (le modelé de l'illustration est conservé par modulation)
-                  for (final e in entries)
-                    Image.asset(
-                      'assets/muscles/${view}_${_fileKeys[e.key]}.png',
-                      fit: BoxFit.fill,
-                      color:
-                          tint == null
-                              ? heat(e.value)
-                              : Color.lerp(
-                                KPalette.gray,
-                                tint,
-                                .45 + .55 * e.value,
-                              ),
-                      colorBlendMode: BlendMode.modulate,
-                      filterQuality: FilterQuality.medium,
-                      gaplessPlayback: true,
-                    ),
-                ],
+              aspectRatio: atlasViewWidth / atlasViewHeight,
+              child: CustomPaint(
+                size: Size.infinite,
+                painter: AtlasPainter(
+                  view: _atlasView[view]!,
+                  fills: fills,
+                  body: KPalette.gray,
+                  marks: SL.text,
+                ),
               ),
             ),
           ),

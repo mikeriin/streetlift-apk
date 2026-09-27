@@ -22,8 +22,23 @@ def verify(root=ROOT, signing=False):
                 ids.add(ex['id'])
     # LC1 (KT-037) : 1 954 − 202 lignes retirées + 66 nouvelles en S12-S19.
     assert len(ids) == 1812, 'Programme incomplet'  # LC1b : 1 818 − 7 + 1
-    exercises = json.loads(gzip.decompress((root / 'assets/exercises_db.json.gz').read_bytes()))
-    assert all(isinstance(e[k], str) for e in exercises for k in ('n', 'g', 'eq'))
+    # L9b (KT-079) : base v2 du pack de contenu (index + fiches + poses).
+    index = json.loads(gzip.decompress((root / 'assets/content/index.json.gz').read_bytes()))
+    exercises = index['exercices']
+    assert all(isinstance(e[k], str) for e in exercises for k in ('id', 'n', 'g', 'eq'))
+    assert len({e['id'] for e in exercises}) == len(exercises), 'Identifiants v2 dupliqués'
+    assert len({e['n'] for e in exercises}) == len(exercises), 'Noms dupliqués'
+    assert sum(1 for e in exercises if e['v1']) == 505, 'Exercices v1 manquants'
+    v2_ids = {e['id'] for e in exercises}
+    assert len(index['base_v1']) == 505 and all(
+        v['id'] in v2_ids and v['canonique'] in v2_ids for v in index['base_v1'].values()), 'Correspondance v1 incomplète'
+    assert all(v['id'] in v2_ids for v in index['programme_v33'].values()), 'Programme non rattaché'
+    details = json.loads(gzip.decompress((root / 'assets/content/details.json.gz').read_bytes()))
+    assert set(details['exercices']) == v2_ids, 'Fiches manquantes'
+    poses = json.loads(gzip.decompress((root / 'assets/content/poses.json.gz').read_bytes()))
+    for i, e in poses['exercices'].items():
+        assert i in v2_ids and (e['statut'] == 'indisponible' or e['gabarit'] in poses['gabarits']), i
+    assert (root / 'assets/content/licences.md').is_file(), 'Mentions absentes'
     for path in (root / 'android/app/src/main/res').rglob('*.xml'):
         ET.parse(path)
     manifest = ET.parse(root / 'android/app/src/main/AndroidManifest.xml')

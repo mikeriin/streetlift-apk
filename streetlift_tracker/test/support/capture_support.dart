@@ -43,16 +43,13 @@ Future<void> loadCaptureFonts() async {
   await icons.load();
 }
 
-/// Précharge les images d'assets affichées (logo, muscles).
+/// Précharge les images d'assets affichées (logo).
 Future<void> precacheCaptureImages(WidgetTester tester) async {
   await tester.runAsync(() async {
     final context = tester.element(find.byType(MaterialApp).first);
     await Future.wait([
+      // L9b : la carte musculaire est dessinée (atlas), plus d'images.
       precacheImage(const AssetImage('assets/icon/logo_mark.png'), context),
-      for (final file
-          in Directory('assets/muscles').listSync().whereType<File>())
-        if (file.path.endsWith('.png'))
-          precacheImage(AssetImage(file.path), context),
     ]);
   });
   await tester.pumpAndSettle();

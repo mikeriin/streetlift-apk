@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'app_theme.dart';
 import 'data_control.dart';
+import 'exercise_screens.dart';
 import 'koach_screens.dart';
 import 'ui.dart';
 import 'notification_settings.dart';
@@ -12,7 +13,7 @@ import 'profile_screens.dart';
 import 'store.dart';
 import 'store_widget.dart';
 
-const kAppVersion = '3.1.0';
+const kAppVersion = '3.2.0';
 
 class SettingsScreen extends StatelessWidget {
   final int? section;
@@ -499,6 +500,16 @@ class SettingsScreen extends StatelessWidget {
             title: 'Kalis Track $kAppVersion',
             subtitle:
                 'Programme streetlifting v3.3 · ${store.allExercises.length} exercices · ${execModes.length} modes · ${store.wods.length} WODs',
+          ),
+          KMenuTile(
+            icon: Icons.menu_book_outlined,
+            title: 'Sources et licences',
+            subtitle: 'Contenu des fiches d’exercices et des démonstrations',
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const MentionsScreen()),
+                ),
           ),
         ];
         final groups = <List<Widget>>[];

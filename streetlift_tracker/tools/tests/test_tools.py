@@ -36,7 +36,8 @@ class ToolsTests(unittest.TestCase):
 
     def test_shipped_assets_and_android_identity(self):
         # LC1 (KT-037) : 1 954 − 202 + 66 exercices.
-        self.assertEqual(verify(), (1812, 505))  # LC1b : 1 818 − 7 + 1
+        # L9b (KT-079) : base v2 = 505 exercices v1 + 120 ajouts du pack.
+        self.assertEqual(verify(), (1812, 625))  # LC1b : 1 818 − 7 + 1
 
 
 if __name__ == '__main__':

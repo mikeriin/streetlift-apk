@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'content_pack.dart';
 import 'game.dart';
 import 'koach_data.dart';
 import 'koach_engine.dart' as ke;
@@ -836,9 +837,12 @@ class AppStore extends ChangeNotifier {
       refReps[a.ref] = a.refReps;
     }
 
-    for (final e
-        in jsonDecode(await _loadGz('assets/exercises_db.json.gz')) as List) {
-      dbExercises.add(Map<String, dynamic>.from(e as Map));
+    // L9b (KT-079) : base v2 du pack de contenu. Les 505 exercices d'origine
+    // gardent leur nom, leurs groupes et leur matériel v1 (clés de
+    // l'historique, des records et de STATS) ; les 120 ajouts suivent.
+    content = await ContentIndex.load();
+    for (final e in content.entries) {
+      dbExercises.add(e.toLegacy());
     }
     final saved = _prefs.getString(_kState);
     if (saved != null) {
@@ -2281,6 +2285,23 @@ class AppStore extends ChangeNotifier {
   String get effortLabel => settings.rpe ? 'RPE' : 'RIR';
 
   // ---------- Base d'exercices ----------
+  /// Index de la base v2 (L9b) ; vide avant [init].
+  ContentIndex content = ContentIndex.fromJson(const {
+    'vocabulaires': {
+      'types_mouvement': <String, dynamic>{},
+      'lieux': <String, dynamic>{},
+      'materiel': <String, dynamic>{},
+      'muscles': <String, dynamic>{},
+    },
+    'exercices': <dynamic>[],
+    'base_v1': <String, dynamic>{},
+    'programme_v33': <String, dynamic>{},
+  });
+
+  /// Identifiant v2 d'un nom d'exercice enregistré ou d'un intitulé du
+  /// programme ; null pour un exercice personnel.
+  String? exerciseIdFor(String name) => content.idFor(name);
+
   List<Map<String, dynamic>>? _allEx;
   List<Map<String, dynamic>> get allExercises =>
       _allEx ??= [...dbExercises, ...userExercises];

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'builder_screen.dart';
+import 'exercise_screens.dart';
 import 'app_theme.dart';
 import 'ui.dart';
 import 'levelup.dart';
@@ -52,6 +53,19 @@ class ArsenalScreen extends StatelessWidget {
                     label: const Text('Nouvelle séance'),
                   ),
                 ],
+              ),
+              KMenuTile(
+                icon: Icons.menu_book_outlined,
+                title: 'Exercices',
+                subtitle:
+                    'Fiches, démonstrations, muscles et progressions',
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ExerciseLibraryScreen(),
+                      ),
+                    ),
               ),
               KSection(
                 'Mes séances',

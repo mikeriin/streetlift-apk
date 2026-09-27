@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'app_theme.dart';
+import 'content_pack.dart';
+import 'exercise_screens.dart';
 import 'ui.dart';
 import 'search.dart';
 import 'store.dart';
@@ -257,7 +259,11 @@ class _ExercisePickerState extends State<_ExercisePicker> {
 
   SearchDoc _doc(Map<String, dynamic> e) {
     final n = e['n'] as String, g = e['g'] as String, eq = e['eq'] as String;
-    return _index.doc(n, '$g|$eq', () => SearchDoc(name: n, meta: g, body: eq));
+    return _index.doc(
+      n,
+      '$g|$eq|${e['id']}',
+      () => exerciseSearchDoc(store.content, e),
+    );
   }
 
   Widget _chip(String label, bool selected, VoidCallback onTap) => Padding(
@@ -328,6 +334,14 @@ class _ExercisePickerState extends State<_ExercisePicker> {
         '${e['g']} · ${e['eq']}',
         style: TextStyle(fontSize: 11.5, color: SL.dim),
       ),
+      trailing:
+          e['id'] == null
+              ? null
+              : IconButton(
+                tooltip: 'Fiche de l’exercice',
+                icon: Icon(Icons.info_outline, color: SL.dim),
+                onPressed: () => openExerciseSheet(context, e['id'] as String),
+              ),
       onTap: () {
         _rememberExercise(e['n'] as String);
         Navigator.pop(context, e['n'] as String);
