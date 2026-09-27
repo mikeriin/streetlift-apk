@@ -4,12 +4,12 @@
 00:00 +2: illustrations et calques profil : fond transparent, bords sans liseré clair
 00:00 +3: carte musculaire muscles de l'atlas → groupes, intensités par rôle
 00:00 +4: carte musculaire STATS : rendu identique à 3.1.0 (sombre)
-00:01 +5: carte musculaire STATS : rendu identique à 3.1.0 (clair)
+00:00 +5: carte musculaire STATS : rendu identique à 3.1.0 (clair)
 00:01 +6: démonstrations découpées choix de la vue : profil, face ou dos selon les muscles
 00:01 +7: démonstrations découpées revue : exercices en image fixe ou sans démonstration
 00:01 +8: démonstrations découpées segments posés exactement sur les articulations du modèle
 00:01 +9: démonstrations découpées rendu sans exception de chaque animation, corps dessiné
 00:01 +10: démonstrations découpées coût : images par seconde (test) et mémoire des textures
-REFONTE_PERF images=240 moyenne_us=1541 ips=649 textures_octets=6340608
-00:02 +11: All tests passed!
+REFONTE_PERF images=240 moyenne_us=1257 ips=796 textures_octets=6340608
+00:01 +11: All tests passed!
 exit=0
