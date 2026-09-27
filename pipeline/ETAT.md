@@ -10,7 +10,8 @@
 | L9b | 3.2.0 | 6015ebc | 87 | 27/09/2026 | livré (build signé réussi ; non vérifié sur téléphone) — point d'installation conseillé |
 | L10 | 4.0.0 | 5d38177 | 88 | 27/09/2026 | livré (build signé réussi ; non vérifié sur téléphone) |
 | L11 | 4.1.0 | b202121 | 89 | 27/09/2026 | livré (build signé réussi ; non vérifié sur téléphone) |
-| L12 | 4.2.0 (attendu) | — | — | 27/09/2026 | lancé |
+| L12 | 4.2.0 | 332e292 | 90 | 27/09/2026 | livré (build signé réussi ; non vérifié sur téléphone) |
+| L13 | 4.3.0 (attendu) | — | — | 27/09/2026 | lancé |
 
 Outil de relecture v2 (même lien, version 2 de l'artefact ; collection `relectures_v2`, l'ancienne `relectures` conservée) : https://claude.ai/artifact/MfMKxQMztc1rd85LLhUn6S
 Suite : le propriétaire relit la v2. À la validation : appliquer ses corrections, copier l'archive validée sous `kalis_content_pack_v1_final.zip` sur `content-pack`, puis lancer L9b (trig_01XUb6PZBCvYvNbBvpQokiun ; main est en 3.1.0, condition remplie). La seconde passe L9 (trig_01KyxRKcUDA45rdHQAw4xVGM) est remplacée par L9R.
@@ -21,4 +22,6 @@ L10 : livré le 27/09/2026 (générateur de programme ; installation existante =
 
 L11 : livré le 27/09/2026 (adaptation au jour le jour ; installation existante en mode Assisté, rien ne change sans tap ; livraison `livraisons/LIVRAISON_L11.md`). Suite : L12 lancé (trig_01KutrfRsBDMLmAgpQKfUQJc).
 
-Décisions en attente : voir DECISIONS_EN_ATTENTE.md (L11, L10 et L9b, non bloquantes ; L9R et L8 tranchées)
+L12 : livré le 27/09/2026 (motivation et progression visible ; barème des récompenses proposé, non appliqué ; rappels jamais un jour de repos ; livraison `livraisons/LIVRAISON_L12.md`). Suite : L13 lancé (trig_01CxGPskf5oNyYEkXyiQbpPZ).
+
+Décisions en attente : voir DECISIONS_EN_ATTENTE.md (L12 dont le barème des récompenses, L11, L10 et L9b, non bloquantes ; L9R et L8 tranchées)

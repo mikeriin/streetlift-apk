@@ -1,5 +1,13 @@
 # Décisions en attente
 
+## L12 (4.2.0) — à relire (non bloquant)
+Détail : `docs/CONTRAT_L12.md` §2 (D-L12-01 à D-L12-12) et §5 (barème) dans le ZIP.
+- **Barème des récompenses des étapes (proposition chiffrée, NON appliquée — invariant économie)** : record 0 crédit (déjà un bonus XP), étape de chaîne franchie 2, cycle terminé 3, régularité 4 / 8 / 12 / 26 / 52 semaines : 1 / 1 / 2 / 3 / 5 ; payé une fois au registre KT-005 (`milestone:<id>`), jamais repris. Estimation : ≈ 51 crédits sur 40 semaines pour un utilisateur régulier. Pour l'appliquer : réponds « barème L12 validé » (ou tes chiffres).
+- **D-L12-08 Rappels jamais un jour de repos** : l'ancien réglage « Ignorer les jours de repos » est retiré ; 3 tests existants adaptés (280 → 240 rappels ; changement d'heure contrôlé au lundi 26/10). Recommandation : garder.
+- **D-L12-07 Semaine régulière** = 3/4 des séances prévues ; jours de repos respectés comptés ; semaine sans séance prévue neutre.
+- **D-L12-04 Célébration** seulement pour une étape de moins de 7 jours (pas de rafale pour l'historique).
+- **D-L12-10 Parcours d'habitude** (débutant, novice) : séances compressées à 20 min les 28 premiers jours, 2 séances visées, désactivable ; pas de réécriture du générateur.
+
 ## L11 (4.1.0) — à relire (non bloquant)
 Détail : `docs/CONTRAT_L11.md` §2 (D-L11-01 à D-L11-14) et §10 (registre) dans le ZIP.
 - **D-L11-01 Le plan glisse sur proposition** (carte « Reprendre là où tu t'es arrêté », un tap, annulable) ; d'office seulement à la fin d'une pause vacances/maladie. Ta décision L4 (« pas de décalage automatique ») est ainsi respectée hors pause. Option : glissement automatique. Recommandation : garder.
