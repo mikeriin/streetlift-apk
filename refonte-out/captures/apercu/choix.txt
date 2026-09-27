@@ -1,4 +1,4 @@
 graine=20260927
 face copenhagen-plank-a-levier-long duree=2.00 images=36 images_cles=1
 dos side-bend-haltere duree=2.50 images=36 images_cles=2
-profil squat-bulgare-halteres duree=2.90 images=36 images_cles=2
+profil l-sit-au-sol-tenue duree=2.00 images=36 images_cles=1

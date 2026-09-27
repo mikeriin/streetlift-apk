@@ -1,33 +1,4 @@
 00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/refonte_ma_capture_test.dart
 00:00 +0: rendus de revue et d'aperçu
-══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
-The following assertion was thrown running a test:
-pumpAndSettle timed out
-
-When the exception was thrown, this was the stack:
-#0      WidgetTester.pumpAndSettle.<anonymous closure> (package:flutter_test/src/widget_tester.dart:718:11)
-<asynchronous suspension>
-#1      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
-<asynchronous suspension>
-#2      precacheCaptureImages (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/support/capture_support.dart:59:3)
-<asynchronous suspension>
-#3      main.<anonymous closure>.show (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/refonte_ma_capture_test.dart:86:7)
-<asynchronous suspension>
-#4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/refonte_ma_capture_test.dart:314:5)
-<asynchronous suspension>
-#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:193:15)
-<asynchronous suspension>
-#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1064:5)
-<asynchronous suspension>
-<asynchronous suspension>
-(elided one frame from package:stack_trace)
-
-The test description was:
-  rendus de revue et d'aperçu
-════════════════════════════════════════════════════════════════════════════════════════════════════
-00:20 +0 -1: rendus de revue et d'aperçu [E]
-  Test failed. See exception logs above.
-  The test description was: rendus de revue et d'aperçu
-  
-00:20 +0 -1: Some tests failed.
-exit=1
+00:14 +1: All tests passed!
+exit=0

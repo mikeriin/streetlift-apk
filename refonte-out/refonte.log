@@ -6,9 +6,10 @@
 00:00 +4: carte musculaire STATS : rendu identique à 3.1.0 (sombre)
 00:01 +5: carte musculaire STATS : rendu identique à 3.1.0 (clair)
 00:01 +6: démonstrations découpées choix de la vue : profil, face ou dos selon les muscles
-00:01 +7: démonstrations découpées segments posés exactement sur les articulations du modèle
-00:01 +8: démonstrations découpées rendu sans exception de chaque animation, corps dessiné
-00:01 +9: démonstrations découpées coût : images par seconde (test) et mémoire des textures
-REFONTE_PERF images=240 moyenne_us=1595 ips=627 textures_octets=6340608
-00:02 +10: All tests passed!
+00:01 +7: démonstrations découpées revue : exercices en image fixe ou sans démonstration
+00:01 +8: démonstrations découpées segments posés exactement sur les articulations du modèle
+00:01 +9: démonstrations découpées rendu sans exception de chaque animation, corps dessiné
+00:02 +10: démonstrations découpées coût : images par seconde (test) et mémoire des textures
+REFONTE_PERF images=240 moyenne_us=2315 ips=432 textures_octets=6340608
+00:02 +11: All tests passed!
 exit=0
