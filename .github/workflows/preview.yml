@@ -26,6 +26,7 @@ jobs:
       - name: Format, analyse, captures
         working-directory: streetlift_tracker
         run: |
+          set +e
           mkdir -p ../preview-out/captures
           flutter pub get --enforce-lockfile > ../preview-out/pub.log 2>&1; echo "exit=$?" >> ../preview-out/pub.log
           dart format --output=none --set-exit-if-changed lib test > ../preview-out/format.log 2>&1; echo "exit=$?" >> ../preview-out/format.log
@@ -46,6 +47,7 @@ jobs:
         if: always()
         working-directory: streetlift_tracker
         run: |
+          set +e
           TZ=Europe/Paris timeout 1800 flutter test --no-pub --timeout 60s --reporter expanded > ../preview-out/test.log 2>&1; echo "exit=$?" >> ../preview-out/test.log
           tail -5 ../preview-out/test.log > ../preview-out/test-summary.txt
       - name: Publier les tests
