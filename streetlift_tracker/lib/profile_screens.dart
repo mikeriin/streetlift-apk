@@ -585,7 +585,7 @@ class _ProfileFlowState extends State<ProfileFlow> {
         ],
       ),
     ),
-      // L13 (KT-074) : avertissement dès le premier écran.
+    // L13 (KT-074) : avertissement dès le premier écran.
     const DisclaimerCard(),
   ];
 

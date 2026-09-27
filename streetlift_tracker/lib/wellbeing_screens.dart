@@ -68,10 +68,7 @@ class SafetyScreen extends StatelessWidget {
                       padding: const EdgeInsets.only(bottom: 4),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text('•  '),
-                          Expanded(child: Text(s)),
-                        ],
+                        children: [const Text('•  '), Expanded(child: Text(s))],
                       ),
                     ),
                   const SizedBox(height: 6),
@@ -266,16 +263,15 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     }
   }
 
-  Widget _field(String key, String label, TextEditingController c) =>
-      TextField(
-        key: ValueKey('feedback-$key'),
-        controller: c,
-        minLines: 2,
-        maxLines: 6,
-        maxLength: 2000,
-        onChanged: (_) => setState(() {}),
-        decoration: InputDecoration(labelText: label),
-      );
+  Widget _field(String key, String label, TextEditingController c) => TextField(
+    key: ValueKey('feedback-$key'),
+    controller: c,
+    minLines: 2,
+    maxLines: 6,
+    maxLength: 2000,
+    onChanged: (_) => setState(() {}),
+    decoration: InputDecoration(labelText: label),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -435,8 +431,7 @@ class MinorGate extends StatelessWidget {
               () => Navigator.push(
                 context,
                 MaterialPageRoute<void>(
-                  builder:
-                      (_) => ProfileFlow(initial: store.profile!.copy()),
+                  builder: (_) => ProfileFlow(initial: store.profile!.copy()),
                 ),
               ),
           child: const Text('Corriger mon année de naissance'),

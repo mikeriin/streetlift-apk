@@ -1,9 +1,18 @@
- ci-out/analyze.log      |      3 -
- ci-out/commit.txt       |      2 +-
- ci-out/format-full.diff | 100005 ---------------------------------------------
- ci-out/format.diff      |      9 -
- ci-out/format.log       |      3 +-
- ci-out/python.log       |     70 -
- ci-out/test-l5c.log     |    219 -
- ci-out/test.log         |   1068 -
- 8 files changed, 2 insertions(+), 101377 deletions(-)
+ ci-out/analyze.log                                |      3 -
+ ci-out/android-debug.log                          |     12 -
+ ci-out/commit.txt                                 |      2 +-
+ ci-out/format-full.diff                           | 101433 -------------------
+ ci-out/format.diff                                |      9 -
+ ci-out/format.log                                 |      9 +-
+ ci-out/python.log                                 |     70 -
+ ci-out/test-l5c.log                               |    210 -
+ ci-out/test-summary.txt                           |      1 -
+ ci-out/test.log                                   |    966 -
+ streetlift_tracker/lib/notification_settings.dart |      4 +-
+ streetlift_tracker/lib/profile_screens.dart       |      2 +-
+ streetlift_tracker/lib/safety_store.dart          |      7 +-
+ streetlift_tracker/lib/wellbeing.dart             |      3 +-
+ streetlift_tracker/lib/wellbeing_screens.dart     |     27 +-
+ streetlift_tracker/test/l13_safety_test.dart      |     64 +-
+ streetlift_tracker/test/l13_screens_test.dart     |     20 +-
+ 17 files changed, 78 insertions(+), 102764 deletions(-)

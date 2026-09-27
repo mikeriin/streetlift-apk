@@ -95,7 +95,10 @@ void main() {
         tester,
         find.byKey(const ValueKey('safety-situation-age65')),
       );
-      await scrollToAction(tester, find.byKey(const ValueKey('wellness-disclaimer')));
+      await scrollToAction(
+        tester,
+        find.byKey(const ValueKey('wellness-disclaimer')),
+      );
       expect(tester.takeException(), isNull);
     });
 
@@ -106,7 +109,10 @@ void main() {
         page(const RecoveryScreen(), scale: scale, dark: dark),
       );
       await tester.pumpAndSettle();
-      await scrollToAction(tester, find.byKey(const ValueKey('recovery-listen')));
+      await scrollToAction(
+        tester,
+        find.byKey(const ValueKey('recovery-listen')),
+      );
       await tester.pumpWidget(
         page(const PrivacyPolicyScreen(), scale: scale, dark: dark),
       );
@@ -126,10 +132,7 @@ void main() {
     phone(tester);
     var t = DateTime(2026, 9, 1, 18);
     for (final key in ['S3-J1', 'S3-J3', 'S4-J1']) {
-      store.logs[key] = SessionLog(
-        done: true,
-        finishedAt: t.toIso8601String(),
-      );
+      store.logs[key] = SessionLog(done: true, finishedAt: t.toIso8601String());
       store.setKoachPain(key, 'dip', 5);
       t = t.add(const Duration(days: 2));
     }
@@ -192,7 +195,10 @@ void main() {
     await tester.pumpWidget(page(const ProfileGate(child: Text('ACCUEIL'))));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('flow-welcome')), findsOneWidget);
-    await scrollToAction(tester, find.byKey(const ValueKey('wellness-disclaimer')));
+    await scrollToAction(
+      tester,
+      find.byKey(const ValueKey('wellness-disclaimer')),
+    );
     expect(find.textContaining('pas un dispositif médical'), findsOneWidget);
   });
 

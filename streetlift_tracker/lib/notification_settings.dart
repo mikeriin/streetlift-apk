@@ -190,7 +190,9 @@ class _NotificationSettingsPanelState extends State<NotificationSettingsPanel> {
                                   );
                                   message('Rapport technique copié.');
                                 },
-                                child: const Text('Copier le rapport technique'),
+                                child: const Text(
+                                  'Copier le rapport technique',
+                                ),
                               ),
                           ],
                         ),

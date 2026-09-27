@@ -1,2 +1,9 @@
-Formatted 145 files (0 changed) in 2.75 seconds.
+Formatted lib/notification_settings.dart
+Formatted lib/profile_screens.dart
+Formatted lib/safety_store.dart
+Formatted lib/wellbeing.dart
+Formatted lib/wellbeing_screens.dart
+Formatted test/l13_safety_test.dart
+Formatted test/l13_screens_test.dart
+Formatted 150 files (7 changed) in 2.60 seconds.
 exit=0

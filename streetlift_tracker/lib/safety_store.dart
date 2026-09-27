@@ -13,8 +13,7 @@ extension SafetyStore on AppStore {
     koach.answers.forEach((k, a) {
       final v = a.pain[movement];
       if (v == null) return;
-      final t =
-          DateTime.tryParse(logs[k]?.finishedAt ?? '') ?? DateTime(1970);
+      final t = DateTime.tryParse(logs[k]?.finishedAt ?? '') ?? DateTime(1970);
       rows.add((t, k, v));
     });
     rows.sort((a, b) {
@@ -31,9 +30,7 @@ extension SafetyStore on AppStore {
 
   /// Mouvements concernés par le renvoi, triés.
   List<String> get painReferralMovements {
-    final all = <String>{
-      for (final a in koach.answers.values) ...a.pain.keys,
-    };
+    final all = <String>{for (final a in koach.answers.values) ...a.pain.keys};
     return [
       for (final m in all.toList()..sort())
         if (painNeedsReferralFor(m)) m,

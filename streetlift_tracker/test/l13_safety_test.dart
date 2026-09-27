@@ -56,15 +56,18 @@ void main() {
       expect(painNeedsReferral(const [4, 5, 6, 1]), isFalse);
     });
 
-    test('signaux d’alerte : poitrine, malaise, essoufflement, irradiation', () {
-      final all = kAlertSignals.join(' ');
-      for (final w in ['poitrine', 'malaise', 'essoufflement', 'irradie']) {
-        expect(all, contains(w));
-      }
-      expect(kAlertAdvice, contains('Arrête l’effort'));
-      expect(kAlertAdvice, contains('médecin'));
-      expect(kPainReferral, contains('professionnel de santé'));
-    });
+    test(
+      'signaux d’alerte : poitrine, malaise, essoufflement, irradiation',
+      () {
+        final all = kAlertSignals.join(' ');
+        for (final w in ['poitrine', 'malaise', 'essoufflement', 'irradie']) {
+          expect(all, contains(w));
+        }
+        expect(kAlertAdvice, contains('Arrête l’effort'));
+        expect(kAlertAdvice, contains('médecin'));
+        expect(kPainReferral, contains('professionnel de santé'));
+      },
+    );
   });
 
   group('situations particulières (KT-073)', () {
@@ -141,7 +144,9 @@ void main() {
 
     test('note du programme figé reformulée à l’affichage', () {
       expect(
-        wellnessWording('Ischios : assurance anti-blessure sur le squat lourd.'),
+        wellnessWording(
+          'Ischios : assurance anti-blessure sur le squat lourd.',
+        ),
         isNot(contains('blessure')),
       );
       expect(wellnessWording('Autre note.'), 'Autre note.');
@@ -285,7 +290,9 @@ void main() {
     test('export puis suppression complète des données de santé', () async {
       final p =
           _profile()
-            ..health.injuries.add(const Injury('shoulder', 5, '2026-09-01', _at))
+            ..health.injuries.add(
+              const Injury('shoulder', 5, '2026-09-01', _at),
+            )
             ..health.clearanceAt = _at;
       p.setField('stress', 'high', _at);
       app.saveProfile(p);
@@ -316,21 +323,24 @@ void main() {
       expect(erased.contains('"pain"'), isFalse);
     });
 
-    test('18 ans et plus : un profil importé plus jeune bloque (KT-075)', () async {
-      app.saveProfile(_profile(birthYear: 1990));
-      expect(app.profileIsMinor, isFalse);
-      final raw = backupOf(app);
-      final fields = (raw['profile'] as Map)['fields'] as Map;
-      (fields['birthYear'] as Map)['v'] = 2012;
-      expect(await app.importBackup(jsonEncode(raw)), ImportStatus.success);
-      expect(app.profileIsMinor, isTrue);
-      // 18 ans dans l'année : accepté (la question a été posée).
-      (fields['birthYear'] as Map)['v'] = 2008;
-      expect(await app.importBackup(jsonEncode(raw)), ImportStatus.success);
-      expect(app.profileIsMinor, isFalse);
-      // Sans profil : pas de blocage.
-      await app.eraseAllData();
-      expect(app.profileIsMinor, isFalse);
-    });
+    test(
+      '18 ans et plus : un profil importé plus jeune bloque (KT-075)',
+      () async {
+        app.saveProfile(_profile(birthYear: 1990));
+        expect(app.profileIsMinor, isFalse);
+        final raw = backupOf(app);
+        final fields = (raw['profile'] as Map)['fields'] as Map;
+        (fields['birthYear'] as Map)['v'] = 2012;
+        expect(await app.importBackup(jsonEncode(raw)), ImportStatus.success);
+        expect(app.profileIsMinor, isTrue);
+        // 18 ans dans l'année : accepté (la question a été posée).
+        (fields['birthYear'] as Map)['v'] = 2008;
+        expect(await app.importBackup(jsonEncode(raw)), ImportStatus.success);
+        expect(app.profileIsMinor, isFalse);
+        // Sans profil : pas de blocage.
+        await app.eraseAllData();
+        expect(app.profileIsMinor, isFalse);
+      },
+    );
   });
 }

@@ -1,3 +1,7 @@
 Analyzing streetlift_tracker...                                 
-No issues found! (ran in 21.5s)
-exit=0
+
+   info • Statements in an if should be enclosed in a block • lib/wellbeing.dart:222:5 • curly_braces_in_flow_control_structures
+  error • The function 'wellnessWording' isn't defined • test/l13_safety_test.dart:147:9 • undefined_function
+  error • The function 'wellnessWording' isn't defined • test/l13_safety_test.dart:152:14 • undefined_function
+
+3 issues found. (ran in 21.3s)
