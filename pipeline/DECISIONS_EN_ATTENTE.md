@@ -1,12 +1,13 @@
 # Décisions en attente
 
-## L9 — à relire (non bloquant)
-Décisions réversibles prises par défaut ; détail dans `CONTRAT_L9.md` §6 sur la branche `content-pack`.
-- **D-L9-01 Sources externes** : aucune base d'exercices externe importée (licences invérifiables depuis l'environnement). Options : (a) garder le contenu 100 % généré (recommandé pour v1) ; (b) autoriser une source CC0/Unlicense précise, vérifiée lors d'une passe avec accès web ; (c) accepter une source CC-BY avec écran de mentions. CC-BY-SA exclu sans ton accord.
-- **D-L9-02 Types de mouvement** : ajout de `isolation`, `flexion_tronc` et `hors_categorie` à la liste du prompt. Confirmer ou demander un repli sur les 16 types.
-- **D-L9-04 Couleur du corps** : rôle « neutre moyen » = #8A8A8A dans les deux modes. Confirmer avant L9b.
-- **D-L9-06 Lieu « maison équipée »** : matériel léger seulement (pas de barre olympique ni de rack). Confirmer.
-- **Couverture** : 79 cases type × lieu × difficulté sous le seuil de 3 (surtout tirages sans matériel et niveaux 7-10). Dire si des exercices doivent être ajoutés en seconde passe.
+## L9R — à relire (non bloquant)
+Le lot L9R a tranché les décisions L9 selon le prompt (D-L9-01 sources consultées, D-L9-02 types conservés, D-L9-04 sans objet, D-L9-06 confirmée, couverture 79 → 22 manques justifiés). Décisions réversibles prises par défaut en L9R ; détail dans `CONTRAT_L9.md` §6 sur `content-pack` (dossier `kalis_content_pack_v2/`).
+- **D-L9R-04 Concordance par variante proche** : six archétypes (dips à la barre droite, isométrie de transition muscle-up, manna, sandbag carry, skin the cat, respiration) n'ont qu'une source directe ; la seconde décrit une variante très proche. Options : (a) accepter (appliqué) ; (b) marquer ces exercices « à confirmer » dans l'application.
+- **D-L9R-06 wger (CC-BY-SA)** : 319 entrées consultées pour vérifier des faits, rien reproduit. Options : (a) garder les références dans `sources` (appliqué, aucun écran de mentions) ; (b) les retirer — 225 archétypes gardent ≥ 2 autres sources, 12 à compléter (liste dans `licences.md` §3).
+- **D-L9R-02 Taxonomie à 81 entrées** au lieu d'« environ 90 » : tous les chefs demandés sont présents ; dire si des subdivisions supplémentaires sont voulues.
+- **D-L9R-05 Classement** : curl nordique et curl ischio glissé en `isolation` (flexion de genou), dragon flag en `gainage_anti_extension`, sprints répétés et bounding en `locomotion`. Confirmer.
+- **D-L9R-07 Démonstrations** : 35 exercices `statique` et 18 `indisponible` (liste `validation_register.md` §6) plutôt qu'une animation approximative. Confirmer ce choix.
+- **D-L9R-09 Ajouts** : 70 exercices ajoutés pour la couverture (variantes d'archétypes sourcés), difficultés à confirmer (`validation_register.md` §3.1) ; roulades et roue non ajoutées faute de source musculaire.
 
 ## L8 (3.1.0) — non bloquant
 
