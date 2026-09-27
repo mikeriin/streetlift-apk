@@ -133,6 +133,14 @@ jobs:
           set -o pipefail
           flutter build apk --debug --no-pub > ../out/build-debug.log 2>&1
           ls -la build/app/outputs/flutter-apk/ | tee -a ../out/build-debug.log
+      - name: Build profile (plugins comme en release, sans signature)
+        id: profile
+        continue-on-error: true
+        working-directory: streetlift_tracker
+        run: |
+          set -o pipefail
+          flutter build apk --profile --no-pub > ../out/build-profile.log 2>&1
+          ls -la build/app/outputs/flutter-apk/ | tee -a ../out/build-profile.log
       - name: Migrations de l'outil Flutter pendant le build
         if: always()
         working-directory: streetlift_tracker
@@ -148,6 +156,7 @@ jobs:
             echo "dart=${{ steps.dart.outcome }}"
             echo "captures=${{ steps.captures.outcome }}"
             echo "build_debug=${{ steps.build.outcome }}"
+            echo "build_profile=${{ steps.profile.outcome }}"
           } > out/checks.txt
           cat out/checks.txt
       - uses: actions/upload-artifact@v4
@@ -242,6 +251,11 @@ jobs:
           cd streetlift_tracker
           flutter pub get --enforce-lockfile || flutter pub get
           mkdir -p build/ci3d
+          # integration_test hors du pubspec livré (voir docs/CI_3D.md) :
+          # ajouté ici seulement, puis analyse du test d'intégration.
+          flutter pub add 'dev:integration_test:{"sdk":"flutter"}' > build/ci3d/pub-add.log 2>&1
+          flutter analyze --no-pub integration_test test_driver --no-fatal-infos 2>&1 | tee build/ci3d/analyze-integration.log
+          grep -q "No issues found" build/ci3d/analyze-integration.log
       - name: Activer KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
