@@ -883,7 +883,10 @@ class _StepRow extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: state == ChainStepState.reached ? SL.success : SL.dim),
+          Icon(
+            icon,
+            color: state == ChainStepState.reached ? SL.success : SL.dim,
+          ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
