@@ -71,7 +71,14 @@ GenInputs ownerInputs({DateTime? start}) => GenInputs(
   sessionMinutes: 120,
   places: const {
     'park': ['pullup_bar', 'dip_bars', 'weight_belt'],
-    'gym': ['pullup_bar', 'dip_bars', 'barbell', 'rack', 'bench', 'weight_belt'],
+    'gym': [
+      'pullup_bar',
+      'dip_bars',
+      'barbell',
+      'rack',
+      'bench',
+      'weight_belt',
+    ],
   },
   autonomy: 'assisted',
   measures: const {
@@ -99,8 +106,7 @@ GenInputs randomInputs(int seed, GenCatalog catalog) {
   final r = Random(seed);
   bool chance(double p) => r.nextDouble() < p;
   final primary = _goals[r.nextInt(_goals.length)];
-  final secondary =
-      chance(.5) ? _goals[r.nextInt(_goals.length)] : null;
+  final secondary = chance(.5) ? _goals[r.nextInt(_goals.length)] : null;
   final days = <int>{};
   final n = 1 + r.nextInt(7);
   while (days.length < n) {
@@ -170,9 +176,7 @@ GenInputs randomInputs(int seed, GenCatalog catalog) {
     eventItems: primary == 'event' ? (items.toList()..sort()) : const [],
     weekdays: days.toList()..sort(),
     sessionMinutes:
-        chance(.5)
-            ? _minutes[r.nextInt(_minutes.length)]
-            : 10 + r.nextInt(231),
+        chance(.5) ? _minutes[r.nextInt(_minutes.length)] : 10 + r.nextInt(231),
     dayPlace: dayPlace,
     places: places,
     disliked: disliked,
@@ -302,11 +306,15 @@ List<String> checkProgram(
           continue;
         }
         if (!ex.materiel.every(eq.contains)) {
-          out.add('$tag S$n J${dm['j']} : matériel absent pour ${ex.id} ($place)');
+          out.add(
+            '$tag S$n J${dm['j']} : matériel absent pour ${ex.id} ($place)',
+          );
         }
         for (final p in i.pains.entries) {
           if (p.value > 3 && (ex.joints[p.key] ?? 0) > 1) {
-            out.add('$tag S$n : ${ex.id} contre-indiqué (${p.key} ${p.value}/10)');
+            out.add(
+              '$tag S$n : ${ex.id} contre-indiqué (${p.key} ${p.value}/10)',
+            );
           }
         }
         if (i.caution && ex.impact) {
@@ -336,7 +344,9 @@ List<String> checkProgram(
           final abs = (n - 1) * 7 + (dm['j'] as int) - 1;
           final prev = heavyLast[ex.family!];
           if (prev != null && prev != abs && abs - prev < 2) {
-            out.add('$tag S$n J${dm['j']} : séances lourdes ${ex.family} à moins de 48 h');
+            out.add(
+              '$tag S$n J${dm['j']} : séances lourdes ${ex.family} à moins de 48 h',
+            );
           }
           heavyLast[ex.family!] = abs;
         }
@@ -349,17 +359,23 @@ List<String> checkProgram(
       final minutes = dayMinutes(dm);
       final avail = i.sessionMinutes.toDouble();
       if (dayKind != 'EVENT' && minutes > avail * 1.1 + 1e-9) {
-        out.add('$tag S$n J${dm['j']} : ${minutes.toStringAsFixed(1)} min > +10 % de $avail');
+        out.add(
+          '$tag S$n J${dm['j']} : ${minutes.toStringAsFixed(1)} min > +10 % de $avail',
+        );
       }
       if (kind == 'load' &&
           dayKind != 'EVENT' &&
           dayKind != 'REC' &&
           dm['capped'] != true &&
           minutes < avail * 0.9 - 1e-9) {
-        out.add('$tag S$n J${dm['j']} : ${minutes.toStringAsFixed(1)} min < −10 % de $avail sans plafond signalé');
+        out.add(
+          '$tag S$n J${dm['j']} : ${minutes.toStringAsFixed(1)} min < −10 % de $avail sans plafond signalé',
+        );
       }
       if ((dm['estimate'] as int) != (minutes * 60).round()) {
-        out.add('$tag S$n J${dm['j']} : durée enregistrée ${dm['estimate']} s ≠ ${(minutes * 60).round()} s');
+        out.add(
+          '$tag S$n J${dm['j']} : durée enregistrée ${dm['estimate']} s ≠ ${(minutes * 60).round()} s',
+        );
       }
       // Échauffement : 5 à 10 minutes.
       final warm = <Map<String, dynamic>>[
@@ -370,7 +386,9 @@ List<String> checkProgram(
       if (dayKind != 'REC') {
         final wmin = dayMinutes({'exercises': warm});
         if (wmin < 5 - 1e-9 || wmin > 10 + 1e-9) {
-          out.add('$tag S$n J${dm['j']} : échauffement ${wmin.toStringAsFixed(1)} min');
+          out.add(
+            '$tag S$n J${dm['j']} : échauffement ${wmin.toStringAsFixed(1)} min',
+          );
         }
       }
     }
@@ -386,7 +404,9 @@ List<String> checkProgram(
       if (!eventWeek) {
         for (final r in required.entries) {
           if ((famSessions[r.key] ?? 0) < r.value) {
-            out.add('$tag S$n : ${r.key} travaillé ${famSessions[r.key] ?? 0} fois (< ${r.value})');
+            out.add(
+              '$tag S$n : ${r.key} travaillé ${famSessions[r.key] ?? 0} fois (< ${r.value})',
+            );
           }
         }
       }

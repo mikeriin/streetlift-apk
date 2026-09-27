@@ -70,7 +70,9 @@ Future<bool> openProgramProposal(
   if (ok != true) return false;
   store.applyProgram(proposal);
   messenger.showSnackBar(
-    const SnackBar(content: Text('Programme mis à jour à partir d’aujourd’hui.')),
+    const SnackBar(
+      content: Text('Programme mis à jour à partir d’aujourd’hui.'),
+    ),
   );
   return true;
 }
@@ -360,8 +362,12 @@ class ProgramPreviewScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('Séances par semaine : ${d.sessionsBefore} → ${d.sessionsAfter}'),
-            Text('Durée moyenne estimée : ${d.minutesBefore} → ${d.minutesAfter} min'),
+            Text(
+              'Séances par semaine : ${d.sessionsBefore} → ${d.sessionsAfter}',
+            ),
+            Text(
+              'Durée moyenne estimée : ${d.minutesBefore} → ${d.minutesAfter} min',
+            ),
             if (d.modelBefore != d.modelAfter)
               Text('Périodisation : ${d.modelBefore} → ${d.modelAfter}'),
             if (d.volume.isNotEmpty) ...[

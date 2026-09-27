@@ -75,49 +75,52 @@ void main() {
       return next;
     }
 
-    test('migration du propriétaire : instance implicite, 40 semaines '
-        'identiques au programme actuel, historique et export inchangés', () async {
-      final filled = filledBackup(app);
-      expect(await app.importAll(jsonEncode(filled)), isTrue);
-      final before = app.exportAll();
-      final next = await relaunch();
-      expect(next.programInstance, isNull);
-      expect(next.programGenerated, isFalse);
-      expect(next.programModel, 'expert_streetlifting');
-      final asset = _asset();
-      final weeks = asset['weeks'] as List;
-      expect(next.program.weeks, hasLength(40));
-      for (var w = 0; w < 40; w++) {
-        final aw = weeks[w] as Map;
-        final pw = next.program.weeks[w];
-        expect(pw.n, aw['n']);
-        expect(pw.block, aw['block']);
-        for (var d = 0; d < 7; d++) {
-          final ad = (aw['days'] as List)[d] as Map;
-          final pd = pw.days[d];
-          expect(pd.title, ad['title']);
-          expect(
-            [for (final e in pd.exercises) '${e.id}|${e.name}|${e.sets.value}|${e.intensity}'],
-            [
-              for (final e in ad['exercises'] as List)
-                '${(e as Map)['id']}|${e['name']}|${(e['sets'] as Map)['value']}|${e['intensity']}',
-            ],
-          );
+    test(
+      'migration du propriétaire : instance implicite, 40 semaines '
+      'identiques au programme actuel, historique et export inchangés',
+      () async {
+        final filled = filledBackup(app);
+        expect(await app.importAll(jsonEncode(filled)), isTrue);
+        final before = app.exportAll();
+        final next = await relaunch();
+        expect(next.programInstance, isNull);
+        expect(next.programGenerated, isFalse);
+        expect(next.programModel, 'expert_streetlifting');
+        final asset = _asset();
+        final weeks = asset['weeks'] as List;
+        expect(next.program.weeks, hasLength(40));
+        for (var w = 0; w < 40; w++) {
+          final aw = weeks[w] as Map;
+          final pw = next.program.weeks[w];
+          expect(pw.n, aw['n']);
+          expect(pw.block, aw['block']);
+          for (var d = 0; d < 7; d++) {
+            final ad = (aw['days'] as List)[d] as Map;
+            final pd = pw.days[d];
+            expect(pd.title, ad['title']);
+            expect(
+              [
+                for (final e in pd.exercises)
+                  '${e.id}|${e.name}|${e.sets.value}|${e.intensity}',
+              ],
+              [
+                for (final e in ad['exercises'] as List)
+                  '${(e as Map)['id']}|${e['name']}|${(e['sets'] as Map)['value']}|${e['intensity']}',
+              ],
+            );
+          }
         }
-      }
-      expect(next.program.start, app.program.start);
-      expect(next.exportAll(), before);
-      expect(backupOf(next).containsKey('programInstance'), isFalse);
-      expect(next.koachProgram.available, isTrue);
-    });
+        expect(next.program.start, app.program.start);
+        expect(next.exportAll(), before);
+        expect(backupOf(next).containsKey('programInstance'), isFalse);
+        expect(next.koachProgram.available, isTrue);
+      },
+    );
 
     test('nouvel utilisateur : programme personnalisé généré au choix du '
         'départ, persisté, relu à l\'identique et exporté', () async {
       app.saveProfile(_profile());
-      expect(
-        await app.configureStart(DateTime(2026, 10, 5)),
-        StartSave.saved,
-      );
+      expect(await app.configureStart(DateTime(2026, 10, 5)), StartSave.saved);
       expect(app.programGenerated, isTrue);
       final inst = app.programInstance!;
       expect(inst.weeks.length, inInclusiveRange(4, 6));
@@ -160,7 +163,14 @@ void main() {
       clock = DateTime(2026, 10, 14, 9);
       final p = app.profile!.copy();
       p.setField('places', {
-        'gym': ['pullup_bar', 'dip_bars', 'dumbbells', 'barbell', 'rack', 'bench'],
+        'gym': [
+          'pullup_bar',
+          'dip_bars',
+          'dumbbells',
+          'barbell',
+          'rack',
+          'bench',
+        ],
       }, profileAt(clock));
       app.saveProfile(p);
       expect(app.programProfileChanged, isTrue);
@@ -179,10 +189,7 @@ void main() {
       expect(app.programCanUndo, isTrue);
       // Annulation : version précédente rétablie.
       expect(app.undoProgram(), isTrue);
-      expect(
-        jsonEncode(app.programInstance!.weeks),
-        jsonEncode(first.weeks),
-      );
+      expect(jsonEncode(app.programInstance!.weeks), jsonEncode(first.weeks));
       expect(app.programCanUndo, isFalse);
     });
 
@@ -302,7 +309,13 @@ void main() {
     expect(raw['version'], '1.0.0');
     expect(
       (raw['models'] as Map).keys,
-      containsAll(['linear', 'undulating', 'block', 'health', 'expert_streetlifting']),
+      containsAll([
+        'linear',
+        'undulating',
+        'block',
+        'health',
+        'expert_streetlifting',
+      ]),
     );
   });
 }

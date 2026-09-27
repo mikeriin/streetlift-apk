@@ -85,31 +85,35 @@ void main() {
   for (final size in const [Size(390, 844), Size(320, 720)]) {
     for (final scale in const [1.0, 1.3, 2.0]) {
       for (final dark in const [true, false]) {
-        testWidgets('Mon programme sans débordement : ${size.width.toInt()} px, '
-            'texte ${(scale * 100).round()} %, ${dark ? 'sombre' : 'clair'}', (
-          tester,
-        ) async {
-          phone(tester, size: size);
-          await tester.pumpWidget(
-            page(const ProgramScreen(), scale: scale, dark: dark),
-          );
-          await tester.pumpAndSettle();
-          expect(find.byKey(const ValueKey('program-model')), findsOneWidget);
-          expect(find.byKey(const ValueKey('program-levels')), findsOneWidget);
-          await scrollToAction(
-            tester,
-            find.byKey(const ValueKey('program-split')),
-          );
-          await scrollToAction(
-            tester,
-            find.byKey(const ValueKey('program-focus')),
-          );
-          await scrollToAction(
-            tester,
-            find.byKey(const ValueKey('program-generate')),
-          );
-          expect(tester.takeException(), isNull);
-        });
+        testWidgets(
+          'Mon programme sans débordement : ${size.width.toInt()} px, '
+          'texte ${(scale * 100).round()} %, ${dark ? 'sombre' : 'clair'}',
+          (tester) async {
+            phone(tester, size: size);
+            await tester.pumpWidget(
+              page(const ProgramScreen(), scale: scale, dark: dark),
+            );
+            await tester.pumpAndSettle();
+            expect(find.byKey(const ValueKey('program-model')), findsOneWidget);
+            expect(
+              find.byKey(const ValueKey('program-levels')),
+              findsOneWidget,
+            );
+            await scrollToAction(
+              tester,
+              find.byKey(const ValueKey('program-split')),
+            );
+            await scrollToAction(
+              tester,
+              find.byKey(const ValueKey('program-focus')),
+            );
+            await scrollToAction(
+              tester,
+              find.byKey(const ValueKey('program-generate')),
+            );
+            expect(tester.takeException(), isNull);
+          },
+        );
       }
     }
   }

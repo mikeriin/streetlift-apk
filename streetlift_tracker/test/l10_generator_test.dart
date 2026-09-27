@@ -91,19 +91,41 @@ void main() {
 
     test('pompes, tractions et squat : seuils proposés au registre', () {
       for (final (v, l) in [
-        (0, 0), (9, 0), (10, 1), (24, 1), (25, 2), (44, 2), (45, 3),
-        (69, 3), (70, 4), (120, 4),
+        (0, 0),
+        (9, 0),
+        (10, 1),
+        (24, 1),
+        (25, 2),
+        (44, 2),
+        (45, 3),
+        (69, 3),
+        (70, 4),
+        (120, 4),
       ]) {
         expect(level('pushups', v.toDouble()), l, reason: 'pompes $v');
       }
       for (final (v, l) in [
-        (0, 0), (1, 1), (5, 1), (6, 2), (12, 2), (13, 3), (20, 3), (21, 4),
+        (0, 0),
+        (1, 1),
+        (5, 1),
+        (6, 2),
+        (12, 2),
+        (13, 3),
+        (20, 3),
+        (21, 4),
       ]) {
         expect(level('pullups', v.toDouble()), l, reason: 'tractions $v');
       }
       for (final (v, l) in [
-        (0.5, 0), (0.74, 0), (0.75, 1), (1.24, 1), (1.25, 2), (1.59, 2),
-        (1.6, 3), (2.0, 3), (2.01, 4),
+        (0.5, 0),
+        (0.74, 0),
+        (0.75, 1),
+        (1.24, 1),
+        (1.25, 2),
+        (1.59, 2),
+        (1.6, 3),
+        (2.0, 3),
+        (2.01, 4),
       ]) {
         expect(level('squatRatio', v), l, reason: 'squat $v');
       }
@@ -142,14 +164,14 @@ void main() {
 
   group('KT-052 périodisation', () {
     test('choix automatique selon l\'objectif et le niveau', () {
-      String model(GenInputs i) => chooseModel(
-        data.models,
-        i,
-        movementLevels(data.models, i).global,
-      );
+      String model(GenInputs i) =>
+          chooseModel(data.models, i, movementLevels(data.models, i).global);
       expect(model(_p(goal: 'health')), 'health');
       expect(model(_p(measures: const {'pushups': 5})), 'linear');
-      expect(model(_p(measures: const {'pushups': 12, 'pullups': 2})), 'linear');
+      expect(
+        model(_p(measures: const {'pushups': 12, 'pullups': 2})),
+        'linear',
+      );
       expect(model(_p()), 'undulating');
       expect(
         model(_p(measures: const {'pushups': 50, 'pullups': 15})),
@@ -271,14 +293,21 @@ void main() {
       expect(sessionKinds(2, 'auto', health: false), ['FB', 'FB']);
       expect(sessionKinds(3, 'auto', health: false), ['FB', 'FB', 'FB']);
       expect(sessionKinds(4, 'auto', health: false), ['U', 'L', 'U', 'L']);
-      expect(
-        sessionKinds(5, 'auto', health: false),
-        ['U', 'L', 'PUSH', 'PULL', 'LEGS'],
-      );
-      expect(
-        sessionKinds(6, 'auto', health: false),
-        ['PUSH', 'PULL', 'LEGS', 'PUSH', 'PULL', 'LEGS'],
-      );
+      expect(sessionKinds(5, 'auto', health: false), [
+        'U',
+        'L',
+        'PUSH',
+        'PULL',
+        'LEGS',
+      ]);
+      expect(sessionKinds(6, 'auto', health: false), [
+        'PUSH',
+        'PULL',
+        'LEGS',
+        'PUSH',
+        'PULL',
+        'LEGS',
+      ]);
       expect(sessionKinds(4, 'auto', health: true), List.filled(4, 'FB'));
       expect(sessionKinds(3, 'ppl', health: false), ['PUSH', 'PULL', 'LEGS']);
     });
@@ -331,10 +360,7 @@ void main() {
       final g = data.generate(i);
       final ids = {for (final e in _exercises(g)) e['exId']};
       expect(ids, isNot(contains('pompes')));
-      expect(
-        _exercises(g).where((e) => e['family'] == 'push'),
-        isNotEmpty,
-      );
+      expect(_exercises(g).where((e) => e['family'] == 'push'), isNotEmpty);
       for (final e in _exercises(g)) {
         final ex = data.catalog.byId[e['exId']]!;
         expect(ex.joints['epaule'] ?? 0, lessThanOrEqualTo(1), reason: ex.id);
@@ -356,9 +382,9 @@ void main() {
       );
       final g = data.generate(i);
       expect(
-        _exercises(g).any(
-          (e) => data.catalog.byId[e['exId']]!.type == 'figure_dynamique',
-        ),
+        _exercises(
+          g,
+        ).any((e) => data.catalog.byId[e['exId']]!.type == 'figure_dynamique'),
         isTrue,
       );
     });
@@ -472,8 +498,7 @@ void main() {
       expect(jsonEncode(merged.first), jsonEncode(old.first));
       final w2 = merged[1]['days'] as List;
       final o2 = old[1]['days'] as List;
-      final n2 =
-          ((b.program['weeks'] as List).first as Map)['days'] as List;
+      final n2 = ((b.program['weeks'] as List).first as Map)['days'] as List;
       expect(jsonEncode(w2[0]), jsonEncode(o2[0]));
       expect(jsonEncode(w2[1]), jsonEncode(o2[1]));
       expect(jsonEncode(w2[2]), jsonEncode(n2[2]));
@@ -499,10 +524,7 @@ void main() {
     test('progression lue dans le journal : calibrage, étapes validées sur '
         '2 séances, volume ±2', () {
       final g = data.generate(
-        _p(
-          measures: const {'pushups': 12},
-          places: const {'home_none': []},
-        ),
+        _p(measures: const {'pushups': 12}, places: const {'home_none': []}),
       );
       final weeks = (g.program['weeks'] as List).cast<Map<String, dynamic>>();
       final logs = <String, List<LoggedSet>>{};

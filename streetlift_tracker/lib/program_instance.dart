@@ -190,7 +190,8 @@ class ProgramInstance {
   }
 
   static ProgramInstance _parse(Object raw) {
-    if (raw is! Map) throw const FormatException('Programme : section invalide.');
+    if (raw is! Map)
+      throw const FormatException('Programme : section invalide.');
     final m = raw.cast<String, dynamic>();
     final v = m['v'];
     if (v is! int || v < 1 || v > kProgramInstanceVersion) {
@@ -385,9 +386,7 @@ List<Map<String, dynamic>> mergeWeeks({
     for (var j = 1; j <= 7; j++) {
       final keepOld = j < from.day || hasLog(n, j);
       final src = keepOld ? old.first : w;
-      days.add(
-        ((src['days'] as List)[j - 1] as Map).cast<String, dynamic>(),
-      );
+      days.add(((src['days'] as List)[j - 1] as Map).cast<String, dynamic>());
     }
     out.add({...w, 'days': days});
   }
@@ -399,7 +398,8 @@ List<Map<String, dynamic>> mergeWeeks({
     final old = oldWeeks.where((x) => x['n'] == n).toList();
     if (old.isEmpty) continue;
     final days = [
-      for (final d in out[k]['days'] as List) (d as Map).cast<String, dynamic>(),
+      for (final d in out[k]['days'] as List)
+        (d as Map).cast<String, dynamic>(),
     ];
     var changed = false;
     for (var j = 1; j <= 7; j++) {
@@ -454,7 +454,8 @@ class ProgramDiff {
   final String modelBefore, modelAfter;
   final int sessionsBefore, sessionsAfter; // séances par semaine (1re semaine)
   final int minutesBefore, minutesAfter; // durée moyenne estimée
-  final Map<String, (int, int)> volume; // groupe → (avant, après), 1re semaine complète
+  final Map<String, (int, int)>
+  volume; // groupe → (avant, après), 1re semaine complète
   const ProgramDiff({
     required this.weeks,
     required this.modelBefore,
@@ -499,16 +500,22 @@ ProgramDiff diffWeeks({
     for (var j = 1; j <= 7; j++) {
       if (n == from.week && j < from.day) continue;
       final da =
-          a == null ? null : ((a['days'] as List)[j - 1] as Map).cast<String, dynamic>();
+          a == null
+              ? null
+              : ((a['days'] as List)[j - 1] as Map).cast<String, dynamic>();
       final db =
-          b == null ? null : ((b['days'] as List)[j - 1] as Map).cast<String, dynamic>();
+          b == null
+              ? null
+              : ((b['days'] as List)[j - 1] as Map).cast<String, dynamic>();
       final la = da == null ? 'rien' : _dayLabel(da);
       final lb = db == null ? 'rien' : _dayLabel(db);
       final namesA = {
-        for (final e in (da?['exercises'] as List? ?? const [])) '${(e as Map)['name']}'.split(' — ').first,
+        for (final e in (da?['exercises'] as List? ?? const []))
+          '${(e as Map)['name']}'.split(' — ').first,
       };
       final namesB = {
-        for (final e in (db?['exercises'] as List? ?? const [])) '${(e as Map)['name']}'.split(' — ').first,
+        for (final e in (db?['exercises'] as List? ?? const []))
+          '${(e as Map)['name']}'.split(' — ').first,
       };
       if (la != lb) lines.add('J$j : $la → $lb');
       final added = namesB.difference(namesA).toList()..sort();
@@ -537,7 +544,11 @@ ProgramDiff diffWeeks({
         }
       }
     }
-    return (sessions, sessions == 0 ? 0 : (seconds / sessions / 60).round(), vol);
+    return (
+      sessions,
+      sessions == 0 ? 0 : (seconds / sessions / 60).round(),
+      vol,
+    );
   }
 
   final next = from.day == 1 ? from.week : from.week + 1;
@@ -618,7 +629,9 @@ CycleProgress progressFromLogs({
         if (role == 'calibration') {
           if (exId == 'pompes') measures['pushups'] = best;
           if (exId == 'traction-pronation') measures['pullups'] = best;
-          if (th != null && th['repetitions'] is num && best >= (th['repetitions'] as num)) {
+          if (th != null &&
+              th['repetitions'] is num &&
+              best >= (th['repetitions'] as num)) {
             calibrated.add(exId);
           }
           continue;
@@ -632,7 +645,12 @@ CycleProgress progressFromLogs({
         }
         if (inCycle && role == 'main') {
           final score = done
-              .map((s) => (s.kg ?? 0) > 0 ? s.kg! * (1 + (s.reps + (s.rir ?? 2)) / 30) : (s.reps + (s.rir ?? 2)).toDouble())
+              .map(
+                (s) =>
+                    (s.kg ?? 0) > 0
+                        ? s.kg! * (1 + (s.reps + (s.rir ?? 2)) / 30)
+                        : (s.reps + (s.rir ?? 2)).toDouble(),
+              )
               .fold<double>(0, (a, b) => b > a ? b : a);
           for (final g in (em['groups'] as List? ?? const [])) {
             perf.putIfAbsent('$g', () => []).add((n, score));

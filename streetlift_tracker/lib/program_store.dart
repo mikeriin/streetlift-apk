@@ -84,10 +84,11 @@ extension ProgramStore on AppStore {
 
   bool get _programHasLogs {
     for (final k in logs.keys) {
-      if (RegExp(r'^S\d+-J\d$').hasMatch(k) && _programLogged(
-        int.parse(k.substring(1, k.indexOf('-'))),
-        int.parse(k.substring(k.indexOf('J') + 1)),
-      )) {
+      if (RegExp(r'^S\d+-J\d$').hasMatch(k) &&
+          _programLogged(
+            int.parse(k.substring(1, k.indexOf('-'))),
+            int.parse(k.substring(k.indexOf('J') + 1)),
+          )) {
         return true;
       }
     }
@@ -119,7 +120,8 @@ extension ProgramStore on AppStore {
       } else if (bench.containsKey(bench0)) {
         final list = bands[bench0] as List;
         final band = bench[bench0]!;
-        final at = band < 0 ? 0 : (band >= list.length ? list.length - 1 : band);
+        final at =
+            band < 0 ? 0 : (band >= list.length ? list.length - 1 : band);
         m[key] = (list[at] as num).toDouble();
         src[key] = 'estimated';
       }
@@ -469,9 +471,10 @@ extension ProgramStore on AppStore {
     programInstance =
         prev == null
             ? null
-            : ProgramInstance.fromJson(prev, strict: false)?.copyWith(
-              clearUndo: true,
-            );
+            : ProgramInstance.fromJson(
+              prev,
+              strict: false,
+            )?.copyWith(clearUndo: true);
     _materializeProgram(program.start);
     _programChanged();
     _persist();
@@ -584,7 +587,8 @@ extension ProgramStore on AppStore {
       weeks: weeks,
       koach: {
         'exercises': {
-          ...(inst.koach['exercises'] as Map? ?? const {}).cast<String, dynamic>(),
+          ...(inst.koach['exercises'] as Map? ?? const {})
+              .cast<String, dynamic>(),
           ...(gen.koach['exercises'] as Map<String, dynamic>),
         },
         'weeks': {

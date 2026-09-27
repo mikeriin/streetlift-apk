@@ -229,7 +229,9 @@ String _describe(GeneratedProgram g, {int detailWeeks = 2}) {
     return b.toString();
   }
   b.writeln();
-  b.writeln('| Semaine | Type | Séances | Durée moyenne estimée | Séries difficiles (dos / pectoraux / quadriceps) |');
+  b.writeln(
+    '| Semaine | Type | Séances | Durée moyenne estimée | Séries difficiles (dos / pectoraux / quadriceps) |',
+  );
   b.writeln('| --- | --- | --- | --- | --- |');
   for (final w in weeks) {
     final days = [
@@ -239,7 +241,9 @@ String _describe(GeneratedProgram g, {int detailWeeks = 2}) {
     final minutes =
         days.isEmpty
             ? 0
-            : days.map((d) => dayMinutes(d.cast<String, dynamic>())).reduce((a, c) => a + c) /
+            : days
+                    .map((d) => dayMinutes(d.cast<String, dynamic>()))
+                    .reduce((a, c) => a + c) /
                 days.length;
     final vol = <String, int>{};
     for (final d in days) {
@@ -281,79 +285,97 @@ String _describe(GeneratedProgram g, {int detailWeeks = 2}) {
 void main() {
   final data = L10Data.load();
 
-  test('13 profils types : propriétés respectées et document de relecture', () {
-    final doc = StringBuffer()
-      ..writeln('# Kalis Track 4.0.0 — 13 profils types (générateur L10)')
-      ..writeln()
-      ..writeln(
-        'Document généré par `test/l10_profiles_test.dart` (générateur $kGeneratorVersion, graine 2026, départ lundi 5 octobre 2026). '
-        'Contenu sportif non relu par un professionnel diplômé : voir le registre de validation (`docs/CONTRAT_L10.md` §8). '
-        'Les durées sont des estimations (training_estimate.dart), pas des mesures.',
-      );
-    final failures = <String>[];
-    var k = 0;
-    for (final prof in _profiles()) {
-      k++;
-      doc
-        ..writeln()
-        ..writeln('## $k. ${prof.title}')
-        ..writeln()
-        ..writeln(prof.who)
-        ..writeln();
-      final g = data.generate(prof.inputs, seed: 2026);
-      failures.addAll(checkProgram(data, prof.inputs, g, tag: prof.title));
-      if (prof.title.startsWith('Changement de lieu')) {
-        // Régénération le mercredi de la 3e semaine : la salle remplace le
-        // parc ; semaines 1-2 et lundi de S3 conservés.
-        final moved = GenInputs.fromJson({
-          ...prof.inputs.toJson(),
-          'places': {'gym': _gym},
-        });
-        final next = data.generate(moved, seed: 2026, firstWeek: 3);
-        final old = (g.program['weeks'] as List).cast<Map<String, dynamic>>();
-        final merged = mergeWeeks(
-          oldWeeks: old,
-          newWeeks: (next.program['weeks'] as List).cast<Map<String, dynamic>>(),
-          from: (week: 3, day: 3),
-          hasLog: (w, d) => w < 3 || (w == 3 && d < 3),
-        );
-        expect(merged.take(2).toList().toString(), old.take(2).toList().toString());
-        final diff = diffWeeks(
-          before: old,
-          after: merged,
-          from: (week: 3, day: 3),
-          modelBefore: g.summary['model'] as String,
-          modelAfter: next.summary['model'] as String,
-        );
-        doc.writeln('Avant le changement :');
-        doc.writeln();
-        doc.writeln(_describe(g, detailWeeks: 1));
-        doc.writeln('**Ce qui change à partir du mercredi de la semaine 3 :**');
-        doc.writeln();
-        for (final w in diff.weeks) {
-          for (final l in w.lines) {
-            doc.writeln('- S${w.week} $l');
+  test(
+    '13 profils types : propriétés respectées et document de relecture',
+    () {
+      final doc =
+          StringBuffer()
+            ..writeln('# Kalis Track 4.0.0 — 13 profils types (générateur L10)')
+            ..writeln()
+            ..writeln(
+              'Document généré par `test/l10_profiles_test.dart` (générateur $kGeneratorVersion, graine 2026, départ lundi 5 octobre 2026). '
+              'Contenu sportif non relu par un professionnel diplômé : voir le registre de validation (`docs/CONTRAT_L10.md` §8). '
+              'Les durées sont des estimations (training_estimate.dart), pas des mesures.',
+            );
+      final failures = <String>[];
+      var k = 0;
+      for (final prof in _profiles()) {
+        k++;
+        doc
+          ..writeln()
+          ..writeln('## $k. ${prof.title}')
+          ..writeln()
+          ..writeln(prof.who)
+          ..writeln();
+        final g = data.generate(prof.inputs, seed: 2026);
+        failures.addAll(checkProgram(data, prof.inputs, g, tag: prof.title));
+        if (prof.title.startsWith('Changement de lieu')) {
+          // Régénération le mercredi de la 3e semaine : la salle remplace le
+          // parc ; semaines 1-2 et lundi de S3 conservés.
+          final moved = GenInputs.fromJson({
+            ...prof.inputs.toJson(),
+            'places': {'gym': _gym},
+          });
+          final next = data.generate(moved, seed: 2026, firstWeek: 3);
+          final old = (g.program['weeks'] as List).cast<Map<String, dynamic>>();
+          final merged = mergeWeeks(
+            oldWeeks: old,
+            newWeeks:
+                (next.program['weeks'] as List).cast<Map<String, dynamic>>(),
+            from: (week: 3, day: 3),
+            hasLog: (w, d) => w < 3 || (w == 3 && d < 3),
+          );
+          expect(
+            merged.take(2).toList().toString(),
+            old.take(2).toList().toString(),
+          );
+          final diff = diffWeeks(
+            before: old,
+            after: merged,
+            from: (week: 3, day: 3),
+            modelBefore: g.summary['model'] as String,
+            modelAfter: next.summary['model'] as String,
+          );
+          doc.writeln('Avant le changement :');
+          doc.writeln();
+          doc.writeln(_describe(g, detailWeeks: 1));
+          doc.writeln(
+            '**Ce qui change à partir du mercredi de la semaine 3 :**',
+          );
+          doc.writeln();
+          for (final w in diff.weeks) {
+            for (final l in w.lines) {
+              doc.writeln('- S${w.week} $l');
+            }
           }
+          doc.writeln();
+          doc.writeln('Après régénération (salle) :');
+          doc.writeln();
+          doc.writeln(_describe(next, detailWeeks: 1));
+          failures.addAll(
+            checkProgram(
+              data,
+              moved,
+              data.generate(moved, seed: 2026),
+              tag: 'salle',
+            ),
+          );
+          continue;
         }
-        doc.writeln();
-        doc.writeln('Après régénération (salle) :');
-        doc.writeln();
-        doc.writeln(_describe(next, detailWeeks: 1));
-        failures.addAll(checkProgram(data, moved, data.generate(moved, seed: 2026), tag: 'salle'));
-        continue;
+        doc.writeln(_describe(g));
       }
-      doc.writeln(_describe(g));
-    }
-    expect(failures, isEmpty, reason: failures.take(40).join('\n'));
-    final file = File('test/goldens/l10_profils_types.md');
-    final text = doc.toString();
-    if (!file.existsSync() ||
-        Platform.environment['KALIS_UPDATE_GOLDEN'] == '1') {
-      file
-        ..createSync(recursive: true)
-        ..writeAsStringSync(text);
-      return;
-    }
-    expect(file.readAsStringSync(), text);
-  }, timeout: const Timeout(Duration(minutes: 5)));
+      expect(failures, isEmpty, reason: failures.take(40).join('\n'));
+      final file = File('test/goldens/l10_profils_types.md');
+      final text = doc.toString();
+      if (!file.existsSync() ||
+          Platform.environment['KALIS_UPDATE_GOLDEN'] == '1') {
+        file
+          ..createSync(recursive: true)
+          ..writeAsStringSync(text);
+        return;
+      }
+      expect(file.readAsStringSync(), text);
+    },
+    timeout: const Timeout(Duration(minutes: 5)),
+  );
 }

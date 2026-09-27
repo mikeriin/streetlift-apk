@@ -1,3 +1,12 @@
 Analyzing streetlift_tracker...                                 
-No issues found! (ran in 23.3s)
-exit=0
+
+   info • Statements in an if should be enclosed in a block • lib/program_generator.dart:682:5 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block • lib/program_generator.dart:693:5 • curly_braces_in_flow_control_structures
+warning • A value for optional parameter 'heavy' isn't ever given • lib/program_generator.dart:1024:10 • unused_element_parameter
+warning • A value for optional parameter 'load' isn't ever given • lib/program_generator.dart:1026:10 • unused_element_parameter
+warning • A value for optional parameter 'koach' isn't ever given • lib/program_generator.dart:1027:10 • unused_element_parameter
+   info • Statements in an if should be enclosed in a block • lib/program_generator.dart:2125:7 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block • lib/program_generator.dart:2593:9 • curly_braces_in_flow_control_structures
+   info • Statements in an if should be enclosed in a block • lib/program_instance.dart:194:7 • curly_braces_in_flow_control_structures
+
+8 issues found. (ran in 23.3s)

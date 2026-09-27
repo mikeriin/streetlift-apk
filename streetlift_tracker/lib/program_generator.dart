@@ -307,17 +307,18 @@ class GenCatalog {
         },
       };
 
-  static String _norm(String s) => s
-      .toLowerCase()
-      .replaceAll(RegExp('[àâä]'), 'a')
-      .replaceAll(RegExp('[éèêë]'), 'e')
-      .replaceAll(RegExp('[îï]'), 'i')
-      .replaceAll(RegExp('[ôö]'), 'o')
-      .replaceAll(RegExp('[ùûü]'), 'u')
-      .replaceAll('ç', 'c')
-      .replaceAll('œ', 'oe')
-      .replaceAll(RegExp(r'[^a-z0-9]+'), ' ')
-      .trim();
+  static String _norm(String s) =>
+      s
+          .toLowerCase()
+          .replaceAll(RegExp('[àâä]'), 'a')
+          .replaceAll(RegExp('[éèêë]'), 'e')
+          .replaceAll(RegExp('[îï]'), 'i')
+          .replaceAll(RegExp('[ôö]'), 'o')
+          .replaceAll(RegExp('[ùûü]'), 'u')
+          .replaceAll('ç', 'c')
+          .replaceAll('œ', 'oe')
+          .replaceAll(RegExp(r'[^a-z0-9]+'), ' ')
+          .trim();
 
   /// [index] : `assets/content/index.json.gz` décodé ; [details] :
   /// `details.json.gz` ; [progressions] : `progressions.json.gz`.
@@ -351,8 +352,7 @@ class GenCatalog {
           type: d['type_mouvement'] as String? ?? '',
           loadMode: d['mode_charge'] as String? ?? 'poids_de_corps',
           measure: d['mesure'] as String? ?? 'repetitions',
-          demo:
-              ((d['pose'] as Map?)?['statut'] as String?) ?? 'indisponible',
+          demo: ((d['pose'] as Map?)?['statut'] as String?) ?? 'indisponible',
           role: d['role'] as String? ?? 'exercice',
           difficulty: (d['difficulte'] as num?)?.toInt() ?? 1,
           materiel: _strings(d['materiel']),
@@ -578,7 +578,8 @@ class GenInputs {
       for (final e in map<List<String>>('places', _strings).entries)
         e.key: e.value,
     };
-    if (places.isEmpty || places.keys.any((p) => !kPlaceToPack.containsKey(p))) {
+    if (places.isEmpty ||
+        places.keys.any((p) => !kPlaceToPack.containsKey(p))) {
       throw const FormatException('Lieux invalides.');
     }
     return GenInputs(
@@ -615,10 +616,7 @@ class GenInputs {
   /// (KT-057) : objectifs, lieux, matériel, disponibilités, gênes, prudence.
   String get profileKey => jsonEncode({
     'g': [goalPrimary, goalSecondary, goalWeight],
-    'e': [
-      if (eventDate != null) civilIsoDate(eventDate!),
-      ...eventItems,
-    ],
+    'e': [if (eventDate != null) civilIsoDate(eventDate!), ...eventItems],
     'd': weekdays,
     'm': sessionMinutes,
     'dp': {for (final e in dayPlace.entries) '${e.key}': e.value},
@@ -636,7 +634,8 @@ class GenInputs {
 
 class MovementLevels {
   final Map<String, int> levels; // mouvement → 0-4
-  final Map<String, String> sources; // measured | estimated | calibrated | default
+  final Map<String, String>
+  sources; // measured | estimated | calibrated | default
   final int global;
   const MovementLevels(this.levels, this.sources, this.global);
 
@@ -679,7 +678,8 @@ MovementLevels movementLevels(GenModels models, GenInputs inputs) {
     }
   }
 
-  if (m['pushups'] != null) put('push', 'pushups', _band(m['pushups']!, cuts('pushups')));
+  if (m['pushups'] != null)
+    put('push', 'pushups', _band(m['pushups']!, cuts('pushups')));
   final dip = m['dipLoadPct'];
   if (dip != null) {
     final t = l['dipLoadPct'] as Map;
@@ -689,7 +689,8 @@ MovementLevels movementLevels(GenModels models, GenInputs inputs) {
       put('push', 'dipLoadPct', 3);
     }
   }
-  if (m['pullups'] != null) put('pull', 'pullups', _band(m['pullups']!, cuts('pullups')));
+  if (m['pullups'] != null)
+    put('pull', 'pullups', _band(m['pullups']!, cuts('pullups')));
   final pull = m['pullLoadPct'];
   if (pull != null) {
     final t = l['pullLoadPct'] as Map;
@@ -710,7 +711,11 @@ MovementLevels movementLevels(GenModels models, GenInputs inputs) {
     put('hinge', 'hingeReps', _band(m['hingeReps']!, cuts('hingeReps')));
   }
   if (m['plankSeconds'] != null) {
-    put('core', 'plankSeconds', _band(m['plankSeconds']!, cuts('plankSeconds')));
+    put(
+      'core',
+      'plankSeconds',
+      _band(m['plankSeconds']!, cuts('plankSeconds')),
+    );
   }
   final known = levels.values.toList();
   final global = lowerMedian(known);
@@ -861,9 +866,11 @@ const _pushHAcc = _Slot('push_h_acc', ['poussee_horizontale']);
 const _pushVAcc = _Slot('push_v_acc', ['poussee_verticale']);
 const _pullHAcc = _Slot('pull_h_acc', ['tirage_horizontal']);
 const _pullVAcc = _Slot('pull_v_acc', ['tirage_vertical']);
-const _coreExt = _Slot('core_ext', [
-  'gainage_anti_extension',
-], chains: ['gainage_ventral', 'gainage_creux']);
+const _coreExt = _Slot(
+  'core_ext',
+  ['gainage_anti_extension'],
+  chains: ['gainage_ventral', 'gainage_creux'],
+);
 const _coreRot = _Slot('core_rot', ['gainage_anti_rotation']);
 const _coreLat = _Slot('core_lat', ['gainage_anti_flexion_laterale']);
 const _coreFlex = _Slot('core_flex', ['flexion_tronc']);
@@ -901,7 +908,15 @@ List<_Slot> _slotsFor(String kind, int index, {required bool health}) {
     'FB' => switch (index % 3) {
       0 => [_squat, _pushH, _pullV, _hingeAcc, _coreExt, _pullHAcc, _triceps],
       1 => [_hinge, _pushV, _pullH, _lunge, _coreRot, _pullVAcc, _biceps],
-      _ => [_squat, _pushV, _pullV, _hingeAcc, _coreLat, _pushHAcc, _prevention],
+      _ => [
+        _squat,
+        _pushV,
+        _pullV,
+        _hingeAcc,
+        _coreLat,
+        _pushHAcc,
+        _prevention,
+      ],
     },
     'U' => [
       _pushH,
@@ -978,7 +993,8 @@ class GenBase {
 
 class _Item {
   final GenExercise ex;
-  final String role; // warmup | mobility | ramp | calibration | main | accessory | specific | circuit | cooldown | test
+  final String
+  role; // warmup | mobility | ramp | calibration | main | accessory | specific | circuit | cooldown | test
   final _Slot? slot;
   final int priority;
   int sets;
@@ -1108,8 +1124,11 @@ class _Ctx {
     return true;
   }
 
-  Set<String> equipmentAt(String place) => _equipment[place] ??=
-      packEquipment(place, inputs.places[place] ?? const []);
+  Set<String> equipmentAt(String place) =>
+      _equipment[place] ??= packEquipment(
+        place,
+        inputs.places[place] ?? const [],
+      );
 }
 
 // ------------------------------------------------------------- génération
@@ -1135,23 +1154,19 @@ GeneratedProgram generateProgram({
           ? explain['technical'] as String
           : explain['simple'] as String;
   if (model == 'expert_streetlifting') {
-    return GeneratedProgram(
-      base.program,
-      base.koach,
-      {
-        'generator': kGeneratorVersion,
-        'models': models.version,
-        'model': model,
-        'modelLabel': models.modelLabel(model),
-        'explanation': explanation,
-        'levels': levels.toJson(),
-        'split': 'streetlifting',
-        'splitLabel': 'Modèle streetlifting (6 séances)',
-        'weeks': (base.program['weeks'] as List).length,
-        'firstWeek': 1,
-        'seed': seed,
-      },
-    );
+    return GeneratedProgram(base.program, base.koach, {
+      'generator': kGeneratorVersion,
+      'models': models.version,
+      'model': model,
+      'modelLabel': models.modelLabel(model),
+      'explanation': explanation,
+      'levels': levels.toJson(),
+      'split': 'streetlifting',
+      'splitLabel': 'Modèle streetlifting (6 séances)',
+      'weeks': (base.program['weeks'] as List).length,
+      'firstWeek': 1,
+      'seed': seed,
+    });
   }
   final disliked = <String>{};
   for (final n in inputs.disliked) {
@@ -1221,11 +1236,8 @@ class _Generator {
   );
 
   /// Date civile de la première journée produite.
-  DateTime get origin => DateTime(
-    i.start.year,
-    i.start.month,
-    i.start.day + (firstWeek - 1) * 7,
-  );
+  DateTime get origin =>
+      DateTime(i.start.year, i.start.month, i.start.day + (firstWeek - 1) * 7);
 
   int jOf(int weekday) => (weekday - i.start.weekday) % 7 + 1;
 
@@ -1250,8 +1262,7 @@ class _Generator {
         // dernière produite.
         final total = math.min(40, days ~/ 7 + 1);
         final t = m.section('taper');
-        final taper =
-            total >= (t['longFromWeeks'] as num).toInt() ? 2 : 1;
+        final taper = total >= (t['longFromWeeks'] as num).toInt() ? 2 : 1;
         final build = total - taper;
         var n = firstWeek, cyc = cycle;
         while (n < firstWeek + build) {
@@ -1269,7 +1280,8 @@ class _Generator {
                 cyc,
                 w,
                 _phaseName(w),
-                calibration: i.calibration && cyc == cycle && cycle == 0 && w < 2,
+                calibration:
+                    i.calibration && cyc == cycle && cycle == 0 && w < 2,
                 simulation: w == loads - 1 && loads >= 3,
               ),
             );
@@ -1388,7 +1400,9 @@ class _Generator {
       if (s.group != null && !e.groups.contains(s.group)) continue;
       if (exclude.contains(e.id)) continue;
       if (!c.allowed(e, equipment, figure: s.figure)) continue;
-      if (e.measure == 'temps' && s.main && !s.types.first.startsWith('gainage')) {
+      if (e.measure == 'temps' &&
+          s.main &&
+          !s.types.first.startsWith('gainage')) {
         continue;
       }
       final maxD = maxOverride ?? c.maxDifficulty(e, main: s.main);
@@ -1432,13 +1446,19 @@ class _Generator {
       if (place != null && e.lieux.contains(place)) score += 3;
       if (c.liked.contains(e.id)) score += 6;
       if (s.main && e.unilateral) score -= 2;
-      if (s.main && !c.health && (i.goalPrimary == 'strength' || i.goalPrimary == 'event') && e.loaded) {
+      if (s.main &&
+          !c.health &&
+          (i.goalPrimary == 'strength' || i.goalPrimary == 'event') &&
+          e.loaded) {
         score += 4;
       }
       if (c.health && e.loaded && e.loadMode == 'barre') score -= 3;
       // Départage : principaux stables d'un cycle à l'autre, accessoires
       // renouvelés à chaque cycle (KT-054).
-      final key = s.main ? '${c.seed}:${s.key}:${e.id}' : '${c.seed}:$cyc:${s.key}:${e.id}';
+      final key =
+          s.main
+              ? '${c.seed}:${s.key}:${e.id}'
+              : '${c.seed}:$cyc:${s.key}:${e.id}';
       score += (genHash(key) % 1000) / 1000.0;
       if (score > bestScore) {
         bestScore = score;
@@ -1642,7 +1662,8 @@ class _Generator {
             'j': j,
             'title': 'REPOS',
             'cycle': w.kind == 'deload' ? 'DELOAD — décharge' : w.phase,
-            'conduite': 'Repos : récupération. Marche ou mobilité légère si tu en as envie.',
+            'conduite':
+                'Repos : récupération. Marche ou mobilité légère si tu en as envie.',
             'exercises': <Map<String, dynamic>>[],
             'why': 'La progression se construit aussi pendant la récupération.',
           });
@@ -1695,27 +1716,34 @@ class _Generator {
       weeks.add({
         'n': w.n,
         'dates': '',
-        'block': 'Cycle ${w.cycle + 1} — ${w.kind == 'deload' ? 'Décharge' : w.kind == 'taper' ? 'Affûtage' : w.phase}',
+        'block':
+            'Cycle ${w.cycle + 1} — ${w.kind == 'deload'
+                ? 'Décharge'
+                : w.kind == 'taper'
+                ? 'Affûtage'
+                : w.phase}',
         'blockKey': 'C${w.cycle + 1}',
         'color': switch (w.kind) {
           'deload' => '808080',
           'taper' => '4F6D7A',
-          _ => w.phase == 'Intensification'
-              ? 'A61717'
-              : w.phase == 'Réalisation'
-              ? '8E1B1B'
-              : '6B0C0C',
+          _ =>
+            w.phase == 'Intensification'
+                ? 'A61717'
+                : w.phase == 'Réalisation'
+                ? '8E1B1B'
+                : '6B0C0C',
         },
         'kind': w.kind,
         'phase': w.phase,
         'days': days,
       });
     }
-    final meta = Map<String, dynamic>.of(base.program['meta'] as Map<String, dynamic>)
-      ..['generator'] = kGeneratorVersion
-      ..['models'] = m.version
-      ..['model'] = c.model
-      ..['weeks'] = weeks.length;
+    final meta =
+        Map<String, dynamic>.of(base.program['meta'] as Map<String, dynamic>)
+          ..['generator'] = kGeneratorVersion
+          ..['models'] = m.version
+          ..['model'] = c.model
+          ..['weeks'] = weeks.length;
     final program = {
       'meta': meta,
       'pilotage': base.program['pilotage'],
@@ -1989,7 +2017,14 @@ class _Generator {
     final sessions = kinds.where((k) => k != 'REC').length;
     final out = <String, int>{};
     if (c.health) {
-      for (final f in const ['squat', 'push', 'pull', 'hinge', 'lunge', 'core']) {
+      for (final f in const [
+        'squat',
+        'push',
+        'pull',
+        'hinge',
+        'lunge',
+        'core',
+      ]) {
         out[f] = 1;
       }
       return out;
@@ -2069,7 +2104,8 @@ class _Generator {
   bool _kindServes(String kind, String family) => switch (kind) {
     'FB' => true,
     'U' => family == 'push' || family == 'pull',
-    'L' || 'LEGS' => family == 'squat' || family == 'hinge' || family == 'lunge',
+    'L' ||
+    'LEGS' => family == 'squat' || family == 'hinge' || family == 'lunge',
     'PUSH' => family == 'push',
     'PULL' => family == 'pull',
     _ => false,
@@ -2081,10 +2117,12 @@ class _Generator {
     if (it.load != null && it.load!['pct'] != null) {
       parts.add('~${((it.load!['pct'] as num) * 100).round()} %');
     }
-    if (it.role == 'main' && (c.model == 'linear' || (c.health && w.cycle == 0))) {
+    if (it.role == 'main' &&
+        (c.model == 'linear' || (c.health && w.cycle == 0))) {
       parts.add('+1 rép. par séance réussie');
     }
-    if (c.model == 'undulating' && it.role == 'main') parts.add('séance $style');
+    if (c.model == 'undulating' && it.role == 'main')
+      parts.add('séance $style');
     if (w.kind == 'deload') parts.add('décharge');
     return parts.join(' · ');
   }
@@ -2098,11 +2136,7 @@ class _Generator {
     // Epley : %1RM ≈ 1 / (1 + (répétitions + RIR) / 30), arrondi au
     // centième (le mode prudent plafonne à 80 % à l'affichage).
     final pct = 1 / (1 + (reps[1] + rir) / 30);
-    return {
-      'type': r.$1,
-      'ref': r.$2,
-      'pct': (pct * 100).round() / 100,
-    };
+    return {'type': r.$1, 'ref': r.$2, 'pct': (pct * 100).round() / 100};
   }
 
   // ------------------------------------------------------ volume
@@ -2259,7 +2293,9 @@ class _Generator {
       if (add > 0) {
         for (final it in work) {
           if (it.role == 'main' && it.sets < m.setsMain[1]) {
-            if (it.ex.groups.every((g) => (_weekVolume[g] ?? 0) + add <= ceiling)) {
+            if (it.ex.groups.every(
+              (g) => (_weekVolume[g] ?? 0) + add <= ceiling,
+            )) {
               it.sets += add;
               for (final g in it.ex.groups) {
                 _weekVolume[g] = (_weekVolume[g] ?? 0) + add;
@@ -2287,7 +2323,10 @@ class _Generator {
       final seen = _calibrated[w.n] ??= <String>{};
       for (final it in work.where((x) => x.role == 'main')) {
         final mv = it.ex.refMovement;
-        if (seen.contains(mv) || (w.calibration && w.loadIndex == 1 && _calibratedAny.contains(mv))) {
+        if (seen.contains(mv) ||
+            (w.calibration &&
+                w.loadIndex == 1 &&
+                _calibratedAny.contains(mv))) {
           continue;
         }
         seen.add(mv);
@@ -2297,17 +2336,20 @@ class _Generator {
             it.ex,
             'calibration',
             sets: 1,
-            text: it.ex.measure == 'temps'
-                ? '1×20-90 s'
-                : it.ex.loaded
-                ? '1×5-8'
-                : '1×5-20',
-            intensity: 'Calibrage : une série propre, arrête à 2-3 répétitions en réserve (RIR 2-3). Jamais d\'échec, pas de maximum.',
+            text:
+                it.ex.measure == 'temps'
+                    ? '1×20-90 s'
+                    : it.ex.loaded
+                    ? '1×5-8'
+                    : '1×5-20',
+            intensity:
+                'Calibrage : une série propre, arrête à 2-3 répétitions en réserve (RIR 2-3). Jamais d\'échec, pas de maximum.',
             restSec: 120,
             nameSuffix: w.miniTest ? 'mini-test' : 'calibrage',
-            why: w.miniTest
-                ? 'Mini-test de fin de cycle : il règle le cycle suivant (jamais à l\'échec).'
-                : 'Mesure ton niveau actuel pour régler la suite (jamais à l\'échec).',
+            why:
+                w.miniTest
+                    ? 'Mini-test de fin de cycle : il règle le cycle suivant (jamais à l\'échec).'
+                    : 'Mesure ton niveau actuel pour régler la suite (jamais à l\'échec).',
             rir: 3,
           ),
         );
@@ -2324,10 +2366,14 @@ class _Generator {
             text: _eventMax.contains(it.slot!.eventItem) ? '1×8-20' : '1×1-3',
             intensity: 'RIR ${i.caution ? 3 : 1} · sans échec',
             restSec: 180,
-            nameSuffix: w.fullSimulation ? 'simulation complète de l\'épreuve' : 'simulation partielle',
-            why: w.fullSimulation
-                ? 'Simulation complète : répéter l\'ordre et le rythme de l\'épreuve, sans aller à l\'échec.'
-                : 'Simulation partielle : se familiariser avec l\'épreuve, espacée et sans échec.',
+            nameSuffix:
+                w.fullSimulation
+                    ? 'simulation complète de l\'épreuve'
+                    : 'simulation partielle',
+            why:
+                w.fullSimulation
+                    ? 'Simulation complète : répéter l\'ordre et le rythme de l\'épreuve, sans aller à l\'échec.'
+                    : 'Simulation partielle : se familiariser avec l\'épreuve, espacée et sans échec.',
             rir: i.caution ? 3 : 1,
           ),
         );
@@ -2493,8 +2539,9 @@ class _Generator {
   /// sur un exercice existant, sinon allonge un bloc chronométré.
   bool _grow(_Session s, Map<String, int> targets, int ceiling) {
     final budget = i.sessionMinutes * 60.0;
-    final work = s.items.where((x) => x.role == 'accessory' || x.role == 'main').toList()
-      ..sort((a, b) => b.priority.compareTo(a.priority));
+    final work =
+        s.items.where((x) => x.role == 'accessory' || x.role == 'main').toList()
+          ..sort((a, b) => b.priority.compareTo(a.priority));
     for (final it in work) {
       final r = it.role == 'main' ? m.setsMain : m.setsAccessory;
       if (it.sets >= r[1]) continue;
@@ -2514,11 +2561,12 @@ class _Generator {
       return true;
     }
     for (final it in s.items) {
-      final max = it.role == 'circuit'
-          ? (m.section('health')['circuitMinutes'] as List)[1] as int
-          : it.role == 'specific' && it.minutes > 0
-          ? 12
-          : 0;
+      final max =
+          it.role == 'circuit'
+              ? (m.section('health')['circuitMinutes'] as List)[1] as int
+              : it.role == 'specific' && it.minutes > 0
+              ? 12
+              : 0;
       if (max > 0 && it.minutes < max) {
         it.minutes++;
         _retime(it);
@@ -2541,7 +2589,8 @@ class _Generator {
         exclude: used,
       );
       if (e == null) continue;
-      if (!e.groups.every((g) => (_weekVolume[g] ?? 0) + 2 <= ceiling)) continue;
+      if (!e.groups.every((g) => (_weekVolume[g] ?? 0) + 2 <= ceiling))
+        continue;
       final it = _Item(
         e,
         'accessory',
@@ -2557,7 +2606,12 @@ class _Generator {
       it.intensity = 'RIR ${it.rir}';
       it.why = _whyExercise(it);
       // Inséré avant les blocs de fin.
-      final at = s.items.indexWhere((x) => x.role == 'circuit' || x.role == 'cooldown' || (x.role == 'specific' && x.minutes > 0));
+      final at = s.items.indexWhere(
+        (x) =>
+            x.role == 'circuit' ||
+            x.role == 'cooldown' ||
+            (x.role == 'specific' && x.minutes > 0),
+      );
       if (at < 0) {
         s.items.add(it);
       } else {
@@ -2623,26 +2677,28 @@ class _Generator {
           text: '${(wu['activationMinutes'] as num).toInt()} min',
           intensity: 'Facile, respiration aisée',
           nameSuffix: 'activation générale',
-          why: 'Échauffement : élever la température et le rythme cardiaque en douceur.',
+          why:
+              'Échauffement : élever la température et le rythme cardiaque en douceur.',
         ),
       );
     }
     // Mobilité des articulations sollicitées.
     final lower = s.kind == 'L' || s.kind == 'LEGS';
-    final mobIds = lower
-        ? const [
-            'mobilisation-cheville-genou-au-mur',
-            'fente-basse-etirement-hanche',
-            'squat-profond-tenu',
-            'etirements-flechisseurs-de-hanche',
-          ]
-        : const [
-            'cercles-de-bras',
-            'mobilite-epaules-poignets',
-            'wall-slides-glisses-au-mur',
-            'mobilite-thoracique-cat-cow-rotations',
-            'dislocations-epaules-baton',
-          ];
+    final mobIds =
+        lower
+            ? const [
+              'mobilisation-cheville-genou-au-mur',
+              'fente-basse-etirement-hanche',
+              'squat-profond-tenu',
+              'etirements-flechisseurs-de-hanche',
+            ]
+            : const [
+              'cercles-de-bras',
+              'mobilite-epaules-poignets',
+              'wall-slides-glisses-au-mur',
+              'mobilite-thoracique-cat-cow-rotations',
+              'dislocations-epaules-baton',
+            ];
     GenExercise? mob;
     for (final id in mobIds) {
       final e = c.catalog.byId[id];
@@ -2655,34 +2711,38 @@ class _Generator {
       }
     }
     final mobRange = wu['mobilityMinutes'] as List;
-    final mobItem = mob == null
-        ? null
-        : _Item(
-            mob,
-            'mobility',
-            minutes: (mobRange[0] as num).toInt(),
-            text: '${(mobRange[0] as num).toInt()} min',
-            intensity: 'Amplitude progressive, sans douleur',
-            nameSuffix: 'mobilité articulaire',
-            why: lower
-                ? 'Prépare chevilles, genoux et hanches aux mouvements du jour.'
-                : 'Prépare épaules, coudes et poignets aux mouvements du jour.',
-          );
+    final mobItem =
+        mob == null
+            ? null
+            : _Item(
+              mob,
+              'mobility',
+              minutes: (mobRange[0] as num).toInt(),
+              text: '${(mobRange[0] as num).toInt()} min',
+              intensity: 'Amplitude progressive, sans douleur',
+              nameSuffix: 'mobilité articulaire',
+              why:
+                  lower
+                      ? 'Prépare chevilles, genoux et hanches aux mouvements du jour.'
+                      : 'Prépare épaules, coudes et poignets aux mouvements du jour.',
+            );
     if (mobItem != null) out.add(mobItem);
     // Montée en charge sur le premier mouvement principal.
     final first = _firstOrNull(work.where((x) => x.role == 'main'));
     if (first != null) {
       final reps = _repsOf[first] ?? const [8, 12];
-      final level = reps[1] <= 6
-          ? 'heavy'
-          : reps[1] <= 12
-          ? 'moderate'
-          : 'light';
+      final level =
+          reps[1] <= 6
+              ? 'heavy'
+              : reps[1] <= 12
+              ? 'moderate'
+              : 'light';
       final steps = (wu['ramp'] as Map)[level] as List;
       final String text;
       final String intensity;
       if (first.ex.loaded || first.load != null) {
-        text = '${steps.length}×${(steps.last as List)[1]}-${(steps.first as List)[1]}';
+        text =
+            '${steps.length}×${(steps.last as List)[1]}-${(steps.first as List)[1]}';
         intensity =
             'Montée : ${steps.map((st) => '${(st as List)[0]} % × ${st[1]}').join(', ')} de ta charge de travail';
       } else {
@@ -2697,7 +2757,8 @@ class _Generator {
           intensity: intensity,
           restSec: 45,
           nameSuffix: 'montée en charge',
-          why: 'Monte progressivement vers ta charge de travail : le geste se cale, les articulations suivent.',
+          why:
+              'Monte progressivement vers ta charge de travail : le geste se cale, les articulations suivent.',
         ),
       );
     }
@@ -2768,10 +2829,12 @@ class _Generator {
         'circuit',
         minutes: min,
         text: '$min min',
-        intensity: 'Rythme modéré : tu peux parler. 40 s d\'effort, 20 s de pause',
+        intensity:
+            'Rythme modéré : tu peux parler. 40 s d\'effort, 20 s de pause',
         nameSuffix:
             'circuit faible impact avec ${picks.skip(1).map((e) => e.nom.toLowerCase()).join(' et ')}',
-        why: 'Circuit à faible impact : entretenir le souffle sans choc pour les articulations.',
+        why:
+            'Circuit à faible impact : entretenir le souffle sans choc pour les articulations.',
         restSec: 0,
       );
       out.add(it);
@@ -2798,7 +2861,8 @@ class _Generator {
             text: '$min min',
             intensity: 'Respiration lente, sans forcer',
             nameSuffix: 'mobilité de retour au calme',
-            why: 'Mobilité de fin de séance : garder de l\'amplitude et revenir au calme.',
+            why:
+                'Mobilité de fin de séance : garder de l\'amplitude et revenir au calme.',
           ),
         );
         break;
@@ -2842,16 +2906,20 @@ class _Generator {
     return _Item(
       e,
       'specific',
-      minutes: variant == 2 ? 0 : (variant == 1 ? math.min(minutes, 8) : minutes),
+      minutes:
+          variant == 2 ? 0 : (variant == 1 ? math.min(minutes, 8) : minutes),
       text: text,
-      intensity: 'RIR ${i.caution ? 3 : 2} en fin de bloc · densité, jamais d\'échec',
+      intensity:
+          'RIR ${i.caution ? 3 : 2} en fin de bloc · densité, jamais d\'échec',
       restSec: variant == 2 ? 90 : 0,
-      nameSuffix: variant == 0
-          ? 'bloc de densité (EMOM)'
-          : variant == 1
-          ? 'bloc de densité (AMRAP court)'
-          : 'bloc de densité (échelles)',
-      why: 'Travail spécifique d\'endurance : plus de répétitions de qualité dans le même temps.',
+      nameSuffix:
+          variant == 0
+              ? 'bloc de densité (EMOM)'
+              : variant == 1
+              ? 'bloc de densité (AMRAP court)'
+              : 'bloc de densité (échelles)',
+      why:
+          'Travail spécifique d\'endurance : plus de répétitions de qualité dans le même temps.',
       rir: i.caution ? 3 : 2,
     );
   }
@@ -2927,7 +2995,9 @@ class _Generator {
 
   String _groupsText(GenExercise e) {
     final g = e.groups.isEmpty ? ['tout le corps'] : e.groups;
-    return g.length == 1 ? g.first : '${g.take(g.length - 1).join(', ')} et ${g.last}';
+    return g.length == 1
+        ? g.first
+        : '${g.take(g.length - 1).join(', ')} et ${g.last}';
   }
 
   String _whyExercise(_Item it) {
@@ -2938,9 +3008,10 @@ class _Generator {
         return 'Exercice principal : il fait progresser ${_groupsText(e)}, à ton niveau actuel.';
       }
       final r = _repsOf[it];
-      final step = chain == null
-          ? ''
-          : ' ; étape ${chain.$2 + 1}/${c.catalog.chains[chain.$1]!.length} de « ${c.catalog.chainTitles[chain.$1]} »';
+      final step =
+          chain == null
+              ? ''
+              : ' ; étape ${chain.$2 + 1}/${c.catalog.chains[chain.$1]!.length} de « ${c.catalog.chainTitles[chain.$1]} »';
       return 'Principal ${kFamilyLabels[e.family] ?? e.type} : ${r == null ? '' : '${r[0]}-${r[1]} répétitions '}à RIR ${it.rir}$step.';
     }
     if (it.slot?.key == 'prevention') {
@@ -2955,32 +3026,39 @@ class _Generator {
 
   String _whySession(_Session s, _WeekPlan w) {
     final base = switch (s.kind) {
-      'FB' => c.simple
-          ? 'Séance corps entier : jambes, poussée, tirage et gainage, pour progresser partout.'
-          : 'Corps entier : un mouvement principal par grand schéma moteur, volume réparti sur la semaine.',
-      'U' => c.simple
-          ? 'Haut du corps : pousser et tirer, en équilibre.'
-          : 'Haut du corps : poussées et tirages appariés, prévention des épaules.',
-      'L' => c.simple
-          ? 'Bas du corps : jambes, fessiers et gainage.'
-          : 'Bas du corps : squat, charnière de hanche et travail unilatéral.',
+      'FB' =>
+        c.simple
+            ? 'Séance corps entier : jambes, poussée, tirage et gainage, pour progresser partout.'
+            : 'Corps entier : un mouvement principal par grand schéma moteur, volume réparti sur la semaine.',
+      'U' =>
+        c.simple
+            ? 'Haut du corps : pousser et tirer, en équilibre.'
+            : 'Haut du corps : poussées et tirages appariés, prévention des épaules.',
+      'L' =>
+        c.simple
+            ? 'Bas du corps : jambes, fessiers et gainage.'
+            : 'Bas du corps : squat, charnière de hanche et travail unilatéral.',
       'PUSH' => 'Poussée : pectoraux, épaules et triceps.',
       'PULL' => 'Tirage : dos et biceps, prévention des épaules.',
       'LEGS' => 'Jambes : squat, charnière de hanche et fentes.',
       _ => 'Récupération active.',
     };
     final phase = switch (w.kind) {
-      'deload' => ' Semaine de décharge : moins de séries pour récupérer, puis un mini-test léger.',
-      'taper' => w.eventWeek
-          ? ' Semaine de l\'épreuve : volume réduit, intensité maintenue. Bonne épreuve !'
-          : ' Affûtage : volume réduit, intensité maintenue avant ton épreuve.',
-      _ => w.calibration
-          ? ' Premières semaines : tests légers de calibrage en début de séance.'
-          : '',
+      'deload' =>
+        ' Semaine de décharge : moins de séries pour récupérer, puis un mini-test léger.',
+      'taper' =>
+        w.eventWeek
+            ? ' Semaine de l\'épreuve : volume réduit, intensité maintenue. Bonne épreuve !'
+            : ' Affûtage : volume réduit, intensité maintenue avant ton épreuve.',
+      _ =>
+        w.calibration
+            ? ' Premières semaines : tests légers de calibrage en début de séance.'
+            : '',
     };
-    final cap = s.capped
-        ? ' Séance plus courte que ton temps disponible : le volume est plafonné pour ta récupération.'
-        : '';
+    final cap =
+        s.capped
+            ? ' Séance plus courte que ton temps disponible : le volume est plafonné pour ta récupération.'
+            : '';
     return '$base$phase$cap';
   }
 }
