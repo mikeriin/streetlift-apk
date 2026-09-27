@@ -1,9 +1,9 @@
- ci-out/analyze.log                             |    14 -
- ci-out/commit.txt                              |     2 +-
- ci-out/format-full.diff                        | 98383 -----------------------
- ci-out/format.diff                             |    18 -
- ci-out/format.log                              |     8 +-
- ci-out/python.log                              |    70 -
- ci-out/test-l5c.log                            |  1445 -
- streetlift_tracker/lib/motivation_screens.dart |     5 +-
- 8 files changed, 6 insertions(+), 99939 deletions(-)
+ ci-out/analyze.log      |      3 -
+ ci-out/commit.txt       |      2 +-
+ ci-out/format-full.diff | 100005 ---------------------------------------------
+ ci-out/format.diff      |      9 -
+ ci-out/format.log       |      3 +-
+ ci-out/python.log       |     70 -
+ ci-out/test-l5c.log     |    219 -
+ ci-out/test.log         |   1068 -
+ 8 files changed, 2 insertions(+), 101377 deletions(-)
