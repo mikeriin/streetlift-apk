@@ -1,0 +1,53 @@
+name: Aperçu refonte muscles (branche Codex, temporaire)
+
+on:
+  push:
+    branches: [claude/preview-refonte]
+    paths: [streetlift_tracker/**, .github/workflows/preview.yml]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: claude-preview
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.29.3'
+          channel: stable
+          cache: true
+      - name: Format, analyse, captures
+        working-directory: streetlift_tracker
+        run: |
+          mkdir -p ../preview-out/captures
+          flutter pub get --enforce-lockfile > ../preview-out/pub.log 2>&1; echo "exit=$?" >> ../preview-out/pub.log
+          dart format --output=none --set-exit-if-changed lib test > ../preview-out/format.log 2>&1; echo "exit=$?" >> ../preview-out/format.log
+          flutter analyze --no-pub > ../preview-out/analyze.log 2>&1; echo "exit=$?" >> ../preview-out/analyze.log
+          TZ=Europe/Paris timeout 1200 flutter test --no-pub --timeout 900s --reporter expanded \
+            --dart-define=KALIS_CAPTURE=true --dart-define=KALIS_CAPTURE_DIR=../preview-out/captures \
+            test/zz_preview_refonte_test.dart > ../preview-out/captures.log 2>&1; echo "exit=$?" >> ../preview-out/captures.log
+      - name: Publier les captures
+        if: always()
+        run: &push |
+          git config user.name "claude-ci"
+          git config user.email "claude-ci@users.noreply.github.com"
+          git add -A preview-out
+          git commit -q -m "Aperçu ${GITHUB_JOB} $(date -u +%H:%M:%S)" || exit 0
+          git pull -q --rebase origin claude/preview-refonte || true
+          git push -q origin HEAD:claude/preview-refonte
+      - name: Suite de tests complète
+        if: always()
+        working-directory: streetlift_tracker
+        run: |
+          TZ=Europe/Paris timeout 1800 flutter test --no-pub --timeout 60s --reporter expanded > ../preview-out/test.log 2>&1; echo "exit=$?" >> ../preview-out/test.log
+          tail -5 ../preview-out/test.log > ../preview-out/test-summary.txt
+      - name: Publier les tests
+        if: always()
+        run: *push
