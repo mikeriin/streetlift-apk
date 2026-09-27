@@ -117,13 +117,15 @@ jobs:
         working-directory: streetlift_tracker
         run: |
           touch ../marker
+          status=0
           TZ=Europe/Paris flutter test --no-pub --timeout 300s --dart-define=KALIS_CAPTURE=true \
-            test/visual_capture_test.dart test/l5c_ecrans_capture_test.dart > ../out/captures-apres.log 2>&1
+            test/visual_capture_test.dart test/l5c_ecrans_capture_test.dart > ../out/captures-apres.log 2>&1 || status=$?
           mkdir -p ../captures-apres
           find . -name '*.png' -newer ../marker -not -path './build/*' | while read -r f; do
             cp "$f" "../captures-apres/$(echo "${f#./}" | tr '/' '_')"
           done
           ls ../captures-apres | wc -l
+          exit "$status"
       - name: Build debug
         id: build
         continue-on-error: true
@@ -276,6 +278,7 @@ jobs:
           rm -rf ci-out && mkdir -p ci-out
           cp -r artifacts/checks/. ci-out/ 2>/dev/null || true
           mkdir -p ci-out/emulateur && cp -r artifacts/emulateur/. ci-out/emulateur/ 2>/dev/null || true
+          cp artifacts/captures-avant/captures-avant.log ci-out/ 2>/dev/null || true
           pip install --quiet pillow
           unzip -q -o streetlift_tracker_v33.zip streetlift_tracker/tools/compare_renders.py
           if [ -d artifacts/captures-avant ] && [ -d artifacts/captures-apres ]; then
