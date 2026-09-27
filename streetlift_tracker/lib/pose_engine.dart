@@ -122,7 +122,7 @@ class PoseProp {
   String get type => raw['type'] as String? ?? '';
   bool get isStatic => raw['static'] == true;
   bool get behind => raw['layer'] == 'arriere';
-  double num(String k, [double fallback = 0]) =>
+  double val(String k, [double fallback = 0]) =>
       (raw[k] as num?)?.toDouble() ?? fallback;
   double? opt(String k) => (raw[k] as num?)?.toDouble();
   List<String> get to => [for (final j in (raw['to'] as List? ?? [])) '$j'];
@@ -342,8 +342,8 @@ List<double> poseBBox(PoseAnimation pose) {
   }
   for (final p in pose.props) {
     if (p.isStatic && p.raw['x'] != null) {
-      xs.add(p.num('x'));
-      if (p.raw['y'] != null) ys.add(p.num('y'));
+      xs.add(p.val('x'));
+      if (p.raw['y'] != null) ys.add(p.val('y'));
     }
   }
   ys.add(0);

@@ -230,7 +230,7 @@ class PosePainter extends CustomPainter {
       if (behindLayer != p.behind) continue;
       final t = p.type;
       if (p.isStatic) {
-        final x = p.num('x'), y = p.num('y');
+        final x = p.val('x'), y = p.val('y');
         switch (t) {
           case 'corde':
             final r = RRect.fromRectAndRadius(

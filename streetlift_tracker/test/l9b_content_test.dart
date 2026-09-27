@@ -161,7 +161,7 @@ void main() {
   });
 
   group('recherche et filtres (KT-082)', () {
-    final index = () => store.content;
+    ContentIndex index() => store.content;
 
     test('par muscle, alias et nom v2', () {
       final dorsal = searchExercises(
