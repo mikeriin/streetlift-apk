@@ -1,6 +1,6 @@
 pub=success
 format=failure
-analyze=failure
+analyze=success
 python=success
 dart=failure
 captures=failure

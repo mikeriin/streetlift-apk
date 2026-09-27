@@ -1,1 +1,1 @@
-verrou=regenere
+verrou=respecte

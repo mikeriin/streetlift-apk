@@ -1,22 +1,26 @@
-Upgrading build.gradle.kts
 Upgrading gradle.properties
 Upgrading gradle.properties
 Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+e: file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/app/src/main/kotlin/fr/tchoupi/streetlift_tracker/ShareProvider.kt:74:15 Type argument for reified type parameter 'T' was inferred to the intersection of ['Comparable<*>?' & 'Serializable?']. Reification of an intersection type results in the common supertype being used. This may lead to subtle issues and an explicit type argument is encouraged.
 
 FAILURE: Build failed with an exception.
 
-* Where:
-Build file '/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/app/build.gradle.kts' line: 5
-
 * What went wrong:
-An exception occurred applying plugin request [id: 'dev.flutter.flutter-gradle-plugin']
-> Failed to apply plugin 'dev.flutter.flutter-gradle-plugin'.
-   > Error: Your project's Gradle version (8.13.0) is lower than Flutter's minimum supported version of 8.14.0. Please upgrade your Gradle version. 
-     Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
-
-     Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/gradle/wrapper/gradle-wrapper.properties. 
-     For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
-
+Execution failed for task ':app:compileDebugKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
+   > Compilation error. See log for more details
 
 * Try:
 > Run with --stacktrace option to get the stack trace.
@@ -24,19 +28,6 @@ An exception occurred applying plugin request [id: 'dev.flutter.flutter-gradle-p
 > Run with --scan to get full insights.
 > Get more help at https://help.gradle.org.
 
-BUILD FAILED in 2m 10s
-Running Gradle task 'assembleDebug'...                            131.8s
-
-┌─ Flutter Fix ────────────────────────────────────────────────────────────────────────────────────┐
-│ [!] Starting AGP 9+, only the new DSL interface will be read.                                    │
-│ This results in a build failure when applying the Flutter Gradle plugin at                       │
-│ /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/app/build.gradle.kts. │
-│                                                                                                  │
-│ To resolve this update flutter or opt out of `android.newDsl`.                                   │
-│ For instructions on how to opt out, see:                                                         │
-│ https://developer.android.com/build/releases/agp-9-0-0-release-notes                             │
-│                                                                                                  │
-│ If you are not upgrading to AGP 9+, run `flutter analyze --suggestions` to check for             │
-│ incompatible dependencies.                                                                       │
-└──────────────────────────────────────────────────────────────────────────────────────────────────┘
+BUILD FAILED in 5m 11s
+Running Gradle task 'assembleDebug'...                            312.8s
 Gradle task assembleDebug failed with exit code 1
