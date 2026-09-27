@@ -19,7 +19,11 @@ import 'phone_test_support.dart';
 /// Défilement réel et lent (gestes chronométrés, sans élan) de la liste
 /// principale jusqu'à ce que [target] soit touchable. Les cartes de ce lot
 /// sont hautes à 200 % : un geste rapide (élan) pourrait les sauter.
-Future<void> reach(WidgetTester tester, Finder target, {bool up = false}) async {
+Future<void> reach(
+  WidgetTester tester,
+  Finder target, {
+  bool up = false,
+}) async {
   final list = find.byType(Scrollable).first;
   for (var i = 0; i < 80 && target.hitTestable().evaluate().isEmpty; i++) {
     await tester.timedDrag(
@@ -29,7 +33,11 @@ Future<void> reach(WidgetTester tester, Finder target, {bool up = false}) async 
     );
     await tester.pumpAndSettle();
   }
-  expect(target.hitTestable(), findsOneWidget, reason: 'Atteint par défilement');
+  expect(
+    target.hitTestable(),
+    findsOneWidget,
+    reason: 'Atteint par défilement',
+  );
 }
 
 /// Laisse le chargement réel de l'asset (politique) se terminer.
@@ -119,14 +127,8 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('safety-alert')), findsOneWidget);
       expect(find.textContaining('poitrine'), findsWidgets);
-      await reach(
-        tester,
-        find.byKey(const ValueKey('safety-situation-age65')),
-      );
-      await reach(
-        tester,
-        find.byKey(const ValueKey('wellness-disclaimer')),
-      );
+      await reach(tester, find.byKey(const ValueKey('safety-situation-age65')));
+      await reach(tester, find.byKey(const ValueKey('wellness-disclaimer')));
       expect(tester.takeException(), isNull);
     });
 
@@ -137,10 +139,7 @@ void main() {
         page(const RecoveryScreen(), scale: scale, dark: dark),
       );
       await tester.pumpAndSettle();
-      await reach(
-        tester,
-        find.byKey(const ValueKey('recovery-listen')),
-      );
+      await reach(tester, find.byKey(const ValueKey('recovery-listen')));
       await tester.pumpWidget(
         page(const PrivacyPolicyScreen(), scale: scale, dark: dark),
       );
@@ -223,10 +222,7 @@ void main() {
     await tester.pumpWidget(page(const ProfileGate(child: Text('ACCUEIL'))));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('flow-welcome')), findsOneWidget);
-    await reach(
-      tester,
-      find.byKey(const ValueKey('wellness-disclaimer')),
-    );
+    await reach(tester, find.byKey(const ValueKey('wellness-disclaimer')));
     expect(find.textContaining('pas un dispositif médical'), findsOneWidget);
   });
 
