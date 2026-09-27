@@ -142,7 +142,9 @@ void main() {
           await tester.pumpAndSettle();
           expect(find.byKey(const ValueKey('motiv-progress')), findsOneWidget);
           expect(
-            find.byKey(const ValueKey('motiv-victory-first:traction-pronation')),
+            find.byKey(
+              const ValueKey('motiv-victory-first:traction-pronation'),
+            ),
             findsOneWidget,
           );
           final texts = grab(tester, {});
@@ -150,7 +152,11 @@ void main() {
           final vertical = find.byWidgetPredicate(
             (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
           );
-          for (var i = 0; i < 30 && target.hitTestable().evaluate().isEmpty; i++) {
+          for (
+            var i = 0;
+            i < 30 && target.hitTestable().evaluate().isEmpty;
+            i++
+          ) {
             await tester.drag(vertical.last, const Offset(0, -250));
             await tester.pumpAndSettle();
             grab(tester, texts);

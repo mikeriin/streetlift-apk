@@ -115,8 +115,10 @@ void main() {
           (day: 30, sets: sets([8], 14)),
         ],
       };
-      expect(chainProgress(chain, perf, bodyweight: 80).met.containsKey(3),
-          isFalse);
+      expect(
+        chainProgress(chain, perf, bodyweight: 80).met.containsKey(3),
+        isFalse,
+      );
       expect(chainProgress(chain, perf, bodyweight: 70).met, {3: 30});
       expect(chainProgress(chain, perf).met, isEmpty);
     });
@@ -169,8 +171,10 @@ void main() {
       expect(pendingMilestones(ms, seen, 106).map((m) => m.id), [
         'chain:pompes',
       ]);
-      expect(pendingMilestones(ms, {...seen, 'chain:pompes': 'x'}, 106),
-          isEmpty);
+      expect(
+        pendingMilestones(ms, {...seen, 'chain:pompes': 'x'}, 106),
+        isEmpty,
+      );
       // Une étape future n'est jamais célébrée d'avance.
       expect(pendingMilestones(ms, const {}, 99), isEmpty);
     });
@@ -297,8 +301,7 @@ void main() {
       expect(const WeekReview(0, null, 'a', 'b').items, hasLength(2));
     });
 
-    test('bilan de fin de cycle : du lendemain du dernier jour, 14 jours',
-        () {
+    test('bilan de fin de cycle : du lendemain du dernier jour, 14 jours', () {
       expect(cycleReviewOpen(100, 100), isFalse);
       expect(cycleReviewOpen(100, 101), isTrue);
       expect(cycleReviewOpen(100, 114), isTrue);
@@ -315,10 +318,7 @@ void main() {
         (4, 4),
       ]);
       expect(cycles.last.index, 3);
-      expect(
-        cycleChange({1: 100, 2: 104, 3: 110}, 1, 3),
-        closeTo(10, 1e-9),
-      );
+      expect(cycleChange({1: 100, 2: 104, 3: 110}, 1, 3), closeTo(10, 1e-9));
       expect(cycleChange({1: 100}, 1, 3), isNull);
     });
 
@@ -364,26 +364,28 @@ void main() {
       }
     });
 
-    test('bibliothèque complète, sans vocabulaire médical, humiliation, '
-        'culpabilisation ni incitation à ignorer douleur, repos ou fatigue',
-        () {
-      final forbidden = RegExp(
-        r'\b(nul|nulle|faible|honte|paresse|paresseux|flemme|excuses?|'
-        r'fainéant|pathétique|mou|lâche|malgré|ignore|ignorer|diagnostic|'
-        r'blessure|traitement|guérir|maladie|fatigue|souffr\w*|pitié|'
-        r'jamais assez|pas le choix|déçu|décevant)\b',
-        caseSensitive: false,
-      );
-      var count = 0;
-      for (final (c, t, l, text) in allKoachLines()) {
-        expect(text, isNotEmpty, reason: '$c $t $l');
-        if (kSafetyContexts.contains(c)) continue;
-        expect(forbidden.hasMatch(text), isFalse, reason: '$c $t $l : $text');
-        expect(text.toLowerCase(), isNot(contains('douleur')));
-        count++;
-      }
-      expect(count, kMessageContexts.length * 3 * 5);
-    });
+    test(
+      'bibliothèque complète, sans vocabulaire médical, humiliation, '
+      'culpabilisation ni incitation à ignorer douleur, repos ou fatigue',
+      () {
+        final forbidden = RegExp(
+          r'\b(nul|nulle|faible|honte|paresse|paresseux|flemme|excuses?|'
+          r'fainéant|pathétique|mou|lâche|malgré|ignore|ignorer|diagnostic|'
+          r'blessure|traitement|guérir|maladie|fatigue|souffr\w*|pitié|'
+          r'jamais assez|pas le choix|déçu|décevant)\b',
+          caseSensitive: false,
+        );
+        var count = 0;
+        for (final (c, t, l, text) in allKoachLines()) {
+          expect(text, isNotEmpty, reason: '$c $t $l');
+          if (kSafetyContexts.contains(c)) continue;
+          expect(forbidden.hasMatch(text), isFalse, reason: '$c $t $l : $text');
+          expect(text.toLowerCase(), isNot(contains('douleur')));
+          count++;
+        }
+        expect(count, kMessageContexts.length * 3 * 5);
+      },
+    );
   });
 
   test('rappels : uniquement un jour d\'entraînement prévu, hors pause '
@@ -465,27 +467,29 @@ void main() {
       expect(back.pristine, isFalse);
     });
 
-    test('import strict : valeur hors contrat refusée ; démarrage tolérant',
-        () {
-      for (final bad in [
-        {'v': 9},
-        {'tone': 'cruel'},
-        {'showAll': 'oui'},
-        {
-          'seen': {'chain:pompes': 'hier'},
-        },
-        'texte',
-      ]) {
-        expect(
-          () => MotivData.fromJson(bad, strict: true),
-          throwsFormatException,
-          reason: '$bad',
-        );
-        final issues = <String>[];
-        MotivData.fromJson(bad, issues: issues);
-        expect(issues, isNotEmpty, reason: '$bad');
-      }
-      expect(MotivData.fromJson(null).pristine, isTrue);
-    });
+    test(
+      'import strict : valeur hors contrat refusée ; démarrage tolérant',
+      () {
+        for (final bad in [
+          {'v': 9},
+          {'tone': 'cruel'},
+          {'showAll': 'oui'},
+          {
+            'seen': {'chain:pompes': 'hier'},
+          },
+          'texte',
+        ]) {
+          expect(
+            () => MotivData.fromJson(bad, strict: true),
+            throwsFormatException,
+            reason: '$bad',
+          );
+          final issues = <String>[];
+          MotivData.fromJson(bad, issues: issues);
+          expect(issues, isNotEmpty, reason: '$bad');
+        }
+        expect(MotivData.fromJson(null).pristine, isTrue);
+      },
+    );
   });
 }

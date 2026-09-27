@@ -142,9 +142,7 @@ class StatsOverview extends StatelessWidget {
           onTap:
               () => Navigator.push(
                 context,
-                MaterialPageRoute<void>(
-                  builder: (_) => const ProgressScreen(),
-                ),
+                MaterialPageRoute<void>(builder: (_) => const ProgressScreen()),
               ),
         ),
       ],

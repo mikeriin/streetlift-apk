@@ -358,56 +358,58 @@ class _CycleCard extends StatelessWidget {
 }
 
 /// Bilan de fin de cycle (feuille).
-Future<void> showCycleReview(BuildContext context, CycleReview review) =>
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      builder:
-          (sheet) => DraggableScrollableSheet(
-            expand: false,
-            initialChildSize: .75,
-            maxChildSize: .94,
-            builder:
-                (context, controller) => KList(
-                  key: const ValueKey('motiv-cycle-sheet'),
-                  controller: controller,
-                  children: [
-                    Text(
-                      'BILAN DE FIN DE CYCLE',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    Text(review.cycle.label, style: TextStyle(color: SL.dim)),
-                    for (final (title, text) in review.lines)
-                      KCard(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              title,
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            const SizedBox(height: 2),
-                            Text(text),
-                          ],
-                        ),
-                      ),
-                    Text(
-                      'Des repères d’entraînement, pas une promesse de résultat.',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                    FilledButton(
-                      key: const ValueKey('motiv-cycle-done'),
-                      onPressed: () {
-                        store.dismissCycleReview(review.cycle);
-                        Navigator.pop(sheet);
-                      },
-                      child: const Text('Compris'),
-                    ),
-                  ],
+Future<void> showCycleReview(
+  BuildContext context,
+  CycleReview review,
+) => showModalBottomSheet<void>(
+  context: context,
+  isScrollControlled: true,
+  useSafeArea: true,
+  builder:
+      (sheet) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: .75,
+        maxChildSize: .94,
+        builder:
+            (context, controller) => KList(
+              key: const ValueKey('motiv-cycle-sheet'),
+              controller: controller,
+              children: [
+                Text(
+                  'BILAN DE FIN DE CYCLE',
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
-          ),
-    );
+                Text(review.cycle.label, style: TextStyle(color: SL.dim)),
+                for (final (title, text) in review.lines)
+                  KCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          title,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                        const SizedBox(height: 2),
+                        Text(text),
+                      ],
+                    ),
+                  ),
+                Text(
+                  'Des repères d’entraînement, pas une promesse de résultat.',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                FilledButton(
+                  key: const ValueKey('motiv-cycle-done'),
+                  onPressed: () {
+                    store.dismissCycleReview(review.cycle);
+                    Navigator.pop(sheet);
+                  },
+                  child: const Text('Compris'),
+                ),
+              ],
+            ),
+      ),
+);
 
 // ============================================ « MES PROGRÈS » (KT-065)
 
@@ -718,7 +720,8 @@ class _Spark extends CustomPainter {
     final path = Path();
     for (var i = 0; i < values.length; i++) {
       final x = size.width * i / (values.length - 1);
-      final y = size.height - 4 - (size.height - 8) * (values[i] - lo) / (hi - lo);
+      final y =
+          size.height - 4 - (size.height - 8) * (values[i] - lo) / (hi - lo);
       if (i == 0) {
         path.moveTo(x, y);
       } else {
@@ -880,10 +883,7 @@ class _StepRow extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            icon,
-            color: state == StepState.reached ? SL.success : SL.dim,
-          ),
+          Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -1117,36 +1117,54 @@ class _ShareProgressScreenState extends State<ShareProgressScreen> {
   Widget build(BuildContext context) {
     final data = store.motivShareData;
     final lines = shareLines(data, _options);
-    Widget option(String key, String title, bool value, void Function(bool) set,
-        {bool enabled = true}) =>
-        CheckboxListTile(
-          key: ValueKey('motiv-share-$key'),
-          contentPadding: EdgeInsets.zero,
-          title: Text(title),
-          value: value,
-          onChanged: enabled ? (v) => setState(() => set(v ?? false)) : null,
-        );
+    Widget option(
+      String key,
+      String title,
+      bool value,
+      void Function(bool) set, {
+      bool enabled = true,
+    }) => CheckboxListTile(
+      key: ValueKey('motiv-share-$key'),
+      contentPadding: EdgeInsets.zero,
+      title: Text(title),
+      value: value,
+      onChanged: enabled ? (v) => setState(() => set(v ?? false)) : null,
+    );
     return KScreen(
       appBar: AppBar(title: const Text('PARTAGER')),
       body: KList(
         key: const ValueKey('motiv-share'),
         children: [
-          RepaintBoundary(
-            key: _boundary,
-            child: _ShareCard(lines: lines),
-          ),
+          RepaintBoundary(key: _boundary, child: _ShareCard(lines: lines)),
           const KSection(
             'Contenu',
-            subtitle: 'Aucune donnée de santé ; le poids seulement si tu le coches',
+            subtitle:
+                'Aucune donnée de santé ; le poids seulement si tu le coches',
           ),
-          option('victories', 'Victoires', _options.victories,
-              (v) => _options.victories = v),
-          option('records', 'Records', _options.records,
-              (v) => _options.records = v),
-          option('regularity', 'Régularité', _options.regularity,
-              (v) => _options.regularity = v),
-          option('chain', 'Dernière étape de figure', _options.chain,
-              (v) => _options.chain = v),
+          option(
+            'victories',
+            'Victoires',
+            _options.victories,
+            (v) => _options.victories = v,
+          ),
+          option(
+            'records',
+            'Records',
+            _options.records,
+            (v) => _options.records = v,
+          ),
+          option(
+            'regularity',
+            'Régularité',
+            _options.regularity,
+            (v) => _options.regularity = v,
+          ),
+          option(
+            'chain',
+            'Dernière étape de figure',
+            _options.chain,
+            (v) => _options.chain = v,
+          ),
           option(
             'bodyweight',
             'Poids de corps',

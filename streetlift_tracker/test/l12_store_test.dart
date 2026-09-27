@@ -191,63 +191,65 @@ void main() {
     test('étape ancienne (plus de 7 jours) listée mais non célébrée', () {
       log('S1-J1', DateTime(2026, 8, 10, 18), 'Pompes', [5, 5, 5]);
       log('S1-J3', DateTime(2026, 8, 12, 18), 'Pompes', [12, 12, 12]);
-      expect(
-        app.motivMilestones.map((m) => m.id),
-        contains('chain:pompes'),
-      );
+      expect(app.motivMilestones.map((m) => m.id), contains('chain:pompes'));
       expect(app.motivPending, isEmpty);
     });
   });
 
   group('régularité (KT-067)', () {
-    test('jour de repos respecté compté, séance de 10 minutes comptée',
-        () async {
-      final monday = dayIndex(DateTime(2026, 8, 17));
-      final w2 = app.program.week(2);
-      final rest = [
-        for (final d in w2.days)
-          if (d.exercises.isEmpty) d.j,
-      ];
-      final before = app.motivWeek(monday);
-      expect(before.restDays, 7 - before.planned);
-      expect(before.restRespected, before.restDays);
-      expect(before.done, 0);
-      // Séance « 10 minutes, ça compte » un jour prévu.
-      final catalog = await app.adaptCatalog();
-      final s = app.ensureMinimalSession(catalog);
-      expect(s.name, kMinimalSessionName);
-      expect(s.items, isNotEmpty);
-      expect(app.ensureMinimalSession(catalog).id, s.id);
-      final planned = [
-        for (final d in w2.days)
-          if (d.exercises.isNotEmpty) d.j,
-      ];
-      final day = app.program.dateFor(2, planned.first);
-      log(
-        'S0-J${s.id}',
-        DateTime(day.year, day.month, day.day, 19),
-        s.items.first.name,
-        [8, 8],
-      );
-      final after = app.motivWeek(monday);
-      expect(after.done, 1);
-      expect(after.plannedDone, 1);
-      expect(after.restRespected, before.restRespected);
-      if (rest.isNotEmpty) {
-        final r = app.program.dateFor(2, rest.first);
-        log('S0-J999', DateTime(r.year, r.month, r.day, 19), 'Pompes', [5]);
-        final third = app.motivWeek(monday);
-        expect(third.restRespected, before.restRespected - 1);
-        expect(third.done, 2);
-      }
-    });
+    test(
+      'jour de repos respecté compté, séance de 10 minutes comptée',
+      () async {
+        final monday = dayIndex(DateTime(2026, 8, 17));
+        final w2 = app.program.week(2);
+        final rest = [
+          for (final d in w2.days)
+            if (d.exercises.isEmpty) d.j,
+        ];
+        final before = app.motivWeek(monday);
+        expect(before.restDays, 7 - before.planned);
+        expect(before.restRespected, before.restDays);
+        expect(before.done, 0);
+        // Séance « 10 minutes, ça compte » un jour prévu.
+        final catalog = await app.adaptCatalog();
+        final s = app.ensureMinimalSession(catalog);
+        expect(s.name, kMinimalSessionName);
+        expect(s.items, isNotEmpty);
+        expect(app.ensureMinimalSession(catalog).id, s.id);
+        final planned = [
+          for (final d in w2.days)
+            if (d.exercises.isNotEmpty) d.j,
+        ];
+        final day = app.program.dateFor(2, planned.first);
+        log(
+          'S0-J${s.id}',
+          DateTime(day.year, day.month, day.day, 19),
+          s.items.first.name,
+          [8, 8],
+        );
+        final after = app.motivWeek(monday);
+        expect(after.done, 1);
+        expect(after.plannedDone, 1);
+        expect(after.restRespected, before.restRespected);
+        if (rest.isNotEmpty) {
+          final r = app.program.dateFor(2, rest.first);
+          log('S0-J999', DateTime(r.year, r.month, r.day, 19), 'Pompes', [5]);
+          final third = app.motivWeek(monday);
+          expect(third.restRespected, before.restRespected - 1);
+          expect(third.done, 2);
+        }
+      },
+    );
   });
 
   test('messages de sécurité au ton neutre quel que soit le ton choisi '
       '(KT-068)', () {
     app.setKoachTone('demanding');
     expect(app.koachTone, 'demanding');
-    expect(app.motivLine('session_done'), isNot(koachLine('session_done', 'neutral', 2)));
+    expect(
+      app.motivLine('session_done'),
+      isNot(koachLine('session_done', 'neutral', 2)),
+    );
     for (final c in kSafetyContexts) {
       expect(app.motivLine(c), koachLine(c, 'neutral', 0));
     }
@@ -280,18 +282,12 @@ void main() {
       expect(app.motivWeekReview?.monday, dayIndex(DateTime(2026, 8, 31)));
     });
 
-    test('bilan de fin de cycle : le lendemain du dernier jour du cycle',
-        () {
+    test('bilan de fin de cycle : le lendemain du dernier jour du cycle', () {
       final cycles = app.motivCycles();
       expect(cycles, isNotEmpty);
       final cy = cycles.first;
       final last = app.program.dateFor(cy.lastWeek, 7);
-      log(
-        'S1-J1',
-        DateTime(2026, 8, 10, 18),
-        'Pompes',
-        [5, 5, 5],
-      );
+      log('S1-J1', DateTime(2026, 8, 10, 18), 'Pompes', [5, 5, 5]);
       clock = DateTime(last.year, last.month, last.day, 20);
       expect(
         app.motivCycleReview == null ||
@@ -314,31 +310,35 @@ void main() {
   });
 
   group('rappels (KT-070)', () {
-    test('jamais un jour de repos, même avec un ancien réglage contraire',
-        () async {
-      expect(AppSettings.fromJson({'notifSkipRest': false}).notifSkipRest,
-          isTrue);
-      SharedPreferences.setMockInitialValues({
-        'settings_v1': jsonEncode({
-          ...AppSettings().toJson(),
-          'notifOn': true,
-          'notifSkipRest': false,
-        }),
-      });
-      final other = AppStore()..storeClock = () => clock;
-      await other.init();
-      others.add(other);
-      expect(other.settings.notifSkipRest, isTrue);
-      other.settings.notifOn = true;
-      await other.configureStart(DateTime(2026, 8, 10), references: _refs);
-      final plan = planReminders(other, clock);
-      expect(plan, isNotEmpty);
-      for (final r in plan) {
-        final m = RegExp(r'S(\d+)-J(\d+)').firstMatch(r.payload)!;
-        final d = other.program.week(int.parse(m[1]!)).day(int.parse(m[2]!))!;
-        expect(d.exercises, isNotEmpty, reason: r.payload);
-      }
-    });
+    test(
+      'jamais un jour de repos, même avec un ancien réglage contraire',
+      () async {
+        expect(
+          AppSettings.fromJson({'notifSkipRest': false}).notifSkipRest,
+          isTrue,
+        );
+        SharedPreferences.setMockInitialValues({
+          'settings_v1': jsonEncode({
+            ...AppSettings().toJson(),
+            'notifOn': true,
+            'notifSkipRest': false,
+          }),
+        });
+        final other = AppStore()..storeClock = () => clock;
+        await other.init();
+        others.add(other);
+        expect(other.settings.notifSkipRest, isTrue);
+        other.settings.notifOn = true;
+        await other.configureStart(DateTime(2026, 8, 10), references: _refs);
+        final plan = planReminders(other, clock);
+        expect(plan, isNotEmpty);
+        for (final r in plan) {
+          final m = RegExp(r'S(\d+)-J(\d+)').firstMatch(r.payload)!;
+          final d = other.program.week(int.parse(m[1]!)).day(int.parse(m[2]!))!;
+          expect(d.exercises, isNotEmpty, reason: r.payload);
+        }
+      },
+    );
   });
 
   test('image de partage sans donnée de santé ni poids par défaut '

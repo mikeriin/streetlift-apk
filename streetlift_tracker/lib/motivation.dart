@@ -166,11 +166,7 @@ typedef PerfSet = ({int value, double kg});
 typedef PerfSession = ({int day, List<PerfSet> sets});
 
 /// Critère de passage atteint dans une séance.
-bool thresholdMet(
-  ChainThreshold t,
-  List<PerfSet> sets, {
-  double? bodyweight,
-}) {
+bool thresholdMet(ChainThreshold t, List<PerfSet> sets, {double? bodyweight}) {
   final pct = t.lestPct;
   if (pct != null) {
     if (bodyweight == null || bodyweight <= 0) return false;
@@ -265,9 +261,7 @@ ChainProgress chainProgress(
     if (own != null || laterPractice != null) {
       final later = laterPractice;
       reached[i] =
-          own == null
-              ? later
-              : (later == null ? own : math.min(own, later));
+          own == null ? later : (later == null ? own : math.min(own, later));
     }
     final f = firstPractice[i];
     if (f != null) {
@@ -837,11 +831,7 @@ const _library = <String, Map<String, List<String>>>{
       'Bonne semaine. Même exigence la prochaine fois.',
       'Bonne semaine. Entraînement difficile, guerre facile.',
     ],
-    'neutral': [
-      'Semaine terminée.',
-      'Semaine terminée.',
-      'Semaine terminée.',
-    ],
+    'neutral': ['Semaine terminée.', 'Semaine terminée.', 'Semaine terminée.'],
   },
   'week_low': {
     'kind': [

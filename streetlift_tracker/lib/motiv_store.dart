@@ -103,8 +103,7 @@ extension MotivStore on AppStore {
   }
 
   /// Message de Koach au ton choisi (sécurité : toujours neutre).
-  String motivLine(String context) =>
-      koachLine(context, koachTone, motivLevel);
+  String motivLine(String context) => koachLine(context, koachTone, motivLevel);
 
   // ------------------------------------------------ performances du journal
 
@@ -342,7 +341,9 @@ extension MotivStore on AppStore {
       }
       final last = c.chain.steps.length - 1;
       final lastDay = c.practiced[last];
-      if (last >= 0 && lastDay != null && c.chain.steps[last].threshold == null) {
+      if (last >= 0 &&
+          lastDay != null &&
+          c.chain.steps[last].threshold == null) {
         final step = c.chain.steps[last];
         add(
           Milestone(
@@ -489,7 +490,8 @@ extension MotivStore on AppStore {
       for (final e in c.practiced.entries) {
         final id = c.chain.steps[e.key].id;
         if (!kFirstTimes.containsKey(id)) continue;
-        if (e.value > firstDay || (e.value == firstDay && id.compareTo(firstId!) < 0)) {
+        if (e.value > firstDay ||
+            (e.value == firstDay && id.compareTo(firstId!) < 0)) {
           firstDay = e.value;
           firstId = id;
         }
@@ -648,7 +650,10 @@ extension MotivStore on AppStore {
       if (!adaptTrainingDays().any((d) => d >= first && d <= last)) {
         return null;
       }
-      return _buildCycleReview(cy, i + 1 < cycles.length ? cycles[i + 1] : null);
+      return _buildCycleReview(
+        cy,
+        i + 1 < cycles.length ? cycles[i + 1] : null,
+      );
     }
     return null;
   });
@@ -672,9 +677,8 @@ extension MotivStore on AppStore {
     final last = dayIndex(program.dateFor(cy.lastWeek, 7));
     final planned =
         _motivPlannedDays.where((d) => d >= first && d <= last).length;
-    final done = adaptTrainingDays()
-        .where((d) => d >= first && d <= last)
-        .length;
+    final done =
+        adaptTrainingDays().where((d) => d >= first && d <= last).length;
     final goal = goalById(profile?.stringValue('goalPrimary') ?? '')?.label;
     final progress =
         sorted.isEmpty
