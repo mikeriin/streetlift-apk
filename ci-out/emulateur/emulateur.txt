@@ -1,5 +1,0 @@
-vulkan=ranchu
-opengles=196609
-egl=emulation
-android=15
-modele=sdk_gphone64_x86_64

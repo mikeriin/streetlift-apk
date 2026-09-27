@@ -1,8 +1,8 @@
 pub=success
-format=success
-analyze=success
-python=success
-dart=failure
-captures=failure
-build_debug=success
-build_profile=success
+format=failure
+analyze=cancelled
+python=skipped
+dart=skipped
+captures=skipped
+build_debug=skipped
+build_profile=skipped
