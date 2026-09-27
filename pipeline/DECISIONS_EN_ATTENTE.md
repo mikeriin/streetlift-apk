@@ -1,5 +1,13 @@
 # Décisions en attente
 
+## L11 (4.1.0) — à relire (non bloquant)
+Détail : `docs/CONTRAT_L11.md` §2 (D-L11-01 à D-L11-14) et §10 (registre) dans le ZIP.
+- **D-L11-01 Le plan glisse sur proposition** (carte « Reprendre là où tu t'es arrêté », un tap, annulable) ; d'office seulement à la fin d'une pause vacances/maladie. Ta décision L4 (« pas de décalage automatique ») est ainsi respectée hors pause. Option : glissement automatique. Recommandation : garder.
+- **D-L11-02 Ton installation reste en mode Assisté** (profil migré jamais choisi ou absent) : rien ne change sans tap. Le mode Guidé (baisses appliquées d'office, annulables) se choisit dans Réglages → Adaptation au quotidien.
+- **D-L11-07 « Une séance de moins/de plus »** proposée seulement pour un programme généré ; pour le programme de 40 semaines, seule « séances 20 % plus courtes ».
+- **D-L11-08 Plateau** : novice traité comme débutant ; « nouveau bloc sur le point faible » à régénérer à la main après la décharge programmée.
+- **D-L11-12 Guidé au bilan** : baisses de valeur et allègement douleur acceptés d'office (annulables), hausses toujours proposées.
+
 ## L10 (4.0.0) — à relire (non bloquant)
 Détail : `docs/CONTRAT_L10.md` §2 (D-L10-01 à D-L10-13) et §8 (registre) dans le ZIP ; 13 profils types : `docs/PROFILS_TYPES_L10.md`.
 - **D-L10-04 Ton programme actuel** reste le modèle « Expert streetlifting » implicite, identique ; rien n'est réécrit. « Mon programme → Générer » le remplace à partir d'aujourd'hui (annulable 7 jours). Recommandation : garder.

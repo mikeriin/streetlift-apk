@@ -9,7 +9,8 @@
 | L9R | pack 2.0.0 (app inchangée) | lecture seule de main (620752e) | — (pas de build) | 27/09/2026 | **validé par le propriétaire** ; `kalis_content_pack_v1_final.zip` = copie du candidat v2 (content-pack 93fad2e, SHA-256 5a13a91e…9086) |
 | L9b | 3.2.0 | 6015ebc | 87 | 27/09/2026 | livré (build signé réussi ; non vérifié sur téléphone) — point d'installation conseillé |
 | L10 | 4.0.0 | 5d38177 | 88 | 27/09/2026 | livré (build signé réussi ; non vérifié sur téléphone) |
-| L11 | 4.1.0 (attendu) | — | — | 27/09/2026 | lancé |
+| L11 | 4.1.0 | b202121 | 89 | 27/09/2026 | livré (build signé réussi ; non vérifié sur téléphone) |
+| L12 | 4.2.0 (attendu) | — | — | 27/09/2026 | lancé |
 
 Outil de relecture v2 (même lien, version 2 de l'artefact ; collection `relectures_v2`, l'ancienne `relectures` conservée) : https://claude.ai/artifact/MfMKxQMztc1rd85LLhUn6S
 Suite : le propriétaire relit la v2. À la validation : appliquer ses corrections, copier l'archive validée sous `kalis_content_pack_v1_final.zip` sur `content-pack`, puis lancer L9b (trig_01XUb6PZBCvYvNbBvpQokiun ; main est en 3.1.0, condition remplie). La seconde passe L9 (trig_01KyxRKcUDA45rdHQAw4xVGM) est remplacée par L9R.
@@ -18,4 +19,6 @@ L9b : livré le 27/09/2026 (pack final `5a13a91e…9086` intégré ; livraison `
 
 L10 : livré le 27/09/2026 (générateur de programme ; installation existante = modèle Expert streetlifting implicite, programme inchangé ; livraison `livraisons/LIVRAISON_L10.md`, 13 profils types dans `docs/PROFILS_TYPES_L10.md` du ZIP). Suite : L11 lancé (trig_01Edi6HpVLFiW5vfUQFRCsqC).
 
-Décisions en attente : voir DECISIONS_EN_ATTENTE.md (L10 et L9b, non bloquantes ; L9R et L8 tranchées)
+L11 : livré le 27/09/2026 (adaptation au jour le jour ; installation existante en mode Assisté, rien ne change sans tap ; livraison `livraisons/LIVRAISON_L11.md`). Suite : L12 lancé (trig_01KutrfRsBDMLmAgpQKfUQJc).
+
+Décisions en attente : voir DECISIONS_EN_ATTENTE.md (L11, L10 et L9b, non bloquantes ; L9R et L8 tranchées)
