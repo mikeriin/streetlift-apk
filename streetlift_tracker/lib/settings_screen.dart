@@ -15,7 +15,7 @@ import 'profile_screens.dart';
 import 'store.dart';
 import 'store_widget.dart';
 
-const kAppVersion = '4.1.0';
+const kAppVersion = '4.1.1';
 
 class SettingsScreen extends StatelessWidget {
   final int? section;

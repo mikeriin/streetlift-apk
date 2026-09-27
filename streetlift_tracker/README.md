@@ -1,4 +1,17 @@
-# Kalis Track 4.1.0 — Koach s'adapte à ta journée
+# Kalis Track 4.1.1 — Muscles et démonstrations en illustrations anatomiques
+
+## 4.1.1 — Refonte muscles et animations (branche `refonte/muscles-animations`)
+
+- **Carte des muscles d'origine** : STATS, accueil et WOD retrouvent les illustrations anatomiques de 3.1.0 (face / dos, un calque par groupe, rampe bordeaux → rouge avec halo), rendu identique à 3.1.0 avec tes données actuelles.
+- **Fiche exercice** : carte face / dos / **profil** (nouvelle vue, dessinée à partir de l'illustration de profil validée par le propriétaire), muscles principaux, secondaires, stabilisateurs et étirés en intensités distinctes, légende et liste en texte conservées.
+- **Démonstrations refaites avec ces illustrations** : le personnage est découpé en segments (tête, cou, tronc, bassin, bras, avant-bras, mains, cuisses, jambes, pieds) animés par la cinématique du pack ; les muscles travaillés s'allument pendant le mouvement. Vue de profil pour les mouvements d'avant en arrière, de face pour les mouvements latéraux, **de dos** quand les muscles principaux sont surtout postérieurs. Membre éloigné légèrement assombri de profil. Réduction des animations du système respectée (images fixes).
+- **Revue de toutes les démonstrations** : 18 exercices dont l'animation aurait été fausse passent en image fixe juste (développés couchés et inclinés : position haute) ou sans démonstration (contact avec le matériel absent) ; liste dans `SUIVI_PROJET.md` (refonte).
+- Aucune donnée modifiée, aucune migration. Contenu sportif **non relu par un professionnel diplômé**.
+
+Détail : `SUIVI_PROJET.md` (refonte muscles et animations). Outils : `tools/muscles_profile.py`, `tools/anim_cutout.py`. Tests : `test/refonte_ma_test.dart`, `tools/tests/test_refonte_muscles.py`.
+
+
+# Historique — Kalis Track 4.1.0 — Koach s'adapte à ta journée
 
 ## 4.1.0 — Adaptation au jour le jour (lot L11)
 

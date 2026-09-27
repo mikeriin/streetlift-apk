@@ -1,8 +1,47 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : L11 — Koach étendu, adaptation au jour le jour (KT-058 à KT-064), version 4.1.0**  
-**Date : 27 septembre 2026, Europe/Paris — version : 4.1.0+68 (versionCode réel fixé par la CI de build)**  
-**Statut : lot L11 exécuté par le pipeline automatisé (sans échange en direct). Corrigé dans le code et testé automatiquement en CI (voir L11.3) ; build signé : `LIVRAISON_L11.md` ; rien n'est vérifié sur téléphone.**
+**Passe actuelle : refonte muscles et animations (branche `refonte/muscles-animations`), version 4.1.1**  
+**Date : 27 septembre 2026, Europe/Paris — version : 4.1.1+69 (versionCode réel fixé par la CI de build)**  
+**Statut : fusion sur `main` soumise à l'accord écrit du propriétaire. Contrôlé en CI (branche temporaire `claude/ci-refonte`) ; build de la branche : `LIVRAISON_REFONTE_MA.md` ; rien n'est vérifié sur téléphone.**
+
+## Refonte MA.0 — Base et demande
+
+| Élément | Valeur |
+| --- | --- |
+| Demande | `pipeline/prompt_REFONTE_MA.txt` (27/09/2026) : carte musculaire en illustrations historiques (STATS inclus), vue de profil tirée de l'image fournie par le propriétaire, toutes les démonstrations refaites avec ces illustrations |
+| Base | `main` `b202121` (4.1.0+68, L11) |
+| Reprise de Codex | branche `codex/retablir-carte-musculaire-et-animations` (`codex_export/`, reconstruit par `reconstruct.py`, SHA-256 vérifiés) : 18 PNG de 3.1.0 (identiques octet pour octet à 3.1.0), carte des fiches agrégée par groupes. **Non repris** : sa vue de profil (blocs polygonaux) et son formatage (autre version de Dart) |
+| Outils | pas de Flutter local (proxy) : contrôles et rendus en CI (Flutter 3.29.3) ; outils d'images en Python (numpy, scipy, Pillow) |
+
+## Refonte MA.1 — Changements
+
+- **Carte (STATS, accueil, WOD)** : `lib/muscle_body.dart` revient au rendu 3.1.0 (image de base + calques modulés par `heat()`, halo). Nouveaux paramètres optionnels `views` (défaut face + dos, comme 3.1.0) et `normalize` (défaut vrai). `heatAtlasFills` est **conservée** (atlas vectoriel du pack, testé par `l9b_content_test.dart`) : aucune assertion retirée.
+- **Fiche exercice** (`lib/atlas.dart`) : `ExerciseAtlas` affiche face / dos / profil ; les 81 muscles de l'atlas sont agrégés en 11 groupes (principal 1, secondaire 0,62, stabilisateur 0,35, étiré 0,25 ; le plus fort l'emporte), sans normalisation ; légende par la rampe ; liste texte inchangée.
+- **Profil** (`tools/muscles_profile.py`, source `tools/sources/profil_source_chatgpt.png`) : alpha opaque dans le corps et bords teintés du noir du contour (aucun liseré), recadrage, 760 px de haut (142 px de large), marges de 8 px comme la face ; niveaux de gris par une courbe monotone passant par des points appariés des histogrammes (noir des contours 49 → 44, muscles q5/q50/q95/q99,5 → face/dos) ; 11 calques par segmentation des pièces claires (points-graines relevés sur la planche de contrôle ; codage des calques identique à la face : gris = 0,877 × base + 89,5). `meta.json` complété.
+- **Démonstrations découpées** (`tools/anim_cutout.py` → `assets/muscles/anim/`, `lib/pose_cutout.dart`) : 16 segments de face et de dos, 10 de profil (bras et jambe du côté proche, réutilisés assombris pour le côté éloigné). À chaque articulation, le segment proximal passe dessus avec un chapeau circulaire dégradé et le distal dessous avec un disque plein (pas de trou ni de cassure quand l'articulation plie). Flanc du tronc sous le bras et haut de cuisse sous la main redessinés dans le style de l'illustration (visibles seulement quand le bras bouge). Chaque os de l'illustration est amené sur l'os du modèle (longueur du modèle, largeur à l'échelle de l'illustration) ; tête, mains et pieds rigides. Coudes, poignets, genoux et chevilles tombent exactement sur les articulations du modèle (contacts et accessoires inchangés). Calques de groupes découpés avec leurs segments, colorés par la rampe de la carte. `PosePainter` garde la silhouette vectorielle en secours (atlas absents) ; `PoseRoles` inchangé.
+- **Choix de vue** (`cutoutViewOf`) : gabarit de profil → profil ; gabarit de face → **dos** si les muscles principaux postérieurs (trapèzes, dorsaux, érecteurs, carré des lombes, triceps, grand fessier, ischios, mollets…) sont plus nombreux que les antérieurs (muscles latéraux non comptés), sinon face. Résultat : 584 profil, 21 face, 2 dos (side bend, planche latérale avec abduction). La vue de dos rejoue la cinématique de face en miroir avec l'illustration de dos.
+- **Revue de toutes les démonstrations** (planches d'images clés de 607 exercices rendues par le vrai code et regardées) : 18 exercices revus (`cutoutReviewOverrides`), le pack validé n'est pas modifié :
+  - image fixe « haut » (position basse du pack : barre ou haltères derrière la tête) : développé couché, couché haltères, prise serrée, pause, décliné, incliné, incliné haltères, floor press, JM press, test 1RM développé couché, Tate press ;
+  - image fixe (deux images clés identiques, aucun mouvement) : leg curl, leg extension ;
+  - sans démonstration (contact essentiel absent) : presse à cuisses (plateau loin des pieds), sled push (mains loin du traîneau), rowing haltère appui poitrine (poitrine hors du banc), transition de muscle-up assistée pieds au sol (pieds en l'air), sauts en contrebas (pas de caisse).
+  Le générateur de programme (L10) lit toujours le statut du pack (références figées des tests L10) : ces 18 exercices y restent « animés ».
+- Version 4.1.1+69 (`pubspec.yaml`, `kAppVersion`).
+
+## Refonte MA.2 — Contrôles
+
+- CI `claude/ci-refonte` (Flutter 3.29.3) : `dart format --set-exit-if-changed` sans changement, `flutter analyze` sans problème, suite complète 769 réussis / 13 ignorés / 0 échec, Python 75/75 et `verify_project.py`.
+- Nouveaux tests (`test/refonte_ma_test.dart`) : PNG et calques présents, calques alignés au pixel et dans la silhouette, profil sans liseré, muscles → groupes et intensités par rôle, **STATS identique au pixel à 3.1.0** (copie conforme du widget 3.1.0 dans `test/support/muscle_body_310.dart`, sombre et clair, avec et sans halo), choix de vue, segments posés exactement sur les articulations, rendu sans exception des 607 animations, exercices revus, coût (≈ 430-620 images/s en test, textures décodées des trois vues 6,3 Mo). `tools/tests/test_refonte_muscles.py` : atlas et gabarits cohérents.
+- Rendus de revue et d'aperçu (`test/refonte_ma_capture_test.dart`, seulement avec `KALIS_CAPTURE`).
+
+## Refonte MA.3 — Limites
+
+- Rien n'est vérifié sur téléphone ; le coût mesuré est celui du moteur de test.
+- Les zones redessinées sous le bras (profil) sont une interprétation dans le style de l'illustration, pas l'image du propriétaire.
+- Les proportions du modèle (bras plus longs que l'illustration) étirent un peu les bras et les cuisses.
+- Défauts de contenu du pack relevés pendant la revue (à corriger dans le pack, proposition dans `pipeline/DECISIONS_EN_ATTENTE.md`) : les 18 exercices ci-dessus ; accessoires manquants sans fausser le geste (« banc incliné » des YTW, porte des rowings à la serviette).
+
+
+# Historique conservé — L11 (4.1.0)
 
 ## L11.0 — Base
 
