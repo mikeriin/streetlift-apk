@@ -8,7 +8,7 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 
 | Lot | Version | Commit main | Run | Date | Statut |
 | --- | --- | --- | --- | --- | --- |
-| M1 | 5.0.0 | — | — | 2026-09-27 | en cours |
+| M1 | 5.0.0 | — | CI 3D run 8 | 2026-09-27 | en cours — bloqué (GitHub Actions ne démarre plus, voir DECISIONS_3D.md) |
 | M2 | 5.1.0 | — | — | — | à faire |
 | M3 | 5.2.0 | — | — | — | à faire |
 | M4 | 5.3.0 | — | — | — | à faire |
