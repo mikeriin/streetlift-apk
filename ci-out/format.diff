@@ -1,10 +1,10 @@
- ci-out/analyze.log                            |      7 -
- ci-out/commit.txt                             |      2 +-
- ci-out/format-full.diff                       | 103056 -----------------------
- ci-out/format.diff                            |     18 -
- ci-out/format.log                             |      8 +-
- ci-out/python.log                             |     70 -
- ci-out/test-l5c.log                           |    210 -
- ci-out/test.log                               |   1851 -
- streetlift_tracker/test/l13_screens_test.dart |     32 +-
- 9 files changed, 16 insertions(+), 105238 deletions(-)
+ ci-out/analyze.log       |      3 -
+ ci-out/android-debug.log |     12 -
+ ci-out/commit.txt        |      2 +-
+ ci-out/format-full.diff  | 105349 --------------------------------------------
+ ci-out/format.diff       |     10 -
+ ci-out/format.log        |      3 +-
+ ci-out/python.log        |     70 -
+ ci-out/test-l5c.log      |    210 -
+ ci-out/test.log          |   1084 -
+ 9 files changed, 2 insertions(+), 106741 deletions(-)
