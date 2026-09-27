@@ -149,8 +149,10 @@ void main() {
 
     test('prescription réduite : « 4×8 » → « 3×8 », myo et EMOM intacts', () {
       expect(SetsSpec.text('4×8').withCount(3)!.value, '3×8');
-      expect(SetsSpec.text('4×(3×2) · 20 s intra').withCount(2)!.value,
-          '2×(3×2) · 20 s intra');
+      expect(
+        SetsSpec.text('4×(3×2) · 20 s intra').withCount(2)!.value,
+        '2×(3×2) · 20 s intra',
+      );
       expect(reducibleText('4×8'), isTrue);
       expect(reducibleText('1×12-15 puis 4×(4)'), isFalse);
       expect(reducibleText('EMOM 10 min'), isFalse);
@@ -200,7 +202,10 @@ void main() {
         for (final c in list) {
           expect(c.id, isNot(original.id));
           expect(c.type, original.type);
-          expect((c.difficulty - original.difficulty).abs(), lessThanOrEqualTo(1));
+          expect(
+            (c.difficulty - original.difficulty).abs(),
+            lessThanOrEqualTo(1),
+          );
           expect(c.materiel.every(equipment.contains), isTrue);
           for (final j in c.joints.entries) {
             expect(
@@ -240,20 +245,16 @@ void main() {
     test('règles de reprise à 7, 14 et 28 jours (et bornes)', () {
       expect(resumeRule(6).active, isFalse);
       final r7 = resumeRule(7);
-      expect([r7.band, r7.loadCut, r7.setCut, r7.calibrationSet], [
-        1,
-        .10,
-        1,
-        false,
-      ]);
+      expect(
+        [r7.band, r7.loadCut, r7.setCut, r7.calibrationSet],
+        [1, .10, 1, false],
+      );
       expect(resumeRule(13).band, 1);
       final r14 = resumeRule(14);
-      expect([r14.band, r14.loadCut, r14.setCut, r14.calibrationSet], [
-        2,
-        .20,
-        0,
-        true,
-      ]);
+      expect(
+        [r14.band, r14.loadCut, r14.setCut, r14.calibrationSet],
+        [2, .20, 0, true],
+      );
       expect(resumeRule(27).band, 2);
       final r28 = resumeRule(28);
       expect([r28.band, r28.loadCut, r28.calibrationWeek], [3, .30, true]);
@@ -277,8 +278,10 @@ void main() {
       final w = resumeRule(30);
       expect(resumeAppliesTo(w, 100, 106, const [100, 102]), isTrue);
       expect(resumeAppliesTo(w, 100, 107, const [100]), isFalse);
-      expect(resumeAppliesTo(r, 100, 100 + kResumeHorizonDays + 1, const []),
-          isFalse);
+      expect(
+        resumeAppliesTo(r, 100, 100 + kResumeHorizonDays + 1, const []),
+        isFalse,
+      );
     });
 
     test('maladie : première semaine de retour seulement', () {
@@ -326,8 +329,10 @@ void main() {
       final p = planned(.5, .5);
       final r = adherenceRate(p, 200)!;
       expect(r, closeTo(.5, 1e-9));
-      expect(adherenceAdvice(r, adherenceRate(p, 200, offset: 28), true),
-          'fewer');
+      expect(
+        adherenceAdvice(r, adherenceRate(p, 200, offset: 28), true),
+        'fewer',
+      );
     });
 
     test('60 à 89 % : rien', () {
@@ -472,12 +477,13 @@ void main() {
 
   group('données', () {
     test('aller-retour et lecture stricte', () {
-      final a = AdaptData()
-        ..autonomy = 'guided'
-        ..pause = const AdaptPause('vacation', '2026-10-01')
-        ..shorter = '2026-10-01T10:00:00'
-        ..lightenFrom = '2026-10-01'
-        ..lightenTo = '2026-10-04';
+      final a =
+          AdaptData()
+            ..autonomy = 'guided'
+            ..pause = const AdaptPause('vacation', '2026-10-01')
+            ..shorter = '2026-10-01T10:00:00'
+            ..lightenFrom = '2026-10-01'
+            ..lightenTo = '2026-10-04';
       a.pauses.add(const AdaptPause('illness', '2026-09-01', '2026-09-05'));
       a.sessions['S3-J1'] = {
         'minutes': 30,

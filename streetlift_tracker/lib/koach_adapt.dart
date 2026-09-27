@@ -464,10 +464,12 @@ ResumeRule resumeRule(int gap) {
 /// séance), avant [session]. Renvoie (premier jour de la reprise, durée de
 /// l'arrêt) ou null (aucun arrêt, ou aucun entraînement avant).
 (int, int)? resumeEpisode(List<int> days, int session) {
-  final before = <int>{
-    for (final d in days)
-      if (d < session) d,
-  }.toList()..sort();
+  final before =
+      <int>{
+          for (final d in days)
+            if (d < session) d,
+        }.toList()
+        ..sort();
   if (before.isEmpty) return null;
   final points = [...before, session];
   for (var i = points.length - 1; i > 0; i--) {
@@ -604,11 +606,12 @@ bool plateauDetected(
 }
 
 /// Intervention proposée selon le niveau (0 débutant … 4 expert).
-String plateauKind(int level) => level <= 1
-    ? 'technique'
-    : level == 2
-    ? 'range'
-    : 'deload';
+String plateauKind(int level) =>
+    level <= 1
+        ? 'technique'
+        : level == 2
+        ? 'range'
+        : 'deload';
 
 const kPlateauTexts = {
   'technique':
@@ -711,7 +714,8 @@ List<GenExercise> maintenanceExercises(GenCatalog catalog, int level) {
         best = e;
         continue;
       }
-      final a = (e.difficulty - target).abs(), b = (best.difficulty - target).abs();
+      final a = (e.difficulty - target).abs(),
+          b = (best.difficulty - target).abs();
       if (a < b || (a == b && e.id.compareTo(best.id) < 0)) best = e;
     }
     if (best != null) out.add(best);

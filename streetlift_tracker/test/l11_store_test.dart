@@ -143,9 +143,10 @@ void main() {
       final full = app.sessionLoad(4, pull)!;
       expect(app.sessionLoad(4, pull, day: 1)!, lessThanOrEqualTo(full * .8));
       // Pas de série retirée à 14 jours.
-      final p2 = app.sessionDay(4, base).exercises.firstWhere(
-        (e) => e.id == pull.id,
-      );
+      final p2 = app
+          .sessionDay(4, base)
+          .exercises
+          .firstWhere((e) => e.id == pull.id);
       expect(app.setCount(p2), app.setCount(pull));
       app.setAdaptSafety(4, base, 'refused');
       expect(app.adaptInfo(4, 1).applied, isFalse);
@@ -192,9 +193,10 @@ void main() {
       expect(info.applied, isTrue);
       final base = day(3, 2);
       final dip = mainOf(base, 'DIP');
-      final adapted = app.sessionDay(3, base).exercises.firstWhere(
-        (e) => e.id == dip.id,
-      );
+      final adapted = app
+          .sessionDay(3, base)
+          .exercises
+          .firstWhere((e) => e.id == dip.id);
       expect(
         app.setCount(adapted),
         (app.setCount(dip) * kIllnessVolume).round(),
@@ -230,47 +232,49 @@ void main() {
   });
 
   group('KT-058 et KT-059 dans le store', () {
-    test('compression pendant la séance puis annulation ; export et rejeu',
-        () async {
-      final base = day(3, 1);
-      expect(identical(app.sessionDay(3, base), base), isTrue);
-      final plain = jsonDecode(app.exportAll()) as Map<String, dynamic>;
-      expect(plain.containsKey('adapt'), isFalse);
-      // Séance commencée : première série du muscle-up faite.
-      for (final e in base.exercises) {
-        app.exLog(3, 1, e);
-      }
-      final mu = mainOf(base, 'MUSCLE-UP');
-      app.exLog(3, 1, mu).sets.first
-        ..reps = '4'
-        ..done = true
-        ..completedAt = clock.toIso8601String();
-      final plan = app.adaptCompressPreview(3, base, 30);
-      expect(plan.unchanged, isFalse);
-      expect(plan.warmup, isFalse, reason: 'séance commencée');
-      app.applyCompression(3, base, plan);
-      final d = app.sessionDay(3, base);
-      expect(app.adaptCompressed(3, 1), 30);
-      for (final e in base.exercises.where((e) => e.main)) {
-        expect(d.exercises.any((x) => x.id == e.id), isTrue);
-      }
-      for (final id in plan.removed) {
-        expect(d.exercises.any((x) => x.id == id), isFalse);
-        expect(app.logs['S3-J1']!.ex.containsKey(id), isFalse);
-      }
-      expect(app.logs['S3-J1']!.ex[mu.id]!.sets.first.done, isTrue);
-      final exported = jsonDecode(app.exportAll()) as Map<String, dynamic>;
-      expect(exported['adapt']['sessions']['S3-J1']['minutes'], 30);
-      final before = signature(app, 3, 1);
-      final next = await relaunch();
-      expect(signature(next, 3, 1), before);
-      app.clearCompression(3, base);
-      expect(identical(app.sessionDay(3, base), base), isTrue);
-      for (final e in base.exercises.where((e) => e.main)) {
-        final log = app.logs['S3-J1']!.ex[e.id]!;
-        expect(log.sets.length, app.setCount(e));
-      }
-    });
+    test(
+      'compression pendant la séance puis annulation ; export et rejeu',
+      () async {
+        final base = day(3, 1);
+        expect(identical(app.sessionDay(3, base), base), isTrue);
+        final plain = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+        expect(plain.containsKey('adapt'), isFalse);
+        // Séance commencée : première série du muscle-up faite.
+        for (final e in base.exercises) {
+          app.exLog(3, 1, e);
+        }
+        final mu = mainOf(base, 'MUSCLE-UP');
+        app.exLog(3, 1, mu).sets.first
+          ..reps = '4'
+          ..done = true
+          ..completedAt = clock.toIso8601String();
+        final plan = app.adaptCompressPreview(3, base, 30);
+        expect(plan.unchanged, isFalse);
+        expect(plan.warmup, isFalse, reason: 'séance commencée');
+        app.applyCompression(3, base, plan);
+        final d = app.sessionDay(3, base);
+        expect(app.adaptCompressed(3, 1), 30);
+        for (final e in base.exercises.where((e) => e.main)) {
+          expect(d.exercises.any((x) => x.id == e.id), isTrue);
+        }
+        for (final id in plan.removed) {
+          expect(d.exercises.any((x) => x.id == id), isFalse);
+          expect(app.logs['S3-J1']!.ex.containsKey(id), isFalse);
+        }
+        expect(app.logs['S3-J1']!.ex[mu.id]!.sets.first.done, isTrue);
+        final exported = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+        expect(exported['adapt']['sessions']['S3-J1']['minutes'], 30);
+        final before = signature(app, 3, 1);
+        final next = await relaunch();
+        expect(signature(next, 3, 1), before);
+        app.clearCompression(3, base);
+        expect(identical(app.sessionDay(3, base), base), isTrue);
+        for (final e in base.exercises.where((e) => e.main)) {
+          final log = app.logs['S3-J1']!.ex[e.id]!;
+          expect(log.sets.length, app.setCount(e));
+        }
+      },
+    );
 
     test('échange : substitut du même type, première série de calibrage, '
         'retour à l\'original', () async {
@@ -286,7 +290,8 @@ void main() {
         }
       }
       expect(original, isNotNull);
-      final to = app.adaptSwapCandidates(catalog, original!, motive: 'busy').first;
+      final to =
+          app.adaptSwapCandidates(catalog, original!, motive: 'busy').first;
       final pack = app.adaptPackOf(original, catalog)!;
       expect(to.type, pack.type);
       app.applySwap(3, base, original, to, 'busy', catalog);
@@ -335,8 +340,7 @@ void main() {
       expect(app.profile!.fields['autonomy']!.source, 'declared');
     });
 
-    test('Guidé : baisse de valeur acceptée d\'office au bilan, annulable',
-        () {
+    test('Guidé : baisse de valeur acceptée d\'office au bilan, annulable', () {
       final p = <String, dynamic>{
         'id': 'S3-J1|B8',
         'kind': 'value',
@@ -375,16 +379,12 @@ void main() {
       final c = app.adaptLoadCaution;
       expect(c, isNotNull);
       expect(c!.$1, closeTo(480 / 300, 1e-9));
-      expect(
-        app.adaptProposals.any((p) => p.kind == 'caution'),
-        isTrue,
-      );
+      expect(app.adaptProposals.any((p) => p.kind == 'caution'), isTrue);
       app.applyLighten();
       expect(app.adapt.lightenFrom, isNotNull);
     });
 
-    test('question de difficulté : débutants et novices, Guidé ou Assisté',
-        () {
+    test('question de difficulté : débutants et novices, Guidé ou Assisté', () {
       const at = '2026-08-24T10:00:00';
       final p = UserProfile(origin: 'onboarding', createdAt: at);
       p.setField('benchmarks', {'pushups': 1, 'pullups': 1}, at);

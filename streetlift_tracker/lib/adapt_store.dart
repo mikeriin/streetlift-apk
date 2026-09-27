@@ -221,16 +221,13 @@ extension AdaptStore on AppStore {
             }
           }
         }
-        return {
-          for (final e in out.entries) e.key: (e.value.toList()..sort()),
-        };
+        return {for (final e in out.entries) e.key: (e.value.toList()..sort())};
       });
 
   /// Jours de retour d'une maladie (premier jour après la pause).
   List<int> get _illnessReturns => [
     for (final p in adapt.pauses)
-      if (p.kind == 'illness' && p.to != null)
-        dayIndex(DateTime.parse(p.to!)),
+      if (p.kind == 'illness' && p.to != null) dayIndex(DateTime.parse(p.to!)),
   ];
 
   /// Jours en pause (terminées et en cours).
@@ -238,7 +235,8 @@ extension AdaptStore on AppStore {
     final out = <int>{};
     for (final p in [...adapt.pauses, if (adapt.pause != null) adapt.pause!]) {
       final a = dayIndex(DateTime.parse(p.from));
-      final b = p.to == null ? _adaptToday + 1 : dayIndex(DateTime.parse(p.to!));
+      final b =
+          p.to == null ? _adaptToday + 1 : dayIndex(DateTime.parse(p.to!));
       for (var d = a; d < b && d - a < 400; d++) {
         out.add(d);
       }
@@ -445,7 +443,10 @@ extension AdaptStore on AppStore {
         final b = out.indexWhere((e) => e.id.split('~').first == p.$2);
         if (a < 0 || b < 0 || b == a + 1) continue;
         final moved = out.removeAt(b);
-        out.insert(out.indexWhere((e) => e.id.split('~').first == p.$1) + 1, moved);
+        out.insert(
+          out.indexWhere((e) => e.id.split('~').first == p.$1) + 1,
+          moved,
+        );
         changed = true;
       }
       return changed ? DayPlan.adapted(base, out) : base;
@@ -543,11 +544,7 @@ extension AdaptStore on AppStore {
       final items = _cItems(week, base);
       final full = compressSession(items, 100000);
       final minutes = math.max(10, (full.before * kShorterFactor / 60).floor());
-      final plan = compressSession(
-        items,
-        minutes,
-        started: _adaptStarted(key),
-      );
+      final plan = compressSession(items, minutes, started: _adaptStarted(key));
       return plan.unchanged ? null : plan.toJson();
     });
   }
@@ -842,7 +839,8 @@ extension AdaptStore on AppStore {
         final o = _order(w.n, d.j);
         planned.add((o, dayIndex(program.dateFor(w.n, d.j))));
         final l = logs[sessionKey(w.n, d.j)];
-        if (l != null && (l.done || l.ex.values.any((x) => x.sets.any((s) => s.done)))) {
+        if (l != null &&
+            (l.done || l.ex.values.any((x) => x.sets.any((s) => s.done)))) {
           done.add(o);
         }
       }
@@ -1078,8 +1076,7 @@ extension AdaptStore on AppStore {
 
   /// Profil concerné par la question de difficulté globale : débutant ou
   /// novice, en mode Guidé ou Assisté.
-  bool get adaptSimplified =>
-      adaptLevel <= 1 && autonomyMode != 'expert';
+  bool get adaptSimplified => adaptLevel <= 1 && autonomyMode != 'expert';
 
   /// La question de fin de séance est à poser.
   bool adaptAsksDifficulty(String key) =>
@@ -1295,7 +1292,8 @@ extension AdaptStore on AppStore {
               'C’est un simple repère : alléger la fin de semaine peut aider '
               'à récupérer.',
           [
-            if (adapt.lightenFrom == null) ('lighten', 'Alléger la fin de semaine'),
+            if (adapt.lightenFrom == null)
+              ('lighten', 'Alléger la fin de semaine'),
             ('dismiss', 'Garder'),
           ],
         ),
@@ -1333,9 +1331,10 @@ extension AdaptStore on AppStore {
         final d = action == 'dropDay' ? dayToDrop(days) : dayToAdd(days);
         if (d == null) return null;
         final next = prof.copy();
-        final list = action == 'dropDay'
-            ? (days.where((x) => x != d).toList()..sort())
-            : ([...days, d]..sort());
+        final list =
+            action == 'dropDay'
+                ? (days.where((x) => x != d).toList()..sort())
+                : ([...days, d]..sort());
         next.setField('days', list, profileAt(storeClock()));
         _adaptEvent('days', {'action': action, 'day': d});
         dismissAdapt(p.id);

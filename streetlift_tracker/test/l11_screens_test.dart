@@ -196,7 +196,10 @@ void main() {
     );
     await tester.tap(find.text('ouvrir'));
     await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('adapt-difficulty-sheet')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('adapt-difficulty-sheet')),
+      findsOneWidget,
+    );
     await scrollToAction(
       tester,
       find.byKey(const ValueKey('adapt-difficulty-6')),

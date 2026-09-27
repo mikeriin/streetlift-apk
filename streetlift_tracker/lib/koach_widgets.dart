@@ -334,21 +334,21 @@ class KoachSuggestionCard extends StatelessWidget {
             ),
           if (actions) const SizedBox(height: 10),
           if (actions)
-          KActionRow(
-            minButtonWidth: 120,
-            children: [
-              FilledButton(
-                key: const ValueKey('koach-apply'),
-                onPressed: onApply,
-                child: const Text('Appliquer'),
-              ),
-              OutlinedButton(
-                key: const ValueKey('koach-keep'),
-                onPressed: onKeep,
-                child: const Text('Garder ma charge'),
-              ),
-            ],
-          ),
+            KActionRow(
+              minButtonWidth: 120,
+              children: [
+                FilledButton(
+                  key: const ValueKey('koach-apply'),
+                  onPressed: onApply,
+                  child: const Text('Appliquer'),
+                ),
+                OutlinedButton(
+                  key: const ValueKey('koach-keep'),
+                  onPressed: onKeep,
+                  child: const Text('Garder ma charge'),
+                ),
+              ],
+            ),
         ],
       ),
     ),

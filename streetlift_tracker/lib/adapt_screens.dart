@@ -561,7 +561,8 @@ class AdaptSessionBanner extends StatelessWidget {
       );
     }
     if (info.lighten) out.add('Fin de semaine allégée : séries × 0,8.');
-    if (info.deload) out.add('Semaine de décharge : séries × 0,6, charges −10 %.');
+    if (info.deload)
+      out.add('Semaine de décharge : séries × 0,6, charges −10 %.');
     if (compressed != null) out.add('Séance recomposée pour $compressed min.');
     if (info.shorter) out.add('Séances 20 % plus courtes.');
     return out;
@@ -598,7 +599,9 @@ class AdaptSessionBanner extends StatelessWidget {
                         store.setAdaptSafety(week, base, 'refused');
                         onChanged?.call();
                       },
-                      child: Text(mode == 'guided' ? 'Annuler' : 'Revenir au prévu'),
+                      child: Text(
+                        mode == 'guided' ? 'Annuler' : 'Revenir au prévu',
+                      ),
                     )
                   else ...[
                     TextButton(
@@ -607,7 +610,9 @@ class AdaptSessionBanner extends StatelessWidget {
                         store.setAdaptSafety(week, base, 'applied');
                         onChanged?.call();
                       },
-                      child: Text(pending ? 'Appliquer' : 'Appliquer quand même'),
+                      child: Text(
+                        pending ? 'Appliquer' : 'Appliquer quand même',
+                      ),
                     ),
                     if (pending)
                       TextButton(
@@ -657,10 +662,7 @@ class AdaptHomeCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    p.title,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
+                  Text(p.title, style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: 4),
                   Text(p.text),
                   const SizedBox(height: 8),
@@ -758,7 +760,9 @@ class _PauseCard extends StatelessWidget {
                       final name = store.addMaintenanceSession(c);
                       messenger.showSnackBar(
                         SnackBar(
-                          content: Text('« $name » est dans tes séances perso.'),
+                          content: Text(
+                            '« $name » est dans tes séances perso.',
+                          ),
                         ),
                       );
                     },
@@ -988,10 +992,7 @@ Future<void> showSessionDifficulty(BuildContext context, String key) async {
                     key: ValueKey('adapt-difficulty-${e.key}'),
                     dense: true,
                     contentPadding: EdgeInsets.zero,
-                    leading: CircleAvatar(
-                      radius: 16,
-                      child: Text('${e.key}'),
-                    ),
+                    leading: CircleAvatar(radius: 16, child: Text('${e.key}')),
                     title: Text(e.value),
                     onTap: () => Navigator.pop(context, e.key),
                   ),

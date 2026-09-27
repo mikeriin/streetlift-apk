@@ -700,15 +700,17 @@ extension KoachStore on AppStore {
 
   /// L11 (KT-063) : conduite selon le mode d'autonomie (`auto`,
   /// `propose`, `info`, `none`).
-  String koachSuggestionAction(ke.KSuggestion sug) => autonomyAction(
-    AdaptStore(this).autonomyMode,
-    sug.direction,
-    sug.reason,
-  );
+  String koachSuggestionAction(ke.KSuggestion sug) =>
+      autonomyAction(AdaptStore(this).autonomyMode, sug.direction, sug.reason);
 
   /// Mode Guidé : applique la suggestion quand la règle le permet. Renvoie
   /// la suggestion appliquée (message et annulation), sinon null.
-  ke.KSuggestion? koachAutoApply(int week, int day, Exercise e, ExerciseLog log) {
+  ke.KSuggestion? koachAutoApply(
+    int week,
+    int day,
+    Exercise e,
+    ExerciseLog log,
+  ) {
     if (!log.sets.any((s) => !s.done)) return null;
     final sug = koachSuggestion(week, day, e, log);
     if (sug == null || koachSuggestionAction(sug) != 'auto') return null;
@@ -751,7 +753,11 @@ extension KoachStore on AppStore {
 
   /// Mode Guidé (KT-063) : jour de fatigue appliqué d'office. Renvoie les
   /// séries retirées par exercice (annulation), vide si rien n'est fait.
-  Map<String, int> koachAutoFatigue(int week, int day, List<Exercise> exercises) {
+  Map<String, int> koachAutoFatigue(
+    int week,
+    int day,
+    List<Exercise> exercises,
+  ) {
     if (AdaptStore(this).autonomyMode != 'guided') return const {};
     final level = koachFatigueLevel(week, day, exercises);
     if (level <= 0) return const {};
