@@ -190,8 +190,9 @@ class ProgramInstance {
   }
 
   static ProgramInstance _parse(Object raw) {
-    if (raw is! Map)
+    if (raw is! Map) {
       throw const FormatException('Programme : section invalide.');
+    }
     final m = raw.cast<String, dynamic>();
     final v = m['v'];
     if (v is! int || v < 1 || v > kProgramInstanceVersion) {

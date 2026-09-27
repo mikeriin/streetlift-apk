@@ -678,8 +678,9 @@ MovementLevels movementLevels(GenModels models, GenInputs inputs) {
     }
   }
 
-  if (m['pushups'] != null)
+  if (m['pushups'] != null) {
     put('push', 'pushups', _band(m['pushups']!, cuts('pushups')));
+  }
   final dip = m['dipLoadPct'];
   if (dip != null) {
     final t = l['dipLoadPct'] as Map;
@@ -689,8 +690,9 @@ MovementLevels movementLevels(GenModels models, GenInputs inputs) {
       put('push', 'dipLoadPct', 3);
     }
   }
-  if (m['pullups'] != null)
+  if (m['pullups'] != null) {
     put('pull', 'pullups', _band(m['pullups']!, cuts('pullups')));
+  }
   final pull = m['pullLoadPct'];
   if (pull != null) {
     final t = l['pullLoadPct'] as Map;
@@ -1004,7 +1006,7 @@ class _Item {
   String nameSuffix;
   String why;
   bool hard;
-  bool heavy;
+  bool heavy = false;
   int? rir;
   Map<String, dynamic>? load;
   Map<String, dynamic>? koach;
@@ -1021,10 +1023,7 @@ class _Item {
     this.nameSuffix = '',
     this.why = '',
     this.hard = false,
-    this.heavy = false,
     this.rir,
-    this.load,
-    this.koach,
     this.minutes = 0,
   });
 }
@@ -2070,7 +2069,12 @@ class _Generator {
         if (types == null) continue;
         final used = {for (final it in s.items) it.ex.id};
         final slot = _Slot('goal_${e.key}', types);
-        final ex = _pick(slot, s, cyc: w.cycle, exclude: used);
+        // Aucun exercice au niveau (mode prudent débutant) : difficulté
+        // relâchée jusqu'à 3, prérequis toujours exigés.
+        final ex =
+            _pick(slot, s, cyc: w.cycle, exclude: used) ??
+            _pick(slot, s, cyc: w.cycle, exclude: used, maxOverride: 2) ??
+            _pick(slot, s, cyc: w.cycle, exclude: used, maxOverride: 3);
         if (ex == null) continue;
         final it = _Item(ex, 'accessory', slot: slot, priority: 150);
         _prescribe(it, s, w, famOccurrence);
@@ -2121,8 +2125,9 @@ class _Generator {
         (c.model == 'linear' || (c.health && w.cycle == 0))) {
       parts.add('+1 rép. par séance réussie');
     }
-    if (c.model == 'undulating' && it.role == 'main')
+    if (c.model == 'undulating' && it.role == 'main') {
       parts.add('séance $style');
+    }
     if (w.kind == 'deload') parts.add('décharge');
     return parts.join(' · ');
   }
@@ -2410,6 +2415,16 @@ class _Generator {
     while (sessionSeconds(s) > budget * 1.1 && guard++ < 120) {
       if (!_shrink(s, week, force: true)) break;
     }
+    // Retrait forcé trop large : on complète de nouveau sans dépasser +10 %.
+    guard = 0;
+    if (w.kind == 'load') {
+      while (sessionSeconds(s) < budget * 0.9 && guard++ < 60) {
+        if (!_grow(s, targets, ceiling)) {
+          s.capped = true;
+          break;
+        }
+      }
+    }
   }
 
   final Map<int, Set<String>> _calibrated = {};
@@ -2589,8 +2604,9 @@ class _Generator {
         exclude: used,
       );
       if (e == null) continue;
-      if (!e.groups.every((g) => (_weekVolume[g] ?? 0) + 2 <= ceiling))
+      if (!e.groups.every((g) => (_weekVolume[g] ?? 0) + 2 <= ceiling)) {
         continue;
+      }
       final it = _Item(
         e,
         'accessory',
@@ -3057,7 +3073,7 @@ class _Generator {
     };
     final cap =
         s.capped
-            ? ' Séance plus courte que ton temps disponible : le volume est plafonné pour ta récupération.'
+            ? ' Séance plus courte que ton temps disponible : rien de plus ne tient sans dépasser ton temps ou le volume prévu pour ta récupération.'
             : '';
     return '$base$phase$cap';
   }

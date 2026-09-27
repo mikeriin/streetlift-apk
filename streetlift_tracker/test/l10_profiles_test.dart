@@ -125,7 +125,7 @@ List<_Profile> _profiles() {
       'Épreuves : pompes et tractions au maximum, le 14/12/2026 ; 4 × 60 min au parc ; 30 pompes, 8 tractions.',
       p(
         goal: 'event',
-        event: kL10Start.add(const Duration(days: 70)),
+        event: l10Day(70),
         items: const ['pushups_max', 'pullups_max'],
         days: const [1, 3, 5, 6],
         minutes: 60,

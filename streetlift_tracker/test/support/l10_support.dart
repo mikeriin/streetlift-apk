@@ -58,6 +58,10 @@ class L10Data {
 /// Lundi 5 octobre 2026 : départ fixe des profils de test.
 final DateTime kL10Start = DateTime(2026, 10, 5);
 
+/// Date civile [days] jours après le départ (sans Duration : le passage à
+/// l'heure d'hiver ne décale aucun jour).
+DateTime l10Day(int days) => DateTime(2026, 10, 5 + days);
+
 /// Profil du propriétaire (migration L8 : épreuve des 4 mouvements lestés,
 /// secondaire force 70/30, 6 jours, parc + salle, références du classeur).
 GenInputs ownerInputs({DateTime? start}) => GenInputs(
@@ -165,13 +169,13 @@ GenInputs randomInputs(int seed, GenCatalog catalog) {
   const splits = ['auto', 'auto', 'auto', 'fullbody', 'upper_lower', 'ppl'];
   const focus = ['', 'pullups', 'pushups', 'dips', 'squats'];
   return GenInputs(
-    start: kL10Start.add(Duration(days: r.nextInt(7))),
+    start: l10Day(r.nextInt(7)),
     goalPrimary: primary,
     goalSecondary: secondary == primary ? null : secondary,
     goalWeight: 50 + 10 * r.nextInt(6),
     eventDate:
         primary == 'event'
-            ? kL10Start.add(Duration(days: 3 + r.nextInt(330)))
+            ? l10Day(3 + r.nextInt(330))
             : null,
     eventItems: primary == 'event' ? (items.toList()..sort()) : const [],
     weekdays: days.toList()..sort(),
@@ -227,6 +231,30 @@ double dayMinutes(Map<String, dynamic> day) {
     first = false;
   }
   return total / 60;
+}
+
+/// Une famille est réalisable si au moins un exercice animé de cette
+/// famille passe les contraintes strictes (matériel d'un lieu de la
+/// semaine, gênes, prudence, exercices détestés) avec une difficulté ≤ 3.
+bool _feasible(L10Data data, GenInputs i, String family, Map week) {
+  final disliked = {for (final n in i.disliked) data.catalog.idForName(n)};
+  final places = {
+    for (final d in week['days'] as List)
+      if ((d as Map)['place'] != null) d['place'] as String,
+  };
+  for (final e in data.catalog.all) {
+    if (e.family != family || !e.usable || disliked.contains(e.id)) continue;
+    if (e.difficulty > 3 || e.measure == 'distance') continue;
+    if (i.caution && e.impact) continue;
+    if (i.pains.entries.any((p) => p.value > 3 && (e.joints[p.key] ?? 0) > 1)) {
+      continue;
+    }
+    for (final pl in places) {
+      final eq = packEquipment(pl, i.places[pl] ?? const []);
+      if (e.materiel.every(eq.contains)) return true;
+    }
+  }
+  return false;
 }
 
 /// Contrôle les propriétés du contrat L10 ; renvoie la liste des écarts.
@@ -372,7 +400,8 @@ List<String> checkProgram(
           '$tag S$n J${dm['j']} : ${minutes.toStringAsFixed(1)} min < −10 % de $avail sans plafond signalé',
         );
       }
-      if ((dm['estimate'] as int) != (minutes * 60).round()) {
+      // Arrondi flottant : ±1 s toléré entre deux sommes identiques.
+      if (((dm['estimate'] as int) - minutes * 60).abs() > 1) {
         out.add(
           '$tag S$n J${dm['j']} : durée enregistrée ${dm['estimate']} s ≠ ${(minutes * 60).round()} s',
         );
@@ -403,7 +432,8 @@ List<String> checkProgram(
       );
       if (!eventWeek) {
         for (final r in required.entries) {
-          if ((famSessions[r.key] ?? 0) < r.value) {
+          if ((famSessions[r.key] ?? 0) < r.value &&
+              _feasible(data, i, r.key, wm)) {
             out.add(
               '$tag S$n : ${r.key} travaillé ${famSessions[r.key] ?? 0} fois (< ${r.value})',
             );

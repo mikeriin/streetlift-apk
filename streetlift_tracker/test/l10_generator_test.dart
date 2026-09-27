@@ -222,7 +222,7 @@ void main() {
         'simulation complète puis jour J', () {
       final i = _p(
         goal: 'event',
-        event: kL10Start.add(const Duration(days: 70)),
+        event: l10Day(70),
         items: const ['pushups_max', 'pullups_max'],
         days: const [1, 3, 5, 6],
         places: const {
@@ -372,7 +372,7 @@ void main() {
     test('muscle-up retenu pour une épreuve de muscle-up', () {
       final i = _p(
         goal: 'event',
-        event: kL10Start.add(const Duration(days: 120)),
+        event: l10Day(120),
         items: const ['mu_max'],
         days: const [1, 3, 5],
         measures: const {'pushups': 60, 'pullups': 18},
@@ -573,7 +573,7 @@ void main() {
         _p(goal: 'health', places: const {'home_none': []}),
         _p(
           goal: 'event',
-          event: kL10Start.add(const Duration(days: 90)),
+          event: l10Day(90),
           items: const ['squat_1rm', 'dip_1rm'],
         ),
       ]) {
@@ -595,7 +595,7 @@ void main() {
         'sante_maison': _p(goal: 'health', places: const {'home_none': []}),
         'epreuve_parc': _p(
           goal: 'event',
-          event: kL10Start.add(const Duration(days: 90)),
+          event: l10Day(90),
           items: const ['pullups_max', 'dips_max'],
           places: const {
             'park': ['pullup_bar', 'dip_bars'],

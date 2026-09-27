@@ -95,9 +95,9 @@ void main() {
             );
             await tester.pumpAndSettle();
             expect(find.byKey(const ValueKey('program-model')), findsOneWidget);
-            expect(
+            await scrollToAction(
+              tester,
               find.byKey(const ValueKey('program-levels')),
-              findsOneWidget,
             );
             await scrollToAction(
               tester,
@@ -168,10 +168,17 @@ void main() {
     expect(store.programProfileChanged, isTrue);
     phone(tester, size: const Size(320, 720));
     await tester.pumpWidget(
-      page(const Scaffold(body: ProgramHomeCard()), scale: 2.0),
+      page(
+        Scaffold(body: ListView(children: const [ProgramHomeCard()])),
+        scale: 2.0,
+      ),
     );
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('program-home-card')), findsOneWidget);
+    await scrollToAction(
+      tester,
+      find.byKey(const ValueKey('program-home-preview')),
+    );
     await tester.tap(find.byKey(const ValueKey('program-home-preview')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('preview-summary')), findsOneWidget);
