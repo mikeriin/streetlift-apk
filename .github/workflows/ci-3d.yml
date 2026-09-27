@@ -141,6 +141,25 @@ jobs:
           set -o pipefail
           flutter build apk --profile --no-pub > ../out/build-profile.log 2>&1
           ls -la build/app/outputs/flutter-apk/ | tee -a ../out/build-profile.log
+          # Poids : contenu de l'APK regroupé par dossier (octets compressés).
+          python3 - <<'PY' > ../out/apk-poids.txt
+          import zipfile, collections
+          z = zipfile.ZipFile('build/app/outputs/flutter-apk/app-profile.apk')
+          groups = collections.Counter()
+          files = []
+          for i in z.infolist():
+              parts = i.filename.split('/')
+              key = '/'.join(parts[:4]) if parts[0] == 'assets' else '/'.join(parts[:2])
+              groups[key] += i.compress_size
+              files.append((i.compress_size, i.file_size, i.filename))
+          print('Total compressé :', sum(groups.values()))
+          for k, v in groups.most_common(40):
+              print(f'{v:>12}  {k}')
+          print()
+          for c, u, n in sorted(files, reverse=True)[:60]:
+              print(f'{c:>12} {u:>12}  {n}')
+          PY
+          head -n 40 ../out/apk-poids.txt
       - name: Migrations de l'outil Flutter pendant le build
         if: always()
         working-directory: streetlift_tracker
