@@ -211,6 +211,18 @@ jobs:
       run:
         shell: bash
     steps:
+      - name: Libérer de l'espace disque (image système de l'émulateur)
+        run: |
+          df -h / | tail -1
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/.ghcup /usr/local/share/boost \
+            /opt/hostedtoolcache/CodeQL /usr/share/swift /usr/local/share/powershell \
+            /opt/microsoft /usr/local/share/chromium /opt/az /usr/share/miniconda || true
+          sdk="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
+          for d in "$sdk"/ndk/*; do
+            [ "$(basename "$d")" = "28.2.13676358" ] || sudo rm -rf "$d"
+          done
+          sudo docker image prune --all --force > /dev/null 2>&1 || true
+          df -h / | tail -1
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
@@ -284,8 +296,8 @@ jobs:
           if [ -d artifacts/captures-avant ] && [ -d artifacts/captures-apres ]; then
             python3 streetlift_tracker/tools/compare_renders.py artifacts/captures-avant artifacts/captures-apres > ci-out/captures-comparaison.txt 2>&1 || true
             mkdir -p ci-out/captures
-            # Paires différentes (avant / après) pour les regarder, 30 au plus.
-            grep -E '^\S+\.png' ci-out/captures-comparaison.txt | grep -v identique | awk '{print $1}' | head -n 30 | while read -r n; do
+            # Les 16 paires les plus différentes (nombre de pixels décroissant).
+            grep -E '^\S+\.png' ci-out/captures-comparaison.txt | grep 'pixels différents' | sort -t$'\t' -k2 -n -r | awk '{print $1}' | head -n 16 | while read -r n; do
               cp "artifacts/captures-avant/$n" "ci-out/captures/avant_$n" 2>/dev/null || true
               cp "artifacts/captures-apres/$n" "ci-out/captures/apres_$n" 2>/dev/null || true
             done
