@@ -1,11 +1,21 @@
 # Décisions en attente
 
 ## Refonte muscles et animations (4.2.1, branche `refonte/muscles-animations`) — accord de fusion requis
-- **D-MA-00 Fusion sur `main`** : bloquante. Aperçu, contrôles et build dans `livraisons/LIVRAISON_REFONTE_MA.md`. Réponds « ok fusion » dans la session du lot.
+- **D-MA-00 Fusion sur `main`** : **faite** — 4.3.1 sur main (`7f07e2e`, run 94 réussi), construite sur 4.3.0 (constaté par L13, 27/09/2026). Texte d'origine : bloquante. Aperçu, contrôles et build dans `livraisons/LIVRAISON_REFONTE_MA.md`. Réponds « ok fusion » dans la session du lot.
 - **D-MA-01 Vue de dos** : choisie quand les muscles principaux postérieurs sont plus nombreux que les antérieurs (latéraux non comptés). Résultat : 2 exercices (side bend, planche latérale avec abduction) ; drapeaux et planches latérales restent de face. Option : forcer le dos pour les drapeaux (dorsaux). Recommandation : garder.
 - **D-MA-02 18 exercices revus** (animation fausse avec la cinématique du pack) : 11 développés en image fixe position haute, leg curl et leg extension en image fixe, 5 sans démonstration (presse à cuisses, sled push, rowing appui poitrine, transition de muscle-up pieds au sol, sauts en contrebas). Proposition pour une passe du pack : corriger la position basse des gabarits `banc.couche`, `banc.pause`, `banc.floor`, `banc.incline` (bras sous le niveau des épaules, avant-bras vertical), donner une vraie flexion à `assis.leg_curl` / `assis.leg_extension`, replacer plateau, traîneau et banc d'appui, ajouter sol et caisse ; les exercices reviendraient alors en animation.
 - **D-MA-03 Générateur de programme** : il lit toujours le statut du pack, ces 18 exercices y comptent comme « animés » (références figées des tests L10). Option : lui faire lire le statut revu (programmes générés légèrement différents).
 - **D-MA-04 Flanc sous le bras (profil)** : redessiné dans le style de ton illustration, visible seulement quand le bras bouge. Option : fournir une seconde image de profil bras levés.
+
+## L13 (4.3.0) — à relire (non bloquant)
+Détail : `docs/CONTRAT_L13.md` §2 (D-L13-01 à D-L13-10), `docs/GOOGLE_PLAY.md`, `docs/REGISTRE_VALIDATION.md`, `docs/TEST_FERME.md` dans le ZIP.
+- **URL publique de la politique de confidentialité** : à fournir (héberger `assets/legal/confidentialite.md`) ; requise pour la fiche Google Play. Adresse de contact aussi.
+- **D-L13-05 Réponses Koach par séance (sommeil, forme, douleur)** : restent hors du consentement L8 et ne sont pas effacées par « Retirer mon accord » (la douleur est une entrée de sécurité) ; effaçables à part. Option : les effacer au retrait de l'accord et ne plus demander sommeil/forme sans accord. Recommandation : garder, faire valider par un juriste.
+- **D-L13-01 Avertissement** : carte sous « Commencer » au premier écran et dans « À propos », sans case à cocher. Option : carte unique sur l'accueil après la mise à jour pour les installations existantes.
+- **D-L13-02 Renvoi vers un professionnel** à la 3ᵉ séance de suite avec douleur > 3/10 sur un mouvement.
+- **D-L13-04 Profil importé de moins de 18 ans** : application bloquée jusqu'à correction ou suppression.
+- **Sauvegarde Android** (KT-016 option A, inchangée) : les données de santé partent dans la sauvegarde Google si elle est activée. Option B : les en exclure.
+- **Registre de validation** : 22 éléments, dont 11 en priorité P1 (questionnaire, mode prudent, douleur, signaux d'alerte, seuils de niveau, reprise, RGPD, finalité, réponses Google Play) ; aucune relecture professionnelle en V1 (ta décision), limite écrite.
 
 ## L12 (4.2.0) — à relire (non bloquant)
 Détail : `docs/CONTRAT_L12.md` §2 (D-L12-01 à D-L12-12) et §5 (barème) dans le ZIP.

@@ -11,8 +11,8 @@
 | L10 | 4.0.0 | 5d38177 | 88 | 27/09/2026 | livré (build signé réussi ; non vérifié sur téléphone) |
 | L11 | 4.1.0 | b202121 | 89 | 27/09/2026 | livré (build signé réussi ; non vérifié sur téléphone) |
 | L12 | 4.2.0 | 332e292 | 90 | 27/09/2026 | livré (build signé réussi ; non vérifié sur téléphone) |
-| L13 | 4.3.0 (attendu) | — | — | 27/09/2026 | lancé |
-| Refonte MA (branche séparée) | 4.2.1 | `refonte/muscles-animations` `f4d7d70` (hors main, base 4.2.0) | 92 | 27/09/2026 | **aperçu prêt, accord de fusion requis** |
+| L13 | 4.3.0 | 1a39f91 | 93 annulé (concurrence) → **94** sur 4.3.1 | 27/09/2026 | livré (build signé réussi sur 4.3.1 qui contient L13 ; non vérifié sur téléphone) — **pipeline terminé** |
+| Refonte MA (branche séparée) | 4.2.1 → **4.3.1** | `refonte/muscles-animations` `f4d7d70` ; fusion sur main `7f07e2e` (base 4.3.0) | 92 ; 94 | 27/09/2026 | fusionnée sur main en 4.3.1 avec l'accord écrit du propriétaire (constaté par L13) ; run 94 réussi |
 
 Outil de relecture v2 (même lien, version 2 de l'artefact ; collection `relectures_v2`, l'ancienne `relectures` conservée) : https://claude.ai/artifact/MfMKxQMztc1rd85LLhUn6S
 Suite : le propriétaire relit la v2. À la validation : appliquer ses corrections, copier l'archive validée sous `kalis_content_pack_v1_final.zip` sur `content-pack`, puis lancer L9b (trig_01XUb6PZBCvYvNbBvpQokiun ; main est en 3.1.0, condition remplie). La seconde passe L9 (trig_01KyxRKcUDA45rdHQAw4xVGM) est remplacée par L9R.
@@ -27,4 +27,6 @@ L12 : livré le 27/09/2026 (motivation et progression visible ; barème des réc
 
 Refonte muscles et animations : livrée sur sa branche le 27/09/2026 (4.1.1 sur 4.1.0, build n°91 ; remise à jour sur 4.2.0 en 4.2.1, build n°92 ; aperçu https://claude.ai/artifact/XPop5Xkw3SJNmeftWd6zQf ; livraison `livraisons/LIVRAISON_REFONTE_MA.md`). Fusion sur main seulement sur accord écrit du propriétaire ; si main a encore avancé (L13), la branche sera remise à jour et renumérotée au correctif suivant.
 
-Décisions en attente : voir DECISIONS_EN_ATTENTE.md (D-MA-00 fusion de la refonte, bloquante ; L12 dont le barème des récompenses, L11, L10 et L9b, non bloquantes ; L9R et L8 tranchées)
+L13 : livré le 27/09/2026 (santé, sécurité, conformité, test fermé ; livraison `livraisons/LIVRAISON_L13.md`). ZIP 4.3.0 `0ff33144…1a70` publié sur main `1a39f91` ; son build n° 93 a été annulé par la poussée de 4.3.1 (refonte fusionnée par une autre session, construite sur 4.3.0, fichiers L13 identiques). **Version à installer : 4.3.1, run n° 94** (https://github.com/mikeriin/streetlift-apk/actions/runs/36327156905). Dernier lot : aucun lot suivant lancé. À fournir : URL publique de la politique de confidentialité.
+
+Décisions en attente : voir DECISIONS_EN_ATTENTE.md (L13 non bloquant, dont l'URL de la politique ; D-MA-00 fusion de la refonte faite en 4.3.1 ; L12 dont le barème des récompenses, L11, L10 et L9b, non bloquantes ; L9R et L8 tranchées)
