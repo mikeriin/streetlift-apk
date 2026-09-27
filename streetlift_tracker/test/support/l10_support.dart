@@ -173,10 +173,7 @@ GenInputs randomInputs(int seed, GenCatalog catalog) {
     goalPrimary: primary,
     goalSecondary: secondary == primary ? null : secondary,
     goalWeight: 50 + 10 * r.nextInt(6),
-    eventDate:
-        primary == 'event'
-            ? l10Day(3 + r.nextInt(330))
-            : null,
+    eventDate: primary == 'event' ? l10Day(3 + r.nextInt(330)) : null,
     eventItems: primary == 'event' ? (items.toList()..sort()) : const [],
     weekdays: days.toList()..sort(),
     sessionMinutes:

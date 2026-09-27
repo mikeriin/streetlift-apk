@@ -1,11 +1,3 @@
-Formatted lib/program_generator.dart
-Formatted lib/program_instance.dart
-Formatted lib/program_screens.dart
-Formatted lib/program_store.dart
-Formatted test/l10_generator_test.dart
-Formatted test/l10_profiles_test.dart
-Formatted test/l10_screens_test.dart
-Formatted test/l10_store_test.dart
 Formatted test/support/l10_support.dart
-Formatted 133 files (9 changed) in 2.75 seconds.
+Formatted 133 files (1 changed) in 3.42 seconds.
 exit=0
