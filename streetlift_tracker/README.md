@@ -1,4 +1,18 @@
-# Kalis Track 3.1.0 — Profil et démarrage
+# Kalis Track 3.2.0 — Exercices, démonstrations et atlas
+
+## 3.2.0 — Base d'exercices v2, démonstrations animées et fiches (lot L9b)
+
+- **625 exercices** (505 d'origine + 120 ajoutés par le pack de contenu validé) : types de mouvement, lieux, matériel, difficulté, muscles principaux, secondaires et stabilisateurs, précautions, prérequis, progressions et régressions.
+- **Arsenal → Exercices** : recherche (nom, muscle, matériel, lieu, type) et filtres type de mouvement, lieu, matériel, difficulté.
+- **Fiche exercice** : démonstration animée (silhouette calculée, muscles colorés selon ta couleur dominante), points clés, erreurs fréquentes, respiration, atlas des muscles avec liste en texte, précautions, prérequis, progressions et régressions sur lesquelles tu peux naviguer. Un geste impossible à montrer fidèlement affiche la position de départ, ou l'atlas et les consignes.
+- **Réduction des animations** du téléphone respectée : images clés fixes, numérotées. Bouton pause.
+- **Carte musculaire de STATS** redessinée avec l'atlas (51 muscles, face et dos) ; mêmes données, mêmes 11 groupes, même échelle d'intensité.
+- **Nouvelle séance** : le choix des exercices utilise la nouvelle base et un bouton ouvre la fiche. **Tes séances, ton historique et tes records ne changent pas** : les noms enregistrés restent valables et sont reliés à la nouvelle base à la lecture.
+- Réglages → À propos → **Sources et licences**.
+- Contenu rédigé et vérifié sur des sources publiques, **non relu par un professionnel diplômé** : ce sont des repères d'entraînement, pas des conseils médicaux.
+
+Détail : `docs/CONTRAT_L9b.md`, `SUIVI_PROJET.md` (L9b). Tests : `test/l9b_pose_test.dart`, `test/l9b_content_test.dart`, `test/l9b_perf_test.dart`, `tools/tests/test_content_pack.py`. Import du pack : `tools/content_pack_import.py`.
+
 
 ## 3.1.0 — Profil, démarrage court et questionnaire de santé (lot L8)
 

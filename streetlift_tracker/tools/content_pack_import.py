@@ -10,7 +10,8 @@ Sorties (reproductibles, gzip sans horodatage) :
   assets/content/progressions.json.gz arbres de progression
   assets/content/licences.md          mentions (écran « Sources et licences »)
   assets/content/pack.json            version et empreinte du pack intégré
-  lib/atlas_data.dart                 atlas musculaire (régions polygonales) et taxonomie
+  lib/atlas_data.dart                 atlas musculaire (régions polygonales) et taxonomie,
+                                        à passer ensuite à `dart format lib` (fait par la CI)
   test/fixtures/l9b/*                 fixtures de migration et de concordance du rendu
 
 Les champs de l'ancienne base (`n`, `g`, `eq`) sont conservés pour les 505 exercices v1 :

@@ -365,7 +365,8 @@ void main() {
       expect(tester.takeException(), null);
       await tester.enterText(find.byType(TextField), 'ab wheel');
       await tester.pumpAndSettle();
-      expect(find.text('Ab wheel'), findsWidgets);
+      // En-tête et filtres occupent l'écran à 200 % : défilement réel.
+      await scrollToAction(tester, find.text('Ab wheel'));
       expect(tester.takeException(), null);
     });
 

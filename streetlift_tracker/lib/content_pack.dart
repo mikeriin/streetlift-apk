@@ -212,6 +212,9 @@ class ContentLibrary {
 
   static Future<ContentLibrary>? _pending;
 
+  /// Contenu déjà chargé (fiche suivante affichée sans attente).
+  static ContentLibrary? loaded;
+
   /// Chargement unique et partagé (assets gzip).
   static Future<ContentLibrary> load([AssetBundle? bundle]) =>
       _pending ??= _load(bundle ?? rootBundle).catchError((Object e) {
@@ -227,7 +230,7 @@ class ContentLibrary {
 
   static Future<ContentLibrary> _load(AssetBundle b) async {
     final d = await _gz(b, 'details');
-    return ContentLibrary._(
+    return loaded = ContentLibrary._(
       d['exercices'] as Map<String, dynamic>,
       await _gz(b, 'sources'),
       await _gz(b, 'poses'),

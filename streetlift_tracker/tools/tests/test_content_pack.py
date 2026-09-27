@@ -43,10 +43,11 @@ class ContentPackTest(unittest.TestCase):
 
     def test_atlas_generated_from_pack(self):
         text = (ROOT / 'lib/atlas_data.dart').read_text()
-        muscles = re.findall(r"AtlasRegion\('(face|dos)', 'muscle', '([a-z_]+)'", text)
+        # Fichier généré puis formaté par `dart format` : espaces libres.
+        muscles = re.findall(r"AtlasRegion\(\s*'(face|dos)',\s*'muscle',\s*'([a-z_]+)'", text)
         self.assertGreaterEqual(len(muscles), 100)
         self.assertEqual(len({m for _, m in muscles}), 51)
-        self.assertEqual(text.count('AtlasMuscle(\''), 81)
+        self.assertEqual(len(re.findall(r"AtlasMuscle\(\s*'", text)), 81)
 
     def test_parity_fixture(self):
         data = json.loads((ROOT / 'test/fixtures/l9b/pose_parity.json').read_text())

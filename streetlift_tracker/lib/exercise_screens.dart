@@ -256,6 +256,7 @@ class ExerciseSheetScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('FICHE EXERCICE')),
       body: FutureBuilder<ContentLibrary>(
         future: ContentLibrary.load(),
+        initialData: ContentLibrary.loaded,
         builder: (context, snap) {
           if (snap.hasError) {
             return const Padding(
