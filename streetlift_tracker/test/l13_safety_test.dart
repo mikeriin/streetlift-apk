@@ -311,9 +311,17 @@ void main() {
       app.deleteHealthData();
       app.clearKoachAnswers();
       final after = backupOf(app);
+      // Le journal « profil modifié » garde seulement les noms des champs
+      // modifiés (« clearance ») : on contrôle la section santé et les
+      // valeurs.
+      final afterHealth = (after['profile'] as Map)['health'] as Map;
+      expect(afterHealth.containsKey('clearance'), isFalse);
+      expect(afterHealth.containsKey('answers'), isFalse);
+      expect(afterHealth.containsKey('injuries'), isFalse);
+      final afterFields = (after['profile'] as Map)['fields'] as Map;
+      expect(afterFields.containsKey('stress'), isFalse);
       final afterProfile = jsonEncode(after['profile']);
       expect(afterProfile.contains('shoulder'), isFalse);
-      expect(afterProfile.contains('"clearance"'), isFalse);
       expect(afterProfile.contains('high'), isFalse);
       expect(jsonEncode(after['koach'] ?? {}).contains('"pain"'), isFalse);
       // Suppression complète : plus rien.

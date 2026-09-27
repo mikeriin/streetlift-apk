@@ -162,17 +162,35 @@ class RecoveryScreen extends StatelessWidget {
 }
 
 /// Politique de confidentialité (même texte que la version publiée).
-class PrivacyPolicyScreen extends StatelessWidget {
+class PrivacyPolicyScreen extends StatefulWidget {
   const PrivacyPolicyScreen({super.key});
 
   static const asset = 'assets/legal/confidentialite.md';
 
   @override
+  State<PrivacyPolicyScreen> createState() => _PrivacyPolicyScreenState();
+}
+
+class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
+  // Chargé une fois, sans cache partagé (texte court, lu rarement).
+  late final Future<String> _text = rootBundle.loadString(
+    PrivacyPolicyScreen.asset,
+    cache: false,
+  );
+
+  @override
   Widget build(BuildContext context) => KScreen(
     appBar: AppBar(title: const Text('CONFIDENTIALITÉ')),
     body: FutureBuilder<String>(
-      future: rootBundle.loadString(asset),
+      future: _text,
       builder: (context, snap) {
+        if (snap.hasError) {
+          return const KEmpty(
+            icon: Icons.error_outline,
+            title: 'Politique indisponible',
+            message: 'Le texte n’a pas pu être lu. Réinstalle l’application.',
+          );
+        }
         if (!snap.hasData) {
           return const Center(child: CircularProgressIndicator());
         }
