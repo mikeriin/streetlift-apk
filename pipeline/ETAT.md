@@ -12,6 +12,7 @@
 | L11 | 4.1.0 | b202121 | 89 | 27/09/2026 | livré (build signé réussi ; non vérifié sur téléphone) |
 | L12 | 4.2.0 | 332e292 | 90 | 27/09/2026 | livré (build signé réussi ; non vérifié sur téléphone) |
 | L13 | 4.3.0 (attendu) | — | — | 27/09/2026 | lancé |
+| Refonte MA (branche séparée) | 4.2.1 | `refonte/muscles-animations` `f4d7d70` (hors main, base 4.2.0) | 92 | 27/09/2026 | **aperçu prêt, accord de fusion requis** |
 
 Outil de relecture v2 (même lien, version 2 de l'artefact ; collection `relectures_v2`, l'ancienne `relectures` conservée) : https://claude.ai/artifact/MfMKxQMztc1rd85LLhUn6S
 Suite : le propriétaire relit la v2. À la validation : appliquer ses corrections, copier l'archive validée sous `kalis_content_pack_v1_final.zip` sur `content-pack`, puis lancer L9b (trig_01XUb6PZBCvYvNbBvpQokiun ; main est en 3.1.0, condition remplie). La seconde passe L9 (trig_01KyxRKcUDA45rdHQAw4xVGM) est remplacée par L9R.
@@ -24,4 +25,6 @@ L11 : livré le 27/09/2026 (adaptation au jour le jour ; installation existante 
 
 L12 : livré le 27/09/2026 (motivation et progression visible ; barème des récompenses proposé, non appliqué ; rappels jamais un jour de repos ; livraison `livraisons/LIVRAISON_L12.md`). Suite : L13 lancé (trig_01CxGPskf5oNyYEkXyiQbpPZ).
 
-Décisions en attente : voir DECISIONS_EN_ATTENTE.md (L12 dont le barème des récompenses, L11, L10 et L9b, non bloquantes ; L9R et L8 tranchées)
+Refonte muscles et animations : livrée sur sa branche le 27/09/2026 (4.1.1 sur 4.1.0, build n°91 ; remise à jour sur 4.2.0 en 4.2.1, build n°92 ; aperçu https://claude.ai/artifact/XPop5Xkw3SJNmeftWd6zQf ; livraison `livraisons/LIVRAISON_REFONTE_MA.md`). Fusion sur main seulement sur accord écrit du propriétaire ; si main a encore avancé (L13), la branche sera remise à jour et renumérotée au correctif suivant.
+
+Décisions en attente : voir DECISIONS_EN_ATTENTE.md (D-MA-00 fusion de la refonte, bloquante ; L12 dont le barème des récompenses, L11, L10 et L9b, non bloquantes ; L9R et L8 tranchées)

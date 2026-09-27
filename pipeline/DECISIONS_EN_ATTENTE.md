@@ -1,5 +1,12 @@
 # Décisions en attente
 
+## Refonte muscles et animations (4.2.1, branche `refonte/muscles-animations`) — accord de fusion requis
+- **D-MA-00 Fusion sur `main`** : bloquante. Aperçu, contrôles et build dans `livraisons/LIVRAISON_REFONTE_MA.md`. Réponds « ok fusion » dans la session du lot.
+- **D-MA-01 Vue de dos** : choisie quand les muscles principaux postérieurs sont plus nombreux que les antérieurs (latéraux non comptés). Résultat : 2 exercices (side bend, planche latérale avec abduction) ; drapeaux et planches latérales restent de face. Option : forcer le dos pour les drapeaux (dorsaux). Recommandation : garder.
+- **D-MA-02 18 exercices revus** (animation fausse avec la cinématique du pack) : 11 développés en image fixe position haute, leg curl et leg extension en image fixe, 5 sans démonstration (presse à cuisses, sled push, rowing appui poitrine, transition de muscle-up pieds au sol, sauts en contrebas). Proposition pour une passe du pack : corriger la position basse des gabarits `banc.couche`, `banc.pause`, `banc.floor`, `banc.incline` (bras sous le niveau des épaules, avant-bras vertical), donner une vraie flexion à `assis.leg_curl` / `assis.leg_extension`, replacer plateau, traîneau et banc d'appui, ajouter sol et caisse ; les exercices reviendraient alors en animation.
+- **D-MA-03 Générateur de programme** : il lit toujours le statut du pack, ces 18 exercices y comptent comme « animés » (références figées des tests L10). Option : lui faire lire le statut revu (programmes générés légèrement différents).
+- **D-MA-04 Flanc sous le bras (profil)** : redessiné dans le style de ton illustration, visible seulement quand le bras bouge. Option : fournir une seconde image de profil bras levés.
+
 ## L12 (4.2.0) — à relire (non bloquant)
 Détail : `docs/CONTRAT_L12.md` §2 (D-L12-01 à D-L12-12) et §5 (barème) dans le ZIP.
 - **Barème des récompenses des étapes (proposition chiffrée, NON appliquée — invariant économie)** : record 0 crédit (déjà un bonus XP), étape de chaîne franchie 2, cycle terminé 3, régularité 4 / 8 / 12 / 26 / 52 semaines : 1 / 1 / 2 / 3 / 5 ; payé une fois au registre KT-005 (`milestone:<id>`), jamais repris. Estimation : ≈ 51 crédits sur 40 semaines pour un utilisateur régulier. Pour l'appliquer : réponds « barème L12 validé » (ou tes chiffres).
