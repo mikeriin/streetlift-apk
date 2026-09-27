@@ -1,0 +1,5 @@
+07:20 +665 ~12 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: récompense à 320 px, texte 1.3 : actions par défilement
+07:20 +666 ~12 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: récompense à 320 px, texte 2.0 : actions par défilement
+07:21 +667 ~12 -2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: (tearDownAll)
+07:21 +667 ~12 -2: Some tests failed.
+exit=1
