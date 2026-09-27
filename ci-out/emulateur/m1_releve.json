@@ -20,11 +20,11 @@
     "couleurs": 144
   },
   "mesure": {
-    "images": 0,
+    "images": 1,
     "duree_ms": 10000,
-    "images_par_s": 0.0,
-    "temps_moyen_ms": 0.0,
-    "p99_ms": 0.0
+    "images_par_s": 0.1,
+    "temps_moyen_ms": 10847.527,
+    "p99_ms": 10847.527
   },
   "rendu_clair": {
     "pixels": 77841,
