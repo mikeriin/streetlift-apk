@@ -1,1 +1,1 @@
-demande=rapide
+demande=tout
