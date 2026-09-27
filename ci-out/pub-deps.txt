@@ -1,6 +1,6 @@
 Dart SDK 3.13.4
 Flutter SDK 3.47.5
-streetlift_tracker 5.0.0+72
+streetlift_tracker 5.1.0+73
 
 dependencies:
 - audioplayers 6.6.0 [audioplayers_android audioplayers_darwin audioplayers_linux audioplayers_platform_interface audioplayers_web audioplayers_windows file flutter http meta path_provider synchronized uuid]
@@ -9,6 +9,7 @@ dependencies:
 - flutter_local_notifications 18.0.1 [clock flutter flutter_local_notifications_linux flutter_local_notifications_platform_interface timezone]
 - flutter_localizations 0.0.0 [flutter intl path]
 - flutter_scene 0.23.0 [code_assets scene args collection data_assets flat_buffers flutter flutter_gpu flutter_gpu_shaders hooks image logging vector_math web yaml yaml_edit]
+- hooks 2.2.0 [collection crypto logging pub_semver record_use yaml]
 - shared_preferences 2.5.3 [flutter shared_preferences_android shared_preferences_foundation shared_preferences_linux shared_preferences_platform_interface shared_preferences_web shared_preferences_windows]
 - timezone 0.10.1 [http path]
 - vector_math 2.4.3
@@ -48,7 +49,6 @@ transitive dependencies:
 - flutter_local_notifications_linux 5.0.0 [dbus ffi flutter flutter_local_notifications_platform_interface path xdg_directories]
 - flutter_local_notifications_platform_interface 8.0.0 [flutter plugin_platform_interface]
 - flutter_web_plugins 0.0.0 [flutter]
-- hooks 2.2.0 [collection crypto logging pub_semver record_use yaml]
 - http 1.6.0 [async http_parser meta web]
 - http_parser 4.1.2 [collection source_span string_scanner typed_data]
 - image 4.9.2 [archive]

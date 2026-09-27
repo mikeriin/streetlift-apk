@@ -1,0 +1,189 @@
+diff --git a/integration_test/moteur_3d_test.dart b/integration_test/moteur_3d_test.dart
+index 6385e74..9e46de9 100644
+--- a/integration_test/moteur_3d_test.dart
++++ b/integration_test/moteur_3d_test.dart
+@@ -251,9 +251,8 @@ void main() {
+   Mannequin3DState mannequin(WidgetTester tester) =>
+       tester.state<Mannequin3DState>(find.byType(Mannequin3D).first);
+ 
+-  void record() => data['m2_releve.json'] = const JsonEncoder.withIndent(
+-    '  ',
+-  ).convert(m2);
++  void record() =>
++      data['m2_releve.json'] = const JsonEncoder.withIndent('  ').convert(m2);
+ 
+   Future<void> anatomyViews(WidgetTester tester, String theme) async {
+     await openApp(tester, theme);
+@@ -304,19 +303,14 @@ void main() {
+     await tester.tap(find.byKey(const ValueKey('mannequin-view-face')));
+     await tester.pump(const Duration(milliseconds: 900));
+     final rect = tester.getRect(find.byKey(const ValueKey('mannequin-view')));
+-    await tester.tapAt(
+-      Offset(rect.center.dx, rect.top + rect.height * .36),
+-    );
++    await tester.tapAt(Offset(rect.center.dx, rect.top + rect.height * .36));
+     await tester.pump(const Duration(seconds: 2));
+     final touched = mannequin(tester).touched;
+     m2['toucher'] = touched?.label;
+     record();
+     await shot('m2_anatomie_toucher');
+     expect(touched, isNotNull, reason: 'aucun muscle touché au centre');
+-    expect(
+-      find.byKey(const ValueKey('mannequin-bubble')),
+-      findsOneWidget,
+-    );
++    expect(find.byKey(const ValueKey('mannequin-bubble')), findsOneWidget);
+     // Os masqués (réglage) : rendu différent, sans erreur.
+     await Display3DSettings.instance.set(bones: false);
+     await tester.pump(const Duration(seconds: 2));
+@@ -325,9 +319,7 @@ void main() {
+     await tester.pump(const Duration(seconds: 1));
+   });
+ 
+-  testWidgets('M2 : Anatomie, groupe Dos, 4 vues, thème clair', (
+-    tester,
+-  ) async {
++  testWidgets('M2 : Anatomie, groupe Dos, 4 vues, thème clair', (tester) async {
+     await anatomyViews(tester, 'light');
+   });
+ 
+@@ -336,10 +328,7 @@ void main() {
+   // (couleur de sommet ; mesure du coût des appels de dessin, le matériau
+   // .fmat n'est construit que si (b) l'emporte). Même scène, même caméra en
+   // rotation, 12 s chacune ; temps de construction (UI) et de rendu (GPU).
+-  Future<Map<String, Object?>> measure(
+-    WidgetTester tester,
+-    bool merged,
+-  ) async {
++  Future<Map<String, Object?>> measure(WidgetTester tester, bool merged) async {
+     final ms = await MannequinScene.create();
+     final demo = ms.map.fromGroups(const {
+       'dos': 1,
+@@ -479,6 +468,9 @@ void main() {
+     final b = await measure(tester, true);
+     m2['organisation_b_fusion'] = b;
+     record();
+-    expect(a['appels_de_dessin'] as int, greaterThan(b['appels_de_dessin'] as int));
++    expect(
++      a['appels_de_dessin'] as int,
++      greaterThan(b['appels_de_dessin'] as int),
++    );
+   });
+ }
+diff --git a/lib/anatomy_screen.dart b/lib/anatomy_screen.dart
+index 1bcfad0..b714ac2 100644
+--- a/lib/anatomy_screen.dart
++++ b/lib/anatomy_screen.dart
+@@ -29,8 +29,11 @@ const kGroupLabels = {
+ 
+ /// Vue de départ qui montre le mieux un groupe.
+ MannequinView viewForGroup(String? group) => switch (group) {
+-  'dos' || 'triceps' || 'ischios' || 'fessiers' || 'mollets' =>
+-    MannequinView.dos,
++  'dos' ||
++  'triceps' ||
++  'ischios' ||
++  'fessiers' ||
++  'mollets' => MannequinView.dos,
+   _ => MannequinView.face,
+ };
+ 
+diff --git a/lib/mannequin_3d.dart b/lib/mannequin_3d.dart
+index 3a2b186..237eec7 100644
+--- a/lib/mannequin_3d.dart
++++ b/lib/mannequin_3d.dart
+@@ -269,9 +269,7 @@ _Frame _measure(Node root) {
+   }
+ 
+   final all = root.combinedWorldBounds;
+-  final center = all == null
+-      ? vm.Vector3(0, .9, 0)
+-      : (all.min + all.max) * .5;
++  final center = all == null ? vm.Vector3(0, .9, 0) : (all.min + all.max) * .5;
+   final height = all == null ? 1.7 : all.max.y - all.min.y;
+   // Avant : du grand fessier vers le droit de l'abdomen ; gauche : côté des
+   // régions « _left ».
+@@ -453,10 +451,7 @@ class MannequinScene {
+     final forward = (target - eye)..normalize();
+     final right = forward.cross(vm.Vector3(0, 1, 0))..normalize();
+     final light = (forward + vm.Vector3(0, -.9, 0) + right * .45)..normalize();
+-    scene.directionalLight = DirectionalLight(
+-      direction: light,
+-      intensity: 2.3,
+-    );
++    scene.directionalLight = DirectionalLight(direction: light, intensity: 2.3);
+     return PerspectiveCamera(
+       fovRadiansY: 28 * math.pi / 180,
+       position: eye,
+@@ -742,11 +737,7 @@ class Mannequin3DState extends State<Mannequin3D>
+           child: LayoutBuilder(
+             builder: (context, constraints) {
+               _size = constraints.biggest;
+-              _camera = scene.camera(
+-                _yaw,
+-                _pitch,
+-                scene.fitDistance(_aspect),
+-              );
++              _camera = scene.camera(_yaw, _pitch, scene.fitDistance(_aspect));
+               return Stack(
+                 children: [
+                   Positioned.fill(
+@@ -762,10 +753,7 @@ class Mannequin3DState extends State<Mannequin3D>
+                       onPanCancel: () => _dragging = false,
+                       onPanUpdate: (d) => setState(() {
+                         _yaw -= d.delta.dx * .012;
+-                        _pitch = (_pitch + d.delta.dy * .008).clamp(
+-                          -.7,
+-                          .7,
+-                        );
++                        _pitch = (_pitch + d.delta.dy * .008).clamp(-.7, .7);
+                       }),
+                       child: Semantics(
+                         label:
+diff --git a/lib/settings_screen.dart b/lib/settings_screen.dart
+index 01e5f2a..4d8b2c6 100644
+--- a/lib/settings_screen.dart
++++ b/lib/settings_screen.dart
+@@ -1050,13 +1050,7 @@ class _Sw extends StatelessWidget {
+   final String? subtitle;
+   final bool value;
+   final ValueChanged<bool> onChanged;
+-  const _Sw(
+-    this.title,
+-    this.subtitle,
+-    this.value,
+-    this.onChanged, {
+-    super.key,
+-  });
++  const _Sw(this.title, this.subtitle, this.value, this.onChanged, {super.key});
+   @override
+   Widget build(BuildContext context) => KCard(
+     padding: EdgeInsets.zero,
+diff --git a/test/m2_mannequin_test.dart b/test/m2_mannequin_test.dart
+index 3e573e3..57d381c 100644
+--- a/test/m2_mannequin_test.dart
++++ b/test/m2_mannequin_test.dart
+@@ -98,7 +98,10 @@ void main() {
+ 
+     test('intensités depuis les groupes et depuis le pack', () {
+       final dos = map.fromGroups({'dos': 1});
+-      expect(dos.keys, containsAll(['latissimus_dorsi_left', 'trapezius_upper_right']));
++      expect(
++        dos.keys,
++        containsAll(['latissimus_dorsi_left', 'trapezius_upper_right']),
++      );
+       expect(dos.values.every((v) => v == 1), isTrue);
+       final pack = map.fromPack({
+         'grand_dorsal': kIntensityPrimary,
+@@ -181,7 +184,10 @@ void main() {
+       final list = find.byKey(const ValueKey('anatomy-group-list'));
+       await scrollToAction(tester, list);
+       expect(
+-        find.descendant(of: list, matching: find.textContaining('Grand dorsal')),
++        find.descendant(
++          of: list,
++          matching: find.textContaining('Grand dorsal'),
++        ),
+         findsOneWidget,
+       );
+       expect(

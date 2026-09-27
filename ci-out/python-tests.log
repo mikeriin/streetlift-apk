@@ -43,6 +43,14 @@ test_revision_reproduces_shipped_asset (test_lc1b_s11_j6.Lc1bTests.test_revision
 test_s11_j6_content (test_lc1b_s11_j6.Lc1bTests.test_s11_j6_content) ... ok
 test_second_run_is_refused_clearly (test_lc1b_s11_j6.Lc1bTests.test_second_run_is_refused_clearly) ... ok
 test_unexpected_input_is_refused (test_lc1b_s11_j6.Lc1bTests.test_unexpected_input_is_refused) ... ok
+test_aucune_region_sans_groupe (test_m2_anatomy.M2AnatomyTest.test_aucune_region_sans_groupe) ... ok
+test_budget_de_triangles (test_m2_anatomy.M2AnatomyTest.test_budget_de_triangles) ... ok
+test_credits (test_m2_anatomy.M2AnatomyTest.test_credits) ... ok
+test_muscles_du_pack (test_m2_anatomy.M2AnatomyTest.test_muscles_du_pack) ... ok
+test_noeuds_et_regions (test_m2_anatomy.M2AnatomyTest.test_noeuds_et_regions) ... ok
+test_noms_francais (test_m2_anatomy.M2AnatomyTest.test_noms_francais) ... ok
+test_pubspec (test_m2_anatomy.M2AnatomyTest.test_pubspec) ... ok
+test_source_sha256 (test_m2_anatomy.M2AnatomyTest.test_source_sha256) ... ok
 test_ecart_franc_et_constant_amelioration (test_perf_compare.PerfCompareTest.test_ecart_franc_et_constant_amelioration) ... ok
 test_echec_et_empreinte_differente_signales (test_perf_compare.PerfCompareTest.test_echec_et_empreinte_differente_signales) ... ok
 test_manche_contraire_pas_de_conclusion (test_perf_compare.PerfCompareTest.test_manche_contraire_pas_de_conclusion) ... ok
@@ -82,7 +90,7 @@ test_rounding_matches_excel_half_away_from_zero (test_tools.ToolsTests.test_roun
 test_shipped_assets_and_android_identity (test_tools.ToolsTests.test_shipped_assets_and_android_identity) ... ok
 
 ----------------------------------------------------------------------
-Ran 82 tests in 8.205s
+Ran 90 tests in 8.886s
 
 OK (skipped=1)
 OK : apk-absents, refus Gradle attendu observé.
@@ -148,4 +156,4 @@ Fichiers : base-r1.jsonl, cand-r1.jsonl
 programme_v33.json: 13 -> 33 octets
 programme_v33.json: 13 -> 33 octets
 OK : 40 semaines, 280 jours, 1812 exercices du programme, 625 exercices de la base.
-OK : ZIP contrôlé, 551 fichiers, 8082067 octets extraits.
+OK : ZIP contrôlé, 569 fichiers, 12041239 octets extraits.

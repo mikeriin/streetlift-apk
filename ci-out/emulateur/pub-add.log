@@ -20,6 +20,7 @@ Downloading packages...
   flutter_local_notifications_linux 5.0.0 (8.0.1 available)
   flutter_local_notifications_platform_interface 8.0.0 (12.2.0 available)
 + fuchsia_remote_debug_protocol 0.0.0 from sdk flutter
+  hooks 2.2.0 (from transitive dependency to direct dependency)
   image 4.9.2 (4.10.1 available)
 + integration_test 0.0.0 from sdk flutter
   json_annotation 4.9.0 (4.12.0 available)
@@ -51,6 +52,6 @@ Downloading packages...
 + webdriver 3.2.0
   win32 5.13.0 (6.4.0 available)
   xml 6.5.0 (7.1.0 available)
-Changed 6 dependencies!
+Changed 7 dependencies!
 45 packages have newer versions incompatible with dependency constraints.
 Try `flutter pub outdated` for more information.
