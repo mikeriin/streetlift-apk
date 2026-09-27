@@ -93,6 +93,13 @@ extension ProfileStore on AppStore {
     next.addEvent(_nowAt, changed);
     profile = next;
     _profileSave();
+    // L10 : profil modifié → régénération proposée (mode Guidé : appliquée
+    // tout de suite, annulable 7 jours).
+    if (ProgramStore(this).programProfileChanged) {
+      unawaited(
+        ProgramStore(this).onProfileSavedForProgram().catchError((_) => false),
+      );
+    }
   }
 
   void _profileSave() {

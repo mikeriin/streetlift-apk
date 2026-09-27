@@ -8,7 +8,7 @@ import 'dart:math' as math;
 import 'dart:ui' show Color;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart' show AssetBundle, rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'content_pack.dart';
@@ -19,6 +19,8 @@ import 'koach_program.dart';
 import 'models.dart';
 import 'persistence.dart';
 import 'profile.dart';
+import 'program_generator.dart';
+import 'program_instance.dart';
 import 'training_estimate.dart';
 import 'progression.dart';
 import 'set_validation.dart';
@@ -34,6 +36,7 @@ export 'set_validation.dart' show SetCheck, SetField;
 
 part 'koach_store.dart';
 part 'profile_store.dart';
+part 'program_store.dart';
 
 class SetEntry {
   String kg;
@@ -632,7 +635,46 @@ class LogSpec {
 }
 
 class AppStore extends ChangeNotifier {
-  late final Program program;
+  /// Programme affiché : le programme embarqué (modèle Expert streetlifting,
+  /// instance implicite) ou l'instance générée (L10, KT-050).
+  late Program program;
+
+  /// Programme embarqué (JSON et objet) et annotations Koach d'origine.
+  Map<String, dynamic> _baseProgramJson = const {};
+  late Program _baseProgram;
+  Map<String, dynamic> _baseKoachJson = const {};
+  KoachProgram _baseKoach = const KoachProgram.empty();
+
+  /// L10 : instance de programme (null = modèle Expert streetlifting
+  /// implicite : programme embarqué inchangé). Contrat : docs/CONTRAT_L10.md.
+  ProgramInstance? programInstance;
+
+  /// Instances illisibles ignorées au dernier démarrage.
+  int programLoadIssues = 0;
+
+  /// Programme à afficher selon l'instance ; le départ est conservé.
+  void _materializeProgram(DateTime? start) {
+    final inst = programInstance;
+    if (inst != null && inst.generated) {
+      try {
+        program = Program.fromJson(inst.programJson(_baseProgramJson));
+        koachProgram =
+            _baseKoach.available
+                ? KoachProgram.fromJson(inst.koachJson(_baseKoachJson))
+                : const KoachProgram.empty();
+      } catch (_) {
+        programLoadIssues++;
+        programInstance = null;
+        program = _baseProgram;
+        koachProgram = _baseKoach;
+      }
+    } else {
+      program = _baseProgram;
+      koachProgram = _baseKoach;
+    }
+    program.start = start;
+  }
+
   late final SharedPreferences _prefs;
 
   /// Valeurs Pilotage éditables : PdC (B4), 1RM (B8-B11), max reps (B16-B20),
@@ -817,18 +859,20 @@ class AppStore extends ChangeNotifier {
   final Map<String, int> _purchases = {};
 
   Future<void> init() async {
-    program = Program.fromJson(
-      jsonDecode(await _loadGz('assets/programme_v33.json.gz'))
-          as Map<String, dynamic>,
-    );
+    _baseProgramJson =
+        jsonDecode(await _loadGz('assets/programme_v33.json.gz'))
+            as Map<String, dynamic>;
+    program = _baseProgram = Program.fromJson(_baseProgramJson);
+    programInstance = null;
     try {
-      koachProgram = KoachProgram.fromJson(
-        jsonDecode(await _loadGz('assets/koach_program.json.gz'))
-            as Map<String, dynamic>,
-      );
+      _baseKoachJson =
+          jsonDecode(await _loadGz('assets/koach_program.json.gz'))
+              as Map<String, dynamic>;
+      koachProgram = _baseKoach = KoachProgram.fromJson(_baseKoachJson);
     } catch (_) {
       // Annotations absentes ou illisibles : Koach indisponible (2.x).
-      koachProgram = const KoachProgram.empty();
+      _baseKoachJson = const {};
+      koachProgram = _baseKoach = const KoachProgram.empty();
     }
     _prefs = await SharedPreferences.getInstance();
 
@@ -851,6 +895,12 @@ class AppStore extends ChangeNotifier {
       _rankDifficulty();
       _restoreActiveWod(raw?['activeWod']);
       _initialized = true;
+      // L10 : dernière semaine du cycle en cours → cycle suivant généré.
+      if (ProgramStore(this).programGenerated) {
+        unawaited(
+          ProgramStore(this).extendProgramIfNeeded().catchError((_) => false),
+        );
+      }
       return;
     }
 
@@ -2378,6 +2428,7 @@ class AppStore extends ChangeNotifier {
     wishlist: wishlist.toList(),
     koach: koach,
     profile: profile,
+    programInstance: programInstance,
   );
 
   Map<String, dynamic> _backupJson(_BackupData data) {
@@ -2439,6 +2490,10 @@ class AppStore extends ChangeNotifier {
       // L8 : profil écrit seulement s'il existe (export identique à 3.0.x
       // sinon) ; ignoré par les versions antérieures.
       if (data.profile != null) 'profile': data.profile!.toJson(),
+      // L10 : instance de programme écrite seulement si elle existe (export
+      // identique à 3.2.0 sinon) ; ignorée par les versions antérieures.
+      if (data.programInstance != null)
+        'programInstance': data.programInstance!.toJson(),
     };
   }
 
@@ -2735,6 +2790,13 @@ class AppStore extends ChangeNotifier {
       strict: limits != null,
       issues: profileIssues,
     );
+    // L10 : instance de programme. Import strict ; démarrage tolérant.
+    final programIssues = <String>[];
+    final nextProgram = ProgramInstance.fromJson(
+      m['programInstance'],
+      strict: limits != null,
+      issues: programIssues,
+    );
     final nextUnlocked = <String, int>{};
     final nextLegacy = <String, String>{};
     (m['legacyGrants'] as Map<String, dynamic>? ?? {}).forEach((k, v) {
@@ -2842,6 +2904,8 @@ class AppStore extends ChangeNotifier {
       koachIssues: koachIssues.length,
       profile: nextProfile,
       profileIssues: profileIssues.length,
+      programInstance: nextProgram,
+      programIssues: programIssues.length,
     );
   }
 
@@ -2902,7 +2966,9 @@ class AppStore extends ChangeNotifier {
     refStatus
       ..clear()
       ..addAll(data.refStatus);
-    program.start = data.start;
+    programInstance = data.programInstance;
+    programLoadIssues = data.programIssues;
+    _materializeProgram(data.start);
     startOrigin = data.startOrigin;
     logs
       ..clear()
@@ -3466,6 +3532,13 @@ class AppStore extends ChangeNotifier {
           if (v != null) KoachStore(this)._koachRecordManual(ref, v);
         });
         _persist();
+      }
+      // L10 : nouvel utilisateur (profil du démarrage court) : programme
+      // personnalisé généré depuis ce départ.
+      try {
+        await ProgramStore(this).onProgramStartConfigured();
+      } catch (_) {
+        // Génération impossible (contenu illisible) : programme embarqué.
       }
       return StartSave.saved;
     }
@@ -4309,6 +4382,12 @@ class AppStore extends ChangeNotifier {
     if (hasUnsavedChanges) return ResultSave.unsaved;
     final reward = _unsavedRewards.remove(key);
     if (reward != null) _pendingReward = reward;
+    // L10 : fin de cycle → cycle suivant préparé depuis le journal.
+    if (ProgramStore(this).programGenerated) {
+      unawaited(
+        ProgramStore(this).extendProgramIfNeeded().catchError((_) => false),
+      );
+    }
     return ResultSave.saved;
   }
 
@@ -4608,6 +4687,10 @@ class _BackupData {
   /// L8 : profil (null si la section est absente).
   final UserProfile? profile;
   final int profileIssues;
+
+  /// L10 : instance de programme (null si la section est absente).
+  final ProgramInstance? programInstance;
+  final int programIssues;
   _BackupData({
     required this.values,
     required this.refStatus,
@@ -4632,6 +4715,8 @@ class _BackupData {
     this.koachIssues = 0,
     this.profile,
     this.profileIssues = 0,
+    this.programInstance,
+    this.programIssues = 0,
   }) : koach = koach ?? KoachData();
 }
 

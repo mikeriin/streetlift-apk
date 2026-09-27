@@ -10,6 +10,7 @@ import 'models.dart';
 import 'rewards.dart' show checkLevelUp;
 import 'store.dart';
 import 'estimate_view.dart';
+import 'exercise_screens.dart' show openExerciseSheet;
 import 'koach_engine.dart' as ke show KSuggestion;
 import 'koach_screens.dart' show KoachReviewScreen;
 import 'profile_screens.dart' show showProgressiveQuestion;
@@ -867,6 +868,29 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 ),
                 const SizedBox(height: 12),
                 if (ex.cue.isNotEmpty) Text(ex.cue),
+                // L10 (KT-057) : pourquoi cet exercice (programme généré).
+                if (ex.why.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    'Pourquoi : ${ex.why}',
+                    key: ValueKey('${ex.id}-why'),
+                    style: TextStyle(color: SL.dim),
+                  ),
+                ],
+                // L10 (D-L9b-09) : fiche et démonstration de l'exercice.
+                if (store.content.idFor(ex.name) != null) ...[
+                  const SizedBox(height: 4),
+                  TextButton.icon(
+                    key: ValueKey('${ex.id}-sheet'),
+                    icon: const Icon(Icons.play_circle_outline),
+                    label: const Text('Fiche et démonstration'),
+                    onPressed:
+                        () => openExerciseSheet(
+                          context,
+                          store.content.idFor(ex.name)!,
+                        ),
+                  ),
+                ],
                 const SizedBox(height: 12),
                 if (!widget.readOnly)
                   EstimateView(estimate: store.exerciseEstimate(ex)),

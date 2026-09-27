@@ -9,6 +9,7 @@ import 'muscle_body.dart';
 import 'session_history.dart';
 import 'session_screen.dart';
 import 'program_start.dart';
+import 'program_screens.dart' show ProgramHomeCard;
 import 'resume_banner.dart';
 import 'store.dart';
 import 'store_widget.dart';
@@ -372,6 +373,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       // journées (départ à choisir, à venir, terminé).
                       if (ProgramStartBanner.visible(store.program, now))
                         ProgramStartBanner(now: now, padding: EdgeInsets.zero),
+                      // L10 : profil modifié ou programme régénéré.
+                      if (ProgramHomeCard.visible) const ProgramHomeCard(),
                       if (ResumeBanner.visible) const ResumeBanner(),
                       if (store.koachWeighInDue) const KoachWeighInBanner(),
                       for (final d in w.days) card(d),

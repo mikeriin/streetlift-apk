@@ -71,6 +71,9 @@ class Exercise {
   final bool main;
   final bool prevention;
 
+  /// L10 (KT-057) : ligne « pourquoi » d'un programme généré (vide sinon).
+  final String why;
+
   /// Renseignés par les séances personnalisées (modes d'exécution).
   final int? forcedSets;
   final Map<String, dynamic>? timer; // {type: emom|amrap|hiit, ...}
@@ -90,7 +93,8 @@ class Exercise {
     this.timer,
   }) : sets = SetsSpec.text(setsText),
        load = LoadSpec.fixed(kg),
-       prevention = false;
+       prevention = false,
+       why = '';
 
   Exercise.fromJson(Map<String, dynamic> j)
     : id = j['id'] as String,
@@ -104,6 +108,7 @@ class Exercise {
       cue = j['cue'] as String? ?? '',
       main = j['main'] as bool? ?? false,
       prevention = j['prevention'] as bool? ?? false,
+      why = j['why'] as String? ?? '',
       forcedSets = null,
       timer = null;
 
@@ -129,19 +134,23 @@ class DayPlan {
   final String conduite;
   final List<Exercise> exercises;
 
+  /// L10 (KT-057) : ligne « pourquoi » de la séance (programme généré).
+  final String why;
+
   DayPlan.manual({
     required this.j,
     required this.title,
     this.cycle = '',
     this.conduite = '',
     required this.exercises,
-  });
+  }) : why = '';
 
   DayPlan.fromJson(Map<String, dynamic> j0)
     : j = j0['j'] as int,
       title = j0['title'] as String,
       cycle = j0['cycle'] as String? ?? '',
       conduite = j0['conduite'] as String? ?? '',
+      why = j0['why'] as String? ?? '',
       exercises =
           (j0['exercises'] as List)
               .map((e) => Exercise.fromJson(e as Map<String, dynamic>))

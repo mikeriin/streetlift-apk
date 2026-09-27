@@ -35,9 +35,20 @@ Adaptations de tests existants (expliquées, aucune assertion affaiblie) : `tool
 
 ## L9b.3 — Tests et scénarios
 
-RESULTATS_CI
+| Contrôle | Résultat | Où |
+| --- | --- | --- |
+| Formatage | 123 fichiers, 0 changement | CI `claude/ci-tools`, commit `9328da8` (lib, test, assets identiques au ZIP) |
+| Analyse | No issues found | idem |
+| Suite complète | **630 réussis, 12 ignorés** (598 existants inchangés + 32 L9b), 0 échec | idem |
+| Tests ciblés L5/L6 rejoués | 155 réussis, 11 ignorés (identiques à L8) | idem |
+| Python | 69/69 (63 + 6) ; `verify_project.py` : 40 semaines, 280 jours, 1 812 exercices du programme, 625 exercices de la base | idem |
+| Android | `flutter build apk --debug` réussi (commit `d77acc1` ; les passages suivants ne modifient que deux fichiers Dart de l'interface et des tests) | CI |
+| Concordance du rendu | 246 gabarits, toutes les images clés : écart max. < 2e-4 (positions du pack arrondies à 4 décimales) ; 20 exercices × 5 instants contre `kt_pose.js` : écart < 1e-9 (exigence : 0,5 % = 0,005) | `test/l9b_pose_test.dart` |
+| Coût mesuré (JIT, machine de CI) | Calcul + dessin d'une image de démonstration : **≈ 170-180 µs** en moyenne sur 6 070 images (607 démonstrations × 10 instants ; budget d'une image à 60 i/s : 16 667 µs). Liste la plus longue (625 exercices) : 40 défilements de 400 px, **≈ 25-29 ms** par geste + image en environnement de test | `test/l9b_perf_test.dart` (3 passages) |
 
-Nouveaux tests : `test/l9b_pose_test.dart` (8 : concordance de toutes les images clés des 246 gabarits, 20 exercices × 5 instants contre le moteur JavaScript, chronologie et bouclage, calcul des 607 démonstrations, accents 6 palettes × 2 modes et contrastes, rendu de référence pixel par pixel pour les 12 combinaisons, animation et pause, réduction des animations) ; `test/l9b_content_test.dart` (migration v1 → v2, correspondances, doublons, STATS, historique complet rechargé sans perte, recherche et filtres, atlas, fiches 320/390 px × 130/200 % × clair/sombre avec défilement réel, démonstration indisponible, navigation de progression, bibliothèque, mentions) ; `test/l9b_perf_test.dart` (2 mesures) ; `tools/tests/test_content_pack.py` (6).
+Défauts trouvés par les passages CI et corrigés : une méthode `num` masquait le type `num` (erreur de compilation) ; une remarque de style (fonction affectée à une variable) ; trois tests L9b mal écrits (fichier généré formaté par `dart format` puis lu par une expression trop stricte ; future déjà terminée hors de la zone de test — corrigé côté application par un affichage immédiat du contenu déjà chargé ; atlas cherché après défilement hors de la liste construite ; réduction des animations non transmise aux fiches ouvertes par navigation dans le test). Aucune assertion affaiblie. Images par seconde en mode profile et mémoire : **non mesurées** (aucun téléphone) ; le banc sur appareil de L6 (`tools/perf_device/`) n'a pas été relancé.
+
+Nouveaux tests : `test/l9b_pose_test.dart` (8 : concordance de toutes les images clés des 246 gabarits, 20 exercices × 5 instants contre le moteur JavaScript, chronologie et bouclage, calcul des 607 démonstrations, accents 6 palettes × 2 modes et contrastes, rendu de référence pixel par pixel pour les 12 combinaisons, animation et pause, réduction des animations) ; `test/l9b_content_test.dart` (22 : migration v1 → v2, correspondances, doublons, STATS, historique complet rechargé sans perte, recherche et filtres, atlas, fiches 320/390 px × 130/200 % × clair/sombre avec défilement réel, démonstration indisponible, navigation de progression, bibliothèque, mentions) ; `test/l9b_perf_test.dart` (2 mesures) ; `tools/tests/test_content_pack.py` (6).
 
 Scénarios couverts : les 505 exercices v1 gardent nom, groupes et matériel ; les 1 812 lignes du programme et les 505 noms v1 ont un identifiant v2 ; les 22 doublons mènent à l'exercice canonique ; groupes de STATS identiques pour tous les noms v1 et du programme ; historique des 40 semaines + 60 séances personnelles importé, rechargé par une nouvelle instance : `logs`, `custom`, `userExercises` et muscles de la semaine identiques ; recherche par muscle, alias, nom v2 ; filtres combinés ; carte de STATS sur l'atlas avec la même rampe.
 

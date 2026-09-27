@@ -9,11 +9,12 @@ import 'ui.dart';
 import 'notification_settings.dart';
 import 'pilotage_screen.dart';
 import 'program_start.dart';
+import 'program_screens.dart';
 import 'profile_screens.dart';
 import 'store.dart';
 import 'store_widget.dart';
 
-const kAppVersion = '3.2.0';
+const kAppVersion = '4.0.0';
 
 class SettingsScreen extends StatelessWidget {
   final int? section;
@@ -308,6 +309,24 @@ class SettingsScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute<void>(
                     builder: (_) => const ProfileScreen(),
+                  ),
+                ),
+          ),
+          // L10 : programme personnalisé (KT-050 à KT-057).
+          _Action(
+            key: const ValueKey('settings-program'),
+            icon: Icons.auto_awesome_outlined,
+            color: SL.accent,
+            title: 'Mon programme',
+            subtitle:
+                store.programGenerated
+                    ? 'Personnalisé · ${store.programSummary['modelLabel'] ?? ''}'
+                    : 'Expert streetlifting (40 semaines)',
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (_) => const ProgramScreen(),
                   ),
                 ),
           ),
