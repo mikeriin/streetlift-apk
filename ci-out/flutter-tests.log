@@ -1,0 +1,850 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: le changement d’heure conserve 7h30 et change correctement l’instant UTC
+00:00 +2: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: supprime les anciennes alarmes et celles des séances terminées, sans toucher aux autres
+00:00 +3: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: notification désactivée ou programme terminé ne crée aucune alarme
+00:00 +4: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: les blocages globaux et du canal sont diagnostiqués
+00:01 +5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: un refus de l’heure précise garde des rappels approximatifs
+00:01 +6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: révocation entre vérification et planification : repli sans abandon des rappels
+00:01 +7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: les erreurs restent lisibles et une nouvelle tentative répare le service
+Kalis notifications: Bad state: init_native_error
+Kalis notifications: Bad state: schedule_native_error
+00:01 +8: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: désactiver pendant une planification ne laisse aucun rappel quotidien
+00:01 +9: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: ne recrée pas les mêmes alarmes inutilement mais une réparation forcée les restaure
+00:01 +10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: les tests immédiat et différé ne dépendent pas de la période du programme
+00:02 +11: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: tap après démarrage à froid : bonne séance, payload invalide ignoré
+00:02 +12: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/notifications_test.dart: une séance terminée en cours d’utilisation annule automatiquement son rappel
+00:02 +13: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+00:07 +13 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2b_data_control_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+00:07 +13 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart
+00:09 +13 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-002 achats achat normal au prix accepté, conservé après relance
+00:10 +14 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-002 achats crédits insuffisants : aucun débit, stockage inchangé
+00:10 +15 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-002 achats prix modifié depuis l’offre : aucun débit
+00:10 +16 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-002 achats double appui : un seul débit, rien d’annoncé avant l’écriture
+00:10 +17 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-002 achats deux WODs : le solde réservé empêche une dépense excessive
+00:10 +18 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-002 achats deux WODs abordables ensemble : deux débits exacts
+00:11 +19 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-002 achats écriture refusée puis nouvelle tentative réussie
+00:11 +20 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-002 achats un droit acquis n’est jamais retiré par un achat échoué
+00:11 +21 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports deux imports rapprochés : le dernier gagne, copies gardées
+00:12 +22 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports au plus trois copies de récupération
+00:12 +23 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports un état ancien n’est pas écrit après un import plus récent
+00:12 +24 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports import pendant un flush : ordre conservé
+00:13 +25 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports achat pendant une sauvegarde : les deux sont écrits
+00:13 +26 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports échec d’écriture : mémoire gardée, reprise explicite
+00:13 +27 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports import refusé à l’écriture : état et stockage inchangés
+00:13 +28 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports import dégradé : rejet complet, aucune copie ni écriture
+00:14 +29 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-013 écritures et imports liste de copies illisible : import suspendu, rien écrasé
+00:14 +30 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques migration crédits v1 : coût 0 conservé à part, sans accès
+00:15 +31 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques migration crédits v1 : un WOD joué reste acquis à coût 0
+00:15 +32 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques import format 2 : WOD joué acquis, non joué archivé
+00:15 +33 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques import format 2 : coût 0 isolé, prix payés conservés
+00:15 +34 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques format 3 : un droit établi à coût 0 reste acquis
+00:16 +35 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques format 1 importable
+00:16 +36 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques achats normaux et remisés : aller-retour exact
+00:16 +37 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques droits anciens : aller-retour sans perte
+00:17 +38 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques utilisateur neuf : export réimporté à l’identique
+00:17 +39 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-014 droits WOD historiques séances perso répétées : archives et XP conservées
+00:18 +40 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-015 imports bornés sauvegarde représentative acceptée, marges mesurées
+L2 représentatif : JSON 958628 o, compact 47263 car., 65925 valeurs
+00:19 +41 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-015 imports bornés texte trop long
+00:19 +42 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-015 imports bornés décompression excessive arrêtée pendant le flux
+00:19 +43 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-015 imports bornés gzip tronqué, base64 invalide, JSON mal formé
+00:19 +44 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-015 imports bornés structure invalide
+00:19 +45 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-015 imports bornés trop de valeurs, textes trop longs
+00:19 +46 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-015 imports bornés trop de séances, séries, résultats ou entrées
+00:20 +47 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-015 imports bornés limites standard documentées
+00:20 +48 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-005 crédits jamais repris (option C) supprimer baisse XP et niveau, pas les crédits gagnés
+00:20 +49 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-005 crédits jamais repris (option C) refaire une performance supprimée ne redonne rien
+00:20 +50 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-005 crédits jamais repris (option C) corriger une séance ne fait pas varier les crédits
+00:20 +51 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-005 crédits jamais repris (option C) migration : le plus haut part du journal, sans créer ni retirer
+00:20 +52 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-005 crédits jamais repris (option C) import d’une sauvegarde L2 : son plus haut remplace le courant
+00:21 +53 -1: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_persistence_test.dart: KT-005 crédits jamais repris (option C) plus haut invalide : import refusé
+00:21 +54 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/persistence_screen_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+00:25 +54 -2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/persistence_screen_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/persistence_screen_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/persistence_screen_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+00:25 +54 -2: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+00:32 +54 -3: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/lc1_programme_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+00:32 +54 -3: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+00:38 +54 -4: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_selecteur_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+00:38 +54 -4: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+00:44 +54 -5: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/programme_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+00:44 +54 -5: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart
+00:46 +54 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-058 séance compressée 20 min : durée respectée, principaux conservés (≥ 2/3), prévention à 1 série
+00:46 +55 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-058 séance compressée 30 min : durée respectée, principaux conservés (≥ 2/3), prévention à 1 série
+00:46 +56 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-058 séance compressée 45 min : durée respectée, principaux conservés (≥ 2/3), prévention à 1 série
+00:47 +57 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-058 séance compressée plus le temps est court, plus on retire (monotone)
+00:47 +58 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-058 séance compressée séance déjà assez courte : rien ne change
+00:47 +59 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-058 séance compressée pendant la séance : séries faites gardées, pas d'échauffement
+00:47 +60 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-058 séance compressée durée impossible : principaux aux 2/3, signalé
+00:47 +61 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-058 séance compressée déterministe
+00:47 +62 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-058 séance compressée prescription réduite : « 4×8 » → « 3×8 », myo et EMOM intacts
+00:47 +63 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-059 échange d'exercice douleur (poussee_horizontale) : même type, difficulté ±1, matériel disponible, contrainte articulaire ≤ l'original
+00:47 +64 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-059 échange d'exercice douleur (tirage_vertical) : même type, difficulté ±1, matériel disponible, contrainte articulaire ≤ l'original
+00:47 +65 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-059 échange d'exercice douleur (squat) : même type, difficulté ±1, matériel disponible, contrainte articulaire ≤ l'original
+00:47 +66 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-059 échange d'exercice jamais un exercice détesté ; classement déterministe
+00:47 +67 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-059 échange d'exercice charge initiale prudente
+00:47 +68 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-060 reprise, vacances, maladie règles de reprise à 7, 14 et 28 jours (et bornes)
+00:47 +69 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-060 reprise, vacances, maladie épisode de reprise : dernier arrêt ≥ 7 jours avant la séance
+00:47 +70 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-060 reprise, vacances, maladie une séance par mouvement (7-13 et 14-27 jours) ; semaine entière (28 jours et plus)
+00:47 +71 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-060 reprise, vacances, maladie maladie : première semaine de retour seulement
+00:47 +72 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-060 reprise, vacances, maladie le plan glisse, aucune séance doublée
+00:47 +73 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-060 reprise, vacances, maladie séance d'entretien : sans matériel, sans saut, 5 types
+00:47 +74 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-061 assiduité < 60 % : une séance de moins ou plus courtes
+00:47 +75 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-061 assiduité 60 à 89 % : rien
+00:47 +76 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-061 assiduité ≥ 90 % sur 2 cycles avec progression : une séance de plus
+00:47 +77 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-061 assiduité données insuffisantes et jours en pause
+00:47 +78 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-061 assiduité jour ajouté ou retiré
+00:47 +79 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-062 plateau vrai positif : estimation plate 3 semaines, assiduité ≥ 80 %
+00:47 +80 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-062 plateau pas de faux positif : décharge, fatigue, assiduité faible, progression
+00:47 +81 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-062 plateau intervention selon le niveau
+00:47 +82 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-062 plateau estimation d'une série
+00:47 +83 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-063 modes d'autonomie Guidé : baisses appliquées, hausse seulement à RIR visé + 2
+00:47 +84 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-063 modes d'autonomie Assisté : tout est proposé ; Expert : suggestion visible
+00:47 +85 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-063 modes d'autonomie adaptations de sécurité : appliquées d'office en Guidé, annulables ; validées d'un tap sinon
+00:47 +86 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-064 charge de séance charge = difficulté × durée
+00:47 +87 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-064 charge de séance seuil de 1,5 fois la moyenne des 4 semaines précédentes
+00:47 +88 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: KT-064 charge de séance semaine civile du lundi au dimanche
+00:47 +89 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: données aller-retour et lecture stricte
+00:47 +90 -5: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_adapt_test.dart: données valeurs hors contrat : import refusé, démarrage tolérant
+00:47 +91 -5: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/visual_capture_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+00:51 +91 -6: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/visual_capture_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/visual_capture_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/visual_capture_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+00:51 +91 -6: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart
+00:54 +91 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: modèle (KT-038) aller-retour JSON identique, sources et dates conservées
+00:54 +92 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: modèle (KT-038) import strict : une valeur hors contrat refuse le profil
+00:54 +93 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: modèle (KT-038) champs de santé refusés sans consentement
+00:54 +94 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: modèle (KT-038) valeurs par défaut du mode et du ton selon le repère
+00:54 +95 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: mode prudent (KT-041) aucun déclencheur : pas de mode prudent
+00:54 +96 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: mode prudent (KT-041) chaque déclencheur active le mode prudent
+00:54 +97 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: mode prudent (KT-041) accord du médecin daté : lève, puis une nouvelle gêne remet
+00:54 +98 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: mode prudent (KT-041) plafond 80 % et repérage des tests maximaux
+00:54 +99 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: questions progressives (KT-040) ordre, une par séance, plus tard, ne plus demander
+00:54 +100 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: questions progressives (KT-040) questions de santé seulement avec consentement
+00:54 +101 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: store installation neuve sans profil : export identique à 3.0.x
+00:54 +102 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: store profil enregistré, relu après relance, événement daté
+00:55 +103 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: store mode prudent : charges des mouvements principaux ≤ 80 %, identiques sans profil ou sans déclencheur
+00:55 +104 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: store levée par accord médical daté
+00:55 +105 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: store refus puis retrait du consentement : santé effacée, prudent
+00:55 +106 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: store export, import, sauvegarde 3.0.0 sans profil, effacement
+00:55 +107 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: store questions progressives : au plus une par séance, persistées
+00:55 +108 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: store migration du propriétaire (KT-043) : pré-rempli, rien modifié
+00:57 +109 -6: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_test.dart: store étape par défaut sans objectif final : date 12 mois après le départ
+00:57 +110 -6: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_screens_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+01:01 +110 -7: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_screens_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_screens_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l8_profile_screens_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+01:01 +110 -7: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_store_test.dart
+01:04 +110 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_store_test.dart: niveau de détail (KT-065) sans profil : intermédiaire ; débutant, novice : victoires ; avancé : complet ; « Afficher toutes les statistiques »
+01:04 +111 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_store_test.dart: niveau de détail (KT-065) débutant : victoires concrètes, au plus 3 chiffres par écran
+01:04 +112 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_store_test.dart: poids facultatif et masquable masqué : réglage persisté et exporté ; section absente sinon
+01:05 +113 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_store_test.dart: étapes réelles (KT-067) record et étape de chaîne célébrés une seule fois ; aucun crédit ni XP créé tant que le barème n'est pas validé
+01:05 +114 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_store_test.dart: étapes réelles (KT-067) étape ancienne (plus de 7 jours) listée mais non célébrée
+01:05 +115 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_store_test.dart: régularité (KT-067) jour de repos respecté compté, séance de 10 minutes comptée
+01:05 +116 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_store_test.dart: messages de sécurité au ton neutre quel que soit le ton choisi (KT-068)
+01:06 +117 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_store_test.dart: bilans (KT-069) bilan hebdomadaire : bornes dimanche soir / lundi matin, lu une fois
+01:06 +118 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_store_test.dart: bilans (KT-069) bilan de fin de cycle : le lendemain du dernier jour du cycle
+01:06 +119 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_store_test.dart: rappels (KT-070) jamais un jour de repos, même avec un ancien réglage contraire
+01:06 +120 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_store_test.dart: image de partage sans donnée de santé ni poids par défaut (KT-071)
+01:06 +121 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_store_test.dart: parcours d'habitude (KT-071) débutant, 4 premières semaines : séances ramenées vers 20 minutes, 2 séances visées ; désactivable
+01:06 +122 -7: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart
+01:07 +122 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) les fixtures sont présentes
+01:07 +123 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) accessories.json
+01:07 +124 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) accessories_first.json
+01:07 +125 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) accessories_locked.json
+01:07 +126 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) atypical_confirmed.json
+01:07 +127 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) atypical_high.json
+01:07 +128 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) atypical_isolated.json
+01:07 +129 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) fatigue.json
+01:07 +130 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) grid.json
+01:07 +131 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) grid_custom.json
+01:07 +132 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) in_session.json
+01:07 +133 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) legacy_effort.json
+01:07 +134 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) no_bodyweight.json
+01:07 +135 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) pain_active.json
+01:07 +136 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) pain_carry.json
+01:07 +137 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) pain_carry_control.json
+01:07 +138 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) pain_double.json
+01:07 +139 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) pain_single.json
+01:07 +140 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) replay_basic.json
+01:07 +141 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) sim_2003.json
+01:07 +142 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) sim_4001.json
+01:07 +143 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) sim_6002.json
+01:07 +144 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) squat_rest.json
+01:07 +145 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) structure.json
+01:07 +146 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) structure_cap.json
+01:07 +147 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) structure_decline.json
+01:07 +148 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Recoupement Dart / Python (fixtures partagées) structure_deload_week.json
+01:07 +149 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D24 — exemples chiffrés de la demande (poids du corps 71,5 kg) traction +32,5 → +35 (cible + 1) ou +37,5 (cible + 2)
+01:07 +150 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D24 — exemples chiffrés de la demande (poids du corps 71,5 kg) muscle-up +5 → +6,25 ou +8,75
+01:07 +151 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D24 — exemples chiffrés de la demande (poids du corps 71,5 kg) squat 97,5 → 100 ou 102,5
+01:07 +152 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D24 — exemples chiffrés de la demande (poids du corps 71,5 kg) baisses : deux séries dures, série ratée (−3 % / −6 %)
+01:07 +153 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D24 — exemples chiffrés de la demande (poids du corps 71,5 kg) décharge, douleur, verrou, refus : aucune hausse
+01:07 +154 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D25 — jour de fatigue bandes −5 / −7,5 / −10 % et questionnaire
+01:07 +155 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D23 — grilles du matériel haltères par 1 kg jusqu’à 10 kg puis par 2 kg
+01:07 +156 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D23 — grilles du matériel poulies par 2,5 lb (unité native), lest 1,25 kg, barre 2,5 kg
+01:07 +157 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D23 — grilles du matériel valeur en livres enregistrée au centième de kg : la progression avance d’un cran
+01:07 +158 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D9 — échelle et valeurs héritées six niveaux, du plus dur au plus facile, stockés en RIR
+01:07 +159 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: D9 — échelle et valeurs héritées RIR / RPE hérités ; valeurs non interprétables
+01:07 +160 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Rejeu complet = cache incrémental (au centième) replay_basic.json
+01:07 +161 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Rejeu complet = cache incrémental (au centième) sim_4001.json
+01:07 +162 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Rejeu complet = cache incrémental (au centième) sim_6002.json
+01:07 +163 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Rejeu complet = cache incrémental (au centième) une correction passée impose le rejeu complet
+01:07 +164 -7: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_engine_test.dart: Rejeu complet = cache incrémental (au centième) pesée rétroactive ou repère modifié : rejeu complet
+01:07 +165 -7: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+01:07 +165 -8: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_couleur_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+01:07 +165 -8: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+01:13 +165 -9: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+01:13 +165 -9: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+01:19 +165 -10: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/motion_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+01:19 +165 -10: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_safety_test.dart
+01:22 +165 -10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_safety_test.dart: douleur (KT-073) série de douleurs au-dessus de 3/10, les plus récentes
+01:22 +166 -10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_safety_test.dart: douleur (KT-073) signaux d’alerte : poitrine, malaise, essoufflement, irradiation
+01:22 +167 -10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_safety_test.dart: situations particulières (KT-073) grossesse, tension ou cœur, 65 ans, gêne : mode prudent
+01:22 +168 -10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_safety_test.dart: situations particulières (KT-073) avis médical conseillé, aucun programme spécifique promis
+01:22 +169 -10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_safety_test.dart: récupération (KT-072) conseils généraux : aucun chiffre, aucun calcul, aucun objectif
+01:22 +170 -10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_safety_test.dart: récupération (KT-072) réponses Koach facultatives : une séance sans réponse est vide
+01:22 +171 -10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_safety_test.dart: avertissement (KT-074) finalité bien-être, pas de dispositif médical ni de promesse
+01:22 +172 -10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_safety_test.dart: avertissement (KT-074) note du programme figé reformulée à l’affichage
+01:22 +173 -10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_safety_test.dart: retour de test (KT-078) seuls les champs remplis et les informations cochées
+01:22 +174 -10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_safety_test.dart: retour de test (KT-078) texte borné à 2 000 caractères par champ
+01:22 +175 -10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_safety_test.dart: retour de test (KT-078) scénarios par profil : débutant, intermédiaire, expert, senior
+01:22 +176 -10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_safety_test.dart: store douleur > 3/10 sur 3 séances de suite : renvoi (ordre réel)
+01:22 +177 -10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_safety_test.dart: store consentement refusé, puis accordé, puis retiré (KT-075)
+01:22 +178 -10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_safety_test.dart: store export puis suppression complète des données de santé
+01:23 +179 -10: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_safety_test.dart: store 18 ans et plus : un profil importé plus jeune bloque (KT-075)
+01:23 +180 -10: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+01:28 +180 -11: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_store_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+01:28 +180 -11: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_store_test.dart
+01:30 +180 -11: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_store_test.dart: store migration du propriétaire : instance implicite, 40 semaines identiques au programme actuel, historique et export inchangés
+01:32 +181 -11: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_store_test.dart: store nouvel utilisateur : programme personnalisé généré au choix du départ, persisté, relu à l'identique et exporté
+01:32 +182 -11: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_store_test.dart: store régénération à partir d'aujourd'hui : passé et journées saisies intacts, aperçu « ce qui change », annulation 7 jours
+01:32 +183 -11: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_store_test.dart: store annulation refusée après une séance du nouveau programme ; expirée après 7 jours
+01:32 +184 -11: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_store_test.dart: store mode Guidé : suite régénérée dès la modification du profil, annulable
+01:33 +185 -11: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_store_test.dart: store cycle suivant généré pendant la dernière semaine, depuis le journal (calibrage), jamais au milieu du cycle
+01:33 +186 -11: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_store_test.dart: store export et import : instance relue à l'identique ; section invalide refusée à l'import, ignorée au démarrage
+01:33 +187 -11: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_store_test.dart: le fichier de modèles est lisible et versionné
+01:33 +188 -11: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/redesign_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+01:38 +188 -12: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/redesign_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/redesign_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/redesign_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+01:38 +188 -12: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+01:44 +188 -13: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/ui_refactor_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+01:44 +188 -13: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/stats_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+01:51 +188 -14: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/stats_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/stats_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/stats_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+01:51 +188 -14: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart
+01:53 +188 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: séries, tempo exact et repos uniquement entre les séries
+01:53 +189 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: repos composé et fourchettes sont conservés
+01:53 +190 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: unilatéral : deux côtés ; charge par haltère explicitée
+01:53 +191 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: tenues ne deviennent pas des répétitions
+01:53 +192 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: myo et clusters comptent chaque micro-repos
+01:53 +193 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: HIIT : même durée que le chrono, sans dernier repos
+01:53 +194 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: WOD : repos inline, durées et charges décimales
+01:53 +195 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: blocs imbriqués et multiplicateurs suffixés
+01:53 +196 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: échelle : distance par tour et somme des répétitions
+01:53 +197 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: EMOM : plages, rotation et récupération dans le temps fixe
+01:53 +198 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: E2MOM respecte la durée des intervalles
+01:53 +199 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: AMRAP fractionné : durée exacte, tous les repos conservés
+01:53 +200 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: rounds : n moins un repos ; cap distinct du temps de complétion
+01:53 +201 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: calories et distances ne sont ni des répétitions ni du tonnage
+01:53 +202 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: une prescription inconnue est signalée sans inventer un volume
+01:53 +203 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: EMOM : cash in et cash out sont hors des trente créneaux
+01:53 +204 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: prescriptions croisées et distances dans les consignes
+01:53 +205 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: blocs répétés avec repos et unités ne perdent pas de distance
+01:53 +206 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: les prescriptions ouvertes restent explicitement partielles
+01:53 +207 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: les historiques anciens et les prescriptions modifiées ne calibrent pas
+01:53 +208 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: échelles bornées dans une ligne et consigne sans repos
+01:53 +209 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: les efforts courts sont affichés en secondes
+01:53 +210 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: une échelle gigantesque est bornée avant itération
+01:53 +211 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: intégration programme le cache se renouvelle après modification ou résultat
+01:53 +212 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: intégration programme les supersets partagent leur repos et les EMOM leur horloge
+01:53 +213 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: intégration programme le repos 2 min 30 corrige aussi le chrono automatique
+01:54 +214 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/training_estimate_test.dart: intégration programme aucun nombre non fini ou négatif dans les 1812 exercices et 1 000 WODs
+01:54 +215 -14: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_profiles_test.dart
+01:55 +215 -14: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_profiles_test.dart: 13 profils types : propriétés respectées et document de relecture
+01:55 +216 -14: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+02:00 +216 -15: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4_depart_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+02:00 +216 -15: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart
+02:02 +216 -15: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: le simulateur Dart reproduit les athlètes de la référence Python
+02:02 +217 -15: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C1 — erreur < 3 % après 6 séances depuis un a priori juste
+02:02 +218 -15: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C2 — convergence en ≤ 6 séances depuis un a priori faux de ±15 %
+02:03 +219 -15: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C3 — un mauvais jour isolé (−8 %) déplace l’estimation de < 1 %
+02:03 +220 -15: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C4 — biais de RIR appris à ±0,5 près après 2 tests
+02:03 +221 -15: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C5, C6 — pas d’oscillation, plafonds D20 / D24 jamais dépassés
+02:03 +222 -15: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_simulation_test.dart: C7 — rejeu complet = cache incrémental, au centième de kg
+02:03 +223 -15: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/refonte_ma_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+02:04 +223 -16: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/refonte_ma_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/refonte_ma_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/refonte_ma_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+02:04 +223 -16: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/startup_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+02:05 +223 -17: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/startup_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/startup_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/startup_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+02:05 +223 -17: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/m1_engine3d_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+02:11 +223 -18: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/m1_engine3d_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/m1_engine3d_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/m1_engine3d_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+02:11 +223 -18: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l9b_perf_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+02:13 +223 -19: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l9b_perf_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l9b_perf_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l9b_perf_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+02:13 +223 -19: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart
+02:16 +223 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-051 niveaux par mouvement pompes, tractions et squat : seuils proposés au registre
+02:16 +224 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-051 niveaux par mouvement lests en % du poids du corps : avancé et expert
+02:16 +225 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-051 niveaux par mouvement niveau global = médiane basse des mouvements mesurés ; les autres mouvements prennent ce niveau « par défaut »
+02:16 +226 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-052 périodisation choix automatique selon l'objectif et le niveau
+02:16 +227 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-052 périodisation propriétaire : modèle Expert streetlifting = programme actuel, 40 semaines identiques (LC1 comprise) et annotations Koach identiques
+02:16 +228 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-052 périodisation mode prudent : jamais le modèle Expert (tests maximaux)
+02:16 +229 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-052 périodisation sans date : cycle de 4 à 6 semaines, décharge et mini-tests
+02:16 +230 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-052 périodisation objectif daté dans 10 semaines : macrocycle, affûtage de 14 jours, simulation complète puis jour J
+02:16 +231 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-052 périodisation « Forme et santé » : corps entier, RIR 2 à 4, circuit et mobilité, volume de départ −2 séries
+02:16 +232 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-052 périodisation objectif double 70/30 : part du principal entre 60 et 80 %
+02:16 +233 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-053 répartition et durée règles par défaut, « Forme et santé » toujours en corps entier
+02:16 +234 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-053 répartition et durée durée dans ±10 % (sauf volume plafonné signalé), 48 h entre séances lourdes, jours consécutifs compris
+02:16 +235 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-053 répartition et durée séances placées sur les jours choisis (J selon le départ)
+02:16 +236 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-054 choix des exercices exercice détesté exclu et remplacé, gêne > 3/10 respectée, figures seulement si l'objectif les demande
+02:16 +237 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-054 choix des exercices muscle-up retenu pour une épreuve de muscle-up
+02:16 +238 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-054 choix des exercices mouvements principaux stables d'un cycle à l'autre, accessoires renouvelés
+02:16 +239 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-055 volume départ par niveau, plafond départ + 6, ajustement ±2 appliqué
+02:16 +240 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-056 échauffement et travail spécifique montée en charge 40/60/75/85 % sur un jour lourd, échauffement de 5 à 10 minutes (contrôle des propriétés)
+02:16 +241 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-056 échauffement et travail spécifique endurance : blocs de densité (EMOM, AMRAP court, échelles)
+02:17 +242 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-057 explications et régénération une ligne « pourquoi » par séance et par exercice, adaptée au niveau
+02:17 +243 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-057 explications et régénération fusion : journées passées et journées déjà saisies conservées, suite remplacée
+02:17 +244 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-057 explications et régénération progression lue dans le journal : calibrage, étapes validées sur 2 séances, volume ±2
+02:17 +245 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-050 déterminisme et références même entrée, même graine : JSON identique au caractère près ; entrées sérialisées rejouées à l'identique
+02:17 +246 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_generator_test.dart: KT-050 déterminisme et références références figées (empreinte FNV et longueur du JSON)
+02:17 +247 -19: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart
+02:17 +247 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: les seuils de niveaux conservent exactement la courbe existante
+02:18 +248 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: les crédits continuent de récompenser les paliers après le niveau 10
+02:18 +249 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: un profil vide commence au niveau 1 sans récompenses fantômes
+02:18 +250 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: une journée de repos conserve le barème historique mais ne donne pas de bonus sportif
+02:18 +251 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: les quatre missions se cumulent une seule fois et comptent des jours distincts
+02:18 +252 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: les bonus des semaines précédentes restent présents au changement de semaine
+02:18 +253 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: la régularité accepte les repos et donne le badge quatre semaines
+02:18 +254 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: une semaine entièrement manquée coupe la série actuelle, pas le meilleur historique
+02:18 +255 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: chaque amélioration stricte gagne son bonus, ni égalité ni tentative inachevée
+02:19 +256 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: AMRAP compare les rounds avant les répétitions pour récompenser les records
+02:19 +257 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: les dates futures ne donnent pas de badges ou de missions en avance
+02:19 +258 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: la suppression d’un événement retire ses bonus sans état de récompense dupliqué
+02:19 +259 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: la migration conserve données, déverrouillages, XP de base et bonus après deux imports
+02:19 +260 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: le cache se met à jour après une validation et son annulation
+02:20 +261 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_test.dart: les semaines civiles restent correctes autour du passage à l’heure d’hiver
+02:20 +262 -19: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_properties_test.dart
+02:20 +262 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_properties_test.dart: profils 1 à 1000
+L10 propriétés 1-1000 : 13388 ms ; modèles {health: 247, block: 385, undulating: 143, linear: 220, expert_streetlifting: 5} ; séances 35087 dont 15922 plafonnées
+02:34 +263 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_properties_test.dart: profils 1001 à 2000
+L10 propriétés 1001-2000 : 12276 ms ; modèles {health: 485, block: 753, undulating: 301, linear: 453, expert_streetlifting: 8} ; séances 68179 dont 30576 plafonnées
+02:46 +264 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_properties_test.dart: profils 2001 à 3000
+L10 propriétés 2001-3000 : 12069 ms ; modèles {health: 745, block: 1116, undulating: 455, linear: 673, expert_streetlifting: 11} ; séances 100025 dont 44959 plafonnées
+02:58 +265 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_properties_test.dart: profils 3001 à 4000
+L10 propriétés 3001-4000 : 12887 ms ; modèles {health: 1000, block: 1486, undulating: 602, linear: 899, expert_streetlifting: 13} ; séances 134919 dont 62138 plafonnées
+03:11 +266 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_properties_test.dart: profils 4001 à 5000
+L10 propriétés 4001-5000 : 12239 ms ; modèles {health: 1274, block: 1856, undulating: 752, linear: 1102, expert_streetlifting: 16} ; séances 168374 dont 77182 plafonnées
+03:23 +267 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_properties_test.dart: profils 5001 à 6000
+L10 propriétés 5001-6000 : 12983 ms ; modèles {health: 1529, block: 2224, undulating: 891, linear: 1340, expert_streetlifting: 16} ; séances 202196 dont 94400 plafonnées
+03:36 +268 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_properties_test.dart: profils 6001 à 7000
+L10 propriétés 6001-7000 : 12569 ms ; modèles {health: 1750, block: 2596, undulating: 1031, linear: 1606, expert_streetlifting: 17} ; séances 236473 dont 110191 plafonnées
+03:49 +269 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_properties_test.dart: profils 7001 à 8000
+L10 propriétés 7001-8000 : 12133 ms ; modèles {health: 2023, block: 2941, undulating: 1188, linear: 1829, expert_streetlifting: 19} ; séances 269501 dont 125489 plafonnées
+04:01 +270 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_properties_test.dart: profils 8001 à 9000
+L10 propriétés 8001-9000 : 12351 ms ; modèles {health: 2271, block: 3302, undulating: 1359, linear: 2045, expert_streetlifting: 23} ; séances 302817 dont 140709 plafonnées
+04:13 +271 -19: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_properties_test.dart: profils 9001 à 10000
+L10 propriétés 9001-10000 : 12671 ms ; modèles {health: 2524, block: 3678, undulating: 1513, linear: 2261, expert_streetlifting: 24} ; séances 336519 dont 154698 plafonnées
+04:26 +272 -19: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_screens_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+04:31 +272 -20: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_screens_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_screens_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l13_screens_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+04:31 +272 -20: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_screens_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+04:37 +272 -21: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_screens_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_screens_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/progression_screens_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+04:37 +272 -21: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart
+04:39 +272 -21: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: courbe par morceaux : bornes et interpolation
+04:39 +273 -21: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: records : 1RM estimé lesté et reps au poids de corps, séance exclue
+04:39 +274 -21: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: série avec boucliers : gagnés toutes les 3 semaines, consommés sur un trou
+04:39 +275 -21: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: rareté des badges par bonus
+04:39 +276 -21: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: avec le programme objectif hebdo adaptatif : entre 2 et les journées du programme
+04:40 +277 -21: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: avec le programme campagne : 6 chapitres, 4 boss, 4 saisons, crédits dérivés à zéro
+04:40 +278 -21: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: avec le programme un boss vaincu et un chapitre bouclé donnent titres et crédits
+04:40 +279 -21: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: avec le programme bilan de récompenses : XP, badge, défi et niveau
+04:40 +280 -21: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/game_test.dart: avec le programme une séance terminée laisse un bilan à consommer une seule fois
+04:40 +281 -21: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l9b_pose_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+04:40 +281 -22: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l9b_pose_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l9b_pose_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l9b_pose_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+04:40 +281 -22: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/screens_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+04:47 +281 -23: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/screens_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/screens_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/screens_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+04:47 +281 -23: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart
+04:49 +281 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: un achat WOD ne débite qu’une fois et reste acquis après rechargement
+04:50 +282 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: nouvelle installation sombre, préférences de thème existantes conservées
+04:50 +283 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: le catalogue de 1 000 WODs est classé avant utilisation
+04:50 +284 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: les données du programme et chaque prescription sont exploitables
+04:51 +285 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: les semaines suivent les jours civils aux changements d’heure
+04:51 +286 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: un import invalide tardif ne modifie aucune donnée
+04:51 +287 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: la sauvegarde compacte conserve les modifications, scores et crédits
+04:51 +288 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: les anciens exports v2 restent importables
+04:51 +289 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: migration des préférences v33 vers la nouvelle sauvegarde
+04:52 +290 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: import : caches, thème et champs de Pilotage sont renouvelés
+04:52 +291 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: une séance perso répétée conserve les deux occurrences et leurs XP
+04:52 +292 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: l’avancement du programme exclut les séances perso et les clés hors programme
+04:52 +293 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: les muscles suivent la date réelle, même dans une autre semaine du programme
+04:52 +294 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: les nouveaux identifiants sont uniques sans délai entre créations
+04:52 +295 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: les montées en singles ne sont pas des myo-reps
+04:52 +296 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: le micro-repos personnalisé est distinct du repos entre séries
+04:53 +297 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: Pilotage refuse les valeurs non finies ou négatives
+04:53 +298 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: modifier une ligne de matériel invalide le cache à longueur identique
+04:53 +299 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: les déciles ne dépendent pas des suppressions personnelles
+04:53 +300 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: le parseur ignore les numéros de minute
+04:53 +301 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: les décimales, blocs multipliés et abréviations MU sont reconnus
+04:53 +302 -23: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/store_test.dart: import refuse les versions futures et chronos invalides
+04:53 +303 -23: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+04:58 +303 -24: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+04:58 +303 -24: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+05:04 +303 -25: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_screens_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+05:04 +303 -25: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+05:09 +303 -26: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/timers_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+05:09 +303 -26: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+05:15 +303 -27: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l4b_seances_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+05:15 +303 -27: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+05:22 +303 -28: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+05:22 +303 -28: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_screens_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+05:28 +303 -29: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_screens_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_screens_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_screens_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+05:28 +303 -29: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_store_test.dart
+05:31 +303 -29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_store_test.dart: KT-060 reprise après un arrêt 7 jours : −10 % et −1 série, une séance par mouvement ; Assisté : proposé puis appliqué d'un tap
+05:31 +304 -29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_store_test.dart: KT-060 reprise après un arrêt 14 jours : −20 % et série de calibrage, appliqué d'office en Guidé, annulable
+05:32 +305 -29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_store_test.dart: KT-060 reprise après un arrêt 28 jours : −30 %, semaine de calibrage entière
+05:32 +306 -29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_store_test.dart: KT-060 maladie, vacances, plan qui glisse maladie : pause, rappels suspendus, retour = plan qui glisse, première semaine × 0,7 (Guidé)
+05:32 +307 -29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_store_test.dart: KT-060 maladie, vacances, plan qui glisse séances manquées : proposition de glisser, annulable
+05:32 +308 -29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_store_test.dart: KT-060 maladie, vacances, plan qui glisse vacances : séance d'entretien ajoutée aux séances perso
+05:32 +309 -29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_store_test.dart: KT-058 et KT-059 dans le store compression pendant la séance puis annulation ; export et rejeu
+05:33 +310 -29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_store_test.dart: KT-058 et KT-059 dans le store échange : substitut du même type, première série de calibrage, retour à l'original
+05:33 +311 -29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_store_test.dart: KT-063 modes d'autonomie sans profil : Assisté par défaut ; changement à tout moment
+05:33 +312 -29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_store_test.dart: KT-063 modes d'autonomie profil migré sans choix : Assisté ; choix enregistré dans le profil
+05:33 +313 -29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_store_test.dart: KT-063 modes d'autonomie Guidé : baisse de valeur acceptée d'office au bilan, annulable
+05:33 +314 -29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_store_test.dart: KT-061 et KT-064 charge de séance : prudence au-delà de 1,5 fois la moyenne
+05:33 +315 -29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_store_test.dart: KT-061 et KT-064 question de difficulté : débutants et novices, Guidé ou Assisté
+05:34 +316 -29: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_store_test.dart: KT-061 et KT-064 export sans adaptation identique ; import strict
+05:34 +317 -29: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/level_fill_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+05:37 +317 -30: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/level_fill_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/level_fill_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/level_fill_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+05:37 +317 -30: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart
+05:40 +317 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: niveau de détail (KT-065) débutant et novice : victoires ; intermédiaire : simple ; avancé et expert : complet ; « Afficher toutes les statistiques »
+05:40 +318 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: niveau de détail (KT-065) au plus 3 chiffres par écran de victoires
+05:40 +319 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: chaînes de progression (KT-066) critère atteint dans une séance : étape franchie datée ; étape en cours et suivante
+05:40 +320 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: chaînes de progression (KT-066) étape plus avancée pratiquée : étapes précédentes franchies par déduction, sans étape réelle célébrée
+05:40 +321 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: chaînes de progression (KT-066) lest en pourcentage du poids de corps
+05:40 +322 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: chaînes de progression (KT-066) chaînes mises en avant selon l'objectif
+05:40 +323 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: chaînes de progression (KT-066) pack réel : 24 chaînes, seuils lus
+05:40 +324 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: étapes réelles et récompenses (KT-067) célébrées une seule fois, récentes seulement
+05:40 +325 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: étapes réelles et récompenses (KT-067) barème proposé mais non appliqué (invariant économie)
+05:40 +326 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: régularité : les jours de repos respectés comptent (KT-067) jour de repos respecté compté ; séance un jour de repos jamais pénalisée ni comptée comme repos
+05:40 +327 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: régularité : les jours de repos respectés comptent (KT-067) semaine en cours : jours futurs non comptés ; aujourd'hui sans séance un jour de repos = repos respecté
+05:40 +328 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: régularité : les jours de repos respectés comptent (KT-067) pause exclue ; 3/4 des séances ; parcours d'habitude : 2
+05:40 +329 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: régularité : les jours de repos respectés comptent (KT-067) série et paliers de régularité
+05:40 +330 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: bilans aux bornes (KT-069) bilan hebdomadaire : semaine précédente, du lundi au dimanche suivant
+05:40 +331 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: bilans aux bornes (KT-069) bilan de fin de cycle : du lendemain du dernier jour, 14 jours
+05:40 +332 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: bilans aux bornes (KT-069) assiduité jamais culpabilisante
+05:40 +333 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: ton de Koach (KT-068) ton par défaut selon le niveau ; exigence croissante
+05:40 +334 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: ton de Koach (KT-068) messages de sécurité : même texte neutre quel que soit le ton
+05:40 +335 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: ton de Koach (KT-068) bibliothèque complète, sans vocabulaire médical, humiliation, culpabilisation ni incitation à ignorer douleur, repos ou fatigue
+05:40 +336 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: rappels : uniquement un jour d'entraînement prévu, hors pause (KT-070)
+05:40 +337 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: partage et habitude (KT-071) image de partage sans poids ni donnée de santé par défaut
+05:40 +338 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: partage et habitude (KT-071) parcours d'habitude : débutant et novice, 4 premières semaines, 20 minutes ou moins
+05:40 +339 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: section motiv de la sauvegarde neuve = absente ; relue à l'identique
+05:40 +340 -30: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_motivation_test.dart: section motiv de la sauvegarde import strict : valeur hors contrat refusée ; démarrage tolérant
+05:40 +341 -30: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_purchase_ui_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+05:45 +341 -31: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_purchase_ui_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_purchase_ui_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l2_purchase_ui_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+05:45 +341 -31: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+05:51 +341 -32: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_rouge_capture_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+05:51 +341 -32: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/search_test.dart
+05:54 +341 -32: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/search_test.dart: normalisation : accents, casse, ponctuation, tirets conservés
+05:54 +342 -32: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/search_test.dart: recherche : synonymes FR / EN, plusieurs termes, préfixes
+05:54 +343 -32: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/search_test.dart: pertinence : le titre pèse plus que les lignes
+05:54 +344 -32: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/search_test.dart: index : un document n’est reconstruit que si sa clé change
+05:54 +345 -32: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/search_test.dart: deuxième série : 500 WODs distincts, ids et noms uniques
+05:54 +346 -32: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/search_test.dart: première série inchangée : ids gen0… et même premier WOD
+05:54 +347 -32: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l6_perf_bench_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+05:59 +347 -33: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l6_perf_bench_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l6_perf_bench_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l6_perf_bench_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+05:59 +347 -33: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_screens_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+06:05 +347 -34: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_screens_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_screens_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l12_screens_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+06:05 +347 -34: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_screens_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+06:12 +347 -35: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_screens_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_screens_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_screens_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+06:12 +347 -35: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart
+06:14 +347 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement désactivé par défaut ; export identique à 2.5.9 tant qu’il n’a jamais servi
+06:15 +348 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement état 2.5.x relu : rien de réécrit, Koach désactivé
+06:15 +349 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement première activation : repère initial daté, première pesée, échelle figée
+06:15 +350 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement sauvegarde 3.0.0 : section koach et champs de série, relue à l’identique
+06:16 +351 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement sauvegarde 2.x importée : rien de synthétisé ; export 3.0.0 au format 3
+06:16 +352 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement import : section Koach ou difficulté hors contrat refusée ; démarrage : entrée illisible ignorée, le reste chargé
+06:17 +353 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement effacement des données : Koach remis à l’état neuf
+06:17 +354 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement export après activation relu par l’import strict (clé ancienne, poids hors pesée) ; réactivation : valeurs modifiées datées
+06:17 +355 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement import strict : horodatage ou détail de décision hors contrat refusé ; démarrage : entrée ignorée et comptée
+06:17 +356 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement séance effacée : ses réponses et décisions Koach aussi ; suppression annulée : rétablies
+06:18 +357 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement cache : une frappe dans la séance en cours ne recalcule rien ; une séance terminée corrigée, si
+06:18 +358 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement D26 : allègement levé à la main, daté
+06:18 +359 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: KT-034 — migration, persistance, effacement KT-036 : réponses supprimables seules, incluses dans l’export
+06:18 +360 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D8, D9, D11, D13, D33, D12 — séries et saisies D8 : difficulté exigée sur la première et la dernière série des mouvements principaux
+06:18 +361 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D8, D9, D11, D13, D33, D12 — séries et saisies D9 : RIR/RPE hérités lus avec l’échelle figée ; non interprétables = borne
+06:18 +362 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D8, D9, D11, D13, D33, D12 — séries et saisies D11 : série écartée gardée au journal, XP inchangée, hors estimation
+06:18 +363 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D8, D9, D11, D13, D33, D12 — séries et saisies D13 : repos réel < 80 % du prescrit → série hors estimation
+06:18 +364 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D8, D9, D11, D13, D33, D12 — séries et saisies D33 : saisie manuelle = mesure datée, regroupée sur 30 s ; poids du corps = pesée du jour
+06:18 +365 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D8, D9, D11, D13, D33, D12 — séries et saisies D12 : pesée la plus récente = poids du corps ; rappel après 7 jours
+06:19 +366 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D8, D9, D11, D13, D33, D12 — séries et saisies D2 : séances perso et WOD ignorés ; cache du store = rejeu complet
+06:19 +367 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D24, D7, D6, D25, D26 — pendant la séance D24 : suggestion après la série 1, appliquée aux séries restantes
+06:19 +368 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D24, D7, D6, D25, D26 — pendant la séance D7 : refus mémorisé, hausse non reproposée ; une baisse de sécurité reste possible
+06:19 +369 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D24, D7, D6, D25, D26 — pendant la séance D6 : verrou « Garder ma valeur » et Koach désactivé : aucune suggestion
+06:19 +370 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D24, D7, D6, D25, D26 — pendant la séance D25 : jour de fatigue : séries restantes réduites, charges gardées, aucune hausse
+06:19 +371 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: D24, D7, D6, D25, D26 — pendant la séance D26 : douleur > 3/10 : aucune hausse ; deux séances de suite : allègement proposé, puis levé
+06:19 +372 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: Bilan (D5 b), historique (KT-029), objectifs (D27), structure (D28) bilan : valeur acceptée d’un tap, datée ; historique des séances inchangé
+06:19 +373 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: Bilan (D5 b), historique (KT-029), objectifs (D27), structure (D28) D27 : étape = cible 12 mois au départ + 12 mois ; objectif final saisi, modifiable
+06:20 +374 -35: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_store_test.dart: Bilan (D5 b), historique (KT-029), objectifs (D27), structure (D28) D28 : option désactivée par défaut ; adaptation acceptée = couche datée et réversible
+06:20 +375 -35: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/refonte_ma_capture_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+06:20 +375 -36: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/refonte_ma_capture_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/refonte_ma_capture_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/refonte_ma_capture_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+06:20 +375 -36: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_palettes_capture_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+06:26 +375 -37: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_palettes_capture_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_palettes_capture_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_palettes_capture_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+06:26 +375 -37: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l6_perf_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+06:33 +375 -38: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l6_perf_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l6_perf_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l6_perf_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+06:33 +375 -38: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l9b_content_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+06:35 +375 -39: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l9b_content_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l9b_content_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l9b_content_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+06:35 +375 -39: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+06:41 +375 -40: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3_economy_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+06:41 +375 -40: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+06:48 +375 -41: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l3b_formats_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+06:48 +375 -41: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_acquisition_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+06:53 +375 -42: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_acquisition_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_acquisition_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/wod_acquisition_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+06:53 +375 -42: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_off_test.dart
+06:55 +375 -42: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_off_test.dart: instantané de référence : 5 jeux × 1 812 exercices
+06:56 +376 -42: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_off_test.dart: Koach jamais activé : charges, séries et saisies identiques à 2.x
+06:56 +377 -42: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l7_koach_off_test.dart: Koach utilisé puis désactivé : identique à 2.x
+06:56 +378 -42: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+07:01 +378 -43: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+        return const CupertinoPageTransitionsBuilder().buildTransitions(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  .
+07:01 +378 -43: Some tests failed.
+
+Failing tests:
+  /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_correction_test.dart
+  /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/history_readonly_test.dart
+  /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_screens_test.dart: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l10_screens_test.dart
+  /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_screens_test.dart: loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l11_screens_test.dart
+  ... and 39 more

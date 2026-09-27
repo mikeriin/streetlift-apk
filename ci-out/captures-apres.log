@@ -1,0 +1,45 @@
+
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+::group::❌ loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/visual_capture_test.dart (failed)
+Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/visual_capture_test.dart":
+Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/visual_capture_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.
+
+::endgroup::
+::group::❌ loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/visual_capture_test.dart (failed after test completion)
+Error: The Dart compiler exited unexpectedly.
+package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+dart:async/zone_root.dart 48:47                  _rootRunUnary
+dart:async/zone.dart 816:35                      _CustomZone.runUnary
+dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+dart:async/future_impl.dart 977:13               Future._propagateToListeners
+dart:async/future_impl.dart 862:9                Future._propagateToListeners
+dart:async/future_impl.dart 720:5                Future._completeWithValue
+dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+dart:async/zone_root.dart 35:13                  _rootRun
+dart:async/zone.dart 810:35                      _CustomZone.run
+dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+::endgroup::
+lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+::group::❌ loading /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart (failed)
+Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart":
+Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/l5c_ecrans_capture_test.dart: lib/motion.dart:99:20: Error: Not a constant expression.
+      return const CupertinoPageTransitionsBuilder().buildTransitions(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.
+
+::endgroup::
+
+::error::0 tests passed, 2 failed.
