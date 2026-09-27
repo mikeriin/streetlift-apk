@@ -581,7 +581,9 @@ class AdaptSessionBanner extends StatelessWidget {
       );
     }
     if (info.illness) {
-      parts.add(info.applied ? 'Retour de maladie : allégé' : 'Retour de maladie');
+      parts.add(
+        info.applied ? 'Retour de maladie : allégé' : 'Retour de maladie',
+      );
     }
     if (info.lighten) parts.add('Semaine allégée');
     if (info.deload) parts.add('Décharge');

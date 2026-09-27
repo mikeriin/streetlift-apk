@@ -1,19 +1,10 @@
- ci-out/analyze.log                            |     3 -
- ci-out/android-debug.log                      |    12 -
- ci-out/commit.txt                             |     2 +-
- ci-out/format-full.diff                       | 93240 ------------------------
- ci-out/format.diff                            |    11 -
- ci-out/format.log                             |    11 +-
- ci-out/python.log                             |    70 -
- ci-out/test-l5c.log                           |   210 -
- ci-out/test-summary.txt                       |     1 -
- ci-out/test.log                               |   836 -
- streetlift_tracker/lib/adapt_screens.dart     |    25 +-
- streetlift_tracker/lib/adapt_store.dart       |    37 +-
- streetlift_tracker/lib/koach_adapt.dart       |    24 +-
- streetlift_tracker/lib/koach_store.dart       |    20 +-
- streetlift_tracker/lib/koach_widgets.dart     |    30 +-
- streetlift_tracker/test/l11_adapt_test.dart   |    56 +-
- streetlift_tracker/test/l11_screens_test.dart |     5 +-
- streetlift_tracker/test/l11_store_test.dart   |   112 +-
- 18 files changed, 174 insertions(+), 94531 deletions(-)
+ ci-out/analyze.log                        |     5 -
+ ci-out/commit.txt                         |     2 +-
+ ci-out/format-full.diff                   | 95053 ----------------------------
+ ci-out/format.diff                        |    19 -
+ ci-out/format.log                         |     9 +-
+ ci-out/python.log                         |    70 -
+ ci-out/test-l5c.log                       |   210 -
+ ci-out/test.log                           |   938 -
+ streetlift_tracker/lib/adapt_screens.dart |     4 +-
+ 9 files changed, 5 insertions(+), 96305 deletions(-)
