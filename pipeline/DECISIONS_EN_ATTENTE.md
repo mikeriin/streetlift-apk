@@ -1,5 +1,11 @@
 # Décisions en attente
 
+## Tranché le 27/09/2026 (le propriétaire a validé le pack v2 et délégué ces choix)
+- L9R : D-L9R-04 (a) accepté ; D-L9R-06 (a) références wger gardées dans `sources` (faits vérifiés, rien reproduit, pas d'écran de mentions) ; D-L9R-02 81 entrées suffisent ; D-L9R-05 classements confirmés ; D-L9R-07 statique / indisponible plutôt qu'une animation approximative : confirmé ; D-L9R-09 ajouts acceptés, difficultés proposées conservées (restent au registre de validation).
+- L8 : 1 garder ; 2 garder ; 3 (a) questions propres à Kalis Track, relecture par un médecin inscrite comme limite ; 4 garder ; 5 garder.
+
+(Historique ci-dessous conservé.)
+
 ## L9R — à relire (non bloquant)
 Le lot L9R a tranché les décisions L9 selon le prompt (D-L9-01 sources consultées, D-L9-02 types conservés, D-L9-04 sans objet, D-L9-06 confirmée, couverture 79 → 22 manques justifiés). Décisions réversibles prises par défaut en L9R ; détail dans `CONTRAT_L9.md` §6 sur `content-pack` (dossier `kalis_content_pack_v2/`).
 - **D-L9R-04 Concordance par variante proche** : six archétypes (dips à la barre droite, isométrie de transition muscle-up, manna, sandbag carry, skin the cat, respiration) n'ont qu'une source directe ; la seconde décrit une variante très proche. Options : (a) accepter (appliqué) ; (b) marquer ces exercices « à confirmer » dans l'application.
