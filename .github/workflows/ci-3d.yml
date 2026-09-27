@@ -1,0 +1,303 @@
+# Pipeline « Mannequin 3D » (M1) : contrôles, captures et rendu réel sur
+# émulateur Android, déclenchés uniquement par un push sur claude/ci-3d.
+# Les résultats (journaux, captures, relevé des temps d'image) sont
+# recommités par la CI dans ci-out/ sur la même branche : rien à
+# télécharger. Méthode : docs/CI_3D.md du ZIP.
+name: CI 3D (mannequin)
+
+on:
+  push:
+    branches: ["claude/ci-3d"]
+    paths-ignore:
+      - "ci-out/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ci-3d
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: "3.47.5"
+  # Version de référence de main avant M1, pour comparer les rendus de test.
+  FLUTTER_BEFORE: "3.29.3"
+
+jobs:
+  checks:
+    name: Contrôles, tests et build debug
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - name: Extraire le projet
+        run: |
+          unzip -q streetlift_tracker_v33.zip
+          mkdir -p out
+          flutter --version > out/flutter-version.txt 2>&1
+          dart --version >> out/flutter-version.txt 2>&1
+          cat out/flutter-version.txt
+          cd streetlift_tracker
+          git init -q && git add -A && git -c user.name=ci -c user.email=ci@local commit -qm base
+      - name: Composants Android
+        run: |
+          sdk="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
+          tools="$sdk/cmdline-tools/latest/bin"
+          (yes 2>/dev/null || true) | "$tools/sdkmanager" --licenses > /dev/null
+          "$tools/sdkmanager" --install "platforms;android-36" "build-tools;36.0.0" "ndk;28.2.13676358" > out/sdkmanager.log 2>&1 || { tail -n 40 out/sdkmanager.log; exit 1; }
+      - name: Dépendances (verrou régénéré si absent ou périmé)
+        id: pub
+        working-directory: streetlift_tracker
+        run: |
+          if flutter pub get --enforce-lockfile > ../out/pub-get.log 2>&1; then
+            echo "verrou=respecte" | tee ../out/pub-lock.txt
+          else
+            echo "verrou=regenere" | tee ../out/pub-lock.txt
+            flutter pub get >> ../out/pub-get.log 2>&1
+          fi
+          cp pubspec.lock ../out/pubspec.lock
+          flutter pub outdated > ../out/pub-outdated.txt 2>&1 || true
+          flutter pub deps --style=compact > ../out/pub-deps.txt 2>&1 || true
+      - name: Formatage
+        id: format
+        continue-on-error: true
+        working-directory: streetlift_tracker
+        run: |
+          set -o pipefail
+          if ! dart format --output=none --set-exit-if-changed lib test > ../out/format.log 2>&1; then
+            # Correctif prêt à appliquer (tout le code, y compris
+            # integration_test et test_driver).
+            dart format lib test integration_test test_driver > /dev/null 2>&1 || true
+            git diff > ../out/format.patch
+            git checkout -q -- .
+            exit 1
+          fi
+          dart format --output=none --set-exit-if-changed integration_test test_driver >> ../out/format.log 2>&1
+      - name: Analyse
+        id: analyze
+        continue-on-error: true
+        working-directory: streetlift_tracker
+        run: |
+          set -o pipefail
+          flutter analyze --no-pub 2>&1 | tee ../out/analyze.log
+      - name: Tests Python et intégrité
+        id: python
+        continue-on-error: true
+        working-directory: streetlift_tracker
+        run: |
+          set -o pipefail
+          python3 -m unittest discover -s tools/tests -v > ../out/python-tests.log 2>&1
+          python3 tools/verify_project.py | tee -a ../out/python-tests.log
+          python3 tools/package_release.py --check ../streetlift_tracker_v33.zip | tee -a ../out/python-tests.log
+      - name: Tests Dart
+        id: dart
+        continue-on-error: true
+        working-directory: streetlift_tracker
+        run: |
+          set -o pipefail
+          TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded > ../out/flutter-tests.log 2>&1
+          tail -n 5 ../out/flutter-tests.log
+      - name: Rendus de test (après)
+        id: captures
+        continue-on-error: true
+        working-directory: streetlift_tracker
+        run: |
+          touch ../marker
+          TZ=Europe/Paris flutter test --no-pub --timeout 300s --dart-define=KALIS_CAPTURE=true \
+            test/visual_capture_test.dart test/l5c_ecrans_capture_test.dart > ../out/captures-apres.log 2>&1
+          mkdir -p ../captures-apres
+          find . -name '*.png' -newer ../marker -not -path './build/*' | while read -r f; do
+            cp "$f" "../captures-apres/$(echo "${f#./}" | tr '/' '_')"
+          done
+          ls ../captures-apres | wc -l
+      - name: Build debug
+        id: build
+        continue-on-error: true
+        working-directory: streetlift_tracker
+        run: |
+          set -o pipefail
+          flutter build apk --debug --no-pub > ../out/build-debug.log 2>&1
+          ls -la build/app/outputs/flutter-apk/ | tee -a ../out/build-debug.log
+      - name: Bilan
+        if: always()
+        run: |
+          {
+            echo "pub=${{ steps.pub.outcome }}"
+            echo "format=${{ steps.format.outcome }}"
+            echo "analyze=${{ steps.analyze.outcome }}"
+            echo "python=${{ steps.python.outcome }}"
+            echo "dart=${{ steps.dart.outcome }}"
+            echo "captures=${{ steps.captures.outcome }}"
+            echo "build_debug=${{ steps.build.outcome }}"
+          } > out/checks.txt
+          cat out/checks.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: checks
+          path: out/
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: captures-apres
+          path: captures-apres/
+          if-no-files-found: ignore
+
+  before:
+    name: Rendus de test de référence (main avant M1)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - name: ZIP de main
+        run: |
+          git fetch -q --depth 1 origin main
+          git show origin/main:streetlift_tracker_v33.zip > main.zip
+          unzip -q main.zip
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_BEFORE }}
+          channel: stable
+          cache: true
+      - name: Rendus (avant)
+        working-directory: streetlift_tracker
+        run: |
+          flutter pub get --enforce-lockfile > /dev/null
+          touch ../marker
+          TZ=Europe/Paris flutter test --no-pub --timeout 300s --dart-define=KALIS_CAPTURE=true \
+            test/visual_capture_test.dart test/l5c_ecrans_capture_test.dart > ../captures-avant.log 2>&1 || true
+          mkdir -p ../captures-avant
+          find . -name '*.png' -newer ../marker -not -path './build/*' | while read -r f; do
+            cp "$f" "../captures-avant/$(echo "${f#./}" | tr '/' '_')"
+          done
+          cp ../captures-avant.log ../captures-avant/
+          ls ../captures-avant | wc -l
+      - uses: actions/upload-artifact@v4
+        with:
+          name: captures-avant
+          path: captures-avant/
+
+  emulator:
+    name: Rendu réel sur émulateur Android (Flutter GPU)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      GRADLE_OPTS: -Dorg.gradle.daemon=false
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - name: Extraire le projet et installer les composants
+        run: |
+          unzip -q streetlift_tracker_v33.zip
+          sdk="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
+          tools="$sdk/cmdline-tools/latest/bin"
+          (yes 2>/dev/null || true) | "$tools/sdkmanager" --licenses > /dev/null
+          "$tools/sdkmanager" --install "platforms;android-36" "build-tools;36.0.0" "ndk;28.2.13676358" > /dev/null
+          cd streetlift_tracker
+          flutter pub get --enforce-lockfile || flutter pub get
+          mkdir -p build/ci3d
+      - name: Activer KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Précompiler l'APK de test
+        working-directory: streetlift_tracker
+        run: flutter build apk --debug --no-pub --target=integration_test/moteur_3d_test.dart > build/ci3d/build-test.log 2>&1 || (tail -n 60 build/ci3d/build-test.log; exit 1)
+      - name: Rendu sur émulateur
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_7
+          disable-animations: true
+          # Même émulateur que la CI de flutter_scene (SwANGLE stable).
+          emulator-build: 13823996
+          emulator-options: -no-window -gpu swangle_indirect -no-snapshot -noaudio -no-boot-anim -camera-back none
+          working-directory: streetlift_tracker
+          script: bash tools/ci3d_drive.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: emulateur
+          path: streetlift_tracker/build/ci3d/
+          if-no-files-found: warn
+
+  publish:
+    name: Publier les résultats dans ci-out/
+    needs: [checks, before, emulator]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Comparer les rendus et assembler ci-out
+        run: |
+          rm -rf ci-out && mkdir -p ci-out
+          cp -r artifacts/checks/. ci-out/ 2>/dev/null || true
+          mkdir -p ci-out/emulateur && cp -r artifacts/emulateur/. ci-out/emulateur/ 2>/dev/null || true
+          pip install --quiet pillow
+          unzip -q -o streetlift_tracker_v33.zip streetlift_tracker/tools/compare_renders.py
+          if [ -d artifacts/captures-avant ] && [ -d artifacts/captures-apres ]; then
+            python3 streetlift_tracker/tools/compare_renders.py artifacts/captures-avant artifacts/captures-apres > ci-out/captures-comparaison.txt 2>&1 || true
+            mkdir -p ci-out/captures
+            # Paires différentes (avant / après) pour les regarder, 30 au plus.
+            grep -E '^\S+\.png' ci-out/captures-comparaison.txt | grep -v identique | awk '{print $1}' | head -n 30 | while read -r n; do
+              cp "artifacts/captures-avant/$n" "ci-out/captures/avant_$n" 2>/dev/null || true
+              cp "artifacts/captures-apres/$n" "ci-out/captures/apres_$n" 2>/dev/null || true
+            done
+            ls artifacts/captures-apres | head -n 400 > ci-out/captures-liste.txt
+          fi
+          {
+            echo "run=${{ github.run_id }}"
+            echo "commit=${{ github.sha }}"
+            echo "checks=${{ needs.checks.result }}"
+            echo "before=${{ needs.before.result }}"
+            echo "emulator=${{ needs.emulator.result }}"
+          } > ci-out/resultat.txt
+          cat ci-out/resultat.txt
+          du -sh ci-out
+      - name: Recommiter ci-out sur claude/ci-3d
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A ci-out
+          git commit -qm "CI 3D : résultats du run ${{ github.run_id }}" || exit 0
+          for i in 1 2 3; do
+            git pull -q --rebase origin claude/ci-3d && git push -q origin HEAD:claude/ci-3d && break
+            sleep 5
+          done
