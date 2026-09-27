@@ -1,10 +1,10 @@
  ci-out/analyze.log       |      3 -
  ci-out/android-debug.log |     12 -
  ci-out/commit.txt        |      2 +-
- ci-out/format-full.diff  | 105349 --------------------------------------------
+ ci-out/format-full.diff  | 106804 --------------------------------------------
  ci-out/format.diff       |     10 -
- ci-out/format.log        |      3 +-
+ ci-out/format.log        |      2 +-
  ci-out/python.log        |     70 -
  ci-out/test-l5c.log      |    210 -
- ci-out/test.log          |   1084 -
- 9 files changed, 2 insertions(+), 106741 deletions(-)
+ ci-out/test.log          |   1024 -
+ 9 files changed, 2 insertions(+), 108135 deletions(-)
