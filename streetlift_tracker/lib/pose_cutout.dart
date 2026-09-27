@@ -22,20 +22,45 @@ const cutoutPrimaryHeat = 1.0, cutoutSecondaryHeat = .62;
 /// Assombrissement du membre éloigné (profil).
 const cutoutFarShade = ui.Color(0xFF9C9C9C);
 
+/// Muscles de la face postérieure du corps (vus de dos).
+const cutoutPosteriorMuscles = {
+  'extenseurs_cervicaux', 'elevateur_scapula', 'trapeze_superieur', //
+  'trapeze_moyen', 'trapeze_inferieur', 'rhomboides', 'grand_dorsal',
+  'grand_rond', 'petit_rond', 'infra_epineux', 'supra_epineux',
+  'deltoide_posterieur', 'triceps_chef_long', 'triceps_chef_lateral',
+  'triceps_chef_medial', 'ancone', 'erecteurs_lombaires',
+  'erecteurs_thoraciques', 'multifides', 'carre_des_lombes', 'grand_fessier',
+  'biceps_femoral', 'biceps_femoral_chef_court', 'semi_tendineux',
+  'semi_membraneux', 'poplite', 'gastrocnemien_medial',
+  'gastrocnemien_lateral', 'soleaire',
+};
+
+/// Muscles de la face antérieure du corps (vus de face). Les muscles
+/// latéraux (obliques, deltoïde moyen, moyen fessier…) ne comptent pas.
+const cutoutAnteriorMuscles = {
+  'sterno_cleido_mastoidien', 'flechisseurs_cervicaux_profonds', //
+  'deltoide_anterieur', 'dentele_anterieur', 'petit_pectoral',
+  'grand_pectoral_claviculaire', 'grand_pectoral_sterno_costal',
+  'grand_pectoral_abdominal', 'biceps_chef_long', 'biceps_chef_court',
+  'brachial', 'coraco_brachial', 'droit_abdomen', 'transverse_abdomen',
+  'grand_psoas', 'iliaque', 'sartorius', 'pectine', 'long_adducteur',
+  'court_adducteur', 'gracile', 'droit_femoral', 'vaste_lateral',
+  'vaste_medial', 'vaste_intermediaire', 'tibial_anterieur',
+  'long_extenseur_des_orteils',
+};
+
 /// Vue de rendu d'une démonstration.
 ///
 /// Règle : les gabarits de profil (plan sagittal) restent de profil ; les
 /// gabarits de face (plan frontal) sont rendus de dos quand leurs muscles
-/// principaux sont en majorité postérieurs (visibles seulement de dos dans
-/// l'atlas : dorsaux, trapèzes, fessiers, ischios…), de face sinon.
+/// principaux postérieurs sont plus nombreux que les antérieurs (les muscles
+/// latéraux ne comptent pas), de face sinon.
 String cutoutViewOf(PoseAnimation pose) {
   if (!pose.isFace) return 'profil';
   var back = 0, front = 0;
   for (final m in pose.primaires) {
-    final vues = atlasMuscles[m]?.vues ?? const <String>[];
-    final b = vues.contains('dos'), f = vues.contains('face');
-    if (b && !f) back++;
-    if (f && !b) front++;
+    if (cutoutPosteriorMuscles.contains(m)) back++;
+    if (cutoutAnteriorMuscles.contains(m)) front++;
   }
   return back > front ? 'dos' : 'face';
 }

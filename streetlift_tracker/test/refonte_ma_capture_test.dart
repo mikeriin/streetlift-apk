@@ -102,7 +102,12 @@ void main() {
           ),
         );
 
-    const label = TextStyle(color: Colors.white, fontSize: 11, height: 1.2);
+    const label = TextStyle(
+      fontFamily: 'Roboto',
+      color: Colors.white,
+      fontSize: 12,
+      height: 1.2,
+    );
 
     // 1. Planches d'images clés : tous les exercices non indisponibles.
     final ids = [
@@ -112,56 +117,79 @@ void main() {
           e.key,
     ]..sort();
     final index = StringBuffer();
-    const perSheet = 12, cell = 150.0;
-    for (var s = 0; s * perSheet < ids.length; s++) {
-      final chunk = ids.skip(s * perSheet).take(perSheet).toList();
-      final blocks = <Widget>[];
-      for (final id in chunk) {
-        final anim = animationOf(id);
-        final e = exercices[id] as Map;
-        final vb = poseBBox(anim);
-        final kfs =
-            e['statut'] == 'statique' ? [anim.keyframes.first] : anim.keyframes;
-        index.writeln(
-          'planche_${s.toString().padLeft(2, '0')} $id '
-          'vue=${cutoutViewOf(anim)} gabarit=${e['gabarit']} '
-          'statut=${e['statut']} images_cles=${anim.keyframes.length}',
-        );
-        blocks.add(
-          SizedBox(
-            width: 4 * cell,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '$id · ${cutoutViewOf(anim)} · ${e['gabarit']}'
-                  '${e['statut'] == 'statique' ? ' · STATIQUE' : ''}',
-                  style: label,
-                  maxLines: 1,
-                  overflow: TextOverflow.clip,
-                ),
-                Row(
-                  children: [
-                    for (final k in kfs.take(4))
-                      tile(anim, poseOf(k, anim.view), vb, cell),
-                  ],
-                ),
-              ],
+    // Rangées de 4 cases au plus (un exercice = ses images clés, 4 au plus),
+    // 4 rangées par planche.
+    const cell = 240.0, perRow = 4, rowsPerSheet = 4;
+    final rows = <List<String>>[];
+    var used = perRow;
+    for (final id in ids) {
+      final e = exercices[id] as Map;
+      final n =
+          e['statut'] == 'statique'
+              ? 1
+              : math.min(perRow, animationOf(id).keyframes.length);
+      if (used + n > perRow) {
+        rows.add([]);
+        used = 0;
+      }
+      rows.last.add(id);
+      used += n;
+    }
+    for (var s = 0; s * rowsPerSheet < rows.length; s++) {
+      final sheetRows = rows.skip(s * rowsPerSheet).take(rowsPerSheet);
+      final lines = <Widget>[];
+      for (final row in sheetRows) {
+        final blocks = <Widget>[];
+        for (final id in row) {
+          final anim = animationOf(id);
+          final e = exercices[id] as Map;
+          final vb = poseBBox(anim);
+          final kfs =
+              e['statut'] == 'statique'
+                  ? [anim.keyframes.first]
+                  : anim.keyframes.take(perRow).toList();
+          index.writeln(
+            'planche_${s.toString().padLeft(3, '0')} $id '
+            'vue=${cutoutViewOf(anim)} gabarit=${e['gabarit']} '
+            'statut=${e['statut']} images_cles=${anim.keyframes.length}',
+          );
+          blocks.add(
+            Container(
+              width: kfs.length * cell,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.white24),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    ' $id · ${cutoutViewOf(anim)}'
+                    '${e['statut'] == 'statique' ? ' · STATIQUE' : ''}',
+                    style: label,
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
+                  ),
+                  Row(
+                    children: [
+                      for (final k in kfs)
+                        tile(anim, poseOf(k, anim.view), vb, cell - 2),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        }
+        lines.add(Row(children: blocks));
       }
       await show(
-        Padding(
-          padding: const EdgeInsets.all(6),
-          child: Wrap(spacing: 10, runSpacing: 6, children: blocks),
-        ),
-        const Size(2 * 4 * cell + 22, 6 * (cell + 22) + 12),
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: lines),
+        const Size(perRow * cell, rowsPerSheet * (cell + 20)),
       );
       await savePng(
         tester,
         boundary,
-        'revue/planche_${s.toString().padLeft(2, '0')}',
+        'revue/planche_${s.toString().padLeft(3, '0')}',
         pixelRatio: 1,
       );
     }

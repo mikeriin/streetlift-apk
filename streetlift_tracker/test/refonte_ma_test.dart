@@ -248,6 +248,11 @@ void main() {
       }
       expect(profil, greaterThan(500));
       expect(face + dos, 23);
+      // exemples réels : côté des muscles principaux
+      expect(cutoutViewOf(animationOf('side-bend-haltere')), 'dos');
+      expect(cutoutViewOf(animationOf('jumping-jacks')), 'face');
+      expect(cutoutViewOf(animationOf('human-flag-drapeau')), 'face');
+      expect(dos, greaterThan(0));
       // principaux postérieurs (grand dorsal) → dos ; obliques → face
       expect(
         cutoutViewOf(
