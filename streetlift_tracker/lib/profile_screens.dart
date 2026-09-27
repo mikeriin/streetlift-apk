@@ -447,6 +447,9 @@ class _ProfileFlowState extends State<ProfileFlow> {
               ),
             ...(_minor ? _minorStep() : _stepBody(name)),
             if (!_minor) _actions(name),
+            // L13 (KT-074) : avertissement dès le premier écran, sous
+            // l'action pour ne pas repousser « Commencer ».
+            if (!_minor && name == 'welcome') const DisclaimerCard(),
           ],
         ),
       ),
@@ -585,8 +588,6 @@ class _ProfileFlowState extends State<ProfileFlow> {
         ],
       ),
     ),
-    // L13 (KT-074) : avertissement dès le premier écran.
-    const DisclaimerCard(),
   ];
 
   List<Widget> _ageStep() {

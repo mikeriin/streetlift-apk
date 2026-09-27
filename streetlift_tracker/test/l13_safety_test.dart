@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:streetlift_tracker/models.dart' show wellnessWording;
 import 'package:streetlift_tracker/store.dart';
 
 import 'l2_fixtures.dart';

@@ -16,6 +16,34 @@ import 'package:streetlift_tracker/wellbeing_screens.dart';
 
 import 'phone_test_support.dart';
 
+/// Défilement réel et lent (gestes chronométrés, sans élan) de la liste
+/// principale jusqu'à ce que [target] soit touchable. Les cartes de ce lot
+/// sont hautes à 200 % : un geste rapide (élan) pourrait les sauter.
+Future<void> reach(WidgetTester tester, Finder target, {bool up = false}) async {
+  final list = find.byType(Scrollable).first;
+  for (var i = 0; i < 80 && target.hitTestable().evaluate().isEmpty; i++) {
+    await tester.timedDrag(
+      list,
+      Offset(0, up ? 150 : -150),
+      const Duration(milliseconds: 400),
+    );
+    await tester.pumpAndSettle();
+  }
+  expect(target.hitTestable(), findsOneWidget, reason: 'Atteint par défilement');
+}
+
+/// Laisse le chargement réel de l'asset (politique) se terminer.
+Future<void> settleAsset(WidgetTester tester, Finder ready) async {
+  for (var i = 0; i < 20 && ready.evaluate().isEmpty; i++) {
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 50)),
+    );
+    await tester.pump();
+  }
+  await tester.pumpAndSettle();
+  expect(ready, findsOneWidget);
+}
+
 const _at = '2026-09-27T10:00:00';
 
 UserProfile _profile({int birthYear = 1990}) {
@@ -91,11 +119,11 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('safety-alert')), findsOneWidget);
       expect(find.textContaining('poitrine'), findsWidgets);
-      await scrollToAction(
+      await reach(
         tester,
         find.byKey(const ValueKey('safety-situation-age65')),
       );
-      await scrollToAction(
+      await reach(
         tester,
         find.byKey(const ValueKey('wellness-disclaimer')),
       );
@@ -109,16 +137,16 @@ void main() {
         page(const RecoveryScreen(), scale: scale, dark: dark),
       );
       await tester.pumpAndSettle();
-      await scrollToAction(
+      await reach(
         tester,
         find.byKey(const ValueKey('recovery-listen')),
       );
       await tester.pumpWidget(
         page(const PrivacyPolicyScreen(), scale: scale, dark: dark),
       );
-      await tester.pumpAndSettle();
+      await settleAsset(tester, find.byKey(const ValueKey('privacy-screen')));
       expect(find.byKey(const ValueKey('privacy-screen')), findsOneWidget);
-      await scrollToAction(
+      await reach(
         tester,
         find.textContaining('Un profil importé qui indique moins de 18 ans'),
       );
@@ -138,7 +166,7 @@ void main() {
     }
     await tester.pumpWidget(page(const SafetyScreen()));
     await tester.pumpAndSettle();
-    await scrollToAction(tester, find.byKey(const ValueKey('safety-referral')));
+    await reach(tester, find.byKey(const ValueKey('safety-referral')));
     expect(find.textContaining('professionnel de santé'), findsWidgets);
   });
 
@@ -156,9 +184,9 @@ void main() {
     await tester.pumpAndSettle();
     // Formulaire vide : rien à partager.
     final share = find.byKey(const ValueKey('feedback-share'));
-    await scrollToAction(tester, share);
+    await reach(tester, share);
     expect(tester.widget<ButtonStyleButton>(share).onPressed, isNull);
-    await scrollToAction(
+    await reach(
       tester,
       find.byKey(const ValueKey('feedback-blocked')),
       up: true,
@@ -170,10 +198,10 @@ void main() {
     await tester.pumpAndSettle();
     // Version décochée ; niveau et mode prudent non cochés par défaut.
     final version = find.byKey(const ValueKey('feedback-include-version'));
-    await scrollToAction(tester, version);
+    await reach(tester, version);
     await tester.tap(version);
     await tester.pumpAndSettle();
-    await scrollToAction(tester, share);
+    await reach(tester, share);
     await tester.tap(share);
     await tester.pumpAndSettle();
     expect(shared, isNotNull);
@@ -195,7 +223,7 @@ void main() {
     await tester.pumpWidget(page(const ProfileGate(child: Text('ACCUEIL'))));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('flow-welcome')), findsOneWidget);
-    await scrollToAction(
+    await reach(
       tester,
       find.byKey(const ValueKey('wellness-disclaimer')),
     );
@@ -213,10 +241,11 @@ void main() {
       'about-privacy',
       'about-feedback',
     ]) {
-      await scrollToAction(tester, find.byKey(ValueKey(key)));
+      await reach(tester, find.byKey(ValueKey(key)));
     }
+    await reach(tester, find.byKey(const ValueKey('about-privacy')), up: true);
     await tester.tap(find.byKey(const ValueKey('about-privacy')));
-    await tester.pumpAndSettle();
+    await settleAsset(tester, find.byKey(const ValueKey('privacy-screen')));
     expect(find.byKey(const ValueKey('privacy-screen')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });

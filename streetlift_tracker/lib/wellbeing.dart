@@ -218,8 +218,9 @@ String feedbackText(
   final lines = <String>['Retour de test — Kalis Track'];
   lines.add('Scénario : ${scenario.$3}');
   if (d.rating != null) lines.add('Note : ${d.rating}/5');
-  if (d.worked.trim().isNotEmpty)
+  if (d.worked.trim().isNotEmpty) {
     lines.add('Ce qui marche : ${clip(d.worked)}');
+  }
   if (d.blocked.trim().isNotEmpty) {
     lines.add('Ce qui bloque : ${clip(d.blocked)}');
   }

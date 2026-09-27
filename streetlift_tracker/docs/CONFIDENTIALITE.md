@@ -1,49 +1,52 @@
-# Kalis Track 3.1.0 — Cartographie des données et politique de confidentialité (préparatoire)
+# Kalis Track 4.3.0 — Cartographie finale des données et confidentialité
 
-**Document préparatoire, 26 septembre 2026 (L8, KT-042).** Il complète `docs/CONFIDENTIALITE_KOACH.md` (données de Koach). Il ne tranche pas la qualification juridique : points à valider au §5.
+**27 septembre 2026 (L13, KT-075), remplace la version préparatoire 3.1.0 (L8).** Complète `docs/CONFIDENTIALITE_KOACH.md` (données de Koach). Politique destinée aux utilisateurs : `assets/legal/confidentialite.md` (affichée dans Réglages → À propos → Politique de confidentialité, publiable telle quelle ; **URL publique à fournir par le propriétaire**, jamais inventée). Les points de qualification juridique restent à valider (§6).
 
 ## 1. Principes
 
-- Application gratuite, sans compte, sans publicité, sans achat réel, sans serveur, sans outil d'analyse d'usage ni SDK de suivi. Tous les calculs se font sur le téléphone.
-- Réservée aux adultes (18 ans et plus, déclaration de l'année de naissance). Un mineur est refusé sans qu'aucune donnée soit enregistrée.
-- Minimisation : ni nom, ni adresse électronique, ni sexe, ni taille, ni date de naissance complète, ni localisation.
+- Application gratuite, sans compte, sans publicité, sans achat réel, sans serveur, sans outil de mesure d'audience ni SDK de suivi. Tous les calculs se font sur le téléphone.
+- Le manifeste principal ne déclare pas la permission `INTERNET` (permissions : notifications, alarmes exactes, redémarrage, vibration). Les dépendances (`shared_preferences`, `wakelock_plus`, `audioplayers` — sons locaux —, `flutter_local_notifications`, `timezone`) n'envoient aucune donnée.
+- Réservée aux 18 ans et plus : refus au démarrage et en modification (L8), blocage d'un profil importé plus jeune (L13).
+- Minimisation : ni nom, ni adresse électronique, ni sexe, ni taille, ni date de naissance complète, ni localisation, ni identifiant publicitaire.
 
 ## 2. Cartographie
 
-| Donnée | Quand | Finalité | Nature | Où |
-| --- | --- | --- | --- | --- |
-| Année de naissance | Démarrage | Contrôle 18+, mode prudent ≥ 65 ans | Identification indirecte faible | Document local `kalis_state_v3`, section `profile` |
-| Objectifs, épreuves, pondération | Démarrage, Profil | Adapter le programme | Préférence | idem |
-| Jours, durée, lieux, matériel, lieu par jour | Démarrage, Profil | idem | Préférence | idem |
-| Repère de niveau (tranches pompes, tractions) | Démarrage | Point de départ | Donnée d'entraînement | idem |
-| Ancienneté, exercices aimés/détestés, métier physique, motivation | Questions progressives (facultatives) | Adapter le programme | Préférence | idem |
-| Mode et ton de Koach | Démarrage, Profil | Présentation des conseils | Préférence | idem |
-| Poids (pesées datées) | Démarrage (facultatif), Pesées | Calcul poids du corps + lest | **Donnée corporelle, à qualifier** | Section `koach` (L7) |
-| **Réponses au questionnaire de santé** (8 oui/non) | Démarrage, après consentement | Mode prudent | **Donnée de santé** | Section `profile.health` |
-| **Accord du médecin déclaré** (date) | Profil | Lever le mode prudent | **Donnée de santé** | idem |
-| **Gênes et limitations** (zone, 0-10, depuis) | Démarrage, Profil, après consentement | Mode prudent | **Donnée de santé** | idem |
-| **Sommeil habituel, stress** | Questions progressives, après consentement | Adapter l'entraînement | **Donnée de santé potentielle** | Section `profile.fields` |
-| Consentement (état, date) | Démarrage, Profil | Trace du choix | Preuve | Section `profile.health` |
-| Historique « profil modifié » | À chaque modification | Régénération future (L10), transparence | Donnée d'usage | Section `profile.events` |
-| Journal, références, WOD, réglages, Koach | Voir `SUIVI_PROJET.md` et `docs/CONFIDENTIALITE_KOACH.md` | | | |
+| Donnée | Saisie | Finalité | Nature | Stockage | Export | Sauvegarde Android | Transmise |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Année de naissance | Démarrage, Profil | 18+, mode prudent ≥ 65 ans | Identification indirecte faible | `profile.fields` | Oui | Oui (si activée) | Non |
+| Objectifs, jours, durée, lieux, matériel, repère, préférences, mode, ton | Démarrage, Profil, questions progressives | Programme personnalisé | Préférence | `profile.fields` | Oui | Oui | Non |
+| Historique « profil modifié » | Automatique | Régénération, transparence | Usage | `profile.events` | Oui | Oui | Non |
+| Programme, journal des séances, séries, records, WOD, crédits, XP, réglages | Utilisation | Suivi de l'entraînement | Entraînement | Document local `kalis_state_v3` | Oui | Oui | Non |
+| Poids (pesées datées) | Démarrage (facultatif), Pesées | Charges au poids du corps | Donnée corporelle | Section `koach` | Oui | Oui | Non (partage : décoché par défaut) |
+| **Questionnaire de santé** (8 oui/non), **gênes** (zone, 0-10, depuis), **accord du médecin** (date), **sommeil habituel, stress** | Après information et accord explicite | Mode prudent | **Santé** (art. 9) | `profile.health`, `profile.fields` | Oui | Oui | Non |
+| **Sommeil, forme, douleur par séance** (Koach) | Bilan de fin de séance, facultatif | Propositions de charge, renvoi douleur | **Santé potentielle** | `koach.answers` | Oui | Oui | Non |
+| Consentement (état, date) | Démarrage, Profil | Preuve du choix | Trace | `profile.health.consent` | Oui | Oui | Non |
+| Adaptation au quotidien, pauses (vacances, maladie) | L11 | Ajuster les séances | Usage ; motif « maladie » = **santé potentielle** (motif seul, sans détail) | Section `adapt` | Oui | Oui | Non |
+| Motivation, célébrations vues | L12 | Progression visible | Usage | Section `motiv` | Oui | Oui | Non |
+| Image de progression | Partage volontaire | Partager | Choix de l'utilisateur (poids et santé exclus par défaut) | Fichier temporaire de l'application | — | Non | Seulement vers l'application choisie |
+| Retour de test | Formulaire, jamais enregistré | Test fermé | Texte libre + version (cochée), repère et mode prudent (décochés) | Aucun | — | Non | Seulement vers l'application choisie |
 
 ## 3. Consentement et droits
 
-- Information affichée **avant** toute question de santé ; choix explicite « J'accepte / Je refuse ». Refus : l'application fonctionne en mode prudent, aucune donnée de santé n'est enregistrée.
-- Retrait à tout moment (Réglages → Profil → « Retirer mon accord ») : les données de santé sont effacées immédiatement ; le choix reste daté.
-- « Supprimer mes réponses de santé » : efface les réponses sans changer le consentement.
-- Accès et portabilité : l'export de sauvegarde contient tout le profil (fichier **non chiffré**, rangé où l'utilisateur le choisit).
-- Effacement : Réglages → Zone sensible → « Supprimer les données de l'application » efface aussi le profil.
+- Information (`kHealthInfo`) affichée **avant** toute question de santé ; choix explicite « J'accepte / Je refuse » ; refus → mode prudent, aucune réponse de santé enregistrée (testé : refus → accord → retrait, contenu de l'export à chaque étape).
+- Retrait (Réglages → Programme → Profil → « Retirer mon accord ») : réponses, gênes, accord du médecin, sommeil et stress effacés immédiatement ; le choix reste daté. « Supprimer mes réponses de santé » : même effacement sans changer l'accord. Réponses Koach par séance : Réglages → Koach → « Supprimer mes réponses aux questionnaires » (non liées à l'accord L8 : D-L13-05, à relire).
+- Accès et portabilité : export de sauvegarde (fichier **non chiffré**, emplacement choisi ; le libellé signale les données de santé).
+- Effacement complet : Réglages → Sauvegardes → « Supprimer les données de l'application » (testé : plus aucune donnée de santé dans l'état exporté).
+- L'éditeur ne reçoit aucune donnée et ne peut donc ni y accéder ni les effacer ; réclamation possible auprès de la CNIL.
 
-## 4. Conservation et transferts
+## 4. Conservation
 
-Jusqu'à suppression par l'utilisateur. Aucun envoi par l'application. La sauvegarde Android (Google), si elle est activée sur le téléphone, peut copier les données de l'application, profil compris (décision KT-016) ; l'application ne peut ni la déclencher ni l'effacer.
+Jusqu'à suppression par l'utilisateur (ou désinstallation). Aucune conservation chez l'éditeur. Copies hors de l'application : fichiers d'export (maîtrisés par l'utilisateur) et sauvegarde Android (Google), si activée sur le téléphone.
 
-## 5. À faire valider (non tranché)
+## 5. Sauvegarde Android (décision KT-016, option A, inchangée)
 
-1. Qualification au sens de l'art. 9 RGPD des réponses de santé, gênes, sommeil, stress et du poids, dans un usage local sans éditeur destinataire.
-2. Suffisance du consentement recueilli (information, choix explicite, trace datée locale) et rôle de l'éditeur (fiche Google Play « Sécurité des données »).
-3. Exclusion éventuelle de la section `profile.health` de la sauvegarde Android (`dataExtractionRules`).
-4. Avertissement spécifique à l'export lorsqu'il contient des données de santé.
+`allowBackup="true"`, sans règles d'exclusion : Android peut copier les données de l'application, profil et santé compris, dans le compte Google de l'utilisateur et les restaurer. L'application ne peut ni la déclencher, ni la lire, ni l'effacer. Expliqué dans l'application (Sauvegardes) et dans la politique.
+
+## 6. À faire valider (juriste / DPO)
+
+1. Qualification art. 9 RGPD des réponses de santé, gênes, sommeil, stress, douleur, poids et motif « maladie », dans un traitement purement local sans destinataire.
+2. Rôle de l'éditeur (responsable de traitement ou non) quand rien ne lui est transmis ; suffisance du consentement (trace locale datée).
+3. Exclusion éventuelle de `profile.health` et `koach.answers` de la sauvegarde Android (option B de KT-016).
+4. Consentement pour les réponses Koach par séance (D-L13-05).
 5. Contrôle d'âge par déclaration seule.
-6. Relecture des textes d'information et du questionnaire (formulation propre, non reprise du PAR-Q+ faute de licence).
+6. Relecture de la politique et des textes d'information.
