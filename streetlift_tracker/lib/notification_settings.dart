@@ -188,9 +188,9 @@ class _NotificationSettingsPanelState extends State<NotificationSettingsPanel> {
                                   await Clipboard.setData(
                                     ClipboardData(text: state.technicalError!),
                                   );
-                                  message('Diagnostic copié.');
+                                  message('Rapport technique copié.');
                                 },
-                                child: const Text('Copier le diagnostic'),
+                                child: const Text('Copier le rapport technique'),
                               ),
                           ],
                         ),

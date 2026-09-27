@@ -305,6 +305,22 @@ class _PainCard extends StatelessWidget {
               'professionnel de santé.',
               style: _dimSmall(),
             ),
+            // L13 (KT-073) : plus de 2 séances de suite → renvoi explicite.
+            if (store.painNeedsReferralFor(movement)) ...[
+              const SizedBox(height: 6),
+              Text(
+                kPainReferral,
+                key: ValueKey('koach-pain-referral-$movement'),
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+            ],
+            const SizedBox(height: 6),
+            Text(
+              'Douleur dans la poitrine, malaise, essoufflement anormal ou '
+              'douleur qui irradie : arrête l’effort et demande de l’aide '
+              '(15 ou 112 en urgence).',
+              style: _dimSmall(),
+            ),
           ],
         ],
       ),

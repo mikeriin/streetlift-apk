@@ -9,6 +9,7 @@ import 'app_theme.dart';
 import 'program_start.dart' show longCivilDate;
 import 'store.dart';
 import 'ui.dart';
+import 'wellbeing_screens.dart' show DisclaimerCard, MinorGate;
 
 /// Texte d'information affiché avant la collecte des données de santé.
 const kHealthInfo =
@@ -52,7 +53,14 @@ class _ProfileGateState extends State<ProfileGate> {
         onLater: () => setState(() => _later = true),
       );
     }
-    return widget.child;
+    // L13 (KT-075) : un profil importé de moins de 18 ans bloque
+    // l'application jusqu'à correction ou suppression des données.
+    return ListenableBuilder(
+      listenable: store,
+      builder:
+          (context, _) =>
+              store.profileIsMinor ? const MinorGate() : widget.child,
+    );
   }
 }
 
@@ -577,6 +585,8 @@ class _ProfileFlowState extends State<ProfileFlow> {
         ],
       ),
     ),
+      // L13 (KT-074) : avertissement dès le premier écran.
+    const DisclaimerCard(),
   ];
 
   List<Widget> _ageStep() {

@@ -8,6 +8,7 @@ import 'exercise_screens.dart';
 import 'koach_screens.dart';
 import 'motivation_screens.dart' show MotivSettingsScreen;
 import 'ui.dart';
+import 'wellbeing_screens.dart';
 import 'notification_settings.dart';
 import 'pilotage_screen.dart';
 import 'program_start.dart';
@@ -16,7 +17,7 @@ import 'profile_screens.dart';
 import 'store.dart';
 import 'store_widget.dart';
 
-const kAppVersion = '4.2.0';
+const kAppVersion = '4.3.0';
 
 class SettingsScreen extends StatelessWidget {
   final int? section;
@@ -226,7 +227,7 @@ class SettingsScreen extends StatelessWidget {
             color: SL.accent,
             title: 'Exporter une sauvegarde',
             subtitle:
-                'Fichier à l’emplacement de ton choix : pilotage, journal, séances, WODs, crédits, réglages, Koach. Non chiffré.',
+                'Fichier à l’emplacement de ton choix : pilotage, journal, séances, WODs, crédits, réglages, Koach, profil (données de santé comprises si tu en as saisi). Non chiffré.',
             onTap: () => exportBackupFile(context, appVersion: kAppVersion),
           ),
           _Action(
@@ -553,6 +554,58 @@ class SettingsScreen extends StatelessWidget {
             subtitle:
                 'Programme streetlifting v3.3 · ${store.allExercises.length} exercices · ${execModes.length} modes · ${store.wods.length} WODs',
           ),
+          // L13 (KT-072 à KT-078) : finalité, sécurité, confidentialité,
+          // retour de test.
+          const DisclaimerCard(),
+          KMenuTile(
+            key: const ValueKey('about-safety'),
+            icon: Icons.health_and_safety_outlined,
+            title: 'Santé et sécurité',
+            subtitle: 'Signaux d’alerte, douleur, situations particulières',
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const SafetyScreen()),
+                ),
+          ),
+          KMenuTile(
+            key: const ValueKey('about-recovery'),
+            icon: Icons.bedtime_outlined,
+            title: 'Récupération',
+            subtitle: 'Sommeil, hydratation, repas, régularité',
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const RecoveryScreen()),
+                ),
+          ),
+          KMenuTile(
+            key: const ValueKey('about-privacy'),
+            icon: Icons.privacy_tip_outlined,
+            title: 'Politique de confidentialité',
+            subtitle: 'Données, santé, export, suppression, tes droits',
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const PrivacyPolicyScreen(),
+                  ),
+                ),
+          ),
+          KMenuTile(
+            key: const ValueKey('about-feedback'),
+            icon: Icons.rate_review_outlined,
+            title: 'Donner mon avis',
+            subtitle: 'Retour de test, partagé seulement si tu le choisis',
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:
+                        (_) => const FeedbackScreen(appVersion: kAppVersion),
+                  ),
+                ),
+          ),
           KMenuTile(
             icon: Icons.menu_book_outlined,
             title: 'Sources et licences',
@@ -592,7 +645,7 @@ class SettingsScreen extends StatelessWidget {
           'Exporter, restaurer ou supprimer tes données',
           'Date de départ et références',
           'Estimations et propositions de charge',
-          'Version et contenu du programme',
+          'Version, sécurité, confidentialité, avis',
         ];
         assert(
           groups.length == icons.length && groups.length == descriptions.length,
