@@ -280,6 +280,29 @@ void main() {
       );
     });
 
+    test('revue : exercices en image fixe ou sans démonstration', () {
+      expect(cutoutReviewOverrides, hasLength(18));
+      for (final e in cutoutReviewOverrides.entries) {
+        final m = exercices[e.key] as Map<String, dynamic>;
+        final anim = animationOf(e.key);
+        expect(e.value.$2, lessThan(anim.keyframes.length), reason: e.key);
+        final shown = reviewedDemoStatus(e.key, m['statut'] as String);
+        expect(shown, e.value.$1, reason: e.key);
+        // jamais plus permissif que le pack
+        expect(reviewedDemoStatus(e.key, 'indisponible'), 'indisponible');
+      }
+      // développé couché : l'image fixe est la position haute, barre au-dessus
+      // des épaules (la position basse du pack place la barre derrière la tête)
+      final bench = animationOf('developpe-couche');
+      final k = bench.keyframes[reviewedStaticKeyframe('developpe-couche')];
+      expect(k.label, 'haut');
+      final j = poseOf(k, bench.view);
+      expect((j['prise_d']!.dx - j['cou']!.dx).abs(), lessThan(.02));
+      // exercice non revu : statut du pack inchangé
+      expect(reviewedDemoStatus('pompes', 'disponible'), 'disponible');
+      expect(reviewedDemoStatus('pompes', 'statique'), 'statique');
+    });
+
     test('segments posés exactement sur les articulations du modèle', () async {
       for (final view in const ['face', 'dos', 'profil']) {
         final sprites = await CutoutSprites.load(view, bundle: _FileBundle());

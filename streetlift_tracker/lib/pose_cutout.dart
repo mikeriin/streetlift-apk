@@ -65,6 +65,49 @@ String cutoutViewOf(PoseAnimation pose) {
   return back > front ? 'dos' : 'face';
 }
 
+/// Revue visuelle de toutes les démonstrations (refonte muscles et
+/// animations, 27/09/2026) : exercices dont l'animation serait fausse avec la
+/// cinématique actuelle du pack. Jamais d'animation fausse : l'exercice passe
+/// en image fixe (index de l'image clé juste) ou sans démonstration. Le pack
+/// de contenu validé n'est pas modifié (correction proposée au propriétaire).
+const cutoutReviewOverrides = <String, (String, int)>{
+  // position basse du développé : barre derrière la tête (bras mal orientés)
+  'developpe-couche': ('statique', 1),
+  'developpe-couche-halteres': ('statique', 1),
+  'developpe-couche-prise-serree': ('statique', 1),
+  'developpe-couche-pause': ('statique', 1),
+  'developpe-decline': ('statique', 1),
+  'developpe-incline': ('statique', 1),
+  'developpe-incline-halteres': ('statique', 1),
+  'floor-press': ('statique', 1),
+  'jm-press': ('statique', 1),
+  'test-1rm-developpe-couche': ('statique', 1),
+  'tate-press': ('statique', 1),
+  // deux images clés identiques : aucun mouvement montré
+  'leg-curl': ('statique', 0),
+  'leg-extension': ('statique', 0),
+  // contact essentiel absent (plateau, traîneau, appui, sol, caisse)
+  'presse-a-cuisses': ('indisponible', 0),
+  'sled-push': ('indisponible', 0),
+  'rowing-haltere-appui-poitrine': ('indisponible', 0),
+  'transition-muscle-up-assistee-pieds-au-sol': ('indisponible', 0),
+  'sauts-en-contrebas-depth-jumps': ('indisponible', 0),
+};
+
+const _demoRank = {'disponible': 0, 'statique': 1, 'indisponible': 2};
+
+/// Statut de démonstration affiché : le plus prudent entre le pack et la revue.
+String reviewedDemoStatus(String id, String packStatus) {
+  final review = cutoutReviewOverrides[id]?.$1;
+  if (review == null) return packStatus;
+  return (_demoRank[review] ?? 0) > (_demoRank[packStatus] ?? 0)
+      ? review
+      : packStatus;
+}
+
+/// Image clé montrée pour une démonstration en image fixe.
+int reviewedStaticKeyframe(String id) => cutoutReviewOverrides[id]?.$2 ?? 0;
+
 /// Intensité par groupe de l'application (0-1) pour une démonstration.
 Map<String, double> cutoutGroupHeat(PoseAnimation pose) {
   final out = <String, double>{};

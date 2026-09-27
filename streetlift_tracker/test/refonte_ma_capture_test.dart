@@ -110,9 +110,12 @@ void main() {
     );
 
     // 1. Planches d'images clés : tous les exercices non indisponibles.
+    // statut affiché par l'application : pack + revue (reviewedDemoStatus)
+    String statutOf(String id) =>
+        reviewedDemoStatus(id, (exercices[id] as Map)['statut'] as String);
     final ids = [
       for (final e in exercices.entries)
-        if ((e.value as Map)['statut'] != 'indisponible' &&
+        if (statutOf(e.key) != 'indisponible' &&
             gabarits[(e.value as Map)['gabarit']] != null)
           e.key,
     ]..sort();
@@ -123,9 +126,8 @@ void main() {
     final rows = <List<String>>[];
     var used = perRow;
     for (final id in ids) {
-      final e = exercices[id] as Map;
       final n =
-          e['statut'] == 'statique'
+          statutOf(id) == 'statique'
               ? 1
               : math.min(perRow, animationOf(id).keyframes.length);
       if (used + n > perRow) {
@@ -145,13 +147,13 @@ void main() {
           final e = exercices[id] as Map;
           final vb = poseBBox(anim);
           final kfs =
-              e['statut'] == 'statique'
-                  ? [anim.keyframes.first]
+              statutOf(id) == 'statique'
+                  ? [anim.keyframes[reviewedStaticKeyframe(id)]]
                   : anim.keyframes.take(perRow).toList();
           index.writeln(
             'planche_${s.toString().padLeft(3, '0')} $id '
             'vue=${cutoutViewOf(anim)} gabarit=${e['gabarit']} '
-            'statut=${e['statut']} images_cles=${anim.keyframes.length}',
+            'statut=${statutOf(id)} images_cles=${anim.keyframes.length}',
           );
           blocks.add(
             Container(
@@ -164,7 +166,7 @@ void main() {
                 children: [
                   Text(
                     ' $id · ${cutoutViewOf(anim)}'
-                    '${e['statut'] == 'statique' ? ' · STATIQUE' : ''}',
+                    '${statutOf(id) == 'statique' ? ' · STATIQUE' : ''}',
                     style: label,
                     maxLines: 1,
                     overflow: TextOverflow.clip,
@@ -203,7 +205,7 @@ void main() {
     for (final view in const ['face', 'dos', 'profil']) {
       final pool = [
         for (final id in ids)
-          if ((exercices[id] as Map)['statut'] == 'disponible' &&
+          if (statutOf(id) == 'disponible' &&
               cutoutViewOf(animationOf(id)) == view)
             id,
       ];
@@ -312,10 +314,7 @@ void main() {
 
     // 4. Fiche exercice (exercice de profil tiré), écran long, sans défilement.
     await show(
-      MediaQuery(
-        data: const MediaQueryData(size: Size(390, 2600)),
-        child: ExerciseSheetScreen(id: chosen['profil']!),
-      ),
+      ExerciseSheetScreen(id: chosen['profil']!),
       const Size(390, 2600),
       reduce: true,
     );

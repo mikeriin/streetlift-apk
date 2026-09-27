@@ -9,6 +9,7 @@ import 'app_theme.dart';
 import 'atlas.dart';
 import 'atlas_data.dart';
 import 'content_pack.dart';
+import 'pose_cutout.dart';
 import 'pose_engine.dart';
 import 'pose_painter.dart';
 import 'search.dart';
@@ -235,7 +236,7 @@ class _ExerciseTile extends StatelessWidget {
     subtitle: Text(
       '${index.typeLabels[entry.type] ?? entry.type} · '
       'difficulté ${entry.difficulte}/10'
-      '${entry.demo == 'indisponible' ? ' · sans démonstration' : ''}',
+      '${reviewedDemoStatus(entry.id, entry.demo) == 'indisponible' ? ' · sans démonstration' : ''}',
       style: TextStyle(fontSize: 12, color: SL.dim),
     ),
     trailing: Icon(Icons.chevron_right, color: SL.dim),
@@ -335,7 +336,8 @@ class _Sheet extends StatelessWidget {
   Widget _demo() {
     final motif = detail.demoMotif;
     final pose = lib.poseOf(entry.id);
-    if (detail.demoStatut == 'indisponible' || pose == null) {
+    final statut = reviewedDemoStatus(entry.id, detail.demoStatut);
+    if (statut == 'indisponible' || pose == null) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -352,12 +354,13 @@ class _Sheet extends StatelessWidget {
       );
     }
     var anim = PoseAnimation.fromPack(pose.$1, pose.$2);
-    if (detail.demoStatut == 'statique') {
-      // Geste hors du plan de la vue : position de départ seulement.
+    if (statut == 'statique') {
+      // Geste hors du plan de la vue (ou revu) : une seule position juste.
+      final k = reviewedStaticKeyframe(entry.id);
       anim = PoseAnimation(
         view: anim.view,
         loop: anim.loop,
-        keyframes: [anim.keyframes.first],
+        keyframes: [anim.keyframes[k < anim.keyframes.length ? k : 0]],
         props: anim.props,
         primaires: anim.primaires,
         secondaires: anim.secondaires,
@@ -368,11 +371,13 @@ class _Sheet extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         PoseDemo(pose: anim, label: entry.nom),
-        if (detail.demoStatut == 'statique')
+        if (statut == 'statique')
           Padding(
             padding: const EdgeInsets.only(top: 6),
             child: Text(
-              'Position de départ seulement${motif == null ? '' : ' : $motif'}.',
+              cutoutReviewOverrides.containsKey(entry.id)
+                  ? 'Image fixe : ${anim.keyframes.first.label}.'
+                  : 'Position de départ seulement${motif == null ? '' : ' : $motif'}.',
               style: TextStyle(fontSize: 12, color: SL.dim),
             ),
           ),

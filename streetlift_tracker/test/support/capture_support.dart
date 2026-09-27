@@ -18,7 +18,12 @@ const captureDir = String.fromEnvironment(
 
 /// Charge Roboto et les icônes Material depuis le SDK Flutter.
 Future<void> loadCaptureFonts() async {
-  final sdk = Platform.environment['FLUTTER_ROOT'];
+  // FLUTTER_ROOT, sinon déduit de flutter_tester (…/bin/cache/artifacts/…).
+  var sdk = Platform.environment['FLUTTER_ROOT'];
+  final exe = Platform.resolvedExecutable;
+  if (sdk == null && exe.contains('/bin/cache/')) {
+    sdk = exe.substring(0, exe.indexOf('/bin/cache/'));
+  }
   if (sdk == null) return;
   final dir = Directory('$sdk/bin/cache/artifacts/material_fonts');
   final fonts = dir.listSync().whereType<File>().where(
