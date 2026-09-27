@@ -1,7 +1,7 @@
-Total compressé : 98590804
-    30970720  lib/x86_64
-    29354320  lib/arm64-v8a
-    27640860  lib/armeabi-v7a
+Total compressé : 52114333
+    14219747  lib/x86_64
+    13635074  lib/armeabi-v7a
+    13634610  lib/arm64-v8a
      4432967  classes.dex
      2732931  assets/flutter_assets/packages/flutter_scene
      1067962  assets/flutter_assets/assets/muscles
@@ -40,19 +40,19 @@ Total compressé : 98590804
         4255  assets/flutter_assets/shaders/stretch_effect.frag
         4159  classes12.dex
 
-    16630344     16630344  lib/armeabi-v7a/libapp.so
-    15336328     15336328  lib/x86_64/libapp.so
-    15139720     15139720  lib/arm64-v8a/libapp.so
-    13923328     13923328  lib/x86_64/libflutter.so
-    12568184     12568184  lib/arm64-v8a/libflutter.so
-     9137740      9137740  lib/armeabi-v7a/libflutter.so
+     7516985     16630344  lib/armeabi-v7a/libapp.so
+     6979643     15336328  lib/x86_64/libapp.so
+     6796939     15139720  lib/arm64-v8a/libapp.so
+     6460202     13923328  lib/x86_64/libflutter.so
+     6080904     12568184  lib/arm64-v8a/libflutter.so
+     5238445      9137740  lib/armeabi-v7a/libflutter.so
      4432967     10967116  classes.dex
-     1868360      1868360  lib/armeabi-v7a/libvmservice_snapshot.so
-     1704840      1704840  lib/x86_64/libvmservice_snapshot.so
-     1639304      1639304  lib/arm64-v8a/libvmservice_snapshot.so
      1188641      4629528  assets/flutter_assets/packages/flutter_scene/flutter_scene_generated/material.physical.860d4ea8.shaderbundle
+      877520      1868360  lib/armeabi-v7a/libvmservice_snapshot.so
       856165      1721380  classes15.dex
       810663       810663  assets/flutter_assets/packages/flutter_scene/assets/royal_esplanade.png
+      777404      1704840  lib/x86_64/libvmservice_snapshot.so
+      753951      1639304  lib/arm64-v8a/libvmservice_snapshot.so
       638440      2356640  assets/flutter_assets/packages/flutter_scene/flutter_scene_generated/shaderbundle.base.64aa199c.shaderbundle
       323916       323916  resources.arsc
       127375       127375  assets/flutter_assets/assets/muscles/anim/dos_calques.png
