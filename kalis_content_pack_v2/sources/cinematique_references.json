@@ -1,0 +1,1321 @@
+{
+  "meta": {
+    "titre": "Fiches biomécaniques de référence — angles articulaires par phase (Kalis Track v2)",
+    "date_recherche": "2026-09-26",
+    "conventions": {
+      "hanche": "flexion de hanche en degrés, 0 = debout aligné (cuisse dans le prolongement du tronc), valeurs positives = flexion, négatives = extension",
+      "genou": "flexion de genou en degrés, 0 = jambe tendue",
+      "cheville": "dorsiflexion en degrés, 0 = neutre (tibia perpendiculaire au pied), négatif = flexion plantaire",
+      "tronc_vs_vertical": "inclinaison du tronc par rapport à la verticale en degrés, 0 = vertical, 90 = horizontal",
+      "epaule_flexion": "flexion d'épaule en degrés, 0 = bras le long du corps, 180 = bras à la verticale au-dessus de la tête",
+      "epaule_abduction": "abduction d'épaule en degrés, 0 = bras le long du corps",
+      "coude": "flexion de coude en degrés, 0 = bras tendu. Les sources qui donnent un angle inclus (180 = tendu) ont été converties : flexion = 180 - angle inclus ; la conversion est signalée dans 'valeurs'",
+      "format_phase": "angles = [debut, fin] de la phase ; null = valeur non trouvée dans une source consultable"
+    },
+    "avertissements": [
+      "Les valeurs proviennent d'études sur des populations précises (gymnastes, powerlifters, étudiants) : ce sont des ordres de grandeur, pas des normes.",
+      "Plusieurs sources primaires (PMC, PubMed, ResearchGate, Springer) étaient inaccessibles (reCAPTCHA, 403, 429, PROVENANCE_REQUIRED) ; les motifs (patterns) concernés portent des null et sont listés dans 'lacunes'.",
+      "ExRx.net n'a pas été consulté (robots.txt)."
+    ]
+  },
+  "patterns": {
+    "squat_poids_du_corps_et_back_squat": {
+      "description": "Squat bipodal, poids du corps ou barre sur le dos. Profondeur 'parallèle' = pli de la hanche sous le sommet de la rotule (norme de compétition IPF/USAPL) ; 'profond' = fesses proches des mollets.",
+      "phases": [
+        {
+          "nom": "descente (haut -> bas, squat parallèle)",
+          "angles": {
+            "hanche": [0, null],
+            "genou": [0, 100],
+            "cheville": [0, null],
+            "tronc_vs_vertical": [0, null],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [null, null]
+          },
+          "contacts": "Pieds à plat, largeur 'moyenne' = 100-150 % de la largeur d'épaules (étroite 75-100 %, large 150-200 %) ; pieds tournés vers l'extérieur jusqu'à ~30° (réduit le moment de valgus du genou de 50 %).",
+          "trajectoire_charge": "Verticale au-dessus du milieu du pied (déduit du concept de trunk-tibia angle : tronc et tibia parallèles = bras de levier équilibrés hanche/genou).",
+          "tempo": null
+        },
+        {
+          "nom": "descente (haut -> bas, squat profond)",
+          "angles": {
+            "hanche": [0, 137],
+            "genou": [0, 142],
+            "cheville": [0, 42],
+            "tronc_vs_vertical": [0, null],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [null, null]
+          },
+          "contacts": "Pieds à plat ; talons au sol.",
+          "trajectoire_charge": "Verticale.",
+          "tempo": null
+        },
+        {
+          "nom": "remontée (bas -> haut)",
+          "angles": {
+            "hanche": [137, 0],
+            "genou": [142, 0],
+            "cheville": [42, 0],
+            "tronc_vs_vertical": [null, 0],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [null, null]
+          },
+          "contacts": "Idem.",
+          "trajectoire_charge": "Verticale.",
+          "tempo": null
+        }
+      ],
+      "definitions_profondeur_flexion_genou": {
+        "partiel_peu_profond": [0, 90],
+        "moyen_parallele": [90, 110],
+        "complet_profond": [110, 135]
+      },
+      "biais_hanche_genou": {
+        "angle_tronc_tibia_biais_extenseurs_hanche": "> +10°",
+        "angle_tronc_tibia_neutre": "-10° à +10°",
+        "angle_tronc_tibia_biais_extenseurs_genou": "< -10°",
+        "ratio_moment_hanche_genou_egal_1": "angle tronc-tibia = -8°"
+      },
+      "sources": [
+        {
+          "url": "https://ijspt.scholasticahq.com/article/94600-a-biomechanical-review-of-the-squat-exercise-implications-for-clinical-practice",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Définitions de profondeur en flexion de genou (0-90 partiel, 90-110 parallèle, 110-135 profond) ; catégories de largeur de stance ; rotation externe du pied 30° ; classification de l'angle tronc-tibia (Barrack et al.)."
+        },
+        {
+          "url": "https://www.jssm.org/20-4-759.p_d_f",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Overhead deep squat (FMS) : pics de flexion de hanche 137,3° (128,7-146,0), de genou 142,1° (134,3-149,8), de dorsiflexion 42,4° (39,2-45,5) chez les sujets notés 3/3 ; pour les notés 1/3 : hanche 112,4°, genou 114,4°, cheville 33,3°."
+        },
+        {
+          "url": "https://www.strengthmath.com/guides/how-deep-should-i-squat-for-strength",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Quart de squat ~45° de flexion de genou ; au-dessus du parallèle ~70-80° ; norme de compétition = pli de hanche au niveau ou sous le sommet de la rotule (cite Schoenfeld 2010 et Hartmann 2013)."
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Squat_(exercise)",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Définition du parallèle (pli de la hanche sous le sommet du genou) ; pas de valeurs angulaires."
+        }
+      ]
+    },
+    "front_squat": {
+      "description": "Squat barre en rack avant (clavicules/deltoïdes antérieurs), coudes hauts.",
+      "phases": [
+        {
+          "nom": "descente",
+          "angles": {
+            "hanche": [0, null],
+            "genou": [0, null],
+            "cheville": [0, null],
+            "tronc_vs_vertical": [0, null],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [null, null]
+          },
+          "contacts": "Barre sur les deltoïdes antérieurs, coudes pointés vers l'avant (description qualitative uniquement).",
+          "trajectoire_charge": "Verticale (tronc plus droit que le back squat selon la littérature, valeurs non consultables).",
+          "tempo": null
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/19002072/",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Étude Gullett et al. 2009 (front vs back squat) identifiée mais résumé non récupérable (page renvoyée vide) ; aucune valeur reprise."
+        },
+        {
+          "url": "https://scholarworks.calstate.edu/downloads/c534ft828",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Thèse comparant angles front/back squat : accès refusé (403) ; aucune valeur reprise."
+        }
+      ]
+    },
+    "pistol_squat": {
+      "description": "Squat unipodal complet, jambe libre tendue devant.",
+      "phases": [
+        {
+          "nom": "descente",
+          "angles": {
+            "hanche": [0, null],
+            "genou": [0, null],
+            "cheville": [0, null],
+            "tronc_vs_vertical": [0, null],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [null, null]
+          },
+          "contacts": "Un pied au sol, jambe libre tendue à l'horizontale (description usuelle, non chiffrée dans les sources consultées).",
+          "trajectoire_charge": null,
+          "tempo": null
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0126258",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Single-leg squat : la table des angles (Table 1) n'est pas transcrite dans la page HTML ; seuls les instants d'analyse sont donnés (pic de flexion de genou et 60° de flexion de genou). Aucune valeur numérique reprise."
+        }
+      ]
+    },
+    "souleve_de_terre_conventionnel": {
+      "description": "Deadlift conventionnel depuis le sol. Phases : décollage (LO), passage des genoux (KP), verrouillage (LC).",
+      "phases": [
+        {
+          "nom": "décollage -> passage des genoux",
+          "angles": {
+            "hanche": [null, null],
+            "genou": [null, 21],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [null, null],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [0, 0]
+          },
+          "contacts": "Largeur de stance 37 ± 10 cm ; largeur de prise 63 ± 10 cm (mains à l'extérieur des jambes).",
+          "trajectoire_charge": "Distance verticale totale de la barre 27 ± 3 % de la taille (lifteurs experts) vs 31 ± 3 % (moins experts).",
+          "tempo": null
+        },
+        {
+          "nom": "passage des genoux -> verrouillage",
+          "angles": {
+            "hanche": [null, 0],
+            "genou": [21, 0],
+            "cheville": [null, 0],
+            "tronc_vs_vertical": [null, 0],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [0, 0]
+          },
+          "contacts": "Idem.",
+          "trajectoire_charge": "Verticale.",
+          "tempo": null
+        }
+      ],
+      "angles_segmentaires_source": {
+        "note": "Escamilla et al. (ISBS 2001) rapportent des angles de segments (tronc, cuisse, jambe) dont la convention (référence horizontale ou verticale) n'est pas précisée dans l'extrait consulté ; à vérifier avant usage direct.",
+        "decollage_tronc_conventionnel": "11 ± 7°",
+        "decollage_tronc_sumo": "16 ± 6°",
+        "decollage_cuisse_conventionnel": "136 ± 6°",
+        "decollage_cuisse_sumo": "143 ± 6°",
+        "passage_genoux_genou_inclus_conventionnel": "159 ± 6° (= 21° de flexion)",
+        "passage_genoux_genou_inclus_sumo": "158 ± 10°",
+        "passage_genoux_cuisse_conventionnel": "111 ± 7°",
+        "passage_genoux_jambe_conventionnel": "83 ± 4°",
+        "passage_genoux_jambe_sumo": "74 ± 6°",
+        "stance_sumo": "73 ± 12 cm ; prise sumo 50 ± 10 cm"
+      },
+      "sources": [
+        {
+          "url": "https://ojs.ub.uni-konstanz.de/cpa/article/download/3819/3538",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Escamilla et al., ISBS 2001 : angles tronc/cuisse/jambe/genou au décollage et au passage des genoux, sumo vs conventionnel, experts vs non experts ; largeurs de stance et de prise ; distance verticale de barre en % de la taille."
+        },
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/10912892/",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Escamilla 2000 (analyse 3D sumo/conventionnel) : résumé non récupérable ; aucune valeur reprise."
+        }
+      ]
+    },
+    "souleve_de_terre_roumain_hip_hinge": {
+      "description": "RDL : hinge de hanche, genoux quasi fixes, barre descendue le long des cuisses.",
+      "phases": [
+        {
+          "nom": "descente (excentrique)",
+          "angles": {
+            "hanche": [0, null],
+            "genou": [15, 15],
+            "cheville": [0, 0],
+            "tronc_vs_vertical": [0, null],
+            "epaule_flexion": [0, null],
+            "epaule_abduction": [0, 0],
+            "coude": [0, 0]
+          },
+          "contacts": "Stance similaire au deadlift conventionnel ; prise pronation double (sangles sur charges maximales).",
+          "trajectoire_charge": "Barre descend lentement au contact des cuisses jusqu'en dessous du genou, ou jusqu'au point où le dos devrait fléchir ; colonne en courbure neutre tout du long.",
+          "tempo": "Descente lente (non chiffrée) ; concentrique non précisé."
+        },
+        {
+          "nom": "remontée (concentrique)",
+          "angles": {
+            "hanche": [null, 0],
+            "genou": [15, 15],
+            "cheville": [0, 0],
+            "tronc_vs_vertical": [null, 0],
+            "epaule_flexion": [null, 0],
+            "epaule_abduction": [0, 0],
+            "coude": [0, 0]
+          },
+          "contacts": "Idem.",
+          "trajectoire_charge": "Remonte au contact des cuisses.",
+          "tempo": null
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.physio-pedia.com/Romanian_deadlift",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Flexion de genou ~15° maintenue ; barre jusque sous le genou ; prise pronation ; stance type deadlift ; descente lente."
+        }
+      ]
+    },
+    "hip_thrust_et_glute_bridge": {
+      "description": "Extension de hanche en décubitus dorsal ; hip thrust = haut du dos sur banc ; glute bridge = haut du dos au sol.",
+      "phases": [
+        {
+          "nom": "montée (extension de hanche)",
+          "angles": {
+            "hanche": [null, 0],
+            "genou": [90, 90],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [null, null],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [null, null]
+          },
+          "contacts": "Genoux à 90° de flexion ; pieds parallèles, 2e orteil vers l'avant ; barre posée sur le pli de la hanche (hip thrust) ; haut du dos sur banc (HT) ou au sol (GB).",
+          "trajectoire_charge": "Hanche suit une trajectoire quasi verticale ; déplacement vertical de la barre 35,65 ± 3,4 cm (hip thrust) vs 15,45 ± 4,82 cm (glute bridge) ; angle du vecteur déplacement 102,2 ± 6,3° (HT) vs 61,8 ± 11,1° (GB) ; objectif = extension terminale de hanche sans extension lombaire.",
+          "tempo": "Non chiffré ; contraction maximale volontaire en haut, retour lent (Brookbush)."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://ccd.ucam.edu/visores/19_59/2084_E_CCD/index.html",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Genoux à 90° de flexion ; déplacement vertical et angle du vecteur déplacement HT vs GB ; les deux exercices atteignent l'extension complète."
+        },
+        {
+          "url": "https://brookbushinstitute.com/articles/Ultimate-glute-bridge-hip-thrust",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Flexion de genou ≥ 90° en haut ; pieds parallèles ; extension terminale de hanche sans extension lombaire ; trajectoire de hanche quasi verticale ; retour lent."
+        }
+      ]
+    },
+    "fente_avant_et_split_squat_bulgare": {
+      "description": "Split squat (pied arrière au sol) ; le split squat bulgare a le pied arrière surélevé. Valeurs ci-dessous : split squat, jambe avant, tronc droit, cuisse avant parallèle au sol en bas.",
+      "phases": [
+        {
+          "nom": "descente (jambe avant)",
+          "angles": {
+            "hanche": [null, 100],
+            "genou": [null, 100],
+            "cheville": [null, 8],
+            "tronc_vs_vertical": [0, 0],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [null, null]
+          },
+          "contacts": "Longueur de pas normalisée à la longueur de jambe (grand trochanter -> malléole latérale) : 50 %, 70 %, 100 %, 120 % ; pied avant à plat.",
+          "trajectoire_charge": "Verticale (tronc érigé imposé).",
+          "tempo": "Descente en 2 s (métronome 60 bpm)."
+        },
+        {
+          "nom": "remontée",
+          "angles": {
+            "hanche": [100, null],
+            "genou": [100, null],
+            "cheville": [8, null],
+            "tronc_vs_vertical": [0, 0],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [null, null]
+          },
+          "contacts": "Idem.",
+          "trajectoire_charge": "Verticale.",
+          "tempo": null
+        }
+      ],
+      "pics_par_longueur_de_pas": {
+        "50_pct_longueur_jambe": {"hanche": 101.1, "genou": 104.0, "dorsiflexion": 14.2},
+        "70_pct_longueur_jambe": {"hanche": 101.9, "genou": 102.1, "dorsiflexion": 8.4},
+        "100_pct_longueur_jambe": {"hanche": 97.9, "genou": 96.3, "dorsiflexion": 2.9},
+        "120_pct_longueur_jambe": {"hanche": 100.5, "genou": 95.4, "dorsiflexion": -2.1},
+        "note": "La source code la dorsiflexion en négatif ; converti ici en positif = dorsiflexion."
+      },
+      "sources": [
+        {
+          "url": "https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2023.1277493/full",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Pics de flexion de hanche, de genou et de dorsiflexion de la jambe avant pour 4 longueurs de pas ; tempo 2 s de descente ; tronc érigé ; cuisse avant parallèle en bas."
+        },
+        {
+          "url": "https://e3rehab.com/split-squat-biomechanics/",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Description qualitative seulement (angle de tibia vers l'avant augmente la flexion de genou) ; aucune valeur numérique."
+        }
+      ]
+    },
+    "pompe": {
+      "description": "Pompe standard au sol. Valeurs UMich (mains 'close' = proches des épaules, 'far' = larges).",
+      "phases": [
+        {
+          "nom": "descente (haut -> bas)",
+          "angles": {
+            "hanche": [0, 0],
+            "genou": [0, 0],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [null, null],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [5, 100]
+          },
+          "contacts": "Mains au sol sous/légèrement à l'extérieur des épaules ; orteils au sol ; corps en ligne droite épaules-talons.",
+          "trajectoire_charge": "Centre de masse descend verticalement ; poitrine vers le sol.",
+          "tempo": "Vitesse positive maximale atteinte à 7 % du mouvement (mains proches) et à 25 % (mains larges)."
+        },
+        {
+          "nom": "remontée (bas -> haut)",
+          "angles": {
+            "hanche": [0, 0],
+            "genou": [0, 0],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [null, null],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [100, 5]
+          },
+          "contacts": "Idem.",
+          "trajectoire_charge": "Verticale.",
+          "tempo": null
+        }
+      ],
+      "variantes_bas_de_mouvement": {
+        "mains_proches_coude_inclus": "80° (= 100° de flexion), haut 175° (= 5° de flexion), amplitude 95°",
+        "mains_larges_coude_inclus": "109° (= 71° de flexion), haut 183°, amplitude 74°",
+        "epaule_horizontale_mains_proches": "pic d'adduction horizontale 116°, abduction horizontale 159°, amplitude 43°",
+        "epaule_horizontale_mains_larges": "pic d'adduction horizontale 122°, abduction horizontale 150°, amplitude 28°",
+        "note": "Angles d'épaule dans la convention propre à cette page (non standard) ; utiles seulement pour l'amplitude."
+      },
+      "sources": [
+        {
+          "url": "https://public.websites.umich.edu/~mvs330/w97/pushup/results2.html",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Angles de coude inclus en bas (80°/109°) et en haut (175°/183°), amplitudes, angles d'épaule horizontaux, instant de vitesse max."
+        },
+        {
+          "url": "https://public.websites.umich.edu/~mvs330/f00/diamonation/results2.html",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Pompe standard vs diamant : amplitude de coude 100° vs 90°, amplitude d'épaule 34° vs 60° (angles bruts de la page exprimés dans une convention non standard, non repris)."
+        }
+      ]
+    },
+    "developpe_couche": {
+      "description": "Bench press barre, dos sur banc. Prise définie en % de la distance biacromiale (BAD).",
+      "phases": [
+        {
+          "nom": "descente (barre haute -> barre poitrine)",
+          "angles": {
+            "hanche": [null, null],
+            "genou": [null, null],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [90, 90],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, 59],
+            "coude": [2, 101]
+          },
+          "contacts": "Prise moyenne 163 ± 5 % BAD (étroite 112 %, large 210 %) ; autre étude : étroite = 1,0 BAD (0,40 m), moyenne = 1,4 BAD (0,56 m), large = 1,7 BAD (0,71 m) ; dos sur banc, pieds au sol.",
+          "trajectoire_charge": "Déplacement horizontal de la barre ~0,05-0,13 m selon la phase, sans différence entre largeurs de prise.",
+          "tempo": "Durées d'intervalle ~0,23-1,37 s selon la phase (1RM) ; UMich : pic de flexion de coude à 1,1 s, pic d'extension à 2,0 s (barre)."
+        },
+        {
+          "nom": "poussée (barre poitrine -> verrouillage)",
+          "angles": {
+            "hanche": [null, null],
+            "genou": [null, null],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [90, 90],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [59, null],
+            "coude": [101, 2]
+          },
+          "contacts": "Idem.",
+          "trajectoire_charge": "Légèrement oblique vers les épaules (déplacement horizontal 5-13 cm).",
+          "tempo": null
+        }
+      ],
+      "bas_de_mouvement_par_prise": {
+        "etroite_coudes_ouverts": {"coude_flexion": 114.1, "abduction_epaule": 56.5, "amplitude_coude": 88.4},
+        "etroite_coudes_serres": {"coude_flexion": 110.3, "abduction_epaule": 37.9, "amplitude_coude": 86.2},
+        "moyenne": {"coude_flexion": 101.4, "abduction_epaule": 59.3, "amplitude_coude": 78.3},
+        "large": {"coude_flexion": 87.4, "abduction_epaule": 66.1, "amplitude_coude": 64.7},
+        "umich_barre": "coude inclus pic flexion 63° (= 117° flexion), pic extension 178° (= 2°), amplitude 115° ; haltères : 55°/175°, amplitude 120°"
+      },
+      "sources": [
+        {
+          "url": "https://www.klokeavskade.no/globalassets/publications/mausehund_2022_understanding-bench-press.pdf",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Mausehund et al. 2022 : flexion de coude en bas 87-114° selon la prise, abduction d'épaule en bas 38-66°, amplitudes de coude 65-88°, largeurs de prise en % BAD."
+        },
+        {
+          "url": "https://www.frontiersin.org/journals/sports-and-active-living/articles/10.3389/fspor.2020.637066/full",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Largeurs de prise 1,0/1,4/1,7 BAD (0,40/0,56/0,71 m) ; déplacement horizontal 0,05-0,13 m ; durées d'intervalle 0,23-1,37 s."
+        },
+        {
+          "url": "https://public.websites.umich.edu/~mvs330/w98/benchpress/results2.html",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Angles inclus de coude pic flexion/extension barre et haltères, amplitudes, instants (s)."
+        }
+      ]
+    },
+    "developpe_militaire_et_push_press": {
+      "description": "Overhead press debout, barre devant (front) ; push press = même mouvement avec impulsion des jambes (non chiffrée).",
+      "phases": [
+        {
+          "nom": "poussée (barre aux épaules -> verrouillage)",
+          "angles": {
+            "hanche": [0, 0],
+            "genou": [0, 0],
+            "cheville": [0, 0],
+            "tronc_vs_vertical": [0, 0],
+            "epaule_flexion": [7, 136],
+            "epaule_abduction": [33, 125],
+            "coude": [null, 0]
+          },
+          "contacts": "Prise à mi-chemin entre la largeur biacromiale et l'envergure des coudes (~0,35-0,40 m) ; départ barre à hauteur de C7 (protocole de l'étude).",
+          "trajectoire_charge": "Verticale, barre finit au-dessus de la tête.",
+          "tempo": null
+        },
+        {
+          "nom": "descente (verrouillage -> épaules)",
+          "angles": {
+            "hanche": [0, 0],
+            "genou": [0, 0],
+            "cheville": [0, 0],
+            "tronc_vs_vertical": [0, 0],
+            "epaule_flexion": [136, 7],
+            "epaule_abduction": [125, 33],
+            "coude": [0, null]
+          },
+          "contacts": "Idem.",
+          "trajectoire_charge": "Verticale.",
+          "tempo": null
+        }
+      ],
+      "details_source": {
+        "depart_flexion_epaule": "6,7° hommes / 10,8° femmes (devant) ; 3,3° / 22,2° (nuque)",
+        "depart_abduction_epaule": "32,8° / 33,4° (devant) ; 54,8° / 56,6° (nuque)",
+        "depart_rotation_externe": "66,5° / 44,5° (devant) ; 92,3° / 79,3° (nuque)",
+        "verrouillage_flexion_epaule": "135,9° hommes / 147,3° femmes (devant) ; 144,7° / 155,0° (nuque)",
+        "verrouillage_abduction_epaule": "~124-126° (les deux techniques)"
+      },
+      "sources": [
+        {
+          "url": "https://www.sciencedirect.com/science/article/pii/S2095254614000106",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Angles d'épaule (flexion, abduction, rotation externe) au départ et au verrouillage, devant vs nuque, hommes/femmes ; largeur de prise ; hauteur de départ C7."
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Overhead_press",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Push press = flexion-extension des jambes pour créer de l'élan ; barre tenue à hauteur d'épaules puis poussée au-dessus de la tête ; aucune valeur numérique."
+        }
+      ]
+    },
+    "dips_barres_paralleles": {
+      "description": "Dips sur barres parallèles.",
+      "phases": [
+        {
+          "nom": "descente",
+          "angles": {
+            "hanche": [null, null],
+            "genou": [null, null],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [0, null],
+            "epaule_flexion": [0, null],
+            "epaule_abduction": [null, null],
+            "coude": [0, 90]
+          },
+          "contacts": "Départ bras tendus, épaules au-dessus des mains ; prise neutre sur barres parallèles (prise étroite = triceps, largeur d'épaules = pectoraux).",
+          "trajectoire_charge": "Verticale ; en bas, bras (humérus) ~parallèles au sol et avant-bras verticaux.",
+          "tempo": null
+        },
+        {
+          "nom": "remontée",
+          "angles": {
+            "hanche": [null, null],
+            "genou": [null, null],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [null, 0],
+            "epaule_flexion": [null, 0],
+            "epaule_abduction": [null, null],
+            "coude": [90, 0]
+          },
+          "contacts": "Idem.",
+          "trajectoire_charge": "Verticale.",
+          "tempo": null
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Dip_(exercise)",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Départ bras tendus, épaules au-dessus des mains ; descente jusqu'à 90° au coude ; effet de la largeur de prise."
+        },
+        {
+          "url": "https://e3rehab.com/how-to-perform-dips/",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Profondeur : bras ~parallèles au sol, avant-bras verticaux ; 90° au coude comme repère général ; lean avant vs droit non chiffré."
+        }
+      ]
+    },
+    "traction_pronation_et_supination": {
+      "description": "Pull-up (pronation) et chin-up (supination) de la suspension bras tendus au menton au-dessus de la barre.",
+      "phases": [
+        {
+          "nom": "tirage (dead hang -> menton au-dessus de la barre)",
+          "angles": {
+            "hanche": [14, 40],
+            "genou": [6, 58],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [null, null],
+            "epaule_flexion": [180, null],
+            "epaule_abduction": [null, null],
+            "coude": [0, 156]
+          },
+          "contacts": "Prise 20 à 50 % plus large que les épaules (auto-sélectionnée) ; étude Springer : 15 cm de plus que la largeur d'épaules ; pronation = pull-up, supination = chin-up.",
+          "trajectoire_charge": "Centre de hanche monte verticalement ; fin = menton au-dessus de la barre (ou poitrine à la barre).",
+          "tempo": "Pic de flexion de coude à 36 % du mouvement (pronation) et 50 % (supination) ; abduction max d'épaule à la fin."
+        },
+        {
+          "nom": "descente (menton -> dead hang)",
+          "angles": {
+            "hanche": [40, 16],
+            "genou": [53, 9],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [null, null],
+            "epaule_flexion": [null, 180],
+            "epaule_abduction": [null, null],
+            "coude": [156, 0]
+          },
+          "contacts": "Idem.",
+          "trajectoire_charge": "Verticale.",
+          "tempo": null
+        }
+      ],
+      "details_source": {
+        "umich_coude_amplitude": "135° pronation, 140° supination ; pic de flexion (angle inclus) 24° pronation = 156° de flexion, 22° supination = 158°",
+        "umich_epaule_amplitude": "99° pronation, 122° supination",
+        "springer_hanche_flexion": "13,5-40,1° (concentrique), 16-39,6° (excentrique)",
+        "springer_genou_flexion": "5,6-57,7° (concentrique), 8,8-52,6° (excentrique)",
+        "springer_flexion_lombaire": "0-23,7° (concentrique), 4,0-16,6° (excentrique)"
+      },
+      "sources": [
+        {
+          "url": "https://public.websites.umich.edu/~mvs330/w97/pullups/results2.html",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Amplitudes de coude (135°/140°) et d'épaule (99°/122°), pics de flexion de coude inclus 24°/22°, instants des pics."
+        },
+        {
+          "url": "https://www.researchgate.net/publication/372467276_Biomechanical_characterisation_of_the_pull-up_exercise",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Plages de flexion de hanche, de genou et lombaire pendant la traction ; prise 15 cm plus large que les épaules."
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Pull-up",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Définition (suspension bras tendus -> menton au-dessus de la barre) ; prise 20-50 % plus large que les épaules ; pronation vs supination."
+        }
+      ]
+    },
+    "rowing_inverse": {
+      "description": "Inverted row sous barre ou sangles.",
+      "phases": [
+        {
+          "nom": "tirage",
+          "angles": {
+            "hanche": [0, 0],
+            "genou": [0, 0],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [null, null],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [0, null]
+          },
+          "contacts": null,
+          "trajectoire_charge": null,
+          "tempo": null
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.researchgate.net/publication/265294454_Exercise_Highlight_Inverted_Row",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Source identifiée mais non consultée (ResearchGate bloque) ; aucune valeur reprise."
+        }
+      ]
+    },
+    "rowing_buste_penche": {
+      "description": "Bent-over row barre.",
+      "phases": [
+        {
+          "nom": "tirage",
+          "angles": {
+            "hanche": [null, null],
+            "genou": [null, null],
+            "cheville": [0, 0],
+            "tronc_vs_vertical": [90, 90],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [0, 90]
+          },
+          "contacts": "Genoux légèrement fléchis ; prise pronation = coudes ouverts, supination = coudes serrés.",
+          "trajectoire_charge": "Barre tirée vers la hanche jusqu'à ce que le coude dépasse 90° et que l'humérus soit dans l'alignement du dos ; dos parallèle au sol pour le Pendlay row ; Yates row tronc légèrement plus relevé.",
+          "tempo": null
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Bent-over_row",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Dos parallèle au sol (Pendlay), coude au-delà de 90°, humérus aligné avec le dos, barre vers la hanche, genoux fléchis."
+        }
+      ]
+    },
+    "handstand_et_handstand_push_up": {
+      "description": "Équilibre sur les mains (alignement mains-épaules-hanches-pieds) et HSPU.",
+      "phases": [
+        {
+          "nom": "maintien handstand",
+          "angles": {
+            "hanche": [0, 0],
+            "genou": [0, 0],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [0, 0],
+            "epaule_flexion": [180, 180],
+            "epaule_abduction": [null, null],
+            "coude": [0, 0]
+          },
+          "contacts": "Mains au sol à ~largeur d'épaules, bras tendus ; jambes tendues serrées, pointes de pieds ; tête rentrée (regard vers l'avant comme debout).",
+          "trajectoire_charge": "Statique ; moment au poignet ~40 % du poids du corps.",
+          "tempo": null
+        },
+        {
+          "nom": "handstand push-up (descente)",
+          "angles": {
+            "hanche": [0, null],
+            "genou": [0, 0],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [0, null],
+            "epaule_flexion": [180, null],
+            "epaule_abduction": [null, null],
+            "coude": [0, null]
+          },
+          "contacts": "Pieds contre un mur pour les débutants.",
+          "trajectoire_charge": null,
+          "tempo": null
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0253951",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Épaule maintenue ~180° (flexion complète) en handstand ; moment au poignet ~40 % du poids du corps."
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Handstand",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Mains à largeur d'épaules, bras tendus, jambes tendues serrées, pointes, tête rentrée ; style dos droit vs dos cambré."
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Handstand_push-up",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Position de départ en handstand, pieds contre un mur pour débutants ; aucune valeur angulaire."
+        },
+        {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/41473027/",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Revue systématique du handstand : 36 % des études analysent des angles articulaires ; aucune valeur numérique dans le résumé."
+        }
+      ]
+    },
+    "pike_push_up": {
+      "description": "Pompe en pike (hanches fléchies, corps en V inversé).",
+      "phases": [
+        {
+          "nom": "descente",
+          "angles": {
+            "hanche": [null, null],
+            "genou": [0, 0],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [null, null],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [0, null]
+          },
+          "contacts": null,
+          "trajectoire_charge": null,
+          "tempo": null
+        }
+      ],
+      "sources": []
+    },
+    "planche_et_planche_lean": {
+      "description": "Planche lean (pseudo-planche) et planche complète.",
+      "phases": [
+        {
+          "nom": "maintien planche lean",
+          "angles": {
+            "hanche": [0, 0],
+            "genou": [0, 0],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [null, null],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [0, 0]
+          },
+          "contacts": "Mains tournées vers l'extérieur ~45° ; scapulas protractées (pousser la poitrine loin du sol) et abaissées ; bassin en rétroversion ; orteils recourbés puis pointes (dos du pied) en avançant.",
+          "trajectoire_charge": "Épaules avancent devant les mains, progressivement jusqu'à ce que les mains soient sous les hanches (planche lean avancé) ; repère : épaules au-dessus des doigts ou au-delà.",
+          "tempo": "Maintiens de 10-15 s (3 séries, 90 s de repos) en débutant, 20-30 s avant d'augmenter le lean (Calixpert)."
+        },
+        {
+          "nom": "maintien planche complète",
+          "angles": {
+            "hanche": [0, 0],
+            "genou": [0, 0],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [90, 90],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [0, 0]
+          },
+          "contacts": "Mains seules au sol ; corps horizontal.",
+          "trajectoire_charge": "Statique.",
+          "tempo": null
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.gymnasticbodies.com/exercises/planche-lean",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Rotation des doigts ~45° vers l'extérieur, protraction + dépression scapulaire, rétroversion du bassin, progression du lean jusqu'aux mains sous les hanches."
+        },
+        {
+          "url": "https://www.calixpert.com/exercises/planche-lean",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Épaules au-dessus des doigts ou au-delà ; progression d'un centimètre à la fois ; 3 x 10-15 s puis 20-30 s ; coudes verrouillés, ligne tête-talons."
+        }
+      ]
+    },
+    "front_lever_et_back_lever": {
+      "description": "Front lever (face vers le haut) et back lever (face vers le bas), corps horizontal sous la barre/anneaux.",
+      "phases": [
+        {
+          "nom": "maintien front lever",
+          "angles": {
+            "hanche": [0, 0],
+            "genou": [0, 0],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [90, 90],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [0, 0]
+          },
+          "contacts": "Suspension à la barre, bras tendus devant le corps ; écarter les mains augmente la difficulté (inclinaison des bras).",
+          "trajectoire_charge": "Statique ; corps complètement horizontal et droit, face vers le haut.",
+          "tempo": null
+        },
+        {
+          "nom": "maintien back lever",
+          "angles": {
+            "hanche": [0, 0],
+            "genou": [0, 0],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [90, 90],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [0, 0]
+          },
+          "contacts": null,
+          "trajectoire_charge": null,
+          "tempo": null
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Front_lever",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Corps complètement horizontal et droit, face vers le haut ; bras tendus ; élargir la prise augmente l'inclinaison des bras ; difficulté A au code FIG."
+        }
+      ]
+    },
+    "l_sit": {
+      "description": "L-sit au sol ou sur parallettes.",
+      "phases": [
+        {
+          "nom": "maintien",
+          "angles": {
+            "hanche": [90, 90],
+            "genou": [0, 0],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [0, 0],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [0, 0]
+          },
+          "contacts": "Mains au sol ou sur parallettes ; coudes verrouillés ; épaules abaissées (dépression) ; jambes tendues parallèles au sol, pieds pointés.",
+          "trajectoire_charge": "Statique.",
+          "tempo": null
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.coachbachmann.com/knowledgebase/how-to-master-the-l-sit-the-ultimate-calisthenics-guide",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Angle de hanche 90°, coudes verrouillés, épaules abaissées, jambes tendues parallèles au sol, pieds pointés, dos droit."
+        }
+      ]
+    },
+    "muscle_up": {
+      "description": "Muscle-up à la barre : traction explosive, transition, dip.",
+      "phases": [
+        {
+          "nom": "traction",
+          "angles": {
+            "hanche": [null, null],
+            "genou": [null, null],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [null, null],
+            "epaule_flexion": [180, null],
+            "epaule_abduction": [null, null],
+            "coude": [0, null]
+          },
+          "contacts": "Départ bras tendus au-dessus de la tête, prise pronation fermée (barre) ; false grip aux anneaux.",
+          "trajectoire_charge": "Tirage vertical plus rapide qu'une traction classique.",
+          "tempo": null
+        },
+        {
+          "nom": "transition",
+          "angles": {
+            "hanche": [null, null],
+            "genou": [null, null],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [null, null],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [null, null]
+          },
+          "contacts": "Quand la barre approche le haut de la poitrine, flexion rapide des poignets pour passer les avant-bras au-dessus de la barre ; le corps bascule vers l'avant.",
+          "trajectoire_charge": "Barre passe de devant la poitrine à sous les épaules.",
+          "tempo": null
+        },
+        {
+          "nom": "dip",
+          "angles": {
+            "hanche": [null, null],
+            "genou": [null, null],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [null, null],
+            "epaule_flexion": [null, 0],
+            "epaule_abduction": [null, null],
+            "coude": [null, 0]
+          },
+          "contacts": "Extension des coudes (triceps) ; fin : bras tendus, barre au niveau de la taille.",
+          "trajectoire_charge": "Verticale.",
+          "tempo": null
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Muscle-up",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Trois phases (traction, transition, dip), flexion des poignets à la transition, false grip aux anneaux, fin barre à la taille bras tendus."
+        }
+      ]
+    },
+    "planche_et_hollow_body": {
+      "description": "Gainage face (plank sur avant-bras) et hollow body hold.",
+      "phases": [
+        {
+          "nom": "maintien plank avant-bras",
+          "angles": {
+            "hanche": [0, 0],
+            "genou": [0, 0],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [90, 90],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [90, 90]
+          },
+          "contacts": "Poids sur avant-bras, coudes et orteils ; position proche de la pompe.",
+          "trajectoire_charge": "Statique.",
+          "tempo": null
+        },
+        {
+          "nom": "maintien hollow body",
+          "angles": {
+            "hanche": [null, null],
+            "genou": [0, 0],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [null, null],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [0, 0]
+          },
+          "contacts": "Décubitus dorsal, bassin en rétroversion (fessiers + abdos), lombaires plaquées au sol, côtes rentrées ; jambes levées juste assez pour garder les lombaires au sol ; bras au-dessus de la tête.",
+          "trajectoire_charge": "Statique ; même alignement que le handstand (pieds sur hanches, hanches sur épaules, épaules sur mains).",
+          "tempo": null
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Plank_(exercise)",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Plank sur avant-bras : appui avant-bras/coudes/orteils, position type pompe ; aucun angle."
+        },
+        {
+          "url": "https://antranik.org/hollow-body-position-importance/",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Rétroversion du bassin, lombaires au sol, côtes rentrées, hauteur des jambes conditionnée par le maintien des lombaires ; lien avec l'alignement du handstand."
+        }
+      ]
+    },
+    "burpee": {
+      "description": "Burpee avec pompe (protocole modifié en 6 mouvements).",
+      "phases": [
+        {
+          "nom": "1. debout bras le long du corps",
+          "angles": {"hanche": [0, 0], "genou": [0, 0], "cheville": [0, 0], "tronc_vs_vertical": [0, 0], "epaule_flexion": [0, 0], "epaule_abduction": [0, 0], "coude": [0, 0]},
+          "contacts": "Pieds au sol.",
+          "trajectoire_charge": null,
+          "tempo": null
+        },
+        {
+          "nom": "2. squat mains au sol devant les pieds",
+          "angles": {"hanche": [0, null], "genou": [0, null], "cheville": [0, null], "tronc_vs_vertical": [0, null], "epaule_flexion": [0, null], "epaule_abduction": [null, null], "coude": [0, 0]},
+          "contacts": "Mains au sol devant les pieds.",
+          "trajectoire_charge": null,
+          "tempo": null
+        },
+        {
+          "nom": "3. projection des jambes en position de pompe (ligne épaules-talons)",
+          "angles": {"hanche": [null, 0], "genou": [null, 0], "cheville": [null, null], "tronc_vs_vertical": [null, null], "epaule_flexion": [null, null], "epaule_abduction": [null, null], "coude": [0, 0]},
+          "contacts": "Mains et orteils au sol.",
+          "trajectoire_charge": null,
+          "tempo": null
+        },
+        {
+          "nom": "4. pompe",
+          "angles": {"hanche": [0, 0], "genou": [0, 0], "cheville": [null, null], "tronc_vs_vertical": [null, null], "epaule_flexion": [null, null], "epaule_abduction": [null, null], "coude": [0, 100]},
+          "contacts": "Voir pattern 'pompe'.",
+          "trajectoire_charge": null,
+          "tempo": null
+        },
+        {
+          "nom": "5. retour en squat puis saut vertical (flexion d'épaule au sommet)",
+          "angles": {"hanche": [null, 0], "genou": [null, 0], "cheville": [null, null], "tronc_vs_vertical": [null, 0], "epaule_flexion": [null, 180], "epaule_abduction": [null, null], "coude": [0, 0]},
+          "contacts": "Décollage des pieds.",
+          "trajectoire_charge": "Charge au genou ~3,5 x poids du corps à la réception (~80 % du cycle).",
+          "tempo": "Test 30 s : 9 ± 3,4 rép. hommes, 6 ± 2,5 femmes (soit ~3-5 s par burpee)."
+        },
+        {
+          "nom": "6. réception debout",
+          "angles": {"hanche": [null, 0], "genou": [null, 0], "cheville": [null, 0], "tronc_vs_vertical": [null, 0], "epaule_flexion": [null, 0], "epaule_abduction": [null, null], "coude": [0, 0]},
+          "contacts": "Pieds au sol.",
+          "trajectoire_charge": null,
+          "tempo": null
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.scholarsresearchlibrary.com/articles/biomechanical-evaluation-of-the-burpee-test-battery-76964.html",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Définition des 6 mouvements ; répétitions en 30 s (hommes 9 ± 3,4 ; femmes 6 ± 2,5)."
+        },
+        {
+          "url": "https://commons.nmu.edu/cgi/viewcontent.cgi?article=3002&context=isbs",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Charge au genou ~3,5 PC à la réception (~80 % de la tâche), puissance ~20 W/kg au genou avant le saut ; pas d'angles."
+        }
+      ]
+    },
+    "box_jump_et_saut_vertical": {
+      "description": "Countermovement jump (CMJ) : profondeur du contre-mouvement en fraction de la longueur de jambe (LH) ou en m.",
+      "phases": [
+        {
+          "nom": "contre-mouvement (descente)",
+          "angles": {
+            "hanche": [0, null],
+            "genou": [0, null],
+            "cheville": [0, null],
+            "tronc_vs_vertical": [0, null],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [null, null]
+          },
+          "contacts": "Pieds au sol ; mains sur les hanches (akimbo) dans l'étude MDPI.",
+          "trajectoire_charge": "Profondeur du centre de masse : préférée 0,32 ± 0,06 LH ; faible 0,23 ± 0,05 LH ; profonde 0,43 ± 0,06 LH (LH = longueur de jambe). Autre étude : 0,24 ± 0,05 m (groupe bimodal) vs 0,19 ± 0,03 m (unimodal).",
+          "tempo": null
+        },
+        {
+          "nom": "propulsion -> décollage",
+          "angles": {
+            "hanche": [null, 0],
+            "genou": [null, 0],
+            "cheville": [null, null],
+            "tronc_vs_vertical": [null, 0],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [null, null]
+          },
+          "contacts": "Décollage.",
+          "trajectoire_charge": "Hauteur de saut : 0,48 LH (préférée), 0,45 LH (faible), 0,50 LH (profonde).",
+          "tempo": null
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.mdpi.com/2075-4663/6/4/131",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Profondeurs de contre-mouvement 0,23/0,32/0,43 LH et hauteurs de saut 0,45/0,48/0,50 LH ; pas d'angles de genou rapportés."
+        },
+        {
+          "url": "https://www.sciencedirect.com/science/article/pii/S2667099225000465",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Profondeur de contre-mouvement 0,24 ± 0,05 m vs 0,19 ± 0,03 m ; angles de pic non transcrits."
+        }
+      ]
+    },
+    "mollets_debout": {
+      "description": "Calf raise debout : amplitude de la cheville entre dorsiflexion (talon bas, sur marche) et flexion plantaire maximale.",
+      "phases": [
+        {
+          "nom": "montée (dorsiflexion -> flexion plantaire)",
+          "angles": {
+            "hanche": [0, 0],
+            "genou": [0, 0],
+            "cheville": [30, -40],
+            "tronc_vs_vertical": [0, 0],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [null, null]
+          },
+          "contacts": "Avant-pied sur marche/sol, talon libre.",
+          "trajectoire_charge": "Verticale.",
+          "tempo": null
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.physio-pedia.com/Range_of_Motion_Normative_Values",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Amplitude normative de cheville : dorsiflexion 30°, flexion plantaire 40° (bornes utilisées faute d'étude cinématique du calf raise)."
+        },
+        {
+          "url": "https://www.matassessment.com/blog/ankle-plantarflexion-test",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Valeurs d'enseignement de flexion plantaire 45-50° (référence large, variable selon protocole)."
+        }
+      ]
+    },
+    "kettlebell_swing": {
+      "description": "Swing kettlebell hardstyle (hauteur d'épaule, SHS) ou overhead (OHS).",
+      "phases": [
+        {
+          "nom": "propulsion (backswing -> sommet)",
+          "angles": {
+            "hanche": [80, -2],
+            "genou": [null, 0],
+            "cheville": [null, 0],
+            "tronc_vs_vertical": [null, 0],
+            "epaule_flexion": [null, 90],
+            "epaule_abduction": [null, null],
+            "coude": [0, 0]
+          },
+          "contacts": "Pieds au sol, deux mains sur la poignée.",
+          "trajectoire_charge": "Arc : kettlebell entre les jambes en bas, à hauteur d'épaule (SHS) ou au-dessus de la tête (OHS, déplacement max ~102-104 % de la taille).",
+          "tempo": "Phase concentrique ~0,86-1,01 s ; durée du swing complet ~1,82-1,91 s (8-16 kg) ; transition concentrique/excentrique à 48-50 % du cycle."
+        },
+        {
+          "nom": "descente (sommet -> backswing)",
+          "angles": {
+            "hanche": [-2, 80],
+            "genou": [0, null],
+            "cheville": [0, null],
+            "tronc_vs_vertical": [0, null],
+            "epaule_flexion": [90, null],
+            "epaule_abduction": [null, null],
+            "coude": [0, 0]
+          },
+          "contacts": "Idem.",
+          "trajectoire_charge": "Arc inverse.",
+          "tempo": null
+        }
+      ],
+      "details_source": {
+        "hanche_depart": "~80° de flexion (les deux styles)",
+        "hanche_fin_SHS": "-1,79 ± 5,02° (légère extension)",
+        "hanche_fin_OHS": "-8,15 ± 5,97°",
+        "amplitude_hanche_SHS": "81-84°",
+        "amplitude_hanche_OHS": "88-98°",
+        "vitesse_extension_hanche": "245-252°/s (SHS), 271-274°/s (OHS)"
+      },
+      "sources": [
+        {
+          "url": "https://ijspt.scholasticahq.com/article/127464",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Flexion de hanche au départ ~80°, fin -1,8° (SHS) / -8,2° (OHS), amplitude de hanche 81-98°, durée concentrique 0,86-1,01 s, vitesses d'extension."
+        },
+        {
+          "url": "https://www.mdpi.com/2075-4663/10/12/203",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Durée de swing 1,82-1,91 s, déplacement max 102-104 % de la taille, transition à 48-50 % du cycle (swing overhead, femmes, 8/12/16 kg)."
+        }
+      ]
+    },
+    "curl_biceps_et_extension_triceps": {
+      "description": "Curl (flexion de coude) ; extension triceps à la poulie : même articulation en sens inverse (aucune source cinématique dédiée trouvée).",
+      "phases": [
+        {
+          "nom": "curl concentrique",
+          "angles": {
+            "hanche": [0, 0],
+            "genou": [0, 0],
+            "cheville": [0, 0],
+            "tronc_vs_vertical": [0, 0],
+            "epaule_flexion": [45, 45],
+            "epaule_abduction": [0, 0],
+            "coude": [0, 135]
+          },
+          "contacts": "Curl haltère assis au pupitre (preacher), épaule fixée à 45° de flexion ; 0° = coude tendu, 135° = avant-bras perpendiculaire au sol.",
+          "trajectoire_charge": "Arc autour du coude.",
+          "tempo": "2 s concentrique / 2 s excentrique (métronome)."
+        },
+        {
+          "nom": "curl excentrique",
+          "angles": {
+            "hanche": [0, 0],
+            "genou": [0, 0],
+            "cheville": [0, 0],
+            "tronc_vs_vertical": [0, 0],
+            "epaule_flexion": [45, 45],
+            "epaule_abduction": [0, 0],
+            "coude": [135, 0]
+          },
+          "contacts": "Idem.",
+          "trajectoire_charge": "Arc.",
+          "tempo": "2 s."
+        },
+        {
+          "nom": "extension triceps poulie (concentrique)",
+          "angles": {
+            "hanche": [0, 0],
+            "genou": [0, 0],
+            "cheville": [0, 0],
+            "tronc_vs_vertical": [null, null],
+            "epaule_flexion": [null, null],
+            "epaule_abduction": [null, null],
+            "coude": [null, 0]
+          },
+          "contacts": null,
+          "trajectoire_charge": null,
+          "tempo": null
+        }
+      ],
+      "sous_amplitudes_curl": {
+        "initiale": [0, 68],
+        "finale": [68, 135]
+      },
+      "sources": [
+        {
+          "url": "https://www.mdpi.com/2075-4663/11/2/39",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Amplitude complète 0-135° de flexion de coude, amplitude initiale 0-68°, finale 68-135°, tempo 2 s / 2 s, épaule fixée à 45°."
+        },
+        {
+          "url": "https://www.physio-pedia.com/Range_of_Motion_Normative_Values",
+          "consulte_le": "2026-09-26",
+          "valeurs": "Flexion de coude normative 140°, extension 0° (borne haute pour le curl et l'extension triceps)."
+        }
+      ]
+    }
+  },
+  "amplitudes_articulaires": {
+    "source": {
+      "url": "https://www.physio-pedia.com/Range_of_Motion_Normative_Values",
+      "consulte_le": "2026-09-26",
+      "note": "Physiopedia cite 'WikEM ROM by joint' ; les valeurs correspondent aux normes cliniques usuelles (type AAOS) mais l'origine AAOS/AMA n'est pas explicitée sur la page."
+    },
+    "unite": "degres",
+    "poignet": {"flexion": 60, "extension": 60, "deviation_radiale": 20, "deviation_ulnaire": 20},
+    "avant_bras": {"pronation": 80, "supination": 80},
+    "coude": {"flexion": 140, "extension": 0},
+    "epaule": {"flexion": 180, "hyperextension": 50, "abduction": 180, "adduction": 50, "rotation_interne_bras_en_abduction": 90, "rotation_externe_bras_en_abduction": 90},
+    "rachis_cervical": {"flexion": 60, "hyperextension": 75, "inclinaison_laterale": 45, "rotation": 80},
+    "rachis_thoraco_lombaire": {"flexion": "45-50", "hyperextension": 25, "inclinaison_laterale": 25, "rotation": 30},
+    "hanche": {"flexion": 100, "hyperextension": 30, "abduction": 40, "adduction": 20, "rotation_interne": 40, "rotation_externe": 50},
+    "genou": {"flexion": 150, "extension": 0},
+    "cheville": {"flexion_plantaire": 40, "dorsiflexion": 30},
+    "complement_cheville": {
+      "url": "https://www.matassessment.com/blog/ankle-plantarflexion-test",
+      "consulte_le": "2026-09-26",
+      "flexion_plantaire_valeurs_enseignement": "45-50"
+    }
+  },
+  "proportions_segments": {
+    "source_principale": {
+      "reference": "Drillis & Contini (1966), reproduit dans Winter, Biomechanics and Motor Control of Human Movement, fig. 4.1",
+      "url_reproduction_winter": "https://courses.grainger.illinois.edu/me481/sp2021/Anthro-Winter.pdf",
+      "consulte_le": "2026-09-26",
+      "note": "Le PDF Winter reproduit la figure 4.1 en image ; les valeurs numériques ci-dessous ont été relevées dans deux supports de cours en français qui reprennent cette figure (yumpu, studylibfr). Les libellés anatomiques associés par l'extraction automatique sont partiellement incohérents (ex. 0,186H attribué à la cuisse alors que la figure Winter l'attribue au bras) : vérifier chaque libellé sur la figure originale avant usage en production."
+    },
+    "valeurs_relevees_fraction_de_stature_H": {
+      "liste_brute_commune_aux_deux_supports": [0.936, 0.870, 0.818, 0.630, 0.520, 0.465, 0.377, 0.285, 0.259, 0.186, 0.152, 0.146, 0.130, 0.108, 0.055, 0.039],
+      "libelles_selon_support_yumpu_a_verifier": {
+        "0.936H": "hauteur des yeux / niveau menton-cou (libellé incertain)",
+        "0.870H": "hauteur des épaules (libellé incertain)",
+        "0.818H": "hauteur de la poitrine (libellé incertain)",
+        "0.630H": "hauteur de la taille / du coude (libellé incertain)",
+        "0.520H": "hauteur de la hanche (libellé incertain)",
+        "0.465H": "hauteur du genou (libellé incertain)",
+        "0.377H": "hauteur de la cheville / bout des doigts (libellé incertain)",
+        "0.259H": "libellé incertain (jambe inférieure selon yumpu ; largeur d'épaules dans la figure Winter)",
+        "0.186H": "libellé incertain (cuisse selon yumpu ; bras dans la figure Winter)",
+        "0.146H": "avant-bras",
+        "0.130H": "libellé incertain (bras selon yumpu ; hauteur de tête dans la figure Winter)",
+        "0.108H": "main (libellé non fourni par yumpu, valeur présente dans la liste)",
+        "0.152H": "longueur du pied",
+        "0.055H": "largeur du pied",
+        "0.039H": "hauteur de la cheville (libellé non fourni par yumpu)"
+      },
+      "urls": [
+        {"url": "https://www.yumpu.com/fr/document/view/17493236/cinematique-du-corps-humain", "consulte_le": "2026-09-26", "valeurs": "Liste des fractions de stature et libellés partiels (cinématique du corps humain, support de cours)."},
+        {"url": "https://studylibfr.com/doc/696653/dynamique-inverse", "consulte_le": "2026-09-26", "valeurs": "Même liste de fractions de stature sans libellés ; fractions de masse segmentaire ; HAT = 0,678."}
+      ]
+    },
+    "fractions_de_masse_segmentaire_winter": {
+      "url": "https://studylibfr.com/doc/696653/dynamique-inverse",
+      "consulte_le": "2026-09-26",
+      "valeurs": {
+        "pied": 0.0145,
+        "jambe": 0.0465,
+        "cuisse": 0.100,
+        "HAT_tete_bras_tronc": 0.678,
+        "valeurs_non_libellees_dans_le_support": [0.006, 0.016, 0.028]
+      },
+      "note": "Les trois valeurs non libellées (0,006 ; 0,016 ; 0,028) figurent dans le support à côté des segments du membre supérieur mais l'extraction n'a pas confirmé l'ordre main / avant-bras / bras ; à vérifier dans la table 4.1 de Winter."
+    },
+    "table_dempster_reproduite_dans_winter": {
+      "url": "https://courses.grainger.illinois.edu/me481/sp2021/Anthro-Winter.pdf",
+      "consulte_le": "2026-09-26",
+      "valeurs": "La table 4.1 du PDF (données Dempster via Miller & Nelson / Plagenhoef) contient poids segmentaire en % du poids total, position du centre de masse (proximal/distal), rayons de giration et densités ; les chiffres n'ont pas été transcrits par l'outil de lecture (image)."
+    }
+  },
+  "lacunes": [
+    "Front squat : aucune valeur angulaire consultable (PubMed 19002072 vide, thèse CSU 403).",
+    "Pistol squat / single-leg squat : table d'angles PLOS ONE non transcrite ; aucune valeur.",
+    "Deadlift conventionnel : angles de hanche et de cheville au décollage et au verrouillage non trouvés ; convention des angles segmentaires d'Escamilla à vérifier ; PMC (deadlift vs good morning, deadlift maximal femmes) bloqué par reCAPTCHA.",
+    "Hip thrust / glute bridge : angle de hanche au départ non chiffré ; article Wiley (Takeshita 2022) en 403.",
+    "Inverted row : aucune valeur (ResearchGate inaccessible).",
+    "Pike push-up, back lever, extension triceps poulie, push press (profondeur du dip), box jump (hauteur de box), plank (angles) : aucune source chiffrée trouvée.",
+    "Handstand push-up : aucun angle de coude/épaule en bas ; profondeur (tête au sol) non chiffrée.",
+    "Pull-up : angles d'épaule en degrés au dead hang et au sommet non donnés explicitement (seulement amplitudes) ; article Springer (Sport Sciences for Health) refusé (429).",
+    "CMJ : angle de genou au point bas non rapporté par les deux études consultées (profondeur uniquement).",
+    "Tempo : rarement rapporté ; seules valeurs trouvées : split squat 2 s de descente, curl 2 s/2 s, KB swing 1,8-1,9 s par cycle, burpee ~3-5 s par répétition (déduit du test 30 s), bench 1RM 0,23-1,37 s par phase.",
+    "Proportions segmentaires : libellés Drillis & Contini à valider sur la figure 4.1 de Winter (les supports consultés donnent les nombres mais des libellés incohérents)."
+  ]
+}

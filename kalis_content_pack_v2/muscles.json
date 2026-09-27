@@ -1,0 +1,1552 @@
+{
+ "version": "2.0.0",
+ "generated": "2026-09-27",
+ "description": "Taxonomie musculaire Kalis Track v2 : muscles et chefs utiles à l'entraînement, groupe de compatibilité avec la carte musculaire actuelle (11 groupes), vues de l'atlas, profondeur.",
+ "groupes_app": [
+  "pectoraux",
+  "épaules",
+  "biceps",
+  "triceps",
+  "avant-bras",
+  "gainage",
+  "dos",
+  "quadriceps",
+  "ischios",
+  "fessiers",
+  "mollets"
+ ],
+ "alias": {
+  "pectoraux": [
+   "grand_pectoral_sterno_costal",
+   "grand_pectoral_claviculaire"
+  ],
+  "pectoraux_tous": [
+   "grand_pectoral_sterno_costal",
+   "grand_pectoral_claviculaire",
+   "grand_pectoral_abdominal"
+  ],
+  "pectoraux_bas": [
+   "grand_pectoral_sterno_costal",
+   "grand_pectoral_abdominal"
+  ],
+  "deltoides": [
+   "deltoide_anterieur",
+   "deltoide_moyen",
+   "deltoide_posterieur"
+  ],
+  "coiffe": [
+   "supra_epineux",
+   "infra_epineux",
+   "petit_rond",
+   "sous_scapulaire"
+  ],
+  "trapezes": [
+   "trapeze_superieur",
+   "trapeze_moyen",
+   "trapeze_inferieur"
+  ],
+  "trapeze_moyen_inferieur": [
+   "trapeze_moyen",
+   "trapeze_inferieur"
+  ],
+  "biceps": [
+   "biceps_chef_long",
+   "biceps_chef_court"
+  ],
+  "flechisseurs_coude": [
+   "biceps_chef_long",
+   "biceps_chef_court",
+   "brachial",
+   "brachio_radial"
+  ],
+  "triceps": [
+   "triceps_chef_long",
+   "triceps_chef_lateral",
+   "triceps_chef_medial"
+  ],
+  "flechisseurs_avant_bras": [
+   "flechisseurs_du_poignet",
+   "flechisseurs_superficiels_des_doigts",
+   "flechisseurs_profonds_des_doigts"
+  ],
+  "prehension": [
+   "flechisseurs_superficiels_des_doigts",
+   "flechisseurs_profonds_des_doigts",
+   "flechisseurs_du_poignet",
+   "muscles_intrinseques_main"
+  ],
+  "extenseurs_avant_bras": [
+   "extenseurs_du_poignet",
+   "extenseurs_des_doigts"
+  ],
+  "abdominaux": [
+   "droit_abdomen",
+   "oblique_externe",
+   "oblique_interne",
+   "transverse_abdomen"
+  ],
+  "obliques": [
+   "oblique_externe",
+   "oblique_interne"
+  ],
+  "erecteurs": [
+   "erecteurs_lombaires",
+   "erecteurs_thoraciques"
+  ],
+  "erecteurs_profonds": [
+   "erecteurs_lombaires",
+   "erecteurs_thoraciques",
+   "multifides"
+  ],
+  "flechisseurs_hanche": [
+   "grand_psoas",
+   "iliaque",
+   "droit_femoral",
+   "tenseur_fascia_lata",
+   "sartorius"
+  ],
+  "ilio_psoas": [
+   "grand_psoas",
+   "iliaque"
+  ],
+  "fessiers": [
+   "grand_fessier",
+   "moyen_fessier",
+   "petit_fessier"
+  ],
+  "abducteurs_hanche": [
+   "moyen_fessier",
+   "petit_fessier",
+   "tenseur_fascia_lata"
+  ],
+  "adducteurs": [
+   "long_adducteur",
+   "court_adducteur",
+   "grand_adducteur",
+   "gracile",
+   "pectine"
+  ],
+  "quadriceps": [
+   "droit_femoral",
+   "vaste_lateral",
+   "vaste_medial",
+   "vaste_intermediaire"
+  ],
+  "vastes": [
+   "vaste_lateral",
+   "vaste_medial",
+   "vaste_intermediaire"
+  ],
+  "ischios": [
+   "biceps_femoral",
+   "biceps_femoral_chef_court",
+   "semi_tendineux",
+   "semi_membraneux"
+  ],
+  "mollets": [
+   "gastrocnemien_medial",
+   "gastrocnemien_lateral",
+   "soleaire"
+  ],
+  "gastrocnemiens": [
+   "gastrocnemien_medial",
+   "gastrocnemien_lateral"
+  ],
+  "cheville_lateral": [
+   "fibulaires",
+   "tibial_posterieur"
+  ],
+  "cou_extenseurs": [
+   "extenseurs_cervicaux",
+   "trapeze_superieur"
+  ]
+ },
+ "atlas": {
+  "fichier": "atlas.svg",
+  "viewBox": "0 0 600 760",
+  "vues": {
+   "face": {
+    "x": 0,
+    "largeur": 300
+   },
+   "dos": {
+    "x": 300,
+    "largeur": 300
+   }
+  },
+  "selecteur_region": "path.muscle[data-muscle=<id>][data-side=d|g]",
+  "roles_couleur": {
+   "corps": "neutre (currentColor atténué)",
+   "primaire": "couleur dominante active (accent)",
+   "secondaire": "même teinte atténuée (opacité 0,45)",
+   "stabilisateur": "contour accent, sans remplissage"
+  },
+  "muscles_profonds_par_vue": {
+   "face": [
+    "flechisseurs_cervicaux_profonds",
+    "sous_scapulaire",
+    "petit_pectoral",
+    "coraco_brachial",
+    "flechisseurs_profonds_des_doigts",
+    "carre_pronateur",
+    "muscles_intrinseques_main",
+    "oblique_interne",
+    "transverse_abdomen",
+    "diaphragme",
+    "plancher_pelvien",
+    "grand_psoas",
+    "iliaque",
+    "court_adducteur",
+    "vaste_intermediaire",
+    "muscles_intrinseques_pied"
+   ],
+   "dos": [
+    "extenseurs_cervicaux",
+    "supra_epineux",
+    "elevateur_scapula",
+    "rhomboides",
+    "supinateur",
+    "carre_des_lombes",
+    "erecteurs_thoraciques",
+    "multifides",
+    "petit_fessier",
+    "rotateurs_lateraux_hanche",
+    "biceps_femoral_chef_court",
+    "poplite",
+    "tibial_posterieur",
+    "flechisseurs_profonds_des_orteils"
+   ]
+  }
+ },
+ "muscles": [
+  {
+   "id": "sterno_cleido_mastoidien",
+   "nom": "Sterno-cléido-mastoïdien",
+   "latin": "Musculus sternocleidomastoideus",
+   "famille": "Cou",
+   "groupe": "dos",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Flexion et rotation de la tête ; stabilise la nuque dans les gainages et les figures.",
+   "note": null,
+   "regions": [
+    "face-sterno_cleido_mastoidien-d",
+    "face-sterno_cleido_mastoidien-g"
+   ]
+  },
+  {
+   "id": "extenseurs_cervicaux",
+   "nom": "Extenseurs de la nuque (splénius, semi-épineux)",
+   "latin": "Mm. splenius capitis et semispinalis capitis",
+   "famille": "Cou",
+   "groupe": "dos",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "profond",
+   "actions": "Extension et maintien de la tête ; travaillés dans les ponts, les portés et les figures tête en bas.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "flechisseurs_cervicaux_profonds",
+   "nom": "Fléchisseurs profonds du cou",
+   "latin": "Mm. longus colli et longus capitis",
+   "famille": "Cou",
+   "groupe": "gainage",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "profond",
+   "actions": "Maintien du menton rentré ; gainage de la nuque dans les creux (hollow) et les tractions.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "deltoide_anterieur",
+   "nom": "Deltoïde antérieur",
+   "latin": "M. deltoideus, pars clavicularis",
+   "famille": "Deltoïde",
+   "groupe": "épaules",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Élévation du bras vers l'avant, rotation interne ; moteur des poussées et des figures bras tendus.",
+   "note": null,
+   "regions": [
+    "face-deltoide_anterieur-d",
+    "face-deltoide_anterieur-g"
+   ]
+  },
+  {
+   "id": "deltoide_moyen",
+   "nom": "Deltoïde moyen",
+   "latin": "M. deltoideus, pars acromialis",
+   "famille": "Deltoïde",
+   "groupe": "épaules",
+   "vues": [
+    "face",
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Élévation du bras sur le côté ; poussées verticales, élévations latérales, équilibres.",
+   "note": null,
+   "regions": [
+    "face-deltoide_moyen-d",
+    "face-deltoide_moyen-g",
+    "dos-deltoide_moyen-d",
+    "dos-deltoide_moyen-g"
+   ]
+  },
+  {
+   "id": "deltoide_posterieur",
+   "nom": "Deltoïde postérieur",
+   "latin": "M. deltoideus, pars spinalis",
+   "famille": "Deltoïde",
+   "groupe": "épaules",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Recul du bras, rotation externe ; tirages horizontaux, oiseau, face pull.",
+   "note": null,
+   "regions": [
+    "dos-deltoide_posterieur-d",
+    "dos-deltoide_posterieur-g"
+   ]
+  },
+  {
+   "id": "supra_epineux",
+   "nom": "Supra-épineux",
+   "latin": "M. supraspinatus",
+   "famille": "Coiffe des rotateurs",
+   "groupe": "épaules",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "profond",
+   "actions": "Amorce l'élévation du bras et centre la tête de l'humérus ; sollicité dans toutes les élévations.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "infra_epineux",
+   "nom": "Infra-épineux",
+   "latin": "M. infraspinatus",
+   "famille": "Coiffe des rotateurs",
+   "groupe": "épaules",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Rotation externe du bras ; stabilise l'épaule dans les tirages, les dips et les figures.",
+   "note": null,
+   "regions": [
+    "dos-infra_epineux-d",
+    "dos-infra_epineux-g"
+   ]
+  },
+  {
+   "id": "petit_rond",
+   "nom": "Petit rond",
+   "latin": "M. teres minor",
+   "famille": "Coiffe des rotateurs",
+   "groupe": "épaules",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Rotation externe du bras avec l'infra-épineux ; stabilisation de l'épaule.",
+   "note": null,
+   "regions": [
+    "dos-petit_rond-d",
+    "dos-petit_rond-g"
+   ]
+  },
+  {
+   "id": "sous_scapulaire",
+   "nom": "Sous-scapulaire",
+   "latin": "M. subscapularis",
+   "famille": "Coiffe des rotateurs",
+   "groupe": "épaules",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "profond",
+   "actions": "Rotation interne du bras ; stabilise l'avant de l'épaule dans les poussées et le drapeau.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "trapeze_superieur",
+   "nom": "Trapèze supérieur",
+   "latin": "M. trapezius, pars descendens",
+   "famille": "Trapèze",
+   "groupe": "dos",
+   "vues": [
+    "face",
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Élévation et rotation vers le haut de l'omoplate ; haussements, portés, poussées au-dessus de la tête.",
+   "note": null,
+   "regions": [
+    "face-trapeze_superieur-d",
+    "face-trapeze_superieur-g",
+    "dos-trapeze_superieur-d",
+    "dos-trapeze_superieur-g"
+   ]
+  },
+  {
+   "id": "trapeze_moyen",
+   "nom": "Trapèze moyen",
+   "latin": "M. trapezius, pars transversa",
+   "famille": "Trapèze",
+   "groupe": "dos",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Rapprochement des omoplates ; tirages horizontaux et tenue du dos dans les squats et soulevés.",
+   "note": null,
+   "regions": [
+    "dos-trapeze_moyen-d",
+    "dos-trapeze_moyen-g"
+   ]
+  },
+  {
+   "id": "trapeze_inferieur",
+   "nom": "Trapèze inférieur",
+   "latin": "M. trapezius, pars ascendens",
+   "famille": "Trapèze",
+   "groupe": "dos",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Abaissement et rotation vers le haut de l'omoplate ; tirages verticaux, équilibre sur les mains, Y raises.",
+   "note": null,
+   "regions": [
+    "dos-trapeze_inferieur-d",
+    "dos-trapeze_inferieur-g"
+   ]
+  },
+  {
+   "id": "elevateur_scapula",
+   "nom": "Élévateur de la scapula",
+   "latin": "M. levator scapulae",
+   "famille": "Ceinture scapulaire",
+   "groupe": "dos",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "profond",
+   "actions": "Élévation de l'omoplate ; haussements et portés lourds.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "rhomboides",
+   "nom": "Rhomboïdes (grand et petit)",
+   "latin": "Mm. rhomboideus major et minor",
+   "famille": "Ceinture scapulaire",
+   "groupe": "dos",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "profond",
+   "actions": "Rapprochement et stabilisation des omoplates ; tirages, rowing, tenue de la posture.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "dentele_anterieur",
+   "nom": "Dentelé antérieur",
+   "latin": "M. serratus anterior",
+   "famille": "Ceinture scapulaire",
+   "groupe": "pectoraux",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Avancée et rotation vers le haut de l'omoplate ; pompes scapulaires, planche, poussées au-dessus de la tête.",
+   "note": null,
+   "regions": [
+    "face-dentele_anterieur-d",
+    "face-dentele_anterieur-g"
+   ]
+  },
+  {
+   "id": "petit_pectoral",
+   "nom": "Petit pectoral",
+   "latin": "M. pectoralis minor",
+   "famille": "Pectoraux",
+   "groupe": "pectoraux",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "profond",
+   "actions": "Abaissement et bascule de l'omoplate ; dips, pompes, respiration forcée.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "grand_pectoral_claviculaire",
+   "nom": "Grand pectoral, chef claviculaire",
+   "latin": "M. pectoralis major, pars clavicularis",
+   "famille": "Pectoraux",
+   "groupe": "pectoraux",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Élévation et rapprochement du bras vers l'avant ; poussées inclinées, dips serrés, planche.",
+   "note": null,
+   "regions": [
+    "face-grand_pectoral_claviculaire-d",
+    "face-grand_pectoral_claviculaire-g"
+   ]
+  },
+  {
+   "id": "grand_pectoral_sterno_costal",
+   "nom": "Grand pectoral, chef sterno-costal",
+   "latin": "M. pectoralis major, pars sternocostalis",
+   "famille": "Pectoraux",
+   "groupe": "pectoraux",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Rapprochement du bras devant le buste, abaissement du bras ; pompes, développés, dips, écartés.",
+   "note": null,
+   "regions": [
+    "face-grand_pectoral_sterno_costal-d",
+    "face-grand_pectoral_sterno_costal-g"
+   ]
+  },
+  {
+   "id": "grand_pectoral_abdominal",
+   "nom": "Grand pectoral, chef abdominal",
+   "latin": "M. pectoralis major, pars abdominalis",
+   "famille": "Pectoraux",
+   "groupe": "pectoraux",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Abaissement du bras vers le bas et l'avant ; dips, pompes déclinées, développé décliné.",
+   "note": null,
+   "regions": [
+    "face-grand_pectoral_abdominal-d",
+    "face-grand_pectoral_abdominal-g"
+   ]
+  },
+  {
+   "id": "grand_dorsal",
+   "nom": "Grand dorsal",
+   "latin": "M. latissimus dorsi",
+   "famille": "Dos",
+   "groupe": "dos",
+   "vues": [
+    "face",
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Abaissement et recul du bras, rotation interne ; tractions, tirages, dips, figures de levier.",
+   "note": null,
+   "regions": [
+    "face-grand_dorsal-d",
+    "face-grand_dorsal-g",
+    "dos-grand_dorsal-d",
+    "dos-grand_dorsal-g"
+   ]
+  },
+  {
+   "id": "grand_rond",
+   "nom": "Grand rond",
+   "latin": "M. teres major",
+   "famille": "Dos",
+   "groupe": "dos",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Assiste le grand dorsal : abaissement et recul du bras ; tractions et tirages.",
+   "note": null,
+   "regions": [
+    "dos-grand_rond-d",
+    "dos-grand_rond-g"
+   ]
+  },
+  {
+   "id": "biceps_chef_long",
+   "nom": "Biceps brachial, chef long",
+   "latin": "M. biceps brachii, caput longum",
+   "famille": "Biceps",
+   "groupe": "biceps",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Flexion du coude et supination ; curls, tractions supination, stabilise l'épaule bras tendu.",
+   "note": null,
+   "regions": [
+    "face-biceps_chef_long-d",
+    "face-biceps_chef_long-g"
+   ]
+  },
+  {
+   "id": "biceps_chef_court",
+   "nom": "Biceps brachial, chef court",
+   "latin": "M. biceps brachii, caput breve",
+   "famille": "Biceps",
+   "groupe": "biceps",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Flexion du coude et supination ; curls prise large ou bras devant, tirages supination.",
+   "note": null,
+   "regions": [
+    "face-biceps_chef_court-d",
+    "face-biceps_chef_court-g"
+   ]
+  },
+  {
+   "id": "brachial",
+   "nom": "Brachial",
+   "latin": "M. brachialis",
+   "famille": "Biceps",
+   "groupe": "biceps",
+   "vues": [
+    "face",
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Fléchisseur principal du coude quelle que soit la prise ; tractions, curls marteau et pronation.",
+   "note": null,
+   "regions": [
+    "face-brachial-d",
+    "face-brachial-g",
+    "dos-brachial-d",
+    "dos-brachial-g"
+   ]
+  },
+  {
+   "id": "coraco_brachial",
+   "nom": "Coraco-brachial",
+   "latin": "M. coracobrachialis",
+   "famille": "Biceps",
+   "groupe": "biceps",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "profond",
+   "actions": "Élévation du bras vers l'avant et rapprochement ; assiste les poussées et les figures bras tendus.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "triceps_chef_long",
+   "nom": "Triceps brachial, chef long",
+   "latin": "M. triceps brachii, caput longum",
+   "famille": "Triceps",
+   "groupe": "triceps",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Extension du coude et recul du bras ; dips, extensions bras au-dessus de la tête, pompes serrées.",
+   "note": null,
+   "regions": [
+    "dos-triceps_chef_long-d",
+    "dos-triceps_chef_long-g"
+   ]
+  },
+  {
+   "id": "triceps_chef_lateral",
+   "nom": "Triceps brachial, chef latéral",
+   "latin": "M. triceps brachii, caput laterale",
+   "famille": "Triceps",
+   "groupe": "triceps",
+   "vues": [
+    "face",
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Extension du coude ; toutes les poussées et les extensions à la poulie.",
+   "note": null,
+   "regions": [
+    "face-triceps_chef_lateral-d",
+    "face-triceps_chef_lateral-g",
+    "dos-triceps_chef_lateral-d",
+    "dos-triceps_chef_lateral-g"
+   ]
+  },
+  {
+   "id": "triceps_chef_medial",
+   "nom": "Triceps brachial, chef médial",
+   "latin": "M. triceps brachii, caput mediale",
+   "famille": "Triceps",
+   "groupe": "triceps",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Extension du coude, actif dès les charges légères ; poussées et extensions, fin d'extension.",
+   "note": null,
+   "regions": [
+    "dos-triceps_chef_medial-d",
+    "dos-triceps_chef_medial-g"
+   ]
+  },
+  {
+   "id": "ancone",
+   "nom": "Anconé",
+   "latin": "M. anconeus",
+   "famille": "Triceps",
+   "groupe": "triceps",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Assiste l'extension du coude et stabilise l'articulation dans les poussées.",
+   "note": null,
+   "regions": [
+    "dos-ancone-d",
+    "dos-ancone-g"
+   ]
+  },
+  {
+   "id": "brachio_radial",
+   "nom": "Brachio-radial",
+   "latin": "M. brachioradialis",
+   "famille": "Avant-bras",
+   "groupe": "avant-bras",
+   "vues": [
+    "face",
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Flexion du coude en prise neutre ou pronation ; curls marteau, tractions pronation, portés.",
+   "note": null,
+   "regions": [
+    "face-brachio_radial-d",
+    "face-brachio_radial-g",
+    "dos-brachio_radial-d",
+    "dos-brachio_radial-g"
+   ]
+  },
+  {
+   "id": "extenseurs_du_poignet",
+   "nom": "Extenseurs du poignet",
+   "latin": "Mm. extensor carpi radialis longus, brevis et ulnaris",
+   "famille": "Avant-bras",
+   "groupe": "avant-bras",
+   "vues": [
+    "face",
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Extension et stabilisation du poignet ; appuis mains à plat, extensions de poignet, équilibre sur les mains.",
+   "note": null,
+   "regions": [
+    "face-extenseurs_du_poignet-d",
+    "face-extenseurs_du_poignet-g",
+    "dos-extenseurs_du_poignet-d",
+    "dos-extenseurs_du_poignet-g"
+   ]
+  },
+  {
+   "id": "extenseurs_des_doigts",
+   "nom": "Extenseurs des doigts",
+   "latin": "M. extensor digitorum",
+   "famille": "Avant-bras",
+   "groupe": "avant-bras",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Ouverture des doigts ; équilibre de la préhension (extensions contre élastique).",
+   "note": null,
+   "regions": [
+    "dos-extenseurs_des_doigts-d",
+    "dos-extenseurs_des_doigts-g"
+   ]
+  },
+  {
+   "id": "flechisseurs_du_poignet",
+   "nom": "Fléchisseurs du poignet",
+   "latin": "Mm. flexor carpi radialis, palmaris longus, flexor carpi ulnaris",
+   "famille": "Avant-bras",
+   "groupe": "avant-bras",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Flexion du poignet ; curls de poignet, prise en faux grip, tenue de la barre.",
+   "note": null,
+   "regions": [
+    "face-flechisseurs_du_poignet-d",
+    "face-flechisseurs_du_poignet-g"
+   ]
+  },
+  {
+   "id": "flechisseurs_superficiels_des_doigts",
+   "nom": "Fléchisseur superficiel des doigts",
+   "latin": "M. flexor digitorum superficialis",
+   "famille": "Avant-bras",
+   "groupe": "avant-bras",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Fermeture des doigts ; préhension sur barre, anneaux et haltères.",
+   "note": null,
+   "regions": [
+    "face-flechisseurs_superficiels_des_doigts-d",
+    "face-flechisseurs_superficiels_des_doigts-g"
+   ]
+  },
+  {
+   "id": "flechisseurs_profonds_des_doigts",
+   "nom": "Fléchisseurs profonds des doigts et du pouce",
+   "latin": "Mm. flexor digitorum profundus et flexor pollicis longus",
+   "famille": "Avant-bras",
+   "groupe": "avant-bras",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "profond",
+   "actions": "Serrage des doigts ; suspensions, portés lourds, pince de préhension.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "rond_pronateur",
+   "nom": "Rond pronateur",
+   "latin": "M. pronator teres",
+   "famille": "Avant-bras",
+   "groupe": "avant-bras",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Pronation de l'avant-bras et assistance à la flexion du coude ; tractions pronation, curls inversés.",
+   "note": null,
+   "regions": [
+    "face-rond_pronateur-d",
+    "face-rond_pronateur-g"
+   ]
+  },
+  {
+   "id": "supinateur",
+   "nom": "Supinateur",
+   "latin": "M. supinator",
+   "famille": "Avant-bras",
+   "groupe": "avant-bras",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "profond",
+   "actions": "Supination de l'avant-bras ; curls supination et rotations du poignet.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "carre_pronateur",
+   "nom": "Carré pronateur",
+   "latin": "M. pronator quadratus",
+   "famille": "Avant-bras",
+   "groupe": "avant-bras",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "profond",
+   "actions": "Pronation de l'avant-bras ; rotations du poignet, tenue de la barre en pronation.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "muscles_intrinseques_main",
+   "nom": "Muscles intrinsèques de la main (éminences thénar et hypothénar, interosseux)",
+   "latin": "Mm. thenaris, hypothenaris, interossei",
+   "famille": "Main",
+   "groupe": "avant-bras",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "profond",
+   "actions": "Serrage fin et opposition du pouce ; pince de préhension, prise sur barre épaisse, suspensions.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "droit_abdomen",
+   "nom": "Droit de l'abdomen",
+   "latin": "M. rectus abdominis",
+   "famille": "Abdominaux",
+   "groupe": "gainage",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Flexion du tronc et bascule du bassin ; creux (hollow), crunchs, relevés de jambes, gainage anti-extension.",
+   "note": null,
+   "regions": [
+    "face-droit_abdomen-d",
+    "face-droit_abdomen-g"
+   ]
+  },
+  {
+   "id": "oblique_externe",
+   "nom": "Oblique externe",
+   "latin": "M. obliquus externus abdominis",
+   "famille": "Abdominaux",
+   "groupe": "gainage",
+   "vues": [
+    "face",
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Rotation et inclinaison du tronc, gainage anti-rotation ; essuie-glaces, planche latérale, drapeau.",
+   "note": null,
+   "regions": [
+    "face-oblique_externe-d",
+    "face-oblique_externe-g",
+    "dos-oblique_externe-d",
+    "dos-oblique_externe-g"
+   ]
+  },
+  {
+   "id": "oblique_interne",
+   "nom": "Oblique interne",
+   "latin": "M. obliquus internus abdominis",
+   "famille": "Abdominaux",
+   "groupe": "gainage",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "profond",
+   "actions": "Rotation et inclinaison du tronc du même côté ; gainage anti-rotation et portés unilatéraux.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "transverse_abdomen",
+   "nom": "Transverse de l'abdomen",
+   "latin": "M. transversus abdominis",
+   "famille": "Abdominaux",
+   "groupe": "gainage",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "profond",
+   "actions": "Serrage de la ceinture abdominale ; gainage sous charge, respiration de bracing.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "carre_des_lombes",
+   "nom": "Carré des lombes",
+   "latin": "M. quadratus lumborum",
+   "famille": "Rachis",
+   "groupe": "gainage",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "profond",
+   "actions": "Inclinaison du tronc et stabilisation latérale du bassin ; portés unilatéraux, planche latérale.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "erecteurs_lombaires",
+   "nom": "Érecteurs du rachis, région lombaire",
+   "latin": "M. erector spinae (pars lumbalis)",
+   "famille": "Rachis",
+   "groupe": "dos",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Extension et maintien du bas du dos ; soulevés de terre, good morning, extensions lombaires, tenue du dos plat.",
+   "note": null,
+   "regions": [
+    "dos-erecteurs_lombaires-d",
+    "dos-erecteurs_lombaires-g"
+   ]
+  },
+  {
+   "id": "erecteurs_thoraciques",
+   "nom": "Érecteurs du rachis, région thoracique",
+   "latin": "M. erector spinae (pars thoracica)",
+   "famille": "Rachis",
+   "groupe": "dos",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "profond",
+   "actions": "Maintien du haut du dos droit sous charge ; squats avant, tirages, portés.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "multifides",
+   "nom": "Multifides",
+   "latin": "Mm. multifidi",
+   "famille": "Rachis",
+   "groupe": "dos",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "profond",
+   "actions": "Stabilisation fine des vertèbres ; bird dog, gainages, mouvements de mobilité du rachis.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "diaphragme",
+   "nom": "Diaphragme",
+   "latin": "Diaphragma",
+   "famille": "Respiration",
+   "groupe": "gainage",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "profond",
+   "actions": "Muscle principal de l'inspiration ; respiration de bracing sous charge et exercices de respiration.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "plancher_pelvien",
+   "nom": "Muscles du plancher pelvien",
+   "latin": "Mm. diaphragmatis pelvis",
+   "famille": "Respiration",
+   "groupe": "gainage",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "profond",
+   "actions": "Soutien du bassin sous pression abdominale ; gainage respiratoire, reprise après une longue pause.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "grand_psoas",
+   "nom": "Grand psoas",
+   "latin": "M. psoas major",
+   "famille": "Fléchisseurs de hanche",
+   "groupe": "quadriceps",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "profond",
+   "actions": "Flexion de la hanche ; relevés de jambes, L-sit, montées de genoux, course.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "iliaque",
+   "nom": "Iliaque",
+   "latin": "M. iliacus",
+   "famille": "Fléchisseurs de hanche",
+   "groupe": "quadriceps",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "profond",
+   "actions": "Flexion de la hanche avec le psoas ; relevés de jambes et figures en équerre.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "tenseur_fascia_lata",
+   "nom": "Tenseur du fascia lata",
+   "latin": "M. tensor fasciae latae",
+   "famille": "Fléchisseurs de hanche",
+   "groupe": "fessiers",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Flexion et abduction de la hanche, rotation interne ; stabilise le genou dans les appuis unipodaux.",
+   "note": null,
+   "regions": [
+    "face-tenseur_fascia_lata-d",
+    "face-tenseur_fascia_lata-g"
+   ]
+  },
+  {
+   "id": "sartorius",
+   "nom": "Sartorius",
+   "latin": "M. sartorius",
+   "famille": "Fléchisseurs de hanche",
+   "groupe": "quadriceps",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Flexion, abduction et rotation externe de la hanche ; position en tailleur, montées de genoux.",
+   "note": null,
+   "regions": [
+    "face-sartorius-d",
+    "face-sartorius-g"
+   ]
+  },
+  {
+   "id": "grand_fessier",
+   "nom": "Grand fessier",
+   "latin": "M. gluteus maximus",
+   "famille": "Fessiers",
+   "groupe": "fessiers",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Extension et rotation externe de la hanche ; squats, soulevés, ponts, fentes, sprints, montées.",
+   "note": null,
+   "regions": [
+    "dos-grand_fessier-d",
+    "dos-grand_fessier-g"
+   ]
+  },
+  {
+   "id": "moyen_fessier",
+   "nom": "Moyen fessier",
+   "latin": "M. gluteus medius",
+   "famille": "Fessiers",
+   "groupe": "fessiers",
+   "vues": [
+    "face",
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Abduction de la hanche et maintien du bassin sur un pied ; fentes, pistols, marches latérales.",
+   "note": null,
+   "regions": [
+    "face-moyen_fessier-d",
+    "face-moyen_fessier-g",
+    "dos-moyen_fessier-d",
+    "dos-moyen_fessier-g"
+   ]
+  },
+  {
+   "id": "petit_fessier",
+   "nom": "Petit fessier",
+   "latin": "M. gluteus minimus",
+   "famille": "Fessiers",
+   "groupe": "fessiers",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "profond",
+   "actions": "Abduction et rotation interne de la hanche ; stabilise le bassin sous le moyen fessier.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "rotateurs_lateraux_hanche",
+   "nom": "Rotateurs latéraux de la hanche (piriforme, obturateurs, jumeaux, carré fémoral)",
+   "latin": "Mm. piriformis, obturatorii, gemelli, quadratus femoris",
+   "famille": "Fessiers",
+   "groupe": "fessiers",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "profond",
+   "actions": "Rotation externe de la hanche ; clamshells, squats profonds, stabilité du bassin.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "pectine",
+   "nom": "Pectiné",
+   "latin": "M. pectineus",
+   "famille": "Adducteurs",
+   "groupe": "quadriceps",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Adduction et flexion de la hanche ; squats larges, fentes latérales.",
+   "note": null,
+   "regions": [
+    "face-pectine-d",
+    "face-pectine-g"
+   ]
+  },
+  {
+   "id": "long_adducteur",
+   "nom": "Long adducteur",
+   "latin": "M. adductor longus",
+   "famille": "Adducteurs",
+   "groupe": "quadriceps",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Adduction de la hanche ; squat sumo, fentes latérales, Copenhague, adducteurs machine.",
+   "note": null,
+   "regions": [
+    "face-long_adducteur-d",
+    "face-long_adducteur-g"
+   ]
+  },
+  {
+   "id": "court_adducteur",
+   "nom": "Court adducteur",
+   "latin": "M. adductor brevis",
+   "famille": "Adducteurs",
+   "groupe": "quadriceps",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "profond",
+   "actions": "Adduction et flexion de la hanche ; mêmes exercices que le long adducteur.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "grand_adducteur",
+   "nom": "Grand adducteur",
+   "latin": "M. adductor magnus",
+   "famille": "Adducteurs",
+   "groupe": "ischios",
+   "vues": [
+    "face",
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Adduction et extension de la hanche ; squats profonds, soulevés sumo, fentes, Copenhague.",
+   "note": null,
+   "regions": [
+    "face-grand_adducteur-d",
+    "face-grand_adducteur-g",
+    "dos-grand_adducteur-d",
+    "dos-grand_adducteur-g"
+   ]
+  },
+  {
+   "id": "gracile",
+   "nom": "Gracile",
+   "latin": "M. gracilis",
+   "famille": "Adducteurs",
+   "groupe": "quadriceps",
+   "vues": [
+    "face",
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Adduction de la hanche et assistance à la flexion du genou ; Copenhague, fentes latérales.",
+   "note": null,
+   "regions": [
+    "face-gracile-d",
+    "face-gracile-g",
+    "dos-gracile-d",
+    "dos-gracile-g"
+   ]
+  },
+  {
+   "id": "droit_femoral",
+   "nom": "Droit fémoral",
+   "latin": "M. rectus femoris",
+   "famille": "Quadriceps",
+   "groupe": "quadriceps",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Extension du genou et flexion de la hanche ; squats, fentes, relevés de jambes, sprints.",
+   "note": null,
+   "regions": [
+    "face-droit_femoral-d",
+    "face-droit_femoral-g"
+   ]
+  },
+  {
+   "id": "vaste_lateral",
+   "nom": "Vaste latéral",
+   "latin": "M. vastus lateralis",
+   "famille": "Quadriceps",
+   "groupe": "quadriceps",
+   "vues": [
+    "face",
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Extension du genou ; squats, presse, pistols, sissy squats.",
+   "note": null,
+   "regions": [
+    "face-vaste_lateral-d",
+    "face-vaste_lateral-g",
+    "dos-vaste_lateral-d",
+    "dos-vaste_lateral-g"
+   ]
+  },
+  {
+   "id": "vaste_medial",
+   "nom": "Vaste médial",
+   "latin": "M. vastus medialis",
+   "famille": "Quadriceps",
+   "groupe": "quadriceps",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Extension du genou, fin de course et stabilité de la rotule ; squats profonds, fentes, extensions.",
+   "note": null,
+   "regions": [
+    "face-vaste_medial-d",
+    "face-vaste_medial-g"
+   ]
+  },
+  {
+   "id": "vaste_intermediaire",
+   "nom": "Vaste intermédiaire",
+   "latin": "M. vastus intermedius",
+   "famille": "Quadriceps",
+   "groupe": "quadriceps",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "profond",
+   "actions": "Extension du genou ; tous les squats et fentes.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "biceps_femoral",
+   "nom": "Biceps fémoral",
+   "latin": "M. biceps femoris",
+   "famille": "Ischio-jambiers",
+   "groupe": "ischios",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Flexion du genou et extension de la hanche ; nordic curl, soulevé roumain, pont, leg curl.",
+   "note": null,
+   "regions": [
+    "dos-biceps_femoral-d",
+    "dos-biceps_femoral-g"
+   ]
+  },
+  {
+   "id": "biceps_femoral_chef_court",
+   "nom": "Biceps fémoral, chef court",
+   "latin": "M. biceps femoris, caput breve",
+   "famille": "Ischio-jambiers",
+   "groupe": "ischios",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "profond",
+   "actions": "Flexion du genou seulement (ne croise pas la hanche) ; leg curl, nordic curl.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "semi_tendineux",
+   "nom": "Semi-tendineux",
+   "latin": "M. semitendinosus",
+   "famille": "Ischio-jambiers",
+   "groupe": "ischios",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Flexion du genou et extension de la hanche ; curls, ponts, good morning.",
+   "note": null,
+   "regions": [
+    "dos-semi_tendineux-d",
+    "dos-semi_tendineux-g"
+   ]
+  },
+  {
+   "id": "semi_membraneux",
+   "nom": "Semi-membraneux",
+   "latin": "M. semimembranosus",
+   "famille": "Ischio-jambiers",
+   "groupe": "ischios",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Flexion du genou et extension de la hanche ; soulevés jambes tendues, curls.",
+   "note": null,
+   "regions": [
+    "dos-semi_membraneux-d",
+    "dos-semi_membraneux-g"
+   ]
+  },
+  {
+   "id": "poplite",
+   "nom": "Poplité",
+   "latin": "M. popliteus",
+   "famille": "Ischio-jambiers",
+   "groupe": "ischios",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "profond",
+   "actions": "Déverrouillage et stabilisation du genou ; appuis unipodaux et squats profonds.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "gastrocnemien_medial",
+   "nom": "Gastrocnémien, chef médial",
+   "latin": "M. gastrocnemius, caput mediale",
+   "famille": "Mollets",
+   "groupe": "mollets",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Extension de la cheville genou tendu, assistance à la flexion du genou ; mollets debout, sauts, corde.",
+   "note": null,
+   "regions": [
+    "dos-gastrocnemien_medial-d",
+    "dos-gastrocnemien_medial-g"
+   ]
+  },
+  {
+   "id": "gastrocnemien_lateral",
+   "nom": "Gastrocnémien, chef latéral",
+   "latin": "M. gastrocnemius, caput laterale",
+   "famille": "Mollets",
+   "groupe": "mollets",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Extension de la cheville genou tendu ; mollets debout, sauts, sprints.",
+   "note": null,
+   "regions": [
+    "dos-gastrocnemien_lateral-d",
+    "dos-gastrocnemien_lateral-g"
+   ]
+  },
+  {
+   "id": "soleaire",
+   "nom": "Soléaire",
+   "latin": "M. soleus",
+   "famille": "Mollets",
+   "groupe": "mollets",
+   "vues": [
+    "face",
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Extension de la cheville genou fléchi, maintien debout ; mollets assis, marche, course.",
+   "note": null,
+   "regions": [
+    "face-soleaire-d",
+    "face-soleaire-g",
+    "dos-soleaire-d",
+    "dos-soleaire-g"
+   ]
+  },
+  {
+   "id": "tibial_anterieur",
+   "nom": "Tibial antérieur",
+   "latin": "M. tibialis anterior",
+   "famille": "Jambe antérieure",
+   "groupe": "mollets",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Relevé du pied (flexion dorsale) ; tibialis raises, réceptions, marche sur les talons.",
+   "note": null,
+   "regions": [
+    "face-tibial_anterieur-d",
+    "face-tibial_anterieur-g"
+   ]
+  },
+  {
+   "id": "long_extenseur_des_orteils",
+   "nom": "Long extenseur des orteils et de l'hallux",
+   "latin": "Mm. extensor digitorum longus et extensor hallucis longus",
+   "famille": "Jambe antérieure",
+   "groupe": "mollets",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Relevé des orteils et du pied ; réceptions, tibialis raises.",
+   "note": null,
+   "regions": [
+    "face-long_extenseur_des_orteils-d",
+    "face-long_extenseur_des_orteils-g"
+   ]
+  },
+  {
+   "id": "fibulaires",
+   "nom": "Fibulaires (long et court)",
+   "latin": "Mm. fibularis longus et brevis",
+   "famille": "Jambe latérale",
+   "groupe": "mollets",
+   "vues": [
+    "face",
+    "dos"
+   ],
+   "profondeur": "superficiel",
+   "actions": "Éversion du pied et stabilité latérale de la cheville ; appuis unipodaux, sauts latéraux.",
+   "note": null,
+   "regions": [
+    "face-fibulaires-d",
+    "face-fibulaires-g",
+    "dos-fibulaires-d",
+    "dos-fibulaires-g"
+   ]
+  },
+  {
+   "id": "tibial_posterieur",
+   "nom": "Tibial postérieur",
+   "latin": "M. tibialis posterior",
+   "famille": "Jambe postérieure profonde",
+   "groupe": "mollets",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "profond",
+   "actions": "Inversion du pied et soutien de la voûte ; mollets, équilibres, marche.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "flechisseurs_profonds_des_orteils",
+   "nom": "Long fléchisseur des orteils et de l'hallux",
+   "latin": "Mm. flexor digitorum longus et flexor hallucis longus",
+   "famille": "Jambe postérieure profonde",
+   "groupe": "mollets",
+   "vues": [
+    "dos"
+   ],
+   "profondeur": "profond",
+   "actions": "Flexion des orteils et assistance à l'extension de la cheville ; mollets sur marche, poussée finale de la foulée.",
+   "note": null,
+   "regions": []
+  },
+  {
+   "id": "muscles_intrinseques_pied",
+   "nom": "Muscles intrinsèques du pied",
+   "latin": "Mm. plantae pedis",
+   "famille": "Pied",
+   "groupe": "mollets",
+   "vues": [
+    "face"
+   ],
+   "profondeur": "profond",
+   "actions": "Soutien de la voûte et agrippement des orteils ; équilibres, pied court, marche pieds nus.",
+   "note": null,
+   "regions": []
+  }
+ ]
+}

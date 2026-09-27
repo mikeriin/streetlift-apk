@@ -1,0 +1,2974 @@
+{
+ "version": "2.0.0",
+ "description": "Arbres de progression : chaque étape indique le seuil mesurable pour passer à la suivante ; les régressions sont les arêtes inverses.",
+ "entrees_debutant": [
+  "cercles-de-bras",
+  "dead-bug",
+  "dips-sur-banc-genoux-flechis",
+  "etirements-flechisseurs-de-hanche",
+  "mobilisation-cheville-genou-au-mur",
+  "pike-hold-v-inverse",
+  "planche-laterale-sur-les-genoux",
+  "planche-sur-les-genoux",
+  "pompes-au-mur",
+  "pont-fessier-au-sol",
+  "squat-assiste-appui",
+  "suspension-passive-pieds-au-sol"
+ ],
+ "chaines": [
+  {
+   "id": "pompes",
+   "titre": "Pompes : du mur à la pompe à un bras",
+   "etapes": [
+    {
+     "id": "pompes-au-mur",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 15,
+      "par_cote": false,
+      "texte": "3 × 15 propres"
+     },
+     "suivant": "pompes-inclinees-mains-surelevees"
+    },
+    {
+     "id": "pompes-inclinees-mains-surelevees",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 12,
+      "par_cote": false,
+      "texte": "3 × 12 propres"
+     },
+     "suivant": "pompes-a-genoux"
+    },
+    {
+     "id": "pompes-a-genoux",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 12,
+      "par_cote": false,
+      "texte": "3 × 12 propres"
+     },
+     "suivant": "pompes"
+    },
+    {
+     "id": "pompes",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 12,
+      "par_cote": false,
+      "texte": "3 × 12 propres"
+     },
+     "suivant": "pompes-archer"
+    },
+    {
+     "id": "pompes-archer",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 6,
+      "par_cote": true,
+      "texte": "3 × 6 par côté propres"
+     },
+     "suivant": "pompes-une-main-progression"
+    },
+    {
+     "id": "pompes-une-main-progression",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 5,
+      "par_cote": true,
+      "texte": "3 × 5 par côté propres"
+     },
+     "suivant": "pompe-a-un-bras"
+    },
+    {
+     "id": "pompe-a-un-bras",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "pompes_lestees",
+   "titre": "Pompes lestées",
+   "etapes": [
+    {
+     "id": "pompes",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 20,
+      "par_cote": false,
+      "texte": "3 × 20 propres"
+     },
+     "suivant": "pompes-lestees"
+    },
+    {
+     "id": "pompes-lestees",
+     "seuil_passage": {
+      "lest_pct_poids_de_corps": 20,
+      "repetitions": 8,
+      "texte": "8 répétition(s) propres avec un lest de 20 % du poids de corps"
+     },
+     "suivant": "pompes-lestees-lourdes"
+    },
+    {
+     "id": "pompes-lestees-lourdes",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "pompes_triceps",
+   "titre": "Pompes orientées triceps",
+   "etapes": [
+    {
+     "id": "pompes",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 15,
+      "par_cote": false,
+      "texte": "3 × 15 propres"
+     },
+     "suivant": "pompes-diamant"
+    },
+    {
+     "id": "pompes-diamant",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 12,
+      "par_cote": false,
+      "texte": "3 × 12 propres"
+     },
+     "suivant": "pompes-diamant-surelevees"
+    },
+    {
+     "id": "pompes-diamant-surelevees",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "tractions",
+   "titre": "Tractions : de la suspension aux tractions lestées",
+   "etapes": [
+    {
+     "id": "suspension-passive-pieds-au-sol",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 30,
+      "par_cote": false,
+      "texte": "3 × 30 s tenues propres"
+     },
+     "suivant": "dead-hang"
+    },
+    {
+     "id": "dead-hang",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 30,
+      "par_cote": false,
+      "texte": "3 × 30 s tenues propres"
+     },
+     "suivant": "scapular-pull-ups"
+    },
+    {
+     "id": "scapular-pull-ups",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 10,
+      "par_cote": false,
+      "texte": "3 × 10 propres"
+     },
+     "suivant": "rowing-australien-barre-haute"
+    },
+    {
+     "id": "rowing-australien-barre-haute",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 12,
+      "par_cote": false,
+      "texte": "3 × 12 propres"
+     },
+     "suivant": "australian-pull-ups-rows-barre-basse"
+    },
+    {
+     "id": "australian-pull-ups-rows-barre-basse",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 12,
+      "par_cote": false,
+      "texte": "3 × 12 propres"
+     },
+     "suivant": "traction-assistee-elastique"
+    },
+    {
+     "id": "traction-assistee-elastique",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 8,
+      "par_cote": false,
+      "texte": "3 × 8 propres"
+     },
+     "suivant": "traction-negative-lente"
+    },
+    {
+     "id": "traction-negative-lente",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 5,
+      "par_cote": false,
+      "texte": "3 × 5 propres"
+     },
+     "suivant": "traction-pronation"
+    },
+    {
+     "id": "traction-pronation",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 10,
+      "par_cote": false,
+      "texte": "3 × 10 propres"
+     },
+     "suivant": "traction-lestee"
+    },
+    {
+     "id": "traction-lestee",
+     "seuil_passage": {
+      "lest_pct_poids_de_corps": 25,
+      "repetitions": 5,
+      "texte": "5 répétition(s) propres avec un lest de 25 % du poids de corps"
+     },
+     "suivant": "traction-lestee-lourde"
+    },
+    {
+     "id": "traction-lestee-lourde",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "tractions_un_bras",
+   "titre": "Tractions : vers la traction à un bras",
+   "etapes": [
+    {
+     "id": "traction-pronation",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 12,
+      "par_cote": false,
+      "texte": "3 × 12 propres"
+     },
+     "suivant": "traction-poitrine-barre"
+    },
+    {
+     "id": "traction-poitrine-barre",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 8,
+      "par_cote": false,
+      "texte": "3 × 8 propres"
+     },
+     "suivant": "traction-archer"
+    },
+    {
+     "id": "traction-archer",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 5,
+      "par_cote": true,
+      "texte": "3 × 5 par côté propres"
+     },
+     "suivant": "traction-une-main-negative"
+    },
+    {
+     "id": "traction-une-main-negative",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 3,
+      "par_cote": true,
+      "texte": "3 × 3 par côté propres"
+     },
+     "suivant": "traction-une-main-assistee"
+    },
+    {
+     "id": "traction-une-main-assistee",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "dips",
+   "titre": "Dips : du banc aux dips lestés",
+   "etapes": [
+    {
+     "id": "dips-sur-banc-genoux-flechis",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 12,
+      "par_cote": false,
+      "texte": "3 × 12 propres"
+     },
+     "suivant": "support-hold-aux-barres"
+    },
+    {
+     "id": "support-hold-aux-barres",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 30,
+      "par_cote": false,
+      "texte": "3 × 30 s tenues propres"
+     },
+     "suivant": "dips-sur-banc-triceps"
+    },
+    {
+     "id": "dips-sur-banc-triceps",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 15,
+      "par_cote": false,
+      "texte": "3 × 15 propres"
+     },
+     "suivant": "dips-assistes-elastique"
+    },
+    {
+     "id": "dips-assistes-elastique",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 8,
+      "par_cote": false,
+      "texte": "3 × 8 propres"
+     },
+     "suivant": "dips-negatifs"
+    },
+    {
+     "id": "dips-negatifs",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 5,
+      "par_cote": false,
+      "texte": "3 × 5 propres"
+     },
+     "suivant": "dips"
+    },
+    {
+     "id": "dips",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 12,
+      "par_cote": false,
+      "texte": "3 × 12 propres"
+     },
+     "suivant": "dips-lestes"
+    },
+    {
+     "id": "dips-lestes",
+     "seuil_passage": {
+      "lest_pct_poids_de_corps": 30,
+      "repetitions": 5,
+      "texte": "5 répétition(s) propres avec un lest de 30 % du poids de corps"
+     },
+     "suivant": "dips-lestes-lourds"
+    },
+    {
+     "id": "dips-lestes-lourds",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "squat",
+   "titre": "Squat : du squat assisté au pistol",
+   "etapes": [
+    {
+     "id": "squat-assiste-appui",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 15,
+      "par_cote": false,
+      "texte": "3 × 15 propres"
+     },
+     "suivant": "squat-sur-chaise"
+    },
+    {
+     "id": "squat-sur-chaise",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 15,
+      "par_cote": false,
+      "texte": "3 × 15 propres"
+     },
+     "suivant": "squat-au-poids-de-corps"
+    },
+    {
+     "id": "squat-au-poids-de-corps",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 20,
+      "par_cote": false,
+      "texte": "3 × 20 propres"
+     },
+     "suivant": "fente-statique-split-squat"
+    },
+    {
+     "id": "fente-statique-split-squat",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 12,
+      "par_cote": true,
+      "texte": "3 × 12 par côté propres"
+     },
+     "suivant": "fentes-bulgares"
+    },
+    {
+     "id": "fentes-bulgares",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 10,
+      "par_cote": true,
+      "texte": "3 × 10 par côté propres"
+     },
+     "suivant": "pistol-squat-assiste"
+    },
+    {
+     "id": "pistol-squat-assiste",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 6,
+      "par_cote": true,
+      "texte": "3 × 6 par côté propres"
+     },
+     "suivant": "pistol-squat-sur-box"
+    },
+    {
+     "id": "pistol-squat-sur-box",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 5,
+      "par_cote": true,
+      "texte": "3 × 5 par côté propres"
+     },
+     "suivant": "pistol-squat"
+    },
+    {
+     "id": "pistol-squat",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 5,
+      "par_cote": true,
+      "texte": "3 × 5 par côté propres"
+     },
+     "suivant": "pistol-squat-leste"
+    },
+    {
+     "id": "pistol-squat-leste",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "squat_crevette",
+   "titre": "Squat sur une jambe, variante crevette",
+   "etapes": [
+    {
+     "id": "fentes-bulgares",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 12,
+      "par_cote": true,
+      "texte": "3 × 12 par côté propres"
+     },
+     "suivant": "skater-squat"
+    },
+    {
+     "id": "skater-squat",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 6,
+      "par_cote": true,
+      "texte": "3 × 6 par côté propres"
+     },
+     "suivant": "shrimp-squat"
+    },
+    {
+     "id": "shrimp-squat",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "back_squat",
+   "titre": "Squat chargé : vers le back squat",
+   "etapes": [
+    {
+     "id": "squat-au-poids-de-corps",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 20,
+      "par_cote": false,
+      "texte": "3 × 20 propres"
+     },
+     "suivant": "squat-gobelet"
+    },
+    {
+     "id": "squat-gobelet",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 10,
+      "par_cote": false,
+      "texte": "3 × 10 propres"
+     },
+     "suivant": "box-squat"
+    },
+    {
+     "id": "box-squat",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 8,
+      "par_cote": false,
+      "texte": "3 × 8 propres"
+     },
+     "suivant": "back-squat"
+    },
+    {
+     "id": "back-squat",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "charniere",
+   "titre": "Charnière de hanche : du pont fessier au soulevé de terre roumain",
+   "etapes": [
+    {
+     "id": "pont-fessier-au-sol",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 15,
+      "par_cote": false,
+      "texte": "3 × 15 propres"
+     },
+     "suivant": "charniere-de-hanche-au-baton"
+    },
+    {
+     "id": "charniere-de-hanche-au-baton",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 10,
+      "par_cote": false,
+      "texte": "3 × 10 propres"
+     },
+     "suivant": "pont-fessier-une-jambe"
+    },
+    {
+     "id": "pont-fessier-une-jambe",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 12,
+      "par_cote": true,
+      "texte": "3 × 12 par côté propres"
+     },
+     "suivant": "hip-thrust"
+    },
+    {
+     "id": "hip-thrust",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 10,
+      "par_cote": false,
+      "texte": "3 × 10 propres"
+     },
+     "suivant": "souleve-de-terre-roumain-halteres"
+    },
+    {
+     "id": "souleve-de-terre-roumain-halteres",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 10,
+      "par_cote": false,
+      "texte": "3 × 10 propres"
+     },
+     "suivant": "souleve-de-terre-roumain"
+    },
+    {
+     "id": "souleve-de-terre-roumain",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "gainage_ventral",
+   "titre": "Gainage anti-extension : de la planche à la roue debout",
+   "etapes": [
+    {
+     "id": "planche-sur-les-genoux",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 30,
+      "par_cote": false,
+      "texte": "3 × 30 s tenues propres"
+     },
+     "suivant": "planche-gainage"
+    },
+    {
+     "id": "planche-gainage",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 45,
+      "par_cote": false,
+      "texte": "3 × 45 s tenues propres"
+     },
+     "suivant": "planche-rkc-coudes"
+    },
+    {
+     "id": "planche-rkc-coudes",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 20,
+      "par_cote": false,
+      "texte": "3 × 20 s tenues propres"
+     },
+     "suivant": "body-saw-sliders"
+    },
+    {
+     "id": "body-saw-sliders",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 10,
+      "par_cote": false,
+      "texte": "3 × 10 propres"
+     },
+     "suivant": "ab-wheel-a-genoux-amplitude-courte"
+    },
+    {
+     "id": "ab-wheel-a-genoux-amplitude-courte",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 10,
+      "par_cote": false,
+      "texte": "3 × 10 propres"
+     },
+     "suivant": "ab-wheel"
+    },
+    {
+     "id": "ab-wheel",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 10,
+      "par_cote": false,
+      "texte": "3 × 10 propres"
+     },
+     "suivant": "ab-wheel-debout"
+    },
+    {
+     "id": "ab-wheel-debout",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "gainage_creux",
+   "titre": "Gainage creux : du dead bug au dragon flag",
+   "etapes": [
+    {
+     "id": "dead-bug",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 10,
+      "par_cote": true,
+      "texte": "3 × 10 par côté propres"
+     },
+     "suivant": "hollow-body-groupe"
+    },
+    {
+     "id": "hollow-body-groupe",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 30,
+      "par_cote": false,
+      "texte": "3 × 30 s tenues propres"
+     },
+     "suivant": "hollow-body-hold"
+    },
+    {
+     "id": "hollow-body-hold",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 30,
+      "par_cote": false,
+      "texte": "3 × 30 s tenues propres"
+     },
+     "suivant": "hollow-rocks"
+    },
+    {
+     "id": "hollow-rocks",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 15,
+      "par_cote": false,
+      "texte": "3 × 15 propres"
+     },
+     "suivant": "dragon-flag-progression"
+    },
+    {
+     "id": "dragon-flag-progression",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 5,
+      "par_cote": false,
+      "texte": "3 × 5 propres"
+     },
+     "suivant": "dragon-flag-negatif"
+    },
+    {
+     "id": "dragon-flag-negatif",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 5,
+      "par_cote": false,
+      "texte": "3 × 5 propres"
+     },
+     "suivant": "dragon-flag-complet"
+    },
+    {
+     "id": "dragon-flag-complet",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "gainage_lateral",
+   "titre": "Gainage latéral",
+   "etapes": [
+    {
+     "id": "planche-laterale-sur-les-genoux",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 30,
+      "par_cote": true,
+      "texte": "3 × 30 s par côté tenues propres"
+     },
+     "suivant": "planche-laterale"
+    },
+    {
+     "id": "planche-laterale",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 45,
+      "par_cote": true,
+      "texte": "3 × 45 s par côté tenues propres"
+     },
+     "suivant": "copenhagen-plank"
+    },
+    {
+     "id": "copenhagen-plank",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "muscle_up",
+   "titre": "Muscle-up",
+   "etapes": [
+    {
+     "id": "traction-pronation",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 10,
+      "par_cote": false,
+      "texte": "3 × 10 propres"
+     },
+     "suivant": "traction-poitrine-barre"
+    },
+    {
+     "id": "traction-poitrine-barre",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 6,
+      "par_cote": false,
+      "texte": "3 × 6 propres"
+     },
+     "suivant": "transitions-de-muscle-up-a-l-elastique"
+    },
+    {
+     "id": "transitions-de-muscle-up-a-l-elastique",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 5,
+      "par_cote": false,
+      "texte": "3 × 5 propres"
+     },
+     "suivant": "negatifs-de-muscle-up"
+    },
+    {
+     "id": "negatifs-de-muscle-up",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 3,
+      "par_cote": false,
+      "texte": "3 × 3 propres"
+     },
+     "suivant": "tractions-explosives-poitrine-barre"
+    },
+    {
+     "id": "tractions-explosives-poitrine-barre",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 5,
+      "par_cote": false,
+      "texte": "3 × 5 propres"
+     },
+     "suivant": "muscle-up-kipping"
+    },
+    {
+     "id": "muscle-up-kipping",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 3,
+      "par_cote": false,
+      "texte": "3 × 3 propres"
+     },
+     "suivant": "muscle-up-strict"
+    },
+    {
+     "id": "muscle-up-strict",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 3,
+      "par_cote": false,
+      "texte": "3 × 3 propres"
+     },
+     "suivant": "muscle-up-leste"
+    },
+    {
+     "id": "muscle-up-leste",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "front_lever",
+   "titre": "Front lever",
+   "etapes": [
+    {
+     "id": "dead-hang",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 30,
+      "par_cote": false,
+      "texte": "3 × 30 s tenues propres"
+     },
+     "suivant": "scapular-pull-ups"
+    },
+    {
+     "id": "scapular-pull-ups",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 10,
+      "par_cote": false,
+      "texte": "3 × 10 propres"
+     },
+     "suivant": "front-lever-tuck"
+    },
+    {
+     "id": "front-lever-tuck",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 15,
+      "par_cote": false,
+      "texte": "3 × 15 s tenues propres"
+     },
+     "suivant": "front-lever-advanced-tuck"
+    },
+    {
+     "id": "front-lever-advanced-tuck",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 12,
+      "par_cote": false,
+      "texte": "3 × 12 s tenues propres"
+     },
+     "suivant": "front-lever-one-leg"
+    },
+    {
+     "id": "front-lever-one-leg",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 10,
+      "par_cote": true,
+      "texte": "3 × 10 s par côté tenues propres"
+     },
+     "suivant": "front-lever-straddle"
+    },
+    {
+     "id": "front-lever-straddle",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 8,
+      "par_cote": false,
+      "texte": "3 × 8 s tenues propres"
+     },
+     "suivant": "front-lever-complet"
+    },
+    {
+     "id": "front-lever-complet",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "back_lever",
+   "titre": "Back lever",
+   "etapes": [
+    {
+     "id": "german-hang-tenue",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 20,
+      "par_cote": false,
+      "texte": "3 × 20 s tenues propres"
+     },
+     "suivant": "back-lever-tuck"
+    },
+    {
+     "id": "back-lever-tuck",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 15,
+      "par_cote": false,
+      "texte": "3 × 15 s tenues propres"
+     },
+     "suivant": "back-lever-advanced-tuck"
+    },
+    {
+     "id": "back-lever-advanced-tuck",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 12,
+      "par_cote": false,
+      "texte": "3 × 12 s tenues propres"
+     },
+     "suivant": "back-lever-straddle"
+    },
+    {
+     "id": "back-lever-straddle",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 8,
+      "par_cote": false,
+      "texte": "3 × 8 s tenues propres"
+     },
+     "suivant": "back-lever-complet"
+    },
+    {
+     "id": "back-lever-complet",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "planche",
+   "titre": "Planche (figure)",
+   "etapes": [
+    {
+     "id": "planche-gainage",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 45,
+      "par_cote": false,
+      "texte": "3 × 45 s tenues propres"
+     },
+     "suivant": "planche-bras-tendus-taps"
+    },
+    {
+     "id": "planche-bras-tendus-taps",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 10,
+      "par_cote": true,
+      "texte": "3 × 10 par côté propres"
+     },
+     "suivant": "planche-lean"
+    },
+    {
+     "id": "planche-lean",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 20,
+      "par_cote": false,
+      "texte": "3 × 20 s tenues propres"
+     },
+     "suivant": "pseudo-planche-hold"
+    },
+    {
+     "id": "pseudo-planche-hold",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 15,
+      "par_cote": false,
+      "texte": "3 × 15 s tenues propres"
+     },
+     "suivant": "pompes-pseudo-planche"
+    },
+    {
+     "id": "pompes-pseudo-planche",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 8,
+      "par_cote": false,
+      "texte": "3 × 8 propres"
+     },
+     "suivant": "tuck-planche"
+    },
+    {
+     "id": "tuck-planche",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 12,
+      "par_cote": false,
+      "texte": "3 × 12 s tenues propres"
+     },
+     "suivant": "planche-advanced-tuck"
+    },
+    {
+     "id": "planche-advanced-tuck",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 10,
+      "par_cote": false,
+      "texte": "3 × 10 s tenues propres"
+     },
+     "suivant": "planche-straddle"
+    },
+    {
+     "id": "planche-straddle",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 6,
+      "par_cote": false,
+      "texte": "3 × 6 s tenues propres"
+     },
+     "suivant": "planche-complete"
+    },
+    {
+     "id": "planche-complete",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "equilibre_mains",
+   "titre": "Équilibre sur les mains",
+   "etapes": [
+    {
+     "id": "pike-hold-v-inverse",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 30,
+      "par_cote": false,
+      "texte": "3 × 30 s tenues propres"
+     },
+     "suivant": "pike-push-ups"
+    },
+    {
+     "id": "pike-push-ups",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 8,
+      "par_cote": false,
+      "texte": "3 × 8 propres"
+     },
+     "suivant": "atr-dos-au-mur-tenue"
+    },
+    {
+     "id": "atr-dos-au-mur-tenue",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 30,
+      "par_cote": false,
+      "texte": "3 × 30 s tenues propres"
+     },
+     "suivant": "atr-poitrine-au-mur-tenue"
+    },
+    {
+     "id": "atr-poitrine-au-mur-tenue",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 45,
+      "par_cote": false,
+      "texte": "3 × 45 s tenues propres"
+     },
+     "suivant": "shoulder-taps-en-atr"
+    },
+    {
+     "id": "shoulder-taps-en-atr",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 5,
+      "par_cote": true,
+      "texte": "3 × 5 par côté propres"
+     },
+     "suivant": "atr-equilibre"
+    },
+    {
+     "id": "atr-equilibre",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 20,
+      "par_cote": false,
+      "texte": "3 × 20 s tenues propres"
+     },
+     "suivant": "handstand-walk-marche-en-atr"
+    },
+    {
+     "id": "handstand-walk-marche-en-atr",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "hspu",
+   "titre": "Pompes en équilibre (HSPU)",
+   "etapes": [
+    {
+     "id": "pike-push-ups",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 10,
+      "par_cote": false,
+      "texte": "3 × 10 propres"
+     },
+     "suivant": "pike-push-ups-sureleves-pieds-sur-banc"
+    },
+    {
+     "id": "pike-push-ups-sureleves-pieds-sur-banc",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 8,
+      "par_cote": false,
+      "texte": "3 × 8 propres"
+     },
+     "suivant": "handstand-push-ups-mur"
+    },
+    {
+     "id": "handstand-push-ups-mur",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 5,
+      "par_cote": false,
+      "texte": "3 × 5 propres"
+     },
+     "suivant": "hspu-stricts-en-deficit"
+    },
+    {
+     "id": "hspu-stricts-en-deficit",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 5,
+      "par_cote": false,
+      "texte": "3 × 5 propres"
+     },
+     "suivant": "hspu-freestanding-progression"
+    },
+    {
+     "id": "hspu-freestanding-progression",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "l_sit",
+   "titre": "L-sit",
+   "etapes": [
+    {
+     "id": "support-hold-aux-barres",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 30,
+      "par_cote": false,
+      "texte": "3 × 30 s tenues propres"
+     },
+     "suivant": "l-sit-tuck-tenue"
+    },
+    {
+     "id": "l-sit-tuck-tenue",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 20,
+      "par_cote": false,
+      "texte": "3 × 20 s tenues propres"
+     },
+     "suivant": "l-sit-une-jambe"
+    },
+    {
+     "id": "l-sit-une-jambe",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 15,
+      "par_cote": true,
+      "texte": "3 × 15 s par côté tenues propres"
+     },
+     "suivant": "l-sit"
+    },
+    {
+     "id": "l-sit",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 20,
+      "par_cote": false,
+      "texte": "3 × 20 s tenues propres"
+     },
+     "suivant": "v-sit-progression"
+    },
+    {
+     "id": "v-sit-progression",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 10,
+      "par_cote": false,
+      "texte": "3 × 10 s tenues propres"
+     },
+     "suivant": "v-sit-tenue"
+    },
+    {
+     "id": "v-sit-tenue",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 5,
+      "par_cote": false,
+      "texte": "3 × 5 s tenues propres"
+     },
+     "suivant": "manna-progression"
+    },
+    {
+     "id": "manna-progression",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "drapeau",
+   "titre": "Drapeau",
+   "etapes": [
+    {
+     "id": "planche-laterale",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 60,
+      "par_cote": true,
+      "texte": "3 × 60 s par côté tenues propres"
+     },
+     "suivant": "drapeau-vertical-tenue"
+    },
+    {
+     "id": "drapeau-vertical-tenue",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 10,
+      "par_cote": true,
+      "texte": "3 × 10 s par côté tenues propres"
+     },
+     "suivant": "human-flag-tuck"
+    },
+    {
+     "id": "human-flag-tuck",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 8,
+      "par_cote": true,
+      "texte": "3 × 8 s par côté tenues propres"
+     },
+     "suivant": "drapeau-straddle"
+    },
+    {
+     "id": "drapeau-straddle",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 5,
+      "par_cote": true,
+      "texte": "3 × 5 s par côté tenues propres"
+     },
+     "suivant": "human-flag-drapeau"
+    },
+    {
+     "id": "human-flag-drapeau",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "mobilite_epaules",
+   "titre": "Mobilité des épaules",
+   "etapes": [
+    {
+     "id": "cercles-de-bras",
+     "seuil_passage": {
+      "series": 2,
+      "repetitions": 10,
+      "par_cote": false,
+      "texte": "2 × 10 propres"
+     },
+     "suivant": "wall-slides-glisses-au-mur"
+    },
+    {
+     "id": "wall-slides-glisses-au-mur",
+     "seuil_passage": {
+      "series": 2,
+      "repetitions": 12,
+      "par_cote": false,
+      "texte": "2 × 12 propres"
+     },
+     "suivant": "dislocations-epaules-elastique"
+    },
+    {
+     "id": "dislocations-epaules-elastique",
+     "seuil_passage": {
+      "series": 2,
+      "repetitions": 12,
+      "par_cote": false,
+      "texte": "2 × 12 propres"
+     },
+     "suivant": "dislocations-epaules-baton"
+    },
+    {
+     "id": "dislocations-epaules-baton",
+     "seuil_passage": {
+      "series": 2,
+      "repetitions": 12,
+      "par_cote": false,
+      "texte": "2 × 12 propres"
+     },
+     "suivant": "bridge-pont-dorsal"
+    },
+    {
+     "id": "bridge-pont-dorsal",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 20,
+      "par_cote": false,
+      "texte": "3 × 20 s tenues propres"
+     },
+     "suivant": "german-hang-tenue"
+    },
+    {
+     "id": "german-hang-tenue",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "mobilite_hanches",
+   "titre": "Mobilité des hanches",
+   "etapes": [
+    {
+     "id": "etirements-flechisseurs-de-hanche",
+     "seuil_passage": {
+      "series": 2,
+      "secondes": 45,
+      "par_cote": true,
+      "texte": "2 × 45 s par côté tenues propres"
+     },
+     "suivant": "fente-basse-etirement-hanche"
+    },
+    {
+     "id": "fente-basse-etirement-hanche",
+     "seuil_passage": {
+      "series": 2,
+      "secondes": 45,
+      "par_cote": true,
+      "texte": "2 × 45 s par côté tenues propres"
+     },
+     "suivant": "mobilite-hanches-90-90"
+    },
+    {
+     "id": "mobilite-hanches-90-90",
+     "seuil_passage": {
+      "series": 2,
+      "secondes": 60,
+      "par_cote": true,
+      "texte": "2 × 60 s par côté tenues propres"
+     },
+     "suivant": "squat-profond-tenu"
+    },
+    {
+     "id": "squat-profond-tenu",
+     "seuil_passage": {
+      "series": 3,
+      "secondes": 60,
+      "par_cote": false,
+      "texte": "3 × 60 s tenues propres"
+     },
+     "suivant": "squat-cosaque"
+    },
+    {
+     "id": "squat-cosaque",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  },
+  {
+   "id": "mobilite_chevilles",
+   "titre": "Mobilité des chevilles",
+   "etapes": [
+    {
+     "id": "mobilisation-cheville-genou-au-mur",
+     "seuil_passage": {
+      "series": 2,
+      "repetitions": 12,
+      "par_cote": true,
+      "texte": "2 × 12 par côté propres"
+     },
+     "suivant": "mollets-unilateraux-sur-marche"
+    },
+    {
+     "id": "mollets-unilateraux-sur-marche",
+     "seuil_passage": {
+      "series": 3,
+      "repetitions": 15,
+      "par_cote": true,
+      "texte": "3 × 15 par côté propres"
+     },
+     "suivant": "squat-profond-tenu"
+    },
+    {
+     "id": "squat-profond-tenu",
+     "seuil_passage": null,
+     "suivant": null
+    }
+   ]
+  }
+ ],
+ "aretes": [
+  {
+   "de": "back-lever-advanced-tuck",
+   "vers": "back-lever-straddle",
+   "seuil": {
+    "series": 3,
+    "secondes": 12,
+    "par_cote": false,
+    "texte": "3 × 12 s tenues propres"
+   },
+   "chaine": "back_lever",
+   "type": "progression"
+  },
+  {
+   "de": "back-lever-straddle",
+   "vers": "back-lever-complet",
+   "seuil": {
+    "series": 3,
+    "secondes": 8,
+    "par_cote": false,
+    "texte": "3 × 8 s tenues propres"
+   },
+   "chaine": "back_lever",
+   "type": "progression"
+  },
+  {
+   "de": "back-lever-tuck",
+   "vers": "back-lever-advanced-tuck",
+   "seuil": {
+    "series": 3,
+    "secondes": 15,
+    "par_cote": false,
+    "texte": "3 × 15 s tenues propres"
+   },
+   "chaine": "back_lever",
+   "type": "progression"
+  },
+  {
+   "de": "german-hang-tenue",
+   "vers": "back-lever-tuck",
+   "seuil": {
+    "series": 3,
+    "secondes": 20,
+    "par_cote": false,
+    "texte": "3 × 20 s tenues propres"
+   },
+   "chaine": "back_lever",
+   "type": "progression"
+  },
+  {
+   "de": "box-squat",
+   "vers": "back-squat",
+   "seuil": {
+    "series": 3,
+    "repetitions": 8,
+    "par_cote": false,
+    "texte": "3 × 8 propres"
+   },
+   "chaine": "back_squat",
+   "type": "progression"
+  },
+  {
+   "de": "squat-au-poids-de-corps",
+   "vers": "squat-gobelet",
+   "seuil": {
+    "series": 3,
+    "repetitions": 20,
+    "par_cote": false,
+    "texte": "3 × 20 propres"
+   },
+   "chaine": "back_squat",
+   "type": "progression"
+  },
+  {
+   "de": "squat-gobelet",
+   "vers": "box-squat",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": false,
+    "texte": "3 × 10 propres"
+   },
+   "chaine": "back_squat",
+   "type": "progression"
+  },
+  {
+   "de": "charniere-de-hanche-au-baton",
+   "vers": "pont-fessier-une-jambe",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": false,
+    "texte": "3 × 10 propres"
+   },
+   "chaine": "charniere",
+   "type": "progression"
+  },
+  {
+   "de": "hip-thrust",
+   "vers": "souleve-de-terre-roumain-halteres",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": false,
+    "texte": "3 × 10 propres"
+   },
+   "chaine": "charniere",
+   "type": "progression"
+  },
+  {
+   "de": "pont-fessier-au-sol",
+   "vers": "charniere-de-hanche-au-baton",
+   "seuil": {
+    "series": 3,
+    "repetitions": 15,
+    "par_cote": false,
+    "texte": "3 × 15 propres"
+   },
+   "chaine": "charniere",
+   "type": "progression"
+  },
+  {
+   "de": "pont-fessier-une-jambe",
+   "vers": "hip-thrust",
+   "seuil": {
+    "series": 3,
+    "repetitions": 12,
+    "par_cote": true,
+    "texte": "3 × 12 par côté propres"
+   },
+   "chaine": "charniere",
+   "type": "progression"
+  },
+  {
+   "de": "souleve-de-terre-roumain-halteres",
+   "vers": "souleve-de-terre-roumain",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": false,
+    "texte": "3 × 10 propres"
+   },
+   "chaine": "charniere",
+   "type": "progression"
+  },
+  {
+   "de": "dips",
+   "vers": "dips-lestes",
+   "seuil": {
+    "series": 3,
+    "repetitions": 12,
+    "par_cote": false,
+    "texte": "3 × 12 propres"
+   },
+   "chaine": "dips",
+   "type": "progression"
+  },
+  {
+   "de": "dips-assistes-elastique",
+   "vers": "dips-negatifs",
+   "seuil": {
+    "series": 3,
+    "repetitions": 8,
+    "par_cote": false,
+    "texte": "3 × 8 propres"
+   },
+   "chaine": "dips",
+   "type": "progression"
+  },
+  {
+   "de": "dips-lestes",
+   "vers": "dips-lestes-lourds",
+   "seuil": {
+    "lest_pct_poids_de_corps": 30,
+    "repetitions": 5,
+    "texte": "5 répétition(s) propres avec un lest de 30 % du poids de corps"
+   },
+   "chaine": "dips",
+   "type": "progression"
+  },
+  {
+   "de": "dips-negatifs",
+   "vers": "dips",
+   "seuil": {
+    "series": 3,
+    "repetitions": 5,
+    "par_cote": false,
+    "texte": "3 × 5 propres"
+   },
+   "chaine": "dips",
+   "type": "progression"
+  },
+  {
+   "de": "dips-sur-banc-genoux-flechis",
+   "vers": "support-hold-aux-barres",
+   "seuil": {
+    "series": 3,
+    "repetitions": 12,
+    "par_cote": false,
+    "texte": "3 × 12 propres"
+   },
+   "chaine": "dips",
+   "type": "progression"
+  },
+  {
+   "de": "dips-sur-banc-triceps",
+   "vers": "dips-assistes-elastique",
+   "seuil": {
+    "series": 3,
+    "repetitions": 15,
+    "par_cote": false,
+    "texte": "3 × 15 propres"
+   },
+   "chaine": "dips",
+   "type": "progression"
+  },
+  {
+   "de": "support-hold-aux-barres",
+   "vers": "dips-sur-banc-triceps",
+   "seuil": {
+    "series": 3,
+    "secondes": 30,
+    "par_cote": false,
+    "texte": "3 × 30 s tenues propres"
+   },
+   "chaine": "dips",
+   "type": "progression"
+  },
+  {
+   "de": "drapeau-straddle",
+   "vers": "human-flag-drapeau",
+   "seuil": {
+    "series": 3,
+    "secondes": 5,
+    "par_cote": true,
+    "texte": "3 × 5 s par côté tenues propres"
+   },
+   "chaine": "drapeau",
+   "type": "progression"
+  },
+  {
+   "de": "drapeau-vertical-tenue",
+   "vers": "human-flag-tuck",
+   "seuil": {
+    "series": 3,
+    "secondes": 10,
+    "par_cote": true,
+    "texte": "3 × 10 s par côté tenues propres"
+   },
+   "chaine": "drapeau",
+   "type": "progression"
+  },
+  {
+   "de": "human-flag-tuck",
+   "vers": "drapeau-straddle",
+   "seuil": {
+    "series": 3,
+    "secondes": 8,
+    "par_cote": true,
+    "texte": "3 × 8 s par côté tenues propres"
+   },
+   "chaine": "drapeau",
+   "type": "progression"
+  },
+  {
+   "de": "planche-laterale",
+   "vers": "drapeau-vertical-tenue",
+   "seuil": {
+    "series": 3,
+    "secondes": 60,
+    "par_cote": true,
+    "texte": "3 × 60 s par côté tenues propres"
+   },
+   "chaine": "drapeau",
+   "type": "progression"
+  },
+  {
+   "de": "atr-dos-au-mur-tenue",
+   "vers": "atr-poitrine-au-mur-tenue",
+   "seuil": {
+    "series": 3,
+    "secondes": 30,
+    "par_cote": false,
+    "texte": "3 × 30 s tenues propres"
+   },
+   "chaine": "equilibre_mains",
+   "type": "progression"
+  },
+  {
+   "de": "atr-equilibre",
+   "vers": "handstand-walk-marche-en-atr",
+   "seuil": {
+    "series": 3,
+    "secondes": 20,
+    "par_cote": false,
+    "texte": "3 × 20 s tenues propres"
+   },
+   "chaine": "equilibre_mains",
+   "type": "progression"
+  },
+  {
+   "de": "atr-poitrine-au-mur-tenue",
+   "vers": "shoulder-taps-en-atr",
+   "seuil": {
+    "series": 3,
+    "secondes": 45,
+    "par_cote": false,
+    "texte": "3 × 45 s tenues propres"
+   },
+   "chaine": "equilibre_mains",
+   "type": "progression"
+  },
+  {
+   "de": "pike-hold-v-inverse",
+   "vers": "pike-push-ups",
+   "seuil": {
+    "series": 3,
+    "secondes": 30,
+    "par_cote": false,
+    "texte": "3 × 30 s tenues propres"
+   },
+   "chaine": "equilibre_mains",
+   "type": "progression"
+  },
+  {
+   "de": "pike-push-ups",
+   "vers": "atr-dos-au-mur-tenue",
+   "seuil": {
+    "series": 3,
+    "repetitions": 8,
+    "par_cote": false,
+    "texte": "3 × 8 propres"
+   },
+   "chaine": "equilibre_mains",
+   "type": "progression"
+  },
+  {
+   "de": "shoulder-taps-en-atr",
+   "vers": "atr-equilibre",
+   "seuil": {
+    "series": 3,
+    "repetitions": 5,
+    "par_cote": true,
+    "texte": "3 × 5 par côté propres"
+   },
+   "chaine": "equilibre_mains",
+   "type": "progression"
+  },
+  {
+   "de": "dead-hang",
+   "vers": "scapular-pull-ups",
+   "seuil": {
+    "series": 3,
+    "secondes": 30,
+    "par_cote": false,
+    "texte": "3 × 30 s tenues propres"
+   },
+   "chaine": "front_lever",
+   "type": "progression"
+  },
+  {
+   "de": "front-lever-advanced-tuck",
+   "vers": "front-lever-one-leg",
+   "seuil": {
+    "series": 3,
+    "secondes": 12,
+    "par_cote": false,
+    "texte": "3 × 12 s tenues propres"
+   },
+   "chaine": "front_lever",
+   "type": "progression"
+  },
+  {
+   "de": "front-lever-one-leg",
+   "vers": "front-lever-straddle",
+   "seuil": {
+    "series": 3,
+    "secondes": 10,
+    "par_cote": true,
+    "texte": "3 × 10 s par côté tenues propres"
+   },
+   "chaine": "front_lever",
+   "type": "progression"
+  },
+  {
+   "de": "front-lever-straddle",
+   "vers": "front-lever-complet",
+   "seuil": {
+    "series": 3,
+    "secondes": 8,
+    "par_cote": false,
+    "texte": "3 × 8 s tenues propres"
+   },
+   "chaine": "front_lever",
+   "type": "progression"
+  },
+  {
+   "de": "front-lever-tuck",
+   "vers": "front-lever-advanced-tuck",
+   "seuil": {
+    "series": 3,
+    "secondes": 15,
+    "par_cote": false,
+    "texte": "3 × 15 s tenues propres"
+   },
+   "chaine": "front_lever",
+   "type": "progression"
+  },
+  {
+   "de": "scapular-pull-ups",
+   "vers": "front-lever-tuck",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": false,
+    "texte": "3 × 10 propres"
+   },
+   "chaine": "front_lever",
+   "type": "progression"
+  },
+  {
+   "de": "dead-bug",
+   "vers": "hollow-body-groupe",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": true,
+    "texte": "3 × 10 par côté propres"
+   },
+   "chaine": "gainage_creux",
+   "type": "progression"
+  },
+  {
+   "de": "dragon-flag-negatif",
+   "vers": "dragon-flag-complet",
+   "seuil": {
+    "series": 3,
+    "repetitions": 5,
+    "par_cote": false,
+    "texte": "3 × 5 propres"
+   },
+   "chaine": "gainage_creux",
+   "type": "progression"
+  },
+  {
+   "de": "dragon-flag-progression",
+   "vers": "dragon-flag-negatif",
+   "seuil": {
+    "series": 3,
+    "repetitions": 5,
+    "par_cote": false,
+    "texte": "3 × 5 propres"
+   },
+   "chaine": "gainage_creux",
+   "type": "progression"
+  },
+  {
+   "de": "hollow-body-groupe",
+   "vers": "hollow-body-hold",
+   "seuil": {
+    "series": 3,
+    "secondes": 30,
+    "par_cote": false,
+    "texte": "3 × 30 s tenues propres"
+   },
+   "chaine": "gainage_creux",
+   "type": "progression"
+  },
+  {
+   "de": "hollow-body-hold",
+   "vers": "hollow-rocks",
+   "seuil": {
+    "series": 3,
+    "secondes": 30,
+    "par_cote": false,
+    "texte": "3 × 30 s tenues propres"
+   },
+   "chaine": "gainage_creux",
+   "type": "progression"
+  },
+  {
+   "de": "hollow-rocks",
+   "vers": "dragon-flag-progression",
+   "seuil": {
+    "series": 3,
+    "repetitions": 15,
+    "par_cote": false,
+    "texte": "3 × 15 propres"
+   },
+   "chaine": "gainage_creux",
+   "type": "progression"
+  },
+  {
+   "de": "planche-laterale",
+   "vers": "copenhagen-plank",
+   "seuil": {
+    "series": 3,
+    "secondes": 45,
+    "par_cote": true,
+    "texte": "3 × 45 s par côté tenues propres"
+   },
+   "chaine": "gainage_lateral",
+   "type": "progression"
+  },
+  {
+   "de": "planche-laterale-sur-les-genoux",
+   "vers": "planche-laterale",
+   "seuil": {
+    "series": 3,
+    "secondes": 30,
+    "par_cote": true,
+    "texte": "3 × 30 s par côté tenues propres"
+   },
+   "chaine": "gainage_lateral",
+   "type": "progression"
+  },
+  {
+   "de": "ab-wheel",
+   "vers": "ab-wheel-debout",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": false,
+    "texte": "3 × 10 propres"
+   },
+   "chaine": "gainage_ventral",
+   "type": "progression"
+  },
+  {
+   "de": "ab-wheel-a-genoux-amplitude-courte",
+   "vers": "ab-wheel",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": false,
+    "texte": "3 × 10 propres"
+   },
+   "chaine": "gainage_ventral",
+   "type": "progression"
+  },
+  {
+   "de": "body-saw-sliders",
+   "vers": "ab-wheel-a-genoux-amplitude-courte",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": false,
+    "texte": "3 × 10 propres"
+   },
+   "chaine": "gainage_ventral",
+   "type": "progression"
+  },
+  {
+   "de": "planche-gainage",
+   "vers": "planche-rkc-coudes",
+   "seuil": {
+    "series": 3,
+    "secondes": 45,
+    "par_cote": false,
+    "texte": "3 × 45 s tenues propres"
+   },
+   "chaine": "gainage_ventral",
+   "type": "progression"
+  },
+  {
+   "de": "planche-rkc-coudes",
+   "vers": "body-saw-sliders",
+   "seuil": {
+    "series": 3,
+    "secondes": 20,
+    "par_cote": false,
+    "texte": "3 × 20 s tenues propres"
+   },
+   "chaine": "gainage_ventral",
+   "type": "progression"
+  },
+  {
+   "de": "planche-sur-les-genoux",
+   "vers": "planche-gainage",
+   "seuil": {
+    "series": 3,
+    "secondes": 30,
+    "par_cote": false,
+    "texte": "3 × 30 s tenues propres"
+   },
+   "chaine": "gainage_ventral",
+   "type": "progression"
+  },
+  {
+   "de": "handstand-push-ups-mur",
+   "vers": "hspu-stricts-en-deficit",
+   "seuil": {
+    "series": 3,
+    "repetitions": 5,
+    "par_cote": false,
+    "texte": "3 × 5 propres"
+   },
+   "chaine": "hspu",
+   "type": "progression"
+  },
+  {
+   "de": "hspu-stricts-en-deficit",
+   "vers": "hspu-freestanding-progression",
+   "seuil": {
+    "series": 3,
+    "repetitions": 5,
+    "par_cote": false,
+    "texte": "3 × 5 propres"
+   },
+   "chaine": "hspu",
+   "type": "progression"
+  },
+  {
+   "de": "pike-push-ups",
+   "vers": "pike-push-ups-sureleves-pieds-sur-banc",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": false,
+    "texte": "3 × 10 propres"
+   },
+   "chaine": "hspu",
+   "type": "progression"
+  },
+  {
+   "de": "pike-push-ups-sureleves-pieds-sur-banc",
+   "vers": "handstand-push-ups-mur",
+   "seuil": {
+    "series": 3,
+    "repetitions": 8,
+    "par_cote": false,
+    "texte": "3 × 8 propres"
+   },
+   "chaine": "hspu",
+   "type": "progression"
+  },
+  {
+   "de": "l-sit",
+   "vers": "v-sit-progression",
+   "seuil": {
+    "series": 3,
+    "secondes": 20,
+    "par_cote": false,
+    "texte": "3 × 20 s tenues propres"
+   },
+   "chaine": "l_sit",
+   "type": "progression"
+  },
+  {
+   "de": "l-sit-tuck-tenue",
+   "vers": "l-sit-une-jambe",
+   "seuil": {
+    "series": 3,
+    "secondes": 20,
+    "par_cote": false,
+    "texte": "3 × 20 s tenues propres"
+   },
+   "chaine": "l_sit",
+   "type": "progression"
+  },
+  {
+   "de": "l-sit-une-jambe",
+   "vers": "l-sit",
+   "seuil": {
+    "series": 3,
+    "secondes": 15,
+    "par_cote": true,
+    "texte": "3 × 15 s par côté tenues propres"
+   },
+   "chaine": "l_sit",
+   "type": "progression"
+  },
+  {
+   "de": "support-hold-aux-barres",
+   "vers": "l-sit-tuck-tenue",
+   "seuil": {
+    "series": 3,
+    "secondes": 30,
+    "par_cote": false,
+    "texte": "3 × 30 s tenues propres"
+   },
+   "chaine": "l_sit",
+   "type": "progression"
+  },
+  {
+   "de": "v-sit-progression",
+   "vers": "v-sit-tenue",
+   "seuil": {
+    "series": 3,
+    "secondes": 10,
+    "par_cote": false,
+    "texte": "3 × 10 s tenues propres"
+   },
+   "chaine": "l_sit",
+   "type": "progression"
+  },
+  {
+   "de": "v-sit-tenue",
+   "vers": "manna-progression",
+   "seuil": {
+    "series": 3,
+    "secondes": 5,
+    "par_cote": false,
+    "texte": "3 × 5 s tenues propres"
+   },
+   "chaine": "l_sit",
+   "type": "progression"
+  },
+  {
+   "de": "mobilisation-cheville-genou-au-mur",
+   "vers": "mollets-unilateraux-sur-marche",
+   "seuil": {
+    "series": 2,
+    "repetitions": 12,
+    "par_cote": true,
+    "texte": "2 × 12 par côté propres"
+   },
+   "chaine": "mobilite_chevilles",
+   "type": "progression"
+  },
+  {
+   "de": "mollets-unilateraux-sur-marche",
+   "vers": "squat-profond-tenu",
+   "seuil": {
+    "series": 3,
+    "repetitions": 15,
+    "par_cote": true,
+    "texte": "3 × 15 par côté propres"
+   },
+   "chaine": "mobilite_chevilles",
+   "type": "progression"
+  },
+  {
+   "de": "bridge-pont-dorsal",
+   "vers": "german-hang-tenue",
+   "seuil": {
+    "series": 3,
+    "secondes": 20,
+    "par_cote": false,
+    "texte": "3 × 20 s tenues propres"
+   },
+   "chaine": "mobilite_epaules",
+   "type": "progression"
+  },
+  {
+   "de": "cercles-de-bras",
+   "vers": "wall-slides-glisses-au-mur",
+   "seuil": {
+    "series": 2,
+    "repetitions": 10,
+    "par_cote": false,
+    "texte": "2 × 10 propres"
+   },
+   "chaine": "mobilite_epaules",
+   "type": "progression"
+  },
+  {
+   "de": "dislocations-epaules-baton",
+   "vers": "bridge-pont-dorsal",
+   "seuil": {
+    "series": 2,
+    "repetitions": 12,
+    "par_cote": false,
+    "texte": "2 × 12 propres"
+   },
+   "chaine": "mobilite_epaules",
+   "type": "progression"
+  },
+  {
+   "de": "dislocations-epaules-elastique",
+   "vers": "dislocations-epaules-baton",
+   "seuil": {
+    "series": 2,
+    "repetitions": 12,
+    "par_cote": false,
+    "texte": "2 × 12 propres"
+   },
+   "chaine": "mobilite_epaules",
+   "type": "progression"
+  },
+  {
+   "de": "wall-slides-glisses-au-mur",
+   "vers": "dislocations-epaules-elastique",
+   "seuil": {
+    "series": 2,
+    "repetitions": 12,
+    "par_cote": false,
+    "texte": "2 × 12 propres"
+   },
+   "chaine": "mobilite_epaules",
+   "type": "progression"
+  },
+  {
+   "de": "etirements-flechisseurs-de-hanche",
+   "vers": "fente-basse-etirement-hanche",
+   "seuil": {
+    "series": 2,
+    "secondes": 45,
+    "par_cote": true,
+    "texte": "2 × 45 s par côté tenues propres"
+   },
+   "chaine": "mobilite_hanches",
+   "type": "progression"
+  },
+  {
+   "de": "fente-basse-etirement-hanche",
+   "vers": "mobilite-hanches-90-90",
+   "seuil": {
+    "series": 2,
+    "secondes": 45,
+    "par_cote": true,
+    "texte": "2 × 45 s par côté tenues propres"
+   },
+   "chaine": "mobilite_hanches",
+   "type": "progression"
+  },
+  {
+   "de": "mobilite-hanches-90-90",
+   "vers": "squat-profond-tenu",
+   "seuil": {
+    "series": 2,
+    "secondes": 60,
+    "par_cote": true,
+    "texte": "2 × 60 s par côté tenues propres"
+   },
+   "chaine": "mobilite_hanches",
+   "type": "progression"
+  },
+  {
+   "de": "squat-profond-tenu",
+   "vers": "squat-cosaque",
+   "seuil": {
+    "series": 3,
+    "secondes": 60,
+    "par_cote": false,
+    "texte": "3 × 60 s tenues propres"
+   },
+   "chaine": "mobilite_hanches",
+   "type": "progression"
+  },
+  {
+   "de": "muscle-up-kipping",
+   "vers": "muscle-up-strict",
+   "seuil": {
+    "series": 3,
+    "repetitions": 3,
+    "par_cote": false,
+    "texte": "3 × 3 propres"
+   },
+   "chaine": "muscle_up",
+   "type": "progression"
+  },
+  {
+   "de": "muscle-up-strict",
+   "vers": "muscle-up-leste",
+   "seuil": {
+    "series": 3,
+    "repetitions": 3,
+    "par_cote": false,
+    "texte": "3 × 3 propres"
+   },
+   "chaine": "muscle_up",
+   "type": "progression"
+  },
+  {
+   "de": "negatifs-de-muscle-up",
+   "vers": "tractions-explosives-poitrine-barre",
+   "seuil": {
+    "series": 3,
+    "repetitions": 3,
+    "par_cote": false,
+    "texte": "3 × 3 propres"
+   },
+   "chaine": "muscle_up",
+   "type": "progression"
+  },
+  {
+   "de": "traction-poitrine-barre",
+   "vers": "transitions-de-muscle-up-a-l-elastique",
+   "seuil": {
+    "series": 3,
+    "repetitions": 6,
+    "par_cote": false,
+    "texte": "3 × 6 propres"
+   },
+   "chaine": "muscle_up",
+   "type": "progression"
+  },
+  {
+   "de": "traction-pronation",
+   "vers": "traction-poitrine-barre",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": false,
+    "texte": "3 × 10 propres"
+   },
+   "chaine": "muscle_up",
+   "type": "progression"
+  },
+  {
+   "de": "tractions-explosives-poitrine-barre",
+   "vers": "muscle-up-kipping",
+   "seuil": {
+    "series": 3,
+    "repetitions": 5,
+    "par_cote": false,
+    "texte": "3 × 5 propres"
+   },
+   "chaine": "muscle_up",
+   "type": "progression"
+  },
+  {
+   "de": "transitions-de-muscle-up-a-l-elastique",
+   "vers": "negatifs-de-muscle-up",
+   "seuil": {
+    "series": 3,
+    "repetitions": 5,
+    "par_cote": false,
+    "texte": "3 × 5 propres"
+   },
+   "chaine": "muscle_up",
+   "type": "progression"
+  },
+  {
+   "de": "planche-advanced-tuck",
+   "vers": "planche-straddle",
+   "seuil": {
+    "series": 3,
+    "secondes": 10,
+    "par_cote": false,
+    "texte": "3 × 10 s tenues propres"
+   },
+   "chaine": "planche",
+   "type": "progression"
+  },
+  {
+   "de": "planche-bras-tendus-taps",
+   "vers": "planche-lean",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": true,
+    "texte": "3 × 10 par côté propres"
+   },
+   "chaine": "planche",
+   "type": "progression"
+  },
+  {
+   "de": "planche-gainage",
+   "vers": "planche-bras-tendus-taps",
+   "seuil": {
+    "series": 3,
+    "secondes": 45,
+    "par_cote": false,
+    "texte": "3 × 45 s tenues propres"
+   },
+   "chaine": "planche",
+   "type": "progression"
+  },
+  {
+   "de": "planche-lean",
+   "vers": "pseudo-planche-hold",
+   "seuil": {
+    "series": 3,
+    "secondes": 20,
+    "par_cote": false,
+    "texte": "3 × 20 s tenues propres"
+   },
+   "chaine": "planche",
+   "type": "progression"
+  },
+  {
+   "de": "planche-straddle",
+   "vers": "planche-complete",
+   "seuil": {
+    "series": 3,
+    "secondes": 6,
+    "par_cote": false,
+    "texte": "3 × 6 s tenues propres"
+   },
+   "chaine": "planche",
+   "type": "progression"
+  },
+  {
+   "de": "pompes-pseudo-planche",
+   "vers": "tuck-planche",
+   "seuil": {
+    "series": 3,
+    "repetitions": 8,
+    "par_cote": false,
+    "texte": "3 × 8 propres"
+   },
+   "chaine": "planche",
+   "type": "progression"
+  },
+  {
+   "de": "pseudo-planche-hold",
+   "vers": "pompes-pseudo-planche",
+   "seuil": {
+    "series": 3,
+    "secondes": 15,
+    "par_cote": false,
+    "texte": "3 × 15 s tenues propres"
+   },
+   "chaine": "planche",
+   "type": "progression"
+  },
+  {
+   "de": "tuck-planche",
+   "vers": "planche-advanced-tuck",
+   "seuil": {
+    "series": 3,
+    "secondes": 12,
+    "par_cote": false,
+    "texte": "3 × 12 s tenues propres"
+   },
+   "chaine": "planche",
+   "type": "progression"
+  },
+  {
+   "de": "pompes",
+   "vers": "pompes-archer",
+   "seuil": {
+    "series": 3,
+    "repetitions": 12,
+    "par_cote": false,
+    "texte": "3 × 12 propres"
+   },
+   "chaine": "pompes",
+   "type": "progression"
+  },
+  {
+   "de": "pompes-a-genoux",
+   "vers": "pompes",
+   "seuil": {
+    "series": 3,
+    "repetitions": 12,
+    "par_cote": false,
+    "texte": "3 × 12 propres"
+   },
+   "chaine": "pompes",
+   "type": "progression"
+  },
+  {
+   "de": "pompes-archer",
+   "vers": "pompes-une-main-progression",
+   "seuil": {
+    "series": 3,
+    "repetitions": 6,
+    "par_cote": true,
+    "texte": "3 × 6 par côté propres"
+   },
+   "chaine": "pompes",
+   "type": "progression"
+  },
+  {
+   "de": "pompes-au-mur",
+   "vers": "pompes-inclinees-mains-surelevees",
+   "seuil": {
+    "series": 3,
+    "repetitions": 15,
+    "par_cote": false,
+    "texte": "3 × 15 propres"
+   },
+   "chaine": "pompes",
+   "type": "progression"
+  },
+  {
+   "de": "pompes-inclinees-mains-surelevees",
+   "vers": "pompes-a-genoux",
+   "seuil": {
+    "series": 3,
+    "repetitions": 12,
+    "par_cote": false,
+    "texte": "3 × 12 propres"
+   },
+   "chaine": "pompes",
+   "type": "progression"
+  },
+  {
+   "de": "pompes-une-main-progression",
+   "vers": "pompe-a-un-bras",
+   "seuil": {
+    "series": 3,
+    "repetitions": 5,
+    "par_cote": true,
+    "texte": "3 × 5 par côté propres"
+   },
+   "chaine": "pompes",
+   "type": "progression"
+  },
+  {
+   "de": "pompes",
+   "vers": "pompes-lestees",
+   "seuil": {
+    "series": 3,
+    "repetitions": 20,
+    "par_cote": false,
+    "texte": "3 × 20 propres"
+   },
+   "chaine": "pompes_lestees",
+   "type": "progression"
+  },
+  {
+   "de": "pompes-lestees",
+   "vers": "pompes-lestees-lourdes",
+   "seuil": {
+    "lest_pct_poids_de_corps": 20,
+    "repetitions": 8,
+    "texte": "8 répétition(s) propres avec un lest de 20 % du poids de corps"
+   },
+   "chaine": "pompes_lestees",
+   "type": "progression"
+  },
+  {
+   "de": "pompes",
+   "vers": "pompes-diamant",
+   "seuil": {
+    "series": 3,
+    "repetitions": 15,
+    "par_cote": false,
+    "texte": "3 × 15 propres"
+   },
+   "chaine": "pompes_triceps",
+   "type": "progression"
+  },
+  {
+   "de": "pompes-diamant",
+   "vers": "pompes-diamant-surelevees",
+   "seuil": {
+    "series": 3,
+    "repetitions": 12,
+    "par_cote": false,
+    "texte": "3 × 12 propres"
+   },
+   "chaine": "pompes_triceps",
+   "type": "progression"
+  },
+  {
+   "de": "fente-statique-split-squat",
+   "vers": "fentes-bulgares",
+   "seuil": {
+    "series": 3,
+    "repetitions": 12,
+    "par_cote": true,
+    "texte": "3 × 12 par côté propres"
+   },
+   "chaine": "squat",
+   "type": "progression"
+  },
+  {
+   "de": "fentes-bulgares",
+   "vers": "pistol-squat-assiste",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": true,
+    "texte": "3 × 10 par côté propres"
+   },
+   "chaine": "squat",
+   "type": "progression"
+  },
+  {
+   "de": "pistol-squat",
+   "vers": "pistol-squat-leste",
+   "seuil": {
+    "series": 3,
+    "repetitions": 5,
+    "par_cote": true,
+    "texte": "3 × 5 par côté propres"
+   },
+   "chaine": "squat",
+   "type": "progression"
+  },
+  {
+   "de": "pistol-squat-assiste",
+   "vers": "pistol-squat-sur-box",
+   "seuil": {
+    "series": 3,
+    "repetitions": 6,
+    "par_cote": true,
+    "texte": "3 × 6 par côté propres"
+   },
+   "chaine": "squat",
+   "type": "progression"
+  },
+  {
+   "de": "pistol-squat-sur-box",
+   "vers": "pistol-squat",
+   "seuil": {
+    "series": 3,
+    "repetitions": 5,
+    "par_cote": true,
+    "texte": "3 × 5 par côté propres"
+   },
+   "chaine": "squat",
+   "type": "progression"
+  },
+  {
+   "de": "squat-assiste-appui",
+   "vers": "squat-sur-chaise",
+   "seuil": {
+    "series": 3,
+    "repetitions": 15,
+    "par_cote": false,
+    "texte": "3 × 15 propres"
+   },
+   "chaine": "squat",
+   "type": "progression"
+  },
+  {
+   "de": "squat-au-poids-de-corps",
+   "vers": "fente-statique-split-squat",
+   "seuil": {
+    "series": 3,
+    "repetitions": 20,
+    "par_cote": false,
+    "texte": "3 × 20 propres"
+   },
+   "chaine": "squat",
+   "type": "progression"
+  },
+  {
+   "de": "squat-sur-chaise",
+   "vers": "squat-au-poids-de-corps",
+   "seuil": {
+    "series": 3,
+    "repetitions": 15,
+    "par_cote": false,
+    "texte": "3 × 15 propres"
+   },
+   "chaine": "squat",
+   "type": "progression"
+  },
+  {
+   "de": "fentes-bulgares",
+   "vers": "skater-squat",
+   "seuil": {
+    "series": 3,
+    "repetitions": 12,
+    "par_cote": true,
+    "texte": "3 × 12 par côté propres"
+   },
+   "chaine": "squat_crevette",
+   "type": "progression"
+  },
+  {
+   "de": "skater-squat",
+   "vers": "shrimp-squat",
+   "seuil": {
+    "series": 3,
+    "repetitions": 6,
+    "par_cote": true,
+    "texte": "3 × 6 par côté propres"
+   },
+   "chaine": "squat_crevette",
+   "type": "progression"
+  },
+  {
+   "de": "australian-pull-ups-rows-barre-basse",
+   "vers": "traction-assistee-elastique",
+   "seuil": {
+    "series": 3,
+    "repetitions": 12,
+    "par_cote": false,
+    "texte": "3 × 12 propres"
+   },
+   "chaine": "tractions",
+   "type": "progression"
+  },
+  {
+   "de": "rowing-australien-barre-haute",
+   "vers": "australian-pull-ups-rows-barre-basse",
+   "seuil": {
+    "series": 3,
+    "repetitions": 12,
+    "par_cote": false,
+    "texte": "3 × 12 propres"
+   },
+   "chaine": "tractions",
+   "type": "progression"
+  },
+  {
+   "de": "scapular-pull-ups",
+   "vers": "rowing-australien-barre-haute",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": false,
+    "texte": "3 × 10 propres"
+   },
+   "chaine": "tractions",
+   "type": "progression"
+  },
+  {
+   "de": "suspension-passive-pieds-au-sol",
+   "vers": "dead-hang",
+   "seuil": {
+    "series": 3,
+    "secondes": 30,
+    "par_cote": false,
+    "texte": "3 × 30 s tenues propres"
+   },
+   "chaine": "tractions",
+   "type": "progression"
+  },
+  {
+   "de": "traction-assistee-elastique",
+   "vers": "traction-negative-lente",
+   "seuil": {
+    "series": 3,
+    "repetitions": 8,
+    "par_cote": false,
+    "texte": "3 × 8 propres"
+   },
+   "chaine": "tractions",
+   "type": "progression"
+  },
+  {
+   "de": "traction-lestee",
+   "vers": "traction-lestee-lourde",
+   "seuil": {
+    "lest_pct_poids_de_corps": 25,
+    "repetitions": 5,
+    "texte": "5 répétition(s) propres avec un lest de 25 % du poids de corps"
+   },
+   "chaine": "tractions",
+   "type": "progression"
+  },
+  {
+   "de": "traction-negative-lente",
+   "vers": "traction-pronation",
+   "seuil": {
+    "series": 3,
+    "repetitions": 5,
+    "par_cote": false,
+    "texte": "3 × 5 propres"
+   },
+   "chaine": "tractions",
+   "type": "progression"
+  },
+  {
+   "de": "traction-pronation",
+   "vers": "traction-lestee",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": false,
+    "texte": "3 × 10 propres"
+   },
+   "chaine": "tractions",
+   "type": "progression"
+  },
+  {
+   "de": "traction-archer",
+   "vers": "traction-une-main-negative",
+   "seuil": {
+    "series": 3,
+    "repetitions": 5,
+    "par_cote": true,
+    "texte": "3 × 5 par côté propres"
+   },
+   "chaine": "tractions_un_bras",
+   "type": "progression"
+  },
+  {
+   "de": "traction-poitrine-barre",
+   "vers": "traction-archer",
+   "seuil": {
+    "series": 3,
+    "repetitions": 8,
+    "par_cote": false,
+    "texte": "3 × 8 propres"
+   },
+   "chaine": "tractions_un_bras",
+   "type": "progression"
+  },
+  {
+   "de": "traction-une-main-negative",
+   "vers": "traction-une-main-assistee",
+   "seuil": {
+    "series": 3,
+    "repetitions": 3,
+    "par_cote": true,
+    "texte": "3 × 3 par côté propres"
+   },
+   "chaine": "tractions_un_bras",
+   "type": "progression"
+  },
+  {
+   "de": "dips",
+   "vers": "transitions-de-muscle-up-a-l-elastique",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": false,
+    "texte": "3 × 10 propres"
+   },
+   "type": "prerequis_transverse"
+  },
+  {
+   "de": "dips",
+   "vers": "muscle-up-kipping",
+   "seuil": {
+    "series": 3,
+    "repetitions": 12,
+    "par_cote": false,
+    "texte": "3 × 12 propres"
+   },
+   "type": "prerequis_transverse"
+  },
+  {
+   "de": "traction-pronation",
+   "vers": "front-lever-tuck",
+   "seuil": {
+    "series": 3,
+    "repetitions": 8,
+    "par_cote": false,
+    "texte": "3 × 8 propres"
+   },
+   "type": "prerequis_transverse"
+  },
+  {
+   "de": "hollow-body-hold",
+   "vers": "front-lever-tuck",
+   "seuil": {
+    "series": 3,
+    "secondes": 30,
+    "par_cote": false,
+    "texte": "3 × 30 s tenues propres"
+   },
+   "type": "prerequis_transverse"
+  },
+  {
+   "de": "dips",
+   "vers": "tuck-planche",
+   "seuil": {
+    "series": 3,
+    "repetitions": 10,
+    "par_cote": false,
+    "texte": "3 × 10 propres"
+   },
+   "type": "prerequis_transverse"
+  },
+  {
+   "de": "atr-dos-au-mur-tenue",
+   "vers": "handstand-push-ups-mur",
+   "seuil": {
+    "series": 3,
+    "secondes": 30,
+    "par_cote": false,
+    "texte": "3 × 30 s tenues propres"
+   },
+   "type": "prerequis_transverse"
+  },
+  {
+   "de": "hollow-body-hold",
+   "vers": "l-sit",
+   "seuil": {
+    "series": 3,
+    "secondes": 30,
+    "par_cote": false,
+    "texte": "3 × 30 s tenues propres"
+   },
+   "type": "prerequis_transverse"
+  },
+  {
+   "de": "traction-pronation",
+   "vers": "human-flag-tuck",
+   "seuil": {
+    "series": 3,
+    "repetitions": 8,
+    "par_cote": false,
+    "texte": "3 × 8 propres"
+   },
+   "type": "prerequis_transverse"
+  },
+  {
+   "de": "pike-push-ups",
+   "vers": "human-flag-tuck",
+   "seuil": {
+    "series": 3,
+    "repetitions": 8,
+    "par_cote": false,
+    "texte": "3 × 8 propres"
+   },
+   "type": "prerequis_transverse"
+  },
+  {
+   "de": "traction-pronation",
+   "vers": "back-lever-tuck",
+   "seuil": {
+    "series": 3,
+    "repetitions": 8,
+    "par_cote": false,
+    "texte": "3 × 8 propres"
+   },
+   "type": "prerequis_transverse"
+  },
+  {
+   "de": "hollow-rocks",
+   "vers": "ab-wheel-debout",
+   "seuil": {
+    "series": 3,
+    "repetitions": 15,
+    "par_cote": false,
+    "texte": "3 × 15 propres"
+   },
+   "type": "prerequis_transverse"
+  }
+ ],
+ "provenance": "genere_l9r"
+}
