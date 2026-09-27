@@ -279,19 +279,20 @@ void main() {
   });
 
   group('fiches à 320 px et 200 %', () {
+    // MediaQuery posé par `builder` : les fiches ouvertes par navigation
+    // reçoivent aussi la taille de texte et la réduction des animations.
     Widget host(Widget page, {required bool dark, required double scale}) =>
         MaterialApp(
           theme: buildTheme(dark),
-          home: Builder(
-            builder:
-                (context) => MediaQuery(
-                  data: MediaQuery.of(context).copyWith(
-                    textScaler: TextScaler.linear(scale),
-                    disableAnimations: true,
-                  ),
-                  child: page,
+          builder:
+              (context, child) => MediaQuery(
+                data: MediaQuery.of(context).copyWith(
+                  textScaler: TextScaler.linear(scale),
+                  disableAnimations: true,
                 ),
-          ),
+                child: child!,
+              ),
+          home: page,
         );
 
     for (final size in const [Size(320, 720), Size(390, 844)]) {
@@ -312,10 +313,10 @@ void main() {
               expect(tester.takeException(), null);
               expect(find.byType(PoseDemo), findsOneWidget);
               expect(find.text('MUSCLE-UP'), findsOneWidget);
-              // Défilement réel jusqu'aux progressions et aux sources.
+              // Défilement réel : atlas des muscles, puis sources en bas.
+              await scrollToAction(tester, find.byType(ExerciseAtlas));
               await scrollToAction(tester, find.text('Sources consultées'));
               expect(tester.takeException(), null);
-              expect(find.byType(ExerciseAtlas), findsWidgets);
             },
           );
         }

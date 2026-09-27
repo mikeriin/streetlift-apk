@@ -1,8 +1,61 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : L8 — Profil, démarrage progressif et questionnaire de santé préalable (KT-038 à KT-043), version 3.1.0**  
-**Date : 26 septembre 2026, Europe/Paris — version : 3.1.0+65 (versionCode réel fixé par la CI de build)**  
-**Statut : lot L8 exécuté par le pipeline automatisé (sans échange en direct). Corrigé dans le code et testé automatiquement en CI (voir L8.3) ; build signé : `LIVRAISON_L8.md` ; rien n'est vérifié sur téléphone.**
+**Passe actuelle : L9b — Intégration du pack de contenu (KT-079, KT-080, KT-082 ; KT-081 réservé), version 3.2.0**  
+**Date : 27 septembre 2026, Europe/Paris — version : 3.2.0+66 (versionCode réel fixé par la CI de build)**  
+**Statut : lot L9b exécuté par le pipeline automatisé (sans échange en direct). Corrigé dans le code et testé automatiquement en CI (voir L9b.3) ; build signé : `LIVRAISON_L9b.md` ; rien n'est vérifié sur téléphone.**
+
+## L9b.0 — Base
+
+| Élément | Valeur | Preuve |
+| --- | --- | --- |
+| Demande | `pipeline/prompt_L9b.txt` (branche `pipeline`), règles `pipeline/PIPELINE.md` | Pipeline du propriétaire |
+| Base | `streetlift_tracker_v33.zip` **3.1.0+65** (L8), `main` `620752e`, 1 990 987 octets, SHA-256 `517f28af939476851125af74a479f046de7a3bd4e9d7e047ab4d60d3361be5c0`, racine unique `streetlift_tracker/` | Recalcul |
+| Pack | `kalis_content_pack_v1_final.zip` (branche `content-pack`, `93fad2e`), SHA-256 `5a13a91e3171c303391e00123c24f5cb8e2577e775e4f4be60622351108f9086` (identique à `pipeline/ETAT.md`), pack **2.0.0**, schéma 2.1.0, 625 exercices, 81 muscles, 246 gabarits, 24 arbres ; validé par le propriétaire le 27/09/2026 | Recalcul, `assets/content/pack.json` |
+| Prérequis | L8 livré (section L8 ci-dessous) ; pack final présent | Lecture |
+| État initial | Celui de L8 sur le même arbre : format 0 changement, analyse sans problème, 598 réussis / 12 ignorés, Python 63/63, `verify_project.py`, build debug | CI L8 (`claude/ci-tools`) |
+| Outils | Pas de Flutter local (proxy) ; CI sur la branche temporaire `claude/ci-tools` ; Node 22 et Python 3.11 locaux pour l'import du pack et les fixtures ; aucun téléphone | Constaté |
+
+## L9b.1 — Contrat
+
+`docs/CONTRAT_L9b.md` : entrées et quatre contradictions non bloquantes (§1 : nom de l'archive, 81 muscles au lieu d'environ 90, écran de mentions, groupe du sterno-cléido-mastoïdien), règles et formats (§2), migration (§3 : aucune réécriture, résolution à la lecture), neuf décisions par défaut réversibles (§4), registre de validation (§5), limites (§6).
+
+## L9b.2 — Changements par ticket
+
+| Ticket | Changement |
+| --- | --- |
+| KT-079 | `tools/content_pack_import.py` (import reproductible du pack → `assets/content/*`, `lib/atlas_data.dart`, fixtures) ; `lib/content_pack.dart` (index chargé au démarrage, fiches/sources/poses/arbres à la demande, résolution nom → identifiant v2 : correspondance v1 canonique, 79 intitulés du programme, noms et alias) ; `lib/store.dart` : la base embarquée vient de l'index v2 (505 entrées v1 à l'identique + 120 ajouts), `exerciseIdFor`. `assets/exercises_db.json.gz` retiré (conservé en fixture). `tools/verify_project.py` contrôle la base v2 |
+| KT-080 | `lib/pose_engine.dart` (portage exact de `kt_pose.js` 2.0.0) ; `lib/pose_painter.dart` (`CustomPainter`, rôles de couleur par palette et mode, `PoseDemo` : animation, pause, réduction des animations → images clés fixes) ; `lib/atlas.dart` (atlas de fiche, légende des rôles) ; `lib/muscle_body.dart` : carte de STATS dessinée avec l'atlas, même API, même agrégation, même rampe ; 18 calques PNG `assets/muscles/` retirés |
+| Mentions | `MentionsScreen` (Réglages → À propos → Sources et licences) : rendu de `assets/content/licences.md` |
+| KT-081 | Réservé (illustrations de scène reportées) : rien |
+| KT-082 | `lib/exercise_screens.dart` : bibliothèque (Arsenal → Exercices : recherche, filtres type, lieu, matériel, difficulté), fiche complète et navigable ; sélecteur de séance (`builder_screen.dart`) : recherche sur les champs v2 et bouton « Fiche de l'exercice » |
+
+Fichiers : nouveaux `lib/atlas.dart`, `lib/atlas_data.dart` (généré), `lib/content_pack.dart`, `lib/exercise_screens.dart`, `lib/pose_engine.dart`, `lib/pose_painter.dart`, `assets/content/` (7 fichiers), `tools/content_pack_import.py`, `tools/tests/test_content_pack.py`, `test/l9b_pose_test.dart`, `test/l9b_content_test.dart`, `test/l9b_perf_test.dart`, `test/fixtures/l9b/` (3 fichiers), `docs/CONTRAT_L9b.md` ; modifiés `lib/store.dart`, `lib/muscle_body.dart`, `lib/builder_screen.dart`, `lib/arsenal_screen.dart`, `lib/settings_screen.dart` (entrée Mentions, version 3.2.0), `pubspec.yaml` (3.2.0+66, assets), `tools/verify_project.py`, `tools/pack_assets.py`, `tools/tests/test_tools.py`, `test/support/capture_support.dart`, `test/visual_capture_test.dart`, `README.md`, ce suivi ; supprimés `assets/exercises_db.json.gz`, `assets/muscles/*` (18). Workflow `build-apk.yml` **inchangé**. Aucune dépendance ajoutée.
+
+Adaptations de tests existants (expliquées, aucune assertion affaiblie) : `tools/tests/test_tools.py` attend 625 exercices dans la base au lieu de 505 (la base s'agrandit, les 505 sont vérifiés un par un par `test_content_pack.py` et `l9b_content_test.dart`) ; les deux utilitaires de captures ne préchargent plus les calques PNG supprimés.
+
+## L9b.3 — Tests et scénarios
+
+RESULTATS_CI
+
+Nouveaux tests : `test/l9b_pose_test.dart` (8 : concordance de toutes les images clés des 246 gabarits, 20 exercices × 5 instants contre le moteur JavaScript, chronologie et bouclage, calcul des 607 démonstrations, accents 6 palettes × 2 modes et contrastes, rendu de référence pixel par pixel pour les 12 combinaisons, animation et pause, réduction des animations) ; `test/l9b_content_test.dart` (migration v1 → v2, correspondances, doublons, STATS, historique complet rechargé sans perte, recherche et filtres, atlas, fiches 320/390 px × 130/200 % × clair/sombre avec défilement réel, démonstration indisponible, navigation de progression, bibliothèque, mentions) ; `test/l9b_perf_test.dart` (2 mesures) ; `tools/tests/test_content_pack.py` (6).
+
+Scénarios couverts : les 505 exercices v1 gardent nom, groupes et matériel ; les 1 812 lignes du programme et les 505 noms v1 ont un identifiant v2 ; les 22 doublons mènent à l'exercice canonique ; groupes de STATS identiques pour tous les noms v1 et du programme ; historique des 40 semaines + 60 séances personnelles importé, rechargé par une nouvelle instance : `logs`, `custom`, `userExercises` et muscles de la semaine identiques ; recherche par muscle, alias, nom v2 ; filtres combinés ; carte de STATS sur l'atlas avec la même rampe.
+
+## L9b.4 — Limites et suites
+
+| Statut | Éléments |
+| --- | --- |
+| Corrigé dans le code | KT-079, KT-080, KT-082 ; écran de mentions |
+| Testé automatiquement | Voir L9b.3 |
+| Vérifié sur appareil | **Rien** |
+| Reste à valider | Essais téléphone (`LIVRAISON_L9b.md`) ; images par seconde en mode profile et mémoire sur téléphone ; lisibilité des démonstrations ; registre de validation (`docs/CONTRAT_L9b.md` §5 et `validation_register.md` du pack) |
+
+- Les fiches ne sont pas encore ouvertes depuis l'écran de séance du programme (D-L9b-09).
+- Le générateur L10 exploitera `generateur`, `substitutions`, `contrainte_articulaire`, `precautions` et les arbres de progression, déjà chargés.
+- Matériel normalisé du profil L8 pas encore rattaché au vocabulaire `materiel` du pack (à faire avec L10).
+- Branche temporaire `claude/ci-tools` toujours présente.
+
+# Historique conservé — L8 (3.1.0)
 
 ## L8.0 — Base
 
