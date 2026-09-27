@@ -205,7 +205,7 @@ class AppSettings {
   bool notifOn; // rappel quotidien de la séance du jour
   int notifHour;
   int notifMinute;
-  bool notifSkipRest; // pas de rappel les jours de repos
+  bool notifSkipRest; // L12 : sans effet (jamais de rappel un jour de repos)
   bool celebrations; // écran de récompenses et cérémonie de niveau
   int weeklyGoal; // objectif de jours actifs par semaine ; 0 = adaptatif
   String title; // titre affiché sur la feuille de personnage ; '' = rang
@@ -272,10 +272,9 @@ class AppSettings {
       notifOn = j['notifOn'] as bool? ?? false,
       notifHour = j['notifHour'] as int? ?? 7,
       notifMinute = j['notifMinute'] as int? ?? 30,
-      // L12 (KT-070) : jamais de rappel un jour de repos. Le champ reste lu
-      // et écrit pour compatibilité, toujours ramené à vrai ; le réglage
-      // « Ignorer les jours de repos » n'est plus proposé.
-      notifSkipRest = true,
+      // L12 (KT-070) : conservé pour la compatibilité du format ; les rappels
+      // ne tombent plus jamais un jour de repos, quelle que soit sa valeur.
+      notifSkipRest = j['notifSkipRest'] as bool? ?? true,
       celebrations = j['celebrations'] as bool? ?? true,
       weeklyGoal = j['weeklyGoal'] as int? ?? 0,
       title = j['title'] as String? ?? '',

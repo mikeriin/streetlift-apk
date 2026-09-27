@@ -5,6 +5,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 import 'device.dart';
+import 'motivation.dart' show reminderAllowed;
 import 'store.dart';
 
 const reminderChannel = 'kalis_daily'; // Conserve les choix Android existants.
@@ -33,8 +34,11 @@ List<PlannedReminder> planReminders(
   final result = <PlannedReminder>[];
   for (final week in app.program.weeks) {
     for (final day in week.days) {
+      // L12 (KT-070) : uniquement les jours d'entraînement prévus, jamais un
+      // jour de repos (l'ancien réglage « Ignorer les jours de repos » n'a
+      // plus d'effet).
       if (app.isDone(week.n, day.j) ||
-          (app.settings.notifSkipRest && day.exercises.isEmpty)) {
+          !reminderAllowed(trainingDay: day.exercises.isNotEmpty)) {
         continue;
       }
       final date = app.program.dateFor(week.n, day.j);
@@ -63,9 +67,7 @@ List<PlannedReminder> planReminders(
         PlannedReminder(
           1000 + (week.n - 1) * 7 + day.j,
           'S${week.n} · J${day.j} — ${day.title}',
-          day.exercises.isEmpty
-              ? 'Journée de récupération.'
-              : '${day.exercises.length} exercices · ${week.block}',
+          '${day.exercises.length} exercices · ${week.block}',
           'S${week.n}-J${day.j}',
           at,
         ),

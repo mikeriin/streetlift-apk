@@ -80,7 +80,7 @@ Future<void> openMinimalSession(BuildContext context) async {
 /// Carte de l'accueil : célébration des étapes réelles (vue une fois),
 /// parcours d'habitude, bilan hebdomadaire et bilan de fin de cycle.
 /// Affichée seulement quand elle a quelque chose à dire.
-class MotivHomeCard extends StatelessWidget {
+class MotivHomeCard extends StoreWidget {
   const MotivHomeCard({super.key});
 
   static bool get visible =>
@@ -426,7 +426,7 @@ class ProgressScreen extends StatelessWidget {
 /// Contenu de « MES PROGRÈS » : victoires (débutant et novice, au plus 3
 /// chiffres), records et courbes simples (intermédiaire), statistiques
 /// complètes de Koach (avancé, expert, ou sur demande).
-class ProgressBody extends StatelessWidget {
+class ProgressBody extends StoreWidget {
   const ProgressBody({super.key});
 
   @override
@@ -766,7 +766,7 @@ class ChainsScreen extends StatelessWidget {
   );
 }
 
-class _ChainsBody extends StatelessWidget {
+class _ChainsBody extends StoreWidget {
   const _ChainsBody();
 
   @override

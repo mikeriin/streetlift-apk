@@ -726,8 +726,8 @@ const _library = <String, Map<String, List<String>>>{
     ],
     'demanding': [
       'Séance faite. C’est comme ça qu’on avance.',
+      'Séance validée. Prochaine séance, même qualité.',
       'Travail fait. Entraînement difficile, guerre facile.',
-      'Séance validée. La régularité fait la différence : prochaine séance, même qualité.',
     ],
     'neutral': [
       'Séance terminée.',

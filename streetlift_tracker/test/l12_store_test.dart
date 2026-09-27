@@ -314,10 +314,6 @@ void main() {
     test(
       'jamais un jour de repos, même avec un ancien réglage contraire',
       () async {
-        expect(
-          AppSettings.fromJson({'notifSkipRest': false}).notifSkipRest,
-          isTrue,
-        );
         SharedPreferences.setMockInitialValues({
           'settings_v1': jsonEncode({
             ...AppSettings().toJson(),
@@ -328,8 +324,9 @@ void main() {
         final other = AppStore()..storeClock = () => clock;
         await other.init();
         others.add(other);
-        expect(other.settings.notifSkipRest, isTrue);
-        other.settings.notifOn = true;
+        other.settings
+          ..notifOn = true
+          ..notifSkipRest = false;
         await other.configureStart(DateTime(2026, 8, 10), references: _refs);
         final plan = planReminders(other, clock);
         expect(plan, isNotEmpty);

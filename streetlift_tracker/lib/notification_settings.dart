@@ -81,8 +81,8 @@ class _NotificationSettingsPanelState extends State<NotificationSettingsPanel> {
                 leading: const Icon(Icons.schedule),
                 title: const Text('Heure du rappel'),
                 // L12 (KT-070) : jamais de rappel un jour de repos ni
-                // pendant une pause (ancien réglage « Ignorer les jours de
-                // repos » toujours actif).
+                // pendant une pause (réglage « Ignorer les jours de repos »
+                // retiré).
                 subtitle: const Text('Jours d’entraînement prévus uniquement'),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
