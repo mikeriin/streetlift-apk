@@ -1,7 +1,7 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : refonte muscles et animations (branche `refonte/muscles-animations`), version 4.1.1**  
-**Date : 27 septembre 2026, Europe/Paris — version : 4.1.1+69 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : refonte muscles et animations (branche `refonte/muscles-animations`), version 4.2.1**  
+**Date : 27 septembre 2026, Europe/Paris — version : 4.2.1+70 (versionCode réel fixé par la CI de build)**  
 **Statut : fusion sur `main` soumise à l'accord écrit du propriétaire. Contrôlé en CI (branche temporaire `claude/ci-refonte`) ; build de la branche : `LIVRAISON_REFONTE_MA.md` ; rien n'est vérifié sur téléphone.**
 
 ## Refonte MA.0 — Base et demande
@@ -9,7 +9,7 @@
 | Élément | Valeur |
 | --- | --- |
 | Demande | `pipeline/prompt_REFONTE_MA.txt` (27/09/2026) : carte musculaire en illustrations historiques (STATS inclus), vue de profil tirée de l'image fournie par le propriétaire, toutes les démonstrations refaites avec ces illustrations |
-| Base | `main` `b202121` (4.1.0+68, L11) |
+| Base | `main` `332e292` (4.2.0+69, L12) ; travail commencé sur `b202121` (4.1.0) puis remis à jour sur 4.2.0 (aucun fichier commun hors README, SUIVI et version) |
 | Reprise de Codex | branche `codex/retablir-carte-musculaire-et-animations` (`codex_export/`, reconstruit par `reconstruct.py`, SHA-256 vérifiés) : 18 PNG de 3.1.0 (identiques octet pour octet à 3.1.0), carte des fiches agrégée par groupes. **Non repris** : sa vue de profil (blocs polygonaux) et son formatage (autre version de Dart) |
 | Outils | pas de Flutter local (proxy) : contrôles et rendus en CI (Flutter 3.29.3) ; outils d'images en Python (numpy, scipy, Pillow) |
 
@@ -25,7 +25,7 @@
   - image fixe (deux images clés identiques, aucun mouvement) : leg curl, leg extension ;
   - sans démonstration (contact essentiel absent) : presse à cuisses (plateau loin des pieds), sled push (mains loin du traîneau), rowing haltère appui poitrine (poitrine hors du banc), transition de muscle-up assistée pieds au sol (pieds en l'air), sauts en contrebas (pas de caisse).
   Le générateur de programme (L10) lit toujours le statut du pack (références figées des tests L10) : ces 18 exercices y restent « animés ».
-- Version 4.1.1+69 (`pubspec.yaml`, `kAppVersion`).
+- Version 4.2.1+70 (`pubspec.yaml`, `kAppVersion`).
 
 ## Refonte MA.2 — Contrôles
 
@@ -41,7 +41,75 @@
 - Défauts de contenu du pack relevés pendant la revue (à corriger dans le pack, proposition dans `pipeline/DECISIONS_EN_ATTENTE.md`) : les 18 exercices ci-dessus ; accessoires manquants sans fausser le geste (« banc incliné » des YTW, porte des rowings à la serviette).
 
 
-# Historique conservé — L11 (4.1.0)
+# Historique conservé — L12 (4.2.0)
+
+**Passe précédente : L12 — Motivation et progression visible (KT-065 à KT-071), version 4.2.0**  
+**Date : 27 septembre 2026, Europe/Paris — version : 4.2.0+69 (versionCode réel fixé par la CI de build)**  
+**Statut : lot L12 exécuté par le pipeline automatisé (sans échange en direct). Corrigé dans le code et testé automatiquement en CI (voir L12.3) ; build signé : `LIVRAISON_L12.md` ; rien n'est vérifié sur téléphone.**
+
+## L12.0 — Base
+
+| Élément | Valeur | Preuve |
+| --- | --- | --- |
+| Demande | `pipeline/prompt_L12.txt` (branche `pipeline`), règles `pipeline/PIPELINE.md` | Pipeline du propriétaire |
+| Base | `streetlift_tracker_v33.zip` **4.1.0+68** (L11), `main` `b202121`, 2 198 067 octets, SHA-256 `e598e0fc4be71f25a198b324fcd1b25e9eedd5b0138af786621c6cfb6cf0ad78` (identique à `LIVRAISON_L11.md`), racine unique `streetlift_tracker/` | Recalcul |
+| Prérequis | L7 (Koach), L8 (profil), L9b (pack), L10 (générateur), L11 (adaptation) livrés | Sections ci-dessous |
+| État initial | Arbre identique à celui du build signé L11 (run 89) : format, analyse, 758 réussis / 12 ignorés, Python 72/72, `verify_project.py` | `LIVRAISON_L11.md` |
+| Outils | Pas de Flutter local (proxy) ; CI sur la branche temporaire `claude/ci-tools` ; Python 3.11 local ; aucun téléphone | Constaté |
+
+## L12.1 — Contrat
+
+`docs/CONTRAT_L12.md` : base et contradictions (§1 : récompenses face à l'invariant économie, rappels face au réglage « Ignorer les jours de repos », ton du profil jamais utilisé, nom « Ma progression » déjà pris, parcours d'habitude face au générateur L10), 12 décisions par défaut réversibles (§2), règles (§3-7), **barème proposé non appliqué** (§5), format de la section `motiv` et absence de migration (§8), registre de validation (§9), limites (§10).
+
+## L12.2 — Changements par ticket
+
+| Ticket | Changement |
+| --- | --- |
+| KT-065 | `detailLevelFor`, `figureCount`, `pickVictories` (purs) ; victoires calculées depuis le journal (progrès depuis le départ, premières fois, étape franchie, semaines régulières) ; écran « MES PROGRÈS » (victoires / records et courbes simples / statistiques de Koach) ; STATS d'un débutant ou novice = victoires ; réglage « Afficher toutes les statistiques » ; poids facultatif, masquable, sans jugement |
+| KT-066 | `ChainBook` (pack L9, `progressions.json.gz`), `chainProgress` (critère atteint, lest en % du poids de corps, déduction par étape plus avancée), `chainsForGoals` ; écrans « MES FIGURES » et détail de chaîne (icône et libellé par état, critère de passage) |
+| KT-067 | Étapes réelles (records datés, étapes de chaîne, cycles terminés, paliers de régularité) ; `pendingMilestones` (récentes, jamais vues) ; célébration sobre sur l'accueil (fondu unique, immédiat si animations réduites) ; « ÉTAPES FRANCHIES » ; `weekRegularity` / `regularStreak` (jours de repos respectés comptés, pauses exclues) ; barème en crédits **proposé, non appliqué** (`kMilestoneRewardsApproved = false`), registre KT-005 inchangé |
+| KT-068 | Bibliothèque `koachLine` (12 contextes × 3 tons × 3 groupes de niveau), sécurité neutre unique ; ton du profil L8 (ou section `motiv` sans profil) réglable dans Réglages → Motivation et progression |
+| KT-069 | Bilan hebdomadaire (3 éléments, du lundi au dimanche suivant) et de fin de cycle (progrès, point fort, point à travailler, prochain objectif, projection Koach) sur l'accueil |
+| KT-070 | `planReminders` : jamais un jour de repos (quel que soit l'ancien réglage), réglage « Ignorer les jours de repos » retiré de l'écran ; pause et permissions : règles L4/L11 inchangées |
+| KT-071 | Image de partage (rendu sur l'appareil, contenu coché, poids décoché, aucune donnée de santé) partagée par le menu Android (`kalis_track/share`, `ShareProvider` en lecture seule, non exporté) ; parcours d'habitude (débutant, novice, 28 jours, compression L11 à 20 min, cible 2 séances, désactivable) ; séance « 10 minutes, ça compte » |
+
+Fichiers : nouveaux `lib/motivation.dart`, `lib/motiv_store.dart`, `lib/motivation_screens.dart`, `android/app/src/main/kotlin/fr/tchoupi/streetlift_tracker/ShareProvider.kt`, `docs/CONTRAT_L12.md`, `test/l12_motivation_test.dart`, `test/l12_store_test.dart`, `test/l12_screens_test.dart` ; modifiés `lib/store.dart` (section `motiv`, chargement des chaînes), `lib/adapt_store.dart` (compression du parcours d'habitude), `lib/notifications.dart` (jamais un jour de repos), `lib/notification_settings.dart` (réglage retiré), `lib/home_screen.dart` (carte), `lib/settings_screen.dart` (entrée, version 4.2.0), `lib/stats_screen.dart` (victoires d'un débutant), `lib/stats_overview.dart` (entrée « Mes progrès »), `android/app/src/main/AndroidManifest.xml` (fournisseur de partage, aucune permission), `MainActivity.kt` (canal de partage), `pubspec.yaml` (4.2.0+69), `README.md`, ce suivi. Workflow `build-apk.yml` **inchangé**. Aucune dépendance ajoutée.
+
+Tests existants adaptés (règle KT-070 voulue par le propriétaire, aucune assertion supprimée) : `test/notifications_test.dart` (changement d'heure contrôlé du samedi 24/10 au lundi 26/10 — 49 h — au lieu du dimanche 25/10 devenu sans rappel, et assertion ajoutée : aucun rappel le 25/10) ; `test/l4_depart_test.dart` (deux décomptes 280 → 240 rappels : les 240 journées d'entraînement des 40 semaines).
+
+## L12.3 — Tests et scénarios
+
+| Contrôle | Résultat | Où |
+| --- | --- | --- |
+| Formatage | Reformatage par la CI repris tel quel ; passage final : aucun changement | CI `claude/ci-tools`, commit `0282f74` |
+| Analyse | No issues found | idem |
+| Suite complète | **809 réussis, 12 ignorés**, 0 échec (758 existants, dont 3 adaptés, + 51 L12) | idem |
+| Tests ciblés L5/L6 rejoués | 155 réussis, 11 ignorés (identiques à L11) | idem |
+| Python | 72/72 ; `verify_project.py` : 40 semaines, 1 812 exercices du programme, 625 exercices de la base | idem |
+| Android | `flutter build apk --debug` : réussi (APK debug arm64 compilé, `ShareProvider` et canal de partage compris, commit CI `0282f74`) ; build signé : `LIVRAISON_L12.md` | CI |
+
+Tests L12 : niveau de détail par profil (sans profil, débutant, novice, avancé, réglage) et **au plus 3 chiffres** sur l'écran entier défilé d'un débutant (8 variantes 390/320 px, 130/200 %, clair/sombre) ; poids affiché puis masqué, export sans section `motiv` par défaut ; record et étape de chaîne **célébrés une seule fois**, relance comprise, crédits inchangés, registre des gains sans étape L12 ; étape ancienne non célébrée ; **jour de repos respecté compté**, séance un jour de repos non pénalisée ; **séance de 10 minutes comptée** ; messages de sécurité identiques quel que soit le ton ; bibliothèque sans mot interdit ; bilans aux bornes dimanche 23:59 / lundi 00:01 et au lendemain du dernier jour du cycle ; **rappels jamais un jour de repos** (même avec l'ancien réglage à faux) ; **image de partage sans poids ni donnée de santé par défaut** ; parcours d'habitude (compression, cible, désactivation, fin après 28 jours) ; section `motiv` (relecture, import strict) ; célébration avec et sans réduction des animations ; chaînes mises en avant ; ton réglable ; STATS d'un débutant.
+
+Défauts trouvés par la CI et corrigés : nom `StepState` en conflit avec Flutter (renommé `ChainStepState`) ; écrans constants non reconstruits après un réglage (poids, célébration) → `StoreWidget` ; normalisation du réglage de rappel à la lecture qui changeait l'état après relance (`l4_depart_test` comparaison avant/après) → règle déplacée dans la planification.
+
+## L12.4 — Limites et suites
+
+| Statut | Éléments |
+| --- | --- |
+| Corrigé dans le code | KT-065 à KT-071 |
+| Testé automatiquement | Voir L12.3 |
+| Vérifié sur appareil | **Rien** (partage Android compris) |
+| Reste à valider | Essais téléphone (`LIVRAISON_L12.md`) ; décisions D-L12-01 à D-L12-12 (`docs/CONTRAT_L12.md` §2) ; **barème des récompenses** (§5) ; registre de validation (§9) |
+
+- Récompenses en crédits des étapes non appliquées tant que le barème n'est pas validé.
+- Étapes de chaîne détectées seulement pour les exercices reconnus par le pack ; une tenue se saisit en secondes dans le champ « répétitions ».
+- Branche temporaire `claude/ci-tools` toujours présente.
+
+---
+
+**Passe précédente : L11 — Koach étendu, adaptation au jour le jour (KT-058 à KT-064), version 4.1.0**  
+**Date : 27 septembre 2026, Europe/Paris — version : 4.1.0+68 (versionCode réel fixé par la CI de build)**  
+**Statut : lot L11 exécuté par le pipeline automatisé (sans échange en direct). Corrigé dans le code et testé automatiquement en CI (voir L11.3) ; build signé : `LIVRAISON_L11.md` ; rien n'est vérifié sur téléphone.**
 
 ## L11.0 — Base
 

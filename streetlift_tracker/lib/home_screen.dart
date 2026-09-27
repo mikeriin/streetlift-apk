@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'adapt_screens.dart';
+import 'motivation_screens.dart' show MotivHomeCard;
 import 'app_theme.dart';
 import 'estimate_view.dart';
 import 'koach_widgets.dart' show KoachWeighInBanner;
@@ -386,6 +387,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       // plateau, prudence ; après les journées.
                       if (store.adaptProposals.isNotEmpty)
                         const AdaptHomeCard(proposalsOnly: true),
+                      // L12 (KT-067, KT-069, KT-071) : célébration, parcours
+                      // d'habitude et bilans ; après les journées.
+                      if (MotivHomeCard.visible) const MotivHomeCard(),
                     ],
                   ),
                 ),

@@ -3,6 +3,9 @@ import 'app_theme.dart';
 import 'store_widget.dart';
 import 'ui.dart';
 import 'motion.dart';
+import 'motivation.dart' show DetailLevel;
+import 'motivation_screens.dart' show ProgressBody;
+import 'store.dart';
 import 'stats_navigation.dart';
 import 'stats_overview.dart';
 import 'stats_progression.dart';
@@ -33,6 +36,19 @@ class StatsScreenState extends State<StatsScreen>
     super.initState();
     _index = widget.initialSection.index;
     _visited.add(_index);
+    _victories = _victoriesOnly;
+    store.addListener(_detailChanged);
+  }
+
+  // L12 (KT-065) : débutant et novice (sans « Afficher toutes les
+  // statistiques ») : victoires concrètes à la place des onglets. Seul un
+  // changement de ce niveau reconstruit l'écran (L6 : les sections restent
+  // seules à lire le store).
+  late bool _victories;
+  bool get _victoriesOnly => store.motivDetail == DetailLevel.victories;
+  void _detailChanged() {
+    final v = _victoriesOnly;
+    if (v != _victories && mounted) setState(() => _victories = v);
   }
 
   @override
@@ -69,6 +85,7 @@ class StatsScreenState extends State<StatsScreen>
   );
   @override
   void dispose() {
+    store.removeListener(_detailChanged);
     _controller?.dispose();
     super.dispose();
   }
@@ -94,6 +111,25 @@ class StatsScreenState extends State<StatsScreen>
         icon: const Icon(Icons.info_outline_rounded),
         onPressed: () => showStatsRules(context),
       );
+      if (_victories) {
+        return KScreen(
+          appBar:
+              widget.standalone
+                  ? AppBar(title: const Text('STATS'))
+                  : KTopBar(
+                    leading: Text(
+                      'STATS',
+                      style: TextStyle(
+                        color: SL.text,
+                        fontSize: 27,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: -.6,
+                      ),
+                    ),
+                  ),
+          body: StoreBuilder(builder: (_) => const ProgressBody()),
+        );
+      }
       return KScreen(
         appBar:
             widget.standalone

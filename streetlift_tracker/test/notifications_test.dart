@@ -65,11 +65,15 @@ void main() {
       final before = plan.singleWhere(
         (r) => r.at.month == 10 && r.at.day == 24,
       );
-      final after = plan.singleWhere((r) => r.at.month == 10 && r.at.day == 25);
+      // L12 (KT-070) : plus de rappel les jours de repos ; le dimanche 25/10
+      // (S16 · J7) en est un. Même contrôle du changement d'heure avec le
+      // lundi 26/10 (S17 · J1) : 2 jours + 1 h.
+      expect(plan.where((r) => r.at.month == 10 && r.at.day == 25), isEmpty);
+      final after = plan.singleWhere((r) => r.at.month == 10 && r.at.day == 26);
       expect(before.at.hour, 7);
       expect(after.at.hour, 7);
       expect(before.at.minute, 30);
-      expect(after.at.toUtc().difference(before.at.toUtc()).inHours, 25);
+      expect(after.at.toUtc().difference(before.at.toUtc()).inHours, 49);
     },
   );
   test(

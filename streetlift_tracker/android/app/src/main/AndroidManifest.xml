@@ -40,6 +40,14 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- L12 (KT-071) : image de progression partagée par le menu Android
+             (lecture seule, non exporté, accès accordé au seul destinataire
+             choisi). Aucune permission ajoutée. -->
+        <provider
+            android:name=".ShareProvider"
+            android:authorities="${applicationId}.partage"
+            android:exported="false"
+            android:grantUriPermissions="true" />
         <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
         <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
             <intent-filter>

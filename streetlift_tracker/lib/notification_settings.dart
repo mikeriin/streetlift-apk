@@ -80,6 +80,10 @@ class _NotificationSettingsPanelState extends State<NotificationSettingsPanel> {
               ListTile(
                 leading: const Icon(Icons.schedule),
                 title: const Text('Heure du rappel'),
+                // L12 (KT-070) : jamais de rappel un jour de repos ni
+                // pendant une pause (réglage « Ignorer les jours de repos »
+                // retiré).
+                subtitle: const Text('Jours d’entraînement prévus uniquement'),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -112,18 +116,6 @@ class _NotificationSettingsPanelState extends State<NotificationSettingsPanel> {
                           if (time == null) return;
                           s.notifHour = time.hour;
                           s.notifMinute = time.minute;
-                          service.app.saveSettings();
-                          await service.reschedule();
-                        }),
-              ),
-              SwitchListTile.adaptive(
-                title: const Text('Ignorer les jours de repos'),
-                value: s.notifSkipRest,
-                onChanged:
-                    busy
-                        ? null
-                        : (value) => run(() async {
-                          s.notifSkipRest = value;
                           service.app.saveSettings();
                           await service.reschedule();
                         }),

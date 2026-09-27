@@ -859,7 +859,9 @@ void main() {
           [plan.first.at.year, plan.first.at.month, plan.first.at.day],
           [2026, 10, 1],
         );
-        expect(plan.length, 280);
+        // L12 (KT-070) : jamais de rappel un jour de repos → les 240
+        // journées d'entraînement des 40 semaines (280 avant L12).
+        expect(plan.length, 240);
         expect(plan.map((r) => r.id).toSet().length, plan.length);
       },
     );
@@ -892,7 +894,9 @@ void main() {
         final s1j1 = byId[1001]!;
         expect([s1j1.at.month, s1j1.at.day], [9, 28]);
         expect(backend.pending.every((id) => id >= 1001 && id <= 1280), isTrue);
-        expect(backend.pending.length, 280);
+        // L12 (KT-070) : jamais de rappel un jour de repos → les 240
+        // journées d'entraînement des 40 semaines (280 avant L12).
+        expect(backend.pending.length, 240);
       },
     );
   });

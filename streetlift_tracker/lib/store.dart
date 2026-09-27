@@ -18,10 +18,12 @@ import 'koach_data.dart';
 import 'koach_engine.dart' as ke;
 import 'koach_program.dart';
 import 'models.dart';
+import 'motivation.dart';
 import 'persistence.dart';
 import 'profile.dart';
 import 'program_generator.dart';
 import 'program_instance.dart';
+import 'search.dart' show normalizeText;
 import 'training_estimate.dart';
 import 'progression.dart';
 import 'set_validation.dart';
@@ -37,6 +39,7 @@ export 'set_validation.dart' show SetCheck, SetField;
 
 part 'adapt_store.dart';
 part 'koach_store.dart';
+part 'motiv_store.dart';
 part 'profile_store.dart';
 part 'program_store.dart';
 
@@ -202,7 +205,7 @@ class AppSettings {
   bool notifOn; // rappel quotidien de la séance du jour
   int notifHour;
   int notifMinute;
-  bool notifSkipRest; // pas de rappel les jours de repos
+  bool notifSkipRest; // L12 : sans effet (jamais de rappel un jour de repos)
   bool celebrations; // écran de récompenses et cérémonie de niveau
   int weeklyGoal; // objectif de jours actifs par semaine ; 0 = adaptatif
   String title; // titre affiché sur la feuille de personnage ; '' = rang
@@ -269,6 +272,8 @@ class AppSettings {
       notifOn = j['notifOn'] as bool? ?? false,
       notifHour = j['notifHour'] as int? ?? 7,
       notifMinute = j['notifMinute'] as int? ?? 30,
+      // L12 (KT-070) : conservé pour la compatibilité du format ; les rappels
+      // ne tombent plus jamais un jour de repos, quelle que soit sa valeur.
       notifSkipRest = j['notifSkipRest'] as bool? ?? true,
       celebrations = j['celebrations'] as bool? ?? true,
       weeklyGoal = j['weeklyGoal'] as int? ?? 0,
@@ -752,6 +757,15 @@ class AppStore extends ChangeNotifier {
   final Map<String, Object?> _adaptCache = {};
   String _adaptCacheRev = '';
 
+  /// L12 : motivation et progression visible (section `motiv`, écrite
+  /// seulement si elle sert). Contrat : docs/CONTRAT_L12.md.
+  MotivData motiv = MotivData();
+
+  /// Entrées de motivation illisibles ignorées au dernier démarrage.
+  int motivLoadIssues = 0;
+  final Map<String, Object?> _motivCache = {};
+  String _motivCacheRev = '';
+
   /// Annotations du programme pour Koach (asset généré, lecture seule).
   /// Vide si l'asset est illisible : Koach reste alors indisponible.
   KoachProgram koachProgram = const KoachProgram.empty();
@@ -896,6 +910,10 @@ class AppStore extends ChangeNotifier {
     // gardent leur nom, leurs groupes et leur matériel v1 (clés de
     // l'historique, des records et de STATS) ; les 120 ajouts suivent.
     content = await ContentIndex.load();
+    // L12 (KT-066) : chaînes de progression du pack (fichier léger).
+    try {
+      await ChainBook.load();
+    } catch (_) {}
     for (final e in content.entries) {
       dbExercises.add(e.toLegacy());
     }
@@ -2441,6 +2459,7 @@ class AppStore extends ChangeNotifier {
     profile: profile,
     programInstance: programInstance,
     adapt: adapt,
+    motiv: motiv,
   );
 
   Map<String, dynamic> _backupJson(_BackupData data) {
@@ -2509,6 +2528,9 @@ class AppStore extends ChangeNotifier {
       // L11 : adaptations écrites seulement si elles servent (export
       // identique à 4.0.0 sinon) ; ignorées par les versions antérieures.
       if (!data.adapt.pristine) 'adapt': data.adapt.toJson(),
+      // L12 : motivation écrite seulement si elle sert (export identique à
+      // 4.1.0 sinon) ; ignorée par les versions antérieures.
+      if (!data.motiv.pristine) 'motiv': data.motiv.toJson(),
     };
   }
 
@@ -2819,6 +2841,13 @@ class AppStore extends ChangeNotifier {
       strict: limits != null,
       issues: adaptIssues,
     );
+    // L12 : motivation. Import strict ; démarrage tolérant.
+    final motivIssues = <String>[];
+    final nextMotiv = MotivData.fromJson(
+      m['motiv'],
+      strict: limits != null,
+      issues: motivIssues,
+    );
     final nextUnlocked = <String, int>{};
     final nextLegacy = <String, String>{};
     (m['legacyGrants'] as Map<String, dynamic>? ?? {}).forEach((k, v) {
@@ -2930,6 +2959,8 @@ class AppStore extends ChangeNotifier {
       programIssues: programIssues.length,
       adapt: nextAdapt,
       adaptIssues: adaptIssues.length,
+      motiv: nextMotiv,
+      motivIssues: motivIssues.length,
     );
   }
 
@@ -3024,6 +3055,10 @@ class AppStore extends ChangeNotifier {
     adaptLoadIssues = data.adaptIssues;
     _adaptCache.clear();
     _adaptCacheRev = '';
+    motiv = data.motiv;
+    motivLoadIssues = data.motivIssues;
+    _motivCache.clear();
+    _motivCacheRev = '';
     koachSkipped.clear();
     _koachStash.clear();
     _koachCache = null;
@@ -4737,6 +4772,10 @@ class _BackupData {
   /// L11 : adaptations (neuves si la section est absente).
   final AdaptData adapt;
   final int adaptIssues;
+
+  /// L12 : motivation (neuve si la section est absente).
+  final MotivData motiv;
+  final int motivIssues;
   _BackupData({
     required this.values,
     required this.refStatus,
@@ -4765,8 +4804,11 @@ class _BackupData {
     this.programIssues = 0,
     AdaptData? adapt,
     this.adaptIssues = 0,
+    MotivData? motiv,
+    this.motivIssues = 0,
   }) : koach = koach ?? KoachData(),
-       adapt = adapt ?? AdaptData();
+       adapt = adapt ?? AdaptData(),
+       motiv = motiv ?? MotivData();
 }
 
 /// Séance à reprendre (bandeau de l'accueil).

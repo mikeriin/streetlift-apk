@@ -1,6 +1,7 @@
 package fr.tchoupi.streetlift_tracker
 
 import android.app.Activity
+import android.content.ClipData
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -211,6 +212,40 @@ class MainActivity : FlutterActivity() {
                         }
                     }
                     else -> result.notImplemented()
+                }
+            }
+        // L12 (KT-071) : image de progression partagée par le menu Android.
+        // Fichier temporaire de l'application (cache), servi en lecture seule
+        // par ShareProvider ; aucun serveur, aucune permission.
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "kalis_track/share")
+            .setMethodCallHandler { call, result ->
+                if (call.method != "shareImage") {
+                    result.notImplemented()
+                    return@setMethodCallHandler
+                }
+                val bytes = call.argument<ByteArray>("bytes")
+                val text = call.argument<String>("text") ?: ""
+                if (bytes == null || bytes.isEmpty() || bytes.size > 8 * 1024 * 1024) {
+                    result.success("error")
+                    return@setMethodCallHandler
+                }
+                try {
+                    val file = ShareProvider.write(this, bytes)
+                    val uri = ShareProvider.uriFor(this, file)
+                    val send = Intent(Intent.ACTION_SEND)
+                        .setType("image/png")
+                        .putExtra(Intent.EXTRA_STREAM, uri)
+                        .putExtra(Intent.EXTRA_TEXT, text)
+                        .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    send.clipData = ClipData.newRawUri("", uri)
+                    val chooser = Intent.createChooser(send, "Partager ma progression")
+                        .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    startActivity(chooser)
+                    result.success("shared")
+                } catch (_: ActivityNotFoundException) {
+                    result.success("unavailable")
+                } catch (_: Exception) {
+                    result.success("error")
                 }
             }
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "kalis_track/device")

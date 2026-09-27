@@ -1,6 +1,6 @@
-# Kalis Track 4.1.1 — Muscles et démonstrations en illustrations anatomiques
+# Kalis Track 4.2.1 — Muscles et démonstrations en illustrations anatomiques
 
-## 4.1.1 — Refonte muscles et animations (branche `refonte/muscles-animations`)
+## 4.2.1 — Refonte muscles et animations (branche `refonte/muscles-animations`)
 
 - **Carte des muscles d'origine** : STATS, accueil et WOD retrouvent les illustrations anatomiques de 3.1.0 (face / dos, un calque par groupe, rampe bordeaux → rouge avec halo), rendu identique à 3.1.0 avec tes données actuelles.
 - **Fiche exercice** : carte face / dos / **profil** (nouvelle vue, dessinée à partir de l'illustration de profil validée par le propriétaire), muscles principaux, secondaires, stabilisateurs et étirés en intensités distinctes, légende et liste en texte conservées.
@@ -9,6 +9,23 @@
 - Aucune donnée modifiée, aucune migration. Contenu sportif **non relu par un professionnel diplômé**.
 
 Détail : `SUIVI_PROJET.md` (refonte muscles et animations). Outils : `tools/muscles_profile.py`, `tools/anim_cutout.py`. Tests : `test/refonte_ma_test.dart`, `tools/tests/test_refonte_muscles.py`.
+
+
+# Historique — Kalis Track 4.2.0 — Tes progrès, visibles
+
+## 4.2.0 — Motivation et progression visible (lot L12)
+
+- **« MES PROGRÈS »** (STATS → Mes progrès, ou Réglages → Motivation et progression) : le détail suit ton niveau. Débutant ou novice : des victoires concrètes (« +6 répétitions en pompes depuis ton départ », « Première traction ! », « 5 semaines régulières »), au plus 3 chiffres par écran ; intermédiaire : records récents et courbes simples ; avancé et expert : statistiques complètes de Koach. Réglage **« Afficher toutes les statistiques »** pour tous. Le poids est facultatif, masquable, jamais jugé.
+- **« MES FIGURES »** : les chaînes de progression du pack (pompes, tractions, dips, squat, muscle-up, front lever…) — étapes atteintes, étape en cours avec son critère de passage, étape suivante. Les chaînes utiles à ton objectif sont en tête.
+- **Étapes franchies** : record, étape de chaîne, cycle terminé, régularité (les jours de repos respectés comptent). Une célébration sobre sur l'accueil, une seule fois, qui respecte la réduction des animations. Récompenses en crédits : barème proposé, en attente de validation (rien n'est modifié dans ton économie).
+- **Ton de Koach** : Bienveillant, Exigeant (« entraînement difficile, guerre facile ») ou Neutre, par défaut selon ton niveau. Les messages de sécurité restent toujours neutres.
+- **Bilans** : chaque lundi, le bilan de la semaine (une victoire, l'assiduité, le cap) ; à la fin d'un cycle, progrès, point fort, point à travailler, prochain objectif et projection de Koach.
+- **Rappels** : à l'heure choisie, uniquement les jours d'entraînement prévus, jamais un jour de repos ni pendant une pause.
+- **Partager ma progression** : image créée sur le téléphone, contenu au choix, sans poids ni donnée de santé par défaut, via le menu de partage Android. Aucun serveur.
+- **Débutant ou novice** : parcours d'habitude les 4 premières semaines (2 séances de 20 minutes suffisent, désactivable) et séance **« 10 minutes, ça compte »** toujours disponible.
+- Aucune donnée migrée. Contenu sportif **non relu par un professionnel diplômé** : des repères d'entraînement, aucune promesse de résultat.
+
+Détail : `docs/CONTRAT_L12.md`, `SUIVI_PROJET.md` (L12). Tests : `test/l12_*_test.dart`.
 
 
 # Historique — Kalis Track 4.1.0 — Koach s'adapte à ta journée
