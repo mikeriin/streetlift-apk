@@ -870,20 +870,20 @@ class _StepRow extends StatelessWidget {
     final step = progress.chain.steps[index];
     final state = progress.stateOf(index);
     final (icon, label) = switch (state) {
-      StepState.reached => (Icons.check_circle_outline, 'atteinte'),
-      StepState.current => (Icons.radio_button_checked, 'en cours'),
-      StepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
-      StepState.locked => (Icons.lock_outline, 'à venir'),
+      ChainStepState.reached => (Icons.check_circle_outline, 'atteinte'),
+      ChainStepState.current => (Icons.radio_button_checked, 'en cours'),
+      ChainStepState.next => (Icons.arrow_circle_right_outlined, 'suivante'),
+      ChainStepState.locked => (Icons.lock_outline, 'à venir'),
     };
     final t = step.threshold;
     final day = progress.reached[index];
     return KCard(
       key: ValueKey('motiv-step-${step.id}'),
-      accent: state == StepState.current ? SL.accent : null,
+      accent: state == ChainStepState.current ? SL.accent : null,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: state == StepState.reached ? SL.success : SL.dim),
+          Icon(icon, color: state == ChainStepState.reached ? SL.success : SL.dim),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -894,13 +894,13 @@ class _StepRow extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 Text(
-                  state == StepState.reached && day != null
+                  state == ChainStepState.reached && day != null
                       ? 'Étape $label le ${_date(day)}'
                       : 'Étape $label',
                 ),
-                if (state == StepState.current && t != null)
+                if (state == ChainStepState.current && t != null)
                   Text('Pour passer : ${t.text}'),
-                if (state == StepState.next && t != null)
+                if (state == ChainStepState.next && t != null)
                   Text(
                     'Critère ensuite : ${t.text}',
                     style: TextStyle(color: SL.dim),

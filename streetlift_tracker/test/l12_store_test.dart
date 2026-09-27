@@ -10,6 +10,7 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/koach_adapt.dart' show dayIndex;
+import 'package:streetlift_tracker/models.dart' show DayPlan;
 import 'package:streetlift_tracker/motivation.dart';
 import 'package:streetlift_tracker/notifications.dart';
 import 'package:streetlift_tracker/store.dart';

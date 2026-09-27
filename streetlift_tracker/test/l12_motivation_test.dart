@@ -88,10 +88,10 @@ void main() {
       expect(p.reached, {0: 12});
       expect(p.met, {0: 12});
       expect(p.current, 1);
-      expect(p.stateOf(0), StepState.reached);
-      expect(p.stateOf(1), StepState.current);
-      expect(p.stateOf(2), StepState.next);
-      expect(p.stateOf(3), StepState.locked);
+      expect(p.stateOf(0), ChainStepState.reached);
+      expect(p.stateOf(1), ChainStepState.current);
+      expect(p.stateOf(2), ChainStepState.next);
+      expect(p.stateOf(3), ChainStepState.locked);
       expect(p.currentStep!.threshold!.text, '3 × 12 propres');
     });
 

@@ -179,7 +179,7 @@ bool thresholdMet(ChainThreshold t, List<PerfSet> sets, {double? bodyweight}) {
   return ok >= math.max(1, t.series);
 }
 
-enum StepState { reached, current, next, locked }
+enum ChainStepState { reached, current, next, locked }
 
 /// Avancement d'une chaîne : jour de passage de chaque étape franchie
 /// (null pour une étape franchie sans date propre ou non franchie),
@@ -214,11 +214,11 @@ class ChainProgress {
 
   bool get complete => current >= chain.steps.length;
 
-  StepState stateOf(int i) {
-    if (reached.containsKey(i)) return StepState.reached;
-    if (i == current) return StepState.current;
-    if (i == current + 1) return StepState.next;
-    return StepState.locked;
+  ChainStepState stateOf(int i) {
+    if (reached.containsKey(i)) return ChainStepState.reached;
+    if (i == current) return ChainStepState.current;
+    if (i == current + 1) return ChainStepState.next;
+    return ChainStepState.locked;
   }
 
   ChainStep? get currentStep => complete ? null : chain.steps[current];
