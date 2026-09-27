@@ -1,0 +1,51 @@
+MISSION — KALIS TRACK : PROTOTYPE « MANNEQUIN 3D » (flutter_scene) — 3 EXERCICES, DÉCISION GO / NO-GO DU PROPRIÉTAIRE
+
+Tu interviens comme développeur Flutter/Dart senior spécialisé en rendu 3D temps réel, technical artist Blender (Python bpy) et biomécanicien du mouvement. Suis `pipeline/PIPELINE.md` (démarrage, économie, décisions, notifications) ; les règles propres à ce lot, ci-dessous, priment.
+
+0. BUT ET DÉCISION DÉJÀ PRISE
+— Le propriétaire (27/09/2026) abandonne les animations 2D (silhouette polygonale, puis découpage d'images) au profit d'un modèle 3D animé selon le mouvement, avec les muscles sollicités mis en évidence par un effet de rendu. Moteur choisi par lui : flutter_scene (Flutter GPU, https://fscene.dev, dépôt github.com/bdero/flutter_scene). Pas d'autre moteur sans son accord.
+— Ce lot est un PROTOTYPE jetable dans sa forme, réutilisable dans ses fichiers : il prouve le rendu, la justesse des mouvements, la mise en évidence des muscles et la tenue sur le téléphone du propriétaire. Il ne modifie PAS l'application Kalis Track.
+— Le propriétaire n'a qu'un téléphone : tout ce qu'il doit voir ou installer passe par un lien ouvrable sur mobile.
+
+1. BRANCHE, PROJET, SÉCURITÉ
+— Branche `poc/3d` créée depuis le `main` le plus récent. Tous tes commits y vont. INTERDIT : pousser sur `main`, fusionner, toucher `streetlift_tracker_v33.zip`, `build-apk.yml`, la signature (`signing/`), ou lancer un autre lot.
+— Projet Flutter AUTONOME `poc_3d/` à la racine de la branche (pas dans le ZIP) : application de démonstration, identifiant Android `fr.kalistrack.poc3d` (distinct de l'application, pour ne jamais écraser les données du propriétaire), signée avec la clé de debug générée par la CI. Aucun secret, aucune réutilisation de la clé de l'application.
+— Flutter : dernière version stable ≥ 3.47 (note la version exacte) ; Flutter GPU activé dans `AndroidManifest.xml` (`io.flutter.embedding.android.EnableFlutterGPU` = true), Impeller. L'application Kalis Track reste sur 3.29.3 : la montée de version fera partie du lot d'intégration, seulement après un GO.
+— CI : workflow dédié `.github/workflows/poc3d.yml`, déclenché uniquement sur `poc/3d` et le dossier `poc_3d/` (ne touche pas aux autres workflows, n'utilise jamais `claude/ci-tools`).
+
+2. MODÈLE 3D (Blender sans interface : `pip install bpy --break-system-packages`, ou Blender en CI)
+— Corps : MakeHuman / MPFB (ressources de base CC0), homme athlétique adulte, pose de référence en T ou A, squelette « game engine » réduit aux os utiles (bassin, 3 vertèbres, cou, tête, clavicules, bras, avant-bras, mains avec doigts regroupés, cuisses, jambes, pieds ; ≤ 30 os), poids de peau propres aux coudes, épaules, hanches, genoux. Maillage décimé à 15 000 triangles maximum (note le nombre).
+— Muscles : dépôt github.com/slfresh/fitmitwith-anatomy-atlas (GLB, 218 régions musculaires, dérivé de Z-Anatomy / BodyParts3D, CC BY-SA 4.0). Transfère les régions sur le corps MPFB (projection surface la plus proche, modificateur Data Transfer ou équivalent) : attribut par sommet `muscle_id` (8 bits) relié aux 81 muscles du pack (`assets/content/muscles.json` du ZIP de main) puis aux 11 groupes de l'application. Table de correspondance livrée (JSON) et testée : chaque muscle du pack visible en surface a au moins une région ; aucune région orpheline.
+— Style : proche des illustrations historiques (`assets/muscles/front_base.png` et `back_base.png` du ZIP 3.1.0, commit 620752e) : musculature grise mate, fines séparations sombres entre muscles (cuites dans la texture de couleur à partir des frontières de régions), relief musculaire (carte de normales cuite depuis le modèle anatomique), tête et mains sobres. Rends une planche de comparaison 3D (face / dos / profil) à côté des images historiques et REGARDE-la (outil Read) ; corrige tant que l'écart de style se voit.
+— Licence : fichiers dérivés de Z-Anatomy sous CC BY-SA 4.0 ; écris `poc_3d/ATTRIBUTION.md` (crédits Z-Anatomy, BodyParts3D, fitmitwith-anatomy-atlas, MPFB, modifications faites, lien de licence) et un écran « Licences » dans la démo. Le code n'est pas concerné ; signale tout doute dans la livraison.
+— Matériel à l'échelle réelle, modélisé simplement : barre de traction (Ø 28 mm, à 2,30 m), barres parallèles (Ø 45 mm, écart 55 cm, hauteur 1,40 m), barre olympique (Ø 28 mm, 2,20 m, disques Ø 45 cm), sol.
+
+3. ANIMATIONS (3 exercices du pack, identifiants exacts relevés dans `assets/content/poses.*` et `details`)
+— Traction pronation (vue de démonstration : dos), dips aux barres parallèles (face), squat barre sur le dos (profil). Chaque clip doit pouvoir être regardé sous toutes les vues.
+— Pour chacun, fiche biomécanique (reprends celle du pack si elle existe, sinon écris-la) : phases, angles articulaires de début et de fin par articulation (degrés, sources notées), prise, contacts, trajectoire de la charge, tempo. Les images clés sont CALCULÉES dans Blender : angles imposés + cinématique inverse pour les contacts (mains sur la barre, pieds au sol, barre sur les trapèzes), jamais placées à l'œil. Clip en boucle complète, cuit sur le squelette, exporté en GLB.
+— Contrôles automatiques (script Python, en CI) : longueurs d'os constantes, angles dans les amplitudes humaines, contacts respectés à 1 cm près, aucune pénétration dans le matériel, centre de masse au-dessus de l'appui (squat), barre sur une trajectoire verticale à ± 3 cm (squat), amplitude complète (menton au-dessus de la barre en traction ; épaule sous le coude en dips ; cuisse parallèle ou plus bas en squat).
+— Contrôle visuel : planche des images clés rendue dans Blender pour chaque exercice et chaque vue, REGARDÉE et corrigée (exercice reconnaissable, amplitude, contacts, matériel à l'échelle, sens du mouvement, posture sûre).
+
+4. DÉMONSTRATION FLUTTER (flutter_scene)
+— Import des GLB par les build hooks de flutter_scene (format `.fsceneb`) ; lecture des clips en boucle.
+— Matériau personnalisé `.fmat` : corps gris mat + mise en évidence des muscles par intensité (tableau uniforme ou texture 128 × 1 indexée par `muscle_id`) : principal 1, secondaire 0,62, stabilisateur 0,35 ; rampe historique bordeaux → rouge reprise de `lib/muscle_body.dart` (version 3.1.0), indépendante de la couleur dominante. Effet de halo : bloom limité à la part émissive des muscles sollicités (post-traitement de flutter_scene), réglé pour rester lisible sur fond sombre et clair.
+— Écran unique : choix de l'exercice, boutons face / dos / profil / 3/4, rotation au doigt autour du personnage, lecture / pause, curseur de temps, liste texte des muscles sous la vue (jamais l'information par la couleur seule), mode sombre et clair, surcouche de mesure (images par seconde, temps de rendu moyen et 99e centile, mémoire).
+— Réduction des animations Android activée : images clés fixes, pas de boucle.
+— Repli : si Flutter GPU n'est pas disponible sur l'appareil, message clair et images fixes pré-rendues (Blender), sans plantage. Documente les appareils non compatibles connus.
+
+5. CONTRÔLES ET MESURES
+— `dart format --output=none --set-exit-if-changed`, `flutter analyze` (zéro erreur, zéro avertissement), tests Dart (correspondance muscles → groupes, rampe de couleurs, choix des intensités, chargement des clips), tests Python (contrôles de l'étape 3).
+— Captures du vrai rendu flutter_scene : essaie d'abord `flutter test` ; si Flutter GPU n'y fonctionne pas, test d'intégration sur émulateur Android en CI (`reactivecircus/android-emulator-runner`, image API 34, GPU `swiftshader_indirect`) avec captures d'écran ; si aucun des deux ne rend, dis-le clairement et fournis les rendus Blender comme référence visuelle. N'invente aucun résultat.
+— Mesure en CI des temps de rendu sur l'émulateur (indicatif) ; la mesure qui compte est celle du téléphone du propriétaire, via la surcouche.
+— Poids : APK de démonstration, GLB, clips, textures (en Mo) ; objectif pour l'intégration : moins de 3 Mo de ressources 3D pour le corps et moins de 5 Ko par clip.
+
+6. LIVRAISON AU PROPRIÉTAIRE (téléphone)
+— Publie l'APK de démonstration en pré-version GitHub (`poc-3d-v1`, marquée pre-release, sur le dépôt mikeriin/streetlift-apk) : lien direct de téléchargement ouvrable sur mobile.
+— GIF courts (boucle complète) : traction de dos, dips de face, squat de profil, plus une rotation 360° du mannequin au repos avec un groupe mis en évidence ; planches d'images clés ; planche de style à côté des images historiques.
+— Page claude.ai « Aperçu mannequin 3D » (outil Artifact ; charge d'abord la skill artifact-design), lisible sur téléphone : GIF et images, lien de l'APK, mode d'emploi en 3 lignes pour l'installer (autoriser l'installation depuis le navigateur), résultats des contrôles et mesures, limites, coût estimé du lot d'intégration (conversion des ~600 exercices, montée de Flutter de l'application, remplacement de la carte des fiches).
+— Écris `LIVRAISON_POC3D.md` (projet claude.ai via l'outil Projects, et `pipeline/livraisons/`), mets à jour `pipeline/ETAT.md`, puis notifie : « Kalis Track mannequin 3D : prototype prêt, à tester sur ton téléphone » avec le lien de la page.
+— Attends la réponse du propriétaire dans cette session : corrections demandées → applique-les et republie (`poc-3d-v2`, …) ; GO ou NO-GO → consigne sa décision dans `pipeline/DECISIONS_EN_ATTENTE.md` et arrête-toi. Aucun autre lot, aucune fusion.
+
+LIMITES
+— Un exercice qui ne passe pas ses contrôles après deux corrections est livré avec ses défauts documentés, jamais présenté comme juste.
+— Si flutter_scene bloque (import, skinning, matériau, Android), arrête-toi à la première impasse avérée, documente-la (version, message d'erreur, essais faits) et notifie le propriétaire avant de changer d'approche.
