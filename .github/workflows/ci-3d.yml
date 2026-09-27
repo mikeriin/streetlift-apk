@@ -348,9 +348,14 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A ci-out
-          git commit -qm "CI 3D : résultats du run ${{ github.run_id }}" || exit 0
+          # Posé sur la tête actuelle de la branche (un run annulé a pu y
+          # recommiter ci-out entre-temps) : seul ci-out change, sans rebase
+          # ni conflit (M2).
           for i in 1 2 3; do
-            git pull -q --rebase origin claude/ci-3d && git push -q origin HEAD:claude/ci-3d && break
+            git fetch -q origin claude/ci-3d
+            git reset -q FETCH_HEAD
+            git add -A ci-out
+            git commit -qm "CI 3D : résultats du run ${{ github.run_id }}" || exit 0
+            git push -q origin HEAD:claude/ci-3d && break
             sleep 5
           done
