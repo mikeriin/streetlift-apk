@@ -78,7 +78,7 @@ jobs:
         working-directory: streetlift_tracker
         run: |
           set -o pipefail
-          if ! dart format --output=none --set-exit-if-changed lib test > ../out/format.log 2>&1; then
+          if ! dart format --output=none --set-exit-if-changed lib test integration_test test_driver > ../out/format.log 2>&1; then
             # Correctif prêt à appliquer (tout le code, y compris
             # integration_test et test_driver).
             dart format lib test integration_test test_driver > /dev/null 2>&1 || true
@@ -86,7 +86,6 @@ jobs:
             git checkout -q -- lib test integration_test test_driver
             exit 1
           fi
-          dart format --output=none --set-exit-if-changed integration_test test_driver >> ../out/format.log 2>&1
       - name: Analyse
         id: analyze
         continue-on-error: true
