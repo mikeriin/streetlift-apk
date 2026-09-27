@@ -1,20 +1,8 @@
- ci-out/analyze.log                            |     3 -
- ci-out/android-debug.log                      |    12 -
- ci-out/commit.txt                             |     2 +-
- ci-out/format-full.diff                       | 70761 ------------------------
- ci-out/format.diff                            |    10 -
- ci-out/format.log                             |    11 +-
- ci-out/python.log                             |    70 -
- ci-out/test-l5c.log                           |   210 -
- ci-out/test-summary.txt                       |     1 -
- ci-out/test.log                               |   721 -
- streetlift_tracker/lib/arsenal_screen.dart    |     3 +-
- streetlift_tracker/lib/atlas.dart             |    15 +-
- streetlift_tracker/lib/atlas_data.dart        |  1838 +-
- streetlift_tracker/lib/exercise_screens.dart  |    64 +-
- streetlift_tracker/lib/muscle_body.dart       |     4 +-
- streetlift_tracker/lib/pose_engine.dart       |     4 +-
- streetlift_tracker/lib/pose_painter.dart      |   157 +-
- streetlift_tracker/test/l9b_content_test.dart |    70 +-
- streetlift_tracker/test/l9b_pose_test.dart    |    49 +-
- 19 files changed, 1863 insertions(+), 72142 deletions(-)
+ ci-out/analyze.log      |     7 -
+ ci-out/commit.txt       |     2 +-
+ ci-out/format-full.diff | 74388 ----------------------------------------------
+ ci-out/format.diff      |    20 -
+ ci-out/format.log       |    11 +-
+ ci-out/python.log       |    75 -
+ ci-out/test-l5c.log     |   457 -
+ 7 files changed, 2 insertions(+), 74958 deletions(-)
