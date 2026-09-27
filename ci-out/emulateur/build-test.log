@@ -1,5 +1,3 @@
-Upgrading gradle.properties
-Upgrading gradle.properties
 Running Gradle task 'assembleDebug'...                          
 Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
 Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
@@ -13,21 +11,5 @@ Alternatively, use the flag "--android-skip-build-dependency-validation" to bypa
 Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/settings.gradle), by a plugin with the id of com.android.application. 
 If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
 
-e: file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/app/src/main/kotlin/fr/tchoupi/streetlift_tracker/ShareProvider.kt:74:15 Type argument for reified type parameter 'T' was inferred to the intersection of ['Comparable<*>?' & 'Serializable?']. Reification of an intersection type results in the common supertype being used. This may lead to subtle issues and an explicit type argument is encouraged.
-
-FAILURE: Build failed with an exception.
-
-* What went wrong:
-Execution failed for task ':app:compileDebugKotlin'.
-> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.btapi.BuildToolsApiCompilationWork
-   > Compilation error. See log for more details
-
-* Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights.
-> Get more help at https://help.gradle.org.
-
-BUILD FAILED in 7m 19s
-Running Gradle task 'assembleDebug'...                            441.0s
-Gradle task assembleDebug failed with exit code 1
+Running Gradle task 'assembleDebug'...                            429.1s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
