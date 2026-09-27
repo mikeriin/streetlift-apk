@@ -191,7 +191,10 @@ void main() {
         'images=$n images_cles=${anim.keyframes.length}',
       );
       for (var i = 0; i < n; i++) {
-        await show(tile(anim, poseJointsAt(anim, d * i / n), vb, 360), const Size(360, 360));
+        await show(
+          tile(anim, poseJointsAt(anim, d * i / n), vb, 360),
+          const Size(360, 360),
+        );
         await savePng(
           tester,
           boundary,

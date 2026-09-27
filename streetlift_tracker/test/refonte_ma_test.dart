@@ -85,29 +85,32 @@ void main() {
       expect(muscleMasks['profile'], containsAll(AppStore.muscleGroups));
     });
 
-    test('calques alignés au pixel sur leur illustration, dans la silhouette', () async {
-      for (final view in const ['front', 'back', 'profile']) {
-        final base = await _png('assets/muscles/${view}_base.png');
-        for (final g in muscleMasks[view]!) {
-          final path = 'assets/muscles/${view}_${_fileKeys[g]}.png';
-          final layer = await _png(path);
-          expect((layer.$1, layer.$2), (base.$1, base.$2), reason: path);
-          var inside = 0, outside = 0;
-          for (var i = 3; i < layer.$3.length; i += 4) {
-            final a = layer.$3[i];
-            if (a < 128) continue;
-            if (base.$3[i] >= 128) {
-              inside++;
-            } else {
-              outside++;
+    test(
+      'calques alignés au pixel sur leur illustration, dans la silhouette',
+      () async {
+        for (final view in const ['front', 'back', 'profile']) {
+          final base = await _png('assets/muscles/${view}_base.png');
+          for (final g in muscleMasks[view]!) {
+            final path = 'assets/muscles/${view}_${_fileKeys[g]}.png';
+            final layer = await _png(path);
+            expect((layer.$1, layer.$2), (base.$1, base.$2), reason: path);
+            var inside = 0, outside = 0;
+            for (var i = 3; i < layer.$3.length; i += 4) {
+              final a = layer.$3[i];
+              if (a < 128) continue;
+              if (base.$3[i] >= 128) {
+                inside++;
+              } else {
+                outside++;
+              }
             }
+            expect(inside, greaterThan(500), reason: path);
+            // calque dans la silhouette (tolérance d'anticrénelage)
+            expect(outside, lessThan(inside ~/ 200 + 5), reason: path);
           }
-          expect(inside, greaterThan(500), reason: path);
-          // calque dans la silhouette (tolérance d'anticrénelage)
-          expect(outside, lessThan(inside ~/ 200 + 5), reason: path);
         }
-      }
-    });
+      },
+    );
 
     test('profil : fond transparent, bords sans liseré clair', () async {
       final (w, h, px) = await _png('assets/muscles/profile_base.png');
@@ -142,88 +145,89 @@ void main() {
         stabilisateurs: ['droit_abdomen'],
         etires: ['grand_pectoral_sterno_costal', 'droit_abdomen'],
       );
-      expect(t, {
-        'dos': 1.0,
-        'biceps': .62,
-        'gainage': .35,
-        'pectoraux': .25,
-      });
-      expect(const ExerciseAtlas(primaires: ['grand_dorsal']).groupIntensities, {
-        'dos': 1.0,
-      });
+      expect(t, {'dos': 1.0, 'biceps': .62, 'gainage': .35, 'pectoraux': .25});
+      expect(
+        const ExerciseAtlas(primaires: ['grand_dorsal']).groupIntensities,
+        {'dos': 1.0},
+      );
     });
 
     for (final dark in const [true, false]) {
-      testWidgets('STATS : rendu identique à 3.1.0 (${dark ? 'sombre' : 'clair'})', (
-        tester,
-      ) async {
-        SL.dark = dark;
-        addTearDown(() => SL.dark = true);
-        const data = {
-          'dos': 14.0,
-          'biceps': 9.0,
-          'pectoraux': 10.0,
-          'triceps': 8.0,
-          'épaules': 7.0,
-          'quadriceps': 6.0,
-          'gainage': 5.0,
-          'avant-bras': 4.0,
-          'ischios': 3.0,
-          'fessiers': 3.0,
-          'mollets': 1.0,
-        };
-        final images = <Uint8List>[];
-        for (final variant in [0, 1]) {
-          for (final glow in [false, true]) {
-            final key = GlobalKey();
-            tester.view.physicalSize = const Size(390, 340);
-            tester.view.devicePixelRatio = 1;
-            addTearDown(tester.view.reset);
-            await tester.pumpWidget(
-              MaterialApp(
-                theme: buildTheme(dark),
-                home: Scaffold(
-                  body: RepaintBoundary(
-                    key: key,
-                    child:
-                        variant == 0
-                            ? MuscleHeatmap(data: data, height: 320, glow: glow)
-                            : MuscleHeatmap310(
-                              data: data,
-                              height: 320,
-                              glow: glow,
-                            ),
+      testWidgets(
+        'STATS : rendu identique à 3.1.0 (${dark ? 'sombre' : 'clair'})',
+        (tester) async {
+          SL.dark = dark;
+          addTearDown(() => SL.dark = true);
+          const data = {
+            'dos': 14.0,
+            'biceps': 9.0,
+            'pectoraux': 10.0,
+            'triceps': 8.0,
+            'épaules': 7.0,
+            'quadriceps': 6.0,
+            'gainage': 5.0,
+            'avant-bras': 4.0,
+            'ischios': 3.0,
+            'fessiers': 3.0,
+            'mollets': 1.0,
+          };
+          final images = <Uint8List>[];
+          for (final variant in [0, 1]) {
+            for (final glow in [false, true]) {
+              final key = GlobalKey();
+              tester.view.physicalSize = const Size(390, 340);
+              tester.view.devicePixelRatio = 1;
+              addTearDown(tester.view.reset);
+              await tester.pumpWidget(
+                MaterialApp(
+                  theme: buildTheme(dark),
+                  home: Scaffold(
+                    body: RepaintBoundary(
+                      key: key,
+                      child:
+                          variant == 0
+                              ? MuscleHeatmap(
+                                data: data,
+                                height: 320,
+                                glow: glow,
+                              )
+                              : MuscleHeatmap310(
+                                data: data,
+                                height: 320,
+                                glow: glow,
+                              ),
+                    ),
                   ),
                 ),
-              ),
-            );
-            await tester.runAsync(() async {
-              final ctx = tester.element(find.byType(Scaffold));
-              for (final f in Directory('assets/muscles').listSync()) {
-                if (f.path.endsWith('.png')) {
-                  await precacheImage(AssetImage(f.path), ctx);
-                }
-              }
-            });
-            await tester.pump();
-            final render =
-                key.currentContext!.findRenderObject()!
-                    as RenderRepaintBoundary;
-            await tester.runAsync(() async {
-              final image = await render.toImage();
-              final bytes = await image.toByteData(
-                format: ui.ImageByteFormat.rawRgba,
               );
-              images.add(bytes!.buffer.asUint8List());
-              image.dispose();
-            });
+              await tester.runAsync(() async {
+                final ctx = tester.element(find.byType(Scaffold));
+                for (final f in Directory('assets/muscles').listSync()) {
+                  if (f.path.endsWith('.png')) {
+                    await precacheImage(AssetImage(f.path), ctx);
+                  }
+                }
+              });
+              await tester.pump();
+              final render =
+                  key.currentContext!.findRenderObject()!
+                      as RenderRepaintBoundary;
+              await tester.runAsync(() async {
+                final image = await render.toImage();
+                final bytes = await image.toByteData(
+                  format: ui.ImageByteFormat.rawRgba,
+                );
+                images.add(bytes!.buffer.asUint8List());
+                image.dispose();
+              });
+            }
           }
-        }
-        // mêmes pixels, avec et sans halo ; et le rendu n'est pas vide
-        expect(images[0], images[2]);
-        expect(images[1], images[3]);
-        expect(images[0].toSet().length, greaterThan(20));
-      });
+          // mêmes pixels, avec et sans halo ; et le rendu n'est pas vide
+          expect(images[0], images[2]);
+          expect(images[1], images[3]);
+          expect(images[0].toSet().length, greaterThan(20));
+        },
+      );
     }
   });
 
@@ -273,13 +277,11 @@ void main() {
 
     test('segments posés exactement sur les articulations du modèle', () async {
       for (final view in const ['face', 'dos', 'profil']) {
-        final sprites = await CutoutSprites.load(
-          view,
-          bundle: _FileBundle(),
-        );
+        final sprites = await CutoutSprites.load(view, bundle: _FileBundle());
         final ref = sprites.rig.joints;
         final k = 1 / sprites.pixelsPerUnit;
-        final id = view == 'profil' ? 'squat-au-poids-de-corps' : 'jumping-jacks';
+        final id =
+            view == 'profil' ? 'squat-au-poids-de-corps' : 'jumping-jacks';
         final anim = animationOf(id);
         final j = poseJointsAt(anim, poseDuration(anim) * .37);
         final placed = {
@@ -290,24 +292,76 @@ void main() {
             expect((a - b).distance, lessThan(1e-9), reason: why);
         if (view == 'profil') {
           for (final (s, key) in const [('d', ''), ('g', '*')]) {
-            near(placed['avant_bras$key']!.apply(ref['coude']!), j['coude_$s']!, 'coude');
-            near(placed['avant_bras$key']!.apply(ref['poignet']!), j['poignet_$s']!, 'poignet');
-            near(placed['main$key']!.apply(ref['poignet']!), j['poignet_$s']!, 'main');
-            near(placed['jambe$key']!.apply(ref['genou']!), j['genou_$s']!, 'genou');
-            near(placed['jambe$key']!.apply(ref['cheville']!), j['cheville_$s']!, 'cheville');
-            near(placed['pied$key']!.apply(ref['cheville']!), j['cheville_$s']!, 'pied');
-            near(placed['cuisse$key']!.apply(ref['genou']!), j['genou_$s']!, 'cuisse');
-            near(placed['bras$key']!.apply(ref['coude']!), j['coude_$s']!, 'bras');
+            near(
+              placed['avant_bras$key']!.apply(ref['coude']!),
+              j['coude_$s']!,
+              'coude',
+            );
+            near(
+              placed['avant_bras$key']!.apply(ref['poignet']!),
+              j['poignet_$s']!,
+              'poignet',
+            );
+            near(
+              placed['main$key']!.apply(ref['poignet']!),
+              j['poignet_$s']!,
+              'main',
+            );
+            near(
+              placed['jambe$key']!.apply(ref['genou']!),
+              j['genou_$s']!,
+              'genou',
+            );
+            near(
+              placed['jambe$key']!.apply(ref['cheville']!),
+              j['cheville_$s']!,
+              'cheville',
+            );
+            near(
+              placed['pied$key']!.apply(ref['cheville']!),
+              j['cheville_$s']!,
+              'pied',
+            );
+            near(
+              placed['cuisse$key']!.apply(ref['genou']!),
+              j['genou_$s']!,
+              'cuisse',
+            );
+            near(
+              placed['bras$key']!.apply(ref['coude']!),
+              j['coude_$s']!,
+              'bras',
+            );
           }
           near(placed['tronc']!.apply(ref['bassin']!), j['bassin']!, 'bassin');
           near(placed['tronc']!.apply(ref['cou']!), j['cou']!, 'cou');
         } else {
           for (final s in const ['g', 'd']) {
-            near(placed['avant_bras_$s']!.apply(ref['poignet_$s']!), j['poignet_$s']!, 'poignet');
-            near(placed['main_$s']!.apply(ref['poignet_$s']!), j['poignet_$s']!, 'main');
-            near(placed['jambe_$s']!.apply(ref['cheville_$s']!), j['cheville_$s']!, 'cheville');
-            near(placed['cuisse_$s']!.apply(ref['genou_$s']!), j['genou_$s']!, 'genou');
-            near(placed['bras_$s']!.apply(ref['coude_$s']!), j['coude_$s']!, 'coude');
+            near(
+              placed['avant_bras_$s']!.apply(ref['poignet_$s']!),
+              j['poignet_$s']!,
+              'poignet',
+            );
+            near(
+              placed['main_$s']!.apply(ref['poignet_$s']!),
+              j['poignet_$s']!,
+              'main',
+            );
+            near(
+              placed['jambe_$s']!.apply(ref['cheville_$s']!),
+              j['cheville_$s']!,
+              'cheville',
+            );
+            near(
+              placed['cuisse_$s']!.apply(ref['genou_$s']!),
+              j['genou_$s']!,
+              'genou',
+            );
+            near(
+              placed['bras_$s']!.apply(ref['coude_$s']!),
+              j['coude_$s']!,
+              'coude',
+            );
           }
           near(placed['tronc']!.apply(ref['cou']!), j['cou']!, 'cou');
         }
@@ -352,7 +406,8 @@ void main() {
         sprites: sprites['profil'],
       ).paint(Canvas(recorder), const Size(240, 240));
       final image = await recorder.endRecording().toImage(240, 240);
-      final bytes = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
+      final bytes =
+          (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
       image.dispose();
       var body = 0;
       for (var i = 0; i < bytes.lengthInBytes; i += 4) {

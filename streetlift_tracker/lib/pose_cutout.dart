@@ -138,13 +138,11 @@ class CutoutRigs {
   final Map<String, CutoutRig> views;
   const CutoutRigs(this.pixelsPerUnit, this.views);
 
-  factory CutoutRigs.fromJson(Map<String, dynamic> j) => CutoutRigs(
-    (j['echelle_px'] as num).toDouble(),
-    {
-      for (final e in (j['vues'] as Map<String, dynamic>).entries)
-        e.key: CutoutRig.fromJson(e.key, e.value as Map<String, dynamic>),
-    },
-  );
+  factory CutoutRigs.fromJson(Map<String, dynamic> j) =>
+      CutoutRigs((j['echelle_px'] as num).toDouble(), {
+        for (final e in (j['vues'] as Map<String, dynamic>).entries)
+          e.key: CutoutRig.fromJson(e.key, e.value as Map<String, dynamic>),
+      });
 }
 
 /// Atlas décodés d'une vue, prêts à peindre.
@@ -170,11 +168,13 @@ class CutoutSprites {
   static Future<CutoutSprites> load(String view, {AssetBundle? bundle}) {
     final b = bundle ?? rootBundle;
     return _loading[view] ??= () async {
-      final rigs = await (_rigs ??= b
-          .loadString(rigAsset)
-          .then(
-            (s) => CutoutRigs.fromJson(jsonDecode(s) as Map<String, dynamic>),
-          ));
+      final rigs =
+          await (_rigs ??= b
+              .loadString(rigAsset)
+              .then(
+                (s) =>
+                    CutoutRigs.fromJson(jsonDecode(s) as Map<String, dynamic>),
+              ));
       final rig = rigs.views[view]!;
       final images = await Future.wait([
         _decode(b, rig.image),
@@ -361,7 +361,13 @@ List<PlacedSegment> cutoutLayout(CutoutRig rig, double k, Joints j) {
         ),
         PlacedSegment(
           'cuisse_$s',
-          cutoutBoneMap(ref['hanche_$s']!, ref['genou_$s']!, hip, j['genou_$s']!, k),
+          cutoutBoneMap(
+            ref['hanche_$s']!,
+            ref['genou_$s']!,
+            hip,
+            j['genou_$s']!,
+            k,
+          ),
           false,
         ),
       ]);
@@ -516,12 +522,13 @@ void paintCutoutBody(
 ) {
   final k = 1 / sprites.pixelsPerUnit;
   final base = ui.Paint()..filterQuality = ui.FilterQuality.medium;
-  final far = ui.Paint()
-    ..filterQuality = ui.FilterQuality.medium
-    ..colorFilter = const ui.ColorFilter.mode(
-      cutoutFarShade,
-      ui.BlendMode.modulate,
-    );
+  final far =
+      ui.Paint()
+        ..filterQuality = ui.FilterQuality.medium
+        ..colorFilter = const ui.ColorFilter.mode(
+          cutoutFarShade,
+          ui.BlendMode.modulate,
+        );
   final tints = <String, (ui.Paint, ui.Paint)>{
     for (final e in groups.entries)
       if (e.value > 0.02)
