@@ -1,5 +1,12 @@
 # Décisions en attente
 
+## L9b (3.2.0) — à relire (non bloquant)
+Détail : `docs/CONTRAT_L9b.md` §4 dans le ZIP (D-L9b-01 à D-L9b-09).
+- **D-L9b-01 Aucune migration de données** : les noms enregistrés (séances, historique, records) restent les clés ; l'identifiant v2 est résolu à la lecture. Option : réécrire les données avec les identifiants v2 (migration de schéma). Recommandation : garder.
+- **D-L9b-05 Doublons v1** (22) : masqués dans la bibliothèque, leur nom mène à l'exercice canonique ; toujours visibles dans le sélecteur de séance (comme avant). Option : les masquer aussi du sélecteur.
+- **D-L9b-08 Tranches de difficulté** du filtre : 1-3 accessible, 4-6 intermédiaire, 7-10 avancé.
+- **D-L9b-09 Fiche depuis l'écran de séance du programme** : pas encore de bouton (écran le plus dense). Options : (a) ajouter une icône ⓘ par exercice en L10 ; (b) laisser l'accès par Arsenal. Recommandation : a.
+
 ## Tranché le 27/09/2026 (le propriétaire a validé le pack v2 et délégué ces choix)
 - L9R : D-L9R-04 (a) accepté ; D-L9R-06 (a) références wger gardées dans `sources` (faits vérifiés, rien reproduit, pas d'écran de mentions) ; D-L9R-02 81 entrées suffisent ; D-L9R-05 classements confirmés ; D-L9R-07 statique / indisponible plutôt qu'une animation approximative : confirmé ; D-L9R-09 ajouts acceptés, difficultés proposées conservées (restent au registre de validation).
 - L8 : 1 garder ; 2 garder ; 3 (a) questions propres à Kalis Track, relecture par un médecin inscrite comme limite ; 4 garder ; 5 garder.
