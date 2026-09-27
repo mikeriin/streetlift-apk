@@ -28,6 +28,8 @@ List<PlannedReminder> planReminders(
 }) {
   // Pas de rappel sans départ confirmé (KT-006) : aucune date inventée.
   if (!app.settings.notifOn || !app.program.scheduled) return [];
+  // L11 (KT-060) : vacances ou maladie, calendrier en pause.
+  if (app.adapt.pause != null) return [];
   final result = <PlannedReminder>[];
   for (final week in app.program.weeks) {
     for (final day in week.days) {
@@ -275,7 +277,8 @@ class NotificationService {
     final start = app.program.start;
     final signature =
         '${s.notifOn}|${s.notifHour}|${s.notifMinute}|${s.notifSkipRest}|'
-        '${start == null ? '-' : civilDateString(start)}|$done';
+        '${start == null ? '-' : civilDateString(start)}|$done|'
+        '${app.adapt.pause?.from ?? '-'}';
     if (signature == _source) return;
     _source = signature;
     unawaited(reschedule());

@@ -1,8 +1,74 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : L9b — Intégration du pack de contenu (KT-079, KT-080, KT-082 ; KT-081 réservé), version 3.2.0**  
-**Date : 27 septembre 2026, Europe/Paris — version : 3.2.0+66 (versionCode réel fixé par la CI de build)**  
-**Statut : lot L9b exécuté par le pipeline automatisé (sans échange en direct). Corrigé dans le code et testé automatiquement en CI (voir L9b.3) ; build signé : `LIVRAISON_L9b.md` ; rien n'est vérifié sur téléphone.**
+**Passe actuelle : L10 — Générateur de programme personnalisé (KT-050 à KT-057), version 4.0.0**  
+**Date : 27 septembre 2026, Europe/Paris — version : 4.0.0+67 (versionCode réel fixé par la CI de build)**  
+**Statut : lot L10 exécuté par le pipeline automatisé (sans échange en direct). Corrigé dans le code et testé automatiquement en CI (voir L10.3) ; build signé : `LIVRAISON_L10.md` ; rien n'est vérifié sur téléphone.**
+
+## L10.0 — Base
+
+| Élément | Valeur | Preuve |
+| --- | --- | --- |
+| Demande | `pipeline/prompt_L10.txt` (branche `pipeline`), règles `pipeline/PIPELINE.md` | Pipeline du propriétaire |
+| Base | `streetlift_tracker_v33.zip` **3.2.0+66** (L9b), `main` `6015ebc`, 2 031 485 octets, SHA-256 `699329b4824b2ceef27355c85a7310de73ec00c6a97d1984c031bed20f578f14`, racine unique `streetlift_tracker/` | Recalcul |
+| Prérequis | L7 (Koach), L8 (profil), L9b (pack intégré) livrés | Sections ci-dessous |
+| État initial | Arbre identique (lib, test, assets, tools) à celui du dernier passage CI de L9b : format 0 changement, analyse sans problème, 630 réussis / 12 ignorés, Python 69/69, `verify_project.py`, build debug | Comparaison de fichiers ; CI L9b (`claude/ci-tools`) |
+| Outils | Pas de Flutter local (proxy) ; CI sur la branche temporaire `claude/ci-tools` ; Python 3.11 local ; aucun téléphone | Constaté |
+
+## L10.1 — Contrat
+
+`docs/CONTRAT_L10.md` : base et contradictions (§1 : repère du profil L8 et nouveaux seuils, niveau global, durée ±10 % face au plafond de volume, démonstrations animées, retour par muscle absent, D-L9b-09 laissée en attente), 13 décisions par défaut réversibles (§2), format de l'instance et migration (§3), règles et paramètres (§4-6), tests (§7), registre de validation (§8), limites (§9).
+
+## L10.2 — Changements par ticket
+
+| Ticket | Changement |
+| --- | --- |
+| KT-050 | `lib/program_generator.dart` : générateur pur (entrées + graine → programme au schéma `programme_v33`, annotations Koach, résumé), départage par hachage FNV-1a ; `assets/program_models.json` 1.0.0 (modèles en données) ; `lib/program_instance.dart` : `ProgramInstance` (persistée, exportée, contrôlée à l'import), fusion d'une régénération (`mergeWeeks`), aperçu (`diffWeeks`) ; `lib/program_store.dart` : instance implicite « Expert streetlifting » pour les installations existantes (programme embarqué inchangé), génération au départ d'un nouvel utilisateur, régénération, annulation, cycle suivant ; `lib/store.dart` : programme matérialisé depuis l'instance, section `programInstance` de la sauvegarde |
+| KT-051 | Niveau par mouvement (pompes, tractions, squat, lests, charnière, gainage), niveau global = médiane basse ; calibrage en semaine 1-2, mini-tests en décharge ; points d'entrée et passages d'étape lus dans le journal (`progressFromLogs`) |
+| KT-052 | Modèles linéaire, ondulation, blocs, Forme et santé, Expert streetlifting ; macrocycle daté avec simulations, affûtage et jour J ; cycles sans date ; pondération 70/30 |
+| KT-053 | Répartition par défaut ou choisie, règle des 48 h, ajustement à la durée disponible (estimation `training_estimate.dart`, échauffement compris) |
+| KT-054 | Choix par matériel du lieu, prérequis, chaînes, exercices détestés, gênes, mode prudent, démonstration animée, figures selon l'objectif ; principaux stables, accessoires renouvelés ; couverture des mouvements de l'objectif |
+| KT-055 | Séries difficiles par groupe (6 à 14, −2 en santé), plafond +6, ajustement ±2 par cycle |
+| KT-056 | Échauffement 5-10 min avec montée en charge, blocs de densité (endurance), circuits à faible impact et mobilité (santé), simulations d'épreuve |
+| KT-057 | Ligne « pourquoi » par séance et par exercice (`Exercise.why`, `DayPlan.why`, affichée dans les consignes) ; écran « Mon programme » (Réglages), aperçu « ce qui change », carte de l'accueil, mode Guidé automatique annulable 7 jours |
+
+Fichiers : nouveaux `lib/program_generator.dart`, `lib/program_instance.dart`, `lib/program_store.dart`, `lib/program_screens.dart`, `assets/program_models.json`, `docs/CONTRAT_L10.md`, `docs/PROFILS_TYPES_L10.md`, `test/l10_generator_test.dart`, `test/l10_properties_test.dart`, `test/l10_profiles_test.dart`, `test/l10_store_test.dart`, `test/l10_screens_test.dart`, `test/support/l10_support.dart`, `test/goldens/l10_reference.json`, `test/goldens/l10_profils_types.md`, `tools/tests/test_program_models.py` ; modifiés `lib/store.dart`, `lib/profile_store.dart`, `lib/models.dart`, `lib/session_screen.dart`, `lib/home_screen.dart`, `lib/settings_screen.dart` (entrée Mon programme, version 4.0.0), `pubspec.yaml` (4.0.0+67, asset), `tools/verify_project.py`, `README.md`, ce suivi. Workflow `build-apk.yml` **inchangé**. Aucune dépendance ajoutée. Aucun test existant modifié.
+
+## L10.3 — Tests et scénarios
+
+| Contrôle | Résultat | Où |
+| --- | --- | --- |
+| Formatage | 133 fichiers ; le passage final n'a reformaté qu'un fichier de test (sauts de ligne), repris tel quel dans le ZIP | CI `claude/ci-tools`, commit `dc9e3bd` |
+| Analyse | No issues found | idem |
+| Suite complète | **689 réussis, 12 ignorés**, 0 échec (630 existants inchangés + 59 L10) | idem (≈ 7 min) |
+| Tests ciblés L5/L6 rejoués | 155 réussis, 11 ignorés (identiques à L9b) | idem |
+| Python | 72/72 (69 + 3) ; `verify_project.py` : 40 semaines, 1 812 exercices du programme, 625 exercices de la base, modèles de périodisation contrôlés | idem |
+| Propriétés | **10 000 profils aléatoires** (graines 1 à 10 000) : 0 écart ; 2 524 « Forme et santé », 3 678 blocs, 1 513 ondulation, 2 261 linéaire, 24 Expert streetlifting ; 336 519 séances contrôlées dont 154 698 plus courtes que le temps disponible et signalées (tirages de 10 à 240 min : au-delà d'environ 90 min, le plafond de volume limite la séance) ; ≈ 15 s par millier en CI | `test/l10_properties_test.dart` |
+| Profils types | 13 profils générés, propriétés respectées, document `docs/PROFILS_TYPES_L10.md`, reproduit au caractère près d'un passage CI à l'autre | `test/l10_profiles_test.dart` |
+| Migration du propriétaire | 40 semaines identiques à l'asset (exercice par exercice), départ, historique complet et export inchangés, Koach disponible ; générateur : JSON identique à l'asset et aux annotations | `test/l10_store_test.dart`, `test/l10_generator_test.dart` |
+| Déterminisme | Même entrée → même JSON ; entrées sérialisées rejouées à l'identique ; empreintes de 3 programmes figées (`test/goldens/l10_reference.json`) et retrouvées au passage suivant | `test/l10_generator_test.dart` |
+| Android | `flutter build apk --debug` : réussi (APK debug arm64 compilé, commit CI `dc9e3bd`) | CI |
+
+Propriétés contrôlées (contrôle indépendant du générateur, `test/support/l10_support.dart`) : matériel du lieu du jour, aucune contre-indication (gêne > 3/10, sauts en mode prudent), prérequis, démonstration animée, durée recalculée avec `training_estimate.dart` ≤ +10 % toujours et ≥ −10 % en semaine de charge sauf séance signalée, échauffement de 5 à 10 min, séries difficiles ≤ plafond, mouvements de l'objectif ≥ 2 séances par semaine (≥ 1 par type en « Forme et santé ») pour des séances de 30 min et plus quand un exercice compatible existe, décharge au moins toutes les 6 semaines, 48 h entre séances lourdes d'une même famille, rejeu identique (1 graine sur 50).
+
+Défauts trouvés par les passages CI et corrigés : 8 remarques d'analyse (accolades, paramètres jamais utilisés) ; le type « fente » absent chaque semaine en « Forme et santé » pour un débutant en mode prudent (difficulté plafonnée à 1) → difficulté relâchée jusqu'à 3 pour le type manquant, prérequis toujours exigés ; séances de 10-15 min trop raccourcies par le retrait forcé → nouvel ajustement vers le temps disponible ; bouton de fiche ajouté dans la feuille de consignes qui repoussait « Fermer » hors écran dans un test existant (`ui_refactor_test.dart`) → retiré (D-L9b-09 reste en attente) ; tests L10 mal écrits (dates calculées avec `Duration` à travers le passage à l'heure d'hiver, cartes non construites hors écran à 200 %, arrondi d'une seconde) → corrigés sans affaiblir d'assertion métier.
+
+Scénarios couverts : nouvel utilisateur (profil du démarrage court → départ → programme généré, persisté, relu, exporté, rejouable) ; régénération au milieu de la semaine 2 après changement de lieu (semaine 1 et journées saisies intactes) ; annulation dans les 7 jours, refusée après une séance du nouveau programme, expirée après 7 jours ; mode Guidé ; cycle suivant depuis le calibrage ; import strict et démarrage tolérant ; écrans « Mon programme », aperçu et carte d'accueil à 390 × 844 et 320 × 720, texte 100/130/200 %, clair et sombre, défilement réel.
+
+## L10.4 — Limites et suites
+
+| Statut | Éléments |
+| --- | --- |
+| Corrigé dans le code | KT-050 à KT-057 |
+| Testé automatiquement | Voir L10.3 |
+| Vérifié sur appareil | **Rien** |
+| Reste à valider | Essais téléphone (`LIVRAISON_L10.md`) ; temps de génération sur téléphone ; relecture des 13 profils types (`docs/PROFILS_TYPES_L10.md`) ; registre de validation (`docs/CONTRAT_L10.md` §8) |
+
+- Retour facultatif par muscle du mode Expert non saisi (reporté).
+- D-L9b-09 (fiche depuis l'écran de séance) toujours en attente.
+- Adaptations de structure Koach bornées à la semaine 40 (contrat L7).
+- Branche temporaire `claude/ci-tools` toujours présente.
+
+# Historique conservé — L9b (3.2.0)
 
 ## L9b.0 — Base
 

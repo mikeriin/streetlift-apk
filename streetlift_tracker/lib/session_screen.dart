@@ -10,6 +10,7 @@ import 'models.dart';
 import 'rewards.dart' show checkLevelUp;
 import 'store.dart';
 import 'estimate_view.dart';
+import 'adapt_screens.dart';
 import 'koach_engine.dart' as ke show KSuggestion;
 import 'koach_screens.dart' show KoachReviewScreen;
 import 'profile_screens.dart' show showProgressiveQuestion;
@@ -69,16 +70,30 @@ class SessionScreen extends StatefulWidget {
 class _SessionScreenState extends State<SessionScreen> {
   final ctl = TimerCtl();
   late final PageController pageCtl;
-  late final List<List<Exercise>> groups;
+  late List<List<Exercise>> groups;
   int page = 0;
   Route<dynamic>? _route;
 
   int get nPages => groups.length;
 
+  /// L11 : journée telle qu'elle sera faite (compression, échanges,
+  /// reprise) ; identique au programme sans adaptation.
+  DayPlan get _day => store.sessionDay(widget.week.n, widget.day);
+
+  /// Séance adaptée (compression, échange, lieu) : pages recalculées.
+  void _adapted(bool changed) {
+    if (!changed || !mounted) return;
+    setState(() {
+      groups = store.sessionGroups(widget.week.n, _day);
+      if (page > nPages) page = nPages;
+    });
+    if (pageCtl.hasClients) pageCtl.jumpToPage(page);
+  }
+
   @override
   void initState() {
     super.initState();
-    groups = store.groups(widget.day);
+    groups = store.sessionGroups(widget.week.n, _day);
     // Reprise : même occurrence (même clé de journal), ouverte sur
     // l'exercice en cours. Le repos n'est pas relancé (décision 26/09).
     page =
@@ -267,6 +282,16 @@ class _SessionScreenState extends State<SessionScreen> {
             onSelected: (value) {
               if (value == 'clear') _confirmClear();
               if (value == 'instructions') _instructions();
+              // L11 (KT-058, KT-059) : séance recomposée ou adaptée.
+              if (value == 'compress') {
+                showCompressSheet(context, w.n, widget.day).then(_adapted);
+              }
+              if (value == 'swap') {
+                pickAndSwap(context, w.n, widget.day).then(_adapted);
+              }
+              if (value == 'place') {
+                showPlaceSheet(context, w.n, widget.day).then(_adapted);
+              }
               // Report d'un test (S2, S12…) dans la feuille Pilotage sans
               // quitter la séance : même écran que depuis STATS.
               if (value == 'pilotage') {
@@ -283,6 +308,20 @@ class _SessionScreenState extends State<SessionScreen> {
                       value: 'instructions',
                       child: Text('Consignes de séance'),
                     ),
+                  if (w.n >= 1 && !restDay) ...[
+                    const PopupMenuItem(
+                      value: 'compress',
+                      child: Text('J’ai seulement… minutes'),
+                    ),
+                    const PopupMenuItem(
+                      value: 'swap',
+                      child: Text('Échanger un exercice'),
+                    ),
+                    const PopupMenuItem(
+                      value: 'place',
+                      child: Text('Je m’entraîne ailleurs'),
+                    ),
+                  ],
                   const PopupMenuItem(
                     value: 'pilotage',
                     child: Text('Références (feuille Pilotage)'),
@@ -339,6 +378,12 @@ class _SessionScreenState extends State<SessionScreen> {
                           index: page,
                           color: SL.action,
                         ),
+                        if (w.n >= 1)
+                          AdaptSessionBanner(
+                            week: w.n,
+                            base: widget.day,
+                            onChanged: () => setState(() {}),
+                          ),
                       ],
                     ),
                   ),
@@ -354,13 +399,15 @@ class _SessionScreenState extends State<SessionScreen> {
                           (_, i) =>
                               i < nPages
                                   ? SessionExercisePage(
-                                    key: ValueKey(groups[i].first.id),
+                                    key: ValueKey(
+                                      '${groups[i].first.id}|${groups[i].length}|${store.setCount(groups[i].first)}',
+                                    ),
                                     week: w,
-                                    day: d,
+                                    day: _day,
                                     exs: groups[i],
                                     timer: ctl,
                                   )
-                                  : _FinishPage(week: w, day: d),
+                                  : _FinishPage(week: w, day: _day),
                     ),
                   ),
                   _TimerBar(ctl: ctl),
@@ -505,7 +552,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
 
   String _labels() => [
     for (final e in widget.exs)
-      '${store.setsLabel(e)}|${store.loadLabel(e, week: widget.week.n)}',
+      '${store.setsLabel(e)}|${store.loadLabel(e, week: widget.week.n, day: widget.day.j)}',
   ].join('\n');
 
   void _onStore() {
@@ -562,7 +609,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       }
     }
     if (sp.kind == 'duration' || sp.kind == 'interval') return;
-    final kg = store.sessionLoad(widget.week.n, ex);
+    final kg = store.sessionLoad(widget.week.n, ex, day: widget.day.j);
     if (kg != null && kg > 0) {
       final t = store.kgFieldText(kg);
       for (final s in log.sets) {
@@ -644,6 +691,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       return;
     }
     if (store.settings.vibration) HapticFeedback.lightImpact();
+    if (s.done) _koachAuto(k);
     if (s.done) _celebrateRecord(ex, s);
     if (!s.done || !store.settings.autoTimer) return;
     if (widget.exs.length == 2 && k == 0) {
@@ -735,6 +783,69 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     setState(() {});
   }
 
+  /// L11 (KT-063) : mode Guidé, suggestion et jour de fatigue appliqués
+  /// d'office après la série, avec un message et « Annuler ».
+  void _koachAuto(int k) {
+    if (widget.readOnly || widget.week.n < 1 || !store.koachOn) return;
+    final w = widget.week.n, j = widget.day.j;
+    final ex = widget.exs[k];
+    final log = logs[k];
+    final sug = store.koachAutoApply(w, j, ex, log);
+    final messenger = ScaffoldMessenger.of(context);
+    if (sug != null) {
+      setState(() => epoch++);
+      messenger
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          SnackBar(
+            duration: const Duration(seconds: 6),
+            content: Text(
+              'Koach : ${store.koachLoadText(ex, sug.kg)} pour les séries '
+              'restantes (${store.koachReason(ex, log, sug)}).',
+            ),
+            action: SnackBarAction(
+              label: 'Annuler',
+              onPressed: () {
+                store.undoKoachSuggestion(w, j, ex, log, sug);
+                if (mounted) setState(() => epoch++);
+              },
+            ),
+          ),
+        );
+    }
+    _koachAutoFatigue();
+  }
+
+  bool _fatigueChecked = false;
+
+  void _koachAutoFatigue() {
+    if (widget.readOnly || widget.week.n < 1 || !store.koachOn) return;
+    final w = widget.week.n, j = widget.day.j;
+    final exercises = widget.day.exercises;
+    final cut = store.koachAutoFatigue(w, j, exercises);
+    if (cut.isEmpty || !mounted) return;
+    final n = cut.values.fold<int>(0, (a, b) => a + b);
+    setState(() => epoch++);
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          duration: const Duration(seconds: 6),
+          content: Text(
+            'Koach : jour de fatigue probable, $n série${n > 1 ? 's' : ''} '
+            'en moins aujourd’hui, charges maintenues.',
+          ),
+          action: SnackBarAction(
+            label: 'Annuler',
+            onPressed: () {
+              store.undoKoachFatigue(w, j, exercises, cut);
+              if (mounted) setState(() => epoch++);
+            },
+          ),
+        ),
+      );
+  }
+
   void _koachApply(int k, ke.KSuggestion sug) {
     store.applyKoachSuggestion(
       widget.week.n,
@@ -783,9 +894,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         log.sets.any((s) => !s.done)
             ? store.koachSuggestion(widget.week.n, widget.day.j, ex, log)
             : null;
+    // L11 (KT-063) : Guidé → rien à valider (hausse modérée non
+    // montrée) ; Expert → suggestion visible sans bouton.
+    final action = sug == null ? 'none' : store.koachSuggestionAction(sug);
     return [
       if (store.koachUncertain(movement)) const KoachCalibrationNote(),
-      if (sug != null)
+      if (sug != null && action != 'none')
         KoachSuggestionCard(
           load: store.koachLoadText(ex, sug.kg),
           from: store.koachLoadText(ex, sug.from),
@@ -793,6 +907,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           onApply: () => _koachApply(k, sug),
           onKeep: () => _koachKeep(k, sug),
           onDetails: () => _koachDetails(k, sug),
+          actions: action != 'info',
         ),
     ];
   }
@@ -815,10 +930,17 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 .values
                 .fold<int>(0, (a, b) => a + b)
             : 0;
+    // L11 (KT-063) : mode Guidé, jour de fatigue appliqué d'office.
+    if (cut > 0 && store.autonomyMode == 'guided' && !_fatigueChecked) {
+      _fatigueChecked = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _koachAutoFatigue();
+      });
+    }
     return [
       if (first && store.koachAskBefore(w, j))
         KoachQuestionsCard(sessionKey: key),
-      if (cut > 0)
+      if (cut > 0 && store.autonomyMode != 'guided')
         KoachFatigueCard(
           level: level,
           sets: cut,
@@ -966,7 +1088,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final loadLabel =
         readOnly
             ? (recordedLoads.length == 1 ? '${recordedLoads.single} kg' : '—')
-            : store.loadLabel(ex, week: widget.week.n);
+            : store.loadLabel(ex, week: widget.week.n, day: widget.day.j);
     final showBigLoad =
         (readOnly || !noLoad) &&
         loadLabel != '—' &&
@@ -2108,19 +2230,34 @@ class _FinishPageState extends State<_FinishPage> {
     // (accueil, Arsenal, notification de rappel). Son décompte attend que la
     // séance soit refermée et sauvegardée.
     nav.pop();
+    final key = store.sessionKey(week.n, day.j);
+    // L11 (KT-063) : mode Guidé, baisses de sécurité acceptées d'office.
+    final auto =
+        week.n >= 1 ? store.koachAutoSafety(key) : <Map<String, dynamic>>[];
     // Koach (D5 b) : douleur facultative et propositions, avant le bilan.
-    if (KoachReviewScreen.hasContent(week.n, day.j)) {
+    if (auto.isNotEmpty || KoachReviewScreen.hasContent(week.n, day.j)) {
       await closing;
       if (!nav.mounted) return;
       await nav.push(
         MaterialPageRoute<void>(
-          builder: (_) => KoachReviewScreen(week: week.n, day: day.j),
+          builder:
+              (_) => KoachReviewScreen(
+                week: week.n,
+                day: day.j,
+                autoApplied: auto,
+              ),
         ),
       );
       if (!nav.mounted) return;
     }
+    // L11 (KT-064) : difficulté globale (débutant, novice ; Guidé, Assisté).
+    if (store.adaptAsksDifficulty(key)) {
+      await closing;
+      if (!nav.mounted) return;
+      await showSessionDifficulty(nav.context, key);
+      if (!nav.mounted) return;
+    }
     // L8 (KT-040) : au plus une question progressive, après la séance.
-    final key = store.sessionKey(week.n, day.j);
     final question = store.progressiveQuestionFor(key);
     if (question != null) {
       await closing;

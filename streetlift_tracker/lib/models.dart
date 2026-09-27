@@ -48,6 +48,38 @@ class SetsSpec {
       div = null,
       suffix = null;
 
+  const SetsSpec._(
+    this.type,
+    this.value,
+    this.prefix,
+    this.coef,
+    this.ref,
+    this.div,
+    this.suffix,
+  );
+
+  /// L11 (KT-058, KT-060) : même prescription avec [n] séries, quand elle
+  /// commence par un nombre de séries (« 4×8 », « 3×12-15 ») ; sinon null
+  /// (EMOM, montée, pyramide : la prescription ne se réduit pas).
+  SetsSpec? withCount(int n) {
+    final re = RegExp(r'^(\s*)(\d+)(\s*[×x])');
+    String? swap(String? t) {
+      if (t == null) return null;
+      final m = re.firstMatch(t);
+      if (m == null) return null;
+      return '${m.group(1)}$n${m.group(3)}${t.substring(m.end)}';
+    }
+
+    if (type == 'volume') {
+      final p = swap(prefix);
+      if (p == null) return null;
+      return SetsSpec._(type, value, p, coef, ref, div, suffix);
+    }
+    final v = swap(value);
+    if (v == null) return null;
+    return SetsSpec._(type, v, prefix, coef, ref, div, suffix);
+  }
+
   SetsSpec.fromJson(Map<String, dynamic> j)
     : type = j['type'] as String,
       value = j['value'] as String?,
@@ -74,6 +106,12 @@ class Exercise {
   /// L10 (KT-057) : ligne « pourquoi » d'un programme généré (vide sinon).
   final String why;
 
+  /// L10 : rôle dans la séance générée (`main`, `accessory`, `warmup`…) et
+  /// identifiant du pack ; vides pour le programme embarqué. L11 s'en sert
+  /// pour compresser une séance et proposer un échange.
+  final String role;
+  final String? exId;
+
   /// Renseignés par les séances personnalisées (modes d'exécution).
   final int? forcedSets;
   final Map<String, dynamic>? timer; // {type: emom|amrap|hiit, ...}
@@ -94,7 +132,38 @@ class Exercise {
   }) : sets = SetsSpec.text(setsText),
        load = LoadSpec.fixed(kg),
        prevention = false,
-       why = '';
+       why = '',
+       role = '',
+       exId = null;
+
+  /// L11 : copie adaptée pour une séance (séries réduites, exercice
+  /// échangé). Sans argument : identique à [base].
+  Exercise.adapted(
+    Exercise base, {
+    String? id,
+    String? name,
+    SetsSpec? sets,
+    LoadSpec? load,
+    String? cue,
+    String? why,
+    String? role,
+    String? exId,
+  }) : id = id ?? base.id,
+       name = name ?? base.name,
+       sets = sets ?? base.sets,
+       intensity = base.intensity,
+       load = load ?? base.load,
+       rest = base.rest,
+       restSec = base.restSec,
+       tempo = base.tempo,
+       cue = cue ?? base.cue,
+       main = base.main,
+       prevention = base.prevention,
+       why = why ?? base.why,
+       role = role ?? base.role,
+       exId = exId ?? base.exId,
+       forcedSets = base.forcedSets,
+       timer = base.timer;
 
   Exercise.fromJson(Map<String, dynamic> j)
     : id = j['id'] as String,
@@ -109,6 +178,8 @@ class Exercise {
       main = j['main'] as bool? ?? false,
       prevention = j['prevention'] as bool? ?? false,
       why = j['why'] as String? ?? '',
+      role = j['role'] as String? ?? '',
+      exId = j['exId'] as String?,
       forcedSets = null,
       timer = null;
 
@@ -144,6 +215,14 @@ class DayPlan {
     this.conduite = '',
     required this.exercises,
   }) : why = '';
+
+  /// L11 : même journée avec une liste d'exercices adaptée.
+  DayPlan.adapted(DayPlan base, this.exercises)
+    : j = base.j,
+      title = base.title,
+      cycle = base.cycle,
+      conduite = base.conduite,
+      why = base.why;
 
   DayPlan.fromJson(Map<String, dynamic> j0)
     : j = j0['j'] as int,

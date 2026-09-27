@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'adapt_screens.dart';
 import 'app_theme.dart';
 import 'data_control.dart';
 import 'exercise_screens.dart';
@@ -14,7 +15,7 @@ import 'profile_screens.dart';
 import 'store.dart';
 import 'store_widget.dart';
 
-const kAppVersion = '4.0.0';
+const kAppVersion = '4.1.0';
 
 class SettingsScreen extends StatelessWidget {
   final int? section;
@@ -328,6 +329,21 @@ class SettingsScreen extends StatelessWidget {
                   MaterialPageRoute<void>(
                     builder: (_) => const ProgramScreen(),
                   ),
+                ),
+          ),
+          // L11 : adaptation au jour le jour (KT-058 à KT-064).
+          _Action(
+            key: const ValueKey('settings-adapt'),
+            icon: Icons.tune_rounded,
+            color: SL.accent,
+            title: 'Adaptation au quotidien',
+            subtitle:
+                'Mode ${const {'guided': 'Guidé', 'assisted': 'Assisté', 'expert': 'Expert'}[store.autonomyMode]}'
+                '${store.adapt.pause == null ? '' : ' · en pause'} · vacances, maladie',
+            onTap:
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(builder: (_) => const AdaptScreen()),
                 ),
           ),
           _Action(

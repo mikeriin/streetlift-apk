@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'adapt_screens.dart';
 import 'app_theme.dart';
 import 'estimate_view.dart';
 import 'koach_widgets.dart' show KoachWeighInBanner;
@@ -377,7 +378,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       if (ProgramHomeCard.visible) const ProgramHomeCard(),
                       if (ResumeBanner.visible) const ResumeBanner(),
                       if (store.koachWeighInDue) const KoachWeighInBanner(),
+                      // L11 (KT-060) : pause en cours, en tête.
+                      if (store.adapt.pause != null)
+                        const AdaptHomeCard(pauseOnly: true),
                       for (final d in w.days) card(d),
+                      // L11 (KT-060 à KT-064) : plan qui glisse, assiduité,
+                      // plateau, prudence ; après les journées.
+                      if (store.adaptProposals.isNotEmpty)
+                        const AdaptHomeCard(proposalsOnly: true),
                     ],
                   ),
                 ),

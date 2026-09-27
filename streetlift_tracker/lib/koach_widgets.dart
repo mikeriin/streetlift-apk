@@ -277,6 +277,10 @@ String koachRuleText(ke.KSuggestion sug) => switch (sug.reason) {
 class KoachSuggestionCard extends StatelessWidget {
   final String load, from, reason;
   final VoidCallback onApply, onKeep, onDetails;
+
+  /// L11 (KT-063) : faux en mode Expert (suggestion visible, réglage
+  /// manuel).
+  final bool actions;
   const KoachSuggestionCard({
     super.key,
     required this.load,
@@ -285,6 +289,7 @@ class KoachSuggestionCard extends StatelessWidget {
     required this.onApply,
     required this.onKeep,
     required this.onDetails,
+    this.actions = true,
   });
 
   @override
@@ -319,7 +324,16 @@ class KoachSuggestionCard extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           Text(reason, style: TextStyle(color: SL.dim, fontSize: 13)),
-          const SizedBox(height: 10),
+          if (!actions)
+            Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: Text(
+                'Mode Expert : à toi de régler la charge si tu le souhaites.',
+                style: TextStyle(color: SL.dim, fontSize: 13),
+              ),
+            ),
+          if (actions) const SizedBox(height: 10),
+          if (actions)
           KActionRow(
             minButtonWidth: 120,
             children: [

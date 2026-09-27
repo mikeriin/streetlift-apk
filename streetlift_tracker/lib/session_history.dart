@@ -73,7 +73,16 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
         }
       }
     }
-    final known = {for (final ex in day?.exercises ?? <Exercise>[]) ex.id: ex};
+    // L11 : exercices échangés ou adaptés de la séance, retrouvés aussi.
+    final adapted =
+        day != null && week != null
+            ? store.sessionDay(week.n, day).exercises
+            : const <Exercise>[];
+    final known = {
+      for (final ex in day?.exercises ?? <Exercise>[]) ex.id: ex,
+      for (final ex in adapted)
+        if (ex.id.contains('~')) ex.id: ex,
+    };
     final order = <String>{
       ...known.keys.where(_snapshot.ex.containsKey),
       ..._snapshot.ex.keys,

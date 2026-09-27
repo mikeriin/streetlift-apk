@@ -131,9 +131,18 @@ Future<bool> showKoachQuestionnaireInfo(BuildContext context) async {
 // Bilan Koach (D5 b) : douleur facultative, propositions
 // ===================================================================
 
-class KoachReviewScreen extends StatelessWidget {
+class KoachReviewScreen extends StatefulWidget {
   final int week, day;
-  const KoachReviewScreen({super.key, required this.week, required this.day});
+
+  /// L11 (KT-063) : propositions de sécurité acceptées d'office en mode
+  /// Guidé (annulables ici).
+  final List<Map<String, dynamic>> autoApplied;
+  const KoachReviewScreen({
+    super.key,
+    required this.week,
+    required this.day,
+    this.autoApplied = const [],
+  });
 
   /// Quelque chose à montrer après cette séance ?
   static bool hasContent(int week, int day) {
@@ -144,6 +153,15 @@ class KoachReviewScreen extends StatelessWidget {
             store.koachMovementsDone(week, day).isNotEmpty) ||
         store.koachStructureProposals().isNotEmpty;
   }
+
+  @override
+  State<KoachReviewScreen> createState() => _KoachReviewScreenState();
+}
+
+class _KoachReviewScreenState extends State<KoachReviewScreen> {
+  int get week => widget.week;
+  int get day => widget.day;
+  final Set<String> _undone = {};
 
   @override
   Widget build(BuildContext context) => ListenableBuilder(
@@ -161,10 +179,43 @@ class KoachReviewScreen extends StatelessWidget {
         body: KList(
           children: [
             Text(
-              'Koach propose, tu décides : aucune valeur ne change sans ton '
-              'accord.',
+              widget.autoApplied.isEmpty
+                  ? 'Koach propose, tu décides : aucune valeur ne change sans '
+                      'ton accord.'
+                  : 'Mode Guidé : Koach a appliqué les baisses de sécurité '
+                      'ci-dessous ; tu peux les annuler.',
               style: TextStyle(color: SL.dim),
             ),
+            for (final p in widget.autoApplied)
+              KCard(
+                key: ValueKey('koach-auto-${p['id']}'),
+                radius: 20,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(store.koachProposalText(p)),
+                    const SizedBox(height: 4),
+                    Text(
+                      _undone.contains(p['id'])
+                          ? 'Annulé : valeur précédente rétablie.'
+                          : 'Appliqué. ${store.koachProposalReason(p)}',
+                      style: TextStyle(color: SL.dim),
+                    ),
+                    if (!_undone.contains(p['id']))
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          key: ValueKey('koach-auto-undo-${p['id']}'),
+                          onPressed: () {
+                            store.undoKoachProposal(p);
+                            setState(() => _undone.add(p['id'] as String));
+                          },
+                          child: const Text('Annuler'),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
             if (movements.isNotEmpty) ...[
               const KSection(
                 'Douleur pendant la séance',

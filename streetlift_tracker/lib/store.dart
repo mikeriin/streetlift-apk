@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'content_pack.dart';
 import 'game.dart';
+import 'koach_adapt.dart';
 import 'koach_data.dart';
 import 'koach_engine.dart' as ke;
 import 'koach_program.dart';
@@ -34,6 +35,7 @@ export 'persistence.dart';
 export 'profile.dart';
 export 'set_validation.dart' show SetCheck, SetField;
 
+part 'adapt_store.dart';
 part 'koach_store.dart';
 part 'profile_store.dart';
 part 'program_store.dart';
@@ -740,6 +742,15 @@ class AppStore extends ChangeNotifier {
 
   /// Entrées du profil illisibles ignorées au dernier démarrage.
   int profileLoadIssues = 0;
+
+  /// L11 : adaptations au jour le jour (section `adapt`, écrite seulement
+  /// si elle sert). Contrat : docs/CONTRAT_L11.md.
+  AdaptData adapt = AdaptData();
+
+  /// Entrées d'adaptation illisibles ignorées au dernier démarrage.
+  int adaptLoadIssues = 0;
+  final Map<String, Object?> _adaptCache = {};
+  String _adaptCacheRev = '';
 
   /// Annotations du programme pour Koach (asset généré, lecture seule).
   /// Vide si l'asset est illisible : Koach reste alors indisponible.
@@ -2429,6 +2440,7 @@ class AppStore extends ChangeNotifier {
     koach: koach,
     profile: profile,
     programInstance: programInstance,
+    adapt: adapt,
   );
 
   Map<String, dynamic> _backupJson(_BackupData data) {
@@ -2494,6 +2506,9 @@ class AppStore extends ChangeNotifier {
       // identique à 3.2.0 sinon) ; ignorée par les versions antérieures.
       if (data.programInstance != null)
         'programInstance': data.programInstance!.toJson(),
+      // L11 : adaptations écrites seulement si elles servent (export
+      // identique à 4.0.0 sinon) ; ignorées par les versions antérieures.
+      if (!data.adapt.pristine) 'adapt': data.adapt.toJson(),
     };
   }
 
@@ -2797,6 +2812,13 @@ class AppStore extends ChangeNotifier {
       strict: limits != null,
       issues: programIssues,
     );
+    // L11 : adaptations. Import strict ; démarrage tolérant.
+    final adaptIssues = <String>[];
+    final nextAdapt = AdaptData.fromJson(
+      m['adapt'],
+      strict: limits != null,
+      issues: adaptIssues,
+    );
     final nextUnlocked = <String, int>{};
     final nextLegacy = <String, String>{};
     (m['legacyGrants'] as Map<String, dynamic>? ?? {}).forEach((k, v) {
@@ -2906,6 +2928,8 @@ class AppStore extends ChangeNotifier {
       profileIssues: profileIssues.length,
       programInstance: nextProgram,
       programIssues: programIssues.length,
+      adapt: nextAdapt,
+      adaptIssues: adaptIssues.length,
     );
   }
 
@@ -2996,6 +3020,10 @@ class AppStore extends ChangeNotifier {
     koachLoadIssues = data.koachIssues;
     profile = data.profile;
     profileLoadIssues = data.profileIssues;
+    adapt = data.adapt;
+    adaptLoadIssues = data.adaptIssues;
+    _adaptCache.clear();
+    _adaptCacheRev = '';
     koachSkipped.clear();
     _koachStash.clear();
     _koachCache = null;
@@ -3592,17 +3620,28 @@ class AppStore extends ChangeNotifier {
 
   /// Charge prescrite pour la semaine [week] du programme : [loadFor],
   /// plus, Koach actif, les adaptations acceptées de la semaine (D28).
-  double? sessionLoad(int week, Exercise e) {
+  double? sessionLoad(int week, Exercise e, {int? day}) {
     if (loadNeedsReference(e)) return null;
-    if (KoachStore(this).koachOn && week >= 1) {
-      return KoachStore(this).koachLoadFor(e, week: week);
-    }
-    return loadFor(e);
+    final kg =
+        KoachStore(this).koachOn && week >= 1
+            ? KoachStore(this).koachLoadFor(e, week: week)
+            : loadFor(e);
+    // L11 (KT-060, KT-062) : reprise après un arrêt, décharge.
+    if (kg == null || day == null || kg <= 0) return kg;
+    final f = AdaptStore(this).adaptLoadFactor(week, day, e);
+    if (f >= 1) return kg;
+    final step = switch (e.load.type) {
+      'acc' => e.load.step ?? 1.0,
+      'fixed' => 1.0,
+      _ => 2.5,
+    };
+    final v = (kg * f / step).floor() * step;
+    return v < 0 ? 0.0 : v;
   }
 
   /// [week] : charge de la séance de cette semaine ([sessionLoad]).
-  String loadLabel(Exercise e, {int? week}) {
-    final kg = week == null ? loadFor(e) : sessionLoad(week, e);
+  String loadLabel(Exercise e, {int? week, int? day}) {
+    final kg = week == null ? loadFor(e) : sessionLoad(week, e, day: day);
     if (kg == null && loadNeedsReference(e)) return 'à renseigner';
     if (kg == null) return '—';
     if (kg <= 0) return 'PdC';
@@ -3654,9 +3693,12 @@ class AppStore extends ChangeNotifier {
     );
   }
 
-  TrainingEstimate dayEstimate(DayPlan day) {
+  /// [week] : séance du programme adaptée (L11 : paires de la
+  /// compression).
+  TrainingEstimate dayEstimate(DayPlan day, {int? week}) {
     final out = TrainingEstimate();
-    final blocks = groups(day);
+    final blocks =
+        week == null ? groups(day) : AdaptStore(this).sessionGroups(week, day);
     for (var i = 0; i < blocks.length; i++) {
       final block = blocks[i];
       final estimates = block.map(exerciseEstimate).toList();
@@ -4691,6 +4733,10 @@ class _BackupData {
   /// L10 : instance de programme (null si la section est absente).
   final ProgramInstance? programInstance;
   final int programIssues;
+
+  /// L11 : adaptations (neuves si la section est absente).
+  final AdaptData adapt;
+  final int adaptIssues;
   _BackupData({
     required this.values,
     required this.refStatus,
@@ -4717,7 +4763,10 @@ class _BackupData {
     this.profileIssues = 0,
     this.programInstance,
     this.programIssues = 0,
-  }) : koach = koach ?? KoachData();
+    AdaptData? adapt,
+    this.adaptIssues = 0,
+  }) : koach = koach ?? KoachData(),
+       adapt = adapt ?? AdaptData();
 }
 
 /// Séance à reprendre (bandeau de l'accueil).

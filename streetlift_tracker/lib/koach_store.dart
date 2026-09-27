@@ -143,10 +143,13 @@ extension KoachStore on AppStore {
       );
 
   /// D8 : difficulté obligatoire sur la série 1 et la dernière série.
+  /// L11 (KT-064) : facultative pour les débutants et novices en mode
+  /// Guidé ou Assisté (difficulté globale de fin de séance à la place).
   bool koachEffortRequired(Exercise e, ExerciseLog log, int index) =>
       koachOn &&
       koachStrength(e) &&
-      (index == 0 || index == log.sets.length - 1);
+      (index == 0 || index == log.sets.length - 1) &&
+      !AdaptStore(this).adaptSimplified;
 
   /// La validation de cette série attend la difficulté (D8) : exigée, ni
   /// choisie ni lisible dans le champ RIR/RPE.
@@ -616,11 +619,17 @@ extension KoachStore on AppStore {
           if (d.detail['direction'] case final String direction) direction,
     ];
     final lift = _koachLift(a.movement!);
+    // L11 (KT-060) : semaine de retour de maladie, RIR visé + 1.
+    final info = AdaptStore(this).adaptInfo(week, day);
+    final target =
+        a.rirTarget == null
+            ? null
+            : a.rirTarget! + (info.illness && info.applied ? 1 : 0);
     final sug = ke.inSession(
       ke.koachParams,
       lift,
       sets,
-      a.rirTarget,
+      target,
       _koachPlanned(e, log.sets.length),
       koachBodyweightNow,
       (lift['grid'] as num).toDouble(),
@@ -687,6 +696,138 @@ extension KoachStore on AppStore {
       ),
     );
     saveLogs(affectsProgression: false);
+  }
+
+  /// L11 (KT-063) : conduite selon le mode d'autonomie (`auto`,
+  /// `propose`, `info`, `none`).
+  String koachSuggestionAction(ke.KSuggestion sug) => autonomyAction(
+    AdaptStore(this).autonomyMode,
+    sug.direction,
+    sug.reason,
+  );
+
+  /// Mode Guidé : applique la suggestion quand la règle le permet. Renvoie
+  /// la suggestion appliquée (message et annulation), sinon null.
+  ke.KSuggestion? koachAutoApply(int week, int day, Exercise e, ExerciseLog log) {
+    if (!log.sets.any((s) => !s.done)) return null;
+    final sug = koachSuggestion(week, day, e, log);
+    if (sug == null || koachSuggestionAction(sug) != 'auto') return null;
+    applyKoachSuggestion(week, day, e, log, sug);
+    return sug;
+  }
+
+  /// Annule une suggestion appliquée automatiquement : charges des séries
+  /// non validées rétablies, décision notée refusée (non reproposée).
+  void undoKoachSuggestion(
+    int week,
+    int day,
+    Exercise e,
+    ExerciseLog log,
+    ke.KSuggestion sug,
+  ) {
+    final key = sessionKey(week, day);
+    final applied = _kgText(sug.kg), from = _kgText(sug.from);
+    for (final s in log.sets) {
+      if (!s.done && s.kg == applied) s.kg = from;
+    }
+    final i = koach.decisions.lastIndexWhere(
+      (d) =>
+          d.kind == 'inSession' &&
+          d.status == 'accepted' &&
+          d.detail['session'] == key &&
+          d.detail['exercise'] == e.id &&
+          d.detail['direction'] == sug.direction,
+    );
+    if (i >= 0) {
+      final d = koach.decisions[i];
+      koach.decisions[i] = KoachDecision(d.at, d.id, d.kind, 'refused', {
+        ...d.detail,
+        'undone': true,
+      });
+    }
+    log.koach = 'Koach : ${koachReason(e, log, sug)} (annulé)';
+    saveLogs(affectsProgression: false);
+  }
+
+  /// Mode Guidé (KT-063) : jour de fatigue appliqué d'office. Renvoie les
+  /// séries retirées par exercice (annulation), vide si rien n'est fait.
+  Map<String, int> koachAutoFatigue(int week, int day, List<Exercise> exercises) {
+    if (AdaptStore(this).autonomyMode != 'guided') return const {};
+    final level = koachFatigueLevel(week, day, exercises);
+    if (level <= 0) return const {};
+    final cut = koachFatigueCut(week, day, exercises, level);
+    if (cut.values.every((n) => n == 0)) return const {};
+    acceptKoachFatigue(week, day, exercises, level);
+    return cut;
+  }
+
+  /// Annule un jour de fatigue appliqué d'office : séries rétablies.
+  void undoKoachFatigue(
+    int week,
+    int day,
+    List<Exercise> exercises,
+    Map<String, int> cut,
+  ) {
+    final key = sessionKey(week, day);
+    for (final e in exercises) {
+      final n = cut[e.id] ?? 0;
+      if (n == 0) continue;
+      final log = exLog(week, day, e);
+      for (var i = 0; i < n; i++) {
+        log.sets.add(SetEntry());
+      }
+    }
+    final i = koach.decisions.indexWhere((d) => d.id == '$key|fatigue');
+    if (i >= 0) {
+      final d = koach.decisions[i];
+      koach.decisions[i] = KoachDecision(d.at, d.id, d.kind, 'refused', {
+        ...d.detail,
+        'undone': true,
+      });
+    }
+    saveLogs(immediate: true);
+  }
+
+  /// Mode Guidé (KT-063) : au bilan, baisses et allègement douleur acceptés
+  /// d'office (annulables) ; les hausses restent proposées.
+  List<Map<String, dynamic>> koachAutoSafety(String key) {
+    if (AdaptStore(this).autonomyMode != 'guided') return const [];
+    final out = <Map<String, dynamic>>[];
+    for (final p in koachProposals(key)) {
+      final safety =
+          p['kind'] == 'pain' ||
+          (p['kind'] == 'value' &&
+              (p['reason'] == 'down' || p['reason'] == 'accDown'));
+      if (!safety) continue;
+      acceptKoachProposal(p);
+      out.add(p);
+    }
+    return out;
+  }
+
+  /// Annule une proposition acceptée d'office : valeur précédente
+  /// rétablie (saisie datée), décision notée refusée.
+  void undoKoachProposal(Map<String, dynamic> p) {
+    final at = ke.wallIso(storeClock());
+    if (p['kind'] == 'value') {
+      final ref = p['ref'] as String;
+      final from = (p['from'] as num).toDouble();
+      values[ref] = from;
+      refStatus[ref] = 'set';
+      pilotageEpoch++;
+      koach.history.add(PilotageEvent(at, ref, from, 'manual'));
+    } else if (p['kind'] == 'pain') {
+      koach.painRelief.remove(p['movement'] as String);
+    }
+    final i = koach.decisions.indexWhere((d) => d.id == p['id']);
+    if (i >= 0) {
+      final d = koach.decisions[i];
+      koach.decisions[i] = KoachDecision(d.at, d.id, d.kind, 'refused', {
+        ...d.detail,
+        'undone': true,
+      });
+    }
+    _koachSave();
   }
 
   /// D7 : refus enregistré, non reproposé dans la séance (même sens).
