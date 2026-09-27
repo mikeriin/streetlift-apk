@@ -9,7 +9,7 @@
 00:01 +7: démonstrations découpées revue : exercices en image fixe ou sans démonstration
 00:01 +8: démonstrations découpées segments posés exactement sur les articulations du modèle
 00:01 +9: démonstrations découpées rendu sans exception de chaque animation, corps dessiné
-00:01 +10: démonstrations découpées coût : images par seconde (test) et mémoire des textures
-REFONTE_PERF images=240 moyenne_us=1609 ips=622 textures_octets=6340608
+00:02 +10: démonstrations découpées coût : images par seconde (test) et mémoire des textures
+REFONTE_PERF images=240 moyenne_us=1425 ips=702 textures_octets=6340608
 00:02 +11: All tests passed!
 exit=0
