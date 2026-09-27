@@ -1,5 +1,14 @@
 # Décisions en attente
 
+## L10 (4.0.0) — à relire (non bloquant)
+Détail : `docs/CONTRAT_L10.md` §2 (D-L10-01 à D-L10-13) et §8 (registre) dans le ZIP ; 13 profils types : `docs/PROFILS_TYPES_L10.md`.
+- **D-L10-04 Ton programme actuel** reste le modèle « Expert streetlifting » implicite, identique ; rien n'est réécrit. « Mon programme → Générer » le remplace à partir d'aujourd'hui (annulable 7 jours). Recommandation : garder.
+- **D-L10-01 Seuils de niveau** du prompt appliqués (pompes 10/25/45/70, tractions 1/6/13/21, squat 0,75/1,25/1,6/2,0 ; lests 25/50 % et 40/75 %) ; les tranches du profil L8 deviennent des répétitions « estimées ». À valider.
+- **D-L10-03 Séances plus courtes que le temps disponible** quand le plafond de volume (départ + 6 séries par groupe) est atteint, signalées dans la séance (fréquent au-delà de 90 min). Option : relever le plafond pour les longues séances.
+- **D-L10-10 Matériel déduit des lieux** (parc → barre basse ; maison → serviette, bâton ; salle → serviette, barre basse avec rack). À confirmer.
+- **D-L9b-09** (fiche depuis l'écran de séance) : toujours en attente — un bouton dans la feuille de consignes cassait un test d'écran existant ; à placer ailleurs si tu le veux.
+
+
 ## L9b (3.2.0) — à relire (non bloquant)
 Détail : `docs/CONTRAT_L9b.md` §4 dans le ZIP (D-L9b-01 à D-L9b-09).
 - **D-L9b-01 Aucune migration de données** : les noms enregistrés (séances, historique, records) restent les clés ; l'identifiant v2 est résolu à la lecture. Option : réécrire les données avec les identifiants v2 (migration de schéma). Recommandation : garder.
