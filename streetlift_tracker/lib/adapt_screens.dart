@@ -561,74 +561,154 @@ class AdaptSessionBanner extends StatelessWidget {
       );
     }
     if (info.lighten) out.add('Fin de semaine allégée : séries × 0,8.');
-    if (info.deload)
+    if (info.deload) {
       out.add('Semaine de décharge : séries × 0,6, charges −10 %.');
+    }
     if (compressed != null) out.add('Séance recomposée pour $compressed min.');
     if (info.shorter) out.add('Séances 20 % plus courtes.');
     return out;
   }
 
+  /// Résumé d'une ligne (l'en-tête de séance reste compact à 200 %).
+  static String summary(AdaptSessionInfo info, int? compressed) {
+    final parts = <String>[];
+    final r = info.rule;
+    if (info.safety && r != null) {
+      parts.add(
+        info.applied
+            ? 'Reprise : charges −${(r.loadCut * 100).round()} %'
+            : 'Reprise après ${r.gap} jours : allègement proposé',
+      );
+    }
+    if (info.illness) {
+      parts.add(info.applied ? 'Retour de maladie : allégé' : 'Retour de maladie');
+    }
+    if (info.lighten) parts.add('Semaine allégée');
+    if (info.deload) parts.add('Décharge');
+    if (compressed != null) parts.add('$compressed min');
+    if (info.shorter) parts.add('Séance raccourcie');
+    return parts.join(' · ');
+  }
+
   @override
   Widget build(BuildContext context) {
     final info = store.adaptInfo(week, base.j);
-    final text = lines(info, store.adaptCompressed(week, base.j));
+    final compressed = store.adaptCompressed(week, base.j);
+    final text = summary(info, compressed);
     if (text.isEmpty) return const SizedBox.shrink();
-    final mode = info.mode;
-    final pending = info.safety && info.choice == null && mode != 'guided';
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
-      child: KCard(
-        key: const ValueKey('adapt-session-banner'),
-        accent: SL.accent,
-        radius: 16,
-        padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            for (final t in text)
-              Text(t, maxLines: 4, overflow: TextOverflow.ellipsis),
-            if (info.safety)
-              Wrap(
-                spacing: 8,
-                alignment: WrapAlignment.end,
-                children: [
-                  if (info.applied)
-                    TextButton(
-                      key: const ValueKey('adapt-safety-undo'),
-                      onPressed: () {
-                        store.setAdaptSafety(week, base, 'refused');
-                        onChanged?.call();
-                      },
-                      child: Text(
-                        mode == 'guided' ? 'Annuler' : 'Revenir au prévu',
-                      ),
-                    )
-                  else ...[
-                    TextButton(
-                      key: const ValueKey('adapt-safety-apply'),
-                      onPressed: () {
-                        store.setAdaptSafety(week, base, 'applied');
-                        onChanged?.call();
-                      },
-                      child: Text(
-                        pending ? 'Appliquer' : 'Appliquer quand même',
-                      ),
-                    ),
-                    if (pending)
-                      TextButton(
-                        key: const ValueKey('adapt-safety-keep'),
-                        onPressed: () {
-                          store.setAdaptSafety(week, base, 'refused');
-                          onChanged?.call();
-                        },
-                        child: const Text('Garder le prévu'),
-                      ),
-                  ],
-                ],
+      padding: const EdgeInsets.only(top: 2),
+      child: Semantics(
+        button: true,
+        label: 'Adaptation de la séance : $text. Détails',
+        excludeSemantics: true,
+        child: KCard(
+          key: const ValueKey('adapt-session-banner'),
+          accent: SL.accent,
+          radius: 14,
+          padding: const EdgeInsets.fromLTRB(12, 6, 8, 6),
+          onTap: () => _details(context),
+          child: Row(
+            children: [
+              const Icon(Icons.tune_rounded, size: 18),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(text, maxLines: 1, overflow: TextOverflow.ellipsis),
               ),
-          ],
+              const Icon(Icons.chevron_right, size: 18),
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Future<void> _details(BuildContext context) async {
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder:
+          (context) => ListenableBuilder(
+            listenable: store,
+            builder: (context, _) {
+              final info = store.adaptInfo(week, base.j);
+              final mode = info.mode;
+              final pending =
+                  info.safety && info.choice == null && mode != 'guided';
+              void choose(String c) {
+                store.setAdaptSafety(week, base, c);
+                onChanged?.call();
+                Navigator.pop(context);
+              }
+
+              return SingleChildScrollView(
+                key: const ValueKey('adapt-session-details'),
+                padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Séance adaptée',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    const SizedBox(height: 8),
+                    for (final t in lines(
+                      info,
+                      store.adaptCompressed(week, base.j),
+                    ))
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 6),
+                        child: Text('• $t'),
+                      ),
+                    if (info.safety && !info.applied)
+                      Text(
+                        mode == 'expert'
+                            ? 'Mode Expert : à toi de décider.'
+                            : 'Mode Assisté : rien ne change sans ton accord.',
+                        style: TextStyle(color: SL.dim),
+                      ),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      alignment: WrapAlignment.end,
+                      children: [
+                        if (info.safety && info.applied)
+                          OutlinedButton(
+                            key: const ValueKey('adapt-safety-undo'),
+                            onPressed: () => choose('refused'),
+                            child: Text(
+                              mode == 'guided' ? 'Annuler' : 'Revenir au prévu',
+                            ),
+                          ),
+                        if (info.safety && !info.applied) ...[
+                          if (pending)
+                            OutlinedButton(
+                              key: const ValueKey('adapt-safety-keep'),
+                              onPressed: () => choose('refused'),
+                              child: const Text('Garder le prévu'),
+                            ),
+                          FilledButton(
+                            key: const ValueKey('adapt-safety-apply'),
+                            onPressed: () => choose('applied'),
+                            child: Text(
+                              pending ? 'Appliquer' : 'Appliquer quand même',
+                            ),
+                          ),
+                        ],
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('Fermer'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
     );
   }
 }
