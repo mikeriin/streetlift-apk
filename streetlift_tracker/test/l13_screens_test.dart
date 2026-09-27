@@ -25,7 +25,7 @@ Future<void> reach(
   bool up = false,
 }) async {
   final list = find.byType(Scrollable).first;
-  for (var i = 0; i < 80 && target.hitTestable().evaluate().isEmpty; i++) {
+  for (var i = 0; i < 200 && target.hitTestable().evaluate().isEmpty; i++) {
     await tester.timedDrag(
       list,
       Offset(0, up ? 150 : -150),
