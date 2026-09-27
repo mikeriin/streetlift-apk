@@ -1,6 +1,6 @@
-# Kalis Track 4.2.1 — Muscles et démonstrations en illustrations anatomiques
+# Kalis Track 4.3.1 — Muscles et démonstrations en illustrations anatomiques
 
-## 4.2.1 — Refonte muscles et animations (branche `refonte/muscles-animations`)
+## 4.3.1 — Refonte muscles et animations (branche `refonte/muscles-animations`)
 
 - **Carte des muscles d'origine** : STATS, accueil et WOD retrouvent les illustrations anatomiques de 3.1.0 (face / dos, un calque par groupe, rampe bordeaux → rouge avec halo), rendu identique à 3.1.0 avec tes données actuelles.
 - **Fiche exercice** : carte face / dos / **profil** (nouvelle vue, dessinée à partir de l'illustration de profil validée par le propriétaire), muscles principaux, secondaires, stabilisateurs et étirés en intensités distinctes, légende et liste en texte conservées.
@@ -9,6 +9,23 @@
 - Aucune donnée modifiée, aucune migration. Contenu sportif **non relu par un professionnel diplômé**.
 
 Détail : `SUIVI_PROJET.md` (refonte muscles et animations). Outils : `tools/muscles_profile.py`, `tools/anim_cutout.py`. Tests : `test/refonte_ma_test.dart`, `tools/tests/test_refonte_muscles.py`.
+
+
+# Historique — Kalis Track 4.3.0 — S'entraîner en sécurité
+
+## 4.3.0 — Santé, sécurité, conformité et test fermé (lot L13)
+
+- **Avertissement clair** dès le premier écran et dans Réglages → À propos : Kalis Track est une application d'entraînement et de bien-être, pas un dispositif médical ; aucun diagnostic, aucune promesse de résultat.
+- **Santé et sécurité** (À propos, et « Douleur ou malaise ? » dans les options de séance) : signaux d'alerte (douleur dans la poitrine, malaise, essoufflement anormal, douleur qui irradie) → arrêter l'effort, 15 ou 112 ; parcours de la douleur ; situations particulières (grossesse, tension ou cœur, 65 ans et plus, reprise après blessure) → mode prudent et avis médical conseillé.
+- **Douleur qui dure** : au-delà de 2 séances de suite au-dessus de 3/10 sur un mouvement, Koach te conseille de consulter un professionnel de santé (en plus de l'absence de hausse et de l'allègement déjà en place).
+- **Récupération** : conseils généraux (protéines réparties, hydratation, sommeil, régularité) ; aucun calcul de calories, aucun objectif de poids.
+- **Politique de confidentialité** consultable dans l'application ; l'export signale qu'il contient tes données de santé. Un profil importé de moins de 18 ans bloque l'application jusqu'à correction.
+- **Donner mon avis** (test fermé) : formulaire local, aperçu exact, partage par le menu Android seulement si tu le choisis ; rien d'autre que ce que tu coches.
+- Textes relus automatiquement (aucune allégation médicale) ; la note « anti-blessure » d'un accessoire est reformulée.
+- Préparation Google Play : visuel 1024 × 500, réponses Sécurité des données et santé, plan du test fermé (`docs/GOOGLE_PLAY.md`, `docs/TEST_FERME.md`).
+- Aucune donnée migrée, aucune permission ni dépendance ajoutée. Contenu sportif **non relu par un professionnel diplômé** : `docs/REGISTRE_VALIDATION.md`.
+
+Détail : `docs/CONTRAT_L13.md`, `SUIVI_PROJET.md` (L13). Tests : `test/l13_*_test.dart`, `tools/tests/test_l13_compliance.py`.
 
 
 # Historique — Kalis Track 4.2.0 — Tes progrès, visibles

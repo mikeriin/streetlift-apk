@@ -23,7 +23,28 @@ def fit_mark(mask, size, color=ACCENT, coverage=.80):
     return result
 
 
+PLAY = ROOT / 'docs/play'
+LIGHT = '#F4F4F4'
+
+
+def feature_graphic(output=PLAY / 'feature_graphic_1024x500.png'):
+    """L13 (KT-076) : visuel Google Play 1024 × 500, fond uni bordeaux et
+    logo clair centré ; ni illustration, ni texte. PNG 24 bits sans alpha."""
+    mask = Image.open(ASSETS / 'logo_mask.png').convert('L')
+    graphic = Image.new('RGBA', (1024, 500), ACCENT)
+    mark = tint(mask.crop(mask.getbbox()), LIGHT)
+    mark.thumbnail((300, 300), Image.Resampling.LANCZOS)
+    graphic.alpha_composite(mark, ((1024 - mark.width) // 2, (500 - mark.height) // 2))
+    output.parent.mkdir(parents=True, exist_ok=True)
+    graphic.convert('RGB').save(output, optimize=True)
+    return output
+
+
 def main():
+    import sys
+    if '--play' in sys.argv[1:]:
+        print(f'Visuel Google Play : {feature_graphic().relative_to(ROOT)}')
+        return
     mask = Image.open(ASSETS / 'logo_mask.png').convert('L')
     foreground = tint(mask)
     foreground.save(ASSETS / 'icon_fg.png')

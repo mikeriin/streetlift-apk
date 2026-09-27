@@ -6,6 +6,7 @@ import 'timers.dart';
 export 'timers.dart' show TimerCtl;
 import 'app_theme.dart';
 import 'ui.dart';
+import 'wellbeing_screens.dart' show SafetyScreen;
 import 'models.dart';
 import 'rewards.dart' show checkLevelUp;
 import 'store.dart';
@@ -294,6 +295,13 @@ class _SessionScreenState extends State<SessionScreen> {
               }
               // Report d'un test (S2, S12…) dans la feuille Pilotage sans
               // quitter la séance : même écran que depuis STATS.
+              // L13 (KT-073) : douleur ou signal d'alerte pendant la séance.
+              if (value == 'safety') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const SafetyScreen()),
+                );
+              }
               if (value == 'pilotage') {
                 Navigator.push(
                   context,
@@ -322,6 +330,10 @@ class _SessionScreenState extends State<SessionScreen> {
                       child: Text('Je m’entraîne ailleurs'),
                     ),
                   ],
+                  const PopupMenuItem(
+                    value: 'safety',
+                    child: Text('Douleur ou malaise ?'),
+                  ),
                   const PopupMenuItem(
                     value: 'pilotage',
                     child: Text('Références (feuille Pilotage)'),

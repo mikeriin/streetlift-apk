@@ -1,15 +1,15 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : refonte muscles et animations (branche `refonte/muscles-animations`), version 4.2.1**  
-**Date : 27 septembre 2026, Europe/Paris — version : 4.2.1+70 (versionCode réel fixé par la CI de build)**  
-**Statut : fusion sur `main` soumise à l'accord écrit du propriétaire. Contrôlé en CI (branche temporaire `claude/ci-refonte`) ; build de la branche : `LIVRAISON_REFONTE_MA.md` ; rien n'est vérifié sur téléphone.**
+**Passe actuelle : refonte muscles et animations (branche `refonte/muscles-animations`), version 4.3.1**  
+**Date : 27 septembre 2026, Europe/Paris — version : 4.3.1+71 (versionCode réel fixé par la CI de build)**  
+**Statut : fusion sur `main` autorisée par écrit par le propriétaire (après L13, en avance rapide). Contrôlé en CI (branche temporaire `claude/ci-refonte`) ; build de la branche : `LIVRAISON_REFONTE_MA.md` ; rien n'est vérifié sur téléphone.**
 
 ## Refonte MA.0 — Base et demande
 
 | Élément | Valeur |
 | --- | --- |
 | Demande | `pipeline/prompt_REFONTE_MA.txt` (27/09/2026) : carte musculaire en illustrations historiques (STATS inclus), vue de profil tirée de l'image fournie par le propriétaire, toutes les démonstrations refaites avec ces illustrations |
-| Base | `main` `332e292` (4.2.0+69, L12) ; travail commencé sur `b202121` (4.1.0) puis remis à jour sur 4.2.0 (aucun fichier commun hors README, SUIVI et version) |
+| Base | `main` `1a39f91` (4.3.0+70, L13). Travail commencé sur 4.1.0, remis sur 4.2.0 (4.2.1, build n°92) puis réappliqué sur les **sources** du ZIP 4.3.0 : les 26 fichiers modifiés par L13 sont conservés (seuls README, SUIVI et la version sont communs, fusionnés à la main) |
 | Reprise de Codex | branche `codex/retablir-carte-musculaire-et-animations` (`codex_export/`, reconstruit par `reconstruct.py`, SHA-256 vérifiés) : 18 PNG de 3.1.0 (identiques octet pour octet à 3.1.0), carte des fiches agrégée par groupes. **Non repris** : sa vue de profil (blocs polygonaux) et son formatage (autre version de Dart) |
 | Outils | pas de Flutter local (proxy) : contrôles et rendus en CI (Flutter 3.29.3) ; outils d'images en Python (numpy, scipy, Pillow) |
 
@@ -25,7 +25,7 @@
   - image fixe (deux images clés identiques, aucun mouvement) : leg curl, leg extension ;
   - sans démonstration (contact essentiel absent) : presse à cuisses (plateau loin des pieds), sled push (mains loin du traîneau), rowing haltère appui poitrine (poitrine hors du banc), transition de muscle-up assistée pieds au sol (pieds en l'air), sauts en contrebas (pas de caisse).
   Le générateur de programme (L10) lit toujours le statut du pack (références figées des tests L10) : ces 18 exercices y restent « animés ».
-- Version 4.2.1+70 (`pubspec.yaml`, `kAppVersion`).
+- Version 4.3.1+71 (`pubspec.yaml`, `kAppVersion`).
 
 ## Refonte MA.2 — Contrôles
 
@@ -41,7 +41,70 @@
 - Défauts de contenu du pack relevés pendant la revue (à corriger dans le pack, proposition dans `pipeline/DECISIONS_EN_ATTENTE.md`) : les 18 exercices ci-dessus ; accessoires manquants sans fausser le geste (« banc incliné » des YTW, porte des rowings à la serviette).
 
 
-# Historique conservé — L12 (4.2.0)
+# Historique conservé — L13 (4.3.0)
+
+**Passe précédente : L13 — Santé, sécurité, conformité et test fermé (KT-072 à KT-078), version 4.3.0**  
+**Date : 27 septembre 2026, Europe/Paris — version : 4.3.0+70 (versionCode réel fixé par la CI de build)**  
+**Statut : lot L13 exécuté par le pipeline automatisé (sans échange en direct). Corrigé dans le code et testé automatiquement en CI (voir L13.3) ; build signé : `LIVRAISON_L13.md` ; rien n'est vérifié sur téléphone.**
+
+## L13.0 — Base
+
+| Élément | Valeur | Preuve |
+| --- | --- | --- |
+| Demande | `pipeline/prompt_L13.txt` (branche `pipeline`), règles `pipeline/PIPELINE.md` ; dernier lot du pipeline | Pipeline du propriétaire |
+| Base | `streetlift_tracker_v33.zip` **4.2.0+69** (L12), `main` `332e292`, 2 254 226 octets, SHA-256 `71f975ab02a7ae3b08593705752c6c8c8cbf8adcbca0e9583d75efa6eb5b6335` (identique à `LIVRAISON_L12.md`), racine unique `streetlift_tracker/` | Recalcul |
+| Prérequis | L7 (Koach), L8 (profil, consentement, mode prudent), L9b (pack), L10, L11, L12 livrés | Sections ci-dessous |
+| État initial | Arbre identique à celui du build signé L12 (run 90) : format, analyse, 809 réussis / 12 ignorés, Python 72/72, `verify_project.py` ; recherche d'allégations (nouvelle) : 4 occurrences | `LIVRAISON_L12.md`, `CONTRAT_L13.md` §5 |
+| Outils | Pas de Flutter local (proxy) ; CI sur la branche temporaire `claude/ci-tools` ; Python 3.11 et Pillow locaux ; recherche web (pages d'aide Google Play, EUR-Lex) ; aucun téléphone | Constaté |
+
+## L13.1 — Contrat
+
+`docs/CONTRAT_L13.md` : base et contradictions (§1 : D26 « jamais l'arrêt » face aux signaux d'alerte, sauvegarde Android KT-016 face aux données de santé, réponses Koach hors consentement L8, allégation dans un asset figé, profil importé d'un mineur, URL de politique non fournie), 10 décisions par défaut (§2), règles (§3), aucune donnée nouvelle (§4), liste des termes interdits (§5), finalité hors règlement (UE) 2017/745 avec source et date (§6), tests (§7), limites (§8). Documents : `CONFIDENTIALITE.md` (cartographie finale), `GOOGLE_PLAY.md`, `REGISTRE_VALIDATION.md`, `TEST_FERME.md`.
+
+## L13.2 — Changements par ticket
+
+| Ticket | Changement |
+| --- | --- |
+| KT-072 | `kRecoveryTips` (6 conseils généraux, sans chiffre ni calcul, sans objectif de poids) ; écran « RÉCUPÉRATION » ; sommeil et forme Koach toujours facultatifs |
+| KT-073 | `painStreak` / `painNeedsReferral` (purs), `painHistory` / `painReferralMovements` (store, ordre des dates de fin) ; renvoi vers un professionnel au-delà de 2 séances > 3/10 (bilan Koach, Santé et sécurité) ; signaux d'alerte (`kAlertSignals`, `kAlertAdvice`) ; entrée « Douleur ou malaise ? » dans les options de séance ; situations particulières (`kSpecialSituations`) reliées au mode prudent L8 ; écran « SANTÉ ET SÉCURITÉ » |
+| KT-074 | `tools/check_claims.py` + test Python ; 4 occurrences corrigées (« Rapport technique » au lieu de « Diagnostic », note d'accessoire reformulée à l'affichage `kWellnessWording`) ; `kWellnessDisclaimer` sur le premier écran du démarrage (sous l'action) et dans « À propos » ; analyse de finalité (`CONTRAT_L13.md` §6) |
+| KT-075 | Cartographie finale (`CONFIDENTIALITE.md`) ; politique embarquée `assets/legal/confidentialite.md` (écran « CONFIDENTIALITÉ ») ; libellé de l'export (données de santé comprises) ; `profileIsMinor` + écran « RÉSERVÉE AUX ADULTES » pour un profil importé de moins de 18 ans |
+| KT-076 | `tools/generate_brand.py --play` → `docs/play/feature_graphic_1024x500.png` ; réponses Sécurité des données, santé, classification, public cible (`GOOGLE_PLAY.md`, sources datées ou « non vérifié ») |
+| KT-077 | `docs/REGISTRE_VALIDATION.md` : 22 éléments, priorités P1-P3, limite V1 (pas de relecture), impact, prochaine action |
+| KT-078 | Règle vérifiée (12 testeurs, 14 jours, comptes personnels créés après le 13/11/2023) ; invitation, mode d'emploi, scénarios par profil, tableau de suivi, critères de production (`TEST_FERME.md`) ; écran « DONNER MON AVIS » (formulaire local, aperçu exact, partage `shareText` par le menu Android, rien d'enregistré) |
+
+Fichiers : nouveaux `lib/wellbeing.dart`, `lib/safety_store.dart`, `lib/wellbeing_screens.dart`, `assets/legal/confidentialite.md`, `docs/CONTRAT_L13.md`, `docs/GOOGLE_PLAY.md`, `docs/REGISTRE_VALIDATION.md`, `docs/TEST_FERME.md`, `docs/play/feature_graphic_1024x500.png`, `tools/check_claims.py`, `tools/tests/test_l13_compliance.py`, `test/l13_safety_test.dart`, `test/l13_screens_test.dart` ; modifiés `lib/store.dart` (partie `safety_store`, export de `wellbeing.dart`), `lib/models.dart` (`kWellnessWording`), `lib/profile_screens.dart` (avertissement, blocage des mineurs importés), `lib/settings_screen.dart` (entrées « À propos », libellé de l'export, version 4.3.0), `lib/session_screen.dart` (« Douleur ou malaise ? »), `lib/koach_screens.dart` (renvoi et signaux sous la douleur), `lib/notification_settings.dart` (« Rapport technique »), `android/app/src/main/kotlin/fr/tchoupi/streetlift_tracker/MainActivity.kt` (`shareText`), `tools/generate_brand.py` (`--play`), `docs/CONFIDENTIALITE.md`, `pubspec.yaml` (4.3.0+70, asset de la politique), `README.md`, ce suivi. Workflow `build-apk.yml` **inchangé**. Aucune dépendance, aucune permission ajoutée ; aucun test existant modifié.
+
+## L13.3 — Tests et scénarios
+
+| Contrôle | Résultat | Où |
+| --- | --- | --- |
+| Formatage | Reformatage par la CI repris tel quel ; passage final : 150 fichiers, 0 changé | CI `claude/ci-tools`, commit `162d3a2` |
+| Analyse | No issues found | idem |
+| Suite complète | **835 réussis, 12 ignorés**, 0 échec (809 existants inchangés + 26 L13) | idem |
+| Tests ciblés L5/L6 rejoués | 155 réussis, 11 ignorés (identiques à L12) | idem |
+| Python | 79 tests : 78 réussis, 1 ignoré en CI (régénération du visuel : Pillow absent du runner ; rejouée localement avec Pillow : réussie ; l'en-tête PNG est contrôlé en CI) ; `verify_project.py` : 40 semaines, 1 812 exercices du programme, 625 exercices de la base ; `check_claims.py` : 0 allégation | idem + local |
+| Android | `flutter build apk --debug` réussi avec le canal `shareText` (commit CI `67f1b44`) ; build signé : `LIVRAISON_L13.md` | CI |
+
+Tests L13 : série de douleurs et renvoi (purs, puis ordre réel des séances, interruption par une séance sans douleur, affichage dans Santé et sécurité) ; signaux d'alerte ; **mode prudent pour chaque situation particulière** (grossesse, cœur/tension, 65 ans, gêne) ; conseils sans chiffre ; avertissement (finalité, aucun diagnostic, aucun résultat) au démarrage et dans « À propos » ; **consentement refusé → accordé → retiré** (état, mode prudent, export) ; **export puis suppression complète** des données de santé (profil, accord du médecin, stress, douleur Koach), puis suppression totale ; **profil importé de moins de 18 ans** bloqué (2012), accepté à 18 ans dans l'année (2008), déblocage après correction ; **retour de test sans donnée non choisie** (pur et par l'écran, partage simulé) ; écrans à 390 × 844 et 320 × 720, texte 100/130/200 %, clair et sombre, défilement par gestes lents réels ; **aucune allégation** (liste documentée, négations tolérées, concaténation Dart) ; visuel 1024 × 500 sans alpha.
+
+Défauts trouvés par la CI et corrigés : `wellnessWording` non exporté dans le test ; avertissement placé au-dessus de « Commencer » qui cassait deux tests L8 existants → placé sous l'action (tests L8 inchangés) ; gestes rapides qui sautaient des cartes hautes à 200 % → défilement lent chronométré ; politique chargée avec le cache partagé de `rootBundle` (futur lié au test précédent) → chargement sans cache, une fois par écran, avec message d'erreur ; assertion trop large (le journal « profil modifié » garde le nom « clearance ») → contrôle de la section santé.
+
+## L13.4 — Limites et suites
+
+| Statut | Éléments |
+| --- | --- |
+| Corrigé dans le code | KT-072 à KT-078 |
+| Testé automatiquement | Voir L13.3 |
+| Vérifié sur appareil | **Rien** (partage du retour de test, TalkBack compris) |
+| Reste à valider | Essais téléphone (`LIVRAISON_L13.md`) ; décisions D-L13-01 à D-L13-10 (`docs/CONTRAT_L13.md` §2) ; registre de validation (lignes P1) ; réponses Google Play à saisir ; **URL publique de la politique** à fournir |
+
+- Analyse « hors dispositif médical » et qualification RGPD non validées par un juriste.
+- Classification IARC, public cible et déclaration de `SCHEDULE_EXACT_ALARM` : préparées, non vérifiées (Play Console).
+- Captures d'écran du Play Store non produites (à faire sur téléphone).
+- Branche temporaire `claude/ci-tools` toujours présente.
+
+---
 
 **Passe précédente : L12 — Motivation et progression visible (KT-065 à KT-071), version 4.2.0**  
 **Date : 27 septembre 2026, Europe/Paris — version : 4.2.0+69 (versionCode réel fixé par la CI de build)**  

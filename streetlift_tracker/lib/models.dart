@@ -294,6 +294,15 @@ class RepMax {
       target = _d(j['target']);
 }
 
+/// L13 (KT-074) : textes des données figées (programme v33, empreinte
+/// contrôlée) reformulés à l'affichage : entraînement, jamais prévention.
+const kWellnessWording = {
+  'Ischios : assurance anti-blessure sur le squat lourd.':
+      'Ischios : équilibre le travail des cuisses pour le squat lourd.',
+};
+
+String wellnessWording(String text) => kWellnessWording[text] ?? text;
+
 class AccessoryRef {
   final String ref, name, note;
   final double refLoad;
@@ -301,7 +310,7 @@ class AccessoryRef {
   AccessoryRef.fromJson(Map<String, dynamic> j)
     : ref = j['ref'] as String,
       name = j['name'] as String,
-      note = j['note'] as String? ?? '',
+      note = wellnessWording(j['note'] as String? ?? ''),
       refLoad = _d(j['refLoad']),
       refReps = j['refReps'] as int;
 }

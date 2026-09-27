@@ -219,6 +219,29 @@ class MainActivity : FlutterActivity() {
         // par ShareProvider ; aucun serveur, aucune permission.
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "kalis_track/share")
             .setMethodCallHandler { call, result ->
+                if (call.method == "shareText") {
+                    // L13 (KT-078) : retour de test, texte seul, partagé
+                    // volontairement par le menu Android (aucun serveur).
+                    val text = call.argument<String>("text") ?: ""
+                    val subject = call.argument<String>("subject") ?: ""
+                    if (text.isEmpty() || text.length > 20000) {
+                        result.success("error")
+                        return@setMethodCallHandler
+                    }
+                    try {
+                        val send = Intent(Intent.ACTION_SEND)
+                            .setType("text/plain")
+                            .putExtra(Intent.EXTRA_TEXT, text)
+                            .putExtra(Intent.EXTRA_SUBJECT, subject)
+                        startActivity(Intent.createChooser(send, "Envoyer mon avis"))
+                        result.success("shared")
+                    } catch (_: ActivityNotFoundException) {
+                        result.success("unavailable")
+                    } catch (_: Exception) {
+                        result.success("error")
+                    }
+                    return@setMethodCallHandler
+                }
                 if (call.method != "shareImage") {
                     result.notImplemented()
                     return@setMethodCallHandler
