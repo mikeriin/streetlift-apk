@@ -1,0 +1,6 @@
+08:09 +845 ~13: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: récompense à 320 px, texte 2.0 : actions par défilement
+08:09 +846 ~13: /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/test/reward_flow_test.dart: (tearDownAll)
+08:09 +846 ~13: All tests passed!
+REFONTE_PERF images=240 moyenne_us=1542 ips=648 textures_octets=6340608
+L9B_PERF demo_frames=6070 moyenne_us=182.8
+L9B_PERF liste_frames=40 moyenne_ms=27.16
