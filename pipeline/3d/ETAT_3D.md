@@ -2,13 +2,13 @@
 
 Tâche planifiée du pipeline : **trig_018sJFdjtWKnTBU2BzWjBzFb** (« Kalis Track — pipeline mannequin 3D (lot suivant) »), relancée par chaque lot en fin de lot réussi.
 Activation : **manuelle par le propriétaire** (premier lancement de M1 seulement sur son ordre).
-Page de suivi : (créée par M1)
+Page de suivi : https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA
 Base de départ : main 4.3.1+71 (commit 7f07e2e, L13 + refonte muscles 2D fusionnés).
 Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pipeline et ne doit pas être lancé.
 
 | Lot | Version | Commit main | Run | Date | Statut |
 | --- | --- | --- | --- | --- | --- |
-| M1 | 5.0.0 | — | CI 3D run 8 | 2026-09-27 | en cours — bloqué (GitHub Actions ne démarre plus, voir DECISIONS_3D.md) |
+| M1 | 5.0.0 | fe96d19 | build n° 97 (36351752086) ; CI 3D 36350581902 | 2026-09-27 | livré |
 | M2 | 5.1.0 | — | — | — | à faire |
 | M3 | 5.2.0 | — | — | — | à faire |
 | M4 | 5.3.0 | — | — | — | à faire |
@@ -28,4 +28,4 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M18 | 5.17.0 | — | — | — | à faire |
 | M19 | 5.18.0 | — | — | — | à faire |
 
-Compatibilité du téléphone du propriétaire (réponse attendue après M1) : —
+Compatibilité du téléphone du propriétaire (réponse attendue après M1) : en attente (5.0.0 livrée le 27/09/2026)
