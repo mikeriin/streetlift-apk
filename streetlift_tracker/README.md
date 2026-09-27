@@ -1,4 +1,20 @@
-# Kalis Track 3.2.0 — Exercices, démonstrations et atlas
+# Kalis Track 4.0.0 — Programme personnalisé
+
+## 4.0.0 — Générateur de programme personnalisé (lot L10)
+
+- **Ton programme est généré pour toi** (nouveau profil) dès que tu choisis ta date de départ : objectifs, jours, durée des séances, lieux et matériel, gênes déclarées, mode prudent. Tous les calculs se font sur le téléphone, sans réseau.
+- **Périodisation expliquée** : débutant et novice → progression linéaire ; intermédiaire → séances lourdes, de volume et légères qui alternent ; avancé et expert → blocs accumulation, intensification, réalisation ; « Forme et santé » → corps entier à chaque séance, jamais jusqu'à l'échec, circuit à faible impact et mobilité. Une décharge au moins toutes les 6 semaines. Objectif daté : cycles jusqu'à la date, simulations, affûtage et jour J.
+- **Niveau par mouvement** (poussée, tirage, squat, charnière, gainage), qui ne sert qu'à choisir la périodisation et les valeurs de départ ; **tests légers de calibrage** les premières semaines (jamais d'échec, jamais de maximum).
+- **Séances ajustées à ton temps** (estimation, échauffement compris, dans ±10 %), échauffement de 5 à 10 minutes avec montée en charge, 48 h entre deux séances lourdes d'un même mouvement, exercices choisis selon le matériel du lieu du jour, tes prérequis et tes gênes, chacun avec une démonstration animée.
+- **Une ligne « pourquoi »** pour chaque séance et chaque exercice, simple pour un débutant, technique pour un expert.
+- **Réglages → Mon programme** : modèle et explication, niveaux, répartition (Koach décide, corps entier, haut/bas, poussée/tirage/jambes), mouvement ciblé en endurance, séries par groupe, régénération de la suite **après un aperçu « ce qui change »**. Profil modifié : proposition sur l'accueil (mode Guidé : appliquée tout de suite, annulable 7 jours). **Ton historique n'est jamais modifié.**
+- **Installation existante (programme de 40 semaines)** : rien ne change. Ton programme devient le modèle « Expert streetlifting », identique jour pour jour ; tu peux générer un programme personnalisé quand tu veux, tes semaines passées restent en place.
+- Contenu sportif **non relu par un professionnel diplômé** : des repères d'entraînement, aucune promesse de résultat.
+
+Détail : `docs/CONTRAT_L10.md`, `docs/PROFILS_TYPES_L10.md` (13 profils types), `SUIVI_PROJET.md` (L10). Tests : `test/l10_*_test.dart`, `tools/tests/test_program_models.py`.
+
+
+# Historique — Kalis Track 3.2.0 — Exercices, démonstrations et atlas
 
 ## 3.2.0 — Base d'exercices v2, démonstrations animées et fiches (lot L9b)
 

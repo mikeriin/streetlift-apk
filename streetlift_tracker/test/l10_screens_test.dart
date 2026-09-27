@@ -181,7 +181,11 @@ void main() {
     );
     await tester.tap(find.byKey(const ValueKey('program-home-preview')));
     await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('preview-summary')), findsOneWidget);
+    expect(find.byKey(const ValueKey('preview-model')), findsOneWidget);
+    await scrollToAction(
+      tester,
+      find.byKey(const ValueKey('preview-summary')),
+    );
     expect(tester.takeException(), isNull);
   });
 }
