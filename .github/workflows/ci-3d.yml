@@ -68,6 +68,8 @@ jobs:
             flutter pub get >> ../out/pub-get.log 2>&1
           fi
           cp pubspec.lock ../out/pubspec.lock
+          # Migrations automatiques de l'outil Flutter (à reporter dans le ZIP).
+          git diff -- . ':(exclude)pubspec.lock' > ../out/migrations-pub.patch
           flutter pub outdated > ../out/pub-outdated.txt 2>&1 || true
           flutter pub deps --style=compact > ../out/pub-deps.txt 2>&1 || true
       - name: Formatage
@@ -80,8 +82,8 @@ jobs:
             # Correctif prêt à appliquer (tout le code, y compris
             # integration_test et test_driver).
             dart format lib test integration_test test_driver > /dev/null 2>&1 || true
-            git diff > ../out/format.patch
-            git checkout -q -- .
+            git diff -- lib test integration_test test_driver > ../out/format.patch
+            git checkout -q -- lib test integration_test test_driver
             exit 1
           fi
           dart format --output=none --set-exit-if-changed integration_test test_driver >> ../out/format.log 2>&1
@@ -130,6 +132,10 @@ jobs:
           set -o pipefail
           flutter build apk --debug --no-pub > ../out/build-debug.log 2>&1
           ls -la build/app/outputs/flutter-apk/ | tee -a ../out/build-debug.log
+      - name: Migrations de l'outil Flutter pendant le build
+        if: always()
+        working-directory: streetlift_tracker
+        run: git diff -- android analysis_options.yaml > ../out/migrations-build.patch || true
       - name: Bilan
         if: always()
         run: |
