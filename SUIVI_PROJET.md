@@ -1,8 +1,38 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M4c (dépôt en sources, zoom au pincement, filtres normalisés), version 5.3.2**  
-**Date : 28 septembre 2026, Europe/Paris — version : 5.3.2+77 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : pipeline « Mannequin 3D », lot M5 (squelette d'animation et peau du modèle), version 5.4.0**  
+**Date : 28 septembre 2026, Europe/Paris — version : 5.4.0+78 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+
+## M5.0 — Base et demande
+
+| Élément | Valeur |
+| --- | --- |
+| Demande | `pipeline/3d/prompts/M05.txt` (effort accru) : squelette ≤ 40 os posé sur les repères anatomiques, poids de peau automatiques corrigés, contrôles de déformation, sélecteur « Posture » (4 postures) dans l'écran Anatomie |
+| Base | `main` `67ec551` (5.3.2+77) |
+
+## M5.1 — Changements
+
+- **Squelette** (`tools/anatomy/build_rig.py`, `rig_def.py`) : 30 os anatomiques (bassin, rachis lombaire, thoracique bas, thoracique haut, cou, tête ; clavicules, scapulas, bras, ulna, radius, mains, 2 os de doigts, cuisses, jambes, pieds, orteils) et 10 os d'aide à mi-angle (épaules, coudes, pronation, hanches, genoux). Centres articulaires tirés du squelette d'appui source (273 pièces rangées par la géométrie : sphères des têtes fémorale et humérale, condyles, malléoles, disques intervertébraux). Degrés de liberté, axes et limites en degrés avec leurs sources (AAOS, Norkin & White, White & Panjabi, Inman, Ludewig, Hemmerich, Kapandji) dans `assets/anatomy/rig.json`.
+- **Peau** : poids géodésiques dans le volume du corps (voxels de 5 mm), lissés par muscle, 4 influences ; chaque muscle ne suit que les segments de ses insertions ; os du modèle rigides ; tendons et fascias collés aux muscles voisins ; mains, pieds et tête dans leurs segments. `assets/anatomy/mannequin.glb` (même organisation d'un nœud par région qu'en M2, plus la peau), `mannequin_skin.bin` (influences pour le toucher).
+- **Contrôles de déformation** : `tools/anatomy/render_poses.py` (planches Blender face / dos / profil / 3/4 de 12 postures : les 4 de l'application et bras levés, extension arrière maximale, coude 150°, hanche 120° jambe tendue, rachis en flexion / extension / rotation, appui bas de dip).
+- **Application** : `lib/mannequin_rig.dart` (rig, postures, interpolation, peau sur le processeur) ; `MannequinScene.applyPose` (articulations, toucher et cadrage sur le modèle déformé, ordre des muscles translucides) ; `Mannequin3D(posture:)` avec transition de 750 ms ; écran Anatomie : puces « Posture » (Debout, Suspendu, Squat bas, Planche) sous les boutons de vue.
+- Version 5.4.0+78.
+
+## M5.2 — Contrôles
+
+- Python (`tools/tests/test_m5_rig.py`, bibliothèque standard) : os et parents, longueurs d'os constantes dans les 12 postures, limites respectées (et part glénohumérale ≤ 125°), quaternions = angles anatomiques, poids normalisés (somme 255) et identiques entre GLB et fichier de peau, aucun sommet sans poids, os rigides, repos inchangé, déchirure entre maillages voisins bornée (paires à ≤ 2 mm au repos : 99e centile ≤ 3 cm suspendu, 2,5 cm squat, 2 cm planche). Fabrication déterministe (SHA-256 identiques sur deux passages).
+- Dart (`test/m5_rig_test.dart`) : lecture du rig et de la peau, cinématique identique à la fabrication (têtes des 40 os dans chaque posture), transition (os d'aide à mi-angle), sélecteur de l'écran Anatomie.
+- Émulateur (`integration_test/postures_m5_test.dart`) : 4 postures × 4 vues, accord du toucher (peau du processeur) et du rendu (peau du GPU), écran Anatomie (transition, toucher d'un quadriceps sur le squat, planche en clair). Captures regardées.
+
+## M5.3 — Limites
+
+- Mélange linéaire (celui de flutter_scene) : aux amplitudes extrêmes (bras au-dessus de la tête, genou à 145°), l'aisselle et le devant du genou restent un peu froissés en gros plan ; à l'échelle de l'écran, pas de déchirure visible.
+- Suspension sans barre (matériel 3D : lot M6).
+- Source : étiquettes « trapèze supérieur / inférieur » inversées dans la carte source (voir DECISIONS_3D.md, M5) ; non corrigé dans la mise en évidence (hors lot).
+- Planche vue de face ou de dos : petite (cadrage par la diagonale du corps).
+
+# Historique — M4c (5.3.2)
 
 ## M4c.0 — Base et demande
 

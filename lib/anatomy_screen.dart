@@ -294,7 +294,7 @@ class AnatomyScreenState extends State<AnatomyScreen> {
                 mq.padding.bottom -
                 kToolbarHeight -
                 KNavigationInset.of(context) -
-                240)
+                285)
             .clamp(300.0, 900.0);
     final tt = Theme.of(context).textTheme;
     final labels = [for (final g in f.orderedGroups) kGroupLabels[g]!];

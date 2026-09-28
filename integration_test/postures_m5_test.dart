@@ -256,6 +256,10 @@ void main() {
       true,
     );
     await ready(tester);
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('anatomy-posture-squat_bas')),
+    );
+    await tester.pump(const Duration(seconds: 1));
     await tester.tap(find.byKey(const ValueKey('anatomy-posture-squat_bas')));
     // Milieu de la transition (750 ms).
     await tester.pump(const Duration(milliseconds: 300));
@@ -304,6 +308,10 @@ void main() {
       false,
     );
     await ready(tester);
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('anatomy-posture-planche')),
+    );
+    await tester.pump(const Duration(seconds: 1));
     await tester.tap(find.byKey(const ValueKey('anatomy-posture-planche')));
     await tester.pump(const Duration(milliseconds: 1200));
     await tester.pump(const Duration(seconds: 2));
