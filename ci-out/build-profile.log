@@ -12,12 +12,12 @@ Potential fix: Your project's AGP version is typically defined in the plugins bl
 If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
 
 Font asset "MaterialIcons-Regular.otf" was tree-shaken, reducing it from 1645184 to 22580 bytes (98.6% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
-Running Gradle task 'assembleProfile'...                           77.0s
+Running Gradle task 'assembleProfile'...                           72.2s
 ✓ Built build/app/outputs/flutter-apk/app-profile.apk (55.8MB)
 total 149464
-drwxr-xr-x 2 runner runner     4096 Sep 28 05:12 .
-drwxr-xr-x 5 runner runner     4096 Sep 28 05:11 ..
--rw-r--r-- 1 runner runner 97264046 Sep 28 05:11 app-debug.apk
--rw-r--r-- 1 runner runner       40 Sep 28 05:11 app-debug.apk.sha1
--rw-r--r-- 1 runner runner 55763915 Sep 28 05:12 app-profile.apk
--rw-r--r-- 1 runner runner       40 Sep 28 05:12 app-profile.apk.sha1
+drwxr-xr-x 2 runner runner     4096 Sep 28 05:30 .
+drwxr-xr-x 5 runner runner     4096 Sep 28 05:29 ..
+-rw-r--r-- 1 runner runner 97263918 Sep 28 05:29 app-debug.apk
+-rw-r--r-- 1 runner runner       40 Sep 28 05:29 app-debug.apk.sha1
+-rw-r--r-- 1 runner runner 55764039 Sep 28 05:30 app-profile.apk
+-rw-r--r-- 1 runner runner       40 Sep 28 05:30 app-profile.apk.sha1
