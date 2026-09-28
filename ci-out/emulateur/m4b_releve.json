@@ -67,9 +67,9 @@
     },
     {
       "pixels": 98280,
-      "figure": 0.1897028897028897,
+      "figure": 0.1897130647130647,
       "rouge": 0.006715506715506716,
-      "gris": 0.18205128205128204,
+      "gris": 0.18206145706145707,
       "couleurs": 143
     }
   ],
@@ -98,50 +98,50 @@
   ],
   "anatomie_sombre": {
     "troisQuarts": {
-      "pixels": 70560,
-      "figure": 0.23425453514739228,
-      "rouge": 0.054365079365079366,
-      "gris": 0.1534438775510204,
-      "couleurs": 305
+      "pixels": 72000,
+      "figure": 0.24022222222222223,
+      "rouge": 0.05561111111111111,
+      "gris": 0.15802777777777777,
+      "couleurs": 314
     },
     "dos": {
-      "pixels": 70560,
-      "figure": 0.2640731292517007,
-      "rouge": 0.059807256235827666,
-      "gris": 0.17103174603174603,
-      "couleurs": 317
+      "pixels": 72000,
+      "figure": 0.2714861111111111,
+      "rouge": 0.060833333333333336,
+      "gris": 0.1763888888888889,
+      "couleurs": 313
     },
     "sans_profonds": {
-      "pixels": 70560,
-      "figure": 0.2258219954648526,
-      "rouge": 0.06622732426303855,
-      "gris": 0.14360827664399092,
+      "pixels": 72000,
+      "figure": 0.23123611111111111,
+      "rouge": 0.06755555555555555,
+      "gris": 0.146875,
       "couleurs": 306
     }
   },
   "anatomie_clair": {
-    "pixels": 70560,
-    "figure": 0.1517998866213152,
-    "rouge": 0.05994897959183673,
-    "gris": 0.08655045351473922,
-    "couleurs": 331
+    "pixels": 72000,
+    "figure": 0.15493055555555554,
+    "rouge": 0.06101388888888889,
+    "gris": 0.08844444444444445,
+    "couleurs": 336
   },
   "fiche": {
     "sombre": {
       "pixels": 61560,
-      "figure": 0.1895224171539961,
-      "rouge": 0.09035087719298246,
-      "gris": 0.08391812865497077,
-      "couleurs": 345,
+      "figure": 0.1895711500974659,
+      "rouge": 0.09023716699155296,
+      "gris": 0.08386939571150097,
+      "couleurs": 353,
       "vue": "dos",
       "rhomboides_allumes": true
     },
     "clair": {
       "pixels": 61560,
-      "figure": 0.17160493827160495,
-      "rouge": 0.05238791423001949,
-      "gris": 0.0828622482131254,
-      "couleurs": 354,
+      "figure": 0.17201104613385315,
+      "rouge": 0.05193307342430149,
+      "gris": 0.08331708901884341,
+      "couleurs": 348,
       "vue": "dos",
       "rhomboides_allumes": true
     }
@@ -149,32 +149,32 @@
   "stats": {
     "sombre": {
       "pixels": 53568,
-      "figure": 0.23060409199522103,
-      "rouge": 0.08807497013142175,
-      "gris": 0.11335125448028674,
-      "couleurs": 276
+      "figure": 0.23069743130227002,
+      "rouge": 0.0877202807646356,
+      "gris": 0.11361260454002389,
+      "couleurs": 267
     },
     "clair": {
       "pixels": 53568,
-      "figure": 0.15247909199522103,
-      "rouge": 0.06627090800477897,
-      "gris": 0.07192727001194743,
-      "couleurs": 348
+      "figure": 0.15234841696535245,
+      "rouge": 0.06619623655913978,
+      "gris": 0.07174059139784947,
+      "couleurs": 338
     }
   },
   "moteur3d": {
     "note": "émulateur, rendu logiciel, build debug : comparaison seulement ; la mesure qui compte est celle du téléphone",
     "avant_opaque_5_3_0": {
-      "images": 17,
-      "images_par_s": 1.7,
-      "temps_moyen_ms": 1142.141882352941,
-      "p99_ms": 1611.795
+      "images": 8,
+      "images_par_s": 0.8,
+      "temps_moyen_ms": 2421.18975,
+      "p99_ms": 3435.284
     },
     "apres_transparent_5_3_1": {
-      "images": 17,
-      "images_par_s": 1.7,
-      "temps_moyen_ms": 1122.086176470588,
-      "p99_ms": 1679.723
+      "images": 7,
+      "images_par_s": 0.7,
+      "temps_moyen_ms": 2770.0662857142856,
+      "p99_ms": 3806.547
     }
   }
 }
