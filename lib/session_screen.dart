@@ -378,16 +378,6 @@ class _SessionScreenState extends State<SessionScreen> {
                         index: page,
                         color: SL.action,
                       ),
-                      // M6 : carte « Koach · séance du jour » (questionnaire,
-                      // jour de fatigue, adaptation), avant les exercices.
-                      if (w.n >= 1)
-                        KoachDayCard(
-                          week: w.n,
-                          base: widget.day,
-                          day: _day,
-                          maxHeight: MediaQuery.sizeOf(context).height * .4,
-                          onChanged: () => setState(() {}),
-                        ),
                     ],
                   ),
                 ),
@@ -408,6 +398,8 @@ class _SessionScreenState extends State<SessionScreen> {
                             day: _day,
                             exs: groups[i],
                             timer: ctl,
+                            baseDay: widget.day,
+                            onSessionChanged: () => setState(() {}),
                           )
                         : _FinishPage(week: w, day: _day),
                   ),
@@ -491,6 +483,11 @@ class SessionExercisePage extends StatefulWidget {
   final TimerCtl timer;
   final SessionLog? history;
   final Set<String> unresolvedIds;
+
+  /// M6 : séance du programme avant adaptation (carte « Koach · séance du
+  /// jour ») et rappel quand une action de la carte change les séries.
+  final DayPlan? baseDay;
+  final VoidCallback? onSessionChanged;
   bool get readOnly => history != null;
   const SessionExercisePage({
     super.key,
@@ -500,6 +497,8 @@ class SessionExercisePage extends StatefulWidget {
     required this.timer,
     this.history,
     this.unresolvedIds = const {},
+    this.baseDay,
+    this.onSessionChanged,
   });
 
   @override
@@ -992,14 +991,32 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     );
   }
 
+  /// Page du premier exercice de la séance.
+  bool get _firstPage =>
+      widget.day.exercises.isNotEmpty &&
+      widget.exs.first.id == widget.day.exercises.first.id;
+
   @override
   Widget build(BuildContext context) => ListView(
     key: PageStorageKey('exercise-scroll-${widget.exs.first.id}'),
     keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
     padding: const EdgeInsets.fromLTRB(KSpace.page, 2, KSpace.page, 10),
     children: [
-      // Koach (L7) : mode Guidé, jour de fatigue appliqué d'office (M6 :
-      // l'affichage est dans la carte « Koach · séance du jour »).
+      // M6 : carte « Koach · séance du jour » (questionnaire, jour de
+      // fatigue, adaptation de la séance) en tête de la séance, avant la
+      // liste des exercices ; les indications propres à un exercice restent
+      // dans son bloc.
+      if (!widget.readOnly && widget.week.n >= 1 && _firstPage)
+        KoachDayCard(
+          week: widget.week.n,
+          base: widget.baseDay ?? widget.day,
+          day: widget.day,
+          onChanged: () {
+            if (mounted) setState(() => epoch++);
+            widget.onSessionChanged?.call();
+          },
+        ),
+      // Koach (L7) : mode Guidé, jour de fatigue appliqué d'office.
       if (!widget.readOnly && store.koachOn)
         ListenableBuilder(
           listenable: store,

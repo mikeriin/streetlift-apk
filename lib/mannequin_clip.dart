@@ -16,7 +16,6 @@
 // démonstration 2D reste en place.
 import 'dart:convert';
 import 'dart:io' show gzip;
-import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 import 'package:vector_math/vector_math.dart' as vm;

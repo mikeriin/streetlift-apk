@@ -5,8 +5,9 @@
 // d'avant séance D14, jour de fatigue D25), et le bandeau d'adaptation de la
 // séance (L11 : reprise, maladie, semaine allégée, décharge, séance
 // recomposée ou raccourcie) sous le compteur d'exercices. Ils sont réunis ici,
-// dans une carte distincte des cartes d'exercice, placée avant les pages
-// d'exercices : résumé d'une ligne une fois repliée. Aucune logique de Koach
+// dans une carte distincte des cartes d'exercice, placée en tête de la
+// séance (première page, avant la liste des exercices) : résumé d'une
+// ligne une fois repliée. Aucune logique de Koach
 // ne change : mêmes conditions d'affichage, mêmes textes, mêmes actions
 // (accepter, ignorer, détails), selon le mode Assisté ou Automatique.
 // Les indications propres à un exercice (suggestion de charge, série de
@@ -33,8 +34,6 @@ class KoachDayCard extends StatefulWidget {
   /// Après une action qui change les séries (fatigue acceptée, adaptation).
   final VoidCallback? onChanged;
 
-  /// Hauteur maximale de la carte ouverte (le contenu défile au-delà).
-  final double maxHeight;
 
   const KoachDayCard({
     super.key,
@@ -42,7 +41,6 @@ class KoachDayCard extends StatefulWidget {
     required this.base,
     required this.day,
     this.onChanged,
-    this.maxHeight = 320,
   });
 
   /// Repli choisi pendant la session, par séance.
@@ -117,7 +115,9 @@ class KoachDayContent {
       );
     }
     if (fatigue) {
-      parts.add('Fatigue probable : −${(fatigueLevel * 100).round()} % proposé');
+      parts.add(
+        'Fatigue probable : −${(fatigueLevel * 100).round()} % proposé',
+      );
     }
     if (adaptSummary.isNotEmpty) parts.add(adaptSummary);
     return parts.join(' · ');
@@ -212,7 +212,12 @@ class KoachDayCardState extends State<KoachDayCard> {
           level: c.fatigueLevel,
           sets: c.fatigueSets,
           onAccept: () {
-            store.acceptKoachFatigue(w, j, widget.day.exercises, c.fatigueLevel);
+            store.acceptKoachFatigue(
+              w,
+              j,
+              widget.day.exercises,
+              c.fatigueLevel,
+            );
             widget.onChanged?.call();
           },
           onRefuse: () {
@@ -223,7 +228,7 @@ class KoachDayCardState extends State<KoachDayCard> {
       if (c.adaptSummary.isNotEmpty) _adaptation(context, c),
     ];
     return Padding(
-      padding: const EdgeInsets.only(top: 4),
+      padding: const EdgeInsets.only(bottom: 12),
       child: KCard(
         key: const ValueKey('koach-day-card'),
         accent: SL.bordeaux,
@@ -234,20 +239,17 @@ class KoachDayCardState extends State<KoachDayCard> {
           children: [
             header,
             if (!folded)
-              ConstrainedBox(
-                constraints: BoxConstraints(maxHeight: widget.maxHeight),
-                child: SingleChildScrollView(
-                  key: const ValueKey('koach-day-content'),
-                  padding: const EdgeInsets.only(top: 8, right: 4),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      for (var i = 0; i < sections.length; i++) ...[
-                        if (i > 0) Divider(height: 20, color: SL.line),
-                        sections[i],
-                      ],
+              Padding(
+                key: const ValueKey('koach-day-content'),
+                padding: const EdgeInsets.only(top: 8, right: 4),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (var i = 0; i < sections.length; i++) ...[
+                      if (i > 0) Divider(height: 20, color: SL.line),
+                      sections[i],
                     ],
-                  ),
+                  ],
                 ),
               ),
           ],
@@ -276,10 +278,7 @@ class KoachDayCardState extends State<KoachDayCard> {
       ),
       const SizedBox(height: 4),
       for (final t in c.adaptLines)
-        Padding(
-          padding: const EdgeInsets.only(bottom: 4),
-          child: Text('• $t'),
-        ),
+        Padding(padding: const EdgeInsets.only(bottom: 4), child: Text('• $t')),
       Align(
         alignment: Alignment.centerRight,
         child: TextButton(
