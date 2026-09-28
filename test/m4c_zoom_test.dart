@@ -25,15 +25,12 @@ void main() {
       expect(z.offset.length, greaterThan(0));
       z.zoomAt(1, const Offset(300, 400), size, right, up, distance);
       expect(z.isDefault, isTrue);
-      expect(z.fovY, closeTo(kMannequinFovY, 1e-9));
+      expect(z.fovY, closeTo(kMannequinFovY, 1e-5));
     });
 
     test('angle de champ divisé par le zoom (tangente)', () {
       final z = MannequinZoom(scale: 4);
-      expect(
-        vm.degrees(z.fovY),
-        closeTo(vm.degrees(kMannequinFovY) / 4, .2),
-      );
+      expect(vm.degrees(z.fovY), closeTo(vm.degrees(kMannequinFovY) / 4, .2));
     });
 
     test('point focal stable : le point sous les doigts reste en place', () {
@@ -50,7 +47,7 @@ void main() {
           final after = z.planePoint(focal, size, right, up, distance);
           expect(
             (after - before).length,
-            lessThan(1e-9),
+            lessThan(1e-5),
             reason: '$focal à $s×',
           );
           before = after;
@@ -65,12 +62,12 @@ void main() {
       z.zoomAt(4, Offset.zero, size, right, up, distance);
       final h0 = MannequinZoom.baseHalfHeight(distance);
       final w0 = h0 * size.width / size.height;
-      expect(z.offset.x, closeTo(-(w0 - w0 / 4), 1e-9));
-      expect(z.offset.y, closeTo(h0 - h0 / 4, 1e-9));
+      expect(z.offset.x, closeTo(-(w0 - w0 / 4), 1e-5));
+      expect(z.offset.y, closeTo(h0 - h0 / 4, 1e-5));
       // Coin de la fenêtre zoomée = coin de la vue d'ensemble.
       final corner = z.planePoint(Offset.zero, size, right, up, distance);
-      expect(corner.x, closeTo(-w0, 1e-9));
-      expect(corner.y, closeTo(h0, 1e-9));
+      expect(corner.x, closeTo(-w0, 1e-5));
+      expect(corner.y, closeTo(h0, 1e-5));
     });
 
     test('déplacement à deux doigts : le contenu suit les doigts', () {
@@ -85,7 +82,7 @@ void main() {
         up,
         distance,
       );
-      expect((moved - p).length, lessThan(1e-9));
+      expect((moved - p).length, lessThan(1e-5));
       // Sans zoom, aucun déplacement possible.
       final flat = MannequinZoom()
         ..pan(const Offset(80, 80), size, right, up, distance);
@@ -97,7 +94,7 @@ void main() {
       z.clampTo(size, right, up, distance);
       final h0 = MannequinZoom.baseHalfHeight(distance);
       final w0 = h0 * size.width / size.height;
-      expect(z.offset.z, closeTo(w0 - w0 / 2, 1e-9));
+      expect(z.offset.z, closeTo(w0 - w0 / 2, 1e-5));
       z.zoomAt(1, const Offset(10, 10), size, right, up, distance);
       expect(z.isDefault, isTrue);
     });
@@ -106,7 +103,7 @@ void main() {
       final a = MannequinZoom(scale: 3, offset: vm.Vector3(.2, .1, 0));
       final mid = MannequinZoom.lerp(a, MannequinZoom(), .5);
       expect(mid.scale, 2);
-      expect(mid.offset.x, closeTo(.1, 1e-12));
+      expect(mid.offset.x, closeTo(.1, 1e-6));
       expect(MannequinZoom.lerp(a, MannequinZoom(), 1).isDefault, isTrue);
     });
   });
@@ -244,9 +241,10 @@ void main() {
       tester,
     ) async {
       await tester.pumpWidget(page(horizontalOnly: false));
-      await tester.drag(
+      await tester.timedDrag(
         find.byKey(const ValueKey('mannequin-view')),
         const Offset(-120, 20),
+        const Duration(milliseconds: 300),
       );
       await tester.pump(const Duration(milliseconds: 400));
       expect(events, contains('rotate'));

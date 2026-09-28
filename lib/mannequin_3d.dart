@@ -565,15 +565,6 @@ class MannequinScene {
         vm.Vector3(0, math.sin(pitch), 0);
   }
 
-  /// Axes droite et haut de l'image pour une vue (M4c : zoom et
-  /// déplacement dans le plan de l'image).
-  (vm.Vector3, vm.Vector3) cameraAxes(double yaw, double pitch) {
-    final forward = -_eyeDirection(yaw, pitch)..normalize();
-    final right = forward.cross(vm.Vector3(0, 1, 0))..normalize();
-    final up = right.cross(forward)..normalize();
-    return (right, up);
-  }
-
   /// Caméra en orbite autour du mannequin ; la lumière principale suit la
   /// caméra (en haut à gauche) pour que chaque vue soit lisible.
   ///
@@ -1052,12 +1043,27 @@ class Mannequin3DState extends State<Mannequin3D>
   void pinchTo(double scale, Offset focal, {Offset pan = Offset.zero}) {
     final scene = _scene;
     if (scene == null || _size.isEmpty) return;
-    final (right, up) = scene.cameraAxes(_yaw, _pitch);
+    final (right, up) = _screenAxes(scene);
     final distance = scene.fitDistance(_aspect);
     setState(() {
       if (pan != Offset.zero) _zoom.pan(pan, _size, right, up, distance);
       _zoom.zoomAt(scale, focal, _size, right, up, distance);
     });
+  }
+
+  /// Directions du monde qui vont vers la droite et vers le haut de l'écran,
+  /// mesurées avec la caméra elle-même (mêmes rayons que le toucher) : le
+  /// repère de flutter_scene est miroir de `forward × haut` (essai 1 de M4c :
+  /// le zoom partait vers l'autre avant-bras).
+  (vm.Vector3, vm.Vector3) _screenAxes(MannequinScene scene) {
+    final camera = scene.camera(_yaw, _pitch, scene.fitDistance(_aspect));
+    final c = _size.center(Offset.zero);
+    vm.Vector3 dir(Offset p) =>
+        camera.screenPointToRay(p, _size).direction.normalized();
+    final o = dir(c);
+    final right = (dir(c + const Offset(8, 0)) - o)..normalize();
+    final up = (dir(c - const Offset(0, 8)) - o)..normalize();
+    return (right, up);
   }
 
   void _onPinchStart(ScaleStartDetails d) {

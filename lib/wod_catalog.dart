@@ -217,8 +217,7 @@ final List<FilterCategory> wodFilterCategories = [
     id: 'niveau',
     label: 'Difficulté',
     options: [
-      for (final e in _bandLabels.entries)
-        FilterOption('lv:${e.key}', e.value),
+      for (final e in _bandLabels.entries) FilterOption('lv:${e.key}', e.value),
     ],
   ),
   FilterCategory(

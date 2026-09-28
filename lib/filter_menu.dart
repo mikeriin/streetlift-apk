@@ -159,7 +159,8 @@ class FilterMenuState extends State<FilterMenu> {
   Set<String> _initialExpanded() {
     final cats = widget.categories;
     final options = cats.fold<int>(0, (n, c) => n + c.options.length);
-    if (options <= FilterMenu.expandAllUpTo) return {for (final c in cats) c.id};
+    if (options <= FilterMenu.expandAllUpTo)
+      return {for (final c in cats) c.id};
     final active = {
       for (final c in cats)
         if (widget.value.count([c]) > 0) c.id,
@@ -239,7 +240,8 @@ class FilterMenuState extends State<FilterMenu> {
                     deleteIcon: const Icon(Icons.cancel, size: 18),
                     deleteIconColor: SL.accent,
                     deleteButtonTooltipMessage: 'Retirer le filtre ${o.label}',
-                    onDeleted: () => widget.onChanged(value.toggle(c.id, o.key)),
+                    onDeleted: () =>
+                        widget.onChanged(value.toggle(c.id, o.key)),
                   ),
                 if (value != widget.initial)
                   TextButton(
@@ -254,28 +256,30 @@ class FilterMenuState extends State<FilterMenu> {
     );
   }
 
+  /// Contenu du menu : une colonne de largeur bornée (le texte des cases
+  /// passe à la ligne en grande taille de texte au lieu de déborder).
   List<Widget> _menuChildren(BuildContext context) {
     final value = widget.value;
     final tt = Theme.of(context).textTheme;
-    final width = (MediaQuery.sizeOf(context).width - 24).clamp(220.0, 380.0);
-    final children = <Widget>[
-      SizedBox(
-        width: width,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(12, 4, 4, 4),
-          child: Row(
-            children: [
-              Expanded(child: Text('Filtres', style: tt.titleSmall)),
-              TextButton(
-                key: ValueKey(_k('filter-reset')),
-                style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
-                onPressed: value == widget.initial
-                    ? null
-                    : () => widget.onChanged(widget.initial),
-                child: const Text('Réinitialiser'),
-              ),
-            ],
-          ),
+    final width = (MediaQuery.sizeOf(context).width - 32).clamp(200.0, 380.0);
+    final rows = <Widget>[
+      Padding(
+        padding: const EdgeInsets.fromLTRB(16, 4, 4, 4),
+        child: Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 8,
+          children: [
+            Text('Filtres', style: tt.titleSmall),
+            TextButton(
+              key: ValueKey(_k('filter-reset')),
+              style: TextButton.styleFrom(minimumSize: const Size(48, 48)),
+              onPressed: value == widget.initial
+                  ? null
+                  : () => widget.onChanged(widget.initial),
+              child: const Text('Réinitialiser'),
+            ),
+          ],
         ),
       ),
     ];
@@ -283,28 +287,40 @@ class FilterMenuState extends State<FilterMenu> {
       final open = _expanded.contains(c.id);
       final n = value.count([c]);
       final selected = value.of(c.id);
-      children.add(const Divider(height: 1));
-      children.add(
-        MenuItemButton(
+      rows.add(const Divider(height: 1));
+      rows.add(
+        Semantics(
           key: ValueKey(_k('filter-cat-${c.id}')),
-          closeOnActivate: false,
-          style: MenuItemButton.styleFrom(minimumSize: const Size(48, 48)),
-          trailingIcon: Icon(open ? Icons.expand_less : Icons.expand_more),
-          onPressed: () => _toggleExpanded(c.id),
-          child: Semantics(
-            label:
-                '${c.label}, $n sur ${c.options.length} cochés, '
-                '${open ? 'déplié' : 'replié'}',
-            excludeSemantics: true,
-            child: Text(
-              n == 0 ? c.label : '${c.label} · $n',
-              style: const TextStyle(fontWeight: FontWeight.w700),
+          button: true,
+          label:
+              '${c.label}, $n sur ${c.options.length} cochés, '
+              '${open ? 'déplié' : 'replié'}',
+          onTap: () => _toggleExpanded(c.id),
+          excludeSemantics: true,
+          child: InkWell(
+            onTap: () => _toggleExpanded(c.id),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 48),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        n == 0 ? c.label : '${c.label} · $n',
+                        style: const TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                    Icon(open ? Icons.expand_less : Icons.expand_more),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
       );
       if (!open) continue;
-      children.add(
+      rows.add(
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4),
           child: Wrap(
@@ -344,23 +360,32 @@ class FilterMenuState extends State<FilterMenu> {
         ),
       );
       for (final o in c.options) {
-        final label = Semantics(
-          label: '${o.label}, ${c.label}',
-          excludeSemantics: true,
-          child: Text(o.label),
-        );
-        children.add(
-          CheckboxMenuButton(
+        rows.add(
+          CheckboxListTile(
             key: ValueKey(_k('filter-${o.key}')),
             value: selected.contains(o.key),
-            closeOnActivate: false,
-            style: MenuItemButton.styleFrom(minimumSize: const Size(48, 48)),
+            controlAffinity: ListTileControlAffinity.leading,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+            visualDensity: VisualDensity.standard,
             onChanged: (_) => widget.onChanged(value.toggle(c.id, o.key)),
-            child: label,
+            title: Semantics(
+              label: '${o.label}, ${c.label}',
+              excludeSemantics: true,
+              child: Text(o.label),
+            ),
           ),
         );
       }
     }
-    return children;
+    return [
+      SizedBox(
+        width: width,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: rows,
+        ),
+      ),
+    ];
   }
 }
