@@ -1071,28 +1071,63 @@ class Mannequin3DState extends State<Mannequin3D>
     _startDrag();
     _pinchStart = _zoom.copy();
     _pinchFocal = d.localFocalPoint;
+    final scene = _scene;
+    if (scene == null || _size.isEmpty) return;
+    // Point du monde sous les doigts au premier contact, dans le plan
+    // perpendiculaire à l'axe de la caméra qui passe par le point visé.
+    final camera = scene.camera(
+      _yaw,
+      _pitch,
+      scene.fitDistance(_aspect),
+      zoom: _pinchStart,
+    );
+    _pinchNormal = camera
+        .screenPointToRay(_size.center(Offset.zero), _size)
+        .direction
+        .normalized();
+    _pinchPlane = scene.target + _pinchStart.offset;
+    _pinchWorld = _onPlane(camera, _pinchFocal);
+  }
+
+  vm.Vector3 _pinchNormal = vm.Vector3(0, 0, 1);
+  vm.Vector3 _pinchPlane = vm.Vector3.zero();
+  vm.Vector3 _pinchWorld = vm.Vector3.zero();
+
+  /// Point du plan du pincement sous le point [p] de la vue, pour [camera].
+  vm.Vector3 _onPlane(Camera camera, Offset p) {
+    final ray = camera.screenPointToRay(p, _size);
+    final dir = ray.direction.normalized();
+    final t =
+        (_pinchPlane - ray.origin).dot(_pinchNormal) / dir.dot(_pinchNormal);
+    return ray.origin + dir * t;
   }
 
   /// Chaque image du pincement est calculée depuis son début : le point
   /// visé au premier contact reste sous les doigts (essai 5 de M4c : en
-  /// cumulant pas à pas, les bornes du début du geste le décalaient).
+  /// cumulant pas à pas, les bornes du début du geste le décalaient). Le
+  /// modèle (`MannequinZoom.pinched`) est ensuite corrigé avec les rayons de
+  /// la caméra elle-même (essai 6 : écart résiduel de quelques points).
   void _onPinchUpdate(ScaleUpdateDetails d) {
     final scene = _scene;
     if (d.pointerCount < 2 || scene == null || _size.isEmpty) return;
     final (right, up) = _screenAxes(scene);
     final distance = scene.fitDistance(_aspect);
-    setState(() {
-      _zoom = MannequinZoom.pinched(
-        _pinchStart,
-        _pinchFocal,
-        d.localFocalPoint,
-        _pinchStart.scale * d.scale,
-        _size,
-        right,
-        up,
-        distance,
-      );
-    });
+    final z = MannequinZoom.pinched(
+      _pinchStart,
+      _pinchFocal,
+      d.localFocalPoint,
+      _pinchStart.scale * d.scale,
+      _size,
+      right,
+      up,
+      distance,
+    );
+    for (var i = 0; i < 2; i++) {
+      final camera = scene.camera(_yaw, _pitch, distance, zoom: z);
+      z.offset += _pinchWorld - _onPlane(camera, d.localFocalPoint);
+    }
+    z.clampTo(_size, right, up, distance);
+    setState(() => _zoom = z);
   }
 
   double get _aspect =>
