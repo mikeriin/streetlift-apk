@@ -1,0 +1,179 @@
+diff --git a/integration_test/anatomie_m4b_test.dart b/integration_test/anatomie_m4b_test.dart
+index ccdc9d4..413faff 100644
+--- a/integration_test/anatomie_m4b_test.dart
++++ b/integration_test/anatomie_m4b_test.dart
+@@ -487,10 +487,7 @@ void main() {
+   Engine3DScreenState engine(WidgetTester tester) =>
+       tester.state<Engine3DScreenState>(find.byType(Engine3DScreen));
+ 
+-  Future<Map<String, Object?>> measure(
+-    WidgetTester tester,
+-    String name,
+-  ) async {
++  Future<Map<String, Object?>> measure(WidgetTester tester, String name) async {
+     await pumpHome(
+       tester,
+       Engine3DScreen(key: ValueKey(name), autoMeasure: false),
+diff --git a/lib/anatomy_screen.dart b/lib/anatomy_screen.dart
+index 36d37de..a119758 100644
+--- a/lib/anatomy_screen.dart
++++ b/lib/anatomy_screen.dart
+@@ -349,39 +349,37 @@ class AnatomyScreenState extends State<AnatomyScreen> {
+     return KCard(
+       key: const ValueKey('anatomy-group-list'),
+       child: Column(
+-          crossAxisAlignment: CrossAxisAlignment.start,
+-          children: [
+-            for (final g in f.orderedGroups) ...[
+-              Row(
+-                children: [
+-                  Container(
+-                    width: 10,
+-                    height: 10,
+-                    decoration: BoxDecoration(
+-                      color: mannequinHeat(1, dark),
+-                      shape: BoxShape.circle,
+-                    ),
+-                  ),
+-                  const SizedBox(width: 8),
+-                  Expanded(
+-                    child: Text(kGroupLabels[g]!, style: tt.titleMedium),
++        crossAxisAlignment: CrossAxisAlignment.start,
++        children: [
++          for (final g in f.orderedGroups) ...[
++            Row(
++              children: [
++                Container(
++                  width: 10,
++                  height: 10,
++                  decoration: BoxDecoration(
++                    color: mannequinHeat(1, dark),
++                    shape: BoxShape.circle,
+                   ),
+-                ],
+-              ),
+-              const SizedBox(height: 4),
+-              Text(
+-                [
+-                  for (final n in map.names(map.fromGroups({g: 1})))
+-                    deepNames.contains(n) ? '$n (profond)' : n,
+-                ].join(', '),
+-                key: ValueKey('anatomy-group-muscles-$g'),
+-                style: tt.bodyMedium,
+-              ),
+-              const SizedBox(height: 12),
+-            ],
+-            Text(state, style: tt.bodySmall),
++                ),
++                const SizedBox(width: 8),
++                Expanded(child: Text(kGroupLabels[g]!, style: tt.titleMedium)),
++              ],
++            ),
++            const SizedBox(height: 4),
++            Text(
++              [
++                for (final n in map.names(map.fromGroups({g: 1})))
++                  deepNames.contains(n) ? '$n (profond)' : n,
++              ].join(', '),
++              key: ValueKey('anatomy-group-muscles-$g'),
++              style: tt.bodyMedium,
++            ),
++            const SizedBox(height: 12),
+           ],
+-        ),
++          Text(state, style: tt.bodySmall),
++        ],
++      ),
+     );
+   }
+ }
+diff --git a/lib/mannequin_3d.dart b/lib/mannequin_3d.dart
+index 122fcef..1221524 100644
+--- a/lib/mannequin_3d.dart
++++ b/lib/mannequin_3d.dart
+@@ -612,18 +612,17 @@ class MannequinScene {
+   }
+ 
+   /// [pick] pour un rayon d'origine [origin] et de direction unitaire [dir].
+-  MuscleRegion? pickRay(vm.Vector3 origin, vm.Vector3 dir) =>
+-      pickAlong(
+-        origin,
+-        dir,
+-        pickables,
+-        map,
+-        intensities: _intensities,
+-        stretched: _stretched,
+-        hidden: {..._hidden, ..._forcedHidden},
+-        bones: _bones,
+-        opacity: opacity,
+-      );
++  MuscleRegion? pickRay(vm.Vector3 origin, vm.Vector3 dir) => pickAlong(
++    origin,
++    dir,
++    pickables,
++    map,
++    intensities: _intensities,
++    stretched: _stretched,
++    hidden: {..._hidden, ..._forcedHidden},
++    bones: _bones,
++    opacity: opacity,
++  );
+ 
+   /// Règle du toucher, sans scène (tests).
+   static MuscleRegion? pickAlong(
+diff --git a/test/m2_mannequin_test.dart b/test/m2_mannequin_test.dart
+index 35bb2db..6183558 100644
+--- a/test/m2_mannequin_test.dart
++++ b/test/m2_mannequin_test.dart
+@@ -199,10 +199,7 @@ void main() {
+         // Toucher en dehors : le menu se ferme.
+         await tester.tapAt(const Offset(5, 5));
+         await tester.pumpAndSettle();
+-        expect(
+-          find.byKey(const ValueKey('anatomy-filter-dos')),
+-          findsNothing,
+-        );
++        expect(find.byKey(const ValueKey('anatomy-filter-dos')), findsNothing);
+       }
+ 
+       await toggleDos();
+diff --git a/test/m4b_anatomie_test.dart b/test/m4b_anatomie_test.dart
+index f882347..e5f7135 100644
+--- a/test/m4b_anatomie_test.dart
++++ b/test/m4b_anatomie_test.dart
+@@ -137,13 +137,16 @@ void main() {
+   group('toucher à travers les muscles translucides', () {
+     // Rayon le long de +z depuis z = -1 : « avant » (z 0), « milieu »
+     // (z 0,5), « arriere » (z 1), os (z 1,5), « loin » (z 2) derrière l'os.
+-    final test2 = MannequinMap([
+-      _region('avant', 'superficiel'),
+-      _region('milieu', 'profond'),
+-      _region('arriere', 'profond'),
+-      _region('loin', 'superficiel'),
+-      _region('main', 'volume', groupe: 'avant-bras'),
+-    ], const ['dos', 'avant-bras']);
++    final test2 = MannequinMap(
++      [
++        _region('avant', 'superficiel'),
++        _region('milieu', 'profond'),
++        _region('arriere', 'profond'),
++        _region('loin', 'superficiel'),
++        _region('main', 'volume', groupe: 'avant-bras'),
++      ],
++      const ['dos', 'avant-bras'],
++    );
+     final meshes = [
+       _quad('arriere', 1),
+       _quad('avant', 0),
+@@ -272,7 +275,10 @@ void main() {
+       );
+       await _settle(tester, find.byType(MuscleHeatmap));
+       expect(find.text('Filtres · 2'), findsOneWidget);
+-      expect(find.byKey(const ValueKey('anatomy-summary-empty')), findsOneWidget);
++      expect(
++        find.byKey(const ValueKey('anatomy-summary-empty')),
++        findsOneWidget,
++      );
+ 
+       // Plusieurs groupes cochés sans fermer le menu : union.
+       await openMenu(tester);

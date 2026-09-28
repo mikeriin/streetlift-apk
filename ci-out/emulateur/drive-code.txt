@@ -1,4 +1,5 @@
+code_m4b=1
 code=0
-code_fiche=1
+code_fiche=0
 code_stats=0
 code_mesure=0

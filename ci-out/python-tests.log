@@ -45,6 +45,8 @@ test_second_run_is_refused_clearly (test_lc1b_s11_j6.Lc1bTests.test_second_run_i
 test_unexpected_input_is_refused (test_lc1b_s11_j6.Lc1bTests.test_unexpected_input_is_refused) ... ok
 test_aucune_region_sans_groupe (test_m2_anatomy.M2AnatomyTest.test_aucune_region_sans_groupe) ... ok
 test_budget_de_triangles (test_m2_anatomy.M2AnatomyTest.test_budget_de_triangles) ... ok
+test_budget_profonds (test_m2_anatomy.M2AnatomyTest.test_budget_profonds) ... ok
+test_couches (test_m2_anatomy.M2AnatomyTest.test_couches) ... ok
 test_credits (test_m2_anatomy.M2AnatomyTest.test_credits) ... ok
 test_muscles_du_pack (test_m2_anatomy.M2AnatomyTest.test_muscles_du_pack) ... ok
 test_noeuds_et_regions (test_m2_anatomy.M2AnatomyTest.test_noeuds_et_regions) ... ok
@@ -90,7 +92,7 @@ test_rounding_matches_excel_half_away_from_zero (test_tools.ToolsTests.test_roun
 test_shipped_assets_and_android_identity (test_tools.ToolsTests.test_shipped_assets_and_android_identity) ... ok
 
 ----------------------------------------------------------------------
-Ran 90 tests in 8.772s
+Ran 92 tests in 8.516s
 
 OK (skipped=1)
 OK : apk-absents, refus Gradle attendu observé.
@@ -156,4 +158,4 @@ Fichiers : base-r1.jsonl, cand-r1.jsonl
 programme_v33.json: 13 -> 33 octets
 programme_v33.json: 13 -> 33 octets
 OK : 40 semaines, 280 jours, 1812 exercices du programme, 625 exercices de la base.
-OK : ZIP contrôlé, 576 fichiers, 12141600 octets extraits.
+OK : ZIP contrôlé, 578 fichiers, 12355778 octets extraits.

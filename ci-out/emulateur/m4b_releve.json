@@ -1,0 +1,136 @@
+{
+  "profonds_sombre": {
+    "face": {
+      "pixels": 98280,
+      "figure": 0.1913003663003663,
+      "rouge": 0.00987993487993488,
+      "gris": 0.17747252747252748,
+      "couleurs": 143
+    },
+    "dos": {
+      "pixels": 98280,
+      "figure": 0.1913003663003663,
+      "rouge": 0.006288156288156288,
+      "gris": 0.18371998371998371,
+      "couleurs": 154
+    },
+    "profil": {
+      "pixels": 98280,
+      "figure": 0.10692918192918192,
+      "rouge": 0.004334554334554335,
+      "gris": 0.10145502645502645,
+      "couleurs": 128
+    },
+    "troisQuarts": {
+      "pixels": 98280,
+      "figure": 0.17448107448107447,
+      "rouge": 0.0069902319902319906,
+      "gris": 0.16355311355311355,
+      "couleurs": 142
+    }
+  },
+  "toucher_point": "Offset(163.5, 107.6)",
+  "toucher": "Petit rhomboïde (gauche) (profond) · Dos",
+  "profonds_clair": {
+    "dos": {
+      "pixels": 98280,
+      "figure": 0.191025641025641,
+      "rouge": 0.004965404965404966,
+      "gris": 0.18386243386243387,
+      "couleurs": 146
+    },
+    "face": {
+      "pixels": 98280,
+      "figure": 0.1903032153032153,
+      "rouge": 0.0010276760276760276,
+      "gris": 0.1796194546194546,
+      "couleurs": 168
+    }
+  },
+  "anatomie_filtres": [
+    "pectoraux",
+    "dos",
+    "quadriceps"
+  ],
+  "anatomie_sombre": {
+    "troisQuarts": {
+      "pixels": 70560,
+      "figure": 0.23425453514739228,
+      "rouge": 0.054365079365079366,
+      "gris": 0.1534438775510204,
+      "couleurs": 305
+    },
+    "dos": {
+      "pixels": 70560,
+      "figure": 0.2640731292517007,
+      "rouge": 0.059807256235827666,
+      "gris": 0.17103174603174603,
+      "couleurs": 317
+    },
+    "sans_profonds": {
+      "pixels": 70560,
+      "figure": 0.2258219954648526,
+      "rouge": 0.06622732426303855,
+      "gris": 0.14360827664399092,
+      "couleurs": 306
+    }
+  },
+  "anatomie_clair": {
+    "pixels": 70560,
+    "figure": 0.1517998866213152,
+    "rouge": 0.05994897959183673,
+    "gris": 0.08655045351473922,
+    "couleurs": 331
+  },
+  "fiche": {
+    "sombre": {
+      "pixels": 61560,
+      "figure": 0.1895224171539961,
+      "rouge": 0.09035087719298246,
+      "gris": 0.08391812865497077,
+      "couleurs": 345,
+      "vue": "dos",
+      "rhomboides_allumes": true
+    },
+    "clair": {
+      "pixels": 61560,
+      "figure": 0.17160493827160495,
+      "rouge": 0.05238791423001949,
+      "gris": 0.0828622482131254,
+      "couleurs": 354,
+      "vue": "dos",
+      "rhomboides_allumes": true
+    }
+  },
+  "stats": {
+    "sombre": {
+      "pixels": 53568,
+      "figure": 0.23060409199522103,
+      "rouge": 0.08807497013142175,
+      "gris": 0.11335125448028674,
+      "couleurs": 276
+    },
+    "clair": {
+      "pixels": 53568,
+      "figure": 0.15247909199522103,
+      "rouge": 0.06627090800477897,
+      "gris": 0.07192727001194743,
+      "couleurs": 348
+    }
+  },
+  "moteur3d": {
+    "note": "émulateur, rendu logiciel, build debug : comparaison seulement ; la mesure qui compte est celle du téléphone",
+    "avant_opaque_5_3_0": {
+      "images": 8,
+      "images_par_s": 0.8,
+      "temps_moyen_ms": 2199.5005,
+      "p99_ms": 2355.006
+    },
+    "apres_transparent_5_3_1": {
+      "images": 8,
+      "images_par_s": 0.8,
+      "temps_moyen_ms": 2472.274375,
+      "p99_ms": 2573.5
+    }
+  }
+}

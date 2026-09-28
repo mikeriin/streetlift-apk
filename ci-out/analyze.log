@@ -1,2 +1,6 @@
 Analyzing streetlift_tracker...                                 
-No issues found! (ran in 17.9s)
+
+   info • 'containsSemantics' is deprecated and shouldn't be used. Migrate to isSemantics instead. This feature was deprecated after v3.40.0-1.0.pre. Try replacing the use of the deprecated member with the replacement • test/m4b_anatomie_test.dart:352:7 • deprecated_member_use
+   info • 'containsSemantics' is deprecated and shouldn't be used. Migrate to isSemantics instead. This feature was deprecated after v3.40.0-1.0.pre. Try replacing the use of the deprecated member with the replacement • test/m4b_anatomie_test.dart:368:9 • deprecated_member_use
+
+2 issues found. (ran in 17.3s)
