@@ -314,7 +314,6 @@ class AnatomyScreenState extends State<AnatomyScreen> {
             chipCategories: const {'groupes'},
             onChanged: _onMenu,
           ),
-          _postureSelector(context),
           Mannequin3D(
             key: const ValueKey('anatomy-mannequin'),
             posture: _posture,
@@ -329,6 +328,9 @@ class AnatomyScreenState extends State<AnatomyScreen> {
                       '${labels.length == 1 ? 'groupe' : 'groupes'} '
                       '${labels.join(', ')} en rouge',
           ),
+          // M5 : sous les boutons de vue (au-dessus, à 200 % de texte, les
+          // puces repoussaient le mannequin hors de la liste construite).
+          _postureSelector(context),
           ValueListenableBuilder<bool>(
             valueListenable: Display3DSettings.instance.touchNames,
             builder: (context, names, _) => Text(

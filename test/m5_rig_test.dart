@@ -110,11 +110,7 @@ void main() {
         ),
       },
     );
-    final same = sub.skinPositions(
-      name,
-      rest,
-      sub.skinMatrices(RigPose.rest),
-    );
+    final same = sub.skinPositions(name, rest, sub.skinMatrices(RigPose.rest));
     for (var i = 0; i < rest.length; i++) {
       expect((same[i] - rest[i]).abs(), lessThan(1e-6));
     }
@@ -136,10 +132,7 @@ void main() {
     final aux = mid.rotationOf('knee_aux_l');
     double angle(vm.Quaternion q) => 2 * math.acos(q.w.abs().clamp(0.0, 1.0));
     expect(angle(aux), closeTo(angle(knee) / 2, 1e-6));
-    expect(
-      angle(knee),
-      closeTo(angle(b.rotationOf('shin_l')) / 2, 1e-3),
-    );
+    expect(angle(knee), closeTo(angle(b.rotationOf('shin_l')) / 2, 1e-3));
     expect(mid.translation.y, closeTo(b.translation.y / 2, 1e-9));
   });
 
@@ -158,7 +151,11 @@ void main() {
     AnatomyScreen.session = null;
     AnatomyScreen.sessionPosture = 'debout';
     await tester.pumpWidget(page(const AnatomyScreen()));
-    for (var i = 0; i < 60 && find.byType(MuscleHeatmap).evaluate().isEmpty; i++) {
+    for (
+      var i = 0;
+      i < 60 && find.byType(MuscleHeatmap).evaluate().isEmpty;
+      i++
+    ) {
       await tester.runAsync(
         () => Future<void>.delayed(const Duration(milliseconds: 25)),
       );
@@ -170,6 +167,10 @@ void main() {
       expect(find.text(label), findsOneWidget);
     }
     expect(state().posture, 'debout');
+    await tester.ensureVisible(
+      find.byKey(const ValueKey('anatomy-posture-planche')),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('anatomy-posture-planche')));
     await tester.pumpAndSettle();
     expect(state().posture, 'planche');

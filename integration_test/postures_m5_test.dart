@@ -74,7 +74,9 @@ void main() {
     }
 
     bool isBg((int, int, int) c) =>
-        (c.$1 - br).abs() <= 12 && (c.$2 - bgG).abs() <= 12 && (c.$3 - bb).abs() <= 12;
+        (c.$1 - br).abs() <= 12 &&
+        (c.$2 - bgG).abs() <= 12 &&
+        (c.$3 - bb).abs() <= 12;
     var total = 0, figure = 0, red = 0, gray = 0;
     for (var y = rect.top; y < rect.bottom; y += 2) {
       for (var x = rect.left; x < rect.right; x += 2) {
@@ -217,7 +219,11 @@ void main() {
       expect(s['figure'] as double, greaterThan(.03), reason: v.name);
       expect(s['gris'] as double, greaterThan(.01), reason: v.name);
       expect(s['rouge'] as double, greaterThan(.002), reason: v.name);
-      expect(s['toucher_vide_fond'] as double, greaterThan(.85), reason: v.name);
+      expect(
+        s['toucher_vide_fond'] as double,
+        greaterThan(.85),
+        reason: v.name,
+      );
       if ((s['toucher_allume'] as int) >= 10) {
         expect(
           s['toucher_allume_rouge'] as double,
@@ -243,7 +249,10 @@ void main() {
     AnatomyScreen.sessionPosture = 'debout';
     await pumpHome(
       tester,
-      const AnatomyScreen(key: ValueKey('m5-anatomie'), initialGroup: 'quadriceps'),
+      const AnatomyScreen(
+        key: ValueKey('m5-anatomie'),
+        initialGroup: 'quadriceps',
+      ),
       true,
     );
     await ready(tester);
@@ -288,7 +297,10 @@ void main() {
     AnatomyScreen.sessionPosture = 'debout';
     await pumpHome(
       tester,
-      const AnatomyScreen(key: ValueKey('m5-anatomie-clair'), initialGroup: 'gainage'),
+      const AnatomyScreen(
+        key: ValueKey('m5-anatomie-clair'),
+        initialGroup: 'gainage',
+      ),
       false,
     );
     await ready(tester);

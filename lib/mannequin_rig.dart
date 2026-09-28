@@ -310,7 +310,8 @@ class MannequinRig {
         if (wk == 0) continue;
         final f = wk / 255;
         final m = j[v * 4 + k] * 12;
-        ox += f * (mats[m] * x + mats[m + 1] * y + mats[m + 2] * z + mats[m + 3]);
+        ox +=
+            f * (mats[m] * x + mats[m + 1] * y + mats[m + 2] * z + mats[m + 3]);
         oy +=
             f *
             (mats[m + 4] * x + mats[m + 5] * y + mats[m + 6] * z + mats[m + 7]);

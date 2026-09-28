@@ -408,12 +408,15 @@ class MannequinFraming {
   final double height, width;
   const MannequinFraming(this.center, this.height, this.width);
 
-  static MannequinFraming lerp(MannequinFraming a, MannequinFraming b, double t) =>
-      MannequinFraming(
-        a.center + (b.center - a.center) * t,
-        a.height + (b.height - a.height) * t,
-        a.width + (b.width - a.width) * t,
-      );
+  static MannequinFraming lerp(
+    MannequinFraming a,
+    MannequinFraming b,
+    double t,
+  ) => MannequinFraming(
+    a.center + (b.center - a.center) * t,
+    a.height + (b.height - a.height) * t,
+    a.width + (b.width - a.width) * t,
+  );
 }
 
 /// Scène du mannequin : modèle, un matériau par région, lumière qui suit la
@@ -703,10 +706,17 @@ class MannequinScene {
       for (var k = 0; k < joints.length; k++) {
         final m = joints[k] * 12;
         final w = weights[k];
-        ox += w * (mats[m] * x + mats[m + 1] * y + mats[m + 2] * z + mats[m + 3]);
-        oy += w * (mats[m + 4] * x + mats[m + 5] * y + mats[m + 6] * z + mats[m + 7]);
+        ox +=
+            w * (mats[m] * x + mats[m + 1] * y + mats[m + 2] * z + mats[m + 3]);
+        oy +=
+            w *
+            (mats[m + 4] * x + mats[m + 5] * y + mats[m + 6] * z + mats[m + 7]);
         oz +=
-            w * (mats[m + 8] * x + mats[m + 9] * y + mats[m + 10] * z + mats[m + 11]);
+            w *
+            (mats[m + 8] * x +
+                mats[m + 9] * y +
+                mats[m + 10] * z +
+                mats[m + 11]);
       }
       final posed = vm.Vector3(ox, oy, _flip ? -oz : oz);
       node.localTransform = vm.Matrix4.translation(posed - point);
@@ -1011,14 +1021,17 @@ class PickMesh {
 
   PickMesh(this.name, this.positions, this.indices, this.min, this.max);
 
-  factory PickMesh.of(String name, Node node) =>
-      PickMesh.fromData(name, node.extractMeshData(transform: node.globalTransform));
-
-  factory PickMesh.fromData(String name, MeshData data) => PickMesh.fromPositions(
+  factory PickMesh.of(String name, Node node) => PickMesh.fromData(
     name,
-    data.positions,
-    data.indices ?? List<int>.generate(data.vertexCount, (i) => i),
+    node.extractMeshData(transform: node.globalTransform),
   );
+
+  factory PickMesh.fromData(String name, MeshData data) =>
+      PickMesh.fromPositions(
+        name,
+        data.positions,
+        data.indices ?? List<int>.generate(data.vertexCount, (i) => i),
+      );
 
   factory PickMesh.fromPositions(String name, Float32List p, List<int> idx) {
     final lo = vm.Vector3.all(double.infinity);
@@ -1279,8 +1292,9 @@ class Mannequin3DState extends State<Mannequin3D>
     widget.onReady?.call(scene != null);
   }
 
-  RigPose _poseOf(MannequinScene scene, String? key) =>
-      key == null ? RigPose.rest : scene.rig?.posture(key)?.pose ?? RigPose.rest;
+  RigPose _poseOf(MannequinScene scene, String? key) => key == null
+      ? RigPose.rest
+      : scene.rig?.posture(key)?.pose ?? RigPose.rest;
 
   /// Passe à la posture [key] (null : repos) avec une transition.
   void setPosture(String? key) {
