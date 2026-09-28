@@ -9,7 +9,7 @@
 | Élément | Valeur |
 | --- | --- |
 | Demande | `pipeline/3d/prompts/M04c.txt` : plus de ZIP, projet structuré à la racine de `main`, CI et outils adaptés ; zoom au pincement ; filtres normalisés dans toute l'application |
-| Base | `main` `4531346` (5.3.1+76, ZIP), étiquette `archive-zip-5.3.1` |
+| Base | `main` `4531346` (5.3.1+76, ZIP) ; étiquette `archive-zip-5.3.1` créée localement, non poussée (refus du proxy de la session) |
 
 ## M4c.1 — Changements
 

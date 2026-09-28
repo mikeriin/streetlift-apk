@@ -2,7 +2,7 @@
 
 ## 5.3.2 — Dépôt en sources, zoom au pincement, filtres normalisés (lot M4c du pipeline « Mannequin 3D »)
 
-- **Dépôt GitHub en sources** : `main` contient directement le projet Flutter (dossiers `lib`, `assets`, `android`, `test`, `tools`…) au lieu de `streetlift_tracker_v33.zip`. Contenu identique octet pour octet au ZIP 5.3.1 (étiquette `archive-zip-5.3.1`, preuve par `tools/compare_tree_with_zip.py`).
+- **Dépôt GitHub en sources** : `main` contient directement le projet Flutter (dossiers `lib`, `assets`, `android`, `test`, `tools`…) au lieu de `streetlift_tracker_v33.zip`. Contenu identique octet pour octet au ZIP 5.3.1 (dernier commit qui le contient : `4531346` ; preuve par `tools/compare_tree_with_zip.py`).
 - **Zoom au pincement** sur le mannequin 3D (Anatomie, fiche exercice, STATS, Moteur 3D) : deux doigts zooment de 1× (corps entier) à 4×, centré sur le point entre les doigts, et déplacent la vue une fois zoomé ; un doigt tourne le mannequin ; toucher bref = nom du muscle ; double toucher ou boutons Face / Dos / Profil / 3/4 = vue d'ensemble. Dans les fiches et STATS, glisser verticalement fait toujours défiler la page.
 - **Mêmes filtres partout** : bibliothèque d'exercices, choix d'exercice (séance perso), catalogue WOD, historique de STATS et écran Anatomie ont un bouton **Filtres · n** qui ouvre un menu par catégorie (cases à cocher, catégories repliables, Tout cocher / Tout décocher, Réinitialiser) ; les filtres actifs s'affichent en puces supprimables sous le bouton.
 
@@ -438,7 +438,7 @@ Depuis 5.3.2 (lot M4c), le dépôt contient les sources du projet à sa racine :
 | `signing/certificate.sha256` | Empreinte publique du certificat de signature (la clé n'est jamais dans le dépôt) |
 | `.github/workflows/` | `build-apk.yml` (APK et AAB signés), `ci-3d.yml` (CI du mannequin, branche `claude/ci-3d`) |
 
-`.gitignore` exclut tout ce que les contrôles de livraison refusent (caches, `build/`, fichiers locaux, clés, mots de passe, APK/AAB, ZIP) ; `.gitattributes` impose les fins de ligne LF et déclare les binaires. Le dernier état livré en ZIP est conservé à l'étiquette `archive-zip-5.3.1`.
+`.gitignore` exclut tout ce que les contrôles de livraison refusent (caches, `build/`, fichiers locaux, clés, mots de passe, APK/AAB, ZIP) ; `.gitattributes` impose les fins de ligne LF et déclare les binaires. Le dernier état livré en ZIP reste dans l'historique, au commit `4531346` (étiquette prévue : `archive-zip-5.3.1`).
 
 ## Construire l'application
 
