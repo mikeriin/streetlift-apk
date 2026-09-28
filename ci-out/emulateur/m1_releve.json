@@ -1,0 +1,36 @@
+{
+  "compatible": true,
+  "erreur": null,
+  "appareil": {
+    "manufacturer": "Google",
+    "model": "sdk_gphone64_x86_64",
+    "release": "15",
+    "sdk": "35",
+    "glesMajor": "3",
+    "glesMinor": "1",
+    "vulkanLevel": "1",
+    "vulkanVersion": "4206592",
+    "impellerBackend": "OpenGLES"
+  },
+  "rendu_sombre": {
+    "pixels": 79515,
+    "figure": 0.12152424070930014,
+    "rouge": 0.019883040935672516,
+    "gris": 0.09566748412249261,
+    "couleurs": 224
+  },
+  "mesure": {
+    "images": 0,
+    "duree_ms": 10000,
+    "images_par_s": 0.0,
+    "temps_moyen_ms": 0.0,
+    "p99_ms": 0.0
+  },
+  "rendu_clair": {
+    "pixels": 79515,
+    "figure": 0.1159026598754952,
+    "rouge": 0.015795761805948563,
+    "gris": 0.09501351946173678,
+    "couleurs": 235
+  }
+}
