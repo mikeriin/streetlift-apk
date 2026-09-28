@@ -138,3 +138,18 @@ principale dans `analysis_options.yaml`, comme `tools/perf_device/`).
 - Émulateur passé en 540 × 960 (240 ppp) par `tools/ci3d_drive.sh` : rendu
   logiciel plus court, captures lisibles (écran de 360 × 640 dp).
 - Aperçu hors application : `render_preview.py --opacite 0.5 --regions …`.
+
+## Squelette et postures (M5)
+
+- `integration_test/postures_m5_test.dart`, cible du lot lancée en premier par
+  `tools/ci3d_drive.sh` (les cibles des lots précédents sur demande,
+  `CI3D_TOUT=1`) : 4 postures (debout, suspendu, squat bas, planche) × 4 vues,
+  quadriceps et dos allumés ; écran Anatomie (sélecteur « Posture »,
+  transition, toucher d'un quadriceps sur le squat, planche en clair).
+- Contrôle d'accord entre la peau du GPU (image) et celle du processeur
+  (toucher) : sur une grille de la vue, là où le toucher trouve un muscle
+  allumé l'image est rouge, là où il ne trouve rien c'est le fond
+  (`m5_releve.json`).
+- Planches Blender hors application (même peau, en numpy) :
+  `python3 tools/anatomy/render_poses.py dossier [--postures …] [--centre x,y,z
+  --echelle s --vues 0,90]`.

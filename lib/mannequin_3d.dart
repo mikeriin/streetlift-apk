@@ -21,6 +21,15 @@
 // chaque image (distance du centre de chaque maille à la caméra, le long de
 // son axe), sans écriture de profondeur, faces arrière éliminées : chaque
 // muscle ne compte qu'une couche par pixel, même en rotation.
+//
+// M5 : le modèle porte un squelette d'animation et une peau
+// (`mannequin_rig.dart`). [MannequinScene.applyPose] tourne les articulations
+// (le GPU déforme les maillages) ; le toucher et le cadrage utilisent les
+// positions déformées, calculées sur le processeur avec la même peau. Chaque
+// maille translucide reçoit une translation « d'ordre » (sans effet sur son
+// dessin, ignorée par la peau) qui place son centre de tri sur le muscle
+// déformé. Sans posture (fiches, STATS), le modèle reste au repos, identique
+// au modèle statique de 5.3.2.
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math' as math;
@@ -36,6 +45,7 @@ import 'package:vector_math/vector_math.dart' as vm;
 import 'app_theme.dart';
 import 'engine3d.dart';
 import 'mannequin_gestures.dart';
+import 'mannequin_rig.dart';
 import 'muscle_body.dart';
 import 'ui.dart';
 
@@ -309,15 +319,66 @@ class MannequinFrame {
 
 MannequinFrame? _frame;
 
-MannequinFrame _measure(Node root) {
-  vm.Vector3? centerOf(String name) {
-    final b = root.getChildByName(name)?.combinedWorldBounds;
-    return b == null ? null : (b.min + b.max) * .5;
+/// Positions de repos (repère de la scène) des maillages nommés du modèle.
+/// Maillages avec peau : `extractMeshData` rend la pose de liaison.
+Map<String, MeshData> _restMeshes(Node root) {
+  final out = <String, MeshData>{};
+  void visit(Node n) {
+    if (n.name.isNotEmpty && n.mesh != null) {
+      out[n.name] = n.extractMeshData(transform: vm.Matrix4.identity());
+    }
+    for (final c in n.children) {
+      visit(c);
+    }
   }
 
-  final all = root.combinedWorldBounds;
-  final center = all == null ? vm.Vector3(0, .9, 0) : (all.min + all.max) * .5;
-  final height = all == null ? 1.7 : all.max.y - all.min.y;
+  visit(root);
+  return out;
+}
+
+(vm.Vector3, vm.Vector3)? _boundsOf(Float32List p) {
+  if (p.length < 3) return null;
+  final lo = vm.Vector3.all(double.infinity);
+  final hi = vm.Vector3.all(-double.infinity);
+  for (var i = 0; i + 2 < p.length; i += 3) {
+    lo.x = math.min(lo.x, p[i]);
+    lo.y = math.min(lo.y, p[i + 1]);
+    lo.z = math.min(lo.z, p[i + 2]);
+    hi.x = math.max(hi.x, p[i]);
+    hi.y = math.max(hi.y, p[i + 1]);
+    hi.z = math.max(hi.z, p[i + 2]);
+  }
+  return (lo, hi);
+}
+
+/// M5 : mesuré sur les positions de repos (les bornes d'un maillage avec
+/// peau ne sont pas celles du repos) ; mêmes valeurs qu'en 5.3.2.
+MannequinFrame _measure(Map<String, MeshData> meshes) {
+  vm.Vector3? centerOf(String name) {
+    final m = meshes[name];
+    final b = m == null ? null : _boundsOf(m.positions);
+    return b == null ? null : (b.$1 + b.$2) * .5;
+  }
+
+  final lo = vm.Vector3.all(double.infinity);
+  final hi = vm.Vector3.all(-double.infinity);
+  for (final m in meshes.values) {
+    final b = _boundsOf(m.positions);
+    if (b == null) continue;
+    lo.setValues(
+      math.min(lo.x, b.$1.x),
+      math.min(lo.y, b.$1.y),
+      math.min(lo.z, b.$1.z),
+    );
+    hi.setValues(
+      math.max(hi.x, b.$2.x),
+      math.max(hi.y, b.$2.y),
+      math.max(hi.z, b.$2.z),
+    );
+  }
+  final empty = lo.x > hi.x;
+  final center = empty ? vm.Vector3(0, .9, 0) : (lo + hi) * .5;
+  final height = empty ? 1.7 : hi.y - lo.y;
   // Avant : du grand fessier vers le droit de l'abdomen ; gauche : côté des
   // régions « _left ».
   final abdo = centerOf('rectus_abdominis_left');
@@ -339,6 +400,23 @@ MannequinFrame _measure(Node root) {
         : vm.Vector3(0, 0, d.z.sign);
   }
   return MannequinFrame(front, left, center, height);
+}
+
+/// M5 : cadrage d'une posture (centre, hauteur, largeur horizontale).
+class MannequinFraming {
+  final vm.Vector3 center;
+  final double height, width;
+  const MannequinFraming(this.center, this.height, this.width);
+
+  static MannequinFraming lerp(
+    MannequinFraming a,
+    MannequinFraming b,
+    double t,
+  ) => MannequinFraming(
+    a.center + (b.center - a.center) * t,
+    a.height + (b.height - a.height) * t,
+    a.width + (b.width - a.width) * t,
+  );
 }
 
 /// Scène du mannequin : modèle, un matériau par région, lumière qui suit la
@@ -383,7 +461,21 @@ class MannequinScene {
         ..metallicFactor = 0
         ..roughnessFactor = roughness;
 
-  MannequinScene._(this.model, this.map, this.frame) {
+  /// M5 : squelette, postures et peau (null : modèle sans rig, toujours au
+  /// repos).
+  final MannequinRig? rig;
+
+  /// Positions de repos des maillages (repère de la scène), partagées.
+  final Map<String, MeshData> _rest;
+
+  final Map<String, Node> _joints = {};
+  final Map<String, vm.Vector3> _jointRest = {};
+
+  /// Le repère de la scène est-il le miroir (z → −z) de celui du glTF ?
+  /// (Import de flutter_scene : `bakeNative`.) Mesuré sur les articulations.
+  bool _flip = false;
+
+  MannequinScene._(this.model, this.map, this.frame, this.rig, this._rest) {
     void collect(Node n) {
       if (n.name.isNotEmpty) _nodes[n.name] = n;
       for (final c in n.children) {
@@ -392,6 +484,27 @@ class MannequinScene {
     }
 
     collect(model);
+    final rig = this.rig;
+    if (rig != null) {
+      for (final b in rig.bones) {
+        final node = _nodes['j_${b.name}'];
+        if (node == null) continue;
+        _joints[b.name] = node;
+        _jointRest[b.name] = node.localTransform.getTranslation();
+      }
+      // Sens de l'axe avant : translation des orteils depuis le pied.
+      final toes = rig.index['toes_l'], foot = rig.index['foot_l'];
+      final t = _jointRest['toes_l'];
+      if (toes != null && foot != null && t != null) {
+        final gz = rig.bones[toes].head.z - rig.bones[foot].head.z;
+        _flip = gz * t.z < 0;
+      }
+    }
+    _nodes.forEach((name, node) {
+      // Maillages avec peau : jamais écartés par le cadre de la caméra (leurs
+      // bornes sont celles du repos, pas de la posture).
+      if (node.skin != null) node.frustumCulled = false;
+    });
     _nodes.forEach((name, node) {
       final region = map.byId[name];
       if (region != null) {
@@ -436,16 +549,31 @@ class MannequinScene {
     });
   }
 
+  static Map<String, MeshData>? _restCache;
+
+  static Future<MannequinRig?> _loadRig() async {
+    try {
+      return await MannequinRig.load();
+    } catch (_) {
+      // Rig illisible : mannequin au repos (5.3.2).
+      return null;
+    }
+  }
+
   static Future<MannequinScene> create() async {
-    final results = await Future.wait<Object>([
+    final results = await Future.wait<Object?>([
       _loadTemplate(),
       MannequinMap.load(),
+      _loadRig(),
     ]);
     final template = results[0] as Node;
+    final rest = _restCache ??= _restMeshes(template);
     final scene = MannequinScene._(
       template.clone(),
       results[1] as MannequinMap,
-      _frame ??= _measure(template),
+      _frame ??= _measure(rest),
+      results[2] as MannequinRig?,
+      rest,
     );
     scene._applyMaterials();
     return scene;
@@ -454,8 +582,175 @@ class MannequinScene {
   /// Nœuds présents dans le modèle (contrôles).
   Iterable<String> get nodeNames => _nodes.keys;
 
-  vm.Vector3 get target =>
-      vm.Vector3(frame.center.x, frame.center.y, frame.center.z);
+  /// Articulations du squelette présentes dans le modèle (contrôles).
+  Iterable<String> get jointNames => _joints.keys;
+
+  /// Posture courante (repos par défaut).
+  RigPose get pose => _pose;
+  RigPose _pose = RigPose.rest;
+  bool _posed = false;
+
+  /// Cadrage courant (M5 : celui de la posture ; au repos, celui de 5.3.2).
+  MannequinFraming get framing => _framing ??= restFraming;
+  MannequinFraming? _framing;
+  set framing(MannequinFraming f) => _framing = f;
+
+  /// Cadrage du modèle au repos : le corps entier, largeur utile ≈ moitié de
+  /// la hauteur (bras le long du corps).
+  MannequinFraming get restFraming =>
+      MannequinFraming(frame.center, frame.height, frame.height * 1.08 * .5);
+
+  vm.Vector3 get target {
+    final c = framing.center;
+    return vm.Vector3(c.x, c.y, c.z);
+  }
+
+  vm.Vector3 _vecToScene(vm.Vector3 v) =>
+      _flip ? vm.Vector3(v.x, v.y, -v.z) : v.clone();
+
+  vm.Quaternion _quatToScene(vm.Quaternion q) =>
+      _flip ? vm.Quaternion(-q.x, -q.y, q.z, q.w) : q.clone();
+
+  /// Place le mannequin dans [pose] : rotations des articulations (le GPU
+  /// déforme les maillages), toucher recalculé à la demande, ordre des
+  /// maillages translucides mis à jour.
+  void applyPose(RigPose pose) {
+    final rig = this.rig;
+    if (rig == null || _joints.isEmpty) return;
+    _pose = pose;
+    _posed = pose.rotations.isNotEmpty || pose.translation.length2 > 0;
+    for (final b in rig.bones) {
+      final node = _joints[b.name];
+      final rest = _jointRest[b.name];
+      if (node == null || rest == null) continue;
+      final t = b.parent == null ? rest + _vecToScene(pose.translation) : rest;
+      node.localTransform = vm.Matrix4.compose(
+        t,
+        _quatToScene(pose.rotationOf(b.name)),
+        vm.Vector3.all(1),
+      );
+    }
+    _posedPickables = null;
+    _updateSortHints();
+  }
+
+  /// Positions déformées d'un maillage (repère de la scène) pour [mats]
+  /// (matrices de peau du rig, repère glTF).
+  Float32List _skinned(String name, Float64List mats) {
+    final rig = this.rig!;
+    final rest = _rest[name]!.positions;
+    if (!_flip) return rig.skinPositions(name, rest, mats);
+    final g = Float32List.fromList(rest);
+    for (var i = 2; i < g.length; i += 3) {
+      g[i] = -g[i];
+    }
+    final out = rig.skinPositions(name, g, mats);
+    for (var i = 2; i < out.length; i += 3) {
+      out[i] = -out[i];
+    }
+    return out;
+  }
+
+  /// Cadrage d'une posture : boîte du corps déformé (repère de la scène).
+  MannequinFraming framingFor(RigPose pose) {
+    final rig = this.rig;
+    if (rig == null ||
+        (pose.rotations.isEmpty && pose.translation.length2 == 0)) {
+      return restFraming;
+    }
+    final mats = rig.skinMatrices(pose);
+    final lo = vm.Vector3.all(double.infinity);
+    final hi = vm.Vector3.all(-double.infinity);
+    for (final name in _rest.keys) {
+      final b = _boundsOf(_skinned(name, mats));
+      if (b == null) continue;
+      lo.setValues(
+        math.min(lo.x, b.$1.x),
+        math.min(lo.y, b.$1.y),
+        math.min(lo.z, b.$1.z),
+      );
+      hi.setValues(
+        math.max(hi.x, b.$2.x),
+        math.max(hi.y, b.$2.y),
+        math.max(hi.z, b.$2.z),
+      );
+    }
+    final size = hi - lo;
+    return MannequinFraming(
+      (lo + hi) * .5,
+      size.y,
+      math.sqrt(size.x * size.x + size.z * size.z) * 1.02,
+    );
+  }
+
+  /// Ordre des maillages translucides : flutter_scene les trie par le centre
+  /// de leurs bornes (celles du repos pour un maillage avec peau). Chaque
+  /// maille reçoit une translation (ignorée par le dessin avec peau) qui
+  /// amène ce centre sur le centre déformé : peau appliquée au centre de
+  /// repos avec les influences moyennes de la maille.
+  void _updateSortHints() {
+    final rig = this.rig;
+    if (rig == null) return;
+    final centers = _restCenters ??= _computeRestCenters();
+    final mats = rig.skinMatrices(_pose);
+    centers.forEach((name, c) {
+      final node = _nodes[name];
+      if (node == null) return;
+      if (!_posed) {
+        node.localTransform = vm.Matrix4.identity();
+        return;
+      }
+      final (point, joints, weights) = c;
+      var ox = 0.0, oy = 0.0, oz = 0.0;
+      final x = point.x, y = point.y, z = _flip ? -point.z : point.z;
+      for (var k = 0; k < joints.length; k++) {
+        final m = joints[k] * 12;
+        final w = weights[k];
+        ox +=
+            w * (mats[m] * x + mats[m + 1] * y + mats[m + 2] * z + mats[m + 3]);
+        oy +=
+            w *
+            (mats[m + 4] * x + mats[m + 5] * y + mats[m + 6] * z + mats[m + 7]);
+        oz +=
+            w *
+            (mats[m + 8] * x +
+                mats[m + 9] * y +
+                mats[m + 10] * z +
+                mats[m + 11]);
+      }
+      final posed = vm.Vector3(ox, oy, _flip ? -oz : oz);
+      node.localTransform = vm.Matrix4.translation(posed - point);
+    });
+  }
+
+  Map<String, (vm.Vector3, List<int>, List<double>)>? _restCenters;
+
+  /// Centre de repos et influences moyennes de chaque maillage translucide.
+  Map<String, (vm.Vector3, List<int>, List<double>)> _computeRestCenters() {
+    final rig = this.rig!;
+    final out = <String, (vm.Vector3, List<int>, List<double>)>{};
+    _regions.forEach((name, _) {
+      final region = map.byId[name];
+      final data = _rest[name];
+      final inf = rig.skin[name];
+      if (region == null || region.couche == 'volume') return;
+      if (data == null || inf == null) return;
+      final b = _boundsOf(data.positions);
+      if (b == null) return;
+      final acc = <int, double>{};
+      for (var i = 0; i < inf.joints.length; i++) {
+        final w = inf.weights[i];
+        if (w > 0) acc[inf.joints[i]] = (acc[inf.joints[i]] ?? 0) + w;
+      }
+      final total = acc.values.fold<double>(0, (a, b) => a + b);
+      out[name] = (
+        (b.$1 + b.$2) * .5,
+        acc.keys.toList(),
+        [for (final v in acc.values) v / total],
+      );
+    });
+    return out;
+  }
 
   /// Matériau du nœud et de ses descendants sans nom propre. Le maillage est
   /// d'abord cloné : les instances de `loadScene` partagent leurs primitives,
@@ -591,27 +886,44 @@ class MannequinScene {
   }
 
   /// Distance qui cadre le corps entier dans une vue de rapport [aspect].
+  /// M5 : cadrage de la posture courante (au repos : celui de 5.3.2).
   double fitDistance(double aspect) {
     const fov = kMannequinFovY;
-    final h = frame.height * 1.08;
+    final f = framing;
+    final h = f.height * 1.08;
     final byHeight = h / 2 / math.tan(fov / 2);
-    // Largeur utile ≈ 0,5 × hauteur (bras le long du corps, vue 3/4).
+    // Largeur utile : au repos ≈ 0,5 × hauteur (bras le long du corps, vue
+    // 3/4) ; en posture, diagonale horizontale du corps déformé.
     final hFov = 2 * math.atan(math.tan(fov / 2) * aspect);
-    final byWidth = h * .5 / 2 / math.tan(hFov / 2);
+    final byWidth = f.width / 2 / math.tan(hFov / 2);
     return math.max(byHeight, byWidth) + .3;
   }
 
-  List<PickMesh>? _pickables;
+  List<PickMesh>? _pickables, _posedPickables;
 
-  /// Maillages du toucher (régions et occultants : os, tête, contexte),
-  /// copiés une fois en coordonnées du monde (mannequin statique).
-  List<PickMesh> get pickables => _pickables ??= [
-    for (final e in _nodes.entries)
-      if (e.value.mesh != null &&
-          (map.byId.containsKey(e.key) ||
-              const {'os', 'contexte', 'head'}.contains(e.key)))
-        PickMesh.of(e.key, e.value),
-  ];
+  bool _pickable(String name) =>
+      map.byId.containsKey(name) ||
+      const {'os', 'contexte', 'head'}.contains(name);
+
+  /// Maillages du toucher (régions et occultants : os, tête, contexte), en
+  /// coordonnées du monde. M5 : sur le modèle déformé par la posture
+  /// courante (peau calculée sur le processeur à la demande).
+  List<PickMesh> get pickables {
+    final rest = _pickables ??= [
+      for (final e in _rest.entries)
+        if (_nodes.containsKey(e.key) && _pickable(e.key))
+          PickMesh.fromData(e.key, e.value),
+    ];
+    final rig = this.rig;
+    if (!_posed || rig == null) return rest;
+    return _posedPickables ??= () {
+      final mats = rig.skinMatrices(_pose);
+      return [
+        for (final m in rest)
+          PickMesh.fromPositions(m.name, _skinned(m.name, mats), m.indices),
+      ];
+    }();
+  }
 
   /// Région touchée au point [position] d'une vue de taille [size].
   ///
@@ -709,10 +1021,19 @@ class PickMesh {
 
   PickMesh(this.name, this.positions, this.indices, this.min, this.max);
 
-  factory PickMesh.of(String name, Node node) {
-    final data = node.extractMeshData(transform: node.globalTransform);
-    final p = data.positions;
-    final idx = data.indices ?? List<int>.generate(data.vertexCount, (i) => i);
+  factory PickMesh.of(String name, Node node) => PickMesh.fromData(
+    name,
+    node.extractMeshData(transform: node.globalTransform),
+  );
+
+  factory PickMesh.fromData(String name, MeshData data) =>
+      PickMesh.fromPositions(
+        name,
+        data.positions,
+        data.indices ?? List<int>.generate(data.vertexCount, (i) => i),
+      );
+
+  factory PickMesh.fromPositions(String name, Float32List p, List<int> idx) {
     final lo = vm.Vector3.all(double.infinity);
     final hi = vm.Vector3.all(-double.infinity);
     for (var i = 0; i + 2 < p.length; i += 3) {
@@ -828,6 +1149,11 @@ class Mannequin3D extends StatefulWidget {
   /// 2D (téléphone incompatible ou modèle illisible).
   final ValueChanged<bool>? onReady;
 
+  /// M5 : posture du mannequin (clé de `rig.json`, par exemple `squat_bas`) ;
+  /// null : repos. Un changement passe par une transition douce (instantanée
+  /// si les animations sont réduites).
+  final String? posture;
+
   const Mannequin3D({
     super.key,
     this.intensities = const {},
@@ -844,6 +1170,7 @@ class Mannequin3D extends StatefulWidget {
     this.onRegionTap,
     this.semanticLabel = 'Mannequin anatomique en 3D',
     this.onReady,
+    this.posture,
   });
 
   @override
@@ -851,7 +1178,7 @@ class Mannequin3D extends StatefulWidget {
 }
 
 class Mannequin3DState extends State<Mannequin3D>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   MannequinScene? _scene;
   bool? _available;
   final _settings = Display3DSettings.instance;
@@ -865,6 +1192,20 @@ class Mannequin3DState extends State<Mannequin3D>
   )..addListener(_onTween);
   MuscleRegion? _touched;
   PerspectiveCamera? _camera;
+
+  // M5 : transition entre deux postures.
+  late final AnimationController _poseTween = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 750),
+  )..addListener(_onPoseTween);
+  RigPose _fromPose = RigPose.rest, _toPose = RigPose.rest;
+  MannequinFraming? _fromFraming, _toFraming;
+  String? _posture;
+
+  /// Posture affichée (clé de `rig.json`, null : repos) et transition en
+  /// cours (tests).
+  String? get posture => _posture;
+  bool get posing => _poseTween.isAnimating;
   Size _size = Size.zero;
 
   // M4c : zoom au pincement (1× corps entier à 4×) et déplacement.
@@ -938,6 +1279,12 @@ class Mannequin3DState extends State<Mannequin3D>
       scene = null;
     }
     if (!mounted) return;
+    if (scene != null && widget.posture != null) {
+      _posture = widget.posture;
+      final pose = _poseOf(scene, widget.posture);
+      scene.applyPose(pose);
+      scene.framing = scene.framingFor(pose);
+    }
     setState(() {
       _scene = scene;
       _available = scene != null;
@@ -945,16 +1292,56 @@ class Mannequin3DState extends State<Mannequin3D>
     widget.onReady?.call(scene != null);
   }
 
+  RigPose _poseOf(MannequinScene scene, String? key) => key == null
+      ? RigPose.rest
+      : scene.rig?.posture(key)?.pose ?? RigPose.rest;
+
+  /// Passe à la posture [key] (null : repos) avec une transition.
+  void setPosture(String? key) {
+    final scene = _scene;
+    _posture = key;
+    if (scene == null || scene.rig == null) return;
+    _poseTween.stop();
+    _fromPose = scene.pose;
+    _toPose = _poseOf(scene, key);
+    _fromFraming = scene.framing;
+    _toFraming = scene.framingFor(_toPose);
+    // Nouveau cadrage : vue d'ensemble (zoom 1×).
+    _zoom = MannequinZoom();
+    _touched = null;
+    if (!mounted) return;
+    if (_reduceMotion) {
+      scene.applyPose(_toPose);
+      scene.framing = _toFraming!;
+      setState(() {});
+    } else {
+      _poseTween.forward(from: 0);
+    }
+  }
+
+  void _onPoseTween() {
+    final scene = _scene;
+    final rig = scene?.rig;
+    if (scene == null || rig == null) return;
+    final t = Curves.easeInOutCubic.transform(_poseTween.value);
+    setState(() {
+      scene.applyPose(t >= 1 ? _toPose : rig.blend(_fromPose, _toPose, t));
+      scene.framing = MannequinFraming.lerp(_fromFraming!, _toFraming!, t);
+    });
+  }
+
   @override
   void didUpdateWidget(Mannequin3D oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.view != widget.view) setView(widget.view);
+    if (oldWidget.posture != widget.posture) setPosture(widget.posture);
   }
 
   @override
   void dispose() {
     _settings.listenable.removeListener(_onSettings);
     _tween.dispose();
+    _poseTween.dispose();
     super.dispose();
   }
 

@@ -18,6 +18,11 @@
 // normalisés dans toute l'application) : catégories « Groupes musculaires »
 // et « Affichage » (Muscles profonds, Os), Tout cocher / Tout décocher par
 // catégorie, Réinitialiser, filtres actifs en puces sous le bouton.
+//
+// M5 : sélecteur « Posture » (debout, suspendu à la barre, squat bas, planche
+// de gainage) : le mannequin riggé passe d'une posture à l'autre par une
+// transition douce ; mise en évidence et toucher restent justes sur le modèle
+// déformé. La posture est gardée pendant la session.
 import 'package:flutter/material.dart';
 
 import 'filter_menu.dart';
@@ -37,6 +42,22 @@ const kGroupLabels = {
   'ischios': 'Ischios',
   'fessiers': 'Fessiers',
   'mollets': 'Mollets',
+};
+
+/// M5 : postures de référence de l'écran Anatomie (clés de
+/// `assets/anatomy/rig.json`, `app: true`) et libellés.
+const kAnatomyPostures = {
+  'debout': 'Debout',
+  'suspendu': 'Suspendu',
+  'squat_bas': 'Squat bas',
+  'planche': 'Planche',
+};
+
+/// Vue qui montre le mieux une posture (null : vue inchangée).
+MannequinView? viewForPosture(String posture) => switch (posture) {
+  'squat_bas' => MannequinView.troisQuarts,
+  'planche' => MannequinView.profil,
+  _ => null,
 };
 
 /// Vue de départ qui montre le mieux un groupe.
@@ -154,6 +175,9 @@ class AnatomyScreen extends StatefulWidget {
   /// Filtres gardés pendant la session (null : pas encore ouvert).
   static AnatomyFilters? session;
 
+  /// M5 : posture gardée pendant la session.
+  static String sessionPosture = 'debout';
+
   @override
   State<AnatomyScreen> createState() => AnatomyScreenState();
 }
@@ -164,6 +188,18 @@ class AnatomyScreenState extends State<AnatomyScreen> {
   late MannequinView _view;
 
   AnatomyFilters get filters => _filters;
+
+  String _posture = AnatomyScreen.sessionPosture;
+
+  /// Posture affichée (M5).
+  String get posture => _posture;
+
+  void setPosture(String key) => setState(() {
+    _posture = key;
+    AnatomyScreen.sessionPosture = key;
+    final v = viewForPosture(key);
+    if (v != null) _view = v;
+  });
 
   /// Groupes cochés.
   Set<String> get groups => _filters.groups;
@@ -258,7 +294,7 @@ class AnatomyScreenState extends State<AnatomyScreen> {
                 mq.padding.bottom -
                 kToolbarHeight -
                 KNavigationInset.of(context) -
-                190)
+                240)
             .clamp(300.0, 900.0);
     final tt = Theme.of(context).textTheme;
     final labels = [for (final g in f.orderedGroups) kGroupLabels[g]!];
@@ -280,6 +316,7 @@ class AnatomyScreenState extends State<AnatomyScreen> {
           ),
           Mannequin3D(
             key: const ValueKey('anatomy-mannequin'),
+            posture: _posture,
             intensities: intensities,
             hidden: hidden,
             bones: f.bones,
@@ -291,6 +328,9 @@ class AnatomyScreenState extends State<AnatomyScreen> {
                       '${labels.length == 1 ? 'groupe' : 'groupes'} '
                       '${labels.join(', ')} en rouge',
           ),
+          // M5 : sous les boutons de vue (au-dessus, à 200 % de texte, les
+          // puces repoussaient le mannequin hors de la liste construite).
+          _postureSelector(context),
           ValueListenableBuilder<bool>(
             valueListenable: Display3DSettings.instance.touchNames,
             builder: (context, names, _) => Text(
@@ -314,6 +354,31 @@ class AnatomyScreenState extends State<AnatomyScreen> {
       ),
     );
   }
+
+  /// M5 : puces « Posture » (une seule choisie).
+  Widget _postureSelector(BuildContext context) => Row(
+    key: const ValueKey('anatomy-postures'),
+    children: [
+      Text('Posture', style: Theme.of(context).textTheme.labelLarge),
+      const SizedBox(width: 10),
+      Expanded(
+        child: Wrap(
+          spacing: 6,
+          runSpacing: 4,
+          children: [
+            for (final e in kAnatomyPostures.entries)
+              ChoiceChip(
+                key: ValueKey('anatomy-posture-${e.key}'),
+                label: Text(e.value),
+                selected: _posture == e.key,
+                visualDensity: VisualDensity.compact,
+                onSelected: (_) => setPosture(e.key),
+              ),
+          ],
+        ),
+      ),
+    ],
+  );
 
   /// Résumé texte : chaque groupe coché et ses muscles (profonds signalés),
   /// état des muscles profonds et des os.

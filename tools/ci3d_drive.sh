@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # M1 (CI 3D) : rendu réel de l'écran Moteur 3D (M2 : Anatomie ; M3 : fiche
 # exercice ; M4 : STATS ; M4b : transparence et filtres ; M4c : zoom au
-# pincement et filtres normalisés) sur l'émulateur
+# pincement et filtres normalisés ; M5 : postures du mannequin riggé) sur
+# l'émulateur
 # Android lancé
 # par .github/workflows/ci-3d.yml (reactivecircus/android-emulator-runner).
 # Écrit dans build/ci3d/ : captures PNG, relevé JSON, moteur de rendu
@@ -30,34 +31,40 @@ adb logcat -v time > "$out/logcat-complet.txt" 2>&1 &
 logcat_pid=$!
 
 # Cible séparée lancée par `flutter drive` (application arrêtée avant).
+# M5 : délai de 10 min par cible (la cible du lot dure ≈ 3 min) : un
+# blocage laisse le temps du second essai dans les 30 min du job.
 cible() {
   adb shell am force-stop fr.tchoupi.streetlift_tracker || true
-  timeout 1500 flutter drive --no-pub \
+  timeout "${CI3D_DELAI:-600}" flutter drive --no-pub \
     --driver=test_driver/integration_test.dart \
     --target="integration_test/$1.dart" \
     -d emulator-5554 > "$out/drive-$1.log" 2>&1
 }
-# M4c : lancé en premier (lot en cours) : zoom au pincement (Anatomie,
-# fiche dans une page qui défile, double toucher, boutons de vue) et menus
-# « Filtres » normalisés (bibliothèque, catalogue WOD, Anatomie, sombre et
-# clair). Les cibles des lots précédents ne sont relancées que sur demande
-# (CI3D_TOUT=1) : captures limitées aux écrans du lot.
-cible zoom_filtres_m4c_test
-code_m4c=$?
-if [ "$code_m4c" -ne 0 ] && [ ! -f "$out/m4c_releve.json" ]; then
-  echo "M4c sans relevé (code $code_m4c) : adb relancé, second essai."
-  cp "$out/drive-zoom_filtres_m4c_test.log" "$out/drive-m4c-essai1.log"
+# M5 : lancé en premier (lot en cours) : écran Anatomie, 4 postures de
+# référence (debout, suspendu, squat bas, planche) sous 4 vues, transition,
+# toucher et mise en évidence sur le modèle déformé. Les cibles des lots
+# précédents ne sont relancées que sur demande (CI3D_TOUT=1) : captures
+# limitées aux écrans du lot.
+cible postures_m5_test
+code_m5=$?
+if [ "$code_m5" -ne 0 ] && [ ! -f "$out/m5_releve.json" ]; then
+  echo "M5 sans relevé (code $code_m5) : adb relancé, second essai."
+  cp "$out/drive-postures_m5_test.log" "$out/drive-m5-essai1.log"
   adb kill-server || true
   adb start-server || true
   timeout 60 adb wait-for-device || true
-  cible zoom_filtres_m4c_test
-  code_m4c=$?
+  cible postures_m5_test
+  code_m5=$?
 fi
+code_m4c=0
 code_m4b=0
 code=0
 code_fiche=0
 code_stats=0
 if [ "${CI3D_TOUT:-0}" = "1" ]; then
+# M4c : zoom au pincement et menus « Filtres » normalisés.
+cible zoom_filtres_m4c_test
+code_m4c=$?
 # M4b : muscles profonds vus à travers les autres, écran Anatomie, fiche et
 # STATS en transparence, Moteur 3D avant / après.
 cible anatomie_m4b_test
@@ -119,15 +126,16 @@ if [ "${CI3D_MESURE:-0}" = "1" ]; then
   code_mesure=$?
   tail -n 20 "$out/drive-mannequin_mesure_test.log"
 fi
-tail -n 40 "$out/drive-zoom_filtres_m4c_test.log"
+tail -n 40 "$out/drive-postures_m5_test.log"
 kill "$logcat_pid" 2>/dev/null || true
 grep -o 'Impeller rendering backend ([^)]*)' "$out/logcat-complet.txt" | sort | uniq -c > "$out/impeller.txt" || true
 grep -iE 'flutter|impeller|vulkan|gles|AndroidRuntime|FATAL|swiftshader|angle|lowmemorykiller|DEBUG|libc|tombstone|ActivityManager' "$out/logcat-complet.txt" | tail -n 3000 > "$out/logcat.txt" || true
 rm -f "$out/logcat-complet.txt"
-echo "code_m4c=$code_m4c" > "$out/drive-code.txt"
+echo "code_m5=$code_m5" > "$out/drive-code.txt"
+echo "code_m4c=$code_m4c" >> "$out/drive-code.txt"
 echo "code_m4b=$code_m4b" >> "$out/drive-code.txt"
 echo "code=$code" >> "$out/drive-code.txt"
 echo "code_fiche=$code_fiche" >> "$out/drive-code.txt"
 echo "code_stats=$code_stats" >> "$out/drive-code.txt"
 echo "code_mesure=$code_mesure" >> "$out/drive-code.txt"
-[ "$code_m4c" -eq 0 ] && [ "$code_m4b" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_fiche" -eq 0 ] && [ "$code_stats" -eq 0 ] && [ "$code_mesure" -eq 0 ]
+[ "$code_m5" -eq 0 ] && [ "$code_m4c" -eq 0 ] && [ "$code_m4b" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_fiche" -eq 0 ] && [ "$code_stats" -eq 0 ] && [ "$code_mesure" -eq 0 ]

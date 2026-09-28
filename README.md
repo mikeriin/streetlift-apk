@@ -1,4 +1,16 @@
-# Kalis Track 5.3.2 — Mannequin anatomique 3D
+# Kalis Track 5.4.0 — Mannequin anatomique 3D
+
+## 5.4.0 — Squelette d'animation et peau du mannequin (lot M5 du pipeline « Mannequin 3D »)
+
+- **Arsenal › Anatomie › Posture** : sous les boutons de vue, quatre postures de référence — **Debout**, **Suspendu** (à la barre, scapulas élevées), **Squat bas** (talons au sol) et **Planche** (gainage sur les avant-bras). Le mannequin passe de l'une à l'autre par une transition douce (instantanée si les animations sont réduites) ; la vue s'adapte (Squat bas : 3/4, Planche : Profil) ; la posture est gardée pendant la session.
+- Mise en évidence, halo, transparence, filtres, zoom au pincement et **nom du muscle au toucher** restent justes sur le mannequin déformé.
+- Fiches, STATS et Moteur 3D : mannequin au repos, identique à 5.3.2.
+- Fabrication : `tools/anatomy/build_rig.py` (squelette de 40 os posé sur le squelette d'appui du modèle, poids de peau géodésiques corrigés muscle par muscle), `tools/anatomy/render_poses.py` (planches de contrôle), sorties `assets/anatomy/mannequin.glb`, `rig.json`, `mannequin_skin.bin`.
+
+Détail : `SUIVI_PROJET.md` (M5). Tests : `tools/tests/test_m5_rig.py`, `test/m5_rig_test.dart`, `integration_test/postures_m5_test.dart`.
+
+
+# Historique — Kalis Track 5.3.2 — Mannequin anatomique 3D
 
 ## 5.3.2 — Dépôt en sources, zoom au pincement, filtres normalisés (lot M4c du pipeline « Mannequin 3D »)
 
