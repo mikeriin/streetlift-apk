@@ -1,0 +1,391 @@
+// M3 (mannequin 3D) — fiche exercice : muscles du pack posés sur les régions
+// du mannequin pour TOUS les exercices (muscles sans région : liste
+// justifiée, tous profonds), règle de la vue de départ, intensités par rôle
+// (principal 1, secondaire 0,62, stabilisateur 0,35, étiré 0,25 en teinte
+// distincte), fiche sans exception sur un échantillon de 50 exercices (le
+// moteur de test n'a pas Flutter GPU : repli sur la carte 2D historique,
+// comme un téléphone incompatible). Le rendu 3D réel est vérifié sur
+// émulateur par integration_test/fiche_exercice_test.dart.
+
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:streetlift_tracker/app_theme.dart';
+import 'package:streetlift_tracker/atlas.dart';
+import 'package:streetlift_tracker/atlas_data.dart';
+import 'package:streetlift_tracker/content_pack.dart';
+import 'package:streetlift_tracker/engine3d.dart';
+import 'package:streetlift_tracker/exercise_mannequin.dart';
+import 'package:streetlift_tracker/exercise_screens.dart';
+import 'package:streetlift_tracker/mannequin_3d.dart';
+import 'package:streetlift_tracker/muscle_body.dart';
+import 'package:streetlift_tracker/store.dart';
+
+import 'phone_test_support.dart';
+
+void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  late MannequinMap map;
+  late ContentLibrary lib;
+
+  setUpAll(() async {
+    SharedPreferences.setMockInitialValues({});
+    await store.init();
+    lib = await ContentLibrary.load();
+    map = MannequinMap.fromJson(
+      jsonDecode(await rootBundle.loadString(kMannequinMapAsset))
+          as Map<String, dynamic>,
+    );
+    // Caches globaux remplis hors des zones de temps simulé (voir M2).
+    await engine3DSupport();
+    await MannequinMap.load();
+  });
+
+  List<String> ids() => [for (final e in store.content.entries) e.id];
+
+  group('correspondance muscles du pack → régions', () {
+    test('tous les exercices : chaque muscle a une région ou une raison', () {
+      final covered = {for (final r in map.regions) ...r.pack};
+      final uncovered = <String>{};
+      var checked = 0;
+      for (final id in ids()) {
+        final d = lib.detail(id);
+        expect(d, isNotNull, reason: id);
+        for (final m in [
+          ...d!.primaires,
+          ...d.secondaires,
+          ...d.stabilisateurs,
+          ...d.etires,
+        ]) {
+          expect(atlasMuscles.containsKey(m), isTrue, reason: '$id : $m');
+          checked++;
+          if (!covered.contains(m)) {
+            uncovered.add(m);
+            expect(
+              musclesSansRegion.containsKey(m),
+              isTrue,
+              reason: '$id : $m sans région ni justification',
+            );
+          }
+        }
+      }
+      expect(checked, greaterThan(5000));
+      // La liste justifiée ne contient que des muscles réellement sans
+      // région, tous profonds.
+      for (final m in musclesSansRegion.keys) {
+        expect(covered.contains(m), isFalse, reason: m);
+        expect(atlasMuscles[m]!.profondeur, 'profond', reason: m);
+      }
+      expect(uncovered, musclesSansRegion.keys.toSet());
+    });
+
+    test('chaque exercice montre au moins une région de ses principaux, '
+        'secondaires ou étirés', () {
+      for (final id in ids()) {
+        final d = lib.detail(id)!;
+        final m = ExerciseMuscleMap.of(
+          map,
+          primaires: d.primaires,
+          secondaires: d.secondaires,
+          etires: d.etires,
+        );
+        expect(
+          m.intensities.isNotEmpty || m.stretched.isNotEmpty,
+          isTrue,
+          reason: id,
+        );
+      }
+    });
+
+    test('muscles retirés en M2, remis en M4b : régions profondes', () async {
+      final raw =
+          jsonDecode(await rootBundle.loadString(kMannequinMapAsset))
+              as Map<String, dynamic>;
+      // M4b : plus aucune région retirée du modèle.
+      expect(raw['retirees'] as List, isEmpty);
+      final hidden = {
+        for (final id in raw['caches_au_repos'] as List)
+          map.byId[id as String]!.nom,
+      };
+      for (final nom in [
+        'Subscapulaire',
+        'Grand rhomboïde',
+        'Petit pectoral',
+        'Carré des lombes',
+      ]) {
+        expect(hidden, contains(nom));
+        final regions = map.regions.where((r) => r.nom == nom).toList();
+        expect(regions, hasLength(2), reason: nom);
+        expect(regions.every((r) => r.profond), isTrue, reason: nom);
+      }
+    });
+  });
+
+  group('intensités par rôle', () {
+    test('principal 1, secondaire 0,62, stabilisateur 0,35, étiré à part', () {
+      final m = ExerciseMuscleMap.of(
+        map,
+        primaires: ['grand_dorsal'],
+        secondaires: ['biceps_chef_court', 'grand_dorsal'],
+        stabilisateurs: ['droit_abdomen'],
+        etires: ['grand_pectoral_sterno_costal'],
+      );
+      double of(String pack) => [
+        for (final r in map.regions)
+          if (r.pack.contains(pack)) m.intensities[r.id] ?? 0,
+      ].reduce((a, b) => a > b ? a : b);
+      expect(of('grand_dorsal'), kIntensityPrimary);
+      expect(of('biceps_chef_court'), kIntensitySecondary);
+      expect(of('droit_abdomen'), kIntensityStabilizer);
+      // Régions étirées : jamais aussi dans les intensités (rouge).
+      final pecs = {
+        for (final r in map.regions)
+          if (r.pack.contains('grand_pectoral_sterno_costal')) r.id,
+      };
+      expect(pecs, isNotEmpty);
+      expect(m.stretched.containsAll(pecs), isTrue);
+      for (final id in m.stretched) {
+        expect(m.intensities.containsKey(id), isFalse, reason: id);
+      }
+      expect(kIntensityStretched, .25);
+      expect(m.hidden, isEmpty);
+    });
+
+    test('cible d’un étirement listée aussi en principal : montrée étirée', () {
+      final m = ExerciseMuscleMap.of(
+        map,
+        primaires: ['droit_femoral', 'grand_psoas'],
+        stabilisateurs: ['vaste_lateral'],
+        etires: ['droit_femoral', 'grand_psoas'],
+      );
+      final rf = {
+        for (final r in map.regions)
+          if (r.pack.contains('droit_femoral')) r.id,
+      };
+      expect(rf, isNotEmpty);
+      expect(m.stretched.containsAll(rf), isTrue);
+      for (final id in rf) {
+        expect(m.intensities.containsKey(id), isFalse, reason: id);
+      }
+      // Le stabilisateur non étiré reste en rouge.
+      expect(
+        m.intensities.values.every((v) => v == kIntensityStabilizer),
+        isTrue,
+      );
+      expect(m.intensities, isNotEmpty);
+    });
+
+    test('tous les exercices avec des étirés en montrent au moins un', () {
+      var count = 0;
+      for (final id in ids()) {
+        final d = lib.detail(id)!;
+        if (d.etires.isEmpty) continue;
+        count++;
+        final m = ExerciseMuscleMap.of(
+          map,
+          primaires: d.primaires,
+          secondaires: d.secondaires,
+          stabilisateurs: d.stabilisateurs,
+          etires: d.etires,
+        );
+        expect(m.stretched, isNotEmpty, reason: id);
+      }
+      expect(count, greaterThan(20));
+    });
+
+    test('muscles absents du modèle : listés à part (M4b : profonds '
+        'affichés)', () {
+      final m = ExerciseMuscleMap.of(
+        map,
+        primaires: ['rhomboides', 'trapeze_moyen'],
+        stabilisateurs: ['sous_scapulaire', 'rhomboides', 'diaphragme'],
+      );
+      expect(m.hidden, ['diaphragme']);
+      expect(m.intensities, isNotEmpty);
+      // Rhomboïdes (profonds, remis en M4b) : principal, allumés à 1.
+      expect(m.intensities['rhomboid_major_left'], kIntensityPrimary);
+      expect(m.intensities['rhomboid_minor_right'], kIntensityPrimary);
+      expect(m.intensities['subscapularis_left'], kIntensityStabilizer);
+    });
+
+    test('teinte des étirés distincte de la rampe et du gris', () {
+      for (final dark in [true, false]) {
+        final s = mannequinStretch(dark);
+        // Bleu : la composante bleue domine nettement (la rampe est rouge).
+        expect(s.b, greaterThan(s.r + .15), reason: '$dark');
+        for (final v in [0.0, .25, .35, .62, 1.0]) {
+          final h = mannequinHeat(v, dark);
+          expect(h.r, greaterThan(h.b), reason: '$dark $v');
+        }
+        expect(s, isNot(kMuscleGray));
+      }
+    });
+  });
+
+  group('vue de départ', () {
+    test('postérieurs → Dos, antérieurs → Face, mixtes → 3/4', () {
+      expect(
+        exerciseStartView(['grand_fessier', 'biceps_femoral']),
+        MannequinView.dos,
+      );
+      expect(
+        exerciseStartView(['droit_abdomen', 'transverse_abdomen']),
+        MannequinView.face,
+      );
+      expect(
+        exerciseStartView(['droit_femoral', 'grand_fessier']),
+        MannequinView.troisQuarts,
+      );
+      // Latéraux seuls : les secondaires décident.
+      expect(
+        exerciseStartView(['deltoide_moyen'], ['trapeze_superieur']),
+        MannequinView.dos,
+      );
+      expect(
+        exerciseStartView(['deltoide_moyen'], ['deltoide_anterieur']),
+        MannequinView.face,
+      );
+      // Rien d'orienté : 3/4.
+      expect(exerciseStartView(['deltoide_moyen']), MannequinView.troisQuarts);
+      expect(exerciseStartView(const []), MannequinView.troisQuarts);
+    });
+
+    test('chaque muscle du pack a une face', () {
+      expect(muscleFaces.keys.toSet(), atlasMuscles.keys.toSet());
+    });
+
+    test('exemples du catalogue', () {
+      MannequinView of(String id) {
+        final d = lib.detail(id)!;
+        return exerciseStartView(d.primaires, d.secondaires);
+      }
+
+      expect(of('souleve-de-terre'), MannequinView.dos);
+      expect(of('hip-thrust'), MannequinView.dos);
+      expect(of('ab-wheel'), MannequinView.face);
+      expect(of('dips'), MannequinView.troisQuarts);
+      expect(of('muscle-up'), MannequinView.troisQuarts);
+      // Les trois vues sont utilisées par le catalogue.
+      final used = {for (final id in ids()) of(id)};
+      expect(
+        used.containsAll([
+          MannequinView.face,
+          MannequinView.dos,
+          MannequinView.troisQuarts,
+        ]),
+        isTrue,
+      );
+    });
+  });
+
+  testWidgets('légende : teinte des étirés sur le mannequin 3D', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildTheme(true),
+        home: const Scaffold(
+          body: Column(
+            children: [
+              AtlasRoleLegend(key: ValueKey('l2d')),
+              AtlasRoleLegend(
+                key: ValueKey('l3d'),
+                stretchColor: Color(0xFF5B8DB0),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    Color swatch(String key) {
+      final box = tester
+          .widgetList<Container>(
+            find.descendant(
+              of: find.byKey(ValueKey(key)),
+              matching: find.byType(Container),
+            ),
+          )
+          .last;
+      return (box.decoration! as BoxDecoration).color!;
+    }
+
+    expect(swatch('l2d'), heat(.25));
+    expect(swatch('l3d'), const Color(0xFF5B8DB0));
+  });
+
+  group('fiche exercice', () {
+    Widget host(Widget page, {required bool dark}) => MaterialApp(
+      theme: buildTheme(dark),
+      builder: (context, child) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(disableAnimations: true),
+        child: child!,
+      ),
+      home: page,
+    );
+
+    testWidgets('sans Flutter GPU : carte 2D historique et liste en texte', (
+      tester,
+    ) async {
+      phone(tester, size: const Size(320, 720));
+      await tester.pumpWidget(
+        host(const ExerciseSheetScreen(id: 'souleve-de-terre'), dark: true),
+      );
+      await tester.pumpAndSettle();
+      // Liste paresseuse : la section Muscles n'est construite qu'une fois
+      // amenée à l'écran.
+      await scrollToAction(tester, find.byType(ExerciseAtlas));
+      expect(find.byType(ExerciseMannequin), findsOneWidget);
+      expect(find.byKey(const ValueKey('mannequin-fallback')), findsNothing);
+      expect(find.byKey(const ValueKey('mannequin-view')), findsNothing);
+      expect(find.byType(AtlasRoleLegend), findsOneWidget);
+      await scrollToAction(tester, find.textContaining('Principaux : '));
+      final state = tester.state<ExerciseMannequinState>(
+        find.byType(ExerciseMannequin),
+      );
+      expect(state.startView, MannequinView.dos);
+      expect(state.muscles.intensities, isNotEmpty);
+      expect(tester.takeException(), isNull);
+    });
+
+    testWidgets('échantillon de 50 exercices, sombre et clair, sans '
+        'exception', (tester) async {
+      phone(tester);
+      final all = ids();
+      final step = all.length ~/ 50;
+      final sample = [for (var i = 0; i < 50; i++) all[i * step]];
+      expect(sample.toSet().length, 50);
+      for (final (i, id) in sample.indexed) {
+        await tester.pumpWidget(
+          host(
+            ExerciseSheetScreen(key: ValueKey(id), id: id),
+            dark: i.isEven,
+          ),
+        );
+        await tester.pumpAndSettle();
+        await scrollToAction(tester, find.byType(ExerciseAtlas));
+        expect(tester.takeException(), isNull, reason: id);
+        expect(find.byType(ExerciseMannequin), findsOneWidget, reason: id);
+        final state = tester.state<ExerciseMannequinState>(
+          find.byType(ExerciseMannequin),
+        );
+        final d = lib.detail(id)!;
+        expect(
+          state.startView,
+          exerciseStartView(d.primaires, d.secondaires),
+          reason: id,
+        );
+        expect(
+          state.muscles.intensities.isNotEmpty ||
+              state.muscles.stretched.isNotEmpty,
+          isTrue,
+          reason: id,
+        );
+      }
+      await tester.pumpWidget(const SizedBox());
+    });
+  });
+}

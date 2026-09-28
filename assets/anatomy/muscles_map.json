@@ -1,0 +1,2732 @@
+{
+ "schema": 1,
+ "source": {
+  "depot": "https://github.com/slfresh/fitmitwith-anatomy-atlas",
+  "commit": "4120ee68b6604b8f2f69105d6de6166fad4734c4",
+  "sha256": "d80bebc4045069b660ca8e7afe599d76d15ccc7d96410b3727c600ef01d24e54",
+  "licence": "CC-BY-SA-4.0"
+ },
+ "groupes": [
+  "pectoraux",
+  "épaules",
+  "biceps",
+  "triceps",
+  "avant-bras",
+  "gainage",
+  "dos",
+  "quadriceps",
+  "ischios",
+  "fessiers",
+  "mollets"
+ ],
+ "triangles": 62506,
+ "regions": [
+  {
+   "id": "abductor_pollicis_longus_left",
+   "cle": "abductor_pollicis_longus",
+   "cote": "left",
+   "nom": "Long abducteur du pouce",
+   "nom_cote": "Long abducteur du pouce (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "abductor_pollicis_longus_right",
+   "cle": "abductor_pollicis_longus",
+   "cote": "right",
+   "nom": "Long abducteur du pouce",
+   "nom_cote": "Long abducteur du pouce (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "adductor_brevis_left",
+   "cle": "adductor_brevis",
+   "cote": "left",
+   "nom": "Court adducteur",
+   "nom_cote": "Court adducteur (gauche)",
+   "groupe": "quadriceps",
+   "pack": [
+    "court_adducteur"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "adductor_brevis_right",
+   "cle": "adductor_brevis",
+   "cote": "right",
+   "nom": "Court adducteur",
+   "nom_cote": "Court adducteur (droit)",
+   "groupe": "quadriceps",
+   "pack": [
+    "court_adducteur"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "adductor_longus_left",
+   "cle": "adductor_longus",
+   "cote": "left",
+   "nom": "Long adducteur",
+   "nom_cote": "Long adducteur (gauche)",
+   "groupe": "quadriceps",
+   "pack": [
+    "long_adducteur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "adductor_longus_right",
+   "cle": "adductor_longus",
+   "cote": "right",
+   "nom": "Long adducteur",
+   "nom_cote": "Long adducteur (droit)",
+   "groupe": "quadriceps",
+   "pack": [
+    "long_adducteur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "adductor_magnus_left",
+   "cle": "adductor_magnus",
+   "cote": "left",
+   "nom": "Grand adducteur",
+   "nom_cote": "Grand adducteur (gauche)",
+   "groupe": "ischios",
+   "pack": [
+    "grand_adducteur"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "adductor_magnus_right",
+   "cle": "adductor_magnus",
+   "cote": "right",
+   "nom": "Grand adducteur",
+   "nom_cote": "Grand adducteur (droit)",
+   "groupe": "ischios",
+   "pack": [
+    "grand_adducteur"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "anconeus_muscle_left",
+   "cle": "anconeus_muscle",
+   "cote": "left",
+   "nom": "Anconé",
+   "nom_cote": "Anconé (gauche)",
+   "groupe": "triceps",
+   "pack": [
+    "ancone"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "anconeus_muscle_right",
+   "cle": "anconeus_muscle",
+   "cote": "right",
+   "nom": "Anconé",
+   "nom_cote": "Anconé (droit)",
+   "groupe": "triceps",
+   "pack": [
+    "ancone"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "biceps_brachii_long_left",
+   "cle": "biceps_brachii_long",
+   "cote": "left",
+   "nom": "Biceps brachial (chef long)",
+   "nom_cote": "Biceps brachial (chef long) (gauche)",
+   "groupe": "biceps",
+   "pack": [
+    "biceps_chef_long"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "biceps_brachii_long_right",
+   "cle": "biceps_brachii_long",
+   "cote": "right",
+   "nom": "Biceps brachial (chef long)",
+   "nom_cote": "Biceps brachial (chef long) (droit)",
+   "groupe": "biceps",
+   "pack": [
+    "biceps_chef_long"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "biceps_brachii_short_left",
+   "cle": "biceps_brachii_short",
+   "cote": "left",
+   "nom": "Biceps brachial (chef court)",
+   "nom_cote": "Biceps brachial (chef court) (gauche)",
+   "groupe": "biceps",
+   "pack": [
+    "biceps_chef_court"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "biceps_brachii_short_right",
+   "cle": "biceps_brachii_short",
+   "cote": "right",
+   "nom": "Biceps brachial (chef court)",
+   "nom_cote": "Biceps brachial (chef court) (droit)",
+   "groupe": "biceps",
+   "pack": [
+    "biceps_chef_court"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "biceps_femoris_long_left",
+   "cle": "biceps_femoris_long",
+   "cote": "left",
+   "nom": "Biceps fémoral (chef long)",
+   "nom_cote": "Biceps fémoral (chef long) (gauche)",
+   "groupe": "ischios",
+   "pack": [
+    "biceps_femoral"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "biceps_femoris_long_right",
+   "cle": "biceps_femoris_long",
+   "cote": "right",
+   "nom": "Biceps fémoral (chef long)",
+   "nom_cote": "Biceps fémoral (chef long) (droit)",
+   "groupe": "ischios",
+   "pack": [
+    "biceps_femoral"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "biceps_femoris_short_left",
+   "cle": "biceps_femoris_short",
+   "cote": "left",
+   "nom": "Biceps fémoral (chef court)",
+   "nom_cote": "Biceps fémoral (chef court) (gauche)",
+   "groupe": "ischios",
+   "pack": [
+    "biceps_femoral_chef_court"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "biceps_femoris_short_right",
+   "cle": "biceps_femoris_short",
+   "cote": "right",
+   "nom": "Biceps fémoral (chef court)",
+   "nom_cote": "Biceps fémoral (chef court) (droit)",
+   "groupe": "ischios",
+   "pack": [
+    "biceps_femoral_chef_court"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "brachialis_left",
+   "cle": "brachialis",
+   "cote": "left",
+   "nom": "Brachial",
+   "nom_cote": "Brachial (gauche)",
+   "groupe": "biceps",
+   "pack": [
+    "brachial"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "brachialis_right",
+   "cle": "brachialis",
+   "cote": "right",
+   "nom": "Brachial",
+   "nom_cote": "Brachial (droit)",
+   "groupe": "biceps",
+   "pack": [
+    "brachial"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "brachioradialis_muscle_left",
+   "cle": "brachioradialis_muscle",
+   "cote": "left",
+   "nom": "Brachio-radial",
+   "nom_cote": "Brachio-radial (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "brachio_radial"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "brachioradialis_muscle_right",
+   "cle": "brachioradialis_muscle",
+   "cote": "right",
+   "nom": "Brachio-radial",
+   "nom_cote": "Brachio-radial (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "brachio_radial"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "coracobrachialis_left",
+   "cle": "coracobrachialis",
+   "cote": "left",
+   "nom": "Coraco-brachial",
+   "nom_cote": "Coraco-brachial (gauche)",
+   "groupe": "biceps",
+   "pack": [
+    "coraco_brachial"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "coracobrachialis_right",
+   "cle": "coracobrachialis",
+   "cote": "right",
+   "nom": "Coraco-brachial",
+   "nom_cote": "Coraco-brachial (droit)",
+   "groupe": "biceps",
+   "pack": [
+    "coraco_brachial"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "deep_head_of_pronator_teres_left",
+   "cle": "deep_head_of_pronator_teres",
+   "cote": "left",
+   "nom": "Rond pronateur (chef profond)",
+   "nom_cote": "Rond pronateur (chef profond) (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "rond_pronateur"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "deep_head_of_pronator_teres_right",
+   "cle": "deep_head_of_pronator_teres",
+   "cote": "right",
+   "nom": "Rond pronateur (chef profond)",
+   "nom_cote": "Rond pronateur (chef profond) (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "rond_pronateur"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "deltoid_anterior_left",
+   "cle": "deltoid_anterior",
+   "cote": "left",
+   "nom": "Deltoïde antérieur",
+   "nom_cote": "Deltoïde antérieur (gauche)",
+   "groupe": "épaules",
+   "pack": [
+    "deltoide_anterieur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "deltoid_anterior_right",
+   "cle": "deltoid_anterior",
+   "cote": "right",
+   "nom": "Deltoïde antérieur",
+   "nom_cote": "Deltoïde antérieur (droit)",
+   "groupe": "épaules",
+   "pack": [
+    "deltoide_anterieur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "deltoid_lateral_left",
+   "cle": "deltoid_lateral",
+   "cote": "left",
+   "nom": "Deltoïde moyen",
+   "nom_cote": "Deltoïde moyen (gauche)",
+   "groupe": "épaules",
+   "pack": [
+    "deltoide_moyen"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "deltoid_lateral_right",
+   "cle": "deltoid_lateral",
+   "cote": "right",
+   "nom": "Deltoïde moyen",
+   "nom_cote": "Deltoïde moyen (droit)",
+   "groupe": "épaules",
+   "pack": [
+    "deltoide_moyen"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "deltoid_posterior_left",
+   "cle": "deltoid_posterior",
+   "cote": "left",
+   "nom": "Deltoïde postérieur",
+   "nom_cote": "Deltoïde postérieur (gauche)",
+   "groupe": "épaules",
+   "pack": [
+    "deltoide_posterieur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "deltoid_posterior_right",
+   "cle": "deltoid_posterior",
+   "cote": "right",
+   "nom": "Deltoïde postérieur",
+   "nom_cote": "Deltoïde postérieur (droit)",
+   "groupe": "épaules",
+   "pack": [
+    "deltoide_posterieur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_carpi_radialis_brevis_left",
+   "cle": "extensor_carpi_radialis_brevis",
+   "cote": "left",
+   "nom": "Court extenseur radial du carpe",
+   "nom_cote": "Court extenseur radial du carpe (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_du_poignet"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_carpi_radialis_brevis_right",
+   "cle": "extensor_carpi_radialis_brevis",
+   "cote": "right",
+   "nom": "Court extenseur radial du carpe",
+   "nom_cote": "Court extenseur radial du carpe (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_du_poignet"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_carpi_radialis_longus_left",
+   "cle": "extensor_carpi_radialis_longus",
+   "cote": "left",
+   "nom": "Long extenseur radial du carpe",
+   "nom_cote": "Long extenseur radial du carpe (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_du_poignet"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_carpi_radialis_longus_right",
+   "cle": "extensor_carpi_radialis_longus",
+   "cote": "right",
+   "nom": "Long extenseur radial du carpe",
+   "nom_cote": "Long extenseur radial du carpe (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_du_poignet"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_digiti_minimi_left",
+   "cle": "extensor_digiti_minimi",
+   "cote": "left",
+   "nom": "Extenseur du petit doigt",
+   "nom_cote": "Extenseur du petit doigt (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_digiti_minimi_right",
+   "cle": "extensor_digiti_minimi",
+   "cote": "right",
+   "nom": "Extenseur du petit doigt",
+   "nom_cote": "Extenseur du petit doigt (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_digitorum_left",
+   "cle": "extensor_digitorum",
+   "cote": "left",
+   "nom": "Extenseur des doigts",
+   "nom_cote": "Extenseur des doigts (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_digitorum_longus_left",
+   "cle": "extensor_digitorum_longus",
+   "cote": "left",
+   "nom": "Long extenseur des orteils",
+   "nom_cote": "Long extenseur des orteils (gauche)",
+   "groupe": "mollets",
+   "pack": [
+    "long_extenseur_des_orteils"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_digitorum_longus_right",
+   "cle": "extensor_digitorum_longus",
+   "cote": "right",
+   "nom": "Long extenseur des orteils",
+   "nom_cote": "Long extenseur des orteils (droit)",
+   "groupe": "mollets",
+   "pack": [
+    "long_extenseur_des_orteils"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_digitorum_right",
+   "cle": "extensor_digitorum",
+   "cote": "right",
+   "nom": "Extenseur des doigts",
+   "nom_cote": "Extenseur des doigts (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_hallucis_longus_left",
+   "cle": "extensor_hallucis_longus",
+   "cote": "left",
+   "nom": "Long extenseur de l'hallux",
+   "nom_cote": "Long extenseur de l'hallux (gauche)",
+   "groupe": "mollets",
+   "pack": [
+    "long_extenseur_des_orteils"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_hallucis_longus_right",
+   "cle": "extensor_hallucis_longus",
+   "cote": "right",
+   "nom": "Long extenseur de l'hallux",
+   "nom_cote": "Long extenseur de l'hallux (droit)",
+   "groupe": "mollets",
+   "pack": [
+    "long_extenseur_des_orteils"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_indicis_left",
+   "cle": "extensor_indicis",
+   "cote": "left",
+   "nom": "Extenseur de l'index",
+   "nom_cote": "Extenseur de l'index (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_indicis_right",
+   "cle": "extensor_indicis",
+   "cote": "right",
+   "nom": "Extenseur de l'index",
+   "nom_cote": "Extenseur de l'index (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_pollicis_brevis_left",
+   "cle": "extensor_pollicis_brevis",
+   "cote": "left",
+   "nom": "Court extenseur du pouce",
+   "nom_cote": "Court extenseur du pouce (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_pollicis_brevis_right",
+   "cle": "extensor_pollicis_brevis",
+   "cote": "right",
+   "nom": "Court extenseur du pouce",
+   "nom_cote": "Court extenseur du pouce (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_pollicis_longus_left",
+   "cle": "extensor_pollicis_longus",
+   "cote": "left",
+   "nom": "Long extenseur du pouce",
+   "nom_cote": "Long extenseur du pouce (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "extensor_pollicis_longus_right",
+   "cle": "extensor_pollicis_longus",
+   "cote": "right",
+   "nom": "Long extenseur du pouce",
+   "nom_cote": "Long extenseur du pouce (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "external_oblique_left",
+   "cle": "external_oblique",
+   "cote": "left",
+   "nom": "Oblique externe",
+   "nom_cote": "Oblique externe (gauche)",
+   "groupe": "gainage",
+   "pack": [
+    "oblique_externe"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "external_oblique_right",
+   "cle": "external_oblique",
+   "cote": "right",
+   "nom": "Oblique externe",
+   "nom_cote": "Oblique externe (droit)",
+   "groupe": "gainage",
+   "pack": [
+    "oblique_externe"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "fibularis_brevis_left",
+   "cle": "fibularis_brevis",
+   "cote": "left",
+   "nom": "Court fibulaire",
+   "nom_cote": "Court fibulaire (gauche)",
+   "groupe": "mollets",
+   "pack": [
+    "fibulaires"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "fibularis_brevis_right",
+   "cle": "fibularis_brevis",
+   "cote": "right",
+   "nom": "Court fibulaire",
+   "nom_cote": "Court fibulaire (droit)",
+   "groupe": "mollets",
+   "pack": [
+    "fibulaires"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "fibularis_longus_left",
+   "cle": "fibularis_longus",
+   "cote": "left",
+   "nom": "Long fibulaire",
+   "nom_cote": "Long fibulaire (gauche)",
+   "groupe": "mollets",
+   "pack": [
+    "fibulaires"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "fibularis_longus_right",
+   "cle": "fibularis_longus",
+   "cote": "right",
+   "nom": "Long fibulaire",
+   "nom_cote": "Long fibulaire (droit)",
+   "groupe": "mollets",
+   "pack": [
+    "fibulaires"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "fibularis_tertius_left",
+   "cle": "fibularis_tertius",
+   "cote": "left",
+   "nom": "Troisième fibulaire",
+   "nom_cote": "Troisième fibulaire (gauche)",
+   "groupe": "mollets",
+   "pack": [
+    "fibulaires"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "fibularis_tertius_right",
+   "cle": "fibularis_tertius",
+   "cote": "right",
+   "nom": "Troisième fibulaire",
+   "nom_cote": "Troisième fibulaire (droit)",
+   "groupe": "mollets",
+   "pack": [
+    "fibulaires"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "flexor_carpi_radialis_left",
+   "cle": "flexor_carpi_radialis",
+   "cote": "left",
+   "nom": "Fléchisseur radial du carpe",
+   "nom_cote": "Fléchisseur radial du carpe (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "flechisseurs_du_poignet"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "flexor_carpi_radialis_right",
+   "cle": "flexor_carpi_radialis",
+   "cote": "right",
+   "nom": "Fléchisseur radial du carpe",
+   "nom_cote": "Fléchisseur radial du carpe (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "flechisseurs_du_poignet"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "flexor_digitorum_longus_left",
+   "cle": "flexor_digitorum_longus",
+   "cote": "left",
+   "nom": "Long fléchisseur des orteils",
+   "nom_cote": "Long fléchisseur des orteils (gauche)",
+   "groupe": "mollets",
+   "pack": [
+    "flechisseurs_profonds_des_orteils"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "flexor_digitorum_longus_right",
+   "cle": "flexor_digitorum_longus",
+   "cote": "right",
+   "nom": "Long fléchisseur des orteils",
+   "nom_cote": "Long fléchisseur des orteils (droit)",
+   "groupe": "mollets",
+   "pack": [
+    "flechisseurs_profonds_des_orteils"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "flexor_digitorum_profundus_left",
+   "cle": "flexor_digitorum_profundus",
+   "cote": "left",
+   "nom": "Fléchisseur profond des doigts",
+   "nom_cote": "Fléchisseur profond des doigts (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "flechisseurs_profonds_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "flexor_digitorum_profundus_right",
+   "cle": "flexor_digitorum_profundus",
+   "cote": "right",
+   "nom": "Fléchisseur profond des doigts",
+   "nom_cote": "Fléchisseur profond des doigts (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "flechisseurs_profonds_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "flexor_hallucis_longus_left",
+   "cle": "flexor_hallucis_longus",
+   "cote": "left",
+   "nom": "Long fléchisseur de l'hallux",
+   "nom_cote": "Long fléchisseur de l'hallux (gauche)",
+   "groupe": "mollets",
+   "pack": [
+    "flechisseurs_profonds_des_orteils"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "flexor_hallucis_longus_right",
+   "cle": "flexor_hallucis_longus",
+   "cote": "right",
+   "nom": "Long fléchisseur de l'hallux",
+   "nom_cote": "Long fléchisseur de l'hallux (droit)",
+   "groupe": "mollets",
+   "pack": [
+    "flechisseurs_profonds_des_orteils"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "flexor_pollicis_longus_left",
+   "cle": "flexor_pollicis_longus",
+   "cote": "left",
+   "nom": "Long fléchisseur du pouce",
+   "nom_cote": "Long fléchisseur du pouce (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "flechisseurs_profonds_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "flexor_pollicis_longus_right",
+   "cle": "flexor_pollicis_longus",
+   "cote": "right",
+   "nom": "Long fléchisseur du pouce",
+   "nom_cote": "Long fléchisseur du pouce (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "flechisseurs_profonds_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "gastrocnemius_lateral_left",
+   "cle": "gastrocnemius_lateral",
+   "cote": "left",
+   "nom": "Gastrocnémien latéral",
+   "nom_cote": "Gastrocnémien latéral (gauche)",
+   "groupe": "mollets",
+   "pack": [
+    "gastrocnemien_lateral"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "gastrocnemius_lateral_right",
+   "cle": "gastrocnemius_lateral",
+   "cote": "right",
+   "nom": "Gastrocnémien latéral",
+   "nom_cote": "Gastrocnémien latéral (droit)",
+   "groupe": "mollets",
+   "pack": [
+    "gastrocnemien_lateral"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "gastrocnemius_medial_left",
+   "cle": "gastrocnemius_medial",
+   "cote": "left",
+   "nom": "Gastrocnémien médial",
+   "nom_cote": "Gastrocnémien médial (gauche)",
+   "groupe": "mollets",
+   "pack": [
+    "gastrocnemien_medial"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "gastrocnemius_medial_right",
+   "cle": "gastrocnemius_medial",
+   "cote": "right",
+   "nom": "Gastrocnémien médial",
+   "nom_cote": "Gastrocnémien médial (droit)",
+   "groupe": "mollets",
+   "pack": [
+    "gastrocnemien_medial"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "gemellus_inferior_left",
+   "cle": "gemellus_inferior",
+   "cote": "left",
+   "nom": "Jumeau inférieur",
+   "nom_cote": "Jumeau inférieur (gauche)",
+   "groupe": "fessiers",
+   "pack": [
+    "rotateurs_lateraux_hanche"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "gemellus_inferior_right",
+   "cle": "gemellus_inferior",
+   "cote": "right",
+   "nom": "Jumeau inférieur",
+   "nom_cote": "Jumeau inférieur (droit)",
+   "groupe": "fessiers",
+   "pack": [
+    "rotateurs_lateraux_hanche"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "gemellus_superior_left",
+   "cle": "gemellus_superior",
+   "cote": "left",
+   "nom": "Jumeau supérieur",
+   "nom_cote": "Jumeau supérieur (gauche)",
+   "groupe": "fessiers",
+   "pack": [
+    "rotateurs_lateraux_hanche"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "gemellus_superior_right",
+   "cle": "gemellus_superior",
+   "cote": "right",
+   "nom": "Jumeau supérieur",
+   "nom_cote": "Jumeau supérieur (droit)",
+   "groupe": "fessiers",
+   "pack": [
+    "rotateurs_lateraux_hanche"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "gluteus_maximus_left",
+   "cle": "gluteus_maximus",
+   "cote": "left",
+   "nom": "Grand fessier",
+   "nom_cote": "Grand fessier (gauche)",
+   "groupe": "fessiers",
+   "pack": [
+    "grand_fessier"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "gluteus_maximus_right",
+   "cle": "gluteus_maximus",
+   "cote": "right",
+   "nom": "Grand fessier",
+   "nom_cote": "Grand fessier (droit)",
+   "groupe": "fessiers",
+   "pack": [
+    "grand_fessier"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "gluteus_medius_left",
+   "cle": "gluteus_medius",
+   "cote": "left",
+   "nom": "Moyen fessier",
+   "nom_cote": "Moyen fessier (gauche)",
+   "groupe": "fessiers",
+   "pack": [
+    "moyen_fessier"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "gluteus_medius_right",
+   "cle": "gluteus_medius",
+   "cote": "right",
+   "nom": "Moyen fessier",
+   "nom_cote": "Moyen fessier (droit)",
+   "groupe": "fessiers",
+   "pack": [
+    "moyen_fessier"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "gluteus_minimus_left",
+   "cle": "gluteus_minimus",
+   "cote": "left",
+   "nom": "Petit fessier",
+   "nom_cote": "Petit fessier (gauche)",
+   "groupe": "fessiers",
+   "pack": [
+    "petit_fessier"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "gluteus_minimus_right",
+   "cle": "gluteus_minimus",
+   "cote": "right",
+   "nom": "Petit fessier",
+   "nom_cote": "Petit fessier (droit)",
+   "groupe": "fessiers",
+   "pack": [
+    "petit_fessier"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "gracilis_left",
+   "cle": "gracilis",
+   "cote": "left",
+   "nom": "Gracile",
+   "nom_cote": "Gracile (gauche)",
+   "groupe": "quadriceps",
+   "pack": [
+    "gracile"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "gracilis_right",
+   "cle": "gracilis",
+   "cote": "right",
+   "nom": "Gracile",
+   "nom_cote": "Gracile (droit)",
+   "groupe": "quadriceps",
+   "pack": [
+    "gracile"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "humeral_head_of_extensor_carpi_ulnaris_left",
+   "cle": "humeral_head_of_extensor_carpi_ulnaris",
+   "cote": "left",
+   "nom": "Extenseur ulnaire du carpe (chef huméral)",
+   "nom_cote": "Extenseur ulnaire du carpe (chef huméral) (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_du_poignet"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "humeral_head_of_extensor_carpi_ulnaris_right",
+   "cle": "humeral_head_of_extensor_carpi_ulnaris",
+   "cote": "right",
+   "nom": "Extenseur ulnaire du carpe (chef huméral)",
+   "nom_cote": "Extenseur ulnaire du carpe (chef huméral) (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_du_poignet"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "humeral_head_of_flexor_carpi_ulnaris_left",
+   "cle": "humeral_head_of_flexor_carpi_ulnaris",
+   "cote": "left",
+   "nom": "Fléchisseur ulnaire du carpe (chef huméral)",
+   "nom_cote": "Fléchisseur ulnaire du carpe (chef huméral) (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "flechisseurs_du_poignet"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "humeral_head_of_flexor_carpi_ulnaris_right",
+   "cle": "humeral_head_of_flexor_carpi_ulnaris",
+   "cote": "right",
+   "nom": "Fléchisseur ulnaire du carpe (chef huméral)",
+   "nom_cote": "Fléchisseur ulnaire du carpe (chef huméral) (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "flechisseurs_du_poignet"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "humero_ulnar_head_of_flexor_digitorum_superficialis_left",
+   "cle": "humero_ulnar_head_of_flexor_digitorum_superficialis",
+   "cote": "left",
+   "nom": "Fléchisseur superficiel des doigts (chef huméro-ulnaire)",
+   "nom_cote": "Fléchisseur superficiel des doigts (chef huméro-ulnaire) (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "flechisseurs_superficiels_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "humero_ulnar_head_of_flexor_digitorum_superficialis_right",
+   "cle": "humero_ulnar_head_of_flexor_digitorum_superficialis",
+   "cote": "right",
+   "nom": "Fléchisseur superficiel des doigts (chef huméro-ulnaire)",
+   "nom_cote": "Fléchisseur superficiel des doigts (chef huméro-ulnaire) (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "flechisseurs_superficiels_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "iliacus_left",
+   "cle": "iliacus",
+   "cote": "left",
+   "nom": "Iliaque",
+   "nom_cote": "Iliaque (gauche)",
+   "groupe": "quadriceps",
+   "pack": [
+    "iliaque"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "iliacus_right",
+   "cle": "iliacus",
+   "cote": "right",
+   "nom": "Iliaque",
+   "nom_cote": "Iliaque (droit)",
+   "groupe": "quadriceps",
+   "pack": [
+    "iliaque"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "iliocostalis_lumborum_left",
+   "cle": "iliocostalis_lumborum",
+   "cote": "left",
+   "nom": "Ilio-costal lombal",
+   "nom_cote": "Ilio-costal lombal (gauche)",
+   "groupe": "dos",
+   "pack": [
+    "erecteurs_lombaires"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "iliocostalis_lumborum_right",
+   "cle": "iliocostalis_lumborum",
+   "cote": "right",
+   "nom": "Ilio-costal lombal",
+   "nom_cote": "Ilio-costal lombal (droit)",
+   "groupe": "dos",
+   "pack": [
+    "erecteurs_lombaires"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "iliocostalis_thoracis_left",
+   "cle": "iliocostalis_thoracis",
+   "cote": "left",
+   "nom": "Ilio-costal thoracique",
+   "nom_cote": "Ilio-costal thoracique (gauche)",
+   "groupe": "dos",
+   "pack": [
+    "erecteurs_thoraciques"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "iliocostalis_thoracis_right",
+   "cle": "iliocostalis_thoracis",
+   "cote": "right",
+   "nom": "Ilio-costal thoracique",
+   "nom_cote": "Ilio-costal thoracique (droit)",
+   "groupe": "dos",
+   "pack": [
+    "erecteurs_thoraciques"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "infraspinatus_left",
+   "cle": "infraspinatus",
+   "cote": "left",
+   "nom": "Infra-épineux",
+   "nom_cote": "Infra-épineux (gauche)",
+   "groupe": "épaules",
+   "pack": [
+    "infra_epineux"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "infraspinatus_right",
+   "cle": "infraspinatus",
+   "cote": "right",
+   "nom": "Infra-épineux",
+   "nom_cote": "Infra-épineux (droit)",
+   "groupe": "épaules",
+   "pack": [
+    "infra_epineux"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "internal_oblique_left",
+   "cle": "internal_oblique",
+   "cote": "left",
+   "nom": "Oblique interne",
+   "nom_cote": "Oblique interne (gauche)",
+   "groupe": "gainage",
+   "pack": [
+    "oblique_interne"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "internal_oblique_right",
+   "cle": "internal_oblique",
+   "cote": "right",
+   "nom": "Oblique interne",
+   "nom_cote": "Oblique interne (droit)",
+   "groupe": "gainage",
+   "pack": [
+    "oblique_interne"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "latissimus_dorsi_left",
+   "cle": "latissimus_dorsi",
+   "cote": "left",
+   "nom": "Grand dorsal",
+   "nom_cote": "Grand dorsal (gauche)",
+   "groupe": "dos",
+   "pack": [
+    "grand_dorsal"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "latissimus_dorsi_right",
+   "cle": "latissimus_dorsi",
+   "cote": "right",
+   "nom": "Grand dorsal",
+   "nom_cote": "Grand dorsal (droit)",
+   "groupe": "dos",
+   "pack": [
+    "grand_dorsal"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "levator_scapulae_left",
+   "cle": "levator_scapulae",
+   "cote": "left",
+   "nom": "Élévateur de la scapula",
+   "nom_cote": "Élévateur de la scapula (gauche)",
+   "groupe": "dos",
+   "pack": [
+    "elevateur_scapula"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "levator_scapulae_right",
+   "cle": "levator_scapulae",
+   "cote": "right",
+   "nom": "Élévateur de la scapula",
+   "nom_cote": "Élévateur de la scapula (droit)",
+   "groupe": "dos",
+   "pack": [
+    "elevateur_scapula"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "longissimus_thoracis_left",
+   "cle": "longissimus_thoracis",
+   "cote": "left",
+   "nom": "Longissimus thoracique",
+   "nom_cote": "Longissimus thoracique (gauche)",
+   "groupe": "dos",
+   "pack": [
+    "erecteurs_thoraciques",
+    "erecteurs_lombaires"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "longissimus_thoracis_right",
+   "cle": "longissimus_thoracis",
+   "cote": "right",
+   "nom": "Longissimus thoracique",
+   "nom_cote": "Longissimus thoracique (droit)",
+   "groupe": "dos",
+   "pack": [
+    "erecteurs_thoraciques",
+    "erecteurs_lombaires"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "multifidus_lumborum_left",
+   "cle": "multifidus_lumborum",
+   "cote": "left",
+   "nom": "Multifide",
+   "nom_cote": "Multifide (gauche)",
+   "groupe": "dos",
+   "pack": [
+    "multifides"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "multifidus_lumborum_right",
+   "cle": "multifidus_lumborum",
+   "cote": "right",
+   "nom": "Multifide",
+   "nom_cote": "Multifide (droit)",
+   "groupe": "dos",
+   "pack": [
+    "multifides"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "obturator_externus_left",
+   "cle": "obturator_externus",
+   "cote": "left",
+   "nom": "Obturateur externe",
+   "nom_cote": "Obturateur externe (gauche)",
+   "groupe": "fessiers",
+   "pack": [
+    "rotateurs_lateraux_hanche"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "obturator_externus_right",
+   "cle": "obturator_externus",
+   "cote": "right",
+   "nom": "Obturateur externe",
+   "nom_cote": "Obturateur externe (droit)",
+   "groupe": "fessiers",
+   "pack": [
+    "rotateurs_lateraux_hanche"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "obturator_internus_left",
+   "cle": "obturator_internus",
+   "cote": "left",
+   "nom": "Obturateur interne",
+   "nom_cote": "Obturateur interne (gauche)",
+   "groupe": "fessiers",
+   "pack": [
+    "rotateurs_lateraux_hanche"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "obturator_internus_right",
+   "cle": "obturator_internus",
+   "cote": "right",
+   "nom": "Obturateur interne",
+   "nom_cote": "Obturateur interne (droit)",
+   "groupe": "fessiers",
+   "pack": [
+    "rotateurs_lateraux_hanche"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "palmaris_longus_muscle_left",
+   "cle": "palmaris_longus_muscle",
+   "cote": "left",
+   "nom": "Long palmaire",
+   "nom_cote": "Long palmaire (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "flechisseurs_du_poignet"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "palmaris_longus_muscle_right",
+   "cle": "palmaris_longus_muscle",
+   "cote": "right",
+   "nom": "Long palmaire",
+   "nom_cote": "Long palmaire (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "flechisseurs_du_poignet"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "pectineus_left",
+   "cle": "pectineus",
+   "cote": "left",
+   "nom": "Pectiné",
+   "nom_cote": "Pectiné (gauche)",
+   "groupe": "quadriceps",
+   "pack": [
+    "pectine"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "pectineus_right",
+   "cle": "pectineus",
+   "cote": "right",
+   "nom": "Pectiné",
+   "nom_cote": "Pectiné (droit)",
+   "groupe": "quadriceps",
+   "pack": [
+    "pectine"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "pectoralis_major_abdominal_left",
+   "cle": "pectoralis_major_abdominal",
+   "cote": "left",
+   "nom": "Grand pectoral (chef abdominal)",
+   "nom_cote": "Grand pectoral (chef abdominal) (gauche)",
+   "groupe": "pectoraux",
+   "pack": [
+    "grand_pectoral_abdominal"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "pectoralis_major_abdominal_right",
+   "cle": "pectoralis_major_abdominal",
+   "cote": "right",
+   "nom": "Grand pectoral (chef abdominal)",
+   "nom_cote": "Grand pectoral (chef abdominal) (droit)",
+   "groupe": "pectoraux",
+   "pack": [
+    "grand_pectoral_abdominal"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "pectoralis_major_clavicular_left",
+   "cle": "pectoralis_major_clavicular",
+   "cote": "left",
+   "nom": "Grand pectoral (chef claviculaire)",
+   "nom_cote": "Grand pectoral (chef claviculaire) (gauche)",
+   "groupe": "pectoraux",
+   "pack": [
+    "grand_pectoral_claviculaire"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "pectoralis_major_clavicular_right",
+   "cle": "pectoralis_major_clavicular",
+   "cote": "right",
+   "nom": "Grand pectoral (chef claviculaire)",
+   "nom_cote": "Grand pectoral (chef claviculaire) (droit)",
+   "groupe": "pectoraux",
+   "pack": [
+    "grand_pectoral_claviculaire"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "pectoralis_major_sternocostal_left",
+   "cle": "pectoralis_major_sternocostal",
+   "cote": "left",
+   "nom": "Grand pectoral (chef sterno-costal)",
+   "nom_cote": "Grand pectoral (chef sterno-costal) (gauche)",
+   "groupe": "pectoraux",
+   "pack": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "pectoralis_major_sternocostal_right",
+   "cle": "pectoralis_major_sternocostal",
+   "cote": "right",
+   "nom": "Grand pectoral (chef sterno-costal)",
+   "nom_cote": "Grand pectoral (chef sterno-costal) (droit)",
+   "groupe": "pectoraux",
+   "pack": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "pectoralis_minor_left",
+   "cle": "pectoralis_minor",
+   "cote": "left",
+   "nom": "Petit pectoral",
+   "nom_cote": "Petit pectoral (gauche)",
+   "groupe": "pectoraux",
+   "pack": [
+    "petit_pectoral"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "pectoralis_minor_right",
+   "cle": "pectoralis_minor",
+   "cote": "right",
+   "nom": "Petit pectoral",
+   "nom_cote": "Petit pectoral (droit)",
+   "groupe": "pectoraux",
+   "pack": [
+    "petit_pectoral"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "piriformis_left",
+   "cle": "piriformis",
+   "cote": "left",
+   "nom": "Piriforme",
+   "nom_cote": "Piriforme (gauche)",
+   "groupe": "fessiers",
+   "pack": [
+    "rotateurs_lateraux_hanche"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "piriformis_right",
+   "cle": "piriformis",
+   "cote": "right",
+   "nom": "Piriforme",
+   "nom_cote": "Piriforme (droit)",
+   "groupe": "fessiers",
+   "pack": [
+    "rotateurs_lateraux_hanche"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "plantaris_left",
+   "cle": "plantaris",
+   "cote": "left",
+   "nom": "Plantaire",
+   "nom_cote": "Plantaire (gauche)",
+   "groupe": "mollets",
+   "pack": [],
+   "couche": "superficiel"
+  },
+  {
+   "id": "plantaris_right",
+   "cle": "plantaris",
+   "cote": "right",
+   "nom": "Plantaire",
+   "nom_cote": "Plantaire (droit)",
+   "groupe": "mollets",
+   "pack": [],
+   "couche": "superficiel"
+  },
+  {
+   "id": "platysma_left",
+   "cle": "platysma",
+   "cote": "left",
+   "nom": "Platysma",
+   "nom_cote": "Platysma (gauche)",
+   "groupe": "dos",
+   "pack": [],
+   "couche": "superficiel"
+  },
+  {
+   "id": "platysma_right",
+   "cle": "platysma",
+   "cote": "right",
+   "nom": "Platysma",
+   "nom_cote": "Platysma (droit)",
+   "groupe": "dos",
+   "pack": [],
+   "couche": "superficiel"
+  },
+  {
+   "id": "popliteus_left",
+   "cle": "popliteus",
+   "cote": "left",
+   "nom": "Poplité",
+   "nom_cote": "Poplité (gauche)",
+   "groupe": "ischios",
+   "pack": [
+    "poplite"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "popliteus_right",
+   "cle": "popliteus",
+   "cote": "right",
+   "nom": "Poplité",
+   "nom_cote": "Poplité (droit)",
+   "groupe": "ischios",
+   "pack": [
+    "poplite"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "pronator_quadratus_left",
+   "cle": "pronator_quadratus",
+   "cote": "left",
+   "nom": "Carré pronateur",
+   "nom_cote": "Carré pronateur (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "carre_pronateur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "pronator_quadratus_right",
+   "cle": "pronator_quadratus",
+   "cote": "right",
+   "nom": "Carré pronateur",
+   "nom_cote": "Carré pronateur (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "carre_pronateur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "psoas_major_left",
+   "cle": "psoas_major",
+   "cote": "left",
+   "nom": "Grand psoas",
+   "nom_cote": "Grand psoas (gauche)",
+   "groupe": "quadriceps",
+   "pack": [
+    "grand_psoas"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "psoas_major_right",
+   "cle": "psoas_major",
+   "cote": "right",
+   "nom": "Grand psoas",
+   "nom_cote": "Grand psoas (droit)",
+   "groupe": "quadriceps",
+   "pack": [
+    "grand_psoas"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "quadratus_femoris_left",
+   "cle": "quadratus_femoris",
+   "cote": "left",
+   "nom": "Carré fémoral",
+   "nom_cote": "Carré fémoral (gauche)",
+   "groupe": "fessiers",
+   "pack": [
+    "rotateurs_lateraux_hanche"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "quadratus_femoris_right",
+   "cle": "quadratus_femoris",
+   "cote": "right",
+   "nom": "Carré fémoral",
+   "nom_cote": "Carré fémoral (droit)",
+   "groupe": "fessiers",
+   "pack": [
+    "rotateurs_lateraux_hanche"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "quadratus_lumborum_left",
+   "cle": "quadratus_lumborum",
+   "cote": "left",
+   "nom": "Carré des lombes",
+   "nom_cote": "Carré des lombes (gauche)",
+   "groupe": "gainage",
+   "pack": [
+    "carre_des_lombes"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "quadratus_lumborum_right",
+   "cle": "quadratus_lumborum",
+   "cote": "right",
+   "nom": "Carré des lombes",
+   "nom_cote": "Carré des lombes (droit)",
+   "groupe": "gainage",
+   "pack": [
+    "carre_des_lombes"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "radial_head_of_flexor_digitorum_superficialis_left",
+   "cle": "radial_head_of_flexor_digitorum_superficialis",
+   "cote": "left",
+   "nom": "Fléchisseur superficiel des doigts (chef radial)",
+   "nom_cote": "Fléchisseur superficiel des doigts (chef radial) (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "flechisseurs_superficiels_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "radial_head_of_flexor_digitorum_superficialis_right",
+   "cle": "radial_head_of_flexor_digitorum_superficialis",
+   "cote": "right",
+   "nom": "Fléchisseur superficiel des doigts (chef radial)",
+   "nom_cote": "Fléchisseur superficiel des doigts (chef radial) (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "flechisseurs_superficiels_des_doigts"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "rectus_abdominis_left",
+   "cle": "rectus_abdominis",
+   "cote": "left",
+   "nom": "Droit de l'abdomen",
+   "nom_cote": "Droit de l'abdomen (gauche)",
+   "groupe": "gainage",
+   "pack": [
+    "droit_abdomen"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "rectus_abdominis_right",
+   "cle": "rectus_abdominis",
+   "cote": "right",
+   "nom": "Droit de l'abdomen",
+   "nom_cote": "Droit de l'abdomen (droit)",
+   "groupe": "gainage",
+   "pack": [
+    "droit_abdomen"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "rectus_femoris_left",
+   "cle": "rectus_femoris",
+   "cote": "left",
+   "nom": "Droit fémoral",
+   "nom_cote": "Droit fémoral (gauche)",
+   "groupe": "quadriceps",
+   "pack": [
+    "droit_femoral"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "rectus_femoris_right",
+   "cle": "rectus_femoris",
+   "cote": "right",
+   "nom": "Droit fémoral",
+   "nom_cote": "Droit fémoral (droit)",
+   "groupe": "quadriceps",
+   "pack": [
+    "droit_femoral"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "rhomboid_major_left",
+   "cle": "rhomboid_major",
+   "cote": "left",
+   "nom": "Grand rhomboïde",
+   "nom_cote": "Grand rhomboïde (gauche)",
+   "groupe": "dos",
+   "pack": [
+    "rhomboides"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "rhomboid_major_right",
+   "cle": "rhomboid_major",
+   "cote": "right",
+   "nom": "Grand rhomboïde",
+   "nom_cote": "Grand rhomboïde (droit)",
+   "groupe": "dos",
+   "pack": [
+    "rhomboides"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "rhomboid_minor_left",
+   "cle": "rhomboid_minor",
+   "cote": "left",
+   "nom": "Petit rhomboïde",
+   "nom_cote": "Petit rhomboïde (gauche)",
+   "groupe": "dos",
+   "pack": [
+    "rhomboides"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "rhomboid_minor_right",
+   "cle": "rhomboid_minor",
+   "cote": "right",
+   "nom": "Petit rhomboïde",
+   "nom_cote": "Petit rhomboïde (droit)",
+   "groupe": "dos",
+   "pack": [
+    "rhomboides"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "sartorius_left",
+   "cle": "sartorius",
+   "cote": "left",
+   "nom": "Sartorius",
+   "nom_cote": "Sartorius (gauche)",
+   "groupe": "quadriceps",
+   "pack": [
+    "sartorius"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "sartorius_right",
+   "cle": "sartorius",
+   "cote": "right",
+   "nom": "Sartorius",
+   "nom_cote": "Sartorius (droit)",
+   "groupe": "quadriceps",
+   "pack": [
+    "sartorius"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "scalenus_anterior_left",
+   "cle": "scalenus_anterior",
+   "cote": "left",
+   "nom": "Scalène antérieur",
+   "nom_cote": "Scalène antérieur (gauche)",
+   "groupe": "dos",
+   "pack": [],
+   "couche": "superficiel"
+  },
+  {
+   "id": "scalenus_anterior_right",
+   "cle": "scalenus_anterior",
+   "cote": "right",
+   "nom": "Scalène antérieur",
+   "nom_cote": "Scalène antérieur (droit)",
+   "groupe": "dos",
+   "pack": [],
+   "couche": "superficiel"
+  },
+  {
+   "id": "scalenus_medius_left",
+   "cle": "scalenus_medius",
+   "cote": "left",
+   "nom": "Scalène moyen",
+   "nom_cote": "Scalène moyen (gauche)",
+   "groupe": "dos",
+   "pack": [],
+   "couche": "superficiel"
+  },
+  {
+   "id": "scalenus_medius_right",
+   "cle": "scalenus_medius",
+   "cote": "right",
+   "nom": "Scalène moyen",
+   "nom_cote": "Scalène moyen (droit)",
+   "groupe": "dos",
+   "pack": [],
+   "couche": "superficiel"
+  },
+  {
+   "id": "scalenus_posterior_left",
+   "cle": "scalenus_posterior",
+   "cote": "left",
+   "nom": "Scalène postérieur",
+   "nom_cote": "Scalène postérieur (gauche)",
+   "groupe": "dos",
+   "pack": [],
+   "couche": "superficiel"
+  },
+  {
+   "id": "scalenus_posterior_right",
+   "cle": "scalenus_posterior",
+   "cote": "right",
+   "nom": "Scalène postérieur",
+   "nom_cote": "Scalène postérieur (droit)",
+   "groupe": "dos",
+   "pack": [],
+   "couche": "superficiel"
+  },
+  {
+   "id": "semimembranosus_left",
+   "cle": "semimembranosus",
+   "cote": "left",
+   "nom": "Semi-membraneux",
+   "nom_cote": "Semi-membraneux (gauche)",
+   "groupe": "ischios",
+   "pack": [
+    "semi_membraneux"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "semimembranosus_right",
+   "cle": "semimembranosus",
+   "cote": "right",
+   "nom": "Semi-membraneux",
+   "nom_cote": "Semi-membraneux (droit)",
+   "groupe": "ischios",
+   "pack": [
+    "semi_membraneux"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "semitendinosus_left",
+   "cle": "semitendinosus",
+   "cote": "left",
+   "nom": "Semi-tendineux",
+   "nom_cote": "Semi-tendineux (gauche)",
+   "groupe": "ischios",
+   "pack": [
+    "semi_tendineux"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "semitendinosus_right",
+   "cle": "semitendinosus",
+   "cote": "right",
+   "nom": "Semi-tendineux",
+   "nom_cote": "Semi-tendineux (droit)",
+   "groupe": "ischios",
+   "pack": [
+    "semi_tendineux"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "serratus_anterior_left",
+   "cle": "serratus_anterior",
+   "cote": "left",
+   "nom": "Dentelé antérieur",
+   "nom_cote": "Dentelé antérieur (gauche)",
+   "groupe": "pectoraux",
+   "pack": [
+    "dentele_anterieur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "serratus_anterior_right",
+   "cle": "serratus_anterior",
+   "cote": "right",
+   "nom": "Dentelé antérieur",
+   "nom_cote": "Dentelé antérieur (droit)",
+   "groupe": "pectoraux",
+   "pack": [
+    "dentele_anterieur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "serratus_posterior_inferior_left",
+   "cle": "serratus_posterior_inferior",
+   "cote": "left",
+   "nom": "Dentelé postérieur inférieur",
+   "nom_cote": "Dentelé postérieur inférieur (gauche)",
+   "groupe": "dos",
+   "pack": [],
+   "couche": "profond"
+  },
+  {
+   "id": "serratus_posterior_inferior_right",
+   "cle": "serratus_posterior_inferior",
+   "cote": "right",
+   "nom": "Dentelé postérieur inférieur",
+   "nom_cote": "Dentelé postérieur inférieur (droit)",
+   "groupe": "dos",
+   "pack": [],
+   "couche": "profond"
+  },
+  {
+   "id": "serratus_posterior_superior_left",
+   "cle": "serratus_posterior_superior",
+   "cote": "left",
+   "nom": "Dentelé postérieur supérieur",
+   "nom_cote": "Dentelé postérieur supérieur (gauche)",
+   "groupe": "dos",
+   "pack": [],
+   "couche": "profond"
+  },
+  {
+   "id": "serratus_posterior_superior_right",
+   "cle": "serratus_posterior_superior",
+   "cote": "right",
+   "nom": "Dentelé postérieur supérieur",
+   "nom_cote": "Dentelé postérieur supérieur (droit)",
+   "groupe": "dos",
+   "pack": [],
+   "couche": "profond"
+  },
+  {
+   "id": "soleus_left",
+   "cle": "soleus",
+   "cote": "left",
+   "nom": "Soléaire",
+   "nom_cote": "Soléaire (gauche)",
+   "groupe": "mollets",
+   "pack": [
+    "soleaire"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "soleus_right",
+   "cle": "soleus",
+   "cote": "right",
+   "nom": "Soléaire",
+   "nom_cote": "Soléaire (droit)",
+   "groupe": "mollets",
+   "pack": [
+    "soleaire"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "spinalis_thoracis_left",
+   "cle": "spinalis_thoracis",
+   "cote": "left",
+   "nom": "Épineux thoracique",
+   "nom_cote": "Épineux thoracique (gauche)",
+   "groupe": "dos",
+   "pack": [
+    "erecteurs_thoraciques"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "spinalis_thoracis_right",
+   "cle": "spinalis_thoracis",
+   "cote": "right",
+   "nom": "Épineux thoracique",
+   "nom_cote": "Épineux thoracique (droit)",
+   "groupe": "dos",
+   "pack": [
+    "erecteurs_thoraciques"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "splenius_capitis_left",
+   "cle": "splenius_capitis",
+   "cote": "left",
+   "nom": "Splénius de la tête",
+   "nom_cote": "Splénius de la tête (gauche)",
+   "groupe": "dos",
+   "pack": [
+    "extenseurs_cervicaux"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "splenius_capitis_right",
+   "cle": "splenius_capitis",
+   "cote": "right",
+   "nom": "Splénius de la tête",
+   "nom_cote": "Splénius de la tête (droit)",
+   "groupe": "dos",
+   "pack": [
+    "extenseurs_cervicaux"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "splenius_colli_left",
+   "cle": "splenius_colli",
+   "cote": "left",
+   "nom": "Splénius du cou",
+   "nom_cote": "Splénius du cou (gauche)",
+   "groupe": "dos",
+   "pack": [
+    "extenseurs_cervicaux"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "splenius_colli_right",
+   "cle": "splenius_colli",
+   "cote": "right",
+   "nom": "Splénius du cou",
+   "nom_cote": "Splénius du cou (droit)",
+   "groupe": "dos",
+   "pack": [
+    "extenseurs_cervicaux"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "sternocleidomastoid_left",
+   "cle": "sternocleidomastoid",
+   "cote": "left",
+   "nom": "Sterno-cléido-mastoïdien",
+   "nom_cote": "Sterno-cléido-mastoïdien (gauche)",
+   "groupe": "dos",
+   "pack": [
+    "sterno_cleido_mastoidien"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "sternocleidomastoid_right",
+   "cle": "sternocleidomastoid",
+   "cote": "right",
+   "nom": "Sterno-cléido-mastoïdien",
+   "nom_cote": "Sterno-cléido-mastoïdien (droit)",
+   "groupe": "dos",
+   "pack": [
+    "sterno_cleido_mastoidien"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "subscapularis_left",
+   "cle": "subscapularis",
+   "cote": "left",
+   "nom": "Subscapulaire",
+   "nom_cote": "Subscapulaire (gauche)",
+   "groupe": "épaules",
+   "pack": [
+    "sous_scapulaire"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "subscapularis_right",
+   "cle": "subscapularis",
+   "cote": "right",
+   "nom": "Subscapulaire",
+   "nom_cote": "Subscapulaire (droit)",
+   "groupe": "épaules",
+   "pack": [
+    "sous_scapulaire"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "superficial_head_of_pronator_teres_left",
+   "cle": "superficial_head_of_pronator_teres",
+   "cote": "left",
+   "nom": "Rond pronateur (chef superficiel)",
+   "nom_cote": "Rond pronateur (chef superficiel) (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "rond_pronateur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "superficial_head_of_pronator_teres_right",
+   "cle": "superficial_head_of_pronator_teres",
+   "cote": "right",
+   "nom": "Rond pronateur (chef superficiel)",
+   "nom_cote": "Rond pronateur (chef superficiel) (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "rond_pronateur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "supinator_left",
+   "cle": "supinator",
+   "cote": "left",
+   "nom": "Supinateur",
+   "nom_cote": "Supinateur (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "supinateur"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "supinator_right",
+   "cle": "supinator",
+   "cote": "right",
+   "nom": "Supinateur",
+   "nom_cote": "Supinateur (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "supinateur"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "supraspinatus_left",
+   "cle": "supraspinatus",
+   "cote": "left",
+   "nom": "Supra-épineux",
+   "nom_cote": "Supra-épineux (gauche)",
+   "groupe": "épaules",
+   "pack": [
+    "supra_epineux"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "supraspinatus_right",
+   "cle": "supraspinatus",
+   "cote": "right",
+   "nom": "Supra-épineux",
+   "nom_cote": "Supra-épineux (droit)",
+   "groupe": "épaules",
+   "pack": [
+    "supra_epineux"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "tensor_fasciae_latae_left",
+   "cle": "tensor_fasciae_latae",
+   "cote": "left",
+   "nom": "Tenseur du fascia lata",
+   "nom_cote": "Tenseur du fascia lata (gauche)",
+   "groupe": "fessiers",
+   "pack": [
+    "tenseur_fascia_lata"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "tensor_fasciae_latae_right",
+   "cle": "tensor_fasciae_latae",
+   "cote": "right",
+   "nom": "Tenseur du fascia lata",
+   "nom_cote": "Tenseur du fascia lata (droit)",
+   "groupe": "fessiers",
+   "pack": [
+    "tenseur_fascia_lata"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "teres_major_left",
+   "cle": "teres_major",
+   "cote": "left",
+   "nom": "Grand rond",
+   "nom_cote": "Grand rond (gauche)",
+   "groupe": "dos",
+   "pack": [
+    "grand_rond"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "teres_major_right",
+   "cle": "teres_major",
+   "cote": "right",
+   "nom": "Grand rond",
+   "nom_cote": "Grand rond (droit)",
+   "groupe": "dos",
+   "pack": [
+    "grand_rond"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "teres_minor_left",
+   "cle": "teres_minor",
+   "cote": "left",
+   "nom": "Petit rond",
+   "nom_cote": "Petit rond (gauche)",
+   "groupe": "épaules",
+   "pack": [
+    "petit_rond"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "teres_minor_right",
+   "cle": "teres_minor",
+   "cote": "right",
+   "nom": "Petit rond",
+   "nom_cote": "Petit rond (droit)",
+   "groupe": "épaules",
+   "pack": [
+    "petit_rond"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "tibialis_anterior_left",
+   "cle": "tibialis_anterior",
+   "cote": "left",
+   "nom": "Tibial antérieur",
+   "nom_cote": "Tibial antérieur (gauche)",
+   "groupe": "mollets",
+   "pack": [
+    "tibial_anterieur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "tibialis_anterior_right",
+   "cle": "tibialis_anterior",
+   "cote": "right",
+   "nom": "Tibial antérieur",
+   "nom_cote": "Tibial antérieur (droit)",
+   "groupe": "mollets",
+   "pack": [
+    "tibial_anterieur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "tibialis_posterior_left",
+   "cle": "tibialis_posterior",
+   "cote": "left",
+   "nom": "Tibial postérieur",
+   "nom_cote": "Tibial postérieur (gauche)",
+   "groupe": "mollets",
+   "pack": [
+    "tibial_posterieur"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "tibialis_posterior_right",
+   "cle": "tibialis_posterior",
+   "cote": "right",
+   "nom": "Tibial postérieur",
+   "nom_cote": "Tibial postérieur (droit)",
+   "groupe": "mollets",
+   "pack": [
+    "tibial_posterieur"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "transversus_abdominis_left",
+   "cle": "transversus_abdominis",
+   "cote": "left",
+   "nom": "Transverse",
+   "nom_cote": "Transverse (gauche)",
+   "groupe": "gainage",
+   "pack": [
+    "transverse_abdomen"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "transversus_abdominis_right",
+   "cle": "transversus_abdominis",
+   "cote": "right",
+   "nom": "Transverse",
+   "nom_cote": "Transverse (droit)",
+   "groupe": "gainage",
+   "pack": [
+    "transverse_abdomen"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "trapezius_lower_left",
+   "cle": "trapezius_lower",
+   "cote": "left",
+   "nom": "Trapèze inférieur",
+   "nom_cote": "Trapèze inférieur (gauche)",
+   "groupe": "dos",
+   "pack": [
+    "trapeze_inferieur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "trapezius_lower_right",
+   "cle": "trapezius_lower",
+   "cote": "right",
+   "nom": "Trapèze inférieur",
+   "nom_cote": "Trapèze inférieur (droit)",
+   "groupe": "dos",
+   "pack": [
+    "trapeze_inferieur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "trapezius_middle_left",
+   "cle": "trapezius_middle",
+   "cote": "left",
+   "nom": "Trapèze moyen",
+   "nom_cote": "Trapèze moyen (gauche)",
+   "groupe": "dos",
+   "pack": [
+    "trapeze_moyen"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "trapezius_middle_right",
+   "cle": "trapezius_middle",
+   "cote": "right",
+   "nom": "Trapèze moyen",
+   "nom_cote": "Trapèze moyen (droit)",
+   "groupe": "dos",
+   "pack": [
+    "trapeze_moyen"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "trapezius_upper_left",
+   "cle": "trapezius_upper",
+   "cote": "left",
+   "nom": "Trapèze supérieur",
+   "nom_cote": "Trapèze supérieur (gauche)",
+   "groupe": "dos",
+   "pack": [
+    "trapeze_superieur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "trapezius_upper_right",
+   "cle": "trapezius_upper",
+   "cote": "right",
+   "nom": "Trapèze supérieur",
+   "nom_cote": "Trapèze supérieur (droit)",
+   "groupe": "dos",
+   "pack": [
+    "trapeze_superieur"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "triceps_lateral_left",
+   "cle": "triceps_lateral",
+   "cote": "left",
+   "nom": "Triceps (chef latéral)",
+   "nom_cote": "Triceps (chef latéral) (gauche)",
+   "groupe": "triceps",
+   "pack": [
+    "triceps_chef_lateral"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "triceps_lateral_right",
+   "cle": "triceps_lateral",
+   "cote": "right",
+   "nom": "Triceps (chef latéral)",
+   "nom_cote": "Triceps (chef latéral) (droit)",
+   "groupe": "triceps",
+   "pack": [
+    "triceps_chef_lateral"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "triceps_long_left",
+   "cle": "triceps_long",
+   "cote": "left",
+   "nom": "Triceps (chef long)",
+   "nom_cote": "Triceps (chef long) (gauche)",
+   "groupe": "triceps",
+   "pack": [
+    "triceps_chef_long"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "triceps_long_right",
+   "cle": "triceps_long",
+   "cote": "right",
+   "nom": "Triceps (chef long)",
+   "nom_cote": "Triceps (chef long) (droit)",
+   "groupe": "triceps",
+   "pack": [
+    "triceps_chef_long"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "triceps_medial_left",
+   "cle": "triceps_medial",
+   "cote": "left",
+   "nom": "Triceps (chef médial)",
+   "nom_cote": "Triceps (chef médial) (gauche)",
+   "groupe": "triceps",
+   "pack": [
+    "triceps_chef_medial"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "triceps_medial_right",
+   "cle": "triceps_medial",
+   "cote": "right",
+   "nom": "Triceps (chef médial)",
+   "nom_cote": "Triceps (chef médial) (droit)",
+   "groupe": "triceps",
+   "pack": [
+    "triceps_chef_medial"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "ulnar_head_of_extensor_carpi_ulnaris_left",
+   "cle": "ulnar_head_of_extensor_carpi_ulnaris",
+   "cote": "left",
+   "nom": "Extenseur ulnaire du carpe (chef ulnaire)",
+   "nom_cote": "Extenseur ulnaire du carpe (chef ulnaire) (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_du_poignet"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "ulnar_head_of_extensor_carpi_ulnaris_right",
+   "cle": "ulnar_head_of_extensor_carpi_ulnaris",
+   "cote": "right",
+   "nom": "Extenseur ulnaire du carpe (chef ulnaire)",
+   "nom_cote": "Extenseur ulnaire du carpe (chef ulnaire) (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "extenseurs_du_poignet"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "ulnar_head_of_flexor_carpi_ulnaris_left",
+   "cle": "ulnar_head_of_flexor_carpi_ulnaris",
+   "cote": "left",
+   "nom": "Fléchisseur ulnaire du carpe (chef ulnaire)",
+   "nom_cote": "Fléchisseur ulnaire du carpe (chef ulnaire) (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "flechisseurs_du_poignet"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "ulnar_head_of_flexor_carpi_ulnaris_right",
+   "cle": "ulnar_head_of_flexor_carpi_ulnaris",
+   "cote": "right",
+   "nom": "Fléchisseur ulnaire du carpe (chef ulnaire)",
+   "nom_cote": "Fléchisseur ulnaire du carpe (chef ulnaire) (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "flechisseurs_du_poignet"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "vastus_intermedius_left",
+   "cle": "vastus_intermedius",
+   "cote": "left",
+   "nom": "Vaste intermédiaire",
+   "nom_cote": "Vaste intermédiaire (gauche)",
+   "groupe": "quadriceps",
+   "pack": [
+    "vaste_intermediaire"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "vastus_intermedius_right",
+   "cle": "vastus_intermedius",
+   "cote": "right",
+   "nom": "Vaste intermédiaire",
+   "nom_cote": "Vaste intermédiaire (droit)",
+   "groupe": "quadriceps",
+   "pack": [
+    "vaste_intermediaire"
+   ],
+   "couche": "profond"
+  },
+  {
+   "id": "vastus_lateralis_left",
+   "cle": "vastus_lateralis",
+   "cote": "left",
+   "nom": "Vaste latéral",
+   "nom_cote": "Vaste latéral (gauche)",
+   "groupe": "quadriceps",
+   "pack": [
+    "vaste_lateral"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "vastus_lateralis_right",
+   "cle": "vastus_lateralis",
+   "cote": "right",
+   "nom": "Vaste latéral",
+   "nom_cote": "Vaste latéral (droit)",
+   "groupe": "quadriceps",
+   "pack": [
+    "vaste_lateral"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "vastus_medialis_left",
+   "cle": "vastus_medialis",
+   "cote": "left",
+   "nom": "Vaste médial",
+   "nom_cote": "Vaste médial (gauche)",
+   "groupe": "quadriceps",
+   "pack": [
+    "vaste_medial"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "vastus_medialis_right",
+   "cle": "vastus_medialis",
+   "cote": "right",
+   "nom": "Vaste médial",
+   "nom_cote": "Vaste médial (droit)",
+   "groupe": "quadriceps",
+   "pack": [
+    "vaste_medial"
+   ],
+   "couche": "superficiel"
+  },
+  {
+   "id": "hand_left",
+   "cle": "hand_intrinsic",
+   "cote": "left",
+   "nom": "Muscles de la main",
+   "nom_cote": "Muscles de la main (gauche)",
+   "groupe": "avant-bras",
+   "pack": [
+    "muscles_intrinseques_main"
+   ],
+   "couche": "volume"
+  },
+  {
+   "id": "hand_right",
+   "cle": "hand_intrinsic",
+   "cote": "right",
+   "nom": "Muscles de la main",
+   "nom_cote": "Muscles de la main (droit)",
+   "groupe": "avant-bras",
+   "pack": [
+    "muscles_intrinseques_main"
+   ],
+   "couche": "volume"
+  },
+  {
+   "id": "foot_left",
+   "cle": "foot_intrinsic",
+   "cote": "left",
+   "nom": "Muscles du pied",
+   "nom_cote": "Muscles du pied (gauche)",
+   "groupe": "mollets",
+   "pack": [
+    "muscles_intrinseques_pied"
+   ],
+   "couche": "volume"
+  },
+  {
+   "id": "foot_right",
+   "cle": "foot_intrinsic",
+   "cote": "right",
+   "nom": "Muscles du pied",
+   "nom_cote": "Muscles du pied (droit)",
+   "groupe": "mollets",
+   "pack": [
+    "muscles_intrinseques_pied"
+   ],
+   "couche": "volume"
+  }
+ ],
+ "retirees": [],
+ "caches_au_repos": [
+  "adductor_brevis_left",
+  "adductor_brevis_right",
+  "deep_head_of_pronator_teres_left",
+  "deep_head_of_pronator_teres_right",
+  "gemellus_inferior_left",
+  "gemellus_inferior_right",
+  "gemellus_superior_left",
+  "gemellus_superior_right",
+  "iliocostalis_thoracis_left",
+  "iliocostalis_thoracis_right",
+  "multifidus_lumborum_left",
+  "multifidus_lumborum_right",
+  "obturator_externus_left",
+  "obturator_externus_right",
+  "pectoralis_minor_left",
+  "pectoralis_minor_right",
+  "piriformis_left",
+  "piriformis_right",
+  "quadratus_femoris_left",
+  "quadratus_femoris_right",
+  "quadratus_lumborum_left",
+  "quadratus_lumborum_right",
+  "rhomboid_major_left",
+  "rhomboid_major_right",
+  "rhomboid_minor_left",
+  "rhomboid_minor_right",
+  "serratus_posterior_inferior_left",
+  "serratus_posterior_inferior_right",
+  "serratus_posterior_superior_left",
+  "serratus_posterior_superior_right",
+  "spinalis_thoracis_left",
+  "spinalis_thoracis_right",
+  "splenius_colli_left",
+  "splenius_colli_right",
+  "subscapularis_left",
+  "subscapularis_right",
+  "supinator_left",
+  "supinator_right",
+  "supraspinatus_left",
+  "supraspinatus_right",
+  "tibialis_posterior_left",
+  "tibialis_posterior_right"
+ ]
+}
