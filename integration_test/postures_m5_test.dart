@@ -262,7 +262,10 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.tap(find.byKey(const ValueKey('anatomy-posture-squat_bas')));
     // Puces sous le mannequin : retour en haut de l'écran pour le voir entier.
-    await tester.drag(find.byType(Scrollable).first, const Offset(0, 600));
+    tester
+        .state<ScrollableState>(find.byType(Scrollable).first)
+        .position
+        .jumpTo(0);
     // Milieu de la transition (750 ms).
     await tester.pump(const Duration(milliseconds: 300));
     final mid = mannequin(tester)!;
@@ -316,7 +319,10 @@ void main() {
     await tester.pump(const Duration(seconds: 1));
     await tester.tap(find.byKey(const ValueKey('anatomy-posture-planche')));
     // Puces sous le mannequin : retour en haut de l'écran pour le voir entier.
-    await tester.drag(find.byType(Scrollable).first, const Offset(0, 600));
+    tester
+        .state<ScrollableState>(find.byType(Scrollable).first)
+        .position
+        .jumpTo(0);
     await tester.pump(const Duration(milliseconds: 1200));
     await tester.pump(const Duration(seconds: 2));
     expect(mannequin(tester)!.view, MannequinView.profil);
