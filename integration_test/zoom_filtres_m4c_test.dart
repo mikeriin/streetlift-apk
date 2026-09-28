@@ -384,7 +384,7 @@ void main() {
       await pumpHome(tester, const WodCatalogScreen(), dark);
       await tester.pump(const Duration(seconds: 2));
       await openMenu(tester, 'wod');
-      await tapItem(tester, 'wod-filter-st:unlocked');
+      await tapItem(tester, 'wod-filter-st:locked');
       await tapItem(tester, 'wod-filter-cat-format');
       await tapItem(tester, 'wod-filter-ty:amrap');
       await tapItem(tester, 'wod-filter-ty:emom');
