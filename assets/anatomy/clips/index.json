@@ -1,0 +1,172 @@
+{
+ "schema": 1,
+ "clips": [
+  {
+   "id": "back-squat",
+   "fichier": "back-squat.json.gz",
+   "statut": "valide",
+   "date": "2026-09-28",
+   "empreinte": "644748ba10230000",
+   "controles": {
+    "longueurs": {
+     "ok": true,
+     "detail": "écart max 0.0000 mm"
+    },
+    "contacts": {
+     "ok": true,
+     "detail": "écart max 0.69 cm (p0)"
+    },
+    "materiel": {
+     "ok": true,
+     "detail": "pénétration max 0.1 mm (3-4@0.5)"
+    },
+    "sol": {
+     "ok": true,
+     "detail": "sous le sol 0.1 mm"
+    },
+    "charge_posee": {
+     "ok": true,
+     "detail": "barre-dos max 0.19 cm"
+    },
+    "corps": {
+     "ok": true,
+     "detail": "recouvrement max 0.0 mm (-)"
+    },
+    "limites": {
+     "ok": true,
+     "detail": "toutes les postures dans les limites du rig"
+    },
+    "amplitude_parallele": {
+     "ok": true,
+     "detail": "hanche_sous_genou : +1.0 cm"
+    },
+    "trajectoire_barre": {
+     "ok": true,
+     "detail": "charge : écart horizontal max 0.3 cm"
+    },
+    "sens": {
+     "ok": true,
+     "detail": "charge monte en concentrique, descend en excentrique"
+    },
+    "equilibre_systeme": {
+     "ok": true,
+     "detail": "centre de masse corps + charge : écart max 3.2 cm au milieu du pied"
+    },
+    "taille": {
+     "ok": true,
+     "detail": "1729 octets"
+    }
+   }
+  },
+  {
+   "id": "dips",
+   "fichier": "dips.json.gz",
+   "statut": "valide",
+   "date": "2026-09-28",
+   "empreinte": "6ba876f8841f0000",
+   "controles": {
+    "longueurs": {
+     "ok": true,
+     "detail": "écart max 0.0000 mm"
+    },
+    "contacts": {
+     "ok": true,
+     "detail": "écart max 0.21 cm (4-5@0.5)"
+    },
+    "materiel": {
+     "ok": true,
+     "detail": "pénétration max 0.0 mm (-)"
+    },
+    "sol": {
+     "ok": true,
+     "detail": "sous le sol 0.0 mm"
+    },
+    "corps": {
+     "ok": true,
+     "detail": "recouvrement max 0.0 mm (-)"
+    },
+    "limites": {
+     "ok": true,
+     "detail": "toutes les postures dans les limites du rig"
+    },
+    "amplitude_coudes": {
+     "ok": true,
+     "detail": "forearm.flexion de 4° à 90°"
+    },
+    "trajectoire": {
+     "ok": true,
+     "detail": "centre_de_masse : écart horizontal max 1.2 cm"
+    },
+    "sens": {
+     "ok": true,
+     "detail": "centre_de_masse monte en concentrique, descend en excentrique"
+    },
+    "pieds_decolles": {
+     "ok": true,
+     "detail": "point le plus bas 78.2 cm au-dessus du sol"
+    },
+    "taille": {
+     "ok": true,
+     "detail": "1780 octets"
+    }
+   }
+  },
+  {
+   "id": "traction-pronation",
+   "fichier": "traction-pronation.json.gz",
+   "statut": "valide",
+   "date": "2026-09-28",
+   "empreinte": "17ab08b98c270000",
+   "controles": {
+    "longueurs": {
+     "ok": true,
+     "detail": "écart max 0.0000 mm"
+    },
+    "contacts": {
+     "ok": true,
+     "detail": "écart max 0.38 cm (7-8@0.5)"
+    },
+    "materiel": {
+     "ok": true,
+     "detail": "pénétration max 1.0 mm (p1)"
+    },
+    "sol": {
+     "ok": true,
+     "detail": "sous le sol 0.0 mm"
+    },
+    "corps": {
+     "ok": true,
+     "detail": "recouvrement max 0.0 mm (-)"
+    },
+    "limites": {
+     "ok": true,
+     "detail": "toutes les postures dans les limites du rig"
+    },
+    "amplitude_haut": {
+     "ok": true,
+     "detail": "menton_au_dessus : +0.0 cm"
+    },
+    "amplitude_bras_tendus": {
+     "ok": true,
+     "detail": "forearm.flexion de 3° à 122°"
+    },
+    "trajectoire": {
+     "ok": true,
+     "detail": "centre_de_masse : écart horizontal max 0.0 cm"
+    },
+    "sens": {
+     "ok": true,
+     "detail": "centre_de_masse monte en concentrique, descend en excentrique"
+    },
+    "suspendu": {
+     "ok": true,
+     "detail": "point le plus bas 20.5 cm au-dessus du sol"
+    },
+    "taille": {
+     "ok": true,
+     "detail": "2111 octets"
+    }
+   }
+  }
+ ]
+}

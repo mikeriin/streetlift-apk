@@ -1,0 +1,255 @@
+{
+ "id": "traction-pronation",
+ "nom": "Traction pronation",
+ "plan": "sagittal",
+ "materiel_pack": {
+  "barre_fixe": "barre_traction"
+ },
+ "materiel": [
+  {
+   "id": "barre_traction",
+   "position": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "sol",
+   "position": [
+    0,
+    0,
+    0
+   ]
+  }
+ ],
+ "note": "Prise pronation (paumes vers l'avant), mains à 58 cm d'axe à axe (≈ 1,5 × la largeur biacromiale du modèle, 39 cm) ; départ bras tendus, épaules engagées (scapulas abaissées depuis la suspension passive) ; arrivée menton au-dessus de la barre, coudes vers les hanches, sans élan (bassin et jambes fixes).",
+ "sources": [
+  "Pack Kalis Track : points clés (« Part bras tendus, épaules engagées », « Tire les coudes vers les hanches », « Menton au-dessus de la barre sans élan »), erreurs (demi-amplitude, balancement), plan sagittal.",
+  "Youdas et al., « Surface electromyographic activation patterns and elbow joint motion during a pull-up, chin-up, or perfect-pullup rotational exercise », J Strength Cond Res 24(12), 2010 : flexion du coude en fin de montée ≈ 110-130°.",
+  "Prinold & Bull, « Scapula kinematics of pull-up techniques: avoiding impingement risk with training changes », J Sci Med Sport 19(8), 2016 : sonnette latérale en suspension, sonnette médiale et rétraction pendant la montée.",
+  "Tempo : notation excentrique-pause-concentrique-pause (NSCA, Essentials of Strength Training and Conditioning, 4e éd., 2016) ; 2-1-1-1 : descente contrôlée, arrêt bras tendus (pas d'élan)."
+ ],
+ "positions": {
+  "bas": {
+   "moteur": 3,
+   "angles": {
+    "clavicle": {
+     "elevation": 8,
+     "protraction": 0
+    },
+    "scapula": {
+     "sonnette": 46,
+     "bascule": 14,
+     "rotation": 0
+    },
+    "upperarm": {
+     "flexion": 10,
+     "abduction": 158,
+     "rotation": -88
+    },
+    "radius": {
+     "pronation": 88
+    },
+    "hand": {
+     "flexion": 0,
+     "deviation": 0
+    },
+    "lumbar": {
+     "flexion": 0
+    },
+    "thoracic_low": {
+     "flexion": 0
+    },
+    "thoracic_high": {
+     "flexion": 0
+    },
+    "neck": {
+     "flexion": 0
+    },
+    "head": {
+     "flexion": 0
+    },
+    "thigh": {
+     "flexion": 8,
+     "abduction": 0
+    },
+    "shin": {
+     "flexion": 20
+    },
+    "foot": {
+     "flexion": -30
+    },
+    "pelvis": {
+     "flexion": 0
+    }
+   }
+  },
+  "haut": {
+   "moteur": {
+    "critere": "menton_au_dessus",
+    "cible": "barre_traction:prise",
+    "marge": 0.01,
+    "min": 60,
+    "max": 150
+   },
+   "angles": {
+    "clavicle": {
+     "elevation": -4,
+     "protraction": -12
+    },
+    "scapula": {
+     "sonnette": 5,
+     "bascule": 0,
+     "rotation": 0
+    },
+    "upperarm": {
+     "flexion": 5,
+     "abduction": 45,
+     "rotation": -85
+    },
+    "radius": {
+     "pronation": 88
+    },
+    "hand": {
+     "flexion": 0,
+     "deviation": 0
+    },
+    "lumbar": {
+     "flexion": -6
+    },
+    "thoracic_low": {
+     "flexion": -4
+    },
+    "thoracic_high": {
+     "flexion": -3
+    },
+    "neck": {
+     "flexion": -6
+    },
+    "head": {
+     "flexion": -2
+    },
+    "thigh": {
+     "flexion": 8,
+     "abduction": 0
+    },
+    "shin": {
+     "flexion": 20
+    },
+    "foot": {
+     "flexion": -30
+    },
+    "pelvis": {
+     "flexion": -8
+    }
+   }
+  }
+ },
+ "moteur": {
+  "ddl": "forearm.flexion"
+ },
+ "ik": {
+  "libres": [
+   "upperarm.flexion",
+   "upperarm.abduction",
+   "hand.flexion",
+   "hand.deviation",
+   "pelvis.flexion",
+   "racine"
+  ],
+  "contacts": [
+   {
+    "os": "hand",
+    "cible": "barre_traction:prise",
+    "decalage": 0.29
+   }
+  ],
+  "equilibre": "barre_traction:prise",
+  "derriere": [
+   {
+    "cible": "barre_traction:prise",
+    "pente": 0.6,
+    "marge": 0.005
+   }
+  ],
+  "bornes": {
+   "pelvis.flexion": [
+    -30,
+    20
+   ]
+  }
+ },
+ "ordre": [
+  "bas",
+  "haut"
+ ],
+ "images_par_phase": 10,
+ "tempo": "2-1-1-1",
+ "phases": [
+  {
+   "nom": "Montée",
+   "type": "concentrique",
+   "de": "bas",
+   "vers": "haut",
+   "duree": 1.0
+  },
+  {
+   "nom": "Menton au-dessus de la barre",
+   "type": "isometrique",
+   "de": "haut",
+   "vers": "haut",
+   "duree": 1.0
+  },
+  {
+   "nom": "Descente",
+   "type": "excentrique",
+   "de": "haut",
+   "vers": "bas",
+   "duree": 2.0
+  },
+  {
+   "nom": "Bras tendus",
+   "type": "isometrique",
+   "de": "bas",
+   "vers": "bas",
+   "duree": 1.0
+  }
+ ],
+ "controles": [
+  {
+   "nom": "amplitude_haut",
+   "type": "critere",
+   "position": "haut",
+   "critere": {
+    "critere": "menton_au_dessus",
+    "cible": "barre_traction:prise",
+    "marge": 0.01
+   }
+  },
+  {
+   "nom": "amplitude_bras_tendus",
+   "type": "angle",
+   "ddl": "forearm.flexion",
+   "max_depart": 5,
+   "min_arrivee": 90
+  },
+  {
+   "nom": "trajectoire",
+   "type": "trajectoire_verticale",
+   "objet": "centre_de_masse",
+   "tolerance": 0.02
+  },
+  {
+   "nom": "sens",
+   "type": "sens",
+   "objet": "centre_de_masse",
+   "min": 0.25
+  },
+  {
+   "nom": "suspendu",
+   "type": "garde_sol",
+   "min": 0.03
+  }
+ ]
+}
