@@ -1,0 +1,7 @@
+Changed lib/filter_menu.dart
+Changed lib/mannequin_3d.dart
+Changed lib/mannequin_gestures.dart
+Changed lib/wod_catalog.dart
+Changed test/m4c_filter_menu_test.dart
+Changed test/m4c_zoom_test.dart
+Formatted 175 files (6 changed) in 1.52 seconds.

@@ -1,0 +1,171 @@
+diff --git a/lib/filter_menu.dart b/lib/filter_menu.dart
+index e37d9fb..1ae4590 100644
+--- a/lib/filter_menu.dart
++++ b/lib/filter_menu.dart
+@@ -159,7 +159,8 @@ class FilterMenuState extends State<FilterMenu> {
+   Set<String> _initialExpanded() {
+     final cats = widget.categories;
+     final options = cats.fold<int>(0, (n, c) => n + c.options.length);
+-    if (options <= FilterMenu.expandAllUpTo) return {for (final c in cats) c.id};
++    if (options <= FilterMenu.expandAllUpTo)
++      return {for (final c in cats) c.id};
+     final active = {
+       for (final c in cats)
+         if (widget.value.count([c]) > 0) c.id,
+@@ -239,7 +240,8 @@ class FilterMenuState extends State<FilterMenu> {
+                     deleteIcon: const Icon(Icons.cancel, size: 18),
+                     deleteIconColor: SL.accent,
+                     deleteButtonTooltipMessage: 'Retirer le filtre ${o.label}',
+-                    onDeleted: () => widget.onChanged(value.toggle(c.id, o.key)),
++                    onDeleted: () =>
++                        widget.onChanged(value.toggle(c.id, o.key)),
+                   ),
+                 if (value != widget.initial)
+                   TextButton(
+diff --git a/lib/mannequin_3d.dart b/lib/mannequin_3d.dart
+index 9897cbe..44d6cd1 100644
+--- a/lib/mannequin_3d.dart
++++ b/lib/mannequin_3d.dart
+@@ -568,7 +568,8 @@ class MannequinScene {
+   /// Axes droite et haut de l'image pour une vue (M4c : zoom et
+   /// déplacement dans le plan de l'image).
+   (vm.Vector3, vm.Vector3) cameraAxes(double yaw, double pitch) {
+-    final forward = -_eyeDirection(yaw, pitch)..normalize();
++    final forward = -_eyeDirection(yaw, pitch)
++      ..normalize();
+     final right = forward.cross(vm.Vector3(0, 1, 0))..normalize();
+     final up = right.cross(forward)..normalize();
+     return (right, up);
+diff --git a/lib/mannequin_gestures.dart b/lib/mannequin_gestures.dart
+index e9ae03c..4074792 100644
+--- a/lib/mannequin_gestures.dart
++++ b/lib/mannequin_gestures.dart
+@@ -226,15 +226,12 @@ class MannequinGestures extends StatelessWidget {
+         HorizontalDragGestureRecognizer:
+             GestureRecognizerFactoryWithHandlers<
+               HorizontalDragGestureRecognizer
+-            >(
+-              () => HorizontalDragGestureRecognizer(debugOwner: this),
+-              (r) {
+-                r.onStart = (_) => onRotateStart?.call();
+-                r.onUpdate = (d) => onRotate?.call(Offset(d.delta.dx, 0));
+-                r.onEnd = (_) => onRotateEnd?.call();
+-                r.onCancel = () => onRotateEnd?.call();
+-              },
+-            )
++            >(() => HorizontalDragGestureRecognizer(debugOwner: this), (r) {
++              r.onStart = (_) => onRotateStart?.call();
++              r.onUpdate = (d) => onRotate?.call(Offset(d.delta.dx, 0));
++              r.onEnd = (_) => onRotateEnd?.call();
++              r.onCancel = () => onRotateEnd?.call();
++            })
+       else
+         PanGestureRecognizer:
+             GestureRecognizerFactoryWithHandlers<PanGestureRecognizer>(
+diff --git a/lib/wod_catalog.dart b/lib/wod_catalog.dart
+index c6ca0dd..e3697f8 100644
+--- a/lib/wod_catalog.dart
++++ b/lib/wod_catalog.dart
+@@ -217,8 +217,7 @@ final List<FilterCategory> wodFilterCategories = [
+     id: 'niveau',
+     label: 'Difficulté',
+     options: [
+-      for (final e in _bandLabels.entries)
+-        FilterOption('lv:${e.key}', e.value),
++      for (final e in _bandLabels.entries) FilterOption('lv:${e.key}', e.value),
+     ],
+   ),
+   FilterCategory(
+diff --git a/test/m4c_filter_menu_test.dart b/test/m4c_filter_menu_test.dart
+index 0ef172d..71a6823 100644
+--- a/test/m4c_filter_menu_test.dart
++++ b/test/m4c_filter_menu_test.dart
+@@ -102,16 +102,19 @@ void main() {
+     test('union dans une catégorie, intersection entre catégories', () {
+       const none = FilterSelection();
+       expect(_filter(none), _items);
+-      final rougeOuBleu = none.toggle('couleur', 'rouge').toggle('couleur', 'bleu');
++      final rougeOuBleu = none
++          .toggle('couleur', 'rouge')
++          .toggle('couleur', 'bleu');
+       expect(_filter(rougeOuBleu).length, 3);
+       final etPetit = rougeOuBleu.toggle('taille', 'petit');
+       expect(_filter(etPetit), [('rouge', 'petit'), ('bleu', 'petit')]);
+       expect(etPetit.count(_cats), 3);
+       expect(etPetit.toggle('couleur', 'rouge').count(_cats), 2);
+-      expect(
+-        etPetit.active(_cats).map((a) => a.$2.label),
+-        ['Rouge', 'Bleu', 'Petit'],
+-      );
++      expect(etPetit.active(_cats).map((a) => a.$2.label), [
++        'Rouge',
++        'Bleu',
++        'Petit',
++      ]);
+     });
+ 
+     test('égalité indépendante de l’ordre et des catégories vides', () {
+@@ -318,10 +321,7 @@ void main() {
+         find.byKey(const ValueKey('library-filter-type:tirage_vertical')),
+         findsWidgets,
+       );
+-      expect(
+-        find.byKey(const ValueKey('library-filter-niv:1')),
+-        findsNothing,
+-      );
++      expect(find.byKey(const ValueKey('library-filter-niv:1')), findsNothing);
+       await tapItem(tester, 'library-filter-type:tirage_vertical');
+       final vertical = countIn(tester.widget<Text>(counter).data!);
+       await tapItem(tester, 'library-filter-type:tirage_horizontal');
+@@ -364,9 +364,11 @@ void main() {
+       await tester.pumpWidget(_app(const WodCatalogScreen()));
+       await tester.pumpAndSettle();
+       int total() => int.parse(
+-        RegExp(
+-          r'WODs · (\d+)',
+-        ).firstMatch(tester.widget<Text>(find.textContaining('WODs · ')).data!)!.group(1)!,
++        RegExp(r'WODs · (\d+)')
++            .firstMatch(
++              tester.widget<Text>(find.textContaining('WODs · ')).data!,
++            )!
++            .group(1)!,
+       );
+       final all = total();
+       await openMenu(tester, 'wod');
+@@ -423,14 +425,18 @@ void main() {
+             (w.key! as ValueKey<String>).value.startsWith('picker-filter-g:'),
+       );
+       expect(groups, findsWidgets);
+-      final first = (tester.widget(groups.first).key! as ValueKey<String>).value;
++      final first =
++          (tester.widget(groups.first).key! as ValueKey<String>).value;
+       await tapItem(tester, first);
+       final one = countIn(tester.widget<Text>(counter).data!);
+       expect(one, lessThan(all));
+       expect(find.text('Filtres · 1'), findsOneWidget);
+       await tester.tapAt(const Offset(5, 5));
+       await tester.pumpAndSettle();
+-      expect(find.byKey(ValueKey(first.replaceFirst('filter', 'chip'))), findsOneWidget);
++      expect(
++        find.byKey(ValueKey(first.replaceFirst('filter', 'chip'))),
++        findsOneWidget,
++      );
+       exercisePickerFilters = const FilterSelection();
+       expect(tester.takeException(), isNull);
+     });
+diff --git a/test/m4c_zoom_test.dart b/test/m4c_zoom_test.dart
+index df57f2e..2150bca 100644
+--- a/test/m4c_zoom_test.dart
++++ b/test/m4c_zoom_test.dart
+@@ -30,10 +30,7 @@ void main() {
+ 
+     test('angle de champ divisé par le zoom (tangente)', () {
+       final z = MannequinZoom(scale: 4);
+-      expect(
+-        vm.degrees(z.fovY),
+-        closeTo(vm.degrees(kMannequinFovY) / 4, .2),
+-      );
++      expect(vm.degrees(z.fovY), closeTo(vm.degrees(kMannequinFovY) / 4, .2));
+     });
+ 
+     test('point focal stable : le point sous les doigts reste en place', () {

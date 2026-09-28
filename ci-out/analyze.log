@@ -1,0 +1,5 @@
+Analyzing streetlift-apk...                                     
+
+   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • test/m4c_filter_menu_test.dart:119:7 • prefer_const_declarations
+
+1 issue found. (ran in 18.5s)

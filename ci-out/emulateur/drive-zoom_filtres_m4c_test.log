@@ -1,0 +1,170 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             58.0s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...           4.4s
+I/Choreographer( 4047): Skipped 132 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4047): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:42089/lM_JEI-iqig=/
+D/ProfileInstaller( 4047): Installing profile for fr.tchoupi.streetlift_tracker
+VMServiceFlutterDriver: Isolate found with number: 1796766838607131
+VMServiceFlutterDriver: Isolate 1796766838607131 is runnable.
+I/eetlift_tracker( 4047): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4047): 00:00 +0: (setUpAll)
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 4047): Skipped 41 frames!  The application may be doing too much work on its main thread.
+I/Choreographer( 4047): Skipped 56 frames!  The application may be doing too much work on its main thread.
+I/Choreographer( 4047): Skipped 54 frames!  The application may be doing too much work on its main thread.
+I/flutter ( 4047): 00:02 +1: M4c : zoom au pincement, écran Anatomie, sombre
+I/Choreographer( 4047): Skipped 47 frames!  The application may be doing too much work on its main thread.
+I/HWUI    ( 4047): Davey! duration=897ms; Flags=1, FrameTimelineVsyncId=8723, IntendedVsync=112338512930, Vsync=113121846232, InputEventId=0, HandleInputStart=113127022942, AnimationStart=113127025025, PerformTraversalsStart=113127025776, DrawStart=113154957285, FrameDeadline=112355179596, FrameInterval=113123652874, FrameStartTime=16666666, SyncQueued=113166721099, SyncStart=113169077496, IssueDrawCommandsStart=113172141644, SwapBuffers=113225414850, FrameCompleted=113238804414, DequeueBufferDuration=3611480, QueueBufferDuration=462424, GpuCompleted=113238804414, SwapBuffersCompleted=113238012937, DisplayPresentTime=0, CommandSubmissionCompleted=113225414850, 
+D/EGL_emulation( 4047): app_time_stats: avg=2278.55ms min=2220.51ms max=2336.60ms count=2
+W/eetlift_tracker( 4047): Verification of void androidx.core.view.WindowInsetsControllerCompat.addOnControllableInsetsChangedListener(androidx.core.view.WindowInsetsControllerCompat$OnControllableInsetsChangedListener) took 5.123s (1.17 bytecodes/s) (2272B approximate peak alloc)
+I/eetlift_tracker( 4047): Background concurrent mark compact GC freed 1815KB AllocSpace bytes, 3(60KB) LOS objects, 49% free, 2592KB/5184KB, paused 58us,24.143ms total 2.311s
+D/EGL_emulation( 4047): app_time_stats: avg=10332.88ms min=10332.88ms max=10332.88ms count=1
+D/EGL_emulation( 4047): app_time_stats: avg=252.34ms min=61.65ms max=626.55ms count=4
+D/EGL_emulation( 4047): app_time_stats: avg=587.38ms min=417.07ms max=757.69ms count=2
+D/EGL_emulation( 4047): app_time_stats: avg=359.44ms min=96.42ms max=884.11ms count=3
+D/EGL_emulation( 4047): app_time_stats: avg=912.92ms min=881.59ms max=944.25ms count=2
+D/EGL_emulation( 4047): app_time_stats: avg=610.65ms min=130.02ms max=1091.29ms count=2
+D/EGL_emulation( 4047): app_time_stats: avg=508.26ms min=177.07ms max=839.44ms count=2
+D/EGL_emulation( 4047): app_time_stats: avg=557.85ms min=112.60ms max=806.24ms count=3
+D/EGL_emulation( 4047): app_time_stats: avg=91.68ms min=13.12ms max=148.30ms count=12
+D/EGL_emulation( 4047): app_time_stats: avg=945.29ms min=80.64ms max=1809.94ms count=2
+I/flutter ( 4047): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4047): The following TestFailure was thrown running a test:
+I/flutter ( 4047): Expected: 'avant-bras'
+I/flutter ( 4047):   Actual: 'gainage'
+I/flutter ( 4047):    Which: is different.
+I/flutter ( 4047):           Expected: avant-bras ...
+I/flutter ( 4047):             Actual: gainage
+I/flutter ( 4047):                     ^
+I/flutter ( 4047):            Differ at offset 0
+I/flutter ( 4047): 
+I/flutter ( 4047): When the exception was thrown, this was the stack:
+I/flutter ( 4047): #4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/zoom_filtres_m4c_test.dart:223:5)
+I/flutter ( 4047): <asynchronous suspension>
+I/flutter ( 4047): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4047): <asynchronous suspension>
+I/flutter ( 4047): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4047): <asynchronous suspension>
+I/flutter ( 4047): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4047): <asynchronous suspension>
+I/flutter ( 4047): 
+I/flutter ( 4047): This was caught by the test expectation on the following line:
+I/flutter ( 4047):   file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/zoom_filtres_m4c_test.dart line 223
+I/flutter ( 4047): The test description was:
+I/flutter ( 4047):   M4c : zoom au pincement, écran Anatomie, sombre
+I/flutter ( 4047): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4047): 00:31 +1: M4c : zoom au pincement, écran Anatomie, sombre [E]
+I/flutter ( 4047):   Test failed. See exception logs above.
+I/flutter ( 4047):   The test description was: M4c : zoom au pincement, écran Anatomie, sombre
+I/flutter ( 4047):   
+I/flutter ( 4047): 00:31 +1 -1: M4c : fiche exercice, zoom dans une page qui défile, clair
+D/FlutterJNI( 4047): Sending viewport metrics to the engine.
+D/EGL_emulation( 4047): app_time_stats: avg=175.27ms min=81.07ms max=317.28ms count=6
+D/EGL_emulation( 4047): app_time_stats: avg=613.92ms min=305.68ms max=922.16ms count=2
+D/EGL_emulation( 4047): app_time_stats: avg=79.56ms min=9.63ms max=180.17ms count=12
+D/EGL_emulation( 4047): app_time_stats: avg=80.79ms min=12.52ms max=159.66ms count=13
+D/EGL_emulation( 4047): app_time_stats: avg=64.39ms min=14.38ms max=146.36ms count=14
+D/EGL_emulation( 4047): app_time_stats: avg=71.33ms min=2.51ms max=124.10ms count=14
+D/EGL_emulation( 4047): app_time_stats: avg=65.44ms min=8.50ms max=145.69ms count=13
+D/EGL_emulation( 4047): app_time_stats: avg=61.58ms min=2.70ms max=132.71ms count=15
+D/EGL_emulation( 4047): app_time_stats: avg=243.79ms min=95.01ms max=416.27ms count=4
+D/EGL_emulation( 4047): app_time_stats: avg=446.75ms min=62.82ms max=830.69ms count=2
+D/EGL_emulation( 4047): app_time_stats: avg=501.60ms min=35.52ms max=967.68ms count=2
+D/EGL_emulation( 4047): app_time_stats: avg=61.12ms min=54.72ms max=67.53ms count=2
+D/EGL_emulation( 4047): app_time_stats: avg=1085.91ms min=1085.91ms max=1085.91ms count=1
+D/EGL_emulation( 4047): app_time_stats: avg=47.09ms min=3.43ms max=94.81ms count=5
+D/EGL_emulation( 4047): app_time_stats: avg=1866.68ms min=1866.68ms max=1866.68ms count=1
+I/flutter ( 4047): 00:49 +2 -1: M4c : menus « Filtres », sombre
+D/FlutterJNI( 4047): Sending viewport metrics to the engine.
+D/EGL_emulation( 4047): app_time_stats: avg=118.67ms min=7.61ms max=457.10ms count=8
+D/EGL_emulation( 4047): app_time_stats: avg=463.42ms min=7.71ms max=952.79ms count=3
+D/EGL_emulation( 4047): app_time_stats: avg=92.41ms min=24.69ms max=203.02ms count=12
+D/EGL_emulation( 4047): app_time_stats: avg=182.44ms min=85.42ms max=357.25ms count=6
+D/EGL_emulation( 4047): app_time_stats: avg=114.00ms min=27.07ms max=369.65ms count=9
+D/EGL_emulation( 4047): app_time_stats: avg=99.14ms min=21.62ms max=270.97ms count=10
+D/EGL_emulation( 4047): app_time_stats: avg=83.27ms min=6.01ms max=254.44ms count=12
+D/EGL_emulation( 4047): app_time_stats: avg=140.49ms min=42.23ms max=513.38ms count=7
+D/EGL_emulation( 4047): app_time_stats: avg=438.60ms min=19.66ms max=1983.44ms count=5
+D/EGL_emulation( 4047): app_time_stats: avg=68.50ms min=26.18ms max=171.80ms count=12
+D/EGL_emulation( 4047): app_time_stats: avg=81.11ms min=16.86ms max=235.86ms count=11
+D/EGL_emulation( 4047): app_time_stats: avg=97.89ms min=21.26ms max=265.22ms count=10
+D/EGL_emulation( 4047): app_time_stats: avg=61.59ms min=21.99ms max=94.31ms count=14
+D/EGL_emulation( 4047): app_time_stats: avg=68.98ms min=8.12ms max=155.58ms count=15
+D/EGL_emulation( 4047): app_time_stats: avg=715.10ms min=17.29ms max=2954.77ms count=5
+D/EGL_emulation( 4047): app_time_stats: avg=71.86ms min=20.87ms max=114.09ms count=13
+D/EGL_emulation( 4047): app_time_stats: avg=332.06ms min=73.36ms max=1071.34ms count=4
+D/EGL_emulation( 4047): app_time_stats: avg=172.62ms min=84.45ms max=542.93ms count=6
+D/EGL_emulation( 4047): app_time_stats: avg=56.91ms min=28.78ms max=138.50ms count=15
+D/EGL_emulation( 4047): app_time_stats: avg=82.77ms min=23.21ms max=181.85ms count=13
+D/EGL_emulation( 4047): app_time_stats: avg=194.07ms min=13.41ms max=1856.60ms count=13
+I/flutter ( 4047): 01:17 +3 -1: M4c : menus « Filtres », clair
+D/FlutterJNI( 4047): Sending viewport metrics to the engine.
+D/EGL_emulation( 4047): app_time_stats: avg=124.57ms min=6.19ms max=898.51ms count=13
+D/EGL_emulation( 4047): app_time_stats: avg=74.59ms min=22.78ms max=125.68ms count=14
+D/EGL_emulation( 4047): app_time_stats: avg=107.34ms min=52.83ms max=302.09ms count=9
+D/EGL_emulation( 4047): app_time_stats: avg=96.27ms min=27.91ms max=229.61ms count=11
+D/EGL_emulation( 4047): app_time_stats: avg=79.89ms min=54.77ms max=109.83ms count=12
+D/EGL_emulation( 4047): app_time_stats: avg=75.00ms min=10.50ms max=183.90ms count=14
+D/EGL_emulation( 4047): app_time_stats: avg=217.92ms min=18.28ms max=1859.20ms count=11
+D/EGL_emulation( 4047): app_time_stats: avg=69.86ms min=24.47ms max=162.15ms count=13
+D/EGL_emulation( 4047): app_time_stats: avg=77.39ms min=2.13ms max=252.15ms count=13
+D/EGL_emulation( 4047): app_time_stats: avg=94.46ms min=45.26ms max=288.75ms count=9
+D/EGL_emulation( 4047): app_time_stats: avg=53.79ms min=6.05ms max=75.00ms count=15
+D/EGL_emulation( 4047): app_time_stats: avg=65.11ms min=6.36ms max=163.15ms count=14
+D/EGL_emulation( 4047): app_time_stats: avg=595.00ms min=10.54ms max=2894.67ms count=6
+D/EGL_emulation( 4047): app_time_stats: avg=61.61ms min=2.37ms max=153.70ms count=13
+D/EGL_emulation( 4047): app_time_stats: avg=389.24ms min=60.02ms max=570.24ms count=3
+D/EGL_emulation( 4047): app_time_stats: avg=115.05ms min=30.03ms max=542.39ms count=8
+D/EGL_emulation( 4047): app_time_stats: avg=62.87ms min=23.18ms max=119.24ms count=14
+D/EGL_emulation( 4047): app_time_stats: avg=66.16ms min=43.84ms max=185.10ms count=13
+D/EGL_emulation( 4047): app_time_stats: avg=196.96ms min=21.44ms max=1934.20ms count=13
+I/flutter ( 4047): 01:44 +4 -1: (tearDownAll)
+I/flutter ( 4047): 01:44 +5 -1: Some tests failed.
+Failure Details:
+Failure in method: M4c : zoom au pincement, écran Anatomie, sombre
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: 'avant-bras'
+  Actual: 'gainage'
+   Which: is different.
+          Expected: avant-bras ...
+            Actual: gainage
+                    ^
+           Differ at offset 0
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/zoom_filtres_m4c_test.dart:223:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/zoom_filtres_m4c_test.dart line 223
+The test description was:
+  M4c : zoom au pincement, écran Anatomie, sombre
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+
