@@ -1,0 +1,268 @@
+{
+ "id": "dips",
+ "nom": "Dips",
+ "plan": "sagittal",
+ "materiel_pack": {
+  "barres_paralleles": "barres_paralleles"
+ },
+ "materiel": [
+  {
+   "id": "barres_paralleles",
+   "position": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "sol",
+   "position": [
+    0,
+    0,
+    0
+   ]
+  }
+ ],
+ "note": "Prise neutre (paumes face à face) sur des barres de 55 cm d'axe à axe ; départ en appui bras tendus, épaules basses ; descente jusqu'à environ 90° aux coudes, buste légèrement penché, coudes vers l'arrière ; genoux fléchis à 90°, cuisses dans l'axe du tronc, pieds derrière (loin du sol). M56 : bas de dip aux coudes à ≈ 98° (épaules au niveau des coudes ou sous eux, contrôlé), buste incliné de 20 à 32° (contrôlé), coudes vers l'arrière ; les hanches fléchissent librement (0 à 35°) pour que le centre de masse reste au-dessus des mains ; cuisses légèrement écartées (3°) pour que les jambes fléchies ne se touchent pas. Revue M56 : jambes fixes (hanches à 28°, genoux à 92°, dans les deux positions : aucun balancement), coudes à 102° en bas (épaule ≥ 1 cm sous le coude), rachis neutre en bas (thorax légèrement ouvert, cou en légère extension) ; le centre de masse reste à moins de 3 cm de l'aplomb des mains. Rotation de l'humérus et pronation laissées au calcul (bornées) : en bas, humérus en rotation externe (≈ 20°) et coudes serrés vers l'arrière, poignets dans leurs limites. Seconde revue : l'épaule passe 1,6 cm sous le coude ; aller plus bas demanderait plus de 60° d'extension d'épaule (limite AAOS) ou un buste incliné au-delà de 30°.",
+ "sources": [
+  "Pack Kalis Track : points clés (« Épaules basses, loin des oreilles », « Buste légèrement penché, coudes vers l'arrière », « Descends jusqu'à environ 90° aux coudes »), erreurs (épaules qui roulent en avant en bas, descente trop profonde), plan sagittal.",
+  "McKenzie et al., « Fundamental characteristics of the dip exercise: a kinematic and electromyographic analysis », J Strength Cond Res 36(6), 2022 : extension de l'épaule en bas de dip, flexion du coude ≈ 90°, inclinaison du tronc.",
+  "Ludewig et al., J Bone Joint Surg Am 91 (2009) : bascule antérieure et sonnette médiale de la scapula en extension du bras.",
+  "Tempo : notation excentrique-pause-concentrique-pause (NSCA, 2016) ; 2-0-1-1 : descente contrôlée, remontée, bras tendus une seconde.",
+  "Profondeur : McKenzie et al., « Bench press and dip: kinematics », J Strength Cond Res (2022) et NSCA : épaule au niveau du coude (bras parallèle au sol) ; inclinaison du buste 20-30° (streetlifting, IST rulebook 2023 : « upper arm parallel or below »)."
+ ],
+ "positions": {
+  "haut": {
+   "moteur": 4,
+   "angles": {
+    "clavicle": {
+     "elevation": -6,
+     "protraction": 0
+    },
+    "scapula": {
+     "sonnette": 0,
+     "bascule": 0,
+     "rotation": 0
+    },
+    "upperarm": {
+     "flexion": 0,
+     "abduction": 8,
+     "rotation": 10
+    },
+    "radius": {
+     "pronation": 88
+    },
+    "hand": {
+     "flexion": -20,
+     "deviation": 0
+    },
+    "pelvis": {
+     "flexion": 5
+    },
+    "lumbar": {
+     "flexion": 0
+    },
+    "thoracic_low": {
+     "flexion": 0
+    },
+    "thoracic_high": {
+     "flexion": 0
+    },
+    "neck": {
+     "flexion": 0
+    },
+    "head": {
+     "flexion": 0
+    },
+    "thigh": {
+     "flexion": 28,
+     "abduction": 3
+    },
+    "shin": {
+     "flexion": 92
+    },
+    "foot": {
+     "flexion": -25
+    }
+   }
+  },
+  "bas": {
+   "moteur": 102,
+   "angles": {
+    "clavicle": {
+     "elevation": 2,
+     "protraction": 6
+    },
+    "scapula": {
+     "sonnette": -10,
+     "bascule": -14,
+     "rotation": 5
+    },
+    "upperarm": {
+     "flexion": -50,
+     "abduction": 5,
+     "rotation": 10
+    },
+    "radius": {
+     "pronation": 88
+    },
+    "hand": {
+     "flexion": -35,
+     "deviation": 0
+    },
+    "pelvis": {
+     "flexion": 22
+    },
+    "lumbar": {
+     "flexion": 0
+    },
+    "thoracic_low": {
+     "flexion": 0
+    },
+    "thoracic_high": {
+     "flexion": -3
+    },
+    "neck": {
+     "flexion": -6
+    },
+    "head": {
+     "flexion": -2
+    },
+    "thigh": {
+     "flexion": 28,
+     "abduction": 3
+    },
+    "shin": {
+     "flexion": 92
+    },
+    "foot": {
+     "flexion": -25
+    }
+   }
+  }
+ },
+ "moteur": {
+  "ddl": "forearm.flexion"
+ },
+ "ik": {
+  "libres": [
+   "upperarm.flexion",
+   "upperarm.abduction",
+   "hand.flexion",
+   "hand.deviation",
+   "pelvis.flexion",
+   "racine",
+   "upperarm.rotation",
+   "radius.pronation"
+  ],
+  "bornes": {
+   "pelvis.flexion": [
+    -10,
+    40
+   ],
+   "upperarm.rotation": [
+    -40,
+    50
+   ],
+   "radius.pronation": [
+    40,
+    140
+   ]
+  },
+  "contacts": [
+   {
+    "os": "hand",
+    "cible": "barres_paralleles:prise_g",
+    "par_cote": {
+     "_l": "prise_g",
+     "_r": "prise_d"
+    }
+   }
+  ],
+  "equilibre": "barres_paralleles:prise_g"
+ },
+ "ordre": [
+  "haut",
+  "bas"
+ ],
+ "images_par_phase": 8,
+ "tempo": "2-0-1-1",
+ "phases": [
+  {
+   "nom": "Descente",
+   "type": "excentrique",
+   "de": "haut",
+   "vers": "bas",
+   "duree": 2.0
+  },
+  {
+   "nom": "Poussée",
+   "type": "concentrique",
+   "de": "bas",
+   "vers": "haut",
+   "duree": 1.0
+  },
+  {
+   "nom": "Bras tendus",
+   "type": "isometrique",
+   "de": "haut",
+   "vers": "haut",
+   "duree": 1.0
+  }
+ ],
+ "controles": [
+  {
+   "nom": "amplitude_coudes",
+   "type": "angle",
+   "ddl": "forearm.flexion",
+   "max_depart": 5,
+   "min_arrivee": 98
+  },
+  {
+   "nom": "trajectoire",
+   "type": "trajectoire_verticale",
+   "objet": "centre_de_masse",
+   "tolerance": 0.03
+  },
+  {
+   "nom": "sens",
+   "type": "sens",
+   "objet": "centre_de_masse",
+   "min": 0.15
+  },
+  {
+   "nom": "pieds_decolles",
+   "type": "garde_sol",
+   "min": 0.05
+  },
+  {
+   "nom": "epaules_sous_coudes",
+   "type": "epaule_sous_coude",
+   "position": "bas",
+   "min": 0.01
+  },
+  {
+   "nom": "buste_incline",
+   "type": "inclinaison_tronc",
+   "position": "bas",
+   "min": 20,
+   "max": 32
+  },
+  {
+   "nom": "coudes_arriere",
+   "type": "angle_position",
+   "ddl": "upperarm.flexion",
+   "position": "bas",
+   "min": -70,
+   "max": -35
+  },
+  {
+   "nom": "jambes_fixes",
+   "type": "angle_position",
+   "ddl": "thigh.flexion",
+   "position": "bas",
+   "min": 27,
+   "max": 29
+  }
+ ]
+}

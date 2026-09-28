@@ -1,0 +1,7846 @@
+{
+ "schema": 1,
+ "repere": "glTF : mètres, Y vers le haut, +Z vers l'avant, +X côté gauche",
+ "os": [
+  {
+   "nom": "pelvis",
+   "nom_fr": "Bassin",
+   "parent": null,
+   "cote": null,
+   "tete": [
+    0.0,
+    0.86056,
+    -0.00451
+   ],
+   "queue": [
+    0.0,
+    0.95924,
+    -0.00886
+   ],
+   "longueur": 0.09877,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Inclinaison du corps vers l'avant (+)",
+     "axe": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "min": -180,
+     "max": 180,
+     "source": "—"
+    },
+    {
+     "cle": "inclinaison",
+     "nom": "Inclinaison latérale gauche (+)",
+     "axe": [
+      0.0,
+      0.0,
+      -1.0
+     ],
+     "min": -180,
+     "max": 180,
+     "source": "—"
+    },
+    {
+     "cle": "rotation",
+     "nom": "Rotation vers la gauche (+)",
+     "axe": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "min": -180,
+     "max": 180,
+     "source": "—"
+    }
+   ]
+  },
+  {
+   "nom": "lumbar",
+   "nom_fr": "Rachis lombaire",
+   "parent": "pelvis",
+   "cote": null,
+   "tete": [
+    0.0,
+    0.95924,
+    -0.00886
+   ],
+   "queue": [
+    0.0,
+    1.13099,
+    -0.0094
+   ],
+   "longueur": 0.17175,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion (+) / extension (−)",
+     "axe": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "min": -25,
+     "max": 50,
+     "source": "WP (L1-S1), AAOS"
+    },
+    {
+     "cle": "inclinaison",
+     "nom": "Inclinaison latérale gauche (+)",
+     "axe": [
+      0.0,
+      0.0,
+      -1.0
+     ],
+     "min": -20,
+     "max": 20,
+     "source": "WP"
+    },
+    {
+     "cle": "rotation",
+     "nom": "Rotation vers la gauche (+)",
+     "axe": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "min": -8,
+     "max": 8,
+     "source": "WP"
+    }
+   ]
+  },
+  {
+   "nom": "thoracic_low",
+   "nom_fr": "Rachis thoracique bas",
+   "parent": "lumbar",
+   "cote": null,
+   "tete": [
+    0.0,
+    1.13099,
+    -0.0094
+   ],
+   "queue": [
+    0.0,
+    1.27724,
+    -0.0444
+   ],
+   "longueur": 0.15038,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion (+) / extension (−)",
+     "axe": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "min": -12,
+     "max": 20,
+     "source": "WP (T8-T12)"
+    },
+    {
+     "cle": "inclinaison",
+     "nom": "Inclinaison latérale gauche (+)",
+     "axe": [
+      0.0,
+      0.0,
+      -1.0
+     ],
+     "min": -15,
+     "max": 15,
+     "source": "WP"
+    },
+    {
+     "cle": "rotation",
+     "nom": "Rotation vers la gauche (+)",
+     "axe": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "min": -18,
+     "max": 18,
+     "source": "WP"
+    }
+   ]
+  },
+  {
+   "nom": "thoracic_high",
+   "nom_fr": "Rachis thoracique haut",
+   "parent": "thoracic_low",
+   "cote": null,
+   "tete": [
+    0.0,
+    1.27724,
+    -0.0444
+   ],
+   "queue": [
+    0.0,
+    1.44686,
+    -0.02812
+   ],
+   "longueur": 0.1704,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion (+) / extension (−)",
+     "axe": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "min": -10,
+     "max": 15,
+     "source": "WP (T1-T7)"
+    },
+    {
+     "cle": "inclinaison",
+     "nom": "Inclinaison latérale gauche (+)",
+     "axe": [
+      0.0,
+      0.0,
+      -1.0
+     ],
+     "min": -12,
+     "max": 12,
+     "source": "WP"
+    },
+    {
+     "cle": "rotation",
+     "nom": "Rotation vers la gauche (+)",
+     "axe": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "min": -18,
+     "max": 18,
+     "source": "WP"
+    }
+   ]
+  },
+  {
+   "nom": "neck",
+   "nom_fr": "Cou",
+   "parent": "thoracic_high",
+   "cote": null,
+   "tete": [
+    0.0,
+    1.44686,
+    -0.02812
+   ],
+   "queue": [
+    0.0,
+    1.55416,
+    -0.01722
+   ],
+   "longueur": 0.10785,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion (+) / extension (−)",
+     "axe": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "min": -50,
+     "max": 40,
+     "source": "AAOS, NW (C2-C7)"
+    },
+    {
+     "cle": "inclinaison",
+     "nom": "Inclinaison latérale gauche (+)",
+     "axe": [
+      0.0,
+      0.0,
+      -1.0
+     ],
+     "min": -35,
+     "max": 35,
+     "source": "AAOS"
+    },
+    {
+     "cle": "rotation",
+     "nom": "Rotation vers la gauche (+)",
+     "axe": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "min": -45,
+     "max": 45,
+     "source": "AAOS"
+    }
+   ]
+  },
+  {
+   "nom": "head",
+   "nom_fr": "Tête",
+   "parent": "neck",
+   "cote": null,
+   "tete": [
+    0.0,
+    1.55416,
+    -0.01722
+   ],
+   "queue": [
+    0.0,
+    1.70555,
+    -0.01722
+   ],
+   "longueur": 0.15139,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion (+) / extension (−)",
+     "axe": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "min": -20,
+     "max": 10,
+     "source": "WP (C0-C1)"
+    },
+    {
+     "cle": "inclinaison",
+     "nom": "Inclinaison latérale gauche (+)",
+     "axe": [
+      0.0,
+      0.0,
+      -1.0
+     ],
+     "min": -8,
+     "max": 8,
+     "source": "WP"
+    },
+    {
+     "cle": "rotation",
+     "nom": "Rotation vers la gauche (+)",
+     "axe": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "min": -35,
+     "max": 35,
+     "source": "WP (C1-C2)"
+    }
+   ]
+  },
+  {
+   "nom": "clavicle_l",
+   "nom_fr": "Clavicule gauche",
+   "parent": "thoracic_high",
+   "cote": "L",
+   "tete": [
+    0.01582,
+    1.40205,
+    0.03243
+   ],
+   "queue": [
+    0.14915,
+    1.41763,
+    -0.03366
+   ],
+   "longueur": 0.14962,
+   "ddl": [
+    {
+     "cle": "elevation",
+     "nom": "Élévation (+) / abaissement (−) de la scapula",
+     "axe": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "min": -10,
+     "max": 45,
+     "source": "INMAN, KAP"
+    },
+    {
+     "cle": "protraction",
+     "nom": "Protraction (+) / rétraction (−) de la scapula",
+     "axe": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "min": -25,
+     "max": 20,
+     "source": "LUD, KAP"
+    }
+   ]
+  },
+  {
+   "nom": "scapula_l",
+   "nom_fr": "Scapula gauche",
+   "parent": "clavicle_l",
+   "cote": "L",
+   "tete": [
+    0.14915,
+    1.41763,
+    -0.03366
+   ],
+   "queue": [
+    0.09122,
+    1.2546,
+    -0.10086
+   ],
+   "longueur": 0.18561,
+   "ddl": [
+    {
+     "cle": "sonnette",
+     "nom": "Sonnette latérale (+, rotation vers le haut) / médiale (−)",
+     "axe": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "min": -15,
+     "max": 60,
+     "source": "INMAN, LUD"
+    },
+    {
+     "cle": "bascule",
+     "nom": "Bascule postérieure (+) / antérieure (−)",
+     "axe": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "min": -20,
+     "max": 30,
+     "source": "LUD"
+    },
+    {
+     "cle": "rotation",
+     "nom": "Rotation interne (+) / externe (−)",
+     "axe": [
+      0.0,
+      1.0,
+      0.0
+     ],
+     "min": -15,
+     "max": 15,
+     "source": "LUD"
+    }
+   ]
+  },
+  {
+   "nom": "upperarm_l",
+   "nom_fr": "Bras gauche",
+   "parent": "scapula_l",
+   "cote": "L",
+   "tete": [
+    0.16753,
+    1.38235,
+    -0.02655
+   ],
+   "queue": [
+    0.21394,
+    1.09881,
+    -0.03445
+   ],
+   "longueur": 0.28742,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion (+) / extension (−) du bras / thorax",
+     "axe": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "min": -60,
+     "max": 180,
+     "source": "AAOS"
+    },
+    {
+     "cle": "abduction",
+     "nom": "Abduction (+) / adduction (−) du bras / thorax",
+     "axe": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "min": -25,
+     "max": 170,
+     "source": "AAOS"
+    },
+    {
+     "cle": "rotation",
+     "nom": "Rotation interne (+) / externe (−)",
+     "axe": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "min": -90,
+     "max": 70,
+     "source": "AAOS"
+    }
+   ]
+  },
+  {
+   "nom": "forearm_l",
+   "nom_fr": "Avant-bras (ulna) gauche",
+   "parent": "upperarm_l",
+   "cote": "L",
+   "tete": [
+    0.21394,
+    1.09881,
+    -0.03445
+   ],
+   "queue": [
+    0.24701,
+    0.86207,
+    0.01475
+   ],
+   "longueur": 0.24405,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion du coude (+)",
+     "axe": [
+      -0.98826,
+      -0.04977,
+      0.14442
+     ],
+     "min": -5,
+     "max": 150,
+     "source": "AAOS ; axe mesuré sur les os du modèle"
+    }
+   ]
+  },
+  {
+   "nom": "radius_l",
+   "nom_fr": "Avant-bras (radius) gauche",
+   "parent": "forearm_l",
+   "cote": "L",
+   "tete": [
+    0.24029,
+    1.08714,
+    -0.03201
+   ],
+   "queue": [
+    0.24701,
+    0.86207,
+    0.01475
+   ],
+   "longueur": 0.22997,
+   "ddl": [
+    {
+     "cle": "pronation",
+     "nom": "Pronation (+) depuis la supination du repos",
+     "axe": [
+      0.02924,
+      -0.97868,
+      0.20332
+     ],
+     "min": -10,
+     "max": 165,
+     "source": "AAOS (pronation 80, supination 80)"
+    }
+   ]
+  },
+  {
+   "nom": "hand_l",
+   "nom_fr": "Main gauche",
+   "parent": "radius_l",
+   "cote": "L",
+   "tete": [
+    0.26111,
+    0.84622,
+    0.02186
+   ],
+   "queue": [
+    0.2655,
+    0.77548,
+    0.03673
+   ],
+   "longueur": 0.07242,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion palmaire (+) / extension (−)",
+     "axe": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "min": -70,
+     "max": 80,
+     "source": "AAOS"
+    },
+    {
+     "cle": "deviation",
+     "nom": "Inclinaison radiale (+) / ulnaire (−)",
+     "axe": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "min": -30,
+     "max": 20,
+     "source": "AAOS"
+    }
+   ]
+  },
+  {
+   "nom": "fingers1_l",
+   "nom_fr": "Doigts (phalanges proximales) gauche",
+   "parent": "hand_l",
+   "cote": "L",
+   "tete": [
+    0.2655,
+    0.77548,
+    0.03673
+   ],
+   "queue": [
+    0.27041,
+    0.73937,
+    0.05794
+   ],
+   "longueur": 0.04217,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion des métacarpo-phalangiennes (+)",
+     "axe": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "min": -20,
+     "max": 90,
+     "source": "AAOS"
+    }
+   ]
+  },
+  {
+   "nom": "fingers2_l",
+   "nom_fr": "Doigts (phalanges moyennes et distales) gauche",
+   "parent": "fingers1_l",
+   "cote": "L",
+   "tete": [
+    0.27041,
+    0.73937,
+    0.05794
+   ],
+   "queue": [
+    0.27041,
+    0.69836,
+    0.05794
+   ],
+   "longueur": 0.04101,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion des interphalangiennes (+)",
+     "axe": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "min": 0,
+     "max": 100,
+     "source": "AAOS"
+    }
+   ]
+  },
+  {
+   "nom": "thigh_l",
+   "nom_fr": "Cuisse gauche",
+   "parent": "pelvis",
+   "cote": "L",
+   "tete": [
+    0.08318,
+    0.86056,
+    -0.00451
+   ],
+   "queue": [
+    0.07466,
+    0.45119,
+    -0.03344
+   ],
+   "longueur": 0.41048,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion (+) / extension (−)",
+     "axe": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "min": -20,
+     "max": 125,
+     "source": "AAOS, NW"
+    },
+    {
+     "cle": "abduction",
+     "nom": "Abduction (+) / adduction (−)",
+     "axe": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "min": -30,
+     "max": 45,
+     "source": "AAOS"
+    },
+    {
+     "cle": "rotation",
+     "nom": "Rotation interne (+) / externe (−)",
+     "axe": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "min": -45,
+     "max": 45,
+     "source": "AAOS"
+    }
+   ]
+  },
+  {
+   "nom": "shin_l",
+   "nom_fr": "Jambe gauche",
+   "parent": "thigh_l",
+   "cote": "L",
+   "tete": [
+    0.07466,
+    0.45119,
+    -0.03344
+   ],
+   "queue": [
+    0.07952,
+    0.06465,
+    -0.04246
+   ],
+   "longueur": 0.38668,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion du genou (+)",
+     "axe": [
+      0.99824,
+      0.05234,
+      -0.02774
+     ],
+     "min": -5,
+     "max": 157,
+     "source": "AAOS, HEM ; axe mesuré sur les os du modèle"
+    },
+    {
+     "cle": "rotation",
+     "nom": "Rotation interne (+) / externe (−) du tibia, genou fléchi",
+     "axe": [
+      0.01258,
+      -0.99965,
+      -0.02333
+     ],
+     "min": -30,
+     "max": 20,
+     "source": "AAOS (genou fléchi : interne 10-20°, externe 20-30°), KAP t. 2"
+    }
+   ]
+  },
+  {
+   "nom": "foot_l",
+   "nom_fr": "Pied gauche",
+   "parent": "shin_l",
+   "cote": "L",
+   "tete": [
+    0.07952,
+    0.06465,
+    -0.04246
+   ],
+   "queue": [
+    0.10349,
+    0.02068,
+    0.07257
+   ],
+   "longueur": 0.12546,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion dorsale (+) / plantaire (−)",
+     "axe": [
+      -0.884,
+      0.17365,
+      0.43403
+     ],
+     "min": -50,
+     "max": 40,
+     "source": "AAOS, HEM ; axe mesuré sur les os du modèle"
+    },
+    {
+     "cle": "inversion",
+     "nom": "Inversion (+) / éversion (−)",
+     "axe": [
+      0.0,
+      0.0,
+      -1.0
+     ],
+     "min": -15,
+     "max": 35,
+     "source": "AAOS"
+    }
+   ]
+  },
+  {
+   "nom": "toes_l",
+   "nom_fr": "Orteils gauche",
+   "parent": "foot_l",
+   "cote": "L",
+   "tete": [
+    0.10349,
+    0.02068,
+    0.07257
+   ],
+   "queue": [
+    0.10349,
+    0.00895,
+    0.13693
+   ],
+   "longueur": 0.06542,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion (+) / extension (−) des orteils",
+     "axe": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "min": -70,
+     "max": 40,
+     "source": "AAOS"
+    }
+   ]
+  },
+  {
+   "nom": "clavicle_r",
+   "nom_fr": "Clavicule droit",
+   "parent": "thoracic_high",
+   "cote": "R",
+   "tete": [
+    -0.01582,
+    1.40205,
+    0.03243
+   ],
+   "queue": [
+    -0.14915,
+    1.41763,
+    -0.03366
+   ],
+   "longueur": 0.14962,
+   "ddl": [
+    {
+     "cle": "elevation",
+     "nom": "Élévation (+) / abaissement (−) de la scapula",
+     "axe": [
+      0.0,
+      -0.0,
+      -1.0
+     ],
+     "min": -10,
+     "max": 45,
+     "source": "INMAN, KAP"
+    },
+    {
+     "cle": "protraction",
+     "nom": "Protraction (+) / rétraction (−) de la scapula",
+     "axe": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "min": -25,
+     "max": 20,
+     "source": "LUD, KAP"
+    }
+   ]
+  },
+  {
+   "nom": "scapula_r",
+   "nom_fr": "Scapula droit",
+   "parent": "clavicle_r",
+   "cote": "R",
+   "tete": [
+    -0.14915,
+    1.41763,
+    -0.03366
+   ],
+   "queue": [
+    -0.09122,
+    1.2546,
+    -0.10086
+   ],
+   "longueur": 0.18561,
+   "ddl": [
+    {
+     "cle": "sonnette",
+     "nom": "Sonnette latérale (+, rotation vers le haut) / médiale (−)",
+     "axe": [
+      0.0,
+      -0.0,
+      -1.0
+     ],
+     "min": -15,
+     "max": 60,
+     "source": "INMAN, LUD"
+    },
+    {
+     "cle": "bascule",
+     "nom": "Bascule postérieure (+) / antérieure (−)",
+     "axe": [
+      -1.0,
+      -0.0,
+      -0.0
+     ],
+     "min": -20,
+     "max": 30,
+     "source": "LUD"
+    },
+    {
+     "cle": "rotation",
+     "nom": "Rotation interne (+) / externe (−)",
+     "axe": [
+      0.0,
+      -1.0,
+      -0.0
+     ],
+     "min": -15,
+     "max": 15,
+     "source": "LUD"
+    }
+   ]
+  },
+  {
+   "nom": "upperarm_r",
+   "nom_fr": "Bras droit",
+   "parent": "scapula_r",
+   "cote": "R",
+   "tete": [
+    -0.16753,
+    1.38235,
+    -0.02655
+   ],
+   "queue": [
+    -0.21394,
+    1.09881,
+    -0.03445
+   ],
+   "longueur": 0.28742,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion (+) / extension (−) du bras / thorax",
+     "axe": [
+      -1.0,
+      -0.0,
+      -0.0
+     ],
+     "min": -60,
+     "max": 180,
+     "source": "AAOS"
+    },
+    {
+     "cle": "abduction",
+     "nom": "Abduction (+) / adduction (−) du bras / thorax",
+     "axe": [
+      0.0,
+      -0.0,
+      -1.0
+     ],
+     "min": -25,
+     "max": 170,
+     "source": "AAOS"
+    },
+    {
+     "cle": "rotation",
+     "nom": "Rotation interne (+) / externe (−)",
+     "axe": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "min": -90,
+     "max": 70,
+     "source": "AAOS"
+    }
+   ]
+  },
+  {
+   "nom": "forearm_r",
+   "nom_fr": "Avant-bras (ulna) droit",
+   "parent": "upperarm_r",
+   "cote": "R",
+   "tete": [
+    -0.21394,
+    1.09881,
+    -0.03445
+   ],
+   "queue": [
+    -0.24701,
+    0.86207,
+    0.01475
+   ],
+   "longueur": 0.24405,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion du coude (+)",
+     "axe": [
+      -0.98826,
+      0.04977,
+      -0.14442
+     ],
+     "min": -5,
+     "max": 150,
+     "source": "AAOS ; axe mesuré sur les os du modèle"
+    }
+   ]
+  },
+  {
+   "nom": "radius_r",
+   "nom_fr": "Avant-bras (radius) droit",
+   "parent": "forearm_r",
+   "cote": "R",
+   "tete": [
+    -0.24029,
+    1.08714,
+    -0.03201
+   ],
+   "queue": [
+    -0.24701,
+    0.86207,
+    0.01475
+   ],
+   "longueur": 0.22997,
+   "ddl": [
+    {
+     "cle": "pronation",
+     "nom": "Pronation (+) depuis la supination du repos",
+     "axe": [
+      0.02924,
+      0.97868,
+      -0.20332
+     ],
+     "min": -10,
+     "max": 165,
+     "source": "AAOS (pronation 80, supination 80)"
+    }
+   ]
+  },
+  {
+   "nom": "hand_r",
+   "nom_fr": "Main droit",
+   "parent": "radius_r",
+   "cote": "R",
+   "tete": [
+    -0.26111,
+    0.84622,
+    0.02186
+   ],
+   "queue": [
+    -0.2655,
+    0.77548,
+    0.03673
+   ],
+   "longueur": 0.07242,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion palmaire (+) / extension (−)",
+     "axe": [
+      -1.0,
+      -0.0,
+      -0.0
+     ],
+     "min": -70,
+     "max": 80,
+     "source": "AAOS"
+    },
+    {
+     "cle": "deviation",
+     "nom": "Inclinaison radiale (+) / ulnaire (−)",
+     "axe": [
+      0.0,
+      -0.0,
+      -1.0
+     ],
+     "min": -30,
+     "max": 20,
+     "source": "AAOS"
+    }
+   ]
+  },
+  {
+   "nom": "fingers1_r",
+   "nom_fr": "Doigts (phalanges proximales) droit",
+   "parent": "hand_r",
+   "cote": "R",
+   "tete": [
+    -0.2655,
+    0.77548,
+    0.03673
+   ],
+   "queue": [
+    -0.27041,
+    0.73937,
+    0.05794
+   ],
+   "longueur": 0.04217,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion des métacarpo-phalangiennes (+)",
+     "axe": [
+      -1.0,
+      -0.0,
+      -0.0
+     ],
+     "min": -20,
+     "max": 90,
+     "source": "AAOS"
+    }
+   ]
+  },
+  {
+   "nom": "fingers2_r",
+   "nom_fr": "Doigts (phalanges moyennes et distales) droit",
+   "parent": "fingers1_r",
+   "cote": "R",
+   "tete": [
+    -0.27041,
+    0.73937,
+    0.05794
+   ],
+   "queue": [
+    -0.27041,
+    0.69836,
+    0.05794
+   ],
+   "longueur": 0.04101,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion des interphalangiennes (+)",
+     "axe": [
+      -1.0,
+      -0.0,
+      -0.0
+     ],
+     "min": 0,
+     "max": 100,
+     "source": "AAOS"
+    }
+   ]
+  },
+  {
+   "nom": "thigh_r",
+   "nom_fr": "Cuisse droit",
+   "parent": "pelvis",
+   "cote": "R",
+   "tete": [
+    -0.08318,
+    0.86056,
+    -0.00451
+   ],
+   "queue": [
+    -0.07466,
+    0.45119,
+    -0.03344
+   ],
+   "longueur": 0.41048,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion (+) / extension (−)",
+     "axe": [
+      -1.0,
+      -0.0,
+      -0.0
+     ],
+     "min": -20,
+     "max": 125,
+     "source": "AAOS, NW"
+    },
+    {
+     "cle": "abduction",
+     "nom": "Abduction (+) / adduction (−)",
+     "axe": [
+      0.0,
+      -0.0,
+      -1.0
+     ],
+     "min": -30,
+     "max": 45,
+     "source": "AAOS"
+    },
+    {
+     "cle": "rotation",
+     "nom": "Rotation interne (+) / externe (−)",
+     "axe": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "min": -45,
+     "max": 45,
+     "source": "AAOS"
+    }
+   ]
+  },
+  {
+   "nom": "shin_r",
+   "nom_fr": "Jambe droit",
+   "parent": "thigh_r",
+   "cote": "R",
+   "tete": [
+    -0.07466,
+    0.45119,
+    -0.03344
+   ],
+   "queue": [
+    -0.07952,
+    0.06465,
+    -0.04246
+   ],
+   "longueur": 0.38668,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion du genou (+)",
+     "axe": [
+      0.99824,
+      -0.05234,
+      0.02774
+     ],
+     "min": -5,
+     "max": 157,
+     "source": "AAOS, HEM ; axe mesuré sur les os du modèle"
+    },
+    {
+     "cle": "rotation",
+     "nom": "Rotation interne (+) / externe (−) du tibia, genou fléchi",
+     "axe": [
+      0.01258,
+      0.99965,
+      0.02333
+     ],
+     "min": -30,
+     "max": 20,
+     "source": "AAOS (genou fléchi : interne 10-20°, externe 20-30°), KAP t. 2"
+    }
+   ]
+  },
+  {
+   "nom": "foot_r",
+   "nom_fr": "Pied droit",
+   "parent": "shin_r",
+   "cote": "R",
+   "tete": [
+    -0.07952,
+    0.06465,
+    -0.04246
+   ],
+   "queue": [
+    -0.10349,
+    0.02068,
+    0.07257
+   ],
+   "longueur": 0.12546,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion dorsale (+) / plantaire (−)",
+     "axe": [
+      -0.884,
+      -0.17365,
+      -0.43403
+     ],
+     "min": -50,
+     "max": 40,
+     "source": "AAOS, HEM ; axe mesuré sur les os du modèle"
+    },
+    {
+     "cle": "inversion",
+     "nom": "Inversion (+) / éversion (−)",
+     "axe": [
+      0.0,
+      -0.0,
+      1.0
+     ],
+     "min": -15,
+     "max": 35,
+     "source": "AAOS"
+    }
+   ]
+  },
+  {
+   "nom": "toes_r",
+   "nom_fr": "Orteils droit",
+   "parent": "foot_r",
+   "cote": "R",
+   "tete": [
+    -0.10349,
+    0.02068,
+    0.07257
+   ],
+   "queue": [
+    -0.10349,
+    0.00895,
+    0.13693
+   ],
+   "longueur": 0.06542,
+   "ddl": [
+    {
+     "cle": "flexion",
+     "nom": "Flexion (+) / extension (−) des orteils",
+     "axe": [
+      1.0,
+      -0.0,
+      -0.0
+     ],
+     "min": -70,
+     "max": 40,
+     "source": "AAOS"
+    }
+   ]
+  },
+  {
+   "nom": "shoulder_aux_l",
+   "nom_fr": "Aide de l'épaule (1/3) gauche",
+   "parent": "scapula_l",
+   "cote": "L",
+   "tete": [
+    0.16753,
+    1.38235,
+    -0.02655
+   ],
+   "queue": [
+    0.21394,
+    1.09881,
+    -0.03445
+   ],
+   "longueur": 0.28742,
+   "ddl": [],
+   "aide": {
+    "suit": "upperarm_l",
+    "part": 0.333333,
+    "gonflement": 0.0
+   }
+  },
+  {
+   "nom": "shoulder_aux2_l",
+   "nom_fr": "Aide de l'épaule (2/3) gauche",
+   "parent": "scapula_l",
+   "cote": "L",
+   "tete": [
+    0.16753,
+    1.38235,
+    -0.02655
+   ],
+   "queue": [
+    0.21394,
+    1.09881,
+    -0.03445
+   ],
+   "longueur": 0.28742,
+   "ddl": [],
+   "aide": {
+    "suit": "upperarm_l",
+    "part": 0.666667,
+    "gonflement": 0.0
+   }
+  },
+  {
+   "nom": "elbow_aux_l",
+   "nom_fr": "Aide du coude (1/3) gauche",
+   "parent": "upperarm_l",
+   "cote": "L",
+   "tete": [
+    0.21394,
+    1.09881,
+    -0.03445
+   ],
+   "queue": [
+    0.24701,
+    0.86207,
+    0.01475
+   ],
+   "longueur": 0.24405,
+   "ddl": [],
+   "aide": {
+    "suit": "forearm_l",
+    "part": 0.333333,
+    "gonflement": 0.06
+   }
+  },
+  {
+   "nom": "elbow_aux2_l",
+   "nom_fr": "Aide du coude (2/3) gauche",
+   "parent": "upperarm_l",
+   "cote": "L",
+   "tete": [
+    0.21394,
+    1.09881,
+    -0.03445
+   ],
+   "queue": [
+    0.24701,
+    0.86207,
+    0.01475
+   ],
+   "longueur": 0.24405,
+   "ddl": [],
+   "aide": {
+    "suit": "forearm_l",
+    "part": 0.666667,
+    "gonflement": 0.06
+   }
+  },
+  {
+   "nom": "pronation_aux_l",
+   "nom_fr": "Aide de la pronation gauche",
+   "parent": "forearm_l",
+   "cote": "L",
+   "tete": [
+    0.24029,
+    1.08714,
+    -0.03201
+   ],
+   "queue": [
+    0.24701,
+    0.86207,
+    0.01475
+   ],
+   "longueur": 0.22997,
+   "ddl": [],
+   "aide": {
+    "suit": "radius_l",
+    "part": 0.5,
+    "gonflement": 0.0
+   }
+  },
+  {
+   "nom": "hip_aux_l",
+   "nom_fr": "Aide de la hanche (1/3) gauche",
+   "parent": "pelvis",
+   "cote": "L",
+   "tete": [
+    0.08318,
+    0.86056,
+    -0.00451
+   ],
+   "queue": [
+    0.07466,
+    0.45119,
+    -0.03344
+   ],
+   "longueur": 0.41048,
+   "ddl": [],
+   "aide": {
+    "suit": "thigh_l",
+    "part": 0.333333,
+    "gonflement": 0.04
+   }
+  },
+  {
+   "nom": "hip_aux2_l",
+   "nom_fr": "Aide de la hanche (2/3) gauche",
+   "parent": "pelvis",
+   "cote": "L",
+   "tete": [
+    0.08318,
+    0.86056,
+    -0.00451
+   ],
+   "queue": [
+    0.07466,
+    0.45119,
+    -0.03344
+   ],
+   "longueur": 0.41048,
+   "ddl": [],
+   "aide": {
+    "suit": "thigh_l",
+    "part": 0.666667,
+    "gonflement": 0.04
+   }
+  },
+  {
+   "nom": "knee_aux_l",
+   "nom_fr": "Aide du genou (1/3) gauche",
+   "parent": "thigh_l",
+   "cote": "L",
+   "tete": [
+    0.07466,
+    0.45119,
+    -0.03344
+   ],
+   "queue": [
+    0.07952,
+    0.06465,
+    -0.04246
+   ],
+   "longueur": 0.38668,
+   "ddl": [],
+   "aide": {
+    "suit": "shin_l",
+    "part": 0.333333,
+    "gonflement": 0.06
+   }
+  },
+  {
+   "nom": "knee_aux2_l",
+   "nom_fr": "Aide du genou (2/3) gauche",
+   "parent": "thigh_l",
+   "cote": "L",
+   "tete": [
+    0.07466,
+    0.45119,
+    -0.03344
+   ],
+   "queue": [
+    0.07952,
+    0.06465,
+    -0.04246
+   ],
+   "longueur": 0.38668,
+   "ddl": [],
+   "aide": {
+    "suit": "shin_l",
+    "part": 0.666667,
+    "gonflement": 0.06
+   }
+  },
+  {
+   "nom": "biceps_bulge_l",
+   "nom_fr": "Gonflement du biceps gauche",
+   "parent": "upperarm_l",
+   "cote": "L",
+   "tete": [
+    0.19806,
+    1.22662,
+    -0.01195
+   ],
+   "queue": [
+    0.20894,
+    1.17786,
+    -0.01394
+   ],
+   "longueur": 0.05,
+   "ddl": [],
+   "aide": {
+    "suit": "forearm_l",
+    "part": 0.0,
+    "gonflement": 0.1,
+    "axe": [
+     0.21761,
+     -0.97523,
+     -0.03975
+    ],
+    "muscles": [
+     "biceps_brachii_long",
+     "biceps_brachii_short",
+     "brachialis"
+    ]
+   }
+  },
+  {
+   "nom": "quads_bulge_l",
+   "nom_fr": "Gonflement du quadriceps gauche",
+   "parent": "thigh_l",
+   "cote": "L",
+   "tete": [
+    0.1144,
+    0.6257,
+    0.02671
+   ],
+   "queue": [
+    0.10929,
+    0.57597,
+    0.02598
+   ],
+   "longueur": 0.05,
+   "ddl": [],
+   "aide": {
+    "suit": "shin_l",
+    "part": 0.0,
+    "gonflement": 0.045,
+    "axe": [
+     -0.10224,
+     -0.99465,
+     -0.01457
+    ],
+    "muscles": [
+     "rectus_femoris",
+     "vastus_lateralis",
+     "vastus_medialis",
+     "vastus_intermedius"
+    ]
+   }
+  },
+  {
+   "nom": "glute_bulge_l",
+   "nom_fr": "Gonflement du grand fessier gauche",
+   "parent": "pelvis",
+   "cote": "L",
+   "tete": [
+    0.07554,
+    0.84582,
+    -0.0709
+   ],
+   "queue": [
+    0.09251,
+    0.80025,
+    -0.05928
+   ],
+   "longueur": 0.05,
+   "ddl": [],
+   "aide": {
+    "suit": "thigh_l",
+    "part": 0.0,
+    "gonflement": 0.05,
+    "axe": [
+     0.33945,
+     -0.91146,
+     0.23242
+    ],
+    "muscles": [
+     "gluteus_maximus"
+    ]
+   }
+  },
+  {
+   "nom": "shoulder_aux_r",
+   "nom_fr": "Aide de l'épaule (1/3) droit",
+   "parent": "scapula_r",
+   "cote": "R",
+   "tete": [
+    -0.16753,
+    1.38235,
+    -0.02655
+   ],
+   "queue": [
+    -0.21394,
+    1.09881,
+    -0.03445
+   ],
+   "longueur": 0.28742,
+   "ddl": [],
+   "aide": {
+    "suit": "upperarm_r",
+    "part": 0.333333,
+    "gonflement": 0.0
+   }
+  },
+  {
+   "nom": "shoulder_aux2_r",
+   "nom_fr": "Aide de l'épaule (2/3) droit",
+   "parent": "scapula_r",
+   "cote": "R",
+   "tete": [
+    -0.16753,
+    1.38235,
+    -0.02655
+   ],
+   "queue": [
+    -0.21394,
+    1.09881,
+    -0.03445
+   ],
+   "longueur": 0.28742,
+   "ddl": [],
+   "aide": {
+    "suit": "upperarm_r",
+    "part": 0.666667,
+    "gonflement": 0.0
+   }
+  },
+  {
+   "nom": "elbow_aux_r",
+   "nom_fr": "Aide du coude (1/3) droit",
+   "parent": "upperarm_r",
+   "cote": "R",
+   "tete": [
+    -0.21394,
+    1.09881,
+    -0.03445
+   ],
+   "queue": [
+    -0.24701,
+    0.86207,
+    0.01475
+   ],
+   "longueur": 0.24405,
+   "ddl": [],
+   "aide": {
+    "suit": "forearm_r",
+    "part": 0.333333,
+    "gonflement": 0.06
+   }
+  },
+  {
+   "nom": "elbow_aux2_r",
+   "nom_fr": "Aide du coude (2/3) droit",
+   "parent": "upperarm_r",
+   "cote": "R",
+   "tete": [
+    -0.21394,
+    1.09881,
+    -0.03445
+   ],
+   "queue": [
+    -0.24701,
+    0.86207,
+    0.01475
+   ],
+   "longueur": 0.24405,
+   "ddl": [],
+   "aide": {
+    "suit": "forearm_r",
+    "part": 0.666667,
+    "gonflement": 0.06
+   }
+  },
+  {
+   "nom": "pronation_aux_r",
+   "nom_fr": "Aide de la pronation droit",
+   "parent": "forearm_r",
+   "cote": "R",
+   "tete": [
+    -0.24029,
+    1.08714,
+    -0.03201
+   ],
+   "queue": [
+    -0.24701,
+    0.86207,
+    0.01475
+   ],
+   "longueur": 0.22997,
+   "ddl": [],
+   "aide": {
+    "suit": "radius_r",
+    "part": 0.5,
+    "gonflement": 0.0
+   }
+  },
+  {
+   "nom": "hip_aux_r",
+   "nom_fr": "Aide de la hanche (1/3) droit",
+   "parent": "pelvis",
+   "cote": "R",
+   "tete": [
+    -0.08318,
+    0.86056,
+    -0.00451
+   ],
+   "queue": [
+    -0.07466,
+    0.45119,
+    -0.03344
+   ],
+   "longueur": 0.41048,
+   "ddl": [],
+   "aide": {
+    "suit": "thigh_r",
+    "part": 0.333333,
+    "gonflement": 0.04
+   }
+  },
+  {
+   "nom": "hip_aux2_r",
+   "nom_fr": "Aide de la hanche (2/3) droit",
+   "parent": "pelvis",
+   "cote": "R",
+   "tete": [
+    -0.08318,
+    0.86056,
+    -0.00451
+   ],
+   "queue": [
+    -0.07466,
+    0.45119,
+    -0.03344
+   ],
+   "longueur": 0.41048,
+   "ddl": [],
+   "aide": {
+    "suit": "thigh_r",
+    "part": 0.666667,
+    "gonflement": 0.04
+   }
+  },
+  {
+   "nom": "knee_aux_r",
+   "nom_fr": "Aide du genou (1/3) droit",
+   "parent": "thigh_r",
+   "cote": "R",
+   "tete": [
+    -0.07466,
+    0.45119,
+    -0.03344
+   ],
+   "queue": [
+    -0.07952,
+    0.06465,
+    -0.04246
+   ],
+   "longueur": 0.38668,
+   "ddl": [],
+   "aide": {
+    "suit": "shin_r",
+    "part": 0.333333,
+    "gonflement": 0.06
+   }
+  },
+  {
+   "nom": "knee_aux2_r",
+   "nom_fr": "Aide du genou (2/3) droit",
+   "parent": "thigh_r",
+   "cote": "R",
+   "tete": [
+    -0.07466,
+    0.45119,
+    -0.03344
+   ],
+   "queue": [
+    -0.07952,
+    0.06465,
+    -0.04246
+   ],
+   "longueur": 0.38668,
+   "ddl": [],
+   "aide": {
+    "suit": "shin_r",
+    "part": 0.666667,
+    "gonflement": 0.06
+   }
+  },
+  {
+   "nom": "biceps_bulge_r",
+   "nom_fr": "Gonflement du biceps droit",
+   "parent": "upperarm_r",
+   "cote": "R",
+   "tete": [
+    -0.19806,
+    1.22662,
+    -0.01195
+   ],
+   "queue": [
+    -0.20894,
+    1.17786,
+    -0.01394
+   ],
+   "longueur": 0.05,
+   "ddl": [],
+   "aide": {
+    "suit": "forearm_r",
+    "part": 0.0,
+    "gonflement": 0.1,
+    "axe": [
+     -0.21761,
+     -0.97523,
+     -0.03975
+    ],
+    "muscles": [
+     "biceps_brachii_long",
+     "biceps_brachii_short",
+     "brachialis"
+    ]
+   }
+  },
+  {
+   "nom": "quads_bulge_r",
+   "nom_fr": "Gonflement du quadriceps droit",
+   "parent": "thigh_r",
+   "cote": "R",
+   "tete": [
+    -0.1144,
+    0.6257,
+    0.02671
+   ],
+   "queue": [
+    -0.10929,
+    0.57597,
+    0.02598
+   ],
+   "longueur": 0.05,
+   "ddl": [],
+   "aide": {
+    "suit": "shin_r",
+    "part": 0.0,
+    "gonflement": 0.045,
+    "axe": [
+     0.10225,
+     -0.99465,
+     -0.01456
+    ],
+    "muscles": [
+     "rectus_femoris",
+     "vastus_lateralis",
+     "vastus_medialis",
+     "vastus_intermedius"
+    ]
+   }
+  },
+  {
+   "nom": "glute_bulge_r",
+   "nom_fr": "Gonflement du grand fessier droit",
+   "parent": "pelvis",
+   "cote": "R",
+   "tete": [
+    -0.07554,
+    0.84583,
+    -0.07089
+   ],
+   "queue": [
+    -0.09253,
+    0.80026,
+    -0.05927
+   ],
+   "longueur": 0.05,
+   "ddl": [],
+   "aide": {
+    "suit": "thigh_r",
+    "part": 0.0,
+    "gonflement": 0.05,
+    "axe": [
+     -0.33973,
+     -0.91135,
+     0.23245
+    ],
+    "muscles": [
+     "gluteus_maximus"
+    ]
+   }
+  }
+ ],
+ "sources": {
+  "AAOS": "American Academy of Orthopaedic Surgeons, Joint Motion: Method of Measuring and Recording (1965) ; Greene & Heckman, The Clinical Measurement of Joint Motion (1994)",
+  "NW": "Norkin & White, Measurement of Joint Motion: A Guide to Goniometry, 5e éd. (2016)",
+  "WP": "White & Panjabi, Clinical Biomechanics of the Spine, 2e éd. (1990)",
+  "INMAN": "Inman, Saunders & Abbott, J Bone Joint Surg 26 (1944)",
+  "LUD": "Ludewig et al., J Bone Joint Surg Am 91 (2009)",
+  "HEM": "Hemmerich et al., J Orthop Res 24 (2006)",
+  "KAP": "Kapandji, Physiologie articulaire, tomes 1 à 3"
+ },
+ "peau": {
+  "fichier": "assets/anatomy/mannequin_skin.bin",
+  "influences": 4,
+  "format": "par sommet : 4 os (octet, index dans « os ») puis 4 poids (octet, somme 255), maillages dans l'ordre du GLB",
+  "maillages": [
+   {
+    "nom": "deltoid_anterior_left",
+    "sommets": 192
+   },
+   {
+    "nom": "deltoid_anterior_right",
+    "sommets": 192
+   },
+   {
+    "nom": "deltoid_lateral_left",
+    "sommets": 71
+   },
+   {
+    "nom": "deltoid_lateral_right",
+    "sommets": 71
+   },
+   {
+    "nom": "deltoid_posterior_left",
+    "sommets": 106
+   },
+   {
+    "nom": "deltoid_posterior_right",
+    "sommets": 106
+   },
+   {
+    "nom": "supraspinatus_left",
+    "sommets": 42
+   },
+   {
+    "nom": "supraspinatus_right",
+    "sommets": 42
+   },
+   {
+    "nom": "infraspinatus_left",
+    "sommets": 78
+   },
+   {
+    "nom": "infraspinatus_right",
+    "sommets": 78
+   },
+   {
+    "nom": "subscapularis_left",
+    "sommets": 55
+   },
+   {
+    "nom": "subscapularis_right",
+    "sommets": 55
+   },
+   {
+    "nom": "teres_minor_left",
+    "sommets": 51
+   },
+   {
+    "nom": "teres_minor_right",
+    "sommets": 51
+   },
+   {
+    "nom": "teres_major_left",
+    "sommets": 40
+   },
+   {
+    "nom": "teres_major_right",
+    "sommets": 40
+   },
+   {
+    "nom": "rectus_femoris_left",
+    "sommets": 198
+   },
+   {
+    "nom": "rectus_femoris_right",
+    "sommets": 198
+   },
+   {
+    "nom": "vastus_lateralis_left",
+    "sommets": 227
+   },
+   {
+    "nom": "vastus_lateralis_right",
+    "sommets": 227
+   },
+   {
+    "nom": "vastus_medialis_left",
+    "sommets": 158
+   },
+   {
+    "nom": "vastus_medialis_right",
+    "sommets": 158
+   },
+   {
+    "nom": "vastus_intermedius_left",
+    "sommets": 143
+   },
+   {
+    "nom": "vastus_intermedius_right",
+    "sommets": 143
+   },
+   {
+    "nom": "biceps_femoris_long_left",
+    "sommets": 169
+   },
+   {
+    "nom": "biceps_femoris_long_right",
+    "sommets": 169
+   },
+   {
+    "nom": "biceps_femoris_short_left",
+    "sommets": 59
+   },
+   {
+    "nom": "biceps_femoris_short_right",
+    "sommets": 59
+   },
+   {
+    "nom": "semitendinosus_left",
+    "sommets": 104
+   },
+   {
+    "nom": "semitendinosus_right",
+    "sommets": 104
+   },
+   {
+    "nom": "semimembranosus_left",
+    "sommets": 184
+   },
+   {
+    "nom": "semimembranosus_right",
+    "sommets": 184
+   },
+   {
+    "nom": "sartorius_left",
+    "sommets": 118
+   },
+   {
+    "nom": "sartorius_right",
+    "sommets": 118
+   },
+   {
+    "nom": "adductor_magnus_left",
+    "sommets": 199
+   },
+   {
+    "nom": "adductor_magnus_right",
+    "sommets": 199
+   },
+   {
+    "nom": "adductor_longus_left",
+    "sommets": 87
+   },
+   {
+    "nom": "adductor_longus_right",
+    "sommets": 87
+   },
+   {
+    "nom": "adductor_brevis_left",
+    "sommets": 41
+   },
+   {
+    "nom": "adductor_brevis_right",
+    "sommets": 41
+   },
+   {
+    "nom": "gracilis_left",
+    "sommets": 114
+   },
+   {
+    "nom": "gracilis_right",
+    "sommets": 114
+   },
+   {
+    "nom": "pectineus_left",
+    "sommets": 44
+   },
+   {
+    "nom": "pectineus_right",
+    "sommets": 44
+   },
+   {
+    "nom": "pectoralis_major_clavicular_left",
+    "sommets": 40
+   },
+   {
+    "nom": "pectoralis_major_clavicular_right",
+    "sommets": 40
+   },
+   {
+    "nom": "pectoralis_major_sternocostal_left",
+    "sommets": 77
+   },
+   {
+    "nom": "pectoralis_major_sternocostal_right",
+    "sommets": 77
+   },
+   {
+    "nom": "pectoralis_major_abdominal_left",
+    "sommets": 51
+   },
+   {
+    "nom": "pectoralis_major_abdominal_right",
+    "sommets": 51
+   },
+   {
+    "nom": "pectoralis_minor_left",
+    "sommets": 81
+   },
+   {
+    "nom": "pectoralis_minor_right",
+    "sommets": 81
+   },
+   {
+    "nom": "serratus_anterior_left",
+    "sommets": 241
+   },
+   {
+    "nom": "serratus_anterior_right",
+    "sommets": 241
+   },
+   {
+    "nom": "trapezius_upper_left",
+    "sommets": 159
+   },
+   {
+    "nom": "trapezius_upper_right",
+    "sommets": 159
+   },
+   {
+    "nom": "trapezius_middle_left",
+    "sommets": 70
+   },
+   {
+    "nom": "trapezius_middle_right",
+    "sommets": 70
+   },
+   {
+    "nom": "trapezius_lower_left",
+    "sommets": 111
+   },
+   {
+    "nom": "trapezius_lower_right",
+    "sommets": 111
+   },
+   {
+    "nom": "latissimus_dorsi_left",
+    "sommets": 249
+   },
+   {
+    "nom": "latissimus_dorsi_right",
+    "sommets": 249
+   },
+   {
+    "nom": "rhomboid_major_left",
+    "sommets": 101
+   },
+   {
+    "nom": "rhomboid_major_right",
+    "sommets": 101
+   },
+   {
+    "nom": "rhomboid_minor_left",
+    "sommets": 40
+   },
+   {
+    "nom": "rhomboid_minor_right",
+    "sommets": 40
+   },
+   {
+    "nom": "levator_scapulae_left",
+    "sommets": 76
+   },
+   {
+    "nom": "levator_scapulae_right",
+    "sommets": 76
+   },
+   {
+    "nom": "serratus_posterior_inferior_left",
+    "sommets": 177
+   },
+   {
+    "nom": "serratus_posterior_inferior_right",
+    "sommets": 177
+   },
+   {
+    "nom": "serratus_posterior_superior_left",
+    "sommets": 113
+   },
+   {
+    "nom": "serratus_posterior_superior_right",
+    "sommets": 113
+   },
+   {
+    "nom": "iliocostalis_lumborum_left",
+    "sommets": 243
+   },
+   {
+    "nom": "iliocostalis_lumborum_right",
+    "sommets": 243
+   },
+   {
+    "nom": "iliocostalis_thoracis_left",
+    "sommets": 121
+   },
+   {
+    "nom": "iliocostalis_thoracis_right",
+    "sommets": 121
+   },
+   {
+    "nom": "longissimus_thoracis_left",
+    "sommets": 630
+   },
+   {
+    "nom": "longissimus_thoracis_right",
+    "sommets": 630
+   },
+   {
+    "nom": "spinalis_thoracis_left",
+    "sommets": 116
+   },
+   {
+    "nom": "spinalis_thoracis_right",
+    "sommets": 116
+   },
+   {
+    "nom": "multifidus_lumborum_left",
+    "sommets": 61
+   },
+   {
+    "nom": "multifidus_lumborum_right",
+    "sommets": 61
+   },
+   {
+    "nom": "rectus_abdominis_left",
+    "sommets": 244
+   },
+   {
+    "nom": "rectus_abdominis_right",
+    "sommets": 244
+   },
+   {
+    "nom": "transversus_abdominis_left",
+    "sommets": 243
+   },
+   {
+    "nom": "transversus_abdominis_right",
+    "sommets": 243
+   },
+   {
+    "nom": "external_oblique_left",
+    "sommets": 401
+   },
+   {
+    "nom": "external_oblique_right",
+    "sommets": 401
+   },
+   {
+    "nom": "internal_oblique_left",
+    "sommets": 383
+   },
+   {
+    "nom": "internal_oblique_right",
+    "sommets": 383
+   },
+   {
+    "nom": "quadratus_lumborum_left",
+    "sommets": 58
+   },
+   {
+    "nom": "quadratus_lumborum_right",
+    "sommets": 58
+   },
+   {
+    "nom": "sternocleidomastoid_left",
+    "sommets": 115
+   },
+   {
+    "nom": "sternocleidomastoid_right",
+    "sommets": 115
+   },
+   {
+    "nom": "scalenus_medius_left",
+    "sommets": 48
+   },
+   {
+    "nom": "scalenus_medius_right",
+    "sommets": 48
+   },
+   {
+    "nom": "scalenus_anterior_left",
+    "sommets": 48
+   },
+   {
+    "nom": "scalenus_anterior_right",
+    "sommets": 48
+   },
+   {
+    "nom": "scalenus_posterior_left",
+    "sommets": 45
+   },
+   {
+    "nom": "scalenus_posterior_right",
+    "sommets": 45
+   },
+   {
+    "nom": "splenius_capitis_left",
+    "sommets": 125
+   },
+   {
+    "nom": "splenius_capitis_right",
+    "sommets": 125
+   },
+   {
+    "nom": "splenius_colli_left",
+    "sommets": 89
+   },
+   {
+    "nom": "splenius_colli_right",
+    "sommets": 89
+   },
+   {
+    "nom": "biceps_brachii_long_left",
+    "sommets": 79
+   },
+   {
+    "nom": "biceps_brachii_long_right",
+    "sommets": 79
+   },
+   {
+    "nom": "biceps_brachii_short_left",
+    "sommets": 174
+   },
+   {
+    "nom": "biceps_brachii_short_right",
+    "sommets": 174
+   },
+   {
+    "nom": "brachialis_left",
+    "sommets": 86
+   },
+   {
+    "nom": "brachialis_right",
+    "sommets": 86
+   },
+   {
+    "nom": "coracobrachialis_left",
+    "sommets": 42
+   },
+   {
+    "nom": "coracobrachialis_right",
+    "sommets": 42
+   },
+   {
+    "nom": "triceps_long_left",
+    "sommets": 97
+   },
+   {
+    "nom": "triceps_long_right",
+    "sommets": 97
+   },
+   {
+    "nom": "triceps_lateral_left",
+    "sommets": 89
+   },
+   {
+    "nom": "triceps_lateral_right",
+    "sommets": 89
+   },
+   {
+    "nom": "triceps_medial_left",
+    "sommets": 66
+   },
+   {
+    "nom": "triceps_medial_right",
+    "sommets": 66
+   },
+   {
+    "nom": "brachioradialis_muscle_left",
+    "sommets": 179
+   },
+   {
+    "nom": "brachioradialis_muscle_right",
+    "sommets": 179
+   },
+   {
+    "nom": "flexor_carpi_radialis_left",
+    "sommets": 58
+   },
+   {
+    "nom": "flexor_carpi_radialis_right",
+    "sommets": 58
+   },
+   {
+    "nom": "palmaris_longus_muscle_left",
+    "sommets": 58
+   },
+   {
+    "nom": "palmaris_longus_muscle_right",
+    "sommets": 58
+   },
+   {
+    "nom": "humeral_head_of_flexor_carpi_ulnaris_left",
+    "sommets": 85
+   },
+   {
+    "nom": "humeral_head_of_flexor_carpi_ulnaris_right",
+    "sommets": 85
+   },
+   {
+    "nom": "ulnar_head_of_flexor_carpi_ulnaris_left",
+    "sommets": 39
+   },
+   {
+    "nom": "ulnar_head_of_flexor_carpi_ulnaris_right",
+    "sommets": 39
+   },
+   {
+    "nom": "humero_ulnar_head_of_flexor_digitorum_superficialis_left",
+    "sommets": 147
+   },
+   {
+    "nom": "humero_ulnar_head_of_flexor_digitorum_superficialis_right",
+    "sommets": 147
+   },
+   {
+    "nom": "radial_head_of_flexor_digitorum_superficialis_left",
+    "sommets": 43
+   },
+   {
+    "nom": "radial_head_of_flexor_digitorum_superficialis_right",
+    "sommets": 43
+   },
+   {
+    "nom": "flexor_digitorum_profundus_left",
+    "sommets": 110
+   },
+   {
+    "nom": "flexor_digitorum_profundus_right",
+    "sommets": 110
+   },
+   {
+    "nom": "flexor_pollicis_longus_left",
+    "sommets": 40
+   },
+   {
+    "nom": "flexor_pollicis_longus_right",
+    "sommets": 40
+   },
+   {
+    "nom": "pronator_quadratus_left",
+    "sommets": 51
+   },
+   {
+    "nom": "pronator_quadratus_right",
+    "sommets": 51
+   },
+   {
+    "nom": "superficial_head_of_pronator_teres_left",
+    "sommets": 61
+   },
+   {
+    "nom": "superficial_head_of_pronator_teres_right",
+    "sommets": 61
+   },
+   {
+    "nom": "deep_head_of_pronator_teres_left",
+    "sommets": 42
+   },
+   {
+    "nom": "deep_head_of_pronator_teres_right",
+    "sommets": 42
+   },
+   {
+    "nom": "supinator_left",
+    "sommets": 58
+   },
+   {
+    "nom": "supinator_right",
+    "sommets": 58
+   },
+   {
+    "nom": "extensor_digitorum_left",
+    "sommets": 85
+   },
+   {
+    "nom": "extensor_digitorum_right",
+    "sommets": 85
+   },
+   {
+    "nom": "ulnar_head_of_extensor_carpi_ulnaris_left",
+    "sommets": 43
+   },
+   {
+    "nom": "ulnar_head_of_extensor_carpi_ulnaris_right",
+    "sommets": 43
+   },
+   {
+    "nom": "humeral_head_of_extensor_carpi_ulnaris_left",
+    "sommets": 41
+   },
+   {
+    "nom": "humeral_head_of_extensor_carpi_ulnaris_right",
+    "sommets": 41
+   },
+   {
+    "nom": "extensor_carpi_radialis_longus_left",
+    "sommets": 92
+   },
+   {
+    "nom": "extensor_carpi_radialis_longus_right",
+    "sommets": 92
+   },
+   {
+    "nom": "extensor_carpi_radialis_brevis_left",
+    "sommets": 75
+   },
+   {
+    "nom": "extensor_carpi_radialis_brevis_right",
+    "sommets": 75
+   },
+   {
+    "nom": "anconeus_muscle_left",
+    "sommets": 48
+   },
+   {
+    "nom": "anconeus_muscle_right",
+    "sommets": 48
+   },
+   {
+    "nom": "extensor_digiti_minimi_left",
+    "sommets": 62
+   },
+   {
+    "nom": "extensor_digiti_minimi_right",
+    "sommets": 62
+   },
+   {
+    "nom": "abductor_pollicis_longus_left",
+    "sommets": 60
+   },
+   {
+    "nom": "abductor_pollicis_longus_right",
+    "sommets": 60
+   },
+   {
+    "nom": "extensor_indicis_left",
+    "sommets": 33
+   },
+   {
+    "nom": "extensor_indicis_right",
+    "sommets": 33
+   },
+   {
+    "nom": "extensor_pollicis_brevis_left",
+    "sommets": 36
+   },
+   {
+    "nom": "extensor_pollicis_brevis_right",
+    "sommets": 36
+   },
+   {
+    "nom": "extensor_pollicis_longus_left",
+    "sommets": 43
+   },
+   {
+    "nom": "extensor_pollicis_longus_right",
+    "sommets": 43
+   },
+   {
+    "nom": "gluteus_maximus_left",
+    "sommets": 133
+   },
+   {
+    "nom": "gluteus_maximus_right",
+    "sommets": 133
+   },
+   {
+    "nom": "gluteus_medius_left",
+    "sommets": 127
+   },
+   {
+    "nom": "gluteus_medius_right",
+    "sommets": 127
+   },
+   {
+    "nom": "gluteus_minimus_left",
+    "sommets": 151
+   },
+   {
+    "nom": "gluteus_minimus_right",
+    "sommets": 151
+   },
+   {
+    "nom": "iliacus_left",
+    "sommets": 107
+   },
+   {
+    "nom": "iliacus_right",
+    "sommets": 107
+   },
+   {
+    "nom": "psoas_major_left",
+    "sommets": 132
+   },
+   {
+    "nom": "psoas_major_right",
+    "sommets": 132
+   },
+   {
+    "nom": "tensor_fasciae_latae_left",
+    "sommets": 46
+   },
+   {
+    "nom": "tensor_fasciae_latae_right",
+    "sommets": 46
+   },
+   {
+    "nom": "piriformis_left",
+    "sommets": 40
+   },
+   {
+    "nom": "piriformis_right",
+    "sommets": 40
+   },
+   {
+    "nom": "quadratus_femoris_left",
+    "sommets": 42
+   },
+   {
+    "nom": "quadratus_femoris_right",
+    "sommets": 42
+   },
+   {
+    "nom": "obturator_internus_left",
+    "sommets": 93
+   },
+   {
+    "nom": "obturator_internus_right",
+    "sommets": 93
+   },
+   {
+    "nom": "obturator_externus_left",
+    "sommets": 44
+   },
+   {
+    "nom": "obturator_externus_right",
+    "sommets": 44
+   },
+   {
+    "nom": "gemellus_inferior_left",
+    "sommets": 42
+   },
+   {
+    "nom": "gemellus_inferior_right",
+    "sommets": 42
+   },
+   {
+    "nom": "gemellus_superior_left",
+    "sommets": 42
+   },
+   {
+    "nom": "gemellus_superior_right",
+    "sommets": 42
+   },
+   {
+    "nom": "gastrocnemius_lateral_left",
+    "sommets": 118
+   },
+   {
+    "nom": "gastrocnemius_lateral_right",
+    "sommets": 118
+   },
+   {
+    "nom": "gastrocnemius_medial_left",
+    "sommets": 154
+   },
+   {
+    "nom": "gastrocnemius_medial_right",
+    "sommets": 154
+   },
+   {
+    "nom": "soleus_left",
+    "sommets": 156
+   },
+   {
+    "nom": "soleus_right",
+    "sommets": 156
+   },
+   {
+    "nom": "plantaris_left",
+    "sommets": 113
+   },
+   {
+    "nom": "plantaris_right",
+    "sommets": 113
+   },
+   {
+    "nom": "tibialis_anterior_left",
+    "sommets": 312
+   },
+   {
+    "nom": "tibialis_anterior_right",
+    "sommets": 312
+   },
+   {
+    "nom": "tibialis_posterior_left",
+    "sommets": 43
+   },
+   {
+    "nom": "tibialis_posterior_right",
+    "sommets": 43
+   },
+   {
+    "nom": "fibularis_longus_left",
+    "sommets": 90
+   },
+   {
+    "nom": "fibularis_longus_right",
+    "sommets": 90
+   },
+   {
+    "nom": "fibularis_brevis_left",
+    "sommets": 64
+   },
+   {
+    "nom": "fibularis_brevis_right",
+    "sommets": 64
+   },
+   {
+    "nom": "fibularis_tertius_left",
+    "sommets": 25
+   },
+   {
+    "nom": "fibularis_tertius_right",
+    "sommets": 25
+   },
+   {
+    "nom": "extensor_digitorum_longus_left",
+    "sommets": 75
+   },
+   {
+    "nom": "extensor_digitorum_longus_right",
+    "sommets": 75
+   },
+   {
+    "nom": "extensor_hallucis_longus_left",
+    "sommets": 51
+   },
+   {
+    "nom": "extensor_hallucis_longus_right",
+    "sommets": 51
+   },
+   {
+    "nom": "flexor_digitorum_longus_left",
+    "sommets": 81
+   },
+   {
+    "nom": "flexor_digitorum_longus_right",
+    "sommets": 81
+   },
+   {
+    "nom": "flexor_hallucis_longus_left",
+    "sommets": 106
+   },
+   {
+    "nom": "flexor_hallucis_longus_right",
+    "sommets": 106
+   },
+   {
+    "nom": "popliteus_left",
+    "sommets": 40
+   },
+   {
+    "nom": "popliteus_right",
+    "sommets": 40
+   },
+   {
+    "nom": "platysma_left",
+    "sommets": 160
+   },
+   {
+    "nom": "platysma_right",
+    "sommets": 160
+   },
+   {
+    "nom": "head",
+    "sommets": 1300
+   },
+   {
+    "nom": "hand_left",
+    "sommets": 352
+   },
+   {
+    "nom": "foot_left",
+    "sommets": 352
+   },
+   {
+    "nom": "hand_right",
+    "sommets": 352
+   },
+   {
+    "nom": "foot_right",
+    "sommets": 352
+   },
+   {
+    "nom": "os",
+    "sommets": 3531
+   },
+   {
+    "nom": "contexte",
+    "sommets": 1523
+   }
+  ]
+ },
+ "postures": {
+  "debout": {
+   "nom": "Debout",
+   "app": true,
+   "placement": "sol",
+   "angles": {},
+   "rotations": {},
+   "translation": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "tetes": {
+    "pelvis": [
+     0.0,
+     0.86056,
+     -0.00451
+    ],
+    "lumbar": [
+     0.0,
+     0.95924,
+     -0.00886
+    ],
+    "thoracic_low": [
+     0.0,
+     1.13099,
+     -0.0094
+    ],
+    "thoracic_high": [
+     0.0,
+     1.27724,
+     -0.0444
+    ],
+    "neck": [
+     0.0,
+     1.44686,
+     -0.02812
+    ],
+    "head": [
+     0.0,
+     1.55416,
+     -0.01722
+    ],
+    "clavicle_l": [
+     0.01582,
+     1.40205,
+     0.03243
+    ],
+    "scapula_l": [
+     0.14915,
+     1.41763,
+     -0.03366
+    ],
+    "upperarm_l": [
+     0.16753,
+     1.38235,
+     -0.02655
+    ],
+    "forearm_l": [
+     0.21394,
+     1.09881,
+     -0.03445
+    ],
+    "radius_l": [
+     0.24029,
+     1.08714,
+     -0.03201
+    ],
+    "hand_l": [
+     0.26111,
+     0.84622,
+     0.02186
+    ],
+    "fingers1_l": [
+     0.2655,
+     0.77548,
+     0.03673
+    ],
+    "fingers2_l": [
+     0.27041,
+     0.73937,
+     0.05794
+    ],
+    "thigh_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "shin_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "foot_l": [
+     0.07952,
+     0.06465,
+     -0.04246
+    ],
+    "toes_l": [
+     0.10349,
+     0.02068,
+     0.07257
+    ],
+    "clavicle_r": [
+     -0.01582,
+     1.40205,
+     0.03243
+    ],
+    "scapula_r": [
+     -0.14915,
+     1.41763,
+     -0.03366
+    ],
+    "upperarm_r": [
+     -0.16753,
+     1.38235,
+     -0.02655
+    ],
+    "forearm_r": [
+     -0.21394,
+     1.09881,
+     -0.03445
+    ],
+    "radius_r": [
+     -0.24029,
+     1.08714,
+     -0.03201
+    ],
+    "hand_r": [
+     -0.26111,
+     0.84622,
+     0.02186
+    ],
+    "fingers1_r": [
+     -0.2655,
+     0.77548,
+     0.03673
+    ],
+    "fingers2_r": [
+     -0.27041,
+     0.73937,
+     0.05794
+    ],
+    "thigh_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "shin_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "foot_r": [
+     -0.07952,
+     0.06465,
+     -0.04246
+    ],
+    "toes_r": [
+     -0.10349,
+     0.02068,
+     0.07257
+    ],
+    "shoulder_aux_l": [
+     0.16753,
+     1.38235,
+     -0.02655
+    ],
+    "shoulder_aux2_l": [
+     0.16753,
+     1.38235,
+     -0.02655
+    ],
+    "elbow_aux_l": [
+     0.21394,
+     1.09881,
+     -0.03445
+    ],
+    "elbow_aux2_l": [
+     0.21394,
+     1.09881,
+     -0.03445
+    ],
+    "pronation_aux_l": [
+     0.24029,
+     1.08714,
+     -0.03201
+    ],
+    "hip_aux_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "hip_aux2_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "knee_aux_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "knee_aux2_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "biceps_bulge_l": [
+     0.19806,
+     1.22662,
+     -0.01195
+    ],
+    "quads_bulge_l": [
+     0.1144,
+     0.6257,
+     0.02671
+    ],
+    "glute_bulge_l": [
+     0.07554,
+     0.84582,
+     -0.0709
+    ],
+    "shoulder_aux_r": [
+     -0.16753,
+     1.38235,
+     -0.02655
+    ],
+    "shoulder_aux2_r": [
+     -0.16753,
+     1.38235,
+     -0.02655
+    ],
+    "elbow_aux_r": [
+     -0.21394,
+     1.09881,
+     -0.03445
+    ],
+    "elbow_aux2_r": [
+     -0.21394,
+     1.09881,
+     -0.03445
+    ],
+    "pronation_aux_r": [
+     -0.24029,
+     1.08714,
+     -0.03201
+    ],
+    "hip_aux_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "hip_aux2_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "knee_aux_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "knee_aux2_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "biceps_bulge_r": [
+     -0.19806,
+     1.22662,
+     -0.01195
+    ],
+    "quads_bulge_r": [
+     -0.1144,
+     0.6257,
+     0.02671
+    ],
+    "glute_bulge_r": [
+     -0.07554,
+     0.84583,
+     -0.07089
+    ]
+   }
+  },
+  "suspendu": {
+   "nom": "Suspendu à la barre",
+   "app": true,
+   "placement": "suspendu",
+   "angles": {
+    "clavicle_l": {
+     "elevation": 15
+    },
+    "clavicle_r": {
+     "elevation": 15
+    },
+    "scapula_l": {
+     "sonnette": 35,
+     "bascule": 15
+    },
+    "scapula_r": {
+     "sonnette": 35,
+     "bascule": 15
+    },
+    "upperarm_l": {
+     "abduction": 155
+    },
+    "upperarm_r": {
+     "abduction": 155
+    },
+    "hand_l": {
+     "flexion": 5
+    },
+    "hand_r": {
+     "flexion": 5
+    },
+    "fingers1_l": {
+     "flexion": 75
+    },
+    "fingers1_r": {
+     "flexion": 75
+    },
+    "fingers2_l": {
+     "flexion": 90
+    },
+    "fingers2_r": {
+     "flexion": 90
+    },
+    "thigh_l": {
+     "flexion": 5
+    },
+    "thigh_r": {
+     "flexion": 5
+    },
+    "shin_l": {
+     "flexion": 10
+    },
+    "shin_r": {
+     "flexion": 10
+    },
+    "foot_l": {
+     "flexion": -25
+    },
+    "foot_r": {
+     "flexion": -25
+    }
+   },
+   "rotations": {
+    "clavicle_l": [
+     0.0,
+     0.0,
+     0.1305262,
+     0.9914449
+    ],
+    "clavicle_r": [
+     0.0,
+     0.0,
+     -0.1305262,
+     0.9914449
+    ],
+    "scapula_l": [
+     -0.124485,
+     -0.03925,
+     0.2981332,
+     0.9455578
+    ],
+    "scapula_r": [
+     -0.124485,
+     0.03925,
+     -0.2981332,
+     0.9455578
+    ],
+    "upperarm_l": [
+     0.0794593,
+     -0.1035534,
+     0.7865661,
+     0.6035534
+    ],
+    "upperarm_r": [
+     0.0794593,
+     0.1035534,
+     -0.7865661,
+     0.6035534
+    ],
+    "hand_l": [
+     -0.0436194,
+     0.0,
+     0.0,
+     0.9990482
+    ],
+    "hand_r": [
+     -0.0436194,
+     0.0,
+     0.0,
+     0.9990482
+    ],
+    "fingers1_l": [
+     -0.6087614,
+     0.0,
+     0.0,
+     0.7933533
+    ],
+    "fingers1_r": [
+     -0.6087614,
+     0.0,
+     0.0,
+     0.7933533
+    ],
+    "fingers2_l": [
+     -0.7071068,
+     0.0,
+     0.0,
+     0.7071068
+    ],
+    "fingers2_r": [
+     -0.7071068,
+     0.0,
+     0.0,
+     0.7071068
+    ],
+    "thigh_l": [
+     -0.0436194,
+     0.0,
+     0.0,
+     0.9990482
+    ],
+    "thigh_r": [
+     -0.0436194,
+     0.0,
+     0.0,
+     0.9990482
+    ],
+    "shin_l": [
+     0.0870027,
+     0.0045617,
+     -0.0024177,
+     0.9961947
+    ],
+    "shin_r": [
+     0.0870027,
+     -0.0045617,
+     0.0024177,
+     0.9961947
+    ],
+    "foot_l": [
+     0.1913333,
+     -0.0375849,
+     -0.0939416,
+     0.976296
+    ],
+    "foot_r": [
+     0.1913333,
+     0.0375849,
+     0.0939416,
+     0.976296
+    ],
+    "shoulder_aux_l": [
+     0.030175,
+     -0.0393249,
+     0.298702,
+     0.9530583
+    ],
+    "shoulder_aux2_l": [
+     0.0575171,
+     -0.0749578,
+     0.5693608,
+     0.8166403
+    ],
+    "hip_aux_l": [
+     -0.0145439,
+     0.0,
+     0.0,
+     0.9998942
+    ],
+    "hip_aux2_l": [
+     -0.0290847,
+     0.0,
+     0.0,
+     0.999577
+    ],
+    "knee_aux_l": [
+     0.0290336,
+     0.0015223,
+     -0.0008068,
+     0.999577
+    ],
+    "knee_aux2_l": [
+     0.0580427,
+     0.0030433,
+     -0.0016129,
+     0.9983082
+    ],
+    "shoulder_aux_r": [
+     0.030175,
+     0.0393249,
+     -0.298702,
+     0.9530583
+    ],
+    "shoulder_aux2_r": [
+     0.0575171,
+     0.0749578,
+     -0.5693608,
+     0.8166403
+    ],
+    "hip_aux_r": [
+     -0.0145439,
+     0.0,
+     0.0,
+     0.9998942
+    ],
+    "hip_aux2_r": [
+     -0.0290847,
+     0.0,
+     0.0,
+     0.999577
+    ],
+    "knee_aux_r": [
+     0.0290336,
+     -0.0015223,
+     0.0008068,
+     0.999577
+    ],
+    "knee_aux2_r": [
+     0.0580427,
+     -0.0030433,
+     0.0016129,
+     0.9983082
+    ]
+   },
+   "translation": [
+    0.0,
+    0.11385,
+    0.0
+   ],
+   "tetes": {
+    "pelvis": [
+     0.0,
+     0.97441,
+     -0.00451
+    ],
+    "lumbar": [
+     0.0,
+     1.07309,
+     -0.00886
+    ],
+    "thoracic_low": [
+     0.0,
+     1.24484,
+     -0.0094
+    ],
+    "thoracic_high": [
+     0.0,
+     1.39109,
+     -0.0444
+    ],
+    "neck": [
+     0.0,
+     1.56071,
+     -0.02812
+    ],
+    "head": [
+     0.0,
+     1.66801,
+     -0.01722
+    ],
+    "clavicle_l": [
+     0.01582,
+     1.5159,
+     0.03243
+    ],
+    "scapula_l": [
+     0.14057,
+     1.56545,
+     -0.03366
+    ],
+    "upperarm_l": [
+     0.17708,
+     1.55881,
+     -0.01766
+    ],
+    "forearm_l": [
+     0.25485,
+     1.8354,
+     -0.02556
+    ],
+    "radius_l": [
+     0.2359,
+     1.85711,
+     -0.02312
+    ],
+    "hand_l": [
+     0.31885,
+     2.08426,
+     0.03075
+    ],
+    "fingers1_l": [
+     0.34411,
+     2.14881,
+     0.05173
+    ],
+    "fingers2_l": [
+     0.33348,
+     2.13764,
+     0.09097
+    ],
+    "thigh_l": [
+     0.08318,
+     0.97441,
+     -0.00451
+    ],
+    "shin_l": [
+     0.07466,
+     0.56407,
+     0.00235
+    ],
+    "foot_l": [
+     0.07727,
+     0.17976,
+     -0.04024
+    ],
+    "toes_l": [
+     0.08104,
+     0.08534,
+     0.04228
+    ],
+    "clavicle_r": [
+     -0.01582,
+     1.5159,
+     0.03243
+    ],
+    "scapula_r": [
+     -0.14057,
+     1.56545,
+     -0.03366
+    ],
+    "upperarm_r": [
+     -0.17708,
+     1.55881,
+     -0.01766
+    ],
+    "forearm_r": [
+     -0.25485,
+     1.8354,
+     -0.02556
+    ],
+    "radius_r": [
+     -0.2359,
+     1.85711,
+     -0.02312
+    ],
+    "hand_r": [
+     -0.31885,
+     2.08426,
+     0.03075
+    ],
+    "fingers1_r": [
+     -0.34411,
+     2.14881,
+     0.05173
+    ],
+    "fingers2_r": [
+     -0.33348,
+     2.13764,
+     0.09097
+    ],
+    "thigh_r": [
+     -0.08318,
+     0.97441,
+     -0.00451
+    ],
+    "shin_r": [
+     -0.07466,
+     0.56407,
+     0.00235
+    ],
+    "foot_r": [
+     -0.07727,
+     0.17976,
+     -0.04024
+    ],
+    "toes_r": [
+     -0.08104,
+     0.08534,
+     0.04228
+    ],
+    "shoulder_aux_l": [
+     0.17708,
+     1.55881,
+     -0.01766
+    ],
+    "shoulder_aux2_l": [
+     0.17708,
+     1.55881,
+     -0.01766
+    ],
+    "elbow_aux_l": [
+     0.25485,
+     1.8354,
+     -0.02556
+    ],
+    "elbow_aux2_l": [
+     0.25485,
+     1.8354,
+     -0.02556
+    ],
+    "pronation_aux_l": [
+     0.2359,
+     1.85711,
+     -0.02312
+    ],
+    "hip_aux_l": [
+     0.08318,
+     0.97441,
+     -0.00451
+    ],
+    "hip_aux2_l": [
+     0.08318,
+     0.97441,
+     -0.00451
+    ],
+    "knee_aux_l": [
+     0.07466,
+     0.56407,
+     0.00235
+    ],
+    "knee_aux2_l": [
+     0.07466,
+     0.56407,
+     0.00235
+    ],
+    "biceps_bulge_l": [
+     0.21523,
+     1.71285,
+     -0.00306
+    ],
+    "quads_bulge_l": [
+     0.1144,
+     0.74316,
+     0.04706
+    ],
+    "glute_bulge_l": [
+     0.07554,
+     0.95967,
+     -0.0709
+    ],
+    "shoulder_aux_r": [
+     -0.17708,
+     1.55881,
+     -0.01766
+    ],
+    "shoulder_aux2_r": [
+     -0.17708,
+     1.55881,
+     -0.01766
+    ],
+    "elbow_aux_r": [
+     -0.25485,
+     1.8354,
+     -0.02556
+    ],
+    "elbow_aux2_r": [
+     -0.25485,
+     1.8354,
+     -0.02556
+    ],
+    "pronation_aux_r": [
+     -0.2359,
+     1.85711,
+     -0.02312
+    ],
+    "hip_aux_r": [
+     -0.08318,
+     0.97441,
+     -0.00451
+    ],
+    "hip_aux2_r": [
+     -0.08318,
+     0.97441,
+     -0.00451
+    ],
+    "knee_aux_r": [
+     -0.07466,
+     0.56407,
+     0.00235
+    ],
+    "knee_aux2_r": [
+     -0.07466,
+     0.56407,
+     0.00235
+    ],
+    "biceps_bulge_r": [
+     -0.21523,
+     1.71285,
+     -0.00306
+    ],
+    "quads_bulge_r": [
+     -0.1144,
+     0.74316,
+     0.04706
+    ],
+    "glute_bulge_r": [
+     -0.07554,
+     0.95968,
+     -0.07089
+    ]
+   }
+  },
+  "squat_bas": {
+   "nom": "Squat bas",
+   "app": true,
+   "placement": "pieds",
+   "angles": {
+    "lumbar": {
+     "flexion": 15
+    },
+    "thoracic_low": {
+     "flexion": 5
+    },
+    "neck": {
+     "flexion": -20
+    },
+    "head": {
+     "flexion": -10
+    },
+    "thigh_l": {
+     "flexion": 118,
+     "abduction": 18,
+     "rotation": -15
+    },
+    "thigh_r": {
+     "flexion": 118,
+     "abduction": 18,
+     "rotation": -15
+    },
+    "shin_l": {
+     "flexion": 145
+    },
+    "shin_r": {
+     "flexion": 145
+    },
+    "foot_l": {
+     "flexion": 35
+    },
+    "foot_r": {
+     "flexion": 35
+    },
+    "clavicle_l": {
+     "protraction": 10
+    },
+    "clavicle_r": {
+     "protraction": 10
+    },
+    "scapula_l": {
+     "sonnette": 15
+    },
+    "scapula_r": {
+     "sonnette": 15
+    },
+    "upperarm_l": {
+     "flexion": 65,
+     "abduction": -8
+    },
+    "upperarm_r": {
+     "flexion": 65,
+     "abduction": -8
+    },
+    "forearm_l": {
+     "flexion": 10
+    },
+    "forearm_r": {
+     "flexion": 10
+    },
+    "radius_l": {
+     "pronation": 90
+    },
+    "radius_r": {
+     "pronation": 90
+    },
+    "fingers1_l": {
+     "flexion": 20
+    },
+    "fingers1_r": {
+     "flexion": 20
+    },
+    "fingers2_l": {
+     "flexion": 20
+    },
+    "fingers2_r": {
+     "flexion": 20
+    },
+    "pelvis": {
+     "flexion": 3.104
+    }
+   },
+   "rotations": {
+    "lumbar": [
+     0.1305262,
+     0.0,
+     0.0,
+     0.9914449
+    ],
+    "thoracic_low": [
+     0.0436194,
+     0.0,
+     0.0,
+     0.9990482
+    ],
+    "neck": [
+     -0.1736482,
+     0.0,
+     0.0,
+     0.9848078
+    ],
+    "head": [
+     -0.0871557,
+     0.0,
+     0.0,
+     0.9961947
+    ],
+    "thigh_l": [
+     -0.8498877,
+     0.1993416,
+     -0.0306249,
+     0.4868428
+    ],
+    "thigh_r": [
+     -0.8498877,
+     -0.1993416,
+     0.0306249,
+     0.4868428
+    ],
+    "shin_l": [
+     0.9520422,
+     0.0499177,
+     -0.0264562,
+     0.3007058
+    ],
+    "shin_r": [
+     0.9520422,
+     -0.0499177,
+     0.0264562,
+     0.3007058
+    ],
+    "foot_l": [
+     -0.2658249,
+     0.0522178,
+     0.1305158,
+     0.953717
+    ],
+    "foot_r": [
+     -0.2658249,
+     -0.0522178,
+     -0.1305158,
+     0.953717
+    ],
+    "clavicle_l": [
+     0.0,
+     -0.0871557,
+     0.0,
+     0.9961947
+    ],
+    "clavicle_r": [
+     0.0,
+     0.0871557,
+     0.0,
+     0.9961947
+    ],
+    "scapula_l": [
+     0.0,
+     0.0,
+     0.1305262,
+     0.9914449
+    ],
+    "scapula_r": [
+     0.0,
+     0.0,
+     -0.1305262,
+     0.9914449
+    ],
+    "upperarm_l": [
+     -0.5297692,
+     0.1060458,
+     -0.1216167,
+     0.8326513
+    ],
+    "upperarm_r": [
+     -0.5297692,
+     -0.1060458,
+     0.1216167,
+     0.8326513
+    ],
+    "forearm_l": [
+     -0.0861329,
+     -0.0043378,
+     0.0125871,
+     0.9961947
+    ],
+    "forearm_r": [
+     -0.0861329,
+     0.0043378,
+     -0.0125871,
+     0.9961947
+    ],
+    "radius_l": [
+     0.0206757,
+     -0.6920283,
+     0.1437683,
+     0.7071068
+    ],
+    "radius_r": [
+     0.0206757,
+     0.6920283,
+     -0.1437683,
+     0.7071068
+    ],
+    "fingers1_l": [
+     -0.1736482,
+     0.0,
+     0.0,
+     0.9848078
+    ],
+    "fingers1_r": [
+     -0.1736482,
+     0.0,
+     0.0,
+     0.9848078
+    ],
+    "fingers2_l": [
+     -0.1736482,
+     0.0,
+     0.0,
+     0.9848078
+    ],
+    "fingers2_r": [
+     -0.1736482,
+     0.0,
+     0.0,
+     0.9848078
+    ],
+    "pelvis": [
+     0.0270882,
+     0.0,
+     0.0,
+     0.999633
+    ],
+    "shoulder_aux_l": [
+     -0.1859593,
+     0.0372242,
+     -0.0426898,
+     0.9809236
+    ],
+    "shoulder_aux2_l": [
+     -0.3648238,
+     0.0730281,
+     -0.083751,
+     0.9244221
+    ],
+    "elbow_aux_l": [
+     -0.0287434,
+     -0.0014476,
+     0.0042004,
+     0.999577
+    ],
+    "elbow_aux2_l": [
+     -0.0574624,
+     -0.0028939,
+     0.0083973,
+     0.9983082
+    ],
+    "pronation_aux_l": [
+     0.0111896,
+     -0.374523,
+     0.0778069,
+     0.9238795
+    ],
+    "hip_aux_l": [
+     -0.3373847,
+     0.0791338,
+     -0.0121573,
+     0.9379561
+    ],
+    "hip_aux2_l": [
+     -0.632904,
+     0.148448,
+     -0.0228061,
+     0.7595232
+    ],
+    "knee_aux_l": [
+     0.4086734,
+     0.0214277,
+     -0.0113566,
+     0.9123584
+    ],
+    "knee_aux2_l": [
+     0.7457133,
+     0.0390994,
+     -0.0207226,
+     0.6647959
+    ],
+    "shoulder_aux_r": [
+     -0.1859593,
+     -0.0372242,
+     0.0426898,
+     0.9809236
+    ],
+    "shoulder_aux2_r": [
+     -0.3648238,
+     -0.0730281,
+     0.083751,
+     0.9244221
+    ],
+    "elbow_aux_r": [
+     -0.0287434,
+     0.0014476,
+     -0.0042004,
+     0.999577
+    ],
+    "elbow_aux2_r": [
+     -0.0574624,
+     0.0028939,
+     -0.0083973,
+     0.9983082
+    ],
+    "pronation_aux_r": [
+     0.0111896,
+     0.374523,
+     -0.0778069,
+     0.9238795
+    ],
+    "hip_aux_r": [
+     -0.3373847,
+     -0.0791338,
+     0.0121573,
+     0.9379561
+    ],
+    "hip_aux2_r": [
+     -0.632904,
+     -0.148448,
+     0.0228061,
+     0.7595232
+    ],
+    "knee_aux_r": [
+     0.4086734,
+     -0.0214277,
+     0.0113566,
+     0.9123584
+    ],
+    "knee_aux2_r": [
+     0.7457133,
+     -0.0390994,
+     0.0207226,
+     0.6647959
+    ]
+   },
+   "translation": [
+    0.0,
+    -0.63664,
+    0.0
+   ],
+   "tetes": {
+    "pelvis": [
+     0.0,
+     0.22392,
+     -0.00451
+    ],
+    "lumbar": [
+     0.0,
+     0.3227,
+     -0.00351
+    ],
+    "thoracic_low": [
+     0.0,
+     0.48611,
+     0.04935
+    ],
+    "thoracic_high": [
+     0.0,
+     0.63436,
+     0.07455
+    ],
+    "neck": [
+     0.0,
+     0.78399,
+     0.15608
+    ],
+    "head": [
+     0.0,
+     0.89054,
+     0.17278
+    ],
+    "clavicle_l": [
+     0.01582,
+     0.71901,
+     0.19419
+    ],
+    "scapula_l": [
+     0.1586,
+     0.7498,
+     0.16173
+    ],
+    "upperarm_l": [
+     0.18384,
+     0.71825,
+     0.16096
+    ],
+    "forearm_l": [
+     0.19034,
+     0.49916,
+     0.34689
+    ],
+    "radius_l": [
+     0.21523,
+     0.4918,
+     0.35965
+    ],
+    "hand_l": [
+     0.1925,
+     0.39454,
+     0.58636
+    ],
+    "fingers1_l": [
+     0.1867,
+     0.36449,
+     0.652
+    ],
+    "fingers2_l": [
+     0.15817,
+     0.35524,
+     0.68164
+    ],
+    "thigh_l": [
+     0.08318,
+     0.22392,
+     -0.00451
+    ],
+    "shin_l": [
+     0.19473,
+     0.36652,
+     0.36389
+    ],
+    "foot_l": [
+     0.00846,
+     0.07222,
+     0.19593
+    ],
+    "toes_l": [
+     0.05144,
+     0.02444,
+     0.30368
+    ],
+    "clavicle_r": [
+     -0.01582,
+     0.71901,
+     0.19419
+    ],
+    "scapula_r": [
+     -0.1586,
+     0.7498,
+     0.16173
+    ],
+    "upperarm_r": [
+     -0.18384,
+     0.71825,
+     0.16096
+    ],
+    "forearm_r": [
+     -0.19034,
+     0.49916,
+     0.34689
+    ],
+    "radius_r": [
+     -0.21523,
+     0.4918,
+     0.35965
+    ],
+    "hand_r": [
+     -0.1925,
+     0.39454,
+     0.58636
+    ],
+    "fingers1_r": [
+     -0.1867,
+     0.36449,
+     0.652
+    ],
+    "fingers2_r": [
+     -0.15817,
+     0.35524,
+     0.68164
+    ],
+    "thigh_r": [
+     -0.08318,
+     0.22392,
+     -0.00451
+    ],
+    "shin_r": [
+     -0.19473,
+     0.36652,
+     0.36389
+    ],
+    "foot_r": [
+     -0.00846,
+     0.07222,
+     0.19593
+    ],
+    "toes_r": [
+     -0.05144,
+     0.02444,
+     0.30368
+    ],
+    "shoulder_aux_l": [
+     0.18384,
+     0.71825,
+     0.16096
+    ],
+    "shoulder_aux2_l": [
+     0.18384,
+     0.71825,
+     0.16096
+    ],
+    "elbow_aux_l": [
+     0.19034,
+     0.49916,
+     0.34689
+    ],
+    "elbow_aux2_l": [
+     0.19034,
+     0.49916,
+     0.34689
+    ],
+    "pronation_aux_l": [
+     0.21523,
+     0.4918,
+     0.35965
+    ],
+    "hip_aux_l": [
+     0.08318,
+     0.22392,
+     -0.00451
+    ],
+    "hip_aux2_l": [
+     0.08318,
+     0.22392,
+     -0.00451
+    ],
+    "knee_aux_l": [
+     0.19473,
+     0.36652,
+     0.36389
+    ],
+    "knee_aux2_l": [
+     0.19473,
+     0.36652,
+     0.36389
+    ],
+    "biceps_bulge_l": [
+     0.1924,
+     0.61005,
+     0.27765
+    ],
+    "quads_bulge_l": [
+     0.19212,
+     0.333,
+     0.17809
+    ],
+    "glute_bulge_l": [
+     0.07554,
+     0.2128,
+     -0.0716
+    ],
+    "shoulder_aux_r": [
+     -0.18384,
+     0.71825,
+     0.16096
+    ],
+    "shoulder_aux2_r": [
+     -0.18384,
+     0.71825,
+     0.16096
+    ],
+    "elbow_aux_r": [
+     -0.19034,
+     0.49916,
+     0.34689
+    ],
+    "elbow_aux2_r": [
+     -0.19034,
+     0.49916,
+     0.34689
+    ],
+    "pronation_aux_r": [
+     -0.21523,
+     0.4918,
+     0.35965
+    ],
+    "hip_aux_r": [
+     -0.08318,
+     0.22392,
+     -0.00451
+    ],
+    "hip_aux2_r": [
+     -0.08318,
+     0.22392,
+     -0.00451
+    ],
+    "knee_aux_r": [
+     -0.19473,
+     0.36652,
+     0.36389
+    ],
+    "knee_aux2_r": [
+     -0.19473,
+     0.36652,
+     0.36389
+    ],
+    "biceps_bulge_r": [
+     -0.1924,
+     0.61005,
+     0.27765
+    ],
+    "quads_bulge_r": [
+     -0.19212,
+     0.333,
+     0.17809
+    ],
+    "glute_bulge_r": [
+     -0.07554,
+     0.21281,
+     -0.07159
+    ]
+   }
+  },
+  "planche": {
+   "nom": "Planche de gainage",
+   "app": true,
+   "placement": "appuis",
+   "angles": {
+    "clavicle_l": {
+     "protraction": 8
+    },
+    "clavicle_r": {
+     "protraction": 8
+    },
+    "scapula_l": {
+     "sonnette": 8
+    },
+    "scapula_r": {
+     "sonnette": 8
+    },
+    "upperarm_l": {
+     "flexion": 80,
+     "abduction": -8
+    },
+    "upperarm_r": {
+     "flexion": 80,
+     "abduction": -8
+    },
+    "forearm_l": {
+     "flexion": 90
+    },
+    "forearm_r": {
+     "flexion": 90
+    },
+    "radius_l": {
+     "pronation": 85
+    },
+    "radius_r": {
+     "pronation": 85
+    },
+    "fingers1_l": {
+     "flexion": 80
+    },
+    "fingers1_r": {
+     "flexion": 80
+    },
+    "fingers2_l": {
+     "flexion": 95
+    },
+    "fingers2_r": {
+     "flexion": 95
+    },
+    "neck": {
+     "flexion": -5
+    },
+    "foot_l": {
+     "flexion": 5
+    },
+    "foot_r": {
+     "flexion": 5
+    },
+    "toes_l": {
+     "flexion": -60
+    },
+    "toes_r": {
+     "flexion": -60
+    },
+    "pelvis": {
+     "flexion": 80.648
+    }
+   },
+   "rotations": {
+    "clavicle_l": [
+     0.0,
+     -0.0697565,
+     0.0,
+     0.9975641
+    ],
+    "clavicle_r": [
+     0.0,
+     0.0697565,
+     0.0,
+     0.9975641
+    ],
+    "scapula_l": [
+     0.0,
+     0.0,
+     0.0697565,
+     0.9975641
+    ],
+    "scapula_r": [
+     0.0,
+     0.0,
+     -0.0697565,
+     0.9975641
+    ],
+    "upperarm_l": [
+     -0.6412218,
+     0.0534366,
+     -0.0619508,
+     0.7629818
+    ],
+    "upperarm_r": [
+     -0.6412218,
+     -0.0534366,
+     0.0619508,
+     0.7629818
+    ],
+    "forearm_l": [
+     -0.6988081,
+     -0.0351928,
+     0.1021208,
+     0.7071068
+    ],
+    "forearm_r": [
+     -0.6988081,
+     0.0351928,
+     -0.1021208,
+     0.7071068
+    ],
+    "radius_l": [
+     0.0197542,
+     -0.6611838,
+     0.1373604,
+     0.7372773
+    ],
+    "radius_r": [
+     0.0197542,
+     0.6611838,
+     -0.1373604,
+     0.7372773
+    ],
+    "fingers1_l": [
+     -0.6427876,
+     0.0,
+     0.0,
+     0.7660444
+    ],
+    "fingers1_r": [
+     -0.6427876,
+     0.0,
+     0.0,
+     0.7660444
+    ],
+    "fingers2_l": [
+     -0.7372773,
+     0.0,
+     0.0,
+     0.6755902
+    ],
+    "fingers2_r": [
+     -0.7372773,
+     0.0,
+     0.0,
+     0.6755902
+    ],
+    "neck": [
+     -0.0436194,
+     0.0,
+     0.0,
+     0.9990482
+    ],
+    "foot_l": [
+     -0.0385597,
+     0.0075745,
+     0.0189322,
+     0.9990482
+    ],
+    "foot_r": [
+     -0.0385597,
+     -0.0075745,
+     -0.0189322,
+     0.9990482
+    ],
+    "toes_l": [
+     -0.5,
+     0.0,
+     0.0,
+     0.8660254
+    ],
+    "toes_r": [
+     -0.5,
+     0.0,
+     0.0,
+     0.8660254
+    ],
+    "pelvis": [
+     0.64711,
+     0.0,
+     0.0,
+     0.7623966
+    ],
+    "shoulder_aux_l": [
+     -0.2302897,
+     0.0191913,
+     -0.0222492,
+     0.9726784
+    ],
+    "shoulder_aux2_l": [
+     -0.4479957,
+     0.037334,
+     -0.0432825,
+     0.8922066
+    ],
+    "elbow_aux_l": [
+     -0.2557815,
+     -0.0128815,
+     0.0373788,
+     0.9659258
+    ],
+    "elbow_aux2_l": [
+     -0.494132,
+     -0.0248851,
+     0.0722103,
+     0.8660254
+    ],
+    "pronation_aux_l": [
+     0.0105976,
+     -0.3547093,
+     0.0736906,
+     0.9320079
+    ],
+    "shoulder_aux_r": [
+     -0.2302897,
+     -0.0191913,
+     0.0222492,
+     0.9726784
+    ],
+    "shoulder_aux2_r": [
+     -0.4479957,
+     -0.037334,
+     0.0432825,
+     0.8922066
+    ],
+    "elbow_aux_r": [
+     -0.2557815,
+     0.0128815,
+     -0.0373788,
+     0.9659258
+    ],
+    "elbow_aux2_r": [
+     -0.494132,
+     0.0248851,
+     -0.0722103,
+     0.8660254
+    ],
+    "pronation_aux_r": [
+     0.0105976,
+     0.3547093,
+     -0.0736906,
+     0.9320079
+    ]
+   },
+   "translation": [
+    0.0,
+    -0.61655,
+    0.0
+   ],
+   "tetes": {
+    "pelvis": [
+     0.0,
+     0.24401,
+     -0.00451
+    ],
+    "lumbar": [
+     0.0,
+     0.26434,
+     0.09215
+    ],
+    "thoracic_low": [
+     0.0,
+     0.29278,
+     0.26153
+    ],
+    "thoracic_high": [
+     0.0,
+     0.35108,
+     0.40015
+    ],
+    "neck": [
+     0.0,
+     0.36258,
+     0.57016
+    ],
+    "head": [
+     0.0,
+     0.37862,
+     0.67681
+    ],
+    "clavicle_l": [
+     0.01582,
+     0.29556,
+     0.53579
+    ],
+    "scapula_l": [
+     0.15705,
+     0.34435,
+     0.54354
+    ],
+    "upperarm_l": [
+     0.17895,
+     0.32897,
+     0.51326
+    ],
+    "forearm_l": [
+     0.18544,
+     0.04184,
+     0.50211
+    ],
+    "radius_l": [
+     0.2126,
+     0.04546,
+     0.51137
+    ],
+    "hand_l": [
+     0.2363,
+     0.10303,
+     0.75116
+    ],
+    "fingers1_l": [
+     0.24413,
+     0.11817,
+     0.82155
+    ],
+    "fingers2_l": [
+     0.20238,
+     0.12349,
+     0.81895
+    ],
+    "thigh_l": [
+     0.08318,
+     0.24401,
+     -0.00451
+    ],
+    "shin_l": [
+     0.07466,
+     0.20604,
+     -0.41314
+    ],
+    "foot_l": [
+     0.07952,
+     0.15213,
+     -0.79601
+    ],
+    "toes_l": [
+     0.10673,
+     0.03051,
+     -0.81046
+    ],
+    "clavicle_r": [
+     -0.01582,
+     0.29556,
+     0.53579
+    ],
+    "scapula_r": [
+     -0.15705,
+     0.34435,
+     0.54354
+    ],
+    "upperarm_r": [
+     -0.17895,
+     0.32897,
+     0.51326
+    ],
+    "forearm_r": [
+     -0.18544,
+     0.04184,
+     0.50211
+    ],
+    "radius_r": [
+     -0.2126,
+     0.04546,
+     0.51137
+    ],
+    "hand_r": [
+     -0.2363,
+     0.10303,
+     0.75116
+    ],
+    "fingers1_r": [
+     -0.24413,
+     0.11817,
+     0.82155
+    ],
+    "fingers2_r": [
+     -0.20238,
+     0.12349,
+     0.81895
+    ],
+    "thigh_r": [
+     -0.08318,
+     0.24401,
+     -0.00451
+    ],
+    "shin_r": [
+     -0.07466,
+     0.20604,
+     -0.41314
+    ],
+    "foot_r": [
+     -0.07952,
+     0.15213,
+     -0.79601
+    ],
+    "toes_r": [
+     -0.10673,
+     0.03051,
+     -0.81046
+    ],
+    "shoulder_aux_l": [
+     0.17895,
+     0.32897,
+     0.51326
+    ],
+    "shoulder_aux2_l": [
+     0.17895,
+     0.32897,
+     0.51326
+    ],
+    "elbow_aux_l": [
+     0.18544,
+     0.04184,
+     0.50211
+    ],
+    "elbow_aux2_l": [
+     0.18544,
+     0.04184,
+     0.50211
+    ],
+    "pronation_aux_l": [
+     0.2126,
+     0.04546,
+     0.51137
+    ],
+    "hip_aux_l": [
+     0.08318,
+     0.24401,
+     -0.00451
+    ],
+    "hip_aux2_l": [
+     0.08318,
+     0.24401,
+     -0.00451
+    ],
+    "knee_aux_l": [
+     0.07466,
+     0.20604,
+     -0.41314
+    ],
+    "knee_aux2_l": [
+     0.07466,
+     0.20604,
+     -0.41314
+    ],
+    "biceps_bulge_l": [
+     0.18751,
+     0.17035,
+     0.52606
+    ],
+    "quads_bulge_l": [
+     0.1144,
+     0.17504,
+     -0.23118
+    ],
+    "glute_bulge_l": [
+     0.07554,
+     0.30713,
+     -0.02984
+    ],
+    "shoulder_aux_r": [
+     -0.17895,
+     0.32897,
+     0.51326
+    ],
+    "shoulder_aux2_r": [
+     -0.17895,
+     0.32897,
+     0.51326
+    ],
+    "elbow_aux_r": [
+     -0.18544,
+     0.04184,
+     0.50211
+    ],
+    "elbow_aux2_r": [
+     -0.18544,
+     0.04184,
+     0.50211
+    ],
+    "pronation_aux_r": [
+     -0.2126,
+     0.04546,
+     0.51137
+    ],
+    "hip_aux_r": [
+     -0.08318,
+     0.24401,
+     -0.00451
+    ],
+    "hip_aux2_r": [
+     -0.08318,
+     0.24401,
+     -0.00451
+    ],
+    "knee_aux_r": [
+     -0.07466,
+     0.20604,
+     -0.41314
+    ],
+    "knee_aux2_r": [
+     -0.07466,
+     0.20604,
+     -0.41314
+    ],
+    "biceps_bulge_r": [
+     -0.18751,
+     0.17035,
+     0.52606
+    ],
+    "quads_bulge_r": [
+     -0.1144,
+     0.17504,
+     -0.23118
+    ],
+    "glute_bulge_r": [
+     -0.07554,
+     0.30712,
+     -0.02983
+    ]
+   }
+  },
+  "bras_leves": {
+   "nom": "Bras levés verticalement",
+   "app": false,
+   "placement": "sol",
+   "angles": {
+    "clavicle_l": {
+     "elevation": 12
+    },
+    "clavicle_r": {
+     "elevation": 12
+    },
+    "scapula_l": {
+     "sonnette": 38,
+     "bascule": 20
+    },
+    "scapula_r": {
+     "sonnette": 38,
+     "bascule": 20
+    },
+    "upperarm_l": {
+     "abduction": 168
+    },
+    "upperarm_r": {
+     "abduction": 168
+    }
+   },
+   "rotations": {
+    "clavicle_l": [
+     0.0,
+     0.0,
+     0.1045285,
+     0.9945219
+    ],
+    "clavicle_r": [
+     0.0,
+     0.0,
+     -0.1045285,
+     0.9945219
+    ],
+    "scapula_l": [
+     -0.1641876,
+     -0.0565343,
+     0.320622,
+     0.931154
+    ],
+    "scapula_r": [
+     -0.1641876,
+     0.0565343,
+     -0.320622,
+     0.931154
+    ],
+    "upperarm_l": [
+     0.0894354,
+     -0.1488455,
+     0.844145,
+     0.5072135
+    ],
+    "upperarm_r": [
+     0.0894354,
+     0.1488455,
+     -0.844145,
+     0.5072135
+    ],
+    "shoulder_aux_l": [
+     0.0352216,
+     -0.0586186,
+     0.3324425,
+     0.9406409
+    ],
+    "shoulder_aux2_l": [
+     0.0662617,
+     -0.1102781,
+     0.625418,
+     0.7696106
+    ],
+    "shoulder_aux_r": [
+     0.0352216,
+     0.0586186,
+     -0.3324425,
+     0.9406409
+    ],
+    "shoulder_aux2_r": [
+     0.0662617,
+     0.1102781,
+     -0.625418,
+     0.7696106
+    ]
+   },
+   "translation": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "tetes": {
+    "pelvis": [
+     0.0,
+     0.86056,
+     -0.00451
+    ],
+    "lumbar": [
+     0.0,
+     0.95924,
+     -0.00886
+    ],
+    "thoracic_low": [
+     0.0,
+     1.13099,
+     -0.0094
+    ],
+    "thoracic_high": [
+     0.0,
+     1.27724,
+     -0.0444
+    ],
+    "neck": [
+     0.0,
+     1.44686,
+     -0.02812
+    ],
+    "head": [
+     0.0,
+     1.55416,
+     -0.01722
+    ],
+    "clavicle_l": [
+     0.01582,
+     1.40205,
+     0.03243
+    ],
+    "scapula_l": [
+     0.143,
+     1.44501,
+     -0.03366
+    ],
+    "upperarm_l": [
+     0.17834,
+     1.43934,
+     -0.01491
+    ],
+    "forearm_l": [
+     0.1919,
+     1.72634,
+     -0.02281
+    ],
+    "radius_l": [
+     0.16855,
+     1.74323,
+     -0.02037
+    ],
+    "hand_l": [
+     0.19828,
+     1.98321,
+     0.0335
+    ],
+    "fingers1_l": [
+     0.20869,
+     2.05332,
+     0.04837
+    ],
+    "fingers2_l": [
+     0.2114,
+     2.08966,
+     0.06958
+    ],
+    "thigh_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "shin_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "foot_l": [
+     0.07952,
+     0.06465,
+     -0.04246
+    ],
+    "toes_l": [
+     0.10349,
+     0.02068,
+     0.07257
+    ],
+    "clavicle_r": [
+     -0.01582,
+     1.40205,
+     0.03243
+    ],
+    "scapula_r": [
+     -0.143,
+     1.44501,
+     -0.03366
+    ],
+    "upperarm_r": [
+     -0.17834,
+     1.43934,
+     -0.01491
+    ],
+    "forearm_r": [
+     -0.1919,
+     1.72634,
+     -0.02281
+    ],
+    "radius_r": [
+     -0.16855,
+     1.74323,
+     -0.02037
+    ],
+    "hand_r": [
+     -0.19828,
+     1.98321,
+     0.0335
+    ],
+    "fingers1_r": [
+     -0.20869,
+     2.05332,
+     0.04837
+    ],
+    "fingers2_r": [
+     -0.2114,
+     2.08966,
+     0.06958
+    ],
+    "thigh_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "shin_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "foot_r": [
+     -0.07952,
+     0.06465,
+     -0.04246
+    ],
+    "toes_r": [
+     -0.10349,
+     0.02068,
+     0.07257
+    ],
+    "shoulder_aux_l": [
+     0.17834,
+     1.43934,
+     -0.01491
+    ],
+    "shoulder_aux2_l": [
+     0.17834,
+     1.43934,
+     -0.01491
+    ],
+    "elbow_aux_l": [
+     0.1919,
+     1.72634,
+     -0.02281
+    ],
+    "elbow_aux2_l": [
+     0.1919,
+     1.72634,
+     -0.02281
+    ],
+    "pronation_aux_l": [
+     0.16855,
+     1.74323,
+     -0.02037
+    ],
+    "hip_aux_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "hip_aux2_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "knee_aux_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "knee_aux2_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "biceps_bulge_l": [
+     0.18086,
+     1.59802,
+     -0.00031
+    ],
+    "quads_bulge_l": [
+     0.1144,
+     0.6257,
+     0.02671
+    ],
+    "glute_bulge_l": [
+     0.07554,
+     0.84582,
+     -0.0709
+    ],
+    "shoulder_aux_r": [
+     -0.17834,
+     1.43934,
+     -0.01491
+    ],
+    "shoulder_aux2_r": [
+     -0.17834,
+     1.43934,
+     -0.01491
+    ],
+    "elbow_aux_r": [
+     -0.1919,
+     1.72634,
+     -0.02281
+    ],
+    "elbow_aux2_r": [
+     -0.1919,
+     1.72634,
+     -0.02281
+    ],
+    "pronation_aux_r": [
+     -0.16855,
+     1.74323,
+     -0.02037
+    ],
+    "hip_aux_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "hip_aux2_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "knee_aux_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "knee_aux2_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "biceps_bulge_r": [
+     -0.18086,
+     1.59802,
+     -0.00031
+    ],
+    "quads_bulge_r": [
+     -0.1144,
+     0.6257,
+     0.02671
+    ],
+    "glute_bulge_r": [
+     -0.07554,
+     0.84583,
+     -0.07089
+    ]
+   }
+  },
+  "bras_extension": {
+   "nom": "Bras en extension arrière maximale",
+   "app": false,
+   "placement": "sol",
+   "angles": {
+    "clavicle_l": {
+     "protraction": 10
+    },
+    "clavicle_r": {
+     "protraction": 10
+    },
+    "scapula_l": {
+     "bascule": -15
+    },
+    "scapula_r": {
+     "bascule": -15
+    },
+    "upperarm_l": {
+     "flexion": -60,
+     "abduction": -8
+    },
+    "upperarm_r": {
+     "flexion": -60,
+     "abduction": -8
+    }
+   },
+   "rotations": {
+    "clavicle_l": [
+     0.0,
+     -0.0871557,
+     0.0,
+     0.9961947
+    ],
+    "clavicle_r": [
+     0.0,
+     0.0871557,
+     0.0,
+     0.9961947
+    ],
+    "scapula_l": [
+     0.1305262,
+     0.0,
+     0.0,
+     0.9914449
+    ],
+    "scapula_r": [
+     0.1305262,
+     0.0,
+     0.0,
+     0.9914449
+    ],
+    "upperarm_l": [
+     0.3754752,
+     0.0955699,
+     -0.1171291,
+     0.9144209
+    ],
+    "upperarm_r": [
+     0.3754752,
+     -0.0955699,
+     0.1171291,
+     0.9144209
+    ],
+    "shoulder_aux_l": [
+     0.1284416,
+     0.0326923,
+     -0.0400672,
+     0.9903679
+    ],
+    "shoulder_aux2_l": [
+     0.2544089,
+     0.0647549,
+     -0.0793626,
+     0.9616572
+    ],
+    "shoulder_aux_r": [
+     0.1284416,
+     -0.0326923,
+     0.0400672,
+     0.9903679
+    ],
+    "shoulder_aux2_r": [
+     0.2544089,
+     -0.0647549,
+     0.0793626,
+     0.9616572
+    ]
+   },
+   "translation": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "tetes": {
+    "pelvis": [
+     0.0,
+     0.86056,
+     -0.00451
+    ],
+    "lumbar": [
+     0.0,
+     0.95924,
+     -0.00886
+    ],
+    "thoracic_low": [
+     0.0,
+     1.13099,
+     -0.0094
+    ],
+    "thoracic_high": [
+     0.0,
+     1.27724,
+     -0.0444
+    ],
+    "neck": [
+     0.0,
+     1.44686,
+     -0.02812
+    ],
+    "head": [
+     0.0,
+     1.55416,
+     -0.01722
+    ],
+    "clavicle_l": [
+     0.01582,
+     1.40205,
+     0.03243
+    ],
+    "scapula_l": [
+     0.1586,
+     1.41763,
+     -0.0095
+    ],
+    "upperarm_l": [
+     0.17709,
+     1.38171,
+     -0.00854
+    ],
+    "forearm_l": [
+     0.18359,
+     1.24493,
+     -0.26125
+    ],
+    "radius_l": [
+     0.20806,
+     1.23521,
+     -0.27321
+    ],
+    "hand_l": [
+     0.19515,
+     1.06782,
+     -0.4554
+    ],
+    "fingers1_l": [
+     0.18965,
+     1.01961,
+     -0.50916
+    ],
+    "fingers2_l": [
+     0.18949,
+     0.98302,
+     -0.53011
+    ],
+    "thigh_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "shin_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "foot_l": [
+     0.07952,
+     0.06465,
+     -0.04246
+    ],
+    "toes_l": [
+     0.10349,
+     0.02068,
+     0.07257
+    ],
+    "clavicle_r": [
+     -0.01582,
+     1.40205,
+     0.03243
+    ],
+    "scapula_r": [
+     -0.1586,
+     1.41763,
+     -0.0095
+    ],
+    "upperarm_r": [
+     -0.17709,
+     1.38171,
+     -0.00854
+    ],
+    "forearm_r": [
+     -0.18359,
+     1.24493,
+     -0.26125
+    ],
+    "radius_r": [
+     -0.20806,
+     1.23521,
+     -0.27321
+    ],
+    "hand_r": [
+     -0.19515,
+     1.06782,
+     -0.4554
+    ],
+    "fingers1_r": [
+     -0.18965,
+     1.01961,
+     -0.50916
+    ],
+    "fingers2_r": [
+     -0.18949,
+     0.98302,
+     -0.53011
+    ],
+    "thigh_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "shin_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "foot_r": [
+     -0.07952,
+     0.06465,
+     -0.04246
+    ],
+    "toes_r": [
+     -0.10349,
+     0.02068,
+     0.07257
+    ],
+    "shoulder_aux_l": [
+     0.17709,
+     1.38171,
+     -0.00854
+    ],
+    "shoulder_aux2_l": [
+     0.17709,
+     1.38171,
+     -0.00854
+    ],
+    "elbow_aux_l": [
+     0.18359,
+     1.24493,
+     -0.26125
+    ],
+    "elbow_aux2_l": [
+     0.18359,
+     1.24493,
+     -0.26125
+    ],
+    "pronation_aux_l": [
+     0.20806,
+     1.23521,
+     -0.27321
+    ],
+    "hip_aux_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "hip_aux2_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "knee_aux_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "knee_aux2_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "biceps_bulge_l": [
+     0.18565,
+     1.28984,
+     -0.13847
+    ],
+    "quads_bulge_l": [
+     0.1144,
+     0.6257,
+     0.02671
+    ],
+    "glute_bulge_l": [
+     0.07554,
+     0.84582,
+     -0.0709
+    ],
+    "shoulder_aux_r": [
+     -0.17709,
+     1.38171,
+     -0.00854
+    ],
+    "shoulder_aux2_r": [
+     -0.17709,
+     1.38171,
+     -0.00854
+    ],
+    "elbow_aux_r": [
+     -0.18359,
+     1.24493,
+     -0.26125
+    ],
+    "elbow_aux2_r": [
+     -0.18359,
+     1.24493,
+     -0.26125
+    ],
+    "pronation_aux_r": [
+     -0.20806,
+     1.23521,
+     -0.27321
+    ],
+    "hip_aux_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "hip_aux2_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "knee_aux_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "knee_aux2_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "biceps_bulge_r": [
+     -0.18565,
+     1.28984,
+     -0.13847
+    ],
+    "quads_bulge_r": [
+     -0.1144,
+     0.6257,
+     0.02671
+    ],
+    "glute_bulge_r": [
+     -0.07554,
+     0.84583,
+     -0.07089
+    ]
+   }
+  },
+  "coude_150": {
+   "nom": "Coude fléchi à 150°",
+   "app": false,
+   "placement": "sol",
+   "angles": {
+    "forearm_l": {
+     "flexion": 150
+    },
+    "forearm_r": {
+     "flexion": 150
+    },
+    "radius_l": {
+     "pronation": 80
+    },
+    "radius_r": {
+     "pronation": 80
+    },
+    "upperarm_l": {
+     "abduction": -5
+    },
+    "upperarm_r": {
+     "abduction": -5
+    }
+   },
+   "rotations": {
+    "forearm_l": [
+     -0.9545897,
+     -0.0480743,
+     0.1394996,
+     0.258819
+    ],
+    "forearm_r": [
+     -0.9545897,
+     0.0480743,
+     -0.1394996,
+     0.258819
+    ],
+    "radius_l": [
+     0.018795,
+     -0.6290807,
+     0.130691,
+     0.7660444
+    ],
+    "radius_r": [
+     0.018795,
+     0.6290807,
+     -0.130691,
+     0.7660444
+    ],
+    "upperarm_l": [
+     0.0,
+     0.0,
+     -0.0436194,
+     0.9990482
+    ],
+    "upperarm_r": [
+     0.0,
+     0.0,
+     0.0436194,
+     0.9990482
+    ],
+    "shoulder_aux_l": [
+     0.0,
+     0.0,
+     -0.0145439,
+     0.9998942
+    ],
+    "shoulder_aux2_l": [
+     0.0,
+     0.0,
+     -0.0290847,
+     0.999577
+    ],
+    "elbow_aux_l": [
+     -0.4176584,
+     -0.0210338,
+     0.0610348,
+     0.9063078
+    ],
+    "elbow_aux2_l": [
+     -0.7570541,
+     -0.0381262,
+     0.1106326,
+     0.6427876
+    ],
+    "pronation_aux_l": [
+     0.0100006,
+     -0.3347268,
+     0.0695392,
+     0.9396926
+    ],
+    "shoulder_aux_r": [
+     0.0,
+     0.0,
+     0.0145439,
+     0.9998942
+    ],
+    "shoulder_aux2_r": [
+     0.0,
+     0.0,
+     0.0290847,
+     0.999577
+    ],
+    "elbow_aux_r": [
+     -0.4176584,
+     0.0210338,
+     -0.0610348,
+     0.9063078
+    ],
+    "elbow_aux2_r": [
+     -0.7570541,
+     0.0381262,
+     -0.1106326,
+     0.6427876
+    ],
+    "pronation_aux_r": [
+     0.0100006,
+     0.3347268,
+     -0.0695392,
+     0.9396926
+    ]
+   },
+   "translation": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "tetes": {
+    "pelvis": [
+     0.0,
+     0.86056,
+     -0.00451
+    ],
+    "lumbar": [
+     0.0,
+     0.95924,
+     -0.00886
+    ],
+    "thoracic_low": [
+     0.0,
+     1.13099,
+     -0.0094
+    ],
+    "thoracic_high": [
+     0.0,
+     1.27724,
+     -0.0444
+    ],
+    "neck": [
+     0.0,
+     1.44686,
+     -0.02812
+    ],
+    "head": [
+     0.0,
+     1.55416,
+     -0.01722
+    ],
+    "clavicle_l": [
+     0.01582,
+     1.40205,
+     0.03243
+    ],
+    "scapula_l": [
+     0.14915,
+     1.41763,
+     -0.03366
+    ],
+    "upperarm_l": [
+     0.16753,
+     1.38235,
+     -0.02655
+    ],
+    "forearm_l": [
+     0.18905,
+     1.09584,
+     -0.03445
+    ],
+    "radius_l": [
+     0.21458,
+     1.10922,
+     -0.03691
+    ],
+    "hand_l": [
+     0.2177,
+     1.3477,
+     0.03013
+    ],
+    "fingers1_l": [
+     0.21967,
+     1.41694,
+     0.05127
+    ],
+    "fingers2_l": [
+     0.20727,
+     1.45586,
+     0.06172
+    ],
+    "thigh_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "shin_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "foot_l": [
+     0.07952,
+     0.06465,
+     -0.04246
+    ],
+    "toes_l": [
+     0.10349,
+     0.02068,
+     0.07257
+    ],
+    "clavicle_r": [
+     -0.01582,
+     1.40205,
+     0.03243
+    ],
+    "scapula_r": [
+     -0.14915,
+     1.41763,
+     -0.03366
+    ],
+    "upperarm_r": [
+     -0.16753,
+     1.38235,
+     -0.02655
+    ],
+    "forearm_r": [
+     -0.18905,
+     1.09584,
+     -0.03445
+    ],
+    "radius_r": [
+     -0.21458,
+     1.10922,
+     -0.03691
+    ],
+    "hand_r": [
+     -0.2177,
+     1.3477,
+     0.03013
+    ],
+    "fingers1_r": [
+     -0.21967,
+     1.41694,
+     0.05127
+    ],
+    "fingers2_r": [
+     -0.20727,
+     1.45586,
+     0.06172
+    ],
+    "thigh_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "shin_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "foot_r": [
+     -0.07952,
+     0.06465,
+     -0.04246
+    ],
+    "toes_r": [
+     -0.10349,
+     0.02068,
+     0.07257
+    ],
+    "shoulder_aux_l": [
+     0.16753,
+     1.38235,
+     -0.02655
+    ],
+    "shoulder_aux2_l": [
+     0.16753,
+     1.38235,
+     -0.02655
+    ],
+    "elbow_aux_l": [
+     0.18905,
+     1.09584,
+     -0.03445
+    ],
+    "elbow_aux2_l": [
+     0.18905,
+     1.09584,
+     -0.03445
+    ],
+    "pronation_aux_l": [
+     0.21458,
+     1.10922,
+     -0.03691
+    ],
+    "hip_aux_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "hip_aux2_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "knee_aux_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "knee_aux2_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "biceps_bulge_l": [
+     0.18437,
+     1.22455,
+     -0.01195
+    ],
+    "quads_bulge_l": [
+     0.1144,
+     0.6257,
+     0.02671
+    ],
+    "glute_bulge_l": [
+     0.07554,
+     0.84582,
+     -0.0709
+    ],
+    "shoulder_aux_r": [
+     -0.16753,
+     1.38235,
+     -0.02655
+    ],
+    "shoulder_aux2_r": [
+     -0.16753,
+     1.38235,
+     -0.02655
+    ],
+    "elbow_aux_r": [
+     -0.18905,
+     1.09584,
+     -0.03445
+    ],
+    "elbow_aux2_r": [
+     -0.18905,
+     1.09584,
+     -0.03445
+    ],
+    "pronation_aux_r": [
+     -0.21458,
+     1.10922,
+     -0.03691
+    ],
+    "hip_aux_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "hip_aux2_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "knee_aux_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "knee_aux2_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "biceps_bulge_r": [
+     -0.18437,
+     1.22455,
+     -0.01195
+    ],
+    "quads_bulge_r": [
+     -0.1144,
+     0.6257,
+     0.02671
+    ],
+    "glute_bulge_r": [
+     -0.07554,
+     0.84583,
+     -0.07089
+    ]
+   }
+  },
+  "hanche_120": {
+   "nom": "Hanche fléchie à 120°, jambe tendue",
+   "app": false,
+   "placement": "sol",
+   "angles": {
+    "thigh_l": {
+     "flexion": 120
+    },
+    "lumbar": {
+     "flexion": 10
+    }
+   },
+   "rotations": {
+    "thigh_l": [
+     -0.8660254,
+     0.0,
+     0.0,
+     0.5
+    ],
+    "lumbar": [
+     0.0871557,
+     0.0,
+     0.0,
+     0.9961947
+    ],
+    "hip_aux_l": [
+     -0.3420201,
+     0.0,
+     0.0,
+     0.9396926
+    ],
+    "hip_aux2_l": [
+     -0.6427876,
+     0.0,
+     0.0,
+     0.7660444
+    ]
+   },
+   "translation": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "tetes": {
+    "pelvis": [
+     0.0,
+     0.86056,
+     -0.00451
+    ],
+    "lumbar": [
+     0.0,
+     0.95924,
+     -0.00886
+    ],
+    "thoracic_low": [
+     0.0,
+     1.12847,
+     0.02043
+    ],
+    "thoracic_high": [
+     0.0,
+     1.27858,
+     0.01136
+    ],
+    "neck": [
+     0.0,
+     1.4428,
+     0.05685
+    ],
+    "head": [
+     0.0,
+     1.54657,
+     0.08621
+    ],
+    "clavicle_l": [
+     0.01582,
+     1.38815,
+     0.1087
+    ],
+    "scapula_l": [
+     0.14915,
+     1.41497,
+     0.04632
+    ],
+    "upperarm_l": [
+     0.16753,
+     1.37899,
+     0.04719
+    ],
+    "forearm_l": [
+     0.21394,
+     1.10113,
+     -0.00983
+    ],
+    "radius_l": [
+     0.24029,
+     1.08922,
+     -0.00945
+    ],
+    "hand_l": [
+     0.26111,
+     0.8426,
+     0.00177
+    ],
+    "fingers1_l": [
+     0.2655,
+     0.77036,
+     0.00413
+    ],
+    "fingers2_l": [
+     0.27041,
+     0.73111,
+     0.01875
+    ],
+    "thigh_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "shin_l": [
+     0.07466,
+     1.04019,
+     0.36448
+    ],
+    "foot_l": [
+     0.07952,
+     1.22565,
+     0.70374
+    ],
+    "toes_l": [
+     0.10349,
+     1.34725,
+     0.68431
+    ],
+    "clavicle_r": [
+     -0.01582,
+     1.38815,
+     0.1087
+    ],
+    "scapula_r": [
+     -0.14915,
+     1.41497,
+     0.04632
+    ],
+    "upperarm_r": [
+     -0.16753,
+     1.37899,
+     0.04719
+    ],
+    "forearm_r": [
+     -0.21394,
+     1.10113,
+     -0.00983
+    ],
+    "radius_r": [
+     -0.24029,
+     1.08922,
+     -0.00945
+    ],
+    "hand_r": [
+     -0.26111,
+     0.8426,
+     0.00177
+    ],
+    "fingers1_r": [
+     -0.2655,
+     0.77036,
+     0.00413
+    ],
+    "fingers2_r": [
+     -0.27041,
+     0.73111,
+     0.01875
+    ],
+    "thigh_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "shin_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "foot_r": [
+     -0.07952,
+     0.06465,
+     -0.04246
+    ],
+    "toes_r": [
+     -0.10349,
+     0.02068,
+     0.07257
+    ],
+    "shoulder_aux_l": [
+     0.16753,
+     1.37899,
+     0.04719
+    ],
+    "shoulder_aux2_l": [
+     0.16753,
+     1.37899,
+     0.04719
+    ],
+    "elbow_aux_l": [
+     0.21394,
+     1.10113,
+     -0.00983
+    ],
+    "elbow_aux2_l": [
+     0.21394,
+     1.10113,
+     -0.00983
+    ],
+    "pronation_aux_l": [
+     0.24029,
+     1.08922,
+     -0.00945
+    ],
+    "hip_aux_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "hip_aux2_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "knee_aux_l": [
+     0.07466,
+     1.04019,
+     0.36448
+    ],
+    "knee_aux2_l": [
+     0.07466,
+     1.04019,
+     0.36448
+    ],
+    "biceps_bulge_l": [
+     0.19806,
+     1.22309,
+     0.03453
+    ],
+    "quads_bulge_l": [
+     0.1144,
+     1.00503,
+     0.18327
+    ],
+    "glute_bulge_l": [
+     0.07554,
+     0.84582,
+     -0.0709
+    ],
+    "shoulder_aux_r": [
+     -0.16753,
+     1.37899,
+     0.04719
+    ],
+    "shoulder_aux2_r": [
+     -0.16753,
+     1.37899,
+     0.04719
+    ],
+    "elbow_aux_r": [
+     -0.21394,
+     1.10113,
+     -0.00983
+    ],
+    "elbow_aux2_r": [
+     -0.21394,
+     1.10113,
+     -0.00983
+    ],
+    "pronation_aux_r": [
+     -0.24029,
+     1.08922,
+     -0.00945
+    ],
+    "hip_aux_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "hip_aux2_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "knee_aux_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "knee_aux2_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "biceps_bulge_r": [
+     -0.19806,
+     1.22309,
+     0.03453
+    ],
+    "quads_bulge_r": [
+     -0.1144,
+     0.6257,
+     0.02671
+    ],
+    "glute_bulge_r": [
+     -0.07554,
+     0.84583,
+     -0.07089
+    ]
+   }
+  },
+  "rachis_flexion": {
+   "nom": "Rachis en flexion",
+   "app": false,
+   "placement": "sol",
+   "angles": {
+    "lumbar": {
+     "flexion": 45
+    },
+    "thoracic_low": {
+     "flexion": 18
+    },
+    "thoracic_high": {
+     "flexion": 12
+    },
+    "neck": {
+     "flexion": 35
+    },
+    "head": {
+     "flexion": 8
+    }
+   },
+   "rotations": {
+    "lumbar": [
+     0.3826834,
+     0.0,
+     0.0,
+     0.9238795
+    ],
+    "thoracic_low": [
+     0.1564345,
+     0.0,
+     0.0,
+     0.9876883
+    ],
+    "thoracic_high": [
+     0.1045285,
+     0.0,
+     0.0,
+     0.9945219
+    ],
+    "neck": [
+     0.3007058,
+     0.0,
+     0.0,
+     0.953717
+    ],
+    "head": [
+     0.0697565,
+     0.0,
+     0.0,
+     0.9975641
+    ]
+   },
+   "translation": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "tetes": {
+    "pelvis": [
+     0.0,
+     0.86056,
+     -0.00451
+    ],
+    "lumbar": [
+     0.0,
+     0.95924,
+     -0.00886
+    ],
+    "thoracic_low": [
+     0.0,
+     1.08107,
+     0.1122
+    ],
+    "thoracic_high": [
+     0.0,
+     1.17865,
+     0.22662
+    ],
+    "neck": [
+     0.0,
+     1.20682,
+     0.39468
+    ],
+    "head": [
+     0.0,
+     1.15988,
+     0.49178
+    ],
+    "clavicle_l": [
+     0.01582,
+     1.13674,
+     0.36707
+    ],
+    "scapula_l": [
+     0.14915,
+     1.20461,
+     0.36501
+    ],
+    "upperarm_l": [
+     0.16753,
+     1.18861,
+     0.33277
+    ],
+    "forearm_l": [
+     0.21394,
+     1.12286,
+     0.05685
+    ],
+    "radius_l": [
+     0.24029,
+     1.11748,
+     0.04621
+    ],
+    "hand_l": [
+     0.26111,
+     1.00309,
+     -0.17256
+    ],
+    "fingers1_l": [
+     0.2655,
+     0.97042,
+     -0.23704
+    ],
+    "fingers2_l": [
+     0.27041,
+     0.94058,
+     -0.26643
+    ],
+    "thigh_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "shin_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "foot_l": [
+     0.07952,
+     0.06465,
+     -0.04246
+    ],
+    "toes_l": [
+     0.10349,
+     0.02068,
+     0.07257
+    ],
+    "clavicle_r": [
+     -0.01582,
+     1.13674,
+     0.36707
+    ],
+    "scapula_r": [
+     -0.14915,
+     1.20461,
+     0.36501
+    ],
+    "upperarm_r": [
+     -0.16753,
+     1.18861,
+     0.33277
+    ],
+    "forearm_r": [
+     -0.21394,
+     1.12286,
+     0.05685
+    ],
+    "radius_r": [
+     -0.24029,
+     1.11748,
+     0.04621
+    ],
+    "hand_r": [
+     -0.26111,
+     1.00309,
+     -0.17256
+    ],
+    "fingers1_r": [
+     -0.2655,
+     0.97042,
+     -0.23704
+    ],
+    "fingers2_r": [
+     -0.27041,
+     0.94058,
+     -0.26643
+    ],
+    "thigh_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "shin_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "foot_r": [
+     -0.07952,
+     0.06465,
+     -0.04246
+    ],
+    "toes_r": [
+     -0.10349,
+     0.02068,
+     0.07257
+    ],
+    "shoulder_aux_l": [
+     0.16753,
+     1.18861,
+     0.33277
+    ],
+    "shoulder_aux2_l": [
+     0.16753,
+     1.18861,
+     0.33277
+    ],
+    "elbow_aux_l": [
+     0.21394,
+     1.12286,
+     0.05685
+    ],
+    "elbow_aux2_l": [
+     0.21394,
+     1.12286,
+     0.05685
+    ],
+    "pronation_aux_l": [
+     0.24029,
+     1.11748,
+     0.04621
+    ],
+    "hip_aux_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "hip_aux2_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "knee_aux_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "knee_aux2_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "biceps_bulge_l": [
+     0.19806,
+     1.1342,
+     0.18613
+    ],
+    "quads_bulge_l": [
+     0.1144,
+     0.6257,
+     0.02671
+    ],
+    "glute_bulge_l": [
+     0.07554,
+     0.84582,
+     -0.0709
+    ],
+    "shoulder_aux_r": [
+     -0.16753,
+     1.18861,
+     0.33277
+    ],
+    "shoulder_aux2_r": [
+     -0.16753,
+     1.18861,
+     0.33277
+    ],
+    "elbow_aux_r": [
+     -0.21394,
+     1.12286,
+     0.05685
+    ],
+    "elbow_aux2_r": [
+     -0.21394,
+     1.12286,
+     0.05685
+    ],
+    "pronation_aux_r": [
+     -0.24029,
+     1.11748,
+     0.04621
+    ],
+    "hip_aux_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "hip_aux2_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "knee_aux_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "knee_aux2_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "biceps_bulge_r": [
+     -0.19806,
+     1.1342,
+     0.18613
+    ],
+    "quads_bulge_r": [
+     -0.1144,
+     0.6257,
+     0.02671
+    ],
+    "glute_bulge_r": [
+     -0.07554,
+     0.84583,
+     -0.07089
+    ]
+   }
+  },
+  "rachis_extension": {
+   "nom": "Rachis en extension",
+   "app": false,
+   "placement": "sol",
+   "angles": {
+    "lumbar": {
+     "flexion": -20
+    },
+    "thoracic_low": {
+     "flexion": -8
+    },
+    "thoracic_high": {
+     "flexion": -5
+    },
+    "neck": {
+     "flexion": -30
+    },
+    "head": {
+     "flexion": -10
+    }
+   },
+   "rotations": {
+    "lumbar": [
+     -0.1736482,
+     0.0,
+     0.0,
+     0.9848078
+    ],
+    "thoracic_low": [
+     -0.0697565,
+     0.0,
+     0.0,
+     0.9975641
+    ],
+    "thoracic_high": [
+     -0.0436194,
+     0.0,
+     0.0,
+     0.9990482
+    ],
+    "neck": [
+     -0.258819,
+     0.0,
+     0.0,
+     0.9659258
+    ],
+    "head": [
+     -0.0871557,
+     0.0,
+     0.0,
+     0.9961947
+    ]
+   },
+   "translation": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "tetes": {
+    "pelvis": [
+     0.0,
+     0.86056,
+     -0.00451
+    ],
+    "lumbar": [
+     0.0,
+     0.95924,
+     -0.00886
+    ],
+    "thoracic_low": [
+     0.0,
+     1.12045,
+     -0.06811
+    ],
+    "thoracic_high": [
+     0.0,
+     1.23315,
+     -0.16767
+    ],
+    "neck": [
+     0.0,
+     1.38427,
+     -0.2464
+    ],
+    "head": [
+     0.0,
+     1.44269,
+     -0.33706
+    ],
+    "clavicle_l": [
+     0.01582,
+     1.37967,
+     -0.17121
+    ],
+    "scapula_l": [
+     0.14915,
+     1.35674,
+     -0.23513
+    ],
+    "upperarm_l": [
+     0.16753,
+     1.33102,
+     -0.20995
+    ],
+    "forearm_l": [
+     0.21394,
+     1.08892,
+     -0.06215
+    ],
+    "radius_l": [
+     0.24029,
+     1.08046,
+     -0.05375
+    ],
+    "hand_l": [
+     0.26111,
+     0.90775,
+     0.12265
+    ],
+    "fingers1_l": [
+     0.2655,
+     0.85652,
+     0.17365
+    ],
+    "fingers2_l": [
+     0.27041,
+     0.83779,
+     0.2111
+    ],
+    "thigh_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "shin_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "foot_l": [
+     0.07952,
+     0.06465,
+     -0.04246
+    ],
+    "toes_l": [
+     0.10349,
+     0.02068,
+     0.07257
+    ],
+    "clavicle_r": [
+     -0.01582,
+     1.37967,
+     -0.17121
+    ],
+    "scapula_r": [
+     -0.14915,
+     1.35674,
+     -0.23513
+    ],
+    "upperarm_r": [
+     -0.16753,
+     1.33102,
+     -0.20995
+    ],
+    "forearm_r": [
+     -0.21394,
+     1.08892,
+     -0.06215
+    ],
+    "radius_r": [
+     -0.24029,
+     1.08046,
+     -0.05375
+    ],
+    "hand_r": [
+     -0.26111,
+     0.90775,
+     0.12265
+    ],
+    "fingers1_r": [
+     -0.2655,
+     0.85652,
+     0.17365
+    ],
+    "fingers2_r": [
+     -0.27041,
+     0.83779,
+     0.2111
+    ],
+    "thigh_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "shin_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "foot_r": [
+     -0.07952,
+     0.06465,
+     -0.04246
+    ],
+    "toes_r": [
+     -0.10349,
+     0.02068,
+     0.07257
+    ],
+    "shoulder_aux_l": [
+     0.16753,
+     1.33102,
+     -0.20995
+    ],
+    "shoulder_aux2_l": [
+     0.16753,
+     1.33102,
+     -0.20995
+    ],
+    "elbow_aux_l": [
+     0.21394,
+     1.08892,
+     -0.06215
+    ],
+    "elbow_aux2_l": [
+     0.21394,
+     1.08892,
+     -0.06215
+    ],
+    "pronation_aux_l": [
+     0.24029,
+     1.08046,
+     -0.05375
+    ],
+    "hip_aux_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "hip_aux2_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "knee_aux_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "knee_aux2_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "biceps_bulge_l": [
+     0.19806,
+     1.20837,
+     -0.11289
+    ],
+    "quads_bulge_l": [
+     0.1144,
+     0.6257,
+     0.02671
+    ],
+    "glute_bulge_l": [
+     0.07554,
+     0.84582,
+     -0.0709
+    ],
+    "shoulder_aux_r": [
+     -0.16753,
+     1.33102,
+     -0.20995
+    ],
+    "shoulder_aux2_r": [
+     -0.16753,
+     1.33102,
+     -0.20995
+    ],
+    "elbow_aux_r": [
+     -0.21394,
+     1.08892,
+     -0.06215
+    ],
+    "elbow_aux2_r": [
+     -0.21394,
+     1.08892,
+     -0.06215
+    ],
+    "pronation_aux_r": [
+     -0.24029,
+     1.08046,
+     -0.05375
+    ],
+    "hip_aux_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "hip_aux2_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "knee_aux_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "knee_aux2_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "biceps_bulge_r": [
+     -0.19806,
+     1.20837,
+     -0.11289
+    ],
+    "quads_bulge_r": [
+     -0.1144,
+     0.6257,
+     0.02671
+    ],
+    "glute_bulge_r": [
+     -0.07554,
+     0.84583,
+     -0.07089
+    ]
+   }
+  },
+  "rachis_rotation": {
+   "nom": "Rachis en rotation",
+   "app": false,
+   "placement": "sol",
+   "angles": {
+    "lumbar": {
+     "rotation": 8,
+     "inclinaison": 10
+    },
+    "thoracic_low": {
+     "rotation": 18,
+     "inclinaison": 8
+    },
+    "thoracic_high": {
+     "rotation": 18,
+     "inclinaison": 6
+    },
+    "neck": {
+     "rotation": 40
+    },
+    "head": {
+     "rotation": 25
+    }
+   },
+   "rotations": {
+    "lumbar": [
+     0.0060797,
+     0.069491,
+     -0.0869434,
+     0.993768
+    ],
+    "thoracic_low": [
+     0.0109123,
+     0.1560534,
+     -0.0688977,
+     0.9852824
+    ],
+    "thoracic_high": [
+     0.0081871,
+     0.1562201,
+     -0.0516916,
+     0.9863347
+    ],
+    "neck": [
+     0.0,
+     0.3420201,
+     0.0,
+     0.9396926
+    ],
+    "head": [
+     0.0,
+     0.2164396,
+     0.0,
+     0.976296
+    ]
+   },
+   "translation": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "tetes": {
+    "pelvis": [
+     0.0,
+     0.86056,
+     -0.00451
+    ],
+    "lumbar": [
+     0.0,
+     0.95924,
+     -0.00886
+    ],
+    "thoracic_low": [
+     0.02975,
+     1.12839,
+     -0.00939
+    ],
+    "thoracic_high": [
+     0.06,
+     1.27165,
+     -0.0437
+    ],
+    "neck": [
+     0.13766,
+     1.42332,
+     -0.04297
+    ],
+    "head": [
+     0.19004,
+     1.51742,
+     -0.04875
+    ],
+    "clavicle_l": [
+     0.16971,
+     1.36313,
+     -0.00728
+    ],
+    "scapula_l": [
+     0.21887,
+     1.34896,
+     -0.14789
+    ],
+    "upperarm_l": [
+     0.22144,
+     1.30898,
+     -0.15314
+    ],
+    "forearm_l": [
+     0.13423,
+     1.03579,
+     -0.17241
+    ],
+    "radius_l": [
+     0.14823,
+     1.0159,
+     -0.18806
+    ],
+    "hand_l": [
+     0.10165,
+     0.77591,
+     -0.1479
+    ],
+    "fingers1_l": [
+     0.08625,
+     0.70623,
+     -0.1356
+    ],
+    "fingers2_l": [
+     0.089,
+     0.66664,
+     -0.12134
+    ],
+    "thigh_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "shin_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "foot_l": [
+     0.07952,
+     0.06465,
+     -0.04246
+    ],
+    "toes_l": [
+     0.10349,
+     0.02068,
+     0.07257
+    ],
+    "clavicle_r": [
+     0.14927,
+     1.37349,
+     0.01453
+    ],
+    "scapula_r": [
+     0.02612,
+     1.44666,
+     0.05775
+    ],
+    "upperarm_r": [
+     0.00495,
+     1.41872,
+     0.07784
+    ],
+    "forearm_r": [
+     -0.14225,
+     1.17593,
+     0.12255
+    ],
+    "radius_r": [
+     -0.16229,
+     1.17331,
+     0.14323
+    ],
+    "hand_r": [
+     -0.23578,
+     0.94695,
+     0.2121
+    ],
+    "fingers1_r": [
+     -0.25686,
+     0.88014,
+     0.23045
+    ],
+    "fingers2_r": [
+     -0.26045,
+     0.84378,
+     0.25148
+    ],
+    "thigh_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "shin_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "foot_r": [
+     -0.07952,
+     0.06465,
+     -0.04246
+    ],
+    "toes_r": [
+     -0.10349,
+     0.02068,
+     0.07257
+    ],
+    "shoulder_aux_l": [
+     0.22144,
+     1.30898,
+     -0.15314
+    ],
+    "shoulder_aux2_l": [
+     0.22144,
+     1.30898,
+     -0.15314
+    ],
+    "elbow_aux_l": [
+     0.13423,
+     1.03579,
+     -0.17241
+    ],
+    "elbow_aux2_l": [
+     0.13423,
+     1.03579,
+     -0.17241
+    ],
+    "pronation_aux_l": [
+     0.14823,
+     1.0159,
+     -0.18806
+    ],
+    "hip_aux_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "hip_aux2_l": [
+     0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "knee_aux_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "knee_aux2_l": [
+     0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "biceps_bulge_l": [
+     0.18916,
+     1.15292,
+     -0.15353
+    ],
+    "quads_bulge_l": [
+     0.1144,
+     0.6257,
+     0.02671
+    ],
+    "glute_bulge_l": [
+     0.07554,
+     0.84582,
+     -0.0709
+    ],
+    "shoulder_aux_r": [
+     0.00495,
+     1.41872,
+     0.07784
+    ],
+    "shoulder_aux2_r": [
+     0.00495,
+     1.41872,
+     0.07784
+    ],
+    "elbow_aux_r": [
+     -0.14225,
+     1.17593,
+     0.12255
+    ],
+    "elbow_aux2_r": [
+     -0.14225,
+     1.17593,
+     0.12255
+    ],
+    "pronation_aux_r": [
+     -0.16229,
+     1.17331,
+     0.14323
+    ],
+    "hip_aux_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "hip_aux2_r": [
+     -0.08318,
+     0.86056,
+     -0.00451
+    ],
+    "knee_aux_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "knee_aux2_r": [
+     -0.07466,
+     0.45119,
+     -0.03344
+    ],
+    "biceps_bulge_r": [
+     -0.06679,
+     1.28266,
+     0.11954
+    ],
+    "quads_bulge_r": [
+     -0.1144,
+     0.6257,
+     0.02671
+    ],
+    "glute_bulge_r": [
+     -0.07554,
+     0.84583,
+     -0.07089
+    ]
+   }
+  },
+  "dips_bas": {
+   "nom": "Appui bas de dip",
+   "app": false,
+   "placement": "suspendu",
+   "angles": {
+    "pelvis": {
+     "flexion": 20
+    },
+    "clavicle_l": {
+     "elevation": 12
+    },
+    "clavicle_r": {
+     "elevation": 12
+    },
+    "scapula_l": {
+     "sonnette": -12,
+     "bascule": -15
+    },
+    "scapula_r": {
+     "sonnette": -12,
+     "bascule": -15
+    },
+    "upperarm_l": {
+     "flexion": -60,
+     "abduction": -8
+    },
+    "upperarm_r": {
+     "flexion": -60,
+     "abduction": -8
+    },
+    "forearm_l": {
+     "flexion": 100
+    },
+    "forearm_r": {
+     "flexion": 100
+    },
+    "radius_l": {
+     "pronation": 85
+    },
+    "radius_r": {
+     "pronation": 85
+    },
+    "fingers1_l": {
+     "flexion": 70
+    },
+    "fingers1_r": {
+     "flexion": 70
+    },
+    "fingers2_l": {
+     "flexion": 80
+    },
+    "fingers2_r": {
+     "flexion": 80
+    },
+    "thigh_l": {
+     "flexion": 20
+    },
+    "thigh_r": {
+     "flexion": 20
+    },
+    "shin_l": {
+     "flexion": 95
+    },
+    "shin_r": {
+     "flexion": 95
+    },
+    "foot_l": {
+     "flexion": -20
+    },
+    "foot_r": {
+     "flexion": -20
+    }
+   },
+   "rotations": {
+    "pelvis": [
+     0.1736482,
+     0.0,
+     0.0,
+     0.9848078
+    ],
+    "clavicle_l": [
+     0.0,
+     0.0,
+     0.1045285,
+     0.9945219
+    ],
+    "clavicle_r": [
+     0.0,
+     0.0,
+     -0.1045285,
+     0.9945219
+    ],
+    "scapula_l": [
+     0.1298112,
+     -0.0136437,
+     -0.1036342,
+     0.9860136
+    ],
+    "scapula_r": [
+     0.1298112,
+     0.0136437,
+     0.1036342,
+     0.9860136
+    ],
+    "upperarm_l": [
+     0.3817512,
+     0.0266946,
+     -0.0644466,
+     0.921629
+    ],
+    "upperarm_r": [
+     0.3817512,
+     -0.0266946,
+     0.0644466,
+     0.921629
+    ],
+    "forearm_l": [
+     -0.7570541,
+     -0.0381262,
+     0.1106326,
+     0.6427876
+    ],
+    "forearm_r": [
+     -0.7570541,
+     0.0381262,
+     -0.1106326,
+     0.6427876
+    ],
+    "radius_l": [
+     0.0197542,
+     -0.6611838,
+     0.1373604,
+     0.7372773
+    ],
+    "radius_r": [
+     0.0197542,
+     0.6611838,
+     -0.1373604,
+     0.7372773
+    ],
+    "fingers1_l": [
+     -0.5735764,
+     0.0,
+     0.0,
+     0.819152
+    ],
+    "fingers1_r": [
+     -0.5735764,
+     0.0,
+     0.0,
+     0.819152
+    ],
+    "fingers2_l": [
+     -0.6427876,
+     0.0,
+     0.0,
+     0.7660444
+    ],
+    "fingers2_r": [
+     -0.6427876,
+     0.0,
+     0.0,
+     0.7660444
+    ],
+    "thigh_l": [
+     -0.1736482,
+     0.0,
+     0.0,
+     0.9848078
+    ],
+    "thigh_r": [
+     -0.1736482,
+     0.0,
+     0.0,
+     0.9848078
+    ],
+    "shin_l": [
+     0.7359826,
+     0.0385892,
+     -0.0204522,
+     0.6755902
+    ],
+    "shin_r": [
+     0.7359826,
+     -0.0385892,
+     0.0204522,
+     0.6755902
+    ],
+    "foot_l": [
+     0.1535056,
+     -0.0301541,
+     -0.0753688,
+     0.9848078
+    ],
+    "foot_r": [
+     0.1535056,
+     0.0301541,
+     0.0753688,
+     0.9848078
+    ],
+    "shoulder_aux_l": [
+     0.1302985,
+     0.0091114,
+     -0.0219968,
+     0.9911889
+    ],
+    "shoulder_aux2_l": [
+     0.2583008,
+     0.0180621,
+     -0.0436059,
+     0.9649109
+    ],
+    "elbow_aux_l": [
+     -0.2834373,
+     -0.0142743,
+     0.0414203,
+     0.9579895
+    ],
+    "elbow_aux2_l": [
+     -0.5430599,
+     -0.0273492,
+     0.0793604,
+     0.8354878
+    ],
+    "pronation_aux_l": [
+     0.0105976,
+     -0.3547093,
+     0.0736906,
+     0.9320079
+    ],
+    "hip_aux_l": [
+     -0.0581448,
+     0.0,
+     0.0,
+     0.9983082
+    ],
+    "hip_aux2_l": [
+     -0.1160929,
+     0.0,
+     0.0,
+     0.9932384
+    ],
+    "knee_aux_l": [
+     0.2723609,
+     0.0142805,
+     -0.0075686,
+     0.9620594
+    ],
+    "knee_aux2_l": [
+     0.5240547,
+     0.0274774,
+     -0.0145629,
+     0.8511167
+    ],
+    "shoulder_aux_r": [
+     0.1302985,
+     -0.0091114,
+     0.0219968,
+     0.9911889
+    ],
+    "shoulder_aux2_r": [
+     0.2583008,
+     -0.0180621,
+     0.0436059,
+     0.9649109
+    ],
+    "elbow_aux_r": [
+     -0.2834373,
+     0.0142743,
+     -0.0414203,
+     0.9579895
+    ],
+    "elbow_aux2_r": [
+     -0.5430599,
+     0.0273492,
+     -0.0793604,
+     0.8354878
+    ],
+    "pronation_aux_r": [
+     0.0105976,
+     0.3547093,
+     -0.0736906,
+     0.9320079
+    ],
+    "hip_aux_r": [
+     -0.0581448,
+     0.0,
+     0.0,
+     0.9983082
+    ],
+    "hip_aux2_r": [
+     -0.1160929,
+     0.0,
+     0.0,
+     0.9932384
+    ],
+    "knee_aux_r": [
+     0.2723609,
+     -0.0142805,
+     0.0075686,
+     0.9620594
+    ],
+    "knee_aux2_r": [
+     0.5240547,
+     -0.0274774,
+     0.0145629,
+     0.8511167
+    ]
+   },
+   "translation": [
+    0.0,
+    -0.2972,
+    0.0
+   ],
+   "tetes": {
+    "pelvis": [
+     0.0,
+     0.56336,
+     -0.00451
+    ],
+    "lumbar": [
+     0.0,
+     0.65758,
+     0.02515
+    ],
+    "thoracic_low": [
+     0.0,
+     0.81916,
+     0.08339
+    ],
+    "thoracic_high": [
+     0.0,
+     0.96856,
+     0.10052
+    ],
+    "neck": [
+     0.0,
+     1.12238,
+     0.17383
+    ],
+    "head": [
+     0.0,
+     1.21948,
+     0.22077
+    ],
+    "clavicle_l": [
+     0.01582,
+     1.05956,
+     0.2154
+    ],
+    "scapula_l": [
+     0.143,
+     1.12254,
+     0.16799
+    ],
+    "upperarm_l": [
+     0.16138,
+     1.08956,
+     0.15358
+    ],
+    "forearm_l": [
+     0.16787,
+     1.04746,
+     -0.13067
+    ],
+    "radius_l": [
+     0.19504,
+     1.04063,
+     -0.12348
+    ],
+    "hand_l": [
+     0.22029,
+     0.83672,
+     0.01493
+    ],
+    "fingers1_l": [
+     0.22862,
+     0.77627,
+     0.05394
+    ],
+    "fingers2_l": [
+     0.18711,
+     0.77331,
+     0.06073
+    ],
+    "thigh_l": [
+     0.08318,
+     0.56336,
+     -0.00451
+    ],
+    "shin_l": [
+     0.07466,
+     0.15399,
+     -0.03344
+    ],
+    "foot_l": [
+     0.04666,
+     0.19566,
+     -0.41684
+    ],
+    "toes_l": [
+     0.0501,
+     0.10619,
+     -0.50473
+    ],
+    "clavicle_r": [
+     -0.01582,
+     1.05956,
+     0.2154
+    ],
+    "scapula_r": [
+     -0.143,
+     1.12254,
+     0.16799
+    ],
+    "upperarm_r": [
+     -0.16138,
+     1.08956,
+     0.15358
+    ],
+    "forearm_r": [
+     -0.16787,
+     1.04746,
+     -0.13067
+    ],
+    "radius_r": [
+     -0.19504,
+     1.04063,
+     -0.12348
+    ],
+    "hand_r": [
+     -0.22029,
+     0.83672,
+     0.01493
+    ],
+    "fingers1_r": [
+     -0.22862,
+     0.77627,
+     0.05394
+    ],
+    "fingers2_r": [
+     -0.18711,
+     0.77331,
+     0.06073
+    ],
+    "thigh_r": [
+     -0.08318,
+     0.56336,
+     -0.00451
+    ],
+    "shin_r": [
+     -0.07466,
+     0.15399,
+     -0.03344
+    ],
+    "foot_r": [
+     -0.04666,
+     0.19566,
+     -0.41684
+    ],
+    "toes_r": [
+     -0.0501,
+     0.10619,
+     -0.50473
+    ],
+    "shoulder_aux_l": [
+     0.16138,
+     1.08956,
+     0.15358
+    ],
+    "shoulder_aux2_l": [
+     0.16138,
+     1.08956,
+     0.15358
+    ],
+    "elbow_aux_l": [
+     0.16787,
+     1.04746,
+     -0.13067
+    ],
+    "elbow_aux2_l": [
+     0.16787,
+     1.04746,
+     -0.13067
+    ],
+    "pronation_aux_l": [
+     0.19504,
+     1.04063,
+     -0.12348
+    ],
+    "hip_aux_l": [
+     0.08318,
+     0.56336,
+     -0.00451
+    ],
+    "hip_aux2_l": [
+     0.08318,
+     0.56336,
+     -0.00451
+    ],
+    "knee_aux_l": [
+     0.07466,
+     0.15399,
+     -0.03344
+    ],
+    "knee_aux2_l": [
+     0.07466,
+     0.15399,
+     -0.03344
+    ],
+    "biceps_bulge_l": [
+     0.16994,
+     1.04766,
+     6e-05
+    ],
+    "quads_bulge_l": [
+     0.1144,
+     0.3285,
+     0.02671
+    ],
+    "glute_bulge_l": [
+     0.07554,
+     0.57222,
+     -0.07194
+    ],
+    "shoulder_aux_r": [
+     -0.16138,
+     1.08956,
+     0.15358
+    ],
+    "shoulder_aux2_r": [
+     -0.16138,
+     1.08956,
+     0.15358
+    ],
+    "elbow_aux_r": [
+     -0.16787,
+     1.04746,
+     -0.13067
+    ],
+    "elbow_aux2_r": [
+     -0.16787,
+     1.04746,
+     -0.13067
+    ],
+    "pronation_aux_r": [
+     -0.19504,
+     1.04063,
+     -0.12348
+    ],
+    "hip_aux_r": [
+     -0.08318,
+     0.56336,
+     -0.00451
+    ],
+    "hip_aux2_r": [
+     -0.08318,
+     0.56336,
+     -0.00451
+    ],
+    "knee_aux_r": [
+     -0.07466,
+     0.15399,
+     -0.03344
+    ],
+    "knee_aux2_r": [
+     -0.07466,
+     0.15399,
+     -0.03344
+    ],
+    "biceps_bulge_r": [
+     -0.16994,
+     1.04766,
+     6e-05
+    ],
+    "quads_bulge_r": [
+     -0.1144,
+     0.3285,
+     0.02671
+    ],
+    "glute_bulge_r": [
+     -0.07554,
+     0.57222,
+     -0.07192
+    ]
+   }
+  }
+ }
+}

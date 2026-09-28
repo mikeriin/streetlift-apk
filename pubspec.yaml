@@ -1,0 +1,76 @@
+name: streetlift_tracker
+description: "Kalis Track — suivi d'entraînement calisthénie et streetlifting : programme guidé, séances perso, WOD, chronos, pilotage recalculable."
+publish_to: 'none'
+version: 5.5.0+79
+
+environment:
+  # M1 (mannequin 3D) : flutter_scene 0.23 exige Flutter 3.47 stable et Dart 3.10.
+  sdk: '>=3.10.0 <4.0.0'
+  flutter: '>=3.47.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  shared_preferences: ^2.2.3
+  wakelock_plus: ^1.2.5
+  audioplayers: ^6.1.0
+  flutter_local_notifications: ^18.0.1
+  timezone: ^0.10.0
+  # M1 : moteur 3D (Flutter GPU / Impeller), décision du propriétaire 27/09/2026.
+  flutter_scene: ^0.23.0
+  flutter_gpu:
+    sdk: flutter
+  vector_math: ^2.1.4
+  # M2 : build hook (hook/build.dart) qui convertit le mannequin
+  # assets/anatomy/mannequin.glb en .fsceneb (flutter_scene_generated/).
+  hooks: ^2.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  fake_async: ^1.3.2
+  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.14.1
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/icon/icon.png"
+  min_sdk_android: 24
+  adaptive_icon_background: "#F4F4F4"
+  adaptive_icon_foreground: "assets/icon/icon_fg.png"
+  adaptive_icon_monochrome: "assets/icon/icon_fg.png"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/programme_v33.json.gz
+    - assets/koach_program.json.gz
+    - assets/program_models.json
+    - assets/content/index.json.gz
+    - assets/content/details.json.gz
+    - assets/content/sources.json.gz
+    - assets/content/poses.json.gz
+    - assets/content/progressions.json.gz
+    - assets/content/licences.md
+    - assets/legal/confidentialite.md
+    - assets/sounds/beep.wav
+    - assets/sounds/alarm.wav
+    - assets/icon/icon_fg.png
+    - assets/icon/logo_mark.png
+    - assets/icon/splash_flag.png
+    - assets/muscles/
+    - assets/muscles/anim/
+    # M2 (mannequin 3D) : carte des régions et crédits du modèle ; le modèle
+    # lui-même est converti par le build hook dans flutter_scene_generated/.
+    - assets/anatomy/muscles_map.json
+    - assets/anatomy/ATTRIBUTION.md
+    # M5 : squelette, postures et peau du mannequin (toucher et cadrage).
+    - assets/anatomy/rig.json
+    - assets/anatomy/mannequin_skin.bin
+    # M56 : animations d'exercice (tools/anatomy/animate.py) et registre ; le
+    # matériel (equipment.glb) est converti par le build hook.
+    - assets/anatomy/clips/
+    - flutter_scene_generated/

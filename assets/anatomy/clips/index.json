@@ -1,0 +1,208 @@
+{
+ "schema": 1,
+ "clips": [
+  {
+   "id": "back-squat",
+   "fichier": "back-squat.json.gz",
+   "statut": "valide",
+   "date": "2026-09-28",
+   "empreinte": "d4a3516ae8310000",
+   "controles": {
+    "longueurs": {
+     "ok": true,
+     "detail": "écart max 0.0000 mm"
+    },
+    "contacts": {
+     "ok": true,
+     "detail": "écart max 0.73 cm (p3)"
+    },
+    "materiel": {
+     "ok": true,
+     "detail": "pénétration max 0.0 mm (-)"
+    },
+    "sol": {
+     "ok": true,
+     "detail": "sous le sol 0.0 mm"
+    },
+    "charge_posee": {
+     "ok": true,
+     "detail": "barre-dos max 0.16 cm"
+    },
+    "corps": {
+     "ok": true,
+     "detail": "recouvrement max 0.0 mm (-)"
+    },
+    "limites": {
+     "ok": true,
+     "detail": "toutes les postures dans les limites du rig"
+    },
+    "amplitude_parallele": {
+     "ok": true,
+     "detail": "hanche_sous_genou : -0.0 cm"
+    },
+    "trajectoire_barre": {
+     "ok": true,
+     "detail": "charge : écart horizontal max 0.1 cm"
+    },
+    "sens": {
+     "ok": true,
+     "detail": "charge monte en concentrique, descend en excentrique"
+    },
+    "equilibre_systeme": {
+     "ok": true,
+     "detail": "centre de masse corps + charge : écart max 3.5 cm au milieu du pied"
+    },
+    "ecart_pieds": {
+     "ok": true,
+     "detail": "pieds à 44 cm d'axe à axe"
+    },
+    "taille": {
+     "ok": true,
+     "detail": "2241 octets"
+    }
+   }
+  },
+  {
+   "id": "dips",
+   "fichier": "dips.json.gz",
+   "statut": "valide",
+   "date": "2026-09-28",
+   "empreinte": "f4b64095b9200000",
+   "controles": {
+    "longueurs": {
+     "ok": true,
+     "detail": "écart max 0.0000 mm"
+    },
+    "contacts": {
+     "ok": true,
+     "detail": "écart max 0.25 cm (5-6@0.5)"
+    },
+    "materiel": {
+     "ok": true,
+     "detail": "pénétration max 0.0 mm (-)"
+    },
+    "sol": {
+     "ok": true,
+     "detail": "sous le sol 0.0 mm"
+    },
+    "corps": {
+     "ok": true,
+     "detail": "recouvrement max 0.0 mm (-)"
+    },
+    "limites": {
+     "ok": true,
+     "detail": "toutes les postures dans les limites du rig"
+    },
+    "amplitude_coudes": {
+     "ok": true,
+     "detail": "forearm.flexion de 4° à 102°"
+    },
+    "trajectoire": {
+     "ok": true,
+     "detail": "centre_de_masse : écart horizontal max 0.3 cm"
+    },
+    "sens": {
+     "ok": true,
+     "detail": "centre_de_masse monte en concentrique, descend en excentrique"
+    },
+    "pieds_decolles": {
+     "ok": true,
+     "detail": "point le plus bas 70.0 cm au-dessus du sol"
+    },
+    "epaules_sous_coudes": {
+     "ok": true,
+     "detail": "épaule +1.6 cm sous le coude"
+    },
+    "buste_incline": {
+     "ok": true,
+     "detail": "tronc incliné de 28° vers l'avant"
+    },
+    "coudes_arriere": {
+     "ok": true,
+     "detail": "upperarm.flexion = -60° en bas"
+    },
+    "jambes_fixes": {
+     "ok": true,
+     "detail": "thigh.flexion = 28° en bas"
+    },
+    "taille": {
+     "ok": true,
+     "detail": "1956 octets"
+    }
+   }
+  },
+  {
+   "id": "traction-pronation",
+   "fichier": "traction-pronation.json.gz",
+   "statut": "valide",
+   "date": "2026-09-28",
+   "empreinte": "9d883399ca4d0000",
+   "controles": {
+    "longueurs": {
+     "ok": true,
+     "detail": "écart max 0.0000 mm"
+    },
+    "contacts": {
+     "ok": true,
+     "detail": "écart max 0.85 cm (p21)"
+    },
+    "materiel": {
+     "ok": true,
+     "detail": "pénétration max 2.1 mm (p21)"
+    },
+    "sol": {
+     "ok": true,
+     "detail": "sous le sol 0.0 mm"
+    },
+    "corps": {
+     "ok": true,
+     "detail": "recouvrement max 0.0 mm (-)"
+    },
+    "limites": {
+     "ok": true,
+     "detail": "toutes les postures dans les limites du rig"
+    },
+    "amplitude_haut": {
+     "ok": true,
+     "detail": "menton_au_dessus : -0.0 cm"
+    },
+    "amplitude_bras_tendus": {
+     "ok": true,
+     "detail": "forearm.flexion de 3° à 129°"
+    },
+    "trajectoire": {
+     "ok": true,
+     "detail": "centre_de_masse : écart horizontal max 0.7 cm"
+    },
+    "sens": {
+     "ok": true,
+     "detail": "centre_de_masse monte en concentrique, descend en excentrique"
+    },
+    "suspendu": {
+     "ok": true,
+     "detail": "point le plus bas 19.0 cm au-dessus du sol"
+    },
+    "suspension_active": {
+     "ok": true,
+     "detail": "clavicule -6°, coude 3° en actif"
+    },
+    "coudes_vers_les_cotes": {
+     "ok": true,
+     "detail": "upperarm.abduction = 53° en haut"
+    },
+    "creux_thoracique": {
+     "ok": true,
+     "detail": "thoracic_low.flexion = -4° en haut"
+    },
+    "jambes_gainees": {
+     "ok": true,
+     "detail": "pelvis.flexion = -0° en haut"
+    },
+    "taille": {
+     "ok": true,
+     "detail": "3375 octets"
+    }
+   }
+  }
+ ]
+}
