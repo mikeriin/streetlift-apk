@@ -1,0 +1,37 @@
+{
+  "anatomie_1x": {
+    "figure": 0.20964656290531777,
+    "rouge": 0.01851491569390402,
+    "gris": 0.15740920881971465,
+    "point": "Offset(115.3, 162.2)",
+    "muscle": "Carré pronateur (droit) · Avant-bras"
+  },
+  "anatomie_zoom": {
+    "figure": 0.8150940337224384,
+    "rouge": 0.1620136186770428,
+    "gris": 0.49250972762645917,
+    "echelle": 4.0,
+    "muscle_sous_les_doigts": null
+  },
+  "fiche": {
+    "defilement_un_doigt": 134.02346149476432,
+    "defilement_pendant_pincement": 0.0,
+    "echelle": 3.0
+  },
+  "filtres_sombre": {
+    "bibliotheque": "FilterSelection({type: {type:tirage_vertical, type:poussee_verticale}, materiel: {mat:barre_fixe}})",
+    "wod": "FilterSelection({acces: {st:locked}, format: {ty:amrap, ty:emom}})",
+    "anatomie": [
+      "dos",
+      "ischios"
+    ]
+  },
+  "filtres_clair": {
+    "bibliotheque": "FilterSelection({type: {type:tirage_vertical, type:poussee_verticale}, materiel: {mat:barre_fixe}})",
+    "wod": "FilterSelection({acces: {st:locked}, format: {ty:amrap, ty:emom}})",
+    "anatomie": [
+      "dos",
+      "ischios"
+    ]
+  }
+}
