@@ -58,7 +58,7 @@ Une seule page claude.ai « Suivi mannequin 3D » (outil Artifact ; charge d'abo
 3. `LIVRAISON_<LOT>.md` dans le projet claude.ai (outil Projects, `claude/LIVRAISON_<LOT>.md`) et dans `pipeline/3d/livraisons/`.
 4. Mets à jour `ETAT_3D.md` (lot, version, commit, run, date, statut « livré », lien de la page) et pousse `pipeline` (jamais de zip sur cette branche).
 5. Relance la tâche planifiée du pipeline (`fire_trigger`, identifiant en tête de `ETAT_3D.md`) pour le lot suivant, sauf si le prompt de ton lot dit d'attendre ; puis notifie la livraison. Après M19 : notification « Pipeline mannequin 3D terminé — installer v<version> ».
-Interdits : supprimer une branche, modifier la signature ou l'identifiant, régénérer une clé, pousser un secret, pousser sur `main` un ZIP dont les contrôles ne sont pas verts.
+Interdits : modifier ou créer une tâche planifiée (seulement `fire_trigger` sur celle d'ETAT_3D.md), supprimer une branche, modifier la signature ou l'identifiant, régénérer une clé, pousser un secret, pousser sur `main` un ZIP dont les contrôles ne sont pas verts.
 
 ## 8. Enchaînement
 | Lot | Prérequis sur main | Version | Action unique | Constat du propriétaire | Effort |

@@ -1,6 +1,6 @@
 # État du pipeline « Mannequin 3D »
 
-Tâche planifiée du pipeline : **trig_01Sa99tJfHPgGirxHQgx1mgs** (« Kalis Track — pipeline mannequin 3D (v3, sans approbation automatique) », depuis le 28/09). Les tâches trig_018sJFdjtWKnTBU2BzWjBzFb (v1) et trig_018MeUFjYtNVBWKVjkgRUPWg (v2) ne doivent plus être relancées : avec « Automatically approve », la session perd l'accès push au dépôt (M4 arrêté au bout de 26 s le 28/09 à 07:55).
+Tâche planifiée du pipeline : **trig_01XQEhzWVVib4xQR5bGnTpyn** (« Kalis Track — pipeline mannequin 3D (v4) », depuis le 28/09 13:05). Ne plus relancer v1 (trig_018sJFdjtWKnTBU2BzWjBzFb), v2 (trig_018MeUFjYtNVBWKVjkgRUPWg) ni v3 (trig_01Sa99tJfHPgGirxHQgx1mgs) : une tâche modifiée après sa création (approbation automatique ou autre réglage) perd l'accès push au dépôt et ses lancements s'arrêtent au bout d'environ 30 s. Aucun lot ne modifie ni ne crée de tâche planifiée.
 Activation : **manuelle par le propriétaire** (premier lancement de M1 seulement sur son ordre).
 Page de suivi : https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA
 Base de départ : main 4.3.1+71 (commit 7f07e2e, L13 + refonte muscles 2D fusionnés).
