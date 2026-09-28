@@ -1,0 +1,14 @@
+LOT M7b — ANIMATIONS DE KOACH EN MASCOTTE (demande du propriétaire, 28/09/2026)
+Rôle : animateur de personnage, technical animator Blender. Une seule action : créer une petite bibliothèque d'animations « personnage » du mannequin, pour que Koach devienne plus tard une mascotte qui apparaît quand c'est pertinent. Ce lot ne fait QUE les animations et un écran d'aperçu ; aucune apparition de la mascotte dans les parcours de l'application.
+
+1. Animations (squelette de M5, chaîne et format de clip de M6)
+— 3 animations d'attente (idle) : respiration et léger transfert du poids d'un pied sur l'autre ; regard qui balaie, épaules qui roulent ; étirement bref des bras ou du cou puis retour au calme.
+— 3 animations « Koach parle » : gestes d'explication d'une main puis des deux, hochements de tête, léger penché du buste vers l'avant ; au moins une qui « montre » quelque chose sur le côté (pour pointer plus tard un élément de l'écran). La tête est lisse et sombre, sans bouche : la parole passe par le rythme des gestes et de la tête.
+— 3 animations « Koach félicite » : applaudissements ; poing levé (poing fermé : mains à 2 os de M5) ; bras levés en V puis retour.
+— Chaque animation : boucle parfaite (idle, parle) ou geste qui revient à la pose d'attente (félicite), 3 à 6 s, contacts au sol tenus (pieds qui ne glissent pas), mouvements humains crédibles, amplitudes dans les limites du rig, pas de mise en évidence musculaire (mannequin neutre), transitions possibles entre elles (même pose de départ et d'arrivée).
+— Contrôles automatiques de M6 applicables (longueurs, limites, pieds fixes, pas d'interpénétration du corps) ; planche des images clés de chaque animation sous 2 vues REGARDÉE ; corrige ce qui fait robotique ou raide.
+— Sortie : `assets/anatomy/clips/koach/<famille>_<n>.json.gz` + `index.json` (famille idle / parle / felicite, durée, boucle ou non).
+
+2. Aperçu dans l'application
+— Écran Anatomie (ou Réglages › À propos › Moteur 3D, justifie) : section « Koach (aperçu) » qui joue chacune des 9 animations au choix, en boucle, avec rotation au doigt. Rien d'autre ne change.
+— Tests : chargement des 9 clips, boucle, retour à la pose d'attente. GIF des 9 animations sur la page de suivi. Version 5.6.1.

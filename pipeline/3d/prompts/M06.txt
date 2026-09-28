@@ -14,4 +14,12 @@ Bibliothèque sobre, gris neutres cohérents avec le mannequin, dimensions réel
 3. Application : les 3 pilotes
 — Traction pronation, dips aux barres parallèles, back squat : dans leur fiche, la démonstration 2D est remplacée par le mannequin animé en boucle (lecture automatique, tempo réel, muscles de l'exercice mis en évidence, matériel), vue par défaut automatique, rotation au doigt. Les autres exercices gardent la démonstration 2D.
 — Registre `assets/anatomy/clips/index.json` : exercices convertis, statut, date, contrôles passés. L'application choisit 3D si l'exercice y figure, sinon 2D.
-— Captures et GIF d'une boucle pour chaque pilote ; REGARDE-les. Version 5.5.0.
+— Captures et GIF d'une boucle pour chaque pilote ; REGARDE-les.
+
+4. Carte Koach de la séance du jour (ajout du propriétaire, 28/09/2026 — indépendant des animations, à traiter à part et simplement)
+— Aujourd'hui, les indications de Koach pour la séance du jour s'affichent au-dessus du premier exercice. Repère précisément où (écran de séance, accueil, aperçu de séance : `lib/koach_widgets.dart`, `lib/session_screen.dart`, `lib/home_screen.dart`…) et liste-les dans la livraison.
+— Remplace cet affichage par une carte dédiée « Koach · séance du jour », placée en tête de la séance, avant la liste des exercices, visuellement distincte des cartes d'exercice (même style de carte que l'application, en-tête Koach) : résumé de l'état du jour et des ajustements décidés (charges, séries, RIR visé, exercices remplacés ou allégés), avec leur raison en une phrase chacune ; repliable (repliée : une ligne de résumé) ; actions Koach existantes conservées dans la carte (accepter / ignorer / détails, selon le mode Assisté ou Automatique actuel). Plus rien de Koach au-dessus du premier exercice ; les indications propres à un exercice restent sur cet exercice.
+— Si Koach n'a rien à dire (désactivé, aucun ajustement), la carte n'apparaît pas ou affiche une ligne neutre — choisis et justifie. Aucune logique de Koach modifiée : seulement l'affichage.
+— Tests : présence et position de la carte, contenu identique à l'affichage précédent, repli, séance sans Koach ; tests existants adaptés sans retirer d'assertion. Captures REGARDÉES (sombre et clair, carte ouverte et repliée).
+
+Version 5.5.0.

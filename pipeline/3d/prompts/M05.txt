@@ -13,3 +13,4 @@ Rôle : rigger et technical artist Blender, anatomiste du mouvement. Une seule a
 3. Application
 — Écran Anatomie : sélecteur « Posture » avec 4 postures de référence (debout, suspendu à la barre, squat bas, planche de gainage) et transition douce ; mise en évidence et toucher toujours justes sur le modèle déformé.
 — Captures des 4 postures sous 4 vues ; REGARDE-les. Version 5.4.0.
+
