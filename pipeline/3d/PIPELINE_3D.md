@@ -6,7 +6,7 @@ Tu es lancé par la tâche planifiée « Kalis Track — pipeline mannequin 3D �
 (Jusqu'à M4b, le projet est livré dans `streetlift_tracker_v33.zip` sur `main`. À partir de M4c, `main` contient directement les sources : partout où ce fichier parle du ZIP, lis « les sources sur `main` » ; M4c met ce texte à jour.)
 1. `add_repo` mikeriin/streetlift-apk en accès `push`, puis clone (commande donnée par l'outil).
 2. `git fetch origin pipeline` ; lis ce fichier, `pipeline/3d/ETAT_3D.md` et `pipeline/3d/DECISIONS_3D.md`.
-3. Ton lot est le **premier lot du tableau §8 dont le statut n'est pas « livré »** dans `ETAT_3D.md`. Lis son prompt `pipeline/3d/prompts/M<NN>.txt` (numéro sur 2 chiffres : M1 → `M01.txt`, M4b → `M04b.txt`, M4c → `M04c.txt`) et exécute-le intégralement. Si ce lot est marqué « en cours » depuis plus de 6 h, repars de l'état réel du dépôt (commits, branches) sans refaire ce qui est poussé.
+3. Ton lot est le **premier lot du tableau §8 dont le statut n'est pas « livré »** dans `ETAT_3D.md`. Lis son prompt `pipeline/3d/prompts/M<NN>.txt` (numéro sur 2 chiffres : M1 → `M01.txt`, M4b → `M04b.txt`, M4c → `M04c.txt`, M7b → `M07b.txt`) et exécute-le intégralement. Si ce lot est marqué « en cours » depuis plus de 6 h, repars de l'état réel du dépôt (commits, branches) sans refaire ce qui est poussé.
 4. Base : `streetlift_tracker_v33.zip` sur `main`. Vérifie la version prérequise (§8). Si elle ne correspond pas : notification d'échec (§5) et arrêt.
 5. Marque ton lot « en cours » dans `ETAT_3D.md` et pousse `pipeline`.
 
@@ -69,10 +69,11 @@ Interdits : modifier ou créer une tâche planifiée (seulement `fire_trigger` s
 | M4 | 5.2.0 | 5.3.0 | STATS : résumé hebdomadaire sur le mannequin | STATS montre les groupes de la semaine sur le mannequin | normal |
 | M4b | 5.3.0 | 5.3.1 | Tous les muscles remis, transparence à 50 %, filtres à cocher, petite refonte de l'écran Anatomie | Muscles sollicités visibles à travers les autres ; menu « Filtres » à cocher | normal |
 | M4c | 5.3.1 | 5.3.2 | Dépôt en sources : plus de ZIP, projet structuré à la racine, CI et outils adaptés ; zoom au pincement ; filtres normalisés (menu déroulant à cocher par catégorie) | Sur GitHub, les dossiers du projet au lieu du ZIP ; zoom au pincement ; mêmes filtres partout | normal |
-| M5 | 5.3.2 | 5.4.0 | Squelette d'animation et peau du modèle ; carte Koach de la séance du jour | Anatomie : 4 postures de référence sans déchirure ; carte « Koach · séance du jour » en tête de séance | **accru** |
-| M6 | 5.4.0 | 5.5.0 | Matériel 3D + chaîne de calcul des animations + 3 pilotes | Traction, dips, squat animés dans leur fiche | normal |
+| M5 | 5.3.2 | 5.4.0 | Squelette d'animation et peau du modèle | Anatomie : 4 postures de référence sans déchirure | **accru** |
+| M6 | 5.4.0 | 5.5.0 | Matériel 3D + chaîne de calcul des animations + 3 pilotes ; carte Koach de la séance du jour | Traction, dips, squat animés dans leur fiche ; carte « Koach · séance du jour » en tête de séance | normal |
 | M7 | 5.5.0 | 5.6.0 | Lecteur complet + intensité par phase | Lecture/pause, curseur, tempo, phases, muscles qui « respirent » avec la phase | normal |
-| M8 | 5.6.0 | 5.7.0 | Conversion : exercices du programme du propriétaire | Tout son programme animé en 3D | normal |
+| M7b | 5.6.0 | 5.6.1 | Animations de Koach en mascotte : 3 attente, 3 « parle », 3 « félicite » (aucune apparition dans l'appli) | Anatomie : section « Koach (aperçu) » avec les 9 animations | normal |
+| M8 | 5.6.1 | 5.7.0 | Conversion : exercices du programme du propriétaire | Tout son programme animé en 3D | normal |
 | M9 | 5.7.0 | 5.8.0 | Conversion : tirages (vertical, horizontal) | Famille animée | normal |
 | M10 | 5.8.0 | 5.9.0 | Conversion : poussées (verticale, horizontale) | Famille animée | normal |
 | M11 | 5.9.0 | 5.10.0 | Conversion : jambes (squat, charnière de hanche, fente) | Famille animée | normal |

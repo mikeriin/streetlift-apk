@@ -12,10 +12,5 @@ Rôle : rigger et technical artist Blender, anatomiste du mouvement. Une seule a
 
 3. Application
 — Écran Anatomie : sélecteur « Posture » avec 4 postures de référence (debout, suspendu à la barre, squat bas, planche de gainage) et transition douce ; mise en évidence et toucher toujours justes sur le modèle déformé.
-— Captures des 4 postures sous 4 vues ; REGARDE-les. Version 5.4.0 (squelette + carte Koach).
+— Captures des 4 postures sous 4 vues ; REGARDE-les. Version 5.4.0.
 
-4. Carte Koach de la séance du jour (ajout du propriétaire, 28/09/2026 — indépendant du squelette, à traiter à part et simplement)
-— Aujourd'hui, les indications de Koach pour la séance du jour s'affichent au-dessus du premier exercice. Repère précisément où (écran de séance, accueil, aperçu de séance : `lib/koach_widgets.dart`, `lib/session_screen.dart`, `lib/home_screen.dart`…) et liste-les dans la livraison.
-— Remplace cet affichage par une carte dédiée « Koach · séance du jour », placée en tête de la séance, avant la liste des exercices, visuellement distincte des cartes d'exercice (même style de carte que l'application, en-tête Koach) : résumé de l'état du jour et des ajustements décidés (charges, séries, RIR visé, exercices remplacés ou allégés), avec leur raison en une phrase chacune ; repliable (repliée : une ligne de résumé) ; actions Koach existantes conservées dans la carte (accepter / ignorer / détails, selon le mode Assisté ou Automatique actuel). Plus rien de Koach au-dessus du premier exercice ; les indications propres à un exercice restent sur cet exercice.
-— Si Koach n'a rien à dire (désactivé, aucun ajustement), la carte n'apparaît pas ou affiche une ligne neutre — choisis et justifie. Aucune logique de Koach modifiée : seulement l'affichage.
-— Tests : présence et position de la carte, contenu identique à l'affichage précédent, repli, séance sans Koach ; tests existants adaptés sans retirer d'assertion. Captures REGARDÉES (sombre et clair, carte ouverte et repliée).
