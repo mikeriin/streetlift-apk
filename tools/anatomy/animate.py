@@ -1052,6 +1052,15 @@ def framing(model, fiche, poses):
     return lo, hi
 
 
+def body_extent(model, poses):
+    """Boîte du corps seul sur toutes les postures (repère glTF)."""
+    lo, hi = np.full(3, np.inf), np.full(3, -np.inf)
+    for p in poses:
+        pts = model.skin(p['g'])
+        lo, hi = np.minimum(lo, pts.min(0)), np.maximum(hi, pts.max(0))
+    return lo, hi
+
+
 def clip_json(model, fiche, poses, timeline, phases, results):
     data = fiche.d
     moving = [i.id for i in fiche.placed.values() if i.attach]
@@ -1064,8 +1073,15 @@ def clip_json(model, fiche, poses, timeline, phases, results):
             q = -q
         return [round(float(c), 4) for c in q]
 
+    # Cadrage : hauteur du corps et du matériel (barre de traction, barres
+    # parallèles), largeur du corps seul (+ 10 %) : une barre olympique de
+    # 2,20 m ou les montants d'une barre de traction ne réduisent pas le
+    # mannequin ; vus de face, leurs extrémités peuvent sortir du cadre.
     lo, hi = framing(model, fiche, poses)
+    blo, bhi = body_extent(model, poses)
     size = hi - lo
+    centre = np.array([(blo[0] + bhi[0]) / 2, (lo[1] + hi[1]) / 2, (blo[2] + bhi[2]) / 2])
+    width = math.hypot(bhi[0] - blo[0], bhi[2] - blo[2]) * 1.1
     # Contacts vérifiables sans le modèle (tools/tests/test_m6_clips.py) :
     # point de prise dans le repère de la main, cible fixe ou portée par la
     # charge ; pieds fixes.
@@ -1111,9 +1127,9 @@ def clip_json(model, fiche, poses, timeline, phases, results):
         'materiel': [{'id': i.id, 'position': [round(float(c), 4) for c in i.position],
                       'rotation_y': i.yaw, 'mobile': bool(i.attach)}
                      for i in fiche.placed.values()],
-        'cadrage': {'centre': [round(float(c), 4) for c in (lo + hi) / 2],
+        'cadrage': {'centre': [round(float(c), 4) for c in centre],
                     'hauteur': round(float(size[1]), 4),
-                    'largeur': round(float(math.hypot(size[0], size[2])), 4)},
+                    'largeur': round(float(width), 4)},
         'contacts': contacts,
         'controles': {k: v[0] for k, v in results.items()},
     }

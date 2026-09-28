@@ -93,11 +93,10 @@ void main() {
 
   setUp(KoachDayCard.debugReset);
 
-  Finder inPages(Finder f) =>
-      find.descendant(of: find.byType(PageView), matching: f);
-
-  testWidgets('carte en tête de séance, avant les exercices ; rien de Koach '
-      'dans la page du premier exercice', (tester) async {
+  testWidgets('carte en tête de séance, avant la liste des exercices : une '
+      'seule carte Koach du jour, distincte du bloc du premier exercice', (
+    tester,
+  ) async {
     phone(tester, const Size(390, 844));
     store.enableKoach();
     store.setKoachQuestionnaires(true);
@@ -105,17 +104,48 @@ void main() {
     await tester.pumpAndSettle();
     final card = find.byKey(const ValueKey('koach-day-card'));
     expect(card, findsOneWidget);
-    expect(inPages(card), findsNothing);
-    expect(inPages(find.byKey(const ValueKey('koach-questions'))), findsNothing);
-    expect(inPages(find.byKey(const ValueKey('koach-fatigue'))), findsNothing);
-    // Au-dessus de la page d'exercices, sous le compteur.
+    // Questionnaire et fatigue seulement dans la carte, plus en cartes
+    // séparées au-dessus de l'exercice.
+    for (final key in const ['koach-questions', 'koach-fatigue']) {
+      expect(
+        find.ancestor(
+          of: find.byKey(ValueKey(key)),
+          matching: find.byType(KoachDayCard),
+        ).evaluate().length,
+        find.byKey(ValueKey(key)).evaluate().length,
+        reason: key,
+      );
+    }
+    // Première chose de la page, avant le premier exercice.
     final cardBox = tester.getRect(card);
-    expect(cardBox.bottom, lessThanOrEqualTo(tester.getRect(find.byType(PageView)).top));
+    final list = find.descendant(
+      of: find.byType(PageView),
+      matching: find.byType(ListView),
+    );
+    expect(find.descendant(of: list.first, matching: card), findsOneWidget);
+    expect(
+      cardBox.bottom,
+      lessThanOrEqualTo(
+        tester.getRect(find.byTooltip('Valider la série 1').first).top,
+      ),
+    );
+    // Rien de Koach dans l'en-tête de la séance.
     expect(
       cardBox.top,
-      greaterThanOrEqualTo(tester.getRect(find.textContaining('Exercice 1')).bottom),
+      greaterThanOrEqualTo(tester.getRect(find.byType(PageView)).top),
     );
     expect(find.text('KOACH · SÉANCE DU JOUR'), findsOneWidget);
+    // Pages suivantes : pas de carte.
+    await tester.tap(find.text('Suivant'));
+    await tester.pumpAndSettle();
+    expect(
+      find.descendant(
+        of: find.byType(PageView),
+        matching: find.byKey(const ValueKey('koach-day-card')),
+        skipOffstage: true,
+      ),
+      findsNothing,
+    );
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox());
   });
@@ -129,14 +159,25 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('koach-questions')), findsOneWidget);
     expect(find.text('Sommeil de la nuit'), findsOneWidget);
-    expect(find.text('Forme du jour : 0 au plus bas, 10 excellente'), findsOneWidget);
+    expect(
+      find.text('Forme du jour : 0 au plus bas, 10 excellente'),
+      findsOneWidget,
+    );
     await tester.tap(find.text('moins de 5 h'));
     await tester.pumpAndSettle();
     expect(store.koach.answers['S3-J1']!.sleep, 4.5);
-    await scrollToAction(tester, find.byKey(const ValueKey('koach-fatigue-accept')));
+    await scrollToAction(
+      tester,
+      find.byKey(const ValueKey('koach-fatigue-accept')),
+    );
     expect(find.textContaining('−30 % de volume'), findsOneWidget);
     expect(find.text('Continuer comme prévu'), findsOneWidget);
     // Repli : une ligne de résumé, contenu masqué.
+    await scrollToAction(
+      tester,
+      find.byKey(const ValueKey('koach-day-toggle')),
+      up: true,
+    );
     await tester.tap(find.byKey(const ValueKey('koach-day-toggle')));
     await tester.pumpAndSettle();
     final summary = find.byKey(const ValueKey('koach-day-summary'));
@@ -151,7 +192,10 @@ void main() {
     // Dépli : même contenu, action conservée (mêmes effets qu'en L7).
     await tester.tap(find.byKey(const ValueKey('koach-day-toggle')));
     await tester.pumpAndSettle();
-    await scrollToAction(tester, find.byKey(const ValueKey('koach-fatigue-accept')));
+    await scrollToAction(
+      tester,
+      find.byKey(const ValueKey('koach-fatigue-accept')),
+    );
     await tester.tap(find.byKey(const ValueKey('koach-fatigue-accept')));
     await tester.pumpAndSettle();
     expect(store.logs['S3-J1']!.ex[mu]!.sets.length, 3);

@@ -77,7 +77,8 @@ void main() {
         final r = rgba.getUint8(o), g = rgba.getUint8(o + 1);
         final b = rgba.getUint8(o + 2);
         total++;
-        if ((r - br).abs() <= 12 && (g - bgG).abs() <= 12 &&
+        if ((r - br).abs() <= 12 &&
+            (g - bgG).abs() <= 12 &&
             (b - bb).abs() <= 12) {
           continue;
         }
@@ -107,7 +108,9 @@ void main() {
 
   Mannequin3DState? mannequin(WidgetTester tester) {
     final f = find.byType(Mannequin3D);
-    return f.evaluate().isEmpty ? null : tester.state<Mannequin3DState>(f.first);
+    return f.evaluate().isEmpty
+        ? null
+        : tester.state<Mannequin3DState>(f.first);
   }
 
   Future<void> pumpHome(
@@ -190,9 +193,12 @@ void main() {
       expect(s['gris'] as double, greaterThan(.01), reason: '$id $k');
     }
     out['boucle'] = frames;
+    m6[id] = out;
+    record();
     // Vue 3/4 à la position clé la plus ample.
     state.seekClip(clip.keyPositions.first.$2);
-    await tester.tap(find.byKey(const ValueKey('mannequin-view-troisQuarts')));
+    // Boutons de vue sous l'écran (émulateur 360 × 640 dp) : vue imposée.
+    state.setView(MannequinView.troisQuarts);
     await tester.pump(const Duration(milliseconds: 900));
     await tester.pump(const Duration(seconds: 2));
     await shot('m6_${id}_troisquarts');
@@ -240,7 +246,9 @@ void main() {
     expect(state.clipTime, t);
     await tester.ensureVisible(chips);
     await tester.pump(const Duration(seconds: 1));
-    await tester.tap(find.descendant(of: chips, matching: find.byType(ChoiceChip)).last);
+    await tester.tap(
+      find.descendant(of: chips, matching: find.byType(ChoiceChip)).last,
+    );
     await tester.pump(const Duration(seconds: 2));
     tester
         .state<ScrollableState>(find.byType(Scrollable).first)
@@ -256,39 +264,42 @@ void main() {
   // ------------------------------------------ carte Koach du jour --
 
   for (final dark in const [true, false]) {
-    testWidgets('M6 : carte Koach · séance du jour (${dark ? 'sombre' : 'clair'})',
-        (tester) async {
-      store.storeClock = () => DateTime(2026, 7, 27, 18);
-      store.program.start = DateTime(2026, 7, 13);
-      store.startOrigin = 'user';
-      store.enableKoach();
-      store.setKoachQuestionnaires(true);
-      store.koach.answers.clear();
-      store.koachSkipped.clear();
-      KoachDayCard.debugReset();
-      final WeekPlan w3 = store.program.week(3);
-      final d1 = w3.day(1)!;
-      await pumpHome(
-        tester,
-        SessionScreen(key: ValueKey('m6-seance-$dark'), week: w3, day: d1),
-        dark,
-      );
-      await tester.pump(const Duration(seconds: 2));
-      expect(find.byKey(const ValueKey('koach-day-card')), findsOneWidget);
-      await tester.tap(find.text('moins de 5 h'));
-      await tester.pump(const Duration(seconds: 1));
-      await shot('m6_koach_${dark ? 'sombre' : 'clair'}_ouverte');
-      await tester.tap(find.byKey(const ValueKey('koach-day-toggle')));
-      await tester.pump(const Duration(seconds: 1));
-      expect(find.byKey(const ValueKey('koach-day-summary')), findsOneWidget);
-      await shot('m6_koach_${dark ? 'sombre' : 'clair'}_repliee');
-      m6['koach_${dark ? 'sombre' : 'clair'}'] = tester
-          .widget<Text>(find.byKey(const ValueKey('koach-day-summary')))
-          .data;
-      record();
-      store.koach.answers.clear();
-      store.storeClock = DateTime.now;
-      SL.dark = true;
-    }, timeout: _limit);
+    testWidgets(
+      'M6 : carte Koach · séance du jour (${dark ? 'sombre' : 'clair'})',
+      (tester) async {
+        store.storeClock = () => DateTime(2026, 7, 27, 18);
+        store.program.start = DateTime(2026, 7, 13);
+        store.startOrigin = 'user';
+        store.enableKoach();
+        store.setKoachQuestionnaires(true);
+        store.koach.answers.clear();
+        store.koachSkipped.clear();
+        KoachDayCard.debugReset();
+        final WeekPlan w3 = store.program.week(3);
+        final d1 = w3.day(1)!;
+        await pumpHome(
+          tester,
+          SessionScreen(key: ValueKey('m6-seance-$dark'), week: w3, day: d1),
+          dark,
+        );
+        await tester.pump(const Duration(seconds: 2));
+        expect(find.byKey(const ValueKey('koach-day-card')), findsOneWidget);
+        await tester.tap(find.text('moins de 5 h'));
+        await tester.pump(const Duration(seconds: 1));
+        await shot('m6_koach_${dark ? 'sombre' : 'clair'}_ouverte');
+        await tester.tap(find.byKey(const ValueKey('koach-day-toggle')));
+        await tester.pump(const Duration(seconds: 1));
+        expect(find.byKey(const ValueKey('koach-day-summary')), findsOneWidget);
+        await shot('m6_koach_${dark ? 'sombre' : 'clair'}_repliee');
+        m6['koach_${dark ? 'sombre' : 'clair'}'] = tester
+            .widget<Text>(find.byKey(const ValueKey('koach-day-summary')))
+            .data;
+        record();
+        store.koach.answers.clear();
+        store.storeClock = DateTime.now;
+        SL.dark = true;
+      },
+      timeout: _limit,
+    );
   }
 }

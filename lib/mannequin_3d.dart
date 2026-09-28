@@ -648,7 +648,8 @@ class MannequinScene {
     }
     final byName = <String, Node>{};
     void index(Node n) {
-      if (n.name.startsWith('eq_') && !n.name.contains('__')) byName[n.name] = n;
+      if (n.name.startsWith('eq_') && !n.name.contains('__'))
+        byName[n.name] = n;
       for (final c in n.children) {
         index(c);
       }
@@ -968,7 +969,7 @@ class MannequinScene {
         Color.lerp(
           sceneBackground(dark),
           dark ? const Color(0xFFFFFFFF) : const Color(0xFF000000),
-          dark ? .07 : .09,
+          dark ? .025 : .04,
         )!,
       );
       final bg = _lin(sceneBackground(dark)).xyz;
@@ -1330,6 +1331,7 @@ class Mannequin3DState extends State<Mannequin3D>
     }
     return widget.view;
   }
+
   double _yaw = 0, _pitch = .06;
   double _fromYaw = 0, _fromPitch = 0, _toYaw = 0, _toPitch = 0;
   late final AnimationController _tween = AnimationController(
@@ -1501,6 +1503,14 @@ class Mannequin3DState extends State<Mannequin3D>
     }
   }
 
+  /// Défilement : visibilité relue après la mise en page de l'image
+  /// (pendant le défilement, la position de la vue n'est pas encore à jour).
+  void _onScroll() {
+    if (!mounted) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) => _updateClipTicker());
+    SchedulerBinding.instance.ensureVisualUpdate();
+  }
+
   /// Place l'animation à l'instant [t] et la met en pause (positions clés
   /// quand les animations sont réduites ; tests et captures).
   void seekClip(double t, {bool pause = true}) {
@@ -1521,8 +1531,8 @@ class Mannequin3DState extends State<Mannequin3D>
     if (widget.clip == null) return;
     final pos = Scrollable.maybeOf(context)?.position;
     if (!identical(pos, _scroll)) {
-      _scroll?.removeListener(_updateClipTicker);
-      _scroll = pos?..addListener(_updateClipTicker);
+      _scroll?.removeListener(_onScroll);
+      _scroll = pos?..addListener(_onScroll);
     }
     WidgetsBinding.instance.addPostFrameCallback((_) => _updateClipTicker());
   }
@@ -1576,7 +1586,7 @@ class Mannequin3DState extends State<Mannequin3D>
 
   @override
   void dispose() {
-    _scroll?.removeListener(_updateClipTicker);
+    _scroll?.removeListener(_onScroll);
     _clipTicker.dispose();
     _settings.listenable.removeListener(_onSettings);
     _tween.dispose();

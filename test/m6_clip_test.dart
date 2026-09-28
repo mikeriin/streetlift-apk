@@ -52,7 +52,9 @@ void main() {
   });
 
   test('registre : les trois pilotes sont validés', () async {
-    final valid = ClipRegistry.parse(await rootBundle.loadString(kClipIndexAsset));
+    final valid = ClipRegistry.parse(
+      await rootBundle.loadString(kClipIndexAsset),
+    );
     expect(valid, containsAll(pilots));
   });
 
@@ -65,19 +67,25 @@ void main() {
       expect(c.phases.first.start, 0);
       expect(c.phases.last.end, closeTo(c.duration, 1e-9));
       final types = {for (final p in c.phases) p.type};
-      expect(types, containsAll([
-        ClipPhaseType.concentrique,
-        ClipPhaseType.excentrique,
-        ClipPhaseType.isometrique,
-      ]), reason: id);
+      expect(
+        types,
+        containsAll([
+          ClipPhaseType.concentrique,
+          ClipPhaseType.excentrique,
+          ClipPhaseType.isometrique,
+        ]),
+        reason: id,
+      );
       expect(c.keyPositions, isNotEmpty);
       expect(c.equipment.map((e) => e.id), contains('sol'));
       expect(c.height, greaterThan(1.0));
       // La boucle revient à sa posture de départ.
       expect(c.timeline.last.$2, c.timeline.first.$2);
     }
-    expect(clips['back-squat']!.equipment.firstWhere((e) => e.moving).id,
-        'barre_olympique');
+    expect(
+      clips['back-squat']!.equipment.firstWhere((e) => e.moving).id,
+      'barre_olympique',
+    );
   });
 
   test('interpolation de l\'application : contacts tenus à 1 cm sur toute la '
@@ -110,7 +118,8 @@ void main() {
             );
           } else {
             final off = ct['decalage'] as List;
-            target = moving[ct['element'] as String]! +
+            target =
+                moving[ct['element'] as String]! +
                 vm.Vector3(
                   (off[0] as num).toDouble(),
                   (off[1] as num).toDouble(),
@@ -121,7 +130,11 @@ void main() {
           if (e > worst) worst = e;
         }
       }
-      expect(worst, lessThanOrEqualTo(.0101), reason: '$id : ${worst * 100} cm');
+      expect(
+        worst,
+        lessThanOrEqualTo(.0101),
+        reason: '$id : ${worst * 100} cm',
+      );
     }
   });
 
