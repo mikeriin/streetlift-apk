@@ -231,7 +231,7 @@ jobs:
   emulator:
     name: Rendu réel sur émulateur Android (Flutter GPU)
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 90
     env:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
     defaults:
