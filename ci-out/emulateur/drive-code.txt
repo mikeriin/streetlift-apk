@@ -1,3 +1,0 @@
-code=0
-code_fiche=0
-code_mesure=0

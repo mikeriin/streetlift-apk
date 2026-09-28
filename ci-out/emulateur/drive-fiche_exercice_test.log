@@ -11,153 +11,54 @@ Alternatively, use the flag "--android-skip-build-dependency-validation" to bypa
 Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/settings.gradle), by a plugin with the id of com.android.application. 
 If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
 
-Running Gradle task 'assembleDebug'...                             41.8s
+Running Gradle task 'assembleDebug'...                             31.9s
 ✓ Built build/app/outputs/flutter-apk/app-debug.apk
-Installing build/app/outputs/flutter-apk/app-debug.apk...        1,400ms
-I/eetlift_tracker( 4660): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
-I/Choreographer( 4660): Skipped 57 frames!  The application may be doing too much work on its main thread.
-D/FlutterJNI( 4660): Sending viewport metrics to the engine.
-VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:39975/R7drBd1iUlo=/
-VMServiceFlutterDriver: Isolate found with number: 7265618492086631
-VMServiceFlutterDriver: Isolate 7265618492086631 is runnable.
-VMServiceFlutterDriver: Isolate is paused at start.
-VMServiceFlutterDriver: Attempting to resume isolate
-I/flutter ( 4660): 00:00 +0: (setUpAll)
-VMServiceFlutterDriver: Connected to Flutter application.
-I/flutter ( 4660): 00:00 +1: M3 : 6 fiches, thème sombre, étirés, profonds, toucher
-D/ProfileInstaller( 4660): Installing profile for fr.tchoupi.streetlift_tracker
-D/EGL_emulation( 4660): app_time_stats: avg=991.99ms min=221.70ms max=2922.24ms count=4
-W/WindowOnBackDispatcher( 4660): OnBackInvokedCallback is not enabled for the application.
-W/WindowOnBackDispatcher( 4660): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
-D/EGL_emulation( 4660): app_time_stats: avg=853.93ms min=764.36ms max=943.51ms count=2
-D/EGL_emulation( 4660): app_time_stats: avg=14667.42ms min=14667.42ms max=14667.42ms count=1
-D/EGL_emulation( 4660): app_time_stats: avg=574.78ms min=61.43ms max=2760.41ms count=6
-D/EGL_emulation( 4660): app_time_stats: avg=397.18ms min=328.33ms max=489.57ms count=3
-W/WindowOnBackDispatcher( 4660): OnBackInvokedCallback is not enabled for the application.
-W/WindowOnBackDispatcher( 4660): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
-I/eetlift_tracker( 4660): Background concurrent mark compact GC freed 2247KB AllocSpace bytes, 3(60KB) LOS objects, 49% free, 2596KB/5192KB, paused 74us,49.747ms total 281.625ms
-D/EGL_emulation( 4660): app_time_stats: avg=609.56ms min=117.69ms max=1591.81ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=165.14ms min=92.22ms max=267.21ms count=6
-D/EGL_emulation( 4660): app_time_stats: avg=2660.35ms min=2660.35ms max=2660.35ms count=1
-D/EGL_emulation( 4660): app_time_stats: avg=376.43ms min=193.39ms max=480.10ms count=3
-W/WindowOnBackDispatcher( 4660): OnBackInvokedCallback is not enabled for the application.
-W/WindowOnBackDispatcher( 4660): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
-D/EGL_emulation( 4660): app_time_stats: avg=683.42ms min=126.89ms max=1575.97ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=200.00ms min=79.29ms max=296.78ms count=5
-D/EGL_emulation( 4660): app_time_stats: avg=998.30ms min=209.90ms max=2555.31ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=425.67ms min=341.51ms max=508.51ms count=3
-W/WindowOnBackDispatcher( 4660): OnBackInvokedCallback is not enabled for the application.
-W/WindowOnBackDispatcher( 4660): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
-D/EGL_emulation( 4660): app_time_stats: avg=243.92ms min=178.40ms max=311.18ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=807.38ms min=184.87ms max=1429.89ms count=2
-D/EGL_emulation( 4660): app_time_stats: avg=636.35ms min=85.32ms max=2666.40ms count=5
-D/EGL_emulation( 4660): app_time_stats: avg=411.20ms min=305.89ms max=470.57ms count=3
-W/WindowOnBackDispatcher( 4660): OnBackInvokedCallback is not enabled for the application.
-W/WindowOnBackDispatcher( 4660): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
-D/EGL_emulation( 4660): app_time_stats: avg=733.54ms min=317.23ms max=1481.58ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=199.87ms min=162.32ms max=276.59ms count=5
-D/EGL_emulation( 4660): app_time_stats: avg=1414.40ms min=200.93ms max=2627.86ms count=2
-D/EGL_emulation( 4660): app_time_stats: avg=402.59ms min=321.01ms max=464.57ms count=3
-W/WindowOnBackDispatcher( 4660): OnBackInvokedCallback is not enabled for the application.
-W/WindowOnBackDispatcher( 4660): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
-D/EGL_emulation( 4660): app_time_stats: avg=340.61ms min=335.10ms max=346.63ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=1670.45ms min=1670.45ms max=1670.45ms count=1
-D/EGL_emulation( 4660): app_time_stats: avg=209.74ms min=180.22ms max=284.89ms count=5
-D/EGL_emulation( 4660): app_time_stats: avg=1416.54ms min=167.96ms max=2665.12ms count=2
-D/EGL_emulation( 4660): app_time_stats: avg=439.11ms min=358.11ms max=486.80ms count=3
-W/WindowOnBackDispatcher( 4660): OnBackInvokedCallback is not enabled for the application.
-W/WindowOnBackDispatcher( 4660): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
-D/EGL_emulation( 4660): app_time_stats: avg=400.26ms min=358.02ms max=463.02ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=1303.09ms min=1303.09ms max=1303.09ms count=1
-D/EGL_emulation( 4660): app_time_stats: avg=583.37ms min=74.62ms max=2718.78ms count=6
-D/EGL_emulation( 4660): app_time_stats: avg=421.94ms min=348.89ms max=471.94ms count=3
-W/WindowOnBackDispatcher( 4660): OnBackInvokedCallback is not enabled for the application.
-W/WindowOnBackDispatcher( 4660): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
-D/EGL_emulation( 4660): app_time_stats: avg=363.99ms min=344.29ms max=389.36ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=1720.35ms min=1720.35ms max=1720.35ms count=1
-D/EGL_emulation( 4660): app_time_stats: avg=212.93ms min=172.20ms max=303.17ms count=5
-D/EGL_emulation( 4660): app_time_stats: avg=1370.45ms min=62.01ms max=2678.89ms count=2
-D/EGL_emulation( 4660): app_time_stats: avg=893.63ms min=410.64ms max=1376.62ms count=2
-D/EGL_emulation( 4660): app_time_stats: avg=181.11ms min=105.97ms max=445.99ms count=6
-D/EGL_emulation( 4660): app_time_stats: avg=1474.20ms min=1474.20ms max=1474.20ms count=1
-D/EGL_emulation( 4660): app_time_stats: avg=200.06ms min=191.55ms max=207.87ms count=5
-D/EGL_emulation( 4660): app_time_stats: avg=106.66ms min=64.44ms max=123.13ms count=5
-D/EGL_emulation( 4660): app_time_stats: avg=733.01ms min=114.17ms max=1351.84ms count=2
-D/EGL_emulation( 4660): app_time_stats: avg=190.77ms min=128.42ms max=219.36ms count=4
-I/flutter ( 4660): 01:29 +2: M3 : 6 fiches, thème clair
-D/EGL_emulation( 4660): app_time_stats: avg=394.12ms min=335.82ms max=467.83ms count=3
-D/FlutterJNI( 4660): Sending viewport metrics to the engine.
-D/EGL_emulation( 4660): app_time_stats: avg=756.42ms min=335.52ms max=1581.46ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=676.63ms min=107.12ms max=2678.71ms count=5
-D/EGL_emulation( 4660): app_time_stats: avg=710.45ms min=243.14ms max=1446.41ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=142.84ms min=47.29ms max=231.27ms count=7
-D/EGL_emulation( 4660): app_time_stats: avg=1381.29ms min=108.75ms max=2653.82ms count=2
-D/EGL_emulation( 4660): app_time_stats: avg=678.38ms min=193.24ms max=1403.21ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=170.68ms min=86.07ms max=214.60ms count=6
-D/EGL_emulation( 4660): app_time_stats: avg=2664.11ms min=2664.11ms max=2664.11ms count=1
-D/EGL_emulation( 4660): app_time_stats: avg=227.68ms min=157.17ms max=443.59ms count=5
-D/EGL_emulation( 4660): app_time_stats: avg=1411.58ms min=1411.58ms max=1411.58ms count=1
-D/EGL_emulation( 4660): app_time_stats: avg=699.55ms min=189.26ms max=2638.87ms count=5
-D/EGL_emulation( 4660): app_time_stats: avg=668.20ms min=194.41ms max=1357.48ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=185.98ms min=70.27ms max=324.50ms count=6
-D/EGL_emulation( 4660): app_time_stats: avg=1447.17ms min=193.82ms max=2700.53ms count=2
-D/EGL_emulation( 4660): app_time_stats: avg=675.58ms min=191.38ms max=1397.52ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=137.11ms min=12.31ms max=203.27ms count=6
-D/EGL_emulation( 4660): app_time_stats: avg=2638.91ms min=2638.91ms max=2638.91ms count=1
-D/EGL_emulation( 4660): app_time_stats: avg=680.24ms min=239.37ms max=1378.91ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=182.93ms min=154.85ms max=212.53ms count=6
-D/EGL_emulation( 4660): app_time_stats: avg=2610.70ms min=2610.70ms max=2610.70ms count=1
-I/flutter ( 4660): 02:11 +3: M3 : 20 fiches d’affilée (temps, mémoire)
-D/FlutterJNI( 4660): Sending viewport metrics to the engine.
-D/EGL_emulation( 4660): app_time_stats: avg=413.85ms min=359.87ms max=488.56ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=578.66ms min=125.89ms max=1473.33ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=308.19ms min=201.32ms max=490.21ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=234.65ms min=146.50ms max=350.97ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=1382.30ms min=1382.30ms max=1382.30ms count=1
-D/EGL_emulation( 4660): app_time_stats: avg=349.83ms min=203.12ms max=530.61ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=992.68ms min=314.77ms max=1670.60ms count=2
-D/EGL_emulation( 4660): app_time_stats: avg=167.76ms min=74.47ms max=278.27ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=155.28ms min=115.55ms max=255.08ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=1470.68ms min=1470.68ms max=1470.68ms count=1
-D/EGL_emulation( 4660): app_time_stats: avg=281.61ms min=186.43ms max=441.01ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=771.15ms min=337.81ms max=1574.01ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=303.09ms min=194.32ms max=536.58ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=781.42ms min=324.64ms max=1665.09ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=285.96ms min=184.10ms max=473.61ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=549.14ms min=331.26ms max=922.62ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=354.66ms min=117.84ms max=761.79ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=173.22ms min=113.58ms max=276.90ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=1597.53ms min=1597.53ms max=1597.53ms count=1
-D/EGL_emulation( 4660): app_time_stats: avg=300.51ms min=186.35ms max=510.99ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=400.65ms min=364.07ms max=465.13ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=1374.03ms min=1374.03ms max=1374.03ms count=1
-D/EGL_emulation( 4660): app_time_stats: avg=259.43ms min=194.07ms max=445.04ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=910.59ms min=234.04ms max=1587.14ms count=2
-D/EGL_emulation( 4660): app_time_stats: avg=301.48ms min=189.80ms max=521.52ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=771.50ms min=324.55ms max=1608.42ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=205.02ms min=109.29ms max=308.97ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=369.97ms min=270.67ms max=446.48ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=1301.17ms min=1301.17ms max=1301.17ms count=1
-D/EGL_emulation( 4660): app_time_stats: avg=191.18ms min=77.27ms max=355.80ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=992.84ms min=359.75ms max=1625.93ms count=2
-D/EGL_emulation( 4660): app_time_stats: avg=289.05ms min=179.66ms max=502.72ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=717.27ms min=191.66ms max=1595.96ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=336.36ms min=179.81ms max=542.43ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=785.37ms min=335.05ms max=1667.36ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=293.51ms min=183.84ms max=487.44ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=753.94ms min=321.75ms max=1588.17ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=286.57ms min=196.18ms max=472.04ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=750.08ms min=321.42ms max=1580.39ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=267.66ms min=77.17ms max=591.83ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=756.80ms min=320.32ms max=1618.54ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=194.83ms min=65.48ms max=278.69ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=369.05ms min=346.53ms max=389.95ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=1753.88ms min=1753.88ms max=1753.88ms count=1
-D/EGL_emulation( 4660): app_time_stats: avg=304.38ms min=202.87ms max=458.60ms count=4
-D/EGL_emulation( 4660): app_time_stats: avg=350.34ms min=201.91ms max=531.37ms count=3
-D/EGL_emulation( 4660): app_time_stats: avg=1450.21ms min=1450.21ms max=1450.21ms count=1
-D/EGL_emulation( 4660): app_time_stats: avg=271.64ms min=202.10ms max=367.50ms count=4
-I/flutter ( 4660): 03:23 +4: (tearDownAll)
-I/flutter ( 4660): 03:23 +5: All tests passed!
-D/EGL_emulation( 4660): app_time_stats: avg=340.74ms min=30.88ms max=581.95ms count=3
-All tests passed.
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,469ms
+Connecting to the VM Service is taking longer than expected...
+Still attempting to connect to the VM Service...
+If you do NOT see the Flutter application running, it might have crashed. The device logs (e.g. from adb or XCode) might have more details.
+If you do see the Flutter application running on the device, try re-running with --host-vmservice-port to use a specific port known to be available.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 45610
+This was attempt #50. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 52986
+This was attempt #100. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 40210
+This was attempt #150. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 37410
+This was attempt #200. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 38230
+This was attempt #250. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 57994
+This was attempt #300. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 52088
+This was attempt #350. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 35208
+This was attempt #400. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 46750
+This was attempt #450. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 55068
+This was attempt #500. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 36228
+This was attempt #550. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 35318
+This was attempt #600. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 39852
+This was attempt #650. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 40554
+This was attempt #700. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 60226
+This was attempt #750. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 40836
+This was attempt #800. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 48952
+This was attempt #850. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 60158
+This was attempt #900. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 37272
+This was attempt #950. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 52426
+This was attempt #1000. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 39588
+This was attempt #1050. Will retry in 0:00:01.600000.
+Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 55304
+This was attempt #1100. Will retry in 0:00:01.600000.

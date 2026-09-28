@@ -1,7 +1,7 @@
-Total compressé : 55640850
-    15066768  lib/x86_64
-    14603258  lib/armeabi-v7a
-    14453939  lib/arm64-v8a
+Total compressé : 55649333
+    15069062  lib/x86_64
+    14605315  lib/armeabi-v7a
+    14458072  lib/arm64-v8a
      4432967  classes.dex
      2732931  assets/flutter_assets/packages/flutter_scene
      1067962  assets/flutter_assets/assets/muscles
@@ -40,9 +40,9 @@ Total compressé : 55640850
         5349  res/mipmap-xxhdpi-v4
         5312  assets/flutter_assets/packages/wakelock_plus
 
-     8485169     18743880  lib/armeabi-v7a/libapp.so
-     7826664     17171336  lib/x86_64/libapp.so
-     7616268     16843656  lib/arm64-v8a/libapp.so
+     8487226     18743880  lib/armeabi-v7a/libapp.so
+     7828958     17171336  lib/x86_64/libapp.so
+     7620401     16909192  lib/arm64-v8a/libapp.so
      6460202     13923328  lib/x86_64/libflutter.so
      6080904     12568184  lib/arm64-v8a/libflutter.so
      5238445      9137740  lib/armeabi-v7a/libflutter.so
