@@ -1,0 +1,34 @@
+diff --git a/lib/koach_day_card.dart b/lib/koach_day_card.dart
+index c90af67..190f8c5 100644
+--- a/lib/koach_day_card.dart
++++ b/lib/koach_day_card.dart
+@@ -34,7 +34,6 @@ class KoachDayCard extends StatefulWidget {
+   /// Après une action qui change les séries (fatigue acceptée, adaptation).
+   final VoidCallback? onChanged;
+ 
+-
+   const KoachDayCard({
+     super.key,
+     required this.week,
+diff --git a/test/m6_koach_day_card_test.dart b/test/m6_koach_day_card_test.dart
+index 65a5aa5..62bc0c5 100644
+--- a/test/m6_koach_day_card_test.dart
++++ b/test/m6_koach_day_card_test.dart
+@@ -108,10 +108,13 @@ void main() {
+     // séparées au-dessus de l'exercice.
+     for (final key in const ['koach-questions', 'koach-fatigue']) {
+       expect(
+-        find.ancestor(
+-          of: find.byKey(ValueKey(key)),
+-          matching: find.byType(KoachDayCard),
+-        ).evaluate().length,
++        find
++            .ancestor(
++              of: find.byKey(ValueKey(key)),
++              matching: find.byType(KoachDayCard),
++            )
++            .evaluate()
++            .length,
+         find.byKey(ValueKey(key)).evaluate().length,
+         reason: key,
+       );
