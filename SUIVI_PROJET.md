@@ -9,7 +9,7 @@
 | Élément | Valeur |
 | --- | --- |
 | Demande | `pipeline/3d/prompts/M04c.txt` : plus de ZIP, projet structuré à la racine de `main`, CI et outils adaptés ; zoom au pincement ; filtres normalisés dans toute l'application |
-| Base | `main` `4531346` (5.3.1+76, ZIP), étiquette `archive-zip-5.3.1` |
+| Base | `main` `4531346` (5.3.1+76, ZIP) ; étiquette `archive-zip-5.3.1` créée localement, non poussée (refus du proxy de la session) |
 
 ## M4c.1 — Changements
 
@@ -21,11 +21,19 @@
 
 ## M4c.2 — Contrôles
 
-(en cours)
+- Identité : `python3 tools/compare_tree_with_zip.py --ref a42f149` → 578 fichiers du ZIP 5.3.1 identiques (SHA-256) dans l'arbre du commit de restructuration ; seules différences : `.gitignore` modifié, `.gitattributes` ajouté. Sur la tête livrée, les autres différences sont les fichiers de version, les outils et workflows adaptés, le zoom et les filtres (liste dans la livraison).
+- Arbre sans secret : `check_release_without_secrets.py --tree` et `package_release.py --check` (586 fichiers contrôlés un par un) ; `verify_project.py` (structure du dépôt, `.gitignore` qui couvre chaque fichier refusé) ; tests Python dont `test_repository_tree.py` (arbre sain accepté ; clé, mot de passe, fichier local, cache, APK, ZIP, lien symbolique suivis refusés ; comparaison au ZIP).
+- CI 3D run 36428956594 (8 essais : axes du zoom, menu en colonne à 200 %, puces, pincement calculé depuis son début) : formatage, analyse sans remarque, 946 tests Dart réussis (13 ignorés, 0 échec), builds debug et profile. (`visual_capture_test.dart` échoue avant comme après, depuis 2.5.0, hors lot.) Rendus des écrans avant / après : seuls le catalogue WOD et l'historique de STATS changent (bouton « Filtres » à la place des puces).
+- `test/m4c_zoom_test.dart` : bornes 1× / 4×, point focal stable (y compris doigts qui bougent inégalement), bord de la vue, déplacement à deux doigts, profondeur bornée ; gestes dans une page qui défile : pincement sans défilement, un doigt vertical = défilement, horizontal = rotation, toucher bref immédiat, double toucher une fois zoomé.
+- `test/m4c_filter_menu_test.dart` : union / intersection, compteur, puces, réinitialisation, Tout cocher / Tout décocher par catégorie, catégories repliables, accessibilité (bouton, cases lues avec leur catégorie et leur état, cibles ≥ 48 dp), sombre et clair × 6 couleurs dominantes à 320 px et texte 200 % ; bibliothèque, catalogue WOD, choix d'exercice ; historique (`stats_test.dart`) et Anatomie (`m4b_anatomie_test.dart`, `m2_mannequin_test.dart`) adaptés sans assertion retirée.
+- Émulateur Android 15 (Flutter GPU) : pincement réel sur un avant-bras (Anatomie) jusqu'à 4×, avant-bras à 2 dp des doigts, nom au toucher une fois zoomé (« Brachio-radial (droit) · Avant-bras »), déplacement à deux doigts, retour 1× par double toucher et par le bouton Dos ; fiche curl poignet (clair) : glisser vertical sur le mannequin = page défilée de 134 dp sans zoom, pincement = zoom 3× sans défilement ; menus « Filtres » de la bibliothèque, du catalogue WOD et de l'Anatomie ouverts puis leurs puces, sombre et clair. Captures regardées.
 
 ## M4c.3 — Limites
 
-(en cours)
+- Le zoom agrandit l'image (angle de champ) : la perspective ne change pas en zoomant, la caméra ne s'approche pas du modèle.
+- Le menu « Filtres » s'ouvre par-dessus le haut de l'écran et le bouton ; il se ferme en touchant en dehors.
+- Anatomie : « Muscles profonds » et « Os » ne sont pas mis en puces (cochés par défaut, ils repousseraient les boutons de vue) ; ils restent dans le menu et dans le résumé sous le mannequin.
+- `build-apk.yml` se déclenche aussi sur `claude/ci-3d` (build signé de contrôle), comme avec le ZIP.
 
 ## M4c.4 — Écrans qui filtraient une liste ou un affichage
 

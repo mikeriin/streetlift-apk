@@ -28,6 +28,8 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 ARCHIVE_TAG = 'archive-zip-5.3.1'
+# Dernier commit de main qui contient le ZIP (si l'étiquette n'est pas présente).
+ARCHIVE_COMMIT = '4531346f183aae545980ae0ecfc80b1942a8134a'
 ARCHIVE_PATH = 'streetlift_tracker_v33.zip'
 PREFIX = 'streetlift_tracker/'
 VERSION_FILES = frozenset({'pubspec.yaml', 'lib/settings_screen.dart', 'README.md', 'SUIVI_PROJET.md'})
@@ -102,11 +104,17 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--ref', default='HEAD', help='commit dont l’arbre est comparé (défaut HEAD)')
     parser.add_argument('--zip', type=Path, help='ZIP local (défaut : ZIP lu dans git à ' + ARCHIVE_TAG + ')')
-    parser.add_argument('--zip-ref', default=ARCHIVE_TAG, help='commit qui contient le ZIP')
+    parser.add_argument('--zip-ref', help='commit qui contient le ZIP (défaut : étiquette ' + ARCHIVE_TAG
+                        + ', sinon ' + ARCHIVE_COMMIT[:7] + ')')
     parser.add_argument('--allow', action='append', default=[], help='fichier admis en plus des exceptions')
     parser.add_argument('--json', type=Path, help='écrit aussi le résultat en JSON')
     args = parser.parse_args(argv)
-    data = args.zip.read_bytes() if args.zip else _git('show', f'{args.zip_ref}:{ARCHIVE_PATH}')
+    zip_ref = args.zip_ref
+    if zip_ref is None:
+        known = subprocess.run(['git', 'rev-parse', '-q', '--verify', f'refs/tags/{ARCHIVE_TAG}'], cwd=ROOT,
+                               capture_output=True).returncode == 0
+        zip_ref = ARCHIVE_TAG if known else ARCHIVE_COMMIT
+    data = args.zip.read_bytes() if args.zip else _git('show', f'{zip_ref}:{ARCHIVE_PATH}')
     result = compare(tree_files(args.ref), zip_files(data), args.allow)
     result['commit'] = _git('rev-parse', '--short', args.ref).decode().strip()
     result['zip_sha256'] = hashlib.sha256(data).hexdigest()
