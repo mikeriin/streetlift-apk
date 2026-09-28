@@ -1,0 +1,165 @@
+{
+  "debout": {
+    "face": {
+      "figure": 0.2620192307692308,
+      "rouge": 0.05718864468864469,
+      "gris": 0.1766941391941392,
+      "toucher_allume": 15,
+      "toucher_allume_rouge": 0.7333333333333333,
+      "toucher_vide": 161,
+      "toucher_vide_fond": 0.8819875776397516
+    },
+    "dos": {
+      "figure": 0.2081272893772894,
+      "rouge": 0.07000915750915751,
+      "gris": 0.12985347985347986,
+      "toucher_allume": 14,
+      "toucher_allume_rouge": 0.7142857142857143,
+      "toucher_vide": 158,
+      "toucher_vide_fond": 0.9746835443037974
+    },
+    "profil": {
+      "figure": 0.1390338827838828,
+      "rouge": 0.022664835164835164,
+      "gris": 0.10815018315018315,
+      "toucher_allume": 9,
+      "toucher_allume_rouge": 0.8888888888888888,
+      "toucher_vide": 183,
+      "toucher_vide_fond": 0.9398907103825137
+    },
+    "troisQuarts": {
+      "figure": 0.231753663003663,
+      "rouge": 0.047779304029304026,
+      "gris": 0.1627518315018315,
+      "toucher_allume": 17,
+      "toucher_allume_rouge": 0.7647058823529411,
+      "toucher_vide": 160,
+      "toucher_vide_fond": 0.94375
+    }
+  },
+  "suspendu": {
+    "face": {
+      "figure": 0.20519688644688644,
+      "rouge": 0.04310897435897436,
+      "gris": 0.13898809523809524,
+      "toucher_allume": 5,
+      "toucher_allume_rouge": 1.0,
+      "toucher_vide": 169,
+      "toucher_vide_fond": 0.9289940828402367
+    },
+    "dos": {
+      "figure": 0.1451923076923077,
+      "rouge": 0.05233516483516484,
+      "gris": 0.08592032967032967,
+      "toucher_allume": 13,
+      "toucher_allume_rouge": 0.9230769230769231,
+      "toucher_vide": 168,
+      "toucher_vide_fond": 0.9940476190476191
+    },
+    "profil": {
+      "figure": 0.10512820512820513,
+      "rouge": 0.01806318681318681,
+      "gris": 0.0787087912087912,
+      "toucher_allume": 6,
+      "toucher_allume_rouge": 0.6666666666666666,
+      "toucher_vide": 190,
+      "toucher_vide_fond": 0.9631578947368421
+    },
+    "troisQuarts": {
+      "figure": 0.18129578754578754,
+      "rouge": 0.03518772893772894,
+      "gris": 0.1269459706959707,
+      "toucher_allume": 10,
+      "toucher_allume_rouge": 0.7,
+      "toucher_vide": 175,
+      "toucher_vide_fond": 0.92
+    }
+  },
+  "squat_bas": {
+    "face": {
+      "figure": 0.1705357142857143,
+      "rouge": 0.027358058608058608,
+      "gris": 0.1368360805860806,
+      "toucher_allume": 9,
+      "toucher_allume_rouge": 0.7777777777777778,
+      "toucher_vide": 171,
+      "toucher_vide_fond": 0.9883040935672515
+    },
+    "dos": {
+      "figure": 0.25432692307692306,
+      "rouge": 0.09986263736263737,
+      "gris": 0.13841575091575092,
+      "toucher_allume": 17,
+      "toucher_allume_rouge": 1.0,
+      "toucher_vide": 166,
+      "toucher_vide_fond": 0.9036144578313253
+    },
+    "profil": {
+      "figure": 0.23569139194139194,
+      "rouge": 0.05258699633699634,
+      "gris": 0.16311813186813187,
+      "toucher_allume": 17,
+      "toucher_allume_rouge": 0.8235294117647058,
+      "toucher_vide": 167,
+      "toucher_vide_fond": 0.9041916167664671
+    },
+    "troisQuarts": {
+      "figure": 0.20373168498168498,
+      "rouge": 0.0353021978021978,
+      "gris": 0.1526327838827839,
+      "toucher_allume": 13,
+      "toucher_allume_rouge": 0.8461538461538461,
+      "toucher_vide": 167,
+      "toucher_vide_fond": 0.9221556886227545
+    }
+  },
+  "planche": {
+    "face": {
+      "figure": 0.030906593406593408,
+      "rouge": 0.004716117216117216,
+      "gris": 0.02532051282051282,
+      "toucher_allume": 0,
+      "toucher_allume_rouge": 0,
+      "toucher_vide": 202,
+      "toucher_vide_fond": 0.995049504950495
+    },
+    "dos": {
+      "figure": 0.03118131868131868,
+      "rouge": 0.007532051282051282,
+      "gris": 0.02271062271062271,
+      "toucher_allume": 1,
+      "toucher_allume_rouge": 1.0,
+      "toucher_vide": 199,
+      "toucher_vide_fond": 1.0
+    },
+    "profil": {
+      "figure": 0.08273809523809524,
+      "rouge": 0.014445970695970697,
+      "gris": 0.06231684981684982,
+      "toucher_allume": 3,
+      "toucher_allume_rouge": 1.0,
+      "toucher_vide": 195,
+      "toucher_vide_fond": 0.9743589743589743
+    },
+    "troisQuarts": {
+      "figure": 0.06639194139194139,
+      "rouge": 0.011469780219780219,
+      "gris": 0.05167124542124542,
+      "toucher_allume": 3,
+      "toucher_allume_rouge": 1.0,
+      "toucher_vide": 196,
+      "toucher_vide_fond": 0.9846938775510204
+    }
+  },
+  "transition_en_cours": false,
+  "anatomie_squat": {
+    "figure": 0.204375,
+    "rouge": 0.018166666666666668,
+    "gris": 0.17608333333333334,
+    "toucher_allume": 8,
+    "toucher_allume_rouge": 0.375,
+    "toucher_vide": 163,
+    "toucher_vide_fond": 0.9386503067484663
+  },
+  "toucher_squat": "Grand psoas (gauche) (profond) · Quadriceps"
+}
