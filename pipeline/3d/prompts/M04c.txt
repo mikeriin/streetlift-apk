@@ -1,5 +1,5 @@
 LOT M4c — DÉPÔT EN SOURCES : PLUS DE ZIP, ARBORESCENCE DU PROJET (demande du propriétaire, 28/09/2026)
-Rôle : ingénieur build et CI Flutter/Android. Une seule action : `main` contient les fichiers du projet, bien structurés, à la place de `streetlift_tracker_v33.zip`. L'application ne change pas, sauf l'ajout du zoom au pincement (point 5).
+Rôle : ingénieur build et CI Flutter/Android. Une seule action : `main` contient les fichiers du projet, bien structurés, à la place de `streetlift_tracker_v33.zip`. L'application ne change pas, sauf le zoom au pincement (point 5) et les filtres normalisés (point 6).
 
 1. Structure cible sur `main`
 — Projet Flutter à la racine du dépôt (contenu de `streetlift_tracker/` du ZIP 5.3.1 : `pubspec.yaml`, `lib/`, `test/`, `assets/`, `android/`, `hook/`, `integration_test/`, `tools/`, `docs/`, README.md, SUIVI_PROJET.md, etc.), plus `.github/workflows/`. Aucun dossier `streetlift_tracker/` intermédiaire, aucun ZIP.
@@ -24,8 +24,16 @@ Rôle : ingénieur build et CI Flutter/Android. Une seule action : `main` contie
 — Coexistence des gestes : un doigt = rotation, deux doigts = zoom (et déplacement de la vue à deux doigts une fois zoomé), toucher bref = nom du muscle ; aucun conflit avec le défilement de la page qui contient le mannequin (fiches, STATS). Double toucher = retour à la vue par défaut ; les boutons Face / Dos / Profil / 3/4 remettent aussi le zoom par défaut.
 — Rendu à la demande conservé (redessin pendant le geste seulement) ; le lancer de rayon du toucher tient compte du zoom.
 — Tests : bornes du zoom, point focal stable, double toucher, gestes sans conflit dans une page qui défile. Capture zoomée REGARDÉE.
-— Ce point est la seule modification visible de l'application dans ce lot.
+— Avec les filtres du point 6, ce sont les seules modifications visibles de l'application dans ce lot.
 
-6. Livraison
+6. Filtres normalisés dans toute l'application (ajout du propriétaire, 28/09/2026)
+— Recense tous les écrans qui filtrent une liste ou un affichage (bibliothèque d'exercices et recherche, Arsenal, catalogue WOD, choix / remplacement d'exercice, générateur de programme, STATS, historique, Anatomie…) et liste-les dans la livraison avec leur mécanisme actuel (puces, onglets, listes déroulantes simples, interrupteurs…).
+— Remplace-les tous par UN composant commun (`lib/filter_menu.dart`), sur le modèle du menu « Filtres » de l'écran Anatomie livré en M4b : un bouton « Filtres » avec le nombre de filtres actifs, qui ouvre un menu déroulant organisé PAR CATÉGORIE (ex. Groupe musculaire, Matériel, Lieu, Difficulté, Type de mouvement, Période…), chaque catégorie repliable avec ses options à cocher ; cases cochées d'une même catégorie = union (OU), catégories entre elles = intersection (ET) ; « Tout cocher » / « Tout décocher » par catégorie et « Réinitialiser » global ; résumé des filtres actifs sous forme de puces supprimables sous le bouton ; fermeture au toucher en dehors.
+— Les choix exclusifs qui ne sont pas des filtres (onglets de navigation, tri, vue face / dos) restent tels quels ; si un écran avait un filtre à choix unique qui doit le rester, il devient une catégorie à choix unique dans le même menu (boutons radio), jamais un autre composant.
+— Aucune perte de fonction : chaque filtre existant garde son effet (tests existants conservés, adaptés à la nouvelle interface sans retirer d'assertion) ; mémorisation des filtres identique à l'actuelle écran par écran (ou pendant la session si rien n'était mémorisé).
+— Accessibilité : cases lues avec leur catégorie et leur état, cibles ≥ 48 dp, thèmes sombre et clair, 6 couleurs dominantes, grandes tailles de texte.
+— Tests du composant (union / intersection, compteur, réinitialisation, puces) et d'un écran par famille ; captures REGARDÉES : menu ouvert sur 3 écrans différents, sombre et clair.
+
+7. Livraison
 — Version 5.3.2 (versionCode + 1) : l'APK signé s'installe par-dessus 5.3.1 sans perte de données (même identifiant, même signature, vérifié par `verify_android_artifacts.py`). Contrôles §4 habituels, puis run `build-apk.yml` réussi sur le nouvel arbre.
-— Constat pour le propriétaire (page de suivi) : sur GitHub, le dépôt montre les dossiers du projet (lib, assets, android…) au lieu du ZIP ; l'application 5.3.2 est identique à 5.3.1, avec en plus le zoom au pincement sur le mannequin.
+— Constat pour le propriétaire (page de suivi) : sur GitHub, le dépôt montre les dossiers du projet (lib, assets, android…) au lieu du ZIP ; l'application 5.3.2 est identique à 5.3.1, avec en plus le zoom au pincement sur le mannequin et les mêmes filtres à cocher par catégorie sur tous les écrans.

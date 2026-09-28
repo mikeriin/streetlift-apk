@@ -68,7 +68,7 @@ Interdits : supprimer une branche, modifier la signature ou l'identifiant, rég�
 | M3 | 5.1.0 | 5.2.0 | Fiche exercice : mannequin fixe avec les muscles de l'exercice | Chaque fiche montre le mannequin coloré + la liste | normal |
 | M4 | 5.2.0 | 5.3.0 | STATS : résumé hebdomadaire sur le mannequin | STATS montre les groupes de la semaine sur le mannequin | normal |
 | M4b | 5.3.0 | 5.3.1 | Tous les muscles remis, transparence à 50 %, filtres à cocher, petite refonte de l'écran Anatomie | Muscles sollicités visibles à travers les autres ; menu « Filtres » à cocher | normal |
-| M4c | 5.3.1 | 5.3.2 | Dépôt en sources : plus de ZIP, projet structuré à la racine, CI et outils adaptés ; zoom au pincement | Sur GitHub, les dossiers du projet au lieu du ZIP ; zoom au pincement sur le mannequin | normal |
+| M4c | 5.3.1 | 5.3.2 | Dépôt en sources : plus de ZIP, projet structuré à la racine, CI et outils adaptés ; zoom au pincement ; filtres normalisés (menu déroulant à cocher par catégorie) | Sur GitHub, les dossiers du projet au lieu du ZIP ; zoom au pincement ; mêmes filtres partout | normal |
 | M5 | 5.3.2 | 5.4.0 | Squelette d'animation et peau du modèle | Anatomie : 4 postures de référence sans déchirure | **accru** |
 | M6 | 5.4.0 | 5.5.0 | Matériel 3D + chaîne de calcul des animations + 3 pilotes | Traction, dips, squat animés dans leur fiche | normal |
 | M7 | 5.5.0 | 5.6.0 | Lecteur complet + intensité par phase | Lecture/pause, curseur, tempo, phases, muscles qui « respirent » avec la phase | normal |
