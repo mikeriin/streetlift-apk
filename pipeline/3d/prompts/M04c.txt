@@ -1,5 +1,5 @@
 LOT M4c — DÉPÔT EN SOURCES : PLUS DE ZIP, ARBORESCENCE DU PROJET (demande du propriétaire, 28/09/2026)
-Rôle : ingénieur build et CI Flutter/Android. Une seule action : `main` contient les fichiers du projet, bien structurés, à la place de `streetlift_tracker_v33.zip`. L'application ne change pas (seulement sa version).
+Rôle : ingénieur build et CI Flutter/Android. Une seule action : `main` contient les fichiers du projet, bien structurés, à la place de `streetlift_tracker_v33.zip`. L'application ne change pas, sauf l'ajout du zoom au pincement (point 5).
 
 1. Structure cible sur `main`
 — Projet Flutter à la racine du dépôt (contenu de `streetlift_tracker/` du ZIP 5.3.1 : `pubspec.yaml`, `lib/`, `test/`, `assets/`, `android/`, `hook/`, `integration_test/`, `tools/`, `docs/`, README.md, SUIVI_PROJET.md, etc.), plus `.github/workflows/`. Aucun dossier `streetlift_tracker/` intermédiaire, aucun ZIP.
@@ -19,6 +19,13 @@ Rôle : ingénieur build et CI Flutter/Android. Une seule action : `main` contie
 4. Règles du pipeline (branche `pipeline`)
 — Mets à jour `pipeline/3d/PIPELINE_3D.md` (§1, §4, §7) et les prompts suivants qui parlent du ZIP : à partir de ce lot, un lot publie en poussant ses commits de sources sur `main` (avance rapide uniquement ; si `main` a bougé, remise à jour puis contrôles relancés). Ne modifie pas les fichiers des pipelines terminés (`pipeline/PIPELINE.md`, lots L*).
 
-5. Livraison
+5. Zoom au pincement sur le mannequin 3D (ajout du propriétaire, 28/09/2026)
+— Partout où `Mannequin3D` est manipulable (Anatomie, fiches, STATS, Moteur 3D) : pincer à deux doigts zoome et dézoome, centré sur le point entre les doigts (le muscle visé reste sous les doigts) ; bornes : du corps entier visible (zoom minimal, vue par défaut) jusqu'à environ 4× (un muscle de l'avant-bras remplit l'écran) ; pas de traversée du modèle.
+— Coexistence des gestes : un doigt = rotation, deux doigts = zoom (et déplacement de la vue à deux doigts une fois zoomé), toucher bref = nom du muscle ; aucun conflit avec le défilement de la page qui contient le mannequin (fiches, STATS). Double toucher = retour à la vue par défaut ; les boutons Face / Dos / Profil / 3/4 remettent aussi le zoom par défaut.
+— Rendu à la demande conservé (redessin pendant le geste seulement) ; le lancer de rayon du toucher tient compte du zoom.
+— Tests : bornes du zoom, point focal stable, double toucher, gestes sans conflit dans une page qui défile. Capture zoomée REGARDÉE.
+— Ce point est la seule modification visible de l'application dans ce lot.
+
+6. Livraison
 — Version 5.3.2 (versionCode + 1) : l'APK signé s'installe par-dessus 5.3.1 sans perte de données (même identifiant, même signature, vérifié par `verify_android_artifacts.py`). Contrôles §4 habituels, puis run `build-apk.yml` réussi sur le nouvel arbre.
-— Constat pour le propriétaire (page de suivi) : sur GitHub, le dépôt montre les dossiers du projet (lib, assets, android…) au lieu du ZIP ; l'application 5.3.2 est identique à 5.3.1.
+— Constat pour le propriétaire (page de suivi) : sur GitHub, le dépôt montre les dossiers du projet (lib, assets, android…) au lieu du ZIP ; l'application 5.3.2 est identique à 5.3.1, avec en plus le zoom au pincement sur le mannequin.
