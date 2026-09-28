@@ -223,12 +223,13 @@ def classify(pieces):
         hip = one([i for i in info if mine(i) and .8 < i['c'][1] < .95 and i['n'] >= 80
                    and i['ext'][0] > .1], 'os_coxal')
         take(hip['i'], 'pelvis', 'hip_' + side)
-        # Rotule : rigide avec l'aide du genou (moitié de la flexion) : tenue
-        # au tibia par le ligament patellaire, elle glisse sur les condyles
-        # en tournant moins que la jambe.
+        # Rotule : rigide avec l'aide du genou aux 2/3 de la flexion (M56) :
+        # tenue au tibia par le ligament patellaire, elle glisse dans la
+        # trochlée en tournant moins que la jambe (flexion patellaire ≈ 0,6 à
+        # 0,7 × flexion du genou, Kapandji t. 2).
         pat = one([i for i in info if mine(i) and .40 < i['c'][1] < .48 and i['n'] <= 30
                    and i['c'][2] > 0], 'rotule')
-        take(pat['i'], 'knee_aux_' + side, 'patella_' + side)
+        take(pat['i'], 'knee_aux2_' + side, 'patella_' + side)
         scap = one([i for i in info if mine(i) and i['c'][2] < -.03 and 1.3 < i['c'][1] < 1.42
                     and abs(i['c'][0]) > .09 and i['ext'][1] > .12], 'scapula')
         take(scap['i'], 'scapula_' + side, 'scapula_' + side)
@@ -327,7 +328,7 @@ def joint_centres(pieces, named):
     def disc(a, b):
         return (lv[a] + lv[b]) / 2
 
-    heads, tails = {}, {}
+    heads, tails, axes = {}, {}, {}
     l5s1 = lv['L5'] + (lv['L5'] - lv['L4']) / 2
     heads['lumbar'] = l5s1
     heads['thoracic_low'] = disc('L1', 'T12')
@@ -351,9 +352,34 @@ def joint_centres(pieces, named):
         knee = cond.mean(0)
         knee[1] = (fem[:, 1].min() + tib[:, 1].max()) / 2 + .02
         heads['shin' + s] = knee
+        # M56 : axe de flexion du genou = ligne des épicondyles fémoraux
+        # (points les plus médial et latéral des condyles), du médial vers
+        # le latéral (sens de l'axe X de la flexion, côté gauche).
+        med = cond[np.argmin(cond[:, 0] * sign)]
+        lat = cond[np.argmax(cond[:, 0] * sign)]
+        a = (lat - med) / np.linalg.norm(lat - med)
+        # Inclinaison frontale bornée à 3° : debout, l'interligne du genou
+        # (parallèle à l'axe transépicondylien) est en varus de 3° ± 2°
+        # (Cooke et al., J Bone Joint Surg Br 1997 ; Bellemans et al., Clin
+        # Orthop 2012) ; les condyles du modèle simplifié donnent 8°, ce qui
+        # ferait glisser le pied de 2 cm en bas de squat.
+        tilt = max(-math.radians(3), min(math.radians(3), math.asin(float(a[1]))))
+        horiz = a[[0, 2]] / np.linalg.norm(a[[0, 2]]) * math.cos(tilt)
+        axes['genou' + s] = np.array([horiz[0], math.sin(tilt), horiz[1]])
         mm = tib[np.argmin(tib[:, 1])]
         lm = fib[np.argmin(fib[:, 1])]
         heads['foot' + s] = (mm + lm) / 2
+        # Axe de la cheville : ligne bimalléolaire (malléole médiale plus
+        # haute et plus avant que la latérale), du latéral vers le médial
+        # (sens −X de la flexion dorsale). L'angle transversal est mesuré
+        # (≈ 26°, dans la fourchette 20-30° d'Inman 1976) ; l'inclinaison
+        # frontale des pointes des malléoles du modèle (≈ 19°) dépasse celle
+        # de l'axe réel, qui passe sous les pointes (82° ± 4° sur l'axe du
+        # tibia, Inman ; Lundberg 1989) : elle est bornée à 10°.
+        a = (mm - lm) / np.linalg.norm(mm - lm)
+        tilt = min(math.asin(float(a[1])), math.radians(10))
+        horiz = a[[0, 2]] / np.linalg.norm(a[[0, 2]]) * math.cos(tilt)
+        axes['cheville' + s] = np.array([horiz[0], math.sin(tilt), horiz[1]])
         mets = [pieces[i] for i in named['metatarsal' + s]]
         mtp = np.mean([m[m[:, 2] > m[:, 2].max() - .01].mean(0) for m in mets], axis=0)
         heads['toes' + s] = mtp
@@ -368,6 +394,13 @@ def joint_centres(pieces, named):
         elbow = dist.mean(0)
         elbow[1] = hum[:, 1].min() + .012
         heads['forearm' + s] = elbow
+        # Axe de flexion du coude : ligne transépicondylienne de l'humérus
+        # (épicondyles médial et latéral = extrêmes médio-latéraux des 3 cm
+        # distaux), du latéral vers le médial (sens −X de la flexion).
+        dist3 = hum[hum[:, 1] < hum[:, 1].min() + .03]
+        med = dist3[np.argmin(dist3[:, 0] * sign)]
+        lat = dist3[np.argmax(dist3[:, 0] * sign)]
+        axes['coude' + s] = (med - lat) / np.linalg.norm(med - lat)
         ulna = pts('ulna' + s)
         rad = pts('radius' + s)
         ulna_head = ulna[ulna[:, 1] < ulna[:, 1].min() + .015].mean(0)
@@ -396,7 +429,9 @@ def joint_centres(pieces, named):
         tails['scapula' + s] = scap[np.argmin(scap[:, 1])]
 
     heads['pelvis'] = (heads['thigh_l'] + heads['thigh_r']) / 2
-    # Symétrie exacte : moyenne des deux côtés (x opposés).
+    # Symétrie exacte : moyenne des deux côtés (x opposés) ; axes mesurés :
+    # moyenne des deux côtés dans la convention du côté gauche, puis miroir
+    # (x, y, z) → (x, −y, −z) pour le droit (convention de rig_def).
     for name in list(heads):
         if name.endswith('_l'):
             r = name[:-2] + '_r'
@@ -405,6 +440,17 @@ def joint_centres(pieces, named):
                     m = (d[name] * np.array([1, 1, 1]) + d[r] * np.array([-1, 1, 1])) / 2
                     d[name] = m
                     d[r] = m * np.array([-1, 1, 1])
+    for name in list(axes):
+        if name.endswith('_l'):
+            r = name[:-2] + '_r'
+            # L'axe droit mesuré (vecteur physique), ramené à gauche par le
+            # miroir sagittal (−x, y, z), moyenné ; l'axe de rotation droit
+            # est (x, −y, −z) de l'axe gauche (même signe d'angle des deux
+            # côtés : convention de rig_def).
+            m = (axes[name] + axes[r] * np.array([-1, 1, 1])) / 2
+            m /= np.linalg.norm(m)
+            axes[name] = m
+            axes[r] = m * np.array([1, -1, -1])
     for name in ('pelvis', 'lumbar', 'thoracic_low', 'thoracic_high', 'neck', 'head'):
         heads[name][0] = 0.0
         if name in tails:
@@ -420,7 +466,30 @@ def joint_centres(pieces, named):
             tails[name] = heads[chain[name]]
         else:
             tails[name] = heads[kids[0]]
-    return heads, tails
+    return heads, tails, axes
+
+
+def bulge_placement(meshes):
+    """Tête (ventre) et axe des os de gonflement (M56) : centre des sommets
+    des muscles concernés pondérés par le profil de ventre, axe principal."""
+    import numpy as np
+    out = {}
+    by_name = {m['nom']: m for m in meshes}
+    for bone in BONE_NAMES:
+        spec = rig_def.helper_spec(bone)
+        if not spec or 'muscles' not in spec:
+            continue
+        side = 'left' if bone.endswith('_l') else 'right'
+        pts = np.concatenate([by_name[f'{k}_{side}']['positions'] for k in spec['muscles']])
+        c = pts.mean(0)
+        _, _, vt = np.linalg.svd(pts - c, full_matrices=False)
+        axis = vt[0]
+        u = (pts - c) @ axis
+        u = (u - u.min()) / (u.max() - u.min())
+        w = np.sin(np.pi * u) ** 2
+        head = (pts * w[:, None]).sum(0) / w.sum()
+        out[bone] = (head, axis if axis[1] < 0 else -axis)
+    return out
 
 
 # ------------------------------------------------------------ poids de peau --
@@ -436,8 +505,11 @@ AXIAL = ['pelvis', 'lumbar', 'thoracic_low', 'thoracic_high', 'neck', 'head']
 TH = ('thoracic_low', 'thoracic_high')
 MUSCLE_BONES = {
     # Épaule
-    'deltoid_anterior': ('clavicle', 'scapula', 'upperarm'),
-    'deltoid_lateral': ('clavicle', 'scapula', 'upperarm'),
+    # Deltoïdes : la clavicule (parent de la scapula, qui bouge peu de plus)
+    # n'est pas une influence à part : 4 influences par sommet, une de plus
+    # créait des discontinuités entre voisins (M56).
+    'deltoid_anterior': ('scapula', 'upperarm'),
+    'deltoid_lateral': ('scapula', 'upperarm'),
     'deltoid_posterior': ('scapula', 'upperarm'),
     'supraspinatus': ('scapula', 'upperarm'), 'infraspinatus': ('scapula', 'upperarm'),
     'subscapularis': ('scapula', 'upperarm'), 'teres_minor': ('scapula', 'upperarm'),
@@ -513,13 +585,20 @@ REGION_BONES = {
 }
 
 
-def with_side(bones, s):
+def with_side(bones, s, key=None):
     """Noms complets (côté ajouté aux os des membres), os d'aide compris
-    quand le muscle suit le parent et l'os suivi."""
+    quand le muscle suit le parent et l'os suivi, os de gonflement du
+    muscle `key` compris."""
     out = [b if b in AXIAL else f'{b}_{s}' for b in bones]
     for h in rig_def.BONE_NAMES:
         pair = rig_def.helper_of(h)
-        if pair and h.endswith('_' + s) and pair[0] in out and pair[1] in out:
+        if not pair or not h.endswith('_' + s):
+            continue
+        spec = rig_def.helper_spec(h)
+        if 'muscles' in spec:
+            if key in spec['muscles'] and pair[0] in out:
+                out.append(h)
+        elif pair[0] in out and pair[1] in out:
             out.append(h)
     return out
 
@@ -528,7 +607,7 @@ def allowed_bones(key, region, s):
     if key == 'head':
         return ['neck', 'head']
     if key in MUSCLE_BONES:
-        return with_side(MUSCLE_BONES[key], s)
+        return with_side(MUSCLE_BONES[key], s, key)
     if region in REGION_BONES:
         return with_side(REGION_BONES[region], s)
     raise KeyError(key)
@@ -733,20 +812,47 @@ def smooth_in_mesh(points, weights, sigma):
     return out / out.sum(1, keepdims=True)
 
 
-def finish_weights(w, bones):
-    """Os d'aide (moitié de l'angle) puis 4 influences les plus fortes."""
+def finish_weights(w, bones, positions=None, chain=True):
+    """Os d'aide (chaîne parent → 1/3 → 2/3 → os suivi, M56), os de
+    gonflement (part du ventre), puis 4 influences les plus fortes.
+    `chain` False : mélange linéaire direct parent / os suivi (nappes en
+    éventail : leurs sommets sous l'aisselle, portés par un os d'aide,
+    décriraient l'arc de l'articulation et sortiraient du corps en pointe ;
+    la corde du mélange linéaire reste dans le corps)."""
     import numpy as np
     w = w.copy()
     col = {b: i for i, b in enumerate(bones)}
+    # Chaînes d'aide : {(parent, suivi): [(part, os d'aide)…]}.
+    chains = {}
     for h in bones:
-        pair = rig_def.helper_of(h)
-        if not pair:
+        spec = rig_def.helper_spec(h)
+        if spec and 'muscles' not in spec and chain:
+            chains.setdefault(rig_def.helper_of(h), []).append((spec['part'], h))
+    for (p, c), helpers in chains.items():
+        nodes = [(0.0, p)] + sorted(helpers) + [(1.0, c)]
+        wp, wc = w[:, col[p]].copy(), w[:, col[c]].copy()
+        total = wp + wc
+        both = (wp > 1e-9) & (wc > 1e-9)
+        f = np.where(both, wc / np.maximum(total, 1e-12), 0.0)
+        w[both, col[p]] = 0
+        w[both, col[c]] = 0
+        for (f0, b0), (f1, b1) in zip(nodes, nodes[1:]):
+            seg = both & (f >= f0) & (f <= f1)
+            t = (f[seg] - f0) / (f1 - f0)
+            w[seg, col[b0]] += total[seg] * (1 - t)
+            w[seg, col[b1]] += total[seg] * t
+    # Gonflements : part du poids du segment, selon le profil de ventre.
+    for h in bones:
+        spec = rig_def.helper_spec(h)
+        if not spec or 'muscles' not in spec or positions is None:
             continue
-        p, c = col[pair[0]], col[pair[1]]
-        m = np.minimum(w[:, p], w[:, c])
-        w[:, col[h]] += 2 * m
-        w[:, p] -= m
-        w[:, c] -= m
+        p = rig_def.helper_of(h)[0]
+        u = positions @ np.asarray(BULGE_AXES[h])
+        u = (u - u.min()) / max(1e-9, u.max() - u.min())
+        share = rig_def.BULGE_SHARE * np.sin(np.pi * u) ** 2
+        moved = w[:, col[p]] * share
+        w[:, col[p]] -= moved
+        w[:, col[h]] += moved
     top = np.argsort(-w, axis=1)[:, :MAX_INFLUENCES]
     k = min(MAX_INFLUENCES, len(bones))
     tw = np.take_along_axis(w, top, 1)[:, :k]
@@ -754,11 +860,37 @@ def finish_weights(w, bones):
     return ids, tw
 
 
+BULGE_AXES = {}
+
+
+# Tendons d'insertion collés à l'os (M56) : les sommets de ces muscles à
+# moins de GLUE_FAR de la surface de l'os d'insertion (fondu complet à
+# GLUE_NEAR) suivent cet os seul ; sans cela, les poids géodésiques
+# « doux » des grands muscles en éventail laissaient leur insertion à
+# mi-chemin entre le tronc et le bras (déchirure de 9 cm bras levés).
+INSERTIONS = {
+    'latissimus_dorsi': 'humerus', 'teres_major': 'humerus',
+    'pectoralis_major_clavicular': 'humerus', 'pectoralis_major_sternocostal': 'humerus',
+    'pectoralis_major_abdominal': 'humerus', 'coracobrachialis': 'humerus',
+    'deltoid_anterior': 'humerus', 'deltoid_lateral': 'humerus',
+    'deltoid_posterior': 'humerus',
+}
+INSERTION_BONE = {'humerus': 'upperarm'}
+GLUE_NEAR, GLUE_FAR = .012, .030
+# Épaule (M56) : la tête humérale et l'acromion se chevauchent dans l'espace,
+# les distances géodésiques y basculent d'un sommet au suivant (Δ de 0,5 sur
+# 6 mm dans le deltoïde : plis en accordéon bras levé). Le partage scapula /
+# bras des muscles qui croisent l'épaule suit donc la hauteur le long de
+# l'axe du bras : tout à la scapula 2 cm au-dessus du centre de la tête
+# humérale, tout au bras 10 cm au-dessous (tubérosité deltoïdienne), lissé.
+SHOULDER_AXIAL = (-.02, .10)
+
 SMOOTH_SIGMA = .018   # m
 # Grands muscles en éventail tendus du tronc au bras : transition plus
 # progressive (l'allongement se répartit sur toute leur longueur au lieu de
 # se concentrer dans l'aisselle).
 SOFT_POWER = 2.0
+SOFT_SIGMA = .018     # lissage des nappes (comme les autres muscles)
 SOFT_MUSCLES = {'latissimus_dorsi', 'pectoralis_major_clavicular',
                 'pectoralis_major_sternocostal', 'pectoralis_major_abdominal', 'teres_major'}
 
@@ -816,10 +948,36 @@ def compute_weights(meshes, pieces, owner, heads, tails, log=print):
                     w = np.where(np.isfinite(d), (d + WEIGHT_D0) ** -power, 0)
                 assert (w.sum(1) > 0).all(), f'{name} : sommet sans os atteignable'
                 w = w / w.sum(1, keepdims=True)
-                w = smooth_in_mesh(pos[mask], w, SMOOTH_SIGMA)
+                w = smooth_in_mesh(pos[mask], w,
+                                   SOFT_SIGMA if key in SOFT_MUSCLES else SMOOTH_SIGMA)
+                scap, arm = f'scapula_{side}', f'upperarm_{side}'
+                if scap in mains and arm in mains:
+                    a, b = heads[arm], heads['forearm_' + side]
+                    axis = (b - a) / np.linalg.norm(b - a)
+                    d = (pos[mask] - a) @ axis
+                    f = np.clip((d - SHOULDER_AXIAL[0]) / (SHOULDER_AXIAL[1] - SHOULDER_AXIAL[0]),
+                                0, 1)
+                    f = f * f * (3 - 2 * f)
+                    total = w[:, mains.index(scap)] + w[:, mains.index(arm)]
+                    w[:, mains.index(scap)] = total * (1 - f)
+                    w[:, mains.index(arm)] = total * f
+                if key in INSERTIONS:
+                    piece = INSERTIONS[key]
+                    target = f'{INSERTION_BONE[piece]}_{side}'
+                    src = np.concatenate([pieces[i] for i, o in owner.items() if o == target])
+                    from scipy.spatial import cKDTree
+                    d = cKDTree(src).query(pos[mask])[0]
+                    near, far = (GLUE_NEAR, GLUE_FAR) if key not in SOFT_MUSCLES else (.008, .02)
+                    g = np.clip((far - d) / (far - near), 0, 1)
+                    g = g * g * (3 - 2 * g)
+                    one = np.zeros(len(mains))
+                    one[mains.index(target)] = 1
+                    w = w * (1 - g)[:, None] + g[:, None] * one
+                    stats.setdefault('colles', {})[name] = int((g > .5).sum())
                 full = np.zeros((len(w), len(bones)))
                 full[:, [bones.index(b) for b in mains]] = w
-                ids, tw = finish_weights(full, bones)
+                ids, tw = finish_weights(full, bones, pos[mask],
+                                         chain=key not in SOFT_MUSCLES)
                 joints[mask, :ids.shape[1]] = ids
                 weights[mask, :tw.shape[1]] = tw
         q = quantize(weights + 1e-12 * (weights.sum(1, keepdims=True) == 0))
@@ -857,18 +1015,24 @@ def compute_weights(meshes, pieces, owner, heads, tails, log=print):
 
 # ------------------------------------------------------------- postures --
 
-def rig_bones(heads, tails):
-    """Os du rig.json : nom, parent, tête, queue, longueur, degrés de liberté."""
+def rig_bones(heads, tails, axes, bulges):
+    """Os du rig.json : nom, parent, tête, queue, longueur, degrés de liberté
+    (axes mesurés sur les os : coude, genou, cheville), os d'aide et de
+    gonflement (M56)."""
     import numpy as np
     out = []
     heads, tails = dict(heads), dict(tails)
     for name in BONE_NAMES:
         pair = rig_def.helper_of(name)
-        if pair:
+        if name in bulges:
+            head, axis = bulges[name]
+            heads[name], tails[name] = head, head + axis * .05
+        elif pair:
             heads[name], tails[name] = heads[pair[1]], tails[pair[1]]
     for name in BONE_NAMES:
         h, t = np.asarray(heads[name], float), np.asarray(tails[name], float)
         axis = (t - h) / np.linalg.norm(t - h)
+        measured = {k[:-2]: v for k, v in axes.items() if k.endswith(name[-2:])}
         out.append({
             'nom': name, 'nom_fr': rig_def.FR_BONE[rig_def.base_name(name)] + (
                 {'L': ' gauche', 'R': ' droit'}[SIDE[name]] if SIDE[name] else ''),
@@ -876,11 +1040,18 @@ def rig_bones(heads, tails):
             'tete': [round(float(v), 5) for v in h],
             'queue': [round(float(v), 5) for v in t],
             'longueur': round(float(np.linalg.norm(t - h)), 5),
-            'ddl': rig_def.dofs_of(name, [round(float(v), 5) for v in axis]),
+            'ddl': rig_def.dofs_of(name, [round(float(v), 5) for v in axis],
+                                   {k: [round(float(c), 5) for c in v]
+                                    for k, v in measured.items()}),
         })
-        pair = rig_def.helper_of(name)
-        if pair:
-            out[-1]['aide'] = {'suit': pair[1], 'part': rig_def.HELPER_PART}
+        spec = rig_def.helper_spec(name)
+        if spec:
+            aide = {'suit': spec['suit'], 'part': round(spec['part'], 6),
+                    'gonflement': spec['gonflement']}
+            if name in bulges:
+                aide['axe'] = [round(float(v), 5) for v in bulges[name][1]]
+                aide['muscles'] = spec['muscles']
+            out[-1]['aide'] = aide
     return out
 
 
@@ -962,9 +1133,10 @@ def resolve_postures(rig, meshes, skin):
 
 # ------------------------------------------------------------------ export --
 
-def write_glb(path, meshes, materials, rig, skin):
+def write_glb(path, meshes, materials, rig=None, skin=None):
     """GLB riggé : nœuds des maillages (mêmes noms et ordre qu'avant), puis
-    articulations `j_<os>` (translation seule au repos), une peau commune."""
+    articulations `j_<os>` (translation seule au repos), une peau commune.
+    Sans `rig` ni `skin` (M56, `build_body.py`) : maillages seuls."""
     import numpy as np
     chunks, views, accessors = [], [], []
     offset = 0
@@ -986,25 +1158,36 @@ def write_glb(path, meshes, materials, rig, skin):
     njoint0 = len(meshes)
     for k, m in enumerate(meshes):
         pos = m['positions'].astype(np.float32)
-        joints, weights = skin[m['nom']]
         attrs = {
             'POSITION': add(pos, 34962, componentType=5126, count=len(pos), type='VEC3',
                             min=[float(v) for v in pos.min(0)],
                             max=[float(v) for v in pos.max(0)]),
             'NORMAL': add(m['normales'].astype(np.float32), 34962, componentType=5126,
                           count=len(pos), type='VEC3'),
-            'JOINTS_0': add(joints.astype(np.uint8), 34962, componentType=5121,
-                            count=len(pos), type='VEC4'),
-            'WEIGHTS_0': add(weights.astype(np.uint8), 34962, componentType=5121,
-                             normalized=True, count=len(pos), type='VEC4'),
         }
+        if skin is not None:
+            joints, weights = skin[m['nom']]
+            attrs['JOINTS_0'] = add(joints.astype(np.uint8), 34962, componentType=5121,
+                                    count=len(pos), type='VEC4')
+            attrs['WEIGHTS_0'] = add(weights.astype(np.uint8), 34962, componentType=5121,
+                                     normalized=True, count=len(pos), type='VEC4')
         idx = m['indices']
         itype = 5125 if idx.max() > 65535 else 5123
         ind = add(idx.astype(np.uint32 if itype == 5125 else np.uint16), 34963,
                   componentType=itype, count=len(idx), type='SCALAR')
         gl_meshes.append({'name': m['maille'], 'primitives': [
             {'attributes': attrs, 'indices': ind, 'material': m['materiau']}]})
-        nodes.append({'name': m['nom'], 'mesh': k, 'skin': 0})
+        nodes.append({'name': m['nom'], 'mesh': k, **({'skin': 0} if skin is not None else {})})
+    if rig is None:
+        gltf = {
+            'asset': {'version': '2.0',
+                      'generator': 'Kalis Track tools/anatomy/build_body.py (M56)'},
+            'scene': 0, 'scenes': [{'name': 'Mannequin', 'nodes': list(range(len(meshes)))}],
+            'nodes': nodes, 'meshes': gl_meshes, 'materials': materials,
+            'accessors': accessors, 'bufferViews': views, 'buffers': [{'byteLength': offset}],
+        }
+        _write_glb_file(path, gltf, chunks)
+        return
     heads = {b['nom']: b['tete'] for b in rig['os']}
     for b in rig['os']:
         p = b['parent']
@@ -1030,6 +1213,11 @@ def write_glb(path, meshes, materials, rig, skin):
         'accessors': accessors, 'bufferViews': views,
         'buffers': [{'byteLength': offset}],
     }
+    _write_glb_file(path, gltf, chunks)
+
+
+def _write_glb_file(path, gltf, chunks):
+    import struct
     js = json.dumps(gltf, separators=(',', ':')).encode()
     js += b' ' * ((-len(js)) % 4)
     blob = b''.join(chunks)
@@ -1060,8 +1248,10 @@ def main():
     log(f'{len(meshes)} maillages, {sum(len(m["positions"]) for m in meshes)} sommets')
     pieces = load_source_skeleton()
     named, owner = classify(pieces)
-    heads, tails = joint_centres(pieces, named)
-    bones = rig_bones(heads, tails)
+    heads, tails, axes = joint_centres(pieces, named)
+    bulges = bulge_placement(meshes)
+    BULGE_AXES.update({k: v[1] for k, v in bulges.items()})
+    bones = rig_bones(heads, tails, axes, bulges)
     skin, stats = compute_weights(meshes, pieces, owner,
                                   {k: np.asarray(v) for k, v in heads.items()},
                                   {k: np.asarray(v) for k, v in tails.items()}, log)
@@ -1083,6 +1273,7 @@ def main():
     write_skin(OUT_SKIN, meshes, skin)
     OUT_RIG.write_text(json.dumps(rig, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
     report = {'os': len(bones), 'sommets': sum(len(m['positions']) for m in meshes),
+              'axes_mesures': {k: [round(float(c), 4) for c in v] for k, v in axes.items()},
               'voxel_m': VOXEL, 'puissance': WEIGHT_POWER, 'd0_m': WEIGHT_D0, **stats,
               'pieces_squelette_source': len(pieces)}
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=1) + '\n')

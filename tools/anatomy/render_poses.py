@@ -180,7 +180,7 @@ def main():
     parser.add_argument('--taille', type=int, default=300)
     parser.add_argument('--articulations', action='store_true')
     parser.add_argument('--regions', default='')
-    parser.add_argument('--centre', help='x,y,z (glTF, posture déformée) : vue rapprochée')
+    parser.add_argument('--centre', help='x,y,z (glTF, posture déformée) ou os:<nom> : vue rapprochée')
     parser.add_argument('--echelle', type=float, default=.5)
     parser.add_argument('--vues', default='0,180,90,45')
     args = parser.parse_args()
@@ -189,7 +189,14 @@ def main():
     out = Path(args.sortie)
     out.mkdir(parents=True, exist_ok=True)
     for name in names:
-        centre = [float(v) for v in args.centre.split(',')] if args.centre else None
+        centre = None
+        if args.centre and args.centre.startswith('os:'):
+            # M56 : vue rapprochée centrée sur la tête d'un os dans la posture.
+            _, g = rig_pose.pose_model(model, name)
+            m = g[args.centre[3:]]
+            centre = [m[0][3], m[1][3], m[2][3]]
+        elif args.centre:
+            centre = [float(v) for v in args.centre.split(',')]
         suffix = '_zoom' if centre else ''
         render_posture(model, name, out / f'{name}{suffix}.png', args.opacite, args.taille,
                        args.articulations, {r for r in args.regions.split(',') if r},

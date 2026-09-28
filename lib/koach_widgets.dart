@@ -402,65 +402,76 @@ class KoachFatigueCard extends StatelessWidget {
   /// Séries non validées retirées si la proposition est acceptée.
   final int sets;
   final VoidCallback onAccept, onRefuse;
+
+  /// M6 : contenu seul (dans la carte « Koach · séance du jour »).
+  final bool bare;
   const KoachFatigueCard({
     super.key,
     required this.level,
     required this.sets,
     required this.onAccept,
     required this.onRefuse,
+    this.bare = false,
   });
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(bottom: 12),
-    child: KCard(
-      key: const ValueKey('koach-fatigue'),
-      accent: SL.bordeaux,
-      radius: 20,
-      padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+  Widget build(BuildContext context) {
+    if (bare) {
+      return KeyedSubtree(key: const ValueKey('koach-fatigue'), child: _body());
+    }
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: KCard(
+        key: const ValueKey('koach-fatigue'),
+        accent: SL.bordeaux,
+        radius: 20,
+        padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+        child: _body(),
+      ),
+    );
+  }
+
+  Widget _body() => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      _koachHeader(
+        'Koach · jour de fatigue probable',
+        icon: Icons.battery_3_bar_rounded,
+      ),
+      const SizedBox(height: 6),
+      Text(
+        'Retirer $sets série${sets > 1 ? 's' : ''} non validée'
+        '${sets > 1 ? 's' : ''} (−${(level * 100).round()} % de volume) ?',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+          color: SL.text,
+        ),
+      ),
+      const SizedBox(height: 2),
+      Text(
+        'Séries retirées en fin d’exercice, de la fin de la séance vers le '
+        'début ; charges maintenues, aucune tentative lourde aujourd’hui. '
+        'Tu peux aussi continuer comme prévu.',
+        style: TextStyle(color: SL.dim, fontSize: 13),
+      ),
+      const SizedBox(height: 10),
+      KActionRow(
+        minButtonWidth: 120,
         children: [
-          _koachHeader(
-            'Koach · jour de fatigue probable',
-            icon: Icons.battery_3_bar_rounded,
+          FilledButton(
+            key: const ValueKey('koach-fatigue-accept'),
+            onPressed: onAccept,
+            child: const Text('Réduire le volume'),
           ),
-          const SizedBox(height: 6),
-          Text(
-            'Retirer $sets série${sets > 1 ? 's' : ''} non validée'
-            '${sets > 1 ? 's' : ''} (−${(level * 100).round()} % de volume) ?',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: SL.text,
-            ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            'Séries retirées en fin d’exercice, de la fin de la séance vers le '
-            'début ; charges maintenues, aucune tentative lourde aujourd’hui. '
-            'Tu peux aussi continuer comme prévu.',
-            style: TextStyle(color: SL.dim, fontSize: 13),
-          ),
-          const SizedBox(height: 10),
-          KActionRow(
-            minButtonWidth: 120,
-            children: [
-              FilledButton(
-                key: const ValueKey('koach-fatigue-accept'),
-                onPressed: onAccept,
-                child: const Text('Réduire le volume'),
-              ),
-              OutlinedButton(
-                key: const ValueKey('koach-fatigue-refuse'),
-                onPressed: onRefuse,
-                child: const Text('Continuer comme prévu'),
-              ),
-            ],
+          OutlinedButton(
+            key: const ValueKey('koach-fatigue-refuse'),
+            onPressed: onRefuse,
+            child: const Text('Continuer comme prévu'),
           ),
         ],
       ),
-    ),
+    ],
   );
 }
 
@@ -476,80 +487,97 @@ const koachSleepOptions = <(String, double)>[
 /// Questionnaire facultatif d'avant séance (D14) : sommeil, forme /10.
 class KoachQuestionsCard extends StatelessWidget {
   final String sessionKey;
-  const KoachQuestionsCard({super.key, required this.sessionKey});
+
+  /// M6 : contenu seul (dans la carte « Koach · séance du jour »).
+  final bool bare;
+  const KoachQuestionsCard({
+    super.key,
+    required this.sessionKey,
+    this.bare = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final a = store.koach.answers[sessionKey];
+    if (bare) {
+      return KeyedSubtree(
+        key: const ValueKey('koach-questions'),
+        child: _body(context),
+      );
+    }
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: KCard(
         key: const ValueKey('koach-questions'),
         radius: 20,
         padding: const EdgeInsets.fromLTRB(14, 12, 14, 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: _body(context),
+      ),
+    );
+  }
+
+  Widget _body(BuildContext context) {
+    final a = store.koach.answers[sessionKey];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _koachHeader(
+          'Koach · avant de commencer (facultatif)',
+          icon: Icons.checklist_rounded,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          'Sommeil de la nuit',
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+        const SizedBox(height: 6),
+        Wrap(
+          spacing: 6,
+          runSpacing: 6,
           children: [
-            _koachHeader(
-              'Koach · avant de commencer (facultatif)',
-              icon: Icons.checklist_rounded,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Sommeil de la nuit',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            const SizedBox(height: 6),
-            Wrap(
-              spacing: 6,
-              runSpacing: 6,
-              children: [
-                for (final (label, value) in koachSleepOptions)
-                  ChoiceChip(
-                    label: Text(label),
-                    selected: a?.sleep == value,
-                    onSelected: (on) => store.setKoachAnswers(
-                      sessionKey,
-                      sleep: on ? value : null,
-                      form: a?.form,
-                    ),
-                  ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Forme du jour : 0 au plus bas, 10 excellente',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            const SizedBox(height: 6),
-            Wrap(
-              spacing: 6,
-              runSpacing: 6,
-              children: [
-                for (var i = 0; i <= 10; i++)
-                  ChoiceChip(
-                    label: Text('$i'),
-                    tooltip: 'Forme $i sur 10',
-                    selected: a?.form == i,
-                    onSelected: (on) => store.setKoachAnswers(
-                      sessionKey,
-                      sleep: a?.sleep,
-                      form: on ? i : null,
-                    ),
-                  ),
-              ],
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                key: const ValueKey('koach-questions-skip'),
-                onPressed: () => store.koachSkipQuestions(sessionKey),
-                child: const Text('Passer'),
+            for (final (label, value) in koachSleepOptions)
+              ChoiceChip(
+                label: Text(label),
+                selected: a?.sleep == value,
+                onSelected: (on) => store.setKoachAnswers(
+                  sessionKey,
+                  sleep: on ? value : null,
+                  form: a?.form,
+                ),
               ),
-            ),
           ],
         ),
-      ),
+        const SizedBox(height: 10),
+        Text(
+          'Forme du jour : 0 au plus bas, 10 excellente',
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+        const SizedBox(height: 6),
+        Wrap(
+          spacing: 6,
+          runSpacing: 6,
+          children: [
+            for (var i = 0; i <= 10; i++)
+              ChoiceChip(
+                label: Text('$i'),
+                tooltip: 'Forme $i sur 10',
+                selected: a?.form == i,
+                onSelected: (on) => store.setKoachAnswers(
+                  sessionKey,
+                  sleep: a?.sleep,
+                  form: on ? i : null,
+                ),
+              ),
+          ],
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton(
+            key: const ValueKey('koach-questions-skip'),
+            onPressed: () => store.koachSkipQuestions(sessionKey),
+            child: const Text('Passer'),
+          ),
+        ),
+      ],
     );
   }
 }

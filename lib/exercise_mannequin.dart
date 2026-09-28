@@ -15,6 +15,7 @@ import 'atlas.dart';
 import 'atlas_data.dart';
 import 'engine3d.dart';
 import 'mannequin_3d.dart';
+import 'mannequin_clip.dart';
 
 /// Face du corps où un muscle du pack se voit le mieux.
 enum MuscleFace { anterieur, posterieur, lateral }
@@ -317,6 +318,106 @@ class ExerciseMannequinState extends State<ExerciseMannequin> {
         const SizedBox(height: 12),
         AtlasRoleLegend(stretchColor: _ready3d ? mannequinStretch(dark) : null),
       ],
+    );
+  }
+}
+
+/// M6 : démonstration animée de la fiche (exercice converti, registre
+/// `assets/anatomy/clips/index.json`) : mannequin en boucle au tempo réel,
+/// muscles de l'exercice mis en évidence, matériel, vue par défaut du
+/// mouvement, rotation au doigt. Repli : [fallback] (démonstration 2D),
+/// aussi pendant le chargement du registre et sur téléphone incompatible.
+class ExerciseAnimation extends StatefulWidget {
+  final String id;
+  final List<String> primaires, secondaires, stabilisateurs, etires;
+  final Widget fallback;
+  final double height;
+
+  const ExerciseAnimation({
+    super.key,
+    required this.id,
+    required this.fallback,
+    this.primaires = const [],
+    this.secondaires = const [],
+    this.stabilisateurs = const [],
+    this.etires = const [],
+    this.height = 380,
+  });
+
+  /// L'exercice a-t-il une animation 3D validée (registre déjà lu) ?
+  static bool converted(String id) =>
+      ClipRegistry.loaded?.contains(id) ?? false;
+
+  @override
+  State<ExerciseAnimation> createState() => ExerciseAnimationState();
+}
+
+class ExerciseAnimationState extends State<ExerciseAnimation> {
+  MannequinClip? _clip;
+  bool _failed = false;
+  ExerciseMuscleMap _muscles = ExerciseMuscleMap.empty;
+
+  MannequinClip? get clip => _clip;
+
+  @override
+  void initState() {
+    super.initState();
+    _setMap(MannequinMap.loaded);
+    if (engine3DSupportKnown?.compatible == false) {
+      _failed = true;
+      return;
+    }
+    ClipRegistry.clip(widget.id).then((c) {
+      if (!mounted) return;
+      setState(() {
+        if (c == null) {
+          _failed = true;
+        } else {
+          _clip = c;
+        }
+      });
+    });
+    if (MannequinMap.loaded == null) {
+      MannequinMap.load().then((m) {
+        if (mounted) setState(() => _setMap(m));
+      }, onError: (Object _) {});
+    }
+  }
+
+  void _setMap(MannequinMap? map) {
+    _muscles = map == null
+        ? ExerciseMuscleMap.empty
+        : ExerciseMuscleMap.of(
+            map,
+            primaires: widget.primaires,
+            secondaires: widget.secondaires,
+            stabilisateurs: widget.stabilisateurs,
+            etires: widget.etires,
+          );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final clip = _clip;
+    if (_failed) return widget.fallback;
+    if (clip == null) {
+      return SizedBox(
+        height: widget.height,
+        child: const Center(child: CircularProgressIndicator()),
+      );
+    }
+    return Mannequin3D(
+      key: ValueKey('fiche-animation-${widget.id}'),
+      clip: clip,
+      intensities: _muscles.intensities,
+      stretched: _muscles.stretched,
+      height: widget.height,
+      horizontalDragOnly: true,
+      viewButtons: true,
+      semanticLabel:
+          'Démonstration animée en 3D : ${clip.name}, muscles de '
+          'l’exercice en rouge',
+      fallback: widget.fallback,
     );
   }
 }

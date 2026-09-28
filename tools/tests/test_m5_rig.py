@@ -156,8 +156,12 @@ class M5RigTest(unittest.TestCase):
                     self.assertAlmostEqual(dist(posed[b['nom']], posed[par]),
                                            dist(heads[b['nom']], heads[par]), places=6)
                 self.assertLess(dist(posed[b['nom']], p['tetes'][b['nom']]), 1e-4)
-            # Rotations pures (matrices orthonormées).
-            for m in g.values():
+            # Rotations pures (matrices orthonormées), sauf les os d'aide et
+            # de gonflement à échelle (M56), qui gonflent avec la flexion.
+            scaled = {b['nom'] for b in self.rig['os'] if b.get('aide', {}).get('gonflement')}
+            for name, m in g.items():
+                if name in scaled:
+                    continue
                 for i in range(3):
                     self.assertAlmostEqual(sum(m[i][k] ** 2 for k in range(3)), 1, places=6)
 
@@ -259,7 +263,12 @@ class M5RigTest(unittest.TestCase):
             for a in items:
                 pa = rest[a[0]][0][a[1]]
                 for b in near:
-                    if b[0] > a[0] and dist(pa, rest[b[0]][0][b[1]]) <= .002:
+                    # M56 : les deux côtés d'un même muscle (adducteurs,
+                    # grands dorsaux…) se touchent au repos sur la ligne
+                    # médiane et s'écartent quand les membres s'ouvrent :
+                    # pas une déchirure.
+                    if b[0] > a[0] and dist(pa, rest[b[0]][0][b[1]]) <= .002 \
+                            and a[0].rsplit('_', 1)[0] != b[0].rsplit('_', 1)[0]:
                         pairs.append((a, b))
         self.assertGreater(len(pairs), 500)
         limits = {'suspendu': .03, 'squat_bas': .025, 'planche': .02}
@@ -267,7 +276,9 @@ class M5RigTest(unittest.TestCase):
             posed = self._posed(key)
             gaps = sorted(dist(posed[a[0]][1][a[1]], posed[b[0]][1][b[1]]) for a, b in pairs)
             self.assertLess(gaps[int(len(gaps) * .99)], p99, key)
-            self.assertLess(gaps[-1], .08, key)
+            # M56 : muscles plus volumineux ; bras levés, le coraco-brachial
+            # (bras) quitte le bord latéral du grand dorsal (tronc) : 8,4 cm.
+            self.assertLess(gaps[-1], .10, key)
 
 
 if __name__ == '__main__':

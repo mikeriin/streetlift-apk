@@ -37,6 +37,7 @@ import 'dart:typed_data';
 
 // `Material` désigne ici le matériau 3D de flutter_scene.
 import 'package:flutter/material.dart' hide Material;
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_scene/scene.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,7 +45,9 @@ import 'package:vector_math/vector_math.dart' as vm;
 
 import 'app_theme.dart';
 import 'engine3d.dart';
+import 'mannequin_clip.dart';
 import 'mannequin_gestures.dart';
+import 'mannequin_preload.dart';
 import 'mannequin_rig.dart';
 import 'muscle_body.dart';
 import 'ui.dart';
@@ -582,6 +585,130 @@ class MannequinScene {
   /// Nœuds présents dans le modèle (contrôles).
   Iterable<String> get nodeNames => _nodes.keys;
 
+  // ------------------------------------------------------------ M6 --
+  // Matériel de l'exercice (tools/anatomy/build_equipment.py) : un nœud
+  // racine par élément, cloné depuis la bibliothèque chargée une fois, gris
+  // neutres mats ; le sol prend une teinte proche du fond du thème.
+
+  static Future<Node>? _equipmentTemplate;
+
+  /// Bibliothèque de matériel chargée une fois par lancement (M56 :
+  /// préchargement).
+  static Future<Node> loadEquipmentTemplate() => _loadEquipment();
+
+  static Future<Node> _loadEquipment() {
+    final pending = _equipmentTemplate ??= loadScene(kEquipmentAsset);
+    return pending.catchError((Object e) {
+      if (identical(_equipmentTemplate, pending)) _equipmentTemplate = null;
+      throw e;
+    });
+  }
+
+  final Map<String, Node> _equipment = {};
+  final Map<String, ClipEquipment> _equipmentSpec = {};
+  final PhysicallyBasedMaterial _floor = _mat(const Color(0xFF2A2726));
+  late final Map<String, PhysicallyBasedMaterial> _equipmentTints = {
+    'metal': _mat(const Color(0xFF9A9794), roughness: .55),
+    'structure': _mat(const Color(0xFF5E5A58), roughness: .7),
+    'charge': _mat(const Color(0xFF3B3837), roughness: .8),
+    'mousse': _mat(const Color(0xFF4A4644), roughness: .9),
+    'sangle': _mat(const Color(0xFF6E6A67), roughness: .9),
+    'sol': _floor,
+  };
+
+  /// Teinte d'une partie de matériel (`eq_<id>` ou `eq_<id>__<partie>`).
+  static String equipmentTint(String node) {
+    final parts = node.substring(3).split('__');
+    final id = parts.first;
+    if (parts.length > 1) {
+      return switch (parts[1]) {
+        'montants' || 'cadre' => 'structure',
+        'disques' || 'tetes' || 'disque' => 'charge',
+        'sangles' => 'sangle',
+        _ => 'structure',
+      };
+    }
+    return switch (id) {
+      'sol' => 'sol',
+      'banc_plat' || 'banc_inclinable' || 'box' => 'mousse',
+      'kettlebell' || 'gilet_lest' => 'charge',
+      'elastique' || 'ceinture_lest' => 'sangle',
+      'anneaux' => 'structure',
+      _ => 'metal',
+    };
+  }
+
+  /// Éléments de matériel affichés (contrôles).
+  Iterable<String> get equipmentNames => _equipment.keys;
+
+  /// Place le matériel d'un clip (chargé une fois par lancement ; sans la
+  /// bibliothèque, le mannequin s'anime sans matériel).
+  Future<void> setEquipment(List<ClipEquipment> items) async {
+    if (items.isEmpty) return;
+    final Node template;
+    try {
+      template = await _loadEquipment();
+    } catch (_) {
+      return;
+    }
+    final byName = <String, Node>{};
+    void index(Node n) {
+      if (n.name.startsWith('eq_') && !n.name.contains('__'))
+        byName[n.name] = n;
+      for (final c in n.children) {
+        index(c);
+      }
+    }
+
+    index(template);
+    for (final item in items) {
+      final source = byName['eq_${item.id}'];
+      if (source == null || _equipment.containsKey(item.id)) continue;
+      final node = source.clone();
+      void paint(Node n) {
+        final mesh = n.mesh;
+        if (mesh != null) {
+          final copy = mesh.clone();
+          final tint = _equipmentTints[equipmentTint(n.name)]!;
+          for (final p in copy.primitives) {
+            p.material = tint;
+          }
+          n.mesh = copy;
+        }
+        for (final c in n.children) {
+          paint(c);
+        }
+      }
+
+      paint(node);
+      _equipment[item.id] = node;
+      _equipmentSpec[item.id] = item;
+      _placeEquipment(item.id, item.position);
+      scene.add(node);
+    }
+  }
+
+  void _placeEquipment(String id, vm.Vector3 position) {
+    final node = _equipment[id], spec = _equipmentSpec[id];
+    if (node == null || spec == null) return;
+    final yaw = vm.Quaternion.axisAngle(
+      vm.Vector3(0, 1, 0),
+      spec.yawDegrees * math.pi / 180,
+    );
+    node.localTransform = _matToScene(
+      vm.Matrix4.compose(position, yaw, vm.Vector3.all(1)),
+    );
+  }
+
+  /// Positions du matériel mobile (repère glTF).
+  void moveEquipment(Map<String, vm.Vector3> positions) {
+    positions.forEach(_placeEquipment);
+  }
+
+  /// Cadrage imposé (repère glTF) : celui d'un clip, fixe sur la boucle.
+  MannequinFraming framingOf(vm.Vector3 center, double height, double width) =>
+      MannequinFraming(_vecToScene(center), height, width);
+
   /// Articulations du squelette présentes dans le modèle (contrôles).
   Iterable<String> get jointNames => _joints.keys;
 
@@ -608,15 +735,16 @@ class MannequinScene {
   vm.Vector3 _vecToScene(vm.Vector3 v) =>
       _flip ? vm.Vector3(v.x, v.y, -v.z) : v.clone();
 
-  vm.Quaternion _quatToScene(vm.Quaternion q) =>
-      _flip ? vm.Quaternion(-q.x, -q.y, q.z, q.w) : q.clone();
-
   /// Place le mannequin dans [pose] : rotations des articulations (le GPU
   /// déforme les maillages), toucher recalculé à la demande, ordre des
   /// maillages translucides mis à jour.
   void applyPose(RigPose pose) {
     final rig = this.rig;
     if (rig == null || _joints.isEmpty) return;
+    // M56 : os d'aide et échelles de gonflement recalculés ici, comme à la
+    // fabrication (les postures de rig.json et les clips ne portent que les
+    // rotations des segments).
+    pose = rig.withHelpers(pose);
     _pose = pose;
     _posed = pose.rotations.isNotEmpty || pose.translation.length2 > 0;
     for (final b in rig.bones) {
@@ -624,14 +752,24 @@ class MannequinScene {
       final rest = _jointRest[b.name];
       if (node == null || rest == null) continue;
       final t = b.parent == null ? rest + _vecToScene(pose.translation) : rest;
-      node.localTransform = vm.Matrix4.compose(
-        t,
-        _quatToScene(pose.rotationOf(b.name)),
-        vm.Vector3.all(1),
+      node.localTransform = _matToScene(
+        MannequinRig.localMatrix(
+          _flip ? vm.Vector3(t.x, t.y, -t.z) : t,
+          pose.rotationOf(b.name),
+          pose.scales[b.name],
+        ),
       );
     }
     _posedPickables = null;
     _updateSortHints();
+  }
+
+  /// Matrice locale d'un os (repère glTF) dans le repère de la scène : le
+  /// miroir z (M5, `bakeNative` de flutter_scene) s'applique des deux côtés.
+  vm.Matrix4 _matToScene(vm.Matrix4 m) {
+    if (!_flip) return m;
+    final f = vm.Matrix4.diagonal3Values(1, 1, -1);
+    return f * m * f;
   }
 
   /// Positions déformées d'un maillage (repère de la scène) pour [mats]
@@ -840,6 +978,14 @@ class MannequinScene {
     _bones = bones;
     _halo = halo;
     if (themeChanged) {
+      // M6 : sol à peine distinct du fond.
+      _floor.baseColorFactor = _lin(
+        Color.lerp(
+          sceneBackground(dark),
+          dark ? const Color(0xFFFFFFFF) : const Color(0xFF000000),
+          dark ? .025 : .04,
+        )!,
+      );
       final bg = _lin(sceneBackground(dark)).xyz;
       scene.skybox = Skybox(
         GradientSkySource(
@@ -1154,6 +1300,11 @@ class Mannequin3D extends StatefulWidget {
   /// si les animations sont réduites).
   final String? posture;
 
+  /// M6 : animation d'exercice jouée en boucle (tempo réel, matériel, vue
+  /// par défaut et cadrage du clip) ; remplace [posture] et [view]. Pause
+  /// hors de l'écran ; animations réduites : positions clés fixes au choix.
+  final MannequinClip? clip;
+
   const Mannequin3D({
     super.key,
     this.intensities = const {},
@@ -1171,6 +1322,7 @@ class Mannequin3D extends StatefulWidget {
     this.semanticLabel = 'Mannequin anatomique en 3D',
     this.onReady,
     this.posture,
+    this.clip,
   });
 
   @override
@@ -1183,7 +1335,17 @@ class Mannequin3DState extends State<Mannequin3D>
   bool? _available;
   final _settings = Display3DSettings.instance;
 
-  late MannequinView _view = widget.view;
+  late MannequinView _view = _startView;
+
+  MannequinView get _startView {
+    final clip = widget.clip;
+    if (clip == null) return widget.view;
+    for (final v in MannequinView.values) {
+      if (v.name == clip.view) return v;
+    }
+    return widget.view;
+  }
+
   double _yaw = 0, _pitch = .06;
   double _fromYaw = 0, _fromPitch = 0, _toYaw = 0, _toPitch = 0;
   late final AnimationController _tween = AnimationController(
@@ -1228,12 +1390,18 @@ class Mannequin3DState extends State<Mannequin3D>
   PerspectiveCamera? get camera => _camera;
   Size get viewSize => _size;
 
+  // M56 : mesure de l'ouverture (temps jusqu'à la première image, images
+  // perdues), lue dans Réglages › À propos › Moteur 3D.
+  OpenTimer? _openTimer;
+  bool _firstImage = false;
+
   @override
   void initState() {
     super.initState();
-    _yaw = _toYaw = widget.view.yaw;
+    _yaw = _toYaw = _startView.yaw;
     _settings.listenable.addListener(_onSettings);
     unawaited(_settings.load());
+    _openTimer = OpenTimer();
     // Téléphone déjà reconnu incompatible et carte chargée : repli 2D
     // immédiat, sans attente.
     final known = engine3DSupportKnown;
@@ -1279,7 +1447,13 @@ class Mannequin3DState extends State<Mannequin3D>
       scene = null;
     }
     if (!mounted) return;
-    if (scene != null && widget.posture != null) {
+    final clip = widget.clip;
+    if (scene != null && clip != null) {
+      await scene.setEquipment(clip.equipment);
+      if (!mounted) return;
+      scene.framing = scene.framingOf(clip.center, clip.height, clip.width);
+      _applyClip(scene, clip);
+    } else if (scene != null && widget.posture != null) {
       _posture = widget.posture;
       final pose = _poseOf(scene, widget.posture);
       scene.applyPose(pose);
@@ -1290,6 +1464,97 @@ class Mannequin3DState extends State<Mannequin3D>
       _available = scene != null;
     });
     widget.onReady?.call(scene != null);
+    if (scene != null && clip != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _updateClipTicker());
+    }
+  }
+
+  // ------------------------------------------------------------ M6 --
+  late final Ticker _clipTicker = createTicker(_onClipTick);
+  double _clipTime = 0;
+  Duration _clipLast = Duration.zero;
+  bool _clipPaused = false;
+  ScrollPosition? _scroll;
+
+  /// Temps courant de l'animation (s) et lecture en cours (tests).
+  double get clipTime => _clipTime;
+  bool get clipPlaying => _clipTicker.isActive;
+
+  void _applyClip(MannequinScene scene, MannequinClip clip) {
+    final rig = scene.rig;
+    if (rig == null) return;
+    scene.applyPose(clip.poseAt(_clipTime, rig));
+    scene.moveEquipment(clip.equipmentAt(_clipTime));
+  }
+
+  void _onClipTick(Duration elapsed) {
+    final scene = _scene, clip = widget.clip;
+    if (scene == null || clip == null) return;
+    final dt = (elapsed - _clipLast).inMicroseconds / 1e6;
+    _clipLast = elapsed;
+    if (!_onScreen()) {
+      // Hors de l'écran : pause, reprise au défilement.
+      _clipTicker.stop();
+      return;
+    }
+    setState(() {
+      _clipTime = clip.wrap(_clipTime + dt.clamp(0.0, .1));
+      _applyClip(scene, clip);
+    });
+  }
+
+  /// Vue au moins en partie visible à l'écran.
+  bool _onScreen() {
+    final box = context.findRenderObject();
+    if (box is! RenderBox || !box.attached || !box.hasSize) return false;
+    final rect = box.localToGlobal(Offset.zero) & box.size;
+    final screen = Offset.zero & MediaQuery.sizeOf(context);
+    return rect.overlaps(screen);
+  }
+
+  void _updateClipTicker() {
+    if (!mounted || widget.clip == null || _scene == null) return;
+    final play = !_clipPaused && !_reduceMotion && _onScreen();
+    if (play && !_clipTicker.isActive) {
+      _clipLast = Duration.zero;
+      _clipTicker.start();
+    } else if (!play && _clipTicker.isActive) {
+      _clipTicker.stop();
+    }
+  }
+
+  /// Défilement : visibilité relue après la mise en page de l'image
+  /// (pendant le défilement, la position de la vue n'est pas encore à jour).
+  void _onScroll() {
+    if (!mounted) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) => _updateClipTicker());
+    SchedulerBinding.instance.ensureVisualUpdate();
+  }
+
+  /// Place l'animation à l'instant [t] et la met en pause (positions clés
+  /// quand les animations sont réduites ; tests et captures).
+  void seekClip(double t, {bool pause = true}) {
+    final scene = _scene, clip = widget.clip;
+    if (scene == null || clip == null) return;
+    _clipPaused = pause;
+    if (pause) _clipTicker.stop();
+    setState(() {
+      _clipTime = clip.wrap(t);
+      _applyClip(scene, clip);
+    });
+    if (!pause) _updateClipTicker();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (widget.clip == null) return;
+    final pos = Scrollable.maybeOf(context)?.position;
+    if (!identical(pos, _scroll)) {
+      _scroll?.removeListener(_onScroll);
+      _scroll = pos?..addListener(_onScroll);
+    }
+    WidgetsBinding.instance.addPostFrameCallback((_) => _updateClipTicker());
   }
 
   RigPose _poseOf(MannequinScene scene, String? key) => key == null
@@ -1334,11 +1599,16 @@ class Mannequin3DState extends State<Mannequin3D>
   void didUpdateWidget(Mannequin3D oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.view != widget.view) setView(widget.view);
-    if (oldWidget.posture != widget.posture) setPosture(widget.posture);
+    if (oldWidget.posture != widget.posture && widget.clip == null) {
+      setPosture(widget.posture);
+    }
   }
 
   @override
   void dispose() {
+    _openTimer?.cancel();
+    _scroll?.removeListener(_onScroll);
+    _clipTicker.dispose();
     _settings.listenable.removeListener(_onSettings);
     _tween.dispose();
     _poseTween.dispose();
@@ -1535,6 +1805,7 @@ class Mannequin3DState extends State<Mannequin3D>
     final available = _available;
     Widget view;
     if (available == false) {
+      _openTimer?.cancel();
       view = widget.fallback ?? _fallback(context);
     } else if (_scene == null) {
       view = SizedBox(
@@ -1549,12 +1820,46 @@ class Mannequin3DState extends State<Mannequin3D>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         view,
+        if (widget.clip != null && _scene != null && available == true)
+          ..._clipInfo(context, widget.clip!),
         if (widget.viewButtons && available != false) ...[
           const SizedBox(height: 8),
           _viewButtons(context),
         ],
       ],
     );
+  }
+
+  /// M6 : phase en cours et tempo ; animations réduites : positions clés.
+  List<Widget> _clipInfo(BuildContext context, MannequinClip clip) {
+    final phase = clip.phaseAt(_clipTime);
+    return [
+      const SizedBox(height: 6),
+      Text(
+        '${phase.name} · ${phase.typeLabel} · tempo ${clip.tempo}',
+        key: const ValueKey('mannequin-phase'),
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 12.5, color: SL.dim),
+      ),
+      if (_reduceMotion)
+        Padding(
+          padding: const EdgeInsets.only(top: 6),
+          child: Wrap(
+            key: const ValueKey('mannequin-key-positions'),
+            alignment: WrapAlignment.center,
+            spacing: 6,
+            runSpacing: 6,
+            children: [
+              for (final (name, t) in clip.keyPositions)
+                ChoiceChip(
+                  label: Text(name),
+                  selected: clip.phaseAt(_clipTime).start == t,
+                  onSelected: (_) => seekClip(t),
+                ),
+            ],
+          ),
+        ),
+    ];
   }
 
   Widget _fallback(BuildContext context) {
@@ -1584,6 +1889,12 @@ class Mannequin3DState extends State<Mannequin3D>
 
   Widget _view3d(BuildContext context, bool dark) {
     final scene = _scene!;
+    if (!_firstImage) {
+      _firstImage = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _openTimer?.firstImage();
+      });
+    }
     scene.configure(
       dark: dark,
       intensities: widget.intensities,

@@ -605,7 +605,7 @@ class AdaptSessionBanner extends StatelessWidget {
           accent: SL.accent,
           radius: 14,
           padding: const EdgeInsets.fromLTRB(12, 6, 8, 6),
-          onTap: () => _details(context),
+          onTap: () => showDetails(context, week, base, onChanged),
           child: Row(
             children: [
               const Icon(Icons.tune_rounded, size: 18),
@@ -621,7 +621,14 @@ class AdaptSessionBanner extends StatelessWidget {
     );
   }
 
-  Future<void> _details(BuildContext context) async {
+  /// Détails et choix (appliquer, garder le prévu, revenir) ; M6 : aussi
+  /// depuis la carte « Koach · séance du jour ».
+  static Future<void> showDetails(
+    BuildContext context,
+    int week,
+    DayPlan base,
+    VoidCallback? onChanged,
+  ) async {
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,

@@ -58,26 +58,53 @@ for _side in ('L', 'R'):
         parent = _p if _p in dict(_AXIAL) else _side_name(_p, _side)
         BONES.append((_side_name(_n, _side), parent, _side))
 
-# Os d'aide (correctifs automatiques du mélange linéaire) : à la tête de l'os
-# suivi, fils du même parent, ils prennent la moitié de sa rotation locale.
-# Les sommets partagés entre le parent et l'os suivi passent par eux : une
-# articulation pliée à 150° se déforme en deux demi-angles au lieu de
-# s'effondrer (épaule, coude, pronation, hanche, genou).
+# Os d'aide (correctifs du mélange linéaire, M56) : à la tête de l'os suivi,
+# fils du même parent, ils prennent une fraction (1/3, 2/3) de sa rotation
+# locale. Les sommets partagés entre le parent et l'os suivi sont répartis
+# sur la chaîne parent → 1/3 → 2/3 → os suivi selon leur fraction de
+# rotation : une articulation pliée à 150° se déforme en trois tiers au lieu
+# de s'effondrer (épaule, coude, hanche, genou ; pronation à 1/2). Un
+# gonflement (par radian de flexion, perpendiculaire à l'axe de rotation)
+# compense la perte de volume du mélange linéaire au pli.
+# nom de base : (parent, os suivi, part, gonflement par radian)
 HELPERS = {
-    'shoulder_aux': ('scapula', 'upperarm'), 'elbow_aux': ('upperarm', 'forearm'),
-    'pronation_aux': ('forearm', 'radius'), 'hip_aux': ('pelvis', 'thigh'),
-    'knee_aux': ('thigh', 'shin'),
+    'shoulder_aux': ('scapula', 'upperarm', 1 / 3, 0.0),
+    'shoulder_aux2': ('scapula', 'upperarm', 2 / 3, 0.0),
+    'elbow_aux': ('upperarm', 'forearm', 1 / 3, .06),
+    'elbow_aux2': ('upperarm', 'forearm', 2 / 3, .06),
+    'pronation_aux': ('forearm', 'radius', .5, 0.0),
+    'hip_aux': ('pelvis', 'thigh', 1 / 3, .04),
+    'hip_aux2': ('pelvis', 'thigh', 2 / 3, .04),
+    'knee_aux': ('thigh', 'shin', 1 / 3, .06),
+    'knee_aux2': ('thigh', 'shin', 2 / 3, .06),
 }
-HELPER_PART = .5
+# Gonflements de contraction (M56) : os sans rotation, fils du segment, à la
+# tête placée au ventre du muscle (calculée à la fabrication), dont l'échelle
+# perpendiculaire à l'axe du muscle croît avec la flexion de l'articulation
+# motrice (par radian) ; les sommets du ventre des muscles cités lui sont
+# confiés pour une part (BULGE_SHARE) de leur poids sur le segment.
+# nom de base : (parent = segment, os moteur, gain par radian, muscles)
+BULGES = {
+    'biceps_bulge': ('upperarm', 'forearm', .10,
+                     ('biceps_brachii_long', 'biceps_brachii_short', 'brachialis')),
+    'quads_bulge': ('thigh', 'shin', .045,
+                    ('rectus_femoris', 'vastus_lateralis', 'vastus_medialis',
+                     'vastus_intermedius')),
+    'glute_bulge': ('pelvis', 'thigh', .05, ('gluteus_maximus',)),
+}
+BULGE_SHARE = .7
 for _side in ('L', 'R'):
-    for _n, (_p, _f) in HELPERS.items():
+    for _n, (_p, _f, _part, _g) in HELPERS.items():
+        parent = _p if _p in dict(_AXIAL) else _side_name(_p, _side)
+        BONES.append((_side_name(_n, _side), parent, _side))
+    for _n, (_p, _f, _g, _m) in BULGES.items():
         parent = _p if _p in dict(_AXIAL) else _side_name(_p, _side)
         BONES.append((_side_name(_n, _side), parent, _side))
 
 BONE_NAMES = [b[0] for b in BONES]
 PARENT = {b[0]: b[1] for b in BONES}
 SIDE = {b[0]: b[2] for b in BONES}
-MAX_BONES = 40
+MAX_BONES = 60
 
 # Noms français (rig.json, écran Anatomie).
 FR_BONE = {
@@ -88,20 +115,45 @@ FR_BONE = {
     'hand': 'Main', 'fingers1': 'Doigts (phalanges proximales)',
     'fingers2': 'Doigts (phalanges moyennes et distales)', 'thigh': 'Cuisse',
     'shin': 'Jambe', 'foot': 'Pied', 'toes': 'Orteils',
-    'shoulder_aux': "Aide de l'épaule", 'elbow_aux': 'Aide du coude',
-    'pronation_aux': 'Aide de la pronation', 'hip_aux': 'Aide de la hanche',
-    'knee_aux': 'Aide du genou',
+    'shoulder_aux': "Aide de l'épaule (1/3)", 'shoulder_aux2': "Aide de l'épaule (2/3)",
+    'elbow_aux': 'Aide du coude (1/3)', 'elbow_aux2': 'Aide du coude (2/3)',
+    'pronation_aux': 'Aide de la pronation', 'hip_aux': 'Aide de la hanche (1/3)',
+    'hip_aux2': 'Aide de la hanche (2/3)', 'knee_aux': 'Aide du genou (1/3)',
+    'knee_aux2': 'Aide du genou (2/3)',
+    'biceps_bulge': 'Gonflement du biceps', 'quads_bulge': 'Gonflement du quadriceps',
+    'glute_bulge': 'Gonflement du grand fessier',
 }
 
 
 def helper_of(bone):
-    """(parent, os suivi) d'un os d'aide, sinon None."""
+    """(parent, os suivi) d'un os d'aide ou de gonflement, sinon None."""
     base = base_name(bone)
-    if base not in HELPERS:
-        return None
     side = bone[-2:]
-    p, f = HELPERS[base]
+    if base in HELPERS:
+        p, f = HELPERS[base][:2]
+    elif base in BULGES:
+        p, f = BULGES[base][:2]
+    else:
+        return None
     return (p if p in dict(_AXIAL) else p + side, f + side)
+
+
+def helper_spec(bone):
+    """{'suit', 'part', 'gonflement'} d'un os d'aide, {'suit', 'moteur',
+    'gonflement', 'muscles'} d'un os de gonflement, sinon None."""
+    base = base_name(bone)
+    side = bone[-2:]
+    if base in HELPERS:
+        p, f, part, g = HELPERS[base]
+        return {'suit': f + side, 'part': part, 'gonflement': g}
+    if base in BULGES:
+        p, f, g, muscles = BULGES[base]
+        return {'suit': f + side, 'part': 0.0, 'gonflement': g, 'muscles': list(muscles)}
+    return None
+
+
+def is_bulge(bone):
+    return base_name(bone) in BULGES
 
 
 def base_name(bone):
@@ -165,7 +217,7 @@ DOF = {
         ('rotation', 'Rotation interne (+) / externe (−)', NY, -90, 70, 'AAOS'),
     ],
     'forearm': [
-        ('flexion', 'Flexion du coude (+)', NX, -5, 150, 'AAOS'),
+        ('flexion', 'Flexion du coude (+)', 'mesure:coude', -5, 150, 'AAOS'),
     ],
     'radius': [
         ('pronation', 'Pronation (+) depuis la supination du repos', 'bone', -10, 165,
@@ -187,16 +239,24 @@ DOF = {
         ('rotation', 'Rotation interne (+) / externe (−)', NY, -45, 45, 'AAOS'),
     ],
     'shin': [
-        ('flexion', 'Flexion du genou (+)', X, -5, 157, 'AAOS, HEM'),
+        ('flexion', 'Flexion du genou (+)', 'mesure:genou', -5, 157, 'AAOS, HEM'),
+        # Rotation du tibia sous le fémur, genou fléchi (M56 : squat profond,
+        # pieds à plat et genoux dans l'axe des pieds).
+        ('rotation', 'Rotation interne (+) / externe (−) du tibia, genou fléchi', 'bone',
+         -30, 20, 'AAOS (genou fléchi : interne 10-20°, externe 20-30°), KAP t. 2'),
     ],
     'foot': [
-        ('flexion', 'Flexion dorsale (+) / plantaire (−)', NX, -50, 40, 'AAOS, HEM'),
+        ('flexion', 'Flexion dorsale (+) / plantaire (−)', 'mesure:cheville', -50, 40,
+         'AAOS, HEM'),
         ('inversion', 'Inversion (+) / éversion (−)', NZ, -15, 35, 'AAOS'),
     ],
     'toes': [
         ('flexion', 'Flexion (+) / extension (−) des orteils', X, -70, 40, 'AAOS'),
     ],
 }
+
+# Axes par défaut des articulations mesurées (sans mesure : anatomiques).
+MEASURED_DEFAULT = {'coude': NX, 'genou': X, 'cheville': NX}
 
 SOURCES = {
     'AAOS': 'American Academy of Orthopaedic Surgeons, Joint Motion: Method of '
@@ -215,11 +275,22 @@ def mirror_axis(axis):
     return (axis[0], -axis[1], -axis[2])
 
 
-def dofs_of(bone, bone_axis=None):
-    """Degrés de liberté d'un os (axes du côté de l'os)."""
+def dofs_of(bone, bone_axis=None, measured=None):
+    """Degrés de liberté d'un os (axes du côté de l'os). `measured` : axes
+    mesurés sur les os du modèle (M56 : 'coude', 'genou', 'cheville'), en
+    convention du côté de l'os ; sans mesure, l'axe anatomique par défaut."""
     out = []
     for key, name, axis, lo, hi, src in DOF.get(base_name(bone), []):
-        if axis == 'bone':
+        if isinstance(axis, str) and axis.startswith('mesure:'):
+            m = (measured or {}).get(axis[7:])
+            axis = tuple(m) if m else MEASURED_DEFAULT[axis[7:]]
+            if m:
+                out.append({'cle': key, 'nom': name, 'axe': list(axis), 'min': lo, 'max': hi,
+                            'source': src + ' ; axe mesuré sur les os du modèle'})
+                continue
+            if SIDE[bone] == 'R':
+                axis = mirror_axis(axis)
+        elif axis == 'bone':
             axis = tuple(bone_axis)
             # Le miroir d'un axe propre est l'opposé de l'axe propre de l'os
             # droit (voir la docstring) : l'axe du radius droit est donc
@@ -290,8 +361,10 @@ def q_angle(q):
 
 
 # Part glénohumérale maximale de l'élévation du bras (INMAN : ≈ 120° sur
-# 180°, le reste par la scapula et la clavicule).
-GH_MAX = 125
+# 180°, le reste par la scapula et la clavicule ; M56 : 130°, haut de la
+# variabilité inter-individuelle (Inman 120 ± 10°), atteint en suspension
+# active : scapulas abaissées, bras vertical).
+GH_MAX = 130
 
 
 def posture_rotations(dofs_by_bone, angles_by_bone):
@@ -330,24 +403,61 @@ def q_slerp_identity(q, t):
 
 
 def with_helpers(rotations):
-    """Rotations complétées par celles des os d'aide."""
+    """Rotations complétées par celles des os d'aide (fraction de la rotation
+    locale de l'os suivi) ; les os de gonflement ne tournent pas."""
     out = dict(rotations)
     for bone in BONE_NAMES:
-        h = helper_of(bone)
-        if h:
-            q = rotations.get(h[1], (0.0, 0.0, 0.0, 1.0))
-            out[bone] = q_slerp_identity(q, HELPER_PART)
+        spec = helper_spec(bone)
+        if spec and spec['part']:
+            q = rotations.get(spec['suit'], (0.0, 0.0, 0.0, 1.0))
+            out[bone] = q_slerp_identity(q, spec['part'])
     return out
 
 
-def mat_from(q, t):
-    """Matrice 3×4 (lignes) d'une rotation q suivie d'une translation t."""
+def q_axis(q):
+    """Axe unitaire d'une rotation (X si nulle)."""
     x, y, z, w = q
-    return [
-        [1 - 2 * (y * y + z * z), 2 * (x * y - z * w), 2 * (x * z + y * w), t[0]],
-        [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w), t[1]],
-        [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y), t[2]],
+    n = math.sqrt(x * x + y * y + z * z)
+    return (x / n, y / n, z / n) if n > 1e-9 else (1.0, 0.0, 0.0)
+
+
+def helper_scales(rotations, rig=None):
+    """Échelles locales (matrices 3×3) des os d'aide et de gonflement (M56) :
+    1 + gain × angle (radians) de l'os moteur, perpendiculairement à l'axe de
+    sa rotation (aide) ou à l'axe du muscle (gonflement, `axe` de rig.json).
+    Vide sans gonflement."""
+    axes = {}
+    if rig is not None:
+        axes = {b['nom']: b['aide'].get('axe') for b in rig['os'] if 'aide' in b}
+    out = {}
+    for bone in BONE_NAMES:
+        spec = helper_spec(bone)
+        if not spec or not spec['gonflement']:
+            continue
+        q = rotations.get(spec['suit'], (0.0, 0.0, 0.0, 1.0))
+        angle = math.radians(q_angle(q))
+        if angle < 1e-6:
+            continue
+        s = 1 + spec['gonflement'] * angle
+        a = axes.get(bone) or (None if spec['part'] else (0.0, 1.0, 0.0))
+        a = tuple(a) if a else q_axis(q)
+        out[bone] = [[(1 if i == j else 0) + (s - 1) * ((1 if i == j else 0) - a[i] * a[j])
+                      for j in range(3)] for i in range(3)]
+    return out
+
+
+def mat_from(q, t, scale=None):
+    """Matrice 3×4 (lignes) d'une échelle (3×3, facultative) suivie d'une
+    rotation q et d'une translation t."""
+    x, y, z, w = q
+    r = [
+        [1 - 2 * (y * y + z * z), 2 * (x * y - z * w), 2 * (x * z + y * w)],
+        [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)],
+        [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)],
     ]
+    if scale is not None:
+        r = [[sum(r[i][k] * scale[k][j] for k in range(3)) for j in range(3)] for i in range(3)]
+    return [r[0] + [t[0]], r[1] + [t[1]], r[2] + [t[2]]]
 
 
 def mat_mul(a, b):
@@ -369,10 +479,14 @@ def mat_apply(m, p):
             m[2][0] * p[0] + m[2][1] * p[1] + m[2][2] * p[2] + m[2][3])
 
 
-def forward_kinematics(rig, rotations, root_translation=(0.0, 0.0, 0.0)):
+def forward_kinematics(rig, rotations, root_translation=(0.0, 0.0, 0.0), scales=None):
     """Transformations globales des os (matrices 3×4) pour des rotations
-    locales {os: quaternion}. Os au repos : translation seule (tête de l'os).
-    La racine (bassin) est placée en `head + root_translation`."""
+    locales {os: quaternion} et des échelles locales {os: 3×3} (os d'aide et
+    de gonflement, M56 ; None : calculées ici). Os au repos : translation
+    seule (tête de l'os). La racine (bassin) est placée en
+    `head + root_translation`."""
+    if scales is None:
+        scales = helper_scales(rotations, rig)
     heads = {b['nom']: b['tete'] for b in rig['os']}
     out = {}
     for b in rig['os']:
@@ -381,10 +495,10 @@ def forward_kinematics(rig, rotations, root_translation=(0.0, 0.0, 0.0)):
         parent = b['parent']
         if parent is None:
             t = [heads[name][i] + root_translation[i] for i in range(3)]
-            out[name] = mat_from(q, t)
+            out[name] = mat_from(q, t, scales.get(name))
         else:
             rel = [heads[name][i] - heads[parent][i] for i in range(3)]
-            out[name] = mat_mul(out[parent], mat_from(q, rel))
+            out[name] = mat_mul(out[parent], mat_from(q, rel, scales.get(name)))
     return out
 
 

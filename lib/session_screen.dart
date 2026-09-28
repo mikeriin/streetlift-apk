@@ -15,6 +15,7 @@ import 'adapt_screens.dart';
 import 'koach_engine.dart' as ke show KSuggestion;
 import 'koach_screens.dart' show KoachReviewScreen;
 import 'profile_screens.dart' show showProgressiveQuestion;
+import 'koach_day_card.dart';
 import 'koach_widgets.dart';
 import 'pilotage_screen.dart';
 import 'set_validation.dart' show checkSet;
@@ -377,12 +378,6 @@ class _SessionScreenState extends State<SessionScreen> {
                         index: page,
                         color: SL.action,
                       ),
-                      if (w.n >= 1)
-                        AdaptSessionBanner(
-                          week: w.n,
-                          base: widget.day,
-                          onChanged: () => setState(() {}),
-                        ),
                     ],
                   ),
                 ),
@@ -403,6 +398,8 @@ class _SessionScreenState extends State<SessionScreen> {
                             day: _day,
                             exs: groups[i],
                             timer: ctl,
+                            baseDay: widget.day,
+                            onSessionChanged: () => setState(() {}),
                           )
                         : _FinishPage(week: w, day: _day),
                   ),
@@ -486,6 +483,11 @@ class SessionExercisePage extends StatefulWidget {
   final TimerCtl timer;
   final SessionLog? history;
   final Set<String> unresolvedIds;
+
+  /// M6 : séance du programme avant adaptation (carte « Koach · séance du
+  /// jour ») et rappel quand une action de la carte change les séries.
+  final DayPlan? baseDay;
+  final VoidCallback? onSessionChanged;
   bool get readOnly => history != null;
   const SessionExercisePage({
     super.key,
@@ -495,6 +497,8 @@ class SessionExercisePage extends StatefulWidget {
     required this.timer,
     this.history,
     this.unresolvedIds = const {},
+    this.baseDay,
+    this.onSessionChanged,
   });
 
   @override
@@ -906,16 +910,14 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     ];
   }
 
-  /// Carte « jour de fatigue » et questionnaire d'avant séance.
-  List<Widget> _koachTop() {
-    if (widget.readOnly || !store.koachOn || widget.week.n < 1) {
-      return const [];
-    }
+  /// Mode Guidé (L11, KT-063) : jour de fatigue appliqué d'office, une fois
+  /// par page. M6 : l'affichage (questionnaire, proposition) est passé dans
+  /// la carte « Koach · séance du jour » de l'en-tête ; cette application
+  /// automatique reste ici, inchangée.
+  void _koachGuidedFatigue() {
+    if (widget.readOnly || !store.koachOn || widget.week.n < 1) return;
+    if (_fatigueChecked || store.autonomyMode != 'guided') return;
     final w = widget.week.n, j = widget.day.j;
-    final key = store.sessionKey(w, j);
-    final first =
-        widget.day.exercises.isNotEmpty &&
-        widget.exs.first.id == widget.day.exercises.first.id;
     final level = store.koachFatigueLevel(w, j, widget.day.exercises);
     final cut = level > 0
         ? store
@@ -923,30 +925,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               .values
               .fold<int>(0, (a, b) => a + b)
         : 0;
-    // L11 (KT-063) : mode Guidé, jour de fatigue appliqué d'office.
-    if (cut > 0 && store.autonomyMode == 'guided' && !_fatigueChecked) {
+    if (cut > 0) {
       _fatigueChecked = true;
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) _koachAutoFatigue();
       });
     }
-    return [
-      if (first && store.koachAskBefore(w, j))
-        KoachQuestionsCard(sessionKey: key),
-      if (cut > 0 && store.autonomyMode != 'guided')
-        KoachFatigueCard(
-          level: level,
-          sets: cut,
-          onAccept: () {
-            store.acceptKoachFatigue(w, j, widget.day.exercises, level);
-            setState(() => epoch++);
-          },
-          onRefuse: () {
-            store.refuseKoachFatigue(w, j, level);
-            setState(() {});
-          },
-        ),
-    ];
   }
 
   void _reusePrevious(int k, ExerciseLog prev) {
@@ -1007,20 +991,39 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     );
   }
 
+  /// Page du premier exercice de la séance.
+  bool get _firstPage =>
+      widget.day.exercises.isNotEmpty &&
+      widget.exs.first.id == widget.day.exercises.first.id;
+
   @override
   Widget build(BuildContext context) => ListView(
     key: PageStorageKey('exercise-scroll-${widget.exs.first.id}'),
     keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
     padding: const EdgeInsets.fromLTRB(KSpace.page, 2, KSpace.page, 10),
     children: [
-      // Koach (L7) : reconstruit à chaque changement du store.
+      // M6 : carte « Koach · séance du jour » (questionnaire, jour de
+      // fatigue, adaptation de la séance) en tête de la séance, avant la
+      // liste des exercices ; les indications propres à un exercice restent
+      // dans son bloc.
+      if (!widget.readOnly && widget.week.n >= 1 && _firstPage)
+        KoachDayCard(
+          week: widget.week.n,
+          base: widget.baseDay ?? widget.day,
+          day: widget.day,
+          onChanged: () {
+            if (mounted) setState(() => epoch++);
+            widget.onSessionChanged?.call();
+          },
+        ),
+      // Koach (L7) : mode Guidé, jour de fatigue appliqué d'office.
       if (!widget.readOnly && store.koachOn)
         ListenableBuilder(
           listenable: store,
-          builder: (context, _) => Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: _koachTop(),
-          ),
+          builder: (context, _) {
+            _koachGuidedFatigue();
+            return const SizedBox.shrink();
+          },
         ),
       for (var k = 0; k < widget.exs.length; k++) ...[
         if (k > 0) const SizedBox(height: 12),

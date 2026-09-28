@@ -44,7 +44,8 @@ void main() {
   });
 
   test('os, postures de l’écran Anatomie, peau', () {
-    expect(rig.bones.length, lessThanOrEqualTo(40));
+    // M56 : 30 segments, 18 os d'aide (tiers, pronation), 6 gonflements.
+    expect(rig.bones.length, 54);
     expect(rig.bones.first.name, 'pelvis');
     expect([for (final p in rig.appPostures) p.key], kAnatomyPostures.keys);
     expect(rig.posture('debout')!.pose.rotations, isEmpty);
@@ -57,7 +58,13 @@ void main() {
       for (final b in rig.bones)
         if (b.follows != null) b.name,
     ];
-    expect(helpers, hasLength(10));
+    expect(helpers, hasLength(24));
+    final bulges = [
+      for (final b in rig.bones)
+        if (b.bulge > 0) b.name,
+    ];
+    // Aides du coude, de la hanche et du genou (tiers) et les 6 gonflements.
+    expect(bulges, hasLength(18));
     // Peau : 4 influences par sommet, somme 255, os existants.
     var vertices = 0;
     rig.skin.forEach((name, inf) {
@@ -122,7 +129,7 @@ void main() {
     expect(squat, isNot(equals(rest)));
   });
 
-  test('transition : extrémités exactes, os d’aide à mi-angle', () {
+  test('transition : extrémités exactes, os d’aide aux tiers, gonflement', () {
     final a = rig.posture('debout')!.pose;
     final b = rig.posture('squat_bas')!.pose;
     expect(identical(rig.blend(a, b, 0), a), isTrue);
@@ -130,10 +137,27 @@ void main() {
     final mid = rig.blend(a, b, .5);
     final knee = mid.rotationOf('shin_l');
     final aux = mid.rotationOf('knee_aux_l');
+    final aux2 = mid.rotationOf('knee_aux2_l');
     double angle(vm.Quaternion q) => 2 * math.acos(q.w.abs().clamp(0.0, 1.0));
-    expect(angle(aux), closeTo(angle(knee) / 2, 1e-6));
+    expect(angle(aux), closeTo(angle(knee) / 3, 1e-6));
+    expect(angle(aux2), closeTo(angle(knee) * 2 / 3, 1e-6));
     expect(angle(knee), closeTo(angle(b.rotationOf('shin_l')) / 2, 1e-3));
     expect(mid.translation.y, closeTo(b.translation.y / 2, 1e-9));
+    // M56 : le quadriceps gonfle avec la flexion du genou (1 + 0,045 × angle),
+    // perpendiculairement à l'axe du muscle ; l'os de gonflement ne tourne pas.
+    final full = rig.withHelpers(b);
+    final quads = rig.bones[rig.index['quads_bulge_l']!];
+    expect(full.rotationOf('quads_bulge_l'), vm.Quaternion.identity());
+    final s = full.scales['quads_bulge_l']!;
+    final axis = quads.bulgeAxis!;
+    final along = s.transform(axis.clone());
+    expect(along.length, closeTo(1, 1e-9));
+    final perp = vm.Vector3(1, 0, 0)..sub(axis * axis.x);
+    final grown = s.transform(perp.clone()).length / perp.length;
+    expect(grown, closeTo(1 + quads.bulge * angle(b.rotationOf('shin_l')), 1e-9));
+    expect(grown, greaterThan(1.08));
+    expect(full.scales.containsKey('knee_aux_l'), isTrue);
+    expect(full.scales.containsKey('shoulder_aux_l'), isFalse);
   });
 
   Widget page(Widget child) => MaterialApp(

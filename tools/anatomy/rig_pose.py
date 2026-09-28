@@ -37,10 +37,16 @@ def load_skin(rig, meshes, path=SKIN):
 
 
 def load_model():
+    return load_model_from(GLB, RIG, SKIN)
+
+
+def load_model_from(glb=None, rig=None, skin=None):
+    """Modèle (maillages, rig, peau) depuis des chemins donnés (M56 :
+    mesures avant / après sur des fichiers hors `assets/`)."""
     import build_rig
-    meshes, _ = build_rig.read_meshes(GLB)
-    rig = json.loads(RIG.read_text(encoding='utf-8'))
-    return {'meshes': meshes, 'rig': rig, 'skin': load_skin(rig, meshes)}
+    meshes, _ = build_rig.read_meshes(glb or GLB)
+    rig_data = json.loads((rig or RIG).read_text(encoding='utf-8'))
+    return {'meshes': meshes, 'rig': rig_data, 'skin': load_skin(rig_data, meshes, skin or SKIN)}
 
 
 def posture_rotations(rig, posture):

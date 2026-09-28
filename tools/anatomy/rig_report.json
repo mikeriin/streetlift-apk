@@ -1,257 +1,349 @@
 {
- "os": 40,
+ "os": 54,
  "sommets": 31452,
+ "axes_mesures": {
+  "genou_l": [
+   0.9982,
+   0.0523,
+   -0.0277
+  ],
+  "cheville_l": [
+   -0.884,
+   0.1736,
+   0.434
+  ],
+  "coude_l": [
+   -0.9883,
+   -0.0498,
+   0.1444
+  ],
+  "genou_r": [
+   0.9982,
+   -0.0523,
+   0.0277
+  ],
+  "cheville_r": [
+   -0.884,
+   -0.1736,
+   -0.434
+  ],
+  "coude_r": [
+   -0.9883,
+   0.0498,
+   -0.1444
+  ]
+ },
  "voxel_m": 0.005,
  "puissance": 4.0,
  "d0_m": 0.01,
  "allowed": {
   "deltoid_anterior_left": [
-   "clavicle_l",
    "scapula_l",
    "upperarm_l",
-   "shoulder_aux_l"
+   "shoulder_aux_l",
+   "shoulder_aux2_l"
   ],
   "deltoid_anterior_right": [
-   "clavicle_r",
    "scapula_r",
    "upperarm_r",
-   "shoulder_aux_r"
+   "shoulder_aux_r",
+   "shoulder_aux2_r"
   ],
   "deltoid_lateral_left": [
-   "clavicle_l",
    "scapula_l",
    "upperarm_l",
-   "shoulder_aux_l"
+   "shoulder_aux_l",
+   "shoulder_aux2_l"
   ],
   "deltoid_lateral_right": [
-   "clavicle_r",
    "scapula_r",
    "upperarm_r",
-   "shoulder_aux_r"
+   "shoulder_aux_r",
+   "shoulder_aux2_r"
   ],
   "deltoid_posterior_left": [
    "scapula_l",
    "upperarm_l",
-   "shoulder_aux_l"
+   "shoulder_aux_l",
+   "shoulder_aux2_l"
   ],
   "deltoid_posterior_right": [
    "scapula_r",
    "upperarm_r",
-   "shoulder_aux_r"
+   "shoulder_aux_r",
+   "shoulder_aux2_r"
   ],
   "supraspinatus_left": [
    "scapula_l",
    "upperarm_l",
-   "shoulder_aux_l"
+   "shoulder_aux_l",
+   "shoulder_aux2_l"
   ],
   "supraspinatus_right": [
    "scapula_r",
    "upperarm_r",
-   "shoulder_aux_r"
+   "shoulder_aux_r",
+   "shoulder_aux2_r"
   ],
   "infraspinatus_left": [
    "scapula_l",
    "upperarm_l",
-   "shoulder_aux_l"
+   "shoulder_aux_l",
+   "shoulder_aux2_l"
   ],
   "infraspinatus_right": [
    "scapula_r",
    "upperarm_r",
-   "shoulder_aux_r"
+   "shoulder_aux_r",
+   "shoulder_aux2_r"
   ],
   "subscapularis_left": [
    "scapula_l",
    "upperarm_l",
-   "shoulder_aux_l"
+   "shoulder_aux_l",
+   "shoulder_aux2_l"
   ],
   "subscapularis_right": [
    "scapula_r",
    "upperarm_r",
-   "shoulder_aux_r"
+   "shoulder_aux_r",
+   "shoulder_aux2_r"
   ],
   "teres_minor_left": [
    "scapula_l",
    "upperarm_l",
-   "shoulder_aux_l"
+   "shoulder_aux_l",
+   "shoulder_aux2_l"
   ],
   "teres_minor_right": [
    "scapula_r",
    "upperarm_r",
-   "shoulder_aux_r"
+   "shoulder_aux_r",
+   "shoulder_aux2_r"
   ],
   "teres_major_left": [
    "scapula_l",
    "upperarm_l",
-   "shoulder_aux_l"
+   "shoulder_aux_l",
+   "shoulder_aux2_l"
   ],
   "teres_major_right": [
    "scapula_r",
    "upperarm_r",
-   "shoulder_aux_r"
+   "shoulder_aux_r",
+   "shoulder_aux2_r"
   ],
   "rectus_femoris_left": [
    "pelvis",
    "thigh_l",
    "shin_l",
    "hip_aux_l",
-   "knee_aux_l"
+   "hip_aux2_l",
+   "knee_aux_l",
+   "knee_aux2_l",
+   "quads_bulge_l"
   ],
   "rectus_femoris_right": [
    "pelvis",
    "thigh_r",
    "shin_r",
    "hip_aux_r",
-   "knee_aux_r"
+   "hip_aux2_r",
+   "knee_aux_r",
+   "knee_aux2_r",
+   "quads_bulge_r"
   ],
   "vastus_lateralis_left": [
    "thigh_l",
    "shin_l",
-   "knee_aux_l"
+   "knee_aux_l",
+   "knee_aux2_l",
+   "quads_bulge_l"
   ],
   "vastus_lateralis_right": [
    "thigh_r",
    "shin_r",
-   "knee_aux_r"
+   "knee_aux_r",
+   "knee_aux2_r",
+   "quads_bulge_r"
   ],
   "vastus_medialis_left": [
    "thigh_l",
    "shin_l",
-   "knee_aux_l"
+   "knee_aux_l",
+   "knee_aux2_l",
+   "quads_bulge_l"
   ],
   "vastus_medialis_right": [
    "thigh_r",
    "shin_r",
-   "knee_aux_r"
+   "knee_aux_r",
+   "knee_aux2_r",
+   "quads_bulge_r"
   ],
   "vastus_intermedius_left": [
    "thigh_l",
    "shin_l",
-   "knee_aux_l"
+   "knee_aux_l",
+   "knee_aux2_l",
+   "quads_bulge_l"
   ],
   "vastus_intermedius_right": [
    "thigh_r",
    "shin_r",
-   "knee_aux_r"
+   "knee_aux_r",
+   "knee_aux2_r",
+   "quads_bulge_r"
   ],
   "biceps_femoris_long_left": [
    "pelvis",
    "thigh_l",
    "shin_l",
    "hip_aux_l",
-   "knee_aux_l"
+   "hip_aux2_l",
+   "knee_aux_l",
+   "knee_aux2_l"
   ],
   "biceps_femoris_long_right": [
    "pelvis",
    "thigh_r",
    "shin_r",
    "hip_aux_r",
-   "knee_aux_r"
+   "hip_aux2_r",
+   "knee_aux_r",
+   "knee_aux2_r"
   ],
   "biceps_femoris_short_left": [
    "thigh_l",
    "shin_l",
-   "knee_aux_l"
+   "knee_aux_l",
+   "knee_aux2_l"
   ],
   "biceps_femoris_short_right": [
    "thigh_r",
    "shin_r",
-   "knee_aux_r"
+   "knee_aux_r",
+   "knee_aux2_r"
   ],
   "semitendinosus_left": [
    "pelvis",
    "thigh_l",
    "shin_l",
    "hip_aux_l",
-   "knee_aux_l"
+   "hip_aux2_l",
+   "knee_aux_l",
+   "knee_aux2_l"
   ],
   "semitendinosus_right": [
    "pelvis",
    "thigh_r",
    "shin_r",
    "hip_aux_r",
-   "knee_aux_r"
+   "hip_aux2_r",
+   "knee_aux_r",
+   "knee_aux2_r"
   ],
   "semimembranosus_left": [
    "pelvis",
    "thigh_l",
    "shin_l",
    "hip_aux_l",
-   "knee_aux_l"
+   "hip_aux2_l",
+   "knee_aux_l",
+   "knee_aux2_l"
   ],
   "semimembranosus_right": [
    "pelvis",
    "thigh_r",
    "shin_r",
    "hip_aux_r",
-   "knee_aux_r"
+   "hip_aux2_r",
+   "knee_aux_r",
+   "knee_aux2_r"
   ],
   "sartorius_left": [
    "pelvis",
    "thigh_l",
    "shin_l",
    "hip_aux_l",
-   "knee_aux_l"
+   "hip_aux2_l",
+   "knee_aux_l",
+   "knee_aux2_l"
   ],
   "sartorius_right": [
    "pelvis",
    "thigh_r",
    "shin_r",
    "hip_aux_r",
-   "knee_aux_r"
+   "hip_aux2_r",
+   "knee_aux_r",
+   "knee_aux2_r"
   ],
   "adductor_magnus_left": [
    "pelvis",
    "thigh_l",
-   "hip_aux_l"
+   "hip_aux_l",
+   "hip_aux2_l"
   ],
   "adductor_magnus_right": [
    "pelvis",
    "thigh_r",
-   "hip_aux_r"
+   "hip_aux_r",
+   "hip_aux2_r"
   ],
   "adductor_longus_left": [
    "pelvis",
    "thigh_l",
-   "hip_aux_l"
+   "hip_aux_l",
+   "hip_aux2_l"
   ],
   "adductor_longus_right": [
    "pelvis",
    "thigh_r",
-   "hip_aux_r"
+   "hip_aux_r",
+   "hip_aux2_r"
   ],
   "adductor_brevis_left": [
    "pelvis",
    "thigh_l",
-   "hip_aux_l"
+   "hip_aux_l",
+   "hip_aux2_l"
   ],
   "adductor_brevis_right": [
    "pelvis",
    "thigh_r",
-   "hip_aux_r"
+   "hip_aux_r",
+   "hip_aux2_r"
   ],
   "gracilis_left": [
    "pelvis",
    "thigh_l",
    "shin_l",
    "hip_aux_l",
-   "knee_aux_l"
+   "hip_aux2_l",
+   "knee_aux_l",
+   "knee_aux2_l"
   ],
   "gracilis_right": [
    "pelvis",
    "thigh_r",
    "shin_r",
    "hip_aux_r",
-   "knee_aux_r"
+   "hip_aux2_r",
+   "knee_aux_r",
+   "knee_aux2_r"
   ],
   "pectineus_left": [
    "pelvis",
    "thigh_l",
-   "hip_aux_l"
+   "hip_aux_l",
+   "hip_aux2_l"
   ],
   "pectineus_right": [
    "pelvis",
    "thigh_r",
-   "hip_aux_r"
+   "hip_aux_r",
+   "hip_aux2_r"
   ],
   "pectoralis_major_clavicular_left": [
    "thoracic_low",
@@ -354,7 +446,8 @@
    "thoracic_high",
    "scapula_l",
    "upperarm_l",
-   "shoulder_aux_l"
+   "shoulder_aux_l",
+   "shoulder_aux2_l"
   ],
   "latissimus_dorsi_right": [
    "pelvis",
@@ -363,7 +456,8 @@
    "thoracic_high",
    "scapula_r",
    "upperarm_r",
-   "shoulder_aux_r"
+   "shoulder_aux_r",
+   "shoulder_aux2_r"
   ],
   "rhomboid_major_left": [
    "thoracic_low",
@@ -599,8 +693,11 @@
    "forearm_l",
    "radius_l",
    "shoulder_aux_l",
+   "shoulder_aux2_l",
    "elbow_aux_l",
-   "pronation_aux_l"
+   "elbow_aux2_l",
+   "pronation_aux_l",
+   "biceps_bulge_l"
   ],
   "biceps_brachii_long_right": [
    "scapula_r",
@@ -608,8 +705,11 @@
    "forearm_r",
    "radius_r",
    "shoulder_aux_r",
+   "shoulder_aux2_r",
    "elbow_aux_r",
-   "pronation_aux_r"
+   "elbow_aux2_r",
+   "pronation_aux_r",
+   "biceps_bulge_r"
   ],
   "biceps_brachii_short_left": [
    "scapula_l",
@@ -617,8 +717,11 @@
    "forearm_l",
    "radius_l",
    "shoulder_aux_l",
+   "shoulder_aux2_l",
    "elbow_aux_l",
-   "pronation_aux_l"
+   "elbow_aux2_l",
+   "pronation_aux_l",
+   "biceps_bulge_l"
   ],
   "biceps_brachii_short_right": [
    "scapula_r",
@@ -626,62 +729,79 @@
    "forearm_r",
    "radius_r",
    "shoulder_aux_r",
+   "shoulder_aux2_r",
    "elbow_aux_r",
-   "pronation_aux_r"
+   "elbow_aux2_r",
+   "pronation_aux_r",
+   "biceps_bulge_r"
   ],
   "brachialis_left": [
    "upperarm_l",
    "forearm_l",
-   "elbow_aux_l"
+   "elbow_aux_l",
+   "elbow_aux2_l",
+   "biceps_bulge_l"
   ],
   "brachialis_right": [
    "upperarm_r",
    "forearm_r",
-   "elbow_aux_r"
+   "elbow_aux_r",
+   "elbow_aux2_r",
+   "biceps_bulge_r"
   ],
   "coracobrachialis_left": [
    "scapula_l",
    "upperarm_l",
-   "shoulder_aux_l"
+   "shoulder_aux_l",
+   "shoulder_aux2_l"
   ],
   "coracobrachialis_right": [
    "scapula_r",
    "upperarm_r",
-   "shoulder_aux_r"
+   "shoulder_aux_r",
+   "shoulder_aux2_r"
   ],
   "triceps_long_left": [
    "scapula_l",
    "upperarm_l",
    "forearm_l",
    "shoulder_aux_l",
-   "elbow_aux_l"
+   "shoulder_aux2_l",
+   "elbow_aux_l",
+   "elbow_aux2_l"
   ],
   "triceps_long_right": [
    "scapula_r",
    "upperarm_r",
    "forearm_r",
    "shoulder_aux_r",
-   "elbow_aux_r"
+   "shoulder_aux2_r",
+   "elbow_aux_r",
+   "elbow_aux2_r"
   ],
   "triceps_lateral_left": [
    "upperarm_l",
    "forearm_l",
-   "elbow_aux_l"
+   "elbow_aux_l",
+   "elbow_aux2_l"
   ],
   "triceps_lateral_right": [
    "upperarm_r",
    "forearm_r",
-   "elbow_aux_r"
+   "elbow_aux_r",
+   "elbow_aux2_r"
   ],
   "triceps_medial_left": [
    "upperarm_l",
    "forearm_l",
-   "elbow_aux_l"
+   "elbow_aux_l",
+   "elbow_aux2_l"
   ],
   "triceps_medial_right": [
    "upperarm_r",
    "forearm_r",
-   "elbow_aux_r"
+   "elbow_aux_r",
+   "elbow_aux2_r"
   ],
   "brachioradialis_muscle_left": [
    "upperarm_l",
@@ -689,6 +809,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "brachioradialis_muscle_right": [
@@ -697,6 +818,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "flexor_carpi_radialis_left": [
@@ -705,6 +827,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "flexor_carpi_radialis_right": [
@@ -713,6 +836,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "palmaris_longus_muscle_left": [
@@ -721,6 +845,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "palmaris_longus_muscle_right": [
@@ -729,6 +854,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "humeral_head_of_flexor_carpi_ulnaris_left": [
@@ -737,6 +863,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "humeral_head_of_flexor_carpi_ulnaris_right": [
@@ -745,6 +872,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "ulnar_head_of_flexor_carpi_ulnaris_left": [
@@ -753,6 +881,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "ulnar_head_of_flexor_carpi_ulnaris_right": [
@@ -761,6 +890,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "humero_ulnar_head_of_flexor_digitorum_superficialis_left": [
@@ -769,6 +899,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "humero_ulnar_head_of_flexor_digitorum_superficialis_right": [
@@ -777,6 +908,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "radial_head_of_flexor_digitorum_superficialis_left": [
@@ -785,6 +917,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "radial_head_of_flexor_digitorum_superficialis_right": [
@@ -793,6 +926,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "flexor_digitorum_profundus_left": [
@@ -801,6 +935,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "flexor_digitorum_profundus_right": [
@@ -809,6 +944,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "flexor_pollicis_longus_left": [
@@ -817,6 +953,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "flexor_pollicis_longus_right": [
@@ -825,6 +962,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "pronator_quadratus_left": [
@@ -833,6 +971,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "pronator_quadratus_right": [
@@ -841,6 +980,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "superficial_head_of_pronator_teres_left": [
@@ -849,6 +989,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "superficial_head_of_pronator_teres_right": [
@@ -857,6 +998,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "deep_head_of_pronator_teres_left": [
@@ -865,6 +1007,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "deep_head_of_pronator_teres_right": [
@@ -873,6 +1016,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "supinator_left": [
@@ -881,6 +1025,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "supinator_right": [
@@ -889,6 +1034,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "extensor_digitorum_left": [
@@ -897,6 +1043,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "extensor_digitorum_right": [
@@ -905,6 +1052,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "ulnar_head_of_extensor_carpi_ulnaris_left": [
@@ -913,6 +1061,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "ulnar_head_of_extensor_carpi_ulnaris_right": [
@@ -921,6 +1070,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "humeral_head_of_extensor_carpi_ulnaris_left": [
@@ -929,6 +1079,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "humeral_head_of_extensor_carpi_ulnaris_right": [
@@ -937,6 +1088,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "extensor_carpi_radialis_longus_left": [
@@ -945,6 +1097,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "extensor_carpi_radialis_longus_right": [
@@ -953,6 +1106,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "extensor_carpi_radialis_brevis_left": [
@@ -961,6 +1115,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "extensor_carpi_radialis_brevis_right": [
@@ -969,6 +1124,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "anconeus_muscle_left": [
@@ -977,6 +1133,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "anconeus_muscle_right": [
@@ -985,6 +1142,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "extensor_digiti_minimi_left": [
@@ -993,6 +1151,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "extensor_digiti_minimi_right": [
@@ -1001,6 +1160,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "abductor_pollicis_longus_left": [
@@ -1009,6 +1169,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "abductor_pollicis_longus_right": [
@@ -1017,6 +1178,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "extensor_indicis_left": [
@@ -1025,6 +1187,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "extensor_indicis_right": [
@@ -1033,6 +1196,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "extensor_pollicis_brevis_left": [
@@ -1041,6 +1205,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "extensor_pollicis_brevis_right": [
@@ -1049,6 +1214,7 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "extensor_pollicis_longus_left": [
@@ -1057,6 +1223,7 @@
    "radius_l",
    "hand_l",
    "elbow_aux_l",
+   "elbow_aux2_l",
    "pronation_aux_l"
   ],
   "extensor_pollicis_longus_right": [
@@ -1065,161 +1232,194 @@
    "radius_r",
    "hand_r",
    "elbow_aux_r",
+   "elbow_aux2_r",
    "pronation_aux_r"
   ],
   "gluteus_maximus_left": [
    "pelvis",
    "lumbar",
    "thigh_l",
-   "hip_aux_l"
+   "hip_aux_l",
+   "hip_aux2_l",
+   "glute_bulge_l"
   ],
   "gluteus_maximus_right": [
    "pelvis",
    "lumbar",
    "thigh_r",
-   "hip_aux_r"
+   "hip_aux_r",
+   "hip_aux2_r",
+   "glute_bulge_r"
   ],
   "gluteus_medius_left": [
    "pelvis",
    "thigh_l",
-   "hip_aux_l"
+   "hip_aux_l",
+   "hip_aux2_l"
   ],
   "gluteus_medius_right": [
    "pelvis",
    "thigh_r",
-   "hip_aux_r"
+   "hip_aux_r",
+   "hip_aux2_r"
   ],
   "gluteus_minimus_left": [
    "pelvis",
    "thigh_l",
-   "hip_aux_l"
+   "hip_aux_l",
+   "hip_aux2_l"
   ],
   "gluteus_minimus_right": [
    "pelvis",
    "thigh_r",
-   "hip_aux_r"
+   "hip_aux_r",
+   "hip_aux2_r"
   ],
   "iliacus_left": [
    "pelvis",
    "thigh_l",
-   "hip_aux_l"
+   "hip_aux_l",
+   "hip_aux2_l"
   ],
   "iliacus_right": [
    "pelvis",
    "thigh_r",
-   "hip_aux_r"
+   "hip_aux_r",
+   "hip_aux2_r"
   ],
   "psoas_major_left": [
    "thoracic_low",
    "lumbar",
    "pelvis",
    "thigh_l",
-   "hip_aux_l"
+   "hip_aux_l",
+   "hip_aux2_l"
   ],
   "psoas_major_right": [
    "thoracic_low",
    "lumbar",
    "pelvis",
    "thigh_r",
-   "hip_aux_r"
+   "hip_aux_r",
+   "hip_aux2_r"
   ],
   "tensor_fasciae_latae_left": [
    "pelvis",
    "thigh_l",
    "shin_l",
    "hip_aux_l",
-   "knee_aux_l"
+   "hip_aux2_l",
+   "knee_aux_l",
+   "knee_aux2_l"
   ],
   "tensor_fasciae_latae_right": [
    "pelvis",
    "thigh_r",
    "shin_r",
    "hip_aux_r",
-   "knee_aux_r"
+   "hip_aux2_r",
+   "knee_aux_r",
+   "knee_aux2_r"
   ],
   "piriformis_left": [
    "pelvis",
    "thigh_l",
-   "hip_aux_l"
+   "hip_aux_l",
+   "hip_aux2_l"
   ],
   "piriformis_right": [
    "pelvis",
    "thigh_r",
-   "hip_aux_r"
+   "hip_aux_r",
+   "hip_aux2_r"
   ],
   "quadratus_femoris_left": [
    "pelvis",
    "thigh_l",
-   "hip_aux_l"
+   "hip_aux_l",
+   "hip_aux2_l"
   ],
   "quadratus_femoris_right": [
    "pelvis",
    "thigh_r",
-   "hip_aux_r"
+   "hip_aux_r",
+   "hip_aux2_r"
   ],
   "obturator_internus_left": [
    "pelvis",
    "thigh_l",
-   "hip_aux_l"
+   "hip_aux_l",
+   "hip_aux2_l"
   ],
   "obturator_internus_right": [
    "pelvis",
    "thigh_r",
-   "hip_aux_r"
+   "hip_aux_r",
+   "hip_aux2_r"
   ],
   "obturator_externus_left": [
    "pelvis",
    "thigh_l",
-   "hip_aux_l"
+   "hip_aux_l",
+   "hip_aux2_l"
   ],
   "obturator_externus_right": [
    "pelvis",
    "thigh_r",
-   "hip_aux_r"
+   "hip_aux_r",
+   "hip_aux2_r"
   ],
   "gemellus_inferior_left": [
    "pelvis",
    "thigh_l",
-   "hip_aux_l"
+   "hip_aux_l",
+   "hip_aux2_l"
   ],
   "gemellus_inferior_right": [
    "pelvis",
    "thigh_r",
-   "hip_aux_r"
+   "hip_aux_r",
+   "hip_aux2_r"
   ],
   "gemellus_superior_left": [
    "pelvis",
    "thigh_l",
-   "hip_aux_l"
+   "hip_aux_l",
+   "hip_aux2_l"
   ],
   "gemellus_superior_right": [
    "pelvis",
    "thigh_r",
-   "hip_aux_r"
+   "hip_aux_r",
+   "hip_aux2_r"
   ],
   "gastrocnemius_lateral_left": [
    "thigh_l",
    "shin_l",
    "foot_l",
-   "knee_aux_l"
+   "knee_aux_l",
+   "knee_aux2_l"
   ],
   "gastrocnemius_lateral_right": [
    "thigh_r",
    "shin_r",
    "foot_r",
-   "knee_aux_r"
+   "knee_aux_r",
+   "knee_aux2_r"
   ],
   "gastrocnemius_medial_left": [
    "thigh_l",
    "shin_l",
    "foot_l",
-   "knee_aux_l"
+   "knee_aux_l",
+   "knee_aux2_l"
   ],
   "gastrocnemius_medial_right": [
    "thigh_r",
    "shin_r",
    "foot_r",
-   "knee_aux_r"
+   "knee_aux_r",
+   "knee_aux2_r"
   ],
   "soleus_left": [
    "shin_l",
@@ -1233,13 +1433,15 @@
    "thigh_l",
    "shin_l",
    "foot_l",
-   "knee_aux_l"
+   "knee_aux_l",
+   "knee_aux2_l"
   ],
   "plantaris_right": [
    "thigh_r",
    "shin_r",
    "foot_r",
-   "knee_aux_r"
+   "knee_aux_r",
+   "knee_aux2_r"
   ],
   "tibialis_anterior_left": [
    "shin_l",
@@ -1316,12 +1518,14 @@
   "popliteus_left": [
    "thigh_l",
    "shin_l",
-   "knee_aux_l"
+   "knee_aux_l",
+   "knee_aux2_l"
   ],
   "popliteus_right": [
    "thigh_r",
    "shin_r",
-   "knee_aux_r"
+   "knee_aux_r",
+   "knee_aux2_r"
   ],
   "platysma_left": [
    "head",
@@ -1365,6 +1569,26 @@
    "foot_r",
    "toes_r"
   ]
+ },
+ "colles": {
+  "deltoid_anterior_left": 75,
+  "deltoid_anterior_right": 75,
+  "deltoid_lateral_left": 36,
+  "deltoid_lateral_right": 36,
+  "deltoid_posterior_left": 20,
+  "deltoid_posterior_right": 20,
+  "teres_major_left": 11,
+  "teres_major_right": 11,
+  "pectoralis_major_clavicular_left": 3,
+  "pectoralis_major_clavicular_right": 3,
+  "pectoralis_major_sternocostal_left": 3,
+  "pectoralis_major_sternocostal_right": 2,
+  "pectoralis_major_abdominal_left": 7,
+  "pectoralis_major_abdominal_right": 7,
+  "latissimus_dorsi_left": 11,
+  "latissimus_dorsi_right": 11,
+  "coracobrachialis_left": 24,
+  "coracobrachialis_right": 24
  },
  "os_pieces": 39,
  "contexte_voisins": 8,

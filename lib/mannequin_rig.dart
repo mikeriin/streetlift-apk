@@ -1,9 +1,14 @@
-// M5 (mannequin 3D) : squelette d'animation et peau du mannequin.
+// M5 / M56 (mannequin 3D) : squelette d'animation et peau du mannequin.
 //
-// `assets/anatomy/rig.json` (fabriqué par tools/anatomy/build_rig.py) : 40
-// os (30 segments anatomiques et 10 os d'aide qui prennent la moitié de la
-// rotation d'une articulation), têtes au repos, degrés de liberté et limites,
-// postures de référence (rotations locales par os, translation du bassin).
+// `assets/anatomy/rig.json` (fabriqué par tools/anatomy/build_rig.py) : 54
+// os (30 segments anatomiques, 18 os d'aide qui prennent une fraction (1/3,
+// 2/3, 1/2) de la rotation d'une articulation et gonflent avec sa flexion,
+// 6 os de gonflement de contraction : biceps, quadriceps, grand fessier,
+// dont l'échelle croît avec la flexion de l'articulation motrice), têtes au
+// repos, degrés de liberté et limites, postures de référence (rotations
+// locales par os, translation du bassin). Les échelles des os d'aide et de
+// gonflement sont recalculées ici à chaque posture ([MannequinRig.withHelpers]),
+// comme à la fabrication (`rig_def.helper_scales`).
 // `assets/anatomy/mannequin_skin.bin` : 4 influences par sommet, dans l'ordre
 // des sommets du modèle ; le GPU déforme le modèle avec les mêmes données
 // (JOINTS_0 / WEIGHTS_0 du GLB), ce fichier sert au toucher et au cadrage
@@ -29,9 +34,16 @@ class RigBone {
   final String name, label;
   final String? parent;
 
-  /// Os d'aide : os suivi (il en prend [helperPart] de la rotation locale).
+  /// Os d'aide : os suivi (il en prend [helperPart] de la rotation locale ;
+  /// 0 pour un os de gonflement, qui ne tourne pas).
   final String? follows;
   final double helperPart;
+
+  /// M56 : gonflement par radian de rotation de l'os suivi (échelle
+  /// perpendiculaire à l'axe de rotation, ou à [bulgeAxis] pour un os de
+  /// gonflement) ; 0 : aucune échelle.
+  final double bulge;
+  final vm.Vector3? bulgeAxis;
 
   /// Tête au repos (repère glTF).
   final vm.Vector3 head;
@@ -42,14 +54,19 @@ class RigBone {
     this.head, {
     this.follows,
     this.helperPart = .5,
+    this.bulge = 0,
+    this.bulgeAxis,
   });
 }
 
-/// Posture : rotations locales (repère glTF) et translation du bassin.
+/// Posture : rotations locales (repère glTF), translation du bassin et, M56,
+/// échelles locales des os d'aide et de gonflement (matrices 3×3, calculées
+/// par [MannequinRig.withHelpers]).
 class RigPose {
   final Map<String, vm.Quaternion> rotations;
   final vm.Vector3 translation;
-  RigPose(this.rotations, this.translation);
+  final Map<String, vm.Matrix3> scales;
+  RigPose(this.rotations, this.translation, [this.scales = const {}]);
 
   static final rest = RigPose(const {}, vm.Vector3.zero());
 
@@ -144,6 +161,11 @@ class MannequinRig {
           v3(b['tete'] as List),
           follows: (b['aide'] as Map?)?['suit'] as String?,
           helperPart: ((b['aide'] as Map?)?['part'] as num?)?.toDouble() ?? .5,
+          bulge:
+              ((b['aide'] as Map?)?['gonflement'] as num?)?.toDouble() ?? 0,
+          bulgeAxis: (b['aide'] as Map?)?['axe'] == null
+              ? null
+              : v3((b['aide'] as Map)['axe'] as List),
         ),
     ];
     final postures = <RigPosture>[];
@@ -215,19 +237,52 @@ class MannequinRig {
   }
 
   /// Rotations complétées par celles des os d'aide (fraction de la rotation
-  /// locale de l'os suivi), comme à la fabrication.
+  /// locale de l'os suivi) et échelles de gonflement (M56 : 1 + gain × angle
+  /// de l'os suivi, perpendiculairement à l'axe de sa rotation ou à l'axe du
+  /// muscle), comme à la fabrication (`rig_def.with_helpers`,
+  /// `rig_def.helper_scales`).
   RigPose withHelpers(RigPose pose) {
     final rots = Map<String, vm.Quaternion>.of(pose.rotations);
+    final scales = <String, vm.Matrix3>{};
     for (final b in bones) {
       final f = b.follows;
       if (f == null) continue;
-      rots[b.name] = quatSlerp(
-        vm.Quaternion.identity(),
-        pose.rotationOf(f),
-        b.helperPart,
-      );
+      final q = pose.rotationOf(f);
+      if (b.helperPart > 0) {
+        rots[b.name] = quatSlerp(vm.Quaternion.identity(), q, b.helperPart);
+      }
+      if (b.bulge > 0) {
+        final s = bulgeScale(q, b.bulge, b.bulgeAxis);
+        if (s != null) scales[b.name] = s;
+      }
     }
-    return RigPose(rots, pose.translation);
+    return RigPose(rots, pose.translation, scales);
+  }
+
+  /// Échelle d'un os d'aide ou de gonflement pour la rotation [q] de l'os
+  /// suivi : `1 + gain × angle`, perpendiculaire à [axis] (axe du muscle) ou,
+  /// sans axe, à l'axe de [q] ; null si la rotation est nulle.
+  static vm.Matrix3? bulgeScale(vm.Quaternion q, double gain, vm.Vector3? axis) {
+    var w = q.w.abs().clamp(0.0, 1.0);
+    final angle = 2 * math.acos(w);
+    if (angle < 1e-6) return null;
+    final s = 1 + gain * angle;
+    vm.Vector3 a;
+    if (axis != null) {
+      a = axis;
+    } else {
+      a = vm.Vector3(q.x, q.y, q.z);
+      final n = a.length;
+      a = n > 1e-9 ? a / n : vm.Vector3(1, 0, 0);
+    }
+    final m = vm.Matrix3.identity();
+    for (var i = 0; i < 3; i++) {
+      for (var j = 0; j < 3; j++) {
+        final d = i == j ? 1.0 : 0.0;
+        m.setEntry(i, j, d + (s - 1) * (d - a[i] * a[j]));
+      }
+    }
+    return m;
   }
 
   /// Posture intermédiaire entre [a] et [b] (fraction [t]) : rotations
@@ -251,24 +306,32 @@ class MannequinRig {
     );
   }
 
+  /// Transformation locale d'un os : translation, rotation, puis échelle
+  /// (M56, os d'aide et de gonflement).
+  static vm.Matrix4 localMatrix(
+    vm.Vector3 t,
+    vm.Quaternion q,
+    vm.Matrix3? scale,
+  ) {
+    final m = vm.Matrix4.compose(t, q, vm.Vector3.all(1));
+    if (scale == null) return m;
+    final s = vm.Matrix4.identity()..setRotation(scale);
+    return m * s;
+  }
+
   /// Transformations globales des os (repère glTF).
   List<vm.Matrix4> globals(RigPose pose) {
     final out = List<vm.Matrix4>.filled(bones.length, vm.Matrix4.identity());
     for (var i = 0; i < bones.length; i++) {
       final b = bones[i];
       final q = pose.rotationOf(b.name);
+      final s = pose.scales[b.name];
       final p = b.parent;
       if (p == null) {
-        out[i] = vm.Matrix4.compose(
-          b.head + pose.translation,
-          q,
-          vm.Vector3.all(1),
-        );
+        out[i] = localMatrix(b.head + pose.translation, q, s);
       } else {
         final pi = index[p]!;
-        out[i] =
-            out[pi] *
-            vm.Matrix4.compose(b.head - bones[pi].head, q, vm.Vector3.all(1));
+        out[i] = out[pi] * localMatrix(b.head - bones[pi].head, q, s);
       }
     }
     return out;

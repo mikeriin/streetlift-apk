@@ -49,12 +49,13 @@ def main():
     parser.add_argument('--clair', action='store_true')
     parser.add_argument('--zoom')
     parser.add_argument('--taille', type=int, default=360)
+    parser.add_argument('--glb', help='M56 : autre modèle (avant / après)')
     args = parser.parse_args()
 
     import bpy
     from mathutils import Vector
     bpy.ops.wm.read_factory_settings(use_empty=True)
-    bpy.ops.import_scene.gltf(filepath=str(GLB))
+    bpy.ops.import_scene.gltf(filepath=str(args.glb or GLB))
     regions = {r['id']: r for r in json.loads(MAP.read_text())['regions']}
     dark = not args.clair
     top = '#E85959' if dark else '#A61717'

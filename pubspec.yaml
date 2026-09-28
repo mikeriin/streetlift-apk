@@ -1,7 +1,7 @@
 name: streetlift_tracker
 description: "Kalis Track — suivi d'entraînement calisthénie et streetlifting : programme guidé, séances perso, WOD, chronos, pilotage recalculable."
 publish_to: 'none'
-version: 5.4.0+78
+version: 5.5.0+79
 
 environment:
   # M1 (mannequin 3D) : flutter_scene 0.23 exige Flutter 3.47 stable et Dart 3.10.
@@ -70,4 +70,7 @@ flutter:
     # M5 : squelette, postures et peau du mannequin (toucher et cadrage).
     - assets/anatomy/rig.json
     - assets/anatomy/mannequin_skin.bin
+    # M56 : animations d'exercice (tools/anatomy/animate.py) et registre ; le
+    # matériel (equipment.glb) est converti par le build hook.
+    - assets/anatomy/clips/
     - flutter_scene_generated/
