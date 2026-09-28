@@ -102,21 +102,24 @@ void main() {
     test('union dans une catégorie, intersection entre catégories', () {
       const none = FilterSelection();
       expect(_filter(none), _items);
-      final rougeOuBleu = none.toggle('couleur', 'rouge').toggle('couleur', 'bleu');
+      final rougeOuBleu = none
+          .toggle('couleur', 'rouge')
+          .toggle('couleur', 'bleu');
       expect(_filter(rougeOuBleu).length, 3);
       final etPetit = rougeOuBleu.toggle('taille', 'petit');
       expect(_filter(etPetit), [('rouge', 'petit'), ('bleu', 'petit')]);
       expect(etPetit.count(_cats), 3);
       expect(etPetit.toggle('couleur', 'rouge').count(_cats), 2);
-      expect(
-        etPetit.active(_cats).map((a) => a.$2.label),
-        ['Rouge', 'Bleu', 'Petit'],
-      );
+      expect(etPetit.active(_cats).map((a) => a.$2.label), [
+        'Rouge',
+        'Bleu',
+        'Petit',
+      ]);
     });
 
     test('égalité indépendante de l’ordre et des catégories vides', () {
       final a = const FilterSelection().toggle('couleur', 'rouge');
-      final b = const FilterSelection({
+      const b = FilterSelection({
         'couleur': {'rouge'},
         'taille': {},
       });
@@ -318,10 +321,7 @@ void main() {
         find.byKey(const ValueKey('library-filter-type:tirage_vertical')),
         findsWidgets,
       );
-      expect(
-        find.byKey(const ValueKey('library-filter-niv:1')),
-        findsNothing,
-      );
+      expect(find.byKey(const ValueKey('library-filter-niv:1')), findsNothing);
       await tapItem(tester, 'library-filter-type:tirage_vertical');
       final vertical = countIn(tester.widget<Text>(counter).data!);
       await tapItem(tester, 'library-filter-type:tirage_horizontal');
@@ -364,9 +364,11 @@ void main() {
       await tester.pumpWidget(_app(const WodCatalogScreen()));
       await tester.pumpAndSettle();
       int total() => int.parse(
-        RegExp(
-          r'WODs · (\d+)',
-        ).firstMatch(tester.widget<Text>(find.textContaining('WODs · ')).data!)!.group(1)!,
+        RegExp(r'WODs · (\d+)')
+            .firstMatch(
+              tester.widget<Text>(find.textContaining('WODs · ')).data!,
+            )!
+            .group(1)!,
       );
       final all = total();
       await openMenu(tester, 'wod');
@@ -418,19 +420,23 @@ void main() {
       await openMenu(tester, 'picker');
       final groups = find.byWidgetPredicate(
         (w) =>
-            w is CheckboxMenuButton &&
+            w is CheckboxListTile &&
             w.key is ValueKey<String> &&
             (w.key! as ValueKey<String>).value.startsWith('picker-filter-g:'),
       );
       expect(groups, findsWidgets);
-      final first = (tester.widget(groups.first).key! as ValueKey<String>).value;
+      final first =
+          (tester.widget(groups.first).key! as ValueKey<String>).value;
       await tapItem(tester, first);
       final one = countIn(tester.widget<Text>(counter).data!);
       expect(one, lessThan(all));
       expect(find.text('Filtres · 1'), findsOneWidget);
       await tester.tapAt(const Offset(5, 5));
       await tester.pumpAndSettle();
-      expect(find.byKey(ValueKey(first.replaceFirst('filter', 'chip'))), findsOneWidget);
+      expect(
+        find.byKey(ValueKey(first.replaceFirst('filter', 'chip'))),
+        findsOneWidget,
+      );
       exercisePickerFilters = const FilterSelection();
       expect(tester.takeException(), isNull);
     });
