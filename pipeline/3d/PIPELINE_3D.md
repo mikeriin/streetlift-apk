@@ -6,9 +6,9 @@ Tu es lancé par la tâche planifiée « Kalis Track — pipeline mannequin 3D �
 (Depuis M4c, 5.3.2, `main` contient directement les sources du projet Flutter à sa racine : plus de ZIP. Le dernier état livré en ZIP est au commit 4531346 de `main`.)
 1. `add_repo` mikeriin/streetlift-apk en accès `push`, puis clone (commande donnée par l'outil).
 2. `git fetch origin pipeline` ; lis ce fichier, `pipeline/3d/ETAT_3D.md` et `pipeline/3d/DECISIONS_3D.md`.
-3. Ton lot est le **premier lot du tableau §8 dont le statut n'est pas « livré »** dans `ETAT_3D.md`. Lis son prompt `pipeline/3d/prompts/M<NN>.txt` (numéro sur 2 chiffres : M1 → `M01.txt`, M4b → `M04b.txt`, M4c → `M04c.txt`, M7b → `M07b.txt`) et exécute-le intégralement. Si ce lot est marqué « en cours » depuis plus de 6 h, repars de l'état réel du dépôt (commits, branches) sans refaire ce qui est poussé.
+3. Ton lot est le **premier lot du tableau §8 dont le statut n'est pas « livré »** dans `ETAT_3D.md`. Lis son prompt `pipeline/3d/prompts/M<NN>.txt` (numéro sur 2 chiffres : M1 → `M01.txt`, M4b → `M04b.txt`, M4c → `M04c.txt`, M7b → `M07b.txt`) et exécute-le intégralement. **Si ce lot est marqué « en cours depuis … » depuis moins de 6 h, ou « en attente du propriétaire », arrête-toi immédiatement, sans rien modifier ni notifier** (une autre session travaille déjà sur ce lot, ou une décision est attendue). S'il est « en cours » depuis plus de 6 h, repars de l'état réel du dépôt (commits, branches) sans refaire ce qui est poussé.
 4. Base : les sources sur `main` (`version:` de `pubspec.yaml`). Vérifie la version prérequise (§8). Si elle ne correspond pas : notification d'échec (§5) et arrêt.
-5. Marque ton lot « en cours » dans `ETAT_3D.md` et pousse `pipeline`.
+5. Marque ton lot « en cours depuis AAAA-MM-JJ HH:MM UTC » dans `ETAT_3D.md` et pousse `pipeline` (si le push est refusé parce qu'une autre session vient de le faire, arrête-toi).
 
 ## 2. Décisions du propriétaire (27/09/2026) — ne pas remettre en cause
 - Moteur : **flutter_scene** (Flutter GPU, Impeller), Flutter ≥ 3.47 stable. Pas d'autre moteur sans son accord.
@@ -57,8 +57,8 @@ Une seule page claude.ai « Suivi mannequin 3D » (outil Artifact ; charge d'abo
 2. Publie en poussant tes commits de sources sur `main` (avance rapide uniquement ; si `main` a bougé, remets-toi à jour puis relance les contrôles) ; vérifie que le run `build-apk.yml` signé réussit sur le commit poussé.
 3. `LIVRAISON_<LOT>.md` dans le projet claude.ai (outil Projects, `claude/LIVRAISON_<LOT>.md`) et dans `pipeline/3d/livraisons/`.
 4. Mets à jour `ETAT_3D.md` (lot, version, commit, run, date, statut « livré », lien de la page) et pousse `pipeline` (jamais de sources du projet sur cette branche).
-5. Relance la tâche planifiée du pipeline (`fire_trigger`, identifiant en tête de `ETAT_3D.md`) pour le lot suivant, sauf si le prompt de ton lot dit d'attendre ; puis notifie la livraison. Après M19 : notification « Pipeline mannequin 3D terminé — installer v<version> ».
-Interdits : modifier ou créer une tâche planifiée (seulement `fire_trigger` sur celle d'ETAT_3D.md), supprimer une branche, modifier la signature ou l'identifiant, régénérer une clé, pousser un secret, pousser sur `main` des sources dont les contrôles ne sont pas verts, réécrire l'historique de `main` (pas de force-push), y ajouter un ZIP du projet.
+5. Ne relance AUCUNE tâche planifiée : le propriétaire fait lancer chaque lot lui-même (décision du 28/09/2026). Notifie la livraison en terminant par « Lot suivant : <LOT> — à lancer ». Un lot qui attend le propriétaire se marque « en attente du propriétaire » ; à sa réponse dans la session, il reprend et se termine normalement. Après M19 : notification « Pipeline mannequin 3D terminé — installer v<version> ».
+Interdits : modifier, créer ou relancer une tâche planifiée (aucun appel à fire_trigger, update_trigger ou create_trigger : un lot qui relançait la tâche lui faisait perdre l'accès push), supprimer une branche, modifier la signature ou l'identifiant, régénérer une clé, pousser un secret, pousser sur `main` des sources dont les contrôles ne sont pas verts, réécrire l'historique de `main` (pas de force-push), y ajouter un ZIP du projet.
 
 ## 8. Enchaînement
 | Lot | Prérequis sur main | Version | Action unique | Constat du propriétaire | Effort |
