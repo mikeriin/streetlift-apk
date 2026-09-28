@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
+import 'filter_menu.dart';
 import 'session_history.dart';
 import 'store.dart';
 import 'ui.dart';
@@ -9,13 +10,24 @@ import 'stats_widgets.dart';
 
 class StatsHistory extends StatefulWidget {
   const StatsHistory({super.key});
+
+  /// M4c : catégorie « Type » du menu « Filtres » (aucune case : tout).
+  static const categories = [
+    FilterCategory(
+      id: 'type',
+      label: 'Type',
+      options: [FilterOption('1', 'Séances'), FilterOption('2', 'WOD')],
+    ),
+  ];
+
+  /// Filtres gardés pendant la session (changements d'onglet compris).
+  static FilterSelection session = const FilterSelection();
   @override
   State<StatsHistory> createState() => _StatsHistoryState();
 }
 
 class _StatsHistoryState extends State<StatsHistory> {
   final _search = TextEditingController();
-  int _filter = 0;
   @override
   void dispose() {
     _search.dispose();
@@ -29,7 +41,10 @@ class _StatsHistoryState extends State<StatsHistory> {
     final entries = all
         .where(
           (e) =>
-              (_filter == 0 || (_filter == 2) == e.isWod) &&
+              StatsHistory.session.matches(
+                'type',
+                (k) => (k == '2') == e.isWod,
+              ) &&
               (query.isEmpty || e.searchText.contains(query)),
         )
         .toList();
@@ -62,18 +77,12 @@ class _StatsHistoryState extends State<StatsHistory> {
           onChanged: (_) => setState(() {}),
           textInputAction: TextInputAction.search,
         ),
-        Wrap(
-          spacing: 8,
-          runSpacing: 6,
-          children: [
-            for (final item in ['Tout', 'Séances', 'WOD'].asMap().entries)
-              ChoiceChip(
-                key: ValueKey('history-filter-${item.key}'),
-                label: Text(item.value),
-                selected: _filter == item.key,
-                onSelected: (_) => setState(() => _filter = item.key),
-              ),
-          ],
+        FilterMenu(
+          key: const ValueKey('history-filter-menu'),
+          keyPrefix: 'history',
+          categories: StatsHistory.categories,
+          value: StatsHistory.session,
+          onChanged: (v) => setState(() => StatsHistory.session = v),
         ),
         Text(
           '${entries.length} résultat${entries.length > 1 ? 's' : ''}',

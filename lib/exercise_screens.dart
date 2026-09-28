@@ -10,6 +10,7 @@ import 'app_theme.dart';
 import 'atlas_data.dart';
 import 'content_pack.dart';
 import 'exercise_mannequin.dart';
+import 'filter_menu.dart';
 import 'pose_cutout.dart';
 import 'pose_engine.dart';
 import 'pose_painter.dart';
@@ -24,19 +25,78 @@ Future<void> openExerciseSheet(BuildContext context, String id) => Navigator.of(
 
 // ------------------------------- recherche ---------------------------------
 
-/// Filtres de la bibliothèque (null = tous).
+/// Filtres de la bibliothèque (ensemble vide = tous).
+///
+/// M4c : plusieurs choix par catégorie (union), catégories combinées
+/// (intersection), dans le menu « Filtres » commun.
 class ExerciseFilters {
-  final String? type, lieu, materiel;
+  final Set<String> types, lieux, materiels;
 
-  /// Tranche de difficulté : 1 (1-3), 2 (4-6), 3 (7-10).
-  final int? niveau;
-  const ExerciseFilters({this.type, this.lieu, this.materiel, this.niveau});
+  /// Tranches de difficulté : 1 (1-3), 2 (4-6), 3 (7-10).
+  final Set<int> niveaux;
+  const ExerciseFilters({
+    this.types = const {},
+    this.lieux = const {},
+    this.materiels = const {},
+    this.niveaux = const {},
+  });
 
   bool accepts(ExerciseEntry e) =>
-      (type == null || e.type == type) &&
-      (lieu == null || e.lieux.contains(lieu)) &&
-      (materiel == null || e.materiel.contains(materiel)) &&
-      (niveau == null || difficultyBand(e.difficulte) == niveau);
+      (types.isEmpty || types.contains(e.type)) &&
+      (lieux.isEmpty || lieux.any(e.lieux.contains)) &&
+      (materiels.isEmpty || materiels.any(e.materiel.contains)) &&
+      (niveaux.isEmpty || niveaux.contains(difficultyBand(e.difficulte)));
+
+  /// Catégories du menu « Filtres » (clés préfixées : uniques dans le menu).
+  static List<FilterCategory> categories(ContentIndex index) => [
+    FilterCategory(
+      id: 'type',
+      label: 'Type de mouvement',
+      options: [
+        for (final e in index.typeLabels.entries)
+          FilterOption('type:${e.key}', e.value),
+      ],
+    ),
+    FilterCategory(
+      id: 'lieu',
+      label: 'Lieu',
+      options: [
+        for (final e in index.lieuLabels.entries)
+          FilterOption('lieu:${e.key}', e.value),
+      ],
+    ),
+    FilterCategory(
+      id: 'materiel',
+      label: 'Matériel',
+      options: [
+        for (final e in index.materielLabels.entries)
+          if (e.key != 'aucun') FilterOption('mat:${e.key}', e.value),
+      ],
+    ),
+    FilterCategory(
+      id: 'niveau',
+      label: 'Difficulté',
+      options: [
+        for (final e in difficultyBandLabels.entries)
+          FilterOption('niv:${e.key}', e.value),
+      ],
+    ),
+  ];
+
+  static Set<String> _strip(Set<String> keys, String prefix) => {
+    for (final k in keys)
+      if (k.startsWith(prefix)) k.substring(prefix.length),
+  };
+
+  static ExerciseFilters fromSelection(FilterSelection s) => ExerciseFilters(
+    types: _strip(s.of('type'), 'type:'),
+    lieux: _strip(s.of('lieu'), 'lieu:'),
+    materiels: _strip(s.of('materiel'), 'mat:'),
+    niveaux: {
+      for (final n in _strip(s.of('niveau'), 'niv:'))
+        if (int.tryParse(n) != null) int.parse(n),
+    },
+  );
 }
 
 int difficultyBand(int d) => d <= 3 ? 1 : (d <= 6 ? 2 : 3);
@@ -78,6 +138,9 @@ List<ExerciseEntry> searchExercises(
 class ExerciseLibraryScreen extends StatefulWidget {
   const ExerciseLibraryScreen({super.key});
 
+  /// M4c : filtres gardés pendant la session (rien n'était mémorisé).
+  static FilterSelection session = const FilterSelection();
+
   @override
   State<ExerciseLibraryScreen> createState() => _ExerciseLibraryScreenState();
 }
@@ -85,7 +148,7 @@ class ExerciseLibraryScreen extends StatefulWidget {
 class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
   final _search = TextEditingController();
   String _q = '';
-  ExerciseFilters _f = const ExerciseFilters();
+  FilterSelection _sel = ExerciseLibraryScreen.session;
 
   @override
   void dispose() {
@@ -93,34 +156,14 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
     super.dispose();
   }
 
-  Widget _dropdown<T>({
-    required String label,
-    required T? value,
-    required Map<T, String> options,
-    required ValueChanged<T?> onChanged,
-  }) => DropdownButtonFormField<T?>(
-    initialValue: value,
-    isExpanded: true,
-    decoration: InputDecoration(labelText: label),
-    items: [
-      DropdownMenuItem<T?>(value: null, child: const Text('Tous')),
-      for (final e in options.entries)
-        DropdownMenuItem<T?>(
-          value: e.key,
-          child: Text(e.value, overflow: TextOverflow.ellipsis),
-        ),
-    ],
-    onChanged: onChanged,
-  );
-
   @override
   Widget build(BuildContext context) {
     final index = store.content;
-    final list = searchExercises(index, _q, _f);
-    final materiel = <String, String>{
-      for (final e in index.materielLabels.entries)
-        if (e.key != 'aucun') e.key: e.value,
-    };
+    final list = searchExercises(
+      index,
+      _q,
+      ExerciseFilters.fromSelection(_sel),
+    );
     final header = <Widget>[
       const KPageIntro(
         'Exercices',
@@ -132,60 +175,15 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
         onChanged: (v) => setState(() => _q = v),
       ),
       const SizedBox(height: KSpace.gap),
-      _dropdown<String>(
-        label: 'Type de mouvement',
-        value: _f.type,
-        options: index.typeLabels,
-        onChanged: (v) => setState(
-          () => _f = ExerciseFilters(
-            type: v,
-            lieu: _f.lieu,
-            materiel: _f.materiel,
-            niveau: _f.niveau,
-          ),
-        ),
-      ),
-      const SizedBox(height: KSpace.gap),
-      _dropdown<String>(
-        label: 'Lieu',
-        value: _f.lieu,
-        options: index.lieuLabels,
-        onChanged: (v) => setState(
-          () => _f = ExerciseFilters(
-            type: _f.type,
-            lieu: v,
-            materiel: _f.materiel,
-            niveau: _f.niveau,
-          ),
-        ),
-      ),
-      const SizedBox(height: KSpace.gap),
-      _dropdown<String>(
-        label: 'Matériel',
-        value: _f.materiel,
-        options: materiel,
-        onChanged: (v) => setState(
-          () => _f = ExerciseFilters(
-            type: _f.type,
-            lieu: _f.lieu,
-            materiel: v,
-            niveau: _f.niveau,
-          ),
-        ),
-      ),
-      const SizedBox(height: KSpace.gap),
-      _dropdown<int>(
-        label: 'Difficulté',
-        value: _f.niveau,
-        options: difficultyBandLabels,
-        onChanged: (v) => setState(
-          () => _f = ExerciseFilters(
-            type: _f.type,
-            lieu: _f.lieu,
-            materiel: _f.materiel,
-            niveau: v,
-          ),
-        ),
+      FilterMenu(
+        key: const ValueKey('library-filter-menu'),
+        keyPrefix: 'library',
+        categories: ExerciseFilters.categories(index),
+        value: _sel,
+        onChanged: (v) => setState(() {
+          _sel = v;
+          ExerciseLibraryScreen.session = v;
+        }),
       ),
       Padding(
         padding: const EdgeInsets.only(top: 10, bottom: 4),

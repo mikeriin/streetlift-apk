@@ -612,8 +612,18 @@ void main() {
             await tester.pump();
             return t;
           }, n: 5);
-          final chip = find.text('< 15 min');
+          // M4c : « < 15 min » est une case du menu « Filtres » (Durée).
+          await tester.tap(find.byKey(const ValueKey('wod-filters')));
+          await tester.pumpAndSettle();
+          final duree = find.byKey(const ValueKey('wod-filter-cat-duree'));
+          await tester.ensureVisible(duree.first);
+          await tester.pumpAndSettle();
+          await tester.tap(duree.first);
+          await tester.pumpAndSettle();
+          final chip = find.byKey(const ValueKey('wod-filter-du:short'));
           if (chip.evaluate().isNotEmpty) {
+            await tester.ensureVisible(chip.first);
+            await tester.pumpAndSettle();
             await _measure('ui.catalog.filterShort', profile, () async {
               await tester.tap(chip.first);
               final t = await timedPump();
@@ -622,6 +632,8 @@ void main() {
               return t;
             }, n: 5);
           }
+          await tester.tapAt(const Offset(5, 5));
+          await tester.pumpAndSettle();
           await _measure('ui.catalog.scroll60', profile, () async {
             final list = find.byType(Scrollable).first;
             final sw = Stopwatch()..start();

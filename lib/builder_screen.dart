@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_theme.dart';
+import 'filter_menu.dart';
 import 'content_pack.dart';
 import 'exercise_screens.dart';
 import 'ui.dart';
@@ -243,10 +244,12 @@ const _equipShort = <String, String>{
   'battle rope': 'Battle rope',
 };
 
+/// M4c : filtres du choix d'exercice gardés pendant la session.
+FilterSelection exercisePickerFilters = const FilterSelection();
+
 class _ExercisePickerState extends State<_ExercisePicker> {
   String q = '';
-  String group = '';
-  String equip = '';
+  FilterSelection filters = exercisePickerFilters;
   final searchCtl = TextEditingController();
   final _index = SearchIndex<String>();
 
@@ -264,15 +267,6 @@ class _ExercisePickerState extends State<_ExercisePicker> {
       () => exerciseSearchDoc(store.content, e),
     );
   }
-
-  Widget _chip(String label, bool selected, VoidCallback onTap) => Padding(
-    padding: const EdgeInsets.only(right: 6),
-    child: ChoiceChip(
-      label: Text(label),
-      selected: selected,
-      onSelected: (_) => onTap(),
-    ),
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -292,10 +286,31 @@ class _ExercisePickerState extends State<_ExercisePicker> {
     final query = SearchQuery(q);
     final ql = query.raw;
 
+    final categories = [
+      FilterCategory(
+        id: 'groupe',
+        label: 'Groupe musculaire',
+        options: [for (final g in gl) FilterOption('g:$g', g)],
+      ),
+      FilterCategory(
+        id: 'materiel',
+        label: 'Matériel',
+        options: [
+          for (final e in el) FilterOption('eq:$e', _equipShort[e] ?? e),
+        ],
+      ),
+    ];
     final scored = <(Map<String, dynamic>, double)>[];
     for (final e in all) {
-      final okG = group.isEmpty || (e['g'] as String).contains(group);
-      final okE = equip.isEmpty || (e['eq'] as String) == equip;
+      // Union dans une catégorie, intersection entre les deux.
+      final okG = filters.matches(
+        'groupe',
+        (k) => (e['g'] as String).contains(k.substring(2)),
+      );
+      final okE = filters.matches(
+        'materiel',
+        (k) => (e['eq'] as String) == k.substring(3),
+      );
       if (!okG || !okE) continue;
       final d = _doc(e);
       if (query.isEmpty) {
@@ -317,7 +332,7 @@ class _ExercisePickerState extends State<_ExercisePicker> {
     final list = [for (final s in scored) s.$1];
     final exact = list.any((e) => normalizeText(e['n'] as String) == ql);
     final recents = [
-      if (query.isEmpty && group.isEmpty && equip.isEmpty)
+      if (query.isEmpty && filters.count(categories) == 0)
         for (final n in _recentExercises)
           for (final e in all)
             if (e['n'] == n) e,
@@ -371,44 +386,20 @@ class _ExercisePickerState extends State<_ExercisePicker> {
                 onChanged: (v) => setState(() => q = v),
               ),
             ),
-            SizedBox(
-              height: 52,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                children: [
-                  _chip(
-                    'Tous',
-                    group.isEmpty,
-                    () => setState(() => group = ''),
-                  ),
-                  for (final g in gl)
-                    _chip(
-                      g,
-                      group == g,
-                      () => setState(() => group = group == g ? '' : g),
-                    ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 52,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                children: [
-                  _chip(
-                    'Tout matériel',
-                    equip.isEmpty,
-                    () => setState(() => equip = ''),
-                  ),
-                  for (final e in el)
-                    _chip(
-                      _equipShort[e] ?? e,
-                      equip == e,
-                      () => setState(() => equip = equip == e ? '' : e),
-                    ),
-                ],
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: KSpace.page),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: FilterMenu(
+                  key: const ValueKey('picker-filter-menu'),
+                  keyPrefix: 'picker',
+                  categories: categories,
+                  value: filters,
+                  onChanged: (v) => setState(() {
+                    filters = v;
+                    exercisePickerFilters = v;
+                  }),
+                ),
               ),
             ),
             Padding(

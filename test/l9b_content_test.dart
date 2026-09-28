@@ -15,6 +15,7 @@ import 'package:streetlift_tracker/atlas.dart';
 import 'package:streetlift_tracker/atlas_data.dart';
 import 'package:streetlift_tracker/content_pack.dart';
 import 'package:streetlift_tracker/exercise_screens.dart';
+import 'package:streetlift_tracker/filter_menu.dart';
 import 'package:streetlift_tracker/muscle_body.dart';
 import 'package:streetlift_tracker/pose_painter.dart';
 import 'package:streetlift_tracker/store.dart';
@@ -199,7 +200,7 @@ void main() {
       final parc = searchExercises(
         index(),
         '',
-        const ExerciseFilters(lieu: 'parc_street_workout'),
+        const ExerciseFilters(lieux: {'parc_street_workout'}),
       );
       expect(parc, isNotEmpty);
       expect(
@@ -209,7 +210,10 @@ void main() {
       final tirage = searchExercises(
         index(),
         '',
-        const ExerciseFilters(type: 'tirage_vertical', materiel: 'barre_fixe'),
+        const ExerciseFilters(
+          types: {'tirage_vertical'},
+          materiels: {'barre_fixe'},
+        ),
       );
       expect(tirage, isNotEmpty);
       expect(
@@ -222,17 +226,79 @@ void main() {
       final avance = searchExercises(
         index(),
         '',
-        const ExerciseFilters(niveau: 3),
+        const ExerciseFilters(niveaux: {3}),
       );
       expect(avance.every((e) => e.difficulte >= 7), isTrue);
       expect(
         searchExercises(
           index(),
           'traction',
-          const ExerciseFilters(niveau: 1),
+          const ExerciseFilters(niveaux: {1}),
         ).every((e) => e.difficulte <= 3),
         isTrue,
       );
+    });
+
+    test('M4c : union dans une catégorie, intersection entre catégories', () {
+      final vertical = searchExercises(
+        index(),
+        '',
+        const ExerciseFilters(types: {'tirage_vertical'}),
+      );
+      final horizontal = searchExercises(
+        index(),
+        '',
+        const ExerciseFilters(types: {'tirage_horizontal'}),
+      );
+      final both = searchExercises(
+        index(),
+        '',
+        const ExerciseFilters(types: {'tirage_vertical', 'tirage_horizontal'}),
+      );
+      expect(vertical, isNotEmpty);
+      expect(horizontal, isNotEmpty);
+      expect(both.length, vertical.length + horizontal.length);
+      final easyOrHard = searchExercises(
+        index(),
+        '',
+        const ExerciseFilters(
+          types: {'tirage_vertical', 'tirage_horizontal'},
+          niveaux: {1, 3},
+        ),
+      );
+      expect(easyOrHard, isNotEmpty);
+      expect(easyOrHard.length, lessThan(both.length));
+      expect(
+        easyOrHard.every(
+          (e) =>
+              {'tirage_vertical', 'tirage_horizontal'}.contains(e.type) &&
+              (e.difficulte <= 3 || e.difficulte >= 7),
+        ),
+        isTrue,
+      );
+      // Correspondance avec le menu « Filtres » (clés préfixées).
+      final menu = ExerciseFilters.fromSelection(
+        const FilterSelection({
+          'type': {'type:tirage_vertical'},
+          'materiel': {'mat:barre_fixe', 'mat:anneaux'},
+          'niveau': {'niv:2'},
+        }),
+      );
+      expect(menu.types, {'tirage_vertical'});
+      expect(menu.materiels, {'barre_fixe', 'anneaux'});
+      expect(menu.niveaux, {2});
+      final cats = ExerciseFilters.categories(index());
+      expect(cats.map((c) => c.label), [
+        'Type de mouvement',
+        'Lieu',
+        'Matériel',
+        'Difficulté',
+      ]);
+      final keys = [
+        for (final c in cats)
+          for (final o in c.options) o.key,
+      ];
+      expect(keys.toSet().length, keys.length, reason: 'clés uniques');
     });
 
     test('sélecteur de séance : recherche sur les champs v2', () {

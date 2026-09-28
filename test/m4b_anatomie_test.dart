@@ -336,14 +336,16 @@ void main() {
       expect(m.bones, isFalse);
       expect(find.text('Filtres · 3'), findsOneWidget);
 
-      // Tout cocher, tout décocher.
-      await tapItem(tester, 'all');
+      // Tout cocher, tout décocher (M4c : par catégorie).
+      await tapItem(tester, 'all-groupes');
+      await tapItem(tester, 'all-affichage');
       expect(state(tester).filters, AnatomyFilters.all);
       expect(find.text('Filtres · 13'), findsOneWidget);
       m = tester.widget<Mannequin3D>(find.byType(Mannequin3D));
       expect(m.hidden, isEmpty);
       expect(m.intensities.length, greaterThan(200));
-      await tapItem(tester, 'none');
+      await tapItem(tester, 'none-groupes');
+      await tapItem(tester, 'none-affichage');
       expect(state(tester).filters, AnatomyFilters.none);
       expect(find.text('Filtres · 0'), findsOneWidget);
       m = tester.widget<Mannequin3D>(find.byType(Mannequin3D));
@@ -373,11 +375,12 @@ void main() {
     );
     await openMenu(tester);
     await tapItem(tester, 'fessiers');
+    // M4c : chaque case est lue avec sa catégorie.
     for (final (key, label, checked) in [
-      ('fessiers', 'Fessiers', true),
-      ('dos', 'Dos', false),
-      ('deep', 'Muscles profonds', true),
-      ('bones', 'Os', true),
+      ('fessiers', 'Fessiers, Groupes musculaires', true),
+      ('dos', 'Dos, Groupes musculaires', false),
+      ('deep', 'Muscles profonds, Affichage', true),
+      ('bones', 'Os, Affichage', true),
     ]) {
       expect(
         tester.getSemantics(find.byKey(ValueKey('anatomy-filter-$key')).first),

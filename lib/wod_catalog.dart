@@ -3,13 +3,15 @@
 // offert, vitrine de la semaine à −1 crédit, sélection « à ta mesure »,
 // liste d'envies), puis tout le catalogue avec recherche tolérante (accents,
 // synonymes FR / EN, plusieurs termes, préfixes) classée par pertinence,
-// puces rapides, panneau de filtres multi-sélection (accès, format,
-// mouvements, difficulté, durée, matériel, source) et menu de tri. Dès qu'une
-// recherche ou un filtre est actif, la vitrine s'efface devant les résultats.
+// menu « Filtres » commun (M4c : accès, format, mouvements, difficulté,
+// durée, matériel, source, à cocher par catégorie, filtres actifs en puces)
+// et menu de tri. Dès qu'une recherche ou un filtre est actif, la vitrine
+// s'efface devant les résultats.
 import 'package:flutter/material.dart';
 
 import 'arsenal_screen.dart' show WodTile;
 import 'app_theme.dart';
+import 'filter_menu.dart';
 import 'search.dart';
 import 'ui.dart';
 import 'store.dart';
@@ -61,7 +63,7 @@ const sortLabels = <String, String>{
 };
 
 class _Filters {
-  String status = 'all'; // all | unlocked | affordable | locked
+  final Set<String> statuses = {}; // unlocked | affordable | locked (union)
   final Set<String> types = {};
   final Set<int> bands = {}; // 1: 1-3 · 2: 4-6 · 3: 7-8 · 4: 9-10
   final Set<String> durs = {}; // short | mid | long
@@ -69,48 +71,23 @@ class _Filters {
   final Set<String> sources = {}; // curated | generated | mine
   final Set<String> moves = {}; // clés de movementFilters
 
-  int get count =>
-      (status == 'all' ? 0 : 1) +
-      types.length +
-      bands.length +
-      durs.length +
-      equips.length +
-      sources.length +
-      moves.length;
-
-  void clear() {
-    status = 'all';
-    types.clear();
-    bands.clear();
-    durs.clear();
-    equips.clear();
-    sources.clear();
-    moves.clear();
+  /// M4c : filtres du menu commun (clés préfixées par catégorie).
+  _Filters.from(FilterSelection sel) {
+    Set<String> strip(String category, String prefix) => {
+      for (final k in sel.of(category))
+        if (k.startsWith(prefix)) k.substring(prefix.length),
+    };
+    statuses.addAll(strip('acces', 'st:'));
+    types.addAll(strip('format', 'ty:'));
+    moves.addAll(strip('mouvements', 'mv:'));
+    bands.addAll({
+      for (final b in strip('niveau', 'lv:'))
+        if (int.tryParse(b) != null) int.parse(b),
+    });
+    durs.addAll(strip('duree', 'du:'));
+    equips.addAll(strip('materiel', 'eq:'));
+    sources.addAll(strip('source', 'src:'));
   }
-
-  void copyFrom(_Filters o) {
-    status = o.status;
-    types
-      ..clear()
-      ..addAll(o.types);
-    bands
-      ..clear()
-      ..addAll(o.bands);
-    durs
-      ..clear()
-      ..addAll(o.durs);
-    equips
-      ..clear()
-      ..addAll(o.equips);
-    sources
-      ..clear()
-      ..addAll(o.sources);
-    moves
-      ..clear()
-      ..addAll(o.moves);
-  }
-
-  _Filters copy() => _Filters()..copyFrom(this);
 
   static int band(int level) => level <= 3
       ? 1
@@ -133,11 +110,17 @@ class _Filters {
   }
 
   bool match(Wod w, SearchQuery query, SearchDoc doc) {
-    if (status == 'unlocked' && !store.unlocked(w)) return false;
-    if (status == 'locked' && store.unlocked(w)) return false;
-    if (status == 'affordable' &&
-        (store.unlocked(w) || store.wodCost(w) > store.credits)) {
-      return false;
+    if (statuses.isNotEmpty) {
+      final unlocked = store.unlocked(w);
+      final ok = statuses.any(
+        (st) => switch (st) {
+          'unlocked' => unlocked,
+          'locked' => !unlocked,
+          'affordable' => !unlocked && store.wodCost(w) <= store.credits,
+          _ => false,
+        },
+      );
+      if (!ok) return false;
     }
     if (types.isNotEmpty && !types.contains(w.type)) return false;
     if (bands.isNotEmpty && !bands.contains(band(w.level))) return false;
@@ -179,7 +162,6 @@ class _Filters {
 }
 
 const _statusLabels = {
-  'all': 'Tous',
   'unlocked': 'Débloqués',
   'affordable': 'Abordables',
   'locked': 'Verrouillés',
@@ -206,51 +188,83 @@ const _equipLabels = {
 };
 const _sourceLabels = {'curated': 'Sélection', 'generated': 'Séries Kalis'};
 
-/// Puce rapide visible sous la recherche : libellé, bascule et état.
-class _Quick {
-  final String label;
-  final void Function(_Filters f) toggle;
-  final bool Function(_Filters f) active;
-  const _Quick(this.label, this.toggle, this.active);
-}
-
-void _toggleSet(Set<String> s, String v) {
-  if (!s.remove(v)) s.add(v);
-}
-
-final List<_Quick> _quick = [
-  _Quick(
-    'Abordables',
-    (f) => f.status = f.status == 'affordable' ? 'all' : 'affordable',
-    (f) => f.status == 'affordable',
+/// M4c : catégories du menu « Filtres » (clés uniques dans le menu).
+final List<FilterCategory> wodFilterCategories = [
+  FilterCategory(
+    id: 'acces',
+    label: 'Accès',
+    options: [
+      for (final e in _statusLabels.entries)
+        FilterOption('st:${e.key}', e.value),
+    ],
   ),
-  _Quick(
-    'Poids de corps',
-    (f) => _toggleSet(f.equips, 'pdc'),
-    (f) => f.equips.contains('pdc'),
+  FilterCategory(
+    id: 'format',
+    label: 'Format',
+    options: [
+      for (final e in wodTypes.entries) FilterOption('ty:${e.key}', e.value),
+    ],
   ),
-  for (final t in ['fortime', 'amrap', 'emom', 'rounds', 'routine'])
-    _Quick(
-      wodTypes[t]!,
-      (f) => _toggleSet(f.types, t),
-      (f) => f.types.contains(t),
-    ),
-  _Quick(
-    '< 15 min',
-    (f) => _toggleSet(f.durs, 'short'),
-    (f) => f.durs.contains('short'),
+  FilterCategory(
+    id: 'mouvements',
+    label: 'Mouvements (au moins un)',
+    options: [
+      for (final e in movementFilters.entries)
+        FilterOption('mv:${e.key}', e.value.$1),
+    ],
+  ),
+  FilterCategory(
+    id: 'niveau',
+    label: 'Difficulté',
+    options: [
+      for (final e in _bandLabels.entries)
+        FilterOption('lv:${e.key}', e.value),
+    ],
+  ),
+  FilterCategory(
+    id: 'duree',
+    label: 'Durée estimée',
+    options: [
+      for (final e in _durLabels.entries) FilterOption('du:${e.key}', e.value),
+    ],
+  ),
+  FilterCategory(
+    id: 'materiel',
+    label: 'Matériel',
+    options: [
+      for (final e in _equipLabels.entries)
+        FilterOption('eq:${e.key}', e.value),
+    ],
+  ),
+  FilterCategory(
+    id: 'source',
+    label: 'Source',
+    options: [
+      for (final e in _sourceLabels.entries)
+        FilterOption('src:${e.key}', e.value),
+    ],
   ),
 ];
 
 class WodCatalogScreen extends StatefulWidget {
   const WodCatalogScreen({super.key});
+
+  /// M4c : filtres gardés pendant la session (rien n'était mémorisé).
+  static FilterSelection session = const FilterSelection();
   @override
   State<WodCatalogScreen> createState() => _WodCatalogScreenState();
 }
 
 class _WodCatalogScreenState extends State<WodCatalogScreen> {
-  final f = _Filters();
+  FilterSelection sel = WodCatalogScreen.session;
+  _Filters f = _Filters.from(WodCatalogScreen.session);
   String q = '';
+
+  void _setFilters(FilterSelection v) => setState(() {
+    sel = v;
+    f = _Filters.from(v);
+    WodCatalogScreen.session = v;
+  });
   String sort = 'default';
   final searchCtl = TextEditingController();
   final _index = SearchIndex<String>();
@@ -342,213 +356,6 @@ class _WodCatalogScreenState extends State<WodCatalogScreen> {
     return [for (final s in scored) s.$1];
   }
 
-  int _countWith(_Filters draft) {
-    final query = SearchQuery(q);
-    var n = 0;
-    for (final w in store.wods) {
-      if (store.isCatalog(w) && draft.match(w, query, _doc(w))) n++;
-    }
-    return n;
-  }
-
-  Future<void> _openFilters() async {
-    final draft = f.copy();
-    final applied = await showModalBottomSheet<_Filters>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setSheet) {
-          final n = _countWith(draft);
-          Widget chips<T>(Map<T, String> labels, Set<T> sel) => Wrap(
-            spacing: 6,
-            runSpacing: 6,
-            children: [
-              for (final e in labels.entries)
-                FilterChip(
-                  label: Text(e.value),
-                  selected: sel.contains(e.key),
-                  showCheckmark: false,
-                  labelStyle: TextStyle(
-                    fontSize: 12.5,
-                    fontWeight: FontWeight.w700,
-                    color: sel.contains(e.key) ? SL.accent : SL.dim,
-                  ),
-                  selectedColor: SL.accent.withValues(alpha: 0.18),
-                  backgroundColor: SL.card,
-                  side: BorderSide(
-                    color: sel.contains(e.key) ? SL.accent : SL.formBorder,
-                  ),
-                  onSelected: (v) =>
-                      setSheet(() => v ? sel.add(e.key) : sel.remove(e.key)),
-                ),
-            ],
-          );
-          Widget section(String t, Widget child) => Padding(
-            padding: const EdgeInsets.fromLTRB(
-              KSpace.page,
-              KControl.formGap,
-              KSpace.page,
-              0,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  t,
-                  style: TextStyle(
-                    color: SL.dim,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 0,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                child,
-              ],
-            ),
-          );
-          final moveLabels = <String, String>{
-            for (final e in movementFilters.entries) e.key: e.value.$1,
-          };
-          return DraggableScrollableSheet(
-            expand: false,
-            initialChildSize: 0.85,
-            maxChildSize: 0.95,
-            builder: (ctx, ctl) => Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    controller: ctl,
-                    padding: const EdgeInsets.only(bottom: 12),
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(
-                          KSpace.page,
-                          0,
-                          KSpace.page,
-                          0,
-                        ),
-                        child: Row(
-                          children: [
-                            const Text(
-                              'Filtres',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 15,
-                              ),
-                            ),
-                            const Spacer(),
-                            TextButton(
-                              onPressed: () => setSheet(draft.clear),
-                              child: const Text('Réinitialiser'),
-                            ),
-                          ],
-                        ),
-                      ),
-                      section(
-                        'Accès',
-                        Wrap(
-                          spacing: 6,
-                          runSpacing: 6,
-                          children: [
-                            for (final e in _statusLabels.entries)
-                              ChoiceChip(
-                                label: Text(e.value),
-                                selected: draft.status == e.key,
-                                showCheckmark: false,
-                                labelStyle: TextStyle(
-                                  fontSize: 12.5,
-                                  fontWeight: FontWeight.w700,
-                                  color: draft.status == e.key
-                                      ? SL.accent
-                                      : SL.dim,
-                                ),
-                                selectedColor: SL.accent.withValues(
-                                  alpha: 0.18,
-                                ),
-                                backgroundColor: SL.card,
-                                side: BorderSide(
-                                  color: draft.status == e.key
-                                      ? SL.accent
-                                      : SL.formBorder,
-                                ),
-                                onSelected: (_) =>
-                                    setSheet(() => draft.status = e.key),
-                              ),
-                          ],
-                        ),
-                      ),
-                      section('Format', chips(wodTypes, draft.types)),
-                      section(
-                        'Mouvements (au moins un)',
-                        chips(moveLabels, draft.moves),
-                      ),
-                      section('Difficulté', chips(_bandLabels, draft.bands)),
-                      section('Durée estimée', chips(_durLabels, draft.durs)),
-                      section('Matériel', chips(_equipLabels, draft.equips)),
-                      section('Source', chips(_sourceLabels, draft.sources)),
-                    ],
-                  ),
-                ),
-                KBottomActions(
-                  child: FilledButton(
-                    onPressed: () => Navigator.pop(ctx, draft),
-                    child: Text('Voir $n WOD${n > 1 ? 's' : ''}'),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-    if (applied != null && mounted) {
-      setState(() => f.copyFrom(applied));
-    }
-  }
-
-  /// Filtres actifs qui ne sont pas déjà représentés par une puce rapide.
-  List<(String, VoidCallback)> _active() {
-    const quickTypes = {'fortime', 'amrap', 'emom', 'rounds', 'routine'};
-    return [
-      if (f.status != 'all' && f.status != 'affordable')
-        (_statusLabels[f.status]!, () => f.status = 'all'),
-      for (final t in f.types)
-        if (!quickTypes.contains(t))
-          (wodTypes[t] ?? t, () => f.types.remove(t)),
-      for (final m in f.moves)
-        (movementFilters[m]!.$1, () => f.moves.remove(m)),
-      for (final b in f.bands) (_bandLabels[b]!, () => f.bands.remove(b)),
-      for (final d in f.durs)
-        if (d != 'short') (_durLabels[d]!, () => f.durs.remove(d)),
-      for (final e in f.equips)
-        if (e != 'pdc') (_equipLabels[e]!, () => f.equips.remove(e)),
-      for (final s in f.sources) (_sourceLabels[s]!, () => f.sources.remove(s)),
-    ];
-  }
-
-  Widget _quickChip(_Quick k) {
-    final on = k.active(f);
-    return Padding(
-      padding: const EdgeInsets.only(right: 6),
-      child: FilterChip(
-        label: Text(k.label),
-        selected: on,
-        showCheckmark: false,
-        labelStyle: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w700,
-          color: on ? SL.accent : SL.dim,
-        ),
-        selectedColor: SL.accent.withValues(alpha: 0.18),
-        backgroundColor: SL.card,
-        side: BorderSide(color: on ? SL.accent : SL.formBorder),
-        onSelected: (_) => setState(() => k.toggle(f)),
-      ),
-    );
-  }
-
   /// En-tête de la liste : la vitrine complète sans recherche ni filtre,
   /// sinon un simple rappel du solde au-dessus des résultats.
   List<Widget> _leading(BuildContext context, bool showcase) {
@@ -623,8 +430,8 @@ class _WodCatalogScreenState extends State<WodCatalogScreen> {
       listenable: store,
       builder: (context, _) {
         final list = _list();
-        final active = _active();
-        final showcase = q.trim().isEmpty && f.count == 0;
+        final showcase =
+            q.trim().isEmpty && sel.count(wodFilterCategories) == 0;
         final leading = _leading(context, showcase);
         return KScreen(
           appBar: AppBar(
@@ -646,20 +453,6 @@ class _WodCatalogScreenState extends State<WodCatalogScreen> {
                     ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: TextButton.icon(
-                  style: TextButton.styleFrom(
-                    foregroundColor: f.count > 0 ? SL.accent : SL.text,
-                  ),
-                  onPressed: _openFilters,
-                  icon: Icon(
-                    f.count > 0 ? Icons.filter_alt : Icons.filter_alt_outlined,
-                    size: 20,
-                  ),
-                  label: Text(f.count > 0 ? 'Filtres · ${f.count}' : 'Filtres'),
-                ),
-              ),
             ],
           ),
           body: Column(
@@ -677,52 +470,24 @@ class _WodCatalogScreenState extends State<WodCatalogScreen> {
                   onChanged: (v) => setState(() => q = v),
                 ),
               ),
-              SizedBox(
-                height: 56,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: KSpace.page),
-                  children: [for (final k in _quick) _quickChip(k)],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  KSpace.page,
+                  0,
+                  KSpace.page,
+                  8,
                 ),
-              ),
-              if (active.isNotEmpty)
-                SizedBox(
-                  height: 52,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: KSpace.page,
-                    ),
-                    children: [
-                      for (final (label, remove) in active)
-                        Padding(
-                          padding: const EdgeInsets.only(right: 6),
-                          child: InputChip(
-                            label: Text(label),
-                            labelStyle: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                              color: SL.accent,
-                            ),
-                            backgroundColor: SL.accent.withValues(alpha: 0.14),
-                            side: BorderSide(
-                              color: SL.accent.withValues(alpha: 0.5),
-                            ),
-                            deleteIcon: const Icon(Icons.cancel, size: 18),
-                            deleteIconColor: SL.accent,
-                            onDeleted: () => setState(remove),
-                          ),
-                        ),
-                      TextButton(
-                        onPressed: () => setState(f.clear),
-                        child: const Text(
-                          'Tout effacer',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ),
-                    ],
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: FilterMenu(
+                    key: const ValueKey('wod-filter-menu'),
+                    keyPrefix: 'wod',
+                    categories: wodFilterCategories,
+                    value: sel,
+                    onChanged: _setFilters,
                   ),
                 ),
+              ),
               Expanded(
                 child: ListView.separated(
                   padding: KSpace.content,
@@ -739,11 +504,13 @@ class _WodCatalogScreenState extends State<WodCatalogScreen> {
                         message:
                             'Essaie un synonyme (pull-ups, tractions), un format (amrap) ou élargis les filtres.',
                         action: 'Réinitialiser',
-                        onAction: () => setState(() {
-                          f.clear();
-                          searchCtl.clear();
-                          q = '';
-                        }),
+                        onAction: () {
+                          _setFilters(const FilterSelection());
+                          setState(() {
+                            searchCtl.clear();
+                            q = '';
+                          });
+                        },
                       );
                     }
                     final w = list[i - leading.length];

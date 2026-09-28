@@ -5,8 +5,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/pilotage_screen.dart';
+import 'package:streetlift_tracker/filter_menu.dart';
 import 'package:streetlift_tracker/session_history.dart';
 import 'package:streetlift_tracker/stats_data.dart';
+import 'package:streetlift_tracker/stats_history.dart';
 import 'package:streetlift_tracker/stats_navigation.dart';
 import 'package:streetlift_tracker/stats_screen.dart';
 import 'package:streetlift_tracker/store.dart';
@@ -24,6 +26,7 @@ void main() {
       ..autoTimer = false;
   });
   setUp(() {
+    StatsHistory.session = const FilterSelection();
     store.logs.clear();
     store.wods.removeWhere((w) => w.id.startsWith('stats-fixture'));
     store.notifyListeners();
@@ -57,6 +60,25 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
+  }
+
+  /// M4c : cases du menu « Filtres » de l'historique, puis menu fermé.
+  Future<void> historyFilters(WidgetTester tester, List<String> keys) async {
+    final button = find.byKey(const ValueKey('history-filters'));
+    await tester.ensureVisible(button);
+    await tester.pumpAndSettle();
+    await tester.tap(button);
+    await tester.pumpAndSettle();
+    for (final k in keys) {
+      final item = find.byKey(ValueKey('history-filter-$k')).first;
+      await tester.ensureVisible(item);
+      await tester.pumpAndSettle();
+      await tester.tap(item);
+      await tester.pumpAndSettle();
+    }
+    await tester.tapAt(const Offset(5, 5));
+    await tester.pumpAndSettle();
+    expect(find.byKey(ValueKey('history-filter-${keys.first}')), findsNothing);
   }
 
   Future<void> section(WidgetTester tester, int index) async {
@@ -142,8 +164,7 @@ void main() {
         find.byKey(const ValueKey('stats-history-search')),
         'Tractions',
       );
-      await tester.tap(find.byKey(const ValueKey('history-filter-1')));
-      await tester.pumpAndSettle();
+      await historyFilters(tester, ['1']);
       await tester.tap(find.byKey(const ValueKey('nav-2')));
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('nav-1')));
@@ -157,12 +178,10 @@ void main() {
             .text,
         'Tractions',
       );
-      expect(
-        tester
-            .widget<ChoiceChip>(find.byKey(const ValueKey('history-filter-1')))
-            .selected,
-        isTrue,
-      );
+      // M4c : filtre actif montré en puce sous le bouton « Filtres ».
+      expect(find.byKey(const ValueKey('history-chip-1')), findsOneWidget);
+      expect(StatsHistory.session.of('type'), {'1'});
+      expect(find.text('Filtres · 1'), findsOneWidget);
       expect(find.text('Tractions du matin'), findsOneWidget);
       expect(tester.takeException(), null);
       await tester.pumpWidget(const SizedBox());
@@ -202,16 +221,16 @@ void main() {
       tester,
       const StatsScreen(initialSection: StatsSection.history, standalone: true),
     );
-    await tester.tap(find.byKey(const ValueKey('history-filter-2')));
-    await tester.pumpAndSettle();
+    await historyFilters(tester, ['2']);
     expect(find.text('Séance témoin'), findsNothing);
     await tester.tap(find.text('WOD témoin'));
     await tester.pumpAndSettle();
     expect(find.text('Allure régulière'), findsOneWidget);
     Navigator.of(tester.element(find.text('Allure régulière'))).pop();
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('history-filter-1')));
-    await tester.pumpAndSettle();
+    // Séances seules : WOD décoché, Séances coché.
+    await historyFilters(tester, ['2', '1']);
+    expect(find.text('WOD témoin'), findsNothing);
     await tester.tap(find.text('Séance témoin'));
     await tester.pumpAndSettle();
     expect(find.byType(SessionHistoryScreen), findsOneWidget);

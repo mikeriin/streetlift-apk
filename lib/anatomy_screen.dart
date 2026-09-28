@@ -13,8 +13,14 @@
 // masqués) et « Os ». Mannequin aussi grand que l'écran le permet, boutons
 // de vue dessous, résumé texte des groupes cochés en dessous. Les filtres
 // sont gardés pendant la session.
+//
+// M4c : le menu devient le composant commun `FilterMenu` (filtres
+// normalisés dans toute l'application) : catégories « Groupes musculaires »
+// et « Affichage » (Muscles profonds, Os), Tout cocher / Tout décocher par
+// catégorie, Réinitialiser, filtres actifs en puces sous le bouton.
 import 'package:flutter/material.dart';
 
+import 'filter_menu.dart';
 import 'mannequin_3d.dart';
 import 'ui.dart';
 
@@ -105,6 +111,39 @@ class AnatomyFilters {
 
   @override
   int get hashCode => Object.hash(deep, bones, Object.hashAllUnordered(groups));
+
+  /// M4c : catégories du menu « Filtres ».
+  static final categories = [
+    FilterCategory(
+      id: 'groupes',
+      label: 'Groupes musculaires',
+      options: [
+        for (final e in kGroupLabels.entries) FilterOption(e.key, e.value),
+      ],
+    ),
+    const FilterCategory(
+      id: 'affichage',
+      label: 'Affichage',
+      options: [
+        FilterOption('deep', 'Muscles profonds'),
+        FilterOption('bones', 'Os'),
+      ],
+    ),
+  ];
+
+  FilterSelection get selection => FilterSelection({
+    'groupes': groups,
+    'affichage': {if (deep) 'deep', if (bones) 'bones'},
+  });
+
+  static AnatomyFilters fromSelection(FilterSelection s) => AnatomyFilters(
+    groups: {
+      for (final g in kGroupLabels.keys)
+        if (s.has('groupes', g)) g,
+    },
+    deep: s.has('affichage', 'deep'),
+    bones: s.has('affichage', 'bones'),
+  );
 }
 
 class AnatomyScreen extends StatefulWidget {
@@ -123,7 +162,6 @@ class AnatomyScreenState extends State<AnatomyScreen> {
   MannequinMap? _map;
   late AnatomyFilters _filters;
   late MannequinView _view;
-  final _menu = MenuController();
 
   AnatomyFilters get filters => _filters;
 
@@ -173,6 +211,23 @@ class AnatomyScreenState extends State<AnatomyScreen> {
   void checkAll() => _set(AnatomyFilters.all);
   void uncheckAll() => _set(AnatomyFilters.none);
 
+  /// Filtres de départ (« Réinitialiser ») : aucun groupe, muscles profonds
+  /// affichés, os selon le réglage « Os visibles ».
+  AnatomyFilters get defaults =>
+      AnatomyFilters(bones: Display3DSettings.instance.bones.value);
+
+  void _onMenu(FilterSelection s) {
+    final next = AnatomyFilters.fromSelection(s);
+    String? checked;
+    for (final g in kGroupLabels.keys) {
+      if (next.groups.contains(g) && !_filters.groups.contains(g)) {
+        checked = g;
+        break;
+      }
+    }
+    _set(next, checkedGroup: checked);
+  }
+
   AnatomyFilters? _intensityKey;
   MannequinMap? _intensityMap;
   Map<String, double> _intensities = const {};
@@ -203,7 +258,7 @@ class AnatomyScreenState extends State<AnatomyScreen> {
                 mq.padding.bottom -
                 kToolbarHeight -
                 KNavigationInset.of(context) -
-                132)
+                180)
             .clamp(300.0, 900.0);
     final tt = Theme.of(context).textTheme;
     final labels = [for (final g in f.orderedGroups) kGroupLabels[g]!];
@@ -213,19 +268,14 @@ class AnatomyScreenState extends State<AnatomyScreen> {
         key: const ValueKey('anatomy-list'),
         gap: 10,
         children: [
-          // Bouton et groupes allumés ; sous le bouton si le texte est grand.
-          Wrap(
-            spacing: 12,
-            runSpacing: 6,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              _filtersMenu(context),
-              Text(
-                labels.isEmpty ? 'Aucun groupe allumé' : labels.join(', '),
-                key: const ValueKey('anatomy-filters-summary'),
-                style: tt.bodyMedium,
-              ),
-            ],
+          // Bouton « Filtres » et filtres actifs en puces (M4c).
+          FilterMenu(
+            key: const ValueKey('anatomy-filter-menu'),
+            keyPrefix: 'anatomy',
+            categories: AnatomyFilters.categories,
+            value: f.selection,
+            initial: defaults.selection,
+            onChanged: _onMenu,
           ),
           Mannequin3D(
             key: const ValueKey('anatomy-mannequin'),
@@ -260,66 +310,6 @@ class AnatomyScreenState extends State<AnatomyScreen> {
             style: tt.bodySmall,
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _filtersMenu(BuildContext context) {
-    final f = _filters;
-    Widget box(
-      String key,
-      String label,
-      bool value,
-      ValueChanged<bool> onChanged,
-    ) => CheckboxMenuButton(
-      key: ValueKey('anatomy-filter-$key'),
-      value: value,
-      closeOnActivate: false,
-      onChanged: (v) => onChanged(v ?? false),
-      child: Text(label),
-    );
-
-    return MenuAnchor(
-      controller: _menu,
-      // Toucher en dehors : ferme le menu sans toucher le mannequin.
-      consumeOutsideTap: true,
-      menuChildren: [
-        MenuItemButton(
-          key: const ValueKey('anatomy-filter-all'),
-          closeOnActivate: false,
-          leadingIcon: const Icon(Icons.done_all),
-          onPressed: f.count == AnatomyFilters.total ? null : checkAll,
-          child: const Text('Tout cocher'),
-        ),
-        MenuItemButton(
-          key: const ValueKey('anatomy-filter-none'),
-          closeOnActivate: false,
-          leadingIcon: const Icon(Icons.remove_done),
-          onPressed: f.count == 0 ? null : uncheckAll,
-          child: const Text('Tout décocher'),
-        ),
-        const Divider(height: 8),
-        for (final e in kGroupLabels.entries)
-          box(
-            e.key,
-            e.value,
-            f.groups.contains(e.key),
-            (_) => toggleGroup(e.key),
-          ),
-        const Divider(height: 8),
-        box('deep', 'Muscles profonds', f.deep, setDeep),
-        box('bones', 'Os', f.bones, setBones),
-      ],
-      builder: (context, controller, _) => OutlinedButton.icon(
-        key: const ValueKey('anatomy-filters'),
-        onPressed: () =>
-            controller.isOpen ? controller.close() : controller.open(),
-        icon: const Icon(Icons.tune),
-        label: Semantics(
-          label: 'Filtres, ${f.count} actifs sur ${AnatomyFilters.total}',
-          excludeSemantics: true,
-          child: Text('Filtres · ${f.count}'),
-        ),
       ),
     );
   }
