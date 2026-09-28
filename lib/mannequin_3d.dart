@@ -870,7 +870,8 @@ class Mannequin3DState extends State<Mannequin3D>
   // M4c : zoom au pincement (1× corps entier à 4×) et déplacement.
   MannequinZoom _zoom = MannequinZoom();
   MannequinZoom _fromZoom = MannequinZoom();
-  double _pinchStartScale = 1;
+  MannequinZoom _pinchStart = MannequinZoom();
+  Offset _pinchFocal = Offset.zero;
 
   /// Zoom courant (tests).
   MannequinZoom get zoom => _zoom;
@@ -1068,16 +1069,30 @@ class Mannequin3DState extends State<Mannequin3D>
 
   void _onPinchStart(ScaleStartDetails d) {
     _startDrag();
-    _pinchStartScale = _zoom.scale;
+    _pinchStart = _zoom.copy();
+    _pinchFocal = d.localFocalPoint;
   }
 
+  /// Chaque image du pincement est calculée depuis son début : le point
+  /// visé au premier contact reste sous les doigts (essai 5 de M4c : en
+  /// cumulant pas à pas, les bornes du début du geste le décalaient).
   void _onPinchUpdate(ScaleUpdateDetails d) {
-    if (d.pointerCount < 2) return;
-    pinchTo(
-      _pinchStartScale * d.scale,
-      d.localFocalPoint,
-      pan: d.focalPointDelta,
-    );
+    final scene = _scene;
+    if (d.pointerCount < 2 || scene == null || _size.isEmpty) return;
+    final (right, up) = _screenAxes(scene);
+    final distance = scene.fitDistance(_aspect);
+    setState(() {
+      _zoom = MannequinZoom.pinched(
+        _pinchStart,
+        _pinchFocal,
+        d.localFocalPoint,
+        _pinchStart.scale * d.scale,
+        _size,
+        right,
+        up,
+        distance,
+      );
+    });
   }
 
   double get _aspect =>
