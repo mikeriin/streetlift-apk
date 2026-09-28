@@ -1,0 +1,6 @@
+code_m4c=1
+code_m4b=0
+code=0
+code_fiche=0
+code_stats=0
+code_mesure=0
