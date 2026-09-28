@@ -35,6 +35,7 @@ import 'package:vector_math/vector_math.dart' as vm;
 
 import 'app_theme.dart';
 import 'engine3d.dart';
+import 'mannequin_gestures.dart';
 import 'muscle_body.dart';
 import 'ui.dart';
 
@@ -557,28 +558,50 @@ class MannequinScene {
     _applyMaterials();
   }
 
+  /// Direction du centre vers la caméra.
+  vm.Vector3 _eyeDirection(double yaw, double pitch) {
+    final f = frame.front, l = frame.left;
+    return (f * math.cos(yaw) + l * math.sin(yaw)) * math.cos(pitch) +
+        vm.Vector3(0, math.sin(pitch), 0);
+  }
+
+  /// Axes droite et haut de l'image pour une vue (M4c : zoom et
+  /// déplacement dans le plan de l'image).
+  (vm.Vector3, vm.Vector3) cameraAxes(double yaw, double pitch) {
+    final forward = -_eyeDirection(yaw, pitch)..normalize();
+    final right = forward.cross(vm.Vector3(0, 1, 0))..normalize();
+    final up = right.cross(forward)..normalize();
+    return (right, up);
+  }
+
   /// Caméra en orbite autour du mannequin ; la lumière principale suit la
   /// caméra (en haut à gauche) pour que chaque vue soit lisible.
-  PerspectiveCamera camera(double yaw, double pitch, double distance) {
-    final f = frame.front, l = frame.left;
-    final dir =
-        (f * math.cos(yaw) + l * math.sin(yaw)) * math.cos(pitch) +
-        vm.Vector3(0, math.sin(pitch), 0);
-    final eye = target + dir * distance;
-    final forward = (target - eye)..normalize();
+  ///
+  /// M4c : [zoom] réduit l'angle de champ (la caméra ne s'approche pas du
+  /// modèle : jamais de traversée) et décale le point visé ; la rotation
+  /// tourne autour du point visé.
+  PerspectiveCamera camera(
+    double yaw,
+    double pitch,
+    double distance, {
+    MannequinZoom? zoom,
+  }) {
+    final center = zoom == null ? target : target + zoom.offset;
+    final eye = center + _eyeDirection(yaw, pitch) * distance;
+    final forward = (center - eye)..normalize();
     final right = forward.cross(vm.Vector3(0, 1, 0))..normalize();
     final light = (forward + vm.Vector3(0, -.9, 0) + right * .45)..normalize();
     scene.directionalLight = DirectionalLight(direction: light, intensity: 2.3);
     return PerspectiveCamera(
-      fovRadiansY: 28 * math.pi / 180,
+      fovRadiansY: zoom?.fovY ?? kMannequinFovY,
       position: eye,
-      target: target,
+      target: center,
     );
   }
 
   /// Distance qui cadre le corps entier dans une vue de rapport [aspect].
   double fitDistance(double aspect) {
-    const fov = 28 * math.pi / 180;
+    const fov = kMannequinFovY;
     final h = frame.height * 1.08;
     final byHeight = h / 2 / math.tan(fov / 2);
     // Largeur utile ≈ 0,5 × hauteur (bras le long du corps, vue 3/4).
@@ -853,6 +876,14 @@ class Mannequin3DState extends State<Mannequin3D>
   PerspectiveCamera? _camera;
   Size _size = Size.zero;
 
+  // M4c : zoom au pincement (1× corps entier à 4×) et déplacement.
+  MannequinZoom _zoom = MannequinZoom();
+  MannequinZoom _fromZoom = MannequinZoom();
+  double _pinchStartScale = 1;
+
+  /// Zoom courant (tests).
+  MannequinZoom get zoom => _zoom;
+
   /// Scène chargée (tests d'intégration et captures).
   MannequinScene? get scene => _scene;
   bool? get available => _available;
@@ -954,11 +985,14 @@ class Mannequin3DState extends State<Mannequin3D>
     _fromPitch = _pitch;
     _toYaw = _yaw + delta;
     _toPitch = .06;
+    // M4c : les boutons de vue remettent aussi le zoom par défaut.
+    _fromZoom = _zoom.copy();
     if (!mounted) return;
     if (_reduceMotion) {
       setState(() {
         _yaw = _toYaw;
         _pitch = _toPitch;
+        _zoom = MannequinZoom();
       });
     } else {
       _tween.forward(from: 0);
@@ -971,6 +1005,9 @@ class Mannequin3DState extends State<Mannequin3D>
     setState(() {
       _yaw = _fromYaw + (_toYaw - _fromYaw) * t;
       _pitch = _fromPitch + (_toPitch - _fromPitch) * t;
+      _zoom = t >= 1
+          ? MannequinZoom()
+          : MannequinZoom.lerp(_fromZoom, MannequinZoom(), t);
     });
   }
 
@@ -988,7 +1025,53 @@ class Mannequin3DState extends State<Mannequin3D>
 
   Camera _cameraFor(Duration _) {
     final scene = _scene!;
-    return _camera = scene.camera(_yaw, _pitch, scene.fitDistance(_aspect));
+    return _camera = scene.camera(
+      _yaw,
+      _pitch,
+      scene.fitDistance(_aspect),
+      zoom: _zoom,
+    );
+  }
+
+  /// Double toucher : retour à la vue par défaut (même vue, zoom 1×).
+  void resetZoom() {
+    if (_zoom.isDefault) return;
+    _tween.stop();
+    _fromYaw = _toYaw = _yaw;
+    _fromPitch = _toPitch = _pitch;
+    _fromZoom = _zoom.copy();
+    if (_reduceMotion) {
+      setState(() => _zoom = MannequinZoom());
+    } else {
+      _tween.forward(from: 0);
+    }
+  }
+
+  /// Pincement : zoom centré sur [focal] à l'échelle [scale] (bornée), puis
+  /// déplacement de la vue de [pan] pixels (tests et gestes).
+  void pinchTo(double scale, Offset focal, {Offset pan = Offset.zero}) {
+    final scene = _scene;
+    if (scene == null || _size.isEmpty) return;
+    final (right, up) = scene.cameraAxes(_yaw, _pitch);
+    final distance = scene.fitDistance(_aspect);
+    setState(() {
+      if (pan != Offset.zero) _zoom.pan(pan, _size, right, up, distance);
+      _zoom.zoomAt(scale, focal, _size, right, up, distance);
+    });
+  }
+
+  void _onPinchStart(ScaleStartDetails d) {
+    _startDrag();
+    _pinchStartScale = _zoom.scale;
+  }
+
+  void _onPinchUpdate(ScaleUpdateDetails d) {
+    if (d.pointerCount < 2) return;
+    pinchTo(
+      _pinchStartScale * d.scale,
+      d.localFocalPoint,
+      pan: d.focalPointDelta,
+    );
   }
 
   double get _aspect =>
@@ -1076,48 +1159,38 @@ class Mannequin3DState extends State<Mannequin3D>
           child: LayoutBuilder(
             builder: (context, constraints) {
               _size = constraints.biggest;
-              _camera = scene.camera(_yaw, _pitch, scene.fitDistance(_aspect));
+              _camera = scene.camera(
+                _yaw,
+                _pitch,
+                scene.fitDistance(_aspect),
+                zoom: _zoom,
+              );
               return Stack(
                 children: [
                   Positioned.fill(
-                    child: GestureDetector(
+                    child: MannequinGestures(
                       key: const ValueKey('mannequin-view'),
-                      behavior: HitTestBehavior.opaque,
+                      horizontalOnly: widget.horizontalDragOnly,
                       onTapUp: _onTap,
-                      onPanStart: widget.horizontalDragOnly
-                          ? null
-                          : (_) => _startDrag(),
-                      onPanEnd: widget.horizontalDragOnly
-                          ? null
-                          : (_) => _dragging = false,
-                      onPanCancel: widget.horizontalDragOnly
-                          ? null
-                          : () => _dragging = false,
-                      onPanUpdate: widget.horizontalDragOnly
-                          ? null
-                          : (d) => setState(() {
-                              _yaw -= d.delta.dx * .012;
-                              _pitch = (_pitch + d.delta.dy * .008).clamp(
-                                -.7,
-                                .7,
-                              );
-                            }),
-                      onHorizontalDragStart: widget.horizontalDragOnly
-                          ? (_) => _startDrag()
-                          : null,
-                      onHorizontalDragEnd: widget.horizontalDragOnly
-                          ? (_) => _dragging = false
-                          : null,
-                      onHorizontalDragCancel: widget.horizontalDragOnly
-                          ? () => _dragging = false
-                          : null,
-                      onHorizontalDragUpdate: widget.horizontalDragOnly
-                          ? (d) => setState(() => _yaw -= d.delta.dx * .012)
-                          : null,
+                      // Reconnu seulement une fois zoomé : le toucher bref
+                      // (nom du muscle) n'attend pas un second toucher.
+                      onDoubleTap: _zoom.isDefault ? null : resetZoom,
+                      onRotateStart: _startDrag,
+                      onRotateEnd: () => _dragging = false,
+                      onRotate: (d) => setState(() {
+                        _yaw -= d.dx * .012;
+                        if (!widget.horizontalDragOnly) {
+                          _pitch = (_pitch + d.dy * .008).clamp(-.7, .7);
+                        }
+                      }),
+                      onPinchStart: _onPinchStart,
+                      onPinchUpdate: _onPinchUpdate,
+                      onPinchEnd: (_) => _dragging = false,
                       child: Semantics(
                         label:
                             '${widget.semanticLabel}. Fais glisser pour le '
-                            'tourner.',
+                            'tourner, pince pour zoomer'
+                            '${_zoom.isDefault ? '' : ', touche deux fois pour revenir à la vue d’ensemble'}.',
                         child: SceneView(
                           scene.scene,
                           // Rendu à la demande : la vue se redessine quand ce
