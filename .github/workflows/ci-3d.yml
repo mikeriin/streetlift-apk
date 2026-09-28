@@ -108,7 +108,13 @@ jobs:
         working-directory: streetlift_tracker
         run: |
           set -o pipefail
-          TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded > ../out/flutter-tests.log 2>&1
+          # Échecs recopiés dans le journal du job (lisible même si l'envoi
+          # des artefacts échoue).
+          TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded > ../out/flutter-tests.log 2>&1 || {
+            grep -E -A12 'EXCEPTION CAUGHT|\[E\]$' ../out/flutter-tests.log | head -n 200
+            tail -n 8 ../out/flutter-tests.log
+            exit 1
+          }
           tail -n 5 ../out/flutter-tests.log
       - name: Rendus de test (après)
         id: captures
