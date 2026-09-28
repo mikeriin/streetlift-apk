@@ -271,7 +271,10 @@ void main() {
     state.pinchTo(3, rect.size.center(Offset.zero));
     await tester.pump(const Duration(seconds: 2));
     expect(state.zoom.scale, closeTo(3, 1e-6));
-    await tester.tap(find.byKey(const ValueKey('mannequin-view-dos')));
+    final dos = find.byKey(const ValueKey('mannequin-view-dos'));
+    await tester.ensureVisible(dos);
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.tap(dos);
     await settle3d(tester);
     m4c['bouton_vue_remet_zoom'] = state.zoom.isDefault;
     record();
@@ -384,7 +387,7 @@ void main() {
       await pumpHome(tester, const WodCatalogScreen(), dark);
       await tester.pump(const Duration(seconds: 2));
       await openMenu(tester, 'wod');
-      await tapItem(tester, 'wod-filter-st:unlocked');
+      await tapItem(tester, 'wod-filter-st:locked');
       await tapItem(tester, 'wod-filter-cat-format');
       await tapItem(tester, 'wod-filter-ty:amrap');
       await tapItem(tester, 'wod-filter-ty:emom');

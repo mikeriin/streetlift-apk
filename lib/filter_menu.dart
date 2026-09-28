@@ -122,6 +122,11 @@ class FilterMenu extends StatefulWidget {
   /// Puces des filtres actifs sous le bouton.
   final bool chips;
 
+  /// Catégories montrées en puces (null : toutes). L'écran Anatomie ne met
+  /// en puces que ses groupes : « Muscles profonds » et « Os », cochés par
+  /// défaut, prendraient la place des boutons de vue.
+  final Set<String>? chipCategories;
+
   /// À droite du bouton (texte court, tri…).
   final Widget? trailing;
 
@@ -133,6 +138,7 @@ class FilterMenu extends StatefulWidget {
     required this.onChanged,
     this.initial = const FilterSelection(),
     this.chips = true,
+    this.chipCategories,
     this.trailing,
   });
 
@@ -184,7 +190,10 @@ class FilterMenuState extends State<FilterMenu> {
     final value = widget.value;
     final count = value.count(cats);
     final total = FilterMenu.totalOf(cats);
-    final active = value.active(cats);
+    final active = [
+      for (final a in value.active(cats))
+        if (widget.chipCategories?.contains(a.$1.id) ?? true) a,
+    ];
     final button = MenuAnchor(
       controller: _menu,
       // Toucher en dehors : ferme le menu sans toucher ce qui est dessous.

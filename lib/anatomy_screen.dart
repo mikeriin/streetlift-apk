@@ -258,7 +258,7 @@ class AnatomyScreenState extends State<AnatomyScreen> {
                 mq.padding.bottom -
                 kToolbarHeight -
                 KNavigationInset.of(context) -
-                180)
+                190)
             .clamp(300.0, 900.0);
     final tt = Theme.of(context).textTheme;
     final labels = [for (final g in f.orderedGroups) kGroupLabels[g]!];
@@ -275,6 +275,7 @@ class AnatomyScreenState extends State<AnatomyScreen> {
             categories: AnatomyFilters.categories,
             value: f.selection,
             initial: defaults.selection,
+            chipCategories: const {'groupes'},
             onChanged: _onMenu,
           ),
           Mannequin3D(
