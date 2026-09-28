@@ -82,6 +82,7 @@ jobs:
             # integration_test et test_driver).
             dart format lib test integration_test test_driver > /dev/null 2>&1 || true
             git diff -- lib test integration_test test_driver > out/format.patch
+            head -n 300 out/format.patch
             git checkout -q -- lib test integration_test test_driver
             exit 1
           fi
@@ -358,7 +359,8 @@ jobs:
           for i in 1 2 3; do
             git fetch -q origin claude/ci-3d
             git reset -q FETCH_HEAD
-            git add -A ci-out
+            # ci-out/ est ignoré sur main (M4c) : ajout forcé ici seulement.
+            git add -A -f ci-out
             git commit -qm "CI 3D : résultats du run ${{ github.run_id }}" || exit 0
             git push -q origin HEAD:claude/ci-3d && break
             sleep 5

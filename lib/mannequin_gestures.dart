@@ -228,21 +228,23 @@ class MannequinGestures extends StatelessWidget {
               HorizontalDragGestureRecognizer
             >(
               () => HorizontalDragGestureRecognizer(debugOwner: this),
-              (r) => r
-                ..onStart = (_) => onRotateStart?.call()
-                ..onUpdate = (d) => onRotate?.call(Offset(d.delta.dx, 0))
-                ..onEnd = (_) => onRotateEnd?.call()
-                ..onCancel = () => onRotateEnd?.call(),
+              (r) {
+                r.onStart = (_) => onRotateStart?.call();
+                r.onUpdate = (d) => onRotate?.call(Offset(d.delta.dx, 0));
+                r.onEnd = (_) => onRotateEnd?.call();
+                r.onCancel = () => onRotateEnd?.call();
+              },
             )
       else
         PanGestureRecognizer:
             GestureRecognizerFactoryWithHandlers<PanGestureRecognizer>(
               () => PanGestureRecognizer(debugOwner: this),
-              (r) => r
-                ..onStart = (_) => onRotateStart?.call()
-                ..onUpdate = (d) => onRotate?.call(d.delta)
-                ..onEnd = (_) => onRotateEnd?.call()
-                ..onCancel = () => onRotateEnd?.call(),
+              (r) {
+                r.onStart = (_) => onRotateStart?.call();
+                r.onUpdate = (d) => onRotate?.call(d.delta);
+                r.onEnd = (_) => onRotateEnd?.call();
+                r.onCancel = () => onRotateEnd?.call();
+              },
             ),
     };
     return RawGestureDetector(
