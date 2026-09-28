@@ -186,20 +186,28 @@ void main() {
     expect(state.view, MannequinView.face);
     await shot('m4c_anatomie_1x');
     final before = await pixels(tester, true);
-    // Point d'un avant-bras (règle du toucher de l'application).
+    // Point au milieu de l'avant-bras de gauche à l'écran (règle du toucher
+    // de l'application, sur une grille) : pas un bord, que la moindre
+    // imprécision ferait manquer.
     final rect = tester.getRect(find.byKey(const ValueKey('mannequin-view')));
-    Offset? p;
-    for (var j = 0; j < 30 && p == null; j++) {
-      for (var i = 0; i < 20 && p == null; i++) {
+    final hits = <Offset>[];
+    for (var j = 0; j < 30; j++) {
+      for (var i = 0; i < 30; i++) {
         final q = Offset(
-          rect.width * (.12 + .3 * i / 19),
-          rect.height * (.35 + .3 * j / 29),
+          rect.width * (.05 + .45 * i / 29),
+          rect.height * (.25 + .5 * j / 29),
         );
         final r = state.scene!.pick(state.camera!, q, state.viewSize);
-        if (r != null && r.groupe == 'avant-bras') p = q;
+        if (r != null && r.groupe == 'avant-bras') hits.add(q);
       }
     }
-    expect(p, isNotNull, reason: 'aucun point sur un avant-bras');
+    expect(hits, isNotEmpty, reason: 'aucun point sur un avant-bras');
+    final mean =
+        hits.fold(Offset.zero, (a, b) => a + b) / hits.length.toDouble();
+    Offset? p;
+    for (final h in hits) {
+      if (p == null || (h - mean).distance < (p - mean).distance) p = h;
+    }
     final r0 = state.scene!.pick(state.camera!, p!, state.viewSize)!;
     m4c['anatomie_1x'] = {...before, 'point': p.toString(), 'muscle': r0.label};
     record();
