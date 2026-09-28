@@ -1,4 +1,15 @@
-# Kalis Track 5.3.1 — Mannequin anatomique 3D
+# Kalis Track 5.3.2 — Mannequin anatomique 3D
+
+## 5.3.2 — Dépôt en sources, zoom au pincement, filtres normalisés (lot M4c du pipeline « Mannequin 3D »)
+
+- **Dépôt GitHub en sources** : `main` contient directement le projet Flutter (dossiers `lib`, `assets`, `android`, `test`, `tools`…) au lieu de `streetlift_tracker_v33.zip`. Contenu identique octet pour octet au ZIP 5.3.1 (étiquette `archive-zip-5.3.1`, preuve par `tools/compare_tree_with_zip.py`).
+- **Zoom au pincement** sur le mannequin 3D (Anatomie, fiche exercice, STATS, Moteur 3D) : deux doigts zooment de 1× (corps entier) à 4×, centré sur le point entre les doigts, et déplacent la vue une fois zoomé ; un doigt tourne le mannequin ; toucher bref = nom du muscle ; double toucher ou boutons Face / Dos / Profil / 3/4 = vue d'ensemble. Dans les fiches et STATS, glisser verticalement fait toujours défiler la page.
+- **Mêmes filtres partout** : bibliothèque d'exercices, choix d'exercice (séance perso), catalogue WOD, historique de STATS et écran Anatomie ont un bouton **Filtres · n** qui ouvre un menu par catégorie (cases à cocher, catégories repliables, Tout cocher / Tout décocher, Réinitialiser) ; les filtres actifs s'affichent en puces supprimables sous le bouton.
+
+Détail : `SUIVI_PROJET.md` (M4c). Tests : `test/m4c_zoom_test.dart`, `test/m4c_filter_menu_test.dart`, `tools/tests/test_repository_tree.py`, `integration_test/zoom_filtres_m4c_test.dart`.
+
+
+# Historique — Kalis Track 5.3.1 — Mannequin anatomique 3D
 
 ## 5.3.1 — Anatomie complète en transparence, filtres à cocher (lot M4b du pipeline « Mannequin 3D »)
 
@@ -411,22 +422,38 @@ Programme garde les sept jours dans leur ordre, les gestes du slider et les rés
 
 Les données des captures sont simulées uniquement dans les tests. L’application livrée n’ajoute aucune activité de démonstration à ton historique.
 
-## Compilation habituelle depuis le ZIP
+## Structure du dépôt
 
-La procédure courante est [Validation Android L1b](docs/VALIDATION_ANDROID_L1b.md).
-Elle décrit les actions GitHub et les essais sur téléphone, dans l’ordre.
-Le workflow produit un APK et un AAB avec le même numéro de build, puis contrôle
-signatures, identité, manifestes finaux et alignements 16 Ko avant de proposer
-les deux artefacts au téléchargement.
+Depuis 5.3.2 (lot M4c), le dépôt contient les sources du projet à sa racine :
 
-Les deux secrets GitHub déjà fonctionnels sont conservés. Le ZIP ne contient
-aucune clé privée ni mot de passe. Analyse et tests restent accessibles sans
-secrets ; la preuve du refus Gradle sans secrets est prévue dans la nouvelle CI.
-Ne pas refaire la préparation de clé décrite dans les consignes historiques L1.
+| Dossier ou fichier | Contenu |
+| --- | --- |
+| `lib/` | Code de l'application (Flutter) |
+| `assets/` | Programme, base d'exercices, mannequin 3D (`assets/anatomy/`), sons, polices, icônes |
+| `android/` | Projet Android (identifiant `fr.tchoupi.streetlift_tracker`, wrapper Gradle) |
+| `hook/` | Build hook de flutter_scene (conversion du mannequin, sortie dans `flutter_scene_generated/`, jamais suivie) |
+| `test/`, `integration_test/`, `test_driver/` | Tests Dart, tests sur émulateur (CI 3D) |
+| `tools/` | Scripts Python de contrôle, de signature, de fabrication des ressources, et leurs tests (`tools/tests`) |
+| `docs/`, `validation/`, `AUDIT_*.md` | Documentation, contrats et relevés historiques |
+| `signing/certificate.sha256` | Empreinte publique du certificat de signature (la clé n'est jamais dans le dépôt) |
+| `.github/workflows/` | `build-apk.yml` (APK et AAB signés), `ci-3d.yml` (CI du mannequin, branche `claude/ci-3d`) |
 
-Le propriétaire confirme la mise à jour L1 sans désinstallation et la
-conservation de ses données. Cette déclaration est enregistrée dans
-`SUIVI_PROJET.md` ; les essais de la nouvelle livraison L1b restent à réaliser.
+`.gitignore` exclut tout ce que les contrôles de livraison refusent (caches, `build/`, fichiers locaux, clés, mots de passe, APK/AAB, ZIP) ; `.gitattributes` impose les fins de ligne LF et déclare les binaires. Le dernier état livré en ZIP est conservé à l'étiquette `archive-zip-5.3.1`.
+
+## Construire l'application
+
+Le workflow **Build APK et AAB** (`.github/workflows/build-apk.yml`) construit depuis la racine du dépôt, sans extraction : à chaque push qui touche le projet (`lib/`, `assets/`, `android/`, `test/`, `tools/`, `hook/`, `integration_test/`, `pubspec.*`, workflows), sur toute branche, ou à la demande (Actions › Build APK et AAB › Run workflow). Il contrôle l'arbre du dépôt sans secret (fichier par fichier), l'intégrité des données, le formatage, l'analyse et les tests, restaure la clé depuis les deux secrets GitHub habituels, produit un APK et un AAB avec le même numéro de build, puis contrôle signatures, identité, manifestes et alignements 16 Ko avant de publier l'artefact `kalis-track-apk`. Identifiant et signature inchangés : chaque APK s'installe par-dessus la version précédente sans perte de données.
+
+La procédure de validation sur téléphone reste [Validation Android L1b](docs/VALIDATION_ANDROID_L1b.md). Ne pas refaire la préparation de clé décrite dans les consignes historiques L1.
+
+En local (SDK Flutter 3.47.5) :
+
+```sh
+flutter pub get --enforce-lockfile
+flutter build apk --debug
+```
+
+Un build release exige les secrets `KALIS_KEYSTORE_BASE64` et `KALIS_KEYSTORE_PASSWORD` (voir `docs/SIGNATURE_ET_ZIP.md`) ; sans eux, il est refusé.
 
 ## Développement et vérification
 
@@ -435,6 +462,8 @@ flutter pub get --enforce-lockfile
 dart format --output=none --set-exit-if-changed lib test
 flutter analyze --no-pub
 python3 tools/verify_project.py
+python3 tools/package_release.py --check
+python3 tools/check_release_without_secrets.py --tree
 python3 -m unittest discover -s tools/tests -v
 TZ=Europe/Paris flutter test --no-pub --timeout 90s --reporter expanded
 ```
@@ -451,10 +480,12 @@ Elles sont écrites dans `validation/2.5.0`. Le test de captures reste désactiv
 
 Voir `REFONTE_UI.md` pour la checklist et `AUDIT_2.5.0.md` pour les vérifications et les limites de validation. Les documents antérieurs sont conservés dans `docs` et les audits précédents ; leurs consignes historiques de signature sont remplacées par `docs/SIGNATURE_ET_ZIP.md`. L’état courant et les validations restantes figurent dans `SUIVI_PROJET.md`.
 
-## Archive de livraison sous 25 Mo
+## Contrôle de l'arbre et archive facultative
 
 ```sh
-python3 tools/package_release.py ../streetlift_tracker_v33.zip
+python3 tools/package_release.py --check                # arbre suivi, fichier par fichier
+python3 tools/check_release_without_secrets.py --tree   # même contrôle, avant chaque push
+python3 tools/compare_tree_with_zip.py                  # identité avec le ZIP 5.3.1 (M4c)
 ```
 
-Le paquet conserve le code, les ressources, les tests, le wrapper Gradle, le certificat public de référence (empreinte) et le workflow. Il exclut les clés privées, secrets locaux, caches et APK/AAB ; les copies détectées de secrets dans les contenus font échouer le packaging. Il inclut les captures de la version actuelle, quand elles ont été générées, et les rapports textuels historiques. Les images de validation des anciennes versions sont exclues. Le script refuse de remplacer l’archive si le ZIP ou son contenu extrait dépasse 25 000 000 octets. Relire un ZIP avec `python3 tools/package_release.py --check ../streetlift_tracker_v33.zip`.
+Le contrôle refuse tout fichier suivi qui serait une clé privée (même renommée ou encodée en Base64), un mot de passe littéral, un fichier local, un cache, un APK/AAB ou un ZIP, et un arbre de plus de 25 000 000 octets. Une archive du projet reste possible comme artefact (`python3 tools/package_release.py ../kalis_track.zip`, relue avec `--check ../kalis_track.zip`) ; elle n'est plus poussée dans le dépôt.

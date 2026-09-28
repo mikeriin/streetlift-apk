@@ -1,8 +1,45 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M4b (anatomie complète en transparence, filtres à cocher), version 5.3.1**  
-**Date : 28 septembre 2026, Europe/Paris — version : 5.3.1+76 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : pipeline « Mannequin 3D », lot M4c (dépôt en sources, zoom au pincement, filtres normalisés), version 5.3.2**  
+**Date : 28 septembre 2026, Europe/Paris — version : 5.3.2+77 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+
+## M4c.0 — Base et demande
+
+| Élément | Valeur |
+| --- | --- |
+| Demande | `pipeline/3d/prompts/M04c.txt` : plus de ZIP, projet structuré à la racine de `main`, CI et outils adaptés ; zoom au pincement ; filtres normalisés dans toute l'application |
+| Base | `main` `4531346` (5.3.1+76, ZIP), étiquette `archive-zip-5.3.1` |
+
+## M4c.1 — Changements
+
+- **Dépôt** : un seul commit de restructuration (`a42f149`) pose le contenu du ZIP 5.3.1 à la racine, octet pour octet (fins de ligne CRLF d'origine gardées pour `gradlew.bat` et deux relevés CSV) ; `.gitignore` complété (tout ce que `release_security.py` refuse), `.gitattributes` (LF, binaires). `tools/compare_tree_with_zip.py` : arbre du commit = ZIP 5.3.1 (578 fichiers identiques par SHA-256) hors `.gitignore` et `.gitattributes`.
+- **CI et outils** : `build-apk.yml` construit depuis la racine, déclenché par les chemins du projet sur toute branche et à la demande, étapes de signature et de vérification inchangées ; `ci-3d.yml` sans extraction, référence « avant » prise sur `main` (ZIP ou sources), job émulateur limité à 30 min ; `package_release.py --check` et `check_release_without_secrets.py --tree` contrôlent l'arbre suivi fichier par fichier ; `verify_project.py` vérifie la structure du dépôt et la couverture du `.gitignore` ; nouveaux tests `tools/tests/test_repository_tree.py`.
+- **Zoom au pincement** (`lib/mannequin_gestures.dart`, `lib/mannequin_3d.dart`) : deux doigts = zoom de 1× à 4× par réduction de l'angle de champ (la caméra ne s'approche jamais du modèle : pas de traversée), point sous les doigts conservé, déplacement à deux doigts, fenêtre zoomée bornée à la vue d'ensemble ; reconnaisseur de pincement qui ne gagne jamais un geste à un doigt et gagne dès que deux doigts sont posés (la page ne défile pas pendant le zoom) ; double toucher (reconnu seulement une fois zoomé) et boutons de vue = vue par défaut ; lancer de rayon du toucher sur la caméra zoomée ; rendu à la demande conservé.
+- **Filtres normalisés** (`lib/filter_menu.dart`) : bouton « Filtres · n », menu par catégorie (repliable, Tout cocher / Tout décocher), Réinitialiser, union dans une catégorie et intersection entre catégories, puces supprimables, fermeture au toucher en dehors. Écrans : voir M4c.4.
+- Version 5.3.2+77.
+
+## M4c.2 — Contrôles
+
+(en cours)
+
+## M4c.3 — Limites
+
+(en cours)
+
+## M4c.4 — Écrans qui filtraient une liste ou un affichage
+
+| Écran | Avant (5.3.1) | Après (5.3.2) | Mémorisation |
+| --- | --- | --- | --- |
+| Arsenal › Exercices (bibliothèque et recherche) | 4 listes déroulantes à choix unique (Type de mouvement, Lieu, Matériel, Difficulté ; « Tous ») | Menu : Type de mouvement, Lieu, Matériel, Difficulté (plusieurs choix par catégorie) | aucune → pendant la session |
+| Choix d'exercice (séance perso, `pickExercise`) | 2 rangées de puces à choix unique (groupe, matériel) | Menu : Groupe musculaire, Matériel | aucune → pendant la session |
+| Arsenal › Catalogue WOD | puces rapides (Abordables, Poids de corps, 5 formats, < 15 min) + panneau en feuille (Accès à choix unique, Format, Mouvements, Difficulté, Durée, Matériel, Source) + puces des filtres actifs | Menu : Accès (Débloqués, Abordables, Verrouillés, à cocher), Format, Mouvements, Difficulté, Durée estimée, Matériel, Source ; puces sous le bouton | aucune → pendant la session |
+| STATS › Historique | 3 puces à choix unique (Tout, Séances, WOD) | Menu : Type (Séances, WOD ; aucune case = tout) | état de l'onglet → pendant la session |
+| Arsenal › Anatomie | menu de cases (M4b) : 11 groupes, Muscles profonds, Os | Menu commun : Groupes musculaires, Affichage (Muscles profonds, Os) | pendant la session (inchangé) |
+
+Restent tels quels (pas des filtres) : onglets et rubriques de STATS, branches de la progression, semaines de l'accueil, tri du catalogue WOD, vue Face / Dos du mannequin, et les choix qui sont des réglages ou des saisies (durée et motif d'un échange d'exercice, lieu d'une séance adaptée, découpage et mouvement ciblé du générateur de programme, questionnaires du profil, Koach, avis de test, objectif hebdomadaire). Aucun écran n'a gardé de filtre à choix unique : les anciens choix uniques sont devenus des cases (cocher une seule case donne le même résultat).
+
+# Historique — pipeline « Mannequin 3D », lot M4b (5.3.1)
 
 ## M4b.0 — Base et demande
 
