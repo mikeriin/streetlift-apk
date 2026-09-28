@@ -11,30 +11,228 @@ Alternatively, use the flag "--android-skip-build-dependency-validation" to bypa
 Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/settings.gradle), by a plugin with the id of com.android.application. 
 If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
 
-Running Gradle task 'assembleDebug'...                             51.7s
+Running Gradle task 'assembleDebug'...                             41.4s
 ✓ Built build/app/outputs/flutter-apk/app-debug.apk
-Installing build/app/outputs/flutter-apk/app-debug.apk...          964ms
-Connecting to the VM Service is taking longer than expected...
-Still attempting to connect to the VM Service...
-If you do NOT see the Flutter application running, it might have crashed. The device logs (e.g. from adb or XCode) might have more details.
-If you do see the Flutter application running on the device, try re-running with --host-vmservice-port to use a specific port known to be available.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 59166
-This was attempt #50. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 39306
-This was attempt #100. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 42960
-This was attempt #150. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 52304
-This was attempt #200. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 49314
-This was attempt #250. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 51102
-This was attempt #300. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 56150
-This was attempt #350. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 36110
-This was attempt #400. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 60098
-This was attempt #450. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 47254
-This was attempt #500. Will retry in 0:00:01.600000.
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,112ms
+I/eetlift_tracker( 4930): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4930): Skipped 78 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4930): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:40235/hmJngrA2wzE=/
+VMServiceFlutterDriver: Isolate found with number: 3008703365206411
+VMServiceFlutterDriver: Isolate 3008703365206411 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4930): 00:00 +0: M2 : organisation du modèle, (a) par muscle / (b) fusionné
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 4930): Skipped 40 frames!  The application may be doing too much work on its main thread.
+I/HWUI    ( 4930): Davey! duration=713ms; Flags=1, FrameTimelineVsyncId=59740, IntendedVsync=347831336714, Vsync=348498003354, InputEventId=0, HandleInputStart=348499476406, AnimationStart=348499477768, PerformTraversalsStart=348499478389, DrawStart=348502783907, FrameDeadline=347848003380, FrameInterval=348498952268, FrameStartTime=16666666, SyncQueued=348505632195, SyncStart=348506694623, IssueDrawCommandsStart=348507442713, SwapBuffers=348517187621, FrameCompleted=348546354358, DequeueBufferDuration=24997877, QueueBufferDuration=1293079, GpuCompleted=348546132343, SwapBuffersCompleted=348546354358, DisplayPresentTime=72904454231359566, CommandSubmissionCompleted=348517187621, 
+D/ProfileInstaller( 4930): Installing profile for fr.tchoupi.streetlift_tracker
+W/eetlift_tracker( 4930): Verification of java.io.InputStream androidx.profileinstaller.DeviceProfileWriter.openStreamFromAssets(android.content.res.AssetManager, java.lang.String) took 112.740ms (301.58 bytecodes/s) (3240B approximate peak alloc)
+D/EGL_emulation( 4930): app_time_stats: avg=830.04ms min=1.94ms max=1747.69ms count=5
+D/EGL_emulation( 4930): app_time_stats: avg=14920.80ms min=14920.80ms max=14920.80ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=5599.55ms min=5599.55ms max=5599.55ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3293.06ms min=3293.06ms max=3293.06ms count=1
+I/eetlift_tracker( 4930): Background concurrent mark compact GC freed 2067KB AllocSpace bytes, 3(60KB) LOS objects, 49% free, 2584KB/5168KB, paused 78us,43.567ms total 590.139ms
+D/EGL_emulation( 4930): app_time_stats: avg=3060.41ms min=3060.41ms max=3060.41ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=165.95ms min=96.36ms max=235.55ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=2566.27ms min=2566.27ms max=2566.27ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=110.20ms min=100.29ms max=120.11ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=2867.66ms min=2867.66ms max=2867.66ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3276.60ms min=3276.60ms max=3276.60ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2693.80ms min=2693.80ms max=2693.80ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3180.53ms min=3180.53ms max=3180.53ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=101.55ms min=99.56ms max=103.53ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=100.02ms min=100.02ms max=100.02ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=116.58ms min=116.58ms max=116.58ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3011.54ms min=3011.54ms max=3011.54ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1536.25ms min=88.50ms max=2984.00ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=1464.33ms min=114.88ms max=2813.78ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=2955.02ms min=2955.02ms max=2955.02ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3056.16ms min=3056.16ms max=3056.16ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1404.69ms min=93.23ms max=2716.15ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=97.42ms min=97.24ms max=97.60ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3186.77ms min=3186.77ms max=3186.77ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3309.64ms min=3309.64ms max=3309.64ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1669.48ms min=360.05ms max=2978.92ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3177.20ms min=3177.20ms max=3177.20ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2913.07ms min=2913.07ms max=2913.07ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3118.12ms min=3118.12ms max=3118.12ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3042.89ms min=3042.89ms max=3042.89ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3124.22ms min=3124.22ms max=3124.22ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3003.56ms min=3003.56ms max=3003.56ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3165.48ms min=3165.48ms max=3165.48ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3075.62ms min=98.22ms max=6053.01ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3240.10ms min=338.32ms max=6141.89ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3340.63ms min=3340.63ms max=3340.63ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2788.36ms min=2788.36ms max=2788.36ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2685.70ms min=2685.70ms max=2685.70ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3054.81ms min=3054.81ms max=3054.81ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3264.77ms min=3264.77ms max=3264.77ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1743.77ms min=226.51ms max=3261.03ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=2811.75ms min=2811.75ms max=2811.75ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1479.35ms min=93.85ms max=2864.84ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3115.84ms min=3115.84ms max=3115.84ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3179.63ms min=288.49ms max=6070.76ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=1667.93ms min=111.18ms max=3224.69ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3305.66ms min=3305.66ms max=3305.66ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3038.57ms min=3038.57ms max=3038.57ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3161.09ms min=3161.09ms max=3161.09ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3334.18ms min=3334.18ms max=3334.18ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3088.00ms min=3088.00ms max=3088.00ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2960.91ms min=2960.91ms max=2960.91ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3205.59ms min=3205.59ms max=3205.59ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3128.74ms min=3128.74ms max=3128.74ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3009.34ms min=3009.34ms max=3009.34ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3260.55ms min=3260.55ms max=3260.55ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3117.35ms min=3117.35ms max=3117.35ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3343.29ms min=3343.29ms max=3343.29ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2875.86ms min=2875.86ms max=2875.86ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3145.13ms min=3145.13ms max=3145.13ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2999.17ms min=2999.17ms max=2999.17ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3294.78ms min=3294.78ms max=3294.78ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1631.86ms min=97.09ms max=3166.63ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=2971.96ms min=2971.96ms max=2971.96ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3124.78ms min=3124.78ms max=3124.78ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3165.85ms min=3165.85ms max=3165.85ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1562.77ms min=93.77ms max=3031.78ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=2922.05ms min=2922.05ms max=2922.05ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2900.78ms min=2900.78ms max=2900.78ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3079.91ms min=3079.91ms max=3079.91ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3169.80ms min=3169.80ms max=3169.80ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3339.04ms min=3339.04ms max=3339.04ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3166.19ms min=3166.19ms max=3166.19ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3249.68ms min=3249.68ms max=3249.68ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3224.09ms min=3224.09ms max=3224.09ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3440.10ms min=3440.10ms max=3440.10ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1677.40ms min=257.26ms max=3097.54ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=2996.58ms min=2996.58ms max=2996.58ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3400.79ms min=3400.79ms max=3400.79ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1751.96ms min=249.82ms max=3254.11ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3061.51ms min=3061.51ms max=3061.51ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3287.84ms min=3287.84ms max=3287.84ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3184.24ms min=3184.24ms max=3184.24ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3006.72ms min=3006.72ms max=3006.72ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3202.93ms min=3202.93ms max=3202.93ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3020.76ms min=3020.76ms max=3020.76ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3228.10ms min=3228.10ms max=3228.10ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2907.50ms min=2907.50ms max=2907.50ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3306.39ms min=3306.39ms max=3306.39ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3068.84ms min=3068.84ms max=3068.84ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3074.77ms min=3074.77ms max=3074.77ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3052.53ms min=3052.53ms max=3052.53ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2791.89ms min=2791.89ms max=2791.89ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3096.14ms min=3096.14ms max=3096.14ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3051.62ms min=3051.62ms max=3051.62ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3338.18ms min=3338.18ms max=3338.18ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2977.26ms min=2977.26ms max=2977.26ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3227.26ms min=3227.26ms max=3227.26ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3173.81ms min=3173.81ms max=3173.81ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3425.94ms min=3425.94ms max=3425.94ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3256.10ms min=3256.10ms max=3256.10ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3174.63ms min=3174.63ms max=3174.63ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3356.67ms min=3356.67ms max=3356.67ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2973.30ms min=2973.30ms max=2973.30ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2793.51ms min=2793.51ms max=2793.51ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2853.83ms min=2853.83ms max=2853.83ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3472.92ms min=225.64ms max=6720.20ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3431.76ms min=3431.76ms max=3431.76ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3017.33ms min=3017.33ms max=3017.33ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3174.19ms min=3174.19ms max=3174.19ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2942.85ms min=2942.85ms max=2942.85ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3831.35ms min=3831.35ms max=3831.35ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3014.69ms min=3014.69ms max=3014.69ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3338.35ms min=3338.35ms max=3338.35ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3069.70ms min=3069.70ms max=3069.70ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2867.33ms min=2867.33ms max=2867.33ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3249.67ms min=3249.67ms max=3249.67ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3146.33ms min=3146.33ms max=3146.33ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3142.05ms min=3142.05ms max=3142.05ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2889.23ms min=2889.23ms max=2889.23ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1591.81ms min=331.29ms max=2852.32ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3124.33ms min=3124.33ms max=3124.33ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3096.96ms min=3096.96ms max=3096.96ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3018.10ms min=3018.10ms max=3018.10ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3224.39ms min=3224.39ms max=3224.39ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1632.71ms min=112.46ms max=3152.97ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3130.14ms min=3130.14ms max=3130.14ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3254.35ms min=3254.35ms max=3254.35ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3042.02ms min=3042.02ms max=3042.02ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=185.18ms min=94.66ms max=275.70ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=100.82ms min=100.82ms max=100.82ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=107.04ms min=107.04ms max=107.04ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2770.97ms min=2770.97ms max=2770.97ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3107.57ms min=3107.57ms max=3107.57ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2822.02ms min=2822.02ms max=2822.02ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1567.93ms min=97.81ms max=3038.05ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3276.97ms min=3276.97ms max=3276.97ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3244.69ms min=3244.69ms max=3244.69ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1557.88ms min=104.57ms max=3011.19ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=2857.39ms min=2857.39ms max=2857.39ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3362.57ms min=3362.57ms max=3362.57ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3095.11ms min=3095.11ms max=3095.11ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3008.45ms min=3008.45ms max=3008.45ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3017.99ms min=3017.99ms max=3017.99ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1620.62ms min=100.36ms max=3140.88ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=116.70ms min=93.12ms max=140.28ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=2874.68ms min=2874.68ms max=2874.68ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3097.01ms min=229.99ms max=5964.03ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=1452.32ms min=93.05ms max=2811.59ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=1447.02ms min=103.68ms max=2790.36ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=1489.21ms min=100.29ms max=2878.13ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=1586.08ms min=92.41ms max=3079.76ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3074.27ms min=3074.27ms max=3074.27ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2840.75ms min=2840.75ms max=2840.75ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2928.28ms min=2928.28ms max=2928.28ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1775.79ms min=309.66ms max=3241.91ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3012.09ms min=3012.09ms max=3012.09ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3295.93ms min=3295.93ms max=3295.93ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3110.32ms min=3110.32ms max=3110.32ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3097.98ms min=246.94ms max=5949.01ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=1564.40ms min=100.35ms max=3028.44ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=1558.20ms min=98.14ms max=3018.27ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=101.98ms min=98.81ms max=105.14ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=104.18ms min=104.18ms max=104.18ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2859.76ms min=2859.76ms max=2859.76ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=98.98ms min=96.38ms max=101.59ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3120.27ms min=3120.27ms max=3120.27ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2990.86ms min=2990.86ms max=2990.86ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=243.49ms min=95.45ms max=391.53ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=2778.14ms min=2778.14ms max=2778.14ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1507.76ms min=97.70ms max=2917.82ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3160.32ms min=3160.32ms max=3160.32ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2907.26ms min=2907.26ms max=2907.26ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3047.35ms min=3047.35ms max=3047.35ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3241.07ms min=3241.07ms max=3241.07ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3045.57ms min=3045.57ms max=3045.57ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3160.84ms min=238.15ms max=6083.53ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=1504.13ms min=98.75ms max=2909.51ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=2878.69ms min=2878.69ms max=2878.69ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=224.73ms min=94.91ms max=354.54ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=116.22ms min=116.22ms max=116.22ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2866.17ms min=2866.17ms max=2866.17ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1494.64ms min=98.62ms max=2890.66ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=1693.38ms min=291.38ms max=3095.38ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=1683.90ms min=302.12ms max=3065.68ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3053.17ms min=236.65ms max=5869.69ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=1505.95ms min=87.00ms max=2924.89ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=1471.13ms min=99.11ms max=2843.15ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=98.65ms min=91.40ms max=105.90ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=116.94ms min=116.94ms max=116.94ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3332.18ms min=3332.18ms max=3332.18ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3050.16ms min=3050.16ms max=3050.16ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3327.49ms min=3327.49ms max=3327.49ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2778.96ms min=2778.96ms max=2778.96ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3336.54ms min=3336.54ms max=3336.54ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2765.44ms min=2765.44ms max=2765.44ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3365.05ms min=3365.05ms max=3365.05ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3131.77ms min=3131.77ms max=3131.77ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3098.52ms min=3098.52ms max=3098.52ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3154.00ms min=3154.00ms max=3154.00ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=1538.74ms min=92.75ms max=2984.74ms count=2
+D/EGL_emulation( 4930): app_time_stats: avg=3008.68ms min=3008.68ms max=3008.68ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3204.32ms min=3204.32ms max=3204.32ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=2905.66ms min=2905.66ms max=2905.66ms count=1
+D/EGL_emulation( 4930): app_time_stats: avg=3328.46ms min=3328.46ms max=3328.46ms count=1
+I/flutter ( 4930): 13:17 +1: (tearDownAll)
+I/flutter ( 4930): 13:17 +2: All tests passed!
+All tests passed.
