@@ -1105,8 +1105,8 @@ class Mannequin3DState extends State<Mannequin3D>
   /// Chaque image du pincement est calculée depuis son début : le point
   /// visé au premier contact reste sous les doigts (essai 5 de M4c : en
   /// cumulant pas à pas, les bornes du début du geste le décalaient). Le
-  /// modèle (`MannequinZoom.pinched`) est ensuite corrigé avec les rayons de
-  /// la caméra elle-même (essai 6 : écart résiduel de quelques points).
+  /// modèle (`MannequinZoom.pinched`) est ensuite vérifié et ajusté avec les
+  /// rayons de la caméra elle-même (mêmes rayons que le toucher).
   void _onPinchUpdate(ScaleUpdateDetails d) {
     final scene = _scene;
     if (d.pointerCount < 2 || scene == null || _size.isEmpty) return;
