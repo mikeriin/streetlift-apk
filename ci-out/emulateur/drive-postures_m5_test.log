@@ -1,0 +1,164 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             95.2s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        2,081ms
+W/eetlift_tracker( 4143): Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+W/eetlift_tracker( 4143): Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+W/eetlift_tracker( 4143): Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+W/eetlift_tracker( 4143): Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+D/AccessibilityBridge( 4143): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 4143): Width is zero. 0,0
+W/HWUI    ( 4143): Unknown dataspace 0
+I/Choreographer( 4143): Skipped 177 frames!  The application may be doing too much work on its main thread.
+I/WindowExtensionsImpl( 4143): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+I/eetlift_tracker( 4143): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+D/FlutterRenderer( 4143): Width is zero. 0,0
+D/FlutterJNI( 4143): Sending viewport metrics to the engine.
+W/HWUI    ( 4143): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 4143): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 4143): mapper 4.x is not supported
+I/Choreographer( 4143): Skipped 105 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4143): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:43585/zITvqsNd1PY=/
+VMServiceFlutterDriver: Isolate found with number: 6045452967404963
+VMServiceFlutterDriver: Isolate 6045452967404963 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4143): 00:00 +0: (setUpAll)
+VMServiceFlutterDriver: Connected to Flutter application.
+D/ProfileInstaller( 4143): Installing profile for fr.tchoupi.streetlift_tracker
+I/flutter ( 4143): 00:01 +1: M5 : posture debout, 4 vues
+D/EGL_emulation( 4143): app_time_stats: avg=8797.01ms min=1492.65ms max=16101.37ms count=2
+I/eetlift_tracker( 4143): Background concurrent mark compact GC freed 2071KB AllocSpace bytes, 3(60KB) LOS objects, 49% free, 2612KB/5224KB, paused 158us,76.764ms total 10.133s
+D/EGL_emulation( 4143): app_time_stats: avg=533.16ms min=92.81ms max=1116.96ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=1647.96ms min=1647.96ms max=1647.96ms count=1
+D/EGL_emulation( 4143): app_time_stats: avg=1196.43ms min=1196.43ms max=1196.43ms count=1
+D/EGL_emulation( 4143): app_time_stats: avg=511.92ms min=73.99ms max=734.90ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=2682.13ms min=2682.13ms max=2682.13ms count=1
+D/EGL_emulation( 4143): app_time_stats: avg=676.10ms min=36.12ms max=1721.78ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=1376.04ms min=432.46ms max=2319.62ms count=2
+D/EGL_emulation( 4143): app_time_stats: avg=657.12ms min=74.54ms max=1819.45ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=1375.67ms min=308.63ms max=2442.71ms count=2
+D/EGL_emulation( 4143): app_time_stats: avg=672.96ms min=1.44ms max=1833.00ms count=3
+I/flutter ( 4143): 00:39 +2: M5 : posture suspendu, 4 vues
+D/EGL_emulation( 4143): app_time_stats: avg=420.36ms min=110.21ms max=1023.76ms count=4
+D/EGL_emulation( 4143): app_time_stats: avg=66.36ms min=6.59ms max=111.36ms count=12
+D/EGL_emulation( 4143): app_time_stats: avg=81.42ms min=8.17ms max=193.55ms count=11
+D/EGL_emulation( 4143): app_time_stats: avg=1171.06ms min=203.65ms max=2138.48ms count=2
+D/EGL_emulation( 4143): app_time_stats: avg=673.82ms min=84.72ms max=1773.03ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=1247.06ms min=351.56ms max=2142.57ms count=2
+D/EGL_emulation( 4143): app_time_stats: avg=669.28ms min=8.17ms max=1823.03ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=1124.93ms min=325.27ms max=1924.59ms count=2
+D/EGL_emulation( 4143): app_time_stats: avg=677.46ms min=96.84ms max=1780.07ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=1217.34ms min=268.20ms max=2166.48ms count=2
+D/EGL_emulation( 4143): app_time_stats: avg=647.30ms min=5.51ms max=1852.09ms count=3
+I/flutter ( 4143): 01:01 +3: M5 : posture squat_bas, 4 vues
+D/EGL_emulation( 4143): app_time_stats: avg=570.04ms min=212.43ms max=1233.80ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=63.66ms min=2.86ms max=108.24ms count=11
+D/EGL_emulation( 4143): app_time_stats: avg=96.18ms min=12.50ms max=212.51ms count=10
+D/EGL_emulation( 4143): app_time_stats: avg=1310.79ms min=1310.79ms max=1310.79ms count=1
+D/EGL_emulation( 4143): app_time_stats: avg=1196.85ms min=1196.85ms max=1196.85ms count=1
+D/EGL_emulation( 4143): app_time_stats: avg=353.57ms min=2.59ms max=731.13ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=2862.20ms min=2862.20ms max=2862.20ms count=1
+D/EGL_emulation( 4143): app_time_stats: avg=675.13ms min=68.27ms max=1765.69ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=1734.02ms min=335.39ms max=3132.64ms count=2
+D/EGL_emulation( 4143): app_time_stats: avg=667.74ms min=77.91ms max=1844.29ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=904.67ms min=380.10ms max=1429.24ms count=2
+D/EGL_emulation( 4143): app_time_stats: avg=1290.41ms min=1290.41ms max=1290.41ms count=1
+I/flutter ( 4143): 01:23 +4: M5 : posture planche, 4 vues
+D/EGL_emulation( 4143): app_time_stats: avg=334.57ms min=78.86ms max=632.10ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=211.36ms min=15.41ms max=590.25ms count=5
+D/EGL_emulation( 4143): app_time_stats: avg=83.11ms min=13.47ms max=175.50ms count=11
+D/EGL_emulation( 4143): app_time_stats: avg=84.50ms min=15.13ms max=176.45ms count=10
+D/EGL_emulation( 4143): app_time_stats: avg=394.53ms min=108.10ms max=743.07ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=667.89ms min=105.78ms max=1320.97ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=767.35ms min=305.30ms max=1229.40ms count=2
+D/EGL_emulation( 4143): app_time_stats: avg=641.33ms min=15.00ms max=1759.31ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=994.25ms min=253.00ms max=1735.49ms count=2
+D/EGL_emulation( 4143): app_time_stats: avg=671.96ms min=77.71ms max=1830.22ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=915.22ms min=283.11ms max=1547.32ms count=2
+D/EGL_emulation( 4143): app_time_stats: avg=677.70ms min=88.90ms max=1750.25ms count=3
+I/flutter ( 4143): 01:41 +5: M5 : écran Anatomie, sélecteur « Posture », transition
+D/EGL_emulation( 4143): app_time_stats: avg=548.80ms min=204.94ms max=1205.25ms count=4
+D/EGL_emulation( 4143): app_time_stats: avg=79.21ms min=13.50ms max=160.82ms count=12
+D/EGL_emulation( 4143): app_time_stats: avg=88.08ms min=24.78ms max=193.61ms count=10
+D/EGL_emulation( 4143): app_time_stats: avg=212.37ms min=13.57ms max=1088.53ms count=9
+D/EGL_emulation( 4143): app_time_stats: avg=1000.43ms min=1000.43ms max=1000.43ms count=1
+D/EGL_emulation( 4143): app_time_stats: avg=1059.28ms min=1059.28ms max=1059.28ms count=1
+D/EGL_emulation( 4143): app_time_stats: avg=2017.02ms min=2017.02ms max=2017.02ms count=1
+I/flutter ( 4143): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4143): The following TestFailure was thrown running a test:
+I/flutter ( 4143): Expected: a value greater than <0.002>
+I/flutter ( 4143):   Actual: <0.0>
+I/flutter ( 4143):    Which: is not a value greater than <0.002>
+I/flutter ( 4143): 
+I/flutter ( 4143): When the exception was thrown, this was the stack:
+I/flutter ( 4143): #4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/postures_m5_test.dart:277:5)
+I/flutter ( 4143): <asynchronous suspension>
+I/flutter ( 4143): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4143): <asynchronous suspension>
+I/flutter ( 4143): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4143): <asynchronous suspension>
+I/flutter ( 4143): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4143): <asynchronous suspension>
+I/flutter ( 4143): 
+I/flutter ( 4143): This was caught by the test expectation on the following line:
+I/flutter ( 4143):   file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/postures_m5_test.dart line 277
+I/flutter ( 4143): The test description was:
+I/flutter ( 4143):   M5 : écran Anatomie, sélecteur « Posture », transition
+I/flutter ( 4143): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4143): 01:51 +5: M5 : écran Anatomie, sélecteur « Posture », transition [E]
+I/flutter ( 4143):   Test failed. See exception logs above.
+I/flutter ( 4143):   The test description was: M5 : écran Anatomie, sélecteur « Posture », transition
+I/flutter ( 4143):   
+I/flutter ( 4143): 01:51 +5 -1: M5 : écran Anatomie, planche, clair
+D/FlutterJNI( 4143): Sending viewport metrics to the engine.
+D/EGL_emulation( 4143): app_time_stats: avg=718.24ms min=669.01ms max=767.47ms count=2
+D/EGL_emulation( 4143): app_time_stats: avg=265.82ms min=100.44ms max=707.05ms count=4
+D/EGL_emulation( 4143): app_time_stats: avg=87.71ms min=10.53ms max=196.16ms count=11
+D/EGL_emulation( 4143): app_time_stats: avg=101.57ms min=13.58ms max=203.73ms count=11
+D/EGL_emulation( 4143): app_time_stats: avg=308.59ms min=12.36ms max=1522.75ms count=7
+D/EGL_emulation( 4143): app_time_stats: avg=667.81ms min=34.74ms max=1892.31ms count=3
+I/flutter ( 4143): 02:00 +6 -1: (tearDownAll)
+I/flutter ( 4143): 02:00 +7 -1: Some tests failed.
+Failure Details:
+Failure in method: M5 : écran Anatomie, sélecteur « Posture », transition
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: a value greater than <0.002>
+  Actual: <0.0>
+   Which: is not a value greater than <0.002>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/postures_m5_test.dart:277:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/postures_m5_test.dart line 277
+The test description was:
+  M5 : écran Anatomie, sélecteur « Posture », transition
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+
+D/EGL_emulation( 4143): app_time_stats: avg=92.13ms min=11.69ms max=235.67ms count=10
