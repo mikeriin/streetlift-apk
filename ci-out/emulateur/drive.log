@@ -11,38 +11,101 @@ Alternatively, use the flag "--android-skip-build-dependency-validation" to bypa
 Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/settings.gradle), by a plugin with the id of com.android.application. 
 If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
 
-Running Gradle task 'assembleDebug'...                             39.6s
+Running Gradle task 'assembleDebug'...                             41.6s
 ✓ Built build/app/outputs/flutter-apk/app-debug.apk
-Installing build/app/outputs/flutter-apk/app-debug.apk...        1,801ms
-Connecting to the VM Service is taking longer than expected...
-Still attempting to connect to the VM Service...
-If you do NOT see the Flutter application running, it might have crashed. The device logs (e.g. from adb or XCode) might have more details.
-If you do see the Flutter application running on the device, try re-running with --host-vmservice-port to use a specific port known to be available.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 46714
-This was attempt #50. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 50112
-This was attempt #100. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 51280
-This was attempt #150. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 52248
-This was attempt #200. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 60912
-This was attempt #250. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 49118
-This was attempt #300. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 54270
-This was attempt #350. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 46590
-This was attempt #400. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 59772
-This was attempt #450. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 52474
-This was attempt #500. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 41460
-This was attempt #550. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 56450
-This was attempt #600. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 34428
-This was attempt #650. Will retry in 0:00:01.600000.
-Exception attempting to connect to the VM Service: SocketException: Connection refused (OS Error: Connection refused, errno = 111), address = 127.0.0.1, port = 50288
-This was attempt #700. Will retry in 0:00:01.600000.
+Installing build/app/outputs/flutter-apk/app-debug.apk...           6.5s
+I/flutter ( 4903): The Dart VM service is listening on http://127.0.0.1:36707/HUWPr9T2izI=/
+W/eetlift_tracker( 4903): Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+W/eetlift_tracker( 4903): Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+W/eetlift_tracker( 4903): Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+W/eetlift_tracker( 4903): Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+D/AccessibilityBridge( 4903): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 4903): Width is zero. 0,0
+W/HWUI    ( 4903): Unknown dataspace 0
+I/WindowExtensionsImpl( 4903): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 4903): Width is zero. 0,0
+D/FlutterJNI( 4903): Sending viewport metrics to the engine.
+W/HWUI    ( 4903): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 4903): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 4903): mapper 4.x is not supported
+I/eetlift_tracker( 4903): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4903): Skipped 58 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4903): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:45759/e1R9LXldEpQ=/
+VMServiceFlutterDriver: Isolate found with number: 1446387591444699
+VMServiceFlutterDriver: Isolate 1446387591444699 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4903): 00:00 +0: (setUpAll)
+VMServiceFlutterDriver: Connected to Flutter application.
+I/flutter ( 4903): 00:00 +1: Réglages › À propos › Moteur 3D, thème sombre
+D/ProfileInstaller( 4903): Installing profile for fr.tchoupi.streetlift_tracker
+W/WindowOnBackDispatcher( 4903): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4903): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4903): app_time_stats: avg=610.34ms min=110.43ms max=1615.47ms count=4
+D/EGL_emulation( 4903): app_time_stats: avg=213.38ms min=99.87ms max=359.39ms count=5
+D/EGL_emulation( 4903): app_time_stats: avg=431.82ms min=273.58ms max=679.17ms count=3
+D/EGL_emulation( 4903): app_time_stats: avg=3994.57ms min=132.18ms max=15136.54ms count=4
+D/EGL_emulation( 4903): app_time_stats: avg=1697.56ms min=378.57ms max=3016.55ms count=2
+D/EGL_emulation( 4903): app_time_stats: avg=1705.93ms min=339.06ms max=3072.80ms count=2
+D/EGL_emulation( 4903): app_time_stats: avg=1867.12ms min=1867.12ms max=1867.12ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1971.48ms min=1971.48ms max=1971.48ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1642.28ms min=1642.28ms max=1642.28ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1786.30ms min=1786.30ms max=1786.30ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1673.31ms min=1673.31ms max=1673.31ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1724.02ms min=1724.02ms max=1724.02ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1742.43ms min=1742.43ms max=1742.43ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1900.79ms min=1900.79ms max=1900.79ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1997.52ms min=1997.52ms max=1997.52ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1680.28ms min=1680.28ms max=1680.28ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1808.10ms min=1808.10ms max=1808.10ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1842.33ms min=1842.33ms max=1842.33ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1872.50ms min=1872.50ms max=1872.50ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1806.87ms min=1806.87ms max=1806.87ms count=1
+I/flutter ( 4903): 00:54 +2: Moteur 3D, thème clair
+D/EGL_emulation( 4903): app_time_stats: avg=1572.52ms min=1572.52ms max=1572.52ms count=1
+D/FlutterJNI( 4903): Sending viewport metrics to the engine.
+W/eetlift_tracker( 4903): Suspending all threads took: 65.918ms
+I/eetlift_tracker( 4903): NativeAlloc concurrent mark compact GC freed 392KB AllocSpace bytes, 2(40KB) LOS objects, 49% free, 2596KB/5192KB, paused 67.604ms,141.505ms total 616.534ms
+D/EGL_emulation( 4903): app_time_stats: avg=1650.54ms min=1650.54ms max=1650.54ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=743.06ms min=117.11ms max=1808.22ms count=3
+D/EGL_emulation( 4903): app_time_stats: avg=1801.81ms min=1801.81ms max=1801.81ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1408.75ms min=1408.75ms max=1408.75ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1728.21ms min=1728.21ms max=1728.21ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1683.90ms min=115.66ms max=3252.13ms count=2
+D/EGL_emulation( 4903): app_time_stats: avg=1605.87ms min=1605.87ms max=1605.87ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=2006.57ms min=2006.57ms max=2006.57ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1728.27ms min=318.83ms max=3137.71ms count=2
+I/flutter ( 4903): 01:15 +3: M2 : Anatomie, groupe Dos, 4 vues, thème sombre
+D/EGL_emulation( 4903): app_time_stats: avg=1593.11ms min=1593.11ms max=1593.11ms count=1
+D/FlutterJNI( 4903): Sending viewport metrics to the engine.
+D/EGL_emulation( 4903): app_time_stats: avg=1853.11ms min=1853.11ms max=1853.11ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1100.87ms min=238.25ms max=3503.94ms count=4
+D/EGL_emulation( 4903): app_time_stats: avg=861.19ms min=148.46ms max=2225.41ms count=3
+D/EGL_emulation( 4903): app_time_stats: avg=1284.53ms min=381.23ms max=2187.83ms count=2
+D/EGL_emulation( 4903): app_time_stats: avg=1638.75ms min=53.81ms max=4518.01ms count=3
+D/EGL_emulation( 4903): app_time_stats: avg=657.75ms min=153.59ms max=1558.34ms count=3
+D/EGL_emulation( 4903): app_time_stats: avg=2227.78ms min=334.71ms max=4120.85ms count=2
+D/EGL_emulation( 4903): app_time_stats: avg=656.61ms min=125.66ms max=1614.68ms count=3
+D/EGL_emulation( 4903): app_time_stats: avg=2368.98ms min=319.58ms max=4418.37ms count=2
+D/EGL_emulation( 4903): app_time_stats: avg=647.52ms min=87.76ms max=1621.13ms count=3
+D/EGL_emulation( 4903): app_time_stats: avg=2445.43ms min=336.56ms max=4554.30ms count=2
+D/EGL_emulation( 4903): app_time_stats: avg=998.43ms min=186.12ms max=2442.10ms count=3
+D/EGL_emulation( 4903): app_time_stats: avg=666.16ms min=169.53ms max=1893.77ms count=4
+D/EGL_emulation( 4903): app_time_stats: avg=618.52ms min=46.81ms max=2298.14ms count=5
+I/flutter ( 4903): 02:02 +4: M2 : Anatomie, groupe Dos, 4 vues, thème clair
+D/FlutterJNI( 4903): Sending viewport metrics to the engine.
+D/EGL_emulation( 4903): app_time_stats: avg=680.65ms min=65.11ms max=2455.39ms count=4
+D/EGL_emulation( 4903): app_time_stats: avg=978.04ms min=97.86ms max=2532.46ms count=3
+D/EGL_emulation( 4903): app_time_stats: avg=2455.67ms min=2455.67ms max=2455.67ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=2561.20ms min=2561.20ms max=2561.20ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=742.18ms min=97.00ms max=2190.24ms count=4
+D/EGL_emulation( 4903): app_time_stats: avg=2531.87ms min=2531.87ms max=2531.87ms count=1
+D/EGL_emulation( 4903): app_time_stats: avg=1147.18ms min=86.02ms max=4108.93ms count=4
+D/EGL_emulation( 4903): app_time_stats: avg=651.33ms min=99.68ms max=1633.70ms count=3
+D/EGL_emulation( 4903): app_time_stats: avg=2296.59ms min=318.79ms max=4274.38ms count=2
+D/EGL_emulation( 4903): app_time_stats: avg=156.07ms min=99.74ms max=212.41ms count=2
+I/flutter ( 4903): 02:33 +5: (tearDownAll)
+I/flutter ( 4903): 02:33 +6: All tests passed!
+D/EGL_emulation( 4903): app_time_stats: avg=151.63ms min=26.10ms max=373.94ms count=6
+All tests passed.

@@ -11,63 +11,34 @@ Alternatively, use the flag "--android-skip-build-dependency-validation" to bypa
 Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/settings.gradle), by a plugin with the id of com.android.application. 
 If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
 
-Running Gradle task 'assembleDebug'...                             89.2s
+Running Gradle task 'assembleDebug'...                             39.8s
 ✓ Built build/app/outputs/flutter-apk/app-debug.apk
-Installing build/app/outputs/flutter-apk/app-debug.apk...        2,588ms
-W/eetlift_tracker( 3876): Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
-W/eetlift_tracker( 3876): Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
-W/eetlift_tracker( 3876): Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
-W/eetlift_tracker( 3876): Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
-D/AccessibilityBridge( 3876): Setting not found: accessibility_display_inversion_enabled, using default: 0
-D/FlutterRenderer( 3876): Width is zero. 0,0
-W/HWUI    ( 3876): Unknown dataspace 0
-W/eetlift_tracker( 3876): Verification of void androidx.window.layout.WindowInfoTracker.overrideDecorator(androidx.window.layout.WindowInfoTrackerDecorator) took 125.782ms (47.70 bytecodes/s) (2216B approximate peak alloc)
-I/WindowExtensionsImpl( 3876): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
-D/FlutterRenderer( 3876): Width is zero. 0,0
-D/FlutterJNI( 3876): Sending viewport metrics to the engine.
-W/HWUI    ( 3876): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
-W/HWUI    ( 3876): Failed to initialize 101010-2 format, error = EGL_SUCCESS
-I/Gralloc4( 3876): mapper 4.x is not supported
-I/eetlift_tracker( 3876): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
-I/Choreographer( 3876): Skipped 127 frames!  The application may be doing too much work on its main thread.
-D/FlutterJNI( 3876): Sending viewport metrics to the engine.
-D/ProfileInstaller( 3876): Installing profile for fr.tchoupi.streetlift_tracker
-I/eetlift_tracker( 3876): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
-VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:42489/oOx2iQ1ToVM=/
-VMServiceFlutterDriver: Isolate found with number: 5579864383911579
-VMServiceFlutterDriver: Isolate 5579864383911579 is runnable.
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,011ms
+I/Choreographer( 4720): Skipped 53 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4720): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:42413/2nt3MFjzARA=/
+VMServiceFlutterDriver: Isolate found with number: 6139345118163699
+VMServiceFlutterDriver: Isolate 6139345118163699 is runnable.
 VMServiceFlutterDriver: Isolate is paused at start.
 VMServiceFlutterDriver: Attempting to resume isolate
-I/flutter ( 3876): 00:00 +0: (setUpAll)
-VMServiceFlutterDriver: Connected to Flutter application.
-I/flutter ( 3876): 00:00 +1: Réglages › À propos › Moteur 3D, thème sombre
-I/Choreographer( 3876): Skipped 31 frames!  The application may be doing too much work on its main thread.
-D/EGL_emulation( 3876): app_time_stats: avg=1762.05ms min=429.45ms max=4165.60ms count=3
-W/WindowOnBackDispatcher( 3876): OnBackInvokedCallback is not enabled for the application.
-W/WindowOnBackDispatcher( 3876): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
-D/EGL_emulation( 3876): app_time_stats: avg=692.58ms min=570.38ms max=814.78ms count=2
-D/EGL_emulation( 3876): app_time_stats: avg=371.20ms min=269.16ms max=620.52ms count=4
-I/eetlift_tracker( 3876): Background concurrent mark compact GC freed 1911KB AllocSpace bytes, 3(60KB) LOS objects, 49% free, 2592KB/5184KB, paused 119us,73.313ms total 767.459ms
-D/EGL_emulation( 3876): app_time_stats: avg=1315.08ms min=1315.08ms max=1315.08ms count=1
-D/EGL_emulation( 3876): app_time_stats: avg=2724.22ms min=2724.22ms max=2724.22ms count=1
-D/EGL_emulation( 3876): app_time_stats: avg=1042.63ms min=273.13ms max=2569.31ms count=3
 Unhandled exception:
-DriverError: Failed to fulfill RequestData due to remote error
-Original error: ext.flutter.driver: (112) Service has disappeared
-Original stack trace:
+getIsolate: (112) Service has disappeared
 #0      new _OutstandingRequest (package:vm_service/src/vm_service.dart:265:34)
 #1      VmService._call.<anonymous closure> (package:vm_service/src/vm_service.dart:1921:25)
 #2      VmService._call (package:vm_service/src/vm_service.dart:1933:8)
-#3      VmService.callServiceExtension (package:vm_service/src/vm_service.dart:1872:14)
-#4      VMServiceFlutterDriver.sendCommand (package:flutter_driver/src/driver/vmservice_driver.dart:327:12)
-#5      FlutterDriver.requestData (package:flutter_driver/src/driver/driver.dart:585:13)
-#6      integrationDriver (package:integration_test/integration_test_driver.dart:71:42)
+#3      VmService.getIsolate (package:vm_service/src/vm_service.dart:1009:7)
+#4      VMServiceFlutterDriver.connect.waitForServiceExtension (package:flutter_driver/src/driver/vmservice_driver.dart:182:57)
 <asynchronous suspension>
-
-
-#0      VMServiceFlutterDriver.sendCommand (package:flutter_driver/src/driver/vmservice_driver.dart:340:7)
+#5      _warnIfSlow.<anonymous closure> (package:flutter_driver/src/driver/vmservice_driver.dart:619:31)
 <asynchronous suspension>
-#1      FlutterDriver.requestData (package:flutter_driver/src/driver/driver.dart:585:7)
+#6      _warnIfSlow (package:flutter_driver/src/driver/vmservice_driver.dart:619:5)
 <asynchronous suspension>
-#2      integrationDriver (package:integration_test/integration_test_driver.dart:71:29)
+#7      VMServiceFlutterDriver.connect (package:flutter_driver/src/driver/vmservice_driver.dart:238:5)
 <asynchronous suspension>
+#8      integrationDriver (package:integration_test/integration_test_driver.dart:70:32)
+<asynchronous suspension>
+Failed to stop app
+adb uninstall failed: ProcessException: Process exited abnormally with exit code 1:
+adb: device offline
+  Command: /usr/local/lib/android/sdk/platform-tools/adb -s emulator-5554 uninstall fr.tchoupi.streetlift_tracker
+Failed to uninstall app

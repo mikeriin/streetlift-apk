@@ -17,8 +17,8 @@ validation_L5-C_apres_320_200pct_stats_apercu.png	identique
 validation_L5-C_apres_320_200pct_stats_historique.png	identique	
 validation_L5-C_apres_320_200pct_stats_parcours.png	identique	
 validation_L5-C_apres_320_200pct_stats_performances.png	identique	
-validation_L5-C_apres_catalogue_wod_clair.png	294 pixels différents	zone (515, 1317, 542, 1334)
-validation_L5-C_apres_catalogue_wod_sombre.png	288 pixels différents	zone (515, 1317, 542, 1334)
+validation_L5-C_apres_catalogue_wod_clair.png	131 pixels différents	zone (516, 1317, 527, 1334)
+validation_L5-C_apres_catalogue_wod_sombre.png	127 pixels différents	zone (516, 1317, 527, 1334)
 validation_L5-C_apres_chrono_wod_clair.png	identique	
 validation_L5-C_apres_chrono_wod_sombre.png	identique	
 validation_L5-C_apres_depart_programme_clair.png	identique	

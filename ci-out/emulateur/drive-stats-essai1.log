@@ -11,14 +11,22 @@ Alternatively, use the flag "--android-skip-build-dependency-validation" to bypa
 Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/settings.gradle), by a plugin with the id of com.android.application. 
 If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
 
-Running Gradle task 'assembleDebug'...                             25.5s
+Running Gradle task 'assembleDebug'...                             72.3s
 ✓ Built build/app/outputs/flutter-apk/app-debug.apk
-Installing build/app/outputs/flutter-apk/app-debug.apk...        1,171ms
-I/eetlift_tracker( 5888): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
-I/Choreographer( 5888): Skipped 56 frames!  The application may be doing too much work on its main thread.
-D/FlutterJNI( 5888): Sending viewport metrics to the engine.
-VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:42131/aDactyMhdEA=/
-VMServiceFlutterDriver: Isolate found with number: 3800865627162447
+Installing build/app/outputs/flutter-apk/app-debug.apk...        2,267ms
+W/HWUI    ( 4011): Unknown dataspace 0
+I/WindowExtensionsImpl( 4011): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 4011): Width is zero. 0,0
+D/FlutterJNI( 4011): Sending viewport metrics to the engine.
+W/HWUI    ( 4011): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 4011): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 4011): mapper 4.x is not supported
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:35911/zx4t1SuJBEg=/
+I/Choreographer( 4011): Skipped 137 frames!  The application may be doing too much work on its main thread.
+D/ProfileInstaller( 4011): Installing profile for fr.tchoupi.streetlift_tracker
+I/eetlift_tracker( 4011): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+D/FlutterJNI( 4011): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Isolate found with number: 8394557663730511
 Unhandled exception:
 getIsolate: (112) Service has disappeared
 #0      new _OutstandingRequest (package:vm_service/src/vm_service.dart:265:34)
