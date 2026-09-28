@@ -218,7 +218,8 @@
     -10,
     60
    ]
-  }
+  },
+  "equilibre_charge": true
  },
  "ordre": [
   "haut",
@@ -270,6 +271,11 @@
    "type": "sens",
    "objet": "charge",
    "min": 0.25
+  },
+  {
+   "nom": "equilibre_systeme",
+   "type": "centre_sur_appui",
+   "tolerance": 0.06
   }
  ]
 }

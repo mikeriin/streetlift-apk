@@ -3,34 +3,34 @@
  "clips": [
   {
    "id": "back-squat",
-   "fichier": null,
-   "statut": "refuse",
+   "fichier": "back-squat.json.gz",
+   "statut": "valide",
    "date": "2026-09-28",
-   "empreinte": "582dfb2889210000",
+   "empreinte": "644748ba10230000",
    "controles": {
     "longueurs": {
      "ok": true,
      "detail": "écart max 0.0000 mm"
     },
     "contacts": {
-     "ok": false,
-     "detail": "écart max 17.29 cm (6-7@0.5 (pied))"
+     "ok": true,
+     "detail": "écart max 0.69 cm (p0)"
     },
     "materiel": {
-     "ok": false,
-     "detail": "pénétration max 19.0 mm (4-5@0.5)"
+     "ok": true,
+     "detail": "pénétration max 0.1 mm (3-4@0.5)"
     },
     "sol": {
-     "ok": false,
-     "detail": "sous le sol 19.0 mm"
+     "ok": true,
+     "detail": "sous le sol 0.1 mm"
     },
     "charge_posee": {
      "ok": true,
      "detail": "barre-dos max 0.19 cm"
     },
     "corps": {
-     "ok": false,
-     "detail": "recouvrement max 18.4 mm (6-7@0.5 jambe_l/jambe_r)"
+     "ok": true,
+     "detail": "recouvrement max 0.0 mm (-)"
     },
     "limites": {
      "ok": true,
@@ -38,19 +38,23 @@
     },
     "amplitude_parallele": {
      "ok": true,
-     "detail": "hanche_sous_genou : +2.0 cm"
+     "detail": "hanche_sous_genou : +1.0 cm"
     },
     "trajectoire_barre": {
-     "ok": false,
-     "detail": "charge : écart horizontal max 6.3 cm"
+     "ok": true,
+     "detail": "charge : écart horizontal max 0.3 cm"
     },
     "sens": {
      "ok": true,
      "detail": "charge monte en concentrique, descend en excentrique"
     },
+    "equilibre_systeme": {
+     "ok": true,
+     "detail": "centre de masse corps + charge : écart max 3.2 cm au milieu du pied"
+    },
     "taille": {
      "ok": true,
-     "detail": "1862 octets"
+     "detail": "1729 octets"
     }
    }
   },
@@ -59,7 +63,7 @@
    "fichier": "dips.json.gz",
    "statut": "valide",
    "date": "2026-09-28",
-   "empreinte": "a3b6809fef1e0000",
+   "empreinte": "6ba876f8841f0000",
    "controles": {
     "longueurs": {
      "ok": true,
@@ -67,7 +71,7 @@
     },
     "contacts": {
      "ok": true,
-     "detail": "écart max 0.20 cm (4-5@0.5)"
+     "detail": "écart max 0.21 cm (4-5@0.5)"
     },
     "materiel": {
      "ok": true,
@@ -91,7 +95,7 @@
     },
     "trajectoire": {
      "ok": true,
-     "detail": "centre_de_masse : écart horizontal max 0.0 cm"
+     "detail": "centre_de_masse : écart horizontal max 1.2 cm"
     },
     "sens": {
      "ok": true,
@@ -99,11 +103,11 @@
     },
     "pieds_decolles": {
      "ok": true,
-     "detail": "point le plus bas 64.6 cm au-dessus du sol"
+     "detail": "point le plus bas 78.2 cm au-dessus du sol"
     },
     "taille": {
      "ok": true,
-     "detail": "1730 octets"
+     "detail": "1780 octets"
     }
    }
   },
@@ -112,7 +116,7 @@
    "fichier": "traction-pronation.json.gz",
    "statut": "valide",
    "date": "2026-09-28",
-   "empreinte": "61f08592ef260000",
+   "empreinte": "17ab08b98c270000",
    "controles": {
     "longueurs": {
      "ok": true,
@@ -160,7 +164,7 @@
     },
     "taille": {
      "ok": true,
-     "detail": "2065 octets"
+     "detail": "2111 octets"
     }
    }
   }

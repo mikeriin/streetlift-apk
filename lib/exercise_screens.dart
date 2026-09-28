@@ -357,7 +357,7 @@ class _Sheet extends StatelessWidget {
         statut: anim.statut,
       );
     }
-    return Column(
+    final demo2d = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         PoseDemo(pose: anim, label: entry.nom),
@@ -372,6 +372,17 @@ class _Sheet extends StatelessWidget {
             ),
           ),
       ],
+    );
+    // M6 : exercice converti → mannequin 3D animé (repli : 2D ci-dessus).
+    if (!ExerciseAnimation.converted(entry.id)) return demo2d;
+    return ExerciseAnimation(
+      key: ValueKey('fiche-animation-${entry.id}'),
+      id: entry.id,
+      primaires: detail.primaires,
+      secondaires: detail.secondaires,
+      stabilisateurs: detail.stabilisateurs,
+      etires: detail.etires,
+      fallback: demo2d,
     );
   }
 

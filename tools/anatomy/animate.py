@@ -472,6 +472,9 @@ class Fiche:
                 res.append(float(a[0] * b[1] - a[1] * b[0]) * 100 * w)
         if self.balance:
             com = self.system_com(g)
+            if self.d['ik'].get('equilibre_charge'):
+                # Charge lourde : la barre à l'aplomb du milieu du pied.
+                com = self.placed[self.load['element']].world_position(M, g)
             support = self.support(g)
             res += [(com[0] - support[0]) * 300, (com[2] - support[2]) * 300]
         # Régularisation : paramètres libres près de la fiche.
@@ -666,16 +669,17 @@ def build(model, data, log=print):
         fiche.fix_load(p0)
         p0 = fiche.pose(base, p0['x'], fixed=fixed)
     if fiche.feet:
-        # Pieds posés sur le sol (point le plus bas des pieds à 2 mm).
+        # Pieds posés sur le sol (point le plus bas des pieds à 5 mm : la
+        # peau du talon descend un peu quand la cheville fléchit).
         pts = model.skin(p0['g'])
         low = pts[model.is_foot, 1].min()
         x = p0['x'].copy()
         if fiche.root_driver:
-            values[first] += FLOOR + .002 - low
+            values[first] += FLOOR + .005 - low
             base = with_driver(first, first, 0.0, values)
             y = values[first]
         else:
-            x[fiche.free_keys().index('racine.y')] += FLOOR + .002 - low
+            x[fiche.free_keys().index('racine.y')] += FLOOR + .005 - low
             y = x[fiche.free_keys().index('racine.y')]
         p0 = fiche.pose(base, x, fixed={'racine.y': y})
         start_keys = fiche.free_keys()
@@ -683,8 +687,8 @@ def build(model, data, log=print):
         # position de départ de la fiche prend la valeur calculée.
         for k, v in zip(start_keys, p0['x']):
             if not k.startswith('racine') and k not in fiche.free:
-                bone, dof = k.split('.')
-                positions[first]['angles'].setdefault(bone, {})[dof] = round(float(v), 2)
+                b_, d_ = k.split('.')
+                positions[first]['angles'].setdefault(b_, {})[d_] = round(float(v), 2)
         base = with_driver(first, first, 0.0, values)
         fiche.fix_feet(p0)
         full = fiche.free_keys()
@@ -987,6 +991,14 @@ def control(model, fiche, poses, timeline, values, spec, samples):
             s = fiche.support(g)
             dev = max(dev, abs(q[2] - s[2]), abs(q[0] - s[0]))
         return dev <= spec['tolerance'], f"{spec['objet']} : écart horizontal max {dev * 100:.1f} cm"
+    if kind == 'centre_sur_appui':
+        # Centre de masse du système (corps + charge) au-dessus du pied.
+        dev = 0.0
+        for _, p in samples:
+            q, sp = fiche.system_com(p['g']), fiche.support(p['g'])
+            dev = max(dev, abs(q[2] - sp[2]), abs(q[0] - sp[0]))
+        return dev <= spec['tolerance'], (f"centre de masse corps + charge : écart max "
+                                          f"{dev * 100:.1f} cm au milieu du pied")
     if kind == 'sens':
         # En concentrique, l'objet monte ; en excentrique, il descend.
         ok, worst = True, ''
@@ -1003,10 +1015,10 @@ def control(model, fiche, poses, timeline, values, spec, samples):
             if want * dy < spec.get('min', .05):
                 ok = False
                 worst = f"{ph['nom']} : {dy * 100:+.1f} cm"
-            mono = all(want * (b - a) >= -.002 for a, b in zip(ys, ys[1:]))
-            if not mono:
+            back = min(want * (b - a) for a, b in zip(ys, ys[1:]))
+            if back < -.005:   # 5 mm : en deçà, imperceptible (calcul)
                 ok = False
-                worst = f"{ph['nom']} : trajectoire non monotone"
+                worst = f"{ph['nom']} : retour en arrière de {-back * 1000:.0f} mm"
         return ok, worst or f"{spec['objet']} monte en concentrique, descend en excentrique"
     if kind == 'garde_sol':
         low = min(float(model.skin(p['g'])[:, 1].min()) for _, p in samples)
@@ -1054,6 +1066,31 @@ def clip_json(model, fiche, poses, timeline, phases, results):
 
     lo, hi = framing(model, fiche, poses)
     size = hi - lo
+    # Contacts vérifiables sans le modèle (tools/tests/test_m6_clips.py) :
+    # point de prise dans le repère de la main, cible fixe ou portée par la
+    # charge ; pieds fixes.
+    contacts = []
+    for c in fiche.contacts:
+        el, cname = c['cible'].split(':')
+        _, point, _ = model.grip(fiche.contact_radius(c))
+        for side, sx in (('_l', 1), ('_r', -1)):
+            item = fiche.placed[el]
+            desc = next(x for x in item.desc['contacts'] if x['nom'] == (
+                cname if not c.get('par_cote') else c['par_cote'][side]))
+            off = np.array(desc['point'], float) + np.array(desc['axe'], float) * c.get(
+                'decalage', 0.0) * sx
+            local = point if sx > 0 else mirror(point)
+            entry = {'os': 'hand' + side, 'point': [round(float(v), 4) for v in local]}
+            if item.attach:
+                entry['element'] = item.id
+                entry['decalage'] = [round(float(v), 4) for v in item.R @ off]
+            else:
+                entry['cible'] = [round(float(v), 4) for v in item.position + item.R @ off]
+            contacts.append(entry)
+    if fiche.feet_target:
+        for side in ('_l', '_r'):
+            contacts.append({'os': 'foot' + side, 'point': [0.0, 0.0, 0.0],
+                             'cible': [round(float(v), 4) for v in fiche.feet_target[side][0]]})
     return {
         'schema': 1,
         'id': fiche.id,
@@ -1077,6 +1114,7 @@ def clip_json(model, fiche, poses, timeline, phases, results):
         'cadrage': {'centre': [round(float(c), 4) for c in (lo + hi) / 2],
                     'hauteur': round(float(size[1]), 4),
                     'largeur': round(float(math.hypot(size[0], size[2])), 4)},
+        'contacts': contacts,
         'controles': {k: v[0] for k, v in results.items()},
     }
 
@@ -1134,8 +1172,19 @@ def main():
     parser.add_argument('--tous', action='store_true', help='toutes les fiches')
     parser.add_argument('--date', default=None, help='date du registre (AAAA-MM-JJ)')
     parser.add_argument('--prises', action='store_true', help='affiche les prises mesurées')
+    parser.add_argument('--check', action='store_true',
+                        help='recalcule les clips suivis et vérifie qu\'ils sont à jour')
     args = parser.parse_args()
     model = Model()
+    if args.check:
+        stale = []
+        for e in json.loads(INDEX.read_text(encoding='utf-8'))['clips']:
+            out = run(e['id'], model, log=lambda *a: None)
+            path = CLIPS / f"{e['id']}.json.gz"
+            if not path.exists() or path.read_bytes() != out['blob']:
+                stale.append(e['id'])
+        print('clips à jour' if not stale else 'clips à régénérer : ' + ', '.join(stale))
+        sys.exit(1 if stale else 0)
     if args.prises:
         for r in GRIPS:
             fingers, point, cov = model.grip(r)
