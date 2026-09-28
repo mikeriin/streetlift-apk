@@ -12,7 +12,7 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M2 | 5.1.0 | f29e880 | build n° 98 (36366289332) ; CI 3D 36364366340 | 2026-09-28 | livré |
 | M3 | 5.2.0 | 2fd86d2 | build n° 99 (36382919900) ; CI 3D 36381559870 | 2026-09-28 | livré |
 | M4 | 5.3.0 | acb5034 | build n° 100 (36398571739) ; CI 3D 36393809265 | 2026-09-28 | livré |
-| M4b | 5.3.1 | — | — | 2026-09-28 | en cours |
+| M4b | 5.3.1 | 4531346 | build n° 101 (36409875811) ; CI 3D 36408180487 | 2026-09-28 | livré |
 | M4c | 5.3.2 | — | — | — | à faire |
 | M5 | 5.4.0 | — | — | — | à faire |
 | M6 | 5.5.0 | — | — | — | à faire |
