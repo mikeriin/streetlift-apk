@@ -368,7 +368,14 @@ class ExerciseAnimationState extends State<ExerciseAnimation> {
       return;
     }
     ClipRegistry.clip(widget.id).then((c) {
-      if (mounted) setState(() => c == null ? _failed = true : _clip = c);
+      if (!mounted) return;
+      setState(() {
+        if (c == null) {
+          _failed = true;
+        } else {
+          _clip = c;
+        }
+      });
     });
     if (MannequinMap.loaded == null) {
       MannequinMap.load().then((m) {

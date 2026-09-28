@@ -16,6 +16,7 @@
 // démonstration 2D reste en place.
 import 'dart:convert';
 import 'dart:io' show gzip;
+import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 import 'package:vector_math/vector_math.dart' as vm;
@@ -173,13 +174,17 @@ class MannequinClip {
       final (t0, a) = timeline[i];
       final (t1, b) = timeline[i + 1];
       if (w >= t0 && w <= t1) {
-        return (a, b, t1 > t0 ? (w - t0) / (t1 - t0) : 0);
+        return (a, b, t1 > t0 ? (w - t0) / (t1 - t0) : 0.0);
       }
     }
     final (tl, last) = timeline.last;
     final first = timeline.first.$2;
     final span = duration - tl;
-    return (last, first, span > 0 ? ((w - tl) / span).clamp(0.0, 1.0) : 0);
+    return (
+      last,
+      first,
+      span > 0 ? ((w - tl) / span).clamp(0.0, 1.0).toDouble() : 0.0,
+    );
   }
 
   /// Posture à l'instant [t] (os d'aide compris).

@@ -402,23 +402,36 @@ class KoachFatigueCard extends StatelessWidget {
   /// Séries non validées retirées si la proposition est acceptée.
   final int sets;
   final VoidCallback onAccept, onRefuse;
+
+  /// M6 : contenu seul (dans la carte « Koach · séance du jour »).
+  final bool bare;
   const KoachFatigueCard({
     super.key,
     required this.level,
     required this.sets,
     required this.onAccept,
     required this.onRefuse,
+    this.bare = false,
   });
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(bottom: 12),
-    child: KCard(
-      key: const ValueKey('koach-fatigue'),
-      accent: SL.bordeaux,
-      radius: 20,
-      padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
-      child: Column(
+  Widget build(BuildContext context) {
+    if (bare) {
+      return KeyedSubtree(key: const ValueKey('koach-fatigue'), child: _body());
+    }
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: KCard(
+        key: const ValueKey('koach-fatigue'),
+        accent: SL.bordeaux,
+        radius: 20,
+        padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+        child: _body(),
+      ),
+    );
+  }
+
+  Widget _body() => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _koachHeader(
@@ -459,9 +472,7 @@ class KoachFatigueCard extends StatelessWidget {
             ],
           ),
         ],
-      ),
-    ),
-  );
+      );
 }
 
 /// Tranches de sommeil (valeur centrale enregistrée, en heures).
@@ -476,18 +487,37 @@ const koachSleepOptions = <(String, double)>[
 /// Questionnaire facultatif d'avant séance (D14) : sommeil, forme /10.
 class KoachQuestionsCard extends StatelessWidget {
   final String sessionKey;
-  const KoachQuestionsCard({super.key, required this.sessionKey});
+
+  /// M6 : contenu seul (dans la carte « Koach · séance du jour »).
+  final bool bare;
+  const KoachQuestionsCard({
+    super.key,
+    required this.sessionKey,
+    this.bare = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final a = store.koach.answers[sessionKey];
+    if (bare) {
+      return KeyedSubtree(
+        key: const ValueKey('koach-questions'),
+        child: _body(context),
+      );
+    }
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: KCard(
         key: const ValueKey('koach-questions'),
         radius: 20,
         padding: const EdgeInsets.fromLTRB(14, 12, 14, 8),
-        child: Column(
+        child: _body(context),
+      ),
+    );
+  }
+
+  Widget _body(BuildContext context) {
+    final a = store.koach.answers[sessionKey];
+    return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _koachHeader(
@@ -548,8 +578,6 @@ class KoachQuestionsCard extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
     );
   }
 }
