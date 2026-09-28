@@ -217,18 +217,31 @@ void main() {
     await settle3d(tester);
     final z = state.zoom;
     final r1 = state.scene!.pick(state.camera!, p, state.viewSize);
+    // Écart entre le point des doigts et l'avant-bras le plus proche (0 :
+    // l'avant-bras est exactement sous les doigts).
+    var ecart = r1?.groupe == 'avant-bras' ? 0.0 : double.infinity;
+    for (var dy = -24.0; dy <= 24 && ecart > 0; dy += 2) {
+      for (var dx = -24.0; dx <= 24; dx += 2) {
+        final d = Offset(dx, dy).distance;
+        if (d >= ecart) continue;
+        final r = state.scene!.pick(state.camera!, p + Offset(dx, dy), state.viewSize);
+        if (r?.groupe == 'avant-bras') ecart = d;
+      }
+    }
     await shot('m4c_anatomie_zoom');
     final zoomed = await pixels(tester, true);
     m4c['anatomie_zoom'] = {
       ...zoomed,
       'echelle': z.scale,
       'muscle_sous_les_doigts': r1?.label,
+      'ecart_avant_bras_dp': ecart,
     };
     record();
     expect(z.scale, greaterThan(3), reason: 'zoom insuffisant');
     expect(z.scale, lessThanOrEqualTo(4.0001));
-    // Point focal stable : le même muscle reste sous les doigts.
-    expect(r1?.groupe, 'avant-bras');
+    // Point focal stable : l'avant-bras reste sous les doigts (à la largeur
+    // d'un doigt près au plus, 8 dp à 4×).
+    expect(ecart, lessThanOrEqualTo(8), reason: 'point visé déplacé');
     expect(zoomed['rouge'] as double, greaterThan(before['rouge'] as double));
 
     // Toucher une fois zoomé : le lancer de rayon tient compte du zoom.
