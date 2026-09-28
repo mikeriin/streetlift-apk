@@ -1,0 +1,8 @@
+{
+  "reduit": {
+    "lecture": false,
+    "temps": 3.0
+  },
+  "koach_sombre": "Sommeil moins de 5 h · Fatigue probable : −30 % proposé",
+  "koach_clair": "Sommeil moins de 5 h · Fatigue probable : −30 % proposé"
+}
