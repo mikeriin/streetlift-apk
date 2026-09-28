@@ -3,11 +3,11 @@
 Tu es lancé par la tâche planifiée « Kalis Track — pipeline mannequin 3D », dans une session neuve, **sans personne pour répondre en direct**. Ce pipeline remplace progressivement l'affichage des muscles et les démonstrations 2D par un mannequin anatomique 3D animé. **Un lot = une seule action**, dont le résultat se constate dans l'application après la mise à jour. Concentre-toi sur ton lot : ne fais rien qui appartienne à un autre lot.
 
 ## 1. Démarrage
-(Jusqu'à M4b, le projet est livré dans `streetlift_tracker_v33.zip` sur `main`. À partir de M4c, `main` contient directement les sources : partout où ce fichier parle du ZIP, lis « les sources sur `main` » ; M4c met ce texte à jour.)
+(Depuis M4c, 5.3.2, `main` contient directement les sources du projet Flutter à sa racine : plus de ZIP. Le dernier état livré en ZIP est au commit 4531346 de `main`.)
 1. `add_repo` mikeriin/streetlift-apk en accès `push`, puis clone (commande donnée par l'outil).
 2. `git fetch origin pipeline` ; lis ce fichier, `pipeline/3d/ETAT_3D.md` et `pipeline/3d/DECISIONS_3D.md`.
 3. Ton lot est le **premier lot du tableau §8 dont le statut n'est pas « livré »** dans `ETAT_3D.md`. Lis son prompt `pipeline/3d/prompts/M<NN>.txt` (numéro sur 2 chiffres : M1 → `M01.txt`, M4b → `M04b.txt`, M4c → `M04c.txt`) et exécute-le intégralement. Si ce lot est marqué « en cours » depuis plus de 6 h, repars de l'état réel du dépôt (commits, branches) sans refaire ce qui est poussé.
-4. Base : `streetlift_tracker_v33.zip` sur `main`. Vérifie la version prérequise (§8). Si elle ne correspond pas : notification d'échec (§5) et arrêt.
+4. Base : les sources sur `main` (`version:` de `pubspec.yaml`). Vérifie la version prérequise (§8). Si elle ne correspond pas : notification d'échec (§5) et arrêt.
 5. Marque ton lot « en cours » dans `ETAT_3D.md` et pousse `pipeline`.
 
 ## 2. Décisions du propriétaire (27/09/2026) — ne pas remettre en cause
@@ -32,13 +32,13 @@ Tu es lancé par la tâche planifiée « Kalis Track — pipeline mannequin 3D �
 - Tant que la conversion n'est pas finie, les exercices non convertis gardent la démonstration 2D actuelle (`lib/pose_cutout.dart`, `pose_engine.dart`) ; aucun écran ne doit perdre son contenu.
 - Rendu économe : on ne dessine que ce qui est visible ; scène fixe = rendu à la demande (pas de boucle continue) ; animations en pause hors écran et en arrière-plan ; réduction des animations Android = images clés fixes.
 - Budgets de référence : 60 images/s visées ; mannequin d'exécution ≤ 60 000 triangles ; clip ≤ 5 Ko compressé ; mémoire des textures mesurée et consignée.
-- Blender sans interface : `pip install bpy --break-system-packages` (version 4.x compatible Python 3.11). Tous les scripts de fabrication des ressources sont livrés dans le ZIP (`tools/anatomy/`), relançables, et leurs sorties vérifiées par des tests.
+- Blender sans interface : `pip install bpy --break-system-packages` (version 4.x compatible Python 3.11). Tous les scripts de fabrication des ressources sont dans les sources (`tools/anatomy/`), relançables, et leurs sorties vérifiées par des tests.
 - Licence : ressources dérivées du modèle sous CC BY-SA 4.0, crédits exacts (texte de `ATTRIBUTION.txt` du dépôt source) dans `assets/anatomy/ATTRIBUTION.md` et l'écran « Sources et licences » ; le code reste sous sa licence.
 - Ne supprime aucune fonctionnalité, ne touche ni aux données de l'utilisateur, ni au format de sauvegarde, ni à l'identifiant Android, ni à la signature (`signing/`) ; ne reproduis aucun secret.
 
 ## 4. Contrôles, CI et économie de crédits
-- Pas de SDK Flutter local (proxy) : regroupe formatage, analyse, tests, build et captures en **un minimum de passages** sur la branche temporaire `claude/ci-3d` (workflow `.github/workflows/ci-3d.yml`, créé en M1 ; jamais `claude/ci-tools`). Les captures d'écran sont recommitées sur cette branche par la CI (pas d'artefacts à télécharger).
-- Contrôles obligatoires à chaque lot : `dart format --output=none --set-exit-if-changed lib test`, `flutter analyze`, suite Dart complète, tests Python (`tools/tests`, `verify_project.py`), `package_release.py --check`. Aucune assertion retirée, aucun test désactivé.
+- Pas de SDK Flutter local (proxy) : regroupe formatage, analyse, tests, build et captures en **un minimum de passages** sur la branche temporaire `claude/ci-3d` (workflow `.github/workflows/ci-3d.yml`, créé en M1 ; jamais `claude/ci-tools`). Depuis M4c : pose l'arbre du lot sur la tête de `claude/ci-3d` (`git commit-tree <arbre> -p origin/claude/ci-3d`, puis push de ce commit : avance rapide, sans réécriture), méthode dans `docs/CI_3D.md` ; le push déclenche aussi un build signé de contrôle (`build-apk.yml`). Les captures d'écran sont recommitées sur cette branche par la CI (pas d'artefacts à télécharger).
+- Contrôles obligatoires à chaque lot : `dart format --output=none --set-exit-if-changed lib test`, `flutter analyze`, suite Dart complète, tests Python (`tools/tests`, `verify_project.py`), `package_release.py --check` et `check_release_without_secrets.py --tree` (arbre suivi, fichier par fichier, avant chaque push). Aucune assertion retirée, aucun test désactivé.
 - Contrôle visuel obligatoire : captures du vrai rendu (émulateur en CI, méthode établie par M1), que tu **regardes** (outil Read) avant de livrer. Corrige tant qu'un rendu est faux.
 - Lis seulement les fichiers utiles au lot ; pas de sous-agents sauf nécessité réelle ; rapports concis.
 - Émulateur sans GPU (rendu 3D sur processeur, 3 à 7 s par image) : garde le rendu court. Jamais de `pumpAndSettle` ni d'attente « jusqu'à stabilité » sur un écran qui contient une vue 3D (nombre fixe de `pump`) ; délai par test de capture ≤ 5 min et délai du job émulateur ≤ 30 min, pour qu'un blocage échoue vite au lieu d'user 90 min ; captures limitées aux écrans du lot (pas de re-capture des lots précédents) ; résolution d'émulateur réduite (par exemple 480 × 854) si la lisibilité des captures reste bonne. La première passe CI d'un lot qui touche `ci-3d.yml` applique ces règles.
@@ -54,11 +54,11 @@ Une seule page claude.ai « Suivi mannequin 3D » (outil Artifact ; charge d'abo
 
 ## 7. Fin de lot
 1. Version : celle du tableau §8 (pubspec `version: x.y.z+N` avec N = N précédent + 1, réglages / À propos), README et SUIVI_PROJET.md complétés (section du lot).
-2. Pousse le ZIP sur `main` (fast-forward uniquement ; si `main` a bougé, remets-toi à jour et relance les contrôles) ; vérifie que le run `build-apk.yml` signé réussit.
+2. Publie en poussant tes commits de sources sur `main` (avance rapide uniquement ; si `main` a bougé, remets-toi à jour puis relance les contrôles) ; vérifie que le run `build-apk.yml` signé réussit sur le commit poussé.
 3. `LIVRAISON_<LOT>.md` dans le projet claude.ai (outil Projects, `claude/LIVRAISON_<LOT>.md`) et dans `pipeline/3d/livraisons/`.
-4. Mets à jour `ETAT_3D.md` (lot, version, commit, run, date, statut « livré », lien de la page) et pousse `pipeline` (jamais de zip sur cette branche).
+4. Mets à jour `ETAT_3D.md` (lot, version, commit, run, date, statut « livré », lien de la page) et pousse `pipeline` (jamais de sources du projet sur cette branche).
 5. Relance la tâche planifiée du pipeline (`fire_trigger`, identifiant en tête de `ETAT_3D.md`) pour le lot suivant, sauf si le prompt de ton lot dit d'attendre ; puis notifie la livraison. Après M19 : notification « Pipeline mannequin 3D terminé — installer v<version> ».
-Interdits : modifier ou créer une tâche planifiée (seulement `fire_trigger` sur celle d'ETAT_3D.md), supprimer une branche, modifier la signature ou l'identifiant, régénérer une clé, pousser un secret, pousser sur `main` un ZIP dont les contrôles ne sont pas verts.
+Interdits : modifier ou créer une tâche planifiée (seulement `fire_trigger` sur celle d'ETAT_3D.md), supprimer une branche, modifier la signature ou l'identifiant, régénérer une clé, pousser un secret, pousser sur `main` des sources dont les contrôles ne sont pas verts, réécrire l'historique de `main` (pas de force-push), y ajouter un ZIP du projet.
 
 ## 8. Enchaînement
 | Lot | Prérequis sur main | Version | Action unique | Constat du propriétaire | Effort |
