@@ -2,8 +2,10 @@
 import base64
 import binascii
 from pathlib import PurePosixPath
+from pathlib import Path
 import re
 import stat
+import subprocess
 import zipfile
 
 LIMIT = 25_000_000
@@ -93,3 +95,42 @@ def check_archive(path):
         if archive.testzip() is not None:
             raise PackagingError('CRC du ZIP invalide.')
     return len(names), total
+
+
+def tracked_files(root):
+    """M4c : fichiers suivis par git sous [root] (arbre du dépôt), chemins relatifs.
+
+    Hors dépôt git (copie extraite d'un artefact), tous les fichiers du dossier."""
+    root = Path(root)
+    try:
+        listing = subprocess.run(['git', 'ls-files', '-z', '--cached'], cwd=root, check=True,
+                                 capture_output=True).stdout
+    except (OSError, subprocess.CalledProcessError):
+        return sorted(p.relative_to(root) for p in root.rglob('*')
+                      if (p.is_file() or p.is_symlink()) and '.git' not in p.relative_to(root).parts)
+    return sorted(Path(name) for name in listing.decode('utf-8').split('\0') if name)
+
+
+def check_tree(root, files=None):
+    """M4c : les contrôles de livraison appliqués à l'arbre du dépôt, fichier par fichier.
+
+    Refuse tout fichier suivi que la livraison exclurait (clé, secret local,
+    cache, artefact, ZIP), tout lien symbolique, tout contenu secret (même
+    renommé ou encodé) et un arbre de plus de 25 Mo."""
+    root = Path(root)
+    files = tracked_files(root) if files is None else [Path(f) for f in files]
+    total = 0
+    for relative in files:
+        path = root / relative
+        if path.is_symlink():
+            raise PackagingError(f'Lien symbolique interdit : {relative.as_posix()}.')
+        if excluded(PurePosixPath(relative.as_posix())):
+            raise PackagingError(f'Fichier local, secret ou artefact suivi : {relative.as_posix()}.')
+        if not path.is_file():
+            continue  # supprimé de la copie de travail, pas encore du dépôt
+        data = path.read_bytes()
+        total += len(data)
+        if total > LIMIT:
+            raise PackagingError('Arbre du dépôt supérieur à 25 000 000 octets.')
+        check_content(PurePosixPath(relative.as_posix()), data)
+    return len(files), total

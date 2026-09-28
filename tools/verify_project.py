@@ -2,11 +2,51 @@
 import argparse
 import gzip
 import json
-from pathlib import Path
+from pathlib import Path, PurePosixPath
+import subprocess
 import xml.etree.ElementTree as ET
 from signing import SigningError, verify_restored
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+# M4c : motifs que le .gitignore racine doit couvrir (échantillons des
+# fichiers refusés par tools/release_security.py).
+IGNORED_SAMPLES = (
+    'build/app/outputs/flutter-apk/app-release.apk', '.dart_tool/package_config.json',
+    'flutter_scene_generated/mannequin.fsceneb', '.flutter-plugins', '.flutter-plugins-dependencies',
+    'android/local.properties', 'android/key.properties', 'android/app/upload.jks',
+    'release.keystore', 'signing/kalis_track.p12', 'signing/.restore-1', 'copie.pfx', 'cle.key',
+    '.env', '.env.local', 'streetlift_tracker_v33.zip', 'kalis-track.aab', 'android/.gradle/cache',
+    'tools/__pycache__/x.pyc',
+)
+REPO_FILES = ('.gitignore', '.gitattributes', '.github/workflows/build-apk.yml',
+              '.github/workflows/ci-3d.yml')
+
+
+def verify_repository(root=ROOT):
+    """M4c : projet Flutter à la racine du dépôt, aucun ZIP, ignorés complets."""
+    for name in ('pubspec.yaml', 'lib/main.dart', 'android/app/build.gradle.kts', 'README.md', *REPO_FILES):
+        assert (root / name).is_file(), f'{name} absent de la racine du dépôt'
+    attributes = (root / '.gitattributes').read_text(encoding='utf-8')
+    assert '* text=auto eol=lf' in attributes, 'Fins de ligne LF non déclarées'
+    for suffix in ('png', 'glb', 'gz', 'jar', 'wav'):
+        assert f'*.{suffix} binary' in attributes, f'Binaire non déclaré : {suffix}'
+    try:
+        tracked = subprocess.run(['git', 'ls-files', '-z'], cwd=root, check=True,
+                                 capture_output=True).stdout.decode().split('\0')
+    except (OSError, subprocess.CalledProcessError):
+        return None  # copie hors dépôt (artefact) : structure seule
+    tracked = [PurePosixPath(t) for t in tracked if t]
+    assert tracked, 'Aucun fichier suivi'
+    assert not any(t.suffix.lower() == '.zip' for t in tracked), 'ZIP suivi dans le dépôt'
+    assert not any(t.parts[0] == 'streetlift_tracker' for t in tracked), 'Dossier intermédiaire streetlift_tracker/'
+    check = subprocess.run(['git', 'check-ignore', '--no-index', '--stdin', '-z'], cwd=root,
+                           input='\0'.join(IGNORED_SAMPLES).encode(), capture_output=True)
+    ignored = set(check.stdout.decode().split('\0'))
+    missing = [s for s in IGNORED_SAMPLES if s not in ignored]
+    assert not missing, 'Non couverts par .gitignore : ' + ', '.join(missing)
+    return len(tracked)
 
 
 def verify(root=ROOT, signing=False):
@@ -73,6 +113,7 @@ def verify(root=ROOT, signing=False):
         assert receivers[full_name].get(ns + 'exported') == 'false'
     build = (root / 'android/app/build.gradle.kts').read_text()
     assert 'applicationId = "fr.tchoupi.streetlift_tracker"' in build
+    verify_repository(root)
     if signing:
         verify_restored(root)
     return len(ids), len(exercises)

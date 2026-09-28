@@ -1,11 +1,24 @@
+# Build signé de Kalis Track. M4c (5.3.2) : le projet Flutter est à la racine
+# du dépôt (plus de ZIP à extraire) ; étapes de contrôle et de signature
+# inchangées, la clé vient toujours des secrets GitHub.
 name: Build APK et AAB
 
 on:
   push:
     branches: ["**"]
     paths:
-      - streetlift_tracker_v33.zip
-      - .github/workflows/build-apk.yml
+      - lib/**
+      - assets/**
+      - android/**
+      - test/**
+      - tools/**
+      - hook/**
+      - integration_test/**
+      - test_driver/**
+      - pubspec.yaml
+      - pubspec.lock
+      - analysis_options.yaml
+      - .github/workflows/**
   workflow_dispatch:
 
 permissions:
@@ -33,20 +46,19 @@ jobs:
           flutter-version: '3.47.5'
           channel: stable
           cache: true
-      - name: Extraire le projet complet
+      - name: Préparer le projet (racine du dépôt)
         run: |
-          unzip -q streetlift_tracker_v33.zip
-          test -f streetlift_tracker/android/app/build.gradle.kts
-          chmod +x streetlift_tracker/android/gradlew
+          test -f android/app/build.gradle.kts
+          test ! -e streetlift_tracker_v33.zip
+          chmod +x android/gradlew
           mkdir -p validation-output
-      - name: Contrôler le ZIP et la copie du workflow sans secrets
-        working-directory: streetlift_tracker
+      - name: Contrôler l'arbre du dépôt sans secrets, fichier par fichier
         run: |
-          python3 tools/package_release.py --check ../streetlift_tracker_v33.zip
-          cmp .github/workflows/build-apk.yml ../.github/workflows/build-apk.yml
+          python3 tools/package_release.py --check
+          python3 tools/check_release_without_secrets.py --tree
           python3 tools/verify_project.py
-          sha256sum ../streetlift_tracker_v33.zip .github/workflows/build-apk.yml pubspec.lock > ../validation-output/inputs.sha256
-          git -C .. rev-parse HEAD > ../validation-output/commit.txt
+          git ls-files -z | xargs -0 sha256sum > validation-output/inputs.sha256
+          git rev-parse HEAD > validation-output/commit.txt
       - name: Installer les composants Android ciblés
         run: |
           # L1b-R1 : SDK préinstallé sur ubuntu-24.04, mais sdkmanager hors du PATH.
@@ -66,27 +78,21 @@ jobs:
           flutter --version > validation-output/flutter.txt
           java -version 2> validation-output/java.txt
           "$tools/sdkmanager" --list_installed > validation-output/android-sdk.txt
-          python3 streetlift_tracker/tools/download_bundletool.py "$RUNNER_TEMP/bundletool.jar"
+          python3 tools/download_bundletool.py "$RUNNER_TEMP/bundletool.jar"
       - name: Installer les dépendances verrouillées
-        working-directory: streetlift_tracker
         run: flutter pub get --enforce-lockfile
       - name: Contrôler le formatage
-        working-directory: streetlift_tracker
         run: dart format --output=none --set-exit-if-changed lib test
       - name: Analyser le code
-        working-directory: streetlift_tracker
-        run: flutter analyze --no-pub 2>&1 | tee ../validation-output/analyze.log
+        run: flutter analyze --no-pub 2>&1 | tee validation-output/analyze.log
       - name: Exécuter les tests de régression
-        working-directory: streetlift_tracker
         run: |
-          python3 -m unittest discover -s tools/tests -v 2>&1 | tee ../validation-output/python-tests.log
-          TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded 2>&1 | tee ../validation-output/flutter-tests.log
+          python3 -m unittest discover -s tools/tests -v 2>&1 | tee validation-output/python-tests.log
+          TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded 2>&1 | tee validation-output/flutter-tests.log
       - name: Générer les icônes
-        working-directory: streetlift_tracker
         run: dart run flutter_launcher_icons
       - name: Prouver le refus réel des releases sans secrets valides
-        working-directory: streetlift_tracker
-        run: python3 tools/check_release_without_secrets.py --output ../validation-output/without-secrets
+        run: python3 tools/check_release_without_secrets.py --output validation-output/without-secrets
       - name: Définir un numéro commun aux deux formats
         run: |
           python3 - <<'PY'
@@ -101,7 +107,6 @@ jobs:
           Path('validation-output/build-number.txt').write_text(str(code) + '\n')
           PY
       - name: Restaurer et contrôler obligatoirement la clé existante
-        working-directory: streetlift_tracker
         env:
           KALIS_KEYSTORE_BASE64: ${{ secrets.KALIS_KEYSTORE_BASE64 }}
           KALIS_KEYSTORE_PASSWORD: ${{ secrets.KALIS_KEYSTORE_PASSWORD }}
@@ -109,7 +114,6 @@ jobs:
           python3 tools/signing.py restore
           python3 tools/verify_project.py --signing
       - name: Compiler APK et AAB avec le même numéro
-        working-directory: streetlift_tracker
         env:
           KALIS_KEYSTORE_BASE64: ${{ secrets.KALIS_KEYSTORE_BASE64 }}
           KALIS_KEYSTORE_PASSWORD: ${{ secrets.KALIS_KEYSTORE_PASSWORD }}
@@ -118,14 +122,14 @@ jobs:
           flutter build appbundle --release --no-pub --build-number="$BUILD_NUMBER"
       - name: Vérifier les vrais artefacts et préparer leurs empreintes
         run: |
-          python3 streetlift_tracker/tools/verify_android_artifacts.py \
-            --apk streetlift_tracker/build/app/outputs/flutter-apk/app-release.apk \
-            --aab streetlift_tracker/build/app/outputs/bundle/release/app-release.aab \
+          python3 tools/verify_android_artifacts.py \
+            --apk build/app/outputs/flutter-apk/app-release.apk \
+            --aab build/app/outputs/bundle/release/app-release.aab \
             --android-sdk "$ANDROID_HOME" --bundletool "$RUNNER_TEMP/bundletool.jar" \
             --output validation-output --build-number "$BUILD_NUMBER"
           mkdir -p apk-output aab-output
-          cp streetlift_tracker/build/app/outputs/flutter-apk/app-release.apk apk-output/kalis-track.apk
-          cp streetlift_tracker/build/app/outputs/bundle/release/app-release.aab aab-output/kalis-track.aab
+          cp build/app/outputs/flutter-apk/app-release.apk apk-output/kalis-track.apk
+          cp build/app/outputs/bundle/release/app-release.aab aab-output/kalis-track.aab
           (cd apk-output && sha256sum kalis-track.apk > kalis-track.apk.sha256)
           (cd aab-output && sha256sum kalis-track.aab > kalis-track.aab.sha256)
       - name: Publier l'APK téléchargeable
@@ -154,4 +158,4 @@ jobs:
           retention-days: 30
       - name: Nettoyer uniquement la copie de clé du runner éphémère
         if: always()
-        run: rm -f streetlift_tracker/signing/kalis_track.p12 streetlift_tracker/signing/.restore-*
+        run: rm -f signing/kalis_track.p12 signing/.restore-*

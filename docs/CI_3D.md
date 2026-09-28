@@ -5,11 +5,14 @@ sans SDK Flutter local. Moteur : flutter_scene (Flutter GPU sur Impeller).
 
 ## Déclenchement
 
-- Workflow `.github/workflows/ci-3d.yml` (copie dans ce ZIP ; l'original est
-  à la racine de la branche `claude/ci-3d`).
+- Workflow `.github/workflows/ci-3d.yml` (M4c : même fichier sur `main` et
+  sur `claude/ci-3d`, le projet étant à la racine du dépôt).
 - Déclenché **uniquement** par un push sur `claude/ci-3d` (jamais
-  `claude/ci-tools`). Cette branche porte le ZIP à tester et `ci-3d.yml`,
-  **sans** `build-apk.yml` (pas de build signé sur la branche de test).
+  `claude/ci-tools`). Cette branche porte les sources à tester (M4c : l'arbre
+  du lot, posé sur la tête de la branche par un commit dont le contenu est
+  celui du lot, sans réécrire l'historique). `build-apk.yml` se déclenche
+  aussi sur ce push (chemins du projet) : un build signé de contrôle, sans
+  effet sur `main`.
 - Les résultats sont recommités par la CI dans `ci-out/` sur `claude/ci-3d`
   (commit « CI 3D : résultats du run … ») : `git fetch origin claude/ci-3d`
   puis lire les fichiers. Rien à télécharger.
@@ -18,8 +21,8 @@ sans SDK Flutter local. Moteur : flutter_scene (Flutter GPU sur Impeller).
 
 | Tâche | Contenu | Résultats dans `ci-out/` |
 | --- | --- | --- |
-| `checks` | Flutter 3.47.5 : `pub get` (verrou régénéré s'il est périmé), formatage, analyse, tests Python + `verify_project.py` + `package_release.py --check`, suite Dart complète, rendus de test (`KALIS_CAPTURE`), build debug | `checks.txt` (bilan), `pubspec.lock`, `pub-lock.txt`, `format.patch` (si formatage à corriger), `analyze.log`, `python-tests.log`, `flutter-tests.log`, `build-debug.log`, `flutter-version.txt` |
-| `before` | Mêmes rendus de test sur le ZIP de `main` (version Flutter de main, `FLUTTER_BEFORE`, à ajuster si un lot change de version) | comparés dans `captures-comparaison.txt` ; paires différentes dans `captures/` (`avant_*` / `apres_*`) |
+| `checks` | Flutter 3.47.5 : `pub get` (verrou régénéré s'il est périmé), formatage, analyse, tests Python + `verify_project.py` + `package_release.py --check` (M4c : arbre du dépôt) + `check_release_without_secrets.py --tree`, suite Dart complète, rendus de test (`KALIS_CAPTURE`), build debug | `checks.txt` (bilan), `pubspec.lock`, `pub-lock.txt`, `format.patch` (si formatage à corriger), `analyze.log`, `python-tests.log`, `flutter-tests.log`, `build-debug.log`, `flutter-version.txt` |
+| `before` | Mêmes rendus de test sur `main`, commit parent du lot (M4c : ZIP extrait si `main` le contient encore, sinon `git archive`) (version Flutter de main, `FLUTTER_BEFORE`, à ajuster si un lot change de version) | comparés dans `captures-comparaison.txt` ; paires différentes dans `captures/` (`avant_*` / `apres_*`) |
 | `emulator` | Émulateur Android API 35 x86_64 (pixel_7), `-gpu swangle_indirect` (OpenGL ES via ANGLE sur SwiftShader Vulkan, build d'émulateur 13823996 comme la CI de flutter_scene), `flutter drive` de `integration_test/moteur_3d_test.dart` puis (M2) de `integration_test/mannequin_mesure_test.dart` par `tools/ci3d_drive.sh` | `emulateur/*.png`, `emulateur/m1_releve.json`, `emulateur/m2_releve.json`, `emulateur/m2_mesure.json`, `emulateur/impeller.txt`, `emulateur/logcat.txt`, `emulateur/drive.log`, `emulateur/drive-mesure.log`, `emulateur/drive-code.txt` |
 | `publish` | Assemble et recommite `ci-out/` | `resultat.txt` |
 
@@ -64,7 +67,7 @@ principale dans `analysis_options.yaml`, comme `tools/perf_device/`).
 
 - Le modèle `assets/anatomy/mannequin.glb` est converti par le build hook
   (`hook/build.dart`) dans `flutter_scene_generated/` à chaque build (et à
-  `flutter test`) ; rien de généré n'est livré dans le ZIP.
+  `flutter test`) ; rien de généré n'est suivi par git (`flutter_scene_generated/.gitignore`).
 - `integration_test/moteur_3d_test.dart` : écran Anatomie, groupe Dos,
   vues Face / Dos / Profil / 3/4 en sombre (via l'application) et en clair
   (MaterialApp claire : un `SLApp` déjà monté ne relit pas le thème), nom au
@@ -85,11 +88,14 @@ principale dans `analysis_options.yaml`, comme `tools/perf_device/`).
 
 ## Pour un lot suivant
 
-1. Construire le ZIP (`python3 tools/package_release.py …`), le copier à la
-   racine de `claude/ci-3d` avec `ci-3d.yml`, pousser.
+1. M4c : poser l'arbre du lot sur la tête de `claude/ci-3d` (par exemple
+   `git commit-tree <arbre du lot> -p origin/claude/ci-3d`, puis pousser ce
+   commit : avance rapide, aucune réécriture), le workflow étant dans l'arbre.
 2. Attendre le commit de résultats, lire `ci-out/checks.txt` et
    `ci-out/resultat.txt`, appliquer `format.patch` et `pubspec.lock` si
    fournis, regarder chaque PNG de `ci-out/emulateur/`.
+4. Émulateur : seule la cible du lot est jouée (`tools/ci3d_drive.sh`,
+   M4c : `integration_test/zoom_filtres_m4c_test.dart`), délai du job 30 min.
 3. Ajouter ses propres écrans au test d'intégration (nouvelle fonction de
    capture, mêmes contrôles sans référence).
 

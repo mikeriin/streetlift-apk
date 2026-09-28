@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # M1 (CI 3D) : rendu réel de l'écran Moteur 3D (M2 : Anatomie ; M3 : fiche
-# exercice ; M4 : STATS ; M4b : transparence et filtres) sur l'émulateur
+# exercice ; M4 : STATS ; M4b : transparence et filtres ; M4c : zoom au
+# pincement et filtres normalisés) sur l'émulateur
 # Android lancé
 # par .github/workflows/ci-3d.yml (reactivecircus/android-emulator-runner).
 # Écrit dans build/ci3d/ : captures PNG, relevé JSON, moteur de rendu
@@ -36,25 +37,32 @@ cible() {
     --target="integration_test/$1.dart" \
     -d emulator-5554 > "$out/drive-$1.log" 2>&1
 }
-# M4b : lancé en premier (lot en cours) : muscles profonds vus à travers les
-# autres, écran Anatomie et ses filtres, fiche et STATS en transparence,
-# Moteur 3D avant / après. Les cibles des lots précédents ne sont relancées
-# que sur demande (CI3D_TOUT=1) : captures limitées aux écrans du lot.
-cible anatomie_m4b_test
-code_m4b=$?
-if [ "$code_m4b" -ne 0 ] && [ ! -f "$out/m4b_releve.json" ]; then
-  echo "M4b sans relevé (code $code_m4b) : adb relancé, second essai."
-  cp "$out/drive-anatomie_m4b_test.log" "$out/drive-m4b-essai1.log"
+# M4c : lancé en premier (lot en cours) : zoom au pincement (Anatomie,
+# fiche dans une page qui défile, double toucher, boutons de vue) et menus
+# « Filtres » normalisés (bibliothèque, catalogue WOD, Anatomie, sombre et
+# clair). Les cibles des lots précédents ne sont relancées que sur demande
+# (CI3D_TOUT=1) : captures limitées aux écrans du lot.
+cible zoom_filtres_m4c_test
+code_m4c=$?
+if [ "$code_m4c" -ne 0 ] && [ ! -f "$out/m4c_releve.json" ]; then
+  echo "M4c sans relevé (code $code_m4c) : adb relancé, second essai."
+  cp "$out/drive-zoom_filtres_m4c_test.log" "$out/drive-m4c-essai1.log"
   adb kill-server || true
   adb start-server || true
   timeout 60 adb wait-for-device || true
-  cible anatomie_m4b_test
-  code_m4b=$?
+  cible zoom_filtres_m4c_test
+  code_m4c=$?
 fi
+code_m4b=0
 code=0
 code_fiche=0
 code_stats=0
 if [ "${CI3D_TOUT:-0}" = "1" ]; then
+# M4b : muscles profonds vus à travers les autres, écran Anatomie, fiche et
+# STATS en transparence, Moteur 3D avant / après.
+cible anatomie_m4b_test
+code_m4b=$?
+tail -n 30 "$out/drive-anatomie_m4b_test.log"
 # STATS, résumé hebdomadaire sur le mannequin (semaine type et vide,
 # sombre et clair, bascule Face / Dos, mesure du défilement).
 cible stats_semaine_test
@@ -111,14 +119,15 @@ if [ "${CI3D_MESURE:-0}" = "1" ]; then
   code_mesure=$?
   tail -n 20 "$out/drive-mannequin_mesure_test.log"
 fi
-tail -n 40 "$out/drive-anatomie_m4b_test.log"
+tail -n 40 "$out/drive-zoom_filtres_m4c_test.log"
 kill "$logcat_pid" 2>/dev/null || true
 grep -o 'Impeller rendering backend ([^)]*)' "$out/logcat-complet.txt" | sort | uniq -c > "$out/impeller.txt" || true
 grep -iE 'flutter|impeller|vulkan|gles|AndroidRuntime|FATAL|swiftshader|angle|lowmemorykiller|DEBUG|libc|tombstone|ActivityManager' "$out/logcat-complet.txt" | tail -n 3000 > "$out/logcat.txt" || true
 rm -f "$out/logcat-complet.txt"
-echo "code_m4b=$code_m4b" > "$out/drive-code.txt"
+echo "code_m4c=$code_m4c" > "$out/drive-code.txt"
+echo "code_m4b=$code_m4b" >> "$out/drive-code.txt"
 echo "code=$code" >> "$out/drive-code.txt"
 echo "code_fiche=$code_fiche" >> "$out/drive-code.txt"
 echo "code_stats=$code_stats" >> "$out/drive-code.txt"
 echo "code_mesure=$code_mesure" >> "$out/drive-code.txt"
-[ "$code_m4b" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_fiche" -eq 0 ] && [ "$code_stats" -eq 0 ] && [ "$code_mesure" -eq 0 ]
+[ "$code_m4c" -eq 0 ] && [ "$code_m4b" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_fiche" -eq 0 ] && [ "$code_stats" -eq 0 ] && [ "$code_mesure" -eq 0 ]

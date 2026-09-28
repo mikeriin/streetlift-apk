@@ -1,9 +1,14 @@
-"""Vraies tentatives release ; seul le refus de signature attendu valide le test."""
+"""Vraies tentatives release ; seul le refus de signature attendu valide le test.
+
+M4c (5.3.2) : `--tree` contrôle d'abord, fichier par fichier, l'arbre suivi
+par git (aucune clé, aucun mot de passe, aucun fichier local ni artefact),
+sans lancer de build : à passer avant chaque push."""
 import argparse
 import json
 import os
 from pathlib import Path
 import subprocess
+from release_security import PackagingError, check_tree
 from signing import BASE64_NAME, PASSWORD_NAME
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -34,7 +39,24 @@ def check(output):
         print(f'OK : {name}, refus Gradle attendu observé.')
 
 
+def check_repository_tree(root=ROOT):
+    """Arbre suivi par git sans secret (M4c) ; lève PackagingError sinon."""
+    count, size = check_tree(root)
+    print(f'OK : arbre suivi sans secret, {count} fichiers contrôlés un par un ({size} octets).')
+    return count
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output', type=Path, required=True)
-    check(parser.parse_args().output.resolve())
+    parser.add_argument('--output', type=Path, help='journaux des tentatives de build release')
+    parser.add_argument('--tree', action='store_true', help='contrôler l’arbre suivi par git (sans build)')
+    args = parser.parse_args()
+    if not args.tree and args.output is None:
+        parser.error('--output ou --tree obligatoire')
+    if args.tree:
+        try:
+            check_repository_tree()
+        except PackagingError as error:
+            parser.exit(1, str(error) + '\n')
+    if args.output is not None:
+        check(args.output.resolve())
