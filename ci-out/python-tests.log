@@ -116,7 +116,7 @@ test_rounding_matches_excel_half_away_from_zero (test_tools.ToolsTests.test_roun
 test_shipped_assets_and_android_identity (test_tools.ToolsTests.test_shipped_assets_and_android_identity) ... ok
 
 ----------------------------------------------------------------------
-Ran 115 tests in 10.576s
+Ran 115 tests in 10.856s
 
 OK (skipped=1)
 OK : apk-absents, refus Gradle attendu observé.
@@ -182,5 +182,5 @@ Fichiers : base-r1.jsonl, cand-r1.jsonl
 programme_v33.json: 13 -> 33 octets
 programme_v33.json: 13 -> 33 octets
 OK : 40 semaines, 280 jours, 1812 exercices du programme, 625 exercices de la base.
-OK : arbre du dépôt contrôlé fichier par fichier, 597 fichiers, 13313503 octets.
-OK : arbre suivi sans secret, 597 fichiers contrôlés un par un (13313503 octets).
+OK : arbre du dépôt contrôlé fichier par fichier, 597 fichiers, 13313575 octets.
+OK : arbre suivi sans secret, 597 fichiers contrôlés un par un (13313575 octets).
