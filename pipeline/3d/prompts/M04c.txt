@@ -1,0 +1,24 @@
+LOT M4c — DÉPÔT EN SOURCES : PLUS DE ZIP, ARBORESCENCE DU PROJET (demande du propriétaire, 28/09/2026)
+Rôle : ingénieur build et CI Flutter/Android. Une seule action : `main` contient les fichiers du projet, bien structurés, à la place de `streetlift_tracker_v33.zip`. L'application ne change pas (seulement sa version).
+
+1. Structure cible sur `main`
+— Projet Flutter à la racine du dépôt (contenu de `streetlift_tracker/` du ZIP 5.3.1 : `pubspec.yaml`, `lib/`, `test/`, `assets/`, `android/`, `hook/`, `integration_test/`, `tools/`, `docs/`, README.md, SUIVI_PROJET.md, etc.), plus `.github/workflows/`. Aucun dossier `streetlift_tracker/` intermédiaire, aucun ZIP.
+— Un seul commit de restructuration sur `main`, historique conservé ; étiquette git `archive-zip-5.3.1` sur le dernier commit qui contient le ZIP.
+— `.gitignore` Flutter/Android complet (build/, .dart_tool/, flutter_scene_generated/, .flutter-plugins*, local.properties, key.properties, *.jks, *.keystore, fichiers de signature et tout ce que `tools/check_release_without_secrets.py` considère comme secret) et `.gitattributes` (fins de ligne LF pour le texte, binaires déclarés : png, glb, gz, ttf…).
+— Règle absolue : aucun secret dans l'arbre suivi par git. Vérifie avant le push, fichier par fichier, avec `check_release_without_secrets.py` adapté à l'arbre ; la signature en CI continue de venir des secrets GitHub, comme aujourd'hui (identifiant Android et clé inchangés, aucune clé régénérée).
+
+2. Contrôle d'identité
+— Script `tools/compare_tree_with_zip.py` : l'arbre de `main` après restructuration = le contenu du ZIP 5.3.1 (liste des fichiers et SHA-256), à l'exception des seuls fichiers de version (pubspec, réglages, README, SUIVI_PROJET) et des fichiers de dépôt ajoutés (.gitignore, .gitattributes). Résultat joint à la livraison.
+
+3. CI et outils
+— `build-apk.yml` : construit depuis la racine, sans extraction ; déclenché par un push sur les chemins du projet (lib/, assets/, android/, test/, tools/, hook/, integration_test/, pubspec.*, workflows) sur toute branche, et à la demande ; étapes de signature et de vérification inchangées ; l'APK signé reste l'artefact habituel.
+— `ci-3d.yml` (branche `claude/ci-3d`) adapté : plus d'extraction, rendus de référence « avant » pris sur le commit parent de `main`.
+— `package_release.py`, `verify_project.py`, `check_release_without_secrets.py`, `verify_android_artifacts.py` et les tests Python adaptés à l'arbre (plus de ZIP à produire ni à vérifier dans le dépôt ; si un paquet ZIP reste utile, il est seulement un artefact de CI). Aucune vérification retirée : chaque contrôle qui portait sur le ZIP porte désormais sur l'arbre.
+— README : section « Structure du dépôt » et « Construire l'application » à jour.
+
+4. Règles du pipeline (branche `pipeline`)
+— Mets à jour `pipeline/3d/PIPELINE_3D.md` (§1, §4, §7) et les prompts suivants qui parlent du ZIP : à partir de ce lot, un lot publie en poussant ses commits de sources sur `main` (avance rapide uniquement ; si `main` a bougé, remise à jour puis contrôles relancés). Ne modifie pas les fichiers des pipelines terminés (`pipeline/PIPELINE.md`, lots L*).
+
+5. Livraison
+— Version 5.3.2 (versionCode + 1) : l'APK signé s'installe par-dessus 5.3.1 sans perte de données (même identifiant, même signature, vérifié par `verify_android_artifacts.py`). Contrôles §4 habituels, puis run `build-apk.yml` réussi sur le nouvel arbre.
+— Constat pour le propriétaire (page de suivi) : sur GitHub, le dépôt montre les dossiers du projet (lib, assets, android…) au lieu du ZIP ; l'application 5.3.2 est identique à 5.3.1.

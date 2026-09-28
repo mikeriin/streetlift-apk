@@ -4,6 +4,7 @@
 Voir `PIPELINE_3D.md` §2 (réponses 1a à 17a). Réglages d'affichage 3D activés par défaut : « Nom du muscle au toucher », « Os visibles ».
 Modèle Claude : Opus 5.5 pour tous les lots, effort accru demandé sur M5 (squelette) et M12 (figures).
 28/09/2026 : lot M4b ajouté après M4 (tous les muscles remis dans le modèle, transparence à 50 % pour voir les muscles sollicités cachés, filtres en menu déroulant à cocher qui se superposent, petite refonte de l'écran Anatomie). M5 prend 5.3.1 pour prérequis.
+28/09/2026 : lot M4c ajouté après M4b (plus de ZIP sur GitHub : sources du projet structurées à la racine de `main`, CI et outils adaptés, application inchangée, 5.3.2). M5 prend 5.3.2 pour prérequis.
 
 ## Décisions prises par défaut par les lots
 (chaque lot ajoute sa section : décision, raison, réversibilité)
