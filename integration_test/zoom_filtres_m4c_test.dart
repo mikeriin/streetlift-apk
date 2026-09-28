@@ -220,12 +220,20 @@ void main() {
     // Écart entre le point des doigts et l'avant-bras le plus proche (0 :
     // l'avant-bras est exactement sous les doigts).
     var ecart = r1?.groupe == 'avant-bras' ? 0.0 : double.infinity;
+    var proche = p;
     for (var dy = -24.0; dy <= 24 && ecart > 0; dy += 2) {
       for (var dx = -24.0; dx <= 24; dx += 2) {
         final d = Offset(dx, dy).distance;
         if (d >= ecart) continue;
-        final r = state.scene!.pick(state.camera!, p + Offset(dx, dy), state.viewSize);
-        if (r?.groupe == 'avant-bras') ecart = d;
+        final r = state.scene!.pick(
+          state.camera!,
+          p + Offset(dx, dy),
+          state.viewSize,
+        );
+        if (r?.groupe == 'avant-bras') {
+          ecart = d;
+          proche = p + Offset(dx, dy);
+        }
       }
     }
     await shot('m4c_anatomie_zoom');
@@ -245,7 +253,7 @@ void main() {
     expect(zoomed['rouge'] as double, greaterThan(before['rouge'] as double));
 
     // Toucher une fois zoomé : le lancer de rayon tient compte du zoom.
-    await tester.tapAt(rect.topLeft + p);
+    await tester.tapAt(rect.topLeft + proche);
     await tester.pump(const Duration(milliseconds: 500));
     await tester.pump(const Duration(seconds: 2));
     final touched = state.touched;
