@@ -40,5 +40,15 @@ Modèle Claude : Opus 5.5 pour tous les lots, effort accru demandé sur M5 (sque
 - Build hook `hook/build.dart` (flutter_scene `buildScenes`, liste explicite) ; `flutter_scene_generated/` déclaré dans le pubspec, son contenu n'est jamais livré ; dépendance directe `hooks`.
 - CI 3D : la mesure des deux organisations est une seconde cible (`integration_test/mannequin_mesure_test.dart`) : lors de l'essai 1, le processus de test est mort pendant cette mesure et toutes les captures ont été perdues.
 
+### M3 (28/09/2026) — fiche exercice : mannequin fixe (5.2.0)
+- Muscles étirés : teinte bleu acier (#5B8DB0 en sombre, #346C92 en clair), intensité 0,25, sans halo ; pastille « Étiré » de la légende dans cette teinte quand le mannequin 3D est affiché (carte 2D : rampe à 0,25 comme avant). Réversible (`mannequinStretch`).
+- Étiré prioritaire : dans le pack, les 25 exercices qui ont des étirés (24 de mobilité, kettlebell windmill) listent aussi ces muscles en principal ou secondaire ; en rouge, ils se liraient comme contractés et le bleu n'apparaissait jamais (essai 2 : 0 pixel bleu). Un muscle listé étiré est donc montré étiré ; une région reste rouge si un autre de ses muscles, non étiré, est sollicité. Réversible (`ExerciseMuscleMap.of`).
+- Vue de départ : face de chacun des 81 muscles du pack écrite dans `muscleFaces` (antérieur, postérieur, latéral) ; principaux tous postérieurs → Dos, tous antérieurs → Face, mixtes → 3/4 ; latéraux ignorés ; sans principal orienté, les secondaires décident ; sinon 3/4. Catalogue : 341 fiches en 3/4, 151 Face, 133 Dos. La traction (grand dorsal + biceps) part en 3/4 avant, comme la règle le demande.
+- 12 muscles du pack sans région, justifiés dans `musclesSansRegion` (9 profonds retirés en M2, 3 internes absents du modèle) ; nommés sous le mannequin (« Profonds, non visibles sur le mannequin : … »), toujours dans la liste en texte.
+- Rotation au doigt seulement horizontale dans la fiche (`horizontalDragOnly`) : sinon le glissement vertical sur le mannequin inclinait la vue au lieu de faire défiler la page.
+- Cache : modèle chargé une fois par lancement, chaque mannequin en reçoit une copie (`Node.clone`, géométrie partagée) ; mesure émulateur : création 0-1 ms, mannequin prêt dès son arrivée à l'écran, mémoire stable sur 20 fiches (460 → 459 Mo, build debug).
+- Repli sans Flutter GPU : `ExerciseAtlas` historique, inchangé (paramètre `fallback` de `Mannequin3D`).
+- CI 3D : cible `integration_test/fiche_exercice_test.dart` ; la mesure M2 des organisations n'est plus relancée par défaut (`CI3D_MESURE=1`).
+
 ## En attente du propriétaire
 (aucune)
