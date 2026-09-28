@@ -1,0 +1,37 @@
+{
+  "anatomie_1x": {
+    "figure": 0.20419986719787517,
+    "rouge": 0.01811088977423639,
+    "gris": 0.15355245683930943,
+    "point": "Offset(115.3, 158.4)",
+    "muscle": "Long fléchisseur du pouce (droit) · Avant-bras"
+  },
+  "anatomie_zoom": {
+    "figure": 0.7915670650730412,
+    "rouge": 0.1583499335989376,
+    "gris": 0.47679282868525896,
+    "echelle": 4.0,
+    "muscle_sous_les_doigts": null
+  },
+  "fiche": {
+    "defilement_un_doigt": 134.02346149476432,
+    "defilement_pendant_pincement": 0.0,
+    "echelle": 3.0
+  },
+  "filtres_sombre": {
+    "bibliotheque": "FilterSelection({type: {type:tirage_vertical, type:poussee_verticale}, materiel: {mat:barre_fixe}})",
+    "wod": "FilterSelection({acces: {st:locked}, format: {ty:amrap, ty:emom}})",
+    "anatomie": [
+      "dos",
+      "ischios"
+    ]
+  },
+  "filtres_clair": {
+    "bibliotheque": "FilterSelection({type: {type:tirage_vertical, type:poussee_verticale}, materiel: {mat:barre_fixe}})",
+    "wod": "FilterSelection({acces: {st:locked}, format: {ty:amrap, ty:emom}})",
+    "anatomie": [
+      "dos",
+      "ischios"
+    ]
+  }
+}
