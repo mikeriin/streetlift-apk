@@ -70,6 +70,32 @@ void main() {
       expect(corner.y, closeTo(h0, 1e-5));
     });
 
+    test('pincement calculé depuis son début : doigts qui bougent '
+        'inégalement, le point touché reste sous les doigts', () {
+      const start = Offset(90, 300);
+      final z0 = MannequinZoom();
+      final p = z0.planePoint(start, size, right, up, distance);
+      var z = z0;
+      // Doigts qui avancent l'un après l'autre : le point entre eux oscille.
+      for (var i = 1; i <= 12; i++) {
+        final focal = start + Offset(i.isOdd ? -4 : 3, i.isOdd ? 2 : -1);
+        final s = 1 + i * .25;
+        z = MannequinZoom.pinched(
+          z0,
+          start,
+          focal,
+          s,
+          size,
+          right,
+          up,
+          distance,
+        );
+        final q = z.planePoint(focal, size, right, up, distance);
+        expect((q - p).length, lessThan(1e-5), reason: 'pas $i');
+      }
+      expect(z.scale, kMannequinMaxZoom);
+    });
+
     test('déplacement à deux doigts : le contenu suit les doigts', () {
       final z = MannequinZoom(scale: 3);
       const focal = Offset(180, 240);

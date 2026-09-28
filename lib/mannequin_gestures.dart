@@ -86,6 +86,30 @@ class MannequinZoom {
     clampTo(size, right, up, distance);
   }
 
+  /// Pincement en cours, calculé depuis son début (sans cumul d'arrondis ni
+  /// de bornes intermédiaires) : le point du plan de référence qui était
+  /// sous [startFocal] au début, zoom [start], se retrouve sous [focal] à
+  /// l'échelle [scale] (bornée), puis la fenêtre est bornée.
+  static MannequinZoom pinched(
+    MannequinZoom start,
+    Offset startFocal,
+    Offset focal,
+    double scale,
+    Size size,
+    vm.Vector3 right,
+    vm.Vector3 up,
+    double distance,
+  ) {
+    final p = start.planePoint(startFocal, size, right, up, distance);
+    final z = MannequinZoom(
+      scale: scale.clamp(1.0, kMannequinMaxZoom),
+      offset: start.offset.clone(),
+    );
+    z.offset += p - z.planePoint(focal, size, right, up, distance);
+    z.clampTo(size, right, up, distance);
+    return z;
+  }
+
   /// Déplace la vue pour que le contenu suive les doigts de [delta] pixels.
   void pan(
     Offset delta,
