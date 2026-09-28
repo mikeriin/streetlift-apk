@@ -140,6 +140,9 @@ class FilterMenu extends StatefulWidget {
   static int totalOf(List<FilterCategory> categories) =>
       categories.fold(0, (n, c) => n + c.options.length);
 
+  /// Puces affichées sous le bouton, au plus.
+  static const maxChips = 6;
+
   /// Au-delà, seules les catégories actives sont dépliées à l'ouverture.
   static const expandAllUpTo = 16;
 
@@ -159,8 +162,9 @@ class FilterMenuState extends State<FilterMenu> {
   Set<String> _initialExpanded() {
     final cats = widget.categories;
     final options = cats.fold<int>(0, (n, c) => n + c.options.length);
-    if (options <= FilterMenu.expandAllUpTo)
+    if (options <= FilterMenu.expandAllUpTo) {
       return {for (final c in cats) c.id};
+    }
     final active = {
       for (final c in cats)
         if (widget.value.count([c]) > 0) c.id,
@@ -225,7 +229,7 @@ class FilterMenuState extends State<FilterMenu> {
               runSpacing: 2,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                for (final (c, o) in active)
+                for (final (c, o) in active.take(FilterMenu.maxChips))
                   InputChip(
                     key: ValueKey(_k('chip-${o.key}')),
                     label: Text(o.label),
@@ -242,6 +246,15 @@ class FilterMenuState extends State<FilterMenu> {
                     deleteButtonTooltipMessage: 'Retirer le filtre ${o.label}',
                     onDeleted: () =>
                         widget.onChanged(value.toggle(c.id, o.key)),
+                  ),
+                // Au-delà de maxChips puces : un rappel qui ouvre le menu (la
+                // page garde sa place, même à 200 % de texte).
+                if (active.length > FilterMenu.maxChips)
+                  ActionChip(
+                    key: ValueKey(_k('chips-more')),
+                    label: Text('+ ${active.length - FilterMenu.maxChips}'),
+                    tooltip: 'Voir tous les filtres actifs',
+                    onPressed: () => _menu.open(),
                   ),
                 if (value != widget.initial)
                   TextButton(

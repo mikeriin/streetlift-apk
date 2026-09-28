@@ -239,7 +239,7 @@ class MannequinGestures extends StatelessWidget {
                 r.onStart = (_) => onRotateStart?.call();
                 r.onUpdate = (d) => onRotate?.call(d.delta);
                 r.onEnd = (_) => onRotateEnd?.call();
-                },
+              },
             ),
     };
     return RawGestureDetector(
