@@ -1,0 +1,1199 @@
+// M2 (mannequin 3D) : mannequin anatomique statique réutilisable.
+//
+// Modèle d'exécution `assets/anatomy/mannequin.glb` (fabriqué par
+// tools/anatomy/build_model.py depuis Z-Anatomy / BodyParts3D, CC BY-SA 4.0),
+// converti au build par le hook de flutter_scene et chargé une seule fois.
+// Une maille par muscle et par côté (nœud nommé par l'id de la région de
+// `assets/anatomy/muscles_map.json`) : la mise en évidence change le
+// matériau des nœuds concernés (rampe historique bordeaux → rouge, halo),
+// le toucher lance un rayon sur la scène et nomme le muscle touché.
+//
+// Rendu à la demande : la vue ne se redessine que lorsqu'un paramètre change
+// (caméra, intensités, thème, réglages) ; aucune boucle continue, sauf dans
+// l'écran « Moteur 3D » qui mesure la fluidité (`spin`). Sans Flutter GPU, la
+// carte 2D historique (`MuscleHeatmap`) prend le relais.
+//
+// M4b : tous les muscles, profonds compris, sont rendus translucides
+// ([kMuscleOpacity]) pour qu'un muscle sollicité caché derrière d'autres se
+// voie à travers eux. Os, tête, contexte, mains et pieds restent opaques.
+// flutter_scene 0.23 dessine d'abord les surfaces opaques (écriture de
+// profondeur), puis les translucides triées de l'arrière vers l'avant à
+// chaque image (distance du centre de chaque maille à la caméra, le long de
+// son axe), sans écriture de profondeur, faces arrière éliminées : chaque
+// muscle ne compte qu'une couche par pixel, même en rotation.
+import 'dart:async';
+import 'dart:convert';
+import 'dart:math' as math;
+import 'dart:typed_data';
+
+// `Material` désigne ici le matériau 3D de flutter_scene.
+import 'package:flutter/material.dart' hide Material;
+import 'package:flutter/services.dart';
+import 'package:flutter_scene/scene.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vector_math/vector_math.dart' as vm;
+
+import 'app_theme.dart';
+import 'engine3d.dart';
+import 'muscle_body.dart';
+import 'ui.dart';
+
+/// Source du modèle d'exécution (chemin de source lu par `loadScene`).
+const kMannequinAsset = 'assets/anatomy/mannequin.glb';
+
+/// Carte des régions (id, côté, nom français, groupe, muscles du pack).
+const kMannequinMapAsset = 'assets/anatomy/muscles_map.json';
+
+/// Crédits du modèle (CC BY-SA 4.0), repris dans « Sources et licences ».
+const kMannequinAttributionAsset = 'assets/anatomy/ATTRIBUTION.md';
+
+/// M4b : opacité de tous les muscles (décision du propriétaire, 28/09/2026 :
+/// 50 %). Constante unique, à ajuster ici ; 1 rend les muscles opaques.
+const kMuscleOpacity = 0.5;
+
+/// Intensités de la mise en évidence (décision du propriétaire).
+const kIntensityPrimary = 1.0;
+const kIntensitySecondary = .62;
+const kIntensityStabilizer = .35;
+
+/// M3 : muscles étirés (rôle « Étiré » du pack), intensité 0,25 dans une
+/// teinte distincte de la rampe rouge : bleu acier, froid et sourd, qui ne
+/// peut pas se lire comme un muscle sollicité (voir DECISIONS_3D.md, M3).
+const kIntensityStretched = .25;
+
+/// Teinte des muscles étirés (sombre : plus claire, pour rester lisible sur
+/// le fond de scène sombre ; clair : plus dense).
+Color mannequinStretch(bool dark) =>
+    dark ? const Color(0xFF5B8DB0) : const Color(0xFF346C92);
+
+/// Os et contexte sombre (tête lisse, tissus, mains et pieds au repos).
+const kBoneGray = Color(0xFF4A4646);
+const kDarkVolume = Color(0xFF2E2A2A);
+
+// ----------------------------------------------------------------- carte --
+
+/// Région sélectionnable du mannequin : un muscle d'un côté, ou le volume
+/// d'une main ou d'un pied (muscles intrinsèques).
+class MuscleRegion {
+  final String id, cle, cote, nom, nomCote, groupe, couche;
+  final List<String> pack;
+
+  const MuscleRegion({
+    required this.id,
+    required this.cle,
+    required this.cote,
+    required this.nom,
+    required this.nomCote,
+    required this.groupe,
+    required this.couche,
+    required this.pack,
+  });
+
+  factory MuscleRegion.fromJson(Map<String, dynamic> j) => MuscleRegion(
+    id: j['id'] as String,
+    cle: j['cle'] as String,
+    cote: j['cote'] as String,
+    nom: j['nom'] as String,
+    nomCote: j['nom_cote'] as String,
+    groupe: j['groupe'] as String,
+    couche: j['couche'] as String,
+    pack: [for (final p in j['pack'] as List) p as String],
+  );
+
+  /// M4b : muscle profond (source anatomique ou caché au repos).
+  bool get profond => couche == 'profond';
+
+  /// Libellé de la bulle au toucher : « Grand dorsal (gauche) · Dos »,
+  /// « Grand rhomboïde (droit) (profond) · Dos ».
+  String get label =>
+      '$nomCote${profond ? ' (profond)' : ''} · '
+      '${groupe[0].toUpperCase()}${groupe.substring(1)}';
+}
+
+/// Carte des régions du mannequin (`assets/anatomy/muscles_map.json`).
+class MannequinMap {
+  final List<MuscleRegion> regions;
+  final List<String> groups;
+  final Map<String, MuscleRegion> byId;
+
+  /// M4b : régions cachées au repos (retirées du modèle jusqu'à 5.3.0,
+  /// mesure de visibilité de M2), toutes profondes.
+  final Set<String> hiddenAtRest;
+
+  MannequinMap(this.regions, this.groups, {this.hiddenAtRest = const {}})
+    : byId = {for (final r in regions) r.id: r};
+
+  factory MannequinMap.fromJson(Map<String, dynamic> j) => MannequinMap(
+    [
+      for (final r in j['regions'] as List)
+        MuscleRegion.fromJson(r as Map<String, dynamic>),
+    ],
+    [for (final g in j['groupes'] as List) g as String],
+    hiddenAtRest: {
+      for (final id in (j['caches_au_repos'] as List?) ?? const [])
+        id as String,
+    },
+  );
+
+  /// M4b : ids des régions profondes (filtre « Muscles profonds »).
+  Set<String> get deepIds => {
+    for (final r in regions)
+      if (r.profond) r.id,
+  };
+
+  static Future<MannequinMap>? _cache;
+
+  /// Carte déjà chargée, s'il y en a une.
+  static MannequinMap? loaded;
+
+  /// Chargée une seule fois par lancement.
+  static Future<MannequinMap> load([AssetBundle? bundle]) =>
+      _cache ??= (bundle ?? rootBundle)
+          .loadString(kMannequinMapAsset)
+          .then((s) => loaded = MannequinMap.fromJson(jsonDecode(s)));
+
+  Iterable<MuscleRegion> ofGroup(String group) =>
+      regions.where((r) => r.groupe == group);
+
+  /// Intensités par région pour des groupes de l'application (0-1).
+  Map<String, double> fromGroups(Map<String, double> groups) => {
+    for (final r in regions)
+      if ((groups[r.groupe] ?? 0) > 0) r.id: groups[r.groupe]!,
+  };
+
+  /// Intensités par région pour des muscles du pack (0-1) : une région prend
+  /// l'intensité la plus forte de ses muscles du pack.
+  Map<String, double> fromPack(Map<String, double> pack) {
+    final out = <String, double>{};
+    for (final r in regions) {
+      for (final p in r.pack) {
+        final v = pack[p] ?? 0;
+        if (v > (out[r.id] ?? 0)) out[r.id] = v;
+      }
+    }
+    return out;
+  }
+
+  /// Intensités par groupe (repli 2D) : le maximum des régions du groupe.
+  Map<String, double> groupsOf(Map<String, double> intensities) {
+    final out = <String, double>{};
+    intensities.forEach((id, v) {
+      final g = byId[id]?.groupe;
+      if (g != null && v > (out[g] ?? 0)) out[g] = v;
+    });
+    return out;
+  }
+
+  /// Noms distincts (sans le côté) des régions allumées, par intensité
+  /// décroissante : la liste en texte qui accompagne toujours la couleur.
+  List<String> names(Map<String, double> intensities) {
+    final best = <String, double>{};
+    intensities.forEach((id, v) {
+      final r = byId[id];
+      if (r == null || v <= 0) return;
+      if (v > (best[r.nom] ?? 0)) best[r.nom] = v;
+    });
+    final list = best.keys.toList()
+      ..sort((a, b) {
+        final c = best[b]!.compareTo(best[a]!);
+        return c != 0 ? c : a.compareTo(b);
+      });
+    return list;
+  }
+}
+
+// --------------------------------------------------------------- réglages --
+
+/// Réglages › Affichage 3D. Préférences de l'appareil (SharedPreferences),
+/// hors sauvegarde : le format des sauvegardes reste inchangé.
+class Display3DSettings {
+  Display3DSettings._();
+  static final instance = Display3DSettings._();
+
+  static const _kNames = 'kt3d_nom_toucher';
+  static const _kBones = 'kt3d_os_visibles';
+  static const _kHalo = 'kt3d_halo';
+
+  /// Nom du muscle au toucher (activé par défaut).
+  final touchNames = ValueNotifier<bool>(true);
+
+  /// Os visibles (activé par défaut).
+  final bones = ValueNotifier<bool>(true);
+
+  /// Halo autour des muscles sollicités (activé par défaut).
+  final halo = ValueNotifier<bool>(true);
+
+  bool _loaded = false;
+
+  Listenable get listenable => Listenable.merge([touchNames, bones, halo]);
+
+  Future<void> load() async {
+    if (_loaded) return;
+    _loaded = true;
+    try {
+      final p = await SharedPreferences.getInstance();
+      touchNames.value = p.getBool(_kNames) ?? true;
+      bones.value = p.getBool(_kBones) ?? true;
+      halo.value = p.getBool(_kHalo) ?? true;
+    } catch (_) {
+      // Préférences illisibles : valeurs par défaut.
+    }
+  }
+
+  Future<void> set({bool? touchNames, bool? bones, bool? halo}) async {
+    if (touchNames != null) this.touchNames.value = touchNames;
+    if (bones != null) this.bones.value = bones;
+    if (halo != null) this.halo.value = halo;
+    try {
+      final p = await SharedPreferences.getInstance();
+      await p.setBool(_kNames, this.touchNames.value);
+      await p.setBool(_kBones, this.bones.value);
+      await p.setBool(_kHalo, this.halo.value);
+    } catch (_) {}
+  }
+
+  /// Tests : revient aux valeurs par défaut et relit les préférences.
+  void reset() {
+    _loaded = false;
+    touchNames.value = true;
+    bones.value = true;
+    halo.value = true;
+  }
+}
+
+// ------------------------------------------------------------------- vues --
+
+/// Vues de départ : Face, Dos, Profil (côté gauche du mannequin, tourné vers
+/// la gauche de l'écran comme l'illustration historique) et 3/4 avant.
+enum MannequinView {
+  face('Face', 0),
+  dos('Dos', math.pi),
+  profil('Profil', math.pi / 2),
+  troisQuarts('3/4', math.pi / 4);
+
+  final String label;
+
+  /// Angle de la caméra autour de l'axe vertical, depuis la face, vers le
+  /// côté gauche du mannequin.
+  final double yaw;
+  const MannequinView(this.label, this.yaw);
+}
+
+double _linear(double c) =>
+    c <= .04045 ? c / 12.92 : math.pow((c + .055) / 1.055, 2.4).toDouble();
+
+vm.Vector4 _lin(Color c, [double scale = 1, double alpha = 1]) => vm.Vector4(
+  _linear(c.r) * scale,
+  _linear(c.g) * scale,
+  _linear(c.b) * scale,
+  alpha,
+);
+
+/// Rampe historique (`heat()` de muscle_body.dart) pour un thème donné.
+Color mannequinHeat(double v, bool dark) => Color.lerp(
+  KPalette.burgundy,
+  dark ? KPalette.lightRed : KPalette.actionRed,
+  .15 + .85 * v.clamp(0.0, 1.0),
+)!;
+
+// ------------------------------------------------------------------ modèle --
+
+/// Repère du modèle importé, mesuré une fois sur ses nœuds : avant du corps,
+/// côté gauche anatomique, centre et hauteur.
+class MannequinFrame {
+  final vm.Vector3 front, left, center;
+  final double height;
+  const MannequinFrame(this.front, this.left, this.center, this.height);
+}
+
+MannequinFrame? _frame;
+
+MannequinFrame _measure(Node root) {
+  vm.Vector3? centerOf(String name) {
+    final b = root.getChildByName(name)?.combinedWorldBounds;
+    return b == null ? null : (b.min + b.max) * .5;
+  }
+
+  final all = root.combinedWorldBounds;
+  final center = all == null ? vm.Vector3(0, .9, 0) : (all.min + all.max) * .5;
+  final height = all == null ? 1.7 : all.max.y - all.min.y;
+  // Avant : du grand fessier vers le droit de l'abdomen ; gauche : côté des
+  // régions « _left ».
+  final abdo = centerOf('rectus_abdominis_left');
+  final glute = centerOf('gluteus_maximus_left');
+  var front = vm.Vector3(0, 0, -1);
+  if (abdo != null && glute != null) {
+    final d = abdo - glute;
+    front = d.z.abs() >= d.x.abs()
+        ? vm.Vector3(0, 0, d.z.sign)
+        : vm.Vector3(d.x.sign, 0, 0);
+  }
+  final l = centerOf('deltoid_lateral_left');
+  final r = centerOf('deltoid_lateral_right');
+  var left = vm.Vector3(1, 0, 0);
+  if (l != null && r != null) {
+    final d = l - r;
+    left = d.x.abs() >= d.z.abs()
+        ? vm.Vector3(d.x.sign, 0, 0)
+        : vm.Vector3(0, 0, d.z.sign);
+  }
+  return MannequinFrame(front, left, center, height);
+}
+
+/// Scène du mannequin : modèle, un matériau par région, lumière qui suit la
+/// caméra, fond de la charte, halo en thème sombre.
+///
+/// Chaque nœud de région reçoit son propre matériau avant l'ajout du modèle
+/// à la scène ; la mise en évidence modifie ensuite les couleurs de ces
+/// matériaux (flutter_scene 0.23 prend en compte un changement de propriété
+/// d'un matériau, pas le remplacement du matériau d'un nœud déjà monté).
+class MannequinScene {
+  final Scene scene = Scene();
+  final Node model;
+  final MannequinMap map;
+  final MannequinFrame frame;
+
+  final PhysicallyBasedMaterial _bone = _mat(kBoneGray, roughness: .85);
+  final PhysicallyBasedMaterial _dark = _mat(kDarkVolume, roughness: .85);
+  final Map<String, PhysicallyBasedMaterial> _regions = {};
+  final Map<String, Node> _nodes = {};
+
+  bool? _dark3d;
+  Map<String, double> _intensities = const {};
+  Set<String> _stretched = const {};
+  Set<String> _hidden = const {};
+  bool _bones = true, _halo = true;
+
+  /// Mesure avant / après de M4b (tests d'intégration) : opacité imposée
+  /// aux muscles et régions masquées d'office, lues à la création de la
+  /// scène. Null : [kMuscleOpacity], aucune région masquée d'office.
+  @visibleForTesting
+  static double? debugOpacity;
+  @visibleForTesting
+  static Set<String> Function(MannequinMap map)? debugHidden;
+
+  /// Opacité des muscles de cette scène.
+  final double opacity = debugOpacity ?? kMuscleOpacity;
+  late final Set<String> _forcedHidden = debugHidden?.call(map) ?? const {};
+
+  static PhysicallyBasedMaterial _mat(Color c, {double roughness = .78}) =>
+      PhysicallyBasedMaterial()
+        ..baseColorFactor = _lin(c)
+        ..metallicFactor = 0
+        ..roughnessFactor = roughness;
+
+  MannequinScene._(this.model, this.map, this.frame) {
+    void collect(Node n) {
+      if (n.name.isNotEmpty) _nodes[n.name] = n;
+      for (final c in n.children) {
+        collect(c);
+      }
+    }
+
+    collect(model);
+    _nodes.forEach((name, node) {
+      final region = map.byId[name];
+      if (region != null) {
+        final m = _mat(
+          region.couche == 'volume' ? kDarkVolume : kMuscleGray,
+          roughness: region.couche == 'volume' ? .85 : .78,
+        );
+        // Muscles translucides (M4b) ; mains et pieds opaques.
+        if (region.couche != 'volume' && opacity < 1) {
+          m.alphaMode = AlphaMode.blend;
+        }
+        _regions[name] = m;
+        _assign(node, m);
+      } else if (name == 'os') {
+        _assign(node, _bone);
+      } else if (name == 'contexte' || name == 'head') {
+        _assign(node, _dark);
+      }
+    });
+    scene
+      ..add(model)
+      ..environmentIntensity = .75
+      ..toneMapping = ToneMappingMode.linear;
+    scene.postProcess.bloom
+      ..threshold = .6
+      ..intensity = .55
+      ..scatter = .7;
+  }
+
+  /// Modèle chargé une seule fois par lancement (M3) : chaque mannequin en
+  /// reçoit une copie (arbre de nœuds et enveloppes de maillage ; géométrie
+  /// partagée), sans relire ni convertir le fichier. Le modèle gardé ici
+  /// n'est jamais ajouté à une scène.
+  static Future<Node>? _template;
+
+  static Future<Node> _loadTemplate() {
+    final pending = _template ??= loadScene(kMannequinAsset);
+    return pending.catchError((Object e) {
+      // Échec non mis en cache : le mannequin suivant réessaie.
+      if (identical(_template, pending)) _template = null;
+      throw e;
+    });
+  }
+
+  static Future<MannequinScene> create() async {
+    final results = await Future.wait<Object>([
+      _loadTemplate(),
+      MannequinMap.load(),
+    ]);
+    final template = results[0] as Node;
+    final scene = MannequinScene._(
+      template.clone(),
+      results[1] as MannequinMap,
+      _frame ??= _measure(template),
+    );
+    scene._applyMaterials();
+    return scene;
+  }
+
+  /// Nœuds présents dans le modèle (contrôles).
+  Iterable<String> get nodeNames => _nodes.keys;
+
+  vm.Vector3 get target =>
+      vm.Vector3(frame.center.x, frame.center.y, frame.center.z);
+
+  /// Matériau du nœud et de ses descendants sans nom propre. Le maillage est
+  /// d'abord cloné : les instances de `loadScene` partagent leurs primitives,
+  /// chaque mannequin garde ainsi ses propres matériaux.
+  void _assign(Node node, Material material) {
+    final shared = node.mesh;
+    if (shared != null) {
+      final mesh = shared.clone();
+      for (final p in mesh.primitives) {
+        p.material = material;
+      }
+      node.mesh = mesh;
+    }
+    for (final c in node.children) {
+      if (!_nodes.containsKey(c.name)) _assign(c, material);
+    }
+  }
+
+  void _applyMaterials() {
+    final dark = _dark3d ?? true;
+    _regions.forEach((name, m) {
+      final v = (_intensities[name] ?? 0).clamp(0.0, 1.0);
+      final stretched = v <= 0 && _stretched.contains(name);
+      final volume = map.byId[name]!.couche == 'volume';
+      final a = volume ? 1.0 : opacity;
+      // Translucide (M4b) : le moteur multiplie la couleur par l'opacité ;
+      // l'émission est divisée d'autant pour que la couleur de la rampe et
+      // le halo gardent leur force à travers la transparence.
+      final glow = 1 / a;
+      if (stretched) {
+        // Étiré : teinte froide, sans halo (sous le seuil), plus sourde que
+        // le plus faible des rôles sollicités.
+        final c = mannequinStretch(dark);
+        m
+          ..baseColorFactor = _lin(c, .55, a)
+          ..emissiveFactor = _lin(c)
+          ..emissiveStrength = (.12 + .18 * kIntensityStretched) * glow
+          ..roughnessFactor = .74;
+      } else if (v > 0) {
+        final c = mannequinHeat(v, dark);
+        // Face éclairée ≈ 0,55 × lumière + émission : la couleur de la
+        // rampe ressort telle quelle ; seuls les muscles sollicités
+        // dépassent le seuil du halo (le gris éclairé reste en dessous).
+        m
+          ..baseColorFactor = _lin(c, .55, a)
+          ..emissiveFactor = _lin(c)
+          ..emissiveStrength = (.12 + .18 * v) * glow
+          ..roughnessFactor = .7;
+      } else {
+        m
+          ..baseColorFactor = _lin(volume ? kDarkVolume : kMuscleGray, 1, a)
+          ..emissiveFactor = vm.Vector4(0, 0, 0, 1)
+          ..emissiveStrength = 0
+          ..roughnessFactor = volume ? .85 : .78;
+      }
+      _nodes[name]?.visible =
+          !_hidden.contains(name) && !_forcedHidden.contains(name);
+    });
+    _nodes['os']?.visible = _bones;
+    scene.postProcess.bloom.enabled =
+        _halo && dark && _intensities.values.any((v) => v > 0);
+  }
+
+  /// Thème, intensités par région (0-1), régions étirées (M3), régions
+  /// masquées (M4b, filtre « Muscles profonds »), os visibles, halo.
+  void configure({
+    required bool dark,
+    required Map<String, double> intensities,
+    Set<String> stretched = const {},
+    Set<String> hidden = const {},
+    required bool bones,
+    required bool halo,
+  }) {
+    final themeChanged = _dark3d != dark;
+    if (!themeChanged &&
+        identical(intensities, _intensities) &&
+        identical(stretched, _stretched) &&
+        identical(hidden, _hidden) &&
+        bones == _bones &&
+        halo == _halo) {
+      return;
+    }
+    _dark3d = dark;
+    _intensities = intensities;
+    _stretched = stretched;
+    _hidden = hidden;
+    _bones = bones;
+    _halo = halo;
+    if (themeChanged) {
+      final bg = _lin(sceneBackground(dark)).xyz;
+      scene.skybox = Skybox(
+        GradientSkySource(
+          zenithColor: bg,
+          horizonColor: bg.clone(),
+          groundColor: bg.clone(),
+          sunColor: vm.Vector3.zero(),
+        ),
+      );
+    }
+    _applyMaterials();
+  }
+
+  /// Caméra en orbite autour du mannequin ; la lumière principale suit la
+  /// caméra (en haut à gauche) pour que chaque vue soit lisible.
+  PerspectiveCamera camera(double yaw, double pitch, double distance) {
+    final f = frame.front, l = frame.left;
+    final dir =
+        (f * math.cos(yaw) + l * math.sin(yaw)) * math.cos(pitch) +
+        vm.Vector3(0, math.sin(pitch), 0);
+    final eye = target + dir * distance;
+    final forward = (target - eye)..normalize();
+    final right = forward.cross(vm.Vector3(0, 1, 0))..normalize();
+    final light = (forward + vm.Vector3(0, -.9, 0) + right * .45)..normalize();
+    scene.directionalLight = DirectionalLight(direction: light, intensity: 2.3);
+    return PerspectiveCamera(
+      fovRadiansY: 28 * math.pi / 180,
+      position: eye,
+      target: target,
+    );
+  }
+
+  /// Distance qui cadre le corps entier dans une vue de rapport [aspect].
+  double fitDistance(double aspect) {
+    const fov = 28 * math.pi / 180;
+    final h = frame.height * 1.08;
+    final byHeight = h / 2 / math.tan(fov / 2);
+    // Largeur utile ≈ 0,5 × hauteur (bras le long du corps, vue 3/4).
+    final hFov = 2 * math.atan(math.tan(fov / 2) * aspect);
+    final byWidth = h * .5 / 2 / math.tan(hFov / 2);
+    return math.max(byHeight, byWidth) + .3;
+  }
+
+  List<PickMesh>? _pickables;
+
+  /// Maillages du toucher (régions et occultants : os, tête, contexte),
+  /// copiés une fois en coordonnées du monde (mannequin statique).
+  List<PickMesh> get pickables => _pickables ??= [
+    for (final e in _nodes.entries)
+      if (e.value.mesh != null &&
+          (map.byId.containsKey(e.key) ||
+              const {'os', 'contexte', 'head'}.contains(e.key)))
+        PickMesh.of(e.key, e.value),
+  ];
+
+  /// Région touchée au point [position] d'une vue de taille [size].
+  ///
+  /// M4b (muscles translucides) : le rayon traverse les muscles jusqu'à la
+  /// première surface opaque (os visibles, tête, contexte, main, pied). Parmi
+  /// les régions traversées (et la main ou le pied qui l'arrête), il renvoie
+  /// la plus proche des régions mises en évidence (sollicitées ou étirées)
+  /// s'il y en a une, sinon la plus proche. Régions masquées ignorées.
+  MuscleRegion? pick(Camera camera, Offset position, Size size) {
+    final ray = camera.screenPointToRay(position, size);
+    return pickRay(ray.origin, ray.direction.normalized());
+  }
+
+  /// [pick] pour un rayon d'origine [origin] et de direction unitaire [dir].
+  MuscleRegion? pickRay(vm.Vector3 origin, vm.Vector3 dir) => pickAlong(
+    origin,
+    dir,
+    pickables,
+    map,
+    intensities: _intensities,
+    stretched: _stretched,
+    hidden: {..._hidden, ..._forcedHidden},
+    bones: _bones,
+    opacity: opacity,
+  );
+
+  /// Règle du toucher, sans scène (tests).
+  static MuscleRegion? pickAlong(
+    vm.Vector3 origin,
+    vm.Vector3 dir,
+    Iterable<PickMesh> meshes,
+    MannequinMap map, {
+    Map<String, double> intensities = const {},
+    Set<String> stretched = const {},
+    Set<String> hidden = const {},
+    bool bones = true,
+    double opacity = kMuscleOpacity,
+  }) {
+    // Surface opaque la plus proche : elle arrête le rayon.
+    var stop = double.infinity;
+    String? stopName;
+    final crossed = <String, double>{};
+    for (final m in meshes) {
+      if (m.name == 'os' && !bones) continue;
+      if (hidden.contains(m.name)) continue;
+      final region = map.byId[m.name];
+      final opaque =
+          region == null || region.couche == 'volume' || opacity >= 1;
+      final t = m.intersect(origin, dir, opaque ? stop : double.infinity);
+      if (t == null) continue;
+      if (opaque) {
+        if (t < stop) {
+          stop = t;
+          stopName = m.name;
+        }
+      } else {
+        crossed[m.name] = t;
+      }
+    }
+    final candidates = <String, double>{
+      for (final e in crossed.entries)
+        if (e.value < stop) e.key: e.value,
+      if (stopName != null && map.byId.containsKey(stopName)) stopName: stop,
+    };
+    String? nearestOf(Iterable<String> ids) {
+      String? best;
+      var d = double.infinity;
+      for (final id in ids) {
+        final t = candidates[id]!;
+        if (t < d) {
+          d = t;
+          best = id;
+        }
+      }
+      return best;
+    }
+
+    final lit = nearestOf(
+      candidates.keys.where(
+        (id) => (intensities[id] ?? 0) > 0 || stretched.contains(id),
+      ),
+    );
+    final best = lit ?? nearestOf(candidates.keys);
+    return best == null ? null : map.byId[best];
+  }
+}
+
+/// Maillage d'un nœud en coordonnées du monde, pour le toucher : test des
+/// triangles (Möller-Trumbore) après une boîte englobante.
+class PickMesh {
+  final String name;
+  final Float32List positions;
+  final List<int> indices;
+  final vm.Vector3 min, max;
+
+  PickMesh(this.name, this.positions, this.indices, this.min, this.max);
+
+  factory PickMesh.of(String name, Node node) {
+    final data = node.extractMeshData(transform: node.globalTransform);
+    final p = data.positions;
+    final idx = data.indices ?? List<int>.generate(data.vertexCount, (i) => i);
+    final lo = vm.Vector3.all(double.infinity);
+    final hi = vm.Vector3.all(-double.infinity);
+    for (var i = 0; i + 2 < p.length; i += 3) {
+      lo.x = math.min(lo.x, p[i]);
+      lo.y = math.min(lo.y, p[i + 1]);
+      lo.z = math.min(lo.z, p[i + 2]);
+      hi.x = math.max(hi.x, p[i]);
+      hi.y = math.max(hi.y, p[i + 1]);
+      hi.z = math.max(hi.z, p[i + 2]);
+    }
+    return PickMesh(name, p, idx, lo, hi);
+  }
+
+  bool _hitsBox(vm.Vector3 o, vm.Vector3 d, double limit) {
+    var t0 = 0.0, t1 = limit;
+    for (var k = 0; k < 3; k++) {
+      final inv = 1 / d[k];
+      var a = (min[k] - o[k]) * inv, b = (max[k] - o[k]) * inv;
+      if (a > b) {
+        final s = a;
+        a = b;
+        b = s;
+      }
+      t0 = math.max(t0, a);
+      t1 = math.min(t1, b);
+      if (t0 > t1) return false;
+    }
+    return true;
+  }
+
+  /// Distance du premier triangle touché le long de [d] (unitaire), ou null.
+  double? intersect(vm.Vector3 o, vm.Vector3 d, [double limit = 1e9]) {
+    if (!_hitsBox(o, d, limit)) return null;
+    double? best;
+    final p = positions;
+    for (var i = 0; i + 2 < indices.length; i += 3) {
+      final a = indices[i] * 3, b = indices[i + 1] * 3, c = indices[i + 2] * 3;
+      final e1x = p[b] - p[a], e1y = p[b + 1] - p[a + 1];
+      final e1z = p[b + 2] - p[a + 2];
+      final e2x = p[c] - p[a], e2y = p[c + 1] - p[a + 1];
+      final e2z = p[c + 2] - p[a + 2];
+      final px = d.y * e2z - d.z * e2y;
+      final py = d.z * e2x - d.x * e2z;
+      final pz = d.x * e2y - d.y * e2x;
+      final det = e1x * px + e1y * py + e1z * pz;
+      if (det.abs() < 1e-12) continue;
+      final inv = 1 / det;
+      final tx = o.x - p[a], ty = o.y - p[a + 1], tz = o.z - p[a + 2];
+      final u = (tx * px + ty * py + tz * pz) * inv;
+      if (u < 0 || u > 1) continue;
+      final qx = ty * e1z - tz * e1y;
+      final qy = tz * e1x - tx * e1z;
+      final qz = tx * e1y - ty * e1x;
+      final v = (d.x * qx + d.y * qy + d.z * qz) * inv;
+      if (v < 0 || u + v > 1) continue;
+      final t = (e2x * qx + e2y * qy + e2z * qz) * inv;
+      if (t > 1e-6 && t < limit && (best == null || t < best)) best = t;
+    }
+    return best;
+  }
+}
+
+// ------------------------------------------------------------------ widget --
+
+/// Mannequin anatomique 3D : vues Face / Dos / Profil / 3/4 avec transition,
+/// rotation au doigt, intensités par région, nom du muscle au toucher.
+/// Sans Flutter GPU : carte 2D historique ([MuscleHeatmap]).
+class Mannequin3D extends StatefulWidget {
+  /// Intensité (0-1) par id de région (`muscles_map.json`).
+  final Map<String, double> intensities;
+
+  /// Régions étirées (M3, fiche exercice) : teinte [mannequinStretch], si la
+  /// région n'est pas déjà sollicitée.
+  final Set<String> stretched;
+
+  /// Régions masquées (M4b, écran Anatomie : filtre « Muscles profonds »).
+  final Set<String> hidden;
+
+  /// Os visibles imposés par l'écran (M4b, filtre « Os » de l'écran
+  /// Anatomie) ; null : réglage « Os visibles ».
+  final bool? bones;
+
+  /// Repli sans Flutter GPU à la place de la carte 2D par groupes (M3 : la
+  /// fiche exercice garde sa carte historique, `ExerciseAtlas`).
+  final Widget? fallback;
+
+  /// Rotation au doigt seulement horizontale (M3 : dans une page qui défile,
+  /// le glissement vertical fait défiler la page au lieu d'incliner la vue).
+  final bool horizontalDragOnly;
+
+  /// Vue de départ (et vue imposée quand elle change).
+  final MannequinView view;
+
+  /// Boutons Face / Dos / Profil / 3/4 sous la vue.
+  final bool viewButtons;
+
+  /// Vues proposées par les boutons (M4, STATS : bascule Face / Dos).
+  final List<MannequinView> views;
+
+  /// Rotation continue lente (écran « Moteur 3D », mesure de fluidité).
+  final bool spin;
+
+  /// Hauteur de la vue.
+  final double height;
+
+  /// Appelé à chaque région touchée (null : aucune).
+  final ValueChanged<MuscleRegion?>? onRegionTap;
+
+  /// Libellé d'accessibilité de la vue.
+  final String semanticLabel;
+
+  /// Appelé une fois : true quand le mannequin 3D est prêt, false en repli
+  /// 2D (téléphone incompatible ou modèle illisible).
+  final ValueChanged<bool>? onReady;
+
+  const Mannequin3D({
+    super.key,
+    this.intensities = const {},
+    this.stretched = const {},
+    this.hidden = const {},
+    this.bones,
+    this.fallback,
+    this.horizontalDragOnly = false,
+    this.view = MannequinView.face,
+    this.viewButtons = true,
+    this.views = MannequinView.values,
+    this.spin = false,
+    this.height = 420,
+    this.onRegionTap,
+    this.semanticLabel = 'Mannequin anatomique en 3D',
+    this.onReady,
+  });
+
+  @override
+  State<Mannequin3D> createState() => Mannequin3DState();
+}
+
+class Mannequin3DState extends State<Mannequin3D>
+    with SingleTickerProviderStateMixin {
+  MannequinScene? _scene;
+  bool? _available;
+  final _settings = Display3DSettings.instance;
+
+  late MannequinView _view = widget.view;
+  double _yaw = 0, _pitch = .06;
+  double _fromYaw = 0, _fromPitch = 0, _toYaw = 0, _toPitch = 0;
+  late final AnimationController _tween = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 520),
+  )..addListener(_onTween);
+  MuscleRegion? _touched;
+  PerspectiveCamera? _camera;
+  Size _size = Size.zero;
+
+  /// Scène chargée (tests d'intégration et captures).
+  MannequinScene? get scene => _scene;
+  bool? get available => _available;
+  MannequinView get view => _view;
+  MuscleRegion? get touched => _touched;
+
+  /// Caméra et taille de la vue au dernier rendu (tests d'intégration :
+  /// point de l'écran où se trouve un muscle).
+  PerspectiveCamera? get camera => _camera;
+  Size get viewSize => _size;
+
+  @override
+  void initState() {
+    super.initState();
+    _yaw = _toYaw = widget.view.yaw;
+    _settings.listenable.addListener(_onSettings);
+    unawaited(_settings.load());
+    // Téléphone déjà reconnu incompatible et carte chargée : repli 2D
+    // immédiat, sans attente.
+    final known = engine3DSupportKnown;
+    if (known != null &&
+        !known.compatible &&
+        (widget.fallback != null || MannequinMap.loaded != null)) {
+      _map = MannequinMap.loaded;
+      _available = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) widget.onReady?.call(false);
+      });
+      return;
+    }
+    unawaited(_init());
+  }
+
+  MannequinMap? _map;
+
+  Future<void> _init() async {
+    final support = await engine3DSupport();
+    if (!support.compatible) {
+      // Repli 2D : la carte des régions donne les groupes à colorer (inutile
+      // quand l'écran fournit son propre repli).
+      MannequinMap? map;
+      if (widget.fallback == null) {
+        try {
+          map = await MannequinMap.load();
+        } catch (_) {}
+      }
+      if (mounted) {
+        setState(() {
+          _map = map;
+          _available = false;
+        });
+      }
+      widget.onReady?.call(false);
+      return;
+    }
+    MannequinScene? scene;
+    try {
+      scene = await MannequinScene.create();
+    } catch (_) {
+      scene = null;
+    }
+    if (!mounted) return;
+    setState(() {
+      _scene = scene;
+      _available = scene != null;
+    });
+    widget.onReady?.call(scene != null);
+  }
+
+  @override
+  void didUpdateWidget(Mannequin3D oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.view != widget.view) setView(widget.view);
+  }
+
+  @override
+  void dispose() {
+    _settings.listenable.removeListener(_onSettings);
+    _tween.dispose();
+    super.dispose();
+  }
+
+  void _onSettings() {
+    if (!mounted) return;
+    setState(() {
+      if (!_settings.touchNames.value) _touched = null;
+    });
+  }
+
+  bool get _reduceMotion => MediaQuery.of(context).disableAnimations;
+
+  /// Change de vue avec une transition (instantanée si les animations sont
+  /// réduites), par le plus court chemin autour du mannequin.
+  void setView(MannequinView view) {
+    _view = view;
+    var delta = (view.yaw - _yaw) % (2 * math.pi);
+    if (delta > math.pi) delta -= 2 * math.pi;
+    _fromYaw = _yaw;
+    _fromPitch = _pitch;
+    _toYaw = _yaw + delta;
+    _toPitch = .06;
+    if (!mounted) return;
+    if (_reduceMotion) {
+      setState(() {
+        _yaw = _toYaw;
+        _pitch = _toPitch;
+      });
+    } else {
+      _tween.forward(from: 0);
+      setState(() {});
+    }
+  }
+
+  void _onTween() {
+    final t = Curves.easeOutCubic.transform(_tween.value);
+    setState(() {
+      _yaw = _fromYaw + (_toYaw - _fromYaw) * t;
+      _pitch = _fromPitch + (_toPitch - _fromPitch) * t;
+    });
+  }
+
+  void _onTick(Duration elapsed, double dt) {
+    if (!widget.spin || _reduceMotion || dt <= 0 || _dragging) return;
+    _yaw += math.min(dt, .1) * .45;
+  }
+
+  bool _dragging = false;
+
+  void _startDrag() {
+    _tween.stop();
+    _dragging = true;
+  }
+
+  Camera _cameraFor(Duration _) {
+    final scene = _scene!;
+    return _camera = scene.camera(_yaw, _pitch, scene.fitDistance(_aspect));
+  }
+
+  double get _aspect =>
+      _size.height == 0 ? .75 : _size.width / math.max(1, _size.height);
+
+  void _onTap(TapUpDetails d) {
+    final scene = _scene, camera = _camera;
+    if (scene == null || camera == null || _size.isEmpty) return;
+    final region = scene.pick(camera, d.localPosition, _size);
+    widget.onRegionTap?.call(region);
+    if (!_settings.touchNames.value) return;
+    setState(() => _touched = region);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    final available = _available;
+    Widget view;
+    if (available == false) {
+      view = widget.fallback ?? _fallback(context);
+    } else if (_scene == null) {
+      view = SizedBox(
+        height: widget.height,
+        child: const Center(child: CircularProgressIndicator()),
+      );
+    } else {
+      view = _view3d(context, dark);
+    }
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        view,
+        if (widget.viewButtons && available != false) ...[
+          const SizedBox(height: 8),
+          _viewButtons(context),
+        ],
+      ],
+    );
+  }
+
+  Widget _fallback(BuildContext context) {
+    final groups = _map?.groupsOf(widget.intensities) ?? const {};
+    return Semantics(
+      label: '${widget.semanticLabel} (illustration 2D)',
+      child: ClipRRect(
+        key: const ValueKey('mannequin-fallback'),
+        borderRadius: BorderRadius.circular(KSpace.radius),
+        child: ColoredBox(
+          color: sceneBackground(
+            Theme.of(context).brightness == Brightness.dark,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: MuscleHeatmap(
+              data: groups,
+              height: widget.height - 24,
+              normalize: false,
+              glow: _settings.halo.value,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _view3d(BuildContext context, bool dark) {
+    final scene = _scene!;
+    scene.configure(
+      dark: dark,
+      intensities: widget.intensities,
+      stretched: widget.stretched,
+      hidden: widget.hidden,
+      bones: widget.bones ?? _settings.bones.value,
+      halo: _settings.halo.value,
+    );
+    final touched = _touched;
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(KSpace.radius),
+      child: ColoredBox(
+        color: sceneBackground(dark),
+        child: SizedBox(
+          height: widget.height,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              _size = constraints.biggest;
+              _camera = scene.camera(_yaw, _pitch, scene.fitDistance(_aspect));
+              return Stack(
+                children: [
+                  Positioned.fill(
+                    child: GestureDetector(
+                      key: const ValueKey('mannequin-view'),
+                      behavior: HitTestBehavior.opaque,
+                      onTapUp: _onTap,
+                      onPanStart: widget.horizontalDragOnly
+                          ? null
+                          : (_) => _startDrag(),
+                      onPanEnd: widget.horizontalDragOnly
+                          ? null
+                          : (_) => _dragging = false,
+                      onPanCancel: widget.horizontalDragOnly
+                          ? null
+                          : () => _dragging = false,
+                      onPanUpdate: widget.horizontalDragOnly
+                          ? null
+                          : (d) => setState(() {
+                              _yaw -= d.delta.dx * .012;
+                              _pitch = (_pitch + d.delta.dy * .008).clamp(
+                                -.7,
+                                .7,
+                              );
+                            }),
+                      onHorizontalDragStart: widget.horizontalDragOnly
+                          ? (_) => _startDrag()
+                          : null,
+                      onHorizontalDragEnd: widget.horizontalDragOnly
+                          ? (_) => _dragging = false
+                          : null,
+                      onHorizontalDragCancel: widget.horizontalDragOnly
+                          ? () => _dragging = false
+                          : null,
+                      onHorizontalDragUpdate: widget.horizontalDragOnly
+                          ? (d) => setState(() => _yaw -= d.delta.dx * .012)
+                          : null,
+                      child: Semantics(
+                        label:
+                            '${widget.semanticLabel}. Fais glisser pour le '
+                            'tourner.',
+                        child: SceneView(
+                          scene.scene,
+                          // Rendu à la demande : la vue se redessine quand ce
+                          // widget se reconstruit (caméra, intensités,
+                          // réglages). flutter_scene 0.23 ne permet pas de
+                          // basculer autoTick sur une vue montée : la clé
+                          // remonte la vue si `spin` change.
+                          key: ValueKey('scene-${widget.spin}'),
+                          autoTick: widget.spin,
+                          onTick: widget.spin ? _onTick : null,
+                          // En rotation continue, la caméra est recalculée à
+                          // chaque image ; sinon, à chaque reconstruction.
+                          camera: widget.spin ? null : _camera,
+                          cameraBuilder: widget.spin ? _cameraFor : null,
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (touched != null)
+                    Positioned(
+                      left: 10,
+                      right: 10,
+                      bottom: 10,
+                      child: IgnorePointer(
+                        child: _Bubble(
+                          key: const ValueKey('mannequin-bubble'),
+                          text: touched.label,
+                          dark: dark,
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _viewButtons(BuildContext context) => SegmentedButton<MannequinView>(
+    key: const ValueKey('mannequin-views'),
+    expandedInsets: EdgeInsets.zero,
+    showSelectedIcon: false,
+    segments: [
+      for (final v in widget.views)
+        ButtonSegment(
+          value: v,
+          label: Text(v.label, key: ValueKey('mannequin-view-${v.name}')),
+        ),
+    ],
+    // Vue hors des boutons proposés : aucun bouton sélectionné.
+    selected: {if (widget.views.contains(_view)) _view},
+    emptySelectionAllowed: !widget.views.contains(_view),
+    onSelectionChanged: (s) {
+      if (s.isNotEmpty) setView(s.single);
+    },
+  );
+}
+
+class _Bubble extends StatelessWidget {
+  final String text;
+  final bool dark;
+  const _Bubble({super.key, required this.text, required this.dark});
+
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+    decoration: BoxDecoration(
+      color: (dark ? KPalette.charcoal : Colors.white).withValues(alpha: .9),
+      borderRadius: BorderRadius.circular(8),
+      border: Border.all(color: SL.line),
+    ),
+    child: Text(
+      text,
+      style: TextStyle(fontSize: 13, color: dark ? KPalette.light : null),
+    ),
+  );
+}

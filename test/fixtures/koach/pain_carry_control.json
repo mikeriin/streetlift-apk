@@ -1,0 +1,403 @@
+{
+ "description": "Témoin de pain_carry sans douleur : hausse proposée",
+ "expected": {
+  "painBlocks": {
+   "pull": false
+  },
+  "proposals": [
+   {
+    "from": 32.5,
+    "id": "S4-J1|B8",
+    "kind": "value",
+    "reason": "up",
+    "ref": "B8",
+    "source": "koach",
+    "to": 42.5
+   }
+  ],
+  "state": {
+   "bias": 0.0,
+   "biasUpdates": 0,
+   "bwNow": 71.5,
+   "lifts": {
+    "pull": {
+     "k": 22.4,
+     "kPersonal": false,
+     "pending": false,
+     "sd": 3.32,
+     "series": [
+      104.0,
+      136.15,
+      137.7,
+      138.99
+     ],
+     "validSets": 12,
+     "validWeeks": 4,
+     "x": 138.99
+    }
+   },
+   "repmax": {}
+  }
+ },
+ "input": {
+  "accessories": [
+   {
+    "equipment": "dumbbell",
+    "prevention": false,
+    "ref": "B30"
+   },
+   {
+    "equipment": "pulley",
+    "prevention": false,
+    "ref": "B34"
+   },
+   {
+    "equipment": "pulley",
+    "prevention": true,
+    "ref": "B43"
+   },
+   {
+    "equipment": "barbell",
+    "prevention": false,
+    "ref": "B25"
+   }
+  ],
+  "history": [
+   {
+    "at": "1970-01-01T17:00:00",
+    "ref": "B8",
+    "source": "initial",
+    "value": 32.5
+   },
+   {
+    "at": "1970-01-01T17:00:00",
+    "ref": "B9",
+    "source": "initial",
+    "value": 45.0
+   },
+   {
+    "at": "1970-01-01T17:00:00",
+    "ref": "B10",
+    "source": "initial",
+    "value": 10.0
+   },
+   {
+    "at": "1970-01-01T17:00:00",
+    "ref": "B11",
+    "source": "initial",
+    "value": 110.0
+   },
+   {
+    "at": "1970-01-01T17:00:00",
+    "ref": "B16",
+    "source": "initial",
+    "value": 10
+   },
+   {
+    "at": "1970-01-01T17:00:00",
+    "ref": "B17",
+    "source": "initial",
+    "value": 30
+   },
+   {
+    "at": "1970-01-01T17:00:00",
+    "ref": "B18",
+    "source": "initial",
+    "value": 70
+   },
+   {
+    "at": "1970-01-01T17:00:00",
+    "ref": "B19",
+    "source": "initial",
+    "value": 65
+   },
+   {
+    "at": "1970-01-01T17:00:00",
+    "ref": "B20",
+    "source": "initial",
+    "value": 25
+   },
+   {
+    "at": "1970-01-01T17:00:00",
+    "ref": "B30",
+    "source": "initial",
+    "value": 14.0
+   },
+   {
+    "at": "1970-01-01T17:00:00",
+    "ref": "B34",
+    "source": "initial",
+    "value": 15.0
+   },
+   {
+    "at": "1970-01-01T17:00:00",
+    "ref": "B43",
+    "source": "initial",
+    "value": 20.0
+   },
+   {
+    "at": "1970-01-01T17:00:00",
+    "ref": "B25",
+    "source": "initial",
+    "value": 70.0
+   }
+  ],
+  "lifts": [
+   {
+    "bodyweight": true,
+    "grid": 1.25,
+    "k": 28.0,
+    "key": "mu",
+    "ref": "B10"
+   },
+   {
+    "bodyweight": true,
+    "grid": 1.25,
+    "k": 22.4,
+    "key": "pull",
+    "ref": "B8"
+   },
+   {
+    "bodyweight": true,
+    "grid": 1.25,
+    "k": 22.4,
+    "key": "dip",
+    "ref": "B9"
+   },
+   {
+    "bodyweight": false,
+    "grid": 2.5,
+    "k": 22.4,
+    "key": "squat",
+    "ref": "B11"
+   }
+  ],
+  "now": "1970-01-23T20:00:00",
+  "references": {
+   "B10": 10.0,
+   "B11": 110.0,
+   "B16": 10,
+   "B17": 30,
+   "B18": 70,
+   "B19": 65,
+   "B20": 25,
+   "B25": 70.0,
+   "B30": 14.0,
+   "B34": 15.0,
+   "B4": 71.5,
+   "B43": 20.0,
+   "B8": 32.5,
+   "B9": 45.0
+  },
+  "repmax": [
+   {
+    "ref": "B16"
+   },
+   {
+    "ref": "B17"
+   },
+   {
+    "dips": true,
+    "ref": "B18"
+   },
+   {
+    "ref": "B19"
+   },
+   {
+    "ref": "B20"
+   }
+  ],
+  "sessions": [
+   {
+    "day": 1,
+    "done": true,
+    "exercises": [
+     {
+      "cat": "strength",
+      "cluster": false,
+      "emom": false,
+      "id": "W0",
+      "plannedReps": 4,
+      "ref": "B8",
+      "restSec": 240,
+      "rirTarget": 2,
+      "sets": [
+       {
+        "at": "1970-01-02T18:00:00",
+        "done": true,
+        "excluded": false,
+        "kg": 32.5,
+        "reps": 4,
+        "rir": 3
+       },
+       {
+        "at": "1970-01-02T18:05:00",
+        "done": true,
+        "excluded": false,
+        "kg": 32.5,
+        "reps": 4,
+        "rir": 3
+       },
+       {
+        "at": "1970-01-02T18:10:00",
+        "done": true,
+        "excluded": false,
+        "kg": 32.5,
+        "reps": 4,
+        "rir": 3
+       }
+      ]
+     }
+    ],
+    "finishedAt": "1970-01-02T19:30:00",
+    "key": "S1-J1",
+    "week": 1
+   },
+   {
+    "day": 1,
+    "done": true,
+    "exercises": [
+     {
+      "cat": "strength",
+      "cluster": false,
+      "emom": false,
+      "id": "W1",
+      "plannedReps": 4,
+      "ref": "B8",
+      "restSec": 240,
+      "rirTarget": 2,
+      "sets": [
+       {
+        "at": "1970-01-09T18:00:00",
+        "done": true,
+        "excluded": false,
+        "kg": 40.0,
+        "reps": 4,
+        "rir": 3
+       },
+       {
+        "at": "1970-01-09T18:05:00",
+        "done": true,
+        "excluded": false,
+        "kg": 40.0,
+        "reps": 4,
+        "rir": 3
+       },
+       {
+        "at": "1970-01-09T18:10:00",
+        "done": true,
+        "excluded": false,
+        "kg": 40.0,
+        "reps": 4,
+        "rir": 3
+       }
+      ]
+     }
+    ],
+    "finishedAt": "1970-01-09T19:30:00",
+    "key": "S2-J1",
+    "week": 2
+   },
+   {
+    "day": 1,
+    "done": true,
+    "exercises": [
+     {
+      "cat": "strength",
+      "cluster": false,
+      "emom": false,
+      "id": "W2",
+      "plannedReps": 4,
+      "ref": "B8",
+      "restSec": 240,
+      "rirTarget": 2,
+      "sets": [
+       {
+        "at": "1970-01-16T18:00:00",
+        "done": true,
+        "excluded": false,
+        "kg": 41.25,
+        "reps": 4,
+        "rir": 3
+       },
+       {
+        "at": "1970-01-16T18:05:00",
+        "done": true,
+        "excluded": false,
+        "kg": 41.25,
+        "reps": 4,
+        "rir": 3
+       },
+       {
+        "at": "1970-01-16T18:10:00",
+        "done": true,
+        "excluded": false,
+        "kg": 41.25,
+        "reps": 4,
+        "rir": 3
+       }
+      ]
+     }
+    ],
+    "finishedAt": "1970-01-16T19:30:00",
+    "key": "S3-J1",
+    "week": 3
+   },
+   {
+    "day": 1,
+    "done": true,
+    "exercises": [
+     {
+      "cat": "strength",
+      "cluster": false,
+      "emom": false,
+      "id": "W3",
+      "plannedReps": 4,
+      "ref": "B8",
+      "restSec": 240,
+      "rirTarget": 2,
+      "sets": [
+       {
+        "at": "1970-01-23T18:00:00",
+        "done": true,
+        "excluded": false,
+        "kg": 42.5,
+        "reps": 4,
+        "rir": 3
+       },
+       {
+        "at": "1970-01-23T18:05:00",
+        "done": true,
+        "excluded": false,
+        "kg": 42.5,
+        "reps": 4,
+        "rir": 3
+       },
+       {
+        "at": "1970-01-23T18:10:00",
+        "done": true,
+        "excluded": false,
+        "kg": 42.5,
+        "reps": 4,
+        "rir": 3
+       }
+      ]
+     }
+    ],
+    "finishedAt": "1970-01-23T19:30:00",
+    "key": "S4-J1",
+    "week": 4
+   }
+  ],
+  "weighIns": [
+   {
+    "date": "1970-01-01",
+    "kg": 71.5
+   }
+  ]
+ },
+ "painBlocks": [
+  "pull"
+ ],
+ "proposalsFor": "S4-J1"
+}
