@@ -1,0 +1,21 @@
+diff --git a/test/m5_rig_test.dart b/test/m5_rig_test.dart
+index 0b2cdaf..7332c2a 100644
+--- a/test/m5_rig_test.dart
++++ b/test/m5_rig_test.dart
+@@ -175,10 +175,12 @@ void main() {
+     await tester.pumpAndSettle();
+     expect(state().posture, 'planche');
+     // Liste construite à la demande : retour au mannequin.
+-    for (var i = 0;
+-        i < 20 &&
+-            find.byKey(const ValueKey('anatomy-mannequin')).evaluate().isEmpty;
+-        i++) {
++    for (
++      var i = 0;
++      i < 20 &&
++          find.byKey(const ValueKey('anatomy-mannequin')).evaluate().isEmpty;
++      i++
++    ) {
+       await tester.drag(find.byType(Scrollable).last, const Offset(0, 250));
+       await tester.pumpAndSettle();
+     }

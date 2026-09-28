@@ -1,0 +1,237 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             40.7s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,127ms
+I/eetlift_tracker( 4369): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4369): Skipped 66 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4369): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:37377/sTpUPJayDIw=/
+VMServiceFlutterDriver: Isolate found with number: 1770703048236323
+VMServiceFlutterDriver: Isolate 1770703048236323 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4369): 00:00 +0: (setUpAll)
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 4369): Skipped 37 frames!  The application may be doing too much work on its main thread.
+I/flutter ( 4369): 00:01 +1: M5 : posture debout, 4 vues
+D/ProfileInstaller( 4369): Installing profile for fr.tchoupi.streetlift_tracker
+D/EGL_emulation( 4369): app_time_stats: avg=1772.28ms min=1265.60ms max=2278.96ms count=2
+D/EGL_emulation( 4369): app_time_stats: avg=2437.49ms min=2437.49ms max=2437.49ms count=1
+D/EGL_emulation( 4369): app_time_stats: avg=17182.87ms min=17182.87ms max=17182.87ms count=1
+I/eetlift_tracker( 4369): Background concurrent mark compact GC freed 2099KB AllocSpace bytes, 3(60KB) LOS objects, 49% free, 2584KB/5168KB, paused 60us,72.824ms total 13.482s
+D/EGL_emulation( 4369): app_time_stats: avg=400.45ms min=134.86ms max=915.06ms count=3
+D/EGL_emulation( 4369): app_time_stats: avg=1720.01ms min=1720.01ms max=1720.01ms count=1
+D/EGL_emulation( 4369): app_time_stats: avg=1582.05ms min=1582.05ms max=1582.05ms count=1
+D/EGL_emulation( 4369): app_time_stats: avg=462.20ms min=140.73ms max=845.25ms count=3
+D/EGL_emulation( 4369): app_time_stats: avg=3394.78ms min=3394.78ms max=3394.78ms count=1
+D/EGL_emulation( 4369): app_time_stats: avg=636.25ms min=3.78ms max=1815.94ms count=3
+D/EGL_emulation( 4369): app_time_stats: avg=1705.84ms min=440.58ms max=2971.11ms count=2
+D/EGL_emulation( 4369): app_time_stats: avg=667.10ms min=97.15ms max=1769.72ms count=3
+D/EGL_emulation( 4369): app_time_stats: avg=1733.43ms min=405.18ms max=3061.68ms count=2
+D/EGL_emulation( 4369): app_time_stats: avg=673.41ms min=102.99ms max=1794.44ms count=3
+I/flutter ( 4369): 00:47 +2: M5 : posture suspendu, 4 vues
+D/EGL_emulation( 4369): app_time_stats: avg=527.69ms min=158.09ms max=1274.82ms count=4
+D/EGL_emulation( 4369): app_time_stats: avg=105.27ms min=95.99ms max=114.25ms count=9
+D/EGL_emulation( 4369): app_time_stats: avg=349.92ms min=115.15ms max=1513.15ms count=7
+D/EGL_emulation( 4369): app_time_stats: avg=1308.04ms min=1308.04ms max=1308.04ms count=1
+D/EGL_emulation( 4369): app_time_stats: avg=567.41ms min=460.09ms max=674.73ms count=2
+D/EGL_emulation( 4369): app_time_stats: avg=2800.37ms min=2800.37ms max=2800.37ms count=1
+D/EGL_emulation( 4369): app_time_stats: avg=674.06ms min=161.24ms max=1630.06ms count=3
+D/EGL_emulation( 4369): app_time_stats: avg=1515.37ms min=403.33ms max=2627.40ms count=2
+D/EGL_emulation( 4369): app_time_stats: avg=673.16ms min=134.02ms max=1686.88ms count=3
+D/EGL_emulation( 4369): app_time_stats: avg=1532.20ms min=386.77ms max=2677.63ms count=2
+D/EGL_emulation( 4369): app_time_stats: avg=672.43ms min=88.16ms max=1806.86ms count=3
+I/flutter ( 4369): 01:10 +3: M5 : posture squat_bas, 4 vues
+D/EGL_emulation( 4369): app_time_stats: avg=715.00ms min=284.39ms max=1529.59ms count=3
+D/EGL_emulation( 4369): app_time_stats: avg=85.21ms min=1.99ms max=108.17ms count=9
+D/EGL_emulation( 4369): app_time_stats: avg=467.33ms min=104.41ms max=1716.05ms count=5
+D/EGL_emulation( 4369): app_time_stats: avg=1537.13ms min=1537.13ms max=1537.13ms count=1
+D/EGL_emulation( 4369): app_time_stats: avg=1110.25ms min=104.89ms max=3581.82ms count=4
+D/EGL_emulation( 4369): app_time_stats: avg=665.88ms min=91.82ms max=1803.12ms count=3
+D/EGL_emulation( 4369): app_time_stats: avg=1224.32ms min=431.98ms max=2016.66ms count=2
+D/EGL_emulation( 4369): app_time_stats: avg=1934.65ms min=1934.65ms max=1934.65ms count=1
+D/EGL_emulation( 4369): app_time_stats: avg=1101.52ms min=15.59ms max=3828.85ms count=4
+D/EGL_emulation( 4369): app_time_stats: avg=671.21ms min=78.91ms max=1810.71ms count=3
+I/flutter ( 4369): 01:34 +4: M5 : posture planche, 4 vues
+D/EGL_emulation( 4369): app_time_stats: avg=388.59ms min=154.18ms max=866.74ms count=4
+D/EGL_emulation( 4369): app_time_stats: avg=94.63ms min=7.09ms max=237.72ms count=9
+D/EGL_emulation( 4369): app_time_stats: avg=113.59ms min=19.97ms max=208.58ms count=9
+D/EGL_emulation( 4369): app_time_stats: avg=345.04ms min=17.23ms max=911.31ms count=4
+D/EGL_emulation( 4369): app_time_stats: avg=665.49ms min=102.61ms max=1121.42ms count=3
+D/EGL_emulation( 4369): app_time_stats: avg=985.99ms min=340.74ms max=1631.25ms count=2
+D/EGL_emulation( 4369): app_time_stats: avg=675.80ms min=133.02ms max=1683.93ms count=3
+D/EGL_emulation( 4369): app_time_stats: avg=1267.41ms min=328.35ms max=2206.47ms count=2
+D/EGL_emulation( 4369): app_time_stats: avg=673.96ms min=89.89ms max=1801.30ms count=3
+D/EGL_emulation( 4369): app_time_stats: avg=922.99ms min=353.78ms max=1492.21ms count=2
+D/EGL_emulation( 4369): app_time_stats: avg=672.72ms min=27.94ms max=1317.36ms count=3
+I/flutter ( 4369): 01:54 +5: M5 : écran Anatomie, sélecteur « Posture », transition
+D/EGL_emulation( 4369): app_time_stats: avg=381.55ms min=261.27ms max=509.17ms count=3
+D/EGL_emulation( 4369): app_time_stats: avg=1432.18ms min=1432.18ms max=1432.18ms count=1
+D/EGL_emulation( 4369): app_time_stats: avg=92.23ms min=16.79ms max=147.95ms count=8
+I/flutter ( 4369): 
+I/flutter ( 4369): Warning: A call to tap() with finder "Found 1 widget with key [<'anatomy-posture-squat_bas'>]: [
+I/flutter ( 4369):   ChoiceChip-[<'anatomy-posture-squat_bas'>](dependencies: [InheritedCupertinoTheme, MediaQuery, _InheritedTheme, _LocalizationsScope-[GlobalKey#3c5f1]]),
+I/flutter ( 4369): ]" derived an Offset (Offset(124.7, 642.0)) that would not hit test on the specified widget.
+I/flutter ( 4369): Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+I/flutter ( 4369): Indeed, Offset(124.7, 642.0) is outside the bounds of the root of the render tree, Size(360.0, 640.0).
+I/flutter ( 4369): The finder corresponds to this RenderBox: RenderSemanticsAnnotations#c9d10 relayoutBoundary=up7
+I/flutter ( 4369): The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#6586a(_ReusableRenderView#e217c), HitTestEntry<HitTestTarget>#dfa25(<IntegrationTestWidgetsFlutterBinding>))
+I/flutter ( 4369): #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+I/flutter ( 4369): #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+I/flutter ( 4369): #2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+I/flutter ( 4369): #3      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/postures_m5_test.dart:259:18)
+I/flutter ( 4369): <asynchronous suspension>
+I/flutter ( 4369): #4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4369): <asynchronous suspension>
+I/flutter ( 4369): #5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4369): <asynchronous suspension>
+I/flutter ( 4369): #6      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4369): <asynchronous suspension>
+I/flutter ( 4369): To silence this warning, pass "warnIfMissed: false" to "tap()".
+I/flutter ( 4369): To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+I/flutter ( 4369): 
+D/EGL_emulation( 4369): app_time_stats: avg=244.35ms min=4.80ms max=1331.93ms count=9
+D/EGL_emulation( 4369): app_time_stats: avg=2011.04ms min=2011.04ms max=2011.04ms count=1
+I/flutter ( 4369): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4369): The following TestFailure was thrown running a test:
+I/flutter ( 4369): Expected: MannequinView:<MannequinView.troisQuarts>
+I/flutter ( 4369):   Actual: MannequinView:<MannequinView.face>
+I/flutter ( 4369): 
+I/flutter ( 4369): When the exception was thrown, this was the stack:
+I/flutter ( 4369): #4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/postures_m5_test.dart:268:5)
+I/flutter ( 4369): <asynchronous suspension>
+I/flutter ( 4369): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4369): <asynchronous suspension>
+I/flutter ( 4369): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4369): <asynchronous suspension>
+I/flutter ( 4369): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4369): <asynchronous suspension>
+I/flutter ( 4369): 
+I/flutter ( 4369): This was caught by the test expectation on the following line:
+I/flutter ( 4369):   file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/postures_m5_test.dart line 268
+I/flutter ( 4369): The test description was:
+I/flutter ( 4369):   M5 : écran Anatomie, sélecteur « Posture », transition
+I/flutter ( 4369): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4369): 02:02 +5: M5 : écran Anatomie, sélecteur « Posture », transition [E]
+I/flutter ( 4369):   Test failed. See exception logs above.
+I/flutter ( 4369):   The test description was: M5 : écran Anatomie, sélecteur « Posture », transition
+I/flutter ( 4369):   
+I/flutter ( 4369): 02:02 +5 -1: M5 : écran Anatomie, planche, clair
+D/FlutterJNI( 4369): Sending viewport metrics to the engine.
+D/EGL_emulation( 4369): app_time_stats: avg=800.70ms min=735.17ms max=866.23ms count=2
+D/EGL_emulation( 4369): app_time_stats: avg=550.12ms min=129.84ms max=970.41ms count=2
+D/EGL_emulation( 4369): app_time_stats: avg=113.75ms min=16.01ms max=235.20ms count=9
+I/flutter ( 4369): 
+I/flutter ( 4369): Warning: A call to tap() with finder "Found 1 widget with key [<'anatomy-posture-planche'>]: [
+I/flutter ( 4369):   ChoiceChip-[<'anatomy-posture-planche'>](dependencies: [InheritedCupertinoTheme, MediaQuery, _InheritedTheme, _LocalizationsScope-[GlobalKey#3b0da]]),
+I/flutter ( 4369): ]" derived an Offset (Offset(215.1, 642.0)) that would not hit test on the specified widget.
+I/flutter ( 4369): Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+I/flutter ( 4369): Indeed, Offset(215.1, 642.0) is outside the bounds of the root of the render tree, Size(360.0, 640.0).
+I/flutter ( 4369): The finder corresponds to this RenderBox: RenderSemanticsAnnotations#eea9e relayoutBoundary=up7
+I/flutter ( 4369): The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#6ebe5(_ReusableRenderView#e217c), HitTestEntry<HitTestTarget>#7fc24(<IntegrationTestWidgetsFlutterBinding>))
+I/flutter ( 4369): #0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+I/flutter ( 4369): #1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+I/flutter ( 4369): #2      WidgetController.tap (package:flutter_test/src/controller.dart:1080:7)
+I/flutter ( 4369): #3      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/postures_m5_test.dart:307:18)
+I/flutter ( 4369): <asynchronous suspension>
+I/flutter ( 4369): #4      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4369): <asynchronous suspension>
+I/flutter ( 4369): #5      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4369): <asynchronous suspension>
+I/flutter ( 4369): #6      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4369): <asynchronous suspension>
+I/flutter ( 4369): To silence this warning, pass "warnIfMissed: false" to "tap()".
+I/flutter ( 4369): To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+I/flutter ( 4369): 
+D/EGL_emulation( 4369): app_time_stats: avg=99.41ms min=19.17ms max=121.84ms count=10
+D/EGL_emulation( 4369): app_time_stats: avg=429.09ms min=17.72ms max=1779.56ms count=5
+I/flutter ( 4369): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4369): The following TestFailure was thrown running a test:
+I/flutter ( 4369): Expected: MannequinView:<MannequinView.profil>
+I/flutter ( 4369):   Actual: MannequinView:<MannequinView.face>
+I/flutter ( 4369): 
+I/flutter ( 4369): When the exception was thrown, this was the stack:
+I/flutter ( 4369): #4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/postures_m5_test.dart:310:5)
+I/flutter ( 4369): <asynchronous suspension>
+I/flutter ( 4369): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4369): <asynchronous suspension>
+I/flutter ( 4369): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4369): <asynchronous suspension>
+I/flutter ( 4369): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4369): <asynchronous suspension>
+I/flutter ( 4369): 
+I/flutter ( 4369): This was caught by the test expectation on the following line:
+I/flutter ( 4369):   file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/postures_m5_test.dart line 310
+I/flutter ( 4369): The test description was:
+I/flutter ( 4369):   M5 : écran Anatomie, planche, clair
+I/flutter ( 4369): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4369): 02:09 +5 -1: M5 : écran Anatomie, planche, clair [E]
+I/flutter ( 4369):   Test failed. See exception logs above.
+I/flutter ( 4369):   The test description was: M5 : écran Anatomie, planche, clair
+I/flutter ( 4369):   
+I/flutter ( 4369): 02:09 +5 -2: (tearDownAll)
+I/flutter ( 4369): 02:09 +6 -2: Some tests failed.
+Failure Details:
+Failure in method: M5 : écran Anatomie, sélecteur « Posture », transition
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: MannequinView:<MannequinView.troisQuarts>
+  Actual: MannequinView:<MannequinView.face>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/postures_m5_test.dart:268:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/postures_m5_test.dart line 268
+The test description was:
+  M5 : écran Anatomie, sélecteur « Posture », transition
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+Failure in method: M5 : écran Anatomie, planche, clair
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: MannequinView:<MannequinView.profil>
+  Actual: MannequinView:<MannequinView.face>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/postures_m5_test.dart:310:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/postures_m5_test.dart line 310
+The test description was:
+  M5 : écran Anatomie, planche, clair
+═════════════════════════════════════════════════════════════════
+
+end of failure 2
+
+
+
