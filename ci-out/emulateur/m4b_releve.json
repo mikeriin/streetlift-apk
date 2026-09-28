@@ -29,8 +29,52 @@
       "couleurs": 142
     }
   },
-  "toucher_point": "Offset(163.5, 107.6)",
-  "toucher": "Petit rhomboïde (gauche) (profond) · Dos",
+  "rotation": [
+    {
+      "pixels": 98280,
+      "figure": 0.19136141636141635,
+      "rouge": 0.006298331298331298,
+      "gris": 0.18367928367928368,
+      "couleurs": 153
+    },
+    {
+      "pixels": 98280,
+      "figure": 0.1908831908831909,
+      "rouge": 0.00635938135938136,
+      "gris": 0.18324175824175823,
+      "couleurs": 156
+    },
+    {
+      "pixels": 98280,
+      "figure": 0.19036426536426537,
+      "rouge": 0.00638990638990639,
+      "gris": 0.18285510785510786,
+      "couleurs": 141
+    },
+    {
+      "pixels": 98280,
+      "figure": 0.18986568986568986,
+      "rouge": 0.00637973137973138,
+      "gris": 0.18237688237688238,
+      "couleurs": 150
+    },
+    {
+      "pixels": 98280,
+      "figure": 0.1897842897842898,
+      "rouge": 0.006634106634106634,
+      "gris": 0.1821835571835572,
+      "couleurs": 139
+    },
+    {
+      "pixels": 98280,
+      "figure": 0.1897028897028897,
+      "rouge": 0.006715506715506716,
+      "gris": 0.18205128205128204,
+      "couleurs": 143
+    }
+  ],
+  "toucher_point": "Offset(163.5, 102.0)",
+  "toucher": "Petit rhomboïde (droit) (profond) · Dos",
   "profonds_clair": {
     "dos": {
       "pixels": 98280,
@@ -121,16 +165,16 @@
   "moteur3d": {
     "note": "émulateur, rendu logiciel, build debug : comparaison seulement ; la mesure qui compte est celle du téléphone",
     "avant_opaque_5_3_0": {
-      "images": 8,
-      "images_par_s": 0.8,
-      "temps_moyen_ms": 2199.5005,
-      "p99_ms": 2355.006
+      "images": 17,
+      "images_par_s": 1.7,
+      "temps_moyen_ms": 1142.141882352941,
+      "p99_ms": 1611.795
     },
     "apres_transparent_5_3_1": {
-      "images": 8,
-      "images_par_s": 0.8,
-      "temps_moyen_ms": 2472.274375,
-      "p99_ms": 2573.5
+      "images": 17,
+      "images_par_s": 1.7,
+      "temps_moyen_ms": 1122.086176470588,
+      "p99_ms": 1679.723
     }
   }
 }
