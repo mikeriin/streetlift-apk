@@ -51,5 +51,14 @@ Modèle Claude : Opus 5.5 pour tous les lots, effort accru demandé sur M5 (sque
 - Repli sans Flutter GPU : `ExerciseAtlas` historique, inchangé (paramètre `fallback` de `Mannequin3D`).
 - CI 3D : cible `integration_test/fiche_exercice_test.dart` ; la mesure M2 des organisations n'est plus relancée par défaut (`CI3D_MESURE=1`).
 
+### M4 (28/09/2026) — STATS : résumé hebdomadaire sur le mannequin (5.3.0)
+- Chiffres inchangés : `AppStore.weeklyMuscles` non modifié ; la normalisation de la carte 2D (valeur / maximum de la semaine, groupes sous 2 % non colorés) est extraite telle quelle (`heatmapIntensities`, `kHeatmapMinIntensity`) et partagée par la carte et le mannequin ; comparaison chiffrée dans `test/m4_stats_mannequin_test.dart`.
+- Chaque région prend l'intensité de son groupe (groupes des régions fixés en M2 ; le groupe Dos inclut les muscles du cou). Mains et pieds (volumes sombres des groupes avant-bras / mollets) restent sombres dans ce résumé : il colore des muscles, pas des extrémités. Réversible (`weeklyRegionIntensities`).
+- Légende chiffrée : la carte 2D n'écrivait que les noms ; chaque groupe porte désormais sa valeur (« Dos · 16 », séries pondérées) et une ligne explique le calcul. Option `MuscleLegend(values:)`, le WOD garde sa légende d'avant.
+- Bascule Face / Dos : paramètre `views` de `Mannequin3D` (défaut : les 4 vues, autres écrans inchangés). Rotation horizontale seule (page qui défile), comme la fiche.
+- Performance : rendu à la demande + `RepaintBoundary` autour du mannequin, sans image figée en cache. Mesure émulateur (debug, rendu logiciel) : défilement de STATS mannequin à l'écran, fil UI médiane 2,4 ms (p90 15,5) sur 46 images ; rotation (scène redessinée) 116 ms. Le défilement ne redessine pas la scène ; l'image en cache n'apporterait rien.
+- Hauteur 330 (fiche : 380) ; repli sans Flutter GPU : `MuscleHeatmap` hauteur 220, identique à 5.2.0.
+- CI 3D : cible STATS lancée en premier sur l'émulateur. Essai 1 : service VM perdu pendant Moteur 3D puis émulateur injoignable jusqu'au délai du job ; essai 2 : premier lancement de chaque cible perdu (« device offline »), relance réussie pour STATS et Moteur 3D, fiche M3 perdue deux fois (infrastructure ; la fiche n'utilise pas le nouveau paramètre).
+
 ## En attente du propriétaire
 (aucune)
