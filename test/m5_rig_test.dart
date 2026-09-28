@@ -174,6 +174,14 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('anatomy-posture-planche')));
     await tester.pumpAndSettle();
     expect(state().posture, 'planche');
+    // Liste construite à la demande : retour au mannequin.
+    for (var i = 0;
+        i < 20 &&
+            find.byKey(const ValueKey('anatomy-mannequin')).evaluate().isEmpty;
+        i++) {
+      await tester.drag(find.byType(Scrollable).last, const Offset(0, 250));
+      await tester.pumpAndSettle();
+    }
     final m = tester.widget<Mannequin3D>(
       find.byKey(const ValueKey('anatomy-mannequin')),
     );
