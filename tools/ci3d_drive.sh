@@ -31,9 +31,11 @@ adb logcat -v time > "$out/logcat-complet.txt" 2>&1 &
 logcat_pid=$!
 
 # Cible séparée lancée par `flutter drive` (application arrêtée avant).
+# M5 : délai de 10 min par cible (la cible du lot dure ≈ 3 min) : un
+# blocage laisse le temps du second essai dans les 30 min du job.
 cible() {
   adb shell am force-stop fr.tchoupi.streetlift_tracker || true
-  timeout 1500 flutter drive --no-pub \
+  timeout "${CI3D_DELAI:-600}" flutter drive --no-pub \
     --driver=test_driver/integration_test.dart \
     --target="integration_test/$1.dart" \
     -d emulator-5554 > "$out/drive-$1.log" 2>&1
