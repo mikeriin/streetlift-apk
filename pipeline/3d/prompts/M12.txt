@@ -1,4 +1,5 @@
 LOT M12 — CONVERSION EN 3D : FIGURES (EFFORT ACCRU)
+Modèle : Claude Fable 5.1, effort maximal (précision chirurgicale : chaque figure justifiée par des mesures et des références, rendus regardés en entier et en gros plan, revue indépendante par un sous-agent neuf jouant l'entraîneur exigeant).
 Rôle : biomécanicien et technical animator. Une seule action : convertir en animations 3D la famille d'exercices ci-dessous avec la chaîne de M6, et les brancher dans l'application.
 
 Périmètre : types `figure_statique` et `figure_dynamique` (environ 94 exercices : planche, front lever, back lever, drapeau, équilibres, muscle-up, transitions…), hors ceux déjà convertis. Effort accru : pour chaque figure, vérifie l'équilibre (centre de masse au-dessus de l'appui, bras de levier), la position des scapulas et du bassin, et compare la posture à au moins 2 références. Une figure statique est une posture tenue avec respiration discrète et pulsation isométrique, pas une boucle de mouvement.

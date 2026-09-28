@@ -1,7 +1,6 @@
 # État du pipeline « Mannequin 3D »
 
-Tâche planifiée du pipeline : **trig_01J35pZkMyrRK6aZw1j4yckL** (« Kalis Track — pipeline mannequin 3D (v5, lancement manuel) », depuis le 28/09 16:25). **Lancement manuel** : le propriétaire fait lancer chaque lot ; aucun lot ne relance, ne modifie ni ne crée de tâche (une relance faite par un lot faisait perdre l'accès push à la tâche : v1 à v4 inutilisables).
-Activation : **manuelle par le propriétaire** (premier lancement de M1 seulement sur son ordre).
+Tâches planifiées (lancement manuel par la conversation de pilotage, lot indiqué dans le message « Lot : <LOT> ») : **Fable 5.1 effort maximal** trig_01Vzab2sFaAoMFNcNepFhEGX (M56, M12) ; **Opus 5.5 effort élevé** trig_01GMgdzWoZ9At48KZ6PUZxSk (tous les autres lots). Aucun lot ne relance, ne modifie ni ne crée de tâche. Validation manuelle de chaque lot par le propriétaire avant le suivant (statut « à valider » → « validé »).
 Page de suivi : https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA
 Base de départ : main 4.3.1+71 (commit 7f07e2e, L13 + refonte muscles 2D fusionnés).
 Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pipeline et ne doit pas être lancé.
@@ -15,7 +14,9 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M4b | 5.3.1 | 4531346 | build n° 101 (36409875811) ; CI 3D 36408180487 | 2026-09-28 | livré |
 | M4c | 5.3.2 | 67ec551 | build n° 112 (36431053547) ; CI 3D 36428956594 | 2026-09-28 | livré |
 | M5 | 5.4.0 | b745c41 | build n° 121 (36456576585) ; CI 3D 36454868372 | 2026-09-28 | livré |
-| M6 | 5.5.0 | — | — | — | en cours depuis 2026-09-28 18:05 UTC |
+| M6 | — | — | — | 2026-09-28 | remplacé par M56 (session Opus lancée à 18:05 UTC, plus pilotée ; son travail sert de brouillon) |
+| M56 | — | — | — | — | à faire |
+| M6b | — | — | — | — | à faire |
 | M7 | 5.6.0 | — | — | — | à faire |
 | M8 | 5.7.0 | — | — | — | à faire |
 | M9 | 5.8.0 | — | — | — | à faire |

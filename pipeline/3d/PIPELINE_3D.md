@@ -1,13 +1,14 @@
 # Pipeline « Mannequin 3D » Kalis Track — règles communes (propriétaire : Gaël, 27/09/2026)
 
-Tu es lancé par la tâche planifiée « Kalis Track — pipeline mannequin 3D », dans une session neuve, **sans personne pour répondre en direct**. Ce pipeline remplace progressivement l'affichage des muscles et les démonstrations 2D par un mannequin anatomique 3D animé. **Un lot = une seule action**, dont le résultat se constate dans l'application après la mise à jour. Concentre-toi sur ton lot : ne fais rien qui appartienne à un autre lot.
+Tu es lancé par une des tâches planifiées « Kalis Track — pipeline 3D (Opus 5.5) » ou « (Fable 5.1) » (colonne « Modèle et effort » du §8), dans une session neuve, **sans personne pour répondre en direct**. Ce pipeline remplace progressivement l'affichage des muscles et les démonstrations 2D par un mannequin anatomique 3D animé. **Un lot = une seule action**, dont le résultat se constate dans l'application après la mise à jour. Concentre-toi sur ton lot : ne fais rien qui appartienne à un autre lot.
 
 ## 1. Démarrage
 (Depuis M4c, 5.3.2, `main` contient directement les sources du projet Flutter à sa racine : plus de ZIP. Le dernier état livré en ZIP est au commit 4531346 de `main`.)
 1. `add_repo` mikeriin/streetlift-apk en accès `push`, puis clone (commande donnée par l'outil).
 2. `git fetch origin pipeline` ; lis ce fichier, `pipeline/3d/ETAT_3D.md` et `pipeline/3d/DECISIONS_3D.md`.
-3. Ton lot est le **premier lot du tableau §8 dont le statut n'est pas « livré »** dans `ETAT_3D.md`. Lis son prompt `pipeline/3d/prompts/M<NN>.txt` (numéro sur 2 chiffres : M1 → `M01.txt`, M4b → `M04b.txt`, M4c → `M04c.txt`, M7b → `M07b.txt`) et exécute-le intégralement. **Si ce lot est marqué « en cours depuis … » depuis moins de 6 h, ou « en attente du propriétaire », arrête-toi immédiatement, sans rien modifier ni notifier** (une autre session travaille déjà sur ce lot, ou une décision est attendue). S'il est « en cours » depuis plus de 6 h, repars de l'état réel du dépôt (commits, branches) sans refaire ce qui est poussé.
-4. Base : les sources sur `main` (`version:` de `pubspec.yaml`). Vérifie la version prérequise (§8). Si elle ne correspond pas : notification d'échec (§5) et arrêt.
+3. Statuts d'un lot dans `ETAT_3D.md` : « à faire », « en cours depuis … », « à valider » (publié, en test chez le propriétaire), « validé » (les lots notés « livré » avant le 29/09/2026 comptent comme validés), « remplacé ». Ton lot est le **premier lot du tableau §8 qui n'est ni « validé » ni « remplacé »**. Son prompt : `pipeline/3d/prompts/<fichier>` (colonne « Prompt » du tableau §8). Exécute-le intégralement. Le message de lancement indique le lot attendu (« Lot : <LOT> ») : s'il ne correspond pas à cette règle, arrête-toi sans rien modifier et notifie « Kalis Track : lot demandé <X>, lot attendu <Y> ».
+   — Si ce lot est « à valider » : si le message de lancement contient « Corrections du propriétaire pour <LOT> », tu fais un **passage de correction** de ce lot (seulement ces corrections, avec la même exigence que le lot ; version corrective, voir §7) ; sinon arrête-toi sans rien modifier et notifie « Kalis Track <LOT> : en attente de validation du propriétaire ». **Si ce lot est marqué « en cours depuis … » depuis moins de 6 h, ou « en attente du propriétaire », arrête-toi immédiatement, sans rien modifier ni notifier** (une autre session travaille déjà sur ce lot, ou une décision est attendue). S'il est « en cours » depuis plus de 6 h, repars de l'état réel du dépôt (commits, branches) sans refaire ce qui est poussé.
+4. Base : les sources sur `main` (`version:` de `pubspec.yaml`). Prérequis : tous les lots précédents du tableau §8 sont « validé » ou « remplacé ». Sinon : notification d'échec (§5) et arrêt.
 5. Marque ton lot « en cours depuis AAAA-MM-JJ HH:MM UTC » dans `ETAT_3D.md` et pousse `pipeline` (si le push est refusé parce qu'une autre session vient de le faire, arrête-toi).
 
 ## 2. Décisions du propriétaire (27/09/2026) — ne pas remettre en cause
@@ -25,7 +26,10 @@ Tu es lancé par la tâche planifiée « Kalis Track — pipeline mannequin 3D �
 - Téléphone incompatible : repli sur la carte 2D historique et postures fixes du mannequin.
 - Poids ajouté à l'APK : objectif ≤ 10 Mo, tolérance 20 Mo.
 - Erreurs fréquentes montrées en « fantôme » : lot dédié après les conversions.
-- Mode : chaque lot passe sur `main` dès que les contrôles sont verts, puis lance le suivant (exception : M1, voir son prompt).
+- Mode (28/09/2026, remplace l'enchaînement automatique) : **validation manuelle**. Un lot publie sur `main` quand ses contrôles sont verts, notifie le propriétaire qu'il peut tester, puis s'arrête. Le propriétaire teste sur son téléphone et rend compte ; ses corrections sont appliquées par un passage de correction du même lot ; le lot suivant n'est lancé que sur son ordre.
+- (28/09/2026) Mannequin **plus musclé** : physique d'athlète de force entraîné (streetlifting), proche du volume de `front_base.png` historique ; animations et modèle d'une **précision chirurgicale et crédibles** (refonte M56).
+- (28/09/2026) Le modèle 3D est **préchargé au lancement de l'application** (plus de saccade à chaque affichage du mannequin).
+- (28/09/2026) Modèles d'agent : Claude Fable 5.1 en effort maximal pour M56 et M12 ; Claude Opus 5.5 en effort élevé pour tous les autres lots.
 
 ## 3. Règles techniques communes
 - **Jamais d'animation fausse** : un exercice dont l'animation 3D ne passe pas ses contrôles garde son affichage actuel (démonstration 2D existante, ou posture fixe) et est listé dans la livraison.
@@ -45,7 +49,7 @@ Tu es lancé par la tâche planifiée « Kalis Track — pipeline mannequin 3D �
 
 ## 5. Décisions, blocages, notifications (PushNotification, < 200 caractères, une ligne)
 Tranche toi-même tout choix réversible compatible avec le §2, et consigne-le dans `pipeline/3d/DECISIONS_3D.md` (section de ton lot). Arrête-toi et notifie seulement si : (a) risque de perte de données ; (b) contradiction avec une décision du §2 qui change le résultat ; (c) accès ou outil indispensable manquant ; (d) build ou tests encore en échec après 2 corrections sérieuses ; (e) impasse avérée de flutter_scene (version, message, essais faits).
-- Livraison : `Kalis Track <LOT> livré — v<version>. À voir : <ce que le propriétaire constate, en une phrase>`
+- Livraison : `Kalis Track <LOT> prêt à tester — v<version> publiée. À tester : <ce que le propriétaire doit vérifier, en une phrase>`
 - Décision : `Kalis Track <LOT> : décision requise — <question>` (question détaillée dans DECISIONS_3D.md avec 2-3 options et ta recommandation ; attends la réponse dans cette session).
 - Échec : `Kalis Track <LOT> bloqué — <cause courte>`
 
@@ -53,37 +57,39 @@ Tranche toi-même tout choix réversible compatible avec le §2, et consigne-le 
 Une seule page claude.ai « Suivi mannequin 3D » (outil Artifact ; charge d'abord la skill artifact-design), créée par M1, puis **republiée au même lien** par chaque lot (paramètre `url`, lien noté dans `ETAT_3D.md`). Chaque lot y ajoute sa section en tête : version, ce qu'il faut regarder dans l'appli (chemin exact des écrans), 2 à 4 captures ou GIF du vrai rendu, résultats des contrôles, limites. Lisible sur téléphone.
 
 ## 7. Fin de lot
-1. Version : celle du tableau §8 (pubspec `version: x.y.z+N` avec N = N précédent + 1, réglages / À propos), README et SUIVI_PROJET.md complétés (section du lot).
+1. Version, calculée au moment de la publication à partir de celle de `main` (x.y.z+N) : lot de fonctionnalités → x.(y+1).0 ; lot correctif (M6b) ou passage de correction → x.y.(z+1) ; N + 1 dans tous les cas (réglages / À propos à jour). README et SUIVI_PROJET.md complétés (section du lot ou de la correction).
 2. Publie en poussant tes commits de sources sur `main` (avance rapide uniquement ; si `main` a bougé, remets-toi à jour puis relance les contrôles) ; vérifie que le run `build-apk.yml` signé réussit sur le commit poussé.
 3. `LIVRAISON_<LOT>.md` dans le projet claude.ai (outil Projects, `claude/LIVRAISON_<LOT>.md`) et dans `pipeline/3d/livraisons/`.
-4. Mets à jour `ETAT_3D.md` (lot, version, commit, run, date, statut « livré », lien de la page) et pousse `pipeline` (jamais de sources du projet sur cette branche).
-5. Ne relance AUCUNE tâche planifiée : le propriétaire fait lancer chaque lot lui-même (décision du 28/09/2026). Notifie la livraison en terminant par « Lot suivant : <LOT> — à lancer ». Un lot qui attend le propriétaire se marque « en attente du propriétaire » ; à sa réponse dans la session, il reprend et se termine normalement. Après M19 : notification « Pipeline mannequin 3D terminé — installer v<version> ».
+4. Mets à jour `ETAT_3D.md` (lot, version, commit, run, date, statut « à valider », lien de la page ; pour un passage de correction, ajoute une ligne « correction n » sous le lot) et pousse `pipeline` (jamais de sources du projet sur cette branche).
+5. Ne relance AUCUNE tâche planifiée. Notifie (§5, « prêt à tester ») seulement après le push final sur `main` ET la réussite du build signé, puis arrête-toi : le propriétaire teste, rend compte, et fait lancer lui-même une correction ou le lot suivant. Seul le propriétaire (par la conversation de pilotage) passe un lot à « validé ». Après M19 : notification « Pipeline mannequin 3D terminé — installer v<version> ».
 Interdits : modifier, créer ou relancer une tâche planifiée (aucun appel à fire_trigger, update_trigger ou create_trigger : un lot qui relançait la tâche lui faisait perdre l'accès push), supprimer une branche, modifier la signature ou l'identifiant, régénérer une clé, pousser un secret, pousser sur `main` des sources dont les contrôles ne sont pas verts, réécrire l'historique de `main` (pas de force-push), y ajouter un ZIP du projet.
 
-## 8. Enchaînement
-| Lot | Prérequis sur main | Version | Action unique | Constat du propriétaire | Effort |
-| --- | --- | --- | --- | --- | --- |
-| M1 | 4.3.1 | 5.0.0 | Socle : Flutter ≥ 3.47, Flutter GPU, CI 3D + captures émulateur, écran « Moteur 3D » | Appli identique ; Réglages › À propos › Moteur 3D : rendu test + compatibilité du téléphone | normal |
-| M2 | 5.0.0 | 5.1.0 | Modèle anatomique d'exécution + écran Anatomie + réglages 3D + licences | Écran Anatomie : rotation, vues, nom du muscle au toucher | normal |
-| M3 | 5.1.0 | 5.2.0 | Fiche exercice : mannequin fixe avec les muscles de l'exercice | Chaque fiche montre le mannequin coloré + la liste | normal |
-| M4 | 5.2.0 | 5.3.0 | STATS : résumé hebdomadaire sur le mannequin | STATS montre les groupes de la semaine sur le mannequin | normal |
-| M4b | 5.3.0 | 5.3.1 | Tous les muscles remis, transparence à 50 %, filtres à cocher, petite refonte de l'écran Anatomie | Muscles sollicités visibles à travers les autres ; menu « Filtres » à cocher | normal |
-| M4c | 5.3.1 | 5.3.2 | Dépôt en sources : plus de ZIP, projet structuré à la racine, CI et outils adaptés ; zoom au pincement ; filtres normalisés (menu déroulant à cocher par catégorie) | Sur GitHub, les dossiers du projet au lieu du ZIP ; zoom au pincement ; mêmes filtres partout | normal |
-| M5 | 5.3.2 | 5.4.0 | Squelette d'animation et peau du modèle | Anatomie : 4 postures de référence sans déchirure | **accru** |
-| M6 | 5.4.0 | 5.5.0 | Matériel 3D + chaîne de calcul des animations + 3 pilotes ; carte Koach de la séance du jour | Traction, dips, squat animés dans leur fiche ; carte « Koach · séance du jour » en tête de séance | normal |
-| M7 | 5.5.0 | 5.6.0 | Lecteur complet + intensité par phase | Lecture/pause, curseur, tempo, phases, muscles qui « respirent » avec la phase | normal |
-| M7b | 5.6.0 | 5.6.1 | Animations de Koach en mascotte : 3 attente, 3 « parle », 3 « félicite » (aucune apparition dans l'appli) | Anatomie : section « Koach (aperçu) » avec les 9 animations | normal |
-| M8 | 5.6.1 | 5.7.0 | Conversion : exercices du programme du propriétaire | Tout son programme animé en 3D | normal |
-| M9 | 5.7.0 | 5.8.0 | Conversion : tirages (vertical, horizontal) | Famille animée | normal |
-| M10 | 5.8.0 | 5.9.0 | Conversion : poussées (verticale, horizontale) | Famille animée | normal |
-| M11 | 5.9.0 | 5.10.0 | Conversion : jambes (squat, charnière de hanche, fente) | Famille animée | normal |
-| M12 | 5.10.0 | 5.11.0 | Conversion : figures statiques et dynamiques | Figures animées ou posées | **accru** |
-| M13 | 5.11.0 | 5.12.0 | Conversion : gainage (3 types), flexion du tronc, mobilité | Famille animée | normal |
-| M14 | 5.12.0 | 5.13.0 | Conversion : isolation, portés | Famille animée | normal |
-| M15 | 5.13.0 | 5.14.0 | Conversion : conditionnement, locomotion, hors catégorie | Tout le catalogue traité | normal |
-| M16 | 5.14.0 | 5.15.0 | Fantôme des erreurs fréquentes | Bouton « Erreur fréquente » sur les fiches concernées | normal |
-| M17 | 5.15.0 | 5.16.0 | Séance en cours : animation de l'exercice actuel | Écran de séance animé | normal |
-| M18 | 5.16.0 | 5.17.0 | Aperçu au choix / remplacement d'un exercice | Aperçu animé dans les listes de choix | normal |
-| M19 | 5.17.0 | 5.18.0 | Nettoyage : repli appareils incompatibles, suppression du moteur 2D, fluidité, poids | Appli plus légère, aucune régression | normal |
+## 8. Enchaînement (ordre d'exécution ; chaque lot attend la validation du précédent)
+| Lot | Prompt | Action unique | Ce que le propriétaire teste | Modèle et effort |
+| --- | --- | --- | --- | --- |
+| M1 | M01.txt | Socle : Flutter ≥ 3.47, Flutter GPU, CI 3D + captures émulateur, écran « Moteur 3D » | Réglages › À propos › Moteur 3D | Opus 5.5 |
+| M2 | M02.txt | Modèle anatomique d'exécution + écran Anatomie + réglages 3D + licences | Écran Anatomie | Opus 5.5 |
+| M3 | M03.txt | Fiche exercice : mannequin fixe avec les muscles de l'exercice | Fiches exercice | Opus 5.5 |
+| M4 | M04.txt | STATS : résumé hebdomadaire sur le mannequin | STATS | Opus 5.5 |
+| M4b | M04b.txt | Tous les muscles, transparence à 50 %, filtres à cocher, écran Anatomie | Anatomie, filtres | Opus 5.5 |
+| M4c | M04c.txt | Dépôt en sources ; zoom au pincement ; filtres normalisés | GitHub, zoom, filtres | Opus 5.5 |
+| M5 | M05.txt | Squelette d'animation et peau (première version, refaite par M56) | — | Opus 5.5 |
+| M6 | M06.txt | (remplacé par M56 : ne pas exécuter) | — | — |
+| M56 | M56.txt | Refonte chirurgicale du modèle (plus musclé), du squelette et de la peau ; matériel, chaîne d'animation, 3 pilotes crédibles ; carte Koach ; préchargement au lancement | Anatomie (postures), traction / dips / squat animés, carte Koach, ouverture du mannequin sans saccade | **Fable 5.1, effort maximal** |
+| M6b | M06b.txt | Correctifs : bugs d'affichage, incohérences graphiques et d'utilisation de tout ce qui touche au mannequin et aux filtres | Tous les écrans 3D, sans défaut | Opus 5.5, effort élevé |
+| M7 | M07.txt | Lecteur complet + intensité par phase | Lecture/pause, curseur, tempo, phases | Opus 5.5, effort élevé |
+| M7b | M07b.txt | Animations de Koach en mascotte : 3 attente, 3 « parle », 3 « félicite » | Anatomie › Koach (aperçu) | Opus 5.5, effort élevé |
+| M8 | M08.txt | Conversion : exercices du programme du propriétaire | Tout son programme animé | Opus 5.5, effort élevé |
+| M9 | M09.txt | Conversion : tirages | Famille animée | Opus 5.5, effort élevé |
+| M10 | M10.txt | Conversion : poussées | Famille animée | Opus 5.5, effort élevé |
+| M11 | M11.txt | Conversion : jambes | Famille animée | Opus 5.5, effort élevé |
+| M12 | M12.txt | Conversion : figures statiques et dynamiques | Figures animées ou posées | **Fable 5.1, effort maximal** |
+| M13 | M13.txt | Conversion : gainage, flexion du tronc, mobilité | Famille animée | Opus 5.5, effort élevé |
+| M14 | M14.txt | Conversion : isolation, portés | Famille animée | Opus 5.5, effort élevé |
+| M15 | M15.txt | Conversion : conditionnement, locomotion, hors catégorie | Tout le catalogue traité | Opus 5.5, effort élevé |
+| M16 | M16.txt | Fantôme des erreurs fréquentes | Bouton « Erreur fréquente » | Opus 5.5, effort élevé |
+| M17 | M17.txt | Séance en cours : animation de l'exercice actuel | Écran de séance | Opus 5.5, effort élevé |
+| M18 | M18.txt | Aperçu au choix / remplacement d'un exercice | Listes de choix | Opus 5.5, effort élevé |
+| M19 | M19.txt | Nettoyage : repli, suppression du moteur 2D, fluidité, poids | Aucune régression | Opus 5.5, effort élevé |
 
-Effort **accru** : raisonne en profondeur avant chaque choix de squelette, de poids de peau ou de cinématique ; vérifie chaque rendu deux fois sous plusieurs vues ; privilégie l'exactitude au volume.
+Effort **élevé** : raisonne avant chaque choix structurant, vérifie chaque rendu sous plusieurs vues, corrige avant de livrer. Effort **maximal** : exigence de précision chirurgicale — chaque décision anatomique, biomécanique ou technique est justifiée par une mesure ou une référence, chaque rendu est regardé en entier puis en gros plan aux articulations, et rien n'est livré qui ne serait pas acceptable par un anatomiste et un entraîneur exigeants.

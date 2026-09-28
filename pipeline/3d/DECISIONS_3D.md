@@ -7,6 +7,7 @@ Modèle Claude : Opus 5.5 pour tous les lots, effort accru demandé sur M5 (sque
 28/09/2026 : lot M4c ajouté après M4b (plus de ZIP sur GitHub : sources du projet structurées à la racine de `main`, CI et outils adaptés, application inchangée, 5.3.2). M5 prend 5.3.2 pour prérequis.
 28/09/2026 : carte « Koach · séance du jour » (en tête de séance, à la place de l'affichage au-dessus du premier exercice) ajoutée à M6, pas à M5 (M5 reste centré sur le squelette). Lot M7b ajouté : 9 animations de Koach en futur rôle de mascotte (3 attente, 3 parle, 3 félicite), aperçu seulement ; M8 prend 5.6.1 pour prérequis.
 28/09/2026 : enchaînement automatique abandonné (réponse b du propriétaire) ; chaque lot est lancé à sa demande. Les lots ne relancent plus aucune tâche planifiée.
+28/09/2026 (23:30) : M5 et M6 fusionnés et refaits en M56 (Fable 5.1, effort maximal) : précision chirurgicale, animations crédibles, mannequin plus musclé, préchargement du modèle au lancement ; lot correctif M6b ajouté après M56 (Opus 5.5, effort élevé). M12 en Fable 5.1, effort maximal ; tous les autres lots en Opus 5.5, effort élevé. Validation manuelle de chaque lot par le propriétaire avant le suivant ; versions calculées à la publication (fonctionnalités : mineure + 1 ; correctifs : correctif + 1).
 
 ## Décisions prises par défaut par les lots
 (chaque lot ajoute sa section : décision, raison, réversibilité)

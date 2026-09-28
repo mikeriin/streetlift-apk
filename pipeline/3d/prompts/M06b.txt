@@ -1,0 +1,22 @@
+LOT M6b — CORRECTIFS : BUGS D'AFFICHAGE, INCOHÉRENCES GRAPHIQUES ET D'UTILISATION
+Modèle : Claude Opus 5.5, effort élevé. Une seule action : rendre irréprochable tout ce que les lots M1 à M56 ont ajouté ou modifié, avant d'aller plus loin. Aucune fonctionnalité nouvelle.
+
+1. Entrées
+— Retours du propriétaire : `pipeline/3d/RETOURS_PROPRIETAIRE.md` (tous les points non marqués « corrigé ») et, s'il y en a, ceux donnés dans le message de lancement. Chacun est traité en priorité.
+— Livraisons et limites connues : `pipeline/3d/livraisons/LIVRAISON_M*.md`, `DECISIONS_3D.md` (limites listées par chaque lot).
+
+2. Audit systématique (avant toute correction)
+— Inventaire des écrans et composants concernés : Anatomie (vues, postures, filtres, toucher, zoom), fiches exercice (mannequin fixe et animé, liste des muscles), STATS (résumé hebdomadaire), carte Koach, Réglages › Affichage 3D, Réglages › À propos › Moteur 3D, Sources et licences, tous les menus de filtres normalisés (M4c), repli des appareils incompatibles.
+— Pour chaque écran : captures du vrai rendu (émulateur) en sombre et en clair, petit écran (360 × 640 dp) et grand écran, grande taille de texte système, avec et sans animations réduites ; parcours d'usage réel (ouvrir, tourner, zoomer, toucher, filtrer, faire défiler, revenir).
+— Grille de contrôle : artefacts de rendu (tri des muscles translucides, clignotements, faces manquantes, halo débordant ou absent, os qui traversent) ; cadrage (corps coupé, zoom qui sort des bornes, vue de départ incohérente) ; cohérence visuelle (rampe de couleurs, légendes, libellés français, espacements, tailles, icônes, alignements avec le reste de l'application) ; interactions (conflits de gestes avec le défilement, cibles trop petites, retour arrière, état des filtres, menus qui ne se ferment pas) ; états (chargement, vide, erreur, appareil incompatible) ; saccades et temps d'ouverture (préchargement de M56 effectif partout) ; accessibilité (lecteur d'écran, contraste, information jamais portée par la couleur seule).
+— Résultat : `docs/AUDIT_M6b.md`, une ligne par défaut (écran, description, gravité bloquant / majeur / mineur, capture, cause).
+
+3. Corrections
+— Corrige tous les défauts bloquants et majeurs, et les mineurs dont la correction est sûre ; chaque correction a son test (widget, capture, ou test Python pour les ressources). Un défaut non corrigé reste listé avec sa raison.
+— Ne change aucune décision du propriétaire (§2 de PIPELINE_3D.md) ; en cas de doute sur une intention, choisis l'option la plus cohérente avec l'existant et consigne-la.
+— Marque « corrigé (M6b, v<version>) » chaque point traité de `RETOURS_PROPRIETAIRE.md`.
+
+4. Contrôles et livraison
+— Contrôles du §4 de PIPELINE_3D.md ; captures avant / après de chaque défaut majeur, regardées.
+— Version : lot correctif (règle §7). Page de suivi : section M6b (tableau des défauts corrigés avec avant / après).
+— Notification : « Kalis Track M6b prêt à tester — v<version>. À tester : <n> défauts corrigés, dont <les 3 plus visibles> ». Puis arrête-toi.
