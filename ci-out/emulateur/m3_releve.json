@@ -52,7 +52,67 @@
       "bleu": 0.0,
       "gris": 0.06504299965600276,
       "couleurs": 305
+    },
+    "gainage": {
+      "exercice": "planche-gainage",
+      "vue": "face",
+      "vue_attendue": "face",
+      "regions_allumees": 44,
+      "regions_etirees": 0,
+      "profonds": [
+        "multifides",
+        "rhomboides",
+        "supra_epineux",
+        "sous_scapulaire"
+      ],
+      "pixels": 72675,
+      "figure": 0.16066047471620226,
+      "rouge": 0.060612315101479186,
+      "bleu": 0.0,
+      "gris": 0.08031647746818026,
+      "couleurs": 285
+    },
+    "figure": {
+      "exercice": "front-lever-tuck",
+      "vue": "troisQuarts",
+      "vue_attendue": "troisQuarts",
+      "regions_allumees": 60,
+      "regions_etirees": 0,
+      "profonds": [
+        "rhomboides"
+      ],
+      "pixels": 72675,
+      "figure": 0.12990712074303407,
+      "rouge": 0.05131062951496388,
+      "bleu": 0.0,
+      "gris": 0.07277605779153767,
+      "couleurs": 241
+    },
+    "isolation": {
+      "exercice": "curl-halteres",
+      "vue": "face",
+      "vue_attendue": "face",
+      "regions_allumees": 30,
+      "regions_etirees": 0,
+      "profonds": [
+        "supra_epineux",
+        "sous_scapulaire"
+      ],
+      "pixels": 72675,
+      "figure": 0.1524595803233574,
+      "rouge": 0.04001375988992088,
+      "bleu": 0.0,
+      "gris": 0.10157550739594083,
+      "couleurs": 249
     }
+  },
+  "etires": {
+    "pixels": 72675,
+    "figure": 0.16126590987272102,
+    "rouge": 0.031427588579291364,
+    "bleu": 0.0,
+    "gris": 0.11354661162710698,
+    "couleurs": 241
   },
   "fiches_clair": {
     "tirage": {
@@ -138,10 +198,10 @@
       ],
       "pixels": 72675,
       "figure": 0.13388372893016856,
-      "rouge": 0.04901272789817682,
+      "rouge": 0.048998968008255935,
       "bleu": 0.0,
       "gris": 0.08174750601995184,
-      "couleurs": 265
+      "couleurs": 264
     },
     "isolation": {
       "exercice": "curl-halteres",
@@ -162,153 +222,160 @@
     }
   },
   "vingt_fiches": {
-    "rss_depart_mo": "483.3",
-    "rss_fin_mo": "449.6",
-    "rss_max_mo": "597.7",
-    "premiere_fiche_pret_apres_visible_ms": 1,
+    "rss_depart_mo": "479.5",
+    "rss_fin_mo": "482.9",
+    "rss_max_mo": "593.5",
+    "premiere_fiche_pret_apres_visible_ms": 5,
     "suivantes_mediane_ms": 1,
-    "suivantes_max_ms": 6,
+    "suivantes_max_ms": 4,
     "fiches": [
       {
         "exercice": "traction-pronation",
-        "mannequin_visible_ms": 1446,
-        "mannequin_pret_ms": 1447,
-        "pret_apres_visible_ms": 1,
-        "rss_mo": "487.2"
+        "mannequin_visible_ms": 888,
+        "mannequin_pret_ms": 893,
+        "pret_apres_visible_ms": 5,
+        "rss_mo": "478.3"
       },
       {
         "exercice": "dips",
-        "mannequin_visible_ms": 1410,
-        "mannequin_pret_ms": 1411,
+        "mannequin_visible_ms": 1007,
+        "mannequin_pret_ms": 1008,
         "pret_apres_visible_ms": 1,
-        "rss_mo": "487.0"
+        "rss_mo": "478.6"
       },
       {
         "exercice": "souleve-de-terre-roumain",
-        "mannequin_visible_ms": 1228,
-        "mannequin_pret_ms": 1228,
-        "pret_apres_visible_ms": 0,
-        "rss_mo": "510.7"
+        "mannequin_visible_ms": 972,
+        "mannequin_pret_ms": 973,
+        "pret_apres_visible_ms": 1,
+        "rss_mo": "484.5"
       },
       {
         "exercice": "planche-gainage",
-        "mannequin_visible_ms": 1440,
-        "mannequin_pret_ms": 1442,
-        "pret_apres_visible_ms": 2,
-        "rss_mo": "471.4"
+        "mannequin_visible_ms": 1321,
+        "mannequin_pret_ms": 1322,
+        "pret_apres_visible_ms": 1,
+        "rss_mo": "484.5"
       },
       {
         "exercice": "front-lever-tuck",
-        "mannequin_visible_ms": 1338,
-        "mannequin_pret_ms": 1339,
+        "mannequin_visible_ms": 998,
+        "mannequin_pret_ms": 999,
         "pret_apres_visible_ms": 1,
-        "rss_mo": "479.8"
+        "rss_mo": "483.5"
       },
       {
         "exercice": "curl-halteres",
-        "mannequin_visible_ms": 2493,
-        "mannequin_pret_ms": 2493,
+        "mannequin_visible_ms": 845,
+        "mannequin_pret_ms": 845,
         "pret_apres_visible_ms": 0,
-        "rss_mo": "478.7"
+        "rss_mo": "486.1"
       },
       {
         "exercice": "etirements-flechisseurs-de-hanche",
-        "mannequin_visible_ms": 1187,
-        "mannequin_pret_ms": 1188,
+        "mannequin_visible_ms": 1185,
+        "mannequin_pret_ms": 1186,
         "pret_apres_visible_ms": 1,
-        "rss_mo": "480.0"
+        "rss_mo": "479.4"
       },
       {
         "exercice": "rowing-australien-barre-haute",
-        "mannequin_visible_ms": 1179,
-        "mannequin_pret_ms": 1180,
+        "mannequin_visible_ms": 692,
+        "mannequin_pret_ms": 693,
         "pret_apres_visible_ms": 1,
-        "rss_mo": "502.0"
+        "rss_mo": "484.1"
       },
       {
         "exercice": "pompes",
-        "mannequin_visible_ms": 1286,
-        "mannequin_pret_ms": 1286,
-        "pret_apres_visible_ms": 0,
-        "rss_mo": "458.1"
+        "mannequin_visible_ms": 1011,
+        "mannequin_pret_ms": 1015,
+        "pret_apres_visible_ms": 4,
+        "rss_mo": "483.3"
       },
       {
         "exercice": "squat-1-14",
-        "mannequin_visible_ms": 1237,
-        "mannequin_pret_ms": 1238,
+        "mannequin_visible_ms": 636,
+        "mannequin_pret_ms": 637,
         "pret_apres_visible_ms": 1,
-        "rss_mo": "452.5"
+        "rss_mo": "520.6"
       },
       {
         "exercice": "rowing-barre-penche",
-        "mannequin_visible_ms": 1183,
-        "mannequin_pret_ms": 1184,
-        "pret_apres_visible_ms": 1,
-        "rss_mo": "456.4"
+        "mannequin_visible_ms": 1044,
+        "mannequin_pret_ms": 1047,
+        "pret_apres_visible_ms": 3,
+        "rss_mo": "480.5"
       },
       {
         "exercice": "l-sit",
-        "mannequin_visible_ms": 1069,
-        "mannequin_pret_ms": 1071,
-        "pret_apres_visible_ms": 2,
-        "rss_mo": "453.7"
+        "mannequin_visible_ms": 1030,
+        "mannequin_pret_ms": 1031,
+        "pret_apres_visible_ms": 1,
+        "rss_mo": "482.7"
       },
       {
         "exercice": "elevations-laterales",
-        "mannequin_visible_ms": 1188,
-        "mannequin_pret_ms": 1189,
+        "mannequin_visible_ms": 992,
+        "mannequin_pret_ms": 993,
         "pret_apres_visible_ms": 1,
-        "rss_mo": "452.3"
+        "rss_mo": "489.4"
       },
       {
         "exercice": "hip-thrust",
-        "mannequin_visible_ms": 2690,
-        "mannequin_pret_ms": 2691,
-        "pret_apres_visible_ms": 1,
-        "rss_mo": "472.6"
+        "mannequin_visible_ms": 903,
+        "mannequin_pret_ms": 903,
+        "pret_apres_visible_ms": 0,
+        "rss_mo": "479.3"
       },
       {
         "exercice": "face-pulls",
-        "mannequin_visible_ms": 1110,
-        "mannequin_pret_ms": 1110,
+        "mannequin_visible_ms": 1029,
+        "mannequin_pret_ms": 1029,
         "pret_apres_visible_ms": 0,
-        "rss_mo": "446.8"
+        "rss_mo": "479.5"
       },
       {
         "exercice": "pistol-squat",
-        "mannequin_visible_ms": 1336,
-        "mannequin_pret_ms": 1342,
-        "pret_apres_visible_ms": 6,
-        "rss_mo": "447.3"
+        "mannequin_visible_ms": 1079,
+        "mannequin_pret_ms": 1080,
+        "pret_apres_visible_ms": 1,
+        "rss_mo": "485.1"
       },
       {
         "exercice": "handstand-push-ups-mur",
-        "mannequin_visible_ms": 900,
-        "mannequin_pret_ms": 901,
-        "pret_apres_visible_ms": 1,
-        "rss_mo": "453.1"
+        "mannequin_visible_ms": 1010,
+        "mannequin_pret_ms": 1010,
+        "pret_apres_visible_ms": 0,
+        "rss_mo": "486.3"
       },
       {
         "exercice": "planche-laterale",
-        "mannequin_visible_ms": 953,
-        "mannequin_pret_ms": 954,
+        "mannequin_visible_ms": 600,
+        "mannequin_pret_ms": 601,
         "pret_apres_visible_ms": 1,
-        "rss_mo": "451.5"
+        "rss_mo": "481.5"
       },
       {
         "exercice": "ab-wheel",
-        "mannequin_visible_ms": 1251,
-        "mannequin_pret_ms": 1251,
-        "pret_apres_visible_ms": 0,
-        "rss_mo": "452.6"
+        "mannequin_visible_ms": 1342,
+        "mannequin_pret_ms": 1344,
+        "pret_apres_visible_ms": 2,
+        "rss_mo": "482.0"
       },
       {
         "exercice": "muscle-up",
-        "mannequin_visible_ms": 1195,
-        "mannequin_pret_ms": 1197,
-        "pret_apres_visible_ms": 2,
-        "rss_mo": "453.3"
+        "mannequin_visible_ms": 1076,
+        "mannequin_pret_ms": 1077,
+        "pret_apres_visible_ms": 1,
+        "rss_mo": "485.2"
       }
     ]
-  }
+  },
+  "creation_mannequin_ms": [
+    1,
+    0,
+    0,
+    0,
+    0
+  ]
 }

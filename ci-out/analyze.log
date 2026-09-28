@@ -1,5 +1,2 @@
 Analyzing streetlift_tracker...                                 
-
-   info • The parameter name 'old' doesn't match the name 'oldWidget' in the overridden method. Try changing the name to 'oldWidget' • lib/exercise_mannequin.dart:251:42 • avoid_renaming_method_parameters
-
-1 issue found. (ran in 14.9s)
+No issues found! (ran in 14.8s)
