@@ -1,6 +1,6 @@
 Dart SDK 3.13.4
 Flutter SDK 3.47.5
-streetlift_tracker 5.1.0+73
+streetlift_tracker 5.2.0+74
 
 dependencies:
 - audioplayers 6.6.0 [audioplayers_android audioplayers_darwin audioplayers_linux audioplayers_platform_interface audioplayers_web audioplayers_windows file flutter http meta path_provider synchronized uuid]

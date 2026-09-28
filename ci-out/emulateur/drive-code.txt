@@ -1,2 +1,3 @@
 code=0
+code_fiche=1
 code_mesure=0

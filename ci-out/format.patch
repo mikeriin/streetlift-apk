@@ -1,0 +1,16 @@
+diff --git a/test/m3_fiche_mannequin_test.dart b/test/m3_fiche_mannequin_test.dart
+index e42e050..2af40d5 100644
+--- a/test/m3_fiche_mannequin_test.dart
++++ b/test/m3_fiche_mannequin_test.dart
+@@ -296,7 +296,10 @@ void main() {
+       expect(sample.toSet().length, 50);
+       for (final (i, id) in sample.indexed) {
+         await tester.pumpWidget(
+-          host(ExerciseSheetScreen(key: ValueKey(id), id: id), dark: i.isEven),
++          host(
++            ExerciseSheetScreen(key: ValueKey(id), id: id),
++            dark: i.isEven,
++          ),
+         );
+         await tester.pump();
+         await tester.pump(const Duration(milliseconds: 100));

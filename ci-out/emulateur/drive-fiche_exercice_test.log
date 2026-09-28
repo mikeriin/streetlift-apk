@@ -1,0 +1,194 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             46.6s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,433ms
+I/Choreographer( 4859): Skipped 58 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4859): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:33915/NQY4wswdQVY=/
+VMServiceFlutterDriver: Isolate found with number: 6433318423740811
+VMServiceFlutterDriver: Isolate 6433318423740811 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4859): 00:00 +0: (setUpAll)
+VMServiceFlutterDriver: Connected to Flutter application.
+I/flutter ( 4859): 00:00 +1: M3 : 6 fiches, thème sombre, étirés, profonds, toucher
+D/ProfileInstaller( 4859): Installing profile for fr.tchoupi.streetlift_tracker
+D/EGL_emulation( 4859): app_time_stats: avg=1129.86ms min=222.55ms max=2441.46ms count=3
+W/WindowOnBackDispatcher( 4859): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4859): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4859): app_time_stats: avg=985.84ms min=925.59ms max=1046.08ms count=2
+D/EGL_emulation( 4859): app_time_stats: avg=10032.19ms min=10032.19ms max=10032.19ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=4387.50ms min=4387.50ms max=4387.50ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=349.51ms min=94.22ms max=727.18ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=367.94ms min=230.70ms max=501.50ms count=3
+W/WindowOnBackDispatcher( 4859): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4859): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4859): app_time_stats: avg=667.18ms min=120.61ms max=1735.76ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=206.54ms min=109.40ms max=305.43ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=2559.14ms min=2559.14ms max=2559.14ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=443.45ms min=367.53ms max=507.14ms count=3
+W/WindowOnBackDispatcher( 4859): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4859): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4859): app_time_stats: avg=401.48ms min=377.98ms max=414.40ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=844.79ms min=373.29ms max=1316.30ms count=2
+D/EGL_emulation( 4859): app_time_stats: avg=186.38ms min=84.27ms max=314.10ms count=5
+D/EGL_emulation( 4859): app_time_stats: avg=147.35ms min=120.06ms max=260.16ms count=6
+D/EGL_emulation( 4859): app_time_stats: avg=216.41ms min=195.99ms max=229.91ms count=5
+D/EGL_emulation( 4859): app_time_stats: avg=385.61ms min=192.41ms max=490.40ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=266.94ms min=221.71ms max=338.02ms count=3
+I/flutter ( 4859): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4859): The following StateError was thrown running a test:
+I/flutter ( 4859): Bad state: No element
+I/flutter ( 4859): 
+I/flutter ( 4859): When the exception was thrown, this was the stack:
+I/flutter ( 4859): #0      Iterable.first (dart:core/iterable.dart:663:7)
+I/flutter ( 4859): #1      _FirstFinderMixin.filter (package:flutter_test/src/finders.dart:1383:28)
+I/flutter ( 4859): #3      Iterable.single (dart:core/iterable.dart:694:13)
+I/flutter ( 4859): #4      WidgetController.widget (package:flutter_test/src/controller.dart:828:30)
+I/flutter ( 4859): #5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2429:15)
+I/flutter ( 4859): #8      TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+I/flutter ( 4859): #9      WidgetController.scrollUntilVisible (package:flutter_test/src/controller.dart:2427:27)
+I/flutter ( 4859): #10     main.openSheet (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/integration_test/fiche_exercice_test.dart:173:18)
+I/flutter ( 4859): <asynchronous suspension>
+I/flutter ( 4859): #11     main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/integration_test/fiche_exercice_test.dart:234:7)
+I/flutter ( 4859): <asynchronous suspension>
+I/flutter ( 4859): #12     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4859): <asynchronous suspension>
+I/flutter ( 4859): #13     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4859): <asynchronous suspension>
+I/flutter ( 4859): #14     TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4859): <asynchronous suspension>
+I/flutter ( 4859): (elided 3 frames from dart:async and dart:async-patch)
+I/flutter ( 4859): 
+I/flutter ( 4859): The test description was:
+I/flutter ( 4859):   M3 : 6 fiches, thème sombre, étirés, profonds, toucher
+I/flutter ( 4859): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4859): 00:40 +1: M3 : 6 fiches, thème sombre, étirés, profonds, toucher [E]
+I/flutter ( 4859):   Test failed. See exception logs above.
+I/flutter ( 4859):   The test description was: M3 : 6 fiches, thème sombre, étirés, profonds, toucher
+I/flutter ( 4859):   
+I/flutter ( 4859): 00:40 +1 -1: M3 : 6 fiches, thème clair
+W/WindowOnBackDispatcher( 4859): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4859): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4859): app_time_stats: avg=694.26ms min=380.87ms max=1007.66ms count=2
+D/FlutterJNI( 4859): Sending viewport metrics to the engine.
+D/EGL_emulation( 4859): app_time_stats: avg=2118.93ms min=2118.93ms max=2118.93ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=223.23ms min=185.62ms max=261.94ms count=5
+D/EGL_emulation( 4859): app_time_stats: avg=1404.20ms min=211.07ms max=2597.32ms count=2
+D/EGL_emulation( 4859): app_time_stats: avg=718.31ms min=204.80ms max=1471.91ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=147.15ms min=86.34ms max=199.54ms count=6
+D/EGL_emulation( 4859): app_time_stats: avg=2660.65ms min=2660.65ms max=2660.65ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=744.84ms min=272.47ms max=1492.15ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=129.29ms min=59.64ms max=188.25ms count=7
+D/EGL_emulation( 4859): app_time_stats: avg=2731.66ms min=2731.66ms max=2731.66ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=253.37ms min=175.88ms max=478.36ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=547.48ms min=168.02ms max=1623.22ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=570.54ms min=121.75ms max=2693.01ms count=6
+D/EGL_emulation( 4859): app_time_stats: avg=728.57ms min=188.52ms max=1468.37ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=200.49ms min=165.29ms max=225.84ms count=6
+D/EGL_emulation( 4859): app_time_stats: avg=2573.87ms min=2573.87ms max=2573.87ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=733.21ms min=238.05ms max=1461.78ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=148.75ms min=47.91ms max=270.00ms count=6
+D/EGL_emulation( 4859): app_time_stats: avg=1463.84ms min=225.01ms max=2702.68ms count=2
+I/flutter ( 4859): 01:17 +2 -1: M3 : 20 fiches d’affilée (temps, mémoire)
+D/FlutterJNI( 4859): Sending viewport metrics to the engine.
+D/EGL_emulation( 4859): app_time_stats: avg=420.25ms min=365.35ms max=516.34ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=762.02ms min=157.51ms max=1746.94ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=304.28ms min=46.28ms max=568.07ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=280.60ms min=124.54ms max=367.98ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=1668.97ms min=1668.97ms max=1668.97ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=327.98ms min=83.68ms max=692.01ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=198.64ms min=125.02ms max=290.37ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=1735.72ms min=1735.72ms max=1735.72ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=127.81ms min=80.42ms max=173.44ms count=5
+D/EGL_emulation( 4859): app_time_stats: avg=342.93ms min=167.70ms max=489.85ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=1563.09ms min=1563.09ms max=1563.09ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=291.86ms min=78.05ms max=497.57ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=810.69ms min=350.45ms max=1600.39ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=148.93ms min=113.72ms max=187.75ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=749.85ms min=248.15ms max=1639.68ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=226.96ms min=190.81ms max=310.78ms count=5
+D/EGL_emulation( 4859): app_time_stats: avg=390.07ms min=343.53ms max=455.34ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=1674.43ms min=1674.43ms max=1674.43ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=293.48ms min=173.67ms max=510.36ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=398.20ms min=361.91ms max=422.56ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=1670.09ms min=1670.09ms max=1670.09ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=333.67ms min=242.14ms max=556.87ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=794.92ms min=341.48ms max=1669.41ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=302.73ms min=189.64ms max=518.05ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=821.80ms min=348.79ms max=1743.44ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=245.40ms min=57.69ms max=473.57ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=357.79ms min=340.28ms max=377.39ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=1454.41ms min=1454.41ms max=1454.41ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=275.38ms min=190.14ms max=495.61ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=356.04ms min=344.67ms max=362.55ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=1705.18ms min=1705.18ms max=1705.18ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=276.18ms min=70.05ms max=516.00ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=328.08ms min=280.14ms max=355.12ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=916.91ms min=397.28ms max=1436.54ms count=2
+D/EGL_emulation( 4859): app_time_stats: avg=136.15ms min=73.05ms max=191.36ms count=5
+D/EGL_emulation( 4859): app_time_stats: avg=1014.35ms min=124.50ms max=1904.20ms count=2
+D/EGL_emulation( 4859): app_time_stats: avg=220.11ms min=179.33ms max=301.14ms count=5
+D/EGL_emulation( 4859): app_time_stats: avg=280.16ms min=141.23ms max=475.13ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=1642.06ms min=1642.06ms max=1642.06ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=309.85ms min=206.05ms max=536.85ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=438.10ms min=359.34ms max=517.82ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=1323.38ms min=1323.38ms max=1323.38ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=539.54ms min=175.25ms max=1237.52ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=510.06ms min=203.95ms max=816.16ms count=2
+D/EGL_emulation( 4859): app_time_stats: avg=826.93ms min=229.57ms max=1726.39ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=295.20ms min=173.44ms max=526.93ms count=4
+D/EGL_emulation( 4859): app_time_stats: avg=909.85ms min=365.05ms max=1995.10ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=101.85ms min=4.43ms max=135.10ms count=5
+D/EGL_emulation( 4859): app_time_stats: avg=273.18ms min=187.48ms max=356.76ms count=3
+D/EGL_emulation( 4859): app_time_stats: avg=1510.76ms min=1510.76ms max=1510.76ms count=1
+D/EGL_emulation( 4859): app_time_stats: avg=307.53ms min=172.41ms max=445.48ms count=4
+I/flutter ( 4859): 02:35 +3 -1: (tearDownAll)
+I/flutter ( 4859): 02:35 +4 -1: Some tests failed.
+D/EGL_emulation( 4859): app_time_stats: avg=378.08ms min=173.27ms max=632.69ms count=3
+Failure Details:
+Failure in method: M3 : 6 fiches, thème sombre, étirés, profonds, toucher
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.first (dart:core/iterable.dart:663:7)
+#1      _FirstFinderMixin.filter (package:flutter_test/src/finders.dart:1383:28)
+#3      Iterable.single (dart:core/iterable.dart:694:13)
+#4      WidgetController.widget (package:flutter_test/src/controller.dart:828:30)
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2429:15)
+#8      TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#9      WidgetController.scrollUntilVisible (package:flutter_test/src/controller.dart:2427:27)
+#10     main.openSheet (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/integration_test/fiche_exercice_test.dart:173:18)
+<asynchronous suspension>
+#11     main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/streetlift_tracker/integration_test/fiche_exercice_test.dart:234:7)
+<asynchronous suspension>
+#12     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#13     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#14     TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+(elided 3 frames from dart:async and dart:async-patch)
+
+The test description was:
+  M3 : 6 fiches, thème sombre, étirés, profonds, toucher
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+
