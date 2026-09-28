@@ -1,0 +1,22 @@
+LOT M4b — ANATOMIE COMPLÈTE EN TRANSPARENCE ET FILTRES À COCHER (demande du propriétaire, 28/09/2026)
+Rôle : technical artist Blender, développeur Flutter 3D, designer d'interface. Une seule action : le mannequin montre de nouveau TOUS ses muscles, en transparence, pour que les muscles sollicités cachés restent visibles ; l'écran Anatomie passe à des filtres à cocher.
+
+1. Muscles remis dans le modèle (`tools/anatomy/build_model.py`)
+— Remets tous les muscles retirés en M2 : les 21 paires de muscles profonds (clé `retirees` de `assets/anatomy/muscles_map.json`) et le platysma, avec leur nom français, leur groupe et leur correspondance avec les muscles du pack (tests de M2 étendus : plus aucune région retirée, chaque muscle du pack a au moins une région, profonds compris). Ne change pas les choix de M2 qui ne sont pas des retraits de muscles (tête, mains et pieds sombres ; aponévrose des obliques passée derrière le droit de l'abdomen ; bandelette ilio-tibiale).
+— Chaque région porte sa couche (superficielle / profonde) dans `muscles_map.json`.
+— Budget : les muscles profonds, vus à travers les autres, peuvent être plus décimés que les superficiels ; vise ≤ 75 000 triangles au total, mesure et consigne (triangles, poids du GLB, appels de dessin).
+
+2. Transparence (partout où `Mannequin3D` s'affiche : Anatomie, fiches, STATS, Moteur 3D)
+— Tous les muscles sont rendus à 50 % d'opacité, sollicités compris, avec leur couleur de la rampe et leur halo : un muscle sollicité caché derrière d'autres doit se voir à travers eux. Os, tête, mains et pieds restent opaques (dessinés d'abord).
+— Rendu juste des surfaces translucides : pas d'écriture de profondeur pour les muscles translucides, tri de l'arrière vers l'avant à chaque changement de caméra (par maille, distance du centre à la caméra), faces arrière gérées pour éviter les doubles couches incohérentes ; vérifie qu'aucun muscle ne « disparaît » ni ne clignote en rotation. Si flutter_scene limite ce rendu (tri, mélange, profondeur), documente la limite et la solution retenue (ex. deux passes : profonds puis superficiels).
+— L'opacité est une constante unique documentée (`kMuscleOpacity = 0.5`), facile à ajuster plus tard ; le halo reste limité aux muscles sollicités et lisible à travers la transparence.
+— Toucher : le lancer de rayon renvoie le muscle sollicité le plus proche sur le trajet s'il y en a un, sinon le muscle le plus proche ; la bulle indique « (profond) » pour un muscle profond.
+— Performance : le mannequin reste fluide ; mesure le temps d'image avant / après sur l'écran Moteur 3D (émulateur) et consigne-le. Le propriétaire vérifiera sur son téléphone (120 images/s avant ce lot).
+
+3. Écran Anatomie : filtres à cocher et petite refonte
+— Remplace les puces de groupes par un seul bouton « Filtres » (avec le nombre de filtres actifs) qui ouvre un menu déroulant de cases à cocher : les 11 groupes, plus « Muscles profonds » et « Os ». Les filtres se superposent : chaque groupe coché s'allume en même temps que les autres (union). Boutons « Tout cocher » et « Tout décocher ». Le menu se ferme au toucher en dehors ; l'état des filtres est gardé pendant la session.
+— Petite refonte de la mise en page pour téléphone : mannequin plus grand (le plus d'écran possible), boutons Face / Dos / Profil / 3/4 regroupés sous le mannequin, résumé texte des groupes cochés et de leurs muscles sous les boutons, marges et espacements cohérents avec le reste de l'application (thèmes sombre et clair, 6 couleurs dominantes, tailles de texte système).
+— Tests : combinaisons de filtres (union), compteur, tout cocher / décocher, accessibilité des cases (libellés lus).
+
+4. Contrôles propres au lot
+Captures REGARDÉES : face, dos, profil et 3/4 avec un groupe profond allumé (ex. dos avec rhomboïdes, jambes avec vaste intermédiaire), plusieurs filtres cochés en même temps, menu ouvert, fiche exercice et STATS avec la transparence, sombre et clair. Aucun artefact de tri visible. Version 5.3.1.

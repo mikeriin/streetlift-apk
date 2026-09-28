@@ -5,7 +5,7 @@ Tu es lancé par la tâche planifiée « Kalis Track — pipeline mannequin 3D �
 ## 1. Démarrage
 1. `add_repo` mikeriin/streetlift-apk en accès `push`, puis clone (commande donnée par l'outil).
 2. `git fetch origin pipeline` ; lis ce fichier, `pipeline/3d/ETAT_3D.md` et `pipeline/3d/DECISIONS_3D.md`.
-3. Ton lot est le **premier lot du tableau §8 dont le statut n'est pas « livré »** dans `ETAT_3D.md`. Lis son prompt `pipeline/3d/prompts/M<NN>.txt` (numéro sur 2 chiffres : M1 → `M01.txt`) et exécute-le intégralement. Si ce lot est marqué « en cours » depuis plus de 6 h, repars de l'état réel du dépôt (commits, branches) sans refaire ce qui est poussé.
+3. Ton lot est le **premier lot du tableau §8 dont le statut n'est pas « livré »** dans `ETAT_3D.md`. Lis son prompt `pipeline/3d/prompts/M<NN>.txt` (numéro sur 2 chiffres : M1 → `M01.txt`, M4b → `M04b.txt`) et exécute-le intégralement. Si ce lot est marqué « en cours » depuis plus de 6 h, repars de l'état réel du dépôt (commits, branches) sans refaire ce qui est poussé.
 4. Base : `streetlift_tracker_v33.zip` sur `main`. Vérifie la version prérequise (§8). Si elle ne correspond pas : notification d'échec (§5) et arrêt.
 5. Marque ton lot « en cours » dans `ETAT_3D.md` et pousse `pipeline`.
 
@@ -14,6 +14,7 @@ Tu es lancé par la tâche planifiée « Kalis Track — pipeline mannequin 3D �
 - Modèle : `models/full-body-male-mobile.glb` du dépôt github.com/slfresh/fitmitwith-anatomy-atlas (Z-Anatomy / BodyParts3D, 218 régions, CC BY-SA 4.0), carte `maps/full-body-map.json`. Un seul mannequin homme. Page de référence validée par le propriétaire : https://claude.ai/artifact/AT93ttC1hE5WCTDBmbRCcZ (lis-la avec l'outil Artifact, action read : couleurs, éclairage, halo, correspondance des groupes, retrait de l'aponévrose des obliques devant le droit de l'abdomen).
 - Tête sombre et lisse (comme `front_base.png` historique), musculature grise mate. Os visibles en gris sombre discret, réglage utilisateur « Os visibles » activé par défaut.
 - Mise en évidence : rampe historique bordeaux → rouge (`heat()` de `lib/muscle_body.dart` : `Color.lerp(burgundy #6B0C0C, haut, .15 + .85·v)`, haut = #E85959 en sombre, #A61717 en clair), indépendante de la couleur dominante ; principal 1, secondaire 0,62, stabilisateur 0,35 ; halo (bloom limité aux muscles sollicités). La liste des muscles en texte reste toujours affichée (jamais l'information par la couleur seule).
+- (28/09/2026) Anatomie complète : tous les muscles, profonds compris, sont affichés à 50 % d'opacité, pour voir les muscles sollicités cachés. Filtres de l'écran Anatomie : menu déroulant de cases à cocher qui se superposent (lot M4b).
 - Toucher un muscle affiche son nom, si le réglage « Nom du muscle au toucher » est activé (activé par défaut).
 - Manipulation : rotation libre au doigt + boutons Face / Dos / Profil / 3/4. Vue de départ d'une animation choisie automatiquement selon le plan du mouvement.
 - Matériel simplifié à l'échelle réelle, cohérent avec le style (gris neutres, sans texture criarde) ; lest visible quand l'exercice est lesté.
@@ -64,7 +65,8 @@ Interdits : supprimer une branche, modifier la signature ou l'identifiant, rég�
 | M2 | 5.0.0 | 5.1.0 | Modèle anatomique d'exécution + écran Anatomie + réglages 3D + licences | Écran Anatomie : rotation, vues, nom du muscle au toucher | normal |
 | M3 | 5.1.0 | 5.2.0 | Fiche exercice : mannequin fixe avec les muscles de l'exercice | Chaque fiche montre le mannequin coloré + la liste | normal |
 | M4 | 5.2.0 | 5.3.0 | STATS : résumé hebdomadaire sur le mannequin | STATS montre les groupes de la semaine sur le mannequin | normal |
-| M5 | 5.3.0 | 5.4.0 | Squelette d'animation et peau du modèle | Anatomie : 4 postures de référence sans déchirure | **accru** |
+| M4b | 5.3.0 | 5.3.1 | Tous les muscles remis, transparence à 50 %, filtres à cocher, petite refonte de l'écran Anatomie | Muscles sollicités visibles à travers les autres ; menu « Filtres » à cocher | normal |
+| M5 | 5.3.1 | 5.4.0 | Squelette d'animation et peau du modèle | Anatomie : 4 postures de référence sans déchirure | **accru** |
 | M6 | 5.4.0 | 5.5.0 | Matériel 3D + chaîne de calcul des animations + 3 pilotes | Traction, dips, squat animés dans leur fiche | normal |
 | M7 | 5.5.0 | 5.6.0 | Lecteur complet + intensité par phase | Lecture/pause, curseur, tempo, phases, muscles qui « respirent » avec la phase | normal |
 | M8 | 5.6.0 | 5.7.0 | Conversion : exercices du programme du propriétaire | Tout son programme animé en 3D | normal |
