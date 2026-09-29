@@ -254,3 +254,20 @@ par nœud, légende).
 - Le mannequin animable (`assets/anatomy/mannequin_anime.glb`) est déchiffré
   comme le mannequin fixe (rôle « exécution » du manifeste) et converti par
   le hook de build.
+
+## Animations de Koach (M7b)
+
+- `integration_test/koach_m7b_test.dart`, seule cible jouée par défaut par
+  `tools/ci3d_drive.sh` (M7 et les lots précédents : `CI3D_TOUT=1`), en
+  quatre parties (`--dart-define=M6B_PART=a|b|c|d`) : a = Anatomie ›
+  Koach (aperçu) (entrée, puces, lecture), pose forte de chacune des 9
+  animations en Face, trois aussi en 3/4 ; b, c, d = 8 images de GIF par
+  animation (Face) pour les familles attente, parle, félicite (un test par
+  animation, 5 min chacun). Relevés `emulateur/m7b_releve_<partie>.json`
+  (temps, part de la vue couverte par la figure).
+- Les clips (`assets/anatomy/clips/koach/`) sont fabriqués hors CI :
+  `python3 tools/anatomy/koach_animations.py --importer` (Blender sans
+  interface, sans clé) ; la CI vérifie le registre
+  (`import_animations.py verifier`, tests Python et Dart).
+- Aperçu hors application (capsules, sans GPU) :
+  `python3 tools/anatomy/koach_preview.py DOSSIER --planche --bande --gif`.

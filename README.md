@@ -1,4 +1,13 @@
-# Kalis Track 5.7.0 — Mannequin anatomique 3D
+# Kalis Track 5.8.0 — Mannequin anatomique 3D
+
+## 5.8.0 — Animations de Koach en mascotte (lot M7b du pipeline « Mannequin 3D »)
+
+- **Neuf animations « personnage »** du mannequin (personnage Mixamo Ch36, squelette de 65 os, doigts compris), pour que Koach devienne plus tard une mascotte : **attente** (respire et change d'appui ; regarde autour et roule les épaules ; s'étire les bras puis le cou), **Koach parle** (explique d'une main ; des deux mains ; montre quelque chose sur le côté, index tendu), **Koach félicite** (applaudit ; lève le poing ; pouce levé). Style un peu exagéré, comme dans les anime : anticipation, poses franches, dépassement puis amorti, tenues courtes, tête et épaules en décalage. Toutes partent de la même pose d'attente et y reviennent (transitions possibles) ; pieds fixes ; mannequin neutre (aucun muscle allumé).
+- **Fabrication** (`tools/anatomy/koach_rig.py`, `koach_animations.py`) : poses par canaux (bassin, rachis, tête, clavicules, bras, coudes, poignets, doigts, pouce), jambes par cinématique inverse (chevilles fixes), clés et courbes d'accélération, contrôles automatiques (durée, pose d'attente au départ et à l'arrivée, limites articulaires, pieds fixes, interpénétration, aucune tenue figée au-delà de 0,45 s) ; FBX « Without Skin » sur l'armature reconstruite depuis `squelette_mixamo.json` (sans ressource chiffrée), relus par la chaîne d'import de M7 (`import_animations.import_koach`) → `assets/anatomy/clips/koach/` (0,2° d'écart, 4 à 11,6 Ko par clip, 66 Ko en tout) et registre (famille, boucle, mascotte). Sources : le script (décision du propriétaire, 29/09/2026 : pas de chiffrement pour Koach).
+- **Validation** : planches de poses clés sous 2 vues et GIF (`tools/anatomy/koach_preview.py`, rendu logiciel sans GPU), puis six passes d'un directeur d'animation indépendant (sous-agent neuf) jusqu'à 8/10 pour chacune (moyenne 4,5 → 8).
+- **Aperçu** : Arsenal › Anatomie › **Koach (aperçu)** (`lib/koach_preview_screen.dart`) : les 9 animations au choix par famille, jouées en boucle par le lecteur de M7 ; boutons Face / Dos / Profil / 3/4 et zoom au pincement (pas de rotation au doigt, décision du 29/09). Koach n'apparaît encore nulle part ailleurs ; les fiches et l'animation de test sont inchangées.
+
+Tests : `test/m7b_koach_test.dart`, `tools/tests/test_m7b_koach.py`, `integration_test/koach_m7b_test.dart`.
 
 ## 5.7.0 — Lecteur d'animation, intensité par phase, import des animations du propriétaire (lot M7 du pipeline « Mannequin 3D »)
 
