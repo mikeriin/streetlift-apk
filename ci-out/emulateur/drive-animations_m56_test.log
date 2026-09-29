@@ -1,0 +1,166 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             86.8s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...           4.4s
+W/eetlift_tracker( 4134): Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+W/eetlift_tracker( 4134): Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+W/eetlift_tracker( 4134): Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+W/eetlift_tracker( 4134): Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+D/AccessibilityBridge( 4134): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 4134): Width is zero. 0,0
+W/HWUI    ( 4134): Unknown dataspace 0
+I/WindowExtensionsImpl( 4134): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 4134): Width is zero. 0,0
+D/FlutterJNI( 4134): Sending viewport metrics to the engine.
+W/HWUI    ( 4134): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 4134): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 4134): mapper 4.x is not supported
+I/eetlift_tracker( 4134): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4134): Skipped 159 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4134): Sending viewport metrics to the engine.
+D/ProfileInstaller( 4134): Installing profile for fr.tchoupi.streetlift_tracker
+I/eetlift_tracker( 4134): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:37309/UPAu5niGWOA=/
+VMServiceFlutterDriver: Isolate found with number: 4040963905637671
+VMServiceFlutterDriver: Isolate 4040963905637671 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4134): 00:00 +0: (setUpAll)
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 4134): Skipped 59 frames!  The application may be doing too much work on its main thread.
+I/Choreographer( 4134): Skipped 77 frames!  The application may be doing too much work on its main thread.
+I/flutter ( 4134): 00:03 +1: M56 : fiche traction-pronation, mannequin fixe et muscles
+I/Choreographer( 4134): Skipped 39 frames!  The application may be doing too much work on its main thread.
+D/EGL_emulation( 4134): app_time_stats: avg=2100.27ms min=988.43ms max=3212.11ms count=2
+I/eetlift_tracker( 4134): Background concurrent mark compact GC freed 1891KB AllocSpace bytes, 3(60KB) LOS objects, 49% free, 2580KB/5160KB, paused 109us,2.469ms total 283.007ms
+I/flutter ( 4134): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4134): The following StateError was thrown running a test:
+I/flutter ( 4134): Bad state: No element
+I/flutter ( 4134): 
+I/flutter ( 4134): When the exception was thrown, this was the stack:
+I/flutter ( 4134): #0      Iterable.first (dart:core/iterable.dart:663:7)
+I/flutter ( 4134): #1      _FirstFinderMixin.filter (package:flutter_test/src/finders.dart:1383:28)
+I/flutter ( 4134): #3      Iterable.single (dart:core/iterable.dart:694:13)
+I/flutter ( 4134): #4      WidgetController.widget (package:flutter_test/src/controller.dart:828:30)
+I/flutter ( 4134): #5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2429:15)
+I/flutter ( 4134): #8      TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+I/flutter ( 4134): #9      WidgetController.scrollUntilVisible (package:flutter_test/src/controller.dart:2427:27)
+I/flutter ( 4134): #10     main.scrollToMannequin (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:172:18)
+I/flutter ( 4134): <asynchronous suspension>
+I/flutter ( 4134): #11     main.fiche (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:186:5)
+I/flutter ( 4134): <asynchronous suspension>
+I/flutter ( 4134): #12     main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:209:7)
+I/flutter ( 4134): <asynchronous suspension>
+I/flutter ( 4134): #13     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4134): <asynchronous suspension>
+I/flutter ( 4134): #14     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4134): <asynchronous suspension>
+I/flutter ( 4134): #15     TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4134): <asynchronous suspension>
+I/flutter ( 4134): (elided 3 frames from dart:async and dart:async-patch)
+I/flutter ( 4134): 
+I/flutter ( 4134): The test description was:
+I/flutter ( 4134):   M56 : fiche traction-pronation, mannequin fixe et muscles
+I/flutter ( 4134): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4134): 00:10 +1: M56 : fiche traction-pronation, mannequin fixe et muscles [E]
+I/flutter ( 4134):   Test failed. See exception logs above.
+I/flutter ( 4134):   The test description was: M56 : fiche traction-pronation, mannequin fixe et muscles
+I/flutter ( 4134):   
+I/flutter ( 4134): 00:10 +1 -1: M56 : fiche dips, mannequin fixe et muscles
+D/EGL_emulation( 4134): app_time_stats: avg=3193.44ms min=3193.44ms max=3193.44ms count=1
+D/EGL_emulation( 4134): app_time_stats: avg=2754.40ms min=2754.40ms max=2754.40ms count=1
+D/EGL_emulation( 4134): app_time_stats: avg=10016.70ms min=10016.70ms max=10016.70ms count=1
+D/EGL_emulation( 4134): app_time_stats: avg=6179.93ms min=6179.93ms max=6179.93ms count=1
+D/EGL_emulation( 4134): app_time_stats: avg=348.09ms min=213.43ms max=607.27ms count=3
+D/EGL_emulation( 4134): app_time_stats: avg=254.57ms min=202.50ms max=338.54ms count=4
+I/flutter ( 4134): 00:32 +2 -1: M56 : fiche back-squat, mannequin fixe et muscles
+D/EGL_emulation( 4134): app_time_stats: avg=257.52ms min=159.50ms max=363.08ms count=4
+D/EGL_emulation( 4134): app_time_stats: avg=903.31ms min=553.13ms max=1253.49ms count=2
+D/EGL_emulation( 4134): app_time_stats: avg=704.32ms min=407.72ms max=1231.03ms count=3
+D/EGL_emulation( 4134): app_time_stats: avg=237.48ms min=221.84ms max=245.24ms count=5
+I/flutter ( 4134): 00:39 +3 -1: M56 : carte Koach · séance du jour (sombre)
+D/EGL_emulation( 4134): app_time_stats: avg=646.43ms min=240.27ms max=1454.65ms count=3
+D/EGL_emulation( 4134): app_time_stats: avg=154.28ms min=132.29ms max=174.60ms count=7
+D/EGL_emulation( 4134): app_time_stats: avg=189.82ms min=19.08ms max=624.71ms count=8
+D/EGL_emulation( 4134): app_time_stats: avg=186.88ms min=132.37ms max=372.26ms count=7
+D/EGL_emulation( 4134): app_time_stats: avg=106.49ms min=11.56ms max=225.15ms count=9
+I/flutter ( 4134): 00:45 +4 -1: M56 : carte Koach · séance du jour (clair)
+D/FlutterJNI( 4134): Sending viewport metrics to the engine.
+D/EGL_emulation( 4134): app_time_stats: avg=346.70ms min=180.09ms max=572.84ms count=3
+D/EGL_emulation( 4134): app_time_stats: avg=126.38ms min=112.19ms max=139.89ms count=7
+D/EGL_emulation( 4134): app_time_stats: avg=151.04ms min=135.28ms max=168.58ms count=7
+D/EGL_emulation( 4134): app_time_stats: avg=155.50ms min=114.29ms max=200.34ms count=6
+D/EGL_emulation( 4134): app_time_stats: avg=128.67ms min=35.49ms max=220.56ms count=9
+I/flutter ( 4134): 00:51 +5 -1: 5.5.2 : écran Anatomie, écorché acheté, vues et groupe
+D/FlutterJNI( 4134): Sending viewport metrics to the engine.
+D/EGL_emulation( 4134): app_time_stats: avg=544.63ms min=8.61ms max=2021.49ms count=5
+D/EGL_emulation( 4134): app_time_stats: avg=677.21ms min=225.40ms max=1113.89ms count=3
+D/EGL_emulation( 4134): app_time_stats: avg=920.00ms min=472.22ms max=1367.79ms count=2
+D/EGL_emulation( 4134): app_time_stats: avg=675.14ms min=130.69ms max=1752.27ms count=3
+D/EGL_emulation( 4134): app_time_stats: avg=846.22ms min=424.07ms max=1268.37ms count=2
+D/EGL_emulation( 4134): app_time_stats: avg=670.09ms min=111.76ms max=1725.26ms count=3
+D/EGL_emulation( 4134): app_time_stats: avg=740.54ms min=245.77ms max=1235.31ms count=2
+D/EGL_emulation( 4134): app_time_stats: avg=678.31ms min=159.43ms max=1686.07ms count=3
+D/EGL_emulation( 4134): app_time_stats: avg=983.27ms min=438.47ms max=1528.06ms count=2
+D/EGL_emulation( 4134): app_time_stats: avg=677.63ms min=63.26ms max=1644.18ms count=3
+I/flutter ( 4134): 01:11 +6 -1: M56 : ouverture d’un mannequin avant / après préchargement
+D/EGL_emulation( 4134): app_time_stats: avg=438.96ms min=165.95ms max=729.95ms count=3
+D/EGL_emulation( 4134): app_time_stats: avg=734.43ms min=191.10ms max=2869.79ms count=5
+D/EGL_emulation( 4134): app_time_stats: avg=380.88ms min=161.07ms max=748.24ms count=3
+D/EGL_emulation( 4134): app_time_stats: avg=123.18ms min=11.49ms max=322.61ms count=8
+I/eetlift_tracker( 4134): NativeAlloc concurrent mark compact GC freed 834KB AllocSpace bytes, 1(20KB) LOS objects, 49% free, 2652KB/5304KB, paused 122us,51.134ms total 399.937ms
+D/EGL_emulation( 4134): app_time_stats: avg=543.53ms min=165.51ms max=1228.87ms count=3
+D/EGL_emulation( 4134): app_time_stats: avg=890.05ms min=875.99ms max=904.12ms count=2
+D/EGL_emulation( 4134): app_time_stats: avg=842.26ms min=186.96ms max=1542.89ms count=3
+I/flutter ( 4134): 01:24 +7 -1: (tearDownAll)
+D/EGL_emulation( 4134): app_time_stats: avg=894.34ms min=869.75ms max=918.94ms count=2
+I/flutter ( 4134): 01:25 +8 -1: Some tests failed.
+Failure Details:
+Failure in method: M56 : fiche traction-pronation, mannequin fixe et muscles
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.first (dart:core/iterable.dart:663:7)
+#1      _FirstFinderMixin.filter (package:flutter_test/src/finders.dart:1383:28)
+#3      Iterable.single (dart:core/iterable.dart:694:13)
+#4      WidgetController.widget (package:flutter_test/src/controller.dart:828:30)
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2429:15)
+#8      TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#9      WidgetController.scrollUntilVisible (package:flutter_test/src/controller.dart:2427:27)
+#10     main.scrollToMannequin (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:172:18)
+<asynchronous suspension>
+#11     main.fiche (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:186:5)
+<asynchronous suspension>
+#12     main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:209:7)
+<asynchronous suspension>
+#13     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#14     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#15     TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+(elided 3 frames from dart:async and dart:async-patch)
+
+The test description was:
+  M56 : fiche traction-pronation, mannequin fixe et muscles
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+
+D/EGL_emulation( 4134): app_time_stats: avg=112.98ms min=9.79ms max=232.71ms count=9
