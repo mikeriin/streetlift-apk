@@ -1,0 +1,8 @@
+pub=success
+format=failure
+analyze=success
+python=success
+dart=success
+captures=failure
+build_debug=success
+build_profile=success
