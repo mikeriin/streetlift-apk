@@ -10,6 +10,13 @@ Rôle : animateur de personnage, technical animator Blender. Une seule action : 
 — Contrôles automatiques applicables (longueurs, limites, pieds fixes, pas d'interpénétration du corps) ; planche des images clés de chaque animation sous 2 vues REGARDÉE ; corrige ce qui fait robotique ou raide.
 — Sortie : clips au format de M7 dans `assets/anatomy/clips/koach/` + entrée dans le registre (famille attente / parle / felicite, durée, boucle ou non) ; sources FBX chiffrées dans `assets_secure/animations/koach/`.
 
+1b. Style et validation (demande du propriétaire, 29/09/2026, 23:30)
+— Style **un peu exagéré, comme dans les anime** : anticipation marquée avant chaque geste, poses clés franches et lisibles en silhouette, dépassement et rebond (overshoot) à l'arrivée, courbes d'accélération nettes (départ lent, geste vif, amorti), léger étirement du timing sur les poses fortes (« hold » de 0,2 à 0,4 s), mouvements secondaires (tête, épaules, bassin) en décalage de quelques images. L'exagération reste dans les limites du squelette : aucun membre cassé, aucun pied qui glisse, aucune interpénétration.
+— **Validation répétée, au moins 3 passes par animation**, jusqu'à un résultat sûr :
+  (1) toi : planche des poses clés sous 2 vues + GIF, regardés en entier ; checklist : lisible en silhouette, exagération perceptible mais crédible, rythme (anticipation → action → amorti), boucle ou retour à l'attente sans à-coup, pieds fixes, pas de raideur « robotique » ;
+  (2) un sous-agent neuf, qui n'a pas vu ton travail, joue le directeur d'animation exigeant (références : animation japonaise, jeux de combat) et note chaque animation sur 10 avec ses défauts ; corrige chaque remarque fondée ;
+  (3) nouvelle passe de ce sous-agent sur les versions corrigées ; aucune animation livrée sous 8/10. Garde les notes et les avant / après dans la livraison.
+
 2. Aperçu dans l'application
 — Écran Anatomie (ou Réglages › À propos › Moteur 3D, justifie) : section « Koach (aperçu) » qui joue chacune des 9 animations au choix, en boucle, avec rotation au doigt. Rien d'autre ne change.
 — Tests : chargement des 9 clips, boucle, retour à la pose d'attente. GIF des 9 animations sur la page de suivi. Version : lot de fonctionnalités (§7 de PIPELINE_3D.md). Notification « prêt à tester », puis arrête-toi.
