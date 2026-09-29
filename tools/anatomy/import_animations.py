@@ -915,8 +915,11 @@ def import_koach(items, log=print):
         by_id[anim.id] = item
         log(f'{anim.id} : {motion.frames} images, {stats["cles"]} clés, {len(data)} octets '
             f'(tolérance {tol}°, écart max {rot_err:.2f}°, {pos_err * 1000:.1f} mm)')
+    # animations de Koach dans l'ordre du script (famille, puis ordre voulu)
+    rank = {anim.id: i for i, (anim, _) in enumerate(items)}
     index['clips'] = sorted(by_id.values(),
-                            key=lambda c: (not c['debogage'], bool(c.get('mascotte')), c['id']))
+                            key=lambda c: (not c['debogage'], bool(c.get('mascotte')),
+                                           rank.get(c['id'], -1), c['id']))
     save_index(index)
     verify(log=log)
     return index

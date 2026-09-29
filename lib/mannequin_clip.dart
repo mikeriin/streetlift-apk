@@ -219,7 +219,10 @@ class ClipRegistry {
   /// M7b : animations de Koach, par famille (attente, parle, félicite)
   /// puis dans l'ordre du registre.
   List<ClipEntry> get koachClips {
-    final out = [for (final c in clips) if (c.mascot) c];
+    final out = [
+      for (final c in clips)
+        if (c.mascot) c,
+    ];
     int rank(ClipEntry c) {
       final i = kKoachFamilies.keys.toList().indexOf(c.family ?? '');
       return i < 0 ? kKoachFamilies.length : i;
