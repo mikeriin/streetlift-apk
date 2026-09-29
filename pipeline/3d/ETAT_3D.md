@@ -21,19 +21,19 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M56 correction 3 | 5.5.3 | b01bb75 | build n° 146 (36561741052) ; CI 3D 36560553169 (3 essais) | 2026-09-29 | remplacé par 5.5.4 — `livraisons/LIVRAISON_M56_correction3.md` |
 | M56 correction 4 | 5.5.4 | 9826982 | build n° 152 ; CI 3D 36571687956 | 2026-09-29 | validé (29/09/2026, 17:00) — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M56_correction4.md` ; halo des zones travaillées (maillage gris), fond sans démarcation ; remplace 5.5.3 |
 | M6b | 5.5.5 | 019fa08 | build n° 159 (36601660192) ; CI 3D 36599218965 (essais A à E) | 2026-09-29 | validé (29/09/2026, 19:15) — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M6b.md`, `docs/AUDIT_M6b.md` ; 11 défauts corrigés |
-| M6c | — | — | — | — | en cours depuis 2026-09-29 17:16 UTC (personnage Mixamo Ch36, source chiffrée `pipeline/3d/inputs/character_mixamo_ch36.fbx.enc`) |
-| M7 | — | — | — | — | à faire (redéfini le 29/09 : lecteur, import des animations du propriétaire, animation de débogage) |
-| M8 | 5.7.0 | — | — | — | à redéfinir (plus d'animation) |
-| M9 | 5.8.0 | — | — | — | à redéfinir (plus d'animation) |
-| M10 | 5.9.0 | — | — | — | à redéfinir (plus d'animation) |
-| M11 | 5.10.0 | — | — | — | à redéfinir (plus d'animation) |
-| M12 | 5.11.0 | — | — | — | à redéfinir (plus d'animation) |
-| M13 | 5.12.0 | — | — | — | à redéfinir (plus d'animation) |
-| M14 | 5.13.0 | — | — | — | à redéfinir (plus d'animation) |
-| M15 | 5.14.0 | — | — | — | à redéfinir (plus d'animation) |
-| M16 | 5.15.0 | — | — | — | à redéfinir (plus d'animation) |
-| M17 | 5.16.0 | — | — | — | à redéfinir (plus d'animation) |
-| M18 | 5.17.0 | — | — | — | à redéfinir (plus d'animation) |
-| M19 | 5.18.0 | — | — | — | à faire |
+| M6c | 5.6.0 | 66a167c | build n° 163 (36618366444) ; CI 3D 36615305716 (essais A à C) | 2026-09-29 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M6c.md` ; personnage Mixamo Ch36, 126 zones sur la peau, ressources chiffrées dans `assets_secure/` |
+| M7 | 5.7.0 | — | — | — | à faire (redéfini le 29/09 : lecteur, import des animations du propriétaire, animation de débogage) |
+| M8 | 5.8.0 | — | — | — | à redéfinir (plus d'animation) |
+| M9 | 5.9.0 | — | — | — | à redéfinir (plus d'animation) |
+| M10 | 5.10.0 | — | — | — | à redéfinir (plus d'animation) |
+| M11 | 5.11.0 | — | — | — | à redéfinir (plus d'animation) |
+| M12 | 5.12.0 | — | — | — | à redéfinir (plus d'animation) |
+| M13 | 5.13.0 | — | — | — | à redéfinir (plus d'animation) |
+| M14 | 5.14.0 | — | — | — | à redéfinir (plus d'animation) |
+| M15 | 5.15.0 | — | — | — | à redéfinir (plus d'animation) |
+| M16 | 5.16.0 | — | — | — | à redéfinir (plus d'animation) |
+| M17 | 5.17.0 | — | — | — | à redéfinir (plus d'animation) |
+| M18 | 5.18.0 | — | — | — | à redéfinir (plus d'animation) |
+| M19 | 5.19.0 | — | — | — | à faire |
 
 Compatibilité du téléphone du propriétaire (réponse attendue après M1) : **Compatible, 120 images/s** (réponse du propriétaire, 27/09/2026, sur 5.0.0) → pipeline relancé pour M2.
