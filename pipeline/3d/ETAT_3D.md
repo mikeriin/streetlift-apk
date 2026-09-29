@@ -20,7 +20,7 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M56 correction 2 | 5.5.2 | 5aeb2d1 | build n° 142 (36554048481) ; CI 3D 36551761380 (4 essais) | 2026-09-29 | remplacé par 5.5.3 — `livraisons/LIVRAISON_M56_correction2.md` |
 | M56 correction 3 | 5.5.3 | b01bb75 | build n° 146 (36561741052) ; CI 3D 36560553169 (3 essais) | 2026-09-29 | remplacé par 5.5.4 — `livraisons/LIVRAISON_M56_correction3.md` |
 | M56 correction 4 | 5.5.4 | 9826982 | build n° 152 ; CI 3D 36571687956 | 2026-09-29 | validé (29/09/2026, 17:00) — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M56_correction4.md` ; halo des zones travaillées (maillage gris), fond sans démarcation ; remplace 5.5.3 |
-| M6b | — | — | — | — | à faire |
+| M6b | — | — | — | — | en cours depuis 2026-09-29 15:05 UTC |
 | M7 | — | — | — | — | à faire (redéfini le 29/09 : lecteur, import des animations du propriétaire, animation de débogage) |
 | M8 | 5.7.0 | — | — | — | à redéfinir (plus d'animation) |
 | M9 | 5.8.0 | — | — | — | à redéfinir (plus d'animation) |
