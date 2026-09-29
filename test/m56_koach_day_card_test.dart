@@ -14,7 +14,7 @@ import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
-import 'phone_test_support.dart' show scrollToAction;
+import 'phone_test_support.dart' show scrollToAction, swipePage;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -132,8 +132,7 @@ void main() {
     );
     expect(find.text('KOACH · SÉANCE DU JOUR'), findsOneWidget);
     // Page suivante : l'exercice 1, sans carte.
-    await tester.tap(find.text('Suivant'));
-    await tester.pumpAndSettle();
+    await swipePage(tester);
     expect(
       find.text('Exercice 1 / ${store.groups(d1).length}'),
       findsOneWidget,

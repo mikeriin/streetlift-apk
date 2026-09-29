@@ -137,13 +137,22 @@ void main() {
     });
   });
 
-  test('rampe historique identique à la carte 2D', () {
-    for (final dark in [true, false]) {
-      SL.dark = dark;
-      for (final v in [.35, .62, 1.0]) {
-        expect(mannequinHeat(v, dark), heat(v), reason: '$dark $v');
+  test('rampe identique à la carte 2D, dans la couleur dominante choisie', () {
+    for (final accent in [KAccentSpec.rouge, KAccentSpec.turquoise]) {
+      SL.accentSpec = accent;
+      for (final dark in [true, false]) {
+        SL.dark = dark;
+        for (final v in [.35, .62, 1.0]) {
+          expect(mannequinHeat(v, dark), heat(v), reason: '$dark $v');
+        }
+        // 5.5.2 : le haut de la rampe est la teinte vive (claire en sombre)
+        // de la dominante, le bas sa teinte principale.
+        final top = dark ? accent.bright : (accent.vividLight ?? accent.vivid);
+        expect(mannequinHeat(1, dark), top);
+        expect(mannequinHeat(0, dark), Color.lerp(accent.principal, top, .15));
       }
     }
+    SL.accentSpec = KAccentSpec.rouge;
     SL.dark = true;
   });
 

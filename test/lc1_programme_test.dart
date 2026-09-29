@@ -19,6 +19,8 @@ import 'package:streetlift_tracker/session_history.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
+import 'phone_test_support.dart' show swipePage;
+
 /// Identifiants retirés de S12 à S19 (202), relevés sur l'asset 2.5.6.
 const removedIds = <String>[
   'B2-9',
@@ -812,8 +814,7 @@ void main() {
         await tester.pumpWidget(page(SessionScreen(week: week, day: day)));
         await tester.pumpAndSettle();
         expect(find.text('TEST MAX TRACTIONS PDC'), findsWidgets);
-        await tester.tap(find.text('Suivant'));
-        await tester.pumpAndSettle();
+        await swipePage(tester);
         expect(find.text(nbsp('2 × 18 reps')), findsOneWidget);
         final continuous = day.exercises[1];
         List<String> reps() => [

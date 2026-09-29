@@ -8,6 +8,8 @@ import 'package:streetlift_tracker/session_history.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
+import 'phone_test_support.dart' show swipePage;
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() async {
@@ -105,16 +107,14 @@ void main() {
         // Toucher une valeur ou la coche ne peut pas changer la saisie.
         await tester.tap(find.text('12,5'));
         await tester.tap(find.byIcon(Icons.check).first);
-        await tester.tap(find.text('Suivant'));
-        await tester.pumpAndSettle();
+        await swipePage(tester);
         await tester.tap(find.text('Exercices'));
         await tester.pumpAndSettle();
         await tester.tap(find.text('Bilan de séance').last);
         await tester.pumpAndSettle();
         expect(find.text('2 / 4'), findsOneWidget);
         expect(find.byType(EditableText), findsNothing);
-        await tester.tap(find.text('Précédent'));
-        await tester.pumpAndSettle();
+        await swipePage(tester, back: true);
         await tester.pumpWidget(const SizedBox());
         await tester.pumpAndSettle();
         expect(journals(), before);

@@ -44,7 +44,6 @@ import 'package:vector_math/vector_math.dart' as vm;
 
 import 'app_theme.dart';
 import 'engine3d.dart';
-import 'mannequin_clip.dart';
 import 'mannequin_gestures.dart';
 import 'mannequin_preload.dart';
 import 'mannequin_rig.dart';
@@ -302,12 +301,18 @@ vm.Vector4 _lin(Color c, [double scale = 1, double alpha = 1]) => vm.Vector4(
   alpha,
 );
 
-/// Rampe historique (`heat()` de muscle_body.dart) pour un thème donné.
-Color mannequinHeat(double v, bool dark) => Color.lerp(
-  KPalette.burgundy,
-  dark ? KPalette.lightRed : KPalette.actionRed,
-  .15 + .85 * v.clamp(0.0, 1.0),
-)!;
+/// Rampe des muscles sollicités (même loi que `heat()` de muscle_body.dart)
+/// pour un thème donné. 5.5.2 (décision du propriétaire, 29/09/2026) : la
+/// rampe suit la **couleur dominante** choisie dans les réglages (principale
+/// → vive / claire), plus le rouge historique fixe.
+Color mannequinHeat(double v, bool dark, [KAccentSpec? accent]) {
+  final a = accent ?? SL.accentSpec;
+  return Color.lerp(
+    a.principal,
+    dark ? a.bright : (a.vividLight ?? a.vivid),
+    .15 + .85 * v.clamp(0.0, 1.0),
+  )!;
+}
 
 // ------------------------------------------------------------------ modèle --
 
@@ -440,6 +445,7 @@ class MannequinScene {
   final Map<String, Node> _nodes = {};
 
   bool? _dark3d;
+  KAccentSpec? _accent3d;
   Map<String, double> _intensities = const {};
   Set<String> _stretched = const {};
   Set<String> _hidden = const {};
@@ -584,131 +590,6 @@ class MannequinScene {
   /// Nœuds présents dans le modèle (contrôles).
   Iterable<String> get nodeNames => _nodes.keys;
 
-  // ------------------------------------------------------------ M6 --
-  // Matériel de l'exercice (tools/anatomy/build_equipment.py) : un nœud
-  // racine par élément, cloné depuis la bibliothèque chargée une fois, gris
-  // neutres mats ; le sol prend une teinte proche du fond du thème.
-
-  static Future<Node>? _equipmentTemplate;
-
-  /// Bibliothèque de matériel chargée une fois par lancement (M56 :
-  /// préchargement).
-  static Future<Node> loadEquipmentTemplate() => _loadEquipment();
-
-  static Future<Node> _loadEquipment() {
-    final pending = _equipmentTemplate ??= loadScene(kEquipmentAsset);
-    return pending.catchError((Object e) {
-      if (identical(_equipmentTemplate, pending)) _equipmentTemplate = null;
-      throw e;
-    });
-  }
-
-  final Map<String, Node> _equipment = {};
-  final Map<String, ClipEquipment> _equipmentSpec = {};
-  final PhysicallyBasedMaterial _floor = _mat(const Color(0xFF2A2726));
-  late final Map<String, PhysicallyBasedMaterial> _equipmentTints = {
-    'metal': _mat(const Color(0xFF9A9794), roughness: .55),
-    'structure': _mat(const Color(0xFF5E5A58), roughness: .7),
-    'charge': _mat(const Color(0xFF3B3837), roughness: .8),
-    'mousse': _mat(const Color(0xFF4A4644), roughness: .9),
-    'sangle': _mat(const Color(0xFF6E6A67), roughness: .9),
-    'sol': _floor,
-  };
-
-  /// Teinte d'une partie de matériel (`eq_<id>` ou `eq_<id>__<partie>`).
-  static String equipmentTint(String node) {
-    final parts = node.substring(3).split('__');
-    final id = parts.first;
-    if (parts.length > 1) {
-      return switch (parts[1]) {
-        'montants' || 'cadre' => 'structure',
-        'disques' || 'tetes' || 'disque' => 'charge',
-        'sangles' => 'sangle',
-        _ => 'structure',
-      };
-    }
-    return switch (id) {
-      'sol' => 'sol',
-      'banc_plat' || 'banc_inclinable' || 'box' => 'mousse',
-      'kettlebell' || 'gilet_lest' => 'charge',
-      'elastique' || 'ceinture_lest' => 'sangle',
-      'anneaux' => 'structure',
-      _ => 'metal',
-    };
-  }
-
-  /// Éléments de matériel affichés (contrôles).
-  Iterable<String> get equipmentNames => _equipment.keys;
-
-  /// Place le matériel d'un clip (chargé une fois par lancement ; sans la
-  /// bibliothèque, le mannequin s'anime sans matériel).
-  Future<void> setEquipment(List<ClipEquipment> items) async {
-    if (items.isEmpty) return;
-    final Node template;
-    try {
-      template = await _loadEquipment();
-    } catch (_) {
-      return;
-    }
-    final byName = <String, Node>{};
-    void index(Node n) {
-      if (n.name.startsWith('eq_') && !n.name.contains('__')) {
-        byName[n.name] = n;
-      }
-      for (final c in n.children) {
-        index(c);
-      }
-    }
-
-    index(template);
-    for (final item in items) {
-      final source = byName['eq_${item.id}'];
-      if (source == null || _equipment.containsKey(item.id)) continue;
-      final node = source.clone();
-      void paint(Node n) {
-        final mesh = n.mesh;
-        if (mesh != null) {
-          final copy = mesh.clone();
-          final tint = _equipmentTints[equipmentTint(n.name)]!;
-          for (final p in copy.primitives) {
-            p.material = tint;
-          }
-          n.mesh = copy;
-        }
-        for (final c in n.children) {
-          paint(c);
-        }
-      }
-
-      paint(node);
-      _equipment[item.id] = node;
-      _equipmentSpec[item.id] = item;
-      _placeEquipment(item.id, item.position);
-      scene.add(node);
-    }
-  }
-
-  void _placeEquipment(String id, vm.Vector3 position) {
-    final node = _equipment[id], spec = _equipmentSpec[id];
-    if (node == null || spec == null) return;
-    final yaw = vm.Quaternion.axisAngle(
-      vm.Vector3(0, 1, 0),
-      spec.yawDegrees * math.pi / 180,
-    );
-    node.localTransform = _matToScene(
-      vm.Matrix4.compose(position, yaw, vm.Vector3.all(1)),
-    );
-  }
-
-  /// Positions du matériel mobile (repère glTF).
-  void moveEquipment(Map<String, vm.Vector3> positions) {
-    positions.forEach(_placeEquipment);
-  }
-
-  /// Cadrage imposé (repère glTF) : celui d'un clip, fixe sur la boucle.
-  MannequinFraming framingOf(vm.Vector3 center, double height, double width) =>
-      MannequinFraming(_vecToScene(center), height, width);
-
   /// Articulations du squelette présentes dans le modèle (contrôles).
   Iterable<String> get jointNames => _joints.keys;
 
@@ -742,7 +623,7 @@ class MannequinScene {
     final rig = this.rig;
     if (rig == null || _joints.isEmpty) return;
     // M56 : os d'aide et échelles de gonflement recalculés ici, comme à la
-    // fabrication (les postures de rig.json et les clips ne portent que les
+    // fabrication (les postures de rig.json ne portent que les
     // rotations des segments).
     pose = rig.withHelpers(pose);
     _pose = pose;
@@ -963,7 +844,9 @@ class MannequinScene {
     required bool halo,
   }) {
     final themeChanged = _dark3d != dark;
+    final accentChanged = _accent3d != SL.accentSpec;
     if (!themeChanged &&
+        !accentChanged &&
         identical(intensities, _intensities) &&
         identical(stretched, _stretched) &&
         identical(hidden, _hidden) &&
@@ -972,20 +855,13 @@ class MannequinScene {
       return;
     }
     _dark3d = dark;
+    _accent3d = SL.accentSpec;
     _intensities = intensities;
     _stretched = stretched;
     _hidden = hidden;
     _bones = bones;
     _halo = halo;
     if (themeChanged) {
-      // M6 : sol à peine distinct du fond.
-      _floor.baseColorFactor = _lin(
-        Color.lerp(
-          sceneBackground(dark),
-          dark ? const Color(0xFFFFFFFF) : const Color(0xFF000000),
-          dark ? .025 : .04,
-        )!,
-      );
       final bg = _lin(sceneBackground(dark)).xyz;
       scene.skybox = Skybox(
         GradientSkySource(
@@ -1300,12 +1176,6 @@ class Mannequin3D extends StatefulWidget {
   /// si les animations sont réduites).
   final String? posture;
 
-  /// M56 : démonstration d'exercice (matériel, vue par défaut et cadrage du
-  /// clip) ; remplace [posture] et [view]. Correction 1 : plus de boucle,
-  /// le mannequin montre la position de départ, puis la position de fin au
-  /// choix, avec un fondu doux (instantané si les animations sont réduites).
-  final MannequinClip? clip;
-
   const Mannequin3D({
     super.key,
     this.intensities = const {},
@@ -1323,7 +1193,6 @@ class Mannequin3D extends StatefulWidget {
     this.semanticLabel = 'Mannequin anatomique en 3D',
     this.onReady,
     this.posture,
-    this.clip,
   });
 
   @override
@@ -1336,16 +1205,7 @@ class Mannequin3DState extends State<Mannequin3D>
   bool? _available;
   final _settings = Display3DSettings.instance;
 
-  late MannequinView _view = _startView;
-
-  MannequinView get _startView {
-    final clip = widget.clip;
-    if (clip == null) return widget.view;
-    for (final v in MannequinView.values) {
-      if (v.name == clip.view) return v;
-    }
-    return widget.view;
-  }
+  late MannequinView _view = widget.view;
 
   double _yaw = 0, _pitch = .06;
   double _fromYaw = 0, _fromPitch = 0, _toYaw = 0, _toPitch = 0;
@@ -1448,17 +1308,7 @@ class Mannequin3DState extends State<Mannequin3D>
       scene = null;
     }
     if (!mounted) return;
-    final clip = widget.clip;
-    if (scene != null && clip != null) {
-      await scene.setEquipment(clip.equipment);
-      if (!mounted) return;
-      scene.framing = scene.framingOf(clip.center, clip.height, clip.width);
-      // Position de départ.
-      final positions = clip.shownPositions;
-      _clipIndex = 0;
-      _clipTime = positions.isEmpty ? 0 : clip.wrap(positions.first.time);
-      _applyClip(scene, clip);
-    } else if (scene != null && widget.posture != null) {
+    if (scene != null && widget.posture != null) {
       _posture = widget.posture;
       final pose = _poseOf(scene, widget.posture);
       scene.applyPose(pose);
@@ -1469,78 +1319,6 @@ class Mannequin3DState extends State<Mannequin3D>
       _available = scene != null;
     });
     widget.onReady?.call(scene != null);
-  }
-
-  // ------------------------------------------------------- M56 clip --
-  // Positions de départ et de fin (correction 1) : la posture affichée est
-  // celle de la position courante ; le passage à l'autre est un fondu
-  // (mélange sphérique des rotations, matériel mobile interpolé) porté par
-  // [_poseTween], comme une posture de l'écran Anatomie.
-  int _clipIndex = 0;
-  double _clipTime = 0;
-  Map<String, vm.Vector3> _fromEquipment = const {}, _toEquipment = const {};
-
-  /// Temps courant de la démonstration (s) : instant de la position montrée
-  /// (tests, captures).
-  double get clipTime => _clipTime;
-
-  /// Position montrée (index dans [MannequinClip.shownPositions]).
-  int get clipPosition => _clipIndex;
-
-  void _applyClip(MannequinScene scene, MannequinClip clip) {
-    final rig = scene.rig;
-    if (rig == null) return;
-    scene.applyPose(clip.poseAt(_clipTime, rig));
-    scene.moveEquipment(clip.equipmentAt(_clipTime));
-  }
-
-  /// Montre la position [index] du clip (départ, fin) avec un fondu.
-  void showClipPosition(int index) {
-    final scene = _scene, clip = widget.clip;
-    final rig = scene?.rig;
-    if (scene == null || clip == null || rig == null) return;
-    final positions = clip.shownPositions;
-    if (positions.isEmpty) return;
-    index = index.clamp(0, positions.length - 1);
-    final t = clip.wrap(positions[index].time);
-    _poseTween.stop();
-    _fromPose = scene.pose;
-    _fromEquipment = clip.equipmentAt(_clipTime);
-    _clipIndex = index;
-    _clipTime = t;
-    _toPose = clip.poseAt(t, rig);
-    _toEquipment = clip.equipmentAt(t);
-    _fromFraming = _toFraming = scene.framing;
-    if (!mounted) return;
-    if (_reduceMotion) {
-      setState(() => _applyClip(scene, clip));
-    } else {
-      _poseTween.forward(from: 0);
-    }
-  }
-
-  /// Place la démonstration à l'instant [t] sans transition (tests et
-  /// captures) ; la position courante devient la plus proche.
-  void seekClip(double t, {bool pause = true}) {
-    final scene = _scene, clip = widget.clip;
-    if (scene == null || clip == null) return;
-    _poseTween.stop();
-    final w = clip.wrap(t);
-    final positions = clip.shownPositions;
-    if (positions.isNotEmpty) {
-      var best = 0;
-      for (var i = 1; i < positions.length; i++) {
-        if ((clip.wrap(positions[i].time) - w).abs() <
-            (clip.wrap(positions[best].time) - w).abs()) {
-          best = i;
-        }
-      }
-      _clipIndex = best;
-    }
-    setState(() {
-      _clipTime = w;
-      _applyClip(scene, clip);
-    });
   }
 
   RigPose _poseOf(MannequinScene scene, String? key) => key == null
@@ -1578,15 +1356,6 @@ class Mannequin3DState extends State<Mannequin3D>
     setState(() {
       scene.applyPose(t >= 1 ? _toPose : rig.blend(_fromPose, _toPose, t));
       scene.framing = MannequinFraming.lerp(_fromFraming!, _toFraming!, t);
-      if (widget.clip != null) {
-        scene.moveEquipment({
-          for (final e in _toEquipment.entries)
-            e.key: t >= 1
-                ? e.value
-                : (_fromEquipment[e.key] ?? e.value) +
-                      (e.value - (_fromEquipment[e.key] ?? e.value)) * t,
-        });
-      }
     });
   }
 
@@ -1594,9 +1363,7 @@ class Mannequin3DState extends State<Mannequin3D>
   void didUpdateWidget(Mannequin3D oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.view != widget.view) setView(widget.view);
-    if (oldWidget.posture != widget.posture && widget.clip == null) {
-      setPosture(widget.posture);
-    }
+    if (oldWidget.posture != widget.posture) setPosture(widget.posture);
   }
 
   @override
@@ -1813,52 +1580,12 @@ class Mannequin3DState extends State<Mannequin3D>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         view,
-        if (widget.clip != null && _scene != null && available == true)
-          ..._clipInfo(context, widget.clip!),
         if (widget.viewButtons && available != false) ...[
           const SizedBox(height: 8),
           _viewButtons(context),
         ],
       ],
     );
-  }
-
-  /// M56 : position montrée (départ / fin), phase et tempo ; puces pour
-  /// passer d'une position à l'autre (fondu doux).
-  List<Widget> _clipInfo(BuildContext context, MannequinClip clip) {
-    final phase = clip.phaseAt(_clipTime);
-    final positions = clip.shownPositions;
-    final current = positions.isEmpty ? null : positions[_clipIndex];
-    return [
-      const SizedBox(height: 6),
-      Text(
-        current == null
-            ? '${phase.name} · tempo ${clip.tempo}'
-            : '${current.name} · ${current.label} · tempo ${clip.tempo}',
-        key: const ValueKey('mannequin-phase'),
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 12.5, color: SL.dim),
-      ),
-      if (positions.length > 1)
-        Padding(
-          padding: const EdgeInsets.only(top: 6),
-          child: Wrap(
-            key: const ValueKey('mannequin-key-positions'),
-            alignment: WrapAlignment.center,
-            spacing: 6,
-            runSpacing: 6,
-            children: [
-              for (var i = 0; i < positions.length; i++)
-                ChoiceChip(
-                  key: ValueKey('mannequin-position-$i'),
-                  label: Text(positions[i].name),
-                  selected: i == _clipIndex,
-                  onSelected: (_) => showClipPosition(i),
-                ),
-            ],
-          ),
-        ),
-    ];
   }
 
   Widget _fallback(BuildContext context) {

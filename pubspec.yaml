@@ -70,7 +70,4 @@ flutter:
     # M5 : squelette, postures et peau du mannequin (toucher et cadrage).
     - assets/anatomy/rig.json
     - assets/anatomy/mannequin_skin.bin
-    # M56 : animations d'exercice (tools/anatomy/animate.py) et registre ; le
-    # matériel (equipment.glb) est converti par le build hook.
-    - assets/anatomy/clips/
     - flutter_scene_generated/

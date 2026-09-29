@@ -373,17 +373,10 @@ class _Sheet extends StatelessWidget {
           ),
       ],
     );
-    // M6 : exercice converti → mannequin 3D animé (repli : 2D ci-dessus).
-    if (!ExerciseAnimation.converted(entry.id)) return demo2d;
-    return ExerciseAnimation(
-      key: ValueKey('fiche-animation-${entry.id}'),
-      id: entry.id,
-      primaires: detail.primaires,
-      secondaires: detail.secondaires,
-      stabilisateurs: detail.stabilisateurs,
-      etires: detail.etires,
-      fallback: demo2d,
-    );
+    // 5.5.2 (décision du propriétaire, 29/09/2026) : plus d'animation 3D ;
+    // la démonstration 2D historique reste, le mannequin 3D montre les
+    // muscles de l'exercice (section suivante).
+    return demo2d;
   }
 
   @override

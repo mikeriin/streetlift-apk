@@ -1,18 +1,14 @@
-// M56 (CI 3D) : mannequin musclé, postures, démonstrations d'exercice, carte
-// « Koach · séance du jour » et préchargement, sur
+// M56 (CI 3D) : mannequin musclé, postures, fiches (mannequin fixe et ses
+// muscles), carte « Koach · séance du jour » et préchargement, sur
 // émulateur Android (Flutter GPU), lancé par tools/ci3d_drive.sh :
 //   flutter drive --driver=test_driver/integration_test.dart \
 //     --target=integration_test/animations_m56_test.dart -d emulator-5554
-// Correction 1 : plus de boucle ; la fiche montre la position de départ,
-// puis la position de fin (puce), avec un fondu doux. Captures : pour
-// chaque pilote (traction pronation, dips, back squat), la fiche exercice à
-// la position de départ, à mi-fondu, à la position de fin, et une vue 3/4 ;
-// animations réduites (passage instantané) ;
-// carte Koach de la séance du jour (page à part, avant l'exercice 1) ouverte
-// et repliée, sombre et clair.
-// Écran Anatomie : 4 postures de référence en 3/4 et le modèle au repos
-// (face, dos). Préchargement : ouverture d'un mannequin avant (désactivé) et
-// après le préchargement (première image, images perdues).
+// 5.5.2 (décision du propriétaire, 29/09/2026) : plus aucune animation ;
+// la fiche montre la démonstration 2D historique et le mannequin 3D avec
+// les muscles de l'exercice. Captures : trois fiches (traction pronation,
+// dips, back squat), carte Koach (page à part, avant l'exercice 1) ouverte
+// et repliée, sombre et clair, écran Anatomie (4 postures en 3/4, repos face
+// et dos), préchargement (ouverture d'un mannequin avant / après), Moteur 3D.
 // Relevé m56_releve.json (cadre du mannequin dans chaque capture, contrôles
 // sans référence : figure, gris, rouge).
 import 'dart:convert';
@@ -31,7 +27,6 @@ import 'package:streetlift_tracker/koach_day_card.dart';
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/mannequin_3d.dart';
 import 'package:streetlift_tracker/anatomy_screen.dart';
-import 'package:streetlift_tracker/mannequin_clip.dart';
 import 'package:streetlift_tracker/mannequin_preload.dart';
 import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/session_screen.dart';
@@ -153,12 +148,11 @@ void main() {
     await Display3DSettings.instance.load();
     await engine3DSupport();
     await MannequinMap.load();
-    await ClipRegistry.load();
   });
 
-  // -------------------------------------------------- pilotes animés --
+  // ------------------------------------------------------ fiches --
 
-  Future<void> pilot(WidgetTester tester, String id) async {
+  Future<void> fiche(WidgetTester tester, String id) async {
     await pumpHome(
       tester,
       ExerciseSheetScreen(key: ValueKey('m56-$id'), id: id),
@@ -167,121 +161,25 @@ void main() {
     await waitFor(tester, () => mannequin(tester)?.available != null);
     final state = mannequin(tester)!;
     expect(state.available, isTrue, reason: 'pas de 3D');
-    expect(find.byType(ExerciseAnimation), findsOneWidget);
-    final clip = state.widget.clip!;
-    final positions = clip.shownPositions;
-    expect(positions.length, 2, reason: 'départ et fin');
-    final out = <String, Object?>{
-      'vue': state.view.name,
-      'materiel': state.scene!.equipmentNames.toList(),
-      'tempo': clip.tempo,
-      'positions': [for (final p in positions) p.name],
-    };
-    // Position de départ, immobile.
+    expect(find.byType(ExerciseMannequin), findsOneWidget);
+    // Plus d'animation : mannequin fixe, muscles de l'exercice.
     await tester.pump(const Duration(seconds: 2));
-    expect(state.clipPosition, 0);
-    final t0 = state.clipTime;
+    await tester.ensureVisible(find.byKey(const ValueKey('mannequin-view')));
     await tester.pump(const Duration(seconds: 1));
-    expect(state.clipTime, t0);
-    expect(state.view.name, clip.view);
-    expect(find.byKey(const ValueKey('mannequin-phase')), findsOneWidget);
-    final chips = find.byKey(const ValueKey('mannequin-key-positions'));
-    expect(chips, findsOneWidget);
-    final shots = <String, Object?>{};
-    Future<void> capture(String key) async {
-      await tester.pump(const Duration(seconds: 1));
-      await shot('m56_${id}_$key');
-      final s = await check(tester, true);
-      s['phase'] = clip.phaseAt(state.clipTime).name;
-      shots[key] = s;
-      expect(s['figure'] as double, greaterThan(.03), reason: '$id $key');
-      expect(s['rouge'] as double, greaterThan(.001), reason: '$id $key');
-      expect(s['gris'] as double, greaterThan(.01), reason: '$id $key');
-    }
-
-    await capture('depart');
-    // Fondu vers la position de fin : image à mi-chemin, puis fin.
-    // (Rendu logiciel de l'émulateur : une image peut prendre plus que le
-    // fondu de 0,75 s ; l'instant capturé n'est pas garanti à mi-chemin.)
-    state.showClipPosition(1);
-    await tester.pump(const Duration(milliseconds: 375));
-    await capture('fondu');
-    await tester.pump(const Duration(seconds: 1));
-    expect(state.posing, isFalse);
-    expect(state.clipPosition, 1);
-    expect(state.clipTime, clip.wrap(positions[1].time));
-    await capture('fin');
-    // Retour au départ par la puce.
-    await tester.ensureVisible(chips);
-    await tester.pump(const Duration(seconds: 1));
-    await tester.tap(
-      find.descendant(of: chips, matching: find.byType(ChoiceChip)).first,
-    );
-    await tester.pump(const Duration(seconds: 1));
-    await tester.pump(const Duration(seconds: 1));
-    expect(state.clipPosition, 0);
-    tester
-        .state<ScrollableState>(find.byType(Scrollable).first)
-        .position
-        .jumpTo(0);
-    await tester.pump(const Duration(seconds: 1));
-    out['captures'] = shots;
-    m6[id] = out;
-    record();
-    // Vue 3/4 à la position de fin.
-    state.showClipPosition(1);
-    // Boutons de vue sous l'écran (émulateur 360 × 640 dp) : vue imposée.
-    state.setView(MannequinView.troisQuarts);
-    await tester.pump(const Duration(milliseconds: 900));
-    await tester.pump(const Duration(seconds: 2));
-    await shot('m56_${id}_troisquarts');
-    out['troisquarts'] = await check(tester, true);
-    m6[id] = out;
+    await shot('m56_${id}_fiche');
+    final s = await check(tester, true);
+    expect(s['figure'] as double, greaterThan(.03), reason: id);
+    expect(s['rouge'] as double, greaterThan(.001), reason: id);
+    expect(s['gris'] as double, greaterThan(.01), reason: id);
+    m6[id] = {'vue': state.view.name, 'fiche': s};
     record();
   }
 
   for (final id in const ['traction-pronation', 'dips', 'back-squat']) {
-    testWidgets('M56 : $id, positions de départ et de fin dans sa fiche', (
-      tester,
-    ) async {
-      await pilot(tester, id);
+    testWidgets('M56 : fiche $id, mannequin fixe et muscles', (tester) async {
+      await fiche(tester, id);
     }, timeout: _limit);
   }
-
-  testWidgets('M56 : animations réduites, passage instantané (clair)', (
-    tester,
-  ) async {
-    await pumpHome(
-      tester,
-      const ExerciseSheetScreen(key: ValueKey('m56-reduit'), id: 'back-squat'),
-      false,
-      reduce: true,
-    );
-    await waitFor(tester, () => mannequin(tester)?.available != null);
-    final state = mannequin(tester)!;
-    await tester.pump(const Duration(seconds: 2));
-    final chips = find.byKey(const ValueKey('mannequin-key-positions'));
-    expect(chips, findsOneWidget);
-    await tester.ensureVisible(chips);
-    await tester.pump(const Duration(seconds: 1));
-    await tester.tap(
-      find.descendant(of: chips, matching: find.byType(ChoiceChip)).last,
-    );
-    await tester.pump();
-    // Sans animation : la position de fin est affichée dès l'image suivante.
-    expect(state.posing, isFalse);
-    expect(state.clipPosition, 1);
-    await tester.pump(const Duration(seconds: 1));
-    tester
-        .state<ScrollableState>(find.byType(Scrollable).first)
-        .position
-        .jumpTo(0);
-    await tester.pump(const Duration(seconds: 2));
-    await shot('m56_reduit_squat_clair');
-    m6['reduit'] = {'position': state.clipPosition, 'temps': state.clipTime};
-    record();
-    SL.dark = true;
-  }, timeout: _limit);
 
   // ------------------------------------------ carte Koach du jour --
 
