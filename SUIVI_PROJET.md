@@ -1,8 +1,18 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M6b (correctifs du mannequin fixe : affichage, cohérence graphique, usage), version 5.5.5 ; précédent : lot M56 et ses corrections 1 à 4 (5.5.0 → 5.5.4), validé**  
-**Date : 29 septembre 2026, Europe/Paris — version : 5.5.5+84 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : pipeline « Mannequin 3D », lot M6c (nouveau mannequin : personnage Mixamo « Ch36 », zones musculaires sur la peau, ressources sous licence chiffrées), version 5.6.0 ; précédent : lot M6b (5.5.5), validé**  
+**Date : 29 septembre 2026, Europe/Paris — version : 5.6.0+85 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+
+## M6c — Personnage Mixamo, zones sur la peau, ressources chiffrées (version 5.6.0)
+
+| Point | Réalisation |
+| --- | --- |
+| Ressources chiffrées | `assets_secure/` : `character_mixamo_ch36.fbx.enc` (source), `mannequin.glb.enc` (exécution), `ecorche_mannequin.glb.enc` (source des zones) + `manifest.json` (empreintes des clairs). `tools/secure_assets.py decrypt [--tout] / encrypt / verify / check`. `build-apk.yml` et `ci-3d.yml` déchiffrent avec le secret `KT_ASSETS_KEY` avant les contrôles (échec explicite sans secret), n'envoient jamais les clairs (artefacts), les effacent en fin de build. `.gitignore` : `/assets/anatomy/mannequin.glb`, `/assets_secure/clair/`. `release_security.check_tree` : tout modèle 3D en clair refusé, ressources chiffrées (en-tête OpenSSL exigé) dans un budget à part de 60 Mo. |
+| Personnage | `tools/anatomy/build_character.py` (Blender sans interface pour le FBX, numpy / scipy) : coutures lissées (arêtes > 40°, 3 anneaux), fit par zones sur le maillage de repos (bras 28,0 → 30,5 cm, avant-bras 22,4 → 23,8, cuisse 48,9 → 51,9, mollet 33,7 → 36,7, poitrine 95,8 → 101,3, taille 68,0 → 68,0 ; épaules 50,1 → 51,3 cm), 6 poses extrêmes vérifiées avant / après, pose d'affichage bras abaissés, 28 880 triangles, GLB 679 Ko, `character_report.json`. |
+| Zones | Écorché retenu contre Z-Anatomy (peau nue 9 % contre 16 %, zones non morcelées) : pose des bras ajustée à la source, niveaux des articulations, recalage non rigide (écart final 3 mm), zone de la surface la plus proche, diffusion des frontières, petits muscles superficiels protégés, zones symétriques. 126 zones + `peau` + `head` ; 24 muscles du pack sans zone (en texte). `aire`, `aire_face`, `aire_dos` par zone. |
+| Application | `MannequinScene` : nœuds `peau` (gris, arrête le toucher) et `head` ; plus d'os ni de tendons. Réglage « Os visibles » et filtre « Os » (catégorie « Affichage ») retirés ; `AnatomyFilters` = 11 groupes. `exerciseStartView` : surfaces vues de face / de dos, `kStartViewDominance` 1,65. Textes et crédits (Mixamo / Adobe, écorché pour les zones). `lib/mixamo_skeleton.dart` + `assets/anatomy/squelette_mixamo.json` (65 os, pose de repos en T, pose d'affichage) pour M7. |
+| Écorché | `build_model.py` écrit désormais sa conversion dans `assets_secure/clair/` (chiffrée) et `tools/anatomy/ecorche_map.json`. L'historique git garde les anciennes versions en clair (réécriture non faite : décision du propriétaire) ; l'asset public `Archive.zip` de la release `modele-achete` est à supprimer par le propriétaire. |
 
 ## M6b — Correctifs du mannequin fixe (version 5.5.5)
 

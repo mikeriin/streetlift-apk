@@ -58,11 +58,15 @@ class SecureAssetsTest(unittest.TestCase):
             subprocess.run(secure_assets.OPENSSL + ['-d', '-in', str(d / 'a.enc'), '-out',
                                                     str(d / 'b.bin')], env=env, check=True)
             self.assertEqual((d / 'a.bin').read_bytes(), (d / 'b.bin').read_bytes())
+            # Mauvaise clé : refus d'OpenSSL (remplissage invalide) ou, une
+            # fois sur 256 environ, un clair illisible ; dans les deux cas
+            # jamais le fichier d'origine (secure_assets vérifie l'empreinte).
             bad = {**os.environ, secure_assets.KEY_ENV: 'mauvaise-cle'}
             result = subprocess.run(secure_assets.OPENSSL + ['-d', '-in', str(d / 'a.enc'), '-out',
                                                              str(d / 'c.bin')], env=bad,
                                     capture_output=True)
-            self.assertNotEqual(result.returncode, 0)
+            self.assertTrue(result.returncode != 0 or (d / 'c.bin').read_bytes()
+                            != (d / 'a.bin').read_bytes())
 
 
 class TreeRefusesClearModelsTest(unittest.TestCase):
