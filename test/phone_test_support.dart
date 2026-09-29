@@ -31,3 +31,14 @@ Future<void> scrollToAction(
     reason: 'Action atteinte par défilement sur une fenêtre de téléphone',
   );
 }
+
+/// 5.5.2 : plus de boutons Précédent / Suivant dans les séances ; une page
+/// se change en glissant. Glissement d'une page vers la suivante (ou la
+/// précédente avec [back]) sur la vue paginée, puis stabilisation.
+Future<void> swipePage(WidgetTester tester, {bool back = false}) async {
+  final pager = find.byType(PageView);
+  expect(pager, findsOneWidget);
+  final width = tester.getSize(pager).width;
+  await tester.drag(pager, Offset(back ? width * .8 : -width * .8, 0));
+  await tester.pumpAndSettle();
+}

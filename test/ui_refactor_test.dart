@@ -18,6 +18,8 @@ import 'package:streetlift_tracker/wod_models.dart';
 import 'package:streetlift_tracker/wod_preview.dart';
 import 'package:streetlift_tracker/wod_screen.dart';
 
+import 'phone_test_support.dart' show swipePage;
+
 Widget page(Widget child, {bool dark = true, double textScale = 1.3}) =>
     MaterialApp(
       theme: buildTheme(dark),
@@ -121,8 +123,7 @@ void main() {
       await tester.tap(find.byKey(ValueKey('${first.id}-note-toggle')));
       await tester.pumpAndSettle();
       expect(find.text('Première note'), findsOneWidget);
-      await tester.tap(find.text('Suivant'));
-      await tester.pumpAndSettle();
+      await swipePage(tester);
       final second = day.exercises.last;
       await tester.tap(find.byKey(ValueKey('${second.id}-note-toggle')));
       await tester.pumpAndSettle();
@@ -130,8 +131,7 @@ void main() {
         find.byKey(ValueKey('${second.id}-note')),
         'Seconde note',
       );
-      await tester.tap(find.text('Précédent'));
-      await tester.pumpAndSettle();
+      await swipePage(tester, back: true);
       expect(find.text('14'), findsOneWidget);
       expect(find.text('Première note'), findsOneWidget);
       await tester.tap(find.text('Exercices'));
@@ -185,8 +185,7 @@ void main() {
         findsOneWidget,
       );
     }
-    await tester.tap(find.text('Bilan'));
-    await tester.pumpAndSettle();
+    await swipePage(tester);
     for (var i = 0; i < day.exercises.length; i++) {
       expect(
         store.exLog(week.n, day.j, day.exercises[i]).note,

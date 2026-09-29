@@ -435,33 +435,6 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
               ),
             ],
           ),
-    bottomNavigationBar: _groups.isEmpty
-        ? null
-        : KBottomActions(
-            child: KActionRow(
-              children: [
-                OutlinedButton.icon(
-                  onPressed: _page > 0 ? () => _go(_page - 1) : null,
-                  icon: const Icon(Icons.chevron_left),
-                  label: const Text('Précédent'),
-                ),
-                FilledButton.icon(
-                  onPressed: _page < _groups.length
-                      ? () => _go(_page + 1)
-                      : () => Navigator.maybePop(context),
-                  icon: Icon(
-                    _page == _groups.length ? Icons.check : Icons.chevron_right,
-                  ),
-                  label: Text(
-                    _page == _groups.length
-                        ? 'Fermer'
-                        : _page == _groups.length - 1
-                        ? 'Bilan'
-                        : 'Suivant',
-                  ),
-                ),
-              ],
-            ),
-          ),
+    // 5.5.2 : plus de boutons Précédent / Suivant (glissement).
   );
 }

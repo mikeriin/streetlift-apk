@@ -16,7 +16,7 @@ import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/settings_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
-import 'phone_test_support.dart' show scrollToAction;
+import 'phone_test_support.dart' show scrollToAction, swipePage;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -393,8 +393,7 @@ void main() {
         // l'exercice 1 quand Koach a quelque chose à dire.
         final koachPage = find.byKey(const ValueKey('session-koach-page'));
         if (koachPage.evaluate().isNotEmpty) {
-          await tester.tap(find.text('Suivant'));
-          await tester.pumpAndSettle();
+          await swipePage(tester);
         }
         await scrollToAction(tester, find.byTooltip('Valider la série 1'));
         await tester.tap(find.byTooltip('Valider la série 1').first);

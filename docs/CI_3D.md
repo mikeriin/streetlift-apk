@@ -156,6 +156,12 @@ principale dans `analysis_options.yaml`, comme `tools/perf_device/`).
 
 ## Mannequin musclé, animations, carte Koach, préchargement (M56)
 
+Correction 1 (5.5.1, 29/09/2026) : 3 essais sur `claude/ci-3d-fable`
+(36532238784 : formatage, test Koach S5 avec la page Koach, fondu non
+garanti à mi-chemin sur émulateur ; 36533912915 vert ; 36535840924 vert,
+libellés des positions). `python3 tools/anatomy/silhouette.py` compare la
+silhouette du mannequin à la référence du propriétaire.
+
 - Branche CI propre au lot : `claude/ci-3d-fable` (copie de `ci-3d.yml`
   déclenchée sur cette branche, `group: ci-3d-fable`, résultats recommités
   sur la même branche ; script `tools/…` : l'arbre du lot est posé par
@@ -164,8 +170,9 @@ principale dans `analysis_options.yaml`, comme `tools/perf_device/`).
 - `integration_test/animations_m56_test.dart`, seule cible jouée par défaut
   par `tools/ci3d_drive.sh` : écran Anatomie (modèle musclé au repos face et
   dos, postures Suspendu, Squat bas, Planche en 3/4), fiches des 3 pilotes
-  (boucle en 8 images, vue 3/4, pause hors de l'écran, animations réduites :
-  positions clés fixes), carte « Koach · séance du jour » (ouverte,
+  (correction 1 : position de départ, fondu, position de fin, vue 3/4 ;
+  animations réduites : passage instantané), carte « Koach · séance du
+  jour » (page à part avant l'exercice 1 ; ouverte,
   repliée, sombre, clair), ouverture d'un mannequin avant / après le
   préchargement (`MannequinPreload`, première image et images perdues,
   durée du chargement et du préchauffage, mémoire ajoutée), écran Moteur 3D

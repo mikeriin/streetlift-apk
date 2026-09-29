@@ -3,9 +3,9 @@
 // Décision du propriétaire (28/09/2026) : plus de saccade à chaque
 // affichage du mannequin. Juste après que l'application est prête (première
 // image affichée, initialisation faite), le modèle, sa carte, son squelette,
-// sa peau et le matériel sont chargés en tâche de fond dans les caches
-// partagés par tous les écrans (`MannequinScene`, `MannequinRig`,
-// `MannequinMap`, `ClipRegistry`), puis les pipelines de rendu sont
+// sa peau sont chargés en tâche de fond dans les caches partagés par tous
+// les écrans (`MannequinScene`, `MannequinRig`, `MannequinMap`), puis les
+// pipelines de rendu sont
 // préchauffés par une image hors écran (`Scene.warmUp`) : le premier
 // mannequin visible ne compile plus les shaders. Un écran 3D ouvert avant la
 // fin du préchargement attend les mêmes futurs (pas de double chargement)
@@ -24,11 +24,10 @@ import 'package:flutter_scene/scene.dart';
 
 import 'engine3d.dart';
 import 'mannequin_3d.dart';
-import 'mannequin_clip.dart';
 
 /// Résultat du préchargement.
 class PreloadReport {
-  /// Chargement des ressources (modèle, carte, rig, peau, matériel), ms.
+  /// Chargement des ressources (modèle, carte, rig, peau), ms.
   final int loadMs;
 
   /// Préchauffage des pipelines (image hors écran), ms ; -1 si impossible.
@@ -118,15 +117,8 @@ class MannequinPreload {
       compatible = support.compatible;
       if (compatible) {
         // Ressources : modèle (converti par le hook de build), carte, rig,
-        // peau, registre des clips et bibliothèque de matériel.
+        // peau.
         final scene = await MannequinScene.create();
-        await Future.wait<void>([
-          ClipRegistry.load(),
-          MannequinScene.loadEquipmentTemplate().then<void>(
-            (_) {},
-            onError: (Object _) {},
-          ),
-        ]);
         final load = sw.elapsedMilliseconds;
         // Préchauffage : matériaux mis en évidence (rampe, halo) et peau,
         // une image hors écran, jetée.

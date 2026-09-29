@@ -11,14 +11,16 @@ import 'app_theme.dart';
 import 'atlas.dart';
 import 'atlas_data.dart';
 
-/// Rampe d'intensité de la charte : bordeaux (léger) → rouge (intense).
-/// En sombre, le haut de la rampe prend la teinte d'accent pour rester visible.
+/// Rampe d'intensité des muscles : principale (léger) → vive (intense).
+/// 5.5.2 (décision du propriétaire, 29/09/2026) : la rampe suit la couleur
+/// dominante choisie dans les réglages (avant : rouge historique fixe). En
+/// sombre, le haut de la rampe prend la teinte claire pour rester visible.
 Color heat(double t) {
   final v = t.clamp(0.0, 1.0);
   if (v <= 0) return SL.faint;
-  // Échelle de données : rouge historique, indépendant de la dominante.
-  final top = SL.dark ? KPalette.lightRed : KPalette.actionRed;
-  return Color.lerp(KPalette.burgundy, top, .15 + .85 * v)!;
+  final a = SL.accentSpec;
+  final top = SL.dark ? a.bright : (a.vividLight ?? a.vivid);
+  return Color.lerp(a.principal, top, .15 + .85 * v)!;
 }
 
 const _fileKeys = {

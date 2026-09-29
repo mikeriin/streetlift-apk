@@ -447,26 +447,9 @@ class _SessionScreenState extends State<SessionScreen> {
                 _TimerBar(ctl: ctl),
               ],
             ),
-      bottomNavigationBar:
-          restDay || MediaQuery.of(context).viewInsets.bottom > 0
-          ? null
-          : KBottomActions(
-              child: KActionRow(
-                children: [
-                  OutlinedButton.icon(
-                    onPressed: page > 0 ? () => _go(page - 1) : null,
-                    icon: const Icon(Icons.chevron_left),
-                    label: const Text('Précédent'),
-                  ),
-                  FilledButton.icon(
-                    onPressed: page < bilanPage ? () => _go(page + 1) : null,
-                    icon: const Icon(Icons.chevron_right),
-                    iconAlignment: IconAlignment.end,
-                    label: Text(page == bilanPage - 1 ? 'Bilan' : 'Suivant'),
-                  ),
-                ],
-              ),
-            ),
+      // 5.5.2 (demande du propriétaire, 29/09/2026) : plus de boutons
+      // Précédent / Suivant, le glissement d'une page à l'autre suffit ; le
+      // bouton « Exercices » et les points restent pour se repérer.
     );
   }
 }

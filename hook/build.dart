@@ -12,8 +12,6 @@ void main(List<String> args) async {
       buildOutput: output,
       inputFilePaths: const [
         'assets/anatomy/mannequin.glb',
-        // M6 : matériel (tools/anatomy/build_equipment.py).
-        'assets/anatomy/equipment.glb',
       ],
     );
   });

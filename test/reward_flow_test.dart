@@ -222,8 +222,7 @@ void main() {
       );
       await tester.tap(find.text('Ouvrir'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Bilan'));
-      await tester.pumpAndSettle();
+      await swipePage(tester);
       await scrollToAction(tester, find.text('Terminer la séance'));
       await tester.tap(find.text('Terminer la séance'));
       // Deux images : la première image d'une page poussée est hors scène
