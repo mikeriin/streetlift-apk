@@ -1,0 +1,48 @@
+{
+  "a": {
+    "entree": 1,
+    "lecture_auto": false,
+    "puces": 9,
+    "lecture": {
+      "avant": 0.0,
+      "apres": 0.0,
+      "images_s": null
+    },
+    "koach_attente_respiration": {
+      "t": 1.75,
+      "figure": 0.09383202099737532
+    },
+    "koach_attente_regard": {
+      "t": 1.2,
+      "figure": 0.09612860892388451
+    },
+    "koach_attente_etirement": {
+      "t": 1.45,
+      "figure": 0.056020341207349084
+    },
+    "koach_parle_une_main": {
+      "t": 0.8,
+      "figure": 0.08710629921259842
+    },
+    "koach_parle_deux_mains": {
+      "t": 2.45,
+      "figure": 0.09407808398950131
+    },
+    "koach_parle_montre": {
+      "t": 1.25,
+      "figure": 0.09416010498687664
+    },
+    "koach_felicite_applaudit": {
+      "t": 0.55,
+      "figure": 0.05700459317585302
+    },
+    "koach_felicite_poing": {
+      "t": 1.05,
+      "figure": 0.04691601049868766
+    },
+    "koach_felicite_pouce": {
+      "t": 0.3,
+      "figure": 0.05224737532808399
+    }
+  }
+}
