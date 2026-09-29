@@ -14,7 +14,7 @@ import 'package:streetlift_tracker/engine3d.dart';
 import 'package:streetlift_tracker/mannequin_preload.dart';
 import 'package:streetlift_tracker/store.dart';
 
-import 'phone_test_support.dart' show phone;
+import 'phone_test_support.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -74,14 +74,18 @@ void main() {
 
   testWidgets('écran Moteur 3D : carte « Préchargement »', (tester) async {
     phone(tester);
-    await MannequinPreload.start();
+    // Le préchargement attend le sondage du moteur, futur créé hors de la
+    // zone du test (setUpAll) : attendu dans la zone réelle (runAsync),
+    // sinon sa fin n'est jamais propagée à l'horloge simulée du test.
+    await tester.runAsync(MannequinPreload.start);
+    expect(MannequinPreload.done, isTrue);
     await tester.pumpWidget(
       MaterialApp(
         theme: buildTheme(true),
         locale: const Locale('fr'),
         supportedLocales: const [Locale('fr')],
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
-        home: const Engine3DScreen(autoMeasure: false),
+        home: const Engine3DScreen(),
       ),
     );
     final ready = find.text('La 3D n’est pas disponible sur ce téléphone.');
@@ -91,17 +95,18 @@ void main() {
       );
       await tester.pump();
     }
-    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pumpAndSettle();
     expect(ready, findsOneWidget);
-    // Carte « Préchargement » en bas de la liste (liste paresseuse : on
-    // défile par pas fixes, sans attendre de stabilisation).
-    final card = find.byKey(const ValueKey('engine3d-preload'));
-    for (var i = 0; i < 12 && card.evaluate().isEmpty; i++) {
-      await tester.drag(find.byType(Scrollable).first, const Offset(0, -250));
-      await tester.pump(const Duration(milliseconds: 300));
-    }
-    expect(card, findsOneWidget);
-    expect(find.text('Rien à précharger sans moteur 3D.'), findsOneWidget);
+    // Carte « Préchargement » sous « Fluidité », en bas de la liste.
+    await scrollToAction(
+      tester,
+      find.text('Mesure impossible sans moteur 3D.'),
+    );
+    await scrollToAction(
+      tester,
+      find.text('Rien à précharger sans moteur 3D.'),
+    );
+    expect(find.byKey(const ValueKey('engine3d-preload')), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }
