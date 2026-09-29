@@ -154,25 +154,19 @@ void main() {
 
   // ------------------------------------------------------ fiches --
 
-  /// 5.5.2 : la démonstration 2D ouvre la fiche, le mannequin (section
-  /// Muscles) est plus bas dans la liste : on y défile d'abord.
+  /// 5.5.3 : le mannequin ouvre la fiche (plus de démonstration 2D) ;
+  /// attendre qu'il soit construit (contenu du pack chargé), puis l'amener
+  /// en haut de la vue.
   Future<void> scrollToMannequin(WidgetTester tester) async {
     await waitFor(
       tester,
-      () => find.byType(ExerciseSheetScreen).evaluate().length == 1,
+      () => find.byType(ExerciseMannequin).evaluate().isNotEmpty,
       seconds: 30,
     );
     await tester.pump(const Duration(milliseconds: 300));
-    final list = find
-        .descendant(
-          of: find.byType(ExerciseSheetScreen).last,
-          matching: find.byType(Scrollable),
-        )
-        .first;
-    await tester.scrollUntilVisible(
-      find.byType(ExerciseMannequin),
-      250,
-      scrollable: list,
+    await Scrollable.ensureVisible(
+      tester.element(find.byType(ExerciseMannequin)),
+      alignment: .04,
     );
     await tester.pump(const Duration(milliseconds: 300));
   }
