@@ -490,12 +490,7 @@ class _KoachPage extends StatelessWidget {
     keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
     padding: const EdgeInsets.fromLTRB(KSpace.page, 2, KSpace.page, 10),
     children: [
-      KoachDayCard(
-        week: week.n,
-        base: baseDay,
-        day: day,
-        onChanged: onChanged,
-      ),
+      KoachDayCard(week: week.n, base: baseDay, day: day, onChanged: onChanged),
       ListenableBuilder(
         listenable: store,
         builder: (context, _) =>

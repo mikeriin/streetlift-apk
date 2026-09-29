@@ -389,6 +389,13 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
+        // M56 correction 1 : page « Koach · séance du jour » avant
+        // l'exercice 1 quand Koach a quelque chose à dire.
+        final koachPage = find.byKey(const ValueKey('session-koach-page'));
+        if (koachPage.evaluate().isNotEmpty) {
+          await tester.tap(find.text('Suivant'));
+          await tester.pumpAndSettle();
+        }
         await scrollToAction(tester, find.byTooltip('Valider la série 1'));
         await tester.tap(find.byTooltip('Valider la série 1').first);
         await tester.pumpAndSettle();
