@@ -1,0 +1,122 @@
+{
+  "traction-pronation": {
+    "vue": "troisQuarts",
+    "fiche": {
+      "cadre": [
+        36.0,
+        97.76,
+        288.0,
+        380.0
+      ],
+      "figure": 0.1845029239766082,
+      "rouge": 0.04108187134502924,
+      "gris": 0.14119152046783626
+    }
+  },
+  "dips": {
+    "vue": "troisQuarts",
+    "fiche": {
+      "cadre": [
+        36.0,
+        97.76,
+        288.0,
+        380.0
+      ],
+      "figure": 0.1966374269005848,
+      "rouge": 0.03629385964912281,
+      "gris": 0.15679824561403508
+    }
+  },
+  "back-squat": {
+    "vue": "troisQuarts",
+    "fiche": {
+      "cadre": [
+        36.0,
+        97.76,
+        288.0,
+        380.0
+      ],
+      "figure": 0.20032894736842105,
+      "rouge": 0.048757309941520464,
+      "gris": 0.14788011695906433
+    }
+  },
+  "koach_sombre": "Sommeil moins de 5 h · Fatigue probable : −30 % proposé",
+  "koach_clair": "Sommeil moins de 5 h · Fatigue probable : −30 % proposé",
+  "anatomie": {
+    "face": {
+      "cadre": [
+        20.0,
+        158.0,
+        320.0,
+        300.0
+      ],
+      "figure": 0.13175,
+      "rouge": 0.0,
+      "gris": 0.13175
+    },
+    "dos": {
+      "cadre": [
+        20.0,
+        158.0,
+        320.0,
+        300.0
+      ],
+      "figure": 0.13254166666666667,
+      "rouge": 0.0,
+      "gris": 0.13254166666666667
+    },
+    "profil": {
+      "cadre": [
+        20.0,
+        158.0,
+        320.0,
+        300.0
+      ],
+      "figure": 0.07733333333333334,
+      "rouge": 0.0,
+      "gris": 0.07733333333333334
+    },
+    "troisQuarts": {
+      "cadre": [
+        20.0,
+        158.0,
+        320.0,
+        300.0
+      ],
+      "figure": 0.12591666666666668,
+      "rouge": 0.0,
+      "gris": 0.12591666666666668
+    },
+    "dos_allume": {
+      "cadre": [
+        20.0,
+        212.0,
+        320.0,
+        300.0
+      ],
+      "figure": 0.19683333333333333,
+      "rouge": 0.03716666666666667,
+      "gris": 0.144375
+    }
+  },
+  "prechargement": {
+    "avant": {
+      "premiere_image_ms": 178,
+      "images_perdues": 1,
+      "images": 1,
+      "precharge": false
+    },
+    "apres": {
+      "premiere_image_ms": 78,
+      "images_perdues": 0,
+      "images": 0,
+      "precharge": true
+    },
+    "duree_ms": 4388,
+    "chargement_ms": 8,
+    "prechauffage_ms": 47,
+    "memoire_ajoutee_mo": 0.609375,
+    "compatible": true
+  }
+}
