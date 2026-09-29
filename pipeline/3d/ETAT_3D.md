@@ -16,21 +16,21 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M5 | 5.4.0 | b745c41 | build n° 121 (36456576585) ; CI 3D 36454868372 | 2026-09-28 | livré |
 | M6 | — | — | — | 2026-09-28 | remplacé par M56 (session Opus lancée à 18:05 UTC, plus pilotée ; son travail sert de brouillon) |
 | M56 | 5.5.0 | 7a24fc0 | build n° 133 (36509815224) ; CI 3D 36508242229 (5 essais) | 2026-09-29 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M56.md` |
-| M56 correction 1 | 5.5.1 | 786e867 | build n° 137 (36537833401) ; CI 3D 36535840924 (3 essais) | 2026-09-29 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M56_correction1.md` ; remplace 5.5.0 |
-| M56 correction 2 | 5.5.2 | — | — | 2026-09-29 | en cours (écorché acheté par le propriétaire, plus d'animation ni de posture, couleur dominante, plus de boutons Précédent / Suivant) |
+| M56 correction 1 | 5.5.1 | 786e867 | build n° 137 (36537833401) ; CI 3D 36535840924 (3 essais) | 2026-09-29 | remplacé par 5.5.2 — `livraisons/LIVRAISON_M56_correction1.md` |
+| M56 correction 2 | 5.5.2 | 5aeb2d1 | build n° 142 (36554048481) ; CI 3D 36551761380 (4 essais) | 2026-09-29 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M56_correction2.md` ; écorché acheté, plus d'animation ni de posture, couleur dominante, séance sans boutons ; remplace 5.5.1 |
 | M6b | — | — | — | — | à redéfinir (plus d'animation) |
-| M7 | 5.6.0 | — | — | — | à faire |
-| M8 | 5.7.0 | — | — | — | à faire |
-| M9 | 5.8.0 | — | — | — | à faire |
-| M10 | 5.9.0 | — | — | — | à faire |
-| M11 | 5.10.0 | — | — | — | à faire |
-| M12 | 5.11.0 | — | — | — | à faire |
-| M13 | 5.12.0 | — | — | — | à faire |
-| M14 | 5.13.0 | — | — | — | à faire |
-| M15 | 5.14.0 | — | — | — | à faire |
-| M16 | 5.15.0 | — | — | — | à faire |
-| M17 | 5.16.0 | — | — | — | à faire |
-| M18 | 5.17.0 | — | — | — | à faire |
+| M7 | 5.6.0 | — | — | — | à redéfinir (plus d'animation) |
+| M8 | 5.7.0 | — | — | — | à redéfinir (plus d'animation) |
+| M9 | 5.8.0 | — | — | — | à redéfinir (plus d'animation) |
+| M10 | 5.9.0 | — | — | — | à redéfinir (plus d'animation) |
+| M11 | 5.10.0 | — | — | — | à redéfinir (plus d'animation) |
+| M12 | 5.11.0 | — | — | — | à redéfinir (plus d'animation) |
+| M13 | 5.12.0 | — | — | — | à redéfinir (plus d'animation) |
+| M14 | 5.13.0 | — | — | — | à redéfinir (plus d'animation) |
+| M15 | 5.14.0 | — | — | — | à redéfinir (plus d'animation) |
+| M16 | 5.15.0 | — | — | — | à redéfinir (plus d'animation) |
+| M17 | 5.16.0 | — | — | — | à redéfinir (plus d'animation) |
+| M18 | 5.17.0 | — | — | — | à redéfinir (plus d'animation) |
 | M19 | 5.18.0 | — | — | — | à faire |
 
 Compatibilité du téléphone du propriétaire (réponse attendue après M1) : **Compatible, 120 images/s** (réponse du propriétaire, 27/09/2026, sur 5.0.0) → pipeline relancé pour M2.

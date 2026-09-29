@@ -13,15 +13,14 @@ Tu es lancé par une des tâches planifiées « Kalis Track — pipeline 3D (Opu
 
 ## 2. Décisions du propriétaire (27/09/2026) — ne pas remettre en cause
 - Moteur : **flutter_scene** (Flutter GPU, Impeller), Flutter ≥ 3.47 stable. Pas d'autre moteur sans son accord.
-- Modèle : `models/full-body-male-mobile.glb` du dépôt github.com/slfresh/fitmitwith-anatomy-atlas (Z-Anatomy / BodyParts3D, 218 régions, CC BY-SA 4.0), carte `maps/full-body-map.json`. Un seul mannequin homme. Page de référence validée par le propriétaire : https://claude.ai/artifact/AT93ttC1hE5WCTDBmbRCcZ (lis-la avec l'outil Artifact, action read : couleurs, éclairage, halo, correspondance des groupes, retrait de l'aponévrose des obliques devant le droit de l'abdomen).
+- Modèle : **(29/09/2026, remplace Z-Anatomy)** l'écorché « Ecorche Musclenames Male Anatomy » acheté par le propriétaire (archive `Archive.zip` de la release GitHub `modele-achete`, licence commerciale : jamais dans le dépôt), converti par `tools/anatomy/build_model.py --zip` (segmentation de la texture, 136 régions, ≤ 60 000 triangles). Jusqu'à 5.5.1 : `models/full-body-male-mobile.glb` de github.com/slfresh/fitmitwith-anatomy-atlas (Z-Anatomy / BodyParts3D, CC BY-SA 4.0). Un seul mannequin homme. Page de référence validée par le propriétaire : https://claude.ai/artifact/AT93ttC1hE5WCTDBmbRCcZ (lis-la avec l'outil Artifact, action read : couleurs, éclairage, halo, correspondance des groupes, retrait de l'aponévrose des obliques devant le droit de l'abdomen).
 - Tête sombre et lisse (comme `front_base.png` historique), musculature grise mate. Os visibles en gris sombre discret, réglage utilisateur « Os visibles » activé par défaut.
-- Mise en évidence : rampe historique bordeaux → rouge (`heat()` de `lib/muscle_body.dart` : `Color.lerp(burgundy #6B0C0C, haut, .15 + .85·v)`, haut = #E85959 en sombre, #A61717 en clair), indépendante de la couleur dominante ; principal 1, secondaire 0,62, stabilisateur 0,35 ; halo (bloom limité aux muscles sollicités). La liste des muscles en texte reste toujours affichée (jamais l'information par la couleur seule).
+- Mise en évidence : **(29/09/2026)** rampe dans la **couleur dominante** choisie par l'utilisateur (`SL.accentSpec` : principale → vive, claire en sombre ; `heat()` de `lib/muscle_body.dart` et `mannequinHeat`), plus la rampe rouge fixe ; principal 1, secondaire 0,62, stabilisateur 0,35 ; halo (bloom limité aux muscles sollicités). La liste des muscles en texte reste toujours affichée (jamais l'information par la couleur seule).
 - (28/09/2026) Anatomie complète : tous les muscles, profonds compris, sont affichés à 50 % d'opacité, pour voir les muscles sollicités cachés. Filtres de l'écran Anatomie : menu déroulant de cases à cocher qui se superposent (lot M4b).
 - Toucher un muscle affiche son nom, si le réglage « Nom du muscle au toucher » est activé (activé par défaut).
 - Manipulation : rotation libre au doigt + boutons Face / Dos / Profil / 3/4. Zoom au pincement ajouté le 28/09/2026 (lot M4c). Vue de départ d'une animation choisie automatiquement selon le plan du mouvement.
-- Matériel simplifié à l'échelle réelle, cohérent avec le style (gris neutres, sans texture criarde) ; lest visible quand l'exercice est lesté.
-- Intensité des muscles modulée par la phase (concentrique plus vive, excentrique plus douce, pulsation lente en isométrie). Vitesse = tempo de l'exercice (pack).
-- Emplacements : fiche exercice, séance en cours, STATS, écran Anatomie, aperçu au choix / remplacement d'un exercice.
+- **(29/09/2026) Plus aucune animation ni posture dans l'application** : le mannequin montre les muscles sollicités, fixe ; le propriétaire fera les positions à la main plus tard (à prendre en compte pour les lots suivants). Caducs : matériel, intensité par phase, tempo, lecteur.
+- Emplacements : fiche exercice, séance en cours, STATS, écran Anatomie, aperçu au choix / remplacement d'un exercice. (29/09/2026) Séance : navigation par glissement seulement, plus de boutons Précédent / Suivant.
 - Ordre de conversion : exercices du programme du propriétaire d'abord, puis par familles.
 - Téléphone incompatible : repli sur la carte 2D historique et postures fixes du mannequin.
 - Poids ajouté à l'APK : objectif ≤ 10 Mo, tolérance 20 Mo.
@@ -76,7 +75,8 @@ Interdits : modifier, créer ou relancer une tâche planifiée (aucun appel à f
 | M5 | M05.txt | Squelette d'animation et peau (première version, refaite par M56) | — | Opus 5.5 |
 | M6 | M06.txt | (remplacé par M56 : ne pas exécuter) | — | — |
 | M56 | M56.txt | Refonte chirurgicale du modèle (plus musclé), du squelette et de la peau ; matériel, chaîne d'animation, 3 pilotes crédibles ; carte Koach ; préchargement au lancement | Anatomie (postures), traction / dips / squat animés, carte Koach, ouverture du mannequin sans saccade | **Fable 5.1, effort maximal** |
-| M6b | M06b.txt | Correctifs : bugs d'affichage, incohérences graphiques et d'utilisation de tout ce qui touche au mannequin et aux filtres | Tous les écrans 3D, sans défaut | Opus 5.5, effort élevé |
+| M56 c2 | (session) | Correction 2 : écorché acheté, plus d'animation ni de posture, couleur dominante, plus de boutons Précédent / Suivant | Anatomie, fiches, séance | **Fable 5.1, effort maximal** |
+| M6b | M06b.txt | Correctifs : bugs d'affichage, incohérences graphiques et d'utilisation de tout ce qui touche au mannequin et aux filtres (à relire : plus de posture ni d'animation) | Tous les écrans 3D, sans défaut | Opus 5.5, effort élevé |
 | M7 | M07.txt | Lecteur complet + intensité par phase | Lecture/pause, curseur, tempo, phases | Opus 5.5, effort élevé |
 | M7b | M07b.txt | Animations de Koach en mascotte : 3 attente, 3 « parle », 3 « félicite » | Anatomie › Koach (aperçu) | Opus 5.5, effort élevé |
 | M8 | M08.txt | Conversion : exercices du programme du propriétaire | Tout son programme animé | Opus 5.5, effort élevé |
@@ -91,5 +91,7 @@ Interdits : modifier, créer ou relancer une tâche planifiée (aucun appel à f
 | M17 | M17.txt | Séance en cours : animation de l'exercice actuel | Écran de séance | Opus 5.5, effort élevé |
 | M18 | M18.txt | Aperçu au choix / remplacement d'un exercice | Listes de choix | Opus 5.5, effort élevé |
 | M19 | M19.txt | Nettoyage : repli, suppression du moteur 2D, fluidité, poids | Aucune régression | Opus 5.5, effort élevé |
+
+**(29/09/2026)** Les lots M7 à M18 ont été écrits pour un mannequin animé ; après la décision « plus d'animation, positions à la main plus tard », ils sont **à redéfinir par le propriétaire** avant tout lancement (voir DECISIONS_3D.md, « En attente »).
 
 Effort **élevé** : raisonne avant chaque choix structurant, vérifie chaque rendu sous plusieurs vues, corrige avant de livrer. Effort **maximal** : exigence de précision chirurgicale — chaque décision anatomique, biomécanique ou technique est justifiée par une mesure ou une référence, chaque rendu est regardé en entier puis en gros plan aux articulations, et rien n'est livré qui ne serait pas acceptable par un anatomiste et un entraîneur exigeants.
