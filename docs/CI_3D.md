@@ -179,7 +179,10 @@ Précédent / Suivant dans la séance. Correction 3 (5.5.3) : muscles à 100 %,
 zone ciblée (muscles du pack des exercices : `TargetedMannequin`), mannequin
 à la place des images 2D (fiche, accueil, WOD), plus de rotation au doigt ;
 3 essais (36556945259 analyse, 36558779220 tests, 36560553169 vert).
-Correction 2 : 4 essais sur `claude/ci-3d-fable`
+Correction 4 (5.5.4) : maillage gris et halo dessiné par-dessus la vue
+(`MannequinHaloPainter`), fond de la scène = couleur du support ; essais
+36565820933, 36567719792 (émulateur relancé une fois : image système
+corrompue), 36571687956 vert. Correction 2 : 4 essais sur `claude/ci-3d-fable`
 (36542184910 : analyse ; 36546278876 : tests LC1 par boutons, fiche sans
 défilement jusqu'au mannequin ; 36549423360 : formatage, respiration sans
 région, préchargement ; 36551761380 : vert, 955 tests Dart). Planches de
