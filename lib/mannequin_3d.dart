@@ -249,7 +249,7 @@ class MannequinHaloPainter extends CustomPainter {
 
   /// Flou du halo (px) et opacités (intensité 0 → 1).
   static const blurSigma = 9.0;
-  static double alphaFor(double v) => .16 + .30 * v;
+  static double alphaFor(double v) => .24 + .40 * v;
 
   @override
   void paint(Canvas canvas, Size s) {
