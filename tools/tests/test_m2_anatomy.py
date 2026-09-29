@@ -88,7 +88,9 @@ class M2AnatomyTest(unittest.TestCase):
     def test_noeuds_et_regions(self):
         regions = {r['id'] for r in self.map['regions']}
         nodes = set(self.tris)
-        self.assertEqual(nodes - regions, {'os', 'contexte', 'head'})
+        tendons = {n for n in nodes if n.startswith('tendon_')}
+        self.assertGreaterEqual(len(tendons), 20)
+        self.assertEqual(nodes - regions - tendons, {'os', 'head'})
         self.assertEqual(regions - nodes, set())
         self.assertEqual(len(regions), len(self.map['regions']), 'ids uniques')
         self.assertEqual(self.map['retirees'], [])

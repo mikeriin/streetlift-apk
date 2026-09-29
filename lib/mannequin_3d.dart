@@ -445,6 +445,15 @@ class MannequinScene {
 
   final PhysicallyBasedMaterial _bone = _mat(kBoneGray, roughness: .85);
   final PhysicallyBasedMaterial _dark = _mat(kDarkVolume, roughness: .85);
+  late final PhysicallyBasedMaterial _tendon = _tendonMaterial();
+
+  /// 5.5.2 : tendons de l'écorché, gris des muscles à leur opacité.
+  PhysicallyBasedMaterial _tendonMaterial() {
+    final m = _mat(kMuscleGray)
+      ..baseColorFactor = _lin(kMuscleGray, 1, opacity);
+    if (opacity < 1) m.alphaMode = AlphaMode.blend;
+    return m;
+  }
   final Map<String, PhysicallyBasedMaterial> _regions = {};
   final Map<String, Node> _nodes = {};
 
@@ -534,6 +543,11 @@ class MannequinScene {
         _assign(node, _bone);
       } else if (name == 'contexte' || name == 'head') {
         _assign(node, _dark);
+      } else if (name.startsWith('tendon_')) {
+        // 5.5.2 : tendons et aponévroses de l'écorché, gris translucide
+        // comme les muscles (un nœud par pièce pour le tri de
+        // transparence), jamais allumés ni touchés.
+        _assign(node, _tendon);
       }
     });
     scene
