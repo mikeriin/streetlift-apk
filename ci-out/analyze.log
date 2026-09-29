@@ -1,5 +1,0 @@
-Analyzing streetlift-apk...                                     
-
-  error • Undefined name 'kMannequinFovY'. Try correcting the name to one that is defined, or defining the name • test/m56_halo_test.dart:15:18 • undefined_identifier
-
-1 issue found. (ran in 12.5s)

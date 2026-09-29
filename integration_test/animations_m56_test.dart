@@ -62,6 +62,13 @@ void main() {
 
   bool isRed(int r, int g, int b) => r > 90 && r > g + 40 && r > b + 40;
 
+  Mannequin3DState? mannequin(WidgetTester tester) {
+    final f = find.byType(Mannequin3D);
+    return f.evaluate().isEmpty
+        ? null
+        : tester.state<Mannequin3DState>(f.first);
+  }
+
   Future<Map<String, Object?>> check(WidgetTester tester, bool dark) async {
     final rect = tester.getRect(
       find.byKey(const ValueKey('mannequin-view')).first,
@@ -108,13 +115,6 @@ void main() {
     for (var i = 0; i < seconds * 20 && !done(); i++) {
       await tester.pump(const Duration(milliseconds: 50));
     }
-  }
-
-  Mannequin3DState? mannequin(WidgetTester tester) {
-    final f = find.byType(Mannequin3D);
-    return f.evaluate().isEmpty
-        ? null
-        : tester.state<Mannequin3DState>(f.first);
   }
 
   Future<void> pumpHome(
