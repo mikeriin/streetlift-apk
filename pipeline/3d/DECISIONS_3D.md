@@ -146,6 +146,12 @@ Modèle Claude : Opus 5.5 pour tous les lots, effort accru demandé sur M5 (sque
 - **Choix du lot** : un exercice sans fiche du pack allume ses groupes comme avant (`groupe:<g>`) ; l'écran Anatomie garde son filtre par groupe (c'est un filtre, pas une sollicitation) ; les mannequins des cartes de l'accueil sont non interactifs (`Mannequin3D.interactive` false : le toucher va à la carte) et sans boutons ; `PoseDemo` et le moteur de découpes restent dans le code (tests, repli éventuel) sans être affichés ; le filtre « Muscles profonds » reste sans effet (M6b).
 - **CI 3D** : 3 essais (36556945259 : analyse ; 36558779220 : tests m3 / m4b ; 36560553169 : vert, 955 tests Dart). Version 5.5.3+82, main b01bb75 titré « Kalis Track 5.5.3 (M56, correction 3) », build signé n° 146.
 
+### M56 correction 4 (29/09/2026) — halo au lieu du maillage coloré, fond du support (5.5.4, Fable 5.1 puis Opus 5.5, même session)
+- **Retours du propriétaire** : « Je ne veux pas que le mesh soit coloré je veux que tu ajoutes un genre de halo de la zone travaillée ; pour tous les affichages 3D, le fond doit être de la même couleur que le support sur lequel il est, on ne doit pas voir de démarcations ».
+- **Décisions du propriétaire (remplacent la mise en évidence par la couleur du maillage)** : maillage toujours gris ; zone travaillée signalée par un halo dans la couleur dominante ; fond de chaque affichage 3D = couleur de son support.
+- **Choix du lot** : halo 2D dessiné par-dessus la vue (silhouette écran des faces tournées vers la caméra, floutée), plutôt qu'une coque 3D (essayée : surface ouverte, invisible de face) ou un post-traitement (flutter_scene 0.23 n'offre pas de passe par objet) ; projection étalonnée sur les rayons de la caméra pour rester alignée avec le toucher ; pas de test d'occlusion (limite assumée) ; pas de halo en rotation continue.
+- **CI 3D** : essais 36565820933 (analyse, test d'intégration), 36567719792 (relance unique : image système Android corrompue avant tout test ; puis attente du contenu de la fiche), 36571648634 (annulé), 36571687956 vert. Version 5.5.4+83, main 9826982, build signé n° 152.
+
 ## En attente du propriétaire
 - Redéfinition des lots M6b à M18 après « plus d'animation, positions à la main plus tard » : que reste-t-il à faire côté application (correctifs M6b ; filtre « Muscles profonds » sans effet ; muscles selon la position quand les positions existeront) ?
 - Positions d'exercice : sous quelle forme seront-elles fournies (fichier posé du même écorché ? images ?) pour que les lots suivants les intègrent.
