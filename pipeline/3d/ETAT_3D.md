@@ -21,7 +21,7 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M56 correction 3 | 5.5.3 | b01bb75 | build n° 146 (36561741052) ; CI 3D 36560553169 (3 essais) | 2026-09-29 | remplacé par 5.5.4 — `livraisons/LIVRAISON_M56_correction3.md` |
 | M56 correction 4 | 5.5.4 | 9826982 | build n° 152 ; CI 3D 36571687956 | 2026-09-29 | validé (29/09/2026, 17:00) — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M56_correction4.md` ; halo des zones travaillées (maillage gris), fond sans démarcation ; remplace 5.5.3 |
 | M6b | 5.5.5 | 019fa08 | build n° 159 (36601660192) ; CI 3D 36599218965 (essais A à E) | 2026-09-29 | validé (29/09/2026, 19:15) — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M6b.md`, `docs/AUDIT_M6b.md` ; 11 défauts corrigés |
-| M6c | — | — | — | — | à faire (ajouté le 29/09 : personnage Mixamo Ch36, source chiffrée `pipeline/3d/inputs/character_mixamo_ch36.fbx.enc`) |
+| M6c | — | — | — | — | en cours depuis 2026-09-29 17:16 UTC (personnage Mixamo Ch36, source chiffrée `pipeline/3d/inputs/character_mixamo_ch36.fbx.enc`) |
 | M7 | — | — | — | — | à faire (redéfini le 29/09 : lecteur, import des animations du propriétaire, animation de débogage) |
 | M8 | 5.7.0 | — | — | — | à redéfinir (plus d'animation) |
 | M9 | 5.8.0 | — | — | — | à redéfinir (plus d'animation) |
