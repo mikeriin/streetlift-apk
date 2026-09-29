@@ -1,5 +1,5 @@
-run=36571648634
-commit=bf96ef6ce3bc29717b03da6d7df07d90e58ea215
-checks=cancelled
-before=cancelled
-emulator=cancelled
+run=36571687956
+commit=b4df40449ef7bfa4a56df95dc7780adc8ac11689
+checks=success
+before=success
+emulator=success

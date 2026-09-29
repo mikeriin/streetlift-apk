@@ -1,0 +1,93 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             85.6s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...           3.8s
+D/FlutterRenderer( 4106): Width is zero. 0,0
+D/FlutterJNI( 4106): Sending viewport metrics to the engine.
+I/Choreographer( 4106): Skipped 119 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4106): Sending viewport metrics to the engine.
+D/ProfileInstaller( 4106): Installing profile for fr.tchoupi.streetlift_tracker
+I/eetlift_tracker( 4106): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:38077/eZD5aHoHLKI=/
+VMServiceFlutterDriver: Isolate found with number: 7463704469390075
+VMServiceFlutterDriver: Isolate 7463704469390075 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4106): 00:00 +0: (setUpAll)
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 4106): Skipped 77 frames!  The application may be doing too much work on its main thread.
+I/Choreographer( 4106): Skipped 89 frames!  The application may be doing too much work on its main thread.
+I/flutter ( 4106): 00:03 +1: M56 : fiche traction-pronation, mannequin fixe et muscles
+I/Choreographer( 4106): Skipped 53 frames!  The application may be doing too much work on its main thread.
+D/EGL_emulation( 4106): app_time_stats: avg=1787.72ms min=1405.27ms max=2170.16ms count=2
+I/eetlift_tracker( 4106): Background concurrent mark compact GC freed 1959KB AllocSpace bytes, 3(60KB) LOS objects, 49% free, 2608KB/5216KB, paused 40us,6.610ms total 422.649ms
+D/EGL_emulation( 4106): app_time_stats: avg=2190.09ms min=2190.09ms max=2190.09ms count=1
+D/EGL_emulation( 4106): app_time_stats: avg=10044.71ms min=10044.71ms max=10044.71ms count=1
+D/EGL_emulation( 4106): app_time_stats: avg=6138.44ms min=6138.44ms max=6138.44ms count=1
+D/EGL_emulation( 4106): app_time_stats: avg=221.59ms min=97.36ms max=370.24ms count=4
+D/EGL_emulation( 4106): app_time_stats: avg=262.16ms min=222.34ms max=318.58ms count=4
+I/flutter ( 4106): 00:28 +2: M56 : fiche dips, mannequin fixe et muscles
+D/EGL_emulation( 4106): app_time_stats: avg=387.49ms min=198.63ms max=1006.39ms count=5
+D/EGL_emulation( 4106): app_time_stats: avg=204.49ms min=177.71ms max=216.81ms count=5
+D/EGL_emulation( 4106): app_time_stats: avg=200.22ms min=175.12ms max=229.16ms count=6
+D/EGL_emulation( 4106): app_time_stats: avg=215.60ms min=201.10ms max=228.49ms count=5
+I/flutter ( 4106): 00:34 +3: M56 : fiche back-squat, mannequin fixe et muscles
+D/EGL_emulation( 4106): app_time_stats: avg=341.40ms min=185.71ms max=652.11ms count=3
+D/EGL_emulation( 4106): app_time_stats: avg=577.63ms min=239.63ms max=1093.58ms count=3
+D/EGL_emulation( 4106): app_time_stats: avg=228.65ms min=196.94ms max=252.19ms count=5
+D/EGL_emulation( 4106): app_time_stats: avg=256.63ms min=246.12ms max=266.88ms count=4
+D/EGL_emulation( 4106): app_time_stats: avg=225.66ms min=217.38ms max=231.82ms count=5
+I/flutter ( 4106): 00:41 +4: M56 : carte Koach · séance du jour (sombre)
+D/EGL_emulation( 4106): app_time_stats: avg=370.60ms min=114.12ms max=745.84ms count=3
+D/EGL_emulation( 4106): app_time_stats: avg=1271.94ms min=1271.94ms max=1271.94ms count=1
+D/EGL_emulation( 4106): app_time_stats: avg=153.71ms min=13.01ms max=269.25ms count=7
+D/EGL_emulation( 4106): app_time_stats: avg=124.50ms min=15.06ms max=254.88ms count=9
+D/EGL_emulation( 4106): app_time_stats: avg=182.98ms min=135.66ms max=364.51ms count=6
+D/EGL_emulation( 4106): app_time_stats: avg=163.71ms min=13.40ms max=423.41ms count=6
+D/EGL_emulation( 4106): app_time_stats: avg=104.67ms min=10.50ms max=136.04ms count=10
+I/flutter ( 4106): 00:48 +5: M56 : carte Koach · séance du jour (clair)
+D/FlutterJNI( 4106): Sending viewport metrics to the engine.
+D/EGL_emulation( 4106): app_time_stats: avg=216.71ms min=132.14ms max=414.88ms count=5
+D/EGL_emulation( 4106): app_time_stats: avg=150.22ms min=92.56ms max=237.56ms count=7
+D/EGL_emulation( 4106): app_time_stats: avg=87.85ms min=21.30ms max=121.96ms count=9
+D/EGL_emulation( 4106): app_time_stats: avg=163.54ms min=39.44ms max=393.94ms count=6
+D/EGL_emulation( 4106): app_time_stats: avg=96.57ms min=10.09ms max=235.98ms count=9
+I/flutter ( 4106): 00:53 +6: 5.5.2 : écran Anatomie, écorché acheté, vues et groupe
+D/FlutterJNI( 4106): Sending viewport metrics to the engine.
+D/EGL_emulation( 4106): app_time_stats: avg=648.38ms min=81.18ms max=1281.21ms count=3
+D/EGL_emulation( 4106): app_time_stats: avg=675.53ms min=211.93ms max=1225.94ms count=3
+D/EGL_emulation( 4106): app_time_stats: avg=781.38ms min=339.40ms max=1223.37ms count=2
+D/EGL_emulation( 4106): app_time_stats: avg=671.02ms min=168.77ms max=1656.98ms count=3
+D/EGL_emulation( 4106): app_time_stats: avg=785.58ms min=359.27ms max=1211.89ms count=2
+D/EGL_emulation( 4106): app_time_stats: avg=675.15ms min=169.97ms max=1668.93ms count=3
+D/EGL_emulation( 4106): app_time_stats: avg=699.45ms min=224.64ms max=1174.26ms count=2
+D/EGL_emulation( 4106): app_time_stats: avg=666.21ms min=42.52ms max=1813.18ms count=3
+D/EGL_emulation( 4106): app_time_stats: avg=922.88ms min=411.77ms max=1433.99ms count=2
+D/EGL_emulation( 4106): app_time_stats: avg=657.47ms min=81.85ms max=1568.97ms count=3
+I/flutter ( 4106): 01:12 +7: M56 : ouverture d’un mannequin avant / après préchargement
+D/EGL_emulation( 4106): app_time_stats: avg=461.24ms min=237.10ms max=706.22ms count=3
+D/EGL_emulation( 4106): app_time_stats: avg=675.89ms min=84.60ms max=2867.58ms count=5
+D/EGL_emulation( 4106): app_time_stats: avg=506.36ms min=214.43ms max=798.28ms count=2
+D/EGL_emulation( 4106): app_time_stats: avg=153.74ms min=7.73ms max=202.96ms count=7
+W/eetlift_tracker( 4106): Verification of java.util.Set kotlin.text.Regex.getOptions() took 323.283ms (163.94 bytecodes/s) (3288B approximate peak alloc)
+D/EGL_emulation( 4106): app_time_stats: avg=82.29ms min=4.27ms max=122.39ms count=8
+D/EGL_emulation( 4106): app_time_stats: avg=440.87ms min=106.59ms max=1411.92ms count=4
+D/EGL_emulation( 4106): app_time_stats: avg=856.50ms min=794.82ms max=918.17ms count=2
+D/EGL_emulation( 4106): app_time_stats: avg=712.37ms min=122.66ms max=1342.42ms count=3
+I/flutter ( 4106): 01:26 +8: (tearDownAll)
+I/flutter ( 4106): 01:27 +9: All tests passed!
+D/EGL_emulation( 4106): app_time_stats: avg=749.87ms min=729.68ms max=770.07ms count=2
+All tests passed.
+D/EGL_emulation( 4106): app_time_stats: avg=99.10ms min=4.12ms max=190.90ms count=9
