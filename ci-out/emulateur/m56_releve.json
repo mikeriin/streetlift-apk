@@ -1,0 +1,84 @@
+{
+  "reduit": {
+    "position": 1,
+    "temps": 2.0
+  },
+  "koach_sombre": "Sommeil moins de 5 h · Fatigue probable : −30 % proposé",
+  "koach_clair": "Sommeil moins de 5 h · Fatigue probable : −30 % proposé",
+  "anatomie": {
+    "debout_face": {
+      "cadre": [
+        20.0,
+        166.0,
+        320.0,
+        300.0
+      ],
+      "figure": 1.0,
+      "rouge": 0.0,
+      "gris": 0.128125
+    },
+    "debout_dos": {
+      "cadre": [
+        20.0,
+        166.0,
+        320.0,
+        300.0
+      ],
+      "figure": 1.0,
+      "rouge": 0.0,
+      "gris": 0.12808333333333333
+    },
+    "suspendu": {
+      "cadre": [
+        20.0,
+        166.0,
+        320.0,
+        300.0
+      ],
+      "figure": 1.0,
+      "rouge": 0.0,
+      "gris": 0.08425
+    },
+    "squat_bas": {
+      "cadre": [
+        20.0,
+        166.0,
+        320.0,
+        300.0
+      ],
+      "figure": 1.0,
+      "rouge": 0.0,
+      "gris": 0.197875
+    },
+    "planche": {
+      "cadre": [
+        20.0,
+        166.0,
+        320.0,
+        300.0
+      ],
+      "figure": 1.0,
+      "rouge": 0.0,
+      "gris": 0.096
+    }
+  },
+  "prechargement": {
+    "avant": {
+      "premiere_image_ms": 299,
+      "images_perdues": 1,
+      "images": 2,
+      "precharge": false
+    },
+    "apres": {
+      "premiere_image_ms": 759,
+      "images_perdues": 2,
+      "images": 3,
+      "precharge": true
+    },
+    "duree_ms": 5186,
+    "chargement_ms": 28,
+    "prechauffage_ms": 57,
+    "memoire_ajoutee_mo": -1.46484375,
+    "compatible": true
+  }
+}

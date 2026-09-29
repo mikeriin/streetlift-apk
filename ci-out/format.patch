@@ -1,0 +1,18 @@
+diff --git a/lib/session_screen.dart b/lib/session_screen.dart
+index d3cdda9..88eb39f 100644
+--- a/lib/session_screen.dart
++++ b/lib/session_screen.dart
+@@ -490,12 +490,7 @@ class _KoachPage extends StatelessWidget {
+     keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+     padding: const EdgeInsets.fromLTRB(KSpace.page, 2, KSpace.page, 10),
+     children: [
+-      KoachDayCard(
+-        week: week.n,
+-        base: baseDay,
+-        day: day,
+-        onChanged: onChanged,
+-      ),
++      KoachDayCard(week: week.n, base: baseDay, day: day, onChanged: onChanged),
+       ListenableBuilder(
+         listenable: store,
+         builder: (context, _) =>

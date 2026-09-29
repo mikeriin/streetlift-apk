@@ -1,0 +1,276 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             32.0s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,411ms
+D/FlutterRenderer( 4416): Width is zero. 0,0
+W/HWUI    ( 4416): Unknown dataspace 0
+W/eetlift_tracker( 4416): Verification of java.math.BigDecimal kotlin.collections.ArraysKt___ArraysJvmKt.sumOfBigDecimal(byte[], kotlin.jvm.functions.Function1) took 163.392ms (312.13 bytecodes/s) (3120B approximate peak alloc)
+I/WindowExtensionsImpl( 4416): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 4416): Width is zero. 0,0
+D/FlutterJNI( 4416): Sending viewport metrics to the engine.
+W/HWUI    ( 4416): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 4416): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 4416): mapper 4.x is not supported
+I/eetlift_tracker( 4416): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4416): Skipped 157 frames!  The application may be doing too much work on its main thread.
+D/ProfileInstaller( 4416): Installing profile for fr.tchoupi.streetlift_tracker
+D/FlutterJNI( 4416): Sending viewport metrics to the engine.
+I/eetlift_tracker( 4416): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:40491/gzqYsKzybAQ=/
+VMServiceFlutterDriver: Isolate found with number: 1182571924181211
+VMServiceFlutterDriver: Isolate 1182571924181211 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4416): 00:00 +0: (setUpAll)
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 4416): Skipped 36 frames!  The application may be doing too much work on its main thread.
+I/flutter ( 4416): 00:01 +1: M56 : traction-pronation, positions de départ et de fin dans sa fiche
+D/EGL_emulation( 4416): app_time_stats: avg=1920.87ms min=1109.55ms max=2732.19ms count=2
+D/EGL_emulation( 4416): app_time_stats: avg=366.00ms min=339.54ms max=388.69ms count=3
+D/EGL_emulation( 4416): app_time_stats: avg=1476.29ms min=1476.29ms max=1476.29ms count=1
+D/EGL_emulation( 4416): app_time_stats: avg=15009.88ms min=15009.88ms max=15009.88ms count=1
+D/EGL_emulation( 4416): app_time_stats: avg=2371.21ms min=2371.21ms max=2371.21ms count=1
+D/EGL_emulation( 4416): app_time_stats: avg=267.99ms min=13.96ms max=586.47ms count=3
+D/EGL_emulation( 4416): app_time_stats: avg=866.28ms min=548.18ms max=1184.38ms count=2
+I/flutter ( 4416): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4416): The following TestFailure was thrown running a test:
+I/flutter ( 4416): Expected: true
+I/flutter ( 4416):   Actual: <false>
+I/flutter ( 4416): 
+I/flutter ( 4416): When the exception was thrown, this was the stack:
+I/flutter ( 4416): #4      main.pilot (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:206:5)
+I/flutter ( 4416): <asynchronous suspension>
+I/flutter ( 4416): #5      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:246:7)
+I/flutter ( 4416): <asynchronous suspension>
+I/flutter ( 4416): #6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4416): <asynchronous suspension>
+I/flutter ( 4416): #7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4416): <asynchronous suspension>
+I/flutter ( 4416): #8      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4416): <asynchronous suspension>
+I/flutter ( 4416): 
+I/flutter ( 4416): This was caught by the test expectation on the following line:
+I/flutter ( 4416):   file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart line 206
+I/flutter ( 4416): The test description was:
+I/flutter ( 4416):   M56 : traction-pronation, positions de départ et de fin dans sa fiche
+I/flutter ( 4416): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4416): 00:29 +1: M56 : traction-pronation, positions de départ et de fin dans sa fiche [E]
+I/flutter ( 4416):   Test failed. See exception logs above.
+I/flutter ( 4416):   The test description was: M56 : traction-pronation, positions de départ et de fin dans sa fiche
+I/flutter ( 4416):   
+I/flutter ( 4416): 00:29 +1 -1: M56 : dips, positions de départ et de fin dans sa fiche
+D/EGL_emulation( 4416): app_time_stats: avg=1325.72ms min=1325.72ms max=1325.72ms count=1
+D/EGL_emulation( 4416): app_time_stats: avg=499.21ms min=4.28ms max=1151.19ms count=4
+D/EGL_emulation( 4416): app_time_stats: avg=290.93ms min=16.27ms max=787.13ms count=5
+D/EGL_emulation( 4416): app_time_stats: avg=1017.35ms min=1017.35ms max=1017.35ms count=1
+D/EGL_emulation( 4416): app_time_stats: avg=915.99ms min=564.57ms max=1267.40ms count=2
+I/flutter ( 4416): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4416): The following TestFailure was thrown running a test:
+I/flutter ( 4416): Expected: true
+I/flutter ( 4416):   Actual: <false>
+I/flutter ( 4416): 
+I/flutter ( 4416): When the exception was thrown, this was the stack:
+I/flutter ( 4416): #4      main.pilot (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:206:5)
+I/flutter ( 4416): <asynchronous suspension>
+I/flutter ( 4416): #5      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:246:7)
+I/flutter ( 4416): <asynchronous suspension>
+I/flutter ( 4416): #6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4416): <asynchronous suspension>
+I/flutter ( 4416): #7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4416): <asynchronous suspension>
+I/flutter ( 4416): #8      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4416): <asynchronous suspension>
+I/flutter ( 4416): 
+I/flutter ( 4416): This was caught by the test expectation on the following line:
+I/flutter ( 4416):   file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart line 206
+I/flutter ( 4416): The test description was:
+I/flutter ( 4416):   M56 : dips, positions de départ et de fin dans sa fiche
+I/flutter ( 4416): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4416): 00:36 +1 -1: M56 : dips, positions de départ et de fin dans sa fiche [E]
+I/flutter ( 4416):   Test failed. See exception logs above.
+I/flutter ( 4416):   The test description was: M56 : dips, positions de départ et de fin dans sa fiche
+I/flutter ( 4416):   
+I/flutter ( 4416): 00:36 +1 -2: M56 : back-squat, positions de départ et de fin dans sa fiche
+D/EGL_emulation( 4416): app_time_stats: avg=1239.25ms min=1239.25ms max=1239.25ms count=1
+D/EGL_emulation( 4416): app_time_stats: avg=249.95ms min=22.55ms max=542.97ms count=4
+D/EGL_emulation( 4416): app_time_stats: avg=1522.91ms min=1522.91ms max=1522.91ms count=1
+D/EGL_emulation( 4416): app_time_stats: avg=280.41ms min=18.17ms max=613.54ms count=3
+D/EGL_emulation( 4416): app_time_stats: avg=1017.15ms min=1017.15ms max=1017.15ms count=1
+D/EGL_emulation( 4416): app_time_stats: avg=1003.27ms min=467.54ms max=1539.00ms count=2
+I/flutter ( 4416): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4416): The following TestFailure was thrown running a test:
+I/flutter ( 4416): Expected: true
+I/flutter ( 4416):   Actual: <false>
+I/flutter ( 4416): 
+I/flutter ( 4416): When the exception was thrown, this was the stack:
+I/flutter ( 4416): #4      main.pilot (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:206:5)
+I/flutter ( 4416): <asynchronous suspension>
+I/flutter ( 4416): #5      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:246:7)
+I/flutter ( 4416): <asynchronous suspension>
+I/flutter ( 4416): #6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4416): <asynchronous suspension>
+I/flutter ( 4416): #7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4416): <asynchronous suspension>
+I/flutter ( 4416): #8      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4416): <asynchronous suspension>
+I/flutter ( 4416): 
+I/flutter ( 4416): This was caught by the test expectation on the following line:
+I/flutter ( 4416):   file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart line 206
+I/flutter ( 4416): The test description was:
+I/flutter ( 4416):   M56 : back-squat, positions de départ et de fin dans sa fiche
+I/flutter ( 4416): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4416): 00:44 +1 -2: M56 : back-squat, positions de départ et de fin dans sa fiche [E]
+I/flutter ( 4416):   Test failed. See exception logs above.
+I/flutter ( 4416):   The test description was: M56 : back-squat, positions de départ et de fin dans sa fiche
+I/flutter ( 4416):   
+I/flutter ( 4416): 00:44 +1 -3: M56 : animations réduites, passage instantané (clair)
+D/FlutterJNI( 4416): Sending viewport metrics to the engine.
+D/EGL_emulation( 4416): app_time_stats: avg=1336.61ms min=1336.61ms max=1336.61ms count=1
+D/EGL_emulation( 4416): app_time_stats: avg=558.08ms min=212.43ms max=1434.95ms count=4
+D/EGL_emulation( 4416): app_time_stats: avg=217.84ms min=18.73ms max=453.70ms count=5
+D/EGL_emulation( 4416): app_time_stats: avg=228.89ms min=18.31ms max=581.57ms count=5
+D/EGL_emulation( 4416): app_time_stats: avg=2780.23ms min=2780.23ms max=2780.23ms count=1
+D/EGL_emulation( 4416): app_time_stats: avg=194.08ms min=14.68ms max=434.81ms count=6
+D/EGL_emulation( 4416): app_time_stats: avg=204.82ms min=184.88ms max=216.48ms count=5
+I/flutter ( 4416): 00:55 +2 -3: M56 : carte Koach · séance du jour (sombre)
+D/EGL_emulation( 4416): app_time_stats: avg=497.80ms min=390.31ms max=605.29ms count=2
+D/FlutterJNI( 4416): Sending viewport metrics to the engine.
+D/EGL_emulation( 4416): app_time_stats: avg=287.67ms min=175.43ms max=451.95ms count=4
+D/EGL_emulation( 4416): app_time_stats: avg=198.84ms min=17.52ms max=261.91ms count=5
+D/EGL_emulation( 4416): app_time_stats: avg=226.86ms min=27.61ms max=425.06ms count=5
+D/EGL_emulation( 4416): app_time_stats: avg=219.54ms min=9.11ms max=426.78ms count=5
+D/EGL_emulation( 4416): app_time_stats: avg=203.59ms min=192.42ms max=224.10ms count=5
+I/flutter ( 4416): 01:02 +3 -3: M56 : carte Koach · séance du jour (clair)
+D/FlutterJNI( 4416): Sending viewport metrics to the engine.
+D/EGL_emulation( 4416): app_time_stats: avg=384.93ms min=198.33ms max=741.65ms count=3
+D/EGL_emulation( 4416): app_time_stats: avg=199.14ms min=179.67ms max=218.19ms count=5
+D/EGL_emulation( 4416): app_time_stats: avg=216.98ms min=14.79ms max=426.89ms count=4
+D/EGL_emulation( 4416): app_time_stats: avg=225.73ms min=17.89ms max=439.17ms count=6
+D/EGL_emulation( 4416): app_time_stats: avg=183.61ms min=11.51ms max=252.29ms count=6
+I/flutter ( 4416): 01:08 +4 -3: M56 : écran Anatomie, modèle musclé et postures
+D/FlutterJNI( 4416): Sending viewport metrics to the engine.
+D/EGL_emulation( 4416): app_time_stats: avg=536.77ms min=192.23ms max=767.23ms count=3
+D/EGL_emulation( 4416): app_time_stats: avg=1622.09ms min=1622.09ms max=1622.09ms count=1
+D/EGL_emulation( 4416): app_time_stats: avg=1168.12ms min=1168.12ms max=1168.12ms count=1
+D/EGL_emulation( 4416): app_time_stats: avg=420.68ms min=223.02ms max=600.06ms count=3
+D/EGL_emulation( 4416): app_time_stats: avg=2102.55ms min=2102.55ms max=2102.55ms count=1
+D/EGL_emulation( 4416): app_time_stats: avg=672.40ms min=16.37ms max=1735.77ms count=3
+D/EGL_emulation( 4416): app_time_stats: avg=1165.40ms min=392.95ms max=1937.86ms count=2
+D/EGL_emulation( 4416): app_time_stats: avg=621.45ms min=91.09ms max=1480.01ms count=3
+D/EGL_emulation( 4416): app_time_stats: avg=1124.25ms min=292.53ms max=1955.98ms count=2
+D/EGL_emulation( 4416): app_time_stats: avg=673.82ms min=16.12ms max=1734.85ms count=3
+D/EGL_emulation( 4416): app_time_stats: avg=697.81ms min=394.44ms max=1001.19ms count=2
+D/EGL_emulation( 4416): app_time_stats: avg=1202.98ms min=1202.98ms max=1202.98ms count=1
+D/EGL_emulation( 4416): app_time_stats: avg=889.57ms min=210.01ms max=1860.53ms count=3
+D/EGL_emulation( 4416): app_time_stats: avg=879.90ms min=288.03ms max=1471.77ms count=2
+D/EGL_emulation( 4416): app_time_stats: avg=1058.31ms min=262.75ms max=2457.76ms count=3
+D/EGL_emulation( 4416): app_time_stats: avg=670.02ms min=47.17ms max=1717.83ms count=3
+D/EGL_emulation( 4416): app_time_stats: avg=1128.37ms min=247.94ms max=2008.79ms count=2
+D/EGL_emulation( 4416): app_time_stats: avg=674.03ms min=41.75ms max=1747.27ms count=3
+I/flutter ( 4416): 01:43 +5 -3: M56 : ouverture d’un mannequin avant / après préchargement
+D/EGL_emulation( 4416): app_time_stats: avg=468.39ms min=254.12ms max=952.91ms count=4
+D/EGL_emulation( 4416): app_time_stats: avg=1072.00ms min=13.67ms max=2728.32ms count=3
+D/EGL_emulation( 4416): app_time_stats: avg=510.61ms min=9.56ms max=1141.80ms count=4
+D/EGL_emulation( 4416): app_time_stats: avg=286.02ms min=14.45ms max=659.81ms count=5
+D/EGL_emulation( 4416): app_time_stats: avg=1223.75ms min=579.42ms max=1868.07ms count=2
+D/EGL_emulation( 4416): app_time_stats: avg=2574.89ms min=2574.89ms max=2574.89ms count=1
+D/EGL_emulation( 4416): app_time_stats: avg=1570.39ms min=1570.39ms max=1570.39ms count=1
+D/EGL_emulation( 4416): app_time_stats: avg=1484.54ms min=1484.54ms max=1484.54ms count=1
+I/flutter ( 4416): 01:59 +6 -3: (tearDownAll)
+I/flutter ( 4416): 01:59 +7 -3: Some tests failed.
+Failure Details:
+Failure in method: M56 : traction-pronation, positions de départ et de fin dans sa fiche
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: true
+  Actual: <false>
+
+When the exception was thrown, this was the stack:
+#4      main.pilot (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:206:5)
+<asynchronous suspension>
+#5      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:246:7)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart line 206
+The test description was:
+  M56 : traction-pronation, positions de départ et de fin dans sa
+  fiche
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+Failure in method: M56 : dips, positions de départ et de fin dans sa fiche
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: true
+  Actual: <false>
+
+When the exception was thrown, this was the stack:
+#4      main.pilot (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:206:5)
+<asynchronous suspension>
+#5      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:246:7)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart line 206
+The test description was:
+  M56 : dips, positions de départ et de fin dans sa fiche
+═════════════════════════════════════════════════════════════════
+
+end of failure 2
+
+
+Failure in method: M56 : back-squat, positions de départ et de fin dans sa fiche
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: true
+  Actual: <false>
+
+When the exception was thrown, this was the stack:
+#4      main.pilot (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:206:5)
+<asynchronous suspension>
+#5      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart:246:7)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/animations_m56_test.dart line 206
+The test description was:
+  M56 : back-squat, positions de départ et de fin dans sa fiche
+═════════════════════════════════════════════════════════════════
+
+end of failure 3
+
+
+
