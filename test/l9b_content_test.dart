@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
-import 'package:streetlift_tracker/atlas.dart';
+import 'package:streetlift_tracker/exercise_mannequin.dart';
 import 'package:streetlift_tracker/atlas_data.dart';
 import 'package:streetlift_tracker/content_pack.dart';
 import 'package:streetlift_tracker/exercise_screens.dart';
@@ -376,10 +376,13 @@ void main() {
               );
               await tester.pumpAndSettle();
               expect(tester.takeException(), null);
-              expect(find.byType(PoseDemo), findsOneWidget);
+              // 5.5.3 : plus de démonstration 2D ; le mannequin (atlas 2D en
+              // repli sans Flutter GPU) ouvre la fiche.
+              expect(find.byType(PoseDemo), findsNothing);
+              expect(find.byType(ExerciseMannequin), findsOneWidget);
               expect(find.text('MUSCLE-UP'), findsOneWidget);
-              // Défilement réel : atlas des muscles, puis sources en bas.
-              await scrollToAction(tester, find.byType(ExerciseAtlas));
+              // Défilement réel : liste des muscles, puis sources en bas.
+              await scrollToAction(tester, find.text('MUSCLES'));
               await scrollToAction(tester, find.text('Sources consultées'));
               expect(tester.takeException(), null);
             },
@@ -400,8 +403,11 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.byType(PoseDemo), findsNothing);
-      expect(find.textContaining('Démonstration indisponible'), findsOneWidget);
-      await scrollToAction(tester, find.byType(ExerciseAtlas));
+      // 5.5.3 : plus de mention « Démonstration indisponible » : le
+      // mannequin des muscles ouvre toutes les fiches.
+      expect(find.textContaining('Démonstration indisponible'), findsNothing);
+      expect(find.byType(ExerciseMannequin), findsOneWidget);
+      await scrollToAction(tester, find.text('MUSCLES'));
       expect(tester.takeException(), null);
     });
 

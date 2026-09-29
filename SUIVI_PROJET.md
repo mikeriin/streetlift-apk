@@ -1,8 +1,19 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M56 (refonte du mannequin, du squelette et de la peau ; matériel, chaîne d'animation et 3 pilotes ; carte Koach ; préchargement), version 5.5.0, correction 1 (retour du propriétaire), version 5.5.1, puis correction 2 (écorché acheté, plus d'animation), version 5.5.2**  
-**Date : 28-29 septembre 2026, Europe/Paris — version : 5.5.2+81 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : pipeline « Mannequin 3D », lot M56 (refonte du mannequin, du squelette et de la peau ; matériel, chaîne d'animation et 3 pilotes ; carte Koach ; préchargement), version 5.5.0, correction 1 (retour du propriétaire), version 5.5.1, correction 2 (écorché acheté, plus d'animation), version 5.5.2, puis correction 3 (muscles opaques, zone ciblée, modèle partout, sans rotation au doigt), version 5.5.3**  
+**Date : 28-29 septembre 2026, Europe/Paris — version : 5.5.3+82 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d-fable`, rendu réel sur émulateur Android).**
+
+## M56.C3 — Correction 3 (retour du propriétaire du 29/09/2026, version 5.5.3)
+
+| Point | Retour | Correction |
+| --- | --- | --- |
+| Opacité | « plus d'affichage avec 50 % on repasse à 100 % » | `kMuscleOpacity` 1,0 ; tendons opaques aussi ; texte de l'écran Anatomie. |
+| Zone ciblée | « pour les groupes musculaires sollicités penche plus pour la zone ciblée en surbrillance plutôt que le groupe en lui-même » | `targetedMuscles` / `targetedRegionIntensities` (`lib/stats_mannequin.dart`) : muscles du pack des fiches des exercices (principaux 1, secondaires 0,6, pondérés par séries / tours / 1), ramenés au maximum, seuil 2 % ; groupe entier seulement pour un exercice sans fiche. `AppStore.weeklyNames` (semaine) et `plannedNames` (séance, WOD) à côté des groupes historiques (repli 2D, légende, STATS). `WeeklyMannequin` devient un `TargetedMannequin`. |
+| Images 2D | « Remplace tous les anciens affichages qui utilisent les images en pièces jointes par le modèle » (face, dos, profil de `assets/muscles/`) | Fiche : le mannequin des muscles ciblés remplace la démonstration 2D en découpes (`PoseDemo`) en tête de fiche, section Muscles en texte ; accueil (carte de séance et feuille de séance) et aperçu de WOD : `TargetedMannequin` (compact, sans boutons ni gestes) ; STATS déjà 3D. Les images restent pour le repli sans Flutter GPU. |
+| Rotation | « Plus besoin d'avoir de contrôle en glissant du doigt pour tourner la caméra on se fie aux boutons » | `MannequinGestures` sans reconnaisseur de glissement quand `onRotate` est nul (mannequin de l'application) ; pincement (zoom) et toucher (nom) gardés ; `Mannequin3D.interactive` false pour les cartes. |
+
+Contrôles : __CTRL__
 
 ## M56.C2 — Correction 2 (retour du propriétaire du 29/09/2026, version 5.5.2)
 
@@ -13,7 +24,7 @@
 | Animations | « Supprimes toutes les animations et repart de zéro, plus d'animation juste l'affichage des muscles utilisés et je ferai les positions à la main plus tard, à prendre en compte pour les autres M » | Clips, matériel, lecteur, ticker, fiches biomécaniques, `animate.py`, `render_clip.py`, `build_equipment.py` retirés ; fiches : démonstration 2D + mannequin fixe avec ses muscles ; squelette, peau, postures et outils associés retirés (`rig.json`, `mannequin_skin.bin`, `build_rig.py`, `rig_def.py`, `rig_pose.py`, `render_poses.py`, `build_body.py`, `measure_body.py`, `silhouette.py`, `mannequin_base.glb`) ; code de posture de `mannequin_3d.dart` / `mannequin_rig.dart` gardé inactif. Lots M7 et suivants à redéfinir (`pipeline/3d/DECISIONS_3D.md`). |
 | Séance | « Enlève les boutons suivant et précédent puisque glisser vers la droite et vers la gauche font déjà le taff » | Barre Précédent / Suivant retirée de la séance et de l'historique ; tests par glissement (`swipePage`). |
 
-Contrôles : Python 105 tests (`test_m2_anatomy.py` réécrit : budget, nœuds ↔ régions, symétrie gauche / droite, étiquettes connues, source hors dépôt), Dart (m2, m3, m4b adaptés : plus de couche profonde, 20 muscles du pack en texte), émulateur (`animations_m56_test` : Anatomie 4 vues + Dos allumé, 3 fiches, carte Koach, préchargement), planches des régions regardées (face, dos, profils, gros plans cou, bras, bassin, dos, jambes).
+Contrôles (CI 3D `claude/ci-3d-fable`, 4 essais : 36542184910 analyse (`_startView`), 36546278876 tests LC1 par boutons et fiche sans défilement, 36549423360 formatage / respiration / préchargement, 36551761380 vert) : Python 105 tests (`test_m2_anatomy.py` réécrit : budget, nœuds ↔ régions, symétrie gauche / droite, étiquettes connues, source hors dépôt), Dart 955 tests, 0 échec (m2, m3, m4b adaptés : plus de couche profonde, 20 muscles du pack en texte), émulateur (`animations_m56_test` : Anatomie 4 vues + Dos allumé, 3 fiches, carte Koach, préchargement), planches des régions regardées (face, dos, profils, gros plans cou, bras, bassin, dos, jambes).
 
 ## M56.C1 — Correction 1 (retour du propriétaire du 29/09/2026, version 5.5.1)
 

@@ -1,4 +1,13 @@
-# Kalis Track 5.5.2 — Mannequin anatomique 3D
+# Kalis Track 5.5.3 — Mannequin anatomique 3D
+
+## 5.5.3 — Muscles opaques, zone ciblée, le modèle partout (correction 3 du lot M56)
+
+- **Muscles à 100 %** : plus de transparence (`kMuscleOpacity` 1) ; l'écorché n'a pas de couche profonde à voir par transparence.
+- **Zone ciblée** : sur le mannequin, les muscles qui s'allument sont ceux des fiches du pack des exercices (principaux 1, secondaires 0,6, pondérés par les séries), plus le groupe entier (`TargetedMannequin`, `targetedRegionIntensities`) : semaine de STATS (`AppStore.weeklyNames`), séance du jour sur l'accueil, aperçu d'un WOD. Un exercice sans fiche allume ses groupes comme avant ; la carte 2D par groupe reste le repli sans Flutter GPU.
+- **Le modèle remplace les images 2D** partout où elles servaient d'affichage : fiche exercice (le mannequin des muscles ciblés en tête, plus de démonstration 2D en découpes), cartes de séance de l'accueil, aperçu de WOD, STATS. Les images `assets/muscles/` ne servent plus qu'au repli 2D.
+- **Plus de rotation au doigt** : les boutons Face / Dos / Profil / 3/4 tournent le mannequin ; le zoom au pincement reste ; les mannequins de carte ne captent aucun geste.
+
+Détail : `SUIVI_PROJET.md` (M56, correction 3).
 
 ## 5.5.2 — Écorché acheté, plus d'animation (correction 2 du lot M56)
 

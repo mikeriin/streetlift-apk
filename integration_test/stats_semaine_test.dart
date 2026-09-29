@@ -230,8 +230,11 @@ void main() {
     final state = tester.state<WeeklyMannequinState>(
       find.byType(WeeklyMannequin),
     );
-    final weekly = store.weeklyMuscles();
-    final expected = weeklyRegionIntensities(MannequinMap.loaded!, weekly);
+    // 5.5.3 : zone ciblée (muscles du pack des exercices de la semaine).
+    final expected = targetedRegionIntensities(
+      MannequinMap.loaded!,
+      targetedMuscles(ContentLibrary.loaded!, store.weeklyNames()),
+    );
     expect(state.intensities, expected);
     expect(expected, isNotEmpty);
     final out = <String, Object?>{

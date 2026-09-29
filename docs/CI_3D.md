@@ -175,9 +175,12 @@ Correction 2 (5.5.2, 29/09/2026) : modèle remplacé par l'écorché acheté
 (`tools/anatomy/build_model.py --zip Archive.zip`, archive de la release
 GitHub `modele-achete`, jamais dans le dépôt), plus d'animation ni de
 posture, muscles sollicités dans la couleur dominante, plus de boutons
-Précédent / Suivant dans la séance. Planches de contrôle :
-`build_model.py --render dossier` (face, dos, profils, une couleur par nœud,
-légende).
+Précédent / Suivant dans la séance. 4 essais sur `claude/ci-3d-fable`
+(36542184910 : analyse ; 36546278876 : tests LC1 par boutons, fiche sans
+défilement jusqu'au mannequin ; 36549423360 : formatage, respiration sans
+région, préchargement ; 36551761380 : vert, 955 tests Dart). Planches de
+contrôle : `build_model.py --render dossier` (face, dos, profils, une couleur
+par nœud, légende).
 
 - Branche CI propre au lot : `claude/ci-3d-fable` (copie de `ci-3d.yml`
   déclenchée sur cette branche, `group: ci-3d-fable`, résultats recommités

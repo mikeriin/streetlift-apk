@@ -305,9 +305,11 @@ class AnatomyScreenState extends State<AnatomyScreen> {
             valueListenable: Display3DSettings.instance.touchNames,
             builder: (context, names, _) => Text(
               names
-                  ? 'Touche un muscle pour afficher son nom. Écorché : la '
-                        'couche superficielle des muscles, transparente ; les '
-                        'muscles profonds sont listés en texte sur les fiches.'
+                  ? 'Touche un muscle pour afficher son nom ; les boutons '
+                        'Face, Dos, Profil, 3/4 tournent le mannequin, pince '
+                        'pour zoomer. Écorché : la couche superficielle des '
+                        'muscles ; les muscles profonds sont listés en texte '
+                        'sur les fiches.'
                   : 'Nom du muscle au toucher désactivé '
                         '(Réglages › Affichage 3D).',
               style: tt.bodySmall,

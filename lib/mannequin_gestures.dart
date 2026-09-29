@@ -1,7 +1,9 @@
 // M4c (mannequin 3D) : zoom au pincement et gestes du mannequin.
 //
 // Un doigt : rotation (horizontale seule dans une page qui défile : fiche,
-// STATS). Deux doigts : zoom centré sur le point entre les doigts (le muscle
+// STATS) ; 5.5.3 : plus de rotation au doigt dans l'application (boutons de
+// vue seulement), le geste reste disponible pour les tests. Deux doigts :
+// zoom centré sur le point entre les doigts (le muscle
 // visé reste sous les doigts) et déplacement de la vue une fois zoomé.
 // Toucher bref : nom du muscle. Double toucher : retour à la vue par défaut
 // (reconnu seulement quand la vue est zoomée, pour ne pas retarder le
@@ -197,6 +199,9 @@ class PinchGestureRecognizer extends ScaleGestureRecognizer {
 class MannequinGestures extends StatelessWidget {
   final Widget child;
 
+  /// 5.5.3 : false : aucun geste reconnu, le toucher passe au parent.
+  final bool enabled;
+
   /// Rotation horizontale seule (page qui défile verticalement).
   final bool horizontalOnly;
   final GestureTapUpCallback? onTapUp;
@@ -213,6 +218,7 @@ class MannequinGestures extends StatelessWidget {
   const MannequinGestures({
     super.key,
     required this.child,
+    this.enabled = true,
     this.horizontalOnly = false,
     this.onTapUp,
     this.onDoubleTap,
@@ -226,6 +232,7 @@ class MannequinGestures extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!enabled) return IgnorePointer(child: child);
     final recognizers = <Type, GestureRecognizerFactory>{
       TapGestureRecognizer:
           GestureRecognizerFactoryWithHandlers<TapGestureRecognizer>(
@@ -246,8 +253,12 @@ class MannequinGestures extends StatelessWidget {
               () => DoubleTapGestureRecognizer(debugOwner: this),
               (r) => r.onDoubleTap = onDoubleTap,
             ),
-      if (horizontalOnly)
-        HorizontalDragGestureRecognizer:
+      // 5.5.3 : sans [onRotate] (mannequin de l'application), aucun
+      // glissement à un doigt n'est reconnu : les boutons de vue tournent le
+      // mannequin, la page défile.
+      if (onRotate != null)
+        if (horizontalOnly)
+          HorizontalDragGestureRecognizer:
             GestureRecognizerFactoryWithHandlers<
               HorizontalDragGestureRecognizer
             >(() => HorizontalDragGestureRecognizer(debugOwner: this), (r) {
@@ -255,16 +266,16 @@ class MannequinGestures extends StatelessWidget {
               r.onUpdate = (d) => onRotate?.call(Offset(d.delta.dx, 0));
               r.onEnd = (_) => onRotateEnd?.call();
             })
-      else
-        PanGestureRecognizer:
-            GestureRecognizerFactoryWithHandlers<PanGestureRecognizer>(
-              () => PanGestureRecognizer(debugOwner: this),
-              (r) {
-                r.onStart = (_) => onRotateStart?.call();
-                r.onUpdate = (d) => onRotate?.call(d.delta);
-                r.onEnd = (_) => onRotateEnd?.call();
-              },
-            ),
+        else
+          PanGestureRecognizer:
+              GestureRecognizerFactoryWithHandlers<PanGestureRecognizer>(
+                () => PanGestureRecognizer(debugOwner: this),
+                (r) {
+                  r.onStart = (_) => onRotateStart?.call();
+                  r.onUpdate = (d) => onRotate?.call(d.delta);
+                  r.onEnd = (_) => onRotateEnd?.call();
+                },
+              ),
     };
     return RawGestureDetector(
       gestures: recognizers,
