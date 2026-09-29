@@ -1,0 +1,267 @@
+{
+  "traction-pronation": {
+    "vue": "profil",
+    "materiel": [
+      "barre_traction",
+      "sol"
+    ],
+    "tempo": "2-1-1-1",
+    "positions": [
+      "Départ",
+      "Fin"
+    ],
+    "captures": {
+      "depart": {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.19835526315789473,
+        "rouge": 0.018932748538011697,
+        "gris": 0.17774122807017545,
+        "phase": "Bras tendus"
+      },
+      "fondu": {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.1953216374269006,
+        "rouge": 0.01732456140350877,
+        "gris": 0.1760233918128655,
+        "phase": "Menton au-dessus de la barre"
+      },
+      "fin": {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.1953216374269006,
+        "rouge": 0.01732456140350877,
+        "gris": 0.1760233918128655,
+        "phase": "Menton au-dessus de la barre"
+      }
+    },
+    "troisquarts": {
+      "cadre": [
+        36.0,
+        228.0,
+        288.0,
+        380.0
+      ],
+      "figure": 0.20921052631578949,
+      "rouge": 0.024744152046783624,
+      "gris": 0.18165204678362573
+    }
+  },
+  "dips": {
+    "vue": "profil",
+    "materiel": [
+      "barres_paralleles",
+      "sol"
+    ],
+    "tempo": "2-0-1-1",
+    "positions": [
+      "Départ",
+      "Fin"
+    ],
+    "captures": {
+      "depart": {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.22551169590643275,
+        "rouge": 0.009173976608187135,
+        "gris": 0.21301169590643274,
+        "phase": "Bras tendus"
+      },
+      "fondu": {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.23241959064327486,
+        "rouge": 0.010891812865497076,
+        "gris": 0.21608187134502924,
+        "phase": "Poussée"
+      },
+      "fin": {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.23241959064327486,
+        "rouge": 0.010891812865497076,
+        "gris": 0.21608187134502924,
+        "phase": "Poussée"
+      }
+    },
+    "troisquarts": {
+      "cadre": [
+        36.0,
+        228.0,
+        288.0,
+        380.0
+      ],
+      "figure": 0.24594298245614035,
+      "rouge": 0.020687134502923976,
+      "gris": 0.2204312865497076
+    }
+  },
+  "back-squat": {
+    "vue": "troisQuarts",
+    "materiel": [
+      "barre_olympique",
+      "sol"
+    ],
+    "tempo": "2-0-1-1",
+    "positions": [
+      "Départ",
+      "Fin"
+    ],
+    "captures": {
+      "depart": {
+        "cadre": [
+          36.0,
+          201.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.43994883040935673,
+        "rouge": 0.06995614035087719,
+        "gris": 0.34806286549707605,
+        "phase": "Debout, gainé"
+      },
+      "fondu": {
+        "cadre": [
+          36.0,
+          201.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.40032894736842106,
+        "rouge": 0.052741228070175436,
+        "gris": 0.33249269005847953,
+        "phase": "Remontée"
+      },
+      "fin": {
+        "cadre": [
+          36.0,
+          201.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.40032894736842106,
+        "rouge": 0.052741228070175436,
+        "gris": 0.33249269005847953,
+        "phase": "Remontée"
+      }
+    },
+    "troisquarts": {
+      "cadre": [
+        36.0,
+        201.0,
+        288.0,
+        380.0
+      ],
+      "figure": 0.40032894736842106,
+      "rouge": 0.052741228070175436,
+      "gris": 0.33249269005847953
+    }
+  },
+  "reduit": {
+    "position": 1,
+    "temps": 2.0
+  },
+  "koach_sombre": "Sommeil moins de 5 h · Fatigue probable : −30 % proposé",
+  "koach_clair": "Sommeil moins de 5 h · Fatigue probable : −30 % proposé",
+  "anatomie": {
+    "debout_face": {
+      "cadre": [
+        20.0,
+        166.0,
+        320.0,
+        300.0
+      ],
+      "figure": 1.0,
+      "rouge": 0.0,
+      "gris": 0.128125
+    },
+    "debout_dos": {
+      "cadre": [
+        20.0,
+        166.0,
+        320.0,
+        300.0
+      ],
+      "figure": 1.0,
+      "rouge": 0.0,
+      "gris": 0.12808333333333333
+    },
+    "suspendu": {
+      "cadre": [
+        20.0,
+        166.0,
+        320.0,
+        300.0
+      ],
+      "figure": 1.0,
+      "rouge": 0.0,
+      "gris": 0.08425
+    },
+    "squat_bas": {
+      "cadre": [
+        20.0,
+        166.0,
+        320.0,
+        300.0
+      ],
+      "figure": 1.0,
+      "rouge": 0.0,
+      "gris": 0.197875
+    },
+    "planche": {
+      "cadre": [
+        20.0,
+        166.0,
+        320.0,
+        300.0
+      ],
+      "figure": 1.0,
+      "rouge": 0.0,
+      "gris": 0.096
+    }
+  },
+  "prechargement": {
+    "avant": {
+      "premiere_image_ms": 191,
+      "images_perdues": 2,
+      "images": 2,
+      "precharge": false
+    },
+    "apres": {
+      "premiere_image_ms": 1207,
+      "images_perdues": 2,
+      "images": 3,
+      "precharge": true
+    },
+    "duree_ms": 5612,
+    "chargement_ms": 21,
+    "prechauffage_ms": 51,
+    "memoire_ajoutee_mo": 2.296875,
+    "compatible": true
+  }
+}
