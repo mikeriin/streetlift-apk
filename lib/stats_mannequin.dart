@@ -137,10 +137,7 @@ class TargetedMannequinState extends State<TargetedMannequin> {
     if (map == null) return const {};
     final lib = _lib;
     if (lib == null) return weeklyRegionIntensities(map, widget.groups);
-    return targetedRegionIntensities(
-      map,
-      targetedMuscles(lib, widget.names),
-    );
+    return targetedRegionIntensities(map, targetedMuscles(lib, widget.names));
   }
 
   @override
@@ -204,22 +201,22 @@ class TargetedMannequinState extends State<TargetedMannequin> {
 /// Mannequin 3D des groupes travaillés dans la semaine (STATS ›
 /// Performances › Muscles sollicités) : [TargetedMannequin] de la semaine.
 class WeeklyMannequin extends TargetedMannequin {
-  /// [data] : séries pondérées par groupe (`AppStore.weeklyMuscles`) ;
-  /// [names] : exercices de la semaine (`AppStore.weeklyNames`, 5.5.3).
+  /// [data] : séries pondérées par groupe (`AppStore.weeklyMuscles`,
+  /// exposé par [groups]) ; [names] : exercices de la semaine
+  /// (`AppStore.weeklyNames`, 5.5.3).
   const WeeklyMannequin({
     super.key,
     required Map<String, double> data,
-    Map<String, double> names = const {},
+    super.names = const {},
     super.height,
   }) : super(
-         names: names,
          groups: data,
-         fallbackHeight: fallbackHeight,
+         fallbackHeight: fallback2dHeight,
          subject: 'muscles de la semaine',
        );
 
   /// Hauteur de la carte 2D de repli (celle de 5.2.0).
-  static const fallbackHeight = 220.0;
+  static const fallback2dHeight = 220.0;
 }
 
 typedef WeeklyMannequinState = TargetedMannequinState;

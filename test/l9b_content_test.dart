@@ -12,6 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/exercise_mannequin.dart';
+import 'package:streetlift_tracker/atlas.dart';
 import 'package:streetlift_tracker/atlas_data.dart';
 import 'package:streetlift_tracker/content_pack.dart';
 import 'package:streetlift_tracker/exercise_screens.dart';
