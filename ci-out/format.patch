@@ -1,0 +1,46 @@
+diff --git a/integration_test/audit_m6b_test.dart b/integration_test/audit_m6b_test.dart
+index 405f844..3d466f4 100644
+--- a/integration_test/audit_m6b_test.dart
++++ b/integration_test/audit_m6b_test.dart
+@@ -138,7 +138,9 @@ void main() {
+             [r, g, b].reduce((a, c) => a < c ? a : c);
+         // Teinte proche de la couleur dominante, saturée.
+         final dot =
+-            (r - br) * (ar - br) + (g - bgG) * (ag - bgG) + (b - bb) * (ab - bb);
++            (r - br) * (ar - br) +
++            (g - bgG) * (ag - bgG) +
++            (b - bb) * (ab - bb);
+         if (sat > 40 && dot > 0) halo++;
+         if (sat < 24 && r > 30) gray++;
+       }
+@@ -243,12 +245,13 @@ void main() {
+     await tester.pump(const Duration(seconds: 1));
+     await shot('anatomie_sombre_menu');
+     out['menu_options'] = [
+-      for (final e in find
+-          .descendant(
+-            of: find.byType(CheckboxListTile),
+-            matching: find.byType(Text),
+-          )
+-          .evaluate())
++      for (final e
++          in find
++              .descendant(
++                of: find.byType(CheckboxListTile),
++                matching: find.byType(Text),
++              )
++              .evaluate())
+         (e.widget as Text).data,
+     ];
+     await tester.tapAt(const Offset(4, 4));
+@@ -423,9 +426,7 @@ void main() {
+ 
+   // ------------------------------------------------- accueil et WOD --
+ 
+-  testWidgets('M6b : accueil (carte du jour) et aperçu de WOD', (
+-    tester,
+-  ) async {
++  testWidgets('M6b : accueil (carte du jour) et aperçu de WOD', (tester) async {
+     store.storeClock = () => DateTime(2026, 7, 27, 9);
+     store.program.start = DateTime(2026, 7, 13);
+     store.startOrigin = 'user';
