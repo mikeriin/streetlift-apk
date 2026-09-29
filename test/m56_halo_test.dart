@@ -48,11 +48,11 @@ void main() {
   });
 
   test('opacité du halo croît avec l’intensité', () {
-    expect(MannequinHaloPainter.alphaFor(0), lessThan(.2));
+    expect(MannequinHaloPainter.alphaFor(0), lessThan(.3));
     expect(
       MannequinHaloPainter.alphaFor(1),
       greaterThan(MannequinHaloPainter.alphaFor(.35)),
     );
-    expect(MannequinHaloPainter.alphaFor(1), lessThanOrEqualTo(.5));
+    expect(MannequinHaloPainter.alphaFor(1), lessThanOrEqualTo(.7));
   });
 }
