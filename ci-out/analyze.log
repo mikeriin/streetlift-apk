@@ -1,6 +1,0 @@
-Analyzing streetlift-apk...                                     
-
-  error • The argument type 'RigBone' can't be assigned to the parameter type 'String'.  • test/m7b_koach_test.dart:138:31 • argument_type_not_assignable
-  error • The argument type 'RigBone' can't be assigned to the parameter type 'String'.  • test/m7b_koach_test.dart:139:33 • argument_type_not_assignable
-
-2 issues found. (ran in 15.3s)

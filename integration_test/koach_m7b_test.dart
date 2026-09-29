@@ -121,6 +121,12 @@ void main() {
           locale: const Locale('fr'),
           supportedLocales: const [Locale('fr')],
           localizationsDelegates: GlobalMaterialLocalizations.delegates,
+          // L'émulateur de la CI coupe les animations du système : lecture
+          // normale ici (les animations réduites sont testées en M7).
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(disableAnimations: false),
+            child: child!,
+          ),
           home: home,
         ),
       ),
@@ -142,7 +148,7 @@ void main() {
     tester
         .state<ScrollableState>(find.byType(Scrollable).first)
         .position
-        .jumpTo(230);
+        .jumpTo(70);
     await tester.pump(const Duration(milliseconds: 500));
   }
 
@@ -215,7 +221,11 @@ void main() {
       for (var i = 0; i < 12; i++) {
         await tester.pump(const Duration(milliseconds: 250));
       }
-      out['lecture'] = {'avant': t0, 'apres': p.playback!.time, 'images_s': p.fps};
+      out['lecture'] = {
+        'avant': t0,
+        'apres': p.playback!.time,
+        'images_s': p.fps,
+      };
       for (final e in _strong.entries) {
         p = await choose(tester, e.key);
         await scrollToPlayer(tester);

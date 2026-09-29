@@ -75,10 +75,12 @@ class KoachPreviewScreenState extends State<KoachPreviewScreen> {
                 (c) => c.id == widget.initialClip,
                 orElse: () => clips.first,
               );
-        if (clips.isEmpty) _error = 'Aucune animation de Koach dans le registre.';
+        if (clips.isEmpty)
+          _error = 'Aucune animation de Koach dans le registre.';
       });
     } catch (_) {
-      if (mounted) setState(() => _error = 'Registre des animations illisible.');
+      if (mounted)
+        setState(() => _error = 'Registre des animations illisible.');
     }
   }
 
@@ -105,7 +107,7 @@ class KoachPreviewScreenState extends State<KoachPreviewScreen> {
           Text(
             'Aperçu des animations de Koach, future mascotte de '
             'l’application : il n’apparaît pas encore ailleurs. Choisis une '
-            'animation, elle se joue en boucle.',
+            'animation sous Koach, elle se joue en boucle.',
             key: const ValueKey('koach-preview-intro'),
             style: tt.bodyMedium,
           ),
@@ -117,14 +119,14 @@ class KoachPreviewScreenState extends State<KoachPreviewScreen> {
               child: Center(child: CircularProgressIndicator()),
             )
           else ...[
-            _chips(context, clip),
+            // Koach d'abord (visible sans défiler), puis le choix.
             KCard(
               key: const ValueKey('koach-preview-card'),
               child: MannequinPlayer(
                 key: _player,
                 clip: clip,
                 view: MannequinView.face,
-                height: 380,
+                height: 340,
                 semanticLabel:
                     'Koach en 3D, animation « ${clip.name} » '
                     '(${kKoachFamilies[clip.family] ?? ''})',
@@ -155,6 +157,7 @@ class KoachPreviewScreenState extends State<KoachPreviewScreen> {
               key: const ValueKey('koach-preview-info'),
               style: tt.bodySmall?.copyWith(color: SL.dim),
             ),
+            _chips(context, clip),
             Text(
               'Boutons Face, Dos, Profil, 3/4 pour tourner Koach, pince pour '
               'zoomer. Toutes les animations partent de la même pose '

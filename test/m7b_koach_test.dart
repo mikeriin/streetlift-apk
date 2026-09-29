@@ -77,11 +77,14 @@ void main() {
     test('9 animations de Koach, 3 familles, dans l’ordre', () {
       final koach = registry.koachClips;
       expect([for (final c in koach) c.id], _ids);
-      expect([for (final c in koach) c.family], [
-        ...List.filled(3, 'attente'),
-        ...List.filled(3, 'parle'),
-        ...List.filled(3, 'felicite'),
-      ]);
+      expect(
+        [for (final c in koach) c.family],
+        [
+          ...List.filled(3, 'attente'),
+          ...List.filled(3, 'parle'),
+          ...List.filled(3, 'felicite'),
+        ],
+      );
       for (final c in koach) {
         expect(c.mascot, isTrue, reason: c.id);
         expect(c.debug, isFalse, reason: c.id);
@@ -134,9 +137,9 @@ void main() {
       for (final id in _ids) {
         final clip = clips[id]!;
         final a = clip.sample(0), b = clip.sample(clip.duration);
-        for (final bone in rig.bones) {
-          expect(_angle(a, b, bone), lessThan(2.5), reason: '$id $bone');
-          expect(_angle(a, ref, bone), lessThan(3), reason: '$id $bone');
+        for (final bone in rig.bones.map((b) => b.name)) {
+          expect(_angle(a, b, bone), lessThan(.5), reason: '$id $bone');
+          expect(_angle(a, ref, bone), lessThan(.5), reason: '$id $bone');
         }
         expect((a.translation - ref.translation).length, lessThan(.006));
       }
@@ -178,7 +181,12 @@ void main() {
       expect(find.byType(MannequinPlayer), findsOneWidget);
       // Sans Flutter GPU : message, pas de lecteur vide.
       expect(find.byKey(const ValueKey('player-play')), findsNothing);
-      await tester.tap(find.byKey(const ValueKey('koach-chip-koach_felicite_pouce')));
+      final chip = find.byKey(
+        const ValueKey('koach-chip-koach_felicite_pouce'),
+      );
+      await tester.ensureVisible(chip);
+      await tester.pump();
+      await tester.tap(chip);
       await settle(tester, 5);
       expect(state.selected!.id, 'koach_felicite_pouce');
       expect(find.text('Pouce levé'), findsWidgets);
