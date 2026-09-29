@@ -2,11 +2,11 @@
 //
 // Décision du propriétaire (28/09/2026) : plus de saccade à chaque
 // affichage du mannequin. Juste après que l'application est prête (première
-// image affichée, initialisation faite), le modèle, sa carte, son squelette,
-// sa peau sont chargés en tâche de fond dans les caches partagés par tous
-// les écrans (`MannequinScene`, `MannequinRig`, `MannequinMap`), puis les
-// pipelines de rendu sont
-// préchauffés par une image hors écran (`Scene.warmUp`) : le premier
+// image affichée, initialisation faite), le modèle et sa carte (5.5.2 :
+// plus de squelette ni de peau) sont chargés en tâche de fond dans les
+// caches partagés par tous les écrans (`MannequinScene`, `MannequinMap`),
+// puis les pipelines de rendu sont préchauffés par une image hors écran
+// (`Scene.warmUp`) : le premier
 // mannequin visible ne compile plus les shaders. Un écran 3D ouvert avant la
 // fin du préchargement attend les mêmes futurs (pas de double chargement)
 // derrière son indicateur discret.
@@ -27,7 +27,7 @@ import 'mannequin_3d.dart';
 
 /// Résultat du préchargement.
 class PreloadReport {
-  /// Chargement des ressources (modèle, carte, rig, peau), ms.
+  /// Chargement des ressources (modèle, carte), ms.
   final int loadMs;
 
   /// Préchauffage des pipelines (image hors écran), ms ; -1 si impossible.
@@ -116,12 +116,12 @@ class MannequinPreload {
       final support = await engine3DSupport();
       compatible = support.compatible;
       if (compatible) {
-        // Ressources : modèle (converti par le hook de build), carte, rig,
-        // peau.
+        // Ressources : modèle (converti par le hook de build) et carte
+        // (5.5.2 : plus de rig ni de peau).
         final scene = await MannequinScene.create();
         final load = sw.elapsedMilliseconds;
-        // Préchauffage : matériaux mis en évidence (rampe, halo) et peau,
-        // une image hors écran, jetée.
+        // Préchauffage : matériaux mis en évidence (rampe, halo), une image
+        // hors écran, jetée.
         final sw2 = Stopwatch()..start();
         try {
           scene.configure(

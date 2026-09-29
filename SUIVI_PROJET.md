@@ -1,8 +1,19 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M56 (refonte du mannequin, du squelette et de la peau ; matériel, chaîne d'animation et 3 pilotes ; carte Koach ; préchargement), version 5.5.0, puis correction 1 (retour du propriétaire), version 5.5.1**  
-**Date : 28-29 septembre 2026, Europe/Paris — version : 5.5.0+79 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : pipeline « Mannequin 3D », lot M56 (refonte du mannequin, du squelette et de la peau ; matériel, chaîne d'animation et 3 pilotes ; carte Koach ; préchargement), version 5.5.0, correction 1 (retour du propriétaire), version 5.5.1, puis correction 2 (écorché acheté, plus d'animation), version 5.5.2**  
+**Date : 28-29 septembre 2026, Europe/Paris — version : 5.5.2+81 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d-fable`, rendu réel sur émulateur Android).**
+
+## M56.C2 — Correction 2 (retour du propriétaire du 29/09/2026, version 5.5.2)
+
+| Point | Retour | Correction |
+| --- | --- | --- |
+| Modèle | « C'est ENCORE pas bon. Change le modèle et prend celui que j'ai mis en .zip, je l'ai acheté » (écorché « Ecorche Musclenames Male Anatomy », 168 Mo, déposé dans la release GitHub `modele-achete`) | `tools/anatomy/build_model.py` réécrit : OBJ ZBrush (664 284 triangles, un seul maillage, pose en A) + texture 4096² (une teinte par muscle, abréviation en blanc, os beige, tendons gris) → segmentation de la texture (palette de 16 teintes, texte et dégradés rebouchés, lisérés gris fins rebouchés), régions d'image → composantes du maillage, miettes fusionnées ; 232 étiquettes relevées à la main (position du texte, abréviation lue, légende du vendeur) nomment les composantes ; muscles de même teinte qui se touchent séparés par plus court chemin depuis leurs étiquettes ; composantes à cheval sur la ligne médiane coupées ; composantes sans étiquette nommées par voisinage, par symétrie (triangle par triangle) ou par position ; subdivisions du pack (deltoïde par angle, trapèze par C7 et épine de la scapula, grand pectoral par hauteur, gastrocnémien médial / latéral) ; décimation globale à 59 400 triangles (pas de fissure), normales du maillage entier, H = 1,70 m. 136 régions, `os` 6 800 triangles, `contexte` 13 000, `head` 1 500. |
+| Couleurs | « tu remets les muscles en alpha 50 % et la couleur reste la même que ce qu'il y a dans l'application, pour les muscles engagés change la couleur en fonction de la couleur principale choisie par l'utilisateur » | Muscles gris `kMuscleGray` à `kMuscleOpacity` 0,5 (inchangés) ; rampe `mannequinHeat` et `heat` 2D : `SL.accentSpec` (principale → vive), plus de rouge fixe. |
+| Animations | « Supprimes toutes les animations et repart de zéro, plus d'animation juste l'affichage des muscles utilisés et je ferai les positions à la main plus tard, à prendre en compte pour les autres M » | Clips, matériel, lecteur, ticker, fiches biomécaniques, `animate.py`, `render_clip.py`, `build_equipment.py` retirés ; fiches : démonstration 2D + mannequin fixe avec ses muscles ; squelette, peau, postures et outils associés retirés (`rig.json`, `mannequin_skin.bin`, `build_rig.py`, `rig_def.py`, `rig_pose.py`, `render_poses.py`, `build_body.py`, `measure_body.py`, `silhouette.py`, `mannequin_base.glb`) ; code de posture de `mannequin_3d.dart` / `mannequin_rig.dart` gardé inactif. Lots M7 et suivants à redéfinir (`pipeline/3d/DECISIONS_3D.md`). |
+| Séance | « Enlève les boutons suivant et précédent puisque glisser vers la droite et vers la gauche font déjà le taff » | Barre Précédent / Suivant retirée de la séance et de l'historique ; tests par glissement (`swipePage`). |
+
+Contrôles : Python 105 tests (`test_m2_anatomy.py` réécrit : budget, nœuds ↔ régions, symétrie gauche / droite, étiquettes connues, source hors dépôt), Dart (m2, m3, m4b adaptés : plus de couche profonde, 23 muscles du pack en texte), émulateur (`animations_m56_test` : Anatomie 4 vues + Dos allumé, 3 fiches, carte Koach, préchargement), planches des régions regardées (face, dos, profils, gros plans cou, bras, bassin, dos, jambes).
 
 ## M56.C1 — Correction 1 (retour du propriétaire du 29/09/2026, version 5.5.1)
 

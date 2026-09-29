@@ -20,9 +20,14 @@
 // catégorie, Réinitialiser, filtres actifs en puces sous le bouton.
 //
 // M5 : sélecteur « Posture » (debout, suspendu à la barre, squat bas, planche
-// de gainage) : le mannequin riggé passe d'une posture à l'autre par une
-// transition douce ; mise en évidence et toucher restent justes sur le modèle
-// déformé. La posture est gardée pendant la session.
+// de gainage) sur le mannequin riggé.
+//
+// 5.5.2 (M56 correction 2, décision du propriétaire du 29/09/2026) : modèle
+// remplacé par l'écorché acheté (un muscle = une région de sa texture), sans
+// squelette ni posture : le sélecteur « Posture » est retiré, le mannequin
+// reste au repos ; les positions des exercices seront faites à la main plus
+// tard. Muscles en gris à 50 % d'opacité, groupes allumés dans la couleur
+// dominante choisie par l'utilisateur.
 import 'package:flutter/material.dart';
 
 import 'filter_menu.dart';
@@ -42,22 +47,6 @@ const kGroupLabels = {
   'ischios': 'Ischios',
   'fessiers': 'Fessiers',
   'mollets': 'Mollets',
-};
-
-/// M5 : postures de référence de l'écran Anatomie (clés de
-/// `assets/anatomy/rig.json`, `app: true`) et libellés.
-const kAnatomyPostures = {
-  'debout': 'Debout',
-  'suspendu': 'Suspendu',
-  'squat_bas': 'Squat bas',
-  'planche': 'Planche',
-};
-
-/// Vue qui montre le mieux une posture (null : vue inchangée).
-MannequinView? viewForPosture(String posture) => switch (posture) {
-  'squat_bas' => MannequinView.troisQuarts,
-  'planche' => MannequinView.profil,
-  _ => null,
 };
 
 /// Vue de départ qui montre le mieux un groupe.
@@ -175,9 +164,6 @@ class AnatomyScreen extends StatefulWidget {
   /// Filtres gardés pendant la session (null : pas encore ouvert).
   static AnatomyFilters? session;
 
-  /// M5 : posture gardée pendant la session.
-  static String sessionPosture = 'debout';
-
   @override
   State<AnatomyScreen> createState() => AnatomyScreenState();
 }
@@ -188,18 +174,6 @@ class AnatomyScreenState extends State<AnatomyScreen> {
   late MannequinView _view;
 
   AnatomyFilters get filters => _filters;
-
-  String _posture = AnatomyScreen.sessionPosture;
-
-  /// Posture affichée (M5).
-  String get posture => _posture;
-
-  void setPosture(String key) => setState(() {
-    _posture = key;
-    AnatomyScreen.sessionPosture = key;
-    final v = viewForPosture(key);
-    if (v != null) _view = v;
-  });
 
   /// Groupes cochés.
   Set<String> get groups => _filters.groups;
@@ -316,7 +290,6 @@ class AnatomyScreenState extends State<AnatomyScreen> {
           ),
           Mannequin3D(
             key: const ValueKey('anatomy-mannequin'),
-            posture: _posture,
             intensities: intensities,
             hidden: hidden,
             bones: f.bones,
@@ -328,16 +301,13 @@ class AnatomyScreenState extends State<AnatomyScreen> {
                       '${labels.length == 1 ? 'groupe' : 'groupes'} '
                       '${labels.join(', ')} en rouge',
           ),
-          // M5 : sous les boutons de vue (au-dessus, à 200 % de texte, les
-          // puces repoussaient le mannequin hors de la liste construite).
-          _postureSelector(context),
           ValueListenableBuilder<bool>(
             valueListenable: Display3DSettings.instance.touchNames,
             builder: (context, names, _) => Text(
               names
-                  ? 'Touche un muscle pour afficher son nom. Tous les muscles '
-                        'sont transparents : un muscle profond allumé se voit '
-                        'à travers les autres.'
+                  ? 'Touche un muscle pour afficher son nom. Écorché : la '
+                        'couche superficielle des muscles, transparente ; les '
+                        'muscles profonds sont listés en texte sur les fiches.'
                   : 'Nom du muscle au toucher désactivé '
                         '(Réglages › Affichage 3D).',
               style: tt.bodySmall,
@@ -345,40 +315,15 @@ class AnatomyScreenState extends State<AnatomyScreen> {
           ),
           if (map != null) _summary(context, map),
           Text(
-            'Modèle : Z-Anatomy, dérivé de BodyParts3D (CC BY-SA 4.0). '
-            'Crédits dans Réglages › À propos › Sources et licences. '
-            'Repères d’entraînement, pas un avis médical.',
+            'Modèle : écorché « Ecorche Musclenames Male Anatomy » (licence '
+            'd’achat). Crédits dans Réglages › À propos › Sources et '
+            'licences. Repères d’entraînement, pas un avis médical.',
             style: tt.bodySmall,
           ),
         ],
       ),
     );
   }
-
-  /// M5 : puces « Posture » (une seule choisie).
-  Widget _postureSelector(BuildContext context) => Row(
-    key: const ValueKey('anatomy-postures'),
-    children: [
-      Text('Posture', style: Theme.of(context).textTheme.labelLarge),
-      const SizedBox(width: 10),
-      Expanded(
-        child: Wrap(
-          spacing: 6,
-          runSpacing: 4,
-          children: [
-            for (final e in kAnatomyPostures.entries)
-              ChoiceChip(
-                key: ValueKey('anatomy-posture-${e.key}'),
-                label: Text(e.value),
-                selected: _posture == e.key,
-                visualDensity: VisualDensity.compact,
-                onSelected: (_) => setPosture(e.key),
-              ),
-          ],
-        ),
-      ),
-    ],
-  );
 
   /// Résumé texte : chaque groupe coché et ses muscles (profonds signalés),
   /// état des muscles profonds et des os.

@@ -129,15 +129,34 @@ MannequinView exerciseStartView(
   return MannequinView.troisQuarts;
 }
 
-/// Muscles du pack sans région sur le mannequin, avec la raison : absents du
-/// modèle source (profonds ou internes). Ils restent dans la liste en texte
-/// de la fiche. M4b : les muscles profonds retirés en M2 sont remis (rendu
-/// translucide), ils ont de nouveau leur région.
+/// Muscles du pack sans région sur le mannequin, avec la raison. Ils restent
+/// dans la liste en texte de la fiche. 5.5.2 (M56 correction 2) : l'écorché
+/// acheté ne montre que la couche superficielle ; les muscles profonds
+/// couverts par d'autres n'ont pas de région (jusqu'à 5.5.1, le modèle
+/// Z-Anatomy les portait en transparence).
 const musclesSansRegion = <String, String>{
   'flechisseurs_cervicaux_profonds':
       'profonds, devant les vertèbres du cou (absents du modèle)',
   'diaphragme': 'interne, sous les côtes (absent du modèle)',
   'plancher_pelvien': 'interne, au fond du bassin (absent du modèle)',
+  'biceps_femoral_chef_court': 'profond, sous le chef long (écorché)',
+  'carre_des_lombes': 'profond, sous les érecteurs (écorché)',
+  'carre_pronateur': 'profond, sous les fléchisseurs (écorché)',
+  'court_adducteur': 'profond, sous le long adducteur (écorché)',
+  'flechisseurs_profonds_des_doigts':
+      'profonds, sous les fléchisseurs superficiels (écorché)',
+  'multifides': 'profonds, sous les érecteurs (écorché)',
+  'oblique_interne': 'profond, sous l’oblique externe (écorché)',
+  'petit_fessier': 'profond, sous le moyen fessier (écorché)',
+  'petit_pectoral': 'profond, sous le grand pectoral (écorché)',
+  'poplite': 'profond, derrière le genou (écorché)',
+  'rotateurs_lateraux_hanche': 'profonds, sous le grand fessier (écorché)',
+  'sous_scapulaire': 'profond, sous la scapula (écorché)',
+  'supinateur': 'profond, sous les extenseurs (écorché)',
+  'supra_epineux': 'profond, sous le trapèze (écorché)',
+  'tibial_posterieur': 'profond, sous le soléaire (écorché)',
+  'transverse_abdomen': 'profond, sous les obliques (écorché)',
+  'vaste_intermediaire': 'profond, sous le droit fémoral (écorché)',
 };
 
 /// Muscles d'un exercice posés sur le mannequin.

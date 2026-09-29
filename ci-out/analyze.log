@@ -1,5 +1,0 @@
-Analyzing streetlift-apk...                                     
-
-  error • Undefined name '_startView'. Try correcting the name to one that is defined, or defining the name • lib/mannequin_3d.dart:1262:21 • undefined_identifier
-
-1 issue found. (ran in 18.9s)
