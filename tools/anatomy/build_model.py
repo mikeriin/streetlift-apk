@@ -34,7 +34,8 @@ Chaîne :
      fissure entre régions) à ≤ 60 000 triangles, régions reportées par
      plus proche centre, normales lissées sur le maillage entier ;
   7. mise à l'échelle (H = 1,70 m, pieds à y = 0), GLB : un nœud par région
-     (`<clé>_<left|right>`), `os`, `contexte` (tendons, aponévroses),
+     (`<clé>_<left|right>`), `os`, `tendon_<k>` (tendons et aponévroses, un
+     nœud par pièce, gris translucide comme les muscles),
      `head` ; carte `assets/anatomy/muscles_map.json`.
 
 Relançable : `pip install numpy scipy pillow fast_simplification
@@ -674,6 +675,48 @@ def vertex_normals(P, Fd):
     return n / l
 
 
+TENDON_MIN = 20
+
+
+def tendon_nodes(Fd, nd, log):
+    """Tendons et aponévroses (`contexte`) : un nœud par composante connexe
+    (`tendon_<k>`, gris translucide comme les muscles, jamais allumé, tri de
+    transparence par nœud) ; les miettes (< TENDON_MIN triangles) rejoignent
+    le nœud voisin qui partage le plus d'arêtes."""
+    import numpy as np
+    from scipy.sparse import coo_matrix
+    from scipy.sparse.csgraph import connected_components
+    nd = nd.copy()
+    pairs = face_pairs(Fd)
+    ctx = np.nonzero(nd == 'contexte')[0]
+    if len(ctx) == 0:
+        return nd
+    idx = {f: i for i, f in enumerate(ctx)}
+    inner = pairs[(nd[pairs[:, 0]] == 'contexte') & (nd[pairs[:, 1]] == 'contexte')]
+    a = np.array([idx[f] for f in inner[:, 0]])
+    b = np.array([idx[f] for f in inner[:, 1]])
+    g = coo_matrix((np.ones(len(a)), (a, b)), shape=(len(ctx), len(ctx)))
+    n, lab = connected_components(g, directed=False)
+    size = np.bincount(lab)
+    k = 0
+    small = []
+    for c in range(n):
+        faces = ctx[lab == c]
+        if size[c] >= TENDON_MIN:
+            nd[faces] = f'tendon_{k}'
+            k += 1
+        else:
+            small.append(faces)
+    # miettes : voisin majoritaire (hors contexte), sinon os
+    for faces in small:
+        m = np.isin(pairs, faces)
+        neigh = np.concatenate([pairs[m[:, 0], 1], pairs[m[:, 1], 0]])
+        names = [nd[f] for f in neigh if nd[f] != 'contexte']
+        nd[faces] = Counter(names).most_common(1)[0][0] if names else 'os'
+    log(f'tendons : {k} nœuds, {len(small)} miettes rattachées')
+    return nd
+
+
 def split_meshes(P, Fd, nd, normals):
     """Une maille par nœud (sommets dupliqués), normales du maillage entier."""
     import numpy as np
@@ -728,7 +771,7 @@ def write_glb(path, meshes):
         itype = 5125 if idx.max() > 65535 else 5123
         ind = add(idx.astype(np.uint32 if itype == 5125 else np.uint16), 34963,
                   componentType=itype, count=len(idx), type='SCALAR')
-        mat = {'os': 1, 'contexte': 2, 'head': 2}.get(m['nom'], 0)
+        mat = {'os': 1, 'head': 2}.get(m['nom'], 0)
         gl_meshes.append({'name': m['nom'], 'primitives': [
             {'attributes': attrs, 'indices': ind, 'material': mat}]})
         nodes.append({'name': m['nom'], 'mesh': k})
@@ -755,7 +798,7 @@ def region_entries(names):
     pack = pack_muscles()
     out = []
     for name in names:
-        if name in ('os', 'contexte', 'head'):
+        if name in ('os', 'head') or name.startswith('tendon_'):
             continue
         key, side = name.rsplit('_', 1)
         # Volumes des mains et des pieds (M2) : nœuds `hand_left`…, clé des
@@ -793,6 +836,7 @@ def build(zip_path, render_dir=None, log=print):
     Vs = (V - [0, lo, 0]) * scale
     Vs[:, 0] -= (Vs[:, 0].max() + Vs[:, 0].min()) / 2
     P, Fd, nd = decimate(Vs, F, node, log)
+    nd = tendon_nodes(Fd, nd, log)
     normals = vertex_normals(P, Fd)
     meshes = split_meshes(P, Fd, nd, normals)
     OUT_GLB.parent.mkdir(parents=True, exist_ok=True)
@@ -822,8 +866,8 @@ def build(zip_path, render_dir=None, log=print):
         'source_triangles': int(len(F)),
         'composantes': int(len(clabel)),
         'triangles': {'total': total, 'os': tris.get('os', 0),
-                      'contexte': tris.get('contexte', 0), 'head': tris.get('head', 0),
-                      'par_noeud': tris},
+                      'tendons': sum(v for k, v in tris.items() if k.startswith('tendon_')),
+                      'head': tris.get('head', 0), 'par_noeud': tris},
         'regions': len(entries),
         'muscles_sans_region': absent,
         'hauteur': HEIGHT,
@@ -860,7 +904,9 @@ def render(P, Fd, nd, out, log):
     rng = np.random.default_rng(7)
     pal = {n: rng.integers(70, 255, 3) for n in names}
     pal['os'] = np.array([120, 110, 100])
-    pal['contexte'] = np.array([60, 60, 60])
+    for n in names:
+        if n.startswith('tendon_'):
+            pal[n] = np.array([60, 60, 60])
     pal['head'] = np.array([90, 80, 80])
     cols = np.array([pal[n] for n in nd])
     size = 1400

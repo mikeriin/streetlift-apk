@@ -2,7 +2,7 @@
 """M2 / M4b : aperçu hors application du mannequin d'exécution (Blender, Cycles CPU).
 
 Rend `assets/anatomy/mannequin.glb` sous les vues Face / Dos / Profil / 3/4
-avec les couleurs de l'application (gris mat, os et contexte sombres,
+avec les couleurs de l'application (gris mat, tendons gris, os et tête sombres,
 groupe allumé dans la rampe historique) et les assemble en une planche PNG.
 Sert au contrôle visuel de la fabrication ; le rendu qui fait foi reste la
 capture Flutter GPU sur émulateur (CI 3D).
@@ -108,8 +108,8 @@ def main():
             m = m_hot
         elif o.name == 'os':
             m = m_bone
-        elif r and r['couche'] != 'volume':
-            m = m_muscle
+        elif (r and r['couche'] != 'volume') or o.name.startswith('tendon_'):
+            m = m_muscle  # 5.5.2 : tendons de l'écorché, gris des muscles
         else:
             m = m_dark
         o.data.materials.clear()
