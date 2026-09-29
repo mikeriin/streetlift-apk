@@ -83,6 +83,8 @@ void main() {
       expect([for (final p in c.shownPositions) p.name], ['Départ', 'Fin']);
       for (final p in c.shownPositions) {
         expect(p.time, inInclusiveRange(0, c.duration));
+        expect(p.label, isNot(p.key));
+        expect(p.label, isNotEmpty);
       }
       expect(c.equipment.map((e) => e.id), contains('sol'));
       expect(c.height, greaterThan(1.0));

@@ -293,5 +293,9 @@
   }
  ],
  "depart": "haut",
- "fin": "bas"
+ "fin": "bas",
+ "libelles": {
+  "haut": "Bras tendus",
+  "bas": "Bas du dip"
+ }
 }

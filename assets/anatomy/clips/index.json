@@ -6,7 +6,7 @@
    "fichier": "back-squat.json.gz",
    "statut": "valide",
    "date": "2026-09-29",
-   "empreinte": "4e660b5c6d320000",
+   "empreinte": "16141b13a1320000",
    "controles": {
     "longueurs": {
      "ok": true,
@@ -58,7 +58,7 @@
     },
     "taille": {
      "ok": true,
-     "detail": "2292 octets"
+     "detail": "2312 octets"
     }
    }
   },
@@ -67,7 +67,7 @@
    "fichier": "dips.json.gz",
    "statut": "valide",
    "date": "2026-09-29",
-   "empreinte": "3122ff9257210000",
+   "empreinte": "75e92c8286210000",
    "controles": {
     "longueurs": {
      "ok": true,
@@ -131,7 +131,7 @@
     },
     "taille": {
      "ok": true,
-     "detail": "2124 octets"
+     "detail": "2143 octets"
     }
    }
   },
@@ -140,7 +140,7 @@
    "fichier": "traction-pronation.json.gz",
    "statut": "valide",
    "date": "2026-09-29",
-   "empreinte": "16fbfb797d4e0000",
+   "empreinte": "fa672f2cca4e0000",
    "controles": {
     "longueurs": {
      "ok": true,
@@ -212,7 +212,7 @@
     },
     "taille": {
      "ok": true,
-     "detail": "3442 octets"
+     "detail": "3467 octets"
     }
    }
   }

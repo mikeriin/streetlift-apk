@@ -68,7 +68,11 @@ class ClipEquipment {
 class ClipPosition {
   final String name, key;
   final double time;
-  const ClipPosition(this.name, this.key, this.time);
+
+  /// Libellé de la position (fiche : « Suspension, bras tendus »…).
+  final String label;
+  const ClipPosition(this.name, this.key, this.time, [String? label])
+    : label = label ?? key;
 }
 
 /// Posture d'une image clé et positions du matériel mobile.
@@ -172,7 +176,12 @@ class MannequinClip {
       width: d(framing['largeur']),
       positions: [
         for (final p in (j['positions'] as List?) ?? const [])
-          ClipPosition(p['nom'] as String, p['cle'] as String, d(p['temps'])),
+          ClipPosition(
+            p['nom'] as String,
+            p['cle'] as String,
+            d(p['temps']),
+            p['libelle'] as String?,
+          ),
       ],
     );
   }

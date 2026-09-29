@@ -287,5 +287,9 @@
  ],
  "vue": "troisQuarts",
  "depart": "haut",
- "fin": "bas"
+ "fin": "bas",
+ "libelles": {
+  "haut": "Debout, gainé",
+  "bas": "Bas du squat"
+ }
 }

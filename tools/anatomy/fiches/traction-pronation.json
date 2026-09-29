@@ -371,5 +371,9 @@
   }
  ],
  "depart": "bas",
- "fin": "haut"
+ "fin": "haut",
+ "libelles": {
+  "bas": "Suspension, bras tendus",
+  "haut": "Menton au-dessus de la barre"
+ }
 }
