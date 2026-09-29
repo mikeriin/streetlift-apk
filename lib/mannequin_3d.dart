@@ -97,6 +97,9 @@ class MuscleRegion {
   final String id, cle, cote, nom, nomCote, groupe, couche;
   final List<String> pack;
 
+  /// M6b : aire de la région (m², `aire` de la carte ; 0 si absente).
+  final double aire;
+
   const MuscleRegion({
     required this.id,
     required this.cle,
@@ -106,6 +109,7 @@ class MuscleRegion {
     required this.groupe,
     required this.couche,
     required this.pack,
+    this.aire = 0,
   });
 
   factory MuscleRegion.fromJson(Map<String, dynamic> j) => MuscleRegion(
@@ -117,6 +121,7 @@ class MuscleRegion {
     groupe: j['groupe'] as String,
     couche: j['couche'] as String,
     pack: [for (final p in j['pack'] as List) p as String],
+    aire: (j['aire'] as num?)?.toDouble() ?? 0,
   );
 
   /// M4b : muscle profond (source anatomique ou caché au repos).
@@ -239,12 +244,19 @@ class MannequinHaloPainter extends CustomPainter {
   final Size size;
   final bool dark, soft;
 
+  /// M6b : caméra lue au moment du dessin (rotation continue de l'écran
+  /// Moteur 3D : elle change à chaque image, [repaint] prévient le
+  /// peintre) ; null : [camera].
+  final PerspectiveCamera Function()? cameraOf;
+
   const MannequinHaloPainter({
     required this.scene,
     required this.camera,
     required this.size,
     required this.dark,
     required this.soft,
+    this.cameraOf,
+    super.repaint,
   });
 
   /// Flou du halo (px) et opacités (intensité 0 → 1).
@@ -256,7 +268,7 @@ class MannequinHaloPainter extends CustomPainter {
     final lit = scene.haloIntensities;
     final stretched = scene.haloStretched;
     if (lit.isEmpty && stretched.isEmpty) return;
-    final proj = HaloProjection.of(camera, size);
+    final proj = HaloProjection.of(cameraOf?.call() ?? camera, size);
     if (proj == null) return;
     void draw(String id, Color color, double alpha) {
       final mesh = scene.restMesh(id);
@@ -289,6 +301,7 @@ class MannequinHaloPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(MannequinHaloPainter old) =>
+      cameraOf != null ||
       old.scene != scene ||
       old.camera != camera ||
       old.size != size ||
@@ -1589,6 +1602,7 @@ class Mannequin3DState extends State<Mannequin3D>
     _settings.listenable.removeListener(_onSettings);
     _tween.dispose();
     _poseTween.dispose();
+    _spinFrame.dispose();
     super.dispose();
   }
 
@@ -1614,7 +1628,10 @@ class Mannequin3DState extends State<Mannequin3D>
     // M4c : les boutons de vue remettent aussi le zoom par défaut.
     _fromZoom = _zoom.copy();
     if (!mounted) return;
-    if (_reduceMotion) {
+    // M6b : scène pas encore affichée (vue de départ connue après le
+    // chargement de la carte) : pas de transition à regarder.
+    if (_reduceMotion || _scene == null) {
+      _tween.stop();
       setState(() {
         _yaw = _toYaw;
         _pitch = _toPitch;
@@ -1640,7 +1657,17 @@ class Mannequin3DState extends State<Mannequin3D>
   void _onTick(Duration elapsed, double dt) {
     if (!widget.spin || _reduceMotion || dt <= 0 || _dragging) return;
     _yaw += math.min(dt, .1) * .45;
+    // M6b : le halo suit la rotation (caméra de cette image, calculée avant
+    // le dessin de la scène et du halo).
+    final scene = _scene;
+    if (scene != null && !_size.isEmpty) {
+      _camera = scene.camera(_yaw, _pitch, scene.fitDistance(_aspect));
+      _spinFrame.value++;
+    }
   }
+
+  /// M6b : image de la rotation continue (redessine le halo).
+  final ValueNotifier<int> _spinFrame = ValueNotifier(0);
 
   bool _dragging = false;
 
@@ -1914,17 +1941,17 @@ class Mannequin3DState extends State<Mannequin3D>
                     child: IgnorePointer(
                       child: CustomPaint(
                         key: const ValueKey('mannequin-halo'),
-                        // Rotation continue (Moteur 3D) : caméra par image,
-                        // pas de halo.
-                        painter: widget.spin
-                            ? null
-                            : MannequinHaloPainter(
-                                scene: scene,
-                                camera: _camera!,
-                                size: _size,
-                                dark: dark,
-                                soft: _settings.halo.value,
-                              ),
+                        // M6b : rotation continue (Moteur 3D) : le halo lit
+                        // la caméra de chaque image.
+                        painter: MannequinHaloPainter(
+                          scene: scene,
+                          camera: _camera!,
+                          size: _size,
+                          dark: dark,
+                          soft: _settings.halo.value,
+                          cameraOf: widget.spin ? () => _camera! : null,
+                          repaint: widget.spin ? _spinFrame : null,
+                        ),
                       ),
                     ),
                   ),

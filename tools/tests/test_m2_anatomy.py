@@ -112,6 +112,48 @@ class M2AnatomyTest(unittest.TestCase):
         self.assertEqual({'hand_left', 'hand_right', 'foot_left', 'foot_right'},
                          {r['id'] for r in self.map['regions'] if r['couche'] == 'volume'})
 
+    def test_aires_des_regions(self):
+        # M6b : aire de chaque région (vue de départ des fiches), recalculée
+        # ici depuis le GLB, sans numpy.
+        import math
+        data = GLB.read_bytes()
+        json_len = struct.unpack('<I', data[12:16])[0]
+        blob = data[20 + json_len + 8:]
+        g = self.gltf
+
+        def read(i, fmt, size):
+            acc = g['accessors'][i]
+            view = g['bufferViews'][acc['bufferView']]
+            n = {'VEC3': 3, 'SCALAR': 1}[acc['type']] * acc['count']
+            start = view['byteOffset'] + acc.get('byteOffset', 0)
+            return struct.unpack(f'<{n}{fmt}', blob[start:start + n * size])
+
+        areas = {}
+        for node in g['nodes']:
+            prim = g['meshes'][node['mesh']]['primitives'][0]
+            p = read(prim['attributes']['POSITION'], 'f', 4)
+            big = g['accessors'][prim['indices']]['componentType'] == 5125
+            idx = read(prim['indices'], 'I' if big else 'H', 4 if big else 2)
+            total = 0.0
+            for t in range(0, len(idx), 3):
+                a, b, c = (3 * idx[t + k] for k in range(3))
+                ux, uy, uz = p[b] - p[a], p[b + 1] - p[a + 1], p[b + 2] - p[a + 2]
+                vx, vy, vz = p[c] - p[a], p[c + 1] - p[a + 1], p[c + 2] - p[a + 2]
+                total += 0.5 * math.sqrt((uy * vz - uz * vy) ** 2
+                                         + (uz * vx - ux * vz) ** 2
+                                         + (ux * vy - uy * vx) ** 2)
+            areas[node['name']] = total
+        for r in self.map['regions']:
+            self.assertIn('aire', r, r['id'])
+            self.assertGreater(r['aire'], 0, r['id'])
+            self.assertAlmostEqual(r['aire'], areas[r['id']], delta=2e-5, msg=r['id'])
+        # Ordres de grandeur (m², modèle de 1,70 m) : grand dorsal plus de
+        # deux fois le biceps (vue de départ Dos pour les tractions).
+        by_id = {r['id']: r['aire'] for r in self.map['regions']}
+        self.assertGreater(by_id['latissimus_dorsi_left'],
+                           2 * by_id['biceps_brachii_left'])
+        self.assertLess(by_id['latissimus_dorsi_left'], 0.1)
+
     def test_symetrie(self):
         # Même muscle des deux côtés : nombre de triangles comparable.
         by_key = {}

@@ -35,29 +35,37 @@ logcat_pid=$!
 # Cible séparée lancée par `flutter drive` (application arrêtée avant).
 # M5 : délai de 10 min par cible (la cible du lot dure ≈ 3 min) : un
 # blocage laisse le temps du second essai dans les 30 min du job.
+# $2 (facultatif) : suffixe du journal et partie jouée (M6B_PART).
 cible() {
   adb shell am force-stop fr.tchoupi.streetlift_tracker || true
   timeout "${CI3D_DELAI:-600}" flutter drive --no-pub \
     --driver=test_driver/integration_test.dart \
     --target="integration_test/$1.dart" \
-    -d emulator-5554 > "$out/drive-$1.log" 2>&1
+    ${2:+--dart-define=M6B_PART=$2} \
+    -d emulator-5554 > "$out/drive-$1${2:+-$2}.log" 2>&1
 }
 # M6b : audit de tous les écrans du mannequin fixe (Anatomie, fiches,
 # STATS, accueil, aperçu de WOD, Moteur 3D, grand écran), cible du lot
 # lancée seule par défaut. Les cibles des lots précédents (M56 compris) ne
 # sont relancées que sur demande (CI3D_TOUT=1) : captures limitées aux
 # écrans du lot.
-CI3D_DELAI="${CI3D_DELAI:-900}" cible audit_m6b_test
-code_m6b=$?
-if [ "$code_m6b" -ne 0 ] && [ ! -f "$out/m6b_releve.json" ]; then
-  echo "M6b sans relevé (code $code_m6b) : adb relancé, second essai."
-  cp "$out/drive-audit_m6b_test.log" "$out/drive-m6b-essai1.log"
-  adb kill-server || true
-  adb start-server || true
-  timeout 60 adb wait-for-device || true
-  cible audit_m6b_test
-  code_m6b=$?
-fi
+# Deux parties (captures renvoyées par le pilote de taille raisonnable) :
+# a = Anatomie et fiches ; b = STATS, accueil, WOD, Moteur 3D, grand écran.
+code_m6b=0
+for part in a b; do
+  cible audit_m6b_test "$part"
+  c=$?
+  if [ "$c" -ne 0 ] && [ ! -f "$out/m6b_releve_$part.json" ]; then
+    echo "M6b $part sans relevé (code $c) : adb relancé, second essai."
+    cp "$out/drive-audit_m6b_test-$part.log" "$out/drive-m6b-$part-essai1.log"
+    adb kill-server || true
+    adb start-server || true
+    timeout 60 adb wait-for-device || true
+    cible audit_m6b_test "$part"
+    c=$?
+  fi
+  [ "$c" -ne 0 ] && code_m6b=$c
+done
 code_m56=0
 code_m5=0
 code_m4c=0
@@ -135,7 +143,8 @@ if [ "${CI3D_MESURE:-0}" = "1" ]; then
   code_mesure=$?
   tail -n 20 "$out/drive-mannequin_mesure_test.log"
 fi
-tail -n 60 "$out/drive-audit_m6b_test.log"
+tail -n 30 "$out/drive-audit_m6b_test-a.log"
+tail -n 30 "$out/drive-audit_m6b_test-b.log"
 kill "$logcat_pid" 2>/dev/null || true
 grep -o 'Impeller rendering backend ([^)]*)' "$out/logcat-complet.txt" | sort | uniq -c > "$out/impeller.txt" || true
 grep -iE 'flutter|impeller|vulkan|gles|AndroidRuntime|FATAL|swiftshader|angle|lowmemorykiller|DEBUG|libc|tombstone|ActivityManager' "$out/logcat-complet.txt" | tail -n 3000 > "$out/logcat.txt" || true

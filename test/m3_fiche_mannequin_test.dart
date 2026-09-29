@@ -266,6 +266,50 @@ void main() {
       expect(exerciseStartView(const []), MannequinView.troisQuarts);
     });
 
+    test('M6b : principaux mixtes départagés par l’aire des régions', () {
+      MannequinView of(String id) {
+        final d = lib.detail(id)!;
+        return exerciseStartView(d.primaires, d.secondaires, map);
+      }
+
+      // Traction : grand dorsal (2 × 0,041 m²) contre biceps (2 × 0,020) :
+      // vue de dos (en 3/4 avant, le halo du dorsal au flanc se lisait comme
+      // un pectoral).
+      expect(of('traction-pronation'), MannequinView.dos);
+      expect(of('traction-supination'), MannequinView.dos);
+      // Surfaces comparables : 3/4, comme sans la carte.
+      expect(of('dips'), MannequinView.troisQuarts);
+      expect(of('back-squat'), MannequinView.troisQuarts);
+      expect(of('muscle-up'), MannequinView.troisQuarts);
+      // Principaux d'une seule face : inchangé.
+      expect(of('souleve-de-terre'), MannequinView.dos);
+      expect(of('ab-wheel'), MannequinView.face);
+      // Toutes les régions ont une aire.
+      expect(map.regions.every((r) => r.aire > 0), isTrue);
+      // Sans aire (ancienne carte) : 3/4, comme avant.
+      final bare = MannequinMap.fromJson({
+        'regions': [
+          for (final r in map.regions)
+            {
+              'id': r.id,
+              'cle': r.cle,
+              'cote': r.cote,
+              'nom': r.nom,
+              'nom_cote': r.nomCote,
+              'groupe': r.groupe,
+              'couche': r.couche,
+              'pack': r.pack,
+            },
+        ],
+        'groupes': map.groups,
+      });
+      final d = lib.detail('traction-pronation')!;
+      expect(
+        exerciseStartView(d.primaires, d.secondaires, bare),
+        MannequinView.troisQuarts,
+      );
+    });
+
     test('chaque muscle du pack a une face', () {
       expect(muscleFaces.keys.toSet(), atlasMuscles.keys.toSet());
     });
@@ -387,9 +431,11 @@ void main() {
           find.byType(ExerciseMannequin),
         );
         final d = lib.detail(id)!;
+        // M6b : avec la carte chargée, les principaux mixtes sont départagés
+        // par l'aire de leurs régions.
         expect(
           state.startView,
-          exerciseStartView(d.primaires, d.secondaires),
+          exerciseStartView(d.primaires, d.secondaires, MannequinMap.loaded),
           reason: id,
         );
         // 5.5.2 : respiration (muscles profonds seulement) : rien d'allumé,

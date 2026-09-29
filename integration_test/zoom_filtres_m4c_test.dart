@@ -435,7 +435,8 @@ void main() {
       );
       await tester.pump(const Duration(seconds: 2));
       await shot('m4c_filtres_anatomie_$theme');
-      expect(find.text('Filtres · 4'), findsOneWidget);
+      // M6b : dos, ischios et « Os » (plus de « Muscles profonds »).
+      expect(find.text('Filtres · 3'), findsOneWidget);
       await closeMenu(tester);
       await tester.pump(const Duration(seconds: 2));
       await shot('m4c_filtres_anatomie_puces_$theme');

@@ -39,6 +39,12 @@ import 'package:streetlift_tracker/wod_preview.dart';
 
 final _root = GlobalKey();
 const _ratio = 1.5;
+
+/// Partie jouée (`--dart-define=M6B_PART=a|b`) : deux lancements, pour que
+/// les captures renvoyées par le pilote restent de taille raisonnable
+/// (essai A : 30 captures d'un coup, service du pilote perdu au retour).
+const _part = String.fromEnvironment('M6B_PART', defaultValue: 'a');
+bool _skip(String part) => _part != part;
 const _limit = Timeout(Duration(minutes: 5));
 
 void _fillWeek() {
@@ -64,14 +70,16 @@ void main() {
   final releve = <String, Object?>{};
   binding.reportData = data;
 
-  void record() => data['m6b_releve.json'] = const JsonEncoder.withIndent(
-    '  ',
-  ).convert(releve);
+  void record() => data['m6b_releve_$_part.json'] =
+      const JsonEncoder.withIndent('  ').convert(releve);
+
+  // Grand écran : capture réduite (surface de 1200 × 1920 px).
+  var ratio = _ratio;
 
   Future<ui.Image> grab() async {
     final boundary =
         _root.currentContext!.findRenderObject()! as RenderRepaintBoundary;
-    return boundary.toImage(pixelRatio: _ratio);
+    return boundary.toImage(pixelRatio: ratio);
   }
 
   Future<void> shot(String name) async {
@@ -110,8 +118,8 @@ void main() {
     final image = await grab();
     final rgba = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
     (int, int, int) at(double x, double y) {
-      final px = (x * _ratio).round().clamp(0, image.width - 1);
-      final py = (y * _ratio).round().clamp(0, image.height - 1);
+      final px = (x * ratio).round().clamp(0, image.width - 1);
+      final py = (y * ratio).round().clamp(0, image.height - 1);
       final o = (py * image.width + px) * 4;
       return (rgba.getUint8(o), rgba.getUint8(o + 1), rgba.getUint8(o + 2));
     }
@@ -284,7 +292,7 @@ void main() {
     await shot('anatomie_sombre_face_dos_allume');
     releve['anatomie_sombre'] = out;
     record();
-  }, timeout: _limit);
+  }, timeout: _limit, skip: _skip('a'));
 
   testWidgets('M6b : Anatomie clair, grand texte, animations réduites', (
     tester,
@@ -318,7 +326,7 @@ void main() {
     await shot('anatomie_reduit_profil');
     releve['anatomie_clair'] = out;
     record();
-  }, timeout: _limit);
+  }, timeout: _limit, skip: _skip('a'));
 
   // --------------------------------------------------------- fiches --
 
@@ -326,6 +334,7 @@ void main() {
     WidgetTester tester,
     String id, {
     bool dark = true,
+    bool legend = false,
   }) async {
     await pumpHome(
       tester,
@@ -351,7 +360,7 @@ void main() {
       alignment: .6,
     );
     await tester.pump(const Duration(seconds: 2));
-    await shot('fiche_${id}_${dark ? 'sombre' : 'clair'}_legende');
+    if (legend) await shot('fiche_${id}_${dark ? 'sombre' : 'clair'}_legende');
     return {'vue': state.view.name, ...s, 'semantique': semantics(tester)};
   }
 
@@ -360,7 +369,7 @@ void main() {
   ) async {
     final out = <String, Object?>{};
     for (final id in const ['traction-pronation', 'dips', 'back-squat']) {
-      out[id] = await fiche(tester, id);
+      out[id] = await fiche(tester, id, legend: id == 'traction-pronation');
       releve['fiches'] = out;
       record();
     }
@@ -371,7 +380,7 @@ void main() {
     );
     releve['fiches'] = out;
     record();
-  }, timeout: _limit);
+  }, timeout: _limit, skip: _skip('a'));
 
   // ---------------------------------------------------------- STATS --
 
@@ -419,7 +428,7 @@ void main() {
     }
     releve['stats'] = out;
     record();
-  }, timeout: _limit);
+  }, timeout: _limit, skip: _skip('b'));
 
   // ------------------------------------------------- accueil et WOD --
 
@@ -488,7 +497,7 @@ void main() {
     store.storeClock = DateTime.now;
     releve['accueil_wod'] = out;
     record();
-  }, timeout: _limit);
+  }, timeout: _limit, skip: _skip('b'));
 
   // ------------------------------------------------------ Moteur 3D --
 
@@ -503,14 +512,18 @@ void main() {
     await shot('moteur3d');
     releve['moteur3d'] = await check(tester);
     record();
-  }, timeout: _limit);
+  }, timeout: _limit, skip: _skip('b'));
 
   // --------------------------------------------------- grand écran --
 
   testWidgets('M6b : grand écran (tablette, 800 × 1280 dp)', (tester) async {
     tester.view.physicalSize = const Size(1200, 1920);
     tester.view.devicePixelRatio = 1.5;
-    addTearDown(tester.view.reset);
+    ratio = .75;
+    addTearDown(() {
+      tester.view.reset();
+      ratio = _ratio;
+    });
     AnatomyScreen.session = null;
     await pumpHome(
       tester,
@@ -535,5 +548,5 @@ void main() {
     out['fiche'] = await check(tester);
     releve['grand_ecran'] = out;
     record();
-  }, timeout: _limit);
+  }, timeout: _limit, skip: _skip('b'));
 }

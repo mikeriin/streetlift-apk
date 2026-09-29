@@ -109,9 +109,16 @@ const muscleFaces = <String, MuscleFace>{
 /// antérieurs → Face, mixtes → 3/4. Les muscles latéraux ne comptent pas ;
 /// sans principal orienté, les secondaires décident ; sans aucun, 3/4 (la
 /// vue qui montre à la fois l'avant et le côté).
+///
+/// M6b : mixtes, avec la carte du mannequin ([map], aires des régions) :
+/// si la surface des régions d'une face est au moins [kStartViewDominance]
+/// fois celle de l'autre, cette face est choisie (traction : le grand dorsal
+/// domine les biceps, vue de dos ; en 3/4 avant, son halo au flanc se lisait
+/// comme un pectoral). Sinon 3/4.
 MannequinView exerciseStartView(
   List<String> primaires, [
   List<String> secondaires = const [],
+  MannequinMap? map,
 ]) {
   for (final muscles in [primaires, secondaires]) {
     final faces = {
@@ -119,13 +126,39 @@ MannequinView exerciseStartView(
         if (muscleFaces[m] case final MuscleFace f)
           if (f != MuscleFace.lateral) f,
     };
-    if (faces.length == 2) return MannequinView.troisQuarts;
+    if (faces.length == 2) {
+      return map == null ? MannequinView.troisQuarts : _byArea(muscles, map);
+    }
     if (faces.length == 1) {
       return faces.single == MuscleFace.anterieur
           ? MannequinView.face
           : MannequinView.dos;
     }
   }
+  return MannequinView.troisQuarts;
+}
+
+/// M6b : rapport de surface à partir duquel une face l'emporte sur l'autre.
+const kStartViewDominance = 2.0;
+
+MannequinView _byArea(List<String> muscles, MannequinMap map) {
+  double area(MuscleFace face) {
+    final pack = {
+      for (final m in muscles)
+        if (muscleFaces[m] == face) m,
+    };
+    return [
+      for (final r in map.regions)
+        if (r.pack.any(pack.contains)) r.aire,
+    ].fold(0.0, (a, b) => a + b);
+  }
+
+  final front = area(MuscleFace.anterieur);
+  final back = area(MuscleFace.posterieur);
+  if (front > 0 && front >= kStartViewDominance * back) {
+    return MannequinView.face;
+  }
+  if (back > 0 && back >= kStartViewDominance * front) return MannequinView.dos;
   return MannequinView.troisQuarts;
 }
 
@@ -247,7 +280,7 @@ class ExerciseMannequinState extends State<ExerciseMannequin> {
 
   /// Vue de départ retenue (contrôles).
   MannequinView get startView =>
-      exerciseStartView(widget.primaires, widget.secondaires);
+      exerciseStartView(widget.primaires, widget.secondaires, _map);
 
   @override
   void initState() {
@@ -334,7 +367,12 @@ class ExerciseMannequinState extends State<ExerciseMannequin> {
             ),
           ),
         const SizedBox(height: 12),
-        AtlasRoleLegend(stretchColor: _ready3d ? mannequinStretch(dark) : null),
+        // M6b : sur le mannequin 3D, pastilles en halo (comme la vue).
+        AtlasRoleLegend(
+          stretchColor: _ready3d ? mannequinStretch(dark) : null,
+          haloAlpha: _ready3d ? MannequinHaloPainter.alphaFor : null,
+          haloBase: kMuscleGray,
+        ),
       ],
     );
   }
