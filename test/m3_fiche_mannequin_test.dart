@@ -85,6 +85,7 @@ void main() {
 
     test('chaque exercice montre au moins une région de ses principaux, '
         'secondaires ou étirés', () {
+      var onlyAbsent = 0;
       for (final id in ids()) {
         final d = lib.detail(id)!;
         final m = ExerciseMuscleMap.of(
@@ -93,35 +94,46 @@ void main() {
           secondaires: d.secondaires,
           etires: d.etires,
         );
+        // 5.5.2 : respiration (diaphragme, plancher pelvien, transverse) :
+        // rien à montrer sur l'écorché, liste en texte seulement.
+        if ([
+          ...d.primaires,
+          ...d.secondaires,
+          ...d.etires,
+        ].every(musclesSansRegion.containsKey)) {
+          onlyAbsent++;
+          continue;
+        }
         expect(
           m.intensities.isNotEmpty || m.stretched.isNotEmpty,
           isTrue,
           reason: id,
         );
       }
+      expect(onlyAbsent, 3);
     });
 
-    test('muscles retirés en M2, remis en M4b : régions profondes', () async {
+    test('5.5.2 : écorché sans couche profonde, muscles profonds en '
+        'texte', () async {
       final raw =
           jsonDecode(await rootBundle.loadString(kMannequinMapAsset))
               as Map<String, dynamic>;
-      // M4b : plus aucune région retirée du modèle.
       expect(raw['retirees'] as List, isEmpty);
-      final hidden = {
-        for (final id in raw['caches_au_repos'] as List)
-          map.byId[id as String]!.nom,
-      };
+      expect(raw['caches_au_repos'] as List, isEmpty);
+      expect(map.deepIds, isEmpty);
+      expect(
+        (raw['muscles_sans_region'] as List).cast<String>().toSet(),
+        musclesSansRegion.keys.toSet(),
+      );
       for (final nom in [
         'Subscapulaire',
-        'Grand rhomboïde',
         'Petit pectoral',
         'Carré des lombes',
       ]) {
-        expect(hidden, contains(nom));
-        final regions = map.regions.where((r) => r.nom == nom).toList();
-        expect(regions, hasLength(2), reason: nom);
-        expect(regions.every((r) => r.profond), isTrue, reason: nom);
+        expect(map.regions.where((r) => r.nom == nom), isEmpty, reason: nom);
       }
+      // Rhomboïdes : visibles sur l'écorché entre trapèze et scapula.
+      expect(map.regions.where((r) => r.nom == 'Rhomboïdes'), hasLength(2));
     });
   });
 
@@ -197,19 +209,19 @@ void main() {
       expect(count, greaterThan(20));
     });
 
-    test('muscles absents du modèle : listés à part (M4b : profonds '
-        'affichés)', () {
+    test('muscles absents du modèle : listés à part (5.5.2 : profonds '
+        'de l’écorché)', () {
       final m = ExerciseMuscleMap.of(
         map,
         primaires: ['rhomboides', 'trapeze_moyen'],
         stabilisateurs: ['sous_scapulaire', 'rhomboides', 'diaphragme'],
       );
-      expect(m.hidden, ['diaphragme']);
+      expect(m.hidden, ['sous_scapulaire', 'diaphragme']);
       expect(m.intensities, isNotEmpty);
-      // Rhomboïdes (profonds, remis en M4b) : principal, allumés à 1.
-      expect(m.intensities['rhomboid_major_left'], kIntensityPrimary);
-      expect(m.intensities['rhomboid_minor_right'], kIntensityPrimary);
-      expect(m.intensities['subscapularis_left'], kIntensityStabilizer);
+      expect(m.intensities['rhomboids_left'], kIntensityPrimary);
+      expect(m.intensities['rhomboids_right'], kIntensityPrimary);
+      expect(m.intensities['trapezius_middle_left'], kIntensityPrimary);
+      expect(m.intensities.containsKey('subscapularis_left'), isFalse);
     });
 
     test('teinte des étirés distincte de la rampe et du gris', () {

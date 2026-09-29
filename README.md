@@ -1,4 +1,14 @@
-# Kalis Track 5.5.1 — Mannequin anatomique 3D
+# Kalis Track 5.5.2 — Mannequin anatomique 3D
+
+## 5.5.2 — Écorché acheté, plus d'animation (correction 2 du lot M56)
+
+- **Nouveau modèle** : l'écorché « Ecorche Musclenames Male Anatomy » acheté par le propriétaire (29/09/2026) remplace le mannequin Z-Anatomy : un seul maillage sculpté, chaque muscle repéré par une plage de couleur de sa texture et son abréviation ; `tools/anatomy/build_model.py --zip Archive.zip` (archive dans la release GitHub `modele-achete`, jamais dans le dépôt) segmente la texture, nomme 136 régions (68 muscles × 2 côtés, dont deltoïde, trapèze, grand pectoral et gastrocnémien subdivisés comme dans le pack), regroupe os (`os`), tendons et aponévroses (`contexte`), tête, mains et pieds, et décime le tout à 59 400 triangles sans fissure.
+- **Affichage** : muscles gris à 50 % d'opacité (inchangé) ; les muscles sollicités s'allument dans la **couleur dominante** choisie dans Réglages › Apparence (rampe de la teinte principale vers sa nuance vive), sur le mannequin comme sur la carte 2D.
+- **Plus d'animation ni de posture** : fiches avec la démonstration 2D historique et le mannequin fixe portant les muscles de l'exercice ; écran Anatomie sans sélecteur « Posture » (squelette, peau, matériel, clips et outils d'animation retirés : `rig.json`, `mannequin_skin.bin`, `animate.py`…). Les positions des exercices seront faites à la main par le propriétaire plus tard.
+- **Séance** : plus de boutons Précédent / Suivant (glisser à droite et à gauche suffit) ; carte « Koach · séance du jour » sur sa page.
+- **Muscles profonds** : l'écorché ne montre que la couche superficielle ; 20 muscles profonds du pack (petit pectoral, subscapulaire, vaste intermédiaire, rotateurs de la hanche, transverse…) restent en texte sur les fiches (« Absents du mannequin »).
+
+Détail : `SUIVI_PROJET.md` (M56, correction 2). Tests : `tools/tests/test_m2_anatomy.py` (réécrit), `test/m2_mannequin_test.dart`, `m3_fiche_mannequin_test.dart`, `m4b_anatomie_test.dart` (adaptés), `integration_test/animations_m56_test.dart`.
 
 ## 5.5.1 — Corrections du propriétaire sur M56 (correction 1 du lot M56)
 
@@ -92,7 +102,7 @@ Détail : `SUIVI_PROJET.md` (M3). Tests : `test/m3_fiche_mannequin_test.dart`, `
 - **Arsenal › Référence › Anatomie** (nouveau) : mannequin anatomique en 3D (musculature gris mat, tête, mains et pieds sombres et lisses, os discrets), à tourner au doigt ; boutons **Face / Dos / Profil / 3/4** avec transition ; choix d'un des **11 groupes** (mis en évidence dans la rampe historique bordeaux → rouge, halo en thème sombre) et **liste des muscles du groupe en texte** ; **toucher un muscle affiche son nom** (côté et groupe).
 - **Réglages › Affichage 3D** (nouveau) : « Nom du muscle au toucher », « Os visibles », « Halo », activés par défaut (préférences du téléphone, hors sauvegarde).
 - **Réglages › À propos › Moteur 3D** : la mesure de fluidité porte désormais sur le mannequin (rotation lente, muscles d'une traction allumés).
-- **Sources et licences** : crédits du modèle (Z-Anatomy / BodyParts3D, CC BY-SA 4.0).
+- **Sources et licences** : crédits du modèle 3D (écorché acheté, licence commerciale ; Z-Anatomy / BodyParts3D CC BY-SA 4.0 jusqu'à 5.5.1).
 - Téléphone sans Flutter GPU : l'écran Anatomie montre la carte 2D historique.
 - Technique : modèle fabriqué par `tools/anatomy/build_model.py` (Blender sans interface) depuis fitmitwith-anatomy-atlas, 56 126 triangles, une maille par muscle et par côté ; converti au build par le hook de flutter_scene (`hook/build.dart`) ; widget réutilisable `Mannequin3D` (`lib/mannequin_3d.dart`), rendu à la demande.
 

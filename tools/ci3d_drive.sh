@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # M1 (CI 3D) : rendu réel de l'écran Moteur 3D (M2 : Anatomie ; M3 : fiche
 # exercice ; M4 : STATS ; M4b : transparence et filtres ; M4c : zoom au
-# pincement et filtres normalisés ; M5 : postures du mannequin riggé ; M6 :
-# animations d'exercice et carte Koach du jour) sur
+# pincement et filtres normalisés ; M5 : postures du mannequin riggé ; M56 :
+# carte Koach du jour ; 5.5.2 : écorché acheté, sans posture) sur
 # l'émulateur
 # Android lancé
 # par .github/workflows/ci-3d.yml (reactivecircus/android-emulator-runner).
@@ -41,9 +41,10 @@ cible() {
     --target="integration_test/$1.dart" \
     -d emulator-5554 > "$out/drive-$1.log" 2>&1
 }
-# M56 : lancé en premier (lot en cours) : Anatomie (modèle musclé, postures), fiches des 3 pilotes animées
-# (boucle en 8 images, vue 3/4, pause hors de l'écran, animations réduites)
-# carte « Koach · séance du jour » et préchargement. Les cibles des lots précédents ne
+# M56 : lancé en premier (lot en cours) ; 5.5.2 : Anatomie (écorché acheté,
+# 4 vues, groupe Dos allumé), fiches des 3 pilotes (démonstration 2D et
+# mannequin fixe avec ses muscles), carte « Koach · séance du jour » et
+# préchargement. Les cibles des lots précédents ne
 # sont relancées que sur demande (CI3D_TOUT=1) : captures limitées aux
 # écrans du lot.
 cible animations_m56_test
@@ -64,9 +65,8 @@ code=0
 code_fiche=0
 code_stats=0
 if [ "${CI3D_TOUT:-0}" = "1" ]; then
-# M5 : postures du mannequin riggé.
-cible postures_m5_test
-code_m5=$?
+# M5 : postures du mannequin riggé (cible retirée en 5.5.2 : écorché sans
+# squelette).
 # M4c : zoom au pincement et menus « Filtres » normalisés.
 cible zoom_filtres_m4c_test
 code_m4c=$?

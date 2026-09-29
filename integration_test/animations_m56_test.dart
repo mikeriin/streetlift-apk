@@ -1,4 +1,4 @@
-// M56 (CI 3D) : mannequin musclé, postures, fiches (mannequin fixe et ses
+// M56 (CI 3D) : écorché acheté (5.5.2), fiches (mannequin fixe et ses
 // muscles), carte « Koach · séance du jour » et préchargement, sur
 // émulateur Android (Flutter GPU), lancé par tools/ci3d_drive.sh :
 //   flutter drive --driver=test_driver/integration_test.dart \
@@ -7,8 +7,9 @@
 // la fiche montre la démonstration 2D historique et le mannequin 3D avec
 // les muscles de l'exercice. Captures : trois fiches (traction pronation,
 // dips, back squat), carte Koach (page à part, avant l'exercice 1) ouverte
-// et repliée, sombre et clair, écran Anatomie (4 postures en 3/4, repos face
-// et dos), préchargement (ouverture d'un mannequin avant / après), Moteur 3D.
+// et repliée, sombre et clair, écran Anatomie (repos face, dos, profil, 3/4 ;
+// groupe Dos allumé dans la couleur dominante), préchargement (ouverture
+// d'un mannequin avant / après), Moteur 3D.
 // Relevé m56_releve.json (cadre du mannequin dans chaque capture, contrôles
 // sans référence : figure, gris, rouge).
 import 'dart:convert';
@@ -223,13 +224,12 @@ void main() {
     );
   }
 
-  // ----------------------------------------- postures et modèle (M56) --
+  // ------------------------------------------------ modèle (5.5.2) --
 
-  testWidgets('M56 : écran Anatomie, modèle musclé et postures', (
+  testWidgets('5.5.2 : écran Anatomie, écorché acheté, vues et groupe', (
     tester,
   ) async {
     AnatomyScreen.session = null;
-    AnatomyScreen.sessionPosture = 'debout';
     await pumpHome(
       tester,
       const AnatomyScreen(key: ValueKey('m56-anat')),
@@ -239,25 +239,26 @@ void main() {
     final state = mannequin(tester)!;
     expect(state.available, isTrue, reason: 'pas de 3D');
     final out = <String, Object?>{};
-    for (final view in const [MannequinView.face, MannequinView.dos]) {
+    for (final view in MannequinView.values) {
       state.setView(view);
       await tester.pump(const Duration(milliseconds: 900));
       await tester.pump(const Duration(seconds: 2));
-      await shot('m56_anatomie_debout_${view.name}');
-      out['debout_${view.name}'] = await check(tester, false);
+      await shot('m56_anatomie_${view.name}');
+      final s = await check(tester, true);
+      expect(s['figure'] as double, greaterThan(.03), reason: view.name);
+      out[view.name] = s;
     }
-    for (final key in const ['suspendu', 'squat_bas', 'planche']) {
-      state.setPosture(key);
-      await tester.pump(const Duration(milliseconds: 900));
-      await tester.pump(const Duration(seconds: 2));
-      state.setView(MannequinView.troisQuarts);
-      await tester.pump(const Duration(milliseconds: 900));
-      await tester.pump(const Duration(seconds: 2));
-      await shot('m56_anatomie_$key');
-      final s = await check(tester, false);
-      expect(s['figure'] as double, greaterThan(.03), reason: key);
-      out[key] = s;
-    }
+    // Groupe Dos allumé (couleur dominante), vue de dos.
+    final anatomy = tester.state<AnatomyScreenState>(
+      find.byType(AnatomyScreen),
+    );
+    anatomy.toggleGroup('dos');
+    await tester.pump(const Duration(milliseconds: 900));
+    await tester.pump(const Duration(seconds: 2));
+    await shot('m56_anatomie_dos_allume');
+    final lit = await check(tester, true);
+    expect(lit['rouge'] as double, greaterThan(0), reason: 'dos allumé');
+    out['dos_allume'] = lit;
     m6['anatomie'] = out;
     record();
   }, timeout: _limit);

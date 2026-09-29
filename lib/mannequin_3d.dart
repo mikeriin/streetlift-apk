@@ -1,8 +1,10 @@
 // M2 (mannequin 3D) : mannequin anatomique statique réutilisable.
 //
 // Modèle d'exécution `assets/anatomy/mannequin.glb` (fabriqué par
-// tools/anatomy/build_model.py depuis Z-Anatomy / BodyParts3D, CC BY-SA 4.0),
-// converti au build par le hook de flutter_scene et chargé une seule fois.
+// tools/anatomy/build_model.py ; 5.5.2 : depuis l'écorché acheté par le
+// propriétaire, un muscle = une région de sa texture ; jusqu'à 5.5.1 :
+// Z-Anatomy / BodyParts3D, CC BY-SA 4.0), converti au build par le hook de
+// flutter_scene et chargé une seule fois.
 // Une maille par muscle et par côté (nœud nommé par l'id de la région de
 // `assets/anatomy/muscles_map.json`) : la mise en évidence change le
 // matériau des nœuds concernés (rampe historique bordeaux → rouge, halo),
@@ -22,14 +24,16 @@
 // son axe), sans écriture de profondeur, faces arrière éliminées : chaque
 // muscle ne compte qu'une couche par pixel, même en rotation.
 //
-// M5 : le modèle porte un squelette d'animation et une peau
+// M5 : le modèle portait un squelette d'animation et une peau
 // (`mannequin_rig.dart`). [MannequinScene.applyPose] tourne les articulations
 // (le GPU déforme les maillages) ; le toucher et le cadrage utilisent les
-// positions déformées, calculées sur le processeur avec la même peau. Chaque
-// maille translucide reçoit une translation « d'ordre » (sans effet sur son
-// dessin, ignorée par la peau) qui place son centre de tri sur le muscle
-// déformé. Sans posture (fiches, STATS), le modèle reste au repos, identique
-// au modèle statique de 5.3.2.
+// positions déformées, calculées sur le processeur avec la même peau.
+//
+// 5.5.2 (M56 correction 2, décision du propriétaire du 29/09/2026) : l'écorché
+// acheté n'a ni squelette ni posture (rig.json et mannequin_skin.bin
+// retirés) ; aucun rig n'est chargé, le modèle reste au repos partout. Le
+// code de posture reste en place, inactif, pour les positions d'exercice
+// que le propriétaire fera à la main plus tard.
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math' as math;
@@ -56,7 +60,7 @@ const kMannequinAsset = 'assets/anatomy/mannequin.glb';
 /// Carte des régions (id, côté, nom français, groupe, muscles du pack).
 const kMannequinMapAsset = 'assets/anatomy/muscles_map.json';
 
-/// Crédits du modèle (CC BY-SA 4.0), repris dans « Sources et licences ».
+/// Crédits du modèle (écorché acheté), repris dans « Sources et licences ».
 const kMannequinAttributionAsset = 'assets/anatomy/ATTRIBUTION.md';
 
 /// M4b : opacité de tous les muscles (décision du propriétaire, 28/09/2026 :
@@ -559,14 +563,9 @@ class MannequinScene {
 
   static Map<String, MeshData>? _restCache;
 
-  static Future<MannequinRig?> _loadRig() async {
-    try {
-      return await MannequinRig.load();
-    } catch (_) {
-      // Rig illisible : mannequin au repos (5.3.2).
-      return null;
-    }
-  }
+  /// 5.5.2 : plus de rig (écorché acheté, sans squelette) ; le mannequin
+  /// reste au repos. Le code de posture ci-dessous attend un rig non nul.
+  static Future<MannequinRig?> _loadRig() async => null;
 
   static Future<MannequinScene> create() async {
     final results = await Future.wait<Object?>([
@@ -1259,7 +1258,7 @@ class Mannequin3DState extends State<Mannequin3D>
   @override
   void initState() {
     super.initState();
-    _yaw = _toYaw = _startView.yaw;
+    _yaw = _toYaw = widget.view.yaw;
     _settings.listenable.addListener(_onSettings);
     unawaited(_settings.load());
     _openTimer = OpenTimer();

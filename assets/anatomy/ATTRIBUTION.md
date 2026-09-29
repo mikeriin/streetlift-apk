@@ -1,30 +1,14 @@
-# Mannequin anatomique 3D — sources, licence et modifications
+# Mannequin anatomique 3D — source, licence et modifications
 
-Le mannequin 3D de Kalis Track (`assets/anatomy/mannequin.glb` et `assets/anatomy/muscles_map.json`) est une adaptation du modèle `full-body-male-mobile.glb` et de la carte `full-body-map.json` du dépôt fitmitwith-anatomy-atlas (https://github.com/slfresh/fitmitwith-anatomy-atlas, commit 4120ee68b6604b8f2f69105d6de6166fad4734c4). Ces fichiers sont distribués sous licence Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) : https://creativecommons.org/licenses/by-sa/4.0/. Seuls ces fichiers du modèle sont sous CC BY-SA ; le reste de l'application relève de sa propre licence.
+Le mannequin 3D de Kalis Track (`assets/anatomy/mannequin.glb` et `assets/anatomy/muscles_map.json`) est dérivé de l'écorché « Ecorche Musclenames Male Anatomy » (maillage ZBrush `male_ecorche.OBJ`, texture `diffuse.jpeg`, légende `BonesMusclesFibers.pdf`), acheté par le propriétaire de l'application le 29/09/2026 sous la licence commerciale du vendeur. Cette licence autorise l'usage du modèle dans l'application ; elle n'autorise pas sa redistribution : le fichier source n'est pas dans le dépôt public et le modèle d'exécution (décimé, sans texture, régions nommées) n'est fourni qu'en tant que composant de l'application.
 
-## Crédits (formulation demandée par les concédants)
+Jusqu'à la version 5.5.1, le mannequin était une adaptation du modèle Z-Anatomy / BodyParts3D (CC BY-SA 4.0) ; cette source n'est plus utilisée à partir de 5.5.2.
 
-"Z-Anatomy - The libre 3D atlas of anatomy - CC-BY-SA 4.0"
-https://github.com/Z-Anatomy/Models-of-human-anatomy
-Authors: Kousaku Okubo (original model BodyParts3D), Gauthier Kervyn (design, 3D, anatomy), Marcin Zielinski (Blender add-on) and the contributors named in the upstream License.txt.
+## Modifications faites pour Kalis Track (29/09/2026)
 
-"BodyParts3D - The Database Center for Life Science - CC-BY-SA 2.1 Japan"
-(the license under which Z-Anatomy obtained the geometry)
-https://creativecommons.org/licenses/by-sa/2.1/jp/
+- Régions : chaque muscle de la texture (plage de couleur portant son abréviation) devient une région nommée par côté ; os (beige) regroupés dans `os`, tendons et aponévroses (gris) dans `contexte`, tête, mains et pieds en volumes sombres.
+- Subdivisions du pack de contenu : deltoïde (antérieur, moyen, postérieur), trapèze (supérieur, moyen, inférieur), grand pectoral (claviculaire, sterno-costal, abdominal), gastrocnémien (médial, latéral).
+- Maillage simplifié à moins de 60 000 triangles (décimation globale, sans fissure), sans texture : couleurs de rendu de l'application (gris à 50 % d'opacité, couleur dominante pour les muscles sollicités).
+- Noms français, correspondance avec les 11 groupes et les muscles du pack de contenu ; les muscles profonds absents de l'écorché restent en texte sur les fiches.
 
-"BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International"
-(the credit line the Database Center for Life Science requests today)
-https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html
-https://creativecommons.org/licenses/by/4.0/
-
-Adaptation intermédiaire : fitmitwith-anatomy-atlas (FIT MIT WITH — 3D Anatomy Atlas), CC BY-SA 4.0, notice du 13/09/2026 reprise intégralement dans `tools/anatomy/source/ATTRIBUTION.txt`.
-
-## Modifications faites pour Kalis Track (27/09/2026)
-
-- Muscles profonds invisibles au repos retirés (liste dans `muscles_map.json`, clé `retirees`).
-- Aponévrose des obliques écartée de devant le droit de l'abdomen.
-- Tête, mains et pieds remplacés par des volumes sombres et lisses de même encombrement ; platysma et bandelette ilio-tibiale retirés.
-- Os d'appui invisibles retirés, maillages simplifiés (moins de 60 000 triangles), couleurs de rendu de l'application.
-- Noms français, correspondance avec les 11 groupes et les muscles du pack de contenu.
-
-Fabrication reproductible : `tools/anatomy/build_model.py` (Blender sans interface). Le modèle n'a pas été relu par un spécialiste de l'anatomie ; les couleurs affichées sont des repères d'entraînement, pas une mesure de l'activation musculaire.
+Fabrication reproductible : `tools/anatomy/build_model.py --zip Archive.zip`. Le modèle n'a pas été relu par un spécialiste de l'anatomie ; les couleurs affichées sont des repères d'entraînement, pas une mesure de l'activation musculaire.

@@ -139,7 +139,16 @@ principale dans `analysis_options.yaml`, comme `tools/perf_device/`).
   logiciel plus court, captures lisibles (écran de 360 × 640 dp).
 - Aperçu hors application : `render_preview.py --opacite 0.5 --regions …`.
 
-## Squelette et postures (M5)
+## Squelette et postures (M5) — retirés en 5.5.2
+
+Le squelette, la peau et les postures (M5) ont été retirés avec l'écorché
+acheté (M56 correction 2, 5.5.2) : `rig.json`, `mannequin_skin.bin`,
+`build_rig.py`, `rig_def.py`, `rig_pose.py`, `render_poses.py`,
+`build_body.py`, `measure_body.py`, `silhouette.py`, `mannequin_base.glb`,
+`postures_m5_test.dart`, `m5_rig_test.dart`, `test_m5_rig.py`,
+`test_m56_body.py`. Le code de posture de `mannequin_3d.dart` et
+`mannequin_rig.dart` reste en place, inactif (aucun rig chargé). Ce qui
+suit décrit l'état de 5.5.0 à 5.5.1.
 
 - `integration_test/postures_m5_test.dart`, cible du lot lancée en premier par
   `tools/ci3d_drive.sh` (les cibles des lots précédents sur demande,
@@ -159,8 +168,16 @@ principale dans `analysis_options.yaml`, comme `tools/perf_device/`).
 Correction 1 (5.5.1, 29/09/2026) : 3 essais sur `claude/ci-3d-fable`
 (36532238784 : formatage, test Koach S5 avec la page Koach, fondu non
 garanti à mi-chemin sur émulateur ; 36533912915 vert ; 36535840924 vert,
-libellés des positions). `python3 tools/anatomy/silhouette.py` compare la
+libellés des positions). `python3 tools/anatomy/silhouette.py` comparait la
 silhouette du mannequin à la référence du propriétaire.
+
+Correction 2 (5.5.2, 29/09/2026) : modèle remplacé par l'écorché acheté
+(`tools/anatomy/build_model.py --zip Archive.zip`, archive de la release
+GitHub `modele-achete`, jamais dans le dépôt), plus d'animation ni de
+posture, muscles sollicités dans la couleur dominante, plus de boutons
+Précédent / Suivant dans la séance. Planches de contrôle :
+`build_model.py --render dossier` (face, dos, profils, une couleur par nœud,
+légende).
 
 - Branche CI propre au lot : `claude/ci-3d-fable` (copie de `ci-3d.yml`
   déclenchée sur cette branche, `group: ci-3d-fable`, résultats recommités
@@ -168,20 +185,17 @@ silhouette du mannequin à la référence du propriétaire.
   `git commit-tree` avec le workflow réécrit, sans toucher `claude/ci-3d`
   de la session M6).
 - `integration_test/animations_m56_test.dart`, seule cible jouée par défaut
-  par `tools/ci3d_drive.sh` : écran Anatomie (modèle musclé au repos face et
-  dos, postures Suspendu, Squat bas, Planche en 3/4), fiches des 3 pilotes
-  (correction 1 : position de départ, fondu, position de fin, vue 3/4 ;
-  animations réduites : passage instantané), carte « Koach · séance du
+  par `tools/ci3d_drive.sh` : écran Anatomie (5.5.2 : écorché au repos dans
+  les 4 vues, groupe Dos allumé dans la couleur dominante), fiches des 3
+  pilotes (5.5.2 : démonstration 2D et mannequin fixe avec les muscles de
+  l'exercice), carte « Koach · séance du
   jour » (page à part avant l'exercice 1 ; ouverte,
   repliée, sombre, clair), ouverture d'un mannequin avant / après le
   préchargement (`MannequinPreload`, première image et images perdues,
   durée du chargement et du préchauffage, mémoire ajoutée), écran Moteur 3D
   (carte Préchargement). Relevé `emulateur/m56_releve.json`, captures
   `emulateur/m56_*.png`.
-- Hors application : `python3 tools/anatomy/render_preview.py sortie.png
-  [--glb tools/anatomy/mannequin_base.glb]` (avant / après), `render_poses.py
-  dossier --centre os:<nom> --echelle .3` (gros plan d'une articulation dans
-  une posture), `render_clip.py <id> dossier --gif 8` (planche des positions
-  clés, GIF d'une boucle au tempo réel, planche de la boucle `<id>_boucle.png`).
-- `python3 tools/anatomy/animate.py --tous` régénère les clips ;
-  `animate.py --check` vérifie qu'ils sont à jour.
+- Hors application : `python3 tools/anatomy/render_preview.py sortie.png`
+  (Blender, rendu du GLB d'exécution) ; `build_model.py --render dossier`
+  (planches des régions). Les outils d'animation (`animate.py`,
+  `render_clip.py`, `render_poses.py`) ont été retirés en 5.5.2.
