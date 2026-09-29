@@ -209,3 +209,23 @@ par nœud, légende).
   (Blender, rendu du GLB d'exécution) ; `build_model.py --render dossier`
   (planches des régions). Les outils d'animation (`animate.py`,
   `render_clip.py`, `render_poses.py`) ont été retirés en 5.5.2.
+
+## Audit du mannequin fixe (M6b)
+
+- `integration_test/audit_m6b_test.dart`, seule cible jouée par défaut par
+  `tools/ci3d_drive.sh` (M56 et les lots précédents : `CI3D_TOUT=1`), en
+  **deux parties** (`--dart-define=M6B_PART=a|b`, journaux
+  `drive-audit_m6b_test-a.log` / `-b.log`) : l'essai A, 30 captures dans
+  un seul lancement, a perdu le service du pilote au renvoi des données
+  (« Service has disappeared »). Partie a : Anatomie (repos, menu Filtres,
+  groupe Dos, toucher, zoom, clair, grand texte avec animations réduites),
+  fiches (traction, dips, squat ; étirement en clair). Partie b : STATS,
+  accueil, aperçu de WOD, Moteur 3D, grand écran (`tester.view` à
+  1200 × 1920 px, capture à 0,75).
+- Relevés `emulateur/m6b_releve_a.json`, `m6b_releve_b.json` : figure, halo
+  (pixels saturés du côté de la couleur dominante), gris, **démarcation**
+  (écart moyen des pixels de part et d'autre des bords gauche et droit de la
+  vue : 0 attendu, fond = support), vue de départ, libellés.
+- Aires des régions (vue de départ des fiches) :
+  `python3 tools/anatomy/build_model.py --aires` (depuis le GLB, sans
+  l'archive) ; `build_model.py --zip` les écrit aussi.

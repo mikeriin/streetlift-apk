@@ -889,6 +889,9 @@ class _DayCard extends StatelessWidget {
                               fallbackTint: SL.onBrandSoft,
                               fallbackGlow: false,
                               background: isToday ? SL.bordeaux : SL.card,
+                              // M6b : sur la carte du jour (couleur
+                              // dominante), halo de la couleur du texte.
+                              haloColor: isToday ? SL.onBrandSoft : null,
                               subject: 'muscles de la séance',
                             ),
                           ),

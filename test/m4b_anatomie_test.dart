@@ -238,10 +238,9 @@ void main() {
       expect(AnatomyFilters.none.count, 0);
       // M6b : l'écorché n'a pas de couche profonde, le filtre est retiré.
       expect(AnatomyFilters.total, 12);
-      expect(
-        AnatomyFilters.categories.last.options.map((o) => o.key),
-        ['bones'],
-      );
+      expect(AnatomyFilters.categories.last.options.map((o) => o.key), [
+        'bones',
+      ]);
       expect(g.withBones(false).count, 2);
       expect(g, g.toggleGroup('biceps').toggleGroup('biceps'));
     });

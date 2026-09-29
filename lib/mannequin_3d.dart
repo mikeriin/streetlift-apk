@@ -244,6 +244,11 @@ class MannequinHaloPainter extends CustomPainter {
   final Size size;
   final bool dark, soft;
 
+  /// M6b : couleur imposée du halo (support de la couleur dominante, carte
+  /// de la séance du jour : la rampe s'y confondrait avec le fond) ; null :
+  /// rampe de la couleur dominante.
+  final Color? color;
+
   /// M6b : caméra lue au moment du dessin (rotation continue de l'écran
   /// Moteur 3D : elle change à chaque image, [repaint] prévient le
   /// peintre) ; null : [camera].
@@ -255,6 +260,7 @@ class MannequinHaloPainter extends CustomPainter {
     required this.size,
     required this.dark,
     required this.soft,
+    this.color,
     this.cameraOf,
     super.repaint,
   });
@@ -295,7 +301,7 @@ class MannequinHaloPainter extends CustomPainter {
       draw(id, mannequinStretch(dark), alphaFor(kIntensityStretched));
     }
     for (final e in ordered) {
-      draw(e.key, mannequinHeat(e.value, dark), alphaFor(e.value));
+      draw(e.key, color ?? mannequinHeat(e.value, dark), alphaFor(e.value));
     }
   }
 
@@ -306,6 +312,7 @@ class MannequinHaloPainter extends CustomPainter {
       old.camera != camera ||
       old.size != size ||
       old.dark != dark ||
+      old.color != color ||
       old.soft != soft;
 }
 
@@ -1380,6 +1387,10 @@ class Mannequin3D extends StatefulWidget {
   /// 2D, sans démarcation. Null : couleur des cartes du thème.
   final Color? background;
 
+  /// M6b : couleur du halo sur un support de la couleur dominante (null :
+  /// rampe de la couleur dominante).
+  final Color? haloColor;
+
   /// Vues proposées par les boutons (M4, STATS : bascule Face / Dos).
   final List<MannequinView> views;
 
@@ -1416,6 +1427,7 @@ class Mannequin3D extends StatefulWidget {
     this.viewButtons = true,
     this.interactive = true,
     this.background,
+    this.haloColor,
     this.views = MannequinView.values,
     this.spin = false,
     this.height = 420,
@@ -1949,6 +1961,7 @@ class Mannequin3DState extends State<Mannequin3D>
                           size: _size,
                           dark: dark,
                           soft: _settings.halo.value,
+                          color: widget.haloColor,
                           cameraOf: widget.spin ? () => _camera! : null,
                           repaint: widget.spin ? _spinFrame : null,
                         ),
