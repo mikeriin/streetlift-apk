@@ -1,4 +1,11 @@
-# Kalis Track 5.5.3 — Mannequin anatomique 3D
+# Kalis Track 5.5.4 — Mannequin anatomique 3D
+
+## 5.5.4 — Halo au lieu de la couleur, fond du support (correction 4 du lot M56)
+
+- **Halo** : le maillage n'est plus coloré ; chaque muscle sollicité reçoit un halo dessiné par-dessus la vue (`MannequinHaloPainter` : triangles tournés vers la caméra projetés à l'écran, union remplie dans la couleur dominante, opacité selon l'intensité, flou doux — net si le réglage « Halo » est désactivé). Le gris et le relief du muscle restent visibles. Projection étalonnée sur les rayons de la caméra (`HaloProjection`), sens des faces mesuré sur le modèle.
+- **Fond** : la scène 3D (et le repli 2D) prend la couleur du support — carte, page, carte de la séance du jour — sans démarcation (`Mannequin3D.background`, `TargetedMannequin.background`).
+
+Détail : `SUIVI_PROJET.md` (M56, correction 4). Test : `test/m56_halo_test.dart`.
 
 ## 5.5.3 — Muscles opaques, zone ciblée, le modèle partout (correction 3 du lot M56)
 

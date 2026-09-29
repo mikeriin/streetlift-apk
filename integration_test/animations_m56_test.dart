@@ -68,7 +68,8 @@ void main() {
     );
     final image = await grab();
     final rgba = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
-    final bg = sceneBackground(dark);
+    // 5.5.4 : fond = couleur du support (carte ou page).
+    final bg = mannequin(tester)?.backgroundColor ?? sceneBackground(dark);
     final br = (bg.r * 255).round(), bgG = (bg.g * 255).round();
     final bb = (bg.b * 255).round();
     var total = 0, figure = 0, red = 0, gray = 0;

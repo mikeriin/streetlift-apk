@@ -6,9 +6,10 @@
 // Z-Anatomy / BodyParts3D, CC BY-SA 4.0), converti au build par le hook de
 // flutter_scene et chargé une seule fois.
 // Une maille par muscle et par côté (nœud nommé par l'id de la région de
-// `assets/anatomy/muscles_map.json`) : la mise en évidence change le
-// matériau des nœuds concernés (rampe historique bordeaux → rouge, halo),
-// le toucher lance un rayon sur la scène et nomme le muscle touché.
+// `assets/anatomy/muscles_map.json`) : la mise en évidence (jusqu'à 5.5.3 :
+// matériau coloré des nœuds ; 5.5.4 : halo dessiné par-dessus la vue,
+// `MannequinHaloPainter`, le maillage reste gris), le toucher lance un rayon
+// sur la scène et nomme le muscle touché.
 //
 // Rendu à la demande : la vue ne se redessine que lorsqu'un paramètre change
 // (caméra, intensités, thème, réglages) ; aucune boucle continue, sauf dans
@@ -217,6 +218,170 @@ class MannequinMap {
         return c != 0 ? c : a.compareTo(b);
       });
     return list;
+  }
+}
+
+
+// ------------------------------------------------------------------ halo --
+
+/// 5.5.4 (M56 correction 4, décision du propriétaire du 29/09/2026) : le
+/// maillage n'est plus coloré ; chaque muscle sollicité reçoit un **halo**
+/// dessiné par-dessus la vue : ses triangles tournés vers la caméra sont
+/// projetés à l'écran, l'union est remplie dans la couleur de la rampe
+/// (couleur dominante, intensité → opacité) avec un flou doux ([soft],
+/// réglage « Halo »), le gris du muscle reste visible au travers. Sans
+/// scène ni GPU : projection calculée ici, étalonnée sur
+/// `camera.screenPointToRay` (mêmes repères que le toucher). Approximation
+/// assumée : un triangle tourné vers la caméra mais caché par une autre
+/// partie du corps (bras devant le tronc) est quand même compté.
+class MannequinHaloPainter extends CustomPainter {
+  final MannequinScene scene;
+  final PerspectiveCamera camera;
+  final Size size;
+  final bool dark, soft;
+
+  const MannequinHaloPainter({
+    required this.scene,
+    required this.camera,
+    required this.size,
+    required this.dark,
+    required this.soft,
+  });
+
+  /// Flou du halo (px) et opacités (intensité 0 → 1).
+  static const blurSigma = 9.0;
+  static double alphaFor(double v) => .16 + .30 * v;
+
+  @override
+  void paint(Canvas canvas, Size s) {
+    final lit = scene.haloIntensities;
+    final stretched = scene.haloStretched;
+    if (lit.isEmpty && stretched.isEmpty) return;
+    final proj = HaloProjection.of(camera, size);
+    if (proj == null) return;
+    void draw(String id, Color color, double alpha) {
+      final mesh = scene.restMesh(id);
+      if (mesh == null) return;
+      final path = proj.silhouette(
+        mesh.positions,
+        mesh.indices ?? List<int>.generate(mesh.vertexCount, (i) => i),
+        outward: scene.windingOutward,
+      );
+      if (path == null) return;
+      final paint = Paint()
+        ..color = color.withValues(alpha: alpha)
+        ..style = PaintingStyle.fill;
+      if (soft) {
+        paint.maskFilter = const MaskFilter.blur(BlurStyle.normal, blurSigma);
+      }
+      canvas.drawPath(path, paint);
+    }
+
+    // Faibles d'abord : les principaux ressortent.
+    final ordered = lit.entries.toList()
+      ..sort((a, b) => a.value.compareTo(b.value));
+    for (final id in stretched) {
+      draw(id, mannequinStretch(dark), alphaFor(kIntensityStretched));
+    }
+    for (final e in ordered) {
+      draw(e.key, mannequinHeat(e.value, dark), alphaFor(e.value));
+    }
+  }
+
+  @override
+  bool shouldRepaint(MannequinHaloPainter old) =>
+      old.scene != scene ||
+      old.camera != camera ||
+      old.size != size ||
+      old.dark != dark ||
+      old.soft != soft;
+}
+
+/// Projection écran d'un point du monde pour une caméra donnée, étalonnée
+/// sur les rayons des coins de la vue (aucune hypothèse sur les
+/// conventions du moteur).
+class HaloProjection {
+  final vm.Vector3 eye, forward, right, up;
+  final double kx, ky;
+  final Size size;
+
+  const HaloProjection(
+    this.eye,
+    this.forward,
+    this.right,
+    this.up,
+    this.kx,
+    this.ky,
+    this.size,
+  );
+
+  static HaloProjection? of(PerspectiveCamera camera, Size size) {
+    if (size.isEmpty) return null;
+    final eye = camera.position;
+    final centre = camera.screenPointToRay(size.center(Offset.zero), size);
+    final forward = centre.direction.normalized();
+    var right = forward.cross(vm.Vector3(0, 1, 0));
+    if (right.length2 < 1e-9) right = vm.Vector3(1, 0, 0);
+    right.normalize();
+    final up = right.cross(forward)..normalize();
+    // Coin bas droit : composantes tangentielles du rayon → échelle et signe
+    // de l'axe écran correspondant.
+    final corner = camera
+        .screenPointToRay(Offset(size.width, size.height), size)
+        .direction
+        .normalized();
+    final cz = corner.dot(forward);
+    if (cz.abs() < 1e-6) return null;
+    final kx = corner.dot(right) / cz;
+    final ky = corner.dot(up) / cz;
+    if (kx.abs() < 1e-9 || ky.abs() < 1e-9) return null;
+    return HaloProjection(eye, forward, right, up, kx, ky, size);
+  }
+
+  /// Point du monde → écran (null derrière la caméra).
+  Offset? project(double x, double y, double z) {
+    final dx = x - eye.x, dy = y - eye.y, dz = z - eye.z;
+    final pz = dx * forward.x + dy * forward.y + dz * forward.z;
+    if (pz <= 1e-4) return null;
+    final px = (dx * right.x + dy * right.y + dz * right.z) / pz;
+    final py = (dx * up.x + dy * up.y + dz * up.z) / pz;
+    return Offset(
+      size.width / 2 + px / kx * size.width / 2,
+      size.height / 2 + py / ky * size.height / 2,
+    );
+  }
+
+  /// Silhouette écran des triangles tournés vers la caméra (null : aucun).
+  Path? silhouette(Float32List p, List<int> idx, {bool outward = true}) {
+    final n = p.length ~/ 3;
+    final screen = List<Offset?>.filled(n, null);
+    for (var i = 0; i < n; i++) {
+      screen[i] = project(p[i * 3], p[i * 3 + 1], p[i * 3 + 2]);
+    }
+    final path = Path();
+    var any = false;
+    for (var t = 0; t + 2 < idx.length; t += 3) {
+      final a = idx[t], b = idx[t + 1], c = idx[t + 2];
+      final sa = screen[a], sb = screen[b], sc = screen[c];
+      if (sa == null || sb == null || sc == null) continue;
+      // Face tournée vers la caméra : normale (sens direct glTF) du côté
+      // de l'œil.
+      final ax = p[a * 3], ay = p[a * 3 + 1], az = p[a * 3 + 2];
+      final ux = p[b * 3] - ax, uy = p[b * 3 + 1] - ay, uz = p[b * 3 + 2] - az;
+      final wx = p[c * 3] - ax, wy = p[c * 3 + 1] - ay, wz = p[c * 3 + 2] - az;
+      final nx = uy * wz - uz * wy, ny = uz * wx - ux * wz;
+      final nz = ux * wy - uy * wx;
+      final facing =
+          nx * (eye.x - ax) + ny * (eye.y - ay) + nz * (eye.z - az);
+      if (outward ? facing <= 0 : facing >= 0) continue;
+      path
+        ..moveTo(sa.dx, sa.dy)
+        ..lineTo(sb.dx, sb.dy)
+        ..lineTo(sc.dx, sc.dy)
+        ..close();
+      any = true;
+    }
+    return any ? path : null;
   }
 }
 
@@ -461,6 +626,7 @@ class MannequinScene {
   final Map<String, Node> _nodes = {};
 
   bool? _dark3d;
+  Color? _background;
   KAccentSpec? _accent3d;
   Map<String, double> _intensities = const {};
   Set<String> _stretched = const {};
@@ -805,48 +971,70 @@ class MannequinScene {
   }
 
   void _applyMaterials() {
-    final dark = _dark3d ?? true;
+    // 5.5.4 (M56 correction 4, décision du propriétaire du 29/09/2026) : le
+    // maillage n'est plus coloré ; les muscles sollicités reçoivent un halo
+    // dessiné par-dessus la vue (`MannequinHaloPainter`). Les matériaux
+    // restent gris ; seule la visibilité des régions change.
     _regions.forEach((name, m) {
-      final v = (_intensities[name] ?? 0).clamp(0.0, 1.0);
-      final stretched = v <= 0 && _stretched.contains(name);
       final volume = map.byId[name]!.couche == 'volume';
       final a = volume ? 1.0 : opacity;
-      // Translucide (M4b) : le moteur multiplie la couleur par l'opacité ;
-      // l'émission est divisée d'autant pour que la couleur de la rampe et
-      // le halo gardent leur force à travers la transparence.
-      final glow = 1 / a;
-      if (stretched) {
-        // Étiré : teinte froide, sans halo (sous le seuil), plus sourde que
-        // le plus faible des rôles sollicités.
-        final c = mannequinStretch(dark);
-        m
-          ..baseColorFactor = _lin(c, .55, a)
-          ..emissiveFactor = _lin(c)
-          ..emissiveStrength = (.12 + .18 * kIntensityStretched) * glow
-          ..roughnessFactor = .74;
-      } else if (v > 0) {
-        final c = mannequinHeat(v, dark);
-        // Face éclairée ≈ 0,55 × lumière + émission : la couleur de la
-        // rampe ressort telle quelle ; seuls les muscles sollicités
-        // dépassent le seuil du halo (le gris éclairé reste en dessous).
-        m
-          ..baseColorFactor = _lin(c, .55, a)
-          ..emissiveFactor = _lin(c)
-          ..emissiveStrength = (.12 + .18 * v) * glow
-          ..roughnessFactor = .7;
-      } else {
-        m
-          ..baseColorFactor = _lin(volume ? kDarkVolume : kMuscleGray, 1, a)
-          ..emissiveFactor = vm.Vector4(0, 0, 0, 1)
-          ..emissiveStrength = 0
-          ..roughnessFactor = volume ? .85 : .78;
-      }
+      m
+        ..baseColorFactor = _lin(volume ? kDarkVolume : kMuscleGray, 1, a)
+        ..emissiveFactor = vm.Vector4(0, 0, 0, 1)
+        ..emissiveStrength = 0
+        ..roughnessFactor = volume ? .85 : .78;
       _nodes[name]?.visible =
           !_hidden.contains(name) && !_forcedHidden.contains(name);
     });
     _nodes['os']?.visible = _bones;
-    scene.postProcess.bloom.enabled =
-        _halo && dark && _intensities.values.any((v) => v > 0);
+    scene.postProcess.bloom.enabled = false;
+  }
+
+  /// 5.5.4 : régions à entourer d'un halo (intensité 0-1) et régions
+  /// étirées, visibles, pour le dessin par-dessus la vue.
+  Map<String, double> get haloIntensities => {
+    for (final e in _intensities.entries)
+      if (e.value > 0 &&
+          _regions.containsKey(e.key) &&
+          map.byId[e.key]!.couche != 'volume' &&
+          !_hidden.contains(e.key) &&
+          !_forcedHidden.contains(e.key))
+        e.key: e.value.clamp(0.0, 1.0),
+  };
+  Set<String> get haloStretched => {
+    for (final id in _stretched)
+      if ((_intensities[id] ?? 0) <= 0 &&
+          _regions.containsKey(id) &&
+          !_hidden.contains(id) &&
+          !_forcedHidden.contains(id))
+        id,
+  };
+
+  /// Maillage au repos d'une région (halo).
+  MeshData? restMesh(String name) => _rest[name];
+
+  /// Sens direct des triangles = normale vers l'extérieur ? Mesuré sur le
+  /// droit de l'abdomen (tourné vers l'avant du repère), une fois : le
+  /// repère importé peut être le miroir de celui du glTF.
+  late final bool windingOutward = _measureWinding();
+
+  bool _measureWinding() {
+    final m = _rest['rectus_abdominis_left'] ?? _rest.values.firstOrNull;
+    if (m == null) return true;
+    final p = m.positions;
+    final idx = m.indices ?? List<int>.generate(m.vertexCount, (i) => i);
+    final f = frame.front;
+    var sum = 0.0;
+    for (var t = 0; t + 2 < idx.length; t += 3) {
+      final a = idx[t], b = idx[t + 1], c = idx[t + 2];
+      final ax = p[a * 3], ay = p[a * 3 + 1], az = p[a * 3 + 2];
+      final ux = p[b * 3] - ax, uy = p[b * 3 + 1] - ay, uz = p[b * 3 + 2] - az;
+      final wx = p[c * 3] - ax, wy = p[c * 3 + 1] - ay, wz = p[c * 3 + 2] - az;
+      sum += (uy * wz - uz * wy) * f.x +
+          (uz * wx - ux * wz) * f.y +
+          (ux * wy - uy * wx) * f.z;
+    }
+    return sum >= 0;
   }
 
   /// Thème, intensités par région (0-1), régions étirées (M3), régions
@@ -858,8 +1046,12 @@ class MannequinScene {
     Set<String> hidden = const {},
     required bool bones,
     required bool halo,
+    Color? background,
   }) {
-    final themeChanged = _dark3d != dark;
+    // 5.5.4 : fond de la scène = couleur du support (carte, page), sans
+    // démarcation.
+    final bgColor = background ?? sceneBackground(dark);
+    final themeChanged = _dark3d != dark || _background != bgColor;
     final accentChanged = _accent3d != SL.accentSpec;
     if (!themeChanged &&
         !accentChanged &&
@@ -871,6 +1063,7 @@ class MannequinScene {
       return;
     }
     _dark3d = dark;
+    _background = bgColor;
     _accent3d = SL.accentSpec;
     _intensities = intensities;
     _stretched = stretched;
@@ -878,7 +1071,7 @@ class MannequinScene {
     _bones = bones;
     _halo = halo;
     if (themeChanged) {
-      final bg = _lin(sceneBackground(dark)).xyz;
+      final bg = _lin(bgColor).xyz;
       scene.skybox = Skybox(
         GradientSkySource(
           zenithColor: bg,
@@ -1171,6 +1364,10 @@ class Mannequin3D extends StatefulWidget {
   /// 5.5.3 : gestes (toucher, zoom) ; false pour un mannequin de carte.
   final bool interactive;
 
+  /// 5.5.4 : couleur du support (carte, page) : fond de la scène et du repli
+  /// 2D, sans démarcation. Null : couleur des cartes du thème.
+  final Color? background;
+
   /// Vues proposées par les boutons (M4, STATS : bascule Face / Dos).
   final List<MannequinView> views;
 
@@ -1206,6 +1403,7 @@ class Mannequin3D extends StatefulWidget {
     this.view = MannequinView.face,
     this.viewButtons = true,
     this.interactive = true,
+    this.background,
     this.views = MannequinView.values,
     this.spin = false,
     this.height = 420,
@@ -1616,9 +1814,7 @@ class Mannequin3DState extends State<Mannequin3D>
         key: const ValueKey('mannequin-fallback'),
         borderRadius: BorderRadius.circular(KSpace.radius),
         child: ColoredBox(
-          color: sceneBackground(
-            Theme.of(context).brightness == Brightness.dark,
-          ),
+          color: _background(context),
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: MuscleHeatmap(
@@ -1632,6 +1828,13 @@ class Mannequin3DState extends State<Mannequin3D>
       ),
     );
   }
+
+  /// 5.5.4 : fond = couleur du support.
+  Color _background(BuildContext context) =>
+      widget.background ?? Theme.of(context).colorScheme.surfaceContainerLow;
+
+  /// Fond de la vue (tests d'intégration : pixels du fond).
+  Color get backgroundColor => _background(context);
 
   Widget _view3d(BuildContext context, bool dark) {
     final scene = _scene!;
@@ -1648,12 +1851,13 @@ class Mannequin3DState extends State<Mannequin3D>
       hidden: widget.hidden,
       bones: widget.bones ?? _settings.bones.value,
       halo: _settings.halo.value,
+      background: _background(context),
     );
     final touched = _touched;
     return ClipRRect(
       borderRadius: BorderRadius.circular(KSpace.radius),
       child: ColoredBox(
-        color: sceneBackground(dark),
+        color: _background(context),
         child: SizedBox(
           height: widget.height,
           child: LayoutBuilder(
@@ -1703,6 +1907,25 @@ class Mannequin3DState extends State<Mannequin3D>
                           camera: widget.spin ? null : _camera,
                           cameraBuilder: widget.spin ? _cameraFor : null,
                         ),
+                      ),
+                    ),
+                  ),
+                  // 5.5.4 : halo des muscles sollicités, par-dessus la vue.
+                  Positioned.fill(
+                    child: IgnorePointer(
+                      child: CustomPaint(
+                        key: const ValueKey('mannequin-halo'),
+                        // Rotation continue (Moteur 3D) : caméra par image,
+                        // pas de halo.
+                        painter: widget.spin
+                            ? null
+                            : MannequinHaloPainter(
+                                scene: scene,
+                                camera: _camera!,
+                                size: _size,
+                                dark: dark,
+                                soft: _settings.halo.value,
+                              ),
                       ),
                     ),
                   ),
