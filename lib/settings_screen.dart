@@ -19,7 +19,7 @@ import 'profile_screens.dart';
 import 'store.dart';
 import 'store_widget.dart';
 
-const kAppVersion = '5.5.0';
+const kAppVersion = '5.5.4';
 
 class SettingsScreen extends StatelessWidget {
   final int? section;
@@ -979,7 +979,7 @@ class _Display3D extends StatelessWidget {
           ),
           _Sw(
             'Halo',
-            'Lueur autour des muscles sollicités (thème sombre)',
+            'Halo flou des muscles sollicités (net si désactivé)',
             settings.halo.value,
             (v) => settings.set(halo: v),
             key: const ValueKey('settings-3d-halo'),

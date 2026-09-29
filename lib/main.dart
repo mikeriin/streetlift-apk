@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'device.dart';
-import 'mannequin_clip.dart' show ClipRegistry;
+import 'mannequin_preload.dart';
 import 'startup.dart';
 import 'app_theme.dart';
 import 'ui.dart';
@@ -25,8 +25,6 @@ import 'store.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // M6 : registre des animations 3D (fiches exercice), lu en arrière-plan.
-  unawaited(ClipRegistry.load());
   // Une première image Flutter immédiate permet d'animer l'ouverture pendant
   // l'initialisation, au lieu de figer l'écran natif deux secondes.
   runApp(
@@ -40,7 +38,12 @@ Future<void> main() async {
           (store.settings.theme == 'system' &&
               WidgetsBinding.instance.platformDispatcher.platformBrightness ==
                   Brightness.dark),
-      onReady: _bindNotifications,
+      onReady: () {
+        _bindNotifications();
+        // M56 : mannequin préchargé en tâche de fond une fois l'application
+        // prête (première image déjà affichée, initialisation faite).
+        unawaited(MannequinPreload.start());
+      },
     ),
   );
   try {

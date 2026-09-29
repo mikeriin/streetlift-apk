@@ -16,7 +16,7 @@ import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/settings_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
-import 'phone_test_support.dart' show scrollToAction;
+import 'phone_test_support.dart' show scrollToAction, swipePage;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -179,6 +179,10 @@ void main() {
     await tester.pumpWidget(page(SessionScreen(week: w3, day: d1), scale: 2));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('koach-questions')), findsOneWidget);
+    // M56 : le questionnaire est dans la carte « Koach · séance du jour »
+    // (en-tête au-dessus) : à 320 px et 200 %, la puce passe sous la barre
+    // du bas ; on la fait remonter avant de toucher.
+    await scrollToAction(tester, find.text('moins de 5 h'));
     await tester.tap(find.text('moins de 5 h'));
     await tester.pumpAndSettle();
     expect(store.koach.answers['S3-J1']!.sleep, 4.5);
@@ -385,6 +389,12 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
+        // M56 correction 1 : page « Koach · séance du jour » avant
+        // l'exercice 1 quand Koach a quelque chose à dire.
+        final koachPage = find.byKey(const ValueKey('session-koach-page'));
+        if (koachPage.evaluate().isNotEmpty) {
+          await swipePage(tester);
+        }
         await scrollToAction(tester, find.byTooltip('Valider la série 1'));
         await tester.tap(find.byTooltip('Valider la série 1').first);
         await tester.pumpAndSettle();

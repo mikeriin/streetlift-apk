@@ -1,8 +1,86 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M5 (squelette d'animation et peau du modèle), version 5.4.0**  
-**Date : 28 septembre 2026, Europe/Paris — version : 5.4.0+78 (versionCode réel fixé par la CI de build)**  
-**Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+**Passe actuelle : pipeline « Mannequin 3D », lot M56 (refonte du mannequin, du squelette et de la peau ; matériel, chaîne d'animation et 3 pilotes ; carte Koach ; préchargement), version 5.5.0, correction 1 (retour du propriétaire), version 5.5.1, correction 2 (écorché acheté, plus d'animation), version 5.5.2, correction 3 (muscles opaques, zone ciblée, modèle partout, sans rotation au doigt), version 5.5.3, puis correction 4 (halo au lieu de la couleur, fond du support), version 5.5.4**  
+**Date : 28-29 septembre 2026, Europe/Paris — version : 5.5.4+83 (versionCode réel fixé par la CI de build)**  
+**Statut : contrôlé en CI (branche temporaire `claude/ci-3d-fable`, rendu réel sur émulateur Android).**
+
+## M56.C4 — Correction 4 (retour du propriétaire du 29/09/2026, version 5.5.4)
+
+| Point | Retour | Correction |
+| --- | --- | --- |
+| Halo | « Je ne veux pas que le mesh soit coloré je veux que tu ajoutes un genre de halo de la zone travaillée » | Matériaux toujours gris (`_applyMaterials` ne change plus que la visibilité ; bloom éteint). `MannequinHaloPainter` (CustomPaint par-dessus la `SceneView`, sous la bulle) : pour chaque région sollicitée (et étirée, teinte froide), triangles tournés vers la caméra projetés à l'écran (`HaloProjection.of(camera, size)` : base caméra reconstruite et étalonnée sur `screenPointToRay` des coins ; sens des faces mesuré une fois sur le droit de l'abdomen, `windingOutward`), union remplie dans `mannequinHeat(v)` à l'opacité 0,24 + 0,40·v, flou 9 px (réglage « Halo » ; net sinon). Pas de halo en rotation continue (Moteur 3D, caméra par image). Une coque 3D retournée a été essayée puis abandonnée (surface ouverte : rien à voir de face). |
+| Fond | « Pour tous les affichages 3D, le fond doit être de la même couleur que le support sur lequel il est, on ne doit pas voir de démarcations » | `Mannequin3D.background` (skybox de la scène, boîte de la vue, repli 2D) : carte du thème par défaut (`surfaceContainerLow`), page pour l'Anatomie, `SL.bordeaux` / `SL.card` sur la carte de séance de l'accueil, `SL.surface` dans la feuille de séance, `sceneBackground` sur l'écran Moteur 3D ; `TargetedMannequin.background`. |
+
+Contrôles (CI 3D `claude/ci-3d-fable`, essais 36565820933 : analyse (import de `kMannequinFovY`) et fonction locale du test d'intégration déclarée après usage ; 36567719792 : tests verts, émulateur relancé une fois (image système Android corrompue au téléchargement, avant tout test) puis fiche attendue avant chargement du contenu ; 36571648634 annulé par le suivant ; 36571687956 vert) : formatage et analyse sans remarque, 958 tests Dart, 0 échec (`m56_halo_test` : projection recoupée par `screenPointToRay`, silhouette des faces tournées vers la caméra, opacité) ; 105 tests Python ; émulateur tout passé, captures regardées (fond de la page et de la carte sans démarcation, maillage gris, halo sur les zones travaillées).
+
+## M56.C3 — Correction 3 (retour du propriétaire du 29/09/2026, version 5.5.3)
+
+| Point | Retour | Correction |
+| --- | --- | --- |
+| Opacité | « plus d'affichage avec 50 % on repasse à 100 % » | `kMuscleOpacity` 1,0 ; tendons opaques aussi ; texte de l'écran Anatomie. |
+| Zone ciblée | « pour les groupes musculaires sollicités penche plus pour la zone ciblée en surbrillance plutôt que le groupe en lui-même » | `targetedMuscles` / `targetedRegionIntensities` (`lib/stats_mannequin.dart`) : muscles du pack des fiches des exercices (principaux 1, secondaires 0,6, pondérés par séries / tours / 1), ramenés au maximum, seuil 2 % ; groupe entier seulement pour un exercice sans fiche. `AppStore.weeklyNames` (semaine) et `plannedNames` (séance, WOD) à côté des groupes historiques (repli 2D, légende, STATS). `WeeklyMannequin` devient un `TargetedMannequin`. |
+| Images 2D | « Remplace tous les anciens affichages qui utilisent les images en pièces jointes par le modèle » (face, dos, profil de `assets/muscles/`) | Fiche : le mannequin des muscles ciblés remplace la démonstration 2D en découpes (`PoseDemo`) en tête de fiche, section Muscles en texte ; accueil (carte de séance et feuille de séance) et aperçu de WOD : `TargetedMannequin` (compact, sans boutons ni gestes) ; STATS déjà 3D. Les images restent pour le repli sans Flutter GPU. |
+| Rotation | « Plus besoin d'avoir de contrôle en glissant du doigt pour tourner la caméra on se fie aux boutons » | `MannequinGestures` sans reconnaisseur de glissement quand `onRotate` est nul (mannequin de l'application) ; pincement (zoom) et toucher (nom) gardés ; `Mannequin3D.interactive` false pour les cartes. |
+
+Contrôles (CI 3D `claude/ci-3d-fable`, 3 essais : 36556945259 analyse (`fallbackHeight` statique / instance, `groups`, import atlas), 36558779220 tests m3 (état du mannequin lu après le défilement) et m4b (toucher translucide à l'opacité par défaut), 36560553169 vert) : formatage et analyse sans remarque, 955 tests Dart, 0 échec ; 105 tests Python ; émulateur (`animations_m56_test` : Anatomie 4 vues + Dos allumé, 3 fiches, carte Koach, préchargement, Moteur 3D), captures regardées (muscles opaques, mannequin en tête de fiche).
+
+## M56.C2 — Correction 2 (retour du propriétaire du 29/09/2026, version 5.5.2)
+
+| Point | Retour | Correction |
+| --- | --- | --- |
+| Modèle | « C'est ENCORE pas bon. Change le modèle et prend celui que j'ai mis en .zip, je l'ai acheté » (écorché « Ecorche Musclenames Male Anatomy », 168 Mo, déposé dans la release GitHub `modele-achete`) | `tools/anatomy/build_model.py` réécrit : OBJ ZBrush (664 284 triangles, un seul maillage, pose en A) + texture 4096² (une teinte par muscle, abréviation en blanc, os beige, tendons gris) → segmentation de la texture (palette de 16 teintes, texte et dégradés rebouchés, lisérés gris fins rebouchés), régions d'image → composantes du maillage, miettes fusionnées ; 232 étiquettes relevées à la main (position du texte, abréviation lue, légende du vendeur) nomment les composantes ; muscles de même teinte qui se touchent séparés par plus court chemin depuis leurs étiquettes ; composantes à cheval sur la ligne médiane coupées ; composantes sans étiquette nommées par voisinage, par symétrie (triangle par triangle) ou par position ; subdivisions du pack (deltoïde par angle, trapèze par C7 et épine de la scapula, grand pectoral par hauteur, gastrocnémien médial / latéral) ; décimation globale à 59 400 triangles (pas de fissure), normales du maillage entier, H = 1,70 m. 136 régions, `os` 6 800 triangles, `contexte` 13 000, `head` 1 500. |
+| Couleurs | « tu remets les muscles en alpha 50 % et la couleur reste la même que ce qu'il y a dans l'application, pour les muscles engagés change la couleur en fonction de la couleur principale choisie par l'utilisateur » | Muscles gris `kMuscleGray` à `kMuscleOpacity` 0,5 (inchangés) ; rampe `mannequinHeat` et `heat` 2D : `SL.accentSpec` (principale → vive), plus de rouge fixe. |
+| Animations | « Supprimes toutes les animations et repart de zéro, plus d'animation juste l'affichage des muscles utilisés et je ferai les positions à la main plus tard, à prendre en compte pour les autres M » | Clips, matériel, lecteur, ticker, fiches biomécaniques, `animate.py`, `render_clip.py`, `build_equipment.py` retirés ; fiches : démonstration 2D + mannequin fixe avec ses muscles ; squelette, peau, postures et outils associés retirés (`rig.json`, `mannequin_skin.bin`, `build_rig.py`, `rig_def.py`, `rig_pose.py`, `render_poses.py`, `build_body.py`, `measure_body.py`, `silhouette.py`, `mannequin_base.glb`) ; code de posture de `mannequin_3d.dart` / `mannequin_rig.dart` gardé inactif. Lots M7 et suivants à redéfinir (`pipeline/3d/DECISIONS_3D.md`). |
+| Séance | « Enlève les boutons suivant et précédent puisque glisser vers la droite et vers la gauche font déjà le taff » | Barre Précédent / Suivant retirée de la séance et de l'historique ; tests par glissement (`swipePage`). |
+
+Contrôles (CI 3D `claude/ci-3d-fable`, 4 essais : 36542184910 analyse (`_startView`), 36546278876 tests LC1 par boutons et fiche sans défilement, 36549423360 formatage / respiration / préchargement, 36551761380 vert) : Python 105 tests (`test_m2_anatomy.py` réécrit : budget, nœuds ↔ régions, symétrie gauche / droite, étiquettes connues, source hors dépôt), Dart 955 tests, 0 échec (m2, m3, m4b adaptés : plus de couche profonde, 20 muscles du pack en texte), émulateur (`animations_m56_test` : Anatomie 4 vues + Dos allumé, 3 fiches, carte Koach, préchargement), planches des régions regardées (face, dos, profils, gros plans cou, bras, bassin, dos, jambes).
+
+## M56.C1 — Correction 1 (retour du propriétaire du 29/09/2026, version 5.5.1)
+
+| Point | Retour | Correction |
+| --- | --- | --- |
+| Modèle | « plus musclé mais difforme : cuisses et pecs trop gros par rapport au reste », référence = écorché d'athlète (3 images) | `tools/anatomy/silhouette.py` : largeurs (face) et profondeurs (profil) de la référence en fraction de H, mesurées sur les images ; `build_body.py` réajusté : bras, épaules, cuisses, mollets sur leur largeur ; cuisse anisotrope (plus profonde que large) ; pectoraux fixés à 0,6 (1,6 avant) ; taille à la cible nominale 0,45 H et fessiers à la largeur de hanches de la référence (dilatation radiale autour de la colonne / du bassin) ; érecteurs 0,30. Résultat : bideltoïde, poitrine, taille, hanches, cuisse, genou, mollet dans ± 6 % de la référence ; bras à mi-chemin (−6,5 %, tour 0,222 H = cible nominale) ; 0 pénétration > 1 mm (37 itérations, amincissement des sommets en sandwich corrigé). |
+| Traction, position basse | « muscles et omoplates du modèle vont s'arracher », « il faut un V » ; « coudes trop en arrière », « abdos pas assez engagés » | Ailes = coiffe des rotateurs (poids mêlés scapula / bras portés par la chaîne d'aide à 155°) et grand dorsal / grand rond emportés par la rotation du bras : os d'insertion `arm_ins` (position de l'insertion humérale, orientation du tronc → la nappe s'étire en ligne droite, V), coiffe et grand rond sur la scapula (tendon seul collé à la tête humérale), deltoïde tout au bras 4 cm sous la tête (10 avant), sonnette et bascule dans le plan de la scapula (35°). Posture : bras à la verticale (flexion humérale 0), clavicule +20°, sonnette 45°, lombaires fléchies 8° et côtes basses (hollow), hanches 15°, genoux 90° (référence). |
+| Dips, position basse | « coudes trop resserrés » | 5.5.0 : coudes serrés derrière le dos (abduction −25°). Extension humérothoracique portée à 75° (glénohumérale 50° + bascule antérieure 20°), bornes par position (`bornes_positions`), coudes ouverts 18-26°, bras à l'horizontale (épaule au niveau du coude ± 3 cm), tronc 23°, hanches 40°, genoux 92°, centre de masse à l'aplomb des prises. |
+| Animations | « on fait juste un aperçu position de départ et position de fin » (décision après discussion : plus d'animation complète, GymVisual / `exercises-dataset` comme référence d'exécution seulement, licence des médias non acquise) | Clip : `positions` (départ, fin : nom, clé de la fiche, instant) ; application : `Mannequin3D` sans boucle ni ticker, position de départ affichée, puces Départ / Fin, fondu par `_poseTween` (0,75 s, matériel mobile interpolé), instantané si animations réduites ; `seekClip` gardé pour les captures. |
+| Carte Koach | « doit être sur une autre page que la carte du premier exercice, juste avant » | Page « Koach · séance du jour » avant l'exercice 1 quand Koach a quelque chose à dire à l'ouverture (questionnaire, fatigue, adaptation) ; reprise d'une séance entamée : page de l'exercice en cours ; sans page Koach, une indication apparue en cours de séance reste en tête de l'exercice 1 (comme avant). |
+| Anatomie | « aussi nul que la dernière fois » → le modèle lui-même | Corrigé par les proportions ci-dessus ; postures recalculées (bras levés : sonnette 50°, clavicule 20°, part glénohumérale 122°). |
+
+Contrôles : Python 126 tests (`test_m56_body.py` réécrit sur les cibles de silhouette), Dart (`m5_rig_test` 56 os, os d'insertion ; `m56_clip_test` positions ; `m56_koach_day_card_test` page à part), émulateur (`animations_m56_test` : départ, mi-fondu, fin, 3/4, animations réduites), planches Blender regardées (avant / après, 12 postures, suspension dos et face, positions des trois exercices).
+
+## M56.0 — Base et demande
+
+| Élément | Valeur |
+| --- | --- |
+| Demande | `pipeline/3d/prompts/M56.txt` (Fable 5.1, effort maximal) : M5 et M6 refaits avec une précision chirurgicale et crédibles, mannequin plus musclé, préchargé au lancement |
+| Base | `main` `b745c41` (5.4.0+78) ; brouillon M6 de la session Opus (`claude/m6-travail`) relu et repris |
+
+## M56.1 — Changements
+
+- **Modèle** : `tools/anatomy/build_body.py` (hypertrophie par muscle : dilatation radiale autour de l'os porteur pour les membres, épaississement des nappes pour le tronc, profil de ventre nul aux tendons, facteurs ajustés par sécante jusqu'aux cibles, interpénétrations résolues jusqu'à 0 > 1 mm), `measure_body.py` (tours au mètre ruban), `mannequin_base.glb` (géométrie M4b de référence). Avant → après : bras 26,8 → 35,4 cm, avant-bras 25,1 → 27,8, poitrine 94,9 → 101,0, taille 68,0 → 69,8 (non épaissie), cuisse 43,1 → 56,8, mollet 33,3 → 35,4, cou 32,4 → 34,0, bideltoïde 47,0 → 48,5 ; épaules / taille 1,73. 62 506 triangles inchangés.
+- **Squelette et peau** : os d'aide aux tiers (1/3, 2/3) avec gonflement au pli, os de gonflement de contraction (biceps, quadriceps, grand fessier), axes mesurés sur les os (coude, genou borné à 3° d'inclinaison, cheville bornée à 10°), rotation tibiale, limite glénohumérale 130° mesurée dans le repère de la scapula, partage scapula / bras par la hauteur, insertions collées à l'humérus, nappes sans chaîne d'aide. `lib/mannequin_rig.dart` : échelles des os d'aide et de gonflement recalculées à chaque posture (`withHelpers`, `localMatrix`).
+- **Matériel et animations** : `build_equipment.py` (bibliothèque, 163 Ko), `animate.py` (fiche → moindres carrés bornés → clip ; profils de vitesse en trapèze adouci, arrêts tenus à accélération nulle, retournements sans pause à accélération non nulle ; dichotomie robuste ; contrôles d'entraîneur), `render_clip.py` (planches, GIF au tempo réel, planche de boucle), fiches `tools/anatomy/fiches/` (sources, revue). Clips : traction 3,3 Ko, dips 2,0 Ko, back squat 2,2 Ko.
+- **Application** : `mannequin_clip.dart` (lecture, interpolation sphérique, registre), `exercise_mannequin.dart` (démonstration animée, repli 2D), `mannequin_3d.dart` (matériel, cadrage du clip, lecture en boucle, pause hors écran, positions clés), `koach_day_card.dart`, `session_screen.dart`, `koach_widgets.dart`, `adapt_screens.dart` (carte du jour), `mannequin_preload.dart` (préchargement, mesures), `engine3d.dart` (carte Préchargement), `main.dart`.
+- Version 5.5.0+79.
+
+## M56.2 — Contrôles
+
+- Python (bibliothèque standard, `tools/tests/`) : `test_m56_body.py` (mêmes nœuds et triangles, os, tête, mains et pieds inchangés, déplacements symétriques, mesures dans la tolérance, aucune pénétration), `test_m5_rig.py` (54 os, longueurs constantes, limites, poids, os rigides, déchirures bornées), `test_m56_clips.py` (clips, contacts rejoués, phases, amplitude). Fabrication déterministe.
+- Dart : `test/m5_rig_test.dart` (rig, aides aux tiers, gonflement), `m56_clip_test.dart`, `m56_koach_day_card_test.dart`, `m56_preload_test.dart`.
+- Émulateur (`integration_test/animations_m56_test.dart`) : écran Anatomie (modèle au repos face et dos, 3 postures en 3/4), 3 pilotes (boucle en 8 images, vue 3/4, pause hors écran, animations réduites), carte Koach ouverte et repliée en sombre et en clair, ouverture d'un mannequin avant / après préchargement, écran Moteur 3D. Captures regardées.
+- Revue indépendante des animations (sous-agent entraîneur + anatomiste, 3 tours) : verdict final acceptable pour les trois.
+
+## M56.3 — Limites
+
+- Bras au-dessus de la tête (> 140°) : les insertions du grand dorsal, du grand rond et du dentelé forment des lames sous l'aisselle en gros plan (mélange linéaire, flutter_scene sans formes correctrices) ; discret à l'échelle de l'écran et à 50 % d'opacité.
+- Traction : coudes à 55-60° du tronc en haut (géométrie d'une traction menton au-dessus avec une prise à 58 cm) ; menton 4 cm au-dessus de la barre (8 cm inatteignable avec la tête derrière la barre).
+- Dips : épaule 1,6 cm sous le coude (limite d'extension d'épaule 60°, AAOS).
+- Squat : écrasement quadriceps / adducteurs à l'aine en bas ; vue 3/4 à 45° (60° suggéré par la revue).
+- Coloration des muscles du pack (grand adducteur, fléchisseurs du coude) : hors lot.
+- Mesure du préchargement sur émulateur (rendu logiciel, processus non relancé entre « avant » et « après », 300 à 900 ms par image) : non représentative ; les chiffres qui comptent sont ceux de la carte Préchargement sur le téléphone.
+- Source : « trapèze supérieur / inférieur » inversés dans la carte source (M5) : non corrigé.
+
+# Historique — M5 (5.4.0)
 
 ## M5.0 — Base et demande
 

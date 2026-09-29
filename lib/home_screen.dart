@@ -7,12 +7,12 @@ import 'estimate_view.dart';
 import 'koach_widgets.dart' show KoachWeighInBanner;
 import 'levelup.dart';
 import 'models.dart';
-import 'muscle_body.dart';
 import 'session_history.dart';
 import 'session_screen.dart';
 import 'program_start.dart';
 import 'program_screens.dart' show ProgramHomeCard;
 import 'resume_banner.dart';
+import 'stats_mannequin.dart';
 import 'store.dart';
 import 'store_widget.dart';
 import 'ui.dart';
@@ -229,12 +229,17 @@ class _HomeScreenState extends State<HomeScreen> {
           Row(
             children: [
               Expanded(child: Text('${d.exercises.length} exercices')),
+              // 5.5.3 : mannequin 3D des muscles ciblés (carte 2D en repli).
               SizedBox(
                 width: 110,
-                child: MuscleHeatmap(
-                  data: store.plannedMuscles(estimate),
+                child: TargetedMannequin(
+                  names: store.plannedNames(estimate),
+                  groups: store.plannedMuscles(estimate),
                   height: 110,
-                  labels: false,
+                  viewButtons: false,
+                  fallbackGlow: false,
+                  background: SL.surface,
+                  subject: 'muscles de la séance',
                 ),
               ),
             ],
@@ -876,12 +881,15 @@ class _DayCard extends StatelessWidget {
                             width: MediaQuery.sizeOf(context).width < 350
                                 ? 88
                                 : 106,
-                            child: MuscleHeatmap(
-                              data: store.plannedMuscles(estimate),
+                            child: TargetedMannequin(
+                              names: store.plannedNames(estimate),
+                              groups: store.plannedMuscles(estimate),
                               height: compact ? 90 : 110,
-                              labels: false,
-                              tint: SL.onBrandSoft,
-                              glow: false,
+                              viewButtons: false,
+                              fallbackTint: SL.onBrandSoft,
+                              fallbackGlow: false,
+                              background: isToday ? SL.bordeaux : SL.card,
+                              subject: 'muscles de la séance',
                             ),
                           ),
                         ],

@@ -1,5 +1,7 @@
 // M4b (mannequin 3D) — tous les muscles remis (couche profonde, régions
-// cachées au repos), opacité unique des muscles, règle du toucher à travers
+// cachées au repos ; 5.5.2 : l'écorché acheté n'a plus de couche profonde,
+// les muscles profonds sont en texte), opacité unique des muscles, règle du
+// toucher à travers
 // les muscles translucides (muscle sollicité le plus proche, sinon le plus
 // proche, arrêt à la première surface opaque), bulle « (profond) », filtres à
 // cocher de l'écran Anatomie (union des groupes, compteur, tout cocher /
@@ -80,57 +82,65 @@ void main() {
   });
 
   group('modèle complet', () {
-    test('plus aucune région retirée, 21 paires cachées au repos', () {
+    test('5.5.2 : aucune région retirée ni cachée, couche superficielle', () {
       expect(raw['retirees'] as List, isEmpty);
-      expect(map.hiddenAtRest, hasLength(42));
-      for (final id in map.hiddenAtRest) {
-        expect(map.byId[id]!.profond, isTrue, reason: id);
-      }
-      expect(map.byId['platysma_left']!.groupe, 'dos');
+      expect(map.hiddenAtRest, isEmpty);
+      expect(map.byId['neck_muscles_left']!.groupe, 'dos');
+      expect(map.byId['sternocleidomastoid_right']!.groupe, 'dos');
     });
 
-    test('chaque muscle du pack a une région, profonds compris', () {
+    test('muscles du pack : région ou justification (profonds absents)', () {
       final covered = {for (final r in map.regions) ...r.pack};
       final absent = atlasMuscles.keys.toSet().difference(covered);
       expect(absent, musclesSansRegion.keys.toSet());
-      expect(absent, {
-        'flechisseurs_cervicaux_profonds',
-        'diaphragme',
-        'plancher_pelvien',
-      });
-    });
-
-    test('couche de chaque région, muscles profonds', () {
-      for (final r in map.regions) {
-        expect(['superficiel', 'profond', 'volume'], contains(r.couche));
+      for (final m in absent) {
+        expect(atlasMuscles[m]!.profondeur, 'profond', reason: m);
       }
-      final deep = map.deepIds;
-      expect(
-        deep,
-        containsAll([
-          'rhomboid_major_left',
-          'rhomboid_minor_right',
-          'vastus_intermedius_left',
-          'subscapularis_right',
-        ]),
-      );
-      expect(deep, isNot(contains('latissimus_dorsi_left')));
-      expect(deep, isNot(contains('hand_left')));
+      expect(absent, hasLength(20));
     });
 
-    test('opacité unique des muscles : 50 %', () {
-      expect(kMuscleOpacity, .5);
+    test('couche de chaque région : superficiel ou volume', () {
+      for (final r in map.regions) {
+        expect(['superficiel', 'volume'], contains(r.couche), reason: r.id);
+      }
+      expect(map.deepIds, isEmpty);
+      expect(map.byId['hand_left']!.couche, 'volume');
+      expect(map.byId['latissimus_dorsi_left']!.couche, 'superficiel');
+      // Subdivisions du pack sur l'écorché.
+      for (final id in [
+        'deltoid_anterior_left',
+        'deltoid_lateral_right',
+        'deltoid_posterior_left',
+        'trapezius_upper_left',
+        'trapezius_middle_right',
+        'trapezius_lower_left',
+        'pectoralis_major_clavicular_right',
+        'pectoralis_major_sternocostal_left',
+        'pectoralis_major_abdominal_right',
+        'gastrocnemius_medial_left',
+        'gastrocnemius_lateral_right',
+        'rhomboids_left',
+        'erector_spinae_right',
+        'iliopsoas_left',
+      ]) {
+        expect(map.byId.containsKey(id), isTrue, reason: id);
+      }
     });
 
-    test('bulle : « (profond) » pour un muscle profond', () {
+    test('opacité unique des muscles : 100 % (5.5.3)', () {
+      expect(kMuscleOpacity, 1.0); // 5.5.3 : opaque
+    });
+
+    test('bulle : « (profond) » pour un muscle profond (carte de test)', () {
       expect(
-        map.byId['rhomboid_major_left']!.label,
-        'Grand rhomboïde (gauche) (profond) · Dos',
+        _region('rhomboid_major_left', 'profond').label,
+        'rhomboid_major_left (gauche) (profond) · Dos',
       );
       expect(
         map.byId['latissimus_dorsi_right']!.label,
         'Grand dorsal (droit) · Dos',
       );
+      expect(map.byId['rhomboids_left']!.label, 'Rhomboïdes (gauche) · Dos');
     });
   });
 
@@ -162,7 +172,9 @@ void main() {
       Set<String> hidden = const {},
       bool bones = true,
       Iterable<PickMesh>? on,
-      double opacity = kMuscleOpacity,
+      // Règle du toucher à travers des muscles translucides (5.5.3 : les
+      // muscles de l'application sont opaques, la règle reste testée).
+      double opacity = .5,
     }) => MannequinScene.pickAlong(
       o,
       d,
@@ -314,7 +326,8 @@ void main() {
         find.byKey(const ValueKey('anatomy-group-muscles-dos')),
       );
       expect(dos.data, contains('Grand dorsal'));
-      expect(dos.data, contains('Grand rhomboïde (profond)'));
+      expect(dos.data, contains('Rhomboïdes'));
+      expect(dos.data, isNot(contains('(profond)')));
       expect(
         find.byKey(const ValueKey('anatomy-group-muscles-ischios')),
         findsOneWidget,
@@ -343,7 +356,7 @@ void main() {
       expect(find.text('Filtres · 13'), findsOneWidget);
       m = tester.widget<Mannequin3D>(find.byType(Mannequin3D));
       expect(m.hidden, isEmpty);
-      expect(m.intensities.length, greaterThan(200));
+      expect(m.intensities.length, greaterThan(120));
       await tapItem(tester, 'none-groupes');
       await tapItem(tester, 'none-affichage');
       expect(state(tester).filters, AnatomyFilters.none);

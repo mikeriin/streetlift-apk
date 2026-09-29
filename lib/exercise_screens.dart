@@ -11,9 +11,6 @@ import 'atlas_data.dart';
 import 'content_pack.dart';
 import 'exercise_mannequin.dart';
 import 'filter_menu.dart';
-import 'pose_cutout.dart';
-import 'pose_engine.dart';
-import 'pose_painter.dart';
 import 'search.dart';
 import 'store.dart';
 import 'ui.dart';
@@ -226,8 +223,7 @@ class _ExerciseTile extends StatelessWidget {
     title: Text(entry.nom, style: const TextStyle(fontWeight: FontWeight.w600)),
     subtitle: Text(
       '${index.typeLabels[entry.type] ?? entry.type} · '
-      'difficulté ${entry.difficulte}/10'
-      '${reviewedDemoStatus(entry.id, entry.demo) == 'indisponible' ? ' · sans démonstration' : ''}',
+      'difficulté ${entry.difficulte}/10',
       style: TextStyle(fontSize: 12, color: SL.dim),
     ),
     trailing: Icon(Icons.chevron_right, color: SL.dim),
@@ -323,69 +319,6 @@ class _Sheet extends StatelessWidget {
     ],
   );
 
-  Widget _demo() {
-    final motif = detail.demoMotif;
-    final pose = lib.poseOf(entry.id);
-    final statut = reviewedDemoStatus(entry.id, detail.demoStatut);
-    if (statut == 'indisponible' || pose == null) {
-      return Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(Icons.info_outline, color: SL.dim),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              'Démonstration indisponible'
-              '${motif == null ? '' : ' : $motif'}. '
-              'Suis les points clés et l’atlas ci-dessous.',
-            ),
-          ),
-        ],
-      );
-    }
-    var anim = PoseAnimation.fromPack(pose.$1, pose.$2);
-    if (statut == 'statique') {
-      // Geste hors du plan de la vue (ou revu) : une seule position juste.
-      final k = reviewedStaticKeyframe(entry.id);
-      anim = PoseAnimation(
-        view: anim.view,
-        loop: anim.loop,
-        keyframes: [anim.keyframes[k < anim.keyframes.length ? k : 0]],
-        props: anim.props,
-        primaires: anim.primaires,
-        secondaires: anim.secondaires,
-        statut: anim.statut,
-      );
-    }
-    final demo2d = Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        PoseDemo(pose: anim, label: entry.nom),
-        if (statut == 'statique')
-          Padding(
-            padding: const EdgeInsets.only(top: 6),
-            child: Text(
-              cutoutReviewOverrides.containsKey(entry.id)
-                  ? 'Image fixe : ${anim.keyframes.first.label}.'
-                  : 'Position de départ seulement${motif == null ? '' : ' : $motif'}.',
-              style: TextStyle(fontSize: 12, color: SL.dim),
-            ),
-          ),
-      ],
-    );
-    // M6 : exercice converti → mannequin 3D animé (repli : 2D ci-dessus).
-    if (!ExerciseAnimation.converted(entry.id)) return demo2d;
-    return ExerciseAnimation(
-      key: ValueKey('fiche-animation-${entry.id}'),
-      id: entry.id,
-      primaires: detail.primaires,
-      secondaires: detail.secondaires,
-      stabilisateurs: detail.stabilisateurs,
-      etires: detail.etires,
-      fallback: demo2d,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final muscles = <(String, List<String>)>[
@@ -414,7 +347,18 @@ class _Sheet extends StatelessWidget {
             KBadge(lib.label('modes_charge', detail.modeCharge)),
           ],
         ),
-        KCard(child: _demo()),
+        // 5.5.3 (décision du propriétaire, 29/09/2026) : le mannequin 3D
+        // remplace la démonstration 2D en tête de fiche ; il montre les
+        // muscles ciblés par l'exercice (repli : carte 2D historique).
+        KCard(
+          child: ExerciseMannequin(
+            key: ValueKey('fiche-muscles-${entry.id}'),
+            primaires: detail.primaires,
+            secondaires: detail.secondaires,
+            stabilisateurs: detail.stabilisateurs,
+            etires: detail.etires,
+          ),
+        ),
         const KSection('Points clés'),
         _bullets(detail.pointsCles),
         const KSection('Erreurs fréquentes'),
@@ -426,15 +370,6 @@ class _Sheet extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // M3 : mannequin 3D (repli : carte 2D historique) et légende.
-              ExerciseMannequin(
-                key: ValueKey('fiche-muscles-${entry.id}'),
-                primaires: detail.primaires,
-                secondaires: detail.secondaires,
-                stabilisateurs: detail.stabilisateurs,
-                etires: detail.etires,
-              ),
-              const SizedBox(height: 12),
               for (final (title, ids) in muscles)
                 if (ids.isNotEmpty)
                   Padding(

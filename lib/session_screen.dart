@@ -76,7 +76,24 @@ class _SessionScreenState extends State<SessionScreen> {
   int page = 0;
   Route<dynamic>? _route;
 
+  /// M56 correction 1 (demande du propriétaire) : la carte « Koach · séance
+  /// du jour » a sa propre page, avant l'exercice 1, quand Koach a quelque
+  /// chose à dire à l'ouverture de la séance (questionnaire, jour de
+  /// fatigue, adaptation) ; décidé une fois à l'ouverture, les pages ne
+  /// bougent plus ensuite. Sans page Koach, une indication qui apparaît en
+  /// cours de séance (adaptation) s'affiche comme avant en tête de
+  /// l'exercice 1.
+  late final bool koachPage;
+  int get koachPages => koachPage ? 1 : 0;
+
+  /// Nombre de pages d'exercices (hors page Koach et bilan).
   int get nPages => groups.length;
+
+  /// Index de la page du bilan.
+  int get bilanPage => koachPages + nPages;
+
+  /// Index de l'exercice de la page courante (−1 sur la page Koach).
+  int get exerciseIndex => page - koachPages;
 
   /// L11 : journée telle qu'elle sera faite (compression, échanges,
   /// reprise) ; identique au programme sans adaptation.
@@ -87,7 +104,7 @@ class _SessionScreenState extends State<SessionScreen> {
     if (!changed || !mounted) return;
     setState(() {
       groups = store.sessionGroups(widget.week.n, _day);
-      if (page > nPages) page = nPages;
+      if (page > bilanPage) page = bilanPage;
     });
     if (pageCtl.hasClients) pageCtl.jumpToPage(page);
   }
@@ -96,11 +113,16 @@ class _SessionScreenState extends State<SessionScreen> {
   void initState() {
     super.initState();
     groups = store.sessionGroups(widget.week.n, _day);
+    koachPage =
+        widget.week.n >= 1 &&
+        !KoachDayContent.of(widget.week.n, widget.day, _day).isEmpty;
     // Reprise : même occurrence (même clé de journal), ouverte sur
-    // l'exercice en cours. Le repos n'est pas relancé (décision 26/09).
-    page = widget.resume
+    // l'exercice en cours (une séance entamée saute la page Koach). Le
+    // repos n'est pas relancé (décision 26/09).
+    final resumed = widget.resume
         ? store.resumePage(widget.week.n, widget.day.j, groups)
         : 0;
+    page = resumed > 0 ? koachPages + resumed : 0;
     pageCtl = PageController(initialPage: page);
     if (store.settings.wakelock) keepAwake(true);
   }
@@ -191,9 +213,16 @@ class _SessionScreenState extends State<SessionScreen> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ),
             ),
+            if (koachPage)
+              ListTile(
+                leading: const Icon(Icons.auto_awesome_outlined),
+                title: const Text('Koach · séance du jour'),
+                selected: page == 0,
+                onTap: () => Navigator.pop(context, 0),
+              ),
             for (var i = 0; i < nPages; i++)
               ListTile(
-                selected: i == page,
+                selected: i == exerciseIndex,
                 leading: CircleAvatar(child: Text('${i + 1}')),
                 title: Text(
                   groups[i].map((e) => store.splitName(e.name).$1).join(' + '),
@@ -201,13 +230,13 @@ class _SessionScreenState extends State<SessionScreen> {
                 subtitle: groups[i].length > 1
                     ? const Text('Exercices enchaînés')
                     : null,
-                onTap: () => Navigator.pop(context, i),
+                onTap: () => Navigator.pop(context, koachPages + i),
               ),
             ListTile(
               leading: const Icon(Icons.flag_outlined),
               title: const Text('Bilan de séance'),
-              selected: page == nPages,
-              onTap: () => Navigator.pop(context, nPages),
+              selected: page == bilanPage,
+              onTap: () => Navigator.pop(context, bilanPage),
             ),
           ],
         ),
@@ -352,9 +381,11 @@ class _SessionScreenState extends State<SessionScreen> {
                         children: [
                           Expanded(
                             child: Text(
-                              page == nPages
+                              page == bilanPage
                                   ? 'Bilan de séance'
-                                  : '${groups[page].length > 1 ? 'Enchaînement' : 'Exercice'} ${page + 1} / $nPages',
+                                  : exerciseIndex < 0
+                                  ? 'Koach · séance du jour'
+                                  : '${groups[exerciseIndex].length > 1 ? 'Enchaînement' : 'Exercice'} ${exerciseIndex + 1} / $nPages',
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ),
@@ -374,7 +405,7 @@ class _SessionScreenState extends State<SessionScreen> {
                         ],
                       ),
                       SessionProgressDots(
-                        count: nPages + 1,
+                        count: bilanPage + 1,
                         index: page,
                         color: SL.action,
                       ),
@@ -388,17 +419,26 @@ class _SessionScreenState extends State<SessionScreen> {
                       store.saveLogs(affectsProgression: false);
                       setState(() => page = i);
                     },
-                    itemCount: nPages + 1,
-                    itemBuilder: (_, i) => i < nPages
+                    itemCount: bilanPage + 1,
+                    itemBuilder: (_, i) => i < koachPages
+                        ? _KoachPage(
+                            key: const ValueKey('session-koach-page'),
+                            week: w,
+                            day: _day,
+                            baseDay: widget.day,
+                            onChanged: () => setState(() {}),
+                          )
+                        : i < bilanPage
                         ? SessionExercisePage(
                             key: ValueKey(
-                              '${groups[i].first.id}|${groups[i].length}|${store.setCount(groups[i].first)}',
+                              '${groups[i - koachPages].first.id}|${groups[i - koachPages].length}|${store.setCount(groups[i - koachPages].first)}',
                             ),
                             week: w,
                             day: _day,
-                            exs: groups[i],
+                            exs: groups[i - koachPages],
                             timer: ctl,
                             baseDay: widget.day,
+                            koachCard: !koachPage,
                             onSessionChanged: () => setState(() {}),
                           )
                         : _FinishPage(week: w, day: _day),
@@ -407,28 +447,49 @@ class _SessionScreenState extends State<SessionScreen> {
                 _TimerBar(ctl: ctl),
               ],
             ),
-      bottomNavigationBar:
-          restDay || MediaQuery.of(context).viewInsets.bottom > 0
-          ? null
-          : KBottomActions(
-              child: KActionRow(
-                children: [
-                  OutlinedButton.icon(
-                    onPressed: page > 0 ? () => _go(page - 1) : null,
-                    icon: const Icon(Icons.chevron_left),
-                    label: const Text('Précédent'),
-                  ),
-                  FilledButton.icon(
-                    onPressed: page < nPages ? () => _go(page + 1) : null,
-                    icon: const Icon(Icons.chevron_right),
-                    iconAlignment: IconAlignment.end,
-                    label: Text(page == nPages - 1 ? 'Bilan' : 'Suivant'),
-                  ),
-                ],
-              ),
-            ),
+      // 5.5.2 (demande du propriétaire, 29/09/2026) : plus de boutons
+      // Précédent / Suivant, le glissement d'une page à l'autre suffit ; le
+      // bouton « Exercices » et les points restent pour se repérer.
     );
   }
+}
+
+/// M56 correction 1 : page « Koach · séance du jour », avant l'exercice 1.
+class _KoachPage extends StatelessWidget {
+  final WeekPlan week;
+  final DayPlan day, baseDay;
+  final VoidCallback onChanged;
+  const _KoachPage({
+    super.key,
+    required this.week,
+    required this.day,
+    required this.baseDay,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) => ListView(
+    key: const PageStorageKey('koach-page-scroll'),
+    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+    padding: const EdgeInsets.fromLTRB(KSpace.page, 2, KSpace.page, 10),
+    children: [
+      KoachDayCard(week: week.n, base: baseDay, day: day, onChanged: onChanged),
+      ListenableBuilder(
+        listenable: store,
+        builder: (context, _) =>
+            KoachDayContent.of(week.n, baseDay, day).isEmpty
+            ? KCard(
+                key: const ValueKey('session-koach-empty'),
+                child: Text(
+                  'Koach n’a plus rien à signaler pour cette séance. '
+                  'Suivant : premier exercice.',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              )
+            : const SizedBox.shrink(),
+      ),
+    ],
+  );
 }
 
 class SessionProgressDots extends StatelessWidget {
@@ -488,6 +549,10 @@ class SessionExercisePage extends StatefulWidget {
   /// jour ») et rappel quand une action de la carte change les séries.
   final DayPlan? baseDay;
   final VoidCallback? onSessionChanged;
+
+  /// Carte « Koach · séance du jour » en tête de la première page (quand la
+  /// séance n'a pas de page Koach à part).
+  final bool koachCard;
   bool get readOnly => history != null;
   const SessionExercisePage({
     super.key,
@@ -499,6 +564,7 @@ class SessionExercisePage extends StatefulWidget {
     this.unresolvedIds = const {},
     this.baseDay,
     this.onSessionChanged,
+    this.koachCard = true,
   });
 
   @override
@@ -1002,11 +1068,14 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
     padding: const EdgeInsets.fromLTRB(KSpace.page, 2, KSpace.page, 10),
     children: [
-      // M6 : carte « Koach · séance du jour » (questionnaire, jour de
-      // fatigue, adaptation de la séance) en tête de la séance, avant la
-      // liste des exercices ; les indications propres à un exercice restent
-      // dans son bloc.
-      if (!widget.readOnly && widget.week.n >= 1 && _firstPage)
+      // M56 : carte « Koach · séance du jour » (questionnaire, jour de
+      // fatigue, adaptation de la séance) en tête de l'exercice 1 seulement
+      // quand la séance n'a pas de page Koach à part (correction 1) ; les
+      // indications propres à un exercice restent dans son bloc.
+      if (!widget.readOnly &&
+          widget.koachCard &&
+          widget.week.n >= 1 &&
+          _firstPage)
         KoachDayCard(
           week: widget.week.n,
           base: widget.baseDay ?? widget.day,

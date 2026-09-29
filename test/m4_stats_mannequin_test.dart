@@ -208,7 +208,7 @@ void main() {
         final weekly = store.weeklyMuscles();
         await open(tester, dark: dark);
         final w = tester.widget<WeeklyMannequin>(find.byType(WeeklyMannequin));
-        expect(w.data, weekly);
+        expect(w.groups, weekly);
         // Sans Flutter GPU : carte 2D historique, mêmes données qu'avant.
         final heatmap = tester.widget<MuscleHeatmap>(
           find.byType(MuscleHeatmap),

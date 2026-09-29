@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # M1 (CI 3D) : rendu réel de l'écran Moteur 3D (M2 : Anatomie ; M3 : fiche
 # exercice ; M4 : STATS ; M4b : transparence et filtres ; M4c : zoom au
-# pincement et filtres normalisés ; M5 : postures du mannequin riggé ; M6 :
-# animations d'exercice et carte Koach du jour) sur
+# pincement et filtres normalisés ; M5 : postures du mannequin riggé ; M56 :
+# carte Koach du jour ; 5.5.2 : écorché acheté, sans posture ; M6b :
+# audit des écrans du mannequin fixe) sur
 # l'émulateur
 # Android lancé
 # par .github/workflows/ci-3d.yml (reactivecircus/android-emulator-runner).
@@ -41,22 +42,23 @@ cible() {
     --target="integration_test/$1.dart" \
     -d emulator-5554 > "$out/drive-$1.log" 2>&1
 }
-# M6 : lancé en premier (lot en cours) : fiches des 3 pilotes animées
-# (boucle en 8 images, vue 3/4, pause hors de l'écran, animations réduites)
-# et carte « Koach · séance du jour ». Les cibles des lots précédents ne
+# M6b : audit de tous les écrans du mannequin fixe (Anatomie, fiches,
+# STATS, accueil, aperçu de WOD, Moteur 3D, grand écran), cible du lot
+# lancée seule par défaut. Les cibles des lots précédents (M56 compris) ne
 # sont relancées que sur demande (CI3D_TOUT=1) : captures limitées aux
 # écrans du lot.
-cible animations_m6_test
-code_m6=$?
-if [ "$code_m6" -ne 0 ] && [ ! -f "$out/m6_releve.json" ]; then
-  echo "M6 sans relevé (code $code_m6) : adb relancé, second essai."
-  cp "$out/drive-animations_m6_test.log" "$out/drive-m6-essai1.log"
+CI3D_DELAI="${CI3D_DELAI:-900}" cible audit_m6b_test
+code_m6b=$?
+if [ "$code_m6b" -ne 0 ] && [ ! -f "$out/m6b_releve.json" ]; then
+  echo "M6b sans relevé (code $code_m6b) : adb relancé, second essai."
+  cp "$out/drive-audit_m6b_test.log" "$out/drive-m6b-essai1.log"
   adb kill-server || true
   adb start-server || true
   timeout 60 adb wait-for-device || true
-  cible animations_m6_test
-  code_m6=$?
+  cible audit_m6b_test
+  code_m6b=$?
 fi
+code_m56=0
 code_m5=0
 code_m4c=0
 code_m4b=0
@@ -64,9 +66,11 @@ code=0
 code_fiche=0
 code_stats=0
 if [ "${CI3D_TOUT:-0}" = "1" ]; then
-# M5 : postures du mannequin riggé.
-cible postures_m5_test
-code_m5=$?
+# M56 : écorché, fiches des 3 pilotes, carte Koach, préchargement.
+cible animations_m56_test
+code_m56=$?
+# M5 : postures du mannequin riggé (cible retirée en 5.5.2 : écorché sans
+# squelette).
 # M4c : zoom au pincement et menus « Filtres » normalisés.
 cible zoom_filtres_m4c_test
 code_m4c=$?
@@ -131,12 +135,13 @@ if [ "${CI3D_MESURE:-0}" = "1" ]; then
   code_mesure=$?
   tail -n 20 "$out/drive-mannequin_mesure_test.log"
 fi
-tail -n 40 "$out/drive-animations_m6_test.log"
+tail -n 60 "$out/drive-audit_m6b_test.log"
 kill "$logcat_pid" 2>/dev/null || true
 grep -o 'Impeller rendering backend ([^)]*)' "$out/logcat-complet.txt" | sort | uniq -c > "$out/impeller.txt" || true
 grep -iE 'flutter|impeller|vulkan|gles|AndroidRuntime|FATAL|swiftshader|angle|lowmemorykiller|DEBUG|libc|tombstone|ActivityManager' "$out/logcat-complet.txt" | tail -n 3000 > "$out/logcat.txt" || true
 rm -f "$out/logcat-complet.txt"
-echo "code_m6=$code_m6" > "$out/drive-code.txt"
+echo "code_m6b=$code_m6b" > "$out/drive-code.txt"
+echo "code_m56=$code_m56" >> "$out/drive-code.txt"
 echo "code_m5=$code_m5" >> "$out/drive-code.txt"
 echo "code_m4c=$code_m4c" >> "$out/drive-code.txt"
 echo "code_m4b=$code_m4b" >> "$out/drive-code.txt"
@@ -144,4 +149,4 @@ echo "code=$code" >> "$out/drive-code.txt"
 echo "code_fiche=$code_fiche" >> "$out/drive-code.txt"
 echo "code_stats=$code_stats" >> "$out/drive-code.txt"
 echo "code_mesure=$code_mesure" >> "$out/drive-code.txt"
-[ "$code_m6" -eq 0 ] && [ "$code_m5" -eq 0 ] && [ "$code_m4c" -eq 0 ] && [ "$code_m4b" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_fiche" -eq 0 ] && [ "$code_stats" -eq 0 ] && [ "$code_mesure" -eq 0 ]
+[ "$code_m6b" -eq 0 ] && [ "$code_m56" -eq 0 ] && [ "$code_m5" -eq 0 ] && [ "$code_m4c" -eq 0 ] && [ "$code_m4b" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_fiche" -eq 0 ] && [ "$code_stats" -eq 0 ] && [ "$code_mesure" -eq 0 ]

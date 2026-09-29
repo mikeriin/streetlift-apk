@@ -1,15 +1,15 @@
-"""M2 : données de correspondance du mannequin 3D (sans dépendance Blender).
+"""M2 → M56 correction 2 : données de correspondance du mannequin 3D (sans
+dépendance à la source).
 
 - FR : noms français des muscles du modèle (repris de la page de référence
   validée par le propriétaire, complétés pour les muscles du cou et les
-  volumes des mains et des pieds).
-- REF_GROUP : groupe du modèle → groupe de l'application (page de référence).
+  volumes des mains et des pieds ; M56 correction 2 : muscles d'un seul
+  tenant de l'écorché acheté — biceps, triceps, ilio-psoas, érecteurs…).
 - PACK_OF_KEY : muscle du modèle → muscles du pack (`assets/content`, clé
   `muscles`).
-- GROUP_OF_MODEL : groupe de l'application retenu pour chaque muscle du
-  modèle : celui du muscle du pack correspondant (`lib/atlas_data.dart`,
-  cohérent avec la liste en texte et STATS), sinon celui de la page de
-  référence.
+- GROUP_OF_KEY : groupe de l'application des muscles sans muscle du pack
+  (le groupe d'une région est sinon celui de son premier muscle du pack,
+  `lib/atlas_data.dart`, cohérent avec la liste en texte et STATS).
 """
 import re
 from pathlib import Path
@@ -105,20 +105,15 @@ FR = {
     # intrinsèques de la main et du pied (pack).
     'hand_intrinsic': 'Muscles de la main',
     'foot_intrinsic': 'Muscles du pied',
-}
-
-# Groupe du modèle → groupe de l'application (page de référence validée ;
-# « Neck » absent de la page : groupe du sterno-cléido-mastoïdien du pack).
-REF_GROUP = {
-    'Chest': 'pectoraux', 'Deltoids': 'épaules', 'Rotator cuff': 'épaules',
-    'Biceps': 'biceps', 'Upper arms': 'biceps', 'Triceps': 'triceps',
-    'Forearms': 'avant-bras', 'Abdominals': 'gainage', 'Obliques': 'gainage',
-    'Serratus': 'gainage', 'Lower back': 'gainage', 'Hip flexors': 'gainage',
-    'Lats': 'dos', 'Trapezius': 'dos', 'Upper back': 'dos', 'Teres major': 'dos',
-    'Spinal extensors': 'dos', 'Quadriceps': 'quadriceps', 'Sartorius': 'quadriceps',
-    'Adductors': 'quadriceps', 'Hamstrings': 'ischios', 'Glutes': 'fessiers',
-    'Hip rotators': 'fessiers', 'Calves': 'mollets', 'Lower legs': 'mollets',
-    'Neck': 'dos', 'Hand': 'avant-bras', 'Foot': 'mollets',
+    # M56 correction 2 : écorché acheté (un muscle = une plage de la texture).
+    'biceps_brachii': 'Biceps brachial', 'triceps_brachii': 'Triceps brachial',
+    'extensor_carpi_ulnaris': 'Extenseur ulnaire du carpe',
+    'flexor_carpi_ulnaris': 'Fléchisseur ulnaire du carpe',
+    'flexor_digitorum_superficialis': 'Fléchisseur superficiel des doigts',
+    'pronator_teres': 'Rond pronateur', 'rhomboids': 'Rhomboïdes',
+    'semispinalis_capitis': 'Semi-épineux de la tête',
+    'erector_spinae': 'Érecteurs du rachis', 'iliopsoas': 'Ilio-psoas',
+    'neck_muscles': 'Muscles hyoïdiens',
 }
 
 # Muscle du modèle → muscles du pack (vide : pas d'équivalent dans le pack).
@@ -204,27 +199,25 @@ PACK_OF_KEY = {
     'platysma': [],
     'hand_intrinsic': ['muscles_intrinseques_main'],
     'foot_intrinsic': ['muscles_intrinseques_pied'],
+    # M56 correction 2.
+    'biceps_brachii': ['biceps_chef_long', 'biceps_chef_court'],
+    'triceps_brachii': ['triceps_chef_long', 'triceps_chef_lateral', 'triceps_chef_medial'],
+    'extensor_carpi_ulnaris': ['extenseurs_du_poignet'],
+    'flexor_carpi_ulnaris': ['flechisseurs_du_poignet'],
+    'flexor_digitorum_superficialis': ['flechisseurs_superficiels_des_doigts'],
+    'pronator_teres': ['rond_pronateur'], 'rhomboids': ['rhomboides'],
+    'semispinalis_capitis': ['extenseurs_cervicaux'],
+    'erector_spinae': ['erecteurs_thoraciques', 'erecteurs_lombaires'],
+    'iliopsoas': ['grand_psoas', 'iliaque'],
+    'neck_muscles': [],
 }
 
-# Volumes sombres du modèle d'exécution : id du nœud → (clé, côté) ; la tête
-# n'est pas un muscle (aucune mise en évidence).
-VOLUME_REGIONS = {
-    'head': (None, None),
-    'hand_left': ('hand_intrinsic', 'left'), 'hand_right': ('hand_intrinsic', 'right'),
-    'foot_left': ('foot_intrinsic', 'left'), 'foot_right': ('foot_intrinsic', 'right'),
+# Groupe de l'application des muscles sans muscle du pack.
+GROUP_OF_KEY = {
+    'serratus_posterior_inferior': 'dos', 'serratus_posterior_superior': 'dos',
+    'scalenus_medius': 'dos', 'scalenus_anterior': 'dos', 'scalenus_posterior': 'dos',
+    'plantaris': 'mollets', 'platysma': 'dos', 'neck_muscles': 'dos',
 }
-
-
-def model_groups():
-    """Groupe du modèle (source) pour chaque clé."""
-    import json
-    data = json.loads((Path(__file__).resolve().parent / 'source/full-body-map.json').read_text())
-    groups = {m['key']: m['group'] for m in data['muscles']}
-    groups['hand_intrinsic'] = 'Hand'
-    groups['foot_intrinsic'] = 'Foot'
-    groups['platysma'] = 'Neck'
-    return groups
-
 
 def pack_muscles():
     """Muscles du pack (lib/atlas_data.dart, généré depuis le pack) :
@@ -238,21 +231,3 @@ def pack_muscles():
     for m in pattern.finditer(text):
         out[m.group(1)] = (m.group(4), m.group(5))
     return out
-
-
-def group_of_model():
-    """Groupe retenu : celui du pack (premier muscle correspondant) s'il
-    existe, sinon celui de la page de référence."""
-    pack = pack_muscles()
-    out, conflicts = {}, {}
-    for key, group in model_groups().items():
-        ref = REF_GROUP[group]
-        packs = [pack[p][0] for p in PACK_OF_KEY[key] if p in pack]
-        chosen = packs[0] if packs else ref
-        if chosen != ref:
-            conflicts[key] = {'reference': ref, 'pack': chosen}
-        out[key] = chosen
-    return out, conflicts
-
-
-GROUP_OF_MODEL, GROUP_CONFLICTS = group_of_model()

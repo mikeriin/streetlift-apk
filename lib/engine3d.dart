@@ -20,6 +20,7 @@ import 'package:flutter_scene/scene.dart';
 import 'app_theme.dart';
 import 'device.dart';
 import 'mannequin_3d.dart';
+import 'mannequin_preload.dart';
 import 'ui.dart';
 
 /// Résultat de la vérification du moteur 3D sur cet appareil.
@@ -270,6 +271,7 @@ class Engine3DScreenState extends State<Engine3DScreen> {
           _view(dark),
           _compatibility(context),
           _performance(context),
+          _preload(context),
           Text(
             'Le mannequin anatomique 3D tourne lentement, muscles d’une '
             'traction allumés : la mesure porte sur ce rendu. Sans moteur 3D, '
@@ -291,6 +293,7 @@ class Engine3DScreenState extends State<Engine3DScreen> {
           view: MannequinView.troisQuarts,
           viewButtons: false,
           spin: true,
+          background: sceneBackground(dark),
           height: 380,
           onReady: _onReady,
           semanticLabel:
@@ -437,6 +440,62 @@ class Engine3DScreenState extends State<Engine3DScreen> {
       ],
     ),
   );
+
+  /// M56 : préchargement au lancement et ouverture du dernier mannequin.
+  Widget _preload(BuildContext context) {
+    final tt = Theme.of(context).textTheme;
+    String ms(int v) => '$v ms';
+    return KCard(
+      key: const ValueKey('engine3d-preload'),
+      child: ValueListenableBuilder<OpenReport?>(
+        valueListenable: MannequinPreload.lastOpen,
+        builder: (context, open, _) {
+          final r = MannequinPreload.report;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Préchargement', style: tt.titleMedium),
+              const SizedBox(height: 8),
+              if (!MannequinPreload.enabled)
+                Text('Désactivé (mesure de référence).', style: tt.bodySmall)
+              else if (r == null)
+                Text(
+                  MannequinPreload.done
+                      ? 'Préchargement impossible (modèle illisible).'
+                      : 'Préchargement en cours…',
+                  style: tt.bodySmall,
+                )
+              else if (!r.compatible)
+                Text('Rien à précharger sans moteur 3D.', style: tt.bodySmall)
+              else ...[
+                _row('Au lancement', '${ms(r.totalMs)} après l’accueil'),
+                _row('Chargement', ms(r.loadMs)),
+                _row(
+                  'Préchauffage',
+                  r.warmUpMs >= 0 ? ms(r.warmUpMs) : 'indisponible',
+                ),
+                if (r.rssBefore > 0)
+                  _row(
+                    'Mémoire ajoutée',
+                    '${r.addedMb.toStringAsFixed(1).replaceAll('.', ',')} Mo',
+                  ),
+              ],
+              if (open != null) ...[
+                const SizedBox(height: 6),
+                _row(
+                  'Dernier mannequin',
+                  'première image en ${ms(open.firstImageMs)}, '
+                      '${open.lostFrames} image${open.lostFrames > 1 ? 's' : ''} '
+                      'perdue${open.lostFrames > 1 ? 's' : ''} sur ${open.frames}'
+                      '${open.preloaded ? '' : ' (avant la fin du préchargement)'}',
+                ),
+              ],
+            ],
+          );
+        },
+      ),
+    );
+  }
 
   Widget _performance(BuildContext context) {
     final tt = Theme.of(context).textTheme;

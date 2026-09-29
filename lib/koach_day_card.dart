@@ -1,4 +1,4 @@
-// M6 : carte « Koach · séance du jour », en tête de la séance.
+// M56 (brouillon M6) : carte « Koach · séance du jour », en tête de la séance.
 //
 // Avant 5.5.0, les indications de Koach pour la séance du jour s'affichaient
 // au-dessus du premier exercice, dans la page de l'exercice (questionnaire
@@ -33,7 +33,6 @@ class KoachDayCard extends StatefulWidget {
 
   /// Après une action qui change les séries (fatigue acceptée, adaptation).
   final VoidCallback? onChanged;
-
 
   const KoachDayCard({
     super.key,

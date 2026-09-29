@@ -1,4 +1,53 @@
-# Kalis Track 5.4.0 — Mannequin anatomique 3D
+# Kalis Track 5.5.4 — Mannequin anatomique 3D
+
+## 5.5.4 — Halo au lieu de la couleur, fond du support (correction 4 du lot M56)
+
+- **Halo** : le maillage n'est plus coloré ; chaque muscle sollicité reçoit un halo dessiné par-dessus la vue (`MannequinHaloPainter` : triangles tournés vers la caméra projetés à l'écran, union remplie dans la couleur dominante, opacité selon l'intensité, flou doux — net si le réglage « Halo » est désactivé). Le gris et le relief du muscle restent visibles. Projection étalonnée sur les rayons de la caméra (`HaloProjection`), sens des faces mesuré sur le modèle.
+- **Fond** : la scène 3D (et le repli 2D) prend la couleur du support — carte, page, carte de la séance du jour — sans démarcation (`Mannequin3D.background`, `TargetedMannequin.background`).
+
+Détail : `SUIVI_PROJET.md` (M56, correction 4). Test : `test/m56_halo_test.dart`.
+
+## 5.5.3 — Muscles opaques, zone ciblée, le modèle partout (correction 3 du lot M56)
+
+- **Muscles à 100 %** : plus de transparence (`kMuscleOpacity` 1) ; l'écorché n'a pas de couche profonde à voir par transparence.
+- **Zone ciblée** : sur le mannequin, les muscles qui s'allument sont ceux des fiches du pack des exercices (principaux 1, secondaires 0,6, pondérés par les séries), plus le groupe entier (`TargetedMannequin`, `targetedRegionIntensities`) : semaine de STATS (`AppStore.weeklyNames`), séance du jour sur l'accueil, aperçu d'un WOD. Un exercice sans fiche allume ses groupes comme avant ; la carte 2D par groupe reste le repli sans Flutter GPU.
+- **Le modèle remplace les images 2D** partout où elles servaient d'affichage : fiche exercice (le mannequin des muscles ciblés en tête, plus de démonstration 2D en découpes), cartes de séance de l'accueil, aperçu de WOD, STATS. Les images `assets/muscles/` ne servent plus qu'au repli 2D.
+- **Plus de rotation au doigt** : les boutons Face / Dos / Profil / 3/4 tournent le mannequin ; le zoom au pincement reste ; les mannequins de carte ne captent aucun geste.
+
+Détail : `SUIVI_PROJET.md` (M56, correction 3).
+
+## 5.5.2 — Écorché acheté, plus d'animation (correction 2 du lot M56)
+
+- **Nouveau modèle** : l'écorché « Ecorche Musclenames Male Anatomy » acheté par le propriétaire (29/09/2026) remplace le mannequin Z-Anatomy : un seul maillage sculpté, chaque muscle repéré par une plage de couleur de sa texture et son abréviation ; `tools/anatomy/build_model.py --zip Archive.zip` (archive dans la release GitHub `modele-achete`, jamais dans le dépôt) segmente la texture, nomme 136 régions (68 muscles × 2 côtés, dont deltoïde, trapèze, grand pectoral et gastrocnémien subdivisés comme dans le pack), regroupe os (`os`), tendons et aponévroses (`contexte`), tête, mains et pieds, et décime le tout à 59 400 triangles sans fissure.
+- **Affichage** : muscles gris à 50 % d'opacité (inchangé) ; les muscles sollicités s'allument dans la **couleur dominante** choisie dans Réglages › Apparence (rampe de la teinte principale vers sa nuance vive), sur le mannequin comme sur la carte 2D.
+- **Plus d'animation ni de posture** : fiches avec la démonstration 2D historique et le mannequin fixe portant les muscles de l'exercice ; écran Anatomie sans sélecteur « Posture » (squelette, peau, matériel, clips et outils d'animation retirés : `rig.json`, `mannequin_skin.bin`, `animate.py`…). Les positions des exercices seront faites à la main par le propriétaire plus tard.
+- **Séance** : plus de boutons Précédent / Suivant (glisser à droite et à gauche suffit) ; carte « Koach · séance du jour » sur sa page.
+- **Muscles profonds** : l'écorché ne montre que la couche superficielle ; 20 muscles profonds du pack (petit pectoral, subscapulaire, vaste intermédiaire, rotateurs de la hanche, transverse…) restent en texte sur les fiches (« Absents du mannequin »).
+
+Détail : `SUIVI_PROJET.md` (M56, correction 2). Tests : `tools/tests/test_m2_anatomy.py` (réécrit), `test/m2_mannequin_test.dart`, `m3_fiche_mannequin_test.dart`, `m4b_anatomie_test.dart` (adaptés), `integration_test/animations_m56_test.dart`.
+
+## 5.5.1 — Corrections du propriétaire sur M56 (correction 1 du lot M56)
+
+- **Proportions du mannequin** recalées sur la référence du propriétaire (écorché d'athlète, trois vues) : largeurs de face et profondeurs de profil mesurées sur les images (`tools/anatomy/silhouette.py`) ; cuisses moins larges et plus profondes, pectoraux plats (plus de « plaques »), taille et fessiers plus pleins (dilatation radiale autour du tronc), bras et mollets un peu plus forts, épaules à la largeur de la référence. Tours : bras 37,7 cm, avant-bras 27,8, poitrine 97,1, taille 74,5, cuisse 52,0, mollet 37,5, cou 34,0, bideltoïde 51,0 ; 0 interpénétration > 1 mm.
+- **Peau bras levés** : plus d'« omoplates arrachées » ni de boucles sous les aisselles en suspension — os d'insertion (position de l'insertion humérale, orientation du tronc) pour le grand dorsal, le grand rond et les pectoraux, coiffe des rotateurs portée par la scapula (tendon seul collé à la tête humérale), deltoïde tout au bras 4 cm sous la tête, sonnette et bascule de la scapula dans son plan (35°) ; 56 os.
+- **Fiches Traction pronation, Dips, Back squat** : plus d'animation en boucle ; le mannequin montre la **position de départ**, puis la **position de fin** (puces sous la vue), avec un fondu doux (instantané si les animations sont réduites). Positions reprises des références d'exécution fournies par le propriétaire (dataset `exercises-dataset`, médias Gym visual, utilisés comme référence seulement) : traction en suspension bras à la verticale, ceinture scapulaire haussée, gainage hollow, genoux fléchis ; dips coudes ouverts (18-26°), bras à l'horizontale en bas, tronc incliné ≈ 23°, cuisses verticales et tibias derrière ; back squat inchangé.
+- **Carte « Koach · séance du jour »** sur sa propre page, avant l'exercice 1 (quand Koach a quelque chose à dire à l'ouverture de la séance) ; l'exercice 1 commence page suivante.
+
+Détail : `SUIVI_PROJET.md` (M56, correction 1).
+
+## 5.5.0 — Mannequin musclé, squelette refait, premières animations (lot M56 du pipeline « Mannequin 3D »)
+
+- **Mannequin plus musclé** : physique d'athlète de streetlifting (cibles du propriétaire en fraction de la taille : bras 0,22 H, avant-bras 0,175 H, poitrine 0,62 H, cuisse 0,345 H, mollet 0,22 H, cou 0,22 H, bideltoïde 0,285 H ; tours mesurés au mètre ruban sur l'enveloppe musculaire, moins 2 cm de peau et de graisse ; taille non épaissie). Hypertrophie muscle par muscle (`tools/anatomy/build_body.py`, mesures `measure_body.py`), aucune interpénétration > 1 mm, os, tête, mains et pieds inchangés.
+- **Squelette et peau refaits** (`build_rig.py`, `rig_def.py`) : 54 os (30 segments, 18 os d'aide aux tiers de la rotation avec gonflement au pli, 6 os de gonflement de contraction : biceps, quadriceps, grand fessier), axes du coude, du genou et de la cheville mesurés sur les os, rotation tibiale, insertions collées à l'humérus, partage scapula / bras par la hauteur.
+- **Fiches Traction pronation, Dips et Back squat** : la démonstration 2D est remplacée par le mannequin animé en boucle au tempo du pack, avec le matériel (barre de traction, barres parallèles, barre olympique et disques, sol), les muscles de l'exercice mis en évidence, la vue de départ automatique, rotation et zoom conservés ; phase et tempo sous la vue ; pause hors de l'écran ; animations réduites : positions clés fixes au choix. Chaîne relançable : `tools/anatomy/animate.py` (fiche biomécanique → cinématique inverse → clip `assets/anatomy/clips/<id>.json.gz` ≤ 5 Ko, contrôles automatiques), `build_equipment.py`, `render_clip.py` (planches et GIF) ; registre `assets/anatomy/clips/index.json` (3D si l'exercice y figure, sinon 2D).
+- **Carte « Koach · séance du jour »** en tête de la séance (repliable, ajustements du jour et leurs raisons, actions Koach conservées) ; plus rien de Koach au-dessus du premier exercice.
+- **Préchargement au lancement** : modèle, squelette, peau, matériel et registre chargés en tâche de fond une fois l'application prête, pipelines de rendu préchauffés hors écran (`Scene.warmUp`) ; mesures dans Réglages › À propos › Moteur 3D (préchargement, dernier mannequin : première image, images perdues).
+- Écran Anatomie : postures de référence recalculées sur le nouveau modèle.
+
+Détail : `SUIVI_PROJET.md` (M56). Tests : `tools/tests/test_m56_body.py`, `test_m56_clips.py`, `test_m5_rig.py`, `test/m5_rig_test.dart`, `m56_clip_test.dart`, `m56_koach_day_card_test.dart`, `m56_preload_test.dart`, `integration_test/animations_m56_test.dart`.
+
+
+# Historique — Kalis Track 5.4.0 — Mannequin anatomique 3D
 
 ## 5.4.0 — Squelette d'animation et peau du mannequin (lot M5 du pipeline « Mannequin 3D »)
 
@@ -69,7 +118,7 @@ Détail : `SUIVI_PROJET.md` (M3). Tests : `test/m3_fiche_mannequin_test.dart`, `
 - **Arsenal › Référence › Anatomie** (nouveau) : mannequin anatomique en 3D (musculature gris mat, tête, mains et pieds sombres et lisses, os discrets), à tourner au doigt ; boutons **Face / Dos / Profil / 3/4** avec transition ; choix d'un des **11 groupes** (mis en évidence dans la rampe historique bordeaux → rouge, halo en thème sombre) et **liste des muscles du groupe en texte** ; **toucher un muscle affiche son nom** (côté et groupe).
 - **Réglages › Affichage 3D** (nouveau) : « Nom du muscle au toucher », « Os visibles », « Halo », activés par défaut (préférences du téléphone, hors sauvegarde).
 - **Réglages › À propos › Moteur 3D** : la mesure de fluidité porte désormais sur le mannequin (rotation lente, muscles d'une traction allumés).
-- **Sources et licences** : crédits du modèle (Z-Anatomy / BodyParts3D, CC BY-SA 4.0).
+- **Sources et licences** : crédits du modèle 3D (écorché acheté, licence commerciale ; Z-Anatomy / BodyParts3D CC BY-SA 4.0 jusqu'à 5.5.1).
 - Téléphone sans Flutter GPU : l'écran Anatomie montre la carte 2D historique.
 - Technique : modèle fabriqué par `tools/anatomy/build_model.py` (Blender sans interface) depuis fitmitwith-anatomy-atlas, 56 126 triangles, une maille par muscle et par côté ; converti au build par le hook de flutter_scene (`hook/build.dart`) ; widget réutilisable `Mannequin3D` (`lib/mannequin_3d.dart`), rendu à la demande.
 

@@ -2,7 +2,7 @@
 """M2 / M4b : aperçu hors application du mannequin d'exécution (Blender, Cycles CPU).
 
 Rend `assets/anatomy/mannequin.glb` sous les vues Face / Dos / Profil / 3/4
-avec les couleurs de l'application (gris mat, os et contexte sombres,
+avec les couleurs de l'application (gris mat, tendons gris, os et tête sombres,
 groupe allumé dans la rampe historique) et les assemble en une planche PNG.
 Sert au contrôle visuel de la fabrication ; le rendu qui fait foi reste la
 capture Flutter GPU sur émulateur (CI 3D).
@@ -49,12 +49,13 @@ def main():
     parser.add_argument('--clair', action='store_true')
     parser.add_argument('--zoom')
     parser.add_argument('--taille', type=int, default=360)
+    parser.add_argument('--glb', help='M56 : autre modèle (avant / après)')
     args = parser.parse_args()
 
     import bpy
     from mathutils import Vector
     bpy.ops.wm.read_factory_settings(use_empty=True)
-    bpy.ops.import_scene.gltf(filepath=str(GLB))
+    bpy.ops.import_scene.gltf(filepath=str(args.glb or GLB))
     regions = {r['id']: r for r in json.loads(MAP.read_text())['regions']}
     dark = not args.clair
     top = '#E85959' if dark else '#A61717'
@@ -107,8 +108,8 @@ def main():
             m = m_hot
         elif o.name == 'os':
             m = m_bone
-        elif r and r['couche'] != 'volume':
-            m = m_muscle
+        elif (r and r['couche'] != 'volume') or o.name.startswith('tendon_'):
+            m = m_muscle  # 5.5.2 : tendons de l'écorché, gris des muscles
         else:
             m = m_dark
         o.data.materials.clear()

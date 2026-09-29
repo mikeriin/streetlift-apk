@@ -15,7 +15,6 @@ import 'atlas.dart';
 import 'atlas_data.dart';
 import 'engine3d.dart';
 import 'mannequin_3d.dart';
-import 'mannequin_clip.dart';
 
 /// Face du corps où un muscle du pack se voit le mieux.
 enum MuscleFace { anterieur, posterieur, lateral }
@@ -130,15 +129,34 @@ MannequinView exerciseStartView(
   return MannequinView.troisQuarts;
 }
 
-/// Muscles du pack sans région sur le mannequin, avec la raison : absents du
-/// modèle source (profonds ou internes). Ils restent dans la liste en texte
-/// de la fiche. M4b : les muscles profonds retirés en M2 sont remis (rendu
-/// translucide), ils ont de nouveau leur région.
+/// Muscles du pack sans région sur le mannequin, avec la raison. Ils restent
+/// dans la liste en texte de la fiche. 5.5.2 (M56 correction 2) : l'écorché
+/// acheté ne montre que la couche superficielle ; les muscles profonds
+/// couverts par d'autres n'ont pas de région (jusqu'à 5.5.1, le modèle
+/// Z-Anatomy les portait en transparence).
 const musclesSansRegion = <String, String>{
   'flechisseurs_cervicaux_profonds':
       'profonds, devant les vertèbres du cou (absents du modèle)',
   'diaphragme': 'interne, sous les côtes (absent du modèle)',
   'plancher_pelvien': 'interne, au fond du bassin (absent du modèle)',
+  'biceps_femoral_chef_court': 'profond, sous le chef long (écorché)',
+  'carre_des_lombes': 'profond, sous les érecteurs (écorché)',
+  'carre_pronateur': 'profond, sous les fléchisseurs (écorché)',
+  'court_adducteur': 'profond, sous le long adducteur (écorché)',
+  'flechisseurs_profonds_des_doigts':
+      'profonds, sous les fléchisseurs superficiels (écorché)',
+  'multifides': 'profonds, sous les érecteurs (écorché)',
+  'oblique_interne': 'profond, sous l’oblique externe (écorché)',
+  'petit_fessier': 'profond, sous le moyen fessier (écorché)',
+  'petit_pectoral': 'profond, sous le grand pectoral (écorché)',
+  'poplite': 'profond, derrière le genou (écorché)',
+  'rotateurs_lateraux_hanche': 'profonds, sous le grand fessier (écorché)',
+  'sous_scapulaire': 'profond, sous la scapula (écorché)',
+  'supinateur': 'profond, sous les extenseurs (écorché)',
+  'supra_epineux': 'profond, sous le trapèze (écorché)',
+  'tibial_posterieur': 'profond, sous le soléaire (écorché)',
+  'transverse_abdomen': 'profond, sous les obliques (écorché)',
+  'vaste_intermediaire': 'profond, sous le droit fémoral (écorché)',
 };
 
 /// Muscles d'un exercice posés sur le mannequin.
@@ -318,106 +336,6 @@ class ExerciseMannequinState extends State<ExerciseMannequin> {
         const SizedBox(height: 12),
         AtlasRoleLegend(stretchColor: _ready3d ? mannequinStretch(dark) : null),
       ],
-    );
-  }
-}
-
-/// M6 : démonstration animée de la fiche (exercice converti, registre
-/// `assets/anatomy/clips/index.json`) : mannequin en boucle au tempo réel,
-/// muscles de l'exercice mis en évidence, matériel, vue par défaut du
-/// mouvement, rotation au doigt. Repli : [fallback] (démonstration 2D),
-/// aussi pendant le chargement du registre et sur téléphone incompatible.
-class ExerciseAnimation extends StatefulWidget {
-  final String id;
-  final List<String> primaires, secondaires, stabilisateurs, etires;
-  final Widget fallback;
-  final double height;
-
-  const ExerciseAnimation({
-    super.key,
-    required this.id,
-    required this.fallback,
-    this.primaires = const [],
-    this.secondaires = const [],
-    this.stabilisateurs = const [],
-    this.etires = const [],
-    this.height = 380,
-  });
-
-  /// L'exercice a-t-il une animation 3D validée (registre déjà lu) ?
-  static bool converted(String id) =>
-      ClipRegistry.loaded?.contains(id) ?? false;
-
-  @override
-  State<ExerciseAnimation> createState() => ExerciseAnimationState();
-}
-
-class ExerciseAnimationState extends State<ExerciseAnimation> {
-  MannequinClip? _clip;
-  bool _failed = false;
-  ExerciseMuscleMap _muscles = ExerciseMuscleMap.empty;
-
-  MannequinClip? get clip => _clip;
-
-  @override
-  void initState() {
-    super.initState();
-    _setMap(MannequinMap.loaded);
-    if (engine3DSupportKnown?.compatible == false) {
-      _failed = true;
-      return;
-    }
-    ClipRegistry.clip(widget.id).then((c) {
-      if (!mounted) return;
-      setState(() {
-        if (c == null) {
-          _failed = true;
-        } else {
-          _clip = c;
-        }
-      });
-    });
-    if (MannequinMap.loaded == null) {
-      MannequinMap.load().then((m) {
-        if (mounted) setState(() => _setMap(m));
-      }, onError: (Object _) {});
-    }
-  }
-
-  void _setMap(MannequinMap? map) {
-    _muscles = map == null
-        ? ExerciseMuscleMap.empty
-        : ExerciseMuscleMap.of(
-            map,
-            primaires: widget.primaires,
-            secondaires: widget.secondaires,
-            stabilisateurs: widget.stabilisateurs,
-            etires: widget.etires,
-          );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final clip = _clip;
-    if (_failed) return widget.fallback;
-    if (clip == null) {
-      return SizedBox(
-        height: widget.height,
-        child: const Center(child: CircularProgressIndicator()),
-      );
-    }
-    return Mannequin3D(
-      key: ValueKey('fiche-animation-${widget.id}'),
-      clip: clip,
-      intensities: _muscles.intensities,
-      stretched: _muscles.stretched,
-      height: widget.height,
-      horizontalDragOnly: true,
-      viewButtons: true,
-      semanticLabel:
-          'Démonstration animée en 3D : ${clip.name}, muscles de '
-          'l’exercice en rouge',
-      fallback: widget.fallback,
     );
   }
 }

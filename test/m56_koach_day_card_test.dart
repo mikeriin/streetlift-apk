@@ -1,4 +1,4 @@
-// M6 — carte « Koach · séance du jour » : en tête de la séance, avant les
+// M56 (repris du brouillon M6) — carte « Koach · séance du jour » : en tête de la séance, avant les
 // pages d'exercices (plus rien de Koach au-dessus du premier exercice),
 // même contenu qu'avant (questionnaire D14, jour de fatigue D25, adaptation
 // L11), repliable (une ligne de résumé), absente quand Koach n'a rien à dire.
@@ -14,7 +14,7 @@ import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
-import 'phone_test_support.dart' show scrollToAction;
+import 'phone_test_support.dart' show scrollToAction, swipePage;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -108,36 +108,36 @@ void main() {
     // séparées au-dessus de l'exercice.
     for (final key in const ['koach-questions', 'koach-fatigue']) {
       expect(
-        find.ancestor(
-          of: find.byKey(ValueKey(key)),
-          matching: find.byType(KoachDayCard),
-        ).evaluate().length,
+        find
+            .ancestor(
+              of: find.byKey(ValueKey(key)),
+              matching: find.byType(KoachDayCard),
+            )
+            .evaluate()
+            .length,
         find.byKey(ValueKey(key)).evaluate().length,
         reason: key,
       );
     }
-    // Première chose de la page, avant le premier exercice.
+    // Correction 1 : page à part, avant l'exercice 1 (rien de l'exercice
+    // sur cette page), première chose de la page.
     final cardBox = tester.getRect(card);
-    final list = find.descendant(
-      of: find.byType(PageView),
-      matching: find.byType(ListView),
-    );
-    expect(find.descendant(of: list.first, matching: card), findsOneWidget);
-    expect(
-      cardBox.bottom,
-      lessThanOrEqualTo(
-        tester.getRect(find.byTooltip('Valider la série 1').first).top,
-      ),
-    );
+    expect(find.byKey(const ValueKey('session-koach-page')), findsOneWidget);
+    expect(find.byTooltip('Valider la série 1'), findsNothing);
+    expect(find.text('Koach · séance du jour'), findsOneWidget);
     // Rien de Koach dans l'en-tête de la séance.
     expect(
       cardBox.top,
       greaterThanOrEqualTo(tester.getRect(find.byType(PageView)).top),
     );
     expect(find.text('KOACH · SÉANCE DU JOUR'), findsOneWidget);
-    // Pages suivantes : pas de carte.
-    await tester.tap(find.text('Suivant'));
-    await tester.pumpAndSettle();
+    // Page suivante : l'exercice 1, sans carte.
+    await swipePage(tester);
+    expect(
+      find.text('Exercice 1 / ${store.groups(d1).length}'),
+      findsOneWidget,
+    );
+    expect(find.byTooltip('Valider la série 1'), findsWidgets);
     expect(
       find.descendant(
         of: find.byType(PageView),
@@ -163,6 +163,10 @@ void main() {
       find.text('Forme du jour : 0 au plus bas, 10 excellente'),
       findsOneWidget,
     );
+    // M56 : le questionnaire est dans la carte « Koach · séance du jour »
+    // (en-tête au-dessus) : à 320 px et 200 %, la puce passe sous la barre
+    // du bas ; on la fait remonter avant de toucher.
+    await scrollToAction(tester, find.text('moins de 5 h'));
     await tester.tap(find.text('moins de 5 h'));
     await tester.pumpAndSettle();
     expect(store.koach.answers['S3-J1']!.sleep, 4.5);

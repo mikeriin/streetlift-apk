@@ -19,6 +19,8 @@ import 'package:streetlift_tracker/session_history.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 
+import 'phone_test_support.dart' show swipePage;
+
 /// Identifiants retirés de S12 à S19 (202), relevés sur l'asset 2.5.6.
 const removedIds = <String>[
   'B2-9',
@@ -812,8 +814,7 @@ void main() {
         await tester.pumpWidget(page(SessionScreen(week: week, day: day)));
         await tester.pumpAndSettle();
         expect(find.text('TEST MAX TRACTIONS PDC'), findsWidgets);
-        await tester.tap(find.text('Suivant'));
-        await tester.pumpAndSettle();
+        await swipePage(tester);
         expect(find.text(nbsp('2 × 18 reps')), findsOneWidget);
         final continuous = day.exercises[1];
         List<String> reps() => [
@@ -919,10 +920,11 @@ void main() {
         );
         await tester.pumpAndSettle();
         expect(find.text('MUSCLE-UPS PDC EXPLOSIFS'), findsWidgets);
-        for (var p = 0; p < day.exercises.length; p++) {
+        // 5.5.2 : plus de boutons, glissement de page en page jusqu'au
+        // bilan (une page Koach possible avant l'exercice 1).
+        for (var p = 0; p <= day.exercises.length; p++) {
           expect(tester.takeException(), isNull, reason: 'S11 J6 page $p');
-          await tester.tap(find.byIcon(Icons.chevron_right).last);
-          await tester.pumpAndSettle();
+          await swipePage(tester);
         }
         await tester.pumpWidget(const SizedBox());
         await tester.pumpAndSettle();
@@ -950,11 +952,10 @@ void main() {
               ),
             );
             await tester.pumpAndSettle();
-            for (var p = 0; p < day.exercises.length; p++) {
+            for (var p = 0; p <= day.exercises.length; p++) {
               expect(tester.takeException(), isNull, reason: 'S12 J$j page $p');
-              // « Suivant », puis « Bilan » sur la dernière page.
-              await tester.tap(find.byIcon(Icons.chevron_right).last);
-              await tester.pumpAndSettle();
+              // 5.5.2 : glissement jusqu'au bilan (plus de bouton Suivant).
+              await swipePage(tester);
             }
             await tester.pumpWidget(const SizedBox());
             await tester.pumpAndSettle();

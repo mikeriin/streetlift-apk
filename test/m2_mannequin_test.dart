@@ -2,7 +2,7 @@
 // les groupes et les muscles du pack, rampe historique, repli 2D sans
 // Flutter GPU (le moteur de test n'en a pas : c'est le cas d'un téléphone
 // incompatible), écran Anatomie (Arsenal › Anatomie), Réglages › Affichage
-// 3D, crédits CC BY-SA dans « Sources et licences ». Le rendu réel est
+// 3D, crédits du modèle dans « Sources et licences ». Le rendu réel est
 // vérifié sur émulateur par integration_test/moteur_3d_test.dart.
 
 import 'dart:convert';
@@ -118,12 +118,12 @@ void main() {
       });
       expect(pack['latissimus_dorsi_left'], 1);
       expect(pack['latissimus_dorsi_right'], 1);
-      expect(pack['biceps_brachii_long_left'], .62);
+      expect(pack['biceps_brachii_left'], .62);
       expect(pack['rectus_abdominis_right'], .35);
       expect(map.groupsOf(pack), {'dos': 1, 'biceps': .62, 'gainage': .35});
       expect(map.names(pack), [
         'Grand dorsal',
-        'Biceps brachial (chef long)',
+        'Biceps brachial',
         "Droit de l'abdomen",
       ]);
     });
@@ -137,13 +137,22 @@ void main() {
     });
   });
 
-  test('rampe historique identique à la carte 2D', () {
-    for (final dark in [true, false]) {
-      SL.dark = dark;
-      for (final v in [.35, .62, 1.0]) {
-        expect(mannequinHeat(v, dark), heat(v), reason: '$dark $v');
+  test('rampe identique à la carte 2D, dans la couleur dominante choisie', () {
+    for (final accent in [KAccentSpec.rouge, KAccentSpec.turquoise]) {
+      SL.accentSpec = accent;
+      for (final dark in [true, false]) {
+        SL.dark = dark;
+        for (final v in [.35, .62, 1.0]) {
+          expect(mannequinHeat(v, dark), heat(v), reason: '$dark $v');
+        }
+        // 5.5.2 : le haut de la rampe est la teinte vive (claire en sombre)
+        // de la dominante, le bas sa teinte principale.
+        final top = dark ? accent.bright : (accent.vividLight ?? accent.vivid);
+        expect(mannequinHeat(1, dark), top);
+        expect(mannequinHeat(0, dark), Color.lerp(accent.principal, top, .15));
       }
     }
+    SL.accentSpec = KAccentSpec.rouge;
     SL.dark = true;
   });
 
@@ -295,11 +304,14 @@ void main() {
   testWidgets('Sources et licences : crédits du modèle 3D', (tester) async {
     phone(tester);
     await tester.pumpWidget(page(const MentionsScreen()));
-    final credit = find.textContaining('Z-Anatomy - The libre 3D atlas');
+    final credit = find.textContaining('Ecorche Musclenames Male Anatomy');
     // Titre des crédits du modèle : le texte des mentions est chargé.
     await _settle(tester, find.textContaining('MANNEQUIN ANATOMIQUE 3D'));
     await scrollToAction(tester, credit);
-    await scrollToAction(tester, find.textContaining('CC-BY-SA 2.1 Japan'));
+    await scrollToAction(
+      tester,
+      find.textContaining('tools/anatomy/build_model.py'),
+    );
     expect(tester.takeException(), isNull);
   });
 }
