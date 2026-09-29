@@ -116,5 +116,8 @@ Modèle Claude : Opus 5.5 pour tous les lots, effort accru demandé sur M5 (sque
 - **CI 3D, 5 essais** : essai 1 formatage / analyse / tests ; essais 2-3 : `m56_preload_test` (widget) bloqué 10 min — un futur créé hors de la zone simulée de `testWidgets` (sondage du moteur en `setUpAll`) attendu avant tout `pump` n'est jamais propagé ; règle : attendre ce genre de futur dans `tester.runAsync`. Essai 5 : la mesure « après » du préchargement s'ouvre 3 s après le préchauffage (le rendu logiciel de l'émulateur terminait l'image de préchauffage pendant l'ouverture : « après » 700 à 1 200 ms plus lent aux essais 2-4). Résultat émulateur : aucune différence mesurable avant / après (caches déjà chauds, ≈ 300 ms par image) ; les chiffres qui comptent sont ceux du téléphone.
 - Version 5.5.0+79 (lot de fonctionnalités) ; main 7a24fc0 (7 commits, avance rapide depuis b745c41), build signé n° 133.
 
+### Règle ajoutée par le propriétaire (29/09/2026, après M56)
+- Le dernier commit de chaque lot sur `main` s'intitule « Kalis Track x.y.z (<LOT>) : … » pour que le build signé à tester se distingue des autres runs (M56 : run n° 133 titré par son dernier correctif). Inscrit au §7 du pipeline.
+
 ## En attente du propriétaire
 (aucune)
