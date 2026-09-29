@@ -293,6 +293,7 @@ class Engine3DScreenState extends State<Engine3DScreen> {
           view: MannequinView.troisQuarts,
           viewButtons: false,
           spin: true,
+          background: sceneBackground(dark),
           height: 380,
           onReady: _onReady,
           semanticLabel:

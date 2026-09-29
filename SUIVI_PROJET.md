@@ -1,8 +1,17 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M56 (refonte du mannequin, du squelette et de la peau ; matériel, chaîne d'animation et 3 pilotes ; carte Koach ; préchargement), version 5.5.0, correction 1 (retour du propriétaire), version 5.5.1, correction 2 (écorché acheté, plus d'animation), version 5.5.2, puis correction 3 (muscles opaques, zone ciblée, modèle partout, sans rotation au doigt), version 5.5.3**  
-**Date : 28-29 septembre 2026, Europe/Paris — version : 5.5.3+82 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : pipeline « Mannequin 3D », lot M56 (refonte du mannequin, du squelette et de la peau ; matériel, chaîne d'animation et 3 pilotes ; carte Koach ; préchargement), version 5.5.0, correction 1 (retour du propriétaire), version 5.5.1, correction 2 (écorché acheté, plus d'animation), version 5.5.2, correction 3 (muscles opaques, zone ciblée, modèle partout, sans rotation au doigt), version 5.5.3, puis correction 4 (halo au lieu de la couleur, fond du support), version 5.5.4**  
+**Date : 28-29 septembre 2026, Europe/Paris — version : 5.5.4+83 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d-fable`, rendu réel sur émulateur Android).**
+
+## M56.C4 — Correction 4 (retour du propriétaire du 29/09/2026, version 5.5.4)
+
+| Point | Retour | Correction |
+| --- | --- | --- |
+| Halo | « Je ne veux pas que le mesh soit coloré je veux que tu ajoutes un genre de halo de la zone travaillée » | Matériaux toujours gris (`_applyMaterials` ne change plus que la visibilité ; bloom éteint). `MannequinHaloPainter` (CustomPaint par-dessus la `SceneView`, sous la bulle) : pour chaque région sollicitée (et étirée, teinte froide), triangles tournés vers la caméra projetés à l'écran (`HaloProjection.of(camera, size)` : base caméra reconstruite et étalonnée sur `screenPointToRay` des coins ; sens des faces mesuré une fois sur le droit de l'abdomen, `windingOutward`), union remplie dans `mannequinHeat(v)` à l'opacité 0,16 + 0,30·v, flou 9 px (réglage « Halo » ; net sinon). Pas de halo en rotation continue (Moteur 3D, caméra par image). Une coque 3D retournée a été essayée puis abandonnée (surface ouverte : rien à voir de face). |
+| Fond | « Pour tous les affichages 3D, le fond doit être de la même couleur que le support sur lequel il est, on ne doit pas voir de démarcations » | `Mannequin3D.background` (skybox de la scène, boîte de la vue, repli 2D) : carte du thème par défaut (`surfaceContainerLow`), page pour l'Anatomie, `SL.bordeaux` / `SL.card` sur la carte de séance de l'accueil, `SL.surface` dans la feuille de séance, `sceneBackground` sur l'écran Moteur 3D ; `TargetedMannequin.background`. |
+
+Contrôles : __CTRL__
 
 ## M56.C3 — Correction 3 (retour du propriétaire du 29/09/2026, version 5.5.3)
 

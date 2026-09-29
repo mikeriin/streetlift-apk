@@ -110,6 +110,9 @@ class TargetedMannequin extends StatefulWidget {
   final bool fallbackGlow;
   final String subject;
 
+  /// 5.5.4 : couleur du support (fond de la scène sans démarcation).
+  final Color? background;
+
   const TargetedMannequin({
     super.key,
     required this.names,
@@ -121,6 +124,7 @@ class TargetedMannequin extends StatefulWidget {
     this.fallbackTint,
     this.fallbackGlow = true,
     this.subject = 'muscles ciblés',
+    this.background,
   });
 
   @override
@@ -181,6 +185,7 @@ class TargetedMannequinState extends State<TargetedMannequin> {
         views: const [MannequinView.face, MannequinView.dos],
         viewButtons: widget.viewButtons,
         interactive: widget.viewButtons,
+        background: widget.background,
         height: widget.height,
         semanticLabel: names.isEmpty
             ? 'Mannequin anatomique en 3D, aucun muscle sollicité'
