@@ -1,0 +1,1195 @@
+09-29 09:57:57.952 W/WifiConnectivityManager(  571): mConnectedSingleSavedNetworkSingleScanScheduleSec is not configured! Using default scan schedule
+09-29 09:57:57.952 W/WifiConnectivityManager(  571): mConnectedSingleSavedNetworkSingleScanType is not configured! Using default scan types
+09-29 09:57:58.054 W/ActivityManager(  571): Invalid packageName: fr.tchoupi.streetlift_tracker
+09-29 09:57:58.282 W/DataFileManager( 1342): 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-29 09:57:58.282 W/DataFileManager( 1342): 	at libcore.io.Linux.open(Native Method)
+09-29 09:57:58.282 W/DataFileManager( 1342): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:57:58.282 W/DataFileManager( 1342): 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:274)
+09-29 09:57:58.282 W/DataFileManager( 1342): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:57:58.282 W/DataFileManager( 1342): 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-29 09:57:58.286 W/ActivityManager(  571): Slow operation: 53ms so far, now at finishAttachApplicationInner: after mServices.attachApplicationLocked
+09-29 09:57:58.286 W/ActivityManager(  571): Slow operation: 173ms so far, now at finishAttachApplicationInner: after dispatching broadcasts
+09-29 09:57:58.388 I/ActivityManager(  571): Start proc 1821:android.process.media/u0a95 for content provider {com.android.providers.media/com.android.providers.media.LegacyMediaProvider}
+09-29 09:57:58.408 E/d.process.media( 1821): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:57:58.653 W/ActivityManager(  571): Slow operation: 73ms so far, now at attachApplicationLocked: immediately after bindApplication
+09-29 09:57:58.667 W/ActivityManager(  571): Slow operation: 87ms so far, now at attachApplicationLocked: after updateLruProcessLocked
+09-29 09:57:58.694 W/ActivityManager(  571): Slow operation: 108ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+09-29 09:57:58.698 W/ActivityManager(  571): Unable to start service Intent { act=com.google.android.play.core.splitinstall.BIND_SPLIT_INSTALL_SERVICE pkg=com.android.vending } U=0: not found
+09-29 09:57:58.733 I/EGL_emulation( 1177): Opening libGLESv1_CM_emulation.so
+09-29 09:57:58.735 I/EGL_emulation( 1177): Opening libGLESv2_emulation.so
+09-29 09:57:58.796 W/ActivityManager(  571): Unable to start service Intent { act=com.google.android.play.core.splitinstall.BIND_SPLIT_INSTALL_SERVICE pkg=com.android.vending } U=0: not found
+09-29 09:57:59.068 V/GraphicsEnvironment( 1821):   angle_gl_driver_selection_pkgs=[]
+09-29 09:57:59.068 V/GraphicsEnvironment( 1821):   angle_gl_driver_selection_values=[]
+09-29 09:57:59.089 I/ActivityManager(  571): Start proc 1901:com.google.android.as.oss/u0a132 for service {com.google.android.as.oss/com.google.android.apps.miphone.astrea.grpc.AstreaGrpcService}
+09-29 09:57:59.340 E/.android.as.oss( 1901): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:57:59.442 V/WindowManagerShell(  923): Transition requested (#5): android.os.BinderProxy@a6b87ec TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 5 }
+09-29 09:57:59.447 I/ActivityManager(  571): Broadcasting: Intent { act=com.android.emulator.multidisplay.START flg=0x400000 cmp=com.android.emulator.multidisplay/.MultiDisplayServiceReceiver }
+09-29 09:57:59.632 W/system_server(  571): Long monitor contention with owner android.fg (594) at void com.android.server.am.ActivityManagerService.scheduleApplicationInfoChanged(java.util.List, int)(ActivityManagerService.java:20499) waiters=0 in int com.android.server.am.ActivityManagerService.getUidState(int) for 429ms
+09-29 09:57:59.633 W/system_server(  571): Long monitor contention with owner android.fg (594) at void com.android.server.am.ActivityManagerService.scheduleApplicationInfoChanged(java.util.List, int)(ActivityManagerService.java:20499) waiters=1 in void com.android.server.am.ActivityManagerService.addPackageDependency(java.lang.String) for 421ms
+09-29 09:57:59.634 W/system_server(  571): Long monitor contention with owner android.fg (594) at void com.android.server.am.ActivityManagerService.scheduleApplicationInfoChanged(java.util.List, int)(ActivityManagerService.java:20499) waiters=5 in android.content.Intent com.android.server.am.ActivityManagerService.registerReceiverWithFeatureTraced(android.app.IApplicationThread, java.lang.String, java.lang.String, java.lang.String, android.content.IIntentReceiver, android.content.IntentFilter, java.lang.String, int, int) for 310ms
+09-29 09:57:59.640 W/system_server(  571): Long monitor contention with owner android.fg (594) at void com.android.server.am.ActivityManagerService.scheduleApplicationInfoChanged(java.util.List, int)(ActivityManagerService.java:20499) waiters=4 in boolean com.android.server.am.ActivityManagerService.isAppStartModeDisabled(int, java.lang.String) for 347ms
+09-29 09:57:59.650 W/system_server(  571): Long monitor contention with owner android.fg (594) at void com.android.server.am.ActivityManagerService.scheduleApplicationInfoChanged(java.util.List, int)(ActivityManagerService.java:20499) waiters=2 in int com.android.server.am.ActivityManagerService.getUidState(int) for 432ms
+09-29 09:57:59.690 W/ActivityManager(  571): Slow operation: 54ms so far, now at startProcess: done starting proc!
+09-29 09:57:59.691 W/ActivityManager(  571): Slow operation: 55ms so far, now at startProcess: asking zygote to start proc
+09-29 09:57:59.728 W/ActivityManager(  571): Slow operation: 92ms so far, now at startProcess: returned from zygote!
+09-29 09:57:59.761 W/ActivityManager(  571): Slow operation: 210ms so far, now at finishAttachApplicationInner: after mServices.attachApplicationLocked
+09-29 09:57:59.761 W/ActivityManager(  571): Slow operation: 210ms so far, now at finishAttachApplicationInner: after dispatching broadcasts
+09-29 09:57:59.901 W/ActivityManager(  571): Slow operation: 72ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+09-29 09:57:59.972 E/.localtransport( 1952): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:57:59.985 W/ActivityManager(  571): Slow operation: 348ms so far, now at startProcess: done updating battery stats
+09-29 09:57:59.993 W/ActivityManager(  571): Slow operation: 356ms so far, now at startProcess: building log message
+09-29 09:57:59.993 I/ActivityManager(  571): Start proc 1952:com.android.localtransport/1000 for service {com.android.localtransport/com.android.localtransport.LocalTransportService}
+09-29 09:58:00.044 W/ActivityManager(  571): Slow operation: 408ms so far, now at startProcess: starting to update pids map
+09-29 09:58:00.045 W/ActivityManager(  571): Slow operation: 408ms so far, now at startProcess: done updating pids map
+09-29 09:58:00.057 D/nativeloader( 1901): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:58:00.062 I/ActivityManager(  571): Enqueued broadcast Intent { act=com.android.emulator.multidisplay.START flg=0x400000 cmp=com.android.emulator.multidisplay/.MultiDisplayServiceReceiver }: 0
+09-29 09:58:00.125 W/ActivityManager(  571): Slow operation: 54ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+09-29 09:58:00.221 V/GraphicsEnvironment( 1901):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:00.221 V/GraphicsEnvironment( 1901):   angle_gl_driver_selection_values=[]
+09-29 09:58:00.310 D/ActivityManager(  571): ThemeHomeDelay: Home launch is not delayable, ignoring setThemeOverlayReady() call
+09-29 09:58:00.377 V/GraphicsEnvironment( 1952):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:00.377 V/GraphicsEnvironment( 1952):   angle_gl_driver_selection_values=[]
+09-29 09:58:00.378 W/system_server(  571): Long monitor contention with owner binder:571_E (1616) at android.content.ComponentName com.android.server.am.ActivityManagerService.startService(android.app.IApplicationThread, android.content.Intent, java.lang.String, boolean, java.lang.String, java.lang.String, int, boolean, int, java.lang.String, java.lang.String)(ActivityManagerService.java:14006) waiters=0 in void com.android.server.am.ActivityManagerService.serviceDoneExecuting(android.os.IBinder, int, int, int, android.content.Intent) for 140ms
+09-29 09:58:00.426 W/ActivityManager(  571): Slow operation: 118ms so far, now at finishAttachApplicationInner: after mServices.attachApplicationLocked
+09-29 09:58:00.426 W/ActivityManager(  571): Slow operation: 118ms so far, now at finishAttachApplicationInner: after dispatching broadcasts
+09-29 09:58:00.890 W/system_server(  571): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleSdkSetup/GoogleSdkSetup.apk' with 1 weak references
+09-29 09:58:00.976 I/GmsDebugLogger( 1230): [46] 
+09-29 09:58:12.267 I/BLASTSyncEngine(  571): Unfinished container: Task{679cd4f #6 type=home A=10171:com.google.android.googlesdksetup}
+09-29 09:58:12.267 I/BLASTSyncEngine(  571):   ActivityRecord{995f7d6 u0 com.google.android.googlesdksetup/.DefaultActivity t6} is relaunching
+09-29 09:58:12.333 V/WindowManager(  571): Sent Transition (#5) createdAt=09-29 09:57:59.302 via request=TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 5 }
+09-29 09:58:12.399 V/WindowManagerShell(  923): Transition requested (#6): android.os.BinderProxy@f0331fe TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = null, displayChange = DisplayChange { displayId = 0, startAbsBounds = Rect(0, 0 - 1080, 2400), endAbsBounds = Rect(0, 0 - 1080, 2400), startRotation = 0, endRotation = 0, physicalDisplayChanged = false }, flags = 0, debugId = 6 }
+09-29 09:58:12.479 D/nativeloader( 1591): Configuring clns-shared-10 for other apk . target_sdk_version=35, uses_libraries=, library_path=/system_ext/priv-app/GoogleServicesFramework/lib/x86_64:/system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk!/lib/x86_64:/system/lib64:/system_ext/lib64, permitted_path=/data:/mnt/expand:/data/user/0/com.google.android.gsf:/system_ext/priv-app/GoogleServicesFramework:/system/lib64:/system_ext/lib64
+09-29 09:58:12.498 W/ActivityManager(  571): Service lookup failed: association not allowed between packages com.google.android.as.oss and com.google.android.gms
+09-29 09:58:12.636 D/nativeloader( 1230): Load /product/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk!/lib/x86_64/libconscrypt_gmscore_jni.so using ns product-clns-9 from class loader (caller=/product/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk!classes3.dex): ok
+09-29 09:58:12.681 I/ActivityThread( 1602): ApplicationInfo updating for com.google.android.googlesdksetup, new timestamp: 37506
+09-29 09:58:12.695 W/GoogleSdkSetup( 1602): Already provisioned, remove itself.
+09-29 09:58:12.698 W/ActivityTaskManager(  571): Duplicate finish request for r=ActivityRecord{995f7d6 u0 com.google.android.googlesdksetup/.DefaultActivity t6 f}}
+09-29 09:58:12.977 D/nativeloader( 1591): Load /product/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk!/lib/x86_64/libconscrypt_gmscore_jni.so using ns product-clns-9 from class loader (caller=/product/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk!classes3.dex): ok
+09-29 09:58:12.996 I/AiAiAdaptiveAudio( 1425): AdaptiveAudio config updated, new config=AdaptiveAudioConfig{shouldEnableAdaptiveAudio=false, shouldBypassQprCheck=false, shouldLimitCalibration=true, shouldShowDebugNotification=false, userSettingDefaultValue=false, crashOnError=true, shouldShowPromoNotification=false, useSilenceDetectorStateBugFix=false}
+09-29 09:58:13.103 D/AugmentedAutofillService( 1425): handleOnConnected(): debug=true, verbose=false
+09-29 09:58:13.434 W/system_server(  571): Core platform API violation: Llibcore/io/Memory;->pokeByte(JB)V from Lcom/android/wifi/x/com/google/protobuf/UnsafeUtil; using reflection
+09-29 09:58:13.437 W/system_server(  571): Core platform API violation: Llibcore/io/Memory;->peekByte(J)B from Lcom/android/wifi/x/com/google/protobuf/UnsafeUtil; using reflection
+09-29 09:58:13.454 W/LastMileLogger(  571): Failed to open free_buffer pseudo-file: /sys/kernel/debug/tracing/instances/wifi/free_buffer: open failed: ENOENT (No such file or directory)
+09-29 09:58:13.554 W/ActivityManager(  571): Slow operation: 138ms so far, now at finishAttachApplicationInner: after mServices.attachApplicationLocked
+09-29 09:58:13.570 W/ActivityManager(  571): Slow operation: 154ms so far, now at finishAttachApplicationInner: after dispatching broadcasts
+09-29 09:58:13.600 I/ActivityManager(  571): Start proc 2125:com.android.carrierconfig/u0a179 for service {com.android.carrierconfig/com.android.carrierconfig.DefaultCarrierConfigService}
+09-29 09:58:13.914 I/WindowManager(  571):   Force finishing ActivityRecord{995f7d6 u0 com.google.android.googlesdksetup/.DefaultActivity t6 f}}
+09-29 09:58:13.914 W/ActivityTaskManager(  571): Duplicate finish request for r=ActivityRecord{995f7d6 u0 com.google.android.googlesdksetup/.DefaultActivity t6 f}}
+09-29 09:58:14.297 I/EGL_emulation(  571): Opening libGLESv1_CM_emulation.so
+09-29 09:58:14.297 I/EGL_emulation(  571): Opening libGLESv2_emulation.so
+09-29 09:58:14.375 W/system_server(  571): Long monitor contention with owner android.fg (594) at int com.android.server.am.ActivityManagerService.bindServiceInstance(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int)(ActivityManagerService.java:14231) waiters=0 in void com.android.server.am.ActivityManagerService.serviceDoneExecuting(android.os.IBinder, int, int, int, android.content.Intent) for 174ms
+09-29 09:58:14.375 W/system_server(  571): Long monitor contention with owner android.fg (594) at int com.android.server.am.ActivityManagerService.bindServiceInstance(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int)(ActivityManagerService.java:14231) waiters=4 in int com.android.server.am.ActivityManagerService.bindServiceInstance(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int) for 135ms
+09-29 09:58:14.418 V/WindowManagerShell(  923):  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@e9dfa1, appThread = android.app.IApplicationThread$Stub$Proxy@d3d75c6, debugName = LauncherToDream }}
+09-29 09:58:14.419 V/WindowManagerShell(  923):  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a31a987, appThread = android.app.IApplicationThread$Stub$Proxy@e3680b4, debugName = QuickstepLaunchHome }}
+09-29 09:58:14.745 E/d.carrierconfig( 2125): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:14.896 V/WindowManagerShell(  923): Transition requested (#7): android.os.BinderProxy@2497b05 TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@7a3175a, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 7 }
+09-29 09:58:14.896 V/WindowManagerShell(  923): RemoteTransition directly requested for (#7) android.os.BinderProxy@2497b05: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@7a3175a, appThread = null, debugName = null }
+09-29 09:58:14.948 I/ModuleSetMgr( 1591): Download of container feature multipackage_debug is disabled.
+09-29 09:58:14.948 I/ModuleSetMgr( 1591): Download of container feature permissions_debug is disabled.
+09-29 09:58:14.948 I/ModuleSetMgr( 1591): Download of container feature semanticlocation_debug is disabled.
+09-29 09:58:15.002 D/nativeloader( 1342): Load /data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.uncompressed.apk!/lib/x86_64/libcronet.126.0.6452.4.so using isolated ns clns-8 (caller=/data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.uncompressed.apk): ok
+09-29 09:58:15.066 W/system_server(  571): Long monitor contention with owner android.fg (594) at int com.android.server.am.ActivityManagerService.bindServiceInstance(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int)(ActivityManagerService.java:14231) waiters=0 in void com.android.server.am.ActivityManagerService.serviceDoneExecuting(android.os.IBinder, int, int, int, android.content.Intent) for 238ms
+09-29 09:58:15.067 W/system_server(  571): Long monitor contention with owner android.fg (594) at int com.android.server.am.ActivityManagerService.bindServiceInstance(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int)(ActivityManagerService.java:14231) waiters=8 in void com.android.server.am.ActivityManagerService.publishService(android.os.IBinder, android.content.Intent, android.os.IBinder) for 102ms
+09-29 09:58:15.067 W/system_server(  571): Long monitor contention with owner android.fg (594) at int com.android.server.am.ActivityManagerService.bindServiceInstance(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int)(ActivityManagerService.java:14231) waiters=5 in int com.android.server.am.ActivityManagerService.bindServiceInstance(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int) for 150ms
+09-29 09:58:15.123 W/AppSearchIcing(  571): icing-search-engine.cc:321: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
+09-29 09:58:15.127 W/system_server(  571): Long monitor contention with owner android.fg (594) at int com.android.server.am.ActivityManagerService.bindServiceInstance(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int)(ActivityManagerService.java:14231) waiters=3 in android.content.ComponentName com.android.server.am.ActivityManagerService.startService(android.app.IApplicationThread, android.content.Intent, java.lang.String, boolean, java.lang.String, java.lang.String, int, boolean, int, java.lang.String, java.lang.String) for 252ms
+09-29 09:58:15.160 W/ActivityManager(  571): Slow operation: 90ms so far, now at startProcess: returned from zygote!
+09-29 09:58:15.181 E/gle.android.tts( 2182): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:15.342 W/ActivityManager(  571): Slow operation: 161ms so far, now at attachApplicationLocked: immediately after bindApplication
+09-29 09:58:15.342 W/ActivityManager(  571): Slow operation: 183ms so far, now at attachApplicationLocked: after updateLruProcessLocked
+09-29 09:58:15.349 W/ActivityManager(  571): Slow operation: 184ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+09-29 09:58:15.352 W/ActivityManager(  571): Slow operation: 283ms so far, now at startProcess: done updating battery stats
+09-29 09:58:15.352 W/ActivityManager(  571): Slow operation: 283ms so far, now at startProcess: building log message
+09-29 09:58:15.352 I/ActivityManager(  571): Start proc 2182:com.google.android.tts/u0a166 for service {com.google.android.tts/com.google.android.apps.speech.tts.googletts.service.GoogleTtsService}
+09-29 09:58:15.352 W/ActivityManager(  571): Slow operation: 283ms so far, now at startProcess: starting to update pids map
+09-29 09:58:15.353 W/ActivityManager(  571): Slow operation: 284ms so far, now at startProcess: done updating pids map
+09-29 09:58:15.396 V/WindowManagerShell(  923): Transition requested (#8): android.os.BinderProxy@20cec5f TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@fffc6ac, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 8 }
+09-29 09:58:15.400 V/WindowManagerShell(  923): RemoteTransition directly requested for (#8) android.os.BinderProxy@20cec5f: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@fffc6ac, appThread = null, debugName = null }
+09-29 09:58:15.467 W/ActivityManager(  571): Slow operation: 55ms so far, now at attachApplicationLocked: immediately after bindApplication
+09-29 09:58:15.467 W/ActivityManager(  571): Slow operation: 55ms so far, now at attachApplicationLocked: after updateLruProcessLocked
+09-29 09:58:15.469 W/ActivityManager(  571): Slow operation: 57ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+09-29 09:58:15.558 V/WindowManager(  571): Sent Transition (#6) createdAt=09-29 09:58:00.075 via request=TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = null, displayChange = DisplayChange { displayId = 0, startAbsBounds = Rect(0, 0 - 1080, 2400), endAbsBounds = Rect(0, 0 - 1080, 2400), startRotation = 0, endRotation = 0, physicalDisplayChanged = false }, flags = 0, debugId = 6 }
+09-29 09:58:15.559 V/WindowManager(  571): Sent Transition (#7) createdAt=09-29 09:58:14.807 via request=TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@72da21, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 7 }
+09-29 09:58:15.561 V/WindowManager(  571): Sent Transition (#8) createdAt=09-29 09:58:15.217 via request=TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@5e31e46, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 8 }
+09-29 09:58:15.771 V/GraphicsEnvironment( 2125):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:15.771 V/GraphicsEnvironment( 2125):   angle_gl_driver_selection_values=[]
+09-29 09:58:15.812 D/nativeloader( 2182): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:58:15.877 V/GraphicsEnvironment( 2182):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:15.877 V/GraphicsEnvironment( 2182):   angle_gl_driver_selection_values=[]
+09-29 09:58:15.887 V/AconfigFlags( 1591): Read Aconfig default flag value android.app.job.job_debug_info_apis = true
+09-29 09:58:15.894 V/AconfigFlags( 1591): Read Aconfig default flag value com.android.graphics.surfaceflinger.flags.vulkan_renderengine = false
+09-29 09:58:16.081 I/ActivityManager(  571): Broadcasting: Intent { act=com.android.emulator.multidisplay.START flg=0x400000 cmp=com.android.emulator.multidisplay/.MultiDisplayServiceReceiver }
+09-29 09:58:16.085 I/ActivityManager(  571): Enqueued broadcast Intent { act=com.android.emulator.multidisplay.START flg=0x400000 cmp=com.android.emulator.multidisplay/.MultiDisplayServiceReceiver }: 0
+09-29 09:58:16.360 I/ActivityManager(  571): Start proc 2221:com.google.android.partnersetup/u0a131 for broadcast {com.google.android.partnersetup/com.google.android.partnersetup.PhoneStateReceiver}
+09-29 09:58:16.924 E/id.partnersetup( 2221): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:16.988 I/AiAiEcho( 1425): AppFetcherImpl onPackageChanged com.google.android.googlesdksetup.
+09-29 09:58:17.000 I/AiAiEcho( 1425): AppIndexer Package:[com.google.android.googlesdksetup] UserProfile:[0] Enabled:[true].
+09-29 09:58:17.000 I/AiAiEcho( 1425): AppFetcherImplV2 updateApps package:[com.google.android.googlesdksetup], userId:[0], reason:[package is updated.].
+09-29 09:58:17.071 W/ActivityManager(  571): Slow operation: 51ms so far, now at startProcess: returned from zygote!
+09-29 09:58:17.071 W/ActivityManager(  571): Slow operation: 51ms so far, now at startProcess: done updating battery stats
+09-29 09:58:17.071 W/ActivityManager(  571): Slow operation: 51ms so far, now at startProcess: building log message
+09-29 09:58:17.071 I/ActivityManager(  571): Start proc 2258:com.google.android.apps.wallpaper/u0a177 for content provider {com.google.android.apps.wallpaper/com.google.android.apps.wallpaper.provider.RecentWallpapersProvider}
+09-29 09:58:17.071 W/ActivityManager(  571): Slow operation: 51ms so far, now at startProcess: starting to update pids map
+09-29 09:58:17.085 E/.apps.wallpaper( 2258): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:17.097 W/ActivityManager(  571): Slow operation: 77ms so far, now at startProcess: done updating pids map
+09-29 09:58:17.255 W/ActivityManager(  571): Slow operation: 116ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+09-29 09:58:17.255 W/system_server(  571): Long monitor contention with owner binder:571_C (1513) at void com.android.server.am.ActivityManagerService.attachApplication(android.app.IApplicationThread, long)(ActivityManagerService.java:4925) waiters=1 in void com.android.server.am.ActivityManagerService.serviceDoneExecuting(android.os.IBinder, int, int, int, android.content.Intent) for 106ms
+09-29 09:58:17.388 W/ActivityManager(  571): Slow operation: 100ms so far, now at attachApplicationLocked: immediately before bindApplication
+09-29 09:58:17.389 W/ActivityManager(  571): Slow operation: 100ms so far, now at attachApplicationLocked: immediately after bindApplication
+09-29 09:58:17.389 W/ActivityManager(  571): Slow operation: 100ms so far, now at attachApplicationLocked: after updateLruProcessLocked
+09-29 09:58:17.446 W/ActivityManager(  571): Slow operation: 157ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+09-29 09:58:17.456 W/system_server(  571): Long monitor contention with owner binder:571_1D (1951) at void com.android.server.am.ActivityManagerService.attachApplication(android.app.IApplicationThread, long)(ActivityManagerService.java:4925) waiters=1 in void com.android.server.am.ActivityManagerService.publishService(android.os.IBinder, android.content.Intent, android.os.IBinder) for 121ms
+09-29 09:58:17.483 D/nativeloader( 2221): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:58:17.485 V/AconfigFlags( 1591): Read Aconfig default flag value android.app.job.job_debug_info_apis = true
+09-29 09:58:17.666 V/GraphicsEnvironment( 2258):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:17.666 V/GraphicsEnvironment( 2258):   angle_gl_driver_selection_values=[]
+09-29 09:58:18.002 V/GraphicsEnvironment( 2221):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:18.004 V/GraphicsEnvironment( 2221):   angle_gl_driver_selection_values=[]
+09-29 09:58:19.020 D/AugmentedAutofillService( 1425): handleOnConnected(): debug=true, verbose=false
+09-29 09:58:19.104 V/AconfigFlags( 1591): Read Aconfig default flag value com.android.graphics.surfaceflinger.flags.vulkan_renderengine = false
+09-29 09:58:19.428 W/gle.android.gms( 1591): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 2 weak references
+09-29 09:58:20.365 W/FileUtils(  571): 	at libcore.io.Linux.chmod(Native Method)
+09-29 09:58:20.365 W/FileUtils(  571): 	at libcore.io.ForwardingOs.chmod(ForwardingOs.java:165)
+09-29 09:58:20.365 W/FileUtils(  571): 	at libcore.io.BlockGuardOs.chmod(BlockGuardOs.java:83)
+09-29 09:58:20.490 W/LastMileLogger(  571): Failed to stop event tracing: /sys/kernel/debug/tracing/instances/wifi/tracing_on: open failed: ENOENT (No such file or directory)
+09-29 09:58:20.777 I/ActivityManager(  571): Broadcast completed: result=0
+09-29 09:58:21.224 W/system_server(  571): Long monitor contention with owner ActivityManager (606) at void com.android.server.am.BroadcastQueueModernImpl.updateRunningList()(BroadcastQueueModernImpl.java:450) waiters=0 in java.lang.String com.android.server.am.ActivityManagerService.getTagForIntentSender(android.content.IIntentSender, java.lang.String) for 181ms
+09-29 09:58:21.287 W/ActivityManager(  571): pid 571 system sent binder code 1 with flags 1 to frozen apps and got error -32
+09-29 09:58:21.296 I/ActivityManager(  571): Broadcast completed: result=0
+09-29 09:58:21.435 W/ActivityManager(  571): Slow operation: 94ms so far, now at startProcess: done creating new process record
+09-29 09:58:21.435 W/ActivityManager(  571): Slow operation: 94ms so far, now at startProcess: stepping in to startProcess
+09-29 09:58:21.471 W/ActivityManager(  571): Slow operation: 130ms so far, now at startProcess: done starting proc!
+09-29 09:58:21.510 W/ActivityManager(  571): Slow operation: 75ms so far, now at startProcess: returned from zygote!
+09-29 09:58:21.570 W/ActivityManager(  571): Slow operation: 135ms so far, now at startProcess: done updating battery stats
+09-29 09:58:21.570 W/ActivityManager(  571): Slow operation: 135ms so far, now at startProcess: building log message
+09-29 09:58:21.570 I/ActivityManager(  571): Start proc 2364:com.android.imsserviceentitlement/u0a137 for broadcast {com.android.imsserviceentitlement/com.android.imsserviceentitlement.ImsEntitlementReceiver}
+09-29 09:58:21.571 W/ActivityManager(  571): Slow operation: 136ms so far, now at startProcess: starting to update pids map
+09-29 09:58:21.595 W/ActivityManager(  571): Slow operation: 160ms so far, now at startProcess: done updating pids map
+09-29 09:58:21.644 W/ActivityManager(  571): pid 571 system sent binder code 1 with flags 1 to frozen apps and got error -32
+09-29 09:58:21.644 D/ActivityManager(  571): Too many transaction errors, throttling freezer binder callback.
+09-29 09:58:22.139 W/system_server(  571): Long monitor contention with owner ActivityManager (606) at void com.android.server.am.BroadcastQueueModernImpl.updateRunningList()(BroadcastQueueModernImpl.java:450) waiters=1 in boolean com.android.server.am.ActivityManagerService.unbindService(android.app.IServiceConnection) for 121ms
+09-29 09:58:22.604 I/ActivityManager(  571): Broadcasting: Intent { act=com.android.emulator.multidisplay.START flg=0x400000 cmp=com.android.emulator.multidisplay/.MultiDisplayServiceReceiver }
+09-29 09:58:22.757 I/ActivityManager(  571): Enqueued broadcast Intent { act=com.android.emulator.multidisplay.START flg=0x400000 cmp=com.android.emulator.multidisplay/.MultiDisplayServiceReceiver }: 0
+09-29 09:58:22.819 I/ModuleSetMgr( 1591): Download of container feature multipackage_debug is disabled.
+09-29 09:58:22.819 I/ModuleSetMgr( 1591): Download of container feature permissions_debug is disabled.
+09-29 09:58:22.819 I/ModuleSetMgr( 1591): Download of container feature semanticlocation_debug is disabled.
+09-29 09:58:22.829 E/viceentitlement( 2364): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:22.935 D/ActivityManager(  571): freezing 1541 com.android.printspooler
+09-29 09:58:22.968 I/ActivityManager(  571): Broadcast completed: result=0
+09-29 09:58:22.996 D/ShortcutService(  571): changing package: com.google.android.googlesdksetup userId0
+09-29 09:58:22.996 D/ShortcutService(  571): handlePackageChanged: com.google.android.googlesdksetup user=0
+09-29 09:58:22.996 D/ShortcutService(  571): rescanPackageIfNeeded 0@com.google.android.googlesdksetup, forceRescan=true , isNewApp=true
+09-29 09:58:22.996 D/ShortcutService(  571): Package com.google.android.googlesdksetup has 0 manifest shortcut(s), and 0 share target(s)
+09-29 09:58:23.232 D/nativeloader( 2364): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:58:23.392 I/Role    (  571): com.google.android.googlesdksetup not qualified for android.app.role.HOME due to missing RequiredComponent{mIntentFilterData=IntentFilterData{mAction='android.intent.action.MAIN', mCategories='[android.intent.category.HOME]', mDataScheme='null', mDataType='null'}, mMinTargetSdkVersion=1, mFlags='0', mPermission='null', mQueryFlags=0, mMetaData=[]}
+09-29 09:58:23.415 V/GraphicsEnvironment( 2364):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:23.415 V/GraphicsEnvironment( 2364):   angle_gl_driver_selection_values=[]
+09-29 09:58:23.417 I/RoleControllerServiceImpl(  571): Removing package that no longer qualifies for the role, package: com.google.android.googlesdksetup, role: android.app.role.HOME
+09-29 09:58:23.598 W/ActivityManager(  571): Slow operation: 79ms so far, now at startProcess: done updating battery stats
+09-29 09:58:23.598 W/ActivityManager(  571): Slow operation: 79ms so far, now at startProcess: building log message
+09-29 09:58:23.598 I/ActivityManager(  571): Start proc 2411:com.google.android.cellbroadcastreceiver/u0a189 for broadcast {com.google.android.cellbroadcastreceiver/com.android.cellbroadcastreceiver.CellBroadcastReceiver}
+09-29 09:58:23.598 W/ActivityManager(  571): Slow operation: 79ms so far, now at startProcess: starting to update pids map
+09-29 09:58:23.599 W/ActivityManager(  571): Slow operation: 80ms so far, now at startProcess: done updating pids map
+09-29 09:58:23.608 E/oadcastreceiver( 2411): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:24.092 D/CarrierSvcBindHelper( 1097): onPackageModified: com.google.android.googlesdksetup
+09-29 09:58:24.112 D/ImsResolver( 1097): maybeAddedImsService, packageName: com.google.android.googlesdksetup
+09-29 09:58:24.360 W/Looper  (  571): Slow delivery took 244ms android.ui h=com.android.server.am.ActivityManagerService$UiHandler c=com.android.server.am.UidObserverController$$ExternalSyntheticLambda0@80eed15 m=0
+09-29 09:58:24.360 W/Looper  (  571): Slow dispatch took 303ms android.ui h=com.android.server.am.ActivityManagerService$UiHandler c=com.android.server.am.UidObserverController$$ExternalSyntheticLambda0@80eed15 m=0
+09-29 09:58:24.376 D/nativeloader( 2411):   com_android_tethering: libandroid_net_connectivity_com_android_net_module_util_jni.so:libcrypto.so:libframework-connectivity-jni.so:libframework-connectivity-tiramisu-jni.so:libmainlinecronet.121.0.6167.71.so:libservice-connectivity.so:libservice-thread-jni.so:libssl.so
+09-29 09:58:24.496 V/SafetyCenterRefreshTrac(  571): Refresh with id: bff8f991-357e-41a4-aa64-cb6723992e7a_0 completed for source id: GoogleSecurityUpdates, user id: 0, duration: PT20.761S, successful: true, data changed: true, tracking: true, now 1 tracked sources in flight
+09-29 09:58:24.931 D/ActivityManager(  571): freezing 1602 com.google.android.googlesdksetup
+09-29 09:58:25.034 V/GraphicsEnvironment( 2411):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:25.034 V/GraphicsEnvironment( 2411):   angle_gl_driver_selection_values=[]
+09-29 09:58:25.438 W/ActivityManager(  571): Slow operation: 52ms so far, now at startProcess: returned from zygote!
+09-29 09:58:25.458 W/ActivityManager(  571): Slow operation: 73ms so far, now at startProcess: done updating battery stats
+09-29 09:58:25.459 W/ActivityManager(  571): Slow operation: 73ms so far, now at startProcess: building log message
+09-29 09:58:25.464 I/ActivityManager(  571): Start proc 2428:com.android.cellbroadcastreceiver/u0a109 for content provider {com.android.cellbroadcastreceiver/com.android.cellbroadcastreceiver.LegacyCellBroadcastContentProvider}
+09-29 09:58:25.465 W/ActivityManager(  571): Slow operation: 79ms so far, now at startProcess: starting to update pids map
+09-29 09:58:25.469 W/ActivityManager(  571): Slow operation: 83ms so far, now at startProcess: done updating pids map
+09-29 09:58:26.051 E/oadcastreceiver( 2428): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:26.331 W/system_server(  571): Long monitor contention with owner main (571) at android.util.Pair com.android.server.am.ProcessList.getNumForegroundServices()(ProcessList.java:5630) waiters=0 in void com.android.server.am.ActivityManagerService.serviceDoneExecuting(android.os.IBinder, int, int, int, android.content.Intent) for 124ms
+09-29 09:58:26.347 D/AugmentedAutofillService( 1425): handleOnConnected(): debug=true, verbose=false
+09-29 09:58:26.640 W/Looper  (  571): Slow dispatch took 193ms android.ui h=com.android.server.am.ActivityManagerService$UiHandler c=com.android.server.am.UidObserverController$$ExternalSyntheticLambda0@80eed15 m=0
+09-29 09:58:26.913 D/nativeloader( 1230): Load /data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.uncompressed.apk!/lib/x86_64/libcronet.126.0.6452.4.so using isolated ns clns-10 (caller=/data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.uncompressed.apk): ok
+09-29 09:58:27.347 V/GraphicsEnvironment( 2428):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:27.347 V/GraphicsEnvironment( 2428):   angle_gl_driver_selection_values=[]
+09-29 09:58:27.407 W/ActivityManager(  571): Slow operation: 101ms so far, now at startProcess: returned from zygote!
+09-29 09:58:27.407 W/ActivityManager(  571): Slow operation: 101ms so far, now at startProcess: done updating battery stats
+09-29 09:58:27.407 W/ActivityManager(  571): Slow operation: 101ms so far, now at startProcess: building log message
+09-29 09:58:27.407 I/ActivityManager(  571): Start proc 2459:com.google.android.gms.unstable/u0a143 for service {com.google.android.gms/com.google.android.gms.droidguard.DroidGuardService}
+09-29 09:58:27.407 W/ActivityManager(  571): Slow operation: 101ms so far, now at startProcess: starting to update pids map
+09-29 09:58:27.410 W/ActivityManager(  571): Slow operation: 104ms so far, now at startProcess: done updating pids map
+09-29 09:58:27.440 E/id.gms.unstable( 2459): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:27.451 I/EGL_emulation( 1591): Opening libGLESv1_CM_emulation.so
+09-29 09:58:27.452 I/EGL_emulation( 1591): Opening libGLESv2_emulation.so
+09-29 09:58:27.991 D/ActivityManager(  571): freezing 2125 com.android.carrierconfig
+09-29 09:58:28.879 W/oadcastreceiver( 2411): Core platform API violation: Llibcore/io/Memory;->pokeByte(JB)V from Lcom/google/protobuf/UnsafeUtil; using reflection
+09-29 09:58:28.879 W/oadcastreceiver( 2411): Core platform API violation: Llibcore/io/Memory;->peekByte(J)B from Lcom/google/protobuf/UnsafeUtil; using reflection
+09-29 09:58:29.104 D/nativeloader( 2459): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:58:29.216 D/ActivityManager(  571): sync unfroze 2125 com.android.carrierconfig for 6
+09-29 09:58:29.435 V/GraphicsEnvironment( 2459):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:29.435 V/GraphicsEnvironment( 2459):   angle_gl_driver_selection_values=[]
+09-29 09:58:30.554 D/nativeloader( 2459): Load /product/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk!/lib/x86_64/libconscrypt_gmscore_jni.so using ns product-clns-9 from class loader (caller=/product/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk!classes3.dex): ok
+09-29 09:58:31.336 W/ActivityManager(  571): Slow operation: 63ms so far, now at finishAttachApplicationInner: after mServices.attachApplicationLocked
+09-29 09:58:31.336 W/ActivityManager(  571): Slow operation: 63ms so far, now at finishAttachApplicationInner: after dispatching broadcasts
+09-29 09:58:31.751 W/libc    ( 1591): Access denied finding property "ro.hardware.chipname"
+09-29 09:58:31.756 I/EGL_emulation( 1591): Opening libGLESv1_CM_emulation.so
+09-29 09:58:31.771 I/EGL_emulation( 1591): Opening libGLESv2_emulation.so
+09-29 09:58:31.925 I/NnApiDriverManager( 1591): Registering application with GPU 'Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0))' by 'Google (Google Inc. (Google))' [CONTEXT service_id=301 ]
+09-29 09:58:32.599 W/ActivityManager(  571): Receiver with filter android.content.IntentFilter@9b56a7f already registered for pid 1177, callerPackage is com.google.android.apps.nexuslauncher
+09-29 09:58:33.557 D/ActivityManager(  571): freezing 2364 com.android.imsserviceentitlement
+09-29 09:58:33.893 I/ActivityManager(  571): dumpStackTraces pids=null
+09-29 09:58:33.896 I/ActivityManager(  571): Dumping to /data/anr/anr_2026-09-29-09-58-33-893
+09-29 09:58:33.919 D/ActivityManager(  571): created ANR temporary file:/data/anr/temp_anr_7400793236945244849.txt
+09-29 09:58:33.920 I/ActivityManager(  571): Collecting stacks for pid 1230 into temporary file temp_anr_7400793236945244849.txt
+09-29 09:58:34.030 I/system_server(  571): libdebuggerd_client: started dumping process 1230
+09-29 09:58:34.034 I/tombstoned(  220): registered intercept for pid 1230 and type kDebuggerdJavaBacktrace
+09-29 09:58:34.099 I/ActivityManager(  571): Start proc 2575:com.android.carrierdefaultapp/u0a111 for broadcast {com.android.carrierdefaultapp/com.android.carrierdefaultapp.CarrierDefaultBroadcastReceiver}
+09-29 09:58:34.109 E/rrierdefaultapp( 2575): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:34.336 V/GraphicsEnvironment( 2575):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:34.336 V/GraphicsEnvironment( 2575):   angle_gl_driver_selection_values=[]
+09-29 09:58:35.015 W/ActivityManager(  571): Slow operation: 92ms so far, now at startProcess: returned from zygote!
+09-29 09:58:35.060 E/gedprovisioning( 2598): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:35.214 W/ActivityManager(  571): Slow operation: 302ms so far, now at startProcess: done updating battery stats
+09-29 09:58:35.214 W/ActivityManager(  571): Slow operation: 302ms so far, now at startProcess: building log message
+09-29 09:58:35.214 I/ActivityManager(  571): Start proc 2598:com.android.managedprovisioning/u0a104 for broadcast {com.android.managedprovisioning/com.android.managedprovisioning.ota.PreBootListener}
+09-29 09:58:35.214 W/ActivityManager(  571): Slow operation: 302ms so far, now at startProcess: starting to update pids map
+09-29 09:58:35.214 W/ActivityManager(  571): Slow operation: 302ms so far, now at startProcess: done updating pids map
+09-29 09:58:35.242 W/system_server(  571): Long monitor contention with owner binder:571_12 (1801) at int com.android.server.am.ActivityManagerService.bindServiceInstance(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int)(ActivityManagerService.java:14231) waiters=2 in android.app.ContentProviderHolder com.android.server.am.ContentProviderHelper.getContentProviderImpl(android.app.IApplicationThread, java.lang.String, android.os.IBinder, int, java.lang.String, java.lang.String, boolean, int) for 185ms
+09-29 09:58:35.781 I/tombstoned(  220): received crash request for pid 1230
+09-29 09:58:35.781 I/tombstoned(  220): found intercept fd 512 for pid 1230 and type kDebuggerdJavaBacktrace
+09-29 09:58:35.783 W/tombstoned(  220): skipping tombstone file creation due to intercept
+09-29 09:58:35.784 I/.gms.persistent( 1230): Wrote stack traces to tombstoned
+09-29 09:58:35.793 I/system_server(  571): libdebuggerd_client: done dumping process 1230
+09-29 09:58:35.809 V/GraphicsEnvironment( 2598):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:35.809 V/GraphicsEnvironment( 2598):   angle_gl_driver_selection_values=[]
+09-29 09:58:35.843 I/ActivityManager(  571): dumpStackTraces nativepids=null
+09-29 09:58:35.843 I/ActivityManager(  571): dumpStackTraces extraPids=null
+09-29 09:58:35.844 I/ActivityManager(  571): Done dumping
+09-29 09:58:35.858 E/ActivityManager(  571): ANR in com.google.android.gms.persistent
+09-29 09:58:35.858 E/ActivityManager(  571): PID: 1230
+09-29 09:58:35.858 E/ActivityManager(  571): Reason: Broadcast of Intent { act=android.intent.action.DOMAINS_NEED_VERIFICATION flg=0x10000010 cmp=com.google.android.gms/.chimera.GmsIntentOperationService$PersistentTrustedReceiver (has extras) }
+09-29 09:58:35.858 E/ActivityManager(  571): ErrorId: 50a91858-551b-43e7-a7c8-adf9391a90ee
+09-29 09:58:35.858 E/ActivityManager(  571): Frozen: false
+09-29 09:58:35.858 E/ActivityManager(  571): Load: 0.0 / 0.0 / 0.0
+09-29 09:58:35.858 E/ActivityManager(  571): ----- Output from /proc/pressure/memory -----
+09-29 09:58:35.858 E/ActivityManager(  571): some avg10=22.09 avg60=8.10 avg300=1.95 total=6188199
+09-29 09:58:35.858 E/ActivityManager(  571): full avg10=3.06 avg60=1.02 avg300=0.24 total=980613
+09-29 09:58:35.858 E/ActivityManager(  571): ----- End output from /proc/pressure/memory -----
+09-29 09:58:35.858 E/ActivityManager(  571): ----- Output from /proc/pressure/cpu -----
+09-29 09:58:35.858 E/ActivityManager(  571): some avg10=87.46 avg60=45.13 avg300=12.26 total=40132148
+09-29 09:58:35.858 E/ActivityManager(  571): full avg10=0.00 avg60=0.00 avg300=0.00 total=0
+09-29 09:58:35.858 E/ActivityManager(  571): ----- End output from /proc/pressure/cpu -----
+09-29 09:58:35.858 E/ActivityManager(  571): ----- Output from /proc/pressure/io -----
+09-29 09:58:35.858 E/ActivityManager(  571): some avg10=16.07 avg60=8.44 avg300=2.37 total=8274331
+09-29 09:58:35.858 E/ActivityManager(  571): full avg10=0.03 avg60=0.29 avg300=0.11 total=488851
+09-29 09:58:35.858 E/ActivityManager(  571): ----- End output from /proc/pressure/io -----
+09-29 09:58:35.858 E/ActivityManager(  571): 
+09-29 09:58:35.858 E/ActivityManager(  571): CPU usage from 32679ms to -10ms ago (2026-09-29 09:58:01.817 to 2026-09-29 09:58:33.886):
+09-29 09:58:35.858 E/ActivityManager(  571):   30% 571/system_server: 21% user + 8.1% kernel / faults: 67411 minor 821 major
+09-29 09:58:35.858 E/ActivityManager(  571):   10% 441/surfaceflinger: 0.7% user + 9.2% kernel / faults: 2511 minor 145 major
+09-29 09:58:35.858 E/ActivityManager(  571):   5.6% 476/logcat: 0.3% user + 5.2% kernel / faults: 2 minor
+09-29 09:58:35.858 E/ActivityManager(  571):   3.5% 43/kswapd0: 0% user + 3.5% kernel
+09-29 09:58:35.858 E/ActivityManager(  571):   3.4% 419/android.hardware.graphics.composer3-service.ranchu: 0% user + 3.3% kernel / faults: 16 minor 128 major
+09-29 09:58:35.858 E/ActivityManager(  571):   2.1% 450/adbd: 0.7% user + 1.4% kernel / faults: 28891 minor
+09-29 09:58:35.858 E/ActivityManager(  571):   2.1% 152/logd: 0.6% user + 1.4% kernel / faults: 1969 minor 21 major
+09-29 09:58:35.858 E/ActivityManager(  571):   1.3% 387/android.hardware.graphics.allocator@3.0-service.ranchu: 0% user + 1.3% kernel / faults: 127 major
+09-29 09:58:35.858 E/ActivityManager(  571):   1.3% 77/kworker/1:6H-kverityd: 0% user + 1.3% kernel
+09-29 09:58:35.858 E/ActivityManager(  571):   1.2% 1/init: 0.2% user + 1% kernel / faults: 886 minor 7 major
+09-29 09:58:35.858 E/ActivityManager(  571): 99% TOTAL: 54% user + 43% kernel + 0% iowait + 1.7% softirq
+09-29 09:58:35.858 E/ActivityManager(  571): CPU usage from 61189ms to 61189ms ago (1970-01-01 00:00:00.000 to 1970-01-01 00:00:00.000) with 0% awake:
+09-29 09:58:35.858 E/ActivityManager(  571): 0% TOTAL: 0% user + 0% kernel
+09-29 09:58:35.890 I/ActivityManager(  571): Killing 1230:com.google.android.gms.persistent/u0a143 (adj 0): bg anr
+09-29 09:58:35.948 D/ActivityManager(  571): Completed ANR of com.google.android.gms.persistent in 2031ms, latency 80ms (expired, only dump ANR app)
+09-29 09:58:36.969 W/binder_debug(    0): 2 callbacks suppressed
+09-29 09:58:36.300 W/ActivityManager(  571): pid 571 system sent binder code 3 with flags 1 to frozen apps and got error -32
+09-29 09:58:36.309 W/ActivityManager(  571): Application dead when creating service ServiceRecord{2ccedff u0 com.google.android.gms/.location.geocode.GeocodeService c:android}
+09-29 09:58:36.323 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.nearby.sharing.ReceiveSurfaceService in 6760ms for start-requested
+09-29 09:58:36.323 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.auth.GetToken in 16756ms for connection
+09-29 09:58:36.323 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/com.google.android.location.internal.server.HardwareArProviderService in 26756ms for connection
+09-29 09:58:36.323 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.auth.easyunlock.authorization.InitializerIntentService in 36756ms for start-requested
+09-29 09:58:36.323 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.chimera.PersistentIntentOperationService in 46756ms for start-requested
+09-29 09:58:36.323 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.gcm.PushMessagingRegistrarProxy in 56756ms for connection
+09-29 09:58:36.323 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.tron.CollectionService in 66756ms for start-requested
+09-29 09:58:36.323 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.auth.proximity.phonehub.PhoneHubService in 76756ms for start-requested
+09-29 09:58:36.323 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/com.google.android.location.network.NetworkLocationService in 86756ms for connection
+09-29 09:58:36.323 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/com.google.android.location.internal.server.GoogleLocationService in 96755ms for start-requested
+09-29 09:58:36.323 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.auth.setup.devicesignals.LockScreenService in 106755ms for start-requested
+09-29 09:58:36.324 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.chimera.PersistentBoundBrokerService in 116755ms for connection
+09-29 09:58:36.324 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.nearby.discovery.service.DiscoveryService in 126755ms for start-requested
+09-29 09:58:36.324 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.chimera.PersistentDirectBootAwareApiService in 136755ms for connection
+09-29 09:58:36.324 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.auth.account.be.accountstate.LoginAccountsChangedIntentService in 146755ms for start-requested
+09-29 09:58:36.324 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/com.google.android.location.internal.GoogleLocationManagerService in 156755ms for start-requested
+09-29 09:58:36.324 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.geotimezone.GeoTimeZoneService in 166755ms for connection
+09-29 09:58:36.324 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.chimera.PersistentApiService in 176755ms for connection
+09-29 09:58:36.324 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.wearable.service.WearableService in 186755ms for connection
+09-29 09:58:36.324 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/com.google.android.contextmanager.service.ContextManagerService in 196755ms for start-requested
+09-29 09:58:36.324 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.location.geocode.GeocodeService in 206755ms for connection
+09-29 09:58:36.324 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.auth.proximity.firstparty.FirstPartyDeviceRegistrationService in 216755ms for start-requested
+09-29 09:58:36.324 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/com.google.android.location.fused.FusedLocationService in 226755ms for connection
+09-29 09:58:36.324 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.auth.account.authenticator.GoogleAccountAuthenticatorService in 236755ms for connection
+09-29 09:58:36.324 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.nearby.sharing.SendSurfaceService in 246755ms for start-requested
+09-29 09:58:36.332 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.gms/.location.geocode.GeocodeService in 827020ms for always
+09-29 09:58:36.336 W/ActivityManager(  571): Exception when starting service com.google.android.gms/.location.geocode.GeocodeService
+09-29 09:58:36.336 W/ActivityManager(  571): android.os.DeadObjectException
+09-29 09:58:36.336 W/ActivityManager(  571): 	at android.os.BinderProxy.transactNative(Native Method)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at android.os.BinderProxy.transact(BinderProxy.java:586)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at android.app.IApplicationThread$Stub$Proxy.scheduleCreateService(IApplicationThread.java:1324)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at com.android.server.am.ActiveServices.realStartServiceLocked(ActiveServices.java:6068)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at com.android.server.am.ActiveServices.bringUpServiceInnerLocked(ActiveServices.java:5820)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at com.android.server.am.ActiveServices.bringUpServiceLocked(ActiveServices.java:5726)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at com.android.server.am.ActiveServices.bindServiceLocked(ActiveServices.java:4319)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14231)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14191)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at android.app.ContextImpl.bindServiceCommon(ContextImpl.java:2156)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at android.app.ContextImpl.bindServiceAsUser(ContextImpl.java:2087)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at com.android.server.servicewatcher.ServiceWatcherImpl$MyServiceConnection.bind(ServiceWatcherImpl.java:214)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at com.android.server.servicewatcher.ServiceWatcherImpl.lambda$onServiceChanged$1(ServiceWatcherImpl.java:149)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at com.android.server.servicewatcher.ServiceWatcherImpl.$r8$lambda$zTLizm-3rVzoLRcwgUDZzwsvYD8(ServiceWatcherImpl.java:0)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at com.android.server.servicewatcher.ServiceWatcherImpl$$ExternalSyntheticLambda0.run(R8$$SyntheticClass:0)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at android.os.Handler.handleCallback(Handler.java:959)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at android.os.Handler.dispatchMessage(Handler.java:100)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at android.os.Looper.loopOnce(Looper.java:232)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at android.os.Looper.loop(Looper.java:317)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at android.os.HandlerThread.run(HandlerThread.java:85)
+09-29 09:58:36.336 W/ActivityManager(  571): 	at com.android.server.ServiceThread.run(ServiceThread.java:46)
+09-29 09:58:36.373 E/.gms.persistent( 2627): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:36.394 W/ActivityManager(  571): pid 1342 com.google.android.inputmethod.latin sent binder code 1 with flags 1 to frozen apps and got error -32
+09-29 09:58:36.394 D/ActivityManager(  571): Too many transaction errors, throttling freezer binder callback.
+09-29 09:58:36.395 W/ActivityManager(  571): Spurious death for ProcessRecord{5124131 0:com.google.android.gms.persistent/u0a143}, curProc for 1230: null
+09-29 09:58:36.396 W/ActivityManager(  571): pid 1613 com.google.android.googlequicksearchbox:search sent binder code 6 with flags 2 to frozen apps and got error -32
+09-29 09:58:36.396 D/ActivityManager(  571): Too many transaction errors, throttling freezer binder callback.
+09-29 09:58:36.403 W/ActivityManager(  571): ProcessRecord{5124131 0:com.google.android.gms.persistent/u0a143} is attached to a previous process 0
+09-29 09:58:36.404 E/ActivityManager(  571): Already have existing proc ProcessRecord{5124131 0:com.google.android.gms.persistent/u0a143} when adding ProcessRecord{51d089 0:com.google.android.gms.persistent/u0a143}
+09-29 09:58:36.412 D/ActivityManager(  571): freezing 1370 com.google.android.ext.services
+09-29 09:58:36.421 W/ActivityManager(  571): ProcessRecord{5124131 0:com.google.android.gms.persistent/u0a143} start not valid, killing pid=2627, No entry in mProcessNames;
+09-29 09:58:36.453 E/.gms.persistent( 2635): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:36.480 E/ActivityManager(  571): Timeout waiting for provider com.google.android.gms/10143 for provider com.google.android.gsf.gservices caller=ProcessRecord{7646bb8 1342:com.google.android.inputmethod.latin/u0a154}
+09-29 09:58:36.481 E/ActivityManager(  571): Timeout waiting for provider com.google.android.gms/10143 for provider com.google.android.gsf.gservices caller=ProcessRecord{57e1125 1485:com.google.android.googlequicksearchbox:interactor/u0a144}
+09-29 09:58:36.481 E/ActivityManager(  571): Timeout waiting for provider com.google.android.gms/10143 for provider com.google.android.gsf.gservices caller=ProcessRecord{4a0959c 1613:com.google.android.googlequicksearchbox:search/u0a144}
+09-29 09:58:36.481 E/ActivityManager(  571): Timeout waiting for provider com.google.android.gms/10143 for provider com.google.android.gsf.gservices caller=ProcessRecord{86097f 2182:com.google.android.tts/u0a166}
+09-29 09:58:36.481 E/ActivityManager(  571): Timeout waiting for provider com.google.android.gms/10143 for provider com.google.android.gsf.gservices caller=ProcessRecord{535c894 2221:com.google.android.partnersetup/u0a131}
+09-29 09:58:36.483 W/ActivityManager(  571): pid 1372 com.google.android.apps.wellbeing sent binder code 6 with flags 2 to frozen apps and got error -32
+09-29 09:58:36.483 D/ActivityManager(  571): Too many transaction errors, throttling freezer binder callback.
+09-29 09:58:36.483 W/ActivityManager(  571): pid 1591 com.google.android.gms sent binder code 46 with flags 2 to frozen apps and got error -32
+09-29 09:58:36.483 D/ActivityManager(  571): Too many transaction errors, throttling freezer binder callback.
+09-29 09:58:36.502 W/ActivityManager(  571): pid 2182 com.google.android.tts sent binder code 1 with flags 1 to frozen apps and got error -32
+09-29 09:58:36.502 D/ActivityManager(  571): Too many transaction errors, throttling freezer binder callback.
+09-29 09:58:36.506 D/ActivityManager(  571): sync unfroze 2364 com.android.imsserviceentitlement for 3
+09-29 09:58:36.512 W/ActivityManager(  571): Slow operation: 100ms so far, now at startProcess: done updating battery stats
+09-29 09:58:36.514 W/ActivityManager(  571): Slow operation: 102ms so far, now at startProcess: building log message
+09-29 09:58:36.516 I/ActivityManager(  571): Start proc 2635:com.google.android.gms.persistent/u0a143 for broadcast {com.google.android.gms/com.google.android.gms.chimera.GmsIntentOperationService$PersistentTrustedReceiver}
+09-29 09:58:36.520 W/ActivityManager(  571): Slow operation: 108ms so far, now at startProcess: starting to update pids map
+09-29 09:58:36.520 W/ActivityManager(  571): Slow operation: 108ms so far, now at startProcess: done updating pids map
+09-29 09:58:36.616 W/ActivityManager(  571): pid 2221 com.google.android.partnersetup sent binder code 27 with flags 2 to frozen apps and got error -32
+09-29 09:58:36.616 D/ActivityManager(  571): Too many transaction errors, throttling freezer binder callback.
+09-29 09:58:36.672 I/GmsDebugLogger( 1591): [79] SYNC_ERROR, java.util.concurrent.ExecutionException: alqy: 20: The connection to Google Play services was lost due to service disconnection.
+09-29 09:58:36.675 W/ActivityManager(  571): pid 1485 com.google.android.googlequicksearchbox:interactor sent binder code 1 with flags 1 to frozen apps and got error -32
+09-29 09:58:36.675 D/ActivityManager(  571): Too many transaction errors, throttling freezer binder callback.
+09-29 09:58:36.860 D/nativeloader( 2635): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:58:36.884 V/GraphicsEnvironment( 2635):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:36.884 V/GraphicsEnvironment( 2635):   angle_gl_driver_selection_values=[]
+09-29 09:58:36.886 I/GmsDebugLogger( 1591): [52] 
+09-29 09:58:36.904 E/ActivityManager(  571): Timeout waiting for provider com.google.android.gms/10143 for provider com.google.android.gsf.gservices caller=ProcessRecord{4a0959c 1613:com.google.android.googlequicksearchbox:search/u0a144}
+09-29 09:58:36.909 E/ActivityManager(  571): Timeout waiting for provider com.google.android.gms/10143 for provider com.google.android.gsf.gservices caller=ProcessRecord{535c894 2221:com.google.android.partnersetup/u0a131}
+09-29 09:58:37.067 I/GmsDebugLogger( 1591): [83] 1 []
+09-29 09:58:37.326 W/system_server(  571): Long monitor contention with owner ActivityManager (606) at void com.android.server.am.BroadcastQueueModernImpl.updateRunningList()(BroadcastQueueModernImpl.java:450) waiters=1 in int com.android.server.am.ActivityManagerService.bindServiceInstance(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int) for 138ms
+09-29 09:58:37.370 V/WindowManagerShell(  923): Transition requested (#9): android.os.BinderProxy@23f40b5 TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@ba3e34a, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 9 }
+09-29 09:58:37.370 V/WindowManagerShell(  923): RemoteTransition directly requested for (#9) android.os.BinderProxy@23f40b5: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@ba3e34a, appThread = null, debugName = null }
+09-29 09:58:37.402 W/system_server(  571): Long monitor contention with owner ActivityManager (606) at void com.android.server.am.BroadcastQueueModernImpl.updateRunningList()(BroadcastQueueModernImpl.java:450) waiters=2 in android.app.ContentProviderHolder com.android.server.am.ContentProviderHelper.getContentProviderImpl(android.app.IApplicationThread, java.lang.String, android.os.IBinder, int, java.lang.String, java.lang.String, boolean, int) for 201ms
+09-29 09:58:37.619 W/system_server(  571): Long monitor contention with owner ActivityManager (606) at boolean android.os.MessageQueue.enqueueMessage(android.os.Message, long)(MessageQueue.java:695) waiters=0 in android.os.Message android.os.MessageQueue.next() for 251ms
+09-29 09:58:38.254 W/system_server(  571): Long monitor contention with owner android.fg (594) at int com.android.server.am.ActivityManagerService.bindServiceInstance(android.app.IApplicationThread, android.os.IBinder, android.content.Intent, java.lang.String, android.app.IServiceConnection, long, java.lang.String, boolean, int, java.lang.String, android.app.IApplicationThread, java.lang.String, int)(ActivityManagerService.java:14231) waiters=5 in void com.android.server.am.ActivityManagerService.serviceDoneExecuting(android.os.IBinder, int, int, int, android.content.Intent) for 411ms
+09-29 09:58:38.353 V/WindowManagerShell(  923): Transition requested (#10): android.os.BinderProxy@a0b5e26 TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@4eada67, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 10 }
+09-29 09:58:38.353 V/WindowManagerShell(  923): RemoteTransition directly requested for (#10) android.os.BinderProxy@a0b5e26: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@4eada67, appThread = null, debugName = null }
+09-29 09:58:38.625 V/WindowManagerShell(  923): Transition requested (#11): android.os.BinderProxy@3a9cdac TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@aff2a75, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 11 }
+09-29 09:58:38.625 V/WindowManagerShell(  923): RemoteTransition directly requested for (#11) android.os.BinderProxy@3a9cdac: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@aff2a75, appThread = null, debugName = null }
+09-29 09:58:38.802 D/nativeloader( 2635): Load /product/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk!/lib/x86_64/libconscrypt_gmscore_jni.so using ns product-clns-9 from class loader (caller=/product/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk!classes3.dex): ok
+09-29 09:58:38.843 I/ActivityManager(  571): Background started FGS: Allowed [callingPackage: com.google.android.inputmethod.latin; callingUid: 10154; uidState: IMPB; uidBFSL: n/a; intent: Intent { cmp=com.google.android.inputmethod.latin/com.google.android.apps.inputmethod.libs.dataservice.superpacks.SuperpacksForegroundTaskService }; code:TIME_CHANGED; tempAllowListReason:<49ae359 android.intent.action.TIME_SET/u-1,reasonCode:TIME_CHANGED,duration:20000,callingUid:1000>; targetSdkVersion:34; callerTargetSdkVersion:34; startForegroundCount:0; bindFromPackage:null: isBindService:false]
+09-29 09:58:38.849 V/WindowManagerShell(  923): Transition requested (#12): android.os.BinderProxy@afd9cd6 TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@7492b57, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 12 }
+09-29 09:58:38.849 V/WindowManagerShell(  923): RemoteTransition directly requested for (#12) android.os.BinderProxy@afd9cd6: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@7492b57, appThread = null, debugName = null }
+09-29 09:58:38.922 W/ActivityManager(  571): Foreground service started from background can not have location/camera/microphone access: service com.google.android.inputmethod.latin/com.google.android.apps.inputmethod.libs.dataservice.superpacks.SuperpacksForegroundTaskService
+09-29 09:58:38.942 V/WindowManagerShell(  923): Transition requested (#13): android.os.BinderProxy@4cb25f3 TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@d0162b0, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 13 }
+09-29 09:58:38.942 V/WindowManagerShell(  923): RemoteTransition directly requested for (#13) android.os.BinderProxy@4cb25f3: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@d0162b0, appThread = null, debugName = null }
+09-29 09:58:39.072 V/WindowManager(  571): Sent Transition (#9) createdAt=09-29 09:58:37.211 via request=TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@fa82270, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 9 }
+09-29 09:58:39.081 V/WindowManager(  571): Sent Transition (#10) createdAt=09-29 09:58:37.349 via request=TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@7b4f9e9, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 10 }
+09-29 09:58:39.143 V/WindowManager(  571): Sent Transition (#11) createdAt=09-29 09:58:37.542 via request=TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a33b1e8, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 11 }
+09-29 09:58:39.144 V/WindowManager(  571): Sent Transition (#12) createdAt=09-29 09:58:37.543 via request=TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@9a7a001, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 12 }
+09-29 09:58:39.144 V/WindowManager(  571): Sent Transition (#13) createdAt=09-29 09:58:38.407 via request=TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@e59ea6, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 13 }
+09-29 09:58:39.357 D/ActivityManager(  571): freezing 2428 com.android.cellbroadcastreceiver
+09-29 09:58:39.397 V/WindowManagerShell(  923): Transition requested (#14): android.os.BinderProxy@342c859 TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a509c1e, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 14 }
+09-29 09:58:39.397 V/WindowManagerShell(  923): RemoteTransition directly requested for (#14) android.os.BinderProxy@342c859: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a509c1e, appThread = null, debugName = null }
+09-29 09:58:39.405 V/WindowManager(  571): Sent Transition (#14) createdAt=09-29 09:58:38.414 via request=TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@8fd1db4, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 14 }
+09-29 09:58:39.590 W/Looper  (  571): Slow delivery took 468ms android.ui h=com.android.server.am.ActivityManagerService$UiHandler c=com.android.server.am.UidObserverController$$ExternalSyntheticLambda0@80eed15 m=0
+09-29 09:58:39.649 V/WindowManagerShell(  923): Transition requested (#15): android.os.BinderProxy@9f5721e TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@77aeaff, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 15 }
+09-29 09:58:39.649 V/WindowManagerShell(  923): RemoteTransition directly requested for (#15) android.os.BinderProxy@9f5721e: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@77aeaff, appThread = null, debugName = null }
+09-29 09:58:39.666 V/WindowManager(  571): Sent Transition (#15) createdAt=09-29 09:58:39.062 via request=TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@ebb51fe, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 15 }
+09-29 09:58:39.936 D/StrictMode( 1659): 	at libcore.io.BlockGuardOs.access(BlockGuardOs.java:74)
+09-29 09:58:39.936 D/StrictMode( 1659): 	at libcore.io.ForwardingOs.access(ForwardingOs.java:128)
+09-29 09:58:39.937 D/StrictMode( 1659): 	at libcore.io.BlockGuardOs.access(BlockGuardOs.java:74)
+09-29 09:58:39.937 D/StrictMode( 1659): 	at libcore.io.ForwardingOs.access(ForwardingOs.java:128)
+09-29 09:58:39.953 D/ActivityManager(  571): created ANR temporary file:/data/anr/temp_anr_8973614889192221264.txt
+09-29 09:58:39.953 I/ActivityManager(  571): Collecting stacks for pid 2221 into temporary file temp_anr_8973614889192221264.txt
+09-29 09:58:39.964 D/StrictMode( 1659): 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:269)
+09-29 09:58:39.964 D/StrictMode( 1659): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:58:39.964 D/StrictMode( 1659): 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-29 09:58:39.969 D/StrictMode( 1659): 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:272)
+09-29 09:58:39.969 D/StrictMode( 1659): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:58:39.969 D/StrictMode( 1659): 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-29 09:58:39.969 D/StrictMode( 1659): 	at libcore.io.BlockGuardOs.fstat(BlockGuardOs.java:194)
+09-29 09:58:39.969 D/StrictMode( 1659): 	at libcore.io.ForwardingOs.fstat(ForwardingOs.java:261)
+09-29 09:58:39.969 D/StrictMode( 1659): 	at libcore.io.IoBridge.open(IoBridge.java:563)
+09-29 09:58:40.009 D/StrictMode( 1659): 	at libcore.io.BlockGuardOs.write(BlockGuardOs.java:447)
+09-29 09:58:40.009 D/StrictMode( 1659): 	at libcore.io.ForwardingOs.write(ForwardingOs.java:943)
+09-29 09:58:40.009 D/StrictMode( 1659): 	at libcore.io.IoBridge.write(IoBridge.java:646)
+09-29 09:58:40.045 D/StrictMode( 1659): 	at libcore.io.BlockGuardOs.chmod(BlockGuardOs.java:81)
+09-29 09:58:40.045 D/StrictMode( 1659): 	at libcore.io.ForwardingOs.chmod(ForwardingOs.java:165)
+09-29 09:58:40.051 D/StrictMode( 1659): 	at libcore.io.BlockGuardOs.stat(BlockGuardOs.java:419)
+09-29 09:58:40.051 D/StrictMode( 1659): 	at libcore.io.ForwardingOs.stat(ForwardingOs.java:846)
+09-29 09:58:40.051 D/StrictMode( 1659): 	at libcore.io.BlockGuardOs.remove(BlockGuardOs.java:365)
+09-29 09:58:40.051 D/StrictMode( 1659): 	at libcore.io.ForwardingOs.remove(ForwardingOs.java:673)
+09-29 09:58:40.062 I/ActivityManager(  571): dumpStackTraces pids=null
+09-29 09:58:40.131 I/ActivityManager(  571): Dumping to /data/anr/anr_2026-09-29-09-58-40-131
+09-29 09:58:40.227 D/ActivityManager(  571): freezing 2182 com.google.android.tts
+09-29 09:58:40.231 I/system_server(  571): libdebuggerd_client: started dumping process 2221
+09-29 09:58:40.232 I/tombstoned(  220): registered intercept for pid 2221 and type kDebuggerdJavaBacktrace
+09-29 09:58:40.311 I/ActivityManager(  571): Background started FGS: Allowed [callingPackage: com.google.android.apps.wellbeing; callingUid: 10142; uidState: BTOP; uidBFSL: [BFSL]; intent: Intent { cmp=com.google.android.apps.wellbeing/com.google.apps.tiktok.concurrent.InternalForegroundService (has extras) }; code:BACKGROUND_ACTIVITY_PERMISSION; tempAllowListReason:<ce8db11 com.google.android.apps.wellbeing.action.SCREEN_TURNING_OFF/u0,reasonCode:UNKNOWN,duration:20000,callingUid:10142>; targetSdkVersion:34; callerTargetSdkVersion:34; startForegroundCount:0; bindFromPackage:null: isBindService:false]
+09-29 09:58:40.463 I/tombstoned(  220): received crash request for pid 2221
+09-29 09:58:40.463 I/tombstoned(  220): found intercept fd 512 for pid 2221 and type kDebuggerdJavaBacktrace
+09-29 09:58:40.465 W/tombstoned(  220): skipping tombstone file creation due to intercept
+09-29 09:58:40.465 I/id.partnersetup( 2221): Wrote stack traces to tombstoned
+09-29 09:58:40.472 I/system_server(  571): libdebuggerd_client: done dumping process 2221
+09-29 09:58:40.503 I/ActivityManager(  571): dumpStackTraces nativepids=null
+09-29 09:58:40.503 I/ActivityManager(  571): dumpStackTraces extraPids=null
+09-29 09:58:40.503 I/ActivityManager(  571): Done dumping
+09-29 09:58:40.504 E/ActivityManager(  571): ANR in com.google.android.partnersetup
+09-29 09:58:40.504 E/ActivityManager(  571): PID: 2221
+09-29 09:58:40.504 E/ActivityManager(  571): Reason: Broadcast of Intent { act=android.intent.action.SIM_STATE_CHANGED flg=0x15000010 cmp=com.google.android.partnersetup/.PhoneStateReceiver (has extras) }
+09-29 09:58:40.504 E/ActivityManager(  571): ErrorId: aa0425d3-1b4a-4771-849f-bbbd6c956b62
+09-29 09:58:40.504 E/ActivityManager(  571): Frozen: false
+09-29 09:58:40.504 E/ActivityManager(  571): Load: 0.0 / 0.0 / 0.0
+09-29 09:58:40.504 E/ActivityManager(  571): ----- Output from /proc/pressure/memory -----
+09-29 09:58:40.504 E/ActivityManager(  571): some avg10=22.23 avg60=9.32 avg300=2.34 total=7900360
+09-29 09:58:40.504 E/ActivityManager(  571): full avg10=2.33 avg60=1.05 avg300=0.26 total=1140146
+09-29 09:58:40.504 E/ActivityManager(  571): ----- End output from /proc/pressure/memory -----
+09-29 09:58:40.504 E/ActivityManager(  571): ----- Output from /proc/pressure/cpu -----
+09-29 09:58:40.504 E/ActivityManager(  571): some avg10=87.44 avg60=49.14 avg300=13.79 total=45547348
+09-29 09:58:40.504 E/ActivityManager(  571): full avg10=0.00 avg60=0.00 avg300=0.00 total=0
+09-29 09:58:40.504 E/ActivityManager(  571): ----- End output from /proc/pressure/cpu -----
+09-29 09:58:40.504 E/ActivityManager(  571): ----- Output from /proc/pressure/io -----
+09-29 09:58:40.504 E/ActivityManager(  571): some avg10=20.51 avg60=10.06 avg300=2.84 total=9824088
+09-29 09:58:40.504 E/ActivityManager(  571): full avg10=0.01 avg60=0.26 avg300=0.11 total=495329
+09-29 09:58:40.504 E/ActivityManager(  571): ----- End output from /proc/pressure/io -----
+09-29 09:58:40.504 E/ActivityManager(  571): 
+09-29 09:58:40.504 E/ActivityManager(  571): CPU usage from 6054ms to -3ms ago (2026-09-29 09:58:33.886 to 2026-09-29 09:58:39.943):
+09-29 09:58:40.504 E/ActivityManager(  571):   20% 571/system_server: 13% user + 6.9% kernel / faults: 7232 minor 149 major
+09-29 09:58:40.504 E/ActivityManager(  571):   14% 441/surfaceflinger: 0.1% user + 14% kernel / faults: 11 minor 5 major
+09-29 09:58:40.504 E/ActivityManager(  571):   12% 2258/com.google.android.apps.wallpaper: 12% user + 0.6% kernel / faults: 1407 minor 2 major
+09-29 09:58:40.504 E/ActivityManager(  571):   9.1% 1613/com.google.android.googlequicksearchbox:search: 6.6% user + 2.5% kernel / faults: 6581 minor 147 major
+09-29 09:58:40.504 E/ActivityManager(  571):   8% 1177/com.google.android.apps.nexuslauncher: 5% user + 3% kernel / faults: 6588 minor 9 major
+09-29 09:58:40.504 E/ActivityManager(  571):   6.9% 923/com.android.systemui: 4.9% user + 1.9% kernel / faults: 3495 minor 87 major
+09-29 09:58:40.504 E/ActivityManager(  571):   6.6% 77/kworker/1:6H-kverityd: 0% user + 6.6% kernel
+09-29 09:58:40.504 E/ActivityManager(  571):   6.5% 1485/com.google.android.googlequicksearchbox:interactor: 5.1% user + 1.3% kernel / faults: 4316 minor 82 major
+09-29 09:58:40.504 E/ActivityManager(  571):   5.6% 476/logcat: 0.1% user + 5.4% kernel / faults: 2 major
+09-29 09:58:40.504 E/ActivityManager(  571):   3.6% 1342/com.google.android.inputmethod.latin: 2.3% user + 1.3% kernel / faults: 1730 minor 81 major
+09-29 09:58:40.504 E/ActivityManager(  571): 99% TOTAL: 51% user + 45% kernel + 0.1% iowait + 3% softirq
+09-29 09:58:40.504 E/ActivityManager(  571): CPU usage from 67253ms to 67253ms ago (1970-01-01 00:00:00.000 to 1970-01-01 00:00:00.000) with 0% awake:
+09-29 09:58:40.504 E/ActivityManager(  571): 0% TOTAL: 0% user + 0% kernel
+09-29 09:58:40.550 W/ActivityManager(  571): Slow operation: 149ms so far, now at finishAttachApplicationInner: after mServices.attachApplicationLocked
+09-29 09:58:40.555 W/ActivityManager(  571): Slow operation: 154ms so far, now at finishAttachApplicationInner: after dispatching broadcasts
+09-29 09:58:40.585 I/ActivityManager(  571): Start proc 2722:com.android.externalstorage/u0a103 for broadcast {com.android.externalstorage/com.android.externalstorage.MountReceiver}
+09-29 09:58:40.588 I/ActivityManager(  571): Killing 2221:com.google.android.partnersetup/u0a131 (adj 250): bg anr
+09-29 09:58:40.607 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.partnersetup/.PhenotypeJobService in 1000ms for connection
+09-29 09:58:40.618 E/externalstorage( 2722): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:40.646 D/ActivityManager(  571): Completed ANR of com.google.android.partnersetup in 708ms, latency 90ms (expired, only dump ANR app)
+09-29 09:58:41.175 V/GraphicsEnvironment( 2722):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:41.175 V/GraphicsEnvironment( 2722):   angle_gl_driver_selection_values=[]
+09-29 09:58:41.493 I/ActivityManager(  571): Start proc 2739:com.google.android.devicelockcontroller/u0a190 for broadcast {com.google.android.devicelockcontroller/com.android.devicelockcontroller.receivers.TimeChangedBroadcastReceiver}
+09-29 09:58:41.555 E/elockcontroller( 2739): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:41.798 D/nativeloader( 2739):   com_android_tethering: libandroid_net_connectivity_com_android_net_module_util_jni.so:libcrypto.so:libframework-connectivity-jni.so:libframework-connectivity-tiramisu-jni.so:libmainlinecronet.121.0.6167.71.so:libservice-connectivity.so:libservice-thread-jni.so:libssl.so
+09-29 09:58:41.969 V/GraphicsEnvironment( 2739):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:41.969 V/GraphicsEnvironment( 2739):   angle_gl_driver_selection_values=[]
+09-29 09:58:42.399 D/nativeloader( 1613): Load /product/priv-app/Velvet/Velvet.apk!/lib/x86_64/libcronet.127.0.6493.0.so using ns product-clns-7 from class loader (caller=/product/priv-app/Velvet/Velvet.apk!classes11.dex): ok
+09-29 09:58:42.542 D/ActivityManager(  571): freezing 1129 com.android.bluetooth
+09-29 09:58:42.754 I/UserRestrictionsPolicyHandler( 2739): Build type DEBUG = true
+09-29 09:58:42.788 I/ActivityManager(  571): Start proc 2780:com.google.android.settings.intelligence/u0a140 for broadcast {com.google.android.settings.intelligence/com.google.android.settings.intelligence.modules.contextualcards.impl.JobBootBroadcastReceiver}
+09-29 09:58:43.225 E/gs.intelligence( 2780): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:43.718 D/nativeloader( 2780): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:58:43.740 V/GraphicsEnvironment( 2780):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:43.740 V/GraphicsEnvironment( 2780):   angle_gl_driver_selection_values=[]
+09-29 09:58:44.219 I/ActivityManager(  571): Start proc 2834:com.google.android.documentsui/u0a96 for broadcast {com.google.android.documentsui/com.android.documentsui.PreBootReceiver}
+09-29 09:58:44.244 E/oid.documentsui( 2834): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:44.407 V/GraphicsEnvironment( 2834):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:44.407 V/GraphicsEnvironment( 2834):   angle_gl_driver_selection_values=[]
+09-29 09:58:44.611 D/ActivityManager(  571): freezing 2125 com.android.carrierconfig
+09-29 09:58:44.829 W/system_server(  571): Long monitor contention with owner CachedAppOptimizerThread (678) at void com.android.server.am.CachedAppOptimizer$FreezeHandler.freezeProcess(com.android.server.am.ProcessRecord)(CachedAppOptimizer.java:2434) waiters=0 in android.content.Intent com.android.server.am.ActivityManagerService.registerReceiverWithFeatureTraced(android.app.IApplicationThread, java.lang.String, java.lang.String, java.lang.String, android.content.IIntentReceiver, android.content.IntentFilter, java.lang.String, int, int) for 120ms
+09-29 09:58:44.864 W/gle.android.gms( 1591): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-29 09:58:44.929 I/ActivityManager(  571): Posting BOOT_COMPLETED user #0
+09-29 09:58:44.938 D/SystemServerTimingAsync(  571): ssm.onUnlockedUser-0_com.android.server.am.ActivityManagerService$Lifecycle
+09-29 09:58:44.941 V/SystemServerTimingAsync(  571): ssm.onUnlockedUser-0_com.android.server.am.ActivityManagerService$Lifecycle took to complete: 0ms
+09-29 09:58:44.952 D/SystemServerTimingAsync(  571): ssm.onUnlockedUser-0_com.android.server.os.NativeTombstoneManagerService
+09-29 09:58:44.952 V/SystemServerTimingAsync(  571): ssm.onUnlockedUser-0_com.android.server.os.NativeTombstoneManagerService took to complete: 0ms
+09-29 09:58:45.206 D/ActivityManager(  571): freezing 2575 com.android.carrierdefaultapp
+09-29 09:58:45.390 D/ActivityManager(  571): sync unfroze 2182 com.google.android.tts for 3
+09-29 09:58:45.483 W/ActivityManager(  571): Slow operation: 58ms so far, now at startProcess: returned from zygote!
+09-29 09:58:45.512 E/android.traceur( 2876): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:45.517 W/ActivityManager(  571): Slow operation: 93ms so far, now at startProcess: done updating battery stats
+09-29 09:58:45.520 W/ActivityManager(  571): Slow operation: 96ms so far, now at startProcess: building log message
+09-29 09:58:45.522 I/ActivityManager(  571): Start proc 2876:com.android.traceur/u0a125 for broadcast {com.android.traceur/com.android.traceur.Receiver}
+09-29 09:58:45.525 W/ActivityManager(  571): Slow operation: 101ms so far, now at startProcess: starting to update pids map
+09-29 09:58:45.525 W/ActivityManager(  571): Slow operation: 101ms so far, now at startProcess: done updating pids map
+09-29 09:58:45.701 D/ActivityManager(  571): sync unfroze 2575 com.android.carrierdefaultapp for 3
+09-29 09:58:45.756 I/GmsActivityDetector( 2635): 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-29 09:58:45.756 I/GmsActivityDetector( 2635): 	at libcore.io.Linux.open(Native Method)
+09-29 09:58:45.756 I/GmsActivityDetector( 2635): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:58:45.756 I/GmsActivityDetector( 2635): 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:274)
+09-29 09:58:45.756 I/GmsActivityDetector( 2635): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:58:45.756 I/GmsActivityDetector( 2635): 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-29 09:58:45.816 V/GraphicsEnvironment( 2876):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:45.817 V/GraphicsEnvironment( 2876):   angle_gl_driver_selection_values=[]
+09-29 09:58:45.971 I/ActivityManager(  571): Start proc 2897:com.google.android.onetimeinitializer/u0a128 for broadcast {com.google.android.onetimeinitializer/com.google.android.onetimeinitializer.OneTimeInitializerReceiver}
+09-29 09:58:45.998 E/timeinitializer( 2897): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:46.054 D/nativeloader( 2897): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:58:46.065 V/GraphicsEnvironment( 2897):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:46.065 V/GraphicsEnvironment( 2897):   angle_gl_driver_selection_values=[]
+09-29 09:58:46.408 I/ActivityManager(  571): Start proc 2918:com.android.camera2/u0a157 for broadcast {com.android.camera2/com.android.camera.SetActivitiesCameraReceiver}
+09-29 09:58:46.492 E/android.camera2( 2918): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:46.628 D/nativeloader( 2918): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:58:46.643 V/GraphicsEnvironment( 2918):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:46.643 V/GraphicsEnvironment( 2918):   angle_gl_driver_selection_values=[]
+09-29 09:58:46.677 I/GoogleSettingsUtils( 1591): Updated ID in checkin_id_token file [CONTEXT service_id=130 ]
+09-29 09:58:47.312 I/ActivityManager(  571): Start proc 2960:com.android.dynsystem/1000 for broadcast {com.android.dynsystem/com.android.dynsystem.BootCompletedReceiver}
+09-29 09:58:47.479 E/droid.dynsystem( 2960): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:48.048 V/GraphicsEnvironment( 2960):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:48.049 V/GraphicsEnvironment( 2960):   angle_gl_driver_selection_values=[]
+09-29 09:58:48.115 D/nativeloader( 2635): Load /data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.uncompressed.apk!/lib/x86_64/libcronet.126.0.6452.4.so using isolated ns clns-10 (caller=/data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.uncompressed.apk): ok
+09-29 09:58:48.173 W/ActivityManager(  571): Slow operation: 70ms so far, now at startProcess: done starting proc!
+09-29 09:58:48.177 W/ActivityManager(  571): Slow operation: 73ms so far, now at startProcess: returned from zygote!
+09-29 09:58:48.194 E/ystem:dynsystem( 2986): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:48.196 W/ActivityManager(  571): Slow operation: 92ms so far, now at startProcess: done updating battery stats
+09-29 09:58:48.196 W/ActivityManager(  571): Slow operation: 92ms so far, now at startProcess: building log message
+09-29 09:58:48.196 I/ActivityManager(  571): Start proc 2986:com.android.dynsystem:dynsystem/1000 for service {com.android.dynsystem/com.android.dynsystem.DynamicSystemInstallationService}
+09-29 09:58:48.196 W/ActivityManager(  571): Slow operation: 92ms so far, now at startProcess: starting to update pids map
+09-29 09:58:48.199 W/ActivityManager(  571): Slow operation: 95ms so far, now at startProcess: done updating pids map
+09-29 09:58:48.305 E/com.android.nfc( 2997): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:48.384 W/ActivityManager(  571): Slow operation: 70ms so far, now at startProcess: done updating battery stats
+09-29 09:58:48.438 W/ActivityManager(  571): Slow operation: 195ms so far, now at startProcess: building log message
+09-29 09:58:48.439 I/ActivityManager(  571): Start proc 2997:com.android.nfc/1027 for broadcast {com.android.nfc/com.android.nfc.NfcBootCompletedReceiver}
+09-29 09:58:48.439 W/ActivityManager(  571): Slow operation: 195ms so far, now at startProcess: starting to update pids map
+09-29 09:58:48.439 W/ActivityManager(  571): Slow operation: 195ms so far, now at startProcess: done updating pids map
+09-29 09:58:48.551 W/ActivityManager(  571): Slow operation: 66ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+09-29 09:58:48.784 D/nativeloader( 2997):   com_android_tethering: libandroid_net_connectivity_com_android_net_module_util_jni.so:libcrypto.so:libframework-connectivity-jni.so:libframework-connectivity-tiramisu-jni.so:libmainlinecronet.121.0.6167.71.so:libservice-connectivity.so:libservice-thread-jni.so:libssl.so
+09-29 09:58:48.823 V/GraphicsEnvironment( 2986):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:48.825 V/GraphicsEnvironment( 2986):   angle_gl_driver_selection_values=[]
+09-29 09:58:48.873 V/GraphicsEnvironment( 2997):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:48.875 V/GraphicsEnvironment( 2997):   angle_gl_driver_selection_values=[]
+09-29 09:58:48.982 I/ActivityManager(  571): Killing 2997:com.android.nfc/1027 (adj 0): change com.android.nfc
+09-29 09:58:49.050 I/ActivityManager(  571): Start proc 3029:com.android.shell/2000 for broadcast {com.android.shell/com.android.shell.HeapDumpReceiver}
+09-29 09:58:49.277 E/m.android.shell( 3029): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:49.514 V/GraphicsEnvironment( 3029):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:49.514 V/GraphicsEnvironment( 3029):   angle_gl_driver_selection_values=[]
+09-29 09:58:49.732 W/binder_debug(    0): 39 callbacks suppressed
+09-29 09:58:49.570 V/ActivityManager(  571): Got obituary of 2997:com.android.nfc
+09-29 09:58:49.686 I/ActivityManager(  571): Start proc 3052:com.google.android.configupdater/u0a136 for broadcast {com.google.android.configupdater/com.google.android.configupdater.MainReceiver}
+09-29 09:58:49.702 E/d.configupdater( 3052): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:49.892 D/nativeloader( 3052): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:58:49.917 V/GraphicsEnvironment( 3052):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:49.917 V/GraphicsEnvironment( 3052):   angle_gl_driver_selection_values=[]
+09-29 09:58:50.304 D/ActivityManager(  571): sync unfroze 1370 com.google.android.ext.services for 3
+09-29 09:58:50.376 I/ActivityManager(  571): reportOnUserCompletedEvent(0): stored=10, eligible=111
+09-29 09:58:50.408 I/ActivityManager(  571): Killing 1370:com.google.android.ext.services/u0a203 (adj 0): change com.google.android.ext.services
+09-29 09:58:50.426 D/SystemServerTimingAsync(  571): ssm.onCompletedEventUser-0_{|Unlocked|}_com.android.server.am.ActivityManagerService$Lifecycle
+09-29 09:58:50.426 V/SystemServerTimingAsync(  571): ssm.onCompletedEventUser-0_{|Unlocked|}_com.android.server.am.ActivityManagerService$Lifecycle took to complete: 0ms
+09-29 09:58:50.427 D/SystemServerTimingAsync(  571): ssm.onCompletedEventUser-0_{|Unlocked|}_com.android.server.os.NativeTombstoneManagerService
+09-29 09:58:50.427 V/SystemServerTimingAsync(  571): ssm.onCompletedEventUser-0_{|Unlocked|}_com.android.server.os.NativeTombstoneManagerService took to complete: 0ms
+09-29 09:58:50.461 W/ActivityManager(  571): finishReceiver: no app for android.os.BinderProxy@5214c8c
+09-29 09:58:50.522 V/ActivityManager(  571): Got obituary of 1370:com.google.android.ext.services
+09-29 09:58:50.522 I/ActivityManager(  571): Start proc 3107:com.google.android.federatedcompute/u0a205 for broadcast {com.google.android.federatedcompute/com.android.federatedcompute.services.FederatedComputeBroadcastReceiver}
+09-29 09:58:50.610 I/ActivityManager(  571): Start proc 3111:com.google.android.partnersetup/u0a131 for service {com.google.android.partnersetup/com.google.android.partnersetup.PhenotypeJobService}
+09-29 09:58:50.670 E/ederatedcompute( 3107): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:50.672 E/id.partnersetup( 3111): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:50.720 D/nativeloader( 3111): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:58:50.754 E/ActivityManager(  571): Unable to freeze binder for 2739: -11
+09-29 09:58:50.758 I/ActivityManager(  571): Killing 2739:com.google.android.devicelockcontroller/u0a190 (adj 100): change com.google.android.devicelockcontroller
+09-29 09:58:50.761 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.devicelockcontroller/com.android.devicelockcontroller.DeviceLockControllerService in 1000ms for connection
+09-29 09:58:50.762 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.devicelockcontroller/androidx.work.impl.background.systemjob.SystemJobService in 11000ms for connection
+09-29 09:58:50.764 I/ActivityManager(  571):   Force stopping service ServiceRecord{df8fe9d u0 com.google.android.devicelockcontroller/com.android.devicelockcontroller.DeviceLockControllerService c:android}
+09-29 09:58:50.767 I/ActivityManager(  571):   Force stopping service ServiceRecord{bc83e13 u0 com.google.android.devicelockcontroller/androidx.work.impl.background.systemjob.SystemJobService c:android}
+09-29 09:58:50.771 V/GraphicsEnvironment( 3111):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:50.771 V/GraphicsEnvironment( 3111):   angle_gl_driver_selection_values=[]
+09-29 09:58:50.853 D/nativeloader( 3107):   com_android_tethering: libandroid_net_connectivity_com_android_net_module_util_jni.so:libcrypto.so:libframework-connectivity-jni.so:libframework-connectivity-tiramisu-jni.so:libmainlinecronet.121.0.6167.71.so:libservice-connectivity.so:libservice-thread-jni.so:libssl.so
+09-29 09:58:50.927 V/GraphicsEnvironment( 3107):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:50.927 V/GraphicsEnvironment( 3107):   angle_gl_driver_selection_values=[]
+09-29 09:58:51.187 I/ActivityManager(  571): Start proc 3149:com.google.android.healthconnect.controller/u0a201 for broadcast {com.google.android.healthconnect.controller/com.android.healthconnect.controller.safetycenter.SafetySourceBroadcastReceiver}
+09-29 09:58:51.188 W/ActivityManager(  571): Slow operation: 51ms so far, now at startProcess: done updating pids map
+09-29 09:58:51.200 E/nect.controller( 3149): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:51.201 V/ActivityManager(  571): Got obituary of 2739:com.google.android.devicelockcontroller
+09-29 09:58:51.376 D/nativeloader( 3149):   com_android_tethering: libandroid_net_connectivity_com_android_net_module_util_jni.so:libcrypto.so:libframework-connectivity-jni.so:libframework-connectivity-tiramisu-jni.so:libmainlinecronet.121.0.6167.71.so:libservice-connectivity.so:libservice-thread-jni.so:libssl.so
+09-29 09:58:51.474 V/WindowManagerShell(  923): Transition requested (#16): android.os.BinderProxy@8058022 TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@3ae1ab3, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 16 }
+09-29 09:58:51.475 V/WindowManagerShell(  923): RemoteTransition directly requested for (#16) android.os.BinderProxy@8058022: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@3ae1ab3, appThread = null, debugName = null }
+09-29 09:58:51.515 V/WindowManager(  571): Sent Transition (#16) createdAt=09-29 09:58:51.412 via request=TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@95694d0, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 16 }
+09-29 09:58:51.533 V/WindowManagerShell(  923): Transition requested (#17): android.os.BinderProxy@6b61870 TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@d9ab7e9, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 17 }
+09-29 09:58:51.533 V/WindowManagerShell(  923): RemoteTransition directly requested for (#17) android.os.BinderProxy@6b61870: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@d9ab7e9, appThread = null, debugName = null }
+09-29 09:58:51.540 V/WindowManager(  571): Sent Transition (#17) createdAt=09-29 09:58:51.505 via request=TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@7f68c85, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 17 }
+09-29 09:58:51.550 V/WindowManagerShell(  923): Transition requested (#18): android.os.BinderProxy@61f7c6e TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@e65af0f, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 18 }
+09-29 09:58:51.550 V/WindowManagerShell(  923): RemoteTransition directly requested for (#18) android.os.BinderProxy@61f7c6e: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@e65af0f, appThread = null, debugName = null }
+09-29 09:58:51.552 V/WindowManager(  571): Sent Transition (#18) createdAt=09-29 09:58:51.529 via request=TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@6a88ada, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 18 }
+09-29 09:58:51.718 V/GraphicsEnvironment( 3149):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:51.718 V/GraphicsEnvironment( 3149):   angle_gl_driver_selection_values=[]
+09-29 09:58:51.947 W/ActivityManager(  571): pid 2635 com.google.android.gms.persistent sent binder code 1 with flags 1 to frozen apps and got error -32
+09-29 09:58:52.132 E/ActivityManager(  571): Unable to freeze binder for 3149: -11
+09-29 09:58:52.159 I/ActivityManager(  571): Killing 3149:com.google.android.healthconnect.controller/u0a201 (adj 0): change com.google.android.healthconnect.controller
+09-29 09:58:52.169 W/ActivityManager(  571): finishReceiver: no app for android.os.BinderProxy@4ce9768
+09-29 09:58:52.191 V/ActivityManager(  571): Got obituary of 3149:com.google.android.healthconnect.controller
+09-29 09:58:52.224 I/ActivityManager(  571): Start proc 3184:com.google.android.ondevicepersonalization.services/u0a204 for broadcast {com.google.android.ondevicepersonalization.services/com.android.ondevicepersonalization.services.OnDevicePersonalizationBroadcastReceiver}
+09-29 09:58:52.240 E/zation.services( 3184): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:52.411 D/nativeloader( 3184):   com_android_tethering: libandroid_net_connectivity_com_android_net_module_util_jni.so:libcrypto.so:libframework-connectivity-jni.so:libframework-connectivity-tiramisu-jni.so:libmainlinecronet.121.0.6167.71.so:libservice-connectivity.so:libservice-thread-jni.so:libssl.so
+09-29 09:58:52.448 V/GraphicsEnvironment( 3184):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:52.449 V/GraphicsEnvironment( 3184):   angle_gl_driver_selection_values=[]
+09-29 09:58:52.596 W/ActivityManager(  571): Slow operation: 55ms so far, now at startProcess: returned from zygote!
+09-29 09:58:52.603 E/ackageinstaller( 3199): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:52.609 W/ActivityManager(  571): Slow operation: 67ms so far, now at startProcess: done updating battery stats
+09-29 09:58:52.609 W/ActivityManager(  571): Slow operation: 67ms so far, now at startProcess: building log message
+09-29 09:58:52.609 I/ActivityManager(  571): Start proc 3199:com.google.android.packageinstaller/u0a101 for broadcast {com.google.android.packageinstaller/com.android.packageinstaller.common.TemporaryFileManager}
+09-29 09:58:52.609 W/ActivityManager(  571): Slow operation: 68ms so far, now at startProcess: starting to update pids map
+09-29 09:58:52.609 W/ActivityManager(  571): Slow operation: 68ms so far, now at startProcess: done updating pids map
+09-29 09:58:52.673 I/ModuleSetMgr( 1591): Download of container feature multipackage_debug is disabled.
+09-29 09:58:52.673 I/ModuleSetMgr( 1591): Download of container feature permissions_debug is disabled.
+09-29 09:58:52.673 I/ModuleSetMgr( 1591): Download of container feature semanticlocation_debug is disabled.
+09-29 09:58:52.711 W/gle.android.gms( 1591): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-29 09:58:52.898 V/GraphicsEnvironment( 3199):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:52.898 V/GraphicsEnvironment( 3199):   angle_gl_driver_selection_values=[]
+09-29 09:58:53.273 W/droid.bluetooth( 1075): Core platform API violation: Llibcore/io/Memory;->pokeByte(JB)V from Lcom/google/protobuf/UnsafeUtil; using reflection
+09-29 09:58:53.281 I/ActivityManager(  571): Killing 2780:com.google.android.settings.intelligence/u0a140 (adj 0): change com.google.android.settings.intelligence
+09-29 09:58:53.304 W/droid.bluetooth( 1075): Core platform API violation: Llibcore/io/Memory;->peekByte(J)B from Lcom/google/protobuf/UnsafeUtil; using reflection
+09-29 09:58:53.327 W/ActivityManager(  571): finishReceiver: no app for android.os.BinderProxy@5724357
+09-29 09:58:53.331 V/ActivityManager(  571): Got obituary of 2780:com.google.android.settings.intelligence
+09-29 09:58:53.390 I/ActivityManager(  571): Start proc 3241:com.google.android.rkpdapp/u0a198 for broadcast {com.google.android.rkpdapp/com.android.rkpdapp.BootReceiver}
+09-29 09:58:53.463 E/android.rkpdapp( 3241): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:53.726 D/nativeloader( 3241):   com_android_tethering: libandroid_net_connectivity_com_android_net_module_util_jni.so:libcrypto.so:libframework-connectivity-jni.so:libframework-connectivity-tiramisu-jni.so:libmainlinecronet.121.0.6167.71.so:libservice-connectivity.so:libservice-thread-jni.so:libssl.so
+09-29 09:58:53.779 V/GraphicsEnvironment( 3241):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:53.779 V/GraphicsEnvironment( 3241):   angle_gl_driver_selection_values=[]
+09-29 09:58:53.816 W/gle.android.gms( 1591): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-29 09:58:54.312 W/ActivityManager(  571): Slow operation: 53ms so far, now at startProcess: done updating battery stats
+09-29 09:58:54.312 W/ActivityManager(  571): Slow operation: 53ms so far, now at startProcess: building log message
+09-29 09:58:54.312 I/ActivityManager(  571): Start proc 3269:com.google.android.settings.intelligence/u0a140 for broadcast {com.google.android.settings.intelligence/com.google.android.settings.intelligence.modules.routines.impl.WifiBroadcastReceiver}
+09-29 09:58:54.312 W/ActivityManager(  571): Slow operation: 53ms so far, now at startProcess: starting to update pids map
+09-29 09:58:54.312 W/ActivityManager(  571): Slow operation: 53ms so far, now at startProcess: done updating pids map
+09-29 09:58:54.339 E/gs.intelligence( 3269): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:54.517 W/ActivityManager(  571): Slow operation: 64ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+09-29 09:58:54.609 D/nativeloader( 3269): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:58:54.654 V/GraphicsEnvironment( 3269):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:54.654 V/GraphicsEnvironment( 3269):   angle_gl_driver_selection_values=[]
+09-29 09:58:54.966 W/SemanticLocation( 2635): 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-29 09:58:54.966 W/SemanticLocation( 2635): 	at libcore.io.Linux.open(Native Method)
+09-29 09:58:54.966 W/SemanticLocation( 2635): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:58:54.966 W/SemanticLocation( 2635): 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:274)
+09-29 09:58:54.966 W/SemanticLocation( 2635): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:58:54.966 W/SemanticLocation( 2635): 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-29 09:58:55.090 I/GmsDebugLogger( 1591): [46] container:2423359190800
+09-29 09:58:55.096 W/SemanticLocation( 2635): 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-29 09:58:55.096 W/SemanticLocation( 2635): 	at libcore.io.Linux.open(Native Method)
+09-29 09:58:55.096 W/SemanticLocation( 2635): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:58:55.096 W/SemanticLocation( 2635): 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:274)
+09-29 09:58:55.096 W/SemanticLocation( 2635): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:58:55.096 W/SemanticLocation( 2635): 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-29 09:58:55.230 I/ModuleSetMgr( 1591): Download of container feature multipackage_debug is disabled.
+09-29 09:58:55.230 I/ModuleSetMgr( 1591): Download of container feature permissions_debug is disabled.
+09-29 09:58:55.230 I/ModuleSetMgr( 1591): Download of container feature semanticlocation_debug is disabled.
+09-29 09:58:55.367 D/nativeloader( 2459): Load /data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.uncompressed.apk!/lib/x86_64/libcronet.126.0.6452.4.so using isolated ns clns-10 (caller=/data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.uncompressed.apk): ok
+09-29 09:58:55.758 D/PrefCtrlListHelper( 1100): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
+09-29 09:58:55.816 D/ActivityManager(  571): freezing 2575 com.android.carrierdefaultapp
+09-29 09:58:55.933 D/PrefCtrlListHelper( 1100): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
+09-29 09:58:55.938 I/ModuleSetMgr( 1591): Download of container feature multipackage_debug is disabled.
+09-29 09:58:55.938 I/ModuleSetMgr( 1591): Download of container feature permissions_debug is disabled.
+09-29 09:58:55.938 I/ModuleSetMgr( 1591): Download of container feature semanticlocation_debug is disabled.
+09-29 09:58:56.123 D/PrefCtrlListHelper( 1100): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
+09-29 09:58:56.201 V/GraphicsEnableAngleCtrl( 1100): Value of persist.graphics.egl is: 
+09-29 09:58:56.359 I/GmsDebugLogger( 1591): [53] +tflite_dynamite:-1
+09-29 09:58:56.442 W/SemanticLocation( 2635): 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-29 09:58:56.442 W/SemanticLocation( 2635): 	at libcore.io.Linux.open(Native Method)
+09-29 09:58:56.442 W/SemanticLocation( 2635): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:58:56.442 W/SemanticLocation( 2635): 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:274)
+09-29 09:58:56.442 W/SemanticLocation( 2635): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:58:56.442 W/SemanticLocation( 2635): 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-29 09:58:57.187 V/GraphicsEnableAngleCtrl( 1100): Value of persist.graphics.egl is: 
+09-29 09:58:57.246 W/.apps.wellbeing( 1372): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-29 09:58:57.252 W/ActivityManager(  571): Slow operation: 51ms so far, now at startProcess: done updating battery stats
+09-29 09:58:57.252 W/ActivityManager(  571): Slow operation: 51ms so far, now at startProcess: building log message
+09-29 09:58:57.252 I/ActivityManager(  571): Start proc 3351:com.android.chrome/u0a145 for broadcast {com.android.chrome/com.google.android.apps.chrome.rlz.RevenueStatsConfigurationUpdateReceiver}
+09-29 09:58:57.252 W/ActivityManager(  571): Slow operation: 51ms so far, now at startProcess: starting to update pids map
+09-29 09:58:57.252 W/ActivityManager(  571): Slow operation: 51ms so far, now at startProcess: done updating pids map
+09-29 09:58:57.255 W/.apps.wellbeing( 1372): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
+09-29 09:58:57.329 E/.android.chrome( 3351): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:58:57.537 D/PrefCtrlListHelper( 1100): Could not find Context-only controller for pref: com.google.android.settings.applications.specialaccess.DebuggingDataPreferenceController
+09-29 09:58:57.548 D/PrefCtrlListHelper( 1100): Could not find Context-only controller for pref: com.google.android.settings.applications.specialaccess.DebuggingDataPreferenceController
+09-29 09:58:57.875 I/ModuleSetMgr( 1591): Download of container feature multipackage_debug is disabled.
+09-29 09:58:57.875 I/ModuleSetMgr( 1591): Download of container feature permissions_debug is disabled.
+09-29 09:58:57.875 I/ModuleSetMgr( 1591): Download of container feature semanticlocation_debug is disabled.
+09-29 09:58:57.953 V/GraphicsEnvironment( 3351):   angle_gl_driver_selection_pkgs=[]
+09-29 09:58:57.953 V/GraphicsEnvironment( 3351):   angle_gl_driver_selection_values=[]
+09-29 09:58:58.604 D/nativeloader( 3351): Load /data/app/~~Ilx44Qzi4tv-kFQuG9JcjA==/com.android.chrome-T2J7Ij-I0nsE6Ln1-9OcBQ==/Chrome.apk!/lib/x86_64/libchromium_android_linker.so using ns clns-8 from class loader (caller=/data/app/~~Ilx44Qzi4tv-kFQuG9JcjA==/com.android.chrome-T2J7Ij-I0nsE6Ln1-9OcBQ==/Chrome.apk): ok
+09-29 09:58:58.729 V/SettingsSearchProvider( 1100): com.android.settings.development.WirelessDebuggingFragment$2@c9dac1c tried to add an empty non-indexable key
+09-29 09:58:59.236 V/WindowManagerShell(  923): Transition requested (#19): android.os.BinderProxy@39679ff TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a77d3cc, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 19 }
+09-29 09:58:59.236 V/WindowManagerShell(  923): RemoteTransition directly requested for (#19) android.os.BinderProxy@39679ff: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a77d3cc, appThread = null, debugName = null }
+09-29 09:58:59.573 V/WindowManager(  571): Sent Transition (#19) createdAt=09-29 09:58:59.228 via request=TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@244c3bc, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 19 }
+09-29 09:58:59.778 V/WindowManagerShell(  923): Transition requested (#20): android.os.BinderProxy@f671f6 TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@9eba9f7, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 20 }
+09-29 09:58:59.778 V/WindowManagerShell(  923): RemoteTransition directly requested for (#20) android.os.BinderProxy@f671f6: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@9eba9f7, appThread = null, debugName = null }
+09-29 09:58:59.904 V/WindowManager(  571): Sent Transition (#20) createdAt=09-29 09:58:59.249 via request=TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@65f7bd2, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 20 }
+09-29 09:58:59.922 V/WindowManagerShell(  923): Transition requested (#21): android.os.BinderProxy@32ad064 TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@61162cd, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 21 }
+09-29 09:58:59.922 V/WindowManagerShell(  923): RemoteTransition directly requested for (#21) android.os.BinderProxy@32ad064: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@61162cd, appThread = null, debugName = null }
+09-29 09:58:59.938 V/WindowManager(  571): Sent Transition (#21) createdAt=09-29 09:58:59.837 via request=TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@4cde4a3, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 21 }
+09-29 09:59:00.597 D/PrefCtrlListHelper( 1100): Could not find Context-only controller for pref: com.google.android.settings.applications.specialaccess.DebuggingDataPreferenceController
+09-29 09:59:00.923 D/ActivityManager(  571): freezing 2722 com.android.externalstorage
+09-29 09:59:01.096 W/ActivityManager(  571): Slow operation: 55ms so far, now at startProcess: asking zygote to start proc
+09-29 09:59:01.142 W/ActivityManager(  571): Slow operation: 101ms so far, now at startProcess: returned from zygote!
+09-29 09:59:01.144 W/ActivityManager(  571): Slow operation: 103ms so far, now at startProcess: done updating battery stats
+09-29 09:59:01.144 W/ActivityManager(  571): Slow operation: 104ms so far, now at startProcess: building log message
+09-29 09:59:01.145 I/ActivityManager(  571): Start proc 3421:com.google.android.apps.messaging/u0a134 for content provider {com.google.android.apps.messaging/com.google.android.apps.messaging.settings.search.MessagesSearchIndexablesProvider}
+09-29 09:59:01.145 W/ActivityManager(  571): Slow operation: 104ms so far, now at startProcess: starting to update pids map
+09-29 09:59:01.145 W/ActivityManager(  571): Slow operation: 104ms so far, now at startProcess: done updating pids map
+09-29 09:59:01.145 W/ActivityManager(  571): Slow operation: 62ms so far, now at startProcess: asking zygote to start proc
+09-29 09:59:01.176 W/ActivityManager(  571): Slow operation: 93ms so far, now at startProcess: returned from zygote!
+09-29 09:59:01.177 W/ActivityManager(  571): Slow operation: 94ms so far, now at startProcess: done updating battery stats
+09-29 09:59:01.177 W/ActivityManager(  571): Slow operation: 94ms so far, now at startProcess: building log message
+09-29 09:59:01.177 I/ActivityManager(  571): Start proc 3422:com.google.android.apps.safetyhub/u0a129 for content provider {com.google.android.apps.safetyhub/com.google.android.apps.safetyhub.platformsettings.search.EmergencySearchIndexablesProvider}
+09-29 09:59:01.177 W/ActivityManager(  571): Slow operation: 94ms so far, now at startProcess: starting to update pids map
+09-29 09:59:01.205 W/ActivityManager(  571): Slow operation: 122ms so far, now at startProcess: done updating pids map
+09-29 09:59:01.207 W/ActivityManager(  571): Slow operation: 106ms so far, now at startProcess: asking zygote to start proc
+09-29 09:59:01.236 W/ActivityManager(  571): Slow operation: 135ms so far, now at startProcess: returned from zygote!
+09-29 09:59:01.245 E/.android.gms.ui( 3423): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:59:01.297 W/ActivityManager(  571): Slow operation: 86ms so far, now at startProcess: done creating new process record
+09-29 09:59:01.297 W/ActivityManager(  571): Slow operation: 86ms so far, now at startProcess: stepping in to startProcess
+09-29 09:59:01.340 W/ActivityManager(  571): Slow operation: 129ms so far, now at startProcess: done starting proc!
+09-29 09:59:01.375 W/ActivityManager(  571): Slow operation: 274ms so far, now at startProcess: done updating battery stats
+09-29 09:59:01.375 W/ActivityManager(  571): Slow operation: 274ms so far, now at startProcess: building log message
+09-29 09:59:01.375 I/ActivityManager(  571): Start proc 3423:com.google.android.gms.ui/u0a143 for content provider {com.google.android.gms/com.google.android.gms.app.search.GmsSearchIndexablesProvider}
+09-29 09:59:01.375 W/ActivityManager(  571): Slow operation: 274ms so far, now at startProcess: starting to update pids map
+09-29 09:59:01.375 W/ActivityManager(  571): Slow operation: 274ms so far, now at startProcess: done updating pids map
+09-29 09:59:01.375 W/ActivityManager(  571): Slow operation: 78ms so far, now at startProcess: asking zygote to start proc
+09-29 09:59:01.390 W/ActivityManager(  571): Slow operation: 93ms so far, now at startProcess: returned from zygote!
+09-29 09:59:01.409 E/nect.controller( 3444): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:59:01.482 W/ActivityManager(  571): Slow operation: 185ms so far, now at startProcess: done updating battery stats
+09-29 09:59:01.482 W/ActivityManager(  571): Slow operation: 185ms so far, now at startProcess: building log message
+09-29 09:59:01.485 I/ActivityManager(  571): Start proc 3444:com.google.android.healthconnect.controller/u0a201 for content provider {com.google.android.healthconnect.controller/com.android.healthconnect.controller.searchindexables.HealthConnectSearchIndexablesProvider}
+09-29 09:59:01.485 W/ActivityManager(  571): Slow operation: 188ms so far, now at startProcess: starting to update pids map
+09-29 09:59:01.493 W/ActivityManager(  571): Slow operation: 196ms so far, now at startProcess: done updating pids map
+09-29 09:59:01.494 E/.apps.safetyhub( 3422): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:59:01.495 W/ActivityManager(  571): Slow operation: 128ms so far, now at startProcess: asking zygote to start proc
+09-29 09:59:01.513 W/ActivityManager(  571): Slow operation: 146ms so far, now at startProcess: returned from zygote!
+09-29 09:59:01.520 E/marvin.talkback( 3461): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:59:01.526 W/ActivityManager(  571): Slow operation: 159ms so far, now at startProcess: done updating battery stats
+09-29 09:59:01.528 W/ActivityManager(  571): Slow operation: 161ms so far, now at startProcess: building log message
+09-29 09:59:01.530 I/ActivityManager(  571): Start proc 3461:com.google.android.marvin.talkback/u0a165 for content provider {com.google.android.marvin.talkback/com.google.android.accessibility.talkback.preference.search.TalkBackSearchIndexablesProvider}
+09-29 09:59:01.531 W/ActivityManager(  571): Slow operation: 164ms so far, now at startProcess: starting to update pids map
+09-29 09:59:01.534 W/ActivityManager(  571): Slow operation: 167ms so far, now at startProcess: done updating pids map
+09-29 09:59:01.629 D/nativeloader( 3421): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:59:01.684 D/nativeloader( 3423): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:59:01.692 D/nativeloader( 3444):   com_android_tethering: libandroid_net_connectivity_com_android_net_module_util_jni.so:libcrypto.so:libframework-connectivity-jni.so:libframework-connectivity-tiramisu-jni.so:libmainlinecronet.121.0.6167.71.so:libservice-connectivity.so:libservice-thread-jni.so:libssl.so
+09-29 09:59:01.695 V/GraphicsEnvironment( 3421):   angle_gl_driver_selection_pkgs=[]
+09-29 09:59:01.695 V/GraphicsEnvironment( 3421):   angle_gl_driver_selection_values=[]
+09-29 09:59:01.698 V/GraphicsEnvironment( 3423):   angle_gl_driver_selection_pkgs=[]
+09-29 09:59:01.698 V/GraphicsEnvironment( 3423):   angle_gl_driver_selection_values=[]
+09-29 09:59:01.718 D/nativeloader( 3422): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:59:01.755 V/GraphicsEnvironment( 3444):   angle_gl_driver_selection_pkgs=[]
+09-29 09:59:01.755 V/GraphicsEnvironment( 3444):   angle_gl_driver_selection_values=[]
+09-29 09:59:01.756 D/nativeloader( 3461): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:59:01.760 V/GraphicsEnvironment( 3422):   angle_gl_driver_selection_pkgs=[]
+09-29 09:59:01.760 V/GraphicsEnvironment( 3422):   angle_gl_driver_selection_values=[]
+09-29 09:59:01.834 V/GraphicsEnvironment( 3461):   angle_gl_driver_selection_pkgs=[]
+09-29 09:59:01.834 V/GraphicsEnvironment( 3461):   angle_gl_driver_selection_values=[]
+09-29 09:59:01.865 W/ssioncontroller(  924): Core platform API violation: Llibcore/io/Memory;->pokeByte(JB)V from Lcom/google/protobuf/UnsafeUtil; using reflection
+09-29 09:59:01.865 W/ssioncontroller(  924): Core platform API violation: Llibcore/io/Memory;->peekByte(J)B from Lcom/google/protobuf/UnsafeUtil; using reflection
+09-29 09:59:02.069 D/nativeloader( 3423): Load /product/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk!/lib/x86_64/libconscrypt_gmscore_jni.so using ns product-clns-9 from class loader (caller=/product/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk!classes3.dex): ok
+09-29 09:59:02.585 D/Backup  ( 3423): [BackupGoogleSettingsIO] Back up or restore entry point is not enabled
+09-29 09:59:02.667 I/ebvk$a  ( 3423): Unable to retrieve flag snapshot for com.google.android.gms.googlesettings#com.google.android.gms, using defaults.
+09-29 09:59:03.281 W/PersonalSafety( 3423): Debug page in internal setting false, false, false  [CONTEXT service_id=310 ]
+09-29 09:59:03.316 I/BugleShortcuts( 3421): Clearing shortcuts for DB recreation
+09-29 09:59:04.053 I/ActivityManager(  571): Background started FGS: Allowed [callingPackage: com.google.android.apps.messaging; callingUid: 10134; uidState: RCVR; uidBFSL: n/a; intent: Intent { cmp=com.google.android.apps.messaging/com.google.apps.tiktok.concurrent.InternalForegroundService (has extras) }; code:BACKGROUND_FGS_PERMISSION; tempAllowListReason:<null>; targetSdkVersion:35; callerTargetSdkVersion:35; startForegroundCount:0; bindFromPackage:null: isBindService:false]
+09-29 09:59:04.085 I/EGL_emulation( 2459): Opening libGLESv1_CM_emulation.so
+09-29 09:59:04.085 I/EGL_emulation( 2459): Opening libGLESv2_emulation.so
+09-29 09:59:04.131 W/ActivityManager(  571): Foreground service started from background can not have location/camera/microphone access: service com.google.android.apps.messaging/com.google.apps.tiktok.concurrent.InternalForegroundService
+09-29 09:59:04.940 W/libc    ( 2459): Access denied finding property "persist.adb.tls_server.enable"
+09-29 09:59:04.940 W/libc    ( 2459): Access denied finding property "service.adb.tls.port"
+09-29 09:59:05.141 D/Backup  ( 3423): [BackupGoogleSettingsIO] Back up or restore entry point is not enabled
+09-29 09:59:05.153 W/ActivityManager(  571): Foreground service started from background can not have location/camera/microphone access: service com.google.android.apps.messaging/com.google.apps.tiktok.concurrent.InternalForegroundService
+09-29 09:59:05.153 I/ActivityManager(  571): Background started FGS: Allowed [callingPackage: com.google.android.apps.messaging; callingUid: 10134; uidState: FGS ; uidBFSL: [BFSL]; intent: Intent { cmp=com.google.android.apps.messaging/com.google.apps.tiktok.concurrent.InternalForegroundService }; code:PROC_STATE_FGS; tempAllowListReason:<null>; targetSdkVersion:35; callerTargetSdkVersion:35; startForegroundCount:1; bindFromPackage:null: isBindService:false] (Called on SHORT_SERVICE)
+09-29 09:59:05.265 W/PersonalSafety( 3423): Debug page in internal setting false, false, false  [CONTEXT service_id=310 ]
+09-29 09:59:05.465 W/IndexDataConverter( 3269): Skipping index for null-key item IndexData.Builder {title: Wireless debugging,package: com.android.settings}
+09-29 09:59:06.004 W/libc    ( 2459): Access denied finding property "persist.adb.tls_server.enable"
+09-29 09:59:06.005 W/libc    ( 2459): Access denied finding property "service.adb.tls.port"
+09-29 09:59:06.095 I/EGL_emulation( 2459): Opening libGLESv1_CM_emulation.so
+09-29 09:59:06.106 I/EGL_emulation( 2459): Opening libGLESv2_emulation.so
+09-29 09:59:07.008 W/AllowlistedPackageIdentifiers( 3269): Is debuggable: false
+09-29 09:59:07.808 W/ActivityManager(  571): Foreground service started from background can not have location/camera/microphone access: service com.google.android.apps.messaging/com.google.apps.tiktok.concurrent.InternalForegroundService
+09-29 09:59:07.827 I/EGL_emulation( 2459): Opening libGLESv1_CM_emulation.so
+09-29 09:59:07.833 I/EGL_emulation( 2459): Opening libGLESv2_emulation.so
+09-29 09:59:07.849 I/BugleSearch( 3421): Queues icing index rebuild work item. [CONTEXT class_name="IcingSyncManagerListener" ]
+09-29 09:59:08.781 I/BugleRcsProvisioning( 3421): BugleSystemBindingManager: onBootComplete
+09-29 09:59:08.890 W/FileUtils(  571): 	at libcore.io.Linux.chmod(Native Method)
+09-29 09:59:08.890 W/FileUtils(  571): 	at libcore.io.ForwardingOs.chmod(ForwardingOs.java:165)
+09-29 09:59:08.890 W/FileUtils(  571): 	at libcore.io.BlockGuardOs.chmod(BlockGuardOs.java:83)
+09-29 09:59:08.897 W/libc    ( 2459): Access denied finding property "persist.adb.tls_server.enable"
+09-29 09:59:08.903 W/libc    ( 2459): Access denied finding property "service.adb.tls.port"
+09-29 09:59:09.035 I/EGL_emulation( 2459): Opening libGLESv1_CM_emulation.so
+09-29 09:59:09.038 I/EGL_emulation( 2459): Opening libGLESv2_emulation.so
+09-29 09:59:09.497 I/EGL_emulation( 2459): Opening libGLESv1_CM_emulation.so
+09-29 09:59:09.497 I/EGL_emulation( 2459): Opening libGLESv2_emulation.so
+09-29 09:59:09.537 D/nativeloader( 3421): Load /product/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk!/lib/x86_64/libconscrypt_gmscore_jni.so using ns product-clns-11 from class loader (caller=/product/priv-app/PrebuiltGmsCore/PrebuiltGmsCore.apk!classes3.dex): ok
+09-29 09:59:09.791 W/libc    ( 2459): Access denied finding property "persist.adb.tls_server.enable"
+09-29 09:59:09.804 W/libc    ( 2459): Access denied finding property "service.adb.tls.port"
+09-29 09:59:09.815 I/BugleBackup( 3421): Registering preference change listener for "buglesub_-1".
+09-29 09:59:09.919 I/BugleBackup( 3421): Registering preference change listener for "buglesub_1".
+09-29 09:59:09.991 I/ActivityManager(  571): Start proc 3711:com.google.android.apps.messaging:rcs/u0a134 for service {com.google.android.apps.messaging/com.google.android.ims.service.JibeService}
+09-29 09:59:10.227 D/nativeloader( 3711): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:59:10.267 V/GraphicsEnvironment( 3711):   angle_gl_driver_selection_pkgs=[]
+09-29 09:59:10.267 V/GraphicsEnvironment( 3711):   angle_gl_driver_selection_values=[]
+09-29 09:59:11.502 I/ActivityManager(  571): Finished processing BOOT_COMPLETED for u0
+09-29 09:59:12.068 I/ModuleSetMgr( 1591): Download of container feature multipackage_debug is disabled.
+09-29 09:59:12.068 I/ModuleSetMgr( 1591): Download of container feature permissions_debug is disabled.
+09-29 09:59:12.068 I/ModuleSetMgr( 1591): Download of container feature semanticlocation_debug is disabled.
+09-29 09:59:12.370 I/EGL_emulation( 2459): Opening libGLESv1_CM_emulation.so
+09-29 09:59:12.379 I/EGL_emulation( 2459): Opening libGLESv2_emulation.so
+09-29 09:59:12.384 I/ModuleSetMgr( 1591): Download of container feature multipackage_debug is disabled.
+09-29 09:59:12.384 I/ModuleSetMgr( 1591): Download of container feature permissions_debug is disabled.
+09-29 09:59:12.384 I/ModuleSetMgr( 1591): Download of container feature semanticlocation_debug is disabled.
+09-29 09:59:12.755 W/libc    ( 2459): Access denied finding property "persist.adb.tls_server.enable"
+09-29 09:59:12.757 W/libc    ( 2459): Access denied finding property "service.adb.tls.port"
+09-29 09:59:14.106 E/RecoverySnapshotStorage(  571): 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-29 09:59:14.106 E/RecoverySnapshotStorage(  571): 	at libcore.io.Linux.open(Native Method)
+09-29 09:59:14.106 E/RecoverySnapshotStorage(  571): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:59:14.106 E/RecoverySnapshotStorage(  571): 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:274)
+09-29 09:59:14.106 E/RecoverySnapshotStorage(  571): 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-29 09:59:14.186 W/ActivityManager(  571): pid 1591 com.google.android.gms sent binder code 1 with flags 2 to frozen apps and got error -2147483646
+09-29 09:59:14.442 I/EGL_emulation( 2459): Opening libGLESv1_CM_emulation.so
+09-29 09:59:14.443 I/EGL_emulation( 2459): Opening libGLESv2_emulation.so
+09-29 09:59:14.540 W/libc    ( 2459): Access denied finding property "persist.adb.tls_server.enable"
+09-29 09:59:14.540 W/libc    ( 2459): Access denied finding property "service.adb.tls.port"
+09-29 09:59:14.570 W/gle.android.gms( 1591): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-29 09:59:14.831 D/nativeloader( 1591): Load /data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.uncompressed.apk!/lib/x86_64/libcronet.126.0.6452.4.so using isolated ns clns-11 (caller=/data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.uncompressed.apk): ok
+09-29 09:59:14.914 D/ActivityManager(  571): freezing 2834 com.google.android.documentsui
+09-29 09:59:15.757 E/RecoverySnapshotStorage(  571): 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-29 09:59:15.757 E/RecoverySnapshotStorage(  571): 	at libcore.io.Linux.open(Native Method)
+09-29 09:59:15.757 E/RecoverySnapshotStorage(  571): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:59:15.757 E/RecoverySnapshotStorage(  571): 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:274)
+09-29 09:59:15.757 E/RecoverySnapshotStorage(  571): 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-29 09:59:16.163 D/ActivityManager(  571): freezing 2897 com.google.android.onetimeinitializer
+09-29 09:59:16.181 I/GmsDebugLogger( 1591): [53] +maps_core:-1
+09-29 09:59:16.453 D/ActivityManager(  571): freezing 2364 com.android.imsserviceentitlement
+09-29 09:59:16.513 W/libc    ( 1591): Access denied finding property "ro.hardware.chipname"
+09-29 09:59:16.526 I/NnApiDriverManager( 1591): Registering application with GPU 'Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0))' by 'Google (Google Inc. (Google))' [CONTEXT service_id=301 ]
+09-29 09:59:16.564 D/ActivityManager(  571): freezing 2598 com.android.managedprovisioning
+09-29 09:59:16.565 I/PeopleInitIntentOp( 1591): Not initializing debuggability [CONTEXT service_id=5 ]
+09-29 09:59:16.630 I/GmsDebugLogger( 1591): [53] +mlkit.barcode.ui:0
+09-29 09:59:16.701 D/ActivityManager(  571): freezing 1563 com.android.providers.calendar
+09-29 09:59:16.907 D/ActivityManager(  571): freezing 2918 com.android.camera2
+09-29 09:59:16.946 I/SemanticLocation( 1591): [Scheduler] Periodic Task com.google.android.gms.semanticlocationhistory.settings.OdlhTombstonesCleanupJob.OdlhTombstonesCleanupJob is scheduled to run EVERY_DAY [CONTEXT service_id=173 ]
+09-29 09:59:17.173 W/SemanticLocation( 2635): 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-29 09:59:17.173 W/SemanticLocation( 2635): 	at libcore.io.Linux.open(Native Method)
+09-29 09:59:17.173 W/SemanticLocation( 2635): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:59:17.173 W/SemanticLocation( 2635): 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:274)
+09-29 09:59:17.173 W/SemanticLocation( 2635): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:59:17.173 W/SemanticLocation( 2635): 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-29 09:59:17.187 I/Bugle   ( 3421): BugleStartup: Registering SIM change receiver...
+09-29 09:59:17.190 I/Bugle   ( 3421): BugleStartup: Updating app config...
+09-29 09:59:17.196 I/Bugle   ( 3421): BugleStartup: Done with SIM change receiver & app config.
+09-29 09:59:17.196 I/Bugle   ( 3421): BugleStartup: Handling shared prefs upgrade & Load MMS Configuration...
+09-29 09:59:17.223 W/SemanticLocation( 2635): 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-29 09:59:17.223 W/SemanticLocation( 2635): 	at libcore.io.Linux.open(Native Method)
+09-29 09:59:17.223 W/SemanticLocation( 2635): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:59:17.223 W/SemanticLocation( 2635): 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:274)
+09-29 09:59:17.223 W/SemanticLocation( 2635): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:59:17.223 W/SemanticLocation( 2635): 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-29 09:59:17.253 I/BugleSimStateTracker( 3421): Updating PhoneSimState
+09-29 09:59:17.361 I/Bugle   ( 3421): BugleStartup: Initializing RCS availability...
+09-29 09:59:17.368 I/Bugle   ( 3421): BugleStartup: Done with RCS availability.
+09-29 09:59:17.369 I/Bugle   ( 3421): BugleStartup: Done initializing with enabled individual init failures.
+09-29 09:59:17.390 I/BugleSimStateTracker( 3421): Is carrier config for identified carrier: true
+09-29 09:59:17.609 I/BugleSimStateTracker( 3421): Looking up Fi through package names.
+09-29 09:59:17.650 D/StrictMode( 3421): 	at libcore.io.BlockGuardOs.stat(BlockGuardOs.java:419)
+09-29 09:59:17.650 D/StrictMode( 3421): 	at libcore.io.ForwardingOs.stat(ForwardingOs.java:846)
+09-29 09:59:17.671 D/ActivityManager(  571): freezing 2258 com.google.android.apps.wallpaper
+09-29 09:59:17.719 D/nativeloader( 3421): Load /data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.uncompressed.apk!/lib/x86_64/libcronet.126.0.6452.4.so using isolated ns clns-12 (caller=/data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.uncompressed.apk): ok
+09-29 09:59:18.020 D/nativeloader( 3421): Load libcurve25519.so using ns product-clns-8 from class loader (caller=/product/priv-app/PrebuiltBugle/PrebuiltBugle.apk!classes6.dex): dlopen failed: library "libcurve25519.so" not found
+09-29 09:59:18.045 I/BugleSimStateTracker( 3421): default call SIM: redacted-pii:sim_id[chars:20,last3:897], default sms SIM redacted-pii:sim_id[chars:20,last3:897]. default data SIM redacted-pii:sim_id[chars:20,last3:897].
+09-29 09:59:18.077 D/ActivityManager(  571): freezing 2986 com.android.dynsystem:dynsystem
+09-29 09:59:18.078 D/ActivityManager(  571): freezing 2960 com.android.dynsystem
+09-29 09:59:18.079 D/ActivityManager(  571): freezing 1707 com.android.keychain
+09-29 09:59:18.079 D/ActivityManager(  571): freezing 1952 com.android.localtransport
+09-29 09:59:18.223 I/BugleSimStateTracker( 3421): Looking up Fi through package names.
+09-29 09:59:18.257 I/BugleSimStateTracker( 3421): allNewlyBuiltSimSubscriptionInfos (simId, loggableGuid): [(redacted-pii:sim_id[chars:20,last3:897], 7738da32-5e75-4ac6-bfc5-f0074f8c647f)]
+09-29 09:59:18.260 I/BugleSimStateTracker( 3421): Storing updatedSimSubscriptionInfos: [(redacted-pii:sim_id[chars:20,last3:897], 7738da32-5e75-4ac6-bfc5-f0074f8c647f)]
+09-29 09:59:18.311 I/BugleSimStateTracker( 3421): Default call SIM changed. Broadcasting SIM SWAP. Old simId redacted-pii:sim_id[chars:0,last3:], new simId: redacted-pii:sim_id[chars:20,last3:897]
+09-29 09:59:18.313 I/BugleSimStateTracker( 3421): Default SMS SIM changed. Old simId redacted-pii:sim_id[chars:0,last3:], new simId: redacted-pii:sim_id[chars:20,last3:897]
+09-29 09:59:18.315 I/BugleSimStateTracker( 3421): Broadcasting SIM_LOADED event for newly loaded SIMs: [(redacted-pii:sim_id[chars:20,last3:897], 7738da32-5e75-4ac6-bfc5-f0074f8c647f)]
+09-29 09:59:19.483 I/EGL_emulation( 2459): Opening libGLESv1_CM_emulation.so
+09-29 09:59:19.483 I/EGL_emulation( 2459): Opening libGLESv2_emulation.so
+09-29 09:59:19.523 W/libc    ( 2459): Access denied finding property "persist.adb.tls_server.enable"
+09-29 09:59:19.530 W/libc    ( 2459): Access denied finding property "service.adb.tls.port"
+09-29 09:59:19.571 D/ActivityManager(  571): freezing 3029 com.android.shell
+09-29 09:59:20.048 W/gle.android.gms( 1591): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-29 09:59:20.140 W/libc    ( 2459): Access denied finding property "persist.adb.tls_server.enable"
+09-29 09:59:20.141 W/libc    ( 2459): Access denied finding property "service.adb.tls.port"
+09-29 09:59:20.356 I/EGL_emulation( 2459): Opening libGLESv1_CM_emulation.so
+09-29 09:59:20.360 I/EGL_emulation( 2459): Opening libGLESv2_emulation.so
+09-29 09:59:20.941 W/.apps.wellbeing( 1372): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-29 09:59:20.942 W/.apps.wellbeing( 1372): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
+09-29 09:59:20.985 D/ActivityManager(  571): freezing 3107 com.google.android.federatedcompute
+09-29 09:59:21.313 I/BugleRcsProvisioning( 3421): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-29 09:59:22.527 D/ActivityManager(  571): freezing 3184 com.google.android.ondevicepersonalization.services
+09-29 09:59:22.679 I/BugleRcsProvisioning( 3421): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-29 09:59:23.124 I/BugleRcsProvisioning( 3421): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-29 09:59:23.125 D/ActivityManager(  571): freezing 3199 com.google.android.packageinstaller
+09-29 09:59:23.457 D/ActivityManager(  571): freezing 1821 android.process.media
+09-29 09:59:23.557 I/BugleRcsProvisioning( 3421): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-29 09:59:24.145 I/GmsDebugLogger( 1591): [78] 
+09-29 09:59:24.300 I/BugleRcsProvisioning( 3421): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-29 09:59:24.432 I/ActivityManager(  571): Start proc 3891:com.google.android.ext.services/u0a203 for service {com.google.android.ext.services/android.ext.services.watchdog.ExplicitHealthCheckServiceImpl}
+09-29 09:59:24.463 E/id.ext.services( 3891): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:59:24.471 I/GmsDebugLogger( 1591): [73] 1801
+09-29 09:59:24.503 I/GmsDebugLogger( 1591): [30] [TfliteDynamiteDynamite.integ:262730502100800]
+09-29 09:59:24.632 D/ActivityManager(  571): freezing 2182 com.google.android.tts
+09-29 09:59:24.690 D/nativeloader( 3891):   com_android_tethering: libandroid_net_connectivity_com_android_net_module_util_jni.so:libcrypto.so:libframework-connectivity-jni.so:libframework-connectivity-tiramisu-jni.so:libmainlinecronet.121.0.6167.71.so:libservice-connectivity.so:libservice-thread-jni.so:libssl.so
+09-29 09:59:24.793 V/GraphicsEnvironment( 3891):   angle_gl_driver_selection_pkgs=[]
+09-29 09:59:24.793 V/GraphicsEnvironment( 3891):   angle_gl_driver_selection_values=[]
+09-29 09:59:24.916 E/AppOps  (  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14231)
+09-29 09:59:24.916 E/AppOps  (  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14191)
+09-29 09:59:24.917 E/AppOps  (  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14231)
+09-29 09:59:24.917 E/AppOps  (  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14191)
+09-29 09:59:24.918 E/AppOps  (  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14231)
+09-29 09:59:24.918 E/AppOps  (  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14191)
+09-29 09:59:24.918 E/AppOps  (  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14231)
+09-29 09:59:24.918 E/AppOps  (  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14191)
+09-29 09:59:25.028 I/GmsDebugLogger( 1591): [46] container:2423359190800
+09-29 09:59:25.030 I/GmsDebugLogger( 1591): [83] 1 [tflite_dynamite]
+09-29 09:59:25.156 I/GmsDebugLogger( 1591): [73] 1801
+09-29 09:59:25.164 I/GmsDebugLogger( 1591): [30] [MapsCoreDynamite.integ:241610202100800]
+09-29 09:59:25.171 I/GmsDebugLogger( 1591): [83] 1 [maps_core]
+09-29 09:59:25.316 I/GmsDebugLogger( 1591): [73] 1801
+09-29 09:59:25.317 I/GmsDebugLogger( 1591): [30] [VisionBarcode.optional:242335100800],[TfliteDynamiteDynamite.integ:262730502100800],[MlkitBarcodeUi.optional:242335100800]
+09-29 09:59:25.351 I/GmsDebugLogger( 1591): [83] 1 [mlkit.barcode.ui]
+09-29 09:59:25.404 W/.apps.wellbeing( 1372): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-29 09:59:25.423 W/.apps.wellbeing( 1372): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
+09-29 09:59:25.452 I/GmsDebugLogger( 1591): [73] 1801
+09-29 09:59:25.454 I/GmsDebugLogger( 1591): [30] [TfliteDynamiteDynamite.integ:262730502100800]
+09-29 09:59:25.456 I/GmsDebugLogger( 1591): [83] 1 [tflite_dynamite]
+09-29 09:59:25.552 W/ActivityManager(  571): Unable to start service Intent { act=android.settings.hats.START_SERVICE pkg=com.google.android.settings.intelligence (has extras) } U=0: not found
+09-29 09:59:25.640 E/ActivityManager(  571): Unable to freeze binder for 3269: -11
+09-29 09:59:25.672 I/ActivityManager(  571): Killing 3269:com.google.android.settings.intelligence/u0a140 (adj 0): change com.google.android.settings.intelligence
+09-29 09:59:25.701 W/ActivityManager(  571): Scheduling restart of crashed service com.google.android.settings.intelligence/.modules.routines.impl.RoutinesJobIntentService in 1000ms for connection
+09-29 09:59:25.714 W/system_server(  571): Long monitor contention with owner PackageManager (630) at int com.android.server.am.ActivityManagerService$LocalService.broadcastIntent(android.content.Intent, android.content.IIntentReceiver, java.lang.String[], boolean, int, int[], java.util.function.BiFunction, android.os.Bundle)(ActivityManagerService.java:19191) waiters=1 in boolean com.android.server.am.ActivityManagerService.unbindService(android.app.IServiceConnection) for 102ms
+09-29 09:59:25.980 D/PrefCtrlListHelper( 1100): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
+09-29 09:59:26.164 D/PrefCtrlListHelper( 1100): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
+09-29 09:59:26.251 W/ActivityManager(  571): pid 571 system sent binder code 4 with flags 1 to frozen apps and got error -32
+09-29 09:59:26.251 V/ActivityManager(  571): Got obituary of 3269:com.google.android.settings.intelligence
+09-29 09:59:26.523 D/PrefCtrlListHelper( 1100): Could not find Context-only controller for pref: com.google.android.settings.update.GoogleSystemUpdatePreferenceController
+09-29 09:59:26.556 V/GraphicsEnableAngleCtrl( 1100): Value of persist.graphics.egl is: 
+09-29 09:59:27.112 D/PrefCtrlListHelper( 1100): Could not find Context-only controller for pref: com.google.android.settings.applications.specialaccess.DebuggingDataPreferenceController
+09-29 09:59:27.152 V/GraphicsEnableAngleCtrl( 1100): Value of persist.graphics.egl is: 
+09-29 09:59:27.409 D/PrefCtrlListHelper( 1100): Could not find Context-only controller for pref: com.google.android.settings.applications.specialaccess.DebuggingDataPreferenceController
+09-29 09:59:27.614 W/ActivityManager(  571): Slow operation: 68ms so far, now at startProcess: returned from zygote!
+09-29 09:59:27.618 W/ActivityManager(  571): Slow operation: 72ms so far, now at startProcess: done updating battery stats
+09-29 09:59:27.618 W/ActivityManager(  571): Slow operation: 72ms so far, now at startProcess: building log message
+09-29 09:59:27.618 I/ActivityManager(  571): Start proc 3916:com.google.android.settings.intelligence/u0a140 for content provider {com.google.android.settings.intelligence/com.google.android.settings.intelligence.modules.gmscoreproxy.impl.PhenotypeProxyContentProvider}
+09-29 09:59:27.619 W/ActivityManager(  571): Slow operation: 73ms so far, now at startProcess: starting to update pids map
+09-29 09:59:27.619 W/ActivityManager(  571): Slow operation: 73ms so far, now at startProcess: done updating pids map
+09-29 09:59:27.663 E/gs.intelligence( 3916): Not starting debugger since process cannot load the jdwp agent.
+09-29 09:59:27.935 D/nativeloader( 3916): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 09:59:27.964 V/GraphicsEnvironment( 3916):   angle_gl_driver_selection_pkgs=[]
+09-29 09:59:27.964 V/GraphicsEnvironment( 3916):   angle_gl_driver_selection_values=[]
+09-29 09:59:28.292 V/SettingsSearchProvider( 1100): com.android.settings.development.WirelessDebuggingFragment$2@c9dac1c tried to add an empty non-indexable key
+09-29 09:59:28.696 D/ActivityManager(  571): sync unfroze 2182 com.google.android.tts for 3
+09-29 09:59:28.925 D/PrefCtrlListHelper( 1100): Could not find Context-only controller for pref: com.google.android.settings.applications.specialaccess.DebuggingDataPreferenceController
+09-29 09:59:30.107 D/ActivityManager(  571): freezing 3241 com.google.android.rkpdapp
+09-29 09:59:30.195 D/ActivityManager(  571): sync unfroze 1821 android.process.media for 7
+09-29 09:59:32.177 E/AppOps  (  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14231)
+09-29 09:59:32.177 E/AppOps  (  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14191)
+09-29 09:59:32.177 E/AppOps  (  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14231)
+09-29 09:59:32.177 E/AppOps  (  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14191)
+09-29 09:59:32.178 E/AppOps  (  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14231)
+09-29 09:59:32.178 E/AppOps  (  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14191)
+09-29 09:59:32.178 E/AppOps  (  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14231)
+09-29 09:59:32.178 E/AppOps  (  571): 	at com.android.server.am.ActivityManagerService.bindServiceInstance(ActivityManagerService.java:14191)
+09-29 09:59:33.569 I/ActivityManager(  571): Background started FGS: Allowed [callingPackage: com.google.android.inputmethod.latin; callingUid: 10154; uidState: IMPB; uidBFSL: n/a; intent: Intent { cmp=com.google.android.inputmethod.latin/com.google.android.apps.inputmethod.libs.dataservice.superpacks.SuperpacksForegroundTaskService }; code:CURRENT_INPUT_METHOD; tempAllowListReason:<null>; targetSdkVersion:34; callerTargetSdkVersion:34; startForegroundCount:0; bindFromPackage:null: isBindService:false]
+09-29 09:59:33.583 W/ActivityManager(  571): Foreground service started from background can not have location/camera/microphone access: service com.google.android.inputmethod.latin/com.google.android.apps.inputmethod.libs.dataservice.superpacks.SuperpacksForegroundTaskService
+09-29 09:59:35.149 I/ActivityManager(  571): Background started FGS: Allowed [callingPackage: com.google.android.inputmethod.latin; callingUid: 10154; uidState: IMPB; uidBFSL: n/a; intent: Intent { cmp=com.google.android.inputmethod.latin/com.google.android.apps.inputmethod.libs.dataservice.superpacks.SuperpacksForegroundTaskService }; code:CURRENT_INPUT_METHOD; tempAllowListReason:<null>; targetSdkVersion:34; callerTargetSdkVersion:34; startForegroundCount:0; bindFromPackage:null: isBindService:false]
+09-29 09:59:35.170 W/ActivityManager(  571): pid 571 system sent binder code 2 with flags 1 to frozen apps and got error -32
+09-29 09:59:35.170 D/ActivityManager(  571): Too many transaction errors, throttling freezer binder callback.
+09-29 09:59:35.170 W/ActivityManager(  571): pid 571 system sent binder code 2 with flags 1 to frozen apps and got error -32
+09-29 09:59:35.170 D/ActivityManager(  571): Too many transaction errors, throttling freezer binder callback.
+09-29 09:59:35.175 W/ActivityManager(  571): Foreground service started from background can not have location/camera/microphone access: service com.google.android.inputmethod.latin/com.google.android.apps.inputmethod.libs.dataservice.superpacks.SuperpacksForegroundTaskService
+09-29 09:59:35.511 W/ActivityManager(  571): pid 571 system sent binder code 2 with flags 1 to frozen apps and got error -32
+09-29 09:59:35.512 D/ActivityManager(  571): Too many transaction errors, throttling freezer binder callback.
+09-29 09:59:35.735 D/ActivityManager(  571): freezing 1659 android.process.acore
+09-29 09:59:35.923 W/ActivityManager(  571): pid 571 system sent binder code 2 with flags 1 to frozen apps and got error -32
+09-29 09:59:35.928 D/ActivityManager(  571): Too many transaction errors, throttling freezer binder callback.
+09-29 09:59:37.534 W/ActivityManager(  571): Invalid packageName: fr.tchoupi.streetlift_tracker
+09-29 09:59:37.802 D/ActivityManager(  571): sync unfroze 1659 android.process.acore for 7
+09-29 09:59:38.648 I/BugleRcsProvisioning( 3421): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-29 09:59:40.031 D/ActivityManager(  571): sync unfroze 3241 com.google.android.rkpdapp for 6
+09-29 09:59:40.043 I/lowmemorykiller(  153): lmkd data connection established
+09-29 09:59:40.074 I/lowmemorykiller(  153): Using psi monitors for memory pressure detection
+09-29 09:59:40.074 I/lowmemorykiller(  153): Properties reinitilized
+09-29 09:59:40.075 I/lowmemorykiller( 4052): lmkd updated properties successfully
+09-29 09:59:40.075 I/lowmemorykiller(  153): lmkd data connection dropped
+09-29 09:59:40.075 I/lowmemorykiller(  153): closing lmkd data connection
+09-29 09:59:40.524 D/NativeLibraryHelper(  571): Punching extracted elf file libflutter.so on fs:61267
+09-29 09:59:40.524 D/FileSystemUtils(  571): Punching holes in file: /data/app/vmdl878573630.tmp/lib/x86_64/libflutter.so programHeaderOffset: 64 programHeaderNum: 9
+09-29 09:59:40.605 I/EGL_emulation( 2459): Opening libGLESv1_CM_emulation.so
+09-29 09:59:40.607 I/EGL_emulation( 2459): Opening libGLESv2_emulation.so
+09-29 09:59:40.611 D/AugmentedAutofillService( 1425): handleOnConnected(): debug=true, verbose=false
+09-29 09:59:40.764 W/libc    ( 2459): Access denied finding property "persist.adb.tls_server.enable"
+09-29 09:59:40.764 W/libc    ( 2459): Access denied finding property "service.adb.tls.port"
+09-29 09:59:41.309 E/BackupHelper(  924): 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-29 09:59:41.309 E/BackupHelper(  924): 	at libcore.io.Linux.open(Native Method)
+09-29 09:59:41.309 E/BackupHelper(  924): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:59:41.309 E/BackupHelper(  924): 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:274)
+09-29 09:59:41.309 E/BackupHelper(  924): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 09:59:41.309 E/BackupHelper(  924): 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-29 09:59:41.339 D/ActivityManager(  571): sync unfroze 3199 com.google.android.packageinstaller for 3
+09-29 09:59:41.882 V/WindowManagerShell(  923): Transition requested (#22): android.os.BinderProxy@43b0492 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=8 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x30000000 cmp=fr.tchoupi.streetlift_tracker/.MainActivity } baseActivity=ComponentInfo{fr.tchoupi.streetlift_tracker/fr.tchoupi.streetlift_tracker.MainActivity} topActivity=ComponentInfo{fr.tchoupi.streetlift_tracker/fr.tchoupi.streetlift_tracker.MainActivity} origActivity=null realActivity=ComponentInfo{fr.tchoupi.streetlift_tracker/fr.tchoupi.streetlift_tracker.MainActivity} numActivities=1 lastActiveTime=129168 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@3719e63} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=ActivityInfo{934ca60 fr.tchoupi.streetlift_tracker.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=540 topActivityLetterboxHeight=960 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 22 }
+09-29 09:59:42.103 W/system_server(  571): Long monitor contention with owner binder:571_7 (1007) at android.content.ComponentName com.android.server.am.ActivityManagerService.startService(android.app.IApplicationThread, android.content.Intent, java.lang.String, boolean, java.lang.String, java.lang.String, int, boolean, int, java.lang.String, java.lang.String)(ActivityManagerService.java:14006) waiters=3 in void com.android.server.am.ActivityManagerService.publishService(android.os.IBinder, android.content.Intent, android.os.IBinder) for 119ms
+09-29 09:59:42.217 W/ActivityManager(  571): Slow operation: 81ms so far, now at startProcess: returned from zygote!
+09-29 09:59:42.223 W/ActivityManager(  571): Slow operation: 87ms so far, now at startProcess: done updating battery stats
+09-29 09:59:42.226 W/ActivityManager(  571): Slow operation: 90ms so far, now at startProcess: building log message
+09-29 09:59:42.227 I/ActivityManager(  571): Start proc 4113:fr.tchoupi.streetlift_tracker/u0a209 for next-top-activity {fr.tchoupi.streetlift_tracker/fr.tchoupi.streetlift_tracker.MainActivity}
+09-29 09:59:42.228 W/ActivityManager(  571): Slow operation: 92ms so far, now at startProcess: starting to update pids map
+09-29 09:59:42.688 W/ActivityManager(  571): Slow operation: 552ms so far, now at startProcess: done updating pids map
+09-29 09:59:42.689 W/system_server(  571): Long monitor contention with owner ActivityManager:procStart (607) at void com.android.server.am.ProcessList.lambda$handleProcessStart$1(com.android.server.am.ProcessRecord, java.lang.String, int[], int, int, int, java.lang.String, java.lang.String, java.lang.String, long)(ProcessList.java:2202) waiters=0 in void com.android.server.am.ActivityManagerService.serviceDoneExecuting(android.os.IBinder, int, int, int, android.content.Intent) for 459ms
+09-29 09:59:42.693 W/system_server(  571): Long monitor contention with owner ActivityManager:procStart (607) at void com.android.server.am.ProcessList.lambda$handleProcessStart$1(com.android.server.am.ProcessRecord, java.lang.String, int[], int, int, int, java.lang.String, java.lang.String, java.lang.String, long)(ProcessList.java:2202) waiters=5 in android.app.ContentProviderHolder com.android.server.am.ContentProviderHelper.getContentProviderImpl(android.app.IApplicationThread, java.lang.String, android.os.IBinder, int, java.lang.String, java.lang.String, boolean, int) for 231ms
+09-29 09:59:42.694 W/system_server(  571): Long monitor contention with owner ActivityManager:procStart (607) at void com.android.server.am.ProcessList.lambda$handleProcessStart$1(com.android.server.am.ProcessRecord, java.lang.String, int[], int, int, int, java.lang.String, java.lang.String, java.lang.String, long)(ProcessList.java:2202) waiters=6 in int com.android.server.am.ActivityManagerService$LocalService.broadcastIntent(android.content.Intent, android.content.IIntentReceiver, java.lang.String[], boolean, int, int[], java.util.function.BiFunction, android.os.Bundle) for 214ms
+09-29 09:59:43.140 V/WindowManager(  571): Sent Transition (#22) createdAt=09-29 09:59:41.567 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=8 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x30000000 cmp=fr.tchoupi.streetlift_tracker/.MainActivity } baseActivity=ComponentInfo{fr.tchoupi.streetlift_tracker/fr.tchoupi.streetlift_tracker.MainActivity} topActivity=ComponentInfo{fr.tchoupi.streetlift_tracker/fr.tchoupi.streetlift_tracker.MainActivity} origActivity=null realActivity=ComponentInfo{fr.tchoupi.streetlift_tracker/fr.tchoupi.streetlift_tracker.MainActivity} numActivities=1 lastActiveTime=129168 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{7450b51 Task{3dc4cde #8 type=standard I=fr.tchoupi.streetlift_tracker/.MainActivity}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=ActivityInfo{37eafb6 fr.tchoupi.streetlift_tracker.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= falseisLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false topActivityEligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=540 topActivityLetterboxHeight=960 isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatControlState=hidden freeformCameraCompatMode=inactive}}}, pipTask = null, remoteTransition = null, displayChange = null, flags = 0, debugId = 22 }
+09-29 09:59:43.159 V/WindowManagerShell(  923):  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=undefined independent=true modes=[OPEN,TO_FRONT] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null},{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@3317b54, appThread = android.app.IApplicationThread$Stub$Proxy@69d4afd, debugName = OverlaySwipeBack }}
+09-29 09:59:43.169 V/WindowManagerShell(  923):  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@e9dfa1, appThread = android.app.IApplicationThread$Stub$Proxy@d3d75c6, debugName = LauncherToDream }}
+09-29 09:59:43.169 V/WindowManagerShell(  923):  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a31a987, appThread = android.app.IApplicationThread$Stub$Proxy@e3680b4, debugName = QuickstepLaunchHome }}
+09-29 09:59:44.464 V/GraphicsEnvironment( 4113):   angle_gl_driver_selection_pkgs=[]
+09-29 09:59:44.464 V/GraphicsEnvironment( 4113):   angle_gl_driver_selection_values=[]
+09-29 09:59:44.565 I/FlutterActivityAndFragmentDelegate( 4113): If you are attempting to set --start-paused via Intent extras to launch a Flutter component outside of using the Flutter CLI, note that support for setting engine flags on Android via Intent will soon be dropped; see https://github.com/flutter/flutter/issues/180686 for more information on this breaking change. To migrate, set --start-paused or any other flags specified via Intent extras on the command line instead or see https://github.com/flutter/flutter/blob/main/docs/engine/Flutter-Android-Engine-Flags.md for alternative methods.
+09-29 09:59:44.598 D/FlutterJNI( 4113): Beginning load of flutter...
+09-29 09:59:44.706 D/nativeloader( 4113): Load /data/app/~~-cPOl-AhZpcfREGCKHNj5A==/fr.tchoupi.streetlift_tracker-GGE-Rf1ppf2y3JkRMHllZg==/lib/x86_64/libflutter.so using ns clns-7 from class loader (caller=/data/app/~~-cPOl-AhZpcfREGCKHNj5A==/fr.tchoupi.streetlift_tracker-GGE-Rf1ppf2y3JkRMHllZg==/base.apk): ok
+09-29 09:59:44.710 D/FlutterJNI( 4113): flutter (null) was loaded normally!
+09-29 09:59:44.931 W/libc    ( 2459): Access denied finding property "persist.adb.tls_server.enable"
+09-29 09:59:44.932 W/libc    ( 2459): Access denied finding property "service.adb.tls.port"
+09-29 09:59:45.432 I/EGL_emulation( 2459): Opening libGLESv1_CM_emulation.so
+09-29 09:59:45.433 I/EGL_emulation( 2459): Opening libGLESv2_emulation.so
+09-29 09:59:45.858 I/ResourceExtractor( 4113): Extracted baseline resource assets/flutter_assets/kernel_blob.bin
+09-29 09:59:45.860 I/ResourceExtractor( 4113): Extracted baseline resource assets/flutter_assets/vm_snapshot_data
+09-29 09:59:45.966 I/ResourceExtractor( 4113): Extracted baseline resource assets/flutter_assets/isolate_snapshot_data
+09-29 09:59:46.025 I/ActivityManager(  571): Background started FGS: Allowed [callingPackage: com.google.android.apps.wellbeing; callingUid: 10142; uidState: BTOP; uidBFSL: [BFSL]; intent: Intent { cmp=com.google.android.apps.wellbeing/com.google.apps.tiktok.concurrent.InternalForegroundService (has extras) }; code:BACKGROUND_ACTIVITY_PERMISSION; tempAllowListReason:<null>; targetSdkVersion:34; callerTargetSdkVersion:34; startForegroundCount:0; bindFromPackage:null: isBindService:false]
+09-29 09:59:46.112 I/EGL_emulation( 4113): Opening libGLESv1_CM_emulation.so
+09-29 09:59:46.119 I/EGL_emulation( 4113): Opening libGLESv2_emulation.so
+09-29 09:59:46.402 I/flutter ( 4113): [IMPORTANT:flutter/shell/platform/android/android_context_gl_impeller.cc(104)] Using the Impeller rendering backend (OpenGLES).
+09-29 09:59:46.556 I/flutter ( 4113): The Dart VM service is listening on http://127.0.0.1:43741/rh_0v2ggkhc=/
+09-29 09:59:47.014 V/WindowManagerShell(  923): Transition requested (#23): android.os.BinderProxy@1a97da2 TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@6be0a33, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 23 }
+09-29 09:59:47.014 V/WindowManagerShell(  923): RemoteTransition directly requested for (#23) android.os.BinderProxy@1a97da2: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@6be0a33, appThread = null, debugName = null }
+09-29 09:59:47.585 D/ActivityManager(  571): freezing 3351 com.android.chrome
+09-29 09:59:47.813 D/ActivityManager(  571): freezing 3111 com.google.android.partnersetup
+09-29 09:59:48.113 V/WindowManager(  571): Sent Transition (#23) createdAt=09-29 09:59:46.948 via request=TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@40ba6cb, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 23 }
+09-29 09:59:48.236 V/WindowManagerShell(  923): Transition requested (#24): android.os.BinderProxy@c190d5e TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@d71853f, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 24 }
+09-29 09:59:48.236 V/WindowManagerShell(  923): RemoteTransition directly requested for (#24) android.os.BinderProxy@c190d5e: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@d71853f, appThread = null, debugName = null }
+09-29 09:59:48.315 D/ActivityManager(  571): freezing 3461 com.google.android.marvin.talkback
+09-29 09:59:48.320 D/ActivityManager(  571): freezing 3422 com.google.android.apps.safetyhub
+09-29 09:59:48.320 D/ActivityManager(  571): freezing 3916 com.google.android.settings.intelligence
+09-29 09:59:48.497 W/Looper  (  571): Slow dispatch took 125ms android.ui h=com.android.server.am.ActivityManagerService$UiHandler c=com.android.server.am.UidObserverController$$ExternalSyntheticLambda0@80eed15 m=0
+09-29 09:59:48.540 V/WindowManagerShell(  923): Transition requested (#25): android.os.BinderProxy@5e4a16a TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@d83365b, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 25 }
+09-29 09:59:48.540 V/WindowManagerShell(  923): RemoteTransition directly requested for (#25) android.os.BinderProxy@5e4a16a: RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@d83365b, appThread = null, debugName = null }
+09-29 09:59:48.710 D/FlutterRenderer( 4113): Width is zero. 0,0
+09-29 09:59:48.817 V/WindowManager(  571): Sent Transition (#24) createdAt=09-29 09:59:47.478 via request=TransitionRequestInfo { type = CHANGE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@16432d9, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 24 }
+09-29 09:59:48.832 V/WindowManager(  571): Sent Transition (#25) createdAt=09-29 09:59:48.215 via request=TransitionRequestInfo { type = CLOSE, triggerTask = null, pipTask = null, remoteTransition = RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@c28774c, appThread = null, debugName = null }, displayChange = null, flags = 0, debugId = 25 }
+09-29 09:59:49.180 D/ActivityManager(  571): sync unfroze 2258 com.google.android.apps.wallpaper for 3
+09-29 09:59:49.415 D/FlutterRenderer( 4113): Width is zero. 0,0
+09-29 09:59:49.632 D/FlutterJNI( 4113): Sending viewport metrics to the engine.
+09-29 09:59:50.590 D/ActivityManager(  571): freezing 1821 android.process.media
+09-29 09:59:50.711 I/GmsDebugLogger( 1591): [73] 1801
+09-29 09:59:50.756 I/GmsDebugLogger( 1591): [30] [VisionBarcode.optional:242335100800],[TfliteDynamiteDynamite.integ:262730502100800],[MapsCoreDynamite.integ:241610202100800],[MlkitBarcodeUi.optional:242335100800]
+09-29 09:59:50.801 D/ActivityManager(  571): freezing 3444 com.google.android.healthconnect.controller
+09-29 09:59:50.802 D/ActivityManager(  571): freezing 2411 com.google.android.cellbroadcastreceiver
+09-29 09:59:50.803 D/ActivityManager(  571): freezing 2876 com.android.traceur
+09-29 09:59:51.519 D/ActivityManager(  571): freezing 3199 com.google.android.packageinstaller
+09-29 09:59:52.040 D/FlutterJNI( 4113): Sending viewport metrics to the engine.
+09-29 09:59:52.079 W/libc    ( 2459): Access denied finding property "persist.adb.tls_server.enable"
+09-29 09:59:52.079 W/libc    ( 2459): Access denied finding property "service.adb.tls.port"
+09-29 09:59:52.982 I/flutter ( 4113): 00:00 +0: (setUpAll)
+09-29 09:59:54.471 D/ActivityManager(  571): freezing 2182 com.google.android.tts
+09-29 09:59:54.871 D/ActivityManager(  571): freezing 3241 com.google.android.rkpdapp
+09-29 09:59:56.527 W/ssioncontroller(  924): ApkAssets: Deleting an ApkAssets object '<empty> and /apex/com.android.permission/priv-app/GoogleSafetyCenterResources@350820360/GoogleSafetyCenterResources.apk' with 1 weak references
+09-29 09:59:56.664 D/ActivityManager(  571): sync unfroze 3916 com.google.android.settings.intelligence for 6
+09-29 09:59:56.667 I/flutter ( 4113): 00:03 +1: M56 : fiche traction-pronation, mannequin fixe et muscles
+09-29 09:59:59.362 D/ActivityManager(  571): freezing 2258 com.google.android.apps.wallpaper
+09-29 10:00:00.016 D/ActivityManager(  571): sync unfroze 2986 com.android.dynsystem:dynsystem for 10
+09-29 10:00:00.019 D/ActivityManager(  571): sync unfroze 2960 com.android.dynsystem for 10
+09-29 10:00:00.021 D/ActivityManager(  571): sync unfroze 1707 com.android.keychain for 10
+09-29 10:00:00.021 D/ActivityManager(  571): sync unfroze 1952 com.android.localtransport for 10
+09-29 10:00:02.329 D/ActivityManager(  571): sync unfroze 3241 com.google.android.rkpdapp for 6
+09-29 10:00:02.662 I/EGL_emulation( 2459): Opening libGLESv1_CM_emulation.so
+09-29 10:00:02.687 I/EGL_emulation( 2459): Opening libGLESv2_emulation.so
+09-29 10:00:02.819 W/libc    ( 2459): Access denied finding property "persist.adb.tls_server.enable"
+09-29 10:00:02.819 W/libc    ( 2459): Access denied finding property "service.adb.tls.port"
+09-29 10:00:19.009 W/system_server(  571): Long monitor contention with owner PackageManager (630) at int com.android.server.am.ActivityManagerService$LocalService.broadcastIntent(android.content.Intent, android.content.IIntentReceiver, java.lang.String[], boolean, int, int[], java.util.function.BiFunction, android.os.Bundle)(ActivityManagerService.java:19191) waiters=0 in boolean com.android.server.am.ActivityManagerService.unbindService(android.app.IServiceConnection) for 1.152s
+09-29 10:00:20.021 D/ActivityManager(  571): freezing 3052 com.google.android.configupdater
+09-29 10:00:20.605 W/system_server(  571): Long monitor contention with owner binder:571_7 (1007) at android.util.Pair com.android.server.am.ProcessList.getNumForegroundServices()(ProcessList.java:5630) waiters=8 in void com.android.server.am.ActivityManagerService.serviceDoneExecuting(android.os.IBinder, int, int, int, android.content.Intent) for 565ms
+09-29 10:00:20.611 W/system_server(  571): Long monitor contention with owner binder:571_7 (1007) at android.util.Pair com.android.server.am.ProcessList.getNumForegroundServices()(ProcessList.java:5630) waiters=9 in int com.android.server.am.ActivityManagerService.broadcastIntentWithFeature(android.app.IApplicationThread, java.lang.String, android.content.Intent, java.lang.String, android.content.IIntentReceiver, int, java.lang.String, android.os.Bundle, java.lang.String[], java.lang.String[], java.lang.String[], int, android.os.Bundle, boolean, boolean, int) for 574ms
+09-29 10:00:20.631 D/ActivityManager(  571): freezing 3241 com.google.android.rkpdapp
+09-29 10:00:24.544 I/flutter ( 4113): 00:31 +2: M56 : fiche dips, mannequin fixe et muscles
+09-29 10:00:27.069 D/ActivityManager(  571): sync unfroze 2182 com.google.android.tts for 3
+09-29 10:00:27.408 D/ActivityManager(  571): sync unfroze 3422 com.google.android.apps.safetyhub for 3
+09-29 10:00:27.531 W/gle.android.gms( 1591): ApkAssets: Deleting an ApkAssets object '<empty> and /system_ext/priv-app/GoogleServicesFramework/GoogleServicesFramework.apk' with 1 weak references
+09-29 10:00:27.689 I/BugleRcsProvisioning( 3421): BugleSystemBindingManager: onBuglePhenotypeFlagChanged
+09-29 10:00:28.111 W/PlatformConfigurator( 2635): Update for unknown DeviceConfig package com.google.android.gms.chimera_debug [CONTEXT service_id=204 ]
+09-29 10:00:28.111 W/PlatformConfigurator( 2635): daaf: No package exists for config package: com.google.android.gms.chimera_debug
+09-29 10:00:29.244 W/PlatformConfigurator( 2635): Update for unknown DeviceConfig package com.google.android.gms.googlesettings#com.google.android.gms [CONTEXT service_id=204 ]
+09-29 10:00:29.244 W/PlatformConfigurator( 2635): daaf: No package exists for config package: com.google.android.gms.googlesettings#com.google.android.gms
+09-29 10:00:30.046 D/ActivityManager(  571): freezing 2986 com.android.dynsystem:dynsystem
+09-29 10:00:30.049 D/ActivityManager(  571): freezing 2960 com.android.dynsystem
+09-29 10:00:30.049 D/ActivityManager(  571): freezing 1707 com.android.keychain
+09-29 10:00:30.054 D/ActivityManager(  571): freezing 1952 com.android.localtransport
+09-29 10:00:30.423 I/flutter ( 4113): 00:37 +3: M56 : fiche back-squat, mannequin fixe et muscles
+09-29 10:00:36.274 I/flutter ( 4113): 00:43 +4: M56 : carte Koach · séance du jour (sombre)
+09-29 10:00:37.431 D/ActivityManager(  571): freezing 2182 com.google.android.tts
+09-29 10:00:37.547 D/ActivityManager(  571): freezing 3422 com.google.android.apps.safetyhub
+09-29 10:00:41.221 D/ActivityManager(  571): freezing 924 com.google.android.permissioncontroller
+09-29 10:00:42.277 I/flutter ( 4113): 00:49 +5: M56 : carte Koach · séance du jour (clair)
+09-29 10:00:42.611 D/FlutterJNI( 4113): Sending viewport metrics to the engine.
+09-29 10:00:47.407 I/flutter ( 4113): 00:54 +6: 5.5.2 : écran Anatomie, écorché acheté, vues et groupe
+09-29 10:00:47.652 D/FlutterJNI( 4113): Sending viewport metrics to the engine.
+09-29 10:00:50.145 D/ActivityManager(  571): sync unfroze 924 com.google.android.permissioncontroller for 6
+09-29 10:00:51.174 D/ActivityManager(  571): sync unfroze 3241 com.google.android.rkpdapp for 6
+09-29 10:00:51.555 W/gle.android.gms( 1591): Missing inline cache for void com.google.android.gms.chimera.debug.ModuleSetJournalUpdate$ModuleSetJournalIntentOperation.a(android.content.Context, byte[], boolean)
+09-29 10:00:51.572 I/GmsDebugLogger( 1591): [73] 1801
+09-29 10:00:51.576 I/GmsDebugLogger( 1591): [30] [MapsCoreDynamite.integ:241610202100800]
+09-29 10:00:51.591 I/GmsDebugLogger( 1591): [83] 1 [maps_core]
+09-29 10:00:51.661 W/libc    ( 2459): Access denied finding property "persist.adb.tls_server.enable"
+09-29 10:00:51.662 W/libc    ( 2459): Access denied finding property "service.adb.tls.port"
+09-29 10:00:51.690 W/libc    ( 1591): Access denied finding property "ro.hardware.chipname"
+09-29 10:00:51.701 I/EGL_emulation( 2459): Opening libGLESv1_CM_emulation.so
+09-29 10:00:51.703 I/EGL_emulation( 2459): Opening libGLESv2_emulation.so
+09-29 10:00:51.721 I/NnApiDriverManager( 1591): Registering application with GPU 'Android Emulator OpenGL ES Translator (ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0))' by 'Google (Google Inc. (Google))' [CONTEXT service_id=301 ]
+09-29 10:00:52.295 I/PeopleInitIntentOp( 1591): Not initializing debuggability [CONTEXT service_id=5 ]
+09-29 10:00:52.765 I/GmsDebugLogger( 1591): [73] 1801
+09-29 10:00:52.774 I/GmsDebugLogger( 1591): [30] [VisionBarcode.optional:242335100800],[TfliteDynamiteDynamite.integ:262730502100800],[MlkitBarcodeUi.optional:242335100800]
+09-29 10:00:52.792 I/GmsDebugLogger( 1591): [83] 1 [mlkit.barcode.ui]
+09-29 10:00:52.933 I/SemanticLocation( 1591): [Scheduler] Periodic Task com.google.android.gms.semanticlocationhistory.settings.OdlhTombstonesCleanupJob.OdlhTombstonesCleanupJob is scheduled to run EVERY_DAY [CONTEXT service_id=173 ]
+09-29 10:00:54.434 W/SemanticLocation( 2635): 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-29 10:00:54.434 W/SemanticLocation( 2635): 	at libcore.io.Linux.open(Native Method)
+09-29 10:00:54.434 W/SemanticLocation( 2635): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 10:00:54.434 W/SemanticLocation( 2635): 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:274)
+09-29 10:00:54.434 W/SemanticLocation( 2635): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 10:00:54.434 W/SemanticLocation( 2635): 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-29 10:00:54.459 W/SemanticLocation( 2635): 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-29 10:00:54.459 W/SemanticLocation( 2635): 	at libcore.io.Linux.open(Native Method)
+09-29 10:00:54.459 W/SemanticLocation( 2635): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 10:00:54.459 W/SemanticLocation( 2635): 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:274)
+09-29 10:00:54.459 W/SemanticLocation( 2635): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 10:00:54.459 W/SemanticLocation( 2635): 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-29 10:00:54.529 I/GmsDebugLogger( 1591): [73] 1801
+09-29 10:00:54.543 I/GmsDebugLogger( 1591): [30] [TfliteDynamiteDynamite.integ:262730502100800]
+09-29 10:00:54.558 I/GmsDebugLogger( 1591): [83] 1 [tflite_dynamite]
+09-29 10:00:54.662 W/libc    ( 2459): Access denied finding property "persist.adb.tls_server.enable"
+09-29 10:00:54.662 W/libc    ( 2459): Access denied finding property "service.adb.tls.port"
+09-29 10:01:01.276 D/ActivityManager(  571): freezing 1613 com.google.android.googlequicksearchbox:search
+09-29 10:01:01.283 D/ActivityManager(  571): freezing 3241 com.google.android.rkpdapp
+09-29 10:01:04.879 W/ActivityManager(  571): stopServiceToken startId 957 is last, but have 1 remaining args
+09-29 10:01:07.095 I/flutter ( 4113): 01:14 +7: M56 : ouverture d’un mannequin avant / après préchargement
+09-29 10:01:15.643 D/ActivityManager(  571): freezing 924 com.google.android.permissioncontroller
+09-29 10:01:17.796 I/BugleSelfIdentity( 3421): Create new MyIdentity 367efd49-a33b-4174-94fc-200736950b1d, existing identities on SIM 0 [CONTEXT sub_id=1 ]
+09-29 10:01:19.843 D/ActivityManager(  571): freezing 1901 com.google.android.as.oss
+09-29 10:01:22.514 I/flutter ( 4113): 01:29 +8: (tearDownAll)
