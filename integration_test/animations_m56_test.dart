@@ -153,14 +153,9 @@ void main() {
 
   // ------------------------------------------------------ fiches --
 
-  Future<void> fiche(WidgetTester tester, String id) async {
-    await pumpHome(
-      tester,
-      ExerciseSheetScreen(key: ValueKey('m56-$id'), id: id),
-      true,
-    );
-    // 5.5.2 : la démonstration 2D ouvre la fiche, le mannequin (section
-    // Muscles) est plus bas dans la liste : on y défile d'abord.
+  /// 5.5.2 : la démonstration 2D ouvre la fiche, le mannequin (section
+  /// Muscles) est plus bas dans la liste : on y défile d'abord.
+  Future<void> scrollToMannequin(WidgetTester tester) async {
     await waitFor(
       tester,
       () => find.byType(ExerciseSheetScreen).evaluate().length == 1,
@@ -179,6 +174,15 @@ void main() {
       scrollable: list,
     );
     await tester.pump(const Duration(milliseconds: 300));
+  }
+
+  Future<void> fiche(WidgetTester tester, String id) async {
+    await pumpHome(
+      tester,
+      ExerciseSheetScreen(key: ValueKey('m56-$id'), id: id),
+      true,
+    );
+    await scrollToMannequin(tester);
     await waitFor(tester, () => mannequin(tester)?.available != null);
     final state = mannequin(tester)!;
     expect(state.available, isTrue, reason: 'pas de 3D');
@@ -303,6 +307,7 @@ void main() {
         ExerciseSheetScreen(key: ValueKey('m56-pre-$key'), id: 'dips'),
         true,
       );
+      await scrollToMannequin(tester);
       await waitFor(tester, () => mannequin(tester)?.available != null);
       await waitFor(
         tester,

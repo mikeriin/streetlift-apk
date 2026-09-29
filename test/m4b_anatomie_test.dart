@@ -96,7 +96,7 @@ void main() {
       for (final m in absent) {
         expect(atlasMuscles[m]!.profondeur, 'profond', reason: m);
       }
-      expect(absent, hasLength(23));
+      expect(absent, hasLength(20));
     });
 
     test('couche de chaque région : superficiel ou volume', () {

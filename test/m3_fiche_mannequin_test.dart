@@ -390,8 +390,16 @@ void main() {
           exerciseStartView(d.primaires, d.secondaires),
           reason: id,
         );
+        // 5.5.2 : respiration (muscles profonds seulement) : rien d'allumé,
+        // liste « Absents du mannequin ».
+        final onlyAbsent = [
+          ...d.primaires,
+          ...d.secondaires,
+          ...d.etires,
+        ].every(musclesSansRegion.containsKey);
         expect(
-          state.muscles.intensities.isNotEmpty ||
+          onlyAbsent ||
+              state.muscles.intensities.isNotEmpty ||
               state.muscles.stretched.isNotEmpty,
           isTrue,
           reason: id,

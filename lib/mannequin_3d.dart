@@ -454,6 +454,7 @@ class MannequinScene {
     if (opacity < 1) m.alphaMode = AlphaMode.blend;
     return m;
   }
+
   final Map<String, PhysicallyBasedMaterial> _regions = {};
   final Map<String, Node> _nodes = {};
 
