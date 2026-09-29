@@ -1,0 +1,141 @@
+{
+  "anatomie_sombre": {
+    "groupes": [
+      "pectoraux",
+      "épaules",
+      "dos",
+      "quadriceps",
+      "ischios"
+    ],
+    "filtres_bouton": "Filtres · 5",
+    "semantique": "Mannequin anatomique en 3D, groupes Pectoraux, Épaules, Dos, Quadriceps, Ischios mis en évidence par un halo",
+    "face": {
+      "cadre": [
+        20.0,
+        95.36000000000001,
+        320.0,
+        300.0
+      ],
+      "figure": 0.14479166666666668,
+      "halo": 0.04533333333333334,
+      "gris": 0.0765,
+      "demarcation": 0.0,
+      "vue": "face"
+    },
+    "dos": {
+      "cadre": [
+        20.0,
+        95.36000000000001,
+        320.0,
+        300.0
+      ],
+      "figure": 0.14570833333333333,
+      "halo": 0.0505,
+      "gris": 0.07329166666666667,
+      "demarcation": 0.0,
+      "vue": "dos"
+    },
+    "profil": {
+      "cadre": [
+        20.0,
+        95.36000000000001,
+        320.0,
+        300.0
+      ],
+      "figure": 0.099625,
+      "halo": 0.03233333333333333,
+      "gris": 0.050791666666666666,
+      "demarcation": 0.0,
+      "vue": "profil"
+    },
+    "troisQuarts": {
+      "cadre": [
+        20.0,
+        95.36000000000001,
+        320.0,
+        300.0
+      ],
+      "figure": 0.13241666666666665,
+      "halo": 0.04158333333333333,
+      "gris": 0.07104166666666667,
+      "demarcation": 0.0,
+      "vue": "troisQuarts"
+    },
+    "noeuds": 129,
+    "noeuds_hors_zones": [
+      "root",
+      "head",
+      "peau"
+    ],
+    "toucher_direct": {
+      "0.44,0.24": "Grand pectoral (chef sterno-costal) (droit) · Pectoraux",
+      "0.5,0.38": "Droit de l'abdomen (gauche) · Gainage",
+      "0.44,0.6": "Droit fémoral (droit) · Quadriceps",
+      "0.34,0.3": null
+    },
+    "toucher": "Grand pectoral (chef sterno-costal) (droit) · Pectoraux"
+  },
+  "anatomie_clair": {
+    "groupes": [
+      "pectoraux",
+      "épaules",
+      "dos",
+      "quadriceps",
+      "ischios"
+    ],
+    "filtres_bouton": "Filtres · 5",
+    "semantique": "Mannequin anatomique en 3D, groupes Pectoraux, Épaules, Dos, Quadriceps, Ischios mis en évidence par un halo",
+    "face": {
+      "cadre": [
+        20.0,
+        95.36000000000001,
+        320.0,
+        300.0
+      ],
+      "figure": 0.14595833333333333,
+      "halo": 0.04525,
+      "gris": 0.07729166666666666,
+      "demarcation": 0.0,
+      "vue": "face"
+    },
+    "dos": {
+      "cadre": [
+        20.0,
+        95.36000000000001,
+        320.0,
+        300.0
+      ],
+      "figure": 0.14654166666666665,
+      "halo": 0.050708333333333334,
+      "gris": 0.07404166666666667,
+      "demarcation": 0.0,
+      "vue": "dos"
+    },
+    "profil": {
+      "cadre": [
+        20.0,
+        95.36000000000001,
+        320.0,
+        300.0
+      ],
+      "figure": 0.10075,
+      "halo": 0.032625,
+      "gris": 0.051708333333333335,
+      "demarcation": 0.0,
+      "vue": "profil"
+    },
+    "troisQuarts": {
+      "cadre": [
+        20.0,
+        95.36000000000001,
+        320.0,
+        300.0
+      ],
+      "figure": 0.13379166666666667,
+      "halo": 0.041958333333333334,
+      "gris": 0.071875,
+      "demarcation": 0.0,
+      "vue": "troisQuarts"
+    }
+  }
+}
