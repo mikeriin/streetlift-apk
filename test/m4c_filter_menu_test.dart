@@ -225,7 +225,7 @@ void main() {
       expect(
         tester.getSemantics(find.byKey(const ValueKey('t-filters'))),
         isSemantics(
-          label: 'Filtres, 0 actifs sur 5',
+          label: 'Filtres, 0 actif sur 5',
           isButton: true,
           hasTapAction: true,
         ),

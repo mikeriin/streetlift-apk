@@ -28,6 +28,14 @@
 // reste au repos ; les positions des exercices seront faites à la main plus
 // tard. Muscles en gris à 50 % d'opacité, groupes allumés dans la couleur
 // dominante choisie par l'utilisateur.
+//
+// 5.5.3-5.5.4 (M56 corrections 3 et 4) : muscles opaques, plus de rotation
+// au doigt (boutons de vue, pincement, toucher), maillage gris et halo des
+// groupes cochés dans la couleur dominante, fond de la page.
+//
+// M6b : le filtre « Muscles profonds » est retiré (l'écorché n'a plus de
+// couche profonde : il n'avait plus d'effet) ; reste « Os » dans la
+// catégorie « Affichage ».
 import 'package:flutter/material.dart';
 
 import 'filter_menu.dart';
@@ -59,37 +67,30 @@ MannequinView viewForGroup(String? group) => switch (group) {
   _ => MannequinView.face,
 };
 
-/// Filtres de l'écran Anatomie (M4b) : groupes allumés (union), muscles
-/// profonds affichés, os affichés.
+/// Filtres de l'écran Anatomie (M4b) : groupes allumés (union), os
+/// affichés. M6b : plus de filtre « Muscles profonds » (écorché sans couche
+/// profonde).
 @immutable
 class AnatomyFilters {
   /// Groupes cochés, allumés ensemble.
   final Set<String> groups;
 
-  /// « Muscles profonds » coché : muscles profonds affichés (en
-  /// transparence) ; décoché : masqués (couche superficielle seule).
-  final bool deep;
-
   /// « Os » coché : squelette affiché.
   final bool bones;
 
-  const AnatomyFilters({
-    this.groups = const {},
-    this.deep = true,
-    this.bones = true,
-  });
+  const AnatomyFilters({this.groups = const {}, this.bones = true});
 
-  /// Nombre de cases (11 groupes, « Muscles profonds », « Os »).
-  static const total = 13;
+  /// Nombre de cases (11 groupes, « Os »).
+  static const total = 12;
 
   /// Tout coché.
   static final all = AnatomyFilters(groups: kGroupLabels.keys.toSet());
 
   /// Tout décoché.
-  static const none = AnatomyFilters(deep: false, bones: false);
+  static const none = AnatomyFilters(bones: false);
 
   /// Nombre de filtres actifs (cases cochées).
-  int get count => groups.length + (deep ? 1 : 0) + (bones ? 1 : 0);
+  int get count => groups.length + (bones ? 1 : 0);
 
   /// Groupes cochés dans l'ordre de l'application.
   List<String> get orderedGroups => [
@@ -101,26 +102,21 @@ class AnatomyFilters {
     groups: groups.contains(group)
         ? ({...groups}..remove(group))
         : {...groups, group},
-    deep: deep,
     bones: bones,
   );
 
-  AnatomyFilters withDeep(bool value) =>
-      AnatomyFilters(groups: groups, deep: value, bones: bones);
-
   AnatomyFilters withBones(bool value) =>
-      AnatomyFilters(groups: groups, deep: deep, bones: value);
+      AnatomyFilters(groups: groups, bones: value);
 
   @override
   bool operator ==(Object other) =>
       other is AnatomyFilters &&
-      other.deep == deep &&
       other.bones == bones &&
       other.groups.length == groups.length &&
       other.groups.containsAll(groups);
 
   @override
-  int get hashCode => Object.hash(deep, bones, Object.hashAllUnordered(groups));
+  int get hashCode => Object.hash(bones, Object.hashAllUnordered(groups));
 
   /// M4c : catégories du menu « Filtres ».
   static final categories = [
@@ -134,16 +130,13 @@ class AnatomyFilters {
     const FilterCategory(
       id: 'affichage',
       label: 'Affichage',
-      options: [
-        FilterOption('deep', 'Muscles profonds'),
-        FilterOption('bones', 'Os'),
-      ],
+      options: [FilterOption('bones', 'Os')],
     ),
   ];
 
   FilterSelection get selection => FilterSelection({
     'groupes': groups,
-    'affichage': {if (deep) 'deep', if (bones) 'bones'},
+    'affichage': {if (bones) 'bones'},
   });
 
   static AnatomyFilters fromSelection(FilterSelection s) => AnatomyFilters(
@@ -151,7 +144,6 @@ class AnatomyFilters {
       for (final g in kGroupLabels.keys)
         if (s.has('groupes', g)) g,
     },
-    deep: s.has('affichage', 'deep'),
     bones: s.has('affichage', 'bones'),
   );
 }
@@ -187,11 +179,7 @@ class AnatomyScreenState extends State<AnatomyScreen> {
     final initial = widget.initialGroup;
     _filters = initial == null
         ? session
-        : AnatomyFilters(
-            groups: {initial},
-            deep: session.deep,
-            bones: session.bones,
-          );
+        : AnatomyFilters(groups: {initial}, bones: session.bones);
     AnatomyScreen.session = _filters;
     final ordered = _filters.orderedGroups;
     _view = viewForGroup(ordered.isEmpty ? null : ordered.first);
@@ -216,13 +204,12 @@ class AnatomyScreenState extends State<AnatomyScreen> {
     _set(_filters.toggleGroup(group), checkedGroup: checking ? group : null);
   }
 
-  void setDeep(bool value) => _set(_filters.withDeep(value));
   void setBones(bool value) => _set(_filters.withBones(value));
   void checkAll() => _set(AnatomyFilters.all);
   void uncheckAll() => _set(AnatomyFilters.none);
 
-  /// Filtres de départ (« Réinitialiser ») : aucun groupe, muscles profonds
-  /// affichés, os selon le réglage « Os visibles ».
+  /// Filtres de départ (« Réinitialiser ») : aucun groupe, os selon le
+  /// réglage « Os visibles ».
   AnatomyFilters get defaults =>
       AnatomyFilters(bones: Display3DSettings.instance.bones.value);
 
@@ -242,9 +229,6 @@ class AnatomyScreenState extends State<AnatomyScreen> {
   MannequinMap? _intensityMap;
   Map<String, double> _intensities = const {};
 
-  Set<String>? _deepCache;
-  Set<String> _deepIds(MannequinMap map) => _deepCache ??= map.deepIds;
-
   @override
   Widget build(BuildContext context) {
     final map = _map;
@@ -258,7 +242,6 @@ class AnatomyScreenState extends State<AnatomyScreen> {
           : map.fromGroups({for (final g in f.groups) g: kIntensityPrimary});
     }
     final intensities = _intensities;
-    final hidden = map == null || f.deep ? const <String>{} : _deepIds(map);
     final mq = MediaQuery.of(context);
     // Le plus d'écran possible : hauteur visible moins la barre, la ligne
     // des filtres et les boutons de vue (le reste défile dessous).
@@ -292,7 +275,6 @@ class AnatomyScreenState extends State<AnatomyScreen> {
             key: const ValueKey('anatomy-mannequin'),
             intensities: intensities,
             background: Theme.of(context).scaffoldBackgroundColor,
-            hidden: hidden,
             bones: f.bones,
             view: _view,
             height: height,
@@ -300,7 +282,7 @@ class AnatomyScreenState extends State<AnatomyScreen> {
                 ? 'Mannequin anatomique en 3D'
                 : 'Mannequin anatomique en 3D, '
                       '${labels.length == 1 ? 'groupe' : 'groupes'} '
-                      '${labels.join(', ')} en rouge',
+                      '${labels.join(', ')} mis en évidence par un halo',
           ),
           ValueListenableBuilder<bool>(
             valueListenable: Display3DSettings.instance.touchNames,
@@ -328,19 +310,12 @@ class AnatomyScreenState extends State<AnatomyScreen> {
     );
   }
 
-  /// Résumé texte : chaque groupe coché et ses muscles (profonds signalés),
-  /// état des muscles profonds et des os.
+  /// Résumé texte : chaque groupe coché et ses muscles, état des os.
   Widget _summary(BuildContext context, MannequinMap map) {
     final tt = Theme.of(context).textTheme;
     final dark = Theme.of(context).brightness == Brightness.dark;
     final f = _filters;
-    final deepNames = {
-      for (final r in map.regions)
-        if (r.profond) r.nom,
-    };
-    final state =
-        'Muscles profonds ${f.deep ? 'affichés' : 'masqués'} · '
-        'Os ${f.bones ? 'affichés' : 'masqués'}';
+    final state = 'Os ${f.bones ? 'affichés' : 'masqués'}';
     if (f.groups.isEmpty) {
       return Text(
         'Aucun groupe coché : ouvre « Filtres » pour allumer un ou plusieurs '
@@ -371,10 +346,7 @@ class AnatomyScreenState extends State<AnatomyScreen> {
             ),
             const SizedBox(height: 4),
             Text(
-              [
-                for (final n in map.names(map.fromGroups({g: 1})))
-                  deepNames.contains(n) ? '$n (profond)' : n,
-              ].join(', '),
+              map.names(map.fromGroups({g: 1})).join(', '),
               key: ValueKey('anatomy-group-muscles-$g'),
               style: tt.bodyMedium,
             ),

@@ -1,8 +1,28 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M56 (refonte du mannequin, du squelette et de la peau ; matériel, chaîne d'animation et 3 pilotes ; carte Koach ; préchargement), version 5.5.0, correction 1 (retour du propriétaire), version 5.5.1, correction 2 (écorché acheté, plus d'animation), version 5.5.2, correction 3 (muscles opaques, zone ciblée, modèle partout, sans rotation au doigt), version 5.5.3, puis correction 4 (halo au lieu de la couleur, fond du support), version 5.5.4**  
-**Date : 28-29 septembre 2026, Europe/Paris — version : 5.5.4+83 (versionCode réel fixé par la CI de build)**  
-**Statut : contrôlé en CI (branche temporaire `claude/ci-3d-fable`, rendu réel sur émulateur Android).**
+**Passe actuelle : pipeline « Mannequin 3D », lot M6b (correctifs du mannequin fixe : affichage, cohérence graphique, usage), version 5.5.5 ; précédent : lot M56 et ses corrections 1 à 4 (5.5.0 → 5.5.4), validé**  
+**Date : 29 septembre 2026, Europe/Paris — version : 5.5.5+84 (versionCode réel fixé par la CI de build)**  
+**Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+
+## M6b — Correctifs du mannequin fixe (version 5.5.5)
+
+Audit (`docs/AUDIT_M6b.md`, une ligne par défaut) puis corrections :
+
+| # | Défaut | Correction |
+| --- | --- | --- |
+| D1 | Anatomie : « Muscles profonds » sans effet, compté comme filtre actif | Case retirée (`AnatomyFilters` sans `deep`), Affichage = « Os », résumé « Os affichés / masqués » |
+| D2 | Fiche traction (et 110 exercices à principaux avant / arrière) : 3/4 avant, dorsal peu visible, halo lu comme un pectoral | `aire` par région (`build_model.py --aires`, calculée sur le GLB) ; `exerciseStartView(…, map)` : face dont la surface des principaux est ≥ 2 × l'autre, sinon 3/4 |
+| D3 | Moteur 3D : cadre sombre | Fond de la page |
+| D4 | Moteur 3D : aucun halo en rotation | `MannequinHaloPainter.cameraOf` + `repaint` (caméra calculée dans `onTick`, avant le dessin) |
+| D5 | Accueil : halo invisible sur la carte du jour (couleur dominante sur couleur dominante) | `haloColor` (`Mannequin3D`, `TargetedMannequin`) = `SL.onBrandSoft` sur cette carte |
+| D6 | Légende des rôles en pastilles pleines | `AtlasRoleLegend.haloAlpha` : pastilles halo sur le gris des muscles |
+| D7 | « en rouge » au lecteur d'écran (Anatomie) | « mis en évidence par un halo » |
+| D8 | « 1 actifs » au lecteur d'écran (menus Filtres) | Accord en nombre |
+| D9 | Fiche sur tablette : mannequin petit | Hauteur 45 % de l'écran, 380-600 dp |
+| D10 | Crédits : « gris à 50 % » | Texte de `ATTRIBUTION.md` à jour |
+| D11 | Rotation possible derrière l'indicateur de chargement | Vue changée sans transition tant que la scène n'est pas affichée |
+
+Non corrigés (raison dans l'audit) : halo sans test d'occlusion, toucher des aponévroses sans bulle (voulu), régions morcelées du modèle (lot de modèle), rendus de test `visual_capture_test` déjà en échec sur main.
 
 ## M56.C4 — Correction 4 (retour du propriétaire du 29/09/2026, version 5.5.4)
 

@@ -113,6 +113,9 @@ class TargetedMannequin extends StatefulWidget {
   /// 5.5.4 : couleur du support (fond de la scène sans démarcation).
   final Color? background;
 
+  /// M6b : couleur du halo sur un support de la couleur dominante.
+  final Color? haloColor;
+
   const TargetedMannequin({
     super.key,
     required this.names,
@@ -125,6 +128,7 @@ class TargetedMannequin extends StatefulWidget {
     this.fallbackGlow = true,
     this.subject = 'muscles ciblés',
     this.background,
+    this.haloColor,
   });
 
   @override
@@ -186,6 +190,7 @@ class TargetedMannequinState extends State<TargetedMannequin> {
         viewButtons: widget.viewButtons,
         interactive: widget.viewButtons,
         background: widget.background,
+        haloColor: widget.haloColor,
         height: widget.height,
         semanticLabel: names.isEmpty
             ? 'Mannequin anatomique en 3D, aucun muscle sollicité'

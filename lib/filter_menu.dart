@@ -210,7 +210,8 @@ class FilterMenuState extends State<FilterMenu> {
             controller.isOpen ? controller.close() : controller.open(),
         icon: Icon(count > 0 ? Icons.filter_alt : Icons.filter_alt_outlined),
         label: Semantics(
-          label: 'Filtres, $count actifs sur $total',
+          // M6b : accord en nombre (« 1 actif », « 0 actif », « 3 actifs »).
+          label: 'Filtres, $count actif${count > 1 ? 's' : ''} sur $total',
           excludeSemantics: true,
           child: Text('Filtres · $count'),
         ),

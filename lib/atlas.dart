@@ -258,7 +258,20 @@ class AtlasRoleLegend extends StatelessWidget {
   /// M3 : teinte des muscles étirés sur le mannequin 3D (null : carte 2D,
   /// rampe à 0,25).
   final Color? stretchColor;
-  const AtlasRoleLegend({super.key, this.stretchColor});
+
+  /// M6b : mannequin 3D (maillage gris et halo, 5.5.4) : opacité du halo
+  /// selon l'intensité (`MannequinHaloPainter.alphaFor`) ; chaque pastille
+  /// montre alors le halo posé sur le gris des muscles [haloBase], comme sur
+  /// le mannequin. Null : pastilles pleines (carte 2D).
+  final double Function(double intensity)? haloAlpha;
+  final Color haloBase;
+
+  const AtlasRoleLegend({
+    super.key,
+    this.stretchColor,
+    this.haloAlpha,
+    this.haloBase = const Color(0xFF8F8B8A),
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -272,6 +285,22 @@ class AtlasRoleLegend extends StatelessWidget {
         ),
       ],
     );
+    BoxDecoration deco(Color color, double v) {
+      final alpha = haloAlpha?.call(v);
+      if (alpha == null) {
+        return BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(3),
+        );
+      }
+      final glow = color.withValues(alpha: alpha);
+      return BoxDecoration(
+        color: Color.alphaBlend(glow, haloBase),
+        borderRadius: BorderRadius.circular(3),
+        boxShadow: [BoxShadow(color: glow, blurRadius: 6, spreadRadius: 1)],
+      );
+    }
+
     return Wrap(
       spacing: 14,
       runSpacing: 6,
@@ -284,11 +313,9 @@ class AtlasRoleLegend extends StatelessWidget {
         ])
           item(
             text,
-            BoxDecoration(
-              color: text == 'Étiré' && stretchColor != null
-                  ? stretchColor
-                  : heat(v),
-              borderRadius: BorderRadius.circular(3),
+            deco(
+              text == 'Étiré' && stretchColor != null ? stretchColor! : heat(v),
+              v,
             ),
           ),
       ],

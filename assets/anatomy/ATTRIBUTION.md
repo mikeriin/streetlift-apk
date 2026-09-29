@@ -8,7 +8,7 @@ Jusqu'à la version 5.5.1, le mannequin était une adaptation du modèle Z-Anato
 
 - Régions : chaque muscle de la texture (plage de couleur portant son abréviation) devient une région nommée par côté ; os (beige) regroupés dans `os`, tendons et aponévroses (gris) dans `contexte`, tête, mains et pieds en volumes sombres.
 - Subdivisions du pack de contenu : deltoïde (antérieur, moyen, postérieur), trapèze (supérieur, moyen, inférieur), grand pectoral (claviculaire, sterno-costal, abdominal), gastrocnémien (médial, latéral).
-- Maillage simplifié à moins de 60 000 triangles (décimation globale, sans fissure), sans texture : couleurs de rendu de l'application (gris à 50 % d'opacité, couleur dominante pour les muscles sollicités).
+- Maillage simplifié à moins de 60 000 triangles (décimation globale, sans fissure), sans texture : couleurs de rendu de l'application (muscles gris opaques ; muscles sollicités signalés par un halo dans la couleur dominante, depuis 5.5.4). Aire de chaque région calculée sur ce maillage (choix de la vue de départ des fiches, 5.5.5).
 - Noms français, correspondance avec les 11 groupes et les muscles du pack de contenu ; les muscles profonds absents de l'écorché restent en texte sur les fiches.
 
 Fabrication reproductible : `tools/anatomy/build_model.py --zip Archive.zip`. Le modèle n'a pas été relu par un spécialiste de l'anatomie ; les couleurs affichées sont des repères d'entraînement, pas une mesure de l'activation musculaire.

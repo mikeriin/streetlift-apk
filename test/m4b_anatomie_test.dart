@@ -223,10 +223,10 @@ void main() {
   group('filtres', () {
     test('union des groupes, compteur, tout cocher / décocher', () {
       const f = AnatomyFilters();
-      expect(f.count, 2); // « Muscles profonds » et « Os »
+      expect(f.count, 1); // « Os » (M6b : plus de « Muscles profonds »)
       final g = f.toggleGroup('dos').toggleGroup('ischios');
       expect(g.groups, {'dos', 'ischios'});
-      expect(g.count, 4);
+      expect(g.count, 3);
       expect(g.orderedGroups, ['dos', 'ischios']);
       final intensities = map.fromGroups({
         for (final x in g.groups) x: kIntensityPrimary,
@@ -236,8 +236,12 @@ void main() {
       expect(AnatomyFilters.all.count, AnatomyFilters.total);
       expect(AnatomyFilters.all.groups, kGroupLabels.keys.toSet());
       expect(AnatomyFilters.none.count, 0);
-      expect(g.withDeep(false).deep, isFalse);
-      expect(g.withBones(false).count, 3);
+      // M6b : l'écorché n'a pas de couche profonde, le filtre est retiré.
+      expect(AnatomyFilters.total, 12);
+      expect(AnatomyFilters.categories.last.options.map((o) => o.key), [
+        'bones',
+      ]);
+      expect(g.withBones(false).count, 2);
       expect(g, g.toggleGroup('biceps').toggleGroup('biceps'));
     });
   });
@@ -286,7 +290,7 @@ void main() {
         page(const AnatomyScreen(), scale: scale, dark: dark),
       );
       await _settle(tester, find.byType(MuscleHeatmap));
-      expect(find.text('Filtres · 2'), findsOneWidget);
+      expect(find.text('Filtres · 1'), findsOneWidget);
       // Résumé sous le mannequin (liste qui défile).
       await scrollToAction(
         tester,
@@ -309,7 +313,7 @@ void main() {
       await tapItem(tester, 'pectoraux');
       expect(find.byKey(const ValueKey('anatomy-filter-dos')), findsWidgets);
       expect(state(tester).groups, {'dos', 'ischios', 'pectoraux'});
-      expect(find.text('Filtres · 5'), findsOneWidget);
+      expect(find.text('Filtres · 4'), findsOneWidget);
       // Toucher en dehors : le menu se ferme.
       await tester.tapAt(const Offset(5, 5));
       await tester.pumpAndSettle();
@@ -338,11 +342,13 @@ void main() {
         up: true,
       );
 
-      // Muscles profonds décochés : régions profondes masquées.
+      // M6b : plus de case « Muscles profonds » (sans effet sur
+      // l'écorché) ; aucune région masquée par l'écran.
       await openMenu(tester);
-      await tapItem(tester, 'deep');
+      expect(find.byKey(const ValueKey('anatomy-filter-deep')), findsNothing);
+      expect(find.text('Muscles profonds'), findsNothing);
       var m = tester.widget<Mannequin3D>(find.byType(Mannequin3D));
-      expect(m.hidden, map.deepIds);
+      expect(m.hidden, isEmpty);
       expect(m.bones, isTrue);
       await tapItem(tester, 'bones');
       m = tester.widget<Mannequin3D>(find.byType(Mannequin3D));
@@ -353,7 +359,7 @@ void main() {
       await tapItem(tester, 'all-groupes');
       await tapItem(tester, 'all-affichage');
       expect(state(tester).filters, AnatomyFilters.all);
-      expect(find.text('Filtres · 13'), findsOneWidget);
+      expect(find.text('Filtres · 12'), findsOneWidget);
       m = tester.widget<Mannequin3D>(find.byType(Mannequin3D));
       expect(m.hidden, isEmpty);
       expect(m.intensities.length, greaterThan(120));
@@ -363,7 +369,7 @@ void main() {
       expect(find.text('Filtres · 0'), findsOneWidget);
       m = tester.widget<Mannequin3D>(find.byType(Mannequin3D));
       expect(m.intensities, isEmpty);
-      expect(m.hidden, map.deepIds);
+      expect(m.hidden, isEmpty);
       await tester.tapAt(const Offset(5, 5));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
@@ -381,7 +387,7 @@ void main() {
     expect(
       tester.getSemantics(find.byKey(const ValueKey('anatomy-filters'))),
       isSemantics(
-        label: 'Filtres, 2 actifs sur 13',
+        label: 'Filtres, 1 actif sur 12',
         isButton: true,
         hasTapAction: true,
       ),
@@ -392,7 +398,6 @@ void main() {
     for (final (key, label, checked) in [
       ('fessiers', 'Fessiers, Groupes musculaires', true),
       ('dos', 'Dos, Groupes musculaires', false),
-      ('deep', 'Muscles profonds, Affichage', true),
       ('bones', 'Os, Affichage', true),
     ]) {
       expect(
@@ -416,7 +421,7 @@ void main() {
     await _settle(tester, find.byType(MuscleHeatmap));
     await openMenu(tester);
     await tapItem(tester, 'mollets');
-    await tapItem(tester, 'deep');
+    await tapItem(tester, 'bones');
     await tester.tapAt(const Offset(5, 5));
     await tester.pumpAndSettle();
     // Écran refermé puis rouvert : mêmes filtres.
@@ -424,14 +429,14 @@ void main() {
     await tester.pumpWidget(page(const AnatomyScreen()));
     await _settle(tester, find.byType(MuscleHeatmap));
     expect(state(tester).groups, {'mollets'});
-    expect(state(tester).filters.deep, isFalse);
-    expect(find.text('Filtres · 2'), findsOneWidget);
+    expect(state(tester).filters.bones, isFalse);
+    expect(find.text('Filtres · 1'), findsOneWidget);
     // Groupe demandé à l'ouverture : il remplace les groupes de la session.
     await tester.pumpWidget(const SizedBox());
     await tester.pumpWidget(page(const AnatomyScreen(initialGroup: 'dos')));
     await _settle(tester, find.byType(MuscleHeatmap));
     expect(state(tester).groups, {'dos'});
-    expect(state(tester).filters.deep, isFalse);
+    expect(state(tester).filters.bones, isFalse);
     AnatomyScreen.session = null;
   });
 }

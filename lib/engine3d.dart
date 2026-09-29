@@ -293,7 +293,9 @@ class Engine3DScreenState extends State<Engine3DScreen> {
           view: MannequinView.troisQuarts,
           viewButtons: false,
           spin: true,
-          background: sceneBackground(dark),
+          // M6b : fond de la page (décision du 29/09/2026 : fond de chaque
+          // vue 3D = couleur de son support, sans démarcation).
+          background: Theme.of(context).scaffoldBackgroundColor,
           height: 380,
           onReady: _onReady,
           semanticLabel:

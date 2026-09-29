@@ -1,4 +1,15 @@
-# Kalis Track 5.5.4 — Mannequin anatomique 3D
+# Kalis Track 5.5.5 — Mannequin anatomique 3D
+
+## 5.5.5 — Correctifs du mannequin fixe (lot M6b du pipeline « Mannequin 3D »)
+
+Audit de tous les écrans du mannequin (captures du vrai rendu, sombre et clair, petit et grand écran, grand texte, animations réduites) : `docs/AUDIT_M6b.md`. 11 défauts corrigés :
+- **Anatomie** : filtre « Muscles profonds » retiré (sans effet depuis l'écorché) ; menu Affichage = « Os » ; libellé d'accessibilité sans « en rouge ».
+- **Fiches** : vue de départ départagée par la surface des muscles principaux (aire de chaque région dans `muscles_map.json`) : traction, chin-up et tirages s'ouvrent de dos (le grand dorsal ne se lit plus comme un pectoral en 3/4) ; légende des rôles en pastilles « halo » ; mannequin plus grand sur tablette.
+- **Moteur 3D** : fond de la page (plus de cadre) et halo pendant la rotation.
+- **Accueil** : sur la carte de la séance du jour (fond de la couleur dominante), halo de la couleur du texte de la carte, enfin visible.
+- **Filtres** (tous les écrans) : « 1 actif » / « 3 actifs » au lecteur d'écran ; crédits du modèle à jour.
+
+Détail : `SUIVI_PROJET.md` (M6b). Tests : `test/m6b_correctifs_test.dart`, `integration_test/audit_m6b_test.dart`.
 
 ## 5.5.4 — Halo au lieu de la couleur, fond du support (correction 4 du lot M56)
 

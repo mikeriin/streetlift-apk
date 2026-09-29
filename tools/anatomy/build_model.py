@@ -813,6 +813,58 @@ def region_entries(names):
     return out
 
 
+def glb_meshes(path):
+    """Positions et indices de chaque nœud d'un GLB écrit par [write_glb]."""
+    import numpy as np
+    data = Path(path).read_bytes()
+    json_len, _ = struct.unpack('<I4s', data[12:20])
+    gltf = json.loads(data[20:20 + json_len])
+    blob = data[20 + json_len + 8:]
+
+    def read(i, dtype):
+        acc = gltf['accessors'][i]
+        view = gltf['bufferViews'][acc['bufferView']]
+        n = {'VEC3': 3, 'SCALAR': 1}[acc['type']]
+        return np.frombuffer(blob, dtype=dtype, count=acc['count'] * n,
+                             offset=view['byteOffset'] + acc.get('byteOffset', 0))
+
+    out = {}
+    for node in gltf['nodes']:
+        prim = gltf['meshes'][node['mesh']]['primitives'][0]
+        pos = read(prim['attributes']['POSITION'], np.float32).reshape(-1, 3)
+        itype = gltf['accessors'][prim['indices']]['componentType']
+        idx = read(prim['indices'], np.uint32 if itype == 5125 else np.uint16)
+        out[node['name']] = (pos.astype(np.float64), idx.astype(np.int64))
+    return out
+
+
+def mesh_area(positions, indices):
+    """Aire (m²) d'un maillage de triangles."""
+    import numpy as np
+    t = indices.reshape(-1, 3)
+    a, b, c = positions[t[:, 0]], positions[t[:, 1]], positions[t[:, 2]]
+    return float(0.5 * np.linalg.norm(np.cross(b - a, c - a), axis=1).sum())
+
+
+def add_areas(entries, meshes):
+    """M6b : aire de chaque région (m², 5 décimales), pour la vue de départ
+    de la fiche (surface des muscles principaux vus de face et de dos)."""
+    for e in entries:
+        pos, idx = meshes[e['id']]
+        e['aire'] = round(mesh_area(pos, idx), 5)
+    return entries
+
+
+def update_areas(log=print):
+    """M6b : ajoute ou recalcule `aire` dans la carte existante depuis le GLB
+    d'exécution (sans l'archive achetée)."""
+    mapping = json.loads(OUT_MAP.read_text(encoding='utf-8'))
+    add_areas(mapping['regions'], glb_meshes(OUT_GLB))
+    OUT_MAP.write_text(json.dumps(mapping, ensure_ascii=False, indent=1) + '\n',
+                       encoding='utf-8')
+    log(f'aires : {len(mapping["regions"])} régions')
+
+
 def build(zip_path, render_dir=None, log=print):
     import numpy as np
     zip_path = Path(zip_path)
@@ -842,7 +894,9 @@ def build(zip_path, render_dir=None, log=print):
     OUT_GLB.parent.mkdir(parents=True, exist_ok=True)
     write_glb(OUT_GLB, meshes)
     names = [m['nom'] for m in meshes]
-    entries = region_entries(names)
+    entries = add_areas(region_entries(names),
+                        {m['nom']: (m['positions'].astype(np.float64),
+                                    m['indices'].astype(np.int64)) for m in meshes})
     tris = {m['nom']: len(m['indices']) // 3 for m in meshes}
     total = sum(tris.values())
     pack = pack_muscles()
@@ -953,9 +1007,14 @@ def main():
     parser.add_argument('--zip', help='Archive.zip de la release modele-achete')
     parser.add_argument('--render', help='dossier des planches de contrôle')
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--aires', action='store_true',
+                        help='recalcule les aires des régions depuis le GLB (M6b)')
     args = parser.parse_args()
     if args.check:
         print('OK' if check() else 'KO')
+        return
+    if args.aires:
+        update_areas()
         return
     if not args.zip:
         parser.error('--zip requis')

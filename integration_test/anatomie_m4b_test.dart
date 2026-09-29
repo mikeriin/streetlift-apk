@@ -363,9 +363,10 @@ void main() {
       expect(s['rouge'] as double, greaterThan(.01), reason: v.name);
       expect(s['gris'] as double, greaterThan(.01), reason: v.name);
     }
-    // Muscles profonds masqués : couche superficielle seule (vue de dos).
+    // M6b : filtre « Muscles profonds » retiré (écorché sans couche
+    // profonde) : la case n'existe plus, la vue reste la même.
     await openMenu(tester);
-    await tapItem(tester, 'deep');
+    expect(find.byKey(const ValueKey('anatomy-filter-deep')), findsNothing);
     await closeMenu(tester);
     await tester.pump(const Duration(seconds: 2));
     await shot('m4b_anatomie_sombre_sans_profonds');

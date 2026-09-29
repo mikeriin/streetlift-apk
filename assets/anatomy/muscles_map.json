@@ -31,7 +31,8 @@
    "pack": [
     "extenseurs_des_doigts"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.0009
   },
   {
    "id": "abductor_pollicis_longus_right",
@@ -43,7 +44,8 @@
    "pack": [
     "extenseurs_des_doigts"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00091
   },
   {
    "id": "adductor_longus_left",
@@ -55,7 +57,8 @@
    "pack": [
     "long_adducteur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00938
   },
   {
    "id": "adductor_longus_right",
@@ -67,7 +70,8 @@
    "pack": [
     "long_adducteur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00922
   },
   {
    "id": "adductor_magnus_left",
@@ -79,7 +83,8 @@
    "pack": [
     "grand_adducteur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00421
   },
   {
    "id": "adductor_magnus_right",
@@ -91,7 +96,8 @@
    "pack": [
     "grand_adducteur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00427
   },
   {
    "id": "anconeus_muscle_left",
@@ -103,7 +109,8 @@
    "pack": [
     "ancone"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00192
   },
   {
    "id": "anconeus_muscle_right",
@@ -115,7 +122,8 @@
    "pack": [
     "ancone"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.0019
   },
   {
    "id": "biceps_brachii_left",
@@ -128,7 +136,8 @@
     "biceps_chef_long",
     "biceps_chef_court"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01966
   },
   {
    "id": "biceps_brachii_right",
@@ -141,7 +150,8 @@
     "biceps_chef_long",
     "biceps_chef_court"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01971
   },
   {
    "id": "biceps_femoris_long_left",
@@ -153,7 +163,8 @@
    "pack": [
     "biceps_femoral"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.02526
   },
   {
    "id": "biceps_femoris_long_right",
@@ -165,7 +176,8 @@
    "pack": [
     "biceps_femoral"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.03053
   },
   {
    "id": "brachialis_left",
@@ -177,7 +189,8 @@
    "pack": [
     "brachial"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00496
   },
   {
    "id": "brachialis_right",
@@ -189,7 +202,8 @@
    "pack": [
     "brachial"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00501
   },
   {
    "id": "brachioradialis_muscle_left",
@@ -201,7 +215,8 @@
    "pack": [
     "brachio_radial"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00926
   },
   {
    "id": "brachioradialis_muscle_right",
@@ -213,7 +228,8 @@
    "pack": [
     "brachio_radial"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00925
   },
   {
    "id": "coracobrachialis_left",
@@ -225,7 +241,8 @@
    "pack": [
     "coraco_brachial"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00147
   },
   {
    "id": "coracobrachialis_right",
@@ -237,7 +254,8 @@
    "pack": [
     "coraco_brachial"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00161
   },
   {
    "id": "deltoid_anterior_left",
@@ -249,7 +267,8 @@
    "pack": [
     "deltoide_anterieur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01721
   },
   {
    "id": "deltoid_anterior_right",
@@ -261,7 +280,8 @@
    "pack": [
     "deltoide_anterieur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01739
   },
   {
    "id": "deltoid_lateral_left",
@@ -273,7 +293,8 @@
    "pack": [
     "deltoide_moyen"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00773
   },
   {
    "id": "deltoid_lateral_right",
@@ -285,7 +306,8 @@
    "pack": [
     "deltoide_moyen"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00764
   },
   {
    "id": "deltoid_posterior_left",
@@ -297,7 +319,8 @@
    "pack": [
     "deltoide_posterieur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01496
   },
   {
    "id": "deltoid_posterior_right",
@@ -309,7 +332,8 @@
    "pack": [
     "deltoide_posterieur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01504
   },
   {
    "id": "erector_spinae_left",
@@ -322,7 +346,8 @@
     "erecteurs_thoraciques",
     "erecteurs_lombaires"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00929
   },
   {
    "id": "erector_spinae_right",
@@ -335,7 +360,8 @@
     "erecteurs_thoraciques",
     "erecteurs_lombaires"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00972
   },
   {
    "id": "extensor_carpi_radialis_brevis_left",
@@ -347,7 +373,8 @@
    "pack": [
     "extenseurs_du_poignet"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00223
   },
   {
    "id": "extensor_carpi_radialis_brevis_right",
@@ -359,7 +386,8 @@
    "pack": [
     "extenseurs_du_poignet"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00226
   },
   {
    "id": "extensor_carpi_radialis_longus_left",
@@ -371,7 +399,8 @@
    "pack": [
     "extenseurs_du_poignet"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.0047
   },
   {
    "id": "extensor_carpi_radialis_longus_right",
@@ -383,7 +412,8 @@
    "pack": [
     "extenseurs_du_poignet"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00482
   },
   {
    "id": "extensor_carpi_ulnaris_left",
@@ -395,7 +425,8 @@
    "pack": [
     "extenseurs_du_poignet"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00434
   },
   {
    "id": "extensor_carpi_ulnaris_right",
@@ -407,7 +438,8 @@
    "pack": [
     "extenseurs_du_poignet"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00621
   },
   {
    "id": "extensor_digiti_minimi_left",
@@ -419,7 +451,8 @@
    "pack": [
     "extenseurs_des_doigts"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00098
   },
   {
    "id": "extensor_digiti_minimi_right",
@@ -431,7 +464,8 @@
    "pack": [
     "extenseurs_des_doigts"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00092
   },
   {
    "id": "extensor_digitorum_left",
@@ -443,7 +477,8 @@
    "pack": [
     "extenseurs_des_doigts"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00399
   },
   {
    "id": "extensor_digitorum_longus_left",
@@ -455,7 +490,8 @@
    "pack": [
     "long_extenseur_des_orteils"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00636
   },
   {
    "id": "extensor_digitorum_longus_right",
@@ -467,7 +503,8 @@
    "pack": [
     "long_extenseur_des_orteils"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00618
   },
   {
    "id": "extensor_digitorum_right",
@@ -479,7 +516,8 @@
    "pack": [
     "extenseurs_des_doigts"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00382
   },
   {
    "id": "extensor_pollicis_brevis_left",
@@ -491,7 +529,8 @@
    "pack": [
     "extenseurs_des_doigts"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00098
   },
   {
    "id": "extensor_pollicis_brevis_right",
@@ -503,7 +542,8 @@
    "pack": [
     "extenseurs_des_doigts"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00102
   },
   {
    "id": "external_oblique_left",
@@ -515,7 +555,8 @@
    "pack": [
     "oblique_externe"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.03037
   },
   {
    "id": "external_oblique_right",
@@ -527,7 +568,8 @@
    "pack": [
     "oblique_externe"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.03054
   },
   {
    "id": "fibularis_brevis_left",
@@ -539,7 +581,8 @@
    "pack": [
     "fibulaires"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.0037
   },
   {
    "id": "fibularis_brevis_right",
@@ -551,7 +594,8 @@
    "pack": [
     "fibulaires"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00421
   },
   {
    "id": "fibularis_longus_left",
@@ -563,7 +607,8 @@
    "pack": [
     "fibulaires"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00362
   },
   {
    "id": "fibularis_longus_right",
@@ -575,7 +620,8 @@
    "pack": [
     "fibulaires"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00301
   },
   {
    "id": "fibularis_tertius_left",
@@ -587,7 +633,8 @@
    "pack": [
     "fibulaires"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00114
   },
   {
    "id": "fibularis_tertius_right",
@@ -599,7 +646,8 @@
    "pack": [
     "fibulaires"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00112
   },
   {
    "id": "flexor_carpi_radialis_left",
@@ -611,7 +659,8 @@
    "pack": [
     "flechisseurs_du_poignet"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00589
   },
   {
    "id": "flexor_carpi_radialis_right",
@@ -623,7 +672,8 @@
    "pack": [
     "flechisseurs_du_poignet"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.0058
   },
   {
    "id": "flexor_carpi_ulnaris_left",
@@ -635,7 +685,8 @@
    "pack": [
     "flechisseurs_du_poignet"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.008
   },
   {
    "id": "flexor_carpi_ulnaris_right",
@@ -647,7 +698,8 @@
    "pack": [
     "flechisseurs_du_poignet"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00799
   },
   {
    "id": "flexor_digitorum_longus_left",
@@ -659,7 +711,8 @@
    "pack": [
     "flechisseurs_profonds_des_orteils"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00315
   },
   {
    "id": "flexor_digitorum_longus_right",
@@ -671,7 +724,8 @@
    "pack": [
     "flechisseurs_profonds_des_orteils"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00317
   },
   {
    "id": "flexor_digitorum_superficialis_left",
@@ -683,7 +737,8 @@
    "pack": [
     "flechisseurs_superficiels_des_doigts"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00942
   },
   {
    "id": "flexor_digitorum_superficialis_right",
@@ -695,7 +750,8 @@
    "pack": [
     "flechisseurs_superficiels_des_doigts"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01001
   },
   {
    "id": "foot_left",
@@ -707,7 +763,8 @@
    "pack": [
     "muscles_intrinseques_pied"
    ],
-   "couche": "volume"
+   "couche": "volume",
+   "aire": 0.00745
   },
   {
    "id": "foot_right",
@@ -719,7 +776,8 @@
    "pack": [
     "muscles_intrinseques_pied"
    ],
-   "couche": "volume"
+   "couche": "volume",
+   "aire": 0.00763
   },
   {
    "id": "gastrocnemius_lateral_left",
@@ -731,7 +789,8 @@
    "pack": [
     "gastrocnemien_lateral"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.02084
   },
   {
    "id": "gastrocnemius_lateral_right",
@@ -743,7 +802,8 @@
    "pack": [
     "gastrocnemien_lateral"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.02103
   },
   {
    "id": "gastrocnemius_medial_left",
@@ -755,7 +815,8 @@
    "pack": [
     "gastrocnemien_medial"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.02465
   },
   {
    "id": "gastrocnemius_medial_right",
@@ -767,7 +828,8 @@
    "pack": [
     "gastrocnemien_medial"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.02424
   },
   {
    "id": "gluteus_maximus_left",
@@ -779,7 +841,8 @@
    "pack": [
     "grand_fessier"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.0341
   },
   {
    "id": "gluteus_maximus_right",
@@ -791,7 +854,8 @@
    "pack": [
     "grand_fessier"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.03411
   },
   {
    "id": "gluteus_medius_left",
@@ -803,7 +867,8 @@
    "pack": [
     "moyen_fessier"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00526
   },
   {
    "id": "gluteus_medius_right",
@@ -815,7 +880,8 @@
    "pack": [
     "moyen_fessier"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00568
   },
   {
    "id": "gracilis_left",
@@ -827,7 +893,8 @@
    "pack": [
     "gracile"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01425
   },
   {
    "id": "gracilis_right",
@@ -839,7 +906,8 @@
    "pack": [
     "gracile"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01418
   },
   {
    "id": "hand_left",
@@ -851,7 +919,8 @@
    "pack": [
     "muscles_intrinseques_main"
    ],
-   "couche": "volume"
+   "couche": "volume",
+   "aire": 0.00581
   },
   {
    "id": "hand_right",
@@ -863,7 +932,8 @@
    "pack": [
     "muscles_intrinseques_main"
    ],
-   "couche": "volume"
+   "couche": "volume",
+   "aire": 0.00449
   },
   {
    "id": "iliopsoas_left",
@@ -876,7 +946,8 @@
     "grand_psoas",
     "iliaque"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00359
   },
   {
    "id": "iliopsoas_right",
@@ -889,7 +960,8 @@
     "grand_psoas",
     "iliaque"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00354
   },
   {
    "id": "infraspinatus_left",
@@ -901,7 +973,8 @@
    "pack": [
     "infra_epineux"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00422
   },
   {
    "id": "infraspinatus_right",
@@ -913,7 +986,8 @@
    "pack": [
     "infra_epineux"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00395
   },
   {
    "id": "latissimus_dorsi_left",
@@ -925,7 +999,8 @@
    "pack": [
     "grand_dorsal"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.04144
   },
   {
    "id": "latissimus_dorsi_right",
@@ -937,7 +1012,8 @@
    "pack": [
     "grand_dorsal"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.04111
   },
   {
    "id": "levator_scapulae_left",
@@ -949,7 +1025,8 @@
    "pack": [
     "elevateur_scapula"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00116
   },
   {
    "id": "levator_scapulae_right",
@@ -961,7 +1038,8 @@
    "pack": [
     "elevateur_scapula"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.0012
   },
   {
    "id": "neck_muscles_left",
@@ -971,7 +1049,8 @@
    "nom_cote": "Muscles hyoïdiens (gauche)",
    "groupe": "dos",
    "pack": [],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00414
   },
   {
    "id": "neck_muscles_right",
@@ -981,7 +1060,8 @@
    "nom_cote": "Muscles hyoïdiens (droit)",
    "groupe": "dos",
    "pack": [],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00881
   },
   {
    "id": "palmaris_longus_muscle_left",
@@ -993,7 +1073,8 @@
    "pack": [
     "flechisseurs_du_poignet"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00411
   },
   {
    "id": "palmaris_longus_muscle_right",
@@ -1005,7 +1086,8 @@
    "pack": [
     "flechisseurs_du_poignet"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00405
   },
   {
    "id": "pectineus_left",
@@ -1017,7 +1099,8 @@
    "pack": [
     "pectine"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00509
   },
   {
    "id": "pectineus_right",
@@ -1029,7 +1112,8 @@
    "pack": [
     "pectine"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00518
   },
   {
    "id": "pectoralis_major_abdominal_left",
@@ -1041,7 +1125,8 @@
    "pack": [
     "grand_pectoral_abdominal"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00296
   },
   {
    "id": "pectoralis_major_abdominal_right",
@@ -1053,7 +1138,8 @@
    "pack": [
     "grand_pectoral_abdominal"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00286
   },
   {
    "id": "pectoralis_major_clavicular_left",
@@ -1065,7 +1151,8 @@
    "pack": [
     "grand_pectoral_claviculaire"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00775
   },
   {
    "id": "pectoralis_major_clavicular_right",
@@ -1077,7 +1164,8 @@
    "pack": [
     "grand_pectoral_claviculaire"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00769
   },
   {
    "id": "pectoralis_major_sternocostal_left",
@@ -1089,7 +1177,8 @@
    "pack": [
     "grand_pectoral_sterno_costal"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.02111
   },
   {
    "id": "pectoralis_major_sternocostal_right",
@@ -1101,7 +1190,8 @@
    "pack": [
     "grand_pectoral_sterno_costal"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.0211
   },
   {
    "id": "pronator_teres_left",
@@ -1113,7 +1203,8 @@
    "pack": [
     "rond_pronateur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00087
   },
   {
    "id": "pronator_teres_right",
@@ -1125,7 +1216,8 @@
    "pack": [
     "rond_pronateur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00076
   },
   {
    "id": "rectus_abdominis_left",
@@ -1137,7 +1229,8 @@
    "pack": [
     "droit_abdomen"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.0249
   },
   {
    "id": "rectus_abdominis_right",
@@ -1149,7 +1242,8 @@
    "pack": [
     "droit_abdomen"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.02473
   },
   {
    "id": "rectus_femoris_left",
@@ -1161,7 +1255,8 @@
    "pack": [
     "droit_femoral"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.022
   },
   {
    "id": "rectus_femoris_right",
@@ -1173,7 +1268,8 @@
    "pack": [
     "droit_femoral"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.02214
   },
   {
    "id": "rhomboids_left",
@@ -1185,7 +1281,8 @@
    "pack": [
     "rhomboides"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00054
   },
   {
    "id": "rhomboids_right",
@@ -1197,7 +1294,8 @@
    "pack": [
     "rhomboides"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.0005
   },
   {
    "id": "sartorius_left",
@@ -1209,7 +1307,8 @@
    "pack": [
     "sartorius"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.02305
   },
   {
    "id": "sartorius_right",
@@ -1221,7 +1320,8 @@
    "pack": [
     "sartorius"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.0231
   },
   {
    "id": "scalenus_medius_left",
@@ -1231,7 +1331,8 @@
    "nom_cote": "Scalène moyen (gauche)",
    "groupe": "dos",
    "pack": [],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00071
   },
   {
    "id": "scalenus_medius_right",
@@ -1241,7 +1342,8 @@
    "nom_cote": "Scalène moyen (droit)",
    "groupe": "dos",
    "pack": [],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00073
   },
   {
    "id": "semimembranosus_left",
@@ -1253,7 +1355,8 @@
    "pack": [
     "semi_membraneux"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00719
   },
   {
    "id": "semimembranosus_right",
@@ -1265,7 +1368,8 @@
    "pack": [
     "semi_membraneux"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00737
   },
   {
    "id": "semispinalis_capitis_left",
@@ -1277,7 +1381,8 @@
    "pack": [
     "extenseurs_cervicaux"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00068
   },
   {
    "id": "semispinalis_capitis_right",
@@ -1289,7 +1394,8 @@
    "pack": [
     "extenseurs_cervicaux"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00078
   },
   {
    "id": "semitendinosus_left",
@@ -1301,7 +1407,8 @@
    "pack": [
     "semi_tendineux"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01032
   },
   {
    "id": "semitendinosus_right",
@@ -1313,7 +1420,8 @@
    "pack": [
     "semi_tendineux"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01051
   },
   {
    "id": "serratus_anterior_left",
@@ -1325,7 +1433,8 @@
    "pack": [
     "dentele_anterieur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01156
   },
   {
    "id": "serratus_anterior_right",
@@ -1337,7 +1446,8 @@
    "pack": [
     "dentele_anterieur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01174
   },
   {
    "id": "soleus_left",
@@ -1349,7 +1459,8 @@
    "pack": [
     "soleaire"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01314
   },
   {
    "id": "soleus_right",
@@ -1361,7 +1472,8 @@
    "pack": [
     "soleaire"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.013
   },
   {
    "id": "splenius_capitis_left",
@@ -1373,7 +1485,8 @@
    "pack": [
     "extenseurs_cervicaux"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00063
   },
   {
    "id": "splenius_capitis_right",
@@ -1385,7 +1498,8 @@
    "pack": [
     "extenseurs_cervicaux"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00063
   },
   {
    "id": "sternocleidomastoid_left",
@@ -1397,7 +1511,8 @@
    "pack": [
     "sterno_cleido_mastoidien"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00845
   },
   {
    "id": "sternocleidomastoid_right",
@@ -1409,7 +1524,8 @@
    "pack": [
     "sterno_cleido_mastoidien"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00858
   },
   {
    "id": "tensor_fasciae_latae_left",
@@ -1421,7 +1537,8 @@
    "pack": [
     "tenseur_fascia_lata"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00946
   },
   {
    "id": "tensor_fasciae_latae_right",
@@ -1433,7 +1550,8 @@
    "pack": [
     "tenseur_fascia_lata"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.0095
   },
   {
    "id": "teres_major_left",
@@ -1445,7 +1563,8 @@
    "pack": [
     "grand_rond"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00583
   },
   {
    "id": "teres_major_right",
@@ -1457,7 +1576,8 @@
    "pack": [
     "grand_rond"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.006
   },
   {
    "id": "teres_minor_left",
@@ -1469,7 +1589,8 @@
    "pack": [
     "petit_rond"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00065
   },
   {
    "id": "teres_minor_right",
@@ -1481,7 +1602,8 @@
    "pack": [
     "petit_rond"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.0006
   },
   {
    "id": "tibialis_anterior_left",
@@ -1493,7 +1615,8 @@
    "pack": [
     "tibial_anterieur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.0088
   },
   {
    "id": "tibialis_anterior_right",
@@ -1505,7 +1628,8 @@
    "pack": [
     "tibial_anterieur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00895
   },
   {
    "id": "trapezius_lower_left",
@@ -1517,7 +1641,8 @@
    "pack": [
     "trapeze_inferieur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01374
   },
   {
    "id": "trapezius_lower_right",
@@ -1529,7 +1654,8 @@
    "pack": [
     "trapeze_inferieur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01378
   },
   {
    "id": "trapezius_middle_left",
@@ -1541,7 +1667,8 @@
    "pack": [
     "trapeze_moyen"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01654
   },
   {
    "id": "trapezius_middle_right",
@@ -1553,7 +1680,8 @@
    "pack": [
     "trapeze_moyen"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.0168
   },
   {
    "id": "trapezius_upper_left",
@@ -1565,7 +1693,8 @@
    "pack": [
     "trapeze_superieur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00735
   },
   {
    "id": "trapezius_upper_right",
@@ -1577,7 +1706,8 @@
    "pack": [
     "trapeze_superieur"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.00749
   },
   {
    "id": "triceps_brachii_left",
@@ -1591,7 +1721,8 @@
     "triceps_chef_lateral",
     "triceps_chef_medial"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.0238
   },
   {
    "id": "triceps_brachii_right",
@@ -1605,7 +1736,8 @@
     "triceps_chef_lateral",
     "triceps_chef_medial"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.02389
   },
   {
    "id": "vastus_lateralis_left",
@@ -1617,7 +1749,8 @@
    "pack": [
     "vaste_lateral"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01362
   },
   {
    "id": "vastus_lateralis_right",
@@ -1629,7 +1762,8 @@
    "pack": [
     "vaste_lateral"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01363
   },
   {
    "id": "vastus_medialis_left",
@@ -1641,7 +1775,8 @@
    "pack": [
     "vaste_medial"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01548
   },
   {
    "id": "vastus_medialis_right",
@@ -1653,7 +1788,8 @@
    "pack": [
     "vaste_medial"
    ],
-   "couche": "superficiel"
+   "couche": "superficiel",
+   "aire": 0.01557
   }
  ],
  "retirees": [],
