@@ -1,0 +1,8 @@
+Changed lib/animation_test_screen.dart
+Changed lib/exercise_mannequin.dart
+Changed lib/mannequin_3d.dart
+Changed lib/mannequin_clip.dart
+Changed lib/mannequin_player.dart
+Changed test/m7_player_test.dart
+Changed integration_test/animation_m7_test.dart
+Formatted 192 files (7 changed) in 1.00 seconds.

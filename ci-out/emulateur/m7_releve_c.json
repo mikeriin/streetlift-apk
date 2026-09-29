@@ -1,0 +1,148 @@
+{
+  "c": {
+    "gif_0": {
+      "t": 0.0,
+      "phase": "Descente · 3 s",
+      "gain": 0.7450000000000001,
+      "lecture": false,
+      "bassin_y": 0.0,
+      "poseVersion": 18,
+      "figure": 0.10739583333333333,
+      "halo": 0.010451388888888889,
+      "gris": 0.06826388888888889,
+      "demarcation": 0.0
+    },
+    "gif_1": {
+      "t": 0.5,
+      "phase": "Descente · 3 s",
+      "gain": 0.62,
+      "lecture": false,
+      "bassin_y": -0.00279999990016222,
+      "poseVersion": 19,
+      "figure": 0.10288194444444444,
+      "halo": 0.002777777777777778,
+      "gris": 0.0721875,
+      "demarcation": 0.0
+    },
+    "gif_2": {
+      "t": 1.0,
+      "phase": "Descente · 3 s",
+      "gain": 0.62,
+      "lecture": false,
+      "bassin_y": -0.03700000047683716,
+      "poseVersion": 20,
+      "figure": 0.10746527777777778,
+      "halo": 0.0022916666666666667,
+      "gris": 0.07548611111111111,
+      "demarcation": 0.0
+    },
+    "gif_3": {
+      "t": 1.5,
+      "phase": "Descente · 3 s",
+      "gain": 0.62,
+      "lecture": false,
+      "bassin_y": -0.13699999451637268,
+      "poseVersion": 21,
+      "figure": 0.10996527777777777,
+      "halo": 0.002638888888888889,
+      "gris": 0.07868055555555556,
+      "demarcation": 0.0
+    },
+    "gif_4": {
+      "t": 2.0,
+      "phase": "Descente · 3 s",
+      "gain": 0.62,
+      "lecture": false,
+      "bassin_y": -0.2856000065803528,
+      "poseVersion": 22,
+      "figure": 0.1103125,
+      "halo": 0.005868055555555555,
+      "gris": 0.07878472222222223,
+      "demarcation": 0.0
+    },
+    "gif_5": {
+      "t": 2.5,
+      "phase": "Descente · 3 s",
+      "gain": 0.62,
+      "lecture": false,
+      "bassin_y": -0.4216666519641876,
+      "poseVersion": 23,
+      "figure": 0.10767361111111111,
+      "halo": 0.0078125,
+      "gris": 0.07541666666666667,
+      "demarcation": 0.0
+    },
+    "gif_6": {
+      "t": 3.0,
+      "phase": "Pause basse · 1 s",
+      "gain": 0.675,
+      "lecture": false,
+      "bassin_y": -0.47999998927116394,
+      "poseVersion": 24,
+      "figure": 0.10559027777777778,
+      "halo": 0.009131944444444444,
+      "gris": 0.07253472222222222,
+      "demarcation": 0.0
+    },
+    "gif_7": {
+      "t": 3.5,
+      "phase": "Pause basse · 1 s",
+      "gain": 0.8,
+      "lecture": false,
+      "bassin_y": -0.47999998927116394,
+      "poseVersion": 25,
+      "figure": 0.10753472222222223,
+      "halo": 0.01579861111111111,
+      "gris": 0.07024305555555556,
+      "demarcation": 0.0
+    },
+    "gif_8": {
+      "t": 4.0,
+      "phase": "Montée · 1 s",
+      "gain": 0.935,
+      "lecture": false,
+      "bassin_y": -0.47999998927116394,
+      "poseVersion": 26,
+      "figure": 0.10857638888888889,
+      "halo": 0.021215277777777777,
+      "gris": 0.06784722222222223,
+      "demarcation": 0.0
+    },
+    "gif_9": {
+      "t": 4.5,
+      "phase": "Montée · 1 s",
+      "gain": 1.0,
+      "lecture": false,
+      "bassin_y": -0.13699999451637268,
+      "poseVersion": 27,
+      "figure": 0.11673611111111111,
+      "halo": 0.025972222222222223,
+      "gris": 0.069375,
+      "demarcation": 0.0
+    },
+    "gif_10": {
+      "t": 5.0,
+      "phase": "Pause haute · 1 s",
+      "gain": 0.865,
+      "lecture": false,
+      "bassin_y": 0.0,
+      "poseVersion": 28,
+      "figure": 0.10965277777777778,
+      "halo": 0.016979166666666667,
+      "gris": 0.0653125,
+      "demarcation": 0.0
+    },
+    "gif_11": {
+      "t": 5.5,
+      "phase": "Pause haute · 1 s",
+      "gain": 0.8,
+      "lecture": false,
+      "bassin_y": 0.0,
+      "poseVersion": 29,
+      "figure": 0.10840277777777778,
+      "halo": 0.013298611111111112,
+      "gris": 0.06697916666666667,
+      "demarcation": 0.0
+    }
+  }
+}

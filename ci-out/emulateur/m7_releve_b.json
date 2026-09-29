@@ -1,0 +1,45 @@
+{
+  "b": {
+    "clair_descente": {
+      "t": 1.5,
+      "phase": "Descente · 3 s",
+      "gain": 0.62,
+      "lecture": false,
+      "bassin_y": -0.13699999451637268,
+      "poseVersion": 19,
+      "figure": 0.13451388888888888,
+      "halo": 0.0036805555555555554,
+      "gris": 0.11229166666666666,
+      "demarcation": 0.0
+    },
+    "clair_pause_basse": {
+      "t": 3.5,
+      "phase": "Pause basse · 1 s",
+      "gain": 0.8,
+      "lecture": false,
+      "bassin_y": -0.47999998927116394,
+      "poseVersion": 20,
+      "figure": 0.11194444444444444,
+      "halo": 0.009652777777777777,
+      "gris": 0.08017361111111111,
+      "demarcation": 0.0
+    },
+    "reduit_depart": {
+      "t": 0.0,
+      "phase": "Descente · 3 s",
+      "gain": 0.71,
+      "lecture": false,
+      "bassin_y": 0.0,
+      "poseVersion": 2,
+      "bouton_lecture": 0
+    },
+    "reduit_image_cle": {
+      "t": 3.0,
+      "phase": "Pause basse · 1 s",
+      "gain": 0.71,
+      "lecture": false,
+      "bassin_y": -0.47999998927116394,
+      "poseVersion": 3
+    }
+  }
+}

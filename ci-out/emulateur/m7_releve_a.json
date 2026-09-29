@@ -1,0 +1,105 @@
+{
+  "a": {
+    "cadrage": {
+      "hauteur": 1.767726182937622,
+      "largeur": 1.494847297668457
+    },
+    "lecture_auto": true,
+    "t0_depart": {
+      "t": 0.0,
+      "phase": "Descente · 3 s",
+      "gain": 0.7450000000000001,
+      "lecture": false,
+      "bassin_y": 0.0,
+      "poseVersion": 17,
+      "figure": 0.10670138888888889,
+      "halo": 0.010381944444444444,
+      "gris": 0.06826388888888889,
+      "demarcation": 0.0
+    },
+    "t1_descente": {
+      "t": 1.5,
+      "phase": "Descente · 3 s",
+      "gain": 0.62,
+      "lecture": false,
+      "bassin_y": -0.13699999451637268,
+      "poseVersion": 18,
+      "figure": 0.10892361111111111,
+      "halo": 0.0030208333333333333,
+      "gris": 0.07732638888888889,
+      "demarcation": 0.0
+    },
+    "t2_pause_basse": {
+      "t": 3.5,
+      "phase": "Pause basse · 1 s",
+      "gain": 0.8,
+      "lecture": false,
+      "bassin_y": -0.47999998927116394,
+      "poseVersion": 19,
+      "figure": 0.10694444444444444,
+      "halo": 0.01579861111111111,
+      "gris": 0.06947916666666666,
+      "demarcation": 0.0
+    },
+    "t3_montee": {
+      "t": 4.5,
+      "phase": "Montée · 1 s",
+      "gain": 1.0,
+      "lecture": false,
+      "bassin_y": -0.13699999451637268,
+      "poseVersion": 20,
+      "figure": 0.11548611111111111,
+      "halo": 0.025416666666666667,
+      "gris": 0.06840277777777778,
+      "demarcation": 0.0
+    },
+    "t4_pause_haute": {
+      "t": 5.5,
+      "phase": "Pause haute · 1 s",
+      "gain": 0.8,
+      "lecture": false,
+      "bassin_y": 0.0,
+      "poseVersion": 21,
+      "figure": 0.1078125,
+      "halo": 0.01357638888888889,
+      "gris": 0.06649305555555556,
+      "demarcation": 0.0
+    },
+    "bas_face": {
+      "figure": 0.08756944444444445,
+      "halo": 0.005520833333333333,
+      "gris": 0.06458333333333334,
+      "demarcation": 0.0
+    },
+    "bas_troisQuarts": {
+      "figure": 0.10690972222222223,
+      "halo": 0.009479166666666667,
+      "gris": 0.07565972222222223,
+      "demarcation": 0.0
+    },
+    "bas_dos": {
+      "figure": 0.09694444444444444,
+      "halo": 0.019965277777777776,
+      "gris": 0.06513888888888889,
+      "demarcation": 0.0
+    },
+    "toucher": {
+      "point": "Offset(169.5, 271.5)",
+      "region": "vastus_lateralis_left"
+    },
+    "zoom": {
+      "echelle": 2.2,
+      "figure": 0.40576388888888887,
+      "halo": 0.06840277777777778,
+      "gris": 0.2620138888888889,
+      "demarcation": 6.430555555555556
+    },
+    "lecture": {
+      "avant": 3.5,
+      "apres": 1.499999999999993,
+      "en_cours": true,
+      "images_s": 2.9032267429763685
+    },
+    "pause": false
+  }
+}

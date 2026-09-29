@@ -1,0 +1,644 @@
+diff --git a/integration_test/animation_m7_test.dart b/integration_test/animation_m7_test.dart
+index 9a733fd..53ebd53 100644
+--- a/integration_test/animation_m7_test.dart
++++ b/integration_test/animation_m7_test.dart
+@@ -41,8 +41,9 @@ void main() {
+   binding.reportData = data;
+   var ratio = 1.5;
+ 
+-  void record() => data['m7_releve_$_part.json'] =
+-      const JsonEncoder.withIndent('  ').convert(releve);
++  void record() => data['m7_releve_$_part.json'] = const JsonEncoder.withIndent(
++    '  ',
++  ).convert(releve);
+ 
+   Future<ui.Image> grab() async {
+     final boundary =
+@@ -105,7 +106,9 @@ void main() {
+             [r, g, b].reduce((a, c) => a > c ? a : c) -
+             [r, g, b].reduce((a, c) => a < c ? a : c);
+         final dot =
+-            (r - br) * (ar - br) + (g - bgG) * (ag - bgG) + (b - bb) * (ab - bb);
++            (r - br) * (ar - br) +
++            (g - bgG) * (ag - bgG) +
++            (b - bb) * (ab - bb);
+         if (sat > 40 && dot > 0) halo++;
+         if (sat < 24 && r > 30) gray++;
+       }
+@@ -214,136 +217,156 @@ void main() {
+     await ClipRegistry.load();
+   });
+ 
+-  testWidgets('a : phases, vues, zoom, toucher, lecture (sombre)', (
+-    tester,
+-  ) async {
+-    await pumpScreen(tester, true);
+-    final p = await ready(tester);
+-    final out = <String, Object?>{};
+-    out['cadrage'] = {
+-      'hauteur': p.framing!.height,
+-      'largeur': p.framing!.width,
+-    };
+-    // Lecture automatique au démarrage.
+-    out['lecture_auto'] = p.playback!.playing;
+-    await view(tester, p, MannequinView.profil);
+-    for (final (name, t) in [
+-      ('t0_depart', 0.0),
+-      ('t1_descente', 1.5),
+-      ('t2_pause_basse', 3.5),
+-      ('t3_montee', 4.5),
+-      ('t4_pause_haute', 5.5),
+-    ]) {
+-      await at(tester, p, t);
+-      out[name] = {...state(p), ...await check(tester)};
+-      await shot('sombre_profil_$name');
+-    }
+-    await at(tester, p, 3.5);
+-    for (final v in [MannequinView.face, MannequinView.troisQuarts, MannequinView.dos]) {
+-      await view(tester, p, v);
+-      out['bas_${v.name}'] = await check(tester);
+-      await shot('sombre_bas_${v.name}');
+-    }
+-    // Toucher sur le corps déformé : centre du vaste latéral gauche posé.
+-    await view(tester, p, MannequinView.troisQuarts);
+-    final m = p.mannequin!;
+-    final scene = m.scene!;
+-    final pos = scene.haloPositions('vastus_lateralis_left')!;
+-    var sx = 0.0, sy = 0.0, sz = 0.0;
+-    final nv = pos.length ~/ 3;
+-    for (var i = 0; i < nv; i++) {
+-      sx += pos[i * 3];
+-      sy += pos[i * 3 + 1];
+-      sz += pos[i * 3 + 2];
+-    }
+-    final proj = HaloProjection.of(m.camera!, m.viewSize)!;
+-    final screen = proj.project(sx / nv, sy / nv, sz / nv);
+-    final viewRect = tester.getRect(
+-      find.byKey(const ValueKey('mannequin-view')).first,
+-    );
+-    if (screen != null) {
+-      await tester.tapAt(viewRect.topLeft + screen);
+-      for (var i = 0; i < 4; i++) {
++  testWidgets(
++    'a : phases, vues, zoom, toucher, lecture (sombre)',
++    (tester) async {
++      await pumpScreen(tester, true);
++      final p = await ready(tester);
++      final out = <String, Object?>{};
++      out['cadrage'] = {
++        'hauteur': p.framing!.height,
++        'largeur': p.framing!.width,
++      };
++      // Lecture automatique au démarrage.
++      out['lecture_auto'] = p.playback!.playing;
++      await view(tester, p, MannequinView.profil);
++      for (final (name, t) in [
++        ('t0_depart', 0.0),
++        ('t1_descente', 1.5),
++        ('t2_pause_basse', 3.5),
++        ('t3_montee', 4.5),
++        ('t4_pause_haute', 5.5),
++      ]) {
++        await at(tester, p, t);
++        out[name] = {...state(p), ...await check(tester)};
++        await shot('sombre_profil_$name');
++      }
++      await at(tester, p, 3.5);
++      for (final v in [
++        MannequinView.face,
++        MannequinView.troisQuarts,
++        MannequinView.dos,
++      ]) {
++        await view(tester, p, v);
++        out['bas_${v.name}'] = await check(tester);
++        await shot('sombre_bas_${v.name}');
++      }
++      // Toucher sur le corps déformé : centre du vaste latéral gauche posé.
++      await view(tester, p, MannequinView.troisQuarts);
++      final m = p.mannequin!;
++      final scene = m.scene!;
++      final pos = scene.haloPositions('vastus_lateralis_left')!;
++      var sx = 0.0, sy = 0.0, sz = 0.0;
++      final nv = pos.length ~/ 3;
++      for (var i = 0; i < nv; i++) {
++        sx += pos[i * 3];
++        sy += pos[i * 3 + 1];
++        sz += pos[i * 3 + 2];
++      }
++      final proj = HaloProjection.of(m.camera!, m.viewSize)!;
++      final screen = proj.project(sx / nv, sy / nv, sz / nv);
++      final viewRect = tester.getRect(
++        find.byKey(const ValueKey('mannequin-view')).first,
++      );
++      if (screen != null) {
++        await tester.tapAt(viewRect.topLeft + screen);
++        for (var i = 0; i < 4; i++) {
++          await tester.pump(const Duration(milliseconds: 250));
++        }
++      }
++      out['toucher'] = {'point': screen?.toString(), 'region': m.touched?.id};
++      await shot('sombre_toucher');
++      // Zoom au pincement sur les genoux.
++      m.pinchTo(2.2, viewRect.size.center(Offset.zero) + const Offset(0, 60));
++      for (var i = 0; i < 6; i++) {
+         await tester.pump(const Duration(milliseconds: 250));
+       }
+-    }
+-    out['toucher'] = {'point': screen?.toString(), 'region': m.touched?.id};
+-    await shot('sombre_toucher');
+-    // Zoom au pincement sur les genoux.
+-    m.pinchTo(2.2, viewRect.size.center(Offset.zero) + const Offset(0, 60));
+-    for (var i = 0; i < 6; i++) {
+-      await tester.pump(const Duration(milliseconds: 250));
+-    }
+-    out['zoom'] = {'echelle': m.zoom.scale, ...await check(tester)};
+-    await shot('sombre_zoom');
+-    m.resetZoom();
+-    // Lecture : le temps avance, images/s mesurées.
+-    await view(tester, p, MannequinView.profil);
+-    p.toggle();
+-    final t0 = p.playback!.time;
+-    for (var i = 0; i < 24; i++) {
+-      await tester.pump(const Duration(milliseconds: 250));
+-    }
+-    out['lecture'] = {
+-      'avant': t0,
+-      'apres': p.playback!.time,
+-      'en_cours': p.playback!.playing,
+-      'images_s': p.fps,
+-    };
+-    await shot('sombre_lecture');
+-    p.toggle();
+-    await tester.pump(const Duration(milliseconds: 500));
+-    out['pause'] = p.playback!.playing;
+-    releve['a'] = out;
+-    record();
+-    expect(out['lecture_auto'], isTrue);
+-    expect((out['lecture']! as Map)['apres'], isNot(t0));
+-  }, timeout: _limit, skip: _skip('a'));
++      out['zoom'] = {'echelle': m.zoom.scale, ...await check(tester)};
++      await shot('sombre_zoom');
++      m.resetZoom();
++      // Lecture : le temps avance, images/s mesurées.
++      await view(tester, p, MannequinView.profil);
++      p.toggle();
++      final t0 = p.playback!.time;
++      for (var i = 0; i < 24; i++) {
++        await tester.pump(const Duration(milliseconds: 250));
++      }
++      out['lecture'] = {
++        'avant': t0,
++        'apres': p.playback!.time,
++        'en_cours': p.playback!.playing,
++        'images_s': p.fps,
++      };
++      await shot('sombre_lecture');
++      p.toggle();
++      await tester.pump(const Duration(milliseconds: 500));
++      out['pause'] = p.playback!.playing;
++      releve['a'] = out;
++      record();
++      expect(out['lecture_auto'], isTrue);
++      expect((out['lecture']! as Map)['apres'], isNot(t0));
++    },
++    timeout: _limit,
++    skip: _skip('a'),
++  );
+ 
+-  testWidgets('b : clair, animations réduites', (tester) async {
+-    await pumpScreen(tester, false);
+-    var p = await ready(tester);
+-    final out = <String, Object?>{};
+-    await view(tester, p, MannequinView.troisQuarts);
+-    for (final (name, t) in [('descente', 1.5), ('pause_basse', 3.5)]) {
+-      await at(tester, p, t);
+-      out['clair_$name'] = {...state(p), ...await check(tester)};
+-      await shot('clair_34_$name');
+-    }
+-    // Animations réduites : pas de lecture, images clés au curseur.
+-    await pumpScreen(tester, true, reduce: true);
+-    p = await ready(tester);
+-    await tester.pump(const Duration(seconds: 2));
+-    out['reduit_depart'] = {
+-      ...state(p),
+-      'bouton_lecture': find.byKey(const ValueKey('player-play')).evaluate().length,
+-    };
+-    await shot('reduit_depart');
+-    p.seek(3.2);
+-    for (var i = 0; i < 6; i++) {
+-      await tester.pump(const Duration(milliseconds: 250));
+-    }
+-    out['reduit_image_cle'] = state(p);
+-    await shot('reduit_image_cle');
+-    releve['b'] = out;
+-    record();
+-    expect(p.playback!.playing, isFalse);
+-    expect(p.playback!.time, 3);
+-  }, timeout: _limit, skip: _skip('b'));
++  testWidgets(
++    'b : clair, animations réduites',
++    (tester) async {
++      await pumpScreen(tester, false);
++      var p = await ready(tester);
++      final out = <String, Object?>{};
++      await view(tester, p, MannequinView.troisQuarts);
++      for (final (name, t) in [('descente', 1.5), ('pause_basse', 3.5)]) {
++        await at(tester, p, t);
++        out['clair_$name'] = {...state(p), ...await check(tester)};
++        await shot('clair_34_$name');
++      }
++      // Animations réduites : pas de lecture, images clés au curseur.
++      await pumpScreen(tester, true, reduce: true);
++      p = await ready(tester);
++      await tester.pump(const Duration(seconds: 2));
++      out['reduit_depart'] = {
++        ...state(p),
++        'bouton_lecture': find
++            .byKey(const ValueKey('player-play'))
++            .evaluate()
++            .length,
++      };
++      await shot('reduit_depart');
++      p.seek(3.2);
++      for (var i = 0; i < 6; i++) {
++        await tester.pump(const Duration(milliseconds: 250));
++      }
++      out['reduit_image_cle'] = state(p);
++      await shot('reduit_image_cle');
++      releve['b'] = out;
++      record();
++      expect(p.playback!.playing, isFalse);
++      expect(p.playback!.time, 3);
++    },
++    timeout: _limit,
++    skip: _skip('b'),
++  );
+ 
+-  testWidgets('c : images du GIF et halo par phase', (tester) async {
+-    await pumpScreen(tester, true);
+-    final p = await ready(tester);
+-    await view(tester, p, MannequinView.profil);
+-    ratio = .75;
+-    final out = <String, Object?>{};
+-    for (var k = 0; k < 12; k++) {
+-      final t = k * .5;
+-      await at(tester, p, t);
+-      out['gif_$k'] = {...state(p), ...await check(tester)};
+-      await shot('gif_${k.toString().padLeft(2, '0')}');
+-    }
+-    releve['c'] = out;
+-    record();
+-  }, timeout: _limit, skip: _skip('c'));
++  testWidgets(
++    'c : images du GIF et halo par phase',
++    (tester) async {
++      await pumpScreen(tester, true);
++      final p = await ready(tester);
++      await view(tester, p, MannequinView.profil);
++      ratio = .75;
++      final out = <String, Object?>{};
++      for (var k = 0; k < 12; k++) {
++        final t = k * .5;
++        await at(tester, p, t);
++        out['gif_$k'] = {...state(p), ...await check(tester)};
++        await shot('gif_${k.toString().padLeft(2, '0')}');
++      }
++      releve['c'] = out;
++      record();
++    },
++    timeout: _limit,
++    skip: _skip('c'),
++  );
+ }
+diff --git a/lib/animation_test_screen.dart b/lib/animation_test_screen.dart
+index eb93ee3..b83f9c1 100644
+--- a/lib/animation_test_screen.dart
++++ b/lib/animation_test_screen.dart
+@@ -57,7 +57,8 @@ class AnimationTestScreenState extends State<AnimationTestScreen> {
+         if (clip == null) _error = 'Aucune animation de test dans le registre.';
+       });
+     } catch (_) {
+-      if (mounted) setState(() => _error = 'Registre des animations illisible.');
++      if (mounted)
++        setState(() => _error = 'Registre des animations illisible.');
+     }
+   }
+ 
+diff --git a/lib/exercise_mannequin.dart b/lib/exercise_mannequin.dart
+index 8e33213..22d02c0 100644
+--- a/lib/exercise_mannequin.dart
++++ b/lib/exercise_mannequin.dart
+@@ -391,18 +391,18 @@ class ExerciseMannequinState extends State<ExerciseMannequin> {
+           )
+         else
+           Mannequin3D(
+-          key: const ValueKey('fiche-mannequin'),
+-          intensities: _muscles.intensities,
+-          stretched: _muscles.stretched,
+-          view: startView,
+-          height: widget.height,
+-          horizontalDragOnly: true,
+-          semanticLabel: semanticLabel,
+-          onReady: (ok) {
+-            if (mounted && ok != _ready3d) setState(() => _ready3d = ok);
+-          },
+-          fallback: fallback,
+-        ),
++            key: const ValueKey('fiche-mannequin'),
++            intensities: _muscles.intensities,
++            stretched: _muscles.stretched,
++            view: startView,
++            height: widget.height,
++            horizontalDragOnly: true,
++            semanticLabel: semanticLabel,
++            onReady: (ok) {
++              if (mounted && ok != _ready3d) setState(() => _ready3d = ok);
++            },
++            fallback: fallback,
++          ),
+         if (_ready3d && hidden.isNotEmpty)
+           Padding(
+             padding: const EdgeInsets.only(top: 8),
+diff --git a/lib/mannequin_3d.dart b/lib/mannequin_3d.dart
+index 002c1aa..8699458 100644
+--- a/lib/mannequin_3d.dart
++++ b/lib/mannequin_3d.dart
+@@ -989,16 +989,20 @@ class MannequinScene {
+         hi = b;
+         continue;
+       }
+-      lo.setValues(math.min(lo.x, a.x), math.min(lo.y, a.y), math.min(lo.z, a.z));
+-      hi.setValues(math.max(hi.x, b.x), math.max(hi.y, b.y), math.max(hi.z, b.z));
++      lo.setValues(
++        math.min(lo.x, a.x),
++        math.min(lo.y, a.y),
++        math.min(lo.z, a.z),
++      );
++      hi.setValues(
++        math.max(hi.x, b.x),
++        math.max(hi.y, b.y),
++        math.max(hi.z, b.z),
++      );
+     }
+     if (lo == null || hi == null) return restFraming;
+     final size = hi - lo;
+-    return MannequinFraming(
+-      (lo + hi) * .5,
+-      size.y,
+-      math.max(size.x, size.z),
+-    );
++    return MannequinFraming((lo + hi) * .5, size.y, math.max(size.x, size.z));
+   }
+ 
+   /// Ordre des maillages translucides : flutter_scene les trie par le centre
+diff --git a/lib/mannequin_clip.dart b/lib/mannequin_clip.dart
+index 1de4ce2..642ce03 100644
+--- a/lib/mannequin_clip.dart
++++ b/lib/mannequin_clip.dart
+@@ -407,7 +407,8 @@ double _phaseGain(ClipPhase p, double t, bool reduceMotion) {
+   final base = _baseGain(p.kind);
+   if (p.kind != PhaseKind.isometrique || reduceMotion) return base;
+   final u = (t - p.start) / kIsometricPeriod;
+-  return base + kIsometricPulse * (1 - math.cos(2 * math.pi * u)) / 2 -
++  return base +
++      kIsometricPulse * (1 - math.cos(2 * math.pi * u)) / 2 -
+       kIsometricPulse / 2;
+ }
+ 
+diff --git a/lib/mannequin_player.dart b/lib/mannequin_player.dart
+index ea8229e..11d3edf 100644
+--- a/lib/mannequin_player.dart
++++ b/lib/mannequin_player.dart
+@@ -236,7 +236,9 @@ class MannequinPlayerState extends State<MannequinPlayer>
+         ...widget.clip.keyTimes,
+         for (var t = 0.0; t < clip.duration; t += .5) t,
+       };
+-      final framing = scene.framingOver([for (final t in times) clip.sample(t)]);
++      final framing = scene.framingOver([
++        for (final t in times) clip.sample(t),
++      ]);
+       final playback = ClipPlayback(widget.clip, reduceMotion: _reduceMotion);
+       setState(() {
+         _clip = clip;
+@@ -447,7 +449,10 @@ class MannequinPlayerState extends State<MannequinPlayer>
+               if (!p.reduceMotion)
+                 IconButton.filledTonal(
+                   key: const ValueKey('player-play'),
+-                  constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
++                  constraints: const BoxConstraints(
++                    minWidth: 48,
++                    minHeight: 48,
++                  ),
+                   tooltip: p.playing ? 'Pause' : 'Lecture',
+                   onPressed: toggle,
+                   icon: Icon(p.playing ? Icons.pause : Icons.play_arrow),
+diff --git a/test/m7_player_test.dart b/test/m7_player_test.dart
+index 7fb963c..59aa02d 100644
+--- a/test/m7_player_test.dart
++++ b/test/m7_player_test.dart
+@@ -68,24 +68,33 @@ void main() {
+     });
+ 
+     test('phases et tempo', () {
+-      expect([for (final p in debug.phases) p.label], [
+-        'Descente · 3 s',
+-        'Pause basse · 1 s',
+-        'Montée · 1 s',
+-        'Pause haute · 1 s',
+-      ]);
+-      expect([for (final p in debug.phases) p.kind], [
+-        PhaseKind.excentrique,
+-        PhaseKind.isometrique,
+-        PhaseKind.concentrique,
+-        PhaseKind.isometrique,
+-      ]);
++      expect(
++        [for (final p in debug.phases) p.label],
++        [
++          'Descente · 3 s',
++          'Pause basse · 1 s',
++          'Montée · 1 s',
++          'Pause haute · 1 s',
++        ],
++      );
++      expect(
++        [for (final p in debug.phases) p.kind],
++        [
++          PhaseKind.excentrique,
++          PhaseKind.isometrique,
++          PhaseKind.concentrique,
++          PhaseKind.isometrique,
++        ],
++      );
+       expect(debug.phaseAt(0).name, 'Descente');
+       expect(debug.phaseAt(3.5).name, 'Pause basse');
+       expect(debug.phaseAt(4.2).name, 'Montée');
+       expect(debug.phaseAt(6).name, 'Pause haute');
+       expect(debug.keyTimes, [0, 3, 4, 5, 6]);
+-      expect(const ClipPhase('X', PhaseKind.concentrique, 0, 1.5).tempo, '1,5 s');
++      expect(
++        const ClipPhase('X', PhaseKind.concentrique, 0, 1.5).tempo,
++        '1,5 s',
++      );
+     });
+ 
+     test('une animation du propriétaire va sur sa fiche', () {
+@@ -149,28 +158,35 @@ void main() {
+ 
+     test('en-tête invalide refusé', () {
+       expect(
+-        () => MannequinClip.decode(
+-          Uint8List.fromList(const [1, 2, 3]),
+-          const ['Hips'],
+-        ),
++        () => MannequinClip.decode(Uint8List.fromList(const [1, 2, 3]), const [
++          'Hips',
++        ]),
+         throwsA(anything),
+       );
+     });
+   });
+ 
+   group('intensité par phase', () {
+-    test('vif en concentrique, doux en excentrique, pulsation en isométrie', () {
+-      final ph = debug.phases;
+-      expect(phaseHaloGain(ph, 1.5), closeTo(kGainEccentric, 1e-9));
+-      expect(phaseHaloGain(ph, 4.5), closeTo(kGainConcentric, 1e-9));
+-      expect(phaseHaloGain(ph, 1.5), lessThan(phaseHaloGain(ph, 4.5)));
+-      // pulsation lente autour de 0,8 en isométrie
+-      final iso = [for (var t = 3.25; t < 3.75; t += .05) phaseHaloGain(ph, t)];
+-      expect(iso.reduce(math.max) - iso.reduce(math.min), greaterThan(.02));
+-      for (final g in iso) {
+-        expect(g, inInclusiveRange(kGainIsometric - .08, kGainIsometric + .08));
+-      }
+-    });
++    test(
++      'vif en concentrique, doux en excentrique, pulsation en isométrie',
++      () {
++        final ph = debug.phases;
++        expect(phaseHaloGain(ph, 1.5), closeTo(kGainEccentric, 1e-9));
++        expect(phaseHaloGain(ph, 4.5), closeTo(kGainConcentric, 1e-9));
++        expect(phaseHaloGain(ph, 1.5), lessThan(phaseHaloGain(ph, 4.5)));
++        // pulsation lente autour de 0,8 en isométrie
++        final iso = [
++          for (var t = 3.25; t < 3.75; t += .05) phaseHaloGain(ph, t),
++        ];
++        expect(iso.reduce(math.max) - iso.reduce(math.min), greaterThan(.02));
++        for (final g in iso) {
++          expect(
++            g,
++            inInclusiveRange(kGainIsometric - .08, kGainIsometric + .08),
++          );
++        }
++      },
++    );
+ 
+     test('jamais de saut ni de clignotement', () {
+       final ph = debug.phases;
+@@ -285,51 +301,52 @@ void main() {
+       expect(find.byKey(const ValueKey('player-play')), findsNothing);
+     });
+ 
+-    testWidgets('fiche animée sans Flutter GPU : repli 2D, aucun lecteur vide', (
+-      tester,
+-    ) async {
+-      final saved = ClipRegistry.loaded;
+-      ClipRegistry.loaded = ClipRegistry([
+-        ClipEntry(
+-          id: 'back-squat',
+-          asset: debug.asset,
+-          name: 'Back squat',
+-          exercises: const ['back-squat'],
+-          debug: false,
+-          fps: 30,
+-          frames: 181,
+-          bytes: debug.bytes,
+-          duration: 6,
+-          phases: debug.phases,
+-        ),
+-      ]);
+-      addTearDown(() => ClipRegistry.loaded = saved);
+-      await tester.pumpWidget(
+-        page(
+-          const Scaffold(
+-            body: SingleChildScrollView(
+-              child: ExerciseMannequin(
+-                exerciseId: 'back-squat',
+-                primaires: ['vaste_lateral'],
++    testWidgets(
++      'fiche animée sans Flutter GPU : repli 2D, aucun lecteur vide',
++      (tester) async {
++        final saved = ClipRegistry.loaded;
++        ClipRegistry.loaded = ClipRegistry([
++          ClipEntry(
++            id: 'back-squat',
++            asset: debug.asset,
++            name: 'Back squat',
++            exercises: const ['back-squat'],
++            debug: false,
++            fps: 30,
++            frames: 181,
++            bytes: debug.bytes,
++            duration: 6,
++            phases: debug.phases,
++          ),
++        ]);
++        addTearDown(() => ClipRegistry.loaded = saved);
++        await tester.pumpWidget(
++          page(
++            const Scaffold(
++              body: SingleChildScrollView(
++                child: ExerciseMannequin(
++                  exerciseId: 'back-squat',
++                  primaires: ['vaste_lateral'],
++                ),
+               ),
+             ),
+           ),
+-        ),
+-      );
+-      for (var i = 0; i < 5; i++) {
+-        await tester.runAsync(
+-          () => Future<void>.delayed(const Duration(milliseconds: 20)),
+         );
+-        await tester.pump();
+-      }
+-      expect(
+-        find.byKey(const ValueKey('fiche-mannequin-anime')),
+-        findsOneWidget,
+-      );
+-      expect(find.byKey(const ValueKey('player-play')), findsNothing);
+-      expect(find.byKey(const ValueKey('player-slider')), findsNothing);
+-      expect(tester.takeException(), isNull);
+-    });
++        for (var i = 0; i < 5; i++) {
++          await tester.runAsync(
++            () => Future<void>.delayed(const Duration(milliseconds: 20)),
++          );
++          await tester.pump();
++        }
++        expect(
++          find.byKey(const ValueKey('fiche-mannequin-anime')),
++          findsOneWidget,
++        );
++        expect(find.byKey(const ValueKey('player-play')), findsNothing);
++        expect(find.byKey(const ValueKey('player-slider')), findsNothing);
++        expect(tester.takeException(), isNull);
++      },
++    );
+ 
+     testWidgets('écran Animation de test, libellé comme test', (tester) async {
+       await tester.pumpWidget(page(const AnimationTestScreen()));
+@@ -384,7 +401,11 @@ void main() {
+ 
+   test('assets du lecteur déclarés', () async {
+     for (final a in [kMixamoRigAsset, kMixamoSkinAsset, kClipIndexAsset]) {
+-      expect((await rootBundle.load(a)).lengthInBytes, greaterThan(0), reason: a);
++      expect(
++        (await rootBundle.load(a)).lengthInBytes,
++        greaterThan(0),
++        reason: a,
++      );
+     }
+     expect(rig.bones, hasLength(65));
+     expect(rig.posture('affichage'), isNotNull);
