@@ -155,6 +155,9 @@ Modèle Claude : Opus 5.5 pour tous les lots, effort accru demandé sur M5 (sque
 ### Pilotage (29/09/2026, 17:00)
 - M56 validé avec ses corrections 1 à 4 (5.5.4). Le propriétaire produit lui-même les animations en parallèle ; ordre confirmé : M6b (correctifs, mannequin fixe) puis M7 (lecteur, intensité par phase, import de ses animations, animation de débogage réservée aux tests). M7b à M18 restent à redéfinir.
 
+### Pilotage (29/09/2026, 17:15) — nouveau modèle
+- Le propriétaire fournit `character.fbx` (Mixamo Ch36, squelette `mixamorig1:` 65 os, 28 880 triangles, sans animation). Il remplace l'écorché partout ; animations : un FBX Mixamo « Without Skin » par exercice ; carrure « un peu plus fit, sans abus ni déformation » ; ressources sous licence chiffrées dans le dépôt (le dépôt est public : les assets de release sont téléchargeables par tous). Lot M6c ajouté entre M6b et M7 ; M7 adapté au format Mixamo. Clé transmise au propriétaire (secret GitHub `KT_ASSETS_KEY` à créer) et aux sessions au lancement.
+
 ## En attente du propriétaire
 - Redéfinition des lots M7b à M18 après « plus d'animation, positions à la main plus tard » : que reste-t-il à faire côté application (correctifs M6b ; filtre « Muscles profonds » sans effet ; muscles selon la position quand les positions existeront) ?
 - Positions d'exercice : sous quelle forme seront-elles fournies (fichier posé du même écorché ? images ?) pour que les lots suivants les intègrent.

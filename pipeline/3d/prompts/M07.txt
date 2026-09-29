@@ -1,10 +1,10 @@
 LOT M7 — LECTEUR D'ANIMATION, INTENSITÉ PAR PHASE ET IMPORT DES ANIMATIONS DU PROPRIÉTAIRE (testés avec une animation de débogage)
-Modèle : Claude Opus 5.5, effort élevé. Contexte (29/09/2026) : l'application affiche l'écorché acheté, fixe (plus d'animation ni de posture depuis M56 correction 2). Le propriétaire produit lui-même, en parallèle, les animations des exercices sur ce même écorché. Une seule action : tout préparer pour qu'elles s'intègrent sans nouveau développement, et le prouver avec une animation de débogage.
+Modèle : Claude Opus 5.5, effort élevé. Contexte (29/09/2026) : l'application affiche le personnage Mixamo de M6c, fixe. Le propriétaire produit lui-même, en parallèle, les animations des exercices sur ce même écorché. Une seule action : tout préparer pour qu'elles s'intègrent sans nouveau développement, et le prouver avec une animation de débogage.
 
-1. Format et import des animations du propriétaire
-— Lis d'abord comment l'écorché acheté est converti (`tools/anatomy/build_model.py --zip`, archive `Archive.zip` de la release `modele-achete`, licence commerciale : jamais dans le dépôt, ni ses dérivés bruts) et s'il porte un squelette. Sinon, ajoute-lui un squelette de débogage minimal (bassin, rachis, tête, bras, avant-bras, mains, cuisses, jambes, pieds ; poids automatiques) dans la chaîne de conversion, suffisant pour tester ; documente-le comme provisoire (le squelette définitif sera celui des animations du propriétaire).
-— Définis le format d'entrée le plus simple pour lui (par ordre de préférence : glTF/GLB avec squelette et clips nommés par identifiant d'exercice ; FBX accepté si convertible sans perte par Blender sans interface) et l'outil `tools/anatomy/import_animations.py` qui : lit ses fichiers (déposés comme asset d'une release GitHub dédiée, jamais dans le dépôt si la licence l'interdit), vérifie la correspondance avec le squelette de l'écorché, rééchantillonne, compresse chaque clip (≤ 5 Ko), l'associe à l'exercice du pack et au registre `assets/anatomy/clips/index.json`, et échoue avec un message clair sinon.
-— Écris `docs/ANIMATIONS_PROPRIETAIRE.md` : mode d'emploi en français simple, faisable depuis un téléphone (où déposer ses fichiers, comment les nommer, comment déclencher l'import), avec la liste des identifiants d'exercices de son programme.
+1. Import des animations Mixamo du propriétaire (décision du 29/09/2026)
+— Le mannequin est le personnage Mixamo Ch36 de M6c (squelette `mixamorig1:`, 65 os). Le propriétaire fournit **un FBX Mixamo « Without Skin » par animation**, nommé par l'identifiant d'exercice du pack (liste de son programme dans `docs/ANIMATIONS_PROPRIETAIRE.md`).
+— Outil `tools/anatomy/import_animations.py` : lit ses FBX, vérifie le squelette (noms et hiérarchie Mixamo), retire le déplacement racine parasite si l'exercice est sur place (option par exercice), rééchantillonne, compresse chaque clip (≤ 5 Ko si possible, sinon mesure et justifie), chiffre les sources (`assets_secure/`, règles de M6c : jamais en clair dans le dépôt), l'associe à l'exercice et au registre `assets/anatomy/clips/index.json`, et échoue avec un message clair sinon.
+— `docs/ANIMATIONS_PROPRIETAIRE.md` : mode d'emploi en français simple, faisable depuis un téléphone (réglages d'export Mixamo : Without Skin, 30 i/s, sans réduction d'images clés ; où déposer les fichiers ; comment les nommer ; comment demander l'import).
 
 2. Lecteur
 — Sous le mannequin animé : lecture / pause, curseur de temps (glisser = parcourir le mouvement), nom de la phase en cours et son tempo (ex. « Descente · 3 s »), boutons de vues. Cibles ≥ 48 dp, libellés accessibles.
@@ -13,7 +13,7 @@ Modèle : Claude Opus 5.5, effort élevé. Contexte (29/09/2026) : l'application
 — Tant qu'un exercice n'a pas d'animation du propriétaire, sa fiche reste exactement comme aujourd'hui (mannequin fixe) : aucun lecteur vide, aucune régression.
 
 3. Animation de débogage (demande du propriétaire : « pour tester le tout »)
-— Une animation simple et lisible sur l'écorché (par exemple : squat lent au poids du corps, 4 phases : descente 3 s, pause 1 s, montée 1 s, pause 1 s), produite par la chaîne d'import du point 1 comme si elle venait du propriétaire, avec ses muscles ciblés et ses phases.
+— Une animation simple et lisible sur le squelette Mixamo (par exemple : squat lent au poids du corps, 4 phases : descente 3 s, pause 1 s, montée 1 s, pause 1 s), produite comme un FBX « Without Skin » et passée par la chaîne d'import du point 1 comme si elle venait du propriétaire, avec ses muscles ciblés et ses phases.
 — Visible seulement dans Réglages › À propos › Moteur 3D › « Animation de test » (libellée comme test), jamais dans une fiche d'exercice. Elle sert au propriétaire à vérifier sur son téléphone : fluidité (images/s affichées), lecteur, curseur, phases, intensité par phase, vues, zoom, réduction des animations.
 
 4. Contrôles et livraison
