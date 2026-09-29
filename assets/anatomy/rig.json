@@ -455,9 +455,9 @@
       0.0,
       0.0
      ],
-     "min": -60,
+     "min": -75,
      "max": 180,
-     "source": "AAOS"
+     "source": "AAOS, KAP"
     },
     {
      "cle": "abduction",
@@ -947,9 +947,9 @@
       -0.0,
       -0.0
      ],
-     "min": -60,
+     "min": -75,
      "max": 180,
-     "source": "AAOS"
+     "source": "AAOS, KAP"
     },
     {
      "cle": "abduction",

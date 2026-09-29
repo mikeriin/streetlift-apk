@@ -11,9 +11,16 @@
 // pénétration, entre les images clés comprises).
 //
 // `assets/anatomy/clips/index.json` : registre des exercices convertis
-// (statut, date, contrôles passés). L'application montre l'animation 3D d'un
-// exercice seulement s'il y figure avec le statut « valide » ; sinon la
+// (statut, date, contrôles passés). L'application montre la démonstration 3D
+// d'un exercice seulement s'il y figure avec le statut « valide » ; sinon la
 // démonstration 2D reste en place.
+//
+// Correction 1 de M56 (décision du propriétaire, 29/09/2026) : l'application
+// ne joue plus la boucle ; elle montre les **positions de départ et de fin**
+// (`positions` du clip : nom, clé de la fiche, instant de la chronologie)
+// avec un fondu doux de l'une à l'autre, comme les postures de l'écran
+// Anatomie. La chronologie complète reste dans le clip (contrôles de la
+// chaîne de calcul, captures).
 import 'dart:convert';
 import 'dart:io' show gzip;
 
@@ -56,6 +63,14 @@ class ClipEquipment {
   const ClipEquipment(this.id, this.position, this.yawDegrees, this.moving);
 }
 
+/// Position montrée par l'application (départ, fin) : instant de la
+/// chronologie où la posture est atteinte.
+class ClipPosition {
+  final String name, key;
+  final double time;
+  const ClipPosition(this.name, this.key, this.time);
+}
+
 /// Posture d'une image clé et positions du matériel mobile.
 class ClipKey {
   final RigPose pose;
@@ -73,6 +88,9 @@ class MannequinClip {
   final List<(double, int)> timeline;
   final List<ClipPhase> phases;
   final List<ClipEquipment> equipment;
+
+  /// Positions montrées (départ, fin) ; à défaut, positions clés des phases.
+  final List<ClipPosition> positions;
 
   /// Cadrage fixe de la boucle (repère glTF) : corps sur toutes les
   /// postures et matériel, sol exclu.
@@ -93,6 +111,7 @@ class MannequinClip {
     required this.center,
     required this.height,
     required this.width,
+    this.positions = const [],
   });
 
   factory MannequinClip.fromJson(Map<String, dynamic> j) {
@@ -151,8 +170,18 @@ class MannequinClip {
       center: v3(framing['centre'] as List),
       height: d(framing['hauteur']),
       width: d(framing['largeur']),
+      positions: [
+        for (final p in (j['positions'] as List?) ?? const [])
+          ClipPosition(p['nom'] as String, p['cle'] as String, d(p['temps'])),
+      ],
     );
   }
+
+  /// Positions montrées par l'application : départ et fin du clip, sinon
+  /// les positions clés des phases.
+  List<ClipPosition> get shownPositions => positions.isNotEmpty
+      ? positions
+      : [for (final (name, t) in keyPositions) ClipPosition(name, name, t)];
 
   factory MannequinClip.fromGzip(Uint8List bytes) => MannequinClip.fromJson(
     jsonDecode(utf8.decode(gzip.decode(bytes))) as Map<String, dynamic>,

@@ -1,4 +1,13 @@
-# Kalis Track 5.5.0 — Mannequin anatomique 3D
+# Kalis Track 5.5.1 — Mannequin anatomique 3D
+
+## 5.5.1 — Corrections du propriétaire sur M56 (correction 1 du lot M56)
+
+- **Proportions du mannequin** recalées sur la référence du propriétaire (écorché d'athlète, trois vues) : largeurs de face et profondeurs de profil mesurées sur les images (`tools/anatomy/silhouette.py`) ; cuisses moins larges et plus profondes, pectoraux plats (plus de « plaques »), taille et fessiers plus pleins (dilatation radiale autour du tronc), bras et mollets un peu plus forts, épaules à la largeur de la référence. Tours : bras 37,7 cm, avant-bras 27,8, poitrine 97,1, taille 74,5, cuisse 52,0, mollet 37,5, cou 34,0, bideltoïde 51,0 ; 0 interpénétration > 1 mm.
+- **Peau bras levés** : plus d'« omoplates arrachées » ni de boucles sous les aisselles en suspension — os d'insertion (position de l'insertion humérale, orientation du tronc) pour le grand dorsal, le grand rond et les pectoraux, coiffe des rotateurs portée par la scapula (tendon seul collé à la tête humérale), deltoïde tout au bras 4 cm sous la tête, sonnette et bascule de la scapula dans son plan (35°) ; 56 os.
+- **Fiches Traction pronation, Dips, Back squat** : plus d'animation en boucle ; le mannequin montre la **position de départ**, puis la **position de fin** (puces sous la vue), avec un fondu doux (instantané si les animations sont réduites). Positions reprises des références d'exécution fournies par le propriétaire (dataset `exercises-dataset`, médias Gym visual, utilisés comme référence seulement) : traction en suspension bras à la verticale, ceinture scapulaire haussée, gainage hollow, genoux fléchis ; dips coudes ouverts (18-26°), bras à l'horizontale en bas, tronc incliné ≈ 23°, cuisses verticales et tibias derrière ; back squat inchangé.
+- **Carte « Koach · séance du jour »** sur sa propre page, avant l'exercice 1 (quand Koach a quelque chose à dire à l'ouverture de la séance) ; l'exercice 1 commence page suivante.
+
+Détail : `SUIVI_PROJET.md` (M56, correction 1).
 
 ## 5.5.0 — Mannequin musclé, squelette refait, premières animations (lot M56 du pipeline « Mannequin 3D »)
 

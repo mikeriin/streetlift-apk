@@ -364,6 +364,15 @@ class Fiche:
             da, db = pa.get(bone, {}), pb.get(bone, {})
             out[bone] = {k: da.get(k, 0.0) + (db.get(k, 0.0) - da.get(k, 0.0)) * u
                          for k in set(da) | set(db)}
+        # Bornes propres à une position (`bornes_positions`, correction 1 :
+        # coudes des dips ouverts en bas seulement), interpolées entre a et b.
+        bp = self.d['ik'].get('bornes_positions', {})
+        ba, bb = bp.get(a, {}), bp.get(b, {})
+        self.position_bounds = {}
+        for k in set(ba) | set(bb):
+            la, ha = ba.get(k) or bb[k]
+            lb, hb = bb.get(k) or ba[k]
+            self.position_bounds[k] = (la + (lb - la) * u, ha + (hb - ha) * u)
         return out
 
     def free_keys(self):
@@ -383,7 +392,8 @@ class Fiche:
 
     def bounds(self, keys):
         lo, hi = [], []
-        extra = self.d['ik'].get('bornes', {})
+        extra = dict(self.d['ik'].get('bornes', {}))
+        extra.update(getattr(self, 'position_bounds', {}))
         for k in keys:
             if k in extra:
                 lo.append(float(extra[k][0]))
@@ -804,10 +814,27 @@ def build(model, data, log=print):
                 continue
             timeline.append((round(tt, 4), i))
         phases.append({'nom': ph['nom'], 'type': ph['type'], 'debut': round(t, 4),
-                       'fin': round(t + dur, 4)})
+                       'fin': round(t + dur, 4), 'de': a, 'vers': b})
         t += dur
     fiche.key_index = key_index
     return fiche, poses, timeline, phases, values
+
+
+def key_positions(data, phases):
+    """Positions montrées par l'application (correction 1 : positions de
+    départ et de fin, sans animation) : nom, clé de la fiche, instant de la
+    chronologie où la posture est atteinte (premier instant où elle est
+    tenue, sinon fin du mouvement qui y mène)."""
+    out = []
+    for label, key in (('Départ', data.get('depart')), ('Fin', data.get('fin'))):
+        if not key:
+            continue
+        held = [ph['debut'] for ph in phases if ph['de'] == key and ph['vers'] == key]
+        reached = [ph['fin'] for ph in phases if ph['vers'] == key]
+        starts = [ph['debut'] for ph in phases if ph['de'] == key]
+        t = (held or reached or starts)[0]
+        out.append({'nom': label, 'cle': key, 'temps': t})
+    return out
 
 
 def _guess(fiche, base, key):
@@ -1234,7 +1261,8 @@ def clip_json(model, fiche, poses, timeline, phases, results):
                       for i in moving}} if moving else {}),
         } for p in poses],
         'chronologie': [[t, i] for t, i in timeline],
-        'phases': phases,
+        'phases': [{k: v for k, v in ph.items() if k not in ('de', 'vers')} for ph in phases],
+        'positions': key_positions(data, phases),
         'materiel': [{'id': i.id, 'position': [round(float(c), 4) for c in i.position],
                       'rotation_y': i.yaw, 'mobile': bool(i.attach)}
                      for i in fiche.placed.values()],

@@ -45,6 +45,12 @@ class RigBone {
   final double bulge;
   final vm.Vector3? bulgeAxis;
 
+  /// M56 correction 1 : os d'insertion — suit la position de l'insertion
+  /// sur son parent (bras) mais garde l'orientation de l'os [follows]
+  /// (tronc) : rotation locale = inverse de la rotation cumulée des os
+  /// entre [follows] (exclu) et le parent (inclus).
+  final bool insertion;
+
   /// Tête au repos (repère glTF).
   final vm.Vector3 head;
   const RigBone(
@@ -54,6 +60,7 @@ class RigBone {
     this.head, {
     this.follows,
     this.helperPart = .5,
+    this.insertion = false,
     this.bulge = 0,
     this.bulgeAxis,
   });
@@ -165,6 +172,7 @@ class MannequinRig {
           bulgeAxis: (b['aide'] as Map?)?['axe'] == null
               ? null
               : v3((b['aide'] as Map)['axe'] as List),
+          insertion: (b['aide'] as Map?)?['insertion'] == true,
         ),
     ];
     final postures = <RigPosture>[];
@@ -246,6 +254,18 @@ class MannequinRig {
     for (final b in bones) {
       final f = b.follows;
       if (f == null) continue;
+      if (b.insertion) {
+        // Orientation du tronc : inverse de la chaîne parent → … → suivi.
+        var chain = vm.Quaternion.identity();
+        var name = b.parent;
+        while (name != null && name != f) {
+          chain = pose.rotationOf(name) * chain;
+          name = bones[index[name]!].parent;
+        }
+        chain.normalize();
+        rots[b.name] = chain.conjugated();
+        continue;
+      }
       final q = pose.rotationOf(f);
       if (b.helperPart > 0) {
         rots[b.name] = quatSlerp(vm.Quaternion.identity(), q, b.helperPart);

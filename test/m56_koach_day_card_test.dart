@@ -119,28 +119,26 @@ void main() {
         reason: key,
       );
     }
-    // Première chose de la page, avant le premier exercice.
+    // Correction 1 : page à part, avant l'exercice 1 (rien de l'exercice
+    // sur cette page), première chose de la page.
     final cardBox = tester.getRect(card);
-    final list = find.descendant(
-      of: find.byType(PageView),
-      matching: find.byType(ListView),
-    );
-    expect(find.descendant(of: list.first, matching: card), findsOneWidget);
-    expect(
-      cardBox.bottom,
-      lessThanOrEqualTo(
-        tester.getRect(find.byTooltip('Valider la série 1').first).top,
-      ),
-    );
+    expect(find.byKey(const ValueKey('session-koach-page')), findsOneWidget);
+    expect(find.byTooltip('Valider la série 1'), findsNothing);
+    expect(find.text('Koach · séance du jour'), findsOneWidget);
     // Rien de Koach dans l'en-tête de la séance.
     expect(
       cardBox.top,
       greaterThanOrEqualTo(tester.getRect(find.byType(PageView)).top),
     );
     expect(find.text('KOACH · SÉANCE DU JOUR'), findsOneWidget);
-    // Pages suivantes : pas de carte.
+    // Page suivante : l'exercice 1, sans carte.
     await tester.tap(find.text('Suivant'));
     await tester.pumpAndSettle();
+    expect(
+      find.text('Exercice 1 / ${store.groups(d1).length}'),
+      findsOneWidget,
+    );
+    expect(find.byTooltip('Valider la série 1'), findsWidgets);
     expect(
       find.descendant(
         of: find.byType(PageView),

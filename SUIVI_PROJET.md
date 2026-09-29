@@ -1,8 +1,21 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M56 (refonte du mannequin, du squelette et de la peau ; matériel, chaîne d'animation et 3 pilotes ; carte Koach ; préchargement), version 5.5.0**  
+**Passe actuelle : pipeline « Mannequin 3D », lot M56 (refonte du mannequin, du squelette et de la peau ; matériel, chaîne d'animation et 3 pilotes ; carte Koach ; préchargement), version 5.5.0, puis correction 1 (retour du propriétaire), version 5.5.1**  
 **Date : 28-29 septembre 2026, Europe/Paris — version : 5.5.0+79 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d-fable`, rendu réel sur émulateur Android).**
+
+## M56.C1 — Correction 1 (retour du propriétaire du 29/09/2026, version 5.5.1)
+
+| Point | Retour | Correction |
+| --- | --- | --- |
+| Modèle | « plus musclé mais difforme : cuisses et pecs trop gros par rapport au reste », référence = écorché d'athlète (3 images) | `tools/anatomy/silhouette.py` : largeurs (face) et profondeurs (profil) de la référence en fraction de H, mesurées sur les images ; `build_body.py` réajusté : bras, épaules, cuisses, mollets sur leur largeur ; cuisse anisotrope (plus profonde que large) ; pectoraux fixés à 0,6 (1,6 avant) ; taille à la cible nominale 0,45 H et fessiers à la largeur de hanches de la référence (dilatation radiale autour de la colonne / du bassin) ; érecteurs 0,30. Résultat : bideltoïde, poitrine, taille, hanches, cuisse, genou, mollet dans ± 6 % de la référence ; bras à mi-chemin (−6,5 %, tour 0,222 H = cible nominale) ; 0 pénétration > 1 mm (37 itérations, amincissement des sommets en sandwich corrigé). |
+| Traction, position basse | « muscles et omoplates du modèle vont s'arracher », « il faut un V » ; « coudes trop en arrière », « abdos pas assez engagés » | Ailes = coiffe des rotateurs (poids mêlés scapula / bras portés par la chaîne d'aide à 155°) et grand dorsal / grand rond emportés par la rotation du bras : os d'insertion `arm_ins` (position de l'insertion humérale, orientation du tronc → la nappe s'étire en ligne droite, V), coiffe et grand rond sur la scapula (tendon seul collé à la tête humérale), deltoïde tout au bras 4 cm sous la tête (10 avant), sonnette et bascule dans le plan de la scapula (35°). Posture : bras à la verticale (flexion humérale 0), clavicule +20°, sonnette 45°, lombaires fléchies 8° et côtes basses (hollow), hanches 15°, genoux 90° (référence). |
+| Dips, position basse | « coudes trop resserrés » | 5.5.0 : coudes serrés derrière le dos (abduction −25°). Extension humérothoracique portée à 75° (glénohumérale 50° + bascule antérieure 20°), bornes par position (`bornes_positions`), coudes ouverts 18-26°, bras à l'horizontale (épaule au niveau du coude ± 3 cm), tronc 23°, hanches 40°, genoux 92°, centre de masse à l'aplomb des prises. |
+| Animations | « on fait juste un aperçu position de départ et position de fin » (décision après discussion : plus d'animation complète, GymVisual / `exercises-dataset` comme référence d'exécution seulement, licence des médias non acquise) | Clip : `positions` (départ, fin : nom, clé de la fiche, instant) ; application : `Mannequin3D` sans boucle ni ticker, position de départ affichée, puces Départ / Fin, fondu par `_poseTween` (0,75 s, matériel mobile interpolé), instantané si animations réduites ; `seekClip` gardé pour les captures. |
+| Carte Koach | « doit être sur une autre page que la carte du premier exercice, juste avant » | Page « Koach · séance du jour » avant l'exercice 1 quand Koach a quelque chose à dire à l'ouverture (questionnaire, fatigue, adaptation) ; reprise d'une séance entamée : page de l'exercice en cours ; sans page Koach, une indication apparue en cours de séance reste en tête de l'exercice 1 (comme avant). |
+| Anatomie | « aussi nul que la dernière fois » → le modèle lui-même | Corrigé par les proportions ci-dessus ; postures recalculées (bras levés : sonnette 50°, clavicule 20°, part glénohumérale 122°). |
+
+Contrôles : Python 126 tests (`test_m56_body.py` réécrit sur les cibles de silhouette), Dart (`m5_rig_test` 56 os, os d'insertion ; `m56_clip_test` positions ; `m56_koach_day_card_test` page à part), émulateur (`animations_m56_test` : départ, mi-fondu, fin, 3/4, animations réduites), planches Blender regardées (avant / après, 12 postures, suspension dos et face, positions des trois exercices).
 
 ## M56.0 — Base et demande
 

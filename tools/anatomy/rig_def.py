@@ -249,7 +249,10 @@ DOF = {
     # scapula et la clavicle placées (voir `posture_rotations`). La part
     # glénohumérale reste contrôlée (GH_MAX, rythme scapulo-huméral 2:1).
     'upperarm': [
-        ('flexion', 'Flexion (+) / extension (−) du bras / thorax', NX, -60, 180, 'AAOS'),
+        # Extension humérothoracique jusqu'à 75° (correction 1 : bas des dips,
+        # extension glénohumérale ≈ 50° (KAP) + bascule antérieure de la
+        # scapula ≈ 20° ; l'AAOS donne 60° bras seul).
+        ('flexion', 'Flexion (+) / extension (−) du bras / thorax', NX, -75, 180, 'AAOS, KAP'),
         ('abduction', 'Abduction (+) / adduction (−) du bras / thorax', Z, -25, 170,
          'AAOS'),
         ('rotation', 'Rotation interne (+) / externe (−)', NY, -90, 70, 'AAOS'),

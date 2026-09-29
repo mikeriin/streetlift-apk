@@ -27,7 +27,7 @@
    ]
   }
  ],
- "note": "Barre haute (sur les trapèzes, au-dessus de l'épine de la scapula), barre olympique chargée de deux disques de 20 kg (60 kg), mains à 76 cm d'axe à axe ; pieds un peu plus larges que les hanches, pointes à ≈ 20° vers l'extérieur, fixes et à plat ; descente sous la parallèle (hanche sous le genou), genoux dans l'axe des pieds, dos neutre ; barre à l'aplomb du milieu du pied. M56 : vue par défaut 3/4 (de profil, le disque de la barre cache le tronc et la tête). Revue M56 : pieds à ≈ 44 cm d'axe à axe (largeur des épaules, bideltoïde 48 cm ; contrôle 38-50 cm), hanche 4 cm sous le genou en bas (nettement sous la parallèle). Rotation du tibia (genou fléchi) laissée au calcul : sans elle, la cheville et la hanche compensaient seules (inversion à 35°, rotation interne de hanche 28°) et le pied glissait de 2 cm en bas.",
+ "note": "Barre haute (sur les trapèzes, au-dessus de l'épine de la scapula), barre olympique chargée de deux disques de 20 kg (60 kg), mains à 76 cm d'axe à axe ; pieds un peu plus larges que les hanches, pointes à ≈ 20° vers l'extérieur, fixes et à plat ; descente sous la parallèle (hanche sous le genou), genoux dans l'axe des pieds, dos neutre ; barre à l'aplomb du milieu du pied. M56 : vue par défaut 3/4 (de profil, le disque de la barre cache le tronc et la tête). Revue M56 : pieds à ≈ 44 cm d'axe à axe (largeur des épaules, bideltoïde 48 cm ; contrôle 38-50 cm), hanche 4 cm sous le genou en bas (nettement sous la parallèle). Rotation du tibia (genou fléchi) laissée au calcul : sans elle, la cheville et la hanche compensaient seules (inversion à 35°, rotation interne de hanche 28°) et le pied glissait de 2 cm en bas. Correction 1 (29/09/2026) : positions seules dans l'application (départ = debout, fin = bas), référence GymVisual « barbell high bar squat » 1436 conforme.",
  "sources": [
   "Pack Kalis Track : points clés (« Barre sur le haut du dos, gainage avant la descente », « Genoux dans l'axe, descente au moins à la parallèle », « Remonte en poussant le sol, poitrine haute »), erreurs (dos qui s'arrondit, genoux qui rentrent), plan sagittal.",
   "Schoenfeld, « Squatting kinematics and kinetics and their application to exercise performance », J Strength Cond Res 24(12), 2010 : barre à l'aplomb du milieu du pied, genoux dans l'axe des pieds, rachis neutre.",
@@ -285,5 +285,7 @@
    "max": 0.5
   }
  ],
- "vue": "troisQuarts"
+ "vue": "troisQuarts",
+ "depart": "haut",
+ "fin": "bas"
 }

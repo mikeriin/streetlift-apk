@@ -23,7 +23,7 @@
    ]
   }
  ],
- "note": "Prise neutre (paumes face à face) sur des barres de 55 cm d'axe à axe ; départ en appui bras tendus, épaules basses ; descente jusqu'à environ 90° aux coudes, buste légèrement penché, coudes vers l'arrière ; genoux fléchis à 90°, cuisses dans l'axe du tronc, pieds derrière (loin du sol). M56 : bas de dip aux coudes à ≈ 98° (épaules au niveau des coudes ou sous eux, contrôlé), buste incliné de 20 à 32° (contrôlé), coudes vers l'arrière ; les hanches fléchissent librement (0 à 35°) pour que le centre de masse reste au-dessus des mains ; cuisses légèrement écartées (3°) pour que les jambes fléchies ne se touchent pas. Revue M56 : jambes fixes (hanches à 28°, genoux à 92°, dans les deux positions : aucun balancement), coudes à 102° en bas (épaule ≥ 1 cm sous le coude), rachis neutre en bas (thorax légèrement ouvert, cou en légère extension) ; le centre de masse reste à moins de 3 cm de l'aplomb des mains. Rotation de l'humérus et pronation laissées au calcul (bornées) : en bas, humérus en rotation externe (≈ 20°) et coudes serrés vers l'arrière, poignets dans leurs limites. Seconde revue : l'épaule passe 1,6 cm sous le coude ; aller plus bas demanderait plus de 60° d'extension d'épaule (limite AAOS) ou un buste incliné au-delà de 30°.",
+ "note": "Prise neutre (paumes face à face) sur des barres de 55 cm d'axe à axe ; départ en appui bras tendus, épaules basses ; descente jusqu'à environ 90° aux coudes, buste légèrement penché, coudes vers l'arrière ; genoux fléchis à 90°, cuisses dans l'axe du tronc, pieds derrière (loin du sol). M56 : bas de dip aux coudes à ≈ 98° (épaules au niveau des coudes ou sous eux, contrôlé), buste incliné de 20 à 32° (contrôlé), coudes vers l'arrière ; les hanches fléchissent librement (0 à 35°) pour que le centre de masse reste au-dessus des mains ; cuisses légèrement écartées (3°) pour que les jambes fléchies ne se touchent pas. Revue M56 : jambes fixes (hanches à 28°, genoux à 92°, dans les deux positions : aucun balancement), coudes à 102° en bas (épaule ≥ 1 cm sous le coude), rachis neutre en bas (thorax légèrement ouvert, cou en légère extension) ; le centre de masse reste à moins de 3 cm de l'aplomb des mains. Rotation de l'humérus et pronation laissées au calcul (bornées) : en bas, humérus en rotation externe (≈ 20°) et coudes serrés vers l'arrière, poignets dans leurs limites. Seconde revue : l'épaule passe 1,6 cm sous le coude ; aller plus bas demanderait plus de 60° d'extension d'épaule (limite AAOS) ou un buste incliné au-delà de 30°. Correction 1 (29/09/2026, référence GymVisual « chest dip » 0251) : coudes ouverts de 18 à 26° en bas (5.5.0 : coudes serrés derrière le dos, abduction −25°), « coudes trop resserrés » ; extension humérothoracique jusqu'à 75° (rig) : bras à l'horizontale, épaule au niveau du coude (± 3 cm), tronc incliné ≈ 23°, hanches fléchies 40° et genoux 92° (cuisses verticales, tibias derrière, comme la référence), centre de masse à l'aplomb des prises ; buste incliné ≈ 28°, jambes fléchies derrière, hanches un peu plus ouvertes en bas (équilibre au-dessus des mains, comme la référence). Positions seules dans l'application (départ = haut, fin = bas).",
  "sources": [
   "Pack Kalis Track : points clés (« Épaules basses, loin des oreilles », « Buste légèrement penché, coudes vers l'arrière », « Descends jusqu'à environ 90° aux coudes »), erreurs (épaules qui roulent en avant en bas, descente trop profonde), plan sagittal.",
   "McKenzie et al., « Fundamental characteristics of the dip exercise: a kinematic and electromyographic analysis », J Strength Cond Res 36(6), 2022 : extension de l'épaule en bas de dip, flexion du coude ≈ 90°, inclinaison du tronc.",
@@ -46,7 +46,7 @@
     },
     "upperarm": {
      "flexion": 0,
-     "abduction": 8,
+     "abduction": 12,
      "rotation": 10
     },
     "radius": {
@@ -87,21 +87,21 @@
    }
   },
   "bas": {
-   "moteur": 102,
+   "moteur": 105,
    "angles": {
     "clavicle": {
-     "elevation": 2,
-     "protraction": 6
+     "elevation": 6,
+     "protraction": 8
     },
     "scapula": {
-     "sonnette": -10,
-     "bascule": -14,
+     "sonnette": -14,
+     "bascule": -20,
      "rotation": 5
     },
     "upperarm": {
-     "flexion": -50,
-     "abduction": 5,
-     "rotation": 10
+     "flexion": -65,
+     "abduction": 18,
+     "rotation": 0
     },
     "radius": {
      "pronation": 88
@@ -129,7 +129,7 @@
      "flexion": -2
     },
     "thigh": {
-     "flexion": 28,
+     "flexion": 34,
      "abduction": 3
     },
     "shin": {
@@ -147,13 +147,14 @@
  "ik": {
   "libres": [
    "upperarm.flexion",
-   "upperarm.abduction",
    "hand.flexion",
    "hand.deviation",
    "pelvis.flexion",
    "racine",
    "upperarm.rotation",
-   "radius.pronation"
+   "radius.pronation",
+   "upperarm.abduction",
+   "thigh.flexion"
   ],
   "bornes": {
    "pelvis.flexion": [
@@ -162,11 +163,15 @@
    ],
    "upperarm.rotation": [
     -40,
-    50
+    60
    ],
    "radius.pronation": [
     40,
     140
+   ],
+   "thigh.flexion": [
+    14,
+    40
    ]
   },
   "contacts": [
@@ -179,7 +184,21 @@
     }
    }
   ],
-  "equilibre": "barres_paralleles:prise_g"
+  "equilibre": "barres_paralleles:prise_g",
+  "bornes_positions": {
+   "haut": {
+    "upperarm.abduction": [
+     4,
+     16
+    ]
+   },
+   "bas": {
+    "upperarm.abduction": [
+     18,
+     26
+    ]
+   }
+  }
  },
  "ordre": [
   "haut",
@@ -216,7 +235,7 @@
    "type": "angle",
    "ddl": "forearm.flexion",
    "max_depart": 5,
-   "min_arrivee": 98
+   "min_arrivee": 105
   },
   {
    "nom": "trajectoire",
@@ -239,30 +258,40 @@
    "nom": "epaules_sous_coudes",
    "type": "epaule_sous_coude",
    "position": "bas",
-   "min": 0.01
+   "min": -0.03
   },
   {
    "nom": "buste_incline",
    "type": "inclinaison_tronc",
    "position": "bas",
    "min": 20,
-   "max": 32
+   "max": 38
   },
   {
    "nom": "coudes_arriere",
    "type": "angle_position",
    "ddl": "upperarm.flexion",
    "position": "bas",
-   "min": -70,
+   "min": -78,
    "max": -35
   },
   {
-   "nom": "jambes_fixes",
+   "nom": "jambes_derriere",
    "type": "angle_position",
    "ddl": "thigh.flexion",
    "position": "bas",
-   "min": 27,
-   "max": 29
+   "min": 8,
+   "max": 40
+  },
+  {
+   "nom": "coudes_ouverts",
+   "type": "angle_position",
+   "ddl": "upperarm.abduction",
+   "position": "bas",
+   "min": 16,
+   "max": 30
   }
- ]
+ ],
+ "depart": "haut",
+ "fin": "bas"
 }
