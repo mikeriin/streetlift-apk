@@ -116,7 +116,11 @@ class StatsPerformance extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // M4 : mannequin 3D (carte 2D historique sans Flutter GPU).
-              WeeklyMannequin(data: muscles),
+              WeeklyMannequin(
+                key: const ValueKey('stats-mannequin'),
+                data: muscles,
+                names: store.weeklyNames(),
+              ),
               const SizedBox(height: 12),
               if (muscles.values.every((value) => value <= 0))
                 Text(

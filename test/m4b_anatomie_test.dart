@@ -127,8 +127,8 @@ void main() {
       }
     });
 
-    test('opacité unique des muscles : 50 %', () {
-      expect(kMuscleOpacity, .5);
+    test('opacité unique des muscles : 100 % (5.5.3)', () {
+      expect(kMuscleOpacity, 1.0); // 5.5.3 : opaque
     });
 
     test('bulle : « (profond) » pour un muscle profond (carte de test)', () {

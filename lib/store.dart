@@ -3801,17 +3801,21 @@ class AppStore extends ChangeNotifier {
 
   Map<String, double> plannedMuscles(TrainingEstimate estimate) {
     final out = <String, double>{};
-    final names = [
-      ...estimate.movements.map((m) => m.name),
-      ...estimate.details.map((e) => e.title),
-    ];
-    for (final name in names) {
+    for (final name in plannedNames(estimate).keys) {
       for (final group in groupsFor(name)) {
         out[group] = 1;
       }
     }
     return out;
   }
+
+  /// 5.5.3 : exercices prévus (nom → poids 1) : la zone ciblée sur le
+  /// mannequin vient des muscles du pack de chaque exercice
+  /// (`targetedRegionIntensities`), plus du groupe entier.
+  Map<String, double> plannedNames(TrainingEstimate estimate) => {
+    for (final m in estimate.movements) m.name: 1,
+    for (final e in estimate.details) e.title: 1,
+  };
 
   /// Rendu de la colonne « Séries × Reps » (les volumes suivent tes maxima).
   String setsLabel(Exercise e) {
@@ -4005,15 +4009,27 @@ class AppStore extends ChangeNotifier {
   /// Les séries sont attribuées à leur date de validation. Les anciens logs
   /// utilisent la fin de séance, ou la date planifiée si la séance est en cours.
   Map<String, double> weeklyMuscles([DateTime? at]) {
-    final now = at ?? DateTime.now();
-    final monday = DateTime(now.year, now.month, now.day - now.weekday + 1);
     final out = <String, double>{for (final g in muscleGroups) g: 0};
-    bool inWeek(DateTime? date) =>
-        date != null && !date.isBefore(monday) && !date.isAfter(now);
-    void add(List<String> gs, double sets) {
+    weeklyNames(at).forEach((name, sets) {
+      final gs = groupsFor(name);
       for (var i = 0; i < gs.length; i++) {
         out[gs[i]] = (out[gs[i]] ?? 0) + sets * (i == 0 ? 1.0 : 0.6);
       }
+    });
+    return out;
+  }
+
+  /// 5.5.3 : exercices de la semaine (nom → séries validées, tours de WOD
+  /// à 0,5), base des groupes (`weeklyMuscles`) et de la zone ciblée sur le
+  /// mannequin (`targetedRegionIntensities`).
+  Map<String, double> weeklyNames([DateTime? at]) {
+    final now = at ?? DateTime.now();
+    final monday = DateTime(now.year, now.month, now.day - now.weekday + 1);
+    final out = <String, double>{};
+    bool inWeek(DateTime? date) =>
+        date != null && !date.isBefore(monday) && !date.isAfter(now);
+    void add(String name, double sets) {
+      out[name] = (out[name] ?? 0) + sets;
     }
 
     for (final entry in logs.entries) {
@@ -4050,7 +4066,7 @@ class AppStore extends ChangeNotifier {
                   inWeek(DateTime.tryParse(set.completedAt ?? '') ?? fallback),
             )
             .length;
-        if (n > 0) add(groupsFor(name), n.toDouble());
+        if (n > 0) add(name, n.toDouble());
       }
     }
     for (final w in wods) {
@@ -4067,7 +4083,7 @@ class AppStore extends ChangeNotifier {
             line,
             repScheme: w.scheme,
           ).movements) {
-            add(groupsFor(part.name), 0.5 * rounds);
+            add(part.name, 0.5 * rounds);
           }
         }
       }

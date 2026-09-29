@@ -65,7 +65,9 @@ const kMannequinAttributionAsset = 'assets/anatomy/ATTRIBUTION.md';
 
 /// M4b : opacité de tous les muscles (décision du propriétaire, 28/09/2026 :
 /// 50 %). Constante unique, à ajuster ici ; 1 rend les muscles opaques.
-const kMuscleOpacity = 0.5;
+/// 5.5.3 (M56 correction 3, décision du propriétaire du 29/09/2026) : 100 % :
+/// l'écorché n'a plus de couche profonde à voir par transparence.
+const kMuscleOpacity = 1.0;
 
 /// Intensités de la mise en évidence (décision du propriétaire).
 const kIntensityPrimary = 1.0;
@@ -1166,6 +1168,9 @@ class Mannequin3D extends StatefulWidget {
   /// Boutons Face / Dos / Profil / 3/4 sous la vue.
   final bool viewButtons;
 
+  /// 5.5.3 : gestes (toucher, zoom) ; false pour un mannequin de carte.
+  final bool interactive;
+
   /// Vues proposées par les boutons (M4, STATS : bascule Face / Dos).
   final List<MannequinView> views;
 
@@ -1200,6 +1205,7 @@ class Mannequin3D extends StatefulWidget {
     this.horizontalDragOnly = false,
     this.view = MannequinView.face,
     this.viewButtons = true,
+    this.interactive = true,
     this.views = MannequinView.values,
     this.spin = false,
     this.height = 420,
@@ -1662,28 +1668,25 @@ class Mannequin3DState extends State<Mannequin3D>
               return Stack(
                 children: [
                   Positioned.fill(
+                    // 5.5.3 : mannequin d'une carte (accueil) : aucun geste,
+                    // le toucher va à la carte.
                     child: MannequinGestures(
                       key: const ValueKey('mannequin-view'),
+                      enabled: widget.interactive,
                       horizontalOnly: widget.horizontalDragOnly,
                       onTapUp: _onTap,
                       // Reconnu seulement une fois zoomé : le toucher bref
                       // (nom du muscle) n'attend pas un second toucher.
                       onDoubleTap: _zoom.isDefault ? null : resetZoom,
-                      onRotateStart: _startDrag,
-                      onRotateEnd: () => _dragging = false,
-                      onRotate: (d) => setState(() {
-                        _yaw -= d.dx * .012;
-                        if (!widget.horizontalDragOnly) {
-                          _pitch = (_pitch + d.dy * .008).clamp(-.7, .7);
-                        }
-                      }),
+                      // 5.5.3 (décision du propriétaire, 29/09/2026) : plus
+                      // de rotation au doigt, les boutons de vue suffisent
+                      // (le zoom au pincement reste).
                       onPinchStart: _onPinchStart,
                       onPinchUpdate: _onPinchUpdate,
                       onPinchEnd: (_) => _dragging = false,
                       child: Semantics(
                         label:
-                            '${widget.semanticLabel}. Fais glisser pour le '
-                            'tourner, pince pour zoomer'
+                            '${widget.semanticLabel}. Pince pour zoomer'
                             '${_zoom.isDefault ? '' : ', touche deux fois pour revenir à la vue d’ensemble'}.',
                         child: SceneView(
                           scene.scene,

@@ -1,8 +1,19 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M56 (refonte du mannequin, du squelette et de la peau ; matériel, chaîne d'animation et 3 pilotes ; carte Koach ; préchargement), version 5.5.0, correction 1 (retour du propriétaire), version 5.5.1, puis correction 2 (écorché acheté, plus d'animation), version 5.5.2**  
-**Date : 28-29 septembre 2026, Europe/Paris — version : 5.5.2+81 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : pipeline « Mannequin 3D », lot M56 (refonte du mannequin, du squelette et de la peau ; matériel, chaîne d'animation et 3 pilotes ; carte Koach ; préchargement), version 5.5.0, correction 1 (retour du propriétaire), version 5.5.1, correction 2 (écorché acheté, plus d'animation), version 5.5.2, puis correction 3 (muscles opaques, zone ciblée, modèle partout, sans rotation au doigt), version 5.5.3**  
+**Date : 28-29 septembre 2026, Europe/Paris — version : 5.5.3+82 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d-fable`, rendu réel sur émulateur Android).**
+
+## M56.C3 — Correction 3 (retour du propriétaire du 29/09/2026, version 5.5.3)
+
+| Point | Retour | Correction |
+| --- | --- | --- |
+| Opacité | « plus d'affichage avec 50 % on repasse à 100 % » | `kMuscleOpacity` 1,0 ; tendons opaques aussi ; texte de l'écran Anatomie. |
+| Zone ciblée | « pour les groupes musculaires sollicités penche plus pour la zone ciblée en surbrillance plutôt que le groupe en lui-même » | `targetedMuscles` / `targetedRegionIntensities` (`lib/stats_mannequin.dart`) : muscles du pack des fiches des exercices (principaux 1, secondaires 0,6, pondérés par séries / tours / 1), ramenés au maximum, seuil 2 % ; groupe entier seulement pour un exercice sans fiche. `AppStore.weeklyNames` (semaine) et `plannedNames` (séance, WOD) à côté des groupes historiques (repli 2D, légende, STATS). `WeeklyMannequin` devient un `TargetedMannequin`. |
+| Images 2D | « Remplace tous les anciens affichages qui utilisent les images en pièces jointes par le modèle » (face, dos, profil de `assets/muscles/`) | Fiche : le mannequin des muscles ciblés remplace la démonstration 2D en découpes (`PoseDemo`) en tête de fiche, section Muscles en texte ; accueil (carte de séance et feuille de séance) et aperçu de WOD : `TargetedMannequin` (compact, sans boutons ni gestes) ; STATS déjà 3D. Les images restent pour le repli sans Flutter GPU. |
+| Rotation | « Plus besoin d'avoir de contrôle en glissant du doigt pour tourner la caméra on se fie aux boutons » | `MannequinGestures` sans reconnaisseur de glissement quand `onRotate` est nul (mannequin de l'application) ; pincement (zoom) et toucher (nom) gardés ; `Mannequin3D.interactive` false pour les cartes. |
+
+Contrôles : __CTRL__
 
 ## M56.C2 — Correction 2 (retour du propriétaire du 29/09/2026, version 5.5.2)
 

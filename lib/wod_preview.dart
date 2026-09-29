@@ -10,6 +10,7 @@ import 'app_theme.dart';
 import 'ui.dart';
 import 'estimate_view.dart';
 import 'muscle_body.dart';
+import 'stats_mannequin.dart';
 import 'store.dart';
 import 'wod_formats.dart';
 import 'wod_models.dart';
@@ -382,7 +383,14 @@ class _WodPreviewScreenState extends State<WodPreviewScreen>
                 'Muscles sollicités',
                 Column(
                   children: [
-                    MuscleHeatmap(data: muscles, height: 200),
+                    // 5.5.3 : mannequin 3D des muscles ciblés.
+                    TargetedMannequin(
+                      names: store.plannedNames(estimate),
+                      groups: muscles,
+                      height: 260,
+                      fallbackHeight: 200,
+                      subject: 'muscles du WOD',
+                    ),
                     const SizedBox(height: 6),
                     MuscleLegend(data: muscles),
                   ],
