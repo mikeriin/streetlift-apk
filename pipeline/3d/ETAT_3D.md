@@ -17,8 +17,8 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M6 | — | — | — | 2026-09-28 | remplacé par M56 (session Opus lancée à 18:05 UTC, plus pilotée ; son travail sert de brouillon) |
 | M56 | 5.5.0 | 7a24fc0 | build n° 133 (36509815224) ; CI 3D 36508242229 (5 essais) | 2026-09-29 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M56.md` |
 | M56 correction 1 | 5.5.1 | 786e867 | build n° 137 (36537833401) ; CI 3D 36535840924 (3 essais) | 2026-09-29 | remplacé par 5.5.2 — `livraisons/LIVRAISON_M56_correction1.md` |
-| M56 correction 2 | 5.5.2 | 5aeb2d1 | build n° 142 (36554048481) ; CI 3D 36551761380 (4 essais) | 2026-09-29 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M56_correction2.md` ; écorché acheté, plus d'animation ni de posture, couleur dominante, séance sans boutons ; remplace 5.5.1 |
-| M56 correction 3 | 5.5.3 | — | — | 2026-09-29 | en cours (muscles à 100 %, zone ciblée, modèle à la place des images 2D, plus de rotation au doigt) |
+| M56 correction 2 | 5.5.2 | 5aeb2d1 | build n° 142 (36554048481) ; CI 3D 36551761380 (4 essais) | 2026-09-29 | remplacé par 5.5.3 — `livraisons/LIVRAISON_M56_correction2.md` |
+| M56 correction 3 | 5.5.3 | b01bb75 | build n° 146 (36561741052) ; CI 3D 36560553169 (3 essais) | 2026-09-29 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M56_correction3.md` ; muscles opaques, zone ciblée, modèle à la place des images 2D, sans rotation au doigt ; remplace 5.5.2 |
 | M6b | — | — | — | — | à redéfinir (plus d'animation) |
 | M7 | 5.6.0 | — | — | — | à redéfinir (plus d'animation) |
 | M8 | 5.7.0 | — | — | — | à redéfinir (plus d'animation) |
