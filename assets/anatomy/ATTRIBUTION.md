@@ -1,14 +1,17 @@
-# Mannequin anatomique 3D — source, licence et modifications
+# Mannequin anatomique 3D — sources, licences et modifications
 
-Le mannequin 3D de Kalis Track (`assets/anatomy/mannequin.glb` et `assets/anatomy/muscles_map.json`) est dérivé de l'écorché « Ecorche Musclenames Male Anatomy » (maillage ZBrush `male_ecorche.OBJ`, texture `diffuse.jpeg`, légende `BonesMusclesFibers.pdf`), acheté par le propriétaire de l'application le 29/09/2026 sous la licence commerciale du vendeur. Cette licence autorise l'usage du modèle dans l'application ; elle n'autorise pas sa redistribution : le fichier source n'est pas dans le dépôt public et le modèle d'exécution (décimé, sans texture, régions nommées) n'est fourni qu'en tant que composant de l'application.
+## Personnage (depuis 5.6.0)
 
-Jusqu'à la version 5.5.1, le mannequin était une adaptation du modèle Z-Anatomy / BodyParts3D (CC BY-SA 4.0) ; cette source n'est plus utilisée à partir de 5.5.2.
+Le mannequin 3D de Kalis Track (`assets/anatomy/mannequin.glb`, `assets/anatomy/muscles_map.json`, `assets/anatomy/squelette_mixamo.json`) est dérivé du personnage « Ch36 » d'Adobe Mixamo (mixamo.com), fourni par le propriétaire de l'application le 29/09/2026, avec son squelette Mixamo (`mixamorig1:`, 65 os). Il est utilisé selon les conditions d'utilisation d'Adobe pour Mixamo, qui permettent d'intégrer les personnages et animations dans une application ; il n'est pas redistribué séparément : le FBX source et le modèle d'exécution sont chiffrés dans le dépôt (`assets_secure/`, clé détenue par le propriétaire) et n'existent en clair que dans l'application compilée. Mixamo est une marque d'Adobe.
 
-## Modifications faites pour Kalis Track (29/09/2026)
+## Zones musculaires
 
-- Régions : chaque muscle de la texture (plage de couleur portant son abréviation) devient une région nommée par côté ; os (beige) regroupés dans `os`, tendons et aponévroses (gris) dans `contexte`, tête, mains et pieds en volumes sombres.
-- Subdivisions du pack de contenu : deltoïde (antérieur, moyen, postérieur), trapèze (supérieur, moyen, inférieur), grand pectoral (claviculaire, sterno-costal, abdominal), gastrocnémien (médial, latéral).
-- Maillage simplifié à moins de 60 000 triangles (décimation globale, sans fissure), sans texture : couleurs de rendu de l'application (muscles gris opaques ; muscles sollicités signalés par un halo dans la couleur dominante, depuis 5.5.4). Aire de chaque région calculée sur ce maillage (choix de la vue de départ des fiches, 5.5.5).
-- Noms français, correspondance avec les 11 groupes et les muscles du pack de contenu ; les muscles profonds absents de l'écorché restent en texte sur les fiches.
+Les zones musculaires dessinées sur la peau du personnage sont projetées depuis l'écorché « Ecorche Musclenames Male Anatomy » (maillage ZBrush `male_ecorche.OBJ`, texture `diffuse.jpeg`, légende `BonesMusclesFibers.pdf`), acheté par le propriétaire le 29/09/2026 sous la licence commerciale du vendeur, qui autorise son usage dans l'application mais pas sa redistribution. Sa conversion (136 régions nommées) est elle aussi chiffrée dans le dépôt. De 5.5.2 à 5.5.5, cet écorché était le mannequin affiché. Jusqu'à 5.5.1, le mannequin était une adaptation de Z-Anatomy / BodyParts3D (CC BY-SA 4.0) ; comparé en 5.6.0 comme source des zones, il n'a pas été retenu.
 
-Fabrication reproductible : `tools/anatomy/build_model.py --zip Archive.zip`. Le modèle n'a pas été relu par un spécialiste de l'anatomie ; les couleurs affichées sont des repères d'entraînement, pas une mesure de l'activation musculaire.
+## Modifications faites pour Kalis Track (29/09/2026, 5.6.0)
+
+- Personnage « un peu plus fit » : léger gain de volume sur le maillage de repos (épaules et deltoïdes, pectoraux, haut du dos et grand dorsal, bras, avant-bras, cuisses, mollets ; +6 à +9 % de tour sur les membres, taille inchangée), sans toucher aux os ni aux poids de peau ; coutures du mannequin (taille, épaules, cou, poignets, chevilles) lissées.
+- Textures d'origine retirées : matériau gris mat de l'application, tête, mains et pieds en gris sombre. Bras abaissés pour l'affichage fixe (pose de repos en T conservée dans le squelette).
+- Zones : régions de l'écorché recalées sur le personnage (pose des bras, hauteurs des articulations, recalage non rigide), projetées sur la peau, frontières lissées, zones symétriques ; noms français, correspondance avec les 11 groupes et les muscles du pack de contenu. Les muscles profonds, invisibles sous la peau, restent en texte sur les fiches.
+
+Fabrication reproductible : `tools/anatomy/build_character.py` (après `tools/secure_assets.py decrypt --tout`). Le modèle n'a pas été relu par un spécialiste de l'anatomie ; les zones affichées sont des repères d'entraînement, pas une mesure de l'activation musculaire.

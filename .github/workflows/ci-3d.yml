@@ -36,6 +36,10 @@ jobs:
         shell: bash
     steps:
       - uses: actions/checkout@v4
+      - name: Déchiffrer les ressources sous licence (M6c)
+        env:
+          KT_ASSETS_KEY: ${{ secrets.KT_ASSETS_KEY }}
+        run: python3 tools/secure_assets.py decrypt
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -101,6 +105,7 @@ jobs:
           python3 tools/verify_project.py | tee -a out/python-tests.log
           python3 tools/package_release.py --check | tee -a out/python-tests.log
           python3 tools/check_release_without_secrets.py --tree | tee -a out/python-tests.log
+          python3 tools/secure_assets.py check | tee -a out/python-tests.log
       - name: Tests Dart
         id: dart
         continue-on-error: true
@@ -214,6 +219,13 @@ jobs:
             git archive origin/main | tar -x -C avant
           fi
           test -f avant/pubspec.yaml
+      - name: Déchiffrer les ressources sous licence de main (M6c, si chiffrées)
+        env:
+          KT_ASSETS_KEY: ${{ secrets.KT_ASSETS_KEY }}
+        run: |
+          if [ -f avant/tools/secure_assets.py ]; then
+            (cd avant && python3 tools/secure_assets.py decrypt)
+          fi
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.FLUTTER_BEFORE }}
@@ -261,6 +273,10 @@ jobs:
           sudo docker image prune --all --force > /dev/null 2>&1 || true
           df -h / | tail -1
       - uses: actions/checkout@v4
+      - name: Déchiffrer les ressources sous licence (M6c)
+        env:
+          KT_ASSETS_KEY: ${{ secrets.KT_ASSETS_KEY }}
+        run: python3 tools/secure_assets.py decrypt
       - uses: actions/setup-java@v4
         with:
           distribution: temurin

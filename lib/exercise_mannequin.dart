@@ -115,6 +115,11 @@ const muscleFaces = <String, MuscleFace>{
 /// fois celle de l'autre, cette face est choisie (traction : le grand dorsal
 /// domine les biceps, vue de dos ; en 3/4 avant, son halo au flanc se lisait
 /// comme un pectoral). Sinon 3/4.
+///
+/// M6c : sur la peau du personnage Mixamo, surfaces vues de face (muscles
+/// antérieurs) et de dos (postérieurs), projetées sur le plan frontal : ce
+/// que montrent les vues Face et Dos (un bras, cylindrique, pèse moins
+/// qu'un dos plat de même surface) ; seuil [kStartViewDominance] 1,65.
 MannequinView exerciseStartView(
   List<String> primaires, [
   List<String> secondaires = const [],
@@ -139,7 +144,9 @@ MannequinView exerciseStartView(
 }
 
 /// M6b : rapport de surface à partir duquel une face l'emporte sur l'autre.
-const kStartViewDominance = 2.0;
+/// M6c : 1,65 sur les surfaces vues de face / de dos du personnage
+/// (traction : grand dorsal 1,76 × biceps → Dos ; squat : 1,56 → 3/4).
+const kStartViewDominance = 1.65;
 
 MannequinView _byArea(List<String> muscles, MannequinMap map) {
   double area(MuscleFace face) {
@@ -147,9 +154,15 @@ MannequinView _byArea(List<String> muscles, MannequinMap map) {
       for (final m in muscles)
         if (muscleFaces[m] == face) m,
     };
+    // M6c : surface vue de face / de dos si la carte la donne, sinon aire.
+    double seen(MuscleRegion r) {
+      final v = face == MuscleFace.anterieur ? r.aireFace : r.aireDos;
+      return v > 0 ? v : r.aire;
+    }
+
     return [
       for (final r in map.regions)
-        if (r.pack.any(pack.contains)) r.aire,
+        if (r.pack.any(pack.contains)) seen(r),
     ].fold(0.0, (a, b) => a + b);
   }
 
@@ -163,7 +176,8 @@ MannequinView _byArea(List<String> muscles, MannequinMap map) {
 }
 
 /// Muscles du pack sans région sur le mannequin, avec la raison. Ils restent
-/// dans la liste en texte de la fiche. 5.5.2 (M56 correction 2) : l'écorché
+/// dans la liste en texte de la fiche. M6c : zones dessinées sur la peau du
+/// personnage (couche superficielle). 5.5.2 (M56 correction 2) : l'écorché
 /// acheté ne montre que la couche superficielle ; les muscles profonds
 /// couverts par d'autres n'ont pas de région (jusqu'à 5.5.1, le modèle
 /// Z-Anatomy les portait en transparence).
@@ -172,24 +186,29 @@ const musclesSansRegion = <String, String>{
       'profonds, devant les vertèbres du cou (absents du modèle)',
   'diaphragme': 'interne, sous les côtes (absent du modèle)',
   'plancher_pelvien': 'interne, au fond du bassin (absent du modèle)',
-  'biceps_femoral_chef_court': 'profond, sous le chef long (écorché)',
-  'carre_des_lombes': 'profond, sous les érecteurs (écorché)',
-  'carre_pronateur': 'profond, sous les fléchisseurs (écorché)',
-  'court_adducteur': 'profond, sous le long adducteur (écorché)',
+  'biceps_femoral_chef_court': 'profond, sous le chef long',
+  'carre_des_lombes': 'profond, sous les érecteurs',
+  'carre_pronateur': 'profond, sous les fléchisseurs',
+  'court_adducteur': 'profond, sous le long adducteur',
   'flechisseurs_profonds_des_doigts':
-      'profonds, sous les fléchisseurs superficiels (écorché)',
-  'multifides': 'profonds, sous les érecteurs (écorché)',
-  'oblique_interne': 'profond, sous l’oblique externe (écorché)',
-  'petit_fessier': 'profond, sous le moyen fessier (écorché)',
-  'petit_pectoral': 'profond, sous le grand pectoral (écorché)',
-  'poplite': 'profond, derrière le genou (écorché)',
-  'rotateurs_lateraux_hanche': 'profonds, sous le grand fessier (écorché)',
-  'sous_scapulaire': 'profond, sous la scapula (écorché)',
-  'supinateur': 'profond, sous les extenseurs (écorché)',
-  'supra_epineux': 'profond, sous le trapèze (écorché)',
-  'tibial_posterieur': 'profond, sous le soléaire (écorché)',
-  'transverse_abdomen': 'profond, sous les obliques (écorché)',
-  'vaste_intermediaire': 'profond, sous le droit fémoral (écorché)',
+      'profonds, sous les fléchisseurs superficiels',
+  'multifides': 'profonds, sous les érecteurs',
+  'oblique_interne': 'profond, sous l’oblique externe',
+  'petit_fessier': 'profond, sous le moyen fessier',
+  'petit_pectoral': 'profond, sous le grand pectoral',
+  'poplite': 'profond, derrière le genou',
+  'rotateurs_lateraux_hanche': 'profonds, sous le grand fessier',
+  'sous_scapulaire': 'profond, sous la scapula',
+  'supinateur': 'profond, sous les extenseurs',
+  'supra_epineux': 'profond, sous le trapèze',
+  'tibial_posterieur': 'profond, sous le soléaire',
+  'transverse_abdomen': 'profond, sous les obliques',
+  'vaste_intermediaire': 'profond, sous le droit fémoral',
+  // M6c : couverts par d'autres muscles sur la peau du personnage.
+  'coraco_brachial': 'profond, sous le deltoïde et le biceps',
+  'elevateur_scapula': 'profond, sous le trapèze',
+  'extenseurs_cervicaux': 'profonds, sous le trapèze',
+  'rhomboides': 'profonds, sous le trapèze',
 };
 
 /// Muscles d'un exercice posés sur le mannequin.

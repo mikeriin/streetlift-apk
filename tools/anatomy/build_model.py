@@ -60,8 +60,11 @@ from anatomy_data import (  # noqa: E402
     APP_GROUPS, FR, GROUP_OF_KEY, PACK_OF_KEY, SIDE_FR, pack_muscles,
 )
 
-OUT_GLB = ROOT / 'assets/anatomy/mannequin.glb'
-OUT_MAP = ROOT / 'assets/anatomy/muscles_map.json'
+# M6c : l'écorché n'est plus le mannequin d'exécution, mais la source des
+# zones musculaires du personnage Mixamo (tools/anatomy/build_character.py) ;
+# son GLB est chiffré (assets_secure/ecorche_mannequin.glb.enc).
+OUT_GLB = ROOT / 'assets_secure/clair/ecorche_mannequin.glb'
+OUT_MAP = HERE / 'ecorche_map.json'
 REPORT = HERE / 'build_report.json'
 
 SOURCE_NAME = 'Ecorche Musclenames Male Anatomy (écorché acheté, 29/09/2026)'

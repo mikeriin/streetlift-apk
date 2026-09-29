@@ -127,7 +127,6 @@ class MannequinPreload {
           scene.configure(
             dark: true,
             intensities: scene.map.fromGroups(const {'dos': 1.0}),
-            bones: true,
             halo: true,
           );
           final camera = scene.camera(0, .06, scene.fitDistance(.75));

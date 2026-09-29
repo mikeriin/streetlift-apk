@@ -1,0 +1,31 @@
+{
+ "schema": 1,
+ "chiffrement": "openssl enc -aes-256-cbc -pbkdf2 -iter 200000 -salt -pass env:KT_ASSETS_KEY",
+ "cle": "secret GitHub KT_ASSETS_KEY (jamais écrite dans le dépôt)",
+ "fichiers": [
+  {
+   "chiffre": "assets_secure/character_mixamo_ch36.fbx.enc",
+   "clair": "assets_secure/clair/character_mixamo_ch36.fbx",
+   "role": "source",
+   "description": "Personnage Mixamo « Ch36 » (Adobe Mixamo), FBX en T, squelette mixamorig1: de 65 os",
+   "sha256": "d1ed4fa2a987dcdc8824e130ac1ad0f4500d78868f2890c5c544fac73ce9f521",
+   "octets_clair": 34860512
+  },
+  {
+   "chiffre": "assets_secure/mannequin.glb.enc",
+   "clair": "assets/anatomy/mannequin.glb",
+   "role": "execution",
+   "description": "Mannequin d'exécution (tools/anatomy/build_character.py), un nœud par zone",
+   "sha256": "cf4d0f69ccd755fe0b8bb6c1beb85a6ca34ec703f58ced3d32071c2d1a475672",
+   "octets_clair": 677000
+  },
+  {
+   "chiffre": "assets_secure/ecorche_mannequin.glb.enc",
+   "clair": "assets_secure/clair/ecorche_mannequin.glb",
+   "role": "source_zones",
+   "description": "Écorché acheté « Ecorche Musclenames Male Anatomy » converti (tools/anatomy/build_model.py), source des zones musculaires",
+   "sha256": "9296b2cf6f3fadba4cf3283d07b72d5e1d698c579f811ec7e99190e1952247b3",
+   "octets_clair": 1385788
+  }
+ ]
+}

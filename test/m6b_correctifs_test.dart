@@ -9,6 +9,7 @@ import 'package:streetlift_tracker/anatomy_screen.dart';
 import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/atlas.dart';
 import 'package:streetlift_tracker/engine3d.dart';
+import 'package:streetlift_tracker/exercise_mannequin.dart';
 import 'package:streetlift_tracker/mannequin_3d.dart';
 import 'package:streetlift_tracker/muscle_body.dart';
 import 'package:streetlift_tracker/store.dart';
@@ -45,13 +46,13 @@ void main() {
   }
 
   group('D1 · Anatomie : filtre « Muscles profonds » retiré', () {
-    test('catégorie Affichage : « Os » seul', () {
-      final display = AnatomyFilters.categories.singleWhere(
-        (c) => c.id == 'affichage',
+    test('M6c : plus de catégorie Affichage (ni « Os »), 11 groupes', () {
+      expect(
+        AnatomyFilters.categories.where((c) => c.id == 'affichage'),
+        isEmpty,
       );
-      expect([for (final o in display.options) o.label], ['Os']);
-      expect(AnatomyFilters.total, 12);
-      expect(AnatomyFilters.all.count, 12);
+      expect(AnatomyFilters.total, 11);
+      expect(AnatomyFilters.all.count, 11);
       // L'écorché n'a aucune région profonde : le filtre n'avait pas d'effet.
       expect(MannequinMap.loaded!.deepIds, isEmpty);
     });
@@ -61,11 +62,12 @@ void main() {
       AnatomyScreen.session = null;
       await tester.pumpWidget(page(const AnatomyScreen(initialGroup: 'dos')));
       await settle(tester, find.byType(MuscleHeatmap));
-      expect(find.text('Filtres · 2'), findsOneWidget); // Dos et Os
+      expect(find.text('Filtres · 1'), findsOneWidget); // Dos (M6c : sans Os)
       await tester.tap(find.byKey(const ValueKey('anatomy-filters')));
       await tester.pumpAndSettle();
       expect(find.text('Muscles profonds'), findsNothing);
-      expect(find.byKey(const ValueKey('anatomy-filter-bones')), findsWidgets);
+      expect(find.byKey(const ValueKey('anatomy-filter-bones')), findsNothing);
+      expect(find.byKey(const ValueKey('anatomy-filter-dos')), findsWidgets);
       await tester.tapAt(const Offset(5, 5));
       await tester.pumpAndSettle();
       // D2 : plus de « en rouge » (halo dans la couleur dominante).
@@ -81,7 +83,8 @@ void main() {
       );
       expect(find.textContaining('Muscles profonds'), findsNothing);
       expect(find.textContaining('(profond)'), findsNothing);
-      expect(find.text('Os affichés'), findsOneWidget);
+      expect(find.text('Os affichés'), findsNothing);
+      expect(find.textContaining('Grand dorsal'), findsWidgets);
       AnatomyScreen.session = null;
     });
   });
@@ -143,8 +146,13 @@ void main() {
     final raw = await rootBundle.loadString(kMannequinMapAsset);
     expect(raw, contains('"aire"'));
     final map = MannequinMap.loaded!;
-    final lat = map.byId['latissimus_dorsi_left']!.aire;
-    final biceps = map.byId['biceps_brachii_left']!.aire;
-    expect(lat, greaterThan(2 * biceps));
+    // M6c : aires vues de face et de dos (peau du personnage) : grand
+    // dorsal vu de dos au moins 1,65 × biceps vu de face (traction : Dos).
+    expect(raw, contains('"aire_face"'));
+    final lat = map.byId['latissimus_dorsi_left']!;
+    final biceps = map.byId['biceps_brachii_left']!;
+    expect(lat.aire, greaterThan(biceps.aire));
+    expect(lat.aireDos, greaterThan(kStartViewDominance * biceps.aireFace));
+    expect(map.byId['rectus_abdominis_left']!.aireDos, 0);
   });
 }

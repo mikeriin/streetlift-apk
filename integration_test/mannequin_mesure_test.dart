@@ -51,7 +51,7 @@ void main() {
       'biceps': .62,
       'avant-bras': .35,
     });
-    ms.configure(dark: true, intensities: demo, bones: true, halo: true);
+    ms.configure(dark: true, intensities: demo, halo: true);
     var draws = 0;
     if (merged) {
       final parts = <MeshData>[];
