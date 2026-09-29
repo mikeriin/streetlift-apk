@@ -394,6 +394,13 @@ void main() {
     final sw = Stopwatch()..start();
     await tester.runAsync(() => MannequinPreload.start());
     final rep = MannequinPreload.report;
+    // Comme sur le téléphone (préchargement au lancement, fiche ouverte
+    // plus tard) : le rendu logiciel de l'émulateur termine l'image de
+    // préchauffage (≈ 1 s) avant l'ouverture mesurée.
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(seconds: 3)),
+    );
+    await tester.pump();
     final after = await open('apres');
     m6['prechargement'] = {
       'avant': before,
