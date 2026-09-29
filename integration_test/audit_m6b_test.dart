@@ -274,27 +274,23 @@ void main() {
       out['dos'] = await check(tester);
       out['dos_vue'] = state.view.name;
       out['dos_semantique'] = semantics(tester);
-      // Toucher : grand dorsal, à côté de la colonne (essai B : au milieu,
-      // le fascia de la colonne n'est pas un muscle, rien sous le doigt).
+      // Toucher : grand dorsal gauche. Essais B à D : au milieu du dos, le
+      // fascia de la colonne n'est pas un muscle ; à 58 % de la largeur et
+      // 36 % de la hauteur, le doigt tombait juste hors de la taille (le
+      // flou du halo déborde la silhouette) : aucun maillage sur le rayon.
       final rect = tester.getRect(
         find.byKey(const ValueKey('mannequin-view')).first,
       );
       await tester.tapAt(
-        rect.topCenter + Offset(rect.width * .08, rect.height * .36),
+        rect.topLeft + Offset(rect.width * .45, rect.height * .30),
       );
       await tester.pump(const Duration(seconds: 2));
       out['toucher'] = state.touched?.label;
-      // Diagnostic (essai C : aucune bulle) : même point, rayon calculé
-      // directement, et points voisins.
-      final local = Offset(rect.width * .58, rect.height * .36);
+      expect(state.touched, isNotNull, reason: 'nom au toucher');
+      // Même règle calculée directement en quelques points de la vue.
       final scene = state.scene!;
       out['toucher_direct'] = {
-        for (final (dx, dy) in const [
-          (.58, .36),
-          (.45, .30),
-          (.5, .5),
-          (.55, .75),
-        ])
+        for (final (dx, dy) in const [(.45, .30), (.5, .5), (.55, .75)])
           '$dx,$dy': scene
               .pick(
                 state.camera!,
@@ -303,23 +299,6 @@ void main() {
               )
               ?.label,
       };
-      out['toucher_vue'] = [state.viewSize.width, state.viewSize.height];
-      out['toucher_local'] = [local.dx, local.dy];
-      final ray = state.camera!.screenPointToRay(local, state.viewSize);
-      out['toucher_rayon'] = [
-        ray.origin.x,
-        ray.origin.y,
-        ray.origin.z,
-        ray.direction.x,
-        ray.direction.y,
-        ray.direction.z,
-      ];
-      out['toucher_maillages'] = scene.pickables.length;
-      out['toucher_touches'] = [
-        for (final m in scene.pickables)
-          if (m.intersect(ray.origin, ray.direction.normalized()) != null)
-            m.name,
-      ];
       await shot('anatomie_sombre_toucher');
       // Zoom ×2,5 sur le haut du dos.
       state.pinchTo(2.5, rect.size.center(Offset(0, -rect.height * .2)));
