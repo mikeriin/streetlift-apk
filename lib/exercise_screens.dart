@@ -353,6 +353,8 @@ class _Sheet extends StatelessWidget {
         KCard(
           child: ExerciseMannequin(
             key: ValueKey('fiche-muscles-${entry.id}'),
+            // M7 : animation du propriétaire si l'exercice en a une.
+            exerciseId: entry.id,
             // M6b : plus grand sur grand écran (tablette), 380 sur téléphone.
             height: (MediaQuery.sizeOf(context).height * .45).clamp(
               380.0,

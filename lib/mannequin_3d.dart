@@ -45,6 +45,16 @@
 // « Os visibles » et le filtre « Os » sont retirés. Même mise en évidence
 // (maillage gris, halo de la zone travaillée). Squelette Mixamo exposé au
 // code par `mixamo_skeleton.dart` (M7).
+//
+// M7 (5.7.0) : lecteur d'animations. Le mannequin animable
+// ([kMannequinAnimAsset], `MannequinScene.create(animated: true)`) reprend
+// le code de posture de M5 avec le squelette Mixamo (`rig_mixamo.json`) :
+// chaque image pose les os ([MannequinScene.applyPose]), le GPU déforme les
+// maillages, le halo et le toucher suivent le corps déformé (peau calculée
+// sur le processeur, seulement pour les zones entourées et au toucher).
+// L'intensité du halo suit la phase du mouvement ([MannequinScene.haloGain],
+// `mannequin_clip.dart`). Les fiches sans animation gardent le mannequin
+// fixe, inchangé.
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math' as math;
@@ -67,6 +77,11 @@ import 'ui.dart';
 
 /// Source du modèle d'exécution (chemin de source lu par `loadScene`).
 const kMannequinAsset = 'assets/anatomy/mannequin.glb';
+
+/// M7 : mannequin animable (même personnage et mêmes zones, au repos en T,
+/// avec le squelette Mixamo et sa peau ; tools/anatomy/build_animated.py),
+/// chargé seulement par le lecteur d'animations.
+const kMannequinAnimAsset = 'assets/anatomy/mannequin_anime.glb';
 
 /// Carte des régions (id, côté, nom français, groupe, muscles du pack).
 const kMannequinMapAsset = 'assets/anatomy/muscles_map.json';
@@ -273,7 +288,12 @@ class MannequinHaloPainter extends CustomPainter {
   /// peintre) ; null : [camera].
   final PerspectiveCamera Function()? cameraOf;
 
-  const MannequinHaloPainter({
+  /// M7 : posture et gain du halo au moment de la construction (la
+  /// lecture d'une animation redessine le halo à chaque image).
+  final int poseVersion;
+  final double gain;
+
+  MannequinHaloPainter({
     required this.scene,
     required this.camera,
     required this.size,
@@ -282,7 +302,8 @@ class MannequinHaloPainter extends CustomPainter {
     this.color,
     this.cameraOf,
     super.repaint,
-  });
+  }) : poseVersion = scene.poseVersion,
+       gain = scene.haloGain;
 
   /// Flou du halo (px) et opacités (intensité 0 → 1).
   static const blurSigma = 9.0;
@@ -295,14 +316,18 @@ class MannequinHaloPainter extends CustomPainter {
     if (lit.isEmpty && stretched.isEmpty) return;
     final proj = HaloProjection.of(cameraOf?.call() ?? camera, size);
     if (proj == null) return;
+    // M7 : intensité de la phase en cours (lecteur d'animations).
+    final g = gain.clamp(0.0, 1.2);
     void draw(String id, Color color, double alpha) {
       final mesh = scene.restMesh(id);
-      if (mesh == null) return;
+      final positions = scene.haloPositions(id);
+      if (mesh == null || positions == null) return;
       final path = proj.silhouette(
-        mesh.positions,
+        positions,
         mesh.indices ?? List<int>.generate(mesh.vertexCount, (i) => i),
         outward: scene.windingOutward,
       );
+      alpha = (alpha * g).clamp(0.0, 1.0);
       if (path == null) return;
       final paint = Paint()
         ..color = color.withValues(alpha: alpha)
@@ -327,6 +352,8 @@ class MannequinHaloPainter extends CustomPainter {
   @override
   bool shouldRepaint(MannequinHaloPainter old) =>
       cameraOf != null ||
+      old.poseVersion != poseVersion ||
+      old.gain != gain ||
       old.scene != scene ||
       old.camera != camera ||
       old.size != size ||
@@ -690,7 +717,21 @@ class MannequinScene {
   /// (Import de flutter_scene : `bakeNative`.) Mesuré sur les articulations.
   bool _flip = false;
 
-  MannequinScene._(this.model, this.map, this.frame, this.rig, this._rest) {
+  /// M7 : mannequin animable (squelette Mixamo, repos en T).
+  final bool animated;
+
+  /// M7 : gain du halo (0-1,2) donné par la phase du mouvement en cours
+  /// (`phaseHaloGain`) ; 1 hors lecture.
+  double haloGain = 1;
+
+  MannequinScene._(
+    this.model,
+    this.map,
+    this.frame,
+    this.rig,
+    this._rest, {
+    this.animated = false,
+  }) {
     void collect(Node n) {
       if (n.name.isNotEmpty) _nodes[n.name] = n;
       for (final c in n.children) {
@@ -707,9 +748,14 @@ class MannequinScene {
         _joints[b.name] = node;
         _jointRest[b.name] = node.localTransform.getTranslation();
       }
-      // Sens de l'axe avant : translation des orteils depuis le pied.
-      final toes = rig.index['toes_l'], foot = rig.index['foot_l'];
-      final t = _jointRest['toes_l'];
+      // Sens de l'axe avant : translation des orteils depuis le pied (M5 :
+      // `toes_l` ; M7, squelette Mixamo : `LeftToeBase`).
+      final toesName = rig.index.containsKey('toes_l')
+          ? 'toes_l'
+          : 'LeftToeBase';
+      final footName = rig.index.containsKey('foot_l') ? 'foot_l' : 'LeftFoot';
+      final toes = rig.index[toesName], foot = rig.index[footName];
+      final t = _jointRest[toesName];
       if (toes != null && foot != null && t != null) {
         final gz = rig.bones[toes].head.z - rig.bones[foot].head.z;
         _flip = gz * t.z < 0;
@@ -753,39 +799,62 @@ class MannequinScene {
   /// reçoit une copie (arbre de nœuds et enveloppes de maillage ; géométrie
   /// partagée), sans relire ni convertir le fichier. Le modèle gardé ici
   /// n'est jamais ajouté à une scène.
-  static Future<Node>? _template;
+  static Future<Node>? _template, _animTemplate;
 
-  static Future<Node> _loadTemplate() {
-    final pending = _template ??= loadScene(kMannequinAsset);
+  static Future<Node> _loadTemplate({bool animated = false}) {
+    final pending = animated
+        ? _animTemplate ??= loadScene(kMannequinAnimAsset)
+        : _template ??= loadScene(kMannequinAsset);
     return pending.catchError((Object e) {
       // Échec non mis en cache : le mannequin suivant réessaie.
       if (identical(_template, pending)) _template = null;
+      if (identical(_animTemplate, pending)) _animTemplate = null;
       throw e;
     });
   }
 
-  static Map<String, MeshData>? _restCache;
+  static Map<String, MeshData>? _restCache, _animRestCache;
+  static MannequinFrame? _animFrame;
 
   /// 5.5.2 : plus de rig (écorché acheté, sans squelette) ; le mannequin
-  /// reste au repos. Le code de posture ci-dessous attend un rig non nul.
-  static Future<MannequinRig?> _loadRig() async => null;
+  /// fixe reste au repos. M7 : le mannequin animable porte le squelette
+  /// Mixamo et sa peau.
+  static Future<MannequinRig?> _loadRig({bool animated = false}) async =>
+      animated ? MannequinRig.loadMixamo() : null;
 
-  static Future<MannequinScene> create() async {
+  /// Mannequin fixe (défaut) ou, M7, animable ([animated] : squelette
+  /// Mixamo, posé en pose d'affichage jusqu'à la première image d'un clip).
+  static Future<MannequinScene> create({bool animated = false}) async {
     final results = await Future.wait<Object?>([
-      _loadTemplate(),
+      _loadTemplate(animated: animated),
       MannequinMap.load(),
-      _loadRig(),
+      _loadRig(animated: animated),
     ]);
     final template = results[0] as Node;
-    final rest = _restCache ??= _restMeshes(template);
+    final Map<String, MeshData> rest;
+    final MannequinFrame frame;
+    if (animated) {
+      rest = _animRestCache ??= _restMeshes(template);
+      frame = _animFrame ??= _measure(rest);
+    } else {
+      rest = _restCache ??= _restMeshes(template);
+      frame = _frame ??= _measure(rest);
+    }
     final scene = MannequinScene._(
       template.clone(),
       results[1] as MannequinMap,
-      _frame ??= _measure(rest),
+      frame,
       results[2] as MannequinRig?,
       rest,
+      animated: animated,
     );
     scene._applyMaterials();
+    final rig = scene.rig;
+    if (animated && rig != null) {
+      final pose = rig.posture('affichage')?.pose ?? RigPose.rest;
+      scene.applyPose(pose);
+      scene.framing = scene.framingFor(pose);
+    }
     return scene;
   }
 
@@ -844,6 +913,9 @@ class MannequinScene {
       );
     }
     _posedPickables = null;
+    _posedPositions.clear();
+    _poseMats = null;
+    _poseVersion++;
     _updateSortHints();
   }
 
@@ -904,6 +976,31 @@ class MannequinScene {
     );
   }
 
+  /// M7 : cadrage commun à plusieurs postures (union des boîtes du corps
+  /// déformé) : la caméra ne bouge pas pendant la lecture d'un clip.
+  MannequinFraming framingOver(Iterable<RigPose> poses) {
+    vm.Vector3? lo, hi;
+    for (final pose in poses) {
+      final f = framingFor(pose);
+      final half = vm.Vector3(f.width / 2, f.height / 2, f.width / 2);
+      final a = f.center - half, b = f.center + half;
+      if (lo == null || hi == null) {
+        lo = a;
+        hi = b;
+        continue;
+      }
+      lo.setValues(math.min(lo.x, a.x), math.min(lo.y, a.y), math.min(lo.z, a.z));
+      hi.setValues(math.max(hi.x, b.x), math.max(hi.y, b.y), math.max(hi.z, b.z));
+    }
+    if (lo == null || hi == null) return restFraming;
+    final size = hi - lo;
+    return MannequinFraming(
+      (lo + hi) * .5,
+      size.y,
+      math.max(size.x, size.z),
+    );
+  }
+
   /// Ordre des maillages translucides : flutter_scene les trie par le centre
   /// de leurs bornes (celles du repos pour un maillage avec peau). Chaque
   /// maille reçoit une translation (ignorée par le dessin avec peau) qui
@@ -912,8 +1009,11 @@ class MannequinScene {
   void _updateSortHints() {
     final rig = this.rig;
     if (rig == null) return;
+    // M7 : muscles opaques (100 %) : aucun tri des surfaces translucides à
+    // tenir à jour pendant la lecture.
+    if (opacity >= 1) return;
     final centers = _restCenters ??= _computeRestCenters();
-    final mats = rig.skinMatrices(_pose);
+    final mats = _poseMats ??= rig.skinMatrices(_pose);
     centers.forEach((name, c) {
       final node = _nodes[name];
       if (node == null) return;
@@ -1031,6 +1131,29 @@ class MannequinScene {
 
   /// Maillage au repos d'une région (halo).
   MeshData? restMesh(String name) => _rest[name];
+
+  /// M7 : positions (repère de la scène) d'une région dans la posture
+  /// courante, pour le halo : celles du repos si le mannequin n'est pas
+  /// posé ; sinon peau calculée sur le processeur, une fois par posture et
+  /// seulement pour les régions demandées.
+  Float32List? haloPositions(String name) {
+    final rest = _rest[name];
+    if (rest == null) return null;
+    final rig = this.rig;
+    if (!_posed || rig == null) return rest.positions;
+    final cached = _posedPositions[name];
+    if (cached != null) return cached;
+    final mats = _poseMats ??= rig.skinMatrices(_pose);
+    return _posedPositions[name] = _skinned(name, mats);
+  }
+
+  final Map<String, Float32List> _posedPositions = {};
+  Float64List? _poseMats;
+
+  /// M7 : numéro de la posture courante (change à chaque [applyPose]) : le
+  /// halo se redessine quand il change.
+  int get poseVersion => _poseVersion;
+  int _poseVersion = 0;
 
   /// Sens direct des triangles = normale vers l'extérieur ? Mesuré sur le
   /// droit de l'abdomen (tourné vers l'avant du repère), une fois : le
@@ -1406,6 +1529,10 @@ class Mannequin3D extends StatefulWidget {
   /// si les animations sont réduites).
   final String? posture;
 
+  /// M7 : mannequin animable (lecteur d'animations, `MannequinPlayer`) :
+  /// squelette Mixamo, posé image par image par [Mannequin3DState.showPose].
+  final bool animated;
+
   const Mannequin3D({
     super.key,
     this.intensities = const {},
@@ -1425,6 +1552,7 @@ class Mannequin3D extends StatefulWidget {
     this.semanticLabel = 'Mannequin anatomique en 3D',
     this.onReady,
     this.posture,
+    this.animated = false,
   });
 
   @override
@@ -1535,7 +1663,7 @@ class Mannequin3DState extends State<Mannequin3D>
     }
     MannequinScene? scene;
     try {
-      scene = await MannequinScene.create();
+      scene = await MannequinScene.create(animated: widget.animated);
     } catch (_) {
       scene = null;
     }
@@ -1551,6 +1679,22 @@ class Mannequin3DState extends State<Mannequin3D>
       _available = scene != null;
     });
     widget.onReady?.call(scene != null);
+  }
+
+  /// M7 : pose le mannequin animable (une image du lecteur) : os, cadrage
+  /// éventuel, gain du halo (intensité de la phase) ; la vue et le halo se
+  /// redessinent. Sans effet sur un mannequin sans squelette.
+  void showPose(
+    RigPose pose, {
+    MannequinFraming? framing,
+    double haloGain = 1,
+  }) {
+    final scene = _scene;
+    if (scene == null || scene.rig == null) return;
+    scene.applyPose(pose);
+    if (framing != null) scene.framing = framing;
+    scene.haloGain = haloGain;
+    if (mounted) setState(() {});
   }
 
   RigPose _poseOf(MannequinScene scene, String? key) => key == null

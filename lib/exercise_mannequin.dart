@@ -15,6 +15,8 @@ import 'atlas.dart';
 import 'atlas_data.dart';
 import 'engine3d.dart';
 import 'mannequin_3d.dart';
+import 'mannequin_clip.dart';
+import 'mannequin_player.dart';
 
 /// Face du corps où un muscle du pack se voit le mieux.
 enum MuscleFace { anterieur, posterieur, lateral }
@@ -276,8 +278,14 @@ class ExerciseMannequin extends StatefulWidget {
   final List<String> primaires, secondaires, stabilisateurs, etires;
   final double height;
 
+  /// M7 : identifiant de l'exercice du pack. S'il a une animation du
+  /// propriétaire (registre des clips), le mannequin est animé avec son
+  /// lecteur ; sinon, la fiche reste exactement comme avant (mannequin fixe).
+  final String? exerciseId;
+
   const ExerciseMannequin({
     super.key,
+    this.exerciseId,
     this.primaires = const [],
     this.secondaires = const [],
     this.stabilisateurs = const [],
@@ -353,27 +361,47 @@ class ExerciseMannequinState extends State<ExerciseMannequin> {
       if (widget.etires.isNotEmpty) 'Étirés : ${_names(widget.etires)}',
     ].join('. ');
     final hidden = _muscles.hidden;
+    // M7 : animation du propriétaire pour cet exercice (jamais l'animation
+    // de test) ; null → mannequin fixe, inchangé.
+    final clip = ClipRegistry.loaded?.forExercise(widget.exerciseId);
+    final fallback = ExerciseAtlas(
+      primaires: widget.primaires,
+      secondaires: widget.secondaires,
+      stabilisateurs: widget.stabilisateurs,
+      etires: widget.etires,
+    );
+    final semanticLabel =
+        'Mannequin anatomique en 3D, muscles de l’exercice. $label';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Mannequin3D(
+        if (clip != null)
+          MannequinPlayer(
+            key: const ValueKey('fiche-mannequin-anime'),
+            clip: clip,
+            intensities: _muscles.intensities,
+            stretched: _muscles.stretched,
+            view: startView,
+            height: widget.height,
+            semanticLabel: semanticLabel,
+            onReady: (ok) {
+              if (mounted && ok != _ready3d) setState(() => _ready3d = ok);
+            },
+            fallback: fallback,
+          )
+        else
+          Mannequin3D(
           key: const ValueKey('fiche-mannequin'),
           intensities: _muscles.intensities,
           stretched: _muscles.stretched,
           view: startView,
           height: widget.height,
           horizontalDragOnly: true,
-          semanticLabel:
-              'Mannequin anatomique en 3D, muscles de l’exercice. $label',
+          semanticLabel: semanticLabel,
           onReady: (ok) {
             if (mounted && ok != _ready3d) setState(() => _ready3d = ok);
           },
-          fallback: ExerciseAtlas(
-            primaires: widget.primaires,
-            secondaires: widget.secondaires,
-            stabilisateurs: widget.stabilisateurs,
-            etires: widget.etires,
-          ),
+          fallback: fallback,
         ),
         if (_ready3d && hidden.isNotEmpty)
           Padding(

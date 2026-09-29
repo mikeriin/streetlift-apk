@@ -1,7 +1,7 @@
 name: streetlift_tracker
 description: "Kalis Track — suivi d'entraînement calisthénie et streetlifting : programme guidé, séances perso, WOD, chronos, pilotage recalculable."
 publish_to: 'none'
-version: 5.6.0+85
+version: 5.7.0+86
 
 environment:
   # M1 (mannequin 3D) : flutter_scene 0.23 exige Flutter 3.47 stable et Dart 3.10.
@@ -70,4 +70,10 @@ flutter:
     # M6c : squelette Mixamo du personnage (noms, hiérarchie, pose de repos)
     # pour le lecteur d'animations (M7).
     - assets/anatomy/squelette_mixamo.json
+    # M7 : lecteur d'animations — squelette et peau du mannequin animable
+    # (le modèle lui-même, mannequin_anime.glb, est converti par le build
+    # hook), registre et clips compressés.
+    - assets/anatomy/rig_mixamo.json
+    - assets/anatomy/peau_mixamo.bin
+    - assets/anatomy/clips/
     - flutter_scene_generated/

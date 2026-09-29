@@ -1,8 +1,18 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M6c (nouveau mannequin : personnage Mixamo « Ch36 », zones musculaires sur la peau, ressources sous licence chiffrées), version 5.6.0 ; précédent : lot M6b (5.5.5), validé**  
-**Date : 29 septembre 2026, Europe/Paris — version : 5.6.0+85 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : pipeline « Mannequin 3D », lot M7 (lecteur d'animation, intensité par phase, import des animations Mixamo du propriétaire, animation de test), version 5.7.0 ; précédent : lot M6c (5.6.0), validé**  
+**Date : 29 septembre 2026, Europe/Paris — version : 5.7.0+86 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+
+## M7 — Lecteur d'animation, intensité par phase, import des animations (version 5.7.0)
+
+| Point | Réalisation |
+| --- | --- |
+| Import | `tools/anatomy/import_animations.py` : `deposer` (nom = identifiant du pack, squelette Mixamo vérifié : 65 os sans préfixe, hiérarchie, longueurs ±3 % ; chiffrement dans `assets_secure/animations/<id>.fbx.enc`, rôle « animation » du manifeste), `importer` (rotations locales dans le repère du corps depuis les matrices du monde du FBX et les repères de repos de `squelette_mixamo.json`, dérive horizontale du bassin retirée si sur place, 30 i/s, réduction des images clés ≤ 0,2° (relâchée jusqu'à 1° au-delà de 5 Ko, dépassement mesuré), quantification « trois plus petites composantes », gzip, phases réglées (`tools/anatomy/animations.json`) ou détectées par le centre de masse, registre), `verifier` (sans clé ni Blender). |
+| Mannequin animable | `tools/anatomy/build_animated.py` : zones reprises du GLB fixe triangle par triangle (écart 0,0001 mm), repos en T, 65 nœuds d'os `j_<os>`, JOINTS_0 / WEIGHTS_0 (4 influences), `rig_mixamo.json` (format `MannequinRig`) et `peau_mixamo.bin` ; peau du processeur contrôlée contre le GLB fixe (écart ≤ 1,1 mm, quantification des poids). GLB 870 Ko, chiffré (`mannequin_anime.glb.enc`, rôle exécution). |
+| Application | `lib/mannequin_clip.dart` (registre, décodage, échantillonnage, `phaseHaloGain`), `lib/mannequin_player.dart` (`ClipPlayback`, `MannequinPlayer`), `MannequinScene.create(animated: true)`, `Mannequin3D.animated` / `showPose`, halo et toucher sur le corps déformé (`haloPositions`, `poseVersion`, `haloGain`), `framingOver` (cadrage fixe du clip), `ExerciseMannequin.exerciseId` (lecteur si l'exercice a une animation, sinon inchangé), registre chargé au préchargement, écran `AnimationTestScreen` (Réglages › À propos › Moteur 3D). |
+| Animation de test | `tools/anatomy/debug_animation.py` : squat lent au poids du corps (descente 3 s, pause 1 s, montée 1 s, pause 1 s), cuisses à 88°, chevilles 33°, pieds fixes, tronc incliné pour garder le centre de masse au-dessus du milieu du pied (41,7° au plus bas), bras tendus devant ; FBX « Without Skin » (os `mixamorig:`) passé par `deposer` / `importer` (aller-retour : 0,003°) ; clip de 1 982 octets, 16 pistes. |
+| Documentation | `docs/ANIMATIONS_PROPRIETAIRE.md` (export Mixamo, nommage, envoi, identifiants du programme), `docs/ANIMATION_3D.md` (chaîne, lecteur, loi d'intensité, animations réduites, économie, format). |
 
 ## M6c — Personnage Mixamo, zones sur la peau, ressources chiffrées (version 5.6.0)
 
