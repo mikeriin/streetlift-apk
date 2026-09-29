@@ -159,13 +159,36 @@ void main() {
       ExerciseSheetScreen(key: ValueKey('m56-$id'), id: id),
       true,
     );
+    // 5.5.2 : la démonstration 2D ouvre la fiche, le mannequin (section
+    // Muscles) est plus bas dans la liste : on y défile d'abord.
+    await waitFor(
+      tester,
+      () => find.byType(ExerciseSheetScreen).evaluate().length == 1,
+      seconds: 30,
+    );
+    await tester.pump(const Duration(milliseconds: 300));
+    final list = find
+        .descendant(
+          of: find.byType(ExerciseSheetScreen).last,
+          matching: find.byType(Scrollable),
+        )
+        .first;
+    await tester.scrollUntilVisible(
+      find.byType(ExerciseMannequin),
+      250,
+      scrollable: list,
+    );
+    await tester.pump(const Duration(milliseconds: 300));
     await waitFor(tester, () => mannequin(tester)?.available != null);
     final state = mannequin(tester)!;
     expect(state.available, isTrue, reason: 'pas de 3D');
     expect(find.byType(ExerciseMannequin), findsOneWidget);
     // Plus d'animation : mannequin fixe, muscles de l'exercice.
     await tester.pump(const Duration(seconds: 2));
-    await tester.ensureVisible(find.byKey(const ValueKey('mannequin-view')));
+    await Scrollable.ensureVisible(
+      tester.element(find.byKey(const ValueKey('mannequin-view'))),
+      alignment: .04,
+    );
     await tester.pump(const Duration(seconds: 1));
     await shot('m56_${id}_fiche');
     final s = await check(tester, true);
