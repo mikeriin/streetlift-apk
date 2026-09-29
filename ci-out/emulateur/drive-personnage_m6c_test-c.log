@@ -1,0 +1,70 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             42.2s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,104ms
+I/eetlift_tracker( 5057): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 5057): Skipped 50 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 5057): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:34165/deXjxOFhREw=/
+VMServiceFlutterDriver: Isolate found with number: 5975604603565695
+VMServiceFlutterDriver: Isolate 5975604603565695 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 5057): 00:00 +0: (setUpAll)
+VMServiceFlutterDriver: Connected to Flutter application.
+D/ProfileInstaller( 5057): Installing profile for fr.tchoupi.streetlift_tracker
+I/Choreographer( 5057): Skipped 34 frames!  The application may be doing too much work on its main thread.
+I/flutter ( 5057): 00:01 +1: M6c : Anatomie sombre, 4 vues, 5 groupes, toucher, nœuds
+I/flutter ( 5057): 00:01 +1 ~1: M6c : Anatomie clair, 4 vues, 5 groupes
+I/flutter ( 5057): 00:01 +1 ~2: M6c : halo aux frontières (gros plans)
+D/EGL_emulation( 5057): app_time_stats: avg=5722.77ms min=970.62ms max=14871.14ms count=3
+D/EGL_emulation( 5057): app_time_stats: avg=346.85ms min=123.45ms max=739.98ms count=3
+D/EGL_emulation( 5057): app_time_stats: avg=239.76ms min=139.11ms max=520.52ms count=5
+D/EGL_emulation( 5057): app_time_stats: avg=148.39ms min=40.98ms max=243.22ms count=8
+D/EGL_emulation( 5057): app_time_stats: avg=150.40ms min=24.87ms max=257.25ms count=7
+D/EGL_emulation( 5057): app_time_stats: avg=277.54ms min=170.19ms max=397.96ms count=4
+D/EGL_emulation( 5057): app_time_stats: avg=130.55ms min=21.47ms max=209.23ms count=8
+D/EGL_emulation( 5057): app_time_stats: avg=106.52ms min=23.68ms max=149.32ms count=9
+D/EGL_emulation( 5057): app_time_stats: avg=326.21ms min=111.74ms max=751.06ms count=3
+D/EGL_emulation( 5057): app_time_stats: avg=217.59ms min=90.18ms max=522.11ms count=5
+D/EGL_emulation( 5057): app_time_stats: avg=144.59ms min=29.84ms max=248.79ms count=7
+D/EGL_emulation( 5057): app_time_stats: avg=123.98ms min=25.75ms max=177.72ms count=8
+D/EGL_emulation( 5057): app_time_stats: avg=269.18ms min=90.54ms max=419.90ms count=4
+D/EGL_emulation( 5057): app_time_stats: avg=125.87ms min=34.66ms max=209.88ms count=8
+D/EGL_emulation( 5057): app_time_stats: avg=228.12ms min=40.79ms max=722.55ms count=7
+D/EGL_emulation( 5057): app_time_stats: avg=342.04ms min=148.52ms max=694.24ms count=3
+D/EGL_emulation( 5057): app_time_stats: avg=252.77ms min=102.27ms max=589.66ms count=4
+D/EGL_emulation( 5057): app_time_stats: avg=139.59ms min=38.89ms max=235.35ms count=7
+D/EGL_emulation( 5057): app_time_stats: avg=160.00ms min=147.12ms max=177.47ms count=7
+D/EGL_emulation( 5057): app_time_stats: avg=337.50ms min=205.72ms max=405.46ms count=3
+D/EGL_emulation( 5057): app_time_stats: avg=156.17ms min=134.16ms max=173.94ms count=7
+D/EGL_emulation( 5057): app_time_stats: avg=198.60ms min=42.60ms max=420.68ms count=6
+D/EGL_emulation( 5057): app_time_stats: avg=369.98ms min=153.02ms max=692.47ms count=4
+D/EGL_emulation( 5057): app_time_stats: avg=338.59ms min=175.74ms max=551.79ms count=3
+D/EGL_emulation( 5057): app_time_stats: avg=150.68ms min=61.64ms max=186.33ms count=7
+D/EGL_emulation( 5057): app_time_stats: avg=125.89ms min=44.00ms max=206.73ms count=7
+D/EGL_emulation( 5057): app_time_stats: avg=253.38ms min=109.55ms max=495.42ms count=4
+D/EGL_emulation( 5057): app_time_stats: avg=128.69ms min=25.56ms max=194.24ms count=8
+D/EGL_emulation( 5057): app_time_stats: avg=171.62ms min=99.00ms max=568.75ms count=7
+D/EGL_emulation( 5057): app_time_stats: avg=353.52ms min=140.87ms max=719.93ms count=4
+D/EGL_emulation( 5057): app_time_stats: avg=257.74ms min=105.29ms max=499.62ms count=4
+D/EGL_emulation( 5057): app_time_stats: avg=101.68ms min=29.33ms max=158.02ms count=9
+D/EGL_emulation( 5057): app_time_stats: avg=116.50ms min=29.75ms max=216.40ms count=8
+I/flutter ( 5057): 00:55 +2 ~2: M6c : fiches (traction, dips, squat)
+I/flutter ( 5057): 00:55 +2 ~3: M6c : STATS, muscles de la semaine, sombre et clair
+I/flutter ( 5057): 00:55 +2 ~4: M6c : accueil (carte du jour), aperçu de WOD, Moteur 3D
+I/flutter ( 5057): 00:55 +2 ~5: (tearDownAll)
+I/flutter ( 5057): 00:55 +3 ~5: All tests passed!
+All tests passed.
