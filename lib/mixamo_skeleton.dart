@@ -73,10 +73,7 @@ class MixamoSkeleton {
         for (final e in rotations.entries)
           e.key as String: [
             for (final r in e.value as List)
-              (
-                axis: v((r as List)[0]),
-                degrees: (r[1] as num).toDouble(),
-              ),
+              (axis: v((r as List)[0]), degrees: (r[1] as num).toDouble()),
           ],
       },
     );

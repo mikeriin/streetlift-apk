@@ -304,8 +304,9 @@ def smooth_seams(ch, log=print):
     face = ch.W[:, ch.groups.index('Head')]
     V0 = np.unique(F[np.unique(pairs[ang > SEAM_ANGLE].ravel())].ravel())
     # mains et pieds : seules les coutures du poignet et de la cheville
-    # comptent (jamais les plis des doigts ni des orteils) ; visage : seul
-    # le bas du cou.
+    # comptent (jamais les plis des doigts ni des orteils) ; tête : seul le
+    # sillon du cou (jusqu'à 5 cm au-dessus de l'articulation de la tête),
+    # jamais le visage.
     far = np.zeros(len(V), bool)
     hands = ch.weight(*HAND_BONES)
     feet = ch.weight(*FOOT_BONES)
@@ -316,7 +317,7 @@ def smooth_seams(ch, log=print):
         far |= (hands > .3) & ((V - h) @ ax > .02)   # au-delà du poignet
         far |= (feet > .3) & (V[:, 1] < ch.head(side + 'Foot')[1] - .045)
     neck_y = ch.head('Head')[1]
-    V0 = V0[~far[V0] & ~((face[V0] > .5) & (V[V0, 1] > neck_y))]
+    V0 = V0[~far[V0] & ~((face[V0] > .5) & (V[V0, 1] > neck_y + .05))]
     n = len(V)
     e = np.concatenate([F[:, [0, 1]], F[:, [1, 2]], F[:, [2, 0]]])
     A = coo_matrix((np.ones(len(e) * 2), (np.r_[e[:, 0], e[:, 1]], np.r_[e[:, 1], e[:, 0]])),

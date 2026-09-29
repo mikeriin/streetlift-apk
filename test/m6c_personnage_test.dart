@@ -69,7 +69,11 @@ void main() {
     test('pose de repos en T, symétrique, 1,77 m', () {
       final l = skeleton['LeftHand']!.head, r = skeleton['RightHand']!.head;
       final arm = skeleton['LeftArm']!.head;
-      expect((l.y - arm.y).abs(), lessThan(.03), reason: 'bras à l’horizontale');
+      expect(
+        (l.y - arm.y).abs(),
+        lessThan(.03),
+        reason: 'bras à l’horizontale',
+      );
       expect(l.x, closeTo(-r.x, .005));
       expect(l.x, greaterThan(.5));
       expect(skeleton['HeadTop_End']!.head.y, closeTo(1.76, .03));
@@ -100,9 +104,10 @@ void main() {
       final groups = {for (final r in map.regions) r.groupe};
       expect(groups, kGroupLabels.keys.toSet());
       for (final r in map.regions) {
-        final other = map.byId[r.cote == 'left'
-            ? r.id.replaceFirst(RegExp(r'_left$'), '_right')
-            : r.id.replaceFirst(RegExp(r'_right$'), '_left')];
+        final other =
+            map.byId[r.cote == 'left'
+                ? r.id.replaceFirst(RegExp(r'_left$'), '_right')
+                : r.id.replaceFirst(RegExp(r'_right$'), '_left')];
         expect(other, isNotNull, reason: r.id);
         expect(r.aire, greaterThan(0), reason: r.id);
         expect(r.aireFace + r.aireDos, greaterThan(0), reason: r.id);

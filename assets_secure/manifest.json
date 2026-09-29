@@ -16,8 +16,8 @@
    "clair": "assets/anatomy/mannequin.glb",
    "role": "execution",
    "description": "Mannequin d'exécution (tools/anatomy/build_character.py), un nœud par zone",
-   "sha256": "cf4d0f69ccd755fe0b8bb6c1beb85a6ca34ec703f58ced3d32071c2d1a475672",
-   "octets_clair": 677000
+   "sha256": "20f2762acb8e078201f3615f7b2204377aa784fb22198b6e920bd6f6c134995a",
+   "octets_clair": 678804
   },
   {
    "chiffre": "assets_secure/ecorche_mannequin.glb.enc",
