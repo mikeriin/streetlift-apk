@@ -20,6 +20,7 @@ Tu es lancé par une des tâches planifiées « Kalis Track — pipeline 3D (Opu
 - Toucher un muscle affiche son nom, si le réglage « Nom du muscle au toucher » est activé (activé par défaut).
 - Manipulation : **(29/09/2026) boutons Face / Dos / Profil / 3/4 seulement, plus de rotation au doigt** ; zoom au pincement (28/09/2026, lot M4c) et toucher gardés. Vue de départ choisie automatiquement selon le plan du mouvement.
 - **(29/09/2026) Plus aucune animation ni posture dans l'application** : le mannequin montre les muscles sollicités, fixe ; le propriétaire fera les positions à la main plus tard (à prendre en compte pour les lots suivants). Caducs : matériel, intensité par phase, tempo, lecteur.
+- **(29/09/2026, 17:00) Les animations reviendront** : le propriétaire les produit lui-même en parallèle sur l'écorché acheté. En attendant, l'application affiche le mannequin fixe ; M7 prépare le lecteur, l'intensité par phase et l'import de ses animations, testés avec **une animation de débogage** (réservée aux tests, jamais montrée comme une démonstration d'exercice).
 - Emplacements : fiche exercice (en tête, à la place de la démonstration 2D), séance en cours, STATS, écran Anatomie, cartes de séance de l'accueil, aperçu de WOD, aperçu au choix / remplacement d'un exercice ; **(29/09/2026) le modèle remplace partout les images 2D** (repli sans Flutter GPU seulement) et allume la **zone ciblée** (muscles du pack des exercices) plutôt que le groupe entier. Séance : navigation par glissement seulement, plus de boutons Précédent / Suivant.
 - Ordre de conversion : exercices du programme du propriétaire d'abord, puis par familles.
 - Téléphone incompatible : repli sur la carte 2D historique et postures fixes du mannequin.
@@ -77,8 +78,8 @@ Interdits : modifier, créer ou relancer une tâche planifiée (aucun appel à f
 | M56 | M56.txt | Refonte chirurgicale du modèle (plus musclé), du squelette et de la peau ; matériel, chaîne d'animation, 3 pilotes crédibles ; carte Koach ; préchargement au lancement | Anatomie (postures), traction / dips / squat animés, carte Koach, ouverture du mannequin sans saccade | **Fable 5.1, effort maximal** |
 | M56 c2 | (session) | Correction 2 : écorché acheté, plus d'animation ni de posture, couleur dominante, plus de boutons Précédent / Suivant | Anatomie, fiches, séance | **Fable 5.1, effort maximal** |
 | M56 c3 | (session) | Correction 3 : muscles opaques, zone ciblée, mannequin à la place des images 2D, sans rotation au doigt | Fiches, STATS, accueil, WOD | **Fable 5.1, effort maximal** |
-| M6b | M06b.txt | Correctifs : bugs d'affichage, incohérences graphiques et d'utilisation de tout ce qui touche au mannequin et aux filtres (à relire : plus de posture ni d'animation) | Tous les écrans 3D, sans défaut | Opus 5.5, effort élevé |
-| M7 | M07.txt | Lecteur complet + intensité par phase | Lecture/pause, curseur, tempo, phases | Opus 5.5, effort élevé |
+| M6b | M06b.txt | Correctifs : bugs d'affichage, incohérences graphiques et d'utilisation de tout ce qui touche au mannequin et aux filtres (mannequin fixe : muscles opaques, zone ciblée, halo, sans rotation au doigt) | Tous les écrans 3D, sans défaut | Opus 5.5, effort élevé |
+| M7 | M07.txt | Lecteur complet + intensité par phase + import des animations du propriétaire, testés avec une animation de débogage | Réglages › À propos › Moteur 3D › Animation de test | Opus 5.5, effort élevé |
 | M7b | M07b.txt | Animations de Koach en mascotte : 3 attente, 3 « parle », 3 « félicite » | Anatomie › Koach (aperçu) | Opus 5.5, effort élevé |
 | M8 | M08.txt | Conversion : exercices du programme du propriétaire | Tout son programme animé | Opus 5.5, effort élevé |
 | M9 | M09.txt | Conversion : tirages | Famille animée | Opus 5.5, effort élevé |
@@ -93,6 +94,6 @@ Interdits : modifier, créer ou relancer une tâche planifiée (aucun appel à f
 | M18 | M18.txt | Aperçu au choix / remplacement d'un exercice | Listes de choix | Opus 5.5, effort élevé |
 | M19 | M19.txt | Nettoyage : repli, suppression du moteur 2D, fluidité, poids | Aucune régression | Opus 5.5, effort élevé |
 
-**(29/09/2026)** Les lots M7 à M18 ont été écrits pour un mannequin animé ; après la décision « plus d'animation, positions à la main plus tard », ils sont **à redéfinir par le propriétaire** avant tout lancement (voir DECISIONS_3D.md, « En attente »).
+**(29/09/2026, 17:00)** Ordre confirmé par le propriétaire : M6b (correctifs, adapté au mannequin fixe), puis M7 (lecteur, intensité par phase, import des animations du propriétaire, animation de débogage). M7b à M18 restent à redéfinir quand ses animations existeront (DECISIONS_3D.md, « En attente »).
 
 Effort **élevé** : raisonne avant chaque choix structurant, vérifie chaque rendu sous plusieurs vues, corrige avant de livrer. Effort **maximal** : exigence de précision chirurgicale — chaque décision anatomique, biomécanique ou technique est justifiée par une mesure ou une référence, chaque rendu est regardé en entier puis en gros plan aux articulations, et rien n'est livré qui ne serait pas acceptable par un anatomiste et un entraîneur exigeants.

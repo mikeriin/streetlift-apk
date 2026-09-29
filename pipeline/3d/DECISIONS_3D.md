@@ -152,6 +152,9 @@ Modèle Claude : Opus 5.5 pour tous les lots, effort accru demandé sur M5 (sque
 - **Choix du lot** : halo 2D dessiné par-dessus la vue (silhouette écran des faces tournées vers la caméra, floutée), plutôt qu'une coque 3D (essayée : surface ouverte, invisible de face) ou un post-traitement (flutter_scene 0.23 n'offre pas de passe par objet) ; projection étalonnée sur les rayons de la caméra pour rester alignée avec le toucher ; pas de test d'occlusion (limite assumée) ; pas de halo en rotation continue.
 - **CI 3D** : essais 36565820933 (analyse, test d'intégration), 36567719792 (relance unique : image système Android corrompue avant tout test ; puis attente du contenu de la fiche), 36571648634 (annulé), 36571687956 vert. Version 5.5.4+83, main 9826982, build signé n° 152.
 
+### Pilotage (29/09/2026, 17:00)
+- M56 validé avec ses corrections 1 à 4 (5.5.4). Le propriétaire produit lui-même les animations en parallèle ; ordre confirmé : M6b (correctifs, mannequin fixe) puis M7 (lecteur, intensité par phase, import de ses animations, animation de débogage réservée aux tests). M7b à M18 restent à redéfinir.
+
 ## En attente du propriétaire
-- Redéfinition des lots M6b à M18 après « plus d'animation, positions à la main plus tard » : que reste-t-il à faire côté application (correctifs M6b ; filtre « Muscles profonds » sans effet ; muscles selon la position quand les positions existeront) ?
+- Redéfinition des lots M7b à M18 après « plus d'animation, positions à la main plus tard » : que reste-t-il à faire côté application (correctifs M6b ; filtre « Muscles profonds » sans effet ; muscles selon la position quand les positions existeront) ?
 - Positions d'exercice : sous quelle forme seront-elles fournies (fichier posé du même écorché ? images ?) pour que les lots suivants les intègrent.

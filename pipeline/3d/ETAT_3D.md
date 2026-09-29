@@ -15,13 +15,13 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M4c | 5.3.2 | 67ec551 | build n° 112 (36431053547) ; CI 3D 36428956594 | 2026-09-28 | livré |
 | M5 | 5.4.0 | b745c41 | build n° 121 (36456576585) ; CI 3D 36454868372 | 2026-09-28 | livré |
 | M6 | — | — | — | 2026-09-28 | remplacé par M56 (session Opus lancée à 18:05 UTC, plus pilotée ; son travail sert de brouillon) |
-| M56 | 5.5.0 | 7a24fc0 | build n° 133 (36509815224) ; CI 3D 36508242229 (5 essais) | 2026-09-29 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M56.md` |
+| M56 | 5.5.0 | 7a24fc0 | build n° 133 (36509815224) ; CI 3D 36508242229 (5 essais) | 2026-09-29 | validé (avec ses corrections 1 à 4) — `livraisons/LIVRAISON_M56.md` |
 | M56 correction 1 | 5.5.1 | 786e867 | build n° 137 (36537833401) ; CI 3D 36535840924 (3 essais) | 2026-09-29 | remplacé par 5.5.2 — `livraisons/LIVRAISON_M56_correction1.md` |
 | M56 correction 2 | 5.5.2 | 5aeb2d1 | build n° 142 (36554048481) ; CI 3D 36551761380 (4 essais) | 2026-09-29 | remplacé par 5.5.3 — `livraisons/LIVRAISON_M56_correction2.md` |
 | M56 correction 3 | 5.5.3 | b01bb75 | build n° 146 (36561741052) ; CI 3D 36560553169 (3 essais) | 2026-09-29 | remplacé par 5.5.4 — `livraisons/LIVRAISON_M56_correction3.md` |
-| M56 correction 4 | 5.5.4 | 9826982 | build n° 152 ; CI 3D 36571687956 | 2026-09-29 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M56_correction4.md` ; halo des zones travaillées (maillage gris), fond sans démarcation ; remplace 5.5.3 |
-| M6b | — | — | — | — | à redéfinir (plus d'animation) |
-| M7 | 5.6.0 | — | — | — | à redéfinir (plus d'animation) |
+| M56 correction 4 | 5.5.4 | 9826982 | build n° 152 ; CI 3D 36571687956 | 2026-09-29 | validé (29/09/2026, 17:00) — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M56_correction4.md` ; halo des zones travaillées (maillage gris), fond sans démarcation ; remplace 5.5.3 |
+| M6b | — | — | — | — | à faire |
+| M7 | — | — | — | — | à faire (redéfini le 29/09 : lecteur, import des animations du propriétaire, animation de débogage) |
 | M8 | 5.7.0 | — | — | — | à redéfinir (plus d'animation) |
 | M9 | 5.8.0 | — | — | — | à redéfinir (plus d'animation) |
 | M10 | 5.9.0 | — | — | — | à redéfinir (plus d'animation) |

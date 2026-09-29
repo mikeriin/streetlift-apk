@@ -1,9 +1,21 @@
-LOT M7 — LECTEUR COMPLET ET INTENSITÉ PAR PHASE
-Rôle : développeur Flutter, designer d'interaction. Une seule action : le lecteur d'animation devient complet, sur les exercices déjà convertis.
+LOT M7 — LECTEUR D'ANIMATION, INTENSITÉ PAR PHASE ET IMPORT DES ANIMATIONS DU PROPRIÉTAIRE (testés avec une animation de débogage)
+Modèle : Claude Opus 5.5, effort élevé. Contexte (29/09/2026) : l'application affiche l'écorché acheté, fixe (plus d'animation ni de posture depuis M56 correction 2). Le propriétaire produit lui-même, en parallèle, les animations des exercices sur ce même écorché. Une seule action : tout préparer pour qu'elles s'intègrent sans nouveau développement, et le prouver avec une animation de débogage.
 
-— Contrôles sous le mannequin animé : lecture / pause, curseur de temps (glisser = parcourir le mouvement), nom de la phase en cours et son tempo (ex. « Descente · 3 s »), boutons de vues. Grandes cibles tactiles (≥ 48 dp), libellés accessibles.
-— Intensité par phase (décision du propriétaire) : muscles principaux plus vifs en concentrique, plus doux en excentrique, pulsation lente en isométrie ; les secondaires et stabilisateurs suivent en proportion. Transitions douces, jamais de clignotement (respect des recommandations d'accessibilité sur les flashs). Loi de modulation écrite dans `docs/ANIMATION_3D.md` et testée.
-— Réduction des animations Android : pas de lecture automatique ; images clés fixes de début et de fin de chaque phase, parcourables au curseur.
-— Économie : pause hors écran, en arrière-plan et après 60 s sans interaction (reprise au toucher).
-— Tests : modulation par phase, curseur ↔ temps, réduction des animations, cycle de vie (pause/reprise).
-— Captures sur les 3 pilotes (phases différentes, sombre et clair) + GIF ; REGARDE-les. Version 5.6.0.
+1. Format et import des animations du propriétaire
+— Lis d'abord comment l'écorché acheté est converti (`tools/anatomy/build_model.py --zip`, archive `Archive.zip` de la release `modele-achete`, licence commerciale : jamais dans le dépôt, ni ses dérivés bruts) et s'il porte un squelette. Sinon, ajoute-lui un squelette de débogage minimal (bassin, rachis, tête, bras, avant-bras, mains, cuisses, jambes, pieds ; poids automatiques) dans la chaîne de conversion, suffisant pour tester ; documente-le comme provisoire (le squelette définitif sera celui des animations du propriétaire).
+— Définis le format d'entrée le plus simple pour lui (par ordre de préférence : glTF/GLB avec squelette et clips nommés par identifiant d'exercice ; FBX accepté si convertible sans perte par Blender sans interface) et l'outil `tools/anatomy/import_animations.py` qui : lit ses fichiers (déposés comme asset d'une release GitHub dédiée, jamais dans le dépôt si la licence l'interdit), vérifie la correspondance avec le squelette de l'écorché, rééchantillonne, compresse chaque clip (≤ 5 Ko), l'associe à l'exercice du pack et au registre `assets/anatomy/clips/index.json`, et échoue avec un message clair sinon.
+— Écris `docs/ANIMATIONS_PROPRIETAIRE.md` : mode d'emploi en français simple, faisable depuis un téléphone (où déposer ses fichiers, comment les nommer, comment déclencher l'import), avec la liste des identifiants d'exercices de son programme.
+
+2. Lecteur
+— Sous le mannequin animé : lecture / pause, curseur de temps (glisser = parcourir le mouvement), nom de la phase en cours et son tempo (ex. « Descente · 3 s »), boutons de vues. Cibles ≥ 48 dp, libellés accessibles.
+— Intensité par phase : halo de la zone travaillée plus vif en concentrique, plus doux en excentrique, pulsation lente en isométrie (règles de mise en évidence du §2 de PIPELINE_3D.md : maillage gris, halo dans la couleur dominante). Transitions douces, jamais de clignotement. Loi écrite dans `docs/ANIMATION_3D.md` et testée.
+— Réduction des animations Android : pas de lecture automatique ; images clés de début et de fin de chaque phase, parcourables au curseur. Économie : pause hors écran, en arrière-plan et après 60 s sans interaction.
+— Tant qu'un exercice n'a pas d'animation du propriétaire, sa fiche reste exactement comme aujourd'hui (mannequin fixe) : aucun lecteur vide, aucune régression.
+
+3. Animation de débogage (demande du propriétaire : « pour tester le tout »)
+— Une animation simple et lisible sur l'écorché (par exemple : squat lent au poids du corps, 4 phases : descente 3 s, pause 1 s, montée 1 s, pause 1 s), produite par la chaîne d'import du point 1 comme si elle venait du propriétaire, avec ses muscles ciblés et ses phases.
+— Visible seulement dans Réglages › À propos › Moteur 3D › « Animation de test » (libellée comme test), jamais dans une fiche d'exercice. Elle sert au propriétaire à vérifier sur son téléphone : fluidité (images/s affichées), lecteur, curseur, phases, intensité par phase, vues, zoom, réduction des animations.
+
+4. Contrôles et livraison
+— Tests : import (fichier valide, squelette incompatible, nom inconnu), clips ≤ 5 Ko, lecteur (curseur ↔ temps, phases, pause/reprise), modulation par phase, réduction des animations, fiches sans animation inchangées. Captures de l'écran « Animation de test » (phases différentes, sombre et clair) et GIF, REGARDÉS.
+— Version : lot de fonctionnalités (§7). Notification « prêt à tester » : « Kalis Track M7 prêt à tester — v<version>. À tester : Réglages › À propos › Moteur 3D › Animation de test. Page : … ».
