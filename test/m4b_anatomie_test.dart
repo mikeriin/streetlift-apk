@@ -172,7 +172,9 @@ void main() {
       Set<String> hidden = const {},
       bool bones = true,
       Iterable<PickMesh>? on,
-      double opacity = kMuscleOpacity,
+      // Règle du toucher à travers des muscles translucides (5.5.3 : les
+      // muscles de l'application sont opaques, la règle reste testée).
+      double opacity = .5,
     }) => MannequinScene.pickAlong(
       o,
       d,

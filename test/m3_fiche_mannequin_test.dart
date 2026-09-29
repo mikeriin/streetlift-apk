@@ -354,12 +354,14 @@ void main() {
       expect(find.byKey(const ValueKey('mannequin-fallback')), findsNothing);
       expect(find.byKey(const ValueKey('mannequin-view')), findsNothing);
       expect(find.byType(AtlasRoleLegend), findsOneWidget);
-      await scrollToAction(tester, find.textContaining('Principaux : '));
+      // 5.5.3 : le mannequin est en tête de fiche (liste paresseuse : lu
+      // avant de défiler jusqu'à la liste des muscles).
       final state = tester.state<ExerciseMannequinState>(
         find.byType(ExerciseMannequin),
       );
       expect(state.startView, MannequinView.dos);
       expect(state.muscles.intensities, isNotEmpty);
+      await scrollToAction(tester, find.textContaining('Principaux : '));
       expect(tester.takeException(), isNull);
     });
 
