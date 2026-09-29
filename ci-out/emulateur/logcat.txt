@@ -1,0 +1,22 @@
+09-29 16:09:21.230 I/GmsActivityDetector( 1175): 	at libcore.io.IoBridge.open(IoBridge.java:574)
+09-29 16:09:21.230 I/GmsActivityDetector( 1175): 	at libcore.io.Linux.open(Native Method)
+09-29 16:09:21.230 I/GmsActivityDetector( 1175): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 16:09:21.230 I/GmsActivityDetector( 1175): 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:274)
+09-29 16:09:21.230 I/GmsActivityDetector( 1175): 	at libcore.io.ForwardingOs.open(ForwardingOs.java:563)
+09-29 16:09:21.230 I/GmsActivityDetector( 1175): 	at libcore.io.IoBridge.open(IoBridge.java:560)
+09-29 16:09:21.350 D/nativeloader( 2277): InitLlndkLibrariesProduct: libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libRS.so:libandroid_net.so:libapexsupport.so:libbinder_ndk.so:libc.so:libcgrouprc.so:libclang_rt.asan-x86_64-android.so:libcom.android.tethering.connectivity_native.so:libdl.so:libft2.so:liblog.so:libm.so:libmediandk.so:libnativewindow.so:libneuralnetworks.so:libselinux.so:libsync.so:libvendorsupport.so:libvndksupport.so:libvulkan.so
+09-29 16:09:21.395 W/ActivityManager(  559): Invalid packageName: fr.tchoupi.streetlift_tracker
+09-29 16:09:21.546 W/ActivityManager(  559): Service lookup failed: association not allowed between packages com.google.android.as.oss and com.google.android.gms
+09-29 16:09:21.554 V/GraphicsEnvironment( 2277):   angle_gl_driver_selection_pkgs=[]
+09-29 16:09:21.554 V/GraphicsEnvironment( 2277):   angle_gl_driver_selection_values=[]
+09-29 16:09:21.733 D/nativeloader( 1175): Load /data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.uncompressed.apk!/lib/x86_64/libcronet.126.0.6452.4.so using isolated ns clns-10 (caller=/data/user_de/0/com.google.android.gms/app_chimera/m/00000001/CronetDynamite.uncompressed.apk): ok
+09-29 16:09:21.783 E/gle.android.tts( 2320): Not starting debugger since process cannot load the jdwp agent.
+09-29 16:09:21.883 I/lowmemorykiller(  142): Kill 'com.android.cellbroadcastreceiver' (1791), uid 10108, oom_score_adj 955 to free 102252kB rss, 1280kB swap; reason: low watermark is breached
+09-29 16:09:21.884 E/lowmemorykiller(  142): process_mrelease 1791 failed: No such process
+09-29 16:09:21.901 I/lowmemorykiller(  142): Kill 'com.google.android.cellbroadcastreceiver' (1624), uid 10189, oom_score_adj 945 to free 125292kB rss, 1408kB swap; reason: low watermark is breached
+09-29 16:09:21.902 E/lowmemorykiller(  142): process_mrelease 1624 failed: No such process
+09-29 16:09:21.908 I/ActivityManager(  559): Process com.android.cellbroadcastreceiver (pid 1791) has died: cch+55 CEM 
+09-29 16:09:21.921 W/ActivityManager(  559): pid 559 system sent binder code 38 with flags 1 to frozen apps and got error -32
+09-29 16:09:21.935 I/UserRestrictionsPolicyHandler( 2275): Build type DEBUG = true
+09-29 16:09:22.005 W/ActivityManager(  559): Slow operation: 76ms so far, now at attachApplicationLocked: after updateOomAdjLocked
+09-29 16:09:22.015 I/ActivityManager(  559): Process com.google.android.cellbroadcastreceiver (pid 1624) has died: cch+45 CEM 
