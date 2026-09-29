@@ -1,6 +1,0 @@
-Analyzing streetlift-apk...                                     
-
-   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • lib/koach_preview_screen.dart:79:11 • curly_braces_in_flow_control_structures
-   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • lib/koach_preview_screen.dart:83:9 • curly_braces_in_flow_control_structures
-
-2 issues found. (ran in 20.3s)
