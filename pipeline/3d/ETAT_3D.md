@@ -23,7 +23,7 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M6b | 5.5.5 | 019fa08 | build n° 159 (36601660192) ; CI 3D 36599218965 (essais A à E) | 2026-09-29 | validé (29/09/2026, 19:15) — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M6b.md`, `docs/AUDIT_M6b.md` ; 11 défauts corrigés |
 | M6c | 5.6.0 | 66a167c | build n° 163 (36618366444) ; CI 3D 36615305716 (essais A à C) | 2026-09-29 | validé (29/09/2026, 21:50) — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M6c.md` ; personnage Mixamo Ch36, 126 zones sur la peau, ressources chiffrées dans `assets_secure/` |
 | M7 | 5.7.0 | 8da6311 | build n° 167 (36631585307) ; CI 3D 36629784293 (essais A à C) | 2026-09-29 | validé (29/09/2026, 23:30) — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M7.md` ; lecteur, intensité par phase, import des FBX Mixamo, animation de test (Réglages › À propos › Moteur 3D) |
-| M7b | — | — | — | — | à faire (adapté le 29/09 au squelette Mixamo) |
+| M7b | — | — | — | — | en cours depuis 2026-09-29 21:43 UTC |
 | M8 | 5.8.0 | — | — | — | à redéfinir (plus d'animation) |
 | M9 | 5.9.0 | — | — | — | à redéfinir (plus d'animation) |
 | M10 | 5.10.0 | — | — | — | à redéfinir (plus d'animation) |
