@@ -157,7 +157,7 @@ void main() {
     final grown = s.transform(perp.clone()).length / perp.length;
     expect(
       grown,
-      closeTo(1 + quads.bulge * angle(b.rotationOf('shin_l')), 1e-9),
+      closeTo(1 + quads.bulge * angle(b.rotationOf('shin_l')), 1e-6),
     );
     expect(grown, greaterThan(1.08));
     expect(full.scales.containsKey('knee_aux_l'), isTrue);

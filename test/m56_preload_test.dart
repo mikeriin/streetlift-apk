@@ -14,7 +14,7 @@ import 'package:streetlift_tracker/engine3d.dart';
 import 'package:streetlift_tracker/mannequin_preload.dart';
 import 'package:streetlift_tracker/store.dart';
 
-import 'phone_test_support.dart';
+import 'phone_test_support.dart' show phone;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -91,16 +91,17 @@ void main() {
       );
       await tester.pump();
     }
-    await tester.pumpAndSettle();
+    await tester.pump(const Duration(milliseconds: 100));
     expect(ready, findsOneWidget);
-    await scrollToAction(
-      tester,
-      find.byKey(const ValueKey('engine3d-preload')),
-    );
-    await scrollToAction(
-      tester,
-      find.text('Rien à précharger sans moteur 3D.'),
-    );
+    // Carte « Préchargement » en bas de la liste (liste paresseuse : on
+    // défile par pas fixes, sans attendre de stabilisation).
+    final card = find.byKey(const ValueKey('engine3d-preload'));
+    for (var i = 0; i < 12 && card.evaluate().isEmpty; i++) {
+      await tester.drag(find.byType(Scrollable).first, const Offset(0, -250));
+      await tester.pump(const Duration(milliseconds: 300));
+    }
+    expect(card, findsOneWidget);
+    expect(find.text('Rien à précharger sans moteur 3D.'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 }
