@@ -37,7 +37,6 @@ import 'dart:typed_data';
 
 // `Material` désigne ici le matériau 3D de flutter_scene.
 import 'package:flutter/material.dart' hide Material;
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_scene/scene.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -1301,9 +1300,10 @@ class Mannequin3D extends StatefulWidget {
   /// si les animations sont réduites).
   final String? posture;
 
-  /// M6 : animation d'exercice jouée en boucle (tempo réel, matériel, vue
-  /// par défaut et cadrage du clip) ; remplace [posture] et [view]. Pause
-  /// hors de l'écran ; animations réduites : positions clés fixes au choix.
+  /// M56 : démonstration d'exercice (matériel, vue par défaut et cadrage du
+  /// clip) ; remplace [posture] et [view]. Correction 1 : plus de boucle,
+  /// le mannequin montre la position de départ, puis la position de fin au
+  /// choix, avec un fondu doux (instantané si les animations sont réduites).
   final MannequinClip? clip;
 
   const Mannequin3D({
@@ -1453,6 +1453,10 @@ class Mannequin3DState extends State<Mannequin3D>
       await scene.setEquipment(clip.equipment);
       if (!mounted) return;
       scene.framing = scene.framingOf(clip.center, clip.height, clip.width);
+      // Position de départ.
+      final positions = clip.shownPositions;
+      _clipIndex = 0;
+      _clipTime = positions.isEmpty ? 0 : clip.wrap(positions.first.time);
       _applyClip(scene, clip);
     } else if (scene != null && widget.posture != null) {
       _posture = widget.posture;
@@ -1465,21 +1469,23 @@ class Mannequin3DState extends State<Mannequin3D>
       _available = scene != null;
     });
     widget.onReady?.call(scene != null);
-    if (scene != null && clip != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => _updateClipTicker());
-    }
   }
 
-  // ------------------------------------------------------------ M6 --
-  late final Ticker _clipTicker = createTicker(_onClipTick);
+  // ------------------------------------------------------- M56 clip --
+  // Positions de départ et de fin (correction 1) : la posture affichée est
+  // celle de la position courante ; le passage à l'autre est un fondu
+  // (mélange sphérique des rotations, matériel mobile interpolé) porté par
+  // [_poseTween], comme une posture de l'écran Anatomie.
+  int _clipIndex = 0;
   double _clipTime = 0;
-  Duration _clipLast = Duration.zero;
-  bool _clipPaused = false;
-  ScrollPosition? _scroll;
+  Map<String, vm.Vector3> _fromEquipment = const {}, _toEquipment = const {};
 
-  /// Temps courant de l'animation (s) et lecture en cours (tests).
+  /// Temps courant de la démonstration (s) : instant de la position montrée
+  /// (tests, captures).
   double get clipTime => _clipTime;
-  bool get clipPlaying => _clipTicker.isActive;
+
+  /// Position montrée (index dans [MannequinClip.shownPositions]).
+  int get clipPosition => _clipIndex;
 
   void _applyClip(MannequinScene scene, MannequinClip clip) {
     final rig = scene.rig;
@@ -1488,74 +1494,53 @@ class Mannequin3DState extends State<Mannequin3D>
     scene.moveEquipment(clip.equipmentAt(_clipTime));
   }
 
-  void _onClipTick(Duration elapsed) {
+  /// Montre la position [index] du clip (départ, fin) avec un fondu.
+  void showClipPosition(int index) {
     final scene = _scene, clip = widget.clip;
-    if (scene == null || clip == null) return;
-    final dt = (elapsed - _clipLast).inMicroseconds / 1e6;
-    _clipLast = elapsed;
-    if (!_onScreen()) {
-      // Hors de l'écran : pause, reprise au défilement.
-      _clipTicker.stop();
-      return;
-    }
-    setState(() {
-      _clipTime = clip.wrap(_clipTime + dt.clamp(0.0, .1));
-      _applyClip(scene, clip);
-    });
-  }
-
-  /// Vue au moins en partie visible à l'écran.
-  bool _onScreen() {
-    final box = context.findRenderObject();
-    if (box is! RenderBox || !box.attached || !box.hasSize) return false;
-    final rect = box.localToGlobal(Offset.zero) & box.size;
-    final screen = Offset.zero & MediaQuery.sizeOf(context);
-    return rect.overlaps(screen);
-  }
-
-  void _updateClipTicker() {
-    if (!mounted || widget.clip == null || _scene == null) return;
-    final play = !_clipPaused && !_reduceMotion && _onScreen();
-    if (play && !_clipTicker.isActive) {
-      _clipLast = Duration.zero;
-      _clipTicker.start();
-    } else if (!play && _clipTicker.isActive) {
-      _clipTicker.stop();
-    }
-  }
-
-  /// Défilement : visibilité relue après la mise en page de l'image
-  /// (pendant le défilement, la position de la vue n'est pas encore à jour).
-  void _onScroll() {
+    final rig = scene?.rig;
+    if (scene == null || clip == null || rig == null) return;
+    final positions = clip.shownPositions;
+    if (positions.isEmpty) return;
+    index = index.clamp(0, positions.length - 1);
+    final t = clip.wrap(positions[index].time);
+    _poseTween.stop();
+    _fromPose = scene.pose;
+    _fromEquipment = clip.equipmentAt(_clipTime);
+    _clipIndex = index;
+    _clipTime = t;
+    _toPose = clip.poseAt(t, rig);
+    _toEquipment = clip.equipmentAt(t);
+    _fromFraming = _toFraming = scene.framing;
     if (!mounted) return;
-    WidgetsBinding.instance.addPostFrameCallback((_) => _updateClipTicker());
-    SchedulerBinding.instance.ensureVisualUpdate();
+    if (_reduceMotion) {
+      setState(() => _applyClip(scene, clip));
+    } else {
+      _poseTween.forward(from: 0);
+    }
   }
 
-  /// Place l'animation à l'instant [t] et la met en pause (positions clés
-  /// quand les animations sont réduites ; tests et captures).
+  /// Place la démonstration à l'instant [t] sans transition (tests et
+  /// captures) ; la position courante devient la plus proche.
   void seekClip(double t, {bool pause = true}) {
     final scene = _scene, clip = widget.clip;
     if (scene == null || clip == null) return;
-    _clipPaused = pause;
-    if (pause) _clipTicker.stop();
+    _poseTween.stop();
+    final w = clip.wrap(t);
+    final positions = clip.shownPositions;
+    if (positions.isNotEmpty) {
+      var best = 0;
+      for (var i = 1; i < positions.length; i++) {
+        if ((clip.wrap(positions[i].time) - w).abs() <
+            (clip.wrap(positions[best].time) - w).abs()) {
+          best = i;
+        }
+      }
+      _clipIndex = best;
+    }
     setState(() {
-      _clipTime = clip.wrap(t);
+      _clipTime = w;
       _applyClip(scene, clip);
     });
-    if (!pause) _updateClipTicker();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (widget.clip == null) return;
-    final pos = Scrollable.maybeOf(context)?.position;
-    if (!identical(pos, _scroll)) {
-      _scroll?.removeListener(_onScroll);
-      _scroll = pos?..addListener(_onScroll);
-    }
-    WidgetsBinding.instance.addPostFrameCallback((_) => _updateClipTicker());
   }
 
   RigPose _poseOf(MannequinScene scene, String? key) => key == null
@@ -1593,6 +1578,15 @@ class Mannequin3DState extends State<Mannequin3D>
     setState(() {
       scene.applyPose(t >= 1 ? _toPose : rig.blend(_fromPose, _toPose, t));
       scene.framing = MannequinFraming.lerp(_fromFraming!, _toFraming!, t);
+      if (widget.clip != null) {
+        scene.moveEquipment({
+          for (final e in _toEquipment.entries)
+            e.key: t >= 1
+                ? e.value
+                : (_fromEquipment[e.key] ?? e.value) +
+                      (e.value - (_fromEquipment[e.key] ?? e.value)) * t,
+        });
+      }
     });
   }
 
@@ -1608,8 +1602,6 @@ class Mannequin3DState extends State<Mannequin3D>
   @override
   void dispose() {
     _openTimer?.cancel();
-    _scroll?.removeListener(_onScroll);
-    _clipTicker.dispose();
     _settings.listenable.removeListener(_onSettings);
     _tween.dispose();
     _poseTween.dispose();
@@ -1831,18 +1823,22 @@ class Mannequin3DState extends State<Mannequin3D>
     );
   }
 
-  /// M6 : phase en cours et tempo ; animations réduites : positions clés.
+  /// M56 : position montrée (départ / fin), phase et tempo ; puces pour
+  /// passer d'une position à l'autre (fondu doux).
   List<Widget> _clipInfo(BuildContext context, MannequinClip clip) {
     final phase = clip.phaseAt(_clipTime);
+    final positions = clip.shownPositions;
+    final current = positions.isEmpty ? null : positions[_clipIndex];
     return [
       const SizedBox(height: 6),
       Text(
-        '${phase.name} · ${phase.typeLabel} · tempo ${clip.tempo}',
+        '${current == null ? '' : '${current.name} · '}${phase.name} · '
+        'tempo ${clip.tempo}',
         key: const ValueKey('mannequin-phase'),
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 12.5, color: SL.dim),
       ),
-      if (_reduceMotion)
+      if (positions.length > 1)
         Padding(
           padding: const EdgeInsets.only(top: 6),
           child: Wrap(
@@ -1851,11 +1847,12 @@ class Mannequin3DState extends State<Mannequin3D>
             spacing: 6,
             runSpacing: 6,
             children: [
-              for (final (name, t) in clip.keyPositions)
+              for (var i = 0; i < positions.length; i++)
                 ChoiceChip(
-                  label: Text(name),
-                  selected: clip.phaseAt(_clipTime).start == t,
-                  onSelected: (_) => seekClip(t),
+                  key: ValueKey('mannequin-position-$i'),
+                  label: Text(positions[i].name),
+                  selected: i == _clipIndex,
+                  onSelected: (_) => showClipPosition(i),
                 ),
             ],
           ),

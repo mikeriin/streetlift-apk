@@ -79,6 +79,11 @@ void main() {
         reason: id,
       );
       expect(c.keyPositions, isNotEmpty);
+      // Correction 1 : positions de départ et de fin montrées par la fiche.
+      expect([for (final p in c.shownPositions) p.name], ['Départ', 'Fin']);
+      for (final p in c.shownPositions) {
+        expect(p.time, inInclusiveRange(0, c.duration));
+      }
       expect(c.equipment.map((e) => e.id), contains('sol'));
       expect(c.height, greaterThan(1.0));
       // La boucle revient à sa posture de départ.
@@ -153,6 +158,15 @@ void main() {
     expect(yActive - y0, greaterThan(.015));
     final y1 = c.poseAt(c.phases[1].end, rig).translation.y;
     expect(y1 - y0, greaterThan(.3));
+    // Départ = suspension bras tendus (bas), fin = menton au-dessus (haut).
+    final depart = c.shownPositions.first, fin = c.shownPositions.last;
+    expect(depart.key, 'bas');
+    expect(fin.key, 'haut');
+    expect(
+      c.poseAt(fin.time, rig).translation.y -
+          c.poseAt(depart.time, rig).translation.y,
+      greaterThan(.3),
+    );
     // Tenue isométrique : posture fixe.
     final p = c.phases[2];
     expect(

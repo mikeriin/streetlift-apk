@@ -23,7 +23,7 @@
    ]
   }
  ],
- "note": "Prise pronation (paumes vers l'avant), mains à 58 cm d'axe à axe (1,2 × la largeur bideltoïdienne du modèle musclé, 48,5 cm : prise légèrement plus large que les épaules) ; départ bras tendus, épaules engagées (scapulas abaissées depuis la suspension passive) ; arrivée menton au-dessus de la barre, coudes vers les hanches, sans élan (bassin et jambes fixes). M56 : position « actif » (suspension active : scapulas abaissées et rétractées, coudes tendus) avant la flexion des coudes ; coudes vers les côtes en haut (abduction 40°) ; descente contrôlée jusqu'à l'extension complète puis relâchement des scapulas. Revue M56 (entraîneur / anatomiste) : suspension active plus marquée (élévation claviculaire +14° → −6°, sonnette 54° → 42°, le corps monte de ≈ 4 cm coudes tendus) ; menton 4 cm au-dessus de la barre ; balancement du bassin borné à ±10° ; avec une prise à 58 cm et le menton au-dessus de la barre, les coudes restent à ≈ 55° du tronc (géométrie : bras 29 cm + avant-bras et main 32 cm), les coudes ne descendent contre les côtes que dans une traction poitrine-barre.",
+ "note": "Prise pronation (paumes vers l'avant), mains à 58 cm d'axe à axe (1,2 × la largeur bideltoïdienne du modèle musclé, 48,5 cm : prise légèrement plus large que les épaules) ; départ bras tendus, épaules engagées (scapulas abaissées depuis la suspension passive) ; arrivée menton au-dessus de la barre, coudes vers les hanches, sans élan (bassin et jambes fixes). M56 : position « actif » (suspension active : scapulas abaissées et rétractées, coudes tendus) avant la flexion des coudes ; coudes vers les côtes en haut (abduction 40°) ; descente contrôlée jusqu'à l'extension complète puis relâchement des scapulas. Revue M56 (entraîneur / anatomiste) : suspension active plus marquée (élévation claviculaire +14° → −6°, sonnette 54° → 42°, le corps monte de ≈ 4 cm coudes tendus) ; menton 4 cm au-dessus de la barre ; balancement du bassin borné à ±10° ; avec une prise à 58 cm et le menton au-dessus de la barre, les coudes restent à ≈ 55° du tronc (géométrie : bras 29 cm + avant-bras et main 32 cm), les coudes ne descendent contre les côtes que dans une traction poitrine-barre. Correction 1 (29/09/2026, référence GymVisual « pull-up » 0652 fournie par le propriétaire) : en bas, bras à la verticale sous la barre (flexion humérale 0, plus d'extension : « coudes trop en arrière »), ceinture scapulaire haussée (clavicule +20°, sonnette 45°) ; gainage hollow (lombaires fléchies de 8°, côtes basses 4° ; le bassin, racine du corps, est orienté par l'équilibre sous la barre : « abdos pas assez engagés ») ; genoux fléchis à 90° et hanches à 15° comme la référence (pieds derrière). Positions seules dans l'application (départ = bas, fin = haut).",
  "sources": [
   "Pack Kalis Track : points clés (« Part bras tendus, épaules engagées », « Tire les coudes vers les hanches », « Menton au-dessus de la barre sans élan »), erreurs (demi-amplitude, balancement), plan sagittal.",
   "Youdas et al., « Surface electromyographic activation patterns and elbow joint motion during a pull-up, chin-up, or perfect-pullup rotational exercise », J Strength Cond Res 24(12), 2010 : flexion du coude en fin de montée ≈ 110-130°.",
@@ -35,17 +35,17 @@
    "moteur": 3,
    "angles": {
     "clavicle": {
-     "elevation": 14,
-     "protraction": 2
+     "elevation": 20,
+     "protraction": 0
     },
     "scapula": {
-     "sonnette": 54,
-     "bascule": 14,
+     "sonnette": 45,
+     "bascule": 10,
      "rotation": 0
     },
     "upperarm": {
-     "flexion": 10,
-     "abduction": 158,
+     "flexion": 0,
+     "abduction": 160,
      "rotation": -88
     },
     "radius": {
@@ -56,10 +56,10 @@
      "deviation": 0
     },
     "lumbar": {
-     "flexion": 0
+     "flexion": 8
     },
     "thoracic_low": {
-     "flexion": 0
+     "flexion": 4
     },
     "thoracic_high": {
      "flexion": 0
@@ -71,14 +71,14 @@
      "flexion": 0
     },
     "thigh": {
-     "flexion": 8,
+     "flexion": 15,
      "abduction": 0
     },
     "shin": {
-     "flexion": 20
+     "flexion": 90
     },
     "foot": {
-     "flexion": -30
+     "flexion": -25
     },
     "pelvis": {
      "flexion": 0
@@ -89,17 +89,17 @@
    "moteur": 3,
    "angles": {
     "clavicle": {
-     "elevation": -6,
-     "protraction": -8
+     "elevation": -4,
+     "protraction": -6
     },
     "scapula": {
-     "sonnette": 42,
-     "bascule": 12,
+     "sonnette": 38,
+     "bascule": 10,
      "rotation": 0
     },
     "upperarm": {
-     "flexion": 8,
-     "abduction": 152,
+     "flexion": 0,
+     "abduction": 156,
      "rotation": -88
     },
     "radius": {
@@ -110,10 +110,10 @@
      "deviation": 0
     },
     "lumbar": {
-     "flexion": 0
+     "flexion": 8
     },
     "thoracic_low": {
-     "flexion": -2
+     "flexion": 4
     },
     "thoracic_high": {
      "flexion": -2
@@ -125,14 +125,14 @@
      "flexion": 0
     },
     "thigh": {
-     "flexion": 8,
+     "flexion": 15,
      "abduction": 0
     },
     "shin": {
-     "flexion": 20
+     "flexion": 90
     },
     "foot": {
-     "flexion": -30
+     "flexion": -25
     },
     "pelvis": {
      "flexion": 0
@@ -170,7 +170,7 @@
      "deviation": 0
     },
     "lumbar": {
-     "flexion": -6
+     "flexion": 0
     },
     "thoracic_low": {
      "flexion": -4
@@ -185,17 +185,17 @@
      "flexion": -8
     },
     "thigh": {
-     "flexion": 8,
+     "flexion": 15,
      "abduction": 0
     },
     "shin": {
-     "flexion": 20
+     "flexion": 90
     },
     "foot": {
-     "flexion": -30
+     "flexion": -25
     },
     "pelvis": {
-     "flexion": -8
+     "flexion": 0
     }
    }
   }
@@ -346,12 +346,30 @@
    "max": 0
   },
   {
-   "nom": "jambes_gainees",
+   "nom": "gainage_hollow",
    "type": "angle_position",
-   "ddl": "pelvis.flexion",
+   "ddl": "lumbar.flexion",
+   "position": "bas",
+   "min": 4,
+   "max": 12
+  },
+  {
+   "nom": "bras_verticaux",
+   "type": "angle_position",
+   "ddl": "upperarm.flexion",
+   "position": "bas",
+   "min": -8,
+   "max": 10
+  },
+  {
+   "nom": "jambes_fixes",
+   "type": "angle_position",
+   "ddl": "shin.flexion",
    "position": "haut",
-   "min": -12,
-   "max": 8
+   "min": 88,
+   "max": 92
   }
- ]
+ ],
+ "depart": "bas",
+ "fin": "haut"
 }

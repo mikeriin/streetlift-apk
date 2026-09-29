@@ -93,6 +93,21 @@ BULGES = {
     'glute_bulge': ('pelvis', 'thigh', .05, ('gluteus_maximus',)),
 }
 BULGE_SHARE = .7
+# Os d'insertion (M56, correction 1) : fils du bras, placé à l'insertion des
+# grands muscles du tronc sur l'humérus (gouttière bicipitale : grand
+# dorsal, grand rond, grand pectoral), il **suit la position** de cette
+# insertion mais **garde l'orientation du tronc** (rotation locale = inverse
+# de la rotation cumulée clavicule → scapula → bras). Une nappe pesée entre
+# le tronc et cet os s'étire donc en ligne droite vers l'insertion déplacée
+# (un V bras levés) au lieu d'être emportée par la rotation de 160° du bras
+# (les « boucles » sous l'aisselle en suspension, retour du propriétaire).
+# nom de base : (parent, os dont il garde l'orientation, distance de la tête
+# de l'humérus le long du bras, muscles confiés)
+INSERTIONS = {
+    'arm_ins': ('upperarm', 'thoracic_high', .06,
+                ('latissimus_dorsi', 'teres_major', 'pectoralis_major_clavicular',
+                 'pectoralis_major_sternocostal', 'pectoralis_major_abdominal')),
+}
 for _side in ('L', 'R'):
     for _n, (_p, _f, _part, _g) in HELPERS.items():
         parent = _p if _p in dict(_AXIAL) else _side_name(_p, _side)
@@ -100,6 +115,8 @@ for _side in ('L', 'R'):
     for _n, (_p, _f, _g, _m) in BULGES.items():
         parent = _p if _p in dict(_AXIAL) else _side_name(_p, _side)
         BONES.append((_side_name(_n, _side), parent, _side))
+    for _n, (_p, _f, _d, _m) in INSERTIONS.items():
+        BONES.append((_side_name(_n, _side), _side_name(_p, _side), _side))
 
 BONE_NAMES = [b[0] for b in BONES]
 PARENT = {b[0]: b[1] for b in BONES}
@@ -122,6 +139,7 @@ FR_BONE = {
     'knee_aux2': 'Aide du genou (2/3)',
     'biceps_bulge': 'Gonflement du biceps', 'quads_bulge': 'Gonflement du quadriceps',
     'glute_bulge': 'Gonflement du grand fessier',
+    'arm_ins': 'Insertion des muscles du tronc sur le bras',
 }
 
 
@@ -133,6 +151,9 @@ def helper_of(bone):
         p, f = HELPERS[base][:2]
     elif base in BULGES:
         p, f = BULGES[base][:2]
+    elif base in INSERTIONS:
+        p, f = INSERTIONS[base][:2]
+        return (p + side, f)
     else:
         return None
     return (p if p in dict(_AXIAL) else p + side, f + side)
@@ -149,7 +170,15 @@ def helper_spec(bone):
     if base in BULGES:
         p, f, g, muscles = BULGES[base]
         return {'suit': f + side, 'part': 0.0, 'gonflement': g, 'muscles': list(muscles)}
+    if base in INSERTIONS:
+        p, f, d, muscles = INSERTIONS[base]
+        return {'suit': f, 'part': 0.0, 'gonflement': 0.0, 'insertion': True,
+                'distance': d, 'muscles': list(muscles)}
     return None
+
+
+def is_insertion(bone):
+    return base_name(bone) in INSERTIONS
 
 
 def is_bulge(bone):
@@ -164,6 +193,10 @@ def base_name(bone):
 # Axe 'bone' : axe propre de l'os (de la tête vers la queue), calculé à la
 # fabrication (pronation / supination autour de l'axe radius-ulna).
 X, Y, Z = (1.0, 0.0, 0.0), (0.0, 1.0, 0.0), (0.0, 0.0, 1.0)
+# Plan de la scapula (côté gauche) : 35° en avant du plan frontal.
+_SP = math.radians(35)
+SCAPULAR_NORMAL = (-math.sin(_SP), 0.0, math.cos(_SP))          # sonnette
+SCAPULAR_MEDIOLATERAL = (-math.cos(_SP), 0.0, -math.sin(_SP))   # bascule (comme NX)
 NX, NY, NZ = (-1.0, 0.0, 0.0), (0.0, -1.0, 0.0), (0.0, 0.0, -1.0)
 
 DOF = {
@@ -200,10 +233,15 @@ DOF = {
         ('protraction', 'Protraction (+) / rétraction (−) de la scapula', NY, -25, 20,
          'LUD, KAP'),
     ],
+    # Sonnette et bascule dans le plan de la scapula (35° en avant du plan
+    # frontal, LUD, KAP) : l'angle inférieur s'écarte vers le côté ET vers
+    # l'avant, il contourne la cage thoracique (correction 1 : autour de Z,
+    # il sortait du dos de 5 cm en suspension, « omoplates arrachées »).
     'scapula': [
-        ('sonnette', 'Sonnette latérale (+, rotation vers le haut) / médiale (−)', Z,
-         -15, 60, 'INMAN, LUD'),
-        ('bascule', 'Bascule postérieure (+) / antérieure (−)', NX, -20, 30, 'LUD'),
+        ('sonnette', 'Sonnette latérale (+, rotation vers le haut) / médiale (−)',
+         SCAPULAR_NORMAL, -15, 60, 'INMAN, LUD'),
+        ('bascule', 'Bascule postérieure (+) / antérieure (−)', SCAPULAR_MEDIOLATERAL,
+         -20, 30, 'LUD'),
         ('rotation', 'Rotation interne (+) / externe (−)', Y, -15, 15, 'LUD'),
     ],
     # Bras par rapport au thorax (angles humérothoraciques, ceux des
@@ -211,7 +249,10 @@ DOF = {
     # scapula et la clavicle placées (voir `posture_rotations`). La part
     # glénohumérale reste contrôlée (GH_MAX, rythme scapulo-huméral 2:1).
     'upperarm': [
-        ('flexion', 'Flexion (+) / extension (−) du bras / thorax', NX, -60, 180, 'AAOS'),
+        # Extension humérothoracique jusqu'à 75° (correction 1 : bas des dips,
+        # extension glénohumérale ≈ 50° (KAP) + bascule antérieure de la
+        # scapula ≈ 20° ; l'AAOS donne 60° bras seul).
+        ('flexion', 'Flexion (+) / extension (−) du bras / thorax', NX, -75, 180, 'AAOS, KAP'),
         ('abduction', 'Abduction (+) / adduction (−) du bras / thorax', Z, -25, 170,
          'AAOS'),
         ('rotation', 'Rotation interne (+) / externe (−)', NY, -90, 70, 'AAOS'),
@@ -411,6 +452,15 @@ def with_helpers(rotations):
         if spec and spec['part']:
             q = rotations.get(spec['suit'], (0.0, 0.0, 0.0, 1.0))
             out[bone] = q_slerp_identity(q, spec['part'])
+        elif spec and spec.get('insertion'):
+            # Orientation du tronc : inverse de la rotation cumulée des os
+            # entre l'os suivi (exclu) et le parent (inclus).
+            chain = (0.0, 0.0, 0.0, 1.0)
+            b = PARENT[bone]
+            while b is not None and b != spec['suit']:
+                chain = q_mul(rotations.get(b, (0.0, 0.0, 0.0, 1.0)), chain)
+                b = PARENT[b]
+            out[bone] = q_conj(q_normalize(chain))
     return out
 
 
@@ -572,7 +622,10 @@ POSTURES = {
     # Postures extrêmes de contrôle (planches Blender et tests).
     'bras_leves': {
         'nom': 'Bras levés verticalement', 'app': False, 'placement': 'sol',
-        'angles': {'clavicle': {'elevation': 12}, 'scapula': {'sonnette': 38, 'bascule': 20},
+        # Sonnette 50° et clavicule 20° en élévation complète (Inman : 50-60°
+        # de rotation scapulaire, 30° d'élévation claviculaire) : part
+        # glénohumérale 122° (correction 1, axes scapulaires inclinés).
+        'angles': {'clavicle': {'elevation': 20}, 'scapula': {'sonnette': 50, 'bascule': 20},
                    'upperarm': {'abduction': 168}},
     },
     'bras_extension': {

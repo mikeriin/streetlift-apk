@@ -44,8 +44,9 @@ void main() {
   });
 
   test('os, postures de l’écran Anatomie, peau', () {
-    // M56 : 30 segments, 18 os d'aide (tiers, pronation), 6 gonflements.
-    expect(rig.bones.length, 54);
+    // M56 : 30 segments, 18 os d'aide (tiers, pronation), 6 gonflements,
+    // 2 os d'insertion (correction 1).
+    expect(rig.bones.length, 56);
     expect(rig.bones.first.name, 'pelvis');
     expect([for (final p in rig.appPostures) p.key], kAnatomyPostures.keys);
     expect(rig.posture('debout')!.pose.rotations, isEmpty);
@@ -58,7 +59,12 @@ void main() {
       for (final b in rig.bones)
         if (b.follows != null) b.name,
     ];
-    expect(helpers, hasLength(24));
+    expect(helpers, hasLength(26));
+    final insertions = [
+      for (final b in rig.bones)
+        if (b.insertion) b.name,
+    ];
+    expect(insertions, ['arm_ins_l', 'arm_ins_r']);
     final bulges = [
       for (final b in rig.bones)
         if (b.bulge > 0) b.name,
@@ -162,6 +168,17 @@ void main() {
     expect(grown, greaterThan(1.08));
     expect(full.scales.containsKey('knee_aux_l'), isTrue);
     expect(full.scales.containsKey('shoulder_aux_l'), isFalse);
+    // Correction 1 : l'os d'insertion annule la rotation cumulée clavicule →
+    // scapula → bras (il garde l'orientation du tronc) : en suspension, le
+    // produit bras × scapula × clavicule × insertion est l'identité.
+    final hang = rig.withHelpers(rig.posture('suspendu')!.pose);
+    final chain =
+        hang.rotationOf('clavicle_l') *
+        hang.rotationOf('scapula_l') *
+        hang.rotationOf('upperarm_l') *
+        hang.rotationOf('arm_ins_l');
+    expect(chain.w.abs(), closeTo(1, 1e-6));
+    expect(hang.scales.containsKey('arm_ins_l'), isFalse);
   });
 
   Widget page(Widget child) => MaterialApp(

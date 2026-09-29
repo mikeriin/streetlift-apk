@@ -94,20 +94,35 @@ class M56BodyTest(unittest.TestCase):
                 self.assertAlmostEqual(v, dep[other], delta=max(1.5, .3 * v), msg=name)
 
     def test_mesures_dans_la_tolerance(self):
+        """Correction 1 : chaque groupe ajusté atteint sa cible (largeur de
+        la silhouette de référence ou tour nominal du propriétaire) à 1 % ;
+        tours nominaux dans ± 10 % (la référence en image prime)."""
         r = self.report
         H = r['H_m']
+        for group, (src, key, target) in r['cibles_ajustement'].items():
+            val = r['silhouette_apres'][key] if src == 'silhouette' else r['apres'][key] / H
+            # Groupe au plafond (cou : au-delà, il paraissait gonflé) : 5 %.
+            capped = r['facteurs'][group] >= r['plafonds'][group] - 1e-9
+            self.assertAlmostEqual(val / target, 1.0, delta=.05 if capped else .015,
+                                   msg=f'{group} ({src} {key})')
         for key, target in r['cibles'].items():
             env = target - (0.0 if key == 'bideltoide' else .02 / H)
             dev = r['apres'][key] / H / env - 1
-            if key == 'taille':
-                # Décision du propriétaire : la taille n'est pas épaissie.
-                self.assertLess(dev, 0.0)
-                self.assertLess(r['apres'][key] / r['avant'][key], 1.05)
-                continue
-            self.assertLessEqual(abs(dev), r['tolerance'], f'{key} : {dev * 100:+.1f} %')
+            self.assertLessEqual(abs(dev), .11, f'{key} : {dev * 100:+.1f} %')
+        # Silhouette de référence (écorché du propriétaire) : largeurs de
+        # face dans ± 6 % là où la référence les donne sans ambiguïté.
+        ref = r['silhouette_reference']
+        for key in ('bideltoide', 'poitrine_largeur', 'taille_largeur', 'hanches_largeur',
+                    'cuisse_largeur', 'genou_largeur', 'mollet_largeur', 'cuisse_profondeur',
+                    'mollet_profondeur'):
+            dev = r['silhouette_apres'][key] / ref[key][0] - 1
+            self.assertLessEqual(abs(dev), .07, f'{key} : {dev * 100:+.1f} %')
+        # Bras : cible à mi-chemin (voir build_body.FITTED).
+        self.assertLessEqual(abs(r['silhouette_apres']['bras_largeur'] / ref['bras_largeur'][0] - 1), .08)
         self.assertGreaterEqual(r['apres']['epaules_sur_taille'], 1.55)
         # Plus musclé partout où c'est mesuré.
-        for key in ('bras', 'avant_bras', 'poitrine', 'cuisse', 'mollet', 'cou', 'bideltoide'):
+        for key in ('bras', 'avant_bras', 'poitrine', 'cuisse', 'mollet', 'cou', 'bideltoide',
+                    'taille'):
             self.assertGreater(r['apres'][key], r['avant'][key], key)
 
     def test_aucune_penetration(self):

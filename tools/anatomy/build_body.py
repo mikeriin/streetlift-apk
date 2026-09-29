@@ -32,6 +32,18 @@ fraction de la taille H, tolérance ± 5 %) :
   antérieur au lot (mesuré sur le modèle de base, consigné).
 - os, tête, mains, pieds, contexte : inchangés.
 
+Correction 1 (29/09/2026, retour du propriétaire : « cuisses et pectoraux trop
+gros par rapport au reste », référence = écorché d'athlète en trois vues) :
+les proportions sont prises sur la **silhouette** de la référence
+(`silhouette.py` : largeurs de face, profondeurs de profil, en fraction de
+H) là où l'image les donne : bras, épaules, cuisses, mollets ajustés sur leur
+largeur ; cuisse dilatée davantage d'avant en arrière que de côté
+(`ANISOTROPY`, la référence a une cuisse plus profonde que large) ;
+pectoraux fixés à un facteur modéré (le thorax de la référence est plat de
+profil : plus de « plaques ») ; taille ajustée sur la cible nominale du
+propriétaire (0,45 H, la référence a un tronc plus plein), érecteurs et
+fessiers plus épais. Les tours restent consignés à titre de contrôle.
+
 Relançable : `pip install trimesh rtree libigl --break-system-packages` puis
 `python3 tools/anatomy/build_body.py` (déterministe). `--mesures` mesure
 seulement le modèle courant.
@@ -92,7 +104,7 @@ GROUP_OF_KEY = {
     'sternocleidomastoid': 'cou', 'scalenus_anterior': 'cou', 'scalenus_medius': 'cou',
     'scalenus_posterior': 'cou', 'splenius_capitis': 'cou', 'splenius_colli': 'cou',
     'platysma': 'peau',
-    # gainage (taille : ne pas épaissir)
+    # gainage (taille : ajustée sur la cible nominale, correction 1)
     'rectus_abdominis': 'gainage', 'external_oblique': 'gainage',
     'internal_oblique': 'gainage', 'transversus_abdominis': 'gainage',
     # fessiers
@@ -120,15 +132,35 @@ APP_GROUP_TO_GROUP = {'avant-bras': 'avant_bras'}
 
 # Facteurs fixés (groupes non mesurés) ; les groupes mesurés partent de ces
 # valeurs puis sont ajustés.
-FIXED = {'dos_superficiel': .30, 'dos_profond': .18, 'gainage': .10, 'fessiers': .30,
-         'fessiers_profond': .12, 'peau': 0.0}
-# Groupe ajusté → (mesure, cible en fraction de H).
-FITTED = {'bras': 'bras', 'avant_bras': 'avant_bras', 'epaules': 'bideltoide',
-          'poitrine': 'poitrine', 'cuisse': 'cuisse', 'mollet': 'mollet', 'cou': 'cou'}
-FIT_START = {'bras': .35, 'avant_bras': .20, 'epaules': .10, 'poitrine': .30,
-             'cuisse': .35, 'mollet': .15, 'cou': .35}
+FIXED = {'dos_superficiel': .30, 'dos_profond': .30,
+         'fessiers_profond': .12, 'peau': 0.0,
+         # Pectoraux, grand dorsal, dentelé : facteur modéré (correction 1 :
+         # à 1,6 les pectoraux formaient des plaques ; la référence est
+         # plate de profil, +7 % déjà sur le modèle de base).
+         'poitrine': .60}
+# Groupe ajusté → (source de la mesure, clé, cible en fraction de H).
+# 'tour' : mètre ruban (`measure_body`, cible = enveloppe de la cible du
+# propriétaire) ; 'silhouette' : largeur de face (`silhouette.REFERENCE`,
+# écorché du propriétaire).
+FITTED = {'bras': ('silhouette', 'bras_largeur', .058),
+          'avant_bras': ('tour', 'avant_bras', None),
+          'epaules': ('silhouette', 'bideltoide', .300),
+          'cuisse': ('silhouette', 'cuisse_largeur', .100),
+          'mollet': ('silhouette', 'mollet_largeur', .066),
+          'cou': ('tour', 'cou', None),
+          'gainage': ('tour', 'taille', None),
+          'fessiers': ('silhouette', 'hanches_largeur', .197)}
+# Bras : la référence donne 0,062 H, mesuré sur un bras écarté du tronc et
+# légèrement tourné ; notre bras pend le long du corps (section vue sous un
+# autre angle) : cible à mi-chemin, qui garde le tour de bras dans la
+# tolérance de la cible nominale (0,22 H).
+FIT_START = {'bras': .55, 'avant_bras': .15, 'epaules': .45,
+             'cuisse': .18, 'mollet': .16, 'cou': 1.0, 'gainage': .10, 'fessiers': .15}
 FIT_MAX = {'bras': .8, 'avant_bras': .8, 'epaules': .8, 'cuisse': .8, 'mollet': .8,
-           'poitrine': 1.6, 'cou': 1.0}
+           'cou': 1.0, 'gainage': 1.0, 'fessiers': 1.0}
+# Dilatation radiale anisotrope : gain × (1 + a · (r̂ · ẑ)²), plus forte
+# d'avant en arrière (z) que de côté (x).
+ANISOTROPY = {'cuisse': 1.0}
 
 
 # ------------------------------------------------------------------ outils --
@@ -174,7 +206,14 @@ def seg_closest(p, a, b):
 
 
 RADIAL_GROUPS = {'bras': 'upperarm', 'epaules': 'upperarm', 'avant_bras': 'forearm',
-                 'cuisse': 'thigh', 'mollet': 'shin'}
+                 'cuisse': 'thigh', 'mollet': 'shin',
+                 # Correction 1 : paroi abdominale et fessiers dilatés
+                 # radialement autour de l'axe du tronc (colonne lombaire,
+                 # bassin) : un tronc plus plein dans toutes les directions,
+                 # les couches profondes suivent les superficielles (un
+                 # épaississement le long des normales, borné par
+                 # l'épaisseur des nappes, ne donnait que +1 cm de taille).
+                 'gainage': 'lumbar', 'fessiers': 'pelvis'}
 BONE_RADIUS = .012        # m : rayon de l'os porteur (diaphyse), qui ne grandit pas
 
 
@@ -223,12 +262,15 @@ class Muscle:
         self.radial = group in RADIAL_GROUPS
         if self.radial:
             bone = f'{RADIAL_GROUPS[group]}_{side}'
+            if bone not in rig_heads:
+                bone = RADIAL_GROUPS[group]   # axe médian (tronc, bassin)
             a, b = rig_heads[bone], rig_tails[bone]
             q = seg_closest(self.rest, a, b)
             r = self.rest - q
             self.r_len = np.linalg.norm(r, axis=1)
             self.r_dir = r / np.maximum(self.r_len[:, None], 1e-9)
             self.gain = self.profile * np.maximum(0, self.r_len - BONE_RADIUS)
+            self.gain *= 1 + ANISOTROPY.get(group, 0.0) * self.r_dir[:, 2] ** 2
             return
         self.thickness = smooth_scalar(self.rest, local_thickness(self.rest, self.normals),
                                        SMOOTH_SIGMA)
@@ -368,9 +410,15 @@ def resolve_penetrations(muscles, bone_mesh, log, iterations=PENETRATION_ITER,
                     # tour à tour de l'un dans l'autre) ne sort jamais : le
                     # muscle s'amincit là, le sommet rentre aussi vers son
                     # propre intérieur.
-                    pen = deepest[m.name] > 0
+                    # (Correction 1 : seulement les sommets poussés vers
+                    # l'intérieur du muscle, c'est-à-dire pris dans un voisin
+                    # plus superficiel ; un sommet poussé vers l'extérieur par
+                    # un voisin profond ou un os ne doit pas être ramené :
+                    # les deux mouvements s'annulaient, le grand dorsal
+                    # mettait 25 itérations à sortir du dentelé.)
+                    n = vertex_normals(m.pos, m.mesh['indices'])
+                    pen = (deepest[m.name] > 0) & (np.einsum('ij,ij->i', mv, n) < 0)
                     if pen.any():
-                        n = vertex_normals(m.pos, m.mesh['indices'])
                         mv[pen] -= n[pen] * (deepest[m.name][pen] + tol)[:, None]
                 m.pos = m.pos + mv
     return history
@@ -386,6 +434,9 @@ def build(log=print):
     regions = {r['id']: r for r in json.loads(MAP.read_text(encoding='utf-8'))['regions']}
     before = measure(meshes, rig)
     log(measure_body.report(before, 'avant : '))
+    import silhouette
+    before_sil = silhouette.Silhouette(measure_body.Body.from_meshes(meshes, rig)).measure()
+    log(silhouette.report(before_sil, 'silhouette avant : '))
     # Pénétrations du modèle de base (référence).
     muscles = []
     for m in meshes:
@@ -409,20 +460,32 @@ def build(log=print):
     assert not unknown, f'groupes sans facteur : {unknown}'
     H = before['H']
 
+    import silhouette
+
     def apply(fac):
         for m in muscles:
             m.inflate(fac[m.group])
             m.mesh['positions'] = m.pos.astype(np.float32)
-        return measure(meshes, rig)
+        girth = measure(meshes, rig)
+        sil = silhouette.Silhouette(measure_body.Body.from_meshes(meshes, rig)).measure()
+        return girth, sil
+
+    def target_of(g):
+        src, key, t = FITTED[g]
+        return t if src == 'silhouette' else measure_body.envelope_target(key, H)
+
+    def value_of(g, girth, sil):
+        src, key, _ = FITTED[g]
+        return sil[key] if src == 'silhouette' else girth[key] / H
 
     # Ajustement par sécante (chaque groupe agit surtout sur sa mesure).
-    hist = {g: [(0.0, before[k] / H)] for g, k in FITTED.items()}
-    for it in range(6):
-        m = apply(factors)
+    hist = {g: [(0.0, value_of(g, before, before_sil))] for g in FITTED}
+    for it in range(8):
+        girth, sil = apply(factors)
         converged = True
-        for g, k in FITTED.items():
-            target = measure_body.envelope_target(k, H)
-            val = m[k] / H
+        for g in FITTED:
+            target = target_of(g)
+            val = value_of(g, girth, sil)
             hist[g].append((factors[g], val))
             err = val / target - 1
             if abs(err) > .01:
@@ -435,17 +498,21 @@ def build(log=print):
                 new = k1 * (target / max(v1, 1e-9))
             factors[g] = float(np.clip(new, 0.0, FIT_MAX[g]))
         log(f'  ajustement {it + 1} : ' + ', '.join(
-            f"{g} {hist[g][-1][0]:.3f} → {m[k] / H:.3f} H" for g, k in FITTED.items()))
+            f"{g} {hist[g][-1][0]:.3f} → {hist[g][-1][1]:.3f} H (cible {target_of(g):.3f})"
+            for g in FITTED))
         if converged:
             break
-    m = apply(factors)
+    m, sil = apply(factors)
     log(measure_body.report(m, 'après hypertrophie : '))
+    log(silhouette.report(sil, 'silhouette après hypertrophie : '))
     history = resolve_penetrations(muscles, bone_mesh, log)
     for mu in muscles:
         mu.mesh['positions'] = mu.pos.astype(np.float32)
         mu.mesh['normales'] = vertex_normals(mu.pos, mu.mesh['indices']).astype(np.float32)
     after = measure(meshes, rig)
+    after_sil = silhouette.Silhouette(measure_body.Body.from_meshes(meshes, rig)).measure()
     log(measure_body.report(after, 'après : '))
+    log(silhouette.report(after_sil, 'silhouette après : '))
     build_rig.write_glb(OUT_GLB, meshes, materials)
     displacement = {mu.name: round(float(np.linalg.norm(mu.pos - mu.rest, axis=1).max()) * 1000, 1)
                     for mu in muscles}
@@ -453,8 +520,12 @@ def build(log=print):
         'base': str(BASE.relative_to(ROOT)), 'H_m': H,
         'cibles': measure_body.TARGETS, 'tolerance': measure_body.TOLERANCE,
         'facteurs': {k: round(v, 4) for k, v in factors.items()},
+        'plafonds': FIT_MAX,
         'avant': {k: v for k, v in before.items() if k != 'niveaux'},
         'apres': {k: v for k, v in after.items() if k != 'niveaux'},
+        'silhouette_reference': silhouette.REFERENCE,
+        'silhouette_avant': before_sil, 'silhouette_apres': after_sil,
+        'cibles_ajustement': {g: [FITTED[g][0], FITTED[g][1], target_of(g)] for g in FITTED},
         'penetrations_base': base_pen, 'penetrations': history,
         'deplacement_max_mm': displacement,
         'triangles': sum(len(mm['indices']) // 3 for mm in meshes),

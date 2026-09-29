@@ -477,7 +477,7 @@ def bulge_placement(meshes):
     by_name = {m['nom']: m for m in meshes}
     for bone in BONE_NAMES:
         spec = rig_def.helper_spec(bone)
-        if not spec or 'muscles' not in spec:
+        if not spec or 'muscles' not in spec or spec.get('insertion'):
             continue
         side = 'left' if bone.endswith('_l') else 'right'
         pts = np.concatenate([by_name[f'{k}_{side}']['positions'] for k in spec['muscles']])
@@ -844,7 +844,7 @@ def finish_weights(w, bones, positions=None, chain=True):
     # Gonflements : part du poids du segment, selon le profil de ventre.
     for h in bones:
         spec = rig_def.helper_spec(h)
-        if not spec or 'muscles' not in spec or positions is None:
+        if not spec or 'muscles' not in spec or positions is None or spec.get('insertion'):
             continue
         p = rig_def.helper_of(h)[0]
         u = positions @ np.asarray(BULGE_AXES[h])
@@ -869,21 +869,35 @@ BULGE_AXES = {}
 # « doux » des grands muscles en éventail laissaient leur insertion à
 # mi-chemin entre le tronc et le bras (déchirure de 9 cm bras levés).
 INSERTIONS = {
-    'latissimus_dorsi': 'humerus', 'teres_major': 'humerus',
+    'latissimus_dorsi': 'humerus', 'teres_major': 'humerus_tete',
+    # Coiffe des rotateurs (correction 1) : corps sur la scapula, seul le
+    # tendon collé à la tête humérale (tubercules) suit le bras ; sans cela
+    # leurs poids mêlés scapula / bras, portés par la chaîne d'aide, les
+    # projetaient de 12 cm hors de l'épaule bras levés (« ailes »).
+    'infraspinatus': 'humerus_tete', 'supraspinatus': 'humerus_tete',
+    'subscapularis': 'humerus_tete', 'teres_minor': 'humerus_tete',
     'pectoralis_major_clavicular': 'humerus', 'pectoralis_major_sternocostal': 'humerus',
     'pectoralis_major_abdominal': 'humerus', 'coracobrachialis': 'humerus',
     'deltoid_anterior': 'humerus', 'deltoid_lateral': 'humerus',
     'deltoid_posterior': 'humerus',
 }
-INSERTION_BONE = {'humerus': 'upperarm'}
+INSERTION_BONE = {'humerus': 'upperarm', 'humerus_tete': 'upperarm'}
 GLUE_NEAR, GLUE_FAR = .012, .030
+# Muscles dont le corps reste sur la scapula (coiffe, grand rond) : le poids
+# géodésique du bras est rendu à la scapula avant le collage du tendon.
+SCAPULAR_BODY = {'infraspinatus', 'supraspinatus', 'subscapularis', 'teres_minor',
+                 'teres_major'}
+HEAD_DEPTH = .04      # m sous le centre de la tête humérale : zone des tubercules
 # Épaule (M56) : la tête humérale et l'acromion se chevauchent dans l'espace,
 # les distances géodésiques y basculent d'un sommet au suivant (Δ de 0,5 sur
 # 6 mm dans le deltoïde : plis en accordéon bras levé). Le partage scapula /
 # bras des muscles qui croisent l'épaule suit donc la hauteur le long de
 # l'axe du bras : tout à la scapula 2 cm au-dessus du centre de la tête
 # humérale, tout au bras 10 cm au-dessous (tubérosité deltoïdienne), lissé.
-SHOULDER_AXIAL = (-.02, .10)
+# Correction 1 : tout au bras 4 cm au-dessous (à 10 cm, un sommet du
+# deltoïde à mi-hauteur, porté par l'aide à 2/3, restait 50° en retard sur
+# le bras levé à 155° : pan de deltoïde écarté du bras).
+SHOULDER_AXIAL = (-.02, .04)
 
 SMOOTH_SIGMA = .018   # m
 # Grands muscles en éventail tendus du tronc au bras : transition plus
@@ -961,10 +975,17 @@ def compute_weights(meshes, pieces, owner, heads, tails, log=print):
                     total = w[:, mains.index(scap)] + w[:, mains.index(arm)]
                     w[:, mains.index(scap)] = total * (1 - f)
                     w[:, mains.index(arm)] = total * f
+                if key in SCAPULAR_BODY:
+                    scap, arm = f'scapula_{side}', f'upperarm_{side}'
+                    if scap in mains and arm in mains:
+                        w[:, mains.index(scap)] += w[:, mains.index(arm)]
+                        w[:, mains.index(arm)] = 0
                 if key in INSERTIONS:
                     piece = INSERTIONS[key]
                     target = f'{INSERTION_BONE[piece]}_{side}'
                     src = np.concatenate([pieces[i] for i, o in owner.items() if o == target])
+                    if piece == 'humerus_tete':
+                        src = src[src[:, 1] > heads[target][1] - HEAD_DEPTH]
                     if key.startswith('deltoid'):
                         # Le deltoïde coiffe la tête humérale (origine sur
                         # l'acromion et la clavicule) : seule son insertion
@@ -982,8 +1003,18 @@ def compute_weights(meshes, pieces, owner, heads, tails, log=print):
                     stats.setdefault('colles', {})[name] = int((g > .5).sum())
                 full = np.zeros((len(w), len(bones)))
                 full[:, [bones.index(b) for b in mains]] = w
+                ins = f'arm_ins_{side}'
+                if ins in bones and key in INSERTIONS:
+                    # Correction 1 : hors du tendon collé (g), le poids du
+                    # bras passe à l'os d'insertion (position de l'insertion,
+                    # orientation du tronc) : la nappe s'étire en ligne droite.
+                    arm = bones.index(f'upperarm_{side}')
+                    moved = full[:, arm] * (1 - g)
+                    full[:, arm] -= moved
+                    full[:, bones.index(ins)] += moved
+                    stats.setdefault('insertion', {})[name] = round(float(moved.sum()), 1)
                 ids, tw = finish_weights(full, bones, pos[mask],
-                                         chain=key not in SOFT_MUSCLES)
+                                         chain=key not in SOFT_MUSCLES | SCAPULAR_BODY)
                 joints[mask, :ids.shape[1]] = ids
                 weights[mask, :tw.shape[1]] = tw
         q = quantize(weights + 1e-12 * (weights.sum(1, keepdims=True) == 0))
@@ -1030,9 +1061,17 @@ def rig_bones(heads, tails, axes, bulges):
     heads, tails = dict(heads), dict(tails)
     for name in BONE_NAMES:
         pair = rig_def.helper_of(name)
+        spec = rig_def.helper_spec(name)
         if name in bulges:
             head, axis = bulges[name]
             heads[name], tails[name] = head, head + axis * .05
+        elif spec and spec.get('insertion'):
+            # Insertion sur l'humérus : sur l'axe du bras, à `distance` de la
+            # tête humérale (gouttière bicipitale).
+            a, b = np.asarray(heads[pair[0]], float), np.asarray(tails[pair[0]], float)
+            axis = (b - a) / np.linalg.norm(b - a)
+            heads[name] = a + axis * spec['distance']
+            tails[name] = heads[name] + axis * .05
         elif pair:
             heads[name], tails[name] = heads[pair[1]], tails[pair[1]]
     for name in BONE_NAMES:
@@ -1056,6 +1095,9 @@ def rig_bones(heads, tails, axes, bulges):
                     'gonflement': spec['gonflement']}
             if name in bulges:
                 aide['axe'] = [round(float(v), 5) for v in bulges[name][1]]
+                aide['muscles'] = spec['muscles']
+            if spec.get('insertion'):
+                aide['insertion'] = True
                 aide['muscles'] = spec['muscles']
             out[-1]['aide'] = aide
     return out

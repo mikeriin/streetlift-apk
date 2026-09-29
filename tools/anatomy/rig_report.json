@@ -1,5 +1,5 @@
 {
- "os": 54,
+ "os": 56,
  "sommets": 31452,
  "axes_mesures": {
   "genou_l": [
@@ -125,13 +125,15 @@
    "scapula_l",
    "upperarm_l",
    "shoulder_aux_l",
-   "shoulder_aux2_l"
+   "shoulder_aux2_l",
+   "arm_ins_l"
   ],
   "teres_major_right": [
    "scapula_r",
    "upperarm_r",
    "shoulder_aux_r",
-   "shoulder_aux2_r"
+   "shoulder_aux2_r",
+   "arm_ins_r"
   ],
   "rectus_femoris_left": [
    "pelvis",
@@ -349,35 +351,41 @@
    "thoracic_low",
    "thoracic_high",
    "clavicle_l",
-   "upperarm_l"
+   "upperarm_l",
+   "arm_ins_l"
   ],
   "pectoralis_major_clavicular_right": [
    "thoracic_low",
    "thoracic_high",
    "clavicle_r",
-   "upperarm_r"
+   "upperarm_r",
+   "arm_ins_r"
   ],
   "pectoralis_major_sternocostal_left": [
    "thoracic_low",
    "thoracic_high",
-   "upperarm_l"
+   "upperarm_l",
+   "arm_ins_l"
   ],
   "pectoralis_major_sternocostal_right": [
    "thoracic_low",
    "thoracic_high",
-   "upperarm_r"
+   "upperarm_r",
+   "arm_ins_r"
   ],
   "pectoralis_major_abdominal_left": [
    "thoracic_low",
    "thoracic_high",
    "lumbar",
-   "upperarm_l"
+   "upperarm_l",
+   "arm_ins_l"
   ],
   "pectoralis_major_abdominal_right": [
    "thoracic_low",
    "thoracic_high",
    "lumbar",
-   "upperarm_r"
+   "upperarm_r",
+   "arm_ins_r"
   ],
   "pectoralis_minor_left": [
    "thoracic_low",
@@ -447,7 +455,8 @@
    "scapula_l",
    "upperarm_l",
    "shoulder_aux_l",
-   "shoulder_aux2_l"
+   "shoulder_aux2_l",
+   "arm_ins_l"
   ],
   "latissimus_dorsi_right": [
    "pelvis",
@@ -457,7 +466,8 @@
    "scapula_r",
    "upperarm_r",
    "shoulder_aux_r",
-   "shoulder_aux2_r"
+   "shoulder_aux2_r",
+   "arm_ins_r"
   ],
   "rhomboid_major_left": [
    "thoracic_low",
@@ -1571,14 +1581,22 @@
   ]
  },
  "colles": {
-  "deltoid_anterior_left": 16,
-  "deltoid_anterior_right": 16,
+  "deltoid_anterior_left": 15,
+  "deltoid_anterior_right": 15,
   "deltoid_lateral_left": 12,
   "deltoid_lateral_right": 12,
-  "deltoid_posterior_left": 14,
-  "deltoid_posterior_right": 14,
-  "teres_major_left": 11,
-  "teres_major_right": 11,
+  "deltoid_posterior_left": 13,
+  "deltoid_posterior_right": 13,
+  "supraspinatus_left": 23,
+  "supraspinatus_right": 23,
+  "infraspinatus_left": 20,
+  "infraspinatus_right": 20,
+  "subscapularis_left": 19,
+  "subscapularis_right": 19,
+  "teres_minor_left": 21,
+  "teres_minor_right": 21,
+  "teres_major_left": 0,
+  "teres_major_right": 0,
   "pectoralis_major_clavicular_left": 3,
   "pectoralis_major_clavicular_right": 3,
   "pectoralis_major_sternocostal_left": 3,
@@ -1589,6 +1607,18 @@
   "latissimus_dorsi_right": 11,
   "coracobrachialis_left": 24,
   "coracobrachialis_right": 24
+ },
+ "insertion": {
+  "teres_major_left": 0.5,
+  "teres_major_right": 0.5,
+  "pectoralis_major_clavicular_left": 7.6,
+  "pectoralis_major_clavicular_right": 7.6,
+  "pectoralis_major_sternocostal_left": 12.5,
+  "pectoralis_major_sternocostal_right": 11.6,
+  "pectoralis_major_abdominal_left": 4.3,
+  "pectoralis_major_abdominal_right": 4.3,
+  "latissimus_dorsi_left": 41.4,
+  "latissimus_dorsi_right": 41.5
  },
  "os_pieces": 39,
  "contexte_voisins": 8,
