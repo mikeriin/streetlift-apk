@@ -15,7 +15,7 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M4c | 5.3.2 | 67ec551 | build n° 112 (36431053547) ; CI 3D 36428956594 | 2026-09-28 | livré |
 | M5 | 5.4.0 | b745c41 | build n° 121 (36456576585) ; CI 3D 36454868372 | 2026-09-28 | livré |
 | M6 | — | — | — | 2026-09-28 | remplacé par M56 (session Opus lancée à 18:05 UTC, plus pilotée ; son travail sert de brouillon) |
-| M56 | — | — | — | — | en cours depuis 2026-09-28 21:36 UTC (Fable 5.1) |
+| M56 | 5.5.0 | 7a24fc0 | build n° 133 (36509815224) ; CI 3D 36508242229 (5 essais) | 2026-09-29 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M56.md` |
 | M6b | — | — | — | — | à faire |
 | M7 | 5.6.0 | — | — | — | à faire |
 | M8 | 5.7.0 | — | — | — | à faire |
