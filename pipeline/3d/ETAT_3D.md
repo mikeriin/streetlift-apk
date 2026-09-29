@@ -17,7 +17,8 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M6 | — | — | — | 2026-09-28 | remplacé par M56 (session Opus lancée à 18:05 UTC, plus pilotée ; son travail sert de brouillon) |
 | M56 | 5.5.0 | 7a24fc0 | build n° 133 (36509815224) ; CI 3D 36508242229 (5 essais) | 2026-09-29 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M56.md` |
 | M56 correction 1 | 5.5.1 | 786e867 | build n° 137 (36537833401) ; CI 3D 36535840924 (3 essais) | 2026-09-29 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M56_correction1.md` ; remplace 5.5.0 |
-| M6b | — | — | — | — | à faire |
+| M56 correction 2 | 5.5.2 | — | — | 2026-09-29 | en cours (écorché acheté par le propriétaire, plus d'animation ni de posture, couleur dominante, plus de boutons Précédent / Suivant) |
+| M6b | — | — | — | — | à redéfinir (plus d'animation) |
 | M7 | 5.6.0 | — | — | — | à faire |
 | M8 | 5.7.0 | — | — | — | à faire |
 | M9 | 5.8.0 | — | — | — | à faire |
