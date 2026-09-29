@@ -19,7 +19,7 @@ import 'profile_screens.dart';
 import 'store.dart';
 import 'store_widget.dart';
 
-const kAppVersion = '5.5.5';
+const kAppVersion = '5.6.0';
 
 class SettingsScreen extends StatelessWidget {
   final int? section;
@@ -970,13 +970,8 @@ class _Display3D extends StatelessWidget {
             (v) => settings.set(touchNames: v),
             key: const ValueKey('settings-3d-names'),
           ),
-          _Sw(
-            'Os visibles',
-            'Squelette d’appui en gris sombre discret',
-            settings.bones.value,
-            (v) => settings.set(bones: v),
-            key: const ValueKey('settings-3d-bones'),
-          ),
+          // M6c : plus de réglage « Os visibles » (personnage à la peau
+          // lisse, sans squelette affiché).
           _Sw(
             'Halo',
             'Halo flou des muscles sollicités (net si désactivé)',

@@ -84,3 +84,8 @@ gradle.properties.local
 # Fichiers de projet IntelliJ livrés avec le projet (exceptions à *.iml).
 !/streetlift_tracker.iml
 !/android/streetlift_tracker_android.iml
+
+# M6c : ressources sous licence en clair (déchiffrées par
+# tools/secure_assets.py avec la clé KT_ASSETS_KEY), jamais suivies.
+/assets_secure/clair/
+/assets/anatomy/mannequin.glb

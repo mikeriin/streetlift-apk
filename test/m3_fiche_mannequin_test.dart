@@ -216,11 +216,13 @@ void main() {
         primaires: ['rhomboides', 'trapeze_moyen'],
         stabilisateurs: ['sous_scapulaire', 'rhomboides', 'diaphragme'],
       );
-      expect(m.hidden, ['sous_scapulaire', 'diaphragme']);
+      // M6c : rhomboïdes sous le trapèze sur la peau du personnage : en
+      // texte, avec les profonds ; le trapèze moyen reste allumé.
+      expect(m.hidden, ['rhomboides', 'sous_scapulaire', 'diaphragme']);
       expect(m.intensities, isNotEmpty);
-      expect(m.intensities['rhomboids_left'], kIntensityPrimary);
-      expect(m.intensities['rhomboids_right'], kIntensityPrimary);
+      expect(m.intensities.containsKey('rhomboids_left'), isFalse);
       expect(m.intensities['trapezius_middle_left'], kIntensityPrimary);
+      expect(m.intensities['trapezius_middle_right'], kIntensityPrimary);
       expect(m.intensities.containsKey('subscapularis_left'), isFalse);
     });
 
@@ -272,8 +274,8 @@ void main() {
         return exerciseStartView(d.primaires, d.secondaires, map);
       }
 
-      // Traction : grand dorsal (2 × 0,041 m²) contre biceps (2 × 0,020) :
-      // vue de dos (en 3/4 avant, le halo du dorsal au flanc se lisait comme
+      // Traction : grand dorsal vu de dos 1,76 × biceps vu de face (M6c,
+      // peau du personnage ; M6b : 2 × 0,041 m² contre 2 × 0,020) : vue de dos (en 3/4 avant, le halo du dorsal au flanc se lisait comme
       // un pectoral).
       expect(of('traction-pronation'), MannequinView.dos);
       expect(of('traction-supination'), MannequinView.dos);

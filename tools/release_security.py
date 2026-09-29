@@ -9,6 +9,13 @@ import subprocess
 import zipfile
 
 LIMIT = 25_000_000
+# M6c : ressources sous licence chiffrées (`assets_secure/*.enc` : personnage
+# Mixamo, mannequin d'exécution, écorché acheté) comptées à part, dans leur
+# propre budget ; le reste de l'arbre garde la limite de 25 Mo.
+SECURE_LIMIT = 60_000_000
+# M6c : aucun modèle 3D suivi en clair (ressources sous licence : chiffrées
+# dans assets_secure/, déchiffrées par la CI avec le secret KT_ASSETS_KEY).
+MODEL_SUFFIXES = {'.glb', '.gltf', '.fbx', '.fsceneb', '.obj', '.blend', '.dae'}
 CACHE_DIRS = {'.dart_tool', 'build', '.gradle', '__pycache__', '.git', '.idea',
               '.pub-cache', '.pub', 'node_modules'}
 LOCAL_FILES = {'local.properties', '.flutter-plugins', '.flutter-plugins-dependencies',
@@ -19,6 +26,17 @@ ARTIFACT_SUFFIXES = {'.apk', '.aab', '.apks', '.zip', '.7z', '.tar', '.tgz', '.p
 
 class PackagingError(ValueError):
     pass
+
+
+def secure_asset(path):
+    """M6c : ressource chiffrée de `assets_secure/` (budget à part)."""
+    path = PurePosixPath(path)
+    return len(path.parts) == 2 and path.parts[0] == 'assets_secure' and path.suffix == '.enc'
+
+
+def clear_model(path):
+    """M6c : modèle 3D en clair (interdit dans l'arbre suivi)."""
+    return PurePosixPath(path).suffix.lower() in MODEL_SUFFIXES
 
 
 def excluded(path):
@@ -69,10 +87,10 @@ def check_content(path, data):
 
 
 def check_archive(path):
-    if path.stat().st_size > LIMIT:
-        raise PackagingError('ZIP supérieur à 25 000 000 octets.')
+    if path.stat().st_size > LIMIT + SECURE_LIMIT:
+        raise PackagingError('ZIP supérieur à 85 000 000 octets.')
     names = set()
-    total = 0
+    total = secure = 0
     with zipfile.ZipFile(path) as archive:
         for entry in archive.infolist():
             p = PurePosixPath(entry.filename)
@@ -88,6 +106,13 @@ def check_archive(path):
             relative = PurePosixPath(*p.parts[1:])
             if excluded(relative):
                 raise PackagingError(f'Fichier local ou secret interdit : {relative}.')
+            if clear_model(relative):
+                raise PackagingError(f'Modèle 3D en clair interdit : {relative}.')
+            if secure_asset(relative):
+                secure += entry.file_size
+                if secure > SECURE_LIMIT:
+                    raise PackagingError('Ressources chiffrées supérieures à 60 000 000 octets.')
+                continue
             total += entry.file_size
             if total > LIMIT:
                 raise PackagingError('Contenu extrait supérieur à 25 000 000 octets.')
@@ -116,21 +141,33 @@ def check_tree(root, files=None):
 
     Refuse tout fichier suivi que la livraison exclurait (clé, secret local,
     cache, artefact, ZIP), tout lien symbolique, tout contenu secret (même
-    renommé ou encodé) et un arbre de plus de 25 Mo."""
+    renommé ou encodé) et un arbre de plus de 25 Mo. M6c : tout modèle 3D en
+    clair ; ressources chiffrées de assets_secure/ (en-tête OpenSSL exigé)
+    dans un budget à part de 60 Mo."""
     root = Path(root)
     files = tracked_files(root) if files is None else [Path(f) for f in files]
-    total = 0
+    total = secure = 0
     for relative in files:
         path = root / relative
         if path.is_symlink():
             raise PackagingError(f'Lien symbolique interdit : {relative.as_posix()}.')
         if excluded(PurePosixPath(relative.as_posix())):
             raise PackagingError(f'Fichier local, secret ou artefact suivi : {relative.as_posix()}.')
+        if clear_model(relative.as_posix()):
+            raise PackagingError(f'Modèle 3D suivi en clair (ressource sous licence : à chiffrer '
+                                 f'dans assets_secure/) : {relative.as_posix()}.')
         if not path.is_file():
             continue  # supprimé de la copie de travail, pas encore du dépôt
         data = path.read_bytes()
+        if secure_asset(relative.as_posix()):
+            if data[:8] != b'Salted__':
+                raise PackagingError(f'Ressource de assets_secure/ non chiffrée : {relative.as_posix()}.')
+            secure += len(data)
+            if secure > SECURE_LIMIT:
+                raise PackagingError('Ressources chiffrées supérieures à 60 000 000 octets.')
+            continue
         total += len(data)
         if total > LIMIT:
             raise PackagingError('Arbre du dépôt supérieur à 25 000 000 octets.')
         check_content(PurePosixPath(relative.as_posix()), data)
-    return len(files), total
+    return len(files), total + secure

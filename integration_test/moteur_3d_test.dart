@@ -326,11 +326,12 @@ void main() {
     await shot('m2_anatomie_toucher');
     expect(touched, isNotNull, reason: 'aucun muscle touché au centre');
     expect(find.byKey(const ValueKey('mannequin-bubble')), findsOneWidget);
-    // Os masqués (réglage) : rendu différent, sans erreur.
-    await Display3DSettings.instance.set(bones: false);
+    // M6c : halo net (réglage « Halo » désactivé) : rendu différent, sans
+    // erreur (plus de réglage « Os visibles »).
+    await Display3DSettings.instance.set(halo: false);
     await tester.pump(const Duration(seconds: 2));
-    await shot('m2_anatomie_sans_os');
-    await Display3DSettings.instance.set(bones: true);
+    await shot('m2_anatomie_halo_net');
+    await Display3DSettings.instance.set(halo: true);
     await tester.pump(const Duration(seconds: 1));
   });
 

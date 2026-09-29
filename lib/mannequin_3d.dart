@@ -35,6 +35,16 @@
 // retirés) ; aucun rig n'est chargé, le modèle reste au repos partout. Le
 // code de posture reste en place, inactif, pour les positions d'exercice
 // que le propriétaire fera à la main plus tard.
+//
+// M6c (5.6.0, décision du propriétaire du 29/09/2026) : le mannequin est le
+// personnage Mixamo « Ch36 » (tools/anatomy/build_character.py, modèle
+// chiffré dans assets_secure/, déchiffré par la CI) : une peau lisse, un
+// nœud par zone musculaire projetée sur la peau depuis l'écorché, `peau`
+// (peau sans muscle, grise, arrête le toucher) et `head` (tête sombre) ;
+// mains et pieds en volumes sombres. Plus d'os ni de tendons : le réglage
+// « Os visibles » et le filtre « Os » sont retirés. Même mise en évidence
+// (maillage gris, halo de la zone travaillée). Squelette Mixamo exposé au
+// code par `mixamo_skeleton.dart` (M7).
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math' as math;
@@ -61,7 +71,8 @@ const kMannequinAsset = 'assets/anatomy/mannequin.glb';
 /// Carte des régions (id, côté, nom français, groupe, muscles du pack).
 const kMannequinMapAsset = 'assets/anatomy/muscles_map.json';
 
-/// Crédits du modèle (écorché acheté), repris dans « Sources et licences ».
+/// Crédits du modèle (personnage Mixamo, zones de l'écorché acheté), repris
+/// dans « Sources et licences ».
 const kMannequinAttributionAsset = 'assets/anatomy/ATTRIBUTION.md';
 
 /// M4b : opacité de tous les muscles (décision du propriétaire, 28/09/2026 :
@@ -100,6 +111,10 @@ class MuscleRegion {
   /// M6b : aire de la région (m², `aire` de la carte ; 0 si absente).
   final double aire;
 
+  /// M6c : aires vues de face et de dos (m², projetées sur le plan frontal ;
+  /// 0 si absentes) : vue de départ des fiches.
+  final double aireFace, aireDos;
+
   const MuscleRegion({
     required this.id,
     required this.cle,
@@ -110,6 +125,8 @@ class MuscleRegion {
     required this.couche,
     required this.pack,
     this.aire = 0,
+    this.aireFace = 0,
+    this.aireDos = 0,
   });
 
   factory MuscleRegion.fromJson(Map<String, dynamic> j) => MuscleRegion(
@@ -122,6 +139,8 @@ class MuscleRegion {
     couche: j['couche'] as String,
     pack: [for (final p in j['pack'] as List) p as String],
     aire: (j['aire'] as num?)?.toDouble() ?? 0,
+    aireFace: (j['aire_face'] as num?)?.toDouble() ?? 0,
+    aireDos: (j['aire_dos'] as num?)?.toDouble() ?? 0,
   );
 
   /// M4b : muscle profond (source anatomique ou caché au repos).
@@ -412,21 +431,19 @@ class Display3DSettings {
   static final instance = Display3DSettings._();
 
   static const _kNames = 'kt3d_nom_toucher';
-  static const _kBones = 'kt3d_os_visibles';
   static const _kHalo = 'kt3d_halo';
 
   /// Nom du muscle au toucher (activé par défaut).
   final touchNames = ValueNotifier<bool>(true);
-
-  /// Os visibles (activé par défaut).
-  final bones = ValueNotifier<bool>(true);
 
   /// Halo autour des muscles sollicités (activé par défaut).
   final halo = ValueNotifier<bool>(true);
 
   bool _loaded = false;
 
-  Listenable get listenable => Listenable.merge([touchNames, bones, halo]);
+  // M6c : plus de réglage « Os visibles » (personnage sans squelette
+  // visible) ; la préférence `kt3d_os_visibles` éventuelle est ignorée.
+  Listenable get listenable => Listenable.merge([touchNames, halo]);
 
   Future<void> load() async {
     if (_loaded) return;
@@ -434,21 +451,18 @@ class Display3DSettings {
     try {
       final p = await SharedPreferences.getInstance();
       touchNames.value = p.getBool(_kNames) ?? true;
-      bones.value = p.getBool(_kBones) ?? true;
       halo.value = p.getBool(_kHalo) ?? true;
     } catch (_) {
       // Préférences illisibles : valeurs par défaut.
     }
   }
 
-  Future<void> set({bool? touchNames, bool? bones, bool? halo}) async {
+  Future<void> set({bool? touchNames, bool? halo}) async {
     if (touchNames != null) this.touchNames.value = touchNames;
-    if (bones != null) this.bones.value = bones;
     if (halo != null) this.halo.value = halo;
     try {
       final p = await SharedPreferences.getInstance();
       await p.setBool(_kNames, this.touchNames.value);
-      await p.setBool(_kBones, this.bones.value);
       await p.setBool(_kHalo, this.halo.value);
     } catch (_) {}
   }
@@ -457,7 +471,6 @@ class Display3DSettings {
   void reset() {
     _loaded = false;
     touchNames.value = true;
-    bones.value = true;
     halo.value = true;
   }
 }
@@ -628,17 +641,11 @@ class MannequinScene {
   final MannequinMap map;
   final MannequinFrame frame;
 
-  final PhysicallyBasedMaterial _bone = _mat(kBoneGray, roughness: .85);
   final PhysicallyBasedMaterial _dark = _mat(kDarkVolume, roughness: .85);
-  late final PhysicallyBasedMaterial _tendon = _tendonMaterial();
 
-  /// 5.5.2 : tendons de l'écorché, gris des muscles à leur opacité.
-  PhysicallyBasedMaterial _tendonMaterial() {
-    final m = _mat(kMuscleGray);
-    m.baseColorFactor = _lin(kMuscleGray, 1, opacity);
-    if (opacity < 1) m.alphaMode = AlphaMode.blend;
-    return m;
-  }
+  /// M6c : peau sans zone musculaire (genoux, coudes, tibias…), grise comme
+  /// les zones.
+  final PhysicallyBasedMaterial _skin = _mat(kMuscleGray);
 
   final Map<String, PhysicallyBasedMaterial> _regions = {};
   final Map<String, Node> _nodes = {};
@@ -649,7 +656,7 @@ class MannequinScene {
   Map<String, double> _intensities = const {};
   Set<String> _stretched = const {};
   Set<String> _hidden = const {};
-  bool _bones = true, _halo = true;
+  bool _halo = true;
 
   /// Mesure avant / après de M4b (tests d'intégration) : opacité imposée
   /// aux muscles et régions masquées d'office, lues à la création de la
@@ -726,15 +733,10 @@ class MannequinScene {
         }
         _regions[name] = m;
         _assign(node, m);
-      } else if (name == 'os') {
-        _assign(node, _bone);
-      } else if (name == 'contexte' || name == 'head') {
+      } else if (name == 'peau') {
+        _assign(node, _skin);
+      } else if (name == 'head') {
         _assign(node, _dark);
-      } else if (name.startsWith('tendon_')) {
-        // 5.5.2 : tendons et aponévroses de l'écorché, gris translucide
-        // comme les muscles (un nœud par pièce pour le tri de
-        // transparence), jamais allumés ni touchés.
-        _assign(node, _tendon);
       }
     });
     scene
@@ -1004,7 +1006,6 @@ class MannequinScene {
       _nodes[name]?.visible =
           !_hidden.contains(name) && !_forcedHidden.contains(name);
     });
-    _nodes['os']?.visible = _bones;
     scene.postProcess.bloom.enabled = false;
   }
 
@@ -1057,13 +1058,12 @@ class MannequinScene {
   }
 
   /// Thème, intensités par région (0-1), régions étirées (M3), régions
-  /// masquées (M4b, filtre « Muscles profonds »), os visibles, halo.
+  /// masquées (M4b), halo.
   void configure({
     required bool dark,
     required Map<String, double> intensities,
     Set<String> stretched = const {},
     Set<String> hidden = const {},
-    required bool bones,
     required bool halo,
     Color? background,
   }) {
@@ -1077,7 +1077,6 @@ class MannequinScene {
         identical(intensities, _intensities) &&
         identical(stretched, _stretched) &&
         identical(hidden, _hidden) &&
-        bones == _bones &&
         halo == _halo) {
       return;
     }
@@ -1087,7 +1086,6 @@ class MannequinScene {
     _intensities = intensities;
     _stretched = stretched;
     _hidden = hidden;
-    _bones = bones;
     _halo = halo;
     if (themeChanged) {
       final bg = _lin(bgColor).xyz;
@@ -1152,10 +1150,9 @@ class MannequinScene {
   List<PickMesh>? _pickables, _posedPickables;
 
   bool _pickable(String name) =>
-      map.byId.containsKey(name) ||
-      const {'os', 'contexte', 'head'}.contains(name);
+      map.byId.containsKey(name) || const {'peau', 'head'}.contains(name);
 
-  /// Maillages du toucher (régions et occultants : os, tête, contexte), en
+  /// Maillages du toucher (zones et occultants : peau nue, tête), en
   /// coordonnées du monde. M5 : sur le modèle déformé par la posture
   /// courante (peau calculée sur le processeur à la demande).
   List<PickMesh> get pickables {
@@ -1178,7 +1175,8 @@ class MannequinScene {
   /// Région touchée au point [position] d'une vue de taille [size].
   ///
   /// M4b (muscles translucides) : le rayon traverse les muscles jusqu'à la
-  /// première surface opaque (os visibles, tête, contexte, main, pied). Parmi
+  /// première surface opaque (peau nue, tête, main, pied ; M6c : zones
+  /// opaques, le rayon s'arrête à la première surface). Parmi
   /// les régions traversées (et la main ou le pied qui l'arrête), il renvoie
   /// la plus proche des régions mises en évidence (sollicitées ou étirées)
   /// s'il y en a une, sinon la plus proche. Régions masquées ignorées.
@@ -1196,7 +1194,6 @@ class MannequinScene {
     intensities: _intensities,
     stretched: _stretched,
     hidden: {..._hidden, ..._forcedHidden},
-    bones: _bones,
     opacity: opacity,
   );
 
@@ -1209,7 +1206,6 @@ class MannequinScene {
     Map<String, double> intensities = const {},
     Set<String> stretched = const {},
     Set<String> hidden = const {},
-    bool bones = true,
     double opacity = kMuscleOpacity,
   }) {
     // Surface opaque la plus proche : elle arrête le rayon.
@@ -1217,7 +1213,6 @@ class MannequinScene {
     String? stopName;
     final crossed = <String, double>{};
     for (final m in meshes) {
-      if (m.name == 'os' && !bones) continue;
       if (hidden.contains(m.name)) continue;
       final region = map.byId[m.name];
       final opaque =
@@ -1362,10 +1357,6 @@ class Mannequin3D extends StatefulWidget {
   /// Régions masquées (M4b, écran Anatomie : filtre « Muscles profonds »).
   final Set<String> hidden;
 
-  /// Os visibles imposés par l'écran (M4b, filtre « Os » de l'écran
-  /// Anatomie) ; null : réglage « Os visibles ».
-  final bool? bones;
-
   /// Repli sans Flutter GPU à la place de la carte 2D par groupes (M3 : la
   /// fiche exercice garde sa carte historique, `ExerciseAtlas`).
   final Widget? fallback;
@@ -1420,7 +1411,6 @@ class Mannequin3D extends StatefulWidget {
     this.intensities = const {},
     this.stretched = const {},
     this.hidden = const {},
-    this.bones,
     this.fallback,
     this.horizontalDragOnly = false,
     this.view = MannequinView.face,
@@ -1887,7 +1877,6 @@ class Mannequin3DState extends State<Mannequin3D>
       intensities: widget.intensities,
       stretched: widget.stretched,
       hidden: widget.hidden,
-      bones: widget.bones ?? _settings.bones.value,
       halo: _settings.halo.value,
       background: _background(context),
     );

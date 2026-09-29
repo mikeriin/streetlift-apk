@@ -8,7 +8,8 @@ from pathlib import Path
 import argparse
 import re
 import zipfile
-from release_security import LIMIT, PackagingError, check_archive, check_content, check_tree, excluded
+from release_security import (LIMIT, PackagingError, check_archive, check_content, check_tree,
+                              clear_model, excluded, secure_asset)
 
 ROOT = Path(__file__).resolve().parents[1]
 CAPTURE_FORMATS = {'.png', '.jpg', '.jpeg', '.webp', '.gif', '.mp4'}
@@ -27,14 +28,16 @@ def package(root, output):
             raise PackagingError(f'Lien symbolique interdit : {relative}.')
         if not path.is_file() or path in {output, temporary}:
             continue
-        if excluded(relative):
+        if excluded(relative) or clear_model(relative.as_posix()):
             continue
         if (len(relative.parts) >= 3 and relative.parts[0] == 'validation'
                 and relative.parts[1] != version and path.suffix.lower() in CAPTURE_FORMATS):
             continue
-        check_content(relative, path.read_bytes())
+        if not secure_asset(relative.as_posix()):
+            check_content(relative, path.read_bytes())
         files.append(path)
-    expanded = sum(path.stat().st_size for path in files)
+    expanded = sum(path.stat().st_size for path in files
+                   if not secure_asset(path.relative_to(root).as_posix()))
     if expanded > LIMIT:
         raise PackagingError('Le dossier extrait dépasserait 25 Mo. Aucune archive remplacée.')
     try:

@@ -273,16 +273,18 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('Réglages › Affichage 3D : trois réglages activés, enregistrés', (
-    tester,
-  ) async {
+  testWidgets('Réglages › Affichage 3D : deux réglages activés, enregistrés '
+      '(M6c : plus de « Os visibles »)', (tester) async {
     SharedPreferences.setMockInitialValues({});
     Display3DSettings.instance.reset();
     phone(tester);
     await tester.pumpWidget(page(const SettingsScreen(section: 10)));
-    await _settle(tester, find.text('Os visibles'));
+    await _settle(tester, find.text('Halo'));
     expect(find.text('AFFICHAGE 3D'), findsOneWidget);
-    for (final key in ['names', 'bones', 'halo']) {
+    // M6c : personnage à la peau lisse, plus d'os à afficher.
+    expect(find.text('Os visibles'), findsNothing);
+    expect(find.byKey(const ValueKey('settings-3d-bones')), findsNothing);
+    for (final key in ['names', 'halo']) {
       final tile = tester.widget<SwitchListTile>(
         find.descendant(
           of: find.byKey(ValueKey('settings-3d-$key')),
@@ -291,12 +293,13 @@ void main() {
       );
       expect(tile.value, isTrue, reason: key);
     }
-    await tester.tap(find.text('Os visibles'));
+    await tester.tap(find.text('Halo'));
     await tester.pumpAndSettle();
-    expect(Display3DSettings.instance.bones.value, isFalse);
+    expect(Display3DSettings.instance.halo.value, isFalse);
     final prefs = await SharedPreferences.getInstance();
-    expect(prefs.getBool('kt3d_os_visibles'), isFalse);
+    expect(prefs.getBool('kt3d_halo'), isFalse);
     expect(prefs.getBool('kt3d_nom_toucher'), isTrue);
+    expect(prefs.containsKey('kt3d_os_visibles'), isFalse);
     Display3DSettings.instance.reset();
     expect(tester.takeException(), isNull);
   });
@@ -304,13 +307,13 @@ void main() {
   testWidgets('Sources et licences : crédits du modèle 3D', (tester) async {
     phone(tester);
     await tester.pumpWidget(page(const MentionsScreen()));
-    final credit = find.textContaining('Ecorche Musclenames Male Anatomy');
+    final credit = find.textContaining('Mixamo');
     // Titre des crédits du modèle : le texte des mentions est chargé.
     await _settle(tester, find.textContaining('MANNEQUIN ANATOMIQUE 3D'));
     await scrollToAction(tester, credit);
     await scrollToAction(
       tester,
-      find.textContaining('tools/anatomy/build_model.py'),
+      find.textContaining('tools/anatomy/build_character.py'),
     );
     expect(tester.takeException(), isNull);
   });

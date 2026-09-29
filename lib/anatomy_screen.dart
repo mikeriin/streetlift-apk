@@ -36,6 +36,10 @@
 // M6b : le filtre « Muscles profonds » est retiré (l'écorché n'a plus de
 // couche profonde : il n'avait plus d'effet) ; reste « Os » dans la
 // catégorie « Affichage ».
+//
+// M6c (5.6.0) : le mannequin devient le personnage Mixamo « Ch36 », zones
+// musculaires sur la peau : plus d'os à afficher, le filtre « Os » et la
+// catégorie « Affichage » sont retirés ; restent les 11 groupes.
 import 'package:flutter/material.dart';
 
 import 'filter_menu.dart';
@@ -67,30 +71,27 @@ MannequinView viewForGroup(String? group) => switch (group) {
   _ => MannequinView.face,
 };
 
-/// Filtres de l'écran Anatomie (M4b) : groupes allumés (union), os
-/// affichés. M6b : plus de filtre « Muscles profonds » (écorché sans couche
-/// profonde).
+/// Filtres de l'écran Anatomie (M4b) : groupes allumés (union). M6b : plus
+/// de filtre « Muscles profonds » ; M6c : plus de filtre « Os » (personnage
+/// à la peau lisse).
 @immutable
 class AnatomyFilters {
   /// Groupes cochés, allumés ensemble.
   final Set<String> groups;
 
-  /// « Os » coché : squelette affiché.
-  final bool bones;
+  const AnatomyFilters({this.groups = const {}});
 
-  const AnatomyFilters({this.groups = const {}, this.bones = true});
-
-  /// Nombre de cases (11 groupes, « Os »).
-  static const total = 12;
+  /// Nombre de cases (11 groupes).
+  static const total = 11;
 
   /// Tout coché.
   static final all = AnatomyFilters(groups: kGroupLabels.keys.toSet());
 
   /// Tout décoché.
-  static const none = AnatomyFilters(bones: false);
+  static const none = AnatomyFilters();
 
   /// Nombre de filtres actifs (cases cochées).
-  int get count => groups.length + (bones ? 1 : 0);
+  int get count => groups.length;
 
   /// Groupes cochés dans l'ordre de l'application.
   List<String> get orderedGroups => [
@@ -102,21 +103,16 @@ class AnatomyFilters {
     groups: groups.contains(group)
         ? ({...groups}..remove(group))
         : {...groups, group},
-    bones: bones,
   );
-
-  AnatomyFilters withBones(bool value) =>
-      AnatomyFilters(groups: groups, bones: value);
 
   @override
   bool operator ==(Object other) =>
       other is AnatomyFilters &&
-      other.bones == bones &&
       other.groups.length == groups.length &&
       other.groups.containsAll(groups);
 
   @override
-  int get hashCode => Object.hash(bones, Object.hashAllUnordered(groups));
+  int get hashCode => Object.hashAllUnordered(groups);
 
   /// M4c : catégories du menu « Filtres ».
   static final categories = [
@@ -127,24 +123,15 @@ class AnatomyFilters {
         for (final e in kGroupLabels.entries) FilterOption(e.key, e.value),
       ],
     ),
-    const FilterCategory(
-      id: 'affichage',
-      label: 'Affichage',
-      options: [FilterOption('bones', 'Os')],
-    ),
   ];
 
-  FilterSelection get selection => FilterSelection({
-    'groupes': groups,
-    'affichage': {if (bones) 'bones'},
-  });
+  FilterSelection get selection => FilterSelection({'groupes': groups});
 
   static AnatomyFilters fromSelection(FilterSelection s) => AnatomyFilters(
     groups: {
       for (final g in kGroupLabels.keys)
         if (s.has('groupes', g)) g,
     },
-    bones: s.has('affichage', 'bones'),
   );
 }
 
@@ -173,13 +160,11 @@ class AnatomyScreenState extends State<AnatomyScreen> {
   @override
   void initState() {
     super.initState();
-    final session =
-        AnatomyScreen.session ??
-        AnatomyFilters(bones: Display3DSettings.instance.bones.value);
+    final session = AnatomyScreen.session ?? AnatomyFilters.none;
     final initial = widget.initialGroup;
     _filters = initial == null
         ? session
-        : AnatomyFilters(groups: {initial}, bones: session.bones);
+        : AnatomyFilters(groups: {initial});
     AnatomyScreen.session = _filters;
     final ordered = _filters.orderedGroups;
     _view = viewForGroup(ordered.isEmpty ? null : ordered.first);
@@ -204,14 +189,11 @@ class AnatomyScreenState extends State<AnatomyScreen> {
     _set(_filters.toggleGroup(group), checkedGroup: checking ? group : null);
   }
 
-  void setBones(bool value) => _set(_filters.withBones(value));
   void checkAll() => _set(AnatomyFilters.all);
   void uncheckAll() => _set(AnatomyFilters.none);
 
-  /// Filtres de départ (« Réinitialiser ») : aucun groupe, os selon le
-  /// réglage « Os visibles ».
-  AnatomyFilters get defaults =>
-      AnatomyFilters(bones: Display3DSettings.instance.bones.value);
+  /// Filtres de départ (« Réinitialiser ») : aucun groupe.
+  AnatomyFilters get defaults => AnatomyFilters.none;
 
   void _onMenu(FilterSelection s) {
     final next = AnatomyFilters.fromSelection(s);
@@ -275,7 +257,6 @@ class AnatomyScreenState extends State<AnatomyScreen> {
             key: const ValueKey('anatomy-mannequin'),
             intensities: intensities,
             background: Theme.of(context).scaffoldBackgroundColor,
-            bones: f.bones,
             view: _view,
             height: height,
             semanticLabel: labels.isEmpty
@@ -290,8 +271,8 @@ class AnatomyScreenState extends State<AnatomyScreen> {
               names
                   ? 'Touche un muscle pour afficher son nom ; les boutons '
                         'Face, Dos, Profil, 3/4 tournent le mannequin, pince '
-                        'pour zoomer. Écorché : la couche superficielle des '
-                        'muscles ; les muscles profonds sont listés en texte '
+                        'pour zoomer. Zones musculaires dessinées sur la '
+                        'peau ; les muscles profonds sont listés en texte '
                         'sur les fiches.'
                   : 'Nom du muscle au toucher désactivé '
                         '(Réglages › Affichage 3D).',
@@ -300,7 +281,8 @@ class AnatomyScreenState extends State<AnatomyScreen> {
           ),
           if (map != null) _summary(context, map),
           Text(
-            'Modèle : écorché « Ecorche Musclenames Male Anatomy » (licence '
+            'Modèle : personnage Mixamo (Adobe), zones musculaires issues de '
+            'l’écorché « Ecorche Musclenames Male Anatomy » (licence '
             'd’achat). Crédits dans Réglages › À propos › Sources et '
             'licences. Repères d’entraînement, pas un avis médical.',
             style: tt.bodySmall,
@@ -310,16 +292,15 @@ class AnatomyScreenState extends State<AnatomyScreen> {
     );
   }
 
-  /// Résumé texte : chaque groupe coché et ses muscles, état des os.
+  /// Résumé texte : chaque groupe coché et ses muscles.
   Widget _summary(BuildContext context, MannequinMap map) {
     final tt = Theme.of(context).textTheme;
     final dark = Theme.of(context).brightness == Brightness.dark;
     final f = _filters;
-    final state = 'Os ${f.bones ? 'affichés' : 'masqués'}';
     if (f.groups.isEmpty) {
       return Text(
         'Aucun groupe coché : ouvre « Filtres » pour allumer un ou plusieurs '
-        'groupes. $state.',
+        'groupes.',
         key: const ValueKey('anatomy-summary-empty'),
         style: tt.bodyMedium,
       );
@@ -352,7 +333,6 @@ class AnatomyScreenState extends State<AnatomyScreen> {
             ),
             const SizedBox(height: 12),
           ],
-          Text(state, style: tt.bodySmall),
         ],
       ),
     );

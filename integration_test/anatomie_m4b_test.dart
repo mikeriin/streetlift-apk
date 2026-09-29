@@ -345,7 +345,7 @@ void main() {
     final state = tester.state<AnatomyScreenState>(find.byType(AnatomyScreen));
     m4b['anatomie_filtres'] = state.filters.orderedGroups;
     expect(state.groups, {'pectoraux', 'dos', 'quadriceps'});
-    expect(find.text('Filtres · 5'), findsOneWidget);
+    expect(find.text('Filtres · 3'), findsOneWidget); // M6c : sans « Os »
     await closeMenu(tester);
     expect(
       find.byKey(const ValueKey('anatomy-filter-dos')),
