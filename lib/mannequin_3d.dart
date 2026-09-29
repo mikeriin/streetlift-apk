@@ -653,8 +653,9 @@ class MannequinScene {
     }
     final byName = <String, Node>{};
     void index(Node n) {
-      if (n.name.startsWith('eq_') && !n.name.contains('__'))
+      if (n.name.startsWith('eq_') && !n.name.contains('__')) {
         byName[n.name] = n;
+      }
       for (final c in n.children) {
         index(c);
       }

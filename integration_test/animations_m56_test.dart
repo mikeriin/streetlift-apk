@@ -44,7 +44,7 @@ void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
   final data = <String, Object?>{};
-  final m6 = <String, Object?>{};  // relevé (clé m56_releve.json)
+  final m6 = <String, Object?>{}; // relevé (clé m56_releve.json)
   binding.reportData = data;
 
   void record() =>
@@ -220,8 +220,15 @@ void main() {
     scroll.position.jumpTo(0);
     await tester.pump(const Duration(seconds: 1));
     await tester.pump(const Duration(seconds: 1));
-    out['reprise'] = state.clipPlaying;
-    expect(state.clipPlaying, isTrue);
+    // La liste peut avoir démonté le mannequin hors de l'écran : au retour,
+    // l'état courant (le même ou un nouveau) doit lire en boucle.
+    await waitFor(tester, () => mannequin(tester)?.available == true);
+    final back = mannequin(tester)!;
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 1));
+    out['reprise'] = back.clipPlaying;
+    out['meme_etat'] = identical(back, state);
+    expect(back.clipPlaying, isTrue);
     m6[id] = out;
     record();
   }
@@ -316,7 +323,11 @@ void main() {
   ) async {
     AnatomyScreen.session = null;
     AnatomyScreen.sessionPosture = 'debout';
-    await pumpHome(tester, const AnatomyScreen(key: ValueKey('m56-anat')), true);
+    await pumpHome(
+      tester,
+      const AnatomyScreen(key: ValueKey('m56-anat')),
+      true,
+    );
     await waitFor(tester, () => mannequin(tester)?.available != null);
     final state = mannequin(tester)!;
     expect(state.available, isTrue, reason: 'pas de 3D');

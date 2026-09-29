@@ -161,8 +161,7 @@ class MannequinRig {
           v3(b['tete'] as List),
           follows: (b['aide'] as Map?)?['suit'] as String?,
           helperPart: ((b['aide'] as Map?)?['part'] as num?)?.toDouble() ?? .5,
-          bulge:
-              ((b['aide'] as Map?)?['gonflement'] as num?)?.toDouble() ?? 0,
+          bulge: ((b['aide'] as Map?)?['gonflement'] as num?)?.toDouble() ?? 0,
           bulgeAxis: (b['aide'] as Map?)?['axe'] == null
               ? null
               : v3((b['aide'] as Map)['axe'] as List),
@@ -262,7 +261,11 @@ class MannequinRig {
   /// Échelle d'un os d'aide ou de gonflement pour la rotation [q] de l'os
   /// suivi : `1 + gain × angle`, perpendiculaire à [axis] (axe du muscle) ou,
   /// sans axe, à l'axe de [q] ; null si la rotation est nulle.
-  static vm.Matrix3? bulgeScale(vm.Quaternion q, double gain, vm.Vector3? axis) {
+  static vm.Matrix3? bulgeScale(
+    vm.Quaternion q,
+    double gain,
+    vm.Vector3? axis,
+  ) {
     var w = q.w.abs().clamp(0.0, 1.0);
     final angle = 2 * math.acos(w);
     if (angle < 1e-6) return null;

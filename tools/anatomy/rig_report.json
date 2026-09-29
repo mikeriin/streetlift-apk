@@ -1571,12 +1571,12 @@
   ]
  },
  "colles": {
-  "deltoid_anterior_left": 75,
-  "deltoid_anterior_right": 75,
-  "deltoid_lateral_left": 36,
-  "deltoid_lateral_right": 36,
-  "deltoid_posterior_left": 20,
-  "deltoid_posterior_right": 20,
+  "deltoid_anterior_left": 16,
+  "deltoid_anterior_right": 16,
+  "deltoid_lateral_left": 12,
+  "deltoid_lateral_right": 12,
+  "deltoid_posterior_left": 14,
+  "deltoid_posterior_right": 14,
   "teres_major_left": 11,
   "teres_major_right": 11,
   "pectoralis_major_clavicular_left": 3,

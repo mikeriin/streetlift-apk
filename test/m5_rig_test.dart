@@ -151,10 +151,14 @@ void main() {
     final s = full.scales['quads_bulge_l']!;
     final axis = quads.bulgeAxis!;
     final along = s.transform(axis.clone());
-    expect(along.length, closeTo(1, 1e-9));
+    // Axe du muscle arrondi à 5 décimales dans rig.json.
+    expect(along.length, closeTo(1, 1e-4));
     final perp = vm.Vector3(1, 0, 0)..sub(axis * axis.x);
     final grown = s.transform(perp.clone()).length / perp.length;
-    expect(grown, closeTo(1 + quads.bulge * angle(b.rotationOf('shin_l')), 1e-9));
+    expect(
+      grown,
+      closeTo(1 + quads.bulge * angle(b.rotationOf('shin_l')), 1e-9),
+    );
     expect(grown, greaterThan(1.08));
     expect(full.scales.containsKey('knee_aux_l'), isTrue);
     expect(full.scales.containsKey('shoulder_aux_l'), isFalse);
