@@ -33,6 +33,7 @@
 - Dips : épaule 1,6 cm sous le coude (limite d'extension d'épaule 60°, AAOS).
 - Squat : écrasement quadriceps / adducteurs à l'aine en bas ; vue 3/4 à 45° (60° suggéré par la revue).
 - Coloration des muscles du pack (grand adducteur, fléchisseurs du coude) : hors lot.
+- Mesure du préchargement sur émulateur (rendu logiciel, processus non relancé entre « avant » et « après », 300 à 900 ms par image) : non représentative ; les chiffres qui comptent sont ceux de la carte Préchargement sur le téléphone.
 - Source : « trapèze supérieur / inférieur » inversés dans la carte source (M5) : non corrigé.
 
 # Historique — M5 (5.4.0)
