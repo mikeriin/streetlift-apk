@@ -118,6 +118,7 @@ Modèle Claude : Opus 5.5 pour tous les lots, effort accru demandé sur M5 (sque
 
 ### Règle ajoutée par le propriétaire (29/09/2026, après M56)
 - Le dernier commit de chaque lot sur `main` s'intitule « Kalis Track x.y.z (<LOT>) : … » pour que le build signé à tester se distingue des autres runs (M56 : run n° 133 titré par son dernier correctif). Inscrit au §7 du pipeline.
+- La notification « prêt à tester » se termine par le lien de la page de suivi (§5), qui reste l'endroit où chaque lot décrit captures, changements et points à vérifier (§6, inchangé : la section M56 y est depuis la livraison).
 
 ## En attente du propriétaire
 (aucune)

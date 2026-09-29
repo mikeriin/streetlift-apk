@@ -49,12 +49,12 @@ Tu es lancé par une des tâches planifiées « Kalis Track — pipeline 3D (Opu
 
 ## 5. Décisions, blocages, notifications (PushNotification, < 200 caractères, une ligne)
 Tranche toi-même tout choix réversible compatible avec le §2, et consigne-le dans `pipeline/3d/DECISIONS_3D.md` (section de ton lot). Arrête-toi et notifie seulement si : (a) risque de perte de données ; (b) contradiction avec une décision du §2 qui change le résultat ; (c) accès ou outil indispensable manquant ; (d) build ou tests encore en échec après 2 corrections sérieuses ; (e) impasse avérée de flutter_scene (version, message, essais faits).
-- Livraison : `Kalis Track <LOT> prêt à tester — v<version> publiée. À tester : <ce que le propriétaire doit vérifier, en une phrase>`
+- Livraison : `Kalis Track <LOT> prêt à tester — v<version>. À tester : <ce que le propriétaire doit vérifier, en quelques mots>. Page : https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA` (le lien de la page de suivi termine toujours la notification, dans la limite des 200 caractères : raccourcis « À tester » plutôt que le lien ; demande du propriétaire, 29/09/2026).
 - Décision : `Kalis Track <LOT> : décision requise — <question>` (question détaillée dans DECISIONS_3D.md avec 2-3 options et ta recommandation ; attends la réponse dans cette session).
 - Échec : `Kalis Track <LOT> bloqué — <cause courte>`
 
 ## 6. Page de suivi
-Une seule page claude.ai « Suivi mannequin 3D » (outil Artifact ; charge d'abord la skill artifact-design), créée par M1, puis **republiée au même lien** par chaque lot (paramètre `url`, lien noté dans `ETAT_3D.md`). Chaque lot y ajoute sa section en tête : version, ce qu'il faut regarder dans l'appli (chemin exact des écrans), 2 à 4 captures ou GIF du vrai rendu, résultats des contrôles, limites. Lisible sur téléphone.
+Une seule page claude.ai « Suivi mannequin 3D » (outil Artifact ; charge d'abord la skill artifact-design), créée par M1, puis **republiée au même lien** par chaque lot (paramètre `url`, lien noté dans `ETAT_3D.md`). Chaque lot y ajoute sa section en tête, **avant la notification** : version et build signé (n° du run), ce qu'il faut regarder dans l'appli (chemin exact des écrans, ce qui a changé et ce qu'il faut vérifier), 2 à 4 captures ou GIF du vrai rendu, résultats des contrôles, limites ; le tableau des lots en bas de page passe le lot à « À valider ». Lisible sur téléphone. C'est là que le propriétaire lit ce qu'il doit tester : la notification en donne le lien (§5).
 
 ## 7. Fin de lot
 1. Version, calculée au moment de la publication à partir de celle de `main` (x.y.z+N) : lot de fonctionnalités → x.(y+1).0 ; lot correctif (M6b) ou passage de correction → x.y.(z+1) ; N + 1 dans tous les cas (réglages / À propos à jour). README et SUIVI_PROJET.md complétés (section du lot ou de la correction).
