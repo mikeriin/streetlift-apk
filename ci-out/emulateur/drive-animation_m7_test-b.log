@@ -1,0 +1,49 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             45.1s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,007ms
+I/Choreographer( 4625): Skipped 52 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4625): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:41321/qVzx_oZABu4=/
+VMServiceFlutterDriver: Isolate found with number: 232758877895895
+VMServiceFlutterDriver: Isolate 232758877895895 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4625): 00:00 +0: (setUpAll)
+VMServiceFlutterDriver: Connected to Flutter application.
+D/ProfileInstaller( 4625): Installing profile for fr.tchoupi.streetlift_tracker
+I/Choreographer( 4625): Skipped 35 frames!  The application may be doing too much work on its main thread.
+I/flutter ( 4625): 00:01 +1: a : phases, vues, zoom, toucher, lecture (sombre)
+I/flutter ( 4625): 00:01 +1 ~1: b : clair, animations réduites
+D/FlutterJNI( 4625): Sending viewport metrics to the engine.
+D/EGL_emulation( 4625): app_time_stats: avg=6155.46ms min=851.83ms max=16070.24ms count=3
+D/EGL_emulation( 4625): app_time_stats: avg=973.39ms min=811.61ms max=1135.17ms count=2
+D/EGL_emulation( 4625): app_time_stats: avg=628.05ms min=587.24ms max=668.86ms count=2
+D/EGL_emulation( 4625): app_time_stats: avg=726.67ms min=705.81ms max=747.53ms count=2
+D/EGL_emulation( 4625): app_time_stats: avg=665.56ms min=662.81ms max=668.31ms count=2
+D/EGL_emulation( 4625): app_time_stats: avg=629.97ms min=614.35ms max=645.59ms count=2
+D/EGL_emulation( 4625): app_time_stats: avg=647.47ms min=646.26ms max=648.67ms count=2
+D/EGL_emulation( 4625): app_time_stats: avg=247.88ms min=158.11ms max=532.30ms count=6
+D/EGL_emulation( 4625): app_time_stats: avg=230.14ms min=155.18ms max=449.82ms count=5
+D/EGL_emulation( 4625): app_time_stats: avg=265.38ms min=148.22ms max=405.82ms count=4
+D/FlutterJNI( 4625): Sending viewport metrics to the engine.
+D/EGL_emulation( 4625): app_time_stats: avg=417.06ms min=151.32ms max=561.65ms count=3
+D/EGL_emulation( 4625): app_time_stats: avg=576.64ms min=137.59ms max=2157.31ms count=5
+D/EGL_emulation( 4625): app_time_stats: avg=910.02ms min=878.35ms max=941.68ms count=2
+I/flutter ( 4625): 00:39 +2 ~1: c : images du GIF et halo par phase
+I/flutter ( 4625): 00:39 +2 ~2: (tearDownAll)
+D/EGL_emulation( 4625): app_time_stats: avg=192.24ms min=128.03ms max=278.26ms count=6
+I/flutter ( 4625): 00:39 +3 ~2: All tests passed!
+All tests passed.
