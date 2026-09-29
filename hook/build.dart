@@ -13,6 +13,9 @@ void main(List<String> args) async {
       buildOutput: output,
       inputFilePaths: const [
         'assets/anatomy/mannequin.glb',
+        // M7 : mannequin animable (squelette Mixamo et peau), lecteur
+        // d'animations (tools/anatomy/build_animated.py, chiffré).
+        'assets/anatomy/mannequin_anime.glb',
       ],
     );
   });

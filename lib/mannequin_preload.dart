@@ -24,6 +24,7 @@ import 'package:flutter_scene/scene.dart';
 
 import 'engine3d.dart';
 import 'mannequin_3d.dart';
+import 'mannequin_clip.dart';
 
 /// Résultat du préchargement.
 class PreloadReport {
@@ -116,6 +117,11 @@ class MannequinPreload {
       final support = await engine3DSupport();
       compatible = support.compatible;
       if (compatible) {
+        // M7 : registre des animations (quelques Ko) : une fiche décide sans
+        // attendre si elle a un lecteur ou son mannequin fixe.
+        try {
+          await ClipRegistry.load();
+        } catch (_) {}
         // Ressources : modèle (converti par le hook de build) et carte
         // (5.5.2 : plus de rig ni de peau).
         final scene = await MannequinScene.create();

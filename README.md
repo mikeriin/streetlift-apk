@@ -1,4 +1,14 @@
-# Kalis Track 5.6.0 — Mannequin anatomique 3D
+# Kalis Track 5.7.0 — Mannequin anatomique 3D
+
+## 5.7.0 — Lecteur d'animation, intensité par phase, import des animations du propriétaire (lot M7 du pipeline « Mannequin 3D »)
+
+- **Import des animations** (`tools/anatomy/import_animations.py deposer | importer | verifier`) : un FBX Mixamo « Without Skin » par exercice (nom = identifiant du pack), squelette vérifié (65 os, hiérarchie, proportions), source chiffrée (`assets_secure/animations/`), dérive du bassin retirée pour un exercice sur place, 30 i/s, images clés réduites (écart ≤ 0,2°), clip compressé `.ktclip` (≤ 5 Ko visé), phases réglées ou détectées, registre `assets/anatomy/clips/index.json` ; messages d'erreur clairs (nom inconnu, squelette incompatible, fichier sans animation). Mode d'emploi : `docs/ANIMATIONS_PROPRIETAIRE.md`.
+- **Mannequin animable** (`tools/anatomy/build_animated.py`) : même personnage et mêmes zones que le mannequin fixe, au repos en T avec le squelette Mixamo et sa peau (`mannequin_anime.glb`, chiffré ; `rig_mixamo.json`, `peau_mixamo.bin`), chargé seulement par le lecteur.
+- **Lecteur** (`lib/mannequin_player.dart`) : lecture / pause, curseur de temps, phase et tempo (« Descente · 3 s »), vues, zoom, toucher sur le corps en mouvement ; halo plus vif en concentrique, plus doux en excentrique, pulsation lente en isométrie, fondus sans clignotement (`docs/ANIMATION_3D.md`) ; animations réduites : pas de lecture, images clés de début et de fin de phase ; pause hors écran, en arrière-plan, après 60 s sans interaction.
+- **Animation de test** : Réglages › À propos › Moteur 3D › Animation de test (squat lent au poids du corps, 4 phases, images/s affichées), produite comme un FBX Mixamo et passée par l'import (`tools/anatomy/debug_animation.py`) ; jamais sur une fiche.
+- **Fiches** : un exercice avec une animation du propriétaire aura le lecteur ; sans animation, la fiche reste exactement comme avant.
+
+Tests : `test/m7_player_test.dart`, `tools/tests/test_m7_animations.py`, `integration_test/animation_m7_test.dart`.
 
 ## 5.6.0 — Nouveau mannequin : personnage Mixamo, zones musculaires sur la peau (lot M6c du pipeline « Mannequin 3D »)
 

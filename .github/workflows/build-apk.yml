@@ -168,4 +168,4 @@ jobs:
         if: always()
         run: |
           rm -f signing/kalis_track.p12 signing/.restore-*
-          rm -rf assets_secure/clair assets/anatomy/mannequin.glb
+          rm -rf assets_secure/clair assets/anatomy/mannequin.glb assets/anatomy/mannequin_anime.glb

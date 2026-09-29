@@ -1,0 +1,21 @@
+{
+ "description": "Réglages de l'import des animations (tools/anatomy/import_animations.py). Une entrée par identifiant d'exercice (nom du FBX) ; tout est facultatif. sur_place : retirer la dérive horizontale du bassin (défaut : oui) ; phases : imposées [{nom, type (concentrique | excentrique | isometrique), debut_s, fin_s}] (défaut : détectées par la hauteur du centre de masse) ; tolerance_deg : écart angulaire toléré par la réduction des images clés (défaut 0,2) ; aussi : autres exercices du pack qui montrent la même animation ; debogage : animation de test (Réglages › À propos › Moteur 3D, jamais sur une fiche), avec ses muscles.",
+ "animations": {
+  "debug_squat": {
+   "debogage": true,
+   "nom": "Squat lent au poids du corps (animation de test)",
+   "sur_place": true,
+   "phases": [
+    {"nom": "Descente", "type": "excentrique", "debut_s": 0, "fin_s": 3},
+    {"nom": "Pause basse", "type": "isometrique", "debut_s": 3, "fin_s": 4},
+    {"nom": "Montée", "type": "concentrique", "debut_s": 4, "fin_s": 5},
+    {"nom": "Pause haute", "type": "isometrique", "debut_s": 5, "fin_s": 6}
+   ],
+   "muscles": {
+    "primaires": ["droit_femoral", "vaste_lateral", "vaste_medial", "vaste_intermediaire", "grand_fessier"],
+    "secondaires": ["biceps_femoral", "biceps_femoral_chef_court", "semi_tendineux", "semi_membraneux", "grand_adducteur", "gastrocnemien_medial", "gastrocnemien_lateral", "soleaire"],
+    "stabilisateurs": ["erecteurs_lombaires", "droit_abdomen", "oblique_externe", "transverse_abdomen"]
+   }
+  }
+ }
+}

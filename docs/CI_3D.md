@@ -240,3 +240,17 @@ par nœud, légende).
 - Aires des régions (vue de départ des fiches) :
   `python3 tools/anatomy/build_model.py --aires` (depuis le GLB, sans
   l'archive) ; `build_model.py --zip` les écrit aussi.
+
+## Lecteur d'animation (M7)
+
+- `integration_test/animation_m7_test.dart`, seule cible jouée par défaut par
+  `tools/ci3d_drive.sh` (M6c et les lots précédents : `CI3D_TOUT=1`), en
+  trois parties (`--dart-define=M6B_PART=a|b|c`) : a = écran « Animation de
+  test » en sombre (5 temps en Profil, 3 vues au plus bas, toucher sur le
+  corps déformé, zoom, lecture et images/s, pause) ; b = clair, animations
+  réduites (pas de lecture, image clé) ; c = 12 images du GIF (0,5 s
+  d'écart, vue Profil). Relevés `emulateur/m7_releve_<partie>.json`
+  (temps, phase, gain du halo, bassin, figure, halo, gris, démarcation).
+- Le mannequin animable (`assets/anatomy/mannequin_anime.glb`) est déchiffré
+  comme le mannequin fixe (rôle « exécution » du manifeste) et converti par
+  le hook de build.

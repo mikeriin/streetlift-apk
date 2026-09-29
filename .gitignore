@@ -89,3 +89,5 @@ gradle.properties.local
 # tools/secure_assets.py avec la clé KT_ASSETS_KEY), jamais suivies.
 /assets_secure/clair/
 /assets/anatomy/mannequin.glb
+# M7 : mannequin animable (chiffré dans assets_secure/mannequin_anime.glb.enc).
+/assets/anatomy/mannequin_anime.glb

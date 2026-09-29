@@ -17,6 +17,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_gpu/gpu.dart' as gpu;
 import 'package:flutter_scene/scene.dart';
 
+import 'animation_test_screen.dart';
 import 'app_theme.dart';
 import 'device.dart';
 import 'mannequin_3d.dart';
@@ -269,6 +270,7 @@ class Engine3DScreenState extends State<Engine3DScreen> {
         key: const ValueKey('engine3d-list'),
         children: [
           _view(dark),
+          _animationTest(context),
           _compatibility(context),
           _performance(context),
           _preload(context),
@@ -439,6 +441,43 @@ class Engine3DScreenState extends State<Engine3DScreen> {
           child: Text(label, style: TextStyle(color: SL.dim)),
         ),
         Expanded(child: Text(value)),
+      ],
+    ),
+  );
+
+  /// M7 : accès à l'animation de test (lecteur, intensité par phase).
+  Widget _animationTest(BuildContext context) => KCard(
+    key: const ValueKey('engine3d-animation-test'),
+    onTap: () {
+      // La mesure de fluidité de cette page s'arrête : le lecteur mesure la
+      // sienne.
+      _stopMeasure(record: false);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const AnimationTestScreen()),
+      );
+    },
+    child: Row(
+      children: [
+        Icon(Icons.directions_run, color: SL.dim),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Animation de test',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              Text(
+                'Squat lent au poids du corps, réservé aux tests du lecteur '
+                '3D (phases, intensité, fluidité).',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+          ),
+        ),
+        Icon(Icons.chevron_right, color: SL.dim),
       ],
     ),
   );

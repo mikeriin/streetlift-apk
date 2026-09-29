@@ -21,7 +21,9 @@ class SecureAssetsTest(unittest.TestCase):
     def test_manifeste(self):
         data = secure_assets.load_manifest()
         roles = {e['role'] for e in data['fichiers']}
-        self.assertEqual(roles, {'source', 'execution', 'source_zones'})
+        # M7 : + animations du propriétaire (et animation de test), rôle
+        # « animation », et mannequin animable (exécution).
+        self.assertEqual(roles, {'source', 'execution', 'source_zones', 'animation'})
         for entry in data['fichiers']:
             self.assertTrue(entry['chiffre'].startswith('assets_secure/'), entry)
             self.assertTrue(entry['chiffre'].endswith('.enc'), entry)
@@ -31,9 +33,16 @@ class SecureAssetsTest(unittest.TestCase):
 
     def test_arbre_sans_clair(self):
         tracked = [p.as_posix() for p in release_security.tracked_files(ROOT)]
-        self.assertEqual(secure_assets.check(tracked, log=lambda *_: None), 3)
+        # M7 : 3 de M6c + mannequin animable + animation de test.
+        self.assertEqual(secure_assets.check(tracked, log=lambda *_: None), 5)
         with self.assertRaises(secure_assets.SecureAssetError):
             secure_assets.check(tracked + ['assets/anatomy/mannequin.glb'], log=lambda *_: None)
+        with self.assertRaises(secure_assets.SecureAssetError):
+            secure_assets.check(tracked + ['assets/anatomy/mannequin_anime.glb'],
+                                log=lambda *_: None)
+        with self.assertRaises(secure_assets.SecureAssetError):
+            secure_assets.check(tracked + ['assets_secure/clair/animations/debug_squat.fbx'],
+                                log=lambda *_: None)
         with self.assertRaises(secure_assets.SecureAssetError):
             secure_assets.check(tracked + ['assets_secure/modele.glb'], log=lambda *_: None)
 

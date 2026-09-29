@@ -29,6 +29,15 @@ import 'package:vector_math/vector_math.dart' as vm;
 const kRigAsset = 'assets/anatomy/rig.json';
 const kSkinAsset = 'assets/anatomy/mannequin_skin.bin';
 
+/// M7 : squelette Mixamo du personnage « Ch36 » (65 os, pose de repos en T,
+/// pose d'affichage en posture `affichage`) et sa peau (4 influences par
+/// sommet), fabriqués par tools/anatomy/build_animated.py pour le mannequin
+/// animable (`assets/anatomy/mannequin_anime.glb`). Même convention que M5 :
+/// une posture est une rotation locale (repère du corps) par os autour de
+/// sa tête, plus la translation du bassin.
+const kMixamoRigAsset = 'assets/anatomy/rig_mixamo.json';
+const kMixamoSkinAsset = 'assets/anatomy/peau_mixamo.bin';
+
 /// Os du squelette d'animation.
 class RigBone {
   final String name, label;
@@ -222,7 +231,37 @@ class MannequinRig {
     return MannequinRig(bones, postures, skin: skin);
   }
 
-  static Future<MannequinRig>? _cache;
+  static Future<MannequinRig>? _cache, _mixamoCache;
+
+  /// M7 : squelette Mixamo et peau du mannequin animable, chargés une seule
+  /// fois par lancement.
+  static Future<MannequinRig> loadMixamo([AssetBundle? bundle]) {
+    final pending = _mixamoCache ??= _load(
+      bundle,
+      kMixamoRigAsset,
+      kMixamoSkinAsset,
+    );
+    return pending.catchError((Object e) {
+      if (identical(_mixamoCache, pending)) _mixamoCache = null;
+      throw e;
+    });
+  }
+
+  static Future<MannequinRig> _load(
+    AssetBundle? bundle,
+    String rigAsset,
+    String skinAsset,
+  ) async {
+    final b = bundle ?? rootBundle;
+    // Chargements l'un après l'autre : `Future.wait` échoue sur les
+    // `SynchronousFuture` d'un bundle de test (essai A de M7).
+    final json = await b.loadString(rigAsset);
+    final skin = await b.load(skinAsset);
+    return MannequinRig.fromJson(
+      jsonDecode(json) as Map<String, dynamic>,
+      skin,
+    );
+  }
 
   /// Chargé une seule fois par lancement (squelette, postures, peau).
   static Future<MannequinRig> load([AssetBundle? bundle]) {
