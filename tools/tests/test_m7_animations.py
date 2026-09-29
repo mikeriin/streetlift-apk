@@ -13,10 +13,15 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'tools'))
 sys.path.insert(0, str(ROOT / 'tools/anatomy'))
 
-import numpy as np  # noqa: E402
+try:
+    import numpy as np
+except ImportError:  # CI sans numpy : décodage, registre et documentation
+    np = None
 
 import build_animated  # noqa: E402
 import import_animations as ia  # noqa: E402
+
+needs_numpy = unittest.skipIf(np is None, 'numpy requis (fabrication des clips)')
 
 
 def fake_fbx(motion, prefix='mixamorig:', fps=30):
@@ -65,6 +70,7 @@ def wave_motion(frames=91, fps=30):
     return ia.Motion(bones, parents, heads, fps, local, root)
 
 
+@needs_numpy
 class QuaternionTest(unittest.TestCase):
     def test_trois_plus_petites(self):
         rng = np.random.default_rng(7)
@@ -80,6 +86,7 @@ class QuaternionTest(unittest.TestCase):
         self.assertTrue(np.allclose(ia.quat_to_mat(ia.mat_to_quat(R)), R, atol=1e-9))
 
 
+@needs_numpy
 class ImportTest(unittest.TestCase):
     def test_fichier_valide(self):
         """FBX valide : squelette accepté, rotations retrouvées, clip ≤ 5 Ko
@@ -125,12 +132,6 @@ class ImportTest(unittest.TestCase):
         with self.assertRaisesRegex(ia.ImportErreur, 'proportions'):
             ia.check_skeleton(dict(fbx, rest=rest), 'autre.fbx')
 
-    def test_nom_inconnu(self):
-        with self.assertRaisesRegex(ia.ImportErreur, 'nom inconnu'):
-            ia.deposit([ROOT / 'pas-un-exercice-du-pack.fbx'], log=lambda *_: None)
-        with self.assertRaisesRegex(ia.ImportErreur, r'\.fbx est attendu'):
-            ia.deposit([ROOT / 'back-squat.bvh'], log=lambda *_: None)
-
     def test_derive_retiree(self):
         m = wave_motion()
         before = m.root.copy()
@@ -162,6 +163,12 @@ class ImportTest(unittest.TestCase):
 
 
 class RegistreTest(unittest.TestCase):
+    def test_nom_inconnu(self):
+        with self.assertRaisesRegex(ia.ImportErreur, 'nom inconnu'):
+            ia.deposit([ROOT / 'pas-un-exercice-du-pack.fbx'], log=lambda *_: None)
+        with self.assertRaisesRegex(ia.ImportErreur, r'\.fbx est attendu'):
+            ia.deposit([ROOT / 'back-squat.bvh'], log=lambda *_: None)
+
     def test_registre_et_clips(self):
         index = ia.verify(log=lambda *_: None)
         self.assertTrue(index['clips'])
@@ -191,7 +198,10 @@ class RegistreTest(unittest.TestCase):
                                                   [b['nom'] for b in rig['os']])
         self.assertEqual(frames, 181)
         # boucle : première et dernière image identiques
-        self.assertLess(max(ia.angle_deg(local[0, i], local[-1, i]) for i in range(65)), .3)
+        self.assertLess(max(ia.angle_deg(local[0][i], local[-1][i]) for i in range(65)), .3)
+        self.assertLess(root[90][1], -.4)   # bassin descendu au plus bas (3 s)
+        if np is None:
+            return
         # au plus bas (3 s) : bassin descendu de plus de 40 cm, pieds fixes
         m = ia.Motion([b['nom'] for b in rig['os']], [b['parent'] for b in rig['os']],
                       [b['tete'] for b in rig['os']], fps, local, root)

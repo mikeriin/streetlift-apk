@@ -3,7 +3,6 @@
 // de test ». Le moteur de test n'a pas Flutter GPU : le rendu animé est
 // vérifié sur émulateur (integration_test/animation_m7_test.dart).
 import 'dart:math' as math;
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -68,24 +67,33 @@ void main() {
     });
 
     test('phases et tempo', () {
-      expect([for (final p in debug.phases) p.label], [
-        'Descente · 3 s',
-        'Pause basse · 1 s',
-        'Montée · 1 s',
-        'Pause haute · 1 s',
-      ]);
-      expect([for (final p in debug.phases) p.kind], [
-        PhaseKind.excentrique,
-        PhaseKind.isometrique,
-        PhaseKind.concentrique,
-        PhaseKind.isometrique,
-      ]);
+      expect(
+        [for (final p in debug.phases) p.label],
+        [
+          'Descente · 3 s',
+          'Pause basse · 1 s',
+          'Montée · 1 s',
+          'Pause haute · 1 s',
+        ],
+      );
+      expect(
+        [for (final p in debug.phases) p.kind],
+        [
+          PhaseKind.excentrique,
+          PhaseKind.isometrique,
+          PhaseKind.concentrique,
+          PhaseKind.isometrique,
+        ],
+      );
       expect(debug.phaseAt(0).name, 'Descente');
       expect(debug.phaseAt(3.5).name, 'Pause basse');
       expect(debug.phaseAt(4.2).name, 'Montée');
       expect(debug.phaseAt(6).name, 'Pause haute');
       expect(debug.keyTimes, [0, 3, 4, 5, 6]);
-      expect(const ClipPhase('X', PhaseKind.concentrique, 0, 1.5).tempo, '1,5 s');
+      expect(
+        const ClipPhase('X', PhaseKind.concentrique, 0, 1.5).tempo,
+        '1,5 s',
+      );
     });
 
     test('une animation du propriétaire va sur sa fiche', () {
@@ -149,28 +157,35 @@ void main() {
 
     test('en-tête invalide refusé', () {
       expect(
-        () => MannequinClip.decode(
-          Uint8List.fromList(const [1, 2, 3]),
-          const ['Hips'],
-        ),
+        () => MannequinClip.decode(Uint8List.fromList(const [1, 2, 3]), const [
+          'Hips',
+        ]),
         throwsA(anything),
       );
     });
   });
 
   group('intensité par phase', () {
-    test('vif en concentrique, doux en excentrique, pulsation en isométrie', () {
-      final ph = debug.phases;
-      expect(phaseHaloGain(ph, 1.5), closeTo(kGainEccentric, 1e-9));
-      expect(phaseHaloGain(ph, 4.5), closeTo(kGainConcentric, 1e-9));
-      expect(phaseHaloGain(ph, 1.5), lessThan(phaseHaloGain(ph, 4.5)));
-      // pulsation lente autour de 0,8 en isométrie
-      final iso = [for (var t = 3.25; t < 3.75; t += .05) phaseHaloGain(ph, t)];
-      expect(iso.reduce(math.max) - iso.reduce(math.min), greaterThan(.02));
-      for (final g in iso) {
-        expect(g, inInclusiveRange(kGainIsometric - .08, kGainIsometric + .08));
-      }
-    });
+    test(
+      'vif en concentrique, doux en excentrique, pulsation en isométrie',
+      () {
+        final ph = debug.phases;
+        expect(phaseHaloGain(ph, 1.5), closeTo(kGainEccentric, 1e-9));
+        expect(phaseHaloGain(ph, 4.5), closeTo(kGainConcentric, 1e-9));
+        expect(phaseHaloGain(ph, 1.5), lessThan(phaseHaloGain(ph, 4.5)));
+        // pulsation lente autour de 0,8 en isométrie
+        final iso = [
+          for (var t = 3.25; t < 3.75; t += .05) phaseHaloGain(ph, t),
+        ];
+        expect(iso.reduce(math.max) - iso.reduce(math.min), greaterThan(.02));
+        for (final g in iso) {
+          expect(
+            g,
+            inInclusiveRange(kGainIsometric - .08, kGainIsometric + .08),
+          );
+        }
+      },
+    );
 
     test('jamais de saut ni de clignotement', () {
       final ph = debug.phases;
@@ -285,51 +300,52 @@ void main() {
       expect(find.byKey(const ValueKey('player-play')), findsNothing);
     });
 
-    testWidgets('fiche animée sans Flutter GPU : repli 2D, aucun lecteur vide', (
-      tester,
-    ) async {
-      final saved = ClipRegistry.loaded;
-      ClipRegistry.loaded = ClipRegistry([
-        ClipEntry(
-          id: 'back-squat',
-          asset: debug.asset,
-          name: 'Back squat',
-          exercises: const ['back-squat'],
-          debug: false,
-          fps: 30,
-          frames: 181,
-          bytes: debug.bytes,
-          duration: 6,
-          phases: debug.phases,
-        ),
-      ]);
-      addTearDown(() => ClipRegistry.loaded = saved);
-      await tester.pumpWidget(
-        page(
-          const Scaffold(
-            body: SingleChildScrollView(
-              child: ExerciseMannequin(
-                exerciseId: 'back-squat',
-                primaires: ['vaste_lateral'],
+    testWidgets(
+      'fiche animée sans Flutter GPU : repli 2D, aucun lecteur vide',
+      (tester) async {
+        final saved = ClipRegistry.loaded;
+        ClipRegistry.loaded = ClipRegistry([
+          ClipEntry(
+            id: 'back-squat',
+            asset: debug.asset,
+            name: 'Back squat',
+            exercises: const ['back-squat'],
+            debug: false,
+            fps: 30,
+            frames: 181,
+            bytes: debug.bytes,
+            duration: 6,
+            phases: debug.phases,
+          ),
+        ]);
+        addTearDown(() => ClipRegistry.loaded = saved);
+        await tester.pumpWidget(
+          page(
+            const Scaffold(
+              body: SingleChildScrollView(
+                child: ExerciseMannequin(
+                  exerciseId: 'back-squat',
+                  primaires: ['vaste_lateral'],
+                ),
               ),
             ),
           ),
-        ),
-      );
-      for (var i = 0; i < 5; i++) {
-        await tester.runAsync(
-          () => Future<void>.delayed(const Duration(milliseconds: 20)),
         );
-        await tester.pump();
-      }
-      expect(
-        find.byKey(const ValueKey('fiche-mannequin-anime')),
-        findsOneWidget,
-      );
-      expect(find.byKey(const ValueKey('player-play')), findsNothing);
-      expect(find.byKey(const ValueKey('player-slider')), findsNothing);
-      expect(tester.takeException(), isNull);
-    });
+        for (var i = 0; i < 5; i++) {
+          await tester.runAsync(
+            () => Future<void>.delayed(const Duration(milliseconds: 20)),
+          );
+          await tester.pump();
+        }
+        expect(
+          find.byKey(const ValueKey('fiche-mannequin-anime')),
+          findsOneWidget,
+        );
+        expect(find.byKey(const ValueKey('player-play')), findsNothing);
+        expect(find.byKey(const ValueKey('player-slider')), findsNothing);
+        expect(tester.takeException(), isNull);
+      },
+    );
 
     testWidgets('écran Animation de test, libellé comme test', (tester) async {
       await tester.pumpWidget(page(const AnimationTestScreen()));
@@ -384,7 +400,11 @@ void main() {
 
   test('assets du lecteur déclarés', () async {
     for (final a in [kMixamoRigAsset, kMixamoSkinAsset, kClipIndexAsset]) {
-      expect((await rootBundle.load(a)).lengthInBytes, greaterThan(0), reason: a);
+      expect(
+        (await rootBundle.load(a)).lengthInBytes,
+        greaterThan(0),
+        reason: a,
+      );
     }
     expect(rig.bones, hasLength(65));
     expect(rig.posture('affichage'), isNotNull);

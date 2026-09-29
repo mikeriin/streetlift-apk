@@ -48,8 +48,6 @@ import hashlib
 import io
 import json
 import math
-import os
-import re
 import struct
 import subprocess
 import sys
@@ -189,18 +187,20 @@ def axis_angle(axis, deg):
 
 
 def slerp(a, b, t):
-    import numpy as np
-    a = np.asarray(a, dtype=np.float64)
-    b = np.asarray(b, dtype=np.float64)
-    d = float(a @ b)
+    """Interpolation sphérique (le plus court chemin), sans numpy."""
+    a = [float(v) for v in a]
+    b = [float(v) for v in b]
+    d = sum(x * y for x, y in zip(a, b))
     if d < 0:
-        b, d = -b, -d
+        b, d = [-v for v in b], -d
     if d > .9995:
-        q = a + t * (b - a)
+        q = [x + t * (y - x) for x, y in zip(a, b)]
     else:
-        th = math.acos(min(1, d))
-        q = (math.sin((1 - t) * th) * a + math.sin(t * th) * b) / math.sin(th)
-    return q / np.linalg.norm(q)
+        th = math.acos(min(1.0, d))
+        s0, s1 = math.sin((1 - t) * th), math.sin(t * th)
+        q = [(s0 * x + s1 * y) / math.sin(th) for x, y in zip(a, b)]
+    n = math.sqrt(sum(v * v for v in q))
+    return [v / n for v in q]
 
 
 def angle_deg(a, b):
@@ -554,9 +554,10 @@ def encode_clip(motion, tol_deg=TOLERANCE_DEG, tol_m=TRANSLATION_TOL):
 
 
 def decode_clip(data, bones):
-    """Décode un clip (vérification, tests) : Motion aux images clés
-    interpolées (toutes les images)."""
-    import numpy as np
+    """Décode un clip (vérification, tests ; sans numpy) : images/s, nombre
+    d'images, rotations locales [image][os] (x, y, z, w) aux clés
+    interpolées, translation du bassin [image] (m)."""
+    import itertools
     raw = gzip.decompress(data)
     if raw[:4] != b'KTC1':
         raise ImportErreur('Clip illisible (en-tête).')
@@ -564,39 +565,39 @@ def decode_clip(data, bones):
     if version != 1:
         raise ImportErreur(f'Clip : version {version} inconnue.')
     o = 10
-    local = np.zeros((frames, len(bones), 4))
-    local[:, :, 3] = 1
+    local = [[[0.0, 0.0, 0.0, 1.0] for _ in bones] for _ in range(frames)]
     for _ in range(n_tracks):
         bone, n = struct.unpack_from('<BH', raw, o)
         o += 3
-        deltas = raw[o:o + n]
+        if bone >= len(bones):
+            raise ImportErreur('Clip : os hors du squelette.')
+        keys = list(itertools.accumulate(raw[o:o + n]))
         o += n
-        keys = list(np.cumsum(list(deltas)))
         quats = []
         for _k in range(n):
             idx, a, b, c = struct.unpack_from('<Bhhh', raw, o)
             o += 7
             quats.append(decode_quat(idx, (a, b, c)))
         for f in range(frames):
-            local[f, bone] = _sample_quat(keys, quats, f)
-    root = np.zeros((frames, 3))
+            local[f][bone] = list(_sample_quat(keys, quats, f))
+    root = [[0.0, 0.0, 0.0] for _ in range(frames)]
     if flags & 1:
         n = struct.unpack_from('<H', raw, o)[0]
         o += 2
-        keys = list(np.cumsum(list(raw[o:o + n])))
+        keys = list(itertools.accumulate(raw[o:o + n]))
         o += n
         vals = []
         for _k in range(n):
-            vals.append(np.array(struct.unpack_from('<hhh', raw, o)) / 1000)
+            vals.append([v / 1000 for v in struct.unpack_from('<hhh', raw, o)])
             o += 6
+        import bisect
         for f in range(frames):
-            j = np.searchsorted(keys, f, side='right') - 1
-            j = max(0, min(j, n - 1))
+            j = max(0, min(bisect.bisect_right(keys, f) - 1, n - 1))
             if j == n - 1 or keys[j] == f:
-                root[f] = vals[j]
+                root[f] = list(vals[j])
             else:
                 t = (f - keys[j]) / (keys[j + 1] - keys[j])
-                root[f] = vals[j] * (1 - t) + vals[j + 1] * t
+                root[f] = [a * (1 - t) + b * t for a, b in zip(vals[j], vals[j + 1])]
     if o != len(raw):
         raise ImportErreur('Clip : taille inattendue.')
     return fps, frames, local, root
@@ -616,6 +617,8 @@ def max_error(motion, decoded_local, decoded_root):
     """Écart maximal (degrés, m) entre le mouvement et le clip décodé,
     rotations locales et positions des têtes d'os (m)."""
     import numpy as np
+    decoded_local = np.asarray(decoded_local, dtype=np.float64)
+    decoded_root = np.asarray(decoded_root, dtype=np.float64)
     rot = 0.0
     for f in range(motion.frames):
         for i in range(len(motion.bones)):
@@ -797,8 +800,9 @@ def build_clip(ex, fbx_path, entry, config, log=print):
     while len(data) > CLIP_BUDGET and tol < TOLERANCE_MAX_DEG:
         tol = round(tol + .1, 2)
         data, stats = encode_clip(motion, tol)
+    import numpy as np
     fps, frames, dl, dr = decode_clip(data, motion.bones)
-    rot_err, pos_err = max_error(motion, dl, dr)
+    rot_err, pos_err = max_error(motion, np.array(dl), np.array(dr))
     phases = opts.get('phases')
     if phases:
         phases = name_phases([dict(p) for p in phases])

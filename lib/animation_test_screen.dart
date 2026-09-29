@@ -57,7 +57,8 @@ class AnimationTestScreenState extends State<AnimationTestScreen> {
         if (clip == null) _error = 'Aucune animation de test dans le registre.';
       });
     } catch (_) {
-      if (mounted) setState(() => _error = 'Registre des animations illisible.');
+      if (mounted)
+        setState(() => _error = 'Registre des animations illisible.');
     }
   }
 
@@ -112,7 +113,7 @@ class AnimationTestScreenState extends State<AnimationTestScreen> {
                 clip: clip,
                 intensities: mapped.intensities,
                 view: MannequinView.profil,
-                height: 400,
+                height: 360,
                 showFps: true,
                 semanticLabel:
                     'Animation de test en 3D : ${clip.name}. Muscles '

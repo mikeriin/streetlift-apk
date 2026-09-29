@@ -41,8 +41,9 @@ void main() {
   binding.reportData = data;
   var ratio = 1.5;
 
-  void record() => data['m7_releve_$_part.json'] =
-      const JsonEncoder.withIndent('  ').convert(releve);
+  void record() => data['m7_releve_$_part.json'] = const JsonEncoder.withIndent(
+    '  ',
+  ).convert(releve);
 
   Future<ui.Image> grab() async {
     final boundary =
@@ -105,7 +106,9 @@ void main() {
             [r, g, b].reduce((a, c) => a > c ? a : c) -
             [r, g, b].reduce((a, c) => a < c ? a : c);
         final dot =
-            (r - br) * (ar - br) + (g - bgG) * (ag - bgG) + (b - bb) * (ab - bb);
+            (r - br) * (ar - br) +
+            (g - bgG) * (ag - bgG) +
+            (b - bb) * (ab - bb);
         if (sat > 40 && dot > 0) halo++;
         if (sat < 24 && r > 30) gray++;
       }
@@ -168,6 +171,11 @@ void main() {
     await waitFor(tester, () => player()?.ready != null);
     final p = player()!;
     expect(p.ready, isTrue, reason: 'pas de 3D ou clip illisible');
+    // Vue et lecteur entiers à l'écran (360 × 640 dp) : bandeau hors champ.
+    tester
+        .state<ScrollableState>(find.byType(Scrollable).first)
+        .position
+        .jumpTo(150);
     await tester.pump(const Duration(seconds: 1));
     return p;
   }
@@ -214,136 +222,156 @@ void main() {
     await ClipRegistry.load();
   });
 
-  testWidgets('a : phases, vues, zoom, toucher, lecture (sombre)', (
-    tester,
-  ) async {
-    await pumpScreen(tester, true);
-    final p = await ready(tester);
-    final out = <String, Object?>{};
-    out['cadrage'] = {
-      'hauteur': p.framing!.height,
-      'largeur': p.framing!.width,
-    };
-    // Lecture automatique au démarrage.
-    out['lecture_auto'] = p.playback!.playing;
-    await view(tester, p, MannequinView.profil);
-    for (final (name, t) in [
-      ('t0_depart', 0.0),
-      ('t1_descente', 1.5),
-      ('t2_pause_basse', 3.5),
-      ('t3_montee', 4.5),
-      ('t4_pause_haute', 5.5),
-    ]) {
-      await at(tester, p, t);
-      out[name] = {...state(p), ...await check(tester)};
-      await shot('sombre_profil_$name');
-    }
-    await at(tester, p, 3.5);
-    for (final v in [MannequinView.face, MannequinView.troisQuarts, MannequinView.dos]) {
-      await view(tester, p, v);
-      out['bas_${v.name}'] = await check(tester);
-      await shot('sombre_bas_${v.name}');
-    }
-    // Toucher sur le corps déformé : centre du vaste latéral gauche posé.
-    await view(tester, p, MannequinView.troisQuarts);
-    final m = p.mannequin!;
-    final scene = m.scene!;
-    final pos = scene.haloPositions('vastus_lateralis_left')!;
-    var sx = 0.0, sy = 0.0, sz = 0.0;
-    final nv = pos.length ~/ 3;
-    for (var i = 0; i < nv; i++) {
-      sx += pos[i * 3];
-      sy += pos[i * 3 + 1];
-      sz += pos[i * 3 + 2];
-    }
-    final proj = HaloProjection.of(m.camera!, m.viewSize)!;
-    final screen = proj.project(sx / nv, sy / nv, sz / nv);
-    final viewRect = tester.getRect(
-      find.byKey(const ValueKey('mannequin-view')).first,
-    );
-    if (screen != null) {
-      await tester.tapAt(viewRect.topLeft + screen);
-      for (var i = 0; i < 4; i++) {
+  testWidgets(
+    'a : phases, vues, zoom, toucher, lecture (sombre)',
+    (tester) async {
+      await pumpScreen(tester, true);
+      final p = await ready(tester);
+      final out = <String, Object?>{};
+      out['cadrage'] = {
+        'hauteur': p.framing!.height,
+        'largeur': p.framing!.width,
+      };
+      // Lecture automatique au démarrage.
+      out['lecture_auto'] = p.playback!.playing;
+      await view(tester, p, MannequinView.profil);
+      for (final (name, t) in [
+        ('t0_depart', 0.0),
+        ('t1_descente', 1.5),
+        ('t2_pause_basse', 3.5),
+        ('t3_montee', 4.5),
+        ('t4_pause_haute', 5.5),
+      ]) {
+        await at(tester, p, t);
+        out[name] = {...state(p), ...await check(tester)};
+        await shot('sombre_profil_$name');
+      }
+      await at(tester, p, 3.5);
+      for (final v in [
+        MannequinView.face,
+        MannequinView.troisQuarts,
+        MannequinView.dos,
+      ]) {
+        await view(tester, p, v);
+        out['bas_${v.name}'] = await check(tester);
+        await shot('sombre_bas_${v.name}');
+      }
+      // Toucher sur le corps déformé : centre du vaste latéral gauche posé.
+      await view(tester, p, MannequinView.troisQuarts);
+      final m = p.mannequin!;
+      final scene = m.scene!;
+      final pos = scene.haloPositions('vastus_lateralis_left')!;
+      var sx = 0.0, sy = 0.0, sz = 0.0;
+      final nv = pos.length ~/ 3;
+      for (var i = 0; i < nv; i++) {
+        sx += pos[i * 3];
+        sy += pos[i * 3 + 1];
+        sz += pos[i * 3 + 2];
+      }
+      final proj = HaloProjection.of(m.camera!, m.viewSize)!;
+      final screen = proj.project(sx / nv, sy / nv, sz / nv);
+      final viewRect = tester.getRect(
+        find.byKey(const ValueKey('mannequin-view')).first,
+      );
+      if (screen != null) {
+        await tester.tapAt(viewRect.topLeft + screen);
+        for (var i = 0; i < 4; i++) {
+          await tester.pump(const Duration(milliseconds: 250));
+        }
+      }
+      out['toucher'] = {'point': screen?.toString(), 'region': m.touched?.id};
+      await shot('sombre_toucher');
+      // Zoom au pincement sur les genoux.
+      m.pinchTo(2.2, viewRect.size.center(Offset.zero) + const Offset(0, 60));
+      for (var i = 0; i < 6; i++) {
         await tester.pump(const Duration(milliseconds: 250));
       }
-    }
-    out['toucher'] = {'point': screen?.toString(), 'region': m.touched?.id};
-    await shot('sombre_toucher');
-    // Zoom au pincement sur les genoux.
-    m.pinchTo(2.2, viewRect.size.center(Offset.zero) + const Offset(0, 60));
-    for (var i = 0; i < 6; i++) {
-      await tester.pump(const Duration(milliseconds: 250));
-    }
-    out['zoom'] = {'echelle': m.zoom.scale, ...await check(tester)};
-    await shot('sombre_zoom');
-    m.resetZoom();
-    // Lecture : le temps avance, images/s mesurées.
-    await view(tester, p, MannequinView.profil);
-    p.toggle();
-    final t0 = p.playback!.time;
-    for (var i = 0; i < 24; i++) {
-      await tester.pump(const Duration(milliseconds: 250));
-    }
-    out['lecture'] = {
-      'avant': t0,
-      'apres': p.playback!.time,
-      'en_cours': p.playback!.playing,
-      'images_s': p.fps,
-    };
-    await shot('sombre_lecture');
-    p.toggle();
-    await tester.pump(const Duration(milliseconds: 500));
-    out['pause'] = p.playback!.playing;
-    releve['a'] = out;
-    record();
-    expect(out['lecture_auto'], isTrue);
-    expect((out['lecture']! as Map)['apres'], isNot(t0));
-  }, timeout: _limit, skip: _skip('a'));
+      out['zoom'] = {'echelle': m.zoom.scale, ...await check(tester)};
+      await shot('sombre_zoom');
+      m.resetZoom();
+      // Lecture : le temps avance, images/s mesurées.
+      await view(tester, p, MannequinView.profil);
+      p.toggle();
+      final t0 = p.playback!.time;
+      for (var i = 0; i < 24; i++) {
+        await tester.pump(const Duration(milliseconds: 250));
+      }
+      out['lecture'] = {
+        'avant': t0,
+        'apres': p.playback!.time,
+        'en_cours': p.playback!.playing,
+        'images_s': p.fps,
+      };
+      await shot('sombre_lecture');
+      p.toggle();
+      await tester.pump(const Duration(milliseconds: 500));
+      out['pause'] = p.playback!.playing;
+      releve['a'] = out;
+      record();
+      expect(out['lecture_auto'], isTrue);
+      expect((out['lecture']! as Map)['apres'], isNot(t0));
+    },
+    timeout: _limit,
+    skip: _skip('a'),
+  );
 
-  testWidgets('b : clair, animations réduites', (tester) async {
-    await pumpScreen(tester, false);
-    var p = await ready(tester);
-    final out = <String, Object?>{};
-    await view(tester, p, MannequinView.troisQuarts);
-    for (final (name, t) in [('descente', 1.5), ('pause_basse', 3.5)]) {
-      await at(tester, p, t);
-      out['clair_$name'] = {...state(p), ...await check(tester)};
-      await shot('clair_34_$name');
-    }
-    // Animations réduites : pas de lecture, images clés au curseur.
-    await pumpScreen(tester, true, reduce: true);
-    p = await ready(tester);
-    await tester.pump(const Duration(seconds: 2));
-    out['reduit_depart'] = {
-      ...state(p),
-      'bouton_lecture': find.byKey(const ValueKey('player-play')).evaluate().length,
-    };
-    await shot('reduit_depart');
-    p.seek(3.2);
-    for (var i = 0; i < 6; i++) {
-      await tester.pump(const Duration(milliseconds: 250));
-    }
-    out['reduit_image_cle'] = state(p);
-    await shot('reduit_image_cle');
-    releve['b'] = out;
-    record();
-    expect(p.playback!.playing, isFalse);
-    expect(p.playback!.time, 3);
-  }, timeout: _limit, skip: _skip('b'));
+  testWidgets(
+    'b : clair, animations réduites',
+    (tester) async {
+      await pumpScreen(tester, false);
+      var p = await ready(tester);
+      final out = <String, Object?>{};
+      await view(tester, p, MannequinView.troisQuarts);
+      for (final (name, t) in [('descente', 1.5), ('pause_basse', 3.5)]) {
+        await at(tester, p, t);
+        out['clair_$name'] = {...state(p), ...await check(tester)};
+        await shot('clair_34_$name');
+      }
+      // Animations réduites : pas de lecture, images clés au curseur.
+      await pumpScreen(tester, true, reduce: true);
+      p = await ready(tester);
+      await tester.pump(const Duration(seconds: 2));
+      out['reduit_depart'] = {
+        ...state(p),
+        'bouton_lecture': find
+            .byKey(const ValueKey('player-play'))
+            .evaluate()
+            .length,
+      };
+      await shot('reduit_depart');
+      p.seek(3.2);
+      for (var i = 0; i < 6; i++) {
+        await tester.pump(const Duration(milliseconds: 250));
+      }
+      out['reduit_image_cle'] = state(p);
+      await shot('reduit_image_cle');
+      releve['b'] = out;
+      record();
+      expect(p.playback!.playing, isFalse);
+      expect(p.playback!.time, 3);
+    },
+    timeout: _limit,
+    skip: _skip('b'),
+  );
 
-  testWidgets('c : images du GIF et halo par phase', (tester) async {
-    await pumpScreen(tester, true);
-    final p = await ready(tester);
-    await view(tester, p, MannequinView.profil);
-    ratio = .75;
-    final out = <String, Object?>{};
-    for (var k = 0; k < 12; k++) {
-      final t = k * .5;
-      await at(tester, p, t);
-      out['gif_$k'] = {...state(p), ...await check(tester)};
-      await shot('gif_${k.toString().padLeft(2, '0')}');
-    }
-    releve['c'] = out;
-    record();
-  }, timeout: _limit, skip: _skip('c'));
+  testWidgets(
+    'c : images du GIF et halo par phase',
+    (tester) async {
+      await pumpScreen(tester, true);
+      final p = await ready(tester);
+      await view(tester, p, MannequinView.profil);
+      ratio = .75;
+      final out = <String, Object?>{};
+      for (var k = 0; k < 12; k++) {
+        final t = k * .5;
+        await at(tester, p, t);
+        out['gif_$k'] = {...state(p), ...await check(tester)};
+        await shot('gif_${k.toString().padLeft(2, '0')}');
+      }
+      releve['c'] = out;
+      record();
+    },
+    timeout: _limit,
+    skip: _skip('c'),
+  );
 }

@@ -391,18 +391,18 @@ class ExerciseMannequinState extends State<ExerciseMannequin> {
           )
         else
           Mannequin3D(
-          key: const ValueKey('fiche-mannequin'),
-          intensities: _muscles.intensities,
-          stretched: _muscles.stretched,
-          view: startView,
-          height: widget.height,
-          horizontalDragOnly: true,
-          semanticLabel: semanticLabel,
-          onReady: (ok) {
-            if (mounted && ok != _ready3d) setState(() => _ready3d = ok);
-          },
-          fallback: fallback,
-        ),
+            key: const ValueKey('fiche-mannequin'),
+            intensities: _muscles.intensities,
+            stretched: _muscles.stretched,
+            view: startView,
+            height: widget.height,
+            horizontalDragOnly: true,
+            semanticLabel: semanticLabel,
+            onReady: (ok) {
+              if (mounted && ok != _ready3d) setState(() => _ready3d = ok);
+            },
+            fallback: fallback,
+          ),
         if (_ready3d && hidden.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(top: 8),

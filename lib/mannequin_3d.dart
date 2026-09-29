@@ -989,16 +989,20 @@ class MannequinScene {
         hi = b;
         continue;
       }
-      lo.setValues(math.min(lo.x, a.x), math.min(lo.y, a.y), math.min(lo.z, a.z));
-      hi.setValues(math.max(hi.x, b.x), math.max(hi.y, b.y), math.max(hi.z, b.z));
+      lo.setValues(
+        math.min(lo.x, a.x),
+        math.min(lo.y, a.y),
+        math.min(lo.z, a.z),
+      );
+      hi.setValues(
+        math.max(hi.x, b.x),
+        math.max(hi.y, b.y),
+        math.max(hi.z, b.z),
+      );
     }
     if (lo == null || hi == null) return restFraming;
     final size = hi - lo;
-    return MannequinFraming(
-      (lo + hi) * .5,
-      size.y,
-      math.max(size.x, size.z),
-    );
+    return MannequinFraming((lo + hi) * .5, size.y, math.max(size.x, size.z));
   }
 
   /// Ordre des maillages translucides : flutter_scene les trie par le centre

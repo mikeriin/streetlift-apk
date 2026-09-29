@@ -253,13 +253,13 @@ class MannequinRig {
     String skinAsset,
   ) async {
     final b = bundle ?? rootBundle;
-    final results = await Future.wait<Object>([
-      b.loadString(rigAsset),
-      b.load(skinAsset),
-    ]);
+    // Chargements l'un après l'autre : `Future.wait` échoue sur les
+    // `SynchronousFuture` d'un bundle de test (essai A de M7).
+    final json = await b.loadString(rigAsset);
+    final skin = await b.load(skinAsset);
     return MannequinRig.fromJson(
-      jsonDecode(results[0] as String) as Map<String, dynamic>,
-      results[1] as ByteData,
+      jsonDecode(json) as Map<String, dynamic>,
+      skin,
     );
   }
 

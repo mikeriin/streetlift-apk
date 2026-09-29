@@ -236,7 +236,9 @@ class MannequinPlayerState extends State<MannequinPlayer>
         ...widget.clip.keyTimes,
         for (var t = 0.0; t < clip.duration; t += .5) t,
       };
-      final framing = scene.framingOver([for (final t in times) clip.sample(t)]);
+      final framing = scene.framingOver([
+        for (final t in times) clip.sample(t),
+      ]);
       final playback = ClipPlayback(widget.clip, reduceMotion: _reduceMotion);
       setState(() {
         _clip = clip;
@@ -447,7 +449,10 @@ class MannequinPlayerState extends State<MannequinPlayer>
               if (!p.reduceMotion)
                 IconButton.filledTonal(
                   key: const ValueKey('player-play'),
-                  constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+                  constraints: const BoxConstraints(
+                    minWidth: 48,
+                    minHeight: 48,
+                  ),
                   tooltip: p.playing ? 'Pause' : 'Lecture',
                   onPressed: toggle,
                   icon: Icon(p.playing ? Icons.pause : Icons.play_arrow),

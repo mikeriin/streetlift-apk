@@ -407,7 +407,8 @@ double _phaseGain(ClipPhase p, double t, bool reduceMotion) {
   final base = _baseGain(p.kind);
   if (p.kind != PhaseKind.isometrique || reduceMotion) return base;
   final u = (t - p.start) / kIsometricPeriod;
-  return base + kIsometricPulse * (1 - math.cos(2 * math.pi * u)) / 2 -
+  return base +
+      kIsometricPulse * (1 - math.cos(2 * math.pi * u)) / 2 -
       kIsometricPulse / 2;
 }
 
