@@ -1,0 +1,12 @@
+diff --git a/lib/mannequin_3d.dart b/lib/mannequin_3d.dart
+index 4d7acbd..8688f4a 100644
+--- a/lib/mannequin_3d.dart
++++ b/lib/mannequin_3d.dart
+@@ -454,6 +454,7 @@ class MannequinScene {
+     if (opacity < 1) m.alphaMode = AlphaMode.blend;
+     return m;
+   }
++
+   final Map<String, PhysicallyBasedMaterial> _regions = {};
+   final Map<String, Node> _nodes = {};
+ 
