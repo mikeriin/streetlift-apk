@@ -1,0 +1,453 @@
+{
+  "traction-pronation": {
+    "vue": "profil",
+    "materiel": [
+      "barre_traction",
+      "sol"
+    ],
+    "duree": 5.0,
+    "tempo": "2-1-1-1",
+    "lecture": true,
+    "temps_avance": true,
+    "boucle": [
+      {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.19769736842105262,
+        "rouge": 0.017616959064327486,
+        "gris": 0.17796052631578949,
+        "phase": "Épaules engagées"
+      },
+      {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.19305555555555556,
+        "rouge": 0.014217836257309942,
+        "gris": 0.17722953216374268,
+        "phase": "Montée"
+      },
+      {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.19623538011695907,
+        "rouge": 0.016264619883040937,
+        "gris": 0.17766812865497075,
+        "phase": "Menton au-dessus de la barre"
+      },
+      {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.19623538011695907,
+        "rouge": 0.016264619883040937,
+        "gris": 0.17766812865497075,
+        "phase": "Menton au-dessus de la barre"
+      },
+      {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.1956140350877193,
+        "rouge": 0.01524122807017544,
+        "gris": 0.1780701754385965,
+        "phase": "Descente"
+      },
+      {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.19455409356725145,
+        "rouge": 0.014948830409356725,
+        "gris": 0.17755847953216375,
+        "phase": "Descente"
+      },
+      {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.19798976608187135,
+        "rouge": 0.017178362573099414,
+        "gris": 0.1787280701754386,
+        "phase": "Extension complète"
+      },
+      {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.19769736842105262,
+        "rouge": 0.017616959064327486,
+        "gris": 0.17796052631578949,
+        "phase": "Bras tendus"
+      }
+    ],
+    "troisquarts": {
+      "cadre": [
+        36.0,
+        228.0,
+        288.0,
+        380.0
+      ],
+      "figure": 0.22086988304093566,
+      "rouge": 0.023391812865497075,
+      "gris": 0.19407894736842105
+    },
+    "pause_hors_ecran": true,
+    "reprise": true,
+    "meme_etat": false
+  },
+  "dips": {
+    "vue": "profil",
+    "materiel": [
+      "barres_paralleles",
+      "sol"
+    ],
+    "duree": 4.0,
+    "tempo": "2-0-1-1",
+    "lecture": true,
+    "temps_avance": true,
+    "boucle": [
+      {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.22317251461988305,
+        "rouge": 0.009941520467836258,
+        "gris": 0.21070906432748537,
+        "phase": "Descente"
+      },
+      {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.22328216374269005,
+        "rouge": 0.00983187134502924,
+        "gris": 0.21001461988304093,
+        "phase": "Descente"
+      },
+      {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.22642543859649122,
+        "rouge": 0.011038011695906434,
+        "gris": 0.21125730994152048,
+        "phase": "Descente"
+      },
+      {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.22843567251461988,
+        "rouge": 0.0116593567251462,
+        "gris": 0.21213450292397662,
+        "phase": "Descente"
+      },
+      {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.2275219298245614,
+        "rouge": 0.0097953216374269,
+        "gris": 0.21246345029239766,
+        "phase": "Poussée"
+      },
+      {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.22642543859649122,
+        "rouge": 0.011038011695906434,
+        "gris": 0.21125730994152048,
+        "phase": "Poussée"
+      },
+      {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.22317251461988305,
+        "rouge": 0.009941520467836258,
+        "gris": 0.21070906432748537,
+        "phase": "Bras tendus"
+      },
+      {
+        "cadre": [
+          36.0,
+          228.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.22317251461988305,
+        "rouge": 0.009941520467836258,
+        "gris": 0.21070906432748537,
+        "phase": "Bras tendus"
+      }
+    ],
+    "troisquarts": {
+      "cadre": [
+        36.0,
+        228.0,
+        288.0,
+        380.0
+      ],
+      "figure": 0.24780701754385964,
+      "rouge": 0.02097953216374269,
+      "gris": 0.2236842105263158
+    },
+    "pause_hors_ecran": true,
+    "reprise": true,
+    "meme_etat": false
+  },
+  "back-squat": {
+    "vue": "troisQuarts",
+    "materiel": [
+      "barre_olympique",
+      "sol"
+    ],
+    "duree": 4.0,
+    "tempo": "2-0-1-1",
+    "lecture": true,
+    "temps_avance": true,
+    "boucle": [
+      {
+        "cadre": [
+          36.0,
+          201.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.4421783625730994,
+        "rouge": 0.0668859649122807,
+        "gris": 0.353983918128655,
+        "phase": "Descente"
+      },
+      {
+        "cadre": [
+          36.0,
+          201.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.46059941520467834,
+        "rouge": 0.06659356725146198,
+        "gris": 0.3649488304093567,
+        "phase": "Descente"
+      },
+      {
+        "cadre": [
+          36.0,
+          201.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.46319444444444446,
+        "rouge": 0.06425438596491229,
+        "gris": 0.36794590643274855,
+        "phase": "Descente"
+      },
+      {
+        "cadre": [
+          36.0,
+          201.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.43417397660818713,
+        "rouge": 0.05617690058479532,
+        "gris": 0.3545687134502924,
+        "phase": "Descente"
+      },
+      {
+        "cadre": [
+          36.0,
+          201.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.4045321637426901,
+        "rouge": 0.05179093567251462,
+        "gris": 0.33596491228070174,
+        "phase": "Remontée"
+      },
+      {
+        "cadre": [
+          36.0,
+          201.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.46319444444444446,
+        "rouge": 0.06425438596491229,
+        "gris": 0.36794590643274855,
+        "phase": "Remontée"
+      },
+      {
+        "cadre": [
+          36.0,
+          201.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.4421783625730994,
+        "rouge": 0.0668859649122807,
+        "gris": 0.353983918128655,
+        "phase": "Debout, gainé"
+      },
+      {
+        "cadre": [
+          36.0,
+          201.0,
+          288.0,
+          380.0
+        ],
+        "figure": 0.4421783625730994,
+        "rouge": 0.0668859649122807,
+        "gris": 0.353983918128655,
+        "phase": "Debout, gainé"
+      }
+    ],
+    "troisquarts": {
+      "cadre": [
+        36.0,
+        201.0,
+        288.0,
+        380.0
+      ],
+      "figure": 0.4421783625730994,
+      "rouge": 0.0668859649122807,
+      "gris": 0.353983918128655
+    },
+    "pause_hors_ecran": true,
+    "reprise": true,
+    "meme_etat": false
+  },
+  "reduit": {
+    "lecture": false,
+    "temps": 3.0
+  },
+  "koach_sombre": "Sommeil moins de 5 h · Fatigue probable : −30 % proposé",
+  "koach_clair": "Sommeil moins de 5 h · Fatigue probable : −30 % proposé",
+  "anatomie": {
+    "debout_face": {
+      "cadre": [
+        20.0,
+        166.0,
+        320.0,
+        300.0
+      ],
+      "figure": 1.0,
+      "rouge": 0.0,
+      "gris": 0.1265
+    },
+    "debout_dos": {
+      "cadre": [
+        20.0,
+        166.0,
+        320.0,
+        300.0
+      ],
+      "figure": 1.0,
+      "rouge": 0.0,
+      "gris": 0.12758333333333333
+    },
+    "suspendu": {
+      "cadre": [
+        20.0,
+        166.0,
+        320.0,
+        300.0
+      ],
+      "figure": 1.0,
+      "rouge": 0.0,
+      "gris": 0.08533333333333333
+    },
+    "squat_bas": {
+      "cadre": [
+        20.0,
+        166.0,
+        320.0,
+        300.0
+      ],
+      "figure": 1.0,
+      "rouge": 0.0,
+      "gris": 0.19441666666666665
+    },
+    "planche": {
+      "cadre": [
+        20.0,
+        166.0,
+        320.0,
+        300.0
+      ],
+      "figure": 1.0,
+      "rouge": 0.0,
+      "gris": 0.09554166666666666
+    }
+  },
+  "prechargement": {
+    "avant": {
+      "premiere_image_ms": 134,
+      "images_perdues": 2,
+      "images": 2,
+      "precharge": false
+    },
+    "apres": {
+      "premiere_image_ms": 258,
+      "images_perdues": 3,
+      "images": 3,
+      "precharge": true
+    },
+    "duree_ms": 10596,
+    "chargement_ms": 82,
+    "prechauffage_ms": 54,
+    "memoire_ajoutee_mo": -0.671875,
+    "compatible": true
+  }
+}
