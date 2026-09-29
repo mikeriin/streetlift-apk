@@ -449,11 +449,12 @@ class MannequinScene {
 
   /// 5.5.2 : tendons de l'écorché, gris des muscles à leur opacité.
   PhysicallyBasedMaterial _tendonMaterial() {
-    final m = _mat(kMuscleGray)
-      ..baseColorFactor = _lin(kMuscleGray, 1, opacity);
+    final m = _mat(kMuscleGray);
+    m.baseColorFactor = _lin(kMuscleGray, 1, opacity);
     if (opacity < 1) m.alphaMode = AlphaMode.blend;
     return m;
   }
+
   final Map<String, PhysicallyBasedMaterial> _regions = {};
   final Map<String, Node> _nodes = {};
 
