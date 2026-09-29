@@ -269,8 +269,16 @@ void main() {
           .join(' '),
       'semantique': semantics(tester),
     };
+    // Essai A : avec 5 puces, les boutons de vue sortaient de l'écran
+    // (toucher sans effet) : mannequin amené en haut de la page, vue
+    // choisie par l'état du mannequin (comme ses boutons).
+    await Scrollable.ensureVisible(
+      tester.element(find.byType(Mannequin3D)),
+      alignment: .02,
+    );
+    await tester.pump(const Duration(seconds: 1));
     for (final v in views) {
-      await tester.tap(find.byKey(ValueKey('mannequin-view-${v.name}')));
+      state.setView(v);
       await tester.pump(const Duration(milliseconds: 900));
       await tester.pump(const Duration(seconds: 2));
       await shot('anatomie_${theme}_${v.name}');
@@ -292,8 +300,8 @@ void main() {
           .toList();
       expect(names, containsAll(['peau', 'head', 'latissimus_dorsi_left']));
       expect(names.contains('os'), isFalse);
-      // Toucher sur la vue 3/4 (dernière) puis de face : grand pectoral.
-      await tester.tap(find.byKey(const ValueKey('mannequin-view-face')));
+      // Toucher de face : grand pectoral.
+      state.setView(MannequinView.face);
       await tester.pump(const Duration(milliseconds: 900));
       await tester.pump(const Duration(seconds: 2));
       final rect = tester.getRect(
@@ -358,16 +366,13 @@ void main() {
           true,
         );
         final state = await ready(tester);
-        await tester.tap(find.byKey(ValueKey('mannequin-view-${view.name}')));
+        state.setView(view);
         await tester.pump(const Duration(milliseconds: 900));
         await tester.pump(const Duration(seconds: 1));
         final rect = tester.getRect(
           find.byKey(const ValueKey('mannequin-view')).first,
         );
-        state.pinchTo(
-          2.6,
-          Offset(rect.width * fx, rect.height * fy),
-        );
+        state.pinchTo(2.6, Offset(rect.width * fx, rect.height * fy));
         await tester.pump(const Duration(seconds: 3));
         await shot('gros_plan_$name');
         out[name] = await check(tester);
@@ -504,7 +509,10 @@ void main() {
       await ready(tester);
       await tester.pump(const Duration(seconds: 2));
       await shot('accueil_sombre');
-      out['accueil'] = {...await check(tester), 'semantique': semantics(tester)};
+      out['accueil'] = {
+        ...await check(tester),
+        'semantique': semantics(tester),
+      };
       final wod = store.wods.firstWhere((w) => store.isCatalog(w));
       await pumpHome(
         tester,

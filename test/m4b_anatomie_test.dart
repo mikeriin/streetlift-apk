@@ -206,10 +206,7 @@ void main() {
       expect(pick(lit: {'loin': 1})!.id, 'avant');
       // Sans la peau nue : le rayon continue jusqu'à « loin ».
       expect(
-        pick(
-          lit: {'loin': 1},
-          on: meshes.where((m) => m.name != 'peau'),
-        )!.id,
+        pick(lit: {'loin': 1}, on: meshes.where((m) => m.name != 'peau'))!.id,
         'loin',
       );
     });

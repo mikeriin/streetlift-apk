@@ -132,8 +132,10 @@ void main() {
       ]) {
         expect(map.regions.where((r) => r.nom == nom), isEmpty, reason: nom);
       }
-      // Rhomboïdes : visibles sur l'écorché entre trapèze et scapula.
-      expect(map.regions.where((r) => r.nom == 'Rhomboïdes'), hasLength(2));
+      // M6c : sur la peau du personnage, les rhomboïdes sont sous le
+      // trapèze (en texte) ; le trapèze moyen a ses deux zones.
+      expect(map.regions.where((r) => r.nom == 'Rhomboïdes'), isEmpty);
+      expect(map.regions.where((r) => r.nom == 'Trapèze moyen'), hasLength(2));
     });
   });
 

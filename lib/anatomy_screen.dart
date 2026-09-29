@@ -162,9 +162,7 @@ class AnatomyScreenState extends State<AnatomyScreen> {
     super.initState();
     final session = AnatomyScreen.session ?? AnatomyFilters.none;
     final initial = widget.initialGroup;
-    _filters = initial == null
-        ? session
-        : AnatomyFilters(groups: {initial});
+    _filters = initial == null ? session : AnatomyFilters(groups: {initial});
     AnatomyScreen.session = _filters;
     final ordered = _filters.orderedGroups;
     _view = viewForGroup(ordered.isEmpty ? null : ordered.first);

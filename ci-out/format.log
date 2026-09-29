@@ -1,6 +1,0 @@
-Changed lib/anatomy_screen.dart
-Changed lib/mixamo_skeleton.dart
-Changed test/m4b_anatomie_test.dart
-Changed test/m6c_personnage_test.dart
-Changed integration_test/personnage_m6c_test.dart
-Formatted 187 files (5 changed) in 1.48 seconds.
