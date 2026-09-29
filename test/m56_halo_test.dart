@@ -7,6 +7,7 @@ import 'dart:ui';
 import 'package:flutter_scene/scene.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:streetlift_tracker/mannequin_3d.dart';
+import 'package:streetlift_tracker/mannequin_gestures.dart';
 import 'package:vector_math/vector_math.dart' as vm;
 
 void main() {
