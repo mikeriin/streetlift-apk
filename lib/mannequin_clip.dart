@@ -29,6 +29,13 @@ import 'mannequin_rig.dart';
 /// Registre des clips.
 const kClipIndexAsset = 'assets/anatomy/clips/index.json';
 
+/// M7b : familles des animations de Koach et leur libellé.
+const kKoachFamilies = {
+  'attente': 'Attente',
+  'parle': 'Koach parle',
+  'felicite': 'Koach félicite',
+};
+
 /// Type de contraction d'une phase.
 enum PhaseKind {
   concentrique('Concentrique'),
@@ -101,6 +108,18 @@ class ClipEntry {
 
   /// Animation de test : Réglages › À propos › Moteur 3D seulement.
   final bool debug;
+
+  /// M7b : animation « personnage » de Koach (mascotte), jamais sur une
+  /// fiche ni une animation de test : Anatomie › Koach (aperçu) seulement.
+  final bool mascot;
+
+  /// M7b : famille de l'animation de Koach (`attente`, `parle`,
+  /// `felicite`), null pour les autres clips.
+  final String? family;
+
+  /// M7b : boucle parfaite (attente, parle) ou geste qui revient à la pose
+  /// d'attente (félicite). Le lecteur les joue toutes en boucle.
+  final bool loop;
   final int fps, frames, bytes;
   final double duration;
   final List<ClipPhase> phases;
@@ -118,6 +137,9 @@ class ClipEntry {
     required this.duration,
     required this.phases,
     this.muscles,
+    this.mascot = false,
+    this.family,
+    this.loop = true,
   });
 
   factory ClipEntry.fromJson(Map<String, dynamic> j) => ClipEntry(
@@ -137,6 +159,9 @@ class ClipEntry {
     muscles: j['muscles'] == null
         ? null
         : ClipMuscles.fromJson(j['muscles'] as Map<String, dynamic>),
+    mascot: j['mascotte'] as bool? ?? false,
+    family: j['famille'] as String?,
+    loop: j['boucle'] as bool? ?? true,
   );
 
   /// Phase au temps [t] (s), bornée à la durée.
@@ -173,12 +198,12 @@ class ClipRegistry {
       ClipEntry.fromJson(c as Map<String, dynamic>),
   ]);
 
-  /// Animation d'un exercice du pack (jamais une animation de test), ou
-  /// null : la fiche garde alors son mannequin fixe.
+  /// Animation d'un exercice du pack (jamais une animation de test ni une
+  /// animation de Koach), ou null : la fiche garde alors son mannequin fixe.
   ClipEntry? forExercise(String? exerciseId) {
     if (exerciseId == null) return null;
     for (final c in clips) {
-      if (!c.debug && c.exercises.contains(exerciseId)) return c;
+      if (!c.debug && !c.mascot && c.exercises.contains(exerciseId)) return c;
     }
     return null;
   }
@@ -186,9 +211,26 @@ class ClipRegistry {
   /// Animation de test (Réglages › À propos › Moteur 3D).
   ClipEntry? get debugClip {
     for (final c in clips) {
-      if (c.debug) return c;
+      if (c.debug && !c.mascot) return c;
     }
     return null;
+  }
+
+  /// M7b : animations de Koach, par famille (attente, parle, félicite)
+  /// puis dans l'ordre du registre.
+  List<ClipEntry> get koachClips {
+    final out = [for (final c in clips) if (c.mascot) c];
+    int rank(ClipEntry c) {
+      final i = kKoachFamilies.keys.toList().indexOf(c.family ?? '');
+      return i < 0 ? kKoachFamilies.length : i;
+    }
+
+    final order = {for (var i = 0; i < out.length; i++) out[i]: i};
+    out.sort((a, b) {
+      final r = rank(a).compareTo(rank(b));
+      return r != 0 ? r : order[a]!.compareTo(order[b]!);
+    });
+    return out;
   }
 
   static Future<ClipRegistry>? _cache;

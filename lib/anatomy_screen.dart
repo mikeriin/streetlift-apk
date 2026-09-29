@@ -40,9 +40,13 @@
 // M6c (5.6.0) : le mannequin devient le personnage Mixamo « Ch36 », zones
 // musculaires sur la peau : plus d'os à afficher, le filtre « Os » et la
 // catégorie « Affichage » sont retirés ; restent les 11 groupes.
+//
+// M7b (5.8.0) : entrée « Koach (aperçu) » (animations de la mascotte,
+// koach_preview_screen.dart) sous le résumé des groupes.
 import 'package:flutter/material.dart';
 
 import 'filter_menu.dart';
+import 'koach_preview_screen.dart';
 import 'mannequin_3d.dart';
 import 'ui.dart';
 
@@ -278,6 +282,22 @@ class AnatomyScreenState extends State<AnatomyScreen> {
             ),
           ),
           if (map != null) _summary(context, map),
+          // M7b : aperçu des animations de Koach (mascotte).
+          KCard(
+            key: const ValueKey('anatomy-koach-preview'),
+            padding: EdgeInsets.zero,
+            child: ListTile(
+              leading: const Icon(Icons.accessibility_new),
+              title: const Text('Koach (aperçu)'),
+              subtitle: const Text(
+                'Ses animations de mascotte : attente, parle, félicite',
+              ),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const KoachPreviewScreen()),
+              ),
+            ),
+          ),
           Text(
             'Modèle : personnage Mixamo (Adobe), zones musculaires issues de '
             'l’écorché « Ecorche Musclenames Male Anatomy » (licence '

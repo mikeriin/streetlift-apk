@@ -1,7 +1,7 @@
 name: streetlift_tracker
 description: "Kalis Track — suivi d'entraînement calisthénie et streetlifting : programme guidé, séances perso, WOD, chronos, pilotage recalculable."
 publish_to: 'none'
-version: 5.7.0+86
+version: 5.8.0+87
 
 environment:
   # M1 (mannequin 3D) : flutter_scene 0.23 exige Flutter 3.47 stable et Dart 3.10.
@@ -76,4 +76,5 @@ flutter:
     - assets/anatomy/rig_mixamo.json
     - assets/anatomy/peau_mixamo.bin
     - assets/anatomy/clips/
+    - assets/anatomy/clips/koach/
     - flutter_scene_generated/

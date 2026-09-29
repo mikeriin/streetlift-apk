@@ -46,7 +46,7 @@
 // (maillage gris, halo de la zone travaillée). Squelette Mixamo exposé au
 // code par `mixamo_skeleton.dart` (M7).
 //
-// M7 (5.7.0) : lecteur d'animations. Le mannequin animable
+// M7 (5.7.0) : lecteur d'animations (M7b, 5.8.0 : animations de Koach). Le mannequin animable
 // ([kMannequinAnimAsset], `MannequinScene.create(animated: true)`) reprend
 // le code de posture de M5 avec le squelette Mixamo (`rig_mixamo.json`) :
 // chaque image pose les os ([MannequinScene.applyPose]), le GPU déforme les

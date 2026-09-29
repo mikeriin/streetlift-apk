@@ -1,8 +1,19 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M7 (lecteur d'animation, intensité par phase, import des animations Mixamo du propriétaire, animation de test), version 5.7.0 ; précédent : lot M6c (5.6.0), validé**  
-**Date : 29 septembre 2026, Europe/Paris — version : 5.7.0+86 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : pipeline « Mannequin 3D », lot M7b (animations de Koach en mascotte, aperçu dans l'écran Anatomie), version 5.8.0 ; précédent : lot M7 (5.7.0), validé**  
+**Date : 30 septembre 2026, Europe/Paris — version : 5.8.0+87 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+
+## M7b — Animations de Koach en mascotte (version 5.8.0)
+
+| Point | Réalisation |
+| --- | --- |
+| Animations | 9 clips (`assets/anatomy/clips/koach/`) : attente × 3 (boucles 4,0 / 4,4 / 5,4 s), parle × 3 (boucles 4,2 / 4,3 / 3,2 s), félicite × 3 (gestes qui reviennent à l'attente, 3,2 / 3,0 / 3,0 s). Style anime : anticipation, poses franches, dépassement et amorti, tenues ≤ 0,4 s avec relances, tête / cou / clavicules / mains décalés de 2 à 4 images (la tête précède le bras pour « montre »), respiration périodique. |
+| Fabrication | `tools/anatomy/koach_rig.py` (pose par canaux, côté droit en miroir exact — signe de l'opposition du pouce corrigé à droite —, jambes par cinématique inverse à deux segments, chevilles et pieds fixes, clés et courbes, résolution des mains par moindres carrés : paume, normale, doigts, pouce) ; `koach_animations.py` (9 animations, `--controle`, `--importer`) ; FBX sur armature reconstruite depuis `squelette_mixamo.json` (aller-retour 0,001°) ; `import_animations.import_koach` (même chaîne que les FBX du propriétaire, tolérance tenue à 0,2°, dépassement du budget de 5 Ko mesuré et justifié : contacts exacts des mains et des pieds). |
+| Contrôles | Durée 3-6 s ; départ et arrivée sur la pose d'attente (écart entre animations ≤ 0,03°) ; limites articulaires ; jambe jamais tendue au-delà de sa longueur ; glissement des pieds 0 mm ; interpénétration par capsules (paumes au contact pour les applaudissements) ; aucune tenue figée > 0,45 s (tête, mains, coudes, bassin, thorax ≥ 6 cm/s). Clips fidèles au script (≤ 0,2°, ≤ 8,2 mm en bout de doigt). |
+| Revue | Planches et GIF (`tools/anatomy/koach_preview.py`) ; six passes d'un sous-agent directeur d'animation (références anime, jeux de combat) : moyennes 4,5 → 5,2 → 6,3 → 6,8 → 7,6 → 8 ; toutes à 8/10 (notes et avant / après dans `pipeline/3d/livraisons/LIVRAISON_M7b.md`). |
+| Application | `ClipEntry` : `mascot`, `family`, `loop` ; `ClipRegistry.koachClips` (jamais sur une fiche ni comme animation de test) ; écran « Koach (aperçu) » (`lib/koach_preview_screen.dart`), entrée dans l'écran Anatomie ; `pubspec.yaml` : `assets/anatomy/clips/koach/`. |
+| Décision | Aperçu dans l'écran Anatomie plutôt que Réglages › À propos › Moteur 3D (réservé aux tests techniques) ; boutons de vue et zoom, pas de rotation au doigt (décision du 29/09/2026, plus récente que le prompt de M7b). Sources FBX non chiffrées ni suivies : le script est la source (choix du propriétaire). |
 
 ## M7 — Lecteur d'animation, intensité par phase, import des animations (version 5.7.0)
 
