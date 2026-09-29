@@ -175,7 +175,11 @@ Correction 2 (5.5.2, 29/09/2026) : modèle remplacé par l'écorché acheté
 (`tools/anatomy/build_model.py --zip Archive.zip`, archive de la release
 GitHub `modele-achete`, jamais dans le dépôt), plus d'animation ni de
 posture, muscles sollicités dans la couleur dominante, plus de boutons
-Précédent / Suivant dans la séance. 4 essais sur `claude/ci-3d-fable`
+Précédent / Suivant dans la séance. Correction 3 (5.5.3) : muscles à 100 %,
+zone ciblée (muscles du pack des exercices : `TargetedMannequin`), mannequin
+à la place des images 2D (fiche, accueil, WOD), plus de rotation au doigt ;
+3 essais (36556945259 analyse, 36558779220 tests, 36560553169 vert).
+Correction 2 : 4 essais sur `claude/ci-3d-fable`
 (36542184910 : analyse ; 36546278876 : tests LC1 par boutons, fiche sans
 défilement jusqu'au mannequin ; 36549423360 : formatage, respiration sans
 région, préchargement ; 36551761380 : vert, 955 tests Dart). Planches de

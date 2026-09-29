@@ -13,7 +13,7 @@
 | Images 2D | « Remplace tous les anciens affichages qui utilisent les images en pièces jointes par le modèle » (face, dos, profil de `assets/muscles/`) | Fiche : le mannequin des muscles ciblés remplace la démonstration 2D en découpes (`PoseDemo`) en tête de fiche, section Muscles en texte ; accueil (carte de séance et feuille de séance) et aperçu de WOD : `TargetedMannequin` (compact, sans boutons ni gestes) ; STATS déjà 3D. Les images restent pour le repli sans Flutter GPU. |
 | Rotation | « Plus besoin d'avoir de contrôle en glissant du doigt pour tourner la caméra on se fie aux boutons » | `MannequinGestures` sans reconnaisseur de glissement quand `onRotate` est nul (mannequin de l'application) ; pincement (zoom) et toucher (nom) gardés ; `Mannequin3D.interactive` false pour les cartes. |
 
-Contrôles : __CTRL__
+Contrôles (CI 3D `claude/ci-3d-fable`, 3 essais : 36556945259 analyse (`fallbackHeight` statique / instance, `groups`, import atlas), 36558779220 tests m3 (état du mannequin lu après le défilement) et m4b (toucher translucide à l'opacité par défaut), 36560553169 vert) : formatage et analyse sans remarque, 955 tests Dart, 0 échec ; 105 tests Python ; émulateur (`animations_m56_test` : Anatomie 4 vues + Dos allumé, 3 fiches, carte Koach, préchargement, Moteur 3D), captures regardées (muscles opaques, mannequin en tête de fiche).
 
 ## M56.C2 — Correction 2 (retour du propriétaire du 29/09/2026, version 5.5.2)
 
