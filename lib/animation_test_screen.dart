@@ -57,8 +57,9 @@ class AnimationTestScreenState extends State<AnimationTestScreen> {
         if (clip == null) _error = 'Aucune animation de test dans le registre.';
       });
     } catch (_) {
-      if (mounted)
+      if (mounted) {
         setState(() => _error = 'Registre des animations illisible.');
+      }
     }
   }
 

@@ -371,7 +371,10 @@ void main() {
         find.byKey(const ValueKey('animation-test-checklist')),
         200,
       );
-      expect(find.textContaining('Descente · 3 s'), findsOneWidget);
+      expect(
+        find.textContaining('Descente · 3 s — excentrique'),
+        findsOneWidget,
+      );
       expect(tester.takeException(), isNull);
     });
 
