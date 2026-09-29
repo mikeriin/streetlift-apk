@@ -1,0 +1,6 @@
+Analyzing streetlift-apk...                                     
+
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • lib/mannequin_3d.dart:657:9 • curly_braces_in_flow_control_structures
+warning • A value of type 'Null' can't be returned by the 'onError' handler because it must be assignable to 'FutureOr<Node>' • lib/mannequin_preload.dart:125:68 • invalid_return_type_for_catch_error
+
+2 issues found. (ran in 17.8s)

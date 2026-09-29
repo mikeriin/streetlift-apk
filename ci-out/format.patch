@@ -1,0 +1,144 @@
+diff --git a/integration_test/animations_m56_test.dart b/integration_test/animations_m56_test.dart
+index e1aa7bb..ade7973 100644
+--- a/integration_test/animations_m56_test.dart
++++ b/integration_test/animations_m56_test.dart
+@@ -44,7 +44,7 @@ void main() {
+   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+   binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
+   final data = <String, Object?>{};
+-  final m6 = <String, Object?>{};  // relevé (clé m56_releve.json)
++  final m6 = <String, Object?>{}; // relevé (clé m56_releve.json)
+   binding.reportData = data;
+ 
+   void record() =>
+@@ -316,7 +316,11 @@ void main() {
+   ) async {
+     AnatomyScreen.session = null;
+     AnatomyScreen.sessionPosture = 'debout';
+-    await pumpHome(tester, const AnatomyScreen(key: ValueKey('m56-anat')), true);
++    await pumpHome(
++      tester,
++      const AnatomyScreen(key: ValueKey('m56-anat')),
++      true,
++    );
+     await waitFor(tester, () => mannequin(tester)?.available != null);
+     final state = mannequin(tester)!;
+     expect(state.available, isTrue, reason: 'pas de 3D');
+diff --git a/lib/koach_day_card.dart b/lib/koach_day_card.dart
+index 39d1f68..8adb446 100644
+--- a/lib/koach_day_card.dart
++++ b/lib/koach_day_card.dart
+@@ -34,7 +34,6 @@ class KoachDayCard extends StatefulWidget {
+   /// Après une action qui change les séries (fatigue acceptée, adaptation).
+   final VoidCallback? onChanged;
+ 
+-
+   const KoachDayCard({
+     super.key,
+     required this.week,
+diff --git a/lib/mannequin_rig.dart b/lib/mannequin_rig.dart
+index 95ef7e0..76573f9 100644
+--- a/lib/mannequin_rig.dart
++++ b/lib/mannequin_rig.dart
+@@ -161,8 +161,7 @@ class MannequinRig {
+           v3(b['tete'] as List),
+           follows: (b['aide'] as Map?)?['suit'] as String?,
+           helperPart: ((b['aide'] as Map?)?['part'] as num?)?.toDouble() ?? .5,
+-          bulge:
+-              ((b['aide'] as Map?)?['gonflement'] as num?)?.toDouble() ?? 0,
++          bulge: ((b['aide'] as Map?)?['gonflement'] as num?)?.toDouble() ?? 0,
+           bulgeAxis: (b['aide'] as Map?)?['axe'] == null
+               ? null
+               : v3((b['aide'] as Map)['axe'] as List),
+@@ -262,7 +261,11 @@ class MannequinRig {
+   /// Échelle d'un os d'aide ou de gonflement pour la rotation [q] de l'os
+   /// suivi : `1 + gain × angle`, perpendiculaire à [axis] (axe du muscle) ou,
+   /// sans axe, à l'axe de [q] ; null si la rotation est nulle.
+-  static vm.Matrix3? bulgeScale(vm.Quaternion q, double gain, vm.Vector3? axis) {
++  static vm.Matrix3? bulgeScale(
++    vm.Quaternion q,
++    double gain,
++    vm.Vector3? axis,
++  ) {
+     var w = q.w.abs().clamp(0.0, 1.0);
+     final angle = 2 * math.acos(w);
+     if (angle < 1e-6) return null;
+diff --git a/test/m56_koach_day_card_test.dart b/test/m56_koach_day_card_test.dart
+index 5ee327c..e963ea6 100644
+--- a/test/m56_koach_day_card_test.dart
++++ b/test/m56_koach_day_card_test.dart
+@@ -108,10 +108,13 @@ void main() {
+     // séparées au-dessus de l'exercice.
+     for (final key in const ['koach-questions', 'koach-fatigue']) {
+       expect(
+-        find.ancestor(
+-          of: find.byKey(ValueKey(key)),
+-          matching: find.byType(KoachDayCard),
+-        ).evaluate().length,
++        find
++            .ancestor(
++              of: find.byKey(ValueKey(key)),
++              matching: find.byType(KoachDayCard),
++            )
++            .evaluate()
++            .length,
+         find.byKey(ValueKey(key)).evaluate().length,
+         reason: key,
+       );
+diff --git a/test/m56_preload_test.dart b/test/m56_preload_test.dart
+index a7dd577..bb4445a 100644
+--- a/test/m56_preload_test.dart
++++ b/test/m56_preload_test.dart
+@@ -35,21 +35,22 @@ void main() {
+     expect(MannequinPreload.report, isNull);
+   });
+ 
+-  test('sans Flutter GPU : terminé, rien à précharger, une seule fois',
+-      () async {
+-    final first = MannequinPreload.start();
+-    final second = MannequinPreload.start();
+-    expect(identical(first, second), isTrue);
+-    await first;
+-    expect(MannequinPreload.done, isTrue);
+-    final r = MannequinPreload.report!;
+-    expect(r.compatible, isFalse);
+-    expect(r.warmUpMs, -1);
+-    expect(r.totalMs, r.loadMs);
+-  });
++  test(
++    'sans Flutter GPU : terminé, rien à précharger, une seule fois',
++    () async {
++      final first = MannequinPreload.start();
++      final second = MannequinPreload.start();
++      expect(identical(first, second), isTrue);
++      await first;
++      expect(MannequinPreload.done, isTrue);
++      final r = MannequinPreload.report!;
++      expect(r.compatible, isFalse);
++      expect(r.warmUpMs, -1);
++      expect(r.totalMs, r.loadMs);
++    },
++  );
+ 
+-  test('ouverture d’un mannequin : première image et images perdues',
+-      () async {
++  test('ouverture d’un mannequin : première image et images perdues', () async {
+     final timer = OpenTimer();
+     timer.firstImage();
+     await Future<void>.delayed(const Duration(milliseconds: 500));
+diff --git a/test/m5_rig_test.dart b/test/m5_rig_test.dart
+index 3cc96cb..ff06a3a 100644
+--- a/test/m5_rig_test.dart
++++ b/test/m5_rig_test.dart
+@@ -154,7 +154,10 @@ void main() {
+     expect(along.length, closeTo(1, 1e-9));
+     final perp = vm.Vector3(1, 0, 0)..sub(axis * axis.x);
+     final grown = s.transform(perp.clone()).length / perp.length;
+-    expect(grown, closeTo(1 + quads.bulge * angle(b.rotationOf('shin_l')), 1e-9));
++    expect(
++      grown,
++      closeTo(1 + quads.bulge * angle(b.rotationOf('shin_l')), 1e-9),
++    );
+     expect(grown, greaterThan(1.08));
+     expect(full.scales.containsKey('knee_aux_l'), isTrue);
+     expect(full.scales.containsKey('shoulder_aux_l'), isFalse);
