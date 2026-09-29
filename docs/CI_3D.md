@@ -17,6 +17,17 @@ sans SDK Flutter local. Moteur : flutter_scene (Flutter GPU sur Impeller).
   (commit « CI 3D : résultats du run … ») : `git fetch origin claude/ci-3d`
   puis lire les fichiers. Rien à télécharger.
 
+## Ressources sous licence (M6c)
+
+Le mannequin d'exécution (`assets/anatomy/mannequin.glb`) n'est plus suivi en
+clair : chaque tâche qui construit ou teste l'application le déchiffre
+d'abord depuis `assets_secure/mannequin.glb.enc` (`python3
+tools/secure_assets.py decrypt`, secret `KT_ASSETS_KEY` ; la tâche `before`
+le fait dans la copie de `main` si elle contient `tools/secure_assets.py`).
+Sans le secret, l'étape échoue avec un message explicite. Les clairs ne
+sont jamais recopiés dans `ci-out/` ni dans les artefacts. Cible émulateur
+du lot : `integration_test/personnage_m6c_test.dart` (parties a, b, c).
+
 ## Tâches
 
 | Tâche | Contenu | Résultats dans `ci-out/` |

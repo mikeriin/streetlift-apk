@@ -1,4 +1,15 @@
-# Kalis Track 5.5.5 — Mannequin anatomique 3D
+# Kalis Track 5.6.0 — Mannequin anatomique 3D
+
+## 5.6.0 — Nouveau mannequin : personnage Mixamo, zones musculaires sur la peau (lot M6c du pipeline « Mannequin 3D »)
+
+- **Personnage** : le personnage Mixamo « Ch36 » (squelette `mixamorig1:` de 65 os) remplace l'écorché partout (Anatomie, fiches, séance, accueil, aperçu de WOD, choix d'exercice, STATS, Moteur 3D). Un peu plus fit (bras +9 %, avant-bras +6 %, cuisses +6 %, mollets +9 %, poitrine +6 % de tour, épaules plus larges, taille inchangée), coutures du mannequin lissées, gris mat de l'application, tête, mains et pieds sombres, bras abaissés.
+- **Zones musculaires** : les 136 régions de l'écorché acheté projetées sur la peau (recalage de pose et non rigide, frontières lissées, zones symétriques) : 63 zones par côté (mains et pieds compris), mêmes noms, groupes et muscles du pack ; même mise en évidence (maillage gris, halo de la zone travaillée), toucher, zoom et vues. Les muscles couverts par d'autres sur une peau (rhomboïdes, élévateur de la scapula, coraco-brachial, extenseurs cervicaux) passent en texte avec les profonds.
+- **Vue de départ des fiches** : surfaces vues de face / de dos (`aire_face`, `aire_dos`), seuil 1,65 : la traction s'ouvre toujours de dos.
+- **Réglages** : « Os visibles » et le filtre « Os » de l'Anatomie retirés (plus d'os à afficher).
+- **Ressources sous licence chiffrées** (`assets_secure/`, `tools/secure_assets.py`, secret GitHub `KT_ASSETS_KEY`) : FBX du personnage, mannequin d'exécution, écorché converti ; aucun modèle 3D en clair dans l'arbre (contrôle `check_release_without_secrets.py --tree`) ; la CI déchiffre avant les contrôles et le build.
+- **Squelette pour M7** : `assets/anatomy/squelette_mixamo.json`, `lib/mixamo_skeleton.dart`.
+
+Fabrication : `tools/anatomy/build_character.py`. Détail : `SUIVI_PROJET.md` (M6c). Tests : `test/m6c_personnage_test.dart`, `tools/tests/test_m2_anatomy.py`, `tools/tests/test_m6c_secure_assets.py`, `integration_test/personnage_m6c_test.dart`.
 
 ## 5.5.5 — Correctifs du mannequin fixe (lot M6b du pipeline « Mannequin 3D »)
 
