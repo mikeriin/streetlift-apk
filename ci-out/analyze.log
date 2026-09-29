@@ -1,0 +1,8 @@
+Analyzing streetlift-apk...                                     
+
+   info • Parameter 'names' could be a super parameter. Trying converting 'names' to a super parameter • lib/stats_mannequin.dart:209:9 • use_super_parameters
+  error • Class 'WeeklyMannequin' can't define static member 'fallbackHeight' and have instance member 'TargetedMannequin.fallbackHeight' with the same name. Try renaming the member to a name that doesn't conflict • lib/stats_mannequin.dart:222:16 • conflicting_static_and_instance
+  error • The function 'exerciseAtlasFills' isn't defined. Try importing the library that defines 'exerciseAtlasFills', correcting the name to the name of an existing function, or defining a function named 'exerciseAtlasFills' • test/l9b_content_test.dart:334:21 • undefined_function
+  error • The getter 'data' isn't defined for the type 'WeeklyMannequin'. Try importing the library that defines 'data', correcting the name to the name of an existing getter, or defining a getter or field named 'data' • test/m4_stats_mannequin_test.dart:211:18 • undefined_getter
+
+4 issues found. (ran in 15.5s)

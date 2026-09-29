@@ -1,0 +1,41 @@
+diff --git a/lib/mannequin_gestures.dart b/lib/mannequin_gestures.dart
+index f6e0b21..9ce151d 100644
+--- a/lib/mannequin_gestures.dart
++++ b/lib/mannequin_gestures.dart
+@@ -259,13 +259,13 @@ class MannequinGestures extends StatelessWidget {
+       if (onRotate != null)
+         if (horizontalOnly)
+           HorizontalDragGestureRecognizer:
+-            GestureRecognizerFactoryWithHandlers<
+-              HorizontalDragGestureRecognizer
+-            >(() => HorizontalDragGestureRecognizer(debugOwner: this), (r) {
+-              r.onStart = (_) => onRotateStart?.call();
+-              r.onUpdate = (d) => onRotate?.call(Offset(d.delta.dx, 0));
+-              r.onEnd = (_) => onRotateEnd?.call();
+-            })
++              GestureRecognizerFactoryWithHandlers<
++                HorizontalDragGestureRecognizer
++              >(() => HorizontalDragGestureRecognizer(debugOwner: this), (r) {
++                r.onStart = (_) => onRotateStart?.call();
++                r.onUpdate = (d) => onRotate?.call(Offset(d.delta.dx, 0));
++                r.onEnd = (_) => onRotateEnd?.call();
++              })
+         else
+           PanGestureRecognizer:
+               GestureRecognizerFactoryWithHandlers<PanGestureRecognizer>(
+diff --git a/lib/stats_mannequin.dart b/lib/stats_mannequin.dart
+index 9bfc833..d308669 100644
+--- a/lib/stats_mannequin.dart
++++ b/lib/stats_mannequin.dart
+@@ -137,10 +137,7 @@ class TargetedMannequinState extends State<TargetedMannequin> {
+     if (map == null) return const {};
+     final lib = _lib;
+     if (lib == null) return weeklyRegionIntensities(map, widget.groups);
+-    return targetedRegionIntensities(
+-      map,
+-      targetedMuscles(lib, widget.names),
+-    );
++    return targetedRegionIntensities(map, targetedMuscles(lib, widget.names));
+   }
+ 
+   @override
