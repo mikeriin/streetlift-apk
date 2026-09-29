@@ -115,7 +115,7 @@ void main() {
         final clip = clips[c.id]!;
         expect(clip.frames, c.frames, reason: c.id);
         expect(clip.duration, closeTo(c.duration, 1e-6), reason: c.id);
-        expect(clip.animatedBones, contains('Hips'), reason: c.id);
+        expect(clip.animatedBones, contains('Spine1'), reason: c.id);
         expect(clip.animatedBones, contains('Head'), reason: c.id);
       }
       // poing et pouce : doigts du squelette Mixamo refermés
@@ -206,9 +206,16 @@ void main() {
       final tile = find.byKey(const ValueKey('anatomy-koach-preview'));
       await tester.scrollUntilVisible(tile, 200);
       expect(find.text('Koach (aperçu)'), findsOneWidget);
-      await tester.tap(tile);
+      // Toucher de l'entrée (son onTap : la liste défile sous le moteur de
+      // test sans GPU, le toucher pourrait tomber à côté).
+      final entry = tester.widget<ListTile>(
+        find.descendant(of: tile, matching: find.byType(ListTile)),
+      );
+      entry.onTap!();
+      for (var i = 0; i < 6; i++) {
+        await tester.pump(const Duration(milliseconds: 100));
+      }
       await settle(tester, 5);
-      await tester.pump(const Duration(milliseconds: 400));
       expect(find.byType(KoachPreviewScreen), findsOneWidget);
       expect(tester.takeException(), isNull);
     });

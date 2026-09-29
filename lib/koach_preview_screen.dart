@@ -75,12 +75,14 @@ class KoachPreviewScreenState extends State<KoachPreviewScreen> {
                 (c) => c.id == widget.initialClip,
                 orElse: () => clips.first,
               );
-        if (clips.isEmpty)
+        if (clips.isEmpty) {
           _error = 'Aucune animation de Koach dans le registre.';
+        }
       });
     } catch (_) {
-      if (mounted)
+      if (mounted) {
         setState(() => _error = 'Registre des animations illisible.');
+      }
     }
   }
 
