@@ -6,7 +6,7 @@
    "fichier": "back-squat.json.gz",
    "statut": "valide",
    "date": "2026-09-28",
-   "empreinte": "d4a3516ae8310000",
+   "empreinte": "2236f513e7310000",
    "controles": {
     "longueurs": {
      "ok": true,
@@ -26,7 +26,7 @@
     },
     "charge_posee": {
      "ok": true,
-     "detail": "barre-dos max 0.16 cm"
+     "detail": "barre-dos max 0.09 cm"
     },
     "corps": {
      "ok": true,

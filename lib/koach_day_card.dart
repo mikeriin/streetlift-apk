@@ -34,7 +34,6 @@ class KoachDayCard extends StatefulWidget {
   /// Après une action qui change les séries (fatigue acceptée, adaptation).
   final VoidCallback? onChanged;
 
-
   const KoachDayCard({
     super.key,
     required this.week,

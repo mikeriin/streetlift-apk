@@ -1,8 +1,41 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M5 (squelette d'animation et peau du modèle), version 5.4.0**  
-**Date : 28 septembre 2026, Europe/Paris — version : 5.4.0+78 (versionCode réel fixé par la CI de build)**  
-**Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+**Passe actuelle : pipeline « Mannequin 3D », lot M56 (refonte du mannequin, du squelette et de la peau ; matériel, chaîne d'animation et 3 pilotes ; carte Koach ; préchargement), version 5.5.0**  
+**Date : 28-29 septembre 2026, Europe/Paris — version : 5.5.0+79 (versionCode réel fixé par la CI de build)**  
+**Statut : contrôlé en CI (branche temporaire `claude/ci-3d-fable`, rendu réel sur émulateur Android).**
+
+## M56.0 — Base et demande
+
+| Élément | Valeur |
+| --- | --- |
+| Demande | `pipeline/3d/prompts/M56.txt` (Fable 5.1, effort maximal) : M5 et M6 refaits avec une précision chirurgicale et crédibles, mannequin plus musclé, préchargé au lancement |
+| Base | `main` `b745c41` (5.4.0+78) ; brouillon M6 de la session Opus (`claude/m6-travail`) relu et repris |
+
+## M56.1 — Changements
+
+- **Modèle** : `tools/anatomy/build_body.py` (hypertrophie par muscle : dilatation radiale autour de l'os porteur pour les membres, épaississement des nappes pour le tronc, profil de ventre nul aux tendons, facteurs ajustés par sécante jusqu'aux cibles, interpénétrations résolues jusqu'à 0 > 1 mm), `measure_body.py` (tours au mètre ruban), `mannequin_base.glb` (géométrie M4b de référence). Avant → après : bras 26,8 → 35,4 cm, avant-bras 25,1 → 27,8, poitrine 94,9 → 101,0, taille 68,0 → 69,8 (non épaissie), cuisse 43,1 → 56,8, mollet 33,3 → 35,4, cou 32,4 → 34,0, bideltoïde 47,0 → 48,5 ; épaules / taille 1,73. 62 506 triangles inchangés.
+- **Squelette et peau** : os d'aide aux tiers (1/3, 2/3) avec gonflement au pli, os de gonflement de contraction (biceps, quadriceps, grand fessier), axes mesurés sur les os (coude, genou borné à 3° d'inclinaison, cheville bornée à 10°), rotation tibiale, limite glénohumérale 130° mesurée dans le repère de la scapula, partage scapula / bras par la hauteur, insertions collées à l'humérus, nappes sans chaîne d'aide. `lib/mannequin_rig.dart` : échelles des os d'aide et de gonflement recalculées à chaque posture (`withHelpers`, `localMatrix`).
+- **Matériel et animations** : `build_equipment.py` (bibliothèque, 163 Ko), `animate.py` (fiche → moindres carrés bornés → clip ; profils de vitesse en trapèze adouci, arrêts tenus à accélération nulle, retournements sans pause à accélération non nulle ; dichotomie robuste ; contrôles d'entraîneur), `render_clip.py` (planches, GIF au tempo réel, planche de boucle), fiches `tools/anatomy/fiches/` (sources, revue). Clips : traction 3,3 Ko, dips 2,0 Ko, back squat 2,2 Ko.
+- **Application** : `mannequin_clip.dart` (lecture, interpolation sphérique, registre), `exercise_mannequin.dart` (démonstration animée, repli 2D), `mannequin_3d.dart` (matériel, cadrage du clip, lecture en boucle, pause hors écran, positions clés), `koach_day_card.dart`, `session_screen.dart`, `koach_widgets.dart`, `adapt_screens.dart` (carte du jour), `mannequin_preload.dart` (préchargement, mesures), `engine3d.dart` (carte Préchargement), `main.dart`.
+- Version 5.5.0+79.
+
+## M56.2 — Contrôles
+
+- Python (bibliothèque standard, `tools/tests/`) : `test_m56_body.py` (mêmes nœuds et triangles, os, tête, mains et pieds inchangés, déplacements symétriques, mesures dans la tolérance, aucune pénétration), `test_m5_rig.py` (54 os, longueurs constantes, limites, poids, os rigides, déchirures bornées), `test_m56_clips.py` (clips, contacts rejoués, phases, amplitude). Fabrication déterministe.
+- Dart : `test/m5_rig_test.dart` (rig, aides aux tiers, gonflement), `m56_clip_test.dart`, `m56_koach_day_card_test.dart`, `m56_preload_test.dart`.
+- Émulateur (`integration_test/animations_m56_test.dart`) : écran Anatomie (modèle au repos face et dos, 3 postures en 3/4), 3 pilotes (boucle en 8 images, vue 3/4, pause hors écran, animations réduites), carte Koach ouverte et repliée en sombre et en clair, ouverture d'un mannequin avant / après préchargement, écran Moteur 3D. Captures regardées.
+- Revue indépendante des animations (sous-agent entraîneur + anatomiste, 3 tours) : verdict final acceptable pour les trois.
+
+## M56.3 — Limites
+
+- Bras au-dessus de la tête (> 140°) : les insertions du grand dorsal, du grand rond et du dentelé forment des lames sous l'aisselle en gros plan (mélange linéaire, flutter_scene sans formes correctrices) ; discret à l'échelle de l'écran et à 50 % d'opacité.
+- Traction : coudes à 55-60° du tronc en haut (géométrie d'une traction menton au-dessus avec une prise à 58 cm) ; menton 4 cm au-dessus de la barre (8 cm inatteignable avec la tête derrière la barre).
+- Dips : épaule 1,6 cm sous le coude (limite d'extension d'épaule 60°, AAOS).
+- Squat : écrasement quadriceps / adducteurs à l'aine en bas ; vue 3/4 à 45° (60° suggéré par la revue).
+- Coloration des muscles du pack (grand adducteur, fléchisseurs du coude) : hors lot.
+- Source : « trapèze supérieur / inférieur » inversés dans la carte source (M5) : non corrigé.
+
+# Historique — M5 (5.4.0)
 
 ## M5.0 — Base et demande
 

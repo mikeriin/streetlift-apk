@@ -14,6 +14,8 @@ import 'package:streetlift_tracker/engine3d.dart';
 import 'package:streetlift_tracker/mannequin_preload.dart';
 import 'package:streetlift_tracker/store.dart';
 
+import 'phone_test_support.dart';
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -35,21 +37,22 @@ void main() {
     expect(MannequinPreload.report, isNull);
   });
 
-  test('sans Flutter GPU : terminé, rien à précharger, une seule fois',
-      () async {
-    final first = MannequinPreload.start();
-    final second = MannequinPreload.start();
-    expect(identical(first, second), isTrue);
-    await first;
-    expect(MannequinPreload.done, isTrue);
-    final r = MannequinPreload.report!;
-    expect(r.compatible, isFalse);
-    expect(r.warmUpMs, -1);
-    expect(r.totalMs, r.loadMs);
-  });
+  test(
+    'sans Flutter GPU : terminé, rien à précharger, une seule fois',
+    () async {
+      final first = MannequinPreload.start();
+      final second = MannequinPreload.start();
+      expect(identical(first, second), isTrue);
+      await first;
+      expect(MannequinPreload.done, isTrue);
+      final r = MannequinPreload.report!;
+      expect(r.compatible, isFalse);
+      expect(r.warmUpMs, -1);
+      expect(r.totalMs, r.loadMs);
+    },
+  );
 
-  test('ouverture d’un mannequin : première image et images perdues',
-      () async {
+  test('ouverture d’un mannequin : première image et images perdues', () async {
     final timer = OpenTimer();
     timer.firstImage();
     await Future<void>.delayed(const Duration(milliseconds: 500));
@@ -70,6 +73,7 @@ void main() {
   });
 
   testWidgets('écran Moteur 3D : carte « Préchargement »', (tester) async {
+    phone(tester);
     await MannequinPreload.start();
     await tester.pumpWidget(
       MaterialApp(
@@ -80,13 +84,23 @@ void main() {
         home: const Engine3DScreen(autoMeasure: false),
       ),
     );
-    for (var i = 0; i < 40; i++) {
+    final ready = find.text('La 3D n’est pas disponible sur ce téléphone.');
+    for (var i = 0; i < 40 && ready.evaluate().isEmpty; i++) {
       await tester.runAsync(
         () => Future<void>.delayed(const Duration(milliseconds: 25)),
       );
       await tester.pump();
     }
-    expect(find.byKey(const ValueKey('engine3d-preload')), findsOneWidget);
-    expect(find.text('Rien à précharger sans moteur 3D.'), findsOneWidget);
+    await tester.pumpAndSettle();
+    expect(ready, findsOneWidget);
+    await scrollToAction(
+      tester,
+      find.byKey(const ValueKey('engine3d-preload')),
+    );
+    await scrollToAction(
+      tester,
+      find.text('Rien à précharger sans moteur 3D.'),
+    );
+    expect(tester.takeException(), isNull);
   });
 }

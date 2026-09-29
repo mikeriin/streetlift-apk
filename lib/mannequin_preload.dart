@@ -120,9 +120,12 @@ class MannequinPreload {
         // Ressources : modèle (converti par le hook de build), carte, rig,
         // peau, registre des clips et bibliothèque de matériel.
         final scene = await MannequinScene.create();
-        await Future.wait<Object?>([
+        await Future.wait<void>([
           ClipRegistry.load(),
-          MannequinScene.loadEquipmentTemplate().catchError((_) => null),
+          MannequinScene.loadEquipmentTemplate().then<void>(
+            (_) {},
+            onError: (Object _) {},
+          ),
         ]);
         final load = sw.elapsedMilliseconds;
         // Préchauffage : matériaux mis en évidence (rampe, halo) et peau,

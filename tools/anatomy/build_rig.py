@@ -965,6 +965,12 @@ def compute_weights(meshes, pieces, owner, heads, tails, log=print):
                     piece = INSERTIONS[key]
                     target = f'{INSERTION_BONE[piece]}_{side}'
                     src = np.concatenate([pieces[i] for i, o in owner.items() if o == target])
+                    if key.startswith('deltoid'):
+                        # Le deltoïde coiffe la tête humérale (origine sur
+                        # l'acromion et la clavicule) : seule son insertion
+                        # sur la diaphyse (tubérosité deltoïdienne, ≥ 7 cm
+                        # sous le centre de la tête) est collée au bras.
+                        src = src[src[:, 1] < heads[target][1] - .07]
                     from scipy.spatial import cKDTree
                     d = cKDTree(src).query(pos[mask])[0]
                     near, far = (GLUE_NEAR, GLUE_FAR) if key not in SOFT_MUSCLES else (.008, .02)

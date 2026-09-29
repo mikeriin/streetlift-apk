@@ -108,10 +108,13 @@ void main() {
     // séparées au-dessus de l'exercice.
     for (final key in const ['koach-questions', 'koach-fatigue']) {
       expect(
-        find.ancestor(
-          of: find.byKey(ValueKey(key)),
-          matching: find.byType(KoachDayCard),
-        ).evaluate().length,
+        find
+            .ancestor(
+              of: find.byKey(ValueKey(key)),
+              matching: find.byType(KoachDayCard),
+            )
+            .evaluate()
+            .length,
         find.byKey(ValueKey(key)).evaluate().length,
         reason: key,
       );
@@ -163,6 +166,10 @@ void main() {
       find.text('Forme du jour : 0 au plus bas, 10 excellente'),
       findsOneWidget,
     );
+    // M56 : le questionnaire est dans la carte « Koach · séance du jour »
+    // (en-tête au-dessus) : à 320 px et 200 %, la puce passe sous la barre
+    // du bas ; on la fait remonter avant de toucher.
+    await scrollToAction(tester, find.text('moins de 5 h'));
     await tester.tap(find.text('moins de 5 h'));
     await tester.pumpAndSettle();
     expect(store.koach.answers['S3-J1']!.sleep, 4.5);

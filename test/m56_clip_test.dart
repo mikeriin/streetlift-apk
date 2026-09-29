@@ -62,7 +62,9 @@ void main() {
     for (final id in pilots) {
       final c = clips[id]!;
       expect(c.plane, 'sagittal', reason: id);
-      expect(c.view, 'profil', reason: id);
+      // Plan sagittal → profil, sauf vue imposée par la fiche (M56 : back
+      // squat en 3/4, le disque cachant le tronc de profil).
+      expect(c.view, id == 'back-squat' ? 'troisQuarts' : 'profil', reason: id);
       expect(c.tempo, matches(RegExp(r'^\d-\d-\d-\d$')), reason: id);
       expect(c.phases.first.start, 0);
       expect(c.phases.last.end, closeTo(c.duration, 1e-9));
@@ -144,12 +146,15 @@ void main() {
     expect(c.wrap(-1), closeTo(c.duration - 1, 1e-9));
     expect(c.phaseAt(.1).type, ClipPhaseType.concentrique);
     expect(c.phaseAt(c.duration - .1).type, ClipPhaseType.isometrique);
-    // Montée : le bassin monte.
+    // Montée : le bassin monte (M56 : engagement des scapulas coudes tendus
+    // sur 0,3 s, puis flexion des coudes ; la tenue en haut est la 3e phase).
     final y0 = c.poseAt(0, rig).translation.y;
-    final y1 = c.poseAt(c.phases.first.end, rig).translation.y;
+    final yActive = c.poseAt(c.phases.first.end, rig).translation.y;
+    expect(yActive - y0, greaterThan(.015));
+    final y1 = c.poseAt(c.phases[1].end, rig).translation.y;
     expect(y1 - y0, greaterThan(.3));
     // Tenue isométrique : posture fixe.
-    final p = c.phases[1];
+    final p = c.phases[2];
     expect(
       c.poseAt(p.start + .01, rig).translation.y,
       closeTo(c.poseAt(p.end - .01, rig).translation.y, 1e-9),

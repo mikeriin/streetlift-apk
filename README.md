@@ -1,4 +1,18 @@
-# Kalis Track 5.4.0 — Mannequin anatomique 3D
+# Kalis Track 5.5.0 — Mannequin anatomique 3D
+
+## 5.5.0 — Mannequin musclé, squelette refait, premières animations (lot M56 du pipeline « Mannequin 3D »)
+
+- **Mannequin plus musclé** : physique d'athlète de streetlifting (cibles du propriétaire en fraction de la taille : bras 0,22 H, avant-bras 0,175 H, poitrine 0,62 H, cuisse 0,345 H, mollet 0,22 H, cou 0,22 H, bideltoïde 0,285 H ; tours mesurés au mètre ruban sur l'enveloppe musculaire, moins 2 cm de peau et de graisse ; taille non épaissie). Hypertrophie muscle par muscle (`tools/anatomy/build_body.py`, mesures `measure_body.py`), aucune interpénétration > 1 mm, os, tête, mains et pieds inchangés.
+- **Squelette et peau refaits** (`build_rig.py`, `rig_def.py`) : 54 os (30 segments, 18 os d'aide aux tiers de la rotation avec gonflement au pli, 6 os de gonflement de contraction : biceps, quadriceps, grand fessier), axes du coude, du genou et de la cheville mesurés sur les os, rotation tibiale, insertions collées à l'humérus, partage scapula / bras par la hauteur.
+- **Fiches Traction pronation, Dips et Back squat** : la démonstration 2D est remplacée par le mannequin animé en boucle au tempo du pack, avec le matériel (barre de traction, barres parallèles, barre olympique et disques, sol), les muscles de l'exercice mis en évidence, la vue de départ automatique, rotation et zoom conservés ; phase et tempo sous la vue ; pause hors de l'écran ; animations réduites : positions clés fixes au choix. Chaîne relançable : `tools/anatomy/animate.py` (fiche biomécanique → cinématique inverse → clip `assets/anatomy/clips/<id>.json.gz` ≤ 5 Ko, contrôles automatiques), `build_equipment.py`, `render_clip.py` (planches et GIF) ; registre `assets/anatomy/clips/index.json` (3D si l'exercice y figure, sinon 2D).
+- **Carte « Koach · séance du jour »** en tête de la séance (repliable, ajustements du jour et leurs raisons, actions Koach conservées) ; plus rien de Koach au-dessus du premier exercice.
+- **Préchargement au lancement** : modèle, squelette, peau, matériel et registre chargés en tâche de fond une fois l'application prête, pipelines de rendu préchauffés hors écran (`Scene.warmUp`) ; mesures dans Réglages › À propos › Moteur 3D (préchargement, dernier mannequin : première image, images perdues).
+- Écran Anatomie : postures de référence recalculées sur le nouveau modèle.
+
+Détail : `SUIVI_PROJET.md` (M56). Tests : `tools/tests/test_m56_body.py`, `test_m56_clips.py`, `test_m5_rig.py`, `test/m5_rig_test.dart`, `m56_clip_test.dart`, `m56_koach_day_card_test.dart`, `m56_preload_test.dart`, `integration_test/animations_m56_test.dart`.
+
+
+# Historique — Kalis Track 5.4.0 — Mannequin anatomique 3D
 
 ## 5.4.0 — Squelette d'animation et peau du mannequin (lot M5 du pipeline « Mannequin 3D »)
 
