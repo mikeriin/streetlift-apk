@@ -1832,8 +1832,9 @@ class Mannequin3DState extends State<Mannequin3D>
     return [
       const SizedBox(height: 6),
       Text(
-        '${current == null ? '' : '${current.name} · '}${phase.name} · '
-        'tempo ${clip.tempo}',
+        current == null
+            ? '${phase.name} · tempo ${clip.tempo}'
+            : '${current.name} · ${current.label} · tempo ${clip.tempo}',
         key: const ValueKey('mannequin-phase'),
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 12.5, color: SL.dim),

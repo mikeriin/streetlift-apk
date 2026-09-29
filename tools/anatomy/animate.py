@@ -833,7 +833,8 @@ def key_positions(data, phases):
         reached = [ph['fin'] for ph in phases if ph['vers'] == key]
         starts = [ph['debut'] for ph in phases if ph['de'] == key]
         t = (held or reached or starts)[0]
-        out.append({'nom': label, 'cle': key, 'temps': t})
+        out.append({'nom': label, 'cle': key, 'temps': t,
+                    'libelle': data.get('libelles', {}).get(key, key)})
     return out
 
 
