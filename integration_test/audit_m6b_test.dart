@@ -284,6 +284,42 @@ void main() {
       );
       await tester.pump(const Duration(seconds: 2));
       out['toucher'] = state.touched?.label;
+      // Diagnostic (essai C : aucune bulle) : même point, rayon calculé
+      // directement, et points voisins.
+      final local = Offset(rect.width * .58, rect.height * .36);
+      final scene = state.scene!;
+      out['toucher_direct'] = {
+        for (final (dx, dy) in const [
+          (.58, .36),
+          (.45, .30),
+          (.5, .5),
+          (.55, .75),
+        ])
+          '$dx,$dy': scene
+              .pick(
+                state.camera!,
+                Offset(rect.width * dx, rect.height * dy),
+                state.viewSize,
+              )
+              ?.label,
+      };
+      out['toucher_vue'] = [state.viewSize.width, state.viewSize.height];
+      out['toucher_local'] = [local.dx, local.dy];
+      final ray = state.camera!.screenPointToRay(local, state.viewSize);
+      out['toucher_rayon'] = [
+        ray.origin.x,
+        ray.origin.y,
+        ray.origin.z,
+        ray.direction.x,
+        ray.direction.y,
+        ray.direction.z,
+      ];
+      out['toucher_maillages'] = scene.pickables.length;
+      out['toucher_touches'] = [
+        for (final m in scene.pickables)
+          if (m.intersect(ray.origin, ray.direction.normalized()) != null)
+            m.name,
+      ];
       await shot('anatomie_sombre_toucher');
       // Zoom ×2,5 sur le haut du dos.
       state.pinchTo(2.5, rect.size.center(Offset(0, -rect.height * .2)));
