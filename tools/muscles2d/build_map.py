@@ -125,6 +125,28 @@ SOMBRE, PEAU = 253, 254
 K = 36  # classes de couleur (k-moyennes)
 TRAP_DOS = (165, 215)  # faisceaux du trapèze de dos : limites sur l'axe (y)
 
+# Corrections au pixel (relecture anatomique) là où deux muscles voisins
+# de teintes proches forment une seule zone : dans le cadre (x0, y0, x1,
+# y1), les pixels de la région `de` dont la teinte (degrés) est dans
+# l'intervalle passent à la région `vers` (ou à la peau).
+HUE_FIXES = [
+    # flancs de face : digitations violettes du dentelé fondues dans les
+    # bandes de l'oblique externe
+    ((185, 255, 245, 375), 'oblique_externe', (250, 305), 'dentele_anterieur'),
+    ((330, 255, 395, 375), 'oblique_externe', (250, 305), 'dentele_anterieur'),
+    # coude latéral de face (côté droit du sujet) : coin rose du brachial
+    ((118, 316, 132, 346), 'triceps_lateral', (300, 360), 'brachial'),
+    ((118, 316, 132, 346), 'triceps_lateral', (0, 40), 'brachial'),
+    # mollets de dos : bande rouge latérale = soléaire (et non fibulaires)
+    ((690, 800, 712, 880), 'fibulaires', (340, 360), 'soleaire'),
+    ((690, 800, 712, 880), 'fibulaires', (0, 15), 'soleaire'),
+    ((850, 800, 880, 880), 'fibulaires', (340, 360), 'soleaire'),
+    ((850, 800, 880, 880), 'fibulaires', (0, 15), 'soleaire'),
+    # tendons de la loge postérieure profonde (cyan, en bas) : non dessinés
+    ((728, 855, 750, 910), 'soleaire', (165, 205), None),
+    ((820, 855, 842, 910), 'soleaire', (165, 205), None),
+]
+
 # Vues : (nom, x0, x1, axe du corps en x) ; image 1536 × 1024.
 VIEWS = [('face', 0, 540, 288), ('dos', 540, 1040, 790), ('profil', 1040, 1536, None)]
 
@@ -223,8 +245,8 @@ FIXE = {
         'grand_dorsal': [(1204, 240), (1201, 268)],
         # vue latérale : le chef latéral couvre la face externe du bras, le
         # chef long n'apparaît qu'en bord postérieur
-        'triceps_lateral': [(1235, 273), (1246, 315)],
-        'triceps_long': [(1230, 326), (1214, 297), (1217, 264)],
+        'triceps_lateral': [(1235, 273), (1246, 315), (1217, 264)],
+        'triceps_long': [(1230, 326), (1214, 297)],
         'biceps': [(1262, 300), (1283, 300)],
         'dentele_anterieur': [(1302, 275), (1292, 325)],
         'oblique_externe': [(1315, 295), (1318, 320), (1315, 360), (1318, 395), (1318, 420)],
@@ -412,6 +434,19 @@ def classify(partial=False):
     todo = (labels == 0) & ~background
     _, (iy, ix) = ndimage.distance_transform_edt(labels == 0, return_indices=True)
     labels[todo] = labels[iy[todo], ix[todo]]
+    # corrections au pixel (HUE_FIXES)
+    f = src.astype(float) / 255
+    mx, mn = f.max(-1), f.min(-1)
+    d = np.where(mx - mn == 0, 1, mx - mn)
+    r, g, b = f[..., 0], f[..., 1], f[..., 2]
+    hue = np.where(mx == r, (g - b) / d % 6, np.where(mx == g, (b - r) / d + 2, (r - g) / d + 4))
+    hue = hue * 60 % 360
+    for (x0, y0, x1, y1), src_region, (h0, h1), dst in HUE_FIXES:
+        k = REGION_IDS.index(src_region) + 1
+        box = np.zeros(labels.shape, bool)
+        box[y0:y1, x0:x1] = True
+        sel = box & (labels == k) & (hue >= h0) & (hue < h1) & colored
+        labels[sel] = PEAU if dst is None else REGION_IDS.index(dst) + 1
     zone_lum = np.zeros(zones.max() + 1)
     zone_lum[ids] = ndimage.mean(lum, zones, ids)
     shade = np.zeros(lum.shape)
