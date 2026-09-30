@@ -9,6 +9,7 @@
 | Retour | Correction |
 | --- | --- |
 | « TOUS les fonds de la couleur du support. » | Audit des 13 constructions de vues 3D (`Mannequin3D`, `MannequinPlayer`, `TargetedMannequin`, `WeeklyMannequin`, `ExerciseMannequin`) : fond explicite partout (`kPageColor`, `kCardColor`). Cartes-cadres retirées : fiche exercice (mannequin posé sur la page) et écran « Animation de test ». WOD et STATS gardent leur carte « Muscles sollicités » (titre, légende) : fond = couleur de cette carte, explicite. `test/fonds_3d_test.dart` (contrôle des sources) ; émulateur : audit M6b (tous les écrans 3D) et animation de test lancés avec la cible du lot. |
+| CI 3D | Essai A vert (run 36674308561) : 999 tests Dart, 140 Python ; démarcation 0,0 sur Anatomie (sombre, clair, zoom, grand texte), 4 fiches, STATS (sombre, clair), accueil (sombre, clair), aperçu de WOD, Moteur 3D, grand écran et les 9 animations de Koach ; écran « Animation de test » : fond uniforme sur toute la capture (écart 2,7 mesuré au bord haut, sous la barre de titre, et 8,7 au zoom, bras qui sort du cadre : pas de carte). |
 
 ## M7b.C1 — Correction 1 (retour du propriétaire du 30/09/2026, version 5.8.1)
 
