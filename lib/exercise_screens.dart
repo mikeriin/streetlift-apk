@@ -426,7 +426,7 @@ class _Sheet extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: Text(
-                    'Non dessinés (profonds) : ${deep.map(muscleName).join(', ')}.',
+                    'Non dessinés sur la carte : ${deep.map(muscleName).join(', ')}.',
                     key: const ValueKey('fiche-muscles-profonds'),
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 12, color: SL.dim),
