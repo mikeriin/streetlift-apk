@@ -143,9 +143,11 @@ class PlatformBackupFiles implements BackupFiles {
 /// Remplaçable par les tests (sélecteur simulé).
 BackupFiles backupFiles = PlatformBackupFiles();
 
-/// Nom proposé : daté, identifiable, sans nom ni donnée sportive.
-String backupFileName(DateTime at) {
+/// Nom proposé : daté, identifiable, sans nom ni donnée sportive. G1 :
+/// [test] = export d'une session de test (mode dev), nommé comme tel.
+String backupFileName(DateTime at, {bool test = false}) {
   String two(int v) => v.toString().padLeft(2, '0');
-  return 'kalis-track-sauvegarde-${at.year}-${two(at.month)}-${two(at.day)}'
+  final kind = test ? 'session-de-test' : 'sauvegarde';
+  return 'kalis-track-$kind-${at.year}-${two(at.month)}-${two(at.day)}'
       '-${two(at.hour)}${two(at.minute)}.json';
 }

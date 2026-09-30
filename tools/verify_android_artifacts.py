@@ -146,6 +146,40 @@ def native_libraries(archive, bundle=False):
     return libraries
 
 
+# G1 (D2.4) : marqueur présent uniquement dans le code du mode dev
+# (lib/dev/dev_session.dart, kDevMarker).
+DEV_MARKER = b'KALIS-DEV-SESSION-7F3A'
+ABIS = ('armeabi-v7a', 'arm64-v8a', 'x86_64')
+
+
+def app_library(archive, abi, bundle=False):
+    prefix = 'base/lib/' if bundle else 'lib/'
+    with zipfile.ZipFile(archive) as z:
+        return z.read(f'{prefix}{abi}/libapp.so')
+
+
+def compare_native(apk, aab, apk_native, aab_native, dev_apk):
+    """Bibliothèques natives de l'APK et de l'AAB : identiques, sauf libapp.so
+    d'un APK de développement (G1 : `--dart-define=KALIS_DEV=true`), qui
+    doit contenir le code du mode dev quand l'AAB ne le contient pas."""
+    apk_hashes = {k: v['sha256'] for k, v in apk_native.items()}
+    aab_hashes = {k: v['sha256'] for k, v in aab_native.items()}
+    require(apk_hashes.keys() == aab_hashes.keys(), 'Bibliothèques APK/AAB différentes.')
+    differ = sorted(k for k in apk_hashes if apk_hashes[k] != aab_hashes[k])
+    if not dev_apk:
+        require(not differ, 'Bibliothèques APK/AAB différentes.')
+        return {'same_native_payloads': True}
+    require(all(k.endswith('/libapp.so') for k in differ),
+            'Build de développement : seules les libapp.so peuvent différer.')
+    for abi in ABIS:
+        require(DEV_MARKER in app_library(apk, abi),
+                f'APK de développement sans le code du mode dev ({abi}).')
+        require(DEV_MARKER not in app_library(aab, abi, bundle=True),
+                f'AAB avec le code du mode dev ({abi}).')
+    return {'same_native_payloads': False, 'dev_apk': True, 'differing_libraries': differ,
+            'dev_mode_code': 'présent dans l’APK, absent de l’AAB'}
+
+
 def check(args):
     args.output.mkdir(parents=True, exist_ok=True)
     expected = expected_certificate(ROOT)
@@ -171,12 +205,11 @@ def check(args):
     zipalign = run([tools / 'zipalign', '-v', '-c', '-P', '16', '4', args.apk])
     (args.output / 'apk-zipalign.txt').write_text(zipalign)
     apk_native, aab_native = native_libraries(args.apk), native_libraries(args.aab, bundle=True)
-    require({k: v['sha256'] for k, v in apk_native.items()} == {k: v['sha256'] for k, v in aab_native.items()},
-            'Bibliothèques APK/AAB différentes.')
+    native = compare_native(args.apk, args.aab, apk_native, aab_native, getattr(args, 'dev_apk', False))
     report = {'signature_certificate_sha256': expected, 'apk_manifest': apk_manifest,
               'aab_manifest': aab_manifest, 'native_libraries': apk_native,
               'aab_zip_alignment': alignment, 'apk_zipalign': 'réussi', 'bundle_structure': 'valide',
-              'same_native_payloads': True, 'runtime_16k': 'non exécuté ; essai sur appareil/émulateur 16 Ko restant',
+              **native, 'runtime_16k': 'non exécuté ; essai sur appareil/émulateur 16 Ko restant',
               'build_number': args.build_number, 'artifacts': {}}
     for artifact in (args.apk, args.aab):
         report['artifacts'][artifact.name] = {'size_bytes': artifact.stat().st_size,
@@ -190,6 +223,8 @@ if __name__ == '__main__':
     for name in ('apk', 'aab', 'android-sdk', 'bundletool', 'output'):
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--build-number', type=int, required=True)
+    parser.add_argument('--dev-apk', action='store_true',
+                        help='APK construit avec --dart-define=KALIS_DEV=true (G1)')
     args = parser.parse_args()
     try:
         check(args)

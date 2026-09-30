@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
-import 'brand.dart';
+import 'dev/dev_widgets.dart' show HeaderLogo;
 
 /// Règles partagées par tous les écrans : espacements, surfaces et actions.
 class KSpace {
@@ -688,7 +688,8 @@ class KTopBar extends StatelessWidget implements PreferredSizeWidget {
       ...actions,
       Padding(
         padding: const EdgeInsets.only(right: 20),
-        child: KalisLogo(color: SL.logo),
+        // G1 : gestes du mode dev (build de développement seulement).
+        child: const HeaderLogo(),
       ),
     ],
   );

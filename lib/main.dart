@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'device.dart';
+import 'dev/dev_flags.dart';
+import 'dev/dev_session.dart';
 import 'mannequin_preload.dart';
 import 'muscle_map_2d.dart' show mapPrecacheInBackground;
+import 'session_host.dart';
+import 'session_prefs.dart';
 import 'startup.dart';
 import 'app_theme.dart';
 import 'ui.dart';
@@ -28,33 +31,49 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Une première image Flutter immédiate permet d'animer l'ouverture pendant
   // l'initialisation, au lieu de figer l'écran natif deux secondes.
-  runApp(
-    AppStartup(
-      initialization: store.init(),
-      appBuilder: (_) => const SLApp(profileGate: true),
-      errorBuilder: (error, stack) =>
-          _InitErrorApp(error: '$error', stack: '$stack'),
-      isDark: () =>
-          store.settings.theme == 'dark' ||
-          (store.settings.theme == 'system' &&
-              WidgetsBinding.instance.platformDispatcher.platformBrightness ==
-                  Brightness.dark),
-      onReady: () {
-        _bindNotifications();
-        // M56 : mannequin préchargé en tâche de fond une fois l'application
-        // prête (première image déjà affichée, initialisation faite).
-        unawaited(MannequinPreload.start());
-        // M8 : masques de la carte 2D des groupes préchargés (accueil,
-        // STATS, fiches : pas de saut au premier affichage).
-        final context = appNavigator.currentContext;
-        if (context != null) mapPrecacheInBackground(context);
-      },
-    ),
-  );
+  // G1 : la session active est lue avant (quelques millisecondes) : le logo
+  // de l'ouverture est rose dès la première image d'une session de test.
+  if (kDevBuild) await DevSession.load();
+  runApp(kalisApp());
   try {
     await enableHighRefreshRate();
   } catch (_) {}
 }
+
+/// Démarrage : session active (G1 : personnelle, ou session de test d'un
+/// build de développement) puis chargement du magasin de cette session.
+Future<void> bootSession() async {
+  await DevSession.load();
+  await store.init();
+}
+
+/// Application complète (racine de [main] et des tests d'intégration) :
+/// G1, racine [SessionHost] qui sait redémarrer l'application sur une
+/// autre session sans quitter le processus.
+Widget kalisApp() => SessionHost(
+  boot: bootSession,
+  builder: (initialization) => AppStartup(
+    initialization: initialization,
+    appBuilder: (_) => const SLApp(profileGate: true),
+    errorBuilder: (error, stack) =>
+        _InitErrorApp(error: '$error', stack: '$stack'),
+    isDark: () =>
+        store.settings.theme == 'dark' ||
+        (store.settings.theme == 'system' &&
+            WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+                Brightness.dark),
+    onReady: () {
+      _bindNotifications();
+      // M56 : mannequin préchargé en tâche de fond une fois l'application
+      // prête (première image déjà affichée, initialisation faite).
+      unawaited(MannequinPreload.start());
+      // M8 : masques de la carte 2D des groupes préchargés (accueil,
+      // STATS, fiches : pas de saut au premier affichage).
+      final context = appNavigator.currentContext;
+      if (context != null) mapPrecacheInBackground(context);
+    },
+  ),
+);
 
 void _bindNotifications() {
   // Même chemin que l'accueil : historique si la journée est faite, séance
@@ -71,6 +90,9 @@ void _bindNotifications() {
   // AppStartup appelle ce point après le rendu de l'accueil : le navigateur
   // est prêt, sans attendre une interaction pour planifier une autre frame.
   Notif.bind();
+  // G1 : après un redémarrage logique, les rappels suivent le magasin de
+  // la session active.
+  Notif.attach(store);
 }
 
 /// Écran de secours si l'initialisation échoue : l'erreur est lisible et copiable
@@ -114,10 +136,8 @@ class _InitErrorApp extends StatelessWidget {
           ),
           OutlinedButton.icon(
             onPressed: () async {
-              final prefs = await SharedPreferences.getInstance();
-              final raw = jsonEncode({
-                for (final key in prefs.getKeys()) key: prefs.get(key),
-              });
+              // G1 : données de la session active seulement.
+              final raw = jsonEncode((await KalisPrefs.active()).snapshot());
               await Clipboard.setData(ClipboardData(text: raw));
             },
             icon: const Icon(Icons.save_alt),

@@ -18,6 +18,7 @@ import 'store.dart';
 import 'store_widget.dart';
 import 'ui.dart';
 import 'motion.dart';
+import 'kalis_clock.dart';
 
 /// Ouvre une journée du programme (accueil ou notification de rappel) : son
 /// historique si elle est faite, sinon la séance. Le bilan s'affiche depuis
@@ -73,7 +74,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late int week;
-  DateTime get now => widget.referenceDate ?? DateTime.now();
+  DateTime get now => widget.referenceDate ?? KalisClock.now();
   @override
   void initState() {
     super.initState();

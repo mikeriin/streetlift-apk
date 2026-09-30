@@ -10,7 +10,9 @@ import 'package:flutter/material.dart';
 
 import 'app_theme.dart';
 import 'backup_files.dart';
+import 'kalis_clock.dart';
 import 'notifications.dart';
+import 'session_prefs.dart';
 import 'store.dart';
 
 /// Replanification des rappels après import ou suppression (remplaçable
@@ -75,10 +77,10 @@ Future<FileSaveStatus> exportBackupFile(
   _say(messenger, 'Préparation de l’export…');
   await store.flush();
   final unsaved = store.hasUnsavedChanges;
-  final now = DateTime.now();
+  final now = KalisClock.now();
   final json = store.exportForFile(appVersion: appVersion, at: now);
   final result = await backupFiles.save(
-    backupFileName(now),
+    backupFileName(now, test: SessionSpace.isDev),
     Uint8List.fromList(utf8.encode(json)),
   );
   _say(messenger, exportMessage(result, unsaved: unsaved));
@@ -138,6 +140,19 @@ Future<ImportStatus?> confirmAndImport(
   String? source,
 }) async {
   final messenger = ScaffoldMessenger.of(context);
+  // G1 (D2.3) : une sauvegarde de la session de test n'entre dans la
+  // session personnelle qu'après un avertissement explicite.
+  if (!SessionSpace.isDev && isTestSessionBackup(raw)) {
+    final go = await showDialog<bool>(
+      context: context,
+      builder: (_) => const TestSessionImportDialog(),
+    );
+    if (!context.mounted) return null;
+    if (go != true) {
+      _say(messenger, 'Import annulé : rien n’a changé.');
+      return null;
+    }
+  }
   while (true) {
     if (!context.mounted) return null;
     final checked = store.previewImport(raw);
@@ -544,4 +559,44 @@ class _EraseDataDialogState extends State<EraseDataDialog> {
       ],
     );
   }
+}
+
+/// G1 : sauvegarde exportée depuis une session de test (mode dev).
+bool isTestSessionBackup(String raw) {
+  try {
+    final data = jsonDecode(raw);
+    return data is Map && data['sessionDeTest'] == true;
+  } catch (_) {
+    return false;
+  }
+}
+
+/// Avertissement avant d'importer une sauvegarde de session de test dans
+/// la session personnelle.
+class TestSessionImportDialog extends StatelessWidget {
+  const TestSessionImportDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) => AlertDialog(
+    key: const ValueKey('test-session-import-warning'),
+    icon: Icon(Icons.warning_amber_rounded, color: SL.danger),
+    title: const Text('Sauvegarde d’une session de test'),
+    content: const Text(
+      'Ce fichier vient d’une session de test (mode dev), avec des données '
+      'fictives et parfois une date simulée. L’importer remplacerait tes '
+      'données personnelles par ces données de test.',
+    ),
+    actions: [
+      TextButton(
+        onPressed: () => Navigator.of(context).pop(false),
+        child: const Text('Annuler'),
+      ),
+      TextButton(
+        key: const ValueKey('test-session-import-continue'),
+        style: TextButton.styleFrom(foregroundColor: SL.danger),
+        onPressed: () => Navigator.of(context).pop(true),
+        child: const Text('Continuer quand même'),
+      ),
+    ],
+  );
 }
