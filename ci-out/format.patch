@@ -1,0 +1,15 @@
+diff --git a/test/m8_carte_2d_test.dart b/test/m8_carte_2d_test.dart
+index a0e4c1a..cd79f6f 100644
+--- a/test/m8_carte_2d_test.dart
++++ b/test/m8_carte_2d_test.dart
+@@ -345,9 +345,7 @@ void main() {
+ 
+     testWidgets('toucher : région sous le doigt', (tester) async {
+       // étiquettes lues avant tout widget (moteur réel, hors temps simulé)
+-      final labels = (await tester.runAsync(
+-        () => loadMapLabels(MapView.dos),
+-      ))!;
++      final labels = (await tester.runAsync(() => loadMapLabels(MapView.dos)))!;
+       Offset? core;
+       for (var fy = .25; fy < .5 && core == null; fy += .01) {
+         for (var fx = .2; fx < .8; fx += .01) {
