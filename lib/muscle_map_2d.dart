@@ -563,7 +563,9 @@ class MapRoleLegend extends StatelessWidget {
           decoration: BoxDecoration(color: c, shape: BoxShape.circle),
         ),
         const SizedBox(width: 6),
-        Text(label, style: tt.bodySmall),
+        // grand texte, carte étroite : retour à la ligne plutôt qu'un
+        // débordement
+        Flexible(child: Text(label, style: tt.bodySmall)),
       ],
     );
     return Wrap(

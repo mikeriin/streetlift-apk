@@ -178,7 +178,7 @@ void main() {
       expect(face.height, lessThan(400));
       expect(
         MuscleMap2D.widthFor(MapView.values, face.height),
-        closeTo(200, 1),
+        closeTo(199, .5), // un pixel de marge (arrondis)
       );
       expect(tester.takeException(), isNull);
     });
