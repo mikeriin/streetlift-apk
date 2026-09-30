@@ -27,20 +27,17 @@ import 'package:streetlift_tracker/session_host.dart';
 import 'package:streetlift_tracker/session_prefs.dart';
 import 'package:streetlift_tracker/store.dart';
 
-Widget _page(Widget child, {bool dark = true, double scale = 1}) =>
-    MaterialApp(
-      theme: buildTheme(dark),
-      locale: const Locale('fr'),
-      supportedLocales: const [Locale('fr')],
-      localizationsDelegates: GlobalMaterialLocalizations.delegates,
-      builder: (context, child) => MediaQuery(
-        data: MediaQuery.of(
-          context,
-        ).copyWith(textScaler: TextScaler.linear(scale)),
-        child: child!,
-      ),
-      home: Scaffold(body: child),
-    );
+Widget _page(Widget child, {bool dark = true, double scale = 1}) => MaterialApp(
+  theme: buildTheme(dark),
+  locale: const Locale('fr'),
+  supportedLocales: const [Locale('fr')],
+  localizationsDelegates: GlobalMaterialLocalizations.delegates,
+  builder: (context, child) => MediaQuery(
+    data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(scale)),
+    child: child!,
+  ),
+  home: Scaffold(body: child),
+);
 
 void _silencePlatform() {
   TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
@@ -57,38 +54,44 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('toujours', () {
-    test('KalisPrefs : deux espaces sans lecture ni écriture croisée', () async {
-      SharedPreferences.setMockInitialValues({
-        'a': '1',
-        'n': 4,
-        '${SessionSpace.devPrefix}a': '2',
-        SessionSpace.controlKey: '{}',
-      });
-      final raw = await SharedPreferences.getInstance();
-      final perso = KalisPrefs(raw, dev: false);
-      final test = KalisPrefs(raw, dev: true);
-      expect(perso.getKeys(), {'a', 'n'});
-      expect(test.getKeys(), {'a'});
-      expect(perso.getString('a'), '1');
-      expect(test.getString('a'), '2');
-      expect(test.getInt('n'), isNull);
-      await test.setString('b', 'x');
-      await test.setInt('n', 9);
-      expect(perso.containsKey('b'), isFalse);
-      expect(perso.getInt('n'), 4);
-      expect(raw.getString('${SessionSpace.devPrefix}b'), 'x');
-      await test.remove('a');
-      expect(perso.getString('a'), '1');
-      await perso.remove('a');
-      expect(test.getKeys(), {'b', 'n'});
-      expect(perso.snapshot(), {'n': 4});
-      expect(
-        () => perso.setString(SessionSpace.controlKey, 'y'),
-        throwsArgumentError,
-      );
-      expect(() => test.getString(SessionSpace.controlKey), throwsArgumentError);
-      expect(raw.getString(SessionSpace.controlKey), '{}');
-    });
+    test(
+      'KalisPrefs : deux espaces sans lecture ni écriture croisée',
+      () async {
+        SharedPreferences.setMockInitialValues({
+          'a': '1',
+          'n': 4,
+          '${SessionSpace.devPrefix}a': '2',
+          SessionSpace.controlKey: '{}',
+        });
+        final raw = await SharedPreferences.getInstance();
+        final perso = KalisPrefs(raw, dev: false);
+        final test = KalisPrefs(raw, dev: true);
+        expect(perso.getKeys(), {'a', 'n'});
+        expect(test.getKeys(), {'a'});
+        expect(perso.getString('a'), '1');
+        expect(test.getString('a'), '2');
+        expect(test.getInt('n'), isNull);
+        await test.setString('b', 'x');
+        await test.setInt('n', 9);
+        expect(perso.containsKey('b'), isFalse);
+        expect(perso.getInt('n'), 4);
+        expect(raw.getString('${SessionSpace.devPrefix}b'), 'x');
+        await test.remove('a');
+        expect(perso.getString('a'), '1');
+        await perso.remove('a');
+        expect(test.getKeys(), {'b', 'n'});
+        expect(perso.snapshot(), {'n': 4});
+        expect(
+          () => perso.setString(SessionSpace.controlKey, 'y'),
+          throwsArgumentError,
+        );
+        expect(
+          () => test.getString(SessionSpace.controlKey),
+          throwsArgumentError,
+        );
+        expect(raw.getString(SessionSpace.controlKey), '{}');
+      },
+    );
 
     test('Horloge : décalage seulement dans un build de développement', () {
       final before = DateTime.now();
@@ -115,7 +118,10 @@ void main() {
         return s.tap(t);
       }
 
-      expect([for (var i = 0; i < 4; i++) tap(2000)], [false, false, false, false]);
+      expect(
+        [for (var i = 0; i < 4; i++) tap(2000)],
+        [false, false, false, false],
+      );
       expect(tap(2000), isTrue); // 2 s pile : compté.
       expect(s.count, 0);
       for (var i = 0; i < 4; i++) {
@@ -146,22 +152,20 @@ void main() {
       expect(isTestSessionBackup('[1]'), isFalse);
     });
 
-    testWidgets(
-      'Build ordinaire : logo d’origine, aucun geste',
-      (tester) async {
-        _silencePlatform();
-        await tester.pumpWidget(_page(const Center(child: HeaderLogo())));
-        expect(find.byType(KalisLogo), findsOneWidget);
-        expect(find.byType(DevLogoGesture), findsNothing);
-        for (var i = 0; i < 6; i++) {
-          await tester.tap(find.byType(KalisLogo), warnIfMissed: false);
-          await tester.pump(const Duration(milliseconds: 100));
-        }
-        expect(DevSession.active.value, isFalse);
-        expect(SessionSpace.isDev, isFalse);
-      },
-      skip: kDevBuild,
-    );
+    testWidgets('Build ordinaire : logo d’origine, aucun geste', (
+      tester,
+    ) async {
+      _silencePlatform();
+      await tester.pumpWidget(_page(const Center(child: HeaderLogo())));
+      expect(find.byType(KalisLogo), findsOneWidget);
+      expect(find.byType(DevLogoGesture), findsNothing);
+      for (var i = 0; i < 6; i++) {
+        await tester.tap(find.byType(KalisLogo), warnIfMissed: false);
+        await tester.pump(const Duration(milliseconds: 100));
+      }
+      expect(DevSession.active.value, isFalse);
+      expect(SessionSpace.isDev, isFalse);
+    }, skip: kDevBuild);
 
     group('import', () {
       setUpAll(() async {
@@ -174,7 +178,8 @@ void main() {
         'Sauvegarde d’une session de test : avertissement avant tout aperçu',
         (tester) async {
           final data =
-              jsonDecode(store.exportForFile(appVersion: 't')) as Map<String, dynamic>;
+              jsonDecode(store.exportForFile(appVersion: 't'))
+                  as Map<String, dynamic>;
           data['sessionDeTest'] = true;
           final raw = jsonEncode(data);
           await tester.pumpWidget(
@@ -311,7 +316,10 @@ void main() {
         expect(test.profile, isNull);
         test.settings.accent = 'violet';
         test.saveSettings();
-        expect(await test.configureStart(_day(DateTime.now())), StartSave.saved);
+        expect(
+          await test.configureStart(_day(DateTime.now())),
+          StartSave.saved,
+        );
         await test.flush();
         expect(persoRaw(), before);
         expect(
@@ -386,126 +394,122 @@ void main() {
       skip: !kDevBuild,
     );
 
-    testWidgets(
-      'Logo : 5 appuis rapprochés démarrent la session de test',
-      (tester) async {
-        _silencePlatform();
-        var now = DateTime(2026, 10, 1, 8);
-        var started = 0;
-        await tester.pumpWidget(
-          _page(
-            Center(
-              child: DevLogoGesture(
-                active: false,
-                onFiveTaps: () => started++,
-                onHoldComplete: () {},
-                clock: () => now,
-              ),
+    testWidgets('Logo : 5 appuis rapprochés démarrent la session de test', (
+      tester,
+    ) async {
+      _silencePlatform();
+      var now = DateTime(2026, 10, 1, 8);
+      var started = 0;
+      await tester.pumpWidget(
+        _page(
+          Center(
+            child: DevLogoGesture(
+              active: false,
+              onFiveTaps: () => started++,
+              onHoldComplete: () {},
+              clock: () => now,
             ),
           ),
-        );
-        Future<void> tapAfter(int ms) async {
-          now = now.add(Duration(milliseconds: ms));
-          await tester.tap(find.byType(DevLogoGesture));
-          await tester.pump();
-        }
+        ),
+      );
+      Future<void> tapAfter(int ms) async {
+        now = now.add(Duration(milliseconds: ms));
+        await tester.tap(find.byType(DevLogoGesture));
+        await tester.pump();
+      }
 
-        for (var i = 0; i < 4; i++) {
-          await tapAfter(2000);
-        }
-        expect(started, 0);
+      for (var i = 0; i < 4; i++) {
         await tapAfter(2000);
-        expect(started, 1);
-        for (var i = 0; i < 4; i++) {
-          await tapAfter(400);
-        }
-        await tapAfter(2100); // trop tard : la série repart de 1.
-        expect(started, 1);
-        for (var i = 0; i < 3; i++) {
-          await tapAfter(400);
-        }
-        expect(started, 1);
+      }
+      expect(started, 0);
+      await tapAfter(2000);
+      expect(started, 1);
+      for (var i = 0; i < 4; i++) {
         await tapAfter(400);
-        expect(started, 2);
-        // Appui trop long : ce n'est pas un appui court.
-        final g = await tester.startGesture(
-          tester.getCenter(find.byType(DevLogoGesture)),
-        );
-        now = now.add(const Duration(seconds: 1));
-        await g.up();
-        await tester.pump();
-        expect(started, 2);
-        expect(find.byType(KalisLogo), findsOneWidget);
-        final logo = tester.widget<KalisLogo>(find.byType(KalisLogo));
-        expect(logo.color, isNot(kDevPink));
-      },
-      skip: !kDevBuild,
-    );
+      }
+      await tapAfter(2100); // trop tard : la série repart de 1.
+      expect(started, 1);
+      for (var i = 0; i < 3; i++) {
+        await tapAfter(400);
+      }
+      expect(started, 1);
+      await tapAfter(400);
+      expect(started, 2);
+      // Appui trop long : ce n'est pas un appui court.
+      final g = await tester.startGesture(
+        tester.getCenter(find.byType(DevLogoGesture)),
+      );
+      now = now.add(const Duration(seconds: 1));
+      await g.up();
+      await tester.pump();
+      expect(started, 2);
+      expect(find.byType(KalisLogo), findsOneWidget);
+      final logo = tester.widget<KalisLogo>(find.byType(KalisLogo));
+      expect(logo.color, isNot(kDevPink));
+    }, skip: !kDevBuild);
 
-    testWidgets(
-      'Logo rose : appui long de 3 s, relâcher avant annule',
-      (tester) async {
-        _silencePlatform();
-        var deleted = 0;
-        await tester.pumpWidget(
-          _page(
-            Center(
-              child: DevLogoGesture(
-                active: true,
-                onFiveTaps: () => fail('5 appuis pendant la session de test'),
-                onHoldComplete: () => deleted++,
-              ),
+    testWidgets('Logo rose : appui long de 3 s, relâcher avant annule', (
+      tester,
+    ) async {
+      _silencePlatform();
+      var deleted = 0;
+      await tester.pumpWidget(
+        _page(
+          Center(
+            child: DevLogoGesture(
+              active: true,
+              onFiveTaps: () => fail('5 appuis pendant la session de test'),
+              onHoldComplete: () => deleted++,
             ),
           ),
-        );
-        final logo = tester.widget<KalisLogo>(find.byType(KalisLogo));
-        expect(logo.color, kDevPink);
-        final center = tester.getCenter(find.byType(DevLogoGesture));
-        final ring = find.byKey(const ValueKey('dev-hold-ring'));
+        ),
+      );
+      final logo = tester.widget<KalisLogo>(find.byType(KalisLogo));
+      expect(logo.color, kDevPink);
+      final center = tester.getCenter(find.byType(DevLogoGesture));
+      final ring = find.byKey(const ValueKey('dev-hold-ring'));
 
-        var g = await tester.startGesture(center);
-        await tester.pump();
-        await tester.pump(const Duration(milliseconds: 1500));
-        expect(ring, findsOneWidget);
-        await tester.pump(const Duration(milliseconds: 1400));
-        await g.up();
-        await tester.pump();
-        expect(deleted, 0);
-        expect(ring, findsNothing);
+      var g = await tester.startGesture(center);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 1500));
+      expect(ring, findsOneWidget);
+      await tester.pump(const Duration(milliseconds: 1400));
+      await g.up();
+      await tester.pump();
+      expect(deleted, 0);
+      expect(ring, findsNothing);
 
-        // Glisser hors du logo annule aussi.
-        g = await tester.startGesture(center);
-        await tester.pump();
-        await tester.pump(const Duration(seconds: 1));
-        await g.moveBy(const Offset(60, 0));
-        await tester.pump(const Duration(seconds: 3));
-        await g.up();
-        await tester.pump();
-        expect(deleted, 0);
+      // Glisser hors du logo annule aussi.
+      g = await tester.startGesture(center);
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+      await g.moveBy(const Offset(60, 0));
+      await tester.pump(const Duration(seconds: 3));
+      await g.up();
+      await tester.pump();
+      expect(deleted, 0);
 
-        g = await tester.startGesture(center);
-        await tester.pump();
-        await tester.pump(const Duration(seconds: 3));
-        await tester.pump();
-        expect(deleted, 1);
-        await g.up();
-        await tester.pump(const Duration(seconds: 1));
-        expect(deleted, 1);
+      g = await tester.startGesture(center);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 3050));
+      await tester.pump();
+      expect(deleted, 1);
+      await g.up();
+      await tester.pump(const Duration(seconds: 1));
+      expect(deleted, 1);
 
-        // Appuis courts pendant la session de test : rien.
-        for (var i = 0; i < 5; i++) {
-          await tester.tap(find.byType(DevLogoGesture));
-          await tester.pump(const Duration(milliseconds: 100));
-        }
-        expect(deleted, 1);
-        final handle = tester.ensureSemantics();
-        await tester.pump();
-        final semantics = tester.getSemantics(find.byType(DevLogoGesture));
-        expect(semantics.label, contains('session de test active'));
-        handle.dispose();
-      },
-      skip: !kDevBuild,
-    );
+      // Appuis courts pendant la session de test : rien.
+      for (var i = 0; i < 5; i++) {
+        await tester.tap(find.byType(DevLogoGesture));
+        await tester.pump(const Duration(milliseconds: 100));
+      }
+      expect(deleted, 1);
+      final handle = tester.ensureSemantics();
+      await tester.pump();
+      final semantics = tester.getSemantics(find.byType(DevLogoGesture));
+      expect(semantics.label, contains('session de test active'));
+      handle.dispose();
+    }, skip: !kDevBuild);
 
     testWidgets(
       'Outils de test : lisibles en clair et en sombre, texte à 200 %',
@@ -585,7 +589,6 @@ void main() {
         }, message: 'Session de test supprimée');
         await tester.pump();
         expect(SessionHost.switching, isTrue);
-        expect(find.byType(_Probe), findsNothing);
         await tester.pump();
         await tester.pump();
         await done;

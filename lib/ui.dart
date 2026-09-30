@@ -686,10 +686,10 @@ class KTopBar extends StatelessWidget implements PreferredSizeWidget {
         ),
     actions: [
       ...actions,
-      Padding(
-        padding: const EdgeInsets.only(right: 20),
+      const Padding(
+        padding: EdgeInsets.only(right: 20),
         // G1 : gestes du mode dev (build de développement seulement).
-        child: const HeaderLogo(),
+        child: HeaderLogo(),
       ),
     ],
   );

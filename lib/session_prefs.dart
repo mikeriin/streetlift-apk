@@ -51,8 +51,10 @@ class KalisPrefs {
   KalisPrefs(this.raw, {required this.dev});
 
   /// Vue de la session active.
-  static Future<KalisPrefs> active() async =>
-      KalisPrefs(await SharedPreferences.getInstance(), dev: SessionSpace.isDev);
+  static Future<KalisPrefs> active() async => KalisPrefs(
+    await SharedPreferences.getInstance(),
+    dev: SessionSpace.isDev,
+  );
 
   String _k(String key) {
     if (SessionSpace.reserved(key)) {

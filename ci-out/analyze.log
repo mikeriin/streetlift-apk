@@ -1,6 +1,0 @@
-Analyzing streetlift-apk...                                     
-
-warning • The receiver can't be null, so the null-aware operator '?[' is unnecessary. Try replacing the operator '?[' with '[' • lib/dev/dev_session.dart:64:39 • invalid_null_aware_operator
-   info • Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation • lib/ui.dart:689:7 • prefer_const_constructors
-
-2 issues found. (ran in 18.1s)

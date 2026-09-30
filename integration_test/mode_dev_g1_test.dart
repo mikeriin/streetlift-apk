@@ -36,7 +36,10 @@ const _limit = Timeout(Duration(minutes: 5));
 final _fixedAt = DateTime(2026, 10, 1, 12);
 const _logoKey = ValueKey('header-logo');
 
-File get _snapshotFile => File('${Directory.systemTemp.path}/g1_perso.json');
+/// Dossier des fichiers de l'application (conservé d'un lancement de
+/// `flutter drive` à l'autre, contrairement au cache de code).
+File get _snapshotFile =>
+    File('${Directory.systemTemp.parent.path}/files/g1_perso.json');
 
 /// Égalité profonde de deux valeurs JSON (ordre des clés indifférent).
 bool _same(Object? a, Object? b) {
@@ -165,6 +168,7 @@ void main() {
         'raw': persoRaw(raw),
         'export': store.exportForFile(appVersion: 'g1', at: _fixedAt),
       };
+      _snapshotFile.parent.createSync(recursive: true);
       _snapshotFile.writeAsStringSync(jsonEncode(snapshot));
       releve['perso_cles'] = (snapshot['raw']! as Map).length;
       releve['perso_dev_actif'] = DevSession.active.value;
@@ -174,14 +178,20 @@ void main() {
       // 5 appuis d'affilée sur le logo.
       for (var i = 0; i < 5; i++) {
         await tester.tap(logo().first);
-        await tester.pump(const Duration(milliseconds: 300));
+        await tester.pump(Duration(milliseconds: i < 4 ? 300 : 16));
       }
-      await wait(tester, 700);
+      // Ouverture de la session de test : logo rose, relevé dès qu'il est
+      // affiché.
       final opening = find.byKey(const ValueKey('opening-logo'));
-      releve['ouverture_logo_rose'] = opening.evaluate().isEmpty
-          ? -1.0
-          : await pinkShare(tester.getRect(opening));
-      await shot('a2_ouverture_rose');
+      var best = -1.0;
+      for (var i = 0; i < 80 && best < .05; i++) {
+        await tester.pump(const Duration(milliseconds: 50));
+        if (opening.evaluate().isEmpty) continue;
+        final share = await pinkShare(tester.getRect(opening));
+        if (share > best) best = share;
+        if (best >= .05) await shot('a2_ouverture_rose');
+      }
+      releve['ouverture_logo_rose'] = best;
       await opened(tester);
       releve['dev_actif'] = DevSession.active.value;
       releve['dev_espace'] = SessionSpace.isDev;
@@ -206,9 +216,7 @@ void main() {
       // Profil et départ créés dans la session de test (comme au bout du
       // démarrage), pour voir l'accueil de la session de test.
       store.saveProfile(store.ownerDraft());
-      await store.configureStart(
-        DateTime(real.year, real.month, real.day - 3),
-      );
+      await store.configureStart(DateTime(real.year, real.month, real.day - 3));
       await store.flush();
 
       // Outils de test : appui long sur l'étiquette DEV.

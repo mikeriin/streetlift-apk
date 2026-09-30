@@ -144,9 +144,10 @@ class DevLogoGesture extends StatefulWidget {
 class _DevLogoGestureState extends State<DevLogoGesture>
     with SingleTickerProviderStateMixin {
   final _streak = TapStreak();
-  late final AnimationController _hold =
-      AnimationController(vsync: this, duration: DevLogoGesture.hold)
-        ..addStatusListener(_onHold);
+  late final AnimationController _hold = AnimationController(
+    vsync: this,
+    duration: DevLogoGesture.hold,
+  )..addStatusListener(_onHold);
   DateTime? _downAt;
   Offset? _downPos;
   bool _fired = false;
