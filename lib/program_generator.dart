@@ -1719,10 +1719,10 @@ class _Generator {
           'taper' => '4F6D7A',
           _ =>
             w.phase == 'Intensification'
-                ? '9E2A28'
+                ? 'A61717'
                 : w.phase == 'Réalisation'
-                ? '7E201F'
-                : '5E1615',
+                ? '8E1B1B'
+                : '6B0C0C',
         },
         'kind': w.kind,
         'phase': w.phase,

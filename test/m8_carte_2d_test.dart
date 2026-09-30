@@ -28,8 +28,9 @@ void main() {
   });
 
   group('régions et groupes', () {
-    test('16 filtres, régions uniques, muscles du pack', () {
-      expect(kMapGroups, hasLength(16));
+    test('17 filtres, régions uniques, muscles du pack', () {
+      expect(kMapGroups, hasLength(17));
+      expect(mapGroupLabel('coiffe'), 'Coiffe des rotateurs');
       expect(mapGroupLabel('ischios'), 'Ischio-jambiers');
       expect(mapGroupLabel('lombaires'), 'Lombaires');
       final ids = [for (final r in kMapRegions) r.id];
@@ -73,6 +74,11 @@ void main() {
         'flechisseurs_cervicaux_profonds',
         'supinateur',
         'carre_pronateur',
+        'multifides',
+        'carre_des_lombes',
+        'flechisseurs_profonds_des_doigts',
+        'elevateur_scapula',
+        'tibial_posterieur',
       ]) {
         expect(mapDrawsMuscle(m), isFalse, reason: m);
       }
@@ -93,7 +99,11 @@ void main() {
       final t = mapIntensitiesFromRoles(
         primaires: const ['grand_dorsal', 'biceps_chef_long'],
         secondaires: const ['brachial', 'trapeze_inferieur', 'biceps_chef_court'],
-        stabilisateurs: const ['droit_abdomen', 'multifides', 'transverse_abdomen'],
+        stabilisateurs: const [
+          'droit_abdomen',
+          'erecteurs_thoraciques',
+          'transverse_abdomen',
+        ],
       );
       expect(t, {
         'grand_dorsal': kMapPrimary,
@@ -145,7 +155,10 @@ void main() {
       expect(deadlift.containsKey('grand_pectoral'), isFalse);
       final pull = of('traction-pronation');
       expect(pull['grand_dorsal'], kMapPrimary);
-      expect(pull.containsKey('grand_pectoral'), isFalse);
+      // correction 2 (Youdas 2010) : le grand pectoral sterno-costal étend
+      // l'épaule depuis la flexion complète
+      expect(pull['grand_pectoral'], kMapSecondary);
+      expect(pull.containsKey('deltoide_anterieur'), isFalse);
       expect(pull.containsKey('vaste_lateral'), isFalse);
       // toutes les fiches : chaque région allumée montre un muscle de la fiche
       for (final e in store.content.entries) {

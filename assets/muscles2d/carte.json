@@ -42,8 +42,8 @@
     "trapeze_moyen",
     "trapeze_inferieur",
     "rhomboides",
-    "elevateur_scapula",
     "extenseurs_cervicaux",
+    "sterno_cleido_mastoidien",
     "deltoide_moyen",
     "deltoide_posterieur",
     "sous_epineux",
@@ -59,11 +59,10 @@
     "lombaires",
     "grand_fessier",
     "moyen_fessier",
+    "adducteurs",
     "vaste_lateral",
     "biceps_femoral",
-    "biceps_femoral_court",
     "semi_tendineux",
-    "semi_membraneux",
     "gastrocnemien_medial",
     "gastrocnemien_lateral",
     "soleaire",
@@ -81,7 +80,7 @@
     "deltoide_anterieur",
     "deltoide_moyen",
     "deltoide_posterieur",
-    "grand_rond",
+    "grand_dorsal",
     "grand_pectoral",
     "dentele_anterieur",
     "biceps",
@@ -108,6 +107,7 @@
  "groupes": [
   "trapezes",
   "deltoides",
+  "coiffe",
   "pectoraux",
   "dorsaux",
   "biceps",
@@ -153,14 +153,6 @@
    "nom": "Rhomboïdes",
    "muscles": [
     "rhomboides"
-   ],
-   "groupe": "trapezes"
-  },
-  {
-   "id": "elevateur_scapula",
-   "nom": "Élévateur de la scapula",
-   "muscles": [
-    "elevateur_scapula"
    ],
    "groupe": "trapezes"
   },
@@ -217,7 +209,7 @@
     "infra_epineux",
     "petit_rond"
    ],
-   "groupe": "deltoides"
+   "groupe": "coiffe"
   },
   {
    "id": "grand_rond",
@@ -309,7 +301,6 @@
    "muscles": [
     "flechisseurs_du_poignet",
     "flechisseurs_superficiels_des_doigts",
-    "flechisseurs_profonds_des_doigts",
     "rond_pronateur"
    ],
    "groupe": "avant_bras"
@@ -344,9 +335,7 @@
    "nom": "Érecteurs du rachis (fascia thoraco-lombaire)",
    "muscles": [
     "erecteurs_lombaires",
-    "erecteurs_thoraciques",
-    "multifides",
-    "carre_des_lombes"
+    "erecteurs_thoraciques"
    ],
    "groupe": "lombaires"
   },
@@ -435,32 +424,18 @@
   },
   {
    "id": "biceps_femoral",
-   "nom": "Biceps fémoral, chef long",
+   "nom": "Biceps fémoral",
    "muscles": [
-    "biceps_femoral"
-   ],
-   "groupe": "ischios"
-  },
-  {
-   "id": "biceps_femoral_court",
-   "nom": "Biceps fémoral, chef court",
-   "muscles": [
+    "biceps_femoral",
     "biceps_femoral_chef_court"
    ],
    "groupe": "ischios"
   },
   {
    "id": "semi_tendineux",
-   "nom": "Semi-tendineux",
+   "nom": "Semi-tendineux et semi-membraneux",
    "muscles": [
-    "semi_tendineux"
-   ],
-   "groupe": "ischios"
-  },
-  {
-   "id": "semi_membraneux",
-   "nom": "Semi-membraneux",
-   "muscles": [
+    "semi_tendineux",
     "semi_membraneux"
    ],
    "groupe": "ischios"
@@ -491,7 +466,7 @@
   },
   {
    "id": "fibulaires",
-   "nom": "Long et court fibulaires",
+   "nom": "Long et court fibulaires (loge latérale)",
    "muscles": [
     "fibulaires"
    ],
@@ -507,7 +482,7 @@
   },
   {
    "id": "extenseurs_orteils",
-   "nom": "Extenseurs des orteils",
+   "nom": "Extenseurs des orteils et de l’hallux",
    "muscles": [
     "long_extenseur_des_orteils"
    ],
@@ -515,7 +490,7 @@
   }
  ],
  "etiquettes": {
-  "regions": "1…47 (rang dans regions)",
+  "regions": "1…44 (rang dans regions)",
   "sombre": 253,
   "peau": 254
  },

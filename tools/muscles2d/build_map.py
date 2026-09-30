@@ -46,9 +46,11 @@ SRC = HERE / 'source_carte.png'
 OUT = ROOT / 'assets/muscles2d'
 DART = ROOT / 'lib/muscle_map_regions.dart'
 
-# Filtres de l'écran Anatomie (15 groupes de la première image + lombaires).
+# Filtres de l'écran Anatomie (15 groupes de la première image, plus
+# lombaires et coiffe des rotateurs : relecture anatomique de 5.10.0).
 GROUPS = [
-    ('trapezes', 'Trapèzes'), ('deltoides', 'Deltoïdes'), ('pectoraux', 'Pectoraux'),
+    ('trapezes', 'Trapèzes'), ('deltoides', 'Deltoïdes'), ('coiffe', 'Coiffe des rotateurs'),
+    ('pectoraux', 'Pectoraux'),
     ('dorsaux', 'Dorsaux'), ('biceps', 'Biceps'), ('triceps', 'Triceps'),
     ('avant_bras', 'Avant-bras'), ('abdominaux', 'Abdominaux'), ('obliques', 'Obliques'),
     ('lombaires', 'Lombaires'), ('fessiers', 'Fessiers'), ('quadriceps', 'Quadriceps'),
@@ -64,7 +66,6 @@ REGIONS = [
     ('trapeze_moyen', 'Trapèze moyen', ['trapeze_moyen'], 'trapezes'),
     ('trapeze_inferieur', 'Trapèze inférieur', ['trapeze_inferieur'], 'trapezes'),
     ('rhomboides', 'Rhomboïdes', ['rhomboides'], 'trapezes'),
-    ('elevateur_scapula', 'Élévateur de la scapula', ['elevateur_scapula'], 'trapezes'),
     ('extenseurs_cervicaux', 'Extenseurs du cou (splénius)', ['extenseurs_cervicaux'], None),
     ('sterno_cleido_mastoidien', 'Sterno-cléido-mastoïdien', ['sterno_cleido_mastoidien'],
      None),
@@ -73,7 +74,7 @@ REGIONS = [
     ('deltoide_moyen', 'Deltoïde moyen', ['deltoide_moyen'], 'deltoides'),
     ('deltoide_posterieur', 'Deltoïde postérieur', ['deltoide_posterieur'], 'deltoides'),
     ('sous_epineux', 'Sous-épineux et petit rond', ['infra_epineux', 'petit_rond'],
-     'deltoides'),
+     'coiffe'),
     ('grand_rond', 'Grand rond', ['grand_rond'], 'dorsaux'),
     ('grand_dorsal', 'Grand dorsal', ['grand_dorsal'], 'dorsaux'),
     ('grand_pectoral', 'Grand pectoral',
@@ -88,15 +89,14 @@ REGIONS = [
      'triceps'),
     ('brachio_radial', 'Brachio-radial', ['brachio_radial'], 'avant_bras'),
     ('flechisseurs', 'Fléchisseurs du poignet et des doigts, rond pronateur',
-     ['flechisseurs_du_poignet', 'flechisseurs_superficiels_des_doigts',
-      'flechisseurs_profonds_des_doigts', 'rond_pronateur'], 'avant_bras'),
+     ['flechisseurs_du_poignet', 'flechisseurs_superficiels_des_doigts', 'rond_pronateur'],
+     'avant_bras'),
     ('extenseurs', 'Extenseurs du poignet et des doigts',
      ['extenseurs_du_poignet', 'extenseurs_des_doigts'], 'avant_bras'),
     ('droit_abdomen', 'Grand droit de l’abdomen', ['droit_abdomen'], 'abdominaux'),
     ('oblique_externe', 'Oblique externe', ['oblique_externe'], 'obliques'),
     ('lombaires', 'Érecteurs du rachis (fascia thoraco-lombaire)',
-     ['erecteurs_lombaires', 'erecteurs_thoraciques', 'multifides', 'carre_des_lombes'],
-     'lombaires'),
+     ['erecteurs_lombaires', 'erecteurs_thoraciques'], 'lombaires'),
     ('grand_fessier', 'Grand fessier', ['grand_fessier'], 'fessiers'),
     ('moyen_fessier', 'Moyen fessier', ['moyen_fessier'], 'fessiers'),
     ('tenseur_fascia_lata', 'Tenseur du fascia lata', ['tenseur_fascia_lata'], 'fessiers'),
@@ -108,17 +108,17 @@ REGIONS = [
     ('droit_femoral', 'Droit fémoral', ['droit_femoral'], 'quadriceps'),
     ('vaste_lateral', 'Vaste latéral', ['vaste_lateral'], 'quadriceps'),
     ('vaste_medial', 'Vaste médial', ['vaste_medial'], 'quadriceps'),
-    ('biceps_femoral', 'Biceps fémoral, chef long', ['biceps_femoral'], 'ischios'),
-    ('biceps_femoral_court', 'Biceps fémoral, chef court', ['biceps_femoral_chef_court'],
+    ('biceps_femoral', 'Biceps fémoral', ['biceps_femoral', 'biceps_femoral_chef_court'],
      'ischios'),
-    ('semi_tendineux', 'Semi-tendineux', ['semi_tendineux'], 'ischios'),
-    ('semi_membraneux', 'Semi-membraneux', ['semi_membraneux'], 'ischios'),
+    ('semi_tendineux', 'Semi-tendineux et semi-membraneux',
+     ['semi_tendineux', 'semi_membraneux'], 'ischios'),
     ('gastrocnemien_medial', 'Gastrocnémien médial', ['gastrocnemien_medial'], 'mollets'),
     ('gastrocnemien_lateral', 'Gastrocnémien latéral', ['gastrocnemien_lateral'], 'mollets'),
     ('soleaire', 'Soléaire', ['soleaire'], 'mollets'),
-    ('fibulaires', 'Long et court fibulaires', ['fibulaires'], 'mollets'),
+    ('fibulaires', 'Long et court fibulaires (loge latérale)', ['fibulaires'], 'mollets'),
     ('tibial_anterieur', 'Tibial antérieur', ['tibial_anterieur'], 'tibial'),
-    ('extenseurs_orteils', 'Extenseurs des orteils', ['long_extenseur_des_orteils'], 'tibial'),
+    ('extenseurs_orteils', 'Extenseurs des orteils et de l’hallux',
+     ['long_extenseur_des_orteils'], 'tibial'),
 ]
 REGION_IDS = [r[0] for r in REGIONS]
 SOMBRE, PEAU = 253, 254
@@ -140,8 +140,8 @@ SYM = {
         'deltoide_moyen': [(143, 220)],
         'deltoide_anterieur': [(185, 215), (205, 195)],
         'grand_pectoral': [(235, 230), (255, 260)],
-        'dentele_anterieur': [(198, 300), (197, 320)],
-        'oblique_externe': [(225, 300), (228, 330), (222, 350), (222, 395)],
+        'dentele_anterieur': [(198, 300)],
+        'oblique_externe': [(228, 330), (222, 395)],
         'droit_abdomen': [(265, 300), (265, 330), (265, 365), (265, 420), (270, 450)],
         'biceps': [(165, 300), (178, 310)],
         'triceps_lateral': [(140, 290)],
@@ -177,10 +177,13 @@ SYM = {
         'moyen_fessier': [(705, 425)],
         'grand_fessier': [(740, 470)],
         'vaste_lateral': [(700, 580)],
-        'biceps_femoral': [(740, 580)],
-        'biceps_femoral_court': [(712, 640)],
-        'semi_tendineux': [(770, 560)],
-        'semi_membraneux': [(752, 655)],
+        # loge postérieure, de dehors en dedans : biceps fémoral (fuseau
+        # central et bande latérale), semi-tendineux et semi-membraneux
+        # (bande médiale jusqu'au genou), grand adducteur (en haut, en
+        # dedans, teinte plus sombre, s'arrête à mi-cuisse)
+        'biceps_femoral': [(736, 577), (713, 634)],
+        'semi_tendineux': [(755, 642)],
+        'adducteurs': [(769, 554)],
         'gastrocnemien_lateral': [(705, 750)],
         'gastrocnemien_medial': [(748, 750)],
         'soleaire': [(730, 850), (743, 830)],
@@ -189,13 +192,18 @@ SYM = {
 FIXE = {
     'dos': {
         'extenseurs_cervicaux': [(765, 100), (806, 100)],
-        'elevateur_scapula': [(758, 112), (817, 110)],
+        # bord postérieur du sterno-cléido-mastoïdien (jusqu'au crâne)
+        'sterno_cleido_mastoidien': [(759, 112), (817, 111)],
         'soleaire': [(825, 830), (708, 830)],
         'fibulaires': [(693, 840), (706, 880), (866, 843), (861, 890)],
     },
     'face': {
-        'brachio_radial': [(127, 338), (447, 334)],
-        'dentele_anterieur': [(211, 334)],
+        # relecture anatomique (5.10.0) : zones repérées une à une
+        'brachial': [(127, 338), (447, 334)],
+        'flechisseurs': [(102, 439), (471, 437)],
+        'dentele_anterieur': [(211, 334), (207, 289), (206, 278), (204, 308), (369, 294),
+                              (381, 275)],
+        'oblique_externe': [(230, 291), (346, 290), (352, 308), (347, 333)],
         'fibulaires': [(182, 740), (392, 760)],
         'tibial_anterieur': [(205, 760), (368, 760)],
         'extenseurs_orteils': [(195, 830), (203, 870), (385, 830), (358, 870)],
@@ -211,15 +219,21 @@ FIXE = {
         'deltoide_moyen': [(1250, 210)],
         'deltoide_anterieur': [(1288, 215)],
         'grand_pectoral': [(1320, 230)],
-        'grand_rond': [(1205, 250)],
-        'triceps_long': [(1225, 285)],
-        'triceps_lateral': [(1238, 320)],
+        # pli axillaire postérieur : grand dorsal
+        'grand_dorsal': [(1204, 240), (1201, 268)],
+        # vue latérale : le chef latéral couvre la face externe du bras, le
+        # chef long n'apparaît qu'en bord postérieur
+        'triceps_lateral': [(1235, 273), (1246, 315)],
+        'triceps_long': [(1230, 326), (1214, 297), (1217, 264)],
         'biceps': [(1262, 300), (1283, 300)],
         'dentele_anterieur': [(1302, 275), (1292, 325)],
         'oblique_externe': [(1315, 295), (1318, 320), (1315, 360), (1318, 395), (1318, 420)],
         'droit_abdomen': [(1337, 300), (1337, 350), (1337, 400), (1335, 450)],
-        'brachio_radial': [(1275, 360), (1285, 430)],
-        'extenseurs': [(1250, 410)],
+        # brachio-radial : fuseau proximal antérieur (crête supracondylaire) ;
+        # dessous et derrière : extenseurs (épicondyle latéral)
+        'brachio_radial': [(1275, 361), (1272, 355), (1287, 395)],
+        'extenseurs': [(1259, 390), (1277, 401), (1283, 424), (1287, 462), (1257, 425),
+                       (1246, 374)],
         'flechisseurs': [(1310, 440)],
         'grand_fessier': [(1220, 470)],
         'vaste_lateral': [(1290, 620), (1265, 600)],
@@ -389,6 +403,12 @@ def classify(partial=False):
     labels[peau] = PEAU
     # pixels sans étiquette (traits, liserés, très petites zones isolées) :
     # étiquette du pixel voisin le plus proche (aucun trou vers le support)
+    # (un pixel coloré prend la région la plus proche, jamais la peau :
+    # fines bandes musculaires effacées par l'érosion)
+    region = (labels >= 1) & (labels <= len(REGIONS))
+    todo = (labels == 0) & colored
+    _, (iy, ix) = ndimage.distance_transform_edt(~region, return_indices=True)
+    labels[todo] = labels[iy[todo], ix[todo]]
     todo = (labels == 0) & ~background
     _, (iy, ix) = ndimage.distance_transform_edt(labels == 0, return_indices=True)
     labels[todo] = labels[iy[todo], ix[todo]]
@@ -405,6 +425,7 @@ PREVIEW_GROUP = {
     'trapezes': (60, 110, 230), 'deltoides': (250, 140, 30), 'pectoraux': (220, 50, 50),
     'dorsaux': (150, 20, 60), 'biceps': (250, 220, 40), 'triceps': (150, 90, 220),
     'avant_bras': (40, 190, 230), 'abdominaux': (60, 180, 70), 'obliques': (250, 170, 150),
+    'coiffe': (200, 120, 60),
     'lombaires': (240, 120, 200), 'fessiers': (240, 100, 20), 'quadriceps': (30, 120, 250),
     'ischios': (110, 90, 200), 'adducteurs': (230, 60, 200), 'mollets': (130, 200, 40),
     'tibial': (20, 150, 110), None: (160, 160, 160),

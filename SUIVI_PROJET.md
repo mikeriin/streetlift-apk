@@ -1,14 +1,23 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : nouveau logo et Rouge Kalis à sa couleur, version 5.10.0 (hors pipeline 3D, demande du propriétaire du 30/09/2026) ; précédent : M8 correction 1 (5.9.1)**  
+**Passe actuelle : version 5.10.0 — nouveau logo, Rouge Kalis à sa couleur ; M8 correction 2 (carte muscle par muscle, relectures anatomique et biomécanique) ; précédent : M8 correction 1 (5.9.1)**  
 **Date : 30 septembre 2026, Europe/Paris — version : 5.10.0+92 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+
+## M8.C2 — Correction 2 (surbrillance scientifiquement correcte, version 5.10.0)
+
+| Passe | Réalisation |
+| --- | --- |
+| Découpage | Carte muscle par muscle : 44 régions (`REGIONS` de `tools/muscles2d/build_map.py`), points posés à la main sur agrandissements quadrillés (`SEEDS`), zones voisines d'un même muscle ombré rattachées, trapèze de dos partagé en trois faisceaux (supérieur, moyen, inférieur) selon leurs insertions. Muscles profonds non dessinés (texte). |
+| Relecture anatomique | Sous-agent indépendant (anatomie de référence) : 8 erreurs corrigées (dentelé / oblique externe, chefs du triceps de profil, brachio-radial / extenseurs de profil, bandelette des fléchisseurs, soléaire latéral de dos, profonds rattachés à tort aux lombaires et aux fléchisseurs, coiffe rangée dans « Deltoïdes ») et cas douteux tranchés (loge postérieure de la cuisse, bord postérieur du SCM, pli axillaire postérieur = grand dorsal). |
+| Relecture des rôles | Sous-agent indépendant (biomécanique, EMG) sur les 625 exercices (255 profils de rôles) : 80 corrections nettes appliquées par `tools/content_corrections.py` (idempotent, contrôlé en test) ; laissées : levier dorsal (discutable), bilan et contraste (non-exercices, rien de dessiné). |
+| Application | `MuscleMap2D` : régions coloriées par étiquettes ; 17 filtres Anatomie ; nom du muscle au toucher ; fiche : « Non dessinés (profonds) ». Tests Dart (régions, profonds, exercices de référence, chaque région allumée montre un muscle de la fiche), Python (table générée identique, muscles dessinés une fois, profonds jamais, corrections appliquées), émulateur. |
 
 ## Logo — Nouveau logo (version 5.10.0)
 
 | Demande | Réalisation |
 | --- | --- |
-| « Nouveau logo, changer la couleur Rouge Kalis, elle s'appelle toujours pareil mais prend la couleur du logo. » | Masque du logo refait depuis l'image (même place, même hauteur) ; icônes Android, notification, en-tête et visuel Google Play régénérés (`tools/generate_brand.py`). `KPalette.burgundy` = #5E1615 (couleur du logo) ; `actionRed` #9E2A28 et `lightRed` #D96968, même teinte, clartés d'avant ; valeurs en dur remplacées (défi du jour, couleurs des blocs du programme). Tests de contraste et de palette mis à jour. |
+| « Nouveau logo, changer la couleur Rouge Kalis, elle s'appelle toujours pareil mais prend la couleur du logo. » | Masque du logo refait depuis l'image (même place, même hauteur) ; icônes Android, notification, en-tête et visuel Google Play régénérés (`tools/generate_brand.py`). `KPalette.burgundy` = #5E1615 (couleur du logo) ; `actionRed` #9E2A28 et `lightRed` #D96968, même teinte, clartés d'avant ; valeurs en dur remplacées (défi du jour ; couleurs des blocs du générateur inchangées : références figées). Tests de contraste et de palette mis à jour. |
 
 ## M8.C1 — Correction 1 (nouvelle image du propriétaire, version 5.9.1)
 

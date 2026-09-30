@@ -52,7 +52,8 @@
 // nom (réglage « Nom du muscle au toucher ») ; résumé texte des muscles de
 // chaque groupe coché. L'entrée « Koach (aperçu) » reste.
 //
-// 5.10.0 : carte muscle par muscle ; 16 filtres (lombaires ajoutés) ;
+// 5.10.0 : carte muscle par muscle ; 17 filtres (lombaires et coiffe des
+// rotateurs ajoutés) ;
 // toucher → nom du muscle (et de son groupe).
 import 'package:flutter/material.dart';
 
@@ -71,9 +72,9 @@ class AnatomyFilters {
 
   const AnatomyFilters({this.groups = const {}});
 
-  /// Nombre de cases (M8 : les groupes de la carte ; 5.10.0 : 16, avec
-  /// les lombaires).
-  static const total = 16;
+  /// Nombre de cases (M8 : les groupes de la carte ; 5.10.0 : 17, avec
+  /// les lombaires et la coiffe des rotateurs).
+  static const total = 17;
 
   /// Tout coché.
   static final all = AnatomyFilters(groups: {for (final g in kMapGroups) g.id});

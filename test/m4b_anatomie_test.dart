@@ -240,7 +240,7 @@ void main() {
       expect(AnatomyFilters.all.groups, {for (final m in kMapGroups) m.id});
       expect(AnatomyFilters.none.count, 0);
       // M8 : les 15 groupes de la carte 2D.
-      expect(AnatomyFilters.total, 16); // 5.10.0 : lombaires
+      expect(AnatomyFilters.total, 17); // 5.10.0 : lombaires, coiffe
       expect(AnatomyFilters.categories.map((c) => c.id), ['groupes']);
       expect(AnatomyFilters.fromSelection(g.selection), g);
       expect(g, g.toggleGroup('biceps').toggleGroup('biceps'));
@@ -370,7 +370,7 @@ void main() {
       // Tout cocher, tout décocher (M4c : par catégorie).
       await tapItem(tester, 'all-groupes');
       expect(state(tester).filters, AnatomyFilters.all);
-      expect(find.text('Filtres · 16'), findsOneWidget);
+      expect(find.text('Filtres · 17'), findsOneWidget);
       expect(
         mapWidget().intensities.length,
         kMapRegions.where((r) => r.group != null).length,
@@ -396,7 +396,7 @@ void main() {
     expect(
       tester.getSemantics(find.byKey(const ValueKey('anatomy-filters'))),
       isSemantics(
-        label: 'Filtres, 0 actif sur 16',
+        label: 'Filtres, 0 actif sur 17',
         isButton: true,
         hasTapAction: true,
       ),

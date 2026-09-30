@@ -38,7 +38,8 @@ PROFONDS = {
     'transverse_abdomen', 'oblique_interne', 'diaphragme', 'plancher_pelvien',
     'petit_fessier', 'rotateurs_lateraux_hanche', 'court_adducteur', 'vaste_intermediaire',
     'poplite', 'muscles_intrinseques_pied', 'flechisseurs_profonds_des_orteils',
-    'tibial_posterieur',
+    'tibial_posterieur', 'multifides', 'carre_des_lombes', 'flechisseurs_profonds_des_doigts',
+    'elevateur_scapula',
 }
 
 
@@ -75,8 +76,9 @@ def atlas_ids():
 class CarteTest(unittest.TestCase):
     def test_regions_et_groupes(self):
         c = carte()
-        self.assertEqual(len(c['groupes']), 16)
+        self.assertEqual(len(c['groupes']), 17)
         self.assertIn('lombaires', c['groupes'])
+        self.assertIn('coiffe', c['groupes'])
         ids = [r['id'] for r in c['regions']]
         self.assertEqual(len(ids), len(set(ids)))
         self.assertLess(len(ids), 253)
@@ -145,6 +147,25 @@ class CarteTest(unittest.TestCase):
             mod.DART = Path(tmp) / 'r.dart'
             mod.write_dart()
             self.assertEqual(mod.DART.read_text(encoding='utf-8'), REGIONS_DART)
+
+    def test_corrections_des_roles_appliquees(self):
+        sys.path.insert(0, str(ROOT / 'tools'))
+        try:
+            import content_corrections as cc
+        finally:
+            sys.path.pop(0)
+        import gzip
+        corrections = json.loads(cc.CORRECTIONS.read_text(encoding='utf-8'))['corrections']
+        details = json.loads(gzip.decompress(cc.DETAILS.read_bytes()))
+        self.assertEqual(cc.apply(details, corrections, cc.atlas_ids()), 0)
+        self.assertGreater(len(corrections), 50)
+        for c in corrections:
+            self.assertTrue(c['why'], c['id'])
+        # exemples : tractions (grand pectoral), pompes (grand fessier)
+        ex = details['exercices']
+        self.assertIn('grand_pectoral_sterno_costal', ex['traction-pronation']['muscles_secondaires'])
+        self.assertIn('grand_fessier', ex['pompes']['muscles_stabilisateurs'])
+        self.assertNotIn('moyen_fessier', ex['pompes']['muscles_stabilisateurs'])
 
     def test_assets_declares(self):
         pubspec = (ROOT / 'pubspec.yaml').read_text(encoding='utf-8')

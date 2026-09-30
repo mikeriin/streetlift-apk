@@ -47,13 +47,13 @@ void main() {
   }
 
   group('D1 · Anatomie : filtre « Muscles profonds » retiré', () {
-    test('M8 : plus de catégorie Affichage (ni « Os »), 16 groupes', () {
+    test('M8 : plus de catégorie Affichage (ni « Os »), 17 groupes', () {
       expect(
         AnatomyFilters.categories.where((c) => c.id == 'affichage'),
         isEmpty,
       );
-      expect(AnatomyFilters.total, 16);
-      expect(AnatomyFilters.all.count, 16);
+      expect(AnatomyFilters.total, 17);
+      expect(AnatomyFilters.all.count, 17);
       // L'écorché n'a aucune région profonde : le filtre n'avait pas d'effet.
       expect(MannequinMap.loaded!.deepIds, isEmpty);
     });

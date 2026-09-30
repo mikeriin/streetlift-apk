@@ -9,6 +9,7 @@ import 'muscle_map_2d.dart' show MapGroup, MapRegion;
 const kMapGroups = [
   MapGroup('trapezes', 'Trapèzes'),
   MapGroup('deltoides', 'Deltoïdes'),
+  MapGroup('coiffe', 'Coiffe des rotateurs'),
   MapGroup('pectoraux', 'Pectoraux'),
   MapGroup('dorsaux', 'Dorsaux'),
   MapGroup('biceps', 'Biceps'),
@@ -41,12 +42,6 @@ const kMapRegions = [
     'trapezes',
   ),
   MapRegion('rhomboides', 'Rhomboïdes', ['rhomboides'], 'trapezes'),
-  MapRegion(
-    'elevateur_scapula',
-    'Élévateur de la scapula',
-    ['elevateur_scapula'],
-    'trapezes',
-  ),
   MapRegion(
     'extenseurs_cervicaux',
     'Extenseurs du cou (splénius)',
@@ -87,7 +82,7 @@ const kMapRegions = [
     'sous_epineux',
     'Sous-épineux et petit rond',
     ['infra_epineux', 'petit_rond'],
-    'deltoides',
+    'coiffe',
   ),
   MapRegion('grand_rond', 'Grand rond', ['grand_rond'], 'dorsaux'),
   MapRegion('grand_dorsal', 'Grand dorsal', ['grand_dorsal'], 'dorsaux'),
@@ -144,7 +139,6 @@ const kMapRegions = [
     [
       'flechisseurs_du_poignet',
       'flechisseurs_superficiels_des_doigts',
-      'flechisseurs_profonds_des_doigts',
       'rond_pronateur',
     ],
     'avant_bras',
@@ -170,12 +164,7 @@ const kMapRegions = [
   MapRegion(
     'lombaires',
     'Érecteurs du rachis (fascia thoraco-lombaire)',
-    [
-      'erecteurs_lombaires',
-      'erecteurs_thoraciques',
-      'multifides',
-      'carre_des_lombes',
-    ],
+    ['erecteurs_lombaires', 'erecteurs_thoraciques'],
     'lombaires',
   ),
   MapRegion('grand_fessier', 'Grand fessier', ['grand_fessier'], 'fessiers'),
@@ -200,21 +189,14 @@ const kMapRegions = [
   MapRegion('vaste_medial', 'Vaste médial', ['vaste_medial'], 'quadriceps'),
   MapRegion(
     'biceps_femoral',
-    'Biceps fémoral, chef long',
-    ['biceps_femoral'],
+    'Biceps fémoral',
+    ['biceps_femoral', 'biceps_femoral_chef_court'],
     'ischios',
   ),
   MapRegion(
-    'biceps_femoral_court',
-    'Biceps fémoral, chef court',
-    ['biceps_femoral_chef_court'],
-    'ischios',
-  ),
-  MapRegion('semi_tendineux', 'Semi-tendineux', ['semi_tendineux'], 'ischios'),
-  MapRegion(
-    'semi_membraneux',
-    'Semi-membraneux',
-    ['semi_membraneux'],
+    'semi_tendineux',
+    'Semi-tendineux et semi-membraneux',
+    ['semi_tendineux', 'semi_membraneux'],
     'ischios',
   ),
   MapRegion(
@@ -232,7 +214,7 @@ const kMapRegions = [
   MapRegion('soleaire', 'Soléaire', ['soleaire'], 'mollets'),
   MapRegion(
     'fibulaires',
-    'Long et court fibulaires',
+    'Long et court fibulaires (loge latérale)',
     ['fibulaires'],
     'mollets',
   ),
@@ -244,7 +226,7 @@ const kMapRegions = [
   ),
   MapRegion(
     'extenseurs_orteils',
-    'Extenseurs des orteils',
+    'Extenseurs des orteils et de l’hallux',
     ['long_extenseur_des_orteils'],
     'tibial',
   ),

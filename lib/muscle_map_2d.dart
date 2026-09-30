@@ -83,7 +83,7 @@ bool mapDrawsMuscle(String muscle) => kMuscleRegions.containsKey(muscle);
 /// d'un exercice sans fiche : `groupe:<g>`) ; le premier est le principal.
 const kAppGroupToMap = <String, List<String>>{
   'pectoraux': ['pectoraux'],
-  'épaules': ['deltoides'],
+  'épaules': ['deltoides', 'coiffe'],
   'biceps': ['biceps'],
   'triceps': ['triceps'],
   'avant-bras': ['avant_bras'],

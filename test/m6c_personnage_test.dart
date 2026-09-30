@@ -131,7 +131,7 @@ void main() {
   });
 
   test('plus de réglage « Os visibles » ni de filtre « Os »', () {
-    expect(AnatomyFilters.total, 16); // 5.10.0 : 16 groupes de la carte 2D
+    expect(AnatomyFilters.total, 17); // 5.10.0 : 17 groupes de la carte 2D
     expect(AnatomyFilters.categories.map((c) => c.id), ['groupes']);
     expect(AnatomyFilters.none.count, 0);
   });
