@@ -881,16 +881,16 @@ class _DayCard extends StatelessWidget {
                             width: MediaQuery.sizeOf(context).width < 350
                                 ? 88
                                 : 106,
-                            // M8 : carte 2D des groupes ciblés ; sur la
-                            // carte du jour (couleur dominante), teintée de
-                            // la couleur du texte.
+                            // M8 : carte 2D des muscles ciblés. 5.10.1
+                            // (propriétaire : « trop claire et flashy ») :
+                            // mêmes couleurs que l'écran Anatomie, aussi sur
+                            // la carte du jour (gris, couleur dominante).
                             child: TargetedMuscleMap(
                               names: store.plannedNames(estimate),
                               groups: store.plannedMuscles(estimate),
                               height: compact ? 90 : 110,
                               views: const [MapView.face, MapView.dos],
                               viewLabels: false,
-                              tint: isToday ? SL.onBrandSoft : null,
                               subject: 'muscles de la séance',
                             ),
                           ),

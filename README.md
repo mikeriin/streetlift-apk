@@ -1,4 +1,8 @@
-# Kalis Track 5.10.0 — Nouveau logo
+# Kalis Track 5.10.1 — Nouveau logo
+
+## 5.10.1 — Carte du jour aux couleurs de l'Anatomie (lot M8, correction 3)
+
+- Retour du propriétaire (30/09/2026) : la carte des muscles de la séance du jour (accueil) était « trop claire et flashy ». Elle n'est plus teintée de la couleur du texte : mêmes couleurs que l'écran Anatomie (muscles non travaillés en gris, muscles travaillés dans la couleur dominante, traits et modelé de l'image), posée sur la carte du jour.
 
 ## 5.10.0 — Nouveau logo, Rouge Kalis à sa couleur
 
