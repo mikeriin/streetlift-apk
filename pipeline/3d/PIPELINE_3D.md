@@ -32,6 +32,7 @@ Tu es lancé par une des tâches planifiées « Kalis Track — pipeline 3D (Opu
 - (28/09/2026) Modèles d'agent : Claude Fable 5.1 en effort maximal pour M56 et M12 ; Claude Opus 5.5 en effort élevé pour tous les autres lots.
 
 ## 3. Règles techniques communes
+- **Règle de base (propriétaire, 30/09/2026) : le fond de TOUT affichage 3D (mannequin fixe, lecteur, aperçu, nouvel écran) est exactement la couleur de son support, sans cadre ni démarcation.** Posé sur une page : pas de carte autour, `background` = couleur de la page (comme l'écran Anatomie) ; dans une carte existante : couleur de cette carte. Chaque lot qui ajoute ou déplace une vue 3D le vérifie par un test Dart (fond = support) et par la mesure de démarcation sur émulateur (écart des pixels de part et d'autre des bords de la vue < 3), avant de livrer : le propriétaire ne doit plus avoir à le demander.
 - **Jamais d'animation fausse** : un exercice dont l'animation 3D ne passe pas ses contrôles garde son affichage actuel (démonstration 2D existante, ou posture fixe) et est listé dans la livraison.
 - Tant que la conversion n'est pas finie, les exercices non convertis gardent la démonstration 2D actuelle (`lib/pose_cutout.dart`, `pose_engine.dart`) ; aucun écran ne doit perdre son contenu.
 - Rendu économe : on ne dessine que ce qui est visible ; scène fixe = rendu à la demande (pas de boucle continue) ; animations en pause hors écran et en arrière-plan ; réduction des animations Android = images clés fixes.

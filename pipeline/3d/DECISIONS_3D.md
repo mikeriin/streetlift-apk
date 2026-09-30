@@ -201,6 +201,10 @@ Modèle Claude : Opus 5.5 pour tous les lots, effort accru demandé sur M5 (sque
 - **Aperçu** : écran Anatomie › « Koach (aperçu) » (et non Réglages › À propos › Moteur 3D, réservé aux tests techniques). **Pas de rotation au doigt** malgré le prompt (écrit le 28/09) : décision du propriétaire du 29/09 (§2), boutons Face / Dos / Profil / 3/4 et zoom. Les 9 animations se jouent en boucle (félicite comprises) ; mannequin neutre ; Koach n'apparaît nulle part ailleurs.
 - **CI 3D** : cible émulateur `koach_m7b_test.dart` (a : entrée, poses fortes ; b, c, d : 8 images de GIF par animation) ; M7 et les lots précédents sur `CI3D_TOUT=1`.
 
+### M7b correction 1 (30/09/2026, 5.8.1)
+- Retour du propriétaire : « le fond doit suivre les mêmes règles que le reste et être de couleur identique au support ; règle de base pour la suite ». Koach (aperçu) : lecteur sorti de sa carte, posé sur la page, fond = couleur de la page ; test Dart et démarcation mesurée sur émulateur. Règle inscrite en tête du §3 de PIPELINE_3D.md.
+- Non modifié (autre lot, déjà validé) : l'écran « Animation de test » de M7 garde son lecteur dans une carte (fond = couleur de la carte, conforme à la règle du support) ; à aligner sur la page si le propriétaire le souhaite.
+
 ## En attente du propriétaire
 - Redéfinition des lots M7b à M18 après « plus d'animation, positions à la main plus tard » (M6b livré en 5.5.5 : filtre « Muscles profonds » retiré).
 - M6c : l'historique git de `main` garde les anciennes versions en clair du modèle (écorché 5.5.2-5.5.5, `assets/anatomy/mannequin.glb`) ; les retirer demande une réécriture de l'historique (force-push), interdite sans accord. Options : (1) laisser (le modèle d'exécution décimé seulement, pas l'OBJ source) ; (2) réécrire `main` avec `git filter-repo` (tous les clones à refaire). Recommandation : (1), sauf exigence du vendeur.
