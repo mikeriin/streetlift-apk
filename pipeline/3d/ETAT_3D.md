@@ -28,6 +28,7 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M7b correction 2 | 5.8.2 | 528afc3 | build n° 176 (36675932390) ; CI 3D 36674308561 (essai A) | 2026-09-30 | remplacé par 5.9.0 — `livraisons/LIVRAISON_M7b_correction2.md` ; tous les fonds 3D = couleur du support ; remplace 5.8.1 |
 | M8 | 5.9.0 | decf806 | build n° 180 (36710169365) ; CI 3D 36708412158 (essai C) | 2026-09-30 | remplacé par 5.9.1 — `livraisons/LIVRAISON_M8.md` ; carte 2D des 15 groupes (fiches, STATS, accueil, WOD, Anatomie), 3D réservée à la démonstration et à Koach |
 | M8 correction 1 | 5.9.1 | a6e0bd7 | build n° 182 (36725473167) ; CI 3D 36723637430 (essai A) | 2026-09-30 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M8_correction1.md` ; carte redessinée d'après l'image détaillée (traits, modelé), bas du dos gris sans groupe (16ᵉ groupe « lombaires » ? question au propriétaire) |
+| Logo + M8 correction 2 | 5.10.0 | — | — | — | en cours depuis 2026-09-30 (nouveau logo, Rouge Kalis = couleur du logo ; surbrillance muscle par muscle, passes de correction anatomique) |
 | M9 | 5.9.0 | — | — | — | à redéfinir (plus d'animation) |
 | M10 | 5.10.0 | — | — | — | à redéfinir (plus d'animation) |
 | M11 | 5.11.0 | — | — | — | à redéfinir (plus d'animation) |
