@@ -453,7 +453,9 @@ def write_dart():
         '// valeur de la carte des étiquettes (1…), filtre de l’écran Anatomie.',
         "import 'muscle_map_2d.dart' show MapGroup, MapRegion;",
         '',
-        '/// Filtres de l’écran Anatomie (16 groupes).',
+        '// Table générée : mise en page du script (dart format ne la touche pas).',
+        '// dart format off',
+        f'/// Filtres de l’écran Anatomie ({len(GROUPS)} groupes).',
         'const kMapGroups = [',
     ]
     for gid, label in GROUPS:
@@ -476,7 +478,7 @@ def write_dart():
         else:
             lines += ['    ['] + [f"      '{m}'," for m in muscles] + ['    ],']
         lines += [f'    {g},', '  ),']
-    lines += ['];', '']
+    lines += ['];', '// dart format on', '']
     DART.write_text('\n'.join(lines), encoding='utf-8')
 
 

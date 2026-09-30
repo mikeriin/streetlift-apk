@@ -5,7 +5,9 @@
 // valeur de la carte des étiquettes (1…), filtre de l’écran Anatomie.
 import 'muscle_map_2d.dart' show MapGroup, MapRegion;
 
-/// Filtres de l’écran Anatomie (16 groupes).
+// Table générée : mise en page du script (dart format ne la touche pas).
+// dart format off
+/// Filtres de l’écran Anatomie (17 groupes).
 const kMapGroups = [
   MapGroup('trapezes', 'Trapèzes'),
   MapGroup('deltoides', 'Deltoïdes'),
@@ -231,3 +233,4 @@ const kMapRegions = [
     'tibial',
   ),
 ];
+// dart format on

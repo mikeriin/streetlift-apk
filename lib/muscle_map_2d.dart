@@ -301,6 +301,10 @@ class MapLabels {
 }
 
 final _labels = <MapView, Future<MapLabels>>{};
+final _labelsReady = <MapView, MapLabels>{};
+
+/// Étiquettes d'une vue déjà lues (toucher sans attente), sinon null.
+MapLabels? mapLabelsIfLoaded(MapView v) => _labelsReady[v];
 
 /// Étiquettes d'une vue (lues une fois).
 Future<MapLabels> loadMapLabels(MapView v) => _labels[v] ??= () async {
@@ -314,16 +318,16 @@ Future<MapLabels> loadMapLabels(MapView v) => _labels[v] ??= () async {
   for (var i = 0; i < values.length; i++) {
     values[i] = bytes[i * 4];
   }
-  return MapLabels(w, h, values);
+  return _labelsReady[v] = MapLabels(w, h, values);
 }();
 
 /// Précharge les étiquettes et les calques (lancement de l'application).
 Future<void> precacheMuscleMap(BuildContext context) async {
   for (final v in MapView.values) {
+    if (!context.mounted) return;
     await precacheImage(AssetImage(v.contour), context);
     if (!context.mounted) return;
     await precacheImage(AssetImage(v.shade), context);
-    if (!context.mounted) return;
     await loadMapLabels(v);
   }
 }
@@ -534,8 +538,8 @@ class MapFigureState extends State<MapFigure> {
   }
 
   @override
-  void didUpdateWidget(MapFigure old) {
-    super.didUpdateWidget(old);
+  void didUpdateWidget(MapFigure oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _refresh();
   }
 
@@ -615,7 +619,7 @@ class MapFigureState extends State<MapFigure> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTapUp: (d) async {
-        final labels = await loadMapLabels(v);
+        final labels = mapLabelsIfLoaded(v) ?? await loadMapLabels(v);
         final r = labels.regionAt(
           d.localPosition.dx / width,
           d.localPosition.dy / widget.height,

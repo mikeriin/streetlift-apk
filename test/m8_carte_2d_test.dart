@@ -98,7 +98,11 @@ void main() {
     test('principal 1, secondaire 0,62, stabilisateur 0,35 ; le plus fort', () {
       final t = mapIntensitiesFromRoles(
         primaires: const ['grand_dorsal', 'biceps_chef_long'],
-        secondaires: const ['brachial', 'trapeze_inferieur', 'biceps_chef_court'],
+        secondaires: const [
+          'brachial',
+          'trapeze_inferieur',
+          'biceps_chef_court',
+        ],
         stabilisateurs: const [
           'droit_abdomen',
           'erecteurs_thoraciques',
@@ -184,10 +188,7 @@ void main() {
         final vivid = dark ? a.bright : (a.vividLight ?? a.vivid);
         expect(mapHeat(1, dark), vivid);
         expect(mapLabelColor(pec, const {}, dark), mapMuscleGray(dark));
-        expect(
-          mapLabelColor(pec, const {'grand_pectoral': 1}, dark),
-          vivid,
-        );
+        expect(mapLabelColor(pec, const {'grand_pectoral': 1}, dark), vivid);
         expect(mapLabelColor(kMapPeau, const {}, dark), mapSkinGray(dark));
         expect(mapLabelColor(kMapSombre, const {}, dark), mapDarkGray(dark));
         expect(mapLabelColor(0, const {}, dark).a, 0);
@@ -295,51 +296,51 @@ void main() {
     testWidgets('étiquettes : régions attendues aux bons endroits', (
       tester,
     ) async {
+      final labels = <MapView, MapLabels>{};
       await tester.runAsync(() async {
-        // cœur de quelques muscles, en fractions de chaque vue
-        Future<Set<String?>> around(MapView v, String region) async {
-          final out = <String?>{};
-          for (var fy = 0.0; fy < 1; fy += .01) {
-            for (var fx = 0.0; fx < 1; fx += .01) {
-              if (await mapRegionAt(v, fx, fy) == region) out.add(region);
-            }
-          }
-          return out;
+        for (final v in MapView.values) {
+          labels[v] = await loadMapLabels(v);
         }
-
-        for (final (v, r) in const [
-          (MapView.dos, 'grand_dorsal'),
-          (MapView.dos, 'lombaires'),
-          (MapView.dos, 'trapeze_moyen'),
-          (MapView.face, 'grand_pectoral'),
-          (MapView.face, 'vaste_medial'),
-          (MapView.face, 'tibial_anterieur'),
-          (MapView.profil, 'deltoide_moyen'),
-        ]) {
-          expect(await around(v, r), {r}, reason: '${v.name} $r');
-        }
-        // haut du dos : trapèze supérieur au-dessus du moyen, lui-même
-        // au-dessus de l'inférieur, sur l'axe
-        final labels = await loadMapLabels(MapView.dos);
-        int firstRow(String region) {
-          final k = kMapRegions.indexWhere((r) => r.id == region) + 1;
-          for (var y = 0; y < labels.height; y++) {
-            for (var x = 0; x < labels.width; x++) {
-              if (labels.values[y * labels.width + x] == k) return y;
-            }
-          }
-          return -1;
-        }
-
-        expect(
-          firstRow('trapeze_superieur'),
-          lessThan(firstRow('trapeze_moyen')),
-        );
-        expect(
-          firstRow('trapeze_moyen'),
-          lessThan(firstRow('trapeze_inferieur')),
-        );
       });
+      Set<String> regions(MapView v) {
+        final l = labels[v]!;
+        return {
+          for (final x in l.values)
+            if (x >= 1 && x <= kMapRegions.length) kMapRegions[x - 1].id,
+        };
+      }
+
+      for (final (v, r) in const [
+        (MapView.dos, 'grand_dorsal'),
+        (MapView.dos, 'lombaires'),
+        (MapView.dos, 'trapeze_moyen'),
+        (MapView.dos, 'sous_epineux'),
+        (MapView.face, 'grand_pectoral'),
+        (MapView.face, 'vaste_medial'),
+        (MapView.face, 'tibial_anterieur'),
+        (MapView.profil, 'deltoide_moyen'),
+      ]) {
+        expect(regions(v), contains(r), reason: '${v.name} $r');
+      }
+      // pas de vue de face sur les muscles postérieurs, ni l'inverse
+      expect(regions(MapView.face), isNot(contains('lombaires')));
+      expect(regions(MapView.dos), isNot(contains('droit_abdomen')));
+      // haut du dos : trapèze supérieur au-dessus du moyen, lui-même
+      // au-dessus de l'inférieur
+      final dos = labels[MapView.dos]!;
+      int firstRow(String region) {
+        final k = kMapRegions.indexWhere((r) => r.id == region) + 1;
+        return dos.values.indexOf(k) ~/ dos.width;
+      }
+
+      expect(
+        firstRow('trapeze_superieur'),
+        lessThan(firstRow('trapeze_moyen')),
+      );
+      expect(
+        firstRow('trapeze_moyen'),
+        lessThan(firstRow('trapeze_inferieur')),
+      );
     });
 
     testWidgets('toucher : région sous le doigt', (tester) async {
@@ -354,35 +355,29 @@ void main() {
         ),
       );
       final rect = tester.getRect(find.byKey(const ValueKey('map-dos')));
-      Offset? core;
+      late MapLabels labels;
       await tester.runAsync(() async {
-        for (var fy = .25; fy < .5 && core == null; fy += .01) {
-          for (var fx = .2; fx < .8; fx += .01) {
-            if (await mapRegionAt(MapView.dos, fx, fy) == 'grand_dorsal' &&
-                await mapRegionAt(MapView.dos, fx + .02, fy) ==
-                    'grand_dorsal' &&
-                await mapRegionAt(MapView.dos, fx - .02, fy) ==
-                    'grand_dorsal') {
-              core = Offset(fx, fy);
-              break;
-            }
+        labels = await loadMapLabels(MapView.dos);
+      });
+      Offset? core;
+      for (var fy = .25; fy < .5 && core == null; fy += .01) {
+        for (var fx = .2; fx < .8; fx += .01) {
+          if (labels.regionAt(fx, fy) == 'grand_dorsal' &&
+              labels.regionAt(fx + .02, fy) == 'grand_dorsal' &&
+              labels.regionAt(fx - .02, fy) == 'grand_dorsal') {
+            core = Offset(fx, fy);
+            break;
           }
         }
-      });
+      }
       expect(core, isNotNull);
       await tester.tapAt(
         rect.topLeft + Offset(core!.dx * rect.width, core!.dy * rect.height),
-      );
-      await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 50)),
       );
       await tester.pump();
       expect(touched, 'grand_dorsal');
       // coin : hors de la figure
       await tester.tapAt(rect.topLeft + const Offset(2, 2));
-      await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 50)),
-      );
       await tester.pump();
       expect(touched, isNull);
     });
