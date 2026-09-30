@@ -1,27 +1,32 @@
 {
  "vues": {
   "face": {
-   "largeur": 469,
-   "hauteur": 964,
+   "largeur": 511,
+   "hauteur": 980,
    "calques": [
     "trapezes",
     "deltoides",
     "pectoraux",
+    "dorsaux",
     "biceps",
+    "triceps",
     "avant_bras",
     "abdominaux",
     "obliques",
+    "fessiers",
     "quadriceps",
     "adducteurs",
     "mollets",
     "tibial",
     "peau",
-    "sombre"
+    "sombre",
+    "contour",
+    "ombre"
    ]
   },
   "dos": {
-   "largeur": 412,
-   "hauteur": 964,
+   "largeur": 489,
+   "hauteur": 976,
    "calques": [
     "trapezes",
     "deltoides",
@@ -30,15 +35,19 @@
     "avant_bras",
     "obliques",
     "fessiers",
+    "quadriceps",
     "ischios",
     "mollets",
+    "neutre",
     "peau",
-    "sombre"
+    "sombre",
+    "contour",
+    "ombre"
    ]
   },
   "profil": {
-   "largeur": 178,
-   "hauteur": 965,
+   "largeur": 187,
+   "hauteur": 980,
    "calques": [
     "trapezes",
     "deltoides",
@@ -55,7 +64,9 @@
     "mollets",
     "tibial",
     "peau",
-    "sombre"
+    "sombre",
+    "contour",
+    "ombre"
    ]
   }
  },
@@ -92,8 +103,11 @@
   "adducteurs",
   "mollets",
   "tibial",
+  "neutre",
   "peau",
-  "sombre"
+  "sombre",
+  "contour",
+  "ombre"
  ],
- "source": "tools/muscles2d/source_carte.png (image du propriétaire, 30/09/2026)"
+ "source": "tools/muscles2d/source_carte.png (image détaillée du propriétaire, 30/09/2026)"
 }

@@ -1,4 +1,9 @@
-# Kalis Track 5.9.0 — Carte 2D des groupes musculaires
+# Kalis Track 5.9.1 — Carte 2D des groupes musculaires
+
+## 5.9.1 — Carte redessinée d'après l'image détaillée (lot M8, correction 1)
+
+- Nouvelle image du propriétaire (30/09/2026), plus détaillée : chaque muscle y est dessiné, cerné de noir, avec son modelé. La carte en reprend les traits (calque `contour`) et le modelé (calque `ombre`, noir translucide sur les muscles) ; les 15 groupes, le gris des muscles non travaillés et la couleur dominante par rôle ne changent pas.
+- Fabrication (`tools/muscles2d/build_map.py`) : l'image n'a pas de légende et réutilise les mêmes couleurs pour plusieurs muscles ; zones colorées isolées (couleur puis connexité : un muscle = une zone), puis groupe de chaque zone par des règles de position et de couleur propres à chaque vue (tibial antérieur repéré par sa place contre le tibia, les deux jambes n'étant pas colorées pareil). Dentelé antérieur → pectoraux, grand dorsal visible de face → dorsaux, tenseur du fascia lata → fessiers, couturier → quadriceps, vaste latéral vu de dos → quadriceps. Bas du dos (fascia, érecteurs) : gris, sans groupe (calque `neutre`).
 
 ## 5.9.0 — Carte 2D des groupes musculaires (lot M8 du pipeline « Mannequin 3D »)
 

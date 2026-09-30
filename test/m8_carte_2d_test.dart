@@ -27,9 +27,18 @@ void main() {
       expect(mapGroupLabel('ischios'), 'Ischio-jambiers');
       expect(mapGroupLabel('tibial'), 'Tibial antérieur');
       expect(kMapLayers.take(15), [for (final g in kMapGroups) g.id]);
-      expect(kMapLayers.skip(15), ['peau', 'sombre']);
+      expect(kMapLayers.skip(15), [
+        'neutre',
+        'peau',
+        'sombre',
+        'contour',
+        'ombre',
+      ]);
       for (final v in MapView.values) {
-        expect(kMapViewLayers[v], containsAll(['peau', 'sombre']));
+        expect(
+          kMapViewLayers[v],
+          containsAll(['peau', 'sombre', 'contour', 'ombre']),
+        );
       }
     });
 
@@ -109,6 +118,22 @@ void main() {
         SL.accentSpec = a;
         expect(mapHeat(1, true), a.bright, reason: a.id);
       }
+    });
+
+    test('5.9.1 : traits, modelé et bas du dos (sans groupe)', () {
+      for (final dark in [true, false]) {
+        expect(
+          MuscleMap2D.layerColor('contour', const {}, dark),
+          mapContour(dark),
+        );
+        expect(MuscleMap2D.layerColor('ombre', const {}, dark), kMapShade);
+        // jamais en couleur, même « travaillé »
+        expect(
+          MuscleMap2D.layerColor('neutre', const {'neutre': 1}, dark),
+          mapMuscleGray(dark),
+        );
+      }
+      expect(kMapShade.a, inInclusiveRange(.3, .6));
     });
 
     test('carte du jour : teintée de la couleur du texte', () {

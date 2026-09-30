@@ -48,13 +48,16 @@ class CarteTest(unittest.TestCase):
     def test_15_groupes_et_calques(self):
         c = carte()
         self.assertEqual(c['groupes'], GROUPS)
-        self.assertEqual(c['calques'], GROUPS + ['peau', 'sombre'])
+        self.assertEqual(c['calques'], GROUPS + ['neutre', 'peau', 'sombre', 'contour', 'ombre'])
         self.assertEqual(sorted(c['vues']), ['dos', 'face', 'profil'])
         present = set()
         for view, v in c['vues'].items():
             present |= set(v['calques'])
             self.assertIn('peau', v['calques'], view)
             self.assertIn('sombre', v['calques'], view)
+            # 5.9.1 : traits et modelé de l'image détaillée
+            self.assertIn('contour', v['calques'], view)
+            self.assertIn('ombre', v['calques'], view)
         # chaque groupe est visible dans au moins une vue
         self.assertTrue(set(GROUPS) <= present, set(GROUPS) - present)
 
@@ -91,7 +94,11 @@ class CarteTest(unittest.TestCase):
                 # calque non vide, étiquette présente
                 self.assertIsNotNone(m.getchannel('A').getbbox(), f'{view}/{name}')
                 k = c['calques'].index(name) + 1
-                self.assertIn(k, values, f'{view}/{name}')
+                # étiquettes (toucher) : groupes et muscles sans groupe
+                if name in GROUPS or name == 'neutre':
+                    self.assertIn(k, values, f'{view}/{name}')
+                else:
+                    self.assertNotIn(k, values, f'{view}/{name}')
             # pas de fichier en trop
             files = {p.stem for p in (OUT / view).glob('*.png')}
             self.assertEqual(files, set(v['calques']) | {'etiquettes'}, view)

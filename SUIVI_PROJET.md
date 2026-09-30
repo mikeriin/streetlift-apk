@@ -1,8 +1,14 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M8 (carte 2D des groupes musculaires), version 5.9.0 ; précédent : M7b correction 2 (5.8.2)**  
-**Date : 30 septembre 2026, Europe/Paris — version : 5.9.0+90 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : pipeline « Mannequin 3D », lot M8, correction 1 (carte redessinée d'après l'image détaillée), version 5.9.1 ; précédent : M8 (5.9.0)**  
+**Date : 30 septembre 2026, Europe/Paris — version : 5.9.1+91 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+
+## M8.C1 — Correction 1 (nouvelle image du propriétaire, version 5.9.1)
+
+| Retour | Correction |
+| --- | --- |
+| Nouvelle image, plus détaillée (face, dos, profil ; chaque muscle dessiné ; sans légende) | `build_map.py` réécrit : fond clair relié au bord → transparent ; zones colorées par couleur puis connexité ; groupe de chaque zone par règles de position et de couleur par vue ; traits (`contour`) et modelé (`ombre`) repris ; bas du dos en gris sans groupe (`neutre`). Dart : 3 calques de plus, tailles des vues (face 511 × 980, dos 489 × 976, profil 187 × 980). Tests Python et Dart mis à jour ; émulateur : couleur du groupe lue sous le modelé. |
 
 ## M8 — Carte 2D des groupes musculaires (version 5.9.0)
 
