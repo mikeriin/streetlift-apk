@@ -4,17 +4,26 @@
 // carte) ; aucune carte ne sert seulement de cadre à une vue 3D. Contrôle
 // sur les sources (tout nouvel écran 3D est couvert sans y penser) ; la
 // démarcation réelle est mesurée sur émulateur (CI 3D).
+//
+// M8 (5.9.0, 30/09/2026) : la 3D ne sert plus qu'à la démonstration des
+// exercices et à Koach (plus l'écran technique Moteur 3D et l'animation de
+// test) ; partout ailleurs, carte 2D des groupes, transparente (fond =
+// support par construction).
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
-const _views = [
-  'Mannequin3D',
-  'MannequinPlayer',
-  'TargetedMannequin',
-  'WeeklyMannequin',
-  'ExerciseMannequin',
-];
+const _views = ['Mannequin3D', 'MannequinPlayer', 'ExerciseMannequin'];
+
+/// Seuls fichiers où la 3D s'affiche (M8).
+const _allowed3d = {
+  'exercise_mannequin.dart', // démonstration de la fiche (lecteur)
+  'exercise_screens.dart', // tête de fiche, si l'exercice a une animation
+  'koach_preview_screen.dart', // Koach
+  'mannequin_player.dart', // lecteur
+  'engine3d.dart', // Réglages › À propos › Moteur 3D (mesure)
+  'animation_test_screen.dart', // animation de test (Moteur 3D)
+};
 
 /// Arguments d'un appel (texte entre la parenthèse ouvrante et sa fermante).
 String _args(String src, int open) {
@@ -61,14 +70,14 @@ void main() {
         }
       }
     }
-    expect(calls, greaterThanOrEqualTo(10));
+    expect(calls, greaterThanOrEqualTo(5));
     expect(missing, isEmpty, reason: 'fond sans couleur du support');
   });
 
   test('aucune carte ne sert seulement de cadre à une vue 3D', () {
     final frame = RegExp(
       r'KCard\(\s*(key:[^,]*,\s*)?child:\s*(Mannequin3D|MannequinPlayer|'
-      r'ExerciseMannequin|TargetedMannequin|WeeklyMannequin)\(',
+      r'ExerciseMannequin)\(',
     );
     final found = [
       for (final f in files)
@@ -76,5 +85,20 @@ void main() {
           '${f.path}: ${m.group(2)}',
     ];
     expect(found, isEmpty);
+  });
+
+  test('M8 : la 3D seulement pour la démonstration et Koach', () {
+    final outside = <String>[];
+    for (final f in files) {
+      final name = f.uri.pathSegments.last;
+      if (_allowed3d.contains(name) || name == 'mannequin_3d.dart') continue;
+      final src = f.readAsStringSync();
+      for (final v in _views) {
+        if (RegExp('(?<![A-Za-z_])$v\\(').hasMatch(src)) {
+          outside.add('$name : $v');
+        }
+      }
+    }
+    expect(outside, isEmpty);
   });
 }

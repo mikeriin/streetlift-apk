@@ -1,7 +1,7 @@
 name: streetlift_tracker
 description: "Kalis Track — suivi d'entraînement calisthénie et streetlifting : programme guidé, séances perso, WOD, chronos, pilotage recalculable."
 publish_to: 'none'
-version: 5.8.2+89
+version: 5.9.0+90
 
 environment:
   # M1 (mannequin 3D) : flutter_scene 0.23 exige Flutter 3.47 stable et Dart 3.10.
@@ -78,3 +78,8 @@ flutter:
     - assets/anatomy/clips/
     - assets/anatomy/clips/koach/
     - flutter_scene_generated/
+    # M8 : carte 2D des 15 groupes musculaires (masques par vue, fabriqués
+    # par tools/muscles2d/build_map.py d'après l'image du propriétaire).
+    - assets/muscles2d/face/
+    - assets/muscles2d/dos/
+    - assets/muscles2d/profil/

@@ -18,6 +18,7 @@ import 'package:streetlift_tracker/content_pack.dart';
 import 'package:streetlift_tracker/exercise_screens.dart';
 import 'package:streetlift_tracker/filter_menu.dart';
 import 'package:streetlift_tracker/muscle_body.dart';
+import 'package:streetlift_tracker/muscle_map_2d.dart';
 import 'package:streetlift_tracker/pose_painter.dart';
 import 'package:streetlift_tracker/store.dart';
 
@@ -377,13 +378,15 @@ void main() {
               );
               await tester.pumpAndSettle();
               expect(tester.takeException(), null);
-              // 5.5.3 : plus de démonstration 2D ; le mannequin (atlas 2D en
-              // repli sans Flutter GPU) ouvre la fiche.
+              // M8 (5.9.0) : sans animation, rien en tête de fiche ; carte
+              // 2D des groupes dans la section Muscles.
               expect(find.byType(PoseDemo), findsNothing);
-              expect(find.byType(ExerciseMannequin), findsOneWidget);
+              expect(find.byType(ExerciseMannequin), findsNothing);
               expect(find.text('MUSCLE-UP'), findsOneWidget);
               // Défilement réel : liste des muscles, puis sources en bas.
               await scrollToAction(tester, find.text('MUSCLES'));
+              await scrollToAction(tester, find.byType(MuscleMap2D));
+              expect(tester.takeException(), null);
               await scrollToAction(tester, find.text('Sources consultées'));
               expect(tester.takeException(), null);
             },
@@ -392,7 +395,7 @@ void main() {
       }
     }
 
-    testWidgets('démonstration indisponible : atlas et consignes', (
+    testWidgets('démonstration indisponible : carte et consignes', (
       tester,
     ) async {
       phone(tester, size: const Size(320, 720));
@@ -404,10 +407,10 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.byType(PoseDemo), findsNothing);
-      // 5.5.3 : plus de mention « Démonstration indisponible » : le
-      // mannequin des muscles ouvre toutes les fiches.
+      // 5.5.3 : plus de mention « Démonstration indisponible ». M8 : rien en
+      // tête sans animation.
       expect(find.textContaining('Démonstration indisponible'), findsNothing);
-      expect(find.byType(ExerciseMannequin), findsOneWidget);
+      expect(find.byType(ExerciseMannequin), findsNothing);
       await scrollToAction(tester, find.text('MUSCLES'));
       expect(tester.takeException(), null);
     });

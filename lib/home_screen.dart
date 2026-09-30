@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'adapt_screens.dart';
 import 'motivation_screens.dart' show MotivHomeCard;
+import 'muscle_map_2d.dart' show MapView;
 import 'app_theme.dart';
 import 'estimate_view.dart';
 import 'koach_widgets.dart' show KoachWeighInBanner;
@@ -229,16 +230,15 @@ class _HomeScreenState extends State<HomeScreen> {
           Row(
             children: [
               Expanded(child: Text('${d.exercises.length} exercices')),
-              // 5.5.3 : mannequin 3D des muscles ciblés (carte 2D en repli).
+              // M8 : carte 2D des groupes ciblés (face et dos).
               SizedBox(
                 width: 110,
-                child: TargetedMannequin(
+                child: TargetedMuscleMap(
                   names: store.plannedNames(estimate),
                   groups: store.plannedMuscles(estimate),
                   height: 110,
-                  viewButtons: false,
-                  fallbackGlow: false,
-                  background: SL.surface,
+                  views: const [MapView.face, MapView.dos],
+                  viewLabels: false,
                   subject: 'muscles de la séance',
                 ),
               ),
@@ -881,17 +881,16 @@ class _DayCard extends StatelessWidget {
                             width: MediaQuery.sizeOf(context).width < 350
                                 ? 88
                                 : 106,
-                            child: TargetedMannequin(
+                            // M8 : carte 2D des groupes ciblés ; sur la
+                            // carte du jour (couleur dominante), teintée de
+                            // la couleur du texte.
+                            child: TargetedMuscleMap(
                               names: store.plannedNames(estimate),
                               groups: store.plannedMuscles(estimate),
                               height: compact ? 90 : 110,
-                              viewButtons: false,
-                              fallbackTint: SL.onBrandSoft,
-                              fallbackGlow: false,
-                              background: isToday ? SL.bordeaux : SL.card,
-                              // M6b : sur la carte du jour (couleur
-                              // dominante), halo de la couleur du texte.
-                              haloColor: isToday ? SL.onBrandSoft : null,
+                              views: const [MapView.face, MapView.dos],
+                              viewLabels: false,
+                              tint: isToday ? SL.onBrandSoft : null,
                               subject: 'muscles de la séance',
                             ),
                           ),

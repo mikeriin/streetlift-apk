@@ -1,8 +1,17 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M7b, correction 2 (tous les fonds 3D = couleur du support), version 5.8.2 ; précédent : M7b correction 1 (5.8.1)**  
-**Date : 30 septembre 2026, Europe/Paris — version : 5.8.2+89 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : pipeline « Mannequin 3D », lot M8 (carte 2D des groupes musculaires), version 5.9.0 ; précédent : M7b correction 2 (5.8.2)**  
+**Date : 30 septembre 2026, Europe/Paris — version : 5.9.0+90 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+
+## M8 — Carte 2D des groupes musculaires (version 5.9.0)
+
+| Point | Réalisation |
+| --- | --- |
+| Demande | Propriétaire, 30/09/2026 : « les animations 3D seront uniquement pour la démonstration des exercices et pour le Koach » ; groupes travaillés sur l'image fournie, réadaptée ; non travaillés grisés, code couleur pertinent pour les autres. Réponses : partout sauf la démonstration ; couleurs par rôle ; les 15 groupes de l'image ; rien en tête de fiche sans animation. |
+| Carte | `tools/muscles2d/build_map.py` : image source → masques alpha par groupe et par vue (face 469 × 964, dos 412 × 964, profil 178 × 965 px) + calques « peau » et « sombre » + étiquettes (toucher) ; traits et fond transparents. `lib/muscle_map_2d.dart` : `MuscleMap2D` (vues ajustées à la largeur, teinte au support de la couleur dominante, toucher), `mapIntensitiesFromRoles` (1 / 0,62 / 0,35), `mapIntensitiesFromWeights` (ramené au plus fort, seuil 2 %), `MapRoleLegend`. |
+| Écrans | Fiche (section Muscles ; tête 3D seulement avec une animation — aucune aujourd'hui), STATS, accueil (2 cartes), aperçu de WOD, Anatomie (15 filtres, nom au toucher, muscles par groupe). 3D restante : démonstration (lecteur), Koach (aperçu), Réglages › Moteur 3D et animation de test. |
+| Tests | Dart : `m8_carte_2d_test.dart` + mises à jour (M2, M3, M4, M4b, M6b, M6c, M7, L9b, programme, fonds). Python : `test_m8_carte_2d.py` (15 groupes, masques, tailles côté Dart, pubspec, fabrication reproductible). Émulateur : `carte_2d_m8_test.dart` (sombre / clair). |
 
 ## M7b.C2 — Correction 2 (retour du propriétaire du 30/09/2026, version 5.8.2)
 

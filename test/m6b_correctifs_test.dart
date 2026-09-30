@@ -12,6 +12,7 @@ import 'package:streetlift_tracker/engine3d.dart';
 import 'package:streetlift_tracker/exercise_mannequin.dart';
 import 'package:streetlift_tracker/mannequin_3d.dart';
 import 'package:streetlift_tracker/muscle_body.dart';
+import 'package:streetlift_tracker/muscle_map_2d.dart';
 import 'package:streetlift_tracker/store.dart';
 
 import 'phone_test_support.dart';
@@ -46,13 +47,13 @@ void main() {
   }
 
   group('D1 · Anatomie : filtre « Muscles profonds » retiré', () {
-    test('M6c : plus de catégorie Affichage (ni « Os »), 11 groupes', () {
+    test('M8 : plus de catégorie Affichage (ni « Os »), 15 groupes', () {
       expect(
         AnatomyFilters.categories.where((c) => c.id == 'affichage'),
         isEmpty,
       );
-      expect(AnatomyFilters.total, 11);
-      expect(AnatomyFilters.all.count, 11);
+      expect(AnatomyFilters.total, 15);
+      expect(AnatomyFilters.all.count, 15);
       // L'écorché n'a aucune région profonde : le filtre n'avait pas d'effet.
       expect(MannequinMap.loaded!.deepIds, isEmpty);
     });
@@ -60,22 +61,26 @@ void main() {
     testWidgets('menu, résumé et libellé d’accessibilité', (tester) async {
       phone(tester);
       AnatomyScreen.session = null;
-      await tester.pumpWidget(page(const AnatomyScreen(initialGroup: 'dos')));
-      await settle(tester, find.byType(MuscleHeatmap));
-      expect(find.text('Filtres · 1'), findsOneWidget); // Dos (M6c : sans Os)
+      await tester.pumpWidget(
+        page(const AnatomyScreen(initialGroup: 'dorsaux')),
+      );
+      await settle(tester, find.byType(MuscleMap2D));
+      expect(find.text('Filtres · 1'), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('anatomy-filters')));
       await tester.pumpAndSettle();
       expect(find.text('Muscles profonds'), findsNothing);
       expect(find.byKey(const ValueKey('anatomy-filter-bones')), findsNothing);
-      expect(find.byKey(const ValueKey('anatomy-filter-dos')), findsWidgets);
+      expect(
+        find.byKey(const ValueKey('anatomy-filter-dorsaux')),
+        findsWidgets,
+      );
       await tester.tapAt(const Offset(5, 5));
       await tester.pumpAndSettle();
-      // D2 : plus de « en rouge » (halo dans la couleur dominante).
+      // D2 : plus de « en rouge » (M8 : couleur dominante).
       final label = tester
-          .widget<Mannequin3D>(find.byType(Mannequin3D))
+          .widget<MuscleMap2D>(find.byType(MuscleMap2D))
           .semanticLabel;
-      expect(label, contains('Dos'));
-      expect(label, contains('halo'));
+      expect(label, contains('Dorsaux'));
       expect(label, isNot(contains('rouge')));
       await scrollToAction(
         tester,

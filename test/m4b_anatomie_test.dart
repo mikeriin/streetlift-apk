@@ -23,7 +23,7 @@ import 'package:streetlift_tracker/atlas_data.dart';
 import 'package:streetlift_tracker/engine3d.dart';
 import 'package:streetlift_tracker/exercise_mannequin.dart';
 import 'package:streetlift_tracker/mannequin_3d.dart';
-import 'package:streetlift_tracker/muscle_body.dart';
+import 'package:streetlift_tracker/muscle_map_2d.dart';
 import 'package:streetlift_tracker/store.dart';
 import 'package:vector_math/vector_math.dart' as vm;
 
@@ -231,21 +231,16 @@ void main() {
     test('union des groupes, compteur, tout cocher / décocher', () {
       const f = AnatomyFilters();
       expect(f.count, 0); // M6c : plus de « Os » (M6b : « Muscles profonds »)
-      final g = f.toggleGroup('dos').toggleGroup('ischios');
-      expect(g.groups, {'dos', 'ischios'});
+      final g = f.toggleGroup('dorsaux').toggleGroup('ischios');
+      expect(g.groups, {'dorsaux', 'ischios'});
       expect(g.count, 2);
-      expect(g.orderedGroups, ['dos', 'ischios']);
-      final intensities = map.fromGroups({
-        for (final x in g.groups) x: kIntensityPrimary,
-      });
-      expect(map.groupsOf(intensities), {'dos': 1.0, 'ischios': 1.0});
-      expect(g.toggleGroup('dos').groups, {'ischios'});
+      expect(g.orderedGroups, ['dorsaux', 'ischios']);
+      expect(g.toggleGroup('dorsaux').groups, {'ischios'});
       expect(AnatomyFilters.all.count, AnatomyFilters.total);
-      expect(AnatomyFilters.all.groups, kGroupLabels.keys.toSet());
+      expect(AnatomyFilters.all.groups, {for (final m in kMapGroups) m.id});
       expect(AnatomyFilters.none.count, 0);
-      // M6b : plus de « Muscles profonds » ; M6c : plus de « Os » ni de
-      // catégorie « Affichage » : les 11 groupes seulement.
-      expect(AnatomyFilters.total, 11);
+      // M8 : les 15 groupes de la carte 2D.
+      expect(AnatomyFilters.total, 15);
       expect(AnatomyFilters.categories.map((c) => c.id), ['groupes']);
       expect(AnatomyFilters.fromSelection(g.selection), g);
       expect(g, g.toggleGroup('biceps').toggleGroup('biceps'));
@@ -295,7 +290,7 @@ void main() {
       await tester.pumpWidget(
         page(const AnatomyScreen(), scale: scale, dark: dark),
       );
-      await _settle(tester, find.byType(MuscleHeatmap));
+      await _settle(tester, find.byType(MuscleMap2D));
       expect(find.text('Filtres · 0'), findsOneWidget);
       // Résumé sous le mannequin (liste qui défile).
       await scrollToAction(
@@ -314,32 +309,41 @@ void main() {
 
       // Plusieurs groupes cochés sans fermer le menu : union.
       await openMenu(tester);
-      await tapItem(tester, 'dos');
+      await tapItem(tester, 'dorsaux');
       await tapItem(tester, 'ischios');
       await tapItem(tester, 'pectoraux');
-      expect(find.byKey(const ValueKey('anatomy-filter-dos')), findsWidgets);
-      expect(state(tester).groups, {'dos', 'ischios', 'pectoraux'});
+      expect(
+        find.byKey(const ValueKey('anatomy-filter-dorsaux')),
+        findsWidgets,
+      );
+      expect(state(tester).groups, {'dorsaux', 'ischios', 'pectoraux'});
       expect(find.text('Filtres · 3'), findsOneWidget);
       // Toucher en dehors : le menu se ferme.
       await tester.tapAt(const Offset(5, 5));
       await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('anatomy-filter-dos')), findsNothing);
-      final heatmap = tester.widget<MuscleHeatmap>(find.byType(MuscleHeatmap));
-      expect(heatmap.data, {'pectoraux': 1.0, 'dos': 1.0, 'ischios': 1.0});
+      expect(
+        find.byKey(const ValueKey('anatomy-filter-dorsaux')),
+        findsNothing,
+      );
+      MuscleMap2D mapWidget() =>
+          tester.widget<MuscleMap2D>(find.byType(MuscleMap2D));
+      expect(mapWidget().intensities, {
+        'pectoraux': 1.0,
+        'dorsaux': 1.0,
+        'ischios': 1.0,
+      });
+      expect(mapWidget().views, MapView.values);
       final list = find.byKey(const ValueKey('anatomy-group-list'));
       await scrollToAction(tester, list);
       expect(
-        find.byKey(const ValueKey('anatomy-group-muscles-dos')),
+        find.byKey(const ValueKey('anatomy-group-muscles-dorsaux')),
         findsOneWidget,
       );
       final dos = tester.widget<Text>(
-        find.byKey(const ValueKey('anatomy-group-muscles-dos')),
+        find.byKey(const ValueKey('anatomy-group-muscles-dorsaux')),
       );
       expect(dos.data, contains('Grand dorsal'));
-      // M6c : zones de la peau (rhomboïdes sous le trapèze, en texte sur
-      // les fiches).
-      expect(dos.data, contains('Trapèze moyen'));
-      expect(dos.data, isNot(contains('(profond)')));
+      expect(dos.data, contains('Grand rond'));
       expect(
         find.byKey(const ValueKey('anatomy-group-muscles-ischios')),
         findsOneWidget,
@@ -357,23 +361,18 @@ void main() {
       expect(find.text('Muscles profonds'), findsNothing);
       expect(find.byKey(const ValueKey('anatomy-filter-bones')), findsNothing);
       expect(find.text('Affichage'), findsNothing);
-      var m = tester.widget<Mannequin3D>(find.byType(Mannequin3D));
-      expect(m.hidden, isEmpty);
+      expect(find.byType(Mannequin3D), findsNothing);
       expect(find.text('Filtres · 3'), findsOneWidget);
 
       // Tout cocher, tout décocher (M4c : par catégorie).
       await tapItem(tester, 'all-groupes');
       expect(state(tester).filters, AnatomyFilters.all);
-      expect(find.text('Filtres · 11'), findsOneWidget);
-      m = tester.widget<Mannequin3D>(find.byType(Mannequin3D));
-      expect(m.hidden, isEmpty);
-      expect(m.intensities.length, greaterThan(120));
+      expect(find.text('Filtres · 15'), findsOneWidget);
+      expect(mapWidget().intensities.length, 15);
       await tapItem(tester, 'none-groupes');
       expect(state(tester).filters, AnatomyFilters.none);
       expect(find.text('Filtres · 0'), findsOneWidget);
-      m = tester.widget<Mannequin3D>(find.byType(Mannequin3D));
-      expect(m.intensities, isEmpty);
-      expect(m.hidden, isEmpty);
+      expect(mapWidget().intensities, isEmpty);
       await tester.tapAt(const Offset(5, 5));
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
@@ -387,11 +386,11 @@ void main() {
     phone(tester);
     AnatomyScreen.session = null;
     await tester.pumpWidget(page(const AnatomyScreen()));
-    await _settle(tester, find.byType(MuscleHeatmap));
+    await _settle(tester, find.byType(MuscleMap2D));
     expect(
       tester.getSemantics(find.byKey(const ValueKey('anatomy-filters'))),
       isSemantics(
-        label: 'Filtres, 0 actif sur 11',
+        label: 'Filtres, 0 actif sur 15',
         isButton: true,
         hasTapAction: true,
       ),
@@ -401,7 +400,7 @@ void main() {
     // M4c : chaque case est lue avec sa catégorie.
     for (final (key, label, checked) in [
       ('fessiers', 'Fessiers, Groupes musculaires', true),
-      ('dos', 'Dos, Groupes musculaires', false),
+      ('dorsaux', 'Dorsaux, Groupes musculaires', false),
       ('mollets', 'Mollets, Groupes musculaires', false),
     ]) {
       expect(
@@ -422,7 +421,7 @@ void main() {
     phone(tester);
     AnatomyScreen.session = null;
     await tester.pumpWidget(page(const AnatomyScreen()));
-    await _settle(tester, find.byType(MuscleHeatmap));
+    await _settle(tester, find.byType(MuscleMap2D));
     await openMenu(tester);
     await tapItem(tester, 'mollets');
     await tapItem(tester, 'fessiers');
@@ -432,14 +431,14 @@ void main() {
     // Écran refermé puis rouvert : mêmes filtres.
     await tester.pumpWidget(const SizedBox());
     await tester.pumpWidget(page(const AnatomyScreen()));
-    await _settle(tester, find.byType(MuscleHeatmap));
+    await _settle(tester, find.byType(MuscleMap2D));
     expect(state(tester).groups, {'mollets'});
     expect(find.text('Filtres · 1'), findsOneWidget);
     // Groupe demandé à l'ouverture : il remplace les groupes de la session.
     await tester.pumpWidget(const SizedBox());
-    await tester.pumpWidget(page(const AnatomyScreen(initialGroup: 'dos')));
-    await _settle(tester, find.byType(MuscleHeatmap));
-    expect(state(tester).groups, {'dos'});
+    await tester.pumpWidget(page(const AnatomyScreen(initialGroup: 'dorsaux')));
+    await _settle(tester, find.byType(MuscleMap2D));
+    expect(state(tester).groups, {'dorsaux'});
     expect(find.text('Filtres · 1'), findsOneWidget);
     AnatomyScreen.session = null;
   });

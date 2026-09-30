@@ -278,9 +278,9 @@ void main() {
   });
 
   group('écrans', () {
-    testWidgets('fiche sans animation : mannequin fixe inchangé', (
-      tester,
-    ) async {
+    // M8 (5.9.0) : la 3D ne sert qu'à la démonstration ; sans animation,
+    // rien (muscles sur la carte 2D de la fiche).
+    testWidgets('fiche sans animation : aucune 3D', (tester) async {
       await tester.pumpWidget(
         page(
           const Scaffold(
@@ -294,58 +294,57 @@ void main() {
         ),
       );
       await tester.pump();
-      expect(find.byKey(const ValueKey('fiche-mannequin')), findsOneWidget);
+      expect(find.byType(Mannequin3D), findsNothing);
       expect(find.byKey(const ValueKey('fiche-mannequin-anime')), findsNothing);
       expect(find.byType(MannequinPlayer), findsNothing);
       expect(find.byKey(const ValueKey('player-play')), findsNothing);
     });
 
-    testWidgets(
-      'fiche animée sans Flutter GPU : repli 2D, aucun lecteur vide',
-      (tester) async {
-        final saved = ClipRegistry.loaded;
-        ClipRegistry.loaded = ClipRegistry([
-          ClipEntry(
-            id: 'back-squat',
-            asset: debug.asset,
-            name: 'Back squat',
-            exercises: const ['back-squat'],
-            debug: false,
-            fps: 30,
-            frames: 181,
-            bytes: debug.bytes,
-            duration: 6,
-            phases: debug.phases,
-          ),
-        ]);
-        addTearDown(() => ClipRegistry.loaded = saved);
-        await tester.pumpWidget(
-          page(
-            const Scaffold(
-              body: SingleChildScrollView(
-                child: ExerciseMannequin(
-                  exerciseId: 'back-squat',
-                  primaires: ['vaste_lateral'],
-                ),
+    testWidgets('fiche animée sans Flutter GPU : aucun lecteur vide', (
+      tester,
+    ) async {
+      final saved = ClipRegistry.loaded;
+      ClipRegistry.loaded = ClipRegistry([
+        ClipEntry(
+          id: 'back-squat',
+          asset: debug.asset,
+          name: 'Back squat',
+          exercises: const ['back-squat'],
+          debug: false,
+          fps: 30,
+          frames: 181,
+          bytes: debug.bytes,
+          duration: 6,
+          phases: debug.phases,
+        ),
+      ]);
+      addTearDown(() => ClipRegistry.loaded = saved);
+      await tester.pumpWidget(
+        page(
+          const Scaffold(
+            body: SingleChildScrollView(
+              child: ExerciseMannequin(
+                exerciseId: 'back-squat',
+                primaires: ['vaste_lateral'],
               ),
             ),
           ),
+        ),
+      );
+      for (var i = 0; i < 5; i++) {
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 20)),
         );
-        for (var i = 0; i < 5; i++) {
-          await tester.runAsync(
-            () => Future<void>.delayed(const Duration(milliseconds: 20)),
-          );
-          await tester.pump();
-        }
-        expect(
-          find.byKey(const ValueKey('fiche-mannequin-anime')),
-          findsOneWidget,
-        );
-        expect(find.byKey(const ValueKey('player-play')), findsNothing);
-        expect(find.byKey(const ValueKey('player-slider')), findsNothing);
-        expect(tester.takeException(), isNull);
-      },
-    );
+        await tester.pump();
+      }
+      expect(
+        find.byKey(const ValueKey('fiche-mannequin-anime')),
+        findsOneWidget,
+      );
+      expect(find.byKey(const ValueKey('player-play')), findsNothing);
+      expect(find.byKey(const ValueKey('player-slider')), findsNothing);
+      expect(tester.takeException(), isNull);
+    });
 
     testWidgets('écran Animation de test, libellé comme test', (tester) async {
       await tester.pumpWidget(page(const AnimationTestScreen()));
