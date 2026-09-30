@@ -20,6 +20,10 @@ void main() {
       ..wakelock = false;
   });
   setUp(() {
+    // G1 : vitrine du jour déterministe (sélections par date) : le test
+    // échouait selon le jour de son exécution (« Catalogue » hors écran le
+    // 01/10/2026). Date fixe où la mise en page de l'Arsenal est connue.
+    store.storeClock = () => DateTime(2026, 9, 30, 12);
     store.unlockedWods.clear();
     store.logs.clear();
     store.wods.removeWhere((w) => !store.isCatalog(w));

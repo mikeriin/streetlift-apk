@@ -119,6 +119,18 @@ jobs:
             exit 1
           }
           tail -n 5 out/flutter-tests.log
+      - name: Tests Dart du mode dev (G1, KALIS_DEV=true)
+        id: dartdev
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded \
+            --dart-define=KALIS_DEV=true test/g1_mode_dev_test.dart > out/flutter-tests-dev.log 2>&1 || {
+            grep -E -A12 'EXCEPTION CAUGHT|\[E\]$' out/flutter-tests-dev.log | head -n 200
+            tail -n 8 out/flutter-tests-dev.log
+            exit 1
+          }
+          tail -n 5 out/flutter-tests-dev.log
       - name: Rendus de test (après)
         id: captures
         continue-on-error: true
@@ -178,6 +190,7 @@ jobs:
             echo "analyze=${{ steps.analyze.outcome }}"
             echo "python=${{ steps.python.outcome }}"
             echo "dart=${{ steps.dart.outcome }}"
+            echo "dart_dev=${{ steps.dartdev.outcome }}"
             echo "captures=${{ steps.captures.outcome }}"
             echo "build_debug=${{ steps.build.outcome }}"
             echo "build_profile=${{ steps.profile.outcome }}"
@@ -195,6 +208,62 @@ jobs:
           name: captures-apres
           path: captures-apres/
           if-no-files-found: ignore
+
+  packages:
+    # G1 (PIPELINE_GP.md §4) : moteurs indépendants de l'application
+    # (packages/, Dart pur). Pour chaque paquet : formatage, analyse sans
+    # aucune remarque, tests, et rapport du simulateur s'il existe
+    # (`dart run bin/<paquet>_cli.dart --rapport <dossier>`), recopié dans
+    # ci-out/packages/<paquet>/. Sans paquet : succès « aucun paquet ».
+    name: Paquets Dart (moteurs)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - name: Contrôler chaque paquet
+        run: |
+          set -o pipefail
+          mkdir -p out-packages
+          bilan=out-packages/packages.txt
+          : > "$bilan"
+          status=0
+          found=0
+          root=$PWD
+          for dir in packages/*/; do
+            [ -f "${dir}pubspec.yaml" ] || continue
+            found=1
+            name=$(basename "$dir")
+            log="$root/out-packages/$name.log"
+            mkdir -p "out-packages/$name"
+            echo "== $name" | tee "$log"
+            ok=1
+            (cd "$dir" && dart pub get) >> "$log" 2>&1 || ok=0
+            (cd "$dir" && dart format --output=none --set-exit-if-changed .) >> "$log" 2>&1 || { echo "formatage : échec" >> "$log"; ok=0; }
+            (cd "$dir" && dart analyze --fatal-infos) >> "$log" 2>&1 || { echo "analyse : échec" >> "$log"; ok=0; }
+            (cd "$dir" && dart test --reporter expanded) >> "$log" 2>&1 || { echo "tests : échec" >> "$log"; ok=0; }
+            if [ -f "${dir}bin/${name}_cli.dart" ]; then
+              (cd "$dir" && dart run "bin/${name}_cli.dart" --rapport "$root/out-packages/$name") >> "$log" 2>&1 || { echo "rapport : échec" >> "$log"; ok=0; }
+            fi
+            if [ "$ok" = 1 ]; then echo "$name=success" >> "$bilan"; else echo "$name=failure" >> "$bilan"; status=1; fi
+            tail -n 30 "$log"
+          done
+          if [ "$found" = 0 ]; then echo "aucun paquet" | tee -a "$bilan"; fi
+          cat "$bilan"
+          exit "$status"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: packages
+          path: out-packages/
+          if-no-files-found: warn
 
   before:
     name: Rendus de test de référence (main, commit parent du lot)
@@ -305,7 +374,7 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: Précompiler l'APK de test
-        run: flutter build apk --debug --no-pub --target=integration_test/moteur_3d_test.dart > build/ci3d/build-test.log 2>&1 || (tail -n 60 build/ci3d/build-test.log; exit 1)
+        run: flutter build apk --debug --no-pub --target=integration_test/mode_dev_g1_test.dart --dart-define=KALIS_DEV=true > build/ci3d/build-test.log 2>&1 || (tail -n 60 build/ci3d/build-test.log; exit 1)
       - name: Rendu sur émulateur
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -327,7 +396,7 @@ jobs:
 
   publish:
     name: Publier les résultats dans ci-out/
-    needs: [checks, before, emulator]
+    needs: [checks, packages, before, emulator]
     if: always()
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -344,6 +413,7 @@ jobs:
           rm -rf ci-out && mkdir -p ci-out
           cp -r artifacts/checks/. ci-out/ 2>/dev/null || true
           mkdir -p ci-out/emulateur && cp -r artifacts/emulateur/. ci-out/emulateur/ 2>/dev/null || true
+          mkdir -p ci-out/packages && cp -r artifacts/packages/. ci-out/packages/ 2>/dev/null || true
           cp artifacts/captures-avant/captures-avant.log ci-out/ 2>/dev/null || true
           pip install --quiet pillow
           if [ -d artifacts/captures-avant ] && [ -d artifacts/captures-apres ]; then
@@ -360,6 +430,7 @@ jobs:
             echo "run=${{ github.run_id }}"
             echo "commit=${{ github.sha }}"
             echo "checks=${{ needs.checks.result }}"
+            echo "packages=${{ needs.packages.result }}"
             echo "before=${{ needs.before.result }}"
             echo "emulator=${{ needs.emulator.result }}"
           } > ci-out/resultat.txt

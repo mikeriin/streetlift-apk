@@ -1,8 +1,20 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : M8 correction 3 (carte du jour aux couleurs de l'Anatomie), version 5.10.1 ; précédent : 5.10.0 (logo, M8 correction 2)**  
-**Date : 30 septembre 2026, Europe/Paris — version : 5.10.1+93 (versionCode réel fixé par la CI de build)**  
-**Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+**Passe actuelle : G1 (mode dev, pipeline « Génération et progression »), version 6.0.0 ; précédent : 5.10.1 (M8 correction 3)**  
+**Date : 30 septembre 2026, Europe/Paris — version : 6.0.0+94 (versionCode réel fixé par la CI de build)**  
+**Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## G1 — Mode dev, CI des paquets, build dev (version 6.0.0)
+
+| Exigence | Réalisation |
+| --- | --- |
+| Drapeau de build (D2.4) | `lib/dev/dev_flags.dart` (`kDevBuild`) ; APK avec `KALIS_DEV=true`, AAB sans ; `verify_android_artifacts.py --dev-apk` exige le marqueur du mode dev dans l'APK et son absence dans l'AAB. |
+| 5 appuis → session de test (D2.1) | `HeaderLogo` (en-tête des 4 destinations) ; fenêtre de 2 s entre deux appuis (`TapStreak`) ; vibration légère dès le 3e ; redémarrage logique (`lib/session_host.dart`) vers une installation neuve. |
+| Logo rose, étiquette DEV | #FF1493 dans l'en-tête et à l'ouverture ; étiquette DEV (TalkBack : « Session de test active »). |
+| Appui long 3 s (D2.2) | Anneau de progression, relâcher ou glisser annule ; suppression directe, vibration, message, retour à la session personnelle. |
+| Isolation (D2.3) | `KalisPrefs` : espace personnel (clés d'origine) et espace de test (préfixe `kt_session_test::`) ; `Display3DSettings` compris ; rappels rattachés au magasin actif ; export marqué `sessionDeTest`, avertissement à l'import en session personnelle. |
+| Horloge, voyage dans le temps (D2.5) | `KalisClock.now()` partout où l'application lit la date ; décalage en jours civils propre à la session de test ; outils de test. |
+| CI | Tâche `packages`, tests Dart du mode dev, cible émulateur `mode_dev_g1_test` (a sombre, b clair après redémarrage à froid) ; `docs/CI_GP.md`. |
 
 ## M8.C3 — Correction 3 (version 5.10.1)
 

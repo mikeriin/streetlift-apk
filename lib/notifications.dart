@@ -215,7 +215,8 @@ class ReminderStatus {
 }
 
 class NotificationService {
-  final AppStore app;
+  /// Magasin suivi (G1 : remplacé au changement de session, [attach]).
+  AppStore app;
   final NotificationBackend backend;
   final DateTime Function() now;
   final status = ValueNotifier<ReminderStatus>(const ReminderStatus());
@@ -262,6 +263,22 @@ class NotificationService {
     _bound = true;
     app.addListener(_onStoreChange);
     _onStoreChange();
+  }
+
+  /// G1 : suit un autre magasin (redémarrage logique vers ou depuis la
+  /// session de test). Tous les rappels sont recalculés depuis ce magasin :
+  /// ceux de la session quittée sont annulés (session personnelle suspendue
+  /// pendant la session de test, session de test annulée à sa suppression),
+  /// ceux de la session rejointe sont programmés.
+  void attach(AppStore next) {
+    if (identical(next, app)) return;
+    if (_bound) app.removeListener(_onStoreChange);
+    app = next;
+    _source = null;
+    if (_bound) {
+      next.addListener(_onStoreChange);
+      unawaited(reschedule(force: true));
+    }
   }
 
   void _onStoreChange() {
@@ -471,6 +488,9 @@ class Notif {
   static set onOpen(void Function(int week, int day)? callback) =>
       service.onOpen = callback;
   static void bind() => service.bind();
+
+  /// G1 : magasin de la session active (voir [NotificationService.attach]).
+  static void attach(AppStore app) => service.attach(app);
   static Future<void> reschedule() => service.reschedule(force: true);
   static Future<bool> requestPermission() => service.requestPermission();
 }

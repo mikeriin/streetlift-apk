@@ -291,6 +291,39 @@ class MainActivity : FlutterActivity() {
                     }
                     return@setMethodCallHandler
                 }
+                // G1 : export JSON de la session de test (mode dev), fichier
+                // temporaire unique du cache servi par ShareProvider.
+                if (call.method == "shareJson") {
+                    val bytes = call.argument<ByteArray>("bytes")
+                    if (bytes == null || bytes.isEmpty() || bytes.size > 16 * 1024 * 1024) {
+                        result.success("error")
+                        return@setMethodCallHandler
+                    }
+                    try {
+                        val file = ShareProvider.write(this, bytes, ShareProvider.JSON_NAME)
+                        val uri = ShareProvider.uriFor(this, file)
+                        val send = Intent(Intent.ACTION_SEND)
+                            .setType("application/json")
+                            .putExtra(Intent.EXTRA_STREAM, uri)
+                            .putExtra(Intent.EXTRA_SUBJECT, call.argument<String>("name") ?: "")
+                            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        send.clipData = ClipData.newRawUri("", uri)
+                        val chooser = Intent.createChooser(send, "Exporter la session de test")
+                            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        startActivity(chooser)
+                        result.success("shared")
+                    } catch (_: ActivityNotFoundException) {
+                        result.success("unavailable")
+                    } catch (_: Exception) {
+                        result.success("error")
+                    }
+                    return@setMethodCallHandler
+                }
+                if (call.method == "clearJson") {
+                    ShareProvider.delete(this, ShareProvider.JSON_NAME)
+                    result.success("cleared")
+                    return@setMethodCallHandler
+                }
                 if (call.method != "shareImage") {
                     result.notImplemented()
                     return@setMethodCallHandler

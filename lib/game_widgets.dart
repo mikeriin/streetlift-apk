@@ -19,6 +19,7 @@ import 'stats_widgets.dart';
 import 'store.dart';
 import 'store_widget.dart';
 import 'ui.dart';
+import 'kalis_clock.dart';
 
 Color rarityColor(BadgeRarity r) => switch (r) {
   BadgeRarity.commun => SL.dim,
@@ -890,7 +891,7 @@ class MainQuestCard extends StoreWidget {
   @override
   Widget build(BuildContext context) {
     final program = store.program;
-    final now = DateTime.now();
+    final now = KalisClock.now();
     final g = store.game;
     if (g.programWeek == 0) {
       return KCard(

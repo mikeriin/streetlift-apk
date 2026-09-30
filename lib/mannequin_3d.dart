@@ -64,7 +64,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart' hide Material;
 import 'package:flutter/services.dart';
 import 'package:flutter_scene/scene.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vector_math/vector_math.dart' as vm;
 
 import 'app_theme.dart';
@@ -72,6 +71,7 @@ import 'engine3d.dart';
 import 'mannequin_gestures.dart';
 import 'mannequin_preload.dart';
 import 'mannequin_rig.dart';
+import 'session_prefs.dart';
 import 'muscle_body.dart';
 import 'ui.dart';
 
@@ -451,7 +451,7 @@ class HaloProjection {
 
 // --------------------------------------------------------------- réglages --
 
-/// Réglages › Affichage 3D. Préférences de l'appareil (SharedPreferences),
+/// Réglages › Affichage 3D. Préférences de la session (G1 : KalisPrefs),
 /// hors sauvegarde : le format des sauvegardes reste inchangé.
 class Display3DSettings {
   Display3DSettings._();
@@ -476,7 +476,7 @@ class Display3DSettings {
     if (_loaded) return;
     _loaded = true;
     try {
-      final p = await SharedPreferences.getInstance();
+      final p = await KalisPrefs.active();
       touchNames.value = p.getBool(_kNames) ?? true;
       halo.value = p.getBool(_kHalo) ?? true;
     } catch (_) {
@@ -488,7 +488,7 @@ class Display3DSettings {
     if (touchNames != null) this.touchNames.value = touchNames;
     if (halo != null) this.halo.value = halo;
     try {
-      final p = await SharedPreferences.getInstance();
+      final p = await KalisPrefs.active();
       await p.setBool(_kNames, this.touchNames.value);
       await p.setBool(_kHalo, this.halo.value);
     } catch (_) {}

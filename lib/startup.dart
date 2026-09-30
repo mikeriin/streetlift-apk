@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
 import 'brand.dart';
+import 'dev/dev_widgets.dart' show devLogoColor;
 
 /// Le chargement commence pendant les deux secondes d'ouverture. Si les
 /// données tardent, la marque reste au centre puis termine son déplacement.
@@ -174,7 +175,8 @@ class _OpeningFrame extends StatelessWidget {
                     key: const ValueKey('opening-logo'),
                     size: logoSize,
                     scale: 1,
-                    color: palette.logo,
+                    // G1 : rose vif pendant la session de test.
+                    color: devLogoColor(palette.logo),
                   ),
                 ),
               ),

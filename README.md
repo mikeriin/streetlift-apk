@@ -1,4 +1,14 @@
-# Kalis Track 5.10.1 — Nouveau logo
+# Kalis Track 6.0.0 — Mode dev (pipeline « Génération et progression »)
+
+## 6.0.0 — Mode dev, session de test isolée (lot G1)
+
+- **Mode dev** (build de développement seulement : l'APK construit par GitHub Actions, avec `--dart-define=KALIS_DEV=true` ; l'AAB du Play Store ne le contient pas) : **5 appuis d'affilée** sur le logo de l'en-tête (2 s au plus entre deux appuis) démarrent une **session de test** vierge, comme une installation neuve ; le logo passe en **rose vif** (#FF1493, écran d'ouverture compris) et une étiquette **DEV** apparaît au bord droit de l'écran.
+- **Appui long de 3 s** sur le logo rose (anneau de progression, relâcher annule) : la session de test est supprimée, vibration, « Session de test supprimée », retour à la session personnelle telle qu'elle était.
+- **Isolation** : toutes les données passent par une vue du stockage propre à la session (`lib/session_prefs.dart`) ; clés de la session personnelle inchangées, clés de test préfixées ; sauvegardes, exports, import et « Supprimer les données » n'agissent que sur la session active ; rappels de la session personnelle suspendus pendant la session de test puis restaurés. La session de test survit à la fermeture de l'application jusqu'à sa suppression.
+- **Outils de test** (appui long sur l'étiquette DEV) : voyage dans le temps (+1 jour, +1 semaine, date au choix, retour à aujourd'hui) par l'horloge unique `KalisClock`, export JSON de la session de test par le menu de partage, suppression ; simulateur et inspecteur annoncés pour G10.
+- Import d'une sauvegarde de session de test dans la session personnelle : avertissement explicite. Réglages › À propos : ligne « Build de développement ».
+- CI : tâche `packages` (moteurs Dart purs de `packages/`), tests du mode dev compilés avec le drapeau, contrôle que l'AAB ne contient pas le code du mode dev (`docs/CI_GP.md`).
+
 
 ## 5.10.1 — Carte du jour aux couleurs de l'Anatomie (lot M8, correction 3)
 

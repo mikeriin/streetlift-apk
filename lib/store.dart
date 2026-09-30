@@ -9,9 +9,10 @@ import 'dart:ui' show Color;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show AssetBundle, rootBundle;
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'content_pack.dart';
+import 'kalis_clock.dart';
+import 'session_prefs.dart';
 import 'game.dart';
 import 'koach_adapt.dart';
 import 'koach_data.dart';
@@ -403,7 +404,7 @@ ExecMode modeById(String id) =>
 
 int _uidCounter = 0;
 String _newUid() =>
-    '${DateTime.now().microsecondsSinceEpoch.toRadixString(36)}-${_uidCounter++}';
+    '${KalisClock.realNow().microsecondsSinceEpoch.toRadixString(36)}-${_uidCounter++}';
 
 class CustomExercise {
   String
@@ -681,7 +682,8 @@ class AppStore extends ChangeNotifier {
     program.start = start;
   }
 
-  late final SharedPreferences _prefs;
+  /// G1 : vue du stockage limitée à la session active (session_prefs.dart).
+  late final KalisPrefs _prefs;
 
   /// Valeurs Pilotage éditables : PdC (B4), 1RM (B8-B11), max reps (B16-B20),
   /// charges de référence accessoires (B25-B45).
@@ -898,7 +900,7 @@ class AppStore extends ChangeNotifier {
       _baseKoachJson = const {};
       koachProgram = _baseKoach = const KoachProgram.empty();
     }
-    _prefs = await SharedPreferences.getInstance();
+    _prefs = await KalisPrefs.active();
 
     final p = program.pilotage;
     for (final a in p.accessories) {
@@ -1232,11 +1234,13 @@ class AppStore extends ChangeNotifier {
   // ---------- Vitrine : sélections déterministes ----------
   /// Horloge de la vitrine (remplaçable dans les tests) : les sélections du
   /// jour et de la semaine ne dépendent que de la date et du journal.
-  DateTime Function() storeClock = DateTime.now;
+  DateTime Function() storeClock = KalisClock.now;
 
   /// Horloge réelle (non remplacée par un test) : les chronos peuvent alors
   /// s'appuyer aussi sur l'horloge monotone du processus.
-  bool get realClock => identical(storeClock, DateTime.now);
+  bool get realClock =>
+      identical(storeClock, KalisClock.now) ||
+      identical(storeClock, DateTime.now);
 
   static int _fnv(String s) {
     var h = 0x811C9DC5;
@@ -1958,7 +1962,7 @@ class AppStore extends ChangeNotifier {
   Progression? _progression;
   DateTime? _progressionDay;
   Progression get progression {
-    final now = DateTime.now();
+    final now = KalisClock.now();
     final day = civilDay(now);
     if (_progression == null || _progressionDay != day) {
       _progression = Progression.calculate(
@@ -1997,7 +2001,7 @@ class AppStore extends ChangeNotifier {
         refs: values,
         wods: wods,
         isDone: isDone,
-        now: DateTime.now(),
+        now: KalisClock.now(),
         manualWeeklyGoal: settings.weeklyGoal,
       );
       _gameSource = p;
@@ -2396,7 +2400,7 @@ class AppStore extends ChangeNotifier {
   }
 
   String newSessionId() {
-    var id = DateTime.now().microsecondsSinceEpoch;
+    var id = KalisClock.realNow().microsecondsSinceEpoch;
     while (customSessions.any((s) => s.id == '$id')) {
       id++;
     }
@@ -3140,7 +3144,7 @@ class AppStore extends ChangeNotifier {
             logs: data.logs,
             catalog: data.wods,
             program: program,
-            now: DateTime.now(),
+            now: KalisClock.now(),
           ),
           customWods: data.wods
               .where((w) => !_seedDefaults.containsKey(w.id))
@@ -3204,8 +3208,14 @@ class AppStore extends ChangeNotifier {
   /// par les versions précédentes). Instantané synchrone de la mémoire.
   String exportForFile({required String appVersion, DateTime? at}) {
     final data = _backupJson(_currentBackup());
-    data['exportedAt'] = (at ?? DateTime.now()).toIso8601String();
+    data['exportedAt'] = (at ?? KalisClock.now()).toIso8601String();
     data['appVersion'] = appVersion;
+    // G1 : export d'une session de test, reconnu à l'import (champs
+    // optionnels, ignorés par les versions précédentes).
+    if (SessionSpace.isDev) {
+      data['sessionDeTest'] = true;
+      data['decalageJours'] = KalisClock.offsetDays;
+    }
     return jsonEncode(data);
   }
 
@@ -3318,7 +3328,7 @@ class AppStore extends ChangeNotifier {
     }
     final next = [
       {
-        'at': DateTime.now().toIso8601String(),
+        'at': KalisClock.now().toIso8601String(),
         'reason': reason,
         'state': _pack(exportAll()),
       },
@@ -4023,7 +4033,7 @@ class AppStore extends ChangeNotifier {
   /// à 0,5), base des groupes (`weeklyMuscles`) et de la zone ciblée sur le
   /// mannequin (`targetedRegionIntensities`).
   Map<String, double> weeklyNames([DateTime? at]) {
-    final now = at ?? DateTime.now();
+    final now = at ?? KalisClock.now();
     final monday = DateTime(now.year, now.month, now.day - now.weekday + 1);
     final out = <String, double>{};
     bool inWeek(DateTime? date) =>
@@ -4959,7 +4969,9 @@ String creditDeficitLabel(int balance) =>
     'déficit de ${-balance} crédit${-balance > 1 ? 's' : ''}';
 
 /// Singleton global — simple et suffisant pour cette app.
-final AppStore store = AppStore();
+/// Magasin de la session active. G1 : remplacé par un magasin neuf au
+/// redémarrage logique (session de test, session_host.dart).
+AppStore store = AppStore();
 
 /// Entrée du cache des estimations WOD (L6, KT-023) : copie des champs
 /// qui composaient la clé JSON d'origine (`Wod.prescriptionKey` et tous

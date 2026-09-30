@@ -18,8 +18,9 @@ import 'program_screens.dart';
 import 'profile_screens.dart';
 import 'store.dart';
 import 'store_widget.dart';
+import 'dev/dev_flags.dart';
 
-const kAppVersion = '5.10.1';
+const kAppVersion = '6.0.0';
 
 class SettingsScreen extends StatelessWidget {
   final int? section;
@@ -535,6 +536,15 @@ class SettingsScreen extends StatelessWidget {
             subtitle:
                 'Programme streetlifting v3.3 · ${store.allExercises.length} exercices · ${execModes.length} modes · ${store.wods.length} WODs',
           ),
+          // G1 (D2.4) : visible seulement dans un build de développement.
+          if (kDevBuild)
+            const _Tile(
+              key: ValueKey('about-dev-build'),
+              title: 'Build de développement',
+              subtitle:
+                  'Mode dev disponible : 5 appuis sur le logo de l’accueil '
+                  'ouvrent une session de test séparée de la tienne.',
+            ),
           // L13 (KT-072 à KT-078) : finalité, sécurité, confidentialité,
           // retour de test.
           const DisclaimerCard(),
@@ -996,7 +1006,13 @@ class _Tile extends StatelessWidget {
   final String title;
   final String? subtitle;
   final Widget? below, trailing;
-  const _Tile({required this.title, this.subtitle, this.below, this.trailing});
+  const _Tile({
+    super.key,
+    required this.title,
+    this.subtitle,
+    this.below,
+    this.trailing,
+  });
   @override
   Widget build(BuildContext context) => KCard(
     child: LayoutBuilder(
