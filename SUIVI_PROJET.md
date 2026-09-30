@@ -1,8 +1,14 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : version 5.10.0 — nouveau logo, Rouge Kalis à sa couleur ; M8 correction 2 (carte muscle par muscle, relectures anatomique et biomécanique) ; précédent : M8 correction 1 (5.9.1)**  
-**Date : 30 septembre 2026, Europe/Paris — version : 5.10.0+92 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : M8 correction 3 (carte du jour aux couleurs de l'Anatomie), version 5.10.1 ; précédent : 5.10.0 (logo, M8 correction 2)**  
+**Date : 30 septembre 2026, Europe/Paris — version : 5.10.1+93 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+
+## M8.C3 — Correction 3 (version 5.10.1)
+
+| Retour | Correction |
+| --- | --- |
+| « Sur la carte de la séance du jour, il est trop clair et flashy, je veux les mêmes couleurs que dans le menu anatomie. » | Accueil, carte du jour : la carte des muscles n'est plus teintée de la couleur du texte (`tint`) ; mêmes couleurs que l'Anatomie (gris, couleur dominante par intensité, traits, modelé). Test Dart : aucune carte teintée à l'accueil. |
 
 ## M8.C2 — Correction 2 (surbrillance scientifiquement correcte, version 5.10.0)
 

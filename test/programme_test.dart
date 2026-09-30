@@ -88,6 +88,8 @@ void main() {
       expect(find.textContaining('AUJOURD’HUI'), findsOneWidget);
       expect(find.byType(PopupMenuButton<String>), findsNothing);
       expect(find.byType(MuscleMap2D), findsOneWidget);
+      // 5.10.1 : carte du jour aux couleurs de l'Anatomie (non teintée)
+      expect(tester.widget<MuscleMap2D>(find.byType(MuscleMap2D)).tint, isNull);
       for (final caption in ['AVANT', 'ARRIÈRE', 'ARRIERE', 'FACE', 'DOS']) {
         expect(find.text(caption), findsNothing);
       }
