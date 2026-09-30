@@ -17,7 +17,7 @@ Entrées attendues du propriétaire :
 
 | Lot | Validation | Version | Commit main | Run | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
-| G1 | propriétaire | 6.0.0 | — | — | — | à faire |
+| G1 | propriétaire | 6.0.0 | — | — | — | en cours depuis 2026-09-30 21:29 UTC |
 | G2 | propriétaire | — | — | — | — | à faire |
 | G3 | propriétaire | — | — | — | — | à faire (attend `base_exercices.json`) |
 | G4 | auto → G5 | kalis_plan 0.1.0 | — | — | — | à faire |
