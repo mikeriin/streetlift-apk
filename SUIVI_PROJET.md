@@ -9,6 +9,7 @@
 | Retour | Correction |
 | --- | --- |
 | « Le fond doit suivre les mêmes règles que le reste et être de couleur identique au support ; ça doit être une règle de base pour la suite » | `KoachPreviewScreen` : lecteur hors carte, posé sur la page, `background` = couleur de la page (comme `AnatomyScreen`). Test Dart (fond = page, aucune `KCard` autour du lecteur), démarcation mesurée sur émulateur pour les 9 animations. Règle inscrite dans `pipeline/3d/PIPELINE_3D.md` §3 pour tous les lots suivants. |
+| CI 3D | Essais A (nom de variable du test), B vert : 997 tests Dart, 140 Python, formatage et analyse sans remarque, builds debug et profile ; émulateur : démarcation 0,0 pour les 9 animations, captures regardées (run 36670659752). |
 
 ## M7b — Animations de Koach en mascotte (version 5.8.0)
 
