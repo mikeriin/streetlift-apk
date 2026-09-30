@@ -297,7 +297,7 @@ class Engine3DScreenState extends State<Engine3DScreen> {
           spin: true,
           // M6b : fond de la page (décision du 29/09/2026 : fond de chaque
           // vue 3D = couleur de son support, sans démarcation).
-          background: Theme.of(context).scaffoldBackgroundColor,
+          background: kPageColor(context),
           height: 380,
           onReady: _onReady,
           semanticLabel:

@@ -350,9 +350,13 @@ class _Sheet extends StatelessWidget {
         // 5.5.3 (décision du propriétaire, 29/09/2026) : le mannequin 3D
         // remplace la démonstration 2D en tête de fiche ; il montre les
         // muscles ciblés par l'exercice (repli : carte 2D historique).
-        KCard(
+        // 5.8.2 (propriétaire, 30/09/2026 : « TOUS les fonds de la couleur du
+        // support ») : mannequin posé sur la page, sans carte, fond = page.
+        KeyedSubtree(
+          key: const ValueKey('fiche-mannequin-support'),
           child: ExerciseMannequin(
             key: ValueKey('fiche-muscles-${entry.id}'),
+            background: kPageColor(context),
             // M7 : animation du propriétaire si l'exercice en a une.
             exerciseId: entry.id,
             // M6b : plus grand sur grand écran (tablette), 380 sur téléphone.

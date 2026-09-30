@@ -219,6 +219,7 @@ class WeeklyMannequin extends TargetedMannequin {
     required Map<String, double> data,
     super.names = const {},
     super.height,
+    super.background,
   }) : super(
          groups: data,
          fallbackHeight: fallback2dHeight,

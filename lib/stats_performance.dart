@@ -118,6 +118,7 @@ class StatsPerformance extends StatelessWidget {
               // M4 : mannequin 3D (carte 2D historique sans Flutter GPU).
               WeeklyMannequin(
                 key: const ValueKey('stats-mannequin'),
+                background: kCardColor(context),
                 data: muscles,
                 names: store.weeklyNames(),
               ),
