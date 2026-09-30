@@ -258,7 +258,7 @@ class AnatomyScreenState extends State<AnatomyScreen> {
           Mannequin3D(
             key: const ValueKey('anatomy-mannequin'),
             intensities: intensities,
-            background: Theme.of(context).scaffoldBackgroundColor,
+            background: kPageColor(context),
             view: _view,
             height: height,
             semanticLabel: labels.isEmpty

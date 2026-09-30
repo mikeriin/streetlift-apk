@@ -136,7 +136,7 @@ class KoachPreviewScreenState extends State<KoachPreviewScreen> {
                 clip: clip,
                 view: MannequinView.face,
                 height: 340,
-                background: Theme.of(context).scaffoldBackgroundColor,
+                background: kPageColor(context),
                 semanticLabel:
                     'Koach en 3D, animation « ${clip.name} » '
                     '(${kKoachFamilies[clip.family] ?? ''})',

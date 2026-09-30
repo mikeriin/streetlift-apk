@@ -389,6 +389,7 @@ class _WodPreviewScreenState extends State<WodPreviewScreen>
                       groups: muscles,
                       height: 260,
                       fallbackHeight: 200,
+                      background: kCardColor(context),
                       subject: 'muscles du WOD',
                     ),
                     const SizedBox(height: 6),

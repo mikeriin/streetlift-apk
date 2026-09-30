@@ -108,9 +108,12 @@ class AnimationTestScreenState extends State<AnimationTestScreen> {
               child: Center(child: CircularProgressIndicator()),
             )
           else
-            KCard(
+            // 5.8.2 : lecteur posé sur la page, fond = page (sans carte).
+            KeyedSubtree(
+              key: const ValueKey('animation-test-support'),
               child: MannequinPlayer(
                 key: _player,
+                background: kPageColor(context),
                 clip: clip,
                 intensities: mapped.intensities,
                 view: MannequinView.profil,

@@ -94,6 +94,16 @@ class KList extends StatelessWidget {
   );
 }
 
+/// Couleur d'une carte [KCard] sans couleur imposée : fond d'une vue 3D
+/// posée dans une carte (règle du propriétaire, 30/09/2026 : fond de tout
+/// affichage 3D = couleur de son support).
+Color kCardColor(BuildContext context) =>
+    Theme.of(context).colorScheme.surfaceContainerLow;
+
+/// Couleur de la page : fond d'une vue 3D posée directement sur la page.
+Color kPageColor(BuildContext context) =>
+    Theme.of(context).scaffoldBackgroundColor;
+
 class KCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;

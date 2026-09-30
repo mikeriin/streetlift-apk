@@ -1,4 +1,10 @@
-# Kalis Track 5.8.1 — Mannequin anatomique 3D
+# Kalis Track 5.8.2 — Mannequin anatomique 3D
+
+## 5.8.2 — Tous les fonds 3D de la couleur du support (lot M7b, correction 2)
+
+- Règle du propriétaire (30/09/2026) : « TOUS les fonds de la couleur du support ». Chaque affichage 3D reçoit explicitement la couleur de son support (`kPageColor` / `kCardColor`, `lib/ui.dart`) et aucune carte ne sert plus seulement de cadre à une vue 3D.
+- **Fiche exercice** : le mannequin (fixe ou animé) n'est plus dans une carte ; il est posé sur la page, fond = page. **Réglages › À propos › Moteur 3D › Animation de test** : lecteur posé sur la page. Koach (aperçu), Anatomie, Moteur 3D : page. Aperçu de WOD et STATS (mannequin dans la carte « Muscles sollicités », avec sa légende) : couleur de la carte, désormais explicite ; accueil : couleur de sa carte (inchangé).
+- Contrôles : `test/fonds_3d_test.dart` (toute vue 3D des sources reçoit un fond ; aucune carte-cadre), démarcation mesurée sur émulateur (audit M6b de tous les écrans 3D, animation de test, Koach).
 
 ## 5.8.1 — Koach (aperçu) sans cadre (lot M7b, correction 1)
 

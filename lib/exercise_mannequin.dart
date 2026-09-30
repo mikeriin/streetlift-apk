@@ -283,9 +283,13 @@ class ExerciseMannequin extends StatefulWidget {
   /// lecteur ; sinon, la fiche reste exactement comme avant (mannequin fixe).
   final String? exerciseId;
 
+  /// 5.8.2 : couleur du support (fond de la vue 3D, sans démarcation).
+  final Color? background;
+
   const ExerciseMannequin({
     super.key,
     this.exerciseId,
+    this.background,
     this.primaires = const [],
     this.secondaires = const [],
     this.stabilisateurs = const [],
@@ -383,6 +387,7 @@ class ExerciseMannequinState extends State<ExerciseMannequin> {
             stretched: _muscles.stretched,
             view: startView,
             height: widget.height,
+            background: widget.background,
             semanticLabel: semanticLabel,
             onReady: (ok) {
               if (mounted && ok != _ready3d) setState(() => _ready3d = ok);
@@ -396,6 +401,7 @@ class ExerciseMannequinState extends State<ExerciseMannequin> {
             stretched: _muscles.stretched,
             view: startView,
             height: widget.height,
+            background: widget.background,
             horizontalDragOnly: true,
             semanticLabel: semanticLabel,
             onReady: (ok) {

@@ -51,7 +51,11 @@ cible() {
 # (attente, parle, félicite). Les cibles des lots précédents (M7, M6c,
 # M6b…) ne sont relancées que sur demande (CI3D_TOUT=1).
 code_m7b=0
-for part in a b c d; do
+# 5.8.2 : partie a seulement par défaut (les images des GIF, b à d, ne
+# changent pas ; CI3D_M7B_GIF=1 pour les refaire).
+m7b_parts="a"
+[ "${CI3D_M7B_GIF:-0}" = "1" ] && m7b_parts="a b c d"
+for part in $m7b_parts; do
   cible koach_m7b_test "$part"
   c=$?
   if [ "$c" -ne 0 ] && [ ! -f "$out/m7b_releve_$part.json" ]; then
@@ -66,6 +70,20 @@ for part in a b c d; do
   [ "$c" -ne 0 ] && code_m7b=$c
 done
 code_m7=0
+code_fonds=0
+if [ "${CI3D_TOUT:-0}" != "1" ]; then
+# M7b correction 2 (5.8.2) : tous les fonds 3D = couleur du support ;
+# démarcation mesurée sur tous les écrans 3D (audit M6b, parties a et b)
+# et sur l'écran « Animation de test » (M7, partie a).
+for part in a b; do
+  cible audit_m6b_test "$part"
+  c=$?
+  [ "$c" -ne 0 ] && code_fonds=$c
+done
+cible animation_m7_test a
+c=$?
+[ "$c" -ne 0 ] && code_fonds=$c
+fi
 if [ "${CI3D_TOUT:-0}" = "1" ]; then
 # M7 : lecteur d'animation et animation de test, en trois parties : a =
 # phases, vues, zoom, toucher, lecture (sombre) ; b = clair et animations
@@ -179,14 +197,14 @@ if [ "${CI3D_MESURE:-0}" = "1" ]; then
   code_mesure=$?
   tail -n 20 "$out/drive-mannequin_mesure_test.log"
 fi
-for part in a b c d; do
+for part in $m7b_parts; do
   tail -n 30 "$out/drive-koach_m7b_test-$part.log"
 done
 kill "$logcat_pid" 2>/dev/null || true
 grep -o 'Impeller rendering backend ([^)]*)' "$out/logcat-complet.txt" | sort | uniq -c > "$out/impeller.txt" || true
 grep -iE 'flutter|impeller|vulkan|gles|AndroidRuntime|FATAL|swiftshader|angle|lowmemorykiller|DEBUG|libc|tombstone|ActivityManager' "$out/logcat-complet.txt" | tail -n 3000 > "$out/logcat.txt" || true
 rm -f "$out/logcat-complet.txt"
-echo "code_m7b=$code_m7b code_m7=$code_m7" > "$out/drive-code.txt"
+echo "code_m7b=$code_m7b code_m7=$code_m7 code_fonds=$code_fonds" > "$out/drive-code.txt"
 echo "code_m6c=$code_m6c" >> "$out/drive-code.txt"
 echo "code_m6b=$code_m6b" >> "$out/drive-code.txt"
 echo "code_m56=$code_m56" >> "$out/drive-code.txt"
@@ -197,4 +215,4 @@ echo "code=$code" >> "$out/drive-code.txt"
 echo "code_fiche=$code_fiche" >> "$out/drive-code.txt"
 echo "code_stats=$code_stats" >> "$out/drive-code.txt"
 echo "code_mesure=$code_mesure" >> "$out/drive-code.txt"
-[ "$code_m7b" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code_m6c" -eq 0 ] && [ "$code_m6b" -eq 0 ] && [ "$code_m56" -eq 0 ] && [ "$code_m5" -eq 0 ] && [ "$code_m4c" -eq 0 ] && [ "$code_m4b" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_fiche" -eq 0 ] && [ "$code_stats" -eq 0 ] && [ "$code_mesure" -eq 0 ]
+[ "$code_m7b" -eq 0 ] && [ "$code_fonds" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code_m6c" -eq 0 ] && [ "$code_m6b" -eq 0 ] && [ "$code_m56" -eq 0 ] && [ "$code_m5" -eq 0 ] && [ "$code_m4c" -eq 0 ] && [ "$code_m4b" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_fiche" -eq 0 ] && [ "$code_stats" -eq 0 ] && [ "$code_mesure" -eq 0 ]

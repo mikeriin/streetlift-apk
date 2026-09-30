@@ -1,8 +1,14 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M7b, correction 1 (fond du lecteur de Koach = couleur de la page), version 5.8.1 ; précédent : M7b (5.8.0)**  
-**Date : 30 septembre 2026, Europe/Paris — version : 5.8.1+88 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : pipeline « Mannequin 3D », lot M7b, correction 2 (tous les fonds 3D = couleur du support), version 5.8.2 ; précédent : M7b correction 1 (5.8.1)**  
+**Date : 30 septembre 2026, Europe/Paris — version : 5.8.2+89 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+
+## M7b.C2 — Correction 2 (retour du propriétaire du 30/09/2026, version 5.8.2)
+
+| Retour | Correction |
+| --- | --- |
+| « TOUS les fonds de la couleur du support. » | Audit des 13 constructions de vues 3D (`Mannequin3D`, `MannequinPlayer`, `TargetedMannequin`, `WeeklyMannequin`, `ExerciseMannequin`) : fond explicite partout (`kPageColor`, `kCardColor`). Cartes-cadres retirées : fiche exercice (mannequin posé sur la page) et écran « Animation de test ». WOD et STATS gardent leur carte « Muscles sollicités » (titre, légende) : fond = couleur de cette carte, explicite. `test/fonds_3d_test.dart` (contrôle des sources) ; émulateur : audit M6b (tous les écrans 3D) et animation de test lancés avec la cible du lot. |
 
 ## M7b.C1 — Correction 1 (retour du propriétaire du 30/09/2026, version 5.8.1)
 
