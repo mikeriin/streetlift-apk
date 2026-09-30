@@ -1,0 +1,129 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             20.2s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,365ms
+I/eetlift_tracker( 4659): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4659): Skipped 46 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4659): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:37419/3ffd-YuPxfE=/
+VMServiceFlutterDriver: Isolate found with number: 4421586421201283
+VMServiceFlutterDriver: Isolate 4421586421201283 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4659): 00:00 +0: (setUpAll)
+VMServiceFlutterDriver: Connected to Flutter application.
+I/flutter ( 4659): 00:00 +1: Anatomie (clair) : aucun groupe, tous, Dorsaux + toucher
+D/ProfileInstaller( 4659): Installing profile for fr.tchoupi.streetlift_tracker
+D/FlutterJNI( 4659): Sending viewport metrics to the engine.
+D/EGL_emulation( 4659): app_time_stats: avg=448.00ms min=123.49ms max=1193.52ms count=5
+D/EGL_emulation( 4659): app_time_stats: avg=164.36ms min=44.97ms max=240.47ms count=6
+D/EGL_emulation( 4659): app_time_stats: avg=142.83ms min=2.04ms max=225.59ms count=7
+D/EGL_emulation( 4659): app_time_stats: avg=165.35ms min=116.01ms max=191.46ms count=6
+D/EGL_emulation( 4659): app_time_stats: avg=178.03ms min=166.80ms max=187.27ms count=6
+D/EGL_emulation( 4659): app_time_stats: avg=199.67ms min=189.14ms max=212.09ms count=5
+D/EGL_emulation( 4659): app_time_stats: avg=239.80ms min=80.91ms max=639.79ms count=6
+D/EGL_emulation( 4659): app_time_stats: avg=186.44ms min=164.41ms max=206.60ms count=6
+D/EGL_emulation( 4659): app_time_stats: avg=172.13ms min=85.47ms max=202.63ms count=6
+D/EGL_emulation( 4659): app_time_stats: avg=241.95ms min=95.44ms max=514.27ms count=4
+D/EGL_emulation( 4659): app_time_stats: avg=180.40ms min=167.02ms max=204.60ms count=6
+D/EGL_emulation( 4659): app_time_stats: avg=194.05ms min=75.93ms max=324.88ms count=6
+D/EGL_emulation( 4659): app_time_stats: avg=218.53ms min=87.43ms max=755.80ms count=6
+D/EGL_emulation( 4659): app_time_stats: avg=188.48ms min=172.95ms max=216.33ms count=6
+I/flutter ( 4659): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4659): The following TestFailure was thrown running a test:
+I/flutter ( 4659): Expected: a value less than <2>
+I/flutter ( 4659):   Actual: <2.0253623188405796>
+I/flutter ( 4659):    Which: is not a value less than <2>
+I/flutter ( 4659): aucun
+I/flutter ( 4659): 
+I/flutter ( 4659): When the exception was thrown, this was the stack:
+I/flutter ( 4659): #4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/carte_2d_m8_test.dart:267:7)
+I/flutter ( 4659): <asynchronous suspension>
+I/flutter ( 4659): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4659): <asynchronous suspension>
+I/flutter ( 4659): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4659): <asynchronous suspension>
+I/flutter ( 4659): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4659): <asynchronous suspension>
+I/flutter ( 4659): 
+I/flutter ( 4659): This was caught by the test expectation on the following line:
+I/flutter ( 4659):   file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/carte_2d_m8_test.dart line 267
+I/flutter ( 4659): The test description was:
+I/flutter ( 4659):   Anatomie (clair) : aucun groupe, tous, Dorsaux + toucher
+I/flutter ( 4659): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4659): 00:19 +1: Anatomie (clair) : aucun groupe, tous, Dorsaux + toucher [E]
+I/flutter ( 4659):   Test failed. See exception logs above.
+I/flutter ( 4659):   The test description was: Anatomie (clair) : aucun groupe, tous, Dorsaux + toucher
+I/flutter ( 4659):   
+I/flutter ( 4659): 00:19 +1 -1: fiches (clair) : section Muscles
+D/EGL_emulation( 4659): app_time_stats: avg=271.10ms min=71.85ms max=904.26ms count=7
+D/EGL_emulation( 4659): app_time_stats: avg=123.11ms min=112.47ms max=159.95ms count=9
+D/EGL_emulation( 4659): app_time_stats: avg=127.80ms min=113.94ms max=180.48ms count=8
+D/EGL_emulation( 4659): app_time_stats: avg=92.84ms min=2.54ms max=172.20ms count=7
+D/EGL_emulation( 4659): app_time_stats: avg=125.31ms min=91.77ms max=191.57ms count=6
+D/EGL_emulation( 4659): app_time_stats: avg=349.83ms min=199.76ms max=636.44ms count=3
+D/EGL_emulation( 4659): app_time_stats: avg=125.98ms min=9.18ms max=226.57ms count=9
+D/EGL_emulation( 4659): app_time_stats: avg=89.61ms min=1.60ms max=183.72ms count=11
+D/EGL_emulation( 4659): app_time_stats: avg=127.24ms min=66.51ms max=270.79ms count=7
+D/EGL_emulation( 4659): app_time_stats: avg=98.43ms min=3.28ms max=187.98ms count=7
+I/flutter ( 4659): 00:30 +2 -1: STATS, accueil et WOD (clair)
+D/EGL_emulation( 4659): app_time_stats: avg=264.57ms min=120.78ms max=616.00ms count=4
+D/EGL_emulation( 4659): app_time_stats: avg=85.05ms min=14.43ms max=113.76ms count=10
+D/EGL_emulation( 4659): app_time_stats: avg=106.33ms min=12.23ms max=198.92ms count=8
+D/EGL_emulation( 4659): app_time_stats: avg=144.21ms min=51.29ms max=246.82ms count=8
+D/EGL_emulation( 4659): app_time_stats: avg=138.60ms min=62.90ms max=171.08ms count=6
+D/EGL_emulation( 4659): app_time_stats: avg=167.00ms min=156.97ms max=176.30ms count=6
+D/EGL_emulation( 4659): app_time_stats: avg=262.52ms min=134.62ms max=569.78ms count=4
+D/EGL_emulation( 4659): app_time_stats: avg=130.03ms min=120.53ms max=159.24ms count=8
+D/EGL_emulation( 4659): app_time_stats: avg=106.02ms min=22.72ms max=128.80ms count=9
+D/EGL_emulation( 4659): app_time_stats: avg=103.56ms min=88.79ms max=120.73ms count=9
+D/EGL_emulation( 4659): app_time_stats: avg=130.16ms min=21.91ms max=217.94ms count=9
+D/EGL_emulation( 4659): app_time_stats: avg=202.36ms min=114.35ms max=486.01ms count=5
+D/EGL_emulation( 4659): app_time_stats: avg=133.04ms min=36.00ms max=233.10ms count=8
+D/EGL_emulation( 4659): app_time_stats: avg=109.03ms min=7.03ms max=247.35ms count=8
+D/EGL_emulation( 4659): app_time_stats: avg=102.63ms min=84.33ms max=145.64ms count=7
+D/EGL_emulation( 4659): app_time_stats: avg=174.39ms min=155.08ms max=223.07ms count=6
+I/flutter ( 4659): 00:47 +3 -1: (tearDownAll)
+I/flutter ( 4659): 00:47 +4 -1: Some tests failed.
+D/EGL_emulation( 4659): app_time_stats: avg=222.63ms min=159.72ms max=441.47ms count=5
+Failure Details:
+Failure in method: Anatomie (clair) : aucun groupe, tous, Dorsaux + toucher
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: a value less than <2>
+  Actual: <2.0253623188405796>
+   Which: is not a value less than <2>
+aucun
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/carte_2d_m8_test.dart:267:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/carte_2d_m8_test.dart line 267
+The test description was:
+  Anatomie (clair) : aucun groupe, tous, Dorsaux + toucher
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+

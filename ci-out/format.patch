@@ -1,0 +1,301 @@
+diff --git a/integration_test/carte_2d_m8_test.dart b/integration_test/carte_2d_m8_test.dart
+index aadd497..d3229c0 100644
+--- a/integration_test/carte_2d_m8_test.dart
++++ b/integration_test/carte_2d_m8_test.dart
+@@ -62,8 +62,9 @@ void main() {
+   final releve = <String, Object?>{};
+   binding.reportData = data;
+ 
+-  void record() => data['m8_releve_$_part.json'] =
+-      const JsonEncoder.withIndent('  ').convert(releve);
++  void record() => data['m8_releve_$_part.json'] = const JsonEncoder.withIndent(
++    '  ',
++  ).convert(releve);
+ 
+   Future<ui.Image> grab() async {
+     final boundary =
+@@ -127,7 +128,9 @@ void main() {
+       for (var x = rect.left; x < rect.right; x += 2) {
+         final (r, g, b) = at(x, y);
+         total++;
+-        if ((r - br).abs() <= 6 && (g - bgG).abs() <= 6 && (b - bb).abs() <= 6) {
++        if ((r - br).abs() <= 6 &&
++            (g - bgG).abs() <= 6 &&
++            (b - bb).abs() <= 6) {
+           continue;
+         }
+         figure++;
+@@ -218,9 +221,7 @@ void main() {
+     out['vues_3d'] = find.byType(Mannequin3D).evaluate().length;
+     out['aucun'] = await check(tester, map);
+     await shot('anatomie_${_theme}_aucun');
+-    final screen = tester.state<AnatomyScreenState>(
+-      find.byType(AnatomyScreen),
+-    );
++    final screen = tester.state<AnatomyScreenState>(find.byType(AnatomyScreen));
+     screen.checkAll();
+     await wait(tester);
+     out['tous'] = await check(tester, map);
+@@ -372,11 +373,7 @@ void main() {
+     expect((out['stats']! as Map)['couleur'] as double, greaterThan(.02));
+     expect((out['accueil']! as Map)['cartes'] as int, greaterThan(0));
+     for (final k in ['stats', 'wod']) {
+-      expect(
+-        (out[k]! as Map)['demarcation'] as double,
+-        lessThan(2),
+-        reason: k,
+-      );
++      expect((out[k]! as Map)['demarcation'] as double, lessThan(2), reason: k);
+     }
+   }, timeout: _limit);
+ }
+diff --git a/lib/anatomy_screen.dart b/lib/anatomy_screen.dart
+index 59b7987..f6a6a77 100644
+--- a/lib/anatomy_screen.dart
++++ b/lib/anatomy_screen.dart
+@@ -72,9 +72,7 @@ class AnatomyFilters {
+   static const total = 15;
+ 
+   /// Tout coché.
+-  static final all = AnatomyFilters(
+-    groups: {for (final g in kMapGroups) g.id},
+-  );
++  static final all = AnatomyFilters(groups: {for (final g in kMapGroups) g.id});
+ 
+   /// Tout décoché.
+   static const none = AnatomyFilters();
+diff --git a/lib/exercise_screens.dart b/lib/exercise_screens.dart
+index b049ba4..e38234f 100644
+--- a/lib/exercise_screens.dart
++++ b/lib/exercise_screens.dart
+@@ -369,23 +369,23 @@ class _Sheet extends StatelessWidget {
+         // fond = page.
+         if (ClipRegistry.loaded?.forExercise(entry.id) != null)
+           KeyedSubtree(
+-          key: const ValueKey('fiche-mannequin-support'),
+-          child: ExerciseMannequin(
+-            key: ValueKey('fiche-muscles-${entry.id}'),
+-            background: kPageColor(context),
+-            // M7 : animation du propriétaire si l'exercice en a une.
+-            exerciseId: entry.id,
+-            // M6b : plus grand sur grand écran (tablette), 380 sur téléphone.
+-            height: (MediaQuery.sizeOf(context).height * .45).clamp(
+-              380.0,
+-              600.0,
++            key: const ValueKey('fiche-mannequin-support'),
++            child: ExerciseMannequin(
++              key: ValueKey('fiche-muscles-${entry.id}'),
++              background: kPageColor(context),
++              // M7 : animation du propriétaire si l'exercice en a une.
++              exerciseId: entry.id,
++              // M6b : plus grand sur grand écran (tablette), 380 sur téléphone.
++              height: (MediaQuery.sizeOf(context).height * .45).clamp(
++                380.0,
++                600.0,
++              ),
++              primaires: detail.primaires,
++              secondaires: detail.secondaires,
++              stabilisateurs: detail.stabilisateurs,
++              etires: detail.etires,
+             ),
+-            primaires: detail.primaires,
+-            secondaires: detail.secondaires,
+-            stabilisateurs: detail.stabilisateurs,
+-            etires: detail.etires,
+           ),
+-        ),
+         const KSection('Points clés'),
+         _bullets(detail.pointsCles),
+         const KSection('Erreurs fréquentes'),
+diff --git a/lib/muscle_map_2d.dart b/lib/muscle_map_2d.dart
+index 4a32ae5..f6201c2 100644
+--- a/lib/muscle_map_2d.dart
++++ b/lib/muscle_map_2d.dart
+@@ -49,8 +49,9 @@ const kMapGroups = [
+ ];
+ 
+ /// Libellé d'un groupe de la carte.
+-String mapGroupLabel(String id) =>
+-    kMapGroups.firstWhere((g) => g.id == id, orElse: () => MapGroup(id, id)).label;
++String mapGroupLabel(String id) => kMapGroups
++    .firstWhere((g) => g.id == id, orElse: () => MapGroup(id, id))
++    .label;
+ 
+ /// Calques de la carte, dans l'ordre de `tools/muscles2d/build_map.py`
+ /// (valeur de la carte des étiquettes = 1 + rang).
+@@ -441,28 +442,25 @@ class MuscleMap2D extends StatelessWidget {
+   ) {
+     final tt = Theme.of(context).textTheme;
+     return Column(
+-              mainAxisSize: MainAxisSize.min,
+-              children: [
+-                _MapFigure(
+-                  key: ValueKey('map-${v.name}'),
+-                  view: v,
+-                  height: h,
+-                  intensities: intensities,
+-                  dark: dark,
+-                  tint: tint,
+-                  selected: selected,
+-                  onGroupTap: onGroupTap,
+-                ),
+-                if (labels)
+-                  Padding(
+-                    padding: const EdgeInsets.only(top: 4),
+-                    child: Text(
+-                      v.label,
+-                      style: tt.labelSmall?.copyWith(color: SL.dim),
+-                    ),
+-                  ),
+-              ],
+-            );
++      mainAxisSize: MainAxisSize.min,
++      children: [
++        _MapFigure(
++          key: ValueKey('map-${v.name}'),
++          view: v,
++          height: h,
++          intensities: intensities,
++          dark: dark,
++          tint: tint,
++          selected: selected,
++          onGroupTap: onGroupTap,
++        ),
++        if (labels)
++          Padding(
++            padding: const EdgeInsets.only(top: 4),
++            child: Text(v.label, style: tt.labelSmall?.copyWith(color: SL.dim)),
++          ),
++      ],
++    );
+   }
+ }
+ 
+diff --git a/test/m2_mannequin_test.dart b/test/m2_mannequin_test.dart
+index 7a8d240..5239217 100644
+--- a/test/m2_mannequin_test.dart
++++ b/test/m2_mannequin_test.dart
+@@ -206,9 +206,7 @@ void main() {
+         await tester.tap(find.byKey(const ValueKey('anatomy-filters')));
+         await tester.pumpAndSettle();
+         // CheckboxMenuButton transmet sa clé à son MenuItemButton.
+-        final box = find
+-            .byKey(const ValueKey('anatomy-filter-dorsaux'))
+-            .first;
++        final box = find.byKey(const ValueKey('anatomy-filter-dorsaux')).first;
+         await tester.ensureVisible(box);
+         await tester.pumpAndSettle();
+         await tester.tap(box);
+diff --git a/test/m4b_anatomie_test.dart b/test/m4b_anatomie_test.dart
+index c6e88d3..e030aed 100644
+--- a/test/m4b_anatomie_test.dart
++++ b/test/m4b_anatomie_test.dart
+@@ -436,9 +436,7 @@ void main() {
+     expect(find.text('Filtres · 1'), findsOneWidget);
+     // Groupe demandé à l'ouverture : il remplace les groupes de la session.
+     await tester.pumpWidget(const SizedBox());
+-    await tester.pumpWidget(
+-      page(const AnatomyScreen(initialGroup: 'dorsaux')),
+-    );
++    await tester.pumpWidget(page(const AnatomyScreen(initialGroup: 'dorsaux')));
+     await _settle(tester, find.byType(MuscleMap2D));
+     expect(state(tester).groups, {'dorsaux'});
+     expect(find.text('Filtres · 1'), findsOneWidget);
+diff --git a/test/m7_player_test.dart b/test/m7_player_test.dart
+index 266f828..f2f43a9 100644
+--- a/test/m7_player_test.dart
++++ b/test/m7_player_test.dart
+@@ -300,52 +300,51 @@ void main() {
+       expect(find.byKey(const ValueKey('player-play')), findsNothing);
+     });
+ 
+-    testWidgets(
+-      'fiche animée sans Flutter GPU : aucun lecteur vide',
+-      (tester) async {
+-        final saved = ClipRegistry.loaded;
+-        ClipRegistry.loaded = ClipRegistry([
+-          ClipEntry(
+-            id: 'back-squat',
+-            asset: debug.asset,
+-            name: 'Back squat',
+-            exercises: const ['back-squat'],
+-            debug: false,
+-            fps: 30,
+-            frames: 181,
+-            bytes: debug.bytes,
+-            duration: 6,
+-            phases: debug.phases,
+-          ),
+-        ]);
+-        addTearDown(() => ClipRegistry.loaded = saved);
+-        await tester.pumpWidget(
+-          page(
+-            const Scaffold(
+-              body: SingleChildScrollView(
+-                child: ExerciseMannequin(
+-                  exerciseId: 'back-squat',
+-                  primaires: ['vaste_lateral'],
+-                ),
++    testWidgets('fiche animée sans Flutter GPU : aucun lecteur vide', (
++      tester,
++    ) async {
++      final saved = ClipRegistry.loaded;
++      ClipRegistry.loaded = ClipRegistry([
++        ClipEntry(
++          id: 'back-squat',
++          asset: debug.asset,
++          name: 'Back squat',
++          exercises: const ['back-squat'],
++          debug: false,
++          fps: 30,
++          frames: 181,
++          bytes: debug.bytes,
++          duration: 6,
++          phases: debug.phases,
++        ),
++      ]);
++      addTearDown(() => ClipRegistry.loaded = saved);
++      await tester.pumpWidget(
++        page(
++          const Scaffold(
++            body: SingleChildScrollView(
++              child: ExerciseMannequin(
++                exerciseId: 'back-squat',
++                primaires: ['vaste_lateral'],
+               ),
+             ),
+           ),
++        ),
++      );
++      for (var i = 0; i < 5; i++) {
++        await tester.runAsync(
++          () => Future<void>.delayed(const Duration(milliseconds: 20)),
+         );
+-        for (var i = 0; i < 5; i++) {
+-          await tester.runAsync(
+-            () => Future<void>.delayed(const Duration(milliseconds: 20)),
+-          );
+-          await tester.pump();
+-        }
+-        expect(
+-          find.byKey(const ValueKey('fiche-mannequin-anime')),
+-          findsOneWidget,
+-        );
+-        expect(find.byKey(const ValueKey('player-play')), findsNothing);
+-        expect(find.byKey(const ValueKey('player-slider')), findsNothing);
+-        expect(tester.takeException(), isNull);
+-      },
+-    );
++        await tester.pump();
++      }
++      expect(
++        find.byKey(const ValueKey('fiche-mannequin-anime')),
++        findsOneWidget,
++      );
++      expect(find.byKey(const ValueKey('player-play')), findsNothing);
++      expect(find.byKey(const ValueKey('player-slider')), findsNothing);
++      expect(tester.takeException(), isNull);
++    });
+ 
+     testWidgets('écran Animation de test, libellé comme test', (tester) async {
+       await tester.pumpWidget(page(const AnimationTestScreen()));
