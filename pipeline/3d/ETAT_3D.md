@@ -1,5 +1,7 @@
 # État du pipeline « Mannequin 3D »
 
+> **PIPELINE CLOS le 30/09/2026 (22:05, heure de Paris) sur ordre du propriétaire.** Les deux tâches planifiées (trig_01Vzab2sFaAoMFNcNepFhEGX, trig_01GMgdzWoZ9At48KZ6PUZxSk) sont désactivées. Aucun lot de ce pipeline ne doit plus être exécuté ; toute session lancée avec ce fichier s'arrête sans rien modifier. Dernier état publié : 5.10.1 (main 601a04d, build n° 193). Travail repris par le pipeline « Génération et progression » (`pipeline/gp/`).
+
 Tâches planifiées (lancement manuel par la conversation de pilotage, lot indiqué dans le message « Lot : <LOT> ») : **Fable 5.1 effort maximal** trig_01Vzab2sFaAoMFNcNepFhEGX (M56, M12) ; **Opus 5.5 effort élevé** trig_01GMgdzWoZ9At48KZ6PUZxSk (tous les autres lots). Aucun lot ne relance, ne modifie ni ne crée de tâche. Validation manuelle de chaque lot par le propriétaire avant le suivant (statut « à valider » → « validé »).
 Page de suivi : https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA
 Base de départ : main 4.3.1+71 (commit 7f07e2e, L13 + refonte muscles 2D fusionnés).
@@ -29,17 +31,17 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M8 | 5.9.0 | decf806 | build n° 180 (36710169365) ; CI 3D 36708412158 (essai C) | 2026-09-30 | remplacé par 5.9.1 — `livraisons/LIVRAISON_M8.md` ; carte 2D des 15 groupes (fiches, STATS, accueil, WOD, Anatomie), 3D réservée à la démonstration et à Koach |
 | M8 correction 1 | 5.9.1 | a6e0bd7 | build n° 182 (36725473167) ; CI 3D 36723637430 (essai A) | 2026-09-30 | remplacé par 5.10.0 — `livraisons/LIVRAISON_M8_correction1.md` ; carte redessinée d'après l'image détaillée (traits, modelé), bas du dos gris sans groupe (16ᵉ groupe « lombaires » ? question au propriétaire) |
 | Logo + M8 correction 2 | 5.10.0 | 0a3f17f | build n° 191 (36747182764) ; CI 3D 36745077241 (essai H) | 2026-09-30 | remplacé par 5.10.1 — `livraisons/LIVRAISON_M8_correction2.md` ; nouveau logo, Rouge Kalis #5E1615 ; carte muscle par muscle (44 régions, profonds en texte, 17 filtres), relectures anatomiques et biomécanique (80 corrections de rôles) |
-| M8 correction 3 | 5.10.1 | 601a04d | build n° 193 (36751438374) ; CI 3D 36749218651 (essai A) | 2026-09-30 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M8_correction3.md` ; carte du jour aux couleurs de l'Anatomie |
-| M9 | 5.9.0 | — | — | — | à redéfinir (plus d'animation) |
-| M10 | 5.10.0 | — | — | — | à redéfinir (plus d'animation) |
-| M11 | 5.11.0 | — | — | — | à redéfinir (plus d'animation) |
-| M12 | 5.12.0 | — | — | — | à redéfinir (plus d'animation) |
-| M13 | 5.13.0 | — | — | — | à redéfinir (plus d'animation) |
-| M14 | 5.14.0 | — | — | — | à redéfinir (plus d'animation) |
-| M15 | 5.15.0 | — | — | — | à redéfinir (plus d'animation) |
-| M16 | 5.16.0 | — | — | — | à redéfinir (plus d'animation) |
-| M17 | 5.17.0 | — | — | — | à redéfinir (plus d'animation) |
-| M18 | 5.18.0 | — | — | — | à redéfinir (plus d'animation) |
-| M19 | 5.19.0 | — | — | — | à faire |
+| M8 correction 3 | 5.10.1 | 601a04d | build n° 193 (36751438374) ; CI 3D 36749218651 (essai A) | 2026-09-30 | clos (pipeline arrêté le 30/09/2026, dernier état publié) — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M8_correction3.md` ; carte du jour aux couleurs de l'Anatomie |
+| M9 | 5.9.0 | — | — | — | abandonné (pipeline clos le 30/09/2026) |
+| M10 | 5.10.0 | — | — | — | abandonné (pipeline clos le 30/09/2026) |
+| M11 | 5.11.0 | — | — | — | abandonné (pipeline clos le 30/09/2026) |
+| M12 | 5.12.0 | — | — | — | abandonné (pipeline clos le 30/09/2026) |
+| M13 | 5.13.0 | — | — | — | abandonné (pipeline clos le 30/09/2026) |
+| M14 | 5.14.0 | — | — | — | abandonné (pipeline clos le 30/09/2026) |
+| M15 | 5.15.0 | — | — | — | abandonné (pipeline clos le 30/09/2026) |
+| M16 | 5.16.0 | — | — | — | abandonné (pipeline clos le 30/09/2026) |
+| M17 | 5.17.0 | — | — | — | abandonné (pipeline clos le 30/09/2026) |
+| M18 | 5.18.0 | — | — | — | abandonné (pipeline clos le 30/09/2026) |
+| M19 | 5.19.0 | — | — | — | abandonné (pipeline clos le 30/09/2026) |
 
 Compatibilité du téléphone du propriétaire (réponse attendue après M1) : **Compatible, 120 images/s** (réponse du propriétaire, 27/09/2026, sur 5.0.0) → pipeline relancé pour M2.

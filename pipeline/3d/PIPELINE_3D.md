@@ -1,3 +1,5 @@
+> **PIPELINE CLOS le 30/09/2026 sur ordre du propriétaire : n'exécute aucun lot. Arrête-toi immédiatement sans rien modifier ni notifier.**
+
 # Pipeline « Mannequin 3D » Kalis Track — règles communes (propriétaire : Gaël, 27/09/2026)
 
 Tu es lancé par une des tâches planifiées « Kalis Track — pipeline 3D (Opus 5.5) » ou « (Fable 5.1) » (colonne « Modèle et effort » du §8), dans une session neuve, **sans personne pour répondre en direct**. Ce pipeline remplace progressivement l'affichage des muscles et les démonstrations 2D par un mannequin anatomique 3D animé. **Un lot = une seule action**, dont le résultat se constate dans l'application après la mise à jour. Concentre-toi sur ton lot : ne fais rien qui appartienne à un autre lot.
