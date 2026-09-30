@@ -1,0 +1,67 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             88.1s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...           3.3s
+D/FlutterRenderer( 3915): Width is zero. 0,0
+I/WindowExtensionsImpl( 3915): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 3915): Width is zero. 0,0
+W/HWUI    ( 3915): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+D/FlutterJNI( 3915): Sending viewport metrics to the engine.
+W/HWUI    ( 3915): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 3915): mapper 4.x is not supported
+I/eetlift_tracker( 3915): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 3915): Skipped 166 frames!  The application may be doing too much work on its main thread.
+D/ProfileInstaller( 3915): Installing profile for fr.tchoupi.streetlift_tracker
+D/FlutterJNI( 3915): Sending viewport metrics to the engine.
+I/eetlift_tracker( 3915): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:32995/Xj4OOd2etrM=/
+VMServiceFlutterDriver: Isolate found with number: 1824097557770739
+VMServiceFlutterDriver: Isolate 1824097557770739 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/Choreographer( 3915): Skipped 30 frames!  The application may be doing too much work on its main thread.
+I/flutter ( 3915): 00:00 +0: G1 a (sombre) : 5 appuis → session de test
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 3915): Skipped 84 frames!  The application may be doing too much work on its main thread.
+I/HWUI    ( 3915): Davey! duration=1481ms; Flags=1, FrameTimelineVsyncId=9585, IntendedVsync=146798251520, Vsync=148198251464, InputEventId=0, HandleInputStart=148215690701, AnimationStart=148215740544, PerformTraversalsStart=148215741035, DrawStart=148222610880, FrameDeadline=146814918186, FrameInterval=148214019190, FrameStartTime=16666666, SyncQueued=148224279656, SyncStart=148226387471, IssueDrawCommandsStart=148229809420, SwapBuffers=148253723635, FrameCompleted=148281751955, DequeueBufferDuration=12328366, QueueBufferDuration=268311, GpuCompleted=148281751955, SwapBuffersCompleted=148274671944, DisplayPresentTime=72904454231359566, CommandSubmissionCompleted=148253723635, 
+D/EGL_emulation( 3915): app_time_stats: avg=410.49ms min=279.04ms max=577.36ms count=4
+D/EGL_emulation( 3915): app_time_stats: avg=1125.42ms min=1125.42ms max=1125.42ms count=1
+D/EGL_emulation( 3915): app_time_stats: avg=283.98ms min=45.74ms max=958.74ms count=6
+I/eetlift_tracker( 3915): Background concurrent mark compact GC freed 2127KB AllocSpace bytes, 13(580KB) LOS objects, 49% free, 2756KB/5513KB, paused 95us,5.902ms total 189.947ms
+D/EGL_emulation( 3915): app_time_stats: avg=183.87ms min=5.19ms max=512.58ms count=7
+D/EGL_emulation( 3915): app_time_stats: avg=2708.88ms min=363.91ms max=5053.85ms count=2
+D/EGL_emulation( 3915): app_time_stats: avg=1294.82ms min=1294.82ms max=1294.82ms count=1
+D/EGL_emulation( 3915): app_time_stats: avg=1617.24ms min=1617.24ms max=1617.24ms count=1
+Unhandled exception:
+DriverError: Failed to fulfill RequestData due to remote error
+Original error: ext.flutter.driver: (112) Service has disappeared
+Original stack trace:
+#0      new _OutstandingRequest (package:vm_service/src/vm_service.dart:265:34)
+#1      VmService._call.<anonymous closure> (package:vm_service/src/vm_service.dart:1921:25)
+#2      VmService._call (package:vm_service/src/vm_service.dart:1933:8)
+#3      VmService.callServiceExtension (package:vm_service/src/vm_service.dart:1872:14)
+#4      VMServiceFlutterDriver.sendCommand (package:flutter_driver/src/driver/vmservice_driver.dart:327:12)
+#5      FlutterDriver.requestData (package:flutter_driver/src/driver/driver.dart:585:13)
+#6      integrationDriver (package:integration_test/integration_test_driver.dart:71:42)
+<asynchronous suspension>
+
+
+#0      VMServiceFlutterDriver.sendCommand (package:flutter_driver/src/driver/vmservice_driver.dart:340:7)
+<asynchronous suspension>
+#1      FlutterDriver.requestData (package:flutter_driver/src/driver/driver.dart:585:7)
+<asynchronous suspension>
+#2      integrationDriver (package:integration_test/integration_test_driver.dart:71:29)
+<asynchronous suspension>
+Leaving the application running.
