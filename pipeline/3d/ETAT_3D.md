@@ -26,7 +26,7 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M7b | 5.8.0 | bb3c38c | build n° 171 (36648109059) ; CI 3D 36646033292 (essais A à C) | 2026-09-30 | remplacé par 5.8.1 — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M7b.md` ; 9 animations de Koach (attente, parle, félicite), Anatomie › Koach (aperçu), toutes à 8/10 en revue |
 | M7b correction 1 | 5.8.1 | 9e6d654 | build n° 174 (36672178365) ; CI 3D 36670659752 (essais A et B) | 2026-09-30 | remplacé par 5.8.2 — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M7b_correction1.md` ; Koach posé sur la page, fond = couleur du support (démarcation 0,0) ; remplace 5.8.0 |
 | M7b correction 2 | 5.8.2 | 528afc3 | build n° 176 (36675932390) ; CI 3D 36674308561 (essai A) | 2026-09-30 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M7b_correction2.md` ; tous les fonds 3D = couleur du support (fiche et animation de test sans carte), démarcation 0 partout ; remplace 5.8.1 |
-| M8 | 5.9.0 | — | — | — | à redéfinir (plus d'animation) |
+| M8 | 5.9.0 | — | — | — | en cours depuis 2026-09-30 10:21 UTC (carte 2D des groupes musculaires, demande du propriétaire du 30/09) |
 | M9 | 5.9.0 | — | — | — | à redéfinir (plus d'animation) |
 | M10 | 5.10.0 | — | — | — | à redéfinir (plus d'animation) |
 | M11 | 5.11.0 | — | — | — | à redéfinir (plus d'animation) |
