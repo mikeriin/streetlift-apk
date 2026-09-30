@@ -1,0 +1,122 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             49.1s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,367ms
+I/flutter ( 4531): The Dart VM service is listening on http://127.0.0.1:44585/on7GF6aoLRU=/
+D/FlutterRenderer( 4531): Width is zero. 0,0
+I/WindowExtensionsImpl( 4531): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 4531): Width is zero. 0,0
+D/FlutterJNI( 4531): Sending viewport metrics to the engine.
+W/HWUI    ( 4531): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 4531): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 4531): mapper 4.x is not supported
+I/eetlift_tracker( 4531): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4531): Skipped 71 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4531): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:43667/MS157af9k9k=/
+VMServiceFlutterDriver: Isolate found with number: 1471889319876331
+VMServiceFlutterDriver: Isolate 1471889319876331 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4531): 00:00 +0: G1 b (clair, redémarrage à froid) : retour à la session personnelle intacte
+VMServiceFlutterDriver: Connected to Flutter application.
+D/ProfileInstaller( 4531): Installing profile for fr.tchoupi.streetlift_tracker
+D/EGL_emulation( 4531): app_time_stats: avg=978.41ms min=620.58ms max=1478.28ms count=3
+I/Choreographer( 4531): Skipped 49 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4531): Sending viewport metrics to the engine.
+D/EGL_emulation( 4531): app_time_stats: avg=979.66ms min=221.37ms max=1737.95ms count=2
+I/eetlift_tracker( 4531): Background concurrent mark compact GC freed 2190KB AllocSpace bytes, 7(140KB) LOS objects, 49% free, 2624KB/5249KB, paused 95us,90.242ms total 588.832ms
+D/EGL_emulation( 4531): app_time_stats: avg=5325.74ms min=630.01ms max=10021.47ms count=2
+D/EGL_emulation( 4531): app_time_stats: avg=4498.70ms min=4498.70ms max=4498.70ms count=1
+D/EGL_emulation( 4531): app_time_stats: avg=208.30ms min=165.33ms max=270.19ms count=5
+D/EGL_emulation( 4531): app_time_stats: avg=190.61ms min=62.81ms max=316.05ms count=5
+D/EGL_emulation( 4531): app_time_stats: avg=154.87ms min=65.25ms max=201.92ms count=7
+D/EGL_emulation( 4531): app_time_stats: avg=115.16ms min=66.27ms max=235.78ms count=7
+D/EGL_emulation( 4531): app_time_stats: avg=272.45ms min=78.94ms max=1003.60ms count=6
+D/EGL_emulation( 4531): app_time_stats: avg=180.89ms min=75.47ms max=275.37ms count=6
+D/EGL_emulation( 4531): app_time_stats: avg=182.83ms min=164.77ms max=208.92ms count=6
+D/EGL_emulation( 4531): app_time_stats: avg=168.55ms min=63.70ms max=248.51ms count=6
+D/EGL_emulation( 4531): app_time_stats: avg=301.53ms min=8.44ms max=842.52ms count=5
+D/FlutterJNI( 4531): Sending viewport metrics to the engine.
+D/EGL_emulation( 4531): app_time_stats: avg=228.66ms min=104.19ms max=383.43ms count=4
+D/EGL_emulation( 4531): app_time_stats: avg=172.80ms min=154.98ms max=207.82ms count=6
+D/EGL_emulation( 4531): app_time_stats: avg=148.44ms min=78.66ms max=205.48ms count=7
+D/EGL_emulation( 4531): app_time_stats: avg=115.56ms min=89.32ms max=195.37ms count=7
+D/EGL_emulation( 4531): app_time_stats: avg=114.68ms min=98.04ms max=171.06ms count=7
+D/EGL_emulation( 4531): app_time_stats: avg=193.31ms min=69.84ms max=293.26ms count=6
+D/EGL_emulation( 4531): app_time_stats: avg=144.27ms min=73.44ms max=215.13ms count=6
+D/EGL_emulation( 4531): app_time_stats: avg=163.53ms min=56.62ms max=243.32ms count=6
+D/EGL_emulation( 4531): app_time_stats: avg=189.35ms min=174.63ms max=222.72ms count=6
+D/EGL_emulation( 4531): app_time_stats: avg=181.73ms min=153.88ms max=211.47ms count=6
+D/EGL_emulation( 4531): app_time_stats: avg=160.02ms min=59.24ms max=188.93ms count=7
+D/EGL_emulation( 4531): app_time_stats: avg=166.02ms min=103.56ms max=311.93ms count=5
+D/EGL_emulation( 4531): app_time_stats: avg=161.61ms min=17.94ms max=310.98ms count=6
+D/EGL_emulation( 4531): app_time_stats: avg=132.14ms min=74.61ms max=211.43ms count=6
+D/EGL_emulation( 4531): app_time_stats: avg=142.09ms min=100.16ms max=190.41ms count=5
+D/EGL_emulation( 4531): app_time_stats: avg=147.67ms min=67.99ms max=190.17ms count=6
+I/flutter ( 4531): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4531): The following TestFailure was thrown running a test:
+I/flutter ( 4531): Expected: true
+I/flutter ( 4531):   Actual: <false>
+I/flutter ( 4531): 
+I/flutter ( 4531): When the exception was thrown, this was the stack:
+I/flutter ( 4531): #4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/mode_dev_g1_test.dart:343:7)
+I/flutter ( 4531): <asynchronous suspension>
+I/flutter ( 4531): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4531): <asynchronous suspension>
+I/flutter ( 4531): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4531): <asynchronous suspension>
+I/flutter ( 4531): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4531): <asynchronous suspension>
+I/flutter ( 4531): 
+I/flutter ( 4531): This was caught by the test expectation on the following line:
+I/flutter ( 4531):   file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/mode_dev_g1_test.dart line 343
+I/flutter ( 4531): The test description was:
+I/flutter ( 4531):   G1 b (clair, redémarrage à froid) : retour à la session personnelle intacte
+I/flutter ( 4531): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4531): 00:50 +0: G1 b (clair, redémarrage à froid) : retour à la session personnelle intacte [E]
+I/flutter ( 4531):   Test failed. See exception logs above.
+I/flutter ( 4531):   The test description was: G1 b (clair, redémarrage à froid) : retour à la session personnelle intacte
+I/flutter ( 4531):   
+I/flutter ( 4531): 00:50 +0 -1: (tearDownAll)
+I/flutter ( 4531): 00:50 +1 -1: Some tests failed.
+Failure Details:
+Failure in method: G1 b (clair, redémarrage à froid) : retour à la session personnelle intacte
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: true
+  Actual: <false>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/mode_dev_g1_test.dart:343:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/mode_dev_g1_test.dart line 343
+The test description was:
+  G1 b (clair, redémarrage à froid) : retour à la session
+  personnelle intacte
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+

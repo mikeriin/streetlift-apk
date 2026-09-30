@@ -1,0 +1,22 @@
+{
+  "partie": "a",
+  "kDevBuild": true,
+  "perso_cles": 3,
+  "perso_dev_actif": false,
+  "perso_logo_rose": 0.0,
+  "ouverture_logo_rose": 0.17982618343195267,
+  "dev_actif": true,
+  "dev_espace": true,
+  "dev_installation_neuve": true,
+  "dev_premier_ecran": true,
+  "dev_etiquette": true,
+  "perso_intact_apres_creation": true,
+  "outils": true,
+  "decalage_jours": 7,
+  "date_simulee": "2026-10-07T23:24:46.309426",
+  "date_attendue_ok": true,
+  "dev_accueil": true,
+  "dev_logo_rose": 0.17057291666666666,
+  "perso_intact_apres_voyage": true,
+  "cles_dev": 3
+}
