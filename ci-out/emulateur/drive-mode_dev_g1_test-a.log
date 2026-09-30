@@ -1,0 +1,133 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             61.4s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        2,712ms
+W/eetlift_tracker( 3961): Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+W/eetlift_tracker( 3961): Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+W/eetlift_tracker( 3961): Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+W/eetlift_tracker( 3961): Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+D/AccessibilityBridge( 3961): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 3961): Width is zero. 0,0
+W/HWUI    ( 3961): Unknown dataspace 0
+I/WindowExtensionsImpl( 3961): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 3961): Width is zero. 0,0
+D/FlutterJNI( 3961): Sending viewport metrics to the engine.
+W/HWUI    ( 3961): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 3961): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 3961): mapper 4.x is not supported
+I/Choreographer( 3961): Skipped 110 frames!  The application may be doing too much work on its main thread.
+I/eetlift_tracker( 3961): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+D/FlutterJNI( 3961): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:37709/57gfXFQhsrU=/
+VMServiceFlutterDriver: Isolate found with number: 6061372518423671
+VMServiceFlutterDriver: Isolate 6061372518423671 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+D/ProfileInstaller( 3961): Installing profile for fr.tchoupi.streetlift_tracker
+I/flutter ( 3961): 00:00 +0: G1 a (sombre) : 5 appuis → session de test
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 3961): Skipped 50 frames!  The application may be doing too much work on its main thread.
+I/Choreographer( 3961): Skipped 30 frames!  The application may be doing too much work on its main thread.
+D/EGL_emulation( 3961): app_time_stats: avg=301.19ms min=52.54ms max=788.03ms count=7
+D/EGL_emulation( 3961): app_time_stats: avg=209.83ms min=66.71ms max=706.96ms count=5
+D/EGL_emulation( 3961): app_time_stats: avg=920.27ms min=3.84ms max=4977.61ms count=6
+D/EGL_emulation( 3961): app_time_stats: avg=1008.91ms min=131.56ms max=1886.26ms count=2
+I/eetlift_tracker( 3961): Background concurrent mark compact GC freed 2007KB AllocSpace bytes, 15(684KB) LOS objects, 49% free, 2728KB/5457KB, paused 56us,31.199ms total 797.545ms
+D/EGL_emulation( 3961): app_time_stats: avg=1870.82ms min=1870.82ms max=1870.82ms count=1
+D/EGL_emulation( 3961): app_time_stats: avg=5010.36ms min=5010.36ms max=5010.36ms count=1
+D/EGL_emulation( 3961): app_time_stats: avg=77.53ms min=77.53ms max=77.53ms count=1
+D/EGL_emulation( 3961): app_time_stats: avg=107.37ms min=53.50ms max=159.26ms count=9
+D/EGL_emulation( 3961): app_time_stats: avg=118.98ms min=110.56ms max=129.41ms count=9
+D/EGL_emulation( 3961): app_time_stats: avg=131.94ms min=108.40ms max=144.67ms count=8
+D/EGL_emulation( 3961): app_time_stats: avg=229.36ms min=105.34ms max=637.77ms count=5
+D/EGL_emulation( 3961): app_time_stats: avg=112.14ms min=99.71ms max=131.86ms count=9
+D/EGL_emulation( 3961): app_time_stats: avg=138.15ms min=96.56ms max=295.80ms count=9
+W/WindowOnBackDispatcher( 3961): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 3961): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 3961): app_time_stats: avg=158.43ms min=4.96ms max=350.12ms count=7
+D/EGL_emulation( 3961): app_time_stats: avg=82.30ms min=4.47ms max=148.27ms count=11
+D/EGL_emulation( 3961): app_time_stats: avg=74.28ms min=6.09ms max=159.75ms count=12
+D/EGL_emulation( 3961): app_time_stats: avg=107.31ms min=81.74ms max=125.33ms count=10
+D/EGL_emulation( 3961): app_time_stats: avg=103.38ms min=2.20ms max=124.01ms count=10
+D/EGL_emulation( 3961): app_time_stats: avg=116.61ms min=113.34ms max=121.05ms count=9
+D/EGL_emulation( 3961): app_time_stats: avg=207.39ms min=113.71ms max=572.31ms count=5
+D/EGL_emulation( 3961): app_time_stats: avg=94.87ms min=18.51ms max=136.57ms count=11
+D/EGL_emulation( 3961): app_time_stats: avg=94.63ms min=3.03ms max=191.55ms count=11
+D/EGL_emulation( 3961): app_time_stats: avg=85.01ms min=18.10ms max=126.92ms count=12
+D/EGL_emulation( 3961): app_time_stats: avg=130.06ms min=110.20ms max=216.99ms count=8
+D/EGL_emulation( 3961): app_time_stats: avg=266.40ms min=6.61ms max=615.52ms count=4
+D/EGL_emulation( 3961): app_time_stats: avg=115.06ms min=88.30ms max=154.16ms count=9
+D/EGL_emulation( 3961): app_time_stats: avg=116.41ms min=78.30ms max=145.08ms count=9
+D/EGL_emulation( 3961): app_time_stats: avg=105.89ms min=49.08ms max=119.98ms count=10
+D/EGL_emulation( 3961): app_time_stats: avg=107.37ms min=68.63ms max=120.04ms count=9
+D/EGL_emulation( 3961): app_time_stats: avg=156.53ms min=94.70ms max=370.98ms count=7
+D/FlutterJNI( 3961): Sending viewport metrics to the engine.
+D/EGL_emulation( 3961): app_time_stats: avg=123.74ms min=85.40ms max=192.65ms count=8
+D/EGL_emulation( 3961): app_time_stats: avg=85.34ms min=39.50ms max=149.73ms count=9
+I/flutter ( 3961): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 3961): The following TestFailure was thrown running a test:
+I/flutter ( 3961): Expected: a value greater than <0.05>
+I/flutter ( 3961):   Actual: <0.0>
+I/flutter ( 3961):    Which: is not a value greater than <0.05>
+I/flutter ( 3961): 
+I/flutter ( 3961): When the exception was thrown, this was the stack:
+I/flutter ( 3961): #4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/mode_dev_g1_test.dart:253:7)
+I/flutter ( 3961): <asynchronous suspension>
+I/flutter ( 3961): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 3961): <asynchronous suspension>
+I/flutter ( 3961): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 3961): <asynchronous suspension>
+I/flutter ( 3961): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 3961): <asynchronous suspension>
+I/flutter ( 3961): 
+I/flutter ( 3961): This was caught by the test expectation on the following line:
+I/flutter ( 3961):   file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/mode_dev_g1_test.dart line 253
+I/flutter ( 3961): The test description was:
+I/flutter ( 3961):   G1 a (sombre) : 5 appuis → session de test
+I/flutter ( 3961): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 3961): 00:50 +0: G1 a (sombre) : 5 appuis → session de test [E]
+I/flutter ( 3961):   Test failed. See exception logs above.
+I/flutter ( 3961):   The test description was: G1 a (sombre) : 5 appuis → session de test
+I/flutter ( 3961):   
+I/flutter ( 3961): 00:50 +0 -1: (tearDownAll)
+I/flutter ( 3961): 00:50 +1 -1: Some tests failed.
+Failure Details:
+Failure in method: G1 a (sombre) : 5 appuis → session de test
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: a value greater than <0.05>
+  Actual: <0.0>
+   Which: is not a value greater than <0.05>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/mode_dev_g1_test.dart:253:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/mode_dev_g1_test.dart line 253
+The test description was:
+  G1 a (sombre) : 5 appuis → session de test
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+
