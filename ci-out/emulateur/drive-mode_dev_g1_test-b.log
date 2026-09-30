@@ -1,0 +1,85 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             49.0s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,142ms
+I/Choreographer( 4636): Skipped 55 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4636): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:39807/cXKpm6vFz-U=/
+VMServiceFlutterDriver: Isolate found with number: 7634677490599267
+VMServiceFlutterDriver: Isolate 7634677490599267 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4636): 00:00 +0: G1 b (clair, redémarrage à froid) : retour à la session personnelle intacte
+VMServiceFlutterDriver: Connected to Flutter application.
+I/flutter ( 4636): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4636): The following PathNotFoundException was thrown running a test:
+I/flutter ( 4636): Cannot open file, path = '/data/user/0/fr.tchoupi.streetlift_tracker/files/g1_perso.json' (OS Error:
+I/flutter ( 4636): No such file or directory, errno = 2)
+I/flutter ( 4636): 
+I/flutter ( 4636): When the exception was thrown, this was the stack:
+I/flutter ( 4636): #0      _File.throwIfError (dart:io/file_impl.dart:779:7)
+I/flutter ( 4636): #1      _File.openSync (dart:io/file_impl.dart:572:5)
+I/flutter ( 4636): #2      _File.readAsBytesSync (dart:io/file_impl.dart:660:18)
+I/flutter ( 4636): #3      _File.readAsStringSync (dart:io/file_impl.dart:715:18)
+I/flutter ( 4636): #4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/mode_dev_g1_test.dart:281:36)
+I/flutter ( 4636): <asynchronous suspension>
+I/flutter ( 4636): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4636): <asynchronous suspension>
+I/flutter ( 4636): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4636): <asynchronous suspension>
+I/flutter ( 4636): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4636): <asynchronous suspension>
+I/flutter ( 4636): 
+I/flutter ( 4636): The test description was:
+I/flutter ( 4636):   G1 b (clair, redémarrage à froid) : retour à la session personnelle intacte
+I/flutter ( 4636): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4636): 00:00 +0: G1 b (clair, redémarrage à froid) : retour à la session personnelle intacte [E]
+I/flutter ( 4636):   Test failed. See exception logs above.
+I/flutter ( 4636):   The test description was: G1 b (clair, redémarrage à froid) : retour à la session personnelle intacte
+I/flutter ( 4636):   
+I/flutter ( 4636): 00:00 +0 -1: (tearDownAll)
+I/flutter ( 4636): 00:00 +1 -1: Some tests failed.
+Failure Details:
+Failure in method: G1 b (clair, redémarrage à froid) : retour à la session personnelle intacte
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following PathNotFoundException was thrown running a test:
+Cannot open file, path =
+'/data/user/0/fr.tchoupi.streetlift_tracker/files/g1_perso.json'
+(OS Error: No such file or directory, errno = 2)
+
+When the exception was thrown, this was the stack:
+#0      _File.throwIfError (dart:io/file_impl.dart:779:7)
+#1      _File.openSync (dart:io/file_impl.dart:572:5)
+#2      _File.readAsBytesSync (dart:io/file_impl.dart:660:18)
+#3      _File.readAsStringSync (dart:io/file_impl.dart:715:18)
+#4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/mode_dev_g1_test.dart:281:36)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+The test description was:
+  G1 b (clair, redémarrage à froid) : retour à la session
+  personnelle intacte
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+
+D/ProfileInstaller( 4636): Installing profile for fr.tchoupi.streetlift_tracker
