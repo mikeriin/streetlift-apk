@@ -8,7 +8,7 @@ Tâches planifiées (lancement manuel par la conversation de pilotage, ou automa
 - **Fable 5.1, effort maximal** : `trig_015YmARJsCysbwuP65URNTaU` — lots de moteur G4, G8, G11.
 Un lot de moteur qui se termine lance le lot suivant sur la tâche **Opus** ; aucun lot ne relance la tâche qui l'a lancé ; aucun lot ne crée, ne modifie ni ne supprime de tâche.
 
-Page de suivi : (créée par G1)
+Page de suivi : https://claude.ai/artifact/7tr7vJvnnn85KzVx5qYRw5 (créée par G1)
 Nom des versions : « devX.Y.Z » (DECISIONS_GP.md D0.9).
 Base de départ : main 5.10.1+93 (commit 601a04d, M8 correction 3, validée par le propriétaire le 30/09/2026).
 
@@ -18,7 +18,7 @@ Entrées attendues du propriétaire :
 
 | Lot | Validation | Version | Commit main | Run | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
-| G1 | propriétaire | dev6.0.0 | — | — | — | en cours depuis 2026-09-30 21:29 UTC |
+| G1 | propriétaire | 6.0.0 | — (prêt : branche `claude/g1-6.0.0`, b3a3d73) | 36792378355 (signé, branche) | 01/10/2026 | en attente du propriétaire : push sur `main` refusé par les permissions de la session ; fusionner `claude/g1-6.0.0` dans `main` (avance rapide) ou relancer G1 avec le push autorisé |
 | G2 | propriétaire | — | — | — | — | à faire |
 | G3 | propriétaire | — | — | — | — | à faire |
 | G4 | auto → G5 | kalis_plan 0.1.0 | — | — | — | à faire |

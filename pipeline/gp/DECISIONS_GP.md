@@ -105,3 +105,19 @@ Source : conversation de pilotage du 30/09/2026 (22:00-23:10, heure de Paris), q
 ## Décisions prises par les lots (choix réversibles)
 
 (Chaque lot ajoute ici sa section « Gx » : décision, raison, alternative écartée.)
+
+### G1 — Mode dev (30/09-01/10/2026, Opus 5.5)
+
+- **Isolation par préfixe de clés** (`lib/session_prefs.dart`, `KalisPrefs`) : les clés de la session personnelle restent exactement celles d'avant (aucune migration, aucun déplacement de données) ; la session de test écrit sous `kt_session_test::` ; la clé de contrôle `kt_session_test_control_v1` (marqueur, date de création, décalage) est hors des deux espaces. Chaque magasin est lié à l'espace de sa création : une écriture tardive ne peut pas changer d'espace. L'application n'écrit aucun autre fichier interne (sauvegardes par le sélecteur système, copies de récupération dans les préférences) ; seul fichier du mode dev : l'export partagé (`cache/partage/kalis_session_de_test.json`), supprimé avec la session. Écartée : un second fichier SharedPreferences (plugin non prévu pour plusieurs fichiers sur Android, migration plus risquée).
+- **Redémarrage logique dans le processus** (`lib/session_host.dart`) : écritures terminées, arbre de l'application démonté, magasin neuf chargé, ouverture rejouée. Écarté : redémarrage du processus Android (code natif, perte de l'état de l'outil).
+- **5 appuis pendant une session de test : rien** (la réinitialiser = la supprimer puis 5 appuis). Raison : aucun effacement possible par erreur.
+- **Étiquette DEV au bord droit de tous les écrans**, noire et blanche (le rose reste réservé au logo) : le démarrage d'une installation neuve n'a pas d'en-tête, il faut pouvoir atteindre les outils et la suppression partout. Appui long : outils de test.
+- **Anneau de l'appui long dans la couleur du texte** (pas en rose). Durée préservée avec « Réduire les animations » (sinon Flutter la ramène à 0,15 s : défaut trouvé sur émulateur, corrigé et testé).
+- **TalkBack** : 5 activations du logo comptent comme 5 appuis ; l'action « appui long » du logo rose supprime directement (même règle que D2.2).
+- **Suppression aussi depuis les outils de test**, avec confirmation (alternative accessible à l'appui long, qui reste direct).
+- **Voyage dans le temps en jours civils entiers** (même heure murale, changements d'heure compris) ; « Choisir une date » de aujourd'hui à + 5 ans ; « Revenir à aujourd'hui ». Restent à l'heure réelle : durées des chronos, identifiants techniques, heure des rappels Android.
+- **Rappels** : le service suit le magasin actif ; en session de test, les rappels personnels sont annulés (non programmés), puis recalculés au retour ; ceux de la session de test disparaissent à sa suppression.
+- **Export de la session de test** : champs `sessionDeTest: true` et `decalageJours` (optionnels, ignorés par les versions précédentes), fichier `kalis-track-session-de-test-AAAA-MM-JJ-HHMM.json`. Import d'une telle sauvegarde dans la session personnelle : avertissement explicite (aussi dans l'AAB).
+- **Preuve D2.4** : marqueur `KALIS-DEV-SESSION-7F3A` (code du mode dev) exigé dans les `libapp.so` de l'APK et absent de celles de l'AAB (`verify_android_artifacts.py --dev-apk`).
+- **Tâche `packages`** : convention du simulateur `dart run bin/<paquet>_cli.dart --rapport <dossier>` (docs/CI_GP.md), à suivre par G4, G8, G11.
+- **Test daté** : `wod_acquisition_test.dart` fixe l'horloge de la vitrine (il échouait le 01/10/2026 selon l'« essai du jour ») ; aucune assertion retirée.
