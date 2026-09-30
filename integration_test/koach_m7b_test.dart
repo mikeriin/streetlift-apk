@@ -109,6 +109,37 @@ void main() {
     return total == 0 ? 0 : fig / total;
   }
 
+  /// Démarcation : écart moyen des pixels de part et d'autre des bords
+  /// gauche et droit de la vue 3D (0 attendu : fond = couleur de la page).
+  Future<double> demarcation(WidgetTester tester) async {
+    final rect = tester.getRect(
+      find.byKey(const ValueKey('mannequin-view')).first,
+    );
+    final image = await grab();
+    final rgba = (await image.toByteData(format: ui.ImageByteFormat.rawRgba))!;
+    (int, int, int) at(double x, double y) {
+      final px = (x * ratio).round().clamp(0, image.width - 1);
+      final py = (y * ratio).round().clamp(0, image.height - 1);
+      final o = (py * image.width + px) * 4;
+      return (rgba.getUint8(o), rgba.getUint8(o + 1), rgba.getUint8(o + 2));
+    }
+
+    var edge = 0.0, n = 0;
+    for (var y = rect.top + 8; y < rect.top + rect.height / 2; y += 4) {
+      for (final (xi, xo) in [
+        (rect.left + 3, rect.left - 3),
+        (rect.right - 3, rect.right + 3),
+      ]) {
+        final (r1, g1, b1) = at(xi, y);
+        final (r2, g2, b2) = at(xo, y);
+        edge += ((r1 - r2).abs() + (g1 - g2).abs() + (b1 - b2).abs()) / 3;
+        n++;
+      }
+    }
+    image.dispose();
+    return n == 0 ? 0 : edge / n;
+  }
+
   Future<void> pumpApp(WidgetTester tester, Widget home) async {
     SL.dark = true;
     await tester.pumpWidget(
@@ -230,7 +261,11 @@ void main() {
         p = await choose(tester, e.key);
         await scrollToPlayer(tester);
         await at(tester, p, e.value);
-        out[e.key] = {'t': p.playback!.time, 'figure': await figure(tester)};
+        out[e.key] = {
+          't': p.playback!.time,
+          'figure': await figure(tester),
+          'demarcation': await demarcation(tester),
+        };
         await shot('pose_${e.key}');
         if (e.key.endsWith('montre') ||
             e.key.endsWith('pouce') ||
@@ -242,6 +277,11 @@ void main() {
       releve['a'] = out;
       record();
       expect(out['puces'], 9);
+      // 5.8.1 : aucun cadre autour de Koach (fond = couleur de la page).
+      for (final id in _strong.keys) {
+        final d = (out[id]! as Map)['demarcation'] as double;
+        expect(d, lessThan(3), reason: id);
+      }
       expect(out['lecture_auto'], isTrue);
     },
     timeout: _limit,

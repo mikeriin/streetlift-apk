@@ -18,6 +18,7 @@ import 'package:streetlift_tracker/mannequin_clip.dart';
 import 'package:streetlift_tracker/mannequin_player.dart';
 import 'package:streetlift_tracker/mannequin_rig.dart';
 import 'package:streetlift_tracker/store.dart';
+import 'package:streetlift_tracker/ui.dart';
 
 const _ids = [
   'koach_attente_respiration',
@@ -179,6 +180,22 @@ void main() {
       );
       expect(state.selected!.id, _ids.first);
       expect(find.byType(MannequinPlayer), findsOneWidget);
+      // 5.8.1 : Koach posé sur la page, fond de la vue 3D = couleur de la
+      // page (support), aucune carte autour.
+      final page = Theme.of(
+        tester.element(find.byType(KoachPreviewScreen)),
+      ).scaffoldBackgroundColor;
+      expect(
+        tester.widget<Mannequin3D>(find.byType(Mannequin3D)).background,
+        page,
+      );
+      expect(
+        find.ancestor(
+          of: find.byType(MannequinPlayer),
+          matching: find.byType(KCard),
+        ),
+        findsNothing,
+      );
       // Sans Flutter GPU : message, pas de lecteur vide.
       expect(find.byKey(const ValueKey('player-play')), findsNothing);
       final chip = find.byKey(

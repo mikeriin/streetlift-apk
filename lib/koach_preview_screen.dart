@@ -20,6 +20,10 @@
 // propriétaire consulte avec le mannequin. Manipulation : boutons Face /
 // Dos / Profil / 3/4 et zoom au pincement ; pas de rotation au doigt
 // (décision du propriétaire du 29/09/2026, PIPELINE_3D.md §2).
+//
+// 5.8.1 (M7b correction 1, propriétaire, 30/09/2026) : le lecteur n'est plus
+// dans une carte ; il est posé sur la page, fond de la vue 3D = couleur de
+// la page, sans démarcation (règle de base de tous les affichages 3D).
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -122,13 +126,17 @@ class KoachPreviewScreenState extends State<KoachPreviewScreen> {
             )
           else ...[
             // Koach d'abord (visible sans défiler), puis le choix.
-            KCard(
+            // Posé directement sur la page, fond = couleur de la page (règle
+            // du propriétaire : fond de chaque affichage 3D = son support,
+            // sans cadre ni démarcation, comme l'écran Anatomie).
+            KeyedSubtree(
               key: const ValueKey('koach-preview-card'),
               child: MannequinPlayer(
                 key: _player,
                 clip: clip,
                 view: MannequinView.face,
                 height: 340,
+                background: Theme.of(context).scaffoldBackgroundColor,
                 semanticLabel:
                     'Koach en 3D, animation « ${clip.name} » '
                     '(${kKoachFamilies[clip.family] ?? ''})',

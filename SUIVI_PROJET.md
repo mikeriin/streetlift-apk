@@ -1,8 +1,14 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M7b (animations de Koach en mascotte, aperçu dans l'écran Anatomie), version 5.8.0 ; précédent : lot M7 (5.7.0), validé**  
-**Date : 30 septembre 2026, Europe/Paris — version : 5.8.0+87 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : pipeline « Mannequin 3D », lot M7b, correction 1 (fond du lecteur de Koach = couleur de la page), version 5.8.1 ; précédent : M7b (5.8.0)**  
+**Date : 30 septembre 2026, Europe/Paris — version : 5.8.1+88 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+
+## M7b.C1 — Correction 1 (retour du propriétaire du 30/09/2026, version 5.8.1)
+
+| Retour | Correction |
+| --- | --- |
+| « Le fond doit suivre les mêmes règles que le reste et être de couleur identique au support ; ça doit être une règle de base pour la suite » | `KoachPreviewScreen` : lecteur hors carte, posé sur la page, `background` = couleur de la page (comme `AnatomyScreen`). Test Dart (fond = page, aucune `KCard` autour du lecteur), démarcation mesurée sur émulateur pour les 9 animations. Règle inscrite dans `pipeline/3d/PIPELINE_3D.md` §3 pour tous les lots suivants. |
 
 ## M7b — Animations de Koach en mascotte (version 5.8.0)
 
