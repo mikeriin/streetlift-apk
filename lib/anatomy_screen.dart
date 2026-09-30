@@ -72,9 +72,7 @@ class AnatomyFilters {
   static const total = 15;
 
   /// Tout coché.
-  static final all = AnatomyFilters(
-    groups: {for (final g in kMapGroups) g.id},
-  );
+  static final all = AnatomyFilters(groups: {for (final g in kMapGroups) g.id});
 
   /// Tout décoché.
   static const none = AnatomyFilters();

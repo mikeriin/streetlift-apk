@@ -206,9 +206,7 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('anatomy-filters')));
         await tester.pumpAndSettle();
         // CheckboxMenuButton transmet sa clé à son MenuItemButton.
-        final box = find
-            .byKey(const ValueKey('anatomy-filter-dorsaux'))
-            .first;
+        final box = find.byKey(const ValueKey('anatomy-filter-dorsaux')).first;
         await tester.ensureVisible(box);
         await tester.pumpAndSettle();
         await tester.tap(box);

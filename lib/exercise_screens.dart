@@ -369,23 +369,23 @@ class _Sheet extends StatelessWidget {
         // fond = page.
         if (ClipRegistry.loaded?.forExercise(entry.id) != null)
           KeyedSubtree(
-          key: const ValueKey('fiche-mannequin-support'),
-          child: ExerciseMannequin(
-            key: ValueKey('fiche-muscles-${entry.id}'),
-            background: kPageColor(context),
-            // M7 : animation du propriétaire si l'exercice en a une.
-            exerciseId: entry.id,
-            // M6b : plus grand sur grand écran (tablette), 380 sur téléphone.
-            height: (MediaQuery.sizeOf(context).height * .45).clamp(
-              380.0,
-              600.0,
+            key: const ValueKey('fiche-mannequin-support'),
+            child: ExerciseMannequin(
+              key: ValueKey('fiche-muscles-${entry.id}'),
+              background: kPageColor(context),
+              // M7 : animation du propriétaire si l'exercice en a une.
+              exerciseId: entry.id,
+              // M6b : plus grand sur grand écran (tablette), 380 sur téléphone.
+              height: (MediaQuery.sizeOf(context).height * .45).clamp(
+                380.0,
+                600.0,
+              ),
+              primaires: detail.primaires,
+              secondaires: detail.secondaires,
+              stabilisateurs: detail.stabilisateurs,
+              etires: detail.etires,
             ),
-            primaires: detail.primaires,
-            secondaires: detail.secondaires,
-            stabilisateurs: detail.stabilisateurs,
-            etires: detail.etires,
           ),
-        ),
         const KSection('Points clés'),
         _bullets(detail.pointsCles),
         const KSection('Erreurs fréquentes'),

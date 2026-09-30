@@ -15,7 +15,6 @@
 // du 30/09/2026). La liste des muscles en texte reste toujours affichée à
 // côté (jamais l'information par la couleur seule).
 import 'dart:async';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -49,8 +48,9 @@ const kMapGroups = [
 ];
 
 /// Libellé d'un groupe de la carte.
-String mapGroupLabel(String id) =>
-    kMapGroups.firstWhere((g) => g.id == id, orElse: () => MapGroup(id, id)).label;
+String mapGroupLabel(String id) => kMapGroups
+    .firstWhere((g) => g.id == id, orElse: () => MapGroup(id, id))
+    .label;
 
 /// Calques de la carte, dans l'ordre de `tools/muscles2d/build_map.py`
 /// (valeur de la carte des étiquettes = 1 + rang).
@@ -415,7 +415,8 @@ class MuscleMap2D extends StatelessWidget {
           // Vues aussi hautes que demandé, réduites si la largeur manque.
           var h = height;
           if (box.hasBoundedWidth && widthFor(views, h) > box.maxWidth) {
-            h = box.maxWidth / widthFor(views, 1);
+            // marge d'un pixel : arrondis de mise en page
+            h = (box.maxWidth - 1) / widthFor(views, 1);
           }
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -441,28 +442,37 @@ class MuscleMap2D extends StatelessWidget {
   ) {
     final tt = Theme.of(context).textTheme;
     return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _MapFigure(
-                  key: ValueKey('map-${v.name}'),
-                  view: v,
-                  height: h,
-                  intensities: intensities,
-                  dark: dark,
-                  tint: tint,
-                  selected: selected,
-                  onGroupTap: onGroupTap,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _MapFigure(
+          key: ValueKey('map-${v.name}'),
+          view: v,
+          height: h,
+          intensities: intensities,
+          dark: dark,
+          tint: tint,
+          selected: selected,
+          onGroupTap: onGroupTap,
+        ),
+        // Nom de la vue, jamais plus large que la figure (profil étroit,
+        // grand texte) : réduit au besoin.
+        if (labels)
+          SizedBox(
+            width: h * v.width / v.height,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  v.label,
+                  maxLines: 1,
+                  style: tt.labelSmall?.copyWith(color: SL.dim),
                 ),
-                if (labels)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Text(
-                      v.label,
-                      style: tt.labelSmall?.copyWith(color: SL.dim),
-                    ),
-                  ),
-              ],
-            );
+              ),
+            ),
+          ),
+      ],
+    );
   }
 }
 

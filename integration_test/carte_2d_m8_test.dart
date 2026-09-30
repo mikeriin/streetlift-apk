@@ -62,8 +62,9 @@ void main() {
   final releve = <String, Object?>{};
   binding.reportData = data;
 
-  void record() => data['m8_releve_$_part.json'] =
-      const JsonEncoder.withIndent('  ').convert(releve);
+  void record() => data['m8_releve_$_part.json'] = const JsonEncoder.withIndent(
+    '  ',
+  ).convert(releve);
 
   Future<ui.Image> grab() async {
     final boundary =
@@ -107,8 +108,8 @@ void main() {
 
   /// Mesures dans le cadre de la carte [map] : figure (pixels hors du
   /// support), couleur dominante (saturés), gris ; démarcation : écart
-  /// moyen des pixels de part et d'autre des bords gauche et droit (0 :
-  /// carte transparente, support visible).
+  /// moyen des pixels de part et d'autre des bords gauche et droit, en haut
+  /// du cadre (0 : carte transparente, support visible).
   Future<Map<String, Object?>> check(WidgetTester tester, Finder map) async {
     final rect = tester.getRect(map.first);
     final image = await grab();
@@ -127,7 +128,9 @@ void main() {
       for (var x = rect.left; x < rect.right; x += 2) {
         final (r, g, b) = at(x, y);
         total++;
-        if ((r - br).abs() <= 6 && (g - bgG).abs() <= 6 && (b - bb).abs() <= 6) {
+        if ((r - br).abs() <= 6 &&
+            (g - bgG).abs() <= 6 &&
+            (b - bb).abs() <= 6) {
           continue;
         }
         figure++;
@@ -139,7 +142,10 @@ void main() {
       }
     }
     var edge = 0.0, n = 0;
-    for (var y = rect.top + 4; y < rect.bottom - 4; y += 6) {
+    // Bande haute (au-dessus des épaules : la figure ne touche pas les
+    // bords du cadre ; plus bas, un bras peut les toucher quand la carte
+    // occupe toute la largeur).
+    for (var y = rect.top + 2; y < rect.top + rect.height * .08; y += 2) {
       for (final (xi, xo) in [
         (rect.left + 2, rect.left - 2),
         (rect.right - 2, rect.right + 2),
@@ -218,9 +224,7 @@ void main() {
     out['vues_3d'] = find.byType(Mannequin3D).evaluate().length;
     out['aucun'] = await check(tester, map);
     await shot('anatomie_${_theme}_aucun');
-    final screen = tester.state<AnatomyScreenState>(
-      find.byType(AnatomyScreen),
-    );
+    final screen = tester.state<AnatomyScreenState>(find.byType(AnatomyScreen));
     screen.checkAll();
     await wait(tester);
     out['tous'] = await check(tester, map);
@@ -372,11 +376,7 @@ void main() {
     expect((out['stats']! as Map)['couleur'] as double, greaterThan(.02));
     expect((out['accueil']! as Map)['cartes'] as int, greaterThan(0));
     for (final k in ['stats', 'wod']) {
-      expect(
-        (out[k]! as Map)['demarcation'] as double,
-        lessThan(2),
-        reason: k,
-      );
+      expect((out[k]! as Map)['demarcation'] as double, lessThan(2), reason: k);
     }
   }, timeout: _limit);
 }

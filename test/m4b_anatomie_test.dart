@@ -436,9 +436,7 @@ void main() {
     expect(find.text('Filtres · 1'), findsOneWidget);
     // Groupe demandé à l'ouverture : il remplace les groupes de la session.
     await tester.pumpWidget(const SizedBox());
-    await tester.pumpWidget(
-      page(const AnatomyScreen(initialGroup: 'dorsaux')),
-    );
+    await tester.pumpWidget(page(const AnatomyScreen(initialGroup: 'dorsaux')));
     await _settle(tester, find.byType(MuscleMap2D));
     expect(state(tester).groups, {'dorsaux'});
     expect(find.text('Filtres · 1'), findsOneWidget);
