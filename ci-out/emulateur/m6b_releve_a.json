@@ -1,0 +1,148 @@
+{
+  "anatomie_sombre": {
+    "repos": {
+      "cadre": [
+        20.0,
+        158.0,
+        320.0,
+        300.0
+      ],
+      "figure": 0.11425,
+      "halo": 0.0,
+      "gris": 0.11425,
+      "demarcation": 0.0
+    },
+    "filtres_bouton": "Filtres · 0",
+    "menu_options": [
+      "Pectoraux",
+      "Épaules",
+      "Biceps",
+      "Triceps",
+      "Avant-bras",
+      "Gainage",
+      "Dos",
+      "Quadriceps",
+      "Ischios",
+      "Fessiers",
+      "Mollets"
+    ],
+    "dos": {
+      "cadre": [
+        20.0,
+        212.0,
+        320.0,
+        300.0
+      ],
+      "figure": 0.12483333333333334,
+      "halo": 0.025625,
+      "gris": 0.08933333333333333,
+      "demarcation": 0.0
+    },
+    "dos_vue": "dos",
+    "dos_semantique": "Mannequin anatomique en 3D, groupe Dos mis en évidence par un halo",
+    "toucher": "Grand dorsal (gauche) · Dos",
+    "toucher_direct": {
+      "0.45,0.3": "Grand dorsal (gauche) · Dos",
+      "0.5,0.5": "Grand fessier (droit) · Fessiers",
+      "0.55,0.75": "Gastrocnémien médial (droit) · Mollets"
+    },
+    "zoom": {
+      "cadre": [
+        20.0,
+        212.0,
+        320.0,
+        300.0
+      ],
+      "figure": 0.4932916666666667,
+      "halo": 0.16479166666666667,
+      "gris": 0.3030833333333333,
+      "demarcation": 0.0
+    },
+    "face_apres_zoom": true
+  },
+  "anatomie_clair": {
+    "clair": {
+      "cadre": [
+        20.0,
+        212.0,
+        320.0,
+        300.0
+      ],
+      "figure": 0.116375,
+      "halo": 0.010708333333333334,
+      "gris": 0.09866666666666667,
+      "demarcation": 0.0
+    },
+    "grand_texte": {
+      "cadre": [
+        20.0,
+        212.0,
+        320.0,
+        300.0
+      ],
+      "figure": 0.13554166666666667,
+      "halo": 0.028541666666666667,
+      "gris": 0.09295833333333334,
+      "demarcation": 0.0
+    },
+    "reduit_vue_immediate": true
+  },
+  "fiches": {
+    "traction-pronation": {
+      "vue": "dos",
+      "cadre": [
+        20.0,
+        90.4,
+        320.0,
+        380.0
+      ],
+      "figure": 0.16516447368421053,
+      "halo": 0.03523026315789474,
+      "gris": 0.11108552631578947,
+      "demarcation": 0.0,
+      "semantique": "Mannequin anatomique en 3D, muscles de l’exercice. Principaux : Grand dorsal, Biceps brachial, chef long, Biceps brachial, chef court. Secondaires : Grand rond, Brachial, Brachio-radial, Trapèze moyen, Trapèze inférieur, Rhomboïdes (grand et petit), Deltoïde postérieur, Infra-épineux. Stabilisateurs : Fléchisseur superficiel des doigts, Fléchisseurs profonds des doigts et du pouce, Fléchisseurs du poignet, Muscles intrinsèques de la main (éminences thénar et hypothénar, interosseux), Droit de l'abdomen, Oblique externe, Oblique interne, Transverse de l'abdomen, Triceps brachial, chef long, Sous-scapulaire"
+    },
+    "dips": {
+      "vue": "troisQuarts",
+      "cadre": [
+        20.0,
+        90.4,
+        320.0,
+        380.0
+      ],
+      "figure": 0.14651315789473685,
+      "halo": 0.013388157894736841,
+      "gris": 0.11473684210526315,
+      "demarcation": 0.0,
+      "semantique": "Mannequin anatomique en 3D, muscles de l’exercice. Principaux : Grand pectoral, chef sterno-costal, Grand pectoral, chef abdominal, Triceps brachial, chef long, Triceps brachial, chef latéral, Triceps brachial, chef médial. Secondaires : Deltoïde antérieur, Grand pectoral, chef claviculaire. Stabilisateurs : Rhomboïdes (grand et petit), Supra-épineux, Infra-épineux, Petit rond, Sous-scapulaire, Petit pectoral, Grand dorsal, Droit de l'abdomen, Fléchisseur superficiel des doigts, Fléchisseurs profonds des doigts et du pouce, Fléchisseurs du poignet, Muscles intrinsèques de la main (éminences thénar et hypothénar, interosseux)"
+    },
+    "back-squat": {
+      "vue": "troisQuarts",
+      "cadre": [
+        20.0,
+        91.08,
+        320.0,
+        380.0
+      ],
+      "figure": 0.15342105263157896,
+      "halo": 0.017532894736842105,
+      "gris": 0.10282894736842105,
+      "demarcation": 0.0,
+      "semantique": "Mannequin anatomique en 3D, muscles de l’exercice. Principaux : Droit fémoral, Vaste latéral, Vaste médial, Vaste intermédiaire, Grand fessier. Secondaires : Biceps fémoral, Biceps fémoral, chef court, Semi-tendineux, Semi-membraneux, Grand adducteur, Gastrocnémien, chef médial, Gastrocnémien, chef latéral, Soléaire, Érecteurs du rachis, région lombaire. Stabilisateurs : Érecteurs du rachis, région thoracique, Droit de l'abdomen, Oblique externe, Transverse de l'abdomen, Trapèze supérieur, Trapèze moyen"
+    },
+    "etirements-flechisseurs-de-hanche": {
+      "vue": "face",
+      "cadre": [
+        20.0,
+        91.75999999999999,
+        320.0,
+        380.0
+      ],
+      "figure": 0.16023026315789474,
+      "halo": 0.0,
+      "gris": 0.1600986842105263,
+      "demarcation": 0.0,
+      "semantique": "Mannequin anatomique en 3D, muscles de l’exercice. Principaux : Grand psoas, Iliaque, Droit fémoral. Secondaires : Tenseur du fascia lata, Sartorius, Pectiné. Stabilisateurs : Grand fessier, Transverse de l'abdomen, Vaste latéral, Vaste médial, Vaste intermédiaire. Étirés : Grand psoas, Iliaque, Droit fémoral, Tenseur du fascia lata, Sartorius, Pectiné"
+    }
+  }
+}
