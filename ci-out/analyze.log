@@ -1,0 +1,6 @@
+Analyzing streetlift-apk...                                     
+
+   info • Don't use 'BuildContext's across async gaps. Try rewriting the code to not use the 'BuildContext', or guard the use with a 'mounted' check • lib/muscle_map_2d.dart:323:48 • use_build_context_synchronously
+   info • The parameter name 'old' doesn't match the name 'oldWidget' in the overridden method. Try changing the name to 'oldWidget' • lib/muscle_map_2d.dart:537:34 • avoid_renaming_method_parameters
+
+2 issues found. (ran in 18.5s)
