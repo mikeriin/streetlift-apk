@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | Nom | Kalis Track | Manifeste (`android:label`) |
 | Catégorie | Santé et remise en forme | Choix du propriétaire à confirmer |
-| Visuel principal (feature graphic) | `docs/play/feature_graphic_1024x500.png` : 1024 × 500, PNG 24 bits sans alpha, fond uni #6B0C0C, logo clair centré, aucun texte ; régénérable par `python3 tools/generate_brand.py --play` | Exigence 1024 × 500, JPEG ou PNG 24 bits sans transparence : https://screenkit.tools/specs/google-play-feature-graphic-size (reprend l'aide Play Console), consulté le 27/09/2026. Page d'aide officielle des éléments graphiques : **non vérifié** |
+| Visuel principal (feature graphic) | `docs/play/feature_graphic_1024x500.png` : 1024 × 500, PNG 24 bits sans alpha, fond uni #5E1615 (couleur du logo depuis 5.10.0), logo clair centré, aucun texte ; régénérable par `python3 tools/generate_brand.py --play` | Exigence 1024 × 500, JPEG ou PNG 24 bits sans transparence : https://screenkit.tools/specs/google-play-feature-graphic-size (reprend l'aide Play Console), consulté le 27/09/2026. Page d'aide officielle des éléments graphiques : **non vérifié** |
 | Icône 512 × 512 | À exporter depuis `assets/icon/icon.png` (1024 × 1024) | Non vérifié |
 | Captures d'écran | À réaliser sur téléphone (aucune capture produite par ce lot) | — |
 | Description courte / complète | À rédiger sans allégation (liste de `docs/CONTRAT_L13.md` §5) : entraînement, suivi, bien-être ; ni « guérir », ni « prévenir les blessures », ni promesse de résultat | Cohérence avec la finalité (§4) |

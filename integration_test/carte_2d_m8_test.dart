@@ -171,7 +171,7 @@ void main() {
   Future<Offset?> coreOf(MapView view, String group) async {
     for (var fy = .1; fy < .95; fy += .01) {
       for (var fx = .05; fx < .95; fx += .01) {
-        if (await mapGroupAt(view, fx, fy) != group) continue;
+        if (await mapRegionAt(view, fx, fy) != group) continue;
         var ok = true;
         for (final (dx, dy) in const [
           (-.03, 0.0),
@@ -179,7 +179,7 @@ void main() {
           (0.0, -.03),
           (0.0, .03),
         ]) {
-          if (await mapGroupAt(view, fx + dx, fy + dy) != group) ok = false;
+          if (await mapRegionAt(view, fx + dx, fy + dy) != group) ok = false;
         }
         if (ok) return Offset(fx, fy);
       }
@@ -237,8 +237,8 @@ void main() {
     // dominante vive ; au cœur des pectoraux (vue de face) : gris.
     final dos = tester.getRect(find.byKey(const ValueKey('map-dos')));
     final face = tester.getRect(find.byKey(const ValueKey('map-face')));
-    final lat = (await coreOf(MapView.dos, 'dorsaux'))!;
-    final pec = (await coreOf(MapView.face, 'pectoraux'))!;
+    final lat = (await coreOf(MapView.dos, 'grand_dorsal'))!;
+    final pec = (await coreOf(MapView.face, 'grand_pectoral'))!;
     final latPt = dos.topLeft + Offset(lat.dx * dos.width, lat.dy * dos.height);
     final pecPt =
         face.topLeft + Offset(pec.dx * face.width, pec.dy * face.height);
@@ -273,8 +273,8 @@ void main() {
     );
     expect(sat(latRgb), greaterThan(40), reason: 'dorsaux');
     expect(sat(pecRgb), lessThan(16), reason: 'pectoraux gris');
-    expect(screen.touched, 'dorsaux');
-    expect(out['toucher_nom'], 'Dorsaux');
+    expect(screen.touched, 'grand_dorsal');
+    expect(out['toucher_nom'], 'Grand dorsal · Dorsaux');
     for (final k in ['aucun', 'tous', 'dorsaux']) {
       final m = out[k]! as Map;
       expect(m['demarcation'] as double, lessThan(2), reason: k);

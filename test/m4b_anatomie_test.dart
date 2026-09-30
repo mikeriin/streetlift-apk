@@ -240,7 +240,7 @@ void main() {
       expect(AnatomyFilters.all.groups, {for (final m in kMapGroups) m.id});
       expect(AnatomyFilters.none.count, 0);
       // M8 : les 15 groupes de la carte 2D.
-      expect(AnatomyFilters.total, 15);
+      expect(AnatomyFilters.total, 17); // 5.10.0 : lombaires, coiffe
       expect(AnatomyFilters.categories.map((c) => c.id), ['groupes']);
       expect(AnatomyFilters.fromSelection(g.selection), g);
       expect(g, g.toggleGroup('biceps').toggleGroup('biceps'));
@@ -327,11 +327,14 @@ void main() {
       );
       MuscleMap2D mapWidget() =>
           tester.widget<MuscleMap2D>(find.byType(MuscleMap2D));
-      expect(mapWidget().intensities, {
-        'pectoraux': 1.0,
-        'dorsaux': 1.0,
-        'ischios': 1.0,
-      });
+      expect(
+        mapWidget().intensities,
+        mapIntensitiesFromGroups({'pectoraux', 'dorsaux', 'ischios'}),
+      );
+      // 5.10.0 : muscle par muscle
+      expect(mapWidget().intensities['grand_dorsal'], 1.0);
+      expect(mapWidget().intensities['semi_tendineux'], 1.0);
+      expect(mapWidget().intensities.containsKey('trapeze_moyen'), isFalse);
       expect(mapWidget().views, MapView.values);
       final list = find.byKey(const ValueKey('anatomy-group-list'));
       await scrollToAction(tester, list);
@@ -367,8 +370,11 @@ void main() {
       // Tout cocher, tout décocher (M4c : par catégorie).
       await tapItem(tester, 'all-groupes');
       expect(state(tester).filters, AnatomyFilters.all);
-      expect(find.text('Filtres · 15'), findsOneWidget);
-      expect(mapWidget().intensities.length, 15);
+      expect(find.text('Filtres · 17'), findsOneWidget);
+      expect(
+        mapWidget().intensities.length,
+        kMapRegions.where((r) => r.group != null).length,
+      );
       await tapItem(tester, 'none-groupes');
       expect(state(tester).filters, AnatomyFilters.none);
       expect(find.text('Filtres · 0'), findsOneWidget);
@@ -390,7 +396,7 @@ void main() {
     expect(
       tester.getSemantics(find.byKey(const ValueKey('anatomy-filters'))),
       isSemantics(
-        label: 'Filtres, 0 actif sur 15',
+        label: 'Filtres, 0 actif sur 17',
         isButton: true,
         hasTapAction: true,
       ),

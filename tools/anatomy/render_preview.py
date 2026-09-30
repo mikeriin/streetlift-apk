@@ -58,8 +58,8 @@ def main():
     bpy.ops.import_scene.gltf(filepath=str(args.glb or GLB))
     regions = {r['id']: r for r in json.loads(MAP.read_text())['regions']}
     dark = not args.clair
-    top = '#E85959' if dark else '#A61717'
-    hot = srgb(lerp('#6B0C0C', top, 1.0))
+    top = '#D96968' if dark else '#9E2A28'
+    hot = srgb(lerp('#5E1615', top, 1.0))
     sc = bpy.context.scene
     sc.render.engine = 'CYCLES'
     sc.cycles.samples = 16

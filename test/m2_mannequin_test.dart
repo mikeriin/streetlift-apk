@@ -237,7 +237,7 @@ void main() {
       // M8 : carte 2D des groupes (plus de mannequin 3D).
       await scrollToAction(tester, find.byType(MuscleMap2D), up: true);
       final map2d = tester.widget<MuscleMap2D>(find.byType(MuscleMap2D));
-      expect(map2d.intensities, {'dorsaux': 1.0});
+      expect(map2d.intensities, mapIntensitiesFromGroups({'dorsaux'}));
       // Second appui : plus de groupe, plus de liste.
       await toggleDos();
       expect(list, findsNothing);

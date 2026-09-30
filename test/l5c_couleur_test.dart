@@ -44,14 +44,14 @@ void main() {
       }
     });
 
-    test('le Rouge Kalis garde exactement les valeurs historiques', () {
+    test('le Rouge Kalis a la couleur du logo (5.10.0)', () {
       for (final dark in _modes) {
         final p = KPalette(dark, KAccentSpec.rouge);
-        expect(p.bordeaux, const Color(0xFF6B0C0C));
-        expect(p.action, const Color(0xFFA61717));
+        expect(p.bordeaux, const Color(0xFF5E1615));
+        expect(p.action, const Color(0xFF9E2A28));
         expect(
           p.accent,
-          dark ? const Color(0xFFE85959) : const Color(0xFF6B0C0C),
+          dark ? const Color(0xFFD96968) : const Color(0xFF5E1615),
         );
         expect(p.onBrand, Colors.white);
         expect(p.onBrandSoft, KPalette.light);
@@ -106,7 +106,7 @@ void main() {
           expect(contrast(p.action, p.progressTrack), greaterThan(1.5));
           expect(contrast(p.gauge.last, p.progressTrack), greaterThan(1.5));
           // Composant d'interface (critère 1.4.11, 3:1) ; le rouge historique
-          // en sombre reste l'exception documentée (2,46:1, identité gardée).
+          // en sombre reste l'exception documentée (2,51:1, identité gardée).
           expect(
             contrast(p.action, p.bg),
             a.id == 'rouge' && dark

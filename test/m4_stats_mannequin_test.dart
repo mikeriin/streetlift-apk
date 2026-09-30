@@ -74,15 +74,21 @@ void main() {
           'gainage': .2,
         }),
       );
-      // dos → dorsaux (1) et trapèzes (0,6) ; gainage 0,2 / 12 ≈ 1,7 % :
-      // sous le seuil, gris (comme la carte historique).
-      expect(got['dorsaux'], 1.0);
-      expect(got['trapezes'], closeTo(.6, 1e-12));
+      // 5.10.0 : régions de chaque groupe. dos → dorsaux (1) et trapèzes
+      // (0,6) ; gainage 0,2 / 12 ≈ 1,7 % : sous le seuil, gris (comme la
+      // carte historique).
+      expect(got['grand_dorsal'], 1.0);
+      expect(got['grand_rond'], 1.0);
+      expect(got['trapeze_moyen'], closeTo(.6, 1e-12));
+      expect(got['rhomboides'], closeTo(.6, 1e-12));
       expect(got['biceps'], closeTo(.6, 1e-12));
-      expect(got['avant_bras'], closeTo(.3, 1e-12));
-      expect(got.containsKey('abdominaux'), isFalse);
-      expect(got.containsKey('obliques'), isFalse);
-      expect(got.length, 4);
+      expect(got['brachial'], closeTo(.6, 1e-12));
+      expect(got['brachio_radial'], closeTo(.3, 1e-12));
+      expect(got.containsKey('droit_abdomen'), isFalse);
+      expect(got.containsKey('lombaires'), isFalse);
+      // régions sans groupe (cou, psoas, couturier) : jamais par groupe
+      expect(got.containsKey('couturier'), isFalse);
+      expect(got.containsKey('sterno_cleido_mastoidien'), isFalse);
     });
 
     test('semaine vide : aucun groupe en couleur', () {

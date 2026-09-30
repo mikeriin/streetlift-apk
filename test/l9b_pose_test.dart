@@ -25,7 +25,7 @@ double _contrast(Color a, Color b) {
 
 /// Accents du moteur de référence (kt_pose.js, ACCENTS) : sombre, clair.
 const _referenceAccents = {
-  'rouge': (0xFFE85959, 0xFF6B0C0C),
+  'rouge': (0xFFD96968, 0xFF5E1615),
   'jaune': (0xFFF5C400, 0xFF7A5800),
   'vert': (0xFF4EC08A, 0xFF0B4D33),
   'violet': (0xFFB38CF2, 0xFF44146B),

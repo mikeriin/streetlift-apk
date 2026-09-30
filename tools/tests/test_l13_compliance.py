@@ -84,8 +84,8 @@ class PolicyAndStoreTests(unittest.TestCase):
             image = Image.open(out)
             self.assertEqual(image.size, (1024, 500))
             self.assertEqual(image.mode, 'RGB')
-            self.assertEqual(image.getpixel((0, 0)), (0x6B, 0x0C, 0x0C))
-            self.assertEqual(image.getpixel((1023, 499)), (0x6B, 0x0C, 0x0C))
+            self.assertEqual(image.getpixel((0, 0)), (0x5E, 0x16, 0x15))
+            self.assertEqual(image.getpixel((1023, 499)), (0x5E, 0x16, 0x15))
             self.assertEqual(out.read_bytes(), (ROOT / 'docs/play/feature_graphic_1024x500.png').read_bytes())
 
 if __name__ == '__main__':

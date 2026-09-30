@@ -1,16 +1,19 @@
-"""M8 (5.9.0) : carte 2D des 15 groupes musculaires.
+"""M8 : carte 2D des muscles (5.9.0 ; 5.10.0 : muscle par muscle).
 
-Masques fabriqués par tools/muscles2d/build_map.py d'après l'image du
-propriétaire (tools/muscles2d/source_carte.png) : chaque vue a ses calques,
-tous à la même taille que sa carte des étiquettes ; fond transparent ;
-groupes et tailles identiques côté Dart (lib/muscle_map_2d.dart) ; assets
-déclarés dans pubspec.yaml ; fabrication reproductible.
+Carte fabriquée par tools/muscles2d/build_map.py d'après l'image du
+propriétaire (tools/muscles2d/source_carte.png) : par vue, une carte des
+étiquettes (rang de la région), les traits et le modelé, tous à la même
+taille ; tailles identiques côté Dart ; table des régions générée
+(lib/muscle_map_regions.dart) identique au script ; muscles du pack dessinés
+une seule fois, les profonds jamais ; assets déclarés ; fabrication
+reproductible.
 """
 import hashlib
 import importlib.util
 import json
 import re
 import struct
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -21,15 +24,23 @@ try:
 except ImportError:  # CI sans numpy ni Pillow : en-têtes PNG seulement
     np = Image = None
 
-needs_pil = unittest.skipIf(Image is None, 'numpy et Pillow requis (pixels)')
-
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'assets/muscles2d'
 DART = (ROOT / 'lib/muscle_map_2d.dart').read_text(encoding='utf-8')
+REGIONS_DART = (ROOT / 'lib/muscle_map_regions.dart').read_text(encoding='utf-8')
+needs_pil = unittest.skipIf(Image is None, 'numpy et Pillow requis (pixels)')
 
-GROUPS = ['trapezes', 'deltoides', 'pectoraux', 'dorsaux', 'biceps', 'triceps', 'avant_bras',
-          'abdominaux', 'obliques', 'fessiers', 'quadriceps', 'ischios', 'adducteurs',
-          'mollets', 'tibial']
+# Muscles du pack que l'image ne dessine pas (sous un autre muscle ou
+# internes) : listés en texte seulement.
+PROFONDS = {
+    'flechisseurs_cervicaux_profonds', 'supra_epineux', 'sous_scapulaire', 'petit_pectoral',
+    'coraco_brachial', 'supinateur', 'carre_pronateur', 'muscles_intrinseques_main',
+    'transverse_abdomen', 'oblique_interne', 'diaphragme', 'plancher_pelvien',
+    'petit_fessier', 'rotateurs_lateraux_hanche', 'court_adducteur', 'vaste_intermediaire',
+    'poplite', 'muscles_intrinseques_pied', 'flechisseurs_profonds_des_orteils',
+    'tibial_posterieur', 'multifides', 'carre_des_lombes', 'flechisseurs_profonds_des_doigts',
+    'elevateur_scapula',
+}
 
 
 def png_header(path):
@@ -44,106 +55,130 @@ def carte():
     return json.loads((OUT / 'carte.json').read_text(encoding='utf-8'))
 
 
+def builder():
+    sys.path.insert(0, str(ROOT / 'tools/muscles2d'))
+    try:
+        spec = importlib.util.spec_from_file_location(
+            'build_map_test', ROOT / 'tools/muscles2d/build_map.py')
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod
+    finally:
+        sys.path.pop(0)
+
+
+def atlas_ids():
+    atlas = (ROOT / 'lib/atlas_data.dart').read_text(encoding='utf-8')
+    start = atlas.index('const atlasMuscles')
+    return set(re.findall(r"^  '([a-z_]+)': AtlasMuscle\(", atlas[start:], re.M))
+
+
 class CarteTest(unittest.TestCase):
-    def test_15_groupes_et_calques(self):
+    def test_regions_et_groupes(self):
         c = carte()
-        self.assertEqual(c['groupes'], GROUPS)
-        self.assertEqual(c['calques'], GROUPS + ['neutre', 'peau', 'sombre', 'contour', 'ombre'])
-        self.assertEqual(sorted(c['vues']), ['dos', 'face', 'profil'])
+        self.assertEqual(len(c['groupes']), 17)
+        self.assertIn('lombaires', c['groupes'])
+        self.assertIn('coiffe', c['groupes'])
+        ids = [r['id'] for r in c['regions']]
+        self.assertEqual(len(ids), len(set(ids)))
+        self.assertLess(len(ids), 253)
         present = set()
-        for view, v in c['vues'].items():
-            present |= set(v['calques'])
-            self.assertIn('peau', v['calques'], view)
-            self.assertIn('sombre', v['calques'], view)
-            # 5.9.1 : traits et modelé de l'image détaillée
-            self.assertIn('contour', v['calques'], view)
-            self.assertIn('ombre', v['calques'], view)
-        # chaque groupe est visible dans au moins une vue
-        self.assertTrue(set(GROUPS) <= present, set(GROUPS) - present)
+        for v in c['vues'].values():
+            present |= set(v['regions'])
+        self.assertEqual(present, set(ids), 'région jamais dessinée')
+        for r in c['regions']:
+            self.assertTrue(r['groupe'] is None or r['groupe'] in c['groupes'], r['id'])
+
+    def test_muscles_du_pack(self):
+        c = carte()
+        pack = atlas_ids()
+        seen = []
+        for r in c['regions']:
+            seen += r['muscles']
+        self.assertEqual(len(seen), len(set(seen)), 'muscle dans deux régions')
+        self.assertTrue(set(seen) <= pack, set(seen) - pack)
+        self.assertEqual(pack - set(seen), PROFONDS)
 
     def test_en_tetes(self):
         # sans Pillow : tailles et types (0 = gris : étiquettes ; 4 = gris +
-        # alpha : masques) lus dans les en-têtes PNG
+        # alpha : traits et modelé) lus dans les en-têtes PNG
         c = carte()
         for view, v in c['vues'].items():
             size = (v['largeur'], v['hauteur'])
             self.assertEqual(png_header(OUT / view / 'etiquettes.png'), (*size, 0), view)
-            for name in v['calques']:
-                self.assertEqual(png_header(OUT / view / f'{name}.png'), (*size, 4),
-                                 f'{view}/{name}')
-            files = {p.stem for p in (OUT / view).glob('*.png')}
-            self.assertEqual(files, set(v['calques']) | {'etiquettes'}, view)
+            for name in ('contour', 'ombre'):
+                self.assertEqual(png_header(OUT / view / f'{name}.png'), (*size, 4), view)
+            files = {p.name for p in (OUT / view).glob('*.png')}
+            self.assertEqual(files, {'etiquettes.png', 'contour.png', 'ombre.png'}, view)
 
     @needs_pil
-    def test_masques_et_etiquettes(self):
+    def test_etiquettes(self):
         c = carte()
+        n = len(c['regions'])
         for view, v in c['vues'].items():
-            size = (v['largeur'], v['hauteur'])
-            labels = Image.open(OUT / view / 'etiquettes.png')
-            self.assertEqual(labels.mode, 'L', view)
-            self.assertEqual(labels.size, size, view)
-            values = set(np.unique(np.asarray(labels)).tolist())
+            lab = np.asarray(Image.open(OUT / view / 'etiquettes.png'))
+            values = set(np.unique(lab).tolist())
             self.assertIn(0, values, view)  # fond transparent
-            self.assertTrue(values <= set(range(len(c['calques']) + 1)), view)
-            for name in v['calques']:
-                m = Image.open(OUT / view / f'{name}.png')
-                self.assertEqual(m.size, size, f'{view}/{name}')
-                self.assertEqual(m.mode, 'LA', f'{view}/{name}')
-                # coin en haut à gauche : transparent (le support se voit)
-                self.assertEqual(m.getpixel((0, 0))[1], 0, f'{view}/{name}')
-                # calque non vide, étiquette présente
-                self.assertIsNotNone(m.getchannel('A').getbbox(), f'{view}/{name}')
-                k = c['calques'].index(name) + 1
-                # étiquettes (toucher) : groupes et muscles sans groupe
-                if name in GROUPS or name == 'neutre':
-                    self.assertIn(k, values, f'{view}/{name}')
-                else:
-                    self.assertNotIn(k, values, f'{view}/{name}')
-            # pas de fichier en trop
-            files = {p.stem for p in (OUT / view).glob('*.png')}
-            self.assertEqual(files, set(v['calques']) | {'etiquettes'}, view)
+            self.assertEqual(lab[0, 0], 0, view)
+            self.assertTrue(values <= set(range(n + 1)) | {253, 254}, view)
+            self.assertEqual({c['regions'][k - 1]['id'] for k in values if 1 <= k <= n},
+                             set(v['regions']), view)
 
-    def test_vues_et_groupes_cote_dart(self):
+    def test_vues_cote_dart(self):
         c = carte()
         for view, v in c['vues'].items():
             m = re.search(rf"{view}\('[^']+', (\d+), (\d+)\)", DART)
             self.assertIsNotNone(m, view)
             self.assertEqual((int(m.group(1)), int(m.group(2))),
                              (v['largeur'], v['hauteur']), view)
-            block = re.search(rf'MapView\.{view}: \{{(.*?)\}}', DART, re.S).group(1)
-            self.assertEqual(set(re.findall(r"'([a-z_]+)'", block)), set(v['calques']), view)
-        ids = re.findall(r"MapGroup\('([a-z_]+)'", DART)
-        self.assertEqual(ids, GROUPS)
-        layers = re.search(r'const kMapLayers = \[(.*?)\];', DART, re.S).group(1)
-        self.assertEqual(re.findall(r"'([a-z_]+)'", layers), c['calques'])
+        self.assertIn('kMapSombre = 253, kMapPeau = 254', DART)
+
+    def test_table_generee(self):
+        c = carte()
+        found = re.findall(r"MapRegion\(\s*'([a-z_]+)',", REGIONS_DART)
+        self.assertEqual(found, [r['id'] for r in c['regions']])
+        groups = re.findall(r"MapGroup\('([a-z_]+)'", REGIONS_DART)
+        self.assertEqual(groups, c['groupes'])
+
+    @needs_pil
+    def test_table_generee_identique_au_script(self):
+        mod = builder()
+        with tempfile.TemporaryDirectory() as tmp:
+            mod.DART = Path(tmp) / 'r.dart'
+            mod.write_dart()
+            self.assertEqual(mod.DART.read_text(encoding='utf-8'), REGIONS_DART)
+
+    def test_corrections_des_roles_appliquees(self):
+        sys.path.insert(0, str(ROOT / 'tools'))
+        try:
+            import content_corrections as cc
+        finally:
+            sys.path.pop(0)
+        import gzip
+        corrections = json.loads(cc.CORRECTIONS.read_text(encoding='utf-8'))['corrections']
+        details = json.loads(gzip.decompress(cc.DETAILS.read_bytes()))
+        self.assertEqual(cc.apply(details, corrections, cc.atlas_ids()), 0)
+        self.assertGreater(len(corrections), 50)
+        for c in corrections:
+            self.assertTrue(c['why'], c['id'])
+        # exemples : tractions (grand pectoral), pompes (grand fessier)
+        ex = details['exercices']
+        self.assertIn('grand_pectoral_sterno_costal', ex['traction-pronation']['muscles_secondaires'])
+        self.assertIn('grand_fessier', ex['pompes']['muscles_stabilisateurs'])
+        self.assertNotIn('moyen_fessier', ex['pompes']['muscles_stabilisateurs'])
 
     def test_assets_declares(self):
         pubspec = (ROOT / 'pubspec.yaml').read_text(encoding='utf-8')
         for view in ('face', 'dos', 'profil'):
             self.assertIn(f'    - assets/muscles2d/{view}/\n', pubspec)
 
-    def test_muscles_du_pack_rattaches(self):
-        atlas = (ROOT / 'lib/atlas_data.dart').read_text(encoding='utf-8')
-        start = atlas.index('const atlasMuscles')
-        ids = re.findall(r"^  '([a-z_]+)': AtlasMuscle\(", atlas[start:], re.M)
-        mapping = dict(re.findall(r"^  '([a-z_]+)': '([a-z_]+)',", DART, re.M))
-        self.assertTrue(set(mapping) <= set(ids), set(mapping) - set(ids))
-        self.assertTrue(set(mapping.values()) <= set(GROUPS))
-        # sans groupe : muscles profonds du tronc et du cou seulement
-        self.assertEqual(set(ids) - set(mapping), {
-            'flechisseurs_cervicaux_profonds', 'carre_des_lombes', 'erecteurs_lombaires',
-            'erecteurs_thoraciques', 'multifides', 'diaphragme', 'plancher_pelvien',
-        })
-
     @needs_pil
     @unittest.skipUnless(importlib.util.find_spec('scipy'), 'scipy absent')
     def test_fabrication_reproductible(self):
-        spec = importlib.util.spec_from_file_location(
-            'build_map', ROOT / 'tools/muscles2d/build_map.py')
-        mod = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(mod)
+        mod = builder()
         with tempfile.TemporaryDirectory() as tmp:
             mod.OUT = Path(tmp)
+            mod.DART = Path(tmp) / 'r.dart'
             mod.build()
             for view in ('face', 'dos', 'profil'):
                 a = Image.open(Path(tmp) / view / 'etiquettes.png').tobytes()
