@@ -1,0 +1,86 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             41.8s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,014ms
+I/Choreographer( 4816): Skipped 55 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4816): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:42279/LY_OV40S4a0=/
+VMServiceFlutterDriver: Isolate found with number: 3116896427384275
+VMServiceFlutterDriver: Isolate 3116896427384275 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4816): 00:00 +0: (setUpAll)
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 4816): Skipped 37 frames!  The application may be doing too much work on its main thread.
+I/flutter ( 4816): 00:01 +1: a : Anatomie › Koach (aperçu), poses fortes
+I/flutter ( 4816): 00:01 +1 ~1: b : images du GIF, koach_attente_respiration
+D/ProfileInstaller( 4816): Installing profile for fr.tchoupi.streetlift_tracker
+D/EGL_emulation( 4816): app_time_stats: avg=850.24ms min=689.41ms max=1122.34ms count=3
+D/EGL_emulation( 4816): app_time_stats: avg=15116.70ms min=15116.70ms max=15116.70ms count=1
+D/EGL_emulation( 4816): app_time_stats: avg=417.89ms min=311.79ms max=486.04ms count=3
+D/EGL_emulation( 4816): app_time_stats: avg=176.90ms min=101.75ms max=267.02ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=195.07ms min=17.05ms max=304.53ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=256.62ms min=217.87ms max=307.07ms count=5
+D/EGL_emulation( 4816): app_time_stats: avg=172.54ms min=96.85ms max=266.55ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=202.69ms min=107.43ms max=318.94ms count=5
+D/EGL_emulation( 4816): app_time_stats: avg=215.33ms min=98.50ms max=266.79ms count=5
+D/EGL_emulation( 4816): app_time_stats: avg=181.02ms min=101.36ms max=311.46ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=264.54ms min=258.25ms max=266.93ms count=4
+D/EGL_emulation( 4816): app_time_stats: avg=176.92ms min=77.60ms max=287.54ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=277.97ms min=199.51ms max=379.32ms count=4
+D/EGL_emulation( 4816): app_time_stats: avg=173.75ms min=13.89ms max=266.62ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=198.15ms min=13.86ms max=415.34ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=250.65ms min=202.26ms max=267.13ms count=4
+I/flutter ( 4816): 00:35 +2 ~1: b : images du GIF, koach_attente_regard
+D/EGL_emulation( 4816): app_time_stats: avg=239.30ms min=101.00ms max=563.48ms count=5
+D/EGL_emulation( 4816): app_time_stats: avg=606.61ms min=493.70ms max=719.52ms count=2
+D/EGL_emulation( 4816): app_time_stats: avg=159.77ms min=21.16ms max=267.14ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=197.14ms min=95.21ms max=407.16ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=251.37ms min=203.48ms max=269.39ms count=4
+D/EGL_emulation( 4816): app_time_stats: avg=194.65ms min=11.79ms max=356.76ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=256.52ms min=191.23ms max=301.54ms count=4
+D/EGL_emulation( 4816): app_time_stats: avg=176.97ms min=21.10ms max=267.07ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=196.79ms min=13.41ms max=406.13ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=254.12ms min=216.72ms max=266.71ms count=4
+D/EGL_emulation( 4816): app_time_stats: avg=171.47ms min=95.33ms max=305.46ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=253.98ms min=215.99ms max=266.91ms count=4
+D/EGL_emulation( 4816): app_time_stats: avg=199.92ms min=22.27ms max=387.38ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=262.70ms min=194.54ms max=322.66ms count=4
+D/EGL_emulation( 4816): app_time_stats: avg=193.89ms min=15.83ms max=266.76ms count=6
+I/flutter ( 4816): 00:52 +3 ~1: b : images du GIF, koach_attente_etirement
+D/EGL_emulation( 4816): app_time_stats: avg=213.00ms min=112.01ms max=416.44ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=602.68ms min=518.58ms max=686.78ms count=2
+D/EGL_emulation( 4816): app_time_stats: avg=274.15ms min=68.24ms max=477.94ms count=4
+D/EGL_emulation( 4816): app_time_stats: avg=228.65ms min=170.21ms max=301.84ms count=5
+D/EGL_emulation( 4816): app_time_stats: avg=170.73ms min=86.89ms max=266.76ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=171.22ms min=95.69ms max=282.23ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=256.94ms min=227.42ms max=266.92ms count=4
+D/EGL_emulation( 4816): app_time_stats: avg=162.14ms min=92.36ms max=270.73ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=252.51ms min=201.84ms max=271.06ms count=5
+D/EGL_emulation( 4816): app_time_stats: avg=171.54ms min=87.27ms max=266.78ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=190.96ms min=14.43ms max=363.61ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=250.55ms min=201.89ms max=267.19ms count=4
+D/EGL_emulation( 4816): app_time_stats: avg=166.43ms min=92.24ms max=272.40ms count=6
+D/EGL_emulation( 4816): app_time_stats: avg=251.19ms min=196.41ms max=266.79ms count=5
+D/EGL_emulation( 4816): app_time_stats: avg=175.34ms min=19.14ms max=266.44ms count=6
+I/flutter ( 4816): 01:08 +4 ~1: c : images du GIF, koach_parle_une_main
+I/flutter ( 4816): 01:08 +4 ~2: c : images du GIF, koach_parle_deux_mains
+I/flutter ( 4816): 01:08 +4 ~3: c : images du GIF, koach_parle_montre
+I/flutter ( 4816): 01:08 +4 ~4: d : images du GIF, koach_felicite_applaudit
+I/flutter ( 4816): 01:08 +4 ~5: d : images du GIF, koach_felicite_poing
+I/flutter ( 4816): 01:08 +4 ~6: d : images du GIF, koach_felicite_pouce
+I/flutter ( 4816): 01:08 +4 ~7: (tearDownAll)
+I/flutter ( 4816): 01:08 +5 ~7: All tests passed!
+All tests passed.
