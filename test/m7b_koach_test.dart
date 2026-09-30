@@ -182,12 +182,12 @@ void main() {
       expect(find.byType(MannequinPlayer), findsOneWidget);
       // 5.8.1 : Koach posé sur la page, fond de la vue 3D = couleur de la
       // page (support), aucune carte autour.
-      final page = Theme.of(
+      final pageColor = Theme.of(
         tester.element(find.byType(KoachPreviewScreen)),
       ).scaffoldBackgroundColor;
       expect(
         tester.widget<Mannequin3D>(find.byType(Mannequin3D)).background,
-        page,
+        pageColor,
       );
       expect(
         find.ancestor(
