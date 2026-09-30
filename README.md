@@ -1,4 +1,9 @@
-# Kalis Track 5.8.0 — Mannequin anatomique 3D
+# Kalis Track 5.8.1 — Mannequin anatomique 3D
+
+## 5.8.1 — Koach (aperçu) sans cadre (lot M7b, correction 1)
+
+- **Anatomie › Koach (aperçu)** : Koach n'est plus dans une carte ; il est posé directement sur la page et le fond de sa vue 3D est la couleur de la page, sans démarcation, comme l'écran Anatomie (retour du propriétaire, 30/09/2026 : règle de base de tous les affichages 3D, `pipeline/3d/PIPELINE_3D.md` §3).
+- Contrôles : test Dart (fond de la vue = couleur de la page, aucune carte autour) et mesure de démarcation sur émulateur (écart des pixels de part et d'autre des bords de la vue < 3).
 
 ## 5.8.0 — Animations de Koach en mascotte (lot M7b du pipeline « Mannequin 3D »)
 

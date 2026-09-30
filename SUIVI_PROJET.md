@@ -1,8 +1,14 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M7b (animations de Koach en mascotte, aperçu dans l'écran Anatomie), version 5.8.0 ; précédent : lot M7 (5.7.0), validé**  
-**Date : 30 septembre 2026, Europe/Paris — version : 5.8.0+87 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : pipeline « Mannequin 3D », lot M7b, correction 1 (fond du lecteur de Koach = couleur de la page), version 5.8.1 ; précédent : M7b (5.8.0)**  
+**Date : 30 septembre 2026, Europe/Paris — version : 5.8.1+88 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+
+## M7b.C1 — Correction 1 (retour du propriétaire du 30/09/2026, version 5.8.1)
+
+| Retour | Correction |
+| --- | --- |
+| « Le fond doit suivre les mêmes règles que le reste et être de couleur identique au support ; ça doit être une règle de base pour la suite » | `KoachPreviewScreen` : lecteur hors carte, posé sur la page, `background` = couleur de la page (comme `AnatomyScreen`). Test Dart (fond = page, aucune `KCard` autour du lecteur), démarcation mesurée sur émulateur pour les 9 animations. Règle inscrite dans `pipeline/3d/PIPELINE_3D.md` §3 pour tous les lots suivants. |
 
 ## M7b — Animations de Koach en mascotte (version 5.8.0)
 
@@ -13,6 +19,7 @@
 | Contrôles | Durée 3-6 s ; départ et arrivée sur la pose d'attente (écart entre animations ≤ 0,03°) ; limites articulaires ; jambe jamais tendue au-delà de sa longueur ; glissement des pieds 0 mm ; interpénétration par capsules (paumes au contact pour les applaudissements) ; aucune tenue figée > 0,45 s (tête, mains, coudes, bassin, thorax ≥ 6 cm/s). Clips fidèles au script (≤ 0,2°, ≤ 8,2 mm en bout de doigt). |
 | Revue | Planches et GIF (`tools/anatomy/koach_preview.py`) ; six passes d'un sous-agent directeur d'animation (références anime, jeux de combat) : moyennes 4,5 → 5,2 → 6,3 → 6,8 → 7,6 → 8 ; toutes à 8/10 (notes et avant / après dans `pipeline/3d/livraisons/LIVRAISON_M7b.md`). |
 | Application | `ClipEntry` : `mascot`, `family`, `loop` ; `ClipRegistry.koachClips` (jamais sur une fiche ni comme animation de test) ; écran « Koach (aperçu) » (`lib/koach_preview_screen.dart`), entrée dans l'écran Anatomie ; `pubspec.yaml` : `assets/anatomy/clips/koach/`. |
+| CI 3D | Essais A (formatage, test Dart, l'émulateur de la CI coupe les animations du système : lecture forcée dans la cible), B (tests Dart, accolades), C vert : 997 tests Dart, 140 Python (14 sautés sans numpy en CI), formatage et analyse sans remarque, builds debug et profile ; émulateur : entrée de l'Anatomie, écran, 9 poses fortes (3 en 3/4), 72 images de GIF, captures regardées (run 36646033292). Échec des rendus de test `visual_capture_test.dart` identique sur `main` (antérieur au lot). |
 | Décision | Aperçu dans l'écran Anatomie plutôt que Réglages › À propos › Moteur 3D (réservé aux tests techniques) ; boutons de vue et zoom, pas de rotation au doigt (décision du 29/09/2026, plus récente que le prompt de M7b). Sources FBX non chiffrées ni suivies : le script est la source (choix du propriétaire). |
 
 ## M7 — Lecteur d'animation, intensité par phase, import des animations (version 5.7.0)
