@@ -68,14 +68,16 @@ void main() {
     '  ',
   ).convert(releve);
 
-  Future<ui.Image> grab() async {
+  Future<ui.Image> grab([double ratio = _ratio]) async {
     final boundary =
         _root.currentContext!.findRenderObject()! as RenderRepaintBoundary;
-    return boundary.toImage(pixelRatio: _ratio);
+    return boundary.toImage(pixelRatio: ratio);
   }
 
+  /// Captures à 1 px par dp (540 × 960) : le renvoi des données au pilote
+  /// reste léger (M6b : « Service has disappeared » sur un gros renvoi).
   Future<void> shot(String name) async {
-    final image = await grab();
+    final image = await grab(1);
     final png = (await image.toByteData(format: ui.ImageByteFormat.png))!;
     data['g1_$name.png'] = base64Encode(png.buffer.asUint8List());
     image.dispose();
