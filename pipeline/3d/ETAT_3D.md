@@ -24,7 +24,7 @@ Le prompt `pipeline/prompt_POC3D.txt` (prototype isolé) est remplacé par ce pi
 | M6c | 5.6.0 | 66a167c | build n° 163 (36618366444) ; CI 3D 36615305716 (essais A à C) | 2026-09-29 | validé (29/09/2026, 21:50) — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M6c.md` ; personnage Mixamo Ch36, 126 zones sur la peau, ressources chiffrées dans `assets_secure/` |
 | M7 | 5.7.0 | 8da6311 | build n° 167 (36631585307) ; CI 3D 36629784293 (essais A à C) | 2026-09-29 | validé (29/09/2026, 23:30) — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M7.md` ; lecteur, intensité par phase, import des FBX Mixamo, animation de test (Réglages › À propos › Moteur 3D) |
 | M7b | 5.8.0 | bb3c38c | build n° 171 (36648109059) ; CI 3D 36646033292 (essais A à C) | 2026-09-30 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M7b.md` ; 9 animations de Koach (attente, parle, félicite), Anatomie › Koach (aperçu), toutes à 8/10 en revue |
-| M7b correction 1 | — | — | — | — | en cours depuis 2026-09-30 04:28 UTC (fond du lecteur = couleur du support) |
+| M7b correction 1 | 5.8.1 | 9e6d654 | build n° 174 (36672178365) ; CI 3D 36670659752 (essais A et B) | 2026-09-30 | à valider — [page de suivi](https://claude.ai/artifact/KknJkZqegaxWrFsmMaomsA), `livraisons/LIVRAISON_M7b_correction1.md` ; Koach posé sur la page, fond = couleur du support (démarcation 0,0) ; remplace 5.8.0 |
 | M8 | 5.9.0 | — | — | — | à redéfinir (plus d'animation) |
 | M9 | 5.9.0 | — | — | — | à redéfinir (plus d'animation) |
 | M10 | 5.10.0 | — | — | — | à redéfinir (plus d'animation) |
