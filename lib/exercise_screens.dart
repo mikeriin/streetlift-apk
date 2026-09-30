@@ -347,6 +347,15 @@ class _Sheet extends StatelessWidget {
         atlasMuscles[m]?.nom ?? store.content.muscleLabels[m] ?? m;
     final idx = store.content;
     final sources = lib.sourcesOf(entry.id);
+    // 5.10.0 : muscles sollicités que la carte ne dessine pas (profonds).
+    final deep = [
+      for (final m in {
+        ...detail.primaires,
+        ...detail.secondaires,
+        ...detail.stabilisateurs,
+      })
+        if (!mapDrawsMuscle(m)) m,
+    ];
     return KList(
       children: [
         Text(
@@ -398,8 +407,9 @@ class _Sheet extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // M8 : carte 2D des 15 groupes, par rôle (principal vif,
-              // secondaire atténué, stabilisateur pâle, autres en gris).
+              // M8 : carte 2D par rôle (principal vif, secondaire atténué,
+              // stabilisateur pâle, autres en gris) ; 5.10.0 : muscle par
+              // muscle.
               MuscleMap2D(
                 key: ValueKey('fiche-muscle-map-${entry.id}'),
                 intensities: mapIntensitiesFromRoles(
@@ -408,10 +418,20 @@ class _Sheet extends StatelessWidget {
                   stabilisateurs: detail.stabilisateurs,
                 ),
                 height: 250,
-                semanticLabel: 'Carte des groupes musculaires de l’exercice',
+                semanticLabel: 'Carte des muscles de l’exercice',
               ),
               const SizedBox(height: 10),
               MapRoleLegend(stabilizers: detail.stabilisateurs.isNotEmpty),
+              if (deep.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Text(
+                    'Non dessinés (profonds) : ${deep.map(muscleName).join(', ')}.',
+                    key: const ValueKey('fiche-muscles-profonds'),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 12, color: SL.dim),
+                  ),
+                ),
               const SizedBox(height: 14),
               for (final (title, ids) in muscles)
                 if (ids.isNotEmpty)

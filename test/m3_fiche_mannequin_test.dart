@@ -413,7 +413,11 @@ void main() {
           stabilisateurs: d.stabilisateurs,
         ),
       );
-      expect(map.intensities['fessiers'], kMapPrimary);
+      // 5.10.0 : muscle par muscle — soulevé de terre : grand fessier,
+      // ischio-jambiers et érecteurs (lombaires) au plus fort.
+      expect(map.intensities['grand_fessier'], kMapPrimary);
+      expect(map.intensities['biceps_femoral'], kMapPrimary);
+      expect(map.intensities['lombaires'], kMapPrimary);
       expect(map.views, MapView.values);
       expect(find.byType(MapRoleLegend), findsOneWidget);
       await scrollToAction(tester, find.textContaining('Principaux : '));
@@ -446,7 +450,7 @@ void main() {
           ...d.primaires,
           ...d.secondaires,
           ...d.stabilisateurs,
-        ].any(kMuscleToMapGroup.containsKey);
+        ].any(mapDrawsMuscle);
         expect(map.intensities.isNotEmpty, mapped, reason: id);
       }
       await tester.pumpWidget(const SizedBox());

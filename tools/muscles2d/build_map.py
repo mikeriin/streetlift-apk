@@ -1,37 +1,39 @@
 #!/usr/bin/env python3
-"""M8 : carte 2D des groupes musculaires, d'après l'image du propriétaire,
+"""M8 : carte 2D des muscles, d'après l'image détaillée du propriétaire,
 réadaptée pour l'application.
 
-5.9.1 (M8 correction 1, 30/09/2026) : nouvelle image, plus détaillée
-(`tools/muscles2d/source_carte.png` : vues de face, de dos et de profil,
-sans légende ; chaque muscle est une zone colorée cernée d'un trait noir).
-Sortie : pour chaque vue, un masque alpha par calque
-(`assets/muscles2d/<vue>/<calque>.png`) que l'application teinte à
-l'affichage (gris si le groupe n'est pas travaillé, couleur dominante par
-rôle sinon) :
-  - 15 groupes : trapezes, deltoides, pectoraux, dorsaux, biceps, triceps,
-    avant_bras, abdominaux, obliques, fessiers, quadriceps, ischios,
-    adducteurs, mollets, tibial ;
-  - `neutre` (muscles sans groupe de la carte : bas du dos) : gris des
-    muscles, jamais en couleur ;
-  - `peau` (tendons, rotules, bandes blanches : gris clair) ;
-  - `sombre` (tête, mains, pieds : gris sombre) ;
-  - `contour` (traits noirs de l'image : cernes et séparations) ;
-  - `ombre` (modelé de l'image : fibres, volumes), posé en noir
-    translucide par-dessus les muscles.
-Le fond blanc devient transparent : le support (page ou carte) apparaît
-autour de la figure (règle des fonds du 30/09/2026).
+5.9.1 (M8 correction 1) : nouvelle image (`tools/muscles2d/source_carte.png` :
+face, dos, profil, sans légende ; chaque muscle est une zone colorée cernée
+de noir).
 
-Méthode : les pixels colorés sont regroupés par couleur (k-moyennes), puis
-en zones connexes (un muscle = une zone : les traits noirs les séparent) ;
-chaque zone reçoit un groupe par des règles de position et de couleur
-propres à chaque vue (l'image n'a pas de légende : une même couleur sert à
-plusieurs groupes). Rendu de contrôle : `--apercu`.
+5.10.0 (M8 correction 2, 30/09/2026 : « plusieurs passes pour quelque chose
+de scientifiquement correct ») : la carte n'est plus découpée par groupe
+mais **muscle par muscle** : chaque zone dessinée est une région anatomique
+(`REGIONS` : grand dorsal, sous-épineux, vaste médial, soléaire…) reliée aux
+muscles du pack qu'elle montre. Un exercice n'allume que les régions de ses
+muscles ; les muscles profonds (psoas sous l'arcade, transverse, oblique
+interne, petit pectoral, supra-épineux, vaste intermédiaire, petit fessier,
+poplité…) ne sont pas dessinés : ils restent listés en texte. Chaque région
+appartient à un filtre de l'écran Anatomie (16 groupes, lombaires compris)
+ou à aucun (cou, psoas, couturier).
+
+Méthode : zones colorées par couleur (k-moyennes) puis connexité (les
+traits noirs séparent les muscles ; une zone = un muscle ou un morceau de
+muscle ombré) ; chaque région est désignée par des **points posés à la
+main** (`SEEDS`, coordonnées de l'image source, relus sur agrandissements
+quadrillés) ; les zones sans point prennent la région de la zone voisine
+qu'elles touchent directement (morceaux d'un même muscle ombré). Toute zone
+restée sans région fait échouer la fabrication.
+
+Sorties (`assets/muscles2d/<vue>/`) : `etiquettes.png` (niveau de gris =
+rang de la région, 253 = extrémités sombres, 254 = peau / tendons),
+`contour.png` (traits, masque alpha), `ombre.png` (modelé, masque alpha) ;
+`assets/muscles2d/carte.json` et `lib/muscle_map_regions.dart` (table des
+régions, générée). Aperçu de contrôle : `--apercu`.
 
   python3 tools/muscles2d/build_map.py [--apercu apercu.png]
 """
 import argparse
-import colorsys
 import json
 from pathlib import Path
 
@@ -42,154 +44,195 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 SRC = HERE / 'source_carte.png'
 OUT = ROOT / 'assets/muscles2d'
+DART = ROOT / 'lib/muscle_map_regions.dart'
 
-GROUPS = ['trapezes', 'deltoides', 'pectoraux', 'dorsaux', 'biceps', 'triceps', 'avant_bras',
-          'abdominaux', 'obliques', 'fessiers', 'quadriceps', 'ischios', 'adducteurs',
-          'mollets', 'tibial']
-LAYERS = GROUPS + ['neutre', 'peau', 'sombre', 'contour', 'ombre']
+# Filtres de l'écran Anatomie (15 groupes de la première image + lombaires).
+GROUPS = [
+    ('trapezes', 'Trapèzes'), ('deltoides', 'Deltoïdes'), ('pectoraux', 'Pectoraux'),
+    ('dorsaux', 'Dorsaux'), ('biceps', 'Biceps'), ('triceps', 'Triceps'),
+    ('avant_bras', 'Avant-bras'), ('abdominaux', 'Abdominaux'), ('obliques', 'Obliques'),
+    ('lombaires', 'Lombaires'), ('fessiers', 'Fessiers'), ('quadriceps', 'Quadriceps'),
+    ('ischios', 'Ischio-jambiers'), ('adducteurs', 'Adducteurs'), ('mollets', 'Mollets'),
+    ('tibial', 'Tibial antérieur'),
+]
 
-# vues : (nom, x0, x1, axe du corps en x) ; image 1536 × 1024
+# Régions dessinées : identifiant, nom, muscles du pack montrés, filtre.
+# Un muscle profond (sous un autre : loge postérieure profonde de la jambe
+# comprise) n'est rattaché à aucune région.
+REGIONS = [
+    ('trapeze_superieur', 'Trapèze supérieur', ['trapeze_superieur'], 'trapezes'),
+    ('trapeze_moyen', 'Trapèze moyen', ['trapeze_moyen'], 'trapezes'),
+    ('trapeze_inferieur', 'Trapèze inférieur', ['trapeze_inferieur'], 'trapezes'),
+    ('rhomboides', 'Rhomboïdes', ['rhomboides'], 'trapezes'),
+    ('elevateur_scapula', 'Élévateur de la scapula', ['elevateur_scapula'], 'trapezes'),
+    ('extenseurs_cervicaux', 'Extenseurs du cou (splénius)', ['extenseurs_cervicaux'], None),
+    ('sterno_cleido_mastoidien', 'Sterno-cléido-mastoïdien', ['sterno_cleido_mastoidien'],
+     None),
+    ('cou', 'Muscles du cou (sus- et sous-hyoïdiens, scalènes)', [], None),
+    ('deltoide_anterieur', 'Deltoïde antérieur', ['deltoide_anterieur'], 'deltoides'),
+    ('deltoide_moyen', 'Deltoïde moyen', ['deltoide_moyen'], 'deltoides'),
+    ('deltoide_posterieur', 'Deltoïde postérieur', ['deltoide_posterieur'], 'deltoides'),
+    ('sous_epineux', 'Sous-épineux et petit rond', ['infra_epineux', 'petit_rond'],
+     'deltoides'),
+    ('grand_rond', 'Grand rond', ['grand_rond'], 'dorsaux'),
+    ('grand_dorsal', 'Grand dorsal', ['grand_dorsal'], 'dorsaux'),
+    ('grand_pectoral', 'Grand pectoral',
+     ['grand_pectoral_claviculaire', 'grand_pectoral_sterno_costal', 'grand_pectoral_abdominal'],
+     'pectoraux'),
+    ('dentele_anterieur', 'Dentelé antérieur', ['dentele_anterieur'], 'pectoraux'),
+    ('biceps', 'Biceps brachial', ['biceps_chef_long', 'biceps_chef_court'], 'biceps'),
+    ('brachial', 'Brachial', ['brachial'], 'biceps'),
+    ('triceps_long', 'Triceps, chef long', ['triceps_chef_long'], 'triceps'),
+    ('triceps_lateral', 'Triceps, chef latéral', ['triceps_chef_lateral'], 'triceps'),
+    ('triceps_medial', 'Triceps, chef médial et anconé', ['triceps_chef_medial', 'ancone'],
+     'triceps'),
+    ('brachio_radial', 'Brachio-radial', ['brachio_radial'], 'avant_bras'),
+    ('flechisseurs', 'Fléchisseurs du poignet et des doigts, rond pronateur',
+     ['flechisseurs_du_poignet', 'flechisseurs_superficiels_des_doigts',
+      'flechisseurs_profonds_des_doigts', 'rond_pronateur'], 'avant_bras'),
+    ('extenseurs', 'Extenseurs du poignet et des doigts',
+     ['extenseurs_du_poignet', 'extenseurs_des_doigts'], 'avant_bras'),
+    ('droit_abdomen', 'Grand droit de l’abdomen', ['droit_abdomen'], 'abdominaux'),
+    ('oblique_externe', 'Oblique externe', ['oblique_externe'], 'obliques'),
+    ('lombaires', 'Érecteurs du rachis (fascia thoraco-lombaire)',
+     ['erecteurs_lombaires', 'erecteurs_thoraciques', 'multifides', 'carre_des_lombes'],
+     'lombaires'),
+    ('grand_fessier', 'Grand fessier', ['grand_fessier'], 'fessiers'),
+    ('moyen_fessier', 'Moyen fessier', ['moyen_fessier'], 'fessiers'),
+    ('tenseur_fascia_lata', 'Tenseur du fascia lata', ['tenseur_fascia_lata'], 'fessiers'),
+    ('iliopsoas', 'Ilio-psoas', ['grand_psoas', 'iliaque'], None),
+    ('couturier', 'Couturier', ['sartorius'], None),
+    ('pectine', 'Pectiné', ['pectine'], 'adducteurs'),
+    ('adducteurs', 'Long et grand adducteurs, gracile',
+     ['long_adducteur', 'grand_adducteur', 'gracile'], 'adducteurs'),
+    ('droit_femoral', 'Droit fémoral', ['droit_femoral'], 'quadriceps'),
+    ('vaste_lateral', 'Vaste latéral', ['vaste_lateral'], 'quadriceps'),
+    ('vaste_medial', 'Vaste médial', ['vaste_medial'], 'quadriceps'),
+    ('biceps_femoral', 'Biceps fémoral, chef long', ['biceps_femoral'], 'ischios'),
+    ('biceps_femoral_court', 'Biceps fémoral, chef court', ['biceps_femoral_chef_court'],
+     'ischios'),
+    ('semi_tendineux', 'Semi-tendineux', ['semi_tendineux'], 'ischios'),
+    ('semi_membraneux', 'Semi-membraneux', ['semi_membraneux'], 'ischios'),
+    ('gastrocnemien_medial', 'Gastrocnémien médial', ['gastrocnemien_medial'], 'mollets'),
+    ('gastrocnemien_lateral', 'Gastrocnémien latéral', ['gastrocnemien_lateral'], 'mollets'),
+    ('soleaire', 'Soléaire', ['soleaire'], 'mollets'),
+    ('fibulaires', 'Long et court fibulaires', ['fibulaires'], 'mollets'),
+    ('tibial_anterieur', 'Tibial antérieur', ['tibial_anterieur'], 'tibial'),
+    ('extenseurs_orteils', 'Extenseurs des orteils', ['long_extenseur_des_orteils'], 'tibial'),
+]
+REGION_IDS = [r[0] for r in REGIONS]
+SOMBRE, PEAU = 253, 254
+K = 36  # classes de couleur (k-moyennes)
+TRAP_DOS = (165, 215)  # faisceaux du trapèze de dos : limites sur l'axe (y)
+
+# Vues : (nom, x0, x1, axe du corps en x) ; image 1536 × 1024.
 VIEWS = [('face', 0, 540, 288), ('dos', 540, 1040, 790), ('profil', 1040, 1536, None)]
 
-# couleurs d'aperçu (contrôle seulement)
-PREVIEW = {
-    'trapezes': (60, 110, 230), 'deltoides': (250, 140, 30), 'pectoraux': (220, 50, 50),
-    'dorsaux': (150, 20, 60), 'biceps': (250, 220, 40), 'triceps': (150, 90, 220),
-    'avant_bras': (40, 190, 230), 'abdominaux': (60, 180, 70), 'obliques': (250, 170, 150),
-    'fessiers': (240, 100, 20), 'quadriceps': (30, 120, 250), 'ischios': (110, 90, 200),
-    'adducteurs': (230, 60, 200), 'mollets': (130, 200, 40), 'tibial': (20, 150, 110),
-    'neutre': (150, 150, 150), 'peau': (225, 225, 225), 'sombre': (70, 70, 70),
-    'contour': (15, 15, 15),
+# Points posés à la main (x, y de l'image source). `SYM` : côté gauche de
+# l'image, recopié en miroir de l'axe (vues de face et de dos) ; `FIXE` :
+# tel quel (jambes de face, colorées différemment à gauche et à droite ;
+# profil).
+SYM = {
+    'face': {
+        'trapeze_superieur': [(220, 160)],
+        'sterno_cleido_mastoidien': [(265, 150), (245, 170)],
+        'cou': [(288, 160), (265, 178)],
+        'deltoide_moyen': [(143, 220)],
+        'deltoide_anterieur': [(185, 215), (205, 195)],
+        'grand_pectoral': [(235, 230), (255, 260)],
+        'dentele_anterieur': [(198, 300), (197, 320)],
+        'oblique_externe': [(225, 300), (228, 330), (222, 350), (222, 395)],
+        'droit_abdomen': [(265, 300), (265, 330), (265, 365), (265, 420), (270, 450)],
+        'biceps': [(165, 300), (178, 310)],
+        'triceps_lateral': [(140, 290)],
+        'brachial': [(165, 345)],
+        'brachio_radial': [(115, 390)],
+        'extenseurs': [(93, 420), (96, 400)],
+        'flechisseurs': [(160, 400), (123, 430), (130, 437)],
+        'tenseur_fascia_lata': [(200, 440)],
+        'couturier': [(222, 450), (235, 490)],
+        'iliopsoas': [(240, 450)],
+        'pectine': [(258, 490)],
+        'adducteurs': [(272, 560)],
+        'droit_femoral': [(222, 540)],
+        'vaste_lateral': [(185, 560), (186, 495)],
+        'vaste_medial': [(245, 610)],
+    },
+    'dos': {
+        'trapeze_superieur': [(775, 130), (730, 160)],
+        'deltoide_moyen': [(655, 210)],
+        'deltoide_posterieur': [(695, 190)],
+        'sous_epineux': [(715, 220)],
+        'grand_rond': [(705, 245)],
+        'rhomboides': [(750, 250)],
+        'grand_dorsal': [(720, 310), (760, 300)],
+        'lombaires': [(770, 380)],
+        'oblique_externe': [(722, 370)],
+        'triceps_lateral': [(640, 300)],
+        'triceps_long': [(672, 290)],
+        'triceps_medial': [(655, 330)],
+        'brachio_radial': [(613, 370)],
+        'extenseurs': [(608, 421), (625, 407)],
+        'flechisseurs': [(643, 412)],
+        'moyen_fessier': [(705, 425)],
+        'grand_fessier': [(740, 470)],
+        'vaste_lateral': [(700, 580)],
+        'biceps_femoral': [(740, 580)],
+        'biceps_femoral_court': [(712, 640)],
+        'semi_tendineux': [(770, 560)],
+        'semi_membraneux': [(752, 655)],
+        'gastrocnemien_lateral': [(705, 750)],
+        'gastrocnemien_medial': [(748, 750)],
+        'soleaire': [(730, 850), (743, 830)],
+    },
 }
-
-
-def kind(rgb):
-    """Famille de couleur d'une zone (l'image réutilise les mêmes teintes)."""
-    h, light, _ = colorsys.rgb_to_hls(*[v / 255 for v in rgb])
-    h *= 360
-    if h < 12 or h >= 340:
-        return 'rouge'
-    if h < 40:
-        return 'orange' if light < .72 else 'peche'
-    if h < 62:
-        return 'jaune' if light < .72 else 'jaune_clair'
-    if h < 90:
-        return 'vert_clair' if light > .62 else 'vert_jaune'
-    if h < 160:
-        return 'vert'
-    if h < 200:
-        return 'cyan'
-    if h < 235:
-        return 'bleu'
-    if h < 255:
-        return 'lavande' if light > .62 else 'bleu_violet'
-    if h < 300:
-        return 'lavande' if light > .72 else 'violet'
-    return 'rose'
-
-
-VIOLETS = ('violet', 'lavande', 'bleu_violet')
-VERTS = ('vert', 'vert_jaune', 'vert_clair')
-ORANGES = ('orange', 'peche')
-
-
-# --------------------------------------------------------------- règles --
-
-def face(x, y, k, axis):
-    dx = abs(x - axis)
-    if y < 275 and dx >= 80 and k in ORANGES:
-        return 'deltoides'
-    if y < 190 and k != 'rouge':
-        return 'trapezes'
-    if k == 'rouge' and y < 300:
-        return 'pectoraux'
-    if dx > 118 and y < 480:  # bras
-        if y < 335:
-            if k in VIOLETS or k == 'rose':
-                return 'triceps'
-            if k in ('bleu', 'cyan'):
-                return 'avant_bras'
-            return 'biceps'
-        return 'avant_bras'
-    if y < 480:  # tronc
-        if k in VERTS and dx < 55:
-            return 'abdominaux'
-        if k in VERTS and y > 395:
-            return 'fessiers'  # tenseur du fascia lata
-        if k in VIOLETS and y < 330:
-            return 'dorsaux'
-        if y < 362:
-            return 'pectoraux'  # dentelé antérieur
-        if y < 445 and k not in VIOLETS + ('bleu', 'rose'):
-            return 'obliques'
-    if y < 700:  # cuisse
-        if k in ('violet', 'bleu_violet', 'rose'):
-            return 'adducteurs'
-        return 'quadriceps'  # vastes, droit fémoral, couturier (lavande)
-    # jambe : tibial antérieur (juste en dehors du tibia, quelle que soit
-    # sa couleur : l'image ne colore pas les deux jambes pareil) et
-    # extenseurs (bleus) ; fibulaires plus en dehors, mollets en dedans
-    if k in ('bleu', 'cyan') or 72 <= dx <= 100:
-        return 'tibial'
-    return 'mollets'
-
-
-def dos(x, y, k, axis):
-    dx = abs(x - axis)
-    if y < 140:
-        return 'trapezes'
-    if y < 275 and dx >= 85 and k in ORANGES + ('jaune',):
-        return 'deltoides'
-    if dx > 135 and y < 490:  # bras
-        return 'triceps' if y < 350 else 'avant_bras'
-    if k != 'rouge' and 245 < y < 360 and dx > 95:
-        return 'triceps'  # chefs latéral et médial, côté tronc
-    if k in VIOLETS and y < 270:
-        return 'deltoides'  # sous-épineux, petit rond
-    if k in ('bleu', 'cyan', 'bleu_violet') and y < 340:
-        return 'trapezes' if dx < 62 or y < 215 else 'dorsaux'
-    if k == 'rouge' and y < 440:
-        return 'dorsaux'
-    if k == 'rose' and y < 440:
-        return 'neutre'  # fascia thoraco-lombaire, érecteurs : sans groupe
-    if k in ORANGES and y < 415:
-        return 'obliques'
-    if y < 535:
-        return 'fessiers'
-    if y < 700:
-        if k in ('bleu', 'cyan') and dx > 60:
-            return 'quadriceps'  # vaste latéral
-        return 'ischios'
-    return 'mollets'
-
-
-def profil(x, y, k, axis):
-    if y < 200 and (x < 1255 or y < 170) and k not in ORANGES + ('jaune',):
-        return 'trapezes'
-    if 160 < y < 290 and 1195 < x < 1300 and k in ORANGES + ('jaune',):
-        return 'deltoides'
-    if k == 'rouge' and y < 300 and x > 1285:
-        return 'pectoraux'
-    if k in VERTS and x > 1318 and y < 500:
-        return 'abdominaux'
-    if 250 < y < 440 and 1288 < x < 1335 and k not in ('jaune', 'bleu', 'cyan', 'violet'):
-        return 'pectoraux' if y < 345 and k not in ORANGES else 'obliques'
-    if y < 370 and k in VIOLETS + ('bleu',) and x < 1265:
-        return 'dorsaux' if x < 1212 and y < 300 else 'triceps'
-    if y < 355 and k in ('jaune',) + VERTS:
-        return 'biceps'
-    if 340 <= y < 490 and x > 1232:
-        return 'avant_bras'
-    if y < 540 and k in ORANGES:
-        return 'fessiers'
-    if y < 705:
-        return 'ischios' if k in VIOLETS else 'quadriceps'
-    if x > 1262 and k not in ('rouge',) + ORANGES:
-        return 'tibial'  # tibial antérieur, extenseurs (devant)
-    return 'mollets'
-
-
-RULES = {'face': face, 'dos': dos, 'profil': profil}
+FIXE = {
+    'dos': {
+        'extenseurs_cervicaux': [(765, 100), (806, 100)],
+        'elevateur_scapula': [(758, 112), (817, 110)],
+        'soleaire': [(825, 830), (708, 830)],
+        'fibulaires': [(693, 840), (706, 880), (866, 843), (861, 890)],
+    },
+    'face': {
+        'brachio_radial': [(127, 338), (447, 334)],
+        'dentele_anterieur': [(211, 334)],
+        'fibulaires': [(182, 740), (392, 760)],
+        'tibial_anterieur': [(205, 760), (368, 760)],
+        'extenseurs_orteils': [(195, 830), (203, 870), (385, 830), (358, 870)],
+        'gastrocnemien_medial': [(243, 750), (333, 750)],
+        'soleaire': [(240, 820), (340, 820)],
+    },
+    'profil': {
+        'trapeze_superieur': [(1220, 150)],
+        'extenseurs_cervicaux': [(1255, 140)],
+        'sterno_cleido_mastoidien': [(1275, 120)],
+        'cou': [(1272, 155)],
+        'deltoide_posterieur': [(1215, 215)],
+        'deltoide_moyen': [(1250, 210)],
+        'deltoide_anterieur': [(1288, 215)],
+        'grand_pectoral': [(1320, 230)],
+        'grand_rond': [(1205, 250)],
+        'triceps_long': [(1225, 285)],
+        'triceps_lateral': [(1238, 320)],
+        'biceps': [(1262, 300), (1283, 300)],
+        'dentele_anterieur': [(1302, 275), (1292, 325)],
+        'oblique_externe': [(1315, 295), (1318, 320), (1315, 360), (1318, 395), (1318, 420)],
+        'droit_abdomen': [(1337, 300), (1337, 350), (1337, 400), (1335, 450)],
+        'brachio_radial': [(1275, 360), (1285, 430)],
+        'extenseurs': [(1250, 410)],
+        'flechisseurs': [(1310, 440)],
+        'grand_fessier': [(1220, 470)],
+        'vaste_lateral': [(1290, 620), (1265, 600)],
+        'droit_femoral': [(1316, 615)],
+        'biceps_femoral': [(1240, 600), (1242, 640)],
+        'semi_tendineux': [(1225, 585)],
+        'gastrocnemien_lateral': [(1215, 760)],
+        'soleaire': [(1233, 770), (1222, 850)],
+        'fibulaires': [(1252, 800)],
+        'extenseurs_orteils': [(1264, 820)],
+        'tibial_anterieur': [(1274, 800)],
+    },
+}
 
 
 # -------------------------------------------------------- segmentation --
@@ -212,13 +255,16 @@ def segment(rgb):
     sombre = (sat < 36) & (mx >= 62) & (mx < 150) & ~background & ~colored
     peau = ~background & ~colored & ~contour & ~sombre
     # zones colorées : k-moyennes puis composantes connexes par classe
-    _, lbl = kmeans2(f[colored], 24, minit='++', seed=1)
+    _, lbl = kmeans2(f[colored], K, minit='++', seed=1)
     cls = np.full(colored.shape, -1)
     cls[colored] = lbl
     zones = np.zeros(colored.shape, int)
     n = 0
-    for c in range(24):
-        cl, k = ndimage.label(cls == c)
+    # érosion d'un pixel : les liserés anticrénelés des traits ne relient
+    # plus deux muscles de même couleur (pixels rendus par le voisin après)
+    core = ndimage.binary_erosion(colored, iterations=1)
+    for c in range(K):
+        cl, k = ndimage.label((cls == c) & core)
         zones[cl > 0] = cl[cl > 0] + n
         n += k
     # petites zones (liserés) rattachées à leur voisine la plus présente
@@ -237,91 +283,227 @@ def segment(rgb):
     return background, colored, contour, sombre, peau, zones
 
 
-def classify():
-    """Calque de chaque pixel de l'image source et modelé (0-1)."""
+
+def seeds():
+    """Points de chaque vue : [(x, y, région)], miroirs compris."""
+    out = {}
+    for view, _, _, axis in VIEWS:
+        pts = []
+        for region, xs in SYM.get(view, {}).items():
+            for x, y in xs:
+                pts.append((x, y, region))
+                if round(2 * axis - x) != x:
+                    pts.append((round(2 * axis - x), y, region))
+        for region, xs in FIXE.get(view, {}).items():
+            pts += [(x, y, region) for x, y in xs]
+        for _, _, r in pts:
+            assert r in REGION_IDS, r
+        out[view] = pts
+    return out
+
+
+def classify(partial=False):
+    """Région (rang dans REGIONS, 1…), peau, sombre de chaque pixel ; modelé."""
     from scipy import ndimage
     src = np.array(Image.open(SRC).convert('RGB'))
     background, colored, contour, sombre, peau, zones = segment(src)
     lum = src.astype(float).mean(-1)
     ids = [i for i in np.unique(zones) if i]
-    centers = ndimage.center_of_mass(zones > 0, zones, ids)
-    means = [ndimage.mean(src[..., j].astype(float), zones, ids) for j in range(3)]
-    lut = np.full(zones.max() + 1, '', dtype=object)
-    for n, i in enumerate(ids):
-        cy, cx = centers[n]
-        rgb = tuple(int(means[j][n]) for j in range(3))
-        for view, x0, x1, axis in VIEWS:
-            if x0 <= cx < x1:
-                lut[i] = RULES[view](cx, cy, kind(rgb), axis)
-    labels = np.full(src.shape[:2], '', dtype=object)
+    zone_region = {}
+    problems = []
+    for view, pts in seeds().items():
+        for x, y, region in pts:
+            z = zones[y, x]
+            if z == 0:
+                # point sur un trait : zone colorée la plus proche (≤ 4 px)
+                win = zones[y - 4:y + 5, x - 4:x + 5]
+                vals = win[win > 0]
+                if not len(vals):
+                    problems.append(f'{view} {region} ({x}, {y}) hors des zones')
+                    continue
+                z = np.bincount(vals).argmax()
+            old = zone_region.get(z)
+            if old and old != region:
+                problems.append(f'{view} ({x}, {y}) : zone déjà {old}, pas {region}')
+            zone_region[z] = region
+    # propagation : une zone sans point prend la région de la zone qu'elle
+    # touche directement (même muscle, autre nuance d'ombre) ; les traits
+    # noirs séparent deux muscles, donc pas de contact direct entre eux
+    means = np.stack([ndimage.mean(src[..., j].astype(float), zones, ids) for j in range(3)], 1)
+    mean_of = dict(zip(ids, means))
+    objs = ndimage.find_objects(zones)
+    neighbours = {}
+    for i in ids:
+        sl = tuple(slice(max(0, a.start - 2), a.stop + 2) for a in objs[i - 1])
+        sub = zones[sl]
+        r = sub == i
+        ring = ndimage.binary_dilation(r, iterations=1) & ~r & (sub > 0)
+        v, cnt = np.unique(sub[ring], return_counts=True)
+        neighbours[i] = dict(zip(v.tolist(), cnt.tolist()))
+    changed = True
+    while changed:
+        changed = False
+        for i in ids:
+            if i in zone_region:
+                continue
+            best = None
+            for j, cnt in neighbours[i].items():
+                if j in zone_region:
+                    d = np.abs(mean_of[i] - mean_of[j]).mean()
+                    score = cnt / (1 + d / 20)
+                    if best is None or score > best[0]:
+                        best = (score, j)
+            if best:
+                zone_region[i] = zone_region[best[1]]
+                changed = True
+    sizes = dict(zip(ids, ndimage.sum(zones > 0, zones, ids)))
+    for i in ids:
+        if i not in zone_region:
+            cy, cx = ndimage.center_of_mass(zones == i)
+            if sizes[i] >= 60:
+                problems.append(f'zone isolée sans région ({round(cx)}, {round(cy)}), '
+                                f'{int(sizes[i])} px')
+    if problems and not partial:
+        raise SystemExit('Découpage incomplet :\n  ' + '\n  '.join(problems))
+    lut = np.zeros(zones.max() + 1, dtype=np.uint8)
+    for z, region in zone_region.items():
+        lut[z] = REGION_IDS.index(region) + 1
+    labels = np.zeros(src.shape[:2], dtype=np.uint8)
     labels[colored] = lut[zones[colored]]
-    labels[contour] = 'contour'
-    labels[sombre] = 'sombre'
-    labels[peau] = 'peau'
-    # pixels restés sans calque (traits anticrénelés, liserés) : calque du
-    # pixel voisin le plus proche (pas de trou vers le support)
-    todo = (labels == '') & ~background
-    if todo.any():
-        _, (iy, ix) = ndimage.distance_transform_edt(
-            (labels == '') | background, return_indices=True)
-        labels[todo] = labels[iy[todo], ix[todo]]
-    # ombre : écart de luminance à la moyenne de la zone (fibres, volumes)
+    # trapèze de dos : les traits intérieurs de l'image ne séparent pas ses
+    # trois faisceaux en zones ; partage anatomique : supérieur (occiput →
+    # C7, vers la clavicule), moyen (C7 → T3, horizontal vers l'acromion et
+    # l'épine de la scapula), inférieur (T4 → T12, vers la base de l'épine).
+    # Limites en y, fonction de la distance à l'axe (dx).
+    _, x0, x1, axis = VIEWS[1]
+    trap_ids = [REGION_IDS.index(r) + 1 for r in
+                ('trapeze_superieur', 'trapeze_moyen', 'trapeze_inferieur')]
+    ys, xs = np.where(np.isin(labels, trap_ids))
+    keep = (xs >= x0) & (xs < x1)
+    ys, xs = ys[keep], xs[keep]
+    dx = np.abs(xs - axis)
+    b1 = TRAP_DOS[0] + 30 * np.minimum(dx / 90, 1)
+    b2 = TRAP_DOS[1] + 17 * np.minimum(dx / 50, 1)
+    labels[ys, xs] = np.where(ys < b1, trap_ids[0], np.where(ys < b2, trap_ids[1], trap_ids[2]))
+    labels[sombre] = SOMBRE
+    labels[peau] = PEAU
+    # pixels sans étiquette (traits, liserés, très petites zones isolées) :
+    # étiquette du pixel voisin le plus proche (aucun trou vers le support)
+    todo = (labels == 0) & ~background
+    _, (iy, ix) = ndimage.distance_transform_edt(labels == 0, return_indices=True)
+    labels[todo] = labels[iy[todo], ix[todo]]
     zone_lum = np.zeros(zones.max() + 1)
     zone_lum[ids] = ndimage.mean(lum, zones, ids)
     shade = np.zeros(lum.shape)
     shade[colored] = np.clip((zone_lum[zones[colored]] - lum[colored]) / 70, 0, 1)
-    return labels, shade
+    if partial:
+        return labels, contour, background, shade, zones, zone_region, problems
+    return labels, contour, background, shade
+
+
+PREVIEW_GROUP = {
+    'trapezes': (60, 110, 230), 'deltoides': (250, 140, 30), 'pectoraux': (220, 50, 50),
+    'dorsaux': (150, 20, 60), 'biceps': (250, 220, 40), 'triceps': (150, 90, 220),
+    'avant_bras': (40, 190, 230), 'abdominaux': (60, 180, 70), 'obliques': (250, 170, 150),
+    'lombaires': (240, 120, 200), 'fessiers': (240, 100, 20), 'quadriceps': (30, 120, 250),
+    'ischios': (110, 90, 200), 'adducteurs': (230, 60, 200), 'mollets': (130, 200, 40),
+    'tibial': (20, 150, 110), None: (160, 160, 160),
+}
+
+
+def preview_rgb(lab):
+    """Aperçu : une teinte par groupe, variée d'une région à l'autre."""
+    rgb = np.full(lab.shape + (3,), 255, dtype=np.uint8)
+    for k, (rid, _, _, group) in enumerate(REGIONS, 1):
+        base = np.array(PREVIEW_GROUP[group])
+        shift = ((k * 37) % 5 - 2) * 14
+        rgb[lab == k] = np.clip(base + shift, 0, 255)
+    rgb[lab == SOMBRE] = (70, 70, 70)
+    rgb[lab == PEAU] = (225, 225, 225)
+    return rgb
+
+
+def write_dart():
+    lines = [
+        '// GÉNÉRÉ par tools/muscles2d/build_map.py — ne pas modifier à la main.',
+        '//',
+        '// M8 correction 2 (5.10.0) : régions dessinées de la carte 2D (une zone',
+        '// = un muscle ou un ensemble de muscles superficiels du pack), rang =',
+        '// valeur de la carte des étiquettes (1…), filtre de l’écran Anatomie.',
+        "import 'muscle_map_2d.dart' show MapGroup, MapRegion;",
+        '',
+        '/// Filtres de l’écran Anatomie (16 groupes).',
+        'const kMapGroups = [',
+    ]
+    for gid, label in GROUPS:
+        lines.append(f"  MapGroup('{gid}', '{label}'),")
+    lines += ['];', '', '/// Régions dessinées, dans l’ordre des étiquettes (1…).',
+              'const kMapRegions = [']
+    for rid, label, muscles, group in REGIONS:
+        g = f"'{group}'" if group else 'null'
+        label = label.replace("'", "\\'")
+        ms = ', '.join(f"'{m}'" for m in muscles)
+        one = f"  MapRegion('{rid}', '{label}', [{ms}], {g}),"
+        if len(one) <= 80:
+            lines.append(one)
+            continue
+        # découpage du formateur Dart : un argument par ligne
+        lines += ['  MapRegion(', f"    '{rid}',", f"    '{label}',"]
+        lst = f'    [{ms}],'
+        if len(lst) <= 80:
+            lines.append(lst)
+        else:
+            lines += ['    ['] + [f"      '{m}'," for m in muscles] + ['    ],']
+        lines += [f'    {g},', '  ),']
+    lines += ['];', '']
+    DART.write_text('\n'.join(lines), encoding='utf-8')
 
 
 def build(apercu=None):
-    labels, shade = classify()
+    labels, contour, background, shade = classify()
     report = {'vues': {}}
     previews = []
     for view, x0, x1, _ in VIEWS:
         lab = labels[:, x0:x1]
-        ys, xs = np.where(lab != '')
+        ys, xs = np.where(lab > 0)
         pad = 4
         top, bot = max(0, ys.min() - pad), min(lab.shape[0], ys.max() + pad + 1)
         left, right = max(0, xs.min() - pad), min(lab.shape[1], xs.max() + pad + 1)
         lab = lab[top:bot, left:right]
+        ct = contour[top:bot, x0 + left:x0 + right]
         sh = shade[top:bot, x0 + left:x0 + right]
         H, W = lab.shape
         d = OUT / view
         d.mkdir(parents=True, exist_ok=True)
         for old in d.glob('*.png'):
             old.unlink()
-        present = []
-        for name in LAYERS:
-            if name == 'ombre':
-                img = Image.fromarray((sh * 255).astype(np.uint8), 'L')
-            else:
-                m = (lab == name).astype(np.uint8) * 255
-                if not m.any():
-                    continue
-                # léger débord (0,6 px) : pas de liseré de fond entre calques
-                img = Image.fromarray(m, 'L').filter(ImageFilter.GaussianBlur(.6))
+        Image.fromarray(lab, 'L').save(d / 'etiquettes.png', optimize=True)
+        for name, m in (('contour', ct.astype(float)), ('ombre', sh)):
+            img = Image.fromarray((m * 255).astype(np.uint8), 'L')
+            if name == 'contour':
+                img = img.filter(ImageFilter.GaussianBlur(.5))
             rgba = Image.new('LA', (W, H), 255)
             rgba.putalpha(img)
             rgba.save(d / f'{name}.png', optimize=True)
-            present.append(name)
-        # étiquettes (toucher) : 1 + rang du calque, groupes et neutre
-        idx = np.zeros(lab.shape, dtype=np.uint8)
-        for k, name in enumerate(LAYERS, 1):
-            if name in GROUPS or name == 'neutre':
-                idx[lab == name] = k
-        Image.fromarray(idx, 'L').save(d / 'etiquettes.png', optimize=True)
-        report['vues'][view] = {'largeur': W, 'hauteur': H, 'calques': present}
+        present = sorted({int(v) for v in np.unique(lab)} - {0, SOMBRE, PEAU})
+        report['vues'][view] = {'largeur': W, 'hauteur': H,
+                                'regions': [REGION_IDS[v - 1] for v in present]}
         if apercu:
-            prev = np.full((H, W, 3), 255, dtype=np.uint8)
-            for name, c in PREVIEW.items():
-                prev[lab == name] = c
-            prev = (prev * (1 - .55 * sh[..., None])).astype(np.uint8)
+            prev = preview_rgb(lab)
+            prev[ct] = (15, 15, 15)
+            prev = (prev * (1 - .5 * sh[..., None])).astype(np.uint8)
             previews.append(Image.fromarray(prev))
-    (OUT / 'carte.json').write_text(json.dumps(
-        {**report, 'groupes': GROUPS, 'calques': LAYERS,
-         'source': 'tools/muscles2d/source_carte.png (image détaillée du propriétaire, '
-                   '30/09/2026)'},
-        ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+    report.update({
+        'groupes': [g for g, _ in GROUPS],
+        'regions': [{'id': r, 'nom': n, 'muscles': m, 'groupe': g} for r, n, m, g in REGIONS],
+        'etiquettes': {'regions': '1…%d (rang dans regions)' % len(REGIONS),
+                       'sombre': SOMBRE, 'peau': PEAU},
+        'source': 'tools/muscles2d/source_carte.png (image détaillée du propriétaire, '
+                  '30/09/2026)',
+    })
+    (OUT / 'carte.json').write_text(json.dumps(report, ensure_ascii=False, indent=1) + '\n',
+                                    encoding='utf-8')
+    write_dart()
     if apercu:
         w = sum(p.width for p in previews) + 20 * len(previews)
         h = max(p.height for p in previews)
@@ -339,7 +521,8 @@ def main():
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--apercu')
     args = parser.parse_args()
-    print(json.dumps(build(args.apercu), ensure_ascii=False))
+    report = build(args.apercu)
+    print(json.dumps(report['vues'], ensure_ascii=False))
 
 
 if __name__ == '__main__':

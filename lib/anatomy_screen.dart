@@ -51,6 +51,9 @@
 // la couleur dominante, les autres en gris ; toucher un groupe affiche son
 // nom (réglage « Nom du muscle au toucher ») ; résumé texte des muscles de
 // chaque groupe coché. L'entrée « Koach (aperçu) » reste.
+//
+// 5.10.0 : carte muscle par muscle ; 16 filtres (lombaires ajoutés) ;
+// toucher → nom du muscle (et de son groupe).
 import 'package:flutter/material.dart';
 
 import 'atlas_data.dart';
@@ -68,8 +71,9 @@ class AnatomyFilters {
 
   const AnatomyFilters({this.groups = const {}});
 
-  /// Nombre de cases (M8 : les 15 groupes de la carte).
-  static const total = 15;
+  /// Nombre de cases (M8 : les groupes de la carte ; 5.10.0 : 16, avec
+  /// les lombaires).
+  static const total = 16;
 
   /// Tout coché.
   static final all = AnatomyFilters(groups: {for (final g in kMapGroups) g.id});
@@ -135,7 +139,7 @@ class AnatomyScreen extends StatefulWidget {
 class AnatomyScreenState extends State<AnatomyScreen> {
   late AnatomyFilters _filters;
 
-  /// Dernier groupe touché sur la carte (nom affiché).
+  /// Dernière région touchée sur la carte (nom du muscle affiché).
   String? touched;
 
   AnatomyFilters get filters => _filters;
@@ -164,16 +168,15 @@ class AnatomyScreenState extends State<AnatomyScreen> {
   /// Filtres de départ (« Réinitialiser ») : aucun groupe.
   AnatomyFilters get defaults => AnatomyFilters.none;
 
-  /// Toucher d'un groupe de la carte (null : à côté).
-  void touch(String? group) {
+  /// Toucher d'une région de la carte (null : à côté).
+  void touch(String? region) {
     if (!Display3DSettings.instance.touchNames.value) return;
-    setState(() => touched = group);
+    setState(() => touched = region);
   }
 
-  /// Intensités de la carte : groupes cochés au plus fort.
-  Map<String, double> get intensities => {
-    for (final g in _filters.groups) g: kMapPrimary,
-  };
+  /// Intensités de la carte : régions des groupes cochés au plus fort.
+  Map<String, double> get intensities =>
+      mapIntensitiesFromGroups(_filters.groups);
 
   @override
   Widget build(BuildContext context) {
@@ -213,10 +216,10 @@ class AnatomyScreenState extends State<AnatomyScreen> {
             intensities: intensities,
             height: height,
             selected: touched,
-            onGroupTap: touch,
+            onRegionTap: touch,
             semanticLabel: labels.isEmpty
-                ? 'Carte des groupes musculaires'
-                : 'Carte des groupes musculaires, '
+                ? 'Carte des muscles'
+                : 'Carte des muscles, '
                       '${labels.length == 1 ? 'groupe' : 'groupes'} '
                       '${labels.join(', ')} en couleur',
           ),
@@ -225,8 +228,11 @@ class AnatomyScreenState extends State<AnatomyScreen> {
             builder: (context, names, _) {
               final t = touched;
               if (names && t != null) {
+                final r = mapRegion(t)!;
                 return Text(
-                  mapGroupLabel(t),
+                  r.group == null
+                      ? r.label
+                      : '${r.label} · ${mapGroupLabel(r.group!)}',
                   key: const ValueKey('anatomy-touched'),
                   textAlign: TextAlign.center,
                   style: tt.titleMedium,
@@ -234,9 +240,10 @@ class AnatomyScreenState extends State<AnatomyScreen> {
               }
               return Text(
                 names
-                    ? 'Touche un groupe pour afficher son nom. Groupes '
+                    ? 'Touche un muscle pour afficher son nom. Groupes '
                           'cochés en couleur, les autres en gris ; muscles '
-                          'profonds listés en texte sur les fiches.'
+                          'profonds (non dessinés) listés en texte sur les '
+                          'fiches.'
                     : 'Nom du muscle au toucher désactivé '
                           '(Réglages › Affichage 3D).',
                 style: tt.bodySmall,
@@ -261,7 +268,8 @@ class AnatomyScreenState extends State<AnatomyScreen> {
             ),
           ),
           Text(
-            'Carte des groupes musculaires redessinée pour l’application. '
+            'Carte des muscles redessinée pour l’application, muscle par '
+            'muscle. '
             'Repères d’entraînement, pas un avis médical.',
             style: tt.bodySmall,
           ),
