@@ -1,6 +1,0 @@
-Analyzing streetlift-apk...                                     
-
-  error • Local variable 'page' can't be referenced before it is declared. Try moving the declaration to before the first use, or renaming the local variable so that it doesn't hide a name from an enclosing scope • test/m7b_koach_test.dart:169:31 • referenced_before_declaration
-  error • The final variable 'page' can't be read because it's potentially unassigned at this point. Ensure that it is assigned on necessary execution paths • test/m7b_koach_test.dart:169:31 • read_potentially_unassigned_final
-
-2 issues found. (ran in 18.3s)
