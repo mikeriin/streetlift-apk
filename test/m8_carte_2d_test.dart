@@ -344,21 +344,10 @@ void main() {
     });
 
     testWidgets('toucher : région sous le doigt', (tester) async {
-      String? touched = 'aucun';
-      await tester.pumpWidget(
-        host(
-          MuscleMap2D(
-            views: const [MapView.dos],
-            height: 400,
-            onRegionTap: (g) => touched = g,
-          ),
-        ),
-      );
-      final rect = tester.getRect(find.byKey(const ValueKey('map-dos')));
-      late MapLabels labels;
-      await tester.runAsync(() async {
-        labels = await loadMapLabels(MapView.dos);
-      });
+      // étiquettes lues avant tout widget (moteur réel, hors temps simulé)
+      final labels = (await tester.runAsync(
+        () => loadMapLabels(MapView.dos),
+      ))!;
       Offset? core;
       for (var fy = .25; fy < .5 && core == null; fy += .01) {
         for (var fx = .2; fx < .8; fx += .01) {
@@ -371,8 +360,21 @@ void main() {
         }
       }
       expect(core, isNotNull);
+      final c = core!;
+      expect(mapLabelsIfLoaded(MapView.dos), same(labels));
+      String? touched = 'aucun';
+      await tester.pumpWidget(
+        host(
+          MuscleMap2D(
+            views: const [MapView.dos],
+            height: 400,
+            onRegionTap: (g) => touched = g,
+          ),
+        ),
+      );
+      final rect = tester.getRect(find.byKey(const ValueKey('map-dos')));
       await tester.tapAt(
-        rect.topLeft + Offset(core!.dx * rect.width, core!.dy * rect.height),
+        rect.topLeft + Offset(c.dx * rect.width, c.dy * rect.height),
       );
       await tester.pump();
       expect(touched, 'grand_dorsal');
@@ -380,6 +382,7 @@ void main() {
       await tester.tapAt(rect.topLeft + const Offset(2, 2));
       await tester.pump();
       expect(touched, isNull);
+      await tester.pumpWidget(const SizedBox());
     });
 
     testWidgets('légende des rôles', (tester) async {

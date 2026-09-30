@@ -1,5 +1,0 @@
-Analyzing streetlift-apk...                                     
-
-warning • The '!' will have no effect because the receiver can't be null. Try removing the '!' operator • test/m8_carte_2d_test.dart:375:58 • unnecessary_non_null_assertion
-
-1 issue found. (ran in 18.1s)
