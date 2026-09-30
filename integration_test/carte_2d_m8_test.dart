@@ -262,8 +262,17 @@ void main() {
     releve['anatomie'] = out;
     record();
     expect(out['vues_3d'], 0);
-    expect(distance(latRgb, hot), lessThan(14), reason: 'dorsaux');
-    expect(distance(pecRgb, grey), lessThan(14), reason: 'pectoraux');
+    // 5.9.1 : modelé de l'image (noir translucide) par-dessus : la couleur
+    // lue est celle du groupe, plus ou moins assombrie.
+    int sat(List<int> c) =>
+        c.reduce((a, b) => a > b ? a : b) - c.reduce((a, b) => a < b ? a : b);
+    expect(
+      distance(latRgb, hot),
+      lessThan(distance(latRgb, grey)),
+      reason: 'dorsaux en couleur dominante',
+    );
+    expect(sat(latRgb), greaterThan(40), reason: 'dorsaux');
+    expect(sat(pecRgb), lessThan(16), reason: 'pectoraux gris');
     expect(screen.touched, 'dorsaux');
     expect(out['toucher_nom'], 'Dorsaux');
     for (final k in ['aucun', 'tous', 'dorsaux']) {

@@ -14,6 +14,12 @@
 // transparents : la carte prend la couleur de son support (règle des fonds
 // du 30/09/2026). La liste des muscles en texte reste toujours affichée à
 // côté (jamais l'information par la couleur seule).
+//
+// 5.9.1 (M8 correction 1, 30/09/2026) : nouvelle image du propriétaire,
+// plus détaillée (chaque muscle dessiné, sans légende). En plus des 15
+// groupes : calques `neutre` (bas du dos, sans groupe : toujours gris),
+// `contour` (traits de l'image) et `ombre` (modelé : fibres, volumes, noir
+// translucide par-dessus les muscles).
 import 'dart:async';
 import 'dart:ui' as ui;
 
@@ -70,8 +76,11 @@ const kMapLayers = [
   'adducteurs',
   'mollets',
   'tibial',
+  'neutre',
   'peau',
   'sombre',
+  'contour',
+  'ombre',
 ];
 
 /// Groupe de la carte de chaque muscle du pack (identifiants de
@@ -239,6 +248,12 @@ Color mapSkinGray(bool dark) =>
 Color mapDarkGray(bool dark) =>
     dark ? const Color(0xFF34353A) : const Color(0xFF5A5B60);
 
+/// 5.9.1 : traits de l'image (cernes, séparations) et modelé (fibres,
+/// volumes, noir translucide posé sur les muscles).
+Color mapContour(bool dark) =>
+    dark ? const Color(0xFF0E0E10) : const Color(0xFF2A2B30);
+const kMapShade = Color(0x73000000);
+
 /// Couleur d'un groupe travaillé : du gris à la couleur dominante vive
 /// selon l'intensité (principal vif, secondaire atténué, stabilisateur
 /// pâle ; semaine de STATS : continue).
@@ -255,6 +270,9 @@ Color mapHeat(double v, bool dark, [KAccentSpec? accent]) {
 Color mapTinted(String layer, double v, Color tint) => switch (layer) {
   'peau' => tint.withValues(alpha: .34),
   'sombre' => tint.withValues(alpha: .14),
+  'contour' => const Color(0x59000000),
+  'ombre' => const Color(0x40000000),
+  'neutre' => tint.withValues(alpha: .22),
   _ =>
     v > kMapMinIntensity
         ? tint.withValues(alpha: .55 + .45 * v.clamp(0.0, 1.0))
@@ -265,9 +283,9 @@ Color mapTinted(String layer, double v, Color tint) => switch (layer) {
 
 /// Vues de la carte.
 enum MapView {
-  face('Face', 469, 964),
-  dos('Dos', 412, 964),
-  profil('Profil', 178, 965);
+  face('Face', 511, 980),
+  dos('Dos', 489, 976),
+  profil('Profil', 187, 980);
 
   final String label;
 
@@ -282,18 +300,19 @@ enum MapView {
 /// Calques présents dans chaque vue (les autres groupes sont cachés).
 const kMapViewLayers = <MapView, Set<String>>{
   MapView.face: {
-    'trapezes', 'deltoides', 'pectoraux', 'biceps', 'avant_bras', //
-    'abdominaux', 'obliques', 'quadriceps', 'adducteurs', 'mollets',
-    'tibial', 'peau', 'sombre',
+    'trapezes', 'deltoides', 'pectoraux', 'dorsaux', 'biceps', 'triceps', //
+    'avant_bras', 'abdominaux', 'obliques', 'fessiers', 'quadriceps',
+    'adducteurs', 'mollets', 'tibial', 'peau', 'sombre', 'contour', 'ombre',
   },
   MapView.dos: {
     'trapezes', 'deltoides', 'dorsaux', 'triceps', 'avant_bras', //
-    'obliques', 'fessiers', 'ischios', 'mollets', 'peau', 'sombre',
+    'obliques', 'fessiers', 'quadriceps', 'ischios', 'mollets', 'neutre',
+    'peau', 'sombre', 'contour', 'ombre',
   },
   MapView.profil: {
     'trapezes', 'deltoides', 'pectoraux', 'dorsaux', 'biceps', 'triceps', //
     'avant_bras', 'abdominaux', 'obliques', 'fessiers', 'quadriceps',
-    'ischios', 'mollets', 'tibial', 'peau', 'sombre',
+    'ischios', 'mollets', 'tibial', 'peau', 'sombre', 'contour', 'ombre',
   },
 };
 
@@ -394,6 +413,10 @@ class MuscleMap2D extends StatelessWidget {
     if (tint != null) return mapTinted(layer, intensities[layer] ?? 0, tint);
     if (layer == 'peau') return mapSkinGray(dark);
     if (layer == 'sombre') return mapDarkGray(dark);
+    if (layer == 'contour') return mapContour(dark);
+    if (layer == 'ombre') return kMapShade;
+    // bas du dos (fascia, érecteurs) : muscle sans groupe, toujours gris
+    if (layer == 'neutre') return mapMuscleGray(dark);
     final v = intensities[layer] ?? 0;
     return v > kMapMinIntensity ? mapHeat(v, dark) : mapMuscleGray(dark);
   }
@@ -538,7 +561,7 @@ class _MapFigure extends StatelessWidget {
           d.localPosition.dx / width,
           d.localPosition.dy / height,
         );
-        tap(g == null || g == 'peau' || g == 'sombre' ? null : g);
+        tap(kMapGroups.any((m) => m.id == g) ? g : null);
       },
       child: stack,
     );

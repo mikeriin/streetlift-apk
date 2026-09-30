@@ -1,30 +1,37 @@
 #!/usr/bin/env python3
-"""M8 : carte 2D des groupes musculaires (image fournie par le propriétaire,
-30/09/2026), réadaptée pour l'application.
+"""M8 : carte 2D des groupes musculaires, d'après l'image du propriétaire,
+réadaptée pour l'application.
 
-Source : `tools/muscles2d/source_carte.png` (vues de face, de dos et de
-profil ; 15 groupes colorés, légende). Sortie : pour chaque vue, un masque
-alpha par calque (`assets/muscles2d/<vue>/<calque>.png`) que l'application
-teinte à l'affichage (gris si le groupe n'est pas travaillé, couleur
-dominante par rôle sinon) :
+5.9.1 (M8 correction 1, 30/09/2026) : nouvelle image, plus détaillée
+(`tools/muscles2d/source_carte.png` : vues de face, de dos et de profil,
+sans légende ; chaque muscle est une zone colorée cernée d'un trait noir).
+Sortie : pour chaque vue, un masque alpha par calque
+(`assets/muscles2d/<vue>/<calque>.png`) que l'application teinte à
+l'affichage (gris si le groupe n'est pas travaillé, couleur dominante par
+rôle sinon) :
   - 15 groupes : trapezes, deltoides, pectoraux, dorsaux, biceps, triceps,
     avant_bras, abdominaux, obliques, fessiers, quadriceps, ischios,
     adducteurs, mollets, tibial ;
-  - `peau` (articulations, tendons, bas du dos : gris clair) ;
-  - `sombre` (tête, mains, pieds, creux : gris sombre).
-Les traits blancs entre les muscles et le fond blanc deviennent
-transparents : le support (page ou carte) apparaît entre les muscles, dans
-les deux thèmes (règle des fonds du 30/09/2026). Légende et titres retirés
-(la légende est dessinée par l'application).
+  - `neutre` (muscles sans groupe de la carte : bas du dos) : gris des
+    muscles, jamais en couleur ;
+  - `peau` (tendons, rotules, bandes blanches : gris clair) ;
+  - `sombre` (tête, mains, pieds : gris sombre) ;
+  - `contour` (traits noirs de l'image : cernes et séparations) ;
+  - `ombre` (modelé de l'image : fibres, volumes), posé en noir
+    translucide par-dessus les muscles.
+Le fond blanc devient transparent : le support (page ou carte) apparaît
+autour de la figure (règle des fonds du 30/09/2026).
 
-Classement de chaque pixel par la couleur la plus proche de la légende de
-la source, puis règles de position pour les couleurs voisines (trapèzes /
-quadriceps / ischios, biceps / triceps, fessiers / adducteurs, mollets /
-tibial) ; composantes minuscules rattachées à leur voisinage.
+Méthode : les pixels colorés sont regroupés par couleur (k-moyennes), puis
+en zones connexes (un muscle = une zone : les traits noirs les séparent) ;
+chaque zone reçoit un groupe par des règles de position et de couleur
+propres à chaque vue (l'image n'a pas de légende : une même couleur sert à
+plusieurs groupes). Rendu de contrôle : `--apercu`.
 
   python3 tools/muscles2d/build_map.py [--apercu apercu.png]
 """
 import argparse
+import colorsys
 import json
 from pathlib import Path
 
@@ -39,180 +46,281 @@ OUT = ROOT / 'assets/muscles2d'
 GROUPS = ['trapezes', 'deltoides', 'pectoraux', 'dorsaux', 'biceps', 'triceps', 'avant_bras',
           'abdominaux', 'obliques', 'fessiers', 'quadriceps', 'ischios', 'adducteurs',
           'mollets', 'tibial']
-LAYERS = GROUPS + ['peau', 'sombre']
+LAYERS = GROUPS + ['neutre', 'peau', 'sombre', 'contour', 'ombre']
 
-# couleurs de la légende de la source (pastilles), plus fond et gris
-PALETTE = {
-    'trapezes': (127, 56, 179), 'deltoides': (22, 136, 229), 'pectoraux': (225, 54, 58),
-    'dorsaux': (21, 100, 184), 'biceps': (252, 145, 35), 'triceps': (249, 168, 29),
-    'avant_bras': (248, 210, 32), 'abdominaux': (56, 154, 66), 'obliques': (158, 221, 78),
-    'fessiers': (238, 70, 132), 'quadriceps': (148, 86, 201), 'adducteurs': (245, 108, 137),
-    'mollets': (13, 191, 209), 'tibial': (60, 198, 212),
-    'deltoides_clair': (70, 165, 245),
-    'blanc': (255, 255, 255), 'peau': (205, 205, 203), 'sombre': (82, 82, 84),
-    'sombre2': (60, 60, 62),
+# vues : (nom, x0, x1, axe du corps en x) ; image 1536 × 1024
+VIEWS = [('face', 0, 540, 288), ('dos', 540, 1040, 790), ('profil', 1040, 1536, None)]
+
+# couleurs d'aperçu (contrôle seulement)
+PREVIEW = {
+    'trapezes': (60, 110, 230), 'deltoides': (250, 140, 30), 'pectoraux': (220, 50, 50),
+    'dorsaux': (150, 20, 60), 'biceps': (250, 220, 40), 'triceps': (150, 90, 220),
+    'avant_bras': (40, 190, 230), 'abdominaux': (60, 180, 70), 'obliques': (250, 170, 150),
+    'fessiers': (240, 100, 20), 'quadriceps': (30, 120, 250), 'ischios': (110, 90, 200),
+    'adducteurs': (230, 60, 200), 'mollets': (130, 200, 40), 'tibial': (20, 150, 110),
+    'neutre': (150, 150, 150), 'peau': (225, 225, 225), 'sombre': (70, 70, 70),
+    'contour': (15, 15, 15),
 }
 
-# vues : (nom, x0, x1) ; figures entre y0 et y1 (légende et titres exclus)
-VIEWS = [('face', 20, 505), ('dos', 505, 935), ('profil', 935, 1175)]
-Y0, Y1 = 15, 990
+
+def kind(rgb):
+    """Famille de couleur d'une zone (l'image réutilise les mêmes teintes)."""
+    h, light, _ = colorsys.rgb_to_hls(*[v / 255 for v in rgb])
+    h *= 360
+    if h < 12 or h >= 340:
+        return 'rouge'
+    if h < 40:
+        return 'orange' if light < .72 else 'peche'
+    if h < 62:
+        return 'jaune' if light < .72 else 'jaune_clair'
+    if h < 90:
+        return 'vert_clair' if light > .62 else 'vert_jaune'
+    if h < 160:
+        return 'vert'
+    if h < 200:
+        return 'cyan'
+    if h < 235:
+        return 'bleu'
+    if h < 255:
+        return 'lavande' if light > .62 else 'bleu_violet'
+    if h < 300:
+        return 'lavande' if light > .72 else 'violet'
+    return 'rose'
 
 
-def classify(rgb):
-    names = list(PALETTE)
-    pal = np.array([PALETTE[n] for n in names], dtype=np.float32)
-    d = ((rgb[:, :, None, :].astype(np.float32) - pal[None, None]) ** 2).sum(-1)
-    idx = d.argmin(-1)
-    lab = np.array(names, dtype=object)[idx]
-    lab[lab == 'deltoides_clair'] = 'deltoides'
-    lab[lab == 'sombre2'] = 'sombre'
-    return lab
+VIOLETS = ('violet', 'lavande', 'bleu_violet')
+VERTS = ('vert', 'vert_jaune', 'vert_clair')
+ORANGES = ('orange', 'peche')
 
 
-def refine(lab, view, x0):
-    """Règles de position pour les couleurs voisines."""
-    h, w = lab.shape
-    ys, xs = np.mgrid[0:h, 0:w]
-    purple = np.isin(lab, ['trapezes', 'quadriceps'])
-    hip = 390 - Y0          # sous les trapèzes, au-dessus des cuisses (px de la vue)
-    upper = ys < hip
-    lab[purple & upper] = 'trapezes'
-    thigh = purple & ~upper
-    if view == 'face':
-        lab[thigh] = 'quadriceps'
-    elif view == 'dos':
-        lab[thigh] = 'ischios'
-    else:
-        # profil (tourné vers la droite) : devant = quadriceps, derrière =
-        # ischios, par rapport au milieu de la cuisse de chaque ligne
-        for y in np.unique(ys[thigh]):
-            row = np.where(thigh[y])[0]
-            mid = (row.min() + row.max()) / 2
-            lab[y, row[row >= mid]] = 'quadriceps'
-            lab[y, row[row < mid]] = 'ischios'
-    pink = np.isin(lab, ['fessiers', 'adducteurs'])
-    if view == 'face':
-        lab[pink] = 'adducteurs'
-    else:
-        lab[pink] = 'fessiers'
-    orange = np.isin(lab, ['biceps', 'triceps'])
-    if view == 'face':
-        lab[orange] = 'biceps'
-    elif view == 'dos':
-        lab[orange] = 'triceps'
-    else:
-        for y in np.unique(ys[orange]):
-            row = np.where(orange[y])[0]
-            mid = (row.min() + row.max()) / 2
-            lab[y, row[row >= mid]] = 'biceps'
-            lab[y, row[row < mid]] = 'triceps'
-    cyan = np.isin(lab, ['mollets', 'tibial'])
-    if view == 'dos':
-        lab[cyan] = 'mollets'
-    elif view == 'profil':
-        for y in np.unique(ys[cyan]):
-            row = np.where(cyan[y])[0]
-            mid = (row.min() + row.max()) / 2
-            lab[y, row[row >= mid]] = 'tibial'
-            lab[y, row[row < mid]] = 'mollets'
-    if view == 'face':
-        # de face, le tibial antérieur est sur le bord externe de la jambe,
-        # les mollets sur le bord interne (chaque jambe de part et d'autre
-        # de l'axe du corps)
-        axis = w / 2
-        for y in np.unique(ys[cyan]):
-            for side in (0, 1):
-                row = np.where(cyan[y] & ((xs[y] < axis) if side == 0 else (xs[y] >= axis)))[0]
-                if not len(row):
-                    continue
-                mid = (row.min() + row.max()) / 2
-                outer = row < mid if side == 0 else row >= mid
-                lab[y, row[outer]] = 'tibial'
-                lab[y, row[~outer]] = 'mollets'
-    blue = lab == 'dorsaux'
-    if view == 'face':
-        lab[blue] = 'deltoides'
-    if view == 'dos':
-        # de dos, le vert des flancs est celui des obliques
-        lab[np.isin(lab, ['abdominaux', 'obliques'])] = 'obliques'
-    return lab
+# --------------------------------------------------------------- règles --
+
+def face(x, y, k, axis):
+    dx = abs(x - axis)
+    if y < 275 and dx >= 80 and k in ORANGES:
+        return 'deltoides'
+    if y < 190 and k != 'rouge':
+        return 'trapezes'
+    if k == 'rouge' and y < 300:
+        return 'pectoraux'
+    if dx > 118 and y < 480:  # bras
+        if y < 335:
+            if k in VIOLETS or k == 'rose':
+                return 'triceps'
+            if k in ('bleu', 'cyan'):
+                return 'avant_bras'
+            return 'biceps'
+        return 'avant_bras'
+    if y < 480:  # tronc
+        if k in VERTS and dx < 55:
+            return 'abdominaux'
+        if k in VERTS and y > 395:
+            return 'fessiers'  # tenseur du fascia lata
+        if k in VIOLETS and y < 330:
+            return 'dorsaux'
+        if y < 362:
+            return 'pectoraux'  # dentelé antérieur
+        if y < 445 and k not in VIOLETS + ('bleu', 'rose'):
+            return 'obliques'
+    if y < 700:  # cuisse
+        if k in ('violet', 'bleu_violet', 'rose'):
+            return 'adducteurs'
+        return 'quadriceps'  # vastes, droit fémoral, couturier (lavande)
+    # jambe : tibial antérieur (juste en dehors du tibia, quelle que soit
+    # sa couleur : l'image ne colore pas les deux jambes pareil) et
+    # extenseurs (bleus) ; fibulaires plus en dehors, mollets en dedans
+    if k in ('bleu', 'cyan') or 72 <= dx <= 100:
+        return 'tibial'
+    return 'mollets'
 
 
-def clean(lab, min_px=40):
-    """Petites composantes (liserés d'anticrénelage) rattachées au calque
-    majoritaire de leur voisinage."""
+def dos(x, y, k, axis):
+    dx = abs(x - axis)
+    if y < 140:
+        return 'trapezes'
+    if y < 275 and dx >= 85 and k in ORANGES + ('jaune',):
+        return 'deltoides'
+    if dx > 135 and y < 490:  # bras
+        return 'triceps' if y < 350 else 'avant_bras'
+    if k != 'rouge' and 245 < y < 360 and dx > 95:
+        return 'triceps'  # chefs latéral et médial, côté tronc
+    if k in VIOLETS and y < 270:
+        return 'deltoides'  # sous-épineux, petit rond
+    if k in ('bleu', 'cyan', 'bleu_violet') and y < 340:
+        return 'trapezes' if dx < 62 or y < 215 else 'dorsaux'
+    if k == 'rouge' and y < 440:
+        return 'dorsaux'
+    if k == 'rose' and y < 440:
+        return 'neutre'  # fascia thoraco-lombaire, érecteurs : sans groupe
+    if k in ORANGES and y < 415:
+        return 'obliques'
+    if y < 535:
+        return 'fessiers'
+    if y < 700:
+        if k in ('bleu', 'cyan') and dx > 60:
+            return 'quadriceps'  # vaste latéral
+        return 'ischios'
+    return 'mollets'
+
+
+def profil(x, y, k, axis):
+    if y < 200 and (x < 1255 or y < 170) and k not in ORANGES + ('jaune',):
+        return 'trapezes'
+    if 160 < y < 290 and 1195 < x < 1300 and k in ORANGES + ('jaune',):
+        return 'deltoides'
+    if k == 'rouge' and y < 300 and x > 1285:
+        return 'pectoraux'
+    if k in VERTS and x > 1318 and y < 500:
+        return 'abdominaux'
+    if 250 < y < 440 and 1288 < x < 1335 and k not in ('jaune', 'bleu', 'cyan', 'violet'):
+        return 'pectoraux' if y < 345 and k not in ORANGES else 'obliques'
+    if y < 370 and k in VIOLETS + ('bleu',) and x < 1265:
+        return 'dorsaux' if x < 1212 and y < 300 else 'triceps'
+    if y < 355 and k in ('jaune',) + VERTS:
+        return 'biceps'
+    if 340 <= y < 490 and x > 1232:
+        return 'avant_bras'
+    if y < 540 and k in ORANGES:
+        return 'fessiers'
+    if y < 705:
+        return 'ischios' if k in VIOLETS else 'quadriceps'
+    if x > 1262 and k not in ('rouge',) + ORANGES:
+        return 'tibial'  # tibial antérieur, extenseurs (devant)
+    return 'mollets'
+
+
+RULES = {'face': face, 'dos': dos, 'profil': profil}
+
+
+# -------------------------------------------------------- segmentation --
+
+def segment(rgb):
+    """Classes des pixels : fond, contour, sombre, peau, zones colorées."""
     from scipy import ndimage
-    out = lab.copy()
-    for name in LAYERS:
-        m = lab == name
-        comp, n = ndimage.label(m)
-        if n == 0:
+    from scipy.cluster.vq import kmeans2
+    f = rgb.astype(float)
+    mx, mn = f.max(-1), f.min(-1)
+    sat = mx - mn
+    lum = f.mean(-1)
+    # fond : clair et relié au bord de l'image (halo gris clair compris)
+    light = (lum > 212) & (sat < 30)
+    lab, _ = ndimage.label(light)
+    border = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
+    background = np.isin(lab, list(border))
+    colored = (sat > 42) & (mx > 95) & ~background
+    contour = (mx < 62) & ~background & ~colored
+    sombre = (sat < 36) & (mx >= 62) & (mx < 150) & ~background & ~colored
+    peau = ~background & ~colored & ~contour & ~sombre
+    # zones colorées : k-moyennes puis composantes connexes par classe
+    _, lbl = kmeans2(f[colored], 24, minit='++', seed=1)
+    cls = np.full(colored.shape, -1)
+    cls[colored] = lbl
+    zones = np.zeros(colored.shape, int)
+    n = 0
+    for c in range(24):
+        cl, k = ndimage.label(cls == c)
+        zones[cl > 0] = cl[cl > 0] + n
+        n += k
+    # petites zones (liserés) rattachées à leur voisine la plus présente
+    sizes = ndimage.sum(zones > 0, zones, range(1, n + 1))
+    objs = ndimage.find_objects(zones)
+    for i, s in enumerate(sizes, 1):
+        if s >= 150 or objs[i - 1] is None:
             continue
-        sizes = ndimage.sum(m, comp, range(1, n + 1))
-        for k, s in enumerate(sizes, 1):
-            if s >= min_px:
-                continue
-            region = comp == k
-            ring = ndimage.binary_dilation(region, iterations=2) & ~region
-            vals, counts = np.unique(lab[ring], return_counts=True)
-            keep = [(c, v) for v, c in zip(vals, counts) if v != name]
-            if keep:
-                out[region] = max(keep)[1]
-    return out
+        sl = tuple(slice(max(0, a.start - 3), a.stop + 3) for a in objs[i - 1])
+        sub = zones[sl]
+        r = sub == i
+        ring = ndimage.binary_dilation(r, iterations=2) & ~r & (sub > 0)
+        if ring.any():
+            v, cnt = np.unique(sub[ring], return_counts=True)
+            sub[r] = v[cnt.argmax()]
+    return background, colored, contour, sombre, peau, zones
+
+
+def classify():
+    """Calque de chaque pixel de l'image source et modelé (0-1)."""
+    from scipy import ndimage
+    src = np.array(Image.open(SRC).convert('RGB'))
+    background, colored, contour, sombre, peau, zones = segment(src)
+    lum = src.astype(float).mean(-1)
+    ids = [i for i in np.unique(zones) if i]
+    centers = ndimage.center_of_mass(zones > 0, zones, ids)
+    means = [ndimage.mean(src[..., j].astype(float), zones, ids) for j in range(3)]
+    lut = np.full(zones.max() + 1, '', dtype=object)
+    for n, i in enumerate(ids):
+        cy, cx = centers[n]
+        rgb = tuple(int(means[j][n]) for j in range(3))
+        for view, x0, x1, axis in VIEWS:
+            if x0 <= cx < x1:
+                lut[i] = RULES[view](cx, cy, kind(rgb), axis)
+    labels = np.full(src.shape[:2], '', dtype=object)
+    labels[colored] = lut[zones[colored]]
+    labels[contour] = 'contour'
+    labels[sombre] = 'sombre'
+    labels[peau] = 'peau'
+    # pixels restés sans calque (traits anticrénelés, liserés) : calque du
+    # pixel voisin le plus proche (pas de trou vers le support)
+    todo = (labels == '') & ~background
+    if todo.any():
+        _, (iy, ix) = ndimage.distance_transform_edt(
+            (labels == '') | background, return_indices=True)
+        labels[todo] = labels[iy[todo], ix[todo]]
+    # ombre : écart de luminance à la moyenne de la zone (fibres, volumes)
+    zone_lum = np.zeros(zones.max() + 1)
+    zone_lum[ids] = ndimage.mean(lum, zones, ids)
+    shade = np.zeros(lum.shape)
+    shade[colored] = np.clip((zone_lum[zones[colored]] - lum[colored]) / 70, 0, 1)
+    return labels, shade
 
 
 def build(apercu=None):
-    src = np.array(Image.open(SRC).convert('RGB'))
+    labels, shade = classify()
     report = {'vues': {}}
     previews = []
-    for view, x0, x1 in VIEWS:
-        rgb = src[Y0:Y1, x0:x1]
-        lab = classify(rgb)
-        lab = refine(lab, view, x0)
-        lab = clean(lab)
-        # cadre serré autour de la figure (fond blanc exclu)
-        fig = lab != 'blanc'
-        ys, xs = np.where(fig)
-        pad = 6
-        top, bot = max(0, ys.min() - pad), min(lab.shape[0], ys.max() + pad)
-        left, right = max(0, xs.min() - pad), min(lab.shape[1], xs.max() + pad)
+    for view, x0, x1, _ in VIEWS:
+        lab = labels[:, x0:x1]
+        ys, xs = np.where(lab != '')
+        pad = 4
+        top, bot = max(0, ys.min() - pad), min(lab.shape[0], ys.max() + pad + 1)
+        left, right = max(0, xs.min() - pad), min(lab.shape[1], xs.max() + pad + 1)
         lab = lab[top:bot, left:right]
+        sh = shade[top:bot, x0 + left:x0 + right]
         H, W = lab.shape
-        # masques à la résolution de la source (bords adoucis)
-        size = (W, H)
         d = OUT / view
         d.mkdir(parents=True, exist_ok=True)
+        for old in d.glob('*.png'):
+            old.unlink()
         present = []
         for name in LAYERS:
-            m = (lab == name).astype(np.uint8) * 255
-            if not m.any():
-                continue
-            img = Image.fromarray(m, 'L').filter(ImageFilter.GaussianBlur(.6))
-            img = img.resize(size, Image.LANCZOS)
-            # masque alpha (blanc opaque, teinté par l'application)
-            rgba = Image.new('LA', size, 255)
+            if name == 'ombre':
+                img = Image.fromarray((sh * 255).astype(np.uint8), 'L')
+            else:
+                m = (lab == name).astype(np.uint8) * 255
+                if not m.any():
+                    continue
+                # léger débord (0,6 px) : pas de liseré de fond entre calques
+                img = Image.fromarray(m, 'L').filter(ImageFilter.GaussianBlur(.6))
+            rgba = Image.new('LA', (W, H), 255)
             rgba.putalpha(img)
             rgba.save(d / f'{name}.png', optimize=True)
             present.append(name)
-        # carte des étiquettes (toucher) : valeur = 1 + rang du calque dans
-        # LAYERS, 0 = transparent ; même taille que les masques, au plus proche
+        # étiquettes (toucher) : 1 + rang du calque, groupes et neutre
         idx = np.zeros(lab.shape, dtype=np.uint8)
         for k, name in enumerate(LAYERS, 1):
-            idx[lab == name] = k
-        Image.fromarray(idx, 'L').resize(size, Image.NEAREST).save(d / 'etiquettes.png',
-                                                                     optimize=True)
-        report['vues'][view] = {'largeur': size[0], 'hauteur': size[1], 'calques': present}
+            if name in GROUPS or name == 'neutre':
+                idx[lab == name] = k
+        Image.fromarray(idx, 'L').save(d / 'etiquettes.png', optimize=True)
+        report['vues'][view] = {'largeur': W, 'hauteur': H, 'calques': present}
         if apercu:
-            pal = {**{k: PALETTE[k] for k in GROUPS if k in PALETTE}, 'ischios': (110, 60, 160),
-                   'tibial': (120, 230, 240), 'peau': (205, 205, 203), 'sombre': (70, 70, 70),
-                   'blanc': (255, 255, 255)}
-            prev = np.zeros((H, W, 3), dtype=np.uint8)
-            for name, c in pal.items():
+            prev = np.full((H, W, 3), 255, dtype=np.uint8)
+            for name, c in PREVIEW.items():
                 prev[lab == name] = c
+            prev = (prev * (1 - .55 * sh[..., None])).astype(np.uint8)
             previews.append(Image.fromarray(prev))
     (OUT / 'carte.json').write_text(json.dumps(
         {**report, 'groupes': GROUPS, 'calques': LAYERS,
-         'source': 'tools/muscles2d/source_carte.png (image du propriétaire, 30/09/2026)'},
+         'source': 'tools/muscles2d/source_carte.png (image détaillée du propriétaire, '
+                   '30/09/2026)'},
         ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
     if apercu:
         w = sum(p.width for p in previews) + 20 * len(previews)
