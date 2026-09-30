@@ -1,0 +1,118 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             46.5s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,074ms
+D/FlutterRenderer( 4999): Width is zero. 0,0
+D/FlutterJNI( 4999): Sending viewport metrics to the engine.
+I/eetlift_tracker( 4999): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4999): Skipped 51 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4999): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:33537/SX0zeP-sjB0=/
+VMServiceFlutterDriver: Isolate found with number: 7375222248092923
+VMServiceFlutterDriver: Isolate 7375222248092923 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4999): 00:00 +0: (setUpAll)
+VMServiceFlutterDriver: Connected to Flutter application.
+D/ProfileInstaller( 4999): Installing profile for fr.tchoupi.streetlift_tracker
+I/Choreographer( 4999): Skipped 35 frames!  The application may be doing too much work on its main thread.
+I/flutter ( 4999): 00:01 +1: a : Anatomie › Koach (aperçu), poses fortes
+D/EGL_emulation( 4999): app_time_stats: avg=422.26ms min=6.08ms max=1965.35ms count=7
+D/EGL_emulation( 4999): app_time_stats: avg=133.37ms min=28.79ms max=222.69ms count=9
+D/EGL_emulation( 4999): app_time_stats: avg=266.55ms min=266.10ms max=266.88ms count=4
+E/AccessibilityBridge( 4999): Had scrollChildren but no childrenInHitTestOrder
+E/AccessibilityBridge( 4999): Had scrollChildren but no childrenInHitTestOrder
+E/AccessibilityBridge( 4999): Had scrollChildren but no childrenInHitTestOrder
+E/AccessibilityBridge( 4999): Had scrollChildren but no childrenInHitTestOrder
+D/EGL_emulation( 4999): app_time_stats: avg=150.03ms min=7.85ms max=266.57ms count=8
+W/WindowOnBackDispatcher( 4999): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4999): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4999): app_time_stats: avg=131.84ms min=9.18ms max=477.58ms count=9
+D/EGL_emulation( 4999): app_time_stats: avg=652.03ms min=350.45ms max=953.62ms count=2
+I/eetlift_tracker( 4999): Background concurrent mark compact GC freed 2215KB AllocSpace bytes, 3(60KB) LOS objects, 49% free, 2596KB/5192KB, paused 85us,11.267ms total 168.390ms
+D/EGL_emulation( 4999): app_time_stats: avg=15195.07ms min=15195.07ms max=15195.07ms count=1
+D/EGL_emulation( 4999): app_time_stats: avg=1102.91ms min=1102.91ms max=1102.91ms count=1
+D/EGL_emulation( 4999): app_time_stats: avg=596.93ms min=261.91ms max=931.95ms count=2
+D/EGL_emulation( 4999): app_time_stats: avg=634.24ms min=435.86ms max=832.61ms count=2
+D/EGL_emulation( 4999): app_time_stats: avg=698.21ms min=508.73ms max=887.69ms count=2
+D/EGL_emulation( 4999): app_time_stats: avg=439.88ms min=132.22ms max=723.46ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=321.22ms min=95.03ms max=547.41ms count=2
+D/EGL_emulation( 4999): app_time_stats: avg=500.45ms min=482.80ms max=518.11ms count=2
+D/EGL_emulation( 4999): app_time_stats: avg=348.83ms min=65.96ms max=518.57ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=544.48ms min=216.63ms max=872.33ms count=2
+D/EGL_emulation( 4999): app_time_stats: avg=513.26ms min=496.00ms max=530.52ms count=2
+D/EGL_emulation( 4999): app_time_stats: avg=479.56ms min=464.46ms max=508.94ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=533.21ms min=522.31ms max=544.12ms count=2
+D/EGL_emulation( 4999): app_time_stats: avg=525.39ms min=516.05ms max=534.73ms count=2
+D/EGL_emulation( 4999): app_time_stats: avg=486.17ms min=434.57ms max=514.93ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=468.37ms min=152.79ms max=807.12ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=489.62ms min=468.77ms max=503.63ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=480.32ms min=479.01ms max=481.11ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=92.94ms min=68.68ms max=106.36ms count=4
+D/EGL_emulation( 4999): app_time_stats: avg=222.20ms min=113.22ms max=290.84ms count=5
+D/EGL_emulation( 4999): app_time_stats: avg=632.72ms min=481.29ms max=784.15ms count=2
+D/EGL_emulation( 4999): app_time_stats: avg=512.08ms min=469.81ms max=558.14ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=516.45ms min=513.27ms max=519.63ms count=2
+D/EGL_emulation( 4999): app_time_stats: avg=201.70ms min=67.75ms max=430.15ms count=6
+D/EGL_emulation( 4999): app_time_stats: avg=409.92ms min=184.99ms max=690.42ms count=4
+D/EGL_emulation( 4999): app_time_stats: avg=436.91ms min=182.57ms max=691.68ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=430.72ms min=395.93ms max=464.56ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=158.56ms min=54.58ms max=464.47ms count=5
+D/EGL_emulation( 4999): app_time_stats: avg=333.15ms min=126.40ms max=791.30ms count=5
+D/EGL_emulation( 4999): app_time_stats: avg=479.16ms min=461.47ms max=502.43ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=467.63ms min=449.28ms max=484.66ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=205.73ms min=63.47ms max=494.70ms count=5
+D/EGL_emulation( 4999): app_time_stats: avg=310.16ms min=180.31ms max=519.02ms count=4
+D/EGL_emulation( 4999): app_time_stats: avg=610.62ms min=444.52ms max=776.73ms count=2
+D/EGL_emulation( 4999): app_time_stats: avg=520.50ms min=483.10ms max=569.58ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=484.68ms min=455.91ms max=515.77ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=177.06ms min=12.63ms max=290.15ms count=6
+D/EGL_emulation( 4999): app_time_stats: avg=465.81ms min=184.15ms max=764.11ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=452.61ms min=174.55ms max=749.12ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=483.14ms min=467.78ms max=500.20ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=338.22ms min=58.66ms max=524.08ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=200.77ms min=93.74ms max=280.19ms count=5
+D/EGL_emulation( 4999): app_time_stats: avg=212.52ms min=92.73ms max=436.15ms count=5
+D/EGL_emulation( 4999): app_time_stats: avg=249.99ms min=200.14ms max=266.86ms count=4
+D/EGL_emulation( 4999): app_time_stats: avg=265.53ms min=155.09ms max=411.67ms count=4
+D/EGL_emulation( 4999): app_time_stats: avg=410.07ms min=170.65ms max=682.00ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=349.24ms min=177.22ms max=521.25ms count=2
+D/EGL_emulation( 4999): app_time_stats: avg=615.99ms min=435.85ms max=796.14ms count=2
+D/EGL_emulation( 4999): app_time_stats: avg=205.03ms min=69.10ms max=416.70ms count=6
+D/EGL_emulation( 4999): app_time_stats: avg=338.16ms min=166.96ms max=458.95ms count=4
+D/EGL_emulation( 4999): app_time_stats: avg=390.10ms min=68.92ms max=673.00ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=459.91ms min=444.08ms max=479.97ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=187.18ms min=17.66ms max=455.04ms count=6
+D/EGL_emulation( 4999): app_time_stats: avg=266.79ms min=219.39ms max=296.18ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=191.20ms min=13.86ms max=267.17ms count=6
+D/EGL_emulation( 4999): app_time_stats: avg=270.17ms min=174.46ms max=444.72ms count=5
+D/EGL_emulation( 4999): app_time_stats: avg=607.64ms min=420.43ms max=794.86ms count=2
+D/EGL_emulation( 4999): app_time_stats: avg=475.71ms min=447.76ms max=490.82ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=355.90ms min=155.88ms max=476.61ms count=3
+D/EGL_emulation( 4999): app_time_stats: avg=195.90ms min=95.78ms max=382.58ms count=6
+D/EGL_emulation( 4999): app_time_stats: avg=260.62ms min=106.83ms max=679.51ms count=4
+D/EGL_emulation( 4999): app_time_stats: avg=248.50ms min=175.68ms max=267.17ms count=5
+I/flutter ( 4999): 01:42 +2: b : images du GIF, koach_attente_respiration
+I/flutter ( 4999): 01:42 +2 ~1: b : images du GIF, koach_attente_regard
+I/flutter ( 4999): 01:42 +2 ~2: b : images du GIF, koach_attente_etirement
+I/flutter ( 4999): 01:42 +2 ~3: c : images du GIF, koach_parle_une_main
+I/flutter ( 4999): 01:42 +2 ~4: c : images du GIF, koach_parle_deux_mains
+I/flutter ( 4999): 01:42 +2 ~5: c : images du GIF, koach_parle_montre
+I/flutter ( 4999): 01:42 +2 ~6: d : images du GIF, koach_felicite_applaudit
+I/flutter ( 4999): 01:42 +2 ~7: d : images du GIF, koach_felicite_poing
+I/flutter ( 4999): 01:42 +2 ~8: d : images du GIF, koach_felicite_pouce
+I/flutter ( 4999): 01:42 +2 ~9: (tearDownAll)
+I/flutter ( 4999): 01:42 +3 ~9: All tests passed!
+All tests passed.

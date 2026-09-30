@@ -1,0 +1,170 @@
+{
+  "anatomie": {
+    "vues_3d": 0,
+    "aucun": {
+      "cadre": [
+        20.0,
+        158.0,
+        320.0,
+        259.26145677350314
+      ],
+      "figure": 0.36572115384615383,
+      "couleur": 0.0,
+      "gris": 0.36572115384615383,
+      "demarcation": 0.0
+    },
+    "tous": {
+      "cadre": [
+        20.0,
+        362.0,
+        320.0,
+        259.26145677350314
+      ],
+      "figure": 0.3647115384615385,
+      "couleur": 0.23197115384615385,
+      "gris": 0.12076923076923077,
+      "demarcation": 0.0
+    },
+    "dorsaux": {
+      "cadre": [
+        20.0,
+        212.0,
+        320.0,
+        259.26145677350314
+      ],
+      "figure": 0.36572115384615383,
+      "couleur": 0.011778846153846154,
+      "gris": 0.3533173076923077,
+      "demarcation": 0.0
+    },
+    "dorsaux_pixel": {
+      "lu": [
+        215,
+        104,
+        103
+      ],
+      "attendu": [
+        217,
+        105,
+        104
+      ]
+    },
+    "pectoraux_pixel": {
+      "lu": [
+        82,
+        83,
+        88
+      ],
+      "attendu": [
+        85,
+        86,
+        91
+      ]
+    },
+    "toucher": "grand_dorsal",
+    "toucher_nom": "Grand dorsal · Dorsaux"
+  },
+  "fiches": {
+    "traction-pronation": {
+      "cadre": [
+        36.0,
+        135.31095387429684,
+        288.0,
+        235.26030750468772
+      ],
+      "figure": 0.355991054613936,
+      "couleur": 0.0803319209039548,
+      "gris": 0.2672434086629002,
+      "demarcation": 0.0,
+      "vues_3d": 0,
+      "intensites": {
+        "flechisseurs": 0.35,
+        "droit_abdomen": 0.35,
+        "oblique_externe": 0.35,
+        "triceps_long": 0.35,
+        "grand_rond": 0.62,
+        "brachial": 0.62,
+        "brachio_radial": 0.62,
+        "trapeze_moyen": 0.62,
+        "trapeze_inferieur": 0.62,
+        "rhomboides": 0.62,
+        "deltoide_posterieur": 0.62,
+        "sous_epineux": 0.62,
+        "grand_pectoral": 0.62,
+        "grand_dorsal": 1.0,
+        "biceps": 1.0
+      }
+    },
+    "back-squat": {
+      "cadre": [
+        36.0,
+        135.31095387429684,
+        288.0,
+        235.26030750468772
+      ],
+      "figure": 0.3565207156308851,
+      "couleur": 0.11958568738229755,
+      "gris": 0.22551789077212805,
+      "demarcation": 0.0,
+      "vues_3d": 0,
+      "intensites": {
+        "lombaires": 0.62,
+        "droit_abdomen": 0.35,
+        "oblique_externe": 0.35,
+        "trapeze_superieur": 0.35,
+        "trapeze_moyen": 0.35,
+        "biceps_femoral": 0.62,
+        "semi_tendineux": 0.62,
+        "adducteurs": 0.62,
+        "gastrocnemien_medial": 0.62,
+        "gastrocnemien_lateral": 0.62,
+        "soleaire": 0.62,
+        "droit_femoral": 1.0,
+        "vaste_lateral": 1.0,
+        "vaste_medial": 1.0,
+        "grand_fessier": 1.0
+      }
+    }
+  },
+  "stats_accueil_wod": {
+    "stats": {
+      "cadre": [
+        36.0,
+        164.07396924953127,
+        288.0,
+        235.26030750468772
+      ],
+      "figure": 0.3561676082862524,
+      "couleur": 0.1187617702448211,
+      "gris": 0.13877118644067796,
+      "demarcation": 0.0
+    },
+    "accueil": {
+      "cartes": 1,
+      "cadre": [
+        214.0,
+        472.0,
+        106.0,
+        90.0
+      ],
+      "figure": 0.3853249475890985,
+      "couleur": 0.0570230607966457,
+      "gris": 0.3165618448637317,
+      "demarcation": 0.0
+    },
+    "wod": {
+      "id": "seed1",
+      "cadre": [
+        36.0,
+        206.73969249531228,
+        288.0,
+        235.26030750468772
+      ],
+      "figure": 0.3559322033898305,
+      "couleur": 0.10357815442561205,
+      "gris": 0.1960334274952919,
+      "demarcation": 0.0
+    },
+    "vues_3d": 0
+  }
+}
