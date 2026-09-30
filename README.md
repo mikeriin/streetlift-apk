@@ -1,4 +1,10 @@
-# Kalis Track 5.9.1 — Carte 2D des groupes musculaires
+# Kalis Track 5.10.0 — Nouveau logo
+
+## 5.10.0 — Nouveau logo, Rouge Kalis à sa couleur
+
+- **Logo** du propriétaire (30/09/2026) : silhouette en appui renversé formant le K (source `tools/logo_source.png`). Masque `assets/icon/logo_mask.png` à la place et à la taille de l'ancien ; `python3 tools/generate_brand.py` régénère le logo de l'en-tête (`logo_mark.png`), l'icône de l'application (classique, adaptative, monochrome), l'icône des notifications et le visuel Google Play (`--play`).
+- **Rouge Kalis** (même nom) : couleur du logo, #5E1615 (au lieu de #6B0C0C). Rouge d'action et rouge clair recalculés dans la même teinte, à la même clarté : #9E2A28 (au lieu de #A61717) et #D96968 (au lieu de #E85959). Contrastes de la charte tenus (test des 12 combinaisons). Couleurs des blocs du programme généré alignées.
+
 
 ## 5.9.1 — Carte redessinée d'après l'image détaillée (lot M8, correction 1)
 

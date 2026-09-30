@@ -1193,7 +1193,7 @@ class _ShareCard extends StatelessWidget {
     decoration: BoxDecoration(
       color: const Color(0xFF121212),
       borderRadius: BorderRadius.circular(16),
-      border: Border.all(color: const Color(0xFF6B0C0C), width: 2),
+      border: Border.all(color: KPalette.burgundy, width: 2),
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1224,7 +1224,7 @@ class _ShareCard extends StatelessWidget {
                   child: Icon(
                     Icons.chevron_right_rounded,
                     size: 16,
-                    color: Color(0xFFA61717),
+                    color: KPalette.actionRed,
                   ),
                 ),
                 const SizedBox(width: 4),
@@ -1241,7 +1241,7 @@ class _ShareCard extends StatelessWidget {
         const Text(
           'KALIS TRACK',
           style: TextStyle(
-            color: Color(0xFFA61717),
+            color: KPalette.actionRed,
             fontWeight: FontWeight.w700,
             letterSpacing: 1.2,
           ),

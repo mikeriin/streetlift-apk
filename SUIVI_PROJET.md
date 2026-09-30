@@ -1,8 +1,14 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : pipeline « Mannequin 3D », lot M8, correction 1 (carte redessinée d'après l'image détaillée), version 5.9.1 ; précédent : M8 (5.9.0)**  
-**Date : 30 septembre 2026, Europe/Paris — version : 5.9.1+91 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : nouveau logo et Rouge Kalis à sa couleur, version 5.10.0 (hors pipeline 3D, demande du propriétaire du 30/09/2026) ; précédent : M8 correction 1 (5.9.1)**  
+**Date : 30 septembre 2026, Europe/Paris — version : 5.10.0+92 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android).**
+
+## Logo — Nouveau logo (version 5.10.0)
+
+| Demande | Réalisation |
+| --- | --- |
+| « Nouveau logo, changer la couleur Rouge Kalis, elle s'appelle toujours pareil mais prend la couleur du logo. » | Masque du logo refait depuis l'image (même place, même hauteur) ; icônes Android, notification, en-tête et visuel Google Play régénérés (`tools/generate_brand.py`). `KPalette.burgundy` = #5E1615 (couleur du logo) ; `actionRed` #9E2A28 et `lightRed` #D96968, même teinte, clartés d'avant ; valeurs en dur remplacées (défi du jour, couleurs des blocs du programme). Tests de contraste et de palette mis à jour. |
 
 ## M8.C1 — Correction 1 (nouvelle image du propriétaire, version 5.9.1)
 

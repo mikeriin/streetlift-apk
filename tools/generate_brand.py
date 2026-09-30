@@ -1,11 +1,15 @@
-"""Recolore le logo historique sans redessiner sa silhouette. Dépendance : Pillow."""
+"""Icônes et marque depuis le masque du logo (assets/icon/logo_mask.png).
+
+5.10.0 : nouveau logo du propriétaire (30/09/2026 : poirier formant le K,
+source `tools/logo_source.png`), couleur #5E1615 (Rouge Kalis). Dépendance :
+Pillow."""
 from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'assets/icon'
 RES = ROOT / 'android/app/src/main/res'
-ACCENT = '#6B0C0C'
+ACCENT = '#5E1615'
 BACKGROUND = '#F4F4F4'
 
 
@@ -67,7 +71,7 @@ def main():
     <color name="launch_background_color">#121212</color>
 </resources>
 ''')
-    print('Silhouette historique recolorée en #6B0C0C ; icônes Android et notifications générées.')
+    print('Logo (tools/logo_source.png, 30/09/2026) teinté en #5E1615 ; icônes Android et notifications générées.')
 
 
 if __name__ == '__main__':

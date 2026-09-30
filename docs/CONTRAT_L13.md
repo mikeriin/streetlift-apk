@@ -32,7 +32,7 @@ Toutes les décisions de L7 (Koach), L8 (profil, consentement, mode prudent), L1
 | D-L13-06 | Allégations dans des données figées : correction à l'affichage plutôt que réécriture de l'asset | Réécrire l'asset imposerait de refaire les empreintes LC1/LC1b |
 | D-L13-07 | Retour de test : formulaire local non enregistré ; scénario, note 1-5, trois champs libres (2 000 caractères au plus) ; version cochée par défaut, repère de niveau et mode prudent décochés ; jamais d'historique, de charge, de poids ni de réponse de santé ; partage par le menu Android ou copie | `FeedbackDraft` |
 | D-L13-08 | Politique de confidentialité : un seul texte (`assets/legal/confidentialite.md`), affiché dans l'application et publiable tel quel ; contact renvoyé à la fiche Google Play | À héberger par le propriétaire |
-| D-L13-09 | Visuel Google Play : logo clair (#F4F4F4) centré sur fond uni #6B0C0C, 1024 × 500, PNG 24 bits sans alpha, sans texte | Un logo bordeaux sur fond bordeaux serait invisible |
+| D-L13-09 | Visuel Google Play : logo clair (#F4F4F4) centré sur fond uni #6B0C0C (#5E1615, couleur du logo, depuis 5.10.0), 1024 × 500, PNG 24 bits sans alpha, sans texte | Un logo bordeaux sur fond bordeaux serait invisible |
 | D-L13-10 | « Diagnostic » des notifications renommé « Rapport technique » (le mot ne doit pas évoquer la santé) | Texte seul |
 
 ## 3. Règles
@@ -99,7 +99,7 @@ Application à Kalis Track : finalité déclarée **entraînement et bien-être*
 | Écrans à 390 × 844 et 320 × 720, texte 100/130/200 %, clair et sombre, défilement par gestes | `l13_screens_test.dart` |
 | Avertissement au démarrage et dans « À propos » ; entrées À propos | idem |
 | Aucune allégation (liste documentée), négations tolérées, concaténation Dart | `tools/tests/test_l13_compliance.py` |
-| Visuel Google Play 1024 × 500, RGB sans alpha, fond #6B0C0C, régénération identique | idem |
+| Visuel Google Play 1024 × 500, RGB sans alpha, fond #5E1615 (5.10.0), régénération identique | idem |
 
 Aucune assertion supprimée, aucun test désactivé. Test Python de régénération du visuel ignoré seulement si Pillow est absent de la machine (l'en-tête PNG est contrôlé dans tous les cas).
 

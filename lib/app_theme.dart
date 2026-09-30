@@ -138,24 +138,30 @@ class KAccentSpec {
 
 /// Bordeaux, anthracite et vert.
 ///
-/// Rôles de la charte : #6B0C0C fait avancer la séance (boutons pleins, cartes
-/// de marque, remplissage des jauges) ; #A61717 marque les états actifs, les
+/// Rôles de la charte : #5E1615 (couleur du logo, 5.10.0) fait avancer la
+/// séance (boutons pleins, cartes de marque, remplissage des jauges) ;
+/// #9E2A28 marque les états actifs, les
 /// records et les alertes de chrono ; #388E3C ne sert qu'à la validation.
 /// Sur fond sombre, ces deux rouges restent sous 3:1 en texte ; l'accent
-/// textuel sombre est donc une teinte claire du rouge d'action (#E85959,
-/// 4,8:1 sur #1E1E1E), le clair conserve le bordeaux (12:1 sur blanc).
+/// textuel sombre est donc une teinte claire du rouge d'action (#D96968,
+/// 4,9:1 sur #1E1E1E), le clair conserve le bordeaux (13:1 sur blanc).
+///
+/// 5.10.0 (propriétaire, 30/09/2026) : nouveau logo ; le Rouge Kalis prend
+/// sa couleur (#5E1615). Rouge d'action et rouge clair recalculés dans la
+/// même teinte, à la même clarté qu'avant (#A61717 → #9E2A28, #E85959 →
+/// #D96968) : mêmes contrastes, à quelques centièmes près.
 class KPalette {
-  /// Rouge Kalis : valeurs historiques, aussi utilisées par les rôles fixes
+  /// Rouge Kalis (couleur du logo), aussi utilisé par les rôles fixes
   /// (alertes, chronos, rangs, données, couvertures WOD) quelle que soit la
   /// couleur dominante choisie.
-  static const burgundy = Color(0xFF6B0C0C);
-  static const actionRed = Color(0xFFA61717);
+  static const burgundy = Color(0xFF5E1615);
+  static const actionRed = Color(0xFF9E2A28);
   static const black = Color(0xFF121212);
   static const charcoal = Color(0xFF1E1E1E);
   static const gray = Color(0xFF8A8A8A);
   static const light = Color(0xFFF4F4F4);
   static const green = Color(0xFF388E3C);
-  static const lightRed = Color(0xFFE85959);
+  static const lightRed = Color(0xFFD96968);
 
   /// Dégradé historique des données (graphiques d'intensité, chronos).
   static const redGradient = [burgundy, actionRed];
