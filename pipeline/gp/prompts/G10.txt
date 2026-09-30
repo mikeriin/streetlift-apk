@@ -1,0 +1,25 @@
+LOT G10 — ÉVOLUTION DU PROGRAMME : PROPOSITIONS, MODES, RESTRUCTURATIONS, OUTILS DEV
+Modèle : Opus 5.5, effort élevé. Validation : propriétaire.
+Décisions : DECISIONS_GP.md D1.4, D2.5, D5.1, D5.6, D5.7, D5.11, D6. Règles : PIPELINE_GP.md. Moteurs : `kalis_adapt`, `kalis_plan`.
+
+1. PROPOSITIONS DE KOACH
+- Toutes les propositions de `kalis_adapt` (volume, échange d'exercice, restructuration de séance, restructuration de bloc, décharge anticipée, bloc suivant) passent par Koach : carte sur l'accueil et au début de la séance concernée, pose adaptée (`idea`, `analyze`, `direction`…), texte court, « Pourquoi ? » (raisons et confiance en mots simples), **aperçu du changement** (diff de `kalis_plan`, même présentation qu'en G7).
+- **Mode assisté** (D5.6) : tout est appliqué automatiquement ; Koach informe (« J'ai remplacé… parce que… ») ; « Annuler » disponible jusqu'à la séance concernée. **Mode libre** : « Accepter / Refuser / Plus tard » ; un refus est transmis au moteur (il ne repropose pas la même chose avant un délai).
+- Réglages › Mon programme : mode assisté/libre modifiable, historique des changements (appliqués, refusés, annulés) avec leurs raisons.
+- **Fin de bloc** : Koach présente le bloc suivant (`kalis_plan.nextBlock` + résumé d'adaptation), en passant par la revue G7 pour les nouveaux exercices.
+- Déblocage visible (D5.7) : Profil ou Mon programme montre ce que Koach sait déjà ajuster et ce qu'il débloquera (« Dans 2 semaines, je pourrai ajuster ton volume »).
+
+2. OUTILS DEV (D2.5)
+- **Simulateur de séances** : choisir un profil d'athlète simulé (ceux de `kalis_adapt`) et un nombre de semaines ; remplit la session dev en avançant l'horloge dev, séance par séance, avec des flammes simulées ; les propositions de Koach apparaissent comme pour un vrai utilisateur (option « accepter tout » pour le mode libre).
+- **Inspecteur du moteur** : pour chaque charge, ajustement et proposition : capacité estimée ± incertitude, fatigue, forme du jour, règle de décision, confiance, niveau de déblocage.
+- **Export du journal moteur** (JSON, menu de partage).
+
+3. RETRAITS (D1.4)
+Koach L7 (`koach_engine.dart`, `koach_program.dart`, `koach_store.dart`, écrans et données de décisions L7), L11 (`koach_adapt.dart`, `adapt_store.dart`, `adapt_screens.dart`) et ce qu'il reste de L10, avec leurs tests et assets (`assets/koach_program.json.gz` s'il ne sert plus), **après** vérification que chaque fonction utile est couverte par les nouveaux moteurs (tableau de correspondance dans la livraison : vacances/maladie, reprise après arrêt, séance compressée, changement de lieu, plan qui glisse… → équivalent `kalis_adapt` ou retrait assumé et justifié). Les décisions passées restent dans l'historique de la sauvegarde (lecture seule).
+
+CONTRÔLES
+- Tests : chaque type de proposition dans les deux modes, annulation, refus et délai, fin de bloc, simulateur déterministe (même graine = même session dev).
+- Émulateur : simulateur 8 semaines en session dev → propositions visibles ; captures (clair/sombre) : carte de proposition, diff, historique des changements, inspecteur.
+
+À TESTER PAR LE PROPRIÉTAIRE
+Session dev : créer un programme puis simuler 8 à 12 semaines (assisté puis libre) et lire les propositions de Koach et l'inspecteur ; session perso : réglage assisté/libre, historique des changements.

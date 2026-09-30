@@ -1,0 +1,27 @@
+LOT G9 — SÉANCE : FLAMMES À CHAQUE SÉRIE, BILAN SANTÉ, CHARGES PAR LE MOTEUR DYNAMIQUE
+Modèle : Opus 5.5, effort élevé. Validation : propriétaire. Lancé automatiquement par G8.
+Décisions : DECISIONS_GP.md D5.3-D5.5, D5.8-D5.10, D6. Règles : PIPELINE_GP.md. Moteur : `kalis_adapt` (G8).
+
+1. BILAN SANTÉ EN DÉBUT DE SÉANCE (D5.8)
+- Au lancement d'une séance : Koach demande « Comment tu te sens ? » (5 niveaux, flammes ou visages de Koach — tranche et consigne). Réponse haute ou moyenne → séance. Réponse basse → détail facultatif sur un seul écran : sommeil, énergie et humeur, courbatures, douleurs localisées (zone sur la carte + 0-10), stress, motivation, temps disponible aujourd'hui, alimentation / hydratation. « Passer » partout ; **une question sans réponse n'est pas prise en compte**.
+- Résultat transmis à `kalis_adapt` ; l'ajustement gradué qui en sort (D5.9) est appliqué en mode assisté (Koach dit ce qu'il a changé, « Annuler » possible) ou proposé en mode libre (Koach propose, « Accepter / Garder ma séance »). Douleur : exercices qui épargnent la zone ; règle L13 de renvoi conservée.
+
+2. FLAMMES À CHAQUE SÉRIE (D5.3-D5.5)
+- Après chaque série validée : sélecteur des 10 flammes (G5), **pré-rempli avec la cible** ; un appui confirme, un appui sur une autre flamme ou un glissement corrige. Obligatoire pour valider la série (un « Je ne sais pas » discret compte comme absence de note et le moteur le traite ainsi). Libellé : flamme + « RIR 2 » par exemple, plus une phrase courte au premier usage expliquant l'échelle.
+- Le sélecteur remplace la saisie RIR actuelle partout ; anciennes séances affichées en flammes (conversion `kalis_core`).
+- Mise à jour du moteur après chaque série et **ajustement de la série suivante** (charge ou répétitions) selon le mode : assisté = appliqué avec un petit message de Koach ; libre = suggestion à accepter.
+
+3. CHARGES DU JOUR
+- Chaque séance affiche les charges calculées par `kalis_adapt` (et plus par Koach L7) ; en calibrage (2-3 premières séances d'un exercice), mention « calibrage » et explication de Koach.
+- **Programme personnel du propriétaire** (D5.10) : même séance, même structure, charges et suggestions par `kalis_adapt` à partir de ses consignes ; ses anciennes suggestions L7 ne sont plus utilisées (L7 reste dans le code jusqu'à G10).
+- Session dev : identique sur le programme généré.
+
+4. FIN DE SÉANCE
+Koach résume : ce qui a été calibré, ce qui a progressé (capacité estimée), ce qui changera la prochaine fois (sans les propositions de structure, qui arrivent en G10).
+
+CONTRÔLES
+- Tests : bilan (réponses partielles, aucune valeur injectée), flammes obligatoires, conversion historique, ajustement intra-séance dans les deux modes, programme template servi par `kalis_adapt`.
+- Émulateur : séance complète en session dev et sur une copie du programme du propriétaire (fixture) ; captures (clair/sombre) : bilan, bilan détaillé, sélecteur de flammes, ajustement de Koach, fin de séance.
+
+À TESTER PAR LE PROPRIÉTAIRE
+Une vraie séance de ton programme : bilan santé, flammes après chaque série, charges proposées cohérentes avec ton ressenti, ajustements pendant la séance, résumé de fin.

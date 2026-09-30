@@ -1,0 +1,22 @@
+LOT G13 — ENVIE DE PROGRESSER
+Modèle : Opus 5.5, effort élevé. Validation : propriétaire.
+Décisions : DECISIONS_GP.md D8, D6. Règles : PIPELINE_GP.md. Logique : `kalis_quest` (G11) — l'application ne fait que l'interface.
+
+Tout implémenter (D8.1), chaque fonction avec **son interrupteur** dans Réglages › « Envie de progresser » (D8.3) ; le propriétaire dira quoi garder.
+
+1. **Célébration de record** : Koach (`victory`, `flex`, `cheer`…), flamme géante animée, vibration, son ; ampleur selon le record (premier, petit, gros). Une seule passe, courte, touchable pour passer.
+2. **Récompenses surprises** : coffre de Krédits en fin de séance (ouverture animée, contenu révélé) ; historique des coffres.
+3. **Série de semaines** : flamme sur l'accueil qui grandit avec la série (10 tailles des flammes fournies), pause vacances/maladie visible, jamais de message culpabilisant.
+4. **Course contre ton fantôme** : pendant une série, ta performance passée (dernière fois / meilleure fois) affichée en direct (répétitions, charge, flammes) ; célébration discrète quand tu la dépasses.
+5. **Note de séance S/A/B/C + combo** : compteur de combo pendant la séance (séries dans la cible), note animée en fin de séance avec ses raisons.
+6. **Récap hebdo façon story** : écrans plein écran qui défilent (volume, records, quêtes, attributs, Koach), partageables en image (menu Android, poids masqué par défaut).
+7. **Comparaisons dans le temps** : « il y a 1 mois / 3 mois / 1 an » sur les mouvements principaux et les attributs.
+8. **Prédictions de date** : « À ce rythme : 100 kg de lest vers le 14/03 » sur l'accueil et les objectifs (fourchette en mots simples).
+9. **Sons + vibrations** (D8.2) : désactivables séparément ; sons courts, créés pour l'application (licence libre ou générés, crédits dans « Sources et licences »), volume discret, respect du mode silencieux.
+
+CONTRÔLES
+- Tests : chaque interrupteur coupe entièrement sa fonction ; aucune animation si « Réduire les animations » ; sons muets si désactivés ou mode silencieux.
+- Émulateur : captures (clair/sombre) de chaque fonction ; session dev avec simulateur pour déclencher record, coffre, série, récap.
+
+À TESTER PAR LE PROPRIÉTAIRE
+Chaque fonction (session dev + simulateur pour aller vite, puis vraies séances) ; dire lesquelles garder, modifier ou supprimer.

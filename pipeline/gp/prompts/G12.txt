@@ -1,0 +1,28 @@
+LOT G12 — LEVELING ET OBJECTIFS DANS L'APPLICATION ; ANCIEN SYSTÈME RETIRÉ
+Modèle : Opus 5.5, effort élevé. Validation : propriétaire. Lancé automatiquement par G11.
+Décisions : DECISIONS_GP.md D1.3, D3.8, D6, D7. Règles : PIPELINE_GP.md. Moteur : `kalis_quest` (G11).
+
+1. NOUVEAU SYSTÈME
+- **Niveau** : pastille dans l'en-tête (niveau 1-100, prestige), écran « Progression » : XP du niveau, historique des gains (registre), prochain palier.
+- **Fin de séance** : écran de gains (XP par source, quêtes réussies, Krédits) — nouvelle version de l'écran de récompenses, une seule passe d'animation, « Réduire les animations » respecté.
+- **Attributs** : hexagone des 6 attributs + détail de chacun (d'où vient la valeur, comment la faire monter), meilleure valeur atteinte.
+- **Rangs par mouvement** : liste des mouvements avec rang, prochain rang et écart chiffré ; standards consultables.
+- **Quêtes** : quotidiennes, hebdomadaires, campagne (chapitres = blocs, boss), quêtes de Koach ; progression visible, récompenses.
+- **Krédits** : solde et historique (aucun usage : Koach dit « Garde-les, ils serviront bientôt »).
+- **Objectifs** (refonte, D3.8) : créer un objectif de performance avec date ou d'habitude, suggestions de Koach, jalons, prédiction de date (médiane + fourchette en mots simples), ajustement proposé si en retard. Les objectifs saisis en G6 sont repris.
+- Koach présente chaque nouveauté la première fois (D6.4).
+
+2. RETRAIT ET REMISE À ZÉRO (D1.3)
+- Retire `progression.dart`, `game.dart`, `rewards.dart`, `levelup.dart` et tout ce qui en dépend (rangs Recrue → Légende, badges, boss, saisons, titres, série avec boucliers, campagne, objectifs adaptatifs, attributs de personnage L-lots), leurs sections de sauvegarde (ignorées à l'import), écrans, tests.
+- **Tout le monde repart niveau 1**, propriétaire compris ; Koach l'annonce une fois (« Nouveau départ : ton entraînement passé reste dans ton historique, ta progression repart de zéro »), avec le bonus de départ si G11 l'a retenu.
+- Historique d'entraînement, records et statistiques intacts.
+
+3. SESSIONS
+Session perso et session dev ; en session dev, outil « Ajouter 1 000 XP » et « Terminer les quêtes du jour » pour tester les écrans.
+
+CONTRÔLES
+- Tests : branchement du registre, niveau jamais en baisse (suppression d'une séance), import/export identique, retrait sans référence morte, reprise des objectifs G6.
+- Émulateur : captures (clair/sombre) : en-tête, progression, fin de séance, attributs, rangs, quêtes, objectifs.
+
+À TESTER PAR LE PROPRIÉTAIRE
+Faire une séance : écran de gains ; Progression, attributs, rangs (tes 4 mouvements de streetlifting), quêtes du jour, objectifs et prédiction ; session dev : outils XP et quêtes.

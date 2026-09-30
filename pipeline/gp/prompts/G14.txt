@@ -1,0 +1,16 @@
+LOT G14 — PARTAGE PSEUDONYMISÉ DES DONNÉES D'ÉVOLUTION + RECALIBRAGE DES MOTEURS
+Modèle : Opus 5.5, effort élevé. Validation : propriétaire.
+Décisions : DECISIONS_GP.md D9. Règles : PIPELINE_GP.md.
+
+1. DANS L'APPLICATION (D9.1, D9.2)
+- Réglages › **« Partager mes données d'évolution »** : désactivé par défaut ; Koach explique à quoi ça sert (améliorer les moteurs), ce qui est partagé et ce qui ne l'est jamais ; consentement explicite, retirable.
+- « Créer le fichier et le partager » : fichier JSON (schéma versionné documenté, `docs/PARTAGE_DONNEES.md`) envoyé par le menu de partage Android. **Pseudonymisé** : identifiant aléatoire propre au partage (régénérable), âge par tranche de 5 ans, dates relatives (J+n depuis le début), aucun prénom, aucune note libre, aucun identifiant d'appareil. Contenu : profil utile aux moteurs (disciplines, dosages, niveau déclaré, objectifs, disponibilités, lieux et matériel, blessures en zones), programme et ses versions, journal (séries, charges, répétitions, flammes, bilans santé, douleurs), décisions des moteurs et réponses de l'utilisateur (acceptées, refusées, annulées), progression (niveau, attributs, quêtes).
+- Aperçu lisible avant envoi (résumé + taille) ; test automatique : aucun champ interdit dans le fichier (liste noire + liste blanche du schéma).
+- Session dev : partage possible, marqué « session de test ».
+
+2. SCRIPT DE RECALIBRAGE (D9.3) — `tools/recalibrate/`
+- Python ou Dart (au choix, justifié), relançable : agrège un dossier de fichiers reçus (validation du schéma, dédoublonnage par identifiant de partage), recalcule les paramètres des moteurs estimables (bruit de report du RIR par niveau, paramètres forme/fatigue, coefficients de transfert entre exercices, tolérance au volume, rythme du leveling), compare aux paramètres actuels, produit un rapport et un fichier de paramètres candidat (jamais appliqué automatiquement), avec les tests de régression des moteurs rejoués sur les paramètres candidats.
+- Jeu de données synthétique (simulateurs de `kalis_adapt` et `kalis_quest`) pour tester le script ; README d'utilisation.
+
+À TESTER PAR LE PROPRIÉTAIRE
+Réglages › Partager mes données d'évolution : consentement, aperçu, envoi à toi-même ; lancer le script sur ton fichier (commande dans le README).

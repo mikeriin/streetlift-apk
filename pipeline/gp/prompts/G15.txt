@@ -1,0 +1,18 @@
+LOT G15 — NETTOYAGE FINAL, PERFORMANCE, AUDIT, DOCUMENTATION
+Modèle : Opus 5.5, effort élevé. Validation : propriétaire. Dernier lot.
+Règles : PIPELINE_GP.md.
+
+1. NETTOYAGE
+Code mort et assets orphelins (anciens moteurs, WOD, L12, pack 2.0.0, Koach 3D, progression L-lots) : recherche exhaustive (imports, routes, clés de sauvegarde, tests, `verify_project.py`, `package_release.py`), retrait, liste dans la livraison. Aucune règle d'entraînement ou de progression ne reste dans `lib/` (D0.3) : audit écrit.
+
+2. PERFORMANCE
+Démarrage à froid, génération d'un programme, revue (régénération), décision de séance, calcul du leveling : mesures en CI (VM et émulateur) et écran « Mesures » en session dev pour le téléphone du propriétaire ; corrections si un budget (§2) est dépassé. Poids de l'APK avant/après le pipeline.
+
+3. AUDIT
+Parcours complets en session dev (5 profils très différents) et en session perso (programme personnel) : profil → programme → 4 semaines simulées → propositions → leveling → partage ; accessibilité (texte 200 %, TalkBack sur les écrans nouveaux), thèmes, couleurs dominantes, « Réduire les animations », sauvegarde/restauration complète. Défauts trouvés corrigés dans ce lot s'ils sont petits, sinon listés.
+
+4. DOCUMENTATION
+`docs/ARCHITECTURE_GP.md` (paquets, flux de données, points d'extension), README et SUIVI_PROJET à jour, CONTRAT.md de chaque paquet relus, registre des décisions complet.
+
+FIN
+Notification « Pipeline Kalis Track GP terminé — installer v<version> ». Page de suivi : bilan du pipeline.

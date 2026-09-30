@@ -1,0 +1,38 @@
+LOT G1 — MODE DEV, CI DES PAQUETS, BUILD DEV, PAGE DE SUIVI
+Modèle : Opus 5.5, effort élevé. Validation : propriétaire. Version : 6.0.0.
+Décisions : DECISIONS_GP.md D0, D2. Règles : PIPELINE_GP.md.
+
+OBJECTIF
+Le propriétaire doit pouvoir tester toutes les fonctionnalités d'une installation neuve sans perdre sa session personnelle. C'est l'outil de test de tout le pipeline : il doit être irréprochable.
+
+1. DRAPEAU DE BUILD (D2.4)
+- `const bool kDevBuild = bool.fromEnvironment('KALIS_DEV');` dans un fichier dédié (`lib/dev/dev_flags.dart`). Tout le code du mode dev est derrière ce drapeau (le compilateur l'élimine de l'AAB).
+- `build-apk.yml` : APK construit avec `--dart-define=KALIS_DEV=true`, AAB sans ; ajoute `packages/**` aux chemins déclencheurs. Un test (Python, `tools/tests`) vérifie que le workflow garde cette différence.
+- Réglages › À propos : ligne « Build de développement » visible seulement si `kDevBuild`.
+
+2. SESSION DEV (D2.1 à D2.3)
+- Logo concerné : le `KalisLogo` de l'en-tête de l'accueil (et, s'il existe ailleurs en en-tête, le même comportement partout où il est visible).
+- 5 appuis d'affilée (≤ 2 s entre deux appuis) → création d'une session dev vierge, puis redémarrage logique de l'application sur cette session : premier écran d'une installation neuve (démarrage, profil, départ du programme…). Retour haptique léger à chaque appui à partir du 3e ; aucun effet si `kDevBuild` est faux.
+- Pendant la session dev : logo en **rose vif #FF1493** (partout où le logo apparaît, écran d'ouverture compris), et nulle part ailleurs de rose. Petite étiquette « DEV » accessible (TalkBack : « Session de test active »).
+- Appui long de 3 s sur le logo rose (anneau de progression autour du logo pendant l'appui, relâcher avant annule) → suppression **directe** de la session dev, vibration, message « Session de test supprimée » (en attendant Koach, G5 le remplacera par Koach), retour à la session personnelle **telle qu'elle était**.
+- Isolation : toutes les données persistées passent par une couche qui préfixe les clés (SharedPreferences) et les fichiers (sauvegardes automatiques, exports, caches de l'application) par l'espace de la session active. Recense exhaustivement les accès au stockage (`lib/store.dart`, `persistence.dart`, `*_store.dart`, notifications planifiées, fichiers) et fais-les tous passer par cette couche. Les notifications planifiées de la session perso sont suspendues pendant la session dev et restaurées au retour ; celles de la session dev sont annulées à sa suppression.
+- La session dev survit à la fermeture et au redémarrage de l'application, jusqu'à sa suppression. Une seule session dev à la fois ; 5 appuis pendant une session dev ne font rien (ou proposent de la réinitialiser : à toi de trancher, consigne-le).
+- Sauvegarde / export / import depuis la session dev : n'agissent que sur la session dev ; l'export porte la mention « session de test ». Ne jamais pouvoir importer une sauvegarde de la session dev dans la session perso sans avertissement explicite.
+
+3. HORLOGE ET VOYAGE DANS LE TEMPS (D2.5)
+- Service d'horloge unique (`KalisClock.now()`), injecté partout où l'application lit l'heure (recense les `DateTime.now()` de `lib/` ; les fonctions pures reçoivent déjà la date en paramètre). En session perso : heure réelle, toujours.
+- Session dev : panneau « Outils de test » (accessible par un bouton discret en session dev uniquement, par exemple appui long sur l'étiquette DEV) : avancer de 1 jour / 1 semaine / choisir une date, revenir à aujourd'hui ; le décalage est propre à la session dev. Export de la session dev en JSON (menu de partage Android). Les outils « simulateur de séances » et « inspecteur du moteur » arriveront avec G10 ; prévois l'emplacement.
+
+4. CI (PIPELINE_GP.md §4)
+- `ci-3d.yml` : tâche `packages` (exécutée même si `packages/` est vide ou absent : elle passe alors avec « aucun paquet »). Crée `docs/CI_GP.md`.
+- Tests d'intégration du lot (émulateur) : 5 appuis → écran d'installation neuve ; logo rose ; appui long 3 s → retour à la session perso, données identiques octet pour octet (compare l'export avant/après) ; redémarrage à froid pendant la session dev → toujours en dev ; voyage dans le temps en dev sans effet sur la session perso.
+- Tests Dart : isolation des clés, suppression complète (aucune clé ni fichier dev restant), horloge, fenêtre de 2 s, appui relâché avant 3 s.
+
+5. PAGE DE SUIVI (PIPELINE_GP.md §6)
+- Crée la page « Suivi Kalis Track GP » (skill artifact-design d'abord) : en tête, la section G1 ; en bas, le tableau des 15 lots (statut, version). Note son lien dans `ETAT_GP.md` (ligne « Page de suivi »).
+
+À TESTER PAR LE PROPRIÉTAIRE (à écrire sur la page)
+Accueil › 5 appuis sur le logo → installation neuve, logo rose ; faire quelques écrans ; fermer/rouvrir l'app → toujours en dev ; outils de test › avancer d'une semaine ; appui long 3 s sur le logo → retour à ta session, rien n'a bougé (séances, historique, réglages, couleur).
+
+LIVRAISON
+Version 6.0.0 ; notification « prêt à tester ». Consigne dans DECISIONS_GP.md (section G1) les choix pris.

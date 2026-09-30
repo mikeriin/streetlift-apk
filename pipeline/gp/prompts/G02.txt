@@ -1,0 +1,26 @@
+LOT G2 — SUPPRESSION DES WOD, DES SÉANCES MANUELLES ET DE L12
+Modèle : Opus 5.5, effort élevé. Validation : propriétaire.
+Décisions : DECISIONS_GP.md D1.1, D1.2. Règles : PIPELINE_GP.md.
+
+OBJECTIF
+Recentrer l'application sur le programme de l'utilisateur. Supprimer sans laisser de trace morte ni casser un écran.
+
+1. SAUVEGARDE AUTOMATIQUE AVANT SUPPRESSION (obligatoire, avant toute suppression de données)
+- Au premier lancement de la version G2 (session perso comme session dev), si des données WOD ou de séances manuelles existent : écrire une **sauvegarde complète** au format d'export actuel (celui de 6.0.0, importable par 6.0.0) dans le stockage de l'application, **vérifier sa relecture** (import à blanc, sommes de contrôle), puis seulement supprimer. Un écran (sobre) annonce : ce qui est supprimé, où est la copie, bouton « Partager la copie » (menu Android). Si l'écriture ou la vérification échoue : ne rien supprimer, masquer seulement les écrans, réessayer au lancement suivant.
+- Test : données WOD + séances manuelles + historique du programme → après migration, historique du programme, records liés au programme, réglages et profil identiques ; copie présente et importable.
+
+2. CE QUI DISPARAÎT
+- Onglet WOD et tout ce qui en dépend : `wod_*.dart` (catalogue, formats, générateur, modèles, aperçu, écran, store), crédits WOD et droits d'accès (KT-005, KT-014) dans l'économie, sections de sauvegarde WOD, entrées de navigation, notifications et statistiques propres aux WOD, textes d'aide.
+- Créateur de séances manuelles (`builder_screen.dart` et ses points d'entrée) et les séances manuelles enregistrées (historique compris).
+- L12 entier : `motivation.dart`, `motiv_store.dart`, `motivation_screens.dart`, l'entrée STATS › « Mes progrès », Réglages › « Motivation et progression », bilans hebdomadaires et de fin de cycle, célébrations d'étape, partage d'image L12 (`ShareProvider.kt` seulement s'il ne sert plus à rien d'autre), ton de Koach L12. Les règles de rappel L12 (jamais un jour de repos) restent si d'autres écrans en dépendent : vérifie et consigne.
+- L'ancien système XP/niveau (progression.dart, game.dart, rewards.dart, levelup.dart) **reste** jusqu'à G12, mais tout ce qui y comptait les WOD ou les séances manuelles est retiré (le niveau peut donc baisser : c'est accepté, D1.3 remet tout à zéro en G12).
+- Barre de navigation : réorganise les onglets restants proprement (pas de trou), mêmes icônes et styles.
+
+3. CONTRÔLES
+- Recherche exhaustive des références (imports, routes nommées, clés de sauvegarde, tests, assets, `verify_project.py`, `package_release.py`) : plus aucune référence morte. Assets devenus inutiles retirés.
+- Les tests qui vérifient une fonctionnalité supprimée sont retirés avec elle (liste dans la livraison) ; tous les autres restent verts.
+- Import d'une ancienne sauvegarde (5.10.1) contenant des WOD : s'importe, WOD ignorés, message clair.
+- Captures (clair/sombre) : accueil, barre de navigation, STATS, Réglages, écran d'annonce de la suppression.
+
+À TESTER PAR LE PROPRIÉTAIRE
+Avant d'installer : export manuel (Réglages › Sauvegardes). Après : écran d'annonce, bouton « Partager la copie » ; plus d'onglet WOD ni de créateur de séance ; STATS sans « Mes progrès » ; ton programme, ton historique et tes records intacts.

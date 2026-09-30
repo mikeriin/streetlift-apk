@@ -1,0 +1,26 @@
+LOT G3 — BASE D'EXERCICES v1.1 ET PAQUET kalis_core
+Modèle : Opus 5.5, effort élevé. Validation : propriétaire.
+Décisions : DECISIONS_GP.md D0.3, D4.10. Règles : PIPELINE_GP.md §2.
+
+ENTRÉE REQUISE
+`pipeline/gp/inputs/base_exercices.json` (et si fourni `Base_exercices.xlsx`) : base v1.1.0 du propriétaire, 1 039 exercices, 8 disciplines (Musculation 448, Street workout 109, Streetlifting 61, Calisthénie statique 100, Calisthénie dynamique 110, CrossFit / WOD 54, Cardio 47, Mobilité 110). Champs : id, nom, alias, discipline, categorie, variante_de, niveau, muscles_principaux, muscles_secondaires, muscles_stabilisateurs, muscles_etires, points_cles, erreurs_frequentes, respiration, materiel. Vocabulaires fermés : 56 muscles, 68 matériels, 56 catégories, 4 niveaux. id = préfixe de discipline (mu-, sw-, sl-, cs-, cd-, cf-, ca-, mo-) + slug.
+**Si le fichier est absent ou ne correspond pas à cette description** : statut « en attente du propriétaire », notification « Kalis Track G3 : en attente — attacher base_exercices.json », arrêt sans rien modifier d'autre.
+
+1. PAQUET `packages/kalis_core` (Dart pur, PIPELINE_GP.md §2)
+- Modèles : Exercise (tous les champs de la base + champs calculés ci-dessous), Catalog (index par id, alias, discipline, catégorie, muscle, matériel ; graphe `variante_de`), Muscle, Equipment, Discipline (les 8 de D3.1, Calisthénie regroupant statique et dynamique pour le choix de l'utilisateur), échelle des flammes (D5.3 : conversion flammes ↔ RIR, exacte et testée), SetLog / SessionLog (journal normalisé, marqueur « reprise »), AthleteProfile v2 (squelette : les champs que G6 remplira), sérialisation JSON versionnée.
+- **Champs calculés par règles** (écrites, testées, reproductibles ; aucune saisie à la main) pour chaque exercice : schéma de mouvement (poussée horizontale/verticale, tirage horizontal/vertical, squat, charnière de hanche, fente, portés, gainage anti-extension/anti-rotation/flexion, isolation bras/épaules/jambes, locomotion, figure statique, figure dynamique, mobilité, cardio…), plan, type (poly/mono-articulaire), difficulté 1-10 (depuis niveau + catégorie + position dans la chaîne `variante_de`), lieux possibles (salle, maison, extérieur/parc) déduits du matériel, contraintes articulaires (épaule, coude, poignet, lombaires, genou, hanche, cheville : charge faible/moyenne/forte), prérequis (exercices ou niveaux de la chaîne), coût de fatigue (système nerveux, local), charge externe possible (barre, haltères, lest, poids du corps, machine), unité de mesure (reps, temps, distance), unilatéral ou non.
+- Rapport de relecture pour le propriétaire (`packages/kalis_core/docs/RELECTURE_CHAMPS_CALCULES.md` + un CSV) : distribution de chaque champ, 60 exemples tirés au hasard seedé, cas ambigus listés.
+
+2. INTÉGRATION DANS L'APPLICATION
+- Catalogue embarqué compressé (`assets/catalog/…json.gz`), chargé par `kalis_core`. Il remplace le pack 2.0.0 (625 exercices) dans Arsenal, les fiches, la recherche, les filtres, les choix/remplacements d'exercice, la carte des muscles (correspondance des 56 muscles de la base vers les régions de `muscle_map_2d.dart` et du mannequin, testée : aucun muscle sans région, sauf profonds listés en texte) et la démonstration 3D (garde les démonstrations existantes via la correspondance d'id).
+- **Historique conservé** : table de correspondance anciens noms/id du pack 2.0.0 et du programme embarqué → nouveaux id (`assets/catalog/correspondance.json`), construite par règles + relue ; chaque séance passée, record et statistique pointe vers le bon exercice. Rapport : nombre d'anciens exercices sans équivalent (doit être 0 pour ceux présents dans un journal ; le propriétaire a indiqué avoir ajouté à la base les exercices de l'app sans équivalent).
+- Le programme personnel (instance template) garde ses libellés à l'affichage mais ses exercices sont reliés aux nouveaux id.
+- Session dev : même catalogue.
+
+3. CONTRÔLES
+- `kalis_core` : tests de schéma sur toute la base (1 039 entrées, vocabulaires fermés respectés, id uniques, `variante_de` sans cycle), tests des règles des champs calculés, test flammes ↔ RIR.
+- Application : sauvegarde 5.10.1 / 6.x du propriétaire (fixture) importée → mêmes séances, mêmes records, mêmes statistiques qu'avant (comparaison chiffrée).
+- Captures : Arsenal (liste + filtres), une fiche de chaque discipline, recherche, carte des muscles d'une fiche.
+
+À TESTER PAR LE PROPRIÉTAIRE
+Arsenal › Exercices : 1 039 exercices, filtres par discipline ; fiches (points clés, erreurs fréquentes, respiration) ; ton historique, tes records et STATS identiques ; relire le rapport des champs calculés (lien sur la page de suivi).

@@ -1,0 +1,44 @@
+LOT G11 — MOTEUR DE LEVELING `kalis_quest` (NIVEAUX, QUÊTES, AVANCEMENTS, OBJECTIFS)
+Modèle : Fable 5.1, effort maximal. Validation : auto (lot de moteur) → en fin de lot, lance G12 sur la tâche Opus.
+Décisions : DECISIONS_GP.md D1.3, D3.8, D7, D8. Règles : PIPELINE_GP.md §2, §4, §7.
+
+OBJECTIF
+Un moteur de progression **avancé**, écrit à partir de zéro, qui donne envie de revenir et de progresser **sans jamais pousser au surentraînement ni punir le repos**. Il contient aussi la logique des objectifs et des mécaniques de plaisir (G13 ne fera que l'interface). Aucune ligne de `progression.dart`, `game.dart`, `rewards.dart` n'est reprise.
+
+1. XP ET NIVEAUX (D7.2-D7.4)
+- Sources : **effort réel** (volume × intensité des flammes, rapporté au programme : au-delà du volume prévu, plus d'XP ; plafond par séance et par semaine), **régularité** (séances prévues faites, jours de repos respectés), **records et jalons d'objectif** (records établis par `kalis_adapt`), **quêtes**. Séances « reprise » : rien.
+- **Niveaux 1 à 100 puis prestige** : courbe définie par une formule documentée et calée par simulation (repère à atteindre et justifier : 3-4 séances/semaine → niveau 10 en ≈ 3 semaines, 25 en ≈ 3 mois, 50 en ≈ 1 an, 100 en ≈ 3-4 ans ; ajuste si la simulation montre mieux). Prestige : le niveau affiché repart à 1 avec une marque de prestige, l'XP total est conservé.
+- **Le niveau ne redescend jamais** (D7.3) : registre d'XP **en ajout seul** (un gain n'est jamais retiré, même si une séance est supprimée ensuite) ; état reconstructible à l'identique depuis le registre + le journal (import/export).
+- **Remise à zéro** (D1.3) : le registre démarre vide au branchement (G12) ; l'historique d'entraînement ne génère pas d'XP rétroactif — à trancher et consigner : proposition « bonus de départ » plafonné pour les séances des 4 dernières semaines, ou rien.
+
+2. AVANCEMENTS (D7.5)
+- **Attributs** 1-100 : Force, Endurance, Puissance, Technique, Mobilité, Régularité — calculés depuis les vraies performances (`kalis_adapt` : capacités, records ; journal : régularité, travail de mobilité, figures maîtrisées, justesse des flammes). Définitions, formules et plafonds documentés ; un attribut reflète le niveau actuel (il peut baisser après un long arrêt) et garde sa meilleure valeur atteinte.
+- **Rangs par mouvement** Bronze, Argent, Or, Platine, Diamant, Élite : **standards par sexe et poids de corps** (rapports charge/poids de corps pour les mouvements lestés et chargés, répétitions ou secondes pour le poids du corps), sources citées et tables publiées dans `docs/STANDARDS.md` ; couverture minimale : les 4 mouvements du streetlifting, squat, soulevé de terre, développé couché, développé militaire, pompes, tractions, dips, figures principales (front lever, planche, handstand, muscle-up), 5 km ; les autres exercices héritent du rang d'un mouvement proche ou n'en ont pas.
+
+3. QUÊTES (D7.6)
+- **Quotidiennes** (1 à 3, courtes, adaptées au jour : jour d'entraînement ou de repos — un jour de repos ne propose jamais de s'entraîner, seulement récupération, mobilité légère, sommeil…), **hebdomadaires**, **campagne liée au programme** (chapitre = bloc, boss = séance de test ou fin de bloc), **quêtes Koach personnalisées** (attribut le plus faible, muscle en retard, régularité d'un jour de la semaine…). Génération déterministe (graine = utilisateur + date), difficulté ajustée à l'utilisateur, jamais impossible.
+- Récompenses : XP et **Krédits** (D7.7 : monnaie gagnée, jamais reprise, aucun usage dans ce pipeline).
+
+4. OBJECTIFS (D3.8)
+- Types : performance chiffrée avec date (exercice, mesure, cible), habitude (séances par semaine × semaines), suggérés par Koach (cibles réalistes calculées depuis la tendance de `kalis_adapt` et le niveau : probabilité d'atteinte ≥ 60 % à la date proposée).
+- **Jalons automatiques** (découpage selon la courbe prévue) et **prédiction de la date d'atteinte** (médiane + intervalle à 80 %, depuis l'incertitude de `kalis_adapt`) ; objectif en retard → Koach propose d'ajuster la date ou la cible.
+
+5. MÉCANIQUES DE PLAISIR (logique pour G13, D8.1)
+- Célébration : détection de record (type, ampleur) et de premières fois.
+- **Coffres surprises** à taux variable (probabilité par séance terminée, garantie après une série sans coffre, contenu en Krédits), déterministes à partir du journal, plafonnés ; aucun achat, aucune perte.
+- **Série de semaines** (semaine réussie = au moins 3/4 des séances prévues ; vacances/maladie déclarées = pause, pas de perte) ; taille de la flamme selon la longueur.
+- **Fantôme** : performance passée comparable série par série (dernière fois et meilleure fois) pour la course en direct.
+- **Note de séance S/A/B/C** (réalisation, justesse des flammes, records ; une séance allégée par le bilan santé et faite en entier vaut une séance complète) + **combo** (séries consécutives dans la cible, bonus plafonné).
+- Données du **récap hebdo façon story**, **comparaisons** (1 mois / 3 mois / 1 an), **prédictions de date**.
+
+6. GARDE-FOUS (testés)
+XP hebdomadaire borné quand le volume dépasse le programme ; aucune récompense liée à une séance faite malgré une douleur > seuil ; aucune quête qui ajoute du volume un jour de repos ; aucun message culpabilisant ; aucune mécanique ne retire quoi que ce soit.
+
+7. VALIDATION
+- Simulation de rythme sur 3 ans : 8 archétypes (2 à 6 séances/semaine, débutant à expert, arrêts, maladie) × 200 graines : niveaux dans le temps, Krédits, quêtes réussies, séries, notes, coffres ; « triche » par surentraînement → aucun gain d'XP au-delà du plafond ; rapport lisible (`docs/RYTHME.md`).
+- Propriétés sur ≥ 10 000 journaux aléatoires : niveau jamais en baisse, déterminisme, reconstruction identique après export/import, garde-fous.
+- Temps : calcul complet depuis 3 ans de journal ≤ 200 ms (VM Dart, CI).
+- CLI : `dart run kalis_quest:simulate --archetype <nom> --years 3 --seed <n>`.
+
+FIN DE LOT
+Commit final « Kalis Track moteurs (G11) : kalis_quest 0.1.0 » ; ETAT_GP « livré » ; page de suivi (courbe des niveaux, tableau de rythme) ; notification ; `fire_trigger` sur la tâche Opus avec « Lot : G12 ».

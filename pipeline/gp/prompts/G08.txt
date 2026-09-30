@@ -1,0 +1,39 @@
+LOT G8 — MOTEUR DYNAMIQUE `kalis_adapt` (SUIVI ET ADAPTATION)
+Modèle : Fable 5.1, effort maximal. Validation : auto (lot de moteur) → en fin de lot, lance G9 sur la tâche Opus.
+Décisions : DECISIONS_GP.md D3.5, D4.7-D4.9, D5. Règles : PIPELINE_GP.md §2, §4, §7.
+
+OBJECTIF
+Un moteur de suivi qui apprend chaque utilisateur séance après séance et fait évoluer son programme avec lui (D5.11) : charges du jour, ajustements pendant la séance, volume, échanges d'exercice, restructuration de séance ou de bloc (via `kalis_plan.restructure`). Il doit être **mesurablement meilleur** que l'ancien Koach L7/L11 (référence : `tools/koach_reference.py`, `lib/koach_engine.dart`, `lib/koach_adapt.dart`, lus seulement pour comparer) sur des athlètes simulés, et **sûr**. Seul signal d'effort : le ressenti (flammes) ; aucun capteur de vitesse.
+
+1. MODÈLE (D5.2) — à formaliser dans `CONTRAT.md` avec références
+- **Capacité par exercice** en espace logarithmique (1RM estimé pour les exercices chargés, charge totale = lest + fraction du poids de corps propre à l'exercice — table justifiée par des mesures publiées ; capacité en répétitions ou en secondes pour le poids du corps et les maintiens) : modèle d'état à tendance locale (niveau + pente), **filtre de Kalman** ; bruit de processus proportionnel au temps écoulé.
+- **Observation d'une série** : charge, répétitions faites, flammes → RIR (D5.3) → capacité implicite (table %1RM selon répétitions + RIR, justifiée : RTS/Tuchscherer, Helms 2016…). **Bruit d'observation croissant avec le RIR** (l'estimation du RIR est moins fiable loin de l'échec : Zourdos 2016, Halperin 2022) et avec les répétitions ; une série à 9-10 flammes informe plus qu'une série à 3.
+- **Partage d'information entre exercices** : a priori d'un nouvel exercice tiré des exercices proches (proximité de `kalis_plan`, graphe `variante_de`) ; mises à jour corrélées limitées aux k plus proches, coefficients de transfert documentés.
+- **Forme / fatigue** : modèle impulsion-réponse (Banister ; Busso pour les paramètres variables) par groupe musculaire et global, impulsion = séries × poids de l'effort (flammes) × rôle musculaire ; paramètres individuels affinés par les résidus de performance.
+- **Forme du jour** : fatigue modélisée + bilan santé (D5.8 : seulement les réponses données ; **une réponse absente n'est jamais remplacée par une valeur par défaut**) + résidus récents.
+- **Détection des notes peu informatives** : un utilisateur qui confirme presque toujours la valeur pré-remplie (D5.4) sans variance voit ses flammes pondérées moins, la performance réelle (répétitions faites vs visées) pèse davantage.
+- Calibrage (D3.5, D4.7) : a priori large tiré de la fourchette déclarée, cible RIR +1 tant que l'incertitude est grande, convergence en 2-3 séances par exercice.
+
+2. DÉCISIONS
+- **Prescription de séance** : pour chaque série, charge (arrondie aux incréments réels du matériel : haltères 1 kg jusqu'à 10 kg puis 2 kg, disques par paire de 1,25 kg, poulies par 2,5 lb, lest — incréments pris du profil, sinon ces valeurs), répétitions, flammes visées ; pour le programme personnel du propriétaire, mêmes calculs à partir de ses consignes (RIR / % du programme), sans changer sa structure.
+- **Pendant la séance** : après chaque série, mise à jour et ajustement de la série suivante si l'écart aux flammes visées atteint 2 flammes (1 RIR), borné.
+- **Entre les séances et les blocs** : volume par muscle (tolérance individuelle apprise : réponse de la performance au volume, bornée par les bandes de `kalis_plan`), échange d'exercice (plateau : pente ≤ 0 avec probabilité ≥ seuil sur ≥ 3 semaines ; mauvaise tolérance ; douleur), restructuration de séance ou de bloc (appel à `kalis_plan.restructure` avec les verrous), décharge anticipée, résumé d'adaptation pour `kalis_plan.nextBlock`.
+- **Règle de décision** : chaque action candidate a une utilité espérée (progrès attendu − risque − fatigue − coût d'adhésion) et une **confiance** ; elle n'est émise que si la confiance dépasse le seuil de son niveau.
+- **Déblocage standard** (D5.7) : charges et répétitions dès la 1re séance ; volume après 2 semaines de données ; échange d'exercice après 4 ; restructuration de séance après 1 bloc ; restructuration de bloc après 2 blocs — et seulement avec confiance suffisante.
+- **Bilan santé mauvais** (D5.9) : ajustement gradué (charge, séries, exercice plus simple, séance raccourcie au **temps disponible aujourd'hui** en gardant les priorités) ; **douleur localisée → exercices qui épargnent la zone** (contraintes articulaires de `kalis_core`, variantes de `kalis_plan`) ; la règle L13 de renvoi vers un professionnel reste dans l'application.
+- **Modes** (D5.6) : chaque proposition porte ses informations d'application ; en **assisté** tout est applicable automatiquement (avec annulation) ; en **libre** tout est proposé. Le moteur ne décide pas du mode, il le respecte.
+- Séances « reprise » (D4.9) ignorées ; historique : anciens RIR convertis en flammes, séries sans RIR = observations faibles.
+- Sorties : prescription, ajustements, propositions (type, portée, confiance, niveau de déblocage, codes de raison + paramètres pour Koach, applicable automatiquement ou non), résumé d'adaptation, **journal du moteur** (pour l'inspecteur et l'export dev).
+
+3. VALIDATION (dans `packages/kalis_adapt/docs/`)
+- **Simulateur d'athlètes** avec vérité connue : trajectoires de capacité (gains décroissants selon le niveau), fatigue, forme du jour, **erreur de report du RIR** (dépendant de la distance à l'échec et de l'expérience), notes paresseuses, séances manquées, maladie, épisode de douleur, changement de lieu. Au moins 6 profils × 24 semaines × 200 graines.
+- Mesures : erreur d'estimation de la capacité après 1, 3, 6 séances ; écart RIR réel / visé après calibrage (cible : erreur absolue moyenne ≤ 1 RIR) ; séries à l'échec non voulues ; progression simulée ; stabilité (pas d'oscillation des charges) ; rythme de déblocage respecté. **Comparaison chiffrée à L7/L11 et à une double progression simple** : le nouveau moteur doit faire mieux sur l'exactitude et la sécurité, au moins aussi bien sur la progression ; sinon l'écart est expliqué.
+- Invariants de sécurité testés (propriétés sur ≥ 10 000 journaux aléatoires) : jamais plus de +10 % de charge d'une séance à l'autre sur un mouvement principal hors calibrage ; jamais d'augmentation après une série à 10 flammes non prévue ; une douleur > seuil n'est jamais suivie d'une charge accrue sur la zone ; aucune proposition au-dessus de son niveau de déblocage.
+- Temps de calcul : décision de séance ≤ 50 ms, mise à jour après une série ≤ 5 ms (VM Dart, CI).
+- CLI : `dart run kalis_adapt:simulate --athlete <json> --weeks 24 --seed <n>` et `dart run kalis_adapt:replay --journal <json>` (rejoue un vrai journal, dont une fixture du programme du propriétaire).
+
+4. CONTRAT
+`CONTRAT.md` : modèle, équations, paramètres et références, invariants, limites, registre de validation. Rien dans `lib/` de l'application ne change dans ce lot.
+
+FIN DE LOT
+Commit final « Kalis Track moteurs (G8) : kalis_adapt 0.1.0 » ; ETAT_GP « livré » ; page de suivi (graphiques de convergence et tableau de comparaison, lisibles sur téléphone) ; notification ; `fire_trigger` sur la tâche Opus avec « Lot : G9 ».

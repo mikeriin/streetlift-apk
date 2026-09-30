@@ -1,0 +1,37 @@
+LOT G7 — CRÉATION DU PROGRAMME EN DEUX PASSES, REVUE, « OÙ J'EN SUIS »
+Modèle : Opus 5.5, effort élevé. Validation : propriétaire.
+Décisions : DECISIONS_GP.md D4, D6. Règles : PIPELINE_GP.md. Moteur : `kalis_plan` (G4) — aucune règle de programmation dans `lib/`.
+
+1. PASSE 1 — LES EXERCICES PAR SÉANCE (D4.4)
+- Après le profil (G6) ou depuis Réglages › Mon programme › « Créer un nouveau programme » : Koach (`checklist`) présente le bloc : une carte par jour (« Lundi · 60 min » › muscle-up, tractions, curl, dead hang…), **sans séries ni répétitions** ; sous la semaine, la carte des muscles de la semaine (couleurs de l'écran Anatomie) et la répartition par discipline.
+- « Autre proposition » (D4.3) ; retour aux propositions précédentes possible.
+
+2. REVUE EXERCICE PAR EXERCICE (D4.5)
+- Parcours en cartes (glisser d'une carte à l'autre) : nom, fiche courte (points clés, carte des muscles, démonstration 3D si elle existe), trois boutons **« Je sais faire » / « Je ne sais pas faire » / « Je n'aime pas »**. Les deux derniers ouvrent aussitôt les **3 variantes ciblées** (plus facile, équivalente, autre matériel) + « Voir tout ».
+- **Ajouter** un exercice aimé (recherche dans le catalogue) ou **retirer** un exercice, à tout moment.
+- Après chaque changement : régénération par `kalis_plan` avec tous les verrous ; **Koach montre le diff** (« J'ai déplacé les dips au jeudi pour laisser 48 h à tes triceps ») : liste courte des changements avec « Pourquoi ? » ; « Annuler ce changement » possible (D4.6).
+- Fin de revue : récapitulatif, « Valider les exercices ».
+
+3. PASSE 2 — SÉRIES, RÉPÉTITIONS, CHARGES (D4.7)
+- Deuxième génération : pour chaque exercice, séries × répétitions (ou temps), **RIR visé en flammes** (FlameIcon, G5), repos ; progression de la semaine 1 à la fin du bloc (vue semaine par semaine) ; semaine de décharge et tests signalés. Charges de départ **prudentes** marquées « à calibrer » (Koach explique : « Les 2-3 premières séances, je cale tes charges avec tes flammes »).
+- Koach (`explain_board`) explique la logique du bloc ; l'utilisateur peut ajuster (séries ±1, plage de répétitions, repos) ; un ajustement hors des bornes du moteur est refusé avec explication. « Valider mon programme ».
+- Le programme validé devient l'**instance active** (blocs glissants, D4.8) : nouvelle forme d'instance (versionnée dans la sauvegarde) lue par l'accueil, le calendrier, les séances et STATS. Le bloc suivant sera proposé par le moteur à la fin du bloc (écran de fin de bloc minimal dans ce lot ; enrichi en G10).
+
+4. « OÙ J'EN SUIS » (D4.9)
+- Réglages › Mon programme › « Où j'en suis » (et proposé automatiquement après une restauration de sauvegarde ou une installation qui détecte un programme sans journal récent) : choisir semaine et séance. Les séances antérieures sont marquées **« reprise »** : neutres (ni XP, ni statistiques, ni série, ni records, ni données pour les moteurs) ; **XP et niveau inchangés** (test). Fonctionne aussi pour le programme personnel du propriétaire.
+
+5. SESSION PERSO DU PROPRIÉTAIRE
+Son programme de 40 semaines reste l'instance active (template) ; « Créer un nouveau programme » lui est proposé mais n'est jamais appliqué sans confirmation explicite, avec retour possible (7 jours tant qu'aucune séance du nouveau programme n'est saisie, comme L10).
+
+6. OUTIL DEV
+Session dev : « Inspecteur du moteur » pour la création (pour chaque exercice : score, contraintes actives, raisons ; pour chaque proposition : score total et détail) ; export du journal du moteur statique (JSON).
+
+7. RETRAITS
+Générateur L10 (`program_generator.dart`, `assets/program_models.json`, écrans « Générer mon programme personnalisé ») et ses tests, une fois le nouveau branché ; les instances « generated » L10 existantes restent lisibles (compatibilité) et affichées telles quelles.
+
+CONTRÔLES
+- Tests : parcours de revue (sais / sais pas / n'aime pas / ajout / retrait), verrous transmis au moteur, annulation d'un changement, passe 2 et ajustements bornés, « reprise » neutre, compatibilité des instances template et L10.
+- Émulateur : session dev complète profil → passe 1 → 2 changements → passe 2 → programme actif ; captures (clair/sombre) de 6 écrans.
+
+À TESTER PAR LE PROPRIÉTAIRE
+Session dev : tout le parcours avec un profil qui n'est pas le tien (débutant maison) puis un profil street ; remplacer 2 exercices et lire le diff de Koach ; valider la passe 2 ; « Où j'en suis » dans ta session perso (sans rien valider si tu ne veux pas).

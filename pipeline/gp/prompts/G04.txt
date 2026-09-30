@@ -1,0 +1,45 @@
+LOT G4 — MOTEUR STATIQUE `kalis_plan` (CRÉATION DU PROGRAMME)
+Modèle : Fable 5.1, effort maximal. Validation : auto (lot de moteur) → en fin de lot, lance G5 sur la tâche Opus.
+Décisions : DECISIONS_GP.md D0.3, D3, D4. Règles : PIPELINE_GP.md §2, §4, §7.
+
+OBJECTIF
+Un moteur de création de programme **écrit à partir de zéro**, indépendant de l'application, dont les programmes sont meilleurs, mesurablement, que ceux du générateur L10, et **ne ressemblent pas au programme personnel du propriétaire** (D4.1). Aucune ligne de `lib/program_generator.dart` ni de `assets/program_models.json` n'est reprise ; tu peux les lire seulement pour mesurer la comparaison.
+
+1. ENTRÉES (types dans `kalis_core`, complétés si besoin)
+Profil d'athlète v2 : sexe, âge, taille, poids ; discipline principale (D3.1) + 1-2 secondaires avec dosage (D3.2) ; mode street (principale parmi streetlifting / sets & reps / calisthénie + dosage des deux autres, D3.3) ; niveau déclaré par mouvement (fourchettes, D3.5) ; objectifs (D3.8) ; disponibilités = jours précis + minutes par jour (D3.6) ; lieux et matériel ; blessures et limitations (zones, articulations) ; exercices aimés / détestés ; mode assisté ou libre (sans effet ici). Catalogue `kalis_core`. Graine. Verrous (choix déjà validés par l'utilisateur). Pour les blocs suivants : résumé d'adaptation (type défini ici dans `kalis_core`, rempli plus tard par `kalis_adapt` : tendance de force par exercice, fatigue, assiduité, douleurs, exercices mal tolérés, confiance).
+
+2. PASSE 1 — CHOIX DES EXERCICES PAR SÉANCE (D4.4)
+Formule le problème comme une **optimisation sous contraintes** (D4.2), notée par une fonction de score explicite et documentée :
+- Contraintes dures : matériel et lieu du jour ; contraintes articulaires des blessures ; prérequis et difficulté compatibles avec le niveau déclaré par schéma de mouvement ; durée estimée de chaque séance ≤ minutes du jour (estimation avec la prescription par défaut de la passe 2, échauffement compris) ; exercices détestés exclus ; verrous respectés à l'identique ; pas de séance vide ; nombre d'exercices par séance borné selon la durée.
+- Objectifs (priorité lexicographique puis somme pondérée, poids dans un fichier de paramètres justifié) : sécurité et récupération (même muscle sollicité lourdement à ≥ 48 h d'écart, fatigue systémique lissée sur la semaine) ; spécificité aux objectifs ; dosage des disciplines (part du temps par discipline ≈ dosage demandé) ; volume hebdomadaire par muscle dans une bande qui dépend du niveau et de l'objectif (comptage fractionnaire : principal 1, secondaire 0,5 ; bandes justifiées par la littérature, ex. méta-analyses dose-réponse de Schoenfeld 2017, Pelland 2024, Baz-Valle 2022) ; équilibre des schémas (tirage ≥ poussée, chaîne postérieure, gainage) ; rapport stimulus/fatigue des exercices ; ordre intra-séance (figures et puissance, puis polyarticulaires, puis isolation, puis mobilité/cardio selon la discipline) ; préférences (aimés) ; nombre raisonnable de nouveautés techniques à la fois.
+- Recherche **déterministe** : construction gloutonne avec anticipation, puis recherche locale (échanger, déplacer, ajouter, retirer) avec un recuit simulé ou une recherche tabou à graine fixe ; départage par hachage stable (FNV-1a) indépendant de l'ordre des appels. Même entrée = même programme à l'octet près (D4.3).
+- « Autre proposition » (D4.3) : graine suivante, score à ≤ 3 % du meilleur, et distance minimale mesurée à toutes les propositions déjà montrées (définis la distance ; au moins un tiers des exercices non verrouillés différents).
+- Disciplines : musculation, street workout (sets & reps), streetlifting (4 mouvements de compétition + assistance), calisthénie (figures statiques en secondes, dynamiques en répétitions, pratique fréquente et courte), CrossFit / WOD (pièces de conditionnement **dans les séances du programme**, construites depuis les exercices cf- du catalogue, sans onglet WOD), cardio (zones, durée, fractionné), mobilité (maintiens), forme générale (mélange équilibré, priorité santé : recommandations OMS/ACSM d'activité citées).
+
+3. REVUE, VARIANTES, AJOUT/RETRAIT, RÉGÉNÉRATION (D4.5, D4.6)
+- `variants(exercice, contexte)` : **3 ciblées** — plus facile (régression : de préférence le parent dans `variante_de`, même schéma), équivalente (même schéma, muscles les plus proches, difficulté ±1, matériel disponible), autre matériel (meilleure proximité avec un matériel différent disponible) — puis **toutes** les compatibles triées. Proximité définie sur les vecteurs de muscles pondérés (principal/secondaire/stabilisateur), le schéma, le plan, la difficulté ; documentée et testée.
+- Réponses de la revue : « Je sais faire » (verrou), « Je ne sais pas faire » (propose la plus facile en tête), « Je n'aime pas » (exclusion + variantes), ajout d'un exercice aimé, retrait. Chaque action → régénération avec tous les verrous → **diff structuré** : liste de changements (ajout, retrait, déplacement, remplacement, volume) avec **code de raison** et paramètres (pas de texte français dans le moteur ; `kalis_koach` et l'application rendent les phrases). Le diff doit être minimal : ne rien bouger qui n'a pas besoin de bouger (pénalité de changement dans le score).
+
+4. PASSE 2 — SÉRIES, RÉPÉTITIONS, RIR, REPOS, CHARGES (D4.7)
+- Pour chaque semaine du bloc : séries, plage de répétitions (ou temps, distance), **RIR visé exprimé aussi en flammes** (D5.3), repos, règle de progression dans le bloc (ex. accumulation → intensification : RIR qui baisse, volume qui monte puis décharge), semaine de décharge selon le niveau, séances de test (« boss ») quand un objectif chiffré le demande.
+- Pas de tempo imposé sur les exercices de force et d'hypertrophie (décision du 30/08/2026 : charges intenables avec tempo strict).
+- **Charges de départ prudentes** depuis la fourchette déclarée (facteur de prudence justifié), marquées « à calibrer » : le moteur dynamique les cale en 2-3 séances.
+- Explication par séance et par exercice sous forme de codes de raison (« pourquoi »).
+
+5. BLOCS GLISSANTS ET RESTRUCTURATION (D4.8, D5.1)
+- `nextBlock(blocPrécédent, résuméAdaptation)` : bloc de 4 à 6 semaines construit sur le précédent — progression de difficulté des schémas maîtrisés, rotation partielle des exercices d'assistance (les mouvements principaux restent), volumes réajustés, exercices mal tolérés remplacés.
+- `restructure(plan, portée: séance | bloc, raisons, verrous)` : utilisé par `kalis_adapt` (G8).
+
+6. VALIDATION (à livrer dans `packages/kalis_plan/docs/`)
+- Tests de propriétés sur ≥ 10 000 profils aléatoires seedés : toutes les contraintes dures, déterminisme, verrous intacts, diff minimal, variantes valides.
+- **40 profils types** relisibles par le propriétaire (`PROFILS_TYPES.md`) : débutant forme générale 2 × 30 min maison sans matériel ; femme 45 ans musculation 4 × 60 min salle ; coureur (cardio + mobilité) ; CrossFit 5 × 60 ; calisthénie figures ; mode street × 3 principales ; blessure d'épaule ; 1 × 20 min ; 6 jours ; senior 65 ans ; etc. Pour chacun : passe 1, une revue simulée (2 remplacements), diff, passe 2.
+- **Non-ressemblance** (D4.1) : pour un profil calqué sur le propriétaire (streetlifting avancé, ~71,5 kg, ses jours), comparer au programme embarqué `programme_v33.json` : composition des séances, accessoires, ordre, volumes, périodisation — similarité mesurée (définis la métrique ; les 4 mouvements de compétition, naturellement présents, sont exclus du calcul) sous un seuil que tu justifies ; pour tout profil non street, aucun accessoire propre à son programme ne doit être sur-représenté.
+- **Comparaison au générateur L10** sur les mêmes profils (respect des bandes de volume, équilibre des schémas, respect du temps, erreur de dosage des disciplines, diversité) : tableau chiffré ; le nouveau moteur doit être meilleur sur chaque critère ou l'écart est expliqué.
+- Temps de calcul (VM Dart, CI) : génération complète ≤ 1 s, régénération après une action de revue ≤ 300 ms.
+- CLI : `dart run kalis_plan:plan --profile <json> --seed <n> --pass 1|2 [--locks <json>]`.
+
+7. CONTRAT
+`CONTRAT.md` : API, formulation mathématique du problème, paramètres et références, invariants, limites connues, registre de validation (contenu sportif non relu par un professionnel diplômé). Rien dans `lib/` de l'application ne change dans ce lot.
+
+FIN DE LOT
+Commit final « Kalis Track moteurs (G4) : kalis_plan 0.1.0 » ; ETAT_GP « livré » ; page de suivi (résumé des 40 profils types, tableau de comparaison L10, lien vers PROFILS_TYPES.md) ; notification ; puis `fire_trigger` sur la tâche Opus (id dans ETAT_GP.md) avec « Lot : G5 ».
