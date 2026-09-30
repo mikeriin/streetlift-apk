@@ -144,9 +144,12 @@ class DevLogoGesture extends StatefulWidget {
 class _DevLogoGestureState extends State<DevLogoGesture>
     with SingleTickerProviderStateMixin {
   final _streak = TapStreak();
+  // Durée réelle même avec « Réduire les animations » (sinon Flutter
+  // raccourcit l'animation à 5 % : l'appui de 3 s durerait 0,15 s).
   late final AnimationController _hold = AnimationController(
     vsync: this,
     duration: DevLogoGesture.hold,
+    animationBehavior: AnimationBehavior.preserve,
   )..addStatusListener(_onHold);
   DateTime? _downAt;
   Offset? _downPos;

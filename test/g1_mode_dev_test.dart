@@ -452,6 +452,12 @@ void main() {
       tester,
     ) async {
       _silencePlatform();
+      // « Réduire les animations » actif : l'appui dure toujours 3 s.
+      tester.platformDispatcher.accessibilityFeaturesTestValue =
+          const FakeAccessibilityFeatures(disableAnimations: true);
+      addTearDown(
+        tester.platformDispatcher.clearAccessibilityFeaturesTestValue,
+      );
       var deleted = 0;
       await tester.pumpWidget(
         _page(
