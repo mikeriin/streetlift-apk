@@ -45,7 +45,7 @@ Fichiers de référence (branche `pipeline`) : ce fichier, `pipeline/gp/DECISION
 ## 5. Décisions, blocages, notifications (PushNotification, < 200 caractères, une ligne)
 
 Tranche toi-même tout choix réversible compatible avec `DECISIONS_GP.md` et consigne-le dans sa section de lot (en bas du fichier). Arrête-toi et notifie seulement si : (a) risque de perte de données ; (b) contradiction avec une décision du propriétaire qui change le résultat ; (c) entrée, accès ou outil indispensable manquant (statut « en attente du propriétaire ») ; (d) build ou tests encore en échec après 2 corrections sérieuses.
-- Livraison d'un lot d'écran : `Kalis Track <LOT> prêt à tester — v<version>. À tester : <quelques mots>. Page : <lien de la page de suivi>` (raccourcis « À tester » plutôt que le lien).
+- Livraison d'un lot d'écran : `Kalis Track <LOT> prêt à tester — devX.Y.Z. À tester : <quelques mots>. Page : <lien de la page de suivi>` (raccourcis « À tester » plutôt que le lien).
 - Livraison d'un lot de moteur : `Kalis Track <LOT> livré (moteur <paquet> <version>) — <lot suivant> lancé. Page : <lien>`.
 - Décision : `Kalis Track <LOT> : décision requise — <question>` (question détaillée dans DECISIONS_GP.md, 2-3 options et ta recommandation).
 - Échec : `Kalis Track <LOT> bloqué — <cause courte>`.
@@ -56,8 +56,8 @@ Une seule page claude.ai « Suivi Kalis Track GP » (outil Artifact ; charge d'a
 
 ## 7. Fin de lot
 
-1. **Lot d'écran** : version calculée à la publication à partir de celle de `main` (x.y.z+N) : lot → x.(y+1).0 ; passage de correction → x.y.(z+1) ; G1 → **6.0.0** ; N + 1 dans tous les cas (réglages / À propos à jour). **Lot de moteur** : version du paquet (0.1.0 à la première livraison) ; la version de l'application ne change que si `lib/` change. README, SUIVI_PROJET.md (section du lot) et CHANGELOG des paquets touchés à jour.
-2. Publie en poussant sur `main` (avance rapide ; si `main` a bougé, remets-toi à jour et relance les contrôles). **Dernier commit poussé** : « Kalis Track x.y.z (<LOT>) : <objet> » (lot d'écran) ou « Kalis Track moteurs (<LOT>) : <paquet> <version> » (lot de moteur). Vérifie que le run `build-apk.yml` signé réussit sur ce commit.
+1. **Lot d'écran** : version calculée à la publication à partir de celle de `main` (x.y.z+N) : lot → x.(y+1).0 ; passage de correction → x.y.(z+1) ; G1 → **6.0.0** ; N + 1 dans tous les cas. **Nom affiché : « devX.Y.Z »** (D0.9) : Réglages › À propos, `versionName` de l'APK (le build signé passe ce nom à l'APK ; l'AAB garde « X.Y.Z »), commit, notification, page, livraison, ETAT ; `pubspec.yaml` reste `X.Y.Z+N`. **Lot de moteur** : version du paquet (0.1.0 à la première livraison) ; la version de l'application ne change que si `lib/` change. README, SUIVI_PROJET.md (section du lot) et CHANGELOG des paquets touchés à jour.
+2. Publie en poussant sur `main` (avance rapide ; si `main` a bougé, remets-toi à jour et relance les contrôles). **Dernier commit poussé** : « Kalis Track devX.Y.Z (<LOT>) : <objet> » (lot d'écran) ou « Kalis Track moteurs (<LOT>) : <paquet> <version> » (lot de moteur). Vérifie que le run `build-apk.yml` signé réussit sur ce commit.
 3. `LIVRAISON_<LOT>.md` dans le projet claude.ai (outil Projects, `claude/LIVRAISON_<LOT>.md`) et dans `pipeline/gp/livraisons/`.
 4. Mets à jour `ETAT_GP.md` (version, commit, run, date, statut : « à valider » pour un lot d'écran, « livré » pour un lot de moteur ; pour une correction, ligne « correction n » sous le lot) et pousse `pipeline` (jamais de sources de l'application sur cette branche).
 5. Page de suivi (§6), puis notification (§5), puis :

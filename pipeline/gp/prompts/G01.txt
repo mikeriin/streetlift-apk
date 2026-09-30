@@ -1,5 +1,5 @@
 LOT G1 — MODE DEV, CI DES PAQUETS, BUILD DEV, PAGE DE SUIVI
-Modèle : Opus 5.5, effort élevé. Validation : propriétaire. Version : 6.0.0.
+Modèle : Opus 5.5, effort élevé. Validation : propriétaire. Version : **dev6.0.0** (pubspec 6.0.0+N ; nommage « devX.Y.Z », DECISIONS_GP.md D0.9).
 Décisions : DECISIONS_GP.md D0, D2. Règles : PIPELINE_GP.md.
 
 OBJECTIF
@@ -9,6 +9,7 @@ Le propriétaire doit pouvoir tester toutes les fonctionnalités d'une installat
 - `const bool kDevBuild = bool.fromEnvironment('KALIS_DEV');` dans un fichier dédié (`lib/dev/dev_flags.dart`). Tout le code du mode dev est derrière ce drapeau (le compilateur l'élimine de l'AAB).
 - `build-apk.yml` : APK construit avec `--dart-define=KALIS_DEV=true`, AAB sans ; ajoute `packages/**` aux chemins déclencheurs. Un test (Python, `tools/tests`) vérifie que le workflow garde cette différence.
 - Réglages › À propos : ligne « Build de développement » visible seulement si `kDevBuild`.
+- **Nom de version « devX.Y.Z »** (D0.9) : `build-apk.yml` passe `--build-name=dev<version du pubspec>` à l'APK (si Flutter refuse ce format, surcharge `versionName` côté Gradle pour le seul build dev) ; l'AAB garde « X.Y.Z » ; `versionCode` inchangé (N) ; l'application affiche « dev6.0.0 » partout où elle affichait sa version (`kAppVersion`, À propos, exports). Test (Python) sur le workflow + test Dart du libellé.
 
 2. SESSION DEV (D2.1 à D2.3)
 - Logo concerné : le `KalisLogo` de l'en-tête de l'accueil (et, s'il existe ailleurs en en-tête, le même comportement partout où il est visible).
@@ -35,4 +36,4 @@ Le propriétaire doit pouvoir tester toutes les fonctionnalités d'une installat
 Accueil › 5 appuis sur le logo → installation neuve, logo rose ; faire quelques écrans ; fermer/rouvrir l'app → toujours en dev ; outils de test › avancer d'une semaine ; appui long 3 s sur le logo → retour à ta session, rien n'a bougé (séances, historique, réglages, couleur).
 
 LIVRAISON
-Version 6.0.0 ; notification « prêt à tester ». Consigne dans DECISIONS_GP.md (section G1) les choix pris.
+Version dev6.0.0 (commit final « Kalis Track dev6.0.0 (G1) : mode dev ») ; notification « prêt à tester ». Consigne dans DECISIONS_GP.md (section G1) les choix pris.

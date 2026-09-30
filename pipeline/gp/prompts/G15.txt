@@ -15,4 +15,4 @@ Parcours complets en session dev (5 profils très différents) et en session per
 `docs/ARCHITECTURE_GP.md` (paquets, flux de données, points d'extension), README et SUIVI_PROJET à jour, CONTRAT.md de chaque paquet relus, registre des décisions complet.
 
 FIN
-Notification « Pipeline Kalis Track GP terminé — installer v<version> ». Page de suivi : bilan du pipeline.
+Notification « Pipeline Kalis Track GP terminé — installer devX.Y.Z ». Page de suivi : bilan du pipeline.

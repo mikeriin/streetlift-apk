@@ -11,6 +11,7 @@ Source : conversation de pilotage du 30/09/2026 (22:00-23:10, heure de Paris), q
 - D0.5 Modèles : **Claude Fable 5.1, effort maximal** pour la conception des moteurs (G4, G8, G11) ; **Claude Opus 5.5, effort élevé** pour les écrans, l'intégration et les données.
 - D0.6 Ordre : mode dev d'abord, puis nettoyage, base d'exercices, moteur statique, Koach, profil, création du programme, moteur dynamique, séance, évolution, leveling, envie de progresser, partage des données, nettoyage final (tableau §8 de PIPELINE_GP.md). Koach passe avant le profil parce qu'il parle pendant la création du profil.
 - D0.7 Suivi : une page claude.ai republiée à chaque lot + une notification courte avec son lien.
+- D0.9 **(30/09/2026, 23:30) Nom des versions : « devX.Y.Z »** (ex. dev6.0.0) pour tout ce que produit ce pipeline : libellé affiché dans l'application (Réglages › À propos, en-tête s'il y figure), `versionName` de l'APK, titre du dernier commit poussé sur `main` (donc du run `build-apk.yml`), notifications, page de suivi, livraisons, `ETAT_GP.md`. `pubspec.yaml` garde le format imposé `X.Y.Z+N` (N = versionCode, toujours croissant, pour que l'APK s'installe par-dessus) ; l'AAB destiné au Play Store garde « X.Y.Z ». Les versions des paquets de moteur (`kalis_plan 0.1.0`…) ne changent pas de forme.
 - D0.8 Les 11 anciennes tâches planifiées Kalis Track (L8 à L13, L9, L9R, L9b, refonte, pipeline 3D) sont désactivées.
 
 ## D1. Ce qui disparaît
