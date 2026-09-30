@@ -1,0 +1,99 @@
+{
+ "vues": {
+  "face": {
+   "largeur": 469,
+   "hauteur": 964,
+   "calques": [
+    "trapezes",
+    "deltoides",
+    "pectoraux",
+    "biceps",
+    "avant_bras",
+    "abdominaux",
+    "obliques",
+    "quadriceps",
+    "adducteurs",
+    "mollets",
+    "tibial",
+    "peau",
+    "sombre"
+   ]
+  },
+  "dos": {
+   "largeur": 412,
+   "hauteur": 964,
+   "calques": [
+    "trapezes",
+    "deltoides",
+    "dorsaux",
+    "triceps",
+    "avant_bras",
+    "obliques",
+    "fessiers",
+    "ischios",
+    "mollets",
+    "peau",
+    "sombre"
+   ]
+  },
+  "profil": {
+   "largeur": 178,
+   "hauteur": 965,
+   "calques": [
+    "trapezes",
+    "deltoides",
+    "pectoraux",
+    "dorsaux",
+    "biceps",
+    "triceps",
+    "avant_bras",
+    "abdominaux",
+    "obliques",
+    "fessiers",
+    "quadriceps",
+    "ischios",
+    "mollets",
+    "tibial",
+    "peau",
+    "sombre"
+   ]
+  }
+ },
+ "groupes": [
+  "trapezes",
+  "deltoides",
+  "pectoraux",
+  "dorsaux",
+  "biceps",
+  "triceps",
+  "avant_bras",
+  "abdominaux",
+  "obliques",
+  "fessiers",
+  "quadriceps",
+  "ischios",
+  "adducteurs",
+  "mollets",
+  "tibial"
+ ],
+ "calques": [
+  "trapezes",
+  "deltoides",
+  "pectoraux",
+  "dorsaux",
+  "biceps",
+  "triceps",
+  "avant_bras",
+  "abdominaux",
+  "obliques",
+  "fessiers",
+  "quadriceps",
+  "ischios",
+  "adducteurs",
+  "mollets",
+  "tibial",
+  "peau",
+  "sombre"
+ ],
+ "source": "tools/muscles2d/source_carte.png (image du propriétaire, 30/09/2026)"
+}

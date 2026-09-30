@@ -21,6 +21,7 @@ import 'package:streetlift_tracker/engine3d.dart';
 import 'package:streetlift_tracker/exercise_screens.dart';
 import 'package:streetlift_tracker/mannequin_3d.dart';
 import 'package:streetlift_tracker/muscle_body.dart';
+import 'package:streetlift_tracker/muscle_map_2d.dart';
 import 'package:streetlift_tracker/settings_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 import 'package:vector_math/vector_math.dart' as vm;
@@ -193,7 +194,7 @@ void main() {
       await tester.pumpWidget(
         page(const AnatomyScreen(), scale: scale, dark: dark),
       );
-      await _settle(tester, find.byType(MuscleHeatmap));
+      await _settle(tester, find.byType(MuscleMap2D));
       expect(find.text('ANATOMIE'), findsWidgets);
       // M4b : le groupe se coche dans le menu « Filtres ».
       Future<void> toggleDos() async {
@@ -205,7 +206,9 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('anatomy-filters')));
         await tester.pumpAndSettle();
         // CheckboxMenuButton transmet sa clé à son MenuItemButton.
-        final box = find.byKey(const ValueKey('anatomy-filter-dos')).first;
+        final box = find
+            .byKey(const ValueKey('anatomy-filter-dorsaux'))
+            .first;
         await tester.ensureVisible(box);
         await tester.pumpAndSettle();
         await tester.tap(box);
@@ -213,7 +216,10 @@ void main() {
         // Toucher en dehors : le menu se ferme.
         await tester.tapAt(const Offset(5, 5));
         await tester.pumpAndSettle();
-        expect(find.byKey(const ValueKey('anatomy-filter-dos')), findsNothing);
+        expect(
+          find.byKey(const ValueKey('anatomy-filter-dorsaux')),
+          findsNothing,
+        );
       }
 
       await toggleDos();
@@ -228,11 +234,12 @@ void main() {
       );
       expect(
         tester.state<AnatomyScreenState>(find.byType(AnatomyScreen)).groups,
-        {'dos'},
+        {'dorsaux'},
       );
-      await scrollToAction(tester, find.byType(MuscleHeatmap), up: true);
-      final heatmap = tester.widget<MuscleHeatmap>(find.byType(MuscleHeatmap));
-      expect(heatmap.data, {'dos': 1.0});
+      // M8 : carte 2D des groupes (plus de mannequin 3D).
+      await scrollToAction(tester, find.byType(MuscleMap2D), up: true);
+      final map2d = tester.widget<MuscleMap2D>(find.byType(MuscleMap2D));
+      expect(map2d.intensities, {'dorsaux': 1.0});
       // Second appui : plus de groupe, plus de liste.
       await toggleDos();
       expect(list, findsNothing);
@@ -253,13 +260,6 @@ void main() {
     expect(m.intersect(vm.Vector3(.8, .8, -1), dir), isNull);
     expect(m.intersect(vm.Vector3(.2, .2, 1), dir), isNull);
     expect(m.intersect(vm.Vector3(.2, .2, -1), dir, .5), isNull);
-  });
-
-  test('vue de départ selon le groupe', () {
-    expect(viewForGroup('dos'), MannequinView.dos);
-    expect(viewForGroup('ischios'), MannequinView.dos);
-    expect(viewForGroup('pectoraux'), MannequinView.face);
-    expect(viewForGroup(null), MannequinView.face);
   });
 
   testWidgets('Arsenal › Anatomie ouvre l’écran', (tester) async {

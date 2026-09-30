@@ -4,7 +4,8 @@
 # pincement et filtres normalisés ; M5 : postures du mannequin riggé ; M56 :
 # carte Koach du jour ; 5.5.2 : écorché acheté, sans posture ; M6b :
 # audit des écrans du mannequin fixe ; M6c : personnage Mixamo ; M7 :
-# lecteur d'animation ; M7b : animations de Koach) sur
+# lecteur d'animation ; M7b : animations de Koach ; M8 : carte 2D des
+# groupes musculaires) sur
 # l'émulateur
 # Android lancé
 # par .github/workflows/ci-3d.yml (reactivecircus/android-emulator-runner).
@@ -45,115 +46,45 @@ cible() {
     ${2:+--dart-define=M6B_PART=$2} \
     -d emulator-5554 > "$out/drive-$1${2:+-$2}.log" 2>&1
 }
-# M7b : animations de Koach et écran « Koach (aperçu) », cible du lot
-# lancée seule par défaut, en quatre parties : a = Anatomie › Koach
-# (aperçu), poses fortes des 9 animations ; b, c, d = images des GIF
-# (attente, parle, félicite). Les cibles des lots précédents (M7, M6c,
-# M6b…) ne sont relancées que sur demande (CI3D_TOUT=1).
+# M8 (5.9.0) : carte 2D des 15 groupes musculaires, cible du lot, en deux
+# parties : a = sombre, b = clair (Anatomie, fiches, STATS, accueil, WOD).
+# Les cibles 3D d'écrans passés à la carte 2D (M3, M4, M4b, M4c, M56, M6b,
+# M6c) sont retirées : ces écrans n'ont plus de 3D.
+code_m8=0
+for part in a b; do
+  cible carte_2d_m8_test "$part"
+  c=$?
+  if [ "$c" -ne 0 ] && [ ! -f "$out/m8_releve_$part.json" ]; then
+    echo "M8 $part sans relevé (code $c) : adb relancé, second essai."
+    cp "$out/drive-carte_2d_m8_test-$part.log" "$out/drive-m8-$part-essai1.log"
+    adb kill-server || true
+    adb start-server || true
+    timeout 60 adb wait-for-device || true
+    cible carte_2d_m8_test "$part"
+    c=$?
+  fi
+  [ "$c" -ne 0 ] && code_m8=$c
+done
+# 3D restante : Koach (Anatomie › Koach (aperçu), partie a ; CI3D_M7B_GIF=1
+# pour les images des GIF) et démonstration (animation de test, partie a).
 code_m7b=0
-# 5.8.2 : partie a seulement par défaut (les images des GIF, b à d, ne
-# changent pas ; CI3D_M7B_GIF=1 pour les refaire).
 m7b_parts="a"
 [ "${CI3D_M7B_GIF:-0}" = "1" ] && m7b_parts="a b c d"
 for part in $m7b_parts; do
   cible koach_m7b_test "$part"
   c=$?
-  if [ "$c" -ne 0 ] && [ ! -f "$out/m7b_releve_$part.json" ]; then
-    echo "M7b $part sans relevé (code $c) : adb relancé, second essai."
-    cp "$out/drive-koach_m7b_test-$part.log" "$out/drive-m7b-$part-essai1.log"
-    adb kill-server || true
-    adb start-server || true
-    timeout 60 adb wait-for-device || true
-    cible koach_m7b_test "$part"
-    c=$?
-  fi
   [ "$c" -ne 0 ] && code_m7b=$c
 done
 code_m7=0
-code_fonds=0
-if [ "${CI3D_TOUT:-0}" != "1" ]; then
-# M7b correction 2 (5.8.2) : tous les fonds 3D = couleur du support ;
-# démarcation mesurée sur tous les écrans 3D (audit M6b, parties a et b)
-# et sur l'écran « Animation de test » (M7, partie a).
-for part in a b; do
-  cible audit_m6b_test "$part"
-  c=$?
-  [ "$c" -ne 0 ] && code_fonds=$c
-done
-cible animation_m7_test a
-c=$?
-[ "$c" -ne 0 ] && code_fonds=$c
-fi
-if [ "${CI3D_TOUT:-0}" = "1" ]; then
-# M7 : lecteur d'animation et animation de test, en trois parties : a =
-# phases, vues, zoom, toucher, lecture (sombre) ; b = clair et animations
-# réduites ; c = images du GIF.
-for part in a b c; do
+m7_parts="a"
+[ "${CI3D_TOUT:-0}" = "1" ] && m7_parts="a b c"
+for part in $m7_parts; do
   cible animation_m7_test "$part"
   c=$?
   [ "$c" -ne 0 ] && code_m7=$c
 done
-fi
-code_m6c=0
-code_m6b=0
-code_m56=0
-code_m5=0
-code_m4c=0
-code_m4b=0
 code=0
-code_fiche=0
-code_stats=0
 if [ "${CI3D_TOUT:-0}" = "1" ]; then
-# M6c : nouveau mannequin (personnage Mixamo, zones sur la peau), trois
-# parties : a = Anatomie ; b = fiches, STATS, accueil, WOD, Moteur 3D ;
-# c = gros plans du halo aux frontières.
-for part in a b c; do
-  cible personnage_m6c_test "$part"
-  c=$?
-  if [ "$c" -ne 0 ] && [ ! -f "$out/m6c_releve_$part.json" ]; then
-    echo "M6c $part sans relevé (code $c) : adb relancé, second essai."
-    cp "$out/drive-personnage_m6c_test-$part.log" "$out/drive-m6c-$part-essai1.log"
-    adb kill-server || true
-    adb start-server || true
-    timeout 60 adb wait-for-device || true
-    cible personnage_m6c_test "$part"
-    c=$?
-  fi
-  [ "$c" -ne 0 ] && code_m6c=$c
-done
-# M6b : audit de tous les écrans du mannequin fixe (Anatomie, fiches,
-# STATS, accueil, aperçu de WOD, Moteur 3D, grand écran), deux parties.
-for part in a b; do
-  cible audit_m6b_test "$part"
-  c=$?
-  [ "$c" -ne 0 ] && code_m6b=$c
-done
-# M56 : écorché, fiches des 3 pilotes, carte Koach, préchargement.
-cible animations_m56_test
-code_m56=$?
-# M5 : postures du mannequin riggé (cible retirée en 5.5.2 : écorché sans
-# squelette).
-# M4c : zoom au pincement et menus « Filtres » normalisés.
-cible zoom_filtres_m4c_test
-code_m4c=$?
-# M4b : muscles profonds vus à travers les autres, écran Anatomie, fiche et
-# STATS en transparence, Moteur 3D avant / après.
-cible anatomie_m4b_test
-code_m4b=$?
-tail -n 30 "$out/drive-anatomie_m4b_test.log"
-# STATS, résumé hebdomadaire sur le mannequin (semaine type et vide,
-# sombre et clair, bascule Face / Dos, mesure du défilement).
-cible stats_semaine_test
-code_stats=$?
-if [ "$code_stats" -ne 0 ] && [ ! -f "$out/m4_releve.json" ]; then
-  echo "STATS sans relevé (code $code_stats) : adb relancé, second essai."
-  cp "$out/drive-stats_semaine_test.log" "$out/drive-stats-essai1.log"
-  adb kill-server || true
-  adb start-server || true
-  timeout 60 adb wait-for-device || true
-  cible stats_semaine_test
-  code_stats=$?
-fi
 drive() {
   timeout 1200 flutter drive --no-pub \
     --driver=test_driver/integration_test.dart \
@@ -162,31 +93,6 @@ drive() {
 }
 drive
 code=$?
-if [ "$code" -ne 0 ] && ! ls "$out"/m1_*.png > /dev/null 2>&1; then
-  echo "Premier essai sans capture (code $code) : adb relancé, second essai."
-  cp "$out/drive.log" "$out/drive-essai1.log"
-  adb kill-server || true
-  adb start-server || true
-  timeout 60 adb wait-for-device || true
-  drive
-  code=$?
-fi
-# M3 : fiche exercice (6 fiches sombre et clair, étirés, toucher, 20 fiches
-# d'affilée), cible séparée : un plantage ne fait pas perdre les captures du
-# premier passage.
-cible fiche_exercice_test
-code_fiche=$?
-if [ "$code_fiche" -ne 0 ] && [ ! -f "$out/m3_releve.json" ]; then
-  echo "Fiche sans relevé (code $code_fiche) : adb relancé, second essai."
-  cp "$out/drive-fiche_exercice_test.log" "$out/drive-fiche-essai1.log"
-  adb kill-server || true
-  adb start-server || true
-  timeout 60 adb wait-for-device || true
-  cible fiche_exercice_test
-  code_fiche=$?
-fi
-tail -n 30 "$out/drive-stats_semaine_test.log"
-tail -n 30 "$out/drive-fiche_exercice_test.log"
 tail -n 40 "$out/drive.log"
 fi
 # M2 : mesure des deux organisations du modèle (a) / (b), relancée seulement
@@ -197,22 +103,14 @@ if [ "${CI3D_MESURE:-0}" = "1" ]; then
   code_mesure=$?
   tail -n 20 "$out/drive-mannequin_mesure_test.log"
 fi
-for part in $m7b_parts; do
-  tail -n 30 "$out/drive-koach_m7b_test-$part.log"
+for part in a b; do
+  tail -n 30 "$out/drive-carte_2d_m8_test-$part.log"
 done
 kill "$logcat_pid" 2>/dev/null || true
 grep -o 'Impeller rendering backend ([^)]*)' "$out/logcat-complet.txt" | sort | uniq -c > "$out/impeller.txt" || true
 grep -iE 'flutter|impeller|vulkan|gles|AndroidRuntime|FATAL|swiftshader|angle|lowmemorykiller|DEBUG|libc|tombstone|ActivityManager' "$out/logcat-complet.txt" | tail -n 3000 > "$out/logcat.txt" || true
 rm -f "$out/logcat-complet.txt"
-echo "code_m7b=$code_m7b code_m7=$code_m7 code_fonds=$code_fonds" > "$out/drive-code.txt"
-echo "code_m6c=$code_m6c" >> "$out/drive-code.txt"
-echo "code_m6b=$code_m6b" >> "$out/drive-code.txt"
-echo "code_m56=$code_m56" >> "$out/drive-code.txt"
-echo "code_m5=$code_m5" >> "$out/drive-code.txt"
-echo "code_m4c=$code_m4c" >> "$out/drive-code.txt"
-echo "code_m4b=$code_m4b" >> "$out/drive-code.txt"
+echo "code_m8=$code_m8 code_m7b=$code_m7b code_m7=$code_m7" > "$out/drive-code.txt"
 echo "code=$code" >> "$out/drive-code.txt"
-echo "code_fiche=$code_fiche" >> "$out/drive-code.txt"
-echo "code_stats=$code_stats" >> "$out/drive-code.txt"
 echo "code_mesure=$code_mesure" >> "$out/drive-code.txt"
-[ "$code_m7b" -eq 0 ] && [ "$code_fonds" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code_m6c" -eq 0 ] && [ "$code_m6b" -eq 0 ] && [ "$code_m56" -eq 0 ] && [ "$code_m5" -eq 0 ] && [ "$code_m4c" -eq 0 ] && [ "$code_m4b" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_fiche" -eq 0 ] && [ "$code_stats" -eq 0 ] && [ "$code_mesure" -eq 0 ]
+[ "$code_m8" -eq 0 ] && [ "$code_m7b" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]

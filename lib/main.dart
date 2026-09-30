@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'device.dart';
 import 'mannequin_preload.dart';
+import 'muscle_map_2d.dart' show mapPrecacheInBackground;
 import 'startup.dart';
 import 'app_theme.dart';
 import 'ui.dart';
@@ -43,6 +44,10 @@ Future<void> main() async {
         // M56 : mannequin préchargé en tâche de fond une fois l'application
         // prête (première image déjà affichée, initialisation faite).
         unawaited(MannequinPreload.start());
+        // M8 : masques de la carte 2D des groupes préchargés (accueil,
+        // STATS, fiches : pas de saut au premier affichage).
+        final context = appNavigator.currentContext;
+        if (context != null) mapPrecacheInBackground(context);
       },
     ),
   );

@@ -9,6 +9,7 @@ import 'package:streetlift_tracker/atlas_data.dart';
 import 'package:streetlift_tracker/exercise_mannequin.dart';
 import 'package:streetlift_tracker/mannequin_3d.dart';
 import 'package:streetlift_tracker/mixamo_skeleton.dart';
+import 'package:streetlift_tracker/store.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -102,7 +103,7 @@ void main() {
 
     test('zones des 11 groupes, symétriques, aires vues de face et de dos', () {
       final groups = {for (final r in map.regions) r.groupe};
-      expect(groups, kGroupLabels.keys.toSet());
+      expect(groups, AppStore.muscleGroups.toSet());
       for (final r in map.regions) {
         final other =
             map.byId[r.cote == 'left'
@@ -130,7 +131,7 @@ void main() {
   });
 
   test('plus de réglage « Os visibles » ni de filtre « Os »', () {
-    expect(AnatomyFilters.total, 11);
+    expect(AnatomyFilters.total, 15); // M8 : les 15 groupes de la carte 2D
     expect(AnatomyFilters.categories.map((c) => c.id), ['groupes']);
     expect(AnatomyFilters.none.count, 0);
   });

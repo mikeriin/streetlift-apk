@@ -2,10 +2,10 @@
 // du mannequin pour TOUS les exercices (muscles sans région : liste
 // justifiée, tous profonds), règle de la vue de départ, intensités par rôle
 // (principal 1, secondaire 0,62, stabilisateur 0,35, étiré 0,25 en teinte
-// distincte), fiche sans exception sur un échantillon de 50 exercices (le
-// moteur de test n'a pas Flutter GPU : repli sur la carte 2D historique,
-// comme un téléphone incompatible). Le rendu 3D réel est vérifié sur
-// émulateur par integration_test/fiche_exercice_test.dart.
+// distincte), fiche sans exception sur un échantillon de 50 exercices.
+// M8 (5.9.0) : sans animation, rien en tête de fiche ; carte 2D des 15
+// groupes dans la section « Muscles » (émulateur :
+// integration_test/carte_2d_m8_test.dart).
 
 import 'dart:convert';
 
@@ -22,6 +22,7 @@ import 'package:streetlift_tracker/exercise_mannequin.dart';
 import 'package:streetlift_tracker/exercise_screens.dart';
 import 'package:streetlift_tracker/mannequin_3d.dart';
 import 'package:streetlift_tracker/muscle_body.dart';
+import 'package:streetlift_tracker/muscle_map_2d.dart';
 import 'package:streetlift_tracker/store.dart';
 
 import 'phone_test_support.dart';
@@ -387,7 +388,10 @@ void main() {
       home: page,
     );
 
-    testWidgets('sans Flutter GPU : carte 2D historique et liste en texte', (
+    // M8 (5.9.0) : la 3D ne sert qu'à la démonstration ; sans animation,
+    // rien en tête de fiche ; muscles sur la carte 2D de la section
+    // « Muscles », liste en texte dessous.
+    testWidgets('M8 : pas d’animation, rien en tête ; carte 2D et liste', (
       tester,
     ) async {
       phone(tester, size: const Size(320, 720));
@@ -395,20 +399,23 @@ void main() {
         host(const ExerciseSheetScreen(id: 'souleve-de-terre'), dark: true),
       );
       await tester.pumpAndSettle();
-      // Liste paresseuse : la section Muscles n'est construite qu'une fois
-      // amenée à l'écran.
-      await scrollToAction(tester, find.byType(ExerciseAtlas));
-      expect(find.byType(ExerciseMannequin), findsOneWidget);
-      expect(find.byKey(const ValueKey('mannequin-fallback')), findsNothing);
+      expect(find.byType(ExerciseMannequin), findsNothing);
       expect(find.byKey(const ValueKey('mannequin-view')), findsNothing);
-      expect(find.byType(AtlasRoleLegend), findsOneWidget);
-      // 5.5.3 : le mannequin est en tête de fiche (liste paresseuse : lu
-      // avant de défiler jusqu'à la liste des muscles).
-      final state = tester.state<ExerciseMannequinState>(
-        find.byType(ExerciseMannequin),
+      expect(find.byType(ExerciseAtlas), findsNothing);
+      await scrollToAction(tester, find.byType(MuscleMap2D));
+      final map = tester.widget<MuscleMap2D>(find.byType(MuscleMap2D));
+      final d = lib.detail('souleve-de-terre')!;
+      expect(
+        map.intensities,
+        mapIntensitiesFromRoles(
+          primaires: d.primaires,
+          secondaires: d.secondaires,
+          stabilisateurs: d.stabilisateurs,
+        ),
       );
-      expect(state.startView, MannequinView.dos);
-      expect(state.muscles.intensities, isNotEmpty);
+      expect(map.intensities['fessiers'], kMapPrimary);
+      expect(map.views, MapView.values);
+      expect(find.byType(MapRoleLegend), findsOneWidget);
       await scrollToAction(tester, find.textContaining('Principaux : '));
       expect(tester.takeException(), isNull);
     });
@@ -428,34 +435,19 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
-        await scrollToAction(tester, find.byType(ExerciseAtlas));
+        await scrollToAction(tester, find.byType(MuscleMap2D));
         expect(tester.takeException(), isNull, reason: id);
-        expect(find.byType(ExerciseMannequin), findsOneWidget, reason: id);
-        final state = tester.state<ExerciseMannequinState>(
-          find.byType(ExerciseMannequin),
-        );
+        expect(find.byType(ExerciseMannequin), findsNothing, reason: id);
+        final map = tester.widget<MuscleMap2D>(find.byType(MuscleMap2D));
         final d = lib.detail(id)!;
-        // M6b : avec la carte chargée, les principaux mixtes sont départagés
-        // par l'aire de leurs régions.
-        expect(
-          state.startView,
-          exerciseStartView(d.primaires, d.secondaires, MannequinMap.loaded),
-          reason: id,
-        );
-        // 5.5.2 : respiration (muscles profonds seulement) : rien d'allumé,
-        // liste « Absents du mannequin ».
-        final onlyAbsent = [
+        // Au moins un groupe en couleur, sauf exercice dont tous les
+        // muscles sont hors de la carte (respiration : profonds).
+        final mapped = [
           ...d.primaires,
           ...d.secondaires,
-          ...d.etires,
-        ].every(musclesSansRegion.containsKey);
-        expect(
-          onlyAbsent ||
-              state.muscles.intensities.isNotEmpty ||
-              state.muscles.stretched.isNotEmpty,
-          isTrue,
-          reason: id,
-        );
+          ...d.stabilisateurs,
+        ].any(kMuscleToMapGroup.containsKey);
+        expect(map.intensities.isNotEmpty, mapped, reason: id);
       }
       await tester.pumpWidget(const SizedBox());
     });

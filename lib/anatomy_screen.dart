@@ -43,41 +43,24 @@
 //
 // M7b (5.8.0) : entrée « Koach (aperçu) » (animations de la mascotte,
 // koach_preview_screen.dart) sous le résumé des groupes.
+//
+// M8 (5.9.0, changement de plan du propriétaire du 30/09/2026) : la 3D ne
+// sert plus qu'à la démonstration des exercices et à Koach. L'écran
+// Anatomie montre la carte 2D des 15 groupes (face, dos, profil, d'après
+// l'image du propriétaire) : filtres = les 15 groupes, groupes cochés dans
+// la couleur dominante, les autres en gris ; toucher un groupe affiche son
+// nom (réglage « Nom du muscle au toucher ») ; résumé texte des muscles de
+// chaque groupe coché. L'entrée « Koach (aperçu) » reste.
 import 'package:flutter/material.dart';
 
+import 'atlas_data.dart';
 import 'filter_menu.dart';
 import 'koach_preview_screen.dart';
-import 'mannequin_3d.dart';
+import 'mannequin_3d.dart' show Display3DSettings;
+import 'muscle_map_2d.dart';
 import 'ui.dart';
 
-/// Libellés des 11 groupes de l'application.
-const kGroupLabels = {
-  'pectoraux': 'Pectoraux',
-  'épaules': 'Épaules',
-  'biceps': 'Biceps',
-  'triceps': 'Triceps',
-  'avant-bras': 'Avant-bras',
-  'gainage': 'Gainage',
-  'dos': 'Dos',
-  'quadriceps': 'Quadriceps',
-  'ischios': 'Ischios',
-  'fessiers': 'Fessiers',
-  'mollets': 'Mollets',
-};
-
-/// Vue de départ qui montre le mieux un groupe.
-MannequinView viewForGroup(String? group) => switch (group) {
-  'dos' ||
-  'triceps' ||
-  'ischios' ||
-  'fessiers' ||
-  'mollets' => MannequinView.dos,
-  _ => MannequinView.face,
-};
-
-/// Filtres de l'écran Anatomie (M4b) : groupes allumés (union). M6b : plus
-/// de filtre « Muscles profonds » ; M6c : plus de filtre « Os » (personnage
-/// à la peau lisse).
+/// Filtres de l'écran Anatomie : groupes de la carte allumés (union).
 @immutable
 class AnatomyFilters {
   /// Groupes cochés, allumés ensemble.
@@ -85,11 +68,13 @@ class AnatomyFilters {
 
   const AnatomyFilters({this.groups = const {}});
 
-  /// Nombre de cases (11 groupes).
-  static const total = 11;
+  /// Nombre de cases (M8 : les 15 groupes de la carte).
+  static const total = 15;
 
   /// Tout coché.
-  static final all = AnatomyFilters(groups: kGroupLabels.keys.toSet());
+  static final all = AnatomyFilters(
+    groups: {for (final g in kMapGroups) g.id},
+  );
 
   /// Tout décoché.
   static const none = AnatomyFilters();
@@ -97,10 +82,10 @@ class AnatomyFilters {
   /// Nombre de filtres actifs (cases cochées).
   int get count => groups.length;
 
-  /// Groupes cochés dans l'ordre de l'application.
+  /// Groupes cochés dans l'ordre de la carte.
   List<String> get orderedGroups => [
-    for (final g in kGroupLabels.keys)
-      if (groups.contains(g)) g,
+    for (final g in kMapGroups)
+      if (groups.contains(g.id)) g.id,
   ];
 
   AnatomyFilters toggleGroup(String group) => AnatomyFilters(
@@ -123,9 +108,7 @@ class AnatomyFilters {
     FilterCategory(
       id: 'groupes',
       label: 'Groupes musculaires',
-      options: [
-        for (final e in kGroupLabels.entries) FilterOption(e.key, e.value),
-      ],
+      options: [for (final g in kMapGroups) FilterOption(g.id, g.label)],
     ),
   ];
 
@@ -133,14 +116,14 @@ class AnatomyFilters {
 
   static AnatomyFilters fromSelection(FilterSelection s) => AnatomyFilters(
     groups: {
-      for (final g in kGroupLabels.keys)
-        if (s.has('groupes', g)) g,
+      for (final g in kMapGroups)
+        if (s.has('groupes', g.id)) g.id,
     },
   );
 }
 
 class AnatomyScreen extends StatefulWidget {
-  /// Groupe allumé à l'ouverture (remplace les groupes de la session).
+  /// Groupe de la carte allumé à l'ouverture (remplace ceux de la session).
   final String? initialGroup;
   const AnatomyScreen({super.key, this.initialGroup});
 
@@ -152,9 +135,10 @@ class AnatomyScreen extends StatefulWidget {
 }
 
 class AnatomyScreenState extends State<AnatomyScreen> {
-  MannequinMap? _map;
   late AnatomyFilters _filters;
-  late MannequinView _view;
+
+  /// Dernier groupe touché sur la carte (nom affiché).
+  String? touched;
 
   AnatomyFilters get filters => _filters;
 
@@ -168,77 +152,48 @@ class AnatomyScreenState extends State<AnatomyScreen> {
     final initial = widget.initialGroup;
     _filters = initial == null ? session : AnatomyFilters(groups: {initial});
     AnatomyScreen.session = _filters;
-    final ordered = _filters.orderedGroups;
-    _view = viewForGroup(ordered.isEmpty ? null : ordered.first);
-    // Carte déjà chargée : utilisée tout de suite, sans attente.
-    _map = MannequinMap.loaded;
-    if (_map == null) {
-      MannequinMap.load().then((m) {
-        if (mounted) setState(() => _map = m);
-      });
-    }
   }
 
-  void _set(AnatomyFilters f, {String? checkedGroup}) => setState(() {
+  void _set(AnatomyFilters f) => setState(() {
     _filters = f;
     AnatomyScreen.session = f;
-    // Un groupe qu'on vient de cocher choisit la vue qui le montre le mieux.
-    if (checkedGroup != null) _view = viewForGroup(checkedGroup);
   });
 
-  void toggleGroup(String group) {
-    final checking = !_filters.groups.contains(group);
-    _set(_filters.toggleGroup(group), checkedGroup: checking ? group : null);
-  }
-
+  void toggleGroup(String group) => _set(_filters.toggleGroup(group));
   void checkAll() => _set(AnatomyFilters.all);
   void uncheckAll() => _set(AnatomyFilters.none);
 
   /// Filtres de départ (« Réinitialiser ») : aucun groupe.
   AnatomyFilters get defaults => AnatomyFilters.none;
 
-  void _onMenu(FilterSelection s) {
-    final next = AnatomyFilters.fromSelection(s);
-    String? checked;
-    for (final g in kGroupLabels.keys) {
-      if (next.groups.contains(g) && !_filters.groups.contains(g)) {
-        checked = g;
-        break;
-      }
-    }
-    _set(next, checkedGroup: checked);
+  /// Toucher d'un groupe de la carte (null : à côté).
+  void touch(String? group) {
+    if (!Display3DSettings.instance.touchNames.value) return;
+    setState(() => touched = group);
   }
 
-  AnatomyFilters? _intensityKey;
-  MannequinMap? _intensityMap;
-  Map<String, double> _intensities = const {};
+  /// Intensités de la carte : groupes cochés au plus fort.
+  Map<String, double> get intensities => {
+    for (final g in _filters.groups) g: kMapPrimary,
+  };
 
   @override
   Widget build(BuildContext context) {
-    final map = _map;
     final f = _filters;
-    // Mêmes groupes : même table (la scène ne recalcule pas ses matériaux).
-    if (!identical(_intensityKey, f) || !identical(_intensityMap, map)) {
-      _intensityKey = f;
-      _intensityMap = map;
-      _intensities = map == null || f.groups.isEmpty
-          ? const <String, double>{}
-          : map.fromGroups({for (final g in f.groups) g: kIntensityPrimary});
-    }
-    final intensities = _intensities;
     final mq = MediaQuery.of(context);
     // Le plus d'écran possible : hauteur visible moins la barre, la ligne
-    // des filtres et les boutons de vue (le reste défile dessous).
+    // des filtres et le nom touché (le reste défile dessous) ; la carte se
+    // réduit d'elle-même si la largeur manque.
     final height =
         (mq.size.height -
                 mq.padding.top -
                 mq.padding.bottom -
                 kToolbarHeight -
                 KNavigationInset.of(context) -
-                240)
-            .clamp(300.0, 900.0);
+                220)
+            .clamp(260.0, 640.0);
     final tt = Theme.of(context).textTheme;
-    final labels = [for (final g in f.orderedGroups) kGroupLabels[g]!];
+    final labels = [for (final g in f.orderedGroups) mapGroupLabel(g)];
     return KScreen(
       appBar: AppBar(title: const Text('ANATOMIE')),
       body: KList(
@@ -253,35 +208,44 @@ class AnatomyScreenState extends State<AnatomyScreen> {
             value: f.selection,
             initial: defaults.selection,
             chipCategories: const {'groupes'},
-            onChanged: _onMenu,
+            onChanged: (s) => _set(AnatomyFilters.fromSelection(s)),
           ),
-          Mannequin3D(
-            key: const ValueKey('anatomy-mannequin'),
+          MuscleMap2D(
+            key: const ValueKey('anatomy-map'),
             intensities: intensities,
-            background: kPageColor(context),
-            view: _view,
             height: height,
+            selected: touched,
+            onGroupTap: touch,
             semanticLabel: labels.isEmpty
-                ? 'Mannequin anatomique en 3D'
-                : 'Mannequin anatomique en 3D, '
+                ? 'Carte des groupes musculaires'
+                : 'Carte des groupes musculaires, '
                       '${labels.length == 1 ? 'groupe' : 'groupes'} '
-                      '${labels.join(', ')} mis en évidence par un halo',
+                      '${labels.join(', ')} en couleur',
           ),
           ValueListenableBuilder<bool>(
             valueListenable: Display3DSettings.instance.touchNames,
-            builder: (context, names, _) => Text(
-              names
-                  ? 'Touche un muscle pour afficher son nom ; les boutons '
-                        'Face, Dos, Profil, 3/4 tournent le mannequin, pince '
-                        'pour zoomer. Zones musculaires dessinées sur la '
-                        'peau ; les muscles profonds sont listés en texte '
-                        'sur les fiches.'
-                  : 'Nom du muscle au toucher désactivé '
-                        '(Réglages › Affichage 3D).',
-              style: tt.bodySmall,
-            ),
+            builder: (context, names, _) {
+              final t = touched;
+              if (names && t != null) {
+                return Text(
+                  mapGroupLabel(t),
+                  key: const ValueKey('anatomy-touched'),
+                  textAlign: TextAlign.center,
+                  style: tt.titleMedium,
+                );
+              }
+              return Text(
+                names
+                    ? 'Touche un groupe pour afficher son nom. Groupes '
+                          'cochés en couleur, les autres en gris ; muscles '
+                          'profonds listés en texte sur les fiches.'
+                    : 'Nom du muscle au toucher désactivé '
+                          '(Réglages › Affichage 3D).',
+                style: tt.bodySmall,
+              );
+            },
           ),
-          if (map != null) _summary(context, map),
+          _summary(context),
           // M7b : aperçu des animations de Koach (mascotte).
           KCard(
             key: const ValueKey('anatomy-koach-preview'),
@@ -299,10 +263,8 @@ class AnatomyScreenState extends State<AnatomyScreen> {
             ),
           ),
           Text(
-            'Modèle : personnage Mixamo (Adobe), zones musculaires issues de '
-            'l’écorché « Ecorche Musclenames Male Anatomy » (licence '
-            'd’achat). Crédits dans Réglages › À propos › Sources et '
-            'licences. Repères d’entraînement, pas un avis médical.',
+            'Carte des groupes musculaires redessinée pour l’application. '
+            'Repères d’entraînement, pas un avis médical.',
             style: tt.bodySmall,
           ),
         ],
@@ -311,7 +273,7 @@ class AnatomyScreenState extends State<AnatomyScreen> {
   }
 
   /// Résumé texte : chaque groupe coché et ses muscles.
-  Widget _summary(BuildContext context, MannequinMap map) {
+  Widget _summary(BuildContext context) {
     final tt = Theme.of(context).textTheme;
     final dark = Theme.of(context).brightness == Brightness.dark;
     final f = _filters;
@@ -335,17 +297,19 @@ class AnatomyScreenState extends State<AnatomyScreen> {
                   width: 10,
                   height: 10,
                   decoration: BoxDecoration(
-                    color: mannequinHeat(1, dark),
+                    color: mapHeat(kMapPrimary, dark),
                     shape: BoxShape.circle,
                   ),
                 ),
                 const SizedBox(width: 8),
-                Expanded(child: Text(kGroupLabels[g]!, style: tt.titleMedium)),
+                Expanded(child: Text(mapGroupLabel(g), style: tt.titleMedium)),
               ],
             ),
             const SizedBox(height: 4),
             Text(
-              map.names(map.fromGroups({g: 1})).join(', '),
+              [
+                for (final m in mapGroupMuscles(g)) atlasMuscles[m]?.nom ?? m,
+              ].join(', '),
               key: ValueKey('anatomy-group-muscles-$g'),
               style: tt.bodyMedium,
             ),

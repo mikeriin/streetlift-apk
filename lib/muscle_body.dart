@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'app_theme.dart';
 import 'atlas.dart';
 import 'atlas_data.dart';
+import 'muscle_map_2d.dart' show mapHeat;
 
 /// Rampe d'intensité des muscles : principale (léger) → vive (intense).
 /// 5.5.2 (décision du propriétaire, 29/09/2026) : la rampe suit la couleur
@@ -311,7 +312,11 @@ class MuscleLegend extends StatelessWidget {
                   width: 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: heat(e.value / max),
+                    // M8 : couleurs de la carte 2D des groupes.
+                    color: mapHeat(
+                      e.value / max,
+                      Theme.of(context).brightness == Brightness.dark,
+                    ),
                     shape: BoxShape.circle,
                   ),
                 ),

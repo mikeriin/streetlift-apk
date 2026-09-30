@@ -1,7 +1,9 @@
 // Bibliothèque d'exercices, fiche exercice et mentions (L9b, KT-080/082).
 // La fiche réunit démonstration animée, points clés, erreurs fréquentes,
-// respiration, muscles (mannequin 3D depuis M3, repli : atlas 2D ; liste en
+// respiration, muscles (M8 : carte 2D des 15 groupes par rôle ; liste en
 // texte), précautions, prérequis, progressions et régressions navigables.
+// M8 (30/09/2026) : la 3D en tête de fiche ne sert qu'à la démonstration,
+// seulement si l'exercice a une animation ; sinon rien en tête.
 // Les consignes sont des repères d'entraînement.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -10,6 +12,8 @@ import 'app_theme.dart';
 import 'atlas_data.dart';
 import 'content_pack.dart';
 import 'exercise_mannequin.dart';
+import 'mannequin_clip.dart';
+import 'muscle_map_2d.dart';
 import 'filter_menu.dart';
 import 'search.dart';
 import 'store.dart';
@@ -237,13 +241,25 @@ class ExerciseSheetScreen extends StatelessWidget {
   final String id;
   const ExerciseSheetScreen({super.key, required this.id});
 
+  static Future<ContentLibrary> _load() async {
+    try {
+      await ClipRegistry.load();
+    } catch (_) {
+      // Registre illisible : aucune démonstration, la fiche s'affiche.
+    }
+    return ContentLibrary.load();
+  }
+
   @override
   Widget build(BuildContext context) {
     final entry = store.content.byId[id];
     return KScreen(
       appBar: AppBar(title: const Text('FICHE EXERCICE')),
       body: FutureBuilder<ContentLibrary>(
-        future: ContentLibrary.load(),
+        future: _load(),
+        // M8 : la fiche s'affiche tout de suite ; la tête (démonstration,
+        // si l'exercice a une animation) apparaît dès le registre lu
+        // (déjà lu au lancement par le préchargement).
         initialData: ContentLibrary.loaded,
         builder: (context, snap) {
           if (snap.hasError) {
@@ -347,12 +363,12 @@ class _Sheet extends StatelessWidget {
             KBadge(lib.label('modes_charge', detail.modeCharge)),
           ],
         ),
-        // 5.5.3 (décision du propriétaire, 29/09/2026) : le mannequin 3D
-        // remplace la démonstration 2D en tête de fiche ; il montre les
-        // muscles ciblés par l'exercice (repli : carte 2D historique).
-        // 5.8.2 (propriétaire, 30/09/2026 : « TOUS les fonds de la couleur du
-        // support ») : mannequin posé sur la page, sans carte, fond = page.
-        KeyedSubtree(
+        // M8 (propriétaire, 30/09/2026) : la 3D ne sert qu'à la
+        // démonstration ; en tête de fiche seulement si l'exercice a une
+        // animation, rien sinon. 5.8.2 : posée sur la page, sans carte,
+        // fond = page.
+        if (ClipRegistry.loaded?.forExercise(entry.id) != null)
+          KeyedSubtree(
           key: const ValueKey('fiche-mannequin-support'),
           child: ExerciseMannequin(
             key: ValueKey('fiche-muscles-${entry.id}'),
@@ -378,9 +394,25 @@ class _Sheet extends StatelessWidget {
         Text(detail.respiration),
         const KSection('Muscles'),
         KCard(
+          key: const ValueKey('fiche-muscles'),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // M8 : carte 2D des 15 groupes, par rôle (principal vif,
+              // secondaire atténué, stabilisateur pâle, autres en gris).
+              MuscleMap2D(
+                key: ValueKey('fiche-muscle-map-${entry.id}'),
+                intensities: mapIntensitiesFromRoles(
+                  primaires: detail.primaires,
+                  secondaires: detail.secondaires,
+                  stabilisateurs: detail.stabilisateurs,
+                ),
+                height: 250,
+                semanticLabel: 'Carte des groupes musculaires de l’exercice',
+              ),
+              const SizedBox(height: 10),
+              MapRoleLegend(stabilizers: detail.stabilisateurs.isNotEmpty),
+              const SizedBox(height: 14),
               for (final (title, ids) in muscles)
                 if (ids.isNotEmpty)
                   Padding(

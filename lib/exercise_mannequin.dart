@@ -8,6 +8,12 @@
 // principaux ([exerciseStartView]). Sans Flutter GPU, la carte 2D historique
 // de la fiche (`ExerciseAtlas`) reste affichée. La liste des muscles en texte
 // reste toujours sous le mannequin (fiche exercice).
+//
+// M8 (5.9.0, changement de plan du propriétaire du 30/09/2026) : la 3D ne
+// sert plus qu'à la démonstration. Le mannequin de la fiche n'existe que si
+// l'exercice a une animation (lecteur) ; sans animation, rien (les muscles
+// sont sur la carte 2D de la section « Muscles »). Sans Flutter GPU, rien
+// non plus.
 import 'package:flutter/material.dart';
 
 import 'app_theme.dart';
@@ -368,47 +374,27 @@ class ExerciseMannequinState extends State<ExerciseMannequin> {
     // M7 : animation du propriétaire pour cet exercice (jamais l'animation
     // de test) ; null → mannequin fixe, inchangé.
     final clip = ClipRegistry.loaded?.forExercise(widget.exerciseId);
-    final fallback = ExerciseAtlas(
-      primaires: widget.primaires,
-      secondaires: widget.secondaires,
-      stabilisateurs: widget.stabilisateurs,
-      etires: widget.etires,
-    );
+    // M8 : pas d'animation, pas de 3D.
+    if (clip == null) return const SizedBox.shrink();
     final semanticLabel =
         'Mannequin anatomique en 3D, muscles de l’exercice. $label';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (clip != null)
-          MannequinPlayer(
-            key: const ValueKey('fiche-mannequin-anime'),
-            clip: clip,
-            intensities: _muscles.intensities,
-            stretched: _muscles.stretched,
-            view: startView,
-            height: widget.height,
-            background: widget.background,
-            semanticLabel: semanticLabel,
-            onReady: (ok) {
-              if (mounted && ok != _ready3d) setState(() => _ready3d = ok);
-            },
-            fallback: fallback,
-          )
-        else
-          Mannequin3D(
-            key: const ValueKey('fiche-mannequin'),
-            intensities: _muscles.intensities,
-            stretched: _muscles.stretched,
-            view: startView,
-            height: widget.height,
-            background: widget.background,
-            horizontalDragOnly: true,
-            semanticLabel: semanticLabel,
-            onReady: (ok) {
-              if (mounted && ok != _ready3d) setState(() => _ready3d = ok);
-            },
-            fallback: fallback,
-          ),
+        MannequinPlayer(
+          key: const ValueKey('fiche-mannequin-anime'),
+          clip: clip,
+          intensities: _muscles.intensities,
+          stretched: _muscles.stretched,
+          view: startView,
+          height: widget.height,
+          background: widget.background,
+          semanticLabel: semanticLabel,
+          onReady: (ok) {
+            if (mounted && ok != _ready3d) setState(() => _ready3d = ok);
+          },
+          fallback: const SizedBox.shrink(),
+        ),
         if (_ready3d && hidden.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(top: 8),
@@ -419,13 +405,15 @@ class ExerciseMannequinState extends State<ExerciseMannequin> {
               style: TextStyle(fontSize: 12, color: SL.dim),
             ),
           ),
-        const SizedBox(height: 12),
         // M6b : sur le mannequin 3D, pastilles en halo (comme la vue).
-        AtlasRoleLegend(
-          stretchColor: _ready3d ? mannequinStretch(dark) : null,
-          haloAlpha: _ready3d ? MannequinHaloPainter.alphaFor : null,
-          haloBase: kMuscleGray,
-        ),
+        if (_ready3d) ...[
+          const SizedBox(height: 12),
+          AtlasRoleLegend(
+            stretchColor: mannequinStretch(dark),
+            haloAlpha: MannequinHaloPainter.alphaFor,
+            haloBase: kMuscleGray,
+          ),
+        ],
       ],
     );
   }

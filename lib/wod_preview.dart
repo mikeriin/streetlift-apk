@@ -383,13 +383,12 @@ class _WodPreviewScreenState extends State<WodPreviewScreen>
                 'Muscles sollicités',
                 Column(
                   children: [
-                    // 5.5.3 : mannequin 3D des muscles ciblés.
-                    TargetedMannequin(
+                    // M8 : carte 2D des groupes ciblés.
+                    TargetedMuscleMap(
+                      key: const ValueKey('wod-muscle-map'),
                       names: store.plannedNames(estimate),
                       groups: muscles,
-                      height: 260,
-                      fallbackHeight: 200,
-                      background: kCardColor(context),
+                      height: 230,
                       subject: 'muscles du WOD',
                     ),
                     const SizedBox(height: 6),

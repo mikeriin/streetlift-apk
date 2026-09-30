@@ -1,4 +1,12 @@
-# Kalis Track 5.8.2 — Mannequin anatomique 3D
+# Kalis Track 5.9.0 — Carte 2D des groupes musculaires
+
+## 5.9.0 — Carte 2D des groupes musculaires (lot M8 du pipeline « Mannequin 3D »)
+
+- **Changement de plan du propriétaire (30/09/2026)** : les animations 3D servent uniquement à la démonstration des exercices et à Koach. Partout ailleurs, les groupes travaillés s'affichent sur une **carte 2D** redessinée d'après l'image fournie par le propriétaire : vues de face, de dos et de profil, **15 groupes** (trapèzes, deltoïdes, pectoraux, dorsaux, biceps, triceps, avant-bras, abdominaux, obliques, fessiers, quadriceps, ischio-jambiers, adducteurs, mollets, tibial antérieur).
+- **Couleurs** : groupes non travaillés en gris ; groupes travaillés dans la couleur dominante choisie, **par rôle** (principal vif, secondaire atténué, stabilisateur pâle) sur les fiches, en intensité continue (séries de la semaine, séance, WOD) ailleurs. Traits entre les muscles et fond transparents : la carte prend la couleur de son support (règle des fonds).
+- **Écrans** : fiche exercice (section « Muscles » : carte des 3 vues, légende des rôles, liste en texte ; en tête, la démonstration 3D seulement si l'exercice a une animation, rien sinon), STATS › Performances (muscles de la semaine), accueil (séance du jour, face et dos ; carte du jour teintée de la couleur du texte), aperçu de WOD, **Arsenal › Anatomie** (filtres = les 15 groupes, nom du groupe au toucher, muscles de chaque groupe coché en texte ; entrée « Koach (aperçu) » conservée).
+- **Fabrication** : `tools/muscles2d/build_map.py` (classement des pixels par couleur de la légende, règles de position pour les couleurs voisines, masques alpha par groupe et par vue, carte des étiquettes pour le toucher) → `assets/muscles2d/`. Correspondance muscles du pack → groupes : `lib/muscle_map_2d.dart` (les muscles profonds du tronc et du cou restent listés en texte).
+- Tests : `test/m8_carte_2d_test.dart`, `tools/tests/test_m8_carte_2d.py`, `integration_test/carte_2d_m8_test.dart` (émulateur : Anatomie, fiches, STATS, accueil, WOD, sombre et clair). Les cibles d'émulateur des écrans passés à la carte 2D (M3, M4, M4b, M4c, M56, M6b, M6c) sont retirées.
 
 ## 5.8.2 — Tous les fonds 3D de la couleur du support (lot M7b, correction 2)
 

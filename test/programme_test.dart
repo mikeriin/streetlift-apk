@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/main.dart';
 import 'package:flutter/services.dart';
-import 'package:streetlift_tracker/muscle_body.dart';
+import 'package:streetlift_tracker/muscle_map_2d.dart';
 import 'package:streetlift_tracker/estimate_view.dart';
 import 'package:streetlift_tracker/session_history.dart';
 import 'package:streetlift_tracker/session_screen.dart';
@@ -87,7 +87,7 @@ void main() {
       expect(find.text('S8'), findsOneWidget);
       expect(find.textContaining('AUJOURD’HUI'), findsOneWidget);
       expect(find.byType(PopupMenuButton<String>), findsNothing);
-      expect(find.byType(MuscleHeatmap), findsOneWidget);
+      expect(find.byType(MuscleMap2D), findsOneWidget);
       for (final caption in ['AVANT', 'ARRIÈRE', 'ARRIERE', 'FACE', 'DOS']) {
         expect(find.text(caption), findsNothing);
       }
@@ -290,7 +290,7 @@ void main() {
       await tester.tap(find.textContaining('Semaine 2 ·'));
       await tester.pumpAndSettle();
       expect(find.text('S2'), findsOneWidget);
-      expect(find.byType(MuscleHeatmap), findsNothing);
+      expect(find.byType(MuscleMap2D), findsNothing);
       await revealCard(tester, 2);
       await tester.longPress(find.byKey(const ValueKey('programme-day-2')));
       await tester.pumpAndSettle();
