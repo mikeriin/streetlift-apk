@@ -74,7 +74,7 @@ void main() {
     return boundary.toImage(pixelRatio: ratio);
   }
 
-  /// Captures à 1 px par dp (540 × 960) : le renvoi des données au pilote
+  /// Captures à 1 px par dp (360 × 640) : le renvoi des données au pilote
   /// reste léger (M6b : « Service has disappeared » sur un gros renvoi).
   Future<void> shot(String name) async {
     final image = await grab(1);
@@ -291,31 +291,40 @@ void main() {
           : await logoPink(tester);
       await shot('b1_dev_redemarrage_froid_clair');
 
-      // Appui long relâché avant 3 s : annulé.
+      // Appui long relâché avant 3 s (temps réel mesuré : les images de
+      // l'émulateur sont lentes) : annulé.
       final center = tester.getCenter(logo().first);
+      final hold = Stopwatch()..start();
       var g = await tester.startGesture(center);
-      await tester.pump();
-      await wait(tester, 1500);
+      while (hold.elapsedMilliseconds < 1000) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
       releve['anneau_visible'] = find
           .byKey(const ValueKey('dev-hold-ring'))
           .evaluate()
           .isNotEmpty;
-      await shot('b2_appui_long_anneau');
-      await wait(tester, 1000);
       await g.up();
+      releve['relache_ms'] = hold.elapsedMilliseconds;
       await wait(tester, 800);
       releve['relache_avant_3s_dev_actif'] = DevSession.active.value;
 
-      // Appui long de 3 s : suppression directe.
+      // Appui long de 3 s : suppression directe (anneau capturé en cours).
+      hold.reset();
       g = await tester.startGesture(tester.getCenter(logo().first));
-      await tester.pump();
-      await wait(tester, 3300);
+      while (hold.elapsedMilliseconds < 1500) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
+      await shot('b2_appui_long_anneau');
+      while (hold.elapsedMilliseconds < 3400) {
+        await tester.pump(const Duration(milliseconds: 50));
+      }
       await g.up();
-      await wait(tester, 700);
-      releve['message'] = find
-          .text('Session de test supprimée')
-          .evaluate()
-          .isNotEmpty;
+      var message = false;
+      for (var i = 0; i < 40 && !message; i++) {
+        await tester.pump(const Duration(milliseconds: 100));
+        message = find.text('Session de test supprimée').evaluate().isNotEmpty;
+      }
+      releve['message'] = message;
       await opened(tester);
       releve['retour_dev_actif'] = DevSession.active.value;
       releve['retour_decalage_jours'] = KalisClock.offsetDays;
@@ -340,7 +349,9 @@ void main() {
       expect(releve['froid_decalage_jours'], 7);
       expect(releve['froid_logo_rose'] as double, greaterThan(.05));
       expect(releve['anneau_visible'], isTrue);
+      expect(releve['relache_ms'] as int, lessThan(3000));
       expect(releve['relache_avant_3s_dev_actif'], isTrue);
+      expect(releve['message'], isTrue);
       expect(releve['retour_dev_actif'], isFalse);
       expect(releve['retour_decalage_jours'], 0);
       expect(releve['retour_cles_reservees'], isEmpty);
