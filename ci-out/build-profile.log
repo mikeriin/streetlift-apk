@@ -1,4 +1,4 @@
-Running Gradle task 'assembleDebug'...                          
+Running Gradle task 'assembleProfile'...                        
 Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
 Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
 
@@ -11,5 +11,13 @@ Alternatively, use the flag "--android-skip-build-dependency-validation" to bypa
 Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
 If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
 
-Running Gradle task 'assembleDebug'...                            267.0s
-✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Font asset "MaterialIcons-Regular.otf" was tree-shaken, reducing it from 1645184 to 22988 bytes (98.6% reduction). Tree-shaking can be disabled by providing the --no-tree-shake-icons flag when building your app.
+Running Gradle task 'assembleProfile'...                           92.5s
+✓ Built build/app/outputs/flutter-apk/app-profile.apk (57.0MB)
+total 151640
+drwxr-xr-x 2 runner runner     4096 Sep 30 15:54 .
+drwxr-xr-x 5 runner runner     4096 Sep 30 15:53 ..
+-rw-r--r-- 1 runner runner 98302179 Sep 30 15:53 app-debug.apk
+-rw-r--r-- 1 runner runner       40 Sep 30 15:53 app-debug.apk.sha1
+-rw-r--r-- 1 runner runner 56958404 Sep 30 15:54 app-profile.apk
+-rw-r--r-- 1 runner runner       40 Sep 30 15:54 app-profile.apk.sha1

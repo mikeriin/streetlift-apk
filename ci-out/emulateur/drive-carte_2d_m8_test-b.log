@@ -1,0 +1,64 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             42.5s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,210ms
+I/eetlift_tracker( 4761): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4761): Skipped 60 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4761): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:40313/LxPDnbz0Ynk=/
+VMServiceFlutterDriver: Isolate found with number: 5993570326992755
+VMServiceFlutterDriver: Isolate 5993570326992755 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4761): 00:00 +0: (setUpAll)
+VMServiceFlutterDriver: Connected to Flutter application.
+I/flutter ( 4761): 00:00 +1: Anatomie (clair) : aucun groupe, tous, Dorsaux + toucher
+D/ProfileInstaller( 4761): Installing profile for fr.tchoupi.streetlift_tracker
+D/FlutterJNI( 4761): Sending viewport metrics to the engine.
+D/EGL_emulation( 4761): app_time_stats: avg=374.92ms min=128.22ms max=1455.54ms count=7
+D/EGL_emulation( 4761): app_time_stats: avg=99.03ms min=20.81ms max=138.09ms count=9
+D/EGL_emulation( 4761): app_time_stats: avg=167.23ms min=87.47ms max=468.89ms count=7
+D/EGL_emulation( 4761): app_time_stats: avg=105.62ms min=26.24ms max=131.88ms count=9
+D/EGL_emulation( 4761): app_time_stats: avg=130.07ms min=96.33ms max=302.26ms count=9
+D/EGL_emulation( 4761): app_time_stats: avg=111.92ms min=98.59ms max=133.00ms count=9
+D/EGL_emulation( 4761): app_time_stats: avg=133.04ms min=23.07ms max=377.47ms count=9
+D/EGL_emulation( 4761): app_time_stats: avg=115.47ms min=94.34ms max=133.99ms count=9
+I/flutter ( 4761): 00:11 +2: fiches (clair) : section Muscles
+D/EGL_emulation( 4761): app_time_stats: avg=145.18ms min=115.73ms max=285.35ms count=7
+D/EGL_emulation( 4761): app_time_stats: avg=116.59ms min=115.97ms max=117.25ms count=9
+D/EGL_emulation( 4761): app_time_stats: avg=116.64ms min=105.95ms max=150.83ms count=9
+D/EGL_emulation( 4761): app_time_stats: avg=107.94ms min=88.35ms max=124.19ms count=10
+D/EGL_emulation( 4761): app_time_stats: avg=111.37ms min=9.37ms max=274.05ms count=9
+D/EGL_emulation( 4761): app_time_stats: avg=109.98ms min=73.56ms max=117.36ms count=10
+D/EGL_emulation( 4761): app_time_stats: avg=96.57ms min=19.77ms max=152.17ms count=11
+I/flutter ( 4761): 00:19 +3: STATS, accueil et WOD (clair)
+D/EGL_emulation( 4761): app_time_stats: avg=158.59ms min=116.22ms max=405.52ms count=7
+D/EGL_emulation( 4761): app_time_stats: avg=92.73ms min=14.51ms max=163.52ms count=11
+D/EGL_emulation( 4761): app_time_stats: avg=108.09ms min=21.43ms max=161.90ms count=10
+D/EGL_emulation( 4761): app_time_stats: avg=99.60ms min=1.98ms max=152.74ms count=10
+D/EGL_emulation( 4761): app_time_stats: avg=92.82ms min=21.02ms max=173.00ms count=9
+D/EGL_emulation( 4761): app_time_stats: avg=149.55ms min=92.94ms max=412.41ms count=7
+D/EGL_emulation( 4761): app_time_stats: avg=101.95ms min=19.57ms max=176.91ms count=10
+D/EGL_emulation( 4761): app_time_stats: avg=111.52ms min=85.92ms max=121.92ms count=10
+D/EGL_emulation( 4761): app_time_stats: avg=117.89ms min=115.92ms max=129.32ms count=9
+D/EGL_emulation( 4761): app_time_stats: avg=151.45ms min=116.06ms max=387.93ms count=8
+D/EGL_emulation( 4761): app_time_stats: avg=101.25ms min=31.56ms max=211.13ms count=9
+D/EGL_emulation( 4761): app_time_stats: avg=98.61ms min=20.82ms max=180.40ms count=9
+D/EGL_emulation( 4761): app_time_stats: avg=101.62ms min=15.54ms max=156.72ms count=10
+D/EGL_emulation( 4761): app_time_stats: avg=116.08ms min=111.95ms max=117.75ms count=9
+I/flutter ( 4761): 00:34 +4: (tearDownAll)
+I/flutter ( 4761): 00:34 +5: All tests passed!
+All tests passed.
+D/EGL_emulation( 4761): app_time_stats: avg=120.71ms min=4.95ms max=245.59ms count=9
