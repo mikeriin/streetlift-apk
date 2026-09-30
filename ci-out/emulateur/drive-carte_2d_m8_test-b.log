@@ -1,0 +1,70 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             49.3s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,185ms
+I/Gralloc4( 4641): mapper 4.x is not supported
+I/eetlift_tracker( 4641): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4641): Skipped 58 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4641): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:43603/CCRy9T88Fr0=/
+VMServiceFlutterDriver: Isolate found with number: 1108615213030659
+VMServiceFlutterDriver: Isolate 1108615213030659 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4641): 00:00 +0: (setUpAll)
+VMServiceFlutterDriver: Connected to Flutter application.
+I/flutter ( 4641): 00:00 +1: Anatomie (clair) : aucun groupe, tous, Dorsaux + toucher
+D/ProfileInstaller( 4641): Installing profile for fr.tchoupi.streetlift_tracker
+D/FlutterJNI( 4641): Sending viewport metrics to the engine.
+D/EGL_emulation( 4641): app_time_stats: avg=519.01ms min=122.25ms max=1541.48ms count=5
+D/EGL_emulation( 4641): app_time_stats: avg=135.84ms min=8.48ms max=274.14ms count=7
+D/EGL_emulation( 4641): app_time_stats: avg=113.57ms min=21.79ms max=223.08ms count=8
+D/EGL_emulation( 4641): app_time_stats: avg=182.22ms min=18.03ms max=484.83ms count=6
+D/EGL_emulation( 4641): app_time_stats: avg=144.14ms min=116.73ms max=172.82ms count=7
+D/EGL_emulation( 4641): app_time_stats: avg=128.87ms min=111.18ms max=153.15ms count=8
+D/EGL_emulation( 4641): app_time_stats: avg=177.79ms min=128.22ms max=326.74ms count=6
+D/EGL_emulation( 4641): app_time_stats: avg=107.68ms min=22.50ms max=164.45ms count=9
+D/EGL_emulation( 4641): app_time_stats: avg=190.93ms min=83.22ms max=522.68ms count=5
+D/EGL_emulation( 4641): app_time_stats: avg=121.66ms min=11.68ms max=224.32ms count=8
+I/flutter ( 4641): 00:13 +2: fiches (clair) : section Muscles
+D/EGL_emulation( 4641): app_time_stats: avg=155.24ms min=9.64ms max=352.82ms count=7
+D/EGL_emulation( 4641): app_time_stats: avg=104.00ms min=22.70ms max=129.27ms count=9
+D/EGL_emulation( 4641): app_time_stats: avg=133.49ms min=99.22ms max=251.66ms count=7
+D/EGL_emulation( 4641): app_time_stats: avg=108.63ms min=23.52ms max=146.50ms count=9
+D/EGL_emulation( 4641): app_time_stats: avg=154.78ms min=89.63ms max=411.16ms count=6
+D/EGL_emulation( 4641): app_time_stats: avg=99.75ms min=11.25ms max=140.64ms count=10
+D/EGL_emulation( 4641): app_time_stats: avg=120.34ms min=10.23ms max=226.30ms count=9
+D/EGL_emulation( 4641): app_time_stats: avg=119.44ms min=18.38ms max=199.49ms count=8
+D/EGL_emulation( 4641): app_time_stats: avg=121.20ms min=29.40ms max=148.54ms count=7
+I/flutter ( 4641): 00:22 +3: STATS, accueil et WOD (clair)
+D/EGL_emulation( 4641): app_time_stats: avg=173.47ms min=15.46ms max=416.96ms count=7
+D/EGL_emulation( 4641): app_time_stats: avg=91.80ms min=8.60ms max=117.60ms count=10
+D/EGL_emulation( 4641): app_time_stats: avg=108.13ms min=12.11ms max=207.15ms count=9
+D/EGL_emulation( 4641): app_time_stats: avg=152.82ms min=24.91ms max=258.02ms count=7
+D/EGL_emulation( 4641): app_time_stats: avg=102.60ms min=22.54ms max=152.63ms count=9
+I/eetlift_tracker( 4641): Background concurrent mark compact GC freed 2375KB AllocSpace bytes, 3(60KB) LOS objects, 49% free, 2596KB/5192KB, paused 56us,18.689ms total 117ms
+D/EGL_emulation( 4641): app_time_stats: avg=247.42ms min=100.62ms max=580.68ms count=4
+D/EGL_emulation( 4641): app_time_stats: avg=136.00ms min=121.40ms max=153.09ms count=8
+D/EGL_emulation( 4641): app_time_stats: avg=116.21ms min=20.01ms max=165.38ms count=9
+D/EGL_emulation( 4641): app_time_stats: avg=147.74ms min=124.67ms max=201.12ms count=7
+D/EGL_emulation( 4641): app_time_stats: avg=119.44ms min=16.71ms max=224.34ms count=9
+D/EGL_emulation( 4641): app_time_stats: avg=163.78ms min=13.57ms max=526.26ms count=6
+D/EGL_emulation( 4641): app_time_stats: avg=99.55ms min=81.17ms max=146.79ms count=8
+D/EGL_emulation( 4641): app_time_stats: avg=120.94ms min=92.30ms max=225.14ms count=7
+D/EGL_emulation( 4641): app_time_stats: avg=106.19ms min=29.88ms max=151.18ms count=9
+I/flutter ( 4641): 00:38 +4: (tearDownAll)
+I/flutter ( 4641): 00:38 +5: All tests passed!
+D/EGL_emulation( 4641): app_time_stats: avg=138.85ms min=25.31ms max=389.05ms count=8
+All tests passed.
