@@ -1,5 +1,0 @@
-run=36741286256
-commit=80e9cc5b9569bc5b0d5ced7d2d060cab4017ef8a
-checks=success
-before=success
-emulator=success

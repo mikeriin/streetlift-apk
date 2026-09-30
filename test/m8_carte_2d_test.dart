@@ -7,6 +7,8 @@
 // teintée sur la carte du jour, vues ajustées à la largeur, toucher d'une
 // région (étiquettes), légende. Rendu réel sur émulateur :
 // integration_test/carte_2d_m8_test.dart.
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -344,24 +346,18 @@ void main() {
     });
 
     testWidgets('toucher : région sous le doigt', (tester) async {
-      // étiquettes lues avant tout widget (moteur réel, hors temps simulé)
-      final labels = (await tester.runAsync(
-        () => loadMapLabels(MapView.dos),
-      ))!;
-      Offset? core;
-      for (var fy = .25; fy < .5 && core == null; fy += .01) {
-        for (var fx = .2; fx < .8; fx += .01) {
-          if (labels.regionAt(fx, fy) == 'grand_dorsal' &&
-              labels.regionAt(fx + .02, fy) == 'grand_dorsal' &&
-              labels.regionAt(fx - .02, fy) == 'grand_dorsal') {
-            core = Offset(fx, fy);
-            break;
-          }
+      // étiquettes de synthèse (sans décodage d'image) : moitié gauche =
+      // grand dorsal, coin haut gauche vide
+      final k = kMapRegions.indexWhere((r) => r.id == 'grand_dorsal') + 1;
+      final values = Uint8List(100 * 100);
+      for (var y = 0; y < 100; y++) {
+        for (var x = 10; x < 50; x++) {
+          values[y * 100 + x] = k;
         }
       }
-      expect(core, isNotNull);
-      final c = core!;
-      expect(mapLabelsIfLoaded(MapView.dos), same(labels));
+      final saved = mapLabelsIfLoaded(MapView.dos);
+      debugSetMapLabels(MapView.dos, MapLabels(100, 100, values));
+      addTearDown(() => debugSetMapLabels(MapView.dos, saved));
       String? touched = 'aucun';
       await tester.pumpWidget(
         host(
@@ -374,12 +370,14 @@ void main() {
       );
       final rect = tester.getRect(find.byKey(const ValueKey('map-dos')));
       await tester.tapAt(
-        rect.topLeft + Offset(c.dx * rect.width, c.dy * rect.height),
+        rect.topLeft + Offset(rect.width * .3, rect.height * .5),
       );
       await tester.pump();
       expect(touched, 'grand_dorsal');
-      // coin : hors de la figure
-      await tester.tapAt(rect.topLeft + const Offset(2, 2));
+      // hors d'une région
+      await tester.tapAt(
+        rect.topLeft + Offset(rect.width * .03, rect.height * .5),
+      );
       await tester.pump();
       expect(touched, isNull);
       await tester.pumpWidget(const SizedBox());

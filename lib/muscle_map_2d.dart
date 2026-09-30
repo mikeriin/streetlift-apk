@@ -303,6 +303,18 @@ class MapLabels {
 final _labels = <MapView, Future<MapLabels>>{};
 final _labelsReady = <MapView, MapLabels>{};
 
+/// Tests : étiquettes d'une vue fournies directement (sans image).
+@visibleForTesting
+void debugSetMapLabels(MapView v, MapLabels? labels) {
+  if (labels == null) {
+    _labels.remove(v);
+    _labelsReady.remove(v);
+  } else {
+    _labels[v] = Future.value(labels);
+    _labelsReady[v] = labels;
+  }
+}
+
 /// Étiquettes d'une vue déjà lues (toucher sans attente), sinon null.
 MapLabels? mapLabelsIfLoaded(MapView v) => _labelsReady[v];
 
