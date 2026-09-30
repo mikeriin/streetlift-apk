@@ -60,9 +60,7 @@ class DevSession {
     SessionSpace.devActive = on;
     final days = control?['offsetDays'];
     KalisClock.setOffsetDays(on && days is int ? days : 0);
-    _createdAt = on
-        ? DateTime.tryParse('${control['createdAt'] ?? ''}')
-        : null;
+    _createdAt = on ? DateTime.tryParse('${control['createdAt'] ?? ''}') : null;
     active.value = on;
   }
 

@@ -39,6 +39,9 @@ logcat_pid=$!
 # blocage laisse le temps du second essai dans les 30 min du job.
 # $2 (facultatif) : suffixe du journal et partie jouée (M6B_PART).
 # $3 (facultatif) : « dev » = build de développement (G1, KALIS_DEV=true).
+# $4 (facultatif) : « garder » = application laissée installée à la fin
+# (sans --keep-app-running, flutter drive la désinstalle : ses données
+# seraient perdues pour la partie suivante).
 cible() {
   adb shell am force-stop fr.tchoupi.streetlift_tracker || true
   timeout "${CI3D_DELAI:-600}" flutter drive --no-pub \
@@ -46,6 +49,7 @@ cible() {
     --target="integration_test/$1.dart" \
     ${2:+--dart-define=M6B_PART=$2} \
     ${3:+--dart-define=KALIS_DEV=true} \
+    ${4:+--keep-app-running} \
     -d emulator-5554 > "$out/drive-$1${2:+-$2}.log" 2>&1
 }
 # G1 (6.0.0) : mode dev, cible du lot, en deux lancements de l'application
@@ -55,7 +59,9 @@ cible() {
 # retour à la session personnelle identique).
 code_g1=0
 for part in a b; do
-  cible mode_dev_g1_test "$part" dev
+  garder=""
+  [ "$part" = a ] && garder=garder
+  cible mode_dev_g1_test "$part" dev $garder
   c=$?
   [ "$c" -ne 0 ] && code_g1=$c
   tail -n 30 "$out/drive-mode_dev_g1_test-$part.log"
