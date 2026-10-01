@@ -274,9 +274,8 @@ class ExerciseDetail {
   final Catalog catalog;
   const ExerciseDetail(this.ex, this.catalog);
 
-  static List<String> _atlas(List<String> muscles) => [
-    for (final m in muscles) ...atlasOfBaseMuscle(m),
-  ].toSet().toList();
+  static List<String> _atlas(List<String> muscles) =>
+      <String>{for (final m in muscles) ...atlasOfBaseMuscle(m)}.toList();
 
   /// Muscles de l'atlas par rôle (carte 2D, mannequin, STATS).
   List<String> get primaires => _atlas(ex.primaryMuscles);
@@ -290,7 +289,9 @@ class ExerciseDetail {
   List<String> get musclesStabilisateurs => ex.stabilizerMuscles;
   List<String> get musclesEtires => ex.stretchedMuscles;
 
-  List<String> get pointsCles => [for (final t in ex.keyPoints) catalogWording(t)];
+  List<String> get pointsCles => [
+    for (final t in ex.keyPoints) catalogWording(t),
+  ];
   List<String> get erreurs => [
     for (final t in ex.commonMistakes) catalogWording(t),
   ];
@@ -366,16 +367,35 @@ class ContentIndex {
   static const catalogAsset = 'assets/catalog/catalog_v1.json.gz';
   static const correspondenceAsset = 'assets/catalog/correspondance.json';
 
-  static Future<ContentIndex> load([AssetBundle? bundle]) async {
-    final b = bundle ?? rootBundle;
+  static Future<ContentIndex>? _shared;
+
+  /// Base chargée une fois par processus (assets embarqués, instance non
+  /// modifiable) : un nouveau magasin (session de test, tests) la reprend
+  /// sans relire 2 Mo de JSON. Un autre [bundle] est toujours relu.
+  static Future<ContentIndex> load([AssetBundle? bundle]) {
+    if (bundle != null && !identical(bundle, rootBundle)) return _load(bundle);
+    return _shared ??= _load(rootBundle).catchError((Object e) {
+      _shared = null;
+      throw e;
+    });
+  }
+
+  static Future<ContentIndex> _load(AssetBundle b) async {
     final bytes = await b.load(catalogAsset);
     final catalog = Catalog.fromJsonBytes(
       gzip.decode(
         bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes),
       ),
     );
+    // Octets décodés ici : `loadString` passe par un isolat au-delà de
+    // 50 Ko (bloqué dans les zones de temps simulé des tests).
+    final raw = await b.load(correspondenceAsset);
     final table =
-        jsonDecode(await b.loadString(correspondenceAsset, cache: false))
+        jsonDecode(
+              utf8.decode(
+                raw.buffer.asUint8List(raw.offsetInBytes, raw.lengthInBytes),
+              ),
+            )
             as Map<String, dynamic>;
     return ContentIndex.from(catalog, table);
   }
@@ -433,7 +453,10 @@ SearchDoc exerciseSearchDoc(ExerciseEntry e) => SearchDoc(
     e.categorie,
     kCatalogFamilyLabels[e.famille] ?? e.famille,
   ].join(' '),
-  body: [...e.materiel, for (final l in e.lieux) kPlaceLabels[l] ?? l].join(' '),
+  body: [
+    ...e.materiel,
+    for (final l in e.lieux) kPlaceLabels[l] ?? l,
+  ].join(' '),
   notes: [
     ...e.alias,
     ...e.ex.primaryMuscles,
@@ -471,7 +494,8 @@ class LegacyPackIndex {
                   as String,
       },
       {
-        for (final e in (index['programme_v33'] as Map<String, dynamic>).entries)
+        for (final e
+            in (index['programme_v33'] as Map<String, dynamic>).entries)
           e.key: (e.value as Map)['id'] as String,
       },
       names,

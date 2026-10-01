@@ -45,7 +45,10 @@ void main() {
         ),
         isNotEmpty,
       );
-      expect(dev.exerciseIdFor('Tractions PdC — EMOM'), 'sw-traction-pronation');
+      expect(
+        dev.exerciseIdFor('Tractions PdC — EMOM'),
+        'sw-traction-pronation',
+      );
       await dev.flush();
       dev.dispose();
 

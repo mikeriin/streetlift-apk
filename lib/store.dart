@@ -2220,7 +2220,8 @@ class AppStore extends ChangeNotifier {
     // G3 : nom de la base v1.1 (exercice échangé, futures séances).
     final id = content.idFor(splitName(name).$1);
     final entry = id == null ? null : content.byId[id];
-    if (entry != null && normalizeText(entry.nom) == normalizeText(splitName(name).$1)) {
+    if (entry != null &&
+        normalizeText(entry.nom) == normalizeText(splitName(name).$1)) {
       return entry.groupes;
     }
     return const [];

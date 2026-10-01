@@ -24,6 +24,7 @@ import 'package:streetlift_tracker/journal_adapter.dart';
 import 'package:streetlift_tracker/mannequin_clip.dart';
 import 'package:streetlift_tracker/muscle_map_2d.dart';
 import 'package:streetlift_tracker/store.dart';
+import 'package:streetlift_tracker/ui.dart';
 
 import 'l2_fixtures.dart';
 import 'phone_test_support.dart';
@@ -93,16 +94,24 @@ void main() {
 
     test('1 039 exercices, 8 disciplines, chargés par kalis_core', () async {
       final watch = Stopwatch()..start();
-      final index = await ContentIndex.load(rootBundle);
+      // Un autre bundle que rootBundle : vraie lecture, sans le cache du
+      // processus.
+      final index = await ContentIndex.load(PlatformAssetBundle());
       watch.stop();
       // ignore: avoid_print
       print('G3_PERF chargement_catalogue_ms=${watch.elapsedMilliseconds}');
       expect(index.entries.length, 1039);
       expect(index.version, '1.1.0');
-      expect({for (final e in index.entries) e.discipline}, {
-        ..._parDiscipline.keys,
-      });
+      expect(
+        {for (final e in index.entries) e.discipline},
+        {..._parDiscipline.keys},
+      );
       expect(store.content.entries.length, 1039);
+      // Base lue une fois par processus : un nouveau magasin la reprend.
+      expect(
+        identical(await ContentIndex.load(), await ContentIndex.load()),
+        isTrue,
+      );
       // Garde-fou large (environnement de test, JIT) ; le paquet mesure
       // ≤ 150 ms en VM.
       expect(watch.elapsedMilliseconds, lessThan(5000));
@@ -180,7 +189,10 @@ void main() {
         store.exerciseIdFor('TRACTION LESTÉE — lift principal'),
         'sl-traction-lestee',
       );
-      expect(store.exerciseIdFor('DIP LESTÉ — lift principal'), 'sl-dips-leste');
+      expect(
+        store.exerciseIdFor('DIP LESTÉ — lift principal'),
+        'sl-dips-leste',
+      );
       expect(
         store.exerciseIdFor('BACK SQUAT — lift principal'),
         'sl-squat-competition',
@@ -197,25 +209,31 @@ void main() {
         // Un ancien identifiant se résout aussi directement.
         expect(store.content.idFor(e.key), isNotNull, reason: e.key);
       }
-      expect(store.content.idFor('sw-traction-pronation'), 'sw-traction-pronation');
+      expect(
+        store.content.idFor('sw-traction-pronation'),
+        'sw-traction-pronation',
+      );
       expect(store.exerciseIdFor('Mon mouvement maison 42'), isNull);
     });
 
-    test('historique complet de 40 semaines : chaque nom saisi est relié', () async {
-      SharedPreferences.setMockInitialValues({});
-      final app = AppStore();
-      await app.init();
-      expect(await app.importAll(jsonEncode(filledBackup(app))), isTrue);
-      final names = <String>{
-        for (final log in app.logs.values) ...log.exerciseNames.values,
-      };
-      final missing = [
-        for (final n in names)
-          if (app.exerciseIdFor(n) == null) n,
-      ];
-      expect(missing, ['BILAN — report des résultats']);
-      app.dispose();
-    });
+    test(
+      'historique complet de 40 semaines : chaque nom saisi est relié',
+      () async {
+        SharedPreferences.setMockInitialValues({});
+        final app = AppStore();
+        await app.init();
+        expect(await app.importAll(jsonEncode(filledBackup(app))), isTrue);
+        final names = <String>{
+          for (final log in app.logs.values) ...log.exerciseNames.values,
+        };
+        final missing = [
+          for (final n in names)
+            if (app.exerciseIdFor(n) == null) n,
+        ];
+        expect(missing, ['BILAN — report des résultats']);
+        app.dispose();
+      },
+    );
 
     test('démonstration existante gardée par correspondance d\'id', () async {
       final reg = await ClipRegistry.load();
@@ -249,10 +267,7 @@ void main() {
   group('conversion du journal (C1 à C12)', () {
     List<String> order(int w, int j) =>
         w >= 1 && w <= store.program.weeks.length
-        ? [
-            for (final e in store.program.week(w).day(j)?.exercises ?? [])
-              e.id,
-          ]
+        ? [for (final e in store.program.week(w).day(j)?.exercises ?? []) e.id]
         : const [];
 
     bool seconds(String id) =>
@@ -285,10 +300,7 @@ void main() {
       );
       expect(out.log.validate(), isEmpty);
       expect(
-        jsonDeepEquals(
-          jsonDecode(jsonEncode(out.log.toJson())),
-          fx['after'],
-        ),
+        jsonDeepEquals(jsonDecode(jsonEncode(out.log.toJson())), fx['after']),
         isTrue,
       );
       expect(out.report.toJson(), fx['report']);
@@ -326,42 +338,45 @@ void main() {
       );
     });
 
-    test('historique complet : journal kalis_core valide, rien d\'inventé', () async {
-      SharedPreferences.setMockInitialValues({});
-      final app = AppStore();
-      await app.init();
-      final doc = filledBackup(app);
-      expect(await app.importAll(jsonEncode(doc)), isTrue);
-      final out = app.coreTrainingLog();
-      expect(out.log.validate(), isEmpty);
-      final r = out.report;
-      final logs = doc['logs'] as Map<String, dynamic>;
-      expect(r.sessionsRead, logs.length);
-      expect(r.manualSessionsDropped, 0);
-      expect(r.unmappedExerciseNames, ['BILAN — report des résultats']);
-      // Chaque série faite est convertie, sauf celles du bilan.
-      var done = 0, bilan = 0;
-      for (final s in logs.values) {
-        final m = s as Map;
-        final names = (m['exerciseNames'] as Map).cast<String, dynamic>();
-        (m['ex'] as Map).forEach((k, v) {
-          final n = (v as Map)['sets'] as List;
-          final d = n.where((x) => (x as Map)['done'] == true).length;
-          done += d;
-          if ('${names[k]}'.startsWith('BILAN')) bilan += d;
-        });
-      }
-      expect(r.setsConverted + r.setsWithoutMeasure, done - bilan);
-      expect(r.setsUnmappedExercise, bilan);
-      expect(r.sessionsConverted + r.emptySessionsDropped, logs.length);
-      // Identifiants : tous de la base, aucun inventé.
-      final ids = {
-        for (final s in out.log.sessions)
-          for (final x in s.sets) x.exerciseId,
-      };
-      expect(store.content.catalog!.checkExerciseIds(ids), isEmpty);
-      app.dispose();
-    });
+    test(
+      'historique complet : journal kalis_core valide, rien d\'inventé',
+      () async {
+        SharedPreferences.setMockInitialValues({});
+        final app = AppStore();
+        await app.init();
+        final doc = filledBackup(app);
+        expect(await app.importAll(jsonEncode(doc)), isTrue);
+        final out = app.coreTrainingLog();
+        expect(out.log.validate(), isEmpty);
+        final r = out.report;
+        final logs = doc['logs'] as Map<String, dynamic>;
+        expect(r.sessionsRead, logs.length);
+        expect(r.manualSessionsDropped, 0);
+        expect(r.unmappedExerciseNames, ['BILAN — report des résultats']);
+        // Chaque série faite est convertie, sauf celles du bilan.
+        var done = 0, bilan = 0;
+        for (final s in logs.values) {
+          final m = s as Map;
+          final names = (m['exerciseNames'] as Map).cast<String, dynamic>();
+          (m['ex'] as Map).forEach((k, v) {
+            final n = (v as Map)['sets'] as List;
+            final d = n.where((x) => (x as Map)['done'] == true).length;
+            done += d;
+            if ('${names[k]}'.startsWith('BILAN')) bilan += d;
+          });
+        }
+        expect(r.setsConverted + r.setsWithoutMeasure, done - bilan);
+        expect(r.setsUnmappedExercise, bilan);
+        expect(r.sessionsConverted + r.emptySessionsDropped, logs.length);
+        // Identifiants : tous de la base, aucun inventé.
+        final ids = {
+          for (final s in out.log.sessions)
+            for (final x in s.sets) x.exerciseId,
+        };
+        expect(store.content.catalog!.checkExerciseIds(ids), isEmpty);
+        app.dispose();
+      },
+    );
   });
 
   group('fiches : une par discipline', () {
@@ -390,7 +405,13 @@ void main() {
           final entry = store.content.byId[e.value]!;
           expect(entry.discipline, e.key);
           expect(find.text(entry.nom.toUpperCase()), findsOneWidget);
-          expect(find.text(e.key), findsWidgets); // badge discipline
+          // Badge de la discipline.
+          final badges = [
+            for (final b in tester.widgetList<KBadge>(find.byType(KBadge)))
+              b.text,
+          ];
+          expect(badges, contains(e.key), reason: '$badges');
+          final d = store.content.detail(e.value)!;
           for (final k in const [
             'fiche-points-cles',
             'fiche-erreurs',
@@ -400,9 +421,10 @@ void main() {
           ]) {
             await scrollToAction(tester, find.byKey(ValueKey(k)));
             expect(find.byKey(ValueKey(k)), findsOneWidget, reason: k);
+            if (k == 'fiche-respiration') {
+              expect(find.text(d.respiration), findsOneWidget);
+            }
           }
-          final d = store.content.detail(e.value)!;
-          expect(find.text(d.respiration), findsOneWidget);
           expect(tester.takeException(), isNull);
         });
       }

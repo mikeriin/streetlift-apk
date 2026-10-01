@@ -79,7 +79,8 @@ class ExerciseFilters {
         id: 'famille',
         label: 'Type de mouvement',
         options: [
-          for (final f in familles) FilterOption('fam:$f', kCatalogFamilyLabels[f]!),
+          for (final f in familles)
+            FilterOption('fam:$f', kCatalogFamilyLabels[f]!),
         ],
       ),
       FilterCategory(

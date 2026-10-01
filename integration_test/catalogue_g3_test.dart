@@ -203,7 +203,10 @@ void main() {
       await wait(tester, 1500);
       fiches[e.key] = {
         'id': e.value,
-        'titre': find.byKey(const ValueKey('fiche-titre')).evaluate().isNotEmpty,
+        'titre': find
+            .byKey(const ValueKey('fiche-titre'))
+            .evaluate()
+            .isNotEmpty,
         'points_cles': find
             .byKey(const ValueKey('fiche-points-cles'))
             .evaluate()
@@ -253,7 +256,9 @@ void main() {
     await wait(tester, 1500);
     releve['dev_bibliotheque'] = count();
     await shot('9_dev_bibliotheque');
-    unawaited(openExerciseSheet(appNavigator.currentContext!, 'cs-planche-tuck'));
+    unawaited(
+      openExerciseSheet(appNavigator.currentContext!, 'cs-planche-tuck'),
+    );
     await wait(tester, 1500);
     await shot('10_dev_fiche');
     releve['dev_fiche'] = find
@@ -279,8 +284,9 @@ void main() {
     expect(releve['recherche'], greaterThan(0));
     expect(releve['recherche_premier'], isTrue);
     for (final f in fiches.values) {
-      expect((f! as Map)['titre'], isTrue, reason: '$f');
-      expect(f['points_cles'], isTrue, reason: '$f');
+      final m = f! as Map;
+      expect(m['titre'], isTrue, reason: '$m');
+      expect(m['points_cles'], isTrue, reason: '$m');
     }
     expect(releve['dev_actif'], isTrue);
     expect(releve['dev_catalogue_exercices'], 1039);

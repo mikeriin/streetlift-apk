@@ -48,7 +48,14 @@ Map<String, Object?> releve(AppStore app) {
     if (hits.isEmpty) continue;
     records[h.id] = [
       for (final r in hits)
-        [r.exercise, r.weighted, _r(r.kg), r.reps, _r(r.previous), _r(r.current)],
+        [
+          r.exercise,
+          r.weighted,
+          _r(r.kg),
+          r.reps,
+          _r(r.previous),
+          _r(r.current),
+        ],
     ];
   }
   final names = <String>{
@@ -107,13 +114,14 @@ Future<Map<String, Object?>> releveDe(
 List<String> diff(Object? a, Object? b, [String path = '']) {
   if (a is Map && b is Map) {
     return [
-      for (final k in {...a.keys, ...b.keys})
-        ...diff(a[k], b[k], '$path/$k'),
+      for (final k in {...a.keys, ...b.keys}) ...diff(a[k], b[k], '$path/$k'),
     ];
   }
   if (a is List && b is List) {
     if (a.length != b.length) return ['$path : $a → $b'];
-    return [for (var i = 0; i < a.length; i++) ...diff(a[i], b[i], '$path[$i]')];
+    return [
+      for (var i = 0; i < a.length; i++) ...diff(a[i], b[i], '$path[$i]'),
+    ];
   }
   if (a is num && b is num) return a == b ? const [] : ['$path : $a → $b'];
   return a == b ? const [] : ['$path : $a → $b'];
@@ -122,25 +130,32 @@ List<String> diff(Object? a, Object? b, [String path = '']) {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  test('historique, records et statistiques identiques avant / après G3', () async {
-    final now = {
-      'programme_40_semaines': await releveDe(filledBackup),
-      'banc_charge': await releveDe((seed) => perfBackup(seed, 'charge')!),
-    };
-    final golden = File('test/fixtures/g3_historique_avant.json');
-    if (!golden.existsSync()) {
-      // ignore: avoid_print
-      print('G3-RELEVE-DEBUT${jsonEncode(now)}G3-RELEVE-FIN');
-      return;
-    }
-    final before =
-        (jsonDecode(golden.readAsStringSync()) as Map<String, dynamic>)['releves'];
-    final d = diff(jsonDecode(jsonEncode(before)), jsonDecode(jsonEncode(now)));
-    expect(d, isEmpty, reason: d.take(40).join('\n'));
-    // Le relevé n'est pas vide : il porte vraiment sur un historique.
-    final p = now['programme_40_semaines']!;
-    expect((p['seances'] as Map).length, greaterThan(150));
-    expect((p['meilleures'] as Map).length, greaterThan(40));
-    expect((now['banc_charge']!['records'] as Map), isNotEmpty);
-  });
+  test(
+    'historique, records et statistiques identiques avant / après G3',
+    () async {
+      final now = {
+        'programme_40_semaines': await releveDe(filledBackup),
+        'banc_charge': await releveDe((seed) => perfBackup(seed, 'charge')!),
+      };
+      final golden = File('test/fixtures/g3_historique_avant.json');
+      if (!golden.existsSync()) {
+        // ignore: avoid_print
+        print('G3-RELEVE-DEBUT${jsonEncode(now)}G3-RELEVE-FIN');
+        return;
+      }
+      final before =
+          (jsonDecode(golden.readAsStringSync())
+              as Map<String, dynamic>)['releves'];
+      final d = diff(
+        jsonDecode(jsonEncode(before)),
+        jsonDecode(jsonEncode(now)),
+      );
+      expect(d, isEmpty, reason: d.take(40).join('\n'));
+      // Le relevé n'est pas vide : il porte vraiment sur un historique.
+      final p = now['programme_40_semaines']!;
+      expect((p['seances'] as Map).length, greaterThan(150));
+      expect((p['meilleures'] as Map).length, greaterThan(40));
+      expect((now['banc_charge']!['records'] as Map), isNotEmpty);
+    },
+  );
 }

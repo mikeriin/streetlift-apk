@@ -221,14 +221,10 @@ void main() {
         // (supinateur) : la région reste alors en rouge ou absente. Sinon,
         // les régions étirées sont montrées étirées.
         final regions = map.fromPack({for (final e in d.etires) e: 1}).keys;
-        expect(
-          m.stretched,
-          {
-            for (final r in regions)
-              if (!m.intensities.containsKey(r)) r,
-          },
-          reason: id,
-        );
+        expect(m.stretched, {
+          for (final r in regions)
+            if (!m.intensities.containsKey(r)) r,
+        }, reason: id);
         if (m.stretched.isNotEmpty) shown++;
       }
       expect(count, greaterThan(800));
@@ -353,7 +349,10 @@ void main() {
 
       // G3 : soulevé de terre de la base v1.1 (quadriceps en principal
       // aussi) : 3/4 sans la carte.
-      expect(of('mu-souleve-de-terre-conventionnel'), MannequinView.troisQuarts);
+      expect(
+        of('mu-souleve-de-terre-conventionnel'),
+        MannequinView.troisQuarts,
+      );
       expect(of('mu-hip-thrust-barre'), MannequinView.dos);
       expect(of('mu-roue-abdominale-genoux'), MannequinView.face);
       expect(of('sw-dips-barres-paralleles'), MannequinView.troisQuarts);
@@ -424,7 +423,10 @@ void main() {
     ) async {
       phone(tester, size: const Size(320, 720));
       await tester.pumpWidget(
-        host(const ExerciseSheetScreen(id: 'mu-souleve-de-terre-conventionnel'), dark: true),
+        host(
+          const ExerciseSheetScreen(id: 'mu-souleve-de-terre-conventionnel'),
+          dark: true,
+        ),
       );
       await tester.pumpAndSettle();
       expect(find.byType(ExerciseMannequin), findsNothing);

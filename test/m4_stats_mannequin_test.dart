@@ -106,13 +106,20 @@ void main() {
       fillWeek(store);
       final names = store.weeklyNames();
       expect(names, isNotEmpty);
-      final got = targetedMapIntensities(store.content, names, store.weeklyMuscles());
+      final got = targetedMapIntensities(
+        store.content,
+        names,
+        store.weeklyMuscles(),
+      );
       expect(got, isNotEmpty);
       expect(got.values.reduce((a, b) => a > b ? a : b), 1.0);
       for (final v in got.values) {
         expect(v, inInclusiveRange(kMapMinIntensity, 1.0));
       }
-      expect(got, mapIntensitiesFromWeights(targetedMuscles(store.content, names)));
+      expect(
+        got,
+        mapIntensitiesFromWeights(targetedMuscles(store.content, names)),
+      );
     });
   });
 
