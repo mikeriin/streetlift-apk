@@ -220,6 +220,7 @@ final class Scorer {
     var knownSeen = 0;
     var novelSeen = 0;
     var fitSum = 0.0;
+    var fitSlots = 0;
     var relevantMobility = 0;
     var cardioStack = 0;
     var skillDays = 0;
@@ -266,8 +267,18 @@ final class Scorer {
         jointTime += seconds * e.jointPenalty;
         // Un exercice réduit sous sa dose de référence vaut d'autant moins :
         // mieux vaut cinq exercices complets que huit exercices rognés.
-        final dose = e.scheme.sets;
-        fitSum += count >= dose ? e.fit : e.fit * count / dose;
+        // Un effort continu (footing, routine) compte pour autant
+        // d'exercices que sa durée en remplace.
+        if (e.scheme.continuous) {
+          final units = seconds ~/ (minutesPerExpectedSlot * 60);
+          final n = units < 1 ? 1 : units;
+          fitSum += e.fit * n;
+          fitSlots += n;
+        } else {
+          final dose = e.scheme.sets;
+          fitSum += count >= dose ? e.fit : e.fit * count / dose;
+          fitSlots++;
+        }
         if (e.needsWarmup) {
           warm = true;
         }
@@ -761,7 +772,7 @@ final class Scorer {
     // semaine encore creuse.
     c[10] = slots == 0
         ? 1.0
-        : fitSum / (slots < _expectedSlots ? _expectedSlots : slots);
+        : fitSum / (fitSlots < _expectedSlots ? _expectedSlots : fitSlots);
 
     // Qualité : rapport stimulus / fatigue.
     c[11] = sfrTime == 0 ? 1.0 : sfrSum / sfrTime;

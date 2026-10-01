@@ -807,6 +807,22 @@ Scheme schemeFor(ExerciseTraits t, SchemeInputs i, PlanParams params) {
           rir: _rirFor(const <double>[3, 2.5, 2, 2], i),
         );
       }
+      if (loaded &&
+          e.difficulty >= 4 &&
+          e.pattern == MovementPattern.gainageAntiFlexionLaterale &&
+          e.articularity == Articularity.multiJoint) {
+        // Relevé turc : quelques répétitions lentes par côté.
+        return reps(
+          SchemeKind.coreReps,
+          const <int>[2, 3, 3, 3],
+          2,
+          4,
+          90,
+          _rirFor(const <double>[3, 3, 3, 3], i),
+          maxSets: 4,
+          cadence: 5,
+        );
+      }
       final (low, high) = loaded ? (10, 15) : bodyweightRange();
       return reps(
         SchemeKind.coreReps,
