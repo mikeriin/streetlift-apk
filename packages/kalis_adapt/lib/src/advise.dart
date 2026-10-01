@@ -9,6 +9,7 @@ import 'fatigue.dart';
 import 'filter.dart';
 import 'model.dart';
 import 'numeric.dart';
+import 'params.dart';
 import 'replay.dart';
 import 'session.dart';
 
@@ -87,8 +88,16 @@ IntraSessionAdvice buildAdvice(
   final day = request.input.today.dayNumber;
   final state = replayed.state.fork();
   final check = request.healthCheck;
-  final health = readHealth(check, p);
-  notePains(state, check, const <PainReport>[], day, p);
+  var health = readHealth(check, p);
+  if (check == null) {
+    // Appelant d'avant kalis_core 0.2.0 : le bilan du jour n'est pas
+    // redonné. Les verrous de la séance sont relus dans ses raisons —
+    // bilan bas (palier et forme du jour) et zones douloureuses.
+    health = _healthOf(session, state, day, p);
+    _painsOf(session, state, day, p);
+  } else {
+    notePains(state, check, const <PainReport>[], day, p);
+  }
   final run = SessionRun(
     ctx,
     state,
@@ -104,7 +113,7 @@ IntraSessionAdvice buildAdvice(
   }
 
   String? openKey;
-  String? openSlot;
+  final bySlot = <String, ExerciseRun>{};
   for (final set in request.done) {
     if (!set.isUsable || set.kind == SetKind.warmup) {
       continue;
@@ -118,17 +127,25 @@ IntraSessionAdvice buildAdvice(
     if (amount == null) {
       continue;
     }
+    if (info.mode == CapacityMode.loaded &&
+        info.totalLoad(set.externalLoadKg ?? 0, run.bodyWeightKg) <= 0) {
+      continue;
+    }
     final key = '${set.slotId ?? ''}|${set.exerciseId}|${set.exerciseOrder}';
     if (key != openKey) {
       openKey = key;
       final item = _itemOf(session, set.slotId, set.exerciseId);
-      openSlot = item?.slotId ?? set.slotId;
+      final slot = item?.slotId ?? set.slotId;
       final exercise = run.begin(
         info,
-        _specOf(view, session, info, item, item?.slotId ?? set.slotId),
+        _specOf(view, session, info, item, slot),
+        key: key,
       );
-      if (item != null) {
+      if (item != null && exercise.observed.isEmpty) {
         exercise.plan = _plansOf(item, hold: hold);
+      }
+      if (slot != null) {
+        bySlot[slot] = exercise;
       }
     }
     final exercise = run.current!;
@@ -148,11 +165,26 @@ IntraSessionAdvice buildAdvice(
 
   final info = ctx.book.find(wanted.exerciseId);
   final rest = wanted.restSeconds;
-  ExerciseRun? exercise = run.current;
-  if (exercise == null ||
-      openSlot != wanted.slotId ||
-      exercise.observed.isEmpty) {
+  // Le déroulement de l'emplacement demandé, même si d'autres exercices
+  // ont été faits depuis (séries enchaînées).
+  ExerciseRun? exercise = bySlot[wanted.slotId];
+  if (exercise != null &&
+      (exercise.observed.isEmpty || exercise.info.id != wanted.exerciseId)) {
     exercise = null;
+  }
+  if (exercise != null && exercise.closed) {
+    // Le même exercice a été repris à un autre emplacement entre-temps :
+    // le déroulement est rouvert avec ce qu'il a déjà vu.
+    final again = run.begin(exercise.info, exercise.spec, key: exercise.key);
+    if (!identical(again, exercise)) {
+      again.observed.addAll(exercise.observed);
+      again.plan = exercise.plan;
+      again.fails = exercise.fails;
+      again.ratedSets = exercise.ratedSets;
+      again.easySets = exercise.easySets;
+      again.lastRatedEasy = exercise.lastRatedEasy;
+    }
+    exercise = again;
   }
   if (info == null || info.mode == null) {
     return IntraSessionAdvice(
@@ -291,4 +323,92 @@ IntraSessionAdvice buildAdvice(
     confidence: roundTo(clampDouble(1 - sd / (2 * p.calibrationSd), 0, 1), 3),
     reasons: reasons,
   );
+}
+
+/// Lecture du bilan du jour d'après la séance prescrite, quand le bilan
+/// lui-même n'est pas redonné : palier (raison `adapt.load_held` de cause
+/// `health` ou `health_strong`) et effet sur la capacité (forme du jour de
+/// la raison `adapt.readiness`, moins la fatigue modélisée).
+HealthReading _healthOf(
+  SessionPlan session,
+  ModelState state,
+  int day,
+  AdaptParams p,
+) {
+  var level = 0;
+  double? readiness;
+  for (final r in session.reasons) {
+    if (r.code == ReasonCodes.adaptLoadHeld) {
+      final cause = r.params['cause'];
+      if (cause == 'health_strong') {
+        level = 2;
+      } else if (cause == 'health' && level < 1) {
+        level = 1;
+      }
+    } else if (r.code == ReasonCodes.adaptReadiness) {
+      final value = r.params['readiness'];
+      if (value is num) {
+        readiness = value.toDouble();
+      }
+    }
+  }
+  if (level == 0) {
+    return HealthReading.none;
+  }
+  var shift = level >= 2 ? p.healthLevel2 : p.healthLevel1;
+  if (readiness != null && readiness > 0) {
+    final fatigue = state.fatigue.fork()..advance(day, p);
+    final fromReadiness =
+        (readiness - 1) * p.readinessSpan - fatigue.globalShift(p);
+    if (fromReadiness < shift) {
+      shift = fromReadiness;
+    }
+  }
+  return HealthReading(clampDouble(shift, p.healthFloor, 0), level, 0);
+}
+
+/// Note dans [state] les zones douloureuses que la séance prescrite a
+/// retenues (raisons `adapt.pain_reported` de ses exercices et de ses
+/// ajustements).
+void _painsOf(SessionPlan session, ModelState state, int day, AdaptParams p) {
+  final worst = <BodyZone, int>{};
+  void read(List<Reason> reasons) {
+    for (final r in reasons) {
+      if (r.code != ReasonCodes.adaptPainReported) {
+        continue;
+      }
+      final code = r.params['zone'];
+      final intensity = r.params['intensity'];
+      if (code is! String || intensity is! num) {
+        continue;
+      }
+      for (final zone in BodyZone.values) {
+        if (zone.code == code) {
+          final old = worst[zone];
+          if (old == null || intensity > old) {
+            worst[zone] = intensity.toInt();
+          }
+        }
+      }
+    }
+  }
+
+  for (final item in session.items) {
+    read(item.reasons);
+  }
+  for (final adjustment in session.adjustments) {
+    read(adjustment.reasons);
+  }
+  for (final zone in BodyZone.values) {
+    final intensity = worst[zone];
+    if (intensity != null && intensity > p.painThreshold) {
+      state.notePain(
+        zone,
+        state.pains[zone]?.side ?? BodySide.both,
+        intensity,
+        day,
+        p,
+      );
+    }
+  }
 }

@@ -14,9 +14,14 @@
 //  I4  aucune proposition au-dessus du niveau de déblocage ;
 //  I5  sorties valides au sens du contrat (codes de raison compris),
 //      charges sur la grille du matériel ;
-//  I6  même entrée, même sortie à l'octet près, avec ou sans cache ;
+//  I6  même entrée, même sortie à l'octet près, avec ou sans cache, que le
+//      journal soit donné en une fois ou prolongé d'un appel à l'autre ;
 //  I7  un bilan santé sans réponse équivaut à l'absence de bilan ;
 //  I8  les séances « reprise » ne changent rien.
+//
+// Un journal sur cinq enchaîne les séries de deux exercices (superset) ;
+// les conseils sont demandés avec et sans le bilan du jour, et après des
+// séries d'un autre emplacement.
 import 'package:kalis_adapt/kalis_adapt.dart';
 import 'package:kalis_adapt/simulation.dart';
 import 'package:kalis_core/kalis_core.dart';
@@ -229,6 +234,29 @@ SetRecord _randomSet(
   );
 }
 
+/// Enchaîne les séries des exercices deux à deux, dans l'ordre de
+/// réalisation d'un superset : A1, B1, A2, B2…
+void _interleave(List<SetRecord> sets) {
+  final byOrder = <int, List<SetRecord>>{};
+  for (final s in sets) {
+    byOrder.putIfAbsent(s.exerciseOrder, () => <SetRecord>[]).add(s);
+  }
+  final groups = byOrder.values.toList();
+  sets.clear();
+  for (var g = 0; g < groups.length; g += 2) {
+    final a = groups[g];
+    final b = g + 1 < groups.length ? groups[g + 1] : const <SetRecord>[];
+    for (var i = 0; i < a.length || i < b.length; i++) {
+      if (i < a.length) {
+        sets.add(a[i]);
+      }
+      if (i < b.length) {
+        sets.add(b[i]);
+      }
+    }
+  }
+}
+
 /// Journal aléatoire de graine [seed] sur l'un des [programs].
 RandomCase randomCase(
   Catalog catalog,
@@ -295,6 +323,9 @@ RandomCase randomCase(
         sets.add(_randomSet(r, info, slotItem, order, i, base));
       }
       order++;
+    }
+    if (_chance(r, 20)) {
+      _interleave(sets);
     }
     final resume = _chance(r, 5);
     sessions.add(
@@ -409,6 +440,29 @@ List<String> checkCase(Catalog catalog, KalisAdapt engine, RandomCase c) {
   final fresh = KalisAdapt(params: p);
   if (jsonText(fresh.prescribeSession(catalog, request).toJson()) != text) {
     out.add('$where : séance différente sans cache');
+  }
+  // I6 : journal prolongé d'un appel à l'autre = journal donné en une fois.
+  if (c.seed % 4 == 1 && c.log.sessions.length >= 2) {
+    final grown = KalisAdapt(params: p);
+    final half = c.log.sessions.length ~/ 2;
+    grown.prescribeSession(
+      catalog,
+      SessionRequest(
+        input: AdaptInput(
+          profile: c.profile,
+          block: c.block,
+          log: TrainingLog(sessions: c.log.sessions.sublist(0, half)),
+          today: c.today,
+        ),
+        weekIndex: c.weekIndex,
+        dayIndex: c.dayIndex,
+        healthCheck: c.health,
+        place: c.place,
+      ),
+    );
+    if (jsonText(grown.prescribeSession(catalog, request).toJson()) != text) {
+      out.add('$where : séance différente quand le journal est prolongé');
+    }
   }
   // I7 : bilan sans réponse = pas de bilan.
   if (c.health == null) {
@@ -525,8 +579,69 @@ List<String> checkCase(Catalog catalog, KalisAdapt engine, RandomCase c) {
               jsonText(advice.toJson())) {
         out.add('$where : conseil différent sans cache');
       }
+      if (c.health != null && advices <= 3) {
+        // Appelant qui ne redonne pas le bilan du jour : les verrous de la
+        // séance tiennent quand même.
+        final bare = engine.adviseNextSet(
+          catalog,
+          AdviceRequest(
+            input: c.input,
+            session: session,
+            done: List<SetRecord>.of(done),
+            slotId: item.slotId,
+          ),
+        );
+        for (final v in bare.validate()) {
+          out.add('$where, conseil sans bilan : ${v.path} ${v.code}');
+        }
+        out.addAll(
+          checkAdvice(
+            catalog,
+            c.profile,
+            session,
+            done,
+            bare,
+            p,
+          ).map((v) => '$where, sans bilan, $v'),
+        );
+      }
     }
     order++;
+  }
+  // Séries enchaînées : après des séries d'autres emplacements, le conseil
+  // d'un emplacement déjà commencé tient encore ses invariants.
+  final started = <String>{};
+  for (final s in done) {
+    final slot = s.slotId;
+    if (slot == null || !started.add(slot) || started.length > 3) {
+      continue;
+    }
+    if (done.last.slotId == slot) {
+      continue;
+    }
+    final late = engine.adviseNextSet(
+      catalog,
+      AdviceRequest(
+        input: c.input,
+        session: session,
+        done: List<SetRecord>.of(done),
+        slotId: slot,
+        healthCheck: c.health,
+      ),
+    );
+    for (final v in late.validate()) {
+      out.add('$where, conseil enchaîné : ${v.path} ${v.code}');
+    }
+    out.addAll(
+      checkAdvice(
+        catalog,
+        c.profile,
+        session,
+        done,
+        late,
+        p,
+      ).map((v) => '$where, enchaîné, $v'),
+    );
   }
 
   // Revue.

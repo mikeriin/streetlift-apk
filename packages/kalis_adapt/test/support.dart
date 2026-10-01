@@ -201,6 +201,87 @@ bool lastHadUnplannedFailure(TrainingLog log, ExerciseInfo info) {
   return false;
 }
 
+/// Plus légère des charges échouées (échec non prévu) de la dernière
+/// séance de l'exercice [info] dans [log], ou `null`.
+double? lowestFailedLoad(TrainingLog log, ExerciseInfo info) {
+  final sessions = log.countedSessions.toList();
+  for (var i = sessions.length - 1; i >= 0; i--) {
+    var seen = false;
+    double? lowest;
+    for (final s in sessions[i].sets) {
+      if (!countsFor(info, s)) {
+        continue;
+      }
+      seen = true;
+      final missed =
+          s.flames == Flames.failure || (s.flames == null && !s.success);
+      final planned = (s.target?.flames ?? 0) >= Flames.failure;
+      final kg = s.externalLoadKg ?? 0;
+      if (missed && !planned && (lowest == null || kg < lowest)) {
+        lowest = kg;
+      }
+    }
+    if (seen) {
+      return lowest;
+    }
+  }
+  return null;
+}
+
+/// Nombre de séances de [log] (hors « reprise ») où l'exercice [info] a
+/// des séries prises en compte.
+int sessionsOfExercise(TrainingLog log, ExerciseInfo info) {
+  var count = 0;
+  for (final session in log.countedSessions) {
+    if (session.sets.any((s) => countsFor(info, s))) {
+      count++;
+    }
+  }
+  return count;
+}
+
+/// Vrai si le moteur prend la série [s] en compte pour l'exercice sans
+/// charge [info] (répétitions ou secondes).
+bool countsDirect(ExerciseInfo info, SetRecord s) {
+  if (s.exerciseId != info.id || !s.isUsable || s.kind == SetKind.warmup) {
+    return false;
+  }
+  return (info.mode == CapacityMode.hold ? s.seconds : s.reps) != null;
+}
+
+/// Dernière séance de [log] où l'exercice sans charge [info] a des séries
+/// prises en compte : (plus grande série, échec non prévu, jour), ou
+/// `null`.
+(int, bool, int)? lastDirectOf(TrainingLog log, ExerciseInfo info) {
+  final hold = info.mode == CapacityMode.hold;
+  final sessions = log.countedSessions.toList();
+  for (var i = sessions.length - 1; i >= 0; i--) {
+    var seen = false;
+    var top = 0;
+    var failed = false;
+    for (final s in sessions[i].sets) {
+      if (!countsDirect(info, s)) {
+        continue;
+      }
+      seen = true;
+      final amount = (hold ? s.seconds : s.reps)!;
+      if (amount > top) {
+        top = amount;
+      }
+      final missed =
+          s.flames == Flames.failure || (s.flames == null && !s.success);
+      final planned = (s.target?.flames ?? 0) >= Flames.failure;
+      if (missed && !planned) {
+        failed = true;
+      }
+    }
+    if (seen) {
+      return (top, failed, sessions[i].date.dayNumber);
+    }
+  }
+  return null;
+}
+
 /// Jour de la dernière séance de l'exercice [info] dans [log], ou `null`.
 int? lastDayOf(TrainingLog log, ExerciseInfo info) {
   int? day;
@@ -248,13 +329,18 @@ Set<BodyZone> painsSince(
 /// Invariants de sécurité d'une séance prescrite, lus dans le journal seul
 /// (sans l'état du moteur) :
 ///
-/// 1. mouvement principal hors calibrage : charge totale ≤ +10 % de la plus
-///    forte charge de la dernière séance de l'exercice — ou un seul cran de
-///    la grille quand le plus petit cran dépasse 10 % ;
-/// 2. aucune hausse après une série à l'échec non prévue ;
+/// 1. mouvement principal hors calibrage (l'exercice a déjà trois séances
+///    au journal) et hors test : charge totale ≤ +10 % de la plus forte
+///    charge de la dernière séance de l'exercice — ou un seul cran de la
+///    grille quand le plus petit cran dépasse 10 % ;
+/// 2. aucune hausse après une série à l'échec non prévue, et jamais plus
+///    que la plus légère des charges échouées ;
 /// 3. aucune hausse sur un exercice d'une zone signalée douloureuse
 ///    au-dessus du seuil depuis sa dernière séance ;
-/// 4. charges sur la grille du matériel.
+/// 4. charges sur la grille du matériel ;
+/// 5. exercices sans charge (répétitions, tenues), hors test : dans les
+///    cas 2 et 3, aucune cible au-dessus de la plus grande série de la
+///    dernière séance.
 List<String> checkSession(
   Catalog catalog,
   AthleteProfile profile,
@@ -273,6 +359,33 @@ List<String> checkSession(
   };
   for (final item in session.items) {
     final info = book.find(item.exerciseId);
+    if (info != null &&
+        (info.mode == CapacityMode.reps || info.mode == CapacityMode.hold) &&
+        item.kind != SetKind.test) {
+      final last = lastDirectOf(log, info);
+      if (last != null) {
+        final (top, failed, lastDay) = last;
+        final hold = info.mode == CapacityMode.hold;
+        var locked = failed ? 'un échec non prévu' : null;
+        for (final zone in painsSince(log, lastDay, health, p)) {
+          if (info.zoneLevel(zone) >= 0.5) {
+            locked ??= 'une douleur (${zone.code})';
+          }
+        }
+        final cap = top < 1 ? 1 : top;
+        if (locked != null) {
+          for (final t in item.setTargets ?? const <SetTarget>[]) {
+            final high = hold ? t.secondsHigh : t.repsHigh;
+            if (high != null && high > cap) {
+              out.add(
+                '${session.date.iso} ${item.exerciseId} : cible $high après '
+                '$locked (dernière séance : $top au plus)',
+              );
+            }
+          }
+        }
+      }
+    }
     if (info == null || info.mode != CapacityMode.loaded) {
       continue;
     }
@@ -319,7 +432,7 @@ List<String> checkSession(
     final oneStep = info.grid.next(reference, up: true);
     final test = item.kind == SetKind.test;
     if (roles[item.slotId] == SlotRole.main &&
-        !item.toCalibrate &&
+        sessionsOfExercise(log, info) >= p.calibrationSessions &&
         !test &&
         rise > p.maxUpMain + 1e-6 &&
         top > oneStep + 0.011) {
@@ -330,6 +443,10 @@ List<String> checkSession(
     }
     if (top > reference + 0.011 && lastHadUnplannedFailure(log, info)) {
       out.add('$where : hausse après un échec non prévu ($reference → $top)');
+    }
+    final failedAt = lowestFailedLoad(log, info);
+    if (failedAt != null && top > failedAt + 0.011) {
+      out.add('$where : $top kg après un échec non prévu à $failedAt kg');
     }
     if (top > reference + 0.011) {
       final zones = painsSince(log, lastDayOf(log, info), health, p);
@@ -347,9 +464,12 @@ List<String> checkSession(
 }
 
 /// Invariants d'un conseil : jamais de hausse de charge après une série à
-/// l'échec non prévue dans la séance ; charge sur la grille. Une série sans
-/// cible enregistrée est jugée d'après la cible de la séance [session],
-/// comme le fait le moteur.
+/// l'échec non prévue dans la séance (les séries d'un autre emplacement
+/// faites entre-temps n'y changent rien), ni quand la séance est verrouillée
+/// (bilan bas, zone douloureuse) ; charge sur la grille ; sans charge,
+/// jamais plus que la dernière série après un échec. Une série sans cible
+/// enregistrée est jugée d'après la cible de la séance [session], comme le
+/// fait le moteur.
 List<String> checkAdvice(
   Catalog catalog,
   AthleteProfile profile,
@@ -360,6 +480,54 @@ List<String> checkAdvice(
 ) {
   final out = <String>[];
   final info = ExerciseBook(catalog, profile).find(advice.exerciseId);
+  if (info != null &&
+      (info.mode == CapacityMode.reps || info.mode == CapacityMode.hold)) {
+    final hold = info.mode == CapacityMode.hold;
+    List<SetTarget>? shownDirect;
+    for (final item in session.items) {
+      if (item.slotId == advice.slotId) {
+        shownDirect = item.setTargets;
+      }
+    }
+    int? lastAmount;
+    var failedDirect = false;
+    var rank = 0;
+    for (final s in done) {
+      if (s.slotId != advice.slotId || !countsDirect(info, s)) {
+        continue;
+      }
+      lastAmount = hold ? s.seconds : s.reps;
+      final recorded = s.target;
+      int? aimed;
+      if (recorded != null &&
+          recorded.flames != null &&
+          (hold
+                  ? (recorded.secondsLow ?? recorded.secondsHigh)
+                  : (recorded.repsLow ?? recorded.repsHigh)) !=
+              null) {
+        aimed = recorded.flames;
+      } else if (shownDirect != null && rank < shownDirect.length) {
+        aimed = shownDirect[rank].flames;
+      }
+      final missed =
+          s.flames == Flames.failure || (s.flames == null && !s.success);
+      if (missed && (aimed ?? 0) < Flames.failure) {
+        failedDirect = true;
+      }
+      rank++;
+    }
+    final high = hold ? advice.nextSeconds : advice.nextRepsHigh;
+    if (failedDirect && lastAmount != null && high != null) {
+      final cap = lastAmount < 1 ? 1 : lastAmount;
+      if (high > cap) {
+        out.add(
+          'conseil ${advice.exerciseId} : cible $high après un échec '
+          '(dernière série : $lastAmount)',
+        );
+      }
+    }
+    return out;
+  }
   final next = advice.nextLoadKg;
   if (info == null || next == null || info.mode != CapacityMode.loaded) {
     return out;
@@ -408,6 +576,39 @@ List<String> checkAdvice(
   }
   if (advice.action == IntraSessionAction.loadUp && failed) {
     out.add('conseil ${advice.exerciseId} : load_up après un échec');
+  }
+  // Séance verrouillée : bilan bas (dit par la séance) ou zone douloureuse
+  // retenue pour cet exercice.
+  String? locked;
+  for (final r in session.reasons) {
+    if (r.code == ReasonCodes.adaptLoadHeld &&
+        '${r.params['cause']}'.startsWith('health')) {
+      locked = 'bilan bas';
+    }
+  }
+  for (final item in session.items) {
+    if (item.slotId != advice.slotId) {
+      continue;
+    }
+    for (final r in item.reasons) {
+      if (r.code != ReasonCodes.adaptPainReported) {
+        continue;
+      }
+      final intensity = r.params['intensity'];
+      for (final zone in BodyZone.values) {
+        if (zone.code == r.params['zone'] &&
+            intensity is num &&
+            intensity > p.painThreshold &&
+            info.zoneLevel(zone) >= 0.5) {
+          locked ??= 'douleur ${zone.code}';
+        }
+      }
+    }
+  }
+  if (last != null && locked != null && next > last + 0.011) {
+    out.add(
+      'conseil ${advice.exerciseId} : hausse malgré $locked ($last → $next)',
+    );
   }
   return out;
 }

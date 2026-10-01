@@ -222,7 +222,8 @@ String campaignMarkdown(Map<String, Object?> campaign) {
         'simulation, après calibrage. Inversions : part de ces changements '
         'qui défont le précédent. Hausse max : plus forte hausse de charge '
         'totale d\'un mouvement principal par rapport à la plus forte '
-        'charge de sa séance précédente, hors calibrage déclaré. Hausses '
+        'charge de sa séance précédente, à partir de la 4ᵉ séance de '
+        'l\'exercice et hors semaines de test. Hausses '
         '> 10 % : celles qui franchissent plus d\'un cran de la grille (ce '
         'que l\'invariant I1 interdit à `kalis_adapt`), et celles d\'un '
         'seul cran (le plus petit cran du matériel dépasse 10 %), sur '
@@ -311,6 +312,31 @@ String campaignMarkdown(Map<String, Object?> campaign) {
       '${unlock(u, 'exercise_swap', runs)} | '
       '${unlock(u, 'session_restructure', runs)} | '
       '${unlock(u, 'block_restructure', runs)} |',
+    );
+  }
+  out.addAll(<String>[
+    '',
+    'Candidates retenues par la revue, par simulation (nature : cause — '
+        '`unlock` niveau de déblocage pas encore atteint, `confidence` '
+        'confiance sous le seuil du niveau, `utility` utilité nulle ou '
+        'négative, `refused` refus récent, `settled` déjà décidée, '
+        '`recent_swap` échange trop récent, `scope` changement qui déborde '
+        'de sa portée, `no_change` et `plan_error` rien à proposer par '
+        '`kalis_plan`) :',
+    '',
+    '| Athlète | Candidates retenues |',
+    '| --- | --- |',
+  ]);
+  for (final a in athletes) {
+    final athlete = _map(a);
+    final loop = _map(athlete['loop']);
+    if (loop.isEmpty) {
+      continue;
+    }
+    final held = _map(loop['withheld']);
+    out.add(
+      '| ${athlete['key']} | '
+      '${held.isEmpty ? '—' : held.entries.map((e) => '${e.key} ${_num(e.value, 1)}').join(' ; ')} |',
     );
   }
   final timings = _map(campaign['timings']);

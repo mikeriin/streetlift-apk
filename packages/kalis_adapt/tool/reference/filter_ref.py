@@ -153,7 +153,7 @@ class Filter:
             self.C[3][i] = 0.0
             self.C[i][3] = 0.0
         self.m[3] = 0.0
-        self.history.append((self.day, self.m[0], math.sqrt(max(self.C[0][0], 0.0))))
+        self.history.append((self.day, self.m[0] + self.g_ref(), math.sqrt(max(self.C[0][0], 0.0))))
 
     # -- fatigue intra-séance
     def fatigue_now(self, p=P):
@@ -195,16 +195,27 @@ class Filter:
         return self.m[0] + self.m[3] + shift + self.g_ref() - math.log(1.0 + (max(n, 1.0) - 1.0) / k)
 
     # -- observation
-    def observe_load(self, log_load, n, n_sd, fatigue, p=P, bound=False, learn_k=False, upper=False):
+    def observe_load(self, log_load, n, n_sd, fatigue, p=P, bound=False, learn_k=False, upper=False, clip=None):
         """Série à charge log_load, n répétitions jusqu'à l'échec estimées
         (écart-type n_sd). bound : borne inférieure seulement. learn_k :
         l'observation met à jour k (n connu précisément) ; sinon k est tenu
-        pour fixe : il ne bouge pas, et son incertitude s'ajoute au bruit."""
+        pour fixe : il ne bouge pas, et son incertitude s'ajoute au bruit.
+        clip : au-delà de ce nombre d'écarts-types de l'innovation, la série
+        est douteuse — bruit gonflé pour ramener l'écart au seuil, k non
+        appris."""
         k = self.k()
         scale = 1.0 / max(1e-6, (1.0 - fatigue))
         h, H, u = self._h(max(n, 1.0) * scale)
         slope = scale / (k * (1.0 + u))
         R = sq(n_sd * slope) + sq(p['obs_floor'])
+        if clip is not None:
+            nu = log_load - h
+            contradicts = (nu < 0.0 if upper else nu > 0.0) if bound else True
+            if contradicts and nu * nu > clip * clip * self._innovation_var(H, R, learn_k):
+                learn_k = False
+                inflated = R + nu * nu / (clip * clip) - self._innovation_var(H, R, False)
+                if inflated > R:
+                    R = inflated
         if bound and upper:
             # « au plus n » : la même contrainte, de l'autre côté
             self._lower_bound([-x for x in H], log_load - h, R, learn_k)
@@ -214,6 +225,30 @@ class Filter:
             self._update(H, log_load - h, R, learn_k)
         self.m[2] = min(math.log(p['k_max']), max(math.log(p['k_min']), self.m[2]))
         self.sets += 1
+
+    def _innovation_var(self, H, R, learn_k):
+        H, R = self._effective(H, R, learn_k)
+        return R + sum(H[i] * self.C[i][j] * H[j] for i in range(4) for j in range(4))
+
+    def repivot(self, n):
+        """Déplace le pivot de la courbe à n répétitions (hors séance) :
+        c' = c + g(n_ref, k) − g(n, k) ; covariance par c' = c + t·κ."""
+        if self.in_session:
+            return
+        to = max(n, 1.0)
+        if abs(to - self.n_ref) < 1e-9:
+            return
+        k = self.k()
+        u0 = (self.n_ref - 1.0) / k
+        u1 = (to - 1.0) / k
+        t = u1 / (1.0 + u1) - u0 / (1.0 + u0)
+        self.m[0] += math.log(1.0 + u0) - math.log(1.0 + u1)
+        for j in range(4):
+            self.C[0][j] += t * self.C[2][j]
+        for i in range(4):
+            self.C[i][0] += t * self.C[i][2]
+        self.n_ref = to
+        _sym(self.C)
 
     def _gain(self, H, R, learn_k):
         CH = [sum(self.C[i][j] * H[j] for j in range(4)) for i in range(4)]
@@ -268,11 +303,16 @@ class Filter:
                     self.C[i][j] = (1.0 - w) * old[i][j] + w * self.C[i][j]
             _sym(self.C)
 
-    def observe_direct(self, log_capacity, sd, p=P, bound=False):
+    def observe_direct(self, log_capacity, sd, p=P, bound=False, clip=None):
         """Capacité observée directement (répétitions ou secondes max)."""
         h = self.m[0] + self.m[3]
         H = [1.0, 0.0, 0.0, 1.0]
         R = sq(sd) + sq(p['obs_floor'])
+        if clip is not None:
+            nu = log_capacity - h
+            S = self._innovation_var(H, R, False)
+            if ((not bound) or nu > 0.0) and nu * nu > clip * clip * S:
+                R += nu * nu / (clip * clip) - S
         if bound:
             self._lower_bound(H, h - log_capacity, R, False)
         else:

@@ -8,6 +8,7 @@ const double poundKg = 0.45359237;
 
 /// Grille de charge d'un type de matériel.
 ///
+/// Les charges sont la plus petite charge plus un nombre entier de pas.
 /// Les incréments viennent du profil (`loadIncrements`) ; sinon : haltères
 /// par 1 kg jusqu'à 10 kg puis par 2 kg, barre par paire de disques de
 /// 1,25 kg (2,5 kg), poulie par 2,5 lb, machine par 5 kg, kettlebell par
@@ -103,8 +104,12 @@ final class LoadGrid {
           _dumbbellKnee +
           ((kg - _dumbbellKnee) / _dumbbellLargeStep + _eps).floorToDouble() *
               _dumbbellLargeStep;
+    } else if (kg <= minimum) {
+      value = minimum;
     } else {
-      value = (kg / step + _eps).floorToDouble() * step;
+      // Les charges disponibles partent de la plus petite : barre de 7 kg
+      // et disques par 2,5 kg → 7 ; 9,5 ; 12…
+      value = minimum + ((kg - minimum) / step + _eps).floorToDouble() * step;
     }
     return value < minimum ? minimum : value;
   }

@@ -92,6 +92,11 @@ final class ExerciseTrack {
   /// Jour de la dernière séance.
   int? lastDay;
 
+  /// Jour de la dernière reprise après coupure déjà appliquée (transfert
+  /// ou désentraînement) : elle n'est pas comptée deux fois quand une
+  /// séance ouverte n'a laissé aucune série utilisable.
+  int? resumedDay;
+
   /// Dernier effet de jour observé (hors bilan santé et fatigue prévue).
   double lastResidual = 0;
 
@@ -113,6 +118,7 @@ final class ExerciseTrack {
     c.benchmarkDay = benchmarkDay;
     c.firstDay = firstDay;
     c.lastDay = lastDay;
+    c.resumedDay = resumedDay;
     c.lastResidual = lastResidual;
     c.lastSets = lastSets;
     c.bestAmount = bestAmount;
@@ -419,6 +425,17 @@ final class ExerciseRun {
   /// Le plus petit pas de la grille dépasse le plafond : la plage s'étend.
   bool coarse = false;
 
+  /// Clé de l'exercice dans la séance (emplacement, exercice, rang), ou
+  /// `null` : des séries enchaînées avec un autre exercice (superset,
+  /// tours) retrouvent le même déroulement.
+  String? key;
+
+  /// Rang de l'effet de jour de cet exercice parmi ceux de la séance.
+  int? dayIndex;
+
+  /// Vrai une fois les apprentissages de fin d'exercice faits.
+  bool closed = false;
+
   /// Vrai si l'exercice a un filtre ouvert.
   bool get modelled => track != null;
 }
@@ -493,6 +510,13 @@ final class SessionRun {
 
   final List<double> _dayResiduals = <double>[];
   final List<double> _dayWeights = <double>[];
+
+  /// Exercices de la séance qui ont des séries et attendent leur clôture,
+  /// dans l'ordre d'ouverture.
+  final List<ExerciseRun> _pending = <ExerciseRun>[];
+
+  /// Exercices clos de la séance, dans l'ordre de clôture.
+  final List<ExerciseRun> closed = <ExerciseRun>[];
 
   AdaptParams get _p => ctx.params;
 
@@ -633,14 +657,35 @@ final class SessionRun {
 
   // ------------------------------------------------------ ouverture, clôture
 
-  /// Ouvre l'exercice [info] à l'emplacement [spec] (ferme le précédent).
-  ExerciseRun begin(ExerciseInfo info, SlotSpec spec) {
-    closeExercise();
-    final run = ExerciseRun(info, spec);
+  /// Ouvre l'exercice [info] à l'emplacement [spec]. L'exercice précédent
+  /// est mis en attente : s'il revient sous la même clé [key] (séries
+  /// enchaînées), son déroulement reprend là où il en était — même effet
+  /// de jour, même fatigue de séries, même compte d'échecs. Les
+  /// apprentissages de fin d'exercice se font à [closeAll].
+  ExerciseRun begin(ExerciseInfo info, SlotSpec spec, {String? key}) {
+    _suspend();
+    if (key != null) {
+      for (final known in _pending) {
+        if (known.key == key && identical(known.info, info)) {
+          current = known;
+          return known;
+        }
+      }
+    }
+    final run = ExerciseRun(info, spec)..key = key;
     current = run;
     run.rirEff = spec.rir;
     run.nPlan = (spec.low + spec.high) / 2 + spec.rir;
     var track = state.tracks[info.id];
+    if (track != null && track.filter.inSession) {
+      // Le même exercice à un autre emplacement de la séance : le premier
+      // déroulement est clos avant d'ouvrir le second.
+      for (final other in List<ExerciseRun>.of(_pending)) {
+        if (identical(other.track, track)) {
+          _finalize(other);
+        }
+      }
+    }
     if (track == null) {
       track = _priorFor(info, spec);
       if (track != null) {
@@ -653,11 +698,58 @@ final class SessionRun {
     return run;
   }
 
+  /// Met l'exercice en cours en attente : son effet de jour, tel qu'il est
+  /// estimé à ce moment, informe la part commune des exercices suivants.
+  void _suspend() {
+    final run = current;
+    current = null;
+    if (run == null) {
+      return;
+    }
+    final track = run.track;
+    if (track == null || run.observed.isEmpty) {
+      if (track != null && track.filter.inSession && run.observed.isEmpty) {
+        // Ouvert pour une prescription, sans série : rien n'est retenu.
+        track.filter.inSession = false;
+        track.filter.m[3] = 0;
+        for (var i = 0; i < 4; i++) {
+          track.filter.cov[12 + i] = 0;
+          track.filter.cov[4 * i + 3] = 0;
+        }
+      }
+      return;
+    }
+    if (!_pending.contains(run)) {
+      _pending.add(run);
+    }
+    _noteDayEffect(run);
+  }
+
+  void _noteDayEffect(ExerciseRun run) {
+    final p = _p;
+    final f = run.track!.filter;
+    final residual = f.m[3] - run.baseShift;
+    final varOwn = (1 - p.dayCommonShare) * sq(p.daySd);
+    final weight = 1 / (f.cov[15] + varOwn);
+    final index = run.dayIndex;
+    if (index == null) {
+      run.dayIndex = _dayResiduals.length;
+      _dayResiduals.add(residual);
+      _dayWeights.add(weight);
+    } else {
+      _dayResiduals[index] = residual;
+      _dayWeights[index] = weight;
+    }
+  }
+
   void _open(ExerciseRun run, ExerciseTrack track) {
     final p = _p;
     run.track = track;
     final info = run.info;
     _resume(track);
+    // La courbe pivote sur la plage travaillée aujourd'hui : c'est là que
+    // le niveau s'apprend sans dépendre de la forme de la courbe.
+    track.filter.repivot(run.nPlan);
     final raw = state.fatigue.rawShift(info, p);
     final baseline = track.fatigueBaseline;
     final deviation = baseline == null ? 0.0 : raw - baseline;
@@ -694,10 +786,18 @@ final class SessionRun {
   /// décroît lentement (désentraînement).
   void _resume(ExerciseTrack track) {
     final p = _p;
-    final last = track.lastDay;
-    if (last == null || day - last <= 14 || track.filter.inSession) {
+    final lastSession = track.lastDay;
+    if (lastSession == null) {
       return;
     }
+    final resumed = track.resumedDay;
+    final last = resumed != null && resumed > lastSession
+        ? resumed
+        : lastSession;
+    if (day - last <= 14 || track.filter.inSession) {
+      return;
+    }
+    track.resumedDay = day;
     track.filter.m[1] = 0;
     var weight = 0.0;
     var change = 0.0;
@@ -768,33 +868,27 @@ final class SessionRun {
     run.rirEff = rir > 5 ? 5 : rir;
   }
 
-  /// Ferme l'exercice en cours : apprentissages de fin d'exercice.
-  void closeExercise() {
-    final run = current;
-    current = null;
-    if (run == null) {
-      return;
+  /// Ferme tous les exercices de la séance, dans l'ordre d'ouverture :
+  /// apprentissages de fin d'exercice.
+  void closeAll() {
+    _suspend();
+    for (final run in List<ExerciseRun>.of(_pending)) {
+      _finalize(run);
     }
-    final track = run.track;
-    if (track == null || run.observed.isEmpty) {
-      if (track != null && track.filter.inSession && run.observed.isEmpty) {
-        // Ouvert pour une prescription, sans série : rien n'est retenu.
-        track.filter.inSession = false;
-        track.filter.m[3] = 0;
-        for (var i = 0; i < 4; i++) {
-          track.filter.cov[12 + i] = 0;
-          track.filter.cov[4 * i + 3] = 0;
-        }
-      }
-      return;
+  }
+
+  void _finalize(ExerciseRun run) {
+    _pending.remove(run);
+    if (identical(current, run)) {
+      current = null;
     }
+    final track = run.track!;
     final p = _p;
     final f = track.filter;
+    _noteDayEffect(run);
     final residual = f.m[3] - run.baseShift;
     final variance = f.cov[15];
     final varOwn = (1 - p.dayCommonShare) * sq(p.daySd);
-    _dayResiduals.add(residual);
-    _dayWeights.add(1 / (variance + varOwn));
     if (track.fatigueBaseline != null) {
       state.fatigue.learn(
         run.rawDeviation,
@@ -807,8 +901,14 @@ final class SessionRun {
         ? run.raw
         : baseline + p.fatigueBaselineAlpha * (run.raw - baseline);
     track.lastResidual = residual;
-    double? firstLoad;
-    double? maxLoad;
+    // Charge de référence de la séance suivante : la plus lourde des
+    // séries qui ont tenu leur cible (un échauffement non marqué ou une
+    // pyramide ne la tirent pas vers le bas) ; après un échec non prévu,
+    // jamais plus que la plus légère des charges échouées ; si aucune
+    // série n'a tenu, la plus légère de la séance.
+    double? held;
+    double? lowestFailed;
+    double? lowest;
     var openSet = false;
     var top = 0;
     for (final o in run.observed) {
@@ -817,9 +917,17 @@ final class SessionRun {
       }
       final kg = o.loadKg;
       if (kg != null) {
-        firstLoad ??= kg;
-        if (maxLoad == null || kg > maxLoad) {
-          maxLoad = kg;
+        if (lowest == null || kg < lowest) {
+          lowest = kg;
+        }
+        final target = o.target;
+        final reached =
+            !o.failed && (target == null || o.amount >= target.low);
+        if (reached && (held == null || kg > held)) {
+          held = kg;
+        }
+        if (o.unplannedFail && (lowestFailed == null || kg < lowestFailed)) {
+          lowestFailed = kg;
         }
       }
       if (o.open) {
@@ -833,20 +941,32 @@ final class SessionRun {
         run.fails == 0 &&
         run.lastRatedEasy &&
         2 * run.easySets >= run.ratedSets;
-    if (firstLoad != null) {
-      // La charge de référence est celle de la première série ; la plus
-      // haute quand la séance a monté en cours de route (calibrage, séries
-      // notées nettement plus faciles que visé).
-      track.lastLoad = run.calibrating || (run.easySets > 0 && run.fails == 0)
-          ? maxLoad
-          : firstLoad;
+    if (lowest != null) {
+      var reference = held ?? lowest;
+      if (lowestFailed != null && lowestFailed < reference) {
+        reference = lowestFailed;
+      }
+      // Même exercice déjà fait aujourd'hui avec un échec non prévu : la
+      // référence ne remonte pas.
+      final earlier = track.lastLoad;
+      if (track.lastDay == day &&
+          track.noUp &&
+          earlier != null &&
+          earlier < reference) {
+        reference = earlier;
+      }
+      track.lastLoad = reference;
     }
     track.easy = easy;
     track.easySets = run.easySets;
-    track.lastTop = top;
     // Un échec non prévu plus tôt dans la même séance (même exercice à un
-    // autre emplacement) compte aussi.
-    track.noUp = run.fails > 0 || (track.lastDay == day && track.noUp);
+    // autre emplacement) compte aussi ; la plus grande série retenue est
+    // alors la plus petite des deux passages.
+    final sameDay = track.lastDay == day;
+    track.lastTop = sameDay && track.lastTop < top && track.noUp
+        ? track.lastTop
+        : top;
+    track.noUp = run.fails > 0 || (sameDay && track.noUp);
     if (openSet) {
       track.benchmarkDay = day;
     }
@@ -854,6 +974,8 @@ final class SessionRun {
     track.lastDay = day;
     track.lastSets = run.observed.length;
     f.endSession();
+    run.closed = true;
+    closed.add(run);
   }
 
   // ------------------------------------------------------------ observation
@@ -1014,7 +1136,9 @@ final class SessionRun {
     var rirEstimate = 0.0;
     if (reps < 1) {
       // Pas une répétition : la charge dépasse ce qui se soulève une fois
-      // aujourd'hui (borne haute).
+      // aujourd'hui (borne haute). Comme pour un échec, une série très loin
+      // de ce qui était prévu (zéro répétition à une charge légère) est
+      // une saisie douteuse : son poids est réduit (`clip`).
       f.observeLoad(
         logLoad: logLoad,
         n: 1,
@@ -1023,6 +1147,7 @@ final class SessionRun {
         p: p,
         bound: true,
         upper: true,
+        clip: p.failOutlier,
       );
     } else if (failed) {
       f.observeLoad(
@@ -1032,6 +1157,7 @@ final class SessionRun {
         fatigue: fatigue,
         p: p,
         learnK: fresh,
+        clip: p.failOutlier,
       );
     } else if (flames == null) {
       f.observeLoad(
@@ -1157,6 +1283,7 @@ final class SessionRun {
         logCapacity: ln(implied / keep),
         sd: mode == CapacityMode.hold ? p.holdSdBase / 2 : p.failSd / implied,
         p: p,
+        clip: p.failOutlier,
       );
     } else if (flames == null) {
       f.observeDirect(
@@ -1503,6 +1630,26 @@ final class SessionRun {
     if (target > top) {
       target = top;
     }
+    // Sans charge, les répétitions (ou les secondes) sont la charge : après
+    // un échec non prévu, une douleur sur la zone ou un bilan bas, jamais
+    // plus que la plus grande série de la dernière séance (I2, I3) ; après
+    // un échec dans la séance, jamais plus que la dernière série faite.
+    final track = run.track!;
+    if (!spec.test &&
+        track.lastDay != null &&
+        (track.noUp || run.painZones.isNotEmpty || noIncrease)) {
+      final cap = track.lastTop < 1 ? 1 : track.lastTop;
+      if (target > cap) {
+        target = cap;
+      }
+    }
+    if (run.fails > 0 && run.observed.isNotEmpty) {
+      final done = run.observed.last.amount;
+      final cap = done < 1 ? 1 : done;
+      if (target > cap) {
+        target = cap;
+      }
+    }
     if (target < 1) {
       target = 1;
     }
@@ -1610,6 +1757,7 @@ final class SessionRun {
   bool wantsBenchmark(ExerciseRun run) {
     return !run.uncertain &&
         !run.easyMode &&
+        !run.track!.noUp &&
         run.spec.benchmarkOk &&
         run.spec.sets >= 2 &&
         run.info.mode != CapacityMode.hold &&
@@ -1644,9 +1792,7 @@ final class SessionRun {
         previous.amount >= previousTarget.high &&
         previousFlames - Flames.min >= p.adviceGapFlames;
     final free = run.fails == 0 && run.painZones.isEmpty && !noIncrease;
-    if (planned != null &&
-        gap.abs() < p.adviceGapFlames &&
-        !previous.unplannedFail) {
+    if (planned != null && gap.abs() < p.adviceGapFlames && run.fails == 0) {
       final same = load != null && planned.loadKg != load
           ? planned.withLoad(load)
           : planned;
@@ -1677,7 +1823,7 @@ final class SessionRun {
         high: amount,
         flames: flamesTarget,
       );
-      if (planned != null && planned.open && !previous.unplannedFail) {
+      if (planned != null && planned.open && run.fails == 0) {
         next = SetPlan(
           loadKg: null,
           low: amount,

@@ -28,6 +28,7 @@ final class AdaptParams {
     this.completedSd = 0.5,
     this.openRir = 5,
     this.huber = 2,
+    this.failOutlier = 3,
     this.rirBias = 0.2,
     this.lazyWindow = 40,
     this.lazyMinSets = 12,
@@ -194,6 +195,10 @@ final class AdaptParams {
 
   /// Seuil de Huber, en écarts-types de l'innovation.
   final double huber;
+
+  /// Seuil, en écarts-types de l'innovation, au-delà duquel une série
+  /// manquée (échec, zéro répétition) est tenue pour une saisie douteuse.
+  final double failOutlier;
 
   /// Biais de report : RIR réel = RIR dit × (1 + biais).
   final double rirBias;

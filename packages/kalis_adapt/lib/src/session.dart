@@ -204,6 +204,15 @@ SessionPlan buildSessionPlan(
     );
   }
   sessionReasons.addAll(healthReasons);
+  if (health.level >= 1) {
+    // Le palier du bilan est dit dans la séance : le conseil le relit quand
+    // le bilan ne lui est pas redonné.
+    sessionReasons.add(
+      reason(ReasonCodes.adaptLoadHeld, <String, Object?>{
+        'cause': health.level >= 2 ? 'health_strong' : 'health',
+      }),
+    );
+  }
   if (replayed.digests.isNotEmpty) {
     final gap = day - replayed.digests.last.day;
     if (gap >= 7) {
@@ -404,7 +413,7 @@ SessionPlan buildSessionPlan(
       );
     }
   }
-  run.closeExercise();
+  run.closeAll();
 
   // 4. Temps disponible aujourd'hui : la séance est raccourcie en gardant
   // les priorités.
@@ -605,6 +614,11 @@ List<SetPlan> _plansFor(
     if ((track.noUp || exercise.painZones.isNotEmpty || run.noIncrease) &&
         kg > start) {
       return start;
+    }
+    if (exercise.spec.test) {
+      // Un test mesure : il se fait à l'effort demandé, sans plafond de
+      // hausse (les trois verrous ci-dessus tiennent).
+      return kg;
     }
     final rise = exercise.calibrating
         ? p.maxUpCalibration

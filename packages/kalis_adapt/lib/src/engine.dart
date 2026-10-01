@@ -78,6 +78,7 @@ final class KalisAdapt implements AdaptEngine {
         if (old.length == sessions.length) {
           return (context, view, cached);
         }
+        _checkOrder(sessions, old.isEmpty ? 1 : old.length);
         final state = cached.state.fork();
         final digests = List<SessionDigest>.of(cached.digests);
         replaySessions(
@@ -98,11 +99,7 @@ final class KalisAdapt implements AdaptEngine {
       final v = violations.first;
       throw ArgumentError('profil invalide : ${v.path} ${v.code}');
     }
-    for (var i = 1; i < sessions.length; i++) {
-      if (sessions[i].date < sessions[i - 1].date) {
-        throw ArgumentError('journal non chronologique : ${sessions[i].id}');
-      }
-    }
+    _checkOrder(sessions, 1);
     context = EngineContext(
       catalog: catalog,
       profile: input.profile,
@@ -121,6 +118,16 @@ final class KalisAdapt implements AdaptEngine {
     _sessions = sessions;
     _replayed = replayed;
     return (context, view, replayed);
+  }
+
+  /// Refuse un journal dont les séances, à partir du rang [from], ne sont
+  /// pas par date croissante (au sens large).
+  static void _checkOrder(List<SessionRecord> sessions, int from) {
+    for (var i = from < 1 ? 1 : from; i < sessions.length; i++) {
+      if (sessions[i].date < sessions[i - 1].date) {
+        throw ArgumentError('journal non chronologique : ${sessions[i].id}');
+      }
+    }
   }
 
   @override

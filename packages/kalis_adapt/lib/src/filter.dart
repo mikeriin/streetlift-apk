@@ -27,7 +27,8 @@ final class TrackPoint {
   /// Numéro de jour civil.
   final int day;
 
-  /// `ln` de la capacité opérationnelle.
+  /// `ln` de la capacité (1RM de charge totale, ou maximum de répétitions
+  /// ou de secondes) : indépendant du pivot de la courbe.
   final double level;
 
   /// Écart-type du niveau.
@@ -122,7 +123,7 @@ final class CapacityFilter {
   final List<double> cov;
 
   /// Répétitions jusqu'à l'échec du pivot de la courbe (exercices chargés).
-  final double nRef;
+  double nRef;
 
   /// Jour de la dernière prédiction.
   int day;
@@ -179,6 +180,35 @@ final class CapacityFilter {
     cov[0] += variance;
   }
 
+  /// Déplace le pivot de la courbe à [n] répétitions jusqu'à l'échec
+  /// (exercices chargés, hors séance). Le 1RM et l'incertitude de toute
+  /// charge prévue sont conservés : `c' = c + g(nRef, k) − g(n, k)`, avec
+  /// `g(n, k) = ln(1 + (n − 1) / k)` ; la covariance suit par la
+  /// transformation linéaire `c' = c + t·κ`,
+  /// `t = u'/(1 + u') − u/(1 + u)`.
+  void repivot(double n) {
+    if (mode != CapacityMode.loaded || inSession) {
+      return;
+    }
+    final to = n < 1 ? 1.0 : n;
+    if ((to - nRef).abs() < 1e-9) {
+      return;
+    }
+    final kk = k;
+    final u0 = (nRef - 1) / kk;
+    final u1 = (to - 1) / kk;
+    final t = u1 / (1 + u1) - u0 / (1 + u0);
+    m[0] += ln(1 + u0) - ln(1 + u1);
+    for (var j = 0; j < 4; j++) {
+      cov[j] += t * cov[8 + j];
+    }
+    for (var i = 0; i < 4; i++) {
+      cov[4 * i] += t * cov[4 * i + 2];
+    }
+    nRef = to;
+    _symmetrize();
+  }
+
   /// Ouvre une séance au jour [toDay] : l'effet de jour repart de
   /// `N(shift, daySd²)`, sans corrélation avec le reste.
   void beginSession(int toDay, double shift, double daySd, AdaptParams p) {
@@ -205,7 +235,7 @@ final class CapacityFilter {
       cov[4 * i + 3] = 0;
     }
     m[3] = 0;
-    history.add(TrackPoint(day, m[0], sqrt(cov[0] < 0 ? 0.0 : cov[0])));
+    history.add(TrackPoint(day, m[0] + gRef, sqrt(cov[0] < 0 ? 0.0 : cov[0])));
   }
 
   // --------------------------------------------------- fatigue intra-séance
@@ -262,7 +292,10 @@ final class CapacityFilter {
   /// « au plus [n] » (une série ratée sans une seule répétition). [learnK] : la série
   /// met à jour `k` (elle est fraîche et [n] est connu précisément) ;
   /// sinon `k` est tenu pour fixe : il ne bouge pas, et son incertitude
-  /// s'ajoute au bruit de la série.
+  /// s'ajoute au bruit de la série. [clip] : au-delà de ce nombre
+  /// d'écarts-types de l'innovation, la série est tenue pour douteuse —
+  /// son bruit est gonflé pour ramener l'écart au seuil et elle n'apprend
+  /// pas `k`.
   void observeLoad({
     required double logLoad,
     required double n,
@@ -272,6 +305,7 @@ final class CapacityFilter {
     bool bound = false,
     bool upper = false,
     bool learnK = false,
+    double? clip,
   }) {
     final kk = k;
     final scale = 1 / (1 - fatigue < 1e-6 ? 1e-6 : 1 - fatigue);
@@ -281,15 +315,28 @@ final class CapacityFilter {
     final h = m[0] + m[3] - ln(1 + u) + ln(1 + ur);
     final hk = u / (1 + u) - ur / (1 + ur);
     final slope = scale / (kk * (1 + u));
-    final r = sq(nSd * slope) + sq(p.observationFloor);
+    var r = sq(nSd * slope) + sq(p.observationFloor);
     final jac = <double>[1, 0, hk, 1];
+    var learn = learnK;
+    if (clip != null) {
+      final nu = logLoad - h;
+      final contradicts = bound ? (upper ? nu < 0 : nu > 0) : true;
+      if (contradicts && nu * nu > clip * clip * _innovationVar(jac, r, learn)) {
+        learn = false;
+        final inflated =
+            r + nu * nu / (clip * clip) - _innovationVar(jac, r, false);
+        if (inflated > r) {
+          r = inflated;
+        }
+      }
+    }
     if (bound && upper) {
       // « Au plus [n] » : la même contrainte, de l'autre côté.
-      _lowerBound(<double>[-1, 0, -hk, -1], logLoad - h, r, learnK);
+      _lowerBound(<double>[-1, 0, -hk, -1], logLoad - h, r, learn);
     } else if (bound) {
-      _lowerBound(jac, h - logLoad, r, learnK);
+      _lowerBound(jac, h - logLoad, r, learn);
     } else {
-      _update(jac, logLoad - h, r, learnK);
+      _update(jac, logLoad - h, r, learn);
     }
     m[2] = clampDouble(m[2], ln(p.kMin), ln(p.kMax));
     sets++;
@@ -297,22 +344,44 @@ final class CapacityFilter {
 
   /// Capacité observée directement (modes [CapacityMode.reps] et
   /// [CapacityMode.hold]) : [logCapacity] est le `ln` de la capacité
-  /// fraîche impliquée par la série, d'écart-type relatif [sd].
+  /// fraîche impliquée par la série, d'écart-type relatif [sd] ; [clip]
+  /// comme pour [observeLoad].
   void observeDirect({
     required double logCapacity,
     required double sd,
     required AdaptParams p,
     bool bound = false,
+    double? clip,
   }) {
     final h = m[0] + m[3];
-    final r = sq(sd) + sq(p.observationFloor);
+    var r = sq(sd) + sq(p.observationFloor);
     const jac = <double>[1, 0, 0, 1];
+    if (clip != null) {
+      final nu = logCapacity - h;
+      final s = _innovationVar(jac, r, false);
+      if ((!bound || nu > 0) && nu * nu > clip * clip * s) {
+        r += nu * nu / (clip * clip) - s;
+      }
+    }
     if (bound) {
       _lowerBound(jac, h - logCapacity, r, false);
     } else {
       _update(jac, logCapacity - h, r, false);
     }
     sets++;
+  }
+
+  /// Variance de l'innovation d'une observation de jacobien [jac] et de
+  /// bruit [r].
+  double _innovationVar(List<double> jac, double r, bool learnK) {
+    final (h, noise) = _effective(jac, r, learnK);
+    var s = noise;
+    for (var i = 0; i < 4; i++) {
+      for (var j = 0; j < 4; j++) {
+        s += h[i] * cov[4 * i + j] * h[j];
+      }
+    }
+    return s;
   }
 
   List<double> _gain(List<double> jac, double r, bool learnK) {

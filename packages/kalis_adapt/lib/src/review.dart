@@ -32,6 +32,7 @@ final class _Candidate {
     required this.reasons,
     this.exerciseId,
     this.diff,
+    this.freeSlots,
   });
 
   /// Clé stable de la proposition hors semaine (`volume:chest:up`).
@@ -56,6 +57,10 @@ final class _Candidate {
   final String? exerciseId;
   PlanDiff? diff;
   ProgramBlock? block;
+
+  /// Emplacements que la restructuration demandée a le droit de changer
+  /// (échange d'un exercice, zone épargnée) ; `null` : pas de limite.
+  final Set<String>? freeSlots;
 
   /// Jour visé (restructuration d'une séance).
   int? dayIndex;
@@ -654,6 +659,7 @@ AdaptReview buildReview(
     RestructureScope scope,
     List<Reason> why, {
     int? dayIndex,
+    Set<String>? freeSlots,
   }) {
     return RestructureRequest(
       profile: input.profile,
@@ -664,7 +670,19 @@ AdaptReview buildReview(
       dayIndex: dayIndex,
       fromWeekIndex: nextWeek,
       reasons: why,
-      locks: const <PlanLock>[],
+      // Échange d'un exercice, zone épargnée : tous les autres emplacements
+      // sont verrouillés, le changement reste à sa portée.
+      locks: <PlanLock>[
+        if (freeSlots != null)
+          for (final d in pass1.days)
+            for (final slot in d.slots)
+              if (!freeSlots.contains(slot.slotId))
+                PlanLock(
+                  kind: LockKind.keepSlot,
+                  slotId: slot.slotId,
+                  exerciseId: slot.exerciseId,
+                ),
+      ],
       adaptation: summary,
     );
   }
@@ -735,6 +753,11 @@ AdaptReview buildReview(
             adherence: 0.1,
             reasons: why,
             exerciseId: id,
+            freeSlots: <String>{
+              for (final other in pass1.days)
+                for (final o in other.slots)
+                  if (o.exerciseId == id && !o.locked) o.slotId,
+            },
           );
         }
       }
@@ -763,6 +786,15 @@ AdaptReview buildReview(
                 'intensity': s.lastIntensity,
               }),
             ],
+            freeSlots: <String>{
+              for (final d in pass1.days)
+                for (final slot in d.slots)
+                  if (!slot.locked &&
+                      (ctx.book.find(slot.exerciseId)?.zoneLevel(s.zone) ??
+                              0) >
+                          0)
+                    slot.slotId,
+            },
           ),
         );
       }
@@ -969,12 +1001,25 @@ AdaptReview buildReview(
         final scope = c.kind == ProposalKind.sessionRestructure
             ? RestructureScope.session
             : RestructureScope.block;
+        final free = c.freeSlots;
         final result = plan.restructure(
           ctx.catalog,
-          request(scope, c.reasons, dayIndex: c.dayIndex),
+          request(scope, c.reasons, dayIndex: c.dayIndex, freeSlots: free),
         );
         if (result.diff.changes.isEmpty) {
           withheld = 'no_change';
+        } else if (free != null &&
+            result.diff.changes.any(
+              (change) =>
+                  !free.contains(change.slotId) ||
+                  (change.kind != ChangeKind.exerciseReplaced &&
+                      change.kind != ChangeKind.prescriptionChanged &&
+                      change.kind != ChangeKind.exerciseRemoved),
+            )) {
+          // Le niveau de déblocage se juge sur le contenu : un échange ou
+          // une épargne de zone qui déborde de ses emplacements est une
+          // restructuration, pas encore permise à ce titre.
+          withheld = 'scope';
         } else {
           c.diff = result.diff;
           c.block = result.block;

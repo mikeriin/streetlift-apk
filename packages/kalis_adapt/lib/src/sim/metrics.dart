@@ -123,7 +123,7 @@ final class Metrics {
           near++;
         }
         final rise = s.rise;
-        if (rise != null && s.main && !s.calibrating) {
+        if (rise != null && s.main) {
           if (rise > maxMainRise) {
             maxMainRise = rise;
           }
@@ -311,7 +311,8 @@ final class Metrics {
   final int runs;
 
   /// Écart absolu moyen entre RIR réel et RIR affiché, après calibrage,
-  /// hors séries ouvertes et semaines de test, sur les séries dont la cible
+  /// hors semaines de test et séries à l'échec prévu (les séries ouvertes
+  /// comptent : leur RIR visé est affiché aussi), sur les séries dont la cible
   /// est atteignable (plage du bloc et matériel de l'athlète).
   late final Stat rirMae;
 
@@ -501,6 +502,7 @@ final class LoopMetrics {
       for (final k in ProposalKind.values) k: <double>[],
     };
     final flips = <double>[];
+    final held = <String, int>{};
     final unlock = <UnlockLevel, List<double>>{
       for (final l in UnlockLevel.values) l: <double>[],
     };
@@ -528,6 +530,9 @@ final class LoopMetrics {
       for (final k in ProposalKind.values) {
         counts[k]!.add((perKind[k] ?? 0).toDouble());
       }
+      for (final e in run.withheld.entries) {
+        held[e.key] = (held[e.key] ?? 0) + e.value;
+      }
       if (volumes > 0) {
         flips.add(flipped / volumes);
       }
@@ -542,6 +547,10 @@ final class LoopMetrics {
       proposals[k] = Stat.of(counts[k]!);
     }
     volumeFlipRate = Stat.of(flips);
+    final keys = held.keys.toList()..sort();
+    for (final key in keys) {
+      withheld[key] = runs.isEmpty ? 0 : held[key]! / runs.length;
+    }
     for (final l in UnlockLevel.values) {
       unlockWeek[l] = Stat.of(unlock[l]!);
     }
@@ -556,6 +565,10 @@ final class LoopMetrics {
 
   /// Propositions appliquées par simulation, par nature.
   final Map<ProposalKind, Stat> proposals = <ProposalKind, Stat>{};
+
+  /// Candidates retenues par la revue, par simulation, par
+  /// « nature:cause » (clés triées).
+  final Map<String, double> withheld = <String, double>{};
 
   /// Part des propositions de volume qui inversent la précédente du même
   /// groupe à moins de six semaines.
@@ -576,6 +589,9 @@ final class LoopMetrics {
       for (final e in proposals.entries) e.key.code: e.value.toJson(),
     },
     'volumeFlipRate': volumeFlipRate.toJson(),
+    'withheld': <String, Object?>{
+      for (final e in withheld.entries) e.key: roundTo(e.value, 3),
+    },
     'unlockWeek': <String, Object?>{
       for (final e in unlockWeek.entries) e.key.code: e.value.toJson(),
     },

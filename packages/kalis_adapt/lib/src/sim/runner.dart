@@ -126,7 +126,6 @@ final class SetRow {
     required this.targetHigh,
     required this.reachable,
     required this.steps,
-    required this.calibrating,
   });
 
   /// Semaine de la simulation (0 = première).
@@ -192,9 +191,6 @@ final class SetRow {
   /// Crans de la grille entre cette plus forte charge et la charge de la
   /// série (première série seulement, 0 sans hausse).
   final int steps;
-
-  /// La politique a déclaré l'exercice en calibrage.
-  final bool calibrating;
 }
 
 /// Estimation d'un exercice après une séance, face à la vérité.
@@ -285,6 +281,10 @@ final class SimRun {
 
   /// Propositions (boucle complète).
   final List<ProposalRow> proposals = <ProposalRow>[];
+
+  /// Propositions candidates retenues par la revue (boucle complète), par
+  /// « nature:cause ».
+  final Map<String, int> withheld = <String, int>{};
 
   /// Semaine où chaque niveau de déblocage est atteint (boucle complète).
   final Map<UnlockLevel, int> unlockWeek = <UnlockLevel, int>{};
@@ -597,7 +597,6 @@ SimRun simulate({
               targetLow: low,
               targetHigh: high,
               steps: steps,
-              calibrating: item.toCalibrate,
               reachable: athlete.reachable(
                 truth,
                 basisLow ?? basisHigh ?? low,
@@ -698,6 +697,12 @@ SimRun simulate({
       for (final level in UnlockLevel.values) {
         if (level.index <= review.summary.unlockLevel.index) {
           run.unlockWeek.putIfAbsent(level, () => g);
+        }
+      }
+      for (final entry in review.log) {
+        if (entry.event == 'proposal_withheld') {
+          final key = '${entry.data['kind']}:${entry.data['withheld']}';
+          run.withheld[key] = (run.withheld[key] ?? 0) + 1;
         }
       }
       for (final proposal in review.proposals) {

@@ -137,7 +137,7 @@ final class _Traced implements SimPolicy {
         'sdc=${r(math.sqrt(f.cov[0]))} sdd=${r(math.sqrt(f.cov[15]))}',
       );
     }
-    run.closeExercise();
+    run.closeAll();
     inner.finish(c, record);
   }
 

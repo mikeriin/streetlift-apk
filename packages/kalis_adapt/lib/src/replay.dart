@@ -361,27 +361,6 @@ void replaySessions(
     String? openKey;
     var residualSum = 0.0;
     var residualCount = 0;
-    void closeCurrent() {
-      final current = run.current;
-      run.closeExercise();
-      if (current != null) {
-        final track = current.track;
-        if (track != null && current.observed.isNotEmpty) {
-          digest.entries.add(
-            DigestEntry(
-              current.info.id,
-              track.filter.capacity,
-              track.filter.capacityRelSd,
-              current.observed.length,
-            ),
-          );
-          digest.unplannedFails += current.fails;
-          residualSum += track.lastResidual;
-          residualCount++;
-        }
-      }
-    }
-
     for (final set in session.sets) {
       if (!set.isUsable || set.kind == SetKind.warmup) {
         continue;
@@ -395,12 +374,22 @@ void replaySessions(
       if (amount == null) {
         continue;
       }
+      if (info.mode == CapacityMode.loaded &&
+          info.totalLoad(set.externalLoadKg ?? 0, run.bodyWeightKg) <= 0) {
+        // Charge totale nulle ou négative : la série ne dit rien.
+        continue;
+      }
+      // Les séries d'un même exercice enchaînées avec un autre (superset,
+      // tours) retrouvent leur déroulement par la clé.
       final key = '${set.slotId ?? ''}|${set.exerciseId}|${set.exerciseOrder}';
       if (key != openKey) {
-        closeCurrent();
         openKey = key;
         final item = view.item(ref, set.slotId, set.exerciseId);
-        run.begin(info, view.specOf(info, item, kind, fallback: set.target));
+        run.begin(
+          info,
+          view.specOf(info, item, kind, fallback: set.target),
+          key: key,
+        );
       }
       digest.workSets++;
       if (!set.isRated) {
@@ -415,7 +404,21 @@ void replaySessions(
         test: set.kind == SetKind.test,
       );
     }
-    closeCurrent();
+    run.closeAll();
+    for (final done in run.closed) {
+      final track = done.track!;
+      digest.entries.add(
+        DigestEntry(
+          done.info.id,
+          track.filter.capacity,
+          track.filter.capacityRelSd,
+          done.observed.length,
+        ),
+      );
+      digest.unplannedFails += done.fails;
+      residualSum += track.lastResidual;
+      residualCount++;
+    }
     digest.residual = residualCount == 0 ? 0 : residualSum / residualCount;
     digests.add(digest);
   }

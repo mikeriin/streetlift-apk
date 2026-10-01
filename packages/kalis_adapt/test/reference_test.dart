@@ -125,13 +125,17 @@ void main() {
               bound: step['bound']! as bool,
               upper: step['upper'] == true,
               learnK: step['learnK']! as bool,
+              clip: step['clip'] == null ? null : _d(step['clip']),
             );
+          case 'repivot':
+            filter.repivot(_d(step['n']));
           case 'direct':
             filter.observeDirect(
               logCapacity: _d(step['logCapacity']),
               sd: _d(step['sd']),
               p: p,
               bound: step['bound']! as bool,
+              clip: step['clip'] == null ? null : _d(step['clip']),
             );
           case 'fatigue':
             filter.noteSetFatigue(_d(step['rir']), step['rest']! as int, p);

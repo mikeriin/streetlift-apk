@@ -52,6 +52,10 @@ def loaded_case(seed):
     truth = log_one_rm + r.gauss(0.0, 0.1)
     for _ in range(r.randint(2, 9)):
         day += r.choice([1, 2, 2, 3, 3, 4, 7, 12, 30])
+        if r.random() < 0.3:
+            pivot = r.choice([3.0, 5.0, 8.5, 12.0, 16.0])
+            f.repivot(pivot)
+            push({'op': 'repivot', 'n': pivot})
         shift = r.choice([0.0, 0.0, -0.01, -0.03, 0.006])
         day_sd = r.choice([0.035, 0.0303, 0.0248])
         f.begin_session(day, shift, day_sd)
@@ -63,11 +67,15 @@ def loaded_case(seed):
             kind = r.random()
             n = max(0.0, n_true + r.gauss(0.0, 1.5))
             if kind < 0.05:
-                step = {'op': 'observe', 'logLoad': log_load + 0.2, 'n': 1.0, 'nSd': 0.5, 'fatigue': fatigue,
-                        'bound': True, 'upper': True, 'learnK': False}
+                # Zéro répétition ; une fois sur trois à une charge légère (saisie douteuse).
+                off = 0.2 if r.random() < 0.67 else -1.2
+                step = {'op': 'observe', 'logLoad': log_load + off, 'n': 1.0, 'nSd': 0.5, 'fatigue': fatigue,
+                        'bound': True, 'upper': True, 'learnK': False, 'clip': 3.0}
             elif kind < 0.15:
-                step = {'op': 'observe', 'logLoad': log_load, 'n': n + 0.5, 'nSd': 0.5, 'fatigue': fatigue,
-                        'bound': False, 'learnK': fatigue < 0.02}
+                # Échec ; une fois sur quatre très loin de ce qui était prévu.
+                off = 0.0 if r.random() < 0.75 else r.choice([-0.5, 0.4])
+                step = {'op': 'observe', 'logLoad': log_load + off, 'n': n + 0.5, 'nSd': 0.5, 'fatigue': fatigue,
+                        'bound': False, 'learnK': fatigue < 0.02, 'clip': 3.0}
             elif kind < 0.35:
                 step = {'op': 'observe', 'logLoad': log_load, 'n': math.floor(n), 'nSd': 0.5, 'fatigue': fatigue,
                         'bound': True, 'learnK': False}
@@ -75,7 +83,8 @@ def loaded_case(seed):
                 step = {'op': 'observe', 'logLoad': log_load, 'n': n, 'nSd': r.uniform(0.6, 3.5),
                         'fatigue': fatigue, 'bound': False, 'learnK': r.random() < 0.2}
             f.observe_load(step['logLoad'], step['n'], step['nSd'], step['fatigue'],
-                           bound=step['bound'], learn_k=step['learnK'], upper=step.get('upper', False))
+                           bound=step['bound'], learn_k=step['learnK'], upper=step.get('upper', False),
+                           clip=step.get('clip'))
             push(step)
             rir = r.uniform(0.0, 5.0)
             rest = r.choice([20, 60, 90, 150, 240])
@@ -119,7 +128,11 @@ def direct_case(seed):
         for _ in range(r.randint(1, 4)):
             step = {'op': 'direct', 'logCapacity': capacity + r.gauss(0.0, 0.15), 'sd': r.uniform(0.05, 0.3),
                     'bound': r.random() < 0.3}
-            f.observe_direct(step['logCapacity'], step['sd'], bound=step['bound'])
+            if r.random() < 0.25:
+                step['clip'] = 3.0
+                step['bound'] = False
+                step['logCapacity'] += r.choice([-0.6, 0.0, 0.5])
+            f.observe_direct(step['logCapacity'], step['sd'], bound=step['bound'], clip=step.get('clip'))
             push(step)
             rir = r.uniform(0.0, 4.0)
             rest = r.choice([45, 90, 120])
