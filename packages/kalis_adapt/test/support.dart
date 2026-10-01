@@ -76,6 +76,9 @@ final class CheckedPolicy implements SimPolicy {
   String get name => inner.name;
 
   @override
+  bool get rangeIsTarget => inner.rangeIsTarget;
+
+  @override
   SessionPlan plan(SessionContext c) {
     final session = inner.plan(c);
     sessions++;
@@ -124,7 +127,14 @@ final class CheckedPolicy implements SimPolicy {
         violations.add('conseil ${c.date.iso} : ${v.path} ${v.code}');
       }
       violations.addAll(
-        checkAdvice(c.catalog, c.profile, done, advice, engine.params),
+        checkAdvice(
+          c.catalog,
+          c.profile,
+          inner.lastSession!,
+          done,
+          advice,
+          engine.params,
+        ),
       );
     }
     return inner.nextSet(c, item, index, done);
@@ -139,18 +149,27 @@ final class CheckedPolicy implements SimPolicy {
       inner.estimate(c, exerciseId, n);
 }
 
-/// Dernière séance de [log] (hors « reprise ») où [exerciseId] a des séries
-/// de travail utilisables avec une charge ; rend ces charges externes.
-List<double>? lastLoadsOf(TrainingLog log, String exerciseId) {
+/// Vrai si le moteur prend la série [s] en compte pour l'exercice chargé
+/// [info] : utilisable, hors échauffement, avec des répétitions et une
+/// charge totale positive.
+bool countsFor(ExerciseInfo info, SetRecord s) {
+  if (s.exerciseId != info.id ||
+      !s.isUsable ||
+      s.kind == SetKind.warmup ||
+      s.reps == null) {
+    return false;
+  }
+  return info.fraction > 0 || (s.externalLoadKg ?? 0) > 0;
+}
+
+/// Dernière séance de [log] (hors « reprise ») où l'exercice [info] a des
+/// séries prises en compte ; rend leurs charges externes.
+List<double>? lastLoadsOf(TrainingLog log, ExerciseInfo info) {
   final sessions = log.countedSessions.toList();
   for (var i = sessions.length - 1; i >= 0; i--) {
     final loads = <double>[
       for (final s in sessions[i].sets)
-        if (s.exerciseId == exerciseId &&
-            s.isUsable &&
-            s.kind != SetKind.warmup &&
-            (s.reps != null || s.seconds != null))
-          s.externalLoadKg ?? 0,
+        if (countsFor(info, s)) s.externalLoadKg ?? 0,
     ];
     if (loads.isNotEmpty) {
       return loads;
@@ -159,18 +178,15 @@ List<double>? lastLoadsOf(TrainingLog log, String exerciseId) {
   return null;
 }
 
-/// Vrai si la dernière séance de [exerciseId] dans [log] compte un échec
-/// qui n'était pas prévu par la cible.
-bool lastHadUnplannedFailure(TrainingLog log, String exerciseId) {
+/// Vrai si la dernière séance de l'exercice [info] dans [log] compte un
+/// échec qui n'était pas prévu par la cible.
+bool lastHadUnplannedFailure(TrainingLog log, ExerciseInfo info) {
   final sessions = log.countedSessions.toList();
   for (var i = sessions.length - 1; i >= 0; i--) {
     var seen = false;
     var failed = false;
     for (final s in sessions[i].sets) {
-      if (s.exerciseId != exerciseId ||
-          !s.isUsable ||
-          s.kind == SetKind.warmup ||
-          (s.reps == null && s.seconds == null)) {
+      if (!countsFor(info, s)) {
         continue;
       }
       seen = true;
@@ -188,15 +204,12 @@ bool lastHadUnplannedFailure(TrainingLog log, String exerciseId) {
   return false;
 }
 
-/// Jour de la dernière séance de [exerciseId] dans [log], ou `null`.
-int? lastDayOf(TrainingLog log, String exerciseId) {
+/// Jour de la dernière séance de l'exercice [info] dans [log], ou `null`.
+int? lastDayOf(TrainingLog log, ExerciseInfo info) {
   int? day;
   for (final session in log.countedSessions) {
     for (final s in session.sets) {
-      if (s.exerciseId == exerciseId &&
-          s.isUsable &&
-          s.kind != SetKind.warmup &&
-          (s.reps != null || s.seconds != null)) {
+      if (countsFor(info, s)) {
         day = session.date.dayNumber;
         break;
       }
@@ -282,7 +295,7 @@ List<String> checkSession(
         out.add('$where : charge $kg hors grille');
       }
     }
-    final before = lastLoadsOf(log, item.exerciseId);
+    final before = lastLoadsOf(log, info);
     if (before == null) {
       continue;
     }
@@ -313,11 +326,11 @@ List<String> checkSession(
       );
     }
     if (top > reference + 0.011 &&
-        lastHadUnplannedFailure(log, item.exerciseId)) {
+        lastHadUnplannedFailure(log, info)) {
       out.add('$where : hausse après un échec non prévu ($reference → $top)');
     }
     if (top > reference + 0.011) {
-      final zones = painsSince(log, lastDayOf(log, item.exerciseId), health, p);
+      final zones = painsSince(log, lastDayOf(log, info), health, p);
       for (final zone in zones) {
         if (info.zoneLevel(zone) >= 0.5) {
           out.add(
@@ -332,10 +345,13 @@ List<String> checkSession(
 }
 
 /// Invariants d'un conseil : jamais de hausse de charge après une série à
-/// l'échec non prévue dans la séance ; charge sur la grille.
+/// l'échec non prévue dans la séance ; charge sur la grille. Une série sans
+/// cible enregistrée est jugée d'après la cible de la séance [session],
+/// comme le fait le moteur.
 List<String> checkAdvice(
   Catalog catalog,
   AthleteProfile profile,
+  SessionPlan session,
   List<SetRecord> done,
   IntraSessionAdvice advice,
   AdaptParams p,
@@ -343,25 +359,41 @@ List<String> checkAdvice(
   final out = <String>[];
   final info = ExerciseBook(catalog, profile).find(advice.exerciseId);
   final next = advice.nextLoadKg;
-  if (info == null || next == null) {
+  if (info == null || next == null || info.mode != CapacityMode.loaded) {
     return out;
   }
   if ((info.grid.nearest(next) - next).abs() > 0.011) {
     out.add('conseil ${advice.exerciseId} : charge $next hors grille');
   }
+  List<SetTarget>? shown;
+  for (final item in session.items) {
+    if (item.slotId == advice.slotId) {
+      shown = item.setTargets;
+    }
+  }
   double? last;
   var failed = false;
+  var index = 0;
   for (final s in done) {
-    if (s.exerciseId != advice.exerciseId ||
-        (advice.slotId != null && s.slotId != advice.slotId)) {
+    if (s.slotId != advice.slotId || !countsFor(info, s)) {
       continue;
     }
-    last = s.externalLoadKg ?? last;
+    last = s.externalLoadKg ?? 0;
+    final recorded = s.target;
+    int? aimed;
+    if (recorded != null &&
+        recorded.flames != null &&
+        (recorded.repsLow ?? recorded.repsHigh) != null) {
+      aimed = recorded.flames;
+    } else if (shown != null && index < shown.length) {
+      aimed = shown[index].flames;
+    }
     final missed =
         s.flames == Flames.failure || (s.flames == null && !s.success);
-    if (missed && (s.target?.flames ?? 0) < Flames.failure) {
+    if (missed && (aimed ?? 0) < Flames.failure) {
       failed = true;
     }
+    index++;
   }
   if (last != null && failed && next > last + 0.011) {
     out.add(

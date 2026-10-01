@@ -297,7 +297,9 @@ final class Metrics {
   /// cible en laissait au moins 2.
   late final Stat nearFailureRate;
 
-  /// Gain moyen de capacité vraie (`ln`) sur la simulation.
+  /// Gain moyen de capacité vraie par semaine (`ln`), entre la première
+  /// et la dernière séance de chaque exercice suivi au moins trois
+  /// semaines.
   late final Stat gain;
 
   /// Part des changements de charge qui inversent le précédent.

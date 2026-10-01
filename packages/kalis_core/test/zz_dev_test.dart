@@ -6,11 +6,8 @@ import 'package:test/test.dart';
 
 void main() {
   test('export des sources formatées', () {
-    final name = Directory.current.uri.pathSegments
-        .where((s) => s.isNotEmpty)
-        .last;
     final r = Process.runSync('dart', <String>['format', '.']);
-    final out = Directory('../../out-packages/$name/formatted');
+    final out = Directory('../../out-packages/kalis_core/formatted');
     out.createSync(recursive: true);
     File('${out.path}/format.log').writeAsStringSync('${r.stdout}\n${r.stderr}');
     for (final dir in <String>['lib', 'test', 'bin', 'tool']) {

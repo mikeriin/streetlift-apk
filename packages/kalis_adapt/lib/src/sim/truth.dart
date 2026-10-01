@@ -169,6 +169,15 @@ final class TruthExercise {
   /// Séances faites.
   int sessions = 0;
 
+  /// Jour de la première séance.
+  int? firstDay;
+
+  /// Capacité à la première séance.
+  double firstCapacity = 0;
+
+  /// Capacité à la dernière séance.
+  double lastCapacity = 0;
+
   /// Part du 1RM soulevable [n] fois.
   double share(double n) => curveA + (1 - curveA) * exp(-curveB * (n - 1));
 
@@ -616,6 +625,11 @@ final class SimAthlete {
     if (load != null) {
       t.lastLoad = load;
     }
+    if (t.firstDay == null) {
+      t.firstDay = _day;
+      t.firstCapacity = t.capacity;
+    }
+    t.lastCapacity = t.capacity;
     t.sessions++;
   }
 

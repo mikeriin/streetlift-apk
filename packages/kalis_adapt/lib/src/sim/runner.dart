@@ -122,6 +122,8 @@ final class SetRow {
     required this.main,
     required this.open,
     required this.rise,
+    required this.targetLow,
+    required this.targetHigh,
   });
 
   /// Semaine de la simulation (0 = première).
@@ -168,6 +170,12 @@ final class SetRow {
 
   /// Série ouverte (série repère, plage au ressenti).
   final bool open;
+
+  /// Bas de la cible affichée (répétitions ou secondes).
+  final int targetLow;
+
+  /// Haut de la cible affichée.
+  final int targetHigh;
 
   /// Hausse relative de la charge totale par rapport à la première série
   /// de la séance précédente de l'exercice (première série seulement),
@@ -263,7 +271,8 @@ final class SimRun {
   /// Semaine où chaque niveau de déblocage est atteint (boucle complète).
   final Map<UnlockLevel, int> unlockWeek = <UnlockLevel, int>{};
 
-  /// Gain de capacité vraie (`ln` fin / début) par exercice entraîné.
+  /// Gain de capacité vraie par semaine (`ln`), par exercice suivi au
+  /// moins trois semaines.
   final Map<String, double> gain = <String, double>{};
 
   /// Séances prévues.
@@ -548,8 +557,10 @@ SimRun simulate({
               failed: outcome.failed,
               plannedFailure: flamesTarget >= Flames.failure,
               main: role == SlotRole.main,
-              open: high > low,
+              open: high > low && !policy.rangeIsTarget,
               rise: rise,
+              targetLow: low,
+              targetHigh: high,
             ),
           );
           performed++;
@@ -671,9 +682,16 @@ SimRun simulate({
     weekInBlock++;
   }
   for (final t in athlete.truths) {
-    if (t.sessions > 0 && t.startCapacity > 0) {
-      run.gain[t.info.id] = ln(t.capacity / t.startCapacity);
+    final first = t.firstDay;
+    final last = t.lastDay;
+    if (first == null || last == null || last - first < 21) {
+      continue;
     }
+    // Gain par semaine entre la première et la dernière séance de
+    // l'exercice (un exercice quitté en cours de route ne compte pas son
+    // désentraînement).
+    run.gain[t.info.id] =
+        ln(t.lastCapacity / t.firstCapacity) / ((last - first) / 7);
   }
   run.painAggravations = athlete.painAggravations;
   run.sessions.addAll(sessions);

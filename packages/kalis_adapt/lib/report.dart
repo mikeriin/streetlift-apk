@@ -81,7 +81,9 @@ String campaignMarkdown(Map<String, Object?> campaign) {
         'entre le RIR réel et le RIR affiché. Biais > 0 : séries plus '
         'faciles que visé. Quasi-échec : série finie à moins de 0,5 '
         'répétition de l\'échec quand la cible en laissait au moins 2. '
-        'Gain : progression moyenne de la capacité vraie sur la simulation.',
+        'Gain : progression moyenne de la capacité vraie par semaine, entre '
+        'la première et la dernière séance de chaque exercice suivi au moins '
+        'trois semaines.',
     '',
     '| Athlète | Politique | RIR MAE | Biais | Échecs non prévus | '
         'Quasi-échecs | Gain |',
@@ -100,7 +102,7 @@ String campaignMarkdown(Map<String, Object?> campaign) {
         '${_num(_mean(m['rirBias']))} | '
         '${_ci(m['failRate'], percent: true)} | '
         '${_ci(m['nearFailureRate'], percent: true)} | '
-        '${_ci(m['gain'], percent: true, digits: 1)} |',
+        '${_ci(m['gain'], percent: true, digits: 2)} |',
       );
     }
   }
@@ -122,8 +124,8 @@ String campaignMarkdown(Map<String, Object?> campaign) {
     out.add(
       '| ${athlete['key']} | ${_ci(p['rirMae_vs_double_progression'])} | '
       '${_ci(p['rirMae_vs_L7'])} | '
-      '${_ci(p['gain_vs_double_progression'], percent: true, digits: 1)} | '
-      '${_ci(p['gain_vs_L7'], percent: true, digits: 1)} |',
+      '${_ci(p['gain_vs_double_progression'], percent: true, digits: 2)} | '
+      '${_ci(p['gain_vs_L7'], percent: true, digits: 2)} |',
     );
   }
   out.addAll(<String>[
@@ -232,7 +234,7 @@ String campaignMarkdown(Map<String, Object?> campaign) {
     final p = _map(loop['proposals']);
     out.add(
       '| ${athlete['key']} | ${_ci(base['rirMae'])} | '
-      '${_ci(base['gain'], percent: true, digits: 1)} | '
+      '${_ci(base['gain'], percent: true, digits: 2)} | '
       '${_num(_mean(p['volume']), 1)} | ${_num(_mean(p['deload']), 1)} | '
       '${_num(_mean(p['exercise_swap']), 1)} | '
       '${_num(_mean(p['pain_sparing']), 1)} | '
@@ -388,9 +390,7 @@ String prescriptionText(Catalog catalog, ExercisePrescription item) {
               : (item.distanceMeters != null
                     ? '${item.distanceMeters} m'
                     : '—'));
-    final load = item.startLoadKg == null
-        ? ''
-        : ' @ ${_kg(item.startLoadKg)}';
+    final load = item.startLoadKg == null ? '' : ' @ ${_kg(item.startLoadKg)}';
     final flames = item.targetFlames == null
         ? ''
         : ' (${item.targetFlames} fl.)';

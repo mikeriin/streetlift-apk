@@ -777,7 +777,9 @@ final class SessionRun {
     if (firstLoad != null) {
       track.lastLoad = run.calibrating ? maxLoad : firstLoad;
     }
-    track.noUp = run.fails > 0;
+    // Un échec non prévu plus tôt dans la même séance (même exercice à un
+    // autre emplacement) compte aussi.
+    track.noUp = run.fails > 0 || (track.lastDay == day && track.noUp);
     if (openSet) {
       track.benchmarkDay = day;
     }
