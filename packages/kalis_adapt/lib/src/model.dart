@@ -1770,8 +1770,7 @@ final class SessionRun {
         final possible = total <= 0
             ? 1000.0
             : track.filter.repsPossible(ln(total)) * (1 - fatigue);
-        if (next > kg &&
-            (possible >= 3 || previous.amount >= spec.wideTop)) {
+        if (next > kg && (possible >= 3 || previous.amount >= spec.wideTop)) {
           kg = next;
           raisedByRating = true;
         }
