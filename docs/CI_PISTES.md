@@ -44,4 +44,6 @@ Durées : délai du job 90 min. Un simulateur long découpe son rapport (graines
 moins nombreuses en CI, campagne complète décrite et lancée en local dans la
 session si nécessaire, résultats commités dans `docs/` du paquet).
 
-Mise en place contrôlée par la conversation de pilotage le 01/10/2026 (premier run de `ci-paquets.yml` : « aucun paquet »).
+Mise en place contrôlée par la conversation de pilotage le 01/10/2026 : run 36826528447 vert (« aucun paquet », « aucun outil »), résultats recommités sans relancer le workflow.
+
+Piège constaté : un push qui **crée** la branche de contrôle sur un commit déjà présent dans le dépôt ne déclenche aucun run. La méthode `git commit-tree` crée toujours un commit nouveau, donc elle n'est pas concernée ; ne pousse jamais une branche existante telle quelle sur la branche de contrôle.
