@@ -1,3 +1,19 @@
+# Cas types des répliques de Koach (kalis_koach 0.1.0)
+
+Sortie de `dart run bin/kalis_koach_cli.dart --rapport` (fichier `cas_types.txt`, run CI
+36830876884), **relue** le 01/10/2026 : ton (tutoiement, phrases courtes), absence d'allégation
+médicale et de promesse de résultat, cohérence pose / message / actions, côté de la bulle.
+
+Corrections faites à la relecture : accord au nombre supprimé des messages à nombre variable
+(« Questions restantes : 1 » au lieu de « 1 questions » ; « séries faites : 6 sur 12 »).
+
+Points d'attention pour G5 et G9 : la douleur signalée a la priorité maximale (100) et renvoie vers
+un professionnel de santé ; « Pourquoi ? » n'est proposé que lorsqu'une explication existe ; un code
+de raison inconnu du paquet donne un message générique (aucune erreur).
+
+Les textes n'ont pas été relus par un professionnel diplômé (registre de validation du CONTRAT).
+
+```text
 Cas types (relus) — kalis_koach 0.1.0
 
 # Premier lancement
@@ -78,3 +94,4 @@ Cas types (relus) — kalis_koach 0.1.0
   1 : victory — Et une séance de plus. Beau travail !
   2 : thumbs_up_2 — C’est fait ! Pense à bien récupérer.
   3 : clap — Séance terminée, bien joué !
+```

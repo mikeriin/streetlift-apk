@@ -45,7 +45,8 @@ void main() {
     for (var n = 0; n < 10000; n++) {
       final event = events[rnd.nextInt(events.length)];
       final params = <String, String>{
-        for (final p in _paramNames) p: _values[p]![rnd.nextInt(_values[p]!.length)],
+        for (final p in _paramNames)
+          p: _values[p]![rnd.nextInt(_values[p]!.length)],
       };
       final cue = KoachCue(
         event,
