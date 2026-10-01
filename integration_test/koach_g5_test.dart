@@ -115,6 +115,14 @@ void main() {
     await wait(tester, 1200);
   }
 
+  /// Attend (images réelles de l'émulateur, lentes) que [f] apparaisse.
+  Future<bool> until(WidgetTester tester, Finder f, {int max = 80}) async {
+    for (var i = 0; i < max && f.evaluate().isEmpty; i++) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
+    return f.evaluate().isNotEmpty;
+  }
+
   /// Koach visibles à l'écran.
   int koachs() => find.byType(KoachView).hitTestable().evaluate().length;
 
@@ -245,11 +253,11 @@ void main() {
     final stage = find.byKey(const ValueKey('koach-gallery-stage'));
     await scrollTo(tester, stage, up: true);
     await scrollTo(tester, find.byKey(const ValueKey('koach-pose-progress_chart')));
+    final before = tester.state<KoachViewState>(stage).transitions;
     await tester.tap(find.byKey(const ValueKey('koach-pose-progress_chart')));
     await tester.pump(const Duration(milliseconds: 90));
     releve['transition_en_cours'] =
-        stage.evaluate().isNotEmpty &&
-        tester.state<KoachViewState>(stage).previous != null;
+        tester.state<KoachViewState>(stage).transitions == before + 1;
     await wait(tester, 600);
     await scrollTo(tester, stage, up: true);
     await shot('9_galerie_transition');
@@ -260,19 +268,19 @@ void main() {
     // « Réduire les animations » : poses fixes.
     tester.platformDispatcher.accessibilityFeaturesTestValue =
         const FakeAccessibilityFeatures(disableAnimations: true);
-    await wait(tester, 800);
+    releve['reduit_texte'] = await until(
+      tester,
+      find.text('Animations réduites : Koach reste immobile.'),
+    );
     await scrollTo(tester, find.byKey(const ValueKey('koach-pose-anatomy')));
+    final n = tester.state<KoachViewState>(stage).transitions;
     await tester.tap(find.byKey(const ValueKey('koach-pose-anatomy')));
-    await tester.pump(const Duration(milliseconds: 16));
-    final staged = stage.evaluate().isNotEmpty;
+    await until(tester, find.text('Montre l’anatomie'));
     releve['reduit_transition'] =
-        !staged || tester.state<KoachViewState>(stage).previous != null;
-    releve['reduit_respiration'] =
-        !staged || tester.state<KoachViewState>(stage).breathing;
-    releve['reduit_texte'] = find
-        .text('Animations réduites : Koach reste immobile.')
-        .evaluate()
-        .isNotEmpty;
+        tester.state<KoachViewState>(stage).transitions != n;
+    releve['reduit_respiration'] = tester
+        .state<KoachViewState>(stage)
+        .breathing;
     await scrollTo(tester, stage, up: true);
     await wait(tester, 600);
     await shot('10_animations_reduites');
@@ -293,13 +301,11 @@ void main() {
         await tester.tap(logo.first);
         await tester.pump(Duration(milliseconds: i < 4 ? 300 : 16));
       }
-      for (var i = 0; i < 30; i++) {
-        await tester.pump(const Duration(milliseconds: 100));
-      }
-      releve['dev_message_koach'] = find
-          .byKey(const ValueKey('session-toast-koach'))
-          .evaluate()
-          .isNotEmpty;
+      releve['dev_message_koach'] = await until(
+        tester,
+        find.byKey(const ValueKey('session-toast-koach')),
+      );
+      await tester.pump(const Duration(milliseconds: 300));
       await shot('11_dev_message_entree');
       await opened(tester);
     }
@@ -323,17 +329,15 @@ void main() {
       await tester.tap(delete.first);
       await wait(tester, 800);
       await tester.tap(find.byKey(const ValueKey('dev-delete-confirm')));
-      for (var i = 0; i < 25; i++) {
-        await tester.pump(const Duration(milliseconds: 100));
-      }
+      releve['dev_suppression_koach'] = await until(
+        tester,
+        find.byKey(const ValueKey('session-toast-koach')),
+      );
       releve['dev_suppression_message'] = find
           .text('Session de test supprimée')
           .evaluate()
           .isNotEmpty;
-      releve['dev_suppression_koach'] = find
-          .byKey(const ValueKey('session-toast-koach'))
-          .evaluate()
-          .isNotEmpty;
+      await tester.pump(const Duration(milliseconds: 300));
       await shot('13_dev_supprimee');
       await opened(tester);
     }

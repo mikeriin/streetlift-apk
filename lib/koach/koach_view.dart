@@ -323,6 +323,11 @@ class KoachViewState extends State<KoachView>
   /// Respiration branchée sur l'horloge (tests).
   bool get breathing => _breathing;
 
+  /// Transitions animées commencées depuis la création (tests : l'émulateur
+  /// peut finir une transition de 200 ms en une seule image).
+  int get transitions => _transitions;
+  int _transitions = 0;
+
   /// Pose précédente pendant une transition (tests).
   KoachPose? get previous => _previous;
 
@@ -364,6 +369,7 @@ class KoachViewState extends State<KoachView>
     if (old.pose != widget.pose) {
       if (_motion) {
         _previous = old.pose;
+        _transitions++;
         _transitionAt = _start();
         _anim.transition = 0;
       } else {
