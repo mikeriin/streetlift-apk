@@ -9,6 +9,7 @@ import 'support.dart';
 void main() {
   final catalog = loadCatalog();
   final engine = KalisPlan();
+  final inspector = PlanInspector(catalog);
 
   test('les 40 profils types : passe 1, revue, passe 2 sans violation', () {
     final profiles = loadProfiles();
@@ -16,6 +17,11 @@ void main() {
     for (final fixture in profiles) {
       final c = runProfileCase(catalog, engine, fixture);
       expect(c.violations, isEmpty, reason: fixture.key);
+      expect(
+        inspector.scoreOf(requestFor(fixture.profile), c.pass1).toJson(),
+        c.pass1.score.toJson(),
+        reason: '${fixture.key} : note relue',
+      );
       expect(c.pass1.days.length, fixture.profile.availability.length);
       for (final day in c.pass1.days) {
         expect(day.slots, isNotEmpty, reason: '${fixture.key} jour vide');

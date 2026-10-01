@@ -10,6 +10,7 @@ import 'dart:typed_data';
 import 'context.dart';
 import 'hash.dart';
 import 'score.dart';
+import 'sets.dart';
 import 'state.dart';
 import 'traits.dart';
 
@@ -260,9 +261,6 @@ final class Planner {
     return true;
   }
 
-  bool _fits(PlanState state, int day) =>
-      scorer.timeOfDay(state, day) <= context.days[day].seconds;
-
   bool _isLastRequired(PlanState state, int poolIndex) {
     final id = context.pool[poolIndex].id;
     return context.requiredIds.contains(id) &&
@@ -369,7 +367,7 @@ final class Planner {
           continue;
         }
         final at = state.add(d, index, ctx.defaultSets(e, d), unnamedSlot);
-        if (scorer.shrinkToFit(state, d, at)) {
+        if (normalizeDay(ctx, state, d)) {
           final value = objective(state) + 1e-7 * e.tieBreak;
           var pos = best.length;
           while (pos > 0 && best[pos - 1].$1 < value) {
@@ -383,19 +381,21 @@ final class Planner {
           }
         }
         state.removeAt(d, at);
+        normalizeDay(ctx, state, d);
       }
     }
     return best;
   }
 
-  /// Ajoute [index] au jour [day] avec ses séries par défaut, réduites au
-  /// besoin pour tenir dans le temps. Rend le rang de l'emplacement, ou −1
-  /// (état inchangé) s'il ne tient pas.
+  /// Ajoute [index] au jour [day] et recalcule les séries du jour. Rend le
+  /// rang de l'emplacement, ou −1 (état inchangé) si la séance ne tient
+  /// plus dans son temps.
   int place(PlanState state, int day, int index, int identity) {
     final e = context.pool[index];
     final at = state.add(day, index, context.defaultSets(e, day), identity);
-    if (!scorer.shrinkToFit(state, day, at)) {
+    if (!normalizeDay(context, state, day)) {
       state.removeAt(day, at);
+      normalizeDay(context, state, day);
       return -1;
     }
     return at;
@@ -444,6 +444,7 @@ final class Planner {
           }
           final next = _bestAdditions(state, shortlist, 1, 0);
           state.removeAt(d, at);
+          normalizeDay(ctx, state, d);
           final ahead = next.isEmpty || next.first.$1 < value
               ? value
               : next.first.$1;
@@ -526,7 +527,7 @@ final class Planner {
       _saveA.save(state, d);
       state.exercise[d][at] = candidate;
       state.sets[d][at] = ctx.defaultSets(e, d);
-      if (!scorer.shrinkToFit(state, d, at)) {
+      if (!normalizeDay(ctx, state, d)) {
         _saveA.restore(state);
         return false;
       }
@@ -562,6 +563,7 @@ final class Planner {
       // Retirer un exercice.
       _saveA.save(state, d);
       state.removeAt(d, at);
+      normalizeDay(ctx, state, d);
       return true;
     }
     // Déplacer un exercice vers un autre jour.
@@ -577,6 +579,7 @@ final class Planner {
     _saveA.save(state, d);
     _saveB.save(state, to);
     state.removeAt(d, at);
+    normalizeDay(ctx, state, d);
     if (place(state, to, moved, unnamedSlot) < 0) {
       _saveA.restore(state);
       _saveB.restore(state);
@@ -644,11 +647,10 @@ final class Planner {
           if (_isLastRequired(state, old)) {
             continue;
           }
-          final oldSets = state.sets[d][at];
           final wasWork = ctx.pool[old].kind != SlotKind.mobility;
           var bestIndex = -1;
-          var bestSets = 0;
           var bestValue = current;
+          _saveA.save(state, d);
           for (final candidate in ctx.neighbours(old)) {
             final e = ctx.pool[candidate];
             if (!e.feasibleOn(d) ||
@@ -662,49 +664,20 @@ final class Planner {
               continue;
             }
             state.exercise[d][at] = candidate;
-            state.sets[d][at] = ctx.defaultSets(e, d);
-            if (scorer.shrinkToFit(state, d, at)) {
+            if (normalizeDay(ctx, state, d)) {
               final value = objective(state);
               if (value > bestValue + 1e-9) {
                 bestValue = value;
                 bestIndex = candidate;
-                bestSets = state.sets[d][at];
               }
             }
-            state.exercise[d][at] = old;
-            state.sets[d][at] = oldSets;
+            _saveA.restore(state);
           }
           if (bestIndex >= 0) {
             state.exercise[d][at] = bestIndex;
-            state.sets[d][at] = bestSets;
+            normalizeDay(ctx, state, d);
             current = bestValue;
             improved = true;
-          }
-        }
-      }
-      // Durées continues (cardio, routines) : une tranche de plus tant que
-      // la note s'améliore et que la séance tient.
-      for (var d = 0; d < ctx.dayCount; d++) {
-        if (!_dayOpen(d)) {
-          continue;
-        }
-        for (var at = 0; at < state.count[d]; at++) {
-          final scheme = ctx.pool[state.exercise[d][at]].scheme;
-          if (!scheme.continuous || _isLocked(state, d, at)) {
-            continue;
-          }
-          while (state.sets[d][at] < scheme.maxSets) {
-            state.sets[d][at]++;
-            final value = _fits(state, d)
-                ? objective(state)
-                : double.negativeInfinity;
-            if (value > current + 1e-9) {
-              current = value;
-              improved = true;
-            } else {
-              state.sets[d][at]--;
-              break;
-            }
           }
         }
       }
@@ -723,6 +696,7 @@ final class Planner {
           }
           _saveA.save(state, d);
           state.removeAt(d, at);
+          normalizeDay(ctx, state, d);
           final value = objective(state);
           if (value > current + 1e-9) {
             current = value;
@@ -770,7 +744,8 @@ final class Planner {
       }
       while (true) {
         final over =
-            !_fits(state, d) || _workSlots(state, d) > ctx.days[d].maxWorkSlots;
+            !normalizeDay(ctx, state, d) ||
+            _workSlots(state, d) > ctx.days[d].maxWorkSlots;
         if (!over) {
           break;
         }
@@ -783,6 +758,7 @@ final class Planner {
           }
           _saveA.save(state, d);
           state.removeAt(d, i);
+          normalizeDay(ctx, state, d);
           final value = objective(state);
           _saveA.restore(state);
           if (value > bestValue) {
@@ -836,7 +812,6 @@ final class Planner {
                 !banned.contains(back) &&
                 !state.dayHas(d, back)) {
               state.exercise[d][at] = back;
-              state.sets[d][at] = reference.sets[d][refAt];
               tried = true;
             }
           }
@@ -845,7 +820,7 @@ final class Planner {
             continue;
           }
           final ok =
-              _fits(state, d) &&
+              normalizeDay(ctx, state, d) &&
               _workSlots(state, d) <= ctx.days[d].maxWorkSlots;
           final value = ok ? objective(state) : double.negativeInfinity;
           if (value >= current - 1e-12) {
@@ -877,7 +852,7 @@ final class Planner {
           _saveA.save(state, d);
           state.add(d, back, reference.sets[d][i], id);
           final ok =
-              _fits(state, d) &&
+              normalizeDay(ctx, state, d) &&
               _workSlots(state, d) <= ctx.days[d].maxWorkSlots;
           final value = ok ? objective(state) : double.negativeInfinity;
           if (value >= current - 1e-12) {

@@ -9,6 +9,7 @@ import 'context.dart';
 import 'params.dart';
 import 'scheme.dart';
 import 'score.dart';
+import 'sets.dart';
 import 'state.dart';
 import 'traits.dart';
 import 'version.dart';
@@ -364,6 +365,7 @@ PlanState stateFromPlan(
       state.add(d, index, ctx.defaultSets(ctx.pool[index], d), identity);
     }
   }
+  normalizeAll(ctx, state);
   return state;
 }
 
@@ -517,7 +519,7 @@ Pass1Plan planFromState(
     if (ctx.cautious) reason(ReasonCodes.planCautiousHealth),
     ...blockReasons,
   ];
-  return Pass1Plan(
+  final draft = Pass1Plan(
     blockId: blockId,
     blockIndex: blockIndex,
     weeks: weeks,
@@ -525,7 +527,11 @@ Pass1Plan planFromState(
     seed: seed,
     engineVersion: kalisPlanVersion,
     days: days,
-    score: planScoreOf(scorer),
+    score: const PlanScore(total: 0, components: <ScoreComponent>[]),
     reasons: reasons,
   );
+  // La note est calculée sur l'état relu depuis le programme (ordre de la
+  // séance) : relire le programme redonne exactement cette note.
+  scorer.evaluate(stateFromPlan(ctx, draft));
+  return draft.copyWith(score: planScoreOf(scorer));
 }

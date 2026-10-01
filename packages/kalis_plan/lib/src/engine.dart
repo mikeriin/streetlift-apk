@@ -13,6 +13,7 @@ import 'params.dart';
 import 'pass2.dart';
 import 'score.dart';
 import 'search.dart';
+import 'sets.dart';
 import 'state.dart';
 import 'traits.dart';
 import 'variants.dart';
@@ -236,6 +237,7 @@ final class KalisPlan implements PlanEngine {
       final identity = state.register(slotId, isLocked: true);
       state.add(d, at, ctx.defaultSets(ctx.pool[at], d), identity);
     }
+    normalizeAll(ctx, state);
     _placeRequired(ctx, planner, state);
     planner.construct(state);
     planner.anneal(state, params.annealIterations);
@@ -275,8 +277,10 @@ final class KalisPlan implements PlanEngine {
             continue;
           }
           final pos = state.add(d, at, ctx.defaultSets(e, d), unnamedSlot);
+          normalizeDay(ctx, state, d);
           final value = planner.objective(state);
           state.removeAt(d, pos);
+          normalizeDay(ctx, state, d);
           if (value > bestValue) {
             bestValue = value;
             bestDay = d;
@@ -288,6 +292,7 @@ final class KalisPlan implements PlanEngine {
       }
       if (bestDay >= 0) {
         state.add(bestDay, at, ctx.defaultSets(e, bestDay), unnamedSlot);
+        normalizeDay(ctx, state, bestDay);
       }
     }
   }
@@ -566,6 +571,7 @@ final class KalisPlan implements PlanEngine {
         } else {
           final identity = state.register(addedSlotId!, isLocked: true);
           state.add(d, at, ctx.defaultSets(ctx.pool[at], d), identity);
+          normalizeDay(ctx, state, d);
         }
         addLock(
           PlanLock(
@@ -579,6 +585,7 @@ final class KalisPlan implements PlanEngine {
         actedReasons.add(reason(ReasonCodes.planUserRemoved));
         if (at >= 0) {
           state.removeAt(targetDay, at);
+          normalizeDay(ctx, state, targetDay);
         }
       case ReviewKind.replace:
         final at = _positionOfSlot(state, targetDay, slotId!);
@@ -586,8 +593,8 @@ final class KalisPlan implements PlanEngine {
         actedReasons.add(reason(ReasonCodes.planUserReplaced));
         if (at >= 0) {
           state.exercise[targetDay][at] = to;
-          state.sets[targetDay][at] = ctx.defaultSets(ctx.pool[to], targetDay);
           state.locked[state.uid[targetDay][at]] = true;
+          normalizeDay(ctx, state, targetDay);
         }
       case ReviewKind.cannotDo:
       case ReviewKind.dislike:
@@ -760,13 +767,7 @@ final class KalisPlan implements PlanEngine {
   }) {
     final current = ctx.pool[state.exercise[day][at]];
     final candidates = <VariantCandidate>[
-      for (final c in admissibleReplacements(
-        ctx,
-        planner.scorer,
-        state,
-        day,
-        at,
-      ))
+      for (final c in admissibleReplacements(ctx, state, day, at))
         if (!planner.banned.contains(c.entry.index)) c,
     ];
     PoolEntry? picked;
@@ -775,7 +776,6 @@ final class KalisPlan implements PlanEngine {
     }
     if (picked == null) {
       final old = state.exercise[day][at];
-      final oldSets = state.sets[day][at];
       var bestValue = double.negativeInfinity;
       var tried = 0;
       for (final c in candidates) {
@@ -784,8 +784,7 @@ final class KalisPlan implements PlanEngine {
         }
         tried++;
         state.exercise[day][at] = c.entry.index;
-        state.sets[day][at] = ctx.defaultSets(c.entry, day);
-        planner.scorer.shrinkToFit(state, day, at);
+        normalizeDay(ctx, state, day);
         final value = planner.objective(state) + 0.02 * c.similarity;
         if (value > bestValue) {
           bestValue = value;
@@ -793,15 +792,14 @@ final class KalisPlan implements PlanEngine {
         }
       }
       state.exercise[day][at] = old;
-      state.sets[day][at] = oldSets;
     }
     if (picked == null) {
       state.removeAt(day, at);
+      normalizeDay(ctx, state, day);
       return null;
     }
     state.exercise[day][at] = picked.index;
-    state.sets[day][at] = ctx.defaultSets(picked, day);
-    planner.scorer.shrinkToFit(state, day, at);
+    normalizeDay(ctx, state, day);
     return picked;
   }
 
@@ -832,7 +830,7 @@ final class KalisPlan implements PlanEngine {
     for (var d = 0; d < state.dayCount; d++) {
       final at = _positionOfSlot(state, d, request.slotId);
       if (at >= 0) {
-        return computeVariants(ctx, Scorer(ctx), state, d, at, request.slotId);
+        return computeVariants(ctx, state, d, at, request.slotId);
       }
     }
     throw ArgumentError.value(request.slotId, 'slotId', 'emplacement inconnu');
@@ -1026,13 +1024,7 @@ final class KalisPlan implements PlanEngine {
           continue;
         }
         PoolEntry? harder;
-        for (final c in admissibleReplacements(
-          ctx,
-          planner.scorer,
-          state,
-          d,
-          i,
-        )) {
+        for (final c in admissibleReplacements(ctx, state, d, i)) {
           final x = c.entry.exercise;
           final step = x.difficulty - e.exercise.difficulty;
           if (x.rootId != e.exercise.rootId ||
@@ -1054,7 +1046,7 @@ final class KalisPlan implements PlanEngine {
             ),
           ];
           state.exercise[d][i] = harder.index;
-          state.sets[d][i] = ctx.defaultSets(harder, d);
+          normalizeDay(ctx, state, d);
         }
       }
     }

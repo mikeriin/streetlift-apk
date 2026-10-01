@@ -6,6 +6,7 @@ import 'dart:typed_data';
 
 import 'context.dart';
 import 'params.dart';
+import 'sets.dart';
 import 'state.dart';
 import 'traits.dart';
 
@@ -119,36 +120,7 @@ final class Scorer {
   int classSeconds(DisciplineClass c) => _classTime[c.index];
 
   /// Durée estimée du jour [day] de [state], échauffement compris.
-  int timeOfDay(PlanState state, int day) {
-    final pool = context.pool;
-    final ex = state.exercise[day];
-    final sets = state.sets[day];
-    var t = 0;
-    var warm = false;
-    for (var i = 0; i < state.count[day]; i++) {
-      final e = pool[ex[i]];
-      t += e.scheme.secondsFor(sets[i]);
-      if (e.needsWarmup) {
-        warm = true;
-      }
-    }
-    return warm ? t + context.days[day].warmupSeconds : t;
-  }
-
-  /// Réduit les séries de l'emplacement de rang [at] du jour [day], jusqu'à
-  /// son minimum, tant que la séance dépasse son temps. Rend vrai si la
-  /// séance tient.
-  bool shrinkToFit(PlanState state, int day, int at) {
-    final limit = context.days[day].seconds;
-    final least = context.pool[state.exercise[day][at]].scheme.minSets;
-    while (timeOfDay(state, day) > limit) {
-      if (state.sets[day][at] <= least) {
-        return false;
-      }
-      state.sets[day][at]--;
-    }
-    return true;
-  }
+  int timeOfDay(PlanState state, int day) => dayTime(context, state, day);
 
   /// Vrai si une copie supplémentaire de [entry] dans la semaine n'est pas
   /// une redondance : pratique d'une figure, cardio, mobilité, travail d'un

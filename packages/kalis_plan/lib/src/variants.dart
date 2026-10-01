@@ -3,11 +3,13 @@
 /// triées par proximité. Définitions : `CONTRAT.md`, § Variantes.
 library;
 
+import 'dart:typed_data';
+
 import 'package:kalis_core/kalis_core.dart';
 
 import 'assemble.dart';
 import 'context.dart';
-import 'score.dart';
+import 'sets.dart';
 import 'similarity.dart';
 import 'state.dart';
 import 'traits.dart';
@@ -40,13 +42,12 @@ bool _sameSet(Set<String> a, Set<String> b) =>
 /// décroissante puis par identifiant.
 List<VariantCandidate> admissibleReplacements(
   PlanContext ctx,
-  Scorer scorer,
   PlanState state,
   int day,
   int at,
 ) {
   final old = state.exercise[day][at];
-  final oldSets = state.sets[day][at];
+  final savedSets = Int32List.fromList(state.sets[day]);
   final current = ctx.pool[old];
   final wasWork = current.kind != SlotKind.mobility;
   var work = 0;
@@ -69,10 +70,9 @@ List<VariantCandidate> admissibleReplacements(
       continue;
     }
     state.exercise[day][at] = e.index;
-    state.sets[day][at] = ctx.defaultSets(e, day);
-    final fits = scorer.shrinkToFit(state, day, at);
+    final fits = normalizeDay(ctx, state, day);
     state.exercise[day][at] = old;
-    state.sets[day][at] = oldSets;
+    state.sets[day].setAll(0, savedSets);
     if (!fits) {
       continue;
     }
@@ -213,7 +213,6 @@ Variant _variant(PoolEntry current, VariantCandidate c, VariantKind kind) {
 /// Variantes de l'emplacement [slotId], de rang [at] dans le jour [day].
 VariantSet computeVariants(
   PlanContext ctx,
-  Scorer scorer,
   PlanState state,
   int day,
   int at,
@@ -221,7 +220,7 @@ VariantSet computeVariants(
 ) {
   final current = ctx.pool[state.exercise[day][at]];
   final e = current.exercise;
-  final admissible = admissibleReplacements(ctx, scorer, state, day, at);
+  final admissible = admissibleReplacements(ctx, state, day, at);
   final targeted = <Variant>[];
   final taken = <String>{};
   final kindOf = <String, VariantKind>{};
