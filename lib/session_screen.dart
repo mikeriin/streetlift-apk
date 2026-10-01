@@ -14,7 +14,6 @@ import 'estimate_view.dart';
 import 'adapt_screens.dart';
 import 'koach_engine.dart' as ke show KSuggestion;
 import 'koach_screens.dart' show KoachReviewScreen;
-import 'profile_screens.dart' show showProgressiveQuestion;
 import 'koach_day_card.dart';
 import 'koach_widgets.dart';
 import 'pilotage_screen.dart';
@@ -2297,14 +2296,6 @@ class _FinishPageState extends State<_FinishPage> {
       await closing;
       if (!nav.mounted) return;
       await showSessionDifficulty(nav.context, key);
-      if (!nav.mounted) return;
-    }
-    // L8 (KT-040) : au plus une question progressive, après la séance.
-    final question = store.progressiveQuestionFor(key);
-    if (question != null) {
-      await closing;
-      if (!nav.mounted) return;
-      await showProgressiveQuestion(nav.context, question, key);
       if (!nav.mounted) return;
     }
     checkLevelUp(nav.context, after: closing);

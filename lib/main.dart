@@ -24,7 +24,7 @@ import 'arsenal_screen.dart';
 import 'stats_screen.dart';
 import 'stats_navigation.dart';
 import 'settings_screen.dart';
-import 'profile_screens.dart';
+import 'athlete_profile_flow.dart' show ProfileGate;
 import 'retired_notice_screen.dart';
 import 'store.dart';
 

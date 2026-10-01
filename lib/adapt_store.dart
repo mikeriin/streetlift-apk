@@ -687,9 +687,12 @@ extension AdaptStore on AppStore {
     return out;
   }
 
+  /// G6 : plus les exercices détestés du profil v2 (identifiants de
+  /// l'ancien pack, jusqu'au retrait de L11 en G10).
   Set<String> adaptDisliked(GenCatalog c) => {
     for (final n in profile?.listValue('disliked') ?? const <String>[])
       if (c.idForName(n) case final String id) id,
+    ...AthleteProfileStore(this).athleteDislikedLegacyIds,
   };
 
   /// Trois propositions classées pour remplacer [e] (KT-059).

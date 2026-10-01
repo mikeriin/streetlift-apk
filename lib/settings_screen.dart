@@ -14,17 +14,17 @@ import 'notification_settings.dart';
 import 'pilotage_screen.dart';
 import 'program_start.dart';
 import 'program_screens.dart';
-import 'profile_screens.dart';
+import 'athlete_profile_screen.dart';
 import 'retired_notice_screen.dart';
 import 'store.dart';
 import 'store_widget.dart';
 import 'dev/dev_flags.dart';
 
 /// Version de l'application (pubspec sans le numéro de build).
-const kVersion = '6.3.0';
+const kVersion = '6.4.0';
 
-/// Version affichée (D0.9) : « dev6.3.0 » dans le build de développement
-/// (APK du propriétaire), « 6.3.0 » dans l’AAB du Play Store.
+/// Version affichée (D0.9) : « dev6.4.0 » dans le build de développement
+/// (APK du propriétaire), « 6.4.0 » dans l’AAB du Play Store.
 const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;
 
 class SettingsScreen extends StatelessWidget {
@@ -317,19 +317,17 @@ class SettingsScreen extends StatelessWidget {
             onTap: () => eraseAppData(context, appVersion: kAppVersion),
           ),
           const _Sec('Programme'),
-          // L8 : profil, santé et mode prudent (KT-038 à KT-043).
+          // L8 puis G6 : profil d'athlète v2, santé et mode prudent.
           _Action(
             key: const ValueKey('settings-profile'),
             icon: Icons.person_outline,
             color: SL.accent,
             title: 'Profil',
-            subtitle: switch ((store.profile, store.caution.active)) {
+            subtitle: switch ((store.athlete, store.caution.active)) {
               (null, _) =>
-                store.needsProfileConfirmation
-                    ? 'Pré-rempli, à vérifier · rien ne change sans toi'
-                    : 'À créer',
-              (_, true) => 'Objectifs, disponibilités, santé · mode prudent',
-              _ => 'Objectifs, disponibilités, lieux, santé',
+                store.profile != null ? 'À refaire avec Koach' : 'À créer',
+              (_, true) => 'Disciplines, objectifs, matériel · mode prudent',
+              _ => 'Disciplines, niveau, objectifs, disponibilités, matériel',
             },
             onTap: () => Navigator.push(
               context,

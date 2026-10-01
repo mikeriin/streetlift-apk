@@ -110,7 +110,7 @@ void main() {
     seed.saveSettings();
     final real = DateTime.now();
     await seed.configureStart(DateTime(real.year, real.month, real.day - 10));
-    seed.saveProfile(seed.ownerDraft());
+    seed.seedSampleAthleteProfile();
     final plan = seed.program.week(1).day(1);
     if (plan != null) {
       for (final ex in plan.exercises) {

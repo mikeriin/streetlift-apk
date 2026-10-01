@@ -1,4 +1,13 @@
-# Kalis Track dev6.3.0 — Recentrage sur le programme (pipeline « Génération et progression »)
+# Kalis Track dev6.4.0 — Recentrage sur le programme (pipeline « Génération et progression »)
+
+## dev6.4.0 — Création du profil (lot G6)
+
+- **Nouvelle création du profil, guidée par Koach** (D3, D6), environ 5 minutes, un écran = une question : accueil et avertissement santé ; toi (prénom ou pseudo, sexe, année de naissance — 18 ans et plus —, taille, poids facultatif et expliqué) ; **discipline principale** parmi les 8 (chacune avec sa phrase et une pose de Koach) ou **mode street** (principale parmi streetlifting, sets & reps, calisthénie) ; **1 ou 2 disciplines secondaires dosées** par curseurs (« environ 1 séance sur 5 en mobilité ») ; **niveau par mouvement** en fourchettes (« Je ne sais pas » toujours possible) et expérience ; **objectifs** (performance chiffrée datée, habitude, ou « Laisse Koach proposer » ; le premier est le principal) ; **jours et durée par jour** (20 à 90 min ou saisie libre) ; **lieux et matériel** (vocabulaire de la base regroupé, préréglages, matériel par lieu, lieu de chaque jour) ; **santé** (questionnaire L13 conservé, blessures et gênes sur la carte du corps + articulations, gêne 0-10) ; exercices aimés / détestés ; **mode assisté ou libre** expliqué avec un exemple ; récapitulatif modifiable. Barre de progression, retour arrière, reprise là où tu t'étais arrêté.
+- Le profil remplit exactement le **profil d'athlète v2 de `kalis_core`** (section de sauvegarde `athleteProfile`, versionnée, facultative ; les anciennes sauvegardes s'importent toujours).
+- **Installation neuve / session de test** : « Créer mon programme » enregistre le profil et Koach annonce « Ton programme arrive bientôt » (G7 branchera la création du programme).
+- **Session personnelle** : au lancement, Koach propose de **refaire ton profil** (pré-rempli depuis l'ancien) ; ton programme, ton historique et tes réglages ne changent pas ; « Plus tard » le repropose le lendemain.
+- **Réglages › Profil** : chaque rubrique se modifie à part ; Koach signale un changement qui touche ton programme. Mode prudent, accord santé et accord du médecin inchangés.
+- **Retiré** : démarrage court L8, confirmation du profil d'une installation existante, questions progressives après les séances. Tests : `test/g6_profil_test.dart`, `test/g6_mode_dev_test.dart`, `integration_test/profil_g6_test.dart`. Version « dev6.4.0 ».
 
 ## dev6.3.0 — Koach 2D dans l'application (lot G5)
 

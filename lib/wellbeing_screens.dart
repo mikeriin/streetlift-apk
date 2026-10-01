@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'app_theme.dart';
 import 'data_control.dart' show eraseAppData;
 import 'exercise_screens.dart' show markdownBlocks;
-import 'profile_screens.dart' show ProfileFlow;
+import 'athlete_profile_flow.dart';
 import 'settings_screen.dart' show kAppVersion;
 import 'store.dart';
 import 'ui.dart';
@@ -261,7 +261,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       _d,
       appVersion: widget.appVersion,
       level: store.feedbackLevel,
-      caution: store.profile == null ? null : store.caution.active,
+      caution: store.hasAnyProfile ? store.caution.active : null,
     );
   }
 
@@ -366,7 +366,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                     onChanged: (v) => setState(() => _d.includeLevel = v!),
                     title: const Text('Mon repère de niveau'),
                   ),
-                if (store.profile != null)
+                if (store.hasAnyProfile)
                   CheckboxListTile(
                     key: const ValueKey('feedback-include-caution'),
                     contentPadding: EdgeInsets.zero,
@@ -447,7 +447,18 @@ class MinorGate extends StatelessWidget {
           onPressed: () => Navigator.push(
             context,
             MaterialPageRoute<void>(
-              builder: (_) => ProfileFlow(initial: store.profile!.copy()),
+              // G6 : rubrique « Toi » du profil v2 (ou création du profil
+              // v2 pour un ancien profil L8).
+              builder: (ctx) => store.athlete != null
+                  ? const AthleteProfileFlow(
+                      mode: AthleteFlowMode.edit,
+                      editStep: 'identity',
+                    )
+                  : AthleteProfileFlow(
+                      mode: AthleteFlowMode.redo,
+                      onDone: () => Navigator.pop(ctx),
+                      onCancel: () => Navigator.pop(ctx),
+                    ),
             ),
           ),
           child: const Text('Corriger mon année de naissance'),
