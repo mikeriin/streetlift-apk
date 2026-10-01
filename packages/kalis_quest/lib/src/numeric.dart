@@ -86,8 +86,7 @@ double clampDouble(double x, double low, double high) =>
     x < low ? low : (x > high ? high : x);
 
 /// [x] ramené dans [low ; high].
-int clampInt(int x, int low, int high) =>
-    x < low ? low : (x > high ? high : x);
+int clampInt(int x, int low, int high) => x < low ? low : (x > high ? high : x);
 
 /// [value] arrondi à [decimals] décimales (sorties JSON stables).
 double roundTo(double value, int decimals) {

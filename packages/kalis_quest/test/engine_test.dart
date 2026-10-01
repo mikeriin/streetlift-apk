@@ -83,7 +83,10 @@ void main() {
         effortOf(greedy.state, 'a').amount,
         effortOf(honest.state, 'a').amount,
       );
-      expect(effortOf(greedy.state, 'a').reasons.first.params['capped'], isTrue);
+      expect(
+        effortOf(greedy.state, 'a').reasons.first.params['capped'],
+        isTrue,
+      );
       expect(greedy.level.totalXp, honest.level.totalXp);
     });
 
@@ -91,15 +94,10 @@ void main() {
         'un peu moins ; sans note, moins', () {
       int amount(int? flames) => effortOf(
         first(<SessionRecord>[
-          sessionOf(
-            'a',
-            monday,
-            <SetRecord>[
-              for (var i = 0; i < 4; i++)
-                setOf(bench, i, load: 60, reps: 8, flames: flames, target: 7),
-            ],
-            planned: 4,
-          ),
+          sessionOf('a', monday, <SetRecord>[
+            for (var i = 0; i < 4; i++)
+              setOf(bench, i, load: 60, reps: 8, flames: flames, target: 7),
+          ], planned: 4),
         ]).state,
         'a',
       ).amount;
@@ -137,31 +135,37 @@ void main() {
       expect(extra.reasons.single.params['scope'], CapScope.week);
     });
 
-    test('une séance en cours aujourd\'hui n\'est réglée qu\'une fois finie', () {
-      final open = first(<SessionRecord>[
-        sessionOf('a', monday, benchSets(2), planned: 4, completed: false),
-      ]);
-      expect(open.state.xp.where((e) => e.source == XpSource.effort), isEmpty);
-      final done = run(
-        engine,
-        profile,
-        <SessionRecord>[sessionOf('a', monday, benchSets(4), planned: 4)],
-        open.state,
-        monday,
-      );
-      expect(effortOf(done.state, 'a').amount, 104);
-      // Laissée inachevée, elle est réglée le lendemain pour ce qui est fait.
-      final later = run(
-        engine,
-        profile,
-        <SessionRecord>[
+    test(
+      'une séance en cours aujourd\'hui n\'est réglée qu\'une fois finie',
+      () {
+        final open = first(<SessionRecord>[
           sessionOf('a', monday, benchSets(2), planned: 4, completed: false),
-        ],
-        open.state,
-        tuesday,
-      );
-      expect(effortOf(later.state, 'a').amount, 50);
-    });
+        ]);
+        expect(
+          open.state.xp.where((e) => e.source == XpSource.effort),
+          isEmpty,
+        );
+        final done = run(
+          engine,
+          profile,
+          <SessionRecord>[sessionOf('a', monday, benchSets(4), planned: 4)],
+          open.state,
+          monday,
+        );
+        expect(effortOf(done.state, 'a').amount, 104);
+        // Laissée inachevée, elle est réglée le lendemain pour ce qui est fait.
+        final later = run(
+          engine,
+          profile,
+          <SessionRecord>[
+            sessionOf('a', monday, benchSets(2), planned: 4, completed: false),
+          ],
+          open.state,
+          tuesday,
+        );
+        expect(effortOf(later.state, 'a').amount, 50);
+      },
+    );
   });
 
   group('douleur', () {
@@ -194,12 +198,14 @@ void main() {
 
     test('le squat épargne l\'épaule douloureuse', () {
       expect(
-        book.find(squat)!.excludedByPain(
-          BodyZone.shoulder,
-          5,
-          hard: p.painHard,
-          severe: p.painSevere,
-        ),
+        book
+            .find(squat)!
+            .excludedByPain(
+              BodyZone.shoulder,
+              5,
+              hard: p.painHard,
+              severe: p.painSevere,
+            ),
         isFalse,
       );
     });
@@ -247,24 +253,20 @@ void main() {
     });
 
     test('une douleur signalée pendant ou après la séance ne retire rien', () {
-      final session = sessionOf(
-        'a',
-        monday,
-        <SetRecord>[
-          for (var i = 0; i < 4; i++)
-            setOf(excluded, i, reps: 8, flames: 7, target: 7),
-        ],
-        planned: 4,
-      ).copyWith(
-        pains: const <PainReport>[
-          PainReport(
-            zone: BodyZone.shoulder,
-            side: BodySide.left,
-            intensity: 6,
-            phase: PainPhase.during,
-          ),
-        ],
-      );
+      final session =
+          sessionOf('a', monday, <SetRecord>[
+            for (var i = 0; i < 4; i++)
+              setOf(excluded, i, reps: 8, flames: 7, target: 7),
+          ], planned: 4).copyWith(
+            pains: const <PainReport>[
+              PainReport(
+                zone: BodyZone.shoulder,
+                side: BodySide.left,
+                intensity: 6,
+                phase: PainPhase.during,
+              ),
+            ],
+          );
       expect(effortOf(first(<SessionRecord>[session]).state, 'a').amount, 104);
     });
   });
@@ -420,7 +422,10 @@ void main() {
       expect(o.events, isEmpty);
       expect(o.records, isNotEmpty);
       final rank = o.ranks.firstWhere((r) => r.exerciseId == bench);
-      expect(rank.tier.index, greaterThanOrEqualTo(MovementRankTier.gold.index));
+      expect(
+        rank.tier.index,
+        greaterThanOrEqualTo(MovementRankTier.gold.index),
+      );
       // Refaire la même performance ensuite n'est pas un record.
       final next = run(
         engine,
@@ -442,20 +447,34 @@ void main() {
       expect(next.events.where((e) => e.kind == DelightKind.rankUp), isEmpty);
     });
 
-    test('bonus de départ : désactivé par défaut, plafonné s\'il est activé', () {
-      final history = <SessionRecord>[
-        for (var i = 0; i < 10; i++)
-          sessionOf('h$i', monday.addDays(-25 + 2 * i), benchSets(3), planned: 3),
-      ];
-      expect(first(history).level.totalXp, 0);
-      final bonus = KalisQuest(
-        params: const QuestParams(startBonusPerSession: 20, startBonusCap: 150),
-      );
-      final o = run(bonus, profile, history, emptyState, monday);
-      expect(o.level.totalXp, 150);
-      expect(o.state.xp.single.reasons.single.code, ReasonCodes.questStartBonus);
-      expect(o.validate(), isEmpty);
-    });
+    test(
+      'bonus de départ : désactivé par défaut, plafonné s\'il est activé',
+      () {
+        final history = <SessionRecord>[
+          for (var i = 0; i < 10; i++)
+            sessionOf(
+              'h$i',
+              monday.addDays(-25 + 2 * i),
+              benchSets(3),
+              planned: 3,
+            ),
+        ];
+        expect(first(history).level.totalXp, 0);
+        final bonus = KalisQuest(
+          params: const QuestParams(
+            startBonusPerSession: 20,
+            startBonusCap: 150,
+          ),
+        );
+        final o = run(bonus, profile, history, emptyState, monday);
+        expect(o.level.totalXp, 150);
+        expect(
+          o.state.xp.single.reasons.single.code,
+          ReasonCodes.questStartBonus,
+        );
+        expect(o.validate(), isEmpty);
+      },
+    );
 
     test('les séances « reprise » ne changent rien', () {
       final plain = first(sessions, today: wednesday);
@@ -487,7 +506,11 @@ void main() {
 
     test('3 sur 3 : réussie ; 2 sur 3 : non réussie, la série repart, la '
         'meilleure est gardée', () {
-      final sessions = <SessionRecord>[...week(0, 3), ...week(1, 3), ...week(2, 2)];
+      final sessions = <SessionRecord>[
+        ...week(0, 3),
+        ...week(1, 3),
+        ...week(2, 2),
+      ];
       var o = first(const <SessionRecord>[]);
       final streaks = <int>[];
       for (var w = 1; w <= 3; w++) {
@@ -501,10 +524,7 @@ void main() {
       expect(streak['best'], 2);
       expect(streak['lastWeek'], 'incomplete');
       // Aucune écriture, aucun événement ne dit la semaine manquée.
-      expect(
-        o.events.where((e) => e.kind == DelightKind.weekStreak),
-        isEmpty,
-      );
+      expect(o.events.where((e) => e.kind == DelightKind.weekStreak), isEmpty);
     });
 
     test('vacances déclarées : pause, la série ne bouge pas', () {
@@ -526,11 +546,10 @@ void main() {
       );
       expect(o.weekStreak, 2);
       final weeks = o.state.data['weeks']! as List<Object?>;
-      expect(<Object?>[for (final w in weeks) (w! as List<Object?>)[5]], <int>[
-        WeekSummary.success,
-        WeekSummary.paused,
-        WeekSummary.success,
-      ]);
+      expect(
+        <Object?>[for (final w in weeks) (w! as List<Object?>)[5]],
+        <int>[WeekSummary.success, WeekSummary.paused, WeekSummary.success],
+      );
       // Pendant la pause : une quête par jour, de récupération.
       final paused = run(
         engine,
@@ -583,7 +602,10 @@ void main() {
       ];
       final a = first(sessions.sublist(0, 1));
       expect(xpOf(a.state, XpSource.record), 0);
-      expect(a.events.where((e) => e.kind == DelightKind.firstTime), hasLength(1));
+      expect(
+        a.events.where((e) => e.kind == DelightKind.firstTime),
+        hasLength(1),
+      );
       expect(a.events.where((e) => e.kind == DelightKind.record), isEmpty);
       final b = run(engine, profile, sessions, a.state, wednesday);
       final event = b.events.singleWhere((e) => e.kind == DelightKind.record);
@@ -616,15 +638,10 @@ void main() {
             benchSets(3, load: 60, reps: 5, flames: 9, target: 9),
             planned: 3,
           ),
-          sessionOf(
-            'b',
-            wednesday,
-            <SetRecord>[
-              ...benchSets(3, load: 60, reps: 5, flames: 9, target: 9),
-              setOf(bench, 3, load: 70, reps: 5, flames: 9, target: 9),
-            ],
-            planned: 3,
-          ),
+          sessionOf('b', wednesday, <SetRecord>[
+            ...benchSets(3, load: 60, reps: 5, flames: 9, target: 9),
+            setOf(bench, 3, load: 70, reps: 5, flames: 9, target: 9),
+          ], planned: 3),
         ],
         a.state,
         wednesday,
@@ -706,47 +723,61 @@ void main() {
   });
 
   group('niveaux et prestige', () {
-    test('Krédits à chaque niveau ; prestige quand le niveau 100 est franchi', () {
-      final small = KalisQuest(params: const QuestParams(levelScale: 0.01));
-      expect(small.curve.prestigeSpan, 500);
-      final sessions = <SessionRecord>[
-        for (var w = 0; w < 3; w++)
-          for (final d in <int>[0, 2, 4])
-            sessionOf(
-              'p$w-$d',
-              monday.addDays(7 * w + d),
-              benchSets(4),
-              planned: 4,
-            ),
-      ];
-      var o = run(small, profile, const <SessionRecord>[], emptyState, monday);
-      var previous = LevelCurve.ordinal(o.level);
-      for (var day = 0; day <= 21; day++) {
-        o = run(small, profile, sessions, o.state, monday.addDays(day));
-        final ordinal = LevelCurve.ordinal(o.level);
-        expect(ordinal, greaterThanOrEqualTo(previous));
-        expect(o.level.level, inInclusiveRange(1, 100));
-        expect(o.validate(), isEmpty);
-        previous = ordinal;
-      }
-      expect(o.level.prestige, greaterThanOrEqualTo(1));
-      expect(o.level.totalXp, greaterThan(500));
-      final levelUps = o.state.kredits.where(
-        (k) => k.source == KreditSource.levelUp,
-      );
-      expect(levelUps.length, previous - 1);
-      expect(
-        levelUps.where((k) => k.refId == 'level|1|1').single.amount,
-        QuestParams.standard.prestigeKredits,
-      );
-    });
+    test(
+      'Krédits à chaque niveau ; prestige quand le niveau 100 est franchi',
+      () {
+        final small = KalisQuest(params: const QuestParams(levelScale: 0.01));
+        expect(small.curve.prestigeSpan, 500);
+        final sessions = <SessionRecord>[
+          for (var w = 0; w < 3; w++)
+            for (final d in <int>[0, 2, 4])
+              sessionOf(
+                'p$w-$d',
+                monday.addDays(7 * w + d),
+                benchSets(4),
+                planned: 4,
+              ),
+        ];
+        var o = run(
+          small,
+          profile,
+          const <SessionRecord>[],
+          emptyState,
+          monday,
+        );
+        var previous = LevelCurve.ordinal(o.level);
+        for (var day = 0; day <= 21; day++) {
+          o = run(small, profile, sessions, o.state, monday.addDays(day));
+          final ordinal = LevelCurve.ordinal(o.level);
+          expect(ordinal, greaterThanOrEqualTo(previous));
+          expect(o.level.level, inInclusiveRange(1, 100));
+          expect(o.validate(), isEmpty);
+          previous = ordinal;
+        }
+        expect(o.level.prestige, greaterThanOrEqualTo(1));
+        expect(o.level.totalXp, greaterThan(500));
+        final levelUps = o.state.kredits.where(
+          (k) => k.source == KreditSource.levelUp,
+        );
+        expect(levelUps.length, previous - 1);
+        expect(
+          levelUps.where((k) => k.refId == 'level|1|1').single.amount,
+          QuestParams.standard.prestigeKredits,
+        );
+      },
+    );
   });
 
   group('sorties', () {
     test('journaux types : sorties valides, exercices du catalogue, extras '
         'sérialisables', () {
       for (final j in loadJournals()) {
-        final o = evaluateFixture(engine, catalog, profileOf(j.profileKey), j.log);
+        final o = evaluateFixture(
+          engine,
+          catalog,
+          profileOf(j.profileKey),
+          j.log,
+        );
         expect(o.validate(), isEmpty, reason: j.key);
         final ids = <String>{};
         o.collectExerciseIds(ids);
@@ -781,7 +812,14 @@ void main() {
     });
 
     test('aucun code culpabilisant ; tous les codes sont au registre', () {
-      const forbidden = <String>['fail', 'miss', 'lost', 'broken', 'lazy', 'shame'];
+      const forbidden = <String>[
+        'fail',
+        'miss',
+        'lost',
+        'broken',
+        'lazy',
+        'shame',
+      ];
       for (final spec in reasonRegistry) {
         if (!spec.code.startsWith('quest.')) {
           continue;
@@ -791,7 +829,12 @@ void main() {
         }
       }
       for (final j in loadJournals()) {
-        final o = evaluateFixture(engine, catalog, profileOf(j.profileKey), j.log);
+        final o = evaluateFixture(
+          engine,
+          catalog,
+          profileOf(j.profileKey),
+          j.log,
+        );
         for (final code in reasonCodesOf(o)) {
           expect(code.startsWith('quest.'), isTrue, reason: code);
           expect(reasonSpecOf(code), isNotNull, reason: code);

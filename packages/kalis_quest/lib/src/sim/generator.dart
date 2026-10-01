@@ -488,14 +488,11 @@ SetRecord? _performSet(
     switch (mode) {
       case CapacityMode.loaded:
         final startLoad = item.startLoadKg;
-        final total = startLoad == null
-            ? 0.0
-            : info.totalLoad(startLoad, bw);
+        final total = startLoad == null ? 0.0 : info.totalLoad(startLoad, bw);
         if (total > 0) {
           first = total * (1 + (repsHigh! + rir - 1) / k) * 1.05;
         } else {
-          first =
-              bw * (info.lowerBody ? 1.0 : 0.6) * (1 + 0.35 * a.level);
+          first = bw * (info.lowerBody ? 1.0 : 0.6) * (1 + 0.35 * a.level);
         }
         final floor = info.fraction * bw * 1.15;
         if (first < floor) {
@@ -524,7 +521,7 @@ SetRecord? _performSet(
         return null;
       }
       final possible = 1 + k * (c / total - 1);
-      var reps = (possible - rir).floor();
+      var reps = (possible - rir).round();
       if (reps > high) {
         reps = high;
       }
@@ -555,7 +552,7 @@ SetRecord? _performSet(
     case CapacityMode.reps:
       final high = repsHigh!;
       final low = repsLow ?? high;
-      var reps = (c - rir).floor();
+      var reps = (c - rir).round();
       if (reps > high) {
         reps = high;
       }
@@ -577,7 +574,7 @@ SetRecord? _performSet(
     case CapacityMode.hold:
       final high = secondsHigh!;
       final low = secondsLow ?? high;
-      var seconds = (c - 3 * rir).floor();
+      var seconds = (c - 3 * rir).round();
       if (seconds > high) {
         seconds = high;
       }

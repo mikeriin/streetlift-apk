@@ -80,6 +80,34 @@ Map<String, Object?> _campaign(String key, int seeds, int weeks) {
           weeks: weeks,
         ),
     ];
+    // À assiduité parfaite : le programme fait en entier, avec et sans
+    // surentraînement.
+    final perfectSeeds = seeds < 50 ? seeds : 50;
+    final perfect = perfectOf(a);
+    var perfectXp = 0;
+    var perfectCheaterXp = 0;
+    var perfectMaxDelta = -1 << 40;
+    for (var seed = 0; seed < perfectSeeds; seed++) {
+      final h = simulateRun(
+        engine: engine,
+        stage: stage,
+        a: perfect,
+        seed: seed,
+        weeks: weeks,
+      );
+      final c = simulateRun(
+        engine: engine,
+        stage: stage,
+        a: cheaterOf(perfect),
+        seed: seed,
+        weeks: weeks,
+      );
+      perfectXp += h.xp.last;
+      perfectCheaterXp += c.xp.last;
+      if (c.xp.last - h.xp.last > perfectMaxDelta) {
+        perfectMaxDelta = c.xp.last - h.xp.last;
+      }
+    }
     final deltas = <int>[
       for (var i = 0; i < seeds; i++) cheats[i].xp.last - runs[i].xp.last,
     ];
@@ -98,15 +126,25 @@ Map<String, Object?> _campaign(String key, int seeds, int weeks) {
     double r1(double v) => (v * 10).roundToDouble() / 10;
     out['cheat'] = <String, Object?>{
       'key': a.key,
+      'perfectSeeds': perfectSeeds,
+      'perfectXp': (perfectXp / perfectSeeds).round(),
+      'perfectCheaterXp': (perfectCheaterXp / perfectSeeds).round(),
+      'perfectMaxDelta': perfectMaxDelta,
       'honestXp': <String, Object?>{
         'p10': quantileOf(<int>[for (final r in runs) r.xp.last], 0.1).round(),
         'p50': quantileOf(<int>[for (final r in runs) r.xp.last], 0.5).round(),
         'p90': quantileOf(<int>[for (final r in runs) r.xp.last], 0.9).round(),
       },
       'cheaterXp': <String, Object?>{
-        'p10': quantileOf(<int>[for (final r in cheats) r.xp.last], 0.1).round(),
-        'p50': quantileOf(<int>[for (final r in cheats) r.xp.last], 0.5).round(),
-        'p90': quantileOf(<int>[for (final r in cheats) r.xp.last], 0.9).round(),
+        'p10': quantileOf(<int>[
+          for (final r in cheats) r.xp.last,
+        ], 0.1).round(),
+        'p50': quantileOf(<int>[
+          for (final r in cheats) r.xp.last,
+        ], 0.5).round(),
+        'p90': quantileOf(<int>[
+          for (final r in cheats) r.xp.last,
+        ], 0.9).round(),
       },
       'medianDelta': quantileOf(deltas, 0.5).round(),
       'maxDelta': quantileOf(deltas, 1).round(),
@@ -144,9 +182,15 @@ Map<String, Object?> _campaign(String key, int seeds, int weeks) {
       'runs': longSeeds,
       'weeksTo': <String, Object?>{'l50': weeksTo(50), 'l100': weeksTo(100)},
       'levelEnd': <String, Object?>{
-        'p10': quantileOf(<int>[for (final r in longs) r.levels.last], 0.1).round(),
-        'p50': quantileOf(<int>[for (final r in longs) r.levels.last], 0.5).round(),
-        'p90': quantileOf(<int>[for (final r in longs) r.levels.last], 0.9).round(),
+        'p10': quantileOf(<int>[
+          for (final r in longs) r.levels.last,
+        ], 0.1).round(),
+        'p50': quantileOf(<int>[
+          for (final r in longs) r.levels.last,
+        ], 0.5).round(),
+        'p90': quantileOf(<int>[
+          for (final r in longs) r.levels.last,
+        ], 0.9).round(),
       },
     };
   }
@@ -285,9 +329,9 @@ Future<void> main(List<String> args) async {
   File('${out.path}/campagne.json').writeAsStringSync('$text\n');
   // Le rapport est construit depuis le JSON relu : c'est exactement ce que
   // le test des documents refait.
-  File('${out.path}/RYTHME.md').writeAsStringSync(
-    rhythmMarkdown(jsonDecode(text) as Map<String, Object?>),
-  );
+  File(
+    '${out.path}/RYTHME.md',
+  ).writeAsStringSync(rhythmMarkdown(jsonDecode(text) as Map<String, Object?>));
   File(
     '${out.path}/STANDARDS.md',
   ).writeAsStringSync(standardsMarkdown(catalog));

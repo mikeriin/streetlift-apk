@@ -93,7 +93,11 @@ void main() {
   test('aucune ligne des anciens fichiers de progression n\'est reprise', () {
     for (final file in sources) {
       final text = file.readAsStringSync();
-      for (final name in <String>['progression.dart', 'game.dart', 'rewards.dart']) {
+      for (final name in <String>[
+        'progression.dart',
+        'game.dart',
+        'rewards.dart',
+      ]) {
         expect(text.contains(name), isFalse, reason: file.path);
       }
     }

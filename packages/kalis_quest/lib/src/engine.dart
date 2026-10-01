@@ -24,8 +24,7 @@ import 'world.dart';
 /// modifier une écriture.
 final class KalisQuest implements QuestEngine {
   /// Moteur de paramètres [params].
-  KalisQuest({this.params = QuestParams.standard})
-    : curve = LevelCurve(params);
+  KalisQuest({this.params = QuestParams.standard}) : curve = LevelCurve(params);
 
   /// Paramètres.
   final QuestParams params;
@@ -661,9 +660,7 @@ final class _Run {
           _reason(ReasonCodes.questXpConsistency, <String, Object?>{
             'weeks': st.streak,
           }),
-          _reason(ReasonCodes.questXpRest, <String, Object?>{
-            'days': restKept,
-          }),
+          _reason(ReasonCodes.questXpRest, <String, Object?>{'days': restKept}),
           if (status == WeekSummary.paused && cause != null)
             _reason(ReasonCodes.questStreakPaused, <String, Object?>{
               'cause': cause.code,
@@ -673,9 +670,7 @@ final class _Run {
     }
     if (status == WeekSummary.success) {
       final reasons = <Reason>[
-        _reason(ReasonCodes.questStreak, <String, Object?>{
-          'weeks': st.streak,
-        }),
+        _reason(ReasonCodes.questStreak, <String, Object?>{'weeks': st.streak}),
       ];
       events.add(
         DelightEvent(
@@ -730,9 +725,12 @@ final class _Run {
         continue;
       }
       final wanted = (g.ambition * p.milestoneXp[i]).round();
-      final lastDay = ledger.xp.isEmpty ? reachedDay : ledger.xp.last.date.dayNumber;
+      final lastDay = ledger.xp.isEmpty
+          ? reachedDay
+          : ledger.xp.last.date.dayNumber;
       final entryDay = reachedDay > lastDay ? reachedDay : lastDay;
-      final room = p.milestoneWeekCapXp - ledger.milestoneXpIn(mondayOf(entryDay));
+      final room =
+          p.milestoneWeekCapXp - ledger.milestoneXpIn(mondayOf(entryDay));
       final granted = wanted < room ? wanted : (room < 0 ? 0 : room);
       final fraction = g.progress.milestones[i].fraction;
       final reason = _reason(ReasonCodes.questXpMilestone, <String, Object?>{

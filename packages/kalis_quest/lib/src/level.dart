@@ -9,7 +9,7 @@ import 'params.dart';
 /// Courbe des niveaux d'un jeu de paramètres.
 ///
 /// Passer du niveau `n` au niveau `n + 1` coûte
-/// `5 × arrondi(levelScale × n^0,75 / 5)` XP, avec `n^0,75 = √√(n³)` : la
+/// `5 × arrondi(levelScale × n^0,875 / 5)` XP, avec `n^0,875 = √√√(n⁷)` : la
 /// racine carrée est exacte en IEEE 754, donc la table est la même sur
 /// toute machine. Le niveau 100 a lui aussi son coût : le franchir fait
 /// passer un prestige (niveau affiché 1, XP total conservé).
@@ -32,8 +32,9 @@ final class LevelCurve {
   static const int maxLevel = 100;
 
   static int _cost(int n, double scale) {
-    final cube = (n * n * n).toDouble();
-    final c = 5 * (scale * sqrt(sqrt(cube)) / 5).round();
+    final n2 = n * n;
+    final seventh = (n2 * n2 * n2 * n).toDouble();
+    final c = 5 * (scale * sqrt(sqrt(sqrt(seventh))) / 5).round();
     return c < 5 ? 5 : c;
   }
 

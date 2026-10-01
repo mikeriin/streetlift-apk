@@ -180,6 +180,21 @@ Archetype archetypeOf(String key) {
   throw ArgumentError.value(key, 'key', 'archétype inconnu');
 }
 
+/// Jumeau parfait de [a] : toutes les séances prévues, faites en entier.
+Archetype perfectOf(Archetype a) => Archetype(
+  key: '${a.key}_parfait',
+  profileKey: a.profileKey,
+  level: a.level,
+  adherence: 1,
+  note: 'Jumeau de ${a.key} qui fait tout le programme.',
+  fullRate: 1,
+  ratingSkip: a.ratingSkip,
+  ratingNoise: a.ratingNoise,
+  healthRate: a.healthRate,
+  claimRate: a.claimRate,
+  mobilityRate: a.mobilityRate,
+);
+
 /// Jumeau tricheur de [a] : mêmes aléas, mais des séries en plus à chaque
 /// séance et des séances en plus les jours de repos.
 Archetype cheaterOf(Archetype a) => Archetype(

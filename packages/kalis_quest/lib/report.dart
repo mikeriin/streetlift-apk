@@ -223,7 +223,9 @@ String rhythmMarkdown(Map<String, Object?> campaign) {
   line();
   line('## 1. Archétypes');
   line();
-  line('| Archétype | Profil type | Séances prévues / sem. | Séances récompensées / sem. | Ce qu\'il représente |');
+  line(
+    '| Archétype | Profil type | Séances prévues / sem. | Séances récompensées / sem. | Ce qu\'il représente |',
+  );
   line('| --- | --- | --- | --- | --- |');
   for (final a in list) {
     line(
@@ -239,7 +241,9 @@ String rhythmMarkdown(Map<String, Object?> campaign) {
     for (final w in reportWeeks)
       if (w <= weeks) 'w$w',
   ];
-  line('| Archétype | ${columns.map((c) => 'Sem. ${c.substring(1)}').join(' | ')} |');
+  line(
+    '| Archétype | ${columns.map((c) => 'Sem. ${c.substring(1)}').join(' | ')} |',
+  );
   line('| --- | ${columns.map((_) => '---').join(' | ')} |');
   for (final a in list) {
     final at = _obj(a['levelAt']);
@@ -324,7 +328,9 @@ String rhythmMarkdown(Map<String, Object?> campaign) {
   line();
   line('## 3. XP');
   line();
-  line('| Archétype | XP total | XP / semaine | Effort | Régularité | Records | Jalons | Quêtes |');
+  line(
+    '| Archétype | XP total | XP / semaine | Effort | Régularité | Records | Jalons | Quêtes |',
+  );
   line('| --- | --- | --- | --- | --- | --- | --- | --- |');
   for (final a in list) {
     final share = _obj(a['xpShare']);
@@ -357,7 +363,9 @@ String rhythmMarkdown(Map<String, Object?> campaign) {
   line();
   line('## 5. Série de semaines, notes, coffres, Krédits');
   line();
-  line('| Archétype | Semaines réussies / en pause / non réussies | Meilleure série | Notes S / A / B / C | Coffres | Séances par coffre | Plus longue attente | Krédits |');
+  line(
+    '| Archétype | Semaines réussies / en pause / non réussies | Meilleure série | Notes S / A / B / C | Coffres | Séances par coffre | Plus longue attente | Krédits |',
+  );
   line('| --- | --- | --- | --- | --- | --- | --- | --- |');
   for (final a in list) {
     final w = _obj(a['weeks']);
@@ -387,9 +395,13 @@ String rhythmMarkdown(Map<String, Object?> campaign) {
   line();
   line('## 6. Avancements');
   line();
-  line('Attributs à la fin (médiane ; entre parenthèses, meilleure valeur atteinte), records et passages de rang (moyennes).');
+  line(
+    'Attributs à la fin (médiane ; entre parenthèses, meilleure valeur atteinte), records et passages de rang (moyennes).',
+  );
   line();
-  line('| Archétype | Force | Endurance | Puissance | Technique | Mobilité | Régularité | Records | Rangs gagnés |');
+  line(
+    '| Archétype | Force | Endurance | Puissance | Technique | Mobilité | Régularité | Records | Rangs gagnés |',
+  );
   line('| --- | --- | --- | --- | --- | --- | --- | --- | --- |');
   for (final a in list) {
     final now = a['attributes']! as List<Object?>;
@@ -403,7 +415,9 @@ String rhythmMarkdown(Map<String, Object?> campaign) {
   line();
   line('## 7. Garde-fous mesurés');
   line();
-  line('| Archétype | Séances faites malgré une douleur (sans récompense) | Séances au-delà du programme (sans XP) | XP écrit pour ces séances | Pire semaine : XP d\'effort / plafond | Niveau en baisse | Écritures d\'XP |');
+  line(
+    '| Archétype | Séances faites malgré une douleur (sans récompense) | Séances au-delà du programme (sans XP) | XP écrit pour ces séances | Pire semaine : XP d\'effort / plafond | Niveau en baisse | Écritures d\'XP |',
+  );
   line('| --- | --- | --- | --- | --- | --- | --- |');
   for (final a in list) {
     final g = _obj(a['guards']);
@@ -425,16 +439,36 @@ String rhythmMarkdown(Map<String, Object?> campaign) {
       'séance et une séance en plus quatre jours de repos sur cinq.',
     );
     line();
-    line('| Archétype | XP honnête | XP tricheur | Écart médian | Écart le plus favorable au tricheur | XP d\'effort honnête | XP d\'effort tricheur | Séances en plus sans XP | Pire semaine / plafond |');
-    line('| --- | --- | --- | --- | --- | --- | --- | --- | --- |');
+    line(
+      '| Archétype | XP honnête | XP tricheur | Écart médian | XP d\'effort honnête | XP d\'effort tricheur | Séances en plus sans XP | Pire semaine / plafond |',
+    );
+    line('| --- | --- | --- | --- | --- | --- | --- | --- |');
     for (final c in cheat) {
       final m = _obj(c);
       line(
         '| `${m['key']}` | ${_spreadText(m['honestXp'])} | '
         '${_spreadText(m['cheaterXp'])} | ${_num(m['medianDelta'])} | '
-        '${_num(m['maxDelta'])} | ${_num(m['honestEffort'])} | '
-        '${_num(m['cheaterEffort'])} | ${_num(m['extraSessions'])} | '
-        '${_num(m['worstWeekShare'])} |',
+        '${_num(m['honestEffort'])} | ${_num(m['cheaterEffort'])} | '
+        '${_num(m['extraSessions'])} | ${_num(m['worstWeekShare'])} |',
+      );
+    }
+    line();
+    line(
+      'Les séances en plus du tricheur prennent la place des séances '
+      'prévues qu\'il manque : son XP d\'effort monte jusqu\'au plafond du '
+      'programme, jamais au-delà. Face au même programme fait en entier '
+      '(assiduité parfaite), le surentraînement ne rapporte rien :',
+    );
+    line();
+    line(
+      '| Archétype | Graines | XP, programme fait en entier | XP, programme fait en entier + surentraînement | Écart le plus favorable au tricheur |',
+    );
+    line('| --- | --- | --- | --- | --- |');
+    for (final c in cheat) {
+      final m = _obj(c);
+      line(
+        '| `${m['key']}` | ${m['perfectSeeds']} | ${_num(m['perfectXp'])} | '
+        '${_num(m['perfectCheaterXp'])} | ${_num(m['perfectMaxDelta'])} |',
       );
     }
   }

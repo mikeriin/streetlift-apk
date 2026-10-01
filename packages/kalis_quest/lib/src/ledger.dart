@@ -85,9 +85,7 @@ final class Ledger {
 
   /// Clé d'une écriture d'XP.
   static String xpKey(XpSource source, String? sessionId, String? refId) =>
-      source == XpSource.effort
-      ? 'effort|$sessionId'
-      : '${source.code}|$refId';
+      source == XpSource.effort ? 'effort|$sessionId' : '${source.code}|$refId';
 
   /// Clé d'une écriture de Krédits.
   static String kreditKey(KreditSource source, String? refId) =>

@@ -14,8 +14,9 @@
 //      le programme ; aucune récompense pour une séance faite malgré une
 //      douleur ; un jour de repos ou de pause ne propose que de la
 //      récupération ; aucune quête ne demande plus que le programme ;
-//  P5  entrées constantes : le résultat ne dépend pas de la cadence des
-//      appels (chaque jour ou une seule fois à la fin) ;
+//  P5  entrées constantes, séances terminées le jour même : le résultat ne
+//      dépend pas de la cadence des appels (chaque jour ou une seule fois
+//      à la fin) ;
 //  P6  les séances « reprise » ne changent rien ;
 //  P7  sorties valides au sens du contrat, exercices cités au catalogue,
 //      codes de raison du registre.
@@ -58,7 +59,8 @@ final class RandomCase {
   RandomCase(this.seed) {
     final rng = SimRng(seed, 'cas');
     double u() => rng.next();
-    final profileKey = propertyProfiles[(u() * propertyProfiles.length).floor()];
+    final profileKey =
+        propertyProfiles[(u() * propertyProfiles.length).floor()];
     weeks = 3 + (u() * (stageWeeks - 2)).floor();
     final archetype = Archetype(
       key: 'aleatoire',
@@ -139,7 +141,11 @@ final class RandomCase {
           days.add(d);
         }
       case 2:
-        for (var d = start + (u() * 5).floor(); d < end; d += 1 + (u() * 10).floor()) {
+        for (
+          var d = start + (u() * 5).floor();
+          d < end;
+          d += 1 + (u() * 10).floor()
+        ) {
           days.add(d);
         }
         days.add(end);
@@ -217,19 +223,27 @@ final class RandomCase {
   final Set<int> trainingWeekdays = <int>{};
 
   /// Journal vu le jour [today].
-  TrainingLog logAt(int today, {bool withResumes = true, bool deletions = true}) {
-    final all = <SessionRecord>[
-      for (final s in sessions)
-        if (s.date.dayNumber <= today &&
-            !(deletions && s.id == deleted && today >= deletedFrom))
-          s,
-      if (withResumes)
-        for (final s in resumes)
-          if (s.date.dayNumber <= today) s,
-    ]..sort((a, b) {
-      final c = a.date.compareTo(b.date);
-      return c != 0 ? c : a.id.compareTo(b.id);
-    });
+  TrainingLog logAt(
+    int today, {
+    bool withResumes = true,
+    bool deletions = true,
+  }) {
+    final all =
+        <SessionRecord>[
+          for (final s in sessions)
+            if (s.date.dayNumber <= today &&
+                !(deletions && s.id == deleted && today >= deletedFrom))
+              // Régime constant (P5) : ni suppression ni séance laissée
+              // inachevée (celle-ci est réglée le lendemain, après les
+              // quêtes du jour : l'ordre des écritures en dépend).
+              deletions || s.completed ? s : s.copyWith(completed: true),
+          if (withResumes)
+            for (final s in resumes)
+              if (s.date.dayNumber <= today) s,
+        ]..sort((a, b) {
+          final c = a.date.compareTo(b.date);
+          return c != 0 ? c : a.id.compareTo(b.id);
+        });
     return TrainingLog(sessions: all, breaks: breaks);
   }
 
@@ -281,7 +295,12 @@ Map<String, Object?> _comparable(QuestState s) {
   };
 }
 
-void _checkStep(RandomCase c, QuestOutcome? before, QuestOutcome after, int day) {
+void _checkStep(
+  RandomCase c,
+  QuestOutcome? before,
+  QuestOutcome after,
+  int day,
+) {
   final why = 'graine ${c.seed}, jour ${day - c.start}';
   final p = _engine.params;
   // P7
@@ -410,7 +429,11 @@ void _checkStep(RandomCase c, QuestOutcome? before, QuestOutcome after, int day)
     );
     expect(after.state.xp.length, greaterThanOrEqualTo(before.state.xp.length));
     for (var i = 0; i < before.state.xp.length; i++) {
-      expect(identical(after.state.xp[i], before.state.xp[i]), isTrue, reason: why);
+      expect(
+        identical(after.state.xp[i], before.state.xp[i]),
+        isTrue,
+        reason: why,
+      );
     }
     expect(
       after.state.kredits.length,
@@ -434,7 +457,11 @@ void _checkStep(RandomCase c, QuestOutcome? before, QuestOutcome after, int day)
       for (final r in before.ranks) r.exerciseId: r.tier.index,
     };
     for (final r in after.ranks) {
-      expect(r.tier.index, greaterThanOrEqualTo(ranks[r.exerciseId]!), reason: why);
+      expect(
+        r.tier.index,
+        greaterThanOrEqualTo(ranks[r.exerciseId]!),
+        reason: why,
+      );
     }
     final done = <String>{
       for (final q in before.state.quests)
@@ -532,7 +559,11 @@ void checkCase(int seed) {
 void propertyTests(int file) {
   group('journaux aléatoires', () {
     final first = file * journalsPerFile;
-    for (var from = first; from < first + journalsPerFile; from += journalsPerTest) {
+    for (
+      var from = first;
+      from < first + journalsPerFile;
+      from += journalsPerTest
+    ) {
       test('journaux $from à ${from + journalsPerTest - 1}', () {
         for (var seed = from; seed < from + journalsPerTest; seed++) {
           checkCase(seed);

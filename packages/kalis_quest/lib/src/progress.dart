@@ -135,8 +135,7 @@ List<RankResult> computeRanks(World w, int asOf) {
     }
     final tier = r.points.floor();
     if (tier < 6) {
-      final fraction =
-          w.book.find(m.id)?.fraction ?? Standards.defaultFraction;
+      final fraction = w.book.find(m.id)?.fraction ?? Standards.defaultFraction;
       final t = Standards.thresholds(m, sex, profileBw, fraction);
       final next = t[tier < 0 ? 0 : tier];
       r.nextValue = switch (m.measure) {
@@ -241,11 +240,65 @@ List<double> computeAttributes(
       explosive = n;
     }
   }
-  final strengthLoaded = _topTwo(loaded);
+  // Niveau de difficulté démontré (catalogue, 1 à 10) : 6 points par
+  // niveau, diminués par la rétention ; plafond à 60. Il donne un attribut
+  // à qui ne pratique aucun mouvement de référence.
+  var genericStrength = 0.0;
+  var genericEndurance = 0.0;
+  var genericPower = 0.0;
+  for (final id in w.practice.keys) {
+    final last = w.lastPractice(id, asOf);
+    final e = w.catalog.find(id);
+    if (last == null || e == null) {
+      continue;
+    }
+    final score = 6.0 * e.difficulty * retentionOf(w, asOf - last);
+    switch (e.family) {
+      case MovementFamily.poussee:
+      case MovementFamily.tirage:
+      case MovementFamily.jambesGenou:
+      case MovementFamily.jambesHanche:
+      case MovementFamily.porte:
+        if (score > genericStrength) {
+          genericStrength = score;
+        }
+      case MovementFamily.cardio:
+      case MovementFamily.conditionnement:
+        if (score > genericEndurance) {
+          genericEndurance = score;
+        }
+      case MovementFamily.explosif:
+      case MovementFamily.figureDynamique:
+        if (score > genericPower) {
+          genericPower = score;
+        }
+      case MovementFamily.cou:
+      case MovementFamily.figureStatique:
+      case MovementFamily.gainage:
+      case MovementFamily.isolationBras:
+      case MovementFamily.isolationHaut:
+      case MovementFamily.isolationJambes:
+      case MovementFamily.mobilite:
+      case MovementFamily.recuperation:
+      case MovementFamily.tronc:
+        break;
+    }
+  }
+  if (genericPower > explosive) {
+    explosive = genericPower;
+  }
+  var strength = _topTwo(loaded);
   final strengthBody = 0.6 * _topTwo(List<double>.of(bodyweight));
-  final strength = strengthLoaded > strengthBody
-      ? strengthLoaded
-      : strengthBody;
+  if (strengthBody > strength) {
+    strength = strengthBody;
+  }
+  if (genericStrength > strength) {
+    strength = genericStrength;
+  }
+  var enduringScore = _topTwo(enduring);
+  if (genericEndurance > enduringScore) {
+    enduringScore = genericEndurance;
+  }
 
   var cardioSeconds = 0;
   var explosiveSets = 0;
@@ -288,11 +341,10 @@ List<double> computeAttributes(
     }
   }
   double perWeek(int total, int windowDays) => total * 7 / windowDays;
-  double share(double value, num full) =>
-      clampDouble(value / full, 0, 1) * 100;
+  double share(double value, num full) => clampDouble(value / full, 0, 1) * 100;
 
   final endurance =
-      0.7 * _topTwo(enduring) +
+      0.7 * enduringScore +
       0.3 *
           share(
             perWeek(cardioSeconds, p.cardioWindowDays),
@@ -374,9 +426,7 @@ List<double> computeAttributes(
       break;
     }
   }
-  final weeksRead = counted < p.consistencyWeeks
-      ? counted
-      : p.consistencyWeeks;
+  final weeksRead = counted < p.consistencyWeeks ? counted : p.consistencyWeeks;
   final consistency = weeksRead == 0
       ? 0.0
       : adherence / weeksRead * 80 +

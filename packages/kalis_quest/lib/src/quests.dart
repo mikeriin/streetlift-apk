@@ -220,8 +220,7 @@ final class QuestMaster {
   static String _iso(int day) => CivilDate.fromDayNumber(day).iso;
 
   bool get _persistentPain {
-    for (final pain
-        in w.input.adaptation?.pains ?? const <PainTrend>[]) {
+    for (final pain in w.input.adaptation?.pains ?? const <PainTrend>[]) {
       if (pain.consecutiveAboveThreshold >= _p.persistentPainSessions) {
         return true;
       }
@@ -332,9 +331,7 @@ final class QuestMaster {
     if (!training) {
       final passive =
           pause == BreakReason.illness || pause == BreakReason.injury;
-      final pool = passive
-          ? QuestTemplates.passive
-          : QuestTemplates.recovery;
+      final pool = passive ? QuestTemplates.passive : QuestTemplates.recovery;
       final count = pause != null ? 1 : 1 + pickOf(seed, 'rest-count|$iso', 2);
       final first = pickOf(seed, 'rest-first|$iso', pool.length);
       for (var i = 0; i < count && i < pool.length; i++) {
@@ -401,6 +398,11 @@ final class QuestMaster {
     }
   }
 
+  /// Cible adaptée à l'utilisateur : une de plus que d'habitude, sans
+  /// jamais dépasser le programme [planned].
+  int _stretch(num usual, int planned) =>
+      clampInt(usual.floor() + 1, 1, planned);
+
   void _ensureWeekly(int day) {
     final monday = mondayOf(day);
     final iso = _iso(monday);
@@ -418,6 +420,18 @@ final class QuestMaster {
         params: <String, Object?>{'planned': planned},
       ),
     ];
+    // Séances faites d'habitude : médiane des quatre dernières semaines
+    // closes hors pause. Sans historique, la cible est le programme.
+    final recent = <double>[];
+    for (var i = st.weeks.length - 1; i >= 0 && recent.length < 4; i--) {
+      final week = st.weeks[i];
+      if (week.monday < monday && week.status != WeekSummary.paused) {
+        recent.add(week.done.toDouble());
+      }
+    }
+    final sessionsTarget = recent.isEmpty
+        ? planned
+        : _stretch(medianOf(recent), planned);
     book.put(
       _quest(
         id: 'w:$iso:0',
@@ -426,62 +440,59 @@ final class QuestMaster {
         metric: QuestMetrics.sessions,
         from: day,
         to: end,
-        target: planned,
+        target: sessionsTarget,
         xp: _p.weeklyQuestXp,
         kredits: _p.weeklyQuestKredits,
         reasons: reasons,
       ),
     );
+    // Habitudes des 28 jours précédents, par semaine.
+    var rated = 0;
+    var checked = 0;
+    for (final f in w.factsIn(day - 28, day - 1)) {
+      if (f.completion >= _p.doneCompletion && f.painZone == null) {
+        if (f.fullyRated) {
+          rated++;
+        }
+        if (f.healthAnswered) {
+          checked++;
+        }
+      }
+    }
     final daysLeft = end - day + 1;
+    final String template;
+    final String metric;
+    final int target;
     switch (pickOf(seed, 'week|$iso', 3)) {
       case 0:
-        book.put(
-          _quest(
-            id: 'w:$iso:1',
-            kind: QuestKind.weekly,
-            template: QuestTemplates.weeklyRated,
-            metric: QuestMetrics.ratedSessions,
-            from: day,
-            to: end,
-            target: planned,
-            xp: _p.weeklyQuestXp,
-            kredits: _p.weeklyQuestKredits,
-            reasons: reasons,
-          ),
-        );
+        template = QuestTemplates.weeklyRated;
+        metric = QuestMetrics.ratedSessions;
+        target = _stretch(rated / 4, planned);
       case 1:
-        book.put(
-          _quest(
-            id: 'w:$iso:1',
-            kind: QuestKind.weekly,
-            template: QuestTemplates.weeklyHealthChecks,
-            metric: QuestMetrics.healthChecks,
-            from: day,
-            to: end,
-            target: planned,
-            xp: _p.weeklyQuestXp,
-            kredits: _p.weeklyQuestKredits,
-            reasons: reasons,
-          ),
-        );
+        template = QuestTemplates.weeklyHealthChecks;
+        metric = QuestMetrics.healthChecks;
+        target = _stretch(checked / 4, planned);
       default:
-        book.put(
-          _quest(
-            id: 'w:$iso:1',
-            kind: QuestKind.weekly,
-            template: QuestTemplates.weeklyMobility,
-            metric: QuestMetrics.mobilityDays,
-            from: day,
-            to: end,
-            target: _p.weeklyMobilityDays < daysLeft
-                ? _p.weeklyMobilityDays
-                : daysLeft,
-            xp: _p.weeklyQuestXp,
-            kredits: _p.weeklyQuestKredits,
-            reasons: reasons,
-          ),
-        );
+        template = QuestTemplates.weeklyMobility;
+        metric = QuestMetrics.mobilityDays;
+        target = _p.weeklyMobilityDays < daysLeft
+            ? _p.weeklyMobilityDays
+            : daysLeft;
     }
+    book.put(
+      _quest(
+        id: 'w:$iso:1',
+        kind: QuestKind.weekly,
+        template: template,
+        metric: metric,
+        from: day,
+        to: end,
+        target: target,
+        xp: _p.weeklyQuestXp,
+        kredits: _p.weeklyQuestKredits,
+        reasons: reasons,
+      ),
+    );
     final koach = _koach(day, monday, end, planned);
     if (koach != null) {
       book.put(koach);
@@ -508,15 +519,45 @@ final class QuestMaster {
     return null;
   }
 
+  /// Quête sur un point faible : l'un des trois attributs les plus bas
+  /// pour lesquels une action existe, à tour de rôle d'une semaine à
+  /// l'autre (une même quête ne revient pas chaque semaine).
   Quest? _koachWeakPoint(String id, int day, int end, int planned) {
     final values = attributesAt(day - 1);
-    var weakest = 0;
-    for (var i = 1; i < values.length; i++) {
-      if (values[i] < values[weakest]) {
-        weakest = i;
+    final order = <int>[for (var i = 0; i < values.length; i++) i]
+      ..sort((a, b) {
+        final c = values[a].compareTo(values[b]);
+        return c != 0 ? c : a.compareTo(b);
+      });
+    final candidates = <Quest>[];
+    for (final index in order) {
+      final q = _weakPointQuest(
+        AthleteAttribute.values[index],
+        id,
+        day,
+        end,
+        planned,
+      );
+      if (q != null) {
+        candidates.add(q);
+      }
+      if (candidates.length == 3) {
+        break;
       }
     }
-    final attribute = AthleteAttribute.values[weakest];
+    if (candidates.isEmpty) {
+      return null;
+    }
+    return candidates[(mondayOf(day) ~/ 7) % candidates.length];
+  }
+
+  Quest? _weakPointQuest(
+    AthleteAttribute attribute,
+    String id,
+    int day,
+    int end,
+    int planned,
+  ) {
     final reasons = <Reason>[
       Reason(
         code: ReasonCodes.questWeakPoint,

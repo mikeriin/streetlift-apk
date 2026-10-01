@@ -341,16 +341,31 @@ const List<int> reportWeeks = <int>[1, 3, 13, 26, 52, 104, 156];
 Map<String, Object?> summarize(Archetype a, List<SimResult> runs, int weeks) {
   final n = runs.length;
   final xpTotal = <int>[for (final r in runs) r.xp.isEmpty ? 0 : r.xp.last];
-  final sources = <String>['effort', 'consistency', 'record', 'milestone', 'quest'];
+  final sources = <String>[
+    'effort',
+    'consistency',
+    'record',
+    'milestone',
+    'quest',
+  ];
   final kinds = <String>['daily', 'weekly', 'campaign', 'koach'];
   final sumXp = _mean(xpTotal) * n;
   final curve = <Object?>[];
   for (var week = 4; week <= weeks; week += 4) {
     curve.add(<Object?>[
       week,
-      roundTo(quantileOf(<int>[for (final r in runs) r.levels[week - 1]], 0.1), 0),
-      roundTo(quantileOf(<int>[for (final r in runs) r.levels[week - 1]], 0.5), 0),
-      roundTo(quantileOf(<int>[for (final r in runs) r.levels[week - 1]], 0.9), 0),
+      roundTo(
+        quantileOf(<int>[for (final r in runs) r.levels[week - 1]], 0.1),
+        0,
+      ),
+      roundTo(
+        quantileOf(<int>[for (final r in runs) r.levels[week - 1]], 0.5),
+        0,
+      ),
+      roundTo(
+        quantileOf(<int>[for (final r in runs) r.levels[week - 1]], 0.9),
+        0,
+      ),
     ]);
   }
   var maxGap = 0;
@@ -384,7 +399,9 @@ Map<String, Object?> summarize(Archetype a, List<SimResult> runs, int weeks) {
     'levelAt': <String, Object?>{
       for (final week in reportWeeks)
         if (week <= weeks)
-          'w$week': _spread(<int>[for (final r in runs) r.levels[week - 1]], decimals: 0),
+          'w$week': _spread(<int>[
+            for (final r in runs) r.levels[week - 1],
+          ], decimals: 0),
     },
     'weeksTo': <String, Object?>{
       for (final level in milestoneLevels)
@@ -411,7 +428,13 @@ Map<String, Object?> summarize(Archetype a, List<SimResult> runs, int weeks) {
     },
     'kredits': _spread(<int>[for (final r in runs) r.kredits], decimals: 0),
     'kreditsBySource': <String, Object?>{
-      for (final s in <String>['quest', 'chest', 'level_up', 'milestone', 'record'])
+      for (final s in <String>[
+        'quest',
+        'chest',
+        'level_up',
+        'milestone',
+        'record',
+      ])
         s: roundTo(
           _mean(<int>[for (final r in runs) r.kreditsBySource[s] ?? 0]),
           0,
@@ -441,7 +464,9 @@ Map<String, Object?> summarize(Archetype a, List<SimResult> runs, int weeks) {
       'missed': roundTo(_mean(<int>[for (final r in runs) r.weeksFailed]), 1),
       'paused': roundTo(_mean(<int>[for (final r in runs) r.weeksPaused]), 1),
     },
-    'bestStreak': _spread(<int>[for (final r in runs) r.bestStreak], decimals: 0),
+    'bestStreak': _spread(<int>[
+      for (final r in runs) r.bestStreak,
+    ], decimals: 0),
     'grades': <String, Object?>{
       for (final g in <String>['s', 'a', 'b', 'c'])
         g: roundTo(

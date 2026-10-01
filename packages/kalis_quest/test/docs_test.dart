@@ -45,6 +45,12 @@ void main() {
       expect(guards['levelDropped'], isFalse, reason: '${a['key']}');
       expect(guards['worstWeekShare']! as num, lessThanOrEqualTo(1));
     }
+    for (final item in campaign['cheat']! as List<Object?>) {
+      final c = item! as Map<String, Object?>;
+      // Programme fait en entier : le surentraînement ne rapporte rien.
+      expect(c['perfectMaxDelta']! as num, lessThanOrEqualTo(0));
+      expect(c['worstWeekShare']! as num, lessThanOrEqualTo(1));
+    }
     final timing = campaign['timing']! as Map<String, Object?>;
     expect(timing['fullMedianMs']! as num, lessThanOrEqualTo(200));
   });
@@ -53,10 +59,13 @@ void main() {
     _expectSame('docs/STANDARDS.md', standardsMarkdown(catalog));
   });
 
-  test('docs/CAS_TYPES.md est ce que le moteur rend pour les journaux types', () {
-    _expectSame(
-      'docs/CAS_TYPES.md',
-      casesMarkdown(catalog, loadProfiles(), loadJournals()),
-    );
-  });
+  test(
+    'docs/CAS_TYPES.md est ce que le moteur rend pour les journaux types',
+    () {
+      _expectSame(
+        'docs/CAS_TYPES.md',
+        casesMarkdown(catalog, loadProfiles(), loadJournals()),
+      );
+    },
+  );
 }

@@ -79,8 +79,7 @@ final class GoalKeeper {
 
   double get _damping => w.adapt.trendDamping;
 
-  double _k(String exerciseId) =>
-      (w.book.find(exerciseId)?.lowerBody ?? false)
+  double _k(String exerciseId) => (w.book.find(exerciseId)?.lowerBody ?? false)
       ? w.adapt.kLowerBody
       : w.adapt.kGeneral;
 
@@ -146,8 +145,7 @@ final class GoalKeeper {
             out.add((
               o.day,
               roundTo(
-                o.value *
-                    power(meters / 5000, w.params.riegelExponent),
+                o.value * power(meters / 5000, w.params.riegelExponent),
                 1,
               ),
             ));
@@ -472,8 +470,7 @@ final class GoalKeeper {
           }
           final left = deadline - w.today;
           if (left > 0) {
-            final reachable =
-                sign * valueBy(e, left, p.suggestProbability);
+            final reachable = sign * valueBy(e, left, p.suggestProbability);
             final step = stepOf(metric, reachable.abs());
             final rounded = lower
                 ? (reachable / step).ceilToDouble() * step
@@ -779,8 +776,7 @@ final class GoalKeeper {
           ? estimate.level
           : best.value - (kind == RecordKind.oneRmKg ? offset : 0);
       final reference = known > estimate.level ? known : estimate.level;
-      final cap =
-          reference * (1 + plausibleGain(w.input.profile.experience));
+      final cap = reference * (1 + plausibleGain(w.input.profile.experience));
       if (value > cap) {
         value = cap;
       }

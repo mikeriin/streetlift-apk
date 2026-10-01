@@ -42,13 +42,7 @@ void main() {
       var o = run(engine, profile, const <SessionRecord>[], emptyState, monday);
       final reached = <int, CivilDate>{};
       for (var k = 0; k < 12; k++) {
-        o = run(
-          engine,
-          profile,
-          rising(k + 1),
-          o.state,
-          monday.addDays(7 * k),
-        );
+        o = run(engine, profile, rising(k + 1), o.state, monday.addDays(7 * k));
         final g = o.goals.single;
         expect(g.baseline, 70);
         expect(g.target, 100);
@@ -118,7 +112,10 @@ void main() {
       );
       final g = o.goals.single;
       expect(g.overdue, isTrue);
-      expect(g.reasons!.map((r) => r.code), contains(ReasonCodes.questGoalLate));
+      expect(
+        g.reasons!.map((r) => r.code),
+        contains(ReasonCodes.questGoalLate),
+      );
       final target = g.suggestedTarget!;
       expect(target, greaterThan(g.current));
       expect(target, lessThan(150));
@@ -146,8 +143,7 @@ void main() {
     test('plafond hebdomadaire d\'XP de jalons', () {
       final many = base.copyWith(
         goals: <Goal>[
-          for (var i = 0; i < 5; i++)
-            performance(75).copyWith(id: 'many$i'),
+          for (var i = 0; i < 5; i++) performance(75).copyWith(id: 'many$i'),
         ],
       );
       final o = run(
@@ -169,7 +165,10 @@ void main() {
       }
       expect(byWeek, isNotEmpty);
       for (final amount in byWeek.values) {
-        expect(amount, lessThanOrEqualTo(QuestParams.standard.milestoneWeekCapXp));
+        expect(
+          amount,
+          lessThanOrEqualTo(QuestParams.standard.milestoneWeekCapXp),
+        );
       }
     });
   });
@@ -257,7 +256,7 @@ void main() {
       expect(goal.origin, GoalOrigin.suggested);
       expect(goal.exerciseId, bench);
       expect(goal.metric, GoalMetric.oneRmKg);
-      expect(goal.targetValue, 102.5);
+      expect(goal.targetValue, 105);
       expect(goal.targetDate, monday.addDays(56));
       expect(goal.validate(), isEmpty);
       final keeper = GoalKeeper(World(catalog, input, engine.params));
@@ -267,7 +266,7 @@ void main() {
         greaterThanOrEqualTo(0.6),
       );
       // Une marche plus haut, la probabilité passe sous 60 %.
-      expect(keeper.probabilityBy(estimate, 105, 56), lessThan(0.6));
+      expect(keeper.probabilityBy(estimate, 107.5, 56), lessThan(0.6));
     });
 
     test('sans tendance positive, ou si l\'exercice a déjà un objectif : '
@@ -330,7 +329,8 @@ void main() {
         final weekly = 0.4 + 1.6 * rng.next();
         final noise = 0.006 + 0.008 * rng.next();
         final horizon = 12 + (12 * rng.next()).floor();
-        double truth(int week) => start + weekly * dampedGain(week.toDouble(), 0.97);
+        double truth(int week) =>
+            start + weekly * dampedGain(week.toDouble(), 0.97);
         final observed = <double>[
           for (var week = 0; week <= 40; week++)
             truth(week) * (1 + noise * rng.gauss()),
@@ -340,7 +340,14 @@ void main() {
         List<SessionRecord> upTo(int weeks) => <SessionRecord>[
           for (var k = 0; k <= weeks; k++)
             sessionOf('c$k', monday.addDays(7 * k), <SetRecord>[
-              setOf(bench, 0, load: observed[k], reps: 1, flames: 10, target: 10),
+              setOf(
+                bench,
+                0,
+                load: observed[k],
+                reps: 1,
+                flames: 10,
+                target: 10,
+              ),
             ], planned: 1),
         ];
         final goal = performance(target, days: 7 * horizon);
@@ -352,8 +359,9 @@ void main() {
           state: emptyState,
           today: today,
         );
-        final result = GoalKeeper(World(catalog, input, engine.params))
-            .performance(goal);
+        final result = GoalKeeper(
+          World(catalog, input, engine.params),
+        ).performance(goal);
         final prediction = result.progress.prediction;
         if (result.progress.achievedOn != null || prediction == null) {
           continue;
@@ -393,7 +401,7 @@ void main() {
         '${(medianError / predicted).toStringAsFixed(1)} jours',
       );
       expect(predicted, greaterThan(cases ~/ 3));
-      expect(coverage, inInclusiveRange(0.6, 0.98));
+      expect(coverage, inInclusiveRange(0.7, 0.92));
     });
   });
 }

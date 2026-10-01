@@ -241,6 +241,10 @@ final class World {
   /// Meilleures performances par séance, par `exercice|nature`.
   final Map<String, List<Observation>> series = <String, List<Observation>>{};
 
+  /// Jours où chaque exercice a été pratiqué avec succès à dose
+  /// suffisante (attributs : niveau de difficulté démontré).
+  final Map<String, List<int>> practice = <String, List<int>>{};
+
   /// Meilleure valeur connue par `exercice|nature`.
   final Map<String, Observation> bests = <String, Observation>{};
 
@@ -391,6 +395,34 @@ final class World {
       e.family == MovementFamily.recuperation ||
       e.pattern == MovementPattern.marche;
 
+  /// Dose minimale pour qu'une série démontre la maîtrise de l'exercice :
+  /// 3 répétitions ou 5 secondes ; pour le cardio et le conditionnement,
+  /// 10 répétitions, 5 minutes ou 1 km.
+  static bool _dosed(CatalogExercise e, SetRecord s) {
+    final reps = s.reps ?? 0;
+    final seconds = s.seconds ?? 0;
+    if (e.family == MovementFamily.cardio ||
+        e.family == MovementFamily.conditionnement) {
+      return reps >= 10 || seconds >= 300 || (s.distanceMeters ?? 0) >= 1000;
+    }
+    return reps >= 3 || seconds >= 5;
+  }
+
+  /// Dernier jour, au plus tard [asOf], où l'exercice [exerciseId] a été
+  /// pratiqué à dose suffisante, ou `null`.
+  int? lastPractice(String exerciseId, int asOf) {
+    final days = practice[exerciseId];
+    if (days == null) {
+      return null;
+    }
+    for (var i = days.length - 1; i >= 0; i--) {
+      if (days[i] <= asOf) {
+        return days[i];
+      }
+    }
+    return null;
+  }
+
   /// Temps équivalent sur 5 km d'une course de [meters] mètres en
   /// [seconds] secondes (Riegel 1981).
   double riegel5k(double meters, double seconds) =>
@@ -526,6 +558,12 @@ final class World {
           if (e.family == MovementFamily.explosif ||
               e.pattern == MovementPattern.sprint) {
             f.explosiveSets++;
+          }
+        }
+        if (e != null && set.success && _dosed(e, set)) {
+          final days = practice.putIfAbsent(e.id, () => <int>[]);
+          if (days.isEmpty || days.last != day) {
+            days.add(day);
           }
         }
         if (info != null) {

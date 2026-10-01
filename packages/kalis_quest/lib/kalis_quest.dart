@@ -30,8 +30,7 @@ export 'src/progress.dart'
         retentionOf;
 export 'src/quests.dart'
     show QuestBook, QuestMaster, QuestMetrics, QuestTemplates;
-export 'src/standards.dart'
-    show HoldRung, RankMeasure, RankMovement, Standards;
+export 'src/standards.dart' show HoldRung, RankMeasure, RankMovement, Standards;
 export 'src/version.dart';
 export 'src/world.dart'
     show BreakSpan, Observation, RecordEvent, SessionFacts, World;

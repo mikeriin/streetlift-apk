@@ -39,19 +39,19 @@ Map<String, Object?> _setJson(SetRecord s) => <String, Object?>{
   if (s.flames != null) 'flames': s.flames,
 };
 
-Map<String, Object?> _ghostSession(SessionFacts f, String exerciseId) =>
-    <String, Object?>{
-      'date': f.session.date.iso,
-      'sessionId': f.session.id,
-      'score': roundTo(f.scoreByExercise[exerciseId] ?? 0, 1),
-      'sets': <Object?>[
-        for (final s in f.session.sets)
-          if (s.exerciseId == exerciseId &&
-              s.isUsable &&
-              s.kind != SetKind.warmup)
-            _setJson(s),
-      ],
-    };
+Map<String, Object?> _ghostSession(
+  SessionFacts f,
+  String exerciseId,
+) => <String, Object?>{
+  'date': f.session.date.iso,
+  'sessionId': f.session.id,
+  'score': roundTo(f.scoreByExercise[exerciseId] ?? 0, 1),
+  'sets': <Object?>[
+    for (final s in f.session.sets)
+      if (s.exerciseId == exerciseId && s.isUsable && s.kind != SetKind.warmup)
+        _setJson(s),
+  ],
+};
 
 Map<String, Object?> _ghost(World w) {
   final p = w.params;

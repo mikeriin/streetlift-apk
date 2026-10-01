@@ -41,27 +41,30 @@ void main() {
       }
     });
 
-    test('tirages : dans [0 ; 1[, stables, sensibles à la graine et à la clé', () {
-      var sum = 0.0;
-      for (var i = 0; i < 20000; i++) {
-        final u = unitOf(3, 'k$i');
-        expect(u, inInclusiveRange(0, 0.9999999999));
-        sum += u;
-      }
-      expect(sum / 20000, closeTo(0.5, 0.01));
-      expect(unitOf(3, 'a'), unitOf(3, 'a'));
-      expect(unitOf(3, 'a'), isNot(unitOf(4, 'a')));
-      expect(unitOf(3, 'a'), isNot(unitOf(3, 'b')));
-    });
+    test(
+      'tirages : dans [0 ; 1[, stables, sensibles à la graine et à la clé',
+      () {
+        var sum = 0.0;
+        for (var i = 0; i < 20000; i++) {
+          final u = unitOf(3, 'k$i');
+          expect(u, inInclusiveRange(0, 0.9999999999));
+          sum += u;
+        }
+        expect(sum / 20000, closeTo(0.5, 0.01));
+        expect(unitOf(3, 'a'), unitOf(3, 'a'));
+        expect(unitOf(3, 'a'), isNot(unitOf(4, 'a')));
+        expect(unitOf(3, 'a'), isNot(unitOf(3, 'b')));
+      },
+    );
   });
 
   group('courbe des niveaux', () {
     final curve = LevelCurve(QuestParams.standard);
 
-    test('coût du niveau n : 5 × arrondi(K × n^0,75 / 5), croissant', () {
+    test('coût du niveau n : 5 × arrondi(K × n^0,875 / 5), croissant', () {
       expect(curve.costs, hasLength(100));
       for (var n = 1; n <= 100; n++) {
-        final exact = QuestParams.standard.levelScale * math.pow(n, 0.75);
+        final exact = QuestParams.standard.levelScale * math.pow(n, 0.875);
         expect(curve.costs[n - 1] % 5, 0);
         expect((curve.costs[n - 1] - exact).abs(), lessThanOrEqualTo(2.5001));
         if (n > 1) {
@@ -176,10 +179,7 @@ void main() {
           expect(female[t], closeTo(wantFemale, 1e-6), reason: '${m.id} F $t');
         }
         // Élite : extrapolation d'un demi-pas logarithmique.
-        expect(
-          male[5],
-          closeTo(male[4] * math.sqrt(male[4] / male[3]), 1e-6),
-        );
+        expect(male[5], closeTo(male[4] * math.sqrt(male[4] / male[3]), 1e-6));
       }
     });
 
@@ -245,7 +245,10 @@ void main() {
       expect(Standards.pointsOf(t, 28), closeTo(0.5, 1e-9));
       for (var i = 0; i < 6; i++) {
         expect(Standards.pointsOf(t, t[i]), closeTo(i + 1, 1e-9));
-        expect(Standards.tierOf(Standards.pointsOf(t, t[i] * 1.0001)).index, i + 1);
+        expect(
+          Standards.tierOf(Standards.pointsOf(t, t[i] * 1.0001)).index,
+          i + 1,
+        );
       }
       var previous = -1.0;
       for (var kg = 1.0; kg < 300; kg += 0.5) {
@@ -267,15 +270,25 @@ void main() {
       double points(Map<String, double> held) =>
           Standards.holdPoints(lever, (id) => held[id] ?? 0, 2);
       expect(points(<String, double>{}), 0);
-      expect(points(<String, double>{'cs-front-lever-tuck': 5}), closeTo(0.5, 1e-9));
-      expect(points(<String, double>{'cs-front-lever-tuck': 10}), closeTo(1, 1e-9));
       expect(
-        Standards.tierOf(points(<String, double>{'cs-front-lever-tuck-avance': 12})),
+        points(<String, double>{'cs-front-lever-tuck': 5}),
+        closeTo(0.5, 1e-9),
+      );
+      expect(
+        points(<String, double>{'cs-front-lever-tuck': 10}),
+        closeTo(1, 1e-9),
+      );
+      expect(
+        Standards.tierOf(
+          points(<String, double>{'cs-front-lever-tuck-avance': 12}),
+        ),
         MovementRankTier.silver,
       );
       // Une progression plus dure tenue 2 s vaut les échelons plus bas.
       expect(
-        Standards.tierOf(points(<String, double>{'cs-front-lever-straddle': 2})),
+        Standards.tierOf(
+          points(<String, double>{'cs-front-lever-straddle': 2}),
+        ),
         MovementRankTier.silver,
       );
       expect(
@@ -297,10 +310,7 @@ void main() {
         Standards.carrierOf(catalog, 'sl-traction-lestee-prise-neutre')!.id,
         'sl-traction-lestee',
       );
-      expect(
-        Standards.carrierOf(catalog, 'sw-pompe-diamant')!.id,
-        'sw-pompe',
-      );
+      expect(Standards.carrierOf(catalog, 'sw-pompe-diamant')!.id, 'sw-pompe');
       expect(Standards.carrierOf(catalog, 'mu-front-squat'), isNull);
       expect(Standards.carrierOf(catalog, 'inconnu'), isNull);
     });

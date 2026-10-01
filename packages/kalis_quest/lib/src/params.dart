@@ -7,7 +7,7 @@ library;
 final class QuestParams {
   /// Paramètres ; les valeurs par défaut sont celles de la livraison.
   const QuestParams({
-    this.levelScale = 54,
+    this.levelScale = 33,
     this.sessionXp = 100,
     this.comboMin = 3,
     this.comboBonusCap = 10,
@@ -23,7 +23,16 @@ final class QuestParams {
     this.streakDenominator = 4,
     this.streakMilestones = const <int>[4, 8, 12, 26, 52, 78, 104, 156],
     this.streakMilestoneXp = const <int>[50, 80, 120, 200, 400, 400, 400, 400],
-    this.streakMilestoneKredits = const <int>[10, 15, 25, 50, 100, 100, 100, 100],
+    this.streakMilestoneKredits = const <int>[
+      10,
+      15,
+      25,
+      50,
+      100,
+      100,
+      100,
+      100,
+    ],
     this.flameSizeWeeks = const <int>[1, 2, 3, 4, 6, 8, 12, 16, 26, 52],
     this.recordXpBase = 10,
     this.recordXpPerPct = 4,
@@ -43,13 +52,13 @@ final class QuestParams {
     this.dailyKredits = 2,
     this.restQuestXp = 5,
     this.restQuestKredits = 1,
-    this.weeklyQuestXp = 50,
+    this.weeklyQuestXp = 40,
     this.weeklyQuestKredits = 10,
-    this.koachQuestXp = 40,
+    this.koachQuestXp = 30,
     this.koachQuestKredits = 10,
-    this.chapterXp = 150,
+    this.chapterXp = 100,
     this.chapterKredits = 40,
-    this.bossXp = 80,
+    this.bossXp = 60,
     this.bossKredits = 25,
     this.chapterShare = 0.75,
     this.bossCompletion = 0.8,
@@ -99,11 +108,11 @@ final class QuestParams {
     this.runMaxMeters = 45000,
     this.riegelExponent = 1.06,
     this.predictionHorizonWeeks = 156,
-    this.trendCv = 0.5,
+    this.trendCv = 0.2,
     this.trendSdFloorWeeks = 26,
     this.seriesWindowWeeks = 12,
     this.seriesMinPoints = 3,
-    this.seriesSdFloor = 0.02,
+    this.seriesSdFloor = 0.01,
     this.suggestHorizonDays = 56,
     this.suggestProbability = 0.6,
     this.suggestMinObservations = 12,
@@ -121,7 +130,7 @@ final class QuestParams {
   // ---------------------------------------------------------------- niveaux
 
   /// Échelle de la courbe des niveaux : passer du niveau `n` au suivant
-  /// coûte `5 × arrondi(levelScale × n^0,75 / 5)` XP.
+  /// coûte `5 × arrondi(levelScale × n^0,875 / 5)` XP.
   final double levelScale;
 
   // ----------------------------------------------------------------- effort

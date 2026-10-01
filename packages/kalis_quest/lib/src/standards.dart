@@ -148,7 +148,10 @@ abstract final class Standards {
     RankMovement(
       id: 'mu-back-squat-barre-haute',
       measure: RankMeasure.load,
-      sources: <String>['mu-back-squat-barre-haute', 'mu-back-squat-barre-basse'],
+      sources: <String>[
+        'mu-back-squat-barre-haute',
+        'mu-back-squat-barre-basse',
+      ],
       male: <double>[75, 101, 132, 168, 206],
       female: <double>[32, 49, 72, 99, 129],
     ),
@@ -165,7 +168,10 @@ abstract final class Standards {
     RankMovement(
       id: 'mu-developpe-couche-barre',
       measure: RankMeasure.load,
-      sources: <String>['mu-developpe-couche-barre', 'mu-developpe-couche-pause'],
+      sources: <String>[
+        'mu-developpe-couche-barre',
+        'mu-developpe-couche-pause',
+      ],
       male: <double>[56, 75, 98, 124, 151],
       female: <double>[19, 31, 47, 66, 88],
     ),
@@ -353,7 +359,9 @@ abstract final class Standards {
     final out = <double>[];
     switch (m.measure) {
       case RankMeasure.load:
-        final totals = <double>[for (final v in reference) v + fraction * refKg];
+        final totals = <double>[
+          for (final v in reference) v + fraction * refKg,
+        ];
         totals.add(totals[4] * sqrt(totals[4] / totals[3]));
         for (var t = 0; t < 6; t++) {
           out.add(totals[t] * power(ratio, loadExponents[t]));

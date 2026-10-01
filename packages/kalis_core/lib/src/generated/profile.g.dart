@@ -3,10 +3,7 @@ part of '../contracts.dart';
 
 /// Discipline secondaire et son dosage.
 final class DisciplineShare {
-  const DisciplineShare({
-    required this.discipline,
-    required this.pct,
-  });
+  const DisciplineShare({required this.discipline, required this.pct});
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
   /// Les champs inconnus sont ignorés (évolution additive).
@@ -25,17 +22,11 @@ final class DisciplineShare {
 
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
-    return <String, Object?>{
-      'discipline': discipline.code,
-      'pct': pct,
-    };
+    return <String, Object?>{'discipline': discipline.code, 'pct': pct};
   }
 
   /// Copie modifiée ; un champ optionnel peut être remis à `null`.
-  DisciplineShare copyWith({
-    TrainingDiscipline? discipline,
-    int? pct,
-  }) {
+  DisciplineShare copyWith({TrainingDiscipline? discipline, int? pct}) {
     return DisciplineShare(
       discipline: discipline ?? this.discipline,
       pct: pct ?? this.pct,
@@ -55,12 +46,14 @@ final class DisciplineShare {
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {
-  }
+  void collectExerciseIds(Set<String> out) {}
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is DisciplineShare && discipline == other.discipline && pct == other.pct;
+    return identical(this, other) ||
+        other is DisciplineShare &&
+            discipline == other.discipline &&
+            pct == other.pct;
   }
 
   @override
@@ -87,7 +80,11 @@ final class DisciplineMix {
     return DisciplineMix(
       primary: jsonEnum(json, 'primary', TrainingDiscipline.fromCode),
       primaryPct: jsonInt(json, 'primaryPct'),
-      secondaries: jsonList(json, 'secondaries', (v) => DisciplineShare.fromJson(jsonAsObject(v, 'secondaries'))),
+      secondaries: jsonList(
+        json,
+        'secondaries',
+        (v) => DisciplineShare.fromJson(jsonAsObject(v, 'secondaries')),
+      ),
     );
   }
 
@@ -133,22 +130,34 @@ final class DisciplineMix {
   void collectViolations(String path, List<Violation> out) {
     checkRange(out, '$path.primaryPct', primaryPct, 1, 100);
     checkLength(out, '$path.secondaries', secondaries.length, null, 2);
-    for (var i = 0; i < secondaries.length; i++) { secondaries[i].collectViolations('$path.secondaries[$i]', out); }
+    for (var i = 0; i < secondaries.length; i++) {
+      secondaries[i].collectViolations('$path.secondaries[$i]', out);
+    }
     _validateDisciplineMix(this, path, out);
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
-    for (final e in secondaries) { e.collectExerciseIds(out); }
+    for (final e in secondaries) {
+      e.collectExerciseIds(out);
+    }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is DisciplineMix && primary == other.primary && primaryPct == other.primaryPct && jsonListEquals(secondaries, other.secondaries);
+    return identical(this, other) ||
+        other is DisciplineMix &&
+            primary == other.primary &&
+            primaryPct == other.primaryPct &&
+            jsonListEquals(secondaries, other.secondaries);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[primary, primaryPct, Object.hashAll(secondaries)]);
+  int get hashCode => Object.hashAll(<Object?>[
+    primary,
+    primaryPct,
+    Object.hashAll(secondaries),
+  ]);
 
   @override
   String toString() => 'DisciplineMix(${toJson()})';
@@ -230,16 +239,25 @@ final class StreetMode {
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {
-  }
+  void collectExerciseIds(Set<String> out) {}
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is StreetMode && primary == other.primary && streetliftingPct == other.streetliftingPct && setsRepsPct == other.setsRepsPct && calisthenicsPct == other.calisthenicsPct;
+    return identical(this, other) ||
+        other is StreetMode &&
+            primary == other.primary &&
+            streetliftingPct == other.streetliftingPct &&
+            setsRepsPct == other.setsRepsPct &&
+            calisthenicsPct == other.calisthenicsPct;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[primary, streetliftingPct, setsRepsPct, calisthenicsPct]);
+  int get hashCode => Object.hashAll(<Object?>[
+    primary,
+    streetliftingPct,
+    setsRepsPct,
+    calisthenicsPct,
+  ]);
 
   @override
   String toString() => 'StreetMode(${toJson()})';
@@ -317,7 +335,9 @@ final class MovementLevel {
       known: known ?? this.known,
       low: identical(low, unset) ? this.low : low as double?,
       high: identical(high, unset) ? this.high : high as double?,
-      distanceMeters: identical(distanceMeters, unset) ? this.distanceMeters : distanceMeters as double?,
+      distanceMeters: identical(distanceMeters, unset)
+          ? this.distanceMeters
+          : distanceMeters as double?,
     );
   }
 
@@ -331,9 +351,15 @@ final class MovementLevel {
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
     checkLength(out, '$path.exerciseId', exerciseId.length, 1, null);
-    if (low case final v?) { checkRange(out, '$path.low', v, 0, null); }
-    if (high case final v?) { checkRange(out, '$path.high', v, 0, null); }
-    if (distanceMeters case final v?) { checkRange(out, '$path.distanceMeters', v, 0, null); }
+    if (low case final v?) {
+      checkRange(out, '$path.low', v, 0, null);
+    }
+    if (high case final v?) {
+      checkRange(out, '$path.high', v, 0, null);
+    }
+    if (distanceMeters case final v?) {
+      checkRange(out, '$path.distanceMeters', v, 0, null);
+    }
     _validateMovementLevel(this, path, out);
   }
 
@@ -344,11 +370,25 @@ final class MovementLevel {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is MovementLevel && exerciseId == other.exerciseId && measure == other.measure && known == other.known && low == other.low && high == other.high && distanceMeters == other.distanceMeters;
+    return identical(this, other) ||
+        other is MovementLevel &&
+            exerciseId == other.exerciseId &&
+            measure == other.measure &&
+            known == other.known &&
+            low == other.low &&
+            high == other.high &&
+            distanceMeters == other.distanceMeters;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[exerciseId, measure, known, low, high, distanceMeters]);
+  int get hashCode => Object.hashAll(<Object?>[
+    exerciseId,
+    measure,
+    known,
+    low,
+    high,
+    distanceMeters,
+  ]);
 
   @override
   String toString() => 'MovementLevel(${toJson()})';
@@ -476,14 +516,26 @@ final class Goal {
       kind: kind ?? this.kind,
       origin: origin ?? this.origin,
       createdOn: createdOn ?? this.createdOn,
-      exerciseId: identical(exerciseId, unset) ? this.exerciseId : exerciseId as String?,
+      exerciseId: identical(exerciseId, unset)
+          ? this.exerciseId
+          : exerciseId as String?,
       metric: identical(metric, unset) ? this.metric : metric as GoalMetric?,
-      targetValue: identical(targetValue, unset) ? this.targetValue : targetValue as double?,
-      distanceMeters: identical(distanceMeters, unset) ? this.distanceMeters : distanceMeters as double?,
+      targetValue: identical(targetValue, unset)
+          ? this.targetValue
+          : targetValue as double?,
+      distanceMeters: identical(distanceMeters, unset)
+          ? this.distanceMeters
+          : distanceMeters as double?,
       loadKg: identical(loadKg, unset) ? this.loadKg : loadKg as double?,
-      durationSeconds: identical(durationSeconds, unset) ? this.durationSeconds : durationSeconds as int?,
-      targetDate: identical(targetDate, unset) ? this.targetDate : targetDate as CivilDate?,
-      sessionsPerWeek: identical(sessionsPerWeek, unset) ? this.sessionsPerWeek : sessionsPerWeek as int?,
+      durationSeconds: identical(durationSeconds, unset)
+          ? this.durationSeconds
+          : durationSeconds as int?,
+      targetDate: identical(targetDate, unset)
+          ? this.targetDate
+          : targetDate as CivilDate?,
+      sessionsPerWeek: identical(sessionsPerWeek, unset)
+          ? this.sessionsPerWeek
+          : sessionsPerWeek as int?,
       weeks: identical(weeks, unset) ? this.weeks : weeks as int?,
     );
   }
@@ -498,28 +550,72 @@ final class Goal {
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
     checkLength(out, '$path.id', id.length, 1, null);
-    if (exerciseId case final v?) { checkLength(out, '$path.exerciseId', v.length, 1, null); }
-    if (targetValue case final v?) { checkRange(out, '$path.targetValue', v, 0, null); }
-    if (distanceMeters case final v?) { checkRange(out, '$path.distanceMeters', v, 0, null); }
-    if (loadKg case final v?) { checkRange(out, '$path.loadKg', v, 0, null); }
-    if (durationSeconds case final v?) { checkRange(out, '$path.durationSeconds', v, 1, null); }
-    if (sessionsPerWeek case final v?) { checkRange(out, '$path.sessionsPerWeek', v, 1, 14); }
-    if (weeks case final v?) { checkRange(out, '$path.weeks', v, 1, 104); }
+    if (exerciseId case final v?) {
+      checkLength(out, '$path.exerciseId', v.length, 1, null);
+    }
+    if (targetValue case final v?) {
+      checkRange(out, '$path.targetValue', v, 0, null);
+    }
+    if (distanceMeters case final v?) {
+      checkRange(out, '$path.distanceMeters', v, 0, null);
+    }
+    if (loadKg case final v?) {
+      checkRange(out, '$path.loadKg', v, 0, null);
+    }
+    if (durationSeconds case final v?) {
+      checkRange(out, '$path.durationSeconds', v, 1, null);
+    }
+    if (sessionsPerWeek case final v?) {
+      checkRange(out, '$path.sessionsPerWeek', v, 1, 14);
+    }
+    if (weeks case final v?) {
+      checkRange(out, '$path.weeks', v, 1, 104);
+    }
     _validateGoal(this, path, out);
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
-    if (exerciseId case final v?) { out.add(v); }
+    if (exerciseId case final v?) {
+      out.add(v);
+    }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is Goal && id == other.id && kind == other.kind && origin == other.origin && createdOn == other.createdOn && exerciseId == other.exerciseId && metric == other.metric && targetValue == other.targetValue && distanceMeters == other.distanceMeters && loadKg == other.loadKg && durationSeconds == other.durationSeconds && targetDate == other.targetDate && sessionsPerWeek == other.sessionsPerWeek && weeks == other.weeks;
+    return identical(this, other) ||
+        other is Goal &&
+            id == other.id &&
+            kind == other.kind &&
+            origin == other.origin &&
+            createdOn == other.createdOn &&
+            exerciseId == other.exerciseId &&
+            metric == other.metric &&
+            targetValue == other.targetValue &&
+            distanceMeters == other.distanceMeters &&
+            loadKg == other.loadKg &&
+            durationSeconds == other.durationSeconds &&
+            targetDate == other.targetDate &&
+            sessionsPerWeek == other.sessionsPerWeek &&
+            weeks == other.weeks;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[id, kind, origin, createdOn, exerciseId, metric, targetValue, distanceMeters, loadKg, durationSeconds, targetDate, sessionsPerWeek, weeks]);
+  int get hashCode => Object.hashAll(<Object?>[
+    id,
+    kind,
+    origin,
+    createdOn,
+    exerciseId,
+    metric,
+    targetValue,
+    distanceMeters,
+    loadKg,
+    durationSeconds,
+    targetDate,
+    sessionsPerWeek,
+    weeks,
+  ]);
 
   @override
   String toString() => 'Goal(${toJson()})';
@@ -527,11 +623,7 @@ final class Goal {
 
 /// Disponibilité d'un jour précis (D3.6).
 final class DaySlot {
-  const DaySlot({
-    required this.weekday,
-    required this.minutes,
-    this.place,
-  });
+  const DaySlot({required this.weekday, required this.minutes, this.place});
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
   /// Les champs inconnus sont ignorés (évolution additive).
@@ -562,11 +654,7 @@ final class DaySlot {
   }
 
   /// Copie modifiée ; un champ optionnel peut être remis à `null`.
-  DaySlot copyWith({
-    int? weekday,
-    int? minutes,
-    Object? place = unset,
-  }) {
+  DaySlot copyWith({int? weekday, int? minutes, Object? place = unset}) {
     return DaySlot(
       weekday: weekday ?? this.weekday,
       minutes: minutes ?? this.minutes,
@@ -588,12 +676,15 @@ final class DaySlot {
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {
-  }
+  void collectExerciseIds(Set<String> out) {}
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is DaySlot && weekday == other.weekday && minutes == other.minutes && place == other.place;
+    return identical(this, other) ||
+        other is DaySlot &&
+            weekday == other.weekday &&
+            minutes == other.minutes &&
+            place == other.place;
   }
 
   @override
@@ -605,17 +696,18 @@ final class DaySlot {
 
 /// Matériel disponible dans un lieu.
 final class PlaceEquipment {
-  const PlaceEquipment({
-    required this.place,
-    required this.equipment,
-  });
+  const PlaceEquipment({required this.place, required this.equipment});
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
   /// Les champs inconnus sont ignorés (évolution additive).
   factory PlaceEquipment.fromJson(Map<String, Object?> json) {
     return PlaceEquipment(
       place: jsonEnum(json, 'place', Place.fromCode),
-      equipment: jsonList(json, 'equipment', (v) => jsonAsString(v, 'equipment')),
+      equipment: jsonList(
+        json,
+        'equipment',
+        (v) => jsonAsString(v, 'equipment'),
+      ),
     );
   }
 
@@ -634,10 +726,7 @@ final class PlaceEquipment {
   }
 
   /// Copie modifiée ; un champ optionnel peut être remis à `null`.
-  PlaceEquipment copyWith({
-    Place? place,
-    List<String>? equipment,
-  }) {
+  PlaceEquipment copyWith({Place? place, List<String>? equipment}) {
     return PlaceEquipment(
       place: place ?? this.place,
       equipment: equipment ?? this.equipment,
@@ -653,20 +742,25 @@ final class PlaceEquipment {
 
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
-    for (var i = 0; i < equipment.length; i++) { checkLength(out, '$path.equipment[$i]', equipment[i].length, 1, null); }
+    for (var i = 0; i < equipment.length; i++) {
+      checkLength(out, '$path.equipment[$i]', equipment[i].length, 1, null);
+    }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {
-  }
+  void collectExerciseIds(Set<String> out) {}
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is PlaceEquipment && place == other.place && jsonListEquals(equipment, other.equipment);
+    return identical(this, other) ||
+        other is PlaceEquipment &&
+            place == other.place &&
+            jsonListEquals(equipment, other.equipment);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[place, Object.hashAll(equipment)]);
+  int get hashCode =>
+      Object.hashAll(<Object?>[place, Object.hashAll(equipment)]);
 
   @override
   String toString() => 'PlaceEquipment(${toJson()})';
@@ -731,16 +825,21 @@ final class LoadIncrement {
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
     checkRange(out, '$path.stepKg', stepKg, 0.05, 50);
-    if (minKg case final v?) { checkRange(out, '$path.minKg', v, 0, null); }
+    if (minKg case final v?) {
+      checkRange(out, '$path.minKg', v, 0, null);
+    }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {
-  }
+  void collectExerciseIds(Set<String> out) {}
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is LoadIncrement && loadType == other.loadType && stepKg == other.stepKg && minKg == other.minKg;
+    return identical(this, other) ||
+        other is LoadIncrement &&
+            loadType == other.loadType &&
+            stepKg == other.stepKg &&
+            minKg == other.minKg;
   }
 
   @override
@@ -820,12 +919,16 @@ final class Limitation {
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {
-  }
+  void collectExerciseIds(Set<String> out) {}
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is Limitation && zone == other.zone && side == other.side && joint == other.joint && discomfort == other.discomfort;
+    return identical(this, other) ||
+        other is Limitation &&
+            zone == other.zone &&
+            side == other.side &&
+            joint == other.joint &&
+            discomfort == other.discomfort;
   }
 
   @override
@@ -879,7 +982,9 @@ final class HealthScreeningRef {
   }) {
     return HealthScreeningRef(
       questionnaireId: questionnaireId ?? this.questionnaireId,
-      answeredOn: identical(answeredOn, unset) ? this.answeredOn : answeredOn as CivilDate?,
+      answeredOn: identical(answeredOn, unset)
+          ? this.answeredOn
+          : answeredOn as CivilDate?,
       outcome: outcome ?? this.outcome,
     );
   }
@@ -897,16 +1002,20 @@ final class HealthScreeningRef {
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {
-  }
+  void collectExerciseIds(Set<String> out) {}
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is HealthScreeningRef && questionnaireId == other.questionnaireId && answeredOn == other.answeredOn && outcome == other.outcome;
+    return identical(this, other) ||
+        other is HealthScreeningRef &&
+            questionnaireId == other.questionnaireId &&
+            answeredOn == other.answeredOn &&
+            outcome == other.outcome;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[questionnaireId, answeredOn, outcome]);
+  int get hashCode =>
+      Object.hashAll(<Object?>[questionnaireId, answeredOn, outcome]);
 
   @override
   String toString() => 'HealthScreeningRef(${toJson()})';
@@ -964,21 +1073,73 @@ final class AthleteProfile {
       bodyWeightKg: jsonDoubleOrNull(json, 'bodyWeightKg'),
       disciplines: jsonObj(json, 'disciplines', DisciplineMix.fromJson),
       streetMode: jsonObjOrNull(json, 'streetMode', StreetMode.fromJson),
-      movementLevels: jsonList(json, 'movementLevels', (v) => MovementLevel.fromJson(jsonAsObject(v, 'movementLevels'))),
-      goals: jsonList(json, 'goals', (v) => Goal.fromJson(jsonAsObject(v, 'goals'))),
-      availability: jsonList(json, 'availability', (v) => DaySlot.fromJson(jsonAsObject(v, 'availability'))),
-      places: jsonList(json, 'places', (v) => Place.fromCode(jsonAsString(v, 'places'))),
-      equipment: jsonList(json, 'equipment', (v) => jsonAsString(v, 'equipment')),
-      equipmentByPlace: jsonListOrNull(json, 'equipmentByPlace', (v) => PlaceEquipment.fromJson(jsonAsObject(v, 'equipmentByPlace'))),
-      loadIncrements: jsonList(json, 'loadIncrements', (v) => LoadIncrement.fromJson(jsonAsObject(v, 'loadIncrements'))),
-      limitations: jsonList(json, 'limitations', (v) => Limitation.fromJson(jsonAsObject(v, 'limitations'))),
-      likedExerciseIds: jsonList(json, 'likedExerciseIds', (v) => jsonAsString(v, 'likedExerciseIds')),
-      dislikedExerciseIds: jsonList(json, 'dislikedExerciseIds', (v) => jsonAsString(v, 'dislikedExerciseIds')),
-      knownExerciseIds: jsonListOrNull(json, 'knownExerciseIds', (v) => jsonAsString(v, 'knownExerciseIds')),
-      cannotDoExerciseIds: jsonListOrNull(json, 'cannotDoExerciseIds', (v) => jsonAsString(v, 'cannotDoExerciseIds')),
+      movementLevels: jsonList(
+        json,
+        'movementLevels',
+        (v) => MovementLevel.fromJson(jsonAsObject(v, 'movementLevels')),
+      ),
+      goals: jsonList(
+        json,
+        'goals',
+        (v) => Goal.fromJson(jsonAsObject(v, 'goals')),
+      ),
+      availability: jsonList(
+        json,
+        'availability',
+        (v) => DaySlot.fromJson(jsonAsObject(v, 'availability')),
+      ),
+      places: jsonList(
+        json,
+        'places',
+        (v) => Place.fromCode(jsonAsString(v, 'places')),
+      ),
+      equipment: jsonList(
+        json,
+        'equipment',
+        (v) => jsonAsString(v, 'equipment'),
+      ),
+      equipmentByPlace: jsonListOrNull(
+        json,
+        'equipmentByPlace',
+        (v) => PlaceEquipment.fromJson(jsonAsObject(v, 'equipmentByPlace')),
+      ),
+      loadIncrements: jsonList(
+        json,
+        'loadIncrements',
+        (v) => LoadIncrement.fromJson(jsonAsObject(v, 'loadIncrements')),
+      ),
+      limitations: jsonList(
+        json,
+        'limitations',
+        (v) => Limitation.fromJson(jsonAsObject(v, 'limitations')),
+      ),
+      likedExerciseIds: jsonList(
+        json,
+        'likedExerciseIds',
+        (v) => jsonAsString(v, 'likedExerciseIds'),
+      ),
+      dislikedExerciseIds: jsonList(
+        json,
+        'dislikedExerciseIds',
+        (v) => jsonAsString(v, 'dislikedExerciseIds'),
+      ),
+      knownExerciseIds: jsonListOrNull(
+        json,
+        'knownExerciseIds',
+        (v) => jsonAsString(v, 'knownExerciseIds'),
+      ),
+      cannotDoExerciseIds: jsonListOrNull(
+        json,
+        'cannotDoExerciseIds',
+        (v) => jsonAsString(v, 'cannotDoExerciseIds'),
+      ),
       experience: jsonEnumOrNull(json, 'experience', ExperienceLevel.fromCode),
       guidanceMode: jsonEnum(json, 'guidanceMode', GuidanceMode.fromCode),
-      healthScreening: jsonObjOrNull(json, 'healthScreening', HealthScreeningRef.fromJson),
+      healthScreening: jsonObjOrNull(
+        json,
+        'healthScreening',
+        HealthScreeningRef.fromJson,
+      ),
       createdOn: jsonDate(json, 'createdOn'),
       updatedOn: jsonDate(json, 'updatedOn'),
     );
@@ -1080,13 +1241,16 @@ final class AthleteProfile {
       'availability': [for (final e in availability) e.toJson()],
       'places': [for (final e in places) e.code],
       'equipment': [for (final e in equipment) e],
-      if (equipmentByPlace case final v?) 'equipmentByPlace': [for (final e in v) e.toJson()],
+      if (equipmentByPlace case final v?)
+        'equipmentByPlace': [for (final e in v) e.toJson()],
       'loadIncrements': [for (final e in loadIncrements) e.toJson()],
       'limitations': [for (final e in limitations) e.toJson()],
       'likedExerciseIds': [for (final e in likedExerciseIds) e],
       'dislikedExerciseIds': [for (final e in dislikedExerciseIds) e],
-      if (knownExerciseIds case final v?) 'knownExerciseIds': [for (final e in v) e],
-      if (cannotDoExerciseIds case final v?) 'cannotDoExerciseIds': [for (final e in v) e],
+      if (knownExerciseIds case final v?)
+        'knownExerciseIds': [for (final e in v) e],
+      if (cannotDoExerciseIds case final v?)
+        'cannotDoExerciseIds': [for (final e in v) e],
       if (experience case final v?) 'experience': v.code,
       'guidanceMode': guidanceMode.code,
       if (healthScreening case final v?) 'healthScreening': v.toJson(),
@@ -1125,28 +1289,44 @@ final class AthleteProfile {
   }) {
     return AthleteProfile(
       schemaVersion: schemaVersion ?? this.schemaVersion,
-      displayName: identical(displayName, unset) ? this.displayName : displayName as String?,
+      displayName: identical(displayName, unset)
+          ? this.displayName
+          : displayName as String?,
       sex: sex ?? this.sex,
       birthYear: birthYear ?? this.birthYear,
       heightCm: heightCm ?? this.heightCm,
-      bodyWeightKg: identical(bodyWeightKg, unset) ? this.bodyWeightKg : bodyWeightKg as double?,
+      bodyWeightKg: identical(bodyWeightKg, unset)
+          ? this.bodyWeightKg
+          : bodyWeightKg as double?,
       disciplines: disciplines ?? this.disciplines,
-      streetMode: identical(streetMode, unset) ? this.streetMode : streetMode as StreetMode?,
+      streetMode: identical(streetMode, unset)
+          ? this.streetMode
+          : streetMode as StreetMode?,
       movementLevels: movementLevels ?? this.movementLevels,
       goals: goals ?? this.goals,
       availability: availability ?? this.availability,
       places: places ?? this.places,
       equipment: equipment ?? this.equipment,
-      equipmentByPlace: identical(equipmentByPlace, unset) ? this.equipmentByPlace : equipmentByPlace as List<PlaceEquipment>?,
+      equipmentByPlace: identical(equipmentByPlace, unset)
+          ? this.equipmentByPlace
+          : equipmentByPlace as List<PlaceEquipment>?,
       loadIncrements: loadIncrements ?? this.loadIncrements,
       limitations: limitations ?? this.limitations,
       likedExerciseIds: likedExerciseIds ?? this.likedExerciseIds,
       dislikedExerciseIds: dislikedExerciseIds ?? this.dislikedExerciseIds,
-      knownExerciseIds: identical(knownExerciseIds, unset) ? this.knownExerciseIds : knownExerciseIds as List<String>?,
-      cannotDoExerciseIds: identical(cannotDoExerciseIds, unset) ? this.cannotDoExerciseIds : cannotDoExerciseIds as List<String>?,
-      experience: identical(experience, unset) ? this.experience : experience as ExperienceLevel?,
+      knownExerciseIds: identical(knownExerciseIds, unset)
+          ? this.knownExerciseIds
+          : knownExerciseIds as List<String>?,
+      cannotDoExerciseIds: identical(cannotDoExerciseIds, unset)
+          ? this.cannotDoExerciseIds
+          : cannotDoExerciseIds as List<String>?,
+      experience: identical(experience, unset)
+          ? this.experience
+          : experience as ExperienceLevel?,
       guidanceMode: guidanceMode ?? this.guidanceMode,
-      healthScreening: identical(healthScreening, unset) ? this.healthScreening : healthScreening as HealthScreeningRef?,
+      healthScreening: identical(healthScreening, unset)
+          ? this.healthScreening
+          : healthScreening as HealthScreeningRef?,
       createdOn: createdOn ?? this.createdOn,
       updatedOn: updatedOn ?? this.updatedOn,
     );
@@ -1161,27 +1341,81 @@ final class AthleteProfile {
 
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
-    checkRange(out, '$path.schemaVersion', schemaVersion, 2, currentSchemaVersion);
-    if (displayName case final v?) { checkLength(out, '$path.displayName', v.length, null, 40); }
+    checkRange(
+      out,
+      '$path.schemaVersion',
+      schemaVersion,
+      2,
+      currentSchemaVersion,
+    );
+    if (displayName case final v?) {
+      checkLength(out, '$path.displayName', v.length, null, 40);
+    }
     checkRange(out, '$path.birthYear', birthYear, 1900, 2100);
     checkRange(out, '$path.heightCm', heightCm, 100, 250);
-    if (bodyWeightKg case final v?) { checkRange(out, '$path.bodyWeightKg', v, 25, 300); }
+    if (bodyWeightKg case final v?) {
+      checkRange(out, '$path.bodyWeightKg', v, 25, 300);
+    }
     disciplines.collectViolations('$path.disciplines', out);
-    if (streetMode case final v?) { v.collectViolations('$path.streetMode', out); }
-    for (var i = 0; i < movementLevels.length; i++) { movementLevels[i].collectViolations('$path.movementLevels[$i]', out); }
-    for (var i = 0; i < goals.length; i++) { goals[i].collectViolations('$path.goals[$i]', out); }
+    if (streetMode case final v?) {
+      v.collectViolations('$path.streetMode', out);
+    }
+    for (var i = 0; i < movementLevels.length; i++) {
+      movementLevels[i].collectViolations('$path.movementLevels[$i]', out);
+    }
+    for (var i = 0; i < goals.length; i++) {
+      goals[i].collectViolations('$path.goals[$i]', out);
+    }
     checkLength(out, '$path.availability', availability.length, 1, 7);
-    for (var i = 0; i < availability.length; i++) { availability[i].collectViolations('$path.availability[$i]', out); }
+    for (var i = 0; i < availability.length; i++) {
+      availability[i].collectViolations('$path.availability[$i]', out);
+    }
     checkLength(out, '$path.places', places.length, 1, 3);
-    for (var i = 0; i < equipment.length; i++) { checkLength(out, '$path.equipment[$i]', equipment[i].length, 1, null); }
-    if (equipmentByPlace case final v?) { for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.equipmentByPlace[$i]', out); } }
-    for (var i = 0; i < loadIncrements.length; i++) { loadIncrements[i].collectViolations('$path.loadIncrements[$i]', out); }
-    for (var i = 0; i < limitations.length; i++) { limitations[i].collectViolations('$path.limitations[$i]', out); }
-    for (var i = 0; i < likedExerciseIds.length; i++) { checkLength(out, '$path.likedExerciseIds[$i]', likedExerciseIds[i].length, 1, null); }
-    for (var i = 0; i < dislikedExerciseIds.length; i++) { checkLength(out, '$path.dislikedExerciseIds[$i]', dislikedExerciseIds[i].length, 1, null); }
-    if (knownExerciseIds case final v?) { for (var i = 0; i < v.length; i++) { checkLength(out, '$path.knownExerciseIds[$i]', v[i].length, 1, null); } }
-    if (cannotDoExerciseIds case final v?) { for (var i = 0; i < v.length; i++) { checkLength(out, '$path.cannotDoExerciseIds[$i]', v[i].length, 1, null); } }
-    if (healthScreening case final v?) { v.collectViolations('$path.healthScreening', out); }
+    for (var i = 0; i < equipment.length; i++) {
+      checkLength(out, '$path.equipment[$i]', equipment[i].length, 1, null);
+    }
+    if (equipmentByPlace case final v?) {
+      for (var i = 0; i < v.length; i++) {
+        v[i].collectViolations('$path.equipmentByPlace[$i]', out);
+      }
+    }
+    for (var i = 0; i < loadIncrements.length; i++) {
+      loadIncrements[i].collectViolations('$path.loadIncrements[$i]', out);
+    }
+    for (var i = 0; i < limitations.length; i++) {
+      limitations[i].collectViolations('$path.limitations[$i]', out);
+    }
+    for (var i = 0; i < likedExerciseIds.length; i++) {
+      checkLength(
+        out,
+        '$path.likedExerciseIds[$i]',
+        likedExerciseIds[i].length,
+        1,
+        null,
+      );
+    }
+    for (var i = 0; i < dislikedExerciseIds.length; i++) {
+      checkLength(
+        out,
+        '$path.dislikedExerciseIds[$i]',
+        dislikedExerciseIds[i].length,
+        1,
+        null,
+      );
+    }
+    if (knownExerciseIds case final v?) {
+      for (var i = 0; i < v.length; i++) {
+        checkLength(out, '$path.knownExerciseIds[$i]', v[i].length, 1, null);
+      }
+    }
+    if (cannotDoExerciseIds case final v?) {
+      for (var i = 0; i < v.length; i++) {
+        checkLength(out, '$path.cannotDoExerciseIds[$i]', v[i].length, 1, null);
+      }
+    }
+    if (healthScreening case final v?) {
+      v.collectViolations('$path.healthScreening', out);
+    }
     _validateAthleteProfile(this, path, out);
   }
 
@@ -1189,26 +1423,94 @@ final class AthleteProfile {
   void collectExerciseIds(Set<String> out) {
     disciplines.collectExerciseIds(out);
     streetMode?.collectExerciseIds(out);
-    for (final e in movementLevels) { e.collectExerciseIds(out); }
-    for (final e in goals) { e.collectExerciseIds(out); }
-    for (final e in availability) { e.collectExerciseIds(out); }
-    for (final e in equipmentByPlace ?? const <PlaceEquipment>[]) { e.collectExerciseIds(out); }
-    for (final e in loadIncrements) { e.collectExerciseIds(out); }
-    for (final e in limitations) { e.collectExerciseIds(out); }
+    for (final e in movementLevels) {
+      e.collectExerciseIds(out);
+    }
+    for (final e in goals) {
+      e.collectExerciseIds(out);
+    }
+    for (final e in availability) {
+      e.collectExerciseIds(out);
+    }
+    for (final e in equipmentByPlace ?? const <PlaceEquipment>[]) {
+      e.collectExerciseIds(out);
+    }
+    for (final e in loadIncrements) {
+      e.collectExerciseIds(out);
+    }
+    for (final e in limitations) {
+      e.collectExerciseIds(out);
+    }
     out.addAll(likedExerciseIds);
     out.addAll(dislikedExerciseIds);
-    if (knownExerciseIds case final v?) { out.addAll(v); }
-    if (cannotDoExerciseIds case final v?) { out.addAll(v); }
+    if (knownExerciseIds case final v?) {
+      out.addAll(v);
+    }
+    if (cannotDoExerciseIds case final v?) {
+      out.addAll(v);
+    }
     healthScreening?.collectExerciseIds(out);
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is AthleteProfile && schemaVersion == other.schemaVersion && displayName == other.displayName && sex == other.sex && birthYear == other.birthYear && heightCm == other.heightCm && bodyWeightKg == other.bodyWeightKg && disciplines == other.disciplines && streetMode == other.streetMode && jsonListEquals(movementLevels, other.movementLevels) && jsonListEquals(goals, other.goals) && jsonListEquals(availability, other.availability) && jsonListEquals(places, other.places) && jsonListEquals(equipment, other.equipment) && jsonDeepEquals(equipmentByPlace, other.equipmentByPlace) && jsonListEquals(loadIncrements, other.loadIncrements) && jsonListEquals(limitations, other.limitations) && jsonListEquals(likedExerciseIds, other.likedExerciseIds) && jsonListEquals(dislikedExerciseIds, other.dislikedExerciseIds) && jsonDeepEquals(knownExerciseIds, other.knownExerciseIds) && jsonDeepEquals(cannotDoExerciseIds, other.cannotDoExerciseIds) && experience == other.experience && guidanceMode == other.guidanceMode && healthScreening == other.healthScreening && createdOn == other.createdOn && updatedOn == other.updatedOn;
+    return identical(this, other) ||
+        other is AthleteProfile &&
+            schemaVersion == other.schemaVersion &&
+            displayName == other.displayName &&
+            sex == other.sex &&
+            birthYear == other.birthYear &&
+            heightCm == other.heightCm &&
+            bodyWeightKg == other.bodyWeightKg &&
+            disciplines == other.disciplines &&
+            streetMode == other.streetMode &&
+            jsonListEquals(movementLevels, other.movementLevels) &&
+            jsonListEquals(goals, other.goals) &&
+            jsonListEquals(availability, other.availability) &&
+            jsonListEquals(places, other.places) &&
+            jsonListEquals(equipment, other.equipment) &&
+            jsonDeepEquals(equipmentByPlace, other.equipmentByPlace) &&
+            jsonListEquals(loadIncrements, other.loadIncrements) &&
+            jsonListEquals(limitations, other.limitations) &&
+            jsonListEquals(likedExerciseIds, other.likedExerciseIds) &&
+            jsonListEquals(dislikedExerciseIds, other.dislikedExerciseIds) &&
+            jsonDeepEquals(knownExerciseIds, other.knownExerciseIds) &&
+            jsonDeepEquals(cannotDoExerciseIds, other.cannotDoExerciseIds) &&
+            experience == other.experience &&
+            guidanceMode == other.guidanceMode &&
+            healthScreening == other.healthScreening &&
+            createdOn == other.createdOn &&
+            updatedOn == other.updatedOn;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[schemaVersion, displayName, sex, birthYear, heightCm, bodyWeightKg, disciplines, streetMode, Object.hashAll(movementLevels), Object.hashAll(goals), Object.hashAll(availability), Object.hashAll(places), Object.hashAll(equipment), jsonDeepHash(equipmentByPlace), Object.hashAll(loadIncrements), Object.hashAll(limitations), Object.hashAll(likedExerciseIds), Object.hashAll(dislikedExerciseIds), jsonDeepHash(knownExerciseIds), jsonDeepHash(cannotDoExerciseIds), experience, guidanceMode, healthScreening, createdOn, updatedOn]);
+  int get hashCode => Object.hashAll(<Object?>[
+    schemaVersion,
+    displayName,
+    sex,
+    birthYear,
+    heightCm,
+    bodyWeightKg,
+    disciplines,
+    streetMode,
+    Object.hashAll(movementLevels),
+    Object.hashAll(goals),
+    Object.hashAll(availability),
+    Object.hashAll(places),
+    Object.hashAll(equipment),
+    jsonDeepHash(equipmentByPlace),
+    Object.hashAll(loadIncrements),
+    Object.hashAll(limitations),
+    Object.hashAll(likedExerciseIds),
+    Object.hashAll(dislikedExerciseIds),
+    jsonDeepHash(knownExerciseIds),
+    jsonDeepHash(cannotDoExerciseIds),
+    experience,
+    guidanceMode,
+    healthScreening,
+    createdOn,
+    updatedOn,
+  ]);
 
   @override
   String toString() => 'AthleteProfile(${toJson()})';
