@@ -41,8 +41,13 @@ extension SafetyStore on AppStore {
   /// 18 ans (18 ans dans l'année : accepté, la question a été posée au
   /// démarrage). L'application est alors bloquée jusqu'à correction ou
   /// suppression des données (KT-075).
+  ///
+  /// G6 : l'année du profil v2 quand il existe.
   bool get profileIsMinor {
-    final age = ageInYear(profile?.intValue('birthYear'), storeClock());
+    final age = ageInYear(
+      athlete?.profile.birthYear ?? profile?.intValue('birthYear'),
+      storeClock(),
+    );
     return age != null && age < 18;
   }
 

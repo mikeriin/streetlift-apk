@@ -291,7 +291,7 @@ void main() {
           ),
           StartSave.saved,
         );
-        perso.saveProfile(perso.ownerDraft());
+        perso.seedSampleAthleteProfile();
         await perso.flush();
         expect(perso.isFreshInstall, isFalse);
         String persoRaw() => jsonEncode(KalisPrefs(raw, dev: false).snapshot());

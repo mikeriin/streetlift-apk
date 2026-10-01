@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
 import 'app_theme.dart';
+import 'athlete_profile_screen.dart' show ProfileScreen;
 import 'koach/koach_bubble.dart';
 import 'program_generator.dart';
-import 'profile_screens.dart' show ProfileScreen;
 import 'store.dart';
 import 'ui.dart';
 
@@ -119,7 +119,7 @@ class ProgramScreen extends StatelessWidget {
       if (ProgramHomeCard.visible) {
         children.add(const ProgramHomeCard(inScreen: true));
       }
-      if (store.profile == null) {
+      if (!store.hasAnyProfile) {
         children.add(
           KCard(
             key: const ValueKey('program-no-profile'),
@@ -242,7 +242,9 @@ class ProgramScreen extends StatelessWidget {
         children.add(const KSection('Séries difficiles par semaine'));
         children.add(_VolumeCard(summary: summary));
       }
-      if (store.profile != null) {
+      // G6 : avec le profil v2, la création du programme passe à
+      // `kalis_plan` (G7) ; l'ancien générateur (L10) n'est plus proposé.
+      if (store.profile != null && store.athlete == null) {
         children.add(
           FilledButton.icon(
             key: const ValueKey('program-generate'),
@@ -260,6 +262,21 @@ class ProgramScreen extends StatelessWidget {
             'Ton historique n’est jamais modifié : seules les séances à '
             'venir changent, après un aperçu.',
             style: dim,
+          ),
+        );
+      }
+      if (store.athlete != null) {
+        children.add(
+          KCard(
+            key: const ValueKey('program-coming'),
+            child: KoachSays(
+              pose: KoachPose.present,
+              child: const Text(
+                'La création de ton programme à partir de ton nouveau profil '
+                'arrive dans la prochaine version. Ton programme actuel ne '
+                'change pas.',
+              ),
+            ),
           ),
         );
       }

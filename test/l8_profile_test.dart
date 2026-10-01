@@ -1,5 +1,7 @@
-// L8 — profil, mode prudent, consentement, questions progressives et
-// migration côté modèle et store (KT-038 à KT-043).
+// L8 — profil, mode prudent, consentement côté modèle et store (KT-038 à
+// KT-042). G6 : les questions progressives (KT-040) et la confirmation
+// d'une installation existante (KT-043) sont retirées avec leurs tests ;
+// le modèle L8 reste lu (import) et garde le bloc santé.
 //
 // Stockage simulé, horloge injectée, données synthétiques (aucune donnée
 // réelle). « Relance » = nouvelle instance du store sur le même stockage.
@@ -102,18 +104,7 @@ void main() {
       );
     });
 
-    test('valeurs par défaut du mode et du ton selon le repère', () {
-      expect(defaultsForLevel('beginner'), (autonomy: 'guided', tone: 'kind'));
-      expect(defaultsForLevel('novice'), (autonomy: 'guided', tone: 'kind'));
-      expect(defaultsForLevel('intermediate'), (
-        autonomy: 'assisted',
-        tone: 'neutral',
-      ));
-      expect(defaultsForLevel('advanced'), (
-        autonomy: 'assisted',
-        tone: 'demanding',
-      ));
-      expect(defaultsForLevel('expert').autonomy, isNot('expert'));
+    test('repère de niveau et catalogue d’objectifs L8 (lecture)', () {
       expect(levelFromBenchmarks({'pushups': 3, 'pullups': 1}), 'novice');
       expect(benchmarkBand('pushups', 65), 4);
       expect(benchmarkBand('pullups', 4), 1);
@@ -187,32 +178,6 @@ void main() {
       expect(cautionPct(.7, mainLift: true, active: true), .7);
       expect(isMaxTest('TEST 1RM DIP LESTÉ', 'Maximum'), isTrue);
       expect(isMaxTest('Dips', 'RIR 2'), isFalse);
-    });
-  });
-
-  group('questions progressives (KT-040)', () {
-    test('ordre, une par séance, plus tard, ne plus demander', () {
-      final p = _profile();
-      expect(nextProgressiveQuestion(p, 'S1-J1', now), 'experience');
-      p.lastAskedSession = 'S1-J1';
-      expect(nextProgressiveQuestion(p, 'S1-J1', now), isNull);
-      p.never.add('experience');
-      expect(nextProgressiveQuestion(p, 'S1-J2', now), 'disliked');
-      p.later['disliked'] = profileAt(now);
-      expect(nextProgressiveQuestion(p, 'S1-J2', now), 'liked');
-      expect(
-        nextProgressiveQuestion(p, 'S2-J1', now.add(const Duration(days: 8))),
-        'disliked',
-      );
-      expect(nextProgressiveQuestion(null, 'S1-J1', now), isNull);
-    });
-
-    test('questions de santé seulement avec consentement', () {
-      final p = _profile(consent: 'refused')
-        ..never.addAll(['experience', 'disliked', 'liked']);
-      expect(nextProgressiveQuestion(p, 'S1-J1', now), 'physicalJob');
-      final q = _profile()..never.addAll(['experience', 'disliked', 'liked']);
-      expect(nextProgressiveQuestion(q, 'S1-J1', now), 'sleep');
     });
   });
 
@@ -384,7 +349,9 @@ void main() {
       final old = backupOf(app)..remove('profile');
       expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
       expect(app.profile, isNull);
-      expect(app.needsProfileConfirmation, isTrue);
+      // G6 : installation existante sans profil → refaire son profil.
+      expect(app.isFreshInstall, isFalse);
+      expect(app.athleteRedoProposed, isTrue);
       expect(app.program.start, DateTime(2026, 7, 13));
       // Réimport de l'export avec profil.
       expect(await app.importBackup(exported), ImportStatus.success);
@@ -399,81 +366,5 @@ void main() {
       expect(app.profile, isNull);
       expect(backupOf(app).containsKey('profile'), isFalse);
     });
-
-    test('questions progressives : au plus une par séance, persistées', () {
-      app.saveProfile(_profile());
-      expect(app.progressiveQuestionFor('S3-J1'), 'experience');
-      app.answerProgressive('experience', 'S3-J1', value: '2to5y');
-      expect(app.progressiveQuestionFor('S3-J1'), isNull);
-      expect(app.progressiveQuestionFor('S3-J2'), 'disliked');
-      app.answerProgressive('disliked', 'S3-J2', never: true);
-      app.answerProgressive('liked', 'S3-J3', later: true);
-      expect(app.progressiveQuestionFor('S3-J4'), 'sleep');
-      expect(app.profile!.stringValue('experience'), '2to5y');
-      expect(app.profile!.never, {'disliked'});
-    });
-
-    test(
-      'migration du propriétaire (KT-043) : pré-rempli, rien modifié',
-      () async {
-        // État réel type 3.0.0 : historique complet, références, départ
-        // d'origine, objectifs Koach (étape 13/07/2027, final 31/12/2027).
-        final state = filledBackup(app);
-        state['programStart'] = {
-          'status': 'set',
-          'date': '2026-07-13',
-          'origin': 'migration',
-        };
-        expect(await app.importBackup(jsonEncode(state)), ImportStatus.success);
-        for (final e in {'B4': 72.0, 'B17': 30.0, 'B19': 65.0}.entries) {
-          app.values[e.key] = e.value;
-          app.refStatus[e.key] = 'set';
-        }
-        for (final ref in ['B8', 'B9', 'B10', 'B11']) {
-          app.setKoachObjective(ref, 'final', 100, DateTime(2027, 12, 31));
-        }
-        await app.flush();
-        final before = backupOf(app);
-        expect(app.needsProfileConfirmation, isTrue);
-        final draft = app.ownerDraft();
-        expect(jsonEncode(backupOf(app)), jsonEncode(before));
-        expect(draft.origin, 'migration');
-        expect(draft.stringValue('goalPrimary'), 'event');
-        final ev = draft.value('eventGoal') as Map;
-        expect(ev['date'], '2027-12-31');
-        expect((ev['items'] as List).length, 4);
-        expect(draft.fields['eventGoal']!.source, 'estimated');
-        expect(draft.benchmarks, isNotEmpty);
-        expect(draft.intValue('birthYear'), isNull);
-        // Confirmation : seul le profil s'ajoute.
-        draft.setField('birthYear', 1990, profileAt(clock));
-        draft.health
-          ..consent = 'given'
-          ..consentAt = profileAt(clock)
-          ..answeredAt = profileAt(clock)
-          ..answers.addAll({for (final q in kHealthQuestions) q.id: false});
-        app.saveProfile(draft);
-        final after = backupOf(app);
-        expect(after.remove('profile'), isNotNull);
-        expect(jsonEncode(after), jsonEncode(before));
-        expect(app.caution.active, isFalse);
-        final next = await relaunch();
-        expect(next.profile!.origin, 'migration');
-        expect(next.program.start, DateTime(2026, 7, 13));
-      },
-    );
-
-    test(
-      'étape par défaut sans objectif final : date 12 mois après le départ',
-      () {
-        setRefs();
-        app.logs['S1-J1'] = SessionLog(
-          done: true,
-          finishedAt: '2026-07-13T18:00:00',
-        );
-        final d = app.ownerDraft();
-        expect((d.value('eventGoal') as Map)['date'], '2027-07-13');
-      },
-    );
   });
 }

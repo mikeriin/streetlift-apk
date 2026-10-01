@@ -9,7 +9,9 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show AssetBundle, rootBundle;
 import 'package:kalis_core/kalis_core.dart' show TrainingLog;
+import 'package:kalis_core/kalis_core.dart' as kc;
 
+import 'athlete_profile.dart';
 import 'content_pack.dart';
 import 'kalis_clock.dart';
 import 'session_prefs.dart';
@@ -40,6 +42,7 @@ export 'set_validation.dart' show SetCheck, SetField;
 export 'wellbeing.dart';
 
 part 'adapt_store.dart';
+part 'athlete_profile_store.dart';
 part 'koach_store.dart';
 part 'profile_store.dart';
 part 'program_store.dart';
@@ -403,6 +406,15 @@ class AppStore extends ChangeNotifier {
 
   /// Entrées du profil illisibles ignorées au dernier démarrage.
   int profileLoadIssues = 0;
+
+  /// G6 : profil d'athlète v2 (section `athleteProfile`), null tant qu'il
+  /// n'a pas été créé. Il remplace le profil L8 pour décrire l'utilisateur.
+  AthleteRecord? athlete;
+
+  /// Section `athleteProfile` illisible au démarrage : gardée telle quelle
+  /// et réécrite à l'identique (aucune perte) jusqu'à un nouveau profil.
+  Map<String, dynamic>? _athleteRaw;
+  int athleteLoadIssues = 0;
 
   /// L11 : adaptations au jour le jour (section `adapt`, écrite seulement
   /// si elle sert). Contrat : docs/CONTRAT_L11.md.
@@ -849,6 +861,8 @@ class AppStore extends ChangeNotifier {
     lastLevel: _lastLevel,
     koach: koach,
     profile: profile,
+    athlete: athlete,
+    athleteRaw: _athleteRaw,
     programInstance: programInstance,
     adapt: adapt,
   );
@@ -883,6 +897,12 @@ class AppStore extends ChangeNotifier {
       // L8 : profil écrit seulement s'il existe (export identique à 3.0.x
       // sinon) ; ignoré par les versions antérieures.
       if (data.profile != null) 'profile': data.profile!.toJson(),
+      // G6 : profil d'athlète v2, écrit seulement s'il existe ; ignoré par
+      // les versions antérieures (section versionnée, facultative).
+      if (data.athlete != null)
+        'athleteProfile': data.athlete!.toJson()
+      else if (data.athleteRaw != null)
+        'athleteProfile': data.athleteRaw,
       // L10 : instance de programme écrite seulement si elle existe (export
       // identique à 3.2.0 sinon) ; ignorée par les versions antérieures.
       if (data.programInstance != null)
@@ -1203,6 +1223,25 @@ class AppStore extends ChangeNotifier {
       strict: limits != null,
       issues: profileIssues,
     );
+    // G6 : profil d'athlète v2. Import strict ; démarrage tolérant (section
+    // illisible gardée telle quelle, jamais perdue).
+    AthleteRecord? nextAthlete;
+    Map<String, dynamic>? athleteRaw;
+    var athleteIssues = 0;
+    final rawAthlete = m['athleteProfile'];
+    if (rawAthlete != null) {
+      try {
+        nextAthlete = AthleteRecord.fromJson(rawAthlete);
+      } catch (e) {
+        if (limits != null) {
+          throw const FormatException('Profil d’athlète illisible.');
+        }
+        athleteIssues = 1;
+        if (rawAthlete is Map) {
+          athleteRaw = Map<String, dynamic>.from(rawAthlete);
+        }
+      }
+    }
     // L10 : instance de programme. Import strict ; démarrage tolérant.
     final programIssues = <String>[];
     final nextProgram = ProgramInstance.fromJson(
@@ -1230,6 +1269,9 @@ class AppStore extends ChangeNotifier {
       koachIssues: koachIssues.length,
       profile: nextProfile,
       profileIssues: profileIssues.length,
+      athlete: nextAthlete,
+      athleteRaw: athleteRaw,
+      athleteIssues: athleteIssues,
       programInstance: nextProgram,
       programIssues: programIssues.length,
       adapt: nextAdapt,
@@ -1313,6 +1355,9 @@ class AppStore extends ChangeNotifier {
     koachLoadIssues = data.koachIssues;
     profile = data.profile;
     profileLoadIssues = data.profileIssues;
+    athlete = data.athlete;
+    _athleteRaw = data.athleteRaw;
+    athleteLoadIssues = data.athleteIssues;
     adapt = data.adapt;
     adaptLoadIssues = data.adaptIssues;
     _adaptCache.clear();
@@ -2870,6 +2915,9 @@ class ImportPreview {
   /// L8 : profil présent dans le fichier, et réponses de santé.
   bool get profilePresent => _data.profile != null;
   bool get profileHealth => _data.profile?.health.hasHealthContent ?? false;
+
+  /// G6 : profil d'athlète v2 présent dans le fichier.
+  bool get athleteProfilePresent => _data.athlete != null;
 }
 
 class _BackupData {
@@ -2889,6 +2937,12 @@ class _BackupData {
   /// L8 : profil (null si la section est absente).
   final UserProfile? profile;
   final int profileIssues;
+
+  /// G6 : profil d'athlète v2 (null si la section est absente) ; section
+  /// illisible gardée telle quelle ([athleteRaw]).
+  final AthleteRecord? athlete;
+  final Map<String, dynamic>? athleteRaw;
+  final int athleteIssues;
 
   /// L10 : instance de programme (null si la section est absente).
   final ProgramInstance? programInstance;
@@ -2913,6 +2967,9 @@ class _BackupData {
     this.koachIssues = 0,
     this.profile,
     this.profileIssues = 0,
+    this.athlete,
+    this.athleteRaw,
+    this.athleteIssues = 0,
     this.programInstance,
     this.programIssues = 0,
     AdaptData? adapt,

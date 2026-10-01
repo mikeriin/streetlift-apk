@@ -9,7 +9,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
-import 'package:streetlift_tracker/profile_screens.dart';
+import 'package:streetlift_tracker/athlete_profile_flow.dart';
 import 'package:streetlift_tracker/settings_screen.dart';
 import 'package:streetlift_tracker/store.dart';
 import 'package:streetlift_tracker/wellbeing_screens.dart';
@@ -257,6 +257,11 @@ void main() {
     // Correction de l'année : l'application s'ouvre.
     final p = store.profile!.copy()..setField('birthYear', 1990, _at);
     store.saveProfile(p);
+    await tester.pumpAndSettle();
+    // G6 : profil L8 sans profil v2 → Koach propose de refaire le profil ;
+    // « Plus tard » ouvre l'application.
+    expect(find.byKey(const ValueKey('redo-proposal')), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('redo-later')));
     await tester.pumpAndSettle();
     expect(find.text('ACCUEIL'), findsOneWidget);
   });

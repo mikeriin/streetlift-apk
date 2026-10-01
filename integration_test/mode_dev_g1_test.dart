@@ -147,7 +147,7 @@ void main() {
       seed.saveSettings();
       final real = DateTime.now();
       await seed.configureStart(DateTime(real.year, real.month, real.day - 10));
-      seed.saveProfile(seed.ownerDraft());
+      seed.seedSampleAthleteProfile();
       final plan = seed.program.week(1).day(1);
       if (plan != null) {
         for (final ex in plan.exercises) {
@@ -217,7 +217,7 @@ void main() {
 
       // Profil et départ créés dans la session de test (comme au bout du
       // démarrage), pour voir l'accueil de la session de test.
-      store.saveProfile(store.ownerDraft());
+      store.seedSampleAthleteProfile();
       await store.configureStart(DateTime(real.year, real.month, real.day - 3));
       await store.flush();
 

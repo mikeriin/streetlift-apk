@@ -1,6 +1,15 @@
 // L8 (KT-038 à KT-042) — profil de l'utilisateur, questionnaire de santé
 // préalable, mode prudent, consentement et questions progressives.
 //
+// G6 (D1.6) : le profil L8 est remplacé par le profil d'athlète v2
+// (athlete_profile.dart). Ce fichier reste le lecteur de la section
+// `profile` des sauvegardes (import des anciennes, valeurs validées) et
+// garde le bloc santé du questionnaire L13 (consentement, réponses, accord
+// du médecin) et les règles du mode prudent, inchangées. Ses écrans
+// (démarrage court, confirmation, questions progressives, catalogue
+// d'objectifs) sont retirés ; les champs restent lus par les anciens
+// moteurs L10/L11 jusqu'à leur retrait (G10).
+//
 // Modèle pur (aucune dépendance Flutter) : toutes les règles sont des
 // fonctions déterministes, avec l'horloge passée en paramètre.
 // Contrat : docs/CONTRAT_L8.md.
@@ -232,15 +241,6 @@ String labelOf(List<(String, String)> list, String? id) {
   return '—';
 }
 
-/// Valeurs par défaut selon le repère (KT-039). Le mode Expert n'est
-/// jamais proposé par défaut.
-({String autonomy, String tone}) defaultsForLevel(String? level) =>
-    switch (level) {
-      'intermediate' => (autonomy: 'assisted', tone: 'neutral'),
-      'advanced' || 'expert' => (autonomy: 'assisted', tone: 'demanding'),
-      _ => (autonomy: 'guided', tone: 'kind'),
-    };
-
 /// Zones des gênes et limitations.
 const kZones = <(String, String)>[
   ('shoulder', 'Épaule'),
@@ -443,10 +443,19 @@ int? ageInYear(int? birthYear, DateTime now) =>
 /// - « oui », 65 ans et plus, grossesse, problème de cœur ou de tension,
 ///   gêne > 3/10 → prudent, levable par l'accord du médecin daté, valable
 ///   pour les réponses et gênes déclarées au plus tard à cette date.
-CautionStatus evaluateCaution(UserProfile p, DateTime now) {
+///
+/// G6 : avec le profil v2, l'année de naissance ([birth]) et les gênes
+/// ([discomforts]) viennent de lui, chacune avec sa date de saisie ; le
+/// consentement, les réponses et l'accord restent ceux du bloc santé.
+CautionStatus evaluateCaution(
+  UserProfile p,
+  DateTime now, {
+  ({int year, String at})? birth,
+  List<({int level, String at})>? discomforts,
+}) {
   final reasons = <String>[];
   final h = p.health;
-  final by = p.intValue('birthYear');
+  final by = birth?.year ?? p.intValue('birthYear');
   final age = ageInYear(by, now);
   if (!h.consentGiven) {
     reasons.add('no_consent');
@@ -468,9 +477,13 @@ CautionStatus evaluateCaution(UserProfile p, DateTime now) {
   }
   if (age != null && age >= 65) {
     reasons.add('age65');
-    dated.add(p.fields['birthYear']?.at ?? h.answeredAt!);
+    dated.add(birth?.at ?? p.fields['birthYear']?.at ?? h.answeredAt!);
   }
-  final pains = h.injuries.where((i) => i.level > 3).toList();
+  final pains = [
+    for (final i in discomforts ??
+        [for (final i in h.injuries) (level: i.level, at: i.at)])
+      if (i.level > 3) i,
+  ];
   if (pains.isNotEmpty) {
     reasons.add('discomfort');
     for (final i in pains) {
@@ -590,7 +603,8 @@ bool _okEvent(Object? v) {
   return true;
 }
 
-/// Questions progressives (KT-040), par ordre de priorité.
+/// Questions progressives (KT-040, retirées en G6) : gardées pour lire les
+/// reports et refus des anciennes sauvegardes.
 const kProgressiveQuestions = [
   'experience',
   'disliked',
@@ -600,9 +614,6 @@ const kProgressiveQuestions = [
   'physicalJob',
   'motivation',
 ];
-
-/// « Plus tard » : la question revient après ce délai.
-const Duration kQuestionSnooze = Duration(days: 7);
 
 class UserProfile {
   int version = kProfileVersion;
@@ -910,29 +921,6 @@ bool _same(Object? a, Object? b) {
     return true;
   }
   return a == b;
-}
-
-/// Question progressive à poser à la fin de la séance validée [sessionKey]
-/// (KT-040) : au plus une par séance ; jamais une question déjà
-/// renseignée, refusée (« ne plus demander ») ou reportée depuis moins de
-/// [kQuestionSnooze] ; les questions de santé seulement avec consentement.
-String? nextProgressiveQuestion(
-  UserProfile? p,
-  String sessionKey,
-  DateTime now,
-) {
-  if (p == null || p.lastAskedSession == sessionKey) return null;
-  for (final q in kProgressiveQuestions) {
-    if (p.fields.containsKey(q) || p.never.contains(q)) continue;
-    if (kHealthFields.contains(q) && !p.health.consentGiven) continue;
-    final l = p.later[q];
-    if (l != null) {
-      final at = DateTime.tryParse(l);
-      if (at != null && now.difference(at) < kQuestionSnooze) continue;
-    }
-    return q;
-  }
-  return null;
 }
 
 /// Libellés des questions progressives et des champs.
