@@ -390,15 +390,43 @@ AdaptReview buildReview(
       }
     }
   }
-  final avoided = <String>[
+  final skipped = <String>[
     for (final e in skips.entries)
       if (e.value >= p.skipTimes) e.key,
   ]..sort();
-  for (final id in avoided) {
+  for (final id in skipped) {
     reasons.add(
       reason(ReasonCodes.adaptExerciseSkipped, <String, Object?>{
         'exerciseId': id,
         'times': skips[id],
+      }),
+    );
+  }
+  // Exercices dont la plus petite charge du matériel est encore trop
+  // lourde (même règle que la prescription de séance).
+  final tooHeavy = <String, double>{};
+  final bodyWeight = bodyWeightOf(null, ctx.profile, p);
+  for (final t in state.tracks.values) {
+    final last = t.lastLoad;
+    final lastDay = t.lastDay;
+    if (t.info.mode != CapacityMode.loaded ||
+        last == null ||
+        lastDay == null ||
+        day - lastDay > 28 ||
+        !t.noUp ||
+        last > t.info.grid.minimum + 1e-9) {
+      continue;
+    }
+    final total = t.info.totalLoad(t.info.grid.minimum, bodyWeight);
+    if (total > 0 && t.filter.repsPossible(ln(total)) < 2) {
+      tooHeavy[t.info.id] = t.info.grid.minimum;
+    }
+  }
+  final avoided = <String>{...skipped, ...tooHeavy.keys}.toList()..sort();
+  for (final id in tooHeavy.keys.toList()..sort()) {
+    reasons.add(
+      reason(ReasonCodes.adaptLoadFloor, <String, Object?>{
+        'minKg': roundTo(tooHeavy[id]!, 2),
       }),
     );
   }
@@ -655,7 +683,15 @@ AdaptReview buildReview(
         final t = state.tracks[id];
         var probability = 0.0;
         List<Reason> why;
-        if (avoided.contains(id)) {
+        final floorKg = tooHeavy[id];
+        if (floorKg != null) {
+          probability = 0.95;
+          why = <Reason>[
+            reason(ReasonCodes.adaptLoadFloor, <String, Object?>{
+              'minKg': roundTo(floorKg, 2),
+            }),
+          ];
+        } else if (skipped.contains(id)) {
           probability = 0.9;
           why = <Reason>[
             reason(ReasonCodes.adaptExerciseSkipped, <String, Object?>{

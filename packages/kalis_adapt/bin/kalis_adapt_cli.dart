@@ -161,7 +161,6 @@ final class _TimedPolicy implements SimPolicy {
   @override
   String get name => inner.name;
 
-
   @override
   SessionPlan plan(SessionContext c) {
     final clock = Stopwatch()..start();

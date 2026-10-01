@@ -75,7 +75,6 @@ final class CheckedPolicy implements SimPolicy {
   @override
   String get name => inner.name;
 
-
   @override
   SessionPlan plan(SessionContext c) {
     final session = inner.plan(c);

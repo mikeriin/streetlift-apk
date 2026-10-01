@@ -258,7 +258,8 @@ final class CapacityFilter {
   /// répétitions jusqu'à l'échec estimées avec l'écart-type [nSd], après la
   /// perte relative [fatigue].
   ///
-  /// [bound] : la série dit seulement « au moins [n] ». [learnK] : la série
+  /// [bound] : la série dit seulement « au moins [n] » — ou, avec [upper],
+  /// « au plus [n] » (une série ratée sans une seule répétition). [learnK] : la série
   /// met à jour `k` (elle est fraîche et [n] est connu précisément) ;
   /// sinon `k` est un état « considéré » (filtre de Schmidt-Kalman) : son
   /// incertitude compte, il ne bouge pas.
@@ -269,6 +270,7 @@ final class CapacityFilter {
     required double fatigue,
     required AdaptParams p,
     bool bound = false,
+    bool upper = false,
     bool learnK = false,
   }) {
     final kk = k;
@@ -281,7 +283,10 @@ final class CapacityFilter {
     final slope = scale / (kk * (1 + u));
     final r = sq(nSd * slope) + sq(p.observationFloor);
     final jac = <double>[1, 0, hk, 1];
-    if (bound) {
+    if (bound && upper) {
+      // « Au plus [n] » : la même contrainte, de l'autre côté.
+      _lowerBound(<double>[-1, 0, -hk, -1], logLoad - h, r, learnK);
+    } else if (bound) {
       _lowerBound(jac, h - logLoad, r, learnK);
     } else {
       _update(jac, logLoad - h, r, learnK);

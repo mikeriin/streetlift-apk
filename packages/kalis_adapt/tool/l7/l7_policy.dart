@@ -93,7 +93,6 @@ final class L7Policy implements SimPolicy {
   @override
   String get name => 'L7/L11';
 
-
   static String _stamp(int dayNumber, double minute) =>
       l7.isoOf(dayNumber * _day + 18 * 3600 + minute * 60);
 

@@ -1186,3 +1186,4 @@ Le JSON porte le **code** ; l'ordre des valeurs est celui du contrat.
 | `adapt.increment_coarse` | `stepKg` (double) | Plus petit incrément de charge trop grand : la progression passe par les répétitions. |
 | `adapt.readiness` | `readiness` (double) | Forme du jour estimée (bilan santé, fatigue modélisée, séries déjà faites). |
 | `adapt.volume_response` | `muscle` (string), `weeklySets` (double) | Volume hebdomadaire d'un groupe musculaire ajusté d'après la réponse observée. |
+| `adapt.load_floor` | `minKg` (double) | Plus petite charge disponible encore trop lourde pour cet exercice : il est remplacé ou retiré de la séance. |

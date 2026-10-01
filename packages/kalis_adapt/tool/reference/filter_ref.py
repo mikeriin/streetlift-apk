@@ -195,7 +195,7 @@ class Filter:
         return self.m[0] + self.m[3] + shift + self.g_ref() - math.log(1.0 + (max(n, 1.0) - 1.0) / k)
 
     # -- observation
-    def observe_load(self, log_load, n, n_sd, fatigue, p=P, bound=False, learn_k=False):
+    def observe_load(self, log_load, n, n_sd, fatigue, p=P, bound=False, learn_k=False, upper=False):
         """Série à charge log_load, n répétitions jusqu'à l'échec estimées
         (écart-type n_sd). bound : borne inférieure seulement. learn_k :
         l'observation met à jour k (n connu précisément) ; sinon k est un
@@ -206,7 +206,10 @@ class Filter:
         h, H, u = self._h(max(n, 1.0) * scale)
         slope = scale / (k * (1.0 + u))
         R = sq(n_sd * slope) + sq(p['obs_floor'])
-        if bound:
+        if bound and upper:
+            # « au plus n » : la même contrainte, de l'autre côté
+            self._lower_bound([-x for x in H], log_load - h, R, learn_k)
+        elif bound:
             self._lower_bound(H, h - log_load, R, learn_k)
         else:
             self._update(H, log_load - h, R, learn_k)

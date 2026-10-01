@@ -200,7 +200,7 @@ leveling depuis tout le journal ≤ 200 ms — mesurés par chaque moteur ; le c
 
 ## 7. Codes de raison
 
-Registre `reasonRegistry` (74 codes : `plan.*`, `adapt.*`, `quest.*`), constantes `ReasonCodes`, table
+Registre `reasonRegistry` (75 codes : `plan.*`, `adapt.*`, `quest.*`), constantes `ReasonCodes`, table
 dans `docs/TYPES.md`. Un `Reason` valide a un code du registre et exactement les paramètres déclarés,
 du bon type (entier, nombre, texte court, booléen, identifiant d'exercice). Un moteur qui a besoin d'un
 nouveau code l'ajoute ici (évolution additive).

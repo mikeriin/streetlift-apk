@@ -996,10 +996,22 @@ final class SessionRun {
     final fresh = fatigue < p.kLearnMaxFatigue;
     final open = target != null && target.open;
     var rirEstimate = 0.0;
-    if (failed || reps < 1) {
+    if (reps < 1) {
+      // Pas une répétition : la charge dépasse ce qui se soulève une fois
+      // aujourd'hui (borne haute).
       f.observeLoad(
         logLoad: logLoad,
-        n: (reps < 0 ? 0 : reps) + p.failExtraReps,
+        n: 1,
+        nSd: p.failSd,
+        fatigue: fatigue,
+        p: p,
+        bound: true,
+        upper: true,
+      );
+    } else if (failed) {
+      f.observeLoad(
+        logLoad: logLoad,
+        n: reps + p.failExtraReps,
         nSd: p.failSd,
         fatigue: fatigue,
         p: p,
@@ -1207,7 +1219,8 @@ final class SessionRun {
   }
 
   /// Compte la série dans le bilan « nettement plus facile que visé » de
-  /// l'exercice : cible atteinte et note au moins
+  /// l'exercice : cible atteinte et note d'une flamme (« 5 répétitions en
+  /// réserve et plus », qui ne borne la capacité que par le bas), au moins
   /// [AdaptParams.adviceGapFlames] flammes sous la cible (D5).
   void _noteEase(
     ExerciseRun run,
@@ -1223,6 +1236,7 @@ final class SessionRun {
     final easy =
         !failed &&
         amount >= target.high &&
+        flames == Flames.min &&
         target.flames - flames >= _p.adviceGapFlames;
     if (easy) {
       run.easySets++;
@@ -1296,6 +1310,11 @@ final class SessionRun {
     final lo = spec.low;
     final hi = spec.high;
     double reps(double kg) => predictedReps(run, kg, rir, 0);
+    double possible(double kg) {
+      final total = info.totalLoad(kg, bodyWeightKg);
+      return total <= 0 ? 1000 : track.filter.repsPossible(ln(total));
+    }
+
     final mid = (lo + hi + 1) ~/ 2;
     final last = track.lastLoad;
     run.heldCause = null;
@@ -1312,18 +1331,30 @@ final class SessionRun {
     final floored = grid.floor(last);
     final start = floored > last ? last : floored;
     var kg = start;
+    final floorReps = lo - 2 > 3 ? lo - 2 : 3;
     if (reps(kg) < lo - p.downMargin) {
-      for (var i = 0; i < 60; i++) {
-        final next = grid.next(kg, up: false);
-        if (next >= kg - 1e-9) {
-          break;
+      // Sur une grille à gros crans, la charge du dessous peut être bien
+      // trop légère : la charge est alors gardée, avec moins de
+      // répétitions, tant qu'elle en permet assez.
+      final below = grid.next(kg, up: false);
+      final keep =
+          below < kg - 1e-9 &&
+          reps(kg) >= floorReps - p.downMargin &&
+          reps(below) >= spec.highExtended + p.upMargin;
+      if (!keep) {
+        for (var i = 0; i < 60; i++) {
+          final next = grid.next(kg, up: false);
+          if (next >= kg - 1e-9) {
+            break;
+          }
+          kg = next;
+          if (reps(kg) >= lo) {
+            break;
+          }
         }
-        kg = next;
-        if (reps(kg) >= lo) {
-          break;
-        }
+        return kg;
       }
-      return kg;
+      run.coarse = true;
     }
     if (track.noUp) {
       run.heldCause = 'failure';
@@ -1352,10 +1383,11 @@ final class SessionRun {
       final now = reps(kg);
       bool ok;
       if (run.easyMode && kg == start) {
-        // La dernière séance a été notée nettement plus facile que visé :
-        // un cran de plus, même si le modèle — qui n'a alors que des bornes
-        // basses — ne le prévoit pas encore.
-        ok = true;
+        // La dernière séance a été notée « 5 en réserve et plus » : un cran
+        // de plus, même si le modèle — qui n'a alors que des bornes basses
+        // — ne le prévoit pas encore, pourvu que la charge suivante laisse
+        // au moins trois répétitions d'après ces bornes.
+        ok = possible(next) >= 3;
       } else if (run.calibrating) {
         ok = reps(next) >= mid;
       } else if (over) {
@@ -1486,9 +1518,12 @@ final class SessionRun {
     // devient ouverte (autant de répétitions que possible en gardant la
     // réserve dite), comme dans l'APRE (Mann et al. 2010).
     final lastBenchmark = track.benchmarkDay;
+    final every = state.rater.weight(p) < p.benchmarkWeight
+        ? p.benchmarkEveryDays
+        : p.benchmarkEveryDaysRated;
     if (wantsBenchmark(run) &&
-        (lastBenchmark == null ||
-            day - lastBenchmark >= p.benchmarkEveryDays)) {
+        every > 0 &&
+        (lastBenchmark == null || day - lastBenchmark >= every)) {
       final last = out.removeLast();
       out.add(
         SetPlan(
@@ -1565,8 +1600,7 @@ final class SessionRun {
         run.spec.sets >= 2 &&
         run.info.mode != CapacityMode.hold &&
         run.painZones.isEmpty &&
-        !noIncrease &&
-        state.rater.weight(p) < p.benchmarkWeight;
+        !noIncrease;
   }
 
   // ----------------------------------------------------------------- conseil
@@ -1590,11 +1624,11 @@ final class SessionRun {
     final load = previous.loadKg;
     // Série nettement plus facile que visé, cible atteinte.
     final easy =
-        rated != null &&
+        rated == Flames.min &&
         previousTarget != null &&
         !previous.failed &&
         previous.amount >= previousTarget.high &&
-        previousFlames - rated >= p.adviceGapFlames;
+        previousFlames - Flames.min >= p.adviceGapFlames;
     final free = run.fails == 0 && run.painZones.isEmpty && !noIncrease;
     if (planned != null &&
         gap.abs() < p.adviceGapFlames &&
@@ -1660,7 +1694,10 @@ final class SessionRun {
       var kg = from;
       for (var i = 0; i < 60; i++) {
         final next = grid.next(kg, up: false);
-        if (next >= kg - 1e-9 || next + bw < floorTotal - 1e-9) {
+        // Un cran reste toujours permis, même quand il dépasse la baisse
+        // maximale (grille à gros crans).
+        if (next >= kg - 1e-9 ||
+            (next + bw < floorTotal - 1e-9 && kg != from)) {
           break;
         }
         kg = next;
@@ -1692,7 +1729,19 @@ final class SessionRun {
       }
     } else if (gap >= p.adviceGapFlames || previous.unplannedFail) {
       if (reps(kg) < lo - p.downMargin) {
-        kg = stepDown(kg);
+        // Grille à gros crans : la charge est gardée avec moins de
+        // répétitions quand celle du dessous serait bien trop légère
+        // (jamais après un échec).
+        final below = grid.next(kg, up: false);
+        final floorReps = lo - 2 > 3 ? lo - 2 : 3;
+        final keep =
+            !previous.unplannedFail &&
+            below < kg - 1e-9 &&
+            reps(kg) >= floorReps - p.downMargin &&
+            reps(below) >= spec.highExtended + p.upMargin;
+        if (!keep) {
+          kg = stepDown(kg);
+        }
       }
     } else if (canRise) {
       final cap =
@@ -1703,7 +1752,11 @@ final class SessionRun {
         // Un cran de la grille, que le modèle le prévoie ou non (il n'a
         // alors que des bornes basses) ; au-delà, le modèle décide.
         final next = grid.next(kg, up: true);
-        if (next > kg) {
+        final total = run.info.totalLoad(next, bodyWeightKg);
+        final possible = total <= 0
+            ? 1000.0
+            : track.filter.repsPossible(ln(total)) * (1 - fatigue);
+        if (next > kg && possible >= 3) {
           kg = next;
           raisedByRating = true;
         }

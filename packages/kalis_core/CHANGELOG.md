@@ -6,9 +6,9 @@ Rien n'est retiré ni renommé ; une application écrite pour 0.1.0 fonctionne s
 
 - `AdviceRequest.healthCheck` (optionnel) : le bilan santé du jour, tel qu'il a été donné à
   `prescribeSession`, pour que le conseil de la série suivante parte de la même forme du jour.
-- Sept codes de raison pour le moteur dynamique (74 codes au registre) : `adapt.ratings_uninformative`,
+- Huit codes de raison pour le moteur dynamique (75 codes au registre) : `adapt.ratings_uninformative`,
   `adapt.benchmark_set`, `adapt.place_changed`, `adapt.load_held`, `adapt.increment_coarse`,
-  `adapt.readiness`, `adapt.volume_response`.
+  `adapt.readiness`, `adapt.volume_response`, `adapt.load_floor`.
 
 ## 0.1.0 — 01/10/2026 (lot GC)
 

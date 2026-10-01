@@ -68,6 +68,7 @@ final class AdaptParams {
     this.benchmarkRir = 1.5,
     this.benchmarkExtraReps = 6,
     this.benchmarkEveryDays = 6,
+    this.benchmarkEveryDaysRated = 0,
     this.benchmarkMaxRir = 3,
     this.tauAcute = 1.2,
     this.tauChronic = 7,
@@ -323,8 +324,13 @@ final class AdaptParams {
   /// Répétitions ouvertes au-dessus de la cible.
   final int benchmarkExtraReps;
 
-  /// Jours au moins entre deux séries repères d'un exercice.
+  /// Jours au moins entre deux séries repères d'un exercice quand les
+  /// notes n'informent plus.
   final int benchmarkEveryDays;
+
+  /// Jours au moins entre deux séries repères d'un exercice quand les
+  /// notes informent (0 : jamais de série repère dans ce cas).
+  final int benchmarkEveryDaysRated;
 
   /// RIR visé au-dessus duquel la semaine ne porte pas de série repère.
   final double benchmarkMaxRir;

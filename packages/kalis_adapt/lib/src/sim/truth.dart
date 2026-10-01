@@ -678,7 +678,8 @@ final class SimAthlete {
         var kg = grid.minimum;
         for (var i = 0; i < 2000; i++) {
           final total = t.info.totalLoad(kg, bodyWeightKg);
-          final reps = (total <= 0 ? 100.0 : t.repsAtShare(total / fresh)) - rir;
+          final reps =
+              (total <= 0 ? 100.0 : t.repsAtShare(total / fresh)) - rir;
           if (reps < low - 2) {
             return false;
           }

@@ -53,7 +53,9 @@ Set<String> equipmentFor(AthleteProfile profile, Place? place) {
 /// même discipline ou même chaîne de variantes, pas plus difficile,
 /// faisable avec [equipment] (et au lieu [place]), ni détesté ni déclaré
 /// non su, épargnant les zones de [pains], absent de [taken] ; le plus
-/// proche au sens de `planSimilarity`, puis par identifiant.
+/// proche au sens de `planSimilarity`, puis par identifiant. [notLoadType]
+/// écarte un type de charge (celui dont la plus petite charge est trop
+/// lourde).
 ExerciseInfo? findSubstitute(
   EngineContext ctx,
   ExerciseInfo original, {
@@ -61,6 +63,7 @@ ExerciseInfo? findSubstitute(
   required Place? place,
   required Map<BodyZone, int> pains,
   required Set<String> taken,
+  LoadType? notLoadType,
 }) {
   final p = ctx.params;
   final profile = ctx.profile;
@@ -76,6 +79,7 @@ ExerciseInfo? findSubstitute(
         taken.contains(e.id) ||
         banned.contains(e.id) ||
         e.unit != o.unit ||
+        e.loadType == notLoadType ||
         e.difficulty > o.difficulty ||
         (e.discipline != o.discipline && e.rootId != o.rootId) ||
         !e.feasibleWith(equipment) ||
@@ -252,10 +256,28 @@ SessionPlan buildSessionPlan(
         break;
       }
     }
-    if (!misplaced && painZone == null) {
+    // Plus petite charge du matériel encore trop lourde : la dernière
+    // séance, à cette charge, a échoué, et le modèle n'y prévoit pas deux
+    // répétitions.
+    var tooHeavy = false;
+    final track = state.tracks[info.id];
+    final lastLoad = track?.lastLoad;
+    if (track != null &&
+        info.mode == CapacityMode.loaded &&
+        lastLoad != null &&
+        track.noUp &&
+        lastLoad <= info.grid.minimum + 1e-9) {
+      final total = info.totalLoad(info.grid.minimum, run.bodyWeightKg);
+      tooHeavy = total > 0 && track.filter.repsPossible(ln(total)) < 2;
+    }
+    if (!misplaced && painZone == null && !tooHeavy) {
       continue;
     }
     final why = <Reason>[
+      if (tooHeavy)
+        reason(ReasonCodes.adaptLoadFloor, <String, Object?>{
+          'minKg': roundTo(info.grid.minimum, 2),
+        }),
       if (painZone != null)
         reason(ReasonCodes.adaptPainReported, <String, Object?>{
           'zone': painZone.code,
@@ -275,6 +297,7 @@ SessionPlan buildSessionPlan(
             place: place,
             pains: painsToday,
             taken: taken,
+            notLoadType: tooHeavy ? e.loadType : null,
           );
     if (substitute == null) {
       d.removed = true;

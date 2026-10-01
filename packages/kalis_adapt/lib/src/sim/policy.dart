@@ -200,7 +200,6 @@ final class KalisAdaptPolicy implements SimPolicy {
   @override
   String get name => 'kalis_adapt';
 
-
   AdaptInput _input(SessionContext c) =>
       AdaptInput(profile: c.profile, block: c.block, log: c.log, today: c.date);
 
@@ -296,7 +295,6 @@ final class DoubleProgressionPolicy implements SimPolicy {
 
   @override
   String get name => 'double_progression';
-
 
   @override
   SessionPlan plan(SessionContext c) {

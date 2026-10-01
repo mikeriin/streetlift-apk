@@ -62,7 +62,10 @@ def loaded_case(seed):
             fatigue = f.fatigue_now()
             kind = r.random()
             n = max(0.0, n_true + r.gauss(0.0, 1.5))
-            if kind < 0.15:
+            if kind < 0.05:
+                step = {'op': 'observe', 'logLoad': log_load + 0.2, 'n': 1.0, 'nSd': 0.5, 'fatigue': fatigue,
+                        'bound': True, 'upper': True, 'learnK': False}
+            elif kind < 0.15:
                 step = {'op': 'observe', 'logLoad': log_load, 'n': n + 0.5, 'nSd': 0.5, 'fatigue': fatigue,
                         'bound': False, 'learnK': fatigue < 0.02}
             elif kind < 0.35:
@@ -72,7 +75,7 @@ def loaded_case(seed):
                 step = {'op': 'observe', 'logLoad': log_load, 'n': n, 'nSd': r.uniform(0.6, 3.5),
                         'fatigue': fatigue, 'bound': False, 'learnK': r.random() < 0.2}
             f.observe_load(step['logLoad'], step['n'], step['nSd'], step['fatigue'],
-                           bound=step['bound'], learn_k=step['learnK'])
+                           bound=step['bound'], learn_k=step['learnK'], upper=step.get('upper', False))
             push(step)
             rir = r.uniform(0.0, 5.0)
             rest = r.choice([20, 60, 90, 150, 240])

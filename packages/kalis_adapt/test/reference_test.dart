@@ -123,6 +123,7 @@ void main() {
               fatigue: _d(step['fatigue']),
               p: p,
               bound: step['bound']! as bool,
+              upper: step['upper'] == true,
               learnK: step['learnK']! as bool,
             );
           case 'direct':
