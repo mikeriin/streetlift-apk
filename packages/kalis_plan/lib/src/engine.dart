@@ -606,10 +606,9 @@ final class KalisPlan implements PlanEngine {
         actedReasons.add(reason(ReasonCodes.planUserRemoved));
         // Ce que l'utilisateur vient de retirer ne revient pas par la
         // ré-optimisation (sans devenir une exclusion durable).
-        final removed = ctx.indexOf(target!.exerciseId);
-        if (removed >= 0) {
-          planner.banned.add(removed);
-        }
+        planner
+          ..dayBanIndex = ctx.indexOf(target!.exerciseId)
+          ..dayBanDay = targetDay;
         if (at >= 0) {
           state.removeAt(targetDay, at);
           normalizeDay(ctx, state, targetDay);
@@ -681,6 +680,14 @@ final class KalisPlan implements PlanEngine {
     planner.anneal(state, params.reviewIterations);
     planner.polish(state);
     planner.revertUnpaidChanges(state, named);
+    if (planner.dayBanDay >= 0 && state.count[planner.dayBanDay] == 0) {
+      // Retirer le seul exercice possible viderait la séance : on la
+      // regarnit, quitte à reprendre l'exercice retiré.
+      planner
+        ..dayBanIndex = -1
+        ..dayBanDay = -1
+        ..construct(state, wide: true);
+    }
 
     final plan = planFromState(
       ctx,

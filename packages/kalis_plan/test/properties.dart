@@ -314,12 +314,15 @@ List<String> checkSeed(Catalog catalog, int seed) {
           fail('$label : ${slot.exerciseId} encore au programme');
         }
       case ReviewKind.remove:
-        if (after.containsKey(slot.slotId)) {
+        if (after[slot.slotId] == slot.exerciseId) {
           fail('$label : emplacement ${slot.slotId} encore présent');
         }
-        if (result.plan.days[day].slots.any(
-          (s) => s.exerciseId == slot.exerciseId,
-        )) {
+        // (Sauf séance qui, sinon, serait vide : le seul exercice possible
+        // ce jour-là revient.)
+        if (result.plan.days[day].slots.length > 1 &&
+            result.plan.days[day].slots.any(
+              (s) => s.exerciseId == slot.exerciseId,
+            )) {
           fail('$label : exercice retiré revenu dans la séance');
         }
       case ReviewKind.replace:

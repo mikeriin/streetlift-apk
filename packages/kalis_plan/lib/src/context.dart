@@ -66,6 +66,9 @@ const List<List<int>> disciplineAffinity = <List<int>>[
   <int>[90, 90, 0, 0, 0, 0, 0, 0],
 ];
 
+/// Affinité d'un exercice de repli (séance qui, sinon, serait vide).
+const int fallbackAffinity = 10;
+
 /// Catégorie de la base des quatre mouvements de compétition du
 /// streetlifting.
 const String competitionCategory = 'Mouvement de compétition';
@@ -192,6 +195,7 @@ final class PoolEntry {
     required this.jointPenalty,
     required this.fit,
     required this.staple,
+    required this.fallback,
     required this.prioritySkill,
     required this.rootIndex,
     required this.creditGroups,
@@ -271,6 +275,10 @@ final class PoolEntry {
   /// d'une chaîne fournie) ou mouvement d'un objectif ; 0 hors
   /// polyarticulaires, puissance et figures.
   final double staple;
+
+  /// Exercice de repli : hors des disciplines du profil, admis seulement
+  /// les jours où rien d'autre n'est possible.
+  final bool fallback;
 
   /// Figure prioritaire : connue de l'utilisateur ou palier d'un objectif.
   final bool prioritySkill;
@@ -1147,10 +1155,37 @@ PlanContext _build(ContextInputs inputs) {
   final flexibilityWanted =
       targets[DisciplineClass.mobility.index] >= 0.3 ||
       targets[DisciplineClass.calisthenics.index] > 0;
+  // Manche 0 : le vivier des disciplines du profil. Manches 1 et 2, pour
+  // les seuls jours restés sans aucun exercice choisissable (discipline
+  // rendue impraticable par une limitation, un lieu sans matériel) : une
+  // séance de repli — mobilité et marche d'abord, puis tout exercice
+  // admissible — plutôt qu'une séance vide.
+  var fallbackDays = 0;
+  for (var round = 0; round < 3; round++) {
+  if (round > 0) {
+    var covered = 0;
+    for (final entry in pool) {
+      if (entry.selectable) {
+        covered |= entry.dayMask;
+      }
+    }
+    fallbackDays = ((1 << days.length) - 1) & ~covered;
+    if (fallbackDays == 0) {
+      break;
+    }
+  }
   for (final t in traits.all) {
     final e = t.exercise;
     final isForced = forced.contains(e.id);
     String? rejection;
+    if (round > 0 &&
+        (indexById.containsKey(e.id) ||
+            rejections[e.id] != Rejections.discipline ||
+            (round == 1 &&
+                t.kind != SlotKind.mobility &&
+                e.pattern != MovementPattern.marche))) {
+      continue;
+    }
 
     // Classe de discipline.
     DisciplineClass? cls;
@@ -1185,6 +1220,14 @@ PlanContext _build(ContextInputs inputs) {
           e.discipline == CatalogDiscipline.calisthenicsDynamic) {
         affinity = 70;
       }
+    }
+    if (round > 0) {
+      cls = t.kind == SlotKind.mobility
+          ? DisciplineClass.mobility
+          : (t.kind.isCardio
+                ? DisciplineClass.cardio
+                : DisciplineClass.generalFitness);
+      affinity = fallbackAffinity;
     }
     if (affinity <= 0) {
       rejection = Rejections.discipline;
@@ -1324,7 +1367,9 @@ PlanContext _build(ContextInputs inputs) {
       }
     }
     if (rejection != null && !isForced) {
-      rejections[e.id] = rejection;
+      if (round == 0) {
+        rejections[e.id] = rejection;
+      }
       continue;
     }
 
@@ -1373,16 +1418,23 @@ PlanContext _build(ContextInputs inputs) {
         mask |= 1 << day.index;
       }
     }
+    if (round > 0) {
+      mask &= fallbackDays;
+    }
     if (rejection == null && mask == 0) {
       rejection = equipped ? Rejections.time : Rejections.equipment;
     }
     final why = rejection;
     final selectable = why == null;
     if (why != null) {
-      rejections[e.id] = why;
+      if (round == 0) {
+        rejections[e.id] = why;
+      }
       if (!isForced) {
         continue;
       }
+    } else if (round > 0) {
+      rejections.remove(e.id);
     }
 
     final groupsOut = <int>[];
@@ -1494,6 +1546,7 @@ PlanContext _build(ContextInputs inputs) {
       novel: t.technical && !known && e.difficulty >= a - 1,
       jointPenalty: penalty > 1 ? 1 : penalty,
       fit: 0.4 * canonical + 0.4 * challenge + (known ? 0.2 : 0.0),
+      fallback: round > 0,
       staple:
           t.kind == SlotKind.compound ||
               t.kind == SlotKind.power ||
@@ -1524,6 +1577,7 @@ PlanContext _build(ContextInputs inputs) {
     );
     indexById[e.id] = entry.index;
     pool.add(entry);
+  }
   }
 
   // Bandes de volume.

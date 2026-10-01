@@ -404,6 +404,38 @@ List<Reason> slotReasons(
   if (entry.liked) {
     out.add(reason(ReasonCodes.planUserLikes));
   }
+  if (entry.fallback) {
+    // Séance de repli : la discipline du profil n'offre rien de faisable
+    // ce jour-là (limitation, lieu, matériel).
+    Limitation? worst;
+    for (final l in ctx.profile.limitations) {
+      if (worst == null || l.discomfort > worst.discomfort) {
+        worst = l;
+      }
+    }
+    if (worst != null) {
+      out.add(
+        reason(ReasonCodes.planJointLimitation, <String, Object?>{
+          'joint': (worst.joint ?? worst.zone.joint)?.code ?? worst.zone.code,
+          'discomfort': worst.discomfort,
+        }),
+      );
+    } else {
+      out.add(
+        reason(ReasonCodes.planEquipmentAvailable, <String, Object?>{
+          'place': ctx.profile.places.isEmpty
+              ? ''
+              : ctx.profile.places.first.code,
+        }),
+      );
+    }
+    out.add(
+      reason(ReasonCodes.planLevelMatch, <String, Object?>{
+        'difficulty': entry.exercise.difficulty,
+      }),
+    );
+    return out;
+  }
   out.add(
     reason(ReasonCodes.planDisciplineShare, <String, Object?>{
       'discipline': entry.cls.discipline.code,

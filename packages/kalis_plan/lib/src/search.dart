@@ -65,6 +65,13 @@ final class Planner {
   /// Exercices bannis de la recherche pour ce passage (rotation).
   final Set<int> banned = <int>{};
 
+  /// Exercice que l'utilisateur vient de retirer du jour [dayBanDay] : il
+  /// n'y revient pas pendant cette recherche (rang dans le vivier, ou −1).
+  int dayBanIndex = -1;
+
+  /// Jour de [dayBanIndex].
+  int dayBanDay = -1;
+
   /// Nombre de notes calculées (mesure d'effort).
   int evaluations = 0;
 
@@ -248,6 +255,7 @@ final class Planner {
     if (!entry.selectable ||
         !entry.feasibleOn(day) ||
         banned.contains(entry.index) ||
+        (day == dayBanDay && entry.index == dayBanIndex) ||
         frozenDays.contains(day)) {
       return false;
     }
@@ -589,6 +597,7 @@ final class Planner {
           !e.selectable ||
           !e.feasibleOn(d) ||
           banned.contains(candidate) ||
+          (d == dayBanDay && candidate == dayBanIndex) ||
           state.dayHas(d, candidate)) {
         return false;
       }
@@ -745,6 +754,7 @@ final class Planner {
             final e = ctx.pool[candidate];
             if (!e.feasibleOn(d) ||
                 banned.contains(candidate) ||
+                (d == dayBanDay && candidate == dayBanIndex) ||
                 state.dayHas(d, candidate)) {
               continue;
             }
