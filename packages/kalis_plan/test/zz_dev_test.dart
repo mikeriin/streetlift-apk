@@ -108,6 +108,46 @@ void main() {
         );
       }
     }
+    for (final seed in <int>[1429]) {
+      final request = randomRequest(catalog, seed);
+      final engine = KalisPlan();
+      b.writeln('== restructuration, graine $seed : '
+          '${profileLine(request.profile)}');
+      b.writeln('  ${inspector.explainProfile(request)}');
+      final p1 = engine.createPass1(catalog, request);
+      b.writeln('  passe 1 :\n    ${days(p1)}');
+      final p2 = engine.createPass2(
+        catalog,
+        Pass2Request(request: request, pass1: p1),
+      );
+      final block = ProgramBlock(pass1: p1, pass2: p2);
+      for (final r in <Reason>[
+        const Reason(
+          code: ReasonCodes.adaptPainReported,
+          params: <String, Object?>{'zone': 'knee', 'intensity': 5},
+        ),
+        const Reason(
+          code: ReasonCodes.adaptFatigueHigh,
+          params: <String, Object?>{'readiness': 0.3},
+        ),
+      ]) {
+        final rr = RestructureRequest(
+          profile: request.profile,
+          seed: 0,
+          today: p1.startDate.addDays(7),
+          current: block,
+          scope: RestructureScope.block,
+          fromWeekIndex: 1,
+          reasons: <Reason>[r],
+          locks: request.locks,
+        );
+        final after = engine.restructure(catalog, rr).block.pass1;
+        b.writeln('  ${r.code} :\n    ${days(after)}');
+        b.writeln('  relu : ${inspector.restructureViolations(rr, after)}');
+        b.writeln('  relu sans le contexte : '
+            '${inspector.hardViolations(request, after)}');
+      }
+    }
     File('${out.path}/graines.txt').writeAsStringSync(b.toString());
   });
 

@@ -1197,60 +1197,8 @@ final class KalisPlan implements PlanEngine {
       throw ArgumentError.value(day, 'dayIndex', 'jour inconnu');
     }
 
-    // Ce que disent les raisons du moteur dynamique.
-    final excluded = <String>{};
-    final pains = <(BodyZone, int)>[];
-    final minutes = <int, int>{};
-    var scale = adaptationVolumeScale(request.adaptation);
-    for (final r in request.reasons) {
-      switch (r.code) {
-        case ReasonCodes.adaptPainReported:
-          final zone = r.params['zone'];
-          final intensity = r.params['intensity'];
-          if (zone is String && intensity is int) {
-            for (final z in BodyZone.values) {
-              if (z.code == zone) {
-                pains.add((z, intensity));
-              }
-            }
-          }
-        case ReasonCodes.adaptExerciseSkipped:
-        case ReasonCodes.adaptPlateau:
-          final id = r.params['exerciseId'];
-          if (id is String && catalog.contains(id)) {
-            excluded.add(id);
-          }
-        case ReasonCodes.adaptTimeShort:
-          final available = r.params['minutesAvailable'];
-          if (available is int && day != null && available >= 5) {
-            minutes[day] = available;
-          }
-        case ReasonCodes.adaptFatigueHigh:
-        case ReasonCodes.adaptHealthLow:
-          if (scale > 0.85) {
-            scale = 0.85;
-          }
-      }
-    }
-
     final ctx = PlanContext.build(
-      ContextInputs(
-        catalog: catalog,
-        profile: request.profile,
-        startDate: before.startDate,
-        seed: request.seed,
-        locks: request.locks,
-        adaptation: request.adaptation,
-        extraExcluded: excluded,
-        extraPains: pains,
-        forcedIds: <String>{
-          for (final d in before.days)
-            for (final slot in d.slots) slot.exerciseId,
-        },
-        minutesOverride: minutes,
-        volumeScale: scale,
-        params: params,
-      ),
+      restructureInputs(catalog, request, params),
     );
     final lockedSlots = <String>{};
     final frozen = <int>{};

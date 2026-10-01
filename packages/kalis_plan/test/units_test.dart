@@ -349,7 +349,10 @@ void main() {
     test('stableLn suit log à 1e-13 près de 1e-6 à 1e6', () {
       for (var i = -600; i <= 600; i++) {
         final x = math.pow(10, i / 100).toDouble();
-        expect((stableLn(x) - math.log(x)).abs(), lessThanOrEqualTo(1e-13 * 15));
+        expect(
+          (stableLn(x) - math.log(x)).abs(),
+          lessThanOrEqualTo(1e-13 * 15),
+        );
       }
       expect(stableLn(1), 0);
     });
@@ -394,7 +397,8 @@ void main() {
                 expect(
                   (ratio - ratio.roundToDouble()).abs(),
                   lessThan(1e-6),
-                  reason: '${fixture.key} ${item.exerciseId} : $load kg, '
+                  reason:
+                      '${fixture.key} ${item.exerciseId} : $load kg, '
                       'pas $step',
                 );
               }

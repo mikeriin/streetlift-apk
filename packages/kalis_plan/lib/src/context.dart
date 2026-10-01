@@ -1743,3 +1743,68 @@ double adaptationVolumeScale(AdaptationSummary? adaptation) {
   }
   return 1;
 }
+
+/// Entrées du contexte d'une restructuration : ce que les raisons du moteur
+/// dynamique changent (exercices écartés, douleurs, temps du jour, volume).
+/// Les exercices du programme en cours restent admis tels quels.
+ContextInputs restructureInputs(
+  Catalog catalog,
+  RestructureRequest request,
+  PlanParams params, {
+  Set<String> alsoForced = const <String>{},
+}) {
+  final before = request.current.pass1;
+  final day = request.dayIndex;
+  final excluded = <String>{};
+  final pains = <(BodyZone, int)>[];
+  final minutes = <int, int>{};
+  var scale = adaptationVolumeScale(request.adaptation);
+  for (final r in request.reasons) {
+    switch (r.code) {
+      case ReasonCodes.adaptPainReported:
+        final zone = r.params['zone'];
+        final intensity = r.params['intensity'];
+        if (zone is String && intensity is int) {
+          for (final z in BodyZone.values) {
+            if (z.code == zone) {
+              pains.add((z, intensity));
+            }
+          }
+        }
+      case ReasonCodes.adaptExerciseSkipped:
+      case ReasonCodes.adaptPlateau:
+        final id = r.params['exerciseId'];
+        if (id is String && catalog.contains(id)) {
+          excluded.add(id);
+        }
+      case ReasonCodes.adaptTimeShort:
+        final available = r.params['minutesAvailable'];
+        if (available is int && day != null && available >= 5) {
+          minutes[day] = available;
+        }
+      case ReasonCodes.adaptFatigueHigh:
+      case ReasonCodes.adaptHealthLow:
+        if (scale > 0.85) {
+          scale = 0.85;
+        }
+    }
+  }
+  return ContextInputs(
+    catalog: catalog,
+    profile: request.profile,
+    startDate: before.startDate,
+    seed: request.seed,
+    locks: request.locks,
+    adaptation: request.adaptation,
+    extraExcluded: excluded,
+    extraPains: pains,
+    forcedIds: <String>{
+      for (final d in before.days)
+        for (final slot in d.slots) slot.exerciseId,
+      ...alsoForced,
+    },
+    minutesOverride: minutes,
+    volumeScale: scale,
+    params: params,
+  );
+}

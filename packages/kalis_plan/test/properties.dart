@@ -602,8 +602,8 @@ List<String> checkSeed(Catalog catalog, int seed) {
     for (final v in proposal.block.pass1.validate()) {
       fail('$label : passe 1 ${v.path} ${v.code}');
     }
-    final restructured = inspector.hardViolations(
-      currentRequest,
+    final restructured = inspector.restructureViolations(
+      restructure,
       proposal.block.pass1,
     );
     if (restructured.isNotEmpty) {

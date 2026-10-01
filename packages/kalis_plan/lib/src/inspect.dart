@@ -310,10 +310,60 @@ final class PlanInspector {
   /// admissible). Ce que l'utilisateur a imposé (emplacement verrouillé)
   /// n'est pas contrôlé, et un jour qui porte un emplacement verrouillé
   /// peut dépasser son temps.
-  List<String> hardViolations(PlanRequest request, Pass1Plan plan) {
+  List<String> hardViolations(PlanRequest request, Pass1Plan plan) =>
+      _violations(
+        contextFor(request, plan),
+        request.profile,
+        locks,
+        plan,
+        null,
+      );
+
+  /// Contraintes dures violées par la semaine type [plan] rendue par une
+  /// restructuration de [request], relues dans le contexte de cette
+  /// restructuration (douleurs signalées, exercices écartés, temps du
+  /// jour). Seuls les jours que la portée laisse modifier sont relus ; une
+  /// restructuration d'une seule semaine ne change pas la semaine type.
+  List<String> restructureViolations(
+    RestructureRequest request,
+    Pass1Plan plan,
+  ) {
+    if (request.scope == RestructureScope.week) {
+      return const <String>[];
+    }
+    final ctx = PlanContext.build(
+      restructureInputs(
+        catalog,
+        request,
+        params,
+        alsoForced: <String>{
+          for (final day in plan.days)
+            for (final slot in day.slots) slot.exerciseId,
+        },
+      ),
+    );
+    final frozen = <int>{
+      for (final l in locks)
+        if (l.kind == LockKind.keepDay && l.dayIndex != null) l.dayIndex!,
+    };
+    final days = <int>{
+      for (var d = 0; d < plan.days.length; d++)
+        if (!frozen.contains(d) &&
+            (request.scope != RestructureScope.session ||
+                d == request.dayIndex))
+          d,
+    };
+    return _violations(ctx, request.profile, locks, plan, days);
+  }
+
+  List<String> _violations(
+    PlanContext ctx,
+    AthleteProfile profile,
+    List<PlanLock> locks,
+    Pass1Plan plan,
+    Set<int>? onlyDays,
+  ) {
     final out = <String>[];
-    final ctx = contextFor(request, plan);
-    final profile = request.profile;
     final scorer = Scorer(ctx);
     final state = stateFromPlan(ctx, plan);
     if (plan.days.length != ctx.dayCount) {
@@ -324,6 +374,12 @@ final class PlanInspector {
     final present = <String>{};
     for (final day in plan.days) {
       final d = day.dayIndex;
+      if (onlyDays != null && !onlyDays.contains(d)) {
+        for (final slot in day.slots) {
+          present.add(slot.exerciseId);
+        }
+        continue;
+      }
       final info = ctx.days[d];
       if (day.weekday != info.weekday) {
         out.add('day $d: jour ISO ${day.weekday} ≠ ${info.weekday}');
@@ -359,7 +415,7 @@ final class PlanInspector {
         // règles : un simple drapeau `locked` ne suffit pas.
         final imposed =
             slot.locked &&
-            request.locks.any(
+            locks.any(
               (l) =>
                   l.kind == LockKind.keepDay ||
                   (l.kind != LockKind.excludeExercise &&
@@ -421,7 +477,7 @@ final class PlanInspector {
         out.add('day $d: ${day.slots.length} emplacements');
       }
     }
-    for (final lock in request.locks) {
+    for (final lock in locks) {
       final id = lock.exerciseId;
       switch (lock.kind) {
         case LockKind.requireExercise:

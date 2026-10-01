@@ -20,17 +20,25 @@ remarque tolérée, tests, puis simulateur (`dart run bin/kalis_plan_cli.dart --
 Quatre vérifications se complètent :
 
 1. **Tests de propriétés** sur 10 240 profils aléatoires seedés (huit fichiers `test/properties_<n>_test.dart`
-   de 1 280 profils, `lib/testing.dart` pour le tirage) : contraintes dures, déterminisme, verrous, diff
-   minimal, variantes, passe 2, blocs.
+   de 1 280 profils, `lib/testing.dart` pour le tirage). Chaque profil passe par la création et une action
+   de revue ; une part fixe, choisie par la graine, passe aussi par les variantes (1 sur 2), la passe 2
+   (1 sur 2), le bloc suivant (1 sur 8) et la restructuration (1 sur 8).
 2. **Profils types** : les 40 profils de kalis_core, chacun déroulé en entier (passe 1, les quatre actions
    de revue, variantes, « Autre proposition », passe 2, bloc suivant, restructuration) et **lu**.
 3. **Mesures** : temps, convergence de la recherche, sensibilité aux poids, non-ressemblance au programme
    du propriétaire.
 4. **Comparaison** à l'ancien générateur (L10) sur les mêmes 40 profils.
 
-Chaque contrainte dure est vérifiée deux fois par deux codes différents : par le moteur quand il
-construit, puis par `PlanInspector.hardViolations`, qui relit le programme rendu sans rien savoir de la
-recherche. Les tests n'utilisent que le second.
+**Portée de la relecture.** `PlanInspector.hardViolations` relit le programme rendu sans rien savoir de
+la recherche ; les tests n'utilisent qu'elle. Elle recalcule par un code à part le matériel et le lieu du
+jour, les exclusions, la contrainte articulaire face à la gêne déclarée, les doublons, les séances vides,
+les verrous et le nombre d'exercices. Pour les règles d'admission du vivier (discipline, niveau,
+prérequis, réservé, trop facile, prudence) et pour la durée d'une séance, elle s'appuie sur le même code
+que le moteur : ces règles sont garanties appliquées, mais une erreur dans la règle elle-même ne serait
+pas vue. Deux d'entre elles — le mode prudent et les exercices réservés — sont donc relues une seconde
+fois par `test/admission_test.dart`, qui les réécrit à partir du texte du contrat et des seuls champs du
+catalogue (40 profils types, 600 profils aléatoires). Niveau, prérequis et « trop facile » n'ont pas de
+seconde relecture automatique : ils reposent sur la lecture des programmes (§ 2).
 
 ## 2. Lecture des 40 profils types
 
@@ -59,13 +67,26 @@ calisthénie plus courtes que le temps donné (62 % du temps utilisé).
 
 ## 3. Tests de propriétés
 
-10 240 profils aléatoires, 0 échec à la livraison. Les propriétés : aucune contrainte dure violée
-(discipline, exclusions, niveau, prérequis, exercices réservés, mode prudent, matériel, gêne
-articulaire, temps, aucune séance vide, verrous) ; même requête, même programme, octet pour octet, sur deux moteurs neufs ; la note relue par
-l'inspecteur égale la note annoncée ; une action de revue ne fait jamais moins bien que l'action seule ;
-ce qui est verrouillé ne bouge pas ; les variantes sont admissibles et triées ; la passe 2 respecte
-plages, charges (multiples du pas, au plus 90 % de la charge d'Epley), flammes de 1 à 10 ; le bloc
-suivant et la restructuration restent valides.
+10 240 profils aléatoires, 0 échec à la livraison. Les propriétés réellement affirmées :
+
+- création et revue (tous les profils) : aucune contrainte dure violée, sortie valide, aucune séance vide,
+  note relue par l'inspecteur égale à la note annoncée, verrous conservés, une action de revue ne fait
+  jamais moins bien que l'action seule, le diff décrit exactement les changements ;
+- déterminisme : même requête, même programme, octet pour octet, sur deux moteurs neufs — rejoué sur un
+  profil sur quatre pour la création et la revue, un sur douze pour la passe 2, et pour tous les blocs
+  suivants et restructurations joués ;
+- variantes (un profil sur deux) : admissibles ce jour-là, absentes de la séance, triées, au plus trois
+  ciblées de natures distinctes ;
+- passe 2 (un profil sur deux) : nature des semaines, flammes de 1 à 10, charges positives ou nulles, part
+  du 1RM entre 0 et 1, aucune séance au-delà du temps ;
+- bloc suivant (un profil sur huit) : contraintes dures, exercices à éviter absents, rang du bloc ;
+- restructuration (un profil sur huit) : contraintes dures, semaines passées intactes, portée respectée,
+  nature des semaines conservée.
+
+Hors propriétés, sur les 40 profils types : charges de départ au plus à 90 % de la charge d'Epley en haut
+de plage et multiples du pas déclaré (`test/units_test.dart`) ; « Autre proposition » à moins de 3 % de la
+meilleure, palier de sécurité tenu (`test/engine_test.dart`). Les plages de répétitions ne sont vérifiées
+par aucun test : elles ont été lues.
 
 Défauts trouvés par ces tests et corrigés avant livraison :
 
@@ -98,7 +119,8 @@ Le seuil est ce premier décile : un programme généré doit ressembler au sien
 ses propres blocs ne se ressemblent entre eux. Un seuil nul serait absurde — tout programme de
 streetlifting partage tractions, dips et squat.
 
-**Résultats** (`docs/MESURES.md`, § 8 ; testé par `test/resemblance_test.dart`) :
+**Résultats** (`docs/MESURES.md`, § 8 ; le seuil est aussi un test, `test/resemblance_test.dart`, sur les
+40 profils types et 600 autres profils aléatoires) :
 
 | Programmes générés | Nombre | Médiane | Maximum |
 | --- | --- | --- | --- |
@@ -144,8 +166,8 @@ la dernière semaine de montée.
 | Groupes majeurs sous 4 séries par semaine, par profil | 0,7 | 0,8 | **Écart, expliqué ci-dessous** |
 | Groupes majeurs au-dessus de 20 séries par semaine, par profil | 1,5 | 2,3 | **Écart, expliqué ci-dessous** |
 
-**Écart 1 — groupes sous 4 séries (0,8 contre 0,7).** kalis_plan fait moins bien sur dix profils et
-mieux sur huit (détail par profil dans `docs/COMPARAISON_L10.md`). Les profils où il fait moins bien sont
+**Écart 1 — groupes sous 4 séries (0,8 contre 0,7).** kalis_plan fait moins bien sur neuf profils de
+renforcement et mieux sur huit (détail par profil dans `docs/COMPARAISON_L10.md`). Les profils où il fait moins bien sont
 ceux sans salle (parc, maison, kettlebell), ceux de figures, le mode prudent (5 groupes contre 2 : trois
 séries au plus par exercice, deux séances) et un profil où L10 dépasse le temps donné deux séances sur
 trois. À la lecture des programmes, les groupes en cause sont surtout les mollets, les lombaires et les
@@ -204,7 +226,32 @@ d'effort avant une relecture professionnelle des programmes.
 changements : l'exclusion d'un exercice vaut pour toute la semaine et peut obliger à rééquilibrer
 plusieurs séances. Ce cas extrême est rare mais visible ; il est noté comme limite.
 
-## 8. Ce qui reste à valider
+## 8. Relecture indépendante avant livraison
+
+Un second lecteur automatique, sans accès à l'historique du lot, a relu le code, le contrat et ce document
+avant la livraison : 17 constats, dont 5 portaient sur des affirmations que le code ou les tests ne
+soutenaient pas. Corrigé avant de figer :
+
+| Constat | Correction |
+| --- | --- |
+| « Chaque contrainte dure vérifiée par deux codes » : faux pour les règles d'admission | Portée écrite telle qu'elle est (§ 1) ; `test/admission_test.dart` ajouté |
+| La restructuration n'était pas relue par l'inspecteur | Propriété ajoutée |
+| Couverture annoncée « de bout en bout » pour chaque profil | Parts réelles écrites (§ 1, § 3 ; `CONTRAT.md` § 8) |
+| Charges d'Epley vérifiées sur un seul profil | Test étendu aux 40 profils types |
+| « Indépendant de l'ordre des listes du profil » : trop large | Portée écrite (`CONTRAT.md` § 2) : l'ordre des objectifs est une priorité |
+| Le cache des propositions ignorait le catalogue | Le catalogue fait partie de la clé |
+| Un emplacement marqué verrouillé échappait à la relecture même sans verrou dans la requête | Seul un verrou de la requête dispense des règles |
+| Exponentielle et puissance du recuit confiées à la bibliothèque de la machine | Fonctions du paquet, à opérations élémentaires seulement (`stableExp`, `stableLn`), testées |
+| Mode prudent : un niveau de 1 montait à 2 | Corrigé (ne baisse que les niveaux au-dessus de 2) |
+| Profil sans référence au questionnaire santé : traité comme standard | Traité comme « sans réponse », donc prudent |
+| Palier de sécurité d'« Autre proposition » ni documenté ni testé | Documenté (`CONTRAT.md` § 7.4), testé |
+| Table d'affinité et seuils de 1RM incomplets dans le contrat ; chiffres divergents | Complétés et alignés sur le relevé |
+| Ligne de commande : trace d'erreur brute sur un fichier absent ou un JSON invalide | Messages et codes de sortie (64, 65, 66) |
+
+Non corrigé, écrit comme limite : le déterminisme entre machines n'est vérifié que sur une seule ; le Web
+n'est pas pris en charge ; niveau, prérequis et « trop facile » sans seconde relecture automatique.
+
+## 9. Ce qui reste à valider
 
 1. Relecture du contenu sportif et d'un échantillon de programmes par un professionnel diplômé, en
    commençant par le comptage des séries de pratique (§ 5), les bandes de volume par niveau et les seuils

@@ -452,9 +452,10 @@ articulaire face à la gêne déclarée, doublons, séances vides, verrous, nomb
 `discipline`, `level`, `prerequisite`, `reserved`, `too_easy`, `cautious` et pour la durée d'une séance,
 elle s'appuie sur le même code d'admission et de durée que le moteur (`PlanContext`, `Scorer.timeOfDay`) :
 ces règles-là sont garanties **appliquées** (un exercice refusé par le vivier ne peut pas apparaître), mais
-une erreur dans la règle elle-même ne serait pas vue par les tests de propriétés. Elles sont couvertes par
-des cas écrits à la main (`test/engine_test.dart`, `test/units_test.dart`) et par la lecture des 40
-programmes. Les plages de répétitions ne font l'objet d'aucune propriété testée.
+une erreur dans la règle elle-même ne serait pas vue par les tests de propriétés. Le mode prudent et les
+exercices réservés sont relus une seconde fois, à partir des seuls champs du catalogue, par
+`test/admission_test.dart` (40 profils types, 600 profils aléatoires) ; niveau, prérequis et « trop
+facile » ne reposent que sur la lecture des 40 programmes. Les plages de répétitions ne font l'objet d'aucune propriété testée.
 
 ## 9. Limites connues
 
