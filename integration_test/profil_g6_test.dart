@@ -131,6 +131,13 @@ void main() {
     await wait(tester, 500);
   }
 
+  Future<void> type(WidgetTester tester, String key, String text) async {
+    final f = find.byKey(ValueKey(key));
+    await scrollTo(tester, f);
+    await tester.enterText(f, text);
+    await wait(tester, 400);
+  }
+
   String step(WidgetTester tester) {
     final f = find.byType(AthleteProfileFlow);
     if (f.evaluate().isEmpty) return '';
@@ -208,10 +215,10 @@ void main() {
 
     // 2. Toi.
     await tap(tester, 'flow-sex-female');
-    await tester.enterText(find.byKey(const ValueKey('flow-name')), 'Alex');
-    await tester.enterText(find.byKey(const ValueKey('flow-year')), '1994');
-    await tester.enterText(find.byKey(const ValueKey('flow-height')), '168');
-    await tester.enterText(find.byKey(const ValueKey('flow-weight')), '61');
+    await type(tester, 'flow-name', 'Alex');
+    await type(tester, 'flow-year', '1994');
+    await type(tester, 'flow-height', '168');
+    await type(tester, 'flow-weight', '61');
     FocusManager.instance.primaryFocus?.unfocus();
     await wait(tester, 800);
     await top(tester);

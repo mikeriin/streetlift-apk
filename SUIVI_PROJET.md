@@ -1,8 +1,21 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : G5 (Koach 2D, `kalis_koach` intégré), version dev6.3.0 ; précédent : dev6.2.0 (G3)**  
-**Date : 1er octobre 2026, Europe/Paris — version : 6.3.0+98, affichée « dev6.3.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : G6 (création du profil d'athlète v2), version dev6.4.0 ; précédent : dev6.3.0 (G5)**  
+**Date : 1er octobre 2026, Europe/Paris — version : 6.4.0+99, affichée « dev6.4.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## G6 — Création du profil (version dev6.4.0)
+
+| Exigence | Réalisation |
+| --- | --- |
+| Profil v2 exact (`kalis_core`, contrat GC inchangé) | `lib/athlete_profile.dart` : brouillon, validation par étape, construction d'`AthleteProfile` (schéma 2) contrôlée par `validate()` et `Catalog.checkProfile` ; section de sauvegarde `athleteProfile` v1 (profil, dates de saisie de l'année et des gênes pour le mode prudent, changements datés), facultative ; section illisible au démarrage gardée telle quelle. `packages/` non modifié. |
+| Parcours (12 écrans, ≈ 5 min, Koach à chaque étape) | `lib/athlete_profile_flow.dart` : accueil + avertissement L13 ; toi (18 ans et plus) ; discipline principale (8, phrase + pose) ou mode street ; 1 à 2 secondaires dosées (curseurs, phrase « 1 séance sur n ») ; niveau par mouvement en fourchettes + « Je ne sais pas » + expérience ; objectifs (performance datée, habitude, « Laisse Koach proposer », principal = premier) ; jours + durée par jour ; lieux, matériel regroupé (68 termes de la base), préréglages, matériel par lieu, lieu du jour ; santé (questionnaire L13, carte du corps + articulations, gêne 0-10) ; aimés / détestés ; mode assisté ou libre (exemples) ; récapitulatif modifiable. Progression, retour, brouillon repris. |
+| Objectifs proposés | `lib/goal_suggestions_g6.dart`, provisoire (à retirer en G12, `kalis_quest` non livré) : borne basse, 12 semaines, habitude 2 à 4 séances. |
+| « Créer mon programme » | Enregistre ; sans programme : Koach « Ton programme arrive bientôt » ; avec un programme : profil enregistré, programme inchangé. |
+| Session perso (D1.6) | Porte d'entrée : Koach propose de refaire le profil (pré-rempli du profil L8), « Plus tard » une fois par jour au plus. Programme, historique, réglages inchangés (test chiffré). |
+| Réglages › Profil | `lib/athlete_profile_screen.dart` : rubriques modifiables une à une, Koach signale un changement qui touche le programme ; mode prudent, accord santé, accord du médecin. |
+| Retraits | Démarrage court, confirmation (KT-043), questions progressives (KT-040), écran Profil L8 (`lib/profile_screens.dart`) ; le modèle L8 reste lecteur des sauvegardes et porte le bloc santé L13 ; L10/L11 gardent leurs champs L8 jusqu'à G10. |
+| Contrôles | `test/g6_profil_test.dart`, `test/g6_mode_dev_test.dart`, émulateur `profil_g6_test` (a sombre rouge, b clair violet). Voir la livraison pour les runs. |
 
 ## G5 — Koach 2D dans l'application (version dev6.3.0)
 

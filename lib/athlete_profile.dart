@@ -1279,8 +1279,9 @@ class ProfileDraft {
         if (displayName.trim().length > 40) {
           return 'Prénom ou pseudo : 40 caractères au plus.';
         }
-        if (sex == null)
+        if (sex == null) {
           return 'Indique ton sexe (ou « Je préfère ne pas le dire »).';
+        }
         final by = birthYearValue;
         if (by == null || by < 1900 || by > now.year) {
           return 'Indique ton année de naissance (4 chiffres).';

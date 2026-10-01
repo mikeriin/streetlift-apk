@@ -229,7 +229,9 @@ void main() {
       final back = ProfileDraft.fromJson(jsonDecode(jsonEncode(d.toJson())))!;
       expect(jsonEncode(back.toJson()), jsonEncode(d.toJson()));
       final p = d.build(now, vocabulary: vocabulary)!;
-      final again = (ProfileDraft.of(p)..consent = 'given').build(now, vocabulary: vocabulary)!;
+      final again = (ProfileDraft.of(
+        p,
+      )..consent = 'given').build(now, vocabulary: vocabulary)!;
       expect(jsonEncode(again.toJson()), jsonEncode(p.toJson()));
       final r = AthleteRecord(
         profile: p,
@@ -267,16 +269,25 @@ void main() {
 
     test('rubriques changées et effet sur le programme', () {
       final a = fullDraft().build(now)!;
-      final b = (ProfileDraft.of(a)..consent = 'given'..displayName = 'Sam').build(now)!;
+      final b =
+          (ProfileDraft.of(a)
+                ..consent = 'given'
+                ..displayName = 'Sam')
+              .build(now)!;
       expect(changedRubrics(a, b), {'identity'});
       expect(rubricsAffectProgram({'identity'}, a, b), isFalse);
-      final c = (ProfileDraft.of(a)..consent = 'given'..days[6] = 30).build(now)!;
+      final c =
+          (ProfileDraft.of(a)
+                ..consent = 'given'
+                ..days[6] = 30)
+              .build(now)!;
       expect(changedRubrics(a, c), {'availability'});
       expect(rubricsAffectProgram({'availability'}, a, c), isTrue);
-      final m = (ProfileDraft.of(a)
-            ..consent = 'given'
-            ..guidance = GuidanceMode.assisted)
-          .build(now)!;
+      final m =
+          (ProfileDraft.of(a)
+                ..consent = 'given'
+                ..guidance = GuidanceMode.assisted)
+              .build(now)!;
       expect(rubricsAffectProgram(changedRubrics(a, m), a, m), isFalse);
     });
 
@@ -569,6 +580,13 @@ void main() {
           home: child,
         );
 
+    Future<void> type(WidgetTester tester, String key, String text) async {
+      final f = find.byKey(ValueKey(key));
+      await scrollToAction(tester, f);
+      await tester.enterText(f, text);
+      await tester.pumpAndSettle();
+    }
+
     Future<void> tap(WidgetTester tester, String key) async {
       final f = find.byKey(ValueKey(key));
       await scrollToAction(tester, f);
@@ -584,13 +602,15 @@ void main() {
       final seen = <String>{flow(tester).step};
       Future<void> next(String step) async {
         await tap(tester, 'flow-next-$step');
+        final i = kAthleteSteps.indexOf(step);
+        expect(flow(tester).step, kAthleteSteps[i + 1], reason: 'après $step');
         seen.add(flow(tester).step);
       }
 
       await next('welcome');
       await tap(tester, 'flow-sex-female');
-      await tester.enterText(find.byKey(const ValueKey('flow-year')), '1994');
-      await tester.enterText(find.byKey(const ValueKey('flow-height')), '170');
+      await type(tester, 'flow-year', '1994');
+      await type(tester, 'flow-height', '170');
       await tester.pumpAndSettle();
       await next('identity');
       await tap(tester, 'flow-discipline-general_fitness');
@@ -653,8 +673,8 @@ void main() {
       await tester.pumpAndSettle();
       await tap(tester, 'flow-next-welcome');
       await tap(tester, 'flow-sex-male');
-      await tester.enterText(find.byKey(const ValueKey('flow-year')), '2012');
-      await tester.enterText(find.byKey(const ValueKey('flow-height')), '160');
+      await type(tester, 'flow-year', '2012');
+      await type(tester, 'flow-height', '160');
       await tester.pumpAndSettle();
       await tap(tester, 'flow-next-identity');
       expect(find.byKey(const ValueKey('minor-message')), findsOneWidget);
@@ -673,8 +693,8 @@ void main() {
       await tester.pumpAndSettle();
       await tap(tester, 'flow-next-welcome');
       await tap(tester, 'flow-sex-male');
-      await tester.enterText(find.byKey(const ValueKey('flow-year')), '1990');
-      await tester.enterText(find.byKey(const ValueKey('flow-height')), '181');
+      await type(tester, 'flow-year', '1990');
+      await type(tester, 'flow-height', '181');
       await tester.pumpAndSettle();
       await tap(tester, 'flow-next-identity');
       await tap(tester, 'flow-discipline-cardio');
@@ -709,14 +729,8 @@ void main() {
           await tap(tester, 'flow-next-welcome');
           expect(tester.takeException(), isNull, reason: 'identité');
           await tap(tester, 'flow-sex-undisclosed');
-          await tester.enterText(
-            find.byKey(const ValueKey('flow-year')),
-            '1985',
-          );
-          await tester.enterText(
-            find.byKey(const ValueKey('flow-height')),
-            '175',
-          );
+          await type(tester, 'flow-year', '1985');
+          await type(tester, 'flow-height', '175');
           await tester.pumpAndSettle();
           await tap(tester, 'flow-next-identity');
           expect(tester.takeException(), isNull, reason: 'discipline');
@@ -740,8 +754,14 @@ void main() {
       await tester.pumpWidget(page(const ProfileScreen()));
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('profile-koach')), findsOneWidget);
-      expect(find.byKey(const ValueKey('profile-rubric-identity')), findsOneWidget);
-      await scrollToAction(tester, find.byKey(const ValueKey('profile-rubric-mode')));
+      expect(
+        find.byKey(const ValueKey('profile-rubric-identity')),
+        findsOneWidget,
+      );
+      await scrollToAction(
+        tester,
+        find.byKey(const ValueKey('profile-rubric-mode')),
+      );
       await scrollToAction(
         tester,
         find.byKey(const ValueKey('profile-rubric-identity')),
