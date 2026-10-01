@@ -1,0 +1,87 @@
+== graine 7402 : crossfit 55 % + general_fitness 45 % — lundi 120 min (salle), mercredi 15 min, vendredi 90 min, samedi 40 min, dimanche 20 min — lieux salle, exterieur — expérience elite, 112 kg, né en 1956, male, knee gêne 5/10
+  matériel [barre fixe, barres parallèles, barre basse, barre olympique, barre EZ, disques, haltères, kettlebell, élastique, poulie, machine guidée, Smith machine, presse à cuisses, machine à mollets, banc plat, banc inclinable, banc à lombaires, cage / rack, box / plinth, step, tapis, corde à sauter, rameur, vélo / home-trainer, tapis de course, médecine-ball, roue abdominale, rouleau de massage (foam roller), corde, piste ou terrain extérieur, côte ou escaliers]
+  {ability: {push: 9, pull: 9, legs: 9, core: 5, power: 5, cardio: 3, mobility: 3}, globalLevel: 1, cautious: true, targets: {crossfit: 0.55, cardio: 0.158, mobility: 0.068, generalFitness: 0.225}, pool: 509, poolByKind: {compound: 137, accessory: 148, core: 68, skillStatic: 23, skillDynamic: 22, conditioning: 14, cardioEasy: 8, cardioHard: 2, mobility: 87}, rejected: {equipment: 58, too_easy: 148, reserved: 28, cautious: 64, joint: 9, level: 162, discipline: 61}, goals: []}
+  passe 1 :
+    j0(120min 1): d0.1=cd-ice-cream-maker, d0.2=cd-muscle-up-barre-strict, d0.3=cd-press-handstand-straddle, d0.4=cd-traction-un-bras-assistee-elastique, d0.5=cs-compression-straddle, d0.6=mu-rowing-poulie-assis-triangle, d0.7=mu-developpe-epaules-smith-assis, d0.8=ca-marche-tapis-incline
+    j1(15min 3): d1.1=mu-fente-marchee-halteres, d1.2=mo-90-90-passif, d1.3=mo-ischio-allonge-elastique
+    j2(90min 5): d2.1=cd-press-handstand-straddle, d2.2=cd-handstand-walk, d2.3=cd-traction-un-bras-assistee-elastique, d2.4=cs-compression-straddle, d2.5=mu-rack-pull, d2.6=cd-hspu-libre-negatif, d2.7=mu-flexion-laterale-haltere, d2.8=cf-burpee, d2.9=mo-pigeon-sol
+    j3(40min 6): d3.1=cd-ice-cream-maker, d3.2=cd-muscle-up-barre-strict, d3.3=cd-traction-un-bras-assistee-elastique, d3.4=mo-foam-roller-routine
+    j4(20min 7): d4.1=mu-souleve-de-terre-jambes-tendues, d4.2=mu-presse-pectorale-convergente, d4.3=mo-foam-roller-routine
+  violations []
+  action remove sur d0.4
+  référence :
+    j0(120min 1): d0.1=cd-ice-cream-maker, d0.2=cd-muscle-up-barre-strict, d0.3=cd-press-handstand-straddle, d0.5=cs-compression-straddle, d0.6=mu-rowing-poulie-assis-triangle, d0.7=mu-developpe-epaules-smith-assis, d0.8=ca-marche-tapis-incline
+    j1(15min 3): d1.1=mu-fente-marchee-halteres, d1.2=mo-90-90-passif, d1.3=mo-ischio-allonge-elastique
+    j2(90min 5): d2.1=cd-press-handstand-straddle, d2.2=cd-handstand-walk, d2.3=cd-traction-un-bras-assistee-elastique, d2.4=cs-compression-straddle, d2.5=mu-rack-pull, d2.6=cd-hspu-libre-negatif, d2.7=mu-flexion-laterale-haltere, d2.8=cf-burpee, d2.9=mo-pigeon-sol
+    j3(40min 6): d3.1=cd-ice-cream-maker, d3.2=cd-muscle-up-barre-strict, d3.3=cd-traction-un-bras-assistee-elastique, d3.4=mo-foam-roller-routine
+    j4(20min 7): d4.1=mu-souleve-de-terre-jambes-tendues, d4.2=mu-presse-pectorale-convergente, d4.3=mo-foam-roller-routine
+  résultat :
+    j0(120min 1): d0.1=cd-ice-cream-maker, d0.2=cd-muscle-up-barre-strict, d0.3=cd-press-handstand-straddle, d0.5=cs-compression-straddle, d0.6=mu-rowing-poulie-assis-triangle, d0.7=mu-developpe-epaules-smith-assis, d0.8=ca-marche-tapis-incline
+    j1(15min 3): d1.1=mu-fente-marchee-halteres, d1.2=mo-90-90-passif, d1.3=mo-ischio-allonge-elastique
+    j2(90min 5): d2.1=cd-press-handstand-straddle, d2.2=cd-handstand-walk, d2.3=cd-traction-un-bras-assistee-elastique, d2.4=cs-compression-straddle, d2.5=mu-rack-pull, d2.6=cd-hspu-libre-negatif, d2.7=mu-flexion-laterale-haltere, d2.8=cf-burpee, d2.9=mo-pigeon-sol
+    j3(40min 6): d3.1=cd-ice-cream-maker, d3.2=cd-muscle-up-barre-strict, d3.3=cd-traction-un-bras-assistee-elastique, d3.4=mo-foam-roller-routine
+    j4(20min 7): d4.1=mu-souleve-de-terre-jambes-tendues, d4.2=mu-presse-pectorale-convergente, d4.3=mo-foam-roller-routine
+  référence : objectif 1.9247848931997535 sans pénalité 1.9247848931997535 changements 0 note 0.9264961152914103 reco 1.000 fati 1.000 join 0.991 goal 1.000 disc 0.943 musc 0.954 patt 0.921 disc 0.765 time 0.961 vari 1.000 exer 0.639 stim 0.870 pref 1.000 nove 0.600
+  résultat : objectif 1.9247848931997535 sans pénalité 1.9247848931997535 changements 0 note 0.9264961152914103 reco 1.000 fati 1.000 join 0.991 goal 1.000 disc 0.943 musc 0.954 patt 0.921 disc 0.765 time 0.961 vari 1.000 exer 0.639 stim 0.870 pref 1.000 nove 0.600
+  violations de la référence []
+== graine 7546 : mobility 85 % + cardio 15 % — lundi 60 min, jeudi 20 min, samedi 10 min, dimanche 20 min (exterieur) — lieux exterieur — expérience advanced, 123 kg, né en 1991, male, santé standard, abdomen gêne 9/10, neck gêne 9/10
+  matériel [barre fixe, barre basse, piste ou terrain extérieur, côte ou escaliers, anneaux, SkiErg]
+  {ability: {push: 8, pull: 6, legs: 8, core: 6, power: 6, cardio: 4, mobility: 4}, globalLevel: 2, cautious: false, targets: {cardio: 0.15, mobility: 0.85}, pool: 71, poolByKind: {cardioEasy: 9, cardioHard: 9, mobility: 53}, rejected: {discipline: 882, equipment: 45, excluded: 1, level: 13, joint: 27}, goals: [cd-pompe-un-bras-negative]}
+  passe 1 :
+    j0(60min 1): d0.1=mo-lift-off-rotation-externe-90-90, d0.2=mo-cheville-genou-mur, d0.3=mo-rotation-interne-hanche-quadrupedie, d0.4=ca-course-30-30, d0.5=mo-pike-assis-passif, d0.6=mo-adducteurs-fente-laterale, d0.7=mo-demi-grand-ecart, d0.8=mo-etirement-gastrocnemiens-mur, d0.9=mo-figure-4-allonge, d0.10=mo-flechisseurs-hanche-semi-agenouille, d0.11=mo-ischio-assis-unilateral, d0.12=mo-pigeon-sol
+    j1(20min 4): d1.1=mo-retraction-menton, d1.2=mo-table-inversee, d1.3=ca-educatif-foulees-jambes-tendues, d1.4=mo-pancake-assis, d1.5=mo-pike-assis-passif, d1.6=mo-flechisseurs-hanche-semi-agenouille, d1.7=mo-pigeon-sol
+    j2(10min 6): d2.1=mo-marche-talons, d2.2=ca-accelerations-progressives, d2.3=mo-pancake-assis, d2.4=mo-etirement-gastrocnemiens-mur
+    j3(20min 7): d3.1=mo-pancake-assis, d3.2=mo-bascules-appui-doigts-avant, d3.3=mo-cheville-genou-mur, d3.4=mo-etirement-capsule-posterieure-bras-croise, d3.5=mo-etirement-gastrocnemiens-mur, d3.6=mo-pigeon-sol, d3.7=mo-rotation-interne-hanche-quadrupedie
+  violations []
+  action remove sur d1.1
+  référence :
+    j0(60min 1): d0.1=mo-lift-off-rotation-externe-90-90, d0.2=mo-cheville-genou-mur, d0.3=mo-rotation-interne-hanche-quadrupedie, d0.4=ca-course-30-30, d0.5=mo-pike-assis-passif, d0.6=mo-adducteurs-fente-laterale, d0.7=mo-demi-grand-ecart, d0.8=mo-etirement-gastrocnemiens-mur, d0.9=mo-figure-4-allonge, d0.10=mo-flechisseurs-hanche-semi-agenouille, d0.11=mo-ischio-assis-unilateral, d0.12=mo-pigeon-sol
+    j1(20min 4): d1.2=mo-table-inversee, d1.3=ca-educatif-foulees-jambes-tendues, d1.4=mo-pancake-assis, d1.5=mo-pike-assis-passif, d1.6=mo-flechisseurs-hanche-semi-agenouille, d1.7=mo-pigeon-sol
+    j2(10min 6): d2.1=mo-marche-talons, d2.2=ca-accelerations-progressives, d2.3=mo-pancake-assis, d2.4=mo-etirement-gastrocnemiens-mur
+    j3(20min 7): d3.1=mo-pancake-assis, d3.2=mo-bascules-appui-doigts-avant, d3.3=mo-cheville-genou-mur, d3.4=mo-etirement-capsule-posterieure-bras-croise, d3.5=mo-etirement-gastrocnemiens-mur, d3.6=mo-pigeon-sol, d3.7=mo-rotation-interne-hanche-quadrupedie
+  résultat :
+    j0(60min 1): d0.1=mo-lift-off-rotation-externe-90-90, d0.2=mo-cheville-genou-mur, d0.3=mo-rotation-interne-hanche-quadrupedie, d0.4=ca-course-30-30, d0.5=mo-pike-assis-passif, d0.6=mo-adducteurs-fente-laterale, d0.7=mo-demi-grand-ecart, d0.8=mo-etirement-gastrocnemiens-mur, d0.9=mo-figure-4-allonge, d0.10=mo-flechisseurs-hanche-semi-agenouille, d0.11=mo-ischio-assis-unilateral, d0.12=mo-pigeon-sol
+    j1(20min 4): d1.2=mo-table-inversee, d1.3=ca-educatif-foulees-jambes-tendues, d1.4=mo-pancake-assis, d1.5=mo-pike-assis-passif, d1.6=mo-flechisseurs-hanche-semi-agenouille, d1.7=mo-pigeon-sol
+    j2(10min 6): d2.1=mo-marche-talons, d2.2=ca-accelerations-progressives, d2.3=mo-pancake-assis, d2.4=mo-etirement-gastrocnemiens-mur
+    j3(20min 7): d3.1=mo-pancake-assis, d3.2=mo-bascules-appui-doigts-avant, d3.3=mo-cheville-genou-mur, d3.4=mo-etirement-capsule-posterieure-bras-croise, d3.5=mo-etirement-gastrocnemiens-mur, d3.6=mo-pigeon-sol, d3.7=mo-rotation-interne-hanche-quadrupedie
+  référence : objectif 1.962871693012348 sans pénalité 1.962871693012348 changements 0 note 0.962871693012348 reco 1.000 fati 1.000 join 1.000 goal 1.000 disc 0.980 musc 1.000 patt 1.000 disc 0.965 time 0.915 vari 1.000 exer 0.610 stim 1.000 pref 1.000 nove 1.000
+  résultat : objectif 1.962871693012348 sans pénalité 1.962871693012348 changements 0 note 0.962871693012348 reco 1.000 fati 1.000 join 1.000 goal 1.000 disc 0.980 musc 1.000 patt 1.000 disc 0.965 time 0.915 vari 1.000 exer 0.610 stim 1.000 pref 1.000 nove 1.000
+  violations de la référence []
+== graine 681 : cardio 100 % — vendredi 15 min (salle), samedi 45 min — lieux exterieur, maison, salle — 50 kg, né en 1978, female, santé standard, thigh gêne 7/10
+  matériel [barre fixe, piste ou terrain extérieur, côte ou escaliers, tapis, kettlebell, corde à sauter, barres parallèles, barre basse, barre olympique, barre EZ, disques, haltères, élastique, poulie, machine guidée, Smith machine, presse à cuisses, machine à mollets, banc plat, banc inclinable, banc à lombaires, cage / rack, box / plinth, step, rameur, vélo / home-trainer, tapis de course, médecine-ball, roue abdominale, rouleau de massage (foam roller), corde, gilet lesté, cônes]
+  {ability: {push: 5, pull: 5, legs: 5, core: 5, power: 8, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {cardio: 1.0}, pool: 56, poolByKind: {mobility: 56}, rejected: {discipline: 936, joint: 43, level: 4}, goals: [mo-etirement-grand-dorsal-barre]}
+  passe 1 :
+    j0(15min 5): d0.1=mo-etirement-grand-dorsal-barre, d0.2=mo-lift-off-rotation-externe-90-90, d0.3=mo-bascules-appui-doigts-avant, d0.4=mo-respiration-boite, d0.5=mo-wall-slides
+    j1(45min 6): d1.1=mo-flexion-dorsale-lestee, d1.2=mo-lift-off-rotation-externe-90-90, d1.3=mo-coherence-cardiaque, d1.4=mo-etirement-biceps-mur, d1.5=mo-open-book, d1.6=mo-respiration-boite, d1.7=mo-respiration-crocodile, d1.8=mo-rouleau-mollets, d1.9=mo-routine-mobilite-epaules-poignets, d1.10=mo-sleeper-stretch, d1.11=mo-soupir-physiologique, d1.12=mo-wall-slides
+  violations []
+  action add sur d1.6
+== graine 3859 : cardio 100 % — samedi 30 min, dimanche 45 min (exterieur) — lieux salle, exterieur — 117 kg, né en 1963, female, santé standard, wrist_hand gêne 6/10, abdomen gêne 8/10
+  matériel [barre fixe, barres parallèles, barre basse, barre olympique, barre EZ, disques, haltères, kettlebell, élastique, poulie, machine guidée, Smith machine, presse à cuisses, machine à mollets, banc plat, banc inclinable, banc à lombaires, cage / rack, box / plinth, step, tapis, rameur, vélo / home-trainer, tapis de course, médecine-ball, roue abdominale, rouleau de massage (foam roller), corde, côte ou escaliers, sliders]
+  {ability: {push: 3, pull: 3, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {cardio: 1.0}, pool: 7, poolByKind: {cardioEasy: 7}, rejected: {discipline: 992, equipment: 10, level: 29, joint: 1}, goals: [mu-extension-doigts-elastique]}
+  passe 1 :
+    j0(30min 6): d0.1=ca-rameur-endurance
+    j1(45min 7): d1.1=ca-marche-rapide
+  violations []
+  action cannot_do sur d1.1
+== graine 1458 : cardio 100 % — jeudi 60 min (maison), vendredi 60 min, samedi 60 min — lieux maison — expérience elite, 130 kg, né en 2003, male, santé standard, lower_leg gêne 6/10, shoulder gêne 3/10
+  matériel [tapis, kettlebell, corde à sauter]
+  {ability: {push: 10, pull: 10, legs: 6, core: 6, power: 6, cardio: 4, mobility: 4}, globalLevel: 3, cautious: false, targets: {cardio: 1.0}, pool: 56, poolByKind: {mobility: 56}, rejected: {discipline: 936, joint: 29, equipment: 14, level: 4}, goals: [sw-pompe-diamant]}
+  passe 1 :
+    j0(60min 4): d0.1=mo-lift-off-rotation-externe-90-90, d0.2=mo-90-90-passif, d0.3=mo-adducteurs-fente-laterale, d0.4=mo-etirement-capsule-posterieure-bras-croise, d0.5=mo-etirement-flechisseurs-poignet-bras-tendu, d0.6=mo-figure-4-allonge, d0.7=mo-flechisseurs-hanche-semi-agenouille, d0.8=mo-pigeon-sol, d0.9=mo-rotation-interne-hanche-quadrupedie, d0.10=mo-rotation-thoracique-quatre-pattes, d0.11=mo-wall-slides, d0.12=mo-worlds-greatest-stretch
+    j1(60min 5): d1.1=mo-90-90-passif, d1.2=mo-cars-epaule, d1.3=mo-coherence-cardiaque, d1.4=mo-etirement-biceps-mur, d1.5=mo-etirement-flechisseurs-poignet-bras-tendu, d1.6=mo-extension-orteils-agenouille, d1.7=mo-marche-talons, d1.8=mo-pigeon-sol, d1.9=mo-respiration-crocodile, d1.10=mo-rotations-coudes-appui, d1.11=mo-soupir-physiologique, d1.12=mo-wall-slides
+    j2(60min 6): d2.1=mo-frog-stretch, d2.2=mo-90-90-passif, d2.3=mo-cobra, d2.4=mo-etirement-capsule-posterieure-bras-croise, d2.5=mo-etirement-extenseurs-poignet-bras-tendu, d2.6=mo-etirement-pectoral-cadre-porte, d2.7=mo-flechisseurs-hanche-semi-agenouille, d2.8=mo-respiration-crocodile, d2.9=mo-rotation-interne-hanche-quadrupedie, d2.10=mo-soupir-physiologique, d2.11=mo-thread-the-needle, d2.12=mo-wall-slides
+  violations []
+  action can_do sur d1.5
+== graine 1496 : cardio 100 % — lundi 45 min, mardi 45 min (salle), mercredi 60 min, jeudi 75 min, vendredi 75 min, samedi 60 min, dimanche 30 min (salle) — lieux salle — 102 kg, né en 2005, female, santé standard, thigh gêne 9/10
+  matériel [barre fixe, barres parallèles, barre basse, barre EZ, disques, haltères, kettlebell, élastique, poulie, Smith machine, presse à cuisses, machine à mollets, banc plat, banc inclinable, banc à lombaires, cage / rack, box / plinth, step, tapis, rameur, tapis de course, médecine-ball, rouleau de massage (foam roller), corde, piscine]
+  {ability: {push: 3, pull: 3, legs: 2, core: 3, power: 3, cardio: 10, mobility: 3}, globalLevel: 0, cautious: false, targets: {cardio: 1.0}, pool: 56, poolByKind: {mobility: 56}, rejected: {discipline: 936, joint: 47}, goals: [sw-pompe-doigts, cd-maltese-pushup]}
+  passe 1 :
+    j0(45min 1): d0.1=mo-lift-off-rotation-externe-90-90, d0.2=mo-90-90-passif, d0.3=mo-bascules-appui-doigts-avant, d0.4=mo-etirement-chiot, d0.5=mo-etirement-flechisseurs-poignet-bras-tendu, d0.6=mo-ouverture-epaules-extension-banc, d0.7=mo-respiration-boite, d0.8=mo-rouleau-mollets, d0.9=mo-toe-yoga
+    j1(45min 2): d1.1=mo-lift-off-rotation-externe-90-90, d1.2=mo-90-90-passif, d1.3=mo-cars-cheville, d1.4=mo-etirement-biceps-mur, d1.5=mo-pigeon-sol, d1.6=mo-rouleau-fessiers-piriforme, d1.7=mo-routine-mobilite-epaules-poignets, d1.8=mo-wall-slides
+    j2(60min 3): d2.1=mo-lift-off-rotation-externe-90-90, d2.2=mo-90-90-passif, d2.3=mo-etirement-flechisseurs-poignet-bras-tendu, d2.4=mo-etirement-mollets-marche, d2.5=mo-etirement-trapeze-superieur, d2.6=mo-open-book, d2.7=mo-ouverture-epaules-extension-banc, d2.8=mo-routine-mobilite-epaules-poignets, d2.9=mo-soupir-physiologique, d2.10=mo-toe-yoga, d2.11=mo-wall-slides
+    j3(75min 4): d3.1=mo-flexion-dorsale-lestee, d3.2=mo-lift-off-rotation-externe-90-90, d3.3=mo-bascules-appui-doigts-avant, d3.4=mo-coherence-cardiaque, d3.5=mo-etirement-capsule-posterieure-bras-croise, d3.6=mo-etirement-flechisseurs-poignet-bras-tendu, d3.7=mo-pigeon-sol, d3.8=mo-rouleau-fessiers-piriforme, d3.9=mo-routine-mobilite-epaules-poignets, d3.10=mo-sleeper-stretch, d3.11=mo-soupir-physiologique, d3.12=mo-wall-slides
+    j4(75min 5): d4.1=mo-lift-off-rotation-externe-90-90, d4.2=mo-bascules-appui-doigts-avant, d4.3=mo-etirement-biceps-mur, d4.4=mo-etirement-capsule-posterieure-bras-croise, d4.5=mo-etirement-flechisseurs-poignet-bras-tendu, d4.6=mo-etirement-pectoral-cadre-porte, d4.7=mo-etirement-trapeze-superieur, d4.8=mo-respiration-boite, d4.9=mo-respiration-crocodile, d4.10=mo-routine-mobilite-epaules-poignets, d4.11=mo-sleeper-stretch, d4.12=mo-wall-slides
+    j5(60min 6): d5.1=mo-lift-off-rotation-externe-90-90, d5.2=mo-90-90-passif, d5.3=mo-bascules-appui-doigts-avant, d5.4=mo-etirement-grand-dorsal-barre, d5.5=mo-etirement-trapeze-superieur, d5.6=mo-etirement-triceps-bras-au-dessus-tete, d5.7=mo-extension-thoracique-rouleau, d5.8=mo-ouverture-epaules-extension-banc, d5.9=mo-rotation-thoracique-quatre-pattes, d5.10=mo-rouleau-grand-dorsal, d5.11=mo-routine-mobilite-epaules-poignets, d5.12=mo-wall-slides
+    j6(30min 7): d6.1=mo-lift-off-rotation-externe-90-90, d6.2=mo-bascules-appui-doigts-avant, d6.3=mo-cercles-bras, d6.4=mo-etirement-trapeze-superieur, d6.5=mo-rouleau-mollets, d6.6=mo-wall-slides
+  violations []
+  action dislike sur d1.4
