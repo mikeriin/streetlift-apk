@@ -1,0 +1,64 @@
+diff --git a/test/g6_profil_test.dart b/test/g6_profil_test.dart
+index b3ac728..138d110 100644
+--- a/test/g6_profil_test.dart
++++ b/test/g6_profil_test.dart
+@@ -229,7 +229,9 @@ void main() {
+       final back = ProfileDraft.fromJson(jsonDecode(jsonEncode(d.toJson())))!;
+       expect(jsonEncode(back.toJson()), jsonEncode(d.toJson()));
+       final p = d.build(now, vocabulary: vocabulary)!;
+-      final again = (ProfileDraft.of(p)..consent = 'given').build(now, vocabulary: vocabulary)!;
++      final again = (ProfileDraft.of(
++        p,
++      )..consent = 'given').build(now, vocabulary: vocabulary)!;
+       expect(jsonEncode(again.toJson()), jsonEncode(p.toJson()));
+       final r = AthleteRecord(
+         profile: p,
+@@ -267,16 +269,25 @@ void main() {
+ 
+     test('rubriques changées et effet sur le programme', () {
+       final a = fullDraft().build(now)!;
+-      final b = (ProfileDraft.of(a)..consent = 'given'..displayName = 'Sam').build(now)!;
++      final b =
++          (ProfileDraft.of(a)
++                ..consent = 'given'
++                ..displayName = 'Sam')
++              .build(now)!;
+       expect(changedRubrics(a, b), {'identity'});
+       expect(rubricsAffectProgram({'identity'}, a, b), isFalse);
+-      final c = (ProfileDraft.of(a)..consent = 'given'..days[6] = 30).build(now)!;
++      final c =
++          (ProfileDraft.of(a)
++                ..consent = 'given'
++                ..days[6] = 30)
++              .build(now)!;
+       expect(changedRubrics(a, c), {'availability'});
+       expect(rubricsAffectProgram({'availability'}, a, c), isTrue);
+-      final m = (ProfileDraft.of(a)
+-            ..consent = 'given'
+-            ..guidance = GuidanceMode.assisted)
+-          .build(now)!;
++      final m =
++          (ProfileDraft.of(a)
++                ..consent = 'given'
++                ..guidance = GuidanceMode.assisted)
++              .build(now)!;
+       expect(rubricsAffectProgram(changedRubrics(a, m), a, m), isFalse);
+     });
+ 
+@@ -740,8 +751,14 @@ void main() {
+       await tester.pumpWidget(page(const ProfileScreen()));
+       await tester.pumpAndSettle();
+       expect(find.byKey(const ValueKey('profile-koach')), findsOneWidget);
+-      expect(find.byKey(const ValueKey('profile-rubric-identity')), findsOneWidget);
+-      await scrollToAction(tester, find.byKey(const ValueKey('profile-rubric-mode')));
++      expect(
++        find.byKey(const ValueKey('profile-rubric-identity')),
++        findsOneWidget,
++      );
++      await scrollToAction(
++        tester,
++        find.byKey(const ValueKey('profile-rubric-mode')),
++      );
+       await scrollToAction(
+         tester,
+         find.byKey(const ValueKey('profile-rubric-identity')),
