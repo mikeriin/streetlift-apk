@@ -77,6 +77,9 @@ final class ExerciseTrack {
   /// Séries de la dernière séance notées nettement plus faciles que visé.
   int easySets = 0;
 
+  /// Plus grande série de la dernière séance (répétitions ou secondes).
+  int lastTop = 0;
+
   /// Niveau habituel de la fatigue brute à l'heure de cet exercice.
   double? fatigueBaseline;
 
@@ -105,6 +108,7 @@ final class ExerciseTrack {
     c.noUp = noUp;
     c.easy = easy;
     c.easySets = easySets;
+    c.lastTop = lastTop;
     c.fatigueBaseline = fatigueBaseline;
     c.benchmarkDay = benchmarkDay;
     c.firstDay = firstDay;
@@ -303,6 +307,13 @@ final class SlotSpec {
 
   /// Haut de plage étendu quand la charge suivante n'est pas atteignable.
   int get highExtended => high + (high + 2) ~/ 3;
+
+  /// Plafond de répétitions quand aucune charge plus lourde n'est possible :
+  /// le double du haut de plage, 30 au plus.
+  int get wideTop {
+    final wide = 2 * high > 30 ? 30 : 2 * high;
+    return wide > highExtended ? wide : highExtended;
+  }
 }
 
 /// Série observée pendant la séance en cours (ce que le conseil et les
@@ -799,7 +810,11 @@ final class SessionRun {
     double? firstLoad;
     double? maxLoad;
     var openSet = false;
+    var top = 0;
     for (final o in run.observed) {
+      if (o.amount > top) {
+        top = o.amount;
+      }
       final kg = o.loadKg;
       if (kg != null) {
         firstLoad ??= kg;
@@ -828,6 +843,7 @@ final class SessionRun {
     }
     track.easy = easy;
     track.easySets = run.easySets;
+    track.lastTop = top;
     // Un échec non prévu plus tôt dans la même séance (même exercice à un
     // autre emplacement) compte aussi.
     track.noUp = run.fails > 0 || (track.lastDay == day && track.noUp);
@@ -1386,8 +1402,9 @@ final class SessionRun {
         // La dernière séance a été notée « 5 en réserve et plus » : un cran
         // de plus, même si le modèle — qui n'a alors que des bornes basses
         // — ne le prévoit pas encore, pourvu que la charge suivante laisse
-        // au moins trois répétitions d'après ces bornes.
-        ok = possible(next) >= 3;
+        // au moins trois répétitions d'après ces bornes, ou que le plafond
+        // de répétitions soit atteint (cette charge n'apprend plus rien).
+        ok = possible(next) >= 3 || track.lastTop >= spec.wideTop;
       } else if (run.calibrating) {
         ok = reps(next) >= mid;
       } else if (over) {
@@ -1753,7 +1770,8 @@ final class SessionRun {
         final possible = total <= 0
             ? 1000.0
             : track.filter.repsPossible(ln(total)) * (1 - fatigue);
-        if (next > kg && possible >= 3) {
+        if (next > kg &&
+            (possible >= 3 || previous.amount >= spec.wideTop)) {
           kg = next;
           raisedByRating = true;
         }

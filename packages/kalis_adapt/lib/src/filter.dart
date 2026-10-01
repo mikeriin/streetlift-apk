@@ -364,10 +364,7 @@ final class CapacityFilter {
     if (learnK) {
       return (jac, r);
     }
-    return (
-      <double>[jac[0], jac[1], 0, jac[3]],
-      r + jac[2] * jac[2] * cov[10],
-    );
+    return (<double>[jac[0], jac[1], 0, jac[3]], r + jac[2] * jac[2] * cov[10]);
   }
 
   void _update(List<double> jac, double innovation, double r, bool learnK) {
