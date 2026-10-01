@@ -19,6 +19,7 @@ Entrées attendues du propriétaire :
 | Lot | Validation | Version | Commit main | Run | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
 | G1 | propriétaire | 6.0.0+94 | b3a3d73 | 36813381709 | 01/10/2026 | à valider |
+| G1 correction 1 | propriétaire | 6.0.1+95 | 10fed1d | 36823406874 | 01/10/2026 | à valider |
 | G2 | propriétaire | — | — | — | — | à faire |
 | G3 | propriétaire | — | — | — | — | à faire |
 | G4 | auto → G5 | kalis_plan 0.1.0 | — | — | — | à faire |

@@ -121,3 +121,7 @@ Source : conversation de pilotage du 30/09/2026 (22:00-23:10, heure de Paris), q
 - **Preuve D2.4** : marqueur `KALIS-DEV-SESSION-7F3A` (code du mode dev) exigé dans les `libapp.so` de l'APK et absent de celles de l'AAB (`verify_android_artifacts.py --dev-apk`).
 - **Tâche `packages`** : convention du simulateur `dart run bin/<paquet>_cli.dart --rapport <dossier>` (docs/CI_GP.md), à suivre par G4, G8, G11.
 - **Test daté** : `wod_acquisition_test.dart` fixe l'horloge de la vitrine (il échouait le 01/10/2026 selon l'« essai du jour ») ; aucune assertion retirée.
+
+### G1 correction 1 (01/10/2026)
+
+- **Brouillon du démarrage** : sauvegardé dans une clé à part de la session active (pas dans la sauvegarde ni l'export : état transitoire d'écran), à chaque étape et au passage en arrière-plan ; jamais pour un âge de moins de 18 ans (règle L13 « aucune écriture »). Écartée : écrire un profil partiel (casserait `isFreshInstall` et la règle « rien n'est écrit avant le récapitulatif »). G6 remplacera la création du profil et reprendra ce principe.
