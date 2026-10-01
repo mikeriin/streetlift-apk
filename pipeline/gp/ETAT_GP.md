@@ -12,7 +12,8 @@ Remplace le pipeline « Mannequin 3D » (clos le 30/09/2026, `pipeline/3d/ETAT_3
 | Fable 5.1, effort maximal, **A** | `trig_015YmARJsCysbwuP65URNTaU` | GC, G8 |
 | Fable 5.1, effort maximal, **B** | `trig_01U6w5JEVp4pdHpZeDkLGuZs` | G4, G11 |
 
-Lancement des lots suivants : piste A par la conversation de pilotage (après validation du propriétaire) ; piste M par le lot précédent (GC → G4 sur Fable B → G8 sur Fable A → G11 sur Fable B ; aucun lot ne relance la tâche qui l'a lancé) ; piste K : un seul lot. Aucun lot ne crée, ne modifie ni ne supprime de tâche.
+Lancement des lots suivants : piste A par la conversation de pilotage (après validation du propriétaire) ; piste M : GC → G4 (Fable B) → G8 (Fable A) → G11 (Fable B) ; le lancement par le lot précédent est refusé aux sessions (constat du 01/10/2026), **la conversation de pilotage vérifie l'état environ toutes les heures et lance les lots prêts** ; piste K : un seul lot.
+Livraisons des pistes M et K : branches fixes `etiquettes/<paquet>-vX.Y.Z` (push d'étiquettes refusé aux sessions, PIPELINE_GP.md §0). Aucun lot ne crée, ne modifie ni ne supprime de tâche.
 
 Page de suivi : https://claude.ai/artifact/7tr7vJvnnn85KzVx5qYRw5 (créée par G1 ; trois parties : Application, Moteurs, Koach)
 Nom des versions : « devX.Y.Z » (DECISIONS_GP.md D0.9 ; appliqué à partir de G2).
@@ -32,7 +33,7 @@ Entrées du propriétaire (`inputs/`) :
 | kalis_plan | — | G4 | — |
 | kalis_adapt | — | G8 | — |
 | kalis_quest | — | G11 | — |
-| kalis_koach | kalis_koach-v0.1.0 (4fa2777) | GK | 01/10/2026 |
+| kalis_koach | kalis_koach-v0.1.0 (4fa2777 ; étiquette créée par le propriétaire + branche fixe `etiquettes/kalis_koach-v0.1.0`) | GK | 01/10/2026 |
 
 ## Piste A — application (validation du propriétaire)
 
@@ -56,7 +57,7 @@ Entrées du propriétaire (`inputs/`) :
 
 | Lot | Prérequis | Tâche | Étiquette | Commit moteurs | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
-| GC | — | Fable A | kalis_core-v0.1.0 (branche fixe `etiquettes/kalis_core-v0.1.0` : push d'étiquette refusé, 403) | 5327294 | 01/10/2026 | livré (run 36833295632 vert) ; **G4 non lancé : fire_trigger refusé à la session (permission), à lancer par le propriétaire ou le pilotage sur Fable B avec « Lot : G4 »** |
+| GC | — | Fable A | kalis_core-v0.1.0 (branche fixe `etiquettes/kalis_core-v0.1.0` : push d'étiquette refusé, 403) | 5327294 | 01/10/2026 | livré (run 36833295632 vert) ; G4 lancé par le pilotage le 01/10/2026 à 09:00 UTC |
 | G4 | GC | Fable B | kalis_plan-v0.1.0 | — | — | à faire |
 | G8 | G4 | Fable A | kalis_adapt-v0.1.0 | — | — | à faire |
 | G11 | G8 | Fable B | kalis_quest-v0.1.0 | — | — | à faire |
