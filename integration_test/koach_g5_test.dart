@@ -252,11 +252,16 @@ void main() {
     // pose de la première rangée.
     await back(tester);
     await gallery(tester);
-    final stage = find.byKey(const ValueKey('koach-gallery-stage'));
-    KoachViewState? stageState() => stage.evaluate().isEmpty
-        ? null
-        : tester.state<KoachViewState>(stage);
+    // Hors écran mais encore construit (liste paresseuse) : trouvé aussi.
+    final stage = find.byKey(
+      const ValueKey('koach-gallery-stage'),
+      skipOffstage: false,
+    );
+    KoachViewState? stageState() =>
+        stage.evaluate().isEmpty ? null : tester.state<KoachViewState>(stage);
     final chart = find.byKey(const ValueKey('koach-pose-progress_chart'));
+    // Fin de l'ouverture de la page (émulateur lent) avant tout défilement.
+    await until(tester, chart.hitTestable());
     await scrollTo(tester, chart);
     final before = stageState()?.transitions ?? -1;
     await tester.tap(chart);
@@ -264,7 +269,11 @@ void main() {
     releve['transition_en_cours'] =
         before >= 0 && stageState()?.transitions == before + 1;
     await wait(tester, 600);
-    await scrollTo(tester, stage, up: true);
+    await scrollTo(
+      tester,
+      find.byKey(const ValueKey('koach-gallery-stage')),
+      up: true,
+    );
     await shot('9_galerie_transition');
     releve['respiration'] = stageState()?.breathing ?? false;
 
@@ -275,13 +284,21 @@ void main() {
       tester,
       find.text('Animations réduites : Koach reste immobile.'),
     );
+    await until(
+      tester,
+      find.byKey(const ValueKey('koach-pose-anatomy')).hitTestable(),
+    );
     await scrollTo(tester, find.byKey(const ValueKey('koach-pose-anatomy')));
     final n = stageState()?.transitions ?? -1;
     await tester.tap(find.byKey(const ValueKey('koach-pose-anatomy')));
     await until(tester, find.text('Montre l’anatomie'));
     releve['reduit_transition'] = n < 0 || stageState()?.transitions != n;
     releve['reduit_respiration'] = stageState()?.breathing ?? true;
-    await scrollTo(tester, stage, up: true);
+    await scrollTo(
+      tester,
+      find.byKey(const ValueKey('koach-gallery-stage')),
+      up: true,
+    );
     await wait(tester, 600);
     await shot('10_animations_reduites');
     tester.platformDispatcher.accessibilityFeaturesTestValue =
