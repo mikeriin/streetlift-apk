@@ -1,5 +1,7 @@
 # Contrat L10 — Générateur de programme personnalisé (4.0.0)
 
+> **Retiré par G7 (dev6.5.0, D1.4)** : le générateur, ses modèles (`assets/program_models.json`), ses écrans et ses tests sont retirés ; `kalis_plan` crée désormais le programme. Les instances « generated » existantes restent lisibles et affichées telles quelles (`lib/program_instance.dart`, `test/l10_store_test.dart`) ; le catalogue de l'ancien pack reste pour L11 (`lib/legacy_pack.dart`) jusqu'à G10. Ce document est gardé pour l'historique.
+
 **27 septembre 2026, lot exécuté par le pipeline automatisé (sans échange en direct).** Tickets KT-050 à KT-057. Code : `lib/program_generator.dart` (générateur, fonction pure), `lib/program_instance.dart` (instance, fusion, « ce qui change », progression lue dans le journal ; fonctions pures), `lib/program_store.dart` (branchement sur le store), `lib/program_screens.dart` (écrans), `assets/program_models.json` (modèles de périodisation, données versionnées). Tests : `test/l10_generator_test.dart`, `test/l10_properties_test.dart`, `test/l10_profiles_test.dart`, `test/l10_store_test.dart`, `test/l10_screens_test.dart`, `tools/tests/test_program_models.py`.
 
 ## 1. Base et contradictions relevées

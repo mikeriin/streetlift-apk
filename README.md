@@ -1,4 +1,16 @@
-# Kalis Track dev6.4.1 — Recentrage sur le programme (pipeline « Génération et progression »)
+# Kalis Track dev6.5.0 — Recentrage sur le programme (pipeline « Génération et progression »)
+
+## dev6.5.0 — Création du programme avec Koach (lot G7)
+
+- **Ton programme se crée avec Koach, en deux passes** (D4), par le moteur `kalis_plan` (étiquette `kalis_plan-v0.1.0`, optimisation sous contraintes, déterministe) : après le profil, ou depuis Réglages › Mon programme › « Créer un nouveau programme ».
+- **Passe 1 — les exercices** : une carte par jour (« Lundi · 60 min » › exercices, sans séries ni répétitions), la carte des muscles de la semaine et la répartition par discipline ; « Autre proposition » et retour aux propositions précédentes.
+- **Revue exercice par exercice** : nom, raison du choix, carte des muscles, points clés, fiche et démonstration ; « Je sais faire » (l'exercice ne bouge plus), « Je ne sais pas faire » / « Je n'aime pas » (3 variantes ciblées — plus facile, équivalente, autre matériel — ou « Voir tout », ou « Laisse Koach choisir »), ajouter un exercice aimé, retirer un exercice. Après chaque changement, le moteur recalcule avec tout ce que tu as validé et **Koach montre ce qui a bougé et pourquoi** ; « Annuler ce changement ». Récapitulatif, « Valider les exercices ».
+- **Passe 2 — séries, répétitions, charges** : semaine par semaine (introduction, montée, décharge ou test), difficulté visée en **flammes** (RIR), repos, charges de départ prudentes ou « à calibrer » (les 2-3 premières séances). Ajustements bornés (séries ±1, plage de répétitions, repos) : hors limites, Koach refuse et explique. « Valider mon programme ».
+- Le programme validé devient **l'instance active** (section de sauvegarde `planProgram`, versionnée) lue par l'accueil, le calendrier, les séances et STATS. Fin de bloc : Koach propose le bloc suivant (écran minimal, enrichi en G10).
+- **Programme du propriétaire** : il reste l'instance active ; un nouveau programme n'est appliqué qu'après confirmation, à partir de la semaine suivante (les semaines passées et l'historique restent tels quels), avec retour possible pendant 7 jours tant qu'aucune séance du nouveau n'est saisie.
+- **Où j'en suis** (Réglages › Mon programme, proposé sur l'accueil après 14 jours sans séance saisie) : choisis ta semaine et ta séance ; les séances d'avant non saisies deviennent « reprise » : neutres (ni XP, ni statistiques, ni série, ni records, ni données pour les moteurs) ; XP et niveau ne bougent pas.
+- **Session de test** : inspecteur du moteur (note de chaque proposition et ses composantes, ce que le moteur retient du profil, contraintes dures, contribution de chaque exercice, raisons) et export du journal du moteur (JSON).
+- **Retiré** : le générateur L10 (`program_generator.dart`, `assets/program_models.json`, « Générer mon programme personnalisé », régénération, cycle suivant automatique) ; les programmes L10 déjà créés restent lisibles et affichés tels quels. Tests : `test/g7_plan_test.dart`, `test/g7_mode_dev_test.dart`, `integration_test/programme_g7_test.dart`. Version « dev6.5.0 ».
 
 ## dev6.4.1 — Création du profil, correction 1 (lot G6)
 

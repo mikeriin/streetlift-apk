@@ -6,7 +6,7 @@
 // sauvegarde. Contrat : docs/CONTRAT_L11.md.
 import 'dart:math' as math;
 
-import 'program_generator.dart';
+import 'legacy_pack.dart';
 
 /// Version du format de la section `adapt`.
 const int kAdaptVersion = 1;

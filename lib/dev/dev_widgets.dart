@@ -25,6 +25,7 @@ import '../main.dart' show appNavigator;
 import '../program_start.dart' show longCivilDate;
 import '../session_host.dart';
 import '../settings_screen.dart' show kAppVersion;
+import '../program_screens.dart' show ProgramScreen;
 import '../store.dart';
 import 'dev_flags.dart';
 import 'dev_session.dart';
@@ -621,12 +622,24 @@ class DevToolsSheet extends StatelessWidget {
               title: Text('Simulateur de séances'),
               subtitle: Text('Arrive avec le lot G10'),
             ),
-            const ListTile(
-              enabled: false,
+            ListTile(
+              key: const ValueKey('dev-inspector'),
               contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.manage_search),
-              title: Text('Inspecteur du moteur'),
-              subtitle: Text('Arrive avec le lot G10'),
+              leading: const Icon(Icons.manage_search),
+              title: const Text('Inspecteur du moteur'),
+              subtitle: const Text(
+                'Création du programme : Mon programme › Outils de test '
+                '(et l’icône loupe pendant la création)',
+              ),
+              onTap: () {
+                final nav = Navigator.of(context);
+                nav.pop();
+                nav.push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => const ProgramScreen(),
+                  ),
+                );
+              },
             ),
             const SizedBox(height: 8),
             TextButton.icon(

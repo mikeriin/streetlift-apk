@@ -119,13 +119,13 @@ jobs:
             exit 1
           }
           tail -n 5 out/flutter-tests.log
-      - name: Tests Dart du mode dev (G1, G2, G3, G6, KALIS_DEV=true)
+      - name: Tests Dart du mode dev (G1, G2, G3, G6, G7, KALIS_DEV=true)
         id: dartdev
         continue-on-error: true
         run: |
           set -o pipefail
           TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded \
-            --dart-define=KALIS_DEV=true test/g1_mode_dev_test.dart test/g2_mode_dev_test.dart test/g3_mode_dev_test.dart test/g6_mode_dev_test.dart > out/flutter-tests-dev.log 2>&1 || {
+            --dart-define=KALIS_DEV=true test/g1_mode_dev_test.dart test/g2_mode_dev_test.dart test/g3_mode_dev_test.dart test/g6_mode_dev_test.dart test/g7_mode_dev_test.dart > out/flutter-tests-dev.log 2>&1 || {
             grep -E -A12 'EXCEPTION CAUGHT|\[E\]$' out/flutter-tests-dev.log | head -n 200
             tail -n 8 out/flutter-tests-dev.log
             exit 1
@@ -374,7 +374,7 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: Précompiler l'APK de test
-        run: flutter build apk --debug --no-pub --dart-define=KALIS_DEV=true --target=integration_test/profil_g6_test.dart > build/ci3d/build-test.log 2>&1 || (tail -n 60 build/ci3d/build-test.log; exit 1)
+        run: flutter build apk --debug --no-pub --dart-define=KALIS_DEV=true --target=integration_test/programme_g7_test.dart > build/ci3d/build-test.log 2>&1 || (tail -n 60 build/ci3d/build-test.log; exit 1)
       - name: Rendu sur émulateur
         uses: reactivecircus/android-emulator-runner@v2
         with:

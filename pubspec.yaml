@@ -1,7 +1,7 @@
 name: streetlift_tracker
 description: "Kalis Track — suivi d'entraînement calisthénie et streetlifting : programme guidé, chronos, pilotage recalculable."
 publish_to: 'none'
-version: 6.4.1+100
+version: 6.5.0+101
 
 environment:
   # M1 (mannequin 3D) : flutter_scene 0.23 exige Flutter 3.47 stable et Dart 3.10.
@@ -34,6 +34,10 @@ dependencies:
   # récupéré par étiquette (branche fixe etiquettes/kalis_koach-v0.1.0).
   kalis_koach:
     path: packages/kalis_koach
+  # G7 (D4) : moteur statique de création du programme, récupéré par
+  # étiquette (branche fixe etiquettes/kalis_plan-v0.1.0).
+  kalis_plan:
+    path: packages/kalis_plan
 
 dev_dependencies:
   flutter_test:
@@ -56,7 +60,6 @@ flutter:
   assets:
     - assets/programme_v33.json.gz
     - assets/koach_program.json.gz
-    - assets/program_models.json
     # G3 : base d'exercices v1.1 (copie de l'asset de kalis_core) et
     # correspondance des anciens noms et identifiants.
     - assets/catalog/catalog_v1.json.gz

@@ -334,7 +334,7 @@ void main() {
     await tap(tester, 'flow-next-recap', ms: 1500);
     releve['attente_programme'] = await until(
       tester,
-      find.textContaining('Ton programme arrive bientôt'),
+      find.textContaining('Ton profil est prêt'),
     );
     await shot('17_attente_programme');
     final p = store.athleteProfile;

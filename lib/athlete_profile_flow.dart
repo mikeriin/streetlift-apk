@@ -24,6 +24,7 @@ import 'goal_suggestions_g6.dart';
 import 'koach/koach_bubble.dart';
 import 'koach/koach_view.dart';
 import 'muscle_map_2d.dart';
+import 'plan/plan_screens.dart' show openPlanCreation;
 import 'program_explainer.dart';
 import 'store.dart';
 import 'ui.dart';
@@ -1922,12 +1923,14 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
 
   Widget _doneScreen() {
     final noProgram = store.program.start == null && !store.programGenerated;
+    // G7 : sans programme, Koach enchaîne sur la création du programme.
     final text = noProgram
-        ? 'Ton profil est prêt ! Ton programme arrive bientôt : je le '
-              'construirai avec toi dans la prochaine version de '
-              'l’application.'
+        ? 'Ton profil est prêt ! On crée maintenant ton programme ensemble : '
+              'd’abord les exercices de chaque séance, puis les séries et les '
+              'charges.'
         : 'Ton profil est enregistré. Ton programme, ton historique et tes '
-              'réglages ne changent pas.';
+              'réglages ne changent pas. Tu peux créer un nouveau programme '
+              'dans Réglages › Mon programme.';
     return KScreen(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -1940,16 +1943,34 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
             color: SL.bg,
             child: KoachBubble(
               key: const ValueKey('flow-done-koach'),
-              pose: noProgram ? KoachPose.present : KoachPose.thumbsUp,
+              pose: noProgram ? KoachPose.checklist : KoachPose.thumbsUp,
               koachHeight: 140,
               text: text,
             ),
           ),
-          FilledButton(
-            key: const ValueKey('flow-done-continue'),
-            onPressed: widget.onDone,
-            child: Text(noProgram ? 'Découvrir l’application' : 'Continuer'),
-          ),
+          if (noProgram)
+            FilledButton.icon(
+              key: const ValueKey('flow-done-create'),
+              icon: const Icon(Icons.auto_awesome_outlined),
+              onPressed: () async {
+                final done = widget.onDone;
+                final created = await openPlanCreation(context);
+                if (created) done?.call();
+              },
+              label: const Text('Créer mon programme'),
+            ),
+          if (noProgram)
+            OutlinedButton(
+              key: const ValueKey('flow-done-continue'),
+              onPressed: widget.onDone,
+              child: const Text('Plus tard'),
+            )
+          else
+            FilledButton(
+              key: const ValueKey('flow-done-continue'),
+              onPressed: widget.onDone,
+              child: const Text('Continuer'),
+            ),
           const ProgramExplainerButton(),
         ],
       ),

@@ -657,10 +657,7 @@ void main() {
       final seen = await runFlow(tester);
       expect(seen, kAthleteSteps.toSet());
       expect(find.byKey(const ValueKey('flow-done')), findsOneWidget);
-      expect(
-        find.textContaining('Ton programme arrive bientôt'),
-        findsOneWidget,
-      );
+      expect(find.textContaining('Ton profil est prêt'), findsOneWidget);
       final p = store.athleteProfile!;
       expect(p.validate(), isEmpty);
       expect(store.content.catalog!.checkProfile(p), isEmpty);
@@ -782,7 +779,8 @@ void main() {
       await tap(tester, 'flow-save');
       expect(find.byKey(const ValueKey('koach-sheet')), findsOneWidget);
       expect(find.textContaining('touche ton programme'), findsOneWidget);
-      await tap(tester, 'koach-sheet-ok');
+      // G7 : Koach propose de recréer le programme ; « Plus tard ».
+      await tap(tester, 'profile-program-later');
       expect(store.athleteProfile!.availability.last.weekday, 7);
       expect(store.athlete!.programChangePending, isTrue);
       // Santé : retrait de l'accord.

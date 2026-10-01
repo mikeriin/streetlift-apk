@@ -8,7 +8,7 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:streetlift_tracker/koach_adapt.dart';
 import 'package:streetlift_tracker/models.dart';
-import 'package:streetlift_tracker/program_generator.dart';
+import 'package:streetlift_tracker/legacy_pack.dart';
 
 import 'support/l10_support.dart';
 
