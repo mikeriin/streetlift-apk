@@ -583,6 +583,12 @@ final class KalisPlan implements PlanEngine {
       case ReviewKind.remove:
         final at = _positionOfSlot(state, targetDay, slotId!);
         actedReasons.add(reason(ReasonCodes.planUserRemoved));
+        // Ce que l'utilisateur vient de retirer ne revient pas par la
+        // ré-optimisation (sans devenir une exclusion durable).
+        final removed = ctx.indexOf(target!.exerciseId);
+        if (removed >= 0) {
+          planner.banned.add(removed);
+        }
         if (at >= 0) {
           state.removeAt(targetDay, at);
           normalizeDay(ctx, state, targetDay);

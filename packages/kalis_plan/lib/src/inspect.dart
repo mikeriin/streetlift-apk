@@ -3,6 +3,8 @@
 /// simulateur et à l'inspecteur du mode dev (D2.5).
 library;
 
+import 'dart:typed_data';
+
 import 'package:kalis_core/kalis_core.dart';
 
 import 'assemble.dart';
@@ -510,6 +512,54 @@ final class PlanInspector {
       );
       for (final (_, line) in found.take(top)) {
         out.add('  $line');
+      }
+      // Échanges vers un schéma de base manquant.
+      scorer.evaluate(state);
+      final missing = ctx.coverableBits & ~scorer.coveredBits & basePatternBits;
+      if (missing == 0) {
+        continue;
+      }
+      final swaps = <(double, String)>[];
+      final saved = Int32List.fromList(state.exercise[d]);
+      final savedSets = Int32List.fromList(state.sets[d]);
+      for (final e in ctx.pool) {
+        if (!e.selectable ||
+            !e.feasibleOn(d) ||
+            e.coverBits & missing == 0 ||
+            state.dayHas(d, e.index)) {
+          continue;
+        }
+        for (var at = 0; at < state.count[d]; at++) {
+          state.exercise[d][at] = e.index;
+          state.sets[d][at] = ctx.defaultSets(e, d);
+          if (normalizeDay(ctx, state, d)) {
+            final value = scorer.evaluate(state);
+            final moved = <String>[];
+            for (var k = 0; k < before.length; k++) {
+              final delta = scorer.components[k] - before[k];
+              if (delta.abs() >= 0.002) {
+                moved.add(
+                  '${ScoreWeights.codes[k]} '
+                  '${delta >= 0 ? '+' : ''}${delta.toStringAsFixed(3)}',
+                );
+              }
+            }
+            swaps.add((
+              value - base,
+              '${ctx.pool[saved[at]].id} → ${e.id} '
+                  '${(value - base).toStringAsFixed(4)} : ${moved.join(', ')}',
+            ));
+          }
+          state.exercise[d].setAll(0, saved);
+          state.sets[d].setAll(0, savedSets);
+        }
+      }
+      swaps.sort((a, b) {
+        final by = b.$1.compareTo(a.$1);
+        return by != 0 ? by : a.$2.compareTo(b.$2);
+      });
+      for (final (_, line) in swaps.take(top)) {
+        out.add('  échange $line');
       }
     }
     return out;
