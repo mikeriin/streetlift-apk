@@ -1,0 +1,16 @@
+diff --git a/integration_test/koach_g5_test.dart b/integration_test/koach_g5_test.dart
+index 268ee73..2f7e4ca 100644
+--- a/integration_test/koach_g5_test.dart
++++ b/integration_test/koach_g5_test.dart
+@@ -244,7 +244,10 @@ void main() {
+     // première rangée.
+     final stage = find.byKey(const ValueKey('koach-gallery-stage'));
+     await scrollTo(tester, stage, up: true);
+-    await scrollTo(tester, find.byKey(const ValueKey('koach-pose-progress_chart')));
++    await scrollTo(
++      tester,
++      find.byKey(const ValueKey('koach-pose-progress_chart')),
++    );
+     await tester.tap(find.byKey(const ValueKey('koach-pose-progress_chart')));
+     await tester.pump(const Duration(milliseconds: 90));
+     releve['transition_en_cours'] =
