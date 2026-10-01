@@ -169,7 +169,7 @@ final class SetRow {
   /// Mouvement principal.
   final bool main;
 
-  /// Série ouverte (série repère, plage au ressenti).
+  /// Cible donnée par une plage (au ressenti) et non par un nombre.
   final bool open;
 
   /// Bas de la cible affichée (répétitions ou secondes).
@@ -570,7 +570,7 @@ SimRun simulate({
               failed: outcome.failed,
               plannedFailure: flamesTarget >= Flames.failure,
               main: role == SlotRole.main,
-              open: high > low && !policy.rangeIsTarget,
+              open: high > low,
               rise: rise,
               targetLow: low,
               targetHigh: high,

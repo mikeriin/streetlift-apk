@@ -267,7 +267,7 @@ IntraSessionAdvice buildAdvice(
       }),
     );
   }
-  if (next.open && !exercise.spec.test) {
+  if (next.benchmark) {
     reasons.add(
       reason(ReasonCodes.adaptBenchmarkSet, <String, Object?>{
         'rir': rirOfFlames(next.flames),

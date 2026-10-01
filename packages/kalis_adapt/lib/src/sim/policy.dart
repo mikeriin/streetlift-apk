@@ -139,12 +139,6 @@ abstract class SimPolicy {
   /// Nom affiché dans les rapports.
   String get name;
 
-  /// Vrai si la politique prescrit par plage « au ressenti » : la plage
-  /// est alors sa cible ordinaire, et ses séries comptent dans l'écart au
-  /// RIR visé. Sinon une plage désigne une série ouverte (série repère,
-  /// test), tenue hors de cette mesure.
-  bool get rangeIsTarget;
-
   /// Séance du jour.
   SessionPlan plan(SessionContext c);
 
@@ -206,8 +200,6 @@ final class KalisAdaptPolicy implements SimPolicy {
   @override
   String get name => 'kalis_adapt';
 
-  @override
-  bool get rangeIsTarget => false;
 
   AdaptInput _input(SessionContext c) =>
       AdaptInput(profile: c.profile, block: c.block, log: c.log, today: c.date);
@@ -305,8 +297,6 @@ final class DoubleProgressionPolicy implements SimPolicy {
   @override
   String get name => 'double_progression';
 
-  @override
-  bool get rangeIsTarget => true;
 
   @override
   SessionPlan plan(SessionContext c) {

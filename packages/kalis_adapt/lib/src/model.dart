@@ -68,6 +68,15 @@ final class ExerciseTrack {
   /// Vrai si la dernière séance a connu un échec non prévu : pas de hausse.
   bool noUp = false;
 
+  /// Vrai si la dernière séance a été notée nettement plus facile que
+  /// visé (au moins [AdaptParams.adviceGapFlames] flammes sous la cible,
+  /// cibles atteintes) : la séance suivante monte d'un cran et se fait au
+  /// ressenti dans la plage.
+  bool easy = false;
+
+  /// Séries de la dernière séance notées nettement plus faciles que visé.
+  int easySets = 0;
+
   /// Niveau habituel de la fatigue brute à l'heure de cet exercice.
   double? fatigueBaseline;
 
@@ -94,6 +103,8 @@ final class ExerciseTrack {
     final c = ExerciseTrack(info, filter.fork());
     c.lastLoad = lastLoad;
     c.noUp = noUp;
+    c.easy = easy;
+    c.easySets = easySets;
     c.fatigueBaseline = fatigueBaseline;
     c.benchmarkDay = benchmarkDay;
     c.firstDay = firstDay;
@@ -215,6 +226,7 @@ final class SetPlan {
     required this.high,
     required this.flames,
     this.open = false,
+    this.benchmark = false,
   });
 
   /// Charge externe en kg (exercices chargés), sinon `null`.
@@ -232,9 +244,18 @@ final class SetPlan {
   /// Série ouverte (série repère, ou plage laissée au ressenti).
   final bool open;
 
+  /// Série repère : ouverte, plus près de l'échec que les autres.
+  final bool benchmark;
+
   /// La même cible à une autre charge.
-  SetPlan withLoad(double? kg) =>
-      SetPlan(loadKg: kg, low: low, high: high, flames: flames, open: open);
+  SetPlan withLoad(double? kg) => SetPlan(
+    loadKg: kg,
+    low: low,
+    high: high,
+    flames: flames,
+    open: open,
+    benchmark: benchmark,
+  );
 }
 
 /// Place d'un exercice dans une séance : ce que la prescription du bloc
@@ -358,6 +379,19 @@ final class ExerciseRun {
 
   /// Échecs non prévus de la séance.
   int fails = 0;
+
+  /// Séries notées face à une cible.
+  int ratedSets = 0;
+
+  /// Séries notées nettement plus faciles que visé, cible atteinte.
+  int easySets = 0;
+
+  /// La dernière série notée était nettement plus facile que visé.
+  bool lastRatedEasy = false;
+
+  /// La séance précédente était nettement plus facile que visé : séries au
+  /// ressenti dans la plage.
+  bool easyMode = false;
 
   /// Séries observées.
   final List<ObservedSet> observed = <ObservedSet>[];
@@ -705,6 +739,12 @@ final class SessionRun {
     run.uncertain = sd > p.calibrationSd;
     run.calibrating =
         run.uncertain && track.filter.sessions < p.calibrationSessions;
+    run.easyMode =
+        track.easy &&
+        !track.noUp &&
+        !noIncrease &&
+        run.painZones.isEmpty &&
+        !run.spec.test;
     var rir = run.spec.rir + extraRir;
     if (run.uncertain && !run.spec.test) {
       // Un test se fait à l'effort demandé : c'est lui qui lève
@@ -774,9 +814,20 @@ final class SessionRun {
         track.bestAmount = o.amount.toDouble();
       }
     }
+    final easy =
+        run.fails == 0 &&
+        run.lastRatedEasy &&
+        2 * run.easySets >= run.ratedSets;
     if (firstLoad != null) {
-      track.lastLoad = run.calibrating ? maxLoad : firstLoad;
+      // La charge de référence est celle de la première série ; la plus
+      // haute quand la séance a monté en cours de route (calibrage, séries
+      // notées nettement plus faciles que visé).
+      track.lastLoad = run.calibrating || (run.easySets > 0 && run.fails == 0)
+          ? maxLoad
+          : firstLoad;
     }
+    track.easy = easy;
+    track.easySets = run.easySets;
     // Un échec non prévu plus tôt dans la même séance (même exercice à un
     // autre emplacement) compte aussi.
     track.noUp = run.fails > 0 || (track.lastDay == day && track.noUp);
@@ -1033,6 +1084,7 @@ final class SessionRun {
     if (unplanned) {
       run.fails++;
     }
+    _noteEase(run, reps, flames, failed, target);
     run.observed.add(
       ObservedSet(
         loadKg: loadKg,
@@ -1140,6 +1192,7 @@ final class SessionRun {
     if (unplanned) {
       run.fails++;
     }
+    _noteEase(run, amount, flames, failed, target);
     run.observed.add(
       ObservedSet(
         loadKg: null,
@@ -1151,6 +1204,30 @@ final class SessionRun {
         target: target,
       ),
     );
+  }
+
+  /// Compte la série dans le bilan « nettement plus facile que visé » de
+  /// l'exercice : cible atteinte et note au moins
+  /// [AdaptParams.adviceGapFlames] flammes sous la cible (D5).
+  void _noteEase(
+    ExerciseRun run,
+    int amount,
+    int? flames,
+    bool failed,
+    SetPlan? target,
+  ) {
+    if (flames == null || target == null) {
+      return;
+    }
+    run.ratedSets++;
+    final easy =
+        !failed &&
+        amount >= target.high &&
+        target.flames - flames >= _p.adviceGapFlames;
+    if (easy) {
+      run.easySets++;
+    }
+    run.lastRatedEasy = easy;
   }
 
   // ----------------------------------------------------------- prescription
@@ -1274,7 +1351,12 @@ final class SessionRun {
       // grille dépasse le plafond (haltères, machines à gros crans).
       final now = reps(kg);
       bool ok;
-      if (run.calibrating) {
+      if (run.easyMode && kg == start) {
+        // La dernière séance a été notée nettement plus facile que visé :
+        // un cran de plus, même si le modèle — qui n'a alors que des bornes
+        // basses — ne le prévoit pas encore.
+        ok = true;
+      } else if (run.calibrating) {
         ok = reps(next) >= mid;
       } else if (over) {
         ok =
@@ -1391,15 +1473,13 @@ final class SessionRun {
       for (var i = 0; i < spec.sets; i++) {
         final fatigue = plannedFatigue(i, rir, spec.restSeconds, p);
         final (reps, _) = targetReps(run, kg, fatigue);
-        out.add(SetPlan(loadKg: kg, low: reps, high: reps, flames: flames));
+        out.add(_felt(run, kg, reps, flames));
       }
     } else {
       for (var i = 0; i < spec.sets; i++) {
         final fatigue = plannedFatigue(i, rir, spec.restSeconds, p);
         final amount = targetAmount(run, fatigue);
-        out.add(
-          SetPlan(loadKg: null, low: amount, high: amount, flames: flames),
-        );
+        out.add(_felt(run, null, amount, flames));
       }
     }
     // Série repère : quand les notes n'informent plus, la dernière série
@@ -1417,6 +1497,7 @@ final class SessionRun {
           high: last.low + p.benchmarkExtraReps,
           flames: flamesOfRir(p.benchmarkRir),
           open: true,
+          benchmark: true,
         ),
       );
     }
@@ -1444,11 +1525,42 @@ final class SessionRun {
     return out;
   }
 
+  /// Cible d'une série de [amount] répétitions (ou secondes) prévues. En
+  /// mode « plus facile que visé », la série se fait au ressenti dans la
+  /// plage du bloc (élargie à la prévision) : c'est elle qui dira la
+  /// capacité, que les notes très basses ne bornent que par le bas.
+  SetPlan _felt(ExerciseRun run, double? kg, int amount, int flames) {
+    if (!run.easyMode) {
+      return SetPlan(loadKg: kg, low: amount, high: amount, flames: flames);
+    }
+    final spec = run.spec;
+    final low = amount < spec.low ? amount : spec.low;
+    var high = amount > spec.high ? amount : spec.high;
+    if (run.info.mode != CapacityMode.loaded) {
+      // Sans charge, les répétitions sont le seul réglage : jusqu'au haut
+      // de plage étendu.
+      final wide = run.info.mode == CapacityMode.hold
+          ? spec.high + spec.high ~/ 2
+          : (2 * spec.high > 30 ? 30 : 2 * spec.high);
+      if (wide > high) {
+        high = wide;
+      }
+    }
+    return SetPlan(
+      loadKg: kg,
+      low: low,
+      high: high,
+      flames: flames,
+      open: high > low,
+    );
+  }
+
   /// Vrai si l'exercice ouvert relève d'une série repère aujourd'hui (hors
   /// délai depuis la précédente).
   bool wantsBenchmark(ExerciseRun run) {
     final p = _p;
     return !run.uncertain &&
+        !run.easyMode &&
         run.spec.benchmarkOk &&
         run.spec.sets >= 2 &&
         run.info.mode != CapacityMode.hold &&
@@ -1476,6 +1588,14 @@ final class SessionRun {
         (previous.unplannedFail ? Flames.failure : (rated ?? previousFlames)) -
         previousFlames;
     final load = previous.loadKg;
+    // Série nettement plus facile que visé, cible atteinte.
+    final easy =
+        rated != null &&
+        previousTarget != null &&
+        !previous.failed &&
+        previous.amount >= previousTarget.high &&
+        previousFlames - rated >= p.adviceGapFlames;
+    final free = run.fails == 0 && run.painZones.isEmpty && !noIncrease;
     if (planned != null &&
         gap.abs() < p.adviceGapFlames &&
         !previous.unplannedFail) {
@@ -1486,7 +1606,23 @@ final class SessionRun {
     }
     final fatigue = track.filter.fatigueNow(p);
     if (run.info.mode != CapacityMode.loaded || load == null) {
-      final amount = targetAmount(run, fatigue);
+      var amount = targetAmount(run, fatigue);
+      if (easy && free) {
+        // Le modèle n'a qu'une borne basse : la série suivante monte d'un
+        // cinquième (au moins une répétition), dans la plage étendue.
+        final step = (previous.amount + 2) ~/ 5;
+        var bumped = previous.amount + (step < 1 ? 1 : step);
+        final wide = run.info.mode == CapacityMode.hold
+            ? 2 * spec.high
+            : (2 * spec.high > 30 ? 30 : 2 * spec.high);
+        final top = wide > spec.highExtended ? wide : spec.highExtended;
+        if (bumped > top) {
+          bumped = top;
+        }
+        if (bumped > amount) {
+          amount = bumped;
+        }
+      }
       var next = SetPlan(
         loadKg: null,
         low: amount,
@@ -1500,6 +1636,7 @@ final class SessionRun {
           high: amount + p.benchmarkExtraReps,
           flames: planned.flames,
           open: true,
+          benchmark: planned.benchmark,
         );
       }
       final before = planned?.high ?? previous.amount;
@@ -1536,8 +1673,8 @@ final class SessionRun {
 
     final floored = grid.floor(load);
     var kg = floored > load ? load : floored;
-    final canRise =
-        run.fails == 0 && run.painZones.isEmpty && !noIncrease && !track.noUp;
+    final canRise = free && !track.noUp;
+    var raisedByRating = false;
     if (planned == null && !previous.unplannedFail) {
       // Calibrage après une première série au jugé : vers le milieu de plage.
       if (canRise) {
@@ -1561,6 +1698,16 @@ final class SessionRun {
       final cap =
           (load + bw) *
           (1 + (run.calibrating ? p.maxUpSetCalibration : p.maxUpSet));
+      if (easy) {
+        // D5 : un écart d'au moins deux flammes ajuste la série suivante.
+        // Un cran de la grille, que le modèle le prévoie ou non (il n'a
+        // alors que des bornes basses) ; au-delà, le modèle décide.
+        final next = grid.next(kg, up: true);
+        if (next > kg) {
+          kg = next;
+          raisedByRating = true;
+        }
+      }
       for (var i = 0; i < 60; i++) {
         final next = grid.next(kg, up: true);
         if (next + bw > cap + 1e-9) {
@@ -1585,13 +1732,25 @@ final class SessionRun {
       high: target,
       flames: flamesTarget,
     );
-    if (planned != null && planned.open && !previous.unplannedFail) {
+    if (raisedByRating || (run.easyMode && !previous.unplannedFail)) {
+      // Série au ressenti dans la plage : elle dira ce que la charge vaut.
+      final low = target < spec.low ? target : spec.low;
+      final high = target > spec.high ? target : spec.high;
+      next = SetPlan(
+        loadKg: kg,
+        low: low,
+        high: high,
+        flames: flamesTarget,
+        open: high > low,
+      );
+    } else if (planned != null && planned.open && !previous.unplannedFail) {
       next = SetPlan(
         loadKg: kg,
         low: target,
         high: target + p.benchmarkExtraReps,
         flames: planned.flames,
         open: true,
+        benchmark: planned.benchmark,
       );
     }
     final before = planned?.high ?? previous.amount;

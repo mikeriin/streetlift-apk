@@ -809,14 +809,18 @@ final class SimAthlete {
           w * info.groupWeights[i] * info.exercise.localFatigue / 3;
     }
     _chronic += w * info.exercise.systemicFatigue / 3;
-    // Stimulus : séries à cinq répétitions de l'échec ou moins, charge
-    // d'au moins 55 % du 1RM.
+    // Stimulus : une série compte pleinement jusqu'à deux répétitions de
+    // l'échec, puis de moins en moins (un cinquième au-delà de dix) ; la
+    // charge doit atteindre la moitié du 1RM. La force progresse presque
+    // autant loin de l'échec (Pelland et al. 2026, Refalo et al. 2023) :
+    // la pente est douce.
     var heavy = true;
     if (t.mode == CapacityMode.loaded) {
-      heavy = info.totalLoad(loadKg ?? 0, bodyWeightKg) / t.capacity >= 0.55;
+      heavy = info.totalLoad(loadKg ?? 0, bodyWeightKg) / t.capacity >= 0.5;
     }
-    if (amount > 0 && trueRir <= 5 && heavy) {
-      t.stimulus += 1 - 0.1 * (trueRir > 2 ? trueRir - 2 : 0);
+    if (amount > 0 && heavy) {
+      final value = 1 - 0.1 * (trueRir > 2 ? trueRir - 2 : 0);
+      t.stimulus += value < 0.2 ? 0.2 : value;
     }
     t.lastDay = _day;
     if (loadKg != null) {

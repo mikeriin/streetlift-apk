@@ -23,8 +23,6 @@ final class _Traced implements SimPolicy {
   @override
   String get name => inner.name;
 
-  @override
-  bool get rangeIsTarget => false;
 
   @override
   SessionPlan plan(SessionContext c) {

@@ -77,7 +77,7 @@ String campaignMarkdown(Map<String, Object?> campaign) {
     '## 1. Écart au RIR visé, échecs, progression',
     '',
     'Après calibrage (à partir de la 4ᵉ séance de chaque exercice), hors '
-        'séries ouvertes et semaines de test. RIR MAE : écart absolu moyen '
+        'semaines de test. RIR MAE : écart absolu moyen '
         'entre le RIR réel et le RIR affiché, sur les séries dont la cible '
         'est atteignable — il existe une charge de la grille de l\'athlète '
         '(ou, sans charge, un nombre de répétitions) qui met le RIR visé '

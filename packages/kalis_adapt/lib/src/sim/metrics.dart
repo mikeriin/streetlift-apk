@@ -118,7 +118,7 @@ final class Metrics {
         if (s.failed && !s.plannedFailure) {
           failed++;
         }
-        if (!s.open && s.trueRir < 0.5 && s.wantRir >= 2) {
+        if (s.trueRir < 0.5 && s.wantRir >= 2) {
           near++;
         }
         final rise = s.rise;
@@ -128,7 +128,7 @@ final class Metrics {
         if (rise != null && s.main && rise > 0.10 + 1e-9) {
           mainRisesOverTen++;
         }
-        if (s.open) {
+        if (s.plannedFailure) {
           continue;
         }
         final e = (s.trueRir - s.wantRir).abs();
@@ -438,14 +438,13 @@ Stat pairedDifference(
 }
 
 /// Écart absolu moyen au RIR visé d'une simulation (après calibrage, hors
-/// séries ouvertes et semaines de test, cibles atteignables), ou `null`
-/// sans série.
+/// semaines de test, cibles atteignables), ou `null` sans série.
 double? runRirMae(SimRun run) {
   var sum = 0.0;
   var count = 0;
   for (final s in run.sets) {
     if (s.weekKind == WeekKind.test ||
-        s.open ||
+        s.plannedFailure ||
         !s.reachable ||
         s.exerciseSession < metricCalibrationSessions) {
       continue;

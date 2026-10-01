@@ -733,7 +733,15 @@ ExercisePrescription _finish(EngineContext ctx, SessionRun run, _Draft d) {
       reasons.add(r);
     }
   }
-  if (used.last.open && !exercise.spec.test) {
+  if (exercise.easyMode) {
+    reasons.add(
+      reason(ReasonCodes.adaptFlamesBelowTarget, <String, Object?>{
+        'delta': p.adviceGapFlames.toDouble(),
+        'sets': track.easySets,
+      }),
+    );
+  }
+  if (used.last.benchmark) {
     reasons.add(
       reason(ReasonCodes.adaptBenchmarkSet, <String, Object?>{
         'rir': rirOfFlames(used.last.flames),
