@@ -318,11 +318,7 @@ class Progression {
       currentStreak++;
       cursor = cursor.subtract(const Duration(days: 7));
     }
-    final metrics = {
-      'sessions': sessions,
-      'sets': sets,
-      'streak': bestStreak,
-    };
+    final metrics = {'sessions': sessions, 'sets': sets, 'streak': bestStreak};
     final badges = [
       for (final badge in progressionBadges)
         BadgeProgress(badge, metrics[badge.metric]!),

@@ -420,11 +420,9 @@ extension ProgramStore on AppStore {
     _koachCache = null;
     _koachCacheRevision = -1;
     _koachAuxRevision++;
-    _statsCache.clear();
     _allEx = null;
     _muscleIndex = null;
     pilotageEpoch++;
-    dataEpoch++;
   }
 
   /// Applique une proposition. Le départ est fixé s'il ne l'était pas.

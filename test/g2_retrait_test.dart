@@ -27,9 +27,11 @@ String _decode(String stored) => stored.startsWith('gz:')
     ? utf8.decode(gzip.decode(base64Decode(stored.substring(3))))
     : stored;
 
-Future<Map<String, dynamic>> _disk() async => jsonDecode(
-  _decode((await SharedPreferences.getInstance()).getString(_key)!),
-) as Map<String, dynamic>;
+Future<Map<String, dynamic>> _disk() async =>
+    jsonDecode(
+          _decode((await SharedPreferences.getInstance()).getString(_key)!),
+        )
+        as Map<String, dynamic>;
 
 UserProfile _profile() {
   final p = UserProfile(origin: 'onboarding', createdAt: _at);
@@ -79,11 +81,12 @@ Future<Map<String, dynamic>> _programDocument() async {
       'origin': 'user',
     }
     ..['logs'] = logs
-    ..['settings'] = (AppSettings()
-          ..theme = 'dark'
-          ..accent = 'vert'
-          ..defaultRest = 120)
-        .toJson()
+    ..['settings'] =
+        (AppSettings()
+              ..theme = 'dark'
+              ..accent = 'vert'
+              ..defaultRest = 120)
+            .toJson()
     ..['profile'] = _profile().toJson()
     ..['lastLevel'] = 3;
 }
@@ -320,10 +323,7 @@ void main() {
       final preview = app.previewImport(jsonEncode(old)).preview!;
       expect(preview.ignored.hasUserData, isTrue);
       expect(preview.ignored.lines, isNotEmpty);
-      expect(
-        await app.importBackup(jsonEncode(old)),
-        ImportStatus.success,
-      );
+      expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
       expect(app.logs.keys.any(isManualSessionKey), isFalse);
       expect(app.logs.length, (program['logs'] as Map).length);
       final export = jsonDecode(app.exportAll()) as Map<String, dynamic>;
@@ -360,39 +360,40 @@ void main() {
     }
 
     for (final dark in [true, false]) {
-      testWidgets('contenu, partage, « Compris » (${dark ? 'sombre' : 'clair'})', (
-        tester,
-      ) async {
-        final old = withRetiredData(await _programDocument());
-        await tester.runAsync(() async {
-          SharedPreferences.setMockInitialValues({_key: jsonEncode(old)});
-          store = AppStore();
-          await store.init();
-        });
-        final shared = <String, String>{};
-        RetiredCopyShare.debugHook = (name, text) async {
-          shared[name] = text;
-          return 'shared';
-        };
-        addTearDown(() => RetiredCopyShare.debugHook = null);
-        await pump(tester, const RetiredNoticeScreen(), dark);
-        expect(find.text('WOD et séances perso retirés'), findsOneWidget);
-        expect(find.text('3 résultats de WOD'), findsOneWidget);
-        expect(find.text('Copie complète vérifiée'), findsOneWidget);
-        await tester.tap(find.byKey(const ValueKey('retired-notice-share')));
-        await tester.pumpAndSettle();
-        expect(shared.length, 1);
-        expect(shared.keys.single, startsWith('kalis-track-copie-avant-g2-'));
-        expect(shared.values.single, store.retiredCopy);
-        await tester.scrollUntilVisible(
-          find.byKey(const ValueKey('retired-notice-close')),
-          200,
-          scrollable: find.byType(Scrollable).first,
-        );
-        await tester.tap(find.byKey(const ValueKey('retired-notice-close')));
-        await tester.pumpAndSettle();
-        expect(store.retiredNotice!.seen, isTrue);
-      });
+      testWidgets(
+        'contenu, partage, « Compris » (${dark ? 'sombre' : 'clair'})',
+        (tester) async {
+          final old = withRetiredData(await _programDocument());
+          await tester.runAsync(() async {
+            SharedPreferences.setMockInitialValues({_key: jsonEncode(old)});
+            store = AppStore();
+            await store.init();
+          });
+          final shared = <String, String>{};
+          RetiredCopyShare.debugHook = (name, text) async {
+            shared[name] = text;
+            return 'shared';
+          };
+          addTearDown(() => RetiredCopyShare.debugHook = null);
+          await pump(tester, const RetiredNoticeScreen(), dark);
+          expect(find.text('WOD et séances perso retirés'), findsOneWidget);
+          expect(find.text('3 résultats de WOD'), findsOneWidget);
+          expect(find.text('Copie complète vérifiée'), findsOneWidget);
+          await tester.tap(find.byKey(const ValueKey('retired-notice-share')));
+          await tester.pumpAndSettle();
+          expect(shared.length, 1);
+          expect(shared.keys.single, startsWith('kalis-track-copie-avant-g2-'));
+          expect(shared.values.single, store.retiredCopy);
+          await tester.scrollUntilVisible(
+            find.byKey(const ValueKey('retired-notice-close')),
+            200,
+            scrollable: find.byType(Scrollable).first,
+          );
+          await tester.tap(find.byKey(const ValueKey('retired-notice-close')));
+          await tester.pumpAndSettle();
+          expect(store.retiredNotice!.seen, isTrue);
+        },
+      );
     }
 
     testWidgets('Réglages › Sauvegardes : la copie reste accessible', (

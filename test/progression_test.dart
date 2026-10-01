@@ -31,11 +31,8 @@ void main() {
     await app.flush();
     app.dispose();
   });
-  Progression calculate() => Progression.calculate(
-    logs: app.logs,
-    program: app.program,
-    now: now,
-  );
+  Progression calculate() =>
+      Progression.calculate(logs: app.logs, program: app.program, now: now);
   // G2 : seules les journées d'entraînement du programme comptent (plus de
   // séances manuelles « S0- ») ; la date vient de finishedAt.
   String dayKey(int i) => [

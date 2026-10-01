@@ -721,36 +721,33 @@ void main() {
       expect(sets(13), 117);
     });
 
-    test(
-      'semaine S12 entièrement faite : XP et semaine complète',
-      () async {
-        final xp = app.progression.programXp;
-        // Dates passées (la semaine réelle S12 est à venir) : la règle dépend
-        // du nombre de journées faites, pas du nombre d'exercices.
-        for (var j = 1; j <= 6; j++) {
-          final log = app.sessionLog(12, j)
-            ..done = true
-            ..finishedAt = '2026-09-${13 + j}T18:00:00';
-          for (final e in app.program.week(12).day(j)!.exercises) {
-            final l = app.exLog(12, j, e);
-            for (final s in l.sets) {
-              s
-                ..reps = '5'
-                ..done = true;
-            }
+    test('semaine S12 entièrement faite : XP et semaine complète', () async {
+      final xp = app.progression.programXp;
+      // Dates passées (la semaine réelle S12 est à venir) : la règle dépend
+      // du nombre de journées faites, pas du nombre d'exercices.
+      for (var j = 1; j <= 6; j++) {
+        final log = app.sessionLog(12, j)
+          ..done = true
+          ..finishedAt = '2026-09-${13 + j}T18:00:00';
+        for (final e in app.program.week(12).day(j)!.exercises) {
+          final l = app.exLog(12, j, e);
+          for (final s in l.sets) {
+            s
+              ..reps = '5'
+              ..done = true;
           }
-          expect(log.done, isTrue);
         }
-        app.saveLogs(immediate: true);
-        await app.flush();
-        expect(app.progression.programXp - xp, 600);
-        // Semaine complète : au moins trois entraînements dans la semaine
-        // civile du lundi 14/09.
-        final week = app.progression.weeks[DateTime.utc(2026, 9, 14)];
-        expect(week, isNotNull);
-        expect(week!.sessions, greaterThanOrEqualTo(3));
-      },
-    );
+        expect(log.done, isTrue);
+      }
+      app.saveLogs(immediate: true);
+      await app.flush();
+      expect(app.progression.programXp - xp, 600);
+      // Semaine complète : au moins trois entraînements dans la semaine
+      // civile du lundi 14/09.
+      final week = app.progression.weeks[DateTime.utc(2026, 9, 14)];
+      expect(week, isNotNull);
+      expect(week!.sessions, greaterThanOrEqualTo(3));
+    });
   });
 
   group('Séance et journal', () {

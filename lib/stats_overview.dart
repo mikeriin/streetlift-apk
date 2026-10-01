@@ -89,8 +89,7 @@ class StatsOverview extends StatelessWidget {
         KMenuTile(
           icon: Icons.account_tree_rounded,
           title: 'Arbre de progression',
-          subtitle:
-              '${p.earnedBadges} badges obtenus · pratique et rythme',
+          subtitle: '${p.earnedBadges} badges obtenus · pratique et rythme',
           onTap: () => onSection(StatsSection.journey),
         ),
         const KSection(

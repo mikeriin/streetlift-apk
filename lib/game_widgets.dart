@@ -1436,11 +1436,7 @@ class SelfCompareCard extends StoreWidget {
             spacing: 18,
             runSpacing: 10,
             children: [
-              delta(
-                'entraînements',
-                c.current.sessions,
-                c.sessionsDelta,
-              ),
+              delta('entraînements', c.current.sessions, c.sessionsDelta),
               delta('séries', c.current.sets, c.setsDelta),
               delta('jours actifs', c.current.activeDays.length, c.daysDelta),
             ],

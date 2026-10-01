@@ -937,8 +937,7 @@ class AppStore extends ChangeNotifier {
         return;
       }
       final reread = jsonDecode(back) as Map<String, dynamic>;
-      final expected = Map<String, dynamic>.of(document)
-        ..remove('activeWod');
+      final expected = Map<String, dynamic>.of(document)..remove('activeWod');
       for (final k in ['exportedAt', 'sessionDeTest', 'decalageJours']) {
         reread.remove(k);
         expected.remove(k);

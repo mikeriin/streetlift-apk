@@ -288,10 +288,7 @@ class NotificationService {
   void _onStoreChange() {
     final s = app.settings;
     final done =
-        app.logs.entries
-            .where((e) => e.value.done)
-            .map((e) => e.key)
-            .toList()
+        app.logs.entries.where((e) => e.value.done).map((e) => e.key).toList()
           ..sort();
     // Le départ fait partie de la signature : le changer replanifie les
     // mêmes identifiants S·J (pas de doublon), sans attendre un autre signal.

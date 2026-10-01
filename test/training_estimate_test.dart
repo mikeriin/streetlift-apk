@@ -126,11 +126,7 @@ void main() {
     expect(rotated.elapsed.high, 600);
   });
   test('E2MOM respecte la durée des intervalles', () {
-    final e = TrainingEstimator.emom(
-      ['5 tractions'],
-      rounds: 6,
-      interval: 120,
-    );
+    final e = TrainingEstimator.emom(['5 tractions'], rounds: 6, interval: 120);
     expect(e.volume('rep').low, 30);
     expect(e.elapsed.low, 720);
   });

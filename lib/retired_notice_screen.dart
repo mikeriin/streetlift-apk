@@ -4,7 +4,6 @@
 // enregistrable dans un fichier). Écran sobre, montré une fois au premier
 // lancement, puis retrouvable dans Réglages › Sauvegardes.
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -77,7 +76,9 @@ class RetiredNoticeScreen extends StatelessWidget {
     final text = store.retiredCopy;
     if (text == null) {
       messenger.showSnackBar(
-        const SnackBar(content: Text('Copie illisible : rien n’a été partagé.')),
+        const SnackBar(
+          content: Text('Copie illisible : rien n’a été partagé.'),
+        ),
       );
       return;
     }
@@ -113,7 +114,8 @@ class RetiredNoticeScreen extends StatelessWidget {
       Uint8List.fromList(utf8.encode(text)),
     );
     final message = switch (result.status) {
-      FileSaveStatus.saved => 'Copie enregistrée : ${result.name ?? 'fichier'}.',
+      FileSaveStatus.saved =>
+        'Copie enregistrée : ${result.name ?? 'fichier'}.',
       FileSaveStatus.unverified =>
         'Copie écrite, mais sa relecture n’a pas été possible. Vérifie le fichier.',
       FileSaveStatus.cancelled => 'Enregistrement annulé.',
@@ -142,10 +144,7 @@ class RetiredNoticeScreen extends StatelessWidget {
         body: KList(
           key: const ValueKey('retired-notice'),
           children: [
-            Text(
-              'WOD et séances perso retirés',
-              style: text.headlineSmall,
-            ),
+            Text('WOD et séances perso retirés', style: text.headlineSmall),
             const Text(
               'Kalis Track se recentre sur ton programme. L’onglet WOD, le '
               'créateur de séances et « Mes progrès » ont été retirés.',

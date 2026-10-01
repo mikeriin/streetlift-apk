@@ -76,9 +76,7 @@ void main() {
         startsWith('kalis-track-session-de-test-copie-avant-g2-'),
       );
       expect(
-        raw.getString(
-          '${SessionSpace.devPrefix}${AppStore.kRetiredCopyKey}',
-        ),
+        raw.getString('${SessionSpace.devPrefix}${AppStore.kRetiredCopyKey}'),
         isNotNull,
       );
       expect(raw.getString(AppStore.kRetiredCopyKey), isNull);

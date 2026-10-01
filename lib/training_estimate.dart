@@ -256,9 +256,11 @@ class TrainingEstimator {
       final seconds =
           timer?['interval'] as int? ?? int.tryParse(custom?[2] ?? '') ?? 60;
       final reps = RegExp(r'(\d+)\s*reps').firstMatch(text);
-      return emom([
-        '${reps?[1] ?? ''} ${e.name}${kg == null ? '' : ' $kg kg'}',
-      ], rounds: rounds, interval: seconds);
+      return emom(
+        ['${reps?[1] ?? ''} ${e.name}${kg == null ? '' : ' $kg kg'}'],
+        rounds: rounds,
+        interval: seconds,
+      );
     }
     if (text.startsWith('amrap') || timer?['type'] == 'amrap') {
       out.clock = Span.exact(

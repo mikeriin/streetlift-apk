@@ -158,7 +158,9 @@ void main() {
 
     await tab(tester, 0);
     releve['arsenal_sans_wod'] =
-        !shown('Mes WODs') && !shown('Nouvelle séance') && !shown('Mes séances');
+        !shown('Mes WODs') &&
+        !shown('Nouvelle séance') &&
+        !shown('Mes séances');
     releve['arsenal_tuiles'] = [
       for (final k in ['arsenal-exercises', 'arsenal-anatomy'])
         if (find.byKey(ValueKey(k)).evaluate().isNotEmpty) k,
@@ -182,10 +184,7 @@ void main() {
     expect(releve['copie_relue'], isTrue);
     expect(releve['document_sans_sections_retirees'], isTrue);
     expect(releve['journal_sans_seances_perso'], isTrue);
-    expect(
-      releve['journal_programme_apres'],
-      releve['journal_programme'],
-    );
+    expect(releve['journal_programme_apres'], releve['journal_programme']);
     expect(releve['annonce'], isTrue);
     expect(releve['annonce_vue'], isTrue);
     expect(releve['arsenal_sans_wod'], isTrue);
