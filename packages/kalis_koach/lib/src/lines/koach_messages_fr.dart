@@ -28,9 +28,9 @@ const Map<String, String> koachMessagesFr = <String, String>{
   // Profil.
   'profile.start.1': 'On commence par ton profil : quelques questions, et je m’occupe du reste.',
   'profile.start.2': 'Parle-moi un peu de toi : ton niveau, ton matériel, ton temps.',
-  'profile.step.1': 'Plus que {remaining} questions.',
-  'profile.step.2': 'Encore {remaining} questions et on passe à ton programme.',
-  'profile.step.3': 'Bien noté. Il reste {remaining} questions.',
+  'profile.step.1': 'Questions restantes : {remaining}.',
+  'profile.step.2': 'Bien noté ! Questions restantes : {remaining}.',
+  'profile.step.3': 'On avance. Questions restantes avant ton programme : {remaining}.',
   'profile.done.1': 'Profil terminé, merci ! Je peux préparer ton programme.',
   'profile.done.2': 'C’est tout bon pour ton profil. Passons au programme !',
   'profile.update.1': 'Ton profil n’est plus à jour ({field}). On le corrige ensemble ?',
@@ -95,8 +95,8 @@ const Map<String, String> koachMessagesFr = <String, String>{
   'session.good.3': 'C’est fait ! Pense à bien récupérer.',
   'session.hard.1': 'Séance difficile, mais tu l’as terminée. Respect.',
   'session.hard.2': 'C’était dur aujourd’hui. J’en tiens compte pour la suite.',
-  'session.partial.1': 'Séance écourtée : {done} séries sur {planned}. C’est déjà ça.',
-  'session.partial.2': '{done} séries sur {planned} aujourd’hui. On reprend la prochaine fois.',
+  'session.partial.1': 'Séance écourtée, séries faites : {done} sur {planned}. C’est déjà ça.',
+  'session.partial.2': 'Séries faites aujourd’hui : {done} sur {planned}. La suite au prochain coup !',
 
   // Record.
   'record.1': 'Nouveau record sur {exercise} : {value} !',

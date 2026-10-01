@@ -87,8 +87,10 @@ abstract final class KoachActions {
   static const later = KoachAction(KoachActionKind.later, 'action.later');
 
   /// Modifier le profil.
-  static const editProfile =
-      KoachAction(KoachActionKind.editProfile, 'action.edit_profile');
+  static const editProfile = KoachAction(
+    KoachActionKind.editProfile,
+    'action.edit_profile',
+  );
 
   /// Réessayer.
   static const retry = KoachAction(KoachActionKind.retry, 'action.retry');
@@ -103,8 +105,10 @@ abstract final class KoachActions {
   static const details = KoachAction(KoachActionKind.details, 'action.details');
 
   /// Continuer.
-  static const continueOn =
-      KoachAction(KoachActionKind.continueOn, 'action.continue');
+  static const continueOn = KoachAction(
+    KoachActionKind.continueOn,
+    'action.continue',
+  );
 
   /// OK.
   static const ok = KoachAction(KoachActionKind.ok, 'action.ok');

@@ -29,5 +29,6 @@ String koachFlameLabel(int level) {
 
 /// Cadre commun aux 10 flammes (union des boîtes) : dessinées dans ce cadre,
 /// elles gardent leurs tailles relatives et la même ligne de base.
-final KoachBox koachFlameFrame =
-    koachFlameArts.map((f) => f.bounds).reduce((a, b) => a.union(b));
+final KoachBox koachFlameFrame = koachFlameArts
+    .map((f) => f.bounds)
+    .reduce((a, b) => a.union(b));

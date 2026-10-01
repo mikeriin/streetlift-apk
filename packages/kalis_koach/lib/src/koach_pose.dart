@@ -366,8 +366,10 @@ enum KoachPose {
   }
 
   /// Poses recommandées pour un usage.
-  static List<KoachPose> forUsage(KoachUsage usage) =>
-      [for (final p in values) if (p.info.usages.contains(usage)) p];
+  static List<KoachPose> forUsage(KoachUsage usage) => [
+    for (final p in values)
+      if (p.info.usages.contains(usage)) p,
+  ];
 }
 
 /// Cadre commun à toutes les poses (union des boîtes, marge de 40 unités) :

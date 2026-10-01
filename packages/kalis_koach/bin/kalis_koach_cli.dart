@@ -42,7 +42,11 @@ void main(List<String> args) {
       'gaze': info.gaze.name,
       'bubbleSide': info.bubbleSide.name,
       'bounds': [a.bounds.left, a.bounds.top, a.bounds.right, a.bounds.bottom],
-      'ink': {'subpaths': ink.subpaths, 'lines': ink.lines, 'cubics': ink.cubics},
+      'ink': {
+        'subpaths': ink.subpaths,
+        'lines': ink.lines,
+        'cubics': ink.cubics,
+      },
       'paper': {
         'subpaths': paper.subpaths,
         'lines': paper.lines,
@@ -104,8 +108,14 @@ void main(List<String> args) {
   for (var k = 0; k < 20000; k++) {
     final e = KoachEvent.values[k % KoachEvent.values.length];
     if (e == KoachEvent.why) continue;
-    final line = director.lineFor(KoachCue(e,
-        params: _sampleParams, reason: k.isEven ? 'deload' : null, occurrence: k));
+    final line = director.lineFor(
+      KoachCue(
+        e,
+        params: _sampleParams,
+        reason: k.isEven ? 'deload' : null,
+        occurrence: k,
+      ),
+    );
     texts.bubble(line);
     n++;
   }
@@ -129,7 +139,8 @@ void main(List<String> args) {
     'timing': {'linesRendered': n, 'microsecondsPerLine': perLineUs},
   };
   File('${dir.path}/inventaire.json').writeAsStringSync(
-      '${const JsonEncoder.withIndent(' ').convert(inventory)}\n');
+    '${const JsonEncoder.withIndent(' ').convert(inventory)}\n',
+  );
 
   final txt = StringBuffer()
     ..writeln('kalis_koach $kalisKoachVersion — inventaire')
@@ -137,23 +148,29 @@ void main(List<String> args) {
     ..writeln()
     ..writeln('Poses (${poses.length}) :');
   for (final p in poses) {
-    txt.writeln('  ${p['id']}  ${p['sheet']}${(p['cell'] as List).join('.')}'
-        '  ${p['emotion']}  yeux ${p['eyes']}  ${p['framing']}'
-        '  regard ${p['gaze']}  bulle ${p['bubbleSide']}  ${p['ints']} entiers');
+    txt.writeln(
+      '  ${p['id']}  ${p['sheet']}${(p['cell'] as List).join('.')}'
+      '  ${p['emotion']}  yeux ${p['eyes']}  ${p['framing']}'
+      '  regard ${p['gaze']}  bulle ${p['bubbleSide']}  ${p['ints']} entiers',
+    );
   }
   txt
     ..writeln()
     ..writeln('Flammes : ${flames.length}');
   for (final f in flames) {
-    txt.writeln('  ${f['label']}  teinte ${(f['tint'] as double).toStringAsFixed(3)}'
-        '  boîte ${f['bounds']}');
+    txt.writeln(
+      '  ${f['label']}  teinte ${(f['tint'] as double).toStringAsFixed(3)}'
+      '  boîte ${f['bounds']}',
+    );
   }
   txt
     ..writeln()
     ..writeln('Événements (${events.length}) :');
   for (final e in events) {
-    txt.writeln('  ${e['event']}: ${e['variants'] ?? '-'} variantes, '
-        'poses ${e['poses'] ?? '-'}, paramètres ${e['params'] ?? '-'}');
+    txt.writeln(
+      '  ${e['event']}: ${e['variants'] ?? '-'} variantes, '
+      'poses ${e['poses'] ?? '-'}, paramètres ${e['params'] ?? '-'}',
+    );
   }
   txt
     ..writeln()
@@ -162,8 +179,9 @@ void main(List<String> args) {
     ..writeln('Temps moyen par réplique : ${perLineUs.toStringAsFixed(2)} µs');
   File('${dir.path}/inventaire.txt').writeAsStringSync(txt.toString());
 
-  File('${dir.path}/cas_types.txt')
-      .writeAsStringSync(_casTypes(director, texts));
+  File(
+    '${dir.path}/cas_types.txt',
+  ).writeAsStringSync(_casTypes(director, texts));
 
   final svg = Directory('${dir.path}/svg')..createSync(recursive: true);
   for (final p in KoachPose.values) {
@@ -171,13 +189,18 @@ void main(List<String> args) {
   }
   for (var level = 1; level <= koachFlameLevels; level++) {
     final f = koachFlame(level);
-    File('${svg.path}/flamme_$level.svg').writeAsStringSync(_svg(
+    File('${svg.path}/flamme_$level.svg').writeAsStringSync(
+      _svg(
         f.bounds.inflate(10),
-        '<path fill="#141414" fill-rule="evenodd" d="${koachPathToSvg(f.ink)}"/>'));
+        '<path fill="#141414" fill-rule="evenodd" d="${koachPathToSvg(f.ink)}"/>',
+      ),
+    );
   }
-  stdout.writeln('Rapport écrit dans ${dir.path} : ${poses.length} poses, '
-      '${flames.length} flammes, ${events.length} événements, '
-      '${perLineUs.toStringAsFixed(2)} µs par réplique.');
+  stdout.writeln(
+    'Rapport écrit dans ${dir.path} : ${poses.length} poses, '
+    '${flames.length} flammes, ${events.length} événements, '
+    '${perLineUs.toStringAsFixed(2)} µs par réplique.',
+  );
 }
 
 const Map<String, String> _sampleParams = {
@@ -194,14 +217,20 @@ const Map<String, String> _sampleParams = {
 };
 
 String _casTypes(KoachDirector d, KoachTexts t) {
-  final b = StringBuffer('Cas types (relus) — kalis_koach $kalisKoachVersion\n\n');
+  final b = StringBuffer(
+    'Cas types (relus) — kalis_koach $kalisKoachVersion\n\n',
+  );
   void show(String title, KoachCue cue) {
     final line = d.lineFor(cue);
     b
       ..writeln('# $title')
-      ..writeln('  pose : ${line.pose.id} (bulle à ${line.pose.info.bubbleSide.name})')
+      ..writeln(
+        '  pose : ${line.pose.id} (bulle à ${line.pose.info.bubbleSide.name})',
+      )
       ..writeln('  bulle : ${t.bubble(line)}')
-      ..writeln('  actions : ${[for (final a in line.actions) t.action(a)].join(' | ')}');
+      ..writeln(
+        '  actions : ${[for (final a in line.actions) t.action(a)].join(' | ')}',
+      );
     final why = d.explain(line);
     if (why != null) {
       b.writeln('  pourquoi (${why.pose.id}) : ${t.bubble(why)}');
@@ -210,29 +239,69 @@ String _casTypes(KoachDirector d, KoachTexts t) {
   }
 
   show('Premier lancement', const KoachCue(KoachEvent.welcome));
-  show('Profil, étape', const KoachCue(KoachEvent.profileStep,
-      params: {'remaining': '4'}, occurrence: 1));
-  show('Profil à mettre à jour', const KoachCue(KoachEvent.profileUpdateNeeded,
-      params: {'field': 'ton matériel'}));
-  show('Première passe du programme', const KoachCue(KoachEvent.programDraftReady,
-      params: {'weeks': '12'}));
-  show('Proposition : charge augmentée', const KoachCue(KoachEvent.proposalNew,
-      reason: 'load_increased', params: {'exercise': 'Pompes'}));
-  show('Proposition : code inconnu (générique)',
-      const KoachCue(KoachEvent.proposalNew, reason: 'code_futur'));
-  show('Changement appliqué : séance raccourcie', const KoachCue(
+  show(
+    'Profil, étape',
+    const KoachCue(
+      KoachEvent.profileStep,
+      params: {'remaining': '4'},
+      occurrence: 1,
+    ),
+  );
+  show(
+    'Profil à mettre à jour',
+    const KoachCue(
+      KoachEvent.profileUpdateNeeded,
+      params: {'field': 'ton matériel'},
+    ),
+  );
+  show(
+    'Première passe du programme',
+    const KoachCue(KoachEvent.programDraftReady, params: {'weeks': '12'}),
+  );
+  show(
+    'Proposition : charge augmentée',
+    const KoachCue(
+      KoachEvent.proposalNew,
+      reason: 'load_increased',
+      params: {'exercise': 'Pompes'},
+    ),
+  );
+  show(
+    'Proposition : code inconnu (générique)',
+    const KoachCue(KoachEvent.proposalNew, reason: 'code_futur'),
+  );
+  show(
+    'Changement appliqué : séance raccourcie',
+    const KoachCue(
       KoachEvent.changeApplied,
       reason: 'session_shortened',
-      params: {'minutes': '20'}));
+      params: {'minutes': '20'},
+    ),
+  );
   show('Bilan santé : douleur', const KoachCue(KoachEvent.healthCheckPain));
-  show('Fin de séance écourtée', const KoachCue(KoachEvent.sessionEndPartial,
-      params: {'done': '6', 'planned': '12'}));
-  show('Record', const KoachCue(KoachEvent.personalRecord,
-      params: {'exercise': 'Dips', 'value': '15 répétitions'}));
+  show(
+    'Fin de séance écourtée',
+    const KoachCue(
+      KoachEvent.sessionEndPartial,
+      params: {'done': '6', 'planned': '12'},
+    ),
+  );
+  show(
+    'Record',
+    const KoachCue(
+      KoachEvent.personalRecord,
+      params: {'exercise': 'Dips', 'value': '15 répétitions'},
+    ),
+  );
   show('Erreur', const KoachCue(KoachEvent.error));
   show('Session de test', const KoachCue(KoachEvent.devSessionEnter));
-  show('Nouveauté', const KoachCue(KoachEvent.featureIntro,
-      params: {'feature': 'les objectifs'}));
+  show(
+    'Nouveauté',
+    const KoachCue(
+      KoachEvent.featureIntro,
+      params: {'feature': 'les objectifs'},
+    ),
+  );
   b.writeln('# Variantes successives (fin de séance, occurrences 0 à 3)');
   for (var o = 0; o < 4; o++) {
     final line = d.lineFor(KoachCue(KoachEvent.sessionEndGood, occurrence: o));
@@ -244,14 +313,18 @@ String _casTypes(KoachDirector d, KoachTexts t) {
 String _poseSvg(KoachPose p) {
   final a = p.art;
   final body = StringBuffer()
-    ..write('<path fill="#141414" fill-rule="evenodd" d="${koachPathToSvg(a.ink)}"/>');
+    ..write(
+      '<path fill="#141414" fill-rule="evenodd" d="${koachPathToSvg(a.ink)}"/>',
+    );
   if (a.paper.isNotEmpty) {
     body.write(
-        '<path fill="#ffffff" fill-rule="evenodd" d="${koachPathToSvg(a.paper)}"/>');
+      '<path fill="#ffffff" fill-rule="evenodd" d="${koachPathToSvg(a.paper)}"/>',
+    );
   }
   if (a.eyes.isNotEmpty) {
     body.write(
-        '<path fill="#ffffff" fill-rule="evenodd" d="${koachPathToSvg(a.eyes)}"/>');
+      '<path fill="#ffffff" fill-rule="evenodd" d="${koachPathToSvg(a.eyes)}"/>',
+    );
   }
   return _svg(koachCommonFrame, body.toString());
 }

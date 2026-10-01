@@ -238,14 +238,15 @@ class KoachLine {
 
   @override
   int get hashCode => Object.hash(
-      event,
-      pose,
-      messageKey,
-      const MapEquality<String, String>().hash(params),
-      priority,
-      const ListEquality<KoachAction>().hash(actions),
-      whyKey,
-      reason);
+    event,
+    pose,
+    messageKey,
+    const MapEquality<String, String>().hash(params),
+    priority,
+    const ListEquality<KoachAction>().hash(actions),
+    whyKey,
+    reason,
+  );
 
   @override
   String toString() => 'KoachLine(${event.name}, ${pose.id}, $messageKey)';

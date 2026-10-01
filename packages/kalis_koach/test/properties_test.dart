@@ -36,8 +36,7 @@ void main() {
     final director = KoachDirector();
     const texts = KoachTexts();
     final codes = [...director.reasons.codes, 'code_inconnu', null];
-    final events =
-        KoachEvent.values.where((e) => e != KoachEvent.why).toList();
+    final events = KoachEvent.values.where((e) => e != KoachEvent.why).toList();
     var explained = 0;
     for (var n = 0; n < 10000; n++) {
       final event = events[rnd.nextInt(events.length)];
@@ -61,8 +60,10 @@ void main() {
       expect(line.actions, rule.actions);
       expect(koachMessagesFr.containsKey(line.messageKey), isTrue);
       final reason = cue.reason == null ? null : director.reasons[cue.reason!];
-      final usesReason = reason != null &&
-          (event == KoachEvent.proposalNew || event == KoachEvent.changeApplied);
+      final usesReason =
+          reason != null &&
+          (event == KoachEvent.proposalNew ||
+              event == KoachEvent.changeApplied);
       expect(line.pose, isIn(usesReason ? reason.poses : rule.poses));
       // Rendu.
       final bubble = texts.bubble(line);
@@ -76,15 +77,19 @@ void main() {
         expect(why.pose, isIn(koachWhyPoses));
       }
       // Occurrence suivante : autre variante quand il y en a plusieurs.
-      final next = director.lineFor(KoachCue(event,
+      final next = director.lineFor(
+        KoachCue(
+          event,
           params: params,
           reason: cue.reason,
           occurrence: cue.occurrence + 1,
-          seed: cue.seed));
+          seed: cue.seed,
+        ),
+      );
       final variants = usesReason
           ? (event == KoachEvent.proposalNew
-              ? reason.proposalKeys
-              : reason.appliedKeys)
+                ? reason.proposalKeys
+                : reason.appliedKeys)
           : rule.messageKeys;
       if (variants.length > 1) {
         expect(next.messageKey, isNot(line.messageKey));
@@ -100,17 +105,24 @@ void main() {
       if (e == KoachEvent.why) continue;
       for (final reason in [null, ...director.reasons.codes]) {
         for (var o = 0; o < 6; o++) {
-          final line = director.lineFor(KoachCue(e,
+          final line = director.lineFor(
+            KoachCue(
+              e,
               params: {for (final p in _paramNames) p: 'x'},
               reason: reason,
-              occurrence: o));
+              occurrence: o,
+            ),
+          );
           seen.add(line.messageKey);
         }
       }
     }
     final expected = <String>{
       for (final r in koachRules) ...r.messageKeys,
-      for (final r in koachBaseReasons) ...[...r.proposalKeys, ...r.appliedKeys],
+      for (final r in koachBaseReasons) ...[
+        ...r.proposalKeys,
+        ...r.appliedKeys,
+      ],
     };
     expect(seen, expected);
   });

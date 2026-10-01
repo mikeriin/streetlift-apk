@@ -11,8 +11,8 @@ class KoachDirector {
   /// Crée un directeur ; [reasons] relie les codes de raison des moteurs aux
   /// messages (table de base par défaut).
   KoachDirector({KoachReasonTable? reasons, List<KoachRule>? rules})
-      : reasons = reasons ?? KoachReasonTable.base(),
-        _rules = {for (final r in rules ?? koachRules) r.event: r};
+    : reasons = reasons ?? KoachReasonTable.base(),
+      _rules = {for (final r in rules ?? koachRules) r.event: r};
 
   /// Table des raisons.
   final KoachReasonTable reasons;
@@ -30,8 +30,11 @@ class KoachDirector {
     }
     final rule = _rules[cue.event];
     if (rule == null) {
-      throw ArgumentError.value(cue.event, 'event',
-          'pas de règle (utiliser explain pour KoachEvent.why)');
+      throw ArgumentError.value(
+        cue.event,
+        'event',
+        'pas de règle (utiliser explain pour KoachEvent.why)',
+      );
     }
     var messageKeys = rule.messageKeys;
     var poses = rule.poses;
@@ -50,8 +53,11 @@ class KoachDirector {
     }
     for (final p in required) {
       if (!cue.params.containsKey(p)) {
-        throw ArgumentError.value(cue.params, 'params',
-            'paramètre « $p » manquant pour ${cue.event.name}');
+        throw ArgumentError.value(
+          cue.params,
+          'params',
+          'paramètre « $p » manquant pour ${cue.event.name}',
+        );
       }
     }
     final k = cue.occurrence + cue.seed;
@@ -99,8 +105,8 @@ class KoachTexts {
 
   /// Paramètres présents dans le message [key].
   Set<String> placeholders(String key) => {
-        for (final m in _placeholder.allMatches(_raw(key))) m.group(1)!,
-      };
+    for (final m in _placeholder.allMatches(_raw(key))) m.group(1)!,
+  };
 
   String _raw(String key) {
     final t = messages[key];
@@ -115,7 +121,10 @@ class KoachTexts {
         final v = params[m.group(1)!];
         if (v == null) {
           throw ArgumentError.value(
-              params, 'params', 'paramètre « ${m.group(1)} » manquant ($key)');
+            params,
+            'params',
+            'paramètre « ${m.group(1)} » manquant ($key)',
+          );
         }
         return v;
       });
@@ -133,9 +142,10 @@ class KoachTexts {
 
 /// Toutes les clés de messages référencées par les règles, la table des
 /// raisons et les actions (contrôle des clés orphelines).
-Set<String> koachReferencedKeys(
-    {List<KoachRule> rules = koachRules,
-    List<KoachReason> reasons = koachBaseReasons}) {
+Set<String> koachReferencedKeys({
+  List<KoachRule> rules = koachRules,
+  List<KoachReason> reasons = koachBaseReasons,
+}) {
   final keys = <String>{};
   for (final r in rules) {
     keys.addAll(r.messageKeys);

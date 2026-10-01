@@ -45,11 +45,11 @@ class KoachBox {
 
   /// Plus petite boîte contenant les deux.
   KoachBox union(KoachBox o) => KoachBox(
-        left < o.left ? left : o.left,
-        top < o.top ? top : o.top,
-        right > o.right ? right : o.right,
-        bottom > o.bottom ? bottom : o.bottom,
-      );
+    left < o.left ? left : o.left,
+    top < o.top ? top : o.top,
+    right > o.right ? right : o.right,
+    bottom > o.bottom ? bottom : o.bottom,
+  );
 
   /// Agrandit la boîte de [m] unités de chaque côté.
   KoachBox inflate(int m) => KoachBox(left - m, top - m, right + m, bottom + m);
@@ -157,8 +157,7 @@ abstract interface class KoachPathSink {
   void lineTo(double x, double y);
 
   /// Courbe de Bézier cubique.
-  void cubicTo(
-      double x1, double y1, double x2, double y2, double x, double y);
+  void cubicTo(double x1, double y1, double x2, double y2, double x, double y);
 
   /// Fermeture du sous-chemin courant.
   void close();
@@ -201,8 +200,14 @@ void replayKoachPath(
         i += 3;
       case koachCubicTo:
         _need(cmds, i, 7);
-        sink.cubicTo(px(cmds[i + 1]), py(cmds[i + 2]), px(cmds[i + 3]),
-            py(cmds[i + 4]), px(cmds[i + 5]), py(cmds[i + 6]));
+        sink.cubicTo(
+          px(cmds[i + 1]),
+          py(cmds[i + 2]),
+          px(cmds[i + 3]),
+          py(cmds[i + 4]),
+          px(cmds[i + 5]),
+          py(cmds[i + 6]),
+        );
         i += 7;
       case koachClose:
         sink.close();
@@ -270,7 +275,11 @@ KoachPathStats koachPathStats(List<int> cmds) {
   replayKoachPath(cmds, sink);
   if (open) allClosed = false;
   return KoachPathStats(
-      subpaths: subpaths, lines: lines, cubics: cubics, allClosed: allClosed);
+    subpaths: subpaths,
+    lines: lines,
+    cubics: cubics,
+    allClosed: allClosed,
+  );
 }
 
 /// Boîte englobante des points (extrémités et points de contrôle) d'un
@@ -321,8 +330,13 @@ class _CountingSink implements KoachPathSink {
   void lineTo(double x, double y) => onLine();
   @override
   void cubicTo(
-          double x1, double y1, double x2, double y2, double x, double y) =>
-      onCubic();
+    double x1,
+    double y1,
+    double x2,
+    double y2,
+    double x,
+    double y,
+  ) => onCubic();
   @override
   void close() => onClose();
 }
@@ -340,8 +354,10 @@ String koachPathToSvg(List<int> cmds) {
         b.write('L${cmds[i + 1]} ${cmds[i + 2]}');
         i += 3;
       case koachCubicTo:
-        b.write('C${cmds[i + 1]} ${cmds[i + 2]} ${cmds[i + 3]} '
-            '${cmds[i + 4]} ${cmds[i + 5]} ${cmds[i + 6]}');
+        b.write(
+          'C${cmds[i + 1]} ${cmds[i + 2]} ${cmds[i + 3]} '
+          '${cmds[i + 4]} ${cmds[i + 5]} ${cmds[i + 6]}',
+        );
         i += 7;
       case koachClose:
         b.write('Z');
