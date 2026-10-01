@@ -86,9 +86,7 @@ double _median3(void Function() body) {
 }
 
 PlanSlot _hashedSlot(Pass1Plan plan, String key) {
-  final slots = <PlanSlot>[
-    for (final d in plan.days) ...d.slots,
-  ];
+  final slots = <PlanSlot>[for (final d in plan.days) ...d.slots];
   return slots[fnv1a32(key) % slots.length];
 }
 
@@ -200,9 +198,7 @@ void main(List<String> args) {
       },
       'violations': violations,
       'metrics': m.toJson(),
-      'ownerWeekResemblance': _r(
-        owner.weekResemblance(planExerciseIds(plan)),
-      ),
+      'ownerWeekResemblance': _r(owner.weekResemblance(planExerciseIds(plan))),
     };
     fixtureRows.add(<Object?>[
       '`${f.key}`',
@@ -275,7 +271,10 @@ void main(List<String> args) {
           ReviewRequest(
             request: request,
             current: plan,
-            action: ReviewAction(kind: ReviewKind.cannotDo, slotId: slot.slotId),
+            action: ReviewAction(
+              kind: ReviewKind.cannotDo,
+              slotId: slot.slotId,
+            ),
           ),
         ),
       ),
@@ -509,8 +508,10 @@ void main(List<String> args) {
       'avec au moins une séance de repli : $fallbackPlans.',
     )
     ..writeln()
-    ..writeln('| Mesure | Moyenne | 5e centile | Médiane | 95e centile | '
-        'Minimum | Maximum |')
+    ..writeln(
+      '| Mesure | Moyenne | 5e centile | Médiane | 95e centile | '
+      'Minimum | Maximum |',
+    )
     ..writeln('| --- | --- | --- | --- | --- | --- | --- |')
     ..writeln(row('Note globale', scores))
     ..writeln(row('Temps utilisé (%)', timeUse, scale: 100))
@@ -694,16 +695,23 @@ void main(List<String> args) {
         params.weights.scaled(code, factor),
       );
       final overlaps = <double>[];
+      final regrets = <double>[];
       var same = 0;
       for (final f in fixtures) {
-        final plan = KalisPlan(params: engineParams).createPass1(
-          catalog,
-          PlanRequest(
-            profile: f.profile,
-            seed: 0,
-            startDate: reportStartDate,
-            locks: const <PlanLock>[],
-          ),
+        final request = PlanRequest(
+          profile: f.profile,
+          seed: 0,
+          startDate: reportStartDate,
+          locks: const <PlanLock>[],
+        );
+        final plan = KalisPlan(
+          params: engineParams,
+        ).createPass1(catalog, request);
+        // Regret : ce que le programme obtenu avec le poids modifié perd,
+        // jugé avec les poids de référence.
+        regrets.add(
+          inspector.objective(request, baseline[f.key]!) -
+              inspector.objective(request, plan),
         );
         final j = jaccard(
           planExerciseIds(baseline[f.key]!),
@@ -717,10 +725,12 @@ void main(List<String> args) {
       entry['x$factor'] = <String, Object?>{
         'meanJaccard': _r(_mean(overlaps), 3),
         'identicalPlans': same,
+        'meanRegret': _r(_mean(regrets), 5),
       };
       cells
         ..add(_mean(overlaps).toStringAsFixed(2))
-        ..add(same);
+        ..add(same)
+        ..add(_mean(regrets).toStringAsFixed(4));
     }
     sensitivityJson[code] = entry;
     sensitivity.add(cells);
@@ -732,8 +742,9 @@ void main(List<String> args) {
     ..writeln(
       'Chaque poids multiplié par 0,8 puis 1,2, les autres inchangés : '
       'recouvrement moyen (Jaccard) des exercices avec le programme de '
-      'référence sur les 40 profils types, et nombre de programmes '
-      'identiques.',
+      'référence sur les 40 profils types, nombre de programmes '
+      'identiques, et regret moyen (objectif de référence perdu par le '
+      'programme obtenu, sur une échelle de 0 à 2).',
     )
     ..writeln()
     ..writeln(
@@ -741,8 +752,10 @@ void main(List<String> args) {
         'Poids',
         'Jaccard × 0,8',
         'Identiques',
+        'Regret',
         'Jaccard × 1,2',
         'Identiques',
+        'Regret',
       ], sensitivity),
     );
 
@@ -803,6 +816,7 @@ void main(List<String> args) {
   final findings = study.findings(catalog, owner)
     ..sort((a, b) => b.rate.compareTo(a.rate));
   final over = findings.where((f) => f.overRepresented).toList();
+  final overSpecific = over.where((f) => f.ownerSpecific).toList();
   final sortedResemblance = <double>[...resemblance]..sort();
   final sortedSessions = <double>[...sessionMax]..sort();
   measures['ownerResemblance'] = <String, Object?>{
@@ -820,6 +834,9 @@ void main(List<String> args) {
     'streetFreePlans': study.plans,
     'accessoryFindings': <Object?>[for (final f in findings) f.toJson()],
     'overRepresented': <String>[for (final f in over) f.exerciseId],
+    'overRepresentedOwnerSpecific': <String>[
+      for (final f in overSpecific) f.exerciseId,
+    ],
   };
   md
     ..writeln('## 8. Non-ressemblance au programme du propriétaire')
@@ -872,15 +889,20 @@ void main(List<String> args) {
       'aléatoires sans discipline street : part des profils (où l\'exercice '
       'est admissible) dont le programme le contient, face à l\'exercice '
       'hors programme du propriétaire le plus choisi de la même catégorie. '
-      'Sur-représenté = plus de 5 % et plus du double de ce pair : '
-      '**${over.length}**'
-      '${over.isEmpty ? '' : ' (${over.map((f) => '`${f.exerciseId}`').join(', ')})'}.',
+      'Sur-représenté = plus de 5 % et plus du double de ce pair. '
+      'Accessoires propres au propriétaire (exercices des disciplines '
+      'street de la base) sur-représentés : **${overSpecific.length}**'
+      '${overSpecific.isEmpty ? '' : ' (${overSpecific.map((f) => '`${f.exerciseId}`').join(', ')})'}'
+      ' ; accessoires du fonds commun de la musculation au-dessus de la '
+      'même règle : ${over.length - overSpecific.length}'
+      '${over.length == overSpecific.length ? '' : ' (${over.where((f) => !f.ownerSpecific).map((f) => '`${f.exerciseId}`').join(', ')})'}.',
     )
     ..writeln()
     ..writeln(
       _table(
         <String>[
           'Accessoire du propriétaire',
+          'Propre',
           'Catégorie',
           'Admissible',
           'Choisi',
@@ -888,9 +910,13 @@ void main(List<String> args) {
           'Choisi',
         ],
         <List<Object?>>[
-          for (final f in findings.take(20))
+          for (final f in <AccessoryFinding>[
+            ...findings.where((f) => f.ownerSpecific),
+            ...findings.where((f) => !f.ownerSpecific).take(14),
+          ])
             <Object?>[
               '`${f.exerciseId}`',
+              f.ownerSpecific ? 'oui' : 'non',
               f.category,
               f.admissible,
               '${(f.rate * 100).toStringAsFixed(1)} %',

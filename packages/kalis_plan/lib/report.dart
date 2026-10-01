@@ -657,6 +657,7 @@ final class AccessoryFinding {
     required this.bestPeerId,
     required this.bestPeerRate,
     required this.overRepresented,
+    required this.ownerSpecific,
   });
 
   /// Accessoire du propriétaire.
@@ -681,6 +682,12 @@ final class AccessoryFinding {
   /// Sur-représenté (voir [InclusionStudy.findings]).
   final bool overRepresented;
 
+  /// Accessoire propre au propriétaire : exercice d'une discipline street
+  /// de la base (streetlifting, street workout, calisthénie). Les autres
+  /// (élévations latérales, face pull, mollets…) sont le fonds commun de
+  /// tout programme de musculation.
+  final bool ownerSpecific;
+
   /// Objet JSON (rapports).
   Map<String, Object?> toJson() => <String, Object?>{
     'exerciseId': exerciseId,
@@ -690,6 +697,7 @@ final class AccessoryFinding {
     'bestPeerId': bestPeerId,
     'bestPeerRate': (bestPeerRate * 10000).round() / 10000,
     'overRepresented': overRepresented,
+    'ownerSpecific': ownerSpecific,
   };
 }
 
@@ -765,6 +773,11 @@ final class InclusionStudy {
           bestPeerId: bestPeer,
           bestPeerRate: bestRate,
           overRepresented: r > 0.05 && r > 2 * bestRate,
+          ownerSpecific:
+              e.discipline == CatalogDiscipline.streetlifting ||
+              e.discipline == CatalogDiscipline.streetWorkout ||
+              e.discipline == CatalogDiscipline.calisthenicsStatic ||
+              e.discipline == CatalogDiscipline.calisthenicsDynamic,
         ),
       );
     }
