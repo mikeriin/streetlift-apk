@@ -45,7 +45,10 @@ void main() {
       await dev.saveAthleteDraft(d, step: 'goals', mode: 'create');
       expect(dev.saveAthleteProfile(d), isNotNull);
       expect(dev.athleteProfile!.validate(), isEmpty);
-      expect(dev.athleteProfile!.disciplines.primary, TrainingDiscipline.streetlifting);
+      expect(
+        dev.athleteProfile!.disciplines.primary,
+        TrainingDiscipline.streetlifting,
+      );
       await dev.flush();
       expect(jsonEncode(KalisPrefs(raw, dev: false).snapshot()), before);
       expect(

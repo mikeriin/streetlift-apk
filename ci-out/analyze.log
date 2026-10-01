@@ -1,6 +1,0 @@
-Analyzing streetlift-apk...                                     
-
-   info • Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation • lib/program_screens.dart:270:11 • prefer_const_constructors
-   info • Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation • lib/program_screens.dart:272:20 • prefer_const_constructors
-
-2 issues found. (ran in 13.0s)

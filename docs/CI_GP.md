@@ -93,6 +93,23 @@ vide ou absent.
   aucun écran ne cesserait sinon de produire des images ; les tests qui les
   vérifient les rallument. Rebond et transition restent (durées finies).
 
+### G6 (dev6.4.0)
+
+- Cible émulateur par défaut : `integration_test/profil_g6_test.dart`, build
+  de développement, parties `a` (sombre, rouge Kalis) et `b` (clair,
+  violet) : session personnelle d'avant G6 (programme commencé, profil L8,
+  pas de profil v2) → proposition de Koach « Refaire mon profil » et
+  « Plus tard » ; session de test (5 appuis) → création complète du profil
+  (12 écrans), dont récapitulatif, « Toi » et discipline à 200 % de texte
+  (`platformDispatcher.textScaleFactorTestValue`) ; attente du programme ;
+  Réglages › Profil ; suppression de la session de test, session
+  personnelle identique clé par clé. Relevés `emulateur/g6_releve_<partie>.json`,
+  captures `emulateur/g6_*_<thème>.png`. G5 passe sous `CI3D_TOUT=1`.
+- APK de test précompilé sur la cible G6.
+- Tests Dart du mode dev : `test/g6_mode_dev_test.dart` ajouté à la commande
+  (ci-3d.yml et build-apk.yml).
+- Tests Dart du lot : `test/g6_profil_test.dart` (modèle, magasin, écrans).
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant

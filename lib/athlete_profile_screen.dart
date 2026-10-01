@@ -269,10 +269,8 @@ class ProfileScreen extends StatelessWidget {
     final res = await Navigator.push<({Set<String> rubrics, bool program})>(
       context,
       MaterialPageRoute(
-        builder: (_) => AthleteProfileFlow(
-          mode: AthleteFlowMode.edit,
-          editStep: rubric,
-        ),
+        builder: (_) =>
+            AthleteProfileFlow(mode: AthleteFlowMode.edit, editStep: rubric),
       ),
     );
     if (res == null || !context.mounted) return;

@@ -480,8 +480,9 @@ CautionStatus evaluateCaution(
     dated.add(birth?.at ?? p.fields['birthYear']?.at ?? h.answeredAt!);
   }
   final pains = [
-    for (final i in discomforts ??
-        [for (final i in h.injuries) (level: i.level, at: i.at)])
+    for (final i
+        in discomforts ??
+            [for (final i in h.injuries) (level: i.level, at: i.at)])
       if (i.level > 3) i,
   ];
   if (pains.isNotEmpty) {

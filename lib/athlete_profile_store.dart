@@ -200,7 +200,8 @@ extension AthleteProfileStore on AppStore {
     }
     // 1. Santé : consentement, réponses (bloc L8, règles L8/L13).
     final before = profile;
-    final hp = before?.copy() ?? UserProfile(origin: 'onboarding', createdAt: at);
+    final hp =
+        before?.copy() ?? UserProfile(origin: 'onboarding', createdAt: at);
     final h = hp.health;
     final changed = <String>{};
     final wanted = d.consent;
@@ -209,7 +210,8 @@ extension AthleteProfileStore on AppStore {
         ..consent = 'given'
         ..consentAt = at;
       changed.add('consent');
-    } else if (wanted == 'refused' && h.consent != 'refused' &&
+    } else if (wanted == 'refused' &&
+        h.consent != 'refused' &&
         h.consent != 'withdrawn') {
       h
         ..consent = h.consentGiven ? 'withdrawn' : 'refused'

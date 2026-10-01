@@ -179,7 +179,8 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
   String _query = '';
 
   bool get _edit => widget.mode == AthleteFlowMode.edit;
-  String get _modeCode => widget.mode == AthleteFlowMode.redo ? 'redo' : 'create';
+  String get _modeCode =>
+      widget.mode == AthleteFlowMode.redo ? 'redo' : 'create';
 
   /// Étape courante (tests).
   String get step => _step;
@@ -334,9 +335,8 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
         : _edit
         ? (kRubricTitles[_step] ?? 'PROFIL').toUpperCase()
         : switch (_step) {
-            'welcome' => widget.mode == AthleteFlowMode.redo
-                ? 'TON PROFIL'
-                : 'BIENVENUE',
+            'welcome' =>
+              widget.mode == AthleteFlowMode.redo ? 'TON PROFIL' : 'BIENVENUE',
             'recap' => 'RÉCAPITULATIF',
             _ => (kRubricTitles[_step] ?? '').toUpperCase(),
           };
@@ -411,7 +411,9 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
         : 'Continuer';
     return FilledButton(
       key: ValueKey(
-        _edit ? 'flow-save' : (_fromRecap ? 'flow-to-recap' : 'flow-next-$_step'),
+        _edit
+            ? 'flow-save'
+            : (_fromRecap ? 'flow-to-recap' : 'flow-next-$_step'),
       ),
       onPressed: _next,
       child: Text(label),
@@ -479,7 +481,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
       for (final o in options)
         multi
             ? FilterChip(
-                key: ValueKey('$keyPrefix-${o.$1}'),
+                key: ValueKey('$keyPrefix-${_keyOf(o.$1)}'),
                 label: Text(o.$2),
                 selected: selected(o.$1),
                 onSelected: enabled == null || enabled(o.$1) || selected(o.$1)
@@ -487,13 +489,22 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                     : null,
               )
             : ChoiceChip(
-                key: ValueKey('$keyPrefix-${o.$1}'),
+                key: ValueKey('$keyPrefix-${_keyOf(o.$1)}'),
                 label: Text(o.$2),
                 selected: selected(o.$1),
                 onSelected: (v) => setState(() => onSelected(o.$1, v)),
               ),
     ],
   );
+
+  /// Code stable d'une option (code du contrat pour un enum).
+  static String _keyOf(Object? v) => switch (v) {
+    Sex x => x.code,
+    Place x => x.code,
+    TrainingDiscipline x => x.code,
+    ExperienceLevel x => x.code,
+    _ => '$v',
+  };
 
   List<Widget> _stepBody() => switch (_step) {
     'welcome' => _welcome(),
@@ -818,7 +829,9 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _title('${kDisciplineLabels[p]} (principale) : ${_d.primaryPct} %'),
+              _title(
+                '${kDisciplineLabels[p]} (principale) : ${_d.primaryPct} %',
+              ),
               _hint(dosageInWords(p, _d.primaryPct)),
               for (final e in _d.secondaries.entries.toList()) ...[
                 const SizedBox(height: 14),
@@ -904,7 +917,8 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           _chips<ExperienceLevel>(
             keyPrefix: 'flow-experience',
             options: [
-              for (final e in ExperienceLevel.values) (e, kExperienceLabels[e]!),
+              for (final e in ExperienceLevel.values)
+                (e, kExperienceLabels[e]!),
             ],
             selected: (e) => _d.experience == e,
             onSelected: (e, v) => _d.experience = v ? e : null,
@@ -1085,9 +1099,9 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     });
   }
 
-  Future<String?> _pickExercise() => Navigator.of(context).push<String>(
-    MaterialPageRoute(builder: (_) => const ExercisePickerPage()),
-  );
+  Future<String?> _pickExercise() => Navigator.of(
+    context,
+  ).push<String>(MaterialPageRoute(builder: (_) => const ExercisePickerPage()));
 
   Future<void> _addHabit() async {
     var sessions = _d.days.isEmpty ? 3 : _d.days.length.clamp(1, 7).toInt();
@@ -1374,15 +1388,16 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                     ActionChip(
                       key: ValueKey('flow-preset-${p.id}'),
                       label: Text(p.label),
-                      onPressed: () => setState(
-                        () => _d.places[current] = {...p.equipment},
-                      ),
+                      onPressed: () =>
+                          setState(() => _d.places[current] = {...p.equipment}),
                     ),
                 ],
               ),
               const SizedBox(height: 6),
-              _hint('${set.length} élément${set.length > 1 ? 's' : ''} choisi'
-                  '${set.length > 1 ? 's' : ''}'),
+              _hint(
+                '${set.length} élément${set.length > 1 ? 's' : ''} choisi'
+                '${set.length > 1 ? 's' : ''}',
+              ),
             ],
           ),
         ),
@@ -1772,7 +1787,9 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     for (final m in GuidanceMode.values)
       _option(
         key: ValueKey('flow-mode-${m.code}'),
-        pose: m == GuidanceMode.assisted ? KoachPose.fistBump : KoachPose.present,
+        pose: m == GuidanceMode.assisted
+            ? KoachPose.fistBump
+            : KoachPose.present,
         title: kGuidanceLabels[m]!,
         hint: m == GuidanceMode.assisted
             ? 'J’applique moi-même ce que je propose, je t’explique pourquoi, '
@@ -2072,10 +2089,16 @@ class _PerformanceGoalSheetState extends State<_PerformanceGoalSheet> {
 
   (String, String?) get _valueLabel => switch (_metric) {
     GoalMetric.oneRmKg => ('Charge visée (kg, charge externe)', null),
-    GoalMetric.maxReps => ('Répétitions visées', 'À une charge de (kg, facultatif)'),
+    GoalMetric.maxReps => (
+      'Répétitions visées',
+      'À une charge de (kg, facultatif)',
+    ),
     GoalMetric.maxHoldSeconds => ('Temps de tenue visé (secondes)', null),
     GoalMetric.timeSeconds => ('Temps visé (min:s, ex. 24:30)', 'Distance (m)'),
-    GoalMetric.distanceMeters => ('Distance visée (m)', 'En combien de minutes ?'),
+    GoalMetric.distanceMeters => (
+      'Distance visée (m)',
+      'En combien de minutes ?',
+    ),
     _ => ('', null),
   };
 
@@ -2089,7 +2112,9 @@ class _PerformanceGoalSheetState extends State<_PerformanceGoalSheet> {
     double? value;
     if (metric != GoalMetric.skillUnlocked) {
       value = _parse(_value.text);
-      if (value == null || value < 0 || (value == 0 && metric != GoalMetric.oneRmKg)) {
+      if (value == null ||
+          value < 0 ||
+          (value == 0 && metric != GoalMetric.oneRmKg)) {
         setState(() => _error = 'Indique la valeur visée.');
         return;
       }

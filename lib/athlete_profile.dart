@@ -86,8 +86,7 @@ const kStreetStyleLabels = <StreetStyle, String>{
 const kStreetStyleHints = <StreetStyle, String>{
   StreetStyle.streetlifting:
       'Charges maximales lestées : traction, dips, muscle-up, squat.',
-  StreetStyle.setsReps:
-      'Beaucoup de répétitions au poids du corps, en séries.',
+  StreetStyle.setsReps: 'Beaucoup de répétitions au poids du corps, en séries.',
   StreetStyle.calisthenics: 'Les figures et leur maîtrise.',
 };
 
@@ -542,9 +541,7 @@ List<LevelMovement> movementsFor(List<TrainingDiscipline> disciplines) {
       }
     }
   }
-  return [
-    for (final k in keys.take(kMaxLevelMovements)) levelMovement(k)!,
-  ];
+  return [for (final k in keys.take(kMaxLevelMovements)) levelMovement(k)!];
 }
 
 // ================================================================ matériel
@@ -868,10 +865,10 @@ String durationText(num seconds) {
 
 String _num(num v) {
   if (v == v.roundToDouble()) return v.toInt().toString();
-  return v.toStringAsFixed(2).replaceAll(RegExp(r'0+$'), '').replaceAll(
-    '.',
-    ',',
-  );
+  return v
+      .toStringAsFixed(2)
+      .replaceAll(RegExp(r'0+$'), '')
+      .replaceAll('.', ',');
 }
 
 String numText(num v) => _num(v);
@@ -918,7 +915,9 @@ String goalText(Goal g, String Function(String id) name) {
       '${_distance(v ?? 0)} en ${durationText(g.durationSeconds ?? 0)}',
     null => '',
   };
-  final date = g.targetDate == null ? '' : ' d’ici le ${civilText(g.targetDate!)}';
+  final date = g.targetDate == null
+      ? ''
+      : ' d’ici le ${civilText(g.targetDate!)}';
   return '$ex : $what$date';
 }
 
@@ -1124,8 +1123,7 @@ class ProfileDraft {
     return [p, ...secondaries.keys];
   }
 
-  int get primaryPct =>
-      100 - secondaries.values.fold<int>(0, (a, b) => a + b);
+  int get primaryPct => 100 - secondaries.values.fold<int>(0, (a, b) => a + b);
 
   /// Mode street du brouillon (null si désactivé ou incomplet).
   StreetMode? get streetMode {
@@ -1281,7 +1279,8 @@ class ProfileDraft {
         if (displayName.trim().length > 40) {
           return 'Prénom ou pseudo : 40 caractères au plus.';
         }
-        if (sex == null) return 'Indique ton sexe (ou « Je préfère ne pas le dire »).';
+        if (sex == null)
+          return 'Indique ton sexe (ou « Je préfère ne pas le dire »).';
         final by = birthYearValue;
         if (by == null || by < 1900 || by > now.year) {
           return 'Indique ton année de naissance (4 chiffres).';
@@ -1340,7 +1339,9 @@ class ProfileDraft {
             ? 'Choisis « J’accepte » ou « Je refuse ».'
             : null;
       case 'mode':
-        return guidance == null ? 'Choisis le mode assisté ou le mode libre.' : null;
+        return guidance == null
+            ? 'Choisis le mode assisté ou le mode libre.'
+            : null;
     }
     return null;
   }
@@ -1409,7 +1410,9 @@ class ProfileDraft {
       for (final p in Place.values)
         if (places.containsKey(p)) p,
     ];
-    final all = sortEquipment({for (final s in places.values) ...s}, vocabulary);
+    final all = sortEquipment({
+      for (final s in places.values) ...s,
+    }, vocabulary);
     List<PlaceEquipment>? byPlace;
     if (placeList.length > 1) {
       final sets = [for (final p in placeList) places[p]!];
@@ -1506,9 +1509,7 @@ class ProfileDraft {
         d.levels[ref.key] = -1;
         continue;
       }
-      final i = ref.bands.indexWhere(
-        (b) => b.low == l.low && b.high == l.high,
-      );
+      final i = ref.bands.indexWhere((b) => b.low == l.low && b.high == l.high);
       if (i < 0) {
         extra.add(l);
       } else {
@@ -1532,7 +1533,11 @@ class ProfileDraft {
     d.liked.addAll(p.likedExerciseIds);
     d.disliked.addAll(p.dislikedExerciseIds);
     if (health != null) {
-      d.consent = health.consentGiven ? 'given' : health.consent == null ? null : 'refused';
+      d.consent = health.consentGiven
+          ? 'given'
+          : health.consent == null
+          ? null
+          : 'refused';
       if (health.consentGiven) d.answers.addAll(health.answers);
     }
     return d;
@@ -1557,9 +1562,7 @@ class ProfileDraft {
     'goals': [for (final g in goals) g.toJson()],
     'days': {for (final e in days.entries) '${e.key}': e.value},
     'dayPlace': {for (final e in dayPlace.entries) '${e.key}': e.value.code},
-    'places': {
-      for (final e in places.entries) e.key.code: e.value.toList(),
-    },
+    'places': {for (final e in places.entries) e.key.code: e.value.toList()},
     if (consent != null) 'consent': consent,
     'answers': answers,
     'limitations': [for (final l in limitations) l.toJson()],
@@ -1613,9 +1616,8 @@ class ProfileDraft {
         (k, v) => d.dayPlace[int.parse('$k')] = Place.fromCode(v as String),
       );
       (raw['places'] as Map? ?? const {}).forEach(
-        (k, v) => d.places[Place.fromCode('$k')] = {
-          ...(v as List).cast<String>(),
-        },
+        (k, v) =>
+            d.places[Place.fromCode('$k')] = {...(v as List).cast<String>()},
       );
       (raw['answers'] as Map? ?? const {}).forEach(
         (k, v) => d.answers['$k'] = v as bool,
@@ -1879,17 +1881,22 @@ Set<String> changedRubrics(AthleteProfile? a, AthleteProfile b) {
       )) {
     out.add('levels');
   }
-  if (diff([for (final g in a.goals) g.toJson()], [
-    for (final g in b.goals) g.toJson(),
-  ])) {
+  if (diff(
+    [for (final g in a.goals) g.toJson()],
+    [for (final g in b.goals) g.toJson()],
+  )) {
     out.add('goals');
   }
-  if (diff([for (final s in a.availability) s.toJson()], [
-    for (final s in b.availability) s.toJson(),
-  ])) {
+  if (diff(
+    [for (final s in a.availability) s.toJson()],
+    [for (final s in b.availability) s.toJson()],
+  )) {
     out.add('availability');
   }
-  if (diff(a.places.map((p) => p.code).toList(), b.places.map((p) => p.code).toList()) ||
+  if (diff(
+        a.places.map((p) => p.code).toList(),
+        b.places.map((p) => p.code).toList(),
+      ) ||
       diff(a.equipment, b.equipment) ||
       diff(
         a.equipmentByPlace?.map((e) => e.toJson()).toList(),
@@ -1897,9 +1904,10 @@ Set<String> changedRubrics(AthleteProfile? a, AthleteProfile b) {
       )) {
     out.add('places');
   }
-  if (diff([for (final l in a.limitations) l.toJson()], [
-        for (final l in b.limitations) l.toJson(),
-      ]) ||
+  if (diff(
+        [for (final l in a.limitations) l.toJson()],
+        [for (final l in b.limitations) l.toJson()],
+      ) ||
       diff(a.healthScreening?.toJson(), b.healthScreening?.toJson())) {
     out.add('health');
   }
@@ -1913,7 +1921,11 @@ Set<String> changedRubrics(AthleteProfile? a, AthleteProfile b) {
 
 /// Un changement de ces rubriques touche le programme (régénération en
 /// G7) ; le nom, la taille et le mode n'en changent pas la construction.
-bool rubricsAffectProgram(Set<String> rubrics, AthleteProfile? a, AthleteProfile b) {
+bool rubricsAffectProgram(
+  Set<String> rubrics,
+  AthleteProfile? a,
+  AthleteProfile b,
+) {
   for (final r in rubrics) {
     switch (r) {
       case 'identity':

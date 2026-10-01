@@ -196,7 +196,12 @@ void main() {
       tester,
       find.byKey(const ValueKey('flow-welcome')),
     );
-    await wait(tester, 600);
+    // Session de test neuve : mêmes thème et couleur que la partie.
+    store.settings
+      ..theme = dark ? 'dark' : 'light'
+      ..accent = accent;
+    store.saveSettings();
+    await wait(tester, 1500);
     await shot('02_dev_bienvenue');
     final t0 = DateTime.now();
     await tap(tester, 'flow-next-welcome');

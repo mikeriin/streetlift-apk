@@ -48,11 +48,7 @@ Goal? _forLevel(LevelMovement m, LevelBand b, CivilDate today, String id) {
     case LevelMeasure.timeSeconds:
       // Temps : la borne prudente est la plus lente (haute).
       final target = (b.high * .95 / 15).floor() * 15.0;
-      return perf(
-        GoalMetric.timeSeconds,
-        target,
-        distance: m.distanceMeters,
-      );
+      return perf(GoalMetric.timeSeconds, target, distance: m.distanceMeters);
   }
 }
 

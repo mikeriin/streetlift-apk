@@ -113,35 +113,44 @@ void main() {
       );
     });
 
-    test('dosage : 1 à 2 secondaires, principale la plus grande, somme 100', () {
-      final d = ProfileDraft()..primary = TrainingDiscipline.musculation;
-      d.addSecondary(TrainingDiscipline.mobility);
-      expect(d.primaryPct, 80);
-      d.addSecondary(TrainingDiscipline.cardio);
-      expect(d.primaryPct, 70);
-      d.addSecondary(TrainingDiscipline.crossfit);
-      expect(d.secondaries, hasLength(2));
-      d.setSecondaryPct(TrainingDiscipline.mobility, 60);
-      expect(d.primaryPct >= d.secondaries[TrainingDiscipline.mobility]!, isTrue);
-      expect(d.mix!.validate(), isEmpty);
-      for (var pct = 0; pct <= 100; pct += 5) {
-        d.setSecondaryPct(TrainingDiscipline.cardio, pct);
-        expect(d.mix!.validate(), isEmpty, reason: '$pct');
-      }
-      expect(dosageInWords(TrainingDiscipline.mobility, 20), contains('1 séance sur 5'));
-      // Mode street : principale + deux autres dosées.
-      final s = ProfileDraft()..setStreet(true);
-      s.setStreetPrimary(StreetStyle.streetlifting);
-      expect(s.streetMode!.validate(), isEmpty);
-      expect(s.streetMode!.pctOf(StreetStyle.streetlifting), 60);
-      s.setStreetPct(StreetStyle.calisthenics, 95);
-      expect(s.streetMode!.validate(), isEmpty);
-      s
-        ..setStreetPct(StreetStyle.calisthenics, 0)
-        ..setStreetPct(StreetStyle.setsReps, 0);
-      expect(s.stepError('secondary', now), isNotNull);
-      expect(s.mix!.primary, TrainingDiscipline.streetlifting);
-    });
+    test(
+      'dosage : 1 à 2 secondaires, principale la plus grande, somme 100',
+      () {
+        final d = ProfileDraft()..primary = TrainingDiscipline.musculation;
+        d.addSecondary(TrainingDiscipline.mobility);
+        expect(d.primaryPct, 80);
+        d.addSecondary(TrainingDiscipline.cardio);
+        expect(d.primaryPct, 70);
+        d.addSecondary(TrainingDiscipline.crossfit);
+        expect(d.secondaries, hasLength(2));
+        d.setSecondaryPct(TrainingDiscipline.mobility, 60);
+        expect(
+          d.primaryPct >= d.secondaries[TrainingDiscipline.mobility]!,
+          isTrue,
+        );
+        expect(d.mix!.validate(), isEmpty);
+        for (var pct = 0; pct <= 100; pct += 5) {
+          d.setSecondaryPct(TrainingDiscipline.cardio, pct);
+          expect(d.mix!.validate(), isEmpty, reason: '$pct');
+        }
+        expect(
+          dosageInWords(TrainingDiscipline.mobility, 20),
+          contains('1 séance sur 5'),
+        );
+        // Mode street : principale + deux autres dosées.
+        final s = ProfileDraft()..setStreet(true);
+        s.setStreetPrimary(StreetStyle.streetlifting);
+        expect(s.streetMode!.validate(), isEmpty);
+        expect(s.streetMode!.pctOf(StreetStyle.streetlifting), 60);
+        s.setStreetPct(StreetStyle.calisthenics, 95);
+        expect(s.streetMode!.validate(), isEmpty);
+        s
+          ..setStreetPct(StreetStyle.calisthenics, 0)
+          ..setStreetPct(StreetStyle.setsReps, 0);
+        expect(s.stepError('secondary', now), isNotNull);
+        expect(s.mix!.primary, TrainingDiscipline.streetlifting);
+      },
+    );
 
     test('étapes : chaque réponse obligatoire est demandée', () {
       final d = ProfileDraft();
@@ -164,7 +173,14 @@ void main() {
       expect(d.stepError('identity', now), contains('Poids'));
       d.weight = '';
       expect(d.stepError('identity', now), isNull);
-      for (final s in ['discipline', 'goals', 'availability', 'places', 'health', 'mode']) {
+      for (final s in [
+        'discipline',
+        'goals',
+        'availability',
+        'places',
+        'health',
+        'mode',
+      ]) {
         expect(d.stepError(s, now), isNotNull, reason: s);
       }
       d.primary = TrainingDiscipline.cardio;
@@ -213,7 +229,7 @@ void main() {
       final back = ProfileDraft.fromJson(jsonDecode(jsonEncode(d.toJson())))!;
       expect(jsonEncode(back.toJson()), jsonEncode(d.toJson()));
       final p = d.build(now, vocabulary: vocabulary)!;
-      final again = ProfileDraft.of(p).build(now, vocabulary: vocabulary)!;
+      final again = (ProfileDraft.of(p)..consent = 'given').build(now, vocabulary: vocabulary)!;
       expect(jsonEncode(again.toJson()), jsonEncode(p.toJson()));
       final r = AthleteRecord(
         profile: p,
@@ -251,15 +267,16 @@ void main() {
 
     test('rubriques changées et effet sur le programme', () {
       final a = fullDraft().build(now)!;
-      final b = (ProfileDraft.of(a)..displayName = 'Sam').build(now)!;
+      final b = (ProfileDraft.of(a)..consent = 'given'..displayName = 'Sam').build(now)!;
       expect(changedRubrics(a, b), {'identity'});
       expect(rubricsAffectProgram({'identity'}, a, b), isFalse);
-      final c = (ProfileDraft.of(a)..days[6] = 30).build(now)!;
+      final c = (ProfileDraft.of(a)..consent = 'given'..days[6] = 30).build(now)!;
       expect(changedRubrics(a, c), {'availability'});
       expect(rubricsAffectProgram({'availability'}, a, c), isTrue);
-      final m = (ProfileDraft.of(a)..guidance = GuidanceMode.assisted).build(
-        now,
-      )!;
+      final m = (ProfileDraft.of(a)
+            ..consent = 'given'
+            ..guidance = GuidanceMode.assisted)
+          .build(now)!;
       expect(rubricsAffectProgram(changedRubrics(a, m), a, m), isFalse);
     });
 
@@ -278,11 +295,16 @@ void main() {
         HealthScreeningOutcome.standard,
       );
       expect(
-        healthRefOf(h, const CautionStatus(['discomfort'], true, false, true))
-            .outcome,
+        healthRefOf(
+          h,
+          const CautionStatus(['discomfort'], true, false, true),
+        ).outcome,
         HealthScreeningOutcome.cautious,
       );
-      expect(healthRefOf(h, CautionStatus.off).answeredOn, CivilDate(2026, 10, 1));
+      expect(
+        healthRefOf(h, CautionStatus.off).answeredOn,
+        CivilDate(2026, 10, 1),
+      );
     });
   });
 
@@ -314,32 +336,35 @@ void main() {
       return next;
     }
 
-    test('installation neuve : profil v2 enregistré, relu, sauvegardé', () async {
-      expect(app.isFreshInstall, isTrue);
-      expect(backupOf(app).containsKey('athleteProfile'), isFalse);
-      final res = app.saveAthleteProfile(fullDraft());
-      expect(res, isNotNull);
-      expect(res!.program, isFalse, reason: 'création, pas de modification');
-      expect(app.isFreshInstall, isFalse);
-      expect(app.athleteRedoProposed, isFalse);
-      final p = app.athleteProfile!;
-      expect(p.validate(), isEmpty);
-      expect(app.content.catalog!.checkProfile(p), isEmpty);
-      expect(p.healthScreening!.outcome, HealthScreeningOutcome.standard);
-      // Bloc santé (questionnaire L13) gardé dans la section L8.
-      expect(app.profile!.health.consentGiven, isTrue);
-      expect(app.profile!.fields, isEmpty);
-      // Pesée du poids déclaré.
-      expect(app.currentBodyweight, 61.5);
-      final json = backupOf(app);
-      expect(json['athleteProfile']['v'], 1);
-      expect(json['athleteProfile']['profile']['schemaVersion'], 2);
-      final next = await relaunch();
-      expect(
-        jsonEncode(next.athlete!.toJson()),
-        jsonEncode(app.athlete!.toJson()),
-      );
-    });
+    test(
+      'installation neuve : profil v2 enregistré, relu, sauvegardé',
+      () async {
+        expect(app.isFreshInstall, isTrue);
+        expect(backupOf(app).containsKey('athleteProfile'), isFalse);
+        final res = app.saveAthleteProfile(fullDraft());
+        expect(res, isNotNull);
+        expect(res!.program, isFalse, reason: 'création, pas de modification');
+        expect(app.isFreshInstall, isFalse);
+        expect(app.athleteRedoProposed, isFalse);
+        final p = app.athleteProfile!;
+        expect(p.validate(), isEmpty);
+        expect(app.content.catalog!.checkProfile(p), isEmpty);
+        expect(p.healthScreening!.outcome, HealthScreeningOutcome.standard);
+        // Bloc santé (questionnaire L13) gardé dans la section L8.
+        expect(app.profile!.health.consentGiven, isTrue);
+        expect(app.profile!.fields, isEmpty);
+        // Pesée du poids déclaré.
+        expect(app.currentBodyweight, 61.5);
+        final json = backupOf(app);
+        expect(json['athleteProfile']['v'], 1);
+        expect(json['athleteProfile']['profile']['schemaVersion'], 2);
+        final next = await relaunch();
+        expect(
+          jsonEncode(next.athlete!.toJson()),
+          jsonEncode(app.athlete!.toJson()),
+        );
+      },
+    );
 
     test('mode prudent avec le profil v2 : âge, gêne, accord daté', () {
       app.saveAthleteProfile(fullDraft());
@@ -399,7 +424,10 @@ void main() {
         'illisible gardée au démarrage', () async {
       app.saveAthleteProfile(fullDraft());
       final exported = app.exportAll();
-      expect(app.previewImport(exported).preview!.athleteProfilePresent, isTrue);
+      expect(
+        app.previewImport(exported).preview!.athleteProfilePresent,
+        isTrue,
+      );
       final old = backupOf(app)..remove('athleteProfile');
       expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
       expect(app.athlete, isNull);
@@ -429,71 +457,86 @@ void main() {
       expect(backupOf(again)['athleteProfile'], m['athleteProfile']);
     });
 
-    test('refaire son profil (session personnelle) : rien d’autre ne change',
-        () async {
-      final state = filledBackup(app);
-      expect(await app.importBackup(jsonEncode(state)), ImportStatus.success);
-      final legacy = UserProfile(origin: 'migration', createdAt: '2026-09-26T10:00:00');
-      legacy.setField('birthYear', 1990, '2026-09-26T10:00:00');
-      legacy.setField('days', [1, 3, 5], '2026-09-26T10:00:00');
-      legacy.setField('sessionMinutes', 75, '2026-09-26T10:00:00');
-      legacy.setField('places', {
-        'park': ['pullup_bar', 'dip_bars', 'weight_belt'],
-      }, '2026-09-26T10:00:00');
-      app.saveProfile(legacy);
-      await app.flush();
-      final before = backupOf(app);
-      expect(app.athleteRedoProposed, isTrue);
-      await app.snoozeAthleteRedo();
-      expect(app.athleteRedoProposed, isFalse);
-      clock = clock.add(const Duration(days: 1));
-      expect(app.athleteRedoProposed, isTrue);
-      final d = app.athleteRedoDraft();
-      expect(d.birthYear, '1990');
-      expect(d.days, {1: 75, 3: 75, 5: 75});
-      expect(d.places.keys, [Place.outdoor]);
-      expect(d.places[Place.outdoor], containsAll(['barre fixe', 'barres parallèles', 'ceinture de lest']));
-      // Réponses complétées, puis enregistrement.
-      d
-        ..sex = Sex.male
-        ..height = '178'
-        ..weight = ''
-        ..setStreet(true)
-        ..setStreetPrimary(StreetStyle.streetlifting)
-        ..guidance = GuidanceMode.assisted
-        ..consent = 'refused';
-      d.goals.add(
-        Goal(
-          id: 'goal-1',
-          kind: GoalKind.habit,
-          origin: GoalOrigin.user,
-          createdOn: CivilDate(2026, 10, 2),
-          sessionsPerWeek: 3,
-          weeks: 12,
-        ),
-      );
-      expect(app.saveAthleteProfile(d), isNotNull);
-      final after = backupOf(app);
-      expect(after.remove('athleteProfile'), isNotNull);
-      final legacyAfter = after.remove('profile') as Map;
-      final legacyBefore = before.remove('profile') as Map;
-      expect(after, before, reason: 'programme, historique et réglages intacts');
-      // Profil L8 conservé (lecture, import) ; seul le refus santé daté.
-      expect(legacyAfter['fields'], legacyBefore['fields']);
-      expect(app.athleteRedoProposed, isFalse);
-    });
+    test(
+      'refaire son profil (session personnelle) : rien d’autre ne change',
+      () async {
+        final state = filledBackup(app);
+        expect(await app.importBackup(jsonEncode(state)), ImportStatus.success);
+        final legacy = UserProfile(
+          origin: 'migration',
+          createdAt: '2026-09-26T10:00:00',
+        );
+        legacy.setField('birthYear', 1990, '2026-09-26T10:00:00');
+        legacy.setField('days', [1, 3, 5], '2026-09-26T10:00:00');
+        legacy.setField('sessionMinutes', 75, '2026-09-26T10:00:00');
+        legacy.setField('places', {
+          'park': ['pullup_bar', 'dip_bars', 'weight_belt'],
+        }, '2026-09-26T10:00:00');
+        app.saveProfile(legacy);
+        await app.flush();
+        final before = backupOf(app);
+        expect(app.athleteRedoProposed, isTrue);
+        await app.snoozeAthleteRedo();
+        expect(app.athleteRedoProposed, isFalse);
+        clock = clock.add(const Duration(days: 1));
+        expect(app.athleteRedoProposed, isTrue);
+        final d = app.athleteRedoDraft();
+        expect(d.birthYear, '1990');
+        expect(d.days, {1: 75, 3: 75, 5: 75});
+        expect(d.places.keys, [Place.outdoor]);
+        expect(
+          d.places[Place.outdoor],
+          containsAll(['barre fixe', 'barres parallèles', 'ceinture de lest']),
+        );
+        // Réponses complétées, puis enregistrement.
+        d
+          ..sex = Sex.male
+          ..height = '178'
+          ..weight = ''
+          ..setStreet(true)
+          ..setStreetPrimary(StreetStyle.streetlifting)
+          ..guidance = GuidanceMode.assisted
+          ..consent = 'refused';
+        d.goals.add(
+          Goal(
+            id: 'goal-1',
+            kind: GoalKind.habit,
+            origin: GoalOrigin.user,
+            createdOn: CivilDate(2026, 10, 2),
+            sessionsPerWeek: 3,
+            weeks: 12,
+          ),
+        );
+        expect(app.saveAthleteProfile(d), isNotNull);
+        final after = backupOf(app);
+        expect(after.remove('athleteProfile'), isNotNull);
+        final legacyAfter = after.remove('profile') as Map;
+        final legacyBefore = before.remove('profile') as Map;
+        expect(
+          after,
+          before,
+          reason: 'programme, historique et réglages intacts',
+        );
+        // Profil L8 conservé (lecture, import) ; seul le refus santé daté.
+        expect(legacyAfter['fields'], legacyBefore['fields']);
+        expect(app.athleteRedoProposed, isFalse);
+      },
+    );
 
-    test('brouillon : hors sauvegarde, repris, effacé avec les données', () async {
-      final d = fullDraft();
-      await app.saveAthleteDraft(d, step: 'places', mode: 'create');
-      final back = app.athleteDraft!;
-      expect(back.step, 'places');
-      expect(back.mode, 'create');
-      expect(jsonEncode(back.draft.toJson()), jsonEncode(d.toJson()));
-      expect(app.exportAll().contains('athlete_profile_draft'), isFalse);
-      await app.eraseAllData();
-      expect(app.athleteDraft, isNull);
-    });
+    test(
+      'brouillon : hors sauvegarde, repris, effacé avec les données',
+      () async {
+        final d = fullDraft();
+        await app.saveAthleteDraft(d, step: 'places', mode: 'create');
+        final back = app.athleteDraft!;
+        expect(back.step, 'places');
+        expect(back.mode, 'create');
+        expect(jsonEncode(back.draft.toJson()), jsonEncode(d.toJson()));
+        expect(app.exportAll().contains('athlete_profile_draft'), isFalse);
+        await app.eraseAllData();
+        expect(app.athleteDraft, isNull);
+      },
+    );
   });
 
   group('écrans', () {
@@ -585,7 +628,10 @@ void main() {
       final seen = await runFlow(tester);
       expect(seen, kAthleteSteps.toSet());
       expect(find.byKey(const ValueKey('flow-done')), findsOneWidget);
-      expect(find.textContaining('Ton programme arrive bientôt'), findsOneWidget);
+      expect(
+        find.textContaining('Ton programme arrive bientôt'),
+        findsOneWidget,
+      );
       final p = store.athleteProfile!;
       expect(p.validate(), isEmpty);
       expect(store.content.catalog!.checkProfile(p), isEmpty);
@@ -647,36 +693,44 @@ void main() {
     });
 
     for (final dark in [true, false]) {
-      testWidgets('texte à 200 % sans débordement (${dark ? 'sombre' : 'clair'})',
-          (tester) async {
-        phone(tester, size: const Size(320, 720));
-        await tester.pumpWidget(
-          page(
-            const ProfileGate(child: Text('ACCUEIL')),
-            scale: 2,
-            dark: dark,
-          ),
-        );
-        await tester.pumpAndSettle();
-        expect(tester.takeException(), isNull);
-        await tap(tester, 'flow-next-welcome');
-        expect(tester.takeException(), isNull, reason: 'identité');
-        await tap(tester, 'flow-sex-undisclosed');
-        await tester.enterText(find.byKey(const ValueKey('flow-year')), '1985');
-        await tester.enterText(find.byKey(const ValueKey('flow-height')), '175');
-        await tester.pumpAndSettle();
-        await tap(tester, 'flow-next-identity');
-        expect(tester.takeException(), isNull, reason: 'discipline');
-        await tap(tester, 'flow-street');
-        await tap(tester, 'flow-style-calisthenics');
-        await tap(tester, 'flow-next-discipline');
-        expect(tester.takeException(), isNull, reason: 'dosage street');
-        await scrollToAction(
-          tester,
-          find.byKey(const ValueKey('flow-slider-streetlifting')),
-        );
-        expect(tester.takeException(), isNull);
-      });
+      testWidgets(
+        'texte à 200 % sans débordement (${dark ? 'sombre' : 'clair'})',
+        (tester) async {
+          phone(tester, size: const Size(320, 720));
+          await tester.pumpWidget(
+            page(
+              const ProfileGate(child: Text('ACCUEIL')),
+              scale: 2,
+              dark: dark,
+            ),
+          );
+          await tester.pumpAndSettle();
+          expect(tester.takeException(), isNull);
+          await tap(tester, 'flow-next-welcome');
+          expect(tester.takeException(), isNull, reason: 'identité');
+          await tap(tester, 'flow-sex-undisclosed');
+          await tester.enterText(
+            find.byKey(const ValueKey('flow-year')),
+            '1985',
+          );
+          await tester.enterText(
+            find.byKey(const ValueKey('flow-height')),
+            '175',
+          );
+          await tester.pumpAndSettle();
+          await tap(tester, 'flow-next-identity');
+          expect(tester.takeException(), isNull, reason: 'discipline');
+          await tap(tester, 'flow-street');
+          await tap(tester, 'flow-style-calisthenics');
+          await tap(tester, 'flow-next-discipline');
+          expect(tester.takeException(), isNull, reason: 'dosage street');
+          await scrollToAction(
+            tester,
+            find.byKey(const ValueKey('flow-slider-streetlifting')),
+          );
+          expect(tester.takeException(), isNull);
+        },
+      );
     }
 
     testWidgets('Réglages › Profil : rubrique modifiée, Koach signale le '
@@ -686,12 +740,13 @@ void main() {
       await tester.pumpWidget(page(const ProfileScreen()));
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('profile-koach')), findsOneWidget);
-      for (final r in kRubricTitles.keys) {
-        expect(
-          find.byKey(ValueKey('profile-rubric-$r'), skipOffstage: false),
-          findsOneWidget,
-        );
-      }
+      expect(find.byKey(const ValueKey('profile-rubric-identity')), findsOneWidget);
+      await scrollToAction(tester, find.byKey(const ValueKey('profile-rubric-mode')));
+      await scrollToAction(
+        tester,
+        find.byKey(const ValueKey('profile-rubric-identity')),
+        up: true,
+      );
       await tap(tester, 'profile-edit-availability');
       expect(flow(tester).step, 'availability');
       await tap(tester, 'flow-day-7');
@@ -705,15 +760,21 @@ void main() {
       await tap(tester, 'profile-consent-withdraw');
       await tap(tester, 'withdraw-confirm');
       expect(store.profile!.health.consent, 'withdrawn');
-      await scrollToAction(tester, find.byKey(const ValueKey('caution-state')), up: true);
+      await scrollToAction(
+        tester,
+        find.byKey(const ValueKey('caution-state')),
+        up: true,
+      );
       expect(find.text('Mode prudent activé'), findsOneWidget);
     });
 
     testWidgets('session personnelle sans profil v2 : Koach propose, « Plus '
         'tard » ouvre l’application', (tester) async {
       phone(tester);
-      final legacy = UserProfile(origin: 'onboarding', createdAt: '2026-09-26T10:00:00')
-        ..setField('birthYear', 1990, '2026-09-26T10:00:00');
+      final legacy = UserProfile(
+        origin: 'onboarding',
+        createdAt: '2026-09-26T10:00:00',
+      )..setField('birthYear', 1990, '2026-09-26T10:00:00');
       store.saveProfile(legacy);
       await tester.pumpWidget(page(const ProfileGate(child: Text('ACCUEIL'))));
       await tester.pumpAndSettle();

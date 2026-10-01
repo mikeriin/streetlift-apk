@@ -267,11 +267,11 @@ class ProgramScreen extends StatelessWidget {
       }
       if (store.athlete != null) {
         children.add(
-          KCard(
-            key: const ValueKey('program-coming'),
+          const KCard(
+            key: ValueKey('program-coming'),
             child: KoachSays(
               pose: KoachPose.present,
-              child: const Text(
+              child: Text(
                 'La création de ton programme à partir de ton nouveau profil '
                 'arrive dans la prochaine version. Ton programme actuel ne '
                 'change pas.',
