@@ -40,12 +40,12 @@ commit quand il veut (`git tag -a kalis_core-v0.1.0 5327294 && git push origin k
 
 ## Catalogue : distribution des champs calculés (règles 1.1.0)
 
-- Type de charge : poids du corps 446, aucune 155, barre 116, haltères 88, lest 57, poulie 61, machine 53,
+- Type de charge : poids du corps 446, aucune 155, barre 116, haltères 88, poulie 61, lest 58, machine 53,
   autre 25, kettlebell 19, élastique 18 (détail exact dans la relecture).
 - Unité : répétitions 73 %, secondes 24 %, distance 3 %, calories 1 exercice.
 - Articularité : poly 53 %, mono 19 %, sans objet 28 % (tenues, cardio, mobilité).
 - Difficulté : Débutant 1-3, Intermédiaire 3-6, Avancé 6-8, Élite 8-10 (jamais décroissante avec le niveau).
-- 220 exercices environ ont une fraction du poids du corps (publiée, dérivée ou estimée, dite pour chacune).
+- 204 exercices ont une fraction du poids du corps (publiée, dérivée ou estimée, dite pour chacune).
 
 ## Relecture indépendante
 
