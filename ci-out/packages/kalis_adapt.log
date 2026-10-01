@@ -1,0 +1,192 @@
+== kalis_adapt
+Resolving dependencies...
+Downloading packages...
++ _fe_analyzer_shared 108.0.0
++ analyzer 14.4.0
++ args 2.7.0
++ async 2.13.1
++ boolean_selector 2.1.2
++ cli_config 0.2.0
++ collection 1.19.1
++ convert 3.1.2
++ coverage 1.15.1
++ crypto 3.0.7
++ file 7.0.1
++ frontend_server_client 4.0.0
++ glob 2.2.0
++ http_multi_server 3.2.2
++ http_parser 4.1.2
++ io 1.1.0
++ kalis_core 0.2.0 from path ../kalis_core
++ kalis_plan 0.1.0 from path ../kalis_plan
++ lints 4.0.0 (6.1.0 available)
++ logging 1.3.0
++ matcher 0.12.20
++ meta 1.19.0
++ mime 2.1.0
++ node_preamble 2.0.2
++ package_config 3.0.0
++ path 1.9.1
++ pool 1.5.3
++ pub_semver 2.2.1
++ shelf 1.4.2
++ shelf_packages_handler 3.0.2
++ shelf_static 1.1.3
++ shelf_web_socket 3.0.0
++ source_map_stack_trace 2.1.2
++ source_maps 0.10.14
++ source_span 1.10.2
++ stack_trace 1.12.2
++ stream_channel 2.1.4
++ string_scanner 1.4.1
++ term_glyph 1.2.2
++ test 1.32.0
++ test_api 0.7.14
++ test_core 0.6.20
++ typed_data 1.4.0
++ vm_service 15.3.0
++ watcher 1.2.1
++ web 1.1.1
++ web_socket 1.0.1
++ web_socket_channel 3.0.3
++ webkit_inspection_protocol 1.2.1
++ yaml 3.1.4
+Changed 50 dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Changed test/zz_dev_test.dart
+Formatted 45 files (1 changed) in 0.19 seconds.
+formatage : échec
+Analyzing kalis_adapt...
+No issues found!
+00:00 +0: loading test/properties_2_test.dart
+00:00 +0: test/zz_dev_test.dart: export des sources formatées
+00:00 +1: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:03 +2: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +3: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +4: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +5: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +6: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +7: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +8: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +9: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +10: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +11: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +12: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +13: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +14: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +15: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +16: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +17: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +18: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +19: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +20: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +21: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +22: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +23: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +24: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +25: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +26: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +27: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +28: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +29: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:05 +30: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:06 +31: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:07 +32: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:08 +33: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:08 +34: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:09 +35: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:10 +36: test/properties_2_test.dart: journaux aléatoires 3520 à 3679
+00:10 +37: test/properties_0_test.dart: journaux aléatoires 160 à 319
+00:10 +38: test/properties_0_test.dart: journaux aléatoires 160 à 319
+00:10 +39: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:11 +40: test/smoke_test.dart: debutant_salle : 8 semaines en boucle complète
+00:12 +41: test/properties_0_test.dart: journaux aléatoires 480 à 639
+00:12 +42: test/smoke_test.dart: intermediaire_salle : 8 semaines en boucle complète
+00:12 +43: test/properties_0_test.dart: journaux aléatoires 640 à 799
+00:12 +44: test/smoke_test.dart: avance_street : 8 semaines en boucle complète
+00:13 +45: test/smoke_test.dart: avance_street : 8 semaines en boucle complète
+00:13 +46: test/properties_0_test.dart: journaux aléatoires 960 à 1119
+00:13 +47: test/properties_0_test.dart: journaux aléatoires 960 à 1119
+00:14 +48: test/properties_0_test.dart: journaux aléatoires 960 à 1119
+00:14 +49: test/smoke_test.dart: maison_halteres : 8 semaines en boucle complète
+00:14 +50: test/properties_0_test.dart: journaux aléatoires 1120 à 1279
+00:14 +51: test/properties_0_test.dart: journaux aléatoires 1120 à 1279
+00:14 +52: test/smoke_test.dart: douleur_et_lieu : 8 semaines en boucle complète
+00:14 +53: test/reference_test.dart: fonctions numériques : mêmes valeurs que la référence
+00:14 +54: test/reference_test.dart: filtre : même état que la référence après chaque étape
+00:15 +55: test/properties_6_test.dart: journaux aléatoires 7680 à 7839
+00:19 +56: test/properties_3_test.dart: journaux aléatoires 3840 à 3999
+00:20 +57: test/properties_6_test.dart: journaux aléatoires 7840 à 7999
+00:20 +58: test/properties_3_test.dart: journaux aléatoires 4000 à 4159
+00:21 +59: test/properties_6_test.dart: journaux aléatoires 8000 à 8159
+00:21 +60: test/properties_3_test.dart: journaux aléatoires 4160 à 4319
+00:21 +61: test/properties_6_test.dart: journaux aléatoires 8160 à 8319
+00:22 +62: test/properties_3_test.dart: journaux aléatoires 4320 à 4479
+00:22 +63: test/properties_6_test.dart: journaux aléatoires 8320 à 8479
+00:22 +64: test/properties_3_test.dart: journaux aléatoires 4480 à 4639
+00:23 +65: test/properties_6_test.dart: journaux aléatoires 8480 à 8639
+00:23 +66: test/properties_3_test.dart: journaux aléatoires 4640 à 4799
+00:23 +67: test/properties_6_test.dart: journaux aléatoires 8640 à 8799
+00:23 +68: test/properties_3_test.dart: journaux aléatoires 4800 à 4959
+00:24 +69: test/properties_6_test.dart: journaux aléatoires 8800 à 8959
+00:24 +70: test/properties_3_test.dart: journaux aléatoires 4960 à 5119
+00:24 +71: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:29 +72: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:29 +73: test/properties_7_test.dart: journaux aléatoires 9120 à 9279
+00:30 +74: test/properties_1_test.dart: journaux aléatoires 1440 à 1599
+00:30 +75: test/properties_7_test.dart: journaux aléatoires 9280 à 9439
+00:31 +76: test/properties_7_test.dart: journaux aléatoires 9280 à 9439
+00:31 +77: test/properties_1_test.dart: journaux aléatoires 1760 à 1919
+00:31 +78: test/properties_7_test.dart: journaux aléatoires 9440 à 9599
+00:32 +79: test/properties_1_test.dart: journaux aléatoires 1920 à 2079
+00:32 +80: test/properties_7_test.dart: journaux aléatoires 9600 à 9759
+00:32 +81: test/properties_1_test.dart: journaux aléatoires 2080 à 2239
+00:32 +82: test/properties_7_test.dart: journaux aléatoires 9760 à 9919
+00:33 +83: test/properties_1_test.dart: journaux aléatoires 2240 à 2399
+00:33 +84: test/properties_7_test.dart: journaux aléatoires 9920 à 10079
+00:33 +85: test/properties_1_test.dart: journaux aléatoires 2400 à 2559
+00:33 +86: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +87: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +88: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +89: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +90: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +91: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +92: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +93: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +94: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +95: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +96: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +97: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +98: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +99: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +100: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +101: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +102: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:34 +103: test/properties_4_test.dart: journaux aléatoires 5120 à 5279
+00:39 +104: test/properties_4_test.dart: journaux aléatoires 5120 à 5279
+00:39 +105: test/properties_5_test.dart: journaux aléatoires 6560 à 6719
+00:40 +106: test/properties_5_test.dart: journaux aléatoires 6560 à 6719
+00:40 +107: test/properties_4_test.dart: journaux aléatoires 5440 à 5599
+00:41 +108: test/properties_5_test.dart: journaux aléatoires 6720 à 6879
+00:41 +109: test/properties_4_test.dart: journaux aléatoires 5600 à 5759
+00:41 +110: test/properties_5_test.dart: journaux aléatoires 6880 à 7039
+00:41 +111: test/properties_4_test.dart: journaux aléatoires 5760 à 5919
+00:42 +112: test/properties_5_test.dart: journaux aléatoires 7040 à 7199
+00:42 +113: test/properties_4_test.dart: journaux aléatoires 5920 à 6079
+00:42 +114: test/properties_5_test.dart: journaux aléatoires 7200 à 7359
+00:43 +115: test/properties_4_test.dart: journaux aléatoires 6080 à 6239
+00:43 +116: test/properties_5_test.dart: journaux aléatoires 7360 à 7519
+00:43 +117: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:43 +118: test/properties_5_test.dart: journaux aléatoires 7520 à 7679
+00:44 +119: All tests passed!
+  notes_paresseuses : fait (109 s)
+  debutant_salle : fait (142 s)
+  irregulier : fait (166 s)
+  calisthenie_parc : fait (187 s)
+  intermediaire_salle : fait (214 s)
+  maison_halteres : fait (258 s)
+  douleur_et_lieu : fait (302 s)
+  avance_street : fait (349 s)
+kalis_adapt 0.1.0 : rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_adapt (350 s).
+durée : 406 s
