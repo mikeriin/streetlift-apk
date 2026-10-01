@@ -127,3 +127,13 @@ Source : conversation de pilotage du 30/09/2026 (22:00-23:10, heure de Paris), q
 ### G1 correction 1 (01/10/2026)
 
 - **Brouillon du démarrage** : sauvegardé dans une clé à part de la session active (pas dans la sauvegarde ni l'export : état transitoire d'écran), à chaque étape et au passage en arrière-plan ; jamais pour un âge de moins de 18 ans (règle L13 « aucune écriture »). Écartée : écrire un profil partiel (casserait `isFreshInstall` et la règle « rien n'est écrit avant le récapitulatif »). G6 remplacera la création du profil et reprendra ce principe.
+
+### GK — Koach vectorisé et `kalis_koach` (01/10/2026, Opus 5.5)
+
+- **Liserés gris conservés et régularisés** (et non comblés) : les traits clairs de 2 à 6 px qui séparent bras, mains et corps portent le dessin (comblés, `ponder`, `please`, `clap`, `checklist` deviennent des silhouettes pleines — vu sur la première planche de contrôle). Ils deviennent des traits de papier nets (≈ 1 % de la hauteur du corps). Réversible : `LINE_RADIUS` dans `tools/koach/segment.py`.
+- **Normalisation** : poses en pied à 1 000 unités de la pointe de la flamme aux pieds ; les 3 bustes (`choice`, `idea`, `settings`) à taille de tête égale à la médiane des poses en pied. Repère : x = 0 au milieu des yeux, y = 0 sur la ligne des pieds ; cadre commun `koachCommonFrame`.
+- **Calques** : encre (yeux ouverts remplis), papier (tout blanc intérieur, traits compris), yeux (calque séparé, clignement par écrasement vertical autour de `eyeBoxes`). Remplissage pair-impair.
+- **Regard** mesuré par l'asymétrie des yeux (seuil 0,06) ; **côté de la bulle** = côté du regard sauf accessoire (> 520 unités), sinon le plus dégagé. Surchargeable par pose dans `poses.json`.
+- **Répliques** : choix déterministe (occurrence + graine), sans répétition consécutive ; douleur signalée en priorité maximale ; table de 6 codes de raison **d'exemple**, extensible, code inconnu → message générique ; les codes définitifs viendront de `kalis_core` / `kalis_adapt`.
+- **Sources** copiées dans `tools/koach/sources/` sur `koach` (empreintes SHA-256) pour que la CI régénère et compare le Dart.
+- **Blocage** : le push de l'étiquette `kalis_koach-v0.1.0` est refusé par le serveur (HTTP 403, deux essais) alors que le push de branche passe. Lot marqué « en attente du propriétaire » jusqu'à la création de l'étiquette sur 4fa2777 (commande dans `livraisons/LIVRAISON_GK.md`).

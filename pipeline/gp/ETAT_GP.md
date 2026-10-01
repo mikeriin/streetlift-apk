@@ -65,4 +65,4 @@ Entrées du propriétaire (`inputs/`) :
 
 | Lot | Prérequis | Tâche | Étiquette | Commit koach | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
-| GK | — | Opus | kalis_koach-v0.1.0 | — | — | en cours depuis 2026-10-01 06:50 UTC |
+| GK | — | Opus | kalis_koach-v0.1.0 (créée, push refusé : 403) | 4fa2777 | 01/10/2026 | en attente du propriétaire (étiquette à pousser ; contrôle vert, run 36831108263) |
