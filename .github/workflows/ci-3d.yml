@@ -119,13 +119,13 @@ jobs:
             exit 1
           }
           tail -n 5 out/flutter-tests.log
-      - name: Tests Dart du mode dev (G1, G2, KALIS_DEV=true)
+      - name: Tests Dart du mode dev (G1, G2, G3, KALIS_DEV=true)
         id: dartdev
         continue-on-error: true
         run: |
           set -o pipefail
           TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded \
-            --dart-define=KALIS_DEV=true test/g1_mode_dev_test.dart test/g2_mode_dev_test.dart > out/flutter-tests-dev.log 2>&1 || {
+            --dart-define=KALIS_DEV=true test/g1_mode_dev_test.dart test/g2_mode_dev_test.dart test/g3_mode_dev_test.dart > out/flutter-tests-dev.log 2>&1 || {
             grep -E -A12 'EXCEPTION CAUGHT|\[E\]$' out/flutter-tests-dev.log | head -n 200
             tail -n 8 out/flutter-tests-dev.log
             exit 1
@@ -374,7 +374,7 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: Précompiler l'APK de test
-        run: flutter build apk --debug --no-pub --target=integration_test/retrait_g2_test.dart > build/ci3d/build-test.log 2>&1 || (tail -n 60 build/ci3d/build-test.log; exit 1)
+        run: flutter build apk --debug --no-pub --dart-define=KALIS_DEV=true --target=integration_test/catalogue_g3_test.dart > build/ci3d/build-test.log 2>&1 || (tail -n 60 build/ci3d/build-test.log; exit 1)
       - name: Rendu sur émulateur
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -420,7 +420,8 @@ jobs:
             python3 tools/compare_renders.py artifacts/captures-avant artifacts/captures-apres > ci-out/captures-comparaison.txt 2>&1 || true
             mkdir -p ci-out/captures
             # Les 16 paires les plus différentes (nombre de pixels décroissant).
-            grep -E '^\S+\.png' ci-out/captures-comparaison.txt | grep 'pixels différents' | sort -t$'\t' -k2 -n -r | awk '{print $1}' | head -n 16 | while read -r n; do
+            # G3 : aucune paire différente (grep sans résultat) n'est pas un échec.
+            { grep -E '^\S+\.png' ci-out/captures-comparaison.txt || true; } | { grep 'pixels différents' || true; } | sort -t$'\t' -k2 -n -r | awk '{print $1}' | head -n 16 | while read -r n; do
               cp "artifacts/captures-avant/$n" "ci-out/captures/avant_$n" 2>/dev/null || true
               cp "artifacts/captures-apres/$n" "ci-out/captures/apres_$n" 2>/dev/null || true
             done
