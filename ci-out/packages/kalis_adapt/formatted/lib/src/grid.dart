@@ -110,16 +110,25 @@ final class LoadGrid {
     return (kg - low) <= (high - kg) ? low : high;
   }
 
-  /// Charge suivante ([up]) ou précédente de la grille à partir de [kg],
-  /// supposé sur la grille ; ne descend pas sous [minimum].
+  /// Première charge de la grille strictement au-dessus ([up]) ou
+  /// strictement au-dessous de [kg] — qui n'a pas besoin d'être sur la
+  /// grille ; ne descend pas sous [minimum].
   double next(double kg, {required bool up}) {
+    final base = floor(kg);
     if (up) {
-      return kg + stepAbove(kg);
+      if (base > kg + _eps) {
+        // [kg] est sous la plus petite charge.
+        return base;
+      }
+      return base + stepAbove(base);
+    }
+    if (base < kg - _eps) {
+      return base;
     }
     final down = dumbbellRule
-        ? (kg <= _dumbbellKnee + _eps ? step : _dumbbellLargeStep)
+        ? (base <= _dumbbellKnee + _eps ? step : _dumbbellLargeStep)
         : step;
-    final value = kg - down;
+    final value = base - down;
     return value < minimum ? minimum : value;
   }
 }

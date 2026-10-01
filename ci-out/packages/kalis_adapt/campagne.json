@@ -1,0 +1,5837 @@
+{
+ "engineVersion": "0.1.0",
+ "coreVersion": "0.2.0",
+ "planVersion": "0.1.0",
+ "weeks": 24,
+ "seeds": 6,
+ "loopSeeds": 4,
+ "athletes": [
+  {
+   "key": "debutant_salle",
+   "profileKey": "homme_25_musculation_debutant_3x60",
+   "spec": {
+    "key": "debutant_salle",
+    "profileKey": "homme_25_musculation_debutant_3x60",
+    "level": 0,
+    "weeklyGain": 0.012,
+    "ratingNoise": 1.3,
+    "rirBias": 0.25,
+    "rirBiasSd": 0.18,
+    "lazy": 0.15,
+    "skipRating": 0.0,
+    "missRate": 0.08,
+    "breakDays": 0,
+    "illnessDays": 0,
+    "painDays": 0,
+    "painIntensity": 5,
+    "otherPlaceDays": 0,
+    "daySd": 0.03,
+    "healthAnswerRate": 0.7,
+    "shortTimeRate": 0.05
+   },
+   "blocks": 5,
+   "policies": {
+    "kalis_adapt": {
+     "athlete": "debutant_salle",
+     "policy": "kalis_adapt",
+     "runs": 6,
+     "rirMae": {
+      "mean": 2.39788,
+      "se": 0.31063,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 1.76303,
+      "se": 0.35322,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 2.68583,
+      "se": 0.35755,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 1.59706,
+      "se": 0.29208,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.0287,
+      "se": 0.00383,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.03693,
+      "se": 0.00408,
+      "n": 6
+     },
+     "gain": {
+      "mean": 0.00172,
+      "se": 0.00017,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.59962,
+      "se": 0.05631,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 30.33333,
+      "se": 6.86375,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.9375,
+      "se": 0.01176,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.14916,
+      "se": 0.02728,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.12468,
+       "se": 0.00887,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.0885,
+       "se": 0.01253,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.08744,
+       "se": 0.00998,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.0778,
+       "se": 0.00862,
+       "n": 6
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.11103,
+       "se": 0.0086,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.07678,
+       "se": 0.01277,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.07803,
+       "se": 0.01048,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.06636,
+       "se": 0.00891,
+       "n": 6
+      }
+     },
+     "convergence": [
+      0.11103,
+      0.08265,
+      0.07678,
+      0.07488,
+      0.07495,
+      0.07803,
+      0.07872,
+      0.07681,
+      0.07728,
+      0.07508,
+      0.06811,
+      0.06636,
+      0.05715,
+      0.03819,
+      0.0336,
+      0.03053,
+      0.02923,
+      0.02939,
+      0.02982,
+      0.03241
+     ],
+     "rirMaeByWeek": [
+      null,
+      0.7767,
+      1.6511,
+      2.8362,
+      null,
+      3.2971,
+      3.3193,
+      3.4285,
+      2.7243,
+      null,
+      1.2912,
+      1.3607,
+      1.5197,
+      2.0176,
+      null,
+      2.6336,
+      2.5841,
+      2.3942,
+      2.5491,
+      null,
+      2.1073,
+      1.8884,
+      2.6249,
+      2.1147
+     ],
+     "coverage95": 0.8073,
+     "maxMainRise": 0.25,
+     "mainRisesOverTen": 20
+    },
+    "double_progression": {
+     "athlete": "debutant_salle",
+     "policy": "double_progression",
+     "runs": 6,
+     "rirMae": {
+      "mean": 2.5648,
+      "se": 0.24285,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 1.93907,
+      "se": 0.32751,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 2.88595,
+      "se": 0.32092,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 1.68528,
+      "se": 0.06582,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.08323,
+      "se": 0.01227,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.06751,
+      "se": 0.00553,
+      "n": 6
+     },
+     "gain": {
+      "mean": 0.00185,
+      "se": 0.00011,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.74083,
+      "se": 0.02332,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 73.16667,
+      "se": 3.10287,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.9375,
+      "se": 0.01176,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {},
+     "operationalError": {},
+     "convergence": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+     ],
+     "rirMaeByWeek": [
+      null,
+      0.9983,
+      1.4763,
+      2.925,
+      null,
+      3.4199,
+      3.7988,
+      3.1495,
+      2.8627,
+      null,
+      2.4952,
+      1.996,
+      2.6477,
+      1.5778,
+      null,
+      2.3594,
+      2.6966,
+      2.0055,
+      2.3149,
+      null,
+      2.8297,
+      2.7279,
+      2.1508,
+      2.0229
+     ],
+     "coverage95": null,
+     "maxMainRise": 0.25,
+     "mainRisesOverTen": 34
+    },
+    "L7/L11": {
+     "athlete": "debutant_salle",
+     "policy": "L7/L11",
+     "runs": 6,
+     "rirMae": {
+      "mean": 4.98886,
+      "se": 0.49198,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 4.13506,
+      "se": 0.58865,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 6.24141,
+      "se": 0.6501,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 1.69431,
+      "se": 0.06474,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.08677,
+      "se": 0.0131,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.08273,
+      "se": 0.00862,
+      "n": 6
+     },
+     "gain": {
+      "mean": 0.0018,
+      "se": 0.00011,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.74971,
+      "se": 0.02858,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 58.16667,
+      "se": 4.44535,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.9375,
+      "se": 0.01176,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.10662,
+       "se": 0.01541,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.09464,
+       "se": 0.01468,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.09203,
+       "se": 0.01221,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.08109,
+       "se": 0.01596,
+       "n": 6
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.11024,
+       "se": 0.0163,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.10201,
+       "se": 0.01733,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.10683,
+       "se": 0.02276,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.11276,
+       "se": 0.02186,
+       "n": 6
+      }
+     },
+     "convergence": [
+      0.11024,
+      0.10285,
+      0.10201,
+      0.09801,
+      0.11092,
+      0.10683,
+      0.10093,
+      0.10202,
+      0.10947,
+      0.1167,
+      0.11339,
+      0.11276,
+      0.10936,
+      0.10798,
+      0.11321,
+      0.11385,
+      0.11066,
+      0.11362,
+      0.11693,
+      0.11923
+     ],
+     "rirMaeByWeek": [
+      null,
+      1.071,
+      2.7888,
+      6.8494,
+      null,
+      6.7199,
+      6.7272,
+      6.2912,
+      4.7217,
+      null,
+      4.1975,
+      4.5384,
+      4.9209,
+      3.9855,
+      null,
+      5.4297,
+      4.324,
+      4.8899,
+      3.9715,
+      null,
+      4.2823,
+      4.9284,
+      4.8581,
+      3.9538
+     ],
+     "coverage95": 0.3388,
+     "maxMainRise": 0.1818,
+     "mainRisesOverTen": 16
+    }
+   },
+   "paired": {
+    "rirMae_vs_double_progression": {
+     "mean": -0.16692,
+     "se": 0.26191,
+     "n": 6
+    },
+    "rirMae_vs_L7": {
+     "mean": -2.59097,
+     "se": 0.33441,
+     "n": 6
+    },
+    "gain_vs_double_progression": {
+     "mean": -0.00013,
+     "se": 0.0001,
+     "n": 6
+    },
+    "gain_vs_L7": {
+     "mean": -0.00008,
+     "se": 0.00011,
+     "n": 6
+    }
+   },
+   "loop": {
+    "athlete": "debutant_salle",
+    "runs": 4,
+    "proposals": {
+     "load": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "reps": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "volume": {
+      "mean": 2.0,
+      "se": 0.91287,
+      "n": 4
+     },
+     "exercise_swap": {
+      "mean": 3.0,
+      "se": 1.08012,
+      "n": 4
+     },
+     "session_restructure": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "block_restructure": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "deload": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "pain_sparing": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "schedule": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     }
+    },
+    "volumeFlipRate": {
+     "mean": 0.0,
+     "se": 0.0,
+     "n": 3
+    },
+    "unlockWeek": {
+     "loads_reps": {
+      "mean": 1.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "volume": {
+      "mean": 2.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "exercise_swap": {
+      "mean": 4.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "session_restructure": {
+      "mean": 6.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "block_restructure": {
+      "mean": 11.0,
+      "se": 0.0,
+      "n": 4
+     }
+    },
+    "base": {
+     "athlete": "debutant_salle",
+     "policy": "kalis_adapt",
+     "runs": 4,
+     "rirMae": {
+      "mean": 2.59673,
+      "se": 0.41621,
+      "n": 4
+     },
+     "rirBias": {
+      "mean": 2.02014,
+      "se": 0.49896,
+      "n": 4
+     },
+     "rirMaeLoaded": {
+      "mean": 2.85481,
+      "se": 0.43039,
+      "n": 4
+     },
+     "rirMaeBodyweight": {
+      "mean": 1.75527,
+      "se": 0.42083,
+      "n": 4
+     },
+     "failRate": {
+      "mean": 0.02504,
+      "se": 0.00521,
+      "n": 4
+     },
+     "nearFailureRate": {
+      "mean": 0.0333,
+      "se": 0.00516,
+      "n": 4
+     },
+     "gain": {
+      "mean": 0.00153,
+      "se": 0.00035,
+      "n": 4
+     },
+     "reversalRate": {
+      "mean": 0.66114,
+      "se": 0.03811,
+      "n": 4
+     },
+     "loadMoves": {
+      "mean": 34.0,
+      "se": 6.79461,
+      "n": 4
+     },
+     "sessionsDoneShare": {
+      "mean": 0.95486,
+      "se": 0.00347,
+      "n": 4
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.18889,
+      "se": 0.02402,
+      "n": 4
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.15238,
+       "se": 0.00584,
+       "n": 4
+      },
+      "3": {
+       "mean": 0.09126,
+       "se": 0.0133,
+       "n": 4
+      },
+      "6": {
+       "mean": 0.09274,
+       "se": 0.01059,
+       "n": 4
+      },
+      "12": {
+       "mean": 0.07707,
+       "se": 0.0143,
+       "n": 4
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.13752,
+       "se": 0.00512,
+       "n": 4
+      },
+      "3": {
+       "mean": 0.07899,
+       "se": 0.01316,
+       "n": 4
+      },
+      "6": {
+       "mean": 0.0817,
+       "se": 0.01117,
+       "n": 4
+      },
+      "12": {
+       "mean": 0.06384,
+       "se": 0.01367,
+       "n": 4
+      }
+     },
+     "convergence": [
+      0.13752,
+      0.09725,
+      0.07899,
+      0.07828,
+      0.079,
+      0.0817,
+      0.08177,
+      0.07924,
+      0.08089,
+      0.0754,
+      0.06207,
+      0.06384,
+      0.06298,
+      0.03652,
+      0.03426,
+      0.02947,
+      0.02948,
+      0.03074,
+      0.03071,
+      0.03086
+     ],
+     "rirMaeByWeek": [
+      null,
+      0.9175,
+      1.8223,
+      2.2969,
+      null,
+      2.9708,
+      3.5062,
+      3.3256,
+      2.6372,
+      null,
+      1.3952,
+      1.2679,
+      1.4105,
+      3.325,
+      null,
+      2.9844,
+      2.7727,
+      2.8923,
+      2.9571,
+      null,
+      2.1284,
+      2.6938,
+      2.5502,
+      2.4896
+     ],
+     "coverage95": 0.8095,
+     "maxMainRise": 0.2,
+     "mainRisesOverTen": 11
+    }
+   }
+  },
+  {
+   "key": "intermediaire_salle",
+   "profileKey": "femme_45_musculation_salle_4x60",
+   "spec": {
+    "key": "intermediaire_salle",
+    "profileKey": "femme_45_musculation_salle_4x60",
+    "level": 1,
+    "weeklyGain": 0.004,
+    "ratingNoise": 1.0,
+    "rirBias": 0.25,
+    "rirBiasSd": 0.18,
+    "lazy": 0.1,
+    "skipRating": 0.0,
+    "missRate": 0.08,
+    "breakDays": 0,
+    "illnessDays": 0,
+    "painDays": 0,
+    "painIntensity": 5,
+    "otherPlaceDays": 0,
+    "daySd": 0.025,
+    "healthAnswerRate": 0.7,
+    "shortTimeRate": 0.05
+   },
+   "blocks": 5,
+   "policies": {
+    "kalis_adapt": {
+     "athlete": "intermediaire_salle",
+     "policy": "kalis_adapt",
+     "runs": 6,
+     "rirMae": {
+      "mean": 3.71268,
+      "se": 0.35828,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 3.03714,
+      "se": 0.48131,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 3.44253,
+      "se": 0.31638,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 4.63427,
+      "se": 0.753,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.02351,
+      "se": 0.00193,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.03124,
+      "se": 0.00433,
+      "n": 6
+     },
+     "gain": {
+      "mean": -0.00011,
+      "se": 0.00005,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.62326,
+      "se": 0.03562,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 37.0,
+      "se": 4.13118,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.92708,
+      "se": 0.0129,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.18831,
+      "se": 0.02821,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.18864,
+       "se": 0.01354,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.1351,
+       "se": 0.00746,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.12874,
+       "se": 0.01028,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.12036,
+       "se": 0.01006,
+       "n": 6
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.1719,
+       "se": 0.01197,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.1162,
+       "se": 0.00705,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.109,
+       "se": 0.01047,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.10616,
+       "se": 0.01198,
+       "n": 6
+      }
+     },
+     "convergence": [
+      0.1719,
+      0.13032,
+      0.1162,
+      0.10656,
+      0.10432,
+      0.109,
+      0.10811,
+      0.1096,
+      0.10964,
+      0.11418,
+      0.11272,
+      0.10616,
+      0.10163,
+      0.07176,
+      0.05237,
+      0.05231,
+      0.05259,
+      0.04629,
+      0.0376,
+      0.03081
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      null,
+      4.4266,
+      null,
+      3.0583,
+      3.0442,
+      3.1132,
+      2.6535,
+      null,
+      3.7937,
+      3.3598,
+      4.1413,
+      3.7116,
+      null,
+      4.6423,
+      4.0561,
+      4.9391,
+      3.6586,
+      null,
+      2.9609,
+      4.2192,
+      3.9178,
+      3.9715
+     ],
+     "coverage95": 0.8232,
+     "maxMainRise": 0.1111,
+     "mainRisesOverTen": 1
+    },
+    "double_progression": {
+     "athlete": "intermediaire_salle",
+     "policy": "double_progression",
+     "runs": 6,
+     "rirMae": {
+      "mean": 4.81547,
+      "se": 0.37136,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 4.47203,
+      "se": 0.43452,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 4.16564,
+      "se": 0.3022,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 6.99372,
+      "se": 0.69708,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.03809,
+      "se": 0.00319,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.03675,
+      "se": 0.00251,
+      "n": 6
+     },
+     "gain": {
+      "mean": -0.00011,
+      "se": 0.00005,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.74193,
+      "se": 0.01562,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 105.83333,
+      "se": 6.7202,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.92708,
+      "se": 0.0129,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {},
+     "operationalError": {},
+     "convergence": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      null,
+      4.1931,
+      null,
+      4.1488,
+      4.8379,
+      3.8236,
+      3.8287,
+      null,
+      5.3437,
+      4.996,
+      5.5989,
+      3.9216,
+      null,
+      5.4975,
+      6.3204,
+      4.6322,
+      5.6011,
+      null,
+      5.1147,
+      4.9489,
+      5.2674,
+      4.589
+     ],
+     "coverage95": null,
+     "maxMainRise": 0.125,
+     "mainRisesOverTen": 12
+    },
+    "L7/L11": {
+     "athlete": "intermediaire_salle",
+     "policy": "L7/L11",
+     "runs": 6,
+     "rirMae": {
+      "mean": 6.08034,
+      "se": 0.2265,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 5.42243,
+      "se": 0.25779,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 5.78795,
+      "se": 0.33552,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 7.01124,
+      "se": 0.6938,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.04124,
+      "se": 0.00254,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.05303,
+      "se": 0.00542,
+      "n": 6
+     },
+     "gain": {
+      "mean": -0.00009,
+      "se": 0.00004,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.72397,
+      "se": 0.01477,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 88.5,
+      "se": 3.2838,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.92708,
+      "se": 0.0129,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.08319,
+       "se": 0.01008,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.09019,
+       "se": 0.00927,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.07523,
+       "se": 0.00936,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.06477,
+       "se": 0.01362,
+       "n": 6
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.0515,
+       "se": 0.00943,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.04122,
+       "se": 0.00666,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.05246,
+       "se": 0.0076,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.064,
+       "se": 0.00951,
+       "n": 6
+      }
+     },
+     "convergence": [
+      0.0515,
+      0.04955,
+      0.04122,
+      0.03735,
+      0.05478,
+      0.05246,
+      0.05517,
+      0.04952,
+      0.04789,
+      0.06921,
+      0.06774,
+      0.064,
+      0.05641,
+      0.05184,
+      0.05997,
+      0.06247,
+      0.0527,
+      0.06324,
+      0.05866,
+      0.06178
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      null,
+      8.4782,
+      null,
+      5.0492,
+      5.1195,
+      5.5544,
+      4.8817,
+      null,
+      5.9102,
+      6.3403,
+      7.6942,
+      5.4097,
+      null,
+      6.6001,
+      7.047,
+      6.4676,
+      6.678,
+      null,
+      5.7681,
+      7.0684,
+      6.385,
+      4.5415
+     ],
+     "coverage95": 0.4979,
+     "maxMainRise": 0.15,
+     "mainRisesOverTen": 12
+    }
+   },
+   "paired": {
+    "rirMae_vs_double_progression": {
+     "mean": -1.10279,
+     "se": 0.2227,
+     "n": 6
+    },
+    "rirMae_vs_L7": {
+     "mean": -2.36766,
+     "se": 0.2741,
+     "n": 6
+    },
+    "gain_vs_double_progression": {
+     "mean": -0.0,
+     "se": 0.00004,
+     "n": 6
+    },
+    "gain_vs_L7": {
+     "mean": -0.00002,
+     "se": 0.00004,
+     "n": 6
+    }
+   },
+   "loop": {
+    "athlete": "intermediaire_salle",
+    "runs": 4,
+    "proposals": {
+     "load": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "reps": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "volume": {
+      "mean": 2.5,
+      "se": 0.95743,
+      "n": 4
+     },
+     "exercise_swap": {
+      "mean": 3.5,
+      "se": 0.6455,
+      "n": 4
+     },
+     "session_restructure": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "block_restructure": {
+      "mean": 0.25,
+      "se": 0.25,
+      "n": 4
+     },
+     "deload": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "pain_sparing": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "schedule": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     }
+    },
+    "volumeFlipRate": {
+     "mean": 0.0,
+     "se": 0.0,
+     "n": 3
+    },
+    "unlockWeek": {
+     "loads_reps": {
+      "mean": 1.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "volume": {
+      "mean": 2.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "exercise_swap": {
+      "mean": 4.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "session_restructure": {
+      "mean": 6.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "block_restructure": {
+      "mean": 11.0,
+      "se": 0.0,
+      "n": 4
+     }
+    },
+    "base": {
+     "athlete": "intermediaire_salle",
+     "policy": "kalis_adapt",
+     "runs": 4,
+     "rirMae": {
+      "mean": 3.53256,
+      "se": 0.32553,
+      "n": 4
+     },
+     "rirBias": {
+      "mean": 2.92715,
+      "se": 0.40774,
+      "n": 4
+     },
+     "rirMaeLoaded": {
+      "mean": 3.59359,
+      "se": 0.36331,
+      "n": 4
+     },
+     "rirMaeBodyweight": {
+      "mean": 3.29954,
+      "se": 0.74983,
+      "n": 4
+     },
+     "failRate": {
+      "mean": 0.02142,
+      "se": 0.00129,
+      "n": 4
+     },
+     "nearFailureRate": {
+      "mean": 0.03084,
+      "se": 0.00186,
+      "n": 4
+     },
+     "gain": {
+      "mean": -0.00012,
+      "se": 0.00009,
+      "n": 4
+     },
+     "reversalRate": {
+      "mean": 0.54418,
+      "se": 0.05578,
+      "n": 4
+     },
+     "loadMoves": {
+      "mean": 31.0,
+      "se": 4.02078,
+      "n": 4
+     },
+     "sessionsDoneShare": {
+      "mean": 0.92188,
+      "se": 0.01925,
+      "n": 4
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.21024,
+      "se": 0.03857,
+      "n": 4
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.17019,
+       "se": 0.01775,
+       "n": 4
+      },
+      "3": {
+       "mean": 0.12631,
+       "se": 0.0118,
+       "n": 4
+      },
+      "6": {
+       "mean": 0.12271,
+       "se": 0.01373,
+       "n": 4
+      },
+      "12": {
+       "mean": 0.11213,
+       "se": 0.01481,
+       "n": 4
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.15485,
+       "se": 0.01533,
+       "n": 4
+      },
+      "3": {
+       "mean": 0.10988,
+       "se": 0.01172,
+       "n": 4
+      },
+      "6": {
+       "mean": 0.10666,
+       "se": 0.01445,
+       "n": 4
+      },
+      "12": {
+       "mean": 0.0976,
+       "se": 0.01892,
+       "n": 4
+      }
+     },
+     "convergence": [
+      0.15485,
+      0.11974,
+      0.10988,
+      0.10132,
+      0.09947,
+      0.10666,
+      0.10512,
+      0.10863,
+      0.10915,
+      0.11343,
+      0.1107,
+      0.0976,
+      0.0928,
+      0.05446,
+      0.03698,
+      0.03389,
+      0.03366,
+      0.02999,
+      0.02869,
+      0.02073
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      null,
+      5.1259,
+      null,
+      3.2622,
+      2.8024,
+      3.2022,
+      2.7021,
+      null,
+      3.4885,
+      3.2424,
+      3.4529,
+      3.801,
+      null,
+      4.4555,
+      3.5774,
+      4.6617,
+      3.494,
+      null,
+      2.5187,
+      4.091,
+      3.5022,
+      3.5832
+     ],
+     "coverage95": 0.8348,
+     "maxMainRise": 0.1111,
+     "mainRisesOverTen": 1
+    }
+   }
+  },
+  {
+   "key": "avance_street",
+   "profileKey": "proprietaire_streetlifting_avance",
+   "spec": {
+    "key": "avance_street",
+    "profileKey": "proprietaire_streetlifting_avance",
+    "level": 2,
+    "weeklyGain": 0.0015,
+    "ratingNoise": 0.8,
+    "rirBias": 0.15,
+    "rirBiasSd": 0.12,
+    "lazy": 0.05,
+    "skipRating": 0.0,
+    "missRate": 0.05,
+    "breakDays": 0,
+    "illnessDays": 0,
+    "painDays": 0,
+    "painIntensity": 5,
+    "otherPlaceDays": 0,
+    "daySd": 0.02,
+    "healthAnswerRate": 0.7,
+    "shortTimeRate": 0.05
+   },
+   "blocks": 4,
+   "policies": {
+    "kalis_adapt": {
+     "athlete": "avance_street",
+     "policy": "kalis_adapt",
+     "runs": 6,
+     "rirMae": {
+      "mean": 2.63684,
+      "se": 0.13489,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 2.01135,
+      "se": 0.21498,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 1.41063,
+      "se": 0.12145,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 4.05336,
+      "se": 0.26108,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.00488,
+      "se": 0.00159,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.01451,
+      "se": 0.00252,
+      "n": 6
+     },
+     "gain": {
+      "mean": -0.0001,
+      "se": 0.0,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.57329,
+      "se": 0.02944,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 57.5,
+      "se": 7.83475,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.95694,
+      "se": 0.00972,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.30418,
+      "se": 0.04979,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.15965,
+       "se": 0.01167,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.09916,
+       "se": 0.00795,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.08524,
+       "se": 0.00526,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.07163,
+       "se": 0.00673,
+       "n": 6
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.14806,
+       "se": 0.01002,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.08576,
+       "se": 0.00769,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.06983,
+       "se": 0.00496,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.05606,
+       "se": 0.00599,
+       "n": 6
+      }
+     },
+     "convergence": [
+      0.14806,
+      0.0988,
+      0.08576,
+      0.07718,
+      0.07186,
+      0.06983,
+      0.06243,
+      0.06092,
+      0.05937,
+      0.05952,
+      0.05929,
+      0.05606,
+      0.04806,
+      0.04703,
+      0.04652,
+      0.04462,
+      0.0427,
+      0.04767,
+      0.04611,
+      0.04532
+     ],
+     "rirMaeByWeek": [
+      null,
+      0.6553,
+      0.6845,
+      2.6913,
+      2.7755,
+      null,
+      2.4685,
+      2.4486,
+      2.3625,
+      2.6218,
+      2.8779,
+      null,
+      1.0332,
+      1.2472,
+      1.2676,
+      2.9871,
+      3.3587,
+      null,
+      2.8295,
+      3.3963,
+      2.7665,
+      3.7209,
+      3.3855
+     ],
+     "coverage95": 0.8189,
+     "maxMainRise": 0.0721,
+     "mainRisesOverTen": 0
+    },
+    "double_progression": {
+     "athlete": "avance_street",
+     "policy": "double_progression",
+     "runs": 6,
+     "rirMae": {
+      "mean": 4.05889,
+      "se": 0.11647,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 3.69821,
+      "se": 0.15683,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 1.99616,
+      "se": 0.15034,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 6.43742,
+      "se": 0.24339,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.04256,
+      "se": 0.00593,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.02704,
+      "se": 0.00329,
+      "n": 6
+     },
+     "gain": {
+      "mean": -0.00011,
+      "se": 0.00001,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.44517,
+      "se": 0.04725,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 96.33333,
+      "se": 4.07158,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.95694,
+      "se": 0.00972,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {},
+     "operationalError": {},
+     "convergence": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+     ],
+     "rirMaeByWeek": [
+      null,
+      4.3501,
+      3.3137,
+      4.7461,
+      5.1214,
+      null,
+      4.4533,
+      4.151,
+      4.1204,
+      3.9647,
+      4.1435,
+      null,
+      2.3299,
+      2.0046,
+      2.1645,
+      3.0391,
+      4.6784,
+      null,
+      4.6904,
+      4.2738,
+      4.3185,
+      4.6035,
+      5.3508
+     ],
+     "coverage95": null,
+     "maxMainRise": 0.0303,
+     "mainRisesOverTen": 0
+    },
+    "L7/L11": {
+     "athlete": "avance_street",
+     "policy": "L7/L11",
+     "runs": 6,
+     "rirMae": {
+      "mean": 4.74848,
+      "se": 0.14211,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 4.03501,
+      "se": 0.2057,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 3.13797,
+      "se": 0.16506,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 6.44065,
+      "se": 0.24443,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.04856,
+      "se": 0.00686,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.04956,
+      "se": 0.00828,
+      "n": 6
+     },
+     "gain": {
+      "mean": -0.00011,
+      "se": 0.0,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.53923,
+      "se": 0.01975,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 131.33333,
+      "se": 2.23109,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.95694,
+      "se": 0.00972,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.06276,
+       "se": 0.01066,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.06072,
+       "se": 0.00556,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.05263,
+       "se": 0.00301,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.04862,
+       "se": 0.00307,
+       "n": 6
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.05714,
+       "se": 0.01053,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.05603,
+       "se": 0.00664,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.05582,
+       "se": 0.00762,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.08303,
+       "se": 0.00329,
+       "n": 6
+      }
+     },
+     "convergence": [
+      0.05714,
+      0.046,
+      0.05603,
+      0.05198,
+      0.05333,
+      0.05582,
+      0.06926,
+      0.06949,
+      0.082,
+      0.08559,
+      0.07784,
+      0.08303,
+      0.09325,
+      0.08736,
+      0.08377,
+      0.07871,
+      0.07398,
+      0.07284,
+      0.0837,
+      0.0803
+     ],
+     "rirMaeByWeek": [
+      null,
+      1.3136,
+      1.2716,
+      5.5996,
+      4.9258,
+      null,
+      5.4562,
+      4.621,
+      4.4731,
+      4.9798,
+      4.7365,
+      null,
+      3.1756,
+      2.5444,
+      2.5922,
+      5.3109,
+      4.8921,
+      null,
+      5.9429,
+      5.0661,
+      4.5723,
+      5.8438,
+      5.7221
+     ],
+     "coverage95": 0.5794,
+     "maxMainRise": 0.0927,
+     "mainRisesOverTen": 0
+    }
+   },
+   "paired": {
+    "rirMae_vs_double_progression": {
+     "mean": -1.42206,
+     "se": 0.10054,
+     "n": 6
+    },
+    "rirMae_vs_L7": {
+     "mean": -2.11164,
+     "se": 0.03652,
+     "n": 6
+    },
+    "gain_vs_double_progression": {
+     "mean": 0.00001,
+     "se": 0.00001,
+     "n": 6
+    },
+    "gain_vs_L7": {
+     "mean": 0.00002,
+     "se": 0.0,
+     "n": 6
+    }
+   },
+   "loop": {
+    "athlete": "avance_street",
+    "runs": 4,
+    "proposals": {
+     "load": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "reps": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "volume": {
+      "mean": 5.75,
+      "se": 1.25,
+      "n": 4
+     },
+     "exercise_swap": {
+      "mean": 3.25,
+      "se": 0.47871,
+      "n": 4
+     },
+     "session_restructure": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "block_restructure": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "deload": {
+      "mean": 3.5,
+      "se": 0.95743,
+      "n": 4
+     },
+     "pain_sparing": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "schedule": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     }
+    },
+    "volumeFlipRate": {
+     "mean": 0.0,
+     "se": 0.0,
+     "n": 4
+    },
+    "unlockWeek": {
+     "loads_reps": {
+      "mean": 1.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "volume": {
+      "mean": 2.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "exercise_swap": {
+      "mean": 4.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "session_restructure": {
+      "mean": 7.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "block_restructure": {
+      "mean": 13.0,
+      "se": 0.0,
+      "n": 4
+     }
+    },
+    "base": {
+     "athlete": "avance_street",
+     "policy": "kalis_adapt",
+     "runs": 4,
+     "rirMae": {
+      "mean": 1.85776,
+      "se": 0.1218,
+      "n": 4
+     },
+     "rirBias": {
+      "mean": 1.25369,
+      "se": 0.22237,
+      "n": 4
+     },
+     "rirMaeLoaded": {
+      "mean": 1.34736,
+      "se": 0.1146,
+      "n": 4
+     },
+     "rirMaeBodyweight": {
+      "mean": 2.41313,
+      "se": 0.21034,
+      "n": 4
+     },
+     "failRate": {
+      "mean": 0.00365,
+      "se": 0.00159,
+      "n": 4
+     },
+     "nearFailureRate": {
+      "mean": 0.01449,
+      "se": 0.00312,
+      "n": 4
+     },
+     "gain": {
+      "mean": -0.00013,
+      "se": 0.00002,
+      "n": 4
+     },
+     "reversalRate": {
+      "mean": 0.60885,
+      "se": 0.01394,
+      "n": 4
+     },
+     "loadMoves": {
+      "mean": 62.0,
+      "se": 8.55375,
+      "n": 4
+     },
+     "sessionsDoneShare": {
+      "mean": 0.96667,
+      "se": 0.01076,
+      "n": 4
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.32581,
+      "se": 0.05561,
+      "n": 4
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.15767,
+       "se": 0.01411,
+       "n": 4
+      },
+      "3": {
+       "mean": 0.10592,
+       "se": 0.00995,
+       "n": 4
+      },
+      "6": {
+       "mean": 0.09256,
+       "se": 0.00829,
+       "n": 4
+      },
+      "12": {
+       "mean": 0.06625,
+       "se": 0.00683,
+       "n": 4
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.14535,
+       "se": 0.01326,
+       "n": 4
+      },
+      "3": {
+       "mean": 0.09414,
+       "se": 0.01098,
+       "n": 4
+      },
+      "6": {
+       "mean": 0.07883,
+       "se": 0.00857,
+       "n": 4
+      },
+      "12": {
+       "mean": 0.05222,
+       "se": 0.00583,
+       "n": 4
+      }
+     },
+     "convergence": [
+      0.14535,
+      0.10522,
+      0.09414,
+      0.0869,
+      0.08002,
+      0.07883,
+      0.05933,
+      0.05687,
+      0.05685,
+      0.05437,
+      0.05089,
+      0.05222,
+      0.04871,
+      0.04931,
+      0.04706,
+      0.04451,
+      0.0442,
+      0.04863,
+      0.04334,
+      0.04369
+     ],
+     "rirMaeByWeek": [
+      null,
+      0.5533,
+      0.6435,
+      2.9689,
+      3.0282,
+      null,
+      1.6726,
+      1.6474,
+      1.5223,
+      1.944,
+      1.7942,
+      null,
+      0.8335,
+      0.9727,
+      0.8921,
+      2.6016,
+      2.7545,
+      null,
+      1.6309,
+      1.9015,
+      1.3425,
+      1.6352,
+      1.5626
+     ],
+     "coverage95": 0.8129,
+     "maxMainRise": 0.0958,
+     "mainRisesOverTen": 0
+    }
+   }
+  },
+  {
+   "key": "notes_paresseuses",
+   "profileKey": "trois_disciplines_70_20_10",
+   "spec": {
+    "key": "notes_paresseuses",
+    "profileKey": "trois_disciplines_70_20_10",
+    "level": 1,
+    "weeklyGain": 0.004,
+    "ratingNoise": 1.0,
+    "rirBias": 0.25,
+    "rirBiasSd": 0.18,
+    "lazy": 0.92,
+    "skipRating": 0.0,
+    "missRate": 0.08,
+    "breakDays": 0,
+    "illnessDays": 0,
+    "painDays": 0,
+    "painIntensity": 5,
+    "otherPlaceDays": 0,
+    "daySd": 0.025,
+    "healthAnswerRate": 0.7,
+    "shortTimeRate": 0.05
+   },
+   "blocks": 5,
+   "policies": {
+    "kalis_adapt": {
+     "athlete": "notes_paresseuses",
+     "policy": "kalis_adapt",
+     "runs": 6,
+     "rirMae": {
+      "mean": 3.58811,
+      "se": 0.10888,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 3.14286,
+      "se": 0.13344,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 2.53838,
+      "se": 0.20599,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 6.49591,
+      "se": 0.45184,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.00741,
+      "se": 0.00172,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.00985,
+      "se": 0.00249,
+      "n": 6
+     },
+     "gain": {
+      "mean": 0.00008,
+      "se": 0.00008,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.39361,
+      "se": 0.05327,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 25.0,
+      "se": 3.32666,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.93287,
+      "se": 0.01453,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.1392,
+      "se": 0.01681,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.1345,
+       "se": 0.00539,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.10186,
+       "se": 0.00685,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.09286,
+       "se": 0.00431,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.0673,
+       "se": 0.00463,
+       "n": 6
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.12987,
+       "se": 0.00554,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.08733,
+       "se": 0.00744,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.07619,
+       "se": 0.00524,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.05368,
+       "se": 0.00319,
+       "n": 6
+      }
+     },
+     "convergence": [
+      0.12987,
+      0.09364,
+      0.08733,
+      0.07828,
+      0.0787,
+      0.07619,
+      0.07328,
+      0.06475,
+      0.06225,
+      0.06215,
+      0.05672,
+      0.05368,
+      0.05107,
+      0.04627,
+      0.03886,
+      0.03717,
+      0.03506,
+      0.03624,
+      0.0356,
+      0.03827
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      null,
+      5.9411,
+      3.5774,
+      2.985,
+      3.6221,
+      3.2889,
+      4.4474,
+      4.5222,
+      4.0863,
+      4.8155,
+      4.175,
+      3.9401,
+      4.4763,
+      2.577,
+      2.4506,
+      2.4509,
+      2.7298,
+      2.0231,
+      3.4058,
+      3.6488,
+      3.272,
+      3.3942
+     ],
+     "coverage95": 0.8006,
+     "maxMainRise": 0.0769,
+     "mainRisesOverTen": 0
+    },
+    "double_progression": {
+     "athlete": "notes_paresseuses",
+     "policy": "double_progression",
+     "runs": 6,
+     "rirMae": {
+      "mean": 4.14635,
+      "se": 0.24805,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 3.97386,
+      "se": 0.30882,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 2.12785,
+      "se": 0.25446,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 9.7558,
+      "se": 0.40555,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.00312,
+      "se": 0.00287,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.00322,
+      "se": 0.00184,
+      "n": 6
+     },
+     "gain": {
+      "mean": 0.00012,
+      "se": 0.00008,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.62589,
+      "se": 0.02508,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 58.66667,
+      "se": 1.60555,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.93287,
+      "se": 0.01453,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {},
+     "operationalError": {},
+     "convergence": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      null,
+      6.9962,
+      3.9376,
+      4.4938,
+      4.4629,
+      4.107,
+      4.6238,
+      4.3577,
+      4.6901,
+      4.5004,
+      4.928,
+      3.9277,
+      4.9606,
+      4.0878,
+      2.7505,
+      3.198,
+      2.9884,
+      3.1078,
+      3.4607,
+      4.4966,
+      3.757,
+      4.3317
+     ],
+     "coverage95": null,
+     "maxMainRise": 0.0476,
+     "mainRisesOverTen": 0
+    },
+    "L7/L11": {
+     "athlete": "notes_paresseuses",
+     "policy": "L7/L11",
+     "runs": 6,
+     "rirMae": {
+      "mean": 6.34104,
+      "se": 0.31679,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 6.07579,
+      "se": 0.35421,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 5.03303,
+      "se": 0.4776,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 9.80888,
+      "se": 0.40692,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.00464,
+      "se": 0.00275,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.01157,
+      "se": 0.00216,
+      "n": 6
+     },
+     "gain": {
+      "mean": -0.00012,
+      "se": 0.00008,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.57842,
+      "se": 0.01512,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 56.5,
+      "se": 2.74165,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.93287,
+      "se": 0.01453,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.10084,
+       "se": 0.01428,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.10126,
+       "se": 0.01644,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.08042,
+       "se": 0.01601,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.06489,
+       "se": 0.01233,
+       "n": 6
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.08669,
+       "se": 0.02102,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.06597,
+       "se": 0.01744,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.0784,
+       "se": 0.0139,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.08145,
+       "se": 0.00842,
+       "n": 6
+      }
+     },
+     "convergence": [
+      0.08669,
+      0.08059,
+      0.06597,
+      0.06967,
+      0.09597,
+      0.0784,
+      0.07185,
+      0.07024,
+      0.07751,
+      0.10192,
+      0.0884,
+      0.08145,
+      0.07958,
+      0.0817,
+      0.09035,
+      0.07709,
+      0.07634,
+      0.07428,
+      0.0808,
+      0.07557
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      null,
+      7.9804,
+      5.5049,
+      5.7874,
+      5.9797,
+      5.6733,
+      6.851,
+      6.1656,
+      6.9232,
+      6.565,
+      7.2322,
+      7.2066,
+      6.9401,
+      5.369,
+      4.8647,
+      4.9559,
+      5.5624,
+      5.3397,
+      5.4657,
+      7.082,
+      7.4935,
+      6.5825
+     ],
+     "coverage95": 0.3924,
+     "maxMainRise": 0.0741,
+     "mainRisesOverTen": 0
+    }
+   },
+   "paired": {
+    "rirMae_vs_double_progression": {
+     "mean": -0.55825,
+     "se": 0.26006,
+     "n": 6
+    },
+    "rirMae_vs_L7": {
+     "mean": -2.75293,
+     "se": 0.33898,
+     "n": 6
+    },
+    "gain_vs_double_progression": {
+     "mean": -0.00004,
+     "se": 0.00004,
+     "n": 6
+    },
+    "gain_vs_L7": {
+     "mean": 0.00019,
+     "se": 0.00003,
+     "n": 6
+    }
+   },
+   "loop": {
+    "athlete": "notes_paresseuses",
+    "runs": 4,
+    "proposals": {
+     "load": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "reps": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "volume": {
+      "mean": 0.5,
+      "se": 0.28868,
+      "n": 4
+     },
+     "exercise_swap": {
+      "mean": 3.0,
+      "se": 1.08012,
+      "n": 4
+     },
+     "session_restructure": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "block_restructure": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "deload": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "pain_sparing": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "schedule": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     }
+    },
+    "volumeFlipRate": {
+     "mean": 0.0,
+     "se": 0.0,
+     "n": 2
+    },
+    "unlockWeek": {
+     "loads_reps": {
+      "mean": 1.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "volume": {
+      "mean": 2.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "exercise_swap": {
+      "mean": 4.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "session_restructure": {
+      "mean": 6.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "block_restructure": {
+      "mean": 11.0,
+      "se": 0.0,
+      "n": 4
+     }
+    },
+    "base": {
+     "athlete": "notes_paresseuses",
+     "policy": "kalis_adapt",
+     "runs": 4,
+     "rirMae": {
+      "mean": 2.88909,
+      "se": 0.20918,
+      "n": 4
+     },
+     "rirBias": {
+      "mean": 2.50587,
+      "se": 0.23202,
+      "n": 4
+     },
+     "rirMaeLoaded": {
+      "mean": 2.74747,
+      "se": 0.31874,
+      "n": 4
+     },
+     "rirMaeBodyweight": {
+      "mean": 3.38808,
+      "se": 0.46963,
+      "n": 4
+     },
+     "failRate": {
+      "mean": 0.00612,
+      "se": 0.00087,
+      "n": 4
+     },
+     "nearFailureRate": {
+      "mean": 0.00542,
+      "se": 0.00217,
+      "n": 4
+     },
+     "gain": {
+      "mean": 0.00003,
+      "se": 0.00006,
+      "n": 4
+     },
+     "reversalRate": {
+      "mean": 0.37698,
+      "se": 0.06057,
+      "n": 4
+     },
+     "loadMoves": {
+      "mean": 22.75,
+      "se": 3.0104,
+      "n": 4
+     },
+     "sessionsDoneShare": {
+      "mean": 0.9375,
+      "se": 0.01748,
+      "n": 4
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.1369,
+      "se": 0.02398,
+      "n": 4
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.13199,
+       "se": 0.00679,
+       "n": 4
+      },
+      "3": {
+       "mean": 0.10018,
+       "se": 0.00836,
+       "n": 4
+      },
+      "6": {
+       "mean": 0.07308,
+       "se": 0.00553,
+       "n": 4
+      },
+      "12": {
+       "mean": 0.0398,
+       "se": 0.0086,
+       "n": 4
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.1272,
+       "se": 0.0078,
+       "n": 4
+      },
+      "3": {
+       "mean": 0.08981,
+       "se": 0.00861,
+       "n": 4
+      },
+      "6": {
+       "mean": 0.05939,
+       "se": 0.00485,
+       "n": 4
+      },
+      "12": {
+       "mean": 0.03006,
+       "se": 0.00562,
+       "n": 4
+      }
+     },
+     "convergence": [
+      0.1272,
+      0.09704,
+      0.08981,
+      0.08195,
+      0.08062,
+      0.05939,
+      0.05618,
+      0.05054,
+      0.04556,
+      0.03798,
+      0.03209,
+      0.03006,
+      0.02916,
+      0.02571,
+      0.01777,
+      0.01651,
+      0.012,
+      0.0132,
+      0.01262,
+      0.01283
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      null,
+      5.3341,
+      3.868,
+      1.5171,
+      1.736,
+      1.7272,
+      3.7178,
+      3.7843,
+      3.234,
+      3.8389,
+      3.214,
+      2.956,
+      3.3959,
+      1.8048,
+      2.5033,
+      2.7304,
+      3.0775,
+      2.1439,
+      1.0815,
+      2.1027,
+      2.3141,
+      2.4538
+     ],
+     "coverage95": 0.8811,
+     "maxMainRise": 0.0769,
+     "mainRisesOverTen": 0
+    }
+   }
+  },
+  {
+   "key": "irregulier",
+   "profileKey": "tres_grand_lourd",
+   "spec": {
+    "key": "irregulier",
+    "profileKey": "tres_grand_lourd",
+    "level": 1,
+    "weeklyGain": 0.004,
+    "ratingNoise": 1.0,
+    "rirBias": 0.25,
+    "rirBiasSd": 0.18,
+    "lazy": 0.1,
+    "skipRating": 0.0,
+    "missRate": 0.3,
+    "breakFromDay": 70,
+    "breakDays": 12,
+    "illnessFromDay": 110,
+    "illnessDays": 8,
+    "painDays": 0,
+    "painIntensity": 5,
+    "otherPlaceDays": 0,
+    "daySd": 0.03,
+    "healthAnswerRate": 0.7,
+    "shortTimeRate": 0.05
+   },
+   "blocks": 5,
+   "policies": {
+    "kalis_adapt": {
+     "athlete": "irregulier",
+     "policy": "kalis_adapt",
+     "runs": 6,
+     "rirMae": {
+      "mean": 2.17984,
+      "se": 0.22809,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 1.66886,
+      "se": 0.29143,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 1.44007,
+      "se": 0.11694,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 4.67204,
+      "se": 0.79143,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.0039,
+      "se": 0.00241,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.01135,
+      "se": 0.00339,
+      "n": 6
+     },
+     "gain": {
+      "mean": -0.00037,
+      "se": 0.00026,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.36059,
+      "se": 0.0487,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 16.0,
+      "se": 1.36626,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.65972,
+      "se": 0.03435,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.15433,
+      "se": 0.02276,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.14511,
+       "se": 0.0077,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.0844,
+       "se": 0.01103,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.08454,
+       "se": 0.00737,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.05427,
+       "se": 0.00258,
+       "n": 6
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.12824,
+       "se": 0.00823,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.06674,
+       "se": 0.01046,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.06415,
+       "se": 0.00765,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.03037,
+       "se": 0.00632,
+       "n": 6
+      }
+     },
+     "convergence": [
+      0.12824,
+      0.07141,
+      0.06674,
+      0.06529,
+      0.06288,
+      0.06415,
+      0.06212,
+      0.0666,
+      0.05494,
+      0.04089,
+      0.0343,
+      0.03037,
+      0.03118,
+      0.0209,
+      0.02346,
+      0.02407,
+      0.01768,
+      0.01556,
+      0.01297,
+      0.01147
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      0.9993,
+      2.5031,
+      1.6654,
+      1.6341,
+      1.7092,
+      1.6382,
+      2.072,
+      2.021,
+      null,
+      null,
+      2.6176,
+      2.4342,
+      1.3806,
+      1.8833,
+      1.4442,
+      2.5433,
+      2.1947,
+      1.8238,
+      2.3745,
+      2.2214,
+      2.2017,
+      2.2107
+     ],
+     "coverage95": 0.8509,
+     "maxMainRise": 0.0625,
+     "mainRisesOverTen": 0
+    },
+    "double_progression": {
+     "athlete": "irregulier",
+     "policy": "double_progression",
+     "runs": 6,
+     "rirMae": {
+      "mean": 3.40112,
+      "se": 0.35915,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 3.23662,
+      "se": 0.38942,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 2.20531,
+      "se": 0.29463,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 7.38455,
+      "se": 1.05392,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.00202,
+      "se": 0.00202,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.00233,
+      "se": 0.0015,
+      "n": 6
+     },
+     "gain": {
+      "mean": -0.00039,
+      "se": 0.00028,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.37332,
+      "se": 0.03677,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 44.16667,
+      "se": 6.7991,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.65972,
+      "se": 0.03435,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {},
+     "operationalError": {},
+     "convergence": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      13.1397,
+      9.9199,
+      3.6126,
+      3.4316,
+      3.0879,
+      2.5506,
+      2.7472,
+      3.8302,
+      null,
+      null,
+      5.0301,
+      3.4479,
+      2.1401,
+      3.1875,
+      2.1921,
+      2.8339,
+      2.7449,
+      2.6342,
+      3.418,
+      3.3822,
+      2.944,
+      2.7705
+     ],
+     "coverage95": null,
+     "maxMainRise": 0.0714,
+     "mainRisesOverTen": 0
+    },
+    "L7/L11": {
+     "athlete": "irregulier",
+     "policy": "L7/L11",
+     "runs": 6,
+     "rirMae": {
+      "mean": 5.13563,
+      "se": 0.41695,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 4.67283,
+      "se": 0.44993,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 4.47921,
+      "se": 0.73684,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 7.39123,
+      "se": 1.05356,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.00637,
+      "se": 0.0022,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.01396,
+      "se": 0.00343,
+      "n": 6
+     },
+     "gain": {
+      "mean": -0.00041,
+      "se": 0.00028,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.5014,
+      "se": 0.03607,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 51.33333,
+      "se": 3.47051,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.65972,
+      "se": 0.03435,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.1126,
+       "se": 0.01339,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.0956,
+       "se": 0.01747,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.10956,
+       "se": 0.00975,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.0684,
+       "se": 0.00483,
+       "n": 6
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.07021,
+       "se": 0.01802,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.05931,
+       "se": 0.01498,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.05964,
+       "se": 0.01307,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.07865,
+       "se": 0.0199,
+       "n": 6
+      }
+     },
+     "convergence": [
+      0.07021,
+      0.06383,
+      0.05931,
+      0.07059,
+      0.06296,
+      0.05964,
+      0.06088,
+      0.06263,
+      0.06518,
+      0.06688,
+      0.0668,
+      0.07865,
+      0.07198,
+      0.07474,
+      0.07907,
+      0.06752,
+      0.06403,
+      0.06803,
+      0.0698,
+      0.055
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      5.4584,
+      5.8589,
+      3.3922,
+      3.2578,
+      4.6991,
+      4.4058,
+      4.5181,
+      4.9047,
+      null,
+      null,
+      16.178,
+      6.7173,
+      4.3858,
+      6.361,
+      2.5049,
+      3.352,
+      3.5643,
+      5.3438,
+      7.617,
+      7.0907,
+      3.631,
+      3.7813
+     ],
+     "coverage95": 0.3448,
+     "maxMainRise": 0.3077,
+     "mainRisesOverTen": 11
+    }
+   },
+   "paired": {
+    "rirMae_vs_double_progression": {
+     "mean": -1.22128,
+     "se": 0.25281,
+     "n": 6
+    },
+    "rirMae_vs_L7": {
+     "mean": -2.95579,
+     "se": 0.46847,
+     "n": 6
+    },
+    "gain_vs_double_progression": {
+     "mean": 0.00002,
+     "se": 0.00004,
+     "n": 6
+    },
+    "gain_vs_L7": {
+     "mean": 0.00003,
+     "se": 0.00005,
+     "n": 6
+    }
+   },
+   "loop": {
+    "athlete": "irregulier",
+    "runs": 4,
+    "proposals": {
+     "load": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "reps": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "volume": {
+      "mean": 2.25,
+      "se": 1.31498,
+      "n": 4
+     },
+     "exercise_swap": {
+      "mean": 2.0,
+      "se": 0.70711,
+      "n": 4
+     },
+     "session_restructure": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "block_restructure": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "deload": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "pain_sparing": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "schedule": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     }
+    },
+    "volumeFlipRate": {
+     "mean": 0.125,
+     "se": 0.125,
+     "n": 2
+    },
+    "unlockWeek": {
+     "loads_reps": {
+      "mean": 1.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "volume": {
+      "mean": 2.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "exercise_swap": {
+      "mean": 4.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "session_restructure": {
+      "mean": 6.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "block_restructure": {
+      "mean": 11.0,
+      "se": 0.0,
+      "n": 4
+     }
+    },
+    "base": {
+     "athlete": "irregulier",
+     "policy": "kalis_adapt",
+     "runs": 4,
+     "rirMae": {
+      "mean": 1.70047,
+      "se": 0.26967,
+      "n": 4
+     },
+     "rirBias": {
+      "mean": 1.18171,
+      "se": 0.38013,
+      "n": 4
+     },
+     "rirMaeLoaded": {
+      "mean": 1.38835,
+      "se": 0.14126,
+      "n": 4
+     },
+     "rirMaeBodyweight": {
+      "mean": 2.78442,
+      "se": 0.64927,
+      "n": 4
+     },
+     "failRate": {
+      "mean": 0.00183,
+      "se": 0.00111,
+      "n": 4
+     },
+     "nearFailureRate": {
+      "mean": 0.01476,
+      "se": 0.00644,
+      "n": 4
+     },
+     "gain": {
+      "mean": -0.00007,
+      "se": 0.00013,
+      "n": 4
+     },
+     "reversalRate": {
+      "mean": 0.36631,
+      "se": 0.03315,
+      "n": 4
+     },
+     "loadMoves": {
+      "mean": 16.75,
+      "se": 2.25,
+      "n": 4
+     },
+     "sessionsDoneShare": {
+      "mean": 0.69792,
+      "se": 0.03819,
+      "n": 4
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.18778,
+      "se": 0.01672,
+      "n": 4
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.13221,
+       "se": 0.01239,
+       "n": 4
+      },
+      "3": {
+       "mean": 0.08476,
+       "se": 0.01396,
+       "n": 4
+      },
+      "6": {
+       "mean": 0.0767,
+       "se": 0.01392,
+       "n": 4
+      },
+      "12": {
+       "mean": 0.04067,
+       "se": 0.00414,
+       "n": 4
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.12023,
+       "se": 0.01396,
+       "n": 4
+      },
+      "3": {
+       "mean": 0.07004,
+       "se": 0.01375,
+       "n": 4
+      },
+      "6": {
+       "mean": 0.05655,
+       "se": 0.01393,
+       "n": 4
+      },
+      "12": {
+       "mean": 0.0174,
+       "se": 0.00067,
+       "n": 4
+      }
+     },
+     "convergence": [
+      0.12023,
+      0.08083,
+      0.07004,
+      0.06826,
+      0.06071,
+      0.05655,
+      0.04978,
+      0.04447,
+      0.03977,
+      0.03566,
+      0.0208,
+      0.0174,
+      0.0158,
+      0.00957,
+      0.0105,
+      0.01063,
+      0.01008,
+      0.00841,
+      0.01156,
+      0.00687
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      1.1019,
+      2.3509,
+      2.2387,
+      1.0513,
+      1.3889,
+      1.531,
+      1.9312,
+      1.7712,
+      null,
+      null,
+      1.1931,
+      1.371,
+      1.3676,
+      1.7537,
+      1.4989,
+      2.1281,
+      1.8182,
+      1.2387,
+      1.7402,
+      1.8261,
+      1.975,
+      1.2789
+     ],
+     "coverage95": 0.8856,
+     "maxMainRise": 0.0625,
+     "mainRisesOverTen": 0
+    }
+   }
+  },
+  {
+   "key": "maison_halteres",
+   "profileKey": "musculation_maison_halteres_4x45",
+   "spec": {
+    "key": "maison_halteres",
+    "profileKey": "musculation_maison_halteres_4x45",
+    "level": 0,
+    "weeklyGain": 0.01,
+    "ratingNoise": 1.3,
+    "rirBias": 0.25,
+    "rirBiasSd": 0.18,
+    "lazy": 0.2,
+    "skipRating": 0.0,
+    "missRate": 0.12,
+    "breakDays": 0,
+    "illnessDays": 0,
+    "painDays": 0,
+    "painIntensity": 5,
+    "otherPlaceDays": 0,
+    "daySd": 0.03,
+    "healthAnswerRate": 0.7,
+    "shortTimeRate": 0.05
+   },
+   "blocks": 6,
+   "policies": {
+    "kalis_adapt": {
+     "athlete": "maison_halteres",
+     "policy": "kalis_adapt",
+     "runs": 6,
+     "rirMae": {
+      "mean": 5.18621,
+      "se": 0.47969,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 4.92423,
+      "se": 0.5257,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 7.63389,
+      "se": 0.71891,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 2.21936,
+      "se": 0.35159,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.001,
+      "se": 0.00048,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.00365,
+      "se": 0.00161,
+      "n": 6
+     },
+     "gain": {
+      "mean": 0.00065,
+      "se": 0.00024,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.73832,
+      "se": 0.03757,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 28.33333,
+      "se": 4.16867,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.88889,
+      "se": 0.0113,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.15324,
+      "se": 0.02428,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.17019,
+       "se": 0.00605,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.14072,
+       "se": 0.00547,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.13272,
+       "se": 0.00884,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.11506,
+       "se": 0.01446,
+       "n": 6
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.1624,
+       "se": 0.00435,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.13283,
+       "se": 0.00533,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.1234,
+       "se": 0.01024,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.10224,
+       "se": 0.01442,
+       "n": 6
+      }
+     },
+     "convergence": [
+      0.1624,
+      0.14985,
+      0.13283,
+      0.12248,
+      0.12614,
+      0.1234,
+      0.12054,
+      0.11736,
+      0.11791,
+      0.11416,
+      0.11251,
+      0.10224,
+      0.09419,
+      0.08599,
+      0.08522,
+      0.0803,
+      0.07733,
+      0.07664,
+      0.06571,
+      0.06333
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      null,
+      7.5327,
+      4.9826,
+      5.3647,
+      5.2874,
+      5.308,
+      4.9612,
+      5.3746,
+      5.5125,
+      4.6506,
+      5.4251,
+      5.4881,
+      5.3685,
+      5.2409,
+      3.7249,
+      3.3654,
+      3.4578,
+      3.0854,
+      5.9469,
+      6.363,
+      6.2691,
+      5.8837
+     ],
+     "coverage95": 0.7002,
+     "maxMainRise": 0.3333,
+     "mainRisesOverTen": 49
+    },
+    "double_progression": {
+     "athlete": "maison_halteres",
+     "policy": "double_progression",
+     "runs": 6,
+     "rirMae": {
+      "mean": 4.69104,
+      "se": 0.35631,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 4.21325,
+      "se": 0.42104,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 6.34328,
+      "se": 0.58639,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 2.70198,
+      "se": 0.14648,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.04028,
+      "se": 0.01359,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.02494,
+      "se": 0.00951,
+      "n": 6
+     },
+     "gain": {
+      "mean": 0.00136,
+      "se": 0.00016,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.83657,
+      "se": 0.0089,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 99.16667,
+      "se": 5.21163,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.88889,
+      "se": 0.0113,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {},
+     "operationalError": {},
+     "convergence": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      null,
+      4.5208,
+      3.5425,
+      5.2076,
+      4.0634,
+      5.3279,
+      3.7295,
+      6.331,
+      3.9489,
+      4.8966,
+      3.4188,
+      5.6559,
+      5.9778,
+      4.1402,
+      3.2338,
+      4.3962,
+      2.9717,
+      4.3916,
+      3.4709,
+      7.7747,
+      4.0974,
+      5.4336
+     ],
+     "coverage95": null,
+     "maxMainRise": 0.3333,
+     "mainRisesOverTen": 107
+    },
+    "L7/L11": {
+     "athlete": "maison_halteres",
+     "policy": "L7/L11",
+     "runs": 6,
+     "rirMae": {
+      "mean": 7.46467,
+      "se": 0.84409,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 6.75614,
+      "se": 0.94477,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 11.66546,
+      "se": 1.51162,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 2.70289,
+      "se": 0.14496,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.04474,
+      "se": 0.01573,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.03311,
+      "se": 0.00927,
+      "n": 6
+     },
+     "gain": {
+      "mean": 0.00132,
+      "se": 0.00014,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.78239,
+      "se": 0.01752,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 58.16667,
+      "se": 2.74975,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.88889,
+      "se": 0.0113,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.10921,
+       "se": 0.01371,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.10089,
+       "se": 0.01224,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.10467,
+       "se": 0.01962,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.10835,
+       "se": 0.02426,
+       "n": 6
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.14671,
+       "se": 0.03041,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.11886,
+       "se": 0.02274,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.11835,
+       "se": 0.02339,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.10768,
+       "se": 0.02342,
+       "n": 6
+      }
+     },
+     "convergence": [
+      0.14671,
+      0.12636,
+      0.11886,
+      0.10654,
+      0.11284,
+      0.11835,
+      0.11063,
+      0.10966,
+      0.1126,
+      0.11587,
+      0.11256,
+      0.10768,
+      0.11799,
+      0.11404,
+      0.11022,
+      0.10907,
+      0.11092,
+      0.10859,
+      0.1056,
+      0.09648
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      null,
+      11.5907,
+      6.1788,
+      6.9765,
+      8.513,
+      11.2108,
+      5.6431,
+      5.9822,
+      8.1729,
+      5.1621,
+      6.9737,
+      6.2211,
+      9.5226,
+      6.9434,
+      5.1617,
+      6.4844,
+      6.4127,
+      6.6226,
+      8.5811,
+      8.0115,
+      7.6839,
+      7.2959
+     ],
+     "coverage95": 0.3853,
+     "maxMainRise": 0.5,
+     "mainRisesOverTen": 20
+    }
+   },
+   "paired": {
+    "rirMae_vs_double_progression": {
+     "mean": 0.49517,
+     "se": 0.24552,
+     "n": 6
+    },
+    "rirMae_vs_L7": {
+     "mean": -2.27846,
+     "se": 0.56917,
+     "n": 6
+    },
+    "gain_vs_double_progression": {
+     "mean": -0.00071,
+     "se": 0.00012,
+     "n": 6
+    },
+    "gain_vs_L7": {
+     "mean": -0.00068,
+     "se": 0.00012,
+     "n": 6
+    }
+   },
+   "loop": {
+    "athlete": "maison_halteres",
+    "runs": 4,
+    "proposals": {
+     "load": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "reps": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "volume": {
+      "mean": 1.5,
+      "se": 1.19024,
+      "n": 4
+     },
+     "exercise_swap": {
+      "mean": 1.75,
+      "se": 0.75,
+      "n": 4
+     },
+     "session_restructure": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "block_restructure": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "deload": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "pain_sparing": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "schedule": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     }
+    },
+    "volumeFlipRate": {
+     "mean": 0.0,
+     "se": 0.0,
+     "n": 2
+    },
+    "unlockWeek": {
+     "loads_reps": {
+      "mean": 1.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "volume": {
+      "mean": 2.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "exercise_swap": {
+      "mean": 4.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "session_restructure": {
+      "mean": 5.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "block_restructure": {
+      "mean": 10.0,
+      "se": 0.0,
+      "n": 4
+     }
+    },
+    "base": {
+     "athlete": "maison_halteres",
+     "policy": "kalis_adapt",
+     "runs": 4,
+     "rirMae": {
+      "mean": 4.63709,
+      "se": 0.54491,
+      "n": 4
+     },
+     "rirBias": {
+      "mean": 4.39262,
+      "se": 0.61264,
+      "n": 4
+     },
+     "rirMaeLoaded": {
+      "mean": 6.86733,
+      "se": 0.80482,
+      "n": 4
+     },
+     "rirMaeBodyweight": {
+      "mean": 2.23977,
+      "se": 0.3004,
+      "n": 4
+     },
+     "failRate": {
+      "mean": 0.00142,
+      "se": 0.00028,
+      "n": 4
+     },
+     "nearFailureRate": {
+      "mean": 0.0057,
+      "se": 0.00195,
+      "n": 4
+     },
+     "gain": {
+      "mean": 0.00107,
+      "se": 0.00031,
+      "n": 4
+     },
+     "reversalRate": {
+      "mean": 0.74574,
+      "se": 0.05215,
+      "n": 4
+     },
+     "loadMoves": {
+      "mean": 34.25,
+      "se": 8.09707,
+      "n": 4
+     },
+     "sessionsDoneShare": {
+      "mean": 0.90365,
+      "se": 0.00781,
+      "n": 4
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.18161,
+      "se": 0.02441,
+      "n": 4
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.16331,
+       "se": 0.00546,
+       "n": 4
+      },
+      "3": {
+       "mean": 0.12686,
+       "se": 0.00545,
+       "n": 4
+      },
+      "6": {
+       "mean": 0.12871,
+       "se": 0.00817,
+       "n": 4
+      },
+      "12": {
+       "mean": 0.12454,
+       "se": 0.00877,
+       "n": 4
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.15583,
+       "se": 0.0031,
+       "n": 4
+      },
+      "3": {
+       "mean": 0.11945,
+       "se": 0.00646,
+       "n": 4
+      },
+      "6": {
+       "mean": 0.11834,
+       "se": 0.01195,
+       "n": 4
+      },
+      "12": {
+       "mean": 0.11003,
+       "se": 0.00889,
+       "n": 4
+      }
+     },
+     "convergence": [
+      0.15583,
+      0.13151,
+      0.11945,
+      0.11839,
+      0.12003,
+      0.11834,
+      0.11733,
+      0.11319,
+      0.112,
+      0.10763,
+      0.1096,
+      0.11003,
+      0.1037,
+      0.10796,
+      0.09198,
+      0.08756,
+      0.08463,
+      0.05739,
+      0.05784,
+      0.05773
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      null,
+      6.7397,
+      5.3451,
+      4.9937,
+      5.9038,
+      5.0986,
+      4.4666,
+      4.0422,
+      4.7022,
+      3.9523,
+      3.79,
+      3.832,
+      4.9665,
+      5.0059,
+      4.7922,
+      4.4644,
+      4.3888,
+      3.9103,
+      3.5779,
+      5.0757,
+      4.1859,
+      4.0015
+     ],
+     "coverage95": 0.6724,
+     "maxMainRise": 0.3333,
+     "mainRisesOverTen": 30
+    }
+   }
+  },
+  {
+   "key": "calisthenie_parc",
+   "profileKey": "femme_30_street_workout_parc_3x45",
+   "spec": {
+    "key": "calisthenie_parc",
+    "profileKey": "femme_30_street_workout_parc_3x45",
+    "level": 1,
+    "weeklyGain": 0.004,
+    "ratingNoise": 1.0,
+    "rirBias": 0.25,
+    "rirBiasSd": 0.18,
+    "lazy": 0.1,
+    "skipRating": 0.1,
+    "missRate": 0.08,
+    "breakDays": 0,
+    "illnessDays": 0,
+    "painDays": 0,
+    "painIntensity": 5,
+    "otherPlaceDays": 0,
+    "daySd": 0.025,
+    "healthAnswerRate": 0.7,
+    "shortTimeRate": 0.05
+   },
+   "blocks": 6,
+   "policies": {
+    "kalis_adapt": {
+     "athlete": "calisthenie_parc",
+     "policy": "kalis_adapt",
+     "runs": 6,
+     "rirMae": {
+      "mean": 5.65234,
+      "se": 0.54446,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 5.6247,
+      "se": 0.55703,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 0
+     },
+     "rirMaeBodyweight": {
+      "mean": 5.65234,
+      "se": 0.54446,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "gain": {
+      "mean": -0.00087,
+      "se": 0.00008,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 0
+     },
+     "loadMoves": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.92361,
+      "se": 0.0182,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.04259,
+      "se": 0.01189,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.27242,
+       "se": 0.02001,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.24532,
+       "se": 0.03022,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.2368,
+       "se": 0.02302,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.18959,
+       "se": 0.02576,
+       "n": 6
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.27242,
+       "se": 0.02001,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.24532,
+       "se": 0.03022,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.2368,
+       "se": 0.02302,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.18959,
+       "se": 0.02576,
+       "n": 6
+      }
+     },
+     "convergence": [
+      0.27242,
+      0.26107,
+      0.24532,
+      0.24286,
+      0.24028,
+      0.2368,
+      0.23014,
+      0.20522,
+      0.2064,
+      0.20792,
+      0.20448,
+      0.18959,
+      0.18579,
+      0.1807,
+      0.17031,
+      0.16633,
+      0.14972,
+      0.1512,
+      0.14842,
+      0.12905
+     ],
+     "rirMaeByWeek": [
+      null,
+      5.3493,
+      4.6345,
+      null,
+      5.9273,
+      6.0357,
+      6.6809,
+      null,
+      5.4994,
+      5.9738,
+      6.7352,
+      null,
+      4.7078,
+      5.6741,
+      5.4568,
+      null,
+      4.0735,
+      5.5499,
+      5.557,
+      null,
+      5.0366,
+      5.6232,
+      6.0822
+     ],
+     "coverage95": 0.4921,
+     "maxMainRise": 0.0,
+     "mainRisesOverTen": 0
+    },
+    "double_progression": {
+     "athlete": "calisthenie_parc",
+     "policy": "double_progression",
+     "runs": 6,
+     "rirMae": {
+      "mean": 8.0819,
+      "se": 0.53397,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 8.06181,
+      "se": 0.5389,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 0
+     },
+     "rirMaeBodyweight": {
+      "mean": 8.0819,
+      "se": 0.53397,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "gain": {
+      "mean": -0.00083,
+      "se": 0.00004,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 0
+     },
+     "loadMoves": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.92361,
+      "se": 0.0182,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {},
+     "operationalError": {},
+     "convergence": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+     ],
+     "rirMaeByWeek": [
+      null,
+      7.6419,
+      6.9753,
+      null,
+      8.4024,
+      8.6428,
+      9.2922,
+      null,
+      7.8807,
+      8.5478,
+      9.2627,
+      null,
+      6.936,
+      8.121,
+      7.8048,
+      null,
+      6.1419,
+      7.8322,
+      7.8848,
+      null,
+      7.5347,
+      8.1905,
+      8.5526
+     ],
+     "coverage95": null,
+     "maxMainRise": 0.0,
+     "mainRisesOverTen": 0
+    },
+    "L7/L11": {
+     "athlete": "calisthenie_parc",
+     "policy": "L7/L11",
+     "runs": 6,
+     "rirMae": {
+      "mean": 8.0819,
+      "se": 0.53397,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 8.06181,
+      "se": 0.5389,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 0
+     },
+     "rirMaeBodyweight": {
+      "mean": 8.0819,
+      "se": 0.53397,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "gain": {
+      "mean": -0.00083,
+      "se": 0.00004,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 0
+     },
+     "loadMoves": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.92361,
+      "se": 0.0182,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {},
+     "operationalError": {},
+     "convergence": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+     ],
+     "rirMaeByWeek": [
+      null,
+      7.6419,
+      6.9753,
+      null,
+      8.4024,
+      8.6428,
+      9.2922,
+      null,
+      7.8807,
+      8.5478,
+      9.2627,
+      null,
+      6.936,
+      8.121,
+      7.8048,
+      null,
+      6.1419,
+      7.8322,
+      7.8848,
+      null,
+      7.5347,
+      8.1905,
+      8.5526
+     ],
+     "coverage95": null,
+     "maxMainRise": 0.0,
+     "mainRisesOverTen": 0
+    }
+   },
+   "paired": {
+    "rirMae_vs_double_progression": {
+     "mean": -2.42956,
+     "se": 0.13262,
+     "n": 6
+    },
+    "rirMae_vs_L7": {
+     "mean": -2.42956,
+     "se": 0.13262,
+     "n": 6
+    },
+    "gain_vs_double_progression": {
+     "mean": -0.00005,
+     "se": 0.00007,
+     "n": 6
+    },
+    "gain_vs_L7": {
+     "mean": -0.00005,
+     "se": 0.00007,
+     "n": 6
+    }
+   },
+   "loop": {
+    "athlete": "calisthenie_parc",
+    "runs": 4,
+    "proposals": {
+     "load": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "reps": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "volume": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "exercise_swap": {
+      "mean": 1.0,
+      "se": 0.40825,
+      "n": 4
+     },
+     "session_restructure": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "block_restructure": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "deload": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "pain_sparing": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "schedule": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     }
+    },
+    "volumeFlipRate": {
+     "mean": 0.0,
+     "se": 0.0,
+     "n": 0
+    },
+    "unlockWeek": {
+     "loads_reps": {
+      "mean": 1.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "volume": {
+      "mean": 2.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "exercise_swap": {
+      "mean": 4.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "session_restructure": {
+      "mean": 5.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "block_restructure": {
+      "mean": 10.0,
+      "se": 0.0,
+      "n": 4
+     }
+    },
+    "base": {
+     "athlete": "calisthenie_parc",
+     "policy": "kalis_adapt",
+     "runs": 4,
+     "rirMae": {
+      "mean": 2.87389,
+      "se": 0.34372,
+      "n": 4
+     },
+     "rirBias": {
+      "mean": 2.84433,
+      "se": 0.34991,
+      "n": 4
+     },
+     "rirMaeLoaded": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 0
+     },
+     "rirMaeBodyweight": {
+      "mean": 2.87389,
+      "se": 0.34372,
+      "n": 4
+     },
+     "failRate": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "nearFailureRate": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "gain": {
+      "mean": -0.00018,
+      "se": 0.00013,
+      "n": 4
+     },
+     "reversalRate": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 0
+     },
+     "loadMoves": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "sessionsDoneShare": {
+      "mean": 0.91319,
+      "se": 0.02621,
+      "n": 4
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0573,
+      "se": 0.00765,
+      "n": 4
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.22938,
+       "se": 0.02347,
+       "n": 4
+      },
+      "3": {
+       "mean": 0.22205,
+       "se": 0.03137,
+       "n": 4
+      },
+      "6": {
+       "mean": 0.20314,
+       "se": 0.02336,
+       "n": 4
+      },
+      "12": {
+       "mean": 0.15178,
+       "se": 0.03498,
+       "n": 4
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.22938,
+       "se": 0.02347,
+       "n": 4
+      },
+      "3": {
+       "mean": 0.22205,
+       "se": 0.03137,
+       "n": 4
+      },
+      "6": {
+       "mean": 0.20314,
+       "se": 0.02336,
+       "n": 4
+      },
+      "12": {
+       "mean": 0.15178,
+       "se": 0.03498,
+       "n": 4
+      }
+     },
+     "convergence": [
+      0.22938,
+      0.23501,
+      0.22205,
+      0.22074,
+      0.21615,
+      0.20314,
+      0.19795,
+      0.20559,
+      0.17248,
+      0.17022,
+      0.16365,
+      0.15178,
+      0.15648,
+      0.15097,
+      0.12811,
+      0.1306,
+      0.12751,
+      0.12674,
+      0.133,
+      0.11482
+     ],
+     "rirMaeByWeek": [
+      null,
+      5.8504,
+      4.751,
+      null,
+      2.9802,
+      2.9423,
+      3.701,
+      3.4742,
+      null,
+      2.424,
+      3.151,
+      2.8298,
+      2.8835,
+      null,
+      2.2333,
+      2.8937,
+      2.756,
+      3.0666,
+      null,
+      1.9199,
+      1.977,
+      2.6197,
+      2.7947
+     ],
+     "coverage95": 0.4251,
+     "maxMainRise": 0.0,
+     "mainRisesOverTen": 0
+    }
+   }
+  },
+  {
+   "key": "douleur_et_lieu",
+   "profileKey": "materiel_complet_gouts_marques",
+   "spec": {
+    "key": "douleur_et_lieu",
+    "profileKey": "materiel_complet_gouts_marques",
+    "level": 1,
+    "weeklyGain": 0.004,
+    "ratingNoise": 1.0,
+    "rirBias": 0.25,
+    "rirBiasSd": 0.18,
+    "lazy": 0.1,
+    "skipRating": 0.0,
+    "missRate": 0.08,
+    "breakDays": 0,
+    "illnessDays": 0,
+    "painZone": "shoulder",
+    "painFromDay": 56,
+    "painDays": 21,
+    "painIntensity": 5,
+    "otherPlace": "maison",
+    "otherPlaceFromDay": 98,
+    "otherPlaceDays": 14,
+    "daySd": 0.025,
+    "healthAnswerRate": 0.7,
+    "shortTimeRate": 0.05
+   },
+   "blocks": 5,
+   "policies": {
+    "kalis_adapt": {
+     "athlete": "douleur_et_lieu",
+     "policy": "kalis_adapt",
+     "runs": 6,
+     "rirMae": {
+      "mean": 3.06619,
+      "se": 0.32384,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 2.37271,
+      "se": 0.39803,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 3.26724,
+      "se": 0.41827,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 2.66141,
+      "se": 0.17025,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.03461,
+      "se": 0.0027,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.039,
+      "se": 0.0031,
+      "n": 6
+     },
+     "gain": {
+      "mean": -0.00021,
+      "se": 0.00005,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.59199,
+      "se": 0.01714,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 30.5,
+      "se": 1.08781,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.93056,
+      "se": 0.0113,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.27421,
+      "se": 0.01473,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.16139,
+       "se": 0.01235,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.0944,
+       "se": 0.00834,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.09533,
+       "se": 0.00594,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.0833,
+       "se": 0.00815,
+       "n": 6
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.1471,
+       "se": 0.01311,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.07674,
+       "se": 0.01139,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.0781,
+       "se": 0.00839,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.06932,
+       "se": 0.01084,
+       "n": 6
+      }
+     },
+     "convergence": [
+      0.1471,
+      0.0928,
+      0.07674,
+      0.07207,
+      0.07502,
+      0.0781,
+      0.07686,
+      0.07816,
+      0.07124,
+      0.0691,
+      0.06784,
+      0.06932,
+      0.05971,
+      0.05315,
+      0.05294,
+      0.05354,
+      0.05045,
+      0.04748,
+      0.02974,
+      0.03393
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      null,
+      2.5287,
+      3.54,
+      1.6436,
+      2.6751,
+      2.0052,
+      2.8888,
+      3.261,
+      1.9172,
+      2.1935,
+      2.1025,
+      2.5675,
+      2.971,
+      5.5935,
+      3.4771,
+      3.2695,
+      4.0202,
+      4.1419,
+      2.9116,
+      3.2594,
+      3.6539,
+      3.7261
+     ],
+     "coverage95": 0.8081,
+     "maxMainRise": 0.2,
+     "mainRisesOverTen": 6
+    },
+    "double_progression": {
+     "athlete": "douleur_et_lieu",
+     "policy": "double_progression",
+     "runs": 6,
+     "rirMae": {
+      "mean": 3.56964,
+      "se": 0.40338,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 3.06865,
+      "se": 0.46915,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 3.39011,
+      "se": 0.5072,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 3.9116,
+      "se": 0.28152,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.05822,
+      "se": 0.00801,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.0517,
+      "se": 0.00604,
+      "n": 6
+     },
+     "gain": {
+      "mean": 0.00008,
+      "se": 0.00005,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.71726,
+      "se": 0.02625,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 82.0,
+      "se": 6.40312,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.93056,
+      "se": 0.0113,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 19.33333,
+      "se": 3.66667,
+      "n": 6
+     },
+     "capacityError": {},
+     "operationalError": {},
+     "convergence": [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      null,
+      3.5734,
+      3.366,
+      3.6756,
+      2.764,
+      3.9926,
+      2.4075,
+      3.5789,
+      2.6175,
+      2.587,
+      2.5947,
+      3.0336,
+      4.0547,
+      3.9976,
+      4.061,
+      4.2194,
+      3.8539,
+      5.3121,
+      4.3032,
+      4.3522,
+      4.0181,
+      3.2163
+     ],
+     "coverage95": null,
+     "maxMainRise": 0.2,
+     "mainRisesOverTen": 26
+    },
+    "L7/L11": {
+     "athlete": "douleur_et_lieu",
+     "policy": "L7/L11",
+     "runs": 6,
+     "rirMae": {
+      "mean": 4.68432,
+      "se": 0.54412,
+      "n": 6
+     },
+     "rirBias": {
+      "mean": 3.8856,
+      "se": 0.55505,
+      "n": 6
+     },
+     "rirMaeLoaded": {
+      "mean": 5.08125,
+      "se": 0.737,
+      "n": 6
+     },
+     "rirMaeBodyweight": {
+      "mean": 3.9165,
+      "se": 0.28398,
+      "n": 6
+     },
+     "failRate": {
+      "mean": 0.06032,
+      "se": 0.00821,
+      "n": 6
+     },
+     "nearFailureRate": {
+      "mean": 0.06468,
+      "se": 0.00622,
+      "n": 6
+     },
+     "gain": {
+      "mean": 0.00005,
+      "se": 0.00004,
+      "n": 6
+     },
+     "reversalRate": {
+      "mean": 0.66938,
+      "se": 0.01302,
+      "n": 6
+     },
+     "loadMoves": {
+      "mean": 83.83333,
+      "se": 4.94245,
+      "n": 6
+     },
+     "sessionsDoneShare": {
+      "mean": 0.93056,
+      "se": 0.0113,
+      "n": 6
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 6
+     },
+     "painAggravations": {
+      "mean": 16.5,
+      "se": 2.23234,
+      "n": 6
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.08332,
+       "se": 0.01009,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.09294,
+       "se": 0.00915,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.10036,
+       "se": 0.00396,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.0834,
+       "se": 0.00473,
+       "n": 6
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.08493,
+       "se": 0.01785,
+       "n": 6
+      },
+      "3": {
+       "mean": 0.06357,
+       "se": 0.01664,
+       "n": 6
+      },
+      "6": {
+       "mean": 0.0672,
+       "se": 0.01339,
+       "n": 6
+      },
+      "12": {
+       "mean": 0.06871,
+       "se": 0.01121,
+       "n": 6
+      }
+     },
+     "convergence": [
+      0.08493,
+      0.06964,
+      0.06357,
+      0.06282,
+      0.07296,
+      0.0672,
+      0.06489,
+      0.06288,
+      0.06171,
+      0.07758,
+      0.06464,
+      0.06871,
+      0.06648,
+      0.06482,
+      0.07754,
+      0.06649,
+      0.06078,
+      0.06858,
+      0.07248,
+      0.06585
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      null,
+      7.5916,
+      4.9612,
+      3.7968,
+      4.8459,
+      3.4442,
+      3.7443,
+      4.6185,
+      4.8402,
+      3.3716,
+      3.9306,
+      4.6447,
+      4.5402,
+      5.5241,
+      4.5183,
+      4.9076,
+      4.4032,
+      4.75,
+      4.7326,
+      3.6734,
+      5.3712,
+      5.3566
+     ],
+     "coverage95": 0.3161,
+     "maxMainRise": 0.2,
+     "mainRisesOverTen": 20
+    }
+   },
+   "paired": {
+    "rirMae_vs_double_progression": {
+     "mean": -0.50345,
+     "se": 0.13299,
+     "n": 6
+    },
+    "rirMae_vs_L7": {
+     "mean": -1.61814,
+     "se": 0.36459,
+     "n": 6
+    },
+    "gain_vs_double_progression": {
+     "mean": -0.00029,
+     "se": 0.00004,
+     "n": 6
+    },
+    "gain_vs_L7": {
+     "mean": -0.00027,
+     "se": 0.00004,
+     "n": 6
+    }
+   },
+   "loop": {
+    "athlete": "douleur_et_lieu",
+    "runs": 4,
+    "proposals": {
+     "load": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "reps": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "volume": {
+      "mean": 3.0,
+      "se": 0.70711,
+      "n": 4
+     },
+     "exercise_swap": {
+      "mean": 2.75,
+      "se": 0.75,
+      "n": 4
+     },
+     "session_restructure": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "block_restructure": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "deload": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "pain_sparing": {
+      "mean": 1.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "schedule": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     }
+    },
+    "volumeFlipRate": {
+     "mean": 0.0,
+     "se": 0.0,
+     "n": 4
+    },
+    "unlockWeek": {
+     "loads_reps": {
+      "mean": 1.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "volume": {
+      "mean": 2.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "exercise_swap": {
+      "mean": 4.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "session_restructure": {
+      "mean": 6.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "block_restructure": {
+      "mean": 11.75,
+      "se": 0.25,
+      "n": 4
+     }
+    },
+    "base": {
+     "athlete": "douleur_et_lieu",
+     "policy": "kalis_adapt",
+     "runs": 4,
+     "rirMae": {
+      "mean": 3.83087,
+      "se": 0.11421,
+      "n": 4
+     },
+     "rirBias": {
+      "mean": 3.1971,
+      "se": 0.13312,
+      "n": 4
+     },
+     "rirMaeLoaded": {
+      "mean": 4.34479,
+      "se": 0.13555,
+      "n": 4
+     },
+     "rirMaeBodyweight": {
+      "mean": 2.23449,
+      "se": 0.25939,
+      "n": 4
+     },
+     "failRate": {
+      "mean": 0.03064,
+      "se": 0.00197,
+      "n": 4
+     },
+     "nearFailureRate": {
+      "mean": 0.03548,
+      "se": 0.00447,
+      "n": 4
+     },
+     "gain": {
+      "mean": 0.0,
+      "se": 0.00006,
+      "n": 4
+     },
+     "reversalRate": {
+      "mean": 0.58581,
+      "se": 0.01177,
+      "n": 4
+     },
+     "loadMoves": {
+      "mean": 36.25,
+      "se": 3.63719,
+      "n": 4
+     },
+     "sessionsDoneShare": {
+      "mean": 0.9349,
+      "se": 0.01721,
+      "n": 4
+     },
+     "sessionsAdjustedShare": {
+      "mean": 0.26471,
+      "se": 0.0252,
+      "n": 4
+     },
+     "painAggravations": {
+      "mean": 0.0,
+      "se": 0.0,
+      "n": 4
+     },
+     "capacityError": {
+      "1": {
+       "mean": 0.16183,
+       "se": 0.01489,
+       "n": 4
+      },
+      "3": {
+       "mean": 0.10461,
+       "se": 0.00707,
+       "n": 4
+      },
+      "6": {
+       "mean": 0.09246,
+       "se": 0.00699,
+       "n": 4
+      },
+      "12": {
+       "mean": 0.06218,
+       "se": 0.00948,
+       "n": 4
+      }
+     },
+     "operationalError": {
+      "1": {
+       "mean": 0.14847,
+       "se": 0.0149,
+       "n": 4
+      },
+      "3": {
+       "mean": 0.09181,
+       "se": 0.00859,
+       "n": 4
+      },
+      "6": {
+       "mean": 0.07714,
+       "se": 0.00839,
+       "n": 4
+      },
+      "12": {
+       "mean": 0.04611,
+       "se": 0.00997,
+       "n": 4
+      }
+     },
+     "convergence": [
+      0.14847,
+      0.11054,
+      0.09181,
+      0.07943,
+      0.0737,
+      0.07714,
+      0.07664,
+      0.08054,
+      0.07462,
+      0.04806,
+      0.05109,
+      0.04611,
+      0.04168,
+      0.03246,
+      0.03566,
+      0.03515,
+      0.03487,
+      0.03378,
+      0.03215,
+      0.03388
+     ],
+     "rirMaeByWeek": [
+      null,
+      null,
+      null,
+      2.6001,
+      4.546,
+      2.2092,
+      3.4313,
+      2.4029,
+      2.8241,
+      4.5388,
+      3.8845,
+      2.7828,
+      3.0005,
+      3.0298,
+      8.2702,
+      9.5379,
+      5.2465,
+      4.5771,
+      4.2138,
+      4.3171,
+      3.7844,
+      3.9142,
+      3.4937,
+      3.8573
+     ],
+     "coverage95": 0.8373,
+     "maxMainRise": 0.2,
+     "mainRisesOverTen": 4
+    }
+   }
+  }
+ ],
+ "timings": {
+  "athlete": "avance_street",
+  "sessions": 117,
+  "advices": 1766,
+  "coldSessions": 117,
+  "prescribe": {
+   "median": 0.058,
+   "p95": 0.087,
+   "max": 9.875,
+   "n": 117
+  },
+  "advise": {
+   "median": 0.064,
+   "p95": 0.127,
+   "max": 9.948,
+   "n": 1766
+  },
+  "review": {
+   "median": 0.853,
+   "p95": 0.91,
+   "max": 0.981,
+   "n": 20
+  },
+  "cold": {
+   "median": 12.063,
+   "p95": 16.411,
+   "max": 17.745,
+   "n": 20
+  },
+  "machine": "linux, 4 cœurs"
+ }
+}

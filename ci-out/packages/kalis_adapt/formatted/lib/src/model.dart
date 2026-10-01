@@ -1223,7 +1223,12 @@ final class SessionRun {
       final ideal = exp(f.logLoadFor(mid + rir, shift: shift)) - bw;
       return grid.floor(ideal < grid.minimum ? grid.minimum : ideal);
     }
-    var kg = last;
+    // La dernière charge du journal peut être hors grille (autre matériel,
+    // saisie libre) : la séance repart de la charge de la grille juste
+    // en dessous (une charge sous la plus petite de la grille est gardée).
+    final floored = grid.floor(last);
+    final start = floored > last ? last : floored;
+    var kg = start;
     if (reps(kg) < lo - p.downMargin) {
       for (var i = 0; i < 60; i++) {
         final next = grid.next(kg, up: false);
@@ -1256,7 +1261,7 @@ final class SessionRun {
     for (var i = 0; i < 60; i++) {
       final next = grid.next(kg, up: true);
       final over = next + bw > capTotal + 1e-9;
-      if (over && kg != last) {
+      if (over && kg != start) {
         break;
       }
       // Un seul incrément reste permis quand le plus petit pas de la
@@ -1279,7 +1284,10 @@ final class SessionRun {
                 reps(next) >= (lo - 2 > 3 ? lo - 2 : 3));
       }
       if (!ok) {
-        if (!over && now >= hi + p.upMargin && kg == last && !run.calibrating) {
+        if (!over &&
+            now >= hi + p.upMargin &&
+            kg == start &&
+            !run.calibrating) {
           // La plage est dépassée mais la charge suivante ne tient pas
           // encore : c'est le pas de la grille qui retient.
           run.coarse = true;
@@ -1291,7 +1299,7 @@ final class SessionRun {
         break;
       }
     }
-    if (kg == last && !run.calibrating) {
+    if (kg == start && !run.calibrating) {
       final next = grid.next(kg, up: true);
       if (next + bw > capTotal + 1e-9 &&
           reps(kg) >= hi + p.upMargin &&
@@ -1512,7 +1520,8 @@ final class SessionRun {
       return kg;
     }
 
-    var kg = load;
+    final floored = grid.floor(load);
+    var kg = floored > load ? load : floored;
     final canRise =
         run.fails == 0 && run.painZones.isEmpty && !noIncrease && !track.noUp;
     if (planned == null && !previous.unplannedFail) {

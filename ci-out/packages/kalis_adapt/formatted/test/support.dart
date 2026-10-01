@@ -290,12 +290,18 @@ List<String> checkSession(
       continue;
     }
     final where = '${session.date.iso} ${item.exerciseId}';
+    final before = lastLoadsOf(log, info);
     for (final kg in loads) {
-      if ((info.grid.nearest(kg) - kg).abs() > 0.011) {
+      // Sur la grille, ou reprise telle quelle d'une charge de la dernière
+      // séance sous la plus petite charge de la grille.
+      final echo =
+          before != null &&
+          kg < info.grid.minimum &&
+          before.any((b) => (b - kg).abs() < 0.011);
+      if ((info.grid.nearest(kg) - kg).abs() > 0.011 && !echo) {
         out.add('$where : charge $kg hors grille');
       }
     }
-    final before = lastLoadsOf(log, info);
     if (before == null) {
       continue;
     }
@@ -361,9 +367,7 @@ List<String> checkAdvice(
   if (info == null || next == null || info.mode != CapacityMode.loaded) {
     return out;
   }
-  if ((info.grid.nearest(next) - next).abs() > 0.011) {
-    out.add('conseil ${advice.exerciseId} : charge $next hors grille');
-  }
+
   List<SetTarget>? shown;
   for (final item in session.items) {
     if (item.slotId == advice.slotId) {
@@ -393,6 +397,12 @@ List<String> checkAdvice(
       failed = true;
     }
     index++;
+  }
+  // Sur la grille, ou reprise telle quelle de la charge de la série
+  // précédente (série suivante « comme prévu »).
+  if ((info.grid.nearest(next) - next).abs() > 0.011 &&
+      (last == null || (last - next).abs() > 0.011)) {
+    out.add('conseil ${advice.exerciseId} : charge $next hors grille');
   }
   if (last != null && failed && next > last + 0.011) {
     out.add(

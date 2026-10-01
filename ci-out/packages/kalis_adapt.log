@@ -56,11 +56,13 @@ Changed 50 dependencies!
 Try `dart pub outdated` for more information.
 Changed bin/kalis_adapt_cli.dart
 Changed test/properties.dart
+Changed test/purity_test.dart
 Changed test/reference_test.dart
 Changed test/support.dart
+Changed test/units_test.dart
 Changed test/zz_dev_test.dart
 Changed tool/l7/l7_policy.dart
-Formatted 43 files (6 changed) in 0.14 seconds.
+Formatted 38 files (8 changed) in 0.20 seconds.
 formatage : échec
 Analyzing kalis_adapt...
 
@@ -68,73 +70,78 @@ warning - test/zz_dev_test.dart:8:8 - Unused import: 'package:kalis_core/kalis_c
 
 1 issue found.
 analyse : échec
-00:00 +0: loading test/properties_2_test.dart
+00:00 +0: loading test/zz_dev_test.dart
 00:00 +0: test/zz_dev_test.dart: export des sources formatées
-00:00 +1: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
-00:03 +2: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
-00:04 +3: test/properties_0_test.dart: journaux aléatoires 0 à 159
-00:05 +4: test/properties_0_test.dart: journaux aléatoires 0 à 159
-00:06 +5: test/properties_0_test.dart: journaux aléatoires 0 à 159
-00:07 +6: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:07 +7: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:08 +8: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:08 +9: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:09 +10: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:09 +11: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:09 +12: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:10 +13: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:11 +14: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:11 +15: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:12 +16: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:12 +17: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:12 +18: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:12 +19: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:12 +20: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:13 +21: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:13 +22: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:13 +23: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:16 +24: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:17 +25: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:18 +26: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:18 +27: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:19 +28: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:19 +29: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:19 +30: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:20 +31: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:23 +32: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:24 +33: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:24 +34: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:25 +35: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:25 +36: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:25 +37: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:26 +38: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:26 +39: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:30 +40: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:30 +41: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:31 +42: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:31 +43: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:31 +44: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:32 +45: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:32 +46: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:33 +47: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:37 +48: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:37 +49: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:38 +50: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:39 +51: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:39 +52: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:39 +53: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:40 +54: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:40 +55: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:44 +56: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:44 +57: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:45 +58: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:45 +59: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:46 +60: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:46 +61: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:47 +62: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:47 +63: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:51 +64: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:52 +65: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:52 +66: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:53 +67: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
-00:53 +68: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
+00:00 +1: test/zz_dev_test.dart: traces
+00:00 +2: test/zz_dev_test.dart: traces
+00:00 +3: test/zz_dev_test.dart: traces
+00:00 +4: test/zz_dev_test.dart: traces
+00:00 +5: test/zz_dev_test.dart: traces
+00:00 +6: test/zz_dev_test.dart: traces
+00:00 +7: test/zz_dev_test.dart: traces
+00:00 +8: test/zz_dev_test.dart: traces
+00:00 +9: test/zz_dev_test.dart: traces
+00:00 +10: test/zz_dev_test.dart: traces
+00:00 +11: test/zz_dev_test.dart: traces
+00:00 +12: test/zz_dev_test.dart: traces
+00:00 +13: test/zz_dev_test.dart: traces
+00:00 +14: test/zz_dev_test.dart: traces
+00:00 +15: test/zz_dev_test.dart: traces
+00:00 +16: test/zz_dev_test.dart: traces
+00:00 +17: test/zz_dev_test.dart: traces
+00:00 +18: test/zz_dev_test.dart: traces
+00:00 +19: test/zz_dev_test.dart: traces
+00:00 +20: test/zz_dev_test.dart: traces
+00:00 +21: test/zz_dev_test.dart: traces
+00:00 +22: test/zz_dev_test.dart: traces
+00:00 +23: test/zz_dev_test.dart: traces
+00:00 +24: test/zz_dev_test.dart: traces
+00:00 +25: test/zz_dev_test.dart: traces
+00:01 +26: test/zz_dev_test.dart: traces
+00:01 +27: test/zz_dev_test.dart: traces
+00:01 +28: test/zz_dev_test.dart: traces
+00:04 +29: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:05 +30: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:06 +31: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:07 +32: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:07 +33: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:07 +34: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:07 +35: test/smoke_test.dart: maison_halteres : 8 semaines en boucle complète
+00:07 +36: test/properties_0_test.dart: journaux aléatoires 160 à 319
+00:07 +37: test/properties_0_test.dart: journaux aléatoires 160 à 319
+00:08 +38: test/properties_0_test.dart: journaux aléatoires 160 à 319
+00:08 +39: test/properties_0_test.dart: journaux aléatoires 160 à 319
+00:08 +40: test/reference_test.dart: filtre : même état que la référence après chaque étape
+00:08 +41: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:08 +42: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:08 +43: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:08 +44: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:08 +45: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:08 +46: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:08 +47: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:08 +48: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:08 +49: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:08 +50: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:08 +51: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:08 +52: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:08 +53: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:08 +54: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:08 +55: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:08 +56: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:08 +57: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +58: test/properties_0_test.dart: journaux aléatoires 480 à 639
+00:09 +59: test/properties_0_test.dart: journaux aléatoires 640 à 799
+00:10 +60: test/properties_0_test.dart: journaux aléatoires 800 à 959
+00:10 +61: test/properties_0_test.dart: journaux aléatoires 960 à 1119
+00:11 +62: test/properties_0_test.dart: journaux aléatoires 1120 à 1279
+00:11 +63: All tests passed!
+  notes_paresseuses : fait (9 s)
+  debutant_salle : fait (10 s)
+  irregulier : fait (12 s)
+  intermediaire_salle : fait (13 s)
+  calisthenie_parc : fait (14 s)
+  maison_halteres : fait (15 s)
+  avance_street : fait (18 s)
+  douleur_et_lieu : fait (18 s)
+kalis_adapt 0.1.0 : rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_adapt (19 s).
+durée : 44 s
