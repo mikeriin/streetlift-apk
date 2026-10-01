@@ -1,0 +1,163 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             41.3s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,116ms
+D/FlutterRenderer( 4571): Width is zero. 0,0
+W/HWUI    ( 4571): Unknown dataspace 0
+I/WindowExtensionsImpl( 4571): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 4571): Width is zero. 0,0
+D/FlutterJNI( 4571): Sending viewport metrics to the engine.
+W/HWUI    ( 4571): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 4571): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 4571): mapper 4.x is not supported
+I/eetlift_tracker( 4571): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4571): Skipped 61 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4571): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:44867/kWv59abso1k=/
+VMServiceFlutterDriver: Isolate found with number: 3560662141459327
+VMServiceFlutterDriver: Isolate 3560662141459327 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4571): 00:00 +0: G6 b (clair, violet) : refaire son profil proposé, création complète en session de test
+VMServiceFlutterDriver: Connected to Flutter application.
+D/ProfileInstaller( 4571): Installing profile for fr.tchoupi.streetlift_tracker
+D/EGL_emulation( 4571): app_time_stats: avg=409.99ms min=4.74ms max=1046.19ms count=5
+D/EGL_emulation( 4571): app_time_stats: avg=223.14ms min=85.63ms max=751.19ms count=6
+D/FlutterJNI( 4571): Sending viewport metrics to the engine.
+D/EGL_emulation( 4571): app_time_stats: avg=94.24ms min=16.25ms max=155.55ms count=10
+D/EGL_emulation( 4571): app_time_stats: avg=402.92ms min=94.71ms max=621.05ms count=3
+D/EGL_emulation( 4571): app_time_stats: avg=10010.70ms min=10010.70ms max=10010.70ms count=1
+D/EGL_emulation( 4571): app_time_stats: avg=2985.91ms min=2985.91ms max=2985.91ms count=1
+D/EGL_emulation( 4571): app_time_stats: avg=82.86ms min=7.23ms max=125.34ms count=11
+D/EGL_emulation( 4571): app_time_stats: avg=75.14ms min=8.58ms max=159.88ms count=11
+D/EGL_emulation( 4571): app_time_stats: avg=74.74ms min=57.39ms max=87.42ms count=12
+D/EGL_emulation( 4571): app_time_stats: avg=77.27ms min=69.83ms max=88.79ms count=12
+D/EGL_emulation( 4571): app_time_stats: avg=83.18ms min=3.16ms max=171.45ms count=11
+D/EGL_emulation( 4571): app_time_stats: avg=74.21ms min=3.95ms max=91.30ms count=13
+D/EGL_emulation( 4571): app_time_stats: avg=72.93ms min=8.27ms max=159.85ms count=12
+D/EGL_emulation( 4571): app_time_stats: avg=126.02ms min=67.14ms max=367.97ms count=8
+D/EGL_emulation( 4571): app_time_stats: avg=115.75ms min=47.38ms max=176.36ms count=8
+D/EGL_emulation( 4571): app_time_stats: avg=79.84ms min=49.46ms max=146.15ms count=9
+D/EGL_emulation( 4571): app_time_stats: avg=100.57ms min=61.86ms max=153.23ms count=8
+D/EGL_emulation( 4571): app_time_stats: avg=99.85ms min=40.61ms max=229.80ms count=9
+W/WindowOnBackDispatcher( 4571): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4571): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/FlutterJNI( 4571): Sending viewport metrics to the engine.
+D/EGL_emulation( 4571): app_time_stats: avg=93.09ms min=16.02ms max=167.29ms count=10
+D/EGL_emulation( 4571): app_time_stats: avg=77.60ms min=16.61ms max=109.07ms count=12
+D/EGL_emulation( 4571): app_time_stats: avg=72.80ms min=13.57ms max=98.86ms count=12
+D/EGL_emulation( 4571): app_time_stats: avg=88.27ms min=76.95ms max=153.31ms count=10
+D/EGL_emulation( 4571): app_time_stats: avg=70.70ms min=13.38ms max=88.07ms count=13
+D/EGL_emulation( 4571): app_time_stats: avg=67.98ms min=5.78ms max=84.63ms count=12
+D/FlutterJNI( 4571): Sending viewport metrics to the engine.
+D/EGL_emulation( 4571): app_time_stats: avg=100.17ms min=13.76ms max=181.04ms count=9
+D/EGL_emulation( 4571): app_time_stats: avg=92.33ms min=70.87ms max=173.72ms count=10
+D/EGL_emulation( 4571): app_time_stats: avg=83.65ms min=14.34ms max=182.59ms count=11
+D/EGL_emulation( 4571): app_time_stats: avg=91.60ms min=6.39ms max=191.17ms count=11
+D/EGL_emulation( 4571): app_time_stats: avg=117.36ms min=10.69ms max=315.81ms count=9
+D/EGL_emulation( 4571): app_time_stats: avg=102.35ms min=10.95ms max=186.94ms count=10
+D/EGL_emulation( 4571): app_time_stats: avg=85.14ms min=5.99ms max=183.28ms count=12
+D/EGL_emulation( 4571): app_time_stats: avg=83.13ms min=17.69ms max=145.52ms count=11
+D/EGL_emulation( 4571): app_time_stats: avg=84.26ms min=10.30ms max=165.71ms count=10
+D/EGL_emulation( 4571): app_time_stats: avg=79.80ms min=33.23ms max=110.13ms count=11
+D/EGL_emulation( 4571): app_time_stats: avg=74.30ms min=37.14ms max=90.67ms count=10
+D/EGL_emulation( 4571): app_time_stats: avg=79.16ms min=61.50ms max=149.84ms count=11
+D/EGL_emulation( 4571): app_time_stats: avg=82.40ms min=32.87ms max=153.24ms count=11
+D/EGL_emulation( 4571): app_time_stats: avg=93.98ms min=57.70ms max=166.51ms count=9
+D/EGL_emulation( 4571): app_time_stats: avg=81.22ms min=25.93ms max=167.32ms count=10
+D/EGL_emulation( 4571): app_time_stats: avg=71.54ms min=13.88ms max=94.53ms count=11
+D/EGL_emulation( 4571): app_time_stats: avg=81.23ms min=64.92ms max=145.33ms count=11
+D/EGL_emulation( 4571): app_time_stats: avg=97.01ms min=29.83ms max=160.38ms count=10
+D/EGL_emulation( 4571): app_time_stats: avg=73.56ms min=12.83ms max=112.14ms count=11
+D/EGL_emulation( 4571): app_time_stats: avg=88.23ms min=31.22ms max=161.78ms count=10
+D/EGL_emulation( 4571): app_time_stats: avg=86.67ms min=70.78ms max=121.13ms count=10
+D/EGL_emulation( 4571): app_time_stats: avg=79.07ms min=61.47ms max=100.49ms count=10
+D/EGL_emulation( 4571): app_time_stats: avg=86.81ms min=28.15ms max=150.60ms count=10
+D/EGL_emulation( 4571): app_time_stats: avg=78.78ms min=30.68ms max=112.02ms count=10
+D/EGL_emulation( 4571): app_time_stats: avg=72.92ms min=32.47ms max=107.59ms count=11
+D/EGL_emulation( 4571): app_time_stats: avg=87.29ms min=34.36ms max=154.10ms count=10
+D/EGL_emulation( 4571): app_time_stats: avg=104.87ms min=68.94ms max=171.15ms count=9
+D/EGL_emulation( 4571): app_time_stats: avg=93.57ms min=30.18ms max=142.99ms count=10
+I/flutter ( 4571): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4571): The following StateError was thrown running a test:
+I/flutter ( 4571): Bad state: No element
+I/flutter ( 4571): 
+I/flutter ( 4571): When the exception was thrown, this was the stack:
+I/flutter ( 4571): #0      Iterable.single (dart:core/iterable.dart:694:25)
+I/flutter ( 4571): #1      WidgetController.state (package:flutter_test/src/controller.dart:932:42)
+I/flutter ( 4571): #2      WidgetTester.showKeyboard.<anonymous closure> (package:flutter_test/src/widget_tester.dart:1125:42)
+I/flutter ( 4571): #5      TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+I/flutter ( 4571): #6      WidgetTester.showKeyboard (package:flutter_test/src/widget_tester.dart:1124:27)
+I/flutter ( 4571): #7      WidgetTester.enterText.<anonymous closure> (package:flutter_test/src/widget_tester.dart:1160:13)
+I/flutter ( 4571): #10     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+I/flutter ( 4571): #11     WidgetTester.enterText (package:flutter_test/src/widget_tester.dart:1159:27)
+I/flutter ( 4571): #12     main.type (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/profil_g6_test.dart:137:18)
+I/flutter ( 4571): <asynchronous suspension>
+I/flutter ( 4571): #13     main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/profil_g6_test.dart:218:5)
+I/flutter ( 4571): <asynchronous suspension>
+I/flutter ( 4571): #14     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4571): <asynchronous suspension>
+I/flutter ( 4571): #15     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4571): <asynchronous suspension>
+I/flutter ( 4571): #16     TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4571): <asynchronous suspension>
+I/flutter ( 4571): (elided 4 frames from dart:async)
+I/flutter ( 4571): 
+I/flutter ( 4571): The test description was:
+I/flutter ( 4571):   G6 b (clair, violet) : refaire son profil proposé, création complète en session de test
+I/flutter ( 4571): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4571): 01:09 +0: G6 b (clair, violet) : refaire son profil proposé, création complète en session de test [E]
+I/flutter ( 4571):   Test failed. See exception logs above.
+I/flutter ( 4571):   The test description was: G6 b (clair, violet) : refaire son profil proposé, création complète en session de test
+I/flutter ( 4571):   
+I/flutter ( 4571): 01:09 +0 -1: (tearDownAll)
+I/flutter ( 4571): 01:09 +1 -1: Some tests failed.
+D/EGL_emulation( 4571): app_time_stats: avg=226.78ms min=95.21ms max=766.21ms count=6
+Failure Details:
+Failure in method: G6 b (clair, violet) : refaire son profil proposé, création complète en session de test
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.single (dart:core/iterable.dart:694:25)
+#1      WidgetController.state (package:flutter_test/src/controller.dart:932:42)
+#2      WidgetTester.showKeyboard.<anonymous closure> (package:flutter_test/src/widget_tester.dart:1125:42)
+#5      TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#6      WidgetTester.showKeyboard (package:flutter_test/src/widget_tester.dart:1124:27)
+#7      WidgetTester.enterText.<anonymous closure> (package:flutter_test/src/widget_tester.dart:1160:13)
+#10     TestAsyncUtils.guard (package:flutter_test/src/test_async_utils.dart:74:41)
+#11     WidgetTester.enterText (package:flutter_test/src/widget_tester.dart:1159:27)
+#12     main.type (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/profil_g6_test.dart:137:18)
+<asynchronous suspension>
+#13     main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/profil_g6_test.dart:218:5)
+<asynchronous suspension>
+#14     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#15     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#16     TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+(elided 4 frames from dart:async)
+
+The test description was:
+  G6 b (clair, violet) : refaire son profil proposé, création
+  complète en session de test
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+
