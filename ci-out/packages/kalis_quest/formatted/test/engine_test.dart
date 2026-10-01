@@ -136,6 +136,62 @@ void main() {
     });
 
     test(
+      'une séance écourtée est payée pour ce qui est fait et ne prend la '
+      'place d\'aucune séance prévue ; le plafond d\'XP de la semaine tient',
+      () {
+        final sessions = <SessionRecord>[
+          sessionOf('short', monday, benchSets(2), planned: 10),
+          sessionOf('c1', wednesday, benchSets(4), planned: 4),
+          sessionOf('c2', monday.addDays(4), benchSets(4), planned: 4),
+          sessionOf('c3', monday.addDays(5), benchSets(4), planned: 4),
+        ];
+        final o = first(sessions, today: monday.addDays(7));
+        final short = effortOf(o.state, 'short');
+        expect(short.amount, 20);
+        expect(short.reasons.last.code, ReasonCodes.questXpCapped);
+        expect(short.reasons.last.params['scope'], CapScope.partial);
+        expect(effortOf(o.state, 'c1').amount, 104);
+        expect(effortOf(o.state, 'c2').amount, 104);
+        // 3 séances prévues × 110 XP : il reste 102 XP pour la troisième.
+        final last = effortOf(o.state, 'c3');
+        expect(last.amount, 102);
+        expect(
+          last.reasons.map((r) => r.params['scope']),
+          contains(CapScope.weekXp),
+        );
+        final week =
+            (o.state.data['weeks']! as List<Object?>).single! as List<Object?>;
+        expect(week.sublist(1, 3), <int>[3, 3]);
+        expect(week[5], WeekSummary.success);
+      },
+    );
+
+    test('une séance déplacée dans une autre semaine après son règlement n\'y '
+        'compte pas une seconde fois', () {
+      final a = sessionOf('a', monday, benchSets(4), planned: 4);
+      final settled = first(<SessionRecord>[a], today: tuesday);
+      final moved = <SessionRecord>[
+        sessionOf('a', monday.addDays(7), benchSets(4), planned: 4),
+        sessionOf('b', monday.addDays(9), benchSets(4), planned: 4),
+        sessionOf('c', monday.addDays(11), benchSets(4), planned: 4),
+      ];
+      final o = run(engine, profile, moved, settled.state, monday.addDays(14));
+      expect(
+        o.state.xp.where((e) => e.source == XpSource.effort),
+        hasLength(3),
+      );
+      final weeks = o.state.data['weeks']! as List<Object?>;
+      expect(
+        <Object?>[for (final w in weeks) (w! as List<Object?>)[2]],
+        <int>[1, 2],
+      );
+      final quest = o.state.quests.firstWhere(
+        (q) => q.id == 'w:${monday.addDays(7).iso}:0',
+      );
+      expect(quest.progress, 2);
+    });
+
+    test(
       'une séance en cours aujourd\'hui n\'est réglée qu\'une fois finie',
       () {
         final open = first(<SessionRecord>[
@@ -234,6 +290,106 @@ void main() {
       for (final q in o.state.quests) {
         expect(q.status, isNot(QuestStatus.completed));
       }
+    });
+
+    test('la séance douloureuse ne nourrit ni objectif, ni rang, ni record '
+        'payé ; le fait reste connu', () {
+      final goal = Goal(
+        id: 'g',
+        kind: GoalKind.performance,
+        origin: GoalOrigin.user,
+        createdOn: monday,
+        exerciseId: excluded,
+        metric: GoalMetric.maxReps,
+        loadKg: 40,
+        targetValue: 30,
+        targetDate: monday.addDays(84),
+      );
+      final withGoal = profile.copyWith(goals: <Goal>[goal]);
+      final clean = sessionOf('a', monday, <SetRecord>[
+        for (var i = 0; i < 4; i++)
+          setOf(excluded, i, load: 40, reps: 8, flames: 9, target: 9),
+      ], planned: 4);
+      final painful = sessionOf(
+        'b',
+        wednesday,
+        <SetRecord>[
+          for (var i = 0; i < 4; i++)
+            setOf(excluded, i, load: 40, reps: 14, flames: 9, target: 9),
+        ],
+        planned: 4,
+        health: pain,
+      );
+      final start = run(
+        engine,
+        withGoal,
+        const <SessionRecord>[],
+        emptyState,
+        monday,
+      ).state;
+      final a = run(engine, withGoal, <SessionRecord>[clean], start, monday);
+      final without = run(
+        engine,
+        withGoal,
+        <SessionRecord>[clean],
+        a.state,
+        wednesday,
+      );
+      final o = run(
+        engine,
+        withGoal,
+        <SessionRecord>[clean, painful],
+        a.state,
+        wednesday,
+      );
+      expect(effortOf(o.state, 'b').amount, 0);
+      expect(o.level.totalXp, without.level.totalXp);
+      expect(o.kreditBalance, without.kreditBalance);
+      expect(o.goals.single.current, without.goals.single.current);
+      expect(o.goals.single.fraction, without.goals.single.fraction);
+      expect(
+        jsonEncode(<Object?>[for (final r in o.ranks) r.toJson()]),
+        jsonEncode(<Object?>[for (final r in without.ranks) r.toJson()]),
+      );
+      expect(
+        jsonEncode(<Object?>[for (final x in o.attributes) x.toJson()]),
+        jsonEncode(<Object?>[for (final x in without.attributes) x.toJson()]),
+      );
+      // Le fait brut reste un record connu de l'athlète.
+      expect(o.records!.any((r) => r.sessionId == 'b'), isTrue);
+    });
+
+    test('une semaine avec une séance douloureuse garde ses séances prévues : '
+        'elle est en pause, pas réussie', () {
+      final sessions = <SessionRecord>[
+        sessionOf('a', monday, benchSets(4), planned: 4),
+        sessionOf(
+          'b',
+          wednesday,
+          <SetRecord>[
+            for (var i = 0; i < 4; i++)
+              setOf(excluded, i, reps: 8, flames: 7, target: 7),
+          ],
+          planned: 4,
+          health: pain,
+        ),
+        sessionOf('c', monday.addDays(4), benchSets(4), planned: 4),
+      ];
+      final o = first(sessions, today: monday.addDays(7));
+      final week =
+          (o.state.data['weeks']! as List<Object?>).single! as List<Object?>;
+      // 3 prévues, 2 comptées : ni réussie (il en faut 3 sur 3) ni manquée.
+      expect(week.sublist(1, 3), <int>[3, 2]);
+      expect(week[5], WeekSummary.paused);
+      expect(o.weekStreak, 0);
+      final entry = o.state.xp.singleWhere(
+        (e) => e.source == XpSource.consistency,
+      );
+      expect(entry.amount, 67);
+      expect(
+        entry.reasons.map((r) => r.code),
+        contains(ReasonCodes.questStreakPaused),
+      );
     });
 
     test('la même douleur, zone épargnée : récompense entière', () {

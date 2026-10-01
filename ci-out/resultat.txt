@@ -1,4 +1,4 @@
-run=36935409953
-commit=34d2e3fa60d403f56b1d1d07b3ab5b4ad4112972
+run=36937488488
+commit=34c0026816796bc0f070f5923c33e31f05706605
 branche=claude/ci-gp-moteurs
-packages=cancelled
+packages=failure

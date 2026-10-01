@@ -70,10 +70,14 @@ List<RankResult> computeRanks(World w, int asOf) {
           if (o.day > asOf) {
             break;
           }
-          if (o.value > (best[id] ?? 0)) {
-            best[id] = o.value;
+          final value = o.counted;
+          if (value == null) {
+            continue;
           }
-          final d = o.value * retentionOf(w, asOf - o.day);
+          if (value > (best[id] ?? 0)) {
+            best[id] = value;
+          }
+          final d = value * retentionOf(w, asOf - o.day);
           if (d > (decayed[id] ?? 0)) {
             decayed[id] = d;
           }
@@ -115,17 +119,21 @@ List<RankResult> computeRanks(World w, int asOf) {
         if (o.day > asOf) {
           break;
         }
+        final value = o.counted;
+        if (value == null) {
+          continue;
+        }
         final t = Standards.thresholds(m, sex, o.bodyWeightKg, fraction);
         final perf = m.measure == RankMeasure.run
-            ? Standards.runMeters / o.value
-            : o.value;
+            ? Standards.runMeters / value
+            : value;
         final p = Standards.pointsOf(t, perf);
         if (p > r.points) {
           r.points = p;
           r.valueExerciseId = id;
           r.value = m.measure == RankMeasure.load
-              ? roundTo(o.value - fraction * o.bodyWeightKg, 1)
-              : o.value;
+              ? roundTo(value - fraction * o.bodyWeightKg, 1)
+              : value;
         }
         final c = Standards.pointsOf(t, perf * retentionOf(w, asOf - o.day));
         if (c > r.current) {
@@ -315,6 +323,10 @@ List<double> computeAttributes(
   var lastMobilityDay = -1 << 40;
   var dayMobility = 0;
   for (final f in w.factsIn(asOf - widest + 1, asOf)) {
+    // Une séance faite malgré une douleur ne nourrit aucun attribut.
+    if (f.painZone != null) {
+      continue;
+    }
     final age = asOf - f.day;
     if (age < p.cardioWindowDays) {
       cardioSeconds += f.cardioSeconds;
@@ -359,26 +371,33 @@ List<double> computeAttributes(
             p.explosiveSetsPerWeek,
           );
 
+  // Figure la plus difficile maîtrisée au jour [asOf], d'après les
+  // performances qui comptent.
   var hardest = 0;
-  for (final entry in w.bests.entries) {
-    final o = entry.value;
-    if (o.day > asOf) {
-      continue;
-    }
+  for (final entry in w.series.entries) {
     final cut = entry.key.indexOf('|');
     final e = w.catalog.find(entry.key.substring(0, cut));
-    if (e == null) {
+    if (e == null || e.difficulty <= hardest) {
       continue;
     }
-    final mastered =
-        (e.family == MovementFamily.figureStatique &&
-            entry.key.endsWith(RecordKind.maxHoldSeconds.code) &&
-            o.value >= p.skillHoldSeconds) ||
-        (e.family == MovementFamily.figureDynamique &&
-            entry.key.endsWith(RecordKind.maxReps.code) &&
-            o.value >= p.skillMinReps);
-    if (mastered && e.difficulty > hardest) {
-      hardest = e.difficulty;
+    final double need;
+    if (e.family == MovementFamily.figureStatique &&
+        entry.key.endsWith(RecordKind.maxHoldSeconds.code)) {
+      need = p.skillHoldSeconds.toDouble();
+    } else if (e.family == MovementFamily.figureDynamique &&
+        entry.key.endsWith(RecordKind.maxReps.code)) {
+      need = p.skillMinReps.toDouble();
+    } else {
+      continue;
+    }
+    for (final o in entry.value) {
+      if (o.day > asOf) {
+        break;
+      }
+      if ((o.counted ?? 0) >= need) {
+        hardest = e.difficulty;
+        break;
+      }
     }
   }
   final figureScore = _topTwo(figures);

@@ -361,13 +361,7 @@ Map<String, Object?> buildExtras({
   final monday = mondayOf(today);
   final from = monday > st.startedOn ? monday : st.startedOn;
   final planned = w.scheduledIn(from, monday + 6, skipBreaks: true);
-  var done = 0;
-  for (final f in w.factsIn(from, today)) {
-    if (ledger.statusOf(f.session.id) == SessionStatus.paid &&
-        f.completion >= p.doneCompletion) {
-      done++;
-    }
-  }
+  final done = ledger.paidSessionsIn(Ledger.weekRef(monday));
   final needed =
       (planned * p.streakNumerator + p.streakDenominator - 1) ~/
       p.streakDenominator;

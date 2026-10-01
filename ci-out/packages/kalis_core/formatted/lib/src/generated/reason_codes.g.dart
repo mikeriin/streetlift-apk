@@ -274,8 +274,9 @@ abstract final class ReasonCodes {
   /// Série de semaines réussies (jalon ou longueur atteinte).
   static const String questStreak = 'quest.streak';
 
-  /// Semaine en pause (vacances, maladie, blessure déclarées) : la série ne
-  /// bouge pas.
+  /// Semaine en pause : la série ne bouge pas. `cause` : motif de la pause
+  /// déclarée (`vacation`, `illness`, `injury`, `other`) ou `pain` (séance
+  /// faite malgré une douleur).
   static const String questStreakPaused = 'quest.streak_paused';
 
   /// Coffre surprise (tirage, ou garantie après une série de séances sans

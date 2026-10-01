@@ -140,6 +140,73 @@ void main() {
       expect(xpOf(o.state, XpSource.milestone), 0);
     });
 
+    test('un objectif antidaté ne paie pas les jalons atteints avant que le '
+        'moteur l\'ait vu', () {
+      final start = run(
+        engine,
+        base,
+        const <SessionRecord>[],
+        emptyState,
+        monday,
+      ).state;
+      final before = run(engine, base, rising(4), start, monday.addDays(21));
+      final o = run(
+        engine,
+        base.copyWith(goals: <Goal>[performance(75)]),
+        rising(4),
+        before.state,
+        monday.addDays(21),
+      );
+      expect(o.goals.single.fraction, 1);
+      expect(xpOf(o.state, XpSource.milestone), 0);
+      expect(
+        o.state.kredits.where((k) => k.source == KreditSource.milestone),
+        isEmpty,
+      );
+    });
+
+    test('sans mesure à la création, la première mesure sert de départ : '
+        'elle ne paie aucun jalon', () {
+      final pullUps = Standards.movements
+          .firstWhere((m) => m.measure == RankMeasure.reps)
+          .id;
+      final goal = Goal(
+        id: 'reps',
+        kind: GoalKind.performance,
+        origin: GoalOrigin.user,
+        createdOn: monday,
+        exerciseId: pullUps,
+        metric: GoalMetric.maxReps,
+        targetValue: 12,
+        targetDate: monday.addDays(84),
+      );
+      final profile = base.copyWith(goals: <Goal>[goal]);
+      final start = run(
+        engine,
+        profile,
+        const <SessionRecord>[],
+        emptyState,
+        monday,
+      ).state;
+      final o = run(
+        engine,
+        profile,
+        <SessionRecord>[
+          sessionOf('a', monday.addDays(2), <SetRecord>[
+            for (var i = 0; i < 3; i++)
+              setOf(pullUps, i, reps: 8, flames: 9, target: 9),
+          ], planned: 3),
+        ],
+        start,
+        monday.addDays(2),
+      );
+      final g = o.goals.single;
+      expect(g.current, greaterThan(0));
+      expect(g.baseline, g.current);
+      expect(g.fraction, 0);
+      expect(xpOf(o.state, XpSource.milestone), 0);
+    });
+
     test('plafond hebdomadaire d\'XP de jalons', () {
       final many = base.copyWith(
         goals: <Goal>[
@@ -164,6 +231,13 @@ void main() {
         }
       }
       expect(byWeek, isNotEmpty);
+      // Cinq objectifs identiques : seul le premier paie ses jalons.
+      for (final e in o.state.xp) {
+        if (e.source == XpSource.milestone) {
+          expect(e.refId, startsWith('goal|many0|'));
+        }
+      }
+      expect(o.goals, hasLength(5));
       for (final amount in byWeek.values) {
         expect(
           amount,

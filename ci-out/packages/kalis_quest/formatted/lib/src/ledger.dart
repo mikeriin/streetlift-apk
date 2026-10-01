@@ -11,8 +11,12 @@ enum SessionStatus {
   /// Séance pas encore réglée.
   unsettled,
 
-  /// Séance récompensée.
+  /// Séance récompensée et comptée parmi les séances de la semaine.
   paid,
+
+  /// Séance récompensée pour ce qui est fait, mais trop courte pour
+  /// compter parmi les séances de la semaine.
+  partial,
 
   /// Séance faite malgré une douleur : aucune récompense.
   pain,
@@ -32,6 +36,12 @@ abstract final class CapScope {
 
   /// Séance de récupération hors programme.
   static const String recovery = 'recovery';
+
+  /// Séance trop courte pour compter parmi les séances de la semaine.
+  static const String partial = 'partial';
+
+  /// Plafond d'XP d'effort de la semaine.
+  static const String weekXp = 'week_xp';
 
   /// Plafond d'XP de records de la séance.
   static const String records = 'records';
@@ -81,6 +91,9 @@ final class Ledger {
   final Set<String> _kreditKeys = <String>{};
   final Map<String, SessionStatus> _status = <String, SessionStatus>{};
   final Map<String, int> _paidInWeek = <String, int>{};
+  final Set<String> _painWeeks = <String>{};
+  final Map<String, int> _effortXpInWeek = <String, int>{};
+  final Map<String, String> _weekOfSession = <String, String>{};
   final Map<String, int> _milestoneXpInWeek = <String, int>{};
 
   /// Clé d'une écriture d'XP.
@@ -113,13 +126,25 @@ final class Ledger {
             status = SessionStatus.extra;
           } else if (scope == CapScope.recovery) {
             status = SessionStatus.recovery;
+          } else if (scope == CapScope.partial) {
+            status = SessionStatus.partial;
           }
         }
       }
       _status[id] = status;
       final ref = e.refId;
-      if (status == SessionStatus.paid && ref != null) {
-        _paidInWeek.update(ref, (n) => n + 1, ifAbsent: () => 1);
+      if (ref != null) {
+        _weekOfSession[id] = ref;
+        _effortXpInWeek.update(
+          ref,
+          (n) => n + e.amount,
+          ifAbsent: () => e.amount,
+        );
+        if (status == SessionStatus.paid) {
+          _paidInWeek.update(ref, (n) => n + 1, ifAbsent: () => 1);
+        } else if (status == SessionStatus.pain) {
+          _painWeeks.add(ref);
+        }
       }
     } else if (e.source == XpSource.milestone) {
       final ref = weekRef(mondayOf(e.date.dayNumber));
@@ -143,6 +168,20 @@ final class Ledger {
 
   /// Séances récompensées de la semaine de référence [weekRef].
   int paidSessionsIn(String weekRef) => _paidInWeek[weekRef] ?? 0;
+
+  /// Vrai si une séance de la semaine de référence [weekRef] a été faite
+  /// malgré une douleur.
+  bool painIn(String weekRef) => _painWeeks.contains(weekRef);
+
+  /// XP d'effort déjà écrit pour la semaine de référence [weekRef].
+  int effortXpIn(String weekRef) => _effortXpInWeek[weekRef] ?? 0;
+
+  /// Vrai si la séance [sessionId] a été réglée dans la semaine du jour
+  /// [day], quel que soit son règlement. Une séance dont la date est
+  /// déplacée dans une autre semaine après son règlement n'y compte pas
+  /// une seconde fois.
+  bool settledIn(String sessionId, int day) =>
+      _weekOfSession[sessionId] == weekRef(mondayOf(day));
 
   /// XP de jalons déjà écrit dans la semaine du lundi [monday].
   int milestoneXpIn(int monday) => _milestoneXpInWeek[weekRef(monday)] ?? 0;
@@ -252,7 +291,7 @@ final class WeekSummary {
   /// Numéro de jour du lundi.
   final int monday;
 
-  /// Séances prévues (hors pauses, hors séances neutralisées).
+  /// Séances prévues au calendrier, hors pauses déclarées.
   final int planned;
 
   /// Séances faites, au plus [planned].
@@ -278,6 +317,17 @@ final class WeekSummary {
   ];
 }
 
+int? _asDay(Object? v) {
+  if (v is! String) {
+    return null;
+  }
+  try {
+    return CivilDate.parse(v).dayNumber;
+  } on FormatException {
+    return null;
+  }
+}
+
 int _asInt(Object? v, int fallback) =>
     v is int ? v : (v is num ? v.round() : fallback);
 
@@ -296,11 +346,11 @@ final class MachineState {
     final m = MachineState._();
     final data = state.data;
     if (data['v'] == version) {
-      final started = data['startedOn'];
-      final settled = data['settledThrough'];
-      if (started is String && settled is String) {
-        m.startedOn = CivilDate.parse(started).dayNumber;
-        m.settledThrough = CivilDate.parse(settled).dayNumber;
+      final started = _asDay(data['startedOn']);
+      final settled = _asDay(data['settledThrough']);
+      if (started != null && settled != null) {
+        m.startedOn = started;
+        m.settledThrough = settled;
         m.fresh = false;
         m.chestGap = _asInt(data['chestGap'], 0);
         m.streak = _asInt(data['streak'], 0);
@@ -337,6 +387,21 @@ final class MachineState {
         if (ranks is Map<String, Object?>) {
           for (final e in ranks.entries) {
             m.rankBest[e.key] = _asInt(e.value, 0);
+          }
+        }
+        final paid = data['recordPaid'];
+        if (paid is Map<String, Object?>) {
+          for (final e in paid.entries) {
+            final v = e.value;
+            if (v is num) {
+              m.recordPaid[e.key] = v.toDouble();
+            }
+          }
+        }
+        final seen = data['goalSeen'];
+        if (seen is Map<String, Object?>) {
+          for (final e in seen.entries) {
+            m.goalSeen[e.key] = _asInt(e.value, today);
           }
         }
         final done = data['questsDone'];
@@ -400,18 +465,30 @@ final class MachineState {
   /// Quêtes terminées par famille.
   final Map<String, int> questsDone = <String, int>{};
 
+  /// Meilleure valeur déjà payée comme record, par `exercice|nature`.
+  final Map<String, double> recordPaid = <String, double>{};
+
+  /// Numéro du jour où chaque objectif a été vu pour la première fois.
+  final Map<String, int> goalSeen = <String, int>{};
+
   /// Objet JSON de l'état (clés triées, valeurs stables).
   Map<String, Object?> toJson() {
     final attrs = attrBest.keys.toList()..sort();
     final ranks = rankBest.keys.toList()..sort();
     final kinds = questsDone.keys.toList()..sort();
+    final records = recordPaid.keys.toList()..sort();
+    final goals = goalSeen.keys.toList()..sort();
     return <String, Object?>{
       'attrBest': <String, Object?>{for (final k in attrs) k: attrBest[k]},
       'bestStreak': bestStreak,
       'chestGap': chestGap,
       'chests': chests,
+      'goalSeen': <String, Object?>{for (final k in goals) k: goalSeen[k]},
       'questsDone': <String, Object?>{for (final k in kinds) k: questsDone[k]},
       'rankBest': <String, Object?>{for (final k in ranks) k: rankBest[k]},
+      'recordPaid': <String, Object?>{
+        for (final k in records) k: recordPaid[k],
+      },
       'sessions': sessions,
       'settledThrough': CivilDate.fromDayNumber(settledThrough).iso,
       'startedOn': CivilDate.fromDayNumber(startedOn).iso,

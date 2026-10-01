@@ -83,13 +83,17 @@ final class _Run {
     }
     // Séances ajoutées après la clôture de leur jour.
     for (final f in w.factsIn(st.startedOn, st.settledThrough).toList()) {
-      if (ledger.statusOf(f.session.id) == SessionStatus.unsettled) {
+      if (ledger.statusOf(f.session.id) == SessionStatus.unsettled &&
+          (f.session.completed || f.day < today)) {
         _settle(f, f.day);
       }
     }
     _levelUps(today);
     final goals = GoalKeeper(w);
     final goalResults = goals.evaluate();
+    for (final g in goalResults) {
+      st.goalSeen.putIfAbsent(g.goal.id, () => today);
+    }
     final claims = input.claims ?? const <QuestClaim>[];
     for (var d = st.settledThrough + 1; d <= today; d++) {
       master.ensure(d);
@@ -270,7 +274,8 @@ final class _Run {
       return;
     }
     final cap = w.scheduledIn(monday, monday + 6, skipBreaks: false);
-    if (ledger.paidSessionsIn(weekRef) >= cap) {
+    final done = f.completion >= p.doneCompletion;
+    if (done && ledger.paidSessionsIn(weekRef) >= cap) {
       ledger.addXp(
         day: day,
         source: XpSource.effort,
@@ -290,21 +295,39 @@ final class _Run {
     final bonus = f.combo >= p.comboMin
         ? (f.combo < p.comboBonusCap ? f.combo : p.comboBonusCap)
         : 0;
+    // Plafond d'XP d'effort de la semaine : séances prévues × XP maximal
+    // d'une séance, séances écourtées comprises.
+    final weekCap = cap * (p.sessionXp + p.comboBonusCap);
+    final room = weekCap - ledger.effortXpIn(weekRef);
+    final wanted = base + bonus;
+    final amount = wanted < room ? wanted : (room < 0 ? 0 : room);
     ledger.addXp(
       day: day,
       source: XpSource.effort,
-      amount: base + bonus,
+      amount: amount,
       sessionId: id,
       refId: weekRef,
       reasons: <Reason>[
         _reason(ReasonCodes.questXpEffort, <String, Object?>{
-          'capped': f.workSets > f.planned,
+          'capped': f.workSets > f.planned || amount < wanted,
           'sets': f.workSets < f.limit ? f.workSets : f.limit,
         }),
         if (bonus > 0)
           _reason(ReasonCodes.questCombo, <String, Object?>{
             'bonus': bonus,
             'length': f.combo,
+          }),
+        if (amount < wanted)
+          _reason(ReasonCodes.questXpCapped, <String, Object?>{
+            'cap': weekCap,
+            'scope': CapScope.weekXp,
+          }),
+        // Séance trop courte : payée pour ce qui est fait, sans prendre la
+        // place d'une séance prévue.
+        if (!done)
+          _reason(ReasonCodes.questXpCapped, <String, Object?>{
+            'cap': 0,
+            'scope': CapScope.partial,
           }),
       ],
     );
@@ -334,10 +357,26 @@ final class _Run {
           ],
         ),
       );
-      if (r.ordinal >= f.limit || r.gain < p.recordMinGain) {
+      // Payé : la meilleure série du volume prévu, si elle dépasse le
+      // record précédent et le dernier record déjà payé (une séance
+      // supprimée puis refaite ne paie pas deux fois).
+      final counted = r.counted;
+      final paidBefore = st.recordPaid[r.subject];
+      if (counted == null || !r.better(counted, previous)) {
         continue;
       }
-      final pct = (p.recordXpPerPct * r.gain * 100).round();
+      if (paidBefore != null && !r.better(counted, paidBefore)) {
+        continue;
+      }
+      final reference = paidBefore != null && r.better(paidBefore, previous)
+          ? paidBefore
+          : previous;
+      final gain = r.gainOver(counted, reference);
+      if (gain < p.recordMinGain) {
+        continue;
+      }
+      final key = 'rec|${r.subject}|$counted';
+      final pct = (p.recordXpPerPct * gain * 100).round();
       var xp = p.recordXpBase + pct;
       if (xp > p.recordXpMax) {
         xp = p.recordXpMax;
@@ -352,7 +391,7 @@ final class _Run {
         source: XpSource.record,
         amount: granted,
         sessionId: id,
-        refId: r.key,
+        refId: key,
         reasons: <Reason>[
           _reason(ReasonCodes.questXpRecord, <String, Object?>{
             'exerciseId': r.exerciseId,
@@ -366,6 +405,7 @@ final class _Run {
         ],
       );
       if (written) {
+        st.recordPaid[r.subject] = counted;
         recordXp += granted;
         if (!paidRecord) {
           paidRecord = true;
@@ -373,7 +413,7 @@ final class _Run {
             day: day,
             source: KreditSource.record,
             amount: p.recordKredits,
-            refId: r.key,
+            refId: key,
           );
         }
       }
@@ -582,8 +622,11 @@ final class _Run {
   }
 
   /// Clôt la semaine du lundi [monday] : régularité, jours de repos, série
-  /// de semaines. Une semaine sans séance prévue, ou touchée par une pause
-  /// déclarée et non réussie, est en pause : la série ne bouge pas.
+  /// de semaines. Les séances prévues sont celles du calendrier hors pauses
+  /// déclarées ; les séances faites sont celles que le registre a réglées
+  /// et comptées dans cette semaine. Une semaine non réussie est en pause — la
+  /// série ne bouge pas — si elle est touchée par une pause déclarée ou par
+  /// une séance faite malgré une douleur ; sinon elle est manquée.
   void _closeWeek(int monday) {
     if (st.weeks.isNotEmpty && st.weeks.last.monday >= monday) {
       return;
@@ -594,39 +637,35 @@ final class _Run {
       return;
     }
     final windowDays = to - from + 1;
-    final scheduled = w.scheduledIn(from, to, skipBreaks: true);
+    final planned = w.scheduledIn(from, to, skipBreaks: true);
+    final calendar = w.scheduledIn(from, to, skipBreaks: false);
     var breakDays = 0;
-    BreakReason? cause;
+    String? cause;
     for (var d = from; d <= to; d++) {
       final b = w.breakOn(d);
       if (b != null) {
         breakDays++;
-        cause ??= b;
+        cause ??= b.code;
       }
     }
-    var done = 0;
-    var neutral = 0;
+    // Le registre fait foi : les séances comptées sont celles qu'il a
+    // réglées dans cette semaine, même supprimées ou déplacées depuis.
+    final weekRef = Ledger.weekRef(monday);
+    var done = ledger.paidSessionsIn(weekRef);
+    final pain = ledger.painIn(weekRef);
     final hardDays = <int>{};
     for (final f in w.factsIn(from, to)) {
-      final status = ledger.statusOf(f.session.id);
-      if (status == SessionStatus.pain) {
-        neutral++;
-      }
-      if (status == SessionStatus.paid && f.completion >= p.doneCompletion) {
-        done++;
-      }
       if (f.hard) {
         hardDays.add(f.day);
       }
     }
-    var planned = scheduled - neutral;
-    if (planned < 0) {
-      planned = 0;
-    }
     if (done > planned) {
       done = planned;
     }
-    final restPlanned = windowDays - scheduled;
+    if (pain) {
+      cause ??= 'pain';
+    }
+    final restPlanned = windowDays - calendar;
     final restActual = windowDays - hardDays.length;
     final restKept = restActual < restPlanned ? restActual : restPlanned;
     final int status;
@@ -634,7 +673,7 @@ final class _Run {
       status = WeekSummary.paused;
     } else if (done * p.streakDenominator >= planned * p.streakNumerator) {
       status = WeekSummary.success;
-    } else if (breakDays > 0) {
+    } else if (breakDays > 0 || pain) {
       status = WeekSummary.paused;
     } else {
       status = WeekSummary.failed;
@@ -649,12 +688,15 @@ final class _Run {
     }
     final iso = CivilDate.fromDayNumber(monday).iso;
     if (planned > 0 && done > 0) {
+      // Une semaine en partie couverte par une pause paie au prorata des
+      // séances qui restaient prévues.
+      final share = calendar == 0 ? 1.0 : planned / calendar;
       final adherence = done / planned;
       final rest = restPlanned == 0 ? 1.0 : restKept / restPlanned;
       ledger.addXp(
         day: to,
         source: XpSource.consistency,
-        amount: (adherence * (p.weekXp + p.restXp * rest)).round(),
+        amount: (share * adherence * (p.weekXp + p.restXp * rest)).round(),
         refId: 'week|$iso',
         reasons: <Reason>[
           _reason(ReasonCodes.questXpConsistency, <String, Object?>{
@@ -663,7 +705,7 @@ final class _Run {
           _reason(ReasonCodes.questXpRest, <String, Object?>{'days': restKept}),
           if (status == WeekSummary.paused && cause != null)
             _reason(ReasonCodes.questStreakPaused, <String, Object?>{
-              'cause': cause.code,
+              'cause': cause,
             }),
         ],
       );
@@ -710,14 +752,20 @@ final class _Run {
     );
   }
 
-  /// Paie les jalons de [g] atteints au plus tard le jour [day].
+  /// Paie les jalons de [g] atteints au plus tard le jour [day]. Un jalon
+  /// atteint avant que le moteur ait vu l'objectif (objectif antidaté)
+  /// n'est pas payé.
   void _payMilestones(GoalResult g, int day) {
     if (g.ambition <= 0) {
       return;
     }
+    final seenOn = st.goalSeen[g.goal.id] ?? w.today;
     for (var i = 0; i < 4; i++) {
       final reachedDay = g.reachedDays[i];
-      if (reachedDay == null || reachedDay < st.startedOn || reachedDay > day) {
+      if (reachedDay == null ||
+          reachedDay < st.startedOn ||
+          reachedDay < seenOn ||
+          reachedDay > day) {
         continue;
       }
       final ref = 'goal|${g.goal.id}|${i + 1}';
@@ -754,7 +802,9 @@ final class _Run {
       ledger.addKredits(
         day: reachedDay,
         source: KreditSource.milestone,
-        amount: (g.ambition * p.milestoneKredits[i]).round(),
+        amount: wanted <= 0
+            ? 0
+            : (g.ambition * p.milestoneKredits[i] * granted / wanted).round(),
         refId: ref,
       );
       events.add(

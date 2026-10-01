@@ -53,7 +53,7 @@ Downloading packages...
 Changed 49 dependencies!
 1 package has newer versions incompatible with dependency constraints.
 Try `dart pub outdated` for more information.
-Formatted 21 files (0 changed) in 0.15 seconds.
+Formatted 21 files (0 changed) in 0.14 seconds.
 Analyzing kalis_plan...
 No issues found!
 No test files were passed and the default "test/" directory doesn't exist.
