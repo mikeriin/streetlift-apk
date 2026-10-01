@@ -155,10 +155,7 @@ final class GoalKeeper {
           for (final (day, value, _) in of(RecordKind.timeSeconds)) {
             out.add((
               day,
-              roundTo(
-                value * power(meters / 5000, w.params.riegelExponent),
-                1,
-              ),
+              roundTo(value * power(meters / 5000, w.params.riegelExponent), 1),
             ));
           }
         }
@@ -655,6 +652,10 @@ final class GoalKeeper {
         final expected = daysAt(rate);
         final earliest = daysAt(perWeek.toDouble());
         final latest = daysAt(rate * 0.6);
+        // Confiance : part des séances restantes faisable d'ici l'échéance
+        // au rythme récent (1 quand ce rythme suffit).
+        final weeksLeft = deadline > w.today ? (deadline - w.today) / 7 : 0.0;
+        final confidence = clampDouble(rate * weeksLeft / remaining, 0, 1);
         prediction = Prediction(
           expectedOn: CivilDate.fromDayNumber(w.today + expected),
           earliestOn: CivilDate.fromDayNumber(
@@ -663,7 +664,7 @@ final class GoalKeeper {
           latestOn: CivilDate.fromDayNumber(
             w.today + (latest > expected ? latest : expected),
           ),
-          confidence: roundTo(clampDouble(rate / perWeek, 0, 1), 3),
+          confidence: roundTo(confidence, 3),
           method: PredictionMethods.habit,
         );
         reasons.add(

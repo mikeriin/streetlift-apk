@@ -666,9 +666,7 @@ final class World {
         weekCap = scheduledIn(monday, monday + 6, skipBreaks: false);
       }
       final training = f.hard || session.programRef != null;
-      if (training &&
-          f.painZone == null &&
-          f.completion >= p.doneCompletion) {
+      if (training && f.painZone == null && f.completion >= p.doneCompletion) {
         f.beyond = weekCount >= weekCap;
         weekCount++;
       }

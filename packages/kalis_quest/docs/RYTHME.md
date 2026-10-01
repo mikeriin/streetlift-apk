@@ -50,7 +50,7 @@ Prolongement à 208 semaines des archétypes de repère (50 graines) :
 | `debutant_3x` | 55 (52.9–57) sem. — 50/50 graines | 199 (194.9–202) sem. — 50/50 graines | 115 (109–120) |
 | `intermediaire_4x` | 43 (42–45) sem. — 50/50 graines | 158 (155–161) sem. — 50/50 graines | 152 (150–154) |
 
-### Courbe médiane (niveau global, toutes les 13 semaines)
+### Courbe médiane (niveau global, toutes les 12 semaines)
 
 | Archétype | S12 | S24 | S36 | S48 | S60 | S72 | S84 | S96 | S108 | S120 | S132 | S144 | S156 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

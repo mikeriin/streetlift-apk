@@ -135,33 +135,36 @@ void main() {
       expect(extra.reasons.single.params['scope'], CapScope.week);
     });
 
-    test('une séance écourtée est payée pour ce qui est fait et ne prend la '
-        'place d\'aucune séance prévue ; le plafond d\'XP de la semaine tient', () {
-      final sessions = <SessionRecord>[
-        sessionOf('short', monday, benchSets(2), planned: 10),
-        sessionOf('c1', wednesday, benchSets(4), planned: 4),
-        sessionOf('c2', monday.addDays(4), benchSets(4), planned: 4),
-        sessionOf('c3', monday.addDays(5), benchSets(4), planned: 4),
-      ];
-      final o = first(sessions, today: monday.addDays(7));
-      final short = effortOf(o.state, 'short');
-      expect(short.amount, 20);
-      expect(short.reasons.last.code, ReasonCodes.questXpCapped);
-      expect(short.reasons.last.params['scope'], CapScope.partial);
-      expect(effortOf(o.state, 'c1').amount, 104);
-      expect(effortOf(o.state, 'c2').amount, 104);
-      // 3 séances prévues × 110 XP : il reste 102 XP pour la troisième.
-      final last = effortOf(o.state, 'c3');
-      expect(last.amount, 102);
-      expect(
-        last.reasons.map((r) => r.params['scope']),
-        contains(CapScope.weekXp),
-      );
-      final week =
-          (o.state.data['weeks']! as List<Object?>).single! as List<Object?>;
-      expect(week.sublist(1, 3), <int>[3, 3]);
-      expect(week[5], WeekSummary.success);
-    });
+    test(
+      'une séance écourtée est payée pour ce qui est fait et ne prend la '
+      'place d\'aucune séance prévue ; le plafond d\'XP de la semaine tient',
+      () {
+        final sessions = <SessionRecord>[
+          sessionOf('short', monday, benchSets(2), planned: 10),
+          sessionOf('c1', wednesday, benchSets(4), planned: 4),
+          sessionOf('c2', monday.addDays(4), benchSets(4), planned: 4),
+          sessionOf('c3', monday.addDays(5), benchSets(4), planned: 4),
+        ];
+        final o = first(sessions, today: monday.addDays(7));
+        final short = effortOf(o.state, 'short');
+        expect(short.amount, 20);
+        expect(short.reasons.last.code, ReasonCodes.questXpCapped);
+        expect(short.reasons.last.params['scope'], CapScope.partial);
+        expect(effortOf(o.state, 'c1').amount, 104);
+        expect(effortOf(o.state, 'c2').amount, 104);
+        // 3 séances prévues × 110 XP : il reste 102 XP pour la troisième.
+        final last = effortOf(o.state, 'c3');
+        expect(last.amount, 102);
+        expect(
+          last.reasons.map((r) => r.params['scope']),
+          contains(CapScope.weekXp),
+        );
+        final week =
+            (o.state.data['weeks']! as List<Object?>).single! as List<Object?>;
+        expect(week.sublist(1, 3), <int>[3, 3]);
+        expect(week[5], WeekSummary.success);
+      },
+    );
 
     test('une séance déplacée dans une autre semaine après son règlement n\'y '
         'compte pas une seconde fois', () {
@@ -178,10 +181,10 @@ void main() {
         hasLength(3),
       );
       final weeks = o.state.data['weeks']! as List<Object?>;
-      expect(<Object?>[for (final w in weeks) (w! as List<Object?>)[2]], <int>[
-        1,
-        2,
-      ]);
+      expect(
+        <Object?>[for (final w in weeks) (w! as List<Object?>)[2]],
+        <int>[1, 2],
+      );
       final quest = o.state.quests.firstWhere(
         (q) => q.id == 'w:${monday.addDays(7).iso}:0',
       );

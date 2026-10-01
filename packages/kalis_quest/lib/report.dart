@@ -308,7 +308,7 @@ String rhythmMarkdown(Map<String, Object?> campaign) {
     }
   }
   line();
-  line('### Courbe médiane (niveau global, toutes les 13 semaines)');
+  line('### Courbe médiane (niveau global, toutes les 12 semaines)');
   line();
   final marks = <int>[for (var w = 12; w <= weeks; w += 12) w];
   line('| Archétype | ${marks.map((w) => 'S$w').join(' | ')} |');

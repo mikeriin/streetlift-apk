@@ -294,7 +294,8 @@ moins 3 semaines). La valeur à `h` semaines suit une loi normale de moyenne
 `expectedOn` est le premier jour où la probabilité d'atteinte passe 50 %, `earliestOn` et `latestOn`
 ceux où elle passe 10 % et 90 % (intervalle à 80 %) ; `latestOn` vaut l'horizon (3 ans) quand 90 %
 n'est jamais atteint. `confidence` est la probabilité d'atteindre la cible à l'échéance. Habitude
-(`habit_rate`) : rythme des 4 dernières semaines.
+(`habit_rate`) : rythme des 4 dernières semaines ; `confidence` y est la part des séances restantes
+faisable d'ici l'échéance à ce rythme (1 quand il suffit), pas une probabilité.
 
 **Retard** (`overdue`) : la médiane dépasse l'échéance, ou la cible est hors d'atteinte. Le moteur
 propose alors la première date où la probabilité atteint 60 % (`suggestedDate`) et la cible atteinte à

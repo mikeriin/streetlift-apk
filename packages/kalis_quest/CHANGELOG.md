@@ -13,6 +13,8 @@ Première version (lot G11 du pipeline « Génération et progression »).
 - Garde-fous : aucun XP au-delà du programme ; aucune récompense pour une séance faite malgré une
   douleur déclarée ; un jour de repos ou de pause ne propose que de la récupération ; rien n'est jamais
   retiré.
+- Une séance écourtée est payée pour ce qui est fait sans prendre la place d'une séance prévue ; le
+  registre fait foi pour la semaine d'une séance ; un seul objectif paie ses jalons par grandeur.
 - Attributs et rangs par mouvement sur standards par sexe et poids de corps (`docs/STANDARDS.md`).
 - Quêtes quotidiennes, hebdomadaires, de campagne et Koach, déterministes (graine + date).
 - Objectifs : jalons le long de la courbe prévue, prédiction (médiane, intervalle à 80 %), retard,
