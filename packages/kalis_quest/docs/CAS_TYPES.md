@@ -26,7 +26,7 @@ Document généré par `casesMarkdown` (`lib/report.dart`) : les 12 journaux typ
 - Rangs : `mu-back-squat-barre-haute` silver (2.189), `mu-developpe-couche-barre` silver (2.142).
 - Records connus : 14.
 - Objectif `g1` : 55.1 / 75 (départ 52, 14 %), jalons 0.33 · 0.6 · 0.82 · 1.0, prédiction 2027-01-27 (2026-10-01 – 2029-02-25, journal_damped_trend, confiance 0.0), en retard ; date proposée 2027-03-11 ; cible proposée 65.
-- Objectif `g2` : 29 / 48 (départ 0, 60 %), jalons 0.25 ✓ · 0.5 ✓ · 0.75 · 1.0, prédiction 2026-04-04 (2026-04-04 – 2026-04-26, habit_rate, confiance 1.0), en retard ; date proposée 2026-04-04.
+- Objectif `g2` : 29 / 48 (départ 0, 60 %), jalons 0.25 ✓ · 0.5 ✓ · 0.75 · 1.0, prédiction 2026-04-04 (2026-04-04 – 2026-04-26, habit_rate, confiance 0.842), en retard ; date proposée 2026-04-04.
 - Quêtes en cours : `weekly.sessions` 3/4, `weekly.health_checks` 2/4, `koach.full_sessions` 3/4, `rest.sleep` 0/1.
 
 ## j12_coureur
