@@ -6,8 +6,10 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
 import 'app_theme.dart';
+import 'koach/koach_bubble.dart';
 import 'koach_engine.dart' as ke;
 import 'koach_widgets.dart';
 import 'set_validation.dart' show parseLoadKg;
@@ -173,13 +175,17 @@ class _KoachReviewScreenState extends State<KoachReviewScreen> {
         appBar: AppBar(title: Text('Bilan Koach · S$week · J$day')),
         body: KList(
           children: [
-            Text(
-              widget.autoApplied.isEmpty
+            // G5 (D6.4) : fin de séance, Koach présente le bilan.
+            KoachBubble(
+              key: const ValueKey('koach-review-bubble'),
+              pose: widget.autoApplied.isEmpty
+                  ? KoachPose.clap
+                  : KoachPose.settings,
+              text: widget.autoApplied.isEmpty
                   ? 'Koach propose, tu décides : aucune valeur ne change sans '
                         'ton accord.'
                   : 'Mode Guidé : Koach a appliqué les baisses de sécurité '
                         'ci-dessous ; tu peux les annuler.',
-              style: TextStyle(color: SL.dim),
             ),
             for (final p in widget.autoApplied)
               KCard(
@@ -331,7 +337,10 @@ class KoachProposalCard extends StatelessWidget {
       key: ValueKey('koach-proposal-${p['id']}'),
       radius: 20,
       accent: SL.accent,
-      child: Column(
+      child: KoachSays(
+        pose: KoachPose.choice,
+        koachHeight: 48,
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
@@ -357,6 +366,7 @@ class KoachProposalCard extends StatelessWidget {
             ],
           ),
         ],
+      ),
       ),
     );
   }
@@ -394,7 +404,10 @@ class KoachStructureCard extends StatelessWidget {
     return KCard(
       key: ValueKey('koach-structure-${p['id']}'),
       radius: 20,
-      child: Column(
+      child: KoachSays(
+        pose: KoachPose.analyze,
+        koachHeight: 48,
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
@@ -422,6 +435,7 @@ class KoachStructureCard extends StatelessWidget {
             ],
           ),
         ],
+      ),
       ),
     );
   }

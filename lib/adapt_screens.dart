@@ -6,8 +6,10 @@
 // d'autonomie, vacances, maladie, historique) et difficulté globale de fin
 // de séance. Contrat : docs/CONTRAT_L11.md.
 import 'package:flutter/material.dart';
+import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
 import 'app_theme.dart';
+import 'koach/koach_bubble.dart';
 import 'koach_adapt.dart';
 import 'models.dart';
 import 'program_generator.dart' show GenCatalog, GenExercise;
@@ -745,7 +747,15 @@ class AdaptHomeCard extends StatelessWidget {
             child: KCard(
               key: ValueKey('adapt-proposal-${p.kind}'),
               accent: SL.accent,
-              child: Column(
+              // G5 (D6.4) : la proposition est dite par Koach.
+              child: KoachSays(
+                pose: switch (p.kind) {
+                  'slide' => KoachPose.direction,
+                  'more' => KoachPose.thumbsUp2,
+                  'fewer' => KoachPose.ponder,
+                  _ => KoachPose.choice,
+                },
+                child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(p.title, style: Theme.of(context).textTheme.titleMedium),
@@ -772,6 +782,7 @@ class AdaptHomeCard extends StatelessWidget {
                   ),
                 ],
               ),
+              ),
             ),
           ),
       ],
@@ -779,10 +790,18 @@ class AdaptHomeCard extends StatelessWidget {
   }
 
   Future<void> _run(BuildContext context, AdaptProposal p, String a) async {
+    // Lus avant l'attente : la carte peut disparaître avec la proposition.
     final messenger = ScaffoldMessenger.of(context);
+    final colors = KoachToastColors.of(context);
     final text = await store.runAdaptAction(p, a);
     if (text != null) {
-      messenger.showSnackBar(SnackBar(content: Text(text)));
+      messenger.showSnackBar(
+        koachSnackBar(
+          colors,
+          text,
+          pose: a == 'dismiss' ? KoachPose.thumbsUp : KoachPose.thumbsUp2,
+        ),
+      );
     }
   }
 }
@@ -799,7 +818,9 @@ class _PauseCard extends StatelessWidget {
       child: KCard(
         key: const ValueKey('adapt-pause-card'),
         accent: SL.accent,
-        child: Column(
+        child: KoachSays(
+          pose: vacation ? KoachPose.love : KoachPose.heart,
+          child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
@@ -826,12 +847,10 @@ class _PauseCard extends StatelessWidget {
                   key: const ValueKey('adapt-pause-end'),
                   onPressed: () {
                     store.endPause();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Bon retour ! Le programme reprend aujourd’hui.',
-                        ),
-                      ),
+                    showKoachToast(
+                      context,
+                      'Bon retour ! Le programme reprend aujourd’hui.',
+                      pose: KoachPose.wave,
                     );
                   },
                   child: const Text('Je reprends'),
@@ -839,6 +858,7 @@ class _PauseCard extends StatelessWidget {
               ],
             ),
           ],
+        ),
         ),
       ),
     );

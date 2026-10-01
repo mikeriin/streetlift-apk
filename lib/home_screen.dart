@@ -4,6 +4,7 @@ import 'adapt_screens.dart';
 import 'muscle_map_2d.dart' show MapView;
 import 'app_theme.dart';
 import 'estimate_view.dart';
+import 'koach/koach_home_card.dart';
 import 'koach_widgets.dart' show KoachWeighInBanner;
 import 'levelup.dart';
 import 'models.dart';
@@ -365,6 +366,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       // L10 : profil modifié ou programme régénéré.
                       if (ProgramHomeCard.visible) const ProgramHomeCard(),
                       if (ResumeBanner.visible) const ResumeBanner(),
+                      // G5 (D6.4) : carte du jour, Koach annonce la
+                      // journée (semaine actuelle seulement).
+                      if (today >= 0 && w.day(today) != null)
+                        KoachHomeCard(
+                          day: w.day(today)!,
+                          today: now,
+                          done: store.isDone(w.n, today),
+                          inProgress: store.inProgress(
+                            store.sessionKey(w.n, today),
+                          ),
+                          onOpen: () => _open(w, w.day(today)!),
+                        ),
                       if (store.koachWeighInDue) const KoachWeighInBanner(),
                       // L11 (KT-060) : pause en cours, en tête.
                       if (store.adapt.pause != null)

@@ -14,11 +14,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
 import '../app_theme.dart';
 import '../backup_files.dart' show backupFileName;
 import '../brand.dart';
 import '../kalis_clock.dart';
+import '../koach/koach_view.dart';
 import '../main.dart' show appNavigator;
 import '../program_start.dart' show longCivilDate;
 import '../session_host.dart';
@@ -73,6 +75,8 @@ class DevActions {
   static Future<void> start() => SessionHost.restart(
     DevSession.create,
     message: 'Session de test : installation neuve',
+    detail: 'Rien de ce que tu fais ici ne touche ta session personnelle.',
+    koach: KoachPose.settings,
   );
 
   /// Supprime la session de test et revient à la session personnelle.
@@ -81,7 +85,11 @@ class DevActions {
     if (remaining.isNotEmpty) {
       throw 'suppression incomplète (${remaining.length} clés)';
     }
-  }, message: 'Session de test supprimée');
+  },
+    message: 'Session de test supprimée',
+    detail: 'Retour à ta session personnelle.',
+    koach: KoachPose.wave,
+  );
 
   /// Voyage dans le temps : date simulée = aujourd'hui + [days] jours.
   static Future<void> travel(int days) {
@@ -92,6 +100,7 @@ class DevActions {
       message: days == 0
           ? 'Retour à aujourd’hui'
           : 'Date simulée : ${longCivilDate(target)}',
+      koach: KoachPose.direction,
     );
   }
 }
@@ -332,7 +341,20 @@ class DevBadge extends StatelessWidget {
 /// Message de la racine (changement de session), au-dessus de tout écran.
 class SessionToast extends StatelessWidget {
   final String message;
-  const SessionToast({super.key, required this.message});
+
+  /// G5 : seconde ligne, plus discrète.
+  final String? detail;
+
+  /// G5 (D6.4) : Koach annonce le changement de session.
+  final KoachPose pose;
+  const SessionToast({
+    super.key,
+    required this.message,
+    this.detail,
+    this.pose = KoachPose.settings,
+  });
+
+  static const _background = Color(0xF0202020);
 
   @override
   Widget build(BuildContext context) => MediaQuery.fromView(
@@ -340,6 +362,14 @@ class SessionToast extends StatelessWidget {
     child: Builder(
       builder: (context) {
         final media = MediaQuery.of(context);
+        const style = TextStyle(
+          color: Color(0xFFFFFFFF),
+          fontSize: 14,
+          height: 1.3,
+          fontWeight: FontWeight.w600,
+          decoration: TextDecoration.none,
+          fontFamily: 'Roboto',
+        );
         return Positioned(
           left: 24,
           right: 24,
@@ -350,25 +380,43 @@ class SessionToast extends StatelessWidget {
               child: Center(
                 child: Container(
                   key: const ValueKey('session-toast'),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
+                  padding: const EdgeInsets.fromLTRB(10, 10, 16, 10),
                   decoration: BoxDecoration(
-                    color: const Color(0xF0202020),
+                    color: _background,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Text(
-                    message,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontSize: 14,
-                      height: 1.3,
-                      fontWeight: FontWeight.w600,
-                      decoration: TextDecoration.none,
-                      fontFamily: 'Roboto',
-                    ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Hors du thème de l'application : support sombre
+                      // fixe, Koach blanc.
+                      KoachView(
+                        key: const ValueKey('session-toast-koach'),
+                        pose: pose,
+                        height: 48,
+                        width: 44,
+                        colors: KoachColors.onDark,
+                      ),
+                      const SizedBox(width: 10),
+                      Flexible(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(message, style: style),
+                            if (detail != null)
+                              Text(
+                                detail!,
+                                style: style.copyWith(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w400,
+                                  color: const Color(0xFFCCCCCC),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

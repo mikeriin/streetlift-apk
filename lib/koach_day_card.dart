@@ -17,9 +17,11 @@
 // ou non demandé), la carte n'apparaît pas : une ligne neutre répétée à
 // chaque séance serait du bruit, et l'en-tête de séance reste compact.
 import 'package:flutter/material.dart';
+import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
 import 'adapt_screens.dart' show AdaptSessionBanner;
 import 'app_theme.dart';
+import 'koach/koach_view.dart';
 import 'koach_widgets.dart';
 import 'models.dart';
 import 'store.dart';
@@ -168,8 +170,18 @@ class KoachDayCardState extends State<KoachDayCard> {
           padding: const EdgeInsets.symmetric(vertical: 2),
           child: Row(
             children: [
-              Icon(Icons.insights_rounded, size: 18, color: SL.accent),
-              const SizedBox(width: 6),
+              // G5 (D6.4) : Koach en personne (pose selon le sujet).
+              KoachView(
+                key: const ValueKey('koach-day-view'),
+                pose: c.questions
+                    ? KoachPose.checklist
+                    : c.fatigue
+                    ? KoachPose.please
+                    : KoachPose.settings,
+                height: 44,
+                width: 40,
+              ),
+              const SizedBox(width: 8),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

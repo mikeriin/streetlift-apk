@@ -1,7 +1,7 @@
 name: streetlift_tracker
 description: "Kalis Track — suivi d'entraînement calisthénie et streetlifting : programme guidé, chronos, pilotage recalculable."
 publish_to: 'none'
-version: 6.2.0+97
+version: 6.3.0+98
 
 environment:
   # M1 (mannequin 3D) : flutter_scene 0.23 exige Flutter 3.47 stable et Dart 3.10.
@@ -30,6 +30,10 @@ dependencies:
   # par étiquette (branche fixe etiquettes/kalis_core-v0.1.0).
   kalis_core:
     path: packages/kalis_core
+  # G5 (D1.5, D6) : Koach 2D (36 poses vectorisées, flammes, répliques),
+  # récupéré par étiquette (branche fixe etiquettes/kalis_koach-v0.1.0).
+  kalis_koach:
+    path: packages/kalis_koach
 
 dev_dependencies:
   flutter_test:
@@ -84,7 +88,6 @@ flutter:
     - assets/anatomy/rig_mixamo.json
     - assets/anatomy/peau_mixamo.bin
     - assets/anatomy/clips/
-    - assets/anatomy/clips/koach/
     - flutter_scene_generated/
     # M8 : carte 2D des 15 groupes musculaires (masques par vue, fabriqués
     # par tools/muscles2d/build_map.py d'après l'image du propriétaire).

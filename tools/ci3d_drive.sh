@@ -4,8 +4,8 @@
 # pincement et filtres normalisés ; M5 : postures du mannequin riggé ; M56 :
 # carte Koach du jour ; 5.5.2 : écorché acheté, sans posture ; M6b :
 # audit des écrans du mannequin fixe ; M6c : personnage Mixamo ; M7 :
-# lecteur d'animation ; M7b : animations de Koach ; M8 : carte 2D des
-# groupes musculaires) sur
+# lecteur d'animation ; M7b : animations de Koach, retirées en G5 ; M8 :
+# carte 2D des groupes musculaires ; G5 : Koach 2D) sur
 # l'émulateur
 # Android lancé
 # par .github/workflows/ci-3d.yml (reactivecircus/android-emulator-runner).
@@ -52,24 +52,32 @@ cible() {
     ${4:+--keep-app-running} \
     -d emulator-5554 > "$out/drive-$1${2:+-$2}.log" 2>&1
 }
-# G3 (dev6.2.0) : base d'exercices v1.1, cible du lot, build de
-# développement (session de test), en deux parties : a = sombre, b = clair
-# (Arsenal › Exercices, filtres, recherche, une fiche par discipline, carte
-# des muscles, bibliothèque de la session de test).
+# G5 (dev6.3.0) : Koach 2D, cible du lot, build de développement, en deux
+# parties : a = sombre et rouge Kalis, b = clair et violet (accueil, carte
+# du jour, proposition, Anatomie › Galerie de Koach, flammes, « Pourquoi ? »,
+# « Réduire les animations », session de test et sa suppression).
+code_g5=0
+for part in a b; do
+  cible koach_g5_test "$part" dev
+  c=$?
+  [ "$c" -ne 0 ] && code_g5=$c
+  tail -n 30 "$out/drive-koach_g5_test-$part.log"
+done
+# Cibles des lots précédents (G3, G2, G1, M8, M7) : CI3D_TOUT=1.
 code_g3=0
+code_g2=0
+code_g1=0
+code_m8=0
+code_m7=0
+if [ "${CI3D_TOUT:-0}" = "1" ]; then
+# G3 (dev6.2.0) : base d'exercices v1.1, build de développement, a = sombre,
+# b = clair.
 for part in a b; do
   cible catalogue_g3_test "$part" dev
   c=$?
   [ "$c" -ne 0 ] && code_g3=$c
   tail -n 30 "$out/drive-catalogue_g3_test-$part.log"
 done
-# Cibles des lots précédents (G2, G1, M8, M7b, M7) : CI3D_TOUT=1.
-code_g2=0
-code_g1=0
-code_m8=0
-code_m7b=0
-code_m7=0
-if [ "${CI3D_TOUT:-0}" = "1" ]; then
 # G2 (dev6.1.0) : suppression des WOD, des séances perso et de L12, en
 # deux parties : a = sombre, b = clair (annonce et copie, accueil, Arsenal,
 # STATS, Réglages › Sauvegardes).
@@ -111,15 +119,8 @@ for part in a b; do
   fi
   [ "$c" -ne 0 ] && code_m8=$c
 done
-# 3D restante : Koach (Anatomie › Koach (aperçu), partie a ; CI3D_M7B_GIF=1
-# pour les images des GIF) et démonstration (animation de test, partie a).
-m7b_parts="a"
-[ "${CI3D_M7B_GIF:-0}" = "1" ] && m7b_parts="a b c d"
-for part in $m7b_parts; do
-  cible koach_m7b_test "$part"
-  c=$?
-  [ "$c" -ne 0 ] && code_m7b=$c
-done
+# 3D restante : démonstration (animation de test, parties a à c). G5 :
+# animations 3D de Koach (M7b) retirées.
 m7_parts="a b c"
 for part in $m7_parts; do
   cible animation_m7_test "$part"
@@ -156,7 +157,7 @@ kill "$logcat_pid" 2>/dev/null || true
 grep -o 'Impeller rendering backend ([^)]*)' "$out/logcat-complet.txt" | sort | uniq -c > "$out/impeller.txt" || true
 grep -iE 'flutter|impeller|vulkan|gles|AndroidRuntime|FATAL|swiftshader|angle|lowmemorykiller|DEBUG|libc|tombstone|ActivityManager' "$out/logcat-complet.txt" | tail -n 3000 > "$out/logcat.txt" || true
 rm -f "$out/logcat-complet.txt"
-echo "code_g3=$code_g3 code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7b=$code_m7b code_m7=$code_m7" > "$out/drive-code.txt"
+echo "code_g5=$code_g5 code_g3=$code_g3 code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7=$code_m7" > "$out/drive-code.txt"
 echo "code=$code" >> "$out/drive-code.txt"
 echo "code_mesure=$code_mesure" >> "$out/drive-code.txt"
-[ "$code_g3" -eq 0 ] && [ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7b" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]
+[ "$code_g5" -eq 0 ] && [ "$code_g3" -eq 0 ] && [ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]

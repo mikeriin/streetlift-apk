@@ -173,14 +173,10 @@ class RegistreTest(unittest.TestCase):
         index = ia.verify(log=lambda *_: None)
         self.assertTrue(index['clips'])
         for c in index['clips']:
-            if c.get('mascotte'):
-                # M7b : animations de Koach, tolérance tenue à 0,2° (contacts
-                # exacts) ; dépassement du budget mesuré et justifié
-                self.assertLessEqual(c['octets'], 12 * 1024, c['id'])
-                if c['octets'] > ia.CLIP_BUDGET:
-                    self.assertIn('depassement', c)
-            else:
-                self.assertLessEqual(c['octets'], ia.CLIP_BUDGET, c['id'])
+            # G5 : animations 3D de Koach (M7b) retirées, Koach est en 2D
+            # (kalis_koach) ; plus aucun clip « mascotte » dans le registre.
+            self.assertNotIn('mascotte', c, c['id'])
+            self.assertLessEqual(c['octets'], ia.CLIP_BUDGET, c['id'])
             self.assertEqual(c['fps'], 30)
             ia.check_phases(c['phases'], c['duree_s'])
 

@@ -19,7 +19,6 @@ const _views = ['Mannequin3D', 'MannequinPlayer', 'ExerciseMannequin'];
 const _allowed3d = {
   'exercise_mannequin.dart', // démonstration de la fiche (lecteur)
   'exercise_screens.dart', // tête de fiche, si l'exercice a une animation
-  'koach_preview_screen.dart', // Koach
   'mannequin_player.dart', // lecteur
   'engine3d.dart', // Réglages › À propos › Moteur 3D (mesure)
   'animation_test_screen.dart', // animation de test (Moteur 3D)

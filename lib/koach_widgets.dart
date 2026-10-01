@@ -5,8 +5,11 @@
 // aucune promesse ; un état est toujours écrit, jamais porté par la seule
 // couleur. Rien ne change sans un tap (D4).
 import 'package:flutter/material.dart';
+import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
 import 'app_theme.dart';
+import 'koach/koach_bubble.dart';
+import 'koach/koach_view.dart';
 import 'koach_engine.dart' as ke;
 import 'set_validation.dart' show parseLoadKg;
 import 'store.dart';
@@ -239,14 +242,23 @@ TextStyle _overline() => TextStyle(
   letterSpacing: .8,
 );
 
-Widget _koachHeader(String text, {IconData icon = Icons.insights_rounded}) =>
-    Row(
-      children: [
-        Icon(icon, size: 18, color: SL.accent),
-        const SizedBox(width: 6),
-        Expanded(child: Text(text.toUpperCase(), style: _overline())),
-      ],
-    );
+/// En-tête « KOACH · … » : Koach en petit (G5, D6.4) ; dans la carte
+/// « Koach · séance du jour » ([bare]), Koach est déjà dans l'en-tête de la
+/// carte : l'icône d'origine reste.
+Widget _koachHeader(
+  String text, {
+  required KoachPose pose,
+  IconData icon = Icons.insights_rounded,
+  bool bare = false,
+}) => bare
+    ? Row(
+        children: [
+          Icon(icon, size: 18, color: SL.accent),
+          const SizedBox(width: 6),
+          Expanded(child: Text(text.toUpperCase(), style: _overline())),
+        ],
+      )
+    : KoachHeader(text, pose: pose);
 
 /// Règle D24 appliquée, en une phrase (fiche au tap).
 String koachRuleText(ke.KSuggestion sug) => switch (sug.reason) {
@@ -303,7 +315,12 @@ class KoachSuggestionCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(child: _koachHeader('Koach · séries restantes')),
+              Expanded(
+                child: _koachHeader(
+                  'Koach · séries restantes',
+                  pose: KoachPose.analyze,
+                ),
+              ),
               Tooltip(
                 message: 'Détail de la suggestion',
                 child: Icon(Icons.info_outline, size: 18, color: SL.dim),
@@ -436,7 +453,9 @@ class KoachFatigueCard extends StatelessWidget {
     children: [
       _koachHeader(
         'Koach · jour de fatigue probable',
+        pose: KoachPose.please,
         icon: Icons.battery_3_bar_rounded,
+        bare: bare,
       ),
       const SizedBox(height: 6),
       Text(
@@ -522,7 +541,9 @@ class KoachQuestionsCard extends StatelessWidget {
       children: [
         _koachHeader(
           'Koach · avant de commencer (facultatif)',
+          pose: KoachPose.checklist,
           icon: Icons.checklist_rounded,
+          bare: bare,
         ),
         const SizedBox(height: 8),
         Text(
@@ -592,7 +613,8 @@ class KoachCalibrationNote extends StatelessWidget {
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(Icons.tune_rounded, size: 16, color: SL.dim),
+        // G5 : Koach en petit, il cherche ta charge.
+        const KoachView(pose: KoachPose.analyze, height: 30, width: 26),
         const SizedBox(width: 6),
         Expanded(
           child: Text(
@@ -722,6 +744,7 @@ class KoachWeighInBanner extends StatelessWidget {
       children: [
         _koachHeader(
           'Koach · pesée de la semaine',
+          pose: KoachPose.checklist,
           icon: Icons.monitor_weight_outlined,
         ),
         const SizedBox(height: 6),

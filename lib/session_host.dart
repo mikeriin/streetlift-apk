@@ -10,6 +10,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
 import 'app_theme.dart';
 import 'dev/dev_flags.dart';
@@ -29,17 +30,20 @@ class SessionHost extends StatefulWidget {
 
   /// Redémarrage logique : [change] s'exécute une fois l'application
   /// démontée et les écritures de la session quittée terminées ; un
-  /// magasin neuf est ensuite chargé. [message] est annoncé à l'arrivée.
+  /// magasin neuf est ensuite chargé. [message] est annoncé à l'arrivée,
+  /// par Koach (G5) dans la pose [koach], avec [detail] en dessous.
   static Future<void> restart(
     Future<void> Function() change, {
     String? message,
+    String? detail,
+    KoachPose koach = KoachPose.settings,
   }) async {
     final host = _current;
     if (host == null || !host.mounted) {
       await change();
       return;
     }
-    await host._restart(change, message);
+    await host._restart(change, message, detail, koach);
   }
 
   /// Redémarrage en cours (tests).
@@ -53,7 +57,8 @@ class _SessionHostState extends State<SessionHost> {
   late Future<void> _init;
   int _generation = 0;
   bool _switching = false;
-  String? _message;
+  String? _message, _detail;
+  KoachPose _koach = KoachPose.settings;
   Timer? _messageTimer;
 
   @override
@@ -70,7 +75,12 @@ class _SessionHostState extends State<SessionHost> {
     super.dispose();
   }
 
-  Future<void> _restart(Future<void> Function() change, String? message) async {
+  Future<void> _restart(
+    Future<void> Function() change,
+    String? message,
+    String? detail,
+    KoachPose koach,
+  ) async {
     if (_switching) return;
     // Écritures de la session quittée terminées avant tout changement.
     try {
@@ -94,12 +104,20 @@ class _SessionHostState extends State<SessionHost> {
       _switching = false;
       _init = store.init();
     });
-    _say(failure == null ? message : 'Opération impossible : $failure');
+    if (failure == null) {
+      _say(message, detail, koach);
+    } else {
+      _say('Opération impossible : $failure', null, KoachPose.oops);
+    }
   }
 
-  void _say(String? message) {
+  void _say(String? message, String? detail, KoachPose koach) {
     _messageTimer?.cancel();
-    setState(() => _message = message);
+    setState(() {
+      _message = message;
+      _detail = detail;
+      _koach = koach;
+    });
     if (message == null) return;
     _messageTimer = Timer(const Duration(seconds: 4), () {
       if (mounted) setState(() => _message = null);
@@ -124,7 +142,8 @@ class _SessionHostState extends State<SessionHost> {
               child: widget.builder(_init),
             ),
           if (kDevBuild) const DevBadge(),
-          if (_message != null) SessionToast(message: _message!),
+          if (_message != null)
+            SessionToast(message: _message!, detail: _detail, pose: _koach),
         ],
       ),
     );
