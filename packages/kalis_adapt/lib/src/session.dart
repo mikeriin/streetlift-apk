@@ -577,15 +577,17 @@ List<SetPlan> _plansFor(
     if (last == null) {
       return kg;
     }
+    final floored = info.grid.floor(last);
+    final start = floored > last ? last : floored;
     if ((track.noUp || exercise.painZones.isNotEmpty || run.noIncrease) &&
-        kg > last) {
-      return last;
+        kg > start) {
+      return start;
     }
     final rise = exercise.calibrating
         ? p.maxUpCalibration
         : (exercise.spec.main ? p.maxUpMain : p.maxUpOther);
     final cap = info.grid.floor((last + bw) * (1 + rise) - bw);
-    final ceiling = cap < last ? last : cap;
+    final ceiling = cap < start ? start : cap;
     return kg > ceiling ? ceiling : kg;
   }
 
