@@ -31,23 +31,26 @@ void _expectSame(String path, String generated) {
 void main() {
   final catalog = loadCatalog();
 
-  test('docs/MESURES.md est la mise en tableaux de docs/data/campagne.json', () {
-    final campaign = readJsonObject('docs/data/campagne.json');
-    _expectSame('docs/MESURES.md', campaignMarkdown(campaign));
-    expect(campaign['seeds'], greaterThanOrEqualTo(200));
-    expect(campaign['weeks'], greaterThanOrEqualTo(24));
-    final athletes = campaign['athletes']! as List<Object?>;
-    expect(athletes.length, greaterThanOrEqualTo(6));
-    expect(athletes.length, simAthletes.length);
-    for (final a in athletes) {
-      final athlete = a! as Map<String, Object?>;
-      final policies = athlete['policies']! as Map<String, Object?>;
-      for (final name in reportPolicies) {
-        final metrics = policies[name]! as Map<String, Object?>;
-        expect(metrics['runs'], campaign['seeds'], reason: name);
+  test(
+    'docs/MESURES.md est la mise en tableaux de docs/data/campagne.json',
+    () {
+      final campaign = readJsonObject('docs/data/campagne.json');
+      _expectSame('docs/MESURES.md', campaignMarkdown(campaign));
+      expect(campaign['seeds'], greaterThanOrEqualTo(200));
+      expect(campaign['weeks'], greaterThanOrEqualTo(24));
+      final athletes = campaign['athletes']! as List<Object?>;
+      expect(athletes.length, greaterThanOrEqualTo(6));
+      expect(athletes.length, simAthletes.length);
+      for (final a in athletes) {
+        final athlete = a! as Map<String, Object?>;
+        final policies = athlete['policies']! as Map<String, Object?>;
+        for (final name in reportPolicies) {
+          final metrics = policies[name]! as Map<String, Object?>;
+          expect(metrics['runs'], campaign['seeds'], reason: name);
+        }
       }
-    }
-  });
+    },
+  );
 
   test('la fixture du propriétaire est celle que le simulateur produit', () {
     final fixture = readJsonObject('test/fixtures/proprietaire.json.gz');
