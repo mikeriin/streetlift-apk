@@ -1,0 +1,4 @@
+run=36830621128
+commit=98d2ccfdd95de95ebaa34e6bacfb9f7e1d87e13e
+branche=claude/ci-gp-koach
+packages=failure
