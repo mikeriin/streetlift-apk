@@ -17,4 +17,6 @@ Première version (lot G4 du pipeline « Génération et progression »).
 - `PlanInspector` (note relue, contraintes dures revérifiées, mesures), `lib/testing.dart` (profils
   aléatoires seedés), `lib/report.dart` (rapports), ligne de commande `dart run kalis_plan:plan`,
   simulateur `bin/kalis_plan_cli.dart`.
-- Validation : `docs/` (profils types, comparaison au générateur L10, non-ressemblance, mesures).
+- Validation : `docs/` (profils types, comparaison au générateur L10, non-ressemblance, mesures,
+  relecture indépendante avant livraison : `docs/VALIDATION.md`, § 8).
+- Portabilité : exponentielle et logarithme du recuit calculés par le paquet (`stableExp`, `stableLn`).

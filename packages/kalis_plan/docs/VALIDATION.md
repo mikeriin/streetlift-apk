@@ -223,7 +223,7 @@ toujours), et c'est aussi pourquoi le réglage fin des poids ne mérite pas
 d'effort avant une relecture professionnelle des programmes.
 
 **Diff minimal** (§ 3). Hors de l'emplacement visé, rien d'autre ne change dans 74 % des `cannot_do`,
-80 % des `dislike` et 58 % des `remove` ; en moyenne 0,5 à 0,6 changement. Le maximum observé est de 12
+80 % des `dislike` et 58 % des `remove` ; en moyenne 0,5 à 0,7 changement. Le maximum observé est de 12
 changements : l'exclusion d'un exercice vaut pour toute la semaine et peut obliger à rééquilibrer
 plusieurs séances. Ce cas extrême est rare mais visible ; il est noté comme limite.
 

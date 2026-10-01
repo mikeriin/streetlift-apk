@@ -70,7 +70,9 @@ dart run kalis_plan:plan --profile profil.json --seed 0 --pass 1 [--locks verrou
 ```
 
 `--pass 1` écrit la passe 1 (JSON) ; `--pass 2` le bloc complet (`ProgramBlock`). Le profil est un
-`AthleteProfile` (ou un objet `{"profile": …}`, comme dans les jeux de données de kalis_core).
+`AthleteProfile` (ou un objet `{"profile": …}`, comme dans les jeux de données de kalis_core). À lancer depuis `packages/kalis_plan` (le catalogue de
+kalis_core est cherché à côté, sinon `--catalog`). `--seed` vaut 0 et `--pass` vaut 1 par défaut ; codes de
+sortie : 64 (ligne de commande), 65 (entrée invalide), 66 (fichier illisible).
 
 ## Contrôle
 
@@ -82,8 +84,8 @@ dart test
 dart run bin/kalis_plan_cli.dart --rapport /tmp/rapport
 ```
 
-`dart test` joue 10 240 profils aléatoires de bout en bout (huit fichiers `properties_<n>_test.dart`, en
-parallèle : quelques minutes). Le simulateur écrit `PROFILS_TYPES.md`, `COMPARAISON_L10.md`, `MESURES.md` et
+`dart test` joue 10 240 profils aléatoires (huit fichiers `properties_<n>_test.dart`, en parallèle : une
+dizaine de minutes ; ce que chaque étape couvre est dit dans `CONTRAT.md`, § 8). Le simulateur écrit `PROFILS_TYPES.md`, `COMPARAISON_L10.md`, `MESURES.md` et
 `mesures.json` ; les deux premiers sont recopiés dans `docs/` et comparés au moteur par
 `test/docs_test.dart` — après tout changement du moteur, relancer le simulateur et les recopier.
 
