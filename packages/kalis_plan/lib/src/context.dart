@@ -211,7 +211,13 @@ final class PoolEntry {
     required this.knownMaxReps,
     required this.knownMaxHoldSeconds,
     required this.tieBreak,
-  });
+  }) : practice =
+           scheme.kind == SchemeKind.strengthMain ||
+           scheme.kind == SchemeKind.skillHold ||
+           scheme.kind == SchemeKind.skillReps ||
+           scheme.kind == SchemeKind.power ||
+           scheme.kind == SchemeKind.plyometric ||
+           scheme.kind == SchemeKind.ballistic;
 
   /// Rang dans le vivier.
   final int index;
@@ -227,6 +233,12 @@ final class PoolEntry {
 
   /// Prescription de référence.
   final Scheme scheme;
+
+  /// Travail de pratique : séries courtes loin de l'échec (force maximale
+  /// sur un mouvement d'objectif, figures, puissance). Ses séries comptent
+  /// pour moitié dans le volume par muscle, dont les bandes viennent
+  /// d'études sur des séries proches de l'échec.
+  final bool practice;
 
   /// Jours où l'exercice est faisable (bit du rang du jour).
   final int dayMask;
@@ -1375,19 +1387,10 @@ PlanContext _build(ContextInputs inputs) {
 
     final groupsOut = <int>[];
     final valuesOut = <int>[];
-    if (t.kind.isResistance || t.kind == SlotKind.conditioning) {
+    if (t.kind.isResistance) {
       for (final g in MuscleGroup.values) {
         final credit = t.groupCredits[g.index];
         if (credit <= 0) {
-          continue;
-        }
-        if (t.kind == SlotKind.conditioning) {
-          // Travail métabolique loin de l'échec : une demi-série pour les
-          // muscles principaux, rien pour les autres.
-          if (credit == 2) {
-            groupsOut.add(g.index);
-            valuesOut.add(1);
-          }
           continue;
         }
         groupsOut.add(g.index);

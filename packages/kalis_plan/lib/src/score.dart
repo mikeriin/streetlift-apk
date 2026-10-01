@@ -284,14 +284,16 @@ final class Scorer {
         }
         final cg = e.creditGroups;
         final cv = e.creditValues;
-        final credited = e.scheme.continuous ? 1 : count;
+        final credited = e.scheme.continuous
+            ? 1
+            : (e.practice ? (count + 1) >> 1 : count);
         for (var k = 0; k < cg.length; k++) {
           final v = cv[k];
           _volume[cg[k]] += credited * v;
           if (v == 2) {
             final g = cg[k];
             if (e.heavyWeight > 0) {
-              _heavy[d * groups + g] += credited * e.heavyWeight;
+              _heavy[d * groups + g] += count * e.heavyWeight;
             }
             if (_groupStamp[g] != dayStamp) {
               _groupStamp[g] = dayStamp;

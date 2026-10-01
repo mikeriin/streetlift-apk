@@ -619,9 +619,24 @@ final class Planner {
         return false;
       }
       _saveA.save(state, d);
-      if (place(state, d, candidate, unnamedSlot) < 0) {
-        _saveA.restore(state);
-        return false;
+      var evictions = 0;
+      while (place(state, d, candidate, unnamedSlot) < 0) {
+        // La séance est pleine : on fait de la place (deux retraits au
+        // plus), le recuit juge l'échange.
+        final n = state.count[d];
+        if (evictions >= 2 || n == 0) {
+          _saveA.restore(state);
+          return false;
+        }
+        final at = _random.nextInt(n);
+        if (_isLocked(state, d, at) ||
+            _isLastRequired(state, state.exercise[d][at])) {
+          _saveA.restore(state);
+          return false;
+        }
+        state.removeAt(d, at);
+        normalizeDay(ctx, state, d);
+        evictions++;
       }
       return true;
     }
