@@ -1354,9 +1354,14 @@ PlanContext _build(ContextInputs inputs) {
       }
 
       // Prudence.
+      // (La course est un impact répété : en mode prudent, le cardio se
+      // fait sans appui contraignant pour la cheville — marche, vélo,
+      // rameur, natation.)
       if (rejection == null &&
           cautious &&
-          (t.impact || e.systemicFatigue >= 5)) {
+          (t.impact ||
+              e.systemicFatigue >= 5 ||
+              (t.kind.isCardio && e.stressOn(Joint.ankle) != JointStress.low))) {
         rejection = Rejections.cautious;
       }
 

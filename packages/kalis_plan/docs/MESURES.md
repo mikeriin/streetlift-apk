@@ -8,46 +8,46 @@ Note globale, part du temps disponible utilisée, erreur de dosage (points de po
 
 | Profil | Note | Temps | Dosage | Volume | Schémas | Exercices | Violations |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `debutant_forme_generale_maison_2x30` | 0.947 | 98 % | 16.0 | 100 % | 3/3 | 11 | 0 |
-| `femme_45_musculation_salle_4x60` | 0.971 | 97 % | 0.0 | 96 % | 6/6 | 37 | 0 |
-| `coureur_cardio_3x45` | 0.928 | 97 % | 7.4 | 80 % | 4/5 | 13 | 0 |
-| `crossfit_5x60` | 0.958 | 96 % | 0.0 | 93 % | 6/6 | 46 | 0 |
-| `calisthenie_figures_4x75` | 0.952 | 92 % | 0.2 | 84 % | 6/6 | 39 | 0 |
-| `street_streetlifting_4x90` | 0.951 | 95 % | 5.3 | 78 % | 6/6 | 29 | 0 |
-| `street_sets_reps_4x60` | 0.953 | 99 % | 1.6 | 73 % | 6/6 | 23 | 0 |
-| `street_calisthenie_5x60` | 0.958 | 83 % | 1.8 | 76 % | 6/6 | 26 | 0 |
-| `blessure_epaule_musculation_3x60` | 0.967 | 99 % | 0.0 | 87 % | 5/5 | 21 | 0 |
-| `minimal_1x20` | 0.917 | 98 % | 35.0 | 100 % | 2/3 | 6 | 0 |
-| `six_jours_musculation_avance_6x75` | 0.967 | 82 % | 0.0 | 93 % | 6/6 | 36 | 0 |
-| `senior_65_forme_generale_3x40` | 0.934 | 99 % | 4.3 | 93 % | 4/6 | 23 | 0 |
-| `proprietaire_streetlifting_avance` | 0.949 | 93 % | 0.3 | 84 % | 6/6 | 36 | 0 |
-| `homme_25_musculation_debutant_3x60` | 0.973 | 98 % | 0.0 | 73 % | 6/6 | 18 | 0 |
-| `femme_30_street_workout_parc_3x45` | 0.960 | 95 % | 0.1 | 93 % | 6/6 | 24 | 0 |
-| `mobilite_seule_5x20` | 0.976 | 93 % | 0.0 | 100 % | 0/0 | 36 | 0 |
+| `debutant_forme_generale_maison_2x30` | 0.957 | 99 % | 4.8 | 100 % | 3/3 | 10 | 0 |
+| `femme_45_musculation_salle_4x60` | 0.969 | 99 % | 0.1 | 96 % | 6/6 | 35 | 0 |
+| `coureur_cardio_3x45` | 0.933 | 98 % | 4.5 | 93 % | 4/5 | 13 | 0 |
+| `crossfit_5x60` | 0.956 | 94 % | 0.0 | 91 % | 6/6 | 46 | 0 |
+| `calisthenie_figures_4x75` | 0.956 | 93 % | 0.1 | 87 % | 6/6 | 40 | 0 |
+| `street_streetlifting_4x90` | 0.959 | 92 % | 0.2 | 80 % | 6/6 | 28 | 0 |
+| `street_sets_reps_4x60` | 0.952 | 96 % | 1.7 | 80 % | 6/6 | 23 | 0 |
+| `street_calisthenie_5x60` | 0.961 | 79 % | 0.0 | 82 % | 6/6 | 25 | 0 |
+| `blessure_epaule_musculation_3x60` | 0.964 | 99 % | 0.0 | 64 % | 5/5 | 21 | 0 |
+| `minimal_1x20` | 0.918 | 97 % | 35.0 | 100 % | 2/3 | 6 | 0 |
+| `six_jours_musculation_avance_6x75` | 0.967 | 85 % | 0.0 | 73 % | 6/6 | 38 | 0 |
+| `senior_65_forme_generale_3x40` | 0.937 | 100 % | 7.2 | 93 % | 5/6 | 23 | 0 |
+| `proprietaire_streetlifting_avance` | 0.951 | 89 % | 0.2 | 84 % | 6/6 | 35 | 0 |
+| `homme_25_musculation_debutant_3x60` | 0.973 | 98 % | 0.0 | 96 % | 6/6 | 18 | 0 |
+| `femme_30_street_workout_parc_3x45` | 0.960 | 83 % | 0.0 | 84 % | 6/6 | 21 | 0 |
+| `mobilite_seule_5x20` | 0.976 | 95 % | 0.0 | 100 % | 0/0 | 36 | 0 |
 | `cardio_debutant_marche_3x30` | 0.976 | 100 % | 0.0 | 100 % | 0/0 | 3 | 0 |
-| `homme_50_reprise_genou_3x45` | 0.960 | 98 % | 4.4 | 80 % | 6/6 | 12 | 0 |
-| `lombalgie_musculation_3x50` | 0.961 | 100 % | 1.2 | 73 % | 6/6 | 26 | 0 |
+| `homme_50_reprise_genou_3x45` | 0.963 | 98 % | 0.2 | 82 % | 6/6 | 12 | 0 |
+| `lombalgie_musculation_3x50` | 0.964 | 98 % | 0.1 | 64 % | 6/6 | 24 | 0 |
 | `poignet_calisthenie_3x60` | 0.953 | 98 % | 0.0 | 89 % | 6/6 | 18 | 0 |
-| `femme_22_calisthenie_debutante_maison` | 0.942 | 99 % | 0.2 | 80 % | 6/6 | 28 | 0 |
-| `homme_35_crossfit_maison_kettlebell` | 0.948 | 95 % | 0.7 | 73 % | 6/6 | 17 | 0 |
-| `musculation_maison_halteres_4x45` | 0.959 | 94 % | 0.0 | 91 % | 5/6 | 21 | 0 |
-| `elite_calisthenie_6x90` | 0.942 | 57 % | 6.4 | 80 % | 6/6 | 42 | 0 |
-| `streetlifting_debutant_3x60` | 0.964 | 99 % | 0.6 | 89 % | 6/6 | 20 | 0 |
-| `forme_generale_exterieur_3x40` | 0.948 | 97 % | 0.1 | 93 % | 4/6 | 15 | 0 |
-| `senior_72_mobilite_marche_4x30` | 0.974 | 94 % | 0.0 | 100 % | 0/0 | 26 | 0 |
-| `femme_60_musculation_salle_2x45` | 0.951 | 99 % | 0.3 | 62 % | 5/6 | 13 | 0 |
-| `homme_40_cardio_musculation_50_50` | 0.971 | 99 % | 0.0 | 89 % | 6/6 | 17 | 0 |
-| `trois_disciplines_70_20_10` | 0.970 | 99 % | 1.2 | 96 % | 6/6 | 28 | 0 |
-| `niveaux_inconnus_sans_poids` | 0.973 | 97 % | 0.0 | 100 % | 6/6 | 14 | 0 |
-| `sans_objectif_mode_libre` | 0.972 | 95 % | 0.2 | 91 % | 6/6 | 20 | 0 |
-| `objectif_habitude_seul` | 0.936 | 96 % | 2.5 | 93 % | 4/6 | 14 | 0 |
-| `objectif_figure_front_lever` | 0.958 | 92 % | 0.1 | 56 % | 6/6 | 23 | 0 |
-| `semi_marathon` | 0.951 | 99 % | 5.4 | 100 % | 4/4 | 19 | 0 |
-| `prudent_sante_musculation` | 0.943 | 96 % | 7.4 | 96 % | 5/6 | 9 | 0 |
-| `tres_grand_lourd` | 0.967 | 99 % | 2.4 | 76 % | 6/6 | 17 | 0 |
-| `petite_legere` | 0.958 | 81 % | 0.1 | 71 % | 6/6 | 21 | 0 |
-| `sept_jours_courts_7x20` | 0.943 | 98 % | 12.4 | 93 % | 5/6 | 33 | 0 |
-| `materiel_complet_gouts_marques` | 0.969 | 98 % | 0.1 | 73 % | 6/6 | 27 | 0 |
+| `femme_22_calisthenie_debutante_maison` | 0.948 | 98 % | 0.1 | 93 % | 6/6 | 28 | 0 |
+| `homme_35_crossfit_maison_kettlebell` | 0.949 | 96 % | 0.0 | 49 % | 6/6 | 17 | 0 |
+| `musculation_maison_halteres_4x45` | 0.961 | 96 % | 0.0 | 87 % | 6/6 | 21 | 0 |
+| `elite_calisthenie_6x90` | 0.943 | 62 % | 3.0 | 56 % | 6/6 | 42 | 0 |
+| `streetlifting_debutant_3x60` | 0.965 | 97 % | 0.5 | 80 % | 6/6 | 19 | 0 |
+| `forme_generale_exterieur_3x40` | 0.950 | 98 % | 0.0 | 93 % | 4/6 | 15 | 0 |
+| `senior_72_mobilite_marche_4x30` | 0.974 | 94 % | 0.0 | 100 % | 0/0 | 25 | 0 |
+| `femme_60_musculation_salle_2x45` | 0.955 | 99 % | 0.1 | 62 % | 6/6 | 14 | 0 |
+| `homme_40_cardio_musculation_50_50` | 0.971 | 98 % | 0.0 | 87 % | 6/6 | 15 | 0 |
+| `trois_disciplines_70_20_10` | 0.971 | 99 % | 1.6 | 96 % | 6/6 | 27 | 0 |
+| `niveaux_inconnus_sans_poids` | 0.975 | 98 % | 0.0 | 100 % | 6/6 | 14 | 0 |
+| `sans_objectif_mode_libre` | 0.973 | 97 % | 0.0 | 76 % | 6/6 | 21 | 0 |
+| `objectif_habitude_seul` | 0.937 | 99 % | 0.9 | 93 % | 4/6 | 12 | 0 |
+| `objectif_figure_front_lever` | 0.962 | 81 % | 0.4 | 80 % | 6/6 | 20 | 0 |
+| `semi_marathon` | 0.960 | 100 % | 2.1 | 100 % | 4/4 | 19 | 0 |
+| `prudent_sante_musculation` | 0.953 | 96 % | 0.9 | 76 % | 6/6 | 10 | 0 |
+| `tres_grand_lourd` | 0.972 | 100 % | 0.8 | 76 % | 6/6 | 16 | 0 |
+| `petite_legere` | 0.961 | 97 % | 0.0 | 87 % | 6/6 | 24 | 0 |
+| `sept_jours_courts_7x20` | 0.947 | 99 % | 7.5 | 93 % | 5/6 | 29 | 0 |
+| `materiel_complet_gouts_marques` | 0.967 | 97 % | 0.3 | 96 % | 6/6 | 23 | 0 |
 
 ## 2. Temps de calcul
 
@@ -55,14 +55,14 @@ Par profil type : médiane de trois exécutions, moteur neuf à chaque fois, apr
 
 | Opération | Médiane | 95e centile | Maximum |
 | --- | --- | --- | --- |
-| Passe 1 (création) | 27.3 | 52.5 | 63.8 |
-| Passe 2 | 1.2 | 3.4 | 3.9 |
-| Génération complète (passes 1 + 2) | 28.5 | 54.9 | 65.5 |
-| Régénération après une action de revue | 7.5 | 12.2 | 15.8 |
-| Variantes d'un exercice | 1.1 | 1.8 | 3.4 |
-| Autre proposition | 14.9 | 27.8 | 36.1 |
-| Bloc suivant | 8.3 | 14.6 | 19.6 |
-| Restructuration de la fin du bloc | 7.8 | 15.3 | 18.6 |
+| Passe 1 (création) | 47.2 | 86.9 | 91.8 |
+| Passe 2 | 1.1 | 2.8 | 3.8 |
+| Génération complète (passes 1 + 2) | 48.3 | 88.5 | 94.8 |
+| Régénération après une action de revue | 7.0 | 12.2 | 16.8 |
+| Variantes d'un exercice | 1.0 | 1.6 | 1.7 |
+| Autre proposition | 19.3 | 35.0 | 47.9 |
+| Bloc suivant | 7.9 | 16.8 | 20.6 |
+| Restructuration de la fin du bloc | 7.4 | 15.6 | 19.4 |
 
 ## 3. Population de 1000 profils aléatoires
 
@@ -70,25 +70,25 @@ Programmes avec une contrainte dure violée : **0** ; programmes invalides au se
 
 | Mesure | Moyenne | 5e centile | Médiane | 95e centile | Minimum | Maximum |
 | --- | --- | --- | --- | --- | --- | --- |
-| Note globale | 0.922 | 0.849 | 0.929 | 0.967 | 0.733 | 0.977 |
-| Temps utilisé (%) | 89.0 | 54.6 | 95.3 | 99.7 | 22.9 | 100.0 |
-| Groupes dans leur bande (%) | 80.6 | 51.1 | 82.2 | 100.0 | 4.4 | 100.0 |
-| Erreur de dosage (points) | 9.3 | 0.0 | 1.7 | 39.9 | 0.0 | 100.0 |
+| Note globale | 0.925 | 0.861 | 0.932 | 0.968 | 0.734 | 0.977 |
+| Temps utilisé (%) | 89.3 | 56.6 | 95.5 | 99.7 | 24.9 | 100.0 |
+| Groupes dans leur bande (%) | 81.5 | 53.3 | 84.4 | 100.0 | 17.8 | 100.0 |
+| Erreur de dosage (points) | 9.5 | 0.0 | 1.7 | 39.0 | 0.0 | 100.0 |
 | Schémas de base couverts (%) | 91.9 | 50.0 | 100.0 | 100.0 | 0.0 | 100.0 |
-| Passe 1 (ms) | 26.818 | 5.300 | 22.200 | 62.300 | 1.300 | 181.600 |
-| Régénération en revue (ms) | 6.861 | 1.900 | 6.300 | 13.400 | 0.500 | 27.100 |
+| Passe 1 (ms) | 46.549 | 13.400 | 42.300 | 92.400 | 2.800 | 207.000 |
+| Régénération en revue (ms) | 6.971 | 1.900 | 6.400 | 14.100 | 0.500 | 31.000 |
 
 Diff minimal — changements d'exercice hors de l'emplacement visé, par action de revue :
 
 | Action | Moyenne | Sans aucun autre changement | Maximum |
 | --- | --- | --- | --- |
-| `cannot_do` | 0.63 | 74 % | 12 |
-| `dislike` | 0.59 | 79 % | 12 |
-| `remove` | 0.57 | 55 % | 9 |
+| `cannot_do` | 0.65 | 73 % | 12 |
+| `dislike` | 0.55 | 78 % | 12 |
+| `remove` | 0.50 | 58 % | 5 |
 
 ## 4. « Autre proposition »
 
-Graines 1 à 7 de chaque profil type (280 propositions). Note rapportée à celle de la meilleure : minimum 0.9875, médiane 0.9993 (plancher du contrat : 0.97). Part d'exercices absents de chacune des propositions déjà montrées : médiane 42 %, minimum 0 % ; **90 %** des propositions atteignent le tiers visé. Programmes distincts parmi les huit premiers : 8.0 en moyenne, 8 au minimum.
+Graines 1 à 7 de chaque profil type (280 propositions). Note rapportée à celle de la meilleure : minimum 0.9811, médiane 0.9986 (plancher du contrat : 0.97). Part d'exercices absents de chacune des propositions déjà montrées : médiane 42 %, minimum 0 % ; **91 %** des propositions atteignent le tiers visé. Programmes distincts parmi les huit premiers : 8.0 en moyenne, 8 au minimum.
 
 ## 5. Convergence de la recherche
 
@@ -96,12 +96,13 @@ Objectif moyen (sécurité + note globale, de 0 à 2) des 40 profils types selon
 
 | Effort | Coups de recuit | Objectif moyen | Temps moyen (ms) | Profils améliorés | Profils dégradés |
 | --- | --- | --- | --- | --- | --- |
-| × 0.0 | 0 | 1.95196 | 15.0 | — | — |
-| × 0.25 | 750 | 1.95300 | 19.7 | — | — |
-| × 0.5 | 1500 | 1.95441 | 22.0 | — | — |
-| × 1.0 | 3000 | 1.95499 | 26.8 | — | — |
-| × 2.0 | 6000 | 1.95640 | 33.4 | 23 | 12 |
-| × 4.0 | 12000 | 1.95717 | 45.7 | 29 | 9 |
+| × 0.0 | 0 | 1.95196 | 15.6 | — | — |
+| × 0.0625 | 750 | 1.95300 | 20.4 | — | — |
+| × 0.125 | 1500 | 1.95441 | 22.8 | — | — |
+| × 0.25 | 3000 | 1.95499 | 28.0 | — | — |
+| × 0.5 | 6000 | 1.95640 | 34.7 | — | — |
+| × 1.0 | 12000 | 1.95717 | 47.4 | — | — |
+| × 2.0 | 24000 | 1.95763 | 72.2 | 21 | 17 |
 
 ## 6. Sensibilité aux poids de la note
 
@@ -109,24 +110,24 @@ Chaque poids multiplié par 0,8 puis 1,2, les autres inchangés : recouvrement m
 
 | Poids | Jaccard × 0,8 | Identiques | Regret | Jaccard × 1,2 | Identiques | Regret |
 | --- | --- | --- | --- | --- | --- | --- |
-| `recovery` | 0.52 | 10 | -0.0002 | 0.56 | 12 | 0.0001 |
-| `fatigue_balance` | 0.50 | 9 | -0.0002 | 0.51 | 10 | 0.0003 |
-| `joint_load` | 0.66 | 18 | -0.0003 | 0.65 | 18 | -0.0002 |
-| `goal_specificity` | 0.40 | 3 | 0.0002 | 0.43 | 6 | -0.0000 |
-| `discipline_dosage` | 0.43 | 2 | -0.0003 | 0.45 | 3 | 0.0002 |
-| `muscle_volume` | 0.41 | 2 | -0.0000 | 0.42 | 3 | 0.0005 |
-| `pattern_balance` | 0.39 | 2 | 0.0001 | 0.42 | 3 | -0.0004 |
-| `discipline_structure` | 0.43 | 4 | -0.0004 | 0.40 | 1 | 0.0001 |
-| `time_use` | 0.42 | 3 | -0.0009 | 0.45 | 3 | 0.0000 |
-| `variety` | 0.45 | 5 | -0.0006 | 0.47 | 5 | -0.0002 |
-| `exercise_fit` | 0.39 | 2 | -0.0004 | 0.42 | 2 | -0.0002 |
-| `stimulus_fatigue` | 0.44 | 3 | -0.0001 | 0.42 | 3 | -0.0001 |
-| `preferences` | 0.45 | 7 | 0.0000 | 0.44 | 5 | -0.0003 |
-| `novelty` | 0.54 | 13 | 0.0001 | 0.60 | 14 | -0.0006 |
+| `recovery` | 0.47 | 5 | 0.0004 | 0.42 | 2 | 0.0004 |
+| `fatigue_balance` | 0.42 | 2 | 0.0005 | 0.46 | 4 | 0.0006 |
+| `joint_load` | 0.53 | 8 | 0.0002 | 0.47 | 5 | 0.0009 |
+| `goal_specificity` | 0.41 | 3 | 0.0000 | 0.41 | 2 | -0.0001 |
+| `discipline_dosage` | 0.44 | 2 | 0.0002 | 0.44 | 2 | 0.0001 |
+| `muscle_volume` | 0.43 | 3 | 0.0003 | 0.42 | 2 | 0.0001 |
+| `pattern_balance` | 0.42 | 2 | 0.0001 | 0.44 | 3 | -0.0000 |
+| `discipline_structure` | 0.44 | 2 | 0.0003 | 0.43 | 2 | 0.0001 |
+| `time_use` | 0.43 | 3 | 0.0003 | 0.42 | 2 | 0.0005 |
+| `variety` | 0.43 | 3 | 0.0002 | 0.42 | 2 | 0.0004 |
+| `exercise_fit` | 0.44 | 1 | 0.0001 | 0.44 | 2 | 0.0006 |
+| `stimulus_fatigue` | 0.43 | 1 | 0.0006 | 0.43 | 2 | 0.0009 |
+| `preferences` | 0.39 | 2 | 0.0007 | 0.44 | 3 | 0.0003 |
+| `novelty` | 0.43 | 2 | 0.0002 | 0.40 | 1 | 0.0006 |
 
 ## 7. Séries créditées par minute de renforcement
 
-Séries fractionnaires créditées aux groupes majeurs par minute de renforcement, sur les profils types qui en comportent (37) : moyenne 0.94, médiane 0.96, de 0.65 à 1.21. Paramètre `creditsPerMinute` : 0.9.
+Séries fractionnaires créditées aux groupes majeurs par minute de renforcement, sur les profils types qui en comportent (37) : moyenne 0.94, médiane 0.97, de 0.66 à 1.17. Paramètre `creditsPerMinute` : 0.9.
 
 ## 8. Non-ressemblance au programme du propriétaire
 
@@ -134,30 +135,30 @@ Programme du propriétaire : 40 semaines, 45 exercices du catalogue, dont 36 acc
 
 | Programmes générés | Nombre | Médiane | Maximum |
 | --- | --- | --- | --- |
-| Profils types — propriétaire (graines 0 à 3) | 4 | 0.190 | 0.211 |
-| Profils types — street (graines 0 à 3) | 52 | 0.063 | 0.173 |
-| Profils types — sans street (graines 0 à 3) | 104 | 0.063 | 0.211 |
-| Population aléatoire | 1000 | 0.040 | 0.160 |
+| Profils types — propriétaire (graines 0 à 3) | 4 | 0.151 | 0.154 |
+| Profils types — street (graines 0 à 3) | 52 | 0.067 | 0.167 |
+| Profils types — sans street (graines 0 à 3) | 104 | 0.067 | 0.196 |
+| Population aléatoire | 1000 | 0.038 | 0.227 |
 
-Séance par séance (profils types, graines 0 à 3) : ressemblance maximale avec une séance du propriétaire, médiane 0.08, maximum 0.33.
+Séance par séance (profils types, graines 0 à 3) : ressemblance maximale avec une séance du propriétaire, médiane 0.08, maximum 0.40.
 
 Accessoires du propriétaire chez les 328 profils aléatoires sans discipline street : part des profils (où l'exercice est admissible) dont le programme le contient, face à l'exercice hors programme du propriétaire le plus choisi de la même catégorie. Sur-représenté = plus de 5 % et plus du double de ce pair. Accessoires propres au propriétaire (exercices des disciplines street de la base) sur-représentés : **0** ; accessoires du fonds commun de la musculation au-dessus de la même règle : 1 (`mu-mollets-debout-machine`).
 
 | Accessoire du propriétaire | Propre | Catégorie | Admissible | Choisi | Meilleur pair | Choisi |
 | --- | --- | --- | --- | --- | --- | --- |
-| `sw-traction-scapulaire` | oui | Préparation scapulaire | 205 | 3.9 % | `mu-halo-kettlebell` | 10.2 % |
-| `mo-routine-mobilite-epaules-poignets` | non | Mobilité articulaire | 144 | 47.2 % | `mo-wall-slides` | 55.9 % |
-| `mu-rowing-poulie-assis-triangle` | non | Tirage horizontal | 148 | 35.1 % | `sw-row-australien` | 62.3 % |
-| `mu-mollets-debout-machine` | non | Mollets et cheville | 138 | 23.9 % | `mu-mollets-unilateral-haltere` | 10.5 % |
-| `mu-leg-curl-couche` | non | Flexion de genou (ischio-jambiers) | 141 | 23.4 % | `mu-nordic-hamstring-curl` | 19.4 % |
-| `mu-elevation-laterale-halteres` | non | Isolation épaules | 151 | 21.9 % | `mu-oiseau-halteres` | 17.9 % |
-| `mu-fente-marchee-halteres` | non | Fente / unilatéral jambes | 104 | 21.2 % | `cf-fente-overhead-disque` | 21.1 % |
-| `mu-face-pull-corde` | non | Tirage horizontal | 140 | 18.6 % | `sw-row-australien` | 62.3 % |
-| `ca-marche-recuperation` | non | Marche et portage | 242 | 16.9 % | `ca-marche-rapide` | 20.7 % |
-| `mu-developpe-couche-barre` | non | Poussée horizontale | 122 | 14.8 % | `mu-developpe-couche-halteres` | 31.6 % |
-| `mu-developpe-militaire-barre-debout` | non | Poussée verticale | 87 | 12.6 % | `sw-dips-assistes-pieds` | 20.0 % |
-| `mu-pallof-press-debout` | non | Gainage anti-rotation | 141 | 12.1 % | `mu-bird-dog` | 14.2 % |
-| `mu-y-raise-banc-incline` | non | Préparation scapulaire | 135 | 8.9 % | `mu-halo-kettlebell` | 10.2 % |
-| `mu-rowing-haltere-unilateral-banc` | non | Tirage horizontal | 141 | 7.1 % | `sw-row-australien` | 62.3 % |
-| `mu-rowing-barre-pronation` | non | Tirage horizontal | 105 | 6.7 % | `sw-row-australien` | 62.3 % |
+| `sw-traction-scapulaire` | oui | Préparation scapulaire | 205 | 4.9 % | `mu-halo-kettlebell` | 8.3 % |
+| `mo-routine-mobilite-epaules-poignets` | non | Mobilité articulaire | 144 | 56.9 % | `mo-wall-slides` | 57.0 % |
+| `mu-rowing-poulie-assis-triangle` | non | Tirage horizontal | 148 | 35.8 % | `sw-row-australien` | 49.3 % |
+| `mu-mollets-debout-machine` | non | Mollets et cheville | 138 | 21.0 % | `mu-mollets-poids-du-corps-marche` | 5.6 % |
+| `mu-leg-curl-couche` | non | Flexion de genou (ischio-jambiers) | 141 | 20.6 % | `mu-nordic-hamstring-curl` | 25.4 % |
+| `mu-fente-marchee-halteres` | non | Fente / unilatéral jambes | 104 | 19.2 % | `cf-fente-overhead-disque` | 36.8 % |
+| `mu-developpe-militaire-barre-debout` | non | Poussée verticale | 87 | 17.2 % | `mu-developpe-halteres-assis` | 20.5 % |
+| `mu-developpe-couche-barre` | non | Poussée horizontale | 122 | 14.8 % | `sw-pompe-t` | 37.3 % |
+| `mu-rowing-barre-pronation` | non | Tirage horizontal | 105 | 14.3 % | `sw-row-australien` | 49.3 % |
+| `mu-elevation-laterale-halteres` | non | Isolation épaules | 151 | 13.9 % | `mu-elevation-laterale-buste-appuye-banc-incline` | 17.7 % |
+| `ca-marche-recuperation` | non | Marche et portage | 242 | 13.6 % | `ca-marche-rapide` | 23.1 % |
+| `mu-y-raise-banc-incline` | non | Préparation scapulaire | 135 | 11.9 % | `mu-halo-kettlebell` | 8.3 % |
+| `mu-pallof-press-debout` | non | Gainage anti-rotation | 141 | 9.9 % | `mu-bird-dog` | 14.7 % |
+| `mu-rowing-haltere-unilateral-banc` | non | Tirage horizontal | 141 | 7.8 % | `sw-row-australien` | 49.3 % |
+| `mu-hollow-body-hold` | non | Gainage anti-extension | 156 | 7.7 % | `mu-planche-rkc` | 37.4 % |
 

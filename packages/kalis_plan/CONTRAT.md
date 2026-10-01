@@ -78,7 +78,7 @@ la première qui l'écarte.
 | `prerequisite` | Aucun de ses prérequis n'est déclaré non acquis ; il n'est pas une variante plus dure d'un exercice non acquis. |
 | `reserved` | Haltérophilie, pliométrie et balistique : seulement avec du CrossFit au profil. Souplesse avancée : seulement avec au moins 30 % de mobilité ou de la calisthénie. Travail direct du cou : jamais d'office. Travail direct des avant-bras : seulement avec une discipline de barre. Sauf exercice su, aimé ou lié à un objectif. |
 | `too_easy` | Un polyarticulaire ou une figure sans charge réglable n'est pas trois paliers sous le niveau du groupe ; un exercice assisté n'est pas deux paliers sous ce niveau. Sauf exercice su, aimé ou visé par un objectif. |
-| `cautious` | Programme prudent (questionnaire santé « prudent » ou sans réponse, 65 ans et plus, moins de 18 ans) : ni impact (sauts, sprints, haltérophilie, corde à sauter, explosif), ni fatigue systémique maximale ; le niveau de chaque groupe baisse d'un palier. |
+| `cautious` | Programme prudent (questionnaire santé « prudent » ou sans réponse, 65 ans et plus, moins de 18 ans) : ni impact (sauts, sprints, haltérophilie, corde à sauter, explosif), ni course à pied (cardio sans appui contraignant pour la cheville : marche, vélo, rameur, natation), ni fatigue systémique maximale ; le niveau de chaque groupe baisse d'un palier. |
 | `joint` | Contrainte forte sur une articulation ou travail direct d'une zone dont la gêne déclarée est d'au moins 4/10 : écarté. Contrainte modérée ou travail indirect : écarté à partir de 7/10. |
 | `equipment` | Le matériel et le lieu de l'exercice existent au moins un jour (matériel par lieu si le profil le donne). |
 | `time` | Sa dose minimale, échauffement compris, tient dans au moins un jour. |
