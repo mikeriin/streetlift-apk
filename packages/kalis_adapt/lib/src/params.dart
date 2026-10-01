@@ -40,7 +40,6 @@ final class AdaptParams {
     this.fatigueRelSd = 0.5,
     this.defaultRestSeconds = 120,
     this.priorSdDeclared = 0.10,
-    this.priorSdPlan = 0.15,
     this.priorSdFirstSet = 0.5,
     this.priorSdNeighbour = 0.25,
     this.trendPrior = const <double>[0.010, 0.004, 0.0015, 0.0005],
@@ -236,9 +235,6 @@ final class AdaptParams {
 
   /// Écart-type ajouté à une fourchette déclarée.
   final double priorSdDeclared;
-
-  /// Écart-type d'un a priori tiré de la charge de départ du programme.
-  final double priorSdPlan;
 
   /// Écart-type d'un a priori centré sur la première série.
   final double priorSdFirstSet;

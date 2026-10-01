@@ -41,6 +41,7 @@ export 'src/replay.dart'
         Replayed,
         SessionDigest,
         bodyWeightOf,
+        planOfTarget,
         replayLog,
         sessionsOf;
 export 'src/review.dart'

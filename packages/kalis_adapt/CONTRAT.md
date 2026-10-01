@@ -1,0 +1,571 @@
+# Contrat de kalis_adapt 0.1.0
+
+Moteur dynamique de Kalis Track (D5) : il suit l'utilisateur et adapte son programme séance après séance.
+Dart pur, sans Flutter, sans stockage, sans horloge ; tout ce qu'il rend est une valeur du contrat de
+`kalis_core` (`docs/TYPES.md`) et des codes de raison, jamais une phrase.
+
+Ce document fixe ce que le moteur garantit (§ 2 et 7), le modèle qu'il estime (§ 3), comment il décide
+(§ 4), d'où vient chaque nombre (§ 5 et 6), ce qu'il ne sait pas faire (§ 8) et ce qui a été vérifié, par
+qui (§ 9). Les mesures citées viennent de `docs/MESURES.md` (relevé du simulateur) et sont lues dans
+`docs/VALIDATION.md`. **Le contenu sportif n'a pas été relu par un professionnel diplômé** (§ 9).
+
+## 1. Vocabulaire
+
+| Terme | Sens |
+| --- | --- |
+| RIR | Répétitions en réserve à la fin d'une série. Les flammes le disent : 10 flammes = échec (RIR 0), 9 = RIR 1, puis un demi-point par flamme, 1 flamme = « 5 et plus » (`Flames`, kalis_core). |
+| Capacité | Ce qu'un exercice permet aujourd'hui, frais : pour un exercice chargé, la charge **totale** (charge externe + fraction du poids du corps) soulevable un nombre donné de fois ; pour un exercice au poids du corps, le maximum de répétitions ; pour une tenue, le maximum de secondes. |
+| Capacité opérationnelle | La capacité là où l'exercice est travaillé : la charge soulevable `n_ref` fois, `n_ref` = milieu de la plage du bloc + RIR visé. C'est elle que le filtre suit ; le 1RM s'en déduit. |
+| Effet de jour | Écart de la capacité d'un jour à sa tendance (sommeil, fatigue, forme) ; remis à zéro à chaque séance. |
+| Calibrage | Les trois premières séances au plus d'un exercice dont la capacité est encore incertaine (§ 4.2). |
+| Série ouverte | Série dont la cible est une plage, faite « au ressenti » jusqu'aux flammes visées : série repère (§ 4.6), séance notée « 5 et plus » (§ 4.3), test « maximum ». |
+| Cible atteignable | Il existe une charge de la grille de l'utilisateur (ou un nombre de répétitions) qui met le RIR visé dans la plage du bloc. Sinon l'exercice est trop facile ou trop dur pour cette plage avec ce matériel (§ 8). |
+
+## 2. API
+
+`KalisAdapt implements AdaptEngine` (kalis_core 0.2.0). Trois méthodes, toutes fonctions pures de leurs
+arguments : même requête, même résultat **à l'octet près** (JSON), quelle que soit l'instance ou l'ordre
+des appels.
+
+| Méthode | Entrée | Sortie | Rôle |
+| --- | --- | --- | --- |
+| `prescribeSession(catalog, SessionRequest)` | profil, bloc, journal, « aujourd'hui », séance visée, bilan santé et lieu du jour éventuels | `SessionPlan` | Charges, répétitions et flammes de la séance du jour ; ajustements (bilan, douleur, lieu, temps). |
+| `adviseNextSet(catalog, AdviceRequest)` | la même entrée, la séance prescrite, les séries déjà faites, l'emplacement | `IntraSessionAdvice` | Cible de la série suivante. |
+| `review(catalog, AdaptInput)` | profil, bloc, journal, « aujourd'hui », état et décisions passées | `AdaptReview` | Résumé d'adaptation (entrée de `PlanEngine.nextBlock`), propositions, records, journal du moteur, état. |
+
+En plus de l'interface : `estimates` (capacités estimées), `applyProposal` (bloc après une proposition),
+`AdaptParams` (tous les paramètres chiffrés), `CapacityFilter` et les briques du modèle (inspecteur du mode
+dev, simulateur).
+
+**Le journal est rejoué.** Le moteur ne garde rien d'un appel à l'autre : l'état du modèle est recalculé
+depuis tout le journal. Une instance retient le dernier rejeu et le prolonge quand le catalogue, le profil,
+le bloc et le début du journal sont **les mêmes objets** ; ce cache ne change aucun résultat (testé sur
+chaque journal aléatoire, § 7). L'`état` opaque rendu par `review` ne sert qu'à numéroter le journal du
+moteur et à l'inspecteur ; le perdre ne change aucune décision.
+
+**Ce qui est ignoré du journal** : les séances « reprise » (D4.9), les séries écartées (`excluded`), les
+échauffements, les séries sans la mesure de leur exercice, les séries d'un exercice chargé dont la charge
+totale est nulle ou négative, les exercices que le moteur ne modélise pas (cardio, conditionnement,
+mobilité, récupération, distance, calories : leur prescription est rendue telle que le bloc la donne).
+
+**Bilan santé.** Seules les réponses données comptent. Une réponse absente n'ajoute aucun terme : un bilan
+sans réponse équivaut à l'absence de bilan (testé, § 7). Une liste `pains` absente veut dire « question non
+posée » ; une liste vide, « aucune douleur » (les zones suivies sont alors levées).
+
+**Erreurs.** `ArgumentError` si le profil est invalide, si le journal n'est pas chronologique, si la séance
+ou l'emplacement demandé n'existe pas dans le bloc. Aucune autre exception sur 10 240 journaux aléatoires
+(§ 7).
+
+**Plateforme.** Les quatre opérations, la racine carrée, et l'exponentielle et le logarithme de
+`kalis_plan` (`stableExp`, `stableLn`) : même résultat attendu sur toute machine native ; vérifié sur la
+seule machine de contrôle (x64). Le Web n'est pas pris en charge.
+
+**Lignes de commande** (depuis la racine du paquet) : `dart run kalis_adapt:simulate --athlete <json|nom>
+--weeks 24 --seed <n> [--boucle] [--journal <fichier>]` ; `dart run kalis_adapt:replay --journal <json>
+[--cle <clé>] [--semaine <n> --jour <n>]` ; `dart run bin/kalis_adapt_cli.dart --rapport <dossier>` (la
+campagne de `docs/`).
+
+## 3. Modèle individuel
+
+### 3.1 Courbe répétitions ↔ charge
+
+Part du 1RM soulevable `n` fois : `p(n) = 1 / (1 + (n − 1) / k)` (forme d'Epley généralisée, `p(1) = 1`).
+`k = 30` a priori (5 répétitions à 88 %, 10 à 77 %, 15 à 68 %, 20 à 61 %), `k = 38` pour les
+polyarticulaires du bas du corps, qui permettent plus de répétitions à un même pourcentage (Nuzzo et al.
+2024). `k` varie d'une personne à l'autre : `ln k` a un écart-type a priori de 0,30 et se règle sur les
+séries qui le mesurent (§ 3.3).
+
+### 3.2 État et dynamique
+
+Un filtre de Kalman par exercice (Kalman 1960 ; modèle à tendance locale amortie, Harvey 1989, Durbin et
+Koopman 2012), état `[c, v, κ, d]` :
+
+- `c` : logarithme de la capacité opérationnelle ;
+- `v` : pente de `c` par semaine ;
+- `κ = ln k` (exercices chargés) ;
+- `d` : effet de jour.
+
+Le 1RM d'un exercice chargé s'en déduit : `ln 1RM = c + ln(1 + (n_ref − 1) / k)`. Paramétrer par la
+capacité opérationnelle plutôt que par le 1RM découple `c` de `k` : une erreur sur la forme de la courbe ne
+déplace pas la capacité à l'endroit où l'exercice est travaillé.
+
+Entre deux séances distantes de `Δ` semaines, avec `φ = 0,97^Δ` :
+
+```
+c ← c + v · (1 − φ) / (−ln 0,97)        v ← φ · v        κ ← κ        d ← 0
+Var(c) += q_c² · Δ + q_v² · Δ³ / 3      Cov(c, v) += q_v² · Δ² / 2      Var(v) += q_v² · Δ
+```
+
+`q_c = 0,004` et `q_v = 0,0015` par racine de semaine. À l'ouverture d'une séance, `d` repart d'une loi
+normale de moyenne `s` (décalage prévu, § 3.5 et 3.6) et d'écart-type 3,5 %, sans corrélation avec le
+reste ; à la clôture il est oublié. La moitié de la variance de l'effet de jour est commune aux exercices
+d'une même séance : le résidu des exercices déjà faits renseigne les suivants (moyenne pondérée par la
+précision).
+
+### 3.3 Observation d'une série
+
+Une série de `r` répétitions à la charge totale `L`, finie à `RIR` répétitions de l'échec après la perte
+relative `f` due aux séries précédentes (§ 3.4), dit que `n = (r + RIR) / (1 − f)` répétitions étaient
+possibles, frais, à cette charge :
+
+```
+ln L = c + d − ln(1 + (n − 1) / k) + ln(1 + (n_ref − 1) / k) + bruit
+```
+
+Filtre de Kalman étendu (jacobien `[1, 0, ∂/∂κ, 1]`), covariance mise à jour sous la forme de Joseph
+(valable pour tout gain). Le bruit sur `n` est ramené en bruit sur `ln L` par la pente de la courbe.
+
+| Série | Ce qu'elle dit | Bruit sur `n` (répétitions) |
+| --- | --- | --- |
+| Notée de 2 à 9 flammes | `n = r + 1,2 × RIR` (le RIR dit est en moyenne sous le RIR réel) | `(0,6 + 0,35 × RIR) × (1 + 0,05 × (n − 12)⁺)`, RIR = le plus grand du RIR dit et du RIR prévu |
+| Menée à l'échec (10 flammes, ou cible manquée sans note) | `n = r + 0,5` | 0,5 |
+| Ratée sans une répétition | `n ≤ 1` (borne haute) | 0,5 |
+| 1 flamme (« 5 et plus ») | `n ≥ r + 6` (borne basse) | 2,35 et plus |
+| Sans note, cible atteinte | `n ≥ r` (borne basse) | 0,5 |
+| Toute série terminée | `n ≥ r` (borne basse), en plus de sa note | 0,5 |
+
+- **Bornes.** Une borne n'est pas une mesure : la mise à jour prend les moments de la loi normale tronquée
+  (Tallis 1961) — rien ne bouge quand la borne est déjà largement satisfaite. « Pas de note » n'est donc
+  jamais lu comme une valeur (D5.3).
+- **Écarts aberrants.** Au-delà de 2 écarts-types d'innovation, le bruit est gonflé pour ramener
+  l'innovation au seuil (Huber) : une note fausse ne déplace pas l'estimation de plus de deux écarts-types.
+- **`k` est un état « considéré »** (filtre de Schmidt-Kalman) : son incertitude entre dans le calcul, mais
+  seules le déplacent les séries fraîches (`f < 0,02`) et précises — menées à l'échec, ou séries de test et
+  séries ouvertes notées à 2 répétitions de l'échec au plus. Apprendre `k` sur des notes bruitées le fait
+  dériver (erreur sur les variables) : mesuré sur le prototype, § 6.
+- **Exercices au poids du corps et tenues.** La capacité s'observe directement : `ln(capacité) = c + d`,
+  avec `capacité = (r + 1,2 × RIR) / (1 − f)` pour des répétitions, `r / (1 − 0,1 × 1,2 × RIR) / (1 − f)` pour
+  une tenue (une répétition en réserve y vaut 10 % de la tenue maximale).
+
+### 3.4 Fatigue dans la séance
+
+Une série finie à `RIR` répétitions de l'échec, suivie de `t` secondes de repos (30 au moins), laisse une
+perte relative de répétitions possibles `0,9 · e^(−t / 150) · e^(−RIR / 1,5)` ; il en reste la moitié deux
+séries plus tard ; le cumul est plafonné à 0,8. Le RIR utilisé est celui que le modèle estime après la
+série, non la note seule. L'incertitude sur cette perte (50 %) entre dans la marge de prudence (§ 4.1).
+
+### 3.5 Forme et fatigue entre les séances
+
+Modèle impulsion-réponse (Banister ; Calvert et al. 1976, Busso 2003), à trois composantes : fatigue
+aiguë par groupe musculaire (constante de temps 1,2 jour), fatigue accumulée globale (7 jours), forme
+(42 jours, rendue dans le résumé). Chaque série ajoute une impulsion `w × fatigue de l'exercice / 3`
+(`fatigue.locale` et `fatigue.systemique` du catalogue, de 1 à 5), avec `w = max(0,3 ; 1 − RIR / 8)`,
+plus 0,25 pour un échec.
+
+Effet sur la capacité d'un exercice : `−g × (0,004 × fatigue aiguë de ses muscles + 0,0006 × fatigue
+accumulée)`, **compté en écart au niveau habituel de cet exercice** (moyenne glissante, poids 0,2) : la
+fatigue ordinaire d'une semaine type est déjà dans la capacité estimée. Le gain individuel `g` (1 a
+priori, écart-type 1) est appris par un filtre scalaire sur les résidus d'effet de jour.
+
+### 3.6 Forme du jour
+
+La forme du jour réunit trois sources, toutes en décalage de `ln` capacité :
+
+1. la fatigue modélisée (§ 3.5) ;
+2. le bilan santé : `−1,5 %` par point de « Comment tu te sens ? » sous 4 ; les réponses de détail
+   (sommeil, énergie, humeur, courbatures, stress, motivation, alimentation, hydratation) ajoutent `−1 %`
+   par réponse à 1 ou 2, `−1 %` par heure de sommeil sous 6 (3 au plus), pour moitié quand la réponse
+   générale est donnée, en entier sinon ; plancher `−8 %` ;
+3. les résidus de performance de la séance en cours (part commune de l'effet de jour, § 3.2).
+
+`readiness = 1 + décalage / 0,10`, bornée à [0 ; 1].
+
+### 3.7 Notes peu informatives
+
+Fenêtre glissante des 40 dernières séries notées face à une cible : une série « confirme » quand elle
+reprend exactement les flammes pré-remplies et les répétitions prévues. Jusqu'à 60 % de confirmations
+(et tant qu'il y a moins de 12 séries), les notes pèsent plein ; au-delà, le poids d'une note confirmée
+décroît linéairement jusqu'à 0,1 (son bruit est divisé par la racine du poids). La borne « série
+terminée » garde tout son poids : c'est la performance réelle qui renseigne alors le modèle. Quand le
+poids passe sous 0,5, une série repère est prescrite (§ 4.6).
+
+### 3.8 A priori et partage entre exercices
+
+- **Niveau déclaré** (profil) : fourchette lue comme une loi uniforme, plus 10 % d'écart-type.
+- **Exercice proche** : sans niveau déclaré, le 1RM d'un exercice de la même chaîne de variantes et du même
+  type de charge déjà suivi (proximité `planSimilarity` ≥ 0,6) sert d'a priori, écart-type 25 %.
+- **Sinon la première série** : a priori centré sur ce qu'elle implique, écart-type 50 %.
+- **Pente a priori** par semaine, par niveau d'expérience : 1,0 %, 0,4 %, 0,15 %, 0,05 %.
+- **Après plus de 14 jours sans pratiquer un exercice**, sa pente propre n'est plus extrapolée. Si des
+  exercices proches (trois au plus) ont continué, 43 % de leur variation lui est transférée (Spitz et al.
+  2023) ; sinon la capacité décroît de 1 % par semaine au-delà de 21 jours (McMaster et al. 2013 ; Bosquet
+  et al. 2013). L'incertitude grandit d'autant.
+
+## 4. Décisions
+
+### 4.1 Charge et répétitions d'une séance
+
+Pour chaque exercice suivi, le moteur prévoit les répétitions possibles à une charge, **prudemment** :
+
+```
+répétitions prévues = n(L) × (1 − f) − z × σ − RIR visé       z = min(0,65 ; max(0 ; 0,6 − 0,25 × RIR visé))
+```
+
+`σ` réunit l'incertitude sur la capacité du jour et sur la fatigue de séance : plus la cible est près de
+l'échec, plus la marge est grande.
+
+**Charge** (règle à hystérésis, pour qu'elle ne change que quand la plage ne tient plus) : la charge de la
+dernière séance (ramenée sur la grille) est gardée ; elle monte d'un cran quand les répétitions prévues
+dépassent le haut de la plage de 0,5 et que la charge suivante en laisse au moins le bas ; elle descend
+quand elles passent sous le bas de 0,5. Première fois : la charge de la grille juste sous celle que le
+modèle prévoit pour le milieu de plage.
+
+**Grille du matériel.** Incréments du profil ; sinon haltères par 1 kg jusqu'à 10 kg puis par 2 kg, barre
+par paire de disques de 1,25 kg (2,5 kg, barre de 20 kg), poulie par 2,5 lb, machine par 5 kg, kettlebell
+par 4 kg, lest par 1,25 kg. Un exercice dont toute la charge est externe n'est jamais prescrit à 0 kg.
+
+**Plafonds de hausse** d'une séance à l'autre, en charge totale : +10 % pour un mouvement principal, +20 %
+pour un autre exercice, +25 % en calibrage. **Un seul cran** reste permis quand le plus petit cran du
+matériel dépasse le plafond (haltères légers, machines à gros crans), et seulement quand les répétitions
+prévues atteignent le haut de plage étendu. Jamais de hausse après un échec non prévu, sur une zone
+douloureuse, ni un jour de bilan bas.
+
+**Grilles à gros crans.** Quand la charge suivante est trop lourde, la plage s'étend d'un tiers (puis
+jusqu'au double, 30 répétitions au plus) et la progression passe par les répétitions (`adapt.increment_coarse`).
+Quand la charge du dessous serait bien trop légère, la charge est gardée avec moins de répétitions (jusqu'à
+2 sous le bas de plage, jamais moins de 3).
+
+**Répétitions.** Une cible par série, arrondie au plus proche, décroissante avec la fatigue prévue. Sans
+charge (poids du corps, tenues), les répétitions ou les secondes sont le seul réglage.
+
+### 4.2 Calibrage
+
+Tant que l'écart-type de la capacité opérationnelle dépasse 6 %, la cible est relevée d'un RIR
+(`toCalibrate`, `adapt.calibration`) ; pendant les trois premières séances de cet état, la charge peut
+monter jusqu'à +25 % par séance et +10 % par série vers le milieu de plage. Sans aucun a priori, la
+première série se fait à la charge du bloc (ou au jugé) ; le moteur ouvre le suivi sur ce qu'elle dit.
+
+### 4.3 Séries notées « 5 et plus »
+
+Une flamme ne dit la capacité que par le bas : après une telle série, le modèle sait seulement « au moins
+6 répétitions de plus ». Quand la cible a été atteinte, que la note est d'une flamme et que la cible était
+d'au moins 3 flammes (écart de 2 flammes, D5) :
+
+- **dans la séance**, la série suivante monte d'un cran de la grille (si les bornes laissent au moins trois
+  répétitions à cette charge), ou d'un cinquième des répétitions sans charge, et se fait au ressenti dans
+  la plage ;
+- **à la séance suivante**, si la dernière série notée et au moins la moitié des séries notées étaient
+  dans ce cas : un cran de plus dans les mêmes limites, séries au ressenti dans la plage étendue
+  (`adapt.flames_below_target`).
+
+Sans cette règle, un débutant qui note tout « 1 flamme » voit sa charge monter au rythme des seules bornes :
+mesuré, § 6.
+
+### 4.4 Conseil pendant la séance
+
+Après chaque série, le modèle est mis à jour. La cible de la série suivante ne change que si l'écart aux
+flammes visées atteint **2 flammes** (D5) ou après un échec non prévu ; sinon la cible prévue est gardée
+(à la charge réellement utilisée). Bornes : −15 % au plus par série (un cran reste toujours permis), +5 %
+(+10 % en calibrage). Après deux échecs non prévus sur un exercice : `stop_exercise`. Après un échec, le
+repos conseillé augmente d'une minute.
+
+### 4.5 Bilan santé gradué (D5.8, D5.9)
+
+| Palier | Condition | Effet |
+| --- | --- | --- |
+| 0 | décalage > −2 % et réponse générale ≥ 3 | la capacité prévue baisse du décalage, rien d'autre |
+| 1 | décalage ≤ −2 % ou réponse générale à 2 | + 0,5 RIR sur chaque cible, aucune hausse de charge |
+| 2 | décalage ≤ −4 % ou réponse générale à 1 | + 1 RIR, aucune hausse, une série de moins par exercice (3 au moins pour un mouvement principal, 2 sinon) |
+
+**Temps disponible.** Quand le temps annoncé ne suffit pas, la séance est raccourcie dans cet ordre :
+retour au calme et mobilité retirés, une série de moins sur les accessoires (2 au moins), accessoires
+retirés, une série de moins sur les mouvements principaux et secondaires (2 au moins), échauffement
+retiré, secondaires retirés, puis une seule série par mouvement principal.
+
+### 4.6 Série repère
+
+Quand les notes n'informent plus (§ 3.7), la dernière série d'un exercice devient, une fois tous les six
+jours au plus, une série ouverte : autant de répétitions que possible en gardant 1,5 répétition en
+réserve, jusqu'à 6 de plus que prévu (principe de l'APRE, Mann et al. 2010). Seulement en semaine de
+montée, pour une cible à 3 répétitions de l'échec au plus, hors douleur et bilan bas. Pour un utilisateur
+dont les notes informent, la série repère a été essayée puis écartée : gain d'écart au RIR inférieur à
+0,15, échecs doublés (mesuré, § 6).
+
+### 4.7 Douleur
+
+Une douleur compte au-dessus de 3/10 (règle santé L13). Tant qu'elle est active (dernier signalement
+au-dessus du seuil, de moins de 14 jours, non levé par un bilan), et pour tout exercice qui sollicite la
+zone (contrainte articulaire au moins moyenne, ou muscle de la zone) :
+
+- **jamais de charge accrue** — aussi quand la douleur a été signalée depuis la dernière séance de
+  l'exercice, même levée depuis ;
+- + 1 RIR sur la cible ;
+- à partir de 4/10 pour une contrainte forte, 7/10 pour une contrainte moyenne (seuils de `kalis_plan`),
+  l'exercice est remplacé par le plus proche qui épargne la zone, ou retiré ;
+- deux séances de suite au-dessus du seuil : proposition d'épargner la zone sur la fin du bloc
+  (restructuration par `kalis_plan`).
+
+### 4.8 Lieu du jour, charge minimale trop lourde
+
+Un exercice infaisable dans le lieu du jour (matériel, lieu) est remplacé par le plus proche faisable
+(`adapt.place_changed`), ou retiré. De même quand la plus petite charge du matériel est encore trop lourde
+— dernière séance échouée à cette charge et moins de deux répétitions prévues (`adapt.load_floor`) : la
+séance propose le plus proche d'un autre type de charge, et la revue le signale au moteur statique.
+
+Un remplaçant a le même mode de capacité et la même unité, la même discipline ou la même chaîne de
+variantes, n'est pas plus difficile, n'est ni détesté ni déclaré non su, et sa proximité est d'au moins
+0,45 (`planSimilarity`).
+
+### 4.9 Programme importé et tests
+
+- **Programme du propriétaire (D5.10).** Un bloc de plus de 6 semaines est un programme importé : sa
+  structure n'est jamais modifiée (aucune restructuration, aucun échange). Ses séances sont calculées par
+  le modèle : un exercice donné par un RIR suit la règle générale dans sa plage ; un exercice donné par un
+  pourcentage seul reçoit cette part du 1RM estimé, les flammes pré-remplies étant celles que le modèle
+  prévoit. Les propositions de volume et de décharge restent possibles.
+- **Tests.** Une prescription de test à cibles série par série (montée de `kalis_plan`) reçoit, pour
+  chaque série, la charge que le modèle prévoit pour ses répétitions et ses flammes, sous les mêmes
+  plafonds. Un test « maximum » est une série ouverte, la prévision prudente servant de repère bas. Un
+  test se fait à l'effort demandé : pas de RIR de calibrage.
+
+### 4.10 Revue et propositions
+
+**Résumé d'adaptation** : semaines de données (semaines civiles avec au moins une série prise en compte),
+séances prévues et faites, niveau de déblocage, confiance globale, capacités estimées (valeur,
+écart-type, pente, séries), forme et fatigue, zones douloureuses, exercices régulièrement sautés ou
+impossibles, faits marquants.
+
+**Déblocage (D5.7).**
+
+| Niveau | Condition | Propositions ouvertes |
+| --- | --- | --- |
+| `loads_reps` | dès le premier jour | charges, répétitions, épargne d'une zone douloureuse |
+| `volume` | 2 semaines de données | volume, décharge anticipée |
+| `exercise_swap` | 4 semaines | échange d'exercice |
+| `session_restructure` | 1 bloc terminé et 4 semaines | restructuration d'une séance |
+| `block_restructure` | 2 blocs terminés et 8 semaines | restructuration du bloc |
+
+**Filtre.** Une proposition n'est émise que si : son niveau est débloqué ; sa confiance atteint le seuil
+de son niveau (0,5 ; 0,65 ; 0,75 ; 0,8 ; 0,85) ; son utilité `progrès − risque − fatigue − coût
+d'adhésion` est positive ; elle n'a pas été refusée ou annulée depuis moins de 28 jours ; elle n'a pas
+déjà été appliquée. Les propositions retenues et écartées sont écrites au journal du moteur avec leurs
+termes.
+
+| Proposition | Déclencheur | Confiance |
+| --- | --- | --- |
+| Décharge anticipée | forme du jour sous 0,4 deux séances de suite, ou performances sous l'attendu (−3 %) avec forme sous 0,6 | 1 − forme récente |
+| Volume + 1 série | pente du groupe musculaire ≤ 0 avec une probabilité ≥ 0,7, performances normales, forme ≥ 0,6, assiduité ≥ 80 %, sous le haut de la bande de `kalis_plan` | probabilité × semaines / 4 |
+| Volume − 1 série | performances du groupe sous l'attendu (−2 %) avec forme sous 0,6 | probabilité que l'écart soit réel |
+| Échange d'exercice | plateau (pente ≤ 0, probabilité ≥ 0,8, 4 séances sur 3 semaines) d'un exercice non principal, exercice sauté 3 fois, ou charge minimale trop lourde | probabilité |
+| Épargner une zone | douleur au-dessus du seuil deux séances de suite | 0,9 |
+| Restructurer une séance | temps insuffisant 3 fois sur les 4 dernières séances de ce jour | part des séances concernées |
+| Restructurer le bloc | moins de 60 % des séances faites sur trois semaines | test binomial contre 75 % |
+
+Deux propositions de volume au plus par revue. Les restructurations et les échanges sont demandés à
+`kalis_plan` (`PlanEngine.restructure`, D5.1) ; le moteur dynamique ne compose jamais de séance lui-même.
+
+**Modes (D5.6).** Toute proposition est `autoApplicable` : en mode assisté l'application l'applique et
+l'annonce ; en mode libre elle la soumet. Le moteur ne lit pas le mode : il lit les suites données
+(`decisions`).
+
+**Records** : meilleures répétitions, meilleure tenue, meilleur 1RM impliqué par une série de 10
+répétitions au plus notée 8 flammes ou plus (courbe a priori, pour qu'un record ne dépende pas de l'état
+du modèle).
+
+## 5. Paramètres
+
+`AdaptParams.standard`. Source : **R** référence citée (§ 10), **M** mesure du simulateur (§ 6 et
+`docs/VALIDATION.md`), **H** hypothèse dite comme telle, à valider (§ 9).
+
+| Paramètre | Valeur | Source |
+| --- | --- | --- |
+| `kGeneral`, `kLowerBody` | 30 ; 38 | R — Nuzzo et al. 2024 (répétitions par pourcentage, plus nombreuses au bas du corps) ; forme d'Epley |
+| `kLogSd`, `kMin`, `kMax` | 0,30 ; 12 ; 80 | R — dispersion entre personnes de Nuzzo et al. 2024 (écart-type de 2,5 à 4,4 répétitions de 80 % à 60 %) |
+| `kLearnMaxFatigue` | 0,02 | M — apprendre `k` sur des séries fatiguées le biaise (prototype) |
+| `levelNoise`, `trendNoise`, `trendDamping` | 0,004 ; 0,0015 ; 0,97 | H — ordres de grandeur des progressions de Steele et al. 2023 et Latella et al. 2020 ; réglés sur le simulateur |
+| `daySd` | 0,035 | R — variation d'un jour à l'autre du 1RM, Grgic et al. 2020 (CV médian 4,2 %, 3,3 % chez les entraînés) |
+| `dayCommonShare` | 0,5 | H |
+| `rirSdBase`, `rirSdPerRir` | 0,6 ; 0,35 | R — Zourdos et al. 2021, Hackett et al. 2012 et 2017 (erreur d'environ une répétition près de l'échec, croissante loin de l'échec) |
+| `rirSdRepsFrom`, `rirSdRepsGain` | 12 ; 0,05 | R — Halperin et al. 2022 (prédiction moins précise sur les séries longues) |
+| `rirBias` | 0,2 | R — Halperin et al. 2022 (sous-estimation moyenne d'environ une répétition) |
+| `failExtraReps`, `failSd`, `completedSd` | 0,5 ; 0,5 ; 0,5 | H — demi-répétition entamée |
+| `openRir` | 5 | contrat — 1 flamme = « 5 et plus » (kalis_core) |
+| `huber` | 2 | H — seuil usuel |
+| `lazyWindow`, `lazyMinSets`, `lazyConfirmRate`, `lazyMinWeight` | 40 ; 12 ; 0,6 ; 0,1 | M — profil « notes paresseuses » |
+| `setFatigueAtFailure`, `setFatigueRestTau`, `setFatigueRirScale`, `setFatigueRecovery` | 0,9 ; 150 s ; 1,5 ; 0,5 | R — chutes de répétitions selon le repos, Willardson et Burkett et la revue de Salles et al. 2009 ; moindre près de l'échec, Refalo et al. 2023 |
+| `fatigueRelSd` | 0,5 | H |
+| `priorSdDeclared`, `priorSdNeighbour`, `priorSdFirstSet` | 0,10 ; 0,25 ; 0,5 | H |
+| `trendPrior` (par niveau) | 1,0 % ; 0,4 % ; 0,15 % ; 0,05 % par semaine | R — Steele et al. 2023, Latella et al. 2020 |
+| `holdReserveShare`, `holdSdBase`, `holdSdPerRir` | 0,1 ; 0,10 ; 0,05 | H |
+| `quantileBase`, `quantilePerRir`, `quantileMin`, `quantileMax` | 0,6 ; 0,25 ; 0 ; 0,65 | M — compromis écart au RIR / échecs (§ 6) |
+| `calibrationSd`, `calibrationRirBonus`, `calibrationSessions` | 0,06 ; 1 ; 3 | consigne du lot (RIR + 1 tant que l'estimation est incertaine) ; M pour le seuil |
+| `upMargin`, `downMargin` | 0,5 ; 0,5 | M — stabilité des charges |
+| `maxUpMain`, `maxUpOther`, `maxUpCalibration` | 10 % ; 20 % ; 25 % | R — ACSM 2009 (hausses de 2 à 10 %) pour le mouvement principal ; H pour les autres |
+| `maxUpSet`, `maxUpSetCalibration`, `maxDownSet` | 5 % ; 10 % ; 15 % | R — ajustements de l'APRE (Mann et al. 2010) ; H |
+| `adviceGapFlames` | 2 | décision D5 |
+| `benchmarkWeight`, `benchmarkRir`, `benchmarkExtraReps`, `benchmarkEveryDays`, `benchmarkMaxRir`, `benchmarkEveryDaysRated` | 0,5 ; 1,5 ; 6 ; 6 ; 3 ; 0 | R — APRE (Mann et al. 2010) ; M pour les seuils (§ 6) |
+| `tauAcute`, `tauChronic`, `tauFitness` | 1,2 ; 7 ; 42 jours | R — récupération en 24 à 72 h (Morán-Navarro et al. 2017, Belcher et al. 2019, Pareja-Blanco et al. 2019) ; constantes de Calvert et al. 1976 et Busso 2003 (ordre de grandeur, établies hors musculation) |
+| `kappaAcute`, `kappaChronic`, `fatigueGainSd`, `fatigueBaselineAlpha` | 0,004 ; 0,0006 ; 1 ; 0,2 | H — échelle fixée pour qu'une séance dure coûte de 2 à 4 % le lendemain ; gain appris par personne |
+| `readinessSpan` | 0,10 | H |
+| `healthPerPoint`, `sleepPerHour`, `detailPerItem`, `detailShare`, `healthFloor` | 1,5 % ; 1 % ; 1 % ; 0,5 ; −8 % | R — privation de sommeil : −7,6 % en moyenne (Craven et al. 2022), surtout après plusieurs nuits (Knowles et al. 2018) ; bien-être déclaré sensible à la charge (Saw et al. 2016) ; H pour la répartition |
+| `healthLevel1`, `healthLevel2`, `healthRirBonus` | −2 % ; −4 % ; 0,5 | H |
+| `painThreshold`, `painHard`, `painSevere`, `painRirBonus`, `painClearDays` | 3 ; 4 ; 7 ; 1 ; 14 | règle santé L13 ; seuils de `kalis_plan` ; R — surveillance de la douleur, Silbernagel et al. 2007 (douleur tolérée jusqu'à 5/10 si elle retombe, sans hausse) |
+| `transferShare`, `transferMinSimilarity`, `transferNeighbours` | 0,43 ; 0,6 ; 3 | R — Spitz et al. 2023 (gain transféré ≈ 43 % du gain spécifique) |
+| `detrainFromDays`, `detrainPerWeek` | 21 ; 1 % | R — McMaster et al. 2013 (force gardée jusqu'à 3 semaines), Bosquet et al. 2013 |
+| `plateauProbability`, `plateauMinWeeks`, `plateauMinSessions` | 0,8 ; 3 ; 4 | H |
+| `volumeMinWeeks`, `swapMinWeeks`, `sessionRestructureMinWeeks`, `blockRestructureMinWeeks` | 2 ; 4 ; 4 ; 8 | décision D5.7 |
+| `confidenceLoads` … `confidenceBlock` | 0,5 ; 0,65 ; 0,75 ; 0,8 ; 0,85 | H — croissants avec la portée (D5.7) |
+| `refusalQuietDays`, `deloadReadiness`, `deloadSessions`, `adherenceLow`, `skipTimes`, `timeShortTimes` | 28 ; 0,4 ; 2 ; 0,6 ; 3 ; 3 | H |
+| `repSeconds`, `transitionSeconds`, `defaultRestSeconds` | 3 ; 45 ; 120 | valeurs de `kalis_plan` |
+| `referenceBodyWeightKg` | 70 | H — n'intervient que sans poids de corps au profil ni à la séance |
+
+Les volumes par groupe musculaire s'appuient sur les bandes de `kalis_plan` (Pelland et al. 2026, Ralston
+et al. 2017) ; la réponse individuelle au volume varie beaucoup (Hammarström et al. 2020), d'où une
+proposition d'une série à la fois.
+
+## 6. Choix de modélisation mesurés
+
+Mesures de mise au point (prototype Python de 16 graines, puis simulateur Dart de 6 graines par athlète) ;
+la campagne complète est dans `docs/MESURES.md`.
+
+| Choix | Ce qui a été mesuré |
+| --- | --- |
+| Suivre la capacité opérationnelle (pivot `n_ref`) plutôt que le 1RM | avec `k` « considéré », le filtre paramétré par le 1RM réagissait trop lentement ; le pivot a levé le défaut |
+| `k` appris seulement par des séries fraîches et précises | appris sur toutes les notes, `k` dérivait (erreur sur les variables) et l'erreur de 1RM grandissait de semaine en semaine |
+| Bruit d'une note pris au plus grand du RIR dit et du RIR prévu, écrêtage de Huber | une note « 9 flammes » donnée à 4 répétitions de l'échec ne fait plus chuter l'estimation |
+| Fatigue comptée en écart au niveau habituel | apprise en valeur absolue, la sensibilité individuelle convergeait vers 0 |
+| Biais de note individuel **non** appris | essayé : aucun gain, estimateur biaisé par les mêmes notes qu'il corrige ; le biais moyen (0,2) est gardé |
+| Échelle individuelle de la fatigue de séance **non** apprise | essayé : aucun gain |
+| Cran de plus après des séries notées « 5 et plus » (§ 4.3) | sans la règle, écart au RIR de 2,4 (débutant) et 5,3 (haltères à la maison) ; avec, 1,3 à 1,5 et 2,4 |
+| Vérité « charge trop légère » : charge gardée avec moins de répétitions | supprime les allers-retours entre deux crans d'haltères |
+| Série repère pour tous, toutes les deux semaines | écart au RIR −0,05 à −0,15, échecs non prévus de 0,4–0,8 % à 1,1–1,7 % : écartée |
+| Marge de prudence `z = 0,6 − 0,25 × RIR` (au lieu de `0,9 − 0,25 × RIR`, plancher 0,15) | écart au RIR −0,1 à −0,25, biais de +0,9 à +0,5, échecs inchangés, quasi-échecs de 1 % à 1,7 % : retenue |
+
+## 7. Invariants testés
+
+Tests de propriétés sur **10 240 journaux aléatoires** seedés (`test/properties.dart` : charges qui
+sautent, notes absentes ou extrêmes, séries à zéro répétition, séances libres, douleurs, bilans partiels,
+reprises, coupures, jusqu'à 40 séances, 16 profils types, blocs de rang 0 à 2). Chaque invariant est
+vérifié **depuis le journal seul**, sans lire l'état du moteur.
+
+| # | Invariant | Vérification |
+| --- | --- | --- |
+| I1 | Mouvement principal hors calibrage : jamais plus de +10 % de charge totale d'une séance à l'autre | charge prescrite comparée à la plus forte charge de la dernière séance de l'exercice ; exception : un seul cran de grille quand le plus petit cran dépasse 10 % |
+| I2 | Jamais de hausse de charge après une série à l'échec non prévue | séance suivante, et série suivante dans la séance |
+| I3 | Une douleur au-dessus du seuil n'est jamais suivie d'une charge accrue sur la zone ; un exercice exclu par la douleur du jour n'est pas prescrit | zones signalées depuis la dernière séance de l'exercice et au bilan du jour |
+| I4 | Aucune proposition au-dessus du niveau de déblocage | niveau recalculé depuis les semaines civiles du journal et le rang du bloc |
+| I5 | Sorties valides au sens du contrat (codes de raison et paramètres compris) ; charges sur la grille | `validate()` de kalis_core ; bloc encore valide après chaque proposition |
+| I6 | Même entrée, même sortie à l'octet près, avec ou sans cache | instance neuve comparée à l'instance en cours |
+| I7 | Un bilan sans réponse équivaut à l'absence de bilan | séance comparée |
+| I8 | Les séances « reprise » ne changent rien | séance « reprise » ajoutée, séance comparée |
+
+S'y ajoutent : la référence croisée du filtre (52 scénarios, 2 400 étapes rejouées contre une écriture
+Python indépendante, écart relatif ≤ 1e-9 : `test/reference_test.dart`) ; les tests unitaires des briques
+(`test/units_test.dart`) ; le bout en bout des huit athlètes simulés en boucle complète
+(`test/smoke_test.dart`) ; la pureté (`test/purity_test.dart`) ; les documents générés à jour
+(`test/docs_test.dart`).
+
+**Temps de calcul** (cibles du lot : décision de séance ≤ 50 ms, mise à jour après une série ≤ 5 ms sur
+une machine modeste) : `docs/MESURES.md`, § 5 — mesurés sur la machine de contrôle, pas sur un téléphone.
+
+## 8. Limites connues
+
+1. **L'écart au RIR visé dépasse la cible d'une répétition** pour la plupart des profils simulés
+   (`docs/VALIDATION.md`, § 2). Loin de l'échec, la note en flammes renseigne peu (bruit de deux
+   répétitions et plus à 4 RIR), l'effet de jour seul vaut plus d'une répétition sur une série de 12, et
+   une grille à gros crans ne laisse pas toujours la bonne charge. L'oracle — qui connaît la vérité — donne
+   le plancher de chaque profil.
+2. **Cible non atteignable.** Un exercice au poids du corps trop facile ou trop dur pour sa plage, un
+   exercice chargé dont le plus petit cran est trop grand : le moteur étend la plage, garde la charge ou
+   remplace l'exercice, mais ne peut pas atteindre le RIR visé. La progression vers une variante plus
+   dure se fait au bloc suivant, par `kalis_plan`, à partir des capacités du résumé.
+3. **Capacité d'un exercice jamais poussé près de l'échec** : connue par le bas seulement (notes d'une
+   flamme) ; l'intervalle annoncé est alors trop étroit (couverture mesurée sous 95 %, § 3 de
+   `docs/VALIDATION.md`).
+4. **Biais de note individuel non appris** : une personne qui sous-estime beaucoup ses répétitions en
+   réserve reçoit des séries plus faciles que visé.
+5. **Paramètres de fatigue et de bilan santé** : ordres de grandeur tirés d'études de groupe, hors
+   musculation pour les constantes de temps longues ; le gain individuel est appris, pas les constantes.
+6. **Exercices non modélisés** : cardio, conditionnement, mobilité, distances, calories — rendus tels que
+   le bloc les prescrit.
+7. **Unilatéral** : la capacité est suivie par exercice, sans distinguer les côtés.
+8. **Séries enchaînées** (supersets, circuits) : la fatigue croisée entre exercices d'un même groupe
+   n'est comptée que par le modèle forme-fatigue du jour, pas série par série.
+9. **Simulateur** : la vérité simulée est un modèle (courbe exponentielle, bruit de note, gains selon la
+   dose) ; elle diffère du modèle du moteur mais partage ses sources. Aucune donnée réelle n'a servi.
+10. **Temps de calcul** non mesurés sur téléphone.
+
+## 9. Registre de validation
+
+| Élément | État |
+| --- | --- |
+| Équations du filtre | vérifiées contre une écriture Python indépendante (vecteurs partagés) |
+| Invariants de sécurité I1 à I8 | testés sur 10 240 journaux aléatoires |
+| Convergence, écart au RIR, échecs, progression | mesurés sur 8 athlètes simulés × 24 semaines × 200 graines, comparés à la double progression, à l'ancien moteur L7/L11 et à l'oracle |
+| Références bibliographiques | relevées par recherche documentaire pour ce lot ; plusieurs vérifiées sur le résumé seulement (§ 10) |
+| Paramètres marqués H | hypothèses, non validées sur des données réelles |
+| Relecture indépendante du code et des documents | faite avant livraison (`docs/VALIDATION.md`, § 7) |
+| **Relecture par un professionnel diplômé (préparateur physique, kinésithérapeute)** | **non faite** |
+| **Validation sur des journaux réels d'utilisateurs** | **non faite** (aucune donnée réelle n'a servi) |
+
+## 10. Références
+
+Vérifiées sur le texte ou le résumé de l'article ; « (résumé) » : résumé seul ; « (secondaire) » : source
+secondaire.
+
+- ACSM (2009). Progression models in resistance training for healthy adults. *Med Sci Sports Exerc* 41(3).
+- Belcher D.J. et al. (2019). Time course of recovery is similar for the back squat, bench press, and
+  deadlift in well-trained males. *Appl Physiol Nutr Metab* 44(10). (résumé)
+- Bosquet L. et al. (2013). Effect of training cessation on muscular performance: a meta-analysis.
+  *Scand J Med Sci Sports* 23(3).
+- Busso T. (2003). Variable dose-response relationship between exercise training and performance.
+  *Med Sci Sports Exerc* 35(7).
+- Calvert T.W. et al. (1976). A systems model of the effects of training on physical performance. *IEEE
+  Trans Syst Man Cybern* 6(2).
+- Craven J. et al. (2022). Effects of acute sleep loss on physical performance: a systematic and
+  meta-analytical review. *Sports Med* 52(11).
+- Durbin J., Koopman S.J. (2012). *Time Series Analysis by State Space Methods*, 2ᵉ éd., Oxford.
+- Grgic J. et al. (2020). Test-retest reliability of the one-repetition maximum (1RM) strength
+  assessment: a systematic review. *Sports Med Open* 6:31.
+- Hackett D.A. et al. (2012). A novel scale to assess resistance-exercise effort. *J Sports Sci* 30(13).
+- Hackett D.A. et al. (2017). Accuracy in estimating repetitions to failure during resistance exercise.
+  *J Strength Cond Res* 31(8).
+- Halperin I. et al. (2022). Accuracy in predicting repetitions to task failure in resistance exercise: a
+  scoping review and exploratory meta-analysis. *Sports Med* 52(2).
+- Hammarström D. et al. (2020). Benefits of higher resistance-training volume are related to ribosome
+  biogenesis. *J Physiol* 598(3).
+- Harvey A.C. (1989). *Forecasting, Structural Time Series Models and the Kalman Filter*, Cambridge.
+- Helms E.R. et al. (2018). RPE vs. percentage 1RM loading in periodized programs matched for sets and
+  repetitions. *Front Physiol* 9:247.
+- Kalman R.E. (1960). A new approach to linear filtering and prediction problems. *J Basic Eng* 82(1).
+- Knowles O.E. et al. (2018). Inadequate sleep and muscle strength: implications for resistance training.
+  *J Sci Med Sport* 21(9).
+- Latella C. et al. (2020). Long-term strength adaptation: a 15-year analysis of powerlifting athletes.
+  *J Strength Cond Res* 34(9).
+- Mann J.B. et al. (2010). The effect of autoregulatory progressive resistance exercise vs. linear
+  periodization on strength improvement in college athletes. *J Strength Cond Res* 24(7).
+- McMaster D.T. et al. (2013). The development, retention and decay rates of strength and power in elite
+  rugby union, rugby league and American football. *Sports Med* 43(5).
+- Morán-Navarro R. et al. (2017). Time course of recovery following resistance training leading or not to
+  failure. *Eur J Appl Physiol* 117(12).
+- Nuzzo J.L. et al. (2024). Maximal number of repetitions at percentages of the one repetition maximum: a
+  meta-regression and moderator analysis. *Sports Med* 54(2).
+- Pareja-Blanco F. et al. (2019). Time course of recovery from resistance exercise with different set
+  configurations. *J Strength Cond Res*. (résumé)
+- Pelland J.C. et al. (2026). The resistance training dose response: meta-regressions exploring the
+  effects of weekly volume and frequency on muscle hypertrophy and strength gains. *Sports Med*.
+  (prépublication lue)
+- Ralston G.W. et al. (2017). The effect of weekly set volume on strength gain: a meta-analysis. *Sports
+  Med* 47(12).
+- Refalo M.C. et al. (2023). Influence of resistance training proximity-to-failure on skeletal muscle
+  hypertrophy: a systematic review with meta-analysis. *Sports Med* 53(3).
+- de Salles B.F. et al. (2009). Rest interval between sets in strength training. *Sports Med* 39(9).
+- Saw A.E. et al. (2016). Monitoring the athlete training response: subjective self-reported measures
+  trump commonly used objective measures. *Br J Sports Med* 50(5).
+- Silbernagel K.G. et al. (2007). Continued sports activity, using a pain-monitoring model, during
+  rehabilitation in patients with Achilles tendinopathy. *Am J Sports Med* 35(6).
+- Spitz R.W. et al. (2023). Strength testing or strength training: considerations for future research.
+  *Physiol Meas* 41. (résumé)
+- Steele J. et al. (2017). Ability to predict repetitions to momentary failure is not perfectly accurate,
+  though improves with resistance training experience. *PeerJ* 5:e4105.
+- Steele J. et al. (2023). Long-term time-course of strength adaptation to minimal dose resistance
+  training. *Res Q Exerc Sport* 94(4).
+- Tallis G.M. (1961). The moment generating function of the truncated multi-normal distribution. *J R
+  Stat Soc B* 23(1).
+- Zourdos M.C. et al. (2021). Proximity to failure and total repetitions performed in a set influences
+  accuracy of intraset repetitions in reserve-based rating of perceived exertion. *J Strength Cond Res*
+  35(Suppl 1).
+
+Deux nombres souvent cités n'ont **pas** été retrouvés dans leur source et ne sont pas utilisés : une
+table « 40/20/16/10/2 % » attribuée à l'ACSM 2009, et les constantes « 45/15 jours, 1/2 » attribuées à
+Morton et al. 1990.

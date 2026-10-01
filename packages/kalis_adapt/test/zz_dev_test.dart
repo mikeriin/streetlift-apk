@@ -80,8 +80,66 @@ final class _Traced implements SimPolicy {
   ) => inner.nextSet(c, item, index, done);
 
   @override
-  void finish(SessionContext c, SessionRecord record) =>
-      inner.finish(c, record);
+  void finish(SessionContext c, SessionRecord record) {
+    final p = engine.params;
+    final (ctx, view, replayed) = engine.prepare(
+      c.catalog,
+      AdaptInput(profile: c.profile, block: c.block, log: c.log, today: c.date),
+    );
+    final run = SessionRun(
+      ctx,
+      replayed.state.fork(),
+      day: c.date.dayNumber,
+      health: readHealth(c.health, p),
+      bodyWeightKg: bodyWeightOf(record, c.profile, p),
+    );
+    String? open;
+    String r(double v) => v.toStringAsFixed(3);
+    for (final set in record.sets) {
+      final info = ctx.book.find(set.exerciseId);
+      final reps = set.reps;
+      if (info == null || info.mode != CapacityMode.loaded || reps == null) {
+        continue;
+      }
+      if (!set.exerciseId.contains('elevation-laterale-halteres') &&
+          !set.exerciseId.contains('split-squat')) {
+        continue;
+      }
+      final key = '${set.slotId}|${set.exerciseId}';
+      if (key != open) {
+        open = key;
+        final item = view.item(record.programRef, set.slotId, set.exerciseId);
+        run.begin(info, view.specOf(info, item, c.weekKind, fallback: set.target));
+      }
+      final ex = run.current!;
+      final before = ex.track?.filter;
+      final load = set.externalLoadKg ?? 0;
+      final total = info.totalLoad(load, run.bodyWeightKg);
+      final pre = before == null
+          ? ''
+          : 'avant m=[${r(before.m[0])},${r(before.m[1])},${r(before.m[2])},'
+                '${r(before.m[3])}] fat=${r(before.fatigueNow(p))} '
+                'poss=${r(before.repsPossible(ln2(total)))}';
+      run.observe(
+        loadKg: set.externalLoadKg,
+        amount: reps,
+        flames: set.flames,
+        missed: !set.success,
+        target: planOfTarget(set.target, hold: false),
+        test: set.kind == SetKind.test,
+      );
+      final f = ex.track!.filter;
+      out.writeln(
+        '% ${c.simDay} ${set.exerciseId} $load kg x $reps fl=${set.flames} '
+        'cible=${set.target?.repsLow}-${set.target?.repsHigh}/${set.target?.flames} '
+        '$pre apres m=[${r(f.m[0])},${r(f.m[1])},${r(f.m[2])},${r(f.m[3])}] '
+        'fat=${r(f.fatigueNow(p))} poss=${r(f.repsPossible(ln2(total)))} '
+        'sdc=${r(math.sqrt(f.cov[0]))} sdd=${r(math.sqrt(f.cov[15]))}',
+      );
+    }
+    run.closeExercise();
+    inner.finish(c, record);
+  }
 
   @override
   SimEstimate? estimate(SessionContext c, String exerciseId, double n) =>
