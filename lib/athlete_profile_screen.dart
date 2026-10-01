@@ -11,6 +11,7 @@ import 'athlete_profile.dart';
 import 'athlete_profile_flow.dart';
 import 'koach/koach_bubble.dart';
 import 'koach/koach_view.dart';
+import 'program_explainer.dart';
 import 'program_start.dart' show longCivilDate;
 import 'store.dart';
 import 'ui.dart';
@@ -155,6 +156,7 @@ class ProfileScreen extends StatelessWidget {
                             'changement touche ton programme, je te le dirai.',
                 ),
               ),
+              const ProgramExplainerButton(),
               for (final r in kRubricTitles.keys)
                 KCard(
                   key: ValueKey('profile-rubric-$r'),

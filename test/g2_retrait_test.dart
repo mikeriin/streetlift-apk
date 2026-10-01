@@ -436,8 +436,8 @@ void main() {
     });
   });
 
-  test('version affichée : « 6.4.0 » hors build de développement (G6)', () {
-    expect(kVersion, '6.4.0');
-    expect(kAppVersion, '6.4.0');
+  test('version affichée : « 6.4.1 » hors build de développement (G6 correction 1)', () {
+    expect(kVersion, '6.4.1');
+    expect(kAppVersion, '6.4.1');
   });
 }

@@ -11,6 +11,7 @@ import 'levelup.dart';
 import 'models.dart';
 import 'session_history.dart';
 import 'session_screen.dart';
+import 'program_explainer.dart';
 import 'program_start.dart';
 import 'program_screens.dart' show ProgramHomeCard;
 import 'resume_banner.dart';
@@ -283,6 +284,9 @@ class _HomeScreenState extends State<HomeScreen> {
   // L6 : différé tant que l'onglet est masqué (voir store_widget.dart).
   Widget build(BuildContext context) => StoreBuilder(
     builder: (context) {
+      // G6 correction 1 : nouveau profil sans programme → pas de programme
+      // embarqué affiché, Koach annonce le programme à venir.
+      if (programPendingFor(store)) return const ProgramPendingView();
       final w = store.program.week(week), current = store.program.weekFor(now);
       final colors = ProgrammeColors.of(context);
       final compactHeader = MediaQuery.textScalerOf(context).scale(10) <= 13;

@@ -17,6 +17,7 @@ import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/athlete_profile_flow.dart';
 import 'package:streetlift_tracker/athlete_profile_screen.dart';
 import 'package:streetlift_tracker/goal_suggestions_g6.dart';
+import 'package:streetlift_tracker/program_explainer.dart';
 import 'package:streetlift_tracker/store.dart';
 
 import 'l2_fixtures.dart';
@@ -366,6 +367,9 @@ void main() {
         expect(app.profile!.fields, isEmpty);
         // Pesée du poids déclaré.
         expect(app.currentBodyweight, 61.5);
+      // Koach actif par défaut, « Koach adapte la structure » aussi.
+      expect(app.koach.enabled, isTrue);
+      expect(app.koach.structure, isTrue);
         final json = backupOf(app);
         expect(json['athleteProfile']['v'], 1);
         expect(json['athleteProfile']['profile']['schemaVersion'], 2);
@@ -523,6 +527,11 @@ void main() {
         expect(after.remove('athleteProfile'), isNotNull);
         final legacyAfter = after.remove('profile') as Map;
         final legacyBefore = before.remove('profile') as Map;
+        // Koach (jamais activé) : actif par défaut, structure adaptée.
+        after.remove('koach');
+        before.remove('koach');
+        expect(app.koach.enabled, isTrue);
+        expect(app.koach.structure, isTrue);
         expect(
           after,
           before,
@@ -786,6 +795,81 @@ void main() {
         up: true,
       );
       expect(find.text('Mode prudent activé'), findsOneWidget);
+    });
+
+    testWidgets('correction 1 : objectif modifié sans être supprimé', (
+      tester,
+    ) async {
+      phone(tester);
+      store.saveAthleteProfile(fullDraft());
+      await tester.pumpWidget(
+        page(
+          const AthleteProfileFlow(
+            mode: AthleteFlowMode.edit,
+            editStep: 'goals',
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tap(tester, 'flow-goal-edit-0');
+      expect(find.byKey(const ValueKey('goal-habit-sheet')), findsOneWidget);
+      await tap(tester, 'goal-weeks-12');
+      await tap(tester, 'goal-save');
+      expect(flow(tester).draft.goals, hasLength(1));
+      await tap(tester, 'flow-save');
+      final g = store.athleteProfile!.goals.single;
+      expect((g.id, g.weeks, g.sessionsPerWeek), ('goal-1', 12, 3));
+    });
+
+    testWidgets('correction 1 : toute la base dans la recherche des '
+        'exercices aimés et détestés', (tester) async {
+      phone(tester);
+      store.saveAthleteProfile(fullDraft());
+      await tester.pumpWidget(
+        page(
+          const AthleteProfileFlow(
+            mode: AthleteFlowMode.edit,
+            editStep: 'preferences',
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      // Sans recherche : les exercices des disciplines choisies, par pages.
+      expect(find.byKey(const ValueKey('flow-pref-more')), findsOneWidget);
+      await type(tester, 'flow-pref-search', 'traction');
+      final more = find.byKey(const ValueKey('flow-pref-more'));
+      expect(more, findsOneWidget, reason: 'plus de 20 tractions');
+      final shown = find
+          .byWidgetPredicate(
+            (w) =>
+                w.key is ValueKey<String> &&
+                (w.key! as ValueKey<String>).value.startsWith(
+                  'flow-pref-result-',
+                ),
+            skipOffstage: false,
+          )
+          .evaluate()
+          .length;
+      expect(shown, greaterThan(8));
+      await tap(tester, 'flow-pref-more');
+      await type(tester, 'flow-pref-search', 'traction lestée de compétition');
+      await tap(tester, 'flow-like-sl-traction-lestee');
+      expect(flow(tester).draft.liked, contains('sl-traction-lestee'));
+    });
+
+    testWidgets('correction 1 : nouveau profil sans programme, Koach '
+        'explique la création et la gestion du programme', (tester) async {
+      phone(tester);
+      expect(programPendingFor(store), isFalse);
+      store.saveAthleteProfile(fullDraft());
+      expect(programPendingFor(store), isTrue);
+      await tester.pumpWidget(page(const ProgramPendingView()));
+      await tester.pumpAndSettle();
+      await tap(tester, 'program-explainer-open');
+      expect(find.byKey(const ValueKey('program-explainer')), findsOneWidget);
+      expect(find.text('2. Tu passes en revue'), findsOneWidget);
+      await store.configureStart(DateTime(2026, 10, 5));
+      expect(programPendingFor(store), isFalse);
     });
 
     testWidgets('session personnelle sans profil v2 : Koach propose, « Plus '
