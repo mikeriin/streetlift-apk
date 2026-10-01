@@ -8,6 +8,34 @@ part of 'store.dart';
 extension ProfileStore on AppStore {
   String get _nowAt => profileAt(storeClock());
 
+  /// G1 correction 1 : brouillon du démarrage (étape et réponses en cours),
+  /// gardé si l'application est fermée avant le récapitulatif. Clé à part,
+  /// hors sauvegarde ; propre à la session (personnelle ou de test) ;
+  /// effacé à l'enregistrement du profil et par « Supprimer les données ».
+  static const _kFlowDraft = 'profile_flow_draft_v1';
+
+  Map<String, dynamic>? get profileFlowDraft {
+    try {
+      final raw = _prefs.getString(_kFlowDraft);
+      if (raw == null) return null;
+      final d = jsonDecode(raw);
+      return d is Map<String, dynamic> && d['v'] == 1 ? d : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Enregistre le brouillon ([draft] null : l'efface).
+  Future<void> saveProfileFlowDraft(Map<String, dynamic>? draft) async {
+    try {
+      if (draft == null) {
+        await _prefs.remove(_kFlowDraft);
+      } else {
+        await _prefs.setString(_kFlowDraft, jsonEncode(draft));
+      }
+    } catch (_) {}
+  }
+
   /// Installation sans aucune donnée : le démarrage court est proposé.
   bool get isFreshInstall =>
       profile == null &&

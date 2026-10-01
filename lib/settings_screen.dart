@@ -20,7 +20,7 @@ import 'store.dart';
 import 'store_widget.dart';
 import 'dev/dev_flags.dart';
 
-const kAppVersion = '6.0.0';
+const kAppVersion = '6.0.1';
 
 class SettingsScreen extends StatelessWidget {
   final int? section;
