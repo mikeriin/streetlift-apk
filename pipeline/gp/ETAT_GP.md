@@ -28,7 +28,7 @@ Entrées du propriétaire (`inputs/`) :
 
 | Paquet | Dernière étiquette | Lot | Date |
 | --- | --- | --- | --- |
-| kalis_core | — | GC | — |
+| kalis_core | kalis_core-v0.1.0 → branche fixe `etiquettes/kalis_core-v0.1.0` (commit 5327294 ; push d'étiquette refusé par le proxy, 403) | GC | 01/10/2026 |
 | kalis_plan | — | G4 | — |
 | kalis_adapt | — | G8 | — |
 | kalis_quest | — | G11 | — |
@@ -56,7 +56,7 @@ Entrées du propriétaire (`inputs/`) :
 
 | Lot | Prérequis | Tâche | Étiquette | Commit moteurs | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
-| GC | — | Fable A | kalis_core-v0.1.0 | — | — | en cours depuis 2026-10-01 06:50 UTC |
+| GC | — | Fable A | kalis_core-v0.1.0 (branche fixe `etiquettes/kalis_core-v0.1.0` : push d'étiquette refusé, 403) | 5327294 | 01/10/2026 | livré (run 36833295632 vert) |
 | G4 | GC | Fable B | kalis_plan-v0.1.0 | — | — | à faire |
 | G8 | G4 | Fable A | kalis_adapt-v0.1.0 | — | — | à faire |
 | G11 | G8 | Fable B | kalis_quest-v0.1.0 | — | — | à faire |

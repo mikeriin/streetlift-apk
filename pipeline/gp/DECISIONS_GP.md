@@ -137,3 +137,21 @@ Source : conversation de pilotage du 30/09/2026 (22:00-23:10, heure de Paris), q
 - **Répliques** : choix déterministe (occurrence + graine), sans répétition consécutive ; douleur signalée en priorité maximale ; table de 6 codes de raison **d'exemple**, extensible, code inconnu → message générique ; les codes définitifs viendront de `kalis_core` / `kalis_adapt`.
 - **Sources** copiées dans `tools/koach/sources/` sur `koach` (empreintes SHA-256) pour que la CI régénère et compare le Dart.
 - **Blocage** : le push de l'étiquette `kalis_koach-v0.1.0` est refusé par le serveur (HTTP 403, deux essais) alors que le push de branche passe. Lot marqué « en attente du propriétaire » jusqu'à la création de l'étiquette sur 4fa2777 (commande dans `livraisons/LIVRAISON_GK.md`).
+
+### GC — Contrats et `kalis_core` (01/10/2026, Fable 5.1)
+
+- **Lot déduit** : le message de lancement ne portait pas « Lot : … » ; la session venait de la tâche Fable A (vérifié en lecture dans la liste des tâches) et GC était le lot attendu de la piste. Écartée : s'arrêter sans rien faire.
+- **Étiquette remplacée par une branche fixe** : le push de `kalis_core-v0.1.0` est refusé par le proxy de la session (403 ; aucune étiquette sur le dépôt). Branche `etiquettes/kalis_core-v0.1.0` sur le commit livré, jamais déplacée ; le propriétaire peut poser la vraie étiquette. Les lots suivants des pistes M et K rencontreront le même refus : même convention (`etiquettes/<paquet>-v<version>`).
+- **Outil de compilation en Python** (`tools/catalog/`) : pas de SDK Dart dans la session, et les distributions devaient être lues avant de livrer ; le paquet Dart revérifie le catalogue.
+- **Types générés depuis une spécification unique** (`tool/contracts_spec.py` → Dart, valeurs aléatoires, `docs/TYPES.md`) : 73 types uniformes, évolution additive faite à un seul endroit. Écartée : 73 classes écrites à la main sans compilateur local.
+- **Formatage** : récupéré par la branche de contrôle (test d'export présent sur `claude/ci-gp-moteurs` seulement, absent de `moteurs`).
+- **Codes** : anglais pour les contrats ; les enums partagés avec le catalogue gardent les codes français du catalogue.
+- **0 à 2 disciplines secondaires** dans le contrat (prompt GC) ; D3.2 (1 à 2) est imposé par l'écran de création (G6). L'égalité principale = secondaire (50/50) est admise.
+- **RIR 0,5 → 9 flammes** (ancien journal) : une demi-répétition en réserve n'est pas un échec ; hors échelle, arrondi au demi-point, égalité vers le plus dur.
+- **Durée de bloc 1 à 52 semaines dans le contrat** ; 4 à 6 (D4.8) est la règle de `kalis_plan`. Raison : le programme de 40 semaines du propriétaire doit passer sous le moteur dynamique (D5.10) comme bloc importé.
+- **La passe 2 fait foi semaine par semaine** (un emplacement peut changer d'exercice en cours de bloc) ; la passe 1 est la semaine type.
+- **Une requête versionnée par méthode de moteur** : les interfaces évoluent par champs optionnels.
+- **Bilan santé** : `pains` absent = question non posée, liste vide = aucune douleur.
+- **Convention de charge** : externe (lue par l'utilisateur) dans le profil, les objectifs et le journal ; totale (externe + fraction × poids de corps) dans les estimations et records des moteurs.
+- **Catalogue** : « Poussée verticale » scindée (au-dessus de la tête / dips) ; `poussee_inclinee` gardée distincte ; difficulté = niveau ± catégorie ± position dans la chaîne, bornée par niveau ; vecteur 1 / 0,5 / 0,2 ; proximité 0,55 muscles + 0,20 schéma + 0,15 chaîne + 0,10 difficulté ; sol, mur, tapis et magnésie ne bloquent jamais un exercice ; disques et ceinture de lest transportables. Justifications et statut (publié, dérivé, estimé, choix raisonné) dans `packages/kalis_core/CONTRAT.md`.
+- **Conversion de l'ancien journal** : séances manuelles non converties (D1.1), série sans mesure écartée et comptée, douleurs par mouvement non converties (pas de zone), exercice sans correspondance écarté et compté.
