@@ -1,0 +1,155 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             81.2s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...           3.7s
+D/FlutterRenderer( 3998): Width is zero. 0,0
+D/FlutterJNI( 3998): Sending viewport metrics to the engine.
+W/HWUI    ( 3998): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 3998): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 3998): mapper 4.x is not supported
+I/eetlift_tracker( 3998): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 3998): Skipped 164 frames!  The application may be doing too much work on its main thread.
+I/eetlift_tracker( 3998): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
+D/ProfileInstaller( 3998): Installing profile for fr.tchoupi.streetlift_tracker
+D/FlutterJNI( 3998): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:40383/Fvq4LastSVc=/
+VMServiceFlutterDriver: Isolate found with number: 8166824346515091
+VMServiceFlutterDriver: Isolate 8166824346515091 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 3998): 00:00 +0: G2 a (sombre) : annonce, copie, écrans sans WOD
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 3998): Skipped 53 frames!  The application may be doing too much work on its main thread.
+I/Choreographer( 3998): Skipped 30 frames!  The application may be doing too much work on its main thread.
+D/EGL_emulation( 3998): app_time_stats: avg=647.95ms min=490.28ms max=1017.22ms count=4
+D/EGL_emulation( 3998): app_time_stats: avg=229.96ms min=143.95ms max=534.66ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=157.33ms min=3.73ms max=356.07ms count=6
+I/eetlift_tracker( 3998): Background concurrent mark compact GC freed 1947KB AllocSpace bytes, 20(908KB) LOS objects, 49% free, 2588KB/5177KB, paused 112us,1.430ms total 470.615ms
+D/EGL_emulation( 3998): app_time_stats: avg=1140.55ms min=175.57ms max=3743.24ms count=4
+W/WindowOnBackDispatcher( 3998): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 3998): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 3998): app_time_stats: avg=2194.83ms min=530.01ms max=3859.65ms count=2
+D/EGL_emulation( 3998): app_time_stats: avg=18527.51ms min=18527.51ms max=18527.51ms count=1
+D/EGL_emulation( 3998): app_time_stats: avg=187.97ms min=160.04ms max=224.95ms count=6
+D/EGL_emulation( 3998): app_time_stats: avg=125.94ms min=12.95ms max=279.75ms count=8
+D/EGL_emulation( 3998): app_time_stats: avg=147.07ms min=16.87ms max=282.88ms count=7
+D/EGL_emulation( 3998): app_time_stats: avg=164.82ms min=17.35ms max=200.77ms count=6
+D/EGL_emulation( 3998): app_time_stats: avg=228.02ms min=14.97ms max=709.59ms count=6
+D/EGL_emulation( 3998): app_time_stats: avg=131.90ms min=21.68ms max=251.18ms count=6
+D/EGL_emulation( 3998): app_time_stats: avg=174.27ms min=26.68ms max=243.72ms count=6
+D/EGL_emulation( 3998): app_time_stats: avg=262.86ms min=141.23ms max=696.02ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=273.94ms min=212.15ms max=382.96ms count=4
+D/EGL_emulation( 3998): app_time_stats: avg=209.95ms min=90.48ms max=285.17ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=245.09ms min=219.36ms max=302.33ms count=4
+D/EGL_emulation( 3998): app_time_stats: avg=307.79ms min=82.91ms max=864.06ms count=6
+D/EGL_emulation( 3998): app_time_stats: avg=211.15ms min=50.39ms max=326.74ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=175.50ms min=70.02ms max=314.10ms count=6
+D/EGL_emulation( 3998): app_time_stats: avg=462.14ms min=60.22ms max=1012.57ms count=3
+D/EGL_emulation( 3998): app_time_stats: avg=185.68ms min=6.95ms max=355.86ms count=6
+D/EGL_emulation( 3998): app_time_stats: avg=252.65ms min=231.20ms max=276.84ms count=4
+D/EGL_emulation( 3998): app_time_stats: avg=236.95ms min=85.91ms max=357.13ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=197.67ms min=92.76ms max=327.27ms count=6
+D/EGL_emulation( 3998): app_time_stats: avg=226.50ms min=213.47ms max=256.51ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=204.22ms min=175.11ms max=248.13ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=207.41ms min=203.94ms max=214.70ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=244.59ms min=230.41ms max=263.02ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=262.49ms min=215.85ms max=357.62ms count=4
+D/EGL_emulation( 3998): app_time_stats: avg=161.30ms min=73.04ms max=218.34ms count=6
+D/EGL_emulation( 3998): app_time_stats: avg=199.29ms min=142.65ms max=267.75ms count=4
+D/EGL_emulation( 3998): app_time_stats: avg=180.39ms min=81.91ms max=270.49ms count=6
+D/EGL_emulation( 3998): app_time_stats: avg=131.19ms min=73.23ms max=221.23ms count=6
+D/EGL_emulation( 3998): app_time_stats: avg=160.80ms min=128.70ms max=214.41ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=150.26ms min=81.73ms max=248.24ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=127.59ms min=110.80ms max=149.72ms count=6
+D/EGL_emulation( 3998): app_time_stats: avg=157.31ms min=118.72ms max=212.25ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=209.78ms min=141.93ms max=246.98ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=207.75ms min=194.80ms max=213.19ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=216.28ms min=207.57ms max=224.98ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=204.68ms min=188.27ms max=218.14ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=336.17ms min=116.75ms max=667.43ms count=3
+D/EGL_emulation( 3998): app_time_stats: avg=207.32ms min=72.39ms max=264.68ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=203.04ms min=70.58ms max=286.60ms count=6
+D/EGL_emulation( 3998): app_time_stats: avg=238.82ms min=218.53ms max=265.85ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=215.58ms min=159.11ms max=268.76ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=221.54ms min=212.64ms max=239.86ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=205.36ms min=185.92ms max=224.55ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=237.27ms min=203.51ms max=278.22ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=197.83ms min=71.86ms max=241.68ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=217.99ms min=195.81ms max=251.38ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=223.04ms min=203.15ms max=244.79ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=223.67ms min=199.14ms max=236.82ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=219.12ms min=175.78ms max=250.03ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=230.63ms min=192.48ms max=247.45ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=233.93ms min=215.90ms max=272.43ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=198.60ms min=103.86ms max=237.81ms count=6
+D/EGL_emulation( 3998): app_time_stats: avg=226.15ms min=202.39ms max=261.12ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=231.75ms min=196.24ms max=251.29ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=168.17ms min=57.81ms max=225.81ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=214.19ms min=200.75ms max=241.40ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=214.99ms min=190.03ms max=237.07ms count=5
+D/EGL_emulation( 3998): app_time_stats: avg=177.65ms min=58.65ms max=232.83ms count=6
+I/flutter ( 3998): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 3998): The following TestFailure was thrown running a test:
+I/flutter ( 3998): Expected: true
+I/flutter ( 3998):   Actual: <false>
+I/flutter ( 3998): 
+I/flutter ( 3998): When the exception was thrown, this was the stack:
+I/flutter ( 3998): #4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/retrait_g2_test.dart:193:5)
+I/flutter ( 3998): <asynchronous suspension>
+I/flutter ( 3998): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 3998): <asynchronous suspension>
+I/flutter ( 3998): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 3998): <asynchronous suspension>
+I/flutter ( 3998): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 3998): <asynchronous suspension>
+I/flutter ( 3998): 
+I/flutter ( 3998): This was caught by the test expectation on the following line:
+I/flutter ( 3998):   file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/retrait_g2_test.dart line 193
+I/flutter ( 3998): The test description was:
+I/flutter ( 3998):   G2 a (sombre) : annonce, copie, écrans sans WOD
+I/flutter ( 3998): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 3998): 01:42 +0: G2 a (sombre) : annonce, copie, écrans sans WOD [E]
+I/flutter ( 3998):   Test failed. See exception logs above.
+I/flutter ( 3998):   The test description was: G2 a (sombre) : annonce, copie, écrans sans WOD
+I/flutter ( 3998):   
+I/flutter ( 3998): 01:42 +0 -1: (tearDownAll)
+I/flutter ( 3998): 01:42 +1 -1: Some tests failed.
+Failure Details:
+Failure in method: G2 a (sombre) : annonce, copie, écrans sans WOD
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: true
+  Actual: <false>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/retrait_g2_test.dart:193:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/retrait_g2_test.dart line 193
+The test description was:
+  G2 a (sombre) : annonce, copie, écrans sans WOD
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+

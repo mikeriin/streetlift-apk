@@ -1,0 +1,37 @@
+{
+  "partie": "b",
+  "theme": "clair",
+  "journal_programme": 1,
+  "copie": {
+    "version": 1,
+    "at": "2026-10-01T07:57:45.509215",
+    "octets": 6073,
+    "empreinte": 3615255745,
+    "supprime": {
+      "seancesPerso": 2,
+      "seancesPersoFaites": 2,
+      "journalPerso": 2,
+      "resultatsWod": 3,
+      "wodPerso": 3,
+      "wodDebloques": 3,
+      "credits": 4,
+      "envies": 1,
+      "motivation": true
+    },
+    "vue": false
+  },
+  "copie_relue": true,
+  "document_sans_sections_retirees": true,
+  "journal_sans_seances_perso": true,
+  "journal_programme_apres": 1,
+  "annonce": true,
+  "annonce_vue": true,
+  "arsenal_sans_wod": true,
+  "arsenal_tuiles": [
+    "arsenal-exercises",
+    "arsenal-anatomy"
+  ],
+  "stats_sans_mes_progres": true,
+  "reglages_copie": false,
+  "reglages_sans_motivation": true
+}
