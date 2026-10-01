@@ -287,6 +287,14 @@ extension AthleteProfileStore on AppStore {
     if (w != null && !w.isNaN && (bw == null || (w - bw).abs() > 1e-9)) {
       addWeighIn(now, w);
     }
+    // G6 correction 1 : Koach actif par défaut (demande du propriétaire) —
+    // activé à l'enregistrement du profil s'il n'a jamais été activé ; un
+    // Koach activé puis désactivé par l'utilisateur le reste.
+    // « Koach adapte la structure » aussi, par défaut.
+    if (!koach.enabled && !koach.introSeen) {
+      KoachStore(this).enableKoach();
+      koach.structure = true;
+    }
     unawaited(saveAthleteDraft(null));
     _koachAuxRevision++;
     pilotageEpoch++;

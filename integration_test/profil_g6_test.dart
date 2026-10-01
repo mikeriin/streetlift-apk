@@ -346,6 +346,25 @@ void main() {
     releve['profil_genes'] = p?.limitations.length;
     releve['profil_sante'] = p?.healthScreening?.outcome.code;
     await tap(tester, 'flow-done-continue', ms: 1500);
+    // Correction 1 : l'onglet Programme n'affiche pas le programme embarqué
+    // tant que le programme du profil n'existe pas ; Koach explique.
+    releve['programme_en_attente'] = await until(
+      tester,
+      find.byKey(const ValueKey('program-pending')),
+    );
+    releve['programme_embarque_cache'] = find
+        .byKey(const ValueKey('programme-weeks'))
+        .evaluate()
+        .isEmpty;
+    await shot('19_programme_en_attente');
+    await tap(tester, 'program-explainer-open', ms: 1500);
+    releve['explication'] = find
+        .byKey(const ValueKey('program-explainer'))
+        .evaluate()
+        .isNotEmpty;
+    await shot('20_explication_programme');
+    await appNavigator.currentState!.maybePop();
+    await wait(tester, 1000);
 
     // Réglages › Profil (session de test).
     unawaited(
@@ -388,6 +407,9 @@ void main() {
     expect(releve['profil_catalogue'], isTrue);
     expect(releve['profil_genes'], 1);
     expect(releve['reglages_profil'], isTrue);
+    expect(releve['programme_en_attente'], isTrue);
+    expect(releve['programme_embarque_cache'], isTrue);
+    expect(releve['explication'], isTrue);
     expect(releve['retour_perso'], isTrue);
     expect(releve['perso_intacte'], isTrue);
     expect(releve['perso_sans_profil_v2'], isTrue);

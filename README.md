@@ -1,4 +1,12 @@
-# Kalis Track dev6.4.0 — Recentrage sur le programme (pipeline « Génération et progression »)
+# Kalis Track dev6.4.1 — Recentrage sur le programme (pipeline « Génération et progression »)
+
+## dev6.4.1 — Création du profil, correction 1 (lot G6)
+
+- Un objectif se modifie sans être supprimé (crayon ou appui sur l'objectif).
+- Recherche des exercices aimés / détestés : tous les résultats (par pages, « Afficher plus »), et sans recherche les exercices de tes disciplines.
+- « Comment marche ton programme ? » : Koach explique la création (exercices, revue, séries et charges) et la gestion (blocs, flammes, bilan, évolution, assisté / libre).
+- Après une première création du profil, l'onglet Programme n'affiche plus le programme de 40 semaines embarqué : Koach annonce le programme à venir.
+- Koach actif par défaut, avec « Koach adapte la structure ».
 
 ## dev6.4.0 — Création du profil (lot G6)
 

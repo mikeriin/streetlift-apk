@@ -24,6 +24,7 @@ import 'goal_suggestions_g6.dart';
 import 'koach/koach_bubble.dart';
 import 'koach/koach_view.dart';
 import 'muscle_map_2d.dart';
+import 'program_explainer.dart';
 import 'store.dart';
 import 'ui.dart';
 import 'wellbeing_screens.dart' show DisclaimerCard, MinorGate;
@@ -177,6 +178,9 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
   final _nameCtl = TextEditingController();
   final _search = TextEditingController();
   String _query = '';
+
+  /// Résultats affichés de la recherche d'exercices (« Afficher plus »).
+  int _shown = 20;
 
   bool get _edit => widget.mode == AthleteFlowMode.edit;
   String get _modeCode =>
@@ -541,6 +545,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
             'tout modifier ensuite dans Réglages › Profil.',
       ),
     ),
+    const ProgramExplainerButton(),
   ];
 
   // --------------------------------------------------------- 2. identité
@@ -969,12 +974,14 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
       'habitude, ou laisse-moi te proposer.',
       why:
           'Tu peux avoir plusieurs objectifs ; le premier est le principal. '
-          'L’étoile change l’objectif principal.',
+          'L’étoile change l’objectif principal ; le crayon (ou un appui '
+          'sur l’objectif) le modifie.',
     ),
     for (var i = 0; i < _d.goals.length; i++)
       KCard(
         key: ValueKey('flow-goal-$i'),
         accent: i == 0 ? SL.accent : null,
+        onTap: () => _editGoal(i),
         child: Row(
           children: [
             Expanded(
@@ -1003,6 +1010,12 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                   _d.goals.insert(0, g);
                 }),
               ),
+            IconButton(
+              key: ValueKey('flow-goal-edit-$i'),
+              tooltip: 'Modifier cet objectif',
+              icon: const Icon(Icons.edit_outlined),
+              onPressed: () => _editGoal(i),
+            ),
             IconButton(
               key: ValueKey('flow-goal-remove-$i'),
               tooltip: 'Retirer cet objectif',
@@ -1103,9 +1116,31 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     context,
   ).push<String>(MaterialPageRoute(builder: (_) => const ExercisePickerPage()));
 
-  Future<void> _addHabit() async {
-    var sessions = _d.days.isEmpty ? 3 : _d.days.length.clamp(1, 7).toInt();
-    var weeks = 8;
+  /// Modifie l'objectif [i] sans le supprimer (même identifiant, même
+  /// place dans la liste).
+  Future<void> _editGoal(int i) async {
+    final g = _d.goals[i];
+    if (g.kind == GoalKind.habit) {
+      await _addHabit(index: i);
+    } else {
+      await _addPerformance(index: i);
+    }
+  }
+
+  void _putGoal(Goal g, int? index) => setState(() {
+    if (index == null) {
+      _d.goals.add(g);
+    } else {
+      _d.goals[index] = g;
+    }
+  });
+
+  Future<void> _addHabit({int? index}) async {
+    final old = index == null ? null : _d.goals[index];
+    var sessions =
+        old?.sessionsPerWeek ??
+        (_d.days.isEmpty ? 3 : _d.days.length.clamp(1, 7).toInt());
+    var weeks = old?.weeks ?? 8;
     final ok = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
@@ -1119,7 +1154,9 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Objectif d’habitude',
+                old == null
+                    ? 'Objectif d’habitude'
+                    : 'Modifier l’objectif d’habitude',
                 style: Theme.of(ctx).textTheme.titleLarge,
               ),
               const SizedBox(height: 12),
@@ -1129,7 +1166,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  for (var n = 1; n <= 7; n++)
+                  for (var n = 1; n <= (sessions > 7 ? sessions : 7); n++)
                     ChoiceChip(
                       key: ValueKey('goal-sessions-$n'),
                       label: Text('$n'),
@@ -1145,7 +1182,10 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  for (final w in const [4, 6, 8, 12, 16, 24, 52])
+                  for (final w in {
+                    ...const [4, 6, 8, 12, 16, 24, 52],
+                    weeks,
+                  }.toList()..sort())
                     ChoiceChip(
                       key: ValueKey('goal-weeks-$w'),
                       label: Text('$w semaines'),
@@ -1158,7 +1198,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
               FilledButton(
                 key: const ValueKey('goal-save'),
                 onPressed: () => Navigator.pop(ctx, true),
-                child: const Text('Ajouter'),
+                child: Text(old == null ? 'Ajouter' : 'Enregistrer'),
               ),
             ],
           ),
@@ -1166,21 +1206,24 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
       ),
     );
     if (ok != true || !mounted) return;
-    setState(
-      () => _d.goals.add(
-        Goal(
-          id: nextGoalId(_d.goals),
-          kind: GoalKind.habit,
-          origin: GoalOrigin.user,
-          createdOn: civilOf(_now),
-          sessionsPerWeek: sessions,
-          weeks: weeks,
-        ),
+    final changed =
+        old == null || old.sessionsPerWeek != sessions || old.weeks != weeks;
+    if (!changed) return;
+    _putGoal(
+      Goal(
+        id: old?.id ?? nextGoalId(_d.goals),
+        kind: GoalKind.habit,
+        origin: GoalOrigin.user,
+        createdOn: old?.createdOn ?? civilOf(_now),
+        sessionsPerWeek: sessions,
+        weeks: weeks,
       ),
+      index,
     );
   }
 
-  Future<void> _addPerformance() async {
+  Future<void> _addPerformance({int? index}) async {
+    final old = index == null ? null : _d.goals[index];
     final g = await showModalBottomSheet<Goal>(
       context: context,
       isScrollControlled: true,
@@ -1191,11 +1234,12 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
         today: civilOf(_now),
         name: _name,
         pick: _pickExercise,
-        id: nextGoalId(_d.goals),
+        id: old?.id ?? nextGoalId(_d.goals),
+        initial: old,
       ),
     );
     if (g == null || !mounted) return;
-    setState(() => _d.goals.add(g));
+    _putGoal(g, index);
   }
 
   // ------------------------------------------------------ 7. disponibilités
@@ -1684,16 +1728,20 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
   // ------------------------------------------------------ 10. préférences
 
   List<Widget> _preferences() {
-    final results = _query.trim().isEmpty
-        ? const <String>[]
-        : [
-            for (final e in searchExercises(
-              _content,
-              _query,
-              const ExerciseFilters(),
-            ).take(8))
-              e.id,
-          ];
+    // Sans recherche : les exercices des disciplines choisies ; avec une
+    // recherche : toute la base. Toujours tous les résultats, par pages.
+    final disciplines = {
+      for (final d in _d.disciplines)
+        for (final c in d.catalogDisciplines) c.code,
+    };
+    final all = searchExercises(
+      _content,
+      _query,
+      ExerciseFilters(
+        disciplines: _query.trim().isEmpty ? disciplines : const {},
+      ),
+    );
+    final results = [for (final e in all.take(_shown)) e];
     Widget chipList(String title, List<String> ids, String prefix) => KCard(
       key: ValueKey('flow-$prefix-list'),
       child: Column(
@@ -1731,41 +1779,62 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             KSearch(
+              key: const ValueKey('flow-pref-search'),
               controller: _search,
-              hint: 'Chercher un exercice',
-              onChanged: (v) => setState(() => _query = v),
+              hint: 'Chercher dans les 1 039 exercices',
+              onChanged: (v) => setState(() {
+                _query = v;
+                _shown = 20;
+              }),
             ),
-            for (final id in results)
+            const SizedBox(height: 6),
+            _hint(
+              _query.trim().isEmpty
+                  ? '${all.length} exercices de tes disciplines · cherche '
+                        'pour voir toute la base'
+                  : '${all.length} exercice${all.length > 1 ? 's' : ''} '
+                        'trouvé${all.length > 1 ? 's' : ''}',
+            ),
+            for (final e in results)
               ListTile(
-                key: ValueKey('flow-pref-result-$id'),
+                key: ValueKey('flow-pref-result-${e.id}'),
                 contentPadding: EdgeInsets.zero,
-                title: Text(_name(id)),
+                title: Text(e.nom),
+                subtitle: Text(e.discipline),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      key: ValueKey('flow-like-$id'),
+                      key: ValueKey('flow-like-${e.id}'),
                       tooltip: 'J’aime',
-                      isSelected: _d.liked.contains(id),
+                      isSelected: _d.liked.contains(e.id),
                       icon: const Icon(Icons.favorite_border),
                       selectedIcon: Icon(Icons.favorite, color: SL.accent),
                       onPressed: () => setState(() {
-                        _d.disliked.remove(id);
-                        if (!_d.liked.remove(id)) _d.liked.add(id);
+                        _d.disliked.remove(e.id);
+                        if (!_d.liked.remove(e.id)) _d.liked.add(e.id);
                       }),
                     ),
                     IconButton(
-                      key: ValueKey('flow-dislike-$id'),
+                      key: ValueKey('flow-dislike-${e.id}'),
                       tooltip: 'Je n’aime pas',
-                      isSelected: _d.disliked.contains(id),
+                      isSelected: _d.disliked.contains(e.id),
                       icon: const Icon(Icons.thumb_down_outlined),
                       selectedIcon: Icon(Icons.thumb_down, color: SL.accent),
                       onPressed: () => setState(() {
-                        _d.liked.remove(id);
-                        if (!_d.disliked.remove(id)) _d.disliked.add(id);
+                        _d.liked.remove(e.id);
+                        if (!_d.disliked.remove(e.id)) _d.disliked.add(e.id);
                       }),
                     ),
                   ],
+                ),
+              ),
+            if (all.length > results.length)
+              TextButton(
+                key: const ValueKey('flow-pref-more'),
+                onPressed: () => setState(() => _shown += 40),
+                child: Text(
+                  'Afficher plus (${all.length - results.length} restants)',
                 ),
               ),
           ],
@@ -1801,6 +1870,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
         selected: _d.guidance == m,
         onTap: () => _d.guidance = m,
       ),
+    const ProgramExplainerButton(),
   ];
 
   // ----------------------------------------------------- 12. récapitulatif
@@ -1844,6 +1914,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           ),
         ),
       CautionCard(status: caution),
+      const ProgramExplainerButton(),
     ];
   }
 
@@ -1879,6 +1950,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
             onPressed: widget.onDone,
             child: Text(noProgram ? 'Découvrir l’application' : 'Continuer'),
           ),
+          const ProgramExplainerButton(),
         ],
       ),
     );
@@ -2031,7 +2103,11 @@ class _PerformanceGoalSheet extends StatefulWidget {
   final String Function(String) name;
   final Future<String?> Function() pick;
   final String id;
+
+  /// Objectif modifié (null : nouvel objectif).
+  final Goal? initial;
   const _PerformanceGoalSheet({
+    this.initial,
     required this.draft,
     required this.today,
     required this.name,
@@ -2050,6 +2126,30 @@ class _PerformanceGoalSheetState extends State<_PerformanceGoalSheet> {
   final _extra = TextEditingController();
   late CivilDate _date = widget.today.addDays(12 * 7);
   String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    final g = widget.initial;
+    if (g == null) return;
+    _exercise = g.exerciseId;
+    _metric = g.metric;
+    if (g.targetDate != null) _date = g.targetDate!;
+    final v = g.targetValue;
+    if (v != null) {
+      _value.text = g.metric == GoalMetric.timeSeconds
+          ? '${v ~/ 60}:${(v.round() % 60).toString().padLeft(2, '0')}'
+          : numText(v);
+    }
+    final extra = switch (g.metric) {
+      GoalMetric.timeSeconds => g.distanceMeters,
+      GoalMetric.maxReps => g.loadKg,
+      GoalMetric.distanceMeters =>
+        g.durationSeconds == null ? null : g.durationSeconds! / 60,
+      _ => null,
+    };
+    if (extra != null) _extra.text = numText(extra);
+  }
 
   @override
   void dispose() {
@@ -2143,7 +2243,7 @@ class _PerformanceGoalSheetState extends State<_PerformanceGoalSheet> {
       id: widget.id,
       kind: GoalKind.performance,
       origin: GoalOrigin.user,
-      createdOn: widget.today,
+      createdOn: widget.initial?.createdOn ?? widget.today,
       exerciseId: ex,
       metric: metric,
       targetValue: value,
@@ -2184,7 +2284,12 @@ class _PerformanceGoalSheetState extends State<_PerformanceGoalSheet> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Objectif de performance', style: tt.titleLarge),
+          Text(
+            widget.initial == null
+                ? 'Objectif de performance'
+                : 'Modifier l’objectif',
+            style: tt.titleLarge,
+          ),
           const SizedBox(height: 12),
           Text('Exercice', style: tt.titleMedium),
           const SizedBox(height: 6),
@@ -2283,7 +2388,7 @@ class _PerformanceGoalSheetState extends State<_PerformanceGoalSheet> {
           FilledButton(
             key: const ValueKey('goal-save'),
             onPressed: _save,
-            child: const Text('Ajouter'),
+            child: Text(widget.initial == null ? 'Ajouter' : 'Enregistrer'),
           ),
         ],
       ),
@@ -2302,6 +2407,7 @@ class ExercisePickerPage extends StatefulWidget {
 class _ExercisePickerPageState extends State<ExercisePickerPage> {
   final _c = TextEditingController();
   String _q = '';
+  int _shown = 40;
 
   @override
   void dispose() {
@@ -2311,11 +2417,8 @@ class _ExercisePickerPageState extends State<ExercisePickerPage> {
 
   @override
   Widget build(BuildContext context) {
-    final list = searchExercises(
-      store.content,
-      _q,
-      const ExerciseFilters(),
-    ).take(40).toList();
+    final all = searchExercises(store.content, _q, const ExerciseFilters());
+    final list = all.take(_shown).toList();
     return KScreen(
       appBar: AppBar(title: const Text('CHOISIR UN EXERCICE')),
       body: KList(
@@ -2324,7 +2427,10 @@ class _ExercisePickerPageState extends State<ExercisePickerPage> {
           KSearch(
             controller: _c,
             hint: 'Chercher un exercice',
-            onChanged: (v) => setState(() => _q = v),
+            onChanged: (v) => setState(() {
+              _q = v;
+              _shown = 40;
+            }),
           ),
           for (final e in list)
             ListTile(
@@ -2333,6 +2439,14 @@ class _ExercisePickerPageState extends State<ExercisePickerPage> {
               title: Text(e.nom),
               subtitle: Text(e.discipline),
               onTap: () => Navigator.pop(context, e.id),
+            ),
+          if (all.length > list.length)
+            TextButton(
+              key: const ValueKey('picker-more'),
+              onPressed: () => setState(() => _shown += 40),
+              child: Text(
+                'Afficher plus (${all.length - list.length} restants)',
+              ),
             ),
         ],
       ),

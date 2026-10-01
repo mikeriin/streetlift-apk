@@ -21,10 +21,10 @@ import 'store_widget.dart';
 import 'dev/dev_flags.dart';
 
 /// Version de l'application (pubspec sans le numéro de build).
-const kVersion = '6.4.0';
+const kVersion = '6.4.1';
 
-/// Version affichée (D0.9) : « dev6.4.0 » dans le build de développement
-/// (APK du propriétaire), « 6.4.0 » dans l’AAB du Play Store.
+/// Version affichée (D0.9) : « dev6.4.1 » dans le build de développement
+/// (APK du propriétaire), « 6.4.1 » dans l’AAB du Play Store.
 const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;
 
 class SettingsScreen extends StatelessWidget {
