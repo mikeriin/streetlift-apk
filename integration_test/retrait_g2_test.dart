@@ -190,7 +190,7 @@ void main() {
     await scrollTo(tester, copyTile);
     releve['reglages_copie'] = copyTile.evaluate().isNotEmpty;
     await shot('6_reglages_sauvegardes');
-    await tester.pageBack();
+    await appNavigator.currentState!.maybePop();
     await wait(tester, 1200);
     await section('Programme');
     releve['reglages_sans_motivation'] = !shown('Motivation et progression');

@@ -420,7 +420,10 @@ void main() {
       await tester.tap(tile);
       await tester.pumpAndSettle();
       expect(find.text('Copie de sécurité'), findsOneWidget);
-      expect(find.text('Fermer'), findsOneWidget);
+      final close = tester.widget<TextButton>(
+        find.byKey(const ValueKey('retired-notice-close'), skipOffstage: false),
+      );
+      expect((close.child! as Text).data, 'Fermer');
     });
   });
 
