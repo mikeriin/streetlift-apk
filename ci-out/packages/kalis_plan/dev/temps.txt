@@ -1,0 +1,862 @@
+  {ability: {push: 3, pull: 3, legs: 4, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {cardio: 0.35, mobility: 0.15, generalFitness: 0.5}, pool: 120, poolByKind: {compound: 13, accessory: 15, core: 25, cardioEasy: 2, mobility: 65}, rejected: {equipment: 295, level: 291, reserved: 8, discipline: 325}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : null
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : equipment
+debutant_forme_generale_maison_2x30 : passe 1 209.8 ms ; cas complet 400 ms ; 9 exercices ; violations []
+jour 0 : 116 ajouts possibles, 1 hors temps
+  mo-etirement-gastrocnemiens-mur (mobility) -0.0079 : discipline_dosage -0.091, exercise_fit -0.002
+  mo-flechisseurs-hanche-semi-agenouille (mobility) -0.0081 : discipline_dosage -0.091, exercise_fit -0.005
+  mo-pigeon-sol (mobility) -0.0081 : discipline_dosage -0.091, exercise_fit -0.005
+jour 1 : 112 ajouts possibles, 2 hors temps
+  mu-hip-airplane (accessory) -0.0004 : discipline_dosage -0.012, muscle_volume +0.014, pattern_balance -0.012, exercise_fit -0.008, stimulus_fatigue +0.043
+  mu-pont-fessier-sol (accessory) -0.0007 : discipline_dosage -0.007, muscle_volume +0.014, stimulus_fatigue -0.061
+  mo-chaine-posterieure-flexion-avant-debout (mobility) -0.0012 : discipline_dosage -0.012, exercise_fit -0.005
+  {ability: {push: 4, pull: 3, legs: 4, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.8, mobility: 0.2}, pool: 454, poolByKind: {compound: 145, accessory: 153, core: 69, mobility: 87}, rejected: {level: 199, equipment: 41, reserved: 27, too_easy: 6, excluded: 1, discipline: 311}, goals: [mu-back-squat-barre-haute]}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+femme_45_musculation_salle_4x60 : passe 1 277.3 ms ; cas complet 516 ms ; 34 exercices ; violations []
+jour 0 : 445 ajouts possibles, 0 hors temps
+  mu-mollets-donkey (accessory) 0.0001 : discipline_dosage -0.004, muscle_volume +0.008, stimulus_fatigue -0.006
+  mu-mollets-poids-du-corps-marche (accessory) 0.0001 : discipline_dosage -0.004, muscle_volume +0.008, stimulus_fatigue -0.006
+  mu-mollets-presse (accessory) 0.0001 : discipline_dosage -0.004, muscle_volume +0.008, stimulus_fatigue -0.006
+jour 1 : 447 ajouts possibles, 0 hors temps
+  mu-mollets-donkey (accessory) 0.0004 : discipline_dosage -0.010, muscle_volume +0.013, discipline_structure +0.003, stimulus_fatigue -0.006
+  mu-mollets-poids-du-corps-marche (accessory) 0.0004 : discipline_dosage -0.010, muscle_volume +0.013, discipline_structure +0.003, stimulus_fatigue -0.006
+  mu-mollets-presse (accessory) 0.0004 : discipline_dosage -0.010, muscle_volume +0.013, discipline_structure +0.003, stimulus_fatigue -0.006
+jour 2 : 446 ajouts possibles, 0 hors temps
+  mu-mollets-donkey (accessory) 0.0003 : discipline_dosage -0.007, muscle_volume +0.013, stimulus_fatigue -0.006
+  mu-mollets-poids-du-corps-marche (accessory) 0.0003 : discipline_dosage -0.007, muscle_volume +0.013, stimulus_fatigue -0.006
+  mu-mollets-presse (accessory) 0.0003 : discipline_dosage -0.007, muscle_volume +0.013, stimulus_fatigue -0.006
+jour 3 : 444 ajouts possibles, 0 hors temps
+  mu-leg-curl-couche (accessory) 0.0006 : muscle_volume +0.008
+  mu-nordic-hamstring-curl-assiste (accessory) 0.0005 : muscle_volume +0.008, exercise_fit -0.003
+  mu-leg-curl-assis (accessory) 0.0004 : muscle_volume +0.008, exercise_fit -0.003
+  {ability: {push: 5, pull: 5, legs: 5, core: 5, power: 5, cardio: 5, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.2, cardio: 0.7, mobility: 0.1}, pool: 172, poolByKind: {accessory: 27, compound: 17, core: 35, cardioEasy: 11, cardioHard: 14, mobility: 68}, rejected: {equipment: 399, level: 138, too_easy: 27, reserved: 39, discipline: 264}, goals: [ca-footing-endurance-fondamentale]}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : null
+  mu-developpe-couche-barre : equipment
+coureur_cardio_3x45 : passe 1 62.2 ms ; cas complet 153 ms ; 20 exercices ; violations []
+jour 0 : 0 ajouts possibles, 144 hors temps
+jour 1 : 60 ajouts possibles, 104 hors temps
+  mo-etirement-gastrocnemiens-mur (mobility) 0.0000 : discipline_dosage +0.003, discipline_structure -0.003
+  mo-flechisseurs-hanche-semi-agenouille (mobility) -0.0001 : discipline_dosage +0.003, discipline_structure -0.003
+  mo-pigeon-sol (mobility) -0.0001 : discipline_dosage +0.003, discipline_structure -0.003
+jour 2 : 151 ajouts possibles, 0 hors temps
+  ca-marche-rapide (cardioEasy) -0.0001 : 
+  ca-marche-recuperation (cardioEasy) -0.0001 : 
+  ca-accelerations-progressives (cardioEasy) -0.0004 : discipline_dosage -0.003
+  {ability: {push: 5, pull: 5, legs: 6, core: 5, power: 8, cardio: 5, mobility: 4}, globalLevel: 1, cautious: false, targets: {crossfit: 0.8, mobility: 0.2}, pool: 404, poolByKind: {compound: 77, accessory: 59, core: 49, power: 46, skillStatic: 36, skillDynamic: 20, conditioning: 38, cardioEasy: 6, cardioHard: 7, mobility: 66}, rejected: {equipment: 318, level: 215, too_easy: 33, discipline: 61, reserved: 8}, goals: [cd-muscle-up-barre-strict]}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : too_easy
+  ca-sortie-longue : equipment
+  mu-developpe-couche-barre : equipment
+crossfit_5x60 : passe 1 87.7 ms ; cas complet 243 ms ; 42 exercices ; violations []
+jour 0 : 399 ajouts possibles, 0 hors temps
+  mu-epaule-jete (power) 0.0022 : muscle_volume -0.061, discipline_structure +0.012, exercise_fit +0.005, stimulus_fatigue -0.018, preferences +0.125
+  mo-90-90-passif (mobility) 0.0004 : discipline_dosage +0.003
+  mo-chaine-posterieure-flexion-avant-debout (mobility) 0.0004 : discipline_dosage +0.003
+jour 1 : 175 ajouts possibles, 218 hors temps
+  cf-fente-overhead-disque (conditioning) 0.0006 : muscle_volume -0.012, discipline_structure +0.018
+  cf-box-step-over (conditioning) 0.0006 : muscle_volume -0.012, discipline_structure +0.018
+  mo-90-90-passif (mobility) 0.0005 : discipline_dosage +0.005
+jour 2 : 397 ajouts possibles, 0 hors temps
+  mu-epaule-jete (power) 0.0009 : discipline_dosage -0.015, muscle_volume -0.049, discipline_structure +0.002, time_use +0.003, exercise_fit +0.005, stimulus_fatigue -0.027, preferences +0.125
+  mo-90-90-passif (mobility) 0.0006 : discipline_dosage +0.003, time_use +0.003
+  mo-chaine-posterieure-flexion-avant-debout (mobility) 0.0005 : discipline_dosage +0.003, time_use +0.003
+jour 3 : 395 ajouts possibles, 0 hors temps
+  cf-pogo-jumps (conditioning) 0.0010 : discipline_dosage -0.004, muscle_volume -0.021, discipline_structure +0.021, time_use +0.020
+  mo-90-90-passif (mobility) 0.0009 : discipline_dosage +0.003, time_use +0.008
+  mo-chaine-posterieure-flexion-avant-debout (mobility) 0.0008 : discipline_dosage +0.003, time_use +0.008
+jour 4 : 324 ajouts possibles, 70 hors temps
+  cf-fente-overhead-disque (conditioning) 0.0006 : muscle_volume -0.012, discipline_structure +0.018
+  cf-box-step-over (conditioning) 0.0006 : muscle_volume -0.012, discipline_structure +0.018
+  mo-90-90-passif (mobility) 0.0005 : discipline_dosage +0.005
+  {ability: {push: 7, pull: 6, legs: 6, core: 6, power: 6, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {calisthenics: 0.8, mobility: 0.2}, pool: 217, poolByKind: {accessory: 32, compound: 29, core: 41, skillStatic: 25, skillDynamic: 15, mobility: 75}, rejected: {equipment: 375, too_easy: 86, level: 229, reserved: 31, discipline: 101}, goals: [cs-front-lever, cs-planche-straddle]}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+calisthenie_figures_4x75 : passe 1 37.7 ms ; cas complet 162 ms ; 31 exercices ; violations []
+jour 0 : 207 ajouts possibles, 0 hors temps
+  sw-traction-pronation (compound) 0.0031 : discipline_dosage -0.014, muscle_volume -0.033, pattern_balance +0.028, discipline_structure -0.004, exercise_fit +0.010, stimulus_fatigue -0.004, preferences +0.100
+  sw-windshield-wiper-tuck (core) -0.0004 : discipline_dosage -0.002, exercise_fit -0.003, stimulus_fatigue +0.006
+  cs-suspension-un-bras (skillStatic) -0.0005 : fatigue_balance -0.008, discipline_dosage -0.020, muscle_volume +0.005, pattern_balance +0.044, discipline_structure +0.002, stimulus_fatigue -0.040
+jour 1 : 210 ajouts possibles, 0 hors temps
+  sw-traction-pronation (compound) 0.0020 : fatigue_balance -0.012, discipline_dosage -0.006, muscle_volume -0.033, pattern_balance +0.028, discipline_structure -0.004, time_use +0.008, exercise_fit +0.010, stimulus_fatigue -0.005, preferences +0.100
+  mo-pont-dorsal (mobility) -0.0001 : discipline_dosage -0.009, time_use +0.008
+  mo-90-90-passif (mobility) -0.0001 : discipline_dosage -0.007, time_use +0.008
+jour 2 : 209 ajouts possibles, 0 hors temps
+  cs-suspension-un-bras (skillStatic) 0.0034 : discipline_dosage -0.009, pattern_balance +0.037, discipline_structure +0.003, time_use +0.037, stimulus_fatigue -0.038
+  mo-pont-dorsal (mobility) -0.0000 : discipline_dosage -0.009, time_use +0.010
+  mo-90-90-passif (mobility) -0.0001 : discipline_dosage -0.007, time_use +0.008
+jour 3 : 211 ajouts possibles, 0 hors temps
+  sw-traction-pronation (compound) 0.0052 : discipline_dosage -0.006, muscle_volume -0.033, pattern_balance +0.028, discipline_structure -0.004, time_use +0.025, exercise_fit +0.010, stimulus_fatigue -0.005, preferences +0.100
+  cs-suspension-un-bras (skillStatic) 0.0034 : discipline_dosage -0.009, pattern_balance +0.037, discipline_structure +0.003, time_use +0.037, stimulus_fatigue -0.038
+  cd-ice-cream-maker-tuck (skillDynamic) 0.0003 : discipline_dosage -0.010, muscle_volume -0.047, pattern_balance +0.037, discipline_structure +0.004, time_use +0.044, exercise_fit -0.004
+  {ability: {push: 8, pull: 8, legs: 8, core: 6, power: 6, cardio: 4, mobility: 4}, globalLevel: 2, cautious: false, targets: {streetWorkout: 0.25, streetlifting: 0.6, calisthenics: 0.15}, pool: 392, poolByKind: {compound: 143, accessory: 137, core: 56, skillStatic: 30, skillDynamic: 26}, rejected: {equipment: 159, too_easy: 143, level: 103, reserved: 31, discipline: 211}, goals: [sl-traction-lestee, sl-dips-leste, sl-muscle-up-leste, sl-squat-competition]}
+  cs-planche-tuck : too_easy
+  sl-muscle-up-leste : null
+  sl-squat-competition : null
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+street_streetlifting_4x90 : passe 1 49.7 ms ; cas complet 296 ms ; 21 exercices ; violations []
+jour 0 : 386 ajouts possibles, 0 hors temps
+  mu-nordic-hamstring-curl (accessory) 0.0009 : discipline_dosage -0.010, pattern_balance +0.018, discipline_structure -0.004, time_use +0.021, exercise_fit -0.004, stimulus_fatigue -0.003
+  mu-elevation-laterale-halteres (accessory) 0.0006 : discipline_dosage -0.010, muscle_volume +0.005, discipline_structure -0.004, time_use +0.021, exercise_fit +0.003
+  mu-elevation-laterale-poulie-derriere-dos (accessory) 0.0003 : discipline_dosage -0.010, muscle_volume +0.009, discipline_structure -0.004, time_use +0.021, exercise_fit -0.006
+jour 1 : 388 ajouts possibles, 0 hors temps
+  mu-nordic-hamstring-curl (accessory) 0.0009 : discipline_dosage -0.010, pattern_balance +0.018, discipline_structure -0.004, time_use +0.021, exercise_fit -0.004, stimulus_fatigue -0.003
+  sw-dead-hang (accessory) 0.0001 : discipline_dosage +0.005, time_use +0.018, exercise_fit -0.018, stimulus_fatigue -0.006
+  sw-pompe-sphinx (accessory) -0.0001 : discipline_dosage +0.005, muscle_volume -0.007, time_use +0.021, exercise_fit -0.017
+jour 2 : 387 ajouts possibles, 0 hors temps
+  mu-nordic-hamstring-curl (accessory) 0.0003 : discipline_dosage -0.010, pattern_balance +0.018, discipline_structure -0.004, time_use +0.010, exercise_fit -0.004, stimulus_fatigue -0.003
+  mu-elevation-laterale-halteres (accessory) -0.0000 : discipline_dosage -0.010, muscle_volume +0.005, discipline_structure -0.004, time_use +0.010, exercise_fit +0.003
+  sw-knees-to-elbows (core) -0.0003 : discipline_dosage +0.005, muscle_volume -0.011, time_use +0.010, exercise_fit -0.008, stimulus_fatigue +0.005
+jour 3 : 386 ajouts possibles, 0 hors temps
+  mu-nordic-hamstring-curl (accessory) -0.0003 : discipline_dosage -0.010, pattern_balance +0.018, discipline_structure -0.004, exercise_fit -0.004, stimulus_fatigue -0.003
+  mu-elevation-laterale-halteres (accessory) -0.0006 : discipline_dosage -0.010, muscle_volume +0.005, discipline_structure -0.004, exercise_fit +0.003
+  mu-elevation-laterale-lean-away (accessory) -0.0008 : discipline_dosage -0.009, muscle_volume +0.006, discipline_structure -0.004, exercise_fit -0.003
+  {ability: {push: 7, pull: 8, legs: 6, core: 6, power: 6, cardio: 4, mobility: 4}, globalLevel: 2, cautious: false, targets: {streetWorkout: 0.6, streetlifting: 0.2, calisthenics: 0.2}, pool: 133, poolByKind: {accessory: 32, compound: 26, core: 41, skillStatic: 18, skillDynamic: 16}, rejected: {equipment: 382, too_easy: 120, level: 162, reserved: 31, discipline: 211}, goals: [sw-traction-pronation, sl-traction-lestee, sl-dips-leste, sl-muscle-up-leste, sl-squat-competition]}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : equipment
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+street_sets_reps_4x60 : passe 1 29.9 ms ; cas complet 93 ms ; 27 exercices ; violations []
+jour 0 : 125 ajouts possibles, 0 hors temps
+  sw-dead-hang (accessory) -0.0002 : muscle_volume -0.005, pattern_balance +0.017, exercise_fit -0.012
+  sw-suspension-supination (accessory) -0.0005 : muscle_volume -0.005, pattern_balance +0.017, exercise_fit -0.015, stimulus_fatigue -0.006
+  sw-pompe-scapulaire (accessory) -0.0008 : discipline_dosage -0.003, muscle_volume -0.008, pattern_balance +0.017, exercise_fit -0.014, stimulus_fatigue -0.006
+jour 1 : 125 ajouts possibles, 0 hors temps
+  sw-releve-genoux-oblique (core) 0.0012 : discipline_dosage -0.003, muscle_volume +0.004, pattern_balance +0.017, exercise_fit -0.004, stimulus_fatigue +0.010
+  sw-knees-to-elbows (core) 0.0003 : discipline_dosage -0.003, muscle_volume -0.005, pattern_balance +0.017, exercise_fit -0.004, stimulus_fatigue +0.006
+  sw-releve-genoux-suspendu (core) 0.0003 : discipline_dosage -0.003, pattern_balance +0.017, exercise_fit -0.010
+jour 2 : 126 ajouts possibles, 0 hors temps
+  sw-releve-genoux-oblique (core) 0.0006 : muscle_volume +0.011, exercise_fit -0.004, stimulus_fatigue +0.002
+  sw-knees-to-elbows (core) -0.0003 : muscle_volume +0.002, exercise_fit -0.004
+  sw-releve-genoux-suspendu (core) -0.0003 : muscle_volume +0.009, exercise_fit -0.010, stimulus_fatigue -0.009
+jour 3 : 129 ajouts possibles, 0 hors temps
+  sw-pompe-sphinx (accessory) -0.0003 : discipline_dosage -0.013, muscle_volume -0.007, time_use +0.031, exercise_fit -0.007
+  sw-dead-hang (accessory) -0.0004 : discipline_dosage -0.011, time_use +0.027, exercise_fit -0.012, stimulus_fatigue -0.011
+  sw-suspension-supination (accessory) -0.0008 : discipline_dosage -0.011, time_use +0.027, exercise_fit -0.015, stimulus_fatigue -0.021
+  {ability: {push: 5, pull: 5, legs: 5, core: 4, power: 5, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {streetWorkout: 0.4, calisthenics: 0.6}, pool: 170, poolByKind: {accessory: 32, compound: 40, core: 41, skillStatic: 37, skillDynamic: 20}, rejected: {equipment: 336, level: 263, too_easy: 28, reserved: 31, discipline: 211}, goals: [cs-handstand]}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+street_calisthenie_5x60 : passe 1 41.5 ms ; cas complet 109 ms ; 25 exercices ; violations []
+jour 0 : 165 ajouts possibles, 0 hors temps
+  sw-dead-hang (accessory) -0.0006 : discipline_dosage -0.011, muscle_volume -0.004, time_use +0.021, exercise_fit -0.006, stimulus_fatigue -0.013
+  cs-suspension-un-bras (skillStatic) -0.0006 : discipline_dosage -0.019, muscle_volume -0.005, discipline_structure +0.003, time_use +0.036, exercise_fit -0.003, stimulus_fatigue -0.033
+  sw-suspension-supination (accessory) -0.0007 : discipline_dosage -0.011, time_use +0.021, exercise_fit -0.009, stimulus_fatigue -0.022
+jour 1 : 163 ajouts possibles, 0 hors temps
+  cs-suspension-un-bras (skillStatic) 0.0001 : muscle_volume +0.011, exercise_fit -0.003, stimulus_fatigue -0.028
+  mu-respiration-90-90 (core) -0.0004 : discipline_dosage -0.006, muscle_volume +0.009, discipline_structure -0.004, exercise_fit -0.004
+  mu-hollow-body-hold (core) -0.0005 : discipline_dosage -0.005, muscle_volume +0.005, discipline_structure -0.003
+jour 2 : 165 ajouts possibles, 0 hors temps
+  sw-releve-genoux-oblique (core) -0.0005 : discipline_dosage -0.011, muscle_volume -0.008, time_use +0.021, exercise_fit -0.005, stimulus_fatigue +0.005
+  sw-pompe-sphinx (accessory) -0.0006 : discipline_dosage -0.014, muscle_volume -0.008, time_use +0.025, exercise_fit -0.004, stimulus_fatigue -0.004
+  sw-releve-genoux-suspendu (core) -0.0006 : discipline_dosage -0.012, muscle_volume -0.008, time_use +0.022, exercise_fit -0.003, stimulus_fatigue -0.009
+jour 3 : 167 ajouts possibles, 0 hors temps
+  sw-pompe-sphinx (accessory) -0.0006 : discipline_dosage -0.014, muscle_volume -0.008, time_use +0.025, exercise_fit -0.004, stimulus_fatigue -0.004
+  sw-dead-hang (accessory) -0.0006 : discipline_dosage -0.011, muscle_volume -0.004, time_use +0.021, exercise_fit -0.006, stimulus_fatigue -0.013
+  sw-suspension-supination (accessory) -0.0007 : discipline_dosage -0.011, time_use +0.021, exercise_fit -0.009, stimulus_fatigue -0.022
+jour 4 : 165 ajouts possibles, 0 hors temps
+  sw-releve-genoux-oblique (core) -0.0010 : discipline_dosage -0.011, muscle_volume -0.008, time_use +0.012, exercise_fit -0.005, stimulus_fatigue +0.005
+  sw-dead-hang (accessory) -0.0011 : discipline_dosage -0.011, muscle_volume -0.004, time_use +0.012, exercise_fit -0.006, stimulus_fatigue -0.013
+  mu-isometries-cou-elastique (accessory) -0.0011 : discipline_dosage -0.007, discipline_structure -0.005, time_use +0.012, exercise_fit -0.005, stimulus_fatigue -0.017
+  {ability: {push: 4, pull: 4, legs: 6, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 1.0}, pool: 374, poolByKind: {compound: 137, accessory: 168, core: 69}, rejected: {level: 140, joint: 28, excluded: 1, equipment: 39, too_easy: 17, reserved: 19, discipline: 421}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+blessure_epaule_musculation_3x60 : passe 1 142.9 ms ; cas complet 228 ms ; 21 exercices ; violations []
+jour 0 : 366 ajouts possibles, 0 hors temps
+  mu-pushdown-corde (accessory) 0.0015 : muscle_volume +0.020, exercise_fit +0.002, stimulus_fatigue -0.011
+  mu-barre-au-front-ez (accessory) 0.0015 : muscle_volume +0.020, stimulus_fatigue -0.004
+  mu-extension-nuque-haltere-deux-mains (accessory) 0.0015 : muscle_volume +0.020, stimulus_fatigue -0.004
+jour 1 : 367 ajouts possibles, 0 hors temps
+  mu-barre-au-front-ez (accessory) 0.0019 : muscle_volume +0.020, stimulus_fatigue -0.007
+  mu-extension-nuque-haltere-deux-mains (accessory) 0.0019 : muscle_volume +0.020, stimulus_fatigue -0.007
+  mu-pushdown-corde (accessory) 0.0018 : muscle_volume +0.020, exercise_fit +0.002, stimulus_fatigue -0.016
+jour 2 : 368 ajouts possibles, 0 hors temps
+  mu-back-squat-barre-haute (compound) 0.0005 : exercise_fit +0.013, stimulus_fatigue -0.027
+  mu-arch-hold (core) 0.0002 : stimulus_fatigue -0.003
+  mu-barre-au-front-ez (accessory) 0.0002 : stimulus_fatigue -0.007
+  {ability: {push: 3, pull: 3, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {cardio: 0.35, mobility: 0.15, generalFitness: 0.5}, pool: 112, poolByKind: {compound: 8, accessory: 12, core: 25, cardioEasy: 2, mobility: 65}, rejected: {equipment: 262, level: 332, reserved: 8, discipline: 325}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : null
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : equipment
+minimal_1x20 : passe 1 7.7 ms ; cas complet 27 ms ; 5 exercices ; violations []
+jour 0 : 70 ajouts possibles, 37 hors temps
+  mo-wall-slides (mobility) -0.0001 : discipline_structure +0.003, exercise_fit -0.006
+  mo-flechisseurs-hanche-semi-agenouille (mobility) -0.0001 : discipline_structure +0.002, exercise_fit -0.006
+  mo-pigeon-sol (mobility) -0.0001 : discipline_structure +0.002, exercise_fit -0.006
+  {ability: {push: 8, pull: 8, legs: 8, core: 6, power: 6, cardio: 4, mobility: 4}, globalLevel: 2, cautious: false, targets: {musculation: 1.0}, pool: 399, poolByKind: {compound: 154, accessory: 176, core: 69}, rejected: {equipment: 79, too_easy: 75, level: 34, reserved: 31, discipline: 421}, goals: [mu-developpe-couche-barre]}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : equipment
+  sl-squat-competition : null
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+six_jours_musculation_avance_6x75 : passe 1 52.6 ms ; cas complet 153 ms ; 22 exercices ; violations []
+jour 0 : 393 ajouts possibles, 0 hors temps
+  mu-oiseau-halteres (accessory) -0.0003 : muscle_volume -0.003, stimulus_fatigue +0.004
+  mu-pushdown-corde (accessory) -0.0004 : muscle_volume -0.004, stimulus_fatigue -0.008
+  mu-rowing-menton-halteres (accessory) -0.0005 : exercise_fit -0.006, stimulus_fatigue +0.007
+jour 1 : 394 ajouts possibles, 0 hors temps
+  mu-crunch-oblique-poulie (core) 0.0008 : time_use +0.020, exercise_fit -0.007, stimulus_fatigue +0.008
+  mu-curl-concentre (accessory) 0.0008 : time_use +0.022, exercise_fit -0.006, stimulus_fatigue -0.003
+  mu-supination-levier (accessory) 0.0008 : time_use +0.022, exercise_fit -0.006, stimulus_fatigue -0.003
+jour 2 : 396 ajouts possibles, 0 hors temps
+  mu-pushdown-corde (accessory) 0.0007 : time_use +0.017, stimulus_fatigue -0.008
+  mu-barre-au-front-ez (accessory) 0.0006 : time_use +0.017, stimulus_fatigue -0.002
+  mu-extension-nuque-haltere-deux-mains (accessory) 0.0006 : time_use +0.017, stimulus_fatigue -0.002
+jour 3 : 397 ajouts possibles, 0 hors temps
+  mu-presse-cuisses-unilaterale (compound) 0.0008 : muscle_volume -0.008, time_use +0.034, exercise_fit -0.005, stimulus_fatigue -0.005
+  mu-crunch-oblique-poulie (core) 0.0008 : time_use +0.020, exercise_fit -0.007, stimulus_fatigue +0.008
+  mu-leg-curl-couche (accessory) 0.0008 : time_use +0.017, exercise_fit -0.003, stimulus_fatigue -0.002
+jour 4 : 396 ajouts possibles, 0 hors temps
+  mu-crunch-oblique-poulie (core) 0.0008 : time_use +0.020, exercise_fit -0.007, stimulus_fatigue +0.008
+  mu-curl-concentre (accessory) 0.0008 : time_use +0.022, exercise_fit -0.006, stimulus_fatigue -0.003
+  mu-supination-levier (accessory) 0.0008 : time_use +0.022, exercise_fit -0.006, stimulus_fatigue -0.003
+jour 5 : 396 ajouts possibles, 0 hors temps
+  mu-leg-curl-couche (accessory) 0.0008 : time_use +0.017, exercise_fit -0.003, stimulus_fatigue -0.002
+  mu-pushdown-corde (accessory) 0.0007 : time_use +0.017, stimulus_fatigue -0.008
+  mu-nordic-hamstring-curl (accessory) 0.0007 : time_use +0.017, exercise_fit -0.003, stimulus_fatigue -0.007
+  {ability: {push: 2, pull: 2, legs: 2, core: 2, power: 2, cardio: 2, mobility: 2}, globalLevel: 0, cautious: true, targets: {cardio: 0.21, mobility: 0.49, generalFitness: 0.3}, pool: 125, poolByKind: {compound: 11, accessory: 21, core: 24, cardioEasy: 2, mobility: 67}, rejected: {equipment: 213, level: 362, cautious: 8, reserved: 6, discipline: 325}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : null
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : equipment
+senior_65_forme_generale_3x40 : passe 1 19.5 ms ; cas complet 54 ms ; 33 exercices ; violations []
+jour 0 : 0 ajouts possibles, 114 hors temps
+jour 1 : 0 ajouts possibles, 113 hors temps
+jour 2 : 0 ajouts possibles, 115 hors temps
+  {ability: {push: 8, pull: 9, legs: 8, core: 6, power: 6, cardio: 4, mobility: 4}, globalLevel: 2, cautious: false, targets: {streetWorkout: 0.2, streetlifting: 0.7, calisthenics: 0.1}, pool: 392, poolByKind: {compound: 145, accessory: 137, core: 56, skillStatic: 26, skillDynamic: 28}, rejected: {equipment: 160, too_easy: 141, level: 98, reserved: 31, excluded: 1, prerequisite: 5, discipline: 211}, goals: [sl-traction-lestee, sl-dips-leste, sl-muscle-up-leste, sl-squat-competition]}
+  cs-planche-tuck : too_easy
+  sl-muscle-up-leste : null
+  sl-squat-competition : null
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+proprietaire_streetlifting_avance : passe 1 29.1 ms ; cas complet 101 ms ; 29 exercices ; violations []
+jour 0 : 384 ajouts possibles, 0 hors temps
+  cd-muscle-up-barre-strict (skillDynamic) 0.0016 : joint_load -0.004, goal_specificity +0.010, discipline_dosage +0.010, muscle_volume -0.013, discipline_structure +0.010, exercise_fit +0.008, stimulus_fatigue +0.009
+  mu-elevation-laterale-poulie-unilaterale (accessory) 0.0009 : muscle_volume +0.015, discipline_structure -0.002, exercise_fit -0.003, stimulus_fatigue +0.004
+  sw-sissy-squat (accessory) 0.0008 : discipline_dosage +0.011, exercise_fit -0.005, stimulus_fatigue +0.003
+jour 1 : 389 ajouts possibles, 0 hors temps
+  sw-dead-hang (accessory) 0.0010 : discipline_dosage +0.009, time_use +0.014, exercise_fit -0.014, stimulus_fatigue -0.005
+  sw-pompe-scapulaire (accessory) 0.0007 : discipline_dosage +0.009, muscle_volume -0.004, time_use +0.017, exercise_fit -0.016, stimulus_fatigue -0.005
+  sw-suspension-supination (accessory) 0.0007 : discipline_dosage +0.009, time_use +0.014, exercise_fit -0.017, stimulus_fatigue -0.011
+jour 2 : 384 ajouts possibles, 0 hors temps
+  cd-muscle-up-barre-strict (skillDynamic) 0.0023 : joint_load -0.002, goal_specificity +0.010, discipline_dosage +0.010, muscle_volume -0.008, discipline_structure +0.008, exercise_fit +0.008, stimulus_fatigue +0.009
+  cd-hefesto-negatif (skillDynamic) 0.0014 : joint_load -0.002, goal_specificity +0.009, discipline_dosage +0.010, muscle_volume +0.006, exercise_fit -0.007, stimulus_fatigue +0.002
+  sw-pistol-squat (compound) 0.0012 : discipline_dosage +0.011, muscle_volume -0.004, stimulus_fatigue +0.004
+jour 3 : 386 ajouts possibles, 0 hors temps
+  sw-dead-hang (accessory) 0.0006 : discipline_dosage +0.009, time_use +0.008, exercise_fit -0.014, stimulus_fatigue -0.005
+  sw-releve-genoux-suspendu (core) 0.0004 : discipline_dosage +0.009, muscle_volume -0.006, time_use +0.008, exercise_fit -0.013
+  sw-suspension-supination (accessory) 0.0003 : discipline_dosage +0.009, time_use +0.008, exercise_fit -0.017, stimulus_fatigue -0.011
+jour 4 : 388 ajouts possibles, 0 hors temps
+  sw-dead-hang (accessory) 0.0010 : discipline_dosage +0.009, time_use +0.014, exercise_fit -0.014, stimulus_fatigue -0.005
+  sw-sissy-squat (accessory) 0.0009 : discipline_dosage +0.009, muscle_volume -0.011, pattern_balance -0.003, time_use +0.017, exercise_fit -0.005
+  sw-dragon-flag-negatif (core) 0.0008 : discipline_dosage +0.009, muscle_volume -0.011, time_use +0.015, exercise_fit -0.005
+  {ability: {push: 4, pull: 4, legs: 4, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 1.0}, pool: 401, poolByKind: {compound: 164, accessory: 168, core: 69}, rejected: {level: 145, equipment: 44, reserved: 19, too_easy: 9, discipline: 421}, goals: [mu-developpe-couche-barre]}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+homme_25_musculation_debutant_3x60 : passe 1 24.2 ms ; cas complet 83 ms ; 22 exercices ; violations []
+jour 0 : 394 ajouts possibles, 0 hors temps
+  mu-mollets-donkey (accessory) 0.0005 : muscle_volume +0.009, stimulus_fatigue -0.007
+  mu-mollets-poids-du-corps-marche (accessory) 0.0005 : muscle_volume +0.009, stimulus_fatigue -0.007
+  mu-mollets-presse (accessory) 0.0005 : muscle_volume +0.009, stimulus_fatigue -0.007
+jour 1 : 253 ajouts possibles, 140 hors temps
+  mu-elevation-laterale-halteres (accessory) 0.0003 : muscle_volume -0.003, discipline_structure +0.002, exercise_fit +0.005
+  mu-y-raise-banc-incline (accessory) 0.0003 : discipline_structure +0.002, stimulus_fatigue +0.010
+  mu-ecarte-poulie-vis-a-vis-milieu (accessory) 0.0002 : muscle_volume -0.003, discipline_structure +0.002, stimulus_fatigue +0.010
+jour 2 : 394 ajouts possibles, 0 hors temps
+  mu-mollets-donkey (accessory) 0.0008 : muscle_volume +0.013, stimulus_fatigue -0.006
+  mu-mollets-poids-du-corps-marche (accessory) 0.0008 : muscle_volume +0.013, stimulus_fatigue -0.006
+  mu-mollets-presse (accessory) 0.0008 : muscle_volume +0.013, stimulus_fatigue -0.006
+  {ability: {push: 3, pull: 3, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {streetWorkout: 0.8, mobility: 0.2}, pool: 162, poolByKind: {compound: 23, accessory: 26, core: 26, skillStatic: 13, skillDynamic: 4, mobility: 70}, rejected: {equipment: 221, level: 546, reserved: 8, excluded: 1, discipline: 101}, goals: [sw-traction-pronation]}
+  cs-planche-tuck : level
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+femme_30_street_workout_parc_3x45 : passe 1 13.6 ms ; cas complet 45 ms ; 29 exercices ; violations []
+jour 0 : 154 ajouts possibles, 0 hors temps
+  sw-dips-assistes-elastique (compound) -0.0001 : muscle_volume -0.006, discipline_structure +0.005
+  sw-suspension-supination (accessory) -0.0002 : discipline_structure +0.004, exercise_fit -0.003, stimulus_fatigue -0.022
+  mu-arch-hold (core) -0.0002 : stimulus_fatigue -0.008
+jour 1 : 41 ajouts possibles, 110 hors temps
+  mo-wall-slides (mobility) -0.0008 : discipline_dosage -0.010
+  mo-cobra (mobility) -0.0008 : discipline_dosage -0.009, exercise_fit -0.003
+  mo-etirement-bas-dips-barres (mobility) -0.0008 : discipline_dosage -0.009, exercise_fit -0.003
+jour 2 : 152 ajouts possibles, 0 hors temps
+  mu-isometries-cou-main (accessory) -0.0005 : stimulus_fatigue -0.011
+  mo-90-90-passif (mobility) -0.0010 : discipline_dosage -0.018, discipline_structure +0.003, stimulus_fatigue +0.011
+  sw-pompe-scapulaire (accessory) -0.0011 : muscle_volume -0.014, discipline_structure +0.008, exercise_fit -0.003, stimulus_fatigue -0.020
+  {ability: {push: 3, pull: 3, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {mobility: 1.0}, pool: 81, poolByKind: {mobility: 81}, rejected: {discipline: 929, equipment: 13, level: 16}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : discipline
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : discipline
+mobilite_seule_5x20 : passe 1 12.2 ms ; cas complet 43 ms ; 35 exercices ; violations []
+jour 0 : 73 ajouts possibles, 0 hors temps
+  mo-bascules-appui-doigts-avant (mobility) -0.0000 : 
+  mo-cheville-genou-mur (mobility) -0.0000 : 
+  mo-flechisseurs-hanche-semi-agenouille (mobility) -0.0000 : 
+jour 1 : 75 ajouts possibles, 0 hors temps
+  mo-90-90-passif (mobility) 0.0001 : 
+  mo-bascules-appui-doigts-avant (mobility) -0.0000 : 
+  mo-chaine-posterieure-flexion-avant-debout (mobility) -0.0000 : 
+jour 2 : 74 ajouts possibles, 0 hors temps
+  mo-etirement-gastrocnemiens-mur (mobility) 0.0000 : 
+  mo-chaine-posterieure-flexion-avant-debout (mobility) -0.0000 : 
+  mo-cheville-genou-mur (mobility) -0.0000 : 
+jour 3 : 74 ajouts possibles, 0 hors temps
+  mo-etirement-gastrocnemiens-mur (mobility) 0.0000 : 
+  mo-chaine-posterieure-flexion-avant-debout (mobility) -0.0000 : 
+  mo-cheville-genou-mur (mobility) -0.0000 : 
+jour 4 : 74 ajouts possibles, 0 hors temps
+  mo-90-90-passif (mobility) 0.0001 : 
+  mo-bascules-appui-doigts-avant (mobility) -0.0000 : 
+  mo-chaine-posterieure-flexion-avant-debout (mobility) -0.0000 : 
+  {ability: {push: 2, pull: 2, legs: 2, core: 2, power: 2, cardio: 2, mobility: 2}, globalLevel: 0, cautious: true, targets: {cardio: 1.0}, pool: 7, poolByKind: {cardioEasy: 5, cardioHard: 2}, rejected: {discipline: 992, level: 29, equipment: 5, cautious: 6}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : discipline
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : discipline
+cardio_debutant_marche_3x30 : passe 1 1.8 ms ; cas complet 11 ms ; 3 exercices ; violations []
+jour 0 : 6 ajouts possibles, 0 hors temps
+  ca-marche-rapide (cardioEasy) -0.0010 : exercise_fit -0.014
+  ca-marche-recuperation (cardioEasy) -0.0010 : exercise_fit -0.014
+  ca-velo-endurance (cardioEasy) -0.0035 : variety -0.083
+jour 1 : 6 ajouts possibles, 0 hors temps
+  ca-marche-rapide (cardioEasy) -0.0010 : exercise_fit -0.014
+  ca-marche-recuperation (cardioEasy) -0.0010 : exercise_fit -0.014
+  ca-velo-endurance (cardioEasy) -0.0035 : variety -0.083
+jour 2 : 6 ajouts possibles, 0 hors temps
+  ca-marche-rapide (cardioEasy) -0.0010 : exercise_fit -0.014
+  ca-marche-recuperation (cardioEasy) -0.0010 : exercise_fit -0.014
+  ca-velo-endurance (cardioEasy) -0.0035 : variety -0.083
+  {ability: {push: 4, pull: 4, legs: 6, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.7, cardio: 0.3}, pool: 410, poolByKind: {compound: 156, accessory: 168, core: 69, cardioEasy: 9, cardioHard: 8}, rejected: {level: 145, equipment: 67, too_easy: 17, joint: 7, reserved: 19, discipline: 374}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : equipment
+  mu-developpe-couche-barre : null
+homme_50_reprise_genou_3x45 : passe 1 22.1 ms ; cas complet 70 ms ; 14 exercices ; violations []
+jour 0 : 376 ajouts possibles, 28 hors temps
+  mu-oiseau-halteres (accessory) 0.0011 : joint_load +0.004, stimulus_fatigue +0.006
+  mu-developpe-couche-barre (compound) 0.0009 : joint_load +0.004, discipline_dosage -0.004, muscle_volume -0.010, exercise_fit +0.020, stimulus_fatigue -0.021
+  mu-t-raise-banc-incline (accessory) 0.0007 : joint_load +0.004, exercise_fit -0.008, stimulus_fatigue +0.012
+jour 1 : 404 ajouts possibles, 0 hors temps
+  mu-windmill-kettlebell (compound) -0.0003 : exercise_fit -0.007, stimulus_fatigue +0.004
+  mu-hyperextension-45-dos (core) -0.0004 : muscle_volume +0.006, pattern_balance -0.012, stimulus_fatigue +0.003
+  mu-arch-hold (core) -0.0004 : muscle_volume +0.006, pattern_balance -0.012, exercise_fit -0.003, stimulus_fatigue +0.003
+jour 2 : 408 ajouts possibles, 0 hors temps
+  mu-arch-hold (core) -0.0035 : discipline_dosage -0.044, muscle_volume +0.006, exercise_fit -0.003, stimulus_fatigue -0.005
+  mu-v-up (core) -0.0037 : discipline_dosage -0.044, exercise_fit -0.005, stimulus_fatigue +0.015
+  mu-planche-commando (core) -0.0038 : discipline_dosage -0.044, exercise_fit -0.003, stimulus_fatigue +0.005
+  {ability: {push: 4, pull: 4, legs: 4, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.8, mobility: 0.2}, pool: 480, poolByKind: {compound: 158, accessory: 168, core: 67, mobility: 87}, rejected: {level: 154, equipment: 48, excluded: 2, joint: 8, reserved: 27, too_easy: 9, discipline: 311}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+lombalgie_musculation_3x50 : passe 1 31.2 ms ; cas complet 91 ms ; 25 exercices ; violations []
+jour 0 : 329 ajouts possibles, 142 hors temps
+  mu-nordic-hamstring-curl-assiste (accessory) 0.0017 : joint_load +0.004, muscle_volume +0.007, discipline_structure +0.006, exercise_fit -0.004, stimulus_fatigue -0.011
+  mu-leg-curl-assis (accessory) 0.0017 : joint_load +0.005, muscle_volume +0.007, discipline_structure +0.006, exercise_fit -0.004, stimulus_fatigue -0.012
+  mu-nordic-hamstring-curl-negatif (accessory) 0.0016 : joint_load +0.004, muscle_volume +0.007, discipline_structure +0.006, exercise_fit -0.004, stimulus_fatigue -0.018
+jour 1 : 472 ajouts possibles, 0 hors temps
+  mu-mollets-donkey (accessory) 0.0018 : joint_load +0.005, muscle_volume +0.003, discipline_structure +0.005, stimulus_fatigue -0.006
+  mu-mollets-poids-du-corps-marche (accessory) 0.0018 : joint_load +0.005, muscle_volume +0.003, discipline_structure +0.005, stimulus_fatigue -0.006
+  mu-mollets-presse (accessory) 0.0018 : joint_load +0.005, muscle_volume +0.003, discipline_structure +0.005, stimulus_fatigue -0.006
+jour 2 : 101 ajouts possibles, 371 hors temps
+  mu-copenhagen-plank (accessory) -0.0006 : muscle_volume -0.003, stimulus_fatigue -0.008
+  mu-wall-sit (accessory) -0.0008 : muscle_volume -0.004, exercise_fit -0.004, stimulus_fatigue -0.010
+  mu-tenue-statique-barre-olympique (accessory) -0.0013 : muscle_volume -0.009, exercise_fit -0.002, stimulus_fatigue -0.015
+  {ability: {push: 5, pull: 6, legs: 5, core: 5, power: 5, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {calisthenics: 1.0}, pool: 128, poolByKind: {accessory: 31, compound: 33, core: 41, skillStatic: 19, skillDynamic: 4}, rejected: {equipment: 328, level: 256, too_easy: 46, joint: 39, reserved: 31, discipline: 211}, goals: []}
+  cs-planche-tuck : joint
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+poignet_calisthenie_3x60 : passe 1 8.9 ms ; cas complet 31 ms ; 17 exercices ; violations []
+jour 0 : 123 ajouts possibles, 0 hors temps
+  sw-releve-jambes-tendues-suspendu (core) 0.0017 : discipline_structure -0.003, time_use +0.026, exercise_fit +0.002, stimulus_fatigue -0.003
+  cs-suspension-un-bras (skillStatic) 0.0015 : joint_load +0.003, muscle_volume -0.006, discipline_structure +0.007, time_use +0.026, exercise_fit -0.003, stimulus_fatigue -0.041
+  sw-windshield-wiper-tuck (core) 0.0015 : discipline_structure -0.003, time_use +0.026, exercise_fit -0.005, stimulus_fatigue +0.011
+jour 1 : 122 ajouts possibles, 0 hors temps
+  sw-skater-squat (compound) 0.0006 : joint_load +0.004, exercise_fit -0.003, stimulus_fatigue -0.015
+  sw-shrimp-squat-bras-libres (compound) 0.0003 : joint_load +0.004, stimulus_fatigue -0.015
+  sw-pistol-squat-negatif (compound) 0.0003 : joint_load +0.004, stimulus_fatigue -0.020
+jour 2 : 122 ajouts possibles, 0 hors temps
+  cs-l-sit (skillStatic) 0.0070 : joint_load -0.011, muscle_volume -0.018, discipline_structure +0.098, time_use +0.005, exercise_fit +0.016, stimulus_fatigue +0.016
+  cs-suspension-un-bras (skillStatic) 0.0007 : muscle_volume -0.006, discipline_structure +0.015, time_use +0.005, exercise_fit -0.003, stimulus_fatigue -0.043
+  sw-pistol-squat-negatif (compound) 0.0003 : joint_load +0.002, time_use +0.005, stimulus_fatigue -0.014
+  {ability: {push: 2, pull: 4, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {calisthenics: 0.7, mobility: 0.3}, pool: 156, poolByKind: {compound: 23, accessory: 25, core: 26, skillStatic: 10, skillDynamic: 4, mobility: 68}, rejected: {equipment: 256, level: 516, reserved: 7, too_easy: 3, discipline: 101}, goals: [sw-traction-pronation, cs-crow]}
+  cs-planche-tuck : level
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+femme_22_calisthenie_debutante_maison : passe 1 13.1 ms ; cas complet 42 ms ; 31 exercices ; violations []
+jour 0 : 145 ajouts possibles, 0 hors temps
+  mu-pushdown-elastique (accessory) -0.0002 : discipline_dosage -0.027, muscle_volume +0.039, discipline_structure -0.009, stimulus_fatigue -0.016
+  mo-etirement-biceps-mur (mobility) -0.0003 : discipline_dosage -0.007, discipline_structure +0.004, stimulus_fatigue +0.002
+  mo-etirement-capsule-posterieure-bras-croise (mobility) -0.0003 : discipline_dosage -0.007, discipline_structure +0.004, stimulus_fatigue +0.002
+jour 1 : 135 ajouts possibles, 9 hors temps
+  mu-pushdown-elastique (accessory) 0.0026 : muscle_volume +0.039, discipline_structure -0.003, stimulus_fatigue -0.013
+  sw-pompe-genoux (compound) 0.0026 : muscle_volume +0.018, discipline_structure +0.003, exercise_fit +0.007, stimulus_fatigue +0.017
+  sw-pompe (compound) 0.0024 : muscle_volume +0.018, discipline_structure +0.002, exercise_fit +0.005, stimulus_fatigue +0.017
+jour 2 : 148 ajouts possibles, 0 hors temps
+  mo-chaine-posterieure-flexion-avant-debout (mobility) 0.0000 : 
+  mo-wall-slides (mobility) -0.0000 : 
+  mo-cobra (mobility) -0.0001 : 
+  {ability: {push: 5, pull: 5, legs: 5, core: 5, power: 5, cardio: 5, mobility: 4}, globalLevel: 1, cautious: false, targets: {crossfit: 0.7, cardio: 0.3}, pool: 194, poolByKind: {compound: 39, accessory: 24, core: 43, power: 13, skillStatic: 28, skillDynamic: 15, conditioning: 24, cardioEasy: 4, cardioHard: 4}, rejected: {equipment: 421, level: 222, too_easy: 31, discipline: 171}, goals: []}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : too_easy
+  ca-sortie-longue : equipment
+  mu-developpe-couche-barre : equipment
+homme_35_crossfit_maison_kettlebell : passe 1 11.6 ms ; cas complet 38 ms ; 18 exercices ; violations []
+jour 0 : 185 ajouts possibles, 4 hors temps
+  cf-plank-jacks (conditioning) 0.0008 : muscle_volume -0.012, discipline_structure +0.020, exercise_fit -0.003, stimulus_fatigue +0.008
+  mu-arch-rocks (core) 0.0008 : discipline_dosage -0.004, muscle_volume +0.023, discipline_structure -0.005, exercise_fit -0.004, stimulus_fatigue +0.002
+  cf-jumping-jacks (conditioning) 0.0006 : muscle_volume -0.016, discipline_structure +0.020, exercise_fit -0.003, stimulus_fatigue +0.008
+jour 1 : 44 ajouts possibles, 144 hors temps
+  cf-jumping-jacks (conditioning) 0.0007 : muscle_volume -0.012, discipline_structure +0.020, exercise_fit -0.003
+  cf-plank-jacks (conditioning) 0.0007 : muscle_volume -0.012, discipline_structure +0.020, exercise_fit -0.003
+  mu-gainage-ventral-coudes (core) 0.0005 : muscle_volume +0.012, discipline_structure -0.003, stimulus_fatigue -0.009
+jour 2 : 150 ajouts possibles, 38 hors temps
+  mu-arch-rocks (core) 0.0011 : muscle_volume +0.020, exercise_fit -0.004, stimulus_fatigue -0.005
+  mu-heel-touch (core) 0.0011 : muscle_volume +0.020, exercise_fit -0.010, stimulus_fatigue +0.011
+  mu-around-the-world-kettlebell (core) 0.0010 : muscle_volume +0.020, exercise_fit -0.003, stimulus_fatigue -0.013
+jour 3 : 193 ajouts possibles, 0 hors temps
+  ca-corde-lestee (cardioHard) -0.0011 : discipline_dosage -0.010, discipline_structure -0.003
+  ca-corde-unipodale (cardioHard) -0.0011 : discipline_dosage -0.010, discipline_structure -0.003
+  ca-corde-croises (cardioHard) -0.0026 : discipline_dosage -0.024, discipline_structure -0.005
+  {ability: {push: 5, pull: 3, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {musculation: 1.0}, pool: 113, poolByKind: {compound: 33, accessory: 54, core: 26}, rejected: {equipment: 199, level: 289, too_easy: 10, reserved: 7, discipline: 421}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+musculation_maison_halteres_4x45 : passe 1 8.3 ms ; cas complet 27 ms ; 23 exercices ; violations []
+jour 0 : 75 ajouts possibles, 32 hors temps
+  mu-isometries-cou-main (accessory) -0.0001 : 
+  mu-copenhagen-plank-genou (accessory) -0.0004 : muscle_volume -0.002, exercise_fit -0.004, stimulus_fatigue +0.005
+  mu-extension-doigts-elastique (accessory) -0.0004 : exercise_fit -0.003, stimulus_fatigue -0.010
+jour 1 : 108 ajouts possibles, 0 hors temps
+  mu-releve-jambes-allonge (core) -0.0000 : muscle_volume +0.005, stimulus_fatigue -0.014
+  mu-rotation-interne-haltere-couche (accessory) -0.0002 : muscle_volume +0.005, exercise_fit -0.004, stimulus_fatigue -0.014
+  mu-flutter-kicks (core) -0.0002 : muscle_volume +0.005, exercise_fit -0.005, stimulus_fatigue -0.014
+jour 2 : 107 ajouts possibles, 0 hors temps
+  mu-releve-jambes-allonge (core) -0.0001 : stimulus_fatigue -0.007
+  mu-isometries-cou-main (accessory) -0.0003 : stimulus_fatigue -0.014
+  mu-flutter-kicks (core) -0.0003 : exercise_fit -0.005, stimulus_fatigue -0.007
+jour 3 : 107 ajouts possibles, 0 hors temps
+  mu-rotation-interne-haltere-couche (accessory) -0.0002 : muscle_volume +0.002, exercise_fit -0.004, stimulus_fatigue -0.009
+  mu-isometries-cou-main (accessory) -0.0004 : stimulus_fatigue -0.014
+  mu-extension-doigts-elastique (accessory) -0.0004 : muscle_volume +0.002, exercise_fit -0.003, stimulus_fatigue -0.021
+  {ability: {push: 9, pull: 10, legs: 6, core: 6, power: 6, cardio: 4, mobility: 4}, globalLevel: 3, cautious: false, targets: {calisthenics: 0.9, mobility: 0.1}, pool: 247, poolByKind: {accessory: 33, compound: 21, core: 41, skillStatic: 39, skillDynamic: 38, mobility: 75}, rejected: {equipment: 399, too_easy: 150, level: 111, reserved: 31, discipline: 101}, goals: [cs-planche]}
+  cs-planche-tuck : too_easy
+  sl-muscle-up-leste : equipment
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+elite_calisthenie_6x90 : passe 1 23.1 ms ; cas complet 65 ms ; 23 exercices ; violations []
+jour 0 : 242 ajouts possibles, 0 hors temps
+  mo-pont-dorsal (mobility) 0.0004 : discipline_dosage -0.003, time_use +0.005, exercise_fit +0.003
+  sw-windshield-wiper-tuck (core) 0.0003 : discipline_dosage -0.003, muscle_volume +0.004, discipline_structure -0.004, time_use +0.012, exercise_fit -0.004, stimulus_fatigue +0.008
+  mo-90-90-passif (mobility) 0.0003 : time_use +0.004
+jour 1 : 245 ajouts possibles, 0 hors temps
+  sw-windshield-wiper-tuck (core) 0.0003 : discipline_dosage -0.003, muscle_volume +0.004, discipline_structure -0.004, time_use +0.012, exercise_fit -0.004, stimulus_fatigue +0.008
+  sw-releve-genoux-oblique (core) 0.0003 : discipline_dosage -0.003, muscle_volume +0.004, discipline_structure -0.004, time_use +0.012, exercise_fit -0.004, stimulus_fatigue +0.008
+  sw-releve-jambes-tendues-suspendu (core) 0.0002 : discipline_dosage -0.003, discipline_structure -0.004, time_use +0.012, stimulus_fatigue -0.002
+jour 2 : 242 ajouts possibles, 0 hors temps
+  mo-pont-dorsal (mobility) 0.0004 : discipline_dosage -0.003, time_use +0.005, exercise_fit +0.003
+  sw-windshield-wiper-tuck (core) 0.0003 : discipline_dosage -0.003, muscle_volume +0.004, discipline_structure -0.004, time_use +0.012, exercise_fit -0.004, stimulus_fatigue +0.008
+  mo-90-90-passif (mobility) 0.0003 : time_use +0.004
+jour 3 : 243 ajouts possibles, 0 hors temps
+  mo-pont-dorsal (mobility) 0.0004 : discipline_dosage -0.003, time_use +0.005, exercise_fit +0.003
+  sw-windshield-wiper-tuck (core) 0.0003 : discipline_dosage -0.003, muscle_volume +0.004, discipline_structure -0.004, time_use +0.012, exercise_fit -0.004, stimulus_fatigue +0.008
+  mo-90-90-passif (mobility) 0.0003 : time_use +0.004
+jour 4 : 243 ajouts possibles, 0 hors temps
+  sw-windshield-wiper-tuck (core) 0.0003 : discipline_dosage -0.003, muscle_volume +0.004, discipline_structure -0.004, time_use +0.012, exercise_fit -0.004, stimulus_fatigue +0.008
+  sw-releve-genoux-oblique (core) 0.0003 : discipline_dosage -0.003, muscle_volume +0.004, discipline_structure -0.004, time_use +0.012, exercise_fit -0.004, stimulus_fatigue +0.008
+  sw-releve-jambes-tendues-suspendu (core) 0.0002 : discipline_dosage -0.003, discipline_structure -0.004, time_use +0.012, stimulus_fatigue -0.002
+jour 5 : 244 ajouts possibles, 0 hors temps
+  cs-l-sit (skillStatic) 0.0007 : discipline_dosage -0.005, muscle_volume -0.011, discipline_structure +0.003, time_use +0.021, exercise_fit +0.004, stimulus_fatigue +0.014
+  cs-l-sit-barres-paralleles (skillStatic) 0.0004 : discipline_dosage -0.005, muscle_volume -0.011, discipline_structure +0.003, time_use +0.021, stimulus_fatigue +0.014
+  cs-l-sit-sol (skillStatic) 0.0004 : discipline_dosage -0.005, muscle_volume -0.011, discipline_structure +0.003, time_use +0.021, stimulus_fatigue +0.014
+  {ability: {push: 5, pull: 4, legs: 8, core: 5, power: 5, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {streetWorkout: 0.4, streetlifting: 0.5, calisthenics: 0.1}, pool: 350, poolByKind: {compound: 123, accessory: 131, core: 56, skillStatic: 28, skillDynamic: 12}, rejected: {level: 256, equipment: 158, too_easy: 33, reserved: 31, discipline: 211}, goals: [sl-traction-lestee, sl-dips-leste, sl-muscle-up-leste, sl-squat-competition]}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : level
+  sl-squat-competition : null
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+streetlifting_debutant_3x60 : passe 1 23.3 ms ; cas complet 70 ms ; 23 exercices ; violations []
+jour 0 : 268 ajouts possibles, 74 hors temps
+  sw-traction-pronation (compound) 0.0045 : goal_specificity +0.031, muscle_volume -0.009, pattern_balance +0.015, exercise_fit +0.010
+  sw-traction-sautee (compound) 0.0034 : goal_specificity +0.031, discipline_dosage -0.003, muscle_volume -0.010, pattern_balance +0.015, exercise_fit -0.004, stimulus_fatigue +0.012
+  sw-traction-commando (compound) 0.0033 : goal_specificity +0.031, muscle_volume -0.010, pattern_balance +0.015, exercise_fit -0.004, stimulus_fatigue -0.002
+jour 1 : 75 ajouts possibles, 268 hors temps
+  mu-hollow-body-hold (core) 0.0004 : muscle_volume -0.004, pattern_balance +0.015, discipline_structure -0.003, exercise_fit -0.005, stimulus_fatigue +0.006
+  sl-dead-hang-leste (accessory) 0.0004 : muscle_volume -0.004, pattern_balance +0.015, exercise_fit -0.007
+  mu-superman (core) 0.0004 : discipline_dosage -0.002, muscle_volume +0.004, pattern_balance +0.015, discipline_structure -0.005, exercise_fit -0.008, stimulus_fatigue +0.010
+jour 2 : 342 ajouts possibles, 0 hors temps
+  mu-nordic-hamstring-curl (accessory) 0.0021 : discipline_dosage -0.027, muscle_volume +0.055, pattern_balance +0.015, discipline_structure -0.007, exercise_fit -0.005, stimulus_fatigue -0.016
+  mu-pont-fessier-pieds-sureleves (accessory) 0.0012 : discipline_dosage -0.027, muscle_volume +0.055, pattern_balance +0.015, discipline_structure -0.007, exercise_fit -0.020, stimulus_fatigue -0.006
+  mu-nordic-hamstring-curl-negatif (accessory) 0.0012 : discipline_dosage -0.027, muscle_volume +0.055, pattern_balance +0.015, discipline_structure -0.007, exercise_fit -0.018, stimulus_fatigue -0.016
+  {ability: {push: 3, pull: 3, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {cardio: 0.545, mobility: 0.105, generalFitness: 0.35}, pool: 144, poolByKind: {compound: 17, accessory: 22, core: 25, cardioEasy: 9, cardioHard: 2, mobility: 69}, rejected: {equipment: 230, level: 332, reserved: 8, discipline: 325}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : null
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : equipment
+forme_generale_exterieur_3x40 : passe 1 10.4 ms ; cas complet 31 ms ; 21 exercices ; violations []
+jour 0 : 62 ajouts possibles, 74 hors temps
+  mo-chaine-posterieure-flexion-avant-debout (mobility) -0.0006 : discipline_dosage -0.006, exercise_fit -0.003
+  mo-marche-talons (mobility) -0.0006 : discipline_dosage -0.006, exercise_fit -0.003
+  mo-cheville-genou-mur (mobility) -0.0006 : discipline_dosage -0.006, exercise_fit -0.003
+jour 1 : 79 ajouts possibles, 59 hors temps
+  mu-mountain-climbers (core) 0.0039 : muscle_volume +0.053, exercise_fit -0.004, stimulus_fatigue -0.015
+  mu-wall-sit (accessory) 0.0023 : muscle_volume +0.047, pattern_balance -0.012, exercise_fit -0.004, stimulus_fatigue -0.026
+  mo-etirement-gastrocnemiens-mur (mobility) 0.0017 : muscle_volume +0.020, stimulus_fatigue -0.006
+jour 2 : 43 ajouts possibles, 94 hors temps
+  mo-chaine-posterieure-flexion-avant-debout (mobility) -0.0006 : discipline_dosage -0.006, exercise_fit -0.003
+  mo-marche-talons (mobility) -0.0006 : discipline_dosage -0.006, exercise_fit -0.003
+  mo-cheville-genou-mur (mobility) -0.0006 : discipline_dosage -0.006, exercise_fit -0.003
+  {ability: {push: 2, pull: 2, legs: 2, core: 2, power: 2, cardio: 2, mobility: 2}, globalLevel: 0, cautious: true, targets: {cardio: 0.4, mobility: 0.6}, pool: 68, poolByKind: {cardioEasy: 3, cardioHard: 2, mobility: 63}, rejected: {discipline: 882, level: 52, equipment: 31, cautious: 6}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : discipline
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : discipline
+senior_72_mobilite_marche_4x30 : passe 1 7.6 ms ; cas complet 24 ms ; 28 exercices ; violations []
+jour 0 : 55 ajouts possibles, 4 hors temps
+  mo-flechisseurs-hanche-semi-agenouille (mobility) -0.0000 : 
+  mo-pigeon-sol (mobility) -0.0000 : 
+  mo-cobra (mobility) -0.0000 : 
+jour 1 : 62 ajouts possibles, 0 hors temps
+  mo-cars-cheville (mobility) -0.0007 : discipline_dosage -0.008
+  mo-inchworm (mobility) -0.0007 : discipline_dosage -0.008
+  mo-table-inversee (mobility) -0.0007 : discipline_dosage -0.008
+jour 2 : 58 ajouts possibles, 0 hors temps
+  mo-dislocations-epaules-baton (mobility) -0.0004 : discipline_dosage -0.005
+  mo-flechisseurs-hanche-semi-agenouille (mobility) -0.0004 : discipline_dosage -0.005
+  mo-pigeon-sol (mobility) -0.0004 : discipline_dosage -0.005
+jour 3 : 65 ajouts possibles, 0 hors temps
+  ca-marche-recuperation (cardioEasy) -0.0027 : variety -0.063
+  ca-footing-endurance-fondamentale (cardioEasy) -0.0034 : joint_load -0.013
+  mo-pigeon-sol (mobility) -0.0034 : discipline_dosage -0.041
+  {ability: {push: 4, pull: 4, legs: 4, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.8, mobility: 0.2}, pool: 488, poolByKind: {compound: 164, accessory: 168, core: 69, mobility: 87}, rejected: {level: 154, equipment: 50, reserved: 27, too_easy: 9, discipline: 311}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+femme_60_musculation_salle_2x45 : passe 1 25.6 ms ; cas complet 76 ms ; 17 exercices ; violations []
+jour 0 : 479 ajouts possibles, 0 hors temps
+  mu-elevation-laterale-buste-appuye-banc-incline (accessory) 0.0006 : discipline_dosage -0.038, muscle_volume +0.044, stimulus_fatigue +0.009
+  mu-cuban-press (accessory) 0.0003 : discipline_dosage -0.038, muscle_volume +0.042, exercise_fit -0.005, stimulus_fatigue +0.017
+  mu-rowing-menton-poulie (accessory) 0.0002 : discipline_dosage -0.038, muscle_volume +0.042, exercise_fit -0.006, stimulus_fatigue +0.017
+jour 1 : 78 ajouts possibles, 402 hors temps
+  mu-copenhagen-plank (accessory) -0.0005 : discipline_dosage -0.002, stimulus_fatigue -0.013
+  mu-tenue-statique-barre-olympique (accessory) -0.0009 : exercise_fit -0.003, stimulus_fatigue -0.025
+  mu-isometries-cou-elastique (accessory) -0.0011 : exercise_fit -0.007, stimulus_fatigue -0.025
+  {ability: {push: 4, pull: 4, legs: 4, core: 4, power: 4, cardio: 5, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.5, cardio: 0.5}, pool: 432, poolByKind: {compound: 164, accessory: 168, core: 69, cardioEasy: 16, cardioHard: 15}, rejected: {level: 149, equipment: 56, reserved: 19, too_easy: 9, discipline: 374}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : null
+  mu-developpe-couche-barre : null
+homme_40_cardio_musculation_50_50 : passe 1 23.3 ms ; cas complet 68 ms ; 16 exercices ; violations []
+jour 0 : 431 ajouts possibles, 0 hors temps
+  ca-corde-sauts-simples (cardioEasy) -0.0002 : discipline_dosage -0.005, exercise_fit +0.003
+  ca-marche-rapide (cardioEasy) -0.0005 : exercise_fit -0.007
+  ca-marche-recuperation (cardioEasy) -0.0005 : exercise_fit -0.007
+jour 1 : 413 ajouts possibles, 13 hors temps
+  mu-tirage-vertical-prise-large-pronation (compound) -0.0001 : muscle_volume -0.009, exercise_fit +0.005, stimulus_fatigue +0.012
+  mu-rowing-menton-halteres (accessory) -0.0003 : exercise_fit -0.008, stimulus_fatigue +0.016
+  mu-rowing-menton-poulie (accessory) -0.0003 : exercise_fit -0.008, stimulus_fatigue +0.016
+jour 2 : 425 ajouts possibles, 1 hors temps
+  mu-rowing-menton-halteres (accessory) -0.0006 : discipline_dosage -0.007, muscle_volume +0.004, exercise_fit -0.008, stimulus_fatigue +0.009
+  mu-rowing-menton-poulie (accessory) -0.0006 : discipline_dosage -0.007, muscle_volume +0.004, exercise_fit -0.008, stimulus_fatigue +0.009
+  mu-elevation-frontale-halteres (accessory) -0.0006 : discipline_dosage -0.007, stimulus_fatigue +0.004
+jour 3 : 429 ajouts possibles, 0 hors temps
+  ca-corde-sauts-simples (cardioEasy) -0.0002 : discipline_dosage -0.005, exercise_fit +0.003
+  ca-marche-rapide (cardioEasy) -0.0005 : exercise_fit -0.007
+  ca-marche-recuperation (cardioEasy) -0.0005 : exercise_fit -0.007
+  {ability: {push: 4, pull: 4, legs: 4, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.7, cardio: 0.1, mobility: 0.2}, pool: 505, poolByKind: {compound: 164, accessory: 168, core: 69, cardioEasy: 9, cardioHard: 8, mobility: 87}, rejected: {level: 158, equipment: 76, reserved: 27, too_easy: 9, discipline: 264}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : equipment
+  mu-developpe-couche-barre : null
+trois_disciplines_70_20_10 : passe 1 33.2 ms ; cas complet 96 ms ; 29 exercices ; violations []
+jour 0 : 496 ajouts possibles, 0 hors temps
+  mu-gainage-lateral-coude (core) -0.0003 : muscle_volume -0.004
+  mu-planche-rkc (core) -0.0005 : muscle_volume -0.004
+  mu-copenhagen-plank (accessory) -0.0005 : discipline_dosage -0.004, stimulus_fatigue -0.006
+jour 1 : 489 ajouts possibles, 8 hors temps
+  mu-woodchop-haut-bas (core) -0.0007 : discipline_dosage -0.010, stimulus_fatigue +0.015
+  mu-planche-rkc (core) -0.0008 : discipline_dosage -0.005, muscle_volume -0.004, stimulus_fatigue +0.003
+  mu-gainage-ventral-coudes (core) -0.0008 : discipline_dosage -0.006, muscle_volume -0.004, exercise_fit +0.003, stimulus_fatigue -0.008
+jour 2 : 493 ajouts possibles, 0 hors temps
+  mu-planche-rkc (core) -0.0004 : discipline_dosage -0.008, time_use +0.003, stimulus_fatigue +0.008
+  mo-foam-roller-routine (mobility) -0.0004 : discipline_dosage -0.010, time_use +0.003, exercise_fit +0.004
+  mu-elevation-frontale-halteres (accessory) -0.0005 : discipline_dosage -0.011, time_use +0.003, stimulus_fatigue +0.005
+  {ability: {push: 2, pull: 2, legs: 2, core: 2, power: 2, cardio: 2, mobility: 2}, globalLevel: 0, cautious: true, targets: {musculation: 1.0}, pool: 227, poolByKind: {compound: 82, accessory: 111, core: 34}, rejected: {level: 371, equipment: 12, cautious: 2, reserved: 6, discipline: 421}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+niveaux_inconnus_sans_poids : passe 1 10.0 ms ; cas complet 32 ms ; 16 exercices ; violations []
+jour 0 : 219 ajouts possibles, 0 hors temps
+  mu-developpe-couche-smith (compound) 0.0009 : muscle_volume +0.008, stimulus_fatigue +0.011
+  mu-developpe-halteres-assis (compound) 0.0007 : muscle_volume +0.008, stimulus_fatigue -0.004
+  mu-developpe-couche-barre (compound) 0.0007 : muscle_volume +0.008, exercise_fit +0.006, stimulus_fatigue -0.022
+jour 1 : 17 ajouts possibles, 202 hors temps
+  mu-gainage-ventral-coudes (core) 0.0005 : discipline_structure +0.004, exercise_fit +0.005, stimulus_fatigue -0.010
+  mu-gainage-ventral-bras-tendus (core) 0.0000 : discipline_structure +0.004, stimulus_fatigue -0.010
+  mu-bear-hold (core) -0.0000 : discipline_structure +0.004, exercise_fit -0.004, stimulus_fatigue -0.006
+  {ability: {push: 5, pull: 5, legs: 5, core: 5, power: 5, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.4, streetWorkout: 0.6}, pool: 443, poolByKind: {compound: 157, accessory: 169, core: 69, skillStatic: 31, skillDynamic: 17}, rejected: {level: 258, too_easy: 31, equipment: 65, reserved: 31, discipline: 211}, goals: []}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+sans_objectif_mode_libre : passe 1 26.1 ms ; cas complet 78 ms ; 21 exercices ; violations []
+jour 0 : 436 ajouts possibles, 0 hors temps
+  mu-back-squat-barre-haute (compound) -0.0002 : discipline_dosage -0.006, muscle_volume +0.007, exercise_fit +0.004, stimulus_fatigue -0.025
+  mu-souleve-de-terre-conventionnel (compound) -0.0005 : discipline_dosage -0.006, muscle_volume +0.003, exercise_fit +0.002, stimulus_fatigue -0.019
+  mu-back-squat-barre-basse (compound) -0.0005 : discipline_dosage -0.006, muscle_volume +0.007, stimulus_fatigue -0.022
+jour 1 : 436 ajouts possibles, 0 hors temps
+  mu-fente-marchee-halteres (compound) -0.0013 : discipline_dosage -0.018, muscle_volume +0.006, exercise_fit -0.003, stimulus_fatigue -0.005
+  mu-leg-curl-assis (accessory) -0.0014 : discipline_dosage -0.018, muscle_volume +0.006, exercise_fit -0.005, stimulus_fatigue -0.005
+  mu-nordic-hamstring-curl-assiste (accessory) -0.0014 : discipline_dosage -0.018, muscle_volume +0.006, exercise_fit -0.005, stimulus_fatigue -0.005
+jour 2 : 436 ajouts possibles, 0 hors temps
+  mu-curl-barre-droite (accessory) -0.0011 : discipline_dosage -0.011, stimulus_fatigue -0.003
+  mu-curl-halteres-simultane (accessory) -0.0011 : discipline_dosage -0.011, stimulus_fatigue -0.003
+  mu-nordic-hamstring-curl-assiste (accessory) -0.0011 : discipline_dosage -0.011, exercise_fit -0.005, stimulus_fatigue -0.003
+  {ability: {push: 3, pull: 3, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {cardio: 0.35, mobility: 0.15, generalFitness: 0.5}, pool: 150, poolByKind: {compound: 17, accessory: 37, core: 26, cardioEasy: 2, mobility: 68}, rejected: {equipment: 224, level: 332, reserved: 8, discipline: 325}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : null
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : equipment
+objectif_habitude_seul : passe 1 8.1 ms ; cas complet 26 ms ; 15 exercices ; violations []
+jour 0 : 0 ajouts possibles, 144 hors temps
+jour 1 : 146 ajouts possibles, 1 hors temps
+  mu-rowing-menton-halteres (accessory) -0.0018 : discipline_dosage -0.062, muscle_volume +0.040, discipline_structure -0.003, exercise_fit -0.003, stimulus_fatigue +0.029
+  mu-elevation-laterale-halteres (accessory) -0.0025 : discipline_dosage -0.062, muscle_volume +0.029, discipline_structure -0.003, exercise_fit +0.011, stimulus_fatigue -0.005
+  mu-elevation-laterale-elastique (accessory) -0.0030 : discipline_dosage -0.062, muscle_volume +0.029, discipline_structure -0.003, exercise_fit +0.003, stimulus_fatigue -0.005
+jour 2 : 116 ajouts possibles, 28 hors temps
+  mu-rowing-menton-halteres (accessory) 0.0016 : discipline_dosage -0.012, muscle_volume +0.031, exercise_fit -0.003, stimulus_fatigue +0.015
+  mu-elevation-laterale-halteres (accessory) 0.0009 : discipline_dosage -0.012, muscle_volume +0.019, exercise_fit +0.011, stimulus_fatigue -0.021
+  mu-elevation-laterale-elastique (accessory) 0.0003 : discipline_dosage -0.012, muscle_volume +0.019, exercise_fit +0.003, stimulus_fatigue -0.021
+  {ability: {push: 6, pull: 6, legs: 6, core: 6, power: 6, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {streetWorkout: 0.4, calisthenics: 0.6}, pool: 146, poolByKind: {accessory: 32, compound: 36, core: 41, skillStatic: 23, skillDynamic: 14}, rejected: {equipment: 336, level: 253, too_easy: 62, reserved: 31, discipline: 211}, goals: [cs-front-lever]}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+objectif_figure_front_lever : passe 1 14.3 ms ; cas complet 44 ms ; 27 exercices ; violations []
+jour 0 : 140 ajouts possibles, 0 hors temps
+  sw-pompe-sphinx (accessory) -0.0002 : muscle_volume -0.009, discipline_structure +0.005, stimulus_fatigue +0.002
+  mu-reverse-nordic (accessory) -0.0003 : discipline_structure -0.002, stimulus_fatigue -0.003
+  mu-wall-sit (accessory) -0.0006 : discipline_dosage +0.003, exercise_fit -0.010, stimulus_fatigue -0.002
+jour 1 : 138 ajouts possibles, 0 hors temps
+  cs-l-sit-barres-paralleles (skillStatic) 0.0015 : discipline_dosage -0.002, muscle_volume +0.017, stimulus_fatigue +0.006
+  cs-l-sit-sol (skillStatic) 0.0015 : discipline_dosage -0.002, muscle_volume +0.017, stimulus_fatigue +0.006
+  mu-hollow-body-hold (core) 0.0008 : discipline_dosage -0.004, muscle_volume +0.018, discipline_structure -0.003
+jour 2 : 138 ajouts possibles, 0 hors temps
+  cs-l-sit-barres-paralleles (skillStatic) 0.0015 : discipline_dosage -0.002, muscle_volume +0.017, stimulus_fatigue +0.006
+  cs-l-sit-sol (skillStatic) 0.0015 : discipline_dosage -0.002, muscle_volume +0.017, stimulus_fatigue +0.006
+  cs-l-sit-anneaux (skillStatic) 0.0001 : muscle_volume +0.017, stimulus_fatigue +0.006, novelty -0.100
+jour 3 : 141 ajouts possibles, 0 hors temps
+  mu-hollow-body-hold (core) -0.0006 : discipline_dosage -0.009, muscle_volume +0.004, discipline_structure -0.007, time_use +0.011, stimulus_fatigue -0.003
+  sw-toes-to-bar-negatif (core) -0.0007 : discipline_dosage -0.010, muscle_volume -0.004, time_use +0.011, exercise_fit -0.003, stimulus_fatigue -0.003
+  sw-shrimp-squat-bras-libres (compound) -0.0007 : discipline_dosage -0.016, muscle_volume -0.004, discipline_structure +0.005, time_use +0.011, stimulus_fatigue -0.009
+  {ability: {push: 5, pull: 5, legs: 5, core: 5, power: 5, cardio: 5, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.1, cardio: 0.8, mobility: 0.1}, pool: 157, poolByKind: {accessory: 16, compound: 16, core: 35, cardioEasy: 11, cardioHard: 14, mobility: 65}, rejected: {equipment: 413, level: 138, too_easy: 28, reserved: 39, discipline: 264}, goals: [ca-sortie-longue]}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : null
+  mu-developpe-couche-barre : equipment
+semi_marathon : passe 1 14.4 ms ; cas complet 45 ms ; 22 exercices ; violations []
+jour 0 : 152 ajouts possibles, 0 hors temps
+  mo-90-90-passif (mobility) -0.0003 : discipline_structure -0.003, exercise_fit +0.003
+  mo-mobilite-cou-trois-plans (mobility) -0.0004 : discipline_structure -0.002
+  mo-retraction-menton (mobility) -0.0004 : discipline_structure -0.002
+jour 1 : 147 ajouts possibles, 0 hors temps
+  mo-mobilite-cou-trois-plans (mobility) -0.0003 : discipline_structure -0.002
+  mo-retraction-menton (mobility) -0.0003 : discipline_structure -0.002
+  mo-flechisseurs-hanche-semi-agenouille (mobility) -0.0003 : discipline_structure -0.003
+jour 2 : 155 ajouts possibles, 0 hors temps
+  mo-90-90-passif (mobility) -0.0003 : discipline_structure -0.003, exercise_fit +0.003
+  mo-mobilite-cou-trois-plans (mobility) -0.0004 : discipline_structure -0.002
+  mo-retraction-menton (mobility) -0.0004 : discipline_structure -0.002
+jour 3 : 152 ajouts possibles, 0 hors temps
+  mo-90-90-passif (mobility) -0.0003 : discipline_structure -0.003, exercise_fit +0.003
+  mo-mobilite-cou-trois-plans (mobility) -0.0004 : discipline_structure -0.002
+  mo-retraction-menton (mobility) -0.0004 : discipline_structure -0.002
+  {ability: {push: 2, pull: 2, legs: 2, core: 2, power: 2, cardio: 2, mobility: 2}, globalLevel: 0, cautious: true, targets: {musculation: 0.6, cardio: 0.4}, pool: 234, poolByKind: {compound: 82, accessory: 111, core: 34, cardioEasy: 7}, rejected: {level: 400, equipment: 17, cautious: 8, reserved: 6, discipline: 374}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : null
+prudent_sante_musculation : passe 1 8.9 ms ; cas complet 29 ms ; 12 exercices ; violations []
+jour 0 : 16 ajouts possibles, 212 hors temps
+  mu-respiration-90-90 (core) 0.0001 : muscle_volume +0.003, discipline_structure +0.005, exercise_fit -0.005, stimulus_fatigue -0.015
+  mu-battle-rope-ondulations (accessory) 0.0000 : discipline_structure +0.005, exercise_fit -0.005, stimulus_fatigue -0.010
+  mu-arch-hold (core) -0.0001 : muscle_volume -0.004, discipline_structure +0.005, stimulus_fatigue -0.015
+jour 1 : 0 ajouts possibles, 228 hors temps
+  {ability: {push: 4, pull: 3, legs: 4, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.7, cardio: 0.3}, pool: 384, poolByKind: {compound: 145, accessory: 153, core: 69, cardioEasy: 9, cardioHard: 8}, rejected: {level: 194, equipment: 61, reserved: 19, too_easy: 6, excluded: 1, discipline: 374}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : equipment
+  mu-developpe-couche-barre : null
+tres_grand_lourd : passe 1 21.1 ms ; cas complet 62 ms ; 17 exercices ; violations []
+jour 0 : 377 ajouts possibles, 0 hors temps
+  mu-woodchop-haut-bas (core) -0.0006 : muscle_volume -0.003, exercise_fit -0.004
+  mu-pallof-press-debout (core) -0.0006 : muscle_volume -0.003, exercise_fit -0.003, stimulus_fatigue -0.006
+  mu-rotation-machine (core) -0.0006 : exercise_fit -0.007
+jour 1 : 381 ajouts possibles, 0 hors temps
+  mu-planche-rkc (core) -0.0023 : discipline_dosage -0.029, muscle_volume +0.003, exercise_fit -0.004, stimulus_fatigue +0.007
+  mu-pull-over-haltere (accessory) -0.0025 : discipline_dosage -0.029, exercise_fit -0.003, stimulus_fatigue +0.007
+  mu-hollow-body-hold (core) -0.0026 : discipline_dosage -0.029, muscle_volume +0.003, exercise_fit -0.004, stimulus_fatigue -0.006
+jour 2 : 377 ajouts possibles, 0 hors temps
+  mu-planche-rkc (core) -0.0000 : discipline_dosage -0.003, muscle_volume +0.003, exercise_fit -0.004, stimulus_fatigue +0.010
+  mu-ecarte-poulie-vis-a-vis-milieu (accessory) -0.0001 : discipline_dosage -0.003, stimulus_fatigue +0.010
+  mu-woodchop-haut-bas (core) -0.0002 : discipline_dosage -0.006, muscle_volume +0.003, exercise_fit -0.004, stimulus_fatigue +0.012
+  {ability: {push: 4, pull: 4, legs: 4, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {streetWorkout: 0.7, mobility: 0.3}, pool: 215, poolByKind: {compound: 48, accessory: 32, core: 41, skillStatic: 15, skillDynamic: 4, mobility: 75}, rejected: {equipment: 369, level: 326, reserved: 19, too_easy: 9, discipline: 101}, goals: []}
+  cs-planche-tuck : level
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+petite_legere : passe 1 15.4 ms ; cas complet 49 ms ; 26 exercices ; violations []
+jour 0 : 205 ajouts possibles, 0 hors temps
+  mu-bird-dog (core) -0.0003 : muscle_volume -0.003, exercise_fit -0.003, stimulus_fatigue +0.016
+  sw-windshield-wiper-tuck (core) -0.0007 : muscle_volume -0.021, discipline_structure +0.009, exercise_fit -0.004, stimulus_fatigue +0.016
+  sw-releve-genoux-oblique (core) -0.0007 : muscle_volume -0.021, discipline_structure +0.009, exercise_fit -0.004, stimulus_fatigue +0.016
+jour 1 : 207 ajouts possibles, 0 hors temps
+  sw-dead-hang (accessory) -0.0000 : discipline_structure +0.004, stimulus_fatigue -0.017
+  sw-active-hang (accessory) -0.0001 : muscle_volume -0.003, discipline_structure +0.004, exercise_fit -0.004, stimulus_fatigue +0.003
+  sw-suspension-supination (accessory) -0.0004 : discipline_structure +0.004, exercise_fit -0.004, stimulus_fatigue -0.027
+jour 2 : 207 ajouts possibles, 0 hors temps
+  mo-chaine-posterieure-flexion-avant-debout (mobility) -0.0010 : discipline_dosage -0.013
+  mo-cobra (mobility) -0.0011 : discipline_dosage -0.013, exercise_fit -0.003
+  mo-etirement-bas-dips-barres (mobility) -0.0011 : discipline_dosage -0.013, exercise_fit -0.003
+  {ability: {push: 3, pull: 3, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {cardio: 0.375, mobility: 0.375, generalFitness: 0.25}, pool: 152, poolByKind: {compound: 17, accessory: 37, core: 26, cardioEasy: 4, mobility: 68}, rejected: {equipment: 223, level: 332, reserved: 7, discipline: 325}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : null
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : equipment
+sept_jours_courts_7x20 : passe 1 17.2 ms ; cas complet 50 ms ; 31 exercices ; violations []
+jour 0 : 63 ajouts possibles, 85 hors temps
+  mo-etirement-gastrocnemiens-mur (mobility) 0.0002 : 
+  mo-90-90-passif (mobility) 0.0002 : 
+  mo-flechisseurs-hanche-semi-agenouille (mobility) 0.0002 : 
+jour 1 : 0 ajouts possibles, 149 hors temps
+jour 2 : 73 ajouts possibles, 75 hors temps
+  mo-90-90-passif (mobility) 0.0003 : 
+  mo-chaine-posterieure-flexion-avant-debout (mobility) 0.0002 : 
+  mo-90-90-actif-leves (mobility) 0.0002 : discipline_dosage +0.002
+jour 3 : 0 ajouts possibles, 147 hors temps
+jour 4 : 0 ajouts possibles, 147 hors temps
+jour 5 : 0 ajouts possibles, 149 hors temps
+jour 6 : 69 ajouts possibles, 76 hors temps
+  mo-chaine-posterieure-flexion-avant-debout (mobility) 0.0001 : 
+  mo-flechisseurs-hanche-semi-agenouille (mobility) 0.0000 : 
+  mo-pigeon-sol (mobility) 0.0000 : 
+  {ability: {push: 5, pull: 5, legs: 6, core: 5, power: 5, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.6, streetWorkout: 0.2, cardio: 0.2}, pool: 547, poolByKind: {compound: 178, accessory: 189, core: 72, skillStatic: 44, skillDynamic: 22, cardioEasy: 20, cardioHard: 22}, rejected: {level: 261, too_easy: 33, excluded: 3, reserved: 31, discipline: 164}, goals: []}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : null
+  mu-developpe-couche-barre : null
+materiel_complet_gouts_marques : passe 1 37.3 ms ; cas complet 106 ms ; 25 exercices ; violations []
+jour 0 : 541 ajouts possibles, 0 hors temps
+  mu-leg-curl-couche (accessory) -0.0004 : discipline_dosage -0.006
+  mu-curl-ischio-glisse (accessory) -0.0004 : discipline_dosage -0.006, exercise_fit -0.004, stimulus_fatigue +0.008
+  mu-curl-ischio-sangles (accessory) -0.0004 : discipline_dosage -0.006, exercise_fit -0.004, stimulus_fatigue +0.008
+jour 1 : 537 ajouts possibles, 2 hors temps
+  mu-copenhagen-plank (accessory) -0.0002 : stimulus_fatigue -0.009
+  mu-ecarte-poulie-vis-a-vis-milieu (accessory) -0.0004 : discipline_dosage -0.010, muscle_volume +0.003, stimulus_fatigue +0.004
+  mu-tenue-statique-barre-olympique (accessory) -0.0005 : exercise_fit -0.002, stimulus_fatigue -0.009
+jour 2 : 541 ajouts possibles, 0 hors temps
+  mu-elevation-laterale-halteres (accessory) -0.0004 : discipline_dosage -0.007, exercise_fit +0.004, stimulus_fatigue -0.003
+  mu-elevation-frontale-halteres (accessory) -0.0005 : discipline_dosage -0.007, stimulus_fatigue +0.003
+  mu-ecarte-poulie-vis-a-vis-milieu (accessory) -0.0005 : discipline_dosage -0.007, stimulus_fatigue +0.006
+jour 3 : 542 ajouts possibles, 0 hors temps
+  mu-leg-curl-debout-unilateral (accessory) -0.0020 : discipline_dosage -0.023, muscle_volume +0.005, exercise_fit -0.004, stimulus_fatigue -0.008
+  mu-leg-curl-couche (accessory) -0.0020 : discipline_dosage -0.024, stimulus_fatigue -0.003
+  mu-rotation-interne-poulie (accessory) -0.0021 : discipline_dosage -0.023, stimulus_fatigue -0.008
