@@ -66,6 +66,9 @@ const List<List<int>> disciplineAffinity = <List<int>>[
   <int>[90, 90, 0, 0, 0, 0, 0, 0],
 ];
 
+/// Catégorie de la base du travail direct des avant-bras.
+const String forearmCategory = 'Avant-bras et préhension';
+
 /// Affinité d'un exercice de repli (séance qui, sinon, serait vide).
 const int fallbackAffinity = 10;
 
@@ -1152,6 +1155,10 @@ PlanContext _build(ContextInputs inputs) {
   var likedInPool = 0;
   var knownInPool = 0;
   final crossfitWanted = targets[DisciplineClass.crossfit.index] > 0;
+  final gripWanted =
+      targets[DisciplineClass.streetWorkout.index] > 0 ||
+      targets[DisciplineClass.streetlifting.index] > 0 ||
+      targets[DisciplineClass.calisthenics.index] > 0;
   final flexibilityWanted =
       targets[DisciplineClass.mobility.index] >= 0.3 ||
       targets[DisciplineClass.calisthenics.index] > 0;
@@ -1321,8 +1328,11 @@ PlanContext _build(ContextInputs inputs) {
         if (e.pattern == MovementPattern.souplesse && !flexibilityWanted) {
           rejection = Rejections.reserved;
         }
-        // Le travail direct du cou ne se programme pas d'office.
-        if (e.family == MovementFamily.cou) {
+        // Le travail direct du cou ne se programme pas d'office ; celui
+        // des avant-bras et de la préhension, seulement pour les
+        // disciplines de barre (street workout, streetlifting, calisthénie).
+        if (e.family == MovementFamily.cou ||
+            (e.category == forearmCategory && !gripWanted)) {
           rejection = Rejections.reserved;
         }
       }
@@ -1461,12 +1471,12 @@ PlanContext _build(ContextInputs inputs) {
             continue;
           }
           // Les muscles secondaires comptent pour une demi-série (comptage
-        // fractionnaire), sauf dans le gainage : ce que la base y liste en
-        // secondaire stabilise, il ne travaille pas.
-        if (credit < 2 && t.kind == SlotKind.core) {
-          continue;
-        }
-        groupsOut.add(g.index);
+          // fractionnaire), sauf dans le gainage : ce que la base y liste en
+          // secondaire stabilise, il ne travaille pas.
+          if (credit < 2 && t.kind == SlotKind.core) {
+            continue;
+          }
+          groupsOut.add(g.index);
           valuesOut.add(credit);
         }
       }
