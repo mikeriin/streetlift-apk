@@ -1,7 +1,11 @@
-// Tests de propriétés sur des profils aléatoires seedés (D4.8) : chaque
-// profil est joué de bout en bout — création, revue, variantes, passe 2,
-// bloc suivant, restructuration — et chaque invariant du CONTRAT.md est
-// revérifié par un code indépendant de la recherche (`PlanInspector`).
+// Tests de propriétés sur des profils aléatoires seedés (D4.8). Chaque
+// profil passe par la création et une action de revue ; une part fixe des
+// profils, choisie par la graine, passe aussi par les variantes (1 sur 2),
+// la passe 2 (1 sur 2), le bloc suivant (1 sur 8) et la restructuration
+// (1 sur 8) ; le déterminisme est rejoué sur 1 profil sur 4 (création,
+// revue) et 1 sur 12 (passe 2). Les contraintes sont relues par
+// `PlanInspector`, qui ne connaît pas la recherche mais partage avec le
+// moteur les règles d'admission du vivier (`CONTRAT.md`, § 8).
 //
 // Le lot complet compte 10 240 profils, répartis en huit fichiers
 // `properties_<n>_test.dart` pour que `dart test` les joue en parallèle.
@@ -597,6 +601,13 @@ List<String> checkSeed(Catalog catalog, int seed) {
     }
     for (final v in proposal.block.pass1.validate()) {
       fail('$label : passe 1 ${v.path} ${v.code}');
+    }
+    final restructured = inspector.hardViolations(
+      currentRequest,
+      proposal.block.pass1,
+    );
+    if (restructured.isNotEmpty) {
+      fail('$label : contraintes dures ${restructured.take(3).join(' | ')}');
     }
     final newWeeks = proposal.block.pass2.weeks;
     if (newWeeks.length != weeks) {

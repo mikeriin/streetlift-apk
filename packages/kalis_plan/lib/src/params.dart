@@ -1,13 +1,13 @@
 /// Paramètres chiffrés de `kalis_plan`. Chaque valeur est justifiée dans
 /// `CONTRAT.md` (§ Paramètres) par une référence citée, une mesure
-/// (`docs/`), ou dite « choix raisonné ».
+/// (`docs/`), ou dite « hypothèse ».
 library;
 
 /// Poids des composantes de la note d'un programme (D4.2).
 ///
 /// La note de sécurité (récupération, fatigue, articulations) passe avant
-/// la note de qualité (priorité lexicographique par paliers de
-/// [PlanParams.safetyStep]) ; à palier égal, la note globale départage.
+/// la note de qualité par son poids dans l'objectif
+/// ([PlanParams.safetyPriority]), sans palier.
 final class ScoreWeights {
   /// Poids par défaut.
   const ScoreWeights({
@@ -214,7 +214,8 @@ final class PlanParams {
   /// Poids des composantes de la note.
   final ScoreWeights weights;
 
-  /// Largeur d'un palier de sécurité (priorité lexicographique).
+  /// Largeur d'un palier de sécurité : une « Autre proposition » n'est
+  /// retenue que si elle reste au palier de la meilleure ou au-dessus.
   final double safetyStep;
 
   /// Part de la note de sécurité dans la note globale affichée.
@@ -304,7 +305,7 @@ final class PlanParams {
   final double cardioHardShare;
 
   /// Séries fractionnaires créditées par minute de renforcement (mesuré,
-  /// `docs/VALIDATION.md`) : sert à réduire les bandes de volume quand le
+  /// `docs/MESURES.md`, § 7) : sert à réduire les bandes de volume quand le
   /// temps disponible ne permet pas de les atteindre.
   final double creditsPerMinute;
 

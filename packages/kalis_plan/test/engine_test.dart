@@ -48,7 +48,8 @@ void main() {
       }
     });
 
-    test('le résultat ne dépend pas de l\'ordre des listes du profil', () {
+    test('le résultat ne dépend pas de l\'ordre des disponibilités, du '
+        'matériel, des niveaux et des goûts', () {
       for (final fixture in profiles.take(12)) {
         final p = fixture.profile;
         final shuffled = p.copyWith(
@@ -86,9 +87,23 @@ void main() {
   group('autre proposition', () {
     test('note à moins de 3 %, sécurité tenue, contraintes dures', () {
       const params = PlanParams.standard;
+      // Note de sécurité relue dans les composantes rendues (arrondies).
+      double safetyOf(Pass1Plan plan) {
+        final by = <String, double>{
+          for (final c in plan.score.components) c.code: c.value,
+        };
+        final w = params.weights;
+        return w.recovery * by['recovery']! +
+            w.fatigueBalance * by['fatigue_balance']! +
+            w.jointLoad * by['joint_load']!;
+      }
+
       for (final fixture in profiles) {
         final engine = KalisPlan();
         final best = engine.createPass1(catalog, requestFor(fixture.profile));
+        final floor =
+            (safetyOf(best) / params.safetyStep + 1e-3).floor() *
+            params.safetyStep;
         for (var seed = 1; seed <= 3; seed++) {
           final request = requestFor(fixture.profile, seed: seed);
           final other = engine.createPass1(catalog, request);
@@ -99,6 +114,11 @@ void main() {
             reason: label,
           );
           expect(other.validate(), isEmpty, reason: label);
+          expect(
+            safetyOf(other),
+            greaterThanOrEqualTo(floor - 1e-3),
+            reason: label,
+          );
           expect(
             other.score.total,
             greaterThanOrEqualTo(

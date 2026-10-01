@@ -23,9 +23,21 @@ viennent de `docs/MESURES.md` (relevé du simulateur) ; les 40 programmes types 
 ## 2. API
 
 `KalisPlan implements PlanEngine` (kalis_core). Toutes les méthodes sont des fonctions pures de leurs
-arguments : même requête, même résultat **à l'octet près** (JSON), quelle que soit l'instance, l'ordre des
-appels ou l'ordre des listes du profil. L'instance garde en mémoire la dernière suite de propositions pour
-ne pas la recalculer ; ce cache ne change aucun résultat (testé).
+arguments : même requête, même résultat **à l'octet près** (JSON), quelle que soit l'instance ou l'ordre des
+appels. L'instance garde en mémoire la dernière suite de propositions (pour un catalogue donné) afin de ne
+pas la recalculer ; ce cache ne change aucun résultat (testé).
+
+Portée exacte de cette garantie :
+
+- **Ordre des listes du profil.** Le programme ne dépend pas de l'ordre des disponibilités, du matériel,
+  des niveaux déclarés ni des goûts (testé sur 12 profils types, raisons d'en-tête exclues). L'ordre des
+  **objectifs** compte : c'est un ordre de priorité, et seuls les 8 premiers objectifs de performance sont
+  pris en compte. Un doublon dans les niveaux déclarés ou le matériel par lieu : le dernier l'emporte.
+- **Plateforme.** Le moteur n'utilise que des entiers de 64 bits, les quatre opérations et la racine carrée
+  des flottants IEEE 754 ; l'exponentielle et le logarithme du recuit sont calculés par le paquet
+  (`stableExp`, `stableLn`) et non par la bibliothèque mathématique de la machine. Le résultat doit donc
+  être le même sur toute machine native (x64, ARM) ; cela **n'a été vérifié que sur la machine du
+  contrôle** (x64). Le Web (JavaScript, entiers de 53 bits) n'est pas pris en charge.
 
 | Méthode | Entrée | Sortie | Rôle |
 | --- | --- | --- | --- |
@@ -78,7 +90,7 @@ la première qui l'écarte.
 | `prerequisite` | Aucun de ses prérequis n'est déclaré non acquis ; il n'est pas une variante plus dure d'un exercice non acquis. |
 | `reserved` | Haltérophilie, pliométrie et balistique : seulement avec du CrossFit au profil. Souplesse avancée : seulement avec au moins 30 % de mobilité ou de la calisthénie. Travail direct du cou : jamais d'office. Travail direct des avant-bras : seulement avec une discipline de barre. Sauf exercice su, aimé ou lié à un objectif. |
 | `too_easy` | Un polyarticulaire ou une figure sans charge réglable n'est pas trois paliers sous le niveau du groupe ; un exercice assisté n'est pas deux paliers sous ce niveau. Sauf exercice su, aimé ou visé par un objectif. |
-| `cautious` | Programme prudent (questionnaire santé « prudent » ou sans réponse, 65 ans et plus, moins de 18 ans) : ni impact (sauts, sprints, haltérophilie, corde à sauter, explosif), ni course à pied (cardio sans appui contraignant pour la cheville : marche, vélo, rameur, natation), ni fatigue systémique maximale ; le niveau de chaque groupe baisse d'un palier. |
+| `cautious` | Programme prudent (questionnaire santé « prudent » ou sans réponse, 65 ans et plus, moins de 18 ans) : ni impact (sauts, sprints, haltérophilie, corde à sauter, explosif), ni course à pied (cardio sans appui contraignant pour la cheville : marche, vélo, rameur, natation), ni fatigue systémique maximale ; le niveau de chaque groupe baisse d'un palier, sans descendre sous 2 (un niveau de 1 ou 2 ne change pas). Un profil sans référence au questionnaire (`healthScreening` absent) est traité comme « sans réponse ». |
 | `joint` | Contrainte forte sur une articulation ou travail direct d'une zone dont la gêne déclarée est d'au moins 4/10 : écarté. Contrainte modérée ou travail indirect : écarté à partir de 7/10. |
 | `equipment` | Le matériel et le lieu de l'exercice existent au moins un jour (matériel par lieu si le profil le donne). |
 | `time` | Sa dose minimale, échauffement compris, tient dans au moins un jour. |
@@ -175,8 +187,9 @@ diversité que pour « Autre proposition » (§ 3.7).
    retraits qui améliorent ; schémas de base encore manquants (avec échange) ; glouton élargi (36 candidats).
    Trois passages au plus.
 
-Le hasard vient d'une suite xorshift32 (Marsaglia 2003) dont la graine est un hachage FNV-1a de la requête ;
-les candidats sont triés par valeur puis par identifiant, et les égalités restantes sont départagées par
+Le hasard vient d'une suite xorshift32 (Marsaglia 2003) à graine fixe pour la meilleure proposition
+(graine 0), dérivée du rang de la proposition pour les suivantes (§ 3.7), de la graine et de l'emplacement
+visé pour une revue : à requête égale, la suite est toujours la même. Les candidats sont triés par valeur puis par identifiant, et les égalités restantes sont départagées par
 le hachage FNV-1a de l'identifiant de l'exercice : le résultat ne dépend d'aucun ordre d'itération.
 
 **Convergence mesurée** (`docs/MESURES.md`, § 5). L'objectif moyen des 40 profils types passe de 1,9520
@@ -185,7 +198,7 @@ améliore 21 profils et en dégrade 17, pour un gain moyen de 0,0004 sur une éc
 l'optimum : le programme rendu est le meilleur **trouvé**.
 
 **Sensibilité mesurée** (§ 6 du relevé). Multiplier un poids par 0,8 ou 1,2 change une bonne part des
-exercices (recouvrement de Jaccard de 0,40 à 0,60), pour un regret d'environ 0,001 : beaucoup de
+exercices (recouvrement de Jaccard de 0,39 à 0,52), pour un regret d'environ 0,001 : beaucoup de
 programmes sont presque équivalents au sens de la note. Les poids fixent des priorités, pas un classement
 fin entre exercices voisins ; c'est ce que « Autre proposition » exploite.
 
@@ -193,7 +206,7 @@ fin entre exercices voisins ; c'est ce que « Autre proposition » exploite.
 
 Les graines 1, 2, … d'une même requête forment une suite : la proposition `k` repart de la meilleure,
 subit un recuit avec une pénalité de ressemblance aux propositions déjà montrées (les 8 dernières), et
-n'est retenue que si elle garde le niveau de sécurité de la meilleure et une note à moins de 3 % de la
+n'est retenue que si elle garde le palier de sécurité de la meilleure (paliers de 0,05) et une note à moins de 3 % de la
 sienne ; parmi trois essais de pénalité décroissante, on garde le premier qui atteint un tiers d'exercices
 non verrouillés absents de chacune des propositions montrées, sinon le plus différent. Mesuré sur les
 profils types : note toujours au-dessus de 97 % de la meilleure (minimum mesuré : 98,1 %) ; le tiers est atteint
@@ -370,6 +383,7 @@ il est alors justifié par une mesure ou signalé comme tel au registre (§ 10).
 | Liste courte, anticipation, voisins | 6, 3, 12 | Hypothèse ; temps mesurés. |
 | Pénalité de changement | 0,01 par emplacement | Mesure : diff minimal (`docs/MESURES.md`, § 3). |
 | Tolérance et distance d'« Autre proposition » | 3 %, un tiers | D4.2. |
+| Palier de sécurité d'« Autre proposition » | 0,05 | Hypothèse : une autre proposition ne perd pas plus d'un palier de sécurité sur la meilleure. |
 | Part de la sécurité dans la note, priorité dans l'objectif | 0,3 ; +1,0 | Hypothèse ; aucune contrainte dure violée sur 10 240 profils. |
 | Poids de la note | § 3.4 | Hypothèse ; sensibilité mesurée (`docs/MESURES.md`, § 6). |
 
@@ -383,39 +397,64 @@ il est alors justifié par une mesure ou signalé comme tel au registre (§ 10).
 ### 7.6 Disciplines
 
 `disciplineAffinity` (0 à 100) dit quelles disciplines de la base nourrissent chaque discipline du profil :
-100 pour la discipline elle-même ; la musculation admet le street workout (60) et le streetlifting (50) ;
-le streetlifting admet la musculation (60), le street workout (60), la calisthénie (20–30) ; la calisthénie
-admet le street workout (60), la musculation et le streetlifting (30) ; le CrossFit admet la musculation
-(barres, haltères, kettlebells : 90 ; isolation : 20), le street workout et la calisthénie dynamique (70),
-le cardio (50) ; la forme générale admet musculation et street workout (90). Hypothèse d'ingénierie.
+0 = hors de la discipline. Hypothèse d'ingénierie.
+
+| Discipline du profil ↓ / de la base → | Musculation | Street workout | Streetlifting | Calisthénie statique | Calisthénie dynamique | CrossFit | Cardio | Mobilité |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Musculation | 100 | 60 | 50 | 0 | 0 | 0 | 0 | 0 |
+| Street workout | 40 | 100 | 50 | 30 | 60 | 0 | 0 | 0 |
+| Streetlifting | 60 | 60 | 100 | 20 | 30 | 0 | 0 | 0 |
+| Calisthénie | 30 | 60 | 30 | 100 | 100 | 0 | 0 | 0 |
+| CrossFit | 60 | 50 | 0 | 20 | 40 | 100 | 50 | 0 |
+| Cardio | 0 | 0 | 0 | 0 | 0 | 0 | 100 | 0 |
+| Mobilité | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 100 |
+| Forme générale (renforcement) | 90 | 90 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+Pour le CrossFit, la ligne est corrigée par nature d'exercice hors de sa propre discipline : isolation 20 ;
+mouvements de puissance et polyarticulaires à barre, haltères ou kettlebell de la musculation 90 ; street
+workout et calisthénie dynamique 70.
 
 ### 7.7 Seuils de 1RM
 
 Rapport du 1RM (charge totale) au poids du corps qui fait passer du niveau débutant aux suivants : squat
 0,75 / 1,25 / 1,75 ; charnière 1,0 / 1,5 / 2,0 ; développé couché 0,6 / 1,0 / 1,4 ; développé au-dessus
 de la tête 0,4 / 0,65 / 0,9 ; traction lestée 1,1 / 1,3 / 1,55 ; dips lesté 1,15 / 1,45 / 1,75 ; muscle-up
-lesté 1,02 / 1,1 / 1,2 ; tirages à charge externe 0,5 / 0,8 / 1,1. Seuils multipliés par 0,65 (haut du
+lesté 1,02 / 1,1 / 1,2 ; tirage vertical à charge externe 0,6 / 0,9 / 1,2 ; tirage horizontal à charge externe
+et haltérophilie 0,5 / 0,8 / 1,1. Seuils multipliés par 0,65 (haut du
 corps) ou 0,75 (bas du corps) pour une femme, 0,85 si le sexe n'est pas renseigné (pour un exercice lesté,
 le facteur ne porte que sur ce qui dépasse le poids du corps). Hypothèse d'ingénierie, sans publication :
 voir le registre (§ 10).
 
 ## 8. Invariants testés
 
+Les tests de propriétés jouent 10 240 profils aléatoires seedés (`test/properties*.dart`). Chacun passe par
+la création et une action de revue ; une part fixe, choisie par la graine, passe aussi par les variantes
+(1 sur 2), la passe 2 (1 sur 2), le bloc suivant (1 sur 8) et la restructuration (1 sur 8).
+
 | Invariant | Test |
 | --- | --- |
-| Aucune contrainte dure violée ; sortie valide au sens du contrat (`validate`) ; identifiants d'exercice du catalogue ; codes de raison du registre | `test/properties*.dart` : 10 240 profils aléatoires seedés, création, revue, variantes, passe 2, bloc suivant, restructuration ; `test/smoke_test.dart` : 40 profils types |
+| Aucune contrainte dure violée (relecture par `PlanInspector.hardViolations`) ; sortie valide au sens du contrat (`validate`) ; identifiants d'exercice du catalogue ; codes de raison du registre | `test/properties*.dart` : création et revue (10 240 profils), bloc suivant et restructuration (1 280 chacun) ; `test/smoke_test.dart` : 40 profils types |
 | Note relue = note rendue | idem (`PlanInspector.scoreOf`) |
-| Déterminisme à l'octet près (création, revue, passe 2, bloc suivant, restructuration) ; indépendance à l'ordre des listes du profil et au cache | `test/properties*.dart`, `test/engine_test.dart` |
-| Verrous intacts après régénération | `test/properties*.dart`, `test/engine_test.dart` |
+| Déterminisme à l'octet près sur deux moteurs neufs | `test/properties*.dart` : création et revue (1 profil sur 4), passe 2 (1 sur 12), bloc suivant et restructuration (tous ceux joués) ; `test/engine_test.dart` : 40 profils types, cache |
+| Indépendance à l'ordre des disponibilités, du matériel, des niveaux et des goûts | `test/engine_test.dart` (12 profils types) |
+| Verrous intacts après régénération (`keep_slot`, `require_exercise`, `exclude_exercise`) | `test/properties*.dart`, `test/engine_test.dart` ; `keep_day` : un cas dans `test/engine_test.dart` |
 | Diff minimal : objectif pénalisé du résultat ≥ celui de l'action seule ; le diff décrit exactement les changements | `test/properties*.dart` |
-| Variantes : admissibles ce jour-là, absentes de la séance, triées, au plus trois ciblées de natures distinctes | `test/properties*.dart` |
-| « Autre proposition » : note ≥ 97 % de la meilleure, sécurité tenue ; un tiers d'exercices différents quand le vivier le permet | `test/engine_test.dart` |
-| Passe 2 : semaines, flammes de 1 à 10, charges ≤ 90 % de la charge d'Epley et multiples du pas, épreuves, calibrage | `test/units_test.dart`, `test/properties*.dart` |
-| Restructuration : semaines passées intactes, portée respectée, nature des semaines conservée | `test/properties*.dart` |
-| Non-ressemblance au programme du propriétaire | `test/resemblance_test.dart` |
-| Pureté : ni Flutter, ni `dart:io`, ni horloge, ni hasard non seedé ; kalis_core pour seule dépendance | `test/purity_test.dart` |
-| Documents générés à jour | `test/docs_test.dart` |
-| Ligne de commande | `test/engine_test.dart` |
+| Variantes : admissibles ce jour-là, absentes de la séance, triées, au plus trois ciblées de natures distinctes | `test/properties*.dart` (1 profil sur 2) |
+| « Autre proposition » : note ≥ 97 % de la meilleure, palier de sécurité tenu, contraintes dures ; un tiers d'exercices différents quand le vivier le permet | `test/engine_test.dart` (40 profils types, graines 1 à 3) |
+| Passe 2 : nature des semaines, flammes de 1 à 10, charges ≥ 0, part du 1RM entre 0 et 1, aucune séance au-delà du temps | `test/properties*.dart` (1 profil sur 2) |
+| Passe 2 : charges ≤ 90 % de la charge d'Epley en haut de plage, multiples du pas déclaré ; épreuves, calibrage | `test/units_test.dart` (40 profils types) |
+| Restructuration : contraintes dures, semaines passées intactes, portée respectée, nature des semaines conservée | `test/properties*.dart` (1 profil sur 8) |
+| Non-ressemblance au programme du propriétaire | `test/resemblance_test.dart` (40 profils types, 600 profils aléatoires) |
+
+**Ce que la relecture vérifie par un code à part, et ce qu'elle partage.** `hardViolations` recalcule
+elle-même, sans passer par le vivier : matériel et lieu du jour, exercices détestés ou exclus, contrainte
+articulaire face à la gêne déclarée, doublons, séances vides, verrous, nombre d'exercices. Pour les règles
+`discipline`, `level`, `prerequisite`, `reserved`, `too_easy`, `cautious` et pour la durée d'une séance,
+elle s'appuie sur le même code d'admission et de durée que le moteur (`PlanContext`, `Scorer.timeOfDay`) :
+ces règles-là sont garanties **appliquées** (un exercice refusé par le vivier ne peut pas apparaître), mais
+une erreur dans la règle elle-même ne serait pas vue par les tests de propriétés. Elles sont couvertes par
+des cas écrits à la main (`test/engine_test.dart`, `test/units_test.dart`) et par la lecture des 40
+programmes. Les plages de répétitions ne font l'objet d'aucune propriété testée.
 
 ## 9. Limites connues
 
@@ -446,6 +485,12 @@ voir le registre (§ 10).
 - **Seuils de niveau par 1RM** et **table d'affinité** : hypothèses d'ingénierie (§ 7.6, 7.7).
 - **Séance de repli** : quand une limitation rend la discipline impraticable, le moteur propose de la
   mobilité et de la marche ; il ne remplace pas un avis médical (règle santé L13, portée par l'application).
+- **Diff minimal non garanti petit** : une action `cannot_do` ou `dislike` exclut l'exercice de toute la
+  semaine ; dans le pire cas mesuré, 12 autres emplacements changent (`docs/MESURES.md`, § 3).
+- **Relecture en partie partagée** : les règles d'admission du vivier ne sont pas revérifiées par un second
+  code (§ 8).
+- **Déterminisme entre machines** : construit pour être identique sur toute machine native, vérifié sur une
+  seule (§ 2) ; le Web n'est pas pris en charge.
 - **Catalogue** : le moteur hérite des champs calculés de la base (muscles, contraintes, difficulté) tels
   qu'ils sont ; `kalis_core/docs/RELECTURE_CATALOGUE.md` liste ce qui reste à relire.
 
@@ -453,7 +498,7 @@ voir le registre (§ 10).
 
 | Objet | État | Par qui, comment |
 | --- | --- | --- |
-| Contraintes dures, déterminisme, verrous, diff minimal, variantes, passe 2, blocs | Vérifié | Tests automatiques sur 10 240 profils aléatoires et 40 profils types (CI `ci-paquets.yml`) |
+| Contraintes dures, déterminisme, verrous, diff minimal, variantes, passe 2, blocs | Vérifié, dans la portée dite au § 8 (parts de profils par étape ; règles d'admission partagées avec le moteur) | Tests automatiques sur 10 240 profils aléatoires et 40 profils types (CI `ci-paquets.yml`) |
 | Temps de calcul (génération ≤ 1 s, régénération ≤ 300 ms) | Vérifié sur la machine du contrôle | `docs/MESURES.md`, § 2 et 3 ; à remesurer sur téléphone à l'intégration |
 | Programmes des 40 profils types | Lus en entier par l'auteur du lot (assistant), plusieurs tours de correction (`docs/VALIDATION.md`, § 2) | **Non relus par un professionnel diplômé** |
 | **Contenu sportif** (bandes de volume, plages, repos, semaines, seuils de gêne, seuils de niveau, table d'affinité, choix des exercices) | **Non relu par un professionnel diplômé** | À faire relire avant toute affirmation d'efficacité ou de sécurité ; le moteur ne pose aucun diagnostic et ne remplace pas un avis médical |

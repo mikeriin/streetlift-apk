@@ -3,6 +3,11 @@
 //   dart run kalis_plan:plan --profile <json> --seed <n> --pass 1|2
 //       [--locks <json>] [--start AAAA-MM-JJ] [--catalog <catalog.json.gz>]
 //
+// `--seed` vaut 0 et `--pass` vaut 1 quand ils sont absents. Codes de
+// sortie : 64 (ligne de commande), 65 (entrée invalide), 66 (fichier
+// illisible). Sans `--catalog`, le catalogue de kalis_core est cherché à
+// côté du paquet : lancer la commande depuis `packages/kalis_plan`.
+//
 // Écrit le programme (JSON) sur la sortie standard. `--profile` : fichier
 // JSON d'un `AthleteProfile` (ou d'un objet `{"profile": …}`) ; `--locks` :
 // fichier JSON d'une liste de `PlanLock`. `--pass 1` rend la passe 1 ;
@@ -34,6 +39,24 @@ String _defaultCatalogPath() {
 }
 
 void main(List<String> args) {
+  try {
+    _run(args);
+  } on FileSystemException catch (e) {
+    stderr.writeln('fichier illisible : ${e.path ?? e.message}');
+    exitCode = 66;
+  } on FormatException catch (e) {
+    stderr.writeln('entrée invalide : ${e.message}');
+    exitCode = 65;
+  } on TypeError {
+    stderr.writeln('entrée invalide : le JSON n\'a pas la forme attendue');
+    exitCode = 65;
+  } on ArgumentError catch (e) {
+    stderr.writeln('entrée invalide : ${e.message}');
+    exitCode = 65;
+  }
+}
+
+void _run(List<String> args) {
   final profilePath = _option(args, '--profile');
   final pass = int.tryParse(_option(args, '--pass') ?? '1');
   final seed = int.tryParse(_option(args, '--seed') ?? '0');

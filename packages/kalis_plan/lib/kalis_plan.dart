@@ -22,7 +22,8 @@ export 'src/context.dart'
         volumeBandsByLevel;
 export 'src/engine.dart'
     show KalisPlan, ReviewTrace, applyProfileDelta, blockIdFor;
-export 'src/hash.dart' show SeededRandom, fnv1a32, fnvMix;
+export 'src/hash.dart'
+    show SeededRandom, fnv1a32, fnvMix, stableExp, stableLn;
 export 'src/inspect.dart' show PlanInspector, PlanMetrics;
 export 'src/params.dart' show PlanParams, ScoreWeights;
 export 'src/pass2.dart'

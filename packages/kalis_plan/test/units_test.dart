@@ -1,6 +1,7 @@
 // Briques du moteur : hachage, proximité, identifiants d'emplacement,
 // nature des semaines, flammes, charges de départ, mise à jour du profil.
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart';
@@ -330,6 +331,97 @@ void main() {
         contains('## $kalisPlanVersion'),
       );
       expect(KalisPlan().engineVersion, kalisPlanVersion);
+    });
+  });
+
+  group('fonctions élémentaires portables', () {
+    test('stableExp suit exp à 1e-12 près sur [-40 ; 0]', () {
+      for (var i = 0; i <= 4000; i++) {
+        final x = -i / 100;
+        final want = math.exp(x);
+        expect((stableExp(x) - want).abs(), lessThanOrEqualTo(1e-12 * want));
+      }
+      expect(stableExp(0), 1);
+      expect(stableExp(3), 1);
+      expect(stableExp(-800), 0);
+    });
+
+    test('stableLn suit log à 1e-13 près de 1e-6 à 1e6', () {
+      for (var i = -600; i <= 600; i++) {
+        final x = math.pow(10, i / 100).toDouble();
+        expect((stableLn(x) - math.log(x)).abs(), lessThanOrEqualTo(1e-13 * 15));
+      }
+      expect(stableLn(1), 0);
+    });
+  });
+
+  group('charges de départ des 40 profils types', () {
+    test('jamais au-dessus de 90 % de la charge d\'Epley en haut de plage, '
+        'multiples du pas déclaré', () {
+      var checked = 0;
+      for (final fixture in loadProfiles()) {
+        final profile = fixture.profile;
+        final request = requestFor(profile);
+        final engine = KalisPlan();
+        final pass1 = engine.createPass1(catalog, request);
+        final pass2 = engine.createPass2(
+          catalog,
+          Pass2Request(request: request, pass1: pass1),
+        );
+        final levels = <String, MovementLevel>{
+          for (final l in profile.movementLevels) l.exerciseId: l,
+        };
+        final steps = <LoadType, double>{
+          for (final i in profile.loadIncrements) i.loadType: i.stepKg,
+        };
+        final least = <LoadType, double>{
+          for (final i in profile.loadIncrements)
+            if (i.minKg != null) i.loadType: i.minKg!,
+        };
+        final bw = profile.bodyWeightKg ?? 0;
+        for (final week in pass2.weeks) {
+          for (final day in week.days) {
+            for (final item in day.items) {
+              final load = item.startLoadKg;
+              if (load == null) {
+                continue;
+              }
+              final e = catalog.exercise(item.exerciseId);
+              expect(load, greaterThanOrEqualTo(0), reason: fixture.key);
+              final step = steps[e.loadType];
+              if (step != null && load > (least[e.loadType] ?? 0) + 1e-9) {
+                final ratio = load / step;
+                expect(
+                  (ratio - ratio.roundToDouble()).abs(),
+                  lessThan(1e-6),
+                  reason: '${fixture.key} ${item.exerciseId} : $load kg, '
+                      'pas $step',
+                );
+              }
+              final level = levels[item.exerciseId];
+              final low = level?.low;
+              final high = item.repsHigh;
+              if (level == null ||
+                  low == null ||
+                  high == null ||
+                  level.measure != LevelMeasure.oneRmKg ||
+                  item.kind == SetKind.test ||
+                  load <= (least[e.loadType] ?? 0) + 1e-9) {
+                continue;
+              }
+              final fraction = e.bodyweightFraction?.value ?? 0;
+              final bound = 0.9 * (low + fraction * bw) / (1 + high / 30);
+              expect(
+                load + fraction * bw,
+                lessThanOrEqualTo(bound + 1e-6),
+                reason: '${fixture.key} ${item.exerciseId} s${week.weekIndex}',
+              );
+              checked++;
+            }
+          }
+        }
+      }
+      expect(checked, greaterThan(20));
     });
   });
 }

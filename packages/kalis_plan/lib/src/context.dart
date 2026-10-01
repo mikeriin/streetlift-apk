@@ -856,7 +856,9 @@ PlanContext _build(ContextInputs inputs) {
   final age = inputs.startDate.year - profile.birthYear;
   final screening = profile.healthScreening?.outcome;
   final senior = age >= params.seniorAge;
+  // Questionnaire absent du profil : même prudence que « sans réponse ».
   final cautious =
+      screening == null ||
       screening == HealthScreeningOutcome.cautious ||
       screening == HealthScreeningOutcome.notAnswered ||
       senior ||
@@ -1030,7 +1032,7 @@ PlanContext _build(ContextInputs inputs) {
       }
     }
     if (cautious) {
-      a = a - 1 < 2 ? 2 : a - 1;
+      a = a > 2 ? a - 1 : a;
     }
     ability[g] = _clampAbility(a);
   }

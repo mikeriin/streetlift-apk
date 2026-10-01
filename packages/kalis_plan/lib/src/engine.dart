@@ -89,9 +89,10 @@ final class ReviewTrace {
 }
 
 final class _Chain {
-  _Chain(this.key, this.context, this.planner, this.weeks);
+  _Chain(this.key, this.catalog, this.context, this.planner, this.weeks);
 
   final String key;
+  final Catalog catalog;
   final PlanContext context;
   final Planner planner;
   final int weeks;
@@ -170,7 +171,9 @@ final class KalisPlan implements PlanEngine {
     final index = request.seed % alternativeCycle;
     final key = jsonEncode(request.copyWith(seed: 0).toJson());
     var chain = _chain;
-    if (chain == null || chain.key != key) {
+    if (chain == null ||
+        chain.key != key ||
+        !identical(chain.catalog, catalog)) {
       chain = _startChain(catalog, request, key);
       _chain = chain;
     }
@@ -246,6 +249,7 @@ final class KalisPlan implements PlanEngine {
     final chain =
         _Chain(
             key,
+            catalog,
             ctx,
             planner,
             request.blockWeeks ?? defaultBlockWeeks(ctx.globalLevel),

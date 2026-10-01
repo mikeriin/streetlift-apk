@@ -28,6 +28,65 @@ int fnvMix(int hash, int value) {
   return h;
 }
 
+/// Logarithme népérien de 2.
+const double _ln2 = 0.6931471805599453;
+
+/// Exponentielle de [x] pour [x] ≤ 0, calculée avec les seules opérations
+/// élémentaires IEEE 754 (réduction par moitiés, série de Taylor, carrés
+/// successifs) : contrairement à `dart:math`, qui s'en remet à la
+/// bibliothèque mathématique de la plateforme, le résultat est le même bit
+/// pour bit sur toute machine. Erreur relative inférieure à 1e-12 sur
+/// [-40 ; 0] ; 0 en dessous de −700.
+double stableExp(double x) {
+  if (x >= 0) {
+    return 1;
+  }
+  if (x < -700) {
+    return 0;
+  }
+  var r = x;
+  var halvings = 0;
+  while (r < -0.125) {
+    r *= 0.5;
+    halvings++;
+  }
+  var term = 1.0;
+  var sum = 1.0;
+  for (var n = 1; n <= 14; n++) {
+    term = term * r / n;
+    sum += term;
+  }
+  for (var i = 0; i < halvings; i++) {
+    sum *= sum;
+  }
+  return sum;
+}
+
+/// Logarithme népérien de [x] > 0 avec les seules opérations élémentaires
+/// IEEE 754 (réduction par puissances de 2, série de l'arc tangente
+/// hyperbolique) : même résultat bit pour bit sur toute machine.
+double stableLn(double x) {
+  var r = x;
+  var twos = 0;
+  while (r < 0.75) {
+    r *= 2;
+    twos--;
+  }
+  while (r >= 1.5) {
+    r *= 0.5;
+    twos++;
+  }
+  final z = (r - 1) / (r + 1);
+  final z2 = z * z;
+  var term = z;
+  var sum = z;
+  for (var n = 3; n <= 41; n += 2) {
+    term *= z2;
+    sum += term / n;
+  }
+  return 2 * sum + twos * _ln2;
+}
+
 /// Suite pseudo-aléatoire xorshift32 (Marsaglia 2003), entièrement
 /// déterminée par sa graine.
 final class SeededRandom {

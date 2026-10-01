@@ -290,8 +290,8 @@ final class PlanInspector {
     return changed + before.length - present;
   }
 
-  /// Objectif de la recherche pour [plan] : palier de sécurité × 2 + note
-  /// globale, moins la pénalité de changement par rapport à [reference].
+  /// Objectif de la recherche pour [plan] : sécurité + note globale (de 0
+  /// à 2), moins la pénalité de changement par rapport à [reference].
   double objective(
     PlanRequest request,
     Pass1Plan plan, {
@@ -355,7 +355,17 @@ final class PlanInspector {
         if (entry.kind != SlotKind.mobility) {
           work++;
         }
-        if (slot.locked) {
+        // Seul un emplacement que la requête verrouille vraiment échappe aux
+        // règles : un simple drapeau `locked` ne suffit pas.
+        final imposed =
+            slot.locked &&
+            request.locks.any(
+              (l) =>
+                  l.kind == LockKind.keepDay ||
+                  (l.kind != LockKind.excludeExercise &&
+                      (l.slotId == slot.slotId || l.exerciseId == id)),
+            );
+        if (imposed) {
           lockedSeconds += entry.scheme.secondsFor(ctx.defaultSets(entry, d));
           if (entry.needsWarmup) {
             lockedWarm = true;

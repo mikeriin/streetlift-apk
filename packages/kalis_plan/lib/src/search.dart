@@ -4,7 +4,6 @@
 /// pénalité (diff minimal, D4.6).
 library;
 
-import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'context.dart';
@@ -698,7 +697,7 @@ final class Planner {
     var bestValue = current;
     final best = state.copy();
     final t0 = params.annealStartTemperature;
-    final ratio = params.annealEndTemperature / t0;
+    final lnRatio = stableLn(params.annealEndTemperature / t0);
     for (var it = 0; it < iterations; it++) {
       if (!_randomMove(state)) {
         continue;
@@ -707,8 +706,8 @@ final class Planner {
       final delta = value - current;
       var accept = delta >= 0;
       if (!accept && delta > -0.5) {
-        final temperature = t0 * math.pow(ratio, it / iterations);
-        accept = _random.nextDouble() < math.exp(delta / temperature);
+        final temperature = t0 * stableExp(lnRatio * it / iterations);
+        accept = _random.nextDouble() < stableExp(delta / temperature);
       }
       if (accept) {
         current = value;
