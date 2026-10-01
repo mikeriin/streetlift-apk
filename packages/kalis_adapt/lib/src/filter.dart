@@ -321,7 +321,8 @@ final class CapacityFilter {
     if (clip != null) {
       final nu = logLoad - h;
       final contradicts = bound ? (upper ? nu < 0 : nu > 0) : true;
-      if (contradicts && nu * nu > clip * clip * _innovationVar(jac, r, learn)) {
+      if (contradicts &&
+          nu * nu > clip * clip * _innovationVar(jac, r, learn)) {
         learn = false;
         final inflated =
             r + nu * nu / (clip * clip) - _innovationVar(jac, r, false);

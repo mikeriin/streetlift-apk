@@ -790,8 +790,7 @@ AdaptReview buildReview(
               for (final d in pass1.days)
                 for (final slot in d.slots)
                   if (!slot.locked &&
-                      (ctx.book.find(slot.exerciseId)?.zoneLevel(s.zone) ??
-                              0) >
+                      (ctx.book.find(slot.exerciseId)?.zoneLevel(s.zone) ?? 0) >
                           0)
                     slot.slotId,
             },

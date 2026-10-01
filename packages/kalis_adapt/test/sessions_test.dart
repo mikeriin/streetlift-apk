@@ -256,7 +256,10 @@ void main() {
           expect(t.loadKg, lessThanOrEqualTo(45));
         }
       }
-      expect(checkSession(catalog, w.profile, w.block, input.log, session, p), isEmpty);
+      expect(
+        checkSession(catalog, w.profile, w.block, input.log, session, p),
+        isEmpty,
+      );
     });
 
     test('zéro répétition à une charge légère : saisie douteuse', () {
@@ -461,10 +464,13 @@ void main() {
     final w = world(gym);
     final a = itemsOf(w, CapacityMode.loaded).first;
     final start = w.block.pass1.startDate;
-    SessionRecord at(String id, int offset) =>
-        sessionOf(w.block, w.day, id, start.addDays(offset), <SetRecord>[
-          setOf(a, 0, 0, kg: 40, reps: 8, flames: 7),
-        ]);
+    SessionRecord at(String id, int offset) => sessionOf(
+      w.block,
+      w.day,
+      id,
+      start.addDays(offset),
+      <SetRecord>[setOf(a, 0, 0, kg: 40, reps: 8, flames: 7)],
+    );
 
     test('une séance ajoutée avant la dernière est refusée, avec ou sans '
         'cache', () {

@@ -921,8 +921,7 @@ final class SessionRun {
           lowest = kg;
         }
         final target = o.target;
-        final reached =
-            !o.failed && (target == null || o.amount >= target.low);
+        final reached = !o.failed && (target == null || o.amount >= target.low);
         if (reached && (held == null || kg > held)) {
           held = kg;
         }
