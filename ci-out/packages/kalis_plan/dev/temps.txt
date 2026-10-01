@@ -1,0 +1,320 @@
+  {ability: {push: 3, pull: 3, legs: 4, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {cardio: 0.35, mobility: 0.15, generalFitness: 0.5}, pool: 120, poolByKind: {compound: 13, accessory: 15, core: 25, cardioEasy: 2, mobility: 65}, rejected: {equipment: 295, level: 291, reserved: 8, discipline: 325}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : null
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : equipment
+debutant_forme_generale_maison_2x30 : passe 1 214.0 ms ; cas complet 389 ms ; 12 exercices ; violations []
+  {ability: {push: 4, pull: 3, legs: 4, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.8, mobility: 0.2}, pool: 454, poolByKind: {compound: 155, accessory: 143, core: 69, mobility: 87}, rejected: {level: 199, equipment: 41, reserved: 27, too_easy: 6, excluded: 1, discipline: 311}, goals: [mu-back-squat-barre-haute]}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+femme_45_musculation_salle_4x60 : passe 1 319.4 ms ; cas complet 560 ms ; 32 exercices ; violations []
+  {ability: {push: 5, pull: 5, legs: 5, core: 5, power: 5, cardio: 5, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.2, cardio: 0.7, mobility: 0.1}, pool: 171, poolByKind: {accessory: 26, compound: 17, core: 35, cardioEasy: 11, cardioHard: 14, mobility: 68}, rejected: {equipment: 395, level: 138, too_easy: 32, reserved: 39, discipline: 264}, goals: [ca-footing-endurance-fondamentale]}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : null
+  mu-developpe-couche-barre : equipment
+coureur_cardio_3x45 : passe 1 36.6 ms ; cas complet 204 ms ; 20 exercices ; violations []
+  {ability: {push: 5, pull: 5, legs: 6, core: 5, power: 8, cardio: 5, mobility: 4}, globalLevel: 1, cautious: false, targets: {crossfit: 0.8, mobility: 0.2}, pool: 403, poolByKind: {compound: 84, accessory: 51, core: 49, power: 46, skillStatic: 36, skillDynamic: 20, conditioning: 38, cardioEasy: 6, cardioHard: 7, mobility: 66}, rejected: {equipment: 312, level: 215, too_easy: 40, discipline: 61, reserved: 8}, goals: [cd-muscle-up-barre-strict]}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : too_easy
+  ca-sortie-longue : equipment
+  mu-developpe-couche-barre : equipment
+crossfit_5x60 : passe 1 80.2 ms ; cas complet 203 ms ; 28 exercices ; violations []
+  {ability: {push: 7, pull: 6, legs: 6, core: 6, power: 6, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {calisthenics: 0.8, mobility: 0.2}, pool: 216, poolByKind: {accessory: 31, compound: 29, core: 41, skillStatic: 25, skillDynamic: 15, mobility: 75}, rejected: {equipment: 371, too_easy: 91, level: 229, reserved: 31, discipline: 101}, goals: [cs-front-lever, cs-planche-straddle]}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+calisthenie_figures_4x75 : passe 1 70.6 ms ; cas complet 295 ms ; 31 exercices ; violations []
+  {ability: {push: 8, pull: 8, legs: 8, core: 6, power: 6, cardio: 4, mobility: 4}, globalLevel: 2, cautious: false, targets: {streetWorkout: 0.25, streetlifting: 0.6, calisthenics: 0.15}, pool: 391, poolByKind: {compound: 148, accessory: 131, core: 56, skillStatic: 30, skillDynamic: 26}, rejected: {equipment: 155, too_easy: 148, level: 103, reserved: 31, discipline: 211}, goals: [sl-traction-lestee, sl-dips-leste, sl-muscle-up-leste, sl-squat-competition]}
+  cs-planche-tuck : too_easy
+  sl-muscle-up-leste : null
+  sl-squat-competition : null
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+street_streetlifting_4x90 : passe 1 57.2 ms ; cas complet 276 ms ; 21 exercices ; violations []
+  {ability: {push: 7, pull: 8, legs: 6, core: 6, power: 6, cardio: 4, mobility: 4}, globalLevel: 2, cautious: false, targets: {streetWorkout: 0.6, streetlifting: 0.2, calisthenics: 0.2}, pool: 132, poolByKind: {accessory: 31, compound: 26, core: 41, skillStatic: 18, skillDynamic: 16}, rejected: {equipment: 378, too_easy: 125, level: 162, reserved: 31, discipline: 211}, goals: [sw-traction-pronation, sl-traction-lestee, sl-dips-leste, sl-muscle-up-leste, sl-squat-competition]}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : equipment
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+street_sets_reps_4x60 : passe 1 30.8 ms ; cas complet 129 ms ; 28 exercices ; violations []
+  {ability: {push: 5, pull: 5, legs: 5, core: 4, power: 5, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {streetWorkout: 0.4, calisthenics: 0.6}, pool: 169, poolByKind: {accessory: 31, compound: 40, core: 41, skillStatic: 37, skillDynamic: 20}, rejected: {equipment: 332, level: 263, too_easy: 33, reserved: 31, discipline: 211}, goals: [cs-handstand]}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+street_calisthenie_5x60 : passe 1 28.7 ms ; cas complet 92 ms ; 21 exercices ; violations []
+  {ability: {push: 4, pull: 4, legs: 6, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 1.0}, pool: 374, poolByKind: {compound: 146, accessory: 159, core: 69}, rejected: {level: 140, joint: 28, excluded: 1, equipment: 39, too_easy: 17, reserved: 19, discipline: 421}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+blessure_epaule_musculation_3x60 : passe 1 145.3 ms ; cas complet 245 ms ; 23 exercices ; violations []
+  {ability: {push: 3, pull: 3, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {cardio: 0.35, mobility: 0.15, generalFitness: 0.5}, pool: 112, poolByKind: {compound: 8, accessory: 12, core: 25, cardioEasy: 2, mobility: 65}, rejected: {equipment: 262, level: 332, reserved: 8, discipline: 325}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : null
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : equipment
+minimal_1x20 : passe 1 14.9 ms ; cas complet 33 ms ; 7 exercices ; violations []
+  {ability: {push: 8, pull: 8, legs: 8, core: 6, power: 6, cardio: 4, mobility: 4}, globalLevel: 2, cautious: false, targets: {musculation: 1.0}, pool: 397, poolByKind: {compound: 162, accessory: 166, core: 69}, rejected: {equipment: 76, too_easy: 80, level: 34, reserved: 31, discipline: 421}, goals: [mu-developpe-couche-barre]}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : equipment
+  sl-squat-competition : null
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+six_jours_musculation_avance_6x75 : passe 1 51.4 ms ; cas complet 149 ms ; 24 exercices ; violations []
+  {ability: {push: 2, pull: 2, legs: 2, core: 2, power: 2, cardio: 2, mobility: 2}, globalLevel: 0, cautious: true, targets: {cardio: 0.21, mobility: 0.49, generalFitness: 0.3}, pool: 125, poolByKind: {compound: 12, accessory: 20, core: 24, cardioEasy: 2, mobility: 67}, rejected: {equipment: 213, level: 362, cautious: 8, reserved: 6, discipline: 325}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : null
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : equipment
+senior_65_forme_generale_3x40 : passe 1 14.9 ms ; cas complet 54 ms ; 35 exercices ; violations []
+  {ability: {push: 8, pull: 9, legs: 8, core: 6, power: 6, cardio: 4, mobility: 4}, globalLevel: 2, cautious: false, targets: {streetWorkout: 0.2, streetlifting: 0.7, calisthenics: 0.1}, pool: 391, poolByKind: {compound: 150, accessory: 131, core: 56, skillStatic: 26, skillDynamic: 28}, rejected: {equipment: 156, too_easy: 146, level: 98, reserved: 31, excluded: 1, prerequisite: 5, discipline: 211}, goals: [sl-traction-lestee, sl-dips-leste, sl-muscle-up-leste, sl-squat-competition]}
+  cs-planche-tuck : too_easy
+  sl-muscle-up-leste : null
+  sl-squat-competition : null
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+proprietaire_streetlifting_avance : passe 1 27.3 ms ; cas complet 102 ms ; 30 exercices ; violations []
+  {ability: {push: 4, pull: 4, legs: 4, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 1.0}, pool: 401, poolByKind: {compound: 174, accessory: 158, core: 69}, rejected: {level: 145, equipment: 44, reserved: 19, too_easy: 9, discipline: 421}, goals: [mu-developpe-couche-barre]}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+homme_25_musculation_debutant_3x60 : passe 1 26.6 ms ; cas complet 85 ms ; 23 exercices ; violations []
+  {ability: {push: 3, pull: 3, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {streetWorkout: 0.8, mobility: 0.2}, pool: 162, poolByKind: {compound: 24, accessory: 25, core: 26, skillStatic: 13, skillDynamic: 4, mobility: 70}, rejected: {equipment: 221, level: 546, reserved: 8, excluded: 1, discipline: 101}, goals: [sw-traction-pronation]}
+  cs-planche-tuck : level
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+femme_30_street_workout_parc_3x45 : passe 1 12.4 ms ; cas complet 42 ms ; 21 exercices ; violations []
+  {ability: {push: 3, pull: 3, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {mobility: 1.0}, pool: 81, poolByKind: {mobility: 81}, rejected: {discipline: 929, equipment: 13, level: 16}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : discipline
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : discipline
+mobilite_seule_5x20 : passe 1 15.3 ms ; cas complet 62 ms ; 51 exercices ; violations []
+  {ability: {push: 2, pull: 2, legs: 2, core: 2, power: 2, cardio: 2, mobility: 2}, globalLevel: 0, cautious: true, targets: {cardio: 1.0}, pool: 7, poolByKind: {cardioEasy: 5, cardioHard: 2}, rejected: {discipline: 992, level: 29, equipment: 5, cautious: 6}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : discipline
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : discipline
+cardio_debutant_marche_3x30 : passe 1 3.0 ms ; cas complet 11 ms ; 6 exercices ; violations []
+  {ability: {push: 4, pull: 4, legs: 6, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.7, cardio: 0.3}, pool: 410, poolByKind: {compound: 166, accessory: 158, core: 69, cardioEasy: 9, cardioHard: 8}, rejected: {level: 145, equipment: 67, too_easy: 17, joint: 7, reserved: 19, discipline: 374}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : equipment
+  mu-developpe-couche-barre : null
+homme_50_reprise_genou_3x45 : passe 1 25.2 ms ; cas complet 79 ms ; 11 exercices ; violations []
+  {ability: {push: 4, pull: 4, legs: 4, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.8, mobility: 0.2}, pool: 480, poolByKind: {compound: 168, accessory: 158, core: 67, mobility: 87}, rejected: {level: 154, equipment: 48, excluded: 2, joint: 8, reserved: 27, too_easy: 9, discipline: 311}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+lombalgie_musculation_3x50 : passe 1 31.3 ms ; cas complet 95 ms ; 28 exercices ; violations []
+  {ability: {push: 5, pull: 6, legs: 5, core: 5, power: 5, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {calisthenics: 1.0}, pool: 127, poolByKind: {accessory: 30, compound: 33, core: 41, skillStatic: 19, skillDynamic: 4}, rejected: {equipment: 324, level: 256, too_easy: 51, joint: 39, reserved: 31, discipline: 211}, goals: []}
+  cs-planche-tuck : joint
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+poignet_calisthenie_3x60 : passe 1 8.0 ms ; cas complet 29 ms ; 16 exercices ; violations []
+  {ability: {push: 2, pull: 4, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {calisthenics: 0.7, mobility: 0.3}, pool: 156, poolByKind: {compound: 24, accessory: 24, core: 26, skillStatic: 10, skillDynamic: 4, mobility: 68}, rejected: {equipment: 256, level: 516, reserved: 7, too_easy: 3, discipline: 101}, goals: [sw-traction-pronation, cs-crow]}
+  cs-planche-tuck : level
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+femme_22_calisthenie_debutante_maison : passe 1 15.1 ms ; cas complet 47 ms ; 33 exercices ; violations []
+  {ability: {push: 5, pull: 5, legs: 5, core: 5, power: 5, cardio: 5, mobility: 4}, globalLevel: 1, cautious: false, targets: {crossfit: 0.7, cardio: 0.3}, pool: 194, poolByKind: {compound: 42, accessory: 21, core: 43, power: 13, skillStatic: 28, skillDynamic: 15, conditioning: 24, cardioEasy: 4, cardioHard: 4}, rejected: {equipment: 416, level: 222, too_easy: 36, discipline: 171}, goals: []}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : too_easy
+  ca-sortie-longue : equipment
+  mu-developpe-couche-barre : equipment
+homme_35_crossfit_maison_kettlebell : passe 1 11.7 ms ; cas complet 39 ms ; 19 exercices ; violations []
+  {ability: {push: 5, pull: 3, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {musculation: 1.0}, pool: 113, poolByKind: {compound: 37, accessory: 50, core: 26}, rejected: {equipment: 199, level: 289, too_easy: 10, reserved: 7, discipline: 421}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+musculation_maison_halteres_4x45 : passe 1 8.6 ms ; cas complet 28 ms ; 19 exercices ; violations []
+  {ability: {push: 9, pull: 10, legs: 6, core: 6, power: 6, cardio: 4, mobility: 4}, globalLevel: 3, cautious: false, targets: {calisthenics: 0.9, mobility: 0.1}, pool: 246, poolByKind: {accessory: 32, compound: 21, core: 41, skillStatic: 39, skillDynamic: 38, mobility: 75}, rejected: {equipment: 395, too_easy: 155, level: 111, reserved: 31, discipline: 101}, goals: [cs-planche]}
+  cs-planche-tuck : too_easy
+  sl-muscle-up-leste : equipment
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+elite_calisthenie_6x90 : passe 1 25.9 ms ; cas complet 81 ms ; 35 exercices ; violations []
+  {ability: {push: 5, pull: 4, legs: 8, core: 5, power: 5, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {streetWorkout: 0.4, streetlifting: 0.5, calisthenics: 0.1}, pool: 350, poolByKind: {compound: 129, accessory: 125, core: 56, skillStatic: 28, skillDynamic: 12}, rejected: {level: 256, equipment: 154, too_easy: 37, reserved: 31, discipline: 211}, goals: [sl-traction-lestee, sl-dips-leste, sl-muscle-up-leste, sl-squat-competition]}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : level
+  sl-squat-competition : null
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+streetlifting_debutant_3x60 : passe 1 24.5 ms ; cas complet 76 ms ; 24 exercices ; violations []
+  {ability: {push: 3, pull: 3, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {cardio: 0.545, mobility: 0.105, generalFitness: 0.35}, pool: 144, poolByKind: {compound: 18, accessory: 21, core: 25, cardioEasy: 9, cardioHard: 2, mobility: 69}, rejected: {equipment: 230, level: 332, reserved: 8, discipline: 325}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : null
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : equipment
+forme_generale_exterieur_3x40 : passe 1 10.5 ms ; cas complet 34 ms ; 20 exercices ; violations []
+  {ability: {push: 2, pull: 2, legs: 2, core: 2, power: 2, cardio: 2, mobility: 2}, globalLevel: 0, cautious: true, targets: {cardio: 0.4, mobility: 0.6}, pool: 68, poolByKind: {cardioEasy: 3, cardioHard: 2, mobility: 63}, rejected: {discipline: 882, level: 52, equipment: 31, cautious: 6}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : discipline
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : discipline
+senior_72_mobilite_marche_4x30 : passe 1 7.5 ms ; cas complet 24 ms ; 27 exercices ; violations []
+  {ability: {push: 4, pull: 4, legs: 4, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.8, mobility: 0.2}, pool: 488, poolByKind: {compound: 174, accessory: 158, core: 69, mobility: 87}, rejected: {level: 154, equipment: 50, reserved: 27, too_easy: 9, discipline: 311}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+femme_60_musculation_salle_2x45 : passe 1 26.4 ms ; cas complet 77 ms ; 18 exercices ; violations []
+  {ability: {push: 4, pull: 4, legs: 4, core: 4, power: 4, cardio: 5, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.5, cardio: 0.5}, pool: 432, poolByKind: {compound: 174, accessory: 158, core: 69, cardioEasy: 16, cardioHard: 15}, rejected: {level: 149, equipment: 56, reserved: 19, too_easy: 9, discipline: 374}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : null
+  mu-developpe-couche-barre : null
+homme_40_cardio_musculation_50_50 : passe 1 23.0 ms ; cas complet 70 ms ; 14 exercices ; violations []
+  {ability: {push: 4, pull: 4, legs: 4, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.7, cardio: 0.1, mobility: 0.2}, pool: 505, poolByKind: {compound: 174, accessory: 158, core: 69, cardioEasy: 9, cardioHard: 8, mobility: 87}, rejected: {level: 158, equipment: 76, reserved: 27, too_easy: 9, discipline: 264}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : equipment
+  mu-developpe-couche-barre : null
+trois_disciplines_70_20_10 : passe 1 34.5 ms ; cas complet 99 ms ; 30 exercices ; violations []
+  {ability: {push: 2, pull: 2, legs: 2, core: 2, power: 2, cardio: 2, mobility: 2}, globalLevel: 0, cautious: true, targets: {musculation: 1.0}, pool: 227, poolByKind: {compound: 88, accessory: 105, core: 34}, rejected: {level: 371, equipment: 12, cautious: 2, reserved: 6, discipline: 421}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+niveaux_inconnus_sans_poids : passe 1 10.8 ms ; cas complet 34 ms ; 14 exercices ; violations []
+  {ability: {push: 5, pull: 5, legs: 5, core: 5, power: 5, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.4, streetWorkout: 0.6}, pool: 441, poolByKind: {compound: 165, accessory: 159, core: 69, skillStatic: 31, skillDynamic: 17}, rejected: {level: 258, too_easy: 36, equipment: 62, reserved: 31, discipline: 211}, goals: []}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : null
+sans_objectif_mode_libre : passe 1 24.1 ms ; cas complet 73 ms ; 17 exercices ; violations []
+  {ability: {push: 3, pull: 3, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {cardio: 0.35, mobility: 0.15, generalFitness: 0.5}, pool: 150, poolByKind: {compound: 20, accessory: 34, core: 26, cardioEasy: 2, mobility: 68}, rejected: {equipment: 224, level: 332, reserved: 8, discipline: 325}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : null
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : equipment
+objectif_habitude_seul : passe 1 8.4 ms ; cas complet 28 ms ; 16 exercices ; violations []
+  {ability: {push: 6, pull: 6, legs: 6, core: 6, power: 6, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {streetWorkout: 0.4, calisthenics: 0.6}, pool: 145, poolByKind: {accessory: 31, compound: 36, core: 41, skillStatic: 23, skillDynamic: 14}, rejected: {equipment: 332, level: 253, too_easy: 67, reserved: 31, discipline: 211}, goals: [cs-front-lever]}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+objectif_figure_front_lever : passe 1 12.4 ms ; cas complet 38 ms ; 18 exercices ; violations []
+  {ability: {push: 5, pull: 5, legs: 5, core: 5, power: 5, cardio: 5, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.1, cardio: 0.8, mobility: 0.1}, pool: 157, poolByKind: {accessory: 16, compound: 16, core: 35, cardioEasy: 11, cardioHard: 14, mobility: 65}, rejected: {equipment: 408, level: 138, too_easy: 33, reserved: 39, discipline: 264}, goals: [ca-sortie-longue]}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : null
+  mu-developpe-couche-barre : equipment
+semi_marathon : passe 1 18.0 ms ; cas complet 52 ms ; 26 exercices ; violations []
+  {ability: {push: 2, pull: 2, legs: 2, core: 2, power: 2, cardio: 2, mobility: 2}, globalLevel: 0, cautious: true, targets: {musculation: 0.6, cardio: 0.4}, pool: 234, poolByKind: {compound: 88, accessory: 105, core: 34, cardioEasy: 7}, rejected: {level: 400, equipment: 17, cautious: 8, reserved: 6, discipline: 374}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : null
+prudent_sante_musculation : passe 1 9.2 ms ; cas complet 30 ms ; 11 exercices ; violations []
+  {ability: {push: 4, pull: 3, legs: 4, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.7, cardio: 0.3}, pool: 384, poolByKind: {compound: 155, accessory: 143, core: 69, cardioEasy: 9, cardioHard: 8}, rejected: {level: 194, equipment: 61, reserved: 19, too_easy: 6, excluded: 1, discipline: 374}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : equipment
+  mu-developpe-couche-barre : null
+tres_grand_lourd : passe 1 21.9 ms ; cas complet 66 ms ; 19 exercices ; violations []
+  {ability: {push: 4, pull: 4, legs: 4, core: 4, power: 4, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {streetWorkout: 0.7, mobility: 0.3}, pool: 215, poolByKind: {compound: 49, accessory: 31, core: 41, skillStatic: 15, skillDynamic: 4, mobility: 75}, rejected: {equipment: 369, level: 326, reserved: 19, too_easy: 9, discipline: 101}, goals: []}
+  cs-planche-tuck : level
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : null
+  ca-sortie-longue : discipline
+  mu-developpe-couche-barre : equipment
+petite_legere : passe 1 13.9 ms ; cas complet 44 ms ; 20 exercices ; violations []
+  {ability: {push: 3, pull: 3, legs: 3, core: 3, power: 3, cardio: 3, mobility: 3}, globalLevel: 0, cautious: false, targets: {cardio: 0.375, mobility: 0.375, generalFitness: 0.25}, pool: 152, poolByKind: {compound: 20, accessory: 34, core: 26, cardioEasy: 4, mobility: 68}, rejected: {equipment: 223, level: 332, reserved: 7, discipline: 325}, goals: []}
+  cs-planche-tuck : discipline
+  sl-muscle-up-leste : discipline
+  sl-squat-competition : discipline
+  mu-air-squat : null
+  ca-sortie-longue : level
+  mu-developpe-couche-barre : equipment
+sept_jours_courts_7x20 : passe 1 17.9 ms ; cas complet 51 ms ; 29 exercices ; violations []
+  {ability: {push: 5, pull: 5, legs: 6, core: 5, power: 5, cardio: 4, mobility: 4}, globalLevel: 1, cautious: false, targets: {musculation: 0.6, streetWorkout: 0.2, cardio: 0.2}, pool: 542, poolByKind: {compound: 188, accessory: 174, core: 72, skillStatic: 44, skillDynamic: 22, cardioEasy: 20, cardioHard: 22}, rejected: {level: 261, too_easy: 38, excluded: 3, reserved: 31, discipline: 164}, goals: []}
+  cs-planche-tuck : null
+  sl-muscle-up-leste : level
+  sl-squat-competition : level
+  mu-air-squat : too_easy
+  ca-sortie-longue : null
+  mu-developpe-couche-barre : null
+materiel_complet_gouts_marques : passe 1 39.5 ms ; cas complet 112 ms ; 23 exercices ; violations []
