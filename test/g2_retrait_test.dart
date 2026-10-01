@@ -378,6 +378,11 @@ void main() {
           await pump(tester, const RetiredNoticeScreen(), dark);
           expect(find.text('WOD et séances perso retirés'), findsOneWidget);
           expect(find.text('3 résultats de WOD'), findsOneWidget);
+          await tester.scrollUntilVisible(
+            find.byKey(const ValueKey('retired-notice-share')),
+            200,
+            scrollable: find.byType(Scrollable).first,
+          );
           expect(find.text('Copie complète vérifiée'), findsOneWidget);
           await tester.tap(find.byKey(const ValueKey('retired-notice-share')));
           await tester.pumpAndSettle();
@@ -405,7 +410,7 @@ void main() {
         store = AppStore();
         await store.init();
       });
-      await pump(tester, const SettingsScreen(), true);
+      await pump(tester, const SettingsScreen(section: 6), true);
       final tile = find.byKey(const ValueKey('settings-retired-copy'));
       await tester.scrollUntilVisible(
         tile,

@@ -76,7 +76,12 @@ void main() {
   Future<void> scrollTo(WidgetTester tester, Finder target) async {
     for (var i = 0; i < 30 && target.evaluate().isEmpty; i++) {
       await tester.drag(
-        find.byType(Scrollable).hitTestable().first,
+        find
+            .byWidgetPredicate(
+              (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+            )
+            .hitTestable()
+            .first,
         const Offset(0, -250),
       );
       await wait(tester, 300);
@@ -173,11 +178,23 @@ void main() {
     await shot('5_stats');
 
     await tab(tester, 3);
+    Future<void> section(String title) async {
+      final tile = find.text(title);
+      await scrollTo(tester, tile);
+      await tester.tap(tile.first);
+      await wait(tester, 1200);
+    }
+
+    await section('Sauvegardes');
     final copyTile = find.byKey(const ValueKey('settings-retired-copy'));
     await scrollTo(tester, copyTile);
     releve['reglages_copie'] = copyTile.evaluate().isNotEmpty;
-    releve['reglages_sans_motivation'] = !shown('Motivation et progression');
     await shot('6_reglages_sauvegardes');
+    await tester.pageBack();
+    await wait(tester, 1200);
+    await section('Programme');
+    releve['reglages_sans_motivation'] = !shown('Motivation et progression');
+    await shot('7_reglages_programme');
     record();
 
     expect(releve['copie'], isNotNull);

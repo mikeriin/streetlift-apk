@@ -313,7 +313,7 @@ class CharacterSheet {
     ]);
     reps('B20', [(0, 0), (5, 10), (15, 40), (25, 65), (40, 90), (50, 100)]);
     final enduranceNote = endurance.isEmpty
-        ? 'Indisponible : maxima en répétitions non renseignés (Références).'
+        ? 'Maxima en répétitions non renseignés (Références) : endurance indisponible.'
         : endurance.length < 5
         ? 'Calcul partiel : ${endurance.length} maximum${endurance.length > 1 ? 's' : ''} sur 5.'
         : null;

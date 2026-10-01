@@ -122,7 +122,11 @@ class RetiredSummary {
         n(manualLogs, 'séance perso commencée', 'séances perso commencées'),
       if (wodResults > 0) n(wodResults, 'résultat de WOD', 'résultats de WOD'),
       if (wodsCustomized > 0)
-        n(wodsCustomized, 'WOD créé ou modifié', 'WOD créés ou modifiés'),
+        n(
+          wodsCustomized,
+          'WOD créé, modifié ou retiré du catalogue',
+          'WOD créés, modifiés ou retirés du catalogue',
+        ),
       if (wodsUnlocked > 0) n(wodsUnlocked, 'WOD débloqué', 'WOD débloqués'),
       if (creditEntries > 0) 'tes crédits WOD',
       if (wishlist > 0) n(wishlist, 'WOD en envie', 'WOD en envie'),
