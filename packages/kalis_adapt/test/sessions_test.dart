@@ -231,7 +231,7 @@ void main() {
         setOf(a, 0, 2, kg: 45, reps: 8, flames: 7),
       ];
       final track = trackAfter(sets);
-      expect(track.lastLoad, 45);
+      expect(track.lastLoad, 50);
       expect(track.noUp, isTrue);
       final input = AdaptInput(
         profile: w.profile,
@@ -251,9 +251,9 @@ void main() {
         if (item.exerciseId != a.exerciseId) {
           continue;
         }
-        expect(item.startLoadKg, lessThanOrEqualTo(45));
+        expect(item.startLoadKg, lessThanOrEqualTo(50));
         for (final t in item.setTargets ?? const <SetTarget>[]) {
-          expect(t.loadKg, lessThanOrEqualTo(45));
+          expect(t.loadKg, lessThanOrEqualTo(50));
         }
       }
       expect(

@@ -912,8 +912,9 @@ final class SessionRun {
     // séries menées à bien, sans échec (un échauffement non marqué ou une
     // pyramide ne la tirent pas vers le bas ; une série arrêtée un peu
     // sous sa cible ne la fait pas baisser, c'est le modèle qui en juge) ;
-    // après un échec non prévu, jamais plus que la plus légère des charges
-    // échouées ; si toutes les séries ont échoué, la plus légère.
+    // après un échec non prévu, la plus légère des charges échouées (la
+    // séance suivante ne la dépasse pas ; le modèle dit s'il faut
+    // descendre).
     double? held;
     double? lowestFailed;
     double? lowest;
@@ -948,7 +949,7 @@ final class SessionRun {
         2 * run.easySets >= run.ratedSets;
     if (lowest != null) {
       var reference = held ?? lowest;
-      if (lowestFailed != null && lowestFailed < reference) {
+      if (lowestFailed != null) {
         reference = lowestFailed;
       }
       // Même exercice déjà fait aujourd'hui avec un échec non prévu : la

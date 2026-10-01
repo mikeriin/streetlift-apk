@@ -237,8 +237,9 @@ l'échec, plus la marge est grande.
 
 **Charge de référence.** La charge de la dernière séance est la plus lourde des séries menées à bien,
 sans échec (un échauffement non marqué ou une pyramide ne la tirent pas vers le bas) ; après un échec non
-prévu, jamais plus que la plus légère des charges échouées ; si toutes les séries ont échoué, la plus
-légère de la séance.
+prévu, la plus légère des charges échouées : la séance suivante ne la dépasse pas, et le modèle dit s'il
+faut descendre. (Repartir de la charge allégée qui a suivi l'échec a été essayé : écart au RIR plus grand
+de 0,05 à 0,15, les séances suivantes étant trop faciles — § 6.)
 
 **Charge** (règle à hystérésis, pour qu'elle ne change que quand la plage ne tient plus) : la charge de
 référence (ramenée sur la grille) est gardée ; elle monte d'un cran quand les répétitions prévues
