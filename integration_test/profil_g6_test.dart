@@ -85,15 +85,24 @@ void main() {
     Finder target, {
     bool up = false,
   }) async {
-    for (var i = 0; i < 40 && target.hitTestable().evaluate().isEmpty; i++) {
-      final lists = find
-          .byWidgetPredicate(
-            (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
-          )
-          .hitTestable();
-      if (lists.evaluate().isEmpty) break;
-      await tester.drag(lists.last, Offset(0, up ? 250 : -250));
-      await wait(tester, 300);
+    // Vers le bas (ou le haut), puis dans l'autre sens si la cible est
+    // déjà passée.
+    for (final dy in up ? const [250.0, -250.0] : const [-250.0, 250.0]) {
+      for (var i = 0; i < 30 && target.hitTestable().evaluate().isEmpty; i++) {
+        final lists = find
+            .byWidgetPredicate(
+              (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+            )
+            .hitTestable();
+        if (lists.evaluate().isEmpty) break;
+        final s = tester.state<ScrollableState>(lists.last).position;
+        if ((dy < 0 && s.pixels >= s.maxScrollExtent) ||
+            (dy > 0 && s.pixels <= s.minScrollExtent)) {
+          break;
+        }
+        await tester.drag(lists.last, Offset(0, dy));
+        await wait(tester, 300);
+      }
     }
     if (target.evaluate().isNotEmpty) {
       await tester.ensureVisible(target.first);
@@ -214,8 +223,8 @@ void main() {
     await tap(tester, 'flow-next-welcome');
 
     // 2. Toi.
-    await tap(tester, 'flow-sex-female');
     await type(tester, 'flow-name', 'Alex');
+    await tap(tester, 'flow-sex-female');
     await type(tester, 'flow-year', '1994');
     await type(tester, 'flow-height', '168');
     await type(tester, 'flow-weight', '61');
@@ -272,8 +281,8 @@ void main() {
     await tap(tester, 'flow-next-availability');
 
     // 8. Lieux et matériel.
-    await tap(tester, 'flow-place-gym');
-    await tap(tester, 'flow-place-home');
+    await tap(tester, 'flow-place-salle');
+    await tap(tester, 'flow-place-maison');
     await tap(tester, 'flow-preset-home_equipped');
     await top(tester);
     await shot('10_lieux_materiel');

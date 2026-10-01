@@ -626,7 +626,7 @@ void main() {
       await tap(tester, 'flow-day-2');
       await tap(tester, 'flow-day-5');
       await next('availability');
-      await tap(tester, 'flow-place-home');
+      await tap(tester, 'flow-place-maison');
       await next('places');
       await tap(tester, 'flow-consent-refused');
       await next('health');
