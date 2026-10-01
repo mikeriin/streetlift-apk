@@ -1,0 +1,151 @@
+== kalis_plan
+Resolving dependencies...
+Downloading packages...
++ _fe_analyzer_shared 108.0.0
++ analyzer 14.4.0
++ args 2.7.0
++ async 2.13.1
++ boolean_selector 2.1.2
++ cli_config 0.2.0
++ collection 1.19.1
++ convert 3.1.2
++ coverage 1.15.1
++ crypto 3.0.7
++ file 7.0.1
++ frontend_server_client 4.0.0
++ glob 2.2.0
++ http_multi_server 3.2.2
++ http_parser 4.1.2
++ io 1.1.0
++ kalis_core 0.1.0 from path ../kalis_core
++ lints 4.0.0 (6.1.0 available)
++ logging 1.3.0
++ matcher 0.12.20
++ meta 1.19.0
++ mime 2.1.0
++ node_preamble 2.0.2
++ package_config 3.0.0
++ path 1.9.1
++ pool 1.5.3
++ pub_semver 2.2.1
++ shelf 1.4.2
++ shelf_packages_handler 3.0.2
++ shelf_static 1.1.3
++ shelf_web_socket 3.0.0
++ source_map_stack_trace 2.1.2
++ source_maps 0.10.14
++ source_span 1.10.2
++ stack_trace 1.12.2
++ stream_channel 2.1.4
++ string_scanner 1.4.1
++ term_glyph 1.2.2
++ test 1.32.0
++ test_api 0.7.14
++ test_core 0.6.20
++ typed_data 1.4.0
++ vm_service 15.3.0
++ watcher 1.2.1
++ web 1.1.1
++ web_socket 1.0.1
++ web_socket_channel 3.0.3
++ webkit_inspection_protocol 1.2.1
++ yaml 3.1.4
+Changed 49 dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Changed lib/src/context.dart
+Formatted 32 files (1 changed) in 0.17 seconds.
+formatage : échec
+Analyzing kalis_plan...
+No issues found!
+00:00 +0: loading test/zz_dev_test.dart
+00:00 +0: test/zz_dev_test.dart: export du formatage
+00:00 +1: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +2: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +3: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +4: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +5: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +6: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +7: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +8: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +9: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +10: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +11: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +12: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +13: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +14: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +15: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +16: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +17: test/zz_dev_test.dart: diagnostic des graines en échec
+00:01 +18: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:06 +18 -1: test/zz_dev_test.dart: relevé de mise au point
+00:06 +18 -1: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour [E]
+  docs/PROFILS_TYPES.md, ligne 15 :
+    fichier : Note 0.948 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.96 · muscle_volume 0.86 · pattern_balance 1.00 · discipline_structure 0.97 · time_use 1.00 · variety 1.00 · exercise_fit 0.55 · stimulus_fatigue 0.88 · preferences 1.00 · novelty 1.00.
+    moteur  : Note 0.947 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.84 · muscle_volume 0.86 · pattern_balance 1.00 · discipline_structure 0.97 · time_use 1.00 · variety 1.00 · exercise_fit 0.69 · stimulus_fatigue 0.87 · preferences 1.00 · novelty 1.00.
+  package:matcher           fail
+  test/docs_test.dart 24:7  _expectSame
+  test/docs_test.dart 34:5  main.<fn>
+  
+00:08 +18 -2: test/zz_dev_test.dart: relevé de mise au point
+00:08 +18 -2: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour [E]
+  docs/COMPARAISON_L10.md, ligne 10 :
+    fichier : | Erreur de dosage en trois familles — renforcement, cardio, mobilité — en points, moyenne (34 profils sans « forme générale ») | 23.8 | 0.7 |
+    moteur  : | Erreur de dosage en trois familles — renforcement, cardio, mobilité — en points, moyenne (34 profils sans « forme générale ») | 23.8 | 1.0 |
+  package:matcher           fail
+  test/docs_test.dart 24:7  _expectSame
+  test/docs_test.dart 41:5  main.<fn>
+  
+00:08 +19 -2: test/zz_dev_test.dart: relevé de mise au point
+00:08 +20 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:13 +21 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:21 +22 -2: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+00:25 +23 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:26 +24 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:26 +25 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:30 +26 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:30 +27 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:30 +28 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:31 +29 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:31 +30 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:31 +31 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:31 +32 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:31 +33 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:31 +34 -2: test/engine_test.dart: ligne de commande dart run kalis_plan:plan rend le programme du moteur
+00:34 +35 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +36 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +37 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +38 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +39 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +40 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +41 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +42 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +43 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +44 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +45 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +46 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +47 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +48 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +49 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +50 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +51 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +52 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:34 +53 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:39 +54 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:42 +55 -2: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+00:54 +56 -2: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+00:57 +57 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 640 à 799
+01:02 +58 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:12 +59 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:22 +60 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+01:30 +61 -2: Some tests failed.
+
+Failing tests:
+  test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+  test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.
+tests : échec
+kalis_plan 0.1.0 : rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_plan (108 s).
+durée : 209 s
