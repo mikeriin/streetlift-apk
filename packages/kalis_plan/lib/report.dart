@@ -784,3 +784,566 @@ final class InclusionStudy {
     return out;
   }
 }
+
+// ------------------------------------------------- comparaison au générateur L10
+
+/// Mesures d'un programme d'un profil, communes aux deux générateurs
+/// (`docs/COMPARAISON_L10.md`).
+final class ComparisonRow {
+  /// Mesures.
+  const ComparisonRow({
+    required this.sessions,
+    required this.overTimeSessions,
+    required this.timeUse,
+    required this.familyError,
+    required this.groupSets,
+    required this.pullSets,
+    required this.pushSets,
+    required this.hipSets,
+    required this.kneeSets,
+    required this.highStressOnLimitedJoint,
+  });
+
+  /// Nombre de séances de la semaine de référence.
+  final int sessions;
+
+  /// Séances plus longues que les minutes données ce jour-là.
+  final int overTimeSessions;
+
+  /// Part moyenne du temps donné qui est utilisée (plafonnée à 1).
+  final double timeUse;
+
+  /// Erreur de dosage en trois familles (renforcement, cardio, mobilité),
+  /// de 0 à 1.
+  final double familyError;
+
+  /// Séries hebdomadaires fractionnaires par groupe majeur (directes 1,
+  /// indirectes 0,5).
+  final Map<String, double> groupSets;
+
+  /// Séries de tirage.
+  final double pullSets;
+
+  /// Séries de poussée.
+  final double pushSets;
+
+  /// Séries de chaîne postérieure.
+  final double hipSets;
+
+  /// Séries à dominante genou.
+  final double kneeSets;
+
+  /// Exercices de travail à contrainte maximale sur une articulation dont
+  /// la gêne déclarée est d'au moins 4 sur 10.
+  final int highStressOnLimitedJoint;
+
+  /// Groupes majeurs sous [floor] séries.
+  int groupsUnder(double floor) =>
+      groupSets.values.where((v) => v < floor).length;
+
+  /// Groupes majeurs au-dessus de [ceiling] séries.
+  int groupsOver(double ceiling) =>
+      groupSets.values.where((v) => v > ceiling).length;
+
+  /// Équilibre d'un rapport : vrai entre 2/3 et 3/2, faux au-delà (ou si un
+  /// seul côté est travaillé), `null` si aucun des deux ne l'est.
+  static bool? balanced(double a, double b) {
+    if (a <= 0 && b <= 0) {
+      return null;
+    }
+    if (a <= 0 || b <= 0) {
+      return false;
+    }
+    final r = a / b;
+    return r >= 2 / 3 - 1e-9 && r <= 3 / 2 + 1e-9;
+  }
+}
+
+const Map<String, String> _oldJointOfCode = <String, String>{
+  'epaule': 'epaule',
+  'coude': 'coude',
+  'poignet': 'poignet',
+  'lombaires': 'rachis_lombaire',
+  'genou': 'genou',
+  'hanche': 'hanche',
+  'cheville': 'cheville',
+};
+
+/// Parts visées en trois familles (renforcement, cardio, mobilité) d'un
+/// profil sans « forme générale », ou `null` s'il en comporte.
+(double, double, double)? familyTargets(AthleteProfile profile) {
+  var r = 0.0;
+  var c = 0.0;
+  var m = 0.0;
+  void add(TrainingDiscipline d, int pct) {
+    if (d == TrainingDiscipline.cardio) {
+      c += pct;
+    } else if (d == TrainingDiscipline.mobility) {
+      m += pct;
+    } else {
+      r += pct;
+    }
+  }
+
+  if (profile.disciplines.primary == TrainingDiscipline.generalFitness) {
+    return null;
+  }
+  add(profile.disciplines.primary, profile.disciplines.primaryPct);
+  for (final s in profile.disciplines.secondaries) {
+    if (s.discipline == TrainingDiscipline.generalFitness && s.pct > 0) {
+      return null;
+    }
+    add(s.discipline, s.pct);
+  }
+  final sum = r + c + m;
+  return sum <= 0 ? null : (r / sum, c / sum, m / sum);
+}
+
+double _familyError((double, double, double)? target, double r, double c, double m) {
+  if (target == null) {
+    return 0;
+  }
+  final sum = r + c + m;
+  if (sum <= 0) {
+    return 1;
+  }
+  final (tr, tc, tm) = target;
+  return ((r / sum - tr).abs() + (c / sum - tc).abs() + (m / sum - tm).abs()) /
+      2;
+}
+
+List<(Joint, int)> _limitedJoints(AthleteProfile profile) => <(Joint, int)>[
+  for (final l in profile.limitations)
+    if (l.discomfort >= 4 && (l.joint ?? l.zone.joint) != null)
+      ((l.joint ?? l.zone.joint)!, l.discomfort),
+];
+
+/// Mesures du programme de l'ancien générateur L10 pour le profil
+/// [fixture], lues dans l'extrait [l10] (`docs/data/l10_sorties.json.gz`).
+ComparisonRow l10ComparisonRow(ProfileFixture fixture, Map<String, Object?> l10) {
+  final profiles = l10['profiles']! as Map<String, Object?>;
+  final exercises = l10['exercises']! as Map<String, Object?>;
+  final p = profiles[fixture.key]! as Map<String, Object?>;
+  final minutesOf = <int, int>{
+    for (final d in fixture.profile.availability) d.weekday: d.minutes,
+  };
+  final limited = _limitedJoints(fixture.profile);
+  final groups = <String, double>{
+    for (final g in MuscleGroup.values)
+      if (g.major) g.code: 0,
+  };
+  var sessions = 0;
+  var over = 0;
+  var use = 0.0;
+  var resistance = 0.0;
+  var mobility = 0.0;
+  var pull = 0.0;
+  var push = 0.0;
+  var hip = 0.0;
+  var knee = 0.0;
+  var stressed = 0;
+  for (final d in p['days']! as List<Object?>) {
+    final day = d! as Map<String, Object?>;
+    final given = minutesOf[day['weekday']! as int] ?? 0;
+    final estimate = (day['estimateSeconds']! as num) / 60;
+    sessions++;
+    if (estimate > given + 1e-9) {
+      over++;
+    }
+    use += given <= 0 ? 1 : (estimate > given ? 1 : estimate / given);
+    var warm = 0.0;
+    var mob = 0.0;
+    for (final i in day['items']! as List<Object?>) {
+      final item = i! as Map<String, Object?>;
+      final role = item['role']! as String;
+      final minutes = (item['minutes']! as num).toDouble();
+      if (role == 'warmup') {
+        warm += minutes;
+        continue;
+      }
+      if (role == 'mobility' || role == 'cooldown') {
+        mob += minutes;
+        continue;
+      }
+      if (role == 'ramp') {
+        continue;
+      }
+      final e = exercises[item['exerciseId']] as Map<String, Object?>?;
+      if (e == null) {
+        continue;
+      }
+      final sets = (item['sets']! as num).toDouble();
+      final credits = e['groups']! as Map<String, Object?>;
+      for (final c in credits.entries) {
+        groups[c.key] = (groups[c.key] ?? 0) + sets * (c.value! as num) / 2;
+      }
+      switch (e['family']) {
+        case 'push':
+          push += sets;
+        case 'pull':
+          pull += sets;
+        case 'squat':
+        case 'lunge':
+          knee += sets;
+        case 'hinge':
+          hip += sets;
+      }
+      final joints = e['joints']! as Map<String, Object?>;
+      for (final (joint, _) in limited) {
+        if ((joints[_oldJointOfCode[joint.code]] as num? ?? 0) >= 3) {
+          stressed++;
+        }
+      }
+    }
+    mobility += mob;
+    final work = estimate - warm - mob;
+    resistance += work < 0 ? 0 : work;
+  }
+  return ComparisonRow(
+    sessions: sessions,
+    overTimeSessions: over,
+    timeUse: sessions == 0 ? 0 : use / sessions,
+    familyError: _familyError(
+      familyTargets(fixture.profile),
+      resistance,
+      0,
+      mobility,
+    ),
+    groupSets: groups,
+    pullSets: pull,
+    pushSets: push,
+    hipSets: hip,
+    kneeSets: knee,
+    highStressOnLimitedJoint: stressed,
+  );
+}
+
+/// Mesures du programme de kalis_plan pour le profil [fixture] (passe 1 de
+/// graine 0, séries de la dernière semaine de montée de la passe 2).
+ComparisonRow planComparisonRow(
+  Catalog catalog,
+  KalisPlan engine,
+  ProfileFixture fixture,
+) {
+  final inspector = PlanInspector(catalog, params: engine.params);
+  final traits = CatalogTraits.of(catalog);
+  final request = PlanRequest(
+    profile: fixture.profile,
+    seed: 0,
+    startDate: reportStartDate,
+    locks: const <PlanLock>[],
+  );
+  final pass1 = engine.createPass1(catalog, request);
+  final pass2 = engine.createPass2(
+    catalog,
+    Pass2Request(request: request, pass1: pass1),
+  );
+  final metrics = inspector.metrics(request, pass1);
+  var reference = pass2.weeks.first;
+  for (final w in pass2.weeks) {
+    if (w.kind == WeekKind.build) {
+      reference = w;
+    }
+  }
+  final limited = _limitedJoints(fixture.profile);
+  final groups = <String, double>{
+    for (final g in MuscleGroup.values)
+      if (g.major) g.code: 0,
+  };
+  var pull = 0.0;
+  var push = 0.0;
+  var hip = 0.0;
+  var knee = 0.0;
+  var stressed = 0;
+  for (final day in reference.days) {
+    for (final item in day.items) {
+      final t = traits.of(item.exerciseId);
+      if (!t.kind.isResistance) {
+        continue;
+      }
+      final sets = item.sets.toDouble();
+      for (final g in MuscleGroup.values) {
+        if (g.major) {
+          groups[g.code] = groups[g.code]! + sets * t.groupCredits[g.index] / 2;
+        }
+      }
+      switch (t.balance) {
+        case BalanceClass.pushHorizontal:
+        case BalanceClass.pushVertical:
+          push += sets;
+        case BalanceClass.pullHorizontal:
+        case BalanceClass.pullVertical:
+          pull += sets;
+        case BalanceClass.pullThenPush:
+          pull += sets / 2;
+          push += sets / 2;
+        case BalanceClass.knee:
+          knee += sets;
+        case BalanceClass.hip:
+          hip += sets;
+        case BalanceClass.core:
+        case BalanceClass.none:
+          break;
+      }
+      for (final (joint, _) in limited) {
+        if (t.exercise.stressOn(joint) == JointStress.high) {
+          stressed++;
+        }
+      }
+    }
+  }
+  var over = 0;
+  var use = 0.0;
+  for (var d = 0; d < metrics.dayMinutes.length; d++) {
+    final given = metrics.dayBudget[d];
+    final estimate = metrics.dayMinutes[d];
+    if (estimate > given + 1e-9) {
+      over++;
+    }
+    use += estimate > given ? 1 : estimate / given;
+  }
+  var cardio = 0.0;
+  var mobility = 0.0;
+  var resistance = 0.0;
+  for (final e in metrics.classShare.entries) {
+    if (e.key == DisciplineClass.cardio.name) {
+      cardio += e.value;
+    } else if (e.key == DisciplineClass.mobility.name) {
+      mobility += e.value;
+    } else {
+      resistance += e.value;
+    }
+  }
+  return ComparisonRow(
+    sessions: metrics.dayMinutes.length,
+    overTimeSessions: over,
+    timeUse: metrics.dayMinutes.isEmpty ? 0 : use / metrics.dayMinutes.length,
+    familyError: _familyError(
+      familyTargets(fixture.profile),
+      resistance,
+      cardio,
+      mobility,
+    ),
+    groupSets: groups,
+    pullSets: pull,
+    pushSets: push,
+    hipSets: hip,
+    kneeSets: knee,
+    highStressOnLimitedJoint: stressed,
+  );
+}
+
+/// Vrai si le profil consacre au moins la moitié de son temps au
+/// renforcement et s'entraîne au moins deux heures par semaine : les
+/// critères de volume et d'équilibre ne se jugent que sur ces profils.
+bool isResistanceProfile(AthleteProfile profile) {
+  final t = familyTargets(profile);
+  var minutes = 0;
+  for (final d in profile.availability) {
+    minutes += d.minutes;
+  }
+  return t != null && t.$1 >= 0.5 && minutes >= 120;
+}
+
+/// Document `COMPARAISON_L10.md` : kalis_plan face à l'ancien générateur
+/// L10 sur les mêmes profils, critère par critère.
+String l10ComparisonMarkdown(
+  Catalog catalog,
+  KalisPlan engine,
+  List<ProfileFixture> fixtures,
+  Map<String, Object?> l10,
+) {
+  final l10Profiles = l10['profiles']! as Map<String, Object?>;
+  final old = <String, ComparisonRow>{};
+  final neu = <String, ComparisonRow>{};
+  for (final f in fixtures) {
+    old[f.key] = l10ComparisonRow(f, l10);
+    neu[f.key] = planComparisonRow(catalog, engine, f);
+  }
+  final n = fixtures.length;
+  final resistance = <ProfileFixture>[
+    for (final f in fixtures)
+      if (isResistanceProfile(f.profile)) f,
+  ];
+  final dosed = <ProfileFixture>[
+    for (final f in fixtures)
+      if (familyTargets(f.profile) != null) f,
+  ];
+  final limited = <ProfileFixture>[
+    for (final f in fixtures)
+      if (_limitedJoints(f.profile).isNotEmpty) f,
+  ];
+
+  var expressible = 0;
+  var approximated = 0;
+  for (final f in fixtures) {
+    final p = l10Profiles[f.key]! as Map<String, Object?>;
+    if ((p['disciplinesWithoutProgramme']! as List<Object?>).isEmpty) {
+      expressible++;
+      if ((p['disciplinesApproximated']! as List<Object?>).isNotEmpty) {
+        approximated++;
+      }
+    }
+  }
+
+  String mean(Iterable<double> values, [int digits = 1]) {
+    var sum = 0.0;
+    var count = 0;
+    for (final v in values) {
+      sum += v;
+      count++;
+    }
+    return count == 0 ? '—' : _f(sum / count, digits);
+  }
+
+  int total(Map<String, ComparisonRow> rows, int Function(ComparisonRow) f) {
+    var sum = 0;
+    for (final r in rows.values) {
+      sum += f(r);
+    }
+    return sum;
+  }
+
+  String balancedCount(
+    Map<String, ComparisonRow> rows,
+    bool? Function(ComparisonRow) f,
+  ) {
+    var ok = 0;
+    var applicable = 0;
+    for (final fixture in resistance) {
+      final b = f(rows[fixture.key]!);
+      if (b == null) {
+        continue;
+      }
+      applicable++;
+      if (b) {
+        ok++;
+      }
+    }
+    return '$ok sur $applicable';
+  }
+
+  final rows = <List<String>>[
+    <String>[
+      'Profils dont chaque discipline a un programme',
+      '$expressible sur $n (dont $approximated où la musculation est '
+          'traitée comme un objectif de force)',
+      '$n sur $n',
+    ],
+    <String>[
+      'Erreur de dosage en trois familles — renforcement, cardio, '
+          'mobilité — en points, moyenne (${dosed.length} profils sans '
+          '« forme générale »)',
+      mean(dosed.map((f) => old[f.key]!.familyError * 100)),
+      mean(dosed.map((f) => neu[f.key]!.familyError * 100)),
+    ],
+    <String>[
+      'Profils à 10 points ou moins de leur dosage',
+      '${dosed.where((f) => old[f.key]!.familyError <= 0.10).length} sur '
+          '${dosed.length}',
+      '${dosed.where((f) => neu[f.key]!.familyError <= 0.10).length} sur '
+          '${dosed.length}',
+    ],
+    <String>[
+      'Séances plus longues que le temps donné ce jour-là',
+      '${total(old, (r) => r.overTimeSessions)} sur '
+          '${total(old, (r) => r.sessions)} '
+          '(${old.values.where((r) => r.overTimeSessions > 0).length} profils)',
+      '${total(neu, (r) => r.overTimeSessions)} sur '
+          '${total(neu, (r) => r.sessions)} '
+          '(${neu.values.where((r) => r.overTimeSessions > 0).length} profils)',
+    ],
+    <String>[
+      'Temps donné utilisé, moyenne',
+      '${mean(old.values.map((r) => r.timeUse * 100), 0)} %',
+      '${mean(neu.values.map((r) => r.timeUse * 100), 0)} %',
+    ],
+    <String>[
+      'Groupes musculaires majeurs sous 4 séries par semaine, moyenne par '
+          'profil (${resistance.length} profils de renforcement)',
+      mean(resistance.map((f) => old[f.key]!.groupsUnder(4).toDouble())),
+      mean(resistance.map((f) => neu[f.key]!.groupsUnder(4).toDouble())),
+    ],
+    <String>[
+      'Groupes musculaires majeurs au-dessus de 20 séries par semaine, '
+          'moyenne par profil',
+      mean(resistance.map((f) => old[f.key]!.groupsOver(20).toDouble())),
+      mean(resistance.map((f) => neu[f.key]!.groupsOver(20).toDouble())),
+    ],
+    <String>[
+      'Tirage et poussée équilibrés (rapport entre 2/3 et 3/2)',
+      balancedCount(
+        old,
+        (r) => ComparisonRow.balanced(r.pullSets, r.pushSets),
+      ),
+      balancedCount(
+        neu,
+        (r) => ComparisonRow.balanced(r.pullSets, r.pushSets),
+      ),
+    ],
+    <String>[
+      'Chaîne postérieure et genou équilibrés (rapport entre 2/3 et 3/2)',
+      balancedCount(old, (r) => ComparisonRow.balanced(r.hipSets, r.kneeSets)),
+      balancedCount(neu, (r) => ComparisonRow.balanced(r.hipSets, r.kneeSets)),
+    ],
+    <String>[
+      'Exercices à contrainte maximale sur une articulation dont la gêne '
+          'est d\'au moins 4/10 (${limited.length} profils)',
+      '${limited.fold<int>(0, (s, f) => s + old[f.key]!.highStressOnLimitedJoint)}',
+      '${limited.fold<int>(0, (s, f) => s + neu[f.key]!.highStressOnLimitedJoint)}',
+    ],
+  ];
+
+  final lines = <String>[
+    '# kalis_plan face au générateur L10',
+    '',
+    'Fichier généré par `dart run bin/kalis_plan_cli.dart --rapport <dossier>` (kalis_plan '
+        '${engine.engineVersion}) à partir de `docs/data/l10_sorties.json.gz` — ne pas modifier à la '
+        'main ; `test/docs_test.dart` le compare au moteur. Lecture et limites de la comparaison : '
+        '`docs/VALIDATION.md`, § 5.',
+    '',
+    'Les deux générateurs reçoivent les mêmes $n profils types (kalis_core). L\'ancien générateur '
+        '(L10, version ${l10['generatorVersion']}, graine ${l10['seed']}) ne lit qu\'une partie '
+        'du profil : la traduction est décrite dans `tool/l10_export_test.dart.txt`. Semaine comparée : '
+        'la semaine ${l10['referenceWeek']} de L10 (première semaine de charge sans calibrage) et la '
+        'dernière semaine de montée de kalis_plan. Chaque durée est celle que le générateur estime '
+        'lui-même ; les séries par groupe sont recomptées de la même façon des deux côtés (muscle '
+        'principal 1, muscle secondaire 0,5, exercices de travail seulement).',
+    '',
+    '| Critère | L10 | kalis_plan |',
+    '| --- | --- | --- |',
+    for (final r in rows) '| ${r[0]} | ${r[1]} | ${r[2]} |',
+    '',
+    '## Détail par profil',
+    '',
+    'Temps : séances au-delà du temps donné / séances, puis part du temps utilisée. Dosage : erreur '
+        'en trois familles, en points (— : profil avec « forme générale »). Volume : groupes majeurs '
+        'sous 4 séries / au-dessus de 20. T/P et CP/G : séries de tirage / de poussée, de chaîne '
+        'postérieure / à dominante genou.',
+    '',
+    '| Profil | Disciplines sans programme (L10) | Temps L10 | Temps KP | Dosage L10 | Dosage KP | '
+        'Volume L10 | Volume KP | T/P L10 | T/P KP | CP/G L10 | CP/G KP |',
+    '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |',
+  ];
+  for (final f in fixtures) {
+    final a = old[f.key]!;
+    final b = neu[f.key]!;
+    final p = l10Profiles[f.key]! as Map<String, Object?>;
+    final without = (p['disciplinesWithoutProgramme']! as List<Object?>).join(
+      ', ',
+    );
+    final hasTarget = familyTargets(f.profile) != null;
+    String time(ComparisonRow r) =>
+        '${r.overTimeSessions}/${r.sessions} · ${(r.timeUse * 100).round()} %';
+    String dose(ComparisonRow r) =>
+        hasTarget ? _f(r.familyError * 100, 1) : '—';
+    String volume(ComparisonRow r) => '${r.groupsUnder(4)} / ${r.groupsOver(20)}';
+    lines.add(
+      '| `${f.key}` | ${without.isEmpty ? '—' : without} | ${time(a)} | ${time(b)} | '
+      '${dose(a)} | ${dose(b)} | ${volume(a)} | ${volume(b)} | '
+      '${_num(a.pullSets)} / ${_num(a.pushSets)} | ${_num(b.pullSets)} / ${_num(b.pushSets)} | '
+      '${_num(a.hipSets)} / ${_num(a.kneeSets)} | ${_num(b.hipSets)} / ${_num(b.kneeSets)} |',
+    );
+  }
+  return '${lines.join('\n')}\n';
+}

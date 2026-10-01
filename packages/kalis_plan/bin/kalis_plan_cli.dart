@@ -5,6 +5,7 @@
 //
 // Écrit dans <dossier> :
 //   PROFILS_TYPES.md  les 40 cas types (copie de référence : docs/) ;
+//   COMPARAISON_L10.md  la comparaison au générateur L10 (idem) ;
 //   mesures.json      toutes les mesures, lisibles par un programme ;
 //   MESURES.md        les mêmes, en tableaux (copie datée : docs/).
 //
@@ -172,6 +173,15 @@ void main(List<String> args) {
   File(
     '${out.path}/PROFILS_TYPES.md',
   ).writeAsStringSync(profilsTypesMarkdown(catalog, KalisPlan(), fixtures));
+
+  File('${out.path}/COMPARAISON_L10.md').writeAsStringSync(
+    l10ComparisonMarkdown(
+      catalog,
+      KalisPlan(),
+      fixtures,
+      _readJson('docs/data/l10_sorties.json.gz'),
+    ),
+  );
 
   final baseline = <String, Pass1Plan>{};
   final fixtureRows = <List<Object?>>[];
@@ -617,6 +627,7 @@ void main(List<String> args) {
     final values = <double>[];
     final times = <double>[];
     var better = 0;
+    var worse = 0;
     for (final f in fixtures) {
       final request = PlanRequest(
         profile: f.profile,
@@ -640,6 +651,8 @@ void main(List<String> args) {
         atOne[f.key] = objective;
       } else if (effort > 1 && objective > atOne[f.key]! + 1e-9) {
         better++;
+      } else if (effort > 1 && objective < atOne[f.key]! - 1e-9) {
+        worse++;
       }
     }
     final mean = _mean(values);
@@ -652,6 +665,7 @@ void main(List<String> args) {
       'meanObjective': _r(mean, 5),
       'meanMs': _r(_mean(times), 1),
       if (effort > 1) 'profilesImproved': better,
+      if (effort > 1) 'profilesWorse': worse,
     });
     convergence.add(<Object?>[
       '× $effort',
@@ -659,6 +673,7 @@ void main(List<String> args) {
       mean.toStringAsFixed(5),
       _mean(times).toStringAsFixed(1),
       effort > 1 ? better : '—',
+      effort > 1 ? worse : '—',
     ]);
   }
   measures['convergence'] = <String, Object?>{
@@ -670,8 +685,9 @@ void main(List<String> args) {
     ..writeln()
     ..writeln(
       'Objectif moyen (sécurité + note globale, de 0 à 2) des 40 profils '
-      'types selon l\'effort de recuit ; dernière colonne : profils dont '
-      'l\'objectif dépasse celui de l\'effort × 1.',
+      'types selon l\'effort de recuit ; dernières colonnes : profils dont '
+      'l\'objectif est au-dessus, puis au-dessous, de celui de l\'effort '
+      '× 1.',
     )
     ..writeln()
     ..writeln(
@@ -681,6 +697,7 @@ void main(List<String> args) {
         'Objectif moyen',
         'Temps moyen (ms)',
         'Profils améliorés',
+        'Profils dégradés',
       ], convergence),
     );
 
