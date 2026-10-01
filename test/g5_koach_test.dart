@@ -80,10 +80,26 @@ void main() {
         final art = p.art.bounds;
         // `getBounds` compte les points de contrôle : la boîte contient
         // celle de la courbe et la dépasse de peu.
-        expect(b.left, inInclusiveRange(art.left - 30, art.left + 1), reason: p.id);
-        expect(b.right, inInclusiveRange(art.right - 1, art.right + 30), reason: p.id);
-        expect(b.top, inInclusiveRange(art.top - 30, art.top + 1), reason: p.id);
-        expect(b.bottom, inInclusiveRange(art.bottom - 1, art.bottom + 30), reason: p.id);
+        expect(
+          b.left,
+          inInclusiveRange(art.left - 30, art.left + 1),
+          reason: p.id,
+        );
+        expect(
+          b.right,
+          inInclusiveRange(art.right - 1, art.right + 30),
+          reason: p.id,
+        );
+        expect(
+          b.top,
+          inInclusiveRange(art.top - 30, art.top + 1),
+          reason: p.id,
+        );
+        expect(
+          b.bottom,
+          inInclusiveRange(art.bottom - 1, art.bottom + 30),
+          reason: p.id,
+        );
         expect(paths.ink.fillType, PathFillType.evenOdd);
         expect(paths.eyeBoxes.length, p.art.eyesOpen ? 2 : 0, reason: p.id);
         expect(identical(KoachPaths.of(p), paths), isTrue, reason: 'cache');

@@ -317,36 +317,36 @@ Future<T?> showKoachSheet<T>(
         Theme.of(context).bottomSheetTheme.backgroundColor ??
         Theme.of(context).colorScheme.surfaceContainerLow,
     child: SingleChildScrollView(
-    key: const ValueKey('koach-sheet'),
-    padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        if (title != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: Text(title, style: Theme.of(context).textTheme.titleLarge),
+      key: const ValueKey('koach-sheet'),
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (title != null)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Text(title, style: Theme.of(context).textTheme.titleLarge),
+            ),
+          KoachBubble(
+            pose: pose,
+            text: text,
+            why: why,
+            koachHeight: 120,
+            actions: actions.isEmpty
+                ? [
+                    KoachBubbleAction(
+                      'OK',
+                      () => Navigator.of(context).pop(),
+                      primary: true,
+                      key: const ValueKey('koach-sheet-ok'),
+                    ),
+                  ]
+                : actions,
           ),
-        KoachBubble(
-          pose: pose,
-          text: text,
-          why: why,
-          koachHeight: 120,
-          actions: actions.isEmpty
-              ? [
-                  KoachBubbleAction(
-                    'OK',
-                    () => Navigator.of(context).pop(),
-                    primary: true,
-                    key: const ValueKey('koach-sheet-ok'),
-                  ),
-                ]
-              : actions,
-        ),
-      ],
+        ],
+      ),
     ),
-  ),
   ),
 );
 

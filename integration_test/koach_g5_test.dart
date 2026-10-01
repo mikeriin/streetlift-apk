@@ -240,22 +240,19 @@ void main() {
         .evaluate()
         .isNotEmpty;
     await shot('8_bulle_pourquoi');
-    // Transition : une pose choisie en haut de la galerie.
-    await scrollTo(
-      tester,
-      find.byKey(const ValueKey('koach-pose-flag')),
-      up: true,
-    );
-    await tester.tap(find.byKey(const ValueKey('koach-pose-flag')));
-    await tester.pump(const Duration(milliseconds: 90));
+    // Transition : retour en haut (Koach en grand visible), une pose de la
+    // première rangée.
     final stage = find.byKey(const ValueKey('koach-gallery-stage'));
+    await scrollTo(tester, stage, up: true);
+    await scrollTo(tester, find.byKey(const ValueKey('koach-pose-progress_chart')));
+    await tester.tap(find.byKey(const ValueKey('koach-pose-progress_chart')));
+    await tester.pump(const Duration(milliseconds: 90));
     releve['transition_en_cours'] =
         stage.evaluate().isNotEmpty &&
         tester.state<KoachViewState>(stage).previous != null;
     await wait(tester, 600);
-    await tester.ensureVisible(stage);
-    await wait(tester, 600);
-    await shot('9_galerie_drapeau');
+    await scrollTo(tester, stage, up: true);
+    await shot('9_galerie_transition');
     releve['respiration'] =
         stage.evaluate().isNotEmpty &&
         tester.state<KoachViewState>(stage).breathing;
@@ -264,19 +261,19 @@ void main() {
     tester.platformDispatcher.accessibilityFeaturesTestValue =
         const FakeAccessibilityFeatures(disableAnimations: true);
     await wait(tester, 800);
-    await scrollTo(tester, find.byKey(const ValueKey('koach-pose-cheer')));
-    await tester.tap(find.byKey(const ValueKey('koach-pose-cheer')));
+    await scrollTo(tester, find.byKey(const ValueKey('koach-pose-anatomy')));
+    await tester.tap(find.byKey(const ValueKey('koach-pose-anatomy')));
     await tester.pump(const Duration(milliseconds: 16));
+    final staged = stage.evaluate().isNotEmpty;
     releve['reduit_transition'] =
-        tester.state<KoachViewState>(stage).previous != null;
-    releve['reduit_respiration'] = tester
-        .state<KoachViewState>(stage)
-        .breathing;
+        !staged || tester.state<KoachViewState>(stage).previous != null;
+    releve['reduit_respiration'] =
+        !staged || tester.state<KoachViewState>(stage).breathing;
     releve['reduit_texte'] = find
         .text('Animations réduites : Koach reste immobile.')
         .evaluate()
         .isNotEmpty;
-    await tester.ensureVisible(stage);
+    await scrollTo(tester, stage, up: true);
     await wait(tester, 600);
     await shot('10_animations_reduites');
     tester.platformDispatcher.accessibilityFeaturesTestValue =

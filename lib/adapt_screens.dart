@@ -847,44 +847,44 @@ class _PauseCard extends StatelessWidget {
           on: koach,
           pose: vacation ? KoachPose.love : KoachPose.heart,
           child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              vacation ? 'Vacances : programme en pause' : 'Pause maladie',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              vacation
-                  ? 'Ton calendrier est en pause depuis le '
-                        '${_date(pause.from)}. Si tu en as envie : 2 séances '
-                        'd’entretien de 20 minutes sans matériel par semaine, '
-                        'facultatives.'
-                  : 'Repose-toi. Au retour, la première semaine sera plus '
-                        'légère (volume −30 %). Si les symptômes persistent, '
-                        'parles-en à un professionnel de santé.',
-            ),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                FilledButton(
-                  key: const ValueKey('adapt-pause-end'),
-                  onPressed: () {
-                    store.endPause();
-                    showKoachToast(
-                      context,
-                      'Bon retour ! Le programme reprend aujourd’hui.',
-                      pose: KoachPose.wave,
-                    );
-                  },
-                  child: const Text('Je reprends'),
-                ),
-              ],
-            ),
-          ],
-        ),
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                vacation ? 'Vacances : programme en pause' : 'Pause maladie',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                vacation
+                    ? 'Ton calendrier est en pause depuis le '
+                          '${_date(pause.from)}. Si tu en as envie : 2 séances '
+                          'd’entretien de 20 minutes sans matériel par semaine, '
+                          'facultatives.'
+                    : 'Repose-toi. Au retour, la première semaine sera plus '
+                          'légère (volume −30 %). Si les symptômes persistent, '
+                          'parles-en à un professionnel de santé.',
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  FilledButton(
+                    key: const ValueKey('adapt-pause-end'),
+                    onPressed: () {
+                      store.endPause();
+                      showKoachToast(
+                        context,
+                        'Bon retour ! Le programme reprend aujourd’hui.',
+                        pose: KoachPose.wave,
+                      );
+                    },
+                    child: const Text('Je reprends'),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
