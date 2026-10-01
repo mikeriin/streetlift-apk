@@ -1,0 +1,14 @@
+Changed lib/game_widgets.dart
+Changed lib/notifications.dart
+Changed lib/progression.dart
+Changed lib/retired_notice_screen.dart
+Changed lib/stats_overview.dart
+Changed lib/store.dart
+Changed lib/training_estimate.dart
+Changed test/g2_mode_dev_test.dart
+Changed test/g2_retrait_test.dart
+Changed test/lc1_programme_test.dart
+Changed test/progression_test.dart
+Changed test/training_estimate_test.dart
+Changed integration_test/retrait_g2_test.dart
+Formatted 188 files (13 changed) in 1.03 seconds.

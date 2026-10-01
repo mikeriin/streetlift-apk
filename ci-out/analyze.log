@@ -1,0 +1,7 @@
+Analyzing streetlift-apk...                                     
+
+  error • Undefined name '_statsCache'. Try correcting the name to one that is defined, or defining the name • lib/program_store.dart:423:5 • undefined_identifier
+  error • Undefined name 'dataEpoch'. Try correcting the name to one that is defined, or defining the name • lib/program_store.dart:427:5 • undefined_identifier
+   info • The import of 'dart:typed_data' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/services.dart'. Try removing the import directive • lib/retired_notice_screen.dart:7:8 • unnecessary_import
+
+3 issues found. (ran in 15.0s)

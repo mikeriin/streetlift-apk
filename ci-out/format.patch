@@ -1,0 +1,400 @@
+diff --git a/integration_test/retrait_g2_test.dart b/integration_test/retrait_g2_test.dart
+index a68bed8..6886f75 100644
+--- a/integration_test/retrait_g2_test.dart
++++ b/integration_test/retrait_g2_test.dart
+@@ -158,7 +158,9 @@ void main() {
+ 
+     await tab(tester, 0);
+     releve['arsenal_sans_wod'] =
+-        !shown('Mes WODs') && !shown('Nouvelle séance') && !shown('Mes séances');
++        !shown('Mes WODs') &&
++        !shown('Nouvelle séance') &&
++        !shown('Mes séances');
+     releve['arsenal_tuiles'] = [
+       for (final k in ['arsenal-exercises', 'arsenal-anatomy'])
+         if (find.byKey(ValueKey(k)).evaluate().isNotEmpty) k,
+@@ -182,10 +184,7 @@ void main() {
+     expect(releve['copie_relue'], isTrue);
+     expect(releve['document_sans_sections_retirees'], isTrue);
+     expect(releve['journal_sans_seances_perso'], isTrue);
+-    expect(
+-      releve['journal_programme_apres'],
+-      releve['journal_programme'],
+-    );
++    expect(releve['journal_programme_apres'], releve['journal_programme']);
+     expect(releve['annonce'], isTrue);
+     expect(releve['annonce_vue'], isTrue);
+     expect(releve['arsenal_sans_wod'], isTrue);
+diff --git a/lib/game_widgets.dart b/lib/game_widgets.dart
+index 4c7881e..569b5ac 100644
+--- a/lib/game_widgets.dart
++++ b/lib/game_widgets.dart
+@@ -1436,11 +1436,7 @@ class SelfCompareCard extends StoreWidget {
+             spacing: 18,
+             runSpacing: 10,
+             children: [
+-              delta(
+-                'entraînements',
+-                c.current.sessions,
+-                c.sessionsDelta,
+-              ),
++              delta('entraînements', c.current.sessions, c.sessionsDelta),
+               delta('séries', c.current.sets, c.setsDelta),
+               delta('jours actifs', c.current.activeDays.length, c.daysDelta),
+             ],
+diff --git a/lib/notifications.dart b/lib/notifications.dart
+index 5cfa510..759a07b 100644
+--- a/lib/notifications.dart
++++ b/lib/notifications.dart
+@@ -288,10 +288,7 @@ class NotificationService {
+   void _onStoreChange() {
+     final s = app.settings;
+     final done =
+-        app.logs.entries
+-            .where((e) => e.value.done)
+-            .map((e) => e.key)
+-            .toList()
++        app.logs.entries.where((e) => e.value.done).map((e) => e.key).toList()
+           ..sort();
+     // Le départ fait partie de la signature : le changer replanifie les
+     // mêmes identifiants S·J (pas de doublon), sans attendre un autre signal.
+diff --git a/lib/progression.dart b/lib/progression.dart
+index 4de16b5..03f2aff 100644
+--- a/lib/progression.dart
++++ b/lib/progression.dart
+@@ -318,11 +318,7 @@ class Progression {
+       currentStreak++;
+       cursor = cursor.subtract(const Duration(days: 7));
+     }
+-    final metrics = {
+-      'sessions': sessions,
+-      'sets': sets,
+-      'streak': bestStreak,
+-    };
++    final metrics = {'sessions': sessions, 'sets': sets, 'streak': bestStreak};
+     final badges = [
+       for (final badge in progressionBadges)
+         BadgeProgress(badge, metrics[badge.metric]!),
+diff --git a/lib/retired_notice_screen.dart b/lib/retired_notice_screen.dart
+index 259b134..0b460d7 100644
+--- a/lib/retired_notice_screen.dart
++++ b/lib/retired_notice_screen.dart
+@@ -77,7 +77,9 @@ class RetiredNoticeScreen extends StatelessWidget {
+     final text = store.retiredCopy;
+     if (text == null) {
+       messenger.showSnackBar(
+-        const SnackBar(content: Text('Copie illisible : rien n’a été partagé.')),
++        const SnackBar(
++          content: Text('Copie illisible : rien n’a été partagé.'),
++        ),
+       );
+       return;
+     }
+@@ -113,7 +115,8 @@ class RetiredNoticeScreen extends StatelessWidget {
+       Uint8List.fromList(utf8.encode(text)),
+     );
+     final message = switch (result.status) {
+-      FileSaveStatus.saved => 'Copie enregistrée : ${result.name ?? 'fichier'}.',
++      FileSaveStatus.saved =>
++        'Copie enregistrée : ${result.name ?? 'fichier'}.',
+       FileSaveStatus.unverified =>
+         'Copie écrite, mais sa relecture n’a pas été possible. Vérifie le fichier.',
+       FileSaveStatus.cancelled => 'Enregistrement annulé.',
+@@ -142,10 +145,7 @@ class RetiredNoticeScreen extends StatelessWidget {
+         body: KList(
+           key: const ValueKey('retired-notice'),
+           children: [
+-            Text(
+-              'WOD et séances perso retirés',
+-              style: text.headlineSmall,
+-            ),
++            Text('WOD et séances perso retirés', style: text.headlineSmall),
+             const Text(
+               'Kalis Track se recentre sur ton programme. L’onglet WOD, le '
+               'créateur de séances et « Mes progrès » ont été retirés.',
+diff --git a/lib/stats_overview.dart b/lib/stats_overview.dart
+index 87bc738..75c132f 100644
+--- a/lib/stats_overview.dart
++++ b/lib/stats_overview.dart
+@@ -89,8 +89,7 @@ class StatsOverview extends StatelessWidget {
+         KMenuTile(
+           icon: Icons.account_tree_rounded,
+           title: 'Arbre de progression',
+-          subtitle:
+-              '${p.earnedBadges} badges obtenus · pratique et rythme',
++          subtitle: '${p.earnedBadges} badges obtenus · pratique et rythme',
+           onTap: () => onSection(StatsSection.journey),
+         ),
+         const KSection(
+diff --git a/lib/store.dart b/lib/store.dart
+index d03e160..a0080ae 100644
+--- a/lib/store.dart
++++ b/lib/store.dart
+@@ -937,8 +937,7 @@ class AppStore extends ChangeNotifier {
+         return;
+       }
+       final reread = jsonDecode(back) as Map<String, dynamic>;
+-      final expected = Map<String, dynamic>.of(document)
+-        ..remove('activeWod');
++      final expected = Map<String, dynamic>.of(document)..remove('activeWod');
+       for (final k in ['exportedAt', 'sessionDeTest', 'decalageJours']) {
+         reread.remove(k);
+         expected.remove(k);
+diff --git a/lib/training_estimate.dart b/lib/training_estimate.dart
+index 668e5ec..6df77b6 100644
+--- a/lib/training_estimate.dart
++++ b/lib/training_estimate.dart
+@@ -256,9 +256,11 @@ class TrainingEstimator {
+       final seconds =
+           timer?['interval'] as int? ?? int.tryParse(custom?[2] ?? '') ?? 60;
+       final reps = RegExp(r'(\d+)\s*reps').firstMatch(text);
+-      return emom([
+-        '${reps?[1] ?? ''} ${e.name}${kg == null ? '' : ' $kg kg'}',
+-      ], rounds: rounds, interval: seconds);
++      return emom(
++        ['${reps?[1] ?? ''} ${e.name}${kg == null ? '' : ' $kg kg'}'],
++        rounds: rounds,
++        interval: seconds,
++      );
+     }
+     if (text.startsWith('amrap') || timer?['type'] == 'amrap') {
+       out.clock = Span.exact(
+diff --git a/test/g2_mode_dev_test.dart b/test/g2_mode_dev_test.dart
+index 43823d5..be8b254 100644
+--- a/test/g2_mode_dev_test.dart
++++ b/test/g2_mode_dev_test.dart
+@@ -76,9 +76,7 @@ void main() {
+         startsWith('kalis-track-session-de-test-copie-avant-g2-'),
+       );
+       expect(
+-        raw.getString(
+-          '${SessionSpace.devPrefix}${AppStore.kRetiredCopyKey}',
+-        ),
++        raw.getString('${SessionSpace.devPrefix}${AppStore.kRetiredCopyKey}'),
+         isNotNull,
+       );
+       expect(raw.getString(AppStore.kRetiredCopyKey), isNull);
+diff --git a/test/g2_retrait_test.dart b/test/g2_retrait_test.dart
+index 394de27..c5eb7a5 100644
+--- a/test/g2_retrait_test.dart
++++ b/test/g2_retrait_test.dart
+@@ -27,9 +27,11 @@ String _decode(String stored) => stored.startsWith('gz:')
+     ? utf8.decode(gzip.decode(base64Decode(stored.substring(3))))
+     : stored;
+ 
+-Future<Map<String, dynamic>> _disk() async => jsonDecode(
+-  _decode((await SharedPreferences.getInstance()).getString(_key)!),
+-) as Map<String, dynamic>;
++Future<Map<String, dynamic>> _disk() async =>
++    jsonDecode(
++          _decode((await SharedPreferences.getInstance()).getString(_key)!),
++        )
++        as Map<String, dynamic>;
+ 
+ UserProfile _profile() {
+   final p = UserProfile(origin: 'onboarding', createdAt: _at);
+@@ -79,11 +81,12 @@ Future<Map<String, dynamic>> _programDocument() async {
+       'origin': 'user',
+     }
+     ..['logs'] = logs
+-    ..['settings'] = (AppSettings()
+-          ..theme = 'dark'
+-          ..accent = 'vert'
+-          ..defaultRest = 120)
+-        .toJson()
++    ..['settings'] =
++        (AppSettings()
++              ..theme = 'dark'
++              ..accent = 'vert'
++              ..defaultRest = 120)
++            .toJson()
+     ..['profile'] = _profile().toJson()
+     ..['lastLevel'] = 3;
+ }
+@@ -320,10 +323,7 @@ void main() {
+       final preview = app.previewImport(jsonEncode(old)).preview!;
+       expect(preview.ignored.hasUserData, isTrue);
+       expect(preview.ignored.lines, isNotEmpty);
+-      expect(
+-        await app.importBackup(jsonEncode(old)),
+-        ImportStatus.success,
+-      );
++      expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
+       expect(app.logs.keys.any(isManualSessionKey), isFalse);
+       expect(app.logs.length, (program['logs'] as Map).length);
+       final export = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+@@ -360,39 +360,40 @@ void main() {
+     }
+ 
+     for (final dark in [true, false]) {
+-      testWidgets('contenu, partage, « Compris » (${dark ? 'sombre' : 'clair'})', (
+-        tester,
+-      ) async {
+-        final old = withRetiredData(await _programDocument());
+-        await tester.runAsync(() async {
+-          SharedPreferences.setMockInitialValues({_key: jsonEncode(old)});
+-          store = AppStore();
+-          await store.init();
+-        });
+-        final shared = <String, String>{};
+-        RetiredCopyShare.debugHook = (name, text) async {
+-          shared[name] = text;
+-          return 'shared';
+-        };
+-        addTearDown(() => RetiredCopyShare.debugHook = null);
+-        await pump(tester, const RetiredNoticeScreen(), dark);
+-        expect(find.text('WOD et séances perso retirés'), findsOneWidget);
+-        expect(find.text('3 résultats de WOD'), findsOneWidget);
+-        expect(find.text('Copie complète vérifiée'), findsOneWidget);
+-        await tester.tap(find.byKey(const ValueKey('retired-notice-share')));
+-        await tester.pumpAndSettle();
+-        expect(shared.length, 1);
+-        expect(shared.keys.single, startsWith('kalis-track-copie-avant-g2-'));
+-        expect(shared.values.single, store.retiredCopy);
+-        await tester.scrollUntilVisible(
+-          find.byKey(const ValueKey('retired-notice-close')),
+-          200,
+-          scrollable: find.byType(Scrollable).first,
+-        );
+-        await tester.tap(find.byKey(const ValueKey('retired-notice-close')));
+-        await tester.pumpAndSettle();
+-        expect(store.retiredNotice!.seen, isTrue);
+-      });
++      testWidgets(
++        'contenu, partage, « Compris » (${dark ? 'sombre' : 'clair'})',
++        (tester) async {
++          final old = withRetiredData(await _programDocument());
++          await tester.runAsync(() async {
++            SharedPreferences.setMockInitialValues({_key: jsonEncode(old)});
++            store = AppStore();
++            await store.init();
++          });
++          final shared = <String, String>{};
++          RetiredCopyShare.debugHook = (name, text) async {
++            shared[name] = text;
++            return 'shared';
++          };
++          addTearDown(() => RetiredCopyShare.debugHook = null);
++          await pump(tester, const RetiredNoticeScreen(), dark);
++          expect(find.text('WOD et séances perso retirés'), findsOneWidget);
++          expect(find.text('3 résultats de WOD'), findsOneWidget);
++          expect(find.text('Copie complète vérifiée'), findsOneWidget);
++          await tester.tap(find.byKey(const ValueKey('retired-notice-share')));
++          await tester.pumpAndSettle();
++          expect(shared.length, 1);
++          expect(shared.keys.single, startsWith('kalis-track-copie-avant-g2-'));
++          expect(shared.values.single, store.retiredCopy);
++          await tester.scrollUntilVisible(
++            find.byKey(const ValueKey('retired-notice-close')),
++            200,
++            scrollable: find.byType(Scrollable).first,
++          );
++          await tester.tap(find.byKey(const ValueKey('retired-notice-close')));
++          await tester.pumpAndSettle();
++          expect(store.retiredNotice!.seen, isTrue);
++        },
++      );
+     }
+ 
+     testWidgets('Réglages › Sauvegardes : la copie reste accessible', (
+diff --git a/test/lc1_programme_test.dart b/test/lc1_programme_test.dart
+index d82a24a..9451cc2 100644
+--- a/test/lc1_programme_test.dart
++++ b/test/lc1_programme_test.dart
+@@ -721,36 +721,33 @@ void main() {
+       expect(sets(13), 117);
+     });
+ 
+-    test(
+-      'semaine S12 entièrement faite : XP et semaine complète',
+-      () async {
+-        final xp = app.progression.programXp;
+-        // Dates passées (la semaine réelle S12 est à venir) : la règle dépend
+-        // du nombre de journées faites, pas du nombre d'exercices.
+-        for (var j = 1; j <= 6; j++) {
+-          final log = app.sessionLog(12, j)
+-            ..done = true
+-            ..finishedAt = '2026-09-${13 + j}T18:00:00';
+-          for (final e in app.program.week(12).day(j)!.exercises) {
+-            final l = app.exLog(12, j, e);
+-            for (final s in l.sets) {
+-              s
+-                ..reps = '5'
+-                ..done = true;
+-            }
++    test('semaine S12 entièrement faite : XP et semaine complète', () async {
++      final xp = app.progression.programXp;
++      // Dates passées (la semaine réelle S12 est à venir) : la règle dépend
++      // du nombre de journées faites, pas du nombre d'exercices.
++      for (var j = 1; j <= 6; j++) {
++        final log = app.sessionLog(12, j)
++          ..done = true
++          ..finishedAt = '2026-09-${13 + j}T18:00:00';
++        for (final e in app.program.week(12).day(j)!.exercises) {
++          final l = app.exLog(12, j, e);
++          for (final s in l.sets) {
++            s
++              ..reps = '5'
++              ..done = true;
+           }
+-          expect(log.done, isTrue);
+         }
+-        app.saveLogs(immediate: true);
+-        await app.flush();
+-        expect(app.progression.programXp - xp, 600);
+-        // Semaine complète : au moins trois entraînements dans la semaine
+-        // civile du lundi 14/09.
+-        final week = app.progression.weeks[DateTime.utc(2026, 9, 14)];
+-        expect(week, isNotNull);
+-        expect(week!.sessions, greaterThanOrEqualTo(3));
+-      },
+-    );
++        expect(log.done, isTrue);
++      }
++      app.saveLogs(immediate: true);
++      await app.flush();
++      expect(app.progression.programXp - xp, 600);
++      // Semaine complète : au moins trois entraînements dans la semaine
++      // civile du lundi 14/09.
++      final week = app.progression.weeks[DateTime.utc(2026, 9, 14)];
++      expect(week, isNotNull);
++      expect(week!.sessions, greaterThanOrEqualTo(3));
++    });
+   });
+ 
+   group('Séance et journal', () {
+diff --git a/test/progression_test.dart b/test/progression_test.dart
+index 1c90a38..080e8f4 100644
+--- a/test/progression_test.dart
++++ b/test/progression_test.dart
+@@ -31,11 +31,8 @@ void main() {
+     await app.flush();
+     app.dispose();
+   });
+-  Progression calculate() => Progression.calculate(
+-    logs: app.logs,
+-    program: app.program,
+-    now: now,
+-  );
++  Progression calculate() =>
++      Progression.calculate(logs: app.logs, program: app.program, now: now);
+   // G2 : seules les journées d'entraînement du programme comptent (plus de
+   // séances manuelles « S0- ») ; la date vient de finishedAt.
+   String dayKey(int i) => [
+diff --git a/test/training_estimate_test.dart b/test/training_estimate_test.dart
+index d5b8936..a693f68 100644
+--- a/test/training_estimate_test.dart
++++ b/test/training_estimate_test.dart
+@@ -126,11 +126,7 @@ void main() {
+     expect(rotated.elapsed.high, 600);
+   });
+   test('E2MOM respecte la durée des intervalles', () {
+-    final e = TrainingEstimator.emom(
+-      ['5 tractions'],
+-      rounds: 6,
+-      interval: 120,
+-    );
++    final e = TrainingEstimator.emom(['5 tractions'], rounds: 6, interval: 120);
+     expect(e.volume('rep').low, 30);
+     expect(e.elapsed.low, 720);
+   });
