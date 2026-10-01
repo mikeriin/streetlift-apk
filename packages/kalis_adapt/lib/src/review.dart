@@ -5,11 +5,7 @@ library;
 
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart'
-    show
-        MuscleGroup,
-        deloadRirBonus,
-        deloadVolumeFactor,
-        volumeBandsByLevel;
+    show MuscleGroup, deloadRirBonus, deloadVolumeFactor, volumeBandsByLevel;
 
 import 'fatigue.dart';
 import 'filter.dart';
@@ -36,7 +32,6 @@ final class _Candidate {
     required this.reasons,
     this.exerciseId,
     this.diff,
-    this.block,
   });
 
   /// Clé stable de la proposition hors semaine (`volume:chest:up`).
@@ -187,7 +182,12 @@ List<PersonalRecord> recordsOf(EngineContext ctx, TrainingLog log) {
         case CapacityMode.hold:
           final seconds = set.seconds;
           if (seconds != null && seconds > 0) {
-            offer(info.id, RecordKind.maxHoldSeconds, seconds.toDouble(), session);
+            offer(
+              info.id,
+              RecordKind.maxHoldSeconds,
+              seconds.toDouble(),
+              session,
+            );
           }
         case CapacityMode.reps:
           final reps = set.reps;
@@ -197,7 +197,11 @@ List<PersonalRecord> recordsOf(EngineContext ctx, TrainingLog log) {
         case CapacityMode.loaded:
           final reps = set.reps;
           final flames = set.flames;
-          if (reps == null || reps < 1 || reps > 10 || flames == null || flames < 8) {
+          if (reps == null ||
+              reps < 1 ||
+              reps > 10 ||
+              flames == null ||
+              flames < 8) {
             continue;
           }
           final total = info.totalLoad(set.externalLoadKg ?? 0, bw);
@@ -349,7 +353,8 @@ AdaptReview buildReview(
         zone: zone,
         side: s.side,
         sessionsReported: s.sessionsReported,
-        lastIntensity: state.painActive(zone, day, p) || s.lastIntensity <= p.painThreshold
+        lastIntensity:
+            state.painActive(zone, day, p) || s.lastIntensity <= p.painThreshold
             ? s.lastIntensity
             : 0,
         consecutiveAboveThreshold: s.consecutiveAbove,
@@ -452,13 +457,16 @@ AdaptReview buildReview(
         break;
       }
     }
-    final under = recent.length >= 3 && recentResidual <= -0.03 && readiness < 0.6;
+    final under =
+        recent.length >= 3 && recentResidual <= -0.03 && readiness < 0.6;
     if (next != null &&
         (next.kind == WeekKind.build || next.kind == WeekKind.intro) &&
         (low >= p.deloadSessions || under)) {
       final changes = <PlanChange>[];
       final why = <Reason>[
-        reason(ReasonCodes.adaptDeload, <String, Object?>{'weekIndex': nextWeek}),
+        reason(ReasonCodes.adaptDeload, <String, Object?>{
+          'weekIndex': nextWeek,
+        }),
         reason(ReasonCodes.adaptFatigueHigh, <String, Object?>{
           'readiness': roundTo(recentReadiness, 3),
         }),
@@ -567,7 +575,18 @@ AdaptReview buildReview(
       if (residual <= -0.02 && recentReadiness < 0.6 && slotDown != null) {
         final c = normCdf((-residual - 0.01) / (p.daySd / sqrt(n.toDouble())));
         found.add(
-          _volumeCandidate(view, g, slotDown, nextWeek, -1, sets, c, 0.3 * c, -0.1, 0),
+          _volumeCandidate(
+            view,
+            g,
+            slotDown,
+            nextWeek,
+            -1,
+            sets,
+            c,
+            0.3 * c,
+            -0.1,
+            0,
+          ),
         );
       } else if (stalled >= 0.7 &&
           residual >= -0.01 &&
@@ -826,31 +845,29 @@ AdaptReview buildReview(
     );
   }
 
-  final from = sessionsLogged > digests.length ? digests.length : sessionsLogged;
+  final from = sessionsLogged > digests.length
+      ? digests.length
+      : sessionsLogged;
   final firstLogged = digests.length - from > 60 ? digests.length - 60 : from;
   for (var i = firstLogged; i < digests.length; i++) {
     final d = digests[i];
-    write(
-      'session',
-      <String, Object?>{
-        'sessionId': d.session.id,
-        'readiness': roundTo(d.readiness, 3),
-        'residual': roundTo(d.residual, 4),
-        'workSets': d.workSets,
-        'unrated': d.unrated,
-        'unplannedFails': d.unplannedFails,
-        'estimates': <Object?>[
-          for (final e in d.entries)
-            <String, Object?>{
-              'exerciseId': e.exerciseId,
-              'capacity': roundTo(e.capacity, 3),
-              'relSd': roundTo(e.relSd, 4),
-              'sets': e.sets,
-            },
-        ],
-      },
-      date: d.session.date,
-    );
+    write('session', <String, Object?>{
+      'sessionId': d.session.id,
+      'readiness': roundTo(d.readiness, 3),
+      'residual': roundTo(d.residual, 4),
+      'workSets': d.workSets,
+      'unrated': d.unrated,
+      'unplannedFails': d.unplannedFails,
+      'estimates': <Object?>[
+        for (final e in d.entries)
+          <String, Object?>{
+            'exerciseId': e.exerciseId,
+            'capacity': roundTo(e.capacity, 3),
+            'relSd': roundTo(e.relSd, 4),
+            'sets': e.sets,
+          },
+      ],
+    }, date: d.session.date);
   }
 
   final refused = <String, int>{};
@@ -982,7 +999,11 @@ AdaptReview buildReview(
 
 /// Séries fractionnaires par semaine et par groupe (`MuscleGroup.index`),
 /// en moyenne sur les deux dernières semaines.
-List<double> _weeklySets(EngineContext ctx, List<SessionDigest> digests, int day) {
+List<double> _weeklySets(
+  EngineContext ctx,
+  List<SessionDigest> digests,
+  int day,
+) {
   final out = List<double>.filled(MuscleGroup.values.length, 0);
   for (final d in digests) {
     if (day - d.day >= 14 || day < d.day) {
@@ -1017,13 +1038,16 @@ List<double> _weeklySets(EngineContext ctx, List<SessionDigest> digests, int day
   required bool up,
 }) {
   final week = view.week(weekIndex);
-  if (week == null || week.kind == WeekKind.deload || week.kind == WeekKind.test) {
+  if (week == null ||
+      week.kind == WeekKind.deload ||
+      week.kind == WeekKind.test) {
     return null;
   }
   (int, ExercisePrescription)? best;
   for (final d in week.days) {
     for (final item in d.items) {
-      if (item.targetFlames == null || view.roleOf(item.slotId) == SlotRole.main) {
+      if (item.targetFlames == null ||
+          view.roleOf(item.slotId) == SlotRole.main) {
         continue;
       }
       final info = ctx.book.find(item.exerciseId);
@@ -1041,7 +1065,8 @@ List<double> _weeklySets(EngineContext ctx, List<SessionDigest> digests, int day
         continue;
       }
       final current = best;
-      final better = current == null ||
+      final better =
+          current == null ||
           (up ? item.sets < current.$2.sets : item.sets > current.$2.sets);
       if (better) {
         best = (d.dayIndex, item);
@@ -1117,7 +1142,8 @@ _Candidate _volumeCandidate(
     }
   }
   return _Candidate(
-    family: 'volume:${group.code}:${delta > 0 ? 'up' : 'down'}:'
+    family:
+        'volume:${group.code}:${delta > 0 ? 'up' : 'down'}:'
         '${view.block.pass1.blockId}',
     kind: ProposalKind.volume,
     scope: ProposalScope.exercise,

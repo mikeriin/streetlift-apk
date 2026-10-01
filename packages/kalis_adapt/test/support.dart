@@ -174,7 +174,8 @@ bool lastHadUnplannedFailure(TrainingLog log, String exerciseId) {
         continue;
       }
       seen = true;
-      final missed = s.flames == Flames.failure || (s.flames == null && !s.success);
+      final missed =
+          s.flames == Flames.failure || (s.flames == null && !s.success);
       final planned = (s.target?.flames ?? 0) >= Flames.failure;
       if (missed && !planned) {
         failed = true;
@@ -316,12 +317,7 @@ List<String> checkSession(
       out.add('$where : hausse après un échec non prévu ($reference → $top)');
     }
     if (top > reference + 0.011) {
-      final zones = painsSince(
-        log,
-        lastDayOf(log, item.exerciseId),
-        health,
-        p,
-      );
+      final zones = painsSince(log, lastDayOf(log, item.exerciseId), health, p);
       for (final zone in zones) {
         if (info.zoneLevel(zone) >= 0.5) {
           out.add(
@@ -361,7 +357,8 @@ List<String> checkAdvice(
       continue;
     }
     last = s.externalLoadKg ?? last;
-    final missed = s.flames == Flames.failure || (s.flames == null && !s.success);
+    final missed =
+        s.flames == Flames.failure || (s.flames == null && !s.success);
     if (missed && (s.target?.flames ?? 0) < Flames.failure) {
       failed = true;
     }

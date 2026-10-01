@@ -48,8 +48,7 @@ double erfc(double x) {
                                                           (1.48851587 +
                                                               t *
                                                                   (-0.82215223 +
-                                                                      t *
-                                                                          0.17087277))))))));
+                                                                      t * 0.17087277))))))));
   final ans = t * exp(poly);
   return x >= 0 ? ans : 2 - ans;
 }

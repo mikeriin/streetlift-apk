@@ -34,9 +34,7 @@ List<SetPlan?> _plansOf(ExercisePrescription item, {required bool hold}) {
   if (targets == null) {
     return <SetPlan?>[];
   }
-  return <SetPlan?>[
-    for (final t in targets) planOfTarget(t, hold: hold),
-  ];
+  return <SetPlan?>[for (final t in targets) planOfTarget(t, hold: hold)];
 }
 
 /// Emplacement de [info] dans la séance en cours : la cible de base vient
@@ -211,7 +209,9 @@ IntraSessionAdvice buildAdvice(
       }),
     );
   } else if (rated == null) {
-    reasons.add(reason(ReasonCodes.adaptNoRating, <String, Object?>{'sets': 1}));
+    reasons.add(
+      reason(ReasonCodes.adaptNoRating, <String, Object?>{'sets': 1}),
+    );
   } else if (previousTarget != null) {
     final delta = rated - previousTarget.flames;
     if (delta >= p.adviceGapFlames) {
@@ -267,7 +267,7 @@ IntraSessionAdvice buildAdvice(
       }),
     );
   }
-  if (next.open) {
+  if (next.open && !exercise.spec.test) {
     reasons.add(
       reason(ReasonCodes.adaptBenchmarkSet, <String, Object?>{
         'rir': rirOfFlames(next.flames),

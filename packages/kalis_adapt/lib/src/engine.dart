@@ -54,7 +54,10 @@ final class KalisAdapt implements AdaptEngine {
   }
 
   /// Contexte, vue du bloc et état rejoué pour [input].
-  (EngineContext, BlockView, Replayed) prepare(Catalog catalog, AdaptInput input) {
+  (EngineContext, BlockView, Replayed) prepare(
+    Catalog catalog,
+    AdaptInput input,
+  ) {
     final sessions = sessionsOf(input.log, input.today.dayNumber);
     final sameWorld =
         identical(catalog, _catalog) &&
@@ -77,7 +80,13 @@ final class KalisAdapt implements AdaptEngine {
         }
         final state = cached.state.fork();
         final digests = List<SessionDigest>.of(cached.digests);
-        replaySessions(context, view, state, digests, sessions.skip(old.length));
+        replaySessions(
+          context,
+          view,
+          state,
+          digests,
+          sessions.skip(old.length),
+        );
         final replayed = Replayed(state, digests);
         _sessions = sessions;
         _replayed = replayed;

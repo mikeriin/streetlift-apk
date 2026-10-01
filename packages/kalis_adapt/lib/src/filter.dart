@@ -460,7 +460,12 @@ double setFatigueOf(double rir, int restSeconds, AdaptParams p) {
 
 /// Fatigue prévue avant la série de rang [setIndex] quand les précédentes
 /// finissent à [rir] répétitions de l'échec avec [restSeconds] de repos.
-double plannedFatigue(int setIndex, double rir, int restSeconds, AdaptParams p) {
+double plannedFatigue(
+  int setIndex,
+  double rir,
+  int restSeconds,
+  AdaptParams p,
+) {
   final f = setFatigueOf(rir, restSeconds, p);
   var total = 0.0;
   for (var i = 0; i < setIndex; i++) {

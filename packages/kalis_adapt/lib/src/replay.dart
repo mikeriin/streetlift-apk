@@ -62,7 +62,11 @@ final class BlockView {
 
   /// Prescription de l'emplacement [slotId] (sinon de l'exercice
   /// [exerciseId]) dans la séance désignée par [ref], ou `null`.
-  ExercisePrescription? item(ProgramRef? ref, String? slotId, String exerciseId) {
+  ExercisePrescription? item(
+    ProgramRef? ref,
+    String? slotId,
+    String exerciseId,
+  ) {
     if (ref == null || ref.blockId != block.pass1.blockId) {
       return null;
     }
@@ -246,8 +250,14 @@ final class Replayed {
 
 /// Poids de corps d'une séance : celui de la séance, sinon celui du
 /// profil, sinon la référence du modèle.
-double bodyWeightOf(SessionRecord? session, AthleteProfile profile, AdaptParams p) {
-  return session?.bodyWeightKg ?? profile.bodyWeightKg ?? p.referenceBodyWeightKg;
+double bodyWeightOf(
+  SessionRecord? session,
+  AthleteProfile profile,
+  AdaptParams p,
+) {
+  return session?.bodyWeightKg ??
+      profile.bodyWeightKg ??
+      p.referenceBodyWeightKg;
 }
 
 /// Cible d'une série d'après la cible enregistrée [target] (ce qui était

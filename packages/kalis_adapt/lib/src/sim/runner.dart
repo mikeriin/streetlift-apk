@@ -25,6 +25,13 @@ final class SimProgram {
   /// Programme du profil [profile] par le moteur statique [plan].
   SimProgram(this.catalog, this.plan, this.profile, {this.seed = 0});
 
+  /// Programme réduit au bloc [block] déjà construit (programme importé) :
+  /// la simulation ne doit pas dépasser sa durée.
+  SimProgram.fixed(this.catalog, this.plan, this.profile, ProgramBlock block)
+    : seed = block.pass1.seed {
+    _blocks.add(block);
+  }
+
   /// Catalogue.
   final Catalog catalog;
 

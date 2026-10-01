@@ -373,10 +373,7 @@ final class SimAthlete {
   late double weeksTrained;
 
   final Map<String, TruthExercise?> _truth = <String, TruthExercise?>{};
-  final List<double> _acute = List<double>.filled(
-    MuscleGroup.values.length,
-    0,
-  );
+  final List<double> _acute = List<double>.filled(MuscleGroup.values.length, 0);
   double _chronic = 0;
   double _life = 0;
   int _day = 0;
@@ -417,7 +414,10 @@ final class SimAthlete {
     for (final level in profile.movementLevels) {
       final low = level.low;
       final high = level.high;
-      if (level.exerciseId != id || !level.known || low == null || high == null) {
+      if (level.exerciseId != id ||
+          !level.known ||
+          low == null ||
+          high == null) {
         continue;
       }
       final wanted = mode == CapacityMode.loaded
@@ -730,7 +730,9 @@ final class SimAthlete {
     }
     // Fatigue laissée par la série (vérité : RIR réel et repos).
     final base =
-        0.85 * exp(-restSeconds / 160) * exp(-(trueRir > 8 ? 8 : trueRir) / 1.4);
+        0.85 *
+        exp(-restSeconds / 160) *
+        exp(-(trueRir > 8 ? 8 : trueRir) / 1.4);
     t.setFatigue.add(base * t.fatigueScale * exp(0.2 * r.gauss()));
     var w = 1 - (trueRir > 6 ? 6 : trueRir) / 8;
     if (w < 0.3) {

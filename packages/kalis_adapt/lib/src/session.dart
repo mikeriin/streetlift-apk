@@ -263,7 +263,7 @@ SessionPlan buildSessionPlan(
         }),
       if (misplaced)
         reason(ReasonCodes.adaptPlaceChanged, <String, Object?>{
-          'place': place!.code,
+          'place': place.code,
         }),
     ];
     final substitute = info.mode == null
@@ -597,7 +597,8 @@ List<SetPlan> _plansFor(
       final t = targets[i < targets.length ? i : targets.length - 1];
       final high = t.repsHigh ?? t.repsLow ?? exercise.spec.high;
       final low = t.repsLow ?? high;
-      final flames = t.flames ?? item.targetFlames ?? flamesOfRir(exercise.rirEff);
+      final flames =
+          t.flames ?? item.targetFlames ?? flamesOfRir(exercise.rirEff);
       final rir = rirOfFlames(flames) + (exercise.rirEff - exercise.spec.rir);
       final shift = -run.quantileZ(rir) * f.loadSd(high + rir);
       final ideal = exp(f.logLoadFor(high + rir, shift: shift)) - bw;
@@ -687,7 +688,10 @@ ExercisePrescription _finish(EngineContext ctx, SessionRun run, _Draft d) {
     final sd = track.filter.loadSd(exercise.nPlan, withDay: false);
     reasons.add(
       reason(ReasonCodes.adaptLowConfidence, <String, Object?>{
-        'confidence': roundTo(clampDouble(1 - sd / (2 * p.calibrationSd), 0, 1), 3),
+        'confidence': roundTo(
+          clampDouble(1 - sd / (2 * p.calibrationSd), 0, 1),
+          3,
+        ),
       }),
     );
   }
@@ -727,7 +731,7 @@ ExercisePrescription _finish(EngineContext ctx, SessionRun run, _Draft d) {
       reasons.add(r);
     }
   }
-  if (used.last.open) {
+  if (used.last.open && !exercise.spec.test) {
     reasons.add(
       reason(ReasonCodes.adaptBenchmarkSet, <String, Object?>{
         'rir': rirOfFlames(used.last.flames),

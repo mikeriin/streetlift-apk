@@ -186,12 +186,18 @@ final class ModelState {
   /// jour [day] : douleur encore active, ou signalée au-dessus du seuil
   /// depuis la dernière séance de l'exercice (elle n'est « jamais suivie
   /// d'une charge accrue sur la zone »).
-  List<BodyZone> painBlocks(ExerciseInfo info, int? lastDay, int day, AdaptParams p) {
+  List<BodyZone> painBlocks(
+    ExerciseInfo info,
+    int? lastDay,
+    int day,
+    AdaptParams p,
+  ) {
     final out = <BodyZone>[];
     for (final s in pains.values) {
       final above = s.lastAboveDay;
       final since = above != null && (lastDay == null || above >= lastDay);
-      if ((painActive(s.zone, day, p) || since) && info.zoneLevel(s.zone) >= 0.5) {
+      if ((painActive(s.zone, day, p) || since) &&
+          info.zoneLevel(s.zone) >= 0.5) {
         out.add(s.zone);
       }
     }
@@ -487,8 +493,10 @@ final class SessionRun {
             info,
             CapacityFilter.fromOneRm(
               logOneRm: 0.5 * (ln(lowTotal) + ln(highTotal)),
-              sd: sqrt(sq(ln(highTotal / lowTotal) / 3.4641016151377544) +
-                  sq(p.priorSdDeclared)),
+              sd: sqrt(
+                sq(ln(highTotal / lowTotal) / 3.4641016151377544) +
+                    sq(p.priorSdDeclared),
+              ),
               v: v,
               vSd: vSd,
               k: k0,
@@ -533,7 +541,9 @@ final class SessionRun {
       }
       final s = planSimilarity(t.info.exercise, info.exercise);
       if (s > bestSimilarity ||
-          (s == bestSimilarity && best != null && t.info.id.compareTo(best.info.id) < 0)) {
+          (s == bestSimilarity &&
+              best != null &&
+              t.info.id.compareTo(best.info.id) < 0)) {
         best = t;
         bestSimilarity = s;
       }
@@ -624,7 +634,12 @@ final class SessionRun {
       common = swd / (sw + 1 / varCommon);
       varCommonNow = 1 / (sw + 1 / varCommon);
     }
-    track.filter.beginSession(day, base + common, sqrt(varCommonNow + varOwn), p);
+    track.filter.beginSession(
+      day,
+      base + common,
+      sqrt(varCommonNow + varOwn),
+      p,
+    );
     run.painZones = state.painBlocks(info, track.lastDay, day, p);
     _settle(run);
   }
@@ -691,7 +706,9 @@ final class SessionRun {
     run.calibrating =
         run.uncertain && track.filter.sessions < p.calibrationSessions;
     var rir = run.spec.rir + extraRir;
-    if (run.uncertain) {
+    if (run.uncertain && !run.spec.test) {
+      // Un test se fait à l'effort demandé : c'est lui qui lève
+      // l'incertitude.
       rir += p.calibrationRirBonus;
     }
     if (run.painZones.isNotEmpty) {
@@ -799,7 +816,16 @@ final class SessionRun {
       if (run.track == null) {
         _firstLoaded(run, logLoad, amount, flames, failed);
       }
-      _observeLoaded(run, logLoad, loadKg ?? 0, amount, flames, failed, target, test);
+      _observeLoaded(
+        run,
+        logLoad,
+        loadKg ?? 0,
+        amount,
+        flames,
+        failed,
+        target,
+        test,
+      );
     } else {
       if (run.track == null) {
         _firstDirect(run, mode, amount, flames, failed);
@@ -956,7 +982,9 @@ final class SessionRun {
         state.rater.note(confirmed, p);
       }
       final predicted = nPred - reps;
-      final rirForNoise = predicted > rir ? (predicted > 6 ? 6.0 : predicted) : rir;
+      final rirForNoise = predicted > rir
+          ? (predicted > 6 ? 6.0 : predicted)
+          : rir;
       var sd = state.rater.rirSd(rirForNoise, reps, p);
       if (w < 0.999) {
         sd = sd / sqrt(w < 1e-3 ? 1e-3 : w);
@@ -1138,7 +1166,12 @@ final class SessionRun {
   /// Répétitions prévues à la charge externe [loadKg] en gardant [rir] en
   /// réserve, après la perte relative [fatigue] : quantile prudent de la
   /// capacité du jour, la fatigue étant elle-même incertaine.
-  double predictedReps(ExerciseRun run, double loadKg, double rir, double fatigue) {
+  double predictedReps(
+    ExerciseRun run,
+    double loadKg,
+    double rir,
+    double fatigue,
+  ) {
     final p = _p;
     final f = run.track!.filter;
     final logLoad = ln(run.info.totalLoad(loadKg, bodyWeightKg));
@@ -1340,7 +1373,9 @@ final class SessionRun {
       for (var i = 0; i < spec.sets; i++) {
         final fatigue = plannedFatigue(i, rir, spec.restSeconds, p);
         final amount = targetAmount(run, fatigue);
-        out.add(SetPlan(loadKg: null, low: amount, high: amount, flames: flames));
+        out.add(
+          SetPlan(loadKg: null, low: amount, high: amount, flames: flames),
+        );
       }
     }
     // Série repère : quand les notes n'informent plus, la dernière série
@@ -1348,7 +1383,8 @@ final class SessionRun {
     // réserve dite), comme dans l'APRE (Mann et al. 2010).
     final lastBenchmark = track.benchmarkDay;
     if (wantsBenchmark(run) &&
-        (lastBenchmark == null || day - lastBenchmark >= p.benchmarkEveryDays)) {
+        (lastBenchmark == null ||
+            day - lastBenchmark >= p.benchmarkEveryDays)) {
       final last = out.removeLast();
       out.add(
         SetPlan(
@@ -1359,6 +1395,26 @@ final class SessionRun {
           open: true,
         ),
       );
+    }
+    if (spec.test && spec.high > spec.low) {
+      // Test sans cible série par série (« maximum ») : séries ouvertes,
+      // la prévision prudente sert de repère bas.
+      for (var i = 0; i < out.length; i++) {
+        final planned = out[i];
+        var high = planned.low + (planned.low + 1) ~/ 2 + 2;
+        if (high > spec.high) {
+          high = spec.high;
+        }
+        if (high > planned.low) {
+          out[i] = SetPlan(
+            loadKg: planned.loadKg,
+            low: planned.low,
+            high: high,
+            flames: planned.flames,
+            open: true,
+          );
+        }
+      }
     }
     run.plan = List<SetPlan?>.of(out);
     return out;
@@ -1396,7 +1452,9 @@ final class SessionRun {
         (previous.unplannedFail ? Flames.failure : (rated ?? previousFlames)) -
         previousFlames;
     final load = previous.loadKg;
-    if (planned != null && gap.abs() < p.adviceGapFlames && !previous.unplannedFail) {
+    if (planned != null &&
+        gap.abs() < p.adviceGapFlames &&
+        !previous.unplannedFail) {
       final same = load != null && planned.loadKg != load
           ? planned.withLoad(load)
           : planned;
@@ -1405,7 +1463,12 @@ final class SessionRun {
     final fatigue = track.filter.fatigueNow(p);
     if (run.info.mode != CapacityMode.loaded || load == null) {
       final amount = targetAmount(run, fatigue);
-      var next = SetPlan(loadKg: null, low: amount, high: amount, flames: flamesTarget);
+      var next = SetPlan(
+        loadKg: null,
+        low: amount,
+        high: amount,
+        flames: flamesTarget,
+      );
       if (planned != null && planned.open && !previous.unplannedFail) {
         next = SetPlan(
           loadKg: null,
@@ -1491,7 +1554,12 @@ final class SessionRun {
       }
     }
     final (target, _) = targetReps(run, kg, fatigue);
-    var next = SetPlan(loadKg: kg, low: target, high: target, flames: flamesTarget);
+    var next = SetPlan(
+      loadKg: kg,
+      low: target,
+      high: target,
+      flames: flamesTarget,
+    );
     if (planned != null && planned.open && !previous.unplannedFail) {
       next = SetPlan(
         loadKg: kg,
