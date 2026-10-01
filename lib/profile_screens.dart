@@ -96,8 +96,7 @@ class ProfileFlow extends StatefulWidget {
   State<ProfileFlow> createState() => _ProfileFlowState();
 }
 
-class _ProfileFlowState extends State<ProfileFlow>
-    with WidgetsBindingObserver {
+class _ProfileFlowState extends State<ProfileFlow> with WidgetsBindingObserver {
   int _step = 0;
   bool _minor = false;
 
@@ -371,7 +370,9 @@ class _ProfileFlowState extends State<ProfileFlow>
       return;
     }
     if (kFlowSteps[_step] == 'age' && _isMinor) {
-      // Aucune donnée enregistrée : le brouillon reste en mémoire.
+      // Aucune donnée enregistrée : le brouillon reste en mémoire (G1
+      // correction 1 : celui des étapes précédentes est effacé).
+      unawaited(store.saveProfileFlowDraft(null));
       setState(() => _minor = true);
       return;
     }
