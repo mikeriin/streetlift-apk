@@ -264,7 +264,10 @@ final class Scorer {
         affinityTime += seconds * e.affinity;
         fatigue += seconds * exercise.systemicFatigue;
         jointTime += seconds * e.jointPenalty;
-        fitSum += e.fit;
+        // Un exercice réduit sous sa dose de référence vaut d'autant moins :
+        // mieux vaut cinq exercices complets que huit exercices rognés.
+        final dose = e.scheme.sets;
+        fitSum += count >= dose ? e.fit : e.fit * count / dose;
         if (e.needsWarmup) {
           warm = true;
         }
@@ -481,13 +484,21 @@ final class Scorer {
 
     // Qualité : objectifs.
     final goals = ctx.goals;
-    if (goals.isEmpty) {
+    var goalWeightSum = 0.0;
+    for (var j = 0; j < goals.length; j++) {
+      goalWeightSum += ctx.goalWeights[j];
+    }
+    if (goalWeightSum <= 0) {
       c[3] = 1;
     } else {
       var sum = 0.0;
-      var weights = 0.0;
-      final need = ctx.goalExposureTarget * 100;
       for (var j = 0; j < goals.length; j++) {
+        final weight = ctx.goalWeights[j];
+        if (weight <= 0) {
+          continue;
+        }
+        // Expositions visées, comptées en meilleur palier disponible.
+        final need = ctx.goalExposureTarget * ctx.goalBestSupport[j];
         var covered = _goalSum[j] / need;
         if (covered > 1) {
           covered = 1;
@@ -495,10 +506,9 @@ final class Scorer {
         if (ctx.goalExactSelectable[j]) {
           covered = 0.5 * covered + (_goalExact[j] > 0 ? 0.5 : 0.0);
         }
-        sum += goals[j].weight * covered;
-        weights += goals[j].weight;
+        sum += weight * covered;
       }
-      c[3] = sum / weights;
+      c[3] = sum / goalWeightSum;
     }
 
     // Qualité : dosage des disciplines.
@@ -515,6 +525,7 @@ final class Scorer {
     }
 
     // Qualité : volume par muscle.
+    var saturation = 0.0;
     if (ctx.resistanceShare <= 0) {
       c[5] = 1;
     } else {
@@ -522,6 +533,7 @@ final class Scorer {
       var weights = 0.0;
       var twice = 0.0;
       var trained = 0.0;
+      var filled = 0.0;
       for (var g = 0; g < groups; g++) {
         final v = _volume[g];
         final low = ctx.bandLow[g];
@@ -530,7 +542,7 @@ final class Scorer {
         if (v < low) {
           s = v / low;
         } else if (v > high) {
-          s = 1 - (v - high) / high;
+          s = 1 - 2 * (v - high) / high;
           if (s < 0) {
             s = 0;
           }
@@ -540,6 +552,9 @@ final class Scorer {
         final weight = ctx.groupWeight[g];
         sum += weight * s;
         weights += weight;
+        if (high > 0) {
+          filled += weight * (v >= high ? 1.0 : v / high);
+        }
         if (low > 0 && _groupDays[g] > 0) {
           trained += weight;
           if (_groupDays[g] >= 2 || dayCount < 2) {
@@ -552,6 +567,7 @@ final class Scorer {
       final band = weights <= 0 ? 1.0 : sum / weights;
       final frequency = trained <= 0 ? 1.0 : twice / trained;
       c[5] = 0.7 * band + 0.3 * frequency;
+      saturation = weights <= 0 ? 0.0 : filled / weights;
     }
 
     // Qualité : équilibre des schémas.
@@ -724,7 +740,12 @@ final class Scorer {
         least = u;
       }
     }
-    c[8] = 0.5 * used / dayCount + 0.5 * least;
+    final raw = 0.5 * used / dayCount + 0.5 * least;
+    // Quand tous les groupes ont atteint le haut de leur bande, il n'y a
+    // plus de travail utile à ajouter : des séances plus courtes que le
+    // temps disponible ne coûtent alors plus rien.
+    final full = saturation * saturation;
+    c[8] = raw + (1 - raw) * full;
 
     // Qualité : variété.
     var redundancy =

@@ -477,6 +477,8 @@ final class PlanContext {
     required this.knownCount,
     required this.hasPrioritySkill,
     required this.goalExactSelectable,
+    required this.goalBestSupport,
+    required this.goalWeights,
     required this.rejections,
     required this.noveltyAllowance,
     required this.rootCount,
@@ -566,6 +568,13 @@ final class PlanContext {
 
   /// Pour chaque objectif : l'exercice visé lui-même est admissible.
   final List<bool> goalExactSelectable;
+
+  /// Meilleur soutien de chaque objectif parmi les exercices choisissables
+  /// (100 = l'exercice même).
+  final List<int> goalBestSupport;
+
+  /// Poids effectif de chaque objectif dans la note.
+  final List<double> goalWeights;
 
   /// Pourquoi un exercice du catalogue n'est pas admissible (identifiant →
   /// code de [Rejections]) ; un exercice absent de la table est admissible.
@@ -848,7 +857,7 @@ PlanContext _build(ContextInputs inputs) {
   ) {
     final group = abilityGroupOf(e);
     var notYet = false;
-    final a = abilityFromPerformance(
+    final a0 = abilityFromPerformance(
       e: e,
       measure: measure,
       value: value,
@@ -857,6 +866,14 @@ PlanContext _build(ContextInputs inputs) {
       group: group,
       cannot: () => notYet = true,
     );
+    // Une tenue sur un exercice d'appoint (suspension, gainage) ne dit pas
+    // la force du groupe : elle ne vaut pas plus d'un palier au-dessus.
+    final kind = slotKindOf(e);
+    final modest =
+        measure == LevelMeasure.maxHoldSeconds &&
+        (kind == SlotKind.accessory || kind == SlotKind.core) &&
+        a0 > e.difficulty + 1;
+    final a = modest ? e.difficulty + 1 : a0;
     if (notYet) {
       // Pas une répétition : l'exercice n'est pas acquis, et le groupe ne
       // dépasse pas le palier juste en dessous tant que rien d'autre ne
@@ -935,6 +952,33 @@ PlanContext _build(ContextInputs inputs) {
         case CapacityUnit.metersPerSecond:
           break;
       }
+    }
+  }
+  // Un objectif « première répétition » ou « figure à débloquer » sur un
+  // exercice sans niveau déclaré dit que l'exercice n'est pas acquis : il
+  // se prépare par ses paliers, il ne se programme pas.
+  for (final g in profile.goals) {
+    final id = g.exerciseId;
+    if (g.kind != GoalKind.performance || id == null || knownIds.contains(id)) {
+      continue;
+    }
+    final e = catalog.find(id);
+    if (e == null) {
+      continue;
+    }
+    final target = g.targetValue;
+    final first =
+        g.metric == GoalMetric.skillUnlocked ||
+        (g.metric == GoalMetric.maxReps && target != null && target <= 2);
+    if (!first) {
+      continue;
+    }
+    cannotIds.add(id);
+    final group = abilityGroupOf(e);
+    final cap = e.difficulty - 1;
+    final previousCap = capOf[group];
+    if (previousCap == null || cap < previousCap) {
+      capOf[group] = cap;
     }
   }
   final experience = profile.experience;
@@ -1082,6 +1126,7 @@ PlanContext _build(ContextInputs inputs) {
   final rootIndex = <String, int>{};
   final rejections = <String, String>{};
   final exactSelectable = List<bool>.filled(goals.length, false);
+  final goalBest = List<int>.filled(goals.length, 0);
   final trainable = <int>{};
   var coverable = 0;
   var likedInPool = 0;
@@ -1213,6 +1258,10 @@ PlanContext _build(ContextInputs inputs) {
       if (e.pattern == MovementPattern.souplesse && !flexibilityWanted) {
         rejection = Rejections.reserved;
       }
+      // Le travail direct du cou ne se programme pas d'office.
+      if (e.family == MovementFamily.cou) {
+        rejection = Rejections.reserved;
+      }
     }
 
     // Trop facile : un polyarticulaire ou une figure sans charge réglable,
@@ -1329,10 +1378,20 @@ PlanContext _build(ContextInputs inputs) {
     if (t.kind.isResistance || t.kind == SlotKind.conditioning) {
       for (final g in MuscleGroup.values) {
         final credit = t.groupCredits[g.index];
-        if (credit > 0) {
-          groupsOut.add(g.index);
-          valuesOut.add(credit);
+        if (credit <= 0) {
+          continue;
         }
+        if (t.kind == SlotKind.conditioning) {
+          // Travail métabolique loin de l'échec : une demi-série pour les
+          // muscles principaux, rien pour les autres.
+          if (credit == 2) {
+            groupsOut.add(g.index);
+            valuesOut.add(1);
+          }
+          continue;
+        }
+        groupsOut.add(g.index);
+        valuesOut.add(credit);
       }
     }
     var push = 0;
@@ -1380,6 +1439,9 @@ PlanContext _build(ContextInputs inputs) {
         if (support[j] == 100) {
           exactSelectable[j] = true;
         }
+        if (support[j] > goalBest[j]) {
+          goalBest[j] = support[j];
+        }
       }
       for (var k = 0; k < groupsOut.length; k++) {
         if (valuesOut[k] == 2) {
@@ -1422,7 +1484,9 @@ PlanContext _build(ContextInputs inputs) {
       jointPenalty: penalty > 1 ? 1 : penalty,
       fit: 0.4 * canonical + 0.4 * challenge + (known ? 0.2 : 0.0),
       staple:
-          t.kind == SlotKind.compound || t.kind == SlotKind.power || t.kind.isSkill
+          t.kind == SlotKind.compound ||
+              t.kind == SlotKind.power ||
+              t.kind.isSkill
           ? (goalLift || bestSupport >= 80 ? 1.0 : canonical)
           : 0.0,
       prioritySkill: t.kind.isSkill && (known || bestSupport >= 60),
@@ -1531,6 +1595,16 @@ PlanContext _build(ContextInputs inputs) {
     knownCount: knownInPool > 6 ? 6 : knownInPool,
     hasPrioritySkill: pool.any((e) => e.selectable && e.prioritySkill),
     goalExactSelectable: List<bool>.unmodifiable(exactSelectable),
+    goalBestSupport: List<int>.unmodifiable(goalBest),
+    goalWeights: List<double>.unmodifiable(<double>[
+      for (var j = 0; j < goals.length; j++)
+        // Un objectif que rien dans le vivier ne sert ne pèse pas ; un
+        // mouvement de compétition hors de portée pèse à la mesure de son
+        // meilleur palier.
+        goals[j].goalId != null
+            ? (goalBest[j] >= 30 ? goals[j].weight : 0.0)
+            : (goalBest[j] >= 50 ? goals[j].weight * goalBest[j] / 100 : 0.0),
+    ]),
     rejections: Map<String, String>.unmodifiable(rejections),
     noveltyAllowance: globalLevel == 0 ? 2 : 3,
     rootCount: rootIndex.length,

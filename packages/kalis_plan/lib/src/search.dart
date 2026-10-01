@@ -289,10 +289,10 @@ final class Planner {
       }
     }
     final goalNeed = List<double>.filled(ctx.goals.length, 0);
-    final need = ctx.goalExposureTarget * 100;
     for (var j = 0; j < goalNeed.length; j++) {
-      final gap = 1 - scorer.goalSupportSum(j) / need;
-      goalNeed[j] = gap > 0 ? gap * ctx.goals[j].weight : 0;
+      final need = ctx.goalExposureTarget * ctx.goalBestSupport[j];
+      final gap = need <= 0 ? 0.0 : 1 - scorer.goalSupportSum(j) / need;
+      goalNeed[j] = gap > 0 ? gap * ctx.goalWeights[j] : 0;
     }
     final missing = ctx.coverableBits & ~scorer.coveredBits;
     final order = <int>[];
