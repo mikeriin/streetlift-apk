@@ -32,7 +32,7 @@ Entrées du propriétaire (`inputs/`) :
 | kalis_plan | — | G4 | — |
 | kalis_adapt | — | G8 | — |
 | kalis_quest | — | G11 | — |
-| kalis_koach | — | GK | — |
+| kalis_koach | kalis_koach-v0.1.0 (4fa2777) | GK | 01/10/2026 |
 
 ## Piste A — application (validation du propriétaire)
 
@@ -65,4 +65,4 @@ Entrées du propriétaire (`inputs/`) :
 
 | Lot | Prérequis | Tâche | Étiquette | Commit koach | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
-| GK | — | Opus | kalis_koach-v0.1.0 (créée, push refusé : 403) | 4fa2777 | 01/10/2026 | en attente du propriétaire (étiquette à pousser ; contrôle vert, run 36831108263) |
+| GK | — | Opus | kalis_koach-v0.1.0 | 4fa2777 | 01/10/2026 | livré (run 36831108263 ; étiquette créée par le propriétaire via une release GitHub, le push d’étiquette étant refusé à la session) |

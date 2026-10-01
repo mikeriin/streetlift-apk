@@ -136,7 +136,7 @@ Source : conversation de pilotage du 30/09/2026 (22:00-23:10, heure de Paris), q
 - **Regard** mesuré par l'asymétrie des yeux (seuil 0,06) ; **côté de la bulle** = côté du regard sauf accessoire (> 520 unités), sinon le plus dégagé. Surchargeable par pose dans `poses.json`.
 - **Répliques** : choix déterministe (occurrence + graine), sans répétition consécutive ; douleur signalée en priorité maximale ; table de 6 codes de raison **d'exemple**, extensible, code inconnu → message générique ; les codes définitifs viendront de `kalis_core` / `kalis_adapt`.
 - **Sources** copiées dans `tools/koach/sources/` sur `koach` (empreintes SHA-256) pour que la CI régénère et compare le Dart.
-- **Blocage** : le push de l'étiquette `kalis_koach-v0.1.0` est refusé par le serveur (HTTP 403, deux essais) alors que le push de branche passe. Lot marqué « en attente du propriétaire » jusqu'à la création de l'étiquette sur 4fa2777 (commande dans `livraisons/LIVRAISON_GK.md`).
+- **Blocage** : le push de l'étiquette `kalis_koach-v0.1.0` est refusé par le serveur (HTTP 403, deux essais) alors que le push de branche passe. Le propriétaire a créé l'étiquette par une release GitHub sur `koach` (4fa2777, étiquette simple et non annotée) ; vérifié, lot livré. Les sessions ne peuvent pas pousser d'étiquette : à prévoir pour la piste M.
 
 ### GC — Contrats et `kalis_core` (01/10/2026, Fable 5.1)
 

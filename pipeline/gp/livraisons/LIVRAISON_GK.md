@@ -3,7 +3,7 @@
 - Date : 01/10/2026 (Opus 5.5, effort élevé). Validation : automatique (contrôles verts).
 - Paquet : `kalis_koach` **0.1.0**, branche `koach`, commit **4fa2777** (« Kalis Track koach (GK) : kalis_koach 0.1.0 »).
 - Contrôle : `claude/ci-gp-koach`, run **36831108263** vert (paquet : formatage, `dart analyze --fatal-infos`, 36 tests, simulateur ; outils Python : 9 tests dont la régénération du Dart à l'identique).
-- **Étiquette `kalis_koach-v0.1.0` : créée localement, push refusé par le serveur (HTTP 403, deux essais)**. Statut : en attente du propriétaire. À faire : `git tag -a kalis_koach-v0.1.0 4fa2777 -m "kalis_koach 0.1.0 (lot GK)"` puis `git push origin kalis_koach-v0.1.0` (ou une release GitHub sur 4fa2777). Le même blocage concernera probablement les étiquettes de la piste M.
+- Étiquette **`kalis_koach-v0.1.0`** sur 4fa2777 : le push depuis la session a été refusé (HTTP 403) ; le propriétaire l'a créée par une release GitHub (étiquette simple). Vérifiée. Statut : **livré**. Les sessions ne peuvent pas pousser d'étiquette : même point à prévoir pour la piste M.
 - Page de suivi : https://claude.ai/artifact/7tr7vJvnnn85KzVx5qYRw5 (partie Koach).
 
 ## Contenu
@@ -30,4 +30,4 @@ Traits de séparation conservés et régularisés ; normalisation en pied / bust
 
 ## Pour G5
 
-`git fetch origin --tags && git checkout kalis_koach-v0.1.0 -- packages/kalis_koach` (une fois l'étiquette poussée) ; implémenter un `KoachPathSink` vers `Path` (`PathFillType.evenOdd`), couleurs D6.2 (CONTRAT § 2), clignement par écrasement vertical du calque yeux autour de `eyeBoxes`, `koachCommonFrame` pour garder Koach en place entre deux poses.
+`git fetch origin --tags && git checkout kalis_koach-v0.1.0 -- packages/kalis_koach` ; implémenter un `KoachPathSink` vers `Path` (`PathFillType.evenOdd`), couleurs D6.2 (CONTRAT § 2), clignement par écrasement vertical du calque yeux autour de `eyeBoxes`, `koachCommonFrame` pour garder Koach en place entre deux poses.
