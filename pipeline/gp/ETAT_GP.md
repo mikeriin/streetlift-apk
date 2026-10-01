@@ -56,7 +56,7 @@ Entrées du propriétaire (`inputs/`) :
 
 | Lot | Prérequis | Tâche | Étiquette | Commit moteurs | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
-| GC | — | Fable A | kalis_core-v0.1.0 | — | — | à faire |
+| GC | — | Fable A | kalis_core-v0.1.0 | — | — | en cours depuis 2026-10-01 06:50 UTC |
 | G4 | GC | Fable B | kalis_plan-v0.1.0 | — | — | à faire |
 | G8 | G4 | Fable A | kalis_adapt-v0.1.0 | — | — | à faire |
 | G11 | G8 | Fable B | kalis_quest-v0.1.0 | — | — | à faire |
