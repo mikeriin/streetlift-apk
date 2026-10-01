@@ -8,15 +8,18 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show AssetBundle, rootBundle;
+import 'package:kalis_core/kalis_core.dart' show TrainingLog;
 
 import 'content_pack.dart';
 import 'kalis_clock.dart';
 import 'session_prefs.dart';
 import 'game.dart';
+import 'journal_adapter.dart';
 import 'koach_adapt.dart';
 import 'koach_data.dart';
 import 'koach_engine.dart' as ke;
 import 'koach_program.dart';
+import 'mannequin_clip.dart' show ClipRegistry;
 import 'models.dart';
 import 'persistence.dart';
 import 'profile.dart';
@@ -25,6 +28,7 @@ import 'program_instance.dart';
 import 'training_estimate.dart';
 import 'progression.dart';
 import 'retired_data.dart';
+import 'search.dart' show normalizeText;
 import 'set_validation.dart';
 import 'wellbeing.dart';
 
@@ -549,12 +553,20 @@ class AppStore extends ChangeNotifier {
       refReps[a.ref] = a.refReps;
     }
 
-    // L9b (KT-079) : base v2 du pack de contenu. Les 505 exercices d'origine
-    // gardent leur nom, leurs groupes et leur matériel v1 (clés de
-    // l'historique, des records et de STATS) ; les 120 ajouts suivent.
+    // G3 (D4.10) : base d'exercices v1.1 (kalis_core) pour Arsenal, les
+    // fiches et la résolution des noms enregistrés (correspondance relue).
     content = await ContentIndex.load();
-    for (final e in content.entries) {
-      dbExercises.add(e.toLegacy());
+    ClipRegistry.legacyIds = content.legacyIds;
+    // Groupes musculaires des noms enregistrés : ceux de l'ancienne base
+    // (pack 2.0.0, noms v1 compris), inchangés, pour que l'historique et
+    // STATS restent identiques ; un nom de la base v1.1 qui n'y figure pas
+    // prend les groupes de ses muscles principaux (`groupsFor`).
+    final legacy =
+        jsonDecode(await _loadGz(_legacyIndexAsset)) as Map<String, dynamic>;
+    legacyPack = LegacyPackIndex.fromJson(legacy);
+    for (final e in legacy['exercices'] as List) {
+      final m = e as Map<String, dynamic>;
+      dbExercises.add({'n': m['n'], 'g': m['g'], 'eq': m['eq'], 'id': m['id']});
     }
     final saved = _prefs.getString(_kState);
     if (saved != null) {
@@ -785,22 +797,33 @@ class AppStore extends ChangeNotifier {
   String get effortLabel => settings.rpe ? 'RPE' : 'RIR';
 
   // ---------- Base d'exercices ----------
-  /// Index de la base v2 (L9b) ; vide avant [init].
-  ContentIndex content = ContentIndex.fromJson(const {
-    'vocabulaires': {
-      'types_mouvement': <String, dynamic>{},
-      'lieux': <String, dynamic>{},
-      'materiel': <String, dynamic>{},
-      'muscles': <String, dynamic>{},
-    },
-    'exercices': <dynamic>[],
-    'base_v1': <String, dynamic>{},
-    'programme_v33': <String, dynamic>{},
-  });
+  /// Base d'exercices v1.1 (G3) ; vide avant [init].
+  ContentIndex content = ContentIndex.empty();
 
-  /// Identifiant v2 d'un nom d'exercice enregistré ou d'un intitulé du
-  /// programme ; null pour un exercice personnel.
+  /// Noms enregistrés → anciens identifiants (moteurs L10 et L11).
+  LegacyPackIndex legacyPack = LegacyPackIndex.empty();
+
+  /// Ancienne base (pack 2.0.0) : groupes musculaires des noms enregistrés
+  /// (STATS) ; données internes de L10 et L11 jusqu'à leur retrait (G10).
+  static const _legacyIndexAsset = 'assets/content/index.json.gz';
+
+  /// Identifiant v1.1 d'un nom d'exercice enregistré ou d'un intitulé du
+  /// programme ; null pour un exercice personnel ou sans équivalent.
   String? exerciseIdFor(String name) => content.idFor(name);
+
+  /// G3 : journal au format de `kalis_core` (règles C1 à C12,
+  /// lib/journal_adapter.dart), calculé depuis l'état exporté ; l'ancien
+  /// journal reste la source et n'est jamais réécrit.
+  ({TrainingLog log, JournalConversionReport report}) coreTrainingLog() =>
+      convertLegacyJournal(
+        jsonDecode(exportAll()) as Map<String, dynamic>,
+        exerciseId: content.idFor,
+        usesSeconds: (id) => content.byId[id]?.ex.unit.code == 'secondes',
+        dayOrder: (w, j) => w >= 1 && w <= program.weeks.length
+            ? [for (final e in program.week(w).day(j)?.exercises ?? []) e.id]
+            : const [],
+        legacyDate: program.legacyDateFor,
+      );
 
   List<Map<String, dynamic>>? _allEx;
   List<Map<String, dynamic>> get allExercises =>
@@ -2193,6 +2216,13 @@ class AppStore extends ChangeNotifier {
     if (exact != null && exact.isNotEmpty) return exact;
     for (final (re, gs) in _kw) {
       if (re.hasMatch(t)) return gs;
+    }
+    // G3 : nom de la base v1.1 (exercice échangé, futures séances).
+    final id = content.idFor(splitName(name).$1);
+    final entry = id == null ? null : content.byId[id];
+    if (entry != null &&
+        normalizeText(entry.nom) == normalizeText(splitName(name).$1)) {
+      return entry.groupes;
     }
     return const [];
   }

@@ -52,22 +52,33 @@ cible() {
     ${4:+--keep-app-running} \
     -d emulator-5554 > "$out/drive-$1${2:+-$2}.log" 2>&1
 }
-# G2 (dev6.1.0) : suppression des WOD, des séances perso et de L12, cible
-# du lot, en deux parties : a = sombre, b = clair (annonce et copie,
-# accueil, Arsenal, STATS, Réglages › Sauvegardes).
+# G3 (dev6.2.0) : base d'exercices v1.1, cible du lot, build de
+# développement (session de test), en deux parties : a = sombre, b = clair
+# (Arsenal › Exercices, filtres, recherche, une fiche par discipline, carte
+# des muscles, bibliothèque de la session de test).
+code_g3=0
+for part in a b; do
+  cible catalogue_g3_test "$part" dev
+  c=$?
+  [ "$c" -ne 0 ] && code_g3=$c
+  tail -n 30 "$out/drive-catalogue_g3_test-$part.log"
+done
+# Cibles des lots précédents (G2, G1, M8, M7b, M7) : CI3D_TOUT=1.
 code_g2=0
+code_g1=0
+code_m8=0
+code_m7b=0
+code_m7=0
+if [ "${CI3D_TOUT:-0}" = "1" ]; then
+# G2 (dev6.1.0) : suppression des WOD, des séances perso et de L12, en
+# deux parties : a = sombre, b = clair (annonce et copie, accueil, Arsenal,
+# STATS, Réglages › Sauvegardes).
 for part in a b; do
   cible retrait_g2_test "$part"
   c=$?
   [ "$c" -ne 0 ] && code_g2=$c
   tail -n 30 "$out/drive-retrait_g2_test-$part.log"
 done
-# Cibles des lots précédents (G1, M8, M7b, M7) : CI3D_TOUT=1.
-code_g1=0
-code_m8=0
-code_m7b=0
-code_m7=0
-if [ "${CI3D_TOUT:-0}" = "1" ]; then
 # G1 (6.0.0) : mode dev, en deux lancements de l'application
 # (b = redémarrage à froid de a, application arrêtée entre les deux) :
 # a = sombre (5 appuis, installation neuve, outils, voyage d'une semaine),
@@ -145,7 +156,7 @@ kill "$logcat_pid" 2>/dev/null || true
 grep -o 'Impeller rendering backend ([^)]*)' "$out/logcat-complet.txt" | sort | uniq -c > "$out/impeller.txt" || true
 grep -iE 'flutter|impeller|vulkan|gles|AndroidRuntime|FATAL|swiftshader|angle|lowmemorykiller|DEBUG|libc|tombstone|ActivityManager' "$out/logcat-complet.txt" | tail -n 3000 > "$out/logcat.txt" || true
 rm -f "$out/logcat-complet.txt"
-echo "code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7b=$code_m7b code_m7=$code_m7" > "$out/drive-code.txt"
+echo "code_g3=$code_g3 code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7b=$code_m7b code_m7=$code_m7" > "$out/drive-code.txt"
 echo "code=$code" >> "$out/drive-code.txt"
 echo "code_mesure=$code_mesure" >> "$out/drive-code.txt"
-[ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7b" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]
+[ "$code_g3" -eq 0 ] && [ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7b" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]

@@ -1,5 +1,9 @@
 # Sources et licences — pack de contenu Kalis Track v2 (L9R)
 
+## 0. Base d'exercices v1.1 (depuis dev6.2.0, lot G3)
+
+Les fiches d'Arsenal › Exercices (1 039 exercices, 8 disciplines : nom, alias, discipline, catégorie, niveau, muscles, points clés, erreurs fréquentes, respiration, matériel) viennent de la **base d'exercices v1.1.0 du propriétaire de Kalis Track** (28/09/2026), propriété du propriétaire, intégrée telle quelle. Les champs calculés (type de mouvement, difficulté, lieux, paliers conseillés) sont déduits par des règles documentées (paquet `kalis_core`, `docs/RELECTURE_CATALOGUE.md`). Contenu non relu par un professionnel diplômé. Le pack de contenu v2 décrit ci-dessous reste la source des démonstrations 2D et des données internes des anciens moteurs de programme.
+
 Dates de consultation : 26 et 27/09/2026. Règle appliquée (prompt L9R) : **les faits se vérifient, ils ne se copient pas.** Aucun texte n'a été repris d'une source ; toutes les consignes, erreurs fréquentes, respirations, fiches biomécaniques et notes sont rédigées en français par Claude. Aucune base n'a été importée en bloc ni copiée dans le pack : chaque source a servi à confirmer des faits (muscles sollicités, matériel, type de mouvement, niveau indicatif, angles articulaires de référence), croisés entre elles. Les URL consultées sont listées par archétype dans `sources/archetypes_sources.json` et reprises dans le champ `sources` de chaque exercice ; les références cinématiques sont dans `sources/cinematique_references.json`.
 
 ## 1. Contenus du propriétaire et contenus produits

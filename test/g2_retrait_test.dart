@@ -363,7 +363,11 @@ void main() {
       testWidgets(
         'contenu, partage, « Compris » (${dark ? 'sombre' : 'clair'})',
         (tester) async {
-          final old = withRetiredData(await _programDocument());
+          // G3 : le magasin (base d'exercices v1.1) s'initialise hors du
+          // temps simulé, comme plus bas.
+          final old = withRetiredData(
+            (await tester.runAsync(_programDocument))!,
+          );
           await tester.runAsync(() async {
             SharedPreferences.setMockInitialValues({_key: jsonEncode(old)});
             store = AppStore();
@@ -404,7 +408,7 @@ void main() {
     testWidgets('Réglages › Sauvegardes : la copie reste accessible', (
       tester,
     ) async {
-      final old = withRetiredData(await _programDocument());
+      final old = withRetiredData((await tester.runAsync(_programDocument))!);
       await tester.runAsync(() async {
         SharedPreferences.setMockInitialValues({_key: jsonEncode(old)});
         store = AppStore();
@@ -432,8 +436,8 @@ void main() {
     });
   });
 
-  test('version affichée : « 6.1.0 » hors build de développement', () {
-    expect(kVersion, '6.1.0');
-    expect(kAppVersion, '6.1.0');
+  test('version affichée : « 6.2.0 » hors build de développement (G3)', () {
+    expect(kVersion, '6.2.0');
+    expect(kAppVersion, '6.2.0');
   });
 }

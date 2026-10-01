@@ -1,10 +1,13 @@
-// L9b (KT-079, KT-082) — base d'exercices v2 : migration v1 → v2 sans perte,
+// L9b (KT-079, KT-082) — base d'exercices : migration sans perte,
 // non-régression des données de STATS, correspondance du programme,
-// recherche et filtres sur les nouveaux champs, fiches et mentions à 320 px
-// et 200 %. Fixture : l'ancienne base embarquée jusqu'en 3.1.0
-// (test/fixtures/l9b/exercises_db_v1.json.gz, 505 entrées réelles) et un
-// historique complet des 40 semaines (l2_fixtures ; séances personnelles
-// retirées en G2).
+// recherche et filtres, fiches et mentions à 320 px et 200 %. G3 : la base
+// v1.1 (kalis_core, 1 039 exercices) remplace le pack 2.0.0 ; les noms v1 et
+// les intitulés du programme sont résolus par la correspondance relue
+// (assets/catalog/correspondance.json) ; les groupes musculaires des noms
+// enregistrés restent ceux de l'ancienne base (STATS identiques). Fixture :
+// l'ancienne base embarquée jusqu'en 3.1.0 (test/fixtures/l9b/
+// exercises_db_v1.json.gz, 505 entrées réelles) et un historique complet des
+// 40 semaines (l2_fixtures ; séances personnelles retirées en G2).
 import 'dart:convert';
 import 'dart:io';
 
@@ -48,10 +51,20 @@ void main() {
   setUpAll(() async {
     SharedPreferences.setMockInitialValues({});
     await store.init();
-    await ContentLibrary.load();
   });
 
-  group('base v2 et migration', () {
+  /// G3 : anciens exercices sans équivalent dans la base v1.1 (relus,
+  /// docs/G3_CORRESPONDANCE.md) : pas des exercices (bilan, méthode) ou
+  /// gestes absents de la base.
+  const sansEquivalent = {
+    'Around the world (suspendu)',
+    'Bilan',
+    'Contraste français',
+    'Kettlebell clean & press',
+    'Rice bucket (seau de riz)',
+  };
+
+  group('base v1.1 et migration', () {
     test('les 505 exercices v1 gardent nom, groupes et matériel', () {
       expect(v1.length, 505);
       final byName = {for (final e in store.dbExercises) e['n']: e};
@@ -69,10 +82,15 @@ void main() {
       );
     });
 
-    test('chaque nom v1 et chaque intitulé du programme a son id v2', () {
+    test('chaque nom v1 et chaque intitulé du programme a son id v1.1', () {
       for (final e in v1) {
-        final id = store.exerciseIdFor(e['n'] as String);
-        expect(id, isNotNull, reason: e['n'] as String);
+        final name = e['n'] as String;
+        final id = store.exerciseIdFor(name);
+        if (sansEquivalent.contains(name)) {
+          expect(id, isNull, reason: name);
+          continue;
+        }
+        expect(id, isNotNull, reason: name);
         expect(store.content.byId.containsKey(id), isTrue);
       }
       var lines = 0;
@@ -81,6 +99,11 @@ void main() {
           for (final ex in d.exercises) {
             lines++;
             final id = store.exerciseIdFor(ex.name);
+            // Le bilan de phase n'est pas un exercice.
+            if (ex.name.startsWith('BILAN')) {
+              expect(id, isNull, reason: ex.name);
+              continue;
+            }
             expect(id, isNotNull, reason: ex.name);
             expect(store.content.byId.containsKey(id), isTrue, reason: ex.name);
           }
@@ -91,14 +114,32 @@ void main() {
       expect(store.exerciseIdFor('Mon mouvement maison 42'), isNull);
     });
 
-    test('doublons v1 : le nom mène à l\'exercice canonique', () {
-      final doublons = [
-        for (final e in store.content.entries)
-          if (e.doublonDe != null && e.v1) e,
-      ];
-      for (final d in doublons) {
-        expect(store.exerciseIdFor(d.n), isNot(d.id), reason: d.n);
+    test('doublons v1 : le nom mène à l\'exercice de son canonique', () {
+      final pack =
+          jsonDecode(
+                utf8.decode(
+                  gzip.decode(
+                    File('assets/content/index.json.gz').readAsBytesSync(),
+                  ),
+                ),
+              )
+              as Map<String, dynamic>;
+      final byId = {
+        for (final e in pack['exercices'] as List)
+          (e as Map)['id'] as String: e,
+      };
+      var n = 0;
+      for (final e in byId.values) {
+        final canon = e['doublon_de'] as String?;
+        if (canon == null || e['v1'] != true) continue;
+        n++;
+        expect(
+          store.exerciseIdFor(e['n'] as String),
+          store.exerciseIdFor(byId[canon]!['n'] as String),
+          reason: e['n'] as String,
+        );
       }
+      expect(n, greaterThan(0));
     });
 
     test('STATS : groupes musculaires inchangés pour tous les noms v1', () {
@@ -109,9 +150,12 @@ void main() {
               if (AppStore.muscleGroups.contains(g.trim())) g.trim(),
           ],
       };
+      final legacyNames = {
+        for (final e in v1) (e['n'] as String).toLowerCase(),
+      };
       final added = {
         for (final e in store.content.entries)
-          if (!e.v1) e.n.toLowerCase(),
+          if (!legacyNames.contains(e.nom.toLowerCase())) e.nom.toLowerCase(),
       };
       final names = {
         for (final e in v1) e['n'] as String,
@@ -125,7 +169,8 @@ void main() {
         if (before != null && before.isNotEmpty) {
           expect(store.groupsFor(name), before, reason: name);
         } else {
-          // Aucun ajout v2 ne capte un nom qui passait par les mots-clés.
+          // Aucun exercice v1.1 ne capte un nom qui passait par les
+          // mots-clés.
           expect(added.contains(key), isFalse, reason: name);
         }
       }
@@ -161,17 +206,19 @@ void main() {
     });
   });
 
-  group('recherche et filtres (KT-082)', () {
+  group('recherche et filtres (KT-082, G3)', () {
     ContentIndex index() => store.content;
 
-    test('par muscle, alias et nom v2', () {
+    test('par muscle, alias et nom de la base v1.1', () {
       final dorsal = searchExercises(
         index(),
         'grand dorsal',
         const ExerciseFilters(),
       );
       expect(
-        dorsal.where((e) => e.muscles.contains('grand_dorsal')).length,
+        dorsal
+            .where((e) => e.ex.primaryMuscles.contains('grand dorsal'))
+            .length,
         greaterThan(20),
       );
       final roue = searchExercises(
@@ -179,91 +226,114 @@ void main() {
         'roue abdominale',
         const ExerciseFilters(),
       );
-      expect(roue.map((e) => e.id), contains('ab-wheel'));
-      final renamed = store.content.entries.firstWhere(
-        (e) =>
-            e.v1 && e.doublonDe == null && normalize(e.nom) != normalize(e.n),
+      expect(roue.map((e) => e.id), contains('mu-roue-abdominale-genoux'));
+      // Par alias (« Bench press ») et par nom.
+      expect(
+        searchExercises(
+          index(),
+          'bench press',
+          const ExerciseFilters(),
+        ).map((e) => e.id),
+        contains('mu-developpe-couche-barre'),
       );
       expect(
         searchExercises(
           index(),
-          renamed.nom,
+          'Muscle-up barre strict',
           const ExerciseFilters(),
-        ).map((e) => e.id),
-        contains(renamed.id),
+        ).first.id,
+        'cd-muscle-up-barre-strict',
       );
     });
 
-    test('filtres : type, lieu, matériel, difficulté', () {
+    test('filtres : discipline, type, niveau, lieu, matériel, difficulté', () {
       final all = searchExercises(index(), '', const ExerciseFilters());
-      expect(all.length, lessThan(625)); // doublons v1 non listés
-      final parc = searchExercises(
+      expect(all.length, 1039);
+      for (final d in const [
+        'Musculation',
+        'Street workout',
+        'Streetlifting',
+        'Calisthénie statique',
+        'Calisthénie dynamique',
+        'CrossFit / WOD',
+        'Cardio',
+        'Mobilité',
+      ]) {
+        final list = searchExercises(
+          index(),
+          '',
+          ExerciseFilters(disciplines: {d}),
+        );
+        expect(list, isNotEmpty, reason: d);
+        expect(list.every((e) => e.discipline == d), isTrue, reason: d);
+      }
+      final dehors = searchExercises(
         index(),
         '',
-        const ExerciseFilters(lieux: {'parc_street_workout'}),
+        const ExerciseFilters(lieux: {'exterieur'}),
       );
-      expect(parc, isNotEmpty);
-      expect(
-        parc.every((e) => e.lieux.contains('parc_street_workout')),
-        isTrue,
-      );
+      expect(dehors, isNotEmpty);
+      expect(dehors.every((e) => e.lieux.contains('exterieur')), isTrue);
       final tirage = searchExercises(
         index(),
         '',
-        const ExerciseFilters(
-          types: {'tirage_vertical'},
-          materiels: {'barre_fixe'},
-        ),
+        const ExerciseFilters(familles: {'tirage'}, materiels: {'barre fixe'}),
       );
       expect(tirage, isNotEmpty);
       expect(
         tirage.every(
-          (e) =>
-              e.type == 'tirage_vertical' && e.materiel.contains('barre_fixe'),
+          (e) => e.famille == 'tirage' && e.materiel.contains('barre fixe'),
         ),
         isTrue,
       );
+      final elite = searchExercises(
+        index(),
+        '',
+        const ExerciseFilters(niveaux: {'Élite'}),
+      );
+      expect(elite, isNotEmpty);
+      expect(elite.every((e) => e.niveau == 'Élite'), isTrue);
       final avance = searchExercises(
         index(),
         '',
-        const ExerciseFilters(niveaux: {3}),
+        const ExerciseFilters(difficultes: {3}),
       );
       expect(avance.every((e) => e.difficulte >= 7), isTrue);
       expect(
         searchExercises(
           index(),
           'traction',
-          const ExerciseFilters(niveaux: {1}),
+          const ExerciseFilters(difficultes: {1}),
         ).every((e) => e.difficulte <= 3),
         isTrue,
       );
     });
 
     test('M4c : union dans une catégorie, intersection entre catégories', () {
-      final vertical = searchExercises(
+      final street = searchExercises(
         index(),
         '',
-        const ExerciseFilters(types: {'tirage_vertical'}),
+        const ExerciseFilters(disciplines: {'Street workout'}),
       );
-      final horizontal = searchExercises(
+      final lifting = searchExercises(
         index(),
         '',
-        const ExerciseFilters(types: {'tirage_horizontal'}),
+        const ExerciseFilters(disciplines: {'Streetlifting'}),
       );
       final both = searchExercises(
         index(),
         '',
-        const ExerciseFilters(types: {'tirage_vertical', 'tirage_horizontal'}),
+        const ExerciseFilters(disciplines: {'Street workout', 'Streetlifting'}),
       );
-      expect(vertical, isNotEmpty);
-      expect(horizontal, isNotEmpty);
-      expect(both.length, vertical.length + horizontal.length);
+      expect(street, isNotEmpty);
+      expect(lifting, isNotEmpty);
+      expect(both.length, street.length + lifting.length);
       final easyOrHard = searchExercises(
         index(),
         '',
         const ExerciseFilters(
-          types: {'tirage_vertical', 'tirage_horizontal'},
-          niveaux: {1, 3},
+          disciplines: {'Street workout', 'Streetlifting'},
+          difficultes: {1, 3},
         ),
       );
       expect(easyOrHard, isNotEmpty);
@@ -271,7 +341,7 @@ void main() {
       expect(
         easyOrHard.every(
           (e) =>
-              {'tirage_vertical', 'tirage_horizontal'}.contains(e.type) &&
+              {'Street workout', 'Streetlifting'}.contains(e.discipline) &&
               (e.difficulte <= 3 || e.difficulte >= 7),
         ),
         isTrue,
@@ -279,21 +349,30 @@ void main() {
       // Correspondance avec le menu « Filtres » (clés préfixées).
       final menu = ExerciseFilters.fromSelection(
         const FilterSelection({
-          'type': {'type:tirage_vertical'},
-          'materiel': {'mat:barre_fixe', 'mat:anneaux'},
-          'niveau': {'niv:2'},
+          'discipline': {'disc:Streetlifting'},
+          'famille': {'fam:tirage'},
+          'niveau': {'lvl:Avancé'},
+          'lieu': {'lieu:salle'},
+          'materiel': {'mat:barre fixe', 'mat:anneaux'},
+          'difficulte': {'dif:2'},
         }),
       );
-      expect(menu.types, {'tirage_vertical'});
-      expect(menu.materiels, {'barre_fixe', 'anneaux'});
-      expect(menu.niveaux, {2});
+      expect(menu.disciplines, {'Streetlifting'});
+      expect(menu.familles, {'tirage'});
+      expect(menu.niveaux, {'Avancé'});
+      expect(menu.lieux, {'salle'});
+      expect(menu.materiels, {'barre fixe', 'anneaux'});
+      expect(menu.difficultes, {2});
       final cats = ExerciseFilters.categories(index());
       expect(cats.map((c) => c.label), [
+        'Discipline',
         'Type de mouvement',
+        'Niveau',
         'Lieu',
         'Matériel',
         'Difficulté',
       ]);
+      expect(cats.first.options.length, 8);
       final keys = [
         for (final c in cats)
           for (final o in c.options) o.key,
@@ -301,10 +380,10 @@ void main() {
       expect(keys.toSet().length, keys.length, reason: 'clés uniques');
     });
 
-    test('sélecteur de séance : recherche sur les champs v2', () {
-      final e = store.dbExercises.firstWhere((x) => x['id'] == 'ab-wheel');
-      final doc = exerciseSearchDoc(store.content, e);
+    test('document de recherche : alias, discipline, muscles, lieux', () {
+      final doc = store.content.byId['mu-roue-abdominale-genoux']!.searchDoc;
       expect(doc.all, contains('roue abdominale'));
+      expect(doc.all, contains('musculation'));
       expect(doc.all, contains('droit de l'));
       expect(doc.all, contains('salle'));
     });
@@ -369,7 +448,7 @@ void main() {
               phone(tester, size: size);
               await tester.pumpWidget(
                 host(
-                  const ExerciseSheetScreen(id: 'muscle-up'),
+                  const ExerciseSheetScreen(id: 'cd-muscle-up-barre-strict'),
                   dark: dark,
                   scale: scale,
                 ),
@@ -380,12 +459,14 @@ void main() {
               // 2D des groupes dans la section Muscles.
               expect(find.byType(PoseDemo), findsNothing);
               expect(find.byType(ExerciseMannequin), findsNothing);
-              expect(find.text('MUSCLE-UP'), findsOneWidget);
-              // Défilement réel : liste des muscles, puis sources en bas.
-              await scrollToAction(tester, find.text('MUSCLES'));
-              await scrollToAction(tester, find.byType(MuscleMap2D));
+              expect(find.text('MUSCLE-UP BARRE STRICT'), findsOneWidget);
+              // Défilement réel : liste des muscles, puis variantes en bas
+              // (G3 : gestes lents, pour ne pas dépasser l'en-tête d'un
+              // geste lancé sur une fiche longue).
+              await scrollSlowlyTo(tester, find.text('MUSCLES'));
+              await scrollSlowlyTo(tester, find.byType(MuscleMap2D));
               expect(tester.takeException(), null);
-              await scrollToAction(tester, find.text('Sources consultées'));
+              await scrollSlowlyTo(tester, find.text('VARIANTES'));
               expect(tester.takeException(), null);
             },
           );
@@ -397,8 +478,9 @@ void main() {
       tester,
     ) async {
       phone(tester, size: const Size(320, 720));
+      // G3 : aucune démonstration d'exercice n'existe encore.
       final id = store.content.entries
-          .firstWhere((e) => e.demo == 'indisponible')
+          .firstWhere((e) => e.discipline == 'Mobilité')
           .id;
       await tester.pumpWidget(
         host(ExerciseSheetScreen(id: id), dark: true, scale: 2),
@@ -409,18 +491,26 @@ void main() {
       // tête sans animation.
       expect(find.textContaining('Démonstration indisponible'), findsNothing);
       expect(find.byType(ExerciseMannequin), findsNothing);
-      await scrollToAction(tester, find.text('MUSCLES'));
+      await scrollSlowlyTo(tester, find.text('MUSCLES'));
       expect(tester.takeException(), null);
     });
 
     testWidgets('progression navigable vers une autre fiche', (tester) async {
       phone(tester);
-      final e = store.content.byId['ab-wheel']!;
+      final e = store.content.byId['mu-roue-abdominale-genoux']!;
+      expect(
+        store.content.detail(e.id)!.variantes,
+        contains('mu-roue-abdominale-debout'),
+      );
       await tester.pumpWidget(
-        host(const ExerciseSheetScreen(id: 'ab-wheel'), dark: true, scale: 1),
+        host(
+          const ExerciseSheetScreen(id: 'mu-roue-abdominale-genoux'),
+          dark: true,
+          scale: 1,
+        ),
       );
       await tester.pumpAndSettle();
-      final next = store.content.byId['ab-wheel-debout']!.nom;
+      final next = store.content.byId['mu-roue-abdominale-debout']!.nom;
       await scrollToAction(tester, find.text(next));
       await tester.tap(find.text(next));
       await tester.pumpAndSettle();
@@ -440,8 +530,9 @@ void main() {
       expect(tester.takeException(), null);
       await tester.enterText(find.byType(TextField), 'ab wheel');
       await tester.pumpAndSettle();
-      // En-tête et filtres occupent l'écran à 200 % : défilement réel.
-      await scrollToAction(tester, find.text('Ab wheel'));
+      // En-tête et filtres occupent l'écran à 200 % : défilement réel
+      // (« Ab wheel » est un alias de la roue abdominale).
+      await scrollToAction(tester, find.text('Roue abdominale à genoux'));
       expect(tester.takeException(), null);
     });
 

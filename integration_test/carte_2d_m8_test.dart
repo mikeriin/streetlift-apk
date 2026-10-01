@@ -21,7 +21,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/anatomy_screen.dart';
-import 'package:streetlift_tracker/content_pack.dart';
 import 'package:streetlift_tracker/exercise_screens.dart';
 import 'package:streetlift_tracker/home_screen.dart';
 import 'package:streetlift_tracker/main.dart';
@@ -210,7 +209,6 @@ void main() {
   setUpAll(() async {
     SharedPreferences.setMockInitialValues({});
     await store.init();
-    await ContentLibrary.load();
     await Display3DSettings.instance.load();
   });
 
@@ -287,7 +285,7 @@ void main() {
 
   testWidgets('fiches ($_theme) : section Muscles', (tester) async {
     final out = <String, Object?>{};
-    for (final id in const ['traction-pronation', 'back-squat']) {
+    for (final id in const ['sw-traction-pronation', 'sl-squat-competition']) {
       await pumpHome(
         tester,
         ExerciseSheetScreen(key: ValueKey('m8-$id'), id: id),

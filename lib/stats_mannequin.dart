@@ -12,26 +12,25 @@
 // travaillés dans la couleur dominante (intensité ramenée au plus fort,
 // seuil de 2 %), les autres en gris ; fond transparent (couleur du
 // support).
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 import 'content_pack.dart';
 import 'muscle_map_2d.dart';
 import 'store.dart';
 
-/// Poids par muscle du pack (ou par groupe, clé `groupe:<g>`, pour un
+/// Poids par muscle de l'atlas (ou par groupe, clé `groupe:<g>`, pour un
 /// exercice sans fiche) des exercices [names] (nom → poids : séries, tours,
-/// 1 pour une séance prévue). Principaux 1, secondaires 0,6.
+/// 1 pour une séance prévue). Principaux 1, secondaires 0,6. G3 : muscles de
+/// la base v1.1 ([index]), nom enregistré résolu par la correspondance.
 Map<String, double> targetedMuscles(
-  ContentLibrary lib,
+  ContentIndex index,
   Map<String, double> names,
 ) {
   final out = <String, double>{};
   void add(String key, double w) => out[key] = (out[key] ?? 0) + w;
   names.forEach((name, w) {
-    final id = store.exerciseIdFor(name);
-    final d = id == null ? null : lib.detail(id);
+    final id = index.idFor(name);
+    final d = id == null ? null : index.detail(id);
     if (d != null && (d.primaires.isNotEmpty || d.secondaires.isNotEmpty)) {
       for (final m in d.primaires) {
         add(m, w);
@@ -50,25 +49,24 @@ Map<String, double> targetedMuscles(
 }
 
 /// Intensité par groupe de la carte des exercices [names] ; [groups] (les
-/// mêmes par groupe de l'application) sert tant que les fiches ne sont pas
-/// lues.
+/// mêmes par groupe de l'application) sert tant que la base n'est pas
+/// chargée.
 Map<String, double> targetedMapIntensities(
-  ContentLibrary? lib,
+  ContentIndex? index,
   Map<String, double> names,
   Map<String, double> groups,
 ) {
-  if (lib == null || names.isEmpty) {
+  if (index == null || index.entries.isEmpty || names.isEmpty) {
     return mapIntensitiesFromWeights({
       for (final e in groups.entries) 'groupe:${e.key}': e.value,
     });
   }
-  return mapIntensitiesFromWeights(targetedMuscles(lib, names));
+  return mapIntensitiesFromWeights(targetedMuscles(index, names));
 }
 
 /// Carte 2D des muscles ciblés par des exercices (M8) : semaine de STATS
 /// (séries validées), séance du jour. [names] : exercices
-/// (nom → poids) ; [groups] : les mêmes par groupe (en attendant les
-/// fiches).
+/// (nom → poids) ; [groups] : les mêmes par groupe (base non chargée).
 class TargetedMuscleMap extends StatefulWidget {
   final Map<String, double> names;
   final Map<String, double> groups;
@@ -96,26 +94,9 @@ class TargetedMuscleMap extends StatefulWidget {
 }
 
 class TargetedMuscleMapState extends State<TargetedMuscleMap> {
-  ContentLibrary? _lib = ContentLibrary.loaded;
-
   /// Intensités par groupe de la carte (contrôles).
   Map<String, double> get intensities =>
-      targetedMapIntensities(_lib, widget.names, widget.groups);
-
-  @override
-  void initState() {
-    super.initState();
-    if (_lib == null) unawaited(_load());
-  }
-
-  Future<void> _load() async {
-    try {
-      final lib = await ContentLibrary.load();
-      if (mounted) setState(() => _lib = lib);
-    } catch (_) {
-      // Fiches illisibles : la carte reste sur les groupes.
-    }
-  }
+      targetedMapIntensities(store.content, widget.names, widget.groups);
 
   @override
   Widget build(BuildContext context) => RepaintBoundary(

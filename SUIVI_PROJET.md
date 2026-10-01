@@ -1,8 +1,24 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : G2 (WOD, séances perso et L12 retirés), version dev6.1.0 ; précédent : 6.0.1 (G1 correction 1)**  
-**Date : 1er octobre 2026, Europe/Paris — version : 6.1.0+96, affichée « dev6.1.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : G3 (base d'exercices v1.1, `kalis_core` intégré), version dev6.2.0 ; précédent : dev6.1.0 (G2)**  
+**Date : 1er octobre 2026, Europe/Paris — version : 6.2.0+97, affichée « dev6.2.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## G3 — Base d'exercices v1.1 dans l'application (version dev6.2.0)
+
+| Exigence | Réalisation |
+| --- | --- |
+| Intégration de `kalis_core` | `packages/kalis_core` et `tools/catalog` récupérés de la branche fixe `etiquettes/kalis_core-v0.1.0` (5327294), non modifiés ; dépendance `path: packages/kalis_core` ; `packages/**` exclu de l'analyse de l'application (analysé par la tâche `packages`). |
+| Catalogue | `assets/catalog/catalog_v1.json.gz` = copie octet pour octet de l'asset du paquet (`tools/correspondance/build_correspondance.py`, tests Dart et Python) ; chargé au démarrage par `Catalog.fromJsonBytes` (`lib/content_pack.dart`, `ContentIndex`). |
+| Arsenal, fiches, recherche, filtres | `lib/exercise_screens.dart` : 1 039 exercices ; filtres Discipline, Type de mouvement (famille calculée), Niveau, Lieu, Matériel, Difficulté ; fiche : points clés, erreurs fréquentes, respiration, muscles, matériel et lieux, paliers conseillés, variantes. |
+| Carte des muscles | `kBaseMuscleAtlas` : 56 muscles de la base → muscles de l'atlas (carte 2D, mannequin) ; 42 dessinés, 14 profonds listés en texte (test). |
+| Démonstration 3D | `ClipRegistry.forExercise` accepte l'identifiant v1.1 et retrouve une démonstration enregistrée sous l'ancien identifiant (correspondance). |
+| Correspondance anciens noms/id → v1.1 | `assets/catalog/correspondance.json` : 169 rattachements automatiques (nom ou alias identique), 446 relus (291 même exercice, 155 même mouvement à petite différence), 10 sans équivalent ; 671 anciens noms ; table relue `tools/correspondance/relecture_g3.json`, rapport `docs/G3_CORRESPONDANCE.md`. Intitulés du programme : 78/79 (bilan de phase). |
+| Historique conservé | Aucune donnée réécrite ; noms résolus à la lecture. Groupes musculaires des noms enregistrés : ceux de l'ancienne base (STATS identiques). Relevé chiffré avant/après : `test/g3_historique_test.dart` (référence produite sur `main` dev6.1.0). |
+| Journal kalis_core | `lib/journal_adapter.dart` (C1 à C12), `AppStore.coreTrainingLog()` ; exemple du paquet reproduit à l'identique ; historique de 40 semaines converti, valide. |
+| L13 | 15 phrases de la base reformulées à l'affichage (`kCatalogWording`), originaux déclarés dans `tools/check_claims.py`. |
+| Moteurs L10 et L11 | Gardent leurs données (pack 2.0.0) jusqu'à leur retrait (G10) ; les échanges d'exercice proposent et enregistrent des exercices de la base v1.1. |
+| Contrôles | Tests Dart `g3_catalogue_test.dart`, `g3_historique_test.dart`, `g3_mode_dev_test.dart` (build de dev), tests mis à jour (L9b, M3, M4, M4c, M8, L11) ; Python `test_g3_catalogue.py` ; émulateur `catalogue_g3_test` (a sombre, b clair, build de dev). |
 
 ## G2 — Suppression des WOD, des séances manuelles et de L12 (version dev6.1.0)
 

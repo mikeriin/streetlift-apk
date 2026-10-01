@@ -198,12 +198,23 @@ class ClipRegistry {
       ClipEntry.fromJson(c as Map<String, dynamic>),
   ]);
 
-  /// Animation d'un exercice du pack (jamais une animation de test ni une
-  /// animation de Koach), ou null : la fiche garde alors son mannequin fixe.
+  /// G3 : anciens identifiants (pack 2.0.0) → identifiants de la base v1.1,
+  /// renseignés au chargement de la base (`AppStore.init`). Les
+  /// démonstrations existantes, enregistrées sous un ancien identifiant,
+  /// restent attachées au même exercice.
+  static Map<String, String?> legacyIds = const {};
+
+  /// Animation d'un exercice (jamais une animation de test ni une animation
+  /// de Koach), ou null : la fiche garde alors son mannequin fixe.
+  /// [exerciseId] : identifiant v1.1 (ou ancien identifiant).
   ClipEntry? forExercise(String? exerciseId) {
     if (exerciseId == null) return null;
     for (final c in clips) {
-      if (!c.debug && !c.mascot && c.exercises.contains(exerciseId)) return c;
+      if (c.debug || c.mascot) continue;
+      if (c.exercises.contains(exerciseId) ||
+          c.exercises.any((old) => legacyIds[old] == exerciseId)) {
+        return c;
+      }
     }
     return null;
   }

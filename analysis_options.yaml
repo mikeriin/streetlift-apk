@@ -24,6 +24,9 @@ analyzer:
     - test_driver/**
     - build/**
     - android/**
+    # G3 : paquets Dart purs (packages/), analysés par la tâche `packages`
+    # de la CI avec leurs propres dépendances de test.
+    - packages/**
 
 linter:
   # The lint rules applied to this project can be customized in the

@@ -21,10 +21,10 @@ import 'store_widget.dart';
 import 'dev/dev_flags.dart';
 
 /// Version de l'application (pubspec sans le numéro de build).
-const kVersion = '6.1.0';
+const kVersion = '6.2.0';
 
-/// Version affichée (D0.9) : « dev6.1.0 » dans le build de développement
-/// (APK du propriétaire), « 6.1.0 » dans l'AAB du Play Store.
+/// Version affichée (D0.9) : « dev6.2.0 » dans le build de développement
+/// (APK du propriétaire), « 6.2.0 » dans l’AAB du Play Store.
 const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;
 
 class SettingsScreen extends StatelessWidget {
@@ -541,7 +541,8 @@ class SettingsScreen extends StatelessWidget {
           _Tile(
             title: 'Kalis Track $kAppVersion',
             subtitle:
-                'Programme streetlifting v3.3 · ${store.allExercises.length} exercices',
+                'Programme streetlifting v3.3 · base d’exercices '
+                'v${store.content.version} (${store.content.entries.length} exercices)',
           ),
           // G1 (D2.4) : visible seulement dans un build de développement.
           if (kDevBuild)

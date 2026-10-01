@@ -14,19 +14,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/atlas_data.dart';
-import 'package:streetlift_tracker/content_pack.dart';
 import 'package:streetlift_tracker/muscle_map_2d.dart';
 import 'package:streetlift_tracker/store.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  late ContentLibrary lib;
-
   setUpAll(() async {
     SharedPreferences.setMockInitialValues({});
     await store.init();
-    lib = await ContentLibrary.load();
   });
 
   group('régions et groupes', () {
@@ -141,7 +137,7 @@ void main() {
 
     test('exercices de référence : les bons muscles, rien d’autre', () {
       Map<String, double> of(String id) {
-        final d = lib.detail(id)!;
+        final d = store.content.detail(id)!;
         return mapIntensitiesFromRoles(
           primaires: d.primaires,
           secondaires: d.secondaires,
@@ -149,17 +145,17 @@ void main() {
         );
       }
 
-      final squat = of('back-squat');
+      final squat = of('sl-squat-competition');
       expect(squat['vaste_lateral'], kMapPrimary);
       expect(squat['grand_fessier'], kMapPrimary);
       expect(squat.containsKey('grand_pectoral'), isFalse);
       expect(squat.containsKey('biceps'), isFalse);
-      final deadlift = of('souleve-de-terre');
+      final deadlift = of('mu-souleve-de-terre-conventionnel');
       expect(deadlift['lombaires'], kMapPrimary);
       expect(deadlift['grand_fessier'], kMapPrimary);
       expect(deadlift['droit_abdomen'], kMapStabilizer);
       expect(deadlift.containsKey('grand_pectoral'), isFalse);
-      final pull = of('traction-pronation');
+      final pull = of('sw-traction-pronation');
       expect(pull['grand_dorsal'], kMapPrimary);
       // correction 2 (Youdas 2010) : le grand pectoral sterno-costal étend
       // l'épaule depuis la flexion complète
@@ -168,7 +164,7 @@ void main() {
       expect(pull.containsKey('vaste_lateral'), isFalse);
       // toutes les fiches : chaque région allumée montre un muscle de la fiche
       for (final e in store.content.entries) {
-        final d = lib.detail(e.id);
+        final d = store.content.detail(e.id);
         if (d == null) continue;
         final muscles = {...d.primaires, ...d.secondaires, ...d.stabilisateurs};
         for (final r in of(e.id).keys) {

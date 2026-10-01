@@ -6,6 +6,8 @@
 // M8 (5.9.0) : sans animation, rien en tête de fiche ; carte 2D des 15
 // groupes dans la section « Muscles » (émulateur :
 // integration_test/carte_2d_m8_test.dart).
+// G3 : muscles de la base v1.1 (kalis_core), reliés aux muscles de l'atlas
+// par kBaseMuscleAtlas ; identifiants v1.1 dans les exemples.
 
 import 'dart:convert';
 
@@ -16,7 +18,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/atlas.dart';
 import 'package:streetlift_tracker/atlas_data.dart';
-import 'package:streetlift_tracker/content_pack.dart';
 import 'package:streetlift_tracker/engine3d.dart';
 import 'package:streetlift_tracker/exercise_mannequin.dart';
 import 'package:streetlift_tracker/exercise_screens.dart';
@@ -31,12 +32,10 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   late MannequinMap map;
-  late ContentLibrary lib;
 
   setUpAll(() async {
     SharedPreferences.setMockInitialValues({});
     await store.init();
-    lib = await ContentLibrary.load();
     map = MannequinMap.fromJson(
       jsonDecode(await rootBundle.loadString(kMannequinMapAsset))
           as Map<String, dynamic>,
@@ -54,7 +53,7 @@ void main() {
       final uncovered = <String>{};
       var checked = 0;
       for (final id in ids()) {
-        final d = lib.detail(id);
+        final d = store.content.detail(id);
         expect(d, isNotNull, reason: id);
         for (final m in [
           ...d!.primaires,
@@ -74,21 +73,30 @@ void main() {
           }
         }
       }
-      expect(checked, greaterThan(5000));
+      expect(checked, greaterThan(20000));
       // La liste justifiée ne contient que des muscles réellement sans
       // région, tous profonds.
       for (final m in musclesSansRegion.keys) {
         expect(covered.contains(m), isFalse, reason: m);
         expect(atlasMuscles[m]!.profondeur, 'profond', reason: m);
       }
-      expect(uncovered, musclesSansRegion.keys.toSet());
+      // G3 : la base v1.1 ne nomme ni le plancher pelvien, ni le poplité,
+      // ni le tibial postérieur (justifiés pour l'ancienne base).
+      expect(
+        uncovered,
+        musclesSansRegion.keys.toSet().difference({
+          'plancher_pelvien',
+          'poplite',
+          'tibial_posterieur',
+        }),
+      );
     });
 
     test('chaque exercice montre au moins une région de ses principaux, '
         'secondaires ou étirés', () {
       var onlyAbsent = 0;
       for (final id in ids()) {
-        final d = lib.detail(id)!;
+        final d = store.content.detail(id)!;
         final m = ExerciseMuscleMap.of(
           map,
           primaires: d.primaires,
@@ -111,7 +119,8 @@ void main() {
           reason: id,
         );
       }
-      expect(onlyAbsent, 3);
+      // G3 : cohérence cardiaque et respiration en boîte.
+      expect(onlyAbsent, 2);
     });
 
     test('5.5.2 : écorché sans couche profonde, muscles profonds en '
@@ -195,9 +204,9 @@ void main() {
     });
 
     test('tous les exercices avec des étirés en montrent au moins un', () {
-      var count = 0;
+      var count = 0, shown = 0;
       for (final id in ids()) {
-        final d = lib.detail(id)!;
+        final d = store.content.detail(id)!;
         if (d.etires.isEmpty) continue;
         count++;
         final m = ExerciseMuscleMap.of(
@@ -207,9 +216,19 @@ void main() {
           stabilisateurs: d.stabilisateurs,
           etires: d.etires,
         );
-        expect(m.stretched, isNotEmpty, reason: id);
+        // G3 : dans la base v1.1, un muscle peut être étiré et travaillé
+        // dans la même région (triceps des extensions, cou) ou profond
+        // (supinateur) : la région reste alors en rouge ou absente. Sinon,
+        // les régions étirées sont montrées étirées.
+        final regions = map.fromPack({for (final e in d.etires) e: 1}).keys;
+        expect(m.stretched, {
+          for (final r in regions)
+            if (!m.intensities.containsKey(r)) r,
+        }, reason: id);
+        if (m.stretched.isNotEmpty) shown++;
       }
-      expect(count, greaterThan(20));
+      expect(count, greaterThan(800));
+      expect(count - shown, lessThanOrEqualTo(10));
     });
 
     test('muscles absents du modèle : listés à part (5.5.2 : profonds '
@@ -273,22 +292,24 @@ void main() {
 
     test('M6b : principaux mixtes départagés par l’aire des régions', () {
       MannequinView of(String id) {
-        final d = lib.detail(id)!;
+        final d = store.content.detail(id)!;
         return exerciseStartView(d.primaires, d.secondaires, map);
       }
 
       // Traction : grand dorsal vu de dos 1,76 × biceps vu de face (M6c,
       // peau du personnage ; M6b : 2 × 0,041 m² contre 2 × 0,020) : vue de dos (en 3/4 avant, le halo du dorsal au flanc se lisait comme
       // un pectoral).
-      expect(of('traction-pronation'), MannequinView.dos);
-      expect(of('traction-supination'), MannequinView.dos);
+      expect(of('sw-traction-pronation'), MannequinView.dos);
+      expect(of('sw-traction-supination'), MannequinView.dos);
+      // G3 : muscle-up de la base v1.1, grand dorsal dominant : Dos.
+      expect(of('cd-muscle-up-barre-strict'), MannequinView.dos);
       // Surfaces comparables : 3/4, comme sans la carte.
-      expect(of('dips'), MannequinView.troisQuarts);
-      expect(of('back-squat'), MannequinView.troisQuarts);
-      expect(of('muscle-up'), MannequinView.troisQuarts);
+      expect(of('sw-dips-barres-paralleles'), MannequinView.troisQuarts);
+      expect(of('sl-squat-competition'), MannequinView.troisQuarts);
+      // Principaux mixtes, chaîne postérieure dominante : Dos.
+      expect(of('mu-souleve-de-terre-conventionnel'), MannequinView.dos);
       // Principaux d'une seule face : inchangé.
-      expect(of('souleve-de-terre'), MannequinView.dos);
-      expect(of('ab-wheel'), MannequinView.face);
+      expect(of('mu-roue-abdominale-genoux'), MannequinView.face);
       // Toutes les régions ont une aire.
       expect(map.regions.every((r) => r.aire > 0), isTrue);
       // Sans aire (ancienne carte) : 3/4, comme avant.
@@ -308,7 +329,8 @@ void main() {
         ],
         'groupes': map.groups,
       });
-      final d = lib.detail('traction-pronation')!;
+      // G3 : traction supination (biceps et dorsal en principaux).
+      final d = store.content.detail('sw-traction-supination')!;
       expect(
         exerciseStartView(d.primaires, d.secondaires, bare),
         MannequinView.troisQuarts,
@@ -321,15 +343,20 @@ void main() {
 
     test('exemples du catalogue', () {
       MannequinView of(String id) {
-        final d = lib.detail(id)!;
+        final d = store.content.detail(id)!;
         return exerciseStartView(d.primaires, d.secondaires);
       }
 
-      expect(of('souleve-de-terre'), MannequinView.dos);
-      expect(of('hip-thrust'), MannequinView.dos);
-      expect(of('ab-wheel'), MannequinView.face);
-      expect(of('dips'), MannequinView.troisQuarts);
-      expect(of('muscle-up'), MannequinView.troisQuarts);
+      // G3 : soulevé de terre de la base v1.1 (quadriceps en principal
+      // aussi) : 3/4 sans la carte.
+      expect(
+        of('mu-souleve-de-terre-conventionnel'),
+        MannequinView.troisQuarts,
+      );
+      expect(of('mu-hip-thrust-barre'), MannequinView.dos);
+      expect(of('mu-roue-abdominale-genoux'), MannequinView.face);
+      expect(of('sw-dips-barres-paralleles'), MannequinView.troisQuarts);
+      expect(of('cd-muscle-up-barre-strict'), MannequinView.troisQuarts);
       // Les trois vues sont utilisées par le catalogue.
       final used = {for (final id in ids()) of(id)};
       expect(
@@ -396,7 +423,10 @@ void main() {
     ) async {
       phone(tester, size: const Size(320, 720));
       await tester.pumpWidget(
-        host(const ExerciseSheetScreen(id: 'souleve-de-terre'), dark: true),
+        host(
+          const ExerciseSheetScreen(id: 'mu-souleve-de-terre-conventionnel'),
+          dark: true,
+        ),
       );
       await tester.pumpAndSettle();
       expect(find.byType(ExerciseMannequin), findsNothing);
@@ -404,7 +434,7 @@ void main() {
       expect(find.byType(ExerciseAtlas), findsNothing);
       await scrollToAction(tester, find.byType(MuscleMap2D));
       final map = tester.widget<MuscleMap2D>(find.byType(MuscleMap2D));
-      final d = lib.detail('souleve-de-terre')!;
+      final d = store.content.detail('mu-souleve-de-terre-conventionnel')!;
       expect(
         map.intensities,
         mapIntensitiesFromRoles(
@@ -443,7 +473,7 @@ void main() {
         expect(tester.takeException(), isNull, reason: id);
         expect(find.byType(ExerciseMannequin), findsNothing, reason: id);
         final map = tester.widget<MuscleMap2D>(find.byType(MuscleMap2D));
-        final d = lib.detail(id)!;
+        final d = store.content.detail(id)!;
         // Au moins un groupe en couleur, sauf exercice dont tous les
         // muscles sont hors de la carte (respiration : profonds).
         final mapped = [

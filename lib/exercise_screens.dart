@@ -1,15 +1,14 @@
-// Bibliothèque d'exercices, fiche exercice et mentions (L9b, KT-080/082).
-// La fiche réunit démonstration animée, points clés, erreurs fréquentes,
-// respiration, muscles (M8 : carte 2D des 15 groupes par rôle ; liste en
-// texte), précautions, prérequis, progressions et régressions navigables.
-// M8 (30/09/2026) : la 3D en tête de fiche ne sert qu'à la démonstration,
-// seulement si l'exercice a une animation ; sinon rien en tête.
+// Bibliothèque d'exercices, fiche exercice et mentions.
+// G3 (D4.10) : la base v1.1 du propriétaire (1 039 exercices, 8
+// disciplines, `kalis_core`) remplace le pack 2.0.0. La fiche réunit
+// démonstration (si l'exercice en a une), points clés, erreurs fréquentes,
+// respiration, muscles (carte 2D par rôle ; liste en texte, muscles profonds
+// compris), matériel et lieux, paliers conseillés et variantes navigables.
 // Les consignes sont des repères d'entraînement.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import 'app_theme.dart';
-import 'atlas_data.dart';
 import 'content_pack.dart';
 import 'exercise_mannequin.dart';
 import 'mannequin_clip.dart';
@@ -19,7 +18,7 @@ import 'search.dart';
 import 'store.dart';
 import 'ui.dart';
 
-/// Ouvre la fiche d'un exercice de la base v2.
+/// Ouvre la fiche d'un exercice de la base v1.1.
 Future<void> openExerciseSheet(BuildContext context, String id) => Navigator.of(
   context,
 ).push(MaterialPageRoute<void>(builder: (_) => ExerciseSheetScreen(id: id)));
@@ -29,60 +28,92 @@ Future<void> openExerciseSheet(BuildContext context, String id) => Navigator.of(
 /// Filtres de la bibliothèque (ensemble vide = tous).
 ///
 /// M4c : plusieurs choix par catégorie (union), catégories combinées
-/// (intersection), dans le menu « Filtres » commun.
+/// (intersection), dans le menu « Filtres » commun. G3 : discipline, type de
+/// mouvement (famille), niveau, lieu, matériel et difficulté de la base v1.1.
 class ExerciseFilters {
-  final Set<String> types, lieux, materiels;
+  final Set<String> disciplines, familles, niveaux, lieux, materiels;
 
   /// Tranches de difficulté : 1 (1-3), 2 (4-6), 3 (7-10).
-  final Set<int> niveaux;
+  final Set<int> difficultes;
   const ExerciseFilters({
-    this.types = const {},
+    this.disciplines = const {},
+    this.familles = const {},
+    this.niveaux = const {},
     this.lieux = const {},
     this.materiels = const {},
-    this.niveaux = const {},
+    this.difficultes = const {},
   });
 
   bool accepts(ExerciseEntry e) =>
-      (types.isEmpty || types.contains(e.type)) &&
+      (disciplines.isEmpty || disciplines.contains(e.discipline)) &&
+      (familles.isEmpty || familles.contains(e.famille)) &&
+      (niveaux.isEmpty || niveaux.contains(e.niveau)) &&
       (lieux.isEmpty || lieux.any(e.lieux.contains)) &&
       (materiels.isEmpty || materiels.any(e.materiel.contains)) &&
-      (niveaux.isEmpty || niveaux.contains(difficultyBand(e.difficulte)));
+      (difficultes.isEmpty ||
+          difficultes.contains(difficultyBand(e.difficulte)));
 
   /// Catégories du menu « Filtres » (clés préfixées : uniques dans le menu).
-  static List<FilterCategory> categories(ContentIndex index) => [
-    FilterCategory(
-      id: 'type',
-      label: 'Type de mouvement',
-      options: [
-        for (final e in index.typeLabels.entries)
-          FilterOption('type:${e.key}', e.value),
-      ],
-    ),
-    FilterCategory(
-      id: 'lieu',
-      label: 'Lieu',
-      options: [
-        for (final e in index.lieuLabels.entries)
-          FilterOption('lieu:${e.key}', e.value),
-      ],
-    ),
-    FilterCategory(
-      id: 'materiel',
-      label: 'Matériel',
-      options: [
-        for (final e in index.materielLabels.entries)
-          if (e.key != 'aucun') FilterOption('mat:${e.key}', e.value),
-      ],
-    ),
-    FilterCategory(
-      id: 'niveau',
-      label: 'Difficulté',
-      options: [
-        for (final e in difficultyBandLabels.entries)
-          FilterOption('niv:${e.key}', e.value),
-      ],
-    ),
-  ];
+  static List<FilterCategory> categories(ContentIndex index) {
+    List<String> present(String Function(ExerciseEntry) f) {
+      final seen = <String>{};
+      return [
+        for (final e in index.entries)
+          if (seen.add(f(e))) f(e),
+      ];
+    }
+
+    final disciplines = present((e) => e.discipline);
+    final niveaux = present((e) => e.niveau);
+    final familles = [
+      for (final k in kCatalogFamilyLabels.keys)
+        if (index.entries.any((e) => e.famille == k)) k,
+    ];
+    return [
+      FilterCategory(
+        id: 'discipline',
+        label: 'Discipline',
+        options: [for (final d in disciplines) FilterOption('disc:$d', d)],
+      ),
+      FilterCategory(
+        id: 'famille',
+        label: 'Type de mouvement',
+        options: [
+          for (final f in familles)
+            FilterOption('fam:$f', kCatalogFamilyLabels[f]!),
+        ],
+      ),
+      FilterCategory(
+        id: 'niveau',
+        label: 'Niveau',
+        options: [for (final n in niveaux) FilterOption('lvl:$n', n)],
+      ),
+      FilterCategory(
+        id: 'lieu',
+        label: 'Lieu',
+        options: [
+          for (final e in kPlaceLabels.entries)
+            FilterOption('lieu:${e.key}', e.value),
+        ],
+      ),
+      FilterCategory(
+        id: 'materiel',
+        label: 'Matériel',
+        options: [
+          for (final m in index.equipmentVocabulary)
+            FilterOption('mat:$m', capitalized(m)),
+        ],
+      ),
+      FilterCategory(
+        id: 'difficulte',
+        label: 'Difficulté',
+        options: [
+          for (final e in difficultyBandLabels.entries)
+            FilterOption('dif:${e.key}', e.value),
+        ],
+      ),
+    ];
+  }
 
   static Set<String> _strip(Set<String> keys, String prefix) => {
     for (final k in keys)
@@ -90,11 +121,13 @@ class ExerciseFilters {
   };
 
   static ExerciseFilters fromSelection(FilterSelection s) => ExerciseFilters(
-    types: _strip(s.of('type'), 'type:'),
+    disciplines: _strip(s.of('discipline'), 'disc:'),
+    familles: _strip(s.of('famille'), 'fam:'),
+    niveaux: _strip(s.of('niveau'), 'lvl:'),
     lieux: _strip(s.of('lieu'), 'lieu:'),
     materiels: _strip(s.of('materiel'), 'mat:'),
-    niveaux: {
-      for (final n in _strip(s.of('niveau'), 'niv:'))
+    difficultes: {
+      for (final n in _strip(s.of('difficulte'), 'dif:'))
         if (int.tryParse(n) != null) int.parse(n),
     },
   );
@@ -109,8 +142,6 @@ const difficultyBandLabels = {
 };
 
 /// Recherche plein texte + filtres, classée par pertinence puis par nom.
-/// Les doublons signalés de l'ancienne base ne sont pas listés (leur fiche
-/// reste accessible par l'exercice canonique).
 List<ExerciseEntry> searchExercises(
   ContentIndex index,
   String q,
@@ -119,12 +150,12 @@ List<ExerciseEntry> searchExercises(
   final query = SearchQuery(q);
   final scored = <(ExerciseEntry, double)>[];
   for (final e in index.entries) {
-    if (e.doublonDe != null || !filters.accepts(e)) continue;
+    if (!filters.accepts(e)) continue;
     if (query.isEmpty) {
       scored.add((e, 0));
       continue;
     }
-    final d = exerciseSearchDoc(index, e.toLegacy());
+    final d = e.searchDoc;
     if (!query.matches(d.all)) continue;
     scored.add((e, query.score(d)));
   }
@@ -168,11 +199,12 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
     final header = <Widget>[
       const KPageIntro(
         'Exercices',
-        'Fiches, démonstrations et progressions. Repères d’entraînement.',
+        'Base d’exercices : 8 disciplines, fiches et progressions. '
+            'Repères d’entraînement.',
       ),
       KSearch(
         controller: _search,
-        hint: 'Nom, muscle, matériel, lieu…',
+        hint: 'Nom, muscle, matériel, discipline…',
         onChanged: (v) => setState(() => _q = v),
       ),
       const SizedBox(height: KSpace.gap),
@@ -190,6 +222,7 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
         padding: const EdgeInsets.only(top: 10, bottom: 4),
         child: Text(
           '${list.length} exercice${list.length > 1 ? 's' : ''}',
+          key: const ValueKey('library-count'),
           style: Theme.of(context).textTheme.bodySmall,
         ),
       ),
@@ -209,7 +242,7 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
             );
           }
           final e = list[i - header.length];
-          return _ExerciseTile(entry: e, index: index);
+          return _ExerciseTile(key: ValueKey('library-ex-${e.id}'), entry: e);
         },
       ),
     );
@@ -218,15 +251,14 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
 
 class _ExerciseTile extends StatelessWidget {
   final ExerciseEntry entry;
-  final ContentIndex index;
-  const _ExerciseTile({required this.entry, required this.index});
+  const _ExerciseTile({super.key, required this.entry});
 
   @override
   Widget build(BuildContext context) => ListTile(
     contentPadding: EdgeInsets.zero,
     title: Text(entry.nom, style: const TextStyle(fontWeight: FontWeight.w600)),
     subtitle: Text(
-      '${index.typeLabels[entry.type] ?? entry.type} · '
+      '${entry.discipline} · ${entry.niveau} · '
       'difficulté ${entry.difficulte}/10',
       style: TextStyle(fontSize: 12, color: SL.dim),
     ),
@@ -241,55 +273,38 @@ class ExerciseSheetScreen extends StatelessWidget {
   final String id;
   const ExerciseSheetScreen({super.key, required this.id});
 
-  static Future<ContentLibrary> _load() async {
+  static Future<ClipRegistry?> _load() async {
     try {
-      await ClipRegistry.load();
+      return await ClipRegistry.load();
     } catch (_) {
       // Registre illisible : aucune démonstration, la fiche s'affiche.
+      return null;
     }
-    return ContentLibrary.load();
   }
 
   @override
   Widget build(BuildContext context) {
+    final d = store.content.detail(id);
     final entry = store.content.byId[id];
     return KScreen(
       appBar: AppBar(title: const Text('FICHE EXERCICE')),
-      body: FutureBuilder<ContentLibrary>(
-        future: _load(),
-        // M8 : la fiche s'affiche tout de suite ; la tête (démonstration,
-        // si l'exercice a une animation) apparaît dès le registre lu
-        // (déjà lu au lancement par le préchargement).
-        initialData: ContentLibrary.loaded,
-        builder: (context, snap) {
-          if (snap.hasError) {
-            return const Padding(
-              padding: KSpace.content,
-              child: KEmpty(
-                icon: Icons.error_outline,
-                title: 'Fiche illisible',
-                message: 'Le contenu embarqué n’a pas pu être lu.',
-              ),
-            );
-          }
-          if (!snap.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          final lib = snap.data!;
-          final d = lib.detail(id);
-          if (d == null || entry == null) {
-            return const Padding(
+      body: d == null || entry == null
+          ? const Padding(
               padding: KSpace.content,
               child: KEmpty(
                 icon: Icons.help_outline,
                 title: 'Exercice inconnu',
                 message: 'Cet exercice ne figure pas dans la base.',
               ),
-            );
-          }
-          return _Sheet(entry: entry, detail: d, lib: lib);
-        },
-      ),
+            )
+          // M8 : la fiche s'affiche tout de suite ; la tête (démonstration,
+          // si l'exercice a une animation) apparaît dès le registre lu
+          // (déjà lu au lancement par le préchargement).
+          : FutureBuilder<ClipRegistry?>(
+              future: _load(),
+              initialData: ClipRegistry.loaded,
+              builder: (context, _) => _Sheet(entry: entry, detail: d),
+            ),
     );
   }
 }
@@ -297,8 +312,7 @@ class ExerciseSheetScreen extends StatelessWidget {
 class _Sheet extends StatelessWidget {
   final ExerciseEntry entry;
   final ExerciseDetail detail;
-  final ContentLibrary lib;
-  const _Sheet({required this.entry, required this.detail, required this.lib});
+  const _Sheet({required this.entry, required this.detail});
 
   String _name(String id) => store.content.byId[id]?.nom ?? id;
 
@@ -319,14 +333,21 @@ class _Sheet extends StatelessWidget {
     ],
   );
 
-  Widget _links(BuildContext context, List<(String, String)> items) => Column(
+  Widget _links(BuildContext context, String key, List<String> ids) => Column(
+    key: ValueKey('fiche-$key'),
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
-      for (final (id, note) in items)
+      for (final id in ids)
         ListTile(
           contentPadding: EdgeInsets.zero,
           title: Text(_name(id)),
-          subtitle: note.isEmpty ? null : Text(note),
+          subtitle: store.content.byId[id] == null
+              ? null
+              : Text(
+                  '${store.content.byId[id]!.niveau} · difficulté '
+                  '${store.content.byId[id]!.difficulte}/10',
+                  style: TextStyle(fontSize: 12, color: SL.dim),
+                ),
           trailing: Icon(Icons.chevron_right, color: SL.dim),
           onTap: store.content.byId.containsKey(id)
               ? () => openExerciseSheet(context, id)
@@ -338,53 +359,55 @@ class _Sheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final muscles = <(String, List<String>)>[
-      ('Principaux', detail.primaires),
-      ('Secondaires', detail.secondaires),
-      ('Stabilisateurs', detail.stabilisateurs),
-      ('Étirés', detail.etires),
+      ('Principaux', detail.musclesPrincipaux),
+      ('Secondaires', detail.musclesSecondaires),
+      ('Stabilisateurs', detail.musclesStabilisateurs),
+      ('Étirés', detail.musclesEtires),
     ];
-    String muscleName(String m) =>
-        atlasMuscles[m]?.nom ?? store.content.muscleLabels[m] ?? m;
-    final idx = store.content;
-    final sources = lib.sourcesOf(entry.id);
-    // 5.10.0 : muscles sollicités que la carte ne dessine pas (profonds).
+    // Muscles sollicités que la carte ne dessine pas (profonds).
     final deep = [
       for (final m in {
-        ...detail.primaires,
-        ...detail.secondaires,
-        ...detail.stabilisateurs,
+        ...detail.musclesPrincipaux,
+        ...detail.musclesSecondaires,
+        ...detail.musclesStabilisateurs,
       })
-        if (!mapDrawsMuscle(m)) m,
+        if (!atlasOfBaseMuscle(m).any(mapDrawsMuscle)) m,
     ];
+    final variantOf = detail.varianteDe;
+    final variants = detail.variantes;
     return KList(
       children: [
         Text(
           entry.nom.toUpperCase(),
+          key: const ValueKey('fiche-titre'),
           style: Theme.of(context).textTheme.headlineSmall,
         ),
+        if (entry.alias.isNotEmpty)
+          Text(
+            'Aussi : ${entry.alias.join(' · ')}',
+            style: TextStyle(fontSize: 12.5, color: SL.dim),
+          ),
         Wrap(
           spacing: 6,
           runSpacing: 6,
           children: [
-            KBadge(idx.typeLabels[entry.type] ?? entry.type),
+            KBadge(entry.discipline),
+            KBadge(entry.niveau),
             KBadge('Difficulté ${entry.difficulte}/10'),
-            KBadge(lib.label('mesures', detail.mesure)),
-            KBadge(lib.label('modes_charge', detail.modeCharge)),
+            KBadge(kLoadTypeLabels[detail.typeCharge] ?? detail.typeCharge),
           ],
         ),
         // M8 (propriétaire, 30/09/2026) : la 3D ne sert qu'à la
         // démonstration ; en tête de fiche seulement si l'exercice a une
-        // animation, rien sinon. 5.8.2 : posée sur la page, sans carte,
-        // fond = page.
+        // animation (G3 : anciennes démonstrations reliées par la
+        // correspondance), rien sinon.
         if (ClipRegistry.loaded?.forExercise(entry.id) != null)
           KeyedSubtree(
             key: const ValueKey('fiche-mannequin-support'),
             child: ExerciseMannequin(
               key: ValueKey('fiche-muscles-${entry.id}'),
               background: kPageColor(context),
-              // M7 : animation du propriétaire si l'exercice en a une.
               exerciseId: entry.id,
-              // M6b : plus grand sur grand écran (tablette), 380 sur téléphone.
               height: (MediaQuery.sizeOf(context).height * .45).clamp(
                 380.0,
                 600.0,
@@ -396,11 +419,17 @@ class _Sheet extends StatelessWidget {
             ),
           ),
         const KSection('Points clés'),
-        _bullets(detail.pointsCles),
+        KeyedSubtree(
+          key: const ValueKey('fiche-points-cles'),
+          child: _bullets(detail.pointsCles),
+        ),
         const KSection('Erreurs fréquentes'),
-        _bullets(detail.erreurs),
+        KeyedSubtree(
+          key: const ValueKey('fiche-erreurs'),
+          child: _bullets(detail.erreurs),
+        ),
         const KSection('Respiration'),
-        Text(detail.respiration),
+        Text(detail.respiration, key: const ValueKey('fiche-respiration')),
         const KSection('Muscles'),
         KCard(
           key: const ValueKey('fiche-muscles'),
@@ -408,8 +437,7 @@ class _Sheet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // M8 : carte 2D par rôle (principal vif, secondaire atténué,
-              // stabilisateur pâle, autres en gris) ; 5.10.0 : muscle par
-              // muscle.
+              // stabilisateur pâle, autres en gris), muscle par muscle.
               MuscleMap2D(
                 key: ValueKey('fiche-muscle-map-${entry.id}'),
                 intensities: mapIntensitiesFromRoles(
@@ -426,15 +454,16 @@ class _Sheet extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: Text(
-                    'Non dessinés sur la carte : ${deep.map(muscleName).join(', ')}.',
+                    'Non dessinés sur la carte : '
+                    '${deep.map(baseMuscleLabel).join(', ')}.',
                     key: const ValueKey('fiche-muscles-profonds'),
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 12, color: SL.dim),
                   ),
                 ),
               const SizedBox(height: 14),
-              for (final (title, ids) in muscles)
-                if (ids.isNotEmpty)
+              for (final (title, names) in muscles)
+                if (names.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Text.rich(
@@ -444,7 +473,7 @@ class _Sheet extends StatelessWidget {
                             text: '$title : ',
                             style: const TextStyle(fontWeight: FontWeight.w700),
                           ),
-                          TextSpan(text: ids.map(muscleName).join(', ')),
+                          TextSpan(text: names.map(baseMuscleLabel).join(', ')),
                         ],
                       ),
                     ),
@@ -452,60 +481,29 @@ class _Sheet extends StatelessWidget {
             ],
           ),
         ),
-        if (detail.precautions.isNotEmpty) ...[
-          const KSection('Précautions'),
-          _bullets([
-            for (final p in detail.precautions) lib.label('precautions', p),
-          ]),
-        ],
         const KSection('Matériel et lieux'),
         Text(
-          [
-            for (final m in entry.materiel) idx.materielLabels[m] ?? m,
-          ].join(', '),
+          entry.materiel.isEmpty
+              ? 'Aucun matériel'
+              : entry.materiel.map(capitalized).join(', '),
+          key: const ValueKey('fiche-materiel'),
         ),
         Text(
-          [for (final l in entry.lieux) idx.lieuLabels[l] ?? l].join(' · '),
+          [for (final l in entry.lieux) kPlaceLabels[l] ?? l].join(' · '),
           style: TextStyle(color: SL.dim, fontSize: 12.5),
         ),
         if (detail.prerequis.isNotEmpty) ...[
-          const KSection('Prérequis'),
-          _links(context, detail.prerequis),
+          const KSection('Paliers conseillés avant'),
+          _links(context, 'prerequis', detail.prerequis),
         ],
-        if (detail.regressions.isNotEmpty) ...[
-          const KSection('Régressions (plus facile)'),
-          _links(context, [for (final r in detail.regressions) (r, '')]),
-        ],
-        if (detail.progressions.isNotEmpty) ...[
-          const KSection('Progressions (plus difficile)'),
-          _links(context, [for (final p in detail.progressions) (p, '')]),
-        ],
-        if (detail.varianteDe != null &&
-            store.content.byId.containsKey(detail.varianteDe)) ...[
+        if (variantOf != null && store.content.byId.containsKey(variantOf)) ...[
           const KSection('Variante de'),
-          _links(context, [(detail.varianteDe!, '')]),
+          _links(context, 'variante-de', [variantOf]),
         ],
-        if (sources.isNotEmpty)
-          KCard(
-            padding: EdgeInsets.zero,
-            child: ExpansionTile(
-              title: const Text('Sources consultées'),
-              subtitle: Text(
-                '${sources.length} référence${sources.length > 1 ? 's' : ''} ; aucun texte repris',
-              ),
-              childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-              children: [
-                for (final s in sources)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 6),
-                    child: Text(
-                      '${s['entree'] ?? ''} — ${s['url'] ?? ''}',
-                      style: TextStyle(fontSize: 12, color: SL.dim),
-                    ),
-                  ),
-              ],
-            ),
-          ),
+        if (variants.isNotEmpty) ...[
+          const KSection('Variantes'),
+          _links(context, 'variantes', variants),
+        ],
         Text(
           'Repères d’entraînement, sans valeur médicale. Contenu non relu par '
           'un professionnel diplômé : en cas de gêne, arrête l’exercice.',

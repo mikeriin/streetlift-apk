@@ -42,3 +42,27 @@ Future<void> swipePage(WidgetTester tester, {bool back = false}) async {
   await tester.drag(pager, Offset(back ? width * .8 : -width * .8, 0));
   await tester.pumpAndSettle();
 }
+
+/// G3 : comme [scrollToAction], par gestes lents (sans élan) : sur une fiche
+/// très longue (texte à 200 %), un geste rapide lance la liste et peut
+/// dépasser la cible entre deux vérifications.
+Future<void> scrollSlowlyTo(WidgetTester tester, Finder target) async {
+  final vertical = find.byWidgetPredicate(
+    (widget) =>
+        widget is Scrollable && widget.axisDirection == AxisDirection.down,
+  );
+  for (var i = 0; i < 80 && target.hitTestable().evaluate().isEmpty; i++) {
+    expect(vertical, findsAtLeastNWidgets(1));
+    await tester.timedDrag(
+      vertical.last,
+      const Offset(0, -200),
+      const Duration(milliseconds: 800),
+    );
+    await tester.pumpAndSettle();
+  }
+  expect(
+    target.hitTestable(),
+    findsOneWidget,
+    reason: 'Atteint par défilement lent sur une fenêtre de téléphone',
+  );
+}
