@@ -747,9 +747,16 @@ final class SessionRun {
     run.track = track;
     final info = run.info;
     _resume(track);
-    // La courbe pivote sur la plage travaillée aujourd'hui : c'est là que
-    // le niveau s'apprend sans dépendre de la forme de la courbe.
-    track.filter.repivot(run.nPlan);
+    // La courbe pivote sur la plage travaillée quand elle s'est nettement
+    // éloignée du pivot : c'est là que le niveau s'apprend sans dépendre
+    // de la forme de la courbe. Un petit écart (RIR visé d'une semaine à
+    // l'autre) ne déplace rien : chaque déplacement reporte un peu de
+    // l'incertitude de la courbe sur le niveau.
+    final pivot = track.filter.nRef;
+    final away = (run.nPlan - pivot).abs();
+    if (away > p.pivotShiftReps && away > p.pivotShiftShare * pivot) {
+      track.filter.repivot(run.nPlan);
+    }
     final raw = state.fatigue.rawShift(info, p);
     final baseline = track.fatigueBaseline;
     final deviation = baseline == null ? 0.0 : raw - baseline;
@@ -902,10 +909,11 @@ final class SessionRun {
         : baseline + p.fatigueBaselineAlpha * (run.raw - baseline);
     track.lastResidual = residual;
     // Charge de référence de la séance suivante : la plus lourde des
-    // séries qui ont tenu leur cible (un échauffement non marqué ou une
-    // pyramide ne la tirent pas vers le bas) ; après un échec non prévu,
-    // jamais plus que la plus légère des charges échouées ; si aucune
-    // série n'a tenu, la plus légère de la séance.
+    // séries menées à bien, sans échec (un échauffement non marqué ou une
+    // pyramide ne la tirent pas vers le bas ; une série arrêtée un peu
+    // sous sa cible ne la fait pas baisser, c'est le modèle qui en juge) ;
+    // après un échec non prévu, jamais plus que la plus légère des charges
+    // échouées ; si toutes les séries ont échoué, la plus légère.
     double? held;
     double? lowestFailed;
     double? lowest;
@@ -920,9 +928,7 @@ final class SessionRun {
         if (lowest == null || kg < lowest) {
           lowest = kg;
         }
-        final target = o.target;
-        final reached = !o.failed && (target == null || o.amount >= target.low);
-        if (reached && (held == null || kg > held)) {
+        if (!o.failed && o.amount >= 1 && (held == null || kg > held)) {
           held = kg;
         }
         if (o.unplannedFail && (lowestFailed == null || kg < lowestFailed)) {

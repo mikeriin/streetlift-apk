@@ -29,6 +29,8 @@ final class AdaptParams {
     this.openRir = 5,
     this.huber = 2,
     this.failOutlier = 3,
+    this.pivotShiftReps = 2.5,
+    this.pivotShiftShare = 0.3,
     this.rirBias = 0.2,
     this.lazyWindow = 40,
     this.lazyMinSets = 12,
@@ -199,6 +201,14 @@ final class AdaptParams {
   /// Seuil, en écarts-types de l'innovation, au-delà duquel une série
   /// manquée (échec, zéro répétition) est tenue pour une saisie douteuse.
   final double failOutlier;
+
+  /// Écart minimal, en répétitions, entre la plage de la séance et le
+  /// pivot de la courbe pour que le pivot soit déplacé.
+  final double pivotShiftReps;
+
+  /// Le même écart minimal, en part du pivot (les deux doivent être
+  /// dépassés).
+  final double pivotShiftShare;
 
   /// Biais de report : RIR réel = RIR dit × (1 + biais).
   final double rirBias;

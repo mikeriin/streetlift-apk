@@ -115,8 +115,9 @@ reste ; à la clôture il est oublié. La moitié de la variance de l'effet de j
 d'une même séance : le résidu des exercices déjà commencés renseigne ceux qui s'ouvrent ensuite (moyenne
 pondérée par la précision).
 
-**Le pivot suit la plage.** Quand la plage de la séance n'est plus celle du pivot (nouveau bloc, test,
-autre emplacement), le pivot est déplacé avant la séance : `c' = c + g(n_ref) − g(n_ref')`, avec
+**Le pivot suit la plage.** Quand la plage de la séance s'est nettement éloignée du pivot (nouveau bloc,
+test, autre emplacement : plus de 2,5 répétitions et plus de 30 % du pivot), le pivot est déplacé avant la
+séance : `c' = c + g(n_ref) − g(n_ref')`, avec
 `g(n) = ln(1 + (n − 1) / k)`, et la covariance suit la transformation linéaire `c' = c + t·κ`. Le 1RM et
 l'incertitude de toute charge prévue sont conservés exactement (testé) ; l'incertitude sur `k` se reporte
 sur le nouveau niveau, qui s'apprend ensuite sans dépendre de la forme de la courbe. Mesure (écriture de
@@ -234,10 +235,10 @@ répétitions prévues = n(L) × (1 − f) − z × σ − RIR visé       z = m
 `σ` réunit l'incertitude sur la capacité du jour et sur la fatigue de séance : plus la cible est près de
 l'échec, plus la marge est grande.
 
-**Charge de référence.** La charge de la dernière séance est la plus lourde des séries qui ont tenu leur
-cible (un échauffement non marqué ou une pyramide ne la tirent pas vers le bas) ; après un échec non
-prévu, jamais plus que la plus légère des charges échouées ; si aucune série n'a tenu, la plus légère de
-la séance.
+**Charge de référence.** La charge de la dernière séance est la plus lourde des séries menées à bien,
+sans échec (un échauffement non marqué ou une pyramide ne la tirent pas vers le bas) ; après un échec non
+prévu, jamais plus que la plus légère des charges échouées ; si toutes les séries ont échoué, la plus
+légère de la séance.
 
 **Charge** (règle à hystérésis, pour qu'elle ne change que quand la plage ne tient plus) : la charge de
 référence (ramenée sur la grille) est gardée ; elle monte d'un cran quand les répétitions prévues
