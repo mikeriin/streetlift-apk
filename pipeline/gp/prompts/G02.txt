@@ -1,5 +1,5 @@
 LOT G2 — SUPPRESSION DES WOD, DES SÉANCES MANUELLES ET DE L12
-Modèle : Opus 5.5, effort élevé. Validation : propriétaire.
+Modèle : Opus 5.5, effort élevé. Piste A. Validation : propriétaire. Prérequis : G1 validé. Version : **dev6.1.0** (pubspec 6.1.0+N).
 Décisions : DECISIONS_GP.md D1.1, D1.2. Règles : PIPELINE_GP.md.
 
 OBJECTIF
@@ -16,7 +16,12 @@ Recentrer l'application sur le programme de l'utilisateur. Supprimer sans laisse
 - L'ancien système XP/niveau (progression.dart, game.dart, rewards.dart, levelup.dart) **reste** jusqu'à G12, mais tout ce qui y comptait les WOD ou les séances manuelles est retiré (le niveau peut donc baisser : c'est accepté, D1.3 remet tout à zéro en G12).
 - Barre de navigation : réorganise les onglets restants proprement (pas de trou), mêmes icônes et styles.
 
-3. CONTRÔLES
+3. NOMMAGE « devX.Y.Z » (D0.9 — G1 et sa correction sont sortis en 6.0.0 / 6.0.1 : à rattraper ici)
+- `build-apk.yml` passe `--build-name=dev<version du pubspec>` à l'APK (si Flutter refuse ce format, surcharge `versionName` côté Gradle pour le seul build dev) ; l'AAB garde « X.Y.Z » ; `versionCode` = N inchangé (installation par-dessus).
+- L'application affiche « dev6.1.0 » partout où elle affiche sa version (`kAppVersion`, Réglages › À propos, exports, page Moteur 3D…) dans le build dev ; « 6.1.0 » dans l'AAB.
+- Commit final « Kalis Track dev6.1.0 (G2) : … ». Tests : Python sur le workflow (APK dev / AAB), Dart sur le libellé (KALIS_DEV vrai/faux).
+
+4. CONTRÔLES
 - Recherche exhaustive des références (imports, routes nommées, clés de sauvegarde, tests, assets, `verify_project.py`, `package_release.py`) : plus aucune référence morte. Assets devenus inutiles retirés.
 - Les tests qui vérifient une fonctionnalité supprimée sont retirés avec elle (liste dans la livraison) ; tous les autres restent verts.
 - Import d'une ancienne sauvegarde (5.10.1) contenant des WOD : s'importe, WOD ignorés, message clair.

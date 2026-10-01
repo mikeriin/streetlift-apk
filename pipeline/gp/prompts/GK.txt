@@ -1,0 +1,32 @@
+LOT GK — KOACH VECTORISÉ, FLAMMES ET PAQUET `kalis_koach` (PISTE K)
+Modèle : Opus 5.5, effort élevé. Validation : auto, fin de piste (G5, piste A, intégrera le paquet).
+Branche de travail : `koach` ; contrôle : `claude/ci-gp-koach` (docs/CI_PISTES.md sur la branche). Aucune modification de `lib/` ni des fichiers de l'application.
+Décisions : DECISIONS_GP.md D5.3, D5.5, D6. Règles : PIPELINE_GP.md §0, §2, §4, §7.
+
+ENTRÉES (branche `pipeline`, `pipeline/gp/inputs/`)
+- `koach/koach_planche_A_pedagogie.png` (4096², 3 colonnes × 4 lignes), `koach/koach_planche_B_emotions.png` (3058 × 4096, 3 × 4), `koach/koach_planche_C_energie.png` (4096², 4 × 3) : 36 poses de Koach, silhouette noire, yeux et « K » blancs, fond blanc (quelques liserés gris d'anticrénelage autour des bras à nettoyer).
+- `flammes_difficulte_1_a_10.png` (2172 × 724) : 10 flammes de taille croissante, gris foncé, fond blanc.
+
+1. VECTORISATION (`tools/koach/build_koach.py`, `tools/koach/requirements.txt`, tests `tools/koach/tests/`)
+- Découpe chaque pose (détection des composantes, pas de coordonnées codées en dur sans contrôle), nettoie les liserés gris, vectorise (potrace ou équivalent installable par pip ; lissage sans perte de forme), normalise (même hauteur de corps, pieds sur la même ligne, marge commune).
+- Calques par pose : **encre** (silhouette et accessoires noirs), **papier** (yeux, K, parties blanches des accessoires), **yeux** en calque séparé quand ils sont ouverts (clignement).
+- Même traitement pour les 10 flammes (flamme extérieure + creux intérieur), tailles relatives conservées.
+- Sortie Dart générée dans `packages/kalis_koach/lib/src/art/` : **commandes numériques** (déplacer, ligne, courbe cubique, fermer) en listes de nombres, boîte englobante, prêtes à devenir un `Path` Flutter **sans aucune dépendance**. Poids total généré ≤ 400 Ko.
+- Contrôle visuel : planches de contrôle rendues **depuis les commandes générées** (pas depuis les PNG source) dans `packages/kalis_koach/docs/controle/` (toutes les poses ; encre noire sur blanc et encre claire sur fond #121212 ; gros plans mains, yeux, K), que tu **regardes** en entier puis en gros plan (outil Read). IoU de la silhouette avec l'original ≥ 0,97 par pose, consigné dans un tableau.
+
+2. CATALOGUE DES POSES (identifiants proposés, à vérifier sur les images et corriger si une pose a été mal lue)
+A (pédagogie, lignes de gauche à droite) : tableau `explain_board`, livre et doigt levé `read_tip`, planche anatomique `anatomy`, graphique en hausse `progress_chart`, doigt sur la tempe `think`, presse-papiers `checklist`, croix et coche `choice`, ampoule `idea`, engrenage `settings`, poing serré « ! » `determined`, panneau directionnel `direction`, loupe `analyze`.
+B (émotions) : salut `wave`, pouce levé `thumbs_up`, bras ouverts heureux `happy`, pointe à droite `point`, main au menton `ponder`, haussement d'épaules `shrug`, main sur le front `oops`, mains jointes `please`, cœur et cœurs `love`, biceps et étincelle `flex`, course `run`, bras levés victoire `victory`.
+C (énergie) : pouce levé `thumbs_up_2`, bras levés joie `cheer`, poing serré `pump`, drapeau `flag`, poing en avant `fist_bump`, cœur les yeux fermés `heart`, pointe vers toi `you`, double biceps `double_biceps`, applaudit `clap`, sprint `sprint`, poing levé `fist_up`, main tendue `present`.
+Pour chaque pose : identifiant, émotion, usages recommandés, yeux ouverts ou fermés, orientation (regard à gauche/droite/face) pour placer la bulle du bon côté.
+
+3. RÉPLIQUES DE KOACH (Dart pur)
+- Événements (profil, création du programme, revue, proposition de changement, bilan santé, fin de séance, record, erreur/annulation, session de test, explications « pourquoi », nouveauté présentée la première fois) → réplique : pose, clé de message, paramètres, priorité, actions proposées, clé « Pourquoi ? ».
+- Bibliothèque de messages en français (tutoiement, phrases courtes, plusieurs variantes par événement choisies de façon déterministe pour ne pas se répéter), sans allégation médicale ni promesse de résultat. Les codes de raison des moteurs seront reliés aux messages par l'application ; prévois une table « code de raison → clé de message » extensible (entrées d'exemple pour les codes les plus probables : charge augmentée, volume réduit, exercice remplacé, séance raccourcie, décharge, calibrage).
+- Tests : chaque événement a au moins une réplique ; aucune clé orpheline ; longueur maximale d'une bulle ; déterminisme.
+
+4. PAQUET
+`packages/kalis_koach` : `pubspec.yaml` (aucune dépendance hors `meta`/`collection`), `README.md`, `CONTRAT.md` (format des commandes, calques, catalogue des poses, API des répliques, règles de couleur D6.2 à appliquer par l'application : thème sombre encre = texte clair #F4F4F4 et papier = fond du support ; thème clair encre quasi-noire et papier blanc), `CHANGELOG.md`, `bin/kalis_koach_cli.dart --rapport` (inventaire des poses et des messages).
+
+FIN DE LOT
+Commit final « Kalis Track koach (GK) : kalis_koach 0.1.0 » sur `koach`, étiquette `kalis_koach-v0.1.0` poussée ; ETAT_GP « livré » ; page de suivi (partie Koach : planche de contrôle des 36 poses et des 10 flammes en clair et en sombre, tableau IoU) ; notification « Kalis Track GK livré (kalis_koach 0.1.0) — fin de la piste K. Page : … ». Aucun lancement.

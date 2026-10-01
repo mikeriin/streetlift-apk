@@ -1,6 +1,7 @@
 LOT G12 — LEVELING ET OBJECTIFS DANS L'APPLICATION ; ANCIEN SYSTÈME RETIRÉ
-Modèle : Opus 5.5, effort élevé. Validation : propriétaire. Lancé automatiquement par G11.
-Décisions : DECISIONS_GP.md D1.3, D3.8, D6, D7. Règles : PIPELINE_GP.md. Moteur : `kalis_quest` (G11).
+Modèle : Opus 5.5, effort élevé. Piste A. Validation : propriétaire. Prérequis : G10 validé, **G11 livré**.
+Décisions : DECISIONS_GP.md D1.3, D3.8, D6, D7. Règles : PIPELINE_GP.md. Moteur : `kalis_quest`.
+INTÉGRATION : `git fetch origin --tags` ; `git checkout <dernières étiquettes> -- packages/kalis_quest packages/kalis_adapt packages/kalis_plan packages/kalis_core` ; dépendance `path:` ; tests de contrat. Retire les règles provisoires d'objectifs suggérés laissées par G6, s'il y en a.
 
 1. NOUVEAU SYSTÈME
 - **Niveau** : pastille dans l'en-tête (niveau 1-100, prestige), écran « Progression » : XP du niveau, historique des gains (registre), prochain palier.

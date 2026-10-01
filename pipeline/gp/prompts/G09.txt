@@ -1,6 +1,7 @@
 LOT G9 — SÉANCE : FLAMMES À CHAQUE SÉRIE, BILAN SANTÉ, CHARGES PAR LE MOTEUR DYNAMIQUE
-Modèle : Opus 5.5, effort élevé. Validation : propriétaire. Lancé automatiquement par G8.
-Décisions : DECISIONS_GP.md D5.3-D5.5, D5.8-D5.10, D6. Règles : PIPELINE_GP.md. Moteur : `kalis_adapt` (G8).
+Modèle : Opus 5.5, effort élevé. Piste A. Validation : propriétaire. Prérequis : G7 validé, **G8 livré**.
+Décisions : DECISIONS_GP.md D5.3-D5.5, D5.8-D5.10, D6. Règles : PIPELINE_GP.md. Moteur : `kalis_adapt`.
+INTÉGRATION : `git fetch origin --tags` ; `git checkout <dernières étiquettes> -- packages/kalis_adapt packages/kalis_plan packages/kalis_core` ; dépendance `path:` ; tests de contrat.
 
 1. BILAN SANTÉ EN DÉBUT DE SÉANCE (D5.8)
 - Au lancement d'une séance : Koach demande « Comment tu te sens ? » (5 niveaux, flammes ou visages de Koach — tranche et consigne). Réponse haute ou moyenne → séance. Réponse basse → détail facultatif sur un seul écran : sommeil, énergie et humeur, courbatures, douleurs localisées (zone sur la carte + 0-10), stress, motivation, temps disponible aujourd'hui, alimentation / hydratation. « Passer » partout ; **une question sans réponse n'est pas prise en compte**.

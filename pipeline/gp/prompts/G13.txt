@@ -1,5 +1,5 @@
 LOT G13 — ENVIE DE PROGRESSER
-Modèle : Opus 5.5, effort élevé. Validation : propriétaire.
+Modèle : Opus 5.5, effort élevé. Piste A. Validation : propriétaire. Prérequis : G12 validé.
 Décisions : DECISIONS_GP.md D8, D6. Règles : PIPELINE_GP.md. Logique : `kalis_quest` (G11) — l'application ne fait que l'interface.
 
 Tout implémenter (D8.1), chaque fonction avec **son interrupteur** dans Réglages › « Envie de progresser » (D8.3) ; le propriétaire dira quoi garder.

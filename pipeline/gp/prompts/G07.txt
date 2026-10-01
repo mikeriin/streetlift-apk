@@ -1,6 +1,7 @@
 LOT G7 — CRÉATION DU PROGRAMME EN DEUX PASSES, REVUE, « OÙ J'EN SUIS »
-Modèle : Opus 5.5, effort élevé. Validation : propriétaire.
-Décisions : DECISIONS_GP.md D4, D6. Règles : PIPELINE_GP.md. Moteur : `kalis_plan` (G4) — aucune règle de programmation dans `lib/`.
+Modèle : Opus 5.5, effort élevé. Piste A. Validation : propriétaire. Prérequis : G6 validé, **G4 livré**.
+Décisions : DECISIONS_GP.md D4, D6. Règles : PIPELINE_GP.md. Moteur : `kalis_plan` — aucune règle de programmation dans `lib/`.
+INTÉGRATION : `git fetch origin --tags` ; `git checkout <dernières étiquettes> -- packages/kalis_plan packages/kalis_core` ; dépendance `path:` ; tests de contrat de `INTEGRATION.md`.
 
 1. PASSE 1 — LES EXERCICES PAR SÉANCE (D4.4)
 - Après le profil (G6) ou depuis Réglages › Mon programme › « Créer un nouveau programme » : Koach (`checklist`) présente le bloc : une carte par jour (« Lundi · 60 min » › muscle-up, tractions, curl, dead hang…), **sans séries ni répétitions** ; sous la semaine, la carte des muscles de la semaine (couleurs de l'écran Anatomie) et la répartition par discipline.

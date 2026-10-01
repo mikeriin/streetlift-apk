@@ -1,43 +1,23 @@
-LOT G5 — KOACH MASCOTTE 2D, FLAMMES, PAQUET `kalis_koach`
-Modèle : Opus 5.5, effort élevé. Validation : propriétaire. Lancé automatiquement par G4.
-Décisions : DECISIONS_GP.md D1.5, D5.3, D5.5, D6. Règles : PIPELINE_GP.md.
+LOT G5 — KOACH 2D DANS L'APPLICATION (INTÉGRATION DE `kalis_koach`), FLAMMES, KOACH 3D RETIRÉ
+Modèle : Opus 5.5, effort élevé. Piste A. Validation : propriétaire. Prérequis : G3 validé, **GK livré** (étiquette `kalis_koach-v0.1.x`).
+Décisions : DECISIONS_GP.md D1.5, D5.3, D5.5, D6. Règles : PIPELINE_GP.md (§0 : intégration par étiquette, la piste A ne modifie jamais `packages/`).
 
-ENTRÉES (branche `pipeline`, `pipeline/gp/inputs/`)
-- `koach/koach_planche_A_pedagogie.png` (4096², 3 colonnes × 4 lignes), `koach/koach_planche_B_emotions.png` (3058 × 4096, 3 × 4), `koach/koach_planche_C_energie.png` (4096², 4 × 3) : 36 poses de Koach, silhouette noire, yeux et « K » blancs, sur fond blanc (quelques liserés gris d'anticrénelage autour des bras à nettoyer).
-- `flammes_difficulte_1_a_10.png` (2172 × 724) : 10 flammes de taille croissante, gris foncé, fond blanc.
+1. INTÉGRATION
+`git fetch origin --tags` ; dernière étiquette `kalis_koach-v0.1.*` ; `git checkout <étiquette> -- packages/kalis_koach tools/koach` ; dépendance `path:` ; lis `packages/kalis_koach/CONTRAT.md`.
 
-1. VECTORISATION (script relançable `tools/koach/build_koach.py`, sorties vérifiées par des tests)
-- Découpe chaque pose (détection des composantes, pas de coordonnées codées en dur sans contrôle), nettoie les liserés gris, vectorise (potrace ou équivalent installable par pip ; lissage sans perte de forme), normalise (même hauteur de corps, pieds sur la même ligne, marge commune).
-- Deux calques par pose : **encre** (silhouette et accessoires noirs) et **papier** (yeux, K, parties blanches des accessoires) ; les yeux dans un sous-calque séparé quand ils sont ouverts (pour le clignement).
-- Même traitement pour les 10 flammes (flamme extérieure + creux intérieur).
-- Rendu dans l'application sans dépendance lourde : de préférence chemins générés en Dart (`lib/koach/koach_paths.g.dart`) ; sinon justifie la dépendance et son poids. Poids ajouté ≤ 400 Ko.
-- Contrôle visuel : planche de contrôle générée (toutes les poses, clair et sombre) que tu **regardes** en entier puis en gros plan (mains, yeux, K) ; comparaison pixel à pixel avec les originaux (IoU de la silhouette ≥ 0,97 par pose, consigné).
+2. COMPOSANTS FLUTTER (`lib/koach/`)
+- `KoachView` : rend une pose depuis les commandes du paquet (conversion en `Path`, mise en cache). **Couleurs inversées selon le thème (D6.2)** : thème sombre, encre = texte clair #F4F4F4 et papier = couleur du fond du support ; thème clair, encre quasi-noire et papier blanc. Aucun contour, aucun effet ; lisible sur toutes les couleurs dominantes et sur les cartes teintées.
+- Micro-animations (D6.3) : respiration lente et légère, clignement des yeux ouverts (intervalle irrégulier seedé), rebond d'entrée, transition entre deux poses (fondu + léger écrasement/étirement, ≤ 200 ms). Rendu à la demande, pause hors écran et en arrière-plan ; « Réduire les animations » = poses fixes.
+- `KoachBubble` (pose + bulle placée selon l'orientation de la pose + actions + « Pourquoi ? » dépliable), `KoachSheet` (feuille du bas), `KoachToast` (court) ; branchés sur les répliques de `kalis_koach`.
+- `FlameIcon(niveau 1..10)` : tailles relatives des flammes fournies, **dégradé de la couleur dominante** (clair → vif) selon le niveau (D5.5), libellé d'accessibilité « Difficulté n sur 10, RIR … » (conversion `kalis_core`). Sélecteur de 10 flammes prêt pour G9 (non branché aux séances dans ce lot).
 
-2. CATALOGUE DES POSES (identifiants proposés, à vérifier sur les images et corriger si une pose a été mal lue)
-A (pédagogie, lignes de gauche à droite) : tableau `explain_board`, livre et doigt levé `read_tip`, planche anatomique `anatomy`, graphique en hausse `progress_chart`, doigt sur la tempe `think`, presse-papiers `checklist`, croix et coche `choice`, ampoule `idea`, engrenage `settings`, poing serré « ! » `determined`, panneau directionnel `direction`, loupe `analyze`.
-B (émotions) : salut `wave`, pouce levé `thumbs_up`, bras ouverts heureux `happy`, pointe à droite `point`, main au menton `ponder`, haussement d'épaules `shrug`, main sur le front `oops`, mains jointes `please`, cœur et cœurs `love`, biceps et étincelle `flex`, course `run`, bras levés victoire `victory`.
-C (énergie) : pouce levé `thumbs_up_2`, bras levés joie `cheer`, poing serré `pump`, drapeau `flag`, poing en avant `fist_bump`, cœur les yeux fermés `heart`, pointe vers toi `you`, double biceps `double_biceps`, applaudit `clap`, sprint `sprint`, poing levé `fist_up`, main tendue `present`.
-Chaque pose : identifiant, émotion, usages recommandés, yeux ouverts ou fermés, orientation (regarde à gauche/droite/face) pour placer la bulle du bon côté.
-
-3. COULEURS (D6.2) ET ANIMATIONS (D6.3)
-- **Thème sombre : encre = texte clair (#F4F4F4), papier = couleur du fond du support. Thème clair : encre = quasi-noir, papier = blanc.** Aucun contour, aucun effet ; lisible sur toutes les couleurs dominantes et sur les cartes teintées.
-- Micro-animations : respiration (légère, lente), clignement des yeux ouverts (intervalle irrégulier seedé), rebond d'entrée, transition entre deux poses (fondu + léger écrasement/étirement, ≤ 200 ms). Rendu à la demande, pause hors écran et en arrière-plan ; « Réduire les animations » = poses fixes.
-
-4. FLAMMES (D5.3, D5.5)
-- Widget `FlameIcon(niveau 1..10)` : taille croissante comme l'image fournie, **dégradé de la couleur dominante** (clair → vif) selon le niveau, libellé d'accessibilité « Difficulté n sur 10, RIR … » (conversion `kalis_core`). Sélecteur de 10 flammes prêt pour G9 (non branché aux séances dans ce lot), visible dans la galerie.
-
-5. PAQUET `packages/kalis_koach` (Dart pur)
-- Événements (profil, création du programme, revue, proposition de changement, bilan santé, fin de séance, record, erreur/annulation, session dev, explications « pourquoi ») → réplique : pose, clé de message, paramètres, priorité, actions proposées, clé « Pourquoi ? ». Bibliothèque de messages en français (tutoiement, phrases courtes, variantes pour ne pas se répéter, choisies de façon déterministe), aucune allégation médicale.
-- Tests : chaque événement a au moins une réplique ; aucune clé orpheline ; longueur maximale des bulles ; déterminisme.
-
-6. INTÉGRATION
-- Composants : `KoachView` (pose animée), `KoachBubble` (pose + bulle + actions + « Pourquoi ? » dépliable), `KoachSheet` (feuille du bas), `KoachToast` (court).
-- **Remplace Koach 3D partout** (carte du jour, propositions, bandeaux de séance, aperçu Anatomie › Koach devenu « Galerie de Koach » avec les 36 poses et les flammes) et retire les 9 animations 3D de Koach (M7b) et ce qui ne sert qu'à elles ; le moteur 3D reste pour la démonstration des exercices.
-- Koach parle partout où l'application parle déjà à l'utilisateur (D6.4) ; message de suppression de la session dev (G1) remplacé par Koach.
-- Session perso et session dev.
+3. REMPLACEMENTS
+- **Koach 3D remplacé partout** (carte du jour, propositions, bandeaux de séance) ; Anatomie › Koach devient « Galerie de Koach » (36 poses animées + flammes 1 à 10) ; retire les 9 animations 3D de Koach (M7b) et ce qui ne sert qu'à elles ; le moteur 3D reste pour la démonstration des exercices.
+- Koach parle partout où l'application parle déjà à l'utilisateur (D6.4) ; message de suppression de la session de test (G1) remplacé par Koach.
+- Session perso et session de test.
 
 CONTRÔLES
-Captures (clair et sombre, deux couleurs dominantes) : galerie des 36 poses, flammes 1 à 10, carte du jour, une proposition, une bulle « Pourquoi ? ».
+Captures (clair et sombre, deux couleurs dominantes) : galerie des 36 poses, flammes 1 à 10, carte du jour, une proposition, une bulle « Pourquoi ? », « Réduire les animations ». Poids de l'APK avant/après.
 
 À TESTER PAR LE PROPRIÉTAIRE
 Anatomie › Galerie de Koach (36 poses, animations, flammes) ; accueil (carte du jour) ; thème clair/sombre ; « Réduire les animations ».

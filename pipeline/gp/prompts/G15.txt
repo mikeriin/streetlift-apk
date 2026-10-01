@@ -1,5 +1,5 @@
 LOT G15 — NETTOYAGE FINAL, PERFORMANCE, AUDIT, DOCUMENTATION
-Modèle : Opus 5.5, effort élevé. Validation : propriétaire. Dernier lot.
+Modèle : Opus 5.5, effort élevé. Piste A. Validation : propriétaire. Prérequis : G14 validé. Dernier lot.
 Règles : PIPELINE_GP.md.
 
 1. NETTOYAGE

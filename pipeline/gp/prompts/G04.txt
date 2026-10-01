@@ -1,11 +1,12 @@
 LOT G4 — MOTEUR STATIQUE `kalis_plan` (CRÉATION DU PROGRAMME)
-Modèle : Fable 5.1, effort maximal. Validation : auto (lot de moteur) → en fin de lot, lance G5 sur la tâche Opus.
+Modèle : Fable 5.1, effort maximal (tâche Fable B). Piste M. Validation : auto → en fin de lot, lance G8 sur la tâche **Fable A**.
+Prérequis : GC livré (étiquette `kalis_core-v0.1.x` sur `moteurs`). Branche de travail : `moteurs` ; contrôle : `claude/ci-gp-moteurs`. Aucune modification de `lib/`.
 Décisions : DECISIONS_GP.md D0.3, D3, D4. Règles : PIPELINE_GP.md §2, §4, §7.
 
 OBJECTIF
 Un moteur de création de programme **écrit à partir de zéro**, indépendant de l'application, dont les programmes sont meilleurs, mesurablement, que ceux du générateur L10, et **ne ressemblent pas au programme personnel du propriétaire** (D4.1). Aucune ligne de `lib/program_generator.dart` ni de `assets/program_models.json` n'est reprise ; tu peux les lire seulement pour mesurer la comparaison.
 
-1. ENTRÉES (types dans `kalis_core`, complétés si besoin)
+1. ENTRÉES (types et interface `plan` de `kalis_core`, figés par GC ; extension additive seulement, PIPELINE_GP.md §0 ; fixtures communes de `kalis_core`)
 Profil d'athlète v2 : sexe, âge, taille, poids ; discipline principale (D3.1) + 1-2 secondaires avec dosage (D3.2) ; mode street (principale parmi streetlifting / sets & reps / calisthénie + dosage des deux autres, D3.3) ; niveau déclaré par mouvement (fourchettes, D3.5) ; objectifs (D3.8) ; disponibilités = jours précis + minutes par jour (D3.6) ; lieux et matériel ; blessures et limitations (zones, articulations) ; exercices aimés / détestés ; mode assisté ou libre (sans effet ici). Catalogue `kalis_core`. Graine. Verrous (choix déjà validés par l'utilisateur). Pour les blocs suivants : résumé d'adaptation (type défini ici dans `kalis_core`, rempli plus tard par `kalis_adapt` : tendance de force par exercice, fatigue, assiduité, douleurs, exercices mal tolérés, confiance).
 
 2. PASSE 1 — CHOIX DES EXERCICES PAR SÉANCE (D4.4)
@@ -32,7 +33,7 @@ Formule le problème comme une **optimisation sous contraintes** (D4.2), notée 
 
 6. VALIDATION (à livrer dans `packages/kalis_plan/docs/`)
 - Tests de propriétés sur ≥ 10 000 profils aléatoires seedés : toutes les contraintes dures, déterminisme, verrous intacts, diff minimal, variantes valides.
-- **40 profils types** relisibles par le propriétaire (`PROFILS_TYPES.md`) : débutant forme générale 2 × 30 min maison sans matériel ; femme 45 ans musculation 4 × 60 min salle ; coureur (cardio + mobilité) ; CrossFit 5 × 60 ; calisthénie figures ; mode street × 3 principales ; blessure d'épaule ; 1 × 20 min ; 6 jours ; senior 65 ans ; etc. Pour chacun : passe 1, une revue simulée (2 remplacements), diff, passe 2.
+- **Les 40 profils types des fixtures de `kalis_core`** relisibles par le propriétaire (`PROFILS_TYPES.md`) : débutant forme générale 2 × 30 min maison sans matériel ; femme 45 ans musculation 4 × 60 min salle ; coureur (cardio + mobilité) ; CrossFit 5 × 60 ; calisthénie figures ; mode street × 3 principales ; blessure d'épaule ; 1 × 20 min ; 6 jours ; senior 65 ans ; etc. Pour chacun : passe 1, une revue simulée (2 remplacements), diff, passe 2.
 - **Non-ressemblance** (D4.1) : pour un profil calqué sur le propriétaire (streetlifting avancé, ~71,5 kg, ses jours), comparer au programme embarqué `programme_v33.json` : composition des séances, accessoires, ordre, volumes, périodisation — similarité mesurée (définis la métrique ; les 4 mouvements de compétition, naturellement présents, sont exclus du calcul) sous un seuil que tu justifies ; pour tout profil non street, aucun accessoire propre à son programme ne doit être sur-représenté.
 - **Comparaison au générateur L10** sur les mêmes profils (respect des bandes de volume, équilibre des schémas, respect du temps, erreur de dosage des disciplines, diversité) : tableau chiffré ; le nouveau moteur doit être meilleur sur chaque critère ou l'écart est expliqué.
 - Temps de calcul (VM Dart, CI) : génération complète ≤ 1 s, régénération après une action de revue ≤ 300 ms.
@@ -42,4 +43,4 @@ Formule le problème comme une **optimisation sous contraintes** (D4.2), notée 
 `CONTRAT.md` : API, formulation mathématique du problème, paramètres et références, invariants, limites connues, registre de validation (contenu sportif non relu par un professionnel diplômé). Rien dans `lib/` de l'application ne change dans ce lot.
 
 FIN DE LOT
-Commit final « Kalis Track moteurs (G4) : kalis_plan 0.1.0 » ; ETAT_GP « livré » ; page de suivi (résumé des 40 profils types, tableau de comparaison L10, lien vers PROFILS_TYPES.md) ; notification ; puis `fire_trigger` sur la tâche Opus (id dans ETAT_GP.md) avec « Lot : G5 ».
+Commit final « Kalis Track moteurs (G4) : kalis_plan 0.1.0 » sur `moteurs`, étiquette `kalis_plan-v0.1.0` poussée ; ETAT_GP « livré » ; page de suivi (partie Moteurs : résumé des 40 profils types, tableau de comparaison L10, lien vers PROFILS_TYPES.md) ; notification ; puis `fire_trigger` sur la tâche **Fable A** (id dans ETAT_GP.md) avec « Lot : G8 ».

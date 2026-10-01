@@ -1,5 +1,5 @@
 LOT G10 — ÉVOLUTION DU PROGRAMME : PROPOSITIONS, MODES, RESTRUCTURATIONS, OUTILS DEV
-Modèle : Opus 5.5, effort élevé. Validation : propriétaire.
+Modèle : Opus 5.5, effort élevé. Piste A. Validation : propriétaire. Prérequis : G9 validé.
 Décisions : DECISIONS_GP.md D1.4, D2.5, D5.1, D5.6, D5.7, D5.11, D6. Règles : PIPELINE_GP.md. Moteurs : `kalis_adapt`, `kalis_plan`.
 
 1. PROPOSITIONS DE KOACH

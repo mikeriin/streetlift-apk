@@ -1,9 +1,9 @@
 LOT G6 — CRÉATION DU PROFIL
-Modèle : Opus 5.5, effort élevé. Validation : propriétaire.
+Modèle : Opus 5.5, effort élevé. Piste A. Validation : propriétaire. Prérequis : G5 validé.
 Décisions : DECISIONS_GP.md D1.6, D3, D5.8 (santé), D6. Règles : PIPELINE_GP.md.
 
 OBJECTIF
-Une création de profil complète (≈ 5 minutes, D3.4) guidée par Koach, pour tout le monde (D0.2), qui fournit au moteur statique tout ce qu'il lui faut (types `AthleteProfile` v2 de `kalis_core`, complétés dans ce lot si besoin, avec leurs tests).
+Une création de profil complète (≈ 5 minutes, D3.4) guidée par Koach, pour tout le monde (D0.2), qui remplit **exactement** le profil d'athlète v2 de `kalis_core` (contrat figé par GC : la piste A ne modifie pas `packages/` ; s'il manque quelque chose, décision requise, PIPELINE_GP.md §5 b). Si une étiquette `kalis_core` plus récente que celle de `main` existe, récupère-la d'abord (`git checkout <étiquette> -- packages/kalis_core`).
 
 1. PARCOURS (un écran = une question claire ; Koach présente chaque étape ; retour arrière possible ; barre de progression ; reprise là où on s'est arrêté si l'application est fermée)
 1) Accueil de Koach (`wave`) et avertissement santé existant (L13, 18 ans et plus : règle conservée).
@@ -11,7 +11,7 @@ Une création de profil complète (≈ 5 minutes, D3.4) guidée par Koach, pour 
 3) **Discipline principale** parmi les 8 (D3.1), chacune avec une phrase d'explication et une pose de Koach ; **mode street** (interrupteur) : si activé, principale parmi streetlifting / sets & reps / calisthénie et dosage des deux autres (D3.3).
 4) **Disciplines secondaires** : 0 à 2, dosage par curseurs dont la somme avec la principale fait 100 % (D3.2), avec aperçu en mots (« environ 1 séance sur 5 en mobilité »).
 5) Expérience et **niveau déclaré par mouvement** en fourchettes (D3.5), mouvements proposés selon les disciplines choisies (ex. tractions, pompes, dips, squat, soulevé de terre, développé, muscle-up, gainage, course 5 km, souplesse…) ; « Je ne sais pas » toujours possible.
-6) **Objectifs** (D3.8) : performance chiffrée avec date, objectif d'habitude, ou « Laisse Koach proposer » (propositions réalistes calculées par règles simples dans ce lot, remplacées par `kalis_quest` en G12) ; plusieurs objectifs possibles, un principal.
+6) **Objectifs** (D3.8) : performance chiffrée avec date, objectif d'habitude, ou « Laisse Koach proposer » (propositions réalistes : si `kalis_quest` est déjà livré, utilise-le ; sinon règles simples provisoires, dans un seul fichier de l'application signalé pour retrait en G12) ; plusieurs objectifs possibles, un principal.
 7) **Disponibilités** (D3.6) : jours précis + durée par jour (préréglages 20/30/45/60/75/90 min + saisie libre).
 8) Lieux (salle, maison, extérieur) et **matériel** (liste du vocabulaire de la base, regroupée, préréglages « salle complète », « maison sans matériel », « barre de traction + élastiques »…).
 9) Blessures et limitations (zones du corps sur la carte des muscles + articulations, gêne actuelle 0-10) ; questionnaire de santé préalable L13 conservé (mode prudent).

@@ -1,5 +1,6 @@
 LOT G8 — MOTEUR DYNAMIQUE `kalis_adapt` (SUIVI ET ADAPTATION)
-Modèle : Fable 5.1, effort maximal. Validation : auto (lot de moteur) → en fin de lot, lance G9 sur la tâche Opus.
+Modèle : Fable 5.1, effort maximal (tâche Fable A). Piste M. Validation : auto → en fin de lot, lance G11 sur la tâche **Fable B**.
+Prérequis : G4 livré (`kalis_plan-v0.1.x`). Branche de travail : `moteurs` ; contrôle : `claude/ci-gp-moteurs`. Aucune modification de `lib/`. Types et interface `adapt` de `kalis_core` (GC) ; extension additive seulement.
 Décisions : DECISIONS_GP.md D3.5, D4.7-D4.9, D5. Règles : PIPELINE_GP.md §2, §4, §7.
 
 OBJECTIF
@@ -36,4 +37,4 @@ Un moteur de suivi qui apprend chaque utilisateur séance après séance et fait
 `CONTRAT.md` : modèle, équations, paramètres et références, invariants, limites, registre de validation. Rien dans `lib/` de l'application ne change dans ce lot.
 
 FIN DE LOT
-Commit final « Kalis Track moteurs (G8) : kalis_adapt 0.1.0 » ; ETAT_GP « livré » ; page de suivi (graphiques de convergence et tableau de comparaison, lisibles sur téléphone) ; notification ; `fire_trigger` sur la tâche Opus avec « Lot : G9 ».
+Commit final « Kalis Track moteurs (G8) : kalis_adapt 0.1.0 » sur `moteurs`, étiquette `kalis_adapt-v0.1.0` poussée ; ETAT_GP « livré » ; page de suivi (partie Moteurs : graphiques de convergence et tableau de comparaison, lisibles sur téléphone) ; notification ; `fire_trigger` sur la tâche **Fable B** avec « Lot : G11 ».
