@@ -548,7 +548,9 @@ final class QuestMaster {
     if (candidates.isEmpty) {
       return null;
     }
-    return candidates[(mondayOf(day) ~/ 7) % candidates.length];
+    // Le point faible revient toutes les trois semaines : le rang de la
+    // quête avance d'un cran à chaque retour.
+    return candidates[(mondayOf(day) ~/ 21) % candidates.length];
   }
 
   Quest? _weakPointQuest(
@@ -622,10 +624,23 @@ final class QuestMaster {
 
   Quest? _koachLagging(String id, int day, int end) {
     final avoided = w.input.adaptation?.avoidedExerciseIds;
-    if (avoided == null || avoided.isEmpty) {
+    if (avoided == null || avoided.isEmpty || _persistentPain) {
       return null;
     }
+    final pains = w.input.adaptation?.pains ?? const <PainTrend>[];
     for (final exerciseId in avoided) {
+      // Un exercice évité qui sollicite une zone douloureuse suivie n'est
+      // jamais proposé : l'éviter est peut-être la bonne décision.
+      final info = w.book.find(exerciseId);
+      var painful = info == null;
+      for (final pain in pains) {
+        if (info != null && info.zoneLevel(pain.zone) >= 0.5) {
+          painful = true;
+        }
+      }
+      if (painful) {
+        continue;
+      }
       var sets = 0;
       for (var d = day; d <= end; d++) {
         if (!w.isTrainingDay(d)) {
@@ -729,7 +744,7 @@ final class QuestMaster {
     final blockEnd = pass1.startDate.dayNumber + 7 * pass1.weeks - 1;
     final end = blockEnd + _p.campaignGraceDays;
     if (book.find('c:$blockId:chapter') == null) {
-      final remaining = w.scheduledIn(day, blockEnd, skipBreaks: false);
+      final remaining = w.scheduledIn(day, blockEnd, skipBreaks: true);
       if (remaining >= 1) {
         final target = (_p.chapterShare * remaining).ceil();
         book.put(
@@ -825,22 +840,34 @@ final class QuestMaster {
     }
     var value = 0.0;
     final days = <int, int>{};
+    final daily = q.kind == QuestKind.daily;
     for (final f in w.factsIn(from, to)) {
-      final status = ledger.statusOf(f.session.id);
-      final paid = status == SessionStatus.paid;
-      final done = paid && f.completion >= _p.doneCompletion;
+      // Le registre fait foi : une séance compte dans la semaine où elle a
+      // été réglée (une date déplacée ensuite ne la fait pas recompter).
+      final id = f.session.id;
+      final status = ledger.settledIn(id, f.day)
+          ? ledger.statusOf(id)
+          : SessionStatus.unsettled;
+      final done = status == SessionStatus.paid;
+      final paid = done || status == SessionStatus.partial;
+      // Séance qui a mis toutes ses séries prévues dans la cible : la quête
+      // du jour est remplie même si la cible dépassait le programme du jour.
+      final flawless = daily && done && f.limit > 0 && f.inTarget >= f.limit;
       switch (metric) {
         case QuestMetrics.sessions:
           if (done) {
             value += 1;
           }
         case QuestMetrics.fullSessions:
-          if (paid && f.completion >= 1) {
+          if (done && f.completion >= 1) {
             value += 1;
           }
         case QuestMetrics.setsInTarget:
           if (paid) {
             value += f.inTarget;
+          }
+          if (flawless && value < q.target) {
+            value = q.target;
           }
         case QuestMetrics.ratedSessions:
           if (done && f.fullyRated) {
@@ -853,6 +880,9 @@ final class QuestMaster {
         case QuestMetrics.combo:
           if (paid && f.combo > value) {
             value = f.combo.toDouble();
+          }
+          if (flawless && value < q.target) {
+            value = q.target;
           }
         case QuestMetrics.mobilitySeconds:
           if (paid || status == SessionStatus.recovery) {
@@ -877,7 +907,7 @@ final class QuestMaster {
         case QuestMetrics.boss:
           final ref = f.session.programRef;
           final dayIndex = q.params['dayIndex'];
-          if (paid &&
+          if (done &&
               ref != null &&
               ref.blockId == q.params['blockId'] &&
               ref.weekIndex == q.params['weekIndex'] &&

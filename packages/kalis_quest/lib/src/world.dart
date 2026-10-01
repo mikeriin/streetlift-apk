@@ -18,7 +18,13 @@ import 'standards.dart';
 /// record.
 final class Observation {
   /// Observation.
-  const Observation(this.day, this.value, this.bodyWeightKg, this.sessionId);
+  const Observation(
+    this.day,
+    this.value,
+    this.bodyWeightKg,
+    this.sessionId,
+    this.counted,
+  );
 
   /// Numéro de jour de la séance.
   final int day;
@@ -31,6 +37,12 @@ final class Observation {
 
   /// Séance.
   final String sessionId;
+
+  /// Valeur qui compte pour les rangs, les objectifs et les records
+  /// payés : la meilleure série faite dans le volume prévu, ou `null` si
+  /// la séance est faite malgré une douleur ou au-delà du programme de la
+  /// semaine. [value] reste le fait brut (records connus).
+  final double? counted;
 }
 
 /// Record établi par une séance : la meilleure valeur de la séance dépasse
@@ -42,7 +54,7 @@ final class RecordEvent {
     required this.kind,
     required this.value,
     required this.previous,
-    required this.ordinal,
+    required this.counted,
   });
 
   /// Exercice.
@@ -57,21 +69,28 @@ final class RecordEvent {
   /// Meilleure valeur avant la séance (`null` : première fois).
   final double? previous;
 
-  /// Rang, parmi les séries de travail de la séance, de la série qui
-  /// l'établit.
-  final int ordinal;
+  /// Meilleure valeur de la séance dans le volume prévu (`null` : aucune).
+  final double? counted;
 
-  /// Gain relatif sur le record précédent (0 pour une première fois).
-  double get gain {
-    final p = previous;
-    if (p == null || p <= 0 || value <= 0) {
+  /// Vrai si [a] est meilleure que [b] pour cette nature de record.
+  bool better(double a, double b) =>
+      kind == RecordKind.timeSeconds ? a < b - 1e-9 : a > b + 1e-9;
+
+  /// Gain relatif de [achieved] sur [reference] (0 sans référence).
+  double gainOver(double achieved, double? reference) {
+    if (reference == null || reference <= 0 || achieved <= 0) {
       return 0;
     }
-    return kind == RecordKind.timeSeconds ? p / value - 1 : value / p - 1;
+    return kind == RecordKind.timeSeconds
+        ? reference / achieved - 1
+        : achieved / reference - 1;
   }
 
-  /// Clé stable du record (registre d'XP).
-  String get key => 'rec|$exerciseId|${kind.code}|$value';
+  /// Gain relatif sur le record précédent (0 pour une première fois).
+  double get gain => gainOver(value, previous);
+
+  /// Clé de l'exercice et de la nature (`exercice|nature`).
+  String get subject => '$exerciseId|${kind.code}';
 }
 
 /// Faits d'une séance comptée.
@@ -130,6 +149,10 @@ final class SessionFacts {
   /// Séance d'entraînement proprement dite (autre chose que mobilité,
   /// récupération, marche).
   bool hard = false;
+
+  /// Séance au-delà du nombre de séances prévues de sa semaine (lecture du
+  /// journal seul ; le registre fait foi pour l'XP).
+  bool beyond = false;
 
   /// Secondes de mobilité et de récupération.
   int mobilitySeconds = 0;
@@ -242,7 +265,8 @@ final class World {
   final Map<String, List<Observation>> series = <String, List<Observation>>{};
 
   /// Jours où chaque exercice a été pratiqué avec succès à dose
-  /// suffisante (attributs : niveau de difficulté démontré).
+  /// suffisante, dans le volume prévu d'une séance ni douloureuse ni
+  /// au-delà du programme (attributs : niveau de difficulté démontré).
   final Map<String, List<int>> practice = <String, List<int>>{};
 
   /// Meilleure valeur connue par `exercice|nature`.
@@ -433,15 +457,38 @@ final class World {
     final seen = <String>{};
     final lastScores = <String, double>{};
     final bestScores = <String, double>{};
-    final sessionBest = <String, (double, int)>{};
-    for (final session in input.log.countedSessions) {
+    final sessionBest = <String, (double, double?)>{};
+    final priorSets = <double>[];
+    var weekMonday = -1 << 40;
+    var weekCount = 0;
+    var weekCap = 0;
+    final sessions = <SessionRecord>[
+      for (final s in input.log.countedSessions)
+        if (s.date.dayNumber <= today) s,
+    ];
+    // Le contrat veut un journal par date croissante ; un journal qui ne
+    // l'est pas est remis dans l'ordre (tri stable).
+    var sorted = true;
+    for (var i = 1; i < sessions.length && sorted; i++) {
+      sorted = sessions[i - 1].date <= sessions[i].date;
+    }
+    if (!sorted) {
+      final order = <int>[for (var i = 0; i < sessions.length; i++) i]
+        ..sort((a, b) {
+          final c = sessions[a].date.compareTo(sessions[b].date);
+          return c != 0 ? c : a.compareTo(b);
+        });
+      final copy = <SessionRecord>[for (final i in order) sessions[i]];
+      sessions
+        ..clear()
+        ..addAll(copy);
+    }
+    for (final session in sessions) {
       final day = session.date.dayNumber;
-      if (day > today) {
-        continue;
-      }
       final f = SessionFacts(session, day);
       final bw = bodyWeightOf(session, input.profile, _adapt);
       sessionBest.clear();
+      final practised = <String>{};
       final work = <SetRecord>[];
       for (final set in session.sets) {
         if (set.isUsable && set.kind != SetKind.warmup && _measured(set)) {
@@ -450,24 +497,38 @@ final class World {
       }
       f.workSets = work.length;
       final field = session.plannedWorkSets;
-      final fromBlock = _blockPlanned(session.programRef);
+      // Référence du programme : la séance du bloc désignée par la séance,
+      // sinon, pour une séance libre, celle prévue ce jour-là.
+      var reference = _blockPlanned(session.programRef);
+      if (reference == null && session.programRef == null) {
+        final prescription = prescriptionOn(day);
+        if (prescription != null) {
+          reference = workSetsOf(prescription);
+        }
+      }
+      // Sans programme : les séries habituelles (médiane des huit dernières
+      // séances d'entraînement, à partir de trois).
+      final usual = priorSets.length >= 3
+          ? medianOf(List<double>.of(priorSets)).round()
+          : null;
       if (field != null && field > 0) {
         f.planned = field;
         f.limit = field;
       } else if (session.completed) {
-        if (fromBlock != null && fromBlock > 0) {
-          final light = (p.lightFloor * fromBlock).ceil();
+        final full = reference != null && reference > 0 ? reference : usual;
+        if (full != null && full > 0) {
+          final light = (p.lightFloor * full).ceil();
           f.planned = light < 1 ? 1 : light;
-          f.limit = fromBlock;
+          f.limit = full;
         } else {
           f.planned = work.isEmpty ? 1 : work.length;
           f.limit = work.length;
         }
       } else {
-        final reference = fromBlock != null && fromBlock > 0
-            ? fromBlock
-            : p.defaultTypicalSets;
-        f.planned = reference > work.length ? reference : work.length;
+        final full = reference != null && reference > 0
+            ? reference
+            : (usual ?? p.defaultTypicalSets);
+        f.planned = full > work.length ? full : work.length;
         f.limit = f.planned;
       }
       f.completion = f.workSets >= f.planned ? 1 : f.workSets / f.planned;
@@ -502,21 +563,20 @@ final class World {
             f.ratedOnTarget++;
           }
           hit = near && set.success;
-          q = delta >= -p.targetTolerance
+          q = delta >= -p.qualityTolerance
               ? 1
               : clampDouble(
-                  1 + (delta + p.targetTolerance) * p.qualityStep,
+                  1 + (delta + p.qualityTolerance) * p.qualityStep,
                   p.qualityFloor,
                   1,
                 );
         }
-        if (i < f.limit) {
+        // Les séries au-delà du volume prévu ne comptent ni pour la
+        // qualité, ni pour la cible, ni pour le combo.
+        final inPlan = i < f.limit;
+        if (inPlan) {
           qualitySum += q;
           qualityCount++;
-        }
-        // Les séries au-delà du volume prévu ne comptent ni pour la cible
-        // ni pour le combo.
-        if (i < f.limit) {
           if (hit) {
             f.inTarget++;
             run++;
@@ -560,14 +620,11 @@ final class World {
             f.explosiveSets++;
           }
         }
-        if (e != null && set.success && _dosed(e, set)) {
-          final days = practice.putIfAbsent(e.id, () => <int>[]);
-          if (days.isEmpty || days.last != day) {
-            days.add(day);
-          }
+        if (e != null && inPlan && set.success && _dosed(e, set)) {
+          practised.add(e.id);
         }
         if (info != null) {
-          _observe(info, set, bw, i, sessionBest);
+          _observe(info, set, bw, inPlan, sessionBest);
           if (info.mode == CapacityMode.loaded && reps > 0) {
             final total = info.totalLoad(set.externalLoadKg ?? 0, bw);
             if (total > 0) {
@@ -600,10 +657,39 @@ final class World {
       f.fullyRated = work.isNotEmpty && rated == work.length;
       _painGuard(f, work);
 
+      // Rang de la séance dans sa semaine, parmi les séances faites qui
+      // comptent pour le programme.
+      final monday = mondayOf(day);
+      if (monday != weekMonday) {
+        weekMonday = monday;
+        weekCount = 0;
+        weekCap = scheduledIn(monday, monday + 6, skipBreaks: false);
+      }
+      final training = f.hard || session.programRef != null;
+      if (training &&
+          f.painZone == null &&
+          f.completion >= p.doneCompletion) {
+        f.beyond = weekCount >= weekCap;
+        weekCount++;
+      }
+      if (f.hard && f.workSets > 0) {
+        priorSets.add(f.workSets.toDouble());
+        if (priorSets.length > 8) {
+          priorSets.removeAt(0);
+        }
+      }
+      final clean = f.painZone == null && !f.beyond;
+      if (clean) {
+        for (final id in practised) {
+          practice.putIfAbsent(id, () => <int>[]).add(day);
+        }
+      }
+
       final keys = sessionBest.keys.toList()..sort();
       for (final key in keys) {
-        final (value, ordinal) = sessionBest[key]!;
-        final obs = Observation(day, value, bw, session.id);
+        final (value, inPlanValue) = sessionBest[key]!;
+        final counted = clean ? inPlanValue : null;
+        final obs = Observation(day, value, bw, session.id, counted);
         series.putIfAbsent(key, () => <Observation>[]).add(obs);
         final cut = key.indexOf('|');
         final kind = RecordKind.fromCode(key.substring(cut + 1));
@@ -621,7 +707,7 @@ final class World {
               kind: kind,
               value: value,
               previous: old?.value,
-              ordinal: ordinal,
+              counted: counted,
             ),
           );
         }
@@ -638,15 +724,17 @@ final class World {
     ExerciseInfo info,
     SetRecord set,
     double bw,
-    int ordinal,
-    Map<String, (double, int)> best,
+    bool inPlan,
+    Map<String, (double, double?)> best,
   ) {
     void offer(RecordKind kind, double value, {bool lower = false}) {
       final key = '${info.id}|${kind.code}';
       final old = best[key];
-      if (old == null || (lower ? value < old.$1 : value > old.$1)) {
-        best[key] = (value, ordinal);
-      }
+      bool beats(double? reference) =>
+          reference == null || (lower ? value < reference : value > reference);
+      final overall = old == null || beats(old.$1) ? value : old.$1;
+      final planned = inPlan && beats(old?.$2) ? value : old?.$2;
+      best[key] = (overall, planned);
     }
 
     final mode = info.mode;

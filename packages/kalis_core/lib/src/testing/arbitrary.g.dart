@@ -10,7 +10,10 @@ import 'arbitrary_base.dart';
 
 /// Valeur aléatoire de [Reason].
 Reason arbitraryReason(Random r) {
-  return Reason(code: arbString(r, 1, 12), params: arbJson(r));
+  return Reason(
+    code: arbString(r, 1, 12),
+    params: arbJson(r),
+  );
 }
 
 /// Valeur aléatoire de [DisciplineShare].
@@ -132,9 +135,7 @@ AthleteProfile arbitraryAthleteProfile(Random r) {
     availability: arbList(r, 1, 7, () => arbitraryDaySlot(r)),
     places: arbList(r, 1, 3, () => arbEnum(r, Place.values)),
     equipment: arbList(r, 0, 3, () => arbString(r, 0, 12)),
-    equipmentByPlace: r.nextBool()
-        ? null
-        : arbList(r, 0, 3, () => arbitraryPlaceEquipment(r)),
+    equipmentByPlace: r.nextBool() ? null : arbList(r, 0, 3, () => arbitraryPlaceEquipment(r)),
     loadIncrements: arbList(r, 0, 3, () => arbitraryLoadIncrement(r)),
     limitations: arbList(r, 0, 3, () => arbitraryLimitation(r)),
     likedExerciseIds: arbList(r, 0, 3, () => arbId(r)),
@@ -256,9 +257,7 @@ TrainingLog arbitraryTrainingLog(Random r) {
   return TrainingLog(
     schemaVersion: TrainingLog.currentSchemaVersion,
     sessions: arbList(r, 0, 3, () => arbitrarySessionRecord(r)),
-    breaks: r.nextBool()
-        ? null
-        : arbList(r, 0, 3, () => arbitraryTrainingBreak(r)),
+    breaks: r.nextBool() ? null : arbList(r, 0, 3, () => arbitraryTrainingBreak(r)),
   );
 }
 
@@ -366,7 +365,9 @@ PlanChange arbitraryPlanChange(Random r) {
 
 /// Valeur aléatoire de [PlanDiff].
 PlanDiff arbitraryPlanDiff(Random r) {
-  return PlanDiff(changes: arbList(r, 0, 3, () => arbitraryPlanChange(r)));
+  return PlanDiff(
+    changes: arbList(r, 0, 3, () => arbitraryPlanChange(r)),
+  );
 }
 
 /// Valeur aléatoire de [ReviewResult].
@@ -416,9 +417,7 @@ ExercisePrescription arbitraryExercisePrescription(Random r) {
     percentOfOneRm: r.nextBool() ? null : arbDouble(r, 0.0, 1.5),
     toCalibrate: r.nextBool(),
     loadBasis: arbEnum(r, LoadBasis.values),
-    setTargets: r.nextBool()
-        ? null
-        : arbList(r, 0, 3, () => arbitrarySetTarget(r)),
+    setTargets: r.nextBool() ? null : arbList(r, 0, 3, () => arbitrarySetTarget(r)),
     groupId: r.nextBool() ? null : arbString(r, 0, 12),
     format: r.nextBool() ? null : arbString(r, 0, 12),
     kind: r.nextBool() ? null : arbEnum(r, SetKind.values),
@@ -523,9 +522,7 @@ AdaptInput arbitraryAdaptInput(Random r) {
     log: arbitraryTrainingLog(r),
     today: arbDate(r),
     state: r.nextBool() ? null : arbJson(r),
-    decisions: r.nextBool()
-        ? null
-        : arbList(r, 0, 3, () => arbitraryProposalDecision(r)),
+    decisions: r.nextBool() ? null : arbList(r, 0, 3, () => arbitraryProposalDecision(r)),
   );
 }
 
@@ -654,9 +651,7 @@ AdaptReview arbitraryAdaptReview(Random r) {
     proposals: arbList(r, 0, 3, () => arbitraryProposal(r)),
     state: arbJson(r),
     log: arbList(r, 0, 3, () => arbitraryEngineLogEntry(r)),
-    records: r.nextBool()
-        ? null
-        : arbList(r, 0, 3, () => arbitraryPersonalRecord(r)),
+    records: r.nextBool() ? null : arbList(r, 0, 3, () => arbitraryPersonalRecord(r)),
   );
 }
 
@@ -801,7 +796,10 @@ QuestState arbitraryQuestState(Random r) {
 
 /// Valeur aléatoire de [QuestClaim].
 QuestClaim arbitraryQuestClaim(Random r) {
-  return QuestClaim(questId: arbString(r, 1, 12), date: arbDate(r));
+  return QuestClaim(
+    questId: arbString(r, 1, 12),
+    date: arbDate(r),
+  );
 }
 
 /// Valeur aléatoire de [QuestInput].
@@ -815,9 +813,7 @@ QuestInput arbitraryQuestInput(Random r) {
     state: arbitraryQuestState(r),
     today: arbDate(r),
     seed: r.nextBool() ? null : arbInt(r, 0, 1000),
-    claims: r.nextBool()
-        ? null
-        : arbList(r, 0, 3, () => arbitraryQuestClaim(r)),
+    claims: r.nextBool() ? null : arbList(r, 0, 3, () => arbitraryQuestClaim(r)),
   );
 }
 
@@ -832,12 +828,8 @@ QuestOutcome arbitraryQuestOutcome(Random r) {
     events: arbList(r, 0, 3, () => arbitraryDelightEvent(r)),
     kreditBalance: arbInt(r, 0, 1000),
     weekStreak: r.nextBool() ? null : arbInt(r, 0, 1000),
-    suggestedGoals: r.nextBool()
-        ? null
-        : arbList(r, 0, 3, () => arbitraryGoal(r)),
-    records: r.nextBool()
-        ? null
-        : arbList(r, 0, 3, () => arbitraryPersonalRecord(r)),
+    suggestedGoals: r.nextBool() ? null : arbList(r, 0, 3, () => arbitraryGoal(r)),
+    records: r.nextBool() ? null : arbList(r, 0, 3, () => arbitraryPersonalRecord(r)),
     extras: r.nextBool() ? null : arbJson(r),
   );
 }
@@ -925,524 +917,80 @@ BlockProposal arbitraryBlockProposal(Random r) {
 
 /// Générateur, encodeur et décodeur de chaque type, pour les tests génériques.
 final List<ContractCodec<Object>> contractCodecs = <ContractCodec<Object>>[
-  ContractCodec<Reason>(
-    'Reason',
-    arbitraryReason,
-    (v) => v.toJson(),
-    Reason.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<DisciplineShare>(
-    'DisciplineShare',
-    arbitraryDisciplineShare,
-    (v) => v.toJson(),
-    DisciplineShare.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<DisciplineMix>(
-    'DisciplineMix',
-    arbitraryDisciplineMix,
-    (v) => v.toJson(),
-    DisciplineMix.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<StreetMode>(
-    'StreetMode',
-    arbitraryStreetMode,
-    (v) => v.toJson(),
-    StreetMode.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<MovementLevel>(
-    'MovementLevel',
-    arbitraryMovementLevel,
-    (v) => v.toJson(),
-    MovementLevel.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<Goal>(
-    'Goal',
-    arbitraryGoal,
-    (v) => v.toJson(),
-    Goal.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<DaySlot>(
-    'DaySlot',
-    arbitraryDaySlot,
-    (v) => v.toJson(),
-    DaySlot.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<PlaceEquipment>(
-    'PlaceEquipment',
-    arbitraryPlaceEquipment,
-    (v) => v.toJson(),
-    PlaceEquipment.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<LoadIncrement>(
-    'LoadIncrement',
-    arbitraryLoadIncrement,
-    (v) => v.toJson(),
-    LoadIncrement.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<Limitation>(
-    'Limitation',
-    arbitraryLimitation,
-    (v) => v.toJson(),
-    Limitation.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<HealthScreeningRef>(
-    'HealthScreeningRef',
-    arbitraryHealthScreeningRef,
-    (v) => v.toJson(),
-    HealthScreeningRef.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<AthleteProfile>(
-    'AthleteProfile',
-    arbitraryAthleteProfile,
-    (v) => v.toJson(),
-    AthleteProfile.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<PainReport>(
-    'PainReport',
-    arbitraryPainReport,
-    (v) => v.toJson(),
-    PainReport.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<HealthCheck>(
-    'HealthCheck',
-    arbitraryHealthCheck,
-    (v) => v.toJson(),
-    HealthCheck.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<SetTarget>(
-    'SetTarget',
-    arbitrarySetTarget,
-    (v) => v.toJson(),
-    SetTarget.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<SetRecord>(
-    'SetRecord',
-    arbitrarySetRecord,
-    (v) => v.toJson(),
-    SetRecord.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<TrainingBreak>(
-    'TrainingBreak',
-    arbitraryTrainingBreak,
-    (v) => v.toJson(),
-    TrainingBreak.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<ProgramRef>(
-    'ProgramRef',
-    arbitraryProgramRef,
-    (v) => v.toJson(),
-    ProgramRef.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<SessionRecord>(
-    'SessionRecord',
-    arbitrarySessionRecord,
-    (v) => v.toJson(),
-    SessionRecord.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<TrainingLog>(
-    'TrainingLog',
-    arbitraryTrainingLog,
-    (v) => v.toJson(),
-    TrainingLog.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<PlanLock>(
-    'PlanLock',
-    arbitraryPlanLock,
-    (v) => v.toJson(),
-    PlanLock.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<PlanSlot>(
-    'PlanSlot',
-    arbitraryPlanSlot,
-    (v) => v.toJson(),
-    PlanSlot.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<PlanDay>(
-    'PlanDay',
-    arbitraryPlanDay,
-    (v) => v.toJson(),
-    PlanDay.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<ScoreComponent>(
-    'ScoreComponent',
-    arbitraryScoreComponent,
-    (v) => v.toJson(),
-    ScoreComponent.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<PlanScore>(
-    'PlanScore',
-    arbitraryPlanScore,
-    (v) => v.toJson(),
-    PlanScore.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<Pass1Plan>(
-    'Pass1Plan',
-    arbitraryPass1Plan,
-    (v) => v.toJson(),
-    Pass1Plan.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<ReviewAction>(
-    'ReviewAction',
-    arbitraryReviewAction,
-    (v) => v.toJson(),
-    ReviewAction.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<ProfileDelta>(
-    'ProfileDelta',
-    arbitraryProfileDelta,
-    (v) => v.toJson(),
-    ProfileDelta.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<PlanChange>(
-    'PlanChange',
-    arbitraryPlanChange,
-    (v) => v.toJson(),
-    PlanChange.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<PlanDiff>(
-    'PlanDiff',
-    arbitraryPlanDiff,
-    (v) => v.toJson(),
-    PlanDiff.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<ReviewResult>(
-    'ReviewResult',
-    arbitraryReviewResult,
-    (v) => v.toJson(),
-    ReviewResult.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<Variant>(
-    'Variant',
-    arbitraryVariant,
-    (v) => v.toJson(),
-    Variant.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<VariantSet>(
-    'VariantSet',
-    arbitraryVariantSet,
-    (v) => v.toJson(),
-    VariantSet.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<ExercisePrescription>(
-    'ExercisePrescription',
-    arbitraryExercisePrescription,
-    (v) => v.toJson(),
-    ExercisePrescription.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<DayPrescription>(
-    'DayPrescription',
-    arbitraryDayPrescription,
-    (v) => v.toJson(),
-    DayPrescription.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<WeekPrescription>(
-    'WeekPrescription',
-    arbitraryWeekPrescription,
-    (v) => v.toJson(),
-    WeekPrescription.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<Pass2Plan>(
-    'Pass2Plan',
-    arbitraryPass2Plan,
-    (v) => v.toJson(),
-    Pass2Plan.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<ProgramBlock>(
-    'ProgramBlock',
-    arbitraryProgramBlock,
-    (v) => v.toJson(),
-    ProgramBlock.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<ExerciseEstimate>(
-    'ExerciseEstimate',
-    arbitraryExerciseEstimate,
-    (v) => v.toJson(),
-    ExerciseEstimate.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<FatigueState>(
-    'FatigueState',
-    arbitraryFatigueState,
-    (v) => v.toJson(),
-    FatigueState.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<PainTrend>(
-    'PainTrend',
-    arbitraryPainTrend,
-    (v) => v.toJson(),
-    PainTrend.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<AdaptationSummary>(
-    'AdaptationSummary',
-    arbitraryAdaptationSummary,
-    (v) => v.toJson(),
-    AdaptationSummary.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<AdaptInput>(
-    'AdaptInput',
-    arbitraryAdaptInput,
-    (v) => v.toJson(),
-    AdaptInput.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<SessionRequest>(
-    'SessionRequest',
-    arbitrarySessionRequest,
-    (v) => v.toJson(),
-    SessionRequest.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<AdviceRequest>(
-    'AdviceRequest',
-    arbitraryAdviceRequest,
-    (v) => v.toJson(),
-    AdviceRequest.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<ProposalDecision>(
-    'ProposalDecision',
-    arbitraryProposalDecision,
-    (v) => v.toJson(),
-    ProposalDecision.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<PersonalRecord>(
-    'PersonalRecord',
-    arbitraryPersonalRecord,
-    (v) => v.toJson(),
-    PersonalRecord.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<SessionAdjustment>(
-    'SessionAdjustment',
-    arbitrarySessionAdjustment,
-    (v) => v.toJson(),
-    SessionAdjustment.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<SessionPlan>(
-    'SessionPlan',
-    arbitrarySessionPlan,
-    (v) => v.toJson(),
-    SessionPlan.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<IntraSessionAdvice>(
-    'IntraSessionAdvice',
-    arbitraryIntraSessionAdvice,
-    (v) => v.toJson(),
-    IntraSessionAdvice.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<Proposal>(
-    'Proposal',
-    arbitraryProposal,
-    (v) => v.toJson(),
-    Proposal.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<EngineLogEntry>(
-    'EngineLogEntry',
-    arbitraryEngineLogEntry,
-    (v) => v.toJson(),
-    EngineLogEntry.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<AdaptReview>(
-    'AdaptReview',
-    arbitraryAdaptReview,
-    (v) => v.toJson(),
-    AdaptReview.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<XpEntry>(
-    'XpEntry',
-    arbitraryXpEntry,
-    (v) => v.toJson(),
-    XpEntry.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<KreditEntry>(
-    'KreditEntry',
-    arbitraryKreditEntry,
-    (v) => v.toJson(),
-    KreditEntry.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<LevelState>(
-    'LevelState',
-    arbitraryLevelState,
-    (v) => v.toJson(),
-    LevelState.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<AttributeScore>(
-    'AttributeScore',
-    arbitraryAttributeScore,
-    (v) => v.toJson(),
-    AttributeScore.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<MovementRank>(
-    'MovementRank',
-    arbitraryMovementRank,
-    (v) => v.toJson(),
-    MovementRank.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<Quest>(
-    'Quest',
-    arbitraryQuest,
-    (v) => v.toJson(),
-    Quest.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<Milestone>(
-    'Milestone',
-    arbitraryMilestone,
-    (v) => v.toJson(),
-    Milestone.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<Prediction>(
-    'Prediction',
-    arbitraryPrediction,
-    (v) => v.toJson(),
-    Prediction.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<GoalProgress>(
-    'GoalProgress',
-    arbitraryGoalProgress,
-    (v) => v.toJson(),
-    GoalProgress.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<DelightEvent>(
-    'DelightEvent',
-    arbitraryDelightEvent,
-    (v) => v.toJson(),
-    DelightEvent.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<QuestState>(
-    'QuestState',
-    arbitraryQuestState,
-    (v) => v.toJson(),
-    QuestState.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<QuestClaim>(
-    'QuestClaim',
-    arbitraryQuestClaim,
-    (v) => v.toJson(),
-    QuestClaim.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<QuestInput>(
-    'QuestInput',
-    arbitraryQuestInput,
-    (v) => v.toJson(),
-    QuestInput.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<QuestOutcome>(
-    'QuestOutcome',
-    arbitraryQuestOutcome,
-    (v) => v.toJson(),
-    QuestOutcome.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<PlanRequest>(
-    'PlanRequest',
-    arbitraryPlanRequest,
-    (v) => v.toJson(),
-    PlanRequest.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<NextBlockRequest>(
-    'NextBlockRequest',
-    arbitraryNextBlockRequest,
-    (v) => v.toJson(),
-    NextBlockRequest.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<RestructureRequest>(
-    'RestructureRequest',
-    arbitraryRestructureRequest,
-    (v) => v.toJson(),
-    RestructureRequest.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<ReviewRequest>(
-    'ReviewRequest',
-    arbitraryReviewRequest,
-    (v) => v.toJson(),
-    ReviewRequest.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<VariantsRequest>(
-    'VariantsRequest',
-    arbitraryVariantsRequest,
-    (v) => v.toJson(),
-    VariantsRequest.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<Pass2Request>(
-    'Pass2Request',
-    arbitraryPass2Request,
-    (v) => v.toJson(),
-    Pass2Request.fromJson,
-    (v) => v.validate(),
-  ),
-  ContractCodec<BlockProposal>(
-    'BlockProposal',
-    arbitraryBlockProposal,
-    (v) => v.toJson(),
-    BlockProposal.fromJson,
-    (v) => v.validate(),
-  ),
+  ContractCodec<Reason>('Reason', arbitraryReason, (v) => v.toJson(), Reason.fromJson, (v) => v.validate()),
+  ContractCodec<DisciplineShare>('DisciplineShare', arbitraryDisciplineShare, (v) => v.toJson(), DisciplineShare.fromJson, (v) => v.validate()),
+  ContractCodec<DisciplineMix>('DisciplineMix', arbitraryDisciplineMix, (v) => v.toJson(), DisciplineMix.fromJson, (v) => v.validate()),
+  ContractCodec<StreetMode>('StreetMode', arbitraryStreetMode, (v) => v.toJson(), StreetMode.fromJson, (v) => v.validate()),
+  ContractCodec<MovementLevel>('MovementLevel', arbitraryMovementLevel, (v) => v.toJson(), MovementLevel.fromJson, (v) => v.validate()),
+  ContractCodec<Goal>('Goal', arbitraryGoal, (v) => v.toJson(), Goal.fromJson, (v) => v.validate()),
+  ContractCodec<DaySlot>('DaySlot', arbitraryDaySlot, (v) => v.toJson(), DaySlot.fromJson, (v) => v.validate()),
+  ContractCodec<PlaceEquipment>('PlaceEquipment', arbitraryPlaceEquipment, (v) => v.toJson(), PlaceEquipment.fromJson, (v) => v.validate()),
+  ContractCodec<LoadIncrement>('LoadIncrement', arbitraryLoadIncrement, (v) => v.toJson(), LoadIncrement.fromJson, (v) => v.validate()),
+  ContractCodec<Limitation>('Limitation', arbitraryLimitation, (v) => v.toJson(), Limitation.fromJson, (v) => v.validate()),
+  ContractCodec<HealthScreeningRef>('HealthScreeningRef', arbitraryHealthScreeningRef, (v) => v.toJson(), HealthScreeningRef.fromJson, (v) => v.validate()),
+  ContractCodec<AthleteProfile>('AthleteProfile', arbitraryAthleteProfile, (v) => v.toJson(), AthleteProfile.fromJson, (v) => v.validate()),
+  ContractCodec<PainReport>('PainReport', arbitraryPainReport, (v) => v.toJson(), PainReport.fromJson, (v) => v.validate()),
+  ContractCodec<HealthCheck>('HealthCheck', arbitraryHealthCheck, (v) => v.toJson(), HealthCheck.fromJson, (v) => v.validate()),
+  ContractCodec<SetTarget>('SetTarget', arbitrarySetTarget, (v) => v.toJson(), SetTarget.fromJson, (v) => v.validate()),
+  ContractCodec<SetRecord>('SetRecord', arbitrarySetRecord, (v) => v.toJson(), SetRecord.fromJson, (v) => v.validate()),
+  ContractCodec<TrainingBreak>('TrainingBreak', arbitraryTrainingBreak, (v) => v.toJson(), TrainingBreak.fromJson, (v) => v.validate()),
+  ContractCodec<ProgramRef>('ProgramRef', arbitraryProgramRef, (v) => v.toJson(), ProgramRef.fromJson, (v) => v.validate()),
+  ContractCodec<SessionRecord>('SessionRecord', arbitrarySessionRecord, (v) => v.toJson(), SessionRecord.fromJson, (v) => v.validate()),
+  ContractCodec<TrainingLog>('TrainingLog', arbitraryTrainingLog, (v) => v.toJson(), TrainingLog.fromJson, (v) => v.validate()),
+  ContractCodec<PlanLock>('PlanLock', arbitraryPlanLock, (v) => v.toJson(), PlanLock.fromJson, (v) => v.validate()),
+  ContractCodec<PlanSlot>('PlanSlot', arbitraryPlanSlot, (v) => v.toJson(), PlanSlot.fromJson, (v) => v.validate()),
+  ContractCodec<PlanDay>('PlanDay', arbitraryPlanDay, (v) => v.toJson(), PlanDay.fromJson, (v) => v.validate()),
+  ContractCodec<ScoreComponent>('ScoreComponent', arbitraryScoreComponent, (v) => v.toJson(), ScoreComponent.fromJson, (v) => v.validate()),
+  ContractCodec<PlanScore>('PlanScore', arbitraryPlanScore, (v) => v.toJson(), PlanScore.fromJson, (v) => v.validate()),
+  ContractCodec<Pass1Plan>('Pass1Plan', arbitraryPass1Plan, (v) => v.toJson(), Pass1Plan.fromJson, (v) => v.validate()),
+  ContractCodec<ReviewAction>('ReviewAction', arbitraryReviewAction, (v) => v.toJson(), ReviewAction.fromJson, (v) => v.validate()),
+  ContractCodec<ProfileDelta>('ProfileDelta', arbitraryProfileDelta, (v) => v.toJson(), ProfileDelta.fromJson, (v) => v.validate()),
+  ContractCodec<PlanChange>('PlanChange', arbitraryPlanChange, (v) => v.toJson(), PlanChange.fromJson, (v) => v.validate()),
+  ContractCodec<PlanDiff>('PlanDiff', arbitraryPlanDiff, (v) => v.toJson(), PlanDiff.fromJson, (v) => v.validate()),
+  ContractCodec<ReviewResult>('ReviewResult', arbitraryReviewResult, (v) => v.toJson(), ReviewResult.fromJson, (v) => v.validate()),
+  ContractCodec<Variant>('Variant', arbitraryVariant, (v) => v.toJson(), Variant.fromJson, (v) => v.validate()),
+  ContractCodec<VariantSet>('VariantSet', arbitraryVariantSet, (v) => v.toJson(), VariantSet.fromJson, (v) => v.validate()),
+  ContractCodec<ExercisePrescription>('ExercisePrescription', arbitraryExercisePrescription, (v) => v.toJson(), ExercisePrescription.fromJson, (v) => v.validate()),
+  ContractCodec<DayPrescription>('DayPrescription', arbitraryDayPrescription, (v) => v.toJson(), DayPrescription.fromJson, (v) => v.validate()),
+  ContractCodec<WeekPrescription>('WeekPrescription', arbitraryWeekPrescription, (v) => v.toJson(), WeekPrescription.fromJson, (v) => v.validate()),
+  ContractCodec<Pass2Plan>('Pass2Plan', arbitraryPass2Plan, (v) => v.toJson(), Pass2Plan.fromJson, (v) => v.validate()),
+  ContractCodec<ProgramBlock>('ProgramBlock', arbitraryProgramBlock, (v) => v.toJson(), ProgramBlock.fromJson, (v) => v.validate()),
+  ContractCodec<ExerciseEstimate>('ExerciseEstimate', arbitraryExerciseEstimate, (v) => v.toJson(), ExerciseEstimate.fromJson, (v) => v.validate()),
+  ContractCodec<FatigueState>('FatigueState', arbitraryFatigueState, (v) => v.toJson(), FatigueState.fromJson, (v) => v.validate()),
+  ContractCodec<PainTrend>('PainTrend', arbitraryPainTrend, (v) => v.toJson(), PainTrend.fromJson, (v) => v.validate()),
+  ContractCodec<AdaptationSummary>('AdaptationSummary', arbitraryAdaptationSummary, (v) => v.toJson(), AdaptationSummary.fromJson, (v) => v.validate()),
+  ContractCodec<AdaptInput>('AdaptInput', arbitraryAdaptInput, (v) => v.toJson(), AdaptInput.fromJson, (v) => v.validate()),
+  ContractCodec<SessionRequest>('SessionRequest', arbitrarySessionRequest, (v) => v.toJson(), SessionRequest.fromJson, (v) => v.validate()),
+  ContractCodec<AdviceRequest>('AdviceRequest', arbitraryAdviceRequest, (v) => v.toJson(), AdviceRequest.fromJson, (v) => v.validate()),
+  ContractCodec<ProposalDecision>('ProposalDecision', arbitraryProposalDecision, (v) => v.toJson(), ProposalDecision.fromJson, (v) => v.validate()),
+  ContractCodec<PersonalRecord>('PersonalRecord', arbitraryPersonalRecord, (v) => v.toJson(), PersonalRecord.fromJson, (v) => v.validate()),
+  ContractCodec<SessionAdjustment>('SessionAdjustment', arbitrarySessionAdjustment, (v) => v.toJson(), SessionAdjustment.fromJson, (v) => v.validate()),
+  ContractCodec<SessionPlan>('SessionPlan', arbitrarySessionPlan, (v) => v.toJson(), SessionPlan.fromJson, (v) => v.validate()),
+  ContractCodec<IntraSessionAdvice>('IntraSessionAdvice', arbitraryIntraSessionAdvice, (v) => v.toJson(), IntraSessionAdvice.fromJson, (v) => v.validate()),
+  ContractCodec<Proposal>('Proposal', arbitraryProposal, (v) => v.toJson(), Proposal.fromJson, (v) => v.validate()),
+  ContractCodec<EngineLogEntry>('EngineLogEntry', arbitraryEngineLogEntry, (v) => v.toJson(), EngineLogEntry.fromJson, (v) => v.validate()),
+  ContractCodec<AdaptReview>('AdaptReview', arbitraryAdaptReview, (v) => v.toJson(), AdaptReview.fromJson, (v) => v.validate()),
+  ContractCodec<XpEntry>('XpEntry', arbitraryXpEntry, (v) => v.toJson(), XpEntry.fromJson, (v) => v.validate()),
+  ContractCodec<KreditEntry>('KreditEntry', arbitraryKreditEntry, (v) => v.toJson(), KreditEntry.fromJson, (v) => v.validate()),
+  ContractCodec<LevelState>('LevelState', arbitraryLevelState, (v) => v.toJson(), LevelState.fromJson, (v) => v.validate()),
+  ContractCodec<AttributeScore>('AttributeScore', arbitraryAttributeScore, (v) => v.toJson(), AttributeScore.fromJson, (v) => v.validate()),
+  ContractCodec<MovementRank>('MovementRank', arbitraryMovementRank, (v) => v.toJson(), MovementRank.fromJson, (v) => v.validate()),
+  ContractCodec<Quest>('Quest', arbitraryQuest, (v) => v.toJson(), Quest.fromJson, (v) => v.validate()),
+  ContractCodec<Milestone>('Milestone', arbitraryMilestone, (v) => v.toJson(), Milestone.fromJson, (v) => v.validate()),
+  ContractCodec<Prediction>('Prediction', arbitraryPrediction, (v) => v.toJson(), Prediction.fromJson, (v) => v.validate()),
+  ContractCodec<GoalProgress>('GoalProgress', arbitraryGoalProgress, (v) => v.toJson(), GoalProgress.fromJson, (v) => v.validate()),
+  ContractCodec<DelightEvent>('DelightEvent', arbitraryDelightEvent, (v) => v.toJson(), DelightEvent.fromJson, (v) => v.validate()),
+  ContractCodec<QuestState>('QuestState', arbitraryQuestState, (v) => v.toJson(), QuestState.fromJson, (v) => v.validate()),
+  ContractCodec<QuestClaim>('QuestClaim', arbitraryQuestClaim, (v) => v.toJson(), QuestClaim.fromJson, (v) => v.validate()),
+  ContractCodec<QuestInput>('QuestInput', arbitraryQuestInput, (v) => v.toJson(), QuestInput.fromJson, (v) => v.validate()),
+  ContractCodec<QuestOutcome>('QuestOutcome', arbitraryQuestOutcome, (v) => v.toJson(), QuestOutcome.fromJson, (v) => v.validate()),
+  ContractCodec<PlanRequest>('PlanRequest', arbitraryPlanRequest, (v) => v.toJson(), PlanRequest.fromJson, (v) => v.validate()),
+  ContractCodec<NextBlockRequest>('NextBlockRequest', arbitraryNextBlockRequest, (v) => v.toJson(), NextBlockRequest.fromJson, (v) => v.validate()),
+  ContractCodec<RestructureRequest>('RestructureRequest', arbitraryRestructureRequest, (v) => v.toJson(), RestructureRequest.fromJson, (v) => v.validate()),
+  ContractCodec<ReviewRequest>('ReviewRequest', arbitraryReviewRequest, (v) => v.toJson(), ReviewRequest.fromJson, (v) => v.validate()),
+  ContractCodec<VariantsRequest>('VariantsRequest', arbitraryVariantsRequest, (v) => v.toJson(), VariantsRequest.fromJson, (v) => v.validate()),
+  ContractCodec<Pass2Request>('Pass2Request', arbitraryPass2Request, (v) => v.toJson(), Pass2Request.fromJson, (v) => v.validate()),
+  ContractCodec<BlockProposal>('BlockProposal', arbitraryBlockProposal, (v) => v.toJson(), BlockProposal.fromJson, (v) => v.validate()),
 ];
 
 /// Jour civil aléatoire (réexporté pour les tests).

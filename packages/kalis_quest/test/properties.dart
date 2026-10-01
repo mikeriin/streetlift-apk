@@ -345,9 +345,27 @@ void _checkStep(
     }
     final ref = e.refId!;
     effortByWeek.update(ref, (n) => n + e.amount, ifAbsent: () => e.amount);
-    if (e.reasons.first.code == ReasonCodes.questXpEffort) {
+    final partial = e.reasons.any(
+      (r) =>
+          r.code == ReasonCodes.questXpCapped &&
+          r.params['scope'] == CapScope.partial,
+    );
+    if (e.reasons.first.code == ReasonCodes.questXpEffort && !partial) {
       paidByWeek.update(ref, (n) => n + 1, ifAbsent: () => 1);
     }
+  }
+  final milestonesByWeek = <int, int>{};
+  for (final e in after.state.xp) {
+    if (e.source == XpSource.milestone) {
+      milestonesByWeek.update(
+        mondayOf(e.date.dayNumber),
+        (n) => n + e.amount,
+        ifAbsent: () => e.amount,
+      );
+    }
+  }
+  for (final amount in milestonesByWeek.values) {
+    expect(amount, lessThanOrEqualTo(p.milestoneWeekCapXp), reason: why);
   }
   for (final entry in effortByWeek.entries) {
     expect(

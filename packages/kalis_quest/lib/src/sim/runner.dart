@@ -247,6 +247,12 @@ SimResult simulateRun({
     if (e.source == XpSource.effort) {
       final id = e.sessionId ?? '';
       switch (ledger.statusOf(id)) {
+        case SessionStatus.partial:
+          effortByWeek.update(
+            e.refId ?? '',
+            (n) => n + e.amount,
+            ifAbsent: () => e.amount,
+          );
         case SessionStatus.paid:
           result.paidSessions++;
           effortByWeek.update(

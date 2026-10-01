@@ -12,8 +12,9 @@ final class QuestParams {
     this.comboMin = 3,
     this.comboBonusCap = 10,
     this.unratedQuality = 0.7,
-    this.qualityStep = 0.125,
-    this.qualityFloor = 0.5,
+    this.qualityTolerance = 2,
+    this.qualityStep = 0.1,
+    this.qualityFloor = 0.7,
     this.targetTolerance = 1,
     this.lightFloor = 0.5,
     this.doneCompletion = 0.5,
@@ -43,7 +44,8 @@ final class QuestParams {
     this.firstTimeEventsPerSession = 3,
     this.milestoneXp = const <int>[30, 30, 30, 100],
     this.milestoneKredits = const <int>[5, 5, 5, 25],
-    this.milestoneWeekCapXp = 200,
+    this.milestoneWeekCapXp = 100,
+    this.skillAmbition = 0.5,
     this.goalFullGap = 0.10,
     this.goalMinAmbition = 0.2,
     this.goalMinDays = 14,
@@ -148,6 +150,9 @@ final class QuestParams {
   /// existe.
   final double unratedQuality;
 
+  /// Flammes sous la cible sans perte de qualité.
+  final int qualityTolerance;
+
   /// Qualité perdue par flamme au-delà de la tolérance, sous la cible.
   final double qualityStep;
 
@@ -223,6 +228,9 @@ final class QuestParams {
 
   /// Krédits des quatre jalons.
   final List<int> milestoneKredits;
+
+  /// Ambition d'un objectif « figure débloquée » (le départ est inconnu).
+  final double skillAmbition;
 
   /// XP de jalons maximal par semaine civile.
   final int milestoneWeekCapXp;

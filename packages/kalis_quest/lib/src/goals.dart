@@ -88,8 +88,10 @@ final class GoalKeeper {
       metric == GoalMetric.timeSeconds;
 
   /// Observations (jour, valeur) de la grandeur d'un objectif de
-  /// performance, par date croissante, dans l'unité de l'objectif.
-  List<(int, double)> observationsOf(Goal goal) {
+  /// performance, par date croissante, dans l'unité de l'objectif. Par
+  /// défaut, seules les valeurs qui comptent (volume prévu, séance ni
+  /// douloureuse ni au-delà du programme) ; avec [raw], les faits bruts.
+  List<(int, double)> observationsOf(Goal goal, {bool raw = false}) {
     final id = goal.exerciseId;
     final metric = goal.metric;
     if (id == null || metric == null) {
@@ -97,43 +99,52 @@ final class GoalKeeper {
     }
     final info = w.book.find(id);
     final fraction = info?.fraction ?? 0;
-    List<Observation> of(RecordKind kind) =>
-        w.series['$id|${kind.code}'] ?? const <Observation>[];
+    List<(int, double, double)> of(RecordKind kind) {
+      final out = <(int, double, double)>[];
+      for (final o in w.series['$id|${kind.code}'] ?? const <Observation>[]) {
+        final value = raw ? o.value : o.counted;
+        if (value != null) {
+          out.add((o.day, value, o.bodyWeightKg));
+        }
+      }
+      return out;
+    }
+
     final out = <(int, double)>[];
     switch (metric) {
       case GoalMetric.oneRmKg:
-        for (final o in of(RecordKind.oneRmKg)) {
-          out.add((o.day, roundTo(o.value - fraction * o.bodyWeightKg, 1)));
+        for (final (day, value, bw) in of(RecordKind.oneRmKg)) {
+          out.add((day, roundTo(value - fraction * bw, 1)));
         }
       case GoalMetric.maxReps:
         final load = goal.loadKg;
         final loaded = of(RecordKind.oneRmKg);
         if (load == null && loaded.isEmpty) {
-          for (final o in of(RecordKind.maxReps)) {
-            out.add((o.day, o.value));
+          for (final (day, value, _) in of(RecordKind.maxReps)) {
+            out.add((day, value));
           }
         } else {
           final k = _k(id);
-          for (final o in loaded) {
-            final total = (load ?? 0) + fraction * o.bodyWeightKg;
+          for (final (day, value, bw) in loaded) {
+            final total = (load ?? 0) + fraction * bw;
             if (total <= 0) {
               continue;
             }
-            final reps = (1 + k * (o.value / total - 1)).floorToDouble();
-            out.add((o.day, reps < 0 ? 0 : reps));
+            final reps = (1 + k * (value / total - 1)).floorToDouble();
+            out.add((day, reps < 0 ? 0 : reps));
           }
         }
       case GoalMetric.maxHoldSeconds:
-        for (final o in of(RecordKind.maxHoldSeconds)) {
-          out.add((o.day, o.value));
+        for (final (day, value, _) in of(RecordKind.maxHoldSeconds)) {
+          out.add((day, value));
         }
       case GoalMetric.skillUnlocked:
         final days = <int>[
-          for (final o in of(RecordKind.maxHoldSeconds))
-            if (o.value >= w.params.skillHoldSeconds) o.day,
-          for (final o in of(RecordKind.maxReps))
-            if (o.value >= 1) o.day,
-          for (final o in of(RecordKind.oneRmKg)) o.day,
+          for (final (day, value, _) in of(RecordKind.maxHoldSeconds))
+            if (value >= w.params.skillHoldSeconds) day,
+          for (final (day, value, _) in of(RecordKind.maxReps))
+            if (value >= 1) day,
+          for (final (day, _, _) in of(RecordKind.oneRmKg)) day,
         ]..sort();
         if (days.isNotEmpty) {
           out.add((days.first, 1));
@@ -141,11 +152,11 @@ final class GoalKeeper {
       case GoalMetric.timeSeconds:
         final meters = goal.distanceMeters;
         if (meters != null && meters > 0) {
-          for (final o in of(RecordKind.timeSeconds)) {
+          for (final (day, value, _) in of(RecordKind.timeSeconds)) {
             out.add((
-              o.day,
+              day,
               roundTo(
-                o.value * power(meters / 5000, w.params.riegelExponent),
+                value * power(meters / 5000, w.params.riegelExponent),
                 1,
               ),
             ));
@@ -154,11 +165,11 @@ final class GoalKeeper {
       case GoalMetric.distanceMeters:
         final seconds = goal.durationSeconds;
         if (seconds != null) {
-          for (final o in of(RecordKind.timeSeconds)) {
+          for (final (day, value, _) in of(RecordKind.timeSeconds)) {
             out.add((
-              o.day,
+              day,
               roundTo(
-                5000 * power(seconds / o.value, 1 / w.params.riegelExponent),
+                5000 * power(seconds / value, 1 / w.params.riegelExponent),
                 0,
               ),
             ));
@@ -352,9 +363,12 @@ final class GoalKeeper {
         goal.targetValue ?? (metric == GoalMetric.skillUnlocked ? 1.0 : 0.0);
     final deadline = goal.targetDate?.dayNumber ?? created;
 
+    // Départ : la meilleure valeur connue à la création, faits bruts
+    // compris (ce que l'athlète savait déjà faire ne peut pas être
+    // « gagné » ensuite). Une compétence jamais réussie part de zéro ;
+    // sinon, sans mesure, la première mesure qui suit sert de départ.
     double? baseline;
-    double? best;
-    for (final (day, value) in raw) {
+    for (final (day, value) in observationsOf(goal, raw: true)) {
       if (day > created) {
         break;
       }
@@ -363,23 +377,21 @@ final class GoalKeeper {
       }
     }
     final hadBaseline = baseline != null;
-    if (metric == GoalMetric.skillUnlocked ||
-        metric == GoalMetric.maxReps ||
-        metric == GoalMetric.maxHoldSeconds) {
+    if (metric == GoalMetric.skillUnlocked) {
       baseline ??= 0;
     }
+    var best = baseline;
     final reached = List<int?>.filled(4, null);
     final fractions = milestoneFractions(deadline - created);
     final alreadyThere =
         baseline != null && hadBaseline && sign * baseline >= sign * target;
     for (final (day, value) in raw) {
-      if (best == null || sign * value > sign * best) {
-        best = value;
-      }
       if (day <= created) {
         continue;
       }
-      // Sans mesure avant la création, la première mesure sert de départ.
+      if (best == null || sign * value > sign * best) {
+        best = value;
+      }
       baseline ??= value;
       final gap = sign * (target - baseline);
       for (var i = 0; i < 4; i++) {
@@ -485,6 +497,24 @@ final class GoalKeeper {
       } else if (w.today > deadline) {
         overdue = true;
       }
+      if (overdue && suggestedDate == null && suggestedTarget == null) {
+        // Aucune proposition tirée de la tendance : à échéance inchangée,
+        // une cible à mi-chemin ; sinon la même cible, plus tard.
+        final middle = (current + target) / 2;
+        final step = stepOf(metric, middle.abs());
+        final rounded = lower
+            ? (middle / step).ceilToDouble() * step
+            : (middle / step).floorToDouble() * step;
+        if (deadline > w.today &&
+            rounded > 0 &&
+            sign * rounded > sign * current &&
+            sign * rounded < sign * target) {
+          suggestedTarget = roundTo(rounded, 1);
+        } else {
+          final from = deadline > w.today ? deadline : w.today;
+          suggestedDate = CivilDate.fromDayNumber(from + p.suggestHorizonDays);
+        }
+      }
       if (overdue) {
         reasons.add(
           Reason(
@@ -498,7 +528,7 @@ final class GoalKeeper {
     var ambition = 0.0;
     if (!alreadyThere && deadline - created >= p.goalMinDays) {
       if (metric == GoalMetric.skillUnlocked) {
-        ambition = 1;
+        ambition = p.skillAmbition;
       } else if (baseline != null) {
         final gap = (target - baseline).abs();
         final base = baseline.abs() < 1e-9 ? 1.0 : baseline.abs();
@@ -688,15 +718,31 @@ final class GoalKeeper {
     );
   }
 
-  /// Évalue tous les objectifs du profil, dans leur ordre.
+  /// Évalue tous les objectifs du profil, dans leur ordre. Un seul
+  /// objectif paie ses jalons par grandeur (exercice et mesure) et un seul
+  /// objectif d'habitude : le premier de la liste.
   List<GoalResult> evaluate() {
-    return <GoalResult>[
-      for (final goal in w.input.profile.goals)
-        if (goal.kind == GoalKind.habit)
-          habit(goal)
-        else if (goal.exerciseId != null && goal.metric != null)
-          performance(goal),
-    ];
+    final paying = <String>{};
+    final out = <GoalResult>[];
+    for (final goal in w.input.profile.goals) {
+      final GoalResult r;
+      final String subject;
+      if (goal.kind == GoalKind.habit) {
+        r = habit(goal);
+        subject = 'habit';
+      } else if (goal.exerciseId != null && goal.metric != null) {
+        r = performance(goal);
+        subject = '${goal.exerciseId}|${goal.metric!.code}';
+      } else {
+        continue;
+      }
+      out.add(
+        paying.add(subject)
+            ? r
+            : GoalResult(r.goal, r.progress, r.reachedDays, 0),
+      );
+    }
+    return out;
   }
 
   /// Gain relatif plausible sur l'échéance d'un objectif suggéré, selon le

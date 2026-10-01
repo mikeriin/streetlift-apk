@@ -1215,7 +1215,7 @@ Le JSON porte le **code** ; l'ordre des valeurs est celui du contrat.
 | `quest.weekday_focus` | `weekday` (int) | Quête Koach : jour de la semaine le moins régulier. |
 | `quest.xp_rest` | `days` (int) | Part de l'XP de régularité due aux jours de repos respectés. |
 | `quest.streak` | `weeks` (int) | Série de semaines réussies (jalon ou longueur atteinte). |
-| `quest.streak_paused` | `cause` (string) | Semaine en pause (vacances, maladie, blessure déclarées) : la série ne bouge pas. |
+| `quest.streak_paused` | `cause` (string) | Semaine en pause : la série ne bouge pas. `cause` : motif de la pause déclarée (`vacation`, `illness`, `injury`, `other`) ou `pain` (séance faite malgré une douleur). |
 | `quest.chest` | `guaranteed` (bool) | Coffre surprise (tirage, ou garantie après une série de séances sans coffre). |
 | `quest.goal_late` | `goalId` (string) | Objectif en retard : une date ou une cible ajustée est proposée. |
 | `quest.first_time` | `exerciseId` (exercise) | Première fois sur un exercice. |
