@@ -797,6 +797,9 @@ final class Planner {
           }
         }
       }
+      if (_coverMissing(state)) {
+        improved = true;
+      }
       final before = state.slotCount;
       construct(state, wide: true);
       if (state.slotCount != before) {
@@ -807,6 +810,88 @@ final class Planner {
         break;
       }
     }
+  }
+
+  /// Schémas de base manquants : essaie d'y placer un exercice, en
+  /// retirant au besoin un ou deux exercices libres du jour pour lui faire
+  /// de la place ; garde l'échange s'il améliore l'objectif. Rend vrai si
+  /// [state] a changé.
+  bool _coverMissing(PlanState state) {
+    final ctx = context;
+    var changed = false;
+    const order = <int>[16, 8, 1, 32, 4, 2, 64];
+    for (final bit in order) {
+      var current = objective(state);
+      if (ctx.coverableBits & bit == 0 || scorer.coveredBits & bit != 0) {
+        continue;
+      }
+      final candidates = <int>[
+        for (final index in _selectable)
+          if (ctx.pool[index].coverBits & bit != 0 && !banned.contains(index))
+            index,
+      ];
+      candidates.sort((a, b) {
+        final by = _merit(ctx.pool[b]).compareTo(_merit(ctx.pool[a]));
+        return by != 0 ? by : ctx.pool[a].id.compareTo(ctx.pool[b].id);
+      });
+      final best = state.copy();
+      var bestValue = current;
+      final work = state.copy();
+      final top = candidates.length > 4 ? 4 : candidates.length;
+      for (var c = 0; c < top; c++) {
+        final index = candidates[c];
+        final e = ctx.pool[index];
+        for (var d = 0; d < ctx.dayCount; d++) {
+          if (!_dayOpen(d) || !e.feasibleOn(d) || state.dayHas(d, index)) {
+            continue;
+          }
+          final n = state.count[d];
+          // Retraits essayés : aucun, un, puis deux exercices libres.
+          for (var i = -1; i < n; i++) {
+            for (var j = -1; j < (i < 0 ? 0 : i); j++) {
+              work.restore(state);
+              var ok = true;
+              for (final at in <int>[i, j]) {
+                if (at < 0) {
+                  continue;
+                }
+                if (_isLocked(work, d, at) ||
+                    _isLastRequired(work, work.exercise[d][at])) {
+                  ok = false;
+                }
+              }
+              if (!ok) {
+                continue;
+              }
+              // Le rang le plus haut d'abord : l'autre ne bouge pas.
+              if (i >= 0) {
+                work.removeAt(d, i);
+              }
+              if (j >= 0) {
+                work.removeAt(d, j);
+              }
+              if (!canPlace(work, d, e)) {
+                continue;
+              }
+              if (place(work, d, index, unnamedSlot) < 0) {
+                continue;
+              }
+              final value = objective(work);
+              if (value > bestValue + 1e-9) {
+                bestValue = value;
+                best.restore(work);
+              }
+            }
+          }
+        }
+      }
+      if (bestValue > current + 1e-9) {
+        state.restore(best);
+        current = bestValue;
+        changed = true;
+      }
+    }
+    return changed;
   }
 
   // ------------------------------------------------------ réparation, retour

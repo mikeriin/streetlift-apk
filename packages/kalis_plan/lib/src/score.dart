@@ -248,7 +248,7 @@ final class Scorer {
       var coreSlots = 0;
       var coreHere = false;
       var strengthHere = false;
-      var resistanceHere = false;
+      var resistanceSeconds = 0;
       var anchor = 0.0;
       var skillHere = false;
       var cardioHere = 0;
@@ -400,8 +400,8 @@ final class Scorer {
               patternExcess++;
             }
         }
-        if (kind.isResistance && kind != SlotKind.core) {
-          resistanceHere = true;
+        if (kind.isResistance) {
+          resistanceSeconds += seconds;
           if (e.staple > anchor) {
             anchor = e.staple;
           }
@@ -417,7 +417,9 @@ final class Scorer {
       _dayFatigue[d] = fatigue / days[d].seconds;
       final piece = conditioning >= 3 ? 1.0 : conditioning / 3;
       _dayWod[d] = 0.5 * piece + (strengthHere ? 0.5 : 0.0);
-      _dayAnchor[d] = resistanceHere ? anchor : -1;
+      // Dix minutes de renforcement et plus font une séance de
+      // renforcement, qui demande son mouvement de base.
+      _dayAnchor[d] = resistanceSeconds >= 600 ? anchor : -1;
       if (cardioHere > 2) {
         cardioStack += cardioHere - 2;
       }
