@@ -200,7 +200,8 @@ final class Scheme {
   static const int continuousUnitSeconds = 300;
 
   /// Durée d'une série, repos compris, en secondes.
-  int get perSetSeconds => continuous ? continuousUnitSeconds : workSeconds + restSeconds;
+  int get perSetSeconds =>
+      continuous ? continuousUnitSeconds : workSeconds + restSeconds;
 
   /// Durée de l'exercice pour [setCount] séries, en secondes.
   int secondsFor(int setCount) => fixedSeconds + setCount * perSetSeconds;
@@ -417,13 +418,32 @@ Scheme schemeFor(ExerciseTraits t, SchemeInputs i, PlanParams params) {
     case SlotKind.mobility:
       final p = e.pattern;
       if (p == MovementPattern.autoMassage) {
-        return hold(SchemeKind.mobilityBlock, const <int>[1, 1, 1, 1], 60, 90, 15, null);
+        return hold(
+          SchemeKind.mobilityBlock,
+          const <int>[1, 1, 1, 1],
+          60,
+          90,
+          15,
+          null,
+        );
       }
       if (p == MovementPattern.respiration) {
-        return hold(SchemeKind.mobilityBlock, const <int>[1, 1, 1, 1], 120, 180, 15, null);
+        return hold(
+          SchemeKind.mobilityBlock,
+          const <int>[1, 1, 1, 1],
+          120,
+          180,
+          15,
+          null,
+        );
       }
       if (e.id.contains('routine')) {
-        return continuous(SchemeKind.mobilityBlock, const <int>[5, 5, 10, 10], 15);
+        return continuous(SchemeKind.mobilityBlock, const <int>[
+          5,
+          5,
+          10,
+          10,
+        ], 15);
       }
       if (e.unit == MeasureUnit.seconds) {
         final long = i.senior || p == MovementPattern.souplesse;
@@ -486,35 +506,46 @@ Scheme schemeFor(ExerciseTraits t, SchemeInputs i, PlanParams params) {
             maxSets: 4,
           );
         }
-        return hold(SchemeKind.cardioDrill, const <int>[2, 3, 3, 3], 15, 20, 30, null);
+        return hold(
+          SchemeKind.cardioDrill,
+          const <int>[2, 3, 3, 3],
+          15,
+          20,
+          30,
+          null,
+        );
       }
       if (p == MovementPattern.marche) {
-        return continuous(
-          SchemeKind.cardioContinuous,
-          const <int>[20, 30, 30, 30],
-          i.cautious ? 45 : 90,
-        );
+        return continuous(SchemeKind.cardioContinuous, const <int>[
+          20,
+          30,
+          30,
+          30,
+        ], i.cautious ? 45 : 90);
       }
       if (e.id.contains('longue')) {
-        return continuous(
-          SchemeKind.cardioContinuous,
-          const <int>[40, 60, 75, 90],
-          i.level <= 0 ? 60 : (i.level == 1 ? 105 : 150),
-        );
+        return continuous(SchemeKind.cardioContinuous, const <int>[
+          40,
+          60,
+          75,
+          90,
+        ], i.level <= 0 ? 60 : (i.level == 1 ? 105 : 150));
       }
-      return continuous(
-        SchemeKind.cardioContinuous,
-        const <int>[20, 30, 40, 45],
-        i.level <= 0 || i.cautious ? 45 : (i.level == 1 ? 75 : 90),
-      );
+      return continuous(SchemeKind.cardioContinuous, const <int>[
+        20,
+        30,
+        40,
+        45,
+      ], i.level <= 0 || i.cautious ? 45 : (i.level == 1 ? 75 : 90));
     case SlotKind.cardioHard:
       final p = e.pattern;
       if (p == MovementPattern.cardioContinu) {
-        return continuous(
-          SchemeKind.cardioContinuous,
-          const <int>[15, 20, 25, 30],
-          i.level <= 1 ? 30 : 40,
-        );
+        return continuous(SchemeKind.cardioContinuous, const <int>[
+          15,
+          20,
+          25,
+          30,
+        ], i.level <= 1 ? 30 : 40);
       }
       if (p == MovementPattern.cordeASauter) {
         if (e.unit == MeasureUnit.repetitions) {

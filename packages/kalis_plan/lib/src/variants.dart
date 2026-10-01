@@ -76,9 +76,7 @@ List<VariantCandidate> admissibleReplacements(
     if (!fits) {
       continue;
     }
-    out.add(
-      VariantCandidate(e, planSimilarity(current.exercise, e.exercise)),
-    );
+    out.add(VariantCandidate(e, planSimilarity(current.exercise, e.exercise)));
   }
   out.sort((a, b) {
     final by = b.similarity.compareTo(a.similarity);

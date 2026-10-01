@@ -50,12 +50,16 @@ String prescriptionLine(ExercisePrescription p) {
   }
   if (p.repsLow != null) {
     b.write('${p.sets}×');
-    b.write(p.repsLow == p.repsHigh ? '${p.repsLow}' : '${p.repsLow}-${p.repsHigh}');
+    b.write(
+      p.repsLow == p.repsHigh ? '${p.repsLow}' : '${p.repsLow}-${p.repsHigh}',
+    );
   } else if (p.secondsLow != null) {
     final low = p.secondsLow!;
     final high = p.secondsHigh!;
     if (high >= 300 && p.sets == 1) {
-      b.write(low == high ? '${high ~/ 60} min' : '${low ~/ 60}-${high ~/ 60} min');
+      b.write(
+        low == high ? '${high ~/ 60} min' : '${low ~/ 60}-${high ~/ 60} min',
+      );
     } else {
       b.write('${p.sets}×');
       b.write(low == high ? '$high s' : '$low-$high s');
@@ -281,12 +285,13 @@ ProfileCase runProfileCase(
   // la clé du profil, pas par la position.
   final reviews = <(ReviewAction, ReviewResult)>[];
   var current = pass1;
-  final slots = <PlanSlot>[
-    for (final d in pass1.days) ...d.slots,
-  ];
+  final slots = <PlanSlot>[for (final d in pass1.days) ...d.slots];
   if (slots.isNotEmpty) {
     final first = slots[fnv1a32('${fixture.key}:a') % slots.length];
-    final action = ReviewAction(kind: ReviewKind.cannotDo, slotId: first.slotId);
+    final action = ReviewAction(
+      kind: ReviewKind.cannotDo,
+      slotId: first.slotId,
+    );
     final result = engine.review(
       catalog,
       ReviewRequest(request: request, current: current, action: action),
@@ -391,7 +396,7 @@ List<String> profileCaseLines(Catalog catalog, ProfileCase c, int rank) {
     ...pass1Lines(catalog, c.pass1, m),
     '',
     'Dosage : ${m.classShare.entries.map((e) => '${e.key} ${(e.value * 100).round()} %'
-        ' (visé ${((m.classTarget[e.key] ?? 0) * 100).round()} %)').join(', ')}'
+            ' (visé ${((m.classTarget[e.key] ?? 0) * 100).round()} %)').join(', ')}'
         ' — erreur ${_f(m.dosageError * 100, 1)} points.',
     '',
     'Volume hebdomadaire (séries fractionnaires [bande]) : ${groups.join(', ')}.'

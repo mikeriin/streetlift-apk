@@ -348,7 +348,9 @@ final class KalisPlan implements PlanEngine {
     _check(catalog, base.profile);
     final violations = action.validate();
     if (violations.isNotEmpty) {
-      throw ArgumentError('Action de revue invalide : ${violations.first.code}');
+      throw ArgumentError(
+        'Action de revue invalide : ${violations.first.code}',
+      );
     }
 
     PlanSlot? target;
@@ -439,20 +441,14 @@ final class KalisPlan implements PlanEngine {
         final slot = target!;
         dropSlotLocks(slot.slotId);
         addLock(
-          PlanLock(
-            kind: LockKind.excludeExercise,
-            exerciseId: slot.exerciseId,
-          ),
+          PlanLock(kind: LockKind.excludeExercise, exerciseId: slot.exerciseId),
         );
         delta = delta.copyWith(unknownExerciseIds: <String>[slot.exerciseId]);
       case ReviewKind.dislike:
         final slot = target!;
         dropSlotLocks(slot.slotId);
         addLock(
-          PlanLock(
-            kind: LockKind.excludeExercise,
-            exerciseId: slot.exerciseId,
-          ),
+          PlanLock(kind: LockKind.excludeExercise, exerciseId: slot.exerciseId),
         );
         delta = delta.copyWith(dislikedExerciseIds: <String>[slot.exerciseId]);
       case ReviewKind.add:
@@ -534,7 +530,8 @@ final class KalisPlan implements PlanEngine {
     );
     final planner = Planner(ctx, fnv1a32('review:${current.seed}:$slotId'));
     planner.frozenDays = lockedDays;
-    final unlockedCurrent = action.kind == ReviewKind.replace ||
+    final unlockedCurrent =
+        action.kind == ReviewKind.replace ||
             action.kind == ReviewKind.remove ||
             action.kind == ReviewKind.cannotDo ||
             action.kind == ReviewKind.dislike
@@ -833,14 +830,7 @@ final class KalisPlan implements PlanEngine {
     for (var d = 0; d < state.dayCount; d++) {
       final at = _positionOfSlot(state, d, request.slotId);
       if (at >= 0) {
-        return computeVariants(
-          ctx,
-          Scorer(ctx),
-          state,
-          d,
-          at,
-          request.slotId,
-        );
+        return computeVariants(ctx, Scorer(ctx), state, d, at, request.slotId);
       }
     }
     throw ArgumentError.value(request.slotId, 'slotId', 'emplacement inconnu');
@@ -1049,8 +1039,7 @@ final class KalisPlan implements PlanEngine {
               step > 2) {
             continue;
           }
-          if (harder == null ||
-              x.difficulty < harder.exercise.difficulty) {
+          if (harder == null || x.difficulty < harder.exercise.difficulty) {
             harder = c.entry;
           }
         }
@@ -1085,11 +1074,7 @@ final class KalisPlan implements PlanEngine {
             reasons.containsKey(slotId)) {
           continue;
         }
-        rotatable.add((
-          fnv1a32('$seed:$blockIndex:$slotId'),
-          slotId,
-          e.index,
-        ));
+        rotatable.add((fnv1a32('$seed:$blockIndex:$slotId'), slotId, e.index));
       }
     }
     rotatable.sort((a, b) {

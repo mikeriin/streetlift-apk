@@ -265,7 +265,8 @@ final class Planner {
 
   bool _isLastRequired(PlanState state, int poolIndex) {
     final id = context.pool[poolIndex].id;
-    return context.requiredIds.contains(id) && state.occurrences(poolIndex) <= 1;
+    return context.requiredIds.contains(id) &&
+        state.occurrences(poolIndex) <= 1;
   }
 
   // ------------------------------------------------------------- glouton
@@ -502,7 +503,9 @@ final class Planner {
       }
       final wasWork = ctx.pool[old].kind != SlotKind.mobility;
       final isWork = e.kind != SlotKind.mobility;
-      if (isWork && !wasWork && _workSlots(state, d) >= ctx.days[d].maxWorkSlots) {
+      if (isWork &&
+          !wasWork &&
+          _workSlots(state, d) >= ctx.days[d].maxWorkSlots) {
         return false;
       }
       _saveA.save(state, d);
@@ -727,8 +730,7 @@ final class Planner {
       }
       while (true) {
         final over =
-            !_fits(state, d) ||
-            _workSlots(state, d) > ctx.days[d].maxWorkSlots;
+            !_fits(state, d) || _workSlots(state, d) > ctx.days[d].maxWorkSlots;
         if (!over) {
           break;
         }
@@ -859,13 +861,18 @@ final class _DaySave {
       sets = Int32List(capacity),
       uid = Int32List(capacity);
 
-  final Int32List exercise;
-  final Int32List sets;
-  final Int32List uid;
+  Int32List exercise;
+  Int32List sets;
+  Int32List uid;
   int count = 0;
   int day = -1;
 
   void save(PlanState state, int d) {
+    if (exercise.length != state.capacity) {
+      exercise = Int32List(state.capacity);
+      sets = Int32List(state.capacity);
+      uid = Int32List(state.capacity);
+    }
     day = d;
     count = state.count[d];
     exercise.setAll(0, state.exercise[d]);

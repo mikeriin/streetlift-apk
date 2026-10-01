@@ -108,7 +108,8 @@ void tuneSets(PlanContext ctx, Scorer scorer, PlanState state) {
       var at = -1;
       var most = 0;
       for (var i = 0; i < state.count[d]; i++) {
-        final spare = state.sets[d][i] - pool[state.exercise[d][i]].scheme.minSets;
+        final spare =
+            state.sets[d][i] - pool[state.exercise[d][i]].scheme.minSets;
         if (spare > most) {
           most = spare;
           at = i;
@@ -233,8 +234,7 @@ Pass2Plan buildPass2(
         final progress = buildWeeks <= 1 ? 1.0 : buildRank / buildWeeks;
         factor = buildWeeks <= 1
             ? 1.0
-            : buildStartVolumeFactor +
-                  (1 - buildStartVolumeFactor) * progress;
+            : buildStartVolumeFactor + (1 - buildStartVolumeFactor) * progress;
         final behind = (buildWeeks - buildRank) * 0.5;
         rirBonus = behind > 1 ? 1 : behind;
         lastBuild = buildRank == buildWeeks && buildWeeks >= 2;

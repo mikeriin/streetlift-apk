@@ -1,6 +1,5 @@
 // Les 40 profils types : chaque étape rend une valeur valide du contrat et
 // respecte les contraintes dures.
-import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart';
 import 'package:kalis_plan/report.dart';
 import 'package:test/test.dart';

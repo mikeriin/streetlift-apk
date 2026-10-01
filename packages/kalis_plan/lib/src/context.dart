@@ -336,7 +336,10 @@ final class ContextInputs {
 
 const Map<BodyZone, List<MuscleGroup>> _zoneGroups =
     <BodyZone, List<MuscleGroup>>{
-      BodyZone.upperBack: <MuscleGroup>[MuscleGroup.upperBack, MuscleGroup.lats],
+      BodyZone.upperBack: <MuscleGroup>[
+        MuscleGroup.upperBack,
+        MuscleGroup.lats,
+      ],
       BodyZone.chest: <MuscleGroup>[MuscleGroup.chest],
       BodyZone.abdomen: <MuscleGroup>[MuscleGroup.abs],
       BodyZone.thigh: <MuscleGroup>[

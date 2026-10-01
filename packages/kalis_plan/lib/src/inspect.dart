@@ -230,7 +230,11 @@ final class PlanInspector {
 
   /// Objectif de la recherche pour [plan] : palier de sécurité × 2 + note
   /// globale, moins la pénalité de changement par rapport à [reference].
-  double objective(PlanRequest request, Pass1Plan plan, {Pass1Plan? reference}) {
+  double objective(
+    PlanRequest request,
+    Pass1Plan plan, {
+    Pass1Plan? reference,
+  }) {
     final ctx = contextFor(request, plan);
     final scorer = Scorer(ctx);
     var value = scorer.evaluate(stateFromPlan(ctx, plan));
@@ -322,7 +326,9 @@ final class PlanInspector {
                   l.discomfort >= params.hardJointDiscomfort) ||
               (stress != JointStress.low &&
                   l.discomfort >= params.severeJointDiscomfort)) {
-            out.add('day $d: $id contraint ${joint.code} (gêne ${l.discomfort})');
+            out.add(
+              'day $d: $id contraint ${joint.code} (gêne ${l.discomfort})',
+            );
           }
         }
         if (!entry.selectable || !entry.feasibleOn(d)) {
@@ -365,7 +371,10 @@ final class PlanInspector {
           }
           final d = lock.slotId == null ? null : dayOfSlotId(lock.slotId!);
           final placeable =
-              d != null && d < ctx.dayCount && id != null && ctx.indexOf(id) >= 0;
+              d != null &&
+              d < ctx.dayCount &&
+              id != null &&
+              ctx.indexOf(id) >= 0;
           if (!kept && placeable) {
             out.add('lock: ${lock.slotId} non conservé');
           }
@@ -378,7 +387,11 @@ final class PlanInspector {
 
   /// Mesures de la semaine de référence de [plan] ; [tuned] règle d'abord
   /// les séries comme la passe 2.
-  PlanMetrics metrics(PlanRequest request, Pass1Plan plan, {bool tuned = true}) {
+  PlanMetrics metrics(
+    PlanRequest request,
+    Pass1Plan plan, {
+    bool tuned = true,
+  }) {
     final ctx = contextFor(request, plan);
     final scorer = Scorer(ctx);
     final state = stateFromPlan(ctx, plan);

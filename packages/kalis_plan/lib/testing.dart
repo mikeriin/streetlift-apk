@@ -76,7 +76,21 @@ const List<String> _extras = <String>[
   'cônes',
 ];
 
-const List<int> _minutes = <int>[10, 15, 20, 30, 30, 40, 45, 45, 60, 60, 75, 90, 120];
+const List<int> _minutes = <int>[
+  10,
+  15,
+  20,
+  30,
+  30,
+  40,
+  45,
+  45,
+  60,
+  60,
+  75,
+  90,
+  120,
+];
 
 /// Profil aléatoire de graine [seed], valide (`validate()` vide) et dont
 /// les exercices et le matériel appartiennent à [catalog].
@@ -398,7 +412,8 @@ AthleteProfile randomProfile(Catalog catalog, int seed) {
       const LoadIncrement(loadType: LoadType.barbell, stepKg: 2.5, minKg: 20),
     if (chance(60))
       const LoadIncrement(loadType: LoadType.dumbbells, stepKg: 2, minKg: 2),
-    if (chance(40)) const LoadIncrement(loadType: LoadType.addedWeight, stepKg: 1.25),
+    if (chance(40))
+      const LoadIncrement(loadType: LoadType.addedWeight, stepKg: 1.25),
     if (chance(30))
       const LoadIncrement(loadType: LoadType.machine, stepKg: 5, minKg: 5),
   ];
