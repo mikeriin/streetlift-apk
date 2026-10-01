@@ -855,76 +855,6 @@ def import_all(ids=None, log=print):
     return index
 
 
-# ============================================================ Koach (M7b) --
-
-KOACH_DIR = CLIPS_DIR / 'koach'
-KOACH_FAMILIES = ('attente', 'parle', 'felicite')
-KOACH_SCRIPT = 'tools/anatomy/koach_animations.py'
-
-
-def import_koach(items, log=print):
-    """M7b : animations « personnage » de Koach (mascotte), passées par la
-    même chaîne que celles du propriétaire : FBX « Without Skin » relu par
-    Blender, squelette vérifié (noms, hiérarchie, longueurs), rotations
-    depuis les matrices du monde, réduction des clés, quantification,
-    compression. `items` : [(anim, chemin du FBX)] (koach_animations.Anim).
-    Pas d'exercice, pas de muscles (mannequin neutre) ; famille (attente,
-    parle, felicite), boucle ou geste qui revient à l'attente. Source : le
-    script (FBX non suivis ; décision du propriétaire, 29/09/2026)."""
-    import numpy as np
-    index = load_index()
-    by_id = {c['id']: c for c in index['clips']}
-    KOACH_DIR.mkdir(parents=True, exist_ok=True)
-    for anim, fbx_path in items:
-        if anim.famille not in KOACH_FAMILIES:
-            raise ImportErreur(f'{anim.id} : famille inconnue {anim.famille}.')
-        fbx = read_fbx(fbx_path)
-        check_skeleton(fbx, Path(fbx_path).name)
-        motion = resample(fbx_motion(fbx), FPS)
-        # tolérance tenue à 0,2° même au-delà de 5 Ko : contacts exacts (mains
-        # qui claquent, pieds fixes) plutôt que 3 Ko gagnés (dépassement
-        # mesuré et écrit dans le registre)
-        tol = TOLERANCE_DEG
-        data, stats = encode_clip(motion, tol)
-        _, _, dl, dr = decode_clip(data, motion.bones)
-        rot_err, pos_err = max_error(motion, np.array(dl), np.array(dr))
-        phases = name_phases(anim.phase_list())
-        check_phases(phases, motion.duration)
-        out = KOACH_DIR / f'{anim.id}.ktclip'
-        out.write_bytes(data)
-        item = {
-            'id': anim.id,
-            'fichier': f'assets/anatomy/clips/koach/{anim.id}.ktclip',
-            'exercices': [], 'debogage': False,
-            'mascotte': True, 'famille': anim.famille, 'boucle': bool(anim.boucle),
-            'nom': anim.nom,
-            'fps': FPS, 'images': motion.frames, 'duree_s': round(motion.duration, 3),
-            'sur_place': True, 'derive_retiree_m': 0.0,
-            'phases': phases, 'phases_source': 'reglages',
-            'octets': len(data), 'budget_octets': CLIP_BUDGET,
-            'compression': {**stats, 'ecart_max_deg': round(rot_err, 3),
-                            'ecart_max_position_mm': round(pos_err * 1000, 2)},
-            'source': {'script': KOACH_SCRIPT, 'fbx': f'build/koach_fbx/{anim.id}.fbx (non suivi)',
-                       'images_s_source': fbx['fps'],
-                       'images_source': fbx['frames'][1] - fbx['frames'][0] + 1},
-        }
-        if len(data) > CLIP_BUDGET:
-            item['depassement'] = (f'{len(data)} octets > {CLIP_BUDGET} à {tol}° : tolérance '
-                                   'tenue pour des contacts exacts (mains, pieds) ; mouvement '
-                                   'riche (doigts, tête, bras), gardé (mesuré).')
-        by_id[anim.id] = item
-        log(f'{anim.id} : {motion.frames} images, {stats["cles"]} clés, {len(data)} octets '
-            f'(tolérance {tol}°, écart max {rot_err:.2f}°, {pos_err * 1000:.1f} mm)')
-    # animations de Koach dans l'ordre du script (famille, puis ordre voulu)
-    rank = {anim.id: i for i, (anim, _) in enumerate(items)}
-    index['clips'] = sorted(by_id.values(),
-                            key=lambda c: (not c['debogage'], bool(c.get('mascotte')),
-                                           rank.get(c['id'], -1), c['id']))
-    save_index(index)
-    verify(log=log)
-    return index
-
-
 def load_index():
     if INDEX.exists():
         return json.loads(INDEX.read_text(encoding='utf-8'))
@@ -968,15 +898,8 @@ def verify(log=print):
         if c['debogage'] and c['exercices']:
             raise ImportErreur(f'{c["id"]} : une animation de test ne va sur aucune fiche.')
         if c.get('mascotte'):
-            # M7b : animations de Koach, source = le script (non chiffrée)
-            if c['exercices'] or c['debogage'] or 'muscles' in c:
-                raise ImportErreur(f'{c["id"]} : une animation de Koach ne va sur aucune '
-                                   'fiche et n\'allume aucun muscle.')
-            if c.get('famille') not in KOACH_FAMILIES or not isinstance(c.get('boucle'), bool):
-                raise ImportErreur(f'{c["id"]} : famille ou boucle absente.')
-            if not (ROOT / c['source'].get('script', '')).is_file():
-                raise ImportErreur(f'{c["id"]} : script source absent.')
-            continue
+            # G5 : les animations 3D de Koach (M7b) sont retirées (Koach 2D).
+            raise ImportErreur(f'{c["id"]} : animation de Koach retirée (G5).')
         src = c['source']['chiffre']
         if src not in enc or enc[src]['sha256'] != c['source']['sha256']:
             raise ImportErreur(f'{c["id"]} : source chiffrée absente ou différente du manifeste.')

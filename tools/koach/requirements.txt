@@ -1,0 +1,7 @@
+# Outils du lot GK (vectorisation de Koach). Versions figées : la sortie
+# Dart doit être identique à l'octet près d'une machine à l'autre.
+numpy==2.4.4
+scipy==1.17.1
+Pillow==12.2.0
+opencv-python-headless==4.13.0.92
+potracer==0.0.4

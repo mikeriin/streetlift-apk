@@ -6,8 +6,10 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
 import 'app_theme.dart';
+import 'koach/koach_bubble.dart';
 import 'koach_engine.dart' as ke;
 import 'koach_widgets.dart';
 import 'set_validation.dart' show parseLoadKg;
@@ -173,13 +175,17 @@ class _KoachReviewScreenState extends State<KoachReviewScreen> {
         appBar: AppBar(title: Text('Bilan Koach · S$week · J$day')),
         body: KList(
           children: [
-            Text(
-              widget.autoApplied.isEmpty
+            // G5 (D6.4) : fin de séance, Koach présente le bilan.
+            KoachBubble(
+              key: const ValueKey('koach-review-bubble'),
+              pose: widget.autoApplied.isEmpty
+                  ? KoachPose.clap
+                  : KoachPose.settings,
+              text: widget.autoApplied.isEmpty
                   ? 'Koach propose, tu décides : aucune valeur ne change sans '
                         'ton accord.'
                   : 'Mode Guidé : Koach a appliqué les baisses de sécurité '
                         'ci-dessous ; tu peux les annuler.',
-              style: TextStyle(color: SL.dim),
             ),
             for (final p in widget.autoApplied)
               KCard(
@@ -331,32 +337,36 @@ class KoachProposalCard extends StatelessWidget {
       key: ValueKey('koach-proposal-${p['id']}'),
       radius: 20,
       accent: SL.accent,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            store.koachProposalText(p),
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: 4),
-          Text(store.koachProposalReason(p), style: _dimSmall()),
-          const SizedBox(height: 10),
-          KActionRow(
-            minButtonWidth: 120,
-            children: [
-              FilledButton(
-                key: ValueKey('koach-accept-${p['id']}'),
-                onPressed: () => store.acceptKoachProposal(p),
-                child: const Text('Accepter'),
-              ),
-              OutlinedButton(
-                key: ValueKey('koach-refuse-${p['id']}'),
-                onPressed: () => store.refuseKoachProposal(p),
-                child: const Text('Refuser'),
-              ),
-            ],
-          ),
-        ],
+      child: KoachSays(
+        pose: KoachPose.choice,
+        koachHeight: 48,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              store.koachProposalText(p),
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 4),
+            Text(store.koachProposalReason(p), style: _dimSmall()),
+            const SizedBox(height: 10),
+            KActionRow(
+              minButtonWidth: 120,
+              children: [
+                FilledButton(
+                  key: ValueKey('koach-accept-${p['id']}'),
+                  onPressed: () => store.acceptKoachProposal(p),
+                  child: const Text('Accepter'),
+                ),
+                OutlinedButton(
+                  key: ValueKey('koach-refuse-${p['id']}'),
+                  onPressed: () => store.refuseKoachProposal(p),
+                  child: const Text('Refuser'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -394,34 +404,38 @@ class KoachStructureCard extends StatelessWidget {
     return KCard(
       key: ValueKey('koach-structure-${p['id']}'),
       radius: 20,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            koachStructureText(p),
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            '${koachStructureReason(p)} Le programme d’origine n’est pas '
-            'modifié : l’adaptation s’annule à tout moment.',
-            style: _dimSmall(),
-          ),
-          const SizedBox(height: 10),
-          KActionRow(
-            minButtonWidth: 120,
-            children: [
-              FilledButton(
-                onPressed: () => store.acceptKoachStructure(p),
-                child: const Text('Accepter'),
-              ),
-              OutlinedButton(
-                onPressed: () => store.refuseKoachStructure(p),
-                child: const Text('Refuser'),
-              ),
-            ],
-          ),
-        ],
+      child: KoachSays(
+        pose: KoachPose.analyze,
+        koachHeight: 48,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              koachStructureText(p),
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              '${koachStructureReason(p)} Le programme d’origine n’est pas '
+              'modifié : l’adaptation s’annule à tout moment.',
+              style: _dimSmall(),
+            ),
+            const SizedBox(height: 10),
+            KActionRow(
+              minButtonWidth: 120,
+              children: [
+                FilledButton(
+                  onPressed: () => store.acceptKoachStructure(p),
+                  child: const Text('Accepter'),
+                ),
+                OutlinedButton(
+                  onPressed: () => store.refuseKoachStructure(p),
+                  child: const Text('Refuser'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

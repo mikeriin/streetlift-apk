@@ -55,11 +55,17 @@
 // 5.10.0 : carte muscle par muscle ; 17 filtres (lombaires et coiffe des
 // rotateurs ajoutés) ;
 // toucher → nom du muscle (et de son groupe).
+//
+// G5 (dev6.3.0, D1.5) : les animations 3D de Koach sont retirées ; l'entrée
+// devient « Galerie de Koach » (36 poses 2D animées, 10 flammes,
+// koach/koach_gallery_screen.dart).
 import 'package:flutter/material.dart';
+import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
 import 'atlas_data.dart';
 import 'filter_menu.dart';
-import 'koach_preview_screen.dart';
+import 'koach/koach_gallery_screen.dart';
+import 'koach/koach_view.dart';
 import 'mannequin_3d.dart' show Display3DSettings;
 import 'muscle_map_2d.dart';
 import 'ui.dart';
@@ -252,19 +258,23 @@ class AnatomyScreenState extends State<AnatomyScreen> {
             },
           ),
           _summary(context),
-          // M7b : aperçu des animations de Koach (mascotte).
+          // G5 : Galerie de Koach (poses 2D, flammes).
           KCard(
-            key: const ValueKey('anatomy-koach-preview'),
+            key: const ValueKey('anatomy-koach-gallery'),
             padding: EdgeInsets.zero,
             child: ListTile(
-              leading: const Icon(Icons.accessibility_new),
-              title: const Text('Koach (aperçu)'),
+              leading: const KoachView(
+                pose: KoachPose.wave,
+                height: 44,
+                width: 40,
+              ),
+              title: const Text('Galerie de Koach'),
               subtitle: const Text(
-                'Ses animations de mascotte : attente, parle, félicite',
+                '36 poses animées et 10 flammes de difficulté',
               ),
               trailing: const Icon(Icons.chevron_right),
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const KoachPreviewScreen()),
+                MaterialPageRoute(builder: (_) => const KoachGalleryScreen()),
               ),
             ),
           ),

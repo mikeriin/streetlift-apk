@@ -1,8 +1,21 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : G3 (base d'exercices v1.1, `kalis_core` intégré), version dev6.2.0 ; précédent : dev6.1.0 (G2)**  
-**Date : 1er octobre 2026, Europe/Paris — version : 6.2.0+97, affichée « dev6.2.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : G5 (Koach 2D, `kalis_koach` intégré), version dev6.3.0 ; précédent : dev6.2.0 (G3)**  
+**Date : 1er octobre 2026, Europe/Paris — version : 6.3.0+98, affichée « dev6.3.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## G5 — Koach 2D dans l'application (version dev6.3.0)
+
+| Exigence | Réalisation |
+| --- | --- |
+| Intégration de `kalis_koach` | `packages/kalis_koach` et `tools/koach` récupérés de la branche fixe `etiquettes/kalis_koach-v0.1.0` (4fa2777), non modifiés ; dépendance `path: packages/kalis_koach` ; paquet contrôlé par la tâche `packages`. |
+| `KoachView` (D6.2, D6.3) | `lib/koach/koach_view.dart` : commandes du paquet → `Path` pair-impair, en cache (36 poses) ; thème sombre : encre #F4F4F4, papier et yeux percés dans un calque (= fond du support, carte teintée comprise) ; thème clair : encre #141414, papier blanc. Rebond d'entrée (420 ms), transition fondu + écrasement/étirement (200 ms), clignement seedé (2,2 à 6,4 s, un sur cinq double), respiration (3,6 s, ±1,2 %, vues ≥ 64 px, horloge partagée à 20 images/s). Ticker seulement pendant un mouvement ; suspendu hors écran (TickerMode) et en arrière-plan ; « Réduire les animations » = pose fixe. |
+| Bulle, feuille, message court | `lib/koach/koach_bubble.dart` : `KoachBubble` (côté du regard de la pose, coin pointu vers Koach, actions, « Pourquoi ? » dépliable qui change la pose), `KoachBubble.line` (répliques de `KoachDirector`), `KoachSays`, `KoachHeader`, `showKoachSheet`, `showKoachToast` / `koachSnackBar`. |
+| Flammes (D5.3, D5.5) | `lib/koach/flame_icon.dart` : `FlameIcon` (cadre commun des 10 flammes : tailles relatives), dégradé de la couleur dominante (clair → vif), libellé « Difficulté n sur 10, RIR … » (`Flames` de `kalis_core`) ; `FlamePicker` prêt pour G9, non branché aux séances. |
+| Koach 3D remplacé (D1.5) | Galerie de Koach à la place de « Koach (aperçu) » ; 9 clips `assets/anatomy/clips/koach/`, entrées « mascotte » du registre, `koach_preview_screen.dart`, `koach_animations.py`, `koach_rig.py`, `koach_preview.py`, `import_koach` et les tests M7b (`m7b_koach_test.dart`, `test_m7b_koach.py`, `koach_m7b_test.dart`) retirés ; le registre refuse désormais un clip « mascotte ». Démonstration 3D des exercices inchangée. |
+| Koach parle (D6.4) | Carte du jour de l'accueil (pose selon la journée), propositions L11 et pause, carte « profil modifié » (L10), carte « Koach · séance du jour », suggestion de charge, note de calibrage, pesée, bilan de fin de séance (bulle), propositions et structure du bilan, messages courts de ces écrans, messages de la session de test (entrée, suppression, voyage dans le temps). |
+| Session perso et de test | Composants sans stockage (graine = jour civil) : aucune donnée nouvelle, rien ne passe d'une session à l'autre ; parcours vérifié sur émulateur dans les deux sessions. |
+| Contrôles | `test/g5_koach_test.dart` ; tests mis à jour (`fonds_3d_test`, `test_m7_animations.py`, versions) ; émulateur `koach_g5_test` (a sombre rouge, b clair violet, build de dev, second essai automatique si le pilote perd le service avant le premier relevé). CI `claude/ci-3d` run 36882261714 (essai 7) : formatage, analyse, 878 tests Dart + 14 du build de dev, 160 tests Python, paquets `kalis_core` et `kalis_koach`, émulateur verts ; rendus `visual_capture_test` en échec identique avant et après (préexistant sur `main`). APK profil : 55 902 704 → 56 398 741 octets (+0,9 %). |
 
 ## G3 — Base d'exercices v1.1 dans l'application (version dev6.2.0)
 

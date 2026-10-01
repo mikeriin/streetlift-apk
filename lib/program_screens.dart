@@ -3,8 +3,10 @@
 // volume, régénération), aperçu « ce qui change » avant validation,
 // annulation pendant 7 jours, carte de l'accueil quand le profil a changé.
 import 'package:flutter/material.dart';
+import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
 import 'app_theme.dart';
+import 'koach/koach_bubble.dart';
 import 'program_generator.dart';
 import 'profile_screens.dart' show ProfileScreen;
 import 'store.dart';
@@ -428,59 +430,61 @@ class ProgramHomeCard extends StatelessWidget {
     return KCard(
       key: const ValueKey('program-home-card'),
       accent: SL.accent,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            changed
-                ? 'Ton profil a changé : ton programme peut être adapté à '
-                      'partir d’aujourd’hui.'
-                : 'Ton programme a été mis à jour. Tu peux revenir à la '
-                      'version précédente pendant 7 jours.',
-          ),
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              if (changed)
-                FilledButton(
-                  key: const ValueKey('program-home-preview'),
-                  onPressed: () =>
-                      openProgramProposal(context, reason: 'profile'),
-                  child: const Text('Voir ce qui change'),
-                ),
-              if (undo)
-                OutlinedButton(
-                  key: const ValueKey('program-home-undo'),
-                  onPressed: () {
-                    final ok = store.undoProgram();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          ok
-                              ? 'Version précédente du programme rétablie.'
-                              : 'Annulation impossible : une séance du nouveau programme est déjà commencée.',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text('Revenir à la version précédente'),
-                ),
-              if (!inScreen)
-                TextButton(
-                  key: const ValueKey('program-home-open'),
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (_) => const ProgramScreen(),
-                    ),
+      // G5 (D6.5) : c'est Koach qui demande d'adapter au profil.
+      child: KoachSays(
+        pose: changed ? KoachPose.think : KoachPose.settings,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              changed
+                  ? 'Ton profil a changé : ton programme peut être adapté à '
+                        'partir d’aujourd’hui.'
+                  : 'Ton programme a été mis à jour. Tu peux revenir à la '
+                        'version précédente pendant 7 jours.',
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                if (changed)
+                  FilledButton(
+                    key: const ValueKey('program-home-preview'),
+                    onPressed: () =>
+                        openProgramProposal(context, reason: 'profile'),
+                    child: const Text('Voir ce qui change'),
                   ),
-                  child: const Text('Mon programme'),
-                ),
-            ],
-          ),
-        ],
+                if (undo)
+                  OutlinedButton(
+                    key: const ValueKey('program-home-undo'),
+                    onPressed: () {
+                      final ok = store.undoProgram();
+                      showKoachToast(
+                        context,
+                        ok
+                            ? 'Version précédente du programme rétablie.'
+                            : 'Annulation impossible : une séance du nouveau programme est déjà commencée.',
+                        pose: ok ? KoachPose.thumbsUp : KoachPose.oops,
+                      );
+                    },
+                    child: const Text('Revenir à la version précédente'),
+                  ),
+                if (!inScreen)
+                  TextButton(
+                    key: const ValueKey('program-home-open'),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (_) => const ProgramScreen(),
+                      ),
+                    ),
+                    child: const Text('Mon programme'),
+                  ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

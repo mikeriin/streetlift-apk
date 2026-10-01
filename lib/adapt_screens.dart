@@ -6,8 +6,10 @@
 // d'autonomie, vacances, maladie, historique) et difficulté globale de fin
 // de séance. Contrat : docs/CONTRAT_L11.md.
 import 'package:flutter/material.dart';
+import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
 import 'app_theme.dart';
+import 'koach/koach_bubble.dart';
 import 'koach_adapt.dart';
 import 'models.dart';
 import 'program_generator.dart' show GenCatalog, GenExercise;
@@ -745,32 +747,44 @@ class AdaptHomeCard extends StatelessWidget {
             child: KCard(
               key: ValueKey('adapt-proposal-${p.kind}'),
               accent: SL.accent,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(p.title, style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 4),
-                  Text(p.text),
-                  const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      for (final (i, a) in p.actions.indexed)
-                        i == 0 && a.$1 != 'dismiss'
-                            ? FilledButton(
-                                key: ValueKey('adapt-action-${a.$1}'),
-                                onPressed: () => _run(context, p, a.$1),
-                                child: Text(a.$2),
-                              )
-                            : OutlinedButton(
-                                key: ValueKey('adapt-action-${a.$1}'),
-                                onPressed: () => _run(context, p, a.$1),
-                                child: Text(a.$2),
-                              ),
-                    ],
-                  ),
-                ],
+              // G5 (D6.4) : la proposition est dite par Koach.
+              child: KoachSays(
+                pose: switch (p.kind) {
+                  'slide' => KoachPose.direction,
+                  'more' => KoachPose.thumbsUp2,
+                  'fewer' => KoachPose.ponder,
+                  _ => KoachPose.choice,
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      p.title,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(p.text),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        for (final (i, a) in p.actions.indexed)
+                          i == 0 && a.$1 != 'dismiss'
+                              ? FilledButton(
+                                  key: ValueKey('adapt-action-${a.$1}'),
+                                  onPressed: () => _run(context, p, a.$1),
+                                  child: Text(a.$2),
+                                )
+                              : OutlinedButton(
+                                  key: ValueKey('adapt-action-${a.$1}'),
+                                  onPressed: () => _run(context, p, a.$1),
+                                  child: Text(a.$2),
+                                ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -779,17 +793,47 @@ class AdaptHomeCard extends StatelessWidget {
   }
 
   Future<void> _run(BuildContext context, AdaptProposal p, String a) async {
+    // Lus avant l'attente : la carte peut disparaître avec la proposition.
     final messenger = ScaffoldMessenger.of(context);
+    final colors = KoachToastColors.of(context);
+    final large = koachLargeText(context);
     final text = await store.runAdaptAction(p, a);
     if (text != null) {
-      messenger.showSnackBar(SnackBar(content: Text(text)));
+      messenger.showSnackBar(
+        koachSnackBar(
+          colors,
+          text,
+          pose: a == 'dismiss' ? KoachPose.thumbsUp : KoachPose.thumbsUp2,
+          large: large,
+        ),
+      );
     }
   }
 }
 
+/// G5 : Koach à côté du contenu sur l'accueil ; dans l'écran
+/// « Adaptation au quotidien » (réglages), le contenu seul.
+class _MaybeKoachSays extends StatelessWidget {
+  final bool on;
+  final KoachPose pose;
+  final Widget child;
+  const _MaybeKoachSays({
+    required this.on,
+    required this.pose,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) =>
+      on ? KoachSays(pose: pose, child: child) : child;
+}
+
 class _PauseCard extends StatelessWidget {
   final AdaptPause pause;
-  const _PauseCard({required this.pause});
+
+  /// Koach dit la pause (accueil) ; faux dans les réglages.
+  final bool koach;
+  const _PauseCard({required this.pause, this.koach = true});
 
   @override
   Widget build(BuildContext context) {
@@ -799,46 +843,48 @@ class _PauseCard extends StatelessWidget {
       child: KCard(
         key: const ValueKey('adapt-pause-card'),
         accent: SL.accent,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              vacation ? 'Vacances : programme en pause' : 'Pause maladie',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              vacation
-                  ? 'Ton calendrier est en pause depuis le '
-                        '${_date(pause.from)}. Si tu en as envie : 2 séances '
-                        'd’entretien de 20 minutes sans matériel par semaine, '
-                        'facultatives.'
-                  : 'Repose-toi. Au retour, la première semaine sera plus '
-                        'légère (volume −30 %). Si les symptômes persistent, '
-                        'parles-en à un professionnel de santé.',
-            ),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                FilledButton(
-                  key: const ValueKey('adapt-pause-end'),
-                  onPressed: () {
-                    store.endPause();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Bon retour ! Le programme reprend aujourd’hui.',
-                        ),
-                      ),
-                    );
-                  },
-                  child: const Text('Je reprends'),
-                ),
-              ],
-            ),
-          ],
+        child: _MaybeKoachSays(
+          on: koach,
+          pose: vacation ? KoachPose.love : KoachPose.heart,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                vacation ? 'Vacances : programme en pause' : 'Pause maladie',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                vacation
+                    ? 'Ton calendrier est en pause depuis le '
+                          '${_date(pause.from)}. Si tu en as envie : 2 séances '
+                          'd’entretien de 20 minutes sans matériel par semaine, '
+                          'facultatives.'
+                    : 'Repose-toi. Au retour, la première semaine sera plus '
+                          'légère (volume −30 %). Si les symptômes persistent, '
+                          'parles-en à un professionnel de santé.',
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  FilledButton(
+                    key: const ValueKey('adapt-pause-end'),
+                    onPressed: () {
+                      store.endPause();
+                      showKoachToast(
+                        context,
+                        'Bon retour ! Le programme reprend aujourd’hui.',
+                        pose: KoachPose.wave,
+                      );
+                    },
+                    child: const Text('Je reprends'),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -949,7 +995,7 @@ class AdaptScreen extends StatelessWidget {
                 ],
               )
             else
-              _PauseCard(pause: pause),
+              _PauseCard(pause: pause, koach: false),
             const KSection('Durée et charge'),
             SwitchListTile(
               key: const ValueKey('adapt-shorter'),
