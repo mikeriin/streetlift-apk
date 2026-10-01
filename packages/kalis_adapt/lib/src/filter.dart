@@ -261,8 +261,8 @@ final class CapacityFilter {
   /// [bound] : la série dit seulement « au moins [n] » — ou, avec [upper],
   /// « au plus [n] » (une série ratée sans une seule répétition). [learnK] : la série
   /// met à jour `k` (elle est fraîche et [n] est connu précisément) ;
-  /// sinon `k` est un état « considéré » (filtre de Schmidt-Kalman) : son
-  /// incertitude compte, il ne bouge pas.
+  /// sinon `k` est tenu pour fixe : il ne bouge pas, et son incertitude
+  /// s'ajoute au bruit de la série.
   void observeLoad({
     required double logLoad,
     required double n,
@@ -354,12 +354,29 @@ final class CapacityFilter {
     _symmetrize();
   }
 
+  /// Jacobien et bruit effectifs d'une observation. Quand elle n'apprend
+  /// pas `k`, `k` est tenu pour fixe : sa composante quitte le jacobien et
+  /// son incertitude s'ajoute au bruit (`hk² · Var(κ)`). Le niveau ne peut
+  /// alors bouger que dans le sens de l'innovation — avec un gain calculé
+  /// sur la covariance complète, une corrélation entre `c` et `κ` pouvait
+  /// l'envoyer à l'opposé de ce que la série montrait.
+  (List<double>, double) _effective(List<double> jac, double r, bool learnK) {
+    if (learnK) {
+      return (jac, r);
+    }
+    return (
+      <double>[jac[0], jac[1], 0, jac[3]],
+      r + jac[2] * jac[2] * cov[10],
+    );
+  }
+
   void _update(List<double> jac, double innovation, double r, bool learnK) {
-    final gain = _gain(jac, r, learnK);
+    final (h, noise) = _effective(jac, r, learnK);
+    final gain = _gain(h, noise, learnK);
     for (var i = 0; i < 4; i++) {
       m[i] += gain[i] * innovation;
     }
-    _joseph(gain, jac, r);
+    _joseph(gain, h, noise);
   }
 
   /// Contrainte `H·m + ε ≥ y`, `ε ~ N(0, R)` ; [margin] = `H·m − y`.
@@ -367,7 +384,8 @@ final class CapacityFilter {
   /// déplace de `K·√S·λ`, la covariance fait la part `λ(a + λ)` d'une mise
   /// à jour complète.
   void _lowerBound(List<double> jac, double margin, double r, bool learnK) {
-    final gain = _gain(jac, r, learnK);
+    final (h, noise) = _effective(jac, r, learnK);
+    final gain = _gain(h, noise, learnK);
     final s = sqrt(gain[4]);
     final a = margin / s;
     final cdf = normCdf(a);
@@ -378,7 +396,7 @@ final class CapacityFilter {
     final w = clampDouble(lambda * (a + lambda), 0, 1);
     if (w > 0) {
       final old = List<double>.of(cov);
-      _joseph(gain, jac, r);
+      _joseph(gain, h, noise);
       for (var i = 0; i < 16; i++) {
         cov[i] = (1 - w) * old[i] + w * cov[i];
       }

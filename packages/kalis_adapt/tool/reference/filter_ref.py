@@ -198,9 +198,8 @@ class Filter:
     def observe_load(self, log_load, n, n_sd, fatigue, p=P, bound=False, learn_k=False, upper=False):
         """Série à charge log_load, n répétitions jusqu'à l'échec estimées
         (écart-type n_sd). bound : borne inférieure seulement. learn_k :
-        l'observation met à jour k (n connu précisément) ; sinon k est un
-        état « considéré » (Schmidt-Kalman) : son incertitude compte, il ne
-        bouge pas."""
+        l'observation met à jour k (n connu précisément) ; sinon k est tenu
+        pour fixe : il ne bouge pas, et son incertitude s'ajoute au bruit."""
         k = self.k()
         scale = 1.0 / max(1e-6, (1.0 - fatigue))
         h, H, u = self._h(max(n, 1.0) * scale)
@@ -232,7 +231,16 @@ class Filter:
                   for i in range(4)]
         _sym(self.C)
 
+    def _effective(self, H, R, learn_k):
+        """Jacobien et bruit effectifs : sans apprentissage de k, k est tenu
+        pour fixe (sa composante quitte le jacobien) et son incertitude
+        s'ajoute au bruit."""
+        if learn_k:
+            return H, R
+        return [H[0], H[1], 0.0, H[3]], R + H[2] * H[2] * self.C[2][2]
+
     def _update(self, H, innov, R, learn_k):
+        H, R = self._effective(H, R, learn_k)
         K, S = self._gain(H, R, learn_k)
         for i in range(4):
             self.m[i] += K[i] * innov
@@ -243,6 +251,7 @@ class Filter:
         de la loi tronquée (Tallis 1961) : la moyenne se déplace de
         K·√S·λ, la covariance fait la part λ(a + λ) d'une mise à jour
         complète."""
+        H, R = self._effective(H, R, learn_k)
         K, S = self._gain(H, R, learn_k)
         s = math.sqrt(S)
         a = margin / s
