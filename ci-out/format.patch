@@ -1,0 +1,16 @@
+diff --git a/integration_test/koach_g5_test.dart b/integration_test/koach_g5_test.dart
+index d1f7b58..857698c 100644
+--- a/integration_test/koach_g5_test.dart
++++ b/integration_test/koach_g5_test.dart
+@@ -253,9 +253,8 @@ void main() {
+     await back(tester);
+     await gallery(tester);
+     final stage = find.byKey(const ValueKey('koach-gallery-stage'));
+-    KoachViewState? stageState() => stage.evaluate().isEmpty
+-        ? null
+-        : tester.state<KoachViewState>(stage);
++    KoachViewState? stageState() =>
++        stage.evaluate().isEmpty ? null : tester.state<KoachViewState>(stage);
+     final chart = find.byKey(const ValueKey('koach-pose-progress_chart'));
+     await scrollTo(tester, chart);
+     final before = stageState()?.transitions ?? -1;

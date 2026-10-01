@@ -1,0 +1,937 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: calcul du zoom bornes : corps entier (1×) à 4×
+00:00 +1: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +2: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +3: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +4: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +5: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +6: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +7: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +8: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +9: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes pincement : zoom, la page ne défile pas (fiche, rotation horizontale)
+00:00 +10: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes pincement : zoom, la page ne défile pas (fiche, rotation horizontale)
+00:00 +11: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes pincement : zoom, la page ne défile pas (fiche, rotation horizontale)
+00:00 +12: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes pincement : zoom, la page ne défile pas (fiche, rotation horizontale)
+00:00 +13: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes pincement : zoom, la page ne défile pas (fiche, rotation horizontale)
+00:00 +14: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes pincement : zoom, la page ne défile pas (fiche, rotation horizontale)
+00:00 +15: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: révocation entre vérification et planification : repli sans abandon des rappels
+00:00 +16: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes deux doigts rapprochés : dézoom (fiche)
+00:00 +16: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: les erreurs restent lisibles et une nouvelle tentative répare le service
+Kalis notifications: Bad state: init_native_error
+00:01 +17: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: les erreurs restent lisibles et une nouvelle tentative répare le service
+Kalis notifications: Bad state: schedule_native_error
+00:01 +18: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes pincement : zoom, la page ne défile pas (Anatomie)
+00:01 +19: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: désactiver pendant une planification ne laisse aucun rappel quotidien
+00:01 +20: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes deux doigts rapprochés : dézoom (Anatomie)
+00:01 +21: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: ne recrée pas les mêmes alarmes inutilement mais une réparation forcée les restaure
+00:01 +22: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes fiche : un doigt vertical fait défiler la page, horizontal tourne le mannequin
+00:01 +23: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: les tests immédiat et différé ne dépendent pas de la période du programme
+00:01 +24: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes Anatomie : un doigt tourne le mannequin, jamais de zoom
+00:01 +25: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: tap après démarrage à froid : bonne séance, payload invalide ignoré
+00:01 +26: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes toucher bref immédiat sans zoom ; double toucher une fois zoomé
+00:01 +27: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: une séance terminée en cours d’utilisation annule automatiquement son rappel
+00:01 +28: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: rappels : uniquement un jour d'entraînement prévu, hors pause (KT-070)
+00:01 +29: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: rappels (KT-070) jamais un jour de repos, même avec un ancien réglage contraire
+00:07 +30: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: (setUpAll)
+00:07 +30: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:07 +31: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:07 +32: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:07 +33: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:07 +34: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:07 +35: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:08 +36: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:08 +37: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:08 +38: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:08 +39: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:08 +40: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: micro-animations (D6.3) transition entre deux poses (≤ 200 ms)
+00:08 +41: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) aperçu : aucune modification, date absente non inventée
+00:08 +42: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) aperçu : aucune modification, date absente non inventée
+00:08 +43: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: micro-animations (D6.3) au repos : clignement seedé et respiration (grande vue), tout s'arrête au démontage
+00:08 +44: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) formats historiques et sauvegarde L2 acceptés
+00:08 +45: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: micro-animations (D6.3) petite vue : clignement sans respiration ; yeux fermés : aucun clignement
+00:08 +46: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) fichiers invalides, tronqués, trop gros ou format inconnu
+00:08 +47: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) fichiers invalides, tronqués, trop gros ou format inconnu
+00:08 +48: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) fichiers invalides, tronqués, trop gros ou format inconnu
+00:08 +49: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) fichiers invalides, tronqués, trop gros ou format inconnu
+00:08 +50: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) fichiers invalides, tronqués, trop gros ou format inconnu
+00:08 +51: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: flammes (D5.3, D5.5) sélecteur : 10 flammes, choix, libellés
+00:08 +52: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: flammes (D5.3, D5.5) sélecteur : 10 flammes, choix, libellés
+00:08 +53: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: flammes (D5.3, D5.5) sélecteur : 10 flammes, choix, libellés
+00:08 +54: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: flammes (D5.3, D5.5) sélecteur : 10 flammes, choix, libellés
+00:09 +55: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) restauration : ni cérémonie, ni bilan
+00:09 +56: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: Koach parle (D6.4) bulle d'une réplique : texte, actions, « Pourquoi ? »
+00:09 +57: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression : tout est retiré, aucune résurrection
+00:09 +58: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression : tout est retiré, aucune résurrection
+00:09 +59: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression : tout est retiré, aucune résurrection
+00:09 +60: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: Koach parle (D6.4) en-têtes « Koach · … » des cartes de séance
+00:09 +61: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression avec écriture en attente : l’ancien état n’est pas réécrit
+00:09 +62: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression avec écriture en attente : l’ancien état n’est pas réécrit
+00:10 +63: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression avec écriture en attente : l’ancien état n’est pas réécrit
+00:10 +64: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression avec écriture en attente : l’ancien état n’est pas réécrit
+00:10 +65: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: écrans Anatomie : « Galerie de Koach » remplace « Koach (aperçu) »
+00:10 +66: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: écrans Anatomie : « Galerie de Koach » remplace « Koach (aperçu) »
+00:11 +67: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: écrans Anatomie : « Galerie de Koach » remplace « Koach (aperçu) »
+00:11 +68: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: écrans Anatomie : « Galerie de Koach » remplace « Koach (aperçu) »
+00:12 +69: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export réussi : fichier daté, contenu métier identique
+00:12 +70: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export réussi : fichier daté, contenu métier identique
+00:12 +71: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export réussi : fichier daté, contenu métier identique
+00:12 +72: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export cancelled : Export annulé
+00:12 +73: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export failed : accès refusé
+00:13 +74: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export failed : indisponible
+00:13 +75: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: KT-013 écritures et imports deux imports rapprochés : le dernier gagne, copies gardées
+00:13 +76: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export unverified : non relu
+00:13 +77: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export unverified : non relu
+00:13 +78: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: KT-013 écritures et imports un état ancien n’est pas écrit après un import plus récent
+00:13 +79: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import cancelled : aucune mutation
+00:13 +80: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import cancelled : aucune mutation
+00:13 +81: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import cancelled : aucune mutation
+00:13 +82: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: KT-013 écritures et imports échec d’écriture : mémoire gardée, reprise explicite
+00:14 +83: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import tooLarge : aucune mutation
+00:14 +84: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import tooLarge : aucune mutation
+00:14 +85: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: KT-013 écritures et imports import dégradé : rejet complet, aucune copie ni écriture
+00:14 +86: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import failed : aucune mutation
+00:14 +87: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import failed : aucune mutation
+00:14 +88: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import failed : aucune mutation
+00:14 +89: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import failed : aucune mutation
+00:14 +90: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: Formats historiques (G2 : WOD et séances perso ignorés) utilisateur neuf : export réimporté à l’identique
+00:14 +91: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import opened : aucune mutation
+00:14 +92: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: Formats historiques (G2 : WOD et séances perso ignorés) sauvegarde 6.0.x : historique du programme et XP conservés
+00:14 +93: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: Formats historiques (G2 : WOD et séances perso ignorés) sauvegarde 6.0.x : historique du programme et XP conservés
+00:15 +94: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran aperçu annulé puis bouton retour : aucune mutation
+00:15 +94: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: KT-015 imports bornés sauvegarde représentative acceptée, marges mesurées
+L2 représentatif : JSON 913203 o, compact 46283 car., 61241 valeurs
+00:15 +95: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran aperçu annulé puis bouton retour : aucune mutation
+00:15 +96: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran aperçu annulé puis bouton retour : aucune mutation
+00:15 +97: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: KT-015 imports bornés décompression excessive arrêtée pendant le flux
+00:15 +98: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable échouée : import non effectué
+00:15 +99: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable échouée : import non effectué
+00:15 +100: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable échouée : import non effectué
+00:15 +101: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable échouée : import non effectué
+00:15 +102: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable échouée : import non effectué
+00:16 +103: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable échouée : import non effectué
+00:16 +104: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable puis remplacement confirmé
+00:16 +105: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran remplacement sans sauvegarde : choix explicite
+00:17 +106: /home/runner/work/streetlift-apk/streetlift-apk/test/persistence_screen_test.dart: saisie et notes sont enregistrées sans changer de page
+00:18 +107: /home/runner/work/streetlift-apk/streetlift-apk/test/persistence_screen_test.dart: saisie et notes sont enregistrées sans changer de page
+00:18 +108: /home/runner/work/streetlift-apk/streetlift-apk/test/persistence_screen_test.dart: saisie et notes sont enregistrées sans changer de page
+00:18 +109: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran suppression : export préalable annulé, rien supprimé
+00:19 +110: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran dialogues à 320 px, texte 200 %, thème sombre true
+00:19 +111: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran dialogues à 320 px, texte 200 %, thème sombre false
+00:20 +112: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_koach_day_card_test.dart: carte en tête de séance, avant la liste des exercices : une seule carte Koach du jour, distincte du bloc du premier exercice
+00:20 +113: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_koach_day_card_test.dart: carte en tête de séance, avant la liste des exercices : une seule carte Koach du jour, distincte du bloc du premier exercice
+00:22 +114: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_koach_day_card_test.dart: carte en tête de séance, avant la liste des exercices : une seule carte Koach du jour, distincte du bloc du premier exercice
+00:22 +115: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_koach_day_card_test.dart: carte en tête de séance, avant la liste des exercices : une seule carte Koach du jour, distincte du bloc du premier exercice
+00:22 +116: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Programme révisé (asset) volumes calculés : maxima actuels puis modifiés
+00:22 +117: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_koach_day_card_test.dart: même contenu qu'avant : questionnaire, fatigue, actions ; repli en une ligne (320 px, texte 200 %)
+00:22 +118: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_koach_day_card_test.dart: même contenu qu'avant : questionnaire, fatigue, actions ; repli en une ligne (320 px, texte 200 %)
+00:22 +119: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_koach_day_card_test.dart: même contenu qu'avant : questionnaire, fatigue, actions ; repli en une ligne (320 px, texte 200 %)
+00:22 +120: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_koach_day_card_test.dart: même contenu qu'avant : questionnaire, fatigue, actions ; repli en une ligne (320 px, texte 200 %)
+00:22 +121: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_koach_day_card_test.dart: même contenu qu'avant : questionnaire, fatigue, actions ; repli en une ligne (320 px, texte 200 %)
+00:23 +122: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal feuille Pilotage modifiée pendant la séance : volumes recalculés tout de suite
+00:23 +123: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal feuille Pilotage modifiée pendant la séance : volumes recalculés tout de suite
+00:23 +124: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal feuille Pilotage modifiée pendant la séance : volumes recalculés tout de suite
+00:24 +125: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart: sélecteur à 390.0 px, texte 100 % : 2 colonne(s)
+00:24 +126: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart: sélecteur à 390.0 px, texte 100 % : 2 colonne(s)
+00:25 +127: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart: sélecteur à 390.0 px, texte 100 % : 2 colonne(s)
+00:26 +128: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 390×844, texte 130 %, sombre
+00:26 +129: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 390×844, texte 130 %, sombre
+00:26 +130: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 390×844, texte 130 %, sombre
+00:27 +131: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart: sélecteur à 390.0 px, texte 130 % : 2 colonne(s)
+00:27 +132: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 320×720, texte 200 %, clair
+00:27 +133: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 320×720, texte 200 %, clair
+00:27 +134: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 320×720, texte 200 %, clair
+00:27 +135: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 320×720, texte 200 %, clair
+00:28 +136: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 320×720, texte 200 %, clair
+00:28 +137: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 320×720, texte 200 %, clair
+00:29 +138: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart: changer de couleur garde onglet, semaine, route, saisies et journal
+00:29 +139: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 320×720, texte 130 %, sombre
+00:29 +140: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart: mode Système : la luminosité suit le téléphone, pas la couleur
+00:30 +141: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 390×844, texte 200 %, sombre
+00:31 +142: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart: les six couleurs × clair/sombre : accueil et réglages sans erreur
+00:33 +143: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: sept cartes accessibles, séance du jour développée et appui court direct
+00:35 +144: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: sept cartes accessibles, séance du jour développée et appui court direct
+00:35 +145: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: sept cartes accessibles, séance du jour développée et appui court direct
+00:35 +146: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_preload_test.dart: ouverture d’un mannequin : première image et images perdues
+00:35 +147: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: la semaine complète reste visible et ordonnée, avec ses statuts
+00:35 +148: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_preload_test.dart: ouverture annulée (repli 2D) : aucune mesure
+00:36 +149: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: appui long sur le slider choisit directement une semaine
+00:36 +150: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_preload_test.dart: écran Moteur 3D : carte « Préchargement »
+00:36 +151: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_preload_test.dart: écran Moteur 3D : carte « Préchargement »
+00:36 +152: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_preload_test.dart: écran Moteur 3D : carte « Préchargement »
+00:37 +153: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_preload_test.dart: écran Moteur 3D : carte « Préchargement »
+00:37 +154: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: la fiche semaine donne accès au choix de semaine et conserve les gestes des cartes
+00:37 +155: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: balayage, clavier et conservation de la semaine dans les onglets
+00:38 +156: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: balayage, clavier et conservation de la semaine dans les onglets
+00:38 +157: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: balayage, clavier et conservation de la semaine dans les onglets
+00:38 +158: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: balayage, clavier et conservation de la semaine dans les onglets
+00:38 +159: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: clip décodage et échantillonnage
+00:38 +160: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: la navigation libère la place du clavier dans STATS
+00:38 +161: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: la navigation libère la place du clavier dans STATS
+00:38 +162: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: la navigation libère la place du clavier dans STATS
+00:38 +163: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: la navigation libère la place du clavier dans STATS
+00:38 +164: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: la navigation libère la place du clavier dans STATS
+00:38 +165: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: la navigation libère la place du clavier dans STATS
+00:38 +166: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: la navigation libère la place du clavier dans STATS
+00:38 +167: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: la navigation libère la place du clavier dans STATS
+00:38 +168: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: la navigation libère la place du clavier dans STATS
+00:38 +169: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: la navigation libère la place du clavier dans STATS
+00:39 +170: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: écrans fiche sans animation : aucune 3D
+00:39 +171: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: écrans fiche sans animation : aucune 3D
+00:39 +172: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: écrans fiche sans animation : aucune 3D
+00:39 +173: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: un jour de récupération garde un résumé lisible et reste ouvrable
+00:39 +174: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: un jour de récupération garde un résumé lisible et reste ouvrable
+00:39 +175: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: écrans écran Animation de test, libellé comme test
+00:40 +176: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: écrans Moteur 3D › Animation de test
+00:40 +176 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: écrans Moteur 3D › Animation de test
+00:40 +176 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: écrans Moteur 3D › Animation de test
+00:41 +177 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: assets du lecteur déclarés
+00:41 +178 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: (tearDownAll)
+00:41 +178 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-058 séance compressée 20 min : durée respectée, principaux conservés (≥ 2/3), prévention à 1 série
+00:41 +179 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-058 séance compressée 30 min : durée respectée, principaux conservés (≥ 2/3), prévention à 1 série
+00:41 +180 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-058 séance compressée 45 min : durée respectée, principaux conservés (≥ 2/3), prévention à 1 série
+00:41 +181 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-058 séance compressée plus le temps est court, plus on retire (monotone)
+00:41 +182 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-058 séance compressée séance déjà assez courte : rien ne change
+00:41 +183 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-058 séance compressée pendant la séance : séries faites gardées, pas d'échauffement
+00:41 +184 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-058 séance compressée durée impossible : principaux aux 2/3, signalé
+00:41 +185 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-058 séance compressée déterministe
+00:41 +186 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-058 séance compressée prescription réduite : « 4×8 » → « 3×8 », myo et EMOM intacts
+00:41 +187 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-059 échange d'exercice douleur (poussee_horizontale) : même type, difficulté ±1, matériel disponible, contrainte articulaire ≤ l'original
+00:41 +188 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-059 échange d'exercice douleur (tirage_vertical) : même type, difficulté ±1, matériel disponible, contrainte articulaire ≤ l'original
+00:41 +189 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-059 échange d'exercice douleur (squat) : même type, difficulté ±1, matériel disponible, contrainte articulaire ≤ l'original
+00:41 +190 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-059 échange d'exercice jamais un exercice détesté ; classement déterministe
+00:41 +191 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-059 échange d'exercice charge initiale prudente
+00:41 +192 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-060 reprise, vacances, maladie règles de reprise à 7, 14 et 28 jours (et bornes)
+00:41 +193 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-060 reprise, vacances, maladie épisode de reprise : dernier arrêt ≥ 7 jours avant la séance
+00:41 +194 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-060 reprise, vacances, maladie une séance par mouvement (7-13 et 14-27 jours) ; semaine entière (28 jours et plus)
+00:41 +195 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-060 reprise, vacances, maladie maladie : première semaine de retour seulement
+00:41 +196 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-060 reprise, vacances, maladie le plan glisse, aucune séance doublée
+00:41 +197 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-061 assiduité < 60 % : une séance de moins ou plus courtes
+00:41 +198 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-061 assiduité 60 à 89 % : rien
+00:41 +199 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-061 assiduité ≥ 90 % sur 2 cycles avec progression : une séance de plus
+00:41 +200 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-061 assiduité données insuffisantes et jours en pause
+00:41 +201 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-061 assiduité jour ajouté ou retiré
+00:41 +202 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-062 plateau vrai positif : estimation plate 3 semaines, assiduité ≥ 80 %
+00:41 +203 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-062 plateau pas de faux positif : décharge, fatigue, assiduité faible, progression
+00:41 +204 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-062 plateau intervention selon le niveau
+00:41 +205 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-062 plateau estimation d'une série
+00:41 +206 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-063 modes d'autonomie Guidé : baisses appliquées, hausse seulement à RIR visé + 2
+00:41 +207 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-063 modes d'autonomie Assisté : tout est proposé ; Expert : suggestion visible
+00:41 +208 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-063 modes d'autonomie adaptations de sécurité : appliquées d'office en Guidé, annulables ; validées d'un tap sinon
+00:41 +209 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-064 charge de séance charge = difficulté × durée
+00:41 +210 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-064 charge de séance seuil de 1,5 fois la moyenne des 4 semaines précédentes
+00:41 +211 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: KT-064 charge de séance semaine civile du lundi au dimanche
+00:41 +212 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: données aller-retour et lecture stricte
+00:41 +213 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_adapt_test.dart: données valeurs hors contrat : import refusé, démarrage tolérant
+00:42 +214 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/visual_capture_test.dart: rendus bordeaux et anthracite : écrans, thèmes et largeur compacte
+00:42 +214 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_test.dart: modèle (KT-038) aller-retour JSON identique, sources et dates conservées
+00:42 +215 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_test.dart: modèle (KT-038) import strict : une valeur hors contrat refuse le profil
+00:42 +216 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_test.dart: modèle (KT-038) champs de santé refusés sans consentement
+00:42 +217 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_test.dart: modèle (KT-038) valeurs par défaut du mode et du ton selon le repère
+00:42 +218 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_test.dart: mode prudent (KT-041) aucun déclencheur : pas de mode prudent
+00:42 +219 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_test.dart: mode prudent (KT-041) chaque déclencheur active le mode prudent
+00:42 +220 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_test.dart: mode prudent (KT-041) accord du médecin daté : lève, puis une nouvelle gêne remet
+00:42 +221 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_test.dart: mode prudent (KT-041) plafond 80 % et repérage des tests maximaux
+00:42 +222 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_test.dart: questions progressives (KT-040) ordre, une par séance, plus tard, ne plus demander
+00:42 +223 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_test.dart: questions progressives (KT-040) questions de santé seulement avec consentement
+00:42 +224 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_test.dart: store installation neuve sans profil : export identique à 3.0.x
+00:43 +225 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: (setUpAll)
+00:43 +226 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: (setUpAll)
+00:43 +227 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: (setUpAll)
+00:43 +228 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: (setUpAll)
+00:43 +229 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: (setUpAll)
+00:43 +229 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_test.dart: store export, import, sauvegarde 3.0.0 sans profil, effacement
+00:43 +230 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:43 +231 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:44 +232 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:44 +233 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +234 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +235 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +236 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +237 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +238 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +239 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +240 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +241 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +242 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +243 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +244 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +245 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +246 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +247 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +248 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +249 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +250 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +251 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +252 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +253 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +254 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +255 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +256 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +257 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +258 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +259 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +260 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +261 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +262 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +263 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +264 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +265 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +266 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +267 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +268 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +269 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +270 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +271 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +272 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +273 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +274 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +275 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:45 +276 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:46 +277 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:46 +278 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:46 +279 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:46 +280 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:46 +281 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:46 +282 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:47 +283 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+00:47 +284 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: démarrage court complet : 9 écrans, taps comptés, profil enregistré, accueil ensuite
+L8 démarrage : 9 écrans, 24 taps, 1 saisie
+00:47 +285 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_couleur_test.dart: préférence choix rapides : le dernier est retrouvé
+00:47 +286 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: moins de 18 ans : message neutre, aucune écriture
+00:47 +287 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: moins de 18 ans : message neutre, aucune écriture
+00:47 +288 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: moins de 18 ans : message neutre, aucune écriture
+00:47 +289 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: moins de 18 ans : message neutre, aucune écriture
+00:47 +290 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_couleur_test.dart: préférence import d’une valeur inconnue : rouge, sans refuser la sauvegarde
+00:47 +291 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: consentement refusé : mode prudent annoncé, sans santé
+00:47 +292 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: consentement refusé : mode prudent annoncé, sans santé
+00:47 +293 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: consentement refusé : mode prudent annoncé, sans santé
+00:48 +294 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: installation existante : confirmation proposée, « Plus tard », puis confirmation sans rien modifier
+00:48 +294 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: installation existante : confirmation proposée, « Plus tard », puis confirmation sans rien modifier
+00:49 +295 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/motion_test.dart: (setUpAll)
+00:49 +295 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: chaque écran sans débordement : 320 px, texte 200 %, clair
+00:51 +296 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: chaque écran sans débordement : 320 px, texte 200 %, clair
+00:52 +297 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: chaque écran sans débordement : 320 px, texte 200 %, clair
+00:52 +298 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: chaque écran sans débordement : 320 px, texte 200 %, clair
+00:52 +299 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: chaque écran sans débordement : 320 px, texte 200 %, clair
+00:52 +300 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: chaque écran sans débordement : 320 px, texte 130 %, sombre
+00:54 +301 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: chaque écran sans débordement : 320 px, texte 130 %, sombre
+00:54 +302 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: chaque écran sans débordement : 320 px, texte 130 %, sombre
+00:54 +303 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: chaque écran sans débordement : 320 px, texte 130 %, sombre
+00:54 +304 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: chaque écran sans débordement : 320 px, texte 130 %, sombre
+00:54 +305 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: chaque écran sans débordement : 320 px, texte 130 %, sombre
+00:55 +306 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:55 +307 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: chaque écran sans débordement : 390 px, texte 200 %, sombre
+00:55 +308 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: chaque écran sans débordement : 390 px, texte 200 %, sombre
+00:56 +309 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: chaque écran sans débordement : 390 px, texte 200 %, sombre
+00:56 +310 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: chaque écran sans débordement : 390 px, texte 200 %, sombre
+00:56 +311 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l13_safety_test.dart: douleur (KT-073) série de douleurs au-dessus de 3/10, les plus récentes
+00:56 +312 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: écran Profil : accord du médecin daté, retrait du consentement
+00:57 +313 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: écran Profil : accord du médecin daté, retrait du consentement
+00:57 +314 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: écran Profil : accord du médecin daté, retrait du consentement
+00:57 +315 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: écran Profil : accord du médecin daté, retrait du consentement
+00:57 +316 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: écran Profil : accord du médecin daté, retrait du consentement
+00:57 +317 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: écran Profil : accord du médecin daté, retrait du consentement
+00:57 +318 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: écran Profil : accord du médecin daté, retrait du consentement
+00:57 +319 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: écran Profil : accord du médecin daté, retrait du consentement
+00:57 +320 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: écran Profil : accord du médecin daté, retrait du consentement
+00:57 +321 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: écran Profil : accord du médecin daté, retrait du consentement
+00:57 +322 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l8_profile_screens_test.dart: écran Profil : accord du médecin daté, retrait du consentement
+00:57 +323 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l13_safety_test.dart: store douleur > 3/10 sur 3 séances de suite : renvoi (ordre réel)
+00:57 +324 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l13_safety_test.dart: store douleur > 3/10 sur 3 séances de suite : renvoi (ordre réel)
+00:57 +325 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l13_safety_test.dart: store consentement refusé, puis accordé, puis retiré (KT-075)
+00:57 +326 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l13_safety_test.dart: store export puis suppression complète des données de santé
+00:57 +327 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l13_safety_test.dart: store 18 ans et plus : un profil importé plus jeune bloque (KT-075)
+00:57 +328 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/fonds_3d_test.dart: chaque vue 3D reçoit la couleur de son support
+00:57 +329 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/fonds_3d_test.dart: aucune carte ne sert seulement de cadre à une vue 3D
+00:57 +330 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/fonds_3d_test.dart: M8 : la 3D seulement pour la démonstration et Koach
+00:58 +331 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: (setUpAll)
+00:59 +331 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_store_test.dart: store migration du propriétaire : instance implicite, 40 semaines identiques au programme actuel, historique et export inchangés
+00:59 +332 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_store_test.dart: store migration du propriétaire : instance implicite, 40 semaines identiques au programme actuel, historique et export inchangés
+00:59 +332 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: catalogue 1 039 exercices, 8 disciplines, chargés par kalis_core
+G3_PERF chargement_catalogue_ms=136
+00:59 +333 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_store_test.dart: store migration du propriétaire : instance implicite, 40 semaines identiques au programme actuel, historique et export inchangés
+00:59 +334 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_store_test.dart: store migration du propriétaire : instance implicite, 40 semaines identiques au programme actuel, historique et export inchangés
+00:59 +335 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_store_test.dart: store migration du propriétaire : instance implicite, 40 semaines identiques au programme actuel, historique et export inchangés
+00:59 +336 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_store_test.dart: store migration du propriétaire : instance implicite, 40 semaines identiques au programme actuel, historique et export inchangés
+00:59 +337 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_store_test.dart: store migration du propriétaire : instance implicite, 40 semaines identiques au programme actuel, historique et export inchangés
+00:59 +338 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_store_test.dart: store migration du propriétaire : instance implicite, 40 semaines identiques au programme actuel, historique et export inchangés
+00:59 +339 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_store_test.dart: store migration du propriétaire : instance implicite, 40 semaines identiques au programme actuel, historique et export inchangés
+00:59 +340 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_store_test.dart: store migration du propriétaire : instance implicite, 40 semaines identiques au programme actuel, historique et export inchangés
+00:59 +341 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_store_test.dart: store migration du propriétaire : instance implicite, 40 semaines identiques au programme actuel, historique et export inchangés
+00:59 +342 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: conversion du journal (C1 à C12) historique complet : journal kalis_core valide, rien d'inventé
+01:00 +343 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_store_test.dart: store nouvel utilisateur : programme personnalisé généré au choix du départ, persisté, relu à l'identique et exporté
+01:00 +344 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:00 +345 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:00 +346 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:00 +347 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:00 +348 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:01 +349 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:01 +350 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:01 +351 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:01 +352 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:01 +353 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:01 +354 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:01 +355 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:01 +356 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:01 +357 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:01 +358 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:04 +359 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/redesign_test.dart: les réglages de chrono restent enregistrés après retour au menu
+01:05 +360 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Street workout (sombre, 200 %)
+01:05 +361 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/redesign_test.dart: les quatre destinations ont un libellé visible et conservent leur état
+01:05 +362 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Streetlifting (sombre, 200 %)
+01:07 +363 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: (setUpAll)
+01:07 +363 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie statique (sombre, 200 %)
+01:07 +364 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie statique (sombre, 200 %)
+01:07 +365 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie statique (sombre, 200 %)
+01:07 +366 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie statique (sombre, 200 %)
+01:07 +367 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie statique (sombre, 200 %)
+01:07 +368 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie statique (sombre, 200 %)
+01:07 +369 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie statique (sombre, 200 %)
+01:07 +370 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie statique (sombre, 200 %)
+01:07 +371 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie statique (sombre, 200 %)
+01:07 +372 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie statique (sombre, 200 %)
+01:08 +373 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage trois vues, traits et modelé, fond transparent
+01:08 +374 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie dynamique (sombre, 200 %)
+01:08 +375 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie dynamique (sombre, 200 %)
+01:08 +376 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie dynamique (sombre, 200 %)
+01:08 +377 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie dynamique (sombre, 200 %)
+01:08 +378 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie dynamique (sombre, 200 %)
+01:08 +379 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie dynamique (sombre, 200 %)
+01:09 +380 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline CrossFit / WOD (sombre, 200 %)
+01:10 +381 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+01:11 +382 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+01:12 +383 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Mobilité (sombre, 200 %)
+01:12 +384 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/ui_refactor_test.dart: cartes, notes et saisies survivent aux boutons et au sélecteur d’exercices
+01:13 +385 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (clair, 200 %)
+01:13 +386 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/ui_refactor_test.dart: les exercices enchaînés ont chacun leur carte et leur note
+01:14 +387 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Street workout (clair, 200 %)
+01:14 +388 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Street workout (clair, 200 %)
+01:14 +389 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème true
+01:15 +390 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème true
+01:15 +391 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie statique (clair, 200 %)
+01:16 +392 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème false
+01:17 +393 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie dynamique (clair, 200 %)
+01:17 +394 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie dynamique (clair, 200 %)
+01:17 +395 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/ui_refactor_test.dart: les actions de sauvegarde ouvrent l’export et l’import
+01:18 +396 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline CrossFit / WOD (clair, 200 %)
+01:18 +397 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Cardio (clair, 200 %)
+01:19 +398 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Cardio (clair, 200 %)
+01:19 +399 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: le niveau ouvre Parcours dans le seul onglet STATS
+01:21 +400 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: le niveau ouvre Parcours dans le seul onglet STATS
+01:21 +401 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: recherche et rubrique STATS survivent aux changements d’onglet
+01:22 +402 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: recherche et rubrique STATS survivent aux changements d’onglet
+01:22 +403 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: recherche et rubrique STATS survivent aux changements d’onglet
+01:22 +404 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: recherche et rubrique STATS survivent aux changements d’onglet
+01:22 +405 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/training_estimate_test.dart: tenues ne deviennent pas des répétitions
+01:22 +406 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +407 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +408 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +409 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +410 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +411 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +412 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +413 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +414 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +415 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +416 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +417 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +418 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +419 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +420 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +421 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +422 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: historique : notes et lecture seule des séances
+01:22 +423 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/training_estimate_test.dart: intégration programme les supersets partagent leur repos et les EMOM leur horloge
+01:22 +424 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: les références restent modifiables et reviennent aux performances
+01:22 +425 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: les références restent modifiables et reviennent aux performances
+01:22 +426 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: les références restent modifiables et reviennent aux performances
+01:22 +427 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: un palier se met à jour depuis les séances, sa consultation ne donne pas de XP
+01:23 +428 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: les commandes STATS et les paliers sont nommés pour le lecteur d’écran
+01:23 +429 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: STATS lisible à 320 px et texte 130 %, thème true
+01:24 +430 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: STATS lisible à 320 px et texte 130 %, thème true
+01:24 +431 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: STATS lisible à 320 px et texte 130 %, thème false
+01:25 +432 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: STATS lisible à 320 px et texte 130 %, thème false
+01:25 +433 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: STATS lisible à 320 px et texte 130 %, thème false
+01:25 +434 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: STATS lisible à 320 px et texte 130 %, thème false
+01:25 +435 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: STATS lisible à 320 px et texte 130 %, thème false
+01:25 +436 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: STATS lisible à 320 px et texte 130 %, thème false
+01:25 +437 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: STATS lisible à 320 px et texte 130 %, thème false
+01:25 +438 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Installation neuve et installations existantes installation neuve : non démarrée, références inconnues
+01:25 +439 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Installation neuve et installations existantes première ouverture interrompue avant la sauvegarde : neuve
+01:25 +440 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Installation neuve et installations existantes ancienne installation (réglages, aucune séance) : calendrier du 13/07/2026
+01:26 +441 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Installation neuve et installations existantes ancienne installation : ses références personnelles priment
+01:26 +442 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Installation neuve et installations existantes état 2.5.7 : semaine, dates, références, séances conservées ; migration idempotente
+01:26 +443 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Installation neuve et installations existantes effacement complet : programme non démarré, références inconnues
+01:26 +444 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Choix du départ bornes incluses : −280 jours et +365 jours
+01:26 +445 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Choix du départ départ futur non lundi + références partielles : persistés, rien d’autre créé
+01:26 +446 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Choix du départ départ passé : reprise à la bonne semaine
+01:26 +447 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Choix du départ référence invalide : rien n’est modifié
+01:26 +448 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Choix du départ écriture refusée : départ non annoncé, état rétabli, nouvel essai
+01:26 +449 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Choix du départ double confirmation : un seul état, aucune séance dupliquée
+01:26 +450 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Choix du départ installation existante : changer la date ne touche ni séances, ni dates réelles, ni récompenses
+01:26 +451 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Choix du départ installation existante : changer la date ne touche ni séances, ni dates réelles, ni récompenses
+01:26 +452 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Choix du départ installation existante : changer la date ne touche ni séances, ni dates réelles, ni récompenses
+01:26 +453 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Choix du départ installation existante : changer la date ne touche ni séances, ni dates réelles, ni récompenses
+01:26 +454 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Sauvegardes aller-retour 2.5.8 : départ, provenance et références intacts
+01:27 +455 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Sauvegardes sauvegarde d’un utilisateur non démarré : restaurée telle quelle
+01:27 +456 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Sauvegardes ancienne sauvegarde : migrée (13/07/2026, références « à vérifier »), jamais « aujourd’hui »
+01:27 +457 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Sauvegardes fichier invalide : refusé, départ et références inchangés
+01:27 +458 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Références (KT-007) inconnue : charge et volume « à renseigner », jamais calculés sur 0
+01:27 +459 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Références (KT-007) renseignée explicitement, même égale à l’ancienne valeur embarquée
+01:27 +460 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Références (KT-007) historique : confirmée sans changer la valeur, ou « Je ne sais pas »
+01:27 +461 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l7_koach_simulation_test.dart: le simulateur Dart reproduit les athlètes de la référence Python
+01:27 +462 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l7_koach_simulation_test.dart: le simulateur Dart reproduit les athlètes de la référence Python
+01:27 +463 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l7_koach_simulation_test.dart: le simulateur Dart reproduit les athlètes de la référence Python
+01:27 +464 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l7_koach_simulation_test.dart: le simulateur Dart reproduit les athlètes de la référence Python
+01:27 +465 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Références (KT-007) affichage en livres : les références restent en kg, sans dérive
+01:27 +466 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l7_koach_simulation_test.dart: C1 — erreur < 3 % après 6 séances depuis un a priori juste
+01:27 +467 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l7_koach_simulation_test.dart: C1 — erreur < 3 % après 6 séances depuis un a priori juste
+01:27 +468 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Rappels départ futur : premier rappel le jour de S1 · J1, aucun avant
+01:27 +469 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l7_koach_simulation_test.dart: C2 — convergence en ≤ 6 séances depuis un a priori faux de ±15 %
+01:28 +470 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l7_koach_simulation_test.dart: C2 — convergence en ≤ 6 séances depuis un a priori faux de ±15 %
+01:28 +470 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Rappels : erreurs et ouverture échec de programmation : visible, départ conservé, reprise possible
+Kalis notifications: Bad state: schedule_native_error
+01:28 +471 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l7_koach_simulation_test.dart: C2 — convergence en ≤ 6 séances depuis un a priori faux de ±15 %
+01:28 +472 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l7_koach_simulation_test.dart: C2 — convergence en ≤ 6 séances depuis un a priori faux de ±15 %
+01:28 +473 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Comparaison avant / après (migration synthétique) utilisateur avancé : semaine, dates, séances, références, récompenses, rappels
+L4-COMPARE migration {"semaine":"S11 · J6","depart":"2026-07-13","origine":"migration","datesS11":"21/09→27/09/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"rappels":174,"premierRappel":"S12-J1 2026-09-28T07:30"}
+L4-COMPARE relance {"semaine":"S11 · J6","depart":"2026-07-13","origine":"migration","datesS11":"21/09→27/09/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"rappels":174,"premierRappel":"S12-J1 2026-09-28T07:30"}
+L4-COMPARE depart-21-09 {"semaine":"S1 · J6","depart":"2026-09-21","origine":"user","datesS11":"30/11→06/12/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"rappels":180,"premierRappel":"S11-J1 2026-11-30T07:30"}
+01:28 +474 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l7_koach_simulation_test.dart: C3 — un mauvais jour isolé (−8 %) déplace l’estimation de < 1 %
+01:28 +475 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans premier départ : date, référence saisie, les autres inconnues
+01:28 +476 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans premier départ : date, référence saisie, les autres inconnues
+01:29 +477 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans premier départ : date, référence saisie, les autres inconnues
+01:29 +478 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans premier départ : date, référence saisie, les autres inconnues
+01:30 +479 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans premier départ : date, référence saisie, les autres inconnues
+01:30 +480 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans premier départ : date, référence saisie, les autres inconnues
+01:30 +481 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans premier départ : date, référence saisie, les autres inconnues
+01:30 +482 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans premier départ : date, référence saisie, les autres inconnues
+01:30 +483 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/refonte_ma_test.dart: carte musculaire STATS : rendu identique à 3.1.0 (sombre)
+01:30 +484 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/refonte_ma_test.dart: carte musculaire STATS : rendu identique à 3.1.0 (sombre)
+01:31 +485 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/refonte_ma_test.dart: carte musculaire STATS : rendu identique à 3.1.0 (sombre)
+01:31 +486 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/refonte_ma_test.dart: carte musculaire STATS : rendu identique à 3.1.0 (sombre)
+01:31 +487 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/refonte_ma_test.dart: carte musculaire STATS : rendu identique à 3.1.0 (sombre)
+01:31 +488 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans même date : bouton inactif, rien à replanifier
+01:31 +489 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/refonte_ma_test.dart: carte musculaire STATS : rendu identique à 3.1.0 (clair)
+01:31 +490 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans séance : référence manquante nommée, rien de calculé à sa place
+01:31 +491 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans séance : référence manquante nommée, rien de calculé à sa place
+01:31 +492 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans séance : référence manquante nommée, rien de calculé à sa place
+01:32 +493 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans séance : référence manquante nommée, rien de calculé à sa place
+01:32 +494 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/refonte_ma_test.dart: démonstrations découpées rendu sans exception de chaque animation, corps dessiné
+01:32 +495 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/refonte_ma_test.dart: démonstrations découpées rendu sans exception de chaque animation, corps dessiné
+01:32 +496 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans Références : inconnue, à vérifier, confirmée, « Je ne sais pas »
+01:32 +497 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/refonte_ma_test.dart: démonstrations découpées coût : images par seconde (test) et mémoire des textures
+REFONTE_PERF images=240 moyenne_us=1871 ips=535 textures_octets=6340608
+01:32 +498 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans accueil non démarré 320 px · 200 % : bandeau dans la liste, journées accessibles
+01:33 +499 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans accueil non démarré 390 px · 100 % : bandeau dans la liste, journées accessibles
+01:33 +500 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans rendu 320 px · 130 % · clair : sans débordement
+01:33 +501 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans rendu 320 px · 200 % · sombre : sans débordement
+01:34 +502 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/startup_test.dart: ouverture deux secondes : drapeau en bas, logo centre puis en-tête, accueil protégé
+01:34 +503 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/startup_test.dart: ouverture deux secondes : drapeau en bas, logo centre puis en-tête, accueil protégé
+01:34 +504 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans rendu 390 px · 100 % · sombre : sans débordement
+01:35 +505 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/startup_test.dart: chargement lent : pas d’accueil prématuré ni saut de logo
+01:35 +506 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/startup_test.dart: une erreur d’initialisation reste visible
+01:35 +507 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/startup_test.dart: réduire les animations supprime le déplacement et garde deux secondes
+01:35 +508 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: (setUpAll)
+01:36 +508 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m3_fiche_mannequin_test.dart: (setUpAll)
+01:36 +509 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m3_fiche_mannequin_test.dart: (setUpAll)
+01:36 +510 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m3_fiche_mannequin_test.dart: (setUpAll)
+01:36 +511 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m3_fiche_mannequin_test.dart: (setUpAll)
+01:36 +512 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m3_fiche_mannequin_test.dart: (setUpAll)
+01:36 +513 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m3_fiche_mannequin_test.dart: (setUpAll)
+01:36 +514 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m3_fiche_mannequin_test.dart: (setUpAll)
+01:36 +515 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m3_fiche_mannequin_test.dart: (setUpAll)
+01:36 +515 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: écran sans Flutter GPU lisible 390 px, texte 100 %
+01:36 +516 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: écran sans Flutter GPU lisible 390 px, texte 100 %
+01:36 +517 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: écran sans Flutter GPU lisible 390 px, texte 100 %
+01:36 +518 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: écran sans Flutter GPU lisible 390 px, texte 100 %
+01:36 +519 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: écran sans Flutter GPU lisible 390 px, texte 100 %
+01:36 +520 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: écran sans Flutter GPU lisible 390 px, texte 100 %
+01:36 +521 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: écran sans Flutter GPU lisible 390 px, texte 100 %
+01:36 +522 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: écran sans Flutter GPU lisible 390 px, texte 100 %
+01:36 +523 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: écran sans Flutter GPU lisible 390 px, texte 100 %
+01:36 +524 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: écran sans Flutter GPU lisible 390 px, texte 100 %
+01:36 +525 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: écran sans Flutter GPU lisible 390 px, texte 100 %
+01:36 +526 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: écran sans Flutter GPU lisible 390 px, texte 100 %
+01:36 +527 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: écran sans Flutter GPU lisible 390 px, texte 100 %
+01:37 +528 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: écran sans Flutter GPU lisible 390 px, texte 100 %
+01:37 +529 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m3_fiche_mannequin_test.dart: fiche exercice M8 : pas d’animation, rien en tête ; carte 2D et liste
+01:37 +530 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m3_fiche_mannequin_test.dart: fiche exercice M8 : pas d’animation, rien en tête ; carte 2D et liste
+01:37 +531 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: Réglages › À propos › Moteur 3D ouvre l’écran
+01:38 +532 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m3_fiche_mannequin_test.dart: fiche exercice échantillon de 50 exercices, sombre et clair, sans exception
+01:40 +532 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l9b_perf_test.dart: calcul + dessin d'une image : toutes les démonstrations
+L9B_PERF demo_frames=6070 moyenne_us=199.5
+01:40 +533 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/m3_fiche_mannequin_test.dart: fiche exercice échantillon de 50 exercices, sombre et clair, sans exception
+01:43 +534 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l9b_perf_test.dart: liste la plus longue : 1 039 exercices (G3), défilement
+L9B_PERF liste_frames=40 moyenne_ms=32.76
+01:43 +535 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_generator_test.dart: KT-051 niveaux par mouvement pompes, tractions et squat : seuils proposés au registre
+01:43 +536 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_generator_test.dart: KT-051 niveaux par mouvement lests en % du poids du corps : avancé et expert
+01:43 +537 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_generator_test.dart: KT-051 niveaux par mouvement niveau global = médiane basse des mouvements mesurés ; les autres mouvements prennent ce niveau « par défaut »
+01:43 +538 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_generator_test.dart: KT-052 périodisation choix automatique selon l'objectif et le niveau
+01:43 +539 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_generator_test.dart: KT-052 périodisation propriétaire : modèle Expert streetlifting = programme actuel, 40 semaines identiques (LC1 comprise) et annotations Koach identiques
+01:43 +540 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_generator_test.dart: KT-052 périodisation mode prudent : jamais le modèle Expert (tests maximaux)
+01:44 +541 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: les seuils de niveaux conservent exactement la courbe existante
+01:44 +542 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: les seuils de niveaux conservent exactement la courbe existante
+01:44 +543 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: les seuils de niveaux conservent exactement la courbe existante
+01:44 +544 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: les seuils de niveaux conservent exactement la courbe existante
+01:44 +545 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: les seuils de niveaux conservent exactement la courbe existante
+01:44 +546 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: les seuils de niveaux conservent exactement la courbe existante
+01:44 +547 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_generator_test.dart: KT-053 répartition et durée durée dans ±10 % (sauf volume plafonné signalé), 48 h entre séances lourdes, jours consécutifs compris
+01:44 +548 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_generator_test.dart: KT-053 répartition et durée durée dans ±10 % (sauf volume plafonné signalé), 48 h entre séances lourdes, jours consécutifs compris
+01:44 +549 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_generator_test.dart: KT-053 répartition et durée durée dans ±10 % (sauf volume plafonné signalé), 48 h entre séances lourdes, jours consécutifs compris
+01:44 +550 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_generator_test.dart: KT-053 répartition et durée durée dans ±10 % (sauf volume plafonné signalé), 48 h entre séances lourdes, jours consécutifs compris
+01:44 +551 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_generator_test.dart: KT-053 répartition et durée durée dans ±10 % (sauf volume plafonné signalé), 48 h entre séances lourdes, jours consécutifs compris
+01:44 +552 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: la régularité accepte les repos et donne le badge quatre semaines
+01:44 +553 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: la régularité accepte les repos et donne le badge quatre semaines
+01:44 +554 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: la régularité accepte les repos et donne le badge quatre semaines
+01:44 +555 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_generator_test.dart: KT-054 choix des exercices muscle-up retenu pour une épreuve de muscle-up
+01:44 +556 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: une semaine entièrement manquée coupe la série actuelle, pas le meilleur historique
+01:44 +557 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: une semaine entièrement manquée coupe la série actuelle, pas le meilleur historique
+01:44 +558 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_generator_test.dart: KT-055 volume départ par niveau, plafond départ + 6, ajustement ±2 appliqué
+01:44 +559 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: les dates futures ne donnent pas de badges ou de missions en avance
+01:44 +560 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_generator_test.dart: KT-056 échauffement et travail spécifique montée en charge 40/60/75/85 % sur un jour lourd, échauffement de 5 à 10 minutes (contrôle des propriétés)
+01:44 +561 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: la suppression d’un événement retire ses bonus sans état de récompense dupliqué
+01:44 +562 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: la suppression d’un événement retire ses bonus sans état de récompense dupliqué
+01:44 +563 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: la suppression d’un événement retire ses bonus sans état de récompense dupliqué
+01:44 +564 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_generator_test.dart: KT-057 explications et régénération fusion : journées passées et journées déjà saisies conservées, suite remplacée
+01:44 +565 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: la migration conserve données, XP de base et bonus après deux imports
+01:44 +566 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: la migration conserve données, XP de base et bonus après deux imports
+01:45 +567 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_generator_test.dart: KT-050 déterminisme et références même entrée, même graine : JSON identique au caractère près ; entrées sérialisées rejouées à l'identique
+01:45 +568 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: le cache se met à jour après une validation et son annulation
+01:45 +569 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: le cache se met à jour après une validation et son annulation
+01:45 +570 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/progression_test.dart: les semaines civiles restent correctes autour du passage à l’heure d’hiver
+01:45 +571 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:46 +572 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:48 +573 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:48 +574 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:48 +575 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:49 +576 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:49 +577 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:49 +578 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:49 +579 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:49 +580 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:49 +581 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:50 +582 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:51 +583 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:52 +584 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:52 +585 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:52 +586 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:52 +587 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:52 +588 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:53 +589 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:53 +590 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:53 +591 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:53 +592 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:54 +593 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:54 +594 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:54 +595 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:54 +596 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:54 +597 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:54 +598 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:55 +599 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:56 +600 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:56 +601 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:57 +602 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:57 +603 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:57 +604 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:57 +605 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:57 +606 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:57 +607 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:58 +608 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:59 +609 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:59 +609 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:59 +609 ~6: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:59 +609 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:59 +609 ~8: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+01:59 +609 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1 à 1000
+L10 propriétés 1-1000 : 16690 ms ; modèles {health: 247, block: 385, undulating: 143, linear: 220, expert_streetlifting: 5} ; séances 35087 dont 15932 plafonnées
+02:02 +610 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l13_screens_test.dart: santé et sécurité lisible 390 px, texte 100 %
+02:02 +611 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:04 +612 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:04 +613 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:06 +614 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:07 +615 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:09 +616 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:09 +617 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:10 +618 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:10 +619 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:11 +620 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:11 +621 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:14 +622 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:14 +623 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:15 +624 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:15 +625 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:15 +626 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:16 +627 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:16 +628 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:16 +629 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:16 +630 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:16 +631 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:16 +632 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:16 +633 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:17 +634 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:17 +635 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:17 +636 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:18 +637 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:18 +638 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:18 +639 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:18 +640 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+02:18 +641 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 1001 à 2000
+L10 propriétés 1001-2000 : 15787 ms ; modèles {health: 485, block: 753, undulating: 301, linear: 453, expert_streetlifting: 8} ; séances 68179 dont 30593 plafonnées
+02:18 +642 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l9b_pose_test.dart: lecture et réduction des animations animation : la pose change au fil du temps
+02:19 +643 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:19 +644 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:21 +645 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:21 +646 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:22 +647 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:22 +648 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:23 +649 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:24 +650 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:24 +651 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:24 +652 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:24 +653 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:24 +654 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:24 +655 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:24 +656 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:24 +657 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:24 +658 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:24 +659 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:24 +660 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:24 +661 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:24 +662 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:24 +663 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:25 +664 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:25 +665 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:26 +666 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:26 +667 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:26 +668 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:28 +669 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:28 +670 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:28 +671 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:28 +672 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:29 +673 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:32 +674 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+02:33 +675 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 2001 à 3000
+L10 propriétés 2001-3000 : 15478 ms ; modèles {health: 745, block: 1116, undulating: 455, linear: 673, expert_streetlifting: 11} ; séances 100025 dont 44981 plafonnées
+02:33 +676 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l7_koach_screens_test.dart: D14/D25 : questionnaire facultatif, jour de fatigue proposé puis accepté (320 px, texte 200 %)
+02:34 +677 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:34 +678 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:34 +679 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:35 +680 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:37 +681 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:39 +682 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:41 +683 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:42 +684 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:44 +685 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:45 +686 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:46 +687 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:46 +688 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:46 +689 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:47 +690 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:47 +691 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:47 +692 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:47 +693 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:47 +694 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:47 +695 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:47 +696 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:47 +697 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:47 +698 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:48 +699 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:48 +700 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:48 +701 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:48 +702 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:48 +703 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:48 +704 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:48 +705 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:49 +706 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+02:50 +707 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 3001 à 4000
+L10 propriétés 3001-4000 : 16255 ms ; modèles {health: 1000, block: 1486, undulating: 602, linear: 899, expert_streetlifting: 13} ; séances 134919 dont 62172 plafonnées
+02:50 +708 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l4b_seances_test.dart: Écrans fin : écriture refusée → réessayer ; bilan une seule fois
+02:50 +709 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:50 +710 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:51 +711 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:51 +712 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:51 +713 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:54 +714 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:55 +715 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:55 +716 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:55 +717 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:56 +718 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:58 +719 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:58 +720 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:58 +721 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:58 +722 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:59 +723 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:59 +724 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:59 +725 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+02:59 +726 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:00 +727 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:00 +728 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:00 +729 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:00 +730 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:01 +731 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:01 +732 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:01 +733 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:03 +734 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:03 +735 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:03 +736 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:03 +737 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:03 +738 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:03 +739 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:03 +740 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:03 +741 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:03 +742 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:03 +743 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:03 +744 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:04 +745 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+03:04 +746 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 4001 à 5000
+L10 propriétés 4001-5000 : 15509 ms ; modèles {health: 1274, block: 1856, undulating: 752, linear: 1102, expert_streetlifting: 16} ; séances 168374 dont 77209 plafonnées
+03:05 +747 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/level_fill_test.dart: NIV. précède le niveau et la barre représente son avancement
+03:05 +748 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:06 +748 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:07 +749 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:07 +750 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:07 +751 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:07 +752 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:08 +753 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:08 +754 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:08 +755 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:08 +756 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:08 +757 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:08 +758 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:08 +759 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:08 +760 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:08 +761 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:08 +762 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:08 +763 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:08 +764 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:11 +765 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:11 +766 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:12 +767 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:12 +768 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:13 +768 ~11: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:13 +768 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:13 +768 ~13: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:13 +768 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:13 +768 ~15: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:13 +768 ~16: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:13 +768 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:17 +769 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:17 +770 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:18 +771 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:18 +772 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:18 +773 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:18 +774 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:19 +775 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:19 +776 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:20 +777 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:20 +778 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:20 +779 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:20 +780 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:21 +781 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:21 +782 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+03:21 +783 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 5001 à 6000
+L10 propriétés 5001-6000 : 16376 ms ; modèles {health: 1529, block: 2224, undulating: 891, linear: 1340, expert_streetlifting: 16} ; séances 202196 dont 94437 plafonnées
+03:22 +784 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l11_screens_test.dart: Adaptation au quotidien : 320 px, texte 200 %, clair
+03:22 +785 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:22 +786 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:22 +787 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:23 +788 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:23 +789 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:23 +790 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +791 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +792 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +793 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +794 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +795 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +796 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +797 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +798 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +799 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +800 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +801 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +802 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +803 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +804 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +805 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +806 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +807 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +808 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +809 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:24 +810 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:25 +811 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:25 +812 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:25 +813 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:25 +814 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:25 +815 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:25 +815 ~18: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:25 +815 ~19: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:33 +816 ~19: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:34 +816 ~20: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+03:35 +816 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 6001 à 7000
+L10 propriétés 6001-7000 : 15203 ms ; modèles {health: 1750, block: 2596, undulating: 1031, linear: 1606, expert_streetlifting: 17} ; séances 236473 dont 110228 plafonnées
+03:37 +817 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l6_perf_test.dart: zones masquées (store global) STATS masqué : notification différée, à jour dès la première image après le retour sur l’onglet
+03:38 +818 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:40 +819 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:44 +820 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:44 +821 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:44 +822 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:45 +823 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:45 +824 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:45 +825 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:45 +826 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:46 +827 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:46 +828 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:46 +829 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:46 +830 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:46 +831 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:46 +832 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:46 +833 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:49 +834 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+03:51 +835 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 7001 à 8000
+L10 propriétés 7001-8000 : 15367 ms ; modèles {health: 2023, block: 2941, undulating: 1188, linear: 1829, expert_streetlifting: 19} ; séances 269501 dont 125538 plafonnées
+03:52 +836 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l9b_content_test.dart: fiches à 320 px et 200 % fiche 320 px, texte 200 %, sombre
+03:52 +837 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+03:54 +838 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+03:55 +839 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+03:55 +840 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+03:56 +841 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+03:57 +842 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+03:58 +843 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+03:58 +844 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+03:59 +845 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+03:59 +846 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:00 +847 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:00 +848 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:01 +849 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:02 +850 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:02 +851 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:04 +852 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:04 +853 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:04 +854 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:04 +855 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:05 +856 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:05 +857 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:05 +858 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:05 +859 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:06 +860 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:06 +861 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:06 +862 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:06 +863 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:07 +864 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:07 +865 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+04:07 +866 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 8001 à 9000
+L10 propriétés 8001-9000 : 15159 ms ; modèles {health: 2271, block: 3302, undulating: 1359, linear: 2045, expert_streetlifting: 23} ; séances 302817 dont 140759 plafonnées
+04:07 +867 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_filter_menu_test.dart: écrans (setUpAll)
+04:07 +867 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 9001 à 10000
+04:08 +868 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 9001 à 10000
+04:11 +869 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 9001 à 10000
+04:11 +870 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 9001 à 10000
+04:11 +871 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 9001 à 10000
+04:12 +872 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 9001 à 10000
+04:13 +873 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 9001 à 10000
+04:13 +874 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 9001 à 10000
+04:13 +875 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 9001 à 10000
+04:13 +876 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 9001 à 10000
+04:13 +877 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/l10_properties_test.dart: profils 9001 à 10000
+L10 propriétés 9001-10000 : 14531 ms ; modèles {health: 2524, block: 3678, undulating: 1513, linear: 2261, expert_streetlifting: 24} ; séances 336519 dont 154750 plafonnées
+04:22 +878 ~21: All tests passed!
