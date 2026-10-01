@@ -99,8 +99,8 @@ Défauts trouvés par ces tests et corrigés avant livraison :
 | Charge de 0 kg refusée par le test | Erreur du test : 0 kg est une charge valide (poids du corps) |
 | Le test du diff comptait un déplacement comme deux changements | Erreur du test, corrigée |
 
-Sur une population distincte de 1 000 profils (`docs/MESURES.md`, § 3) : 0 programme invalide, 2 avec une
-séance de repli. La note va de 0,734 à 0,977 (médiane 0,932) ; les notes basses sont des profils que le
+Sur une population distincte de 1 000 profils (`docs/MESURES.md`, § 3) : 0 programme invalide, 3 avec une
+séance de repli. La note va de 0,734 à 0,977 (médiane 0,933) ; les notes basses sont des profils que le
 tirage rend presque impossibles (une discipline, peu de matériel, plusieurs gênes fortes) : l'erreur de
 dosage y atteint 100 points quand aucune séance de la discipline demandée n'est admissible. Ce cas est
 couvert par la séance de repli, pas résolu.
@@ -137,7 +137,7 @@ gens qui ne font pas de street ? Sur les 328 profils aléatoires sans discipline
 du propriétaire est comparé à l'exercice le plus choisi de la même catégorie hors de son programme ;
 « sur-représenté » veut dire choisi dans plus de 5 % des programmes et plus de deux fois plus que ce
 pair. Accessoires **propres** au propriétaire (exercices des disciplines street) sur-représentés : **0**.
-Un accessoire du fonds commun de la musculation dépasse la règle : `mu-mollets-debout-machine` (18,1 %
+Un accessoire du fonds commun de la musculation dépasse la règle : `mu-mollets-debout-machine` (17,4 %
 contre 4,9 % pour le meilleur pair). La cause est le catalogue, pas le programme du propriétaire : c'est
 l'exercice de mollets de référence dès qu'une salle est disponible, et la catégorie offre peu de pairs
 chargés. Le constat est laissé visible dans le relevé plutôt que masqué par un réglage.
@@ -196,12 +196,13 @@ Budget : génération en 1 s au plus, régénération en 300 ms au plus. Sur la 
 
 | Opération | Profils types (médiane / maximum) | 1 000 profils aléatoires (maximum) |
 | --- | --- | --- |
-| Passe 1 | 56,1 ms / 115,6 ms | 253,9 ms |
-| Génération complète (passes 1 et 2) | 57,4 ms / 117,6 ms | — |
-| Régénération après une action de revue | 8,5 ms / 20,9 ms | 42,2 ms |
-| Autre proposition | 23,6 ms / 59,8 ms | — |
+| Passe 1 | 49,0 ms / 93,9 ms | 212,0 ms |
+| Génération complète (passes 1 et 2) | 50,1 ms / 95,6 ms | — |
+| Régénération après une action de revue | 7,0 ms / 16,1 ms | 46,0 ms |
+| Autre proposition | 19,7 ms / 47,9 ms | — |
 
-La marge est d'un facteur 4 sur la génération et 7 sur la régénération dans le pire cas mesuré. Un
+La marge est d'un facteur 4 sur la génération et 6 sur la régénération dans le pire cas mesuré ; d'un
+passage du contrôle à l'autre, les temps varient d'environ 20 %. Un
 téléphone d'entrée de gamme est plus lent que cette machine d'un facteur inconnu : **à remesurer à
 l'intégration** (G8). Si le budget était dépassé, `annealIterations` se réduit sans autre changement.
 
@@ -221,8 +222,8 @@ note à moins de 2 % de la meilleure ; les viviers étroits — mobilité seule,
 toujours), et c'est aussi pourquoi le réglage fin des poids ne mérite pas
 d'effort avant une relecture professionnelle des programmes.
 
-**Diff minimal** (§ 3). Hors de l'emplacement visé, rien d'autre ne change dans 75 % des `cannot_do`,
-80 % des `dislike` et 59 % des `remove` ; en moyenne 0,5 à 0,6 changement. Le maximum observé est de 12
+**Diff minimal** (§ 3). Hors de l'emplacement visé, rien d'autre ne change dans 74 % des `cannot_do`,
+80 % des `dislike` et 58 % des `remove` ; en moyenne 0,5 à 0,6 changement. Le maximum observé est de 12
 changements : l'exclusion d'un exercice vaut pour toute la semaine et peut obliger à rééquilibrer
 plusieurs séances. Ce cas extrême est rare mais visible ; il est noté comme limite.
 
