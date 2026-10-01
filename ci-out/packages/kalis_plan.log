@@ -1,0 +1,309 @@
+== kalis_plan
+Resolving dependencies...
+Downloading packages...
++ _fe_analyzer_shared 108.0.0
++ analyzer 14.4.0
++ args 2.7.0
++ async 2.13.1
++ boolean_selector 2.1.2
++ cli_config 0.2.0
++ collection 1.19.1
++ convert 3.1.2
++ coverage 1.15.1
++ crypto 3.0.7
++ file 7.0.1
++ frontend_server_client 4.0.0
++ glob 2.2.0
++ http_multi_server 3.2.2
++ http_parser 4.1.2
++ io 1.1.0
++ kalis_core 0.1.0 from path ../kalis_core
++ lints 4.0.0 (6.1.0 available)
++ logging 1.3.0
++ matcher 0.12.20
++ meta 1.19.0
++ mime 2.1.0
++ node_preamble 2.0.2
++ package_config 3.0.0
++ path 1.9.1
++ pool 1.5.3
++ pub_semver 2.2.1
++ shelf 1.4.2
++ shelf_packages_handler 3.0.2
++ shelf_static 1.1.3
++ shelf_web_socket 3.0.0
++ source_map_stack_trace 2.1.2
++ source_maps 0.10.14
++ source_span 1.10.2
++ stack_trace 1.12.2
++ stream_channel 2.1.4
++ string_scanner 1.4.1
++ term_glyph 1.2.2
++ test 1.32.0
++ test_api 0.7.14
++ test_core 0.6.20
++ typed_data 1.4.0
++ vm_service 15.3.0
++ watcher 1.2.1
++ web 1.1.1
++ web_socket 1.0.1
++ web_socket_channel 3.0.3
++ webkit_inspection_protocol 1.2.1
++ yaml 3.1.4
+Changed 49 dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Changed test/engine_test.dart
+Changed test/properties.dart
+Changed test/units_test.dart
+Changed test/zz_dev_test.dart
+Formatted 29 files (4 changed) in 0.16 seconds.
+formatage : échec
+Analyzing kalis_plan...
+No issues found!
+00:00 +0: loading test/zz_dev_test.dart
+00:00 +0: test/zz_dev_test.dart: export du formatage
+00:00 +1: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +2: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +3: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +4: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +5: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +6: test/zz_dev_test.dart: diagnostic des graines en échec
+00:00 +7: test/zz_dev_test.dart: diagnostic des graines en échec
+00:01 +8: test/zz_dev_test.dart: diagnostic des graines en échec
+00:01 +9: test/zz_dev_test.dart: diagnostic des graines en échec
+00:01 +10: test/zz_dev_test.dart: diagnostic des graines en échec
+00:01 +11: test/zz_dev_test.dart: diagnostic des graines en échec
+00:01 +12: test/zz_dev_test.dart: diagnostic des graines en échec
+00:01 +13: test/zz_dev_test.dart: diagnostic des graines en échec
+00:01 +14: test/zz_dev_test.dart: diagnostic des graines en échec
+00:01 +15: test/zz_dev_test.dart: diagnostic des graines en échec
+00:01 +16: test/zz_dev_test.dart: diagnostic des graines en échec
+00:01 +17: test/zz_dev_test.dart: diagnostic des graines en échec
+00:01 +18: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:08 +19: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:12 +20: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:13 +20 -1: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159 [E]
+  Expected: empty
+    Actual: [
+              'profil 16 — revue remove : objectif 1.892634578436569 < 1.9032583841693342 (action seule)',
+              'profil 22 — revue remove : objectif 1.8798051703552843 < 1.903532264887819 (action seule)',
+              'profil 130 — revue remove : objectif 1.9533098575094676 < 1.9642262280792373 (action seule)',
+              'profil 148 — revue remove : objectif 1.8974691059439541 < 1.9026258004606362 (action seule)'
+            ]
+  4 manquement(s) :
+  profil 16 — revue remove : objectif 1.892634578436569 < 1.9032583841693342 (action seule)
+  profil 22 — revue remove : objectif 1.8798051703552843 < 1.903532264887819 (action seule)
+  profil 130 — revue remove : objectif 1.9533098575094676 < 1.9642262280792373 (action seule)
+  profil 148 — revue remove : objectif 1.8974691059439541 < 1.9026258004606362 (action seule)
+  
+  package:matcher             expect
+  test/properties.dart 661:9  propertyShard.<fn>.<fn>
+  
+00:13 +20 -1: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:23 +21 -1: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:24 +21 -2: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des listes du profil
+00:24 +21 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319 [E]
+  Expected: empty
+    Actual: [
+              'profil 172 — revue remove : objectif 1.773625078216542 < 1.8630832083372986 (action seule)',
+              'profil 208 — revue remove : objectif 1.8766057971014491 < 1.9211709577991396 (action seule)',
+              'profil 256 — revue remove : objectif 1.8651455221825646 < 1.9029998858843649 (action seule)'
+            ]
+  3 manquement(s) :
+  profil 172 — revue remove : objectif 1.773625078216542 < 1.8630832083372986 (action seule)
+  profil 208 — revue remove : objectif 1.8766057971014491 < 1.9211709577991396 (action seule)
+  profil 256 — revue remove : objectif 1.8651455221825646 < 1.9029998858843649 (action seule)
+  
+  package:matcher             expect
+  test/properties.dart 661:9  propertyShard.<fn>.<fn>
+  
+00:24 +22 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:24 +23 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:27 +24 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:28 +25 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:28 +26 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:28 +27 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:29 +28 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:29 +29 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:29 +30 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:29 +31 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:31 +32 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:32 +33 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:32 +34 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:32 +35 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:32 +36 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:32 +37 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:32 +38 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:32 +39 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:32 +40 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:32 +41 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:32 +42 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:32 +43 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:32 +44 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:32 +45 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:32 +46 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:32 +47 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:33 +47 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479 [E]
+  Expected: empty
+    Actual: [
+              'profil 322 — revue remove : objectif 1.8880895271952247 < 1.9380902478199913 (action seule)',
+              'profil 388 — revue remove : objectif 1.885414926819613 < 1.8986903893029488 (action seule)',
+              'profil 412 — revue remove : objectif 1.8439404637597123 < 1.8894257514389583 (action seule)',
+              'profil 418 — revue remove : objectif 1.9017995715817495 < 1.9113650362072776 (action seule)',
+              'profil 430 — revue remove : objectif 1.8602301824266436 < 1.882923772240146 (action seule)',
+              'profil 442 — revue remove : objectif 1.9318383986138665 < 1.9547218785848985 (action seule)',
+              'profil 472 — revue remove : objectif 1.9048912023819622 < 1.9366555432613284 (action seule)'
+            ]
+  7 manquement(s) :
+  profil 322 — revue remove : objectif 1.8880895271952247 < 1.9380902478199913 (action seule)
+  profil 388 — revue remove : objectif 1.885414926819613 < 1.8986903893029488 (action seule)
+  profil 412 — revue remove : objectif 1.8439404637597123 < 1.8894257514389583 (action seule)
+  profil 418 — revue remove : objectif 1.9017995715817495 < 1.9113650362072776 (action seule)
+  profil 430 — revue remove : objectif 1.8602301824266436 < 1.882923772240146 (action seule)
+  profil 442 — revue remove : objectif 1.9318383986138665 < 1.9547218785848985 (action seule)
+  profil 472 — revue remove : objectif 1.9048912023819622 < 1.9366555432613284 (action seule)
+  
+  package:matcher             expect
+  test/properties.dart 661:9  propertyShard.<fn>.<fn>
+  
+00:33 +47 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:43 +47 -4: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639 [E]
+  Expected: empty
+    Actual: [
+              'profil 490 — revue remove : objectif 1.8886592472926313 < 1.9388489186291056 (action seule)',
+              'profil 502 — revue remove : objectif 1.924106931094332 < 1.9393541840000528 (action seule)',
+              'profil 508 — revue remove : objectif 1.8957940229163768 < 1.9210908659505603 (action seule)',
+              'profil 520 — revue remove : objectif 1.9469476666768992 < 1.958754444531563 (action seule)',
+              'profil 532 — revue remove : objectif 1.8825981895483346 < 1.9148054525573723 (action seule)',
+              'profil 562 — revue remove : objectif 1.8646286692691167 < 1.8995406138818574 (action seule)',
+              'profil 568 — revue remove : objectif 1.8776875596820433 < 1.9020827388344492 (action seule)',
+              'profil 610 — revue remove : objectif 1.9055458391812632 < 1.9281710295011392 (action seule)'
+            ]
+  8 manquement(s) :
+  profil 490 — revue remove : objectif 1.8886592472926313 < 1.9388489186291056 (action seule)
+  profil 502 — revue remove : objectif 1.924106931094332 < 1.9393541840000528 (action seule)
+  profil 508 — revue remove : objectif 1.8957940229163768 < 1.9210908659505603 (action seule)
+  profil 520 — revue remove : objectif 1.9469476666768992 < 1.958754444531563 (action seule)
+  profil 532 — revue remove : objectif 1.8825981895483346 < 1.9148054525573723 (action seule)
+  profil 562 — revue remove : objectif 1.8646286692691167 < 1.8995406138818574 (action seule)
+  profil 568 — revue remove : objectif 1.8776875596820433 < 1.9020827388344492 (action seule)
+  profil 610 — revue remove : objectif 1.9055458391812632 < 1.9281710295011392 (action seule)
+  
+  package:matcher             expect
+  test/properties.dart 661:9  propertyShard.<fn>.<fn>
+  
+00:43 +47 -4: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 640 à 799
+00:51 +47 -5: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 640 à 799 [E]
+  Expected: empty
+    Actual: [
+              'profil 646 — revue remove : objectif 1.9184278675065825 < 1.931204311478094 (action seule)',
+              'profil 658 — revue remove : objectif 1.9132037888301359 < 1.9278355766184248 (action seule)',
+              'profil 664 — revue remove : objectif 1.9266253416347914 < 1.9603687613742091 (action seule)',
+              'profil 681 — passe 1 : contrainte dure — day 0: séance vide',
+              'profil 681 — passe 1 : contrainte dure — day 1: séance vide',
+              'profil 681 — passe 1 : jour 0 vide',
+              'profil 681 — passe 1 : jour 1 vide',
+              'profil 681 — passe 2 : semaine 0, jour 0 vide',
+              'profil 681 — passe 2 : semaine 0, jour 1 vide',
+              'profil 681 — passe 2 : semaine 1, jour 0 vide',
+              'profil 681 — passe 2 : semaine 1, jour 1 vide',
+              'profil 681 — passe 2 : semaine 2, jour 0 vide',
+              'profil 681 — passe 2 : semaine 2, jour 1 vide',
+              'profil 681 — passe 2 : semaine 3, jour 0 vide',
+              'profil 681 — passe 2 : semaine 3, jour 1 vide',
+              'profil 681 — passe 2 : semaine 4, jour 0 vide',
+              'profil 681 — passe 2 : semaine 4, jour 1 vide',
+              'profil 688 — revue remove : objectif 1.8422995243812235 < 1.8535813326700343 (action seule)',
+              'profil 718 — revue remove : objectif 1.8987258766317798 < 1.9218917762715273 (action seule)',
+              'profil 754 — revue remove : objectif 1.9449084162917603 < 1.9716808317089018 (action seule)',
+              'profil 772 — revue remove : objectif 1.846054356216389 < 1.8585544669096545 (action seule)'
+            ]
+  21 manquement(s) :
+  profil 646 — revue remove : objectif 1.9184278675065825 < 1.931204311478094 (action seule)
+  profil 658 — revue remove : objectif 1.9132037888301359 < 1.9278355766184248 (action seule)
+  profil 664 — revue remove : objectif 1.9266253416347914 < 1.9603687613742091 (action seule)
+  profil 681 — passe 1 : contrainte dure — day 0: séance vide
+  profil 681 — passe 1 : contrainte dure — day 1: séance vide
+  profil 681 — passe 1 : jour 0 vide
+  profil 681 — passe 1 : jour 1 vide
+  profil 681 — passe 2 : semaine 0, jour 0 vide
+  profil 681 — passe 2 : semaine 0, jour 1 vide
+  profil 681 — passe 2 : semaine 1, jour 0 vide
+  profil 681 — passe 2 : semaine 1, jour 1 vide
+  profil 681 — passe 2 : semaine 2, jour 0 vide
+  
+  package:matcher             expect
+  test/properties.dart 661:9  propertyShard.<fn>.<fn>
+  
+00:51 +47 -5: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:00 +47 -6: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959 [E]
+  Expected: empty
+    Actual: [
+              'profil 844 — revue remove : objectif 1.8668020272340957 < 1.8966795769893368 (action seule)',
+              'profil 904 — revue remove : objectif 1.8501415267228347 < 1.879690518883966 (action seule)',
+              'profil 940 — revue remove : objectif 1.8635622947271562 < 1.8991828242667559 (action seule)',
+              'profil 958 — revue remove : objectif 1.9197444103111019 < 1.9300818778888893 (action seule)'
+            ]
+  4 manquement(s) :
+  profil 844 — revue remove : objectif 1.8668020272340957 < 1.8966795769893368 (action seule)
+  profil 904 — revue remove : objectif 1.8501415267228347 < 1.879690518883966 (action seule)
+  profil 940 — revue remove : objectif 1.8635622947271562 < 1.8991828242667559 (action seule)
+  profil 958 — revue remove : objectif 1.9197444103111019 < 1.9300818778888893 (action seule)
+  
+  package:matcher             expect
+  test/properties.dart 661:9  propertyShard.<fn>.<fn>
+  
+01:00 +47 -6: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:09 +47 -7: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119 [E]
+  Expected: empty
+    Actual: [
+              'profil 994 — revue remove : objectif 1.890339400692554 < 1.9148366434983035 (action seule)',
+              'profil 1006 — revue remove : objectif 1.7854556469071745 < 1.8776892498276616 (action seule)',
+              'profil 1018 — revue remove : objectif 1.901449877195408 < 1.9136616605141359 (action seule)',
+              'profil 1024 — revue remove : objectif 1.9301809808616504 < 1.942042492156982 (action seule)',
+              'profil 1036 — revue remove : objectif 1.9570109523542705 < 1.965800212052385 (action seule)',
+              'profil 1054 — revue remove : objectif 1.8581302925340757 < 1.917158428016671 (action seule)',
+              'profil 1108 — revue remove : objectif 1.8856489711807192 < 1.9333675701194994 (action seule)'
+            ]
+  7 manquement(s) :
+  profil 994 — revue remove : objectif 1.890339400692554 < 1.9148366434983035 (action seule)
+  profil 1006 — revue remove : objectif 1.7854556469071745 < 1.8776892498276616 (action seule)
+  profil 1018 — revue remove : objectif 1.901449877195408 < 1.9136616605141359 (action seule)
+  profil 1024 — revue remove : objectif 1.9301809808616504 < 1.942042492156982 (action seule)
+  profil 1036 — revue remove : objectif 1.9570109523542705 < 1.965800212052385 (action seule)
+  profil 1054 — revue remove : objectif 1.8581302925340757 < 1.917158428016671 (action seule)
+  profil 1108 — revue remove : objectif 1.8856489711807192 < 1.9333675701194994 (action seule)
+  
+  package:matcher             expect
+  test/properties.dart 661:9  propertyShard.<fn>.<fn>
+  
+01:09 +47 -7: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+01:17 +47 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279 [E]
+  Expected: empty
+    Actual: [
+              'profil 1138 — revue remove : objectif 1.9034855164801658 < 1.925295447242459 (action seule)',
+              'profil 1156 — revue remove : objectif 1.934948148148148 < 1.9600111111111111 (action seule)',
+              'profil 1186 — revue remove : objectif 1.9028201213044105 < 1.9261635544838005 (action seule)'
+            ]
+  3 manquement(s) :
+  profil 1138 — revue remove : objectif 1.9034855164801658 < 1.925295447242459 (action seule)
+  profil 1156 — revue remove : objectif 1.934948148148148 < 1.9600111111111111 (action seule)
+  profil 1186 — revue remove : objectif 1.9028201213044105 < 1.9261635544838005 (action seule)
+  
+  package:matcher             expect
+  test/properties.dart 661:9  propertyShard.<fn>.<fn>
+  
+01:17 +47 -8: Some tests failed.
+
+Failing tests:
+  test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+  test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+  test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+  test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+  ... and 4 more
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.
+tests : échec
+durée : 86 s
