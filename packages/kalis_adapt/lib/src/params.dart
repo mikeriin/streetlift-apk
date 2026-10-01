@@ -68,7 +68,7 @@ final class AdaptParams {
     this.benchmarkRir = 1.5,
     this.benchmarkExtraReps = 6,
     this.benchmarkEveryDays = 6,
-    this.benchmarkEveryDaysRated = 0,
+    this.benchmarkEveryDaysRated = 13,
     this.benchmarkMaxRir = 3,
     this.tauAcute = 1.2,
     this.tauChronic = 7,

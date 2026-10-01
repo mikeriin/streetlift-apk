@@ -1593,7 +1593,6 @@ final class SessionRun {
   /// Vrai si l'exercice ouvert relève d'une série repère aujourd'hui (hors
   /// délai depuis la précédente).
   bool wantsBenchmark(ExerciseRun run) {
-    final p = _p;
     return !run.uncertain &&
         !run.easyMode &&
         run.spec.benchmarkOk &&
