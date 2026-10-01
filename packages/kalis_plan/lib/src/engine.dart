@@ -239,7 +239,7 @@ final class KalisPlan implements PlanEngine {
     }
     normalizeAll(ctx, state);
     _placeRequired(ctx, planner, state);
-    planner.construct(state);
+    planner.construct(state, seed: true);
     planner.anneal(state, params.annealIterations);
     planner.polish(state);
     planner.scorer.evaluate(state);

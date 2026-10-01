@@ -259,11 +259,15 @@ Scheme schemeFor(ExerciseTraits t, SchemeInputs i, PlanParams params) {
   }) {
     final n = _byLevel(sets, i.level);
     final s = n > capSets ? capSets : n;
+    // Un exercice coté en effort ne dépasse pas sa dose de référence de
+    // plus d'une série : le volume vient d'exercices de plus, pas de
+    // séries empilées.
+    final most = rir != null && maxSets > s + 1 ? s + 1 : maxSets;
     return Scheme._(
       kind: kind,
       sets: s,
       minSets: minSets > s ? s : minSets,
-      maxSets: maxSets > capSets ? capSets : maxSets,
+      maxSets: most > capSets ? capSets : most,
       unit: MeasureUnit.repetitions,
       low: low,
       high: high,
@@ -292,11 +296,15 @@ Scheme schemeFor(ExerciseTraits t, SchemeInputs i, PlanParams params) {
   }) {
     final n = _byLevel(sets, i.level);
     final s = n > capSets ? capSets : n;
+    // Un exercice coté en effort ne dépasse pas sa dose de référence de
+    // plus d'une série : le volume vient d'exercices de plus, pas de
+    // séries empilées.
+    final most = rir != null && maxSets > s + 1 ? s + 1 : maxSets;
     return Scheme._(
       kind: kind,
       sets: s,
       minSets: minSets > s ? s : minSets,
-      maxSets: maxSets > capSets ? capSets : maxSets,
+      maxSets: most > capSets ? capSets : most,
       unit: MeasureUnit.seconds,
       low: low,
       high: high,

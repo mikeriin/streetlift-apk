@@ -272,7 +272,7 @@ final class Planner {
   /// Classe les exercices choisissables par besoin décroissant (après un
   /// [objective] sur [state]) et rend les premiers de chaque classe de
   /// discipline en manque, puis les premiers toutes classes confondues.
-  List<int> _shortlist(PlanState state) {
+  List<int> _shortlist(PlanState state, {bool wide = false}) {
     final ctx = context;
     final slotTime = scorer.slotSeconds;
     final classNeed = List<double>.filled(DisciplineClass.values.length, 0);
@@ -313,9 +313,10 @@ final class Planner {
       for (var j = 0; j < goalNeed.length; j++) {
         h += goalNeed[j] * e.goalSupport[j] / 100;
       }
-      if (e.liked && state.occurrences(index) == 0) {
+      if ((e.liked || e.known) && state.occurrences(index) == 0) {
         h += 0.5;
       }
+      h += 0.2 * e.fit;
       final sfr = e.traits.stimulusFatigue;
       if (sfr > 0) {
         h += 0.1 * sfr;
@@ -327,7 +328,8 @@ final class Planner {
       final by = _heuristic[b].compareTo(_heuristic[a]);
       return by != 0 ? by : ctx.pool[a].id.compareTo(ctx.pool[b].id);
     });
-    final per = ctx.params.shortlistPerClass;
+    // Passe large (finition) : six fois plus de candidats.
+    final per = ctx.params.shortlistPerClass * (wide ? 6 : 1);
     final taken = List<int>.filled(DisciplineClass.values.length, 0);
     final out = <int>[];
     var overall = 0;
@@ -472,10 +474,15 @@ final class Planner {
   /// améliore le plus la note, en regardant un ajout plus loin pour les
   /// meilleurs candidats ; s'arrête quand plus aucun ajout n'améliore.
   /// Une séance vide est remplie d'abord (aucune séance vide).
-  void construct(PlanState state) {
+  ///
+  /// [seed] amorce d'abord les schémas de base (construction initiale) ;
+  /// [wide] élargit la liste des candidats (finition).
+  void construct(PlanState state, {bool seed = false, bool wide = false}) {
     final ctx = context;
     final width = ctx.params.lookaheadWidth;
-    _seedPatterns(state);
+    if (seed) {
+      _seedPatterns(state);
+    }
     for (var step = 0; step < 160; step++) {
       var empty = 0;
       for (var d = 0; d < ctx.dayCount; d++) {
@@ -484,7 +491,7 @@ final class Planner {
         }
       }
       final base = objective(state);
-      final shortlist = _shortlist(state);
+      final shortlist = _shortlist(state, wide: wide);
       final first = _bestAdditions(state, shortlist, width, empty);
       if (first.isEmpty) {
         if (empty != 0) {
@@ -776,7 +783,7 @@ final class Planner {
         }
       }
       final before = state.slotCount;
-      construct(state);
+      construct(state, wide: true);
       if (state.slotCount != before) {
         improved = true;
         current = objective(state);

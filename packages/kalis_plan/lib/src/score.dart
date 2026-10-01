@@ -21,6 +21,24 @@ const double fatigueTolerance = 0.3;
 /// avant que son pendant soit placé.
 const int balancePriorHalfSets = 4;
 
+/// Rapport au-delà duquel un côté domine trop l'autre (tirage sur poussée,
+/// chaîne postérieure sur genou) : hypothèse d'ingénierie, `CONTRAT.md`.
+const double balanceUpperRatio = 1.5;
+
+/// Minutes de séance par exercice attendu (cinq exercices pour une heure).
+const int minutesPerExpectedSlot = 12;
+
+double _ratioScore(int a, int b, double low, double high) {
+  final r = (a + balancePriorHalfSets) / (b + balancePriorHalfSets);
+  if (r < low) {
+    return r / low;
+  }
+  if (r > high) {
+    return high / r;
+  }
+  return 1;
+}
+
 /// Bit du tronc dans `PoolEntry.coverBits`.
 const int coreBit = 64;
 
@@ -62,7 +80,18 @@ final class Scorer {
       _skillDay = Int32List(context.rootCount),
       _skillDays = Int32List(context.rootCount),
       _skillTouched = Int32List(context.rootCount),
+      _dayAnchor = Float64List(context.dayCount),
+      _expectedSlots = _expectedSlotsOf(context),
       components = Float64List(ScoreWeights.codes.length);
+
+  static int _expectedSlotsOf(PlanContext ctx) {
+    var n = 0;
+    for (final d in ctx.days) {
+      final e = d.minutes ~/ minutesPerExpectedSlot;
+      n += e < 2 ? 2 : e;
+    }
+    return n;
+  }
 
   /// Contexte.
   final PlanContext context;
@@ -79,6 +108,8 @@ final class Scorer {
   final Int32List _groupStamp;
   final Int32List _groupDays;
   final Float64List _dayWod;
+  final Float64List _dayAnchor;
+  final int _expectedSlots;
   final Int32List _weekSeen;
   final Int32List _rootDay;
   final Int32List _patternStamp;
@@ -216,6 +247,8 @@ final class Scorer {
       var coreSlots = 0;
       var coreHere = false;
       var strengthHere = false;
+      var resistanceHere = false;
+      var anchor = 0.0;
       var skillHere = false;
       var cardioHere = 0;
       var regions = 0;
@@ -351,6 +384,12 @@ final class Scorer {
               patternExcess++;
             }
         }
+        if (kind.isResistance && kind != SlotKind.core) {
+          resistanceHere = true;
+          if (e.staple > anchor) {
+            anchor = e.staple;
+          }
+        }
         final sfr = e.traits.stimulusFatigue;
         if (sfr >= 0) {
           sfrSum += sfr * seconds;
@@ -362,6 +401,7 @@ final class Scorer {
       _dayFatigue[d] = fatigue / days[d].seconds;
       final piece = conditioning >= 3 ? 1.0 : conditioning / 3;
       _dayWod[d] = 0.5 * piece + (strengthHere ? 0.5 : 0.0);
+      _dayAnchor[d] = resistanceHere ? anchor : -1;
       if (cardioHere > 2) {
         cardioStack += cardioHere - 2;
       }
@@ -519,23 +559,25 @@ final class Scorer {
       c[6] = 1;
     } else {
       final coverable = ctx.coverableBits;
+      // Les deux côtés d'un rapport ne se comparent que si le vivier les
+      // permet tous les deux.
       var pullPush = 1.0;
-      if (push > 0 && coverable & 12 != 0) {
-        pullPush =
-            (pull + balancePriorHalfSets) /
-            (params.pullToPushRatio * push + balancePriorHalfSets);
-        if (pullPush > 1) {
-          pullPush = 1;
-        }
+      if (coverable & 3 != 0 && coverable & 12 != 0) {
+        pullPush = _ratioScore(
+          pull,
+          push,
+          params.pullToPushRatio,
+          balanceUpperRatio,
+        );
       }
       var hipKnee = 1.0;
-      if (knee > 0 && coverable & 32 != 0) {
-        hipKnee =
-            (hip + balancePriorHalfSets) /
-            (params.hipToKneeRatio * knee + balancePriorHalfSets);
-        if (hipKnee > 1) {
-          hipKnee = 1;
-        }
+      if (coverable & 16 != 0 && coverable & 32 != 0) {
+        hipKnee = _ratioScore(
+          hip,
+          knee,
+          params.hipToKneeRatio,
+          balanceUpperRatio,
+        );
       }
       var core = 1.0;
       if (coverable & coreBit != 0) {
@@ -650,7 +692,17 @@ final class Scorer {
         case DisciplineClass.streetWorkout:
         case DisciplineClass.streetlifting:
         case DisciplineClass.generalFitness:
-          break;
+          // Chaque séance de renforcement s'ancre sur un mouvement de base
+          // (ou le mouvement d'un objectif).
+          var sum = 0.0;
+          var n = 0;
+          for (var d = 0; d < dayCount; d++) {
+            if (_dayAnchor[d] >= 0) {
+              sum += _dayAnchor[d];
+              n++;
+            }
+          }
+          sub = n == 0 ? 1.0 : sum / n;
       }
       specific += target * sub;
     }
@@ -658,12 +710,21 @@ final class Scorer {
     c[7] = 0.5 * own + 0.5 * specific;
 
     // Qualité : temps utilisé.
+    // Moitié moyenne, moitié séance la moins remplie : des séances
+    // équilibrées plutôt qu'une séance pleine et une séance creuse.
     var used = 0.0;
+    var least = 1.0;
     for (var d = 0; d < dayCount; d++) {
-      final u = _dayTime[d] / (days[d].seconds * params.timeUseTarget);
-      used += u > 1 ? 1 : u;
+      var u = _dayTime[d] / (days[d].seconds * params.timeUseTarget);
+      if (u > 1) {
+        u = 1;
+      }
+      used += u;
+      if (u < least) {
+        least = u;
+      }
     }
-    c[8] = used / dayCount;
+    c[8] = 0.5 * used / dayCount + 0.5 * least;
 
     // Qualité : variété.
     var redundancy =
@@ -674,7 +735,12 @@ final class Scorer {
     c[9] = 1 - redundancy;
 
     // Qualité : exercices adaptés.
-    c[10] = slots == 0 ? 1.0 : fitSum / slots;
+    // Moyenne sur le nombre d'exercices attendu tant qu'il n'est pas
+    // atteint : un exercice de plus ne fait pas baisser la note d'une
+    // semaine encore creuse.
+    c[10] = slots == 0
+        ? 1.0
+        : fitSum / (slots < _expectedSlots ? _expectedSlots : slots);
 
     // Qualité : rapport stimulus / fatigue.
     c[11] = sfrTime == 0 ? 1.0 : sfrSum / sfrTime;

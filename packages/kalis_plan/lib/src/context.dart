@@ -191,6 +191,7 @@ final class PoolEntry {
     required this.novel,
     required this.jointPenalty,
     required this.fit,
+    required this.staple,
     required this.prioritySkill,
     required this.rootIndex,
     required this.creditGroups,
@@ -253,6 +254,11 @@ final class PoolEntry {
   /// (racine `variante_de`), ni trop facile ni assisté sans besoin, connu
   /// de l'utilisateur.
   final double fit;
+
+  /// Valeur d'ancrage d'une séance, de 0 à 1 : mouvement de base (racine
+  /// d'une chaîne fournie) ou mouvement d'un objectif ; 0 hors
+  /// polyarticulaires, puissance et figures.
+  final double staple;
 
   /// Figure prioritaire : connue de l'utilisateur ou palier d'un objectif.
   final bool prioritySkill;
@@ -1214,11 +1220,13 @@ PlanContext _build(ContextInputs inputs) {
     // sous ce niveau), n'entraîne plus — sauf exercice connu, aimé ou
     // exercice même d'un objectif.
     if (rejection == null &&
-        !(known || liked.contains(e.id) || bestSupport == 100) &&
-        (t.kind == SlotKind.compound || t.kind.isSkill) &&
-        !isLoadAdjustable(e.loadType)) {
+        !(known || liked.contains(e.id) || bestSupport == 100)) {
       final below = a - e.difficulty;
-      if (below >= 3 || (e.assisted && below >= 2)) {
+      final unloaded =
+          (t.kind == SlotKind.compound || t.kind.isSkill) &&
+          !isLoadAdjustable(e.loadType);
+      if ((unloaded && below >= 3) ||
+          (e.assisted && t.kind.isResistance && below >= 2)) {
         rejection = Rejections.tooEasy;
       }
     }
@@ -1413,6 +1421,10 @@ PlanContext _build(ContextInputs inputs) {
       novel: t.technical && !known && e.difficulty >= a - 1,
       jointPenalty: penalty > 1 ? 1 : penalty,
       fit: 0.4 * canonical + 0.4 * challenge + (known ? 0.2 : 0.0),
+      staple:
+          t.kind == SlotKind.compound || t.kind == SlotKind.power || t.kind.isSkill
+          ? (goalLift || bestSupport >= 80 ? 1.0 : canonical)
+          : 0.0,
       prioritySkill: t.kind.isSkill && (known || bestSupport >= 60),
       rootIndex: root,
       creditGroups: List<int>.unmodifiable(groupsOut),
