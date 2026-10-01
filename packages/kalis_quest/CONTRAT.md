@@ -415,7 +415,7 @@ relire).
   vraie). Sans `kalis_adapt`, il faut 3 semaines de mesures. Les objectifs de compétence n'ont pas de
   prédiction.
 - **Objectif suggéré** : seulement avec le résumé d'adaptation.
-- **Registres** : environ 700 à 1 000 écritures d'XP par an ; ils ne sont jamais compactés.
+- **Registres** : environ 500 à 1 000 écritures d'XP par an ; ils ne sont jamais compactés.
 - **Quêtes passées** : gardées 35 jours dans l'état ; au-delà, seuls leurs gains restent au registre.
 - **Web** : entiers 64 bits de la VM Dart (hachage des tirages) ; le Web n'est pas pris en charge.
 - **Régularité de 2 ou 3 séances par semaine** : la règle des 3/4 exige alors toutes les séances ; une
