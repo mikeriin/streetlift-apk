@@ -86,8 +86,7 @@ Map<String, Object?> jsonAsObject(Object? value, String key) {
 }
 
 /// Entier obligatoire.
-int jsonInt(Map<String, Object?> json, String key) =>
-    jsonAsInt(json[key], key);
+int jsonInt(Map<String, Object?> json, String key) => jsonAsInt(json[key], key);
 
 /// Entier optionnel (clé absente ou nulle : `null`).
 int? jsonIntOrNull(Map<String, Object?> json, String key) {
@@ -196,8 +195,37 @@ List<T> jsonList<T>(
   _typeError(key, 'liste', v);
 }
 
+/// Liste optionnelle (clé absente ou nulle : `null`).
+List<T>? jsonListOrNull<T>(
+  Map<String, Object?> json,
+  String key,
+  T Function(Object? value) convert,
+) {
+  return json[key] == null ? null : jsonList(json, key, convert);
+}
+
+/// Copie canonique d'un objet JSON libre : clés triées à tous les niveaux,
+/// pour que deux objets égaux s'écrivent à l'identique.
+Map<String, Object?> jsonCanonical(Map<String, Object?> json) {
+  final keys = json.keys.toList()..sort();
+  return <String, Object?>{
+    for (final key in keys) key: _canonicalValue(json[key]),
+  };
+}
+
+Object? _canonicalValue(Object? value) {
+  if (value is Map<String, Object?>) {
+    return jsonCanonical(value);
+  }
+  if (value is List<Object?>) {
+    return <Object?>[for (final item in value) _canonicalValue(item)];
+  }
+  return value;
+}
+
 /// Égalité profonde de deux valeurs JSON (objets, listes, scalaires) ou de
-/// deux valeurs du contrat.
+/// deux valeurs du contrat. Un entier et un décimal ne sont jamais égaux
+/// (`2` ≠ `2.0`) : ils ne s'écrivent pas de la même façon.
 bool jsonDeepEquals(Object? a, Object? b) {
   if (a is Map<String, Object?> && b is Map<String, Object?>) {
     if (a.length != b.length) {
@@ -213,6 +241,9 @@ bool jsonDeepEquals(Object? a, Object? b) {
   }
   if (a is List<Object?> && b is List<Object?>) {
     return jsonListEquals(a, b);
+  }
+  if (a is num && b is num) {
+    return (a is int) == (b is int) && a == b;
   }
   return a == b;
 }

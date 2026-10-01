@@ -1,7 +1,7 @@
 # Relecture du catalogue compilé (kalis_core, lot GC)
 
 Source : base v1.1.0 du 2026-09-28, 1039 exercices, SHA-256 `1a44c2b059389143f682b5e6b050d6382f795b446bb8ce3dae915d10c59b01f6`.
-Règles : `tools/catalog/rules.py` version 1.0.0 ; schéma du catalogue : 1.
+Règles : `tools/catalog/rules.py` version 1.1.0 ; schéma du catalogue : 1.
 Fichier généré par `tools/catalog/compile_catalog.py` — ne pas modifier à la main.
 
 Tous les champs ci-dessous sont **calculés par règles** (CONTRAT.md, § Catalogue). Le contenu
@@ -96,8 +96,8 @@ champ ; la correction passe par une règle (jamais par une valeur saisie à la m
 
 | Valeur | Exercices | Part |
 | --- | ---: | ---: |
-| sagittal | 621 | 59.8 % |
-| frontal | 117 | 11.3 % |
+| sagittal | 623 | 60.0 % |
+| frontal | 115 | 11.1 % |
 | transversal | 126 | 12.1 % |
 | multiple | 175 | 16.8 % |
 
@@ -105,17 +105,17 @@ champ ; la correction passe par une règle (jamais par une valeur saisie à la m
 
 | Valeur | Exercices | Part |
 | --- | ---: | ---: |
-| polyarticulaire | 549 | 52.8 % |
+| polyarticulaire | 548 | 52.7 % |
 | monoarticulaire | 203 | 19.5 % |
-| non_applicable | 287 | 27.6 % |
+| non_applicable | 288 | 27.7 % |
 
 ## Régime de contraction
 
 | Valeur | Exercices | Part |
 | --- | ---: | ---: |
-| dynamique | 687 | 66.1 % |
-| isometrique | 135 | 13.0 % |
-| explosif | 90 | 8.7 % |
+| dynamique | 688 | 66.2 % |
+| isometrique | 136 | 13.1 % |
+| explosif | 88 | 8.5 % |
 | passif | 66 | 6.4 % |
 | cyclique | 39 | 3.8 % |
 | excentrique | 22 | 2.1 % |
@@ -124,10 +124,10 @@ champ ; la correction passe par une règle (jamais par une valeur saisie à la m
 
 | Valeur | Exercices | Part |
 | --- | ---: | ---: |
-| 1 | 143 | 13.8 % |
-| 2 | 227 | 21.8 % |
-| 3 | 55 | 5.3 % |
-| 4 | 268 | 25.8 % |
+| 1 | 139 | 13.4 % |
+| 2 | 231 | 22.2 % |
+| 3 | 54 | 5.2 % |
+| 4 | 269 | 25.9 % |
 | 5 | 64 | 6.2 % |
 | 6 | 5 | 0.5 % |
 | 7 | 114 | 11.0 % |
@@ -139,8 +139,8 @@ champ ; la correction passe par une règle (jamais par une valeur saisie à la m
 
 | Niveau | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Débutant | 143 | 227 | 43 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Intermédiaire | 0 | 0 | 12 | 268 | 64 | 1 | 0 | 0 | 0 | 0 |
+| Débutant | 139 | 231 | 43 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Intermédiaire | 0 | 0 | 11 | 269 | 64 | 1 | 0 | 0 | 0 | 0 |
 | Avancé | 0 | 0 | 0 | 0 | 0 | 4 | 114 | 87 | 0 | 0 |
 | Élite | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 21 | 55 |
 
@@ -148,21 +148,21 @@ champ ; la correction passe par une règle (jamais par une valeur saisie à la m
 
 | Valeur | Exercices | Part |
 | --- | ---: | ---: |
-| salle | 1018 | 45.3 % |
-| maison | 634 | 28.2 % |
-| exterieur | 597 | 26.5 % |
+| salle | 1018 | 43.5 % |
+| maison | 674 | 28.8 % |
+| exterieur | 646 | 27.6 % |
 
-Part calculée sur le total des lieux cités. Exercices par lieu : salle 1018, maison 634, exterieur 597.
+Part calculée sur le total des lieux cités. Exercices par lieu : salle 1018, maison 674, exterieur 646.
 
 ## Contraintes articulaires
 
 | Articulation | faible | moyenne | forte |
 | --- | ---: | ---: | ---: |
-| epaule | 433 | 313 | 293 |
-| coude | 532 | 305 | 202 |
-| poignet | 665 | 208 | 166 |
-| lombaires | 539 | 441 | 59 |
-| genou | 841 | 152 | 46 |
+| epaule | 433 | 314 | 292 |
+| coude | 535 | 309 | 195 |
+| poignet | 668 | 212 | 159 |
+| lombaires | 538 | 442 | 59 |
+| genou | 841 | 153 | 45 |
 | hanche | 766 | 265 | 8 |
 | cheville | 863 | 142 | 34 |
 
@@ -170,7 +170,7 @@ Part calculée sur le total des lieux cités. Exercices par lieu : salle 1018, m
 
 | Coût | 1 | 2 | 3 | 4 | 5 |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| systemique | 320 | 205 | 326 | 144 | 44 |
+| systemique | 320 | 205 | 326 | 145 | 43 |
 | locale | 103 | 170 | 599 | 164 | 3 |
 
 ## Type de charge
@@ -192,8 +192,8 @@ Part calculée sur le total des lieux cités. Exercices par lieu : salle 1018, m
 
 | Valeur | Exercices | Part |
 | --- | ---: | ---: |
-| repetitions | 765 | 73.6 % |
-| secondes | 242 | 23.3 % |
+| repetitions | 764 | 73.5 % |
+| secondes | 243 | 23.4 % |
 | distance | 31 | 3.0 % |
 | calories | 1 | 0.1 % |
 
@@ -240,18 +240,18 @@ Références : `suprak2011` = Suprak, Dawes & Stephenson (2011), J Strength Cond
 | `mu-presse-pectorale-unilaterale` | Presse pectorale unilatérale machine | Débutant | poussee_horizontale | transversal | poly | dynamique | 2 | salle | machine | repetitions | unilateral | 2/3 | — | epaule moyenne, coude moyenne, poignet moyenne | `mu-presse-pectorale-convergente`, `mu-presse-pectorale-inclinee` |
 | `mu-developpe-landmine-debout` | Développé landmine debout unilatéral | Débutant | poussee_inclinee | transversal | poly | dynamique | 2 | salle | barre | repetitions | unilateral | 4/3 | — | epaule moyenne, coude moyenne, poignet moyenne | — |
 | `mu-rowing-machine-convergente` | Rowing machine convergente iso-latérale | Débutant | tirage_horizontal | sagittal | poly | dynamique | 1 | salle | machine | repetitions | bilateral | 2/3 | — | epaule moyenne, coude moyenne, lombaires moyenne | — |
-| `mu-ecarte-poulie-unilateral` | Écarté poulie unilatéral | Débutant | isolation_pectoraux | transversal | mono | dynamique | 3 | salle | poulie | repetitions | unilateral | 1/3 | — | epaule moyenne | `mu-ecarte-poulie-bas-vers-haut`, `mu-ecarte-poulie-haut-vers-bas` |
-| `mu-tirage-bras-tendus-unilateral-poulie` | Tirage bras tendu unilatéral poulie haute | Intermédiaire | isolation_dos | sagittal | mono | dynamique | 4 | salle | poulie | repetitions | unilateral | 1/3 | — | epaule moyenne | `mu-tirage-bras-tendus-elastique`, `mu-tirage-bras-tendus-poulie-barre` |
+| `mu-ecarte-poulie-unilateral` | Écarté poulie unilatéral | Débutant | isolation_pectoraux | transversal | mono | dynamique | 3 | salle | poulie | repetitions | unilateral | 1/3 | — | epaule moyenne | `mu-ecarte-poulie-vis-a-vis-milieu`, `mu-ecarte-poulie-banc-plat` |
+| `mu-tirage-bras-tendus-unilateral-poulie` | Tirage bras tendu unilatéral poulie haute | Intermédiaire | isolation_dos | sagittal | mono | dynamique | 4 | salle | poulie | repetitions | unilateral | 1/3 | — | epaule moyenne | `mu-tirage-bras-tendus-poulie-barre`, `mu-tirage-bras-tendus-elastique` |
 | `mu-pull-over-machine` | Pull-over machine | Débutant | isolation_dos | sagittal | mono | dynamique | 1 | salle | machine | repetitions | bilateral | 1/3 | — | epaule moyenne | — |
 | `mu-curl-barre-ez` | Curl biceps à la barre EZ | Débutant | isolation_biceps | sagittal | mono | dynamique | 2 | salle | barre | repetitions | bilateral | 1/3 | — | coude moyenne | — |
-| `mu-extension-nuque-barre-ez` | Extension nuque à la barre EZ | Intermédiaire | isolation_triceps | sagittal | mono | dynamique | 4 | salle | barre | repetitions | bilateral | 1/3 | — | coude moyenne | `mu-extension-nuque-haltere-unilaterale`, `mu-extension-nuque-haltere-deux-mains` |
+| `mu-extension-nuque-barre-ez` | Extension nuque à la barre EZ | Intermédiaire | isolation_triceps | sagittal | mono | dynamique | 4 | salle | barre | repetitions | bilateral | 1/3 | — | coude moyenne | `mu-extension-nuque-haltere-deux-mains`, `mu-extension-nuque-haltere-unilaterale` |
 | `mu-box-squat` | Box squat | Intermédiaire | squat | sagittal | poly | dynamique | 4 | salle | barre | repetitions | bilateral | 5/3 | — | lombaires moyenne, genou moyenne, hanche moyenne, cheville moyenne | `mu-squat-smith-machine` |
 | `mu-fente-arriere-barre` | Fente arrière à la barre | Intermédiaire | fente | sagittal | poly | dynamique | 4 | salle | barre | repetitions | unilateral | 4/3 | — | genou moyenne, hanche moyenne, cheville moyenne | `mu-fente-arriere-halteres`, `mu-fente-arriere-poids-du-corps` |
 | `mu-fente-laterale` | Fente latérale | Débutant | fente | frontal | poly | dynamique | 2 | salle, maison, exterieur | poids_du_corps | repetitions | unilateral | 2/3 | 0.88 (derivee) | genou moyenne, hanche moyenne, cheville moyenne | — |
-| `mu-souleve-de-terre-roumain-unilateral` | Soulevé de terre roumain unilatéral à l'haltère | Intermédiaire | charniere_hanche | sagittal | poly | dynamique | 5 | salle, maison | halteres | repetitions | unilateral | 3/3 | — | lombaires moyenne, hanche moyenne | `mu-souleve-de-terre-jambes-tendues`, `mu-souleve-de-terre-roumain-barre` |
+| `mu-souleve-de-terre-roumain-unilateral` | Soulevé de terre roumain unilatéral à l'haltère | Intermédiaire | charniere_hanche | sagittal | poly | dynamique | 5 | salle, maison | halteres | repetitions | unilateral | 3/3 | — | lombaires moyenne, hanche moyenne | `mu-souleve-de-terre-roumain-barre`, `mu-souleve-de-terre-jambes-tendues` |
 | `mu-hip-thrust-unilateral` | Hip thrust unilatéral | Intermédiaire | extension_hanche | sagittal | mono | dynamique | 5 | salle, maison, exterieur | poids_du_corps | repetitions | unilateral | 2/4 | — | lombaires moyenne, hanche moyenne | `mu-hip-thrust-barre`, `mu-hip-thrust-machine` |
 | `mu-clamshell` | Clamshell | Débutant | adducteurs_abducteurs | transversal | mono | dynamique | 2 | salle, maison, exterieur | poids_du_corps | repetitions | unilateral | 1/3 | — | hanche moyenne | — |
-| `mu-gainage-lateral-releves-hanche` | Gainage latéral avec relevés de hanche | Intermédiaire | gainage_anti_flexion_laterale | frontal | poly | dynamique | 4 | salle, maison, exterieur | poids_du_corps | repetitions | unilateral | 2/3 | — | epaule moyenne, lombaires moyenne | `mu-gainage-lateral-bras-tendu`, `mu-gainage-lateral-coude` |
+| `mu-gainage-lateral-releves-hanche` | Gainage latéral avec relevés de hanche | Intermédiaire | gainage_anti_flexion_laterale | frontal | poly | dynamique | 4 | salle, maison, exterieur | poids_du_corps | repetitions | unilateral | 2/3 | — | epaule moyenne, lombaires moyenne | `mu-gainage-lateral-coude`, `mu-gainage-lateral-bras-tendu` |
 | `mu-crunch-decline` | Crunch sur banc décliné | Intermédiaire | flexion_tronc | sagittal | mono | dynamique | 4 | salle | poids_du_corps | repetitions | bilateral | 1/4 | — | lombaires moyenne, hanche moyenne | `mu-crunch-sol` |
 | `mu-woodchop-haut-bas` | Woodchop à la poulie haut vers bas | Intermédiaire | rotation_tronc | transversal | poly | dynamique | 4 | salle | poulie | repetitions | alterne | 1/3 | — | lombaires moyenne | — |
 | `mu-rotation-poulie-bassin-bloque` | Rotation du tronc à la poulie assis | Débutant | rotation_tronc | transversal | mono | dynamique | 2 | salle | poulie | repetitions | bilateral | 1/3 | — | lombaires moyenne | — |
@@ -264,15 +264,15 @@ Références : `suprak2011` = Suprak, Dawes & Stephenson (2011), J Strength Cond
 | `sw-pompe-large` | Pompe prise large | Débutant | poussee_horizontale | transversal | poly | dynamique | 3 | salle, maison, exterieur | poids_du_corps | repetitions | bilateral | 2/3 | 0.72 (publiee) | epaule moyenne, coude moyenne, poignet moyenne | `sw-pompe`, `sw-pompe-genoux` |
 | `sw-pompe-pike` | Pompe pike | Intermédiaire | poussee_verticale_haute | sagittal | poly | dynamique | 4 | salle, maison, exterieur | poids_du_corps | repetitions | bilateral | 3/3 | 0.70 (estimee) | epaule forte, coude moyenne, poignet moyenne, lombaires moyenne | — |
 | `sw-row-australien` | Row australien | Débutant | tirage_horizontal | sagittal | poly | dynamique | 2 | salle, exterieur | poids_du_corps | repetitions | bilateral | 2/3 | 0.60 (estimee) | epaule moyenne, coude moyenne, lombaires moyenne | `sw-row-australien-genoux-flechis` |
-| `sw-row-archer` | Row archer | Intermédiaire | tirage_horizontal | sagittal | poly | dynamique | 4 | salle, exterieur | poids_du_corps | repetitions | unilateral | 3/3 | 0.60 (estimee) | epaule forte, coude forte, lombaires moyenne | `sw-row-australien-anneaux`, `sw-row-australien-large` |
-| `sw-traction-derriere-nuque` | Traction derrière la nuque | Avancé | tirage_vertical | frontal | poly | dynamique | 7 | salle, maison, exterieur | poids_du_corps | repetitions | bilateral | 3/3 | 0.97 (derivee) | epaule forte, coude moyenne | `sw-traction-anneaux`, `sw-traction-large` |
+| `sw-row-archer` | Row archer | Intermédiaire | tirage_horizontal | sagittal | poly | dynamique | 4 | salle, exterieur | poids_du_corps | repetitions | unilateral | 3/3 | 0.60 (estimee) | epaule forte, coude forte, lombaires moyenne | `sw-row-australien`, `sw-row-australien-anneaux` |
+| `sw-traction-derriere-nuque` | Traction derrière la nuque | Avancé | tirage_vertical | frontal | poly | dynamique | 7 | salle, maison, exterieur | poids_du_corps | repetitions | bilateral | 3/3 | 0.97 (derivee) | epaule forte, coude moyenne | `sw-traction-pronation`, `sw-traction-anneaux` |
 | `sw-traction-assistee-elastique` | Traction assistée à l'élastique | Débutant | tirage_vertical | sagittal | poly | dynamique | 2 | salle, maison, exterieur | poids_du_corps (assisté) | repetitions | bilateral | 1/2 | 0.97 (derivee) | epaule moyenne, coude moyenne | — |
 | `sw-pompe-scapulaire` | Pompe scapulaire | Débutant | preparation_scapulaire | sagittal | mono | dynamique | 2 | salle, maison, exterieur | poids_du_corps | repetitions | bilateral | 1/3 | — | — | — |
 | `sw-skater-squat` | Skater squat | Intermédiaire | squat | frontal | poly | dynamique | 4 | salle, maison, exterieur | poids_du_corps | repetitions | unilateral | 3/3 | 0.94 (derivee) | lombaires moyenne, genou forte, hanche moyenne, cheville moyenne | — |
 | `sw-windshield-wiper-tuck` | Windshield wiper suspendu genoux fléchis | Intermédiaire | rotation_tronc | transversal | poly | dynamique | 4 | salle, maison, exterieur | poids_du_corps | repetitions | alterne | 1/3 | — | lombaires moyenne | — |
 | `sw-releve-genoux-oblique` | Relevé de genoux oblique suspendu | Intermédiaire | rotation_tronc | transversal | mono | dynamique | 4 | salle, maison, exterieur | poids_du_corps | repetitions | alterne | 1/3 | — | lombaires moyenne | `sw-releve-genoux-suspendu` |
-| `sl-traction-lestee-prise-serree` | Traction lestée prise serrée pronation | Avancé | tirage_vertical | sagittal | poly | dynamique | 7 | salle | lest | repetitions | bilateral | 4/3 | 0.97 (derivee) | epaule moyenne, coude forte | `sw-traction-supination` |
-| `cs-one-arm-handstand` | One-arm handstand | Élite | equilibre_mains | multiple | — | isometrique | 10 | salle, maison, exterieur | poids_du_corps | secondes | unilateral | 2/3 | — | epaule forte, coude forte, poignet forte, lombaires moyenne | `cs-handstand-anneaux`, `cs-handstand-poids-decale` |
+| `sl-traction-lestee-prise-serree` | Traction lestée prise serrée pronation | Avancé | tirage_vertical | sagittal | poly | dynamique | 7 | salle, maison, exterieur | lest | repetitions | bilateral | 4/3 | 0.97 (derivee) | epaule moyenne, coude forte | `sw-traction-supination` |
+| `cs-one-arm-handstand` | One-arm handstand | Élite | equilibre_mains | multiple | — | isometrique | 10 | salle, maison, exterieur | poids_du_corps | secondes | unilateral | 2/3 | — | epaule forte, coude forte, poignet forte, lombaires moyenne | `cs-handstand`, `cs-handstand-anneaux` |
 | `cs-planche-straddle` | Planche straddle | Avancé | figure_statique_poussee | sagittal | — | isometrique | 8 | salle, maison, exterieur | poids_du_corps | secondes | bilateral | 3/3 | — | epaule forte, coude forte, poignet forte, lombaires moyenne | `cs-planche-tuck`, `cs-planche-lean` |
 | `cs-front-lever-half-lay` | Front lever half-lay | Avancé | figure_statique_tirage | sagittal | — | isometrique | 8 | salle, maison, exterieur | poids_du_corps | secondes | bilateral | 3/3 | — | epaule forte, coude forte, lombaires moyenne | `cs-front-lever-tuck`, `cs-front-lever-tuck-avance` |
 | `cs-back-lever-anneaux` | Back lever sur anneaux | Avancé | figure_statique_tirage | sagittal | — | isometrique | 8 | salle, maison, exterieur | poids_du_corps | secondes | bilateral | 3/3 | — | epaule forte, coude forte, lombaires moyenne | `cs-back-lever-straddle`, `cs-back-lever-tuck` |
@@ -280,14 +280,14 @@ Références : `suprak2011` = Suprak, Dawes & Stephenson (2011), J Strength Cond
 | `cd-traction-explosive-poitrine-barre` | Traction explosive poitrine à la barre | Intermédiaire | tirage_vertical | sagittal | poly | explosif | 4 | salle, maison, exterieur | poids_du_corps | repetitions | bilateral | 3/3 | 0.97 (derivee) | epaule moyenne, coude moyenne | — |
 | `cd-traction-un-bras-assistee-elastique` | Traction un bras assistée élastique | Avancé | figure_dynamique_tirage | sagittal | poly | dynamique | 8 | salle, maison, exterieur | poids_du_corps (assisté) | repetitions | unilateral | 2/2 | 0.97 (derivee) | epaule forte, coude forte, lombaires moyenne | — |
 | `cd-front-lever-raise-tuck-avance` | Front lever raise tuck avancé | Avancé | figure_dynamique_tirage | sagittal | poly | dynamique | 8 | salle, maison, exterieur | poids_du_corps | repetitions | bilateral | 3/3 | — | epaule forte, coude forte, lombaires moyenne | `cd-front-lever-raise-tuck` |
-| `cd-kip-swing-barre` | Balancier creux-cambré à la barre | Débutant | transition_muscle_up | sagittal | poly | dynamique | 3 | salle, maison, exterieur | poids_du_corps | repetitions | bilateral | 2/3 | — | epaule forte, coude forte, poignet forte | — |
-| `cd-muscle-up-barre-lent` | Muscle-up barre lent | Élite | transition_muscle_up | sagittal | poly | dynamique | 10 | salle, maison, exterieur | poids_du_corps | repetitions | bilateral | 3/4 | 0.97 (derivee) | epaule forte, coude forte, poignet forte | `cd-muscle-up-barre-prise-serree`, `cd-muscle-up-barre-strict` |
+| `cd-kip-swing-barre` | Balancier creux-cambré à la barre | Débutant | transition_muscle_up | sagittal | poly | dynamique | 3 | salle, maison, exterieur | poids_du_corps | repetitions | bilateral | 2/3 | — | epaule moyenne | — |
+| `cd-muscle-up-barre-lent` | Muscle-up barre lent | Élite | transition_muscle_up | sagittal | poly | dynamique | 10 | salle, maison, exterieur | poids_du_corps | repetitions | bilateral | 3/4 | 0.97 (derivee) | epaule forte, coude forte, poignet forte | `cd-muscle-up-barre-strict`, `cd-muscle-up-barre-prise-serree` |
 | `cd-muscle-up-barre-assiste-elastique` | Muscle-up barre assisté élastique | Intermédiaire | transition_muscle_up | sagittal | poly | dynamique | 5 | salle, maison, exterieur | poids_du_corps (assisté) | repetitions | bilateral | 2/2 | 0.97 (derivee) | epaule forte, coude forte, poignet forte | `cd-kip-swing-barre`, `cd-muscle-up-barre-basse-pieds-au-sol` |
 | `cd-muscle-up-saute` | Muscle-up sauté | Débutant | transition_muscle_up | sagittal | poly | explosif | 3 | salle, maison, exterieur | poids_du_corps | repetitions | bilateral | 2/3 | — | epaule forte, coude forte, poignet forte | — |
 | `cf-plank-jacks` | Plank jacks | Débutant | conditionnement | multiple | poly | dynamique | 2 | salle, maison, exterieur | poids_du_corps | secondes | bilateral | 3/2 | — | epaule moyenne, poignet moyenne, lombaires moyenne, genou moyenne, hanche moyenne, cheville moyenne | — |
 | `ca-skierg-sprint` | SkiErg en sprint | Intermédiaire | sprint | sagittal | — | explosif | 4 | salle | aucune | secondes | bilateral | 4/2 | — | epaule moyenne, lombaires moyenne, hanche moyenne | `ca-skierg-endurance` |
 | `ca-sprints-repetes` | Sprints répétés 10 × 50 m | Avancé | sprint | sagittal | — | explosif | 7 | exterieur | aucune | distance | bilateral | 5/2 | — | genou moyenne, hanche moyenne, cheville forte | `ca-sprint`, `ca-sprint-cote` |
-| `ca-corde-double-unders` | Double-unders | Intermédiaire | corde_a_sauter | sagittal | — | cyclique | 4 | salle, maison, exterieur | aucune | repetitions | bilateral | 3/2 | — | genou moyenne, cheville forte | `ca-corde-pas-alternes`, `ca-corde-sauts-simples` |
+| `ca-corde-double-unders` | Double-unders | Intermédiaire | corde_a_sauter | sagittal | — | cyclique | 4 | salle, maison, exterieur | aucune | repetitions | bilateral | 3/2 | — | genou moyenne, cheville forte | `ca-corde-sauts-simples`, `ca-corde-pas-alternes` |
 | `ca-marche-recuperation` | Marche de récupération | Débutant | marche | sagittal | — | cyclique | 2 | salle, maison, exterieur | aucune | secondes | bilateral | 1/1 | — | — | — |
 | `ca-marche-lestee-ruck` | Marche lestée au sac à dos (ruck) | Intermédiaire | marche | sagittal | — | cyclique | 4 | exterieur | lest | secondes | bilateral | 2/1 | — | lombaires moyenne, genou moyenne | — |
 | `mo-squat-profond-tenu` | Squat profond tenu | Débutant | mobilite_articulaire | multiple | — | isometrique | 1 | salle, maison, exterieur | aucune | secondes | bilateral | 1/1 | — | — | — |
@@ -298,7 +298,7 @@ Références : `suprak2011` = Suprak, Dawes & Stephenson (2011), J Strength Cond
 | `mo-chameau` | Chameau (extension à genoux) | Intermédiaire | souplesse | sagittal | — | passif | 4 | salle, maison, exterieur | aucune | secondes | bilateral | 1/2 | — | lombaires moyenne, hanche moyenne | — |
 | `mo-rouleau-dos-thoracique` | Auto-massage du dos thoracique au rouleau | Débutant | auto_massage | multiple | — | passif | 1 | salle, maison, exterieur | aucune | secondes | bilateral | 1/1 | — | — | — |
 
-## Cas ambigus (143)
+## Cas ambigus (142)
 
 Cas que les règles tranchent sans certitude ; à relire en priorité.
 
@@ -313,9 +313,8 @@ Cas que les règles tranchent sans certitude ; à relire en priorité.
 - `cs-compression-pike` — Compression pike assis
 - `cs-compression-straddle` — Compression straddle assis
 
-### difficulté au plancher de son niveau — 16
+### difficulté au plancher de son niveau — 15
 
-- `mu-barre-au-front-incline` — Barre au front sur banc incliné (3)
 - `mu-presse-cuisses-unilaterale` — Presse à cuisses unilatérale (3)
 - `mu-presse-cuisses-pieds-bas` — Presse à cuisses pieds bas (3)
 - `mu-reverse-hyper-machine` — Reverse hyper à la machine (3)

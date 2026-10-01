@@ -30,8 +30,11 @@ void main() {
   for (final entry in forbidden.entries) {
     test('lib/ sans ${entry.value} (« ${entry.key} »)', () {
       for (final file in sources) {
-        expect(file.readAsStringSync().contains(entry.key), isFalse,
-            reason: file.path);
+        expect(
+          file.readAsStringSync().contains(entry.key),
+          isFalse,
+          reason: file.path,
+        );
       }
     });
   }
@@ -45,11 +48,14 @@ void main() {
 
   test('la version exportée est celle du pubspec et du CHANGELOG', () {
     final pubspec = File('pubspec.yaml').readAsStringSync();
-    final version = RegExp(r'^version: (\S+)$', multiLine: true)
-        .firstMatch(pubspec)!
-        .group(1)!;
-    expect(File('lib/src/version.dart').readAsStringSync(),
-        contains("kalisCoreVersion = '$version'"));
+    final version = RegExp(
+      r'^version: (\S+)$',
+      multiLine: true,
+    ).firstMatch(pubspec)!.group(1)!;
+    expect(
+      File('lib/src/version.dart').readAsStringSync(),
+      contains("kalisCoreVersion = '$version'"),
+    );
     expect(File('CHANGELOG.md').readAsStringSync(), contains('## $version'));
   });
 }

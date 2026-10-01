@@ -66,6 +66,8 @@ Goal arbitraryGoal(Random r) {
     metric: r.nextBool() ? null : arbEnum(r, GoalMetric.values),
     targetValue: r.nextBool() ? null : arbDouble(r, 0.0, 2000.0),
     distanceMeters: r.nextBool() ? null : arbDouble(r, 0.0, 2000.0),
+    loadKg: r.nextBool() ? null : arbDouble(r, 0.0, 2000.0),
+    durationSeconds: r.nextBool() ? null : arbInt(r, 1, 1001),
     targetDate: r.nextBool() ? null : arbDate(r),
     sessionsPerWeek: r.nextBool() ? null : arbInt(r, 1, 14),
     weeks: r.nextBool() ? null : arbInt(r, 1, 104),
@@ -77,6 +79,15 @@ DaySlot arbitraryDaySlot(Random r) {
   return DaySlot(
     weekday: arbInt(r, 1, 7),
     minutes: arbInt(r, 10, 300),
+    place: r.nextBool() ? null : arbEnum(r, Place.values),
+  );
+}
+
+/// Valeur aléatoire de [PlaceEquipment].
+PlaceEquipment arbitraryPlaceEquipment(Random r) {
+  return PlaceEquipment(
+    place: arbEnum(r, Place.values),
+    equipment: arbList(r, 0, 3, () => arbString(r, 0, 12)),
   );
 }
 
@@ -124,10 +135,14 @@ AthleteProfile arbitraryAthleteProfile(Random r) {
     availability: arbList(r, 1, 7, () => arbitraryDaySlot(r)),
     places: arbList(r, 1, 3, () => arbEnum(r, Place.values)),
     equipment: arbList(r, 0, 3, () => arbString(r, 0, 12)),
+    equipmentByPlace: r.nextBool() ? null : arbList(r, 0, 3, () => arbitraryPlaceEquipment(r)),
     loadIncrements: arbList(r, 0, 3, () => arbitraryLoadIncrement(r)),
     limitations: arbList(r, 0, 3, () => arbitraryLimitation(r)),
     likedExerciseIds: arbList(r, 0, 3, () => arbId(r)),
     dislikedExerciseIds: arbList(r, 0, 3, () => arbId(r)),
+    knownExerciseIds: r.nextBool() ? null : arbList(r, 0, 3, () => arbId(r)),
+    cannotDoExerciseIds: r.nextBool() ? null : arbList(r, 0, 3, () => arbId(r)),
+    experience: r.nextBool() ? null : arbEnum(r, ExperienceLevel.values),
     guidanceMode: arbEnum(r, GuidanceMode.values),
     healthScreening: r.nextBool() ? null : arbitraryHealthScreeningRef(r),
     createdOn: arbDate(r),
@@ -161,7 +176,7 @@ HealthCheck arbitraryHealthCheck(Random r) {
     nutrition: r.nextBool() ? null : arbInt(r, 1, 5),
     hydration: r.nextBool() ? null : arbInt(r, 1, 5),
     minutesAvailable: r.nextBool() ? null : arbInt(r, 0, 600),
-    pains: arbList(r, 0, 3, () => arbitraryPainReport(r)),
+    pains: r.nextBool() ? null : arbList(r, 0, 3, () => arbitraryPainReport(r)),
   );
 }
 
@@ -170,8 +185,10 @@ SetTarget arbitrarySetTarget(Random r) {
   return SetTarget(
     repsLow: r.nextBool() ? null : arbInt(r, 0, 1000),
     repsHigh: r.nextBool() ? null : arbInt(r, 0, 1000),
-    seconds: r.nextBool() ? null : arbInt(r, 0, 86400),
+    secondsLow: r.nextBool() ? null : arbInt(r, 0, 86400),
+    secondsHigh: r.nextBool() ? null : arbInt(r, 0, 86400),
     distanceMeters: r.nextBool() ? null : arbDouble(r, 0.0, 2000.0),
+    calories: r.nextBool() ? null : arbDouble(r, 0.0, 2000.0),
     loadKg: r.nextBool() ? null : arbDouble(r, -300.0, 1000.0),
     flames: r.nextBool() ? null : arbInt(r, 1, 10),
   );
@@ -192,8 +209,18 @@ SetRecord arbitrarySetRecord(Random r) {
     flames: r.nextBool() ? null : arbInt(r, 1, 10),
     success: r.nextBool(),
     excluded: r.nextBool(),
+    slotId: r.nextBool() ? null : arbString(r, 0, 12),
     side: r.nextBool() ? null : arbEnum(r, BodySide.values),
     target: r.nextBool() ? null : arbitrarySetTarget(r),
+  );
+}
+
+/// Valeur aléatoire de [TrainingBreak].
+TrainingBreak arbitraryTrainingBreak(Random r) {
+  return TrainingBreak(
+    startDate: arbDate(r),
+    endDate: r.nextBool() ? null : arbDate(r),
+    reason: arbEnum(r, BreakReason.values),
   );
 }
 
@@ -217,6 +244,7 @@ SessionRecord arbitrarySessionRecord(Random r) {
     completed: r.nextBool(),
     durationMinutes: r.nextBool() ? null : arbInt(r, 0, 600),
     bodyWeightKg: r.nextBool() ? null : arbDouble(r, 25.0, 300.0),
+    place: r.nextBool() ? null : arbEnum(r, Place.values),
     healthCheck: r.nextBool() ? null : arbitraryHealthCheck(r),
     sets: arbList(r, 0, 3, () => arbitrarySetRecord(r)),
     pains: arbList(r, 0, 3, () => arbitraryPainReport(r)),
@@ -228,6 +256,7 @@ TrainingLog arbitraryTrainingLog(Random r) {
   return TrainingLog(
     schemaVersion: TrainingLog.currentSchemaVersion,
     sessions: arbList(r, 0, 3, () => arbitrarySessionRecord(r)),
+    breaks: r.nextBool() ? null : arbList(r, 0, 3, () => arbitraryTrainingBreak(r)),
   );
 }
 
@@ -286,7 +315,7 @@ Pass1Plan arbitraryPass1Plan(Random r) {
     schemaVersion: Pass1Plan.currentSchemaVersion,
     blockId: arbString(r, 1, 12),
     blockIndex: arbInt(r, 0, 1000),
-    weeks: arbInt(r, 4, 6),
+    weeks: arbInt(r, 1, 52),
     startDate: arbDate(r),
     seed: arbInt(r, 0, 1000),
     engineVersion: arbString(r, 0, 12),
@@ -327,6 +356,8 @@ PlanChange arbitraryPlanChange(Random r) {
     fromExerciseId: r.nextBool() ? null : arbId(r),
     toExerciseId: r.nextBool() ? null : arbId(r),
     fromDayIndex: r.nextBool() ? null : arbInt(r, 0, 1000),
+    fromPrescription: r.nextBool() ? null : arbitraryExercisePrescription(r),
+    toPrescription: r.nextBool() ? null : arbitraryExercisePrescription(r),
     reasons: arbList(r, 0, 3, () => arbitraryReason(r)),
   );
 }
@@ -379,11 +410,16 @@ ExercisePrescription arbitraryExercisePrescription(Random r) {
     secondsHigh: r.nextBool() ? null : arbInt(r, 1, 86400),
     distanceMeters: r.nextBool() ? null : arbDouble(r, 0.0, 2000.0),
     calories: r.nextBool() ? null : arbDouble(r, 0.0, 2000.0),
-    targetFlames: arbInt(r, 1, 10),
-    restSeconds: arbInt(r, 0, 900),
+    targetFlames: r.nextBool() ? null : arbInt(r, 1, 10),
+    restSeconds: r.nextBool() ? null : arbInt(r, 0, 900),
     startLoadKg: r.nextBool() ? null : arbDouble(r, -300.0, 1000.0),
+    percentOfOneRm: r.nextBool() ? null : arbDouble(r, 0.0, 1.5),
     toCalibrate: r.nextBool(),
     loadBasis: arbEnum(r, LoadBasis.values),
+    setTargets: r.nextBool() ? null : arbList(r, 0, 3, () => arbitrarySetTarget(r)),
+    groupId: r.nextBool() ? null : arbString(r, 0, 12),
+    format: r.nextBool() ? null : arbString(r, 0, 12),
+    kind: r.nextBool() ? null : arbEnum(r, SetKind.values),
     reasons: arbList(r, 0, 3, () => arbitraryReason(r)),
   );
 }
@@ -485,6 +521,51 @@ AdaptInput arbitraryAdaptInput(Random r) {
     log: arbitraryTrainingLog(r),
     today: arbDate(r),
     state: r.nextBool() ? null : arbJson(r),
+    decisions: r.nextBool() ? null : arbList(r, 0, 3, () => arbitraryProposalDecision(r)),
+  );
+}
+
+/// Valeur aléatoire de [SessionRequest].
+SessionRequest arbitrarySessionRequest(Random r) {
+  return SessionRequest(
+    schemaVersion: SessionRequest.currentSchemaVersion,
+    input: arbitraryAdaptInput(r),
+    weekIndex: arbInt(r, 0, 1000),
+    dayIndex: arbInt(r, 0, 1000),
+    healthCheck: r.nextBool() ? null : arbitraryHealthCheck(r),
+    place: r.nextBool() ? null : arbEnum(r, Place.values),
+  );
+}
+
+/// Valeur aléatoire de [AdviceRequest].
+AdviceRequest arbitraryAdviceRequest(Random r) {
+  return AdviceRequest(
+    schemaVersion: AdviceRequest.currentSchemaVersion,
+    input: arbitraryAdaptInput(r),
+    session: arbitrarySessionPlan(r),
+    done: arbList(r, 0, 3, () => arbitrarySetRecord(r)),
+    slotId: arbString(r, 1, 12),
+  );
+}
+
+/// Valeur aléatoire de [ProposalDecision].
+ProposalDecision arbitraryProposalDecision(Random r) {
+  return ProposalDecision(
+    proposalId: arbString(r, 1, 12),
+    date: arbDate(r),
+    status: arbEnum(r, ProposalStatus.values),
+  );
+}
+
+/// Valeur aléatoire de [PersonalRecord].
+PersonalRecord arbitraryPersonalRecord(Random r) {
+  return PersonalRecord(
+    exerciseId: arbId(r),
+    kind: arbEnum(r, RecordKind.values),
+    value: arbDouble(r, 0.0, 2000.0),
+    date: arbDate(r),
+    sessionId: r.nextBool() ? null : arbString(r, 0, 12),
+    previousValue: r.nextBool() ? null : arbDouble(r, 0.0, 2000.0),
   );
 }
 
@@ -523,6 +604,8 @@ IntraSessionAdvice arbitraryIntraSessionAdvice(Random r) {
     nextLoadKg: r.nextBool() ? null : arbDouble(r, -300.0, 1000.0),
     nextRepsLow: r.nextBool() ? null : arbInt(r, 0, 1000),
     nextRepsHigh: r.nextBool() ? null : arbInt(r, 0, 1000),
+    nextSeconds: r.nextBool() ? null : arbInt(r, 0, 86400),
+    slotId: r.nextBool() ? null : arbString(r, 0, 12),
     restSeconds: r.nextBool() ? null : arbInt(r, 0, 900),
     confidence: arbDouble(r, 0.0, 1.0),
     reasons: arbList(r, 0, 3, () => arbitraryReason(r)),
@@ -566,6 +649,7 @@ AdaptReview arbitraryAdaptReview(Random r) {
     proposals: arbList(r, 0, 3, () => arbitraryProposal(r)),
     state: arbJson(r),
     log: arbList(r, 0, 3, () => arbitraryEngineLogEntry(r)),
+    records: r.nextBool() ? null : arbList(r, 0, 3, () => arbitraryPersonalRecord(r)),
   );
 }
 
@@ -712,6 +796,7 @@ QuestInput arbitraryQuestInput(Random r) {
     adaptation: r.nextBool() ? null : arbitraryAdaptationSummary(r),
     state: arbitraryQuestState(r),
     today: arbDate(r),
+    seed: r.nextBool() ? null : arbInt(r, 0, 1000),
   );
 }
 
@@ -725,6 +810,10 @@ QuestOutcome arbitraryQuestOutcome(Random r) {
     goals: arbList(r, 0, 3, () => arbitraryGoalProgress(r)),
     events: arbList(r, 0, 3, () => arbitraryDelightEvent(r)),
     kreditBalance: arbInt(r, 0, 1000),
+    weekStreak: r.nextBool() ? null : arbInt(r, 0, 1000),
+    suggestedGoals: r.nextBool() ? null : arbList(r, 0, 3, () => arbitraryGoal(r)),
+    records: r.nextBool() ? null : arbList(r, 0, 3, () => arbitraryPersonalRecord(r)),
+    extras: r.nextBool() ? null : arbJson(r),
   );
 }
 
@@ -772,6 +861,35 @@ RestructureRequest arbitraryRestructureRequest(Random r) {
   );
 }
 
+/// Valeur aléatoire de [ReviewRequest].
+ReviewRequest arbitraryReviewRequest(Random r) {
+  return ReviewRequest(
+    schemaVersion: ReviewRequest.currentSchemaVersion,
+    request: arbitraryPlanRequest(r),
+    current: arbitraryPass1Plan(r),
+    action: arbitraryReviewAction(r),
+  );
+}
+
+/// Valeur aléatoire de [VariantsRequest].
+VariantsRequest arbitraryVariantsRequest(Random r) {
+  return VariantsRequest(
+    schemaVersion: VariantsRequest.currentSchemaVersion,
+    request: arbitraryPlanRequest(r),
+    current: arbitraryPass1Plan(r),
+    slotId: arbString(r, 1, 12),
+  );
+}
+
+/// Valeur aléatoire de [Pass2Request].
+Pass2Request arbitraryPass2Request(Random r) {
+  return Pass2Request(
+    schemaVersion: Pass2Request.currentSchemaVersion,
+    request: arbitraryPlanRequest(r),
+    pass1: arbitraryPass1Plan(r),
+  );
+}
+
 /// Valeur aléatoire de [BlockProposal].
 BlockProposal arbitraryBlockProposal(Random r) {
   return BlockProposal(
@@ -789,6 +907,7 @@ final List<ContractCodec<Object>> contractCodecs = <ContractCodec<Object>>[
   ContractCodec<MovementLevel>('MovementLevel', arbitraryMovementLevel, (v) => v.toJson(), MovementLevel.fromJson, (v) => v.validate()),
   ContractCodec<Goal>('Goal', arbitraryGoal, (v) => v.toJson(), Goal.fromJson, (v) => v.validate()),
   ContractCodec<DaySlot>('DaySlot', arbitraryDaySlot, (v) => v.toJson(), DaySlot.fromJson, (v) => v.validate()),
+  ContractCodec<PlaceEquipment>('PlaceEquipment', arbitraryPlaceEquipment, (v) => v.toJson(), PlaceEquipment.fromJson, (v) => v.validate()),
   ContractCodec<LoadIncrement>('LoadIncrement', arbitraryLoadIncrement, (v) => v.toJson(), LoadIncrement.fromJson, (v) => v.validate()),
   ContractCodec<Limitation>('Limitation', arbitraryLimitation, (v) => v.toJson(), Limitation.fromJson, (v) => v.validate()),
   ContractCodec<HealthScreeningRef>('HealthScreeningRef', arbitraryHealthScreeningRef, (v) => v.toJson(), HealthScreeningRef.fromJson, (v) => v.validate()),
@@ -797,6 +916,7 @@ final List<ContractCodec<Object>> contractCodecs = <ContractCodec<Object>>[
   ContractCodec<HealthCheck>('HealthCheck', arbitraryHealthCheck, (v) => v.toJson(), HealthCheck.fromJson, (v) => v.validate()),
   ContractCodec<SetTarget>('SetTarget', arbitrarySetTarget, (v) => v.toJson(), SetTarget.fromJson, (v) => v.validate()),
   ContractCodec<SetRecord>('SetRecord', arbitrarySetRecord, (v) => v.toJson(), SetRecord.fromJson, (v) => v.validate()),
+  ContractCodec<TrainingBreak>('TrainingBreak', arbitraryTrainingBreak, (v) => v.toJson(), TrainingBreak.fromJson, (v) => v.validate()),
   ContractCodec<ProgramRef>('ProgramRef', arbitraryProgramRef, (v) => v.toJson(), ProgramRef.fromJson, (v) => v.validate()),
   ContractCodec<SessionRecord>('SessionRecord', arbitrarySessionRecord, (v) => v.toJson(), SessionRecord.fromJson, (v) => v.validate()),
   ContractCodec<TrainingLog>('TrainingLog', arbitraryTrainingLog, (v) => v.toJson(), TrainingLog.fromJson, (v) => v.validate()),
@@ -823,6 +943,10 @@ final List<ContractCodec<Object>> contractCodecs = <ContractCodec<Object>>[
   ContractCodec<PainTrend>('PainTrend', arbitraryPainTrend, (v) => v.toJson(), PainTrend.fromJson, (v) => v.validate()),
   ContractCodec<AdaptationSummary>('AdaptationSummary', arbitraryAdaptationSummary, (v) => v.toJson(), AdaptationSummary.fromJson, (v) => v.validate()),
   ContractCodec<AdaptInput>('AdaptInput', arbitraryAdaptInput, (v) => v.toJson(), AdaptInput.fromJson, (v) => v.validate()),
+  ContractCodec<SessionRequest>('SessionRequest', arbitrarySessionRequest, (v) => v.toJson(), SessionRequest.fromJson, (v) => v.validate()),
+  ContractCodec<AdviceRequest>('AdviceRequest', arbitraryAdviceRequest, (v) => v.toJson(), AdviceRequest.fromJson, (v) => v.validate()),
+  ContractCodec<ProposalDecision>('ProposalDecision', arbitraryProposalDecision, (v) => v.toJson(), ProposalDecision.fromJson, (v) => v.validate()),
+  ContractCodec<PersonalRecord>('PersonalRecord', arbitraryPersonalRecord, (v) => v.toJson(), PersonalRecord.fromJson, (v) => v.validate()),
   ContractCodec<SessionAdjustment>('SessionAdjustment', arbitrarySessionAdjustment, (v) => v.toJson(), SessionAdjustment.fromJson, (v) => v.validate()),
   ContractCodec<SessionPlan>('SessionPlan', arbitrarySessionPlan, (v) => v.toJson(), SessionPlan.fromJson, (v) => v.validate()),
   ContractCodec<IntraSessionAdvice>('IntraSessionAdvice', arbitraryIntraSessionAdvice, (v) => v.toJson(), IntraSessionAdvice.fromJson, (v) => v.validate()),
@@ -845,6 +969,9 @@ final List<ContractCodec<Object>> contractCodecs = <ContractCodec<Object>>[
   ContractCodec<PlanRequest>('PlanRequest', arbitraryPlanRequest, (v) => v.toJson(), PlanRequest.fromJson, (v) => v.validate()),
   ContractCodec<NextBlockRequest>('NextBlockRequest', arbitraryNextBlockRequest, (v) => v.toJson(), NextBlockRequest.fromJson, (v) => v.validate()),
   ContractCodec<RestructureRequest>('RestructureRequest', arbitraryRestructureRequest, (v) => v.toJson(), RestructureRequest.fromJson, (v) => v.validate()),
+  ContractCodec<ReviewRequest>('ReviewRequest', arbitraryReviewRequest, (v) => v.toJson(), ReviewRequest.fromJson, (v) => v.validate()),
+  ContractCodec<VariantsRequest>('VariantsRequest', arbitraryVariantsRequest, (v) => v.toJson(), VariantsRequest.fromJson, (v) => v.validate()),
+  ContractCodec<Pass2Request>('Pass2Request', arbitraryPass2Request, (v) => v.toJson(), Pass2Request.fromJson, (v) => v.validate()),
   ContractCodec<BlockProposal>('BlockProposal', arbitraryBlockProposal, (v) => v.toJson(), BlockProposal.fromJson, (v) => v.validate()),
 ];
 

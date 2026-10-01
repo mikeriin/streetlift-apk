@@ -399,10 +399,11 @@ final class MovementRank {
   /// Rang.
   final MovementRankTier tier;
 
-  /// Performance normalisée utilisée pour le rang.
+  /// Performance normalisée utilisée pour le rang (échelle définie et publiée
+  /// par kalis_quest : standards par sexe et poids de corps).
   final double score;
 
-  /// Performance du rang suivant.
+  /// Performance normalisée du rang suivant, même échelle.
   final double? nextTierAt;
 
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
@@ -539,7 +540,7 @@ final class Quest {
       'id': id,
       'kind': kind.code,
       'template': template,
-      'params': params,
+      'params': jsonCanonical(params),
       'startsOn': startsOn.iso,
       if (endsOn case final v?) 'endsOn': v.iso,
       'progress': progress,
@@ -813,10 +814,11 @@ final class GoalProgress {
   /// Objectif.
   final String goalId;
 
-  /// Valeur actuelle.
+  /// Valeur actuelle, dans l'unité de l'objectif (`Goal.metric` ; séances
+  /// faites pour une habitude).
   final double current;
 
-  /// Valeur cible.
+  /// Valeur cible, même unité.
   final double target;
 
   /// Avancement, de 0 à 1.
@@ -1113,7 +1115,7 @@ final class QuestState {
       'kredits': [for (final e in kredits) e.toJson()],
       'quests': [for (final e in quests) e.toJson()],
       if (lastEvaluatedOn case final v?) 'lastEvaluatedOn': v.iso,
-      'data': data,
+      'data': jsonCanonical(data),
     };
   }
 
@@ -1182,6 +1184,7 @@ final class QuestInput {
     this.adaptation,
     required this.state,
     required this.today,
+    this.seed,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1195,6 +1198,7 @@ final class QuestInput {
       adaptation: jsonObjOrNull(json, 'adaptation', AdaptationSummary.fromJson),
       state: jsonObj(json, 'state', QuestState.fromJson),
       today: jsonDate(json, 'today'),
+      seed: jsonIntOrNull(json, 'seed'),
     );
   }
 
@@ -1222,6 +1226,10 @@ final class QuestInput {
   /// « Aujourd'hui », fourni par l'application.
   final CivilDate today;
 
+  /// Graine de l'utilisateur pour les tirages (coffres, quêtes du jour) ; le
+  /// moteur la combine à la date.
+  final int? seed;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -1232,6 +1240,7 @@ final class QuestInput {
       if (adaptation case final v?) 'adaptation': v.toJson(),
       'state': state.toJson(),
       'today': today.iso,
+      if (seed case final v?) 'seed': v,
     };
   }
 
@@ -1244,6 +1253,7 @@ final class QuestInput {
     Object? adaptation = unset,
     QuestState? state,
     CivilDate? today,
+    Object? seed = unset,
   }) {
     return QuestInput(
       schemaVersion: schemaVersion ?? this.schemaVersion,
@@ -1253,6 +1263,7 @@ final class QuestInput {
       adaptation: identical(adaptation, unset) ? this.adaptation : adaptation as AdaptationSummary?,
       state: state ?? this.state,
       today: today ?? this.today,
+      seed: identical(seed, unset) ? this.seed : seed as int?,
     );
   }
 
@@ -1271,6 +1282,7 @@ final class QuestInput {
     if (block case final v?) { v.collectViolations('$path.block', out); }
     if (adaptation case final v?) { v.collectViolations('$path.adaptation', out); }
     state.collectViolations('$path.state', out);
+    if (seed case final v?) { checkRange(out, '$path.seed', v, 0, null); }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -1284,11 +1296,11 @@ final class QuestInput {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is QuestInput && schemaVersion == other.schemaVersion && profile == other.profile && log == other.log && block == other.block && adaptation == other.adaptation && state == other.state && today == other.today;
+    return identical(this, other) || other is QuestInput && schemaVersion == other.schemaVersion && profile == other.profile && log == other.log && block == other.block && adaptation == other.adaptation && state == other.state && today == other.today && seed == other.seed;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[schemaVersion, profile, log, block, adaptation, state, today]);
+  int get hashCode => Object.hashAll(<Object?>[schemaVersion, profile, log, block, adaptation, state, today, seed]);
 
   @override
   String toString() => 'QuestInput(${toJson()})';
@@ -1304,6 +1316,10 @@ final class QuestOutcome {
     required this.goals,
     required this.events,
     required this.kreditBalance,
+    this.weekStreak,
+    this.suggestedGoals,
+    this.records,
+    this.extras,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1317,6 +1333,10 @@ final class QuestOutcome {
       goals: jsonList(json, 'goals', (v) => GoalProgress.fromJson(jsonAsObject(v, 'goals'))),
       events: jsonList(json, 'events', (v) => DelightEvent.fromJson(jsonAsObject(v, 'events'))),
       kreditBalance: jsonInt(json, 'kreditBalance'),
+      weekStreak: jsonIntOrNull(json, 'weekStreak'),
+      suggestedGoals: jsonListOrNull(json, 'suggestedGoals', (v) => Goal.fromJson(jsonAsObject(v, 'suggestedGoals'))),
+      records: jsonListOrNull(json, 'records', (v) => PersonalRecord.fromJson(jsonAsObject(v, 'records'))),
+      extras: jsonObjectOrNull(json, 'extras'),
     );
   }
 
@@ -1341,6 +1361,20 @@ final class QuestOutcome {
   /// Solde de Krédits.
   final int kreditBalance;
 
+  /// Série de semaines en cours.
+  final int? weekStreak;
+
+  /// Objectifs suggérés par Koach d'après le profil et les données (D3.8), à
+  /// proposer à l'utilisateur.
+  final List<Goal>? suggestedGoals;
+
+  /// Records personnels connus.
+  final List<PersonalRecord>? records;
+
+  /// Données de présentation propres à kalis_quest (récapitulatif hebdomadaire,
+  /// comparaisons dans le temps, fantôme), documentées par ce paquet.
+  final Map<String, Object?>? extras;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -1351,6 +1385,10 @@ final class QuestOutcome {
       'goals': [for (final e in goals) e.toJson()],
       'events': [for (final e in events) e.toJson()],
       'kreditBalance': kreditBalance,
+      if (weekStreak case final v?) 'weekStreak': v,
+      if (suggestedGoals case final v?) 'suggestedGoals': [for (final e in v) e.toJson()],
+      if (records case final v?) 'records': [for (final e in v) e.toJson()],
+      if (extras case final v?) 'extras': jsonCanonical(v),
     };
   }
 
@@ -1363,6 +1401,10 @@ final class QuestOutcome {
     List<GoalProgress>? goals,
     List<DelightEvent>? events,
     int? kreditBalance,
+    Object? weekStreak = unset,
+    Object? suggestedGoals = unset,
+    Object? records = unset,
+    Object? extras = unset,
   }) {
     return QuestOutcome(
       state: state ?? this.state,
@@ -1372,6 +1414,10 @@ final class QuestOutcome {
       goals: goals ?? this.goals,
       events: events ?? this.events,
       kreditBalance: kreditBalance ?? this.kreditBalance,
+      weekStreak: identical(weekStreak, unset) ? this.weekStreak : weekStreak as int?,
+      suggestedGoals: identical(suggestedGoals, unset) ? this.suggestedGoals : suggestedGoals as List<Goal>?,
+      records: identical(records, unset) ? this.records : records as List<PersonalRecord>?,
+      extras: identical(extras, unset) ? this.extras : extras as Map<String, Object?>?,
     );
   }
 
@@ -1391,6 +1437,10 @@ final class QuestOutcome {
     for (var i = 0; i < goals.length; i++) { goals[i].collectViolations('$path.goals[$i]', out); }
     for (var i = 0; i < events.length; i++) { events[i].collectViolations('$path.events[$i]', out); }
     checkRange(out, '$path.kreditBalance', kreditBalance, 0, null);
+    if (weekStreak case final v?) { checkRange(out, '$path.weekStreak', v, 0, null); }
+    if (suggestedGoals case final v?) { for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.suggestedGoals[$i]', out); } }
+    if (records case final v?) { for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.records[$i]', out); } }
+    if (extras case final v?) { checkJson(out, '$path.extras', v); }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -1401,15 +1451,17 @@ final class QuestOutcome {
     for (final e in ranks) { e.collectExerciseIds(out); }
     for (final e in goals) { e.collectExerciseIds(out); }
     for (final e in events) { e.collectExerciseIds(out); }
+    for (final e in suggestedGoals ?? const <Goal>[]) { e.collectExerciseIds(out); }
+    for (final e in records ?? const <PersonalRecord>[]) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is QuestOutcome && state == other.state && level == other.level && jsonListEquals(attributes, other.attributes) && jsonListEquals(ranks, other.ranks) && jsonListEquals(goals, other.goals) && jsonListEquals(events, other.events) && kreditBalance == other.kreditBalance;
+    return identical(this, other) || other is QuestOutcome && state == other.state && level == other.level && jsonListEquals(attributes, other.attributes) && jsonListEquals(ranks, other.ranks) && jsonListEquals(goals, other.goals) && jsonListEquals(events, other.events) && kreditBalance == other.kreditBalance && weekStreak == other.weekStreak && jsonDeepEquals(suggestedGoals, other.suggestedGoals) && jsonDeepEquals(records, other.records) && jsonDeepEquals(extras, other.extras);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[state, level, Object.hashAll(attributes), Object.hashAll(ranks), Object.hashAll(goals), Object.hashAll(events), kreditBalance]);
+  int get hashCode => Object.hashAll(<Object?>[state, level, Object.hashAll(attributes), Object.hashAll(ranks), Object.hashAll(goals), Object.hashAll(events), kreditBalance, weekStreak, jsonDeepHash(suggestedGoals), jsonDeepHash(records), jsonDeepHash(extras)]);
 
   @override
   String toString() => 'QuestOutcome(${toJson()})';

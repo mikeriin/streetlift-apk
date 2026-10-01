@@ -144,7 +144,8 @@ def street_mix(s: dict) -> dict:
 
 def profile(key, description, *, sex, birth, height, weight, disciplines=None, street_mode=None, days,
             places, equipment, increments="aucun", levels=(), goals=(), limitations=(), liked=(), disliked=(),
-            mode="assisted", name=None, health="standard", created=JOUR0) -> dict:
+            mode="assisted", name=None, health="standard", created=JOUR0, experience=None, by_place=None,
+            day_places=None, known=None, cannot=None) -> dict:
     p: dict = {"schemaVersion": 2}
     if name:
         p["displayName"] = name
@@ -156,15 +157,27 @@ def profile(key, description, *, sex, birth, height, weight, disciplines=None, s
         p["streetMode"] = street_mode
     p["movementLevels"] = list(levels)
     p["goals"] = list(goals)
-    p["availability"] = [{"weekday": d, "minutes": m} for d, m in days]
+    lieu = {"gym": "salle", "home": "maison", "outdoor": "exterieur"}
+    p["availability"] = [
+        ({"weekday": d, "minutes": m, "place": lieu[day_places[d]]} if day_places and d in day_places
+         else {"weekday": d, "minutes": m}) for d, m in days
+    ]
     p["places"] = [{"gym": "salle", "home": "maison", "outdoor": "exterieur"}[x] for x in places]
     p["equipment"] = list(equipment)
+    if by_place:
+        p["equipmentByPlace"] = [{"place": lieu[k], "equipment": list(v)} for k, v in by_place.items()]
     p["loadIncrements"] = [
         ({"loadType": t, "stepKg": s, "minKg": m} if m else {"loadType": t, "stepKg": s}) for t, s, m in INC[increments]
     ]
     p["limitations"] = list(limitations)
     p["likedExerciseIds"] = list(liked)
     p["dislikedExerciseIds"] = list(disliked)
+    if known is not None:
+        p["knownExerciseIds"] = list(known)
+    if cannot is not None:
+        p["cannotDoExerciseIds"] = list(cannot)
+    if experience:
+        p["experience"] = experience
     p["guidanceMode"] = mode
     hs = {"questionnaireId": "kalis-sante-l13-v1"}
     if health != "not_answered":
@@ -181,7 +194,7 @@ def profils() -> list[dict]:
     return [
         P("debutant_forme_generale_maison_2x30", "Débutant, forme générale, 2 × 30 min à la maison sans matériel.",
           sex="male", birth=1994, height=178, weight=82, disciplines=mix("general_fitness"),
-          days=[(2, 30), (5, 30)], places=["home"], equipment=SANS,
+          days=[(2, 30), (5, 30)], places=["home"], equipment=SANS, experience="beginner",
           levels=[lvl("sw-pompe", "max_reps", 5, 10), lvl("mu-air-squat", "max_reps", 15, 25),
                   lvl("mu-gainage-ventral-coudes", "max_hold_seconds")],
           goals=[habit("g1", 2, 8)]),
@@ -195,6 +208,8 @@ def profils() -> list[dict]:
         P("coureur_cardio_3x45", "Coureur : cardio principal, mobilité et musculation en appoint, 3 × 45 min dehors.",
           sex="male", birth=1988, height=176, weight=68, disciplines=mix("cardio", 70, ("musculation", 20), ("mobility", 10)),
           days=[(2, 45), (4, 45), (7, 75)], places=["outdoor", "home"], equipment=COURSE + ["élastique"],
+          by_place={"outdoor": ["piste ou terrain extérieur", "côte ou escaliers"], "home": ["tapis", "corde à sauter", "élastique"]},
+          day_places={2: "home", 7: "outdoor"}, experience="intermediate",
           levels=[lvl("ca-footing-endurance-fondamentale", "time_seconds", 1500, 1620, distance=5000),
                   lvl("mu-air-squat", "max_reps", 30, 40)],
           goals=[perf("g1", "ca-footing-endurance-fondamentale", "time_seconds", 2880, "2027-03-14", distance=10000)]),
@@ -210,7 +225,7 @@ def profils() -> list[dict]:
           levels=[lvl("sw-traction-pronation", "max_reps", 14, 18), lvl("sw-dips-barres-paralleles", "max_reps", 20, 25),
                   lvl("cs-front-lever-tuck-avance", "max_hold_seconds", 8, 12), lvl("cs-planche-tuck", "max_hold_seconds", 10, 15),
                   lvl("cs-handstand", "max_hold_seconds", 15, 30)],
-          goals=[perf("g1", "cs-front-lever", "hold_seconds", 5, "2027-09-01"), perf("g2", "cs-planche-straddle", "skill_unlocked", None, "2027-12-01")],
+          goals=[perf("g1", "cs-front-lever", "max_hold_seconds", 5, "2027-09-01"), perf("g2", "cs-planche-straddle", "skill_unlocked", None, "2027-12-01")],
           liked=["cs-front-lever-tuck-avance", "cs-handstand"]),
         P("street_streetlifting_4x90", "Mode street, principale streetlifting (60/25/15), 4 × 90 min.",
           sex="male", birth=1997, height=180, weight=78, street_mode=street("streetlifting", 60, 25, 15),
@@ -229,7 +244,7 @@ def profils() -> list[dict]:
           days=[(1, 60), (2, 60), (4, 60), (5, 60), (7, 60)], places=["outdoor", "home"], equipment=PARC + ["anneaux", "tapis"],
           levels=[lvl("sw-traction-pronation", "max_reps", 6, 8), lvl("cs-handstand-dos-au-mur", "max_hold_seconds", 30, 45),
                   lvl("cs-l-sit", "max_hold_seconds", 8, 12)],
-          goals=[perf("g1", "cs-handstand", "hold_seconds", 30, "2027-06-01")]),
+          goals=[perf("g1", "cs-handstand", "max_hold_seconds", 30, "2027-06-01")]),
         P("blessure_epaule_musculation_3x60", "Musculation avec une blessure d'épaule droite (gêne 6/10).",
           sex="male", birth=1985, height=183, weight=88, disciplines=mix("musculation"),
           days=[(1, 60), (3, 60), (5, 60)], places=["gym"], equipment=SALLE, increments="salle",
@@ -244,7 +259,7 @@ def profils() -> list[dict]:
           days=[(1, 75), (2, 75), (3, 75), (4, 75), (5, 75), (6, 75)], places=["gym"], equipment=SALLE, increments="salle",
           levels=[lvl("mu-developpe-couche-barre", "one_rm_kg", 130, 140), lvl("mu-back-squat-barre-haute", "one_rm_kg", 170, 185),
                   lvl("mu-souleve-de-terre-conventionnel", "one_rm_kg", 210, 225), lvl("mu-developpe-militaire-barre-debout", "one_rm_kg", 80, 85)],
-          goals=[perf("g1", "mu-developpe-couche-barre", "one_rm_kg", 150, "2027-06-01")], mode="free"),
+          goals=[perf("g1", "mu-developpe-couche-barre", "one_rm_kg", 150, "2027-06-01")], mode="free", experience="advanced"),
         P("senior_65_forme_generale_3x40", "Senior de 65 ans, forme générale, 3 × 40 min, questionnaire santé en mode prudent.",
           sex="female", birth=1961, height=160, weight=64, disciplines=mix("general_fitness", 60, ("mobility", 40)),
           days=[(1, 40), (3, 40), (5, 40)], places=["home", "outdoor"], equipment=["tapis", "élastique", "step", "bâton"],
@@ -253,6 +268,7 @@ def profils() -> list[dict]:
         P("proprietaire_streetlifting_avance", "Profil calqué sur le propriétaire : streetlifting avancé, environ 71,5 kg, mode street.",
           sex="male", birth=1996, height=175, weight=71.5, street_mode=street("streetlifting", 70, 20, 10),
           days=[(1, 90), (2, 90), (3, 75), (5, 90), (6, 90)], places=["gym", "outdoor"], equipment=STREETLIFT, increments="street",
+          experience="advanced", known=["cd-muscle-up-barre-strict", "sw-traction-chest-to-bar"], cannot=["cs-front-lever"],
           levels=[lvl("sl-traction-lestee", "one_rm_kg", 52.5, 57.5), lvl("sl-dips-leste", "one_rm_kg", 72.5, 77.5),
                   lvl("sl-muscle-up-leste", "one_rm_kg", 12.5, 17.5), lvl("sl-squat-competition", "one_rm_kg", 115, 125),
                   lvl("sw-traction-pronation", "max_reps", 28, 32), lvl("sw-dips-barres-paralleles", "max_reps", 65, 75),
@@ -314,7 +330,7 @@ def profils() -> list[dict]:
           equipment=PARC + ["anneaux", "parallettes", "tapis", "mur", "poteau vertical", "espalier"],
           levels=[lvl("cs-front-lever", "max_hold_seconds", 12, 15), lvl("cs-planche-straddle", "max_hold_seconds", 8, 10),
                   lvl("cd-traction-un-bras", "max_reps", 1, 2), lvl("cd-hspu-libre", "max_reps", 4, 6)],
-          goals=[perf("g1", "cs-planche", "hold_seconds", 5, "2027-12-01")], mode="free"),
+          goals=[perf("g1", "cs-planche", "max_hold_seconds", 5, "2027-12-01")], mode="free"),
         P("streetlifting_debutant_3x60", "Débutant en streetlifting : peu de tractions, pas encore de lest.",
           sex="male", birth=2002, height=178, weight=74, street_mode=street("streetlifting", 50, 40, 10),
           days=[(1, 60), (3, 60), (5, 60)], places=["gym"], equipment=STREETLIFT, increments="street",
@@ -575,9 +591,12 @@ def simuler(j: dict, profil: dict) -> tuple[dict, dict]:
                         bilan["minutesAvailable"] = rnd.choice([20, 30, 40])
                 elif rnd.random() < 0.25:
                     bilan["sleepHours"] = rnd.choice([7.0, 7.5, 8.0])
-                bilan["pains"] = []
+                # Douleurs : la question n'est posée que si la réponse est basse
+                # (D5.8) ; sinon le champ reste absent (≠ « aucune douleur »).
+                if bas or douleur:
+                    bilan["pains"] = []
             elif rnd.random() < 0.1:
-                bilan = {"sleepHours": rnd.choice([6.5, 7.0, 8.0]), "pains": []}
+                bilan = {"sleepHours": rnd.choice([6.5, 7.0, 8.0])}
             forme *= 1 + rnd.gauss(0, 0.015)
             series = []
             douleurs = []
@@ -626,19 +645,19 @@ def simuler(j: dict, profil: dict) -> tuple[dict, dict]:
                         # Une tenue : chaque « répétition en réserve » vaut environ 10 % de la tenue max.
                         rir = (maxi - secs) / max(1.0, cap * 0.1)
                         rec["seconds"] = secs
-                        cible_rec.update(seconds=cible_s)
+                        cible_rec.update(secondsLow=cible_s, secondsHigh=cible_s)
                         ok = secs >= cible_s
                     elif mode == "run":
                         secs = bas_
                         rec["seconds"] = secs
                         rec["distanceMeters"] = float(round(cap * secs * (1 - 0.01 * k)))
                         rir = rir_cible + rnd.gauss(0, 0.5)
-                        cible_rec.update(seconds=secs)
+                        cible_rec.update(secondsLow=secs, secondsHigh=secs)
                         ok = True
                     else:  # easy
                         rec["seconds"] = bas_
                         rir = 5.0
-                        cible_rec.update(seconds=bas_)
+                        cible_rec.update(secondsLow=bas_, secondsHigh=bas_)
                         ok = True
                     rir = max(0.0, rir + rnd.gauss(0, 0.4))
                     note = 10 if (not ok and mode in ("load", "reps")) else fromrir(rir)
@@ -670,7 +689,7 @@ def simuler(j: dict, profil: dict) -> tuple[dict, dict]:
                         e["cible"] += palier
                     elif not complet and e["cible"] - palier >= bas_:
                         e["cible"] -= palier
-            if bilan is not None and douleur and rnd.random() < 0.3:
+            if bilan is not None and "pains" in bilan and douleur and rnd.random() < 0.3:
                 bilan["pains"].append({"zone": douleur[0], "side": douleur[1], "joint": ZONE_JOINT[douleur[0]],
                                        "intensity": rnd.choice([2, 3, 4]), "phase": "before"})
             # Une série écartée (incident) de temps en temps.
@@ -688,6 +707,10 @@ def simuler(j: dict, profil: dict) -> tuple[dict, dict]:
             s["pains"] = douleurs
             sessions.append(s)
     log = {"schemaVersion": 1, "sessions": sessions}
+    if coupure:
+        d0 = DEBUT + dt.timedelta(days=coupure[0] * 7)
+        log["breaks"] = [{"startDate": d0.isoformat(), "endDate": (d0 + dt.timedelta(days=coupure[1] - 1)).isoformat(),
+                          "reason": "illness"}]
     verite = {ex: {"mode": next(m[2] for jour in gabarit for m in jour if m[0] == ex),
                    "capacityStart": float(c), "weeklyGain": j["gain"]} for ex, c in sorted(j["cap"].items())}
     return log, verite
@@ -843,6 +866,8 @@ def journal_ancien(programme: dict) -> dict:
                         entree["rir"] = rnd.choice(["2", "3", "1,5", "5"])
                     if fait and e["main"] and k == n - 1 and rnd.random() < 0.15:
                         entree["excluded"] = True
+                    if cle == "S1-J3" and rang == 0 and k == 0:
+                        entree["reps"] = ""  # cas fixe : série cochée sans mesure saisie
                     series.append(entree)
                 ex_logs[e["id"]] = {"sets": series, "note": "", "showKg": None, "showRir": None, "showV": None}
             logs[cle] = {"done": not inacheve, "finishedAt": None if inacheve else f"{date.isoformat()}T19:05:00.000",
@@ -882,7 +907,8 @@ def convertir(ancien: dict, programme: dict) -> tuple[dict, dict]:
     depart = dt.date.fromisoformat(ancien["programStart"]["date"])
     ordre_prog = {(w["week"], d["day"]): [e["id"] for e in d["exercises"]] for w in programme["weeks"] for d in w["days"]}
     rapport = {"sessionsRead": 0, "sessionsConverted": 0, "manualSessionsDropped": 0, "emptySessionsDropped": 0,
-               "setsConverted": 0, "setsNotDone": 0, "setsUnmappedExercise": 0, "unmappedExerciseNames": [],
+               "setsConverted": 0, "setsNotDone": 0, "setsUnmappedExercise": 0, "setsWithoutMeasure": 0,
+               "unmappedExerciseNames": [],
                "painAnswersDropped": 0}
     sessions = []
     for cle, s in ancien["logs"].items():
@@ -910,13 +936,19 @@ def convertir(ancien: dict, programme: dict) -> tuple[dict, dict]:
             if not faites:
                 continue
             unite = EX[cid]["calc"]["unite"]
-            for i, x in enumerate(faites):
+            i = 0
+            avant = len(series)
+            for x in faites:
+                val = nombre(x.get("reps", ""))
+                if val is None or val < 0:  # C8 : aucune mesure lisible, série écartée et comptée
+                    rapport["setsWithoutMeasure"] += 1
+                    continue
                 rec = {"exerciseId": cid, "exerciseOrder": rang, "setIndex": i, "kind": "work"}
+                i += 1
                 kg = nombre(x.get("kg", ""))
                 if kg is not None:
                     rec["externalLoadKg"] = kg  # C7
-                val = nombre(x.get("reps", ""))
-                mesure = int(val) if val is not None else 0
+                mesure = int(val)
                 rec["seconds" if unite == "secondes" else "reps"] = mesure  # C8
                 rir = x.get("effort")
                 if rir is None:
@@ -927,7 +959,8 @@ def convertir(ancien: dict, programme: dict) -> tuple[dict, dict]:
                 rec["excluded"] = bool(x.get("excluded", False))
                 series.append(rec)
                 rapport["setsConverted"] += 1
-            rang += 1
+            if len(series) > avant:
+                rang += 1
         if not series:
             rapport["emptySessionsDropped"] += 1
             continue
@@ -943,8 +976,7 @@ def convertir(ancien: dict, programme: dict) -> tuple[dict, dict]:
                 bilan["sleepHours"] = float(rep["sleep"])
             if rep.get("pain"):
                 rapport["painAnswersDropped"] += len(rep["pain"])
-            bilan["pains"] = []
-            if len(bilan) > 1:
+            if bilan:
                 out["healthCheck"] = bilan
         out["sets"] = series
         out["pains"] = []

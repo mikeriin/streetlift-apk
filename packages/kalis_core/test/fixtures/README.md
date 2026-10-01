@@ -19,7 +19,8 @@ kg — charge externe + fraction du poids du corps × poids ; `reps` : répétit
 secondes ; `run` : vitesse en m/s), `capacityStart` et `weeklyGain` (gain relatif linéaire par semaine).
 Répétitions possibles à une charge : formule d'Epley inversée, `30 × (1RM / charge − 1)` ; chaque série
 suivante coûte 1,2 % de capacité ; la note en flammes est celle du RIR vrai, bruité (écart-type 0,4).
-`kalis_adapt` peut donc comparer ses estimations à la vérité.
+`kalis_adapt` peut donc comparer ses estimations à la vérité. Dans un bilan santé, `pains` n'est présent
+que si la question a été posée (réponse basse) ; `j08_irregulier` déclare sa coupure dans `breaks`.
 
 | Clé | Ce que le journal illustre |
 | --- | --- |

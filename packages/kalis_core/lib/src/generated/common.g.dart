@@ -24,14 +24,15 @@ final class Reason {
   /// Identifiant stable du registre des codes de raison.
   final String code;
 
-  /// Paramètres typés du code (nombres, chaînes, booléens).
+  /// Paramètres typés du code (nombres, chaînes, booléens), écrits par clés
+  /// triées.
   final Map<String, Object?> params;
 
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
       'code': code,
-      'params': params,
+      'params': jsonCanonical(params),
     };
   }
 
@@ -62,6 +63,7 @@ final class Reason {
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
+    _collectReasonExerciseIds(this, out);
   }
 
   @override

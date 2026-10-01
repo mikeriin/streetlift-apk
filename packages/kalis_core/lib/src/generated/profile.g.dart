@@ -369,6 +369,8 @@ final class Goal {
     this.metric,
     this.targetValue,
     this.distanceMeters,
+    this.loadKg,
+    this.durationSeconds,
     this.targetDate,
     this.sessionsPerWeek,
     this.weeks,
@@ -386,6 +388,8 @@ final class Goal {
       metric: jsonEnumOrNull(json, 'metric', GoalMetric.fromCode),
       targetValue: jsonDoubleOrNull(json, 'targetValue'),
       distanceMeters: jsonDoubleOrNull(json, 'distanceMeters'),
+      loadKg: jsonDoubleOrNull(json, 'loadKg'),
+      durationSeconds: jsonIntOrNull(json, 'durationSeconds'),
       targetDate: jsonDateOrNull(json, 'targetDate'),
       sessionsPerWeek: jsonIntOrNull(json, 'sessionsPerWeek'),
       weeks: jsonIntOrNull(json, 'weeks'),
@@ -410,11 +414,18 @@ final class Goal {
   /// Grandeur visée (performance).
   final GoalMetric? metric;
 
-  /// Valeur cible, dans l'unité de `metric` (absente pour `skill_unlocked`).
+  /// Valeur cible, dans l'unité de `metric` (charge EXTERNE pour `one_rm_kg` ;
+  /// absente pour `skill_unlocked`).
   final double? targetValue;
 
   /// Distance de référence pour `time_seconds`.
   final double? distanceMeters;
+
+  /// Charge externe de référence pour `max_reps` (« 38 répétitions à 70 kg »).
+  final double? loadKg;
+
+  /// Durée de référence pour `distance_meters`.
+  final int? durationSeconds;
 
   /// Échéance (performance).
   final CivilDate? targetDate;
@@ -436,6 +447,8 @@ final class Goal {
       if (metric case final v?) 'metric': v.code,
       if (targetValue case final v?) 'targetValue': v,
       if (distanceMeters case final v?) 'distanceMeters': v,
+      if (loadKg case final v?) 'loadKg': v,
+      if (durationSeconds case final v?) 'durationSeconds': v,
       if (targetDate case final v?) 'targetDate': v.iso,
       if (sessionsPerWeek case final v?) 'sessionsPerWeek': v,
       if (weeks case final v?) 'weeks': v,
@@ -452,6 +465,8 @@ final class Goal {
     Object? metric = unset,
     Object? targetValue = unset,
     Object? distanceMeters = unset,
+    Object? loadKg = unset,
+    Object? durationSeconds = unset,
     Object? targetDate = unset,
     Object? sessionsPerWeek = unset,
     Object? weeks = unset,
@@ -465,6 +480,8 @@ final class Goal {
       metric: identical(metric, unset) ? this.metric : metric as GoalMetric?,
       targetValue: identical(targetValue, unset) ? this.targetValue : targetValue as double?,
       distanceMeters: identical(distanceMeters, unset) ? this.distanceMeters : distanceMeters as double?,
+      loadKg: identical(loadKg, unset) ? this.loadKg : loadKg as double?,
+      durationSeconds: identical(durationSeconds, unset) ? this.durationSeconds : durationSeconds as int?,
       targetDate: identical(targetDate, unset) ? this.targetDate : targetDate as CivilDate?,
       sessionsPerWeek: identical(sessionsPerWeek, unset) ? this.sessionsPerWeek : sessionsPerWeek as int?,
       weeks: identical(weeks, unset) ? this.weeks : weeks as int?,
@@ -484,6 +501,8 @@ final class Goal {
     if (exerciseId case final v?) { checkLength(out, '$path.exerciseId', v.length, 1, null); }
     if (targetValue case final v?) { checkRange(out, '$path.targetValue', v, 0, null); }
     if (distanceMeters case final v?) { checkRange(out, '$path.distanceMeters', v, 0, null); }
+    if (loadKg case final v?) { checkRange(out, '$path.loadKg', v, 0, null); }
+    if (durationSeconds case final v?) { checkRange(out, '$path.durationSeconds', v, 1, null); }
     if (sessionsPerWeek case final v?) { checkRange(out, '$path.sessionsPerWeek', v, 1, 14); }
     if (weeks case final v?) { checkRange(out, '$path.weeks', v, 1, 104); }
     _validateGoal(this, path, out);
@@ -496,11 +515,11 @@ final class Goal {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is Goal && id == other.id && kind == other.kind && origin == other.origin && createdOn == other.createdOn && exerciseId == other.exerciseId && metric == other.metric && targetValue == other.targetValue && distanceMeters == other.distanceMeters && targetDate == other.targetDate && sessionsPerWeek == other.sessionsPerWeek && weeks == other.weeks;
+    return identical(this, other) || other is Goal && id == other.id && kind == other.kind && origin == other.origin && createdOn == other.createdOn && exerciseId == other.exerciseId && metric == other.metric && targetValue == other.targetValue && distanceMeters == other.distanceMeters && loadKg == other.loadKg && durationSeconds == other.durationSeconds && targetDate == other.targetDate && sessionsPerWeek == other.sessionsPerWeek && weeks == other.weeks;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[id, kind, origin, createdOn, exerciseId, metric, targetValue, distanceMeters, targetDate, sessionsPerWeek, weeks]);
+  int get hashCode => Object.hashAll(<Object?>[id, kind, origin, createdOn, exerciseId, metric, targetValue, distanceMeters, loadKg, durationSeconds, targetDate, sessionsPerWeek, weeks]);
 
   @override
   String toString() => 'Goal(${toJson()})';
@@ -511,6 +530,7 @@ final class DaySlot {
   const DaySlot({
     required this.weekday,
     required this.minutes,
+    this.place,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -519,6 +539,7 @@ final class DaySlot {
     return DaySlot(
       weekday: jsonInt(json, 'weekday'),
       minutes: jsonInt(json, 'minutes'),
+      place: jsonEnumOrNull(json, 'place', Place.fromCode),
     );
   }
 
@@ -528,11 +549,15 @@ final class DaySlot {
   /// Durée disponible, en minutes.
   final int minutes;
 
+  /// Lieu de ce jour-là (absent : n'importe quel lieu du profil).
+  final Place? place;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
       'weekday': weekday,
       'minutes': minutes,
+      if (place case final v?) 'place': v.code,
     };
   }
 
@@ -540,10 +565,12 @@ final class DaySlot {
   DaySlot copyWith({
     int? weekday,
     int? minutes,
+    Object? place = unset,
   }) {
     return DaySlot(
       weekday: weekday ?? this.weekday,
       minutes: minutes ?? this.minutes,
+      place: identical(place, unset) ? this.place : place as Place?,
     );
   }
 
@@ -566,14 +593,83 @@ final class DaySlot {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is DaySlot && weekday == other.weekday && minutes == other.minutes;
+    return identical(this, other) || other is DaySlot && weekday == other.weekday && minutes == other.minutes && place == other.place;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[weekday, minutes]);
+  int get hashCode => Object.hashAll(<Object?>[weekday, minutes, place]);
 
   @override
   String toString() => 'DaySlot(${toJson()})';
+}
+
+/// Matériel disponible dans un lieu.
+final class PlaceEquipment {
+  const PlaceEquipment({
+    required this.place,
+    required this.equipment,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory PlaceEquipment.fromJson(Map<String, Object?> json) {
+    return PlaceEquipment(
+      place: jsonEnum(json, 'place', Place.fromCode),
+      equipment: jsonList(json, 'equipment', (v) => jsonAsString(v, 'equipment')),
+    );
+  }
+
+  /// Lieu.
+  final Place place;
+
+  /// Matériel disponible dans ce lieu (vocabulaire `materiel` de la base).
+  final List<String> equipment;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'place': place.code,
+      'equipment': [for (final e in equipment) e],
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  PlaceEquipment copyWith({
+    Place? place,
+    List<String>? equipment,
+  }) {
+    return PlaceEquipment(
+      place: place ?? this.place,
+      equipment: equipment ?? this.equipment,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    for (var i = 0; i < equipment.length; i++) { checkLength(out, '$path.equipment[$i]', equipment[i].length, 1, null); }
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is PlaceEquipment && place == other.place && jsonListEquals(equipment, other.equipment);
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[place, Object.hashAll(equipment)]);
+
+  @override
+  String toString() => 'PlaceEquipment(${toJson()})';
 }
 
 /// Plus petit pas de charge disponible pour un type de charge.
@@ -824,6 +920,9 @@ final class HealthScreeningRef {
 /// `createdOn`.
 /// Invariant : Mode street activé ⇒ `disciplines` est l'image du mode street
 /// (`StreetMode.toDisciplineMix()`).
+/// Invariant : `equipmentByPlace` : un lieu au plus une fois, parmi `places`,
+/// matériel inclus dans `equipment` ; `DaySlot.place` parmi `places` ; su ∩
+/// pas su = ∅.
 final class AthleteProfile {
   const AthleteProfile({
     this.schemaVersion = currentSchemaVersion,
@@ -839,10 +938,14 @@ final class AthleteProfile {
     required this.availability,
     required this.places,
     required this.equipment,
+    this.equipmentByPlace,
     required this.loadIncrements,
     required this.limitations,
     required this.likedExerciseIds,
     required this.dislikedExerciseIds,
+    this.knownExerciseIds,
+    this.cannotDoExerciseIds,
+    this.experience,
     required this.guidanceMode,
     this.healthScreening,
     required this.createdOn,
@@ -866,10 +969,14 @@ final class AthleteProfile {
       availability: jsonList(json, 'availability', (v) => DaySlot.fromJson(jsonAsObject(v, 'availability'))),
       places: jsonList(json, 'places', (v) => Place.fromCode(jsonAsString(v, 'places'))),
       equipment: jsonList(json, 'equipment', (v) => jsonAsString(v, 'equipment')),
+      equipmentByPlace: jsonListOrNull(json, 'equipmentByPlace', (v) => PlaceEquipment.fromJson(jsonAsObject(v, 'equipmentByPlace'))),
       loadIncrements: jsonList(json, 'loadIncrements', (v) => LoadIncrement.fromJson(jsonAsObject(v, 'loadIncrements'))),
       limitations: jsonList(json, 'limitations', (v) => Limitation.fromJson(jsonAsObject(v, 'limitations'))),
       likedExerciseIds: jsonList(json, 'likedExerciseIds', (v) => jsonAsString(v, 'likedExerciseIds')),
       dislikedExerciseIds: jsonList(json, 'dislikedExerciseIds', (v) => jsonAsString(v, 'dislikedExerciseIds')),
+      knownExerciseIds: jsonListOrNull(json, 'knownExerciseIds', (v) => jsonAsString(v, 'knownExerciseIds')),
+      cannotDoExerciseIds: jsonListOrNull(json, 'cannotDoExerciseIds', (v) => jsonAsString(v, 'cannotDoExerciseIds')),
+      experience: jsonEnumOrNull(json, 'experience', ExperienceLevel.fromCode),
       guidanceMode: jsonEnum(json, 'guidanceMode', GuidanceMode.fromCode),
       healthScreening: jsonObjOrNull(json, 'healthScreening', HealthScreeningRef.fromJson),
       createdOn: jsonDate(json, 'createdOn'),
@@ -916,8 +1023,13 @@ final class AthleteProfile {
   /// Lieux d'entraînement.
   final List<Place> places;
 
-  /// Matériel disponible (vocabulaire `materiel` de la base).
+  /// Matériel disponible, tous lieux confondus (vocabulaire `materiel` de la
+  /// base).
   final List<String> equipment;
+
+  /// Matériel par lieu, quand il diffère d'un lieu à l'autre (absent :
+  /// `equipment` vaut partout).
+  final List<PlaceEquipment>? equipmentByPlace;
 
   /// Incréments de charge par type de charge.
   final List<LoadIncrement> loadIncrements;
@@ -930,6 +1042,15 @@ final class AthleteProfile {
 
   /// Exercices détestés.
   final List<String> dislikedExerciseIds;
+
+  /// Exercices que l'utilisateur a dit savoir faire (revue, D4.5).
+  final List<String>? knownExerciseIds;
+
+  /// Exercices que l'utilisateur a dit ne pas savoir faire (revue, D4.5).
+  final List<String>? cannotDoExerciseIds;
+
+  /// Niveau global d'expérience déclaré.
+  final ExperienceLevel? experience;
 
   /// Mode assisté ou libre.
   final GuidanceMode guidanceMode;
@@ -959,10 +1080,14 @@ final class AthleteProfile {
       'availability': [for (final e in availability) e.toJson()],
       'places': [for (final e in places) e.code],
       'equipment': [for (final e in equipment) e],
+      if (equipmentByPlace case final v?) 'equipmentByPlace': [for (final e in v) e.toJson()],
       'loadIncrements': [for (final e in loadIncrements) e.toJson()],
       'limitations': [for (final e in limitations) e.toJson()],
       'likedExerciseIds': [for (final e in likedExerciseIds) e],
       'dislikedExerciseIds': [for (final e in dislikedExerciseIds) e],
+      if (knownExerciseIds case final v?) 'knownExerciseIds': [for (final e in v) e],
+      if (cannotDoExerciseIds case final v?) 'cannotDoExerciseIds': [for (final e in v) e],
+      if (experience case final v?) 'experience': v.code,
       'guidanceMode': guidanceMode.code,
       if (healthScreening case final v?) 'healthScreening': v.toJson(),
       'createdOn': createdOn.iso,
@@ -985,10 +1110,14 @@ final class AthleteProfile {
     List<DaySlot>? availability,
     List<Place>? places,
     List<String>? equipment,
+    Object? equipmentByPlace = unset,
     List<LoadIncrement>? loadIncrements,
     List<Limitation>? limitations,
     List<String>? likedExerciseIds,
     List<String>? dislikedExerciseIds,
+    Object? knownExerciseIds = unset,
+    Object? cannotDoExerciseIds = unset,
+    Object? experience = unset,
     GuidanceMode? guidanceMode,
     Object? healthScreening = unset,
     CivilDate? createdOn,
@@ -1008,10 +1137,14 @@ final class AthleteProfile {
       availability: availability ?? this.availability,
       places: places ?? this.places,
       equipment: equipment ?? this.equipment,
+      equipmentByPlace: identical(equipmentByPlace, unset) ? this.equipmentByPlace : equipmentByPlace as List<PlaceEquipment>?,
       loadIncrements: loadIncrements ?? this.loadIncrements,
       limitations: limitations ?? this.limitations,
       likedExerciseIds: likedExerciseIds ?? this.likedExerciseIds,
       dislikedExerciseIds: dislikedExerciseIds ?? this.dislikedExerciseIds,
+      knownExerciseIds: identical(knownExerciseIds, unset) ? this.knownExerciseIds : knownExerciseIds as List<String>?,
+      cannotDoExerciseIds: identical(cannotDoExerciseIds, unset) ? this.cannotDoExerciseIds : cannotDoExerciseIds as List<String>?,
+      experience: identical(experience, unset) ? this.experience : experience as ExperienceLevel?,
       guidanceMode: guidanceMode ?? this.guidanceMode,
       healthScreening: identical(healthScreening, unset) ? this.healthScreening : healthScreening as HealthScreeningRef?,
       createdOn: createdOn ?? this.createdOn,
@@ -1041,10 +1174,13 @@ final class AthleteProfile {
     for (var i = 0; i < availability.length; i++) { availability[i].collectViolations('$path.availability[$i]', out); }
     checkLength(out, '$path.places', places.length, 1, 3);
     for (var i = 0; i < equipment.length; i++) { checkLength(out, '$path.equipment[$i]', equipment[i].length, 1, null); }
+    if (equipmentByPlace case final v?) { for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.equipmentByPlace[$i]', out); } }
     for (var i = 0; i < loadIncrements.length; i++) { loadIncrements[i].collectViolations('$path.loadIncrements[$i]', out); }
     for (var i = 0; i < limitations.length; i++) { limitations[i].collectViolations('$path.limitations[$i]', out); }
     for (var i = 0; i < likedExerciseIds.length; i++) { checkLength(out, '$path.likedExerciseIds[$i]', likedExerciseIds[i].length, 1, null); }
     for (var i = 0; i < dislikedExerciseIds.length; i++) { checkLength(out, '$path.dislikedExerciseIds[$i]', dislikedExerciseIds[i].length, 1, null); }
+    if (knownExerciseIds case final v?) { for (var i = 0; i < v.length; i++) { checkLength(out, '$path.knownExerciseIds[$i]', v[i].length, 1, null); } }
+    if (cannotDoExerciseIds case final v?) { for (var i = 0; i < v.length; i++) { checkLength(out, '$path.cannotDoExerciseIds[$i]', v[i].length, 1, null); } }
     if (healthScreening case final v?) { v.collectViolations('$path.healthScreening', out); }
     _validateAthleteProfile(this, path, out);
   }
@@ -1056,20 +1192,23 @@ final class AthleteProfile {
     for (final e in movementLevels) { e.collectExerciseIds(out); }
     for (final e in goals) { e.collectExerciseIds(out); }
     for (final e in availability) { e.collectExerciseIds(out); }
+    for (final e in equipmentByPlace ?? const <PlaceEquipment>[]) { e.collectExerciseIds(out); }
     for (final e in loadIncrements) { e.collectExerciseIds(out); }
     for (final e in limitations) { e.collectExerciseIds(out); }
     out.addAll(likedExerciseIds);
     out.addAll(dislikedExerciseIds);
+    if (knownExerciseIds case final v?) { out.addAll(v); }
+    if (cannotDoExerciseIds case final v?) { out.addAll(v); }
     healthScreening?.collectExerciseIds(out);
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is AthleteProfile && schemaVersion == other.schemaVersion && displayName == other.displayName && sex == other.sex && birthYear == other.birthYear && heightCm == other.heightCm && bodyWeightKg == other.bodyWeightKg && disciplines == other.disciplines && streetMode == other.streetMode && jsonListEquals(movementLevels, other.movementLevels) && jsonListEquals(goals, other.goals) && jsonListEquals(availability, other.availability) && jsonListEquals(places, other.places) && jsonListEquals(equipment, other.equipment) && jsonListEquals(loadIncrements, other.loadIncrements) && jsonListEquals(limitations, other.limitations) && jsonListEquals(likedExerciseIds, other.likedExerciseIds) && jsonListEquals(dislikedExerciseIds, other.dislikedExerciseIds) && guidanceMode == other.guidanceMode && healthScreening == other.healthScreening && createdOn == other.createdOn && updatedOn == other.updatedOn;
+    return identical(this, other) || other is AthleteProfile && schemaVersion == other.schemaVersion && displayName == other.displayName && sex == other.sex && birthYear == other.birthYear && heightCm == other.heightCm && bodyWeightKg == other.bodyWeightKg && disciplines == other.disciplines && streetMode == other.streetMode && jsonListEquals(movementLevels, other.movementLevels) && jsonListEquals(goals, other.goals) && jsonListEquals(availability, other.availability) && jsonListEquals(places, other.places) && jsonListEquals(equipment, other.equipment) && jsonDeepEquals(equipmentByPlace, other.equipmentByPlace) && jsonListEquals(loadIncrements, other.loadIncrements) && jsonListEquals(limitations, other.limitations) && jsonListEquals(likedExerciseIds, other.likedExerciseIds) && jsonListEquals(dislikedExerciseIds, other.dislikedExerciseIds) && jsonDeepEquals(knownExerciseIds, other.knownExerciseIds) && jsonDeepEquals(cannotDoExerciseIds, other.cannotDoExerciseIds) && experience == other.experience && guidanceMode == other.guidanceMode && healthScreening == other.healthScreening && createdOn == other.createdOn && updatedOn == other.updatedOn;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[schemaVersion, displayName, sex, birthYear, heightCm, bodyWeightKg, disciplines, streetMode, Object.hashAll(movementLevels), Object.hashAll(goals), Object.hashAll(availability), Object.hashAll(places), Object.hashAll(equipment), Object.hashAll(loadIncrements), Object.hashAll(limitations), Object.hashAll(likedExerciseIds), Object.hashAll(dislikedExerciseIds), guidanceMode, healthScreening, createdOn, updatedOn]);
+  int get hashCode => Object.hashAll(<Object?>[schemaVersion, displayName, sex, birthYear, heightCm, bodyWeightKg, disciplines, streetMode, Object.hashAll(movementLevels), Object.hashAll(goals), Object.hashAll(availability), Object.hashAll(places), Object.hashAll(equipment), jsonDeepHash(equipmentByPlace), Object.hashAll(loadIncrements), Object.hashAll(limitations), Object.hashAll(likedExerciseIds), Object.hashAll(dislikedExerciseIds), jsonDeepHash(knownExerciseIds), jsonDeepHash(cannotDoExerciseIds), experience, guidanceMode, healthScreening, createdOn, updatedOn]);
 
   @override
   String toString() => 'AthleteProfile(${toJson()})';

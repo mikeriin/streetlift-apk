@@ -13,27 +13,22 @@ final class _FakePlan implements PlanEngine {
   @override
   Pass1Plan createPass1(Catalog catalog, PlanRequest request) {
     return samples.basePass1().copyWith(
-          seed: request.seed,
-          startDate: request.startDate,
-        );
+      seed: request.seed,
+      startDate: request.startDate,
+    );
   }
 
   @override
-  Pass2Plan createPass2(Catalog catalog, PlanRequest request, Pass1Plan pass1) {
+  Pass2Plan createPass2(Catalog catalog, Pass2Request request) {
     return samples.basePass2();
   }
 
   @override
-  ReviewResult review(
-    Catalog catalog,
-    PlanRequest request,
-    Pass1Plan current,
-    ReviewAction action,
-  ) {
+  ReviewResult review(Catalog catalog, ReviewRequest request) {
     return ReviewResult(
-      plan: current,
+      plan: request.current,
       diff: const PlanDiff(changes: <PlanChange>[]),
-      locks: request.locks,
+      locks: request.request.locks,
       profileDelta: const ProfileDelta(
         knownExerciseIds: <String>[],
         unknownExerciseIds: <String>[],
@@ -44,18 +39,13 @@ final class _FakePlan implements PlanEngine {
   }
 
   @override
-  VariantSet variants(
-    Catalog catalog,
-    PlanRequest request,
-    Pass1Plan current,
-    String slotId,
-  ) {
-    final slot = current.days
+  VariantSet variants(Catalog catalog, VariantsRequest request) {
+    final slot = request.current.days
         .expand((d) => d.slots)
-        .firstWhere((s) => s.slotId == slotId);
+        .firstWhere((s) => s.slotId == request.slotId);
     final close = catalog.mostSimilar(slot.exerciseId, limit: 3);
     return VariantSet(
-      slotId: slotId,
+      slotId: request.slotId,
       targeted: <Variant>[
         for (final e in close)
           Variant(
@@ -98,19 +88,19 @@ final class _FakeAdapt implements AdaptEngine {
   String get engineVersion => '0.0.0-test';
 
   @override
-  SessionPlan prescribeSession(
-    Catalog catalog,
-    AdaptInput input, {
-    required int weekIndex,
-    required int dayIndex,
-    HealthCheck? healthCheck,
-  }) {
+  SessionPlan prescribeSession(Catalog catalog, SessionRequest request) {
+    final input = request.input;
     return SessionPlan(
       date: input.today,
       blockId: input.block.pass1.blockId,
-      weekIndex: weekIndex,
-      dayIndex: dayIndex,
-      items: input.block.pass2.weeks[weekIndex].days[dayIndex].items,
+      weekIndex: request.weekIndex,
+      dayIndex: request.dayIndex,
+      items: input
+          .block
+          .pass2
+          .weeks[request.weekIndex]
+          .days[request.dayIndex]
+          .items,
       adjustments: const <SessionAdjustment>[],
       confidence: 0,
       reasons: const <Reason>[],
@@ -118,15 +108,14 @@ final class _FakeAdapt implements AdaptEngine {
   }
 
   @override
-  IntraSessionAdvice adviseNextSet(
-    Catalog catalog,
-    AdaptInput input,
-    SessionPlan session,
-    List<SetRecord> done,
-  ) {
+  IntraSessionAdvice adviseNextSet(Catalog catalog, AdviceRequest request) {
+    final item = request.session.items.firstWhere(
+      (i) => i.slotId == request.slotId,
+    );
     return IntraSessionAdvice(
-      exerciseId: session.items.first.exerciseId,
+      exerciseId: item.exerciseId,
       action: IntraSessionAction.keep,
+      slotId: request.slotId,
       confidence: 0,
       reasons: const <Reason>[],
     );
@@ -196,18 +185,26 @@ void main() {
     );
     expect(request.validate(), isEmpty);
     final pass1 = engine.createPass1(catalog, request);
-    final pass2 = engine.createPass2(catalog, request, pass1);
+    final pass2 = engine.createPass2(
+      catalog,
+      Pass2Request(request: request, pass1: pass1),
+    );
     final block = ProgramBlock(pass1: pass1, pass2: pass2);
     expect(block.validate(), isEmpty);
     expect(pass1.seed, 7);
-    final variants = engine.variants(catalog, request, pass1, 'd0s0');
+    final variants = engine.variants(
+      catalog,
+      VariantsRequest(request: request, current: pass1, slotId: 'd0s0'),
+    );
     expect(variants.validate(), isEmpty);
     expect(variants.targeted, hasLength(3));
     final review = engine.review(
       catalog,
-      request,
-      pass1,
-      const ReviewAction(kind: ReviewKind.canDo, slotId: 'd0s0'),
+      ReviewRequest(
+        request: request,
+        current: pass1,
+        action: const ReviewAction(kind: ReviewKind.canDo, slotId: 'd0s0'),
+      ),
     );
     expect(review.validate(), isEmpty);
     final next = engine.nextBlock(
@@ -233,13 +230,17 @@ void main() {
     );
     expect(next.validate(), isEmpty);
     // Même requête, même résultat sérialisé.
-    expect(engine.createPass1(catalog, request).toJson().toString(),
-        pass1.toJson().toString());
+    expect(
+      engine.createPass1(catalog, request).toJson().toString(),
+      pass1.toJson().toString(),
+    );
   });
 
   test('AdaptEngine et QuestEngine : entrées et sorties valides', () {
-    final block =
-        ProgramBlock(pass1: samples.basePass1(), pass2: samples.basePass2());
+    final block = ProgramBlock(
+      pass1: samples.basePass1(),
+      pass2: samples.basePass2(),
+    );
     final log = TrainingLog(
       sessions: <SessionRecord>[samples.session('a', '2026-10-05')],
     );
@@ -251,19 +252,26 @@ void main() {
     );
     expect(input.validate(), isEmpty);
     final AdaptEngine adapt = _FakeAdapt();
-    final session = adapt.prescribeSession(
-      catalog,
-      input,
+    final sessionRequest = SessionRequest(
+      input: input,
       weekIndex: 0,
       dayIndex: 0,
-      healthCheck: const HealthCheck(pains: <PainReport>[]),
+      healthCheck: const HealthCheck(),
     );
+    expect(sessionRequest.validate(), isEmpty);
+    final session = adapt.prescribeSession(catalog, sessionRequest);
     expect(session.validate(), isEmpty);
-    expect(
-      adapt.adviseNextSet(catalog, input, session, log.sessions.first.sets)
-          .validate(),
-      isEmpty,
+    final advice = adapt.adviseNextSet(
+      catalog,
+      AdviceRequest(
+        input: input,
+        session: session,
+        done: log.sessions.first.sets,
+        slotId: 'd0s0',
+      ),
     );
+    expect(advice.validate(), isEmpty);
+    expect(advice.slotId, 'd0s0');
     final review = adapt.review(catalog, input);
     expect(review.validate(), isEmpty);
     expect(review.summary.sessionsCompleted, 1);

@@ -120,7 +120,7 @@ final class HealthCheck {
     this.nutrition,
     this.hydration,
     this.minutesAvailable,
-    required this.pains,
+    this.pains,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -138,7 +138,7 @@ final class HealthCheck {
       nutrition: jsonIntOrNull(json, 'nutrition'),
       hydration: jsonIntOrNull(json, 'hydration'),
       minutesAvailable: jsonIntOrNull(json, 'minutesAvailable'),
-      pains: jsonList(json, 'pains', (v) => PainReport.fromJson(jsonAsObject(v, 'pains'))),
+      pains: jsonListOrNull(json, 'pains', (v) => PainReport.fromJson(jsonAsObject(v, 'pains'))),
     );
   }
 
@@ -175,8 +175,9 @@ final class HealthCheck {
   /// Temps disponible aujourd'hui, en minutes.
   final int? minutesAvailable;
 
-  /// Douleurs localisées.
-  final List<PainReport> pains;
+  /// Douleurs localisées (absent : question non posée ou sans réponse ; liste
+  /// vide : aucune douleur).
+  final List<PainReport>? pains;
 
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
@@ -192,7 +193,7 @@ final class HealthCheck {
       if (nutrition case final v?) 'nutrition': v,
       if (hydration case final v?) 'hydration': v,
       if (minutesAvailable case final v?) 'minutesAvailable': v,
-      'pains': [for (final e in pains) e.toJson()],
+      if (pains case final v?) 'pains': [for (final e in v) e.toJson()],
     };
   }
 
@@ -209,7 +210,7 @@ final class HealthCheck {
     Object? nutrition = unset,
     Object? hydration = unset,
     Object? minutesAvailable = unset,
-    List<PainReport>? pains,
+    Object? pains = unset,
   }) {
     return HealthCheck(
       overall: identical(overall, unset) ? this.overall : overall as int?,
@@ -223,7 +224,7 @@ final class HealthCheck {
       nutrition: identical(nutrition, unset) ? this.nutrition : nutrition as int?,
       hydration: identical(hydration, unset) ? this.hydration : hydration as int?,
       minutesAvailable: identical(minutesAvailable, unset) ? this.minutesAvailable : minutesAvailable as int?,
-      pains: pains ?? this.pains,
+      pains: identical(pains, unset) ? this.pains : pains as List<PainReport>?,
     );
   }
 
@@ -247,21 +248,21 @@ final class HealthCheck {
     if (nutrition case final v?) { checkRange(out, '$path.nutrition', v, 1, 5); }
     if (hydration case final v?) { checkRange(out, '$path.hydration', v, 1, 5); }
     if (minutesAvailable case final v?) { checkRange(out, '$path.minutesAvailable', v, 0, 600); }
-    for (var i = 0; i < pains.length; i++) { pains[i].collectViolations('$path.pains[$i]', out); }
+    if (pains case final v?) { for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.pains[$i]', out); } }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
-    for (final e in pains) { e.collectExerciseIds(out); }
+    for (final e in pains ?? const <PainReport>[]) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is HealthCheck && overall == other.overall && sleepQuality == other.sleepQuality && sleepHours == other.sleepHours && energy == other.energy && mood == other.mood && soreness == other.soreness && stress == other.stress && motivation == other.motivation && nutrition == other.nutrition && hydration == other.hydration && minutesAvailable == other.minutesAvailable && jsonListEquals(pains, other.pains);
+    return identical(this, other) || other is HealthCheck && overall == other.overall && sleepQuality == other.sleepQuality && sleepHours == other.sleepHours && energy == other.energy && mood == other.mood && soreness == other.soreness && stress == other.stress && motivation == other.motivation && nutrition == other.nutrition && hydration == other.hydration && minutesAvailable == other.minutesAvailable && jsonDeepEquals(pains, other.pains);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[overall, sleepQuality, sleepHours, energy, mood, soreness, stress, motivation, nutrition, hydration, minutesAvailable, Object.hashAll(pains)]);
+  int get hashCode => Object.hashAll(<Object?>[overall, sleepQuality, sleepHours, energy, mood, soreness, stress, motivation, nutrition, hydration, minutesAvailable, jsonDeepHash(pains)]);
 
   @override
   String toString() => 'HealthCheck(${toJson()})';
@@ -269,13 +270,15 @@ final class HealthCheck {
 
 /// Cible prescrite d'une série, telle qu'elle était affichée.
 ///
-/// Invariant : `repsLow` ≤ `repsHigh` quand les deux sont renseignés.
+/// Invariant : Bornes basses ≤ bornes hautes quand les deux sont renseignées.
 final class SetTarget {
   const SetTarget({
     this.repsLow,
     this.repsHigh,
-    this.seconds,
+    this.secondsLow,
+    this.secondsHigh,
     this.distanceMeters,
+    this.calories,
     this.loadKg,
     this.flames,
   });
@@ -286,8 +289,10 @@ final class SetTarget {
     return SetTarget(
       repsLow: jsonIntOrNull(json, 'repsLow'),
       repsHigh: jsonIntOrNull(json, 'repsHigh'),
-      seconds: jsonIntOrNull(json, 'seconds'),
+      secondsLow: jsonIntOrNull(json, 'secondsLow'),
+      secondsHigh: jsonIntOrNull(json, 'secondsHigh'),
       distanceMeters: jsonDoubleOrNull(json, 'distanceMeters'),
+      calories: jsonDoubleOrNull(json, 'calories'),
       loadKg: jsonDoubleOrNull(json, 'loadKg'),
       flames: jsonIntOrNull(json, 'flames'),
     );
@@ -299,13 +304,20 @@ final class SetTarget {
   /// Haut de la plage de répétitions.
   final int? repsHigh;
 
-  /// Durée visée, en secondes.
-  final int? seconds;
+  /// Bas de la plage de temps, en secondes.
+  final int? secondsLow;
+
+  /// Haut de la plage de temps, en secondes.
+  final int? secondsHigh;
 
   /// Distance visée, en mètres.
   final double? distanceMeters;
 
-  /// Charge externe prescrite, en kg.
+  /// Calories visées.
+  final double? calories;
+
+  /// Charge externe prescrite, en kg (même convention que
+  /// `SetRecord.externalLoadKg`).
   final double? loadKg;
 
   /// Flammes visées.
@@ -316,8 +328,10 @@ final class SetTarget {
     return <String, Object?>{
       if (repsLow case final v?) 'repsLow': v,
       if (repsHigh case final v?) 'repsHigh': v,
-      if (seconds case final v?) 'seconds': v,
+      if (secondsLow case final v?) 'secondsLow': v,
+      if (secondsHigh case final v?) 'secondsHigh': v,
       if (distanceMeters case final v?) 'distanceMeters': v,
+      if (calories case final v?) 'calories': v,
       if (loadKg case final v?) 'loadKg': v,
       if (flames case final v?) 'flames': v,
     };
@@ -327,16 +341,20 @@ final class SetTarget {
   SetTarget copyWith({
     Object? repsLow = unset,
     Object? repsHigh = unset,
-    Object? seconds = unset,
+    Object? secondsLow = unset,
+    Object? secondsHigh = unset,
     Object? distanceMeters = unset,
+    Object? calories = unset,
     Object? loadKg = unset,
     Object? flames = unset,
   }) {
     return SetTarget(
       repsLow: identical(repsLow, unset) ? this.repsLow : repsLow as int?,
       repsHigh: identical(repsHigh, unset) ? this.repsHigh : repsHigh as int?,
-      seconds: identical(seconds, unset) ? this.seconds : seconds as int?,
+      secondsLow: identical(secondsLow, unset) ? this.secondsLow : secondsLow as int?,
+      secondsHigh: identical(secondsHigh, unset) ? this.secondsHigh : secondsHigh as int?,
       distanceMeters: identical(distanceMeters, unset) ? this.distanceMeters : distanceMeters as double?,
+      calories: identical(calories, unset) ? this.calories : calories as double?,
       loadKg: identical(loadKg, unset) ? this.loadKg : loadKg as double?,
       flames: identical(flames, unset) ? this.flames : flames as int?,
     );
@@ -353,8 +371,10 @@ final class SetTarget {
   void collectViolations(String path, List<Violation> out) {
     if (repsLow case final v?) { checkRange(out, '$path.repsLow', v, 0, 1000); }
     if (repsHigh case final v?) { checkRange(out, '$path.repsHigh', v, 0, 1000); }
-    if (seconds case final v?) { checkRange(out, '$path.seconds', v, 0, 86400); }
+    if (secondsLow case final v?) { checkRange(out, '$path.secondsLow', v, 0, 86400); }
+    if (secondsHigh case final v?) { checkRange(out, '$path.secondsHigh', v, 0, 86400); }
     if (distanceMeters case final v?) { checkRange(out, '$path.distanceMeters', v, 0, null); }
+    if (calories case final v?) { checkRange(out, '$path.calories', v, 0, null); }
     if (loadKg case final v?) { checkRange(out, '$path.loadKg', v, -300, 1000); }
     if (flames case final v?) { checkRange(out, '$path.flames', v, 1, 10); }
     _validateSetTarget(this, path, out);
@@ -366,11 +386,11 @@ final class SetTarget {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is SetTarget && repsLow == other.repsLow && repsHigh == other.repsHigh && seconds == other.seconds && distanceMeters == other.distanceMeters && loadKg == other.loadKg && flames == other.flames;
+    return identical(this, other) || other is SetTarget && repsLow == other.repsLow && repsHigh == other.repsHigh && secondsLow == other.secondsLow && secondsHigh == other.secondsHigh && distanceMeters == other.distanceMeters && calories == other.calories && loadKg == other.loadKg && flames == other.flames;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[repsLow, repsHigh, seconds, distanceMeters, loadKg, flames]);
+  int get hashCode => Object.hashAll(<Object?>[repsLow, repsHigh, secondsLow, secondsHigh, distanceMeters, calories, loadKg, flames]);
 
   @override
   String toString() => 'SetTarget(${toJson()})';
@@ -394,6 +414,7 @@ final class SetRecord {
     this.flames,
     required this.success,
     required this.excluded,
+    this.slotId,
     this.side,
     this.target,
   });
@@ -414,6 +435,7 @@ final class SetRecord {
       flames: jsonIntOrNull(json, 'flames'),
       success: jsonBool(json, 'success'),
       excluded: jsonBool(json, 'excluded'),
+      slotId: jsonStringOrNull(json, 'slotId'),
       side: jsonEnumOrNull(json, 'side', BodySide.fromCode),
       target: jsonObjOrNull(json, 'target', SetTarget.fromJson),
     );
@@ -431,14 +453,16 @@ final class SetRecord {
   /// Rôle de la série.
   final SetKind kind;
 
-  /// Charge externe en kg (lest, barre, par haltère… ; négative = assistance ;
-  /// absente = aucune).
+  /// Charge externe en kg, telle que l'utilisateur la lit : barre et disques
+  /// compris ; par haltère ou par kettlebell ; valeur affichée d'une machine ou
+  /// d'une poulie ; lest seul pour un exercice lesté (le poids du corps n'y est
+  /// jamais ajouté) ; négative = assistance ; absente = aucune.
   final double? externalLoadKg;
 
-  /// Répétitions réalisées.
+  /// Répétitions réalisées (par côté pour un exercice unilatéral).
   final int? reps;
 
-  /// Durée réalisée, en secondes.
+  /// Durée réalisée, en secondes (par côté pour un exercice unilatéral).
   final int? seconds;
 
   /// Distance réalisée, en mètres.
@@ -456,7 +480,11 @@ final class SetRecord {
   /// Série écartée (incident), gardée au journal, ignorée des moteurs.
   final bool excluded;
 
-  /// Côté travaillé (exercice unilatéral).
+  /// Emplacement du programme dont vient la série.
+  final String? slotId;
+
+  /// Côté travaillé (exercice unilatéral) : `both` = une série par côté,
+  /// comptée une fois ; `left` ou `right` = un seul côté.
   final BodySide? side;
 
   /// Cible prescrite.
@@ -477,6 +505,7 @@ final class SetRecord {
       if (flames case final v?) 'flames': v,
       'success': success,
       'excluded': excluded,
+      if (slotId case final v?) 'slotId': v,
       if (side case final v?) 'side': v.code,
       if (target case final v?) 'target': v.toJson(),
     };
@@ -496,6 +525,7 @@ final class SetRecord {
     Object? flames = unset,
     bool? success,
     bool? excluded,
+    Object? slotId = unset,
     Object? side = unset,
     Object? target = unset,
   }) {
@@ -512,6 +542,7 @@ final class SetRecord {
       flames: identical(flames, unset) ? this.flames : flames as int?,
       success: success ?? this.success,
       excluded: excluded ?? this.excluded,
+      slotId: identical(slotId, unset) ? this.slotId : slotId as String?,
       side: identical(side, unset) ? this.side : side as BodySide?,
       target: identical(target, unset) ? this.target : target as SetTarget?,
     );
@@ -547,14 +578,93 @@ final class SetRecord {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is SetRecord && exerciseId == other.exerciseId && exerciseOrder == other.exerciseOrder && setIndex == other.setIndex && kind == other.kind && externalLoadKg == other.externalLoadKg && reps == other.reps && seconds == other.seconds && distanceMeters == other.distanceMeters && calories == other.calories && flames == other.flames && success == other.success && excluded == other.excluded && side == other.side && target == other.target;
+    return identical(this, other) || other is SetRecord && exerciseId == other.exerciseId && exerciseOrder == other.exerciseOrder && setIndex == other.setIndex && kind == other.kind && externalLoadKg == other.externalLoadKg && reps == other.reps && seconds == other.seconds && distanceMeters == other.distanceMeters && calories == other.calories && flames == other.flames && success == other.success && excluded == other.excluded && slotId == other.slotId && side == other.side && target == other.target;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[exerciseId, exerciseOrder, setIndex, kind, externalLoadKg, reps, seconds, distanceMeters, calories, flames, success, excluded, side, target]);
+  int get hashCode => Object.hashAll(<Object?>[exerciseId, exerciseOrder, setIndex, kind, externalLoadKg, reps, seconds, distanceMeters, calories, flames, success, excluded, slotId, side, target]);
 
   @override
   String toString() => 'SetRecord(${toJson()})';
+}
+
+/// Pause déclarée (vacances, maladie…) : ni manquement ni perte de série.
+///
+/// Invariant : `startDate` ≤ `endDate`.
+final class TrainingBreak {
+  const TrainingBreak({
+    required this.startDate,
+    this.endDate,
+    required this.reason,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory TrainingBreak.fromJson(Map<String, Object?> json) {
+    return TrainingBreak(
+      startDate: jsonDate(json, 'startDate'),
+      endDate: jsonDateOrNull(json, 'endDate'),
+      reason: jsonEnum(json, 'reason', BreakReason.fromCode),
+    );
+  }
+
+  /// Premier jour de la pause.
+  final CivilDate startDate;
+
+  /// Dernier jour de la pause (absent : en cours).
+  final CivilDate? endDate;
+
+  /// Motif.
+  final BreakReason reason;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'startDate': startDate.iso,
+      if (endDate case final v?) 'endDate': v.iso,
+      'reason': reason.code,
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  TrainingBreak copyWith({
+    CivilDate? startDate,
+    Object? endDate = unset,
+    BreakReason? reason,
+  }) {
+    return TrainingBreak(
+      startDate: startDate ?? this.startDate,
+      endDate: identical(endDate, unset) ? this.endDate : endDate as CivilDate?,
+      reason: reason ?? this.reason,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    _validateTrainingBreak(this, path, out);
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is TrainingBreak && startDate == other.startDate && endDate == other.endDate && reason == other.reason;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[startDate, endDate, reason]);
+
+  @override
+  String toString() => 'TrainingBreak(${toJson()})';
 }
 
 /// Place d'une séance dans le programme.
@@ -581,7 +691,8 @@ final class ProgramRef {
   /// Semaine dans le bloc (0 = première).
   final int weekIndex;
 
-  /// Jour d'entraînement dans la semaine (0 = premier).
+  /// Rang du jour dans la semaine du bloc, celui de `DayPrescription.dayIndex`
+  /// (0 = premier).
   final int dayIndex;
 
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
@@ -647,6 +758,7 @@ final class SessionRecord {
     required this.completed,
     this.durationMinutes,
     this.bodyWeightKg,
+    this.place,
     this.healthCheck,
     required this.sets,
     required this.pains,
@@ -664,6 +776,7 @@ final class SessionRecord {
       completed: jsonBool(json, 'completed'),
       durationMinutes: jsonIntOrNull(json, 'durationMinutes'),
       bodyWeightKg: jsonDoubleOrNull(json, 'bodyWeightKg'),
+      place: jsonEnumOrNull(json, 'place', Place.fromCode),
       healthCheck: jsonObjOrNull(json, 'healthCheck', HealthCheck.fromJson),
       sets: jsonList(json, 'sets', (v) => SetRecord.fromJson(jsonAsObject(v, 'sets'))),
       pains: jsonList(json, 'pains', (v) => PainReport.fromJson(jsonAsObject(v, 'pains'))),
@@ -695,6 +808,9 @@ final class SessionRecord {
   /// Poids de corps du jour, en kg.
   final double? bodyWeightKg;
 
+  /// Lieu de la séance.
+  final Place? place;
+
   /// Bilan santé de début de séance.
   final HealthCheck? healthCheck;
 
@@ -715,6 +831,7 @@ final class SessionRecord {
       'completed': completed,
       if (durationMinutes case final v?) 'durationMinutes': v,
       if (bodyWeightKg case final v?) 'bodyWeightKg': v,
+      if (place case final v?) 'place': v.code,
       if (healthCheck case final v?) 'healthCheck': v.toJson(),
       'sets': [for (final e in sets) e.toJson()],
       'pains': [for (final e in pains) e.toJson()],
@@ -731,6 +848,7 @@ final class SessionRecord {
     bool? completed,
     Object? durationMinutes = unset,
     Object? bodyWeightKg = unset,
+    Object? place = unset,
     Object? healthCheck = unset,
     List<SetRecord>? sets,
     List<PainReport>? pains,
@@ -744,6 +862,7 @@ final class SessionRecord {
       completed: completed ?? this.completed,
       durationMinutes: identical(durationMinutes, unset) ? this.durationMinutes : durationMinutes as int?,
       bodyWeightKg: identical(bodyWeightKg, unset) ? this.bodyWeightKg : bodyWeightKg as double?,
+      place: identical(place, unset) ? this.place : place as Place?,
       healthCheck: identical(healthCheck, unset) ? this.healthCheck : healthCheck as HealthCheck?,
       sets: sets ?? this.sets,
       pains: pains ?? this.pains,
@@ -778,11 +897,11 @@ final class SessionRecord {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is SessionRecord && id == other.id && date == other.date && origin == other.origin && programRef == other.programRef && resume == other.resume && completed == other.completed && durationMinutes == other.durationMinutes && bodyWeightKg == other.bodyWeightKg && healthCheck == other.healthCheck && jsonListEquals(sets, other.sets) && jsonListEquals(pains, other.pains);
+    return identical(this, other) || other is SessionRecord && id == other.id && date == other.date && origin == other.origin && programRef == other.programRef && resume == other.resume && completed == other.completed && durationMinutes == other.durationMinutes && bodyWeightKg == other.bodyWeightKg && place == other.place && healthCheck == other.healthCheck && jsonListEquals(sets, other.sets) && jsonListEquals(pains, other.pains);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[id, date, origin, programRef, resume, completed, durationMinutes, bodyWeightKg, healthCheck, Object.hashAll(sets), Object.hashAll(pains)]);
+  int get hashCode => Object.hashAll(<Object?>[id, date, origin, programRef, resume, completed, durationMinutes, bodyWeightKg, place, healthCheck, Object.hashAll(sets), Object.hashAll(pains)]);
 
   @override
   String toString() => 'SessionRecord(${toJson()})';
@@ -796,6 +915,7 @@ final class TrainingLog {
   const TrainingLog({
     this.schemaVersion = currentSchemaVersion,
     required this.sessions,
+    this.breaks,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -804,6 +924,7 @@ final class TrainingLog {
     return TrainingLog(
       schemaVersion: jsonInt(json, 'schemaVersion'),
       sessions: jsonList(json, 'sessions', (v) => SessionRecord.fromJson(jsonAsObject(v, 'sessions'))),
+      breaks: jsonListOrNull(json, 'breaks', (v) => TrainingBreak.fromJson(jsonAsObject(v, 'breaks'))),
     );
   }
 
@@ -816,11 +937,15 @@ final class TrainingLog {
   /// Séances, par date croissante.
   final List<SessionRecord> sessions;
 
+  /// Pauses déclarées.
+  final List<TrainingBreak>? breaks;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
       'schemaVersion': schemaVersion,
       'sessions': [for (final e in sessions) e.toJson()],
+      if (breaks case final v?) 'breaks': [for (final e in v) e.toJson()],
     };
   }
 
@@ -828,10 +953,12 @@ final class TrainingLog {
   TrainingLog copyWith({
     int? schemaVersion,
     List<SessionRecord>? sessions,
+    Object? breaks = unset,
   }) {
     return TrainingLog(
       schemaVersion: schemaVersion ?? this.schemaVersion,
       sessions: sessions ?? this.sessions,
+      breaks: identical(breaks, unset) ? this.breaks : breaks as List<TrainingBreak>?,
     );
   }
 
@@ -846,21 +973,23 @@ final class TrainingLog {
   void collectViolations(String path, List<Violation> out) {
     checkRange(out, '$path.schemaVersion', schemaVersion, 1, currentSchemaVersion);
     for (var i = 0; i < sessions.length; i++) { sessions[i].collectViolations('$path.sessions[$i]', out); }
+    if (breaks case final v?) { for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.breaks[$i]', out); } }
     _validateTrainingLog(this, path, out);
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
     for (final e in sessions) { e.collectExerciseIds(out); }
+    for (final e in breaks ?? const <TrainingBreak>[]) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is TrainingLog && schemaVersion == other.schemaVersion && jsonListEquals(sessions, other.sessions);
+    return identical(this, other) || other is TrainingLog && schemaVersion == other.schemaVersion && jsonListEquals(sessions, other.sessions) && jsonDeepEquals(breaks, other.breaks);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[schemaVersion, Object.hashAll(sessions)]);
+  int get hashCode => Object.hashAll(<Object?>[schemaVersion, Object.hashAll(sessions), jsonDeepHash(breaks)]);
 
   @override
   String toString() => 'TrainingLog(${toJson()})';

@@ -54,6 +54,19 @@ bool _reasonParamMatches(ReasonParamType type, Object? value) {
   }
 }
 
+void _collectReasonExerciseIds(Reason v, Set<String> out) {
+  final spec = reasonSpecOf(v.code);
+  if (spec == null) {
+    return;
+  }
+  for (final entry in spec.params.entries) {
+    final value = v.params[entry.key];
+    if (entry.value == ReasonParamType.exerciseId && value is String) {
+      out.add(value);
+    }
+  }
+}
+
 void _validateReason(Reason v, String path, List<Violation> out) {
   final spec = reasonSpecOf(v.code);
   if (spec == null) {

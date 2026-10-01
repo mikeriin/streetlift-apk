@@ -39,8 +39,6 @@ class T:
         if self.is_list:
             t = t[5:]
         self.kind, _, self.name = t.partition(":")  # int|double|…|enum|obj
-        if self.is_list and self.optional:
-            raise ValueError("liste optionnelle non prévue : " + text)
 
     @property
     def elem(self) -> str:
@@ -105,7 +103,7 @@ def from_json_expr(f: spec.Field) -> str:
             "enum": f"{t.name}.fromCode(jsonAsString(v, {k}))",
             "obj": f"{t.name}.fromJson(jsonAsObject(v, {k}))",
         }[t.kind]
-        return f"jsonList(json, {k}, (v) => {conv})"
+        return f"jsonList{'OrNull' if t.optional else ''}(json, {k}, (v) => {conv})"
     suffix = "OrNull" if t.optional else ""
     simple = {"int": "jsonInt", "double": "jsonDouble", "bool": "jsonBool", "string": "jsonString",
               "date": "jsonDate", "json": "jsonObject"}
@@ -120,23 +118,24 @@ def to_json_value(t: T, var: str) -> str:
     if t.is_list:
         inner = {"enum": "e.code", "obj": "e.toJson()", "date": "e.iso"}.get(t.kind, "e")
         return f"[for (final e in {var}) {inner}]"
-    return {"enum": f"{var}.code", "obj": f"{var}.toJson()", "date": f"{var}.iso"}.get(t.kind, var)
+    return {"enum": f"{var}.code", "obj": f"{var}.toJson()", "date": f"{var}.iso",
+            "json": f"jsonCanonical({var})"}.get(t.kind, var)
 
 
 def eq_expr(f: spec.Field) -> str:
     t = T(f.type)
-    if t.is_list:
+    if t.is_list and not t.optional:
         return f"jsonListEquals({f.name}, other.{f.name})"
-    if t.kind == "json":
+    if t.kind == "json" or t.is_list:
         return f"jsonDeepEquals({f.name}, other.{f.name})"
     return f"{f.name} == other.{f.name}"
 
 
 def hash_expr(f: spec.Field) -> str:
     t = T(f.type)
-    if t.is_list:
+    if t.is_list and not t.optional:
         return f"Object.hashAll({f.name})"
-    if t.kind == "json":
+    if t.kind == "json" or t.is_list:
         return f"jsonDeepHash({f.name})"
     return f.name
 
@@ -156,13 +155,17 @@ def validation(ty: spec.Type, f: spec.Field) -> list[str]:
         return stmt.replace("@", n)
 
     if t.is_list:
+        v = "v" if t.optional else n
+        body = []
         if f.min_len is not None or f.max_len is not None:
-            out.append(f"checkLength(out, {p}, {n}.length, {f.min_len if f.min_len is not None else 'null'}, {f.max_len if f.max_len is not None else 'null'});")
+            body.append(f"checkLength(out, {p}, {v}.length, {f.min_len if f.min_len is not None else 'null'}, {f.max_len if f.max_len is not None else 'null'});")
         if t.kind == "obj":
-            out.append(f"for (var i = 0; i < {n}.length; i++) {{ {n}[i].collectViolations('$path.{n}[$i]', out); }}")
+            body.append(f"for (var i = 0; i < {v}.length; i++) {{ {v}[i].collectViolations('$path.{n}[$i]', out); }}")
         elif t.kind == "string":
-            out.append(f"for (var i = 0; i < {n}.length; i++) {{ checkLength(out, '$path.{n}[$i]', {n}[i].length, 1, null); }}")
-        return out
+            body.append(f"for (var i = 0; i < {v}.length; i++) {{ checkLength(out, '$path.{n}[$i]', {v}[i].length, 1, null); }}")
+        if t.optional and body:
+            return [f"if ({n} case final v?) {{ " + " ".join(body) + " }"]
+        return body
     if t.kind in ("int", "double"):
         if f.min is not None or f.max is not None or t.kind == "double":
             out.append(guarded(f"checkRange(out, {p}, @, {lo}, {hi});"))
@@ -181,10 +184,12 @@ def collect_ids(f: spec.Field) -> str | None:
     t, n = T(f.type), f.name
     if f.ref == "exercise":
         if t.is_list:
-            return f"out.addAll({n});"
+            return f"if ({n} case final v?) {{ out.addAll(v); }}" if t.optional else f"out.addAll({n});"
         return f"if ({n} case final v?) {{ out.add(v); }}" if t.optional else f"out.add({n});"
     if t.kind == "obj":
         if t.is_list:
+            if t.optional:
+                return f"for (final e in {n} ?? const <{t.name}>[]) {{ e.collectExerciseIds(out); }}"
             return f"for (final e in {n}) {{ e.collectExerciseIds(out); }}"
         return f"{n}?.collectExerciseIds(out);" if t.optional else f"{n}.collectExerciseIds(out);"
     return None
@@ -262,6 +267,8 @@ def gen_type(ty: spec.Type) -> str:
         line = collect_ids(f)
         if line:
             o.append(f"    {line}\n")
+    if ty.name == "Reason":
+        o.append("    _collectReasonExerciseIds(this, out);\n")
     o.append("  }\n\n")
     # égalité
     o.append("  @override\n  bool operator ==(Object other) {\n")
@@ -350,6 +357,8 @@ def gen_arbitrary() -> str:
                 lo = f.min_len or 0
                 hi = f.max_len if f.max_len is not None else max(lo, 3)
                 expr = f"arbList(r, {lo}, {hi}, () => {base})"
+                if t.optional:
+                    expr = f"r.nextBool() ? null : {expr}"
             elif t.optional:
                 expr = f"r.nextBool() ? null : {base}"
             else:

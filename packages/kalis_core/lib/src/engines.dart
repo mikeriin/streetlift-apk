@@ -7,6 +7,11 @@
 /// hasard hors de la graine fournie, aucun stockage ; deux appels identiques
 /// rendent un résultat identique à l'octet près une fois sérialisé ; aucune
 /// phrase, seulement des codes de raison du registre.
+///
+/// Chaque méthode prend le catalogue et **une requête versionnée** : une
+/// requête s'enrichit de champs optionnels sans casser les implémentations.
+/// Un besoin nouveau qui ne tient pas dans une requête existante passe par
+/// une nouvelle interface, jamais par la modification de celles-ci.
 library;
 
 import 'catalog.dart';
@@ -23,34 +28,25 @@ abstract interface class PlanEngine {
   /// s'obtient par une autre graine (D4.3).
   Pass1Plan createPass1(Catalog catalog, PlanRequest request);
 
-  /// Applique une action de revue à [current] (D4.5, D4.6) : ce qui est
-  /// verrouillé ne bouge pas, le reste est ré-optimisé, le diff dit ce qui
-  /// a bougé et pourquoi. [request] porte les verrous déjà posés.
-  ReviewResult review(
-    Catalog catalog,
-    PlanRequest request,
-    Pass1Plan current,
-    ReviewAction action,
-  );
+  /// Applique une action de revue (D4.5, D4.6) : ce qui est verrouillé ne
+  /// bouge pas, le reste est ré-optimisé, le diff dit ce qui a bougé et
+  /// pourquoi.
+  ReviewResult review(Catalog catalog, ReviewRequest request);
 
-  /// Variantes de l'exercice de l'emplacement [slotId] : jusqu'à 3 ciblées
-  /// (plus facile, équivalente, autre matériel) et toutes les admissibles.
-  VariantSet variants(
-    Catalog catalog,
-    PlanRequest request,
-    Pass1Plan current,
-    String slotId,
-  );
+  /// Variantes de l'exercice d'un emplacement : jusqu'à 3 ciblées (plus
+  /// facile, équivalente, autre matériel) et toutes les admissibles.
+  VariantSet variants(Catalog catalog, VariantsRequest request);
 
   /// Passe 2 : prescriptions par semaine du programme validé (D4.7).
-  Pass2Plan createPass2(Catalog catalog, PlanRequest request, Pass1Plan pass1);
+  Pass2Plan createPass2(Catalog catalog, Pass2Request request);
 
   /// Bloc suivant, construit à partir du précédent et des données réelles
   /// (D4.8).
   BlockProposal nextBlock(Catalog catalog, NextBlockRequest request);
 
   /// Restructuration d'une séance, d'une semaine ou d'un bloc, demandée par
-  /// le moteur dynamique (D5.1).
+  /// le moteur dynamique (D5.1). Les semaines déjà faites ne sont pas
+  /// réécrites : seules celles à partir de `fromWeekIndex` changent.
   BlockProposal restructure(Catalog catalog, RestructureRequest request);
 }
 
@@ -59,30 +55,19 @@ abstract interface class AdaptEngine {
   /// Version sémantique du moteur.
   String get engineVersion;
 
-  /// Prescription de la séance ([weekIndex], [dayIndex]) du bloc en cours,
-  /// ajustée au journal et au bilan santé du jour (D5.8, D5.9).
+  /// Prescription d'une séance du bloc en cours, ajustée au journal et au
+  /// bilan santé du jour (D5.8, D5.9).
   ///
-  /// Une réponse absente de [healthCheck] n'est jamais remplacée par une
-  /// valeur par défaut.
-  SessionPlan prescribeSession(
-    Catalog catalog,
-    AdaptInput input, {
-    required int weekIndex,
-    required int dayIndex,
-    HealthCheck? healthCheck,
-  });
+  /// Une réponse absente du bilan n'est jamais remplacée par une valeur par
+  /// défaut.
+  SessionPlan prescribeSession(Catalog catalog, SessionRequest request);
 
-  /// Conseil pour la série suivante d'un exercice, d'après les séries déjà
-  /// faites dans la séance en cours.
-  IntraSessionAdvice adviseNextSet(
-    Catalog catalog,
-    AdaptInput input,
-    SessionPlan session,
-    List<SetRecord> done,
-  );
+  /// Conseil pour la série suivante de l'exercice d'un emplacement, d'après
+  /// les séries déjà faites dans la séance en cours.
+  IntraSessionAdvice adviseNextSet(Catalog catalog, AdviceRequest request);
 
   /// Revue complète : estimations, propositions, résumé d'adaptation,
-  /// journal du moteur et état à repasser au prochain appel.
+  /// records, journal du moteur et état à repasser au prochain appel.
   AdaptReview review(Catalog catalog, AdaptInput input);
 }
 

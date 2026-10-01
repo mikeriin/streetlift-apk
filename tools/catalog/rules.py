@@ -15,7 +15,7 @@ import math
 import re
 import unicodedata
 
-RULES_VERSION = "1.0.0"
+RULES_VERSION = "1.1.0"
 
 NIVEAUX = ["Débutant", "Intermédiaire", "Avancé", "Élite"]
 JOINTS = ["epaule", "coude", "poignet", "lombaires", "genou", "hanche", "cheville"]
@@ -199,7 +199,7 @@ _DYN_GAINAGE = (
     "avec abduction", "releves de hanche", "dynamique", "get-up", "dragon flag",
 )
 _ISO_MOTS = (
-    "hold", "tenue", "profond tenu", "isometri", "chaise contre", "dead hang",
+    "hold", "tenue", "profond tenu", "isometri", "chaise contre", "dead hang", "walkout",
     "support", "statique", "gainage", "planche rkc", "copenhagen", "wall sit",
 )
 
@@ -229,6 +229,8 @@ def regime(ex: dict, sch: str) -> str:
         return "isometrique"
     if (has(n, *_ISO_MOTS) or n.startswith("suspension")) and not has(n, "dynamique"):
         return "isometrique"
+    if sch == "halterophilie" and has(n, "overhead squat"):
+        return "dynamique"  # squat bras tendus : pas de phase balistique
     if sch in ("halterophilie", "balistique", "pliometrie", "freestyle"):
         return "explosif"
     if has(n, "explosi", "claque", "saute", "kipping", "butterfly"):
@@ -400,8 +402,8 @@ def plan(ex: dict, sch: str) -> str:
             return "transversal"
         if has(n, "inclinaison"):
             return "frontal"
-    if sch in ("squat", "fente", "pliometrie", "sprint") and has(
-        n, "lateral", "cossack", "croisee", "skater", "pas chasses", "sumo",
+    if sch in ("squat", "fente", "pliometrie", "sprint") and (
+        has(n, "cossack", "croisee", "skater", "pas chasses", "sumo") or re.search(r"(?<!uni)lateral", n)
     ):
         return "frontal"
     if sch == "pliometrie" and "rotatif" in n:
@@ -573,7 +575,7 @@ LIEUX_PAR_MATERIEL = {
     "barre EZ": {S},
     "barre hexagonale": {S},
     "barre de sécurité (safety bar)": {S},
-    "disques": {S},
+    "disques": {S, M, E},
     "haltères": {S, M},
     "kettlebell": {S, M},
     "médecine-ball": {S, M},
@@ -594,7 +596,7 @@ LIEUX_PAR_MATERIEL = {
     "box / plinth": {S, M, E},
     "step": {S, M, E},
     "roue abdominale": {S, M},
-    "ceinture de lest": {S, E},
+    "ceinture de lest": {S, M, E},
     "gilet lesté": {S, M, E},
     "chaînes": {S},
     "harnais de nuque": {S},
@@ -744,8 +746,12 @@ def contraintes(ex: dict, sch: str, typ: str) -> dict[str, str]:
         plus("epaule")
     if has(n, "un bras", "une main", "one-arm", "archer") and haut:
         plus("epaule"), plus("coude")
-    if has(n, "planche", "maltese", "pseudo"):
-        au_moins("poignet", 3), au_moins("coude", 3)
+    if fam in ("figure_statique", "figure_dynamique", "poussee") and has(n, "planche", "maltese", "pseudo"):
+        au_moins("poignet", 3), au_moins("coude", 3)  # figures bras tendus, pas le gainage « planche »
+    if has(n, "support hold"):
+        c["coude"], c["poignet"] = 2, 2
+    if has(n, "balancier"):
+        c["epaule"], c["coude"], c["poignet"] = 2, 1, 1
     if has(n, "poings", "doigts", "false grip", "wrist"):
         au_moins("poignet", 3)
     if has(n, "barre au front", "jm press", "tate press", "sphinx", "tiger bend"):
@@ -756,11 +762,11 @@ def contraintes(ex: dict, sch: str, typ: str) -> dict[str, str]:
         au_moins("genou", 3)
     if not haut and has(n, "saute", "box jump", "broad jump", "tuck jump", "saut ", "bonds", "depth", "reception", "pogo"):
         au_moins("genou", 3), au_moins("cheville", 3)
-    if sch == "halterophilie" and not has(n, "debout", "power", "muscle", "tirage", "push", "jete", "haltere"):
+    if sch == "halterophilie" and not has(n, "debout", "power", "muscle", "tirage", "push", "jete", "haltere", "high pull"):
         au_moins("genou", 3)  # réception en squat complet
     if has(n, "good morning", "jefferson", "zercher") or (sch == "charniere_hanche" and typ == "barre"):
         au_moins("lombaires", 3)
-    if sch == "squat" and typ in ("poids_du_corps", "machine") and not has(n, "pistol", "shrimp", "dragon", "skater"):
+    if sch == "squat" and typ in ("poids_du_corps", "machine") and not has(n, "pistol", "shrimp", "dragon", "skater", "smith"):
         c["lombaires"] = 1
     if sch == "squat" and typ in ("barre", "lest") and has(n, "squat"):
         au_moins("genou", 2), au_moins("lombaires", 2)
@@ -830,7 +836,7 @@ def fatigue(ex: dict, sch: str, typ: str, reg: str, art: str) -> dict[str, int]:
     # Poids du corps, niveau débutant : coût systémique réduit.
     if typ == "poids_du_corps" and niv == 0 and sys_ >= 3:
         sys_ -= 1
-    if sch == "halterophilie" and typ == "barre" and not has(n, "muscle", "tirage", "push press"):
+    if sch == "halterophilie" and typ == "barre" and not has(n, "muscle", "tirage", "push press", "high pull"):
         sys_ = 5
     if typ in ("machine", "poulie") and sys_ >= 3 and sch != "squat":
         sys_ -= 1
@@ -970,7 +976,7 @@ _REGRESSION = (
     "assist", "negati", "genoux", "partiel", "amplitude reduite", "tuck", "groupe",
     "pieds au sol", "saute", "murale", "contre le mur", "mains surelevees", "inclinee",
     "lean", "au mur", "pieds sur box", "depuis blocs", "suspendu", "levier court",
-    "kipping", "recuperation", "banc",
+    "kipping", "recuperation",
 )
 _PROGRESSION = (
     "leste", "deficit", "un bras", "une jambe", "une main", "pieds sureleves", "pause",

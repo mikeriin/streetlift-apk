@@ -13,8 +13,10 @@ const int samples = 10000;
 
 void main() {
   test('chaque type du contrat a son codec', () {
-    expect(contractCodecs.map((c) => c.name).toSet().length,
-        contractCodecs.length);
+    expect(
+      contractCodecs.map((c) => c.name).toSet().length,
+      contractCodecs.length,
+    );
     expect(contractCodecs.length, greaterThanOrEqualTo(60));
   });
 
@@ -25,8 +27,11 @@ void main() {
       for (var i = 0; i < samples; i++) {
         final value = codec.arbitrary(r);
         final json = codec.toJson(value);
-        expect(json.values, isNot(contains(null)),
-            reason: 'un champ absent est omis, jamais nul');
+        expect(
+          json.values,
+          isNot(contains(null)),
+          reason: 'un champ absent est omis, jamais nul',
+        );
         final text = jsonEncode(json);
         final decoded = jsonDecode(text) as Map<String, Object?>;
         final back = codec.fromJson(decoded);
@@ -51,8 +56,11 @@ void main() {
     for (final codec in contractCodecs) {
       final a = codec.arbitrary(Random(42));
       final b = codec.arbitrary(Random(42));
-      expect(jsonEncode(codec.toJson(a)), jsonEncode(codec.toJson(b)),
-          reason: codec.name);
+      expect(
+        jsonEncode(codec.toJson(a)),
+        jsonEncode(codec.toJson(b)),
+        reason: codec.name,
+      );
     }
   });
 
@@ -71,8 +79,10 @@ void main() {
 
   test('lecture stricte : champ manquant ou de mauvais type refusé', () {
     final json = arbitraryDaySlot(Random(3)).toJson();
-    expect(() => DaySlot.fromJson(<String, Object?>{'weekday': 1}),
-        throwsFormatException);
+    expect(
+      () => DaySlot.fromJson(<String, Object?>{'weekday': 1}),
+      throwsFormatException,
+    );
     expect(
       () => DaySlot.fromJson(<String, Object?>{...json, 'minutes': '30'}),
       throwsFormatException,

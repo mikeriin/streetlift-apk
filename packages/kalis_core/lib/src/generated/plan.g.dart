@@ -437,7 +437,8 @@ final class PlanScore {
 }
 
 /// Passe 1 : le bloc, ses jours, ses exercices et leurs rôles, sans séries ni
-/// répétitions (D4.4).
+/// répétitions (D4.4). C'est la semaine type du bloc ; la passe 2 fait foi
+/// semaine par semaine.
 ///
 /// Invariant : `dayIndex` = rang dans `days` ; `slotId` uniques dans le bloc.
 final class Pass1Plan {
@@ -483,7 +484,9 @@ final class Pass1Plan {
   /// Rang du bloc dans le programme (0 = premier).
   final int blockIndex;
 
-  /// Durée du bloc, en semaines (D4.8).
+  /// Durée du bloc, en semaines. `kalis_plan` produit des blocs de 4 à 6
+  /// semaines (D4.8) ; un programme importé (celui du propriétaire, D5.10) peut
+  /// en compter jusqu'à 52.
   final int weeks;
 
   /// Premier jour du bloc.
@@ -559,7 +562,7 @@ final class Pass1Plan {
     checkRange(out, '$path.schemaVersion', schemaVersion, 1, currentSchemaVersion);
     checkLength(out, '$path.blockId', blockId.length, 1, null);
     checkRange(out, '$path.blockIndex', blockIndex, 0, null);
-    checkRange(out, '$path.weeks', weeks, 4, 6);
+    checkRange(out, '$path.weeks', weeks, 1, 52);
     checkRange(out, '$path.seed', seed, 0, null);
     for (var i = 0; i < days.length; i++) { days[i].collectViolations('$path.days[$i]', out); }
     score.collectViolations('$path.score', out);
@@ -791,6 +794,8 @@ final class PlanChange {
     this.fromExerciseId,
     this.toExerciseId,
     this.fromDayIndex,
+    this.fromPrescription,
+    this.toPrescription,
     required this.reasons,
   });
 
@@ -805,6 +810,8 @@ final class PlanChange {
       fromExerciseId: jsonStringOrNull(json, 'fromExerciseId'),
       toExerciseId: jsonStringOrNull(json, 'toExerciseId'),
       fromDayIndex: jsonIntOrNull(json, 'fromDayIndex'),
+      fromPrescription: jsonObjOrNull(json, 'fromPrescription', ExercisePrescription.fromJson),
+      toPrescription: jsonObjOrNull(json, 'toPrescription', ExercisePrescription.fromJson),
       reasons: jsonList(json, 'reasons', (v) => Reason.fromJson(jsonAsObject(v, 'reasons'))),
     );
   }
@@ -830,6 +837,14 @@ final class PlanChange {
   /// Jour d'origine (déplacement).
   final int? fromDayIndex;
 
+  /// Prescription avant (`prescription_changed`).
+  final ExercisePrescription? fromPrescription;
+
+  /// Prescription après (`prescription_changed`) : appliquer le changement =
+  /// remplacer la prescription de (`weekIndex`, `dayIndex`, `slotId`) par
+  /// celle-ci.
+  final ExercisePrescription? toPrescription;
+
   /// Pourquoi.
   final List<Reason> reasons;
 
@@ -843,6 +858,8 @@ final class PlanChange {
       if (fromExerciseId case final v?) 'fromExerciseId': v,
       if (toExerciseId case final v?) 'toExerciseId': v,
       if (fromDayIndex case final v?) 'fromDayIndex': v,
+      if (fromPrescription case final v?) 'fromPrescription': v.toJson(),
+      if (toPrescription case final v?) 'toPrescription': v.toJson(),
       'reasons': [for (final e in reasons) e.toJson()],
     };
   }
@@ -856,6 +873,8 @@ final class PlanChange {
     Object? fromExerciseId = unset,
     Object? toExerciseId = unset,
     Object? fromDayIndex = unset,
+    Object? fromPrescription = unset,
+    Object? toPrescription = unset,
     List<Reason>? reasons,
   }) {
     return PlanChange(
@@ -866,6 +885,8 @@ final class PlanChange {
       fromExerciseId: identical(fromExerciseId, unset) ? this.fromExerciseId : fromExerciseId as String?,
       toExerciseId: identical(toExerciseId, unset) ? this.toExerciseId : toExerciseId as String?,
       fromDayIndex: identical(fromDayIndex, unset) ? this.fromDayIndex : fromDayIndex as int?,
+      fromPrescription: identical(fromPrescription, unset) ? this.fromPrescription : fromPrescription as ExercisePrescription?,
+      toPrescription: identical(toPrescription, unset) ? this.toPrescription : toPrescription as ExercisePrescription?,
       reasons: reasons ?? this.reasons,
     );
   }
@@ -884,6 +905,8 @@ final class PlanChange {
     if (fromExerciseId case final v?) { checkLength(out, '$path.fromExerciseId', v.length, 1, null); }
     if (toExerciseId case final v?) { checkLength(out, '$path.toExerciseId', v.length, 1, null); }
     if (fromDayIndex case final v?) { checkRange(out, '$path.fromDayIndex', v, 0, null); }
+    if (fromPrescription case final v?) { v.collectViolations('$path.fromPrescription', out); }
+    if (toPrescription case final v?) { v.collectViolations('$path.toPrescription', out); }
     for (var i = 0; i < reasons.length; i++) { reasons[i].collectViolations('$path.reasons[$i]', out); }
   }
 
@@ -891,16 +914,18 @@ final class PlanChange {
   void collectExerciseIds(Set<String> out) {
     if (fromExerciseId case final v?) { out.add(v); }
     if (toExerciseId case final v?) { out.add(v); }
+    fromPrescription?.collectExerciseIds(out);
+    toPrescription?.collectExerciseIds(out);
     for (final e in reasons) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is PlanChange && kind == other.kind && dayIndex == other.dayIndex && weekIndex == other.weekIndex && slotId == other.slotId && fromExerciseId == other.fromExerciseId && toExerciseId == other.toExerciseId && fromDayIndex == other.fromDayIndex && jsonListEquals(reasons, other.reasons);
+    return identical(this, other) || other is PlanChange && kind == other.kind && dayIndex == other.dayIndex && weekIndex == other.weekIndex && slotId == other.slotId && fromExerciseId == other.fromExerciseId && toExerciseId == other.toExerciseId && fromDayIndex == other.fromDayIndex && fromPrescription == other.fromPrescription && toPrescription == other.toPrescription && jsonListEquals(reasons, other.reasons);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[kind, dayIndex, weekIndex, slotId, fromExerciseId, toExerciseId, fromDayIndex, Object.hashAll(reasons)]);
+  int get hashCode => Object.hashAll(<Object?>[kind, dayIndex, weekIndex, slotId, fromExerciseId, toExerciseId, fromDayIndex, fromPrescription, toPrescription, Object.hashAll(reasons)]);
 
   @override
   String toString() => 'PlanChange(${toJson()})';
@@ -1235,7 +1260,8 @@ final class VariantSet {
 /// Prescription d'un exercice pour une séance (passe 2, D4.7).
 ///
 /// Invariant : Une seule famille de mesure : répétitions, temps, distance ou
-/// calories ; bornes basses ≤ bornes hautes, renseignées ensemble.
+/// calories ; bornes basses ≤ bornes hautes, renseignées ensemble ;
+/// `setTargets`, s'il est présent, a `sets` éléments.
 final class ExercisePrescription {
   const ExercisePrescription({
     required this.slotId,
@@ -1247,11 +1273,16 @@ final class ExercisePrescription {
     this.secondsHigh,
     this.distanceMeters,
     this.calories,
-    required this.targetFlames,
-    required this.restSeconds,
+    this.targetFlames,
+    this.restSeconds,
     this.startLoadKg,
+    this.percentOfOneRm,
     required this.toCalibrate,
     required this.loadBasis,
+    this.setTargets,
+    this.groupId,
+    this.format,
+    this.kind,
     required this.reasons,
   });
 
@@ -1268,11 +1299,16 @@ final class ExercisePrescription {
       secondsHigh: jsonIntOrNull(json, 'secondsHigh'),
       distanceMeters: jsonDoubleOrNull(json, 'distanceMeters'),
       calories: jsonDoubleOrNull(json, 'calories'),
-      targetFlames: jsonInt(json, 'targetFlames'),
-      restSeconds: jsonInt(json, 'restSeconds'),
+      targetFlames: jsonIntOrNull(json, 'targetFlames'),
+      restSeconds: jsonIntOrNull(json, 'restSeconds'),
       startLoadKg: jsonDoubleOrNull(json, 'startLoadKg'),
+      percentOfOneRm: jsonDoubleOrNull(json, 'percentOfOneRm'),
       toCalibrate: jsonBool(json, 'toCalibrate'),
       loadBasis: jsonEnum(json, 'loadBasis', LoadBasis.fromCode),
+      setTargets: jsonListOrNull(json, 'setTargets', (v) => SetTarget.fromJson(jsonAsObject(v, 'setTargets'))),
+      groupId: jsonStringOrNull(json, 'groupId'),
+      format: jsonStringOrNull(json, 'format'),
+      kind: jsonEnumOrNull(json, 'kind', SetKind.fromCode),
       reasons: jsonList(json, 'reasons', (v) => Reason.fromJson(jsonAsObject(v, 'reasons'))),
     );
   }
@@ -1304,20 +1340,42 @@ final class ExercisePrescription {
   /// Calories par série.
   final double? calories;
 
-  /// Flammes visées.
-  final int targetFlames;
+  /// Flammes visées (absent : sans cible de difficulté — mobilité,
+  /// échauffement).
+  final int? targetFlames;
 
-  /// Repos entre les séries, en secondes.
-  final int restSeconds;
+  /// Repos entre les séries, en secondes (absent : libre).
+  final int? restSeconds;
 
-  /// Charge externe de départ, en kg (prudente).
+  /// Charge externe de départ, en kg (prudente ; même convention que
+  /// `SetRecord.externalLoadKg`).
   final double? startLoadKg;
+
+  /// Charge exprimée en part du 1RM de charge totale, de 0 à 1,5 (programme
+  /// importé, ou repère du moteur).
+  final double? percentOfOneRm;
 
   /// Charge à calibrer sur les premières séances.
   final bool toCalibrate;
 
   /// Ce que désigne la charge.
   final LoadBasis loadBasis;
+
+  /// Cible série par série, quand les séries diffèrent (montée de calibrage,
+  /// série lourde puis séries allégées) ; sa longueur est `sets`. Absent :
+  /// toutes les séries suivent la prescription.
+  final List<SetTarget>? setTargets;
+
+  /// Groupe d'exercices enchaînés dans la séance (superset, tours, circuit) :
+  /// même valeur pour les membres du groupe.
+  final String? groupId;
+
+  /// Code du format du groupe ou de l'exercice (`superset`, `rounds`, `amrap`,
+  /// `emom`, `intervals`…).
+  final String? format;
+
+  /// Rôle des séries (absent : travail) ; `test` pour une séance de test.
+  final SetKind? kind;
 
   /// Pourquoi.
   final List<Reason> reasons;
@@ -1334,11 +1392,16 @@ final class ExercisePrescription {
       if (secondsHigh case final v?) 'secondsHigh': v,
       if (distanceMeters case final v?) 'distanceMeters': v,
       if (calories case final v?) 'calories': v,
-      'targetFlames': targetFlames,
-      'restSeconds': restSeconds,
+      if (targetFlames case final v?) 'targetFlames': v,
+      if (restSeconds case final v?) 'restSeconds': v,
       if (startLoadKg case final v?) 'startLoadKg': v,
+      if (percentOfOneRm case final v?) 'percentOfOneRm': v,
       'toCalibrate': toCalibrate,
       'loadBasis': loadBasis.code,
+      if (setTargets case final v?) 'setTargets': [for (final e in v) e.toJson()],
+      if (groupId case final v?) 'groupId': v,
+      if (format case final v?) 'format': v,
+      if (kind case final v?) 'kind': v.code,
       'reasons': [for (final e in reasons) e.toJson()],
     };
   }
@@ -1354,11 +1417,16 @@ final class ExercisePrescription {
     Object? secondsHigh = unset,
     Object? distanceMeters = unset,
     Object? calories = unset,
-    int? targetFlames,
-    int? restSeconds,
+    Object? targetFlames = unset,
+    Object? restSeconds = unset,
     Object? startLoadKg = unset,
+    Object? percentOfOneRm = unset,
     bool? toCalibrate,
     LoadBasis? loadBasis,
+    Object? setTargets = unset,
+    Object? groupId = unset,
+    Object? format = unset,
+    Object? kind = unset,
     List<Reason>? reasons,
   }) {
     return ExercisePrescription(
@@ -1371,11 +1439,16 @@ final class ExercisePrescription {
       secondsHigh: identical(secondsHigh, unset) ? this.secondsHigh : secondsHigh as int?,
       distanceMeters: identical(distanceMeters, unset) ? this.distanceMeters : distanceMeters as double?,
       calories: identical(calories, unset) ? this.calories : calories as double?,
-      targetFlames: targetFlames ?? this.targetFlames,
-      restSeconds: restSeconds ?? this.restSeconds,
+      targetFlames: identical(targetFlames, unset) ? this.targetFlames : targetFlames as int?,
+      restSeconds: identical(restSeconds, unset) ? this.restSeconds : restSeconds as int?,
       startLoadKg: identical(startLoadKg, unset) ? this.startLoadKg : startLoadKg as double?,
+      percentOfOneRm: identical(percentOfOneRm, unset) ? this.percentOfOneRm : percentOfOneRm as double?,
       toCalibrate: toCalibrate ?? this.toCalibrate,
       loadBasis: loadBasis ?? this.loadBasis,
+      setTargets: identical(setTargets, unset) ? this.setTargets : setTargets as List<SetTarget>?,
+      groupId: identical(groupId, unset) ? this.groupId : groupId as String?,
+      format: identical(format, unset) ? this.format : format as String?,
+      kind: identical(kind, unset) ? this.kind : kind as SetKind?,
       reasons: reasons ?? this.reasons,
     );
   }
@@ -1398,9 +1471,11 @@ final class ExercisePrescription {
     if (secondsHigh case final v?) { checkRange(out, '$path.secondsHigh', v, 1, 86400); }
     if (distanceMeters case final v?) { checkRange(out, '$path.distanceMeters', v, 0, null); }
     if (calories case final v?) { checkRange(out, '$path.calories', v, 0, null); }
-    checkRange(out, '$path.targetFlames', targetFlames, 1, 10);
-    checkRange(out, '$path.restSeconds', restSeconds, 0, 900);
+    if (targetFlames case final v?) { checkRange(out, '$path.targetFlames', v, 1, 10); }
+    if (restSeconds case final v?) { checkRange(out, '$path.restSeconds', v, 0, 900); }
     if (startLoadKg case final v?) { checkRange(out, '$path.startLoadKg', v, -300, 1000); }
+    if (percentOfOneRm case final v?) { checkRange(out, '$path.percentOfOneRm', v, 0, 1.5); }
+    if (setTargets case final v?) { for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.setTargets[$i]', out); } }
     for (var i = 0; i < reasons.length; i++) { reasons[i].collectViolations('$path.reasons[$i]', out); }
     _validateExercisePrescription(this, path, out);
   }
@@ -1408,16 +1483,17 @@ final class ExercisePrescription {
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
     out.add(exerciseId);
+    for (final e in setTargets ?? const <SetTarget>[]) { e.collectExerciseIds(out); }
     for (final e in reasons) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is ExercisePrescription && slotId == other.slotId && exerciseId == other.exerciseId && sets == other.sets && repsLow == other.repsLow && repsHigh == other.repsHigh && secondsLow == other.secondsLow && secondsHigh == other.secondsHigh && distanceMeters == other.distanceMeters && calories == other.calories && targetFlames == other.targetFlames && restSeconds == other.restSeconds && startLoadKg == other.startLoadKg && toCalibrate == other.toCalibrate && loadBasis == other.loadBasis && jsonListEquals(reasons, other.reasons);
+    return identical(this, other) || other is ExercisePrescription && slotId == other.slotId && exerciseId == other.exerciseId && sets == other.sets && repsLow == other.repsLow && repsHigh == other.repsHigh && secondsLow == other.secondsLow && secondsHigh == other.secondsHigh && distanceMeters == other.distanceMeters && calories == other.calories && targetFlames == other.targetFlames && restSeconds == other.restSeconds && startLoadKg == other.startLoadKg && percentOfOneRm == other.percentOfOneRm && toCalibrate == other.toCalibrate && loadBasis == other.loadBasis && jsonDeepEquals(setTargets, other.setTargets) && groupId == other.groupId && format == other.format && kind == other.kind && jsonListEquals(reasons, other.reasons);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[slotId, exerciseId, sets, repsLow, repsHigh, secondsLow, secondsHigh, distanceMeters, calories, targetFlames, restSeconds, startLoadKg, toCalibrate, loadBasis, Object.hashAll(reasons)]);
+  int get hashCode => Object.hashAll(<Object?>[slotId, exerciseId, sets, repsLow, repsHigh, secondsLow, secondsHigh, distanceMeters, calories, targetFlames, restSeconds, startLoadKg, percentOfOneRm, toCalibrate, loadBasis, jsonDeepHash(setTargets), groupId, format, kind, Object.hashAll(reasons)]);
 
   @override
   String toString() => 'ExercisePrescription(${toJson()})';
@@ -1680,8 +1756,11 @@ final class Pass2Plan {
 /// Bloc de programme complet (passes 1 et 2), stocké par l'application.
 ///
 /// Invariant : Même `blockId` ; autant de semaines de passe 2 que
-/// `pass1.weeks` ; chaque prescription renvoie à un emplacement de la passe
-/// 1.
+/// `pass1.weeks` ; `slotId` uniques dans une séance ; chaque séance prescrite
+/// renvoie à un jour de la passe 1. La passe 2 fait foi : une semaine peut
+/// prescrire un autre exercice que la semaine type pour un emplacement
+/// (échange en cours de bloc, semaine de test), ou un emplacement propre à
+/// cette semaine.
 final class ProgramBlock {
   const ProgramBlock({
     this.schemaVersion = currentSchemaVersion,
@@ -2176,6 +2255,277 @@ final class RestructureRequest {
 
   @override
   String toString() => 'RestructureRequest(${toJson()})';
+}
+
+/// Requête d'action de revue de la passe 1.
+final class ReviewRequest {
+  const ReviewRequest({
+    this.schemaVersion = currentSchemaVersion,
+    required this.request,
+    required this.current,
+    required this.action,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory ReviewRequest.fromJson(Map<String, Object?> json) {
+    return ReviewRequest(
+      schemaVersion: jsonInt(json, 'schemaVersion'),
+      request: jsonObj(json, 'request', PlanRequest.fromJson),
+      current: jsonObj(json, 'current', Pass1Plan.fromJson),
+      action: jsonObj(json, 'action', ReviewAction.fromJson),
+    );
+  }
+
+  /// Version courante du schéma JSON de ce type.
+  static const int currentSchemaVersion = 1;
+
+  /// Version du schéma (1).
+  final int schemaVersion;
+
+  /// Requête de création (avec les verrous déjà posés).
+  final PlanRequest request;
+
+  /// Programme en cours de revue.
+  final Pass1Plan current;
+
+  /// Action de l'utilisateur.
+  final ReviewAction action;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'schemaVersion': schemaVersion,
+      'request': request.toJson(),
+      'current': current.toJson(),
+      'action': action.toJson(),
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  ReviewRequest copyWith({
+    int? schemaVersion,
+    PlanRequest? request,
+    Pass1Plan? current,
+    ReviewAction? action,
+  }) {
+    return ReviewRequest(
+      schemaVersion: schemaVersion ?? this.schemaVersion,
+      request: request ?? this.request,
+      current: current ?? this.current,
+      action: action ?? this.action,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkRange(out, '$path.schemaVersion', schemaVersion, 1, currentSchemaVersion);
+    request.collectViolations('$path.request', out);
+    current.collectViolations('$path.current', out);
+    action.collectViolations('$path.action', out);
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+    request.collectExerciseIds(out);
+    current.collectExerciseIds(out);
+    action.collectExerciseIds(out);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is ReviewRequest && schemaVersion == other.schemaVersion && request == other.request && current == other.current && action == other.action;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[schemaVersion, request, current, action]);
+
+  @override
+  String toString() => 'ReviewRequest(${toJson()})';
+}
+
+/// Requête de variantes pour un emplacement.
+final class VariantsRequest {
+  const VariantsRequest({
+    this.schemaVersion = currentSchemaVersion,
+    required this.request,
+    required this.current,
+    required this.slotId,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory VariantsRequest.fromJson(Map<String, Object?> json) {
+    return VariantsRequest(
+      schemaVersion: jsonInt(json, 'schemaVersion'),
+      request: jsonObj(json, 'request', PlanRequest.fromJson),
+      current: jsonObj(json, 'current', Pass1Plan.fromJson),
+      slotId: jsonString(json, 'slotId'),
+    );
+  }
+
+  /// Version courante du schéma JSON de ce type.
+  static const int currentSchemaVersion = 1;
+
+  /// Version du schéma (1).
+  final int schemaVersion;
+
+  /// Requête de création.
+  final PlanRequest request;
+
+  /// Programme en cours de revue.
+  final Pass1Plan current;
+
+  /// Emplacement.
+  final String slotId;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'schemaVersion': schemaVersion,
+      'request': request.toJson(),
+      'current': current.toJson(),
+      'slotId': slotId,
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  VariantsRequest copyWith({
+    int? schemaVersion,
+    PlanRequest? request,
+    Pass1Plan? current,
+    String? slotId,
+  }) {
+    return VariantsRequest(
+      schemaVersion: schemaVersion ?? this.schemaVersion,
+      request: request ?? this.request,
+      current: current ?? this.current,
+      slotId: slotId ?? this.slotId,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkRange(out, '$path.schemaVersion', schemaVersion, 1, currentSchemaVersion);
+    request.collectViolations('$path.request', out);
+    current.collectViolations('$path.current', out);
+    checkLength(out, '$path.slotId', slotId.length, 1, null);
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+    request.collectExerciseIds(out);
+    current.collectExerciseIds(out);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is VariantsRequest && schemaVersion == other.schemaVersion && request == other.request && current == other.current && slotId == other.slotId;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[schemaVersion, request, current, slotId]);
+
+  @override
+  String toString() => 'VariantsRequest(${toJson()})';
+}
+
+/// Requête de passe 2.
+final class Pass2Request {
+  const Pass2Request({
+    this.schemaVersion = currentSchemaVersion,
+    required this.request,
+    required this.pass1,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory Pass2Request.fromJson(Map<String, Object?> json) {
+    return Pass2Request(
+      schemaVersion: jsonInt(json, 'schemaVersion'),
+      request: jsonObj(json, 'request', PlanRequest.fromJson),
+      pass1: jsonObj(json, 'pass1', Pass1Plan.fromJson),
+    );
+  }
+
+  /// Version courante du schéma JSON de ce type.
+  static const int currentSchemaVersion = 1;
+
+  /// Version du schéma (1).
+  final int schemaVersion;
+
+  /// Requête de création.
+  final PlanRequest request;
+
+  /// Passe 1 validée par l'utilisateur.
+  final Pass1Plan pass1;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'schemaVersion': schemaVersion,
+      'request': request.toJson(),
+      'pass1': pass1.toJson(),
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  Pass2Request copyWith({
+    int? schemaVersion,
+    PlanRequest? request,
+    Pass1Plan? pass1,
+  }) {
+    return Pass2Request(
+      schemaVersion: schemaVersion ?? this.schemaVersion,
+      request: request ?? this.request,
+      pass1: pass1 ?? this.pass1,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkRange(out, '$path.schemaVersion', schemaVersion, 1, currentSchemaVersion);
+    request.collectViolations('$path.request', out);
+    pass1.collectViolations('$path.pass1', out);
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+    request.collectExerciseIds(out);
+    pass1.collectExerciseIds(out);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is Pass2Request && schemaVersion == other.schemaVersion && request == other.request && pass1 == other.pass1;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[schemaVersion, request, pass1]);
+
+  @override
+  String toString() => 'Pass2Request(${toJson()})';
 }
 
 /// Bloc proposé et ce qui change par rapport au précédent.

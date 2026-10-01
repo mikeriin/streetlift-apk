@@ -49,38 +49,45 @@ void main() {
     expect(Flames.fromRir(0), 10);
   });
 
-  test('hors échelle : demi-point le plus proche, égalité vers le plus dur',
-      () {
-    expect(Flames.fromRir(0.2), 10);
-    expect(Flames.fromRir(0.25), 10);
-    expect(Flames.fromRir(0.3), 9);
-    expect(Flames.fromRir(0.75), 9);
-    expect(Flames.fromRir(1.2), 9);
-    expect(Flames.fromRir(1.25), 9);
-    expect(Flames.fromRir(1.3), 8);
-    expect(Flames.fromRir(1.75), 8);
-    expect(Flames.fromRir(4.75), 2);
-    expect(Flames.fromRir(4.8), 1);
-  });
+  test(
+    'hors échelle : demi-point le plus proche, égalité vers le plus dur',
+    () {
+      expect(Flames.fromRir(0.2), 10);
+      expect(Flames.fromRir(0.25), 10);
+      expect(Flames.fromRir(0.3), 9);
+      expect(Flames.fromRir(0.75), 9);
+      expect(Flames.fromRir(1.2), 9);
+      expect(Flames.fromRir(1.25), 9);
+      expect(Flames.fromRir(1.3), 8);
+      expect(Flames.fromRir(1.75), 8);
+      expect(Flames.fromRir(4.75), 2);
+      expect(Flames.fromRir(4.8), 1);
+    },
+  );
 
-  test('monotone : plus de réserve, jamais plus de flammes (10 000 tirages)',
-      () {
-    final r = Random(53);
-    for (var i = 0; i < 10000; i++) {
-      final a = r.nextDouble() * 7;
-      final b = a + r.nextDouble() * 3;
-      final fa = Flames.fromRir(a);
-      final fb = Flames.fromRir(b);
-      expect(Flames.isValid(fa), isTrue);
-      expect(fb, lessThanOrEqualTo(fa), reason: '$a → $fa, $b → $fb');
-      // L'aller-retour ne s'éloigne jamais de plus d'un quart de point
-      // (hors RIR 0,5, absent de l'échelle, et au-delà de 5).
-      if (a < 5 && (a < 0.25 || a >= 0.75)) {
-        expect((Flames.toRir(fa) - a).abs(), lessThanOrEqualTo(0.25 + 1e-9),
-            reason: '$a');
+  test(
+    'monotone : plus de réserve, jamais plus de flammes (10 000 tirages)',
+    () {
+      final r = Random(53);
+      for (var i = 0; i < 10000; i++) {
+        final a = r.nextDouble() * 7;
+        final b = a + r.nextDouble() * 3;
+        final fa = Flames.fromRir(a);
+        final fb = Flames.fromRir(b);
+        expect(Flames.isValid(fa), isTrue);
+        expect(fb, lessThanOrEqualTo(fa), reason: '$a → $fa, $b → $fb');
+        // L'aller-retour ne s'éloigne jamais de plus d'un quart de point
+        // (hors RIR 0,5, absent de l'échelle, et au-delà de 5).
+        if (a < 5 && (a < 0.25 || a >= 0.75)) {
+          expect(
+            (Flames.toRir(fa) - a).abs(),
+            lessThanOrEqualTo(0.25 + 1e-9),
+            reason: '$a',
+          );
+        }
       }
-    }
-  });
+    },
+  );
 
   test('valeurs refusées', () {
     expect(() => Flames.toRir(0), throwsArgumentError);
@@ -112,10 +119,15 @@ void main() {
     expect(Flames.delta(actual: rated.flames, target: 7), 2);
     expect(rated.copyWith(flames: null).flames, isNull);
     expect(rated.copyWith().flames, 9);
-    expect(codesOf(unrated.copyWith(flames: 11).validate()), <String>['above_max']);
-    expect(codesOf(unrated.copyWith(flames: 0).validate()), <String>['below_min']);
+    expect(codesOf(unrated.copyWith(flames: 11).validate()), <String>[
+      'above_max',
+    ]);
+    expect(codesOf(unrated.copyWith(flames: 0).validate()), <String>[
+      'below_min',
+    ]);
   });
 }
 
-List<String> codesOf(List<Violation> violations) =>
-    <String>[for (final v in violations) v.code];
+List<String> codesOf(List<Violation> violations) => <String>[
+  for (final v in violations) v.code,
+];

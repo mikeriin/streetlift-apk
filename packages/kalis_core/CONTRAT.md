@@ -11,7 +11,9 @@ Version 0.1.0 (lot GC, 01/10/2026). Ce paquet fixe **tout ce que les moteurs et 
   requêtes). Vérifié par `test/purity_test.dart`.
 - **JSON versionné** : chaque type racine porte `schemaVersion`. Clé JSON = nom du champ. Un champ
   optionnel nul est **absent** du JSON (jamais `null`, jamais de valeur par défaut). `toJson()` écrit
-  les clés dans l'ordre du contrat : deux valeurs égales donnent le même texte à l'octet près.
+  les clés dans l'ordre du contrat, et celles des objets JSON libres (`Reason.params`, états opaques)
+  triées : deux valeurs égales donnent le même texte à l'octet près. Dans un objet libre, un entier
+  et un décimal ne sont pas égaux (`2` ≠ `2.0`) puisqu'ils ne s'écrivent pas pareil.
 - **Lecture stricte** : `fromJson` lève `FormatException` si un champ obligatoire manque, a un mauvais
   type ou porte un code d'enum inconnu ; les champs inconnus sont ignorés.
 - **Validation séparée de la lecture** : `validate()` rend la liste des violations (`Violation` :
@@ -55,10 +57,10 @@ des champs calculés), `poids_vecteur`, `references_fraction`, `exercices`.
 | `articularite` | `articularity` | par schéma ; sans objet pour les tenues, le cardio, la mobilité | définition NSCA 2016 (ch. 17 : exercices poly- et mono-articulaires) |
 | `regime` | `contractionMode` | discipline, schéma et mots-clés (négatif, tenue, explosif…) | choix raisonné |
 | `difficulte` 1-10 | `difficulty` | niveau (Débutant 2, Intermédiaire 4, Avancé 7, Élite 9) ± 1 selon la catégorie (figures, haltérophilie, compétition : + 1 ; mobilité légère, machine : − 1) ± 1 selon la position dans la chaîne `variante_de` (régression ou progression à niveau égal avec l'exercice de référence), bornée par niveau (1-3, 3-6, 6-8, 8-10) | choix raisonné ; **invariant testé** : la difficulté ne décroît jamais quand le niveau monte |
-| `lieux` | `places` | intersection, sur le matériel de l'exercice, des lieux où ce matériel est habituellement disponible ou transportable (table `LIEUX_PAR_MATERIEL`) | choix raisonné ; le filtre exact reste le matériel du profil (`feasibleWith`) |
+| `lieux` | `places` | intersection, sur le matériel de l'exercice, des lieux où ce matériel est habituellement disponible ou transportable (table `LIEUX_PAR_MATERIEL` ; disques et ceinture de lest sont transportables) | choix raisonné ; le filtre exact reste le matériel du profil (`feasibleWith`, où sol, mur, tapis et magnésie ne bloquent jamais) |
 | `contraintes` (7 articulations) | `jointStress` | table schéma → niveau par articulation, retouches par mots-clés (derrière la nuque, anneaux, un bras, planche, sauts, charnière à la barre…) | choix raisonné d'entraîneur, orienté par Escamilla 2001 (genou au squat), Cholewicki et al. 1991 (lombaires au soulevé de terre), Kolber et al. 2010 (épaule en musculation). **Ce n'est pas un avis médical.** |
-| `prerequis` | `prerequisites` | hors lest : jusqu'à 2 exercices de la même famille `variante_de`, de difficulté strictement inférieure, les plus proches d'abord ; lest : l'exercice au poids du corps non assisté le plus proche de la même famille de mouvement | choix raisonné ; « paliers conseillés », pas une interdiction |
-| `fatigue.systemique`, `fatigue.locale` (1-5) | `systemicFatigue`, `localFatigue` | systémique : table par schéma, + 1 polyarticulaire à la barre ou lesté, 5 pour squats et soulevés de terre lourds et haltérophilie complète, − 1 débutant au poids du corps, machine, assisté ; locale : 3, + 1 excentrique (dommages musculaires plus marqués : Proske & Morgan 2001), + 1 isolation d'un seul muscle, − 1 conditionnement, portés, gainage tenu, assisté | choix raisonné (échelle ordinale, pas une mesure) |
+| `prerequis` | `prerequisites` | hors lest : jusqu'à 2 exercices de la même famille `variante_de`, de difficulté strictement inférieure, les ancêtres d'abord (du parent vers la racine) puis les plus proches en difficulté ; lest : l'exercice au poids du corps non assisté le plus proche de la même famille de mouvement (muscles, schéma, matériel, nom, latéralité) | choix raisonné ; « paliers conseillés », pas une interdiction |
+| `fatigue.systemique`, `fatigue.locale` (1-5) | `systemicFatigue`, `localFatigue` | systémique : table par schéma, + 1 polyarticulaire à la barre ou lesté, 5 pour squats et soulevés de terre lourds et haltérophilie complète, + 1 supramaximal et enchaînements lourds (man maker, devil press), − 1 débutant au poids du corps, machine ou poulie, assisté ; locale : 3, + 1 excentrique ou supramaximal (dommages musculaires plus marqués en excentrique : Proske & Morgan 2001), + 1 isolation d'un seul muscle, + 1 niveau Élite, − 1 conditionnement, portés, préparation scapulaire, équilibre, cou, gainage tenu, assisté (détail exact : `rules.fatigue`) | choix raisonné (échelle ordinale, pas une mesure) |
 | `type_charge` | `loadType` | matériel et discipline, par ordre de priorité (lest, machine, poulie, barre, haltères, kettlebell, autre, élastique, poids du corps) | règle |
 | `assiste` | `assisted` | nom contenant « assist… » | règle |
 | `fraction_pdc` | `bodyweightFraction` | voir ci-dessous | publié, dérivé ou estimé (dit pour chaque valeur) |
@@ -71,7 +73,8 @@ des champs calculés), `poids_vecteur`, `references_fraction`, `exercices`.
 
 Part de la masse du corps déplacée ou soutenue par les membres moteurs, pour un exercice au poids du
 corps ou lesté ; charge totale = charge externe + fraction × poids de corps. Absente quand la notion n'a
-pas de sens (charge externe seule, tenue de levier, gainage, cardio, mobilité).
+pas de sens (charge externe seule, tenue de levier au poids du corps, gainage, cardio, mobilité) ; les
+isométries **lestées** de traction et de dips gardent la fraction du mouvement (0,97 ; 0,96).
 
 | Valeur | Exercices | Origine |
 | ---: | --- | --- |
@@ -84,7 +87,9 @@ pas de sens (charge externe seule, tenue de levier, gainage, cardio, mobilité).
 | 0,88 ; 0,94 | squats et fentes ; sur une jambe | **dérivée** : 1 − jambes − pieds (4,65 % et 1,45 % par côté) |
 | 0,36 ; 0,50 ; 0,60 ; 0,70 ; 0,80 | pompe murale ; dips au banc, row genoux fléchis ; row australien ; pompe pike, row pieds surélevés ; pompe pseudo-planche | **estimée** (statique simple) — à mesurer |
 
-Un exercice assisté porte la fraction du mouvement non assisté (l'assistance n'est pas connue).
+Un exercice assisté porte la fraction du mouvement non assisté (l'assistance n'est pas connue). La
+fraction est la part de masse déplacée, pas la charge par membre : une pompe à un bras garde 0,72
+(tout porté par un bras ; la latéralité est dans `lateralite`).
 
 ### Proximité de base
 
@@ -106,8 +111,8 @@ comprise ; `test/catalog_test.dart`, rapport du simulateur).
 ## 3. Profil d'athlète v2 (`AthleteProfile`, schéma 2)
 
 Décisions D3. Champs dans `docs/TYPES.md`. Invariants : somme des dosages = 100, disciplines
-distinctes, principale ≥ secondaires ; **0 à 2 secondaires** (le contrat admet 0 ; l'écran de création
-en demande 1 à 2, D3.2) ; mode street = une principale parmi streetlifting / sets & reps /
+distinctes, principale ≥ secondaires (l'égalité est admise : 50/50) ; **0 à 2 secondaires** (le prompt
+du lot admet 0 ; D3.2 en demande 1 à 2 : c'est l'écran de création, G6, qui l'impose) ; mode street = une principale parmi streetlifting / sets & reps /
 calisthénie, parts de somme 100, et `disciplines` en est l'image (`StreetMode.toDisciplineMix()` ;
 « sets & reps » = discipline `street_workout`) ; niveau déclaré = fourchette ou « je ne sais pas »
 (`known: false`, sans valeur) ; objectif de performance (exercice, grandeur, valeur, échéance) ou
@@ -116,6 +121,12 @@ minutes ; matériel dans le vocabulaire de la base ; un incrément par type de c
 aimés ∩ détestés = ∅. Le questionnaire santé L13 n'est que **référencé** (`HealthScreeningRef` :
 identifiant, jour, résultat) : aucune réponse de santé n'est copiée dans le profil.
 `TrainingDiscipline.catalogDisciplines` relie les 8 disciplines du profil (D3.1) aux 8 de la base.
+Champs optionnels : lieu d'un jour (`DaySlot.place`), matériel par lieu (`equipmentByPlace`), exercices
+que l'utilisateur a dit savoir ou ne pas savoir faire (`knownExerciseIds`, `cannotDoExerciseIds`, à
+reporter depuis `ProfileDelta` après la revue), niveau global d'expérience (`experience`).
+**Convention de charge** : dans le profil et les objectifs, `one_rm_kg` est la charge **externe** (lest
+seul pour un exercice lesté, comme l'utilisateur la lit) ; dans les estimations et les records des
+moteurs, c'est la charge **totale** (externe + fraction × poids de corps).
 
 ## 4. Échelle des flammes (`Flames`, D5.3)
 
@@ -136,21 +147,47 @@ Helms et al. 2016) ; la table elle-même est une décision du propriétaire.
 Séance (`SessionRecord`) : identifiant unique, **jour civil**, origine, place dans le programme,
 marqueur **`resume`** (« reprise », D4.9 : la séance reste au journal mais `countedSessions` l'exclut —
 ni XP, ni statistiques, ni série, ni records, ni données pour les moteurs), bilan santé, séries,
-douleurs. Série (`SetRecord`) : exercice, rang, rôle, charge externe (kg ; négative = assistance),
-répétitions / secondes / mètres / calories (au moins une mesure), flammes ou absence, `success`
-(cible atteinte), `excluded` (incident : gardée, ignorée des moteurs), côté, cible prescrite. Bilan
+douleurs, lieu, pauses déclarées (`TrainingLog.breaks`). Série (`SetRecord`) : exercice, rang, rôle,
+charge externe en kg **telle que l'utilisateur la lit** (barre et disques compris ; par haltère ou par
+kettlebell ; valeur affichée d'une machine ou d'une poulie ; lest seul — le poids du corps n'y est
+jamais ajouté ; négative = assistance), répétitions / secondes / mètres / calories (au moins une
+mesure ; par côté pour un exercice unilatéral, une série par côté comptant une fois avec
+`side: both`), flammes ou absence, `success` (cible atteinte), `excluded` (incident : gardée, ignorée
+des moteurs), emplacement d'origine (`slotId`), cible prescrite. Bilan
 santé (`HealthCheck`, D5.8) : **chaque question est facultative ; une réponse absente n'est jamais
 remplacée par une valeur** (testé : clés absentes du JSON, `null` à la lecture) ; échelles de 1 à 5 où
-5 est toujours l'état le plus favorable. Invariants : identifiants uniques, dates croissantes.
+5 est toujours l'état le plus favorable ; `pains` absent = question non posée, liste vide = aucune
+douleur. Invariants : identifiants uniques, dates croissantes.
 Format actuel du journal de l'application et règle de conversion : `docs/CONVERSION_JOURNAL.md`.
 
 ## 6. Interfaces des moteurs (`lib/src/engines.dart`)
 
 | Interface | Méthodes | Lot |
 | --- | --- | --- |
-| `PlanEngine` | `createPass1(catalog, PlanRequest)` → `Pass1Plan` ; `review(…, Pass1Plan, ReviewAction)` → `ReviewResult` (programme, `PlanDiff`, verrous, `ProfileDelta`) ; `variants(…, slotId)` → `VariantSet` (≤ 3 ciblées + toutes) ; `createPass2` → `Pass2Plan` ; `nextBlock(NextBlockRequest)` et `restructure(RestructureRequest)` → `BlockProposal` | G4 |
-| `AdaptEngine` | `prescribeSession(catalog, AdaptInput, weekIndex, dayIndex, healthCheck)` → `SessionPlan` ; `adviseNextSet(…, SessionPlan, séries faites)` → `IntraSessionAdvice` ; `review(AdaptInput)` → `AdaptReview` (`AdaptationSummary`, `Proposal`, état opaque, `EngineLogEntry`) | G8 |
+| `PlanEngine` | `createPass1(catalog, PlanRequest)` → `Pass1Plan` ; `review(catalog, ReviewRequest)` → `ReviewResult` (programme, `PlanDiff`, verrous, `ProfileDelta`) ; `variants(catalog, VariantsRequest)` → `VariantSet` (≤ 3 ciblées + toutes) ; `createPass2(catalog, Pass2Request)` → `Pass2Plan` ; `nextBlock(NextBlockRequest)` et `restructure(RestructureRequest)` → `BlockProposal` | G4 |
+| `AdaptEngine` | `prescribeSession(catalog, SessionRequest)` → `SessionPlan` ; `adviseNextSet(catalog, AdviceRequest)` → `IntraSessionAdvice` ; `review(catalog, AdaptInput)` → `AdaptReview` (`AdaptationSummary`, `Proposal`, records, état opaque, `EngineLogEntry`) | G8 |
 | `QuestEngine` | `evaluate(catalog, QuestInput)` → `QuestOutcome` (`QuestState`, `LevelState`, attributs, rangs, objectifs, événements) | G11 |
+
+Chaque méthode prend le catalogue et **une requête versionnée** : un besoin nouveau s'ajoute comme champ
+optionnel de la requête, sans casser les implémentations ; ce qui ne tient pas dans une requête passe
+par une nouvelle interface, jamais par la modification de celles-ci.
+
+**Bloc de programme.** La passe 1 est la semaine type (jours, emplacements, rôles) ; **la passe 2 fait
+foi semaine par semaine** : pour un emplacement, une semaine peut prescrire un autre exercice que la
+semaine type (échange en cours de bloc, semaine de test) ou un emplacement qui n'existe que cette
+semaine-là. Une restructuration ne réécrit jamais les semaines déjà faites. Une prescription peut être
+uniforme (`sets` × plage) ou détaillée série par série (`setTargets`), regroupée (`groupId`, `format`),
+exprimée en part du 1RM (`percentOfOneRm`). Un changement de prescription proposé porte l'avant et
+l'après (`PlanChange.fromPrescription`, `toPrescription`) : l'appliquer, c'est remplacer la
+prescription visée. Les suites données aux propositions reviennent au moteur par
+`AdaptInput.decisions`.
+
+**Programme importé** (celui du propriétaire, D5.10 : 40 semaines, conservé jour pour jour). L'application
+(G9) le présente au moteur dynamique comme un `ProgramBlock` de 40 semaines (`blockId`
+`legacy-programme-v33`) : passe 1 = semaine type minimale, passe 2 = les prescriptions de chaque
+semaine telles qu'elles sont (exercices propres à chaque semaine, `percentOfOneRm` quand la charge est
+un pourcentage). `kalis_plan`, lui, ne produit que des blocs de 4 à 6 semaines (D4.8) et ne régénère
+jamais ce programme.
 
 Obligations de toute implémentation : fonctions pures et déterministes (mêmes entrées → même JSON à
 l'octet près) ; toute sortie passe `validate()` ; toute raison est au registre ; ce qui est verrouillé
@@ -179,7 +216,12 @@ fichiers et valeurs aléatoires seedées de chaque type (`contractCodecs`, `arbi
 
 - Champs calculés par règles sur les noms : des cas particuliers sont mal classés ; les cas ambigus
   repérés sont listés dans `docs/RELECTURE_CATALOGUE.md` (une correction = une règle, jamais une valeur).
-- Fractions du poids du corps « estimées » : ordre de grandeur statique, non mesuré.
+- Fractions du poids du corps « estimées » : ordre de grandeur statique, non mesuré ; les variantes
+  pieds surélevés des dips au banc et de la pompe pike gardent la valeur de la variante de base.
+- Les prérequis d'un exercice non lesté restent dans sa famille `variante_de` : le squat de
+  compétition, par exemple, ne renvoie pas vers le back squat de musculation.
+- `QuestOutcome.extras` (récapitulatif hebdomadaire, comparaisons, fantôme) est un objet libre que
+  `kalis_quest` documentera ; il pourra être typé plus tard par des champs optionnels.
 - Contraintes articulaires et coûts de fatigue : échelles ordinales de bon sens, sans valeur médicale.
 - `lieux` suppose une salle complète, un parc de street workout et un domicile sans gros matériel.
 - La proximité ne tient compte ni du matériel ni des contraintes articulaires (à `kalis_plan` de le faire).
@@ -196,6 +238,7 @@ fichiers et valeurs aléatoires seedées de chaque type (`contractCodecs`, `arbi
 | Conversion flammes ↔ RIR | `test/flames_test.dart` (table, inverse, 10 000 tirages) | testé |
 | Aller-retour JSON de chaque type | `test/contracts_roundtrip_test.dart` (10 000 valeurs seedées par type) | testé |
 | Invariants croisés | `test/validation_test.dart` | testé |
+| Relecture indépendante des contrats, des règles et du catalogue (35 constats, 2 bloquants) | corrections intégrées avant l'étiquette ; constats non retenus dans les limites ci-dessus | fait le 01/10/2026 |
 | Jeux de données valides | `test/fixtures_test.dart`, simulateur | testé |
 | Chargement du catalogue ≤ 150 ms | `test/catalog_test.dart`, rapport du simulateur | mesuré en CI |
 | Valeurs publiées (Suprak 2011, Ebben 2011, Winter 2009) | reprises des résumés et tables publiés | **non revérifiées sur le texte intégral dans ce lot** |

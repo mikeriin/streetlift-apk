@@ -274,8 +274,8 @@ final class CatalogExercise {
   JointStress stressOn(Joint joint) => jointStress[joint]!;
 
   /// Vrai si l'exercice peut se faire avec le seul matériel [available]
-  /// (noms du vocabulaire `materiel`). « aucun (sol) » et « mur » sont
-  /// toujours disponibles.
+  /// (noms du vocabulaire `materiel`). Le matériel de
+  /// [alwaysAvailableEquipment] ne bloque jamais.
   bool feasibleWith(Set<String> available) {
     for (final item in equipment) {
       if (!alwaysAvailableEquipment.contains(item) &&
@@ -316,8 +316,14 @@ final class CatalogExercise {
   String toString() => 'CatalogExercise($id)';
 }
 
-/// Matériel du vocabulaire qui ne demande rien : toujours disponible.
-const Set<String> alwaysAvailableEquipment = <String>{'aucun (sol)', 'mur'};
+/// Matériel du vocabulaire qui ne bloque jamais un exercice : le sol, un
+/// mur, et le matériel de confort ou consommable (tapis, magnésie).
+const Set<String> alwaysAvailableEquipment = <String>{
+  'aucun (sol)',
+  'mur',
+  'tapis',
+  'magnésie',
+};
 
 /// Catalogue d'exercices compilé.
 ///
@@ -395,9 +401,9 @@ final class Catalog {
   /// [FormatException] si le schéma est plus récent que
   /// [supportedSchemaVersion] ou si le contenu est invalide.
   factory Catalog.fromJsonBytes(List<int> utf8Json) {
-    final decoded = const Utf8Decoder().fuse(const JsonDecoder()).convert(
-          utf8Json,
-        );
+    final decoded = const Utf8Decoder()
+        .fuse(const JsonDecoder())
+        .convert(utf8Json);
     return Catalog.fromJson(jsonAsObject(decoded, 'catalogue'));
   }
 
@@ -563,7 +569,8 @@ final class Catalog {
   }
 
   /// Variantes directes de [id], dans l'ordre de la base.
-  List<CatalogExercise> childrenOf(String id) => _view(_children[exercise(id).id]);
+  List<CatalogExercise> childrenOf(String id) =>
+      _view(_children[exercise(id).id]);
 
   /// Racine de la chaîne `variante_de` de [id].
   CatalogExercise rootOf(String id) => _byId[exercise(id).rootId]!;
@@ -602,7 +609,8 @@ final class Catalog {
         : (ea.family == eb.family ? 0.5 : 0.0);
     final chain = ea.rootId == eb.rootId ? 1.0 : 0.0;
     final level = 1 - (ea.difficulty - eb.difficulty).abs() / 9;
-    final value = similarityMuscleWeight * ea.muscleCosine(eb) +
+    final value =
+        similarityMuscleWeight * ea.muscleCosine(eb) +
         similarityPatternWeight * pattern +
         similarityChainWeight * chain +
         similarityDifficultyWeight * level;
@@ -631,7 +639,8 @@ final class Catalog {
   }) {
     final scored = <(double, CatalogExercise)>[
       for (final e in exercises)
-        if (e.id != id && (where == null || where(e))) (similarity(id, e.id), e),
+        if (e.id != id && (where == null || where(e)))
+          (similarity(id, e.id), e),
     ];
     scored.sort((x, y) {
       final byScore = y.$1.compareTo(x.$1);
@@ -692,13 +701,30 @@ final class Catalog {
   }
 
   static const Map<String, String> _folding = <String, String>{
-    'à': 'a', 'â': 'a', 'ä': 'a', 'á': 'a', 'ã': 'a',
+    'à': 'a',
+    'â': 'a',
+    'ä': 'a',
+    'á': 'a',
+    'ã': 'a',
     'ç': 'c',
-    'é': 'e', 'è': 'e', 'ê': 'e', 'ë': 'e',
-    'î': 'i', 'ï': 'i', 'í': 'i',
-    'ô': 'o', 'ö': 'o', 'ó': 'o',
-    'ù': 'u', 'û': 'u', 'ü': 'u', 'ú': 'u',
-    'ÿ': 'y', 'ñ': 'n', 'œ': 'oe', 'æ': 'ae',
+    'é': 'e',
+    'è': 'e',
+    'ê': 'e',
+    'ë': 'e',
+    'î': 'i',
+    'ï': 'i',
+    'í': 'i',
+    'ô': 'o',
+    'ö': 'o',
+    'ó': 'o',
+    'ù': 'u',
+    'û': 'u',
+    'ü': 'u',
+    'ú': 'u',
+    'ÿ': 'y',
+    'ñ': 'n',
+    'œ': 'oe',
+    'æ': 'ae',
     '’': "'",
   };
 }

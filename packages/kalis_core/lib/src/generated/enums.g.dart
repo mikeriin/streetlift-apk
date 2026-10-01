@@ -546,8 +546,8 @@ enum BodySide {
   }
 }
 
-/// Mesure d'un niveau déclaré : répétitions max, 1RM en kg, tenue max, temps
-/// sur une distance.
+/// Mesure d'un niveau déclaré : répétitions max, 1RM de charge externe en kg
+/// (lest seul pour un exercice lesté), tenue max, temps sur une distance.
 enum LevelMeasure {
   maxReps('max_reps'),
   oneRmKg('one_rm_kg'),
@@ -612,11 +612,13 @@ enum GoalOrigin {
   }
 }
 
-/// Grandeur visée par un objectif de performance.
+/// Grandeur visée par un objectif de performance : 1RM de charge externe en
+/// kg, répétitions max (à une charge donnée si `loadKg`), tenue max, figure
+/// débloquée, temps sur une distance, distance en une durée.
 enum GoalMetric {
   oneRmKg('one_rm_kg'),
   maxReps('max_reps'),
-  holdSeconds('hold_seconds'),
+  maxHoldSeconds('max_hold_seconds'),
   skillUnlocked('skill_unlocked'),
   timeSeconds('time_seconds'),
   distanceMeters('distance_meters');
@@ -634,6 +636,29 @@ enum GoalMetric {
       }
     }
     throw FormatException('GoalMetric : code inconnu', code);
+  }
+}
+
+/// Niveau global d'expérience déclaré (ordre croissant).
+enum ExperienceLevel {
+  beginner('beginner'),
+  intermediate('intermediate'),
+  advanced('advanced'),
+  elite('elite');
+
+  const ExperienceLevel(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static ExperienceLevel fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('ExperienceLevel : code inconnu', code);
   }
 }
 
@@ -1047,11 +1072,14 @@ enum IntraSessionAction {
   }
 }
 
-/// Unité de la capacité estimée d'un exercice.
+/// Unité de la capacité estimée d'un exercice : 1RM de charge TOTALE en kg
+/// (charge externe + fraction du poids du corps), répétitions max, tenue max,
+/// vitesse.
 enum CapacityUnit {
-  kgOneRm('kg_one_rm'),
-  repsMax('reps_max'),
-  secondsMax('seconds_max');
+  oneRmKg('one_rm_kg'),
+  maxReps('max_reps'),
+  maxHoldSeconds('max_hold_seconds'),
+  metersPerSecond('meters_per_second');
 
   const CapacityUnit(this.code);
 
@@ -1066,6 +1094,30 @@ enum CapacityUnit {
       }
     }
     throw FormatException('CapacityUnit : code inconnu', code);
+  }
+}
+
+/// Suite donnée à une proposition (D5.6) : appliquée automatiquement,
+/// acceptée, refusée, annulée.
+enum ProposalStatus {
+  autoApplied('auto_applied'),
+  accepted('accepted'),
+  refused('refused'),
+  undone('undone');
+
+  const ProposalStatus(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static ProposalStatus fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('ProposalStatus : code inconnu', code);
   }
 }
 
@@ -1261,14 +1313,14 @@ enum SessionGrade {
   }
 }
 
-/// Nature d'un record.
+/// Nature d'un record (même vocabulaire que les niveaux et les objectifs).
 enum RecordKind {
-  oneRm('one_rm'),
-  repMax('rep_max'),
-  hold('hold'),
-  volume('volume'),
-  time('time'),
-  distance('distance');
+  oneRmKg('one_rm_kg'),
+  maxReps('max_reps'),
+  maxHoldSeconds('max_hold_seconds'),
+  volumeKg('volume_kg'),
+  timeSeconds('time_seconds'),
+  distanceMeters('distance_meters');
 
   const RecordKind(this.code);
 
@@ -1283,5 +1335,28 @@ enum RecordKind {
       }
     }
     throw FormatException('RecordKind : code inconnu', code);
+  }
+}
+
+/// Motif d'une pause déclarée.
+enum BreakReason {
+  vacation('vacation'),
+  illness('illness'),
+  injury('injury'),
+  other('other');
+
+  const BreakReason(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static BreakReason fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('BreakReason : code inconnu', code);
   }
 }

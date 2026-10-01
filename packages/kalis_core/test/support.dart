@@ -30,5 +30,6 @@ Map<String, Object?> viaJsonText(Map<String, Object?> json) =>
     jsonDecode(jsonEncode(json)) as Map<String, Object?>;
 
 /// Codes des violations.
-List<String> codesOf(List<Violation> violations) =>
-    <String>[for (final v in violations) v.code];
+List<String> codesOf(List<Violation> violations) => <String>[
+  for (final v in violations) v.code,
+];

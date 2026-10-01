@@ -13,11 +13,13 @@ const String sourceSha256 =
 
 void main() {
   final catalog = loadCatalog();
-  final raw = jsonDecode(utf8.decode(catalogJsonBytes())) as Map<String, Object?>;
+  final raw =
+      jsonDecode(utf8.decode(catalogJsonBytes())) as Map<String, Object?>;
   final rawExercises = (raw['exercices']! as List<Object?>)
       .cast<Map<String, Object?>>();
   final vocab = raw['vocabulaires']! as Map<String, Object?>;
-  List<String> words(String key) => (vocab[key]! as List<Object?>).cast<String>();
+  List<String> words(String key) =>
+      (vocab[key]! as List<Object?>).cast<String>();
 
   group('source', () {
     test('la copie de la base v1.1.0 a la somme de contrôle attendue', () {
@@ -29,15 +31,20 @@ void main() {
     });
 
     test('la base est conservée telle quelle dans le catalogue', () {
-      final source = jsonDecode(File(sourcePath).readAsStringSync())
-          as Map<String, Object?>;
+      final source =
+          jsonDecode(File(sourcePath).readAsStringSync())
+              as Map<String, Object?>;
       final sourceExercises = (source['exercices']! as List<Object?>)
           .cast<Map<String, Object?>>();
       expect(rawExercises.length, sourceExercises.length);
       for (var i = 0; i < sourceExercises.length; i++) {
-        final compiled = Map<String, Object?>.of(rawExercises[i])..remove('calc');
-        expect(jsonDeepEquals(compiled, sourceExercises[i]), isTrue,
-            reason: '${sourceExercises[i]['id']}');
+        final compiled = Map<String, Object?>.of(rawExercises[i])
+          ..remove('calc');
+        expect(
+          jsonDeepEquals(compiled, sourceExercises[i]),
+          isTrue,
+          reason: '${sourceExercises[i]['id']}',
+        );
       }
     });
   });
@@ -58,8 +65,11 @@ void main() {
         CatalogDiscipline.mobility: 110,
       };
       for (final entry in expected.entries) {
-        expect(catalog.byDiscipline(entry.key).length, entry.value,
-            reason: entry.key.code);
+        expect(
+          catalog.byDiscipline(entry.key).length,
+          entry.value,
+          reason: entry.key.code,
+        );
       }
     });
 
@@ -67,10 +77,12 @@ void main() {
       expect(catalog.muscles.length, 56);
       expect(catalog.equipmentVocabulary.length, 68);
       expect(catalog.categories.length, 56);
-      expect(words('niveaux'),
-          <String>[for (final l in ExerciseLevel.values) l.code]);
-      expect(words('disciplines'),
-          <String>[for (final d in CatalogDiscipline.values) d.code]);
+      expect(words('niveaux'), <String>[
+        for (final l in ExerciseLevel.values) l.code,
+      ]);
+      expect(words('disciplines'), <String>[
+        for (final d in CatalogDiscipline.values) d.code,
+      ]);
       final muscles = catalog.muscles.toSet();
       final equipment = catalog.equipmentVocabulary.toSet();
       final categories = catalog.categories.toSet();
@@ -110,55 +122,75 @@ void main() {
       }
     });
 
-    test('variante_de : existe, sans cycle, racine et profondeur cohérentes',
-        () {
-      for (final e in catalog.exercises) {
-        final ancestors = catalog.ancestorsOf(e.id);
-        expect(ancestors.length, e.depth, reason: e.id);
-        expect(ancestors.map((a) => a.id).toSet().length, ancestors.length);
-        expect(ancestors.any((a) => a.id == e.id), isFalse, reason: e.id);
-        final root = ancestors.isEmpty ? e : ancestors.last;
-        expect(root.variantOf, isNull);
-        expect(catalog.rootOf(e.id).id, root.id);
-        expect(e.rootId, root.id);
-        expect(catalog.parentOf(e.id)?.id, e.variantOf);
-        expect(catalog.familyOf(e.id), contains(e));
-        if (e.variantOf != null) {
-          expect(catalog.childrenOf(e.variantOf!), contains(e));
+    test(
+      'variante_de : existe, sans cycle, racine et profondeur cohérentes',
+      () {
+        for (final e in catalog.exercises) {
+          final ancestors = catalog.ancestorsOf(e.id);
+          expect(ancestors.length, e.depth, reason: e.id);
+          expect(ancestors.map((a) => a.id).toSet().length, ancestors.length);
+          expect(ancestors.any((a) => a.id == e.id), isFalse, reason: e.id);
+          final root = ancestors.isEmpty ? e : ancestors.last;
+          expect(root.variantOf, isNull);
+          expect(catalog.rootOf(e.id).id, root.id);
+          expect(e.rootId, root.id);
+          expect(catalog.parentOf(e.id)?.id, e.variantOf);
+          expect(catalog.familyOf(e.id), contains(e));
+          if (e.variantOf != null) {
+            expect(catalog.childrenOf(e.variantOf!), contains(e));
+          }
         }
-      }
-      final children = <String>{
-        for (final e in catalog.exercises)
-          for (final c in catalog.childrenOf(e.id)) c.id,
-      };
-      expect(children.length,
-          catalog.exercises.where((e) => e.variantOf != null).length);
-    });
+        final children = <String>{
+          for (final e in catalog.exercises)
+            for (final c in catalog.childrenOf(e.id)) c.id,
+        };
+        expect(
+          children.length,
+          catalog.exercises.where((e) => e.variantOf != null).length,
+        );
+      },
+    );
   });
 
   group('champs calculés', () {
     test('les vocabulaires calculés sont ceux des enums du contrat', () {
       Set<String> codes(Iterable<String> values) => values.toSet();
-      expect(codes(words('schemas')),
-          codes(MovementPattern.values.map((v) => v.code)));
-      expect(codes(words('familles')),
-          codes(MovementFamily.values.map((v) => v.code)));
-      expect(words('plans'), <String>[for (final v in MovementPlane.values) v.code]);
-      expect(words('articularites'),
-          <String>[for (final v in Articularity.values) v.code]);
-      expect(words('regimes'),
-          <String>[for (final v in ContractionMode.values) v.code]);
+      expect(
+        codes(words('schemas')),
+        codes(MovementPattern.values.map((v) => v.code)),
+      );
+      expect(
+        codes(words('familles')),
+        codes(MovementFamily.values.map((v) => v.code)),
+      );
+      expect(words('plans'), <String>[
+        for (final v in MovementPlane.values) v.code,
+      ]);
+      expect(words('articularites'), <String>[
+        for (final v in Articularity.values) v.code,
+      ]);
+      expect(words('regimes'), <String>[
+        for (final v in ContractionMode.values) v.code,
+      ]);
       expect(words('lieux'), <String>[for (final v in Place.values) v.code]);
-      expect(words('articulations'), <String>[for (final v in Joint.values) v.code]);
-      expect(words('contraintes'),
-          <String>[for (final v in JointStress.values) v.code]);
-      expect(words('types_charge'),
-          <String>[for (final v in LoadType.values) v.code]);
-      expect(words('unites'), <String>[for (final v in MeasureUnit.values) v.code]);
-      expect(words('lateralites'),
-          <String>[for (final v in Laterality.values) v.code]);
-      expect(words('sources_fraction'),
-          <String>[for (final v in FractionSource.values) v.code]);
+      expect(words('articulations'), <String>[
+        for (final v in Joint.values) v.code,
+      ]);
+      expect(words('contraintes'), <String>[
+        for (final v in JointStress.values) v.code,
+      ]);
+      expect(words('types_charge'), <String>[
+        for (final v in LoadType.values) v.code,
+      ]);
+      expect(words('unites'), <String>[
+        for (final v in MeasureUnit.values) v.code,
+      ]);
+      expect(words('lateralites'), <String>[
+        for (final v in Laterality.values) v.code,
+      ]);
+      expect(words('sources_fraction'), <String>[
+        for (final v in FractionSource.values) v.code,
+      ]);
     });
 
     test('domaines : difficulté, fatigue, lieux, contraintes, fraction', () {
@@ -171,11 +203,17 @@ void main() {
         expect(e.jointStress.keys.toSet(), Joint.values.toSet(), reason: e.id);
         final fraction = e.bodyweightFraction;
         if (fraction != null) {
-          expect(e.loadType,
-              anyOf(LoadType.bodyweight, LoadType.addedWeight), reason: e.id);
+          expect(
+            e.loadType,
+            anyOf(LoadType.bodyweight, LoadType.addedWeight),
+            reason: e.id,
+          );
           expect(fraction.value, inInclusiveRange(0.3, 1.0), reason: e.id);
-          expect(fraction.reference == null,
-              fraction.source == FractionSource.estimated, reason: e.id);
+          expect(
+            fraction.reference == null,
+            fraction.source == FractionSource.estimated,
+            reason: e.id,
+          );
         }
       }
     });
@@ -190,8 +228,11 @@ void main() {
       for (var i = 1; i < ExerciseLevel.values.length; i++) {
         final below = ExerciseLevel.values[i - 1];
         final above = ExerciseLevel.values[i];
-        expect(highest[below]!, lessThanOrEqualTo(lowest[above]!),
-            reason: '${below.code} / ${above.code}');
+        expect(
+          highest[below]!,
+          lessThanOrEqualTo(lowest[above]!),
+          reason: '${below.code} / ${above.code}',
+        );
       }
       expect(lowest[ExerciseLevel.beginner], 1);
       expect(highest[ExerciseLevel.elite], 10);
@@ -237,28 +278,30 @@ void main() {
       }
     });
 
-    test('vecteur musculaire : principal 1, secondaire 0,5, stabilisateur 0,2',
-        () {
-      expect(Catalog.primaryWeight, 1.0);
-      expect(Catalog.secondaryWeight, 0.5);
-      expect(Catalog.stabilizerWeight, 0.2);
-      for (final e in catalog.exercises) {
-        final expected = <String, double>{
-          for (final m in e.stabilizerMuscles) m: 0.2,
-          for (final m in e.secondaryMuscles) m: 0.5,
-          for (final m in e.primaryMuscles) m: 1.0,
-        };
-        expect(e.muscleIndices.length, expected.length, reason: e.id);
-        for (var i = 0; i < e.muscleIndices.length; i++) {
-          if (i > 0) {
-            expect(e.muscleIndices[i], greaterThan(e.muscleIndices[i - 1]));
+    test(
+      'vecteur musculaire : principal 1, secondaire 0,5, stabilisateur 0,2',
+      () {
+        expect(Catalog.primaryWeight, 1.0);
+        expect(Catalog.secondaryWeight, 0.5);
+        expect(Catalog.stabilizerWeight, 0.2);
+        for (final e in catalog.exercises) {
+          final expected = <String, double>{
+            for (final m in e.stabilizerMuscles) m: 0.2,
+            for (final m in e.secondaryMuscles) m: 0.5,
+            for (final m in e.primaryMuscles) m: 1.0,
+          };
+          expect(e.muscleIndices.length, expected.length, reason: e.id);
+          for (var i = 0; i < e.muscleIndices.length; i++) {
+            if (i > 0) {
+              expect(e.muscleIndices[i], greaterThan(e.muscleIndices[i - 1]));
+            }
+            final muscle = catalog.muscles[e.muscleIndices[i]];
+            expect(e.muscleWeights[i], expected[muscle], reason: e.id);
+            expect(catalog.weightOf(e, muscle), expected[muscle]);
           }
-          final muscle = catalog.muscles[e.muscleIndices[i]];
-          expect(e.muscleWeights[i], expected[muscle], reason: e.id);
-          expect(catalog.weightOf(e, muscle), expected[muscle]);
         }
-      }
-    });
+      },
+    );
 
     test('cas types relus', () {
       final pushUp = catalog.exercise('sw-pompe');
@@ -310,22 +353,30 @@ void main() {
     });
 
     test('par nom et alias, sans casse ni accents', () {
-      expect(catalog.byLabel('Pompe classique').map((e) => e.id),
-          contains('sw-pompe'));
-      expect(catalog.byLabel('  pompe   CLASSIQUE ').map((e) => e.id),
-          contains('sw-pompe'));
+      expect(
+        catalog.byLabel('Pompe classique').map((e) => e.id),
+        contains('sw-pompe'),
+      );
+      expect(
+        catalog.byLabel('  pompe   CLASSIQUE ').map((e) => e.id),
+        contains('sw-pompe'),
+      );
       final deadHang = catalog.exercise('sw-dead-hang');
       for (final alias in deadHang.aliases) {
         expect(catalog.byLabel(alias), contains(deadHang), reason: alias);
       }
-      expect(catalog.byLabel('élévation latérale haltères'),
-          catalog.byLabel('Elevation laterale halteres'));
+      expect(
+        catalog.byLabel('élévation latérale haltères'),
+        catalog.byLabel('Elevation laterale halteres'),
+      );
       expect(catalog.byLabel('exercice qui n’existe pas'), isEmpty);
       for (final e in catalog.exercises) {
         expect(catalog.byLabel(e.name), contains(e), reason: e.id);
       }
-      expect(Catalog.normalizeLabel('  Élévation   LATÉRALE à l’haltère '),
-          "elevation laterale a l'haltere");
+      expect(
+        Catalog.normalizeLabel('  Élévation   LATÉRALE à l’haltère '),
+        "elevation laterale a l'haltere",
+      );
     });
 
     test('par discipline, catégorie, schéma, famille : partitions', () {
@@ -361,8 +412,10 @@ void main() {
           expect(e.equipment, contains(item));
         }
       }
-      expect(catalog.byEquipment('barre fixe').map((e) => e.id),
-          contains('sw-traction-pronation'));
+      expect(
+        catalog.byEquipment('barre fixe').map((e) => e.id),
+        contains('sw-traction-pronation'),
+      );
     });
 
     test('faisabilité selon le matériel disponible', () {
@@ -370,16 +423,22 @@ void main() {
       expect(pullUp.feasibleWith(<String>{}), isFalse);
       expect(pullUp.feasibleWith(<String>{'barre fixe'}), isTrue);
       expect(catalog.exercise('sw-pompe').feasibleWith(<String>{}), isTrue);
-      expect(catalog.exercise('sw-pompe-murale').feasibleWith(<String>{}),
-          isTrue);
+      expect(
+        catalog.exercise('sw-pompe-murale').feasibleWith(<String>{}),
+        isTrue,
+      );
     });
 
     test('contrôles de références', () {
       expect(catalog.checkExerciseIds(<String>['sw-pompe']), isEmpty);
-      expect(codesOf(catalog.checkExerciseIds(<String>['sw-pompe', 'xx-rien'])),
-          <String>['unknown_exercise']);
-      expect(codesOf(catalog.checkEquipment(<String>['barre fixe', 'trampoline'])),
-          <String>['unknown_equipment']);
+      expect(
+        codesOf(catalog.checkExerciseIds(<String>['sw-pompe', 'xx-rien'])),
+        <String>['unknown_exercise'],
+      );
+      expect(
+        codesOf(catalog.checkEquipment(<String>['barre fixe', 'trampoline'])),
+        <String>['unknown_equipment'],
+      );
     });
   });
 
@@ -464,7 +523,8 @@ void main() {
 
     test('refuse un code inconnu', () {
       final json = copy();
-      (exercisesOf(json)[0]['calc']! as Map<String, Object?>)['schema'] = 'lancer';
+      (exercisesOf(json)[0]['calc']! as Map<String, Object?>)['schema'] =
+          'lancer';
       expect(() => Catalog.fromJson(json), throwsFormatException);
     });
 

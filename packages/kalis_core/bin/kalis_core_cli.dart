@@ -33,7 +33,9 @@ Map<String, int> _count<T>(Iterable<T> values, String Function(T) label) {
 void main(List<String> args) {
   final at = args.indexOf('--rapport');
   if (at < 0 || at + 1 >= args.length) {
-    stderr.writeln('usage : dart run bin/kalis_core_cli.dart --rapport <dossier>');
+    stderr.writeln(
+      'usage : dart run bin/kalis_core_cli.dart --rapport <dossier>',
+    );
     exitCode = 64;
     return;
   }
@@ -160,8 +162,7 @@ void main(List<String> args) {
       'chargement_ms_meilleur': bestMs,
       'chargement_ms_mediane': medianMs,
       'chargement_budget_ms': loadBudgetMs,
-      'familles_variante_de':
-          ex.where((e) => e.variantOf == null).length,
+      'familles_variante_de': ex.where((e) => e.variantOf == null).length,
       'profondeur_max': ex.map((e) => e.depth).reduce((a, b) => a > b ? a : b),
       'avec_prerequis': ex.where((e) => e.prerequisites.isNotEmpty).length,
       'avec_fraction': ex.where((e) => e.bodyweightFraction != null).length,
@@ -198,25 +199,36 @@ void main(List<String> args) {
   };
 
   const encoder = JsonEncoder.withIndent('  ');
-  File('${out.path}/kalis_core_rapport.json')
-      .writeAsStringSync('${encoder.convert(report)}\n');
+  File(
+    '${out.path}/kalis_core_rapport.json',
+  ).writeAsStringSync('${encoder.convert(report)}\n');
 
   final text = StringBuffer()
     ..writeln('kalis_core $kalisCoreVersion — rapport de contrôle')
     ..writeln()
-    ..writeln('Catalogue : ${catalog.length} exercices, base '
-        'v${catalog.sourceVersion}, règles ${catalog.rulesVersion}, '
-        'schéma ${catalog.schemaVersion}')
-    ..writeln('Chargement (décompression comprise) : meilleur '
-        '${bestMs.toStringAsFixed(1)} ms, médiane '
-        '${medianMs.toStringAsFixed(1)} ms (budget $loadBudgetMs ms)')
-    ..writeln('Contrats : ${contractCodecs.length} types, '
-        '${reasonRegistry.length} codes de raison')
-    ..writeln('Profils types : ${profiles.length} '
-        '($profileViolations violation(s))')
-    ..writeln('Journaux : ${journals.length}, $sessions séances dont $resume '
-        '« reprise », $sets séries dont $unrated sans note '
-        '($journalViolations violation(s))')
+    ..writeln(
+      'Catalogue : ${catalog.length} exercices, base '
+      'v${catalog.sourceVersion}, règles ${catalog.rulesVersion}, '
+      'schéma ${catalog.schemaVersion}',
+    )
+    ..writeln(
+      'Chargement (décompression comprise) : meilleur '
+      '${bestMs.toStringAsFixed(1)} ms, médiane '
+      '${medianMs.toStringAsFixed(1)} ms (budget $loadBudgetMs ms)',
+    )
+    ..writeln(
+      'Contrats : ${contractCodecs.length} types, '
+      '${reasonRegistry.length} codes de raison',
+    )
+    ..writeln(
+      'Profils types : ${profiles.length} '
+      '($profileViolations violation(s))',
+    )
+    ..writeln(
+      'Journaux : ${journals.length}, $sessions séances dont $resume '
+      '« reprise », $sets séries dont $unrated sans note '
+      '($journalViolations violation(s))',
+    )
     ..writeln();
   for (final entry in distributions.entries) {
     text.writeln('${entry.key} :');
@@ -226,9 +238,11 @@ void main(List<String> args) {
   }
   text
     ..writeln()
-    ..writeln(failures.isEmpty
-        ? 'Tous les contrôles passent.'
-        : 'ÉCHECS :\n${failures.join('\n')}');
+    ..writeln(
+      failures.isEmpty
+          ? 'Tous les contrôles passent.'
+          : 'ÉCHECS :\n${failures.join('\n')}',
+    );
   File('${out.path}/kalis_core_rapport.txt').writeAsStringSync(text.toString());
   stdout.write(text.toString());
   if (failures.isNotEmpty) {

@@ -41,8 +41,7 @@ String arbId(Random r) {
 }
 
 /// Jour civil entre 1990 et 2059.
-CivilDate arbDate(Random r) =>
-    CivilDate.fromDayNumber(arbInt(r, 7305, 32872));
+CivilDate arbDate(Random r) => CivilDate.fromDayNumber(arbInt(r, 7305, 32872));
 
 /// Valeur d'une énumération.
 T arbEnum<T>(Random r, List<T> values) => values[r.nextInt(values.length)];
@@ -81,8 +80,7 @@ Object? _arbJsonValue(Random r, int depth) {
 /// Objet JSON libre (scalaires, listes et objets imbriqués).
 Map<String, Object?> arbJson(Random r) {
   return <String, Object?>{
-    for (var i = 0, n = r.nextInt(4); i < n; i++)
-      'p$i': _arbJsonValue(r, 0),
+    for (var i = 0, n = r.nextInt(4); i < n; i++) 'p$i': _arbJsonValue(r, 0),
   };
 }
 

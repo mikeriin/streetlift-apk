@@ -15,12 +15,17 @@ Clé JSON = nom du champ. « Optionnel » : la clé est absente du JSON quand la
 | `ProgramBlock` | 1 |
 | `AdaptationSummary` | 1 |
 | `AdaptInput` | 1 |
+| `SessionRequest` | 1 |
+| `AdviceRequest` | 1 |
 | `SessionPlan` | 1 |
 | `QuestState` | 1 |
 | `QuestInput` | 1 |
 | `PlanRequest` | 1 |
 | `NextBlockRequest` | 1 |
 | `RestructureRequest` | 1 |
+| `ReviewRequest` | 1 |
+| `VariantsRequest` | 1 |
+| `Pass2Request` | 1 |
 
 ## Commun
 
@@ -31,7 +36,7 @@ Code de raison et ses paramètres (aucun texte : les phrases viennent de kalis_k
 | Champ | Type | Optionnel | Contraintes | Sens |
 | --- | --- | --- | --- | --- |
 | `code` | texte | non | longueur ≥ 1 | Identifiant stable du registre des codes de raison. |
-| `params` | objet JSON | non | — | Paramètres typés du code (nombres, chaînes, booléens). |
+| `params` | objet JSON | non | — | Paramètres typés du code (nombres, chaînes, booléens), écrits par clés triées. |
 
 Invariant : `code` figure au registre ; `params` contient exactement les paramètres déclarés, du bon type.
 
@@ -98,8 +103,10 @@ Objectif : performance chiffrée datée, ou habitude (D3.8).
 | `createdOn` | jour civil | non | — | Jour de création. |
 | `exerciseId` | texte | oui | id du catalogue | Exercice visé (performance). |
 | `metric` | `GoalMetric` | oui | — | Grandeur visée (performance). |
-| `targetValue` | nombre | oui | ≥ 0 | Valeur cible, dans l'unité de `metric` (absente pour `skill_unlocked`). |
+| `targetValue` | nombre | oui | ≥ 0 | Valeur cible, dans l'unité de `metric` (charge EXTERNE pour `one_rm_kg` ; absente pour `skill_unlocked`). |
 | `distanceMeters` | nombre | oui | ≥ 0 | Distance de référence pour `time_seconds`. |
+| `loadKg` | nombre | oui | ≥ 0 | Charge externe de référence pour `max_reps` (« 38 répétitions à 70 kg »). |
+| `durationSeconds` | entier | oui | ≥ 1 | Durée de référence pour `distance_meters`. |
 | `targetDate` | jour civil | oui | — | Échéance (performance). |
 | `sessionsPerWeek` | entier | oui | 1 à 14 | Séances par semaine (habitude). |
 | `weeks` | entier | oui | 1 à 104 | Durée en semaines (habitude). |
@@ -114,6 +121,16 @@ Disponibilité d'un jour précis (D3.6).
 | --- | --- | --- | --- | --- |
 | `weekday` | entier | non | 1 à 7 | Jour ISO : 1 = lundi … 7 = dimanche. |
 | `minutes` | entier | non | 10 à 300 | Durée disponible, en minutes. |
+| `place` | `Place` | oui | — | Lieu de ce jour-là (absent : n'importe quel lieu du profil). |
+
+### `PlaceEquipment`
+
+Matériel disponible dans un lieu.
+
+| Champ | Type | Optionnel | Contraintes | Sens |
+| --- | --- | --- | --- | --- |
+| `place` | `Place` | non | — | Lieu. |
+| `equipment` | liste de texte | non | — | Matériel disponible dans ce lieu (vocabulaire `materiel` de la base). |
 
 ### `LoadIncrement`
 
@@ -164,11 +181,15 @@ Profil d'athlète v2 (D3).
 | `goals` | liste de `Goal` | non | — | Objectifs. |
 | `availability` | liste de `DaySlot` | non | longueur 1 à 7 | Jours et durées disponibles. |
 | `places` | liste de `Place` | non | longueur 1 à 3 | Lieux d'entraînement. |
-| `equipment` | liste de texte | non | — | Matériel disponible (vocabulaire `materiel` de la base). |
+| `equipment` | liste de texte | non | — | Matériel disponible, tous lieux confondus (vocabulaire `materiel` de la base). |
+| `equipmentByPlace` | liste de `PlaceEquipment` | oui | — | Matériel par lieu, quand il diffère d'un lieu à l'autre (absent : `equipment` vaut partout). |
 | `loadIncrements` | liste de `LoadIncrement` | non | — | Incréments de charge par type de charge. |
 | `limitations` | liste de `Limitation` | non | — | Blessures et limitations. |
 | `likedExerciseIds` | liste de texte | non | id du catalogue | Exercices aimés. |
 | `dislikedExerciseIds` | liste de texte | non | id du catalogue | Exercices détestés. |
+| `knownExerciseIds` | liste de texte | oui | id du catalogue | Exercices que l'utilisateur a dit savoir faire (revue, D4.5). |
+| `cannotDoExerciseIds` | liste de texte | oui | id du catalogue | Exercices que l'utilisateur a dit ne pas savoir faire (revue, D4.5). |
+| `experience` | `ExperienceLevel` | oui | — | Niveau global d'expérience déclaré. |
 | `guidanceMode` | `GuidanceMode` | non | — | Mode assisté ou libre. |
 | `healthScreening` | `HealthScreeningRef` | oui | — | Référence au questionnaire santé. |
 | `createdOn` | jour civil | non | — | Jour de création du profil. |
@@ -179,6 +200,8 @@ Invariant : Jours de `availability` distincts ; lieux, matériel, exercices aim�
 Invariant : Un seul incrément par type de charge ; `updatedOn` ≥ `createdOn`.
 
 Invariant : Mode street activé ⇒ `disciplines` est l'image du mode street (`StreetMode.toDisciplineMix()`).
+
+Invariant : `equipmentByPlace` : un lieu au plus une fois, parmi `places`, matériel inclus dans `equipment` ; `DaySlot.place` parmi `places` ; su ∩ pas su = ∅.
 
 ## Journal
 
@@ -212,7 +235,7 @@ Bilan santé de début de séance (D5.8). Chaque question est facultative : une 
 | `nutrition` | entier | oui | 1 à 5 | Alimentation. |
 | `hydration` | entier | oui | 1 à 5 | Hydratation. |
 | `minutesAvailable` | entier | oui | 0 à 600 | Temps disponible aujourd'hui, en minutes. |
-| `pains` | liste de `PainReport` | non | — | Douleurs localisées. |
+| `pains` | liste de `PainReport` | oui | — | Douleurs localisées (absent : question non posée ou sans réponse ; liste vide : aucune douleur). |
 
 ### `SetTarget`
 
@@ -222,12 +245,14 @@ Cible prescrite d'une série, telle qu'elle était affichée.
 | --- | --- | --- | --- | --- |
 | `repsLow` | entier | oui | 0 à 1000 | Bas de la plage de répétitions. |
 | `repsHigh` | entier | oui | 0 à 1000 | Haut de la plage de répétitions. |
-| `seconds` | entier | oui | 0 à 86400 | Durée visée, en secondes. |
+| `secondsLow` | entier | oui | 0 à 86400 | Bas de la plage de temps, en secondes. |
+| `secondsHigh` | entier | oui | 0 à 86400 | Haut de la plage de temps, en secondes. |
 | `distanceMeters` | nombre | oui | ≥ 0 | Distance visée, en mètres. |
-| `loadKg` | nombre | oui | -300 à 1000 | Charge externe prescrite, en kg. |
+| `calories` | nombre | oui | ≥ 0 | Calories visées. |
+| `loadKg` | nombre | oui | -300 à 1000 | Charge externe prescrite, en kg (même convention que `SetRecord.externalLoadKg`). |
 | `flames` | entier | oui | 1 à 10 | Flammes visées. |
 
-Invariant : `repsLow` ≤ `repsHigh` quand les deux sont renseignés.
+Invariant : Bornes basses ≤ bornes hautes quand les deux sont renseignées.
 
 ### `SetRecord`
 
@@ -239,18 +264,31 @@ Série réalisée.
 | `exerciseOrder` | entier | non | ≥ 0 | Rang de l'exercice dans la séance (0 = premier). |
 | `setIndex` | entier | non | ≥ 0 | Rang de la série dans l'exercice (0 = première). |
 | `kind` | `SetKind` | non | — | Rôle de la série. |
-| `externalLoadKg` | nombre | oui | -300 à 1000 | Charge externe en kg (lest, barre, par haltère… ; négative = assistance ; absente = aucune). |
-| `reps` | entier | oui | 0 à 1000 | Répétitions réalisées. |
-| `seconds` | entier | oui | 0 à 86400 | Durée réalisée, en secondes. |
+| `externalLoadKg` | nombre | oui | -300 à 1000 | Charge externe en kg, telle que l'utilisateur la lit : barre et disques compris ; par haltère ou par kettlebell ; valeur affichée d'une machine ou d'une poulie ; lest seul pour un exercice lesté (le poids du corps n'y est jamais ajouté) ; négative = assistance ; absente = aucune. |
+| `reps` | entier | oui | 0 à 1000 | Répétitions réalisées (par côté pour un exercice unilatéral). |
+| `seconds` | entier | oui | 0 à 86400 | Durée réalisée, en secondes (par côté pour un exercice unilatéral). |
 | `distanceMeters` | nombre | oui | ≥ 0 | Distance réalisée, en mètres. |
 | `calories` | nombre | oui | ≥ 0 | Calories réalisées. |
 | `flames` | entier | oui | 1 à 10 | Note de difficulté de 1 à 10 flammes ; absente = « pas de note ». |
 | `success` | booléen | non | — | La série a atteint sa cible. |
 | `excluded` | booléen | non | — | Série écartée (incident), gardée au journal, ignorée des moteurs. |
-| `side` | `BodySide` | oui | — | Côté travaillé (exercice unilatéral). |
+| `slotId` | texte | oui | — | Emplacement du programme dont vient la série. |
+| `side` | `BodySide` | oui | — | Côté travaillé (exercice unilatéral) : `both` = une série par côté, comptée une fois ; `left` ou `right` = un seul côté. |
 | `target` | `SetTarget` | oui | — | Cible prescrite. |
 
 Invariant : Au moins une mesure parmi `reps`, `seconds`, `distanceMeters`, `calories`.
+
+### `TrainingBreak`
+
+Pause déclarée (vacances, maladie…) : ni manquement ni perte de série.
+
+| Champ | Type | Optionnel | Contraintes | Sens |
+| --- | --- | --- | --- | --- |
+| `startDate` | jour civil | non | — | Premier jour de la pause. |
+| `endDate` | jour civil | oui | — | Dernier jour de la pause (absent : en cours). |
+| `reason` | `BreakReason` | non | — | Motif. |
+
+Invariant : `startDate` ≤ `endDate`.
 
 ### `ProgramRef`
 
@@ -260,7 +298,7 @@ Place d'une séance dans le programme.
 | --- | --- | --- | --- | --- |
 | `blockId` | texte | non | longueur ≥ 1 | Identifiant du bloc. |
 | `weekIndex` | entier | non | ≥ 0 | Semaine dans le bloc (0 = première). |
-| `dayIndex` | entier | non | ≥ 0 | Jour d'entraînement dans la semaine (0 = premier). |
+| `dayIndex` | entier | non | ≥ 0 | Rang du jour dans la semaine du bloc, celui de `DayPrescription.dayIndex` (0 = premier). |
 
 ### `SessionRecord`
 
@@ -276,6 +314,7 @@ Séance du journal. Dates en jours civils.
 | `completed` | booléen | non | — | Séance terminée. |
 | `durationMinutes` | entier | oui | 0 à 600 | Durée de la séance, en minutes. |
 | `bodyWeightKg` | nombre | oui | 25 à 300 | Poids de corps du jour, en kg. |
+| `place` | `Place` | oui | — | Lieu de la séance. |
 | `healthCheck` | `HealthCheck` | oui | — | Bilan santé de début de séance. |
 | `sets` | liste de `SetRecord` | non | — | Séries, dans l'ordre de réalisation. |
 | `pains` | liste de `PainReport` | non | — | Douleurs signalées pendant ou après la séance. |
@@ -288,6 +327,7 @@ Journal de séances.
 | --- | --- | --- | --- | --- |
 | `schemaVersion` | entier | non | ≥ 1 | Version du schéma (1). |
 | `sessions` | liste de `SessionRecord` | non | — | Séances, par date croissante. |
+| `breaks` | liste de `TrainingBreak` | oui | — | Pauses déclarées. |
 
 Invariant : Identifiants de séance uniques ; dates croissantes (au sens large).
 
@@ -351,14 +391,14 @@ Note d'un programme candidat.
 
 ### `Pass1Plan`
 
-Passe 1 : le bloc, ses jours, ses exercices et leurs rôles, sans séries ni répétitions (D4.4).
+Passe 1 : le bloc, ses jours, ses exercices et leurs rôles, sans séries ni répétitions (D4.4). C'est la semaine type du bloc ; la passe 2 fait foi semaine par semaine.
 
 | Champ | Type | Optionnel | Contraintes | Sens |
 | --- | --- | --- | --- | --- |
 | `schemaVersion` | entier | non | ≥ 1 | Version du schéma (1). |
 | `blockId` | texte | non | longueur ≥ 1 | Identifiant du bloc. |
 | `blockIndex` | entier | non | ≥ 0 | Rang du bloc dans le programme (0 = premier). |
-| `weeks` | entier | non | 4 à 6 | Durée du bloc, en semaines (D4.8). |
+| `weeks` | entier | non | 1 à 52 | Durée du bloc, en semaines. `kalis_plan` produit des blocs de 4 à 6 semaines (D4.8) ; un programme importé (celui du propriétaire, D5.10) peut en compter jusqu'à 52. |
 | `startDate` | jour civil | non | — | Premier jour du bloc. |
 | `seed` | entier | non | ≥ 0 | Graine utilisée. |
 | `engineVersion` | texte | non | — | Version de kalis_plan. |
@@ -406,6 +446,8 @@ Changement typé entre deux programmes.
 | `fromExerciseId` | texte | oui | id du catalogue | Exercice avant. |
 | `toExerciseId` | texte | oui | id du catalogue | Exercice après. |
 | `fromDayIndex` | entier | oui | ≥ 0 | Jour d'origine (déplacement). |
+| `fromPrescription` | `ExercisePrescription` | oui | — | Prescription avant (`prescription_changed`). |
+| `toPrescription` | `ExercisePrescription` | oui | — | Prescription après (`prescription_changed`) : appliquer le changement = remplacer la prescription de (`weekIndex`, `dayIndex`, `slotId`) par celle-ci. |
 | `reasons` | liste de `Reason` | non | — | Pourquoi. |
 
 ### `PlanDiff`
@@ -463,14 +505,19 @@ Prescription d'un exercice pour une séance (passe 2, D4.7).
 | `secondsHigh` | entier | oui | 1 à 86400 | Haut de la plage de temps, en secondes. |
 | `distanceMeters` | nombre | oui | ≥ 0 | Distance par série, en mètres. |
 | `calories` | nombre | oui | ≥ 0 | Calories par série. |
-| `targetFlames` | entier | non | 1 à 10 | Flammes visées. |
-| `restSeconds` | entier | non | 0 à 900 | Repos entre les séries, en secondes. |
-| `startLoadKg` | nombre | oui | -300 à 1000 | Charge externe de départ, en kg (prudente). |
+| `targetFlames` | entier | oui | 1 à 10 | Flammes visées (absent : sans cible de difficulté — mobilité, échauffement). |
+| `restSeconds` | entier | oui | 0 à 900 | Repos entre les séries, en secondes (absent : libre). |
+| `startLoadKg` | nombre | oui | -300 à 1000 | Charge externe de départ, en kg (prudente ; même convention que `SetRecord.externalLoadKg`). |
+| `percentOfOneRm` | nombre | oui | 0 à 1.5 | Charge exprimée en part du 1RM de charge totale, de 0 à 1,5 (programme importé, ou repère du moteur). |
 | `toCalibrate` | booléen | non | — | Charge à calibrer sur les premières séances. |
 | `loadBasis` | `LoadBasis` | non | — | Ce que désigne la charge. |
+| `setTargets` | liste de `SetTarget` | oui | — | Cible série par série, quand les séries diffèrent (montée de calibrage, série lourde puis séries allégées) ; sa longueur est `sets`. Absent : toutes les séries suivent la prescription. |
+| `groupId` | texte | oui | — | Groupe d'exercices enchaînés dans la séance (superset, tours, circuit) : même valeur pour les membres du groupe. |
+| `format` | texte | oui | — | Code du format du groupe ou de l'exercice (`superset`, `rounds`, `amrap`, `emom`, `intervals`…). |
+| `kind` | `SetKind` | oui | — | Rôle des séries (absent : travail) ; `test` pour une séance de test. |
 | `reasons` | liste de `Reason` | non | — | Pourquoi. |
 
-Invariant : Une seule famille de mesure : répétitions, temps, distance ou calories ; bornes basses ≤ bornes hautes, renseignées ensemble.
+Invariant : Une seule famille de mesure : répétitions, temps, distance ou calories ; bornes basses ≤ bornes hautes, renseignées ensemble ; `setTargets`, s'il est présent, a `sets` éléments.
 
 ### `DayPrescription`
 
@@ -515,7 +562,7 @@ Bloc de programme complet (passes 1 et 2), stocké par l'application.
 | `pass1` | `Pass1Plan` | non | — | Passe 1. |
 | `pass2` | `Pass2Plan` | non | — | Passe 2. |
 
-Invariant : Même `blockId` ; autant de semaines de passe 2 que `pass1.weeks` ; chaque prescription renvoie à un emplacement de la passe 1.
+Invariant : Même `blockId` ; autant de semaines de passe 2 que `pass1.weeks` ; `slotId` uniques dans une séance ; chaque séance prescrite renvoie à un jour de la passe 1. La passe 2 fait foi : une semaine peut prescrire un autre exercice que la semaine type pour un emplacement (échange en cours de bloc, semaine de test), ou un emplacement propre à cette semaine.
 
 ### `PlanRequest`
 
@@ -566,6 +613,38 @@ Requête de restructuration (D5.1 : le moteur dynamique appelle le statique).
 
 Invariant : Portée `session` ⇒ `dayIndex` renseigné.
 
+### `ReviewRequest`
+
+Requête d'action de revue de la passe 1.
+
+| Champ | Type | Optionnel | Contraintes | Sens |
+| --- | --- | --- | --- | --- |
+| `schemaVersion` | entier | non | ≥ 1 | Version du schéma (1). |
+| `request` | `PlanRequest` | non | — | Requête de création (avec les verrous déjà posés). |
+| `current` | `Pass1Plan` | non | — | Programme en cours de revue. |
+| `action` | `ReviewAction` | non | — | Action de l'utilisateur. |
+
+### `VariantsRequest`
+
+Requête de variantes pour un emplacement.
+
+| Champ | Type | Optionnel | Contraintes | Sens |
+| --- | --- | --- | --- | --- |
+| `schemaVersion` | entier | non | ≥ 1 | Version du schéma (1). |
+| `request` | `PlanRequest` | non | — | Requête de création. |
+| `current` | `Pass1Plan` | non | — | Programme en cours de revue. |
+| `slotId` | texte | non | longueur ≥ 1 | Emplacement. |
+
+### `Pass2Request`
+
+Requête de passe 2.
+
+| Champ | Type | Optionnel | Contraintes | Sens |
+| --- | --- | --- | --- | --- |
+| `schemaVersion` | entier | non | ≥ 1 | Version du schéma (1). |
+| `request` | `PlanRequest` | non | — | Requête de création. |
+| `pass1` | `Pass1Plan` | non | — | Passe 1 validée par l'utilisateur. |
+
 ### `BlockProposal`
 
 Bloc proposé et ce qui change par rapport au précédent.
@@ -585,7 +664,7 @@ Capacité estimée sur un exercice (D5.2).
 | --- | --- | --- | --- | --- |
 | `exerciseId` | texte | non | id du catalogue | Exercice. |
 | `unit` | `CapacityUnit` | non | — | Unité de la capacité. |
-| `capacity` | nombre | non | ≥ 0 | Capacité estimée (1RM de charge totale en kg, répétitions max ou tenue max). |
+| `capacity` | nombre | non | ≥ 0 | Capacité estimée, dans l'unité `unit` (1RM de charge TOTALE en kg, répétitions max, tenue max, vitesse). |
 | `standardError` | nombre | non | ≥ 0 | Écart-type de l'estimation, même unité. |
 | `weeklyTrend` | nombre | non | — | Tendance par semaine, même unité. |
 | `observations` | entier | non | ≥ 0 | Nombre de séries utilisées. |
@@ -644,6 +723,55 @@ Entrée du moteur dynamique.
 | `log` | `TrainingLog` | non | — | Journal complet. |
 | `today` | jour civil | non | — | « Aujourd'hui », fourni par l'application. |
 | `state` | objet JSON | oui | — | État opaque rendu par le dernier appel (propriété de kalis_adapt). |
+| `decisions` | liste de `ProposalDecision` | oui | — | Suites données aux propositions passées (D5.6, D9.2). |
+
+### `SessionRequest`
+
+Requête de prescription de la séance du jour.
+
+| Champ | Type | Optionnel | Contraintes | Sens |
+| --- | --- | --- | --- | --- |
+| `schemaVersion` | entier | non | ≥ 1 | Version du schéma (1). |
+| `input` | `AdaptInput` | non | — | Profil, bloc, journal, « aujourd'hui », état. |
+| `weekIndex` | entier | non | ≥ 0 | Semaine dans le bloc. |
+| `dayIndex` | entier | non | ≥ 0 | Jour d'entraînement. |
+| `healthCheck` | `HealthCheck` | oui | — | Bilan santé du jour (une réponse absente n'est jamais remplacée). |
+| `place` | `Place` | oui | — | Lieu du jour, s'il diffère du lieu prévu. |
+
+### `AdviceRequest`
+
+Requête de conseil pour la série suivante.
+
+| Champ | Type | Optionnel | Contraintes | Sens |
+| --- | --- | --- | --- | --- |
+| `schemaVersion` | entier | non | ≥ 1 | Version du schéma (1). |
+| `input` | `AdaptInput` | non | — | Profil, bloc, journal, « aujourd'hui », état. |
+| `session` | `SessionPlan` | non | — | Séance en cours. |
+| `done` | liste de `SetRecord` | non | — | Séries déjà faites dans la séance, dans l'ordre. |
+| `slotId` | texte | non | longueur ≥ 1 | Emplacement de l'exercice dont on demande la série suivante. |
+
+### `ProposalDecision`
+
+Suite donnée par l'utilisateur (ou par le mode assisté) à une proposition.
+
+| Champ | Type | Optionnel | Contraintes | Sens |
+| --- | --- | --- | --- | --- |
+| `proposalId` | texte | non | longueur ≥ 1 | Proposition concernée. |
+| `date` | jour civil | non | — | Jour de la décision. |
+| `status` | `ProposalStatus` | non | — | Suite donnée. |
+
+### `PersonalRecord`
+
+Record personnel établi sur un exercice.
+
+| Champ | Type | Optionnel | Contraintes | Sens |
+| --- | --- | --- | --- | --- |
+| `exerciseId` | texte | non | id du catalogue | Exercice. |
+| `kind` | `RecordKind` | non | — | Nature du record. |
+| `value` | nombre | non | ≥ 0 | Valeur, dans l'unité de `kind` (charge TOTALE pour `one_rm_kg`). |
+| `date` | jour civil | non | — | Jour du record. |
+| `sessionId` | texte | oui | — | Séance du record. |
+| `previousValue` | nombre | oui | ≥ 0 | Record précédent. |
 
 ### `SessionAdjustment`
 
@@ -685,6 +813,8 @@ Ajustement intra-séance : conseil pour la série suivante.
 | `nextLoadKg` | nombre | oui | -300 à 1000 | Charge externe conseillée, en kg. |
 | `nextRepsLow` | entier | oui | 0 à 1000 | Bas de la plage conseillée. |
 | `nextRepsHigh` | entier | oui | 0 à 1000 | Haut de la plage conseillée. |
+| `nextSeconds` | entier | oui | 0 à 86400 | Durée conseillée, en secondes (tenues). |
+| `slotId` | texte | oui | — | Emplacement concerné. |
 | `restSeconds` | entier | oui | 0 à 900 | Repos conseillé, en secondes. |
 | `confidence` | nombre | non | 0 à 1 | Confiance, de 0 à 1. |
 | `reasons` | liste de `Reason` | non | — | Pourquoi. |
@@ -731,6 +861,7 @@ Résultat d'une revue du moteur dynamique.
 | `proposals` | liste de `Proposal` | non | — | Propositions. |
 | `state` | objet JSON | non | — | État opaque à repasser au prochain appel. |
 | `log` | liste de `EngineLogEntry` | non | — | Entrées de journal du moteur. |
+| `records` | liste de `PersonalRecord` | oui | — | Records personnels établis d'après le journal. |
 
 ## Interface `quest` (kalis_quest, G11)
 
@@ -789,8 +920,8 @@ Rang sur un mouvement (D7.5).
 | --- | --- | --- | --- | --- |
 | `exerciseId` | texte | non | id du catalogue | Mouvement. |
 | `tier` | `MovementRankTier` | non | — | Rang. |
-| `score` | nombre | non | ≥ 0 | Performance normalisée utilisée pour le rang. |
-| `nextTierAt` | nombre | oui | ≥ 0 | Performance du rang suivant. |
+| `score` | nombre | non | ≥ 0 | Performance normalisée utilisée pour le rang (échelle définie et publiée par kalis_quest : standards par sexe et poids de corps). |
+| `nextTierAt` | nombre | oui | ≥ 0 | Performance normalisée du rang suivant, même échelle. |
 
 ### `Quest`
 
@@ -841,8 +972,8 @@ Avancement d'un objectif du profil.
 | Champ | Type | Optionnel | Contraintes | Sens |
 | --- | --- | --- | --- | --- |
 | `goalId` | texte | non | longueur ≥ 1 | Objectif. |
-| `current` | nombre | non | — | Valeur actuelle. |
-| `target` | nombre | non | — | Valeur cible. |
+| `current` | nombre | non | — | Valeur actuelle, dans l'unité de l'objectif (`Goal.metric` ; séances faites pour une habitude). |
+| `target` | nombre | non | — | Valeur cible, même unité. |
 | `fraction` | nombre | non | 0 à 1 | Avancement, de 0 à 1. |
 | `achievedOn` | jour civil | oui | — | Jour d'atteinte. |
 | `milestones` | liste de `Milestone` | non | — | Jalons. |
@@ -895,6 +1026,7 @@ Entrée du moteur de leveling.
 | `adaptation` | `AdaptationSummary` | oui | — | Résumé d'adaptation. |
 | `state` | `QuestState` | non | — | État précédent. |
 | `today` | jour civil | non | — | « Aujourd'hui », fourni par l'application. |
+| `seed` | entier | oui | ≥ 0 | Graine de l'utilisateur pour les tirages (coffres, quêtes du jour) ; le moteur la combine à la date. |
 
 ### `QuestOutcome`
 
@@ -909,6 +1041,10 @@ Résultat du moteur de leveling.
 | `goals` | liste de `GoalProgress` | non | — | Avancement des objectifs. |
 | `events` | liste de `DelightEvent` | non | — | Événements de plaisir nouveaux. |
 | `kreditBalance` | entier | non | ≥ 0 | Solde de Krédits. |
+| `weekStreak` | entier | oui | ≥ 0 | Série de semaines en cours. |
+| `suggestedGoals` | liste de `Goal` | oui | — | Objectifs suggérés par Koach d'après le profil et les données (D3.8), à proposer à l'utilisateur. |
+| `records` | liste de `PersonalRecord` | oui | — | Records personnels connus. |
+| `extras` | objet JSON | oui | — | Données de présentation propres à kalis_quest (récapitulatif hebdomadaire, comparaisons dans le temps, fantôme), documentées par ce paquet. |
 
 ## Énumérations
 
@@ -936,10 +1072,11 @@ Le JSON porte le **code** ; l'ordre des valeurs est celui du contrat.
 | `GuidanceMode` | `assisted`, `free` | Mode assisté ou libre (D3.7, D5.6). |
 | `BodyZone` | `neck`, `shoulder`, `elbow`, `wrist_hand`, `upper_back`, `lower_back`, `chest`, `abdomen`, `hip`, `thigh`, `knee`, `lower_leg`, `ankle_foot` | Zone du corps (blessures, limitations, douleurs). |
 | `BodySide` | `left`, `right`, `both` | Côté du corps. |
-| `LevelMeasure` | `max_reps`, `one_rm_kg`, `max_hold_seconds`, `time_seconds` | Mesure d'un niveau déclaré : répétitions max, 1RM en kg, tenue max, temps sur une distance. |
+| `LevelMeasure` | `max_reps`, `one_rm_kg`, `max_hold_seconds`, `time_seconds` | Mesure d'un niveau déclaré : répétitions max, 1RM de charge externe en kg (lest seul pour un exercice lesté), tenue max, temps sur une distance. |
 | `GoalKind` | `performance`, `habit` | Nature d'un objectif (D3.8). |
 | `GoalOrigin` | `user`, `suggested` | Objectif saisi ou suggéré par Koach. |
-| `GoalMetric` | `one_rm_kg`, `max_reps`, `hold_seconds`, `skill_unlocked`, `time_seconds`, `distance_meters` | Grandeur visée par un objectif de performance. |
+| `GoalMetric` | `one_rm_kg`, `max_reps`, `max_hold_seconds`, `skill_unlocked`, `time_seconds`, `distance_meters` | Grandeur visée par un objectif de performance : 1RM de charge externe en kg, répétitions max (à une charge donnée si `loadKg`), tenue max, figure débloquée, temps sur une distance, distance en une durée. |
+| `ExperienceLevel` | `beginner`, `intermediate`, `advanced`, `elite` | Niveau global d'expérience déclaré (ordre croissant). |
 | `HealthScreeningOutcome` | `standard`, `cautious`, `not_answered` | Résultat du questionnaire santé L13 (référence, aucune réponse n'est copiée). |
 | `SessionOrigin` | `program`, `imported` | Séance du programme, ou reprise de l'ancien journal de l'application. |
 | `SetKind` | `warmup`, `work`, `calibration`, `test` | Rôle d'une série. |
@@ -957,7 +1094,8 @@ Le JSON porte le **code** ; l'ordre des valeurs est celui du contrat.
 | `UnlockLevel` | `loads_reps`, `volume`, `exercise_swap`, `session_restructure`, `block_restructure` | Niveau de déblocage des propositions (D5.7, ordre croissant). |
 | `AdjustmentKind` | `load_reduced`, `sets_reduced`, `exercise_swapped`, `exercise_removed`, `rest_increased`, `load_increased` | Ajustement d'une séance après le bilan santé. |
 | `IntraSessionAction` | `keep`, `load_up`, `load_down`, `reps_up`, `reps_down`, `stop_exercise`, `rest_more` | Conseil pour la série suivante. |
-| `CapacityUnit` | `kg_one_rm`, `reps_max`, `seconds_max` | Unité de la capacité estimée d'un exercice. |
+| `CapacityUnit` | `one_rm_kg`, `max_reps`, `max_hold_seconds`, `meters_per_second` | Unité de la capacité estimée d'un exercice : 1RM de charge TOTALE en kg (charge externe + fraction du poids du corps), répétitions max, tenue max, vitesse. |
+| `ProposalStatus` | `auto_applied`, `accepted`, `refused`, `undone` | Suite donnée à une proposition (D5.6) : appliquée automatiquement, acceptée, refusée, annulée. |
 | `XpSource` | `effort`, `consistency`, `record`, `milestone`, `quest` | Origine d'un gain d'XP (D7.2). |
 | `AthleteAttribute` | `strength`, `endurance`, `power`, `technique`, `mobility`, `consistency` | Attribut façon RPG (D7.5). |
 | `MovementRankTier` | `unranked`, `bronze`, `silver`, `gold`, `platinum`, `diamond`, `elite` | Rang d'un mouvement (ordre croissant). |
@@ -966,7 +1104,8 @@ Le JSON porte le **code** ; l'ordre des valeurs est celui du contrat.
 | `KreditSource` | `quest`, `chest`, `level_up`, `milestone`, `record` | Origine d'un gain de Krédits. |
 | `DelightKind` | `record`, `chest`, `week_streak`, `session_grade`, `combo`, `ghost` | Événement de plaisir (D8.1). |
 | `SessionGrade` | `s`, `a`, `b`, `c` | Note de séance. |
-| `RecordKind` | `one_rm`, `rep_max`, `hold`, `volume`, `time`, `distance` | Nature d'un record. |
+| `RecordKind` | `one_rm_kg`, `max_reps`, `max_hold_seconds`, `volume_kg`, `time_seconds`, `distance_meters` | Nature d'un record (même vocabulaire que les niveaux et les objectifs). |
+| `BreakReason` | `vacation`, `illness`, `injury`, `other` | Motif d'une pause déclarée. |
 
 ## Registre des codes de raison
 

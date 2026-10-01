@@ -18,5 +18,11 @@ export 'src/contracts.dart';
 export 'src/engines.dart';
 export 'src/flames.dart';
 export 'src/json_util.dart'
-    show Violation, checkJson, jsonDeepEquals, jsonDeepHash, jsonListEquals, unset;
+    show
+        Violation,
+        checkJson,
+        jsonDeepEquals,
+        jsonDeepHash,
+        jsonListEquals,
+        unset;
 export 'src/version.dart';

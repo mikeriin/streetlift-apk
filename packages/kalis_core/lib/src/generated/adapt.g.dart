@@ -33,8 +33,8 @@ final class ExerciseEstimate {
   /// Unité de la capacité.
   final CapacityUnit unit;
 
-  /// Capacité estimée (1RM de charge totale en kg, répétitions max ou tenue
-  /// max).
+  /// Capacité estimée, dans l'unité `unit` (1RM de charge TOTALE en kg,
+  /// répétitions max, tenue max, vitesse).
   final double capacity;
 
   /// Écart-type de l'estimation, même unité.
@@ -466,6 +466,7 @@ final class AdaptInput {
     required this.log,
     required this.today,
     this.state,
+    this.decisions,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -478,6 +479,7 @@ final class AdaptInput {
       log: jsonObj(json, 'log', TrainingLog.fromJson),
       today: jsonDate(json, 'today'),
       state: jsonObjectOrNull(json, 'state'),
+      decisions: jsonListOrNull(json, 'decisions', (v) => ProposalDecision.fromJson(jsonAsObject(v, 'decisions'))),
     );
   }
 
@@ -502,6 +504,9 @@ final class AdaptInput {
   /// État opaque rendu par le dernier appel (propriété de kalis_adapt).
   final Map<String, Object?>? state;
 
+  /// Suites données aux propositions passées (D5.6, D9.2).
+  final List<ProposalDecision>? decisions;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -510,7 +515,8 @@ final class AdaptInput {
       'block': block.toJson(),
       'log': log.toJson(),
       'today': today.iso,
-      if (state case final v?) 'state': v,
+      if (state case final v?) 'state': jsonCanonical(v),
+      if (decisions case final v?) 'decisions': [for (final e in v) e.toJson()],
     };
   }
 
@@ -522,6 +528,7 @@ final class AdaptInput {
     TrainingLog? log,
     CivilDate? today,
     Object? state = unset,
+    Object? decisions = unset,
   }) {
     return AdaptInput(
       schemaVersion: schemaVersion ?? this.schemaVersion,
@@ -530,6 +537,7 @@ final class AdaptInput {
       log: log ?? this.log,
       today: today ?? this.today,
       state: identical(state, unset) ? this.state : state as Map<String, Object?>?,
+      decisions: identical(decisions, unset) ? this.decisions : decisions as List<ProposalDecision>?,
     );
   }
 
@@ -547,6 +555,7 @@ final class AdaptInput {
     block.collectViolations('$path.block', out);
     log.collectViolations('$path.log', out);
     if (state case final v?) { checkJson(out, '$path.state', v); }
+    if (decisions case final v?) { for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.decisions[$i]', out); } }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -554,18 +563,413 @@ final class AdaptInput {
     profile.collectExerciseIds(out);
     block.collectExerciseIds(out);
     log.collectExerciseIds(out);
+    for (final e in decisions ?? const <ProposalDecision>[]) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is AdaptInput && schemaVersion == other.schemaVersion && profile == other.profile && block == other.block && log == other.log && today == other.today && jsonDeepEquals(state, other.state);
+    return identical(this, other) || other is AdaptInput && schemaVersion == other.schemaVersion && profile == other.profile && block == other.block && log == other.log && today == other.today && jsonDeepEquals(state, other.state) && jsonDeepEquals(decisions, other.decisions);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[schemaVersion, profile, block, log, today, jsonDeepHash(state)]);
+  int get hashCode => Object.hashAll(<Object?>[schemaVersion, profile, block, log, today, jsonDeepHash(state), jsonDeepHash(decisions)]);
 
   @override
   String toString() => 'AdaptInput(${toJson()})';
+}
+
+/// Requête de prescription de la séance du jour.
+final class SessionRequest {
+  const SessionRequest({
+    this.schemaVersion = currentSchemaVersion,
+    required this.input,
+    required this.weekIndex,
+    required this.dayIndex,
+    this.healthCheck,
+    this.place,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory SessionRequest.fromJson(Map<String, Object?> json) {
+    return SessionRequest(
+      schemaVersion: jsonInt(json, 'schemaVersion'),
+      input: jsonObj(json, 'input', AdaptInput.fromJson),
+      weekIndex: jsonInt(json, 'weekIndex'),
+      dayIndex: jsonInt(json, 'dayIndex'),
+      healthCheck: jsonObjOrNull(json, 'healthCheck', HealthCheck.fromJson),
+      place: jsonEnumOrNull(json, 'place', Place.fromCode),
+    );
+  }
+
+  /// Version courante du schéma JSON de ce type.
+  static const int currentSchemaVersion = 1;
+
+  /// Version du schéma (1).
+  final int schemaVersion;
+
+  /// Profil, bloc, journal, « aujourd'hui », état.
+  final AdaptInput input;
+
+  /// Semaine dans le bloc.
+  final int weekIndex;
+
+  /// Jour d'entraînement.
+  final int dayIndex;
+
+  /// Bilan santé du jour (une réponse absente n'est jamais remplacée).
+  final HealthCheck? healthCheck;
+
+  /// Lieu du jour, s'il diffère du lieu prévu.
+  final Place? place;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'schemaVersion': schemaVersion,
+      'input': input.toJson(),
+      'weekIndex': weekIndex,
+      'dayIndex': dayIndex,
+      if (healthCheck case final v?) 'healthCheck': v.toJson(),
+      if (place case final v?) 'place': v.code,
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  SessionRequest copyWith({
+    int? schemaVersion,
+    AdaptInput? input,
+    int? weekIndex,
+    int? dayIndex,
+    Object? healthCheck = unset,
+    Object? place = unset,
+  }) {
+    return SessionRequest(
+      schemaVersion: schemaVersion ?? this.schemaVersion,
+      input: input ?? this.input,
+      weekIndex: weekIndex ?? this.weekIndex,
+      dayIndex: dayIndex ?? this.dayIndex,
+      healthCheck: identical(healthCheck, unset) ? this.healthCheck : healthCheck as HealthCheck?,
+      place: identical(place, unset) ? this.place : place as Place?,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkRange(out, '$path.schemaVersion', schemaVersion, 1, currentSchemaVersion);
+    input.collectViolations('$path.input', out);
+    checkRange(out, '$path.weekIndex', weekIndex, 0, null);
+    checkRange(out, '$path.dayIndex', dayIndex, 0, null);
+    if (healthCheck case final v?) { v.collectViolations('$path.healthCheck', out); }
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+    input.collectExerciseIds(out);
+    healthCheck?.collectExerciseIds(out);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is SessionRequest && schemaVersion == other.schemaVersion && input == other.input && weekIndex == other.weekIndex && dayIndex == other.dayIndex && healthCheck == other.healthCheck && place == other.place;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[schemaVersion, input, weekIndex, dayIndex, healthCheck, place]);
+
+  @override
+  String toString() => 'SessionRequest(${toJson()})';
+}
+
+/// Requête de conseil pour la série suivante.
+final class AdviceRequest {
+  const AdviceRequest({
+    this.schemaVersion = currentSchemaVersion,
+    required this.input,
+    required this.session,
+    required this.done,
+    required this.slotId,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory AdviceRequest.fromJson(Map<String, Object?> json) {
+    return AdviceRequest(
+      schemaVersion: jsonInt(json, 'schemaVersion'),
+      input: jsonObj(json, 'input', AdaptInput.fromJson),
+      session: jsonObj(json, 'session', SessionPlan.fromJson),
+      done: jsonList(json, 'done', (v) => SetRecord.fromJson(jsonAsObject(v, 'done'))),
+      slotId: jsonString(json, 'slotId'),
+    );
+  }
+
+  /// Version courante du schéma JSON de ce type.
+  static const int currentSchemaVersion = 1;
+
+  /// Version du schéma (1).
+  final int schemaVersion;
+
+  /// Profil, bloc, journal, « aujourd'hui », état.
+  final AdaptInput input;
+
+  /// Séance en cours.
+  final SessionPlan session;
+
+  /// Séries déjà faites dans la séance, dans l'ordre.
+  final List<SetRecord> done;
+
+  /// Emplacement de l'exercice dont on demande la série suivante.
+  final String slotId;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'schemaVersion': schemaVersion,
+      'input': input.toJson(),
+      'session': session.toJson(),
+      'done': [for (final e in done) e.toJson()],
+      'slotId': slotId,
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  AdviceRequest copyWith({
+    int? schemaVersion,
+    AdaptInput? input,
+    SessionPlan? session,
+    List<SetRecord>? done,
+    String? slotId,
+  }) {
+    return AdviceRequest(
+      schemaVersion: schemaVersion ?? this.schemaVersion,
+      input: input ?? this.input,
+      session: session ?? this.session,
+      done: done ?? this.done,
+      slotId: slotId ?? this.slotId,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkRange(out, '$path.schemaVersion', schemaVersion, 1, currentSchemaVersion);
+    input.collectViolations('$path.input', out);
+    session.collectViolations('$path.session', out);
+    for (var i = 0; i < done.length; i++) { done[i].collectViolations('$path.done[$i]', out); }
+    checkLength(out, '$path.slotId', slotId.length, 1, null);
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+    input.collectExerciseIds(out);
+    session.collectExerciseIds(out);
+    for (final e in done) { e.collectExerciseIds(out); }
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is AdviceRequest && schemaVersion == other.schemaVersion && input == other.input && session == other.session && jsonListEquals(done, other.done) && slotId == other.slotId;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[schemaVersion, input, session, Object.hashAll(done), slotId]);
+
+  @override
+  String toString() => 'AdviceRequest(${toJson()})';
+}
+
+/// Suite donnée par l'utilisateur (ou par le mode assisté) à une proposition.
+final class ProposalDecision {
+  const ProposalDecision({
+    required this.proposalId,
+    required this.date,
+    required this.status,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory ProposalDecision.fromJson(Map<String, Object?> json) {
+    return ProposalDecision(
+      proposalId: jsonString(json, 'proposalId'),
+      date: jsonDate(json, 'date'),
+      status: jsonEnum(json, 'status', ProposalStatus.fromCode),
+    );
+  }
+
+  /// Proposition concernée.
+  final String proposalId;
+
+  /// Jour de la décision.
+  final CivilDate date;
+
+  /// Suite donnée.
+  final ProposalStatus status;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'proposalId': proposalId,
+      'date': date.iso,
+      'status': status.code,
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  ProposalDecision copyWith({
+    String? proposalId,
+    CivilDate? date,
+    ProposalStatus? status,
+  }) {
+    return ProposalDecision(
+      proposalId: proposalId ?? this.proposalId,
+      date: date ?? this.date,
+      status: status ?? this.status,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkLength(out, '$path.proposalId', proposalId.length, 1, null);
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is ProposalDecision && proposalId == other.proposalId && date == other.date && status == other.status;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[proposalId, date, status]);
+
+  @override
+  String toString() => 'ProposalDecision(${toJson()})';
+}
+
+/// Record personnel établi sur un exercice.
+final class PersonalRecord {
+  const PersonalRecord({
+    required this.exerciseId,
+    required this.kind,
+    required this.value,
+    required this.date,
+    this.sessionId,
+    this.previousValue,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory PersonalRecord.fromJson(Map<String, Object?> json) {
+    return PersonalRecord(
+      exerciseId: jsonString(json, 'exerciseId'),
+      kind: jsonEnum(json, 'kind', RecordKind.fromCode),
+      value: jsonDouble(json, 'value'),
+      date: jsonDate(json, 'date'),
+      sessionId: jsonStringOrNull(json, 'sessionId'),
+      previousValue: jsonDoubleOrNull(json, 'previousValue'),
+    );
+  }
+
+  /// Exercice.
+  final String exerciseId;
+
+  /// Nature du record.
+  final RecordKind kind;
+
+  /// Valeur, dans l'unité de `kind` (charge TOTALE pour `one_rm_kg`).
+  final double value;
+
+  /// Jour du record.
+  final CivilDate date;
+
+  /// Séance du record.
+  final String? sessionId;
+
+  /// Record précédent.
+  final double? previousValue;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'exerciseId': exerciseId,
+      'kind': kind.code,
+      'value': value,
+      'date': date.iso,
+      if (sessionId case final v?) 'sessionId': v,
+      if (previousValue case final v?) 'previousValue': v,
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  PersonalRecord copyWith({
+    String? exerciseId,
+    RecordKind? kind,
+    double? value,
+    CivilDate? date,
+    Object? sessionId = unset,
+    Object? previousValue = unset,
+  }) {
+    return PersonalRecord(
+      exerciseId: exerciseId ?? this.exerciseId,
+      kind: kind ?? this.kind,
+      value: value ?? this.value,
+      date: date ?? this.date,
+      sessionId: identical(sessionId, unset) ? this.sessionId : sessionId as String?,
+      previousValue: identical(previousValue, unset) ? this.previousValue : previousValue as double?,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkLength(out, '$path.exerciseId', exerciseId.length, 1, null);
+    checkRange(out, '$path.value', value, 0, null);
+    if (previousValue case final v?) { checkRange(out, '$path.previousValue', v, 0, null); }
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+    out.add(exerciseId);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is PersonalRecord && exerciseId == other.exerciseId && kind == other.kind && value == other.value && date == other.date && sessionId == other.sessionId && previousValue == other.previousValue;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[exerciseId, kind, value, date, sessionId, previousValue]);
+
+  @override
+  String toString() => 'PersonalRecord(${toJson()})';
 }
 
 /// Ajustement d'une séance (bilan santé, douleur, temps disponible : D5.9).
@@ -822,6 +1226,8 @@ final class IntraSessionAdvice {
     this.nextLoadKg,
     this.nextRepsLow,
     this.nextRepsHigh,
+    this.nextSeconds,
+    this.slotId,
     this.restSeconds,
     required this.confidence,
     required this.reasons,
@@ -836,6 +1242,8 @@ final class IntraSessionAdvice {
       nextLoadKg: jsonDoubleOrNull(json, 'nextLoadKg'),
       nextRepsLow: jsonIntOrNull(json, 'nextRepsLow'),
       nextRepsHigh: jsonIntOrNull(json, 'nextRepsHigh'),
+      nextSeconds: jsonIntOrNull(json, 'nextSeconds'),
+      slotId: jsonStringOrNull(json, 'slotId'),
       restSeconds: jsonIntOrNull(json, 'restSeconds'),
       confidence: jsonDouble(json, 'confidence'),
       reasons: jsonList(json, 'reasons', (v) => Reason.fromJson(jsonAsObject(v, 'reasons'))),
@@ -857,6 +1265,12 @@ final class IntraSessionAdvice {
   /// Haut de la plage conseillée.
   final int? nextRepsHigh;
 
+  /// Durée conseillée, en secondes (tenues).
+  final int? nextSeconds;
+
+  /// Emplacement concerné.
+  final String? slotId;
+
   /// Repos conseillé, en secondes.
   final int? restSeconds;
 
@@ -874,6 +1288,8 @@ final class IntraSessionAdvice {
       if (nextLoadKg case final v?) 'nextLoadKg': v,
       if (nextRepsLow case final v?) 'nextRepsLow': v,
       if (nextRepsHigh case final v?) 'nextRepsHigh': v,
+      if (nextSeconds case final v?) 'nextSeconds': v,
+      if (slotId case final v?) 'slotId': v,
       if (restSeconds case final v?) 'restSeconds': v,
       'confidence': confidence,
       'reasons': [for (final e in reasons) e.toJson()],
@@ -887,6 +1303,8 @@ final class IntraSessionAdvice {
     Object? nextLoadKg = unset,
     Object? nextRepsLow = unset,
     Object? nextRepsHigh = unset,
+    Object? nextSeconds = unset,
+    Object? slotId = unset,
     Object? restSeconds = unset,
     double? confidence,
     List<Reason>? reasons,
@@ -897,6 +1315,8 @@ final class IntraSessionAdvice {
       nextLoadKg: identical(nextLoadKg, unset) ? this.nextLoadKg : nextLoadKg as double?,
       nextRepsLow: identical(nextRepsLow, unset) ? this.nextRepsLow : nextRepsLow as int?,
       nextRepsHigh: identical(nextRepsHigh, unset) ? this.nextRepsHigh : nextRepsHigh as int?,
+      nextSeconds: identical(nextSeconds, unset) ? this.nextSeconds : nextSeconds as int?,
+      slotId: identical(slotId, unset) ? this.slotId : slotId as String?,
       restSeconds: identical(restSeconds, unset) ? this.restSeconds : restSeconds as int?,
       confidence: confidence ?? this.confidence,
       reasons: reasons ?? this.reasons,
@@ -916,6 +1336,7 @@ final class IntraSessionAdvice {
     if (nextLoadKg case final v?) { checkRange(out, '$path.nextLoadKg', v, -300, 1000); }
     if (nextRepsLow case final v?) { checkRange(out, '$path.nextRepsLow', v, 0, 1000); }
     if (nextRepsHigh case final v?) { checkRange(out, '$path.nextRepsHigh', v, 0, 1000); }
+    if (nextSeconds case final v?) { checkRange(out, '$path.nextSeconds', v, 0, 86400); }
     if (restSeconds case final v?) { checkRange(out, '$path.restSeconds', v, 0, 900); }
     checkRange(out, '$path.confidence', confidence, 0, 1);
     for (var i = 0; i < reasons.length; i++) { reasons[i].collectViolations('$path.reasons[$i]', out); }
@@ -929,11 +1350,11 @@ final class IntraSessionAdvice {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is IntraSessionAdvice && exerciseId == other.exerciseId && action == other.action && nextLoadKg == other.nextLoadKg && nextRepsLow == other.nextRepsLow && nextRepsHigh == other.nextRepsHigh && restSeconds == other.restSeconds && confidence == other.confidence && jsonListEquals(reasons, other.reasons);
+    return identical(this, other) || other is IntraSessionAdvice && exerciseId == other.exerciseId && action == other.action && nextLoadKg == other.nextLoadKg && nextRepsLow == other.nextRepsLow && nextRepsHigh == other.nextRepsHigh && nextSeconds == other.nextSeconds && slotId == other.slotId && restSeconds == other.restSeconds && confidence == other.confidence && jsonListEquals(reasons, other.reasons);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[exerciseId, action, nextLoadKg, nextRepsLow, nextRepsHigh, restSeconds, confidence, Object.hashAll(reasons)]);
+  int get hashCode => Object.hashAll(<Object?>[exerciseId, action, nextLoadKg, nextRepsLow, nextRepsHigh, nextSeconds, slotId, restSeconds, confidence, Object.hashAll(reasons)]);
 
   @override
   String toString() => 'IntraSessionAdvice(${toJson()})';
@@ -1145,7 +1566,7 @@ final class EngineLogEntry {
       'event': event,
       if (confidence case final v?) 'confidence': v,
       'reasons': [for (final e in reasons) e.toJson()],
-      'data': data,
+      'data': jsonCanonical(data),
     };
   }
 
@@ -1211,6 +1632,7 @@ final class AdaptReview {
     required this.proposals,
     required this.state,
     required this.log,
+    this.records,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1221,6 +1643,7 @@ final class AdaptReview {
       proposals: jsonList(json, 'proposals', (v) => Proposal.fromJson(jsonAsObject(v, 'proposals'))),
       state: jsonObject(json, 'state'),
       log: jsonList(json, 'log', (v) => EngineLogEntry.fromJson(jsonAsObject(v, 'log'))),
+      records: jsonListOrNull(json, 'records', (v) => PersonalRecord.fromJson(jsonAsObject(v, 'records'))),
     );
   }
 
@@ -1236,13 +1659,17 @@ final class AdaptReview {
   /// Entrées de journal du moteur.
   final List<EngineLogEntry> log;
 
+  /// Records personnels établis d'après le journal.
+  final List<PersonalRecord>? records;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
       'summary': summary.toJson(),
       'proposals': [for (final e in proposals) e.toJson()],
-      'state': state,
+      'state': jsonCanonical(state),
       'log': [for (final e in log) e.toJson()],
+      if (records case final v?) 'records': [for (final e in v) e.toJson()],
     };
   }
 
@@ -1252,12 +1679,14 @@ final class AdaptReview {
     List<Proposal>? proposals,
     Map<String, Object?>? state,
     List<EngineLogEntry>? log,
+    Object? records = unset,
   }) {
     return AdaptReview(
       summary: summary ?? this.summary,
       proposals: proposals ?? this.proposals,
       state: state ?? this.state,
       log: log ?? this.log,
+      records: identical(records, unset) ? this.records : records as List<PersonalRecord>?,
     );
   }
 
@@ -1274,6 +1703,7 @@ final class AdaptReview {
     for (var i = 0; i < proposals.length; i++) { proposals[i].collectViolations('$path.proposals[$i]', out); }
     checkJson(out, '$path.state', state);
     for (var i = 0; i < log.length; i++) { log[i].collectViolations('$path.log[$i]', out); }
+    if (records case final v?) { for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.records[$i]', out); } }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -1281,15 +1711,16 @@ final class AdaptReview {
     summary.collectExerciseIds(out);
     for (final e in proposals) { e.collectExerciseIds(out); }
     for (final e in log) { e.collectExerciseIds(out); }
+    for (final e in records ?? const <PersonalRecord>[]) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is AdaptReview && summary == other.summary && jsonListEquals(proposals, other.proposals) && jsonDeepEquals(state, other.state) && jsonListEquals(log, other.log);
+    return identical(this, other) || other is AdaptReview && summary == other.summary && jsonListEquals(proposals, other.proposals) && jsonDeepEquals(state, other.state) && jsonListEquals(log, other.log) && jsonDeepEquals(records, other.records);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[summary, Object.hashAll(proposals), jsonDeepHash(state), Object.hashAll(log)]);
+  int get hashCode => Object.hashAll(<Object?>[summary, Object.hashAll(proposals), jsonDeepHash(state), Object.hashAll(log), jsonDeepHash(records)]);
 
   @override
   String toString() => 'AdaptReview(${toJson()})';

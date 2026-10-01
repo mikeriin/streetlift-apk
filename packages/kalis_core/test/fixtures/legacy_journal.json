@@ -354,7 +354,7 @@
       "sets": [
        {
         "kg": "100",
-        "reps": "10",
+        "reps": "",
         "rir": "",
         "v": "",
         "done": true,
@@ -1569,8 +1569,7 @@
     "completed": true,
     "healthCheck": {
      "overall": 4,
-     "sleepHours": 6.5,
-     "pains": []
+     "sleepHours": 6.5
     },
     "sets": [
      {
@@ -1707,18 +1706,8 @@
     "completed": true,
     "sets": [
      {
-      "exerciseId": "sl-squat-competition",
-      "exerciseOrder": 0,
-      "setIndex": 0,
-      "kind": "work",
-      "externalLoadKg": 100.0,
-      "reps": 10,
-      "success": true,
-      "excluded": false
-     },
-     {
       "exerciseId": "mu-hollow-body-hold",
-      "exerciseOrder": 1,
+      "exerciseOrder": 0,
       "setIndex": 0,
       "kind": "work",
       "externalLoadKg": 10.0,
@@ -1729,7 +1718,7 @@
      },
      {
       "exerciseId": "mu-hollow-body-hold",
-      "exerciseOrder": 1,
+      "exerciseOrder": 0,
       "setIndex": 1,
       "kind": "work",
       "externalLoadKg": 10.0,
@@ -1740,7 +1729,7 @@
      },
      {
       "exerciseId": "mu-hollow-body-hold",
-      "exerciseOrder": 1,
+      "exerciseOrder": 0,
       "setIndex": 2,
       "kind": "work",
       "externalLoadKg": 10.0,
@@ -1750,7 +1739,7 @@
      },
      {
       "exerciseId": "mu-pallof-press-debout",
-      "exerciseOrder": 2,
+      "exerciseOrder": 1,
       "setIndex": 0,
       "kind": "work",
       "externalLoadKg": 10.0,
@@ -1760,7 +1749,7 @@
      },
      {
       "exerciseId": "mu-pallof-press-debout",
-      "exerciseOrder": 2,
+      "exerciseOrder": 1,
       "setIndex": 1,
       "kind": "work",
       "externalLoadKg": 10.0,
@@ -1771,7 +1760,7 @@
      },
      {
       "exerciseId": "mu-pallof-press-debout",
-      "exerciseOrder": 2,
+      "exerciseOrder": 1,
       "setIndex": 2,
       "kind": "work",
       "externalLoadKg": 10.0,
@@ -1781,7 +1770,7 @@
      },
      {
       "exerciseId": "mo-routine-mobilite-epaules-poignets",
-      "exerciseOrder": 3,
+      "exerciseOrder": 2,
       "setIndex": 0,
       "kind": "work",
       "externalLoadKg": 10.0,
@@ -2293,8 +2282,7 @@
     "resume": false,
     "completed": true,
     "healthCheck": {
-     "sleepHours": 7.5,
-     "pains": []
+     "sleepHours": 7.5
     },
     "sets": [
      {
@@ -2536,9 +2524,10 @@
   "sessionsConverted": 11,
   "manualSessionsDropped": 1,
   "emptySessionsDropped": 1,
-  "setsConverted": 92,
+  "setsConverted": 91,
   "setsNotDone": 1,
   "setsUnmappedExercise": 4,
+  "setsWithoutMeasure": 1,
   "unmappedExerciseNames": [
    "HIIT court",
    "BILAN — report des résultats",

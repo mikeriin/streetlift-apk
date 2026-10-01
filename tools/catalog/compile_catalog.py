@@ -168,11 +168,12 @@ def compiler(base: dict, sha256: str) -> dict:
 
     # Prérequis (paliers conseillés avant l'exercice) :
     # - hors lest : jusqu'à deux exercices de la même famille `variante_de`,
-    #   de difficulté strictement inférieure, les plus proches d'abord ;
+    #   de difficulté strictement inférieure : les ancêtres d'abord (du
+    #   parent vers la racine), puis les plus proches en difficulté ;
     # - lest : l'exercice au poids du corps non assisté de la même famille de
     #   mouvement le plus proche (cosinus des vecteurs musculaires + 0,5 si
     #   même schéma + 0,2 × recouvrement du matériel hors lest + 0,6 si le
-    #   nom commence par le même mot), de
+    #   nom commence par le même mot + 0,3 si même latéralité), de
     #   difficulté inférieure ou égale ; une racine de chaîne est préférée
     #   si son score atteint 85 % du meilleur. Les variantes lestées d'un
     #   même mouvement ne sont pas des paliers les unes des autres.
@@ -200,7 +201,9 @@ def compiler(base: dict, sha256: str) -> dict:
                 jaccard = len(mat_i & mat_j) / len(mat_i | mat_j)
                 meme_schema = 1.0 if calc[j]["schema"] == c["schema"] else 0.0
                 meme_mot = 0.6 if rules.norm(par_id[j]["nom"]).split()[0] == premier_mot else 0.0
-                return rules.cosinus(vecteurs[i], vecteurs[j]) + 0.5 * meme_schema + 0.2 * jaccard + meme_mot
+                meme_cote = 0.3 if calc[j]["lateralite"] == c["lateralite"] else 0.0
+                return (rules.cosinus(vecteurs[i], vecteurs[j]) + 0.5 * meme_schema + 0.2 * jaccard
+                        + meme_mot + meme_cote)
 
             sc = {j: score(j) for j in candidats}
             candidats.sort(key=lambda j: (-round(sc[j], 3), -calc[j]["difficulte"], j))
@@ -209,8 +212,15 @@ def compiler(base: dict, sha256: str) -> dict:
                 candidats = racines
             c["prerequis"] = candidats[:1]
         else:
+            ancetres = []
+            a = parents[i]
+            while a is not None:
+                ancetres.append(a)
+                a = parents[a]
             plus_faciles = [j for j in familles[c["racine"]] if calc[j]["difficulte"] < c["difficulte"]]
-            plus_faciles.sort(key=lambda j: (-calc[j]["difficulte"], calc[j]["assiste"], j))
+            plus_faciles.sort(key=lambda j: (
+                ancetres.index(j) if j in ancetres else len(ancetres),
+                -calc[j]["difficulte"], calc[j]["assiste"], j))
             c["prerequis"] = plus_faciles[:2]
 
     return {

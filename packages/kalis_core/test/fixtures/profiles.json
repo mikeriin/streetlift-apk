@@ -66,6 +66,7 @@
     "limitations": [],
     "likedExerciseIds": [],
     "dislikedExerciseIds": [],
+    "experience": "beginner",
     "guidanceMode": "assisted",
     "healthScreening": {
      "questionnaireId": "kalis-sante-l13-v1",
@@ -301,7 +302,8 @@
     "availability": [
      {
       "weekday": 2,
-      "minutes": 45
+      "minutes": 45,
+      "place": "maison"
      },
      {
       "weekday": 4,
@@ -309,7 +311,8 @@
      },
      {
       "weekday": 7,
-      "minutes": 75
+      "minutes": 75,
+      "place": "exterieur"
      }
     ],
     "places": [
@@ -323,10 +326,28 @@
      "corde à sauter",
      "élastique"
     ],
+    "equipmentByPlace": [
+     {
+      "place": "exterieur",
+      "equipment": [
+       "piste ou terrain extérieur",
+       "côte ou escaliers"
+      ]
+     },
+     {
+      "place": "maison",
+      "equipment": [
+       "tapis",
+       "corde à sauter",
+       "élastique"
+      ]
+     }
+    ],
     "loadIncrements": [],
     "limitations": [],
     "likedExerciseIds": [],
     "dislikedExerciseIds": [],
+    "experience": "intermediate",
     "guidanceMode": "assisted",
     "healthScreening": {
      "questionnaireId": "kalis-sante-l13-v1",
@@ -548,7 +569,7 @@
       "origin": "user",
       "createdOn": "2026-10-01",
       "exerciseId": "cs-front-lever",
-      "metric": "hold_seconds",
+      "metric": "max_hold_seconds",
       "targetValue": 5.0,
       "targetDate": "2027-09-01"
      },
@@ -943,7 +964,7 @@
       "origin": "user",
       "createdOn": "2026-10-01",
       "exerciseId": "cs-handstand",
-      "metric": "hold_seconds",
+      "metric": "max_hold_seconds",
       "targetValue": 30.0,
       "targetDate": "2027-06-01"
      }
@@ -1339,6 +1360,7 @@
     "limitations": [],
     "likedExerciseIds": [],
     "dislikedExerciseIds": [],
+    "experience": "advanced",
     "guidanceMode": "free",
     "healthScreening": {
      "questionnaireId": "kalis-sante-l13-v1",
@@ -1643,6 +1665,14 @@
     ],
     "likedExerciseIds": [],
     "dislikedExerciseIds": [],
+    "knownExerciseIds": [
+     "cd-muscle-up-barre-strict",
+     "sw-traction-chest-to-bar"
+    ],
+    "cannotDoExerciseIds": [
+     "cs-front-lever"
+    ],
+    "experience": "advanced",
     "guidanceMode": "free",
     "healthScreening": {
      "questionnaireId": "kalis-sante-l13-v1",
@@ -2683,7 +2713,7 @@
       "origin": "user",
       "createdOn": "2026-10-01",
       "exerciseId": "cs-planche",
-      "metric": "hold_seconds",
+      "metric": "max_hold_seconds",
       "targetValue": 5.0,
       "targetDate": "2027-12-01"
      }

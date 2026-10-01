@@ -52,12 +52,21 @@ Chaque moteur est une classe qui réalise une interface de `kalis_core` :
 
 ```dart
 final PlanEngine plan = KalisPlan();        // kalis_plan (G4)
-final pass1 = plan.createPass1(catalog, PlanRequest(profile: p, seed: 0, startDate: today, locks: const []));
+final request = PlanRequest(profile: p, seed: 0, startDate: today, locks: const []);
+final pass1 = plan.createPass1(catalog, request);
+final after = plan.review(catalog, ReviewRequest(request: request, current: pass1, action: action));
+final pass2 = plan.createPass2(catalog, Pass2Request(request: request, pass1: after.plan));
 ```
 
 - Tout ce qui vient d'un moteur se stocke par `toJson()` et se relit par `fromJson()`.
 - `AdaptInput.state` (rendu par `AdaptReview.state`) et `QuestState` sont à stocker et à repasser tels
   quels ; l'application ne les interprète pas.
+- Après une revue, reporte `ReviewResult.profileDelta` dans le profil (`knownExerciseIds`,
+  `cannotDoExerciseIds`, aimés, détestés) et repasse `ReviewResult.locks` dans la requête suivante.
+- Chaque suite donnée à une proposition (appliquée, acceptée, refusée, annulée) s'ajoute à
+  `AdaptInput.decisions`.
+- Programme du propriétaire (D5.10) : présente-le au moteur dynamique comme un `ProgramBlock` importé
+  de 40 semaines (CONTRAT.md §6) ; aucun moteur ne le régénère.
 - Les raisons (`Reason`) se rendent en phrases par `kalis_koach` : code → modèle de phrase, paramètres
   → valeurs. Un code inconnu de l'application s'affiche avec un texte générique (ne plante jamais).
 - Test de contrat à écrire dans l'application pour chaque intégration : sérialise la requête et la
