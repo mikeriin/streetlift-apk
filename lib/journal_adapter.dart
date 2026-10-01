@@ -198,6 +198,33 @@ String _civil(DateTime d) =>
     sessions.add(out);
     report.sessionsConverted++;
   }
+  // G7 (D4.9) : séances marquées « reprise » par « Où j'en suis », sans
+  // journal : neutres, signalées aux moteurs (`resume`), sans série.
+  final resume = (doc['programResume'] as Map?)?['keys'];
+  if (resume is List) {
+    for (final k in resume) {
+      final m = k is String ? key.firstMatch(k) : null;
+      if (m == null || logs.containsKey(k)) continue;
+      final w = int.parse(m[1]!), j = int.parse(m[2]!);
+      sessions.add({
+        'id': 'resume-$k',
+        'date': _civil(
+          startDate != null
+              ? DateTime(
+                  startDate.year,
+                  startDate.month,
+                  startDate.day + (w - 1) * 7 + j - 1,
+                )
+              : legacyDate(w, j),
+        ),
+        'origin': 'program',
+        'resume': true,
+        'completed': false,
+        'sets': const <Object?>[],
+        'pains': const <Object?>[],
+      });
+    }
+  }
   sessions.sort((a, b) {
     final c = (a['date'] as String).compareTo(b['date'] as String);
     return c != 0 ? c : (a['id'] as String).compareTo(b['id'] as String);

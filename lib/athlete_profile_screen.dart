@@ -11,6 +11,7 @@ import 'athlete_profile.dart';
 import 'athlete_profile_flow.dart';
 import 'koach/koach_bubble.dart';
 import 'koach/koach_view.dart';
+import 'plan/plan_screens.dart' show openPlanCreation;
 import 'program_explainer.dart';
 import 'program_start.dart' show longCivilDate;
 import 'store.dart';
@@ -149,9 +150,8 @@ class ProfileScreen extends StatelessWidget {
                       : KoachPose.present,
                   text: a.programChangePending
                       ? 'Tu as changé des choses qui touchent ton programme. '
-                            'Je le referai avec toi dès que la création du '
-                            'programme sera prête ; en attendant, il ne change '
-                            'pas.'
+                            'On peut le refaire ensemble dans Réglages › Mon '
+                            'programme ; en attendant, il ne change pas.'
                       : 'Touche une rubrique pour la modifier. Si un '
                             'changement touche ton programme, je te le dirai.',
                 ),
@@ -277,15 +277,29 @@ class ProfileScreen extends StatelessWidget {
     );
     if (res == null || !context.mounted) return;
     if (res.program) {
-      await showKoachSheet<void>(
+      final redo = await showKoachSheet<bool>(
         context,
         pose: KoachPose.settings,
         title: 'Ton programme',
         text:
-            'Ce changement touche ton programme. Je le referai avec toi dès '
-            'que la création du programme sera prête (prochaine version). '
-            'En attendant, ton programme actuel ne change pas.',
+            'Ce changement touche ton programme. On le refait ensemble ? Ton '
+            'programme actuel ne change pas tant que tu n’as pas validé le '
+            'nouveau.',
+        actions: [
+          KoachBubbleAction(
+            'Créer un nouveau programme',
+            () => Navigator.of(context).pop(true),
+            primary: true,
+            key: const ValueKey('profile-program-redo'),
+          ),
+          KoachBubbleAction(
+            'Plus tard',
+            () => Navigator.of(context).pop(false),
+            key: const ValueKey('profile-program-later'),
+          ),
+        ],
       );
+      if (redo == true && context.mounted) await openPlanCreation(context);
     } else if (res.rubrics.isNotEmpty) {
       showKoachToast(context, 'Profil enregistré.');
     }

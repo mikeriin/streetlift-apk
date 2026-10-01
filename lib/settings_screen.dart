@@ -21,10 +21,10 @@ import 'store_widget.dart';
 import 'dev/dev_flags.dart';
 
 /// Version de l'application (pubspec sans le numéro de build).
-const kVersion = '6.4.1';
+const kVersion = '6.5.0';
 
-/// Version affichée (D0.9) : « dev6.4.1 » dans le build de développement
-/// (APK du propriétaire), « 6.4.1 » dans l’AAB du Play Store.
+/// Version affichée (D0.9) : « dev6.5.0 » dans le build de développement
+/// (APK du propriétaire), « 6.5.0 » dans l’AAB du Play Store.
 const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;
 
 class SettingsScreen extends StatelessWidget {
@@ -334,14 +334,18 @@ class SettingsScreen extends StatelessWidget {
               MaterialPageRoute<void>(builder: (_) => const ProfileScreen()),
             ),
           ),
-          // L10 : programme personnalisé (KT-050 à KT-057).
+          // G7 : programme créé avec Koach (kalis_plan), où j'en suis.
           _Action(
             key: const ValueKey('settings-program'),
             icon: Icons.auto_awesome_outlined,
             color: SL.accent,
             title: 'Mon programme',
-            subtitle: store.programGenerated
+            subtitle: PlanStore(store).programPlanned
+                ? 'Créé avec Koach · où j’en suis, nouveau programme'
+                : store.programGenerated
                 ? 'Personnalisé · ${store.programSummary['modelLabel'] ?? ''}'
+                : store.athlete != null && store.program.start == null
+                ? 'À créer avec Koach'
                 : 'Expert streetlifting (40 semaines)',
             onTap: () => Navigator.push(
               context,

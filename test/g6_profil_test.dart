@@ -658,7 +658,7 @@ void main() {
       expect(seen, kAthleteSteps.toSet());
       expect(find.byKey(const ValueKey('flow-done')), findsOneWidget);
       expect(
-        find.textContaining('Ton programme arrive bientôt'),
+        find.textContaining('Ton profil est prêt'),
         findsOneWidget,
       );
       final p = store.athleteProfile!;

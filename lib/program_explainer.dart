@@ -1,13 +1,15 @@
 // G6 correction 1 : Koach explique comment le programme est créé puis géré
 // (D4, D5, D6.4), et l'accueil d'un nouveau profil sans programme n'affiche
 // plus le programme de 40 semaines embarqué en attendant la création du
-// programme (G7). Textes sans promesse de résultat (règles L13).
+// programme (G7). Textes sans promesse de résultat (règles L13). G7 : la
+// vue d'attente propose de créer le programme.
 import 'package:flutter/material.dart';
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
 import 'app_theme.dart';
 import 'koach/koach_bubble.dart';
 import 'koach/koach_view.dart';
+import 'plan/plan_screens.dart' show openPlanCreation;
 import 'store.dart';
 import 'ui.dart';
 
@@ -151,9 +153,13 @@ class ProgramExplainerButton extends StatelessWidget {
 /// Nouveau profil sans programme : rien du programme embarqué de 40
 /// semaines n'est affiché tant que le programme n'est pas créé (G7).
 bool programPendingFor(AppStore s) =>
-    s.athlete != null && s.program.start == null && !s.programGenerated;
+    s.athlete != null &&
+    s.program.start == null &&
+    !s.programGenerated &&
+    s.planProgram == null;
 
-/// Onglet Programme d'un nouveau profil, en attendant son programme.
+/// Onglet Programme d'un nouveau profil, en attendant son programme : Koach
+/// propose de le créer (G7).
 class ProgramPendingView extends StatelessWidget {
   const ProgramPendingView({super.key});
 
@@ -172,13 +178,21 @@ class ProgramPendingView extends StatelessWidget {
         KoachSurface(
           color: SL.bg,
           child: const KoachBubble(
-            pose: KoachPose.present,
+            pose: KoachPose.checklist,
             koachHeight: 120,
             text:
-                'Ton profil est prêt. Ton programme arrive bientôt : je le '
-                'construirai avec toi, à partir de ton profil, dans la '
-                'prochaine version de l’application.',
+                'Ton profil est prêt. On crée ton programme ensemble : '
+                'd’abord les exercices de chaque séance, puis les séries et '
+                'les charges.',
           ),
+        ),
+        FilledButton.icon(
+          key: const ValueKey('program-pending-create'),
+          icon: const Icon(Icons.auto_awesome_outlined),
+          label: const Text('Créer mon programme'),
+          onPressed: PlanStore(store).planCanCreate
+              ? () => openPlanCreation(context)
+              : null,
         ),
         const ProgramExplainerButton(),
       ],

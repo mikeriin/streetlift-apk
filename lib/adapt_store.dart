@@ -866,6 +866,10 @@ extension AdaptStore on AppStore {
         if (l != null &&
             (l.done || l.ex.values.any((x) => x.sets.any((s) => s.done)))) {
           done.add(o);
+        } else if (PlanStore(this).isResume(w.n, d.j)) {
+          // G7 (D4.9) : séance « reprise » (Où j'en suis) : ni faite ni en
+          // retard ; le plan ne glisse pas à cause d'elle.
+          done.add(o);
         }
       }
     }

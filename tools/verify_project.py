@@ -79,13 +79,10 @@ def verify(root=ROOT, signing=False):
     for i, e in poses['exercices'].items():
         assert i in v2_ids and (e['statut'] == 'indisponible' or e['gabarit'] in poses['gabarits']), i
     assert (root / 'assets/content/licences.md').is_file(), 'Mentions absentes'
-    # L10 (KT-052) : modèles de périodisation du générateur (données versionnées).
-    models = json.loads((root / 'assets/program_models.json').read_text(encoding='utf-8'))
-    assert models['schema'] == 1, 'Schéma des modèles inconnu'
-    assert {'linear', 'undulating', 'block', 'health', 'expert_streetlifting'} <= set(models['models']), 'Modèle manquant'
-    assert len(models['volume']['start']) == 5, 'Volumes de départ incomplets'
-    assert all(len(models['levels'][k]) == 4 for k in ('pushups', 'pullups', 'squatRatio')), 'Seuils de niveau incomplets'
-    assert 'assets/program_models.json' in (root / 'pubspec.yaml').read_text(encoding='utf-8'), 'Modèles non déclarés'
+    # G7 : générateur L10 et ses modèles retirés (kalis_plan les remplace).
+    assert not (root / 'assets/program_models.json').exists(), 'Modèles L10 encore présents'
+    assert 'program_models.json' not in (root / 'pubspec.yaml').read_text(encoding='utf-8'), 'Modèles L10 encore déclarés'
+    assert 'kalis_plan' in (root / 'pubspec.yaml').read_text(encoding='utf-8'), 'kalis_plan non déclaré'
     for path in (root / 'android/app/src/main/res').rglob('*.xml'):
         ET.parse(path)
     manifest = ET.parse(root / 'android/app/src/main/AndroidManifest.xml')

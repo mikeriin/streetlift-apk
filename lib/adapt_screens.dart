@@ -12,7 +12,7 @@ import 'app_theme.dart';
 import 'koach/koach_bubble.dart';
 import 'koach_adapt.dart';
 import 'models.dart';
-import 'program_generator.dart' show GenCatalog, GenExercise;
+import 'legacy_pack.dart' show GenCatalog, GenExercise;
 import 'store.dart';
 import 'ui.dart';
 

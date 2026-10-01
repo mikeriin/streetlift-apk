@@ -305,6 +305,7 @@ class _HomeScreenState extends State<HomeScreen> {
         isToday: d.j == today,
         done: store.isDone(w.n, d.j),
         inProgress: store.inProgress(store.sessionKey(w.n, d.j)),
+        resume: PlanStore(store).isResume(w.n, d.j),
         onOpen: () => _open(w, d),
         onSummary: () => _summary(w, d),
       );
@@ -685,6 +686,9 @@ class _DayCard extends StatelessWidget {
   final WeekPlan week;
   final DayPlan day;
   final bool isToday, done, inProgress;
+
+  /// G7 (D4.9) : séance marquée « reprise » par « Où j'en suis » (neutre).
+  final bool resume;
   final VoidCallback onOpen, onSummary;
   const _DayCard({
     required this.week,
@@ -692,6 +696,7 @@ class _DayCard extends StatelessWidget {
     required this.isToday,
     required this.done,
     this.inProgress = false,
+    this.resume = false,
     required this.onOpen,
     required this.onSummary,
   });
@@ -707,6 +712,8 @@ class _DayCard extends StatelessWidget {
         ? 'Séance effectuée'
         : inProgress
         ? 'Séance en cours'
+        : resume
+        ? 'Reprise : séance neutre'
         : 'Séance à faire';
     final statusColor = done
         ? (isToday ? SL.onBrandSoft : SL.success)
@@ -718,6 +725,8 @@ class _DayCard extends StatelessWidget {
           ? Icons.check_circle_rounded
           : inProgress
           ? Icons.timelapse_rounded
+          : resume
+          ? Icons.fast_forward_rounded
           : Icons.radio_button_unchecked_rounded,
       key: ValueKey('day-status-${day.j}'),
       semanticLabel: status,
@@ -726,13 +735,17 @@ class _DayCard extends StatelessWidget {
     );
     // L5 : une séance commencée est écrite, pas seulement signalée par
     // l'icône (fait / à faire restent des icônes, lues par TalkBack).
-    final statusIcon = inProgress && !done
+    final statusIcon = (inProgress || resume) && !done
         ? Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'En cours',
-                key: ValueKey('day-in-progress-${day.j}'),
+                inProgress ? 'En cours' : 'Reprise',
+                key: ValueKey(
+                  inProgress
+                      ? 'day-in-progress-${day.j}'
+                      : 'day-resume-${day.j}',
+                ),
                 style: TextStyle(
                   color: statusColor,
                   fontSize: 12,

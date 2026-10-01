@@ -1,83 +1,40 @@
-// Écrans du programme personnalisé (L10, KT-050 à KT-057) : « Mon
-// programme » (modèle et explication, niveaux par mouvement, répartition,
-// volume, régénération), aperçu « ce qui change » avant validation,
-// annulation pendant 7 jours, carte de l'accueil quand le profil a changé.
+// Réglages › Mon programme (G7, D4) : programme en place (créé avec Koach
+// par `kalis_plan`, programme de 40 semaines du propriétaire, ou ancien
+// programme L10 affiché tel quel), « Créer un nouveau programme », « Où
+// j'en suis », retour à l'ancien programme (7 jours), bloc suivant, et en
+// session de test l'inspecteur et le journal du moteur. Carte de l'accueil
+// (ProgramHomeCard) : « Où en es-tu ? », fin de bloc, retour possible.
+//
+// L10 (générateur, aperçu « ce qui change », régénération) est retiré par
+// G7 : `kalis_plan` le remplace (D1.4).
 import 'package:flutter/material.dart';
+import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
 import 'app_theme.dart';
 import 'athlete_profile_screen.dart' show ProfileScreen;
+import 'dev/dev_flags.dart';
+import 'dev/dev_session.dart' show DevShare;
 import 'koach/koach_bubble.dart';
-import 'program_generator.dart';
+import 'plan/plan_inspector.dart';
+import 'plan/plan_screens.dart';
+import 'plan/plan_texts.dart';
+import 'plan/program_position.dart';
+import 'session_prefs.dart' show SessionSpace;
 import 'store.dart';
 import 'ui.dart';
-
-const _sourceLabels = {
-  'measured': 'mesuré',
-  'estimated': 'estimé',
-  'calibrated': 'calibrage',
-  'default': 'par défaut',
-};
-
-const _splitChoices = [
-  ('auto', 'Koach décide'),
-  ('fullbody', 'Corps entier'),
-  ('upper_lower', 'Haut / bas'),
-  ('ppl', 'Poussée / tirage / jambes'),
-];
-
-const _focusChoices = [
-  ('pullups', 'Tractions'),
-  ('pushups', 'Pompes'),
-  ('dips', 'Dips'),
-  ('squats', 'Squats'),
-];
-
-const _weekdayNames = ['lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.', 'dim.'];
 
 const _templateExplain =
     'Le programme de 40 semaines du créateur de Kalis Track (v3.3, révisions '
     'LC1 comprises), repris à l’identique : blocs, décharges et tests.';
 
-/// Ouvre l'aperçu d'une (ré)génération, puis l'applique si l'utilisateur
-/// valide. Renvoie vrai si le programme a changé.
-Future<bool> openProgramProposal(
-  BuildContext context, {
-  String reason = 'user',
-  Map<String, String>? options,
-}) async {
-  final messenger = ScaffoldMessenger.of(context);
-  final navigator = Navigator.of(context);
-  ProgramProposal? proposal;
-  try {
-    proposal = await store.proposeProgram(reason: reason, options: options);
-  } catch (_) {
-    proposal = null;
-  }
-  if (proposal == null) {
-    messenger.showSnackBar(
-      const SnackBar(
-        content: Text(
-          'Génération impossible : profil incomplet ou contenu illisible.',
-        ),
-      ),
-    );
-    return false;
-  }
-  final ok = await navigator.push<bool>(
-    MaterialPageRoute<bool>(
-      builder: (_) => ProgramPreviewScreen(proposal: proposal!),
-    ),
-  );
-  if (ok != true) return false;
-  store.applyProgram(proposal);
-  messenger.showSnackBar(
-    const SnackBar(
-      content: Text('Programme mis à jour à partir d’aujourd’hui.'),
-    ),
-  );
-  return true;
-}
+Future<void> _openPosition(BuildContext context) => Navigator.of(context).push(
+  MaterialPageRoute<void>(builder: (_) => const ProgramPositionScreen()),
+);
+
+Future<void> _openNextBlock(BuildContext context) => Navigator.of(context).push(
+  MaterialPageRoute<void>(builder: (_) => const NextBlockScreen()),
+);
 
 class ProgramScreen extends StatelessWidget {
   const ProgramScreen({super.key});
@@ -86,197 +43,215 @@ class ProgramScreen extends StatelessWidget {
   Widget build(BuildContext context) => ListenableBuilder(
     listenable: store,
     builder: (context, _) {
+      final plan = store.planProgram;
       final inst = store.programInstance;
       final generated = inst?.generated ?? false;
-      final opts = inst?.options ?? const <String, String>{};
-      final summary = store.programSummary;
       final dim = Theme.of(context).textTheme.bodySmall;
-      final children = <Widget>[
-        KCard(
-          key: const ValueKey('program-model'),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                (summary['modelLabel'] as String?) ??
-                    'Expert streetlifting (40 semaines)',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 6),
-              Text((summary['explanation'] as String?) ?? _templateExplain),
-              const SizedBox(height: 6),
-              Text(
-                generated
-                    ? '${inst!.weeks.length} semaines · cycle ${inst.cycle + 1}'
-                          '${summary['eventDate'] != null ? ' · épreuve le ${_date(summary['eventDate'] as String)}' : ''}'
-                    : 'Programme embarqué, inchangé',
-                style: dim,
-              ),
-            ],
+      final start = store.program.start;
+      final children = <Widget>[];
+      if (plan != null) {
+        final last = plan.blocks.last.block;
+        children.add(
+          KCard(
+            key: const ValueKey('program-model'),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Programme créé avec Koach',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  'Bloc ${plan.blocks.length} · ${last.pass1.weeks} semaines · '
+                  '${last.pass1.days.length} séances par semaine '
+                  '(${[for (final d in last.pass1.days) weekdayName(d.weekday).toLowerCase()].join(', ')}).',
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  plan.firstWeek > 1
+                      ? 'Commence en semaine ${plan.firstWeek} ; les semaines '
+                            'd’avant restent celles de ton programme précédent.'
+                      : start == null
+                      ? ''
+                      : 'Depuis le ${civilDateLabel(start)}.',
+                  style: dim,
+                ),
+              ],
+            ),
           ),
-        ),
-      ];
-      if (ProgramHomeCard.visible) {
+        );
+      } else {
+        children.add(
+          KCard(
+            key: const ValueKey('program-model'),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  generated
+                      ? '${store.programSummary['modelLabel'] ?? 'Programme personnalisé'}'
+                      : 'Expert streetlifting (40 semaines)',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  generated
+                      ? '${store.programSummary['explanation'] ?? ''}'
+                      : _templateExplain,
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  generated
+                      ? '${inst!.weeks.length} semaines · programme généré '
+                            'avant la création avec Koach, affiché tel quel'
+                      : 'Programme embarqué, inchangé',
+                  style: dim,
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+      if (PlanStore(store).planCanUndo) {
         children.add(const ProgramHomeCard(inScreen: true));
       }
-      if (!store.hasAnyProfile) {
+      if (start != null) {
+        children.add(
+          OutlinedButton.icon(
+            key: const ValueKey('program-position'),
+            icon: const Icon(Icons.my_location),
+            label: const Text('Où j’en suis'),
+            onPressed: () => _openPosition(context),
+          ),
+        );
+      }
+      if (PlanStore(store).planBlockEnding) {
+        children.add(
+          FilledButton.icon(
+            key: const ValueKey('program-next-block'),
+            icon: const Icon(Icons.skip_next_outlined),
+            label: const Text('Préparer le bloc suivant'),
+            onPressed: () => _openNextBlock(context),
+          ),
+        );
+      }
+      if (store.athlete == null) {
         children.add(
           KCard(
             key: const ValueKey('program-no-profile'),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Text(
-                  'Crée ton profil pour obtenir un programme personnalisé : '
-                  'objectifs, disponibilités, lieux et matériel.',
-                ),
-                const SizedBox(height: 10),
-                FilledButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (_) => const ProfileScreen(),
-                    ),
-                  ),
-                  child: const Text('Mon profil'),
-                ),
-              ],
-            ),
-          ),
-        );
-      }
-      if (generated) {
-        final levels = summary['levels'] as Map?;
-        final movements = (levels?['movements'] as Map?) ?? const {};
-        children.add(const KSection('Niveau par mouvement'));
-        children.add(
-          KCard(
-            key: const ValueKey('program-levels'),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                for (final mv in kRefMovements)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 3),
-                    child: Text(
-                      '${kRefMovementLabels[mv]} : '
-                      '${_levelLabel((movements[mv] as Map?)?['level'] as int?)}'
-                      ' (${_sourceLabels[(movements[mv] as Map?)?['source']] ?? '—'})',
-                    ),
-                  ),
-                const SizedBox(height: 6),
-                Text(
-                  'Ce repère sert seulement à choisir la périodisation et les '
-                  'valeurs de départ, jamais à te juger.',
-                  style: dim,
-                ),
-              ],
-            ),
-          ),
-        );
-        children.add(const KSection('Répartition de la semaine'));
-        final kinds = (summary['kinds'] as List?)?.cast<String>() ?? const [];
-        final days = (summary['weekdays'] as List?)?.cast<int>() ?? const [];
-        children.add(
-          KCard(
-            key: const ValueKey('program-split'),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text('${summary['splitLabel'] ?? ''}'),
-                const SizedBox(height: 4),
-                Text(
-                  [
-                    for (var k = 0; k < days.length && k < kinds.length; k++)
-                      '${_weekdayNames[days[k] - 1]} ${kKindTitles[kinds[k]]?.toLowerCase() ?? ''}',
-                  ].join(' · '),
-                  style: dim,
-                ),
-                const SizedBox(height: 10),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    for (final (id, label) in _splitChoices)
-                      ChoiceChip(
-                        key: ValueKey('program-split-$id'),
-                        label: Text(label),
-                        selected: (opts['split'] ?? 'auto') == id,
-                        onSelected: (_) => openProgramProposal(
-                          context,
-                          options: {...opts, 'split': id},
-                        ),
-                      ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-        final goal = store.profile?.stringValue('goalPrimary');
-        final second = store.profile?.stringValue('goalSecondary');
-        if (goal == 'endurance' || second == 'endurance') {
-          children.add(const KSection('Mouvement ciblé (endurance)'));
-          children.add(
-            KCard(
-              key: const ValueKey('program-focus'),
-              child: Wrap(
-                spacing: 8,
-                runSpacing: 8,
+            child: KoachSays(
+              pose: KoachPose.you,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  for (final (id, label) in _focusChoices)
-                    ChoiceChip(
-                      key: ValueKey('program-focus-$id'),
-                      label: Text(label),
-                      selected: opts['focus'] == id,
-                      onSelected: (_) => openProgramProposal(
-                        context,
-                        options: {...opts, 'focus': id},
+                  const Text(
+                    'Pour créer ton programme, j’ai d’abord besoin de ton '
+                    'profil : disciplines, niveau, objectifs, disponibilités, '
+                    'matériel.',
+                  ),
+                  const SizedBox(height: 10),
+                  FilledButton(
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (_) => const ProfileScreen(),
                       ),
                     ),
+                    child: const Text('Mon profil'),
+                  ),
                 ],
               ),
             ),
-          );
-        }
-        children.add(const KSection('Séries difficiles par semaine'));
-        children.add(_VolumeCard(summary: summary));
-      }
-      // G6 : avec le profil v2, la création du programme passe à
-      // `kalis_plan` (G7) ; l'ancien générateur (L10) n'est plus proposé.
-      if (store.profile != null && store.athlete == null) {
-        children.add(
-          FilledButton.icon(
-            key: const ValueKey('program-generate'),
-            icon: const Icon(Icons.auto_awesome_outlined),
-            label: Text(
-              generated
-                  ? 'Régénérer la suite à partir d’aujourd’hui'
-                  : 'Générer mon programme personnalisé',
-            ),
-            onPressed: () => openProgramProposal(context),
           ),
         );
+      } else {
         children.add(
-          Text(
-            'Ton historique n’est jamais modifié : seules les séances à '
-            'venir changent, après un aperçu.',
-            style: dim,
-          ),
-        );
-      }
-      if (store.athlete != null) {
-        children.add(
-          const KCard(
-            key: ValueKey('program-coming'),
+          KCard(
+            key: const ValueKey('program-create'),
             child: KoachSays(
-              pose: KoachPose.present,
-              child: Text(
-                'La création de ton programme à partir de ton nouveau profil '
-                'arrive dans la prochaine version. Ton programme actuel ne '
-                'change pas.',
+              pose: KoachPose.checklist,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    start == null
+                        ? 'On crée ton programme ensemble : d’abord les '
+                              'exercices, puis les séries et les charges.'
+                        : 'Tu peux créer un nouveau programme à partir de ton '
+                              'profil. Rien ne change tant que tu ne l’as pas '
+                              'validé, et ton historique reste tel quel.',
+                  ),
+                  const SizedBox(height: 10),
+                  FilledButton.icon(
+                    key: const ValueKey('program-create-open'),
+                    icon: const Icon(Icons.auto_awesome_outlined),
+                    label: Text(
+                      start == null
+                          ? 'Créer mon programme'
+                          : 'Créer un nouveau programme',
+                    ),
+                    onPressed: PlanStore(store).planCanCreate
+                        ? () => openPlanCreation(context)
+                        : null,
+                  ),
+                ],
               ),
             ),
+          ),
+        );
+      }
+      if (kDevBuild && SessionSpace.isDev) {
+        children.add(const KSection('Outils de test'));
+        children.add(
+          OutlinedButton.icon(
+            key: const ValueKey('program-inspector'),
+            icon: const Icon(Icons.manage_search),
+            label: const Text('Inspecteur du moteur'),
+            onPressed: plan == null || store.athleteProfileForEngines == null
+                ? null
+                : () {
+                    final b = plan.blocks.last;
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => PlanInspectorScreen(
+                          plan: b.block.pass1,
+                          request: kc.PlanRequest(
+                            profile: store.athleteProfileForEngines!,
+                            seed: b.seed,
+                            startDate: b.block.pass1.startDate,
+                            locks: b.locks,
+                          ),
+                          journal: PlanStore(store).planJournalText,
+                        ),
+                      ),
+                    );
+                  },
+          ),
+        );
+        children.add(
+          OutlinedButton.icon(
+            key: const ValueKey('program-journal'),
+            icon: const Icon(Icons.ios_share),
+            label: const Text('Exporter le journal du moteur (JSON)'),
+            onPressed: PlanStore(store).planJournalText == null
+                ? null
+                : () async {
+                    final messenger = ScaffoldMessenger.of(context);
+                    final r = await DevShare.shareJson(
+                      'kalis_plan_journal.json',
+                      PlanStore(store).planJournalText!,
+                    );
+                    messenger.showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          r == 'shared'
+                              ? 'Journal du moteur prêt : choisis où l’envoyer.'
+                              : 'Export impossible ($r).',
+                        ),
+                      ),
+                    );
+                  },
           ),
         );
       }
@@ -288,204 +263,82 @@ class ProgramScreen extends StatelessWidget {
   );
 }
 
-String _levelLabel(int? level) {
-  const labels = ['débutant', 'novice', 'intermédiaire', 'avancé', 'expert'];
-  if (level == null || level < 0 || level > 4) return '—';
-  return labels[level];
-}
-
-String _date(String iso) {
-  final d = parseCivil(iso);
-  if (d == null) return iso;
-  String two(int v) => v.toString().padLeft(2, '0');
-  return '${two(d.day)}/${two(d.month)}/${d.year}';
-}
-
-class _VolumeCard extends StatelessWidget {
-  final Map<String, dynamic> summary;
-  const _VolumeCard({required this.summary});
-
-  @override
-  Widget build(BuildContext context) {
-    final targets = (summary['targets'] as Map?)?.cast<String, dynamic>() ?? {};
-    final weeks = (summary['weekVolumes'] as List?) ?? const [];
-    final firstLoad = weeks.cast<Map>().where((w) => w['kind'] == 'load');
-    final groups = firstLoad.isEmpty
-        ? const <String, dynamic>{}
-        : (firstLoad.first['groups'] as Map).cast<String, dynamic>();
-    final dim = Theme.of(context).textTheme.bodySmall;
-    final keys = targets.keys.toList();
-    return KCard(
-      key: const ValueKey('program-volume'),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (final g in keys)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 2),
-              child: Text(
-                '$g : ${groups[g] ?? 0} séries (repère ${targets[g]})',
-              ),
-            ),
-          const SizedBox(height: 6),
-          Text(
-            'Plafond : ${summary['ceiling'] ?? '—'} séries par groupe. Koach '
-            'ajuste de ±2 séries par cycle selon ta progression.',
-            style: dim,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Aperçu « ce qui change » : rien n'est appliqué sans validation.
-class ProgramPreviewScreen extends StatelessWidget {
-  final ProgramProposal proposal;
-  const ProgramPreviewScreen({super.key, required this.proposal});
-
-  @override
-  Widget build(BuildContext context) {
-    final d = proposal.diff;
-    final dim = Theme.of(context).textTheme.bodySmall;
-    final s = proposal.instance.summary;
-    final children = <Widget>[
-      KCard(
-        key: const ValueKey('preview-model'),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              '${s['modelLabel'] ?? d.modelAfter}',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 6),
-            Text('${s['explanation'] ?? ''}'),
-            const SizedBox(height: 6),
-            Text(
-              proposal.from.week == 1 && proposal.from.day == 1
-                  ? 'À partir du départ du programme.'
-                  : 'À partir d’aujourd’hui (S${proposal.from.week} · J${proposal.from.day}). Les séances passées ne changent pas.',
-              style: dim,
-            ),
-          ],
-        ),
-      ),
-      const KSection('Ce qui change'),
-      KCard(
-        key: const ValueKey('preview-summary'),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Séances par semaine : ${d.sessionsBefore} → ${d.sessionsAfter}',
-            ),
-            Text(
-              'Durée moyenne estimée : ${d.minutesBefore} → ${d.minutesAfter} min',
-            ),
-            if (d.modelBefore != d.modelAfter)
-              Text('Périodisation : ${d.modelBefore} → ${d.modelAfter}'),
-            if (d.volume.isNotEmpty) ...[
-              const SizedBox(height: 8),
-              Text('Séries difficiles par groupe (semaine type) :', style: dim),
-              for (final e in d.volume.entries)
-                Text('${e.key} : ${e.value.$1} → ${e.value.$2}'),
-            ],
-          ],
-        ),
-      ),
-      for (final w in d.weeks)
-        KCard(
-          key: ValueKey('preview-week-${w.week}'),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Semaine ${w.week}',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-              const SizedBox(height: 4),
-              if (w.lines.isEmpty)
-                Text('Aucun changement', style: dim)
-              else
-                for (final l in w.lines) Text(l),
-            ],
-          ),
-        ),
-      FilledButton(
-        key: const ValueKey('preview-apply'),
-        onPressed: () => Navigator.pop(context, true),
-        child: const Text('Appliquer'),
-      ),
-      OutlinedButton(
-        key: const ValueKey('preview-cancel'),
-        onPressed: () => Navigator.pop(context, false),
-        child: const Text('Garder mon programme actuel'),
-      ),
-    ];
-    return KScreen(
-      appBar: AppBar(title: const Text('CE QUI CHANGE')),
-      body: KList(key: const ValueKey('preview-list'), children: children),
-    );
-  }
-}
-
-/// Carte « profil modifié » ou « programme mis à jour, annulable » (accueil
-/// et Mon programme).
+/// Carte de l'accueil : « Où en es-tu ? » (programme sans journal récent),
+/// fin de bloc, retour possible à l'ancien programme (7 jours).
 class ProgramHomeCard extends StatelessWidget {
   final bool inScreen;
   const ProgramHomeCard({super.key, this.inScreen = false});
 
   static bool get visible =>
-      store.programProfileChanged || store.programCanUndo;
+      PlanStore(store).planCanUndo ||
+      PlanStore(store).planBlockEnding ||
+      PlanStore(store).planPositionProposed;
 
   @override
   Widget build(BuildContext context) {
-    final changed = store.programProfileChanged;
-    final undo = store.programCanUndo;
-    if (!changed && !undo) return const SizedBox.shrink();
+    final undo = PlanStore(store).planCanUndo;
+    final ending = !inScreen && PlanStore(store).planBlockEnding;
+    final position = !inScreen && PlanStore(store).planPositionProposed;
+    if (!undo && !ending && !position) return const SizedBox.shrink();
+    final text = ending
+        ? 'Ton bloc arrive à son terme : je prépare le suivant avec toi ?'
+        : position
+        ? 'Ça fait un moment que tu n’as rien saisi. Tu me dis où tu en es '
+              'dans ton programme ?'
+        : 'Ton nouveau programme est en place. Tu peux revenir à l’ancien '
+              'pendant 7 jours, tant que tu n’as saisi aucune séance du '
+              'nouveau.';
     return KCard(
       key: const ValueKey('program-home-card'),
       accent: SL.accent,
-      // G5 (D6.5) : c'est Koach qui demande d'adapter au profil.
       child: KoachSays(
-        pose: changed ? KoachPose.think : KoachPose.settings,
+        pose: ending
+            ? KoachPose.progressChart
+            : position
+            ? KoachPose.direction
+            : KoachPose.settings,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              changed
-                  ? 'Ton profil a changé : ton programme peut être adapté à '
-                        'partir d’aujourd’hui.'
-                  : 'Ton programme a été mis à jour. Tu peux revenir à la '
-                        'version précédente pendant 7 jours.',
-            ),
+            Text(text),
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,
               runSpacing: 8,
               children: [
-                if (changed)
+                if (ending)
                   FilledButton(
-                    key: const ValueKey('program-home-preview'),
-                    onPressed: () =>
-                        openProgramProposal(context, reason: 'profile'),
-                    child: const Text('Voir ce qui change'),
+                    key: const ValueKey('program-home-next'),
+                    onPressed: () => _openNextBlock(context),
+                    child: const Text('Voir le bloc suivant'),
                   ),
-                if (undo)
+                if (position && !ending) ...[
+                  FilledButton(
+                    key: const ValueKey('program-home-position'),
+                    onPressed: () => _openPosition(context),
+                    child: const Text('Où j’en suis'),
+                  ),
+                  TextButton(
+                    key: const ValueKey('program-home-later'),
+                    onPressed: () => PlanStore(store).snoozePlanPosition(),
+                    child: const Text('Plus tard'),
+                  ),
+                ],
+                if (undo && !ending && !position)
                   OutlinedButton(
                     key: const ValueKey('program-home-undo'),
                     onPressed: () {
-                      final ok = store.undoProgram();
+                      final ok = PlanStore(store).undoPlanProgram();
                       showKoachToast(
                         context,
                         ok
-                            ? 'Version précédente du programme rétablie.'
-                            : 'Annulation impossible : une séance du nouveau programme est déjà commencée.',
+                            ? 'Ton ancien programme est rétabli.'
+                            : 'Retour impossible : une séance du nouveau '
+                                  'programme est déjà saisie.',
                         pose: ok ? KoachPose.thumbsUp : KoachPose.oops,
                       );
                     },
-                    child: const Text('Revenir à la version précédente'),
+                    child: const Text('Revenir à l’ancien programme'),
                   ),
                 if (!inScreen)
                   TextButton(

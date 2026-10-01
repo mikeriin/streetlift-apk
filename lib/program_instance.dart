@@ -13,9 +13,12 @@
 //   telles quelles (figées), entrées et graine conservées pour le rejouer.
 import 'dart:convert';
 
-import 'program_generator.dart';
+import 'legacy_pack.dart';
 
 const kProgramInstanceVersion = 1;
+
+/// Version du générateur L10 (retiré par G7) écrite dans ses instances.
+const kGeneratorVersion = '1.0.0';
 
 /// Délai d'annulation d'une régénération (KT-057).
 const Duration kRegenerationUndo = Duration(days: 7);

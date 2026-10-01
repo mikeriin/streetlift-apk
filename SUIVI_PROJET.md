@@ -1,8 +1,19 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : G6 (création du profil d'athlète v2), version dev6.4.0 ; précédent : dev6.3.0 (G5)**  
-**Date : 1er octobre 2026, Europe/Paris — version : 6.4.0+99, affichée « dev6.4.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : G6 correction 1, version dev6.4.1 ; précédent : dev6.4.0 (G6)**  
+**Date : 1er octobre 2026, Europe/Paris — version : 6.4.1+100, affichée « dev6.4.1 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## G6.C1 — Correction 1 (version dev6.4.1)
+
+| Demande du propriétaire | Réalisation |
+| --- | --- |
+| Modifier un objectif sans le supprimer | Crayon ou appui sur l'objectif : feuille pré-remplie, même identifiant et même place. |
+| Exercices manquants dans la recherche aimés / détestés | Tous les résultats par pages (20, puis +40) avec leur nombre ; sans recherche, les exercices des disciplines choisies. Même pagination pour « Autre exercice… ». |
+| Explications de la création et de la gestion du programme | `lib/program_explainer.dart` : feuille de Koach en 8 étapes, accessible depuis le flux, l'écran de fin, Réglages › Profil et l'onglet Programme. |
+| Programme du propriétaire affiché après une première création du profil | Profil v2 sans programme → l'onglet Programme affiche Koach (programme à venir) au lieu du programme embarqué et de son choix de départ. |
+| Koach actif par défaut, « Koach adapte la structure » par défaut | Activés à l'enregistrement du profil si Koach n'a jamais été activé. |
+| Contrôles | CI `claude/ci-3d` run 36914114452 vert (886 tests Dart, 15 du mode dev, émulateur G6 a et b). |
 
 ## G6 — Création du profil (version dev6.4.0)
 

@@ -10,6 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show AssetBundle, rootBundle;
 import 'package:kalis_core/kalis_core.dart' show TrainingLog;
 import 'package:kalis_core/kalis_core.dart' as kc;
+import 'package:kalis_plan/kalis_plan.dart' as kp;
 
 import 'athlete_profile.dart';
 import 'content_pack.dart';
@@ -24,8 +25,11 @@ import 'koach_program.dart';
 import 'mannequin_clip.dart' show ClipRegistry;
 import 'models.dart';
 import 'persistence.dart';
+import 'plan/plan_creation.dart';
+import 'plan/plan_program.dart';
+import 'plan/plan_texts.dart' show weekdayName;
 import 'profile.dart';
-import 'program_generator.dart';
+import 'legacy_pack.dart';
 import 'program_instance.dart';
 import 'training_estimate.dart';
 import 'progression.dart';
@@ -44,6 +48,7 @@ export 'wellbeing.dart';
 part 'adapt_store.dart';
 part 'athlete_profile_store.dart';
 part 'koach_store.dart';
+part 'plan_store.dart';
 part 'profile_store.dart';
 part 'program_store.dart';
 part 'safety_store.dart';
@@ -320,8 +325,50 @@ class AppStore extends ChangeNotifier {
   /// Instances illisibles ignorées au dernier démarrage.
   int programLoadIssues = 0;
 
+  /// G7 : programme créé par `kalis_plan` (section `planProgram`) ; il
+  /// remplace l'instance L10 / le programme embarqué quand il existe.
+  PlanProgram? planProgram;
+
+  /// Section `planProgram` illisible au démarrage : gardée telle quelle et
+  /// réécrite à l'identique (aucune perte).
+  Map<String, dynamic>? _planRaw;
+  int planLoadIssues = 0;
+
+  /// G7 (D4.9) : « Où j'en suis » (section `programResume`).
+  ProgramResume? programResume;
+
   /// Programme à afficher selon l'instance ; le départ est conservé.
   void _materializeProgram(DateTime? start) {
+    final plan = planProgram;
+    if (plan != null) {
+      try {
+        final weekday =
+            start?.weekday ?? plan.blocks.first.block.pass1.startDate.weekday;
+        final weeks = planWeeks(
+          plan,
+          startWeekday: weekday,
+          labels: PlanStore(this).planLabels,
+        );
+        program = Program.fromJson({
+          'meta': {
+            ...(_baseProgramJson['meta'] as Map<String, dynamic>),
+            'weeks': weeks.length,
+            'generator': 'kalis_plan ${kp.kalisPlanVersion}',
+          },
+          'pilotage': _baseProgramJson['pilotage'],
+          'weeks': weeks,
+        });
+        koachProgram = _baseKoach.available || plan.prefixKoach.isNotEmpty
+            ? KoachProgram.fromJson(planKoachJson(plan, weeks, _baseKoachJson))
+            : const KoachProgram.empty();
+        program.start = start;
+        return;
+      } catch (_) {
+        planLoadIssues++;
+        _planRaw = plan.toJson().cast<String, dynamic>();
+        planProgram = null;
+      }
+    }
     final inst = programInstance;
     if (inst != null && inst.generated) {
       try {
@@ -590,12 +637,6 @@ class AppStore extends ChangeNotifier {
       // prochain lancement).
       final document = raw;
       if (document != null) await _secureRetiredData(document);
-      // L10 : dernière semaine du cycle en cours → cycle suivant généré.
-      if (ProgramStore(this).programGenerated) {
-        unawaited(
-          ProgramStore(this).extendProgramIfNeeded().catchError((_) => false),
-        );
-      }
       return;
     }
 
@@ -864,6 +905,9 @@ class AppStore extends ChangeNotifier {
     athlete: athlete,
     athleteRaw: _athleteRaw,
     programInstance: programInstance,
+    planProgram: planProgram,
+    planRaw: _planRaw,
+    programResume: programResume,
     adapt: adapt,
   );
 
@@ -907,6 +951,15 @@ class AppStore extends ChangeNotifier {
       // identique à 3.2.0 sinon) ; ignorée par les versions antérieures.
       if (data.programInstance != null)
         'programInstance': data.programInstance!.toJson(),
+      // G7 : programme créé par kalis_plan et « Où j'en suis », écrits
+      // seulement s'ils existent ; ignorés par les versions antérieures
+      // (sections versionnées, facultatives).
+      if (data.planProgram != null)
+        'planProgram': data.planProgram!.toJson()
+      else if (data.planRaw != null)
+        'planProgram': data.planRaw,
+      if (data.programResume != null)
+        'programResume': data.programResume!.toJson(),
       // L11 : adaptations écrites seulement si elles servent (export
       // identique à 4.0.0 sinon) ; ignorées par les versions antérieures.
       if (!data.adapt.pristine) 'adapt': data.adapt.toJson(),
@@ -1249,6 +1302,34 @@ class AppStore extends ChangeNotifier {
       strict: limits != null,
       issues: programIssues,
     );
+    // G7 : programme kalis_plan. Import strict ; démarrage tolérant
+    // (section illisible gardée telle quelle, jamais perdue).
+    PlanProgram? nextPlan;
+    Map<String, dynamic>? planRaw;
+    var planIssues = 0;
+    final rawPlan = m['planProgram'];
+    if (rawPlan != null) {
+      try {
+        nextPlan = PlanProgram.fromJson(rawPlan);
+      } catch (_) {
+        if (limits != null) {
+          throw const FormatException('Programme créé illisible.');
+        }
+        planIssues = 1;
+        if (rawPlan is Map) planRaw = Map<String, dynamic>.from(rawPlan);
+      }
+    }
+    ProgramResume? nextResume;
+    final rawResume = m['programResume'];
+    if (rawResume != null) {
+      try {
+        nextResume = ProgramResume.fromJson(rawResume);
+      } catch (_) {
+        if (limits != null) {
+          throw const FormatException('« Où j’en suis » illisible.');
+        }
+      }
+    }
     // L11 : adaptations. Import strict ; démarrage tolérant.
     final adaptIssues = <String>[];
     final nextAdapt = AdaptData.fromJson(
@@ -1274,6 +1355,10 @@ class AppStore extends ChangeNotifier {
       athleteIssues: athleteIssues,
       programInstance: nextProgram,
       programIssues: programIssues.length,
+      planProgram: nextPlan,
+      planRaw: planRaw,
+      planIssues: planIssues,
+      programResume: nextResume,
       adapt: nextAdapt,
       adaptIssues: adaptIssues.length,
       retired: RetiredData.of(m).summary,
@@ -1342,6 +1427,12 @@ class AppStore extends ChangeNotifier {
       ..addAll(data.refStatus);
     programInstance = data.programInstance;
     programLoadIssues = data.programIssues;
+    planProgram = data.planProgram;
+    _planRaw = data.planRaw;
+    planLoadIssues = data.planIssues;
+    programResume = data.programResume;
+    // Libellés des objectifs du programme : profil de la sauvegarde.
+    athlete = data.athlete;
     _materializeProgram(data.start);
     startOrigin = data.startOrigin;
     logs
@@ -1868,13 +1959,6 @@ class AppStore extends ChangeNotifier {
           if (v != null) KoachStore(this)._koachRecordManual(ref, v);
         });
         _persist();
-      }
-      // L10 : nouvel utilisateur (profil du démarrage court) : programme
-      // personnalisé généré depuis ce départ.
-      try {
-        await ProgramStore(this).onProgramStartConfigured();
-      } catch (_) {
-        // Génération impossible (contenu illisible) : programme embarqué.
       }
       return StartSave.saved;
     }
@@ -2692,12 +2776,6 @@ class AppStore extends ChangeNotifier {
     if (hasUnsavedChanges) return ResultSave.unsaved;
     final reward = _unsavedRewards.remove(key);
     if (reward != null) _pendingReward = reward;
-    // L10 : fin de cycle → cycle suivant préparé depuis le journal.
-    if (ProgramStore(this).programGenerated) {
-      unawaited(
-        ProgramStore(this).extendProgramIfNeeded().catchError((_) => false),
-      );
-    }
     return ResultSave.saved;
   }
 
@@ -2948,6 +3026,13 @@ class _BackupData {
   final ProgramInstance? programInstance;
   final int programIssues;
 
+  /// G7 : programme kalis_plan (null si absent ; illisible : [planRaw]) et
+  /// « Où j'en suis ».
+  final PlanProgram? planProgram;
+  final Map<String, dynamic>? planRaw;
+  final int planIssues;
+  final ProgramResume? programResume;
+
   /// L11 : adaptations (neuves si la section est absente).
   final AdaptData adapt;
   final int adaptIssues;
@@ -2972,6 +3057,10 @@ class _BackupData {
     this.athleteIssues = 0,
     this.programInstance,
     this.programIssues = 0,
+    this.planProgram,
+    this.planRaw,
+    this.planIssues = 0,
+    this.programResume,
     AdaptData? adapt,
     this.adaptIssues = 0,
     this.retired = const RetiredSummary(),
