@@ -137,10 +137,10 @@ final class TruthExercise {
   double startCapacity = 0;
 
   /// Asymptote de la courbe répétitions ↔ charge.
-  double curveA = 0.5;
+  double curveA = 0.3;
 
   /// Vitesse de la courbe.
-  double curveB = 0.065;
+  double curveB = 0.044;
 
   /// Échelle individuelle de la fatigue intra-séance.
   double fatigueScale = 1;
@@ -187,10 +187,10 @@ final class TruthExercise {
       return 1 - (share - 1) * 20;
     }
     if (share <= curveA + 1e-6) {
-      return 60;
+      return 100;
     }
     final n = 1 - ln((share - curveA) / (1 - curveA)) / curveB;
-    return n > 60 ? 60 : n;
+    return n > 100 ? 100 : n;
   }
 
   /// Perte relative de capacité de la série à venir.
@@ -459,8 +459,11 @@ final class SimAthlete {
         if (t.capacity < floor) {
           t.capacity = floor;
         }
-        t.curveB = (lower ? 0.052 : 0.066) * exp(0.20 * r.gauss());
-        t.curveA = clampDouble(0.5 + 0.04 * r.gauss(), 0.4, 0.6);
+        // Courbe propre à l'athlète, autour des moyennes publiées (Nuzzo
+        // et al. 2024 : environ 5 répétitions à 90 %, 10 à 77 %, 15 à 70 %,
+        // 20 à 60 % ; plus de répétitions au bas du corps).
+        t.curveB = (lower ? 0.036 : 0.044) * exp(0.20 * r.gauss());
+        t.curveA = clampDouble(0.30 + 0.04 * r.gauss(), 0.2, 0.4);
       case CapacityMode.reps:
         if (declared != null) {
           t.capacity = declared * exp(0.10 * r.gauss());
@@ -644,6 +647,51 @@ final class SimAthlete {
       case CapacityMode.reps:
       case CapacityMode.hold:
         return t.capacity * exp(t.day) * keep;
+    }
+  }
+
+  /// Haut de plage jusqu'où une prescription peut s'étendre quand la
+  /// charge ne peut pas monter (mêmes bornes que le moteur).
+  static int extendedTop(int high) {
+    final a = high + (high + 2) ~/ 3;
+    final b = 2 * high > 30 ? 30 : 2 * high;
+    return a > b ? a : b;
+  }
+
+  /// Vrai si, aujourd'hui, une charge de la grille (ou, sans charge, la
+  /// capacité elle-même) permet de finir une série de la plage [low] à
+  /// [high] — étendue comme le moteur sait l'étendre — à [rir]
+  /// répétitions de l'échec. Faux : l'exercice est trop facile ou trop dur
+  /// pour cette plage avec ce matériel, quelle que soit la politique.
+  bool reachable(TruthExercise t, int low, int high, double rir) {
+    final fresh = t.capacity * exp(t.day);
+    switch (t.mode) {
+      case CapacityMode.hold:
+        final seconds = fresh * (1 - t.holdShare * (rir > 6 ? 6 : rir));
+        return seconds >= 0.7 * low && seconds <= 1.5 * high;
+      case CapacityMode.reps:
+        final reps = fresh - rir;
+        return reps >= low - 2 && reps <= extendedTop(high);
+      case CapacityMode.loaded:
+        final grid = t.info.grid;
+        final top = extendedTop(high);
+        var kg = grid.minimum;
+        for (var i = 0; i < 2000; i++) {
+          final total = t.info.totalLoad(kg, bodyWeightKg);
+          final reps = (total <= 0 ? 100.0 : t.repsAtShare(total / fresh)) - rir;
+          if (reps < low - 2) {
+            return false;
+          }
+          if (reps <= top) {
+            return true;
+          }
+          final next = grid.next(kg, up: true);
+          if (next <= kg) {
+            return false;
+          }
+          kg = next;
+        }
+        return false;
     }
   }
 

@@ -67,6 +67,8 @@ final class Metrics {
       policy = runs.isEmpty ? '' : runs.first.policy,
       runs = runs.length {
     final maes = <double>[];
+    final maesAll = <double>[];
+    final shares = <double>[];
     final biases = <double>[];
     final maesLoaded = <double>[];
     final maesBody = <double>[];
@@ -88,6 +90,8 @@ final class Metrics {
       var errorSum = 0.0;
       var biasSum = 0.0;
       var errorCount = 0;
+      var allSum = 0.0;
+      var allCount = 0;
       var loadedSum = 0.0;
       var loadedCount = 0;
       var bodySum = 0.0;
@@ -128,6 +132,11 @@ final class Metrics {
           continue;
         }
         final e = (s.trueRir - s.wantRir).abs();
+        allSum += e;
+        allCount++;
+        if (!s.reachable) {
+          continue;
+        }
         errorSum += e;
         biasSum += s.trueRir - s.wantRir;
         errorCount++;
@@ -144,6 +153,10 @@ final class Metrics {
       if (errorCount > 0) {
         maes.add(errorSum / errorCount);
         biases.add(biasSum / errorCount);
+      }
+      if (allCount > 0) {
+        maesAll.add(allSum / allCount);
+        shares.add(errorCount / allCount);
       }
       if (loadedCount > 0) {
         maesLoaded.add(loadedSum / loadedCount);
@@ -234,6 +247,8 @@ final class Metrics {
       aggravations.add(run.painAggravations.toDouble());
     }
     rirMae = Stat.of(maes);
+    rirMaeAll = Stat.of(maesAll);
+    reachableShare = Stat.of(shares);
     rirBias = Stat.of(biases);
     rirMaeLoaded = Stat.of(maesLoaded);
     rirMaeBodyweight = Stat.of(maesBody);
@@ -278,8 +293,15 @@ final class Metrics {
   final int runs;
 
   /// Écart absolu moyen entre RIR réel et RIR affiché, après calibrage,
-  /// hors séries ouvertes et semaines de test.
+  /// hors séries ouvertes et semaines de test, sur les séries dont la cible
+  /// est atteignable (plage du bloc et matériel de l'athlète).
   late final Stat rirMae;
+
+  /// Le même écart sur toutes les séries, cible atteignable ou non.
+  late final Stat rirMaeAll;
+
+  /// Part des séries dont la cible est atteignable.
+  late final Stat reachableShare;
 
   /// Écart moyen signé (positif : séries plus faciles que visé).
   late final Stat rirBias;
@@ -348,6 +370,8 @@ final class Metrics {
     'policy': policy,
     'runs': runs,
     'rirMae': rirMae.toJson(),
+    'rirMaeAll': rirMaeAll.toJson(),
+    'reachableShare': reachableShare.toJson(),
     'rirBias': rirBias.toJson(),
     'rirMaeLoaded': rirMaeLoaded.toJson(),
     'rirMaeBodyweight': rirMaeBodyweight.toJson(),
@@ -414,13 +438,15 @@ Stat pairedDifference(
 }
 
 /// Écart absolu moyen au RIR visé d'une simulation (après calibrage, hors
-/// séries ouvertes et semaines de test), ou `null` sans série.
+/// séries ouvertes et semaines de test, cibles atteignables), ou `null`
+/// sans série.
 double? runRirMae(SimRun run) {
   var sum = 0.0;
   var count = 0;
   for (final s in run.sets) {
     if (s.weekKind == WeekKind.test ||
         s.open ||
+        !s.reachable ||
         s.exerciseSession < metricCalibrationSessions) {
       continue;
     }

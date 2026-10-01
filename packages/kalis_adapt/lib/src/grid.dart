@@ -46,6 +46,12 @@ final class LoadGrid {
     }
   }
 
+  /// La même grille dont la plus petite charge est au moins un cran : pour
+  /// un exercice dont toute la charge est externe, une charge nulle n'a
+  /// pas de sens.
+  LoadGrid get positive =>
+      minimum > 0 ? this : LoadGrid._(step, step, dumbbellRule);
+
   static double _defaultMinimum(LoadType type) {
     switch (type) {
       case LoadType.barbell:

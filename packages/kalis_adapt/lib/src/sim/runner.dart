@@ -124,6 +124,7 @@ final class SetRow {
     required this.rise,
     required this.targetLow,
     required this.targetHigh,
+    required this.reachable,
   });
 
   /// Semaine de la simulation (0 = première).
@@ -176,6 +177,10 @@ final class SetRow {
 
   /// Haut de la cible affichée.
   final int targetHigh;
+
+  /// Vrai si la cible de RIR est atteignable dans la plage du bloc avec le
+  /// matériel de l'athlète (voir `SimAthlete.reachable`).
+  final bool reachable;
 
   /// Hausse relative de la charge totale par rapport à la première série
   /// de la séance précédente de l'exercice (première série seulement),
@@ -470,6 +475,14 @@ SimRun simulate({
           continue;
         }
         athlete.beginExercise(truth, item.slotId);
+        var basis = item;
+        for (final it in prescription.items) {
+          if (it.slotId == item.slotId && it.exerciseId == item.exerciseId) {
+            basis = it;
+          }
+        }
+        final basisLow = hold ? basis.secondsLow : basis.repsLow;
+        final basisHigh = hold ? basis.secondsHigh : basis.repsHigh;
         final count = exerciseSessions[item.exerciseId] ?? 0;
         final role = context.roleOf(item.slotId);
         final rest = item.restSeconds ?? 90;
@@ -561,6 +574,12 @@ SimRun simulate({
               rise: rise,
               targetLow: low,
               targetHigh: high,
+              reachable: athlete.reachable(
+                truth,
+                basisLow ?? basisHigh ?? low,
+                basisHigh ?? basisLow ?? high,
+                Flames.toRir(flamesTarget),
+              ),
             ),
           );
           performed++;

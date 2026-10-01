@@ -1176,7 +1176,13 @@ final class SessionRun {
   ) {
     final p = _p;
     final f = run.track!.filter;
-    final logLoad = ln(run.info.totalLoad(loadKg, bodyWeightKg));
+    final total = run.info.totalLoad(loadKg, bodyWeightKg);
+    if (total <= 0) {
+      // Charge totale nulle (assistance égale au poids porté) : la série
+      // n'est pas limitée par la charge.
+      return 1000;
+    }
+    final logLoad = ln(total);
     final n = f.repsPossible(logLoad);
     final kk = f.k;
     final u = (n - 1) / kk;
@@ -1350,6 +1356,14 @@ final class SessionRun {
       top = run.info.mode == CapacityMode.hold
           ? spec.high + spec.high ~/ 2
           : spec.highExtended;
+      if (run.info.mode == CapacityMode.reps && r >= top + 1) {
+        // Sans charge, les répétitions sont le seul réglage : la plage
+        // s'étend comme pour une charge qui ne peut pas monter.
+        final wide = 2 * spec.high > 30 ? 30 : 2 * spec.high;
+        if (wide > top) {
+          top = wide;
+        }
+      }
     }
     var target = (r + 0.5).floor();
     if (run.info.mode == CapacityMode.hold && target > 20) {

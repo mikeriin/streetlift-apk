@@ -184,17 +184,20 @@ final class L7Policy implements SimPolicy {
                 dl > 0) {
               // Niveau déclaré : 1RM de charge externe (lest seul).
               final center = math.sqrt(dl * dh);
-              _setReference(ref, grid.nearest(center < 0 ? 0 : center), 'initial');
+              _setReference(
+                ref,
+                grid.nearest(center < 0 ? 0 : center),
+                'initial',
+              );
             }
           }
         } else {
-          (_input['accessories'] as List<Map<String, dynamic>>).add(
-            <String, dynamic>{
-              'ref': ref,
-              'equipment': _equipmentOf(info.exercise.loadType),
-              'prevention': false,
-            },
-          );
+          (_input['accessories'] as List<Map<String, dynamic>>)
+              .add(<String, dynamic>{
+                'ref': ref,
+                'equipment': _equipmentOf(info.exercise.loadType),
+                'prevention': false,
+              });
         }
       }
       final reference = (_references[ref] as num?)?.toDouble();
@@ -216,8 +219,8 @@ final class L7Policy implements SimPolicy {
       }
       // D25 : forme basse → moins de séries.
       if (overall != null && overall * 2 <= l7.koachParams['form_max']!) {
-        final reduced =
-            (item.sets * (1 - l7.koachParams['fatigue_cut_3']!)).round();
+        final reduced = (item.sets * (1 - l7.koachParams['fatigue_cut_3']!))
+            .round();
         cur.sets = reduced < 1 ? 1 : reduced;
       }
       cur.sets = cur.sets - _setCut < 1 ? 1 : cur.sets - _setCut;
@@ -300,7 +303,11 @@ final class L7Policy implements SimPolicy {
         <String, dynamic>{'bodyweight': cur.body},
         <Map<String, dynamic>>[
           for (final s in cur.done)
-            <String, dynamic>{'kg': s['kg'], 'reps': s['reps'], 'rir': s['rir']},
+            <String, dynamic>{
+              'kg': s['kg'],
+              'reps': s['reps'],
+              'rir': s['rir'],
+            },
         ],
         cur.rir,
         cur.planned,

@@ -78,16 +78,21 @@ String campaignMarkdown(Map<String, Object?> campaign) {
     '',
     'Après calibrage (à partir de la 4ᵉ séance de chaque exercice), hors '
         'séries ouvertes et semaines de test. RIR MAE : écart absolu moyen '
-        'entre le RIR réel et le RIR affiché. Biais > 0 : séries plus '
-        'faciles que visé. Quasi-échec : série finie à moins de 0,5 '
+        'entre le RIR réel et le RIR affiché, sur les séries dont la cible '
+        'est atteignable — il existe une charge de la grille de l\'athlète '
+        '(ou, sans charge, un nombre de répétitions) qui met le RIR visé '
+        'dans la plage du bloc, étendue comme le moteur sait l\'étendre ; '
+        '« Atteignable » en donne la part, « toutes séries » l\'écart sans '
+        'ce tri. Biais > 0 : séries plus faciles que visé. Quasi-échec : série finie à moins de 0,5 '
         'répétition de l\'échec quand la cible en laissait au moins 2. '
         'Gain : progression moyenne de la capacité vraie par semaine, entre '
         'la première et la dernière séance de chaque exercice suivi au moins '
         'trois semaines.',
     '',
-    '| Athlète | Politique | RIR MAE | Biais | Échecs non prévus | '
-        'Quasi-échecs | Gain |',
-    '| --- | --- | --- | --- | --- | --- | --- |',
+    '| Athlète | Politique | RIR MAE | Biais | Atteignable | RIR MAE '
+        '(toutes séries) | Échecs non prévus | Quasi-échecs | Gain par '
+        'semaine |',
+    '| --- | --- | --- | --- | --- | --- | --- | --- | --- |',
   ]);
   for (final a in athletes) {
     final athlete = _map(a);
@@ -100,6 +105,8 @@ String campaignMarkdown(Map<String, Object?> campaign) {
       out.add(
         '| ${athlete['key']} | $name | ${_ci(m['rirMae'])} | '
         '${_num(_mean(m['rirBias']))} | '
+        '${_pct(_mean(m['reachableShare']), 0)} | '
+        '${_num(_mean(m['rirMaeAll']))} | '
         '${_ci(m['failRate'], percent: true)} | '
         '${_ci(m['nearFailureRate'], percent: true)} | '
         '${_ci(m['gain'], percent: true, digits: 2)} |',

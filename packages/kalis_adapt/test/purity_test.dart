@@ -42,18 +42,25 @@ void main() {
     });
   }
 
-  test('le hasard du simulateur vient de la seule suite seedée de rng.dart', () {
-    for (final file in sources) {
-      final text = file.readAsStringSync();
-      expect(text.contains('math.Random'), isFalse, reason: file.path);
-      expect(RegExp(r'\bRandom\(').hasMatch(text), isFalse, reason: file.path);
-      if (!file.path.contains('/sim/') &&
-          !file.path.endsWith('simulation.dart')) {
-        expect(text.contains('SimRandom'), isFalse, reason: file.path);
-        expect(text.contains('SeededRandom'), isFalse, reason: file.path);
+  test(
+    'le hasard du simulateur vient de la seule suite seedée de rng.dart',
+    () {
+      for (final file in sources) {
+        final text = file.readAsStringSync();
+        expect(text.contains('math.Random'), isFalse, reason: file.path);
+        expect(
+          RegExp(r'\bRandom\(').hasMatch(text),
+          isFalse,
+          reason: file.path,
+        );
+        if (!file.path.contains('/sim/') &&
+            !file.path.endsWith('simulation.dart')) {
+          expect(text.contains('SimRandom'), isFalse, reason: file.path);
+          expect(text.contains('SeededRandom'), isFalse, reason: file.path);
+        }
       }
-    }
-  });
+    },
+  );
 
   test('le moteur n\'importe pas le simulateur', () {
     for (final file in sources) {

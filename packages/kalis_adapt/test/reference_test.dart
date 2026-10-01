@@ -44,7 +44,11 @@ void main() {
       expect(flamesOfRir(_d(r[0])), r[1], reason: 'RIR ${r[0]}');
     }
     for (final r in rows('logShare')) {
-      _near(logShare(_d(r[0]), _d(r[1])), _d(r[2]), 'logShare(${r[0]}, ${r[1]})');
+      _near(
+        logShare(_d(r[0]), _d(r[1])),
+        _d(r[2]),
+        'logShare(${r[0]}, ${r[1]})',
+      );
     }
     for (final r in rows('repsAt')) {
       _near(repsAt(_d(r[0]), _d(r[1])), _d(r[2]), 'repsAt(${r[0]}, ${r[1]})');

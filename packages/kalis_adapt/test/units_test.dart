@@ -42,7 +42,10 @@ void main() {
     test('poulie : 2,5 lb', () {
       final g = LoadGrid.of(LoadType.cable, null);
       expect(g.step, closeTo(1.13398, 1e-5));
-      expect(g.next(10 * 2.5 * poundKg, up: true), closeTo(27.5 * poundKg, 1e-9));
+      expect(
+        g.next(10 * 2.5 * poundKg, up: true),
+        closeTo(27.5 * poundKg, 1e-9),
+      );
       expect(g.floor(20), closeTo(17 * 2.5 * poundKg, 1e-9));
     });
 
@@ -326,7 +329,10 @@ void main() {
       expect(model.rawShift(squat, p), greaterThan(local));
       model.advance(60, p);
       expect(model.rawShift(squat, p), closeTo(0, 1e-4));
-      expect(effortWeight(0, failed: true), greaterThan(effortWeight(0, failed: false)));
+      expect(
+        effortWeight(0, failed: true),
+        greaterThan(effortWeight(0, failed: false)),
+      );
     });
   });
 
@@ -356,7 +362,10 @@ void main() {
 
     test('semaines civiles et jours prévus', () {
       final monday = CivilDate(2026, 10, 5);
-      expect(weekOfDay(monday.dayNumber), weekOfDay(monday.addDays(6).dayNumber));
+      expect(
+        weekOfDay(monday.dayNumber),
+        weekOfDay(monday.addDays(6).dayNumber),
+      );
       expect(
         weekOfDay(monday.addDays(7).dayNumber),
         weekOfDay(monday.dayNumber) + 1,
@@ -365,10 +374,7 @@ void main() {
       for (final d in block.pass1.days) {
         final day = scheduledDay(block.pass1, 1, d.dayIndex);
         expect(CivilDate.fromDayNumber(day).weekday, d.weekday);
-        expect(
-          day - block.pass1.startDate.dayNumber,
-          inInclusiveRange(7, 13),
-        );
+        expect(day - block.pass1.startDate.dayNumber, inInclusiveRange(7, 13));
       }
     });
   });
@@ -436,7 +442,10 @@ void main() {
   group('athlètes simulés', () {
     test('aller-retour JSON', () {
       for (final a in simAthletes) {
-        expect(athleteToJson(athleteFromJson(athleteToJson(a))), athleteToJson(a));
+        expect(
+          athleteToJson(athleteFromJson(athleteToJson(a))),
+          athleteToJson(a),
+        );
       }
       expect(simAthletes.length, greaterThanOrEqualTo(6));
       expect(() => athleteOf('inconnu'), throwsArgumentError);

@@ -153,7 +153,9 @@ final class ExerciseBook {
       traits: t,
       mode: modeOf(e),
       fraction: e.bodyweightFraction?.value ?? 0,
-      grid: LoadGrid.of(e.loadType, profile),
+      grid: (e.bodyweightFraction?.value ?? 0) > 0
+          ? LoadGrid.of(e.loadType, profile)
+          : LoadGrid.of(e.loadType, profile).positive,
       lowerBody:
           e.articularity == Articularity.multiJoint &&
           (e.family == MovementFamily.jambesGenou ||

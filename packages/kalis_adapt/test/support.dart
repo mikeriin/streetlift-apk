@@ -331,8 +331,7 @@ List<String> checkSession(
         'principal ($reference → $top kg)',
       );
     }
-    if (top > reference + 0.011 &&
-        lastHadUnplannedFailure(log, info)) {
+    if (top > reference + 0.011 && lastHadUnplannedFailure(log, info)) {
       out.add('$where : hausse après un échec non prévu ($reference → $top)');
     }
     if (top > reference + 0.011) {

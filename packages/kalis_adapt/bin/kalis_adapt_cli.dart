@@ -316,7 +316,9 @@ Future<void> main(List<String> args) async {
     'timings': _timings(catalog, weeks),
   };
   const encoder = JsonEncoder.withIndent(' ');
-  File('$dir/campagne.json').writeAsStringSync('${encoder.convert(campaign)}\n');
+  File(
+    '$dir/campagne.json',
+  ).writeAsStringSync('${encoder.convert(campaign)}\n');
   // Relu comme le lira `docs_test` : mêmes types, même texte.
   final reread = jsonDecode(jsonEncode(campaign)) as Map<String, Object?>;
   File('$dir/MESURES.md').writeAsStringSync(campaignMarkdown(reread));

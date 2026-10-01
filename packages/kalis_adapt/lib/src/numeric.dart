@@ -9,7 +9,22 @@ import 'package:kalis_plan/kalis_plan.dart' show stableExp, stableLn;
 
 /// Logarithme népérien de [x] > 0 (opérations élémentaires seulement : même
 /// résultat sur toute machine, voir `kalis_plan`).
-double ln(double x) => stableLn(x);
+///
+/// `stableLn` ne termine pas hors de son domaine : zéro, un nombre négatif
+/// ou l'infini rendent ici l'infini du bon signe (et un non-nombre, un
+/// non-nombre) au lieu de bloquer l'appelant.
+double ln(double x) {
+  if (x.isNaN) {
+    return double.nan;
+  }
+  if (x <= 0) {
+    return double.negativeInfinity;
+  }
+  if (x == double.infinity) {
+    return double.infinity;
+  }
+  return stableLn(x);
+}
 
 /// Exponentielle de [x] (opérations élémentaires seulement).
 double exp(double x) => x <= 0 ? stableExp(x) : 1 / stableExp(-x);

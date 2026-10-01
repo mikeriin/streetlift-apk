@@ -241,10 +241,13 @@ RandomCase randomCase(
   final block = program.block(blockPick < 60 ? 0 : (blockPick < 88 ? 1 : 2));
   final book = ExerciseBook(catalog, profile);
   final weeks = block.pass2.weeks;
-  final sessionCount = _chance(r, 6) ? 0 : _between(r, 1, _chance(r, 30) ? 40 : 14);
+  final sessionCount = _chance(r, 6)
+      ? 0
+      : _between(r, 1, _chance(r, 30) ? 40 : 14);
   // Les séances partent de quelques semaines avant le bloc, ou du bloc.
   var day =
-      block.pass1.startDate.dayNumber - (_chance(r, 35) ? _between(r, 7, 70) : 0);
+      block.pass1.startDate.dayNumber -
+      (_chance(r, 35) ? _between(r, 7, 70) : 0);
   final bases = <String, double>{};
   final sessions = <SessionRecord>[];
   final extras = catalog.exercises;
@@ -600,7 +603,9 @@ void propertyTests(int file) {
       final engine = KalisAdapt();
       final failures = <String>[];
       for (var seed = first; seed < first + chunk; seed++) {
-        failures.addAll(checkCase(catalog, engine, randomCase(catalog, programs, seed)));
+        failures.addAll(
+          checkCase(catalog, engine, randomCase(catalog, programs, seed)),
+        );
         if (failures.length > 20) {
           break;
         }
