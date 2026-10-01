@@ -5,6 +5,7 @@ import 'muscle_map_2d.dart' show MapView;
 import 'app_theme.dart';
 import 'estimate_view.dart';
 import 'koach/koach_home_card.dart';
+import 'koach/koach_view.dart';
 import 'koach_widgets.dart' show KoachWeighInBanner;
 import 'levelup.dart';
 import 'models.dart';
@@ -366,18 +367,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       // L10 : profil modifié ou programme régénéré.
                       if (ProgramHomeCard.visible) const ProgramHomeCard(),
                       if (ResumeBanner.visible) const ResumeBanner(),
-                      // G5 (D6.4) : carte du jour, Koach annonce la
-                      // journée (semaine actuelle seulement).
-                      if (today >= 0 && w.day(today) != null)
-                        KoachHomeCard(
-                          day: w.day(today)!,
-                          today: now,
-                          done: store.isDone(w.n, today),
-                          inProgress: store.inProgress(
-                            store.sessionKey(w.n, today),
-                          ),
-                          onOpen: () => _open(w, w.day(today)!),
-                        ),
                       if (store.koachWeighInDue) const KoachWeighInBanner(),
                       // L11 (KT-060) : pause en cours, en tête.
                       if (store.adapt.pause != null)
@@ -794,32 +783,59 @@ class _DayCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Expanded(
-                          child: Text(
-                            'J${day.j} · AUJOURD’HUI',
-                            style: TextStyle(
-                              color: secondary,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: .9,
-                            ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'J${day.j} · AUJOURD’HUI',
+                                      style: TextStyle(
+                                        color: secondary,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: .9,
+                                      ),
+                                    ),
+                                  ),
+                                  statusIcon,
+                                ],
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                day.title,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: foreground,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  height: 1.2,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        statusIcon,
+                        // G5 (D6.4) : Koach sur la carte du jour, sa pose
+                        // dit la journée (séance, repos, en cours, faite).
+                        const SizedBox(width: 8),
+                        KoachView(
+                          key: const ValueKey('koach-today-view'),
+                          pose: KoachToday(
+                            day: day,
+                            done: done,
+                            inProgress: inProgress,
+                            today: KalisClock.now(),
+                          ).pose(),
+                          height: 44,
+                          width: 40,
+                          colors: KoachColors.onColor(SL.bordeaux),
+                        ),
                       ],
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      day.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: foreground,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        height: 1.2,
-                      ),
                     ),
                     if (recovery) ...[
                       const SizedBox(height: 18),

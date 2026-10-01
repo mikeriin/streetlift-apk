@@ -76,6 +76,23 @@ vide ou absent.
   pubspec>` à l'APK seulement ; `verify_android_artifacts.py --dev-apk`
   attend ce `versionName` dans l'APK et la version nue dans l'AAB.
 
+### G5 (dev6.3.0)
+
+- Cible émulateur par défaut : `integration_test/koach_g5_test.dart`, build
+  de développement, parties `a` (sombre, rouge Kalis) et `b` (clair,
+  violet) : accueil (carte du jour, proposition dite par Koach), Anatomie ›
+  Galerie de Koach (36 poses, flammes, sélecteur, « Pourquoi ? »,
+  transition), « Réduire les animations »
+  (`platformDispatcher.accessibilityFeaturesTestValue`), session de test
+  (message de Koach à l'entrée, galerie, suppression). Relevés
+  `emulateur/g5_releve_<partie>.json`, captures `emulateur/g5_*_<thème>.png`.
+  G3 passe sous `CI3D_TOUT=1` ; la cible `koach_m7b_test` (animations 3D de
+  Koach) est retirée avec elles.
+- Sous `flutter test`, les animations au repos de Koach (respiration,
+  clignement) sont coupées (`KoachMotion.idle`, variable `FLUTTER_TEST`) :
+  aucun écran ne cesserait sinon de produire des images ; les tests qui les
+  vérifient les rallument. Rebond et transition restent (durées finies).
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant

@@ -793,6 +793,7 @@ class AdaptHomeCard extends StatelessWidget {
     // Lus avant l'attente : la carte peut disparaître avec la proposition.
     final messenger = ScaffoldMessenger.of(context);
     final colors = KoachToastColors.of(context);
+    final large = koachLargeText(context);
     final text = await store.runAdaptAction(p, a);
     if (text != null) {
       messenger.showSnackBar(
@@ -800,6 +801,7 @@ class AdaptHomeCard extends StatelessWidget {
           colors,
           text,
           pose: a == 'dismiss' ? KoachPose.thumbsUp : KoachPose.thumbsUp2,
+          large: large,
         ),
       );
     }

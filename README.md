@@ -1,4 +1,13 @@
-# Kalis Track dev6.2.0 — Recentrage sur le programme (pipeline « Génération et progression »)
+# Kalis Track dev6.3.0 — Recentrage sur le programme (pipeline « Génération et progression »)
+
+## dev6.3.0 — Koach 2D dans l'application (lot G5)
+
+- **Koach devient une mascotte 2D** (D1.5, D6) : les 36 poses dessinées par le propriétaire, vectorisées par le paquet `kalis_koach` (étiquette `kalis_koach-v0.1.0`), remplacent le Koach 3D. **Couleurs inversées selon le thème** (D6.2) : Koach blanc, yeux et K de la couleur du support en thème sombre ; Koach noir, yeux et K blancs en thème clair ; lisible sur toutes les couleurs dominantes et sur les cartes teintées.
+- **Micro-animations** (D6.3) : rebond d'entrée, transition entre deux poses (fondu et léger écrasement, 200 ms), clignement des yeux à intervalle irrégulier, respiration lente sur les grandes vues. Rien n'est dessiné entre deux clignements, tout s'arrête hors écran et en arrière-plan ; **« Réduire les animations »** : Koach reste immobile.
+- **Koach parle** (D6.4) : sur l'accueil, la **carte du jour** (séance du jour et son bouton « C'est parti », repos, séance commencée ou faite) ; les **propositions** (reprendre là où tu t'es arrêté, régularité, paliers, pause) et la carte « profil modifié » ; dans la séance, la carte « Koach · séance du jour », les suggestions de charge, la note de calibrage ; le bilan de fin de séance ; les messages courts de ces écrans ; les messages de la **session de test** (entrée, suppression).
+- **Arsenal › Anatomie › Galerie de Koach** (remplace « Koach (aperçu) ») : les 36 poses animées (touche-en une pour la voir en grand), les **10 flammes de difficulté** (tailles relatives, dégradé de la couleur dominante du clair au vif, « Difficulté n sur 10, RIR … » pour TalkBack), le sélecteur de flammes prêt pour la séance (G9), une bulle avec « Pourquoi ? », une feuille et un message court de Koach.
+- **Retiré** : les 9 animations 3D de Koach (M7b), leur écran, leurs outils de fabrication et leurs tests. Le moteur 3D reste pour la démonstration des exercices.
+- Composants : `lib/koach/` (`KoachView`, `KoachBubble`, `KoachSays`, `KoachHeader`, `showKoachSheet`, `showKoachToast`, `FlameIcon`, `FlamePicker`, galerie, carte du jour). Tests : `test/g5_koach_test.dart`, `integration_test/koach_g5_test.dart`. Version « dev6.3.0 ».
 
 ## dev6.2.0 — Base d'exercices v1.1 dans l'application (lot G3)
 

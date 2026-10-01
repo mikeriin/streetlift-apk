@@ -1,6 +1,0 @@
-Analyzing streetlift-apk...                                     
-
-   info • The parameter name 'old' doesn't match the name 'oldWidget' in the overridden method. Try changing the name to 'oldWidget' • lib/koach/koach_view.dart:332:34 • avoid_renaming_method_parameters
-  error • Undefined class 'DayPlan'. Try changing the name to the name of an existing class, or creating a class with the name 'DayPlan' • test/g5_koach_test.dart:569:25 • undefined_class
-
-2 issues found. (ran in 17.8s)

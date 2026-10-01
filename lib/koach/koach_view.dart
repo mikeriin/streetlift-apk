@@ -329,8 +329,9 @@ class KoachViewState extends State<KoachView>
   }
 
   @override
-  void didUpdateWidget(KoachView old) {
-    super.didUpdateWidget(old);
+  void didUpdateWidget(KoachView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final old = oldWidget;
     if (old.seed != widget.seed) _rng = math.Random(widget.seed);
     if (old.animate != widget.animate) {
       _motion = widget.animate && !_reduce;

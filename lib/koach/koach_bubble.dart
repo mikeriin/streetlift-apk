@@ -368,28 +368,36 @@ class KoachToastColors {
   }
 }
 
-/// Message court de Koach (SnackBar avec Koach en petit).
+/// Message court de Koach (SnackBar avec Koach en petit). Avec un grand
+/// texte ([large]), le texte garde toute la largeur : Koach s'efface.
 SnackBar koachSnackBar(
   KoachToastColors colors,
   String text, {
   KoachPose pose = KoachPose.thumbsUp,
+  bool large = false,
 }) => SnackBar(
   key: const ValueKey('koach-toast'),
   content: Row(
     children: [
-      KoachView(
-        pose: pose,
-        height: 40,
-        width: 36,
-        colors: KoachColors.onColor(colors.background),
-      ),
-      const SizedBox(width: 10),
+      if (!large) ...[
+        KoachView(
+          pose: pose,
+          height: 34,
+          width: 30,
+          colors: KoachColors.onColor(colors.background),
+        ),
+        const SizedBox(width: 10),
+      ],
       Expanded(
         child: Text(text, style: TextStyle(color: colors.text)),
       ),
     ],
   ),
 );
+
+/// Grand texte : au-delà de 130 %, les messages courts n'ont pas Koach.
+bool koachLargeText(BuildContext context) =>
+    MediaQuery.textScalerOf(context).scale(10) > 13;
 
 /// Message court de Koach (remplace un SnackBar).
 void showKoachToast(
@@ -400,6 +408,11 @@ void showKoachToast(
   final messenger = ScaffoldMessenger.maybeOf(context);
   if (messenger == null) return;
   messenger.showSnackBar(
-    koachSnackBar(KoachToastColors.of(context), text, pose: pose),
+    koachSnackBar(
+      KoachToastColors.of(context),
+      text,
+      pose: pose,
+      large: koachLargeText(context),
+    ),
   );
 }

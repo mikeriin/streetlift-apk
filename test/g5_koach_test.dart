@@ -26,6 +26,7 @@ import 'package:streetlift_tracker/koach/koach_home_card.dart';
 import 'package:streetlift_tracker/koach/koach_view.dart';
 import 'package:streetlift_tracker/koach_widgets.dart';
 import 'package:streetlift_tracker/mannequin_3d.dart' show MannequinMap;
+import 'package:streetlift_tracker/models.dart' show DayPlan;
 import 'package:streetlift_tracker/store.dart';
 
 Widget _page(
@@ -559,50 +560,36 @@ void main() {
       expect(find.byType(KoachGalleryScreen), findsOneWidget);
     });
 
-    testWidgets('carte du jour de l\'accueil : séance, repos, faite', (
-      tester,
-    ) async {
+    test('carte du jour de l\'accueil : la pose de Koach dit la journée',
+        () {
       final week = store.program.week(1);
       final training = week.days.firstWhere((d) => d.exercises.isNotEmpty);
       final rest = week.days.where((d) => d.exercises.isEmpty).toList();
-      var opened = 0;
-      Future<void> show(DayPlan d, {bool done = false}) async {
-        await tester.pumpWidget(
-          _page(
-            ListView(
-              children: [
-                KoachHomeCard(
-                  day: d,
-                  done: done,
-                  inProgress: false,
-                  today: DateTime(2026, 10, 1),
-                  onOpen: () => opened++,
-                ),
-              ],
-            ),
-          ),
-        );
-        await tester.pumpAndSettle();
-      }
-
-      await show(training);
-      final card = tester.widget<KoachHomeCard>(find.byType(KoachHomeCard));
-      expect(card.state, KoachDayState.todo);
-      expect(card.text(), startsWith('Aujourd’hui : ${training.title}.'));
-      expect(find.byType(KoachView), findsOneWidget);
-      await tester.tap(find.byKey(const ValueKey('koach-home-open')));
-      expect(opened, 1);
-      await show(training, done: true);
-      expect(find.byKey(const ValueKey('koach-home-open')), findsNothing);
+      KoachToday day(DayPlan d, {bool done = false, bool started = false}) =>
+          KoachToday(
+            day: d,
+            done: done,
+            inProgress: started,
+            today: DateTime(2026, 10, 1),
+          );
+      final todo = day(training);
+      expect(todo.state, KoachDayState.todo);
       expect(
-        tester.widget<KoachHomeCard>(find.byType(KoachHomeCard)).state,
-        KoachDayState.done,
+        KoachPose.forUsage(KoachUsage.sessionStart),
+        contains(todo.pose()),
       );
+      // Même jour : même pose (déterministe).
+      expect(day(training).pose(), todo.pose());
+      expect(day(training, started: true).state, KoachDayState.started);
+      expect(day(training, started: true).pose(), KoachPose.you);
+      final done = day(training, done: true);
+      expect(done.state, KoachDayState.done);
+      expect(KoachPose.forUsage(KoachUsage.sessionEnd), contains(done.pose()));
       if (rest.isNotEmpty) {
-        await show(rest.first);
+        expect(day(rest.first).state, KoachDayState.rest);
         expect(
-          tester.widget<KoachHomeCard>(find.byType(KoachHomeCard)).state,
-          KoachDayState.rest,
+          KoachPose.forUsage(KoachUsage.rest),
+          contains(day(rest.first).pose()),
         );
       }
     });

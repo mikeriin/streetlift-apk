@@ -82,7 +82,11 @@ void main() {
     await wait(tester, 1000);
   }
 
-  Future<void> scrollTo(WidgetTester tester, Finder target) async {
+  Future<void> scrollTo(
+    WidgetTester tester,
+    Finder target, {
+    bool up = false,
+  }) async {
     for (var i = 0; i < 40 && target.hitTestable().evaluate().isEmpty; i++) {
       await tester.drag(
         find
@@ -91,7 +95,7 @@ void main() {
             )
             .hitTestable()
             .last,
-        const Offset(0, -250),
+        Offset(0, up ? 250 : -250),
       );
       await wait(tester, 300);
     }
@@ -151,12 +155,16 @@ void main() {
     await seed.flush();
     seed.dispose();
 
+    // L'émulateur de la CI a ses animations coupées : on les rallume pour
+    // voir les micro-animations, puis « Réduire les animations » plus bas.
+    tester.platformDispatcher.accessibilityFeaturesTestValue =
+        const FakeAccessibilityFeatures();
     await tester.pumpWidget(RepaintBoundary(key: _root, child: kalisApp()));
     await opened(tester);
 
-    // Accueil : carte du jour de Koach.
+    // Accueil : Koach sur la carte du jour.
     await tab(tester, 2);
-    final card = find.byKey(const ValueKey('koach-home-card'));
+    final card = find.byKey(const ValueKey('koach-today-view'));
     await scrollTo(tester, card);
     releve['carte_du_jour'] = card.evaluate().isNotEmpty;
     releve['accueil_koachs'] = koachs();
@@ -194,12 +202,10 @@ void main() {
     }
     releve['galerie'] = find.byType(KoachGalleryScreen).evaluate().isNotEmpty;
     await shot('4_galerie_haut');
-    final grid = find.byKey(const ValueKey('koach-gallery-grid'));
-    await scrollTo(tester, grid);
-    await tester.ensureVisible(find.byKey(const ValueKey('koach-pose-explain_board')));
+    await scrollTo(tester, find.byKey(const ValueKey('koach-pose-explain_board')));
     await wait(tester, 800);
     await shot('5_galerie_poses_1');
-    await tester.ensureVisible(find.byKey(const ValueKey('koach-pose-present')));
+    await scrollTo(tester, find.byKey(const ValueKey('koach-pose-present')));
     await wait(tester, 800);
     await shot('6_galerie_poses_2');
     final poses = <String>[
@@ -209,8 +215,7 @@ void main() {
     ];
     releve['poses'] = poses.length;
     // Flammes et sélecteur.
-    final flames = find.byKey(const ValueKey('koach-gallery-flames'));
-    await scrollTo(tester, flames);
+    await scrollTo(tester, find.byKey(const ValueKey('flame-pick-9')));
     await tester.tap(find.byKey(const ValueKey('flame-pick-9')));
     await wait(tester, 600);
     releve['selecteur'] =
@@ -229,8 +234,7 @@ void main() {
         .isNotEmpty;
     await shot('8_bulle_pourquoi');
     // Transition : une pose choisie en haut de la galerie.
-    await scrollTo(tester, grid);
-    await tester.ensureVisible(find.byKey(const ValueKey('koach-pose-flag')));
+    await scrollTo(tester, find.byKey(const ValueKey('koach-pose-flag')), up: true);
     await tester.tap(find.byKey(const ValueKey('koach-pose-flag')));
     await tester.pump(const Duration(milliseconds: 90));
     final stage = find.byKey(const ValueKey('koach-gallery-stage'));
@@ -249,6 +253,7 @@ void main() {
     tester.platformDispatcher.accessibilityFeaturesTestValue =
         const FakeAccessibilityFeatures(disableAnimations: true);
     await wait(tester, 800);
+    await scrollTo(tester, find.byKey(const ValueKey('koach-pose-cheer')));
     await tester.tap(find.byKey(const ValueKey('koach-pose-cheer')));
     await tester.pump(const Duration(milliseconds: 16));
     releve['reduit_transition'] =
@@ -263,7 +268,8 @@ void main() {
     await tester.ensureVisible(stage);
     await wait(tester, 600);
     await shot('10_animations_reduites');
-    tester.platformDispatcher.clearAccessibilityFeaturesTestValue();
+    tester.platformDispatcher.accessibilityFeaturesTestValue =
+        const FakeAccessibilityFeatures();
     await wait(tester, 600);
     await back(tester);
     await back(tester);
@@ -328,6 +334,7 @@ void main() {
         jsonEncode(KalisPrefs(raw, dev: false).snapshot()) ==
         jsonEncode(persoBefore);
     record();
+    tester.platformDispatcher.clearAccessibilityFeaturesTestValue();
 
     expect(releve['carte_du_jour'], isTrue);
     expect(releve['proposition_koach'], isTrue);
