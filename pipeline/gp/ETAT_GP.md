@@ -18,7 +18,7 @@ Entrées attendues du propriétaire :
 
 | Lot | Validation | Version | Commit main | Run | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
-| G1 | propriétaire | 6.0.0 | — (prêt : branche `claude/g1-6.0.0`, b3a3d73) | 36792378355 (signé, branche) | 01/10/2026 | en attente du propriétaire : push sur `main` refusé par les permissions de la session ; fusionner `claude/g1-6.0.0` dans `main` (avance rapide) ou relancer G1 avec le push autorisé |
+| G1 | propriétaire | 6.0.0+94 | b3a3d73 | 36813381709 | 01/10/2026 | à valider |
 | G2 | propriétaire | — | — | — | — | à faire |
 | G3 | propriétaire | — | — | — | — | à faire |
 | G4 | auto → G5 | kalis_plan 0.1.0 | — | — | — | à faire |
