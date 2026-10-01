@@ -81,8 +81,17 @@ final class Scorer {
       _skillDays = Int32List(context.rootCount),
       _skillTouched = Int32List(context.rootCount),
       _dayAnchor = Float64List(context.dayCount),
+      _anchorSaved = Float64List(context.dayCount),
+      _anchorDays = _anchorDaysOf(context),
       _expectedSlots = _expectedSlotsOf(context),
       components = Float64List(ScoreWeights.codes.length);
+
+  /// Séances de renforcement attendues : une fois et demie la part de
+  /// renforcement, en jours, au moins une.
+  static int _anchorDaysOf(PlanContext ctx) {
+    final n = (1.5 * ctx.resistanceShare * ctx.dayCount - 0.25).ceil();
+    return n < 1 ? 1 : (n > ctx.dayCount ? ctx.dayCount : n);
+  }
 
   static int _expectedSlotsOf(PlanContext ctx) {
     var n = 0;
@@ -109,6 +118,8 @@ final class Scorer {
   final Int32List _groupDays;
   final Float64List _dayWod;
   final Float64List _dayAnchor;
+  final Float64List _anchorSaved;
+  final int _anchorDays;
   final int _expectedSlots;
   final Int32List _weekSeen;
   final Int32List _rootDay;
@@ -248,7 +259,6 @@ final class Scorer {
       var coreSlots = 0;
       var coreHere = false;
       var strengthHere = false;
-      var resistanceSeconds = 0;
       var anchor = 0.0;
       var skillHere = false;
       var cardioHere = 0;
@@ -400,11 +410,8 @@ final class Scorer {
               patternExcess++;
             }
         }
-        if (kind.isResistance) {
-          resistanceSeconds += seconds;
-          if (e.staple > anchor) {
-            anchor = e.staple;
-          }
+        if (e.staple > anchor) {
+          anchor = e.staple;
         }
         final sfr = e.traits.stimulusFatigue;
         if (sfr >= 0) {
@@ -417,9 +424,8 @@ final class Scorer {
       _dayFatigue[d] = fatigue / days[d].seconds;
       final piece = conditioning >= 3 ? 1.0 : conditioning / 3;
       _dayWod[d] = 0.5 * piece + (strengthHere ? 0.5 : 0.0);
-      // Dix minutes de renforcement et plus font une séance de
-      // renforcement, qui demande son mouvement de base.
-      _dayAnchor[d] = resistanceSeconds >= 600 ? anchor : -1;
+      _dayAnchor[d] = anchor;
+      _anchorSaved[d] = anchor;
       if (cardioHere > 2) {
         cardioStack += cardioHere - 2;
       }
@@ -723,17 +729,30 @@ final class Scorer {
         case DisciplineClass.streetWorkout:
         case DisciplineClass.streetlifting:
         case DisciplineClass.generalFitness:
-          // Chaque séance de renforcement s'ancre sur un mouvement de base
-          // (ou le mouvement d'un objectif).
+          // Les séances de renforcement attendues s'ancrent chacune sur
+          // un mouvement de base (ou le mouvement d'un objectif) : on
+          // compte les meilleures ancres de la semaine, si bien que retirer
+          // du renforcement ne rapporte jamais.
           var sum = 0.0;
-          var n = 0;
-          for (var d = 0; d < dayCount; d++) {
-            if (_dayAnchor[d] >= 0) {
-              sum += _dayAnchor[d];
-              n++;
+          for (var rank = 0; rank < _anchorDays; rank++) {
+            var best = -1;
+            for (var d = 0; d < dayCount; d++) {
+              if (_dayAnchor[d] >= 0 &&
+                  (best < 0 || _dayAnchor[d] > _dayAnchor[best])) {
+                best = d;
+              }
             }
+            if (best < 0) {
+              break;
+            }
+            sum += _dayAnchor[best];
+            _dayAnchor[best] = -1;
           }
-          sub = n == 0 ? 1.0 : sum / n;
+          sub = sum / _anchorDays;
+          // Les autres classes de renforcement relisent les mêmes ancres.
+          for (var d = 0; d < dayCount; d++) {
+            _dayAnchor[d] = _anchorSaved[d];
+          }
       }
       specific += target * sub;
     }
@@ -745,6 +764,7 @@ final class Scorer {
     // équilibrées plutôt qu'une séance pleine et une séance creuse.
     var used = 0.0;
     var least = 1.0;
+    var most = 0.0;
     for (var d = 0; d < dayCount; d++) {
       var u = _dayTime[d] / (days[d].seconds * params.timeUseTarget);
       if (u > 1) {
@@ -754,13 +774,18 @@ final class Scorer {
       if (u < least) {
         least = u;
       }
+      if (u > most) {
+        most = u;
+      }
     }
-    final raw = 0.5 * used / dayCount + 0.5 * least;
     // Quand tous les groupes ont atteint le haut de leur bande, il n'y a
     // plus de travail utile à ajouter : des séances plus courtes que le
-    // temps disponible ne coûtent alors plus rien.
+    // temps disponible ne coûtent alors plus rien — pourvu qu'elles
+    // restent équilibrées entre elles.
+    final mean = used / dayCount;
     final full = saturation * saturation;
-    c[8] = raw + (1 - raw) * full;
+    final even = most <= 0 ? 0.0 : least / most;
+    c[8] = 0.5 * (mean + (1 - mean) * full) + 0.5 * even;
 
     // Qualité : variété.
     var redundancy =
