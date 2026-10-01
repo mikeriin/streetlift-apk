@@ -1,0 +1,4 @@
+run=36916117251
+commit=5135ec066c164071ce3e2bdac0bac9cf72fa9850
+branche=claude/ci-gp-moteurs
+packages=failure
