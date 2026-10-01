@@ -899,7 +899,12 @@ const Map<String, String> _oldJointOfCode = <String, String>{
   return sum <= 0 ? null : (r / sum, c / sum, m / sum);
 }
 
-double _familyError((double, double, double)? target, double r, double c, double m) {
+double _familyError(
+  (double, double, double)? target,
+  double r,
+  double c,
+  double m,
+) {
   if (target == null) {
     return 0;
   }
@@ -920,7 +925,10 @@ List<(Joint, int)> _limitedJoints(AthleteProfile profile) => <(Joint, int)>[
 
 /// Mesures du programme de l'ancien générateur L10 pour le profil
 /// [fixture], lues dans l'extrait [l10] (`docs/data/l10_sorties.json.gz`).
-ComparisonRow l10ComparisonRow(ProfileFixture fixture, Map<String, Object?> l10) {
+ComparisonRow l10ComparisonRow(
+  ProfileFixture fixture,
+  Map<String, Object?> l10,
+) {
   final profiles = l10['profiles']! as Map<String, Object?>;
   final exercises = l10['exercises']! as Map<String, Object?>;
   final p = profiles[fixture.key]! as Map<String, Object?>;
@@ -1272,14 +1280,8 @@ String l10ComparisonMarkdown(
     ],
     <String>[
       'Tirage et poussée équilibrés (rapport entre 2/3 et 3/2)',
-      balancedCount(
-        old,
-        (r) => ComparisonRow.balanced(r.pullSets, r.pushSets),
-      ),
-      balancedCount(
-        neu,
-        (r) => ComparisonRow.balanced(r.pullSets, r.pushSets),
-      ),
+      balancedCount(old, (r) => ComparisonRow.balanced(r.pullSets, r.pushSets)),
+      balancedCount(neu, (r) => ComparisonRow.balanced(r.pullSets, r.pushSets)),
     ],
     <String>[
       'Chaîne postérieure et genou équilibrés (rapport entre 2/3 et 3/2)',
@@ -1337,7 +1339,8 @@ String l10ComparisonMarkdown(
         '${r.overTimeSessions}/${r.sessions} · ${(r.timeUse * 100).round()} %';
     String dose(ComparisonRow r) =>
         hasTarget ? _f(r.familyError * 100, 1) : '—';
-    String volume(ComparisonRow r) => '${r.groupsUnder(4)} / ${r.groupsOver(20)}';
+    String volume(ComparisonRow r) =>
+        '${r.groupsUnder(4)} / ${r.groupsOver(20)}';
     lines.add(
       '| `${f.key}` | ${without.isEmpty ? '—' : without} | ${time(a)} | ${time(b)} | '
       '${dose(a)} | ${dose(b)} | ${volume(a)} | ${volume(b)} | '

@@ -4,7 +4,6 @@
 // sur-représentés chez les profils sans discipline street.
 import 'dart:io';
 
-import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart';
 import 'package:kalis_plan/report.dart';
 import 'package:kalis_plan/testing.dart';
@@ -38,8 +37,9 @@ void main() {
   });
 
   test('aucun moteur ne lit le programme du propriétaire', () {
-    for (final file
-        in Directory('lib').listSync(recursive: true).whereType<File>()) {
+    for (final file in Directory(
+      'lib',
+    ).listSync(recursive: true).whereType<File>()) {
       if (!file.path.endsWith('.dart') || file.path.endsWith('report.dart')) {
         continue;
       }

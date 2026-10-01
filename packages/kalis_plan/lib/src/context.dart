@@ -1460,15 +1460,13 @@ PlanContext _build(ContextInputs inputs) {
           if (credit <= 0) {
             continue;
           }
-          // Les muscles secondaires ne comptent (pour une demi-série) que
-          // dans les mouvements polyarticulaires, où ils sont de vrais
-          // synergistes ; un gainage ou une isolation ne crédite que ses
-          // muscles principaux.
-          if (credit < 2 &&
-              (t.kind == SlotKind.core || t.kind == SlotKind.accessory)) {
-            continue;
-          }
-          groupsOut.add(g.index);
+          // Les muscles secondaires comptent pour une demi-série (comptage
+        // fractionnaire), sauf dans le gainage : ce que la base y liste en
+        // secondaire stabilise, il ne travaille pas.
+        if (credit < 2 && t.kind == SlotKind.core) {
+          continue;
+        }
+        groupsOut.add(g.index);
           valuesOut.add(credit);
         }
       }

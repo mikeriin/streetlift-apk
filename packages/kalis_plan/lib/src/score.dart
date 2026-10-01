@@ -21,6 +21,10 @@ const double fatigueTolerance = 0.3;
 /// avant que son pendant soit placé.
 const int balancePriorHalfSets = 4;
 
+/// Dose minimale efficace d'un groupe musculaire, en demi-séries par
+/// semaine (quatre séries : Pelland et al. 2026, `CONTRAT.md`).
+const int minimumDoseHalfSets = 8;
+
 /// Rapport au-delà duquel un côté domine trop l'autre (tirage sur poussée,
 /// chaîne postérieure sur genou) : hypothèse d'ingénierie, `CONTRAT.md`.
 const double balanceUpperRatio = 1.5;
@@ -562,6 +566,13 @@ final class Scorer {
         double s;
         if (v < low) {
           s = v / low;
+          // Sous la dose minimale efficace (quatre séries par semaine, ou
+          // le bas de la bande s'il est plus bas), le manque compte une
+          // fois et demie : un groupe majeur n'est pas laissé de côté.
+          final floor = low < minimumDoseHalfSets ? low : minimumDoseHalfSets;
+          if (v < floor) {
+            s -= 0.5 * (1 - v / floor);
+          }
         } else if (v > high) {
           // Sans plancher à zéro : un groupe déjà trop chargé ne devient
           // pas un remplissage gratuit.
