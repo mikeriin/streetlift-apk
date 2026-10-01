@@ -420,6 +420,11 @@ void main() {
       await tester.tap(tile);
       await tester.pumpAndSettle();
       expect(find.text('Copie de sécurité'), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('retired-notice-close')),
+        200,
+        scrollable: find.byType(Scrollable).last,
+      );
       final close = tester.widget<TextButton>(
         find.byKey(const ValueKey('retired-notice-close'), skipOffstage: false),
       );
