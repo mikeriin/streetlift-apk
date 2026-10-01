@@ -11,6 +11,8 @@ Première version (lot G8 du pipeline « Génération et progression »).
   (notes absentes, « 5 et plus », séries terminées, séries ratées), écrêtage des écarts aberrants,
   fatigue dans la séance, forme et fatigue entre les séances, forme du jour, notes peu informatives,
   partage entre exercices proches, coupures.
+- Séries enchaînées (supersets, tours) lues dans l'ordre de réalisation ; pivot de la courbe déplacé
+  quand la plage change ; séries manquées douteuses écrêtées.
 - Décisions : charge à hystérésis sur la grille réelle du matériel, plafonds de hausse, calibrage,
   séries notées « 5 et plus », conseil pendant la séance (écart de 2 flammes), série repère, bilan santé
   gradué, douleur, lieu et temps du jour, charge minimale trop lourde, programme importé, tests.

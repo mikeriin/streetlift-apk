@@ -85,11 +85,11 @@ dart run bin/kalis_adapt_cli.dart --rapport <dossier>   # campagne de docs/ (200
 
 - `lib/simulation.dart` : athlètes simulés à vérité connue, politiques comparées (`kalis_adapt`, double
   progression, oracle), mesures. L'ancien moteur L7/L11 est branché depuis `tool/l7/` (copie figée).
-- `tool/reference/` : écriture Python indépendante du filtre et générateur des vecteurs partagés.
+- `tool/reference/` : seconde écriture du filtre, en Python, et générateur des vecteurs partagés.
 - `tool/owner.dart` : fixture du programme importé du propriétaire.
 
 ## Tests
 
-`dart test` : briques (`units_test`), référence croisée Python (`reference_test`), huit athlètes en boucle
-complète (`smoke_test`), 10 240 journaux aléatoires et les invariants de sécurité (`properties_*_test`),
+`dart test` : briques (`units_test`), scénarios de journal (`sessions_test`), référence croisée Python
+(`reference_test`), huit athlètes en boucle complète (`smoke_test`), 10 240 journaux aléatoires et les invariants de sécurité (`properties_*_test`),
 pureté (`purity_test`), documents générés à jour (`docs_test`).
