@@ -571,9 +571,9 @@ void main() {
     );
 
     Future<void> tap(WidgetTester tester, String key) async {
-      final f = find.byKey(ValueKey(key)).last;
+      final f = find.byKey(ValueKey(key));
       await scrollToAction(tester, f);
-      await tester.tap(f);
+      await tester.tap(f.hitTestable().last);
       await tester.pumpAndSettle();
     }
 

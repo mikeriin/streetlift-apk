@@ -369,8 +369,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       // journées (départ à choisir, à venir, terminé).
                       if (ProgramStartBanner.visible(store.program, now))
                         ProgramStartBanner(now: now, padding: EdgeInsets.zero),
-                      // L10 : profil modifié ou programme régénéré.
-                      if (ProgramHomeCard.visible) const ProgramHomeCard(),
                       if (ResumeBanner.visible) const ResumeBanner(),
                       if (store.koachWeighInDue) const KoachWeighInBanner(),
                       // L11 (KT-060) : pause en cours, en tête.
@@ -381,6 +379,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       // plateau, prudence ; après les journées.
                       if (store.adaptProposals.isNotEmpty)
                         const AdaptHomeCard(proposalsOnly: true),
+                      // G7 : Où j'en suis, fin de bloc, retour à l'ancien
+                      // programme ; après les journées (la semaine entière
+                      // reste visible, L5).
+                      if (ProgramHomeCard.visible) const ProgramHomeCard(),
                     ],
                   ),
                 ),

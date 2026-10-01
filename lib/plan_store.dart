@@ -440,8 +440,9 @@ extension PlanStore on AppStore {
       null,
       (a, b) => a == null || b.isAfter(a) ? b : a,
     );
-    if (ref == null)
+    if (ref == null) {
       return Program.civilIndex(today) - Program.civilIndex(start) >= 14;
+    }
     return Program.civilIndex(today) - Program.civilIndex(ref) >= 14;
   }
 

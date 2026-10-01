@@ -779,7 +779,8 @@ void main() {
       await tap(tester, 'flow-save');
       expect(find.byKey(const ValueKey('koach-sheet')), findsOneWidget);
       expect(find.textContaining('touche ton programme'), findsOneWidget);
-      await tap(tester, 'koach-sheet-ok');
+      // G7 : Koach propose de recréer le programme ; « Plus tard ».
+      await tap(tester, 'profile-program-later');
       expect(store.athleteProfile!.availability.last.weekday, 7);
       expect(store.athlete!.programChangePending, isTrue);
       // Santé : retrait de l'accord.

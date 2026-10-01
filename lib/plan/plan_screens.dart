@@ -348,8 +348,8 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
           appBar: AppBar(
             leading: BackButton(onPressed: _back),
             title: Text(switch (_stage) {
-              _Stage.pass1 => 'TON PROGRAMME · EXERCICES',
-              _Stage.review => 'REVUE DES EXERCICES',
+              _Stage.pass1 => 'TES EXERCICES',
+              _Stage.review => 'REVUE',
               _Stage.recap => 'RÉCAPITULATIF',
               _Stage.pass2 => 'SÉRIES ET CHARGES',
             }),
