@@ -71,7 +71,7 @@ des objets JSON libres, conventions de charge écrites, 12 règles du catalogue 
 
 ## Pour la suite
 
-- G4 (`kalis_plan`) part de `moteurs` (5327294) et réalise `PlanEngine`.
+- G4 (`kalis_plan`) part de `moteurs` (5327294) et réalise `PlanEngine`. **Le lancement automatique de G4 a été refusé à la session (permission sur `fire_trigger`)** : à lancer à la main sur la tâche Fable B avec « Lot : G4 ».
 - G3 récupère `packages/kalis_core` par la branche fixe ci-dessus ; `INTEGRATION.md` dit comment charger le
   catalogue, stocker le profil, convertir le journal.
 - À relire par le propriétaire : `packages/kalis_core/docs/RELECTURE_CATALOGUE.md` (sur `moteurs`).

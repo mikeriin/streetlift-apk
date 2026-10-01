@@ -56,7 +56,7 @@ Entrées du propriétaire (`inputs/`) :
 
 | Lot | Prérequis | Tâche | Étiquette | Commit moteurs | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
-| GC | — | Fable A | kalis_core-v0.1.0 (branche fixe `etiquettes/kalis_core-v0.1.0` : push d'étiquette refusé, 403) | 5327294 | 01/10/2026 | livré (run 36833295632 vert) |
+| GC | — | Fable A | kalis_core-v0.1.0 (branche fixe `etiquettes/kalis_core-v0.1.0` : push d'étiquette refusé, 403) | 5327294 | 01/10/2026 | livré (run 36833295632 vert) ; **G4 non lancé : fire_trigger refusé à la session (permission), à lancer par le propriétaire ou le pilotage sur Fable B avec « Lot : G4 »** |
 | G4 | GC | Fable B | kalis_plan-v0.1.0 | — | — | à faire |
 | G8 | G4 | Fable A | kalis_adapt-v0.1.0 | — | — | à faire |
 | G11 | G8 | Fable B | kalis_quest-v0.1.0 | — | — | à faire |
