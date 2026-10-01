@@ -1,0 +1,574 @@
+== kalis_plan
+Resolving dependencies...
+Downloading packages...
++ _fe_analyzer_shared 108.0.0
++ analyzer 14.4.0
++ args 2.7.0
++ async 2.13.1
++ boolean_selector 2.1.2
++ cli_config 0.2.0
++ collection 1.19.1
++ convert 3.1.2
++ coverage 1.15.1
++ crypto 3.0.7
++ file 7.0.1
++ frontend_server_client 4.0.0
++ glob 2.2.0
++ http_multi_server 3.2.2
++ http_parser 4.1.2
++ io 1.1.0
++ kalis_core 0.1.0 from path ../kalis_core
++ lints 4.0.0 (6.1.0 available)
++ logging 1.3.0
++ matcher 0.12.20
++ meta 1.19.0
++ mime 2.1.0
++ node_preamble 2.0.2
++ package_config 3.0.0
++ path 1.9.1
++ pool 1.5.3
++ pub_semver 2.2.1
++ shelf 1.4.2
++ shelf_packages_handler 3.0.2
++ shelf_static 1.1.3
++ shelf_web_socket 3.0.0
++ source_map_stack_trace 2.1.2
++ source_maps 0.10.14
++ source_span 1.10.2
++ stack_trace 1.12.2
++ stream_channel 2.1.4
++ string_scanner 1.4.1
++ term_glyph 1.2.2
++ test 1.32.0
++ test_api 0.7.14
++ test_core 0.6.20
++ typed_data 1.4.0
++ vm_service 15.3.0
++ watcher 1.2.1
++ web 1.1.1
++ web_socket 1.0.1
++ web_socket_channel 3.0.3
++ webkit_inspection_protocol 1.2.1
++ yaml 3.1.4
+Changed 49 dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Changed lib/src/context.dart
+Changed test/engine_test.dart
+Changed test/properties.dart
+Changed test/units_test.dart
+Changed test/zz_dev_test.dart
+Formatted 36 files (5 changed) in 0.16 seconds.
+formatage : échec
+Analyzing kalis_plan...
+No issues found!
+00:00 +0: loading test/properties_2_test.dart
+00:00 +0: test/zz_dev_test.dart: export du formatage
+00:00 +1: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:08 +3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:09 +4: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:09 +5: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:09 +6: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:09 +7: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:09 +8: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:09 +9: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:09 +10: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:09 +11: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:09 +12: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:09 +13: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:09 +14: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:09 +15: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:09 +16: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:09 +17: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:09 +18: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:09 +19: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +20: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:21 +21: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+00:25 +22: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:30 +23: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2880 à 3039
+00:34 +24: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:40 +25: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3040 à 3199
+00:43 +26: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:51 +27: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3200 à 3359
+00:52 +28: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 640 à 799
+00:59 +28 -1: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3360 à 3519
+00:59 +28 -1: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 640 à 799 [E]
+  Expected: empty
+    Actual: [
+              'profil 681 — passe 1 : contrainte dure — day 0: mo-90-90-passif inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : contrainte dure — day 0: mo-ouverture-epaules-extension-banc inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : contrainte dure — day 0: mo-pigeon-sol inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : contrainte dure — day 0: mo-rouleau-fessiers-piriforme inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : contrainte dure — day 0: mo-wall-slides inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : contrainte dure — day 1: mo-etirement-grand-dorsal-barre inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : contrainte dure — day 1: mo-90-90-passif inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : contrainte dure — day 1: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : contrainte dure — day 1: mo-etirement-capsule-posterieure-bras-croise inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : contrainte dure — day 1: mo-etirement-extenseurs-poignet-bras-tendu inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : contrainte dure — day 1: mo-figure-4-allonge inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : contrainte dure — day 1: mo-ouverture-epaules-extension-banc inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : contrainte dure — day 1: mo-pigeon-sol inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : contrainte dure — day 1: mo-respiration-crocodile inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : contrainte dure — day 1: mo-routine-mobilite-epaules-poignets inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : contrainte dure — day 1: mo-soupir-physiologique inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : contrainte dure — day 1: mo-wall-slides inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — passe 1 : la note relue diffère de la note rendue',
+              'profil 681 — revue add : contrainte dure — day 0: mo-etirement-triceps-bras-au-dessus-tete inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — revue add : contrainte dure — day 1: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)',
+              'profil 681 — revue add : la note relue diffère de la note rendue'
+            ]
+  21 manquement(s) :
+  profil 681 — passe 1 : contrainte dure — day 0: mo-90-90-passif inadmissible (niveau, prérequis, prudence)
+  profil 681 — passe 1 : contrainte dure — day 0: mo-ouverture-epaules-extension-banc inadmissible (niveau, prérequis, prudence)
+  profil 681 — passe 1 : contrainte dure — day 0: mo-pigeon-sol inadmissible (niveau, prérequis, prudence)
+  profil 681 — passe 1 : contrainte dure — day 0: mo-rouleau-fessiers-piriforme inadmissible (niveau, prérequis, prudence)
+  profil 681 — passe 1 : contrainte dure — day 0: mo-wall-slides inadmissible (niveau, prérequis, prudence)
+  profil 681 — passe 1 : contrainte dure — day 1: mo-etirement-grand-dorsal-barre inadmissible (niveau, prérequis, prudence)
+  profil 681 — passe 1 : contrainte dure — day 1: mo-90-90-passif inadmissible (niveau, prérequis, prudence)
+  profil 681 — passe 1 : contrainte dure — day 1: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)
+  profil 681 — passe 1 : contrainte dure — day 1: mo-etirement-capsule-posterieure-bras-croise inadmissible (niveau, prérequis, prudence)
+  profil 681 — passe 1 : contrainte dure — day 1: mo-etirement-extenseurs-poignet-bras-tendu inadmissible (niveau, prérequis, prudence)
+  profil 681 — passe 1 : contrainte dure — day 1: mo-figure-4-allonge inadmissible (niveau, prérequis, prudence)
+  profil 681 — passe 1 : contrainte dure — day 1: mo-ouverture-epaules-extension-banc inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 664:9  propertyShard.<fn>.<fn>
+  
+01:01 +29 -1: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:09 +30 -1: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3520 à 3679
+01:10 +31 -1: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:18 +32 -1: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839
+01:19 +33 -1: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+01:23 +34 -1: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+01:28 +35 -1: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+01:35 +36 -1: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+01:36 +37 -1: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+01:36 +38 -1: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+01:39 +39 -1: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+01:40 +40 -1: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+01:40 +41 -1: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+01:40 +42 -1: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+01:40 +43 -1: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+01:40 +44 -1: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+01:40 +45 -1: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+01:40 +46 -1: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+01:42 +46 -2: test/engine_test.dart: ligne de commande dart run kalis_plan:plan rend le programme du moteur
+01:42 +46 -2: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839 [E]
+  Expected: empty
+    Actual: [
+              'profil 7835 — passe 1 : contrainte dure — day 0: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 0: mo-ouverture-epaules-extension-banc inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 0: mo-rouleau-fessiers-piriforme inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 0: mo-wall-slides inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 1: mo-flexion-dorsale-lestee inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 1: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 1: mo-coherence-cardiaque inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 1: mo-etirement-capsule-posterieure-bras-croise inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 1: mo-etirement-trapeze-superieur inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 1: mo-pigeon-sol inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 1: mo-respiration-boite inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 1: mo-respiration-crocodile inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 1: mo-retraction-menton inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 1: mo-rouleau-fessiers-piriforme inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 1: mo-routine-mobilite-epaules-poignets inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 1: mo-soupir-physiologique inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 2: mo-etirement-trapeze-superieur inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 2: mo-respiration-boite inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 2: mo-wall-slides inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 3: mo-90-90-passif inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 3: mo-etirement-biceps-mur inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 3: mo-etirement-pectoral-cadre-porte inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 3: mo-etirement-trapeze-superieur inadmissible (niveau, prérequis, prudence)',
+              'profil 7835 — passe 1 : contrainte dure — day 3: mo-ouverture-epaules-extension-banc inadmissible (niveau, prérequis, prudence)',
+              ...
+            ]
+  73 manquement(s) :
+  profil 7835 — passe 1 : contrainte dure — day 0: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)
+  profil 7835 — passe 1 : contrainte dure — day 0: mo-ouverture-epaules-extension-banc inadmissible (niveau, prérequis, prudence)
+  profil 7835 — passe 1 : contrainte dure — day 0: mo-rouleau-fessiers-piriforme inadmissible (niveau, prérequis, prudence)
+  profil 7835 — passe 1 : contrainte dure — day 0: mo-wall-slides inadmissible (niveau, prérequis, prudence)
+  profil 7835 — passe 1 : contrainte dure — day 1: mo-flexion-dorsale-lestee inadmissible (niveau, prérequis, prudence)
+  profil 7835 — passe 1 : contrainte dure — day 1: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)
+  profil 7835 — passe 1 : contrainte dure — day 1: mo-coherence-cardiaque inadmissible (niveau, prérequis, prudence)
+  profil 7835 — passe 1 : contrainte dure — day 1: mo-etirement-capsule-posterieure-bras-croise inadmissible (niveau, prérequis, prudence)
+  profil 7835 — passe 1 : contrainte dure — day 1: mo-etirement-trapeze-superieur inadmissible (niveau, prérequis, prudence)
+  profil 7835 — passe 1 : contrainte dure — day 1: mo-pigeon-sol inadmissible (niveau, prérequis, prudence)
+  profil 7835 — passe 1 : contrainte dure — day 1: mo-respiration-boite inadmissible (niveau, prérequis, prudence)
+  profil 7835 — passe 1 : contrainte dure — day 1: mo-respiration-crocodile inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 664:9  propertyShard.<fn>.<fn>
+  
+01:43 +47 -2: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+01:52 +48 -2: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+01:56 +48 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+01:56 +48 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999 [E]
+  Expected: empty
+    Actual: [
+              'profil 3859 — bloc suivant : contrainte dure — day 1: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)',
+              'profil 3859 — bloc suivant : contrainte dure — day 1: mo-adducteurs-fente-laterale inadmissible (niveau, prérequis, prudence)',
+              'profil 3859 — bloc suivant : contrainte dure — day 1: mo-etirement-biceps-mur inadmissible (niveau, prérequis, prudence)',
+              'profil 3859 — bloc suivant : contrainte dure — day 1: mo-etirement-capsule-posterieure-bras-croise inadmissible (niveau, prérequis, prudence)',
+              'profil 3859 — bloc suivant : contrainte dure — day 1: mo-etirement-gastrocnemiens-mur inadmissible (niveau, prérequis, prudence)',
+              'profil 3859 — bloc suivant : contrainte dure — day 1: mo-flechisseurs-hanche-semi-agenouille inadmissible (niveau, prérequis, prudence)',
+              'profil 3859 — bloc suivant : contrainte dure — day 1: mo-pigeon-sol inadmissible (niveau, prérequis, prudence)',
+              'profil 3859 — bloc suivant : contrainte dure — day 1: mo-wall-slides inadmissible (niveau, prérequis, prudence)',
+              'profil 3859 — bloc suivant : la note relue diffère de la note rendue',
+              'profil 3989 — passe 1 : contrainte dure — day 0: mo-pont-dorsal inadmissible (niveau, prérequis, prudence)',
+              'profil 3989 — passe 1 : contrainte dure — day 0: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)',
+              'profil 3989 — passe 1 : contrainte dure — day 0: mo-90-90-passif inadmissible (niveau, prérequis, prudence)',
+              'profil 3989 — passe 1 : contrainte dure — day 0: mo-coherence-cardiaque inadmissible (niveau, prérequis, prudence)',
+              'profil 3989 — passe 1 : contrainte dure — day 0: mo-etirement-biceps-mur inadmissible (niveau, prérequis, prudence)',
+              'profil 3989 — passe 1 : contrainte dure — day 0: mo-flechisseurs-hanche-semi-agenouille inadmissible (niveau, prérequis, prudence)',
+              'profil 3989 — passe 1 : contrainte dure — day 0: mo-marche-talons inadmissible (niveau, prérequis, prudence)',
+              'profil 3989 — passe 1 : contrainte dure — day 0: mo-pigeon-sol inadmissible (niveau, prérequis, prudence)',
+              'profil 3989 — passe 1 : contrainte dure — day 0: mo-rotation-thoracique-quatre-pattes inadmissible (niveau, prérequis, prudence)',
+              'profil 3989 — passe 1 : contrainte dure — day 0: mo-sleeper-stretch inadmissible (niveau, prérequis, prudence)',
+              'profil 3989 — passe 1 : contrainte dure — day 0: mo-table-inversee inadmissible (niveau, prérequis, prudence)',
+              'profil 3989 — passe 1 : contrainte dure — day 0: mo-wall-slides inadmissible (niveau, prérequis, prudence)',
+              'profil 3989 — passe 1 : contrainte dure — day 1: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)',
+              'profil 3989 — passe 1 : contrainte dure — day 1: mo-90-90-passif inadmissible (niveau, prérequis, prudence)',
+              'profil 3989 — passe 1 : contrainte dure — day 1: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)',
+              ...
+            ]
+  63 manquement(s) :
+  profil 3859 — bloc suivant : contrainte dure — day 1: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)
+  profil 3859 — bloc suivant : contrainte dure — day 1: mo-adducteurs-fente-laterale inadmissible (niveau, prérequis, prudence)
+  profil 3859 — bloc suivant : contrainte dure — day 1: mo-etirement-biceps-mur inadmissible (niveau, prérequis, prudence)
+  profil 3859 — bloc suivant : contrainte dure — day 1: mo-etirement-capsule-posterieure-bras-croise inadmissible (niveau, prérequis, prudence)
+  profil 3859 — bloc suivant : contrainte dure — day 1: mo-etirement-gastrocnemiens-mur inadmissible (niveau, prérequis, prudence)
+  profil 3859 — bloc suivant : contrainte dure — day 1: mo-flechisseurs-hanche-semi-agenouille inadmissible (niveau, prérequis, prudence)
+  profil 3859 — bloc suivant : contrainte dure — day 1: mo-pigeon-sol inadmissible (niveau, prérequis, prudence)
+  profil 3859 — bloc suivant : contrainte dure — day 1: mo-wall-slides inadmissible (niveau, prérequis, prudence)
+  profil 3859 — bloc suivant : la note relue diffère de la note rendue
+  profil 3989 — passe 1 : contrainte dure — day 0: mo-pont-dorsal inadmissible (niveau, prérequis, prudence)
+  profil 3989 — passe 1 : contrainte dure — day 0: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)
+  profil 3989 — passe 1 : contrainte dure — day 0: mo-90-90-passif inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 664:9  propertyShard.<fn>.<fn>
+  
+02:01 +48 -4: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4000 à 4159
+02:01 +48 -4: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159 [E]
+  Expected: empty
+    Actual: [
+              'profil 8107 — passe 2 : s0 d1.5 — charge 0.0',
+              'profil 8107 — passe 2 : s1 d1.5 — charge 0.0',
+              'profil 8107 — passe 2 : s2 d1.5 — charge 0.0',
+              'profil 8107 — passe 2 : s3 d1.5 — charge 0.0',
+              'profil 8107 — passe 2 : s4 d1.5 — charge 0.0',
+              'profil 8107 — passe 2 : s5 d1.5 — charge 0.0',
+              'profil 8107 — bloc suivant : s0 d1.5 — charge 0.0',
+              'profil 8107 — bloc suivant : s1 d1.5 — charge 0.0',
+              'profil 8107 — bloc suivant : s2 d1.5 — charge 0.0',
+              'profil 8107 — bloc suivant : s3 d1.5 — charge 0.0',
+              'profil 8107 — bloc suivant : s4 d1.5 — charge 0.0',
+              'profil 8107 — bloc suivant : s5 d1.5 — charge 0.0'
+            ]
+  12 manquement(s) :
+  profil 8107 — passe 2 : s0 d1.5 — charge 0.0
+  profil 8107 — passe 2 : s1 d1.5 — charge 0.0
+  profil 8107 — passe 2 : s2 d1.5 — charge 0.0
+  profil 8107 — passe 2 : s3 d1.5 — charge 0.0
+  profil 8107 — passe 2 : s4 d1.5 — charge 0.0
+  profil 8107 — passe 2 : s5 d1.5 — charge 0.0
+  profil 8107 — bloc suivant : s0 d1.5 — charge 0.0
+  profil 8107 — bloc suivant : s1 d1.5 — charge 0.0
+  profil 8107 — bloc suivant : s2 d1.5 — charge 0.0
+  profil 8107 — bloc suivant : s3 d1.5 — charge 0.0
+  profil 8107 — bloc suivant : s4 d1.5 — charge 0.0
+  profil 8107 — bloc suivant : s5 d1.5 — charge 0.0
+  
+  package:matcher             expect
+  test/properties.dart 664:9  propertyShard.<fn>.<fn>
+  
+02:06 +49 -4: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319
+02:10 +49 -5: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4160 à 4319
+02:10 +49 -5: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319 [E]
+  Expected: empty
+    Actual: [
+              'profil 8193 — passe 1 : contrainte dure — day 0: mo-90-90-passif inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 0: mo-wall-slides inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 1: mo-ouverture-epaules-extension-banc inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 1: mo-rouleau-fessiers-piriforme inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 1: mo-routine-mobilite-epaules-poignets inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 2: mo-90-90-passif inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 2: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 2: mo-etirement-capsule-posterieure-bras-croise inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 2: mo-etirement-dessus-pied inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 2: mo-etirement-extenseurs-poignet-bras-tendu inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 2: mo-etirement-grand-dorsal-barre inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 2: mo-etirement-pectoral-cadre-porte inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 2: mo-etirement-trapeze-superieur inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 2: mo-rouleau-grand-dorsal inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 2: mo-routine-mobilite-epaules-poignets inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 2: mo-sleeper-stretch inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 2: mo-wall-slides inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 3: mo-cat-cow inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 3: mo-rotation-thoracique-quatre-pattes inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 3: mo-rouleau-grand-dorsal inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 3: mo-sleeper-stretch inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : contrainte dure — day 3: mo-wall-slides inadmissible (niveau, prérequis, prudence)',
+              'profil 8193 — passe 1 : la note relue diffère de la note rendue',
+              'profil 8193 — revue add : contrainte dure — day 0: mo-retraction-menton inadmissible (niveau, prérequis, prudence)',
+              ...
+            ]
+  29 manquement(s) :
+  profil 8193 — passe 1 : contrainte dure — day 0: mo-90-90-passif inadmissible (niveau, prérequis, prudence)
+  profil 8193 — passe 1 : contrainte dure — day 0: mo-wall-slides inadmissible (niveau, prérequis, prudence)
+  profil 8193 — passe 1 : contrainte dure — day 1: mo-ouverture-epaules-extension-banc inadmissible (niveau, prérequis, prudence)
+  profil 8193 — passe 1 : contrainte dure — day 1: mo-rouleau-fessiers-piriforme inadmissible (niveau, prérequis, prudence)
+  profil 8193 — passe 1 : contrainte dure — day 1: mo-routine-mobilite-epaules-poignets inadmissible (niveau, prérequis, prudence)
+  profil 8193 — passe 1 : contrainte dure — day 2: mo-90-90-passif inadmissible (niveau, prérequis, prudence)
+  profil 8193 — passe 1 : contrainte dure — day 2: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)
+  profil 8193 — passe 1 : contrainte dure — day 2: mo-etirement-capsule-posterieure-bras-croise inadmissible (niveau, prérequis, prudence)
+  profil 8193 — passe 1 : contrainte dure — day 2: mo-etirement-dessus-pied inadmissible (niveau, prérequis, prudence)
+  profil 8193 — passe 1 : contrainte dure — day 2: mo-etirement-extenseurs-poignet-bras-tendu inadmissible (niveau, prérequis, prudence)
+  profil 8193 — passe 1 : contrainte dure — day 2: mo-etirement-grand-dorsal-barre inadmissible (niveau, prérequis, prudence)
+  profil 8193 — passe 1 : contrainte dure — day 2: mo-etirement-pectoral-cadre-porte inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 664:9  propertyShard.<fn>.<fn>
+  
+02:15 +50 -5: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8320 à 8479
+02:19 +51 -5: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4320 à 4479
+02:24 +52 -5: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8480 à 8639
+02:28 +53 -5: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4480 à 4639
+02:33 +54 -5: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8640 à 8799
+02:37 +55 -5: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4640 à 4799
+02:42 +56 -5: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8800 à 8959
+02:46 +57 -5: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4800 à 4959
+02:50 +58 -5: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1280 à 1439
+02:59 +59 -5: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4960 à 5119
+03:00 +60 -5: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1440 à 1599
+03:09 +60 -6: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 8960 à 9119
+03:09 +60 -6: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1440 à 1599 [E]
+  Expected: empty
+    Actual: [
+              'profil 1458 — passe 1 : contrainte dure — day 0: mo-frog-stretch inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 0: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 0: mo-90-90-passif inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 0: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 0: mo-flechisseurs-hanche-semi-agenouille inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 0: mo-papillon inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 0: mo-pigeon-sol inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 0: mo-thread-the-needle inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 1: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 1: mo-90-90-passif inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 1: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 1: mo-flechisseurs-hanche-semi-agenouille inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 1: mo-open-book inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 1: mo-rotations-coudes-appui inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 1: mo-wall-slides inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 1: mo-worlds-greatest-stretch inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 2: mo-90-90-passif inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 2: mo-appui-dos-des-mains inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 2: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 2: mo-cars-hanche inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 2: mo-flechisseurs-hanche-semi-agenouille inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 2: mo-soupir-physiologique inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 2: mo-thread-the-needle inadmissible (niveau, prérequis, prudence)',
+              'profil 1458 — passe 1 : contrainte dure — day 2: mo-wall-slides inadmissible (niveau, prérequis, prudence)',
+              ...
+            ]
+  96 manquement(s) :
+  profil 1458 — passe 1 : contrainte dure — day 0: mo-frog-stretch inadmissible (niveau, prérequis, prudence)
+  profil 1458 — passe 1 : contrainte dure — day 0: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)
+  profil 1458 — passe 1 : contrainte dure — day 0: mo-90-90-passif inadmissible (niveau, prérequis, prudence)
+  profil 1458 — passe 1 : contrainte dure — day 0: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)
+  profil 1458 — passe 1 : contrainte dure — day 0: mo-flechisseurs-hanche-semi-agenouille inadmissible (niveau, prérequis, prudence)
+  profil 1458 — passe 1 : contrainte dure — day 0: mo-papillon inadmissible (niveau, prérequis, prudence)
+  profil 1458 — passe 1 : contrainte dure — day 0: mo-pigeon-sol inadmissible (niveau, prérequis, prudence)
+  profil 1458 — passe 1 : contrainte dure — day 0: mo-thread-the-needle inadmissible (niveau, prérequis, prudence)
+  profil 1458 — passe 1 : contrainte dure — day 1: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)
+  profil 1458 — passe 1 : contrainte dure — day 1: mo-90-90-passif inadmissible (niveau, prérequis, prudence)
+  profil 1458 — passe 1 : contrainte dure — day 1: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)
+  profil 1458 — passe 1 : contrainte dure — day 1: mo-flechisseurs-hanche-semi-agenouille inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 664:9  propertyShard.<fn>.<fn>
+  
+03:15 +61 -6: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1600 à 1759
+03:18 +62 -6: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9120 à 9279
+03:23 +63 -6: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1760 à 1919
+03:26 +63 -7: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9280 à 9439
+03:26 +63 -7: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1760 à 1919 [E]
+  Expected: empty
+    Actual: [
+              'profil 1844 — passe 1 : contrainte dure — day 0: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 0: mo-cobra inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 0: mo-coherence-cardiaque inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 0: mo-etirement-biceps-mur inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 0: mo-etirement-flechisseurs-poignet-bras-tendu inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 0: mo-etirement-pectoral-cadre-porte inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 0: mo-etirement-trapeze-superieur inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 0: mo-figure-4-allonge inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 0: mo-pigeon-sol inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 0: mo-rouleau-mollets inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 0: mo-routine-mobilite-epaules-poignets inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 0: mo-soupir-physiologique inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 1: mo-90-90-passif inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 1: mo-cobra inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 1: mo-ouverture-epaules-extension-banc inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 1: mo-rouleau-mollets inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 1: mo-toe-yoga inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : contrainte dure — day 1: mo-wall-slides inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — passe 1 : la note relue diffère de la note rendue',
+              'profil 1844 — revue dislike : contrainte dure — day 0: mo-etirement-bas-dips-barres inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — revue dislike : contrainte dure — day 0: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — revue dislike : contrainte dure — day 0: mo-cars-cheville inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — revue dislike : contrainte dure — day 1: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)',
+              'profil 1844 — revue dislike : la note relue diffère de la note rendue'
+            ]
+  24 manquement(s) :
+  profil 1844 — passe 1 : contrainte dure — day 0: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)
+  profil 1844 — passe 1 : contrainte dure — day 0: mo-cobra inadmissible (niveau, prérequis, prudence)
+  profil 1844 — passe 1 : contrainte dure — day 0: mo-coherence-cardiaque inadmissible (niveau, prérequis, prudence)
+  profil 1844 — passe 1 : contrainte dure — day 0: mo-etirement-biceps-mur inadmissible (niveau, prérequis, prudence)
+  profil 1844 — passe 1 : contrainte dure — day 0: mo-etirement-flechisseurs-poignet-bras-tendu inadmissible (niveau, prérequis, prudence)
+  profil 1844 — passe 1 : contrainte dure — day 0: mo-etirement-pectoral-cadre-porte inadmissible (niveau, prérequis, prudence)
+  profil 1844 — passe 1 : contrainte dure — day 0: mo-etirement-trapeze-superieur inadmissible (niveau, prérequis, prudence)
+  profil 1844 — passe 1 : contrainte dure — day 0: mo-figure-4-allonge inadmissible (niveau, prérequis, prudence)
+  profil 1844 — passe 1 : contrainte dure — day 0: mo-pigeon-sol inadmissible (niveau, prérequis, prudence)
+  profil 1844 — passe 1 : contrainte dure — day 0: mo-rouleau-mollets inadmissible (niveau, prérequis, prudence)
+  profil 1844 — passe 1 : contrainte dure — day 0: mo-routine-mobilite-epaules-poignets inadmissible (niveau, prérequis, prudence)
+  profil 1844 — passe 1 : contrainte dure — day 0: mo-soupir-physiologique inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 664:9  propertyShard.<fn>.<fn>
+  
+03:32 +64 -7: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1920 à 2079
+03:36 +65 -7: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9440 à 9599
+03:42 +65 -8: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2080 à 2239
+03:42 +65 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9440 à 9599 [E]
+  Expected: empty
+    Actual: [
+              'profil 9470 — passe 1 : contrainte dure — day 0: mo-90-90-passif inadmissible (niveau, prérequis, prudence)',
+              'profil 9470 — passe 1 : contrainte dure — day 0: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)',
+              'profil 9470 — passe 1 : contrainte dure — day 0: mo-etirement-trapeze-superieur inadmissible (niveau, prérequis, prudence)',
+              'profil 9470 — passe 1 : contrainte dure — day 0: mo-ouverture-epaules-extension-banc inadmissible (niveau, prérequis, prudence)',
+              'profil 9470 — passe 1 : contrainte dure — day 0: mo-pigeon-sol inadmissible (niveau, prérequis, prudence)',
+              'profil 9470 — passe 1 : contrainte dure — day 0: mo-respiration-boite inadmissible (niveau, prérequis, prudence)',
+              'profil 9470 — passe 1 : contrainte dure — day 0: mo-rouleau-tenseur-fascia-lata inadmissible (niveau, prérequis, prudence)',
+              'profil 9470 — passe 1 : contrainte dure — day 0: mo-routine-mobilite-epaules-poignets inadmissible (niveau, prérequis, prudence)',
+              'profil 9470 — passe 1 : contrainte dure — day 0: mo-wall-slides inadmissible (niveau, prérequis, prudence)',
+              'profil 9470 — passe 1 : contrainte dure — day 0: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence)',
+              'profil 9470 — passe 1 : la note relue diffère de la note rendue',
+              'profil 9470 — revue dislike : contrainte dure — day 0: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)',
+              'profil 9470 — revue dislike : contrainte dure — day 0: mo-rouleau-fessiers-piriforme inadmissible (niveau, prérequis, prudence)',
+              'profil 9470 — revue dislike : la note relue diffère de la note rendue'
+            ]
+  14 manquement(s) :
+  profil 9470 — passe 1 : contrainte dure — day 0: mo-90-90-passif inadmissible (niveau, prérequis, prudence)
+  profil 9470 — passe 1 : contrainte dure — day 0: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)
+  profil 9470 — passe 1 : contrainte dure — day 0: mo-etirement-trapeze-superieur inadmissible (niveau, prérequis, prudence)
+  profil 9470 — passe 1 : contrainte dure — day 0: mo-ouverture-epaules-extension-banc inadmissible (niveau, prérequis, prudence)
+  profil 9470 — passe 1 : contrainte dure — day 0: mo-pigeon-sol inadmissible (niveau, prérequis, prudence)
+  profil 9470 — passe 1 : contrainte dure — day 0: mo-respiration-boite inadmissible (niveau, prérequis, prudence)
+  profil 9470 — passe 1 : contrainte dure — day 0: mo-rouleau-tenseur-fascia-lata inadmissible (niveau, prérequis, prudence)
+  profil 9470 — passe 1 : contrainte dure — day 0: mo-routine-mobilite-epaules-poignets inadmissible (niveau, prérequis, prudence)
+  profil 9470 — passe 1 : contrainte dure — day 0: mo-wall-slides inadmissible (niveau, prérequis, prudence)
+  profil 9470 — passe 1 : contrainte dure — day 0: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence)
+  profil 9470 — passe 1 : la note relue diffère de la note rendue
+  profil 9470 — revue dislike : contrainte dure — day 0: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 664:9  propertyShard.<fn>.<fn>
+  
+03:44 +66 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+03:52 +67 -8: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
+03:53 +68 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
+04:01 +69 -8: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2400 à 2559
+04:01 +70 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+04:01 +71 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+04:01 +72 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+04:01 +73 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+04:01 +74 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+04:01 +75 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+04:01 +76 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+04:02 +77 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+04:02 +78 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+04:02 +79 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+04:02 +80 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+04:02 +81 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+04:02 +82 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+04:02 +83 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+04:02 +84 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+04:02 +85 -8: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+04:11 +86 -8: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
+04:14 +86 -9: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+04:14 +86 -9: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279 [E]
+  Expected: empty
+    Actual: [
+              'profil 5150 — passe 1 : contrainte dure — day 0: mo-etirement-bas-dips-barres inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 0: mo-soupir-physiologique inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 1: mo-etirement-bas-dips-barres inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 1: mo-90-90-passif inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 1: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 1: mo-etirement-biceps-mur inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 1: mo-respiration-crocodile inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 2: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 2: mo-90-90-passif inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 2: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 2: mo-etirement-biceps-mur inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 2: mo-etirement-capsule-posterieure-bras-croise inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 2: mo-etirement-flechisseurs-poignet-bras-tendu inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 2: mo-etirement-pectoral-cadre-porte inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 2: mo-figure-4-allonge inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 2: mo-pigeon-sol inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 2: mo-sleeper-stretch inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 2: mo-soupir-physiologique inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 2: mo-wall-slides inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 3: mo-90-90-passif inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 3: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 3: mo-etirement-biceps-mur inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 3: mo-etirement-extenseurs-poignet-bras-tendu inadmissible (niveau, prérequis, prudence)',
+              'profil 5150 — passe 1 : contrainte dure — day 3: mo-sleeper-stretch inadmissible (niveau, prérequis, prudence)',
+              ...
+            ]
+  42 manquement(s) :
+  profil 5150 — passe 1 : contrainte dure — day 0: mo-etirement-bas-dips-barres inadmissible (niveau, prérequis, prudence)
+  profil 5150 — passe 1 : contrainte dure — day 0: mo-soupir-physiologique inadmissible (niveau, prérequis, prudence)
+  profil 5150 — passe 1 : contrainte dure — day 1: mo-etirement-bas-dips-barres inadmissible (niveau, prérequis, prudence)
+  profil 5150 — passe 1 : contrainte dure — day 1: mo-90-90-passif inadmissible (niveau, prérequis, prudence)
+  profil 5150 — passe 1 : contrainte dure — day 1: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)
+  profil 5150 — passe 1 : contrainte dure — day 1: mo-etirement-biceps-mur inadmissible (niveau, prérequis, prudence)
+  profil 5150 — passe 1 : contrainte dure — day 1: mo-respiration-crocodile inadmissible (niveau, prérequis, prudence)
+  profil 5150 — passe 1 : contrainte dure — day 2: mo-lift-off-rotation-externe-90-90 inadmissible (niveau, prérequis, prudence)
+  profil 5150 — passe 1 : contrainte dure — day 2: mo-90-90-passif inadmissible (niveau, prérequis, prudence)
+  profil 5150 — passe 1 : contrainte dure — day 2: mo-bascules-appui-doigts-avant inadmissible (niveau, prérequis, prudence)
+  profil 5150 — passe 1 : contrainte dure — day 2: mo-etirement-biceps-mur inadmissible (niveau, prérequis, prudence)
+  profil 5150 — passe 1 : contrainte dure — day 2: mo-etirement-capsule-posterieure-bras-croise inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 664:9  propertyShard.<fn>.<fn>
+  
+04:20 +87 -9: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
+04:26 +88 -9: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+04:33 +89 -9: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+04:34 +90 -9: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+04:42 +91 -9: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+04:44 +92 -9: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+04:50 +93 -9: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5760 à 5919
+04:52 +94 -9: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6880 à 7039
+05:00 +95 -9: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5920 à 6079
+05:02 +96 -9: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7040 à 7199
+05:09 +97 -9: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239
+05:12 +98 -9: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7200 à 7359
+05:17 +99 -9: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6240 à 6399
+05:20 +100 -9: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7360 à 7519
+05:26 +101 -9: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7520 à 7679
+05:35 +102 -9: Some tests failed.
+
+Failing tests:
+  test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 640 à 799
+  test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1440 à 1599
+  test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1760 à 1919
+  test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+  ... and 5 more
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.
+tests : échec
+durée : 344 s
