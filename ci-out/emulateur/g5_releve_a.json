@@ -1,0 +1,15 @@
+{
+  "partie": "a",
+  "theme": "sombre",
+  "couleur_dominante": "rouge",
+  "carte_du_jour": true,
+  "accueil_koachs": 2,
+  "proposition": true,
+  "proposition_koach": true,
+  "entree_galerie": true,
+  "entree_apercu_3d": false,
+  "galerie": true,
+  "poses": 36,
+  "selecteur": "Difficulté 9 sur 10 : encore 1 répétition en réserve.",
+  "pourquoi": true
+}
