@@ -1,0 +1,4 @@
+run=36893759460
+commit=ac81b92c7913898244965dd6646329c9c7e4dc4c
+branche=claude/ci-gp-moteurs
+packages=cancelled
