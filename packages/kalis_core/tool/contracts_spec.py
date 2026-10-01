@@ -198,8 +198,9 @@ ENUMS: list[Enum] = [
     E("QuestKind", ["daily", "weekly", "campaign", "koach"], "Famille de quête (D7.6)."),
     E("QuestStatus", ["active", "completed", "expired"], "État d'une quête."),
     E("KreditSource", ["quest", "chest", "level_up", "milestone", "record"], "Origine d'un gain de Krédits."),
-    E("DelightKind", ["record", "chest", "week_streak", "session_grade", "combo", "ghost"],
-      "Événement de plaisir (D8.1)."),
+    E("DelightKind", ["record", "chest", "week_streak", "session_grade", "combo", "ghost",
+                      "first_time", "level_up", "rank_up", "goal_milestone", "quest_completed"],
+      "Événement de plaisir (D8.1). Les cinq derniers sont ajoutés en 0.3.0 (première fois, passage de niveau, nouveau rang, jalon d'objectif, quête terminée)."),
     E("SessionGrade", ["s", "a", "b", "c"], "Note de séance."),
     E("RecordKind", ["one_rm_kg", "max_reps", "max_hold_seconds", "volume_kg", "time_seconds", "distance_meters"],
       "Nature d'un record (même vocabulaire que les niveaux et les objectifs)."),
@@ -383,6 +384,7 @@ TYPES: list[Type] = [
         F("healthCheck", "obj:HealthCheck?", "Bilan santé de début de séance."),
         F("sets", "list:obj:SetRecord", "Séries, dans l'ordre de réalisation."),
         F("pains", "list:obj:PainReport", "Douleurs signalées pendant ou après la séance."),
+        F("plannedWorkSets", "int?", "Nombre de séries de travail prescrites pour cette séance, telle qu'elle a été affichée (après l'ajustement du bilan santé, de la douleur, du lieu et du temps du jour) (0.3.0). Sert à `kalis_quest` pour rapporter l'effort au programme : une séance allégée et faite en entier vaut une séance complète.", min=0, max=500),
     ]),
     Type("TrainingLog", "journal", "Journal de séances.", [
         F("schemaVersion", "int", "Version du schéma (1).", min=1),
@@ -680,6 +682,7 @@ TYPES: list[Type] = [
     Type("AttributeScore", "quest", "Attribut façon RPG (D7.5).", [
         F("attribute", "enum:AthleteAttribute", "Attribut."),
         F("value", "double", "Valeur, de 0 à 100.", min=0, max=100),
+        F("best", "double?", "Meilleure valeur atteinte, de 0 à 100 (0.3.0) : elle ne baisse jamais, alors que `value` reflète le niveau actuel.", min=0, max=100),
     ]),
     Type("MovementRank", "quest", "Rang sur un mouvement (D7.5).", [
         F("exerciseId", "string", "Mouvement.", **EXID),
@@ -720,6 +723,11 @@ TYPES: list[Type] = [
         F("achievedOn", "date?", "Jour d'atteinte."),
         F("milestones", "list:obj:Milestone", "Jalons."),
         F("prediction", "obj:Prediction?", "Prédiction."),
+        F("baseline", "double?", "Valeur de départ, mesurée à la création de l'objectif, même unité (0.3.0)."),
+        F("overdue", "bool?", "Vrai si l'objectif est en retard : la date prédite dépasse l'échéance, ou la cible est hors d'atteinte au rythme actuel (0.3.0)."),
+        F("suggestedDate", "date?", "Échéance proposée pour un objectif en retard, cible inchangée (0.3.0)."),
+        F("suggestedTarget", "double?", "Cible proposée pour un objectif en retard, échéance inchangée, même unité (0.3.0).", min=0),
+        F("reasons", "list:obj:Reason?", "Pourquoi (prédiction mise à jour, retard) (0.3.0)."),
     ]),
     Type("DelightEvent", "quest", "Événement de plaisir (D8.1).", [
         F("kind", "enum:DelightKind", "Nature."),
@@ -743,6 +751,10 @@ TYPES: list[Type] = [
         F("lastEvaluatedOn", "date?", "Dernier jour évalué."),
         F("data", "json", "État opaque de kalis_quest."),
     ], schema_version=1, custom=True, invariants=["Registres en ajout seul : `sequence` = rang dans la liste (0, 1, 2…) ; dates croissantes au sens large."]),
+    Type("QuestClaim", "quest", "Déclaration de l'utilisateur : une quête déclarative (récupération d'un jour de repos : sommeil, hydratation, marche légère…) est faite (0.3.0).", [
+        F("questId", "string", "Quête déclarée faite.", min_len=1),
+        F("date", "date", "Jour de la déclaration."),
+    ]),
     Type("QuestInput", "quest", "Entrée du moteur de leveling.", [
         F("schemaVersion", "int", "Version du schéma (1).", min=1),
         F("profile", "obj:AthleteProfile", "Profil."),
@@ -752,6 +764,7 @@ TYPES: list[Type] = [
         F("state", "obj:QuestState", "État précédent."),
         F("today", "date", "« Aujourd'hui », fourni par l'application."),
         F("seed", "int?", "Graine de l'utilisateur pour les tirages (coffres, quêtes du jour) ; le moteur la combine à la date.", min=0),
+        F("claims", "list:obj:QuestClaim?", "Quêtes déclaratives que l'utilisateur dit avoir faites depuis le dernier appel (0.3.0). Une déclaration déjà prise en compte peut être redonnée sans effet."),
     ], schema_version=1),
     Type("QuestOutcome", "quest", "Résultat du moteur de leveling.", [
         F("state", "obj:QuestState", "Nouvel état (les registres ne perdent jamais d'écriture)."),
@@ -904,6 +917,24 @@ REASONS: list[tuple[str, dict[str, str], str]] = [
     ("adapt.readiness", {"readiness": "double"}, "Forme du jour estimée (bilan santé, fatigue modélisée, séries déjà faites)."),
     ("adapt.volume_response", {"muscle": "string", "weeklySets": "double"}, "Volume hebdomadaire d'un groupe musculaire ajusté d'après la réponse observée."),
     ("adapt.load_floor", {"minKg": "double"}, "Plus petite charge disponible encore trop lourde pour cet exercice : il est remplacé ou retiré de la séance."),
+    # ---- quest, ajoutés en 0.3.0 (lot G11, évolution additive) ----
+    ("quest.no_reward_pain", {"zone": "string", "intensity": "int"}, "Séance faite malgré une douleur déclarée avant la séance : aucune récompense (ni XP, ni coffre, ni note, ni quête)."),
+    ("quest.xp_capped", {"scope": "string", "cap": "int"}, "Gain d'XP borné par un plafond (`session`, `week`, `records`)."),
+    ("quest.combo", {"length": "int", "bonus": "int"}, "Combo : séries consécutives dans la cible, bonus plafonné."),
+    ("quest.session_grade", {"completion": "double", "accuracy": "double", "records": "int"}, "Composantes de la note de séance : réalisation, justesse des flammes, records."),
+    ("quest.daily", {"dayKind": "string"}, "Quête du jour, adaptée au jour (`training`, `rest`, `break`)."),
+    ("quest.weekly", {"planned": "int"}, "Quête de la semaine, bornée par les séances prévues."),
+    ("quest.campaign_boss", {"blockIndex": "int"}, "Boss de campagne : séance de test ou dernière séance du bloc."),
+    ("quest.lagging_exercise", {"exerciseId": "exercise"}, "Quête Koach : exercice du programme le plus souvent écourté ou sauté."),
+    ("quest.weekday_focus", {"weekday": "int"}, "Quête Koach : jour de la semaine le moins régulier."),
+    ("quest.xp_rest", {"days": "int"}, "Part de l'XP de régularité due aux jours de repos respectés."),
+    ("quest.streak", {"weeks": "int"}, "Série de semaines réussies (jalon ou longueur atteinte)."),
+    ("quest.streak_paused", {"cause": "string"}, "Semaine en pause (vacances, maladie, blessure déclarées) : la série ne bouge pas."),
+    ("quest.chest", {"guaranteed": "bool"}, "Coffre surprise (tirage, ou garantie après une série de séances sans coffre)."),
+    ("quest.goal_late", {"goalId": "string"}, "Objectif en retard : une date ou une cible ajustée est proposée."),
+    ("quest.first_time", {"exerciseId": "exercise"}, "Première fois sur un exercice."),
+    ("quest.ghost_beaten", {"exerciseId": "exercise", "reference": "string"}, "Fantôme battu : mieux que la dernière fois (`last`) ou que la meilleure fois (`best`)."),
+    ("quest.start_bonus", {"sessions": "int"}, "Bonus de départ plafonné (désactivé par défaut)."),
 ]
 
 SCHEMA_VERSIONS = {t.name: t.schema_version for t in TYPES if t.schema_version is not None}

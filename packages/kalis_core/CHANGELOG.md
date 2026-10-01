@@ -1,5 +1,26 @@
 # Journal des versions de kalis_core
 
+## 0.3.0 — 02/10/2026 (lot G11, évolution additive)
+
+Rien n'est retiré ni renommé ; une application écrite pour 0.2.0 fonctionne sans changement.
+
+- `SessionRecord.plannedWorkSets` (optionnel) : nombre de séries de travail prescrites pour la séance telle
+  qu'elle a été affichée (après ajustement du bilan santé, de la douleur, du lieu, du temps). `kalis_quest`
+  s'en sert pour rapporter l'effort au programme : une séance allégée et faite en entier vaut une séance
+  complète. Absent : le moteur s'en passe (voir `kalis_quest/CONTRAT.md`).
+- `QuestInput.claims` (optionnel) et type `QuestClaim` : quêtes déclaratives (récupération d'un jour de
+  repos) que l'utilisateur dit avoir faites.
+- `AttributeScore.best` (optionnel) : meilleure valeur atteinte par un attribut.
+- `GoalProgress.baseline`, `overdue`, `suggestedDate`, `suggestedTarget`, `reasons` (optionnels) : départ
+  de l'objectif, objectif en retard, date ou cible ajustée proposée.
+- `DelightKind` : cinq valeurs en fin de liste — `first_time`, `level_up`, `rank_up`, `goal_milestone`,
+  `quest_completed`.
+- Dix-sept codes de raison pour le moteur de progression (92 codes au registre) : `quest.no_reward_pain`,
+  `quest.xp_capped`, `quest.combo`, `quest.session_grade`, `quest.daily`, `quest.weekly`,
+  `quest.campaign_boss`, `quest.lagging_exercise`, `quest.weekday_focus`, `quest.xp_rest`, `quest.streak`,
+  `quest.streak_paused`, `quest.chest`, `quest.goal_late`, `quest.first_time`, `quest.ghost_beaten`,
+  `quest.start_bonus`.
+
 ## 0.2.0 — 01/10/2026 (lot G8, évolution additive)
 
 Rien n'est retiré ni renommé ; une application écrite pour 0.1.0 fonctionne sans changement.

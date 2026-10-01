@@ -23,11 +23,7 @@ final class XpEntry {
       amount: jsonInt(json, 'amount'),
       sessionId: jsonStringOrNull(json, 'sessionId'),
       refId: jsonStringOrNull(json, 'refId'),
-      reasons: jsonList(
-        json,
-        'reasons',
-        (v) => Reason.fromJson(jsonAsObject(v, 'reasons')),
-      ),
+      reasons: jsonList(json, 'reasons', (v) => Reason.fromJson(jsonAsObject(v, 'reasons'))),
     );
   }
 
@@ -80,9 +76,7 @@ final class XpEntry {
       date: date ?? this.date,
       source: source ?? this.source,
       amount: amount ?? this.amount,
-      sessionId: identical(sessionId, unset)
-          ? this.sessionId
-          : sessionId as String?,
+      sessionId: identical(sessionId, unset) ? this.sessionId : sessionId as String?,
       refId: identical(refId, unset) ? this.refId : refId as String?,
       reasons: reasons ?? this.reasons,
     );
@@ -99,41 +93,21 @@ final class XpEntry {
   void collectViolations(String path, List<Violation> out) {
     checkRange(out, '$path.sequence', sequence, 0, null);
     checkRange(out, '$path.amount', amount, 0, null);
-    for (var i = 0; i < reasons.length; i++) {
-      reasons[i].collectViolations('$path.reasons[$i]', out);
-    }
+    for (var i = 0; i < reasons.length; i++) { reasons[i].collectViolations('$path.reasons[$i]', out); }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
-    for (final e in reasons) {
-      e.collectExerciseIds(out);
-    }
+    for (final e in reasons) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is XpEntry &&
-            sequence == other.sequence &&
-            date == other.date &&
-            source == other.source &&
-            amount == other.amount &&
-            sessionId == other.sessionId &&
-            refId == other.refId &&
-            jsonListEquals(reasons, other.reasons);
+    return identical(this, other) || other is XpEntry && sequence == other.sequence && date == other.date && source == other.source && amount == other.amount && sessionId == other.sessionId && refId == other.refId && jsonListEquals(reasons, other.reasons);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[
-    sequence,
-    date,
-    source,
-    amount,
-    sessionId,
-    refId,
-    Object.hashAll(reasons),
-  ]);
+  int get hashCode => Object.hashAll(<Object?>[sequence, date, source, amount, sessionId, refId, Object.hashAll(reasons)]);
 
   @override
   String toString() => 'XpEntry(${toJson()})';
@@ -218,22 +192,16 @@ final class KreditEntry {
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {}
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is KreditEntry &&
-            sequence == other.sequence &&
-            date == other.date &&
-            source == other.source &&
-            amount == other.amount &&
-            refId == other.refId;
+  void collectExerciseIds(Set<String> out) {
   }
 
   @override
-  int get hashCode =>
-      Object.hashAll(<Object?>[sequence, date, source, amount, refId]);
+  bool operator ==(Object other) {
+    return identical(this, other) || other is KreditEntry && sequence == other.sequence && date == other.date && source == other.source && amount == other.amount && refId == other.refId;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[sequence, date, source, amount, refId]);
 
   @override
   String toString() => 'KreditEntry(${toJson()})';
@@ -321,27 +289,16 @@ final class LevelState {
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {}
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is LevelState &&
-            level == other.level &&
-            prestige == other.prestige &&
-            totalXp == other.totalXp &&
-            xpIntoLevel == other.xpIntoLevel &&
-            xpForNextLevel == other.xpForNextLevel;
+  void collectExerciseIds(Set<String> out) {
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[
-    level,
-    prestige,
-    totalXp,
-    xpIntoLevel,
-    xpForNextLevel,
-  ]);
+  bool operator ==(Object other) {
+    return identical(this, other) || other is LevelState && level == other.level && prestige == other.prestige && totalXp == other.totalXp && xpIntoLevel == other.xpIntoLevel && xpForNextLevel == other.xpForNextLevel;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[level, prestige, totalXp, xpIntoLevel, xpForNextLevel]);
 
   @override
   String toString() => 'LevelState(${toJson()})';
@@ -349,7 +306,11 @@ final class LevelState {
 
 /// Attribut façon RPG (D7.5).
 final class AttributeScore {
-  const AttributeScore({required this.attribute, required this.value});
+  const AttributeScore({
+    required this.attribute,
+    required this.value,
+    this.best,
+  });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
   /// Les champs inconnus sont ignorés (évolution additive).
@@ -357,6 +318,7 @@ final class AttributeScore {
     return AttributeScore(
       attribute: jsonEnum(json, 'attribute', AthleteAttribute.fromCode),
       value: jsonDouble(json, 'value'),
+      best: jsonDoubleOrNull(json, 'best'),
     );
   }
 
@@ -366,16 +328,29 @@ final class AttributeScore {
   /// Valeur, de 0 à 100.
   final double value;
 
+  /// Meilleure valeur atteinte, de 0 à 100 (0.3.0) : elle ne baisse jamais,
+  /// alors que `value` reflète le niveau actuel.
+  final double? best;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
-    return <String, Object?>{'attribute': attribute.code, 'value': value};
+    return <String, Object?>{
+      'attribute': attribute.code,
+      'value': value,
+      if (best case final v?) 'best': v,
+    };
   }
 
   /// Copie modifiée ; un champ optionnel peut être remis à `null`.
-  AttributeScore copyWith({AthleteAttribute? attribute, double? value}) {
+  AttributeScore copyWith({
+    AthleteAttribute? attribute,
+    double? value,
+    Object? best = unset,
+  }) {
     return AttributeScore(
       attribute: attribute ?? this.attribute,
       value: value ?? this.value,
+      best: identical(best, unset) ? this.best : best as double?,
     );
   }
 
@@ -389,21 +364,20 @@ final class AttributeScore {
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
     checkRange(out, '$path.value', value, 0, 100);
+    if (best case final v?) { checkRange(out, '$path.best', v, 0, 100); }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {}
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is AttributeScore &&
-            attribute == other.attribute &&
-            value == other.value;
+  void collectExerciseIds(Set<String> out) {
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[attribute, value]);
+  bool operator ==(Object other) {
+    return identical(this, other) || other is AttributeScore && attribute == other.attribute && value == other.value && best == other.best;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[attribute, value, best]);
 
   @override
   String toString() => 'AttributeScore(${toJson()})';
@@ -463,9 +437,7 @@ final class MovementRank {
       exerciseId: exerciseId ?? this.exerciseId,
       tier: tier ?? this.tier,
       score: score ?? this.score,
-      nextTierAt: identical(nextTierAt, unset)
-          ? this.nextTierAt
-          : nextTierAt as double?,
+      nextTierAt: identical(nextTierAt, unset) ? this.nextTierAt : nextTierAt as double?,
     );
   }
 
@@ -480,9 +452,7 @@ final class MovementRank {
   void collectViolations(String path, List<Violation> out) {
     checkLength(out, '$path.exerciseId', exerciseId.length, 1, null);
     checkRange(out, '$path.score', score, 0, null);
-    if (nextTierAt case final v?) {
-      checkRange(out, '$path.nextTierAt', v, 0, null);
-    }
+    if (nextTierAt case final v?) { checkRange(out, '$path.nextTierAt', v, 0, null); }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -492,17 +462,11 @@ final class MovementRank {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is MovementRank &&
-            exerciseId == other.exerciseId &&
-            tier == other.tier &&
-            score == other.score &&
-            nextTierAt == other.nextTierAt;
+    return identical(this, other) || other is MovementRank && exerciseId == other.exerciseId && tier == other.tier && score == other.score && nextTierAt == other.nextTierAt;
   }
 
   @override
-  int get hashCode =>
-      Object.hashAll(<Object?>[exerciseId, tier, score, nextTierAt]);
+  int get hashCode => Object.hashAll(<Object?>[exerciseId, tier, score, nextTierAt]);
 
   @override
   String toString() => 'MovementRank(${toJson()})';
@@ -540,11 +504,7 @@ final class Quest {
       status: jsonEnum(json, 'status', QuestStatus.fromCode),
       rewardXp: jsonInt(json, 'rewardXp'),
       rewardKredits: jsonInt(json, 'rewardKredits'),
-      reasons: jsonList(
-        json,
-        'reasons',
-        (v) => Reason.fromJson(jsonAsObject(v, 'reasons')),
-      ),
+      reasons: jsonList(json, 'reasons', (v) => Reason.fromJson(jsonAsObject(v, 'reasons'))),
     );
   }
 
@@ -649,51 +609,21 @@ final class Quest {
     checkRange(out, '$path.target', target, 0, null);
     checkRange(out, '$path.rewardXp', rewardXp, 0, null);
     checkRange(out, '$path.rewardKredits', rewardKredits, 0, null);
-    for (var i = 0; i < reasons.length; i++) {
-      reasons[i].collectViolations('$path.reasons[$i]', out);
-    }
+    for (var i = 0; i < reasons.length; i++) { reasons[i].collectViolations('$path.reasons[$i]', out); }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
-    for (final e in reasons) {
-      e.collectExerciseIds(out);
-    }
+    for (final e in reasons) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is Quest &&
-            id == other.id &&
-            kind == other.kind &&
-            template == other.template &&
-            jsonDeepEquals(params, other.params) &&
-            startsOn == other.startsOn &&
-            endsOn == other.endsOn &&
-            progress == other.progress &&
-            target == other.target &&
-            status == other.status &&
-            rewardXp == other.rewardXp &&
-            rewardKredits == other.rewardKredits &&
-            jsonListEquals(reasons, other.reasons);
+    return identical(this, other) || other is Quest && id == other.id && kind == other.kind && template == other.template && jsonDeepEquals(params, other.params) && startsOn == other.startsOn && endsOn == other.endsOn && progress == other.progress && target == other.target && status == other.status && rewardXp == other.rewardXp && rewardKredits == other.rewardKredits && jsonListEquals(reasons, other.reasons);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[
-    id,
-    kind,
-    template,
-    jsonDeepHash(params),
-    startsOn,
-    endsOn,
-    progress,
-    target,
-    status,
-    rewardXp,
-    rewardKredits,
-    Object.hashAll(reasons),
-  ]);
+  int get hashCode => Object.hashAll(<Object?>[id, kind, template, jsonDeepHash(params), startsOn, endsOn, progress, target, status, rewardXp, rewardKredits, Object.hashAll(reasons)]);
 
   @override
   String toString() => 'Quest(${toJson()})';
@@ -701,7 +631,10 @@ final class Quest {
 
 /// Jalon automatique d'un objectif.
 final class Milestone {
-  const Milestone({required this.fraction, this.reachedOn});
+  const Milestone({
+    required this.fraction,
+    this.reachedOn,
+  });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
   /// Les champs inconnus sont ignorés (évolution additive).
@@ -727,12 +660,13 @@ final class Milestone {
   }
 
   /// Copie modifiée ; un champ optionnel peut être remis à `null`.
-  Milestone copyWith({double? fraction, Object? reachedOn = unset}) {
+  Milestone copyWith({
+    double? fraction,
+    Object? reachedOn = unset,
+  }) {
     return Milestone(
       fraction: fraction ?? this.fraction,
-      reachedOn: identical(reachedOn, unset)
-          ? this.reachedOn
-          : reachedOn as CivilDate?,
+      reachedOn: identical(reachedOn, unset) ? this.reachedOn : reachedOn as CivilDate?,
     );
   }
 
@@ -749,14 +683,12 @@ final class Milestone {
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {}
+  void collectExerciseIds(Set<String> out) {
+  }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is Milestone &&
-            fraction == other.fraction &&
-            reachedOn == other.reachedOn;
+    return identical(this, other) || other is Milestone && fraction == other.fraction && reachedOn == other.reachedOn;
   }
 
   @override
@@ -848,27 +780,16 @@ final class Prediction {
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {}
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is Prediction &&
-            expectedOn == other.expectedOn &&
-            earliestOn == other.earliestOn &&
-            latestOn == other.latestOn &&
-            confidence == other.confidence &&
-            method == other.method;
+  void collectExerciseIds(Set<String> out) {
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[
-    expectedOn,
-    earliestOn,
-    latestOn,
-    confidence,
-    method,
-  ]);
+  bool operator ==(Object other) {
+    return identical(this, other) || other is Prediction && expectedOn == other.expectedOn && earliestOn == other.earliestOn && latestOn == other.latestOn && confidence == other.confidence && method == other.method;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[expectedOn, earliestOn, latestOn, confidence, method]);
 
   @override
   String toString() => 'Prediction(${toJson()})';
@@ -884,6 +805,11 @@ final class GoalProgress {
     this.achievedOn,
     required this.milestones,
     this.prediction,
+    this.baseline,
+    this.overdue,
+    this.suggestedDate,
+    this.suggestedTarget,
+    this.reasons,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -895,12 +821,13 @@ final class GoalProgress {
       target: jsonDouble(json, 'target'),
       fraction: jsonDouble(json, 'fraction'),
       achievedOn: jsonDateOrNull(json, 'achievedOn'),
-      milestones: jsonList(
-        json,
-        'milestones',
-        (v) => Milestone.fromJson(jsonAsObject(v, 'milestones')),
-      ),
+      milestones: jsonList(json, 'milestones', (v) => Milestone.fromJson(jsonAsObject(v, 'milestones'))),
       prediction: jsonObjOrNull(json, 'prediction', Prediction.fromJson),
+      baseline: jsonDoubleOrNull(json, 'baseline'),
+      overdue: jsonBoolOrNull(json, 'overdue'),
+      suggestedDate: jsonDateOrNull(json, 'suggestedDate'),
+      suggestedTarget: jsonDoubleOrNull(json, 'suggestedTarget'),
+      reasons: jsonListOrNull(json, 'reasons', (v) => Reason.fromJson(jsonAsObject(v, 'reasons'))),
     );
   }
 
@@ -926,6 +853,23 @@ final class GoalProgress {
   /// Prédiction.
   final Prediction? prediction;
 
+  /// Valeur de départ, mesurée à la création de l'objectif, même unité (0.3.0).
+  final double? baseline;
+
+  /// Vrai si l'objectif est en retard : la date prédite dépasse l'échéance, ou
+  /// la cible est hors d'atteinte au rythme actuel (0.3.0).
+  final bool? overdue;
+
+  /// Échéance proposée pour un objectif en retard, cible inchangée (0.3.0).
+  final CivilDate? suggestedDate;
+
+  /// Cible proposée pour un objectif en retard, échéance inchangée, même unité
+  /// (0.3.0).
+  final double? suggestedTarget;
+
+  /// Pourquoi (prédiction mise à jour, retard) (0.3.0).
+  final List<Reason>? reasons;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -936,6 +880,11 @@ final class GoalProgress {
       if (achievedOn case final v?) 'achievedOn': v.iso,
       'milestones': [for (final e in milestones) e.toJson()],
       if (prediction case final v?) 'prediction': v.toJson(),
+      if (baseline case final v?) 'baseline': v,
+      if (overdue case final v?) 'overdue': v,
+      if (suggestedDate case final v?) 'suggestedDate': v.iso,
+      if (suggestedTarget case final v?) 'suggestedTarget': v,
+      if (reasons case final v?) 'reasons': [for (final e in v) e.toJson()],
     };
   }
 
@@ -948,19 +897,25 @@ final class GoalProgress {
     Object? achievedOn = unset,
     List<Milestone>? milestones,
     Object? prediction = unset,
+    Object? baseline = unset,
+    Object? overdue = unset,
+    Object? suggestedDate = unset,
+    Object? suggestedTarget = unset,
+    Object? reasons = unset,
   }) {
     return GoalProgress(
       goalId: goalId ?? this.goalId,
       current: current ?? this.current,
       target: target ?? this.target,
       fraction: fraction ?? this.fraction,
-      achievedOn: identical(achievedOn, unset)
-          ? this.achievedOn
-          : achievedOn as CivilDate?,
+      achievedOn: identical(achievedOn, unset) ? this.achievedOn : achievedOn as CivilDate?,
       milestones: milestones ?? this.milestones,
-      prediction: identical(prediction, unset)
-          ? this.prediction
-          : prediction as Prediction?,
+      prediction: identical(prediction, unset) ? this.prediction : prediction as Prediction?,
+      baseline: identical(baseline, unset) ? this.baseline : baseline as double?,
+      overdue: identical(overdue, unset) ? this.overdue : overdue as bool?,
+      suggestedDate: identical(suggestedDate, unset) ? this.suggestedDate : suggestedDate as CivilDate?,
+      suggestedTarget: identical(suggestedTarget, unset) ? this.suggestedTarget : suggestedTarget as double?,
+      reasons: identical(reasons, unset) ? this.reasons : reasons as List<Reason>?,
     );
   }
 
@@ -977,45 +932,27 @@ final class GoalProgress {
     checkRange(out, '$path.current', current, null, null);
     checkRange(out, '$path.target', target, null, null);
     checkRange(out, '$path.fraction', fraction, 0, 1);
-    for (var i = 0; i < milestones.length; i++) {
-      milestones[i].collectViolations('$path.milestones[$i]', out);
-    }
-    if (prediction case final v?) {
-      v.collectViolations('$path.prediction', out);
-    }
+    for (var i = 0; i < milestones.length; i++) { milestones[i].collectViolations('$path.milestones[$i]', out); }
+    if (prediction case final v?) { v.collectViolations('$path.prediction', out); }
+    if (baseline case final v?) { checkRange(out, '$path.baseline', v, null, null); }
+    if (suggestedTarget case final v?) { checkRange(out, '$path.suggestedTarget', v, 0, null); }
+    if (reasons case final v?) { for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.reasons[$i]', out); } }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
-    for (final e in milestones) {
-      e.collectExerciseIds(out);
-    }
+    for (final e in milestones) { e.collectExerciseIds(out); }
     prediction?.collectExerciseIds(out);
+    for (final e in reasons ?? const <Reason>[]) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is GoalProgress &&
-            goalId == other.goalId &&
-            current == other.current &&
-            target == other.target &&
-            fraction == other.fraction &&
-            achievedOn == other.achievedOn &&
-            jsonListEquals(milestones, other.milestones) &&
-            prediction == other.prediction;
+    return identical(this, other) || other is GoalProgress && goalId == other.goalId && current == other.current && target == other.target && fraction == other.fraction && achievedOn == other.achievedOn && jsonListEquals(milestones, other.milestones) && prediction == other.prediction && baseline == other.baseline && overdue == other.overdue && suggestedDate == other.suggestedDate && suggestedTarget == other.suggestedTarget && jsonDeepEquals(reasons, other.reasons);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[
-    goalId,
-    current,
-    target,
-    fraction,
-    achievedOn,
-    Object.hashAll(milestones),
-    prediction,
-  ]);
+  int get hashCode => Object.hashAll(<Object?>[goalId, current, target, fraction, achievedOn, Object.hashAll(milestones), prediction, baseline, overdue, suggestedDate, suggestedTarget, jsonDeepHash(reasons)]);
 
   @override
   String toString() => 'GoalProgress(${toJson()})';
@@ -1053,11 +990,7 @@ final class DelightEvent {
       combo: jsonIntOrNull(json, 'combo'),
       streakWeeks: jsonIntOrNull(json, 'streakWeeks'),
       kredits: jsonIntOrNull(json, 'kredits'),
-      reasons: jsonList(
-        json,
-        'reasons',
-        (v) => Reason.fromJson(jsonAsObject(v, 'reasons')),
-      ),
+      reasons: jsonList(json, 'reasons', (v) => Reason.fromJson(jsonAsObject(v, 'reasons'))),
     );
   }
 
@@ -1133,24 +1066,14 @@ final class DelightEvent {
     return DelightEvent(
       kind: kind ?? this.kind,
       date: date ?? this.date,
-      sessionId: identical(sessionId, unset)
-          ? this.sessionId
-          : sessionId as String?,
-      exerciseId: identical(exerciseId, unset)
-          ? this.exerciseId
-          : exerciseId as String?,
-      recordKind: identical(recordKind, unset)
-          ? this.recordKind
-          : recordKind as RecordKind?,
+      sessionId: identical(sessionId, unset) ? this.sessionId : sessionId as String?,
+      exerciseId: identical(exerciseId, unset) ? this.exerciseId : exerciseId as String?,
+      recordKind: identical(recordKind, unset) ? this.recordKind : recordKind as RecordKind?,
       value: identical(value, unset) ? this.value : value as double?,
-      previousValue: identical(previousValue, unset)
-          ? this.previousValue
-          : previousValue as double?,
+      previousValue: identical(previousValue, unset) ? this.previousValue : previousValue as double?,
       grade: identical(grade, unset) ? this.grade : grade as SessionGrade?,
       combo: identical(combo, unset) ? this.combo : combo as int?,
-      streakWeeks: identical(streakWeeks, unset)
-          ? this.streakWeeks
-          : streakWeeks as int?,
+      streakWeeks: identical(streakWeeks, unset) ? this.streakWeeks : streakWeeks as int?,
       kredits: identical(kredits, unset) ? this.kredits : kredits as int?,
       reasons: reasons ?? this.reasons,
     );
@@ -1165,72 +1088,28 @@ final class DelightEvent {
 
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
-    if (exerciseId case final v?) {
-      checkLength(out, '$path.exerciseId', v.length, 1, null);
-    }
-    if (value case final v?) {
-      checkRange(out, '$path.value', v, null, null);
-    }
-    if (previousValue case final v?) {
-      checkRange(out, '$path.previousValue', v, null, null);
-    }
-    if (combo case final v?) {
-      checkRange(out, '$path.combo', v, 0, null);
-    }
-    if (streakWeeks case final v?) {
-      checkRange(out, '$path.streakWeeks', v, 0, null);
-    }
-    if (kredits case final v?) {
-      checkRange(out, '$path.kredits', v, 0, null);
-    }
-    for (var i = 0; i < reasons.length; i++) {
-      reasons[i].collectViolations('$path.reasons[$i]', out);
-    }
+    if (exerciseId case final v?) { checkLength(out, '$path.exerciseId', v.length, 1, null); }
+    if (value case final v?) { checkRange(out, '$path.value', v, null, null); }
+    if (previousValue case final v?) { checkRange(out, '$path.previousValue', v, null, null); }
+    if (combo case final v?) { checkRange(out, '$path.combo', v, 0, null); }
+    if (streakWeeks case final v?) { checkRange(out, '$path.streakWeeks', v, 0, null); }
+    if (kredits case final v?) { checkRange(out, '$path.kredits', v, 0, null); }
+    for (var i = 0; i < reasons.length; i++) { reasons[i].collectViolations('$path.reasons[$i]', out); }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
-    if (exerciseId case final v?) {
-      out.add(v);
-    }
-    for (final e in reasons) {
-      e.collectExerciseIds(out);
-    }
+    if (exerciseId case final v?) { out.add(v); }
+    for (final e in reasons) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is DelightEvent &&
-            kind == other.kind &&
-            date == other.date &&
-            sessionId == other.sessionId &&
-            exerciseId == other.exerciseId &&
-            recordKind == other.recordKind &&
-            value == other.value &&
-            previousValue == other.previousValue &&
-            grade == other.grade &&
-            combo == other.combo &&
-            streakWeeks == other.streakWeeks &&
-            kredits == other.kredits &&
-            jsonListEquals(reasons, other.reasons);
+    return identical(this, other) || other is DelightEvent && kind == other.kind && date == other.date && sessionId == other.sessionId && exerciseId == other.exerciseId && recordKind == other.recordKind && value == other.value && previousValue == other.previousValue && grade == other.grade && combo == other.combo && streakWeeks == other.streakWeeks && kredits == other.kredits && jsonListEquals(reasons, other.reasons);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[
-    kind,
-    date,
-    sessionId,
-    exerciseId,
-    recordKind,
-    value,
-    previousValue,
-    grade,
-    combo,
-    streakWeeks,
-    kredits,
-    Object.hashAll(reasons),
-  ]);
+  int get hashCode => Object.hashAll(<Object?>[kind, date, sessionId, exerciseId, recordKind, value, previousValue, grade, combo, streakWeeks, kredits, Object.hashAll(reasons)]);
 
   @override
   String toString() => 'DelightEvent(${toJson()})';
@@ -1256,16 +1135,8 @@ final class QuestState {
     return QuestState(
       schemaVersion: jsonInt(json, 'schemaVersion'),
       xp: jsonList(json, 'xp', (v) => XpEntry.fromJson(jsonAsObject(v, 'xp'))),
-      kredits: jsonList(
-        json,
-        'kredits',
-        (v) => KreditEntry.fromJson(jsonAsObject(v, 'kredits')),
-      ),
-      quests: jsonList(
-        json,
-        'quests',
-        (v) => Quest.fromJson(jsonAsObject(v, 'quests')),
-      ),
+      kredits: jsonList(json, 'kredits', (v) => KreditEntry.fromJson(jsonAsObject(v, 'kredits'))),
+      quests: jsonList(json, 'quests', (v) => Quest.fromJson(jsonAsObject(v, 'quests'))),
       lastEvaluatedOn: jsonDateOrNull(json, 'lastEvaluatedOn'),
       data: jsonObject(json, 'data'),
     );
@@ -1318,9 +1189,7 @@ final class QuestState {
       xp: xp ?? this.xp,
       kredits: kredits ?? this.kredits,
       quests: quests ?? this.quests,
-      lastEvaluatedOn: identical(lastEvaluatedOn, unset)
-          ? this.lastEvaluatedOn
-          : lastEvaluatedOn as CivilDate?,
+      lastEvaluatedOn: identical(lastEvaluatedOn, unset) ? this.lastEvaluatedOn : lastEvaluatedOn as CivilDate?,
       data: data ?? this.data,
     );
   }
@@ -1334,63 +1203,101 @@ final class QuestState {
 
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
-    checkRange(
-      out,
-      '$path.schemaVersion',
-      schemaVersion,
-      1,
-      currentSchemaVersion,
-    );
-    for (var i = 0; i < xp.length; i++) {
-      xp[i].collectViolations('$path.xp[$i]', out);
-    }
-    for (var i = 0; i < kredits.length; i++) {
-      kredits[i].collectViolations('$path.kredits[$i]', out);
-    }
-    for (var i = 0; i < quests.length; i++) {
-      quests[i].collectViolations('$path.quests[$i]', out);
-    }
+    checkRange(out, '$path.schemaVersion', schemaVersion, 1, currentSchemaVersion);
+    for (var i = 0; i < xp.length; i++) { xp[i].collectViolations('$path.xp[$i]', out); }
+    for (var i = 0; i < kredits.length; i++) { kredits[i].collectViolations('$path.kredits[$i]', out); }
+    for (var i = 0; i < quests.length; i++) { quests[i].collectViolations('$path.quests[$i]', out); }
     checkJson(out, '$path.data', data);
     _validateQuestState(this, path, out);
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
-    for (final e in xp) {
-      e.collectExerciseIds(out);
-    }
-    for (final e in kredits) {
-      e.collectExerciseIds(out);
-    }
-    for (final e in quests) {
-      e.collectExerciseIds(out);
-    }
+    for (final e in xp) { e.collectExerciseIds(out); }
+    for (final e in kredits) { e.collectExerciseIds(out); }
+    for (final e in quests) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is QuestState &&
-            schemaVersion == other.schemaVersion &&
-            jsonListEquals(xp, other.xp) &&
-            jsonListEquals(kredits, other.kredits) &&
-            jsonListEquals(quests, other.quests) &&
-            lastEvaluatedOn == other.lastEvaluatedOn &&
-            jsonDeepEquals(data, other.data);
+    return identical(this, other) || other is QuestState && schemaVersion == other.schemaVersion && jsonListEquals(xp, other.xp) && jsonListEquals(kredits, other.kredits) && jsonListEquals(quests, other.quests) && lastEvaluatedOn == other.lastEvaluatedOn && jsonDeepEquals(data, other.data);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[
-    schemaVersion,
-    Object.hashAll(xp),
-    Object.hashAll(kredits),
-    Object.hashAll(quests),
-    lastEvaluatedOn,
-    jsonDeepHash(data),
-  ]);
+  int get hashCode => Object.hashAll(<Object?>[schemaVersion, Object.hashAll(xp), Object.hashAll(kredits), Object.hashAll(quests), lastEvaluatedOn, jsonDeepHash(data)]);
 
   @override
   String toString() => 'QuestState(${toJson()})';
+}
+
+/// Déclaration de l'utilisateur : une quête déclarative (récupération d'un
+/// jour de repos : sommeil, hydratation, marche légère…) est faite (0.3.0).
+final class QuestClaim {
+  const QuestClaim({
+    required this.questId,
+    required this.date,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory QuestClaim.fromJson(Map<String, Object?> json) {
+    return QuestClaim(
+      questId: jsonString(json, 'questId'),
+      date: jsonDate(json, 'date'),
+    );
+  }
+
+  /// Quête déclarée faite.
+  final String questId;
+
+  /// Jour de la déclaration.
+  final CivilDate date;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'questId': questId,
+      'date': date.iso,
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  QuestClaim copyWith({
+    String? questId,
+    CivilDate? date,
+  }) {
+    return QuestClaim(
+      questId: questId ?? this.questId,
+      date: date ?? this.date,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkLength(out, '$path.questId', questId.length, 1, null);
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is QuestClaim && questId == other.questId && date == other.date;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[questId, date]);
+
+  @override
+  String toString() => 'QuestClaim(${toJson()})';
 }
 
 /// Entrée du moteur de leveling.
@@ -1404,6 +1311,7 @@ final class QuestInput {
     required this.state,
     required this.today,
     this.seed,
+    this.claims,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1418,6 +1326,7 @@ final class QuestInput {
       state: jsonObj(json, 'state', QuestState.fromJson),
       today: jsonDate(json, 'today'),
       seed: jsonIntOrNull(json, 'seed'),
+      claims: jsonListOrNull(json, 'claims', (v) => QuestClaim.fromJson(jsonAsObject(v, 'claims'))),
     );
   }
 
@@ -1449,6 +1358,11 @@ final class QuestInput {
   /// moteur la combine à la date.
   final int? seed;
 
+  /// Quêtes déclaratives que l'utilisateur dit avoir faites depuis le dernier
+  /// appel (0.3.0). Une déclaration déjà prise en compte peut être redonnée
+  /// sans effet.
+  final List<QuestClaim>? claims;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -1460,6 +1374,7 @@ final class QuestInput {
       'state': state.toJson(),
       'today': today.iso,
       if (seed case final v?) 'seed': v,
+      if (claims case final v?) 'claims': [for (final e in v) e.toJson()],
     };
   }
 
@@ -1473,18 +1388,18 @@ final class QuestInput {
     QuestState? state,
     CivilDate? today,
     Object? seed = unset,
+    Object? claims = unset,
   }) {
     return QuestInput(
       schemaVersion: schemaVersion ?? this.schemaVersion,
       profile: profile ?? this.profile,
       log: log ?? this.log,
       block: identical(block, unset) ? this.block : block as ProgramBlock?,
-      adaptation: identical(adaptation, unset)
-          ? this.adaptation
-          : adaptation as AdaptationSummary?,
+      adaptation: identical(adaptation, unset) ? this.adaptation : adaptation as AdaptationSummary?,
       state: state ?? this.state,
       today: today ?? this.today,
       seed: identical(seed, unset) ? this.seed : seed as int?,
+      claims: identical(claims, unset) ? this.claims : claims as List<QuestClaim>?,
     );
   }
 
@@ -1497,25 +1412,14 @@ final class QuestInput {
 
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
-    checkRange(
-      out,
-      '$path.schemaVersion',
-      schemaVersion,
-      1,
-      currentSchemaVersion,
-    );
+    checkRange(out, '$path.schemaVersion', schemaVersion, 1, currentSchemaVersion);
     profile.collectViolations('$path.profile', out);
     log.collectViolations('$path.log', out);
-    if (block case final v?) {
-      v.collectViolations('$path.block', out);
-    }
-    if (adaptation case final v?) {
-      v.collectViolations('$path.adaptation', out);
-    }
+    if (block case final v?) { v.collectViolations('$path.block', out); }
+    if (adaptation case final v?) { v.collectViolations('$path.adaptation', out); }
     state.collectViolations('$path.state', out);
-    if (seed case final v?) {
-      checkRange(out, '$path.seed', v, 0, null);
-    }
+    if (seed case final v?) { checkRange(out, '$path.seed', v, 0, null); }
+    if (claims case final v?) { for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.claims[$i]', out); } }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -1525,33 +1429,16 @@ final class QuestInput {
     block?.collectExerciseIds(out);
     adaptation?.collectExerciseIds(out);
     state.collectExerciseIds(out);
+    for (final e in claims ?? const <QuestClaim>[]) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is QuestInput &&
-            schemaVersion == other.schemaVersion &&
-            profile == other.profile &&
-            log == other.log &&
-            block == other.block &&
-            adaptation == other.adaptation &&
-            state == other.state &&
-            today == other.today &&
-            seed == other.seed;
+    return identical(this, other) || other is QuestInput && schemaVersion == other.schemaVersion && profile == other.profile && log == other.log && block == other.block && adaptation == other.adaptation && state == other.state && today == other.today && seed == other.seed && jsonDeepEquals(claims, other.claims);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[
-    schemaVersion,
-    profile,
-    log,
-    block,
-    adaptation,
-    state,
-    today,
-    seed,
-  ]);
+  int get hashCode => Object.hashAll(<Object?>[schemaVersion, profile, log, block, adaptation, state, today, seed, jsonDeepHash(claims)]);
 
   @override
   String toString() => 'QuestInput(${toJson()})';
@@ -1579,38 +1466,14 @@ final class QuestOutcome {
     return QuestOutcome(
       state: jsonObj(json, 'state', QuestState.fromJson),
       level: jsonObj(json, 'level', LevelState.fromJson),
-      attributes: jsonList(
-        json,
-        'attributes',
-        (v) => AttributeScore.fromJson(jsonAsObject(v, 'attributes')),
-      ),
-      ranks: jsonList(
-        json,
-        'ranks',
-        (v) => MovementRank.fromJson(jsonAsObject(v, 'ranks')),
-      ),
-      goals: jsonList(
-        json,
-        'goals',
-        (v) => GoalProgress.fromJson(jsonAsObject(v, 'goals')),
-      ),
-      events: jsonList(
-        json,
-        'events',
-        (v) => DelightEvent.fromJson(jsonAsObject(v, 'events')),
-      ),
+      attributes: jsonList(json, 'attributes', (v) => AttributeScore.fromJson(jsonAsObject(v, 'attributes'))),
+      ranks: jsonList(json, 'ranks', (v) => MovementRank.fromJson(jsonAsObject(v, 'ranks'))),
+      goals: jsonList(json, 'goals', (v) => GoalProgress.fromJson(jsonAsObject(v, 'goals'))),
+      events: jsonList(json, 'events', (v) => DelightEvent.fromJson(jsonAsObject(v, 'events'))),
       kreditBalance: jsonInt(json, 'kreditBalance'),
       weekStreak: jsonIntOrNull(json, 'weekStreak'),
-      suggestedGoals: jsonListOrNull(
-        json,
-        'suggestedGoals',
-        (v) => Goal.fromJson(jsonAsObject(v, 'suggestedGoals')),
-      ),
-      records: jsonListOrNull(
-        json,
-        'records',
-        (v) => PersonalRecord.fromJson(jsonAsObject(v, 'records')),
-      ),
+      suggestedGoals: jsonListOrNull(json, 'suggestedGoals', (v) => Goal.fromJson(jsonAsObject(v, 'suggestedGoals'))),
+      records: jsonListOrNull(json, 'records', (v) => PersonalRecord.fromJson(jsonAsObject(v, 'records'))),
       extras: jsonObjectOrNull(json, 'extras'),
     );
   }
@@ -1661,8 +1524,7 @@ final class QuestOutcome {
       'events': [for (final e in events) e.toJson()],
       'kreditBalance': kreditBalance,
       if (weekStreak case final v?) 'weekStreak': v,
-      if (suggestedGoals case final v?)
-        'suggestedGoals': [for (final e in v) e.toJson()],
+      if (suggestedGoals case final v?) 'suggestedGoals': [for (final e in v) e.toJson()],
       if (records case final v?) 'records': [for (final e in v) e.toJson()],
       if (extras case final v?) 'extras': jsonCanonical(v),
     };
@@ -1690,18 +1552,10 @@ final class QuestOutcome {
       goals: goals ?? this.goals,
       events: events ?? this.events,
       kreditBalance: kreditBalance ?? this.kreditBalance,
-      weekStreak: identical(weekStreak, unset)
-          ? this.weekStreak
-          : weekStreak as int?,
-      suggestedGoals: identical(suggestedGoals, unset)
-          ? this.suggestedGoals
-          : suggestedGoals as List<Goal>?,
-      records: identical(records, unset)
-          ? this.records
-          : records as List<PersonalRecord>?,
-      extras: identical(extras, unset)
-          ? this.extras
-          : extras as Map<String, Object?>?,
+      weekStreak: identical(weekStreak, unset) ? this.weekStreak : weekStreak as int?,
+      suggestedGoals: identical(suggestedGoals, unset) ? this.suggestedGoals : suggestedGoals as List<Goal>?,
+      records: identical(records, unset) ? this.records : records as List<PersonalRecord>?,
+      extras: identical(extras, unset) ? this.extras : extras as Map<String, Object?>?,
     );
   }
 
@@ -1716,92 +1570,36 @@ final class QuestOutcome {
   void collectViolations(String path, List<Violation> out) {
     state.collectViolations('$path.state', out);
     level.collectViolations('$path.level', out);
-    for (var i = 0; i < attributes.length; i++) {
-      attributes[i].collectViolations('$path.attributes[$i]', out);
-    }
-    for (var i = 0; i < ranks.length; i++) {
-      ranks[i].collectViolations('$path.ranks[$i]', out);
-    }
-    for (var i = 0; i < goals.length; i++) {
-      goals[i].collectViolations('$path.goals[$i]', out);
-    }
-    for (var i = 0; i < events.length; i++) {
-      events[i].collectViolations('$path.events[$i]', out);
-    }
+    for (var i = 0; i < attributes.length; i++) { attributes[i].collectViolations('$path.attributes[$i]', out); }
+    for (var i = 0; i < ranks.length; i++) { ranks[i].collectViolations('$path.ranks[$i]', out); }
+    for (var i = 0; i < goals.length; i++) { goals[i].collectViolations('$path.goals[$i]', out); }
+    for (var i = 0; i < events.length; i++) { events[i].collectViolations('$path.events[$i]', out); }
     checkRange(out, '$path.kreditBalance', kreditBalance, 0, null);
-    if (weekStreak case final v?) {
-      checkRange(out, '$path.weekStreak', v, 0, null);
-    }
-    if (suggestedGoals case final v?) {
-      for (var i = 0; i < v.length; i++) {
-        v[i].collectViolations('$path.suggestedGoals[$i]', out);
-      }
-    }
-    if (records case final v?) {
-      for (var i = 0; i < v.length; i++) {
-        v[i].collectViolations('$path.records[$i]', out);
-      }
-    }
-    if (extras case final v?) {
-      checkJson(out, '$path.extras', v);
-    }
+    if (weekStreak case final v?) { checkRange(out, '$path.weekStreak', v, 0, null); }
+    if (suggestedGoals case final v?) { for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.suggestedGoals[$i]', out); } }
+    if (records case final v?) { for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.records[$i]', out); } }
+    if (extras case final v?) { checkJson(out, '$path.extras', v); }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
     state.collectExerciseIds(out);
     level.collectExerciseIds(out);
-    for (final e in attributes) {
-      e.collectExerciseIds(out);
-    }
-    for (final e in ranks) {
-      e.collectExerciseIds(out);
-    }
-    for (final e in goals) {
-      e.collectExerciseIds(out);
-    }
-    for (final e in events) {
-      e.collectExerciseIds(out);
-    }
-    for (final e in suggestedGoals ?? const <Goal>[]) {
-      e.collectExerciseIds(out);
-    }
-    for (final e in records ?? const <PersonalRecord>[]) {
-      e.collectExerciseIds(out);
-    }
+    for (final e in attributes) { e.collectExerciseIds(out); }
+    for (final e in ranks) { e.collectExerciseIds(out); }
+    for (final e in goals) { e.collectExerciseIds(out); }
+    for (final e in events) { e.collectExerciseIds(out); }
+    for (final e in suggestedGoals ?? const <Goal>[]) { e.collectExerciseIds(out); }
+    for (final e in records ?? const <PersonalRecord>[]) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is QuestOutcome &&
-            state == other.state &&
-            level == other.level &&
-            jsonListEquals(attributes, other.attributes) &&
-            jsonListEquals(ranks, other.ranks) &&
-            jsonListEquals(goals, other.goals) &&
-            jsonListEquals(events, other.events) &&
-            kreditBalance == other.kreditBalance &&
-            weekStreak == other.weekStreak &&
-            jsonDeepEquals(suggestedGoals, other.suggestedGoals) &&
-            jsonDeepEquals(records, other.records) &&
-            jsonDeepEquals(extras, other.extras);
+    return identical(this, other) || other is QuestOutcome && state == other.state && level == other.level && jsonListEquals(attributes, other.attributes) && jsonListEquals(ranks, other.ranks) && jsonListEquals(goals, other.goals) && jsonListEquals(events, other.events) && kreditBalance == other.kreditBalance && weekStreak == other.weekStreak && jsonDeepEquals(suggestedGoals, other.suggestedGoals) && jsonDeepEquals(records, other.records) && jsonDeepEquals(extras, other.extras);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[
-    state,
-    level,
-    Object.hashAll(attributes),
-    Object.hashAll(ranks),
-    Object.hashAll(goals),
-    Object.hashAll(events),
-    kreditBalance,
-    weekStreak,
-    jsonDeepHash(suggestedGoals),
-    jsonDeepHash(records),
-    jsonDeepHash(extras),
-  ]);
+  int get hashCode => Object.hashAll(<Object?>[state, level, Object.hashAll(attributes), Object.hashAll(ranks), Object.hashAll(goals), Object.hashAll(events), kreditBalance, weekStreak, jsonDeepHash(suggestedGoals), jsonDeepHash(records), jsonDeepHash(extras)]);
 
   @override
   String toString() => 'QuestOutcome(${toJson()})';

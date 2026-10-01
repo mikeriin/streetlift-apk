@@ -70,12 +70,10 @@ abstract final class ReasonCodes {
   static const String planVariantEquivalent = 'plan.variant_equivalent';
 
   /// Variante avec un autre matériel.
-  static const String planVariantOtherEquipment =
-      'plan.variant_other_equipment';
+  static const String planVariantOtherEquipment = 'plan.variant_other_equipment';
 
   /// Charge de départ prudente.
-  static const String planStartLoadConservative =
-      'plan.start_load_conservative';
+  static const String planStartLoadConservative = 'plan.start_load_conservative';
 
   /// Charge à caler sur les premières séances.
   static const String planToCalibrate = 'plan.to_calibrate';
@@ -84,8 +82,7 @@ abstract final class ReasonCodes {
   static const String planWeekKind = 'plan.week_kind';
 
   /// Reprend ou fait progresser un exercice du bloc précédent.
-  static const String planProgressionFromPreviousBlock =
-      'plan.progression_from_previous_block';
+  static const String planProgressionFromPreviousBlock = 'plan.progression_from_previous_block';
 
   /// Tient compte du résumé d'adaptation.
   static const String planAdaptationApplied = 'plan.adaptation_applied';
@@ -238,45 +235,77 @@ abstract final class ReasonCodes {
   /// Plus petite charge disponible encore trop lourde pour cet exercice : il
   /// est remplacé ou retiré de la séance.
   static const String adaptLoadFloor = 'adapt.load_floor';
+
+  /// Séance faite malgré une douleur déclarée avant la séance : aucune
+  /// récompense (ni XP, ni coffre, ni note, ni quête).
+  static const String questNoRewardPain = 'quest.no_reward_pain';
+
+  /// Gain d'XP borné par un plafond (`session`, `week`, `records`).
+  static const String questXpCapped = 'quest.xp_capped';
+
+  /// Combo : séries consécutives dans la cible, bonus plafonné.
+  static const String questCombo = 'quest.combo';
+
+  /// Composantes de la note de séance : réalisation, justesse des flammes,
+  /// records.
+  static const String questSessionGrade = 'quest.session_grade';
+
+  /// Quête du jour, adaptée au jour (`training`, `rest`, `break`).
+  static const String questDaily = 'quest.daily';
+
+  /// Quête de la semaine, bornée par les séances prévues.
+  static const String questWeekly = 'quest.weekly';
+
+  /// Boss de campagne : séance de test ou dernière séance du bloc.
+  static const String questCampaignBoss = 'quest.campaign_boss';
+
+  /// Quête Koach : exercice du programme le plus souvent écourté ou sauté.
+  static const String questLaggingExercise = 'quest.lagging_exercise';
+
+  /// Quête Koach : jour de la semaine le moins régulier.
+  static const String questWeekdayFocus = 'quest.weekday_focus';
+
+  /// Part de l'XP de régularité due aux jours de repos respectés.
+  static const String questXpRest = 'quest.xp_rest';
+
+  /// Série de semaines réussies (jalon ou longueur atteinte).
+  static const String questStreak = 'quest.streak';
+
+  /// Semaine en pause (vacances, maladie, blessure déclarées) : la série ne
+  /// bouge pas.
+  static const String questStreakPaused = 'quest.streak_paused';
+
+  /// Coffre surprise (tirage, ou garantie après une série de séances sans
+  /// coffre).
+  static const String questChest = 'quest.chest';
+
+  /// Objectif en retard : une date ou une cible ajustée est proposée.
+  static const String questGoalLate = 'quest.goal_late';
+
+  /// Première fois sur un exercice.
+  static const String questFirstTime = 'quest.first_time';
+
+  /// Fantôme battu : mieux que la dernière fois (`last`) ou que la meilleure
+  /// fois (`best`).
+  static const String questGhostBeaten = 'quest.ghost_beaten';
+
+  /// Bonus de départ plafonné (désactivé par défaut).
+  static const String questStartBonus = 'quest.start_bonus';
+
 }
 
 /// Registre des codes de raison et de leurs paramètres typés.
 const List<ReasonSpec> reasonRegistry = <ReasonSpec>[
-  ReasonSpec(ReasonCodes.planDisciplineShare, <String, ReasonParamType>{
-    'discipline': ReasonParamType.text,
-    'pct': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.planMovementCoverage, <String, ReasonParamType>{
-    'pattern': ReasonParamType.text,
-  }),
-  ReasonSpec(ReasonCodes.planMuscleVolume, <String, ReasonParamType>{
-    'muscle': ReasonParamType.text,
-    'weeklySets': ReasonParamType.number,
-    'targetLow': ReasonParamType.number,
-    'targetHigh': ReasonParamType.number,
-  }),
-  ReasonSpec(ReasonCodes.planFatigueBalance, <String, ReasonParamType>{
-    'dayIndex': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.planTimeBudget, <String, ReasonParamType>{
-    'minutes': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.planEquipmentAvailable, <String, ReasonParamType>{
-    'place': ReasonParamType.text,
-  }),
-  ReasonSpec(ReasonCodes.planEquipmentMissing, <String, ReasonParamType>{
-    'equipment': ReasonParamType.text,
-  }),
-  ReasonSpec(ReasonCodes.planLevelMatch, <String, ReasonParamType>{
-    'difficulty': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.planPrerequisiteMissing, <String, ReasonParamType>{
-    'exerciseId': ReasonParamType.exerciseId,
-  }),
-  ReasonSpec(ReasonCodes.planJointLimitation, <String, ReasonParamType>{
-    'joint': ReasonParamType.text,
-    'discomfort': ReasonParamType.integer,
-  }),
+  ReasonSpec(ReasonCodes.planDisciplineShare, <String, ReasonParamType>{'discipline': ReasonParamType.text, 'pct': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.planMovementCoverage, <String, ReasonParamType>{'pattern': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.planMuscleVolume, <String, ReasonParamType>{'muscle': ReasonParamType.text, 'weeklySets': ReasonParamType.number, 'targetLow': ReasonParamType.number, 'targetHigh': ReasonParamType.number}),
+  ReasonSpec(ReasonCodes.planFatigueBalance, <String, ReasonParamType>{'dayIndex': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.planTimeBudget, <String, ReasonParamType>{'minutes': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.planEquipmentAvailable, <String, ReasonParamType>{'place': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.planEquipmentMissing, <String, ReasonParamType>{'equipment': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.planLevelMatch, <String, ReasonParamType>{'difficulty': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.planPrerequisiteMissing, <String, ReasonParamType>{'exerciseId': ReasonParamType.exerciseId}),
+  ReasonSpec(ReasonCodes.planJointLimitation, <String, ReasonParamType>{'joint': ReasonParamType.text, 'discomfort': ReasonParamType.integer}),
   ReasonSpec(ReasonCodes.planUserLikes, <String, ReasonParamType>{}),
   ReasonSpec(ReasonCodes.planUserDislikes, <String, ReasonParamType>{}),
   ReasonSpec(ReasonCodes.planUserCannotDo, <String, ReasonParamType>{}),
@@ -284,190 +313,79 @@ const List<ReasonSpec> reasonRegistry = <ReasonSpec>[
   ReasonSpec(ReasonCodes.planUserRemoved, <String, ReasonParamType>{}),
   ReasonSpec(ReasonCodes.planUserReplaced, <String, ReasonParamType>{}),
   ReasonSpec(ReasonCodes.planLockKept, <String, ReasonParamType>{}),
-  ReasonSpec(ReasonCodes.planGoalSupport, <String, ReasonParamType>{
-    'goalId': ReasonParamType.text,
-  }),
+  ReasonSpec(ReasonCodes.planGoalSupport, <String, ReasonParamType>{'goalId': ReasonParamType.text}),
   ReasonSpec(ReasonCodes.planVariety, <String, ReasonParamType>{}),
-  ReasonSpec(ReasonCodes.planReoptimized, <String, ReasonParamType>{
-    'scoreBefore': ReasonParamType.number,
-    'scoreAfter': ReasonParamType.number,
-  }),
-  ReasonSpec(ReasonCodes.planVariantEasier, <String, ReasonParamType>{
-    'difficultyDelta': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.planVariantEquivalent, <String, ReasonParamType>{
-    'similarity': ReasonParamType.number,
-  }),
-  ReasonSpec(ReasonCodes.planVariantOtherEquipment, <String, ReasonParamType>{
-    'equipment': ReasonParamType.text,
-  }),
-  ReasonSpec(ReasonCodes.planStartLoadConservative, <String, ReasonParamType>{
-    'fractionOfEstimate': ReasonParamType.number,
-  }),
+  ReasonSpec(ReasonCodes.planReoptimized, <String, ReasonParamType>{'scoreBefore': ReasonParamType.number, 'scoreAfter': ReasonParamType.number}),
+  ReasonSpec(ReasonCodes.planVariantEasier, <String, ReasonParamType>{'difficultyDelta': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.planVariantEquivalent, <String, ReasonParamType>{'similarity': ReasonParamType.number}),
+  ReasonSpec(ReasonCodes.planVariantOtherEquipment, <String, ReasonParamType>{'equipment': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.planStartLoadConservative, <String, ReasonParamType>{'fractionOfEstimate': ReasonParamType.number}),
   ReasonSpec(ReasonCodes.planToCalibrate, <String, ReasonParamType>{}),
-  ReasonSpec(ReasonCodes.planWeekKind, <String, ReasonParamType>{
-    'kind': ReasonParamType.text,
-  }),
-  ReasonSpec(
-    ReasonCodes.planProgressionFromPreviousBlock,
-    <String, ReasonParamType>{'exerciseId': ReasonParamType.exerciseId},
-  ),
-  ReasonSpec(ReasonCodes.planAdaptationApplied, <String, ReasonParamType>{
-    'proposalKind': ReasonParamType.text,
-  }),
+  ReasonSpec(ReasonCodes.planWeekKind, <String, ReasonParamType>{'kind': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.planProgressionFromPreviousBlock, <String, ReasonParamType>{'exerciseId': ReasonParamType.exerciseId}),
+  ReasonSpec(ReasonCodes.planAdaptationApplied, <String, ReasonParamType>{'proposalKind': ReasonParamType.text}),
   ReasonSpec(ReasonCodes.planCautiousHealth, <String, ReasonParamType>{}),
-  ReasonSpec(ReasonCodes.planRestructureScope, <String, ReasonParamType>{
-    'scope': ReasonParamType.text,
-  }),
-  ReasonSpec(ReasonCodes.adaptFlamesBelowTarget, <String, ReasonParamType>{
-    'delta': ReasonParamType.number,
-    'sets': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptFlamesAboveTarget, <String, ReasonParamType>{
-    'delta': ReasonParamType.number,
-    'sets': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptSetFailed, <String, ReasonParamType>{
-    'missingReps': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptLoadUp, <String, ReasonParamType>{
-    'deltaKg': ReasonParamType.number,
-  }),
-  ReasonSpec(ReasonCodes.adaptLoadDown, <String, ReasonParamType>{
-    'deltaKg': ReasonParamType.number,
-  }),
-  ReasonSpec(ReasonCodes.adaptRepsUp, <String, ReasonParamType>{
-    'delta': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptRepsDown, <String, ReasonParamType>{
-    'delta': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptVolumeUp, <String, ReasonParamType>{
-    'sets': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptVolumeDown, <String, ReasonParamType>{
-    'sets': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptCalibration, <String, ReasonParamType>{
-    'session': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptEstimateUpdated, <String, ReasonParamType>{
-    'exerciseId': ReasonParamType.exerciseId,
-    'capacity': ReasonParamType.number,
-    'standardError': ReasonParamType.number,
-  }),
-  ReasonSpec(ReasonCodes.adaptLowConfidence, <String, ReasonParamType>{
-    'confidence': ReasonParamType.number,
-  }),
-  ReasonSpec(ReasonCodes.adaptUnlockLevel, <String, ReasonParamType>{
-    'level': ReasonParamType.text,
-  }),
-  ReasonSpec(ReasonCodes.adaptHealthLow, <String, ReasonParamType>{
-    'overall': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptSleepLow, <String, ReasonParamType>{
-    'sleepQuality': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptTimeShort, <String, ReasonParamType>{
-    'minutesAvailable': ReasonParamType.integer,
-    'minutesPlanned': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptPainReported, <String, ReasonParamType>{
-    'zone': ReasonParamType.text,
-    'intensity': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptPainPersistent, <String, ReasonParamType>{
-    'zone': ReasonParamType.text,
-    'sessions': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptFatigueHigh, <String, ReasonParamType>{
-    'readiness': ReasonParamType.number,
-  }),
-  ReasonSpec(ReasonCodes.adaptDeload, <String, ReasonParamType>{
-    'weekIndex': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptPlateau, <String, ReasonParamType>{
-    'exerciseId': ReasonParamType.exerciseId,
-    'weeks': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptExerciseSkipped, <String, ReasonParamType>{
-    'exerciseId': ReasonParamType.exerciseId,
-    'times': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptMissedSessions, <String, ReasonParamType>{
-    'missed': ReasonParamType.integer,
-    'planned': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptResumeAfterBreak, <String, ReasonParamType>{
-    'days': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptNoRating, <String, ReasonParamType>{
-    'sets': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.questXpEffort, <String, ReasonParamType>{
-    'sets': ReasonParamType.integer,
-    'capped': ReasonParamType.flag,
-  }),
-  ReasonSpec(ReasonCodes.questXpConsistency, <String, ReasonParamType>{
-    'weeks': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.questXpRecord, <String, ReasonParamType>{
-    'exerciseId': ReasonParamType.exerciseId,
-    'recordKind': ReasonParamType.text,
-  }),
-  ReasonSpec(ReasonCodes.questXpMilestone, <String, ReasonParamType>{
-    'goalId': ReasonParamType.text,
-    'fraction': ReasonParamType.number,
-  }),
-  ReasonSpec(ReasonCodes.questXpQuest, <String, ReasonParamType>{
-    'questId': ReasonParamType.text,
-  }),
-  ReasonSpec(ReasonCodes.questLevelUp, <String, ReasonParamType>{
-    'level': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.questPrestige, <String, ReasonParamType>{
-    'prestige': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.questRankUp, <String, ReasonParamType>{
-    'exerciseId': ReasonParamType.exerciseId,
-    'tier': ReasonParamType.text,
-  }),
-  ReasonSpec(ReasonCodes.questWeakPoint, <String, ReasonParamType>{
-    'attribute': ReasonParamType.text,
-  }),
-  ReasonSpec(ReasonCodes.questCampaignChapter, <String, ReasonParamType>{
-    'blockIndex': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.questGoalSuggested, <String, ReasonParamType>{
-    'exerciseId': ReasonParamType.exerciseId,
-  }),
-  ReasonSpec(ReasonCodes.questPredictionUpdated, <String, ReasonParamType>{
-    'goalId': ReasonParamType.text,
-  }),
-  ReasonSpec(ReasonCodes.adaptRatingsUninformative, <String, ReasonParamType>{
-    'confirmRate': ReasonParamType.number,
-    'sets': ReasonParamType.integer,
-  }),
-  ReasonSpec(ReasonCodes.adaptBenchmarkSet, <String, ReasonParamType>{
-    'rir': ReasonParamType.number,
-  }),
-  ReasonSpec(ReasonCodes.adaptPlaceChanged, <String, ReasonParamType>{
-    'place': ReasonParamType.text,
-  }),
-  ReasonSpec(ReasonCodes.adaptLoadHeld, <String, ReasonParamType>{
-    'cause': ReasonParamType.text,
-  }),
-  ReasonSpec(ReasonCodes.adaptIncrementCoarse, <String, ReasonParamType>{
-    'stepKg': ReasonParamType.number,
-  }),
-  ReasonSpec(ReasonCodes.adaptReadiness, <String, ReasonParamType>{
-    'readiness': ReasonParamType.number,
-  }),
-  ReasonSpec(ReasonCodes.adaptVolumeResponse, <String, ReasonParamType>{
-    'muscle': ReasonParamType.text,
-    'weeklySets': ReasonParamType.number,
-  }),
-  ReasonSpec(ReasonCodes.adaptLoadFloor, <String, ReasonParamType>{
-    'minKg': ReasonParamType.number,
-  }),
+  ReasonSpec(ReasonCodes.planRestructureScope, <String, ReasonParamType>{'scope': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.adaptFlamesBelowTarget, <String, ReasonParamType>{'delta': ReasonParamType.number, 'sets': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptFlamesAboveTarget, <String, ReasonParamType>{'delta': ReasonParamType.number, 'sets': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptSetFailed, <String, ReasonParamType>{'missingReps': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptLoadUp, <String, ReasonParamType>{'deltaKg': ReasonParamType.number}),
+  ReasonSpec(ReasonCodes.adaptLoadDown, <String, ReasonParamType>{'deltaKg': ReasonParamType.number}),
+  ReasonSpec(ReasonCodes.adaptRepsUp, <String, ReasonParamType>{'delta': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptRepsDown, <String, ReasonParamType>{'delta': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptVolumeUp, <String, ReasonParamType>{'sets': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptVolumeDown, <String, ReasonParamType>{'sets': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptCalibration, <String, ReasonParamType>{'session': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptEstimateUpdated, <String, ReasonParamType>{'exerciseId': ReasonParamType.exerciseId, 'capacity': ReasonParamType.number, 'standardError': ReasonParamType.number}),
+  ReasonSpec(ReasonCodes.adaptLowConfidence, <String, ReasonParamType>{'confidence': ReasonParamType.number}),
+  ReasonSpec(ReasonCodes.adaptUnlockLevel, <String, ReasonParamType>{'level': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.adaptHealthLow, <String, ReasonParamType>{'overall': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptSleepLow, <String, ReasonParamType>{'sleepQuality': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptTimeShort, <String, ReasonParamType>{'minutesAvailable': ReasonParamType.integer, 'minutesPlanned': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptPainReported, <String, ReasonParamType>{'zone': ReasonParamType.text, 'intensity': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptPainPersistent, <String, ReasonParamType>{'zone': ReasonParamType.text, 'sessions': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptFatigueHigh, <String, ReasonParamType>{'readiness': ReasonParamType.number}),
+  ReasonSpec(ReasonCodes.adaptDeload, <String, ReasonParamType>{'weekIndex': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptPlateau, <String, ReasonParamType>{'exerciseId': ReasonParamType.exerciseId, 'weeks': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptExerciseSkipped, <String, ReasonParamType>{'exerciseId': ReasonParamType.exerciseId, 'times': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptMissedSessions, <String, ReasonParamType>{'missed': ReasonParamType.integer, 'planned': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptResumeAfterBreak, <String, ReasonParamType>{'days': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptNoRating, <String, ReasonParamType>{'sets': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.questXpEffort, <String, ReasonParamType>{'sets': ReasonParamType.integer, 'capped': ReasonParamType.flag}),
+  ReasonSpec(ReasonCodes.questXpConsistency, <String, ReasonParamType>{'weeks': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.questXpRecord, <String, ReasonParamType>{'exerciseId': ReasonParamType.exerciseId, 'recordKind': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.questXpMilestone, <String, ReasonParamType>{'goalId': ReasonParamType.text, 'fraction': ReasonParamType.number}),
+  ReasonSpec(ReasonCodes.questXpQuest, <String, ReasonParamType>{'questId': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.questLevelUp, <String, ReasonParamType>{'level': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.questPrestige, <String, ReasonParamType>{'prestige': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.questRankUp, <String, ReasonParamType>{'exerciseId': ReasonParamType.exerciseId, 'tier': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.questWeakPoint, <String, ReasonParamType>{'attribute': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.questCampaignChapter, <String, ReasonParamType>{'blockIndex': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.questGoalSuggested, <String, ReasonParamType>{'exerciseId': ReasonParamType.exerciseId}),
+  ReasonSpec(ReasonCodes.questPredictionUpdated, <String, ReasonParamType>{'goalId': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.adaptRatingsUninformative, <String, ReasonParamType>{'confirmRate': ReasonParamType.number, 'sets': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.adaptBenchmarkSet, <String, ReasonParamType>{'rir': ReasonParamType.number}),
+  ReasonSpec(ReasonCodes.adaptPlaceChanged, <String, ReasonParamType>{'place': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.adaptLoadHeld, <String, ReasonParamType>{'cause': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.adaptIncrementCoarse, <String, ReasonParamType>{'stepKg': ReasonParamType.number}),
+  ReasonSpec(ReasonCodes.adaptReadiness, <String, ReasonParamType>{'readiness': ReasonParamType.number}),
+  ReasonSpec(ReasonCodes.adaptVolumeResponse, <String, ReasonParamType>{'muscle': ReasonParamType.text, 'weeklySets': ReasonParamType.number}),
+  ReasonSpec(ReasonCodes.adaptLoadFloor, <String, ReasonParamType>{'minKg': ReasonParamType.number}),
+  ReasonSpec(ReasonCodes.questNoRewardPain, <String, ReasonParamType>{'zone': ReasonParamType.text, 'intensity': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.questXpCapped, <String, ReasonParamType>{'scope': ReasonParamType.text, 'cap': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.questCombo, <String, ReasonParamType>{'length': ReasonParamType.integer, 'bonus': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.questSessionGrade, <String, ReasonParamType>{'completion': ReasonParamType.number, 'accuracy': ReasonParamType.number, 'records': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.questDaily, <String, ReasonParamType>{'dayKind': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.questWeekly, <String, ReasonParamType>{'planned': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.questCampaignBoss, <String, ReasonParamType>{'blockIndex': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.questLaggingExercise, <String, ReasonParamType>{'exerciseId': ReasonParamType.exerciseId}),
+  ReasonSpec(ReasonCodes.questWeekdayFocus, <String, ReasonParamType>{'weekday': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.questXpRest, <String, ReasonParamType>{'days': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.questStreak, <String, ReasonParamType>{'weeks': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.questStreakPaused, <String, ReasonParamType>{'cause': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.questChest, <String, ReasonParamType>{'guaranteed': ReasonParamType.flag}),
+  ReasonSpec(ReasonCodes.questGoalLate, <String, ReasonParamType>{'goalId': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.questFirstTime, <String, ReasonParamType>{'exerciseId': ReasonParamType.exerciseId}),
+  ReasonSpec(ReasonCodes.questGhostBeaten, <String, ReasonParamType>{'exerciseId': ReasonParamType.exerciseId, 'reference': ReasonParamType.text}),
+  ReasonSpec(ReasonCodes.questStartBonus, <String, ReasonParamType>{'sessions': ReasonParamType.integer}),
 ];
