@@ -749,6 +749,7 @@ Requête de conseil pour la série suivante.
 | `session` | `SessionPlan` | non | — | Séance en cours. |
 | `done` | liste de `SetRecord` | non | — | Séries déjà faites dans la séance, dans l'ordre. |
 | `slotId` | texte | non | longueur ≥ 1 | Emplacement de l'exercice dont on demande la série suivante. |
+| `healthCheck` | `HealthCheck` | oui | — | Bilan santé du jour, tel qu'il a été donné à `prescribeSession` (0.2.0 ; une réponse absente n'est jamais remplacée). |
 
 ### `ProposalDecision`
 
@@ -1178,3 +1179,10 @@ Le JSON porte le **code** ; l'ordre des valeurs est celui du contrat.
 | `quest.campaign_chapter` | `blockIndex` (int) | Chapitre de campagne lié à un bloc. |
 | `quest.goal_suggested` | `exerciseId` (exercise) | Objectif suggéré d'après le profil et les données. |
 | `quest.prediction_updated` | `goalId` (string) | Prédiction de date mise à jour. |
+| `adapt.ratings_uninformative` | `confirmRate` (double), `sets` (int) | Notes presque toujours confirmées telles quelles : elles pèsent moins, la performance réelle pèse davantage. |
+| `adapt.benchmark_set` | `rir` (double) | Série repère : dernière série ouverte, autant de répétitions que possible en gardant la réserve indiquée. |
+| `adapt.place_changed` | `place` (string) | Lieu du jour différent du lieu prévu : exercice remplacé par un équivalent faisable sur place. |
+| `adapt.load_held` | `cause` (string) | Charge non augmentée (échec non prévu, douleur, bilan bas, plafond de hausse). |
+| `adapt.increment_coarse` | `stepKg` (double) | Plus petit incrément de charge trop grand : la progression passe par les répétitions. |
+| `adapt.readiness` | `readiness` (double) | Forme du jour estimée (bilan santé, fatigue modélisée, séries déjà faites). |
+| `adapt.volume_response` | `muscle` (string), `weeklySets` (double) | Volume hebdomadaire d'un groupe musculaire ajusté d'après la réponse observée. |
