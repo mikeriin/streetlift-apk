@@ -1,0 +1,26 @@
+Formatted bin/kalis_core_cli.dart
+Formatted lib/kalis_core.dart
+Formatted lib/src/catalog.dart
+Formatted lib/src/custom_validation.dart
+Formatted lib/src/generated/adapt.g.dart
+Formatted lib/src/generated/common.g.dart
+Formatted lib/src/generated/journal.g.dart
+Formatted lib/src/generated/plan.g.dart
+Formatted lib/src/generated/profile.g.dart
+Formatted lib/src/generated/quest.g.dart
+Formatted lib/src/generated/reason_codes.g.dart
+Formatted lib/src/json_util.dart
+Formatted lib/src/testing/arbitrary.g.dart
+Formatted lib/src/testing/arbitrary_base.dart
+Formatted test/catalog_test.dart
+Formatted test/contracts_roundtrip_test.dart
+Formatted test/engines_test.dart
+Formatted test/fixtures_test.dart
+Formatted test/flames_test.dart
+Formatted test/purity_test.dart
+Formatted test/reasons_test.dart
+Formatted test/support.dart
+Formatted test/validation_test.dart
+Formatted test/zz_format_export_test.dart
+Formatted 35 files (24 changed) in 0.21 seconds.
+
