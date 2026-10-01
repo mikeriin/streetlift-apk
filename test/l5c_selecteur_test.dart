@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/home_screen.dart';
 import 'package:streetlift_tracker/main.dart';
+import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/settings_screen.dart';
 import 'package:streetlift_tracker/store.dart';
@@ -207,15 +208,33 @@ void main() {
       final week = tester
           .widget<Text>(find.byKey(const ValueKey('selected-week')))
           .data;
-      final custom = CustomSession(
-        id: '994',
-        name: 'Couleur',
-        items: [
-          CustomExercise(name: 'Pompes', p: {'series': 2, 'reps': 8}),
-          CustomExercise(name: 'Squat', p: {'series': 1, 'reps': 10}),
+      // Séance construite à la main (semaine 0) : les séances manuelles ont
+      // disparu en G2, le runner reste le même.
+      final plan = WeekPlan.manual(
+        n: 0,
+        block: 'Couleur',
+        color: const Color(0xFF4FA3C7),
+        days: [
+          DayPlan.manual(
+            j: 994,
+            title: 'Couleur',
+            exercises: [
+              Exercise.manual(
+                id: 'CU-994-0',
+                name: 'Pompes',
+                setsText: '2×8',
+                forcedSets: 2,
+              ),
+              Exercise.manual(
+                id: 'CU-994-1',
+                name: 'Squat',
+                setsText: '1×10',
+                forcedSets: 1,
+              ),
+            ],
+          ),
         ],
       );
-      final plan = custom.toWeekPlan();
       appNavigator.currentState!.push(
         MaterialPageRoute<void>(
           builder: (_) => SessionScreen(week: plan, day: plan.days.single),

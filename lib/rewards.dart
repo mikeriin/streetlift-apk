@@ -1,6 +1,6 @@
-// Écran de récompenses : après une séance validée ou un score de WOD, les XP
-// gagnés défilent, la jauge se remplit (et passe le niveau s'il y a lieu), les
-// bonus s'affichent un à un (badge, défi, semaine validée, record, crédits),
+// Écran de récompenses : après une séance validée, les XP gagnés défilent,
+// la jauge se remplit (et passe le niveau s'il y a lieu), les bonus
+// s'affichent un à un (badge, défi, semaine validée, record),
 // puis la cérémonie de niveau montre l'insigne. Une seule passe d'animations
 // (aucune boucle infinie), « Réduire les animations » rend tout immédiat, et
 // le réglage « Célébrations » remplace l'écran par une simple confirmation.
@@ -22,7 +22,7 @@ import 'progression_screen.dart';
 import 'store.dart';
 import 'ui.dart';
 
-/// À appeler après une séance terminée ou un score de WOD enregistré : affiche
+/// À appeler après une séance terminée : affiche
 /// le bilan en attente, sinon la cérémonie de niveau seule si le niveau a
 /// monté (import, suppression…). `after` : fermeture de l'écran d'origine
 /// (la séance), que le décompte attend avant de démarrer.
@@ -52,7 +52,7 @@ void checkLevelUp(BuildContext context, {Future<void>? after}) {
           SnackBar(
             duration: const Duration(seconds: 3),
             content: Text(
-              '+${reward.xpGained} XP · niveau ${reward.levelAfter}${reward.levelUp ? ' · niveau supérieur, +${reward.creditsGained} crédit${reward.creditsGained > 1 ? 's' : ''}' : ''}',
+              '+${reward.xpGained} XP · niveau ${reward.levelAfter}${reward.levelUp ? ' · niveau supérieur' : ''}',
             ),
           ),
         );
@@ -78,7 +78,7 @@ void checkLevelUp(BuildContext context, {Future<void>? after}) {
         ],
       ),
       content: Text(
-        'Niveau ${up.from} → ${up.to} · ${store.progression.rank.title}\n+${up.credits} crédit${up.credits > 1 ? 's' : ''} de déverrouillage — ${store.credits >= 0 ? '${store.credits} disponible${store.credits > 1 ? 's' : ''}' : creditDeficitLabel(store.credits)}.',
+        'Niveau ${up.from} → ${up.to} · ${store.progression.rank.title}.',
       ),
       actions: [
         TextButton(
@@ -406,7 +406,6 @@ class _LootLine extends StatelessWidget {
       'streak' => Icons.local_fire_department_rounded,
       'record' => Icons.emoji_events_rounded,
       'goal' => Icons.track_changes_rounded,
-      'credit' => Icons.toll_rounded,
       _ => Icons.fitness_center_rounded,
     };
     final color = switch (line.kind) {
@@ -488,12 +487,6 @@ class _Ceremony extends StatelessWidget {
               'Niveau ${r.levelAfter}',
               style: TextStyle(color: SL.onBrandSoft, fontSize: 13),
             ),
-          const SizedBox(height: 10),
-          Text(
-            '+${r.creditsGained} crédit${r.creditsGained > 1 ? 's' : ''} WOD · ${store.credits >= 0 ? '${store.credits} disponible${store.credits > 1 ? 's' : ''}' : creditDeficitLabel(store.credits)}',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: SL.onBrand, fontWeight: FontWeight.w700),
-          ),
         ],
       ),
     );

@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'dart:io' show gzip;
 import 'dart:math' show max;
 import 'dart:math' as math;
-import 'dart:ui' show Color;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show AssetBundle, rootBundle;
@@ -19,18 +18,14 @@ import 'koach_data.dart';
 import 'koach_engine.dart' as ke;
 import 'koach_program.dart';
 import 'models.dart';
-import 'motivation.dart';
 import 'persistence.dart';
 import 'profile.dart';
 import 'program_generator.dart';
 import 'program_instance.dart';
-import 'search.dart' show normalizeText;
 import 'training_estimate.dart';
 import 'progression.dart';
+import 'retired_data.dart';
 import 'set_validation.dart';
-import 'wod_formats.dart';
-import 'wod_generator.dart';
-import 'wod_models.dart';
 import 'wellbeing.dart';
 
 export 'koach_data.dart';
@@ -42,7 +37,6 @@ export 'wellbeing.dart';
 
 part 'adapt_store.dart';
 part 'koach_store.dart';
-part 'motiv_store.dart';
 part 'profile_store.dart';
 part 'program_store.dart';
 part 'safety_store.dart';
@@ -145,17 +139,15 @@ class ExerciseLog {
 class SessionLog {
   bool done;
   String? finishedAt; // ISO
-  String? title; // libellé lisible (ex. « S8 · J1 » ou nom de séance perso)
+  String? title; // libellé lisible (ex. « S8 · J1 »)
   Map<String, ExerciseLog> ex;
   Map<String, String> exerciseNames;
-  String? customId;
   SessionLog({
     this.done = false,
     this.finishedAt,
     this.title,
     Map<String, ExerciseLog>? ex,
     Map<String, String>? exerciseNames,
-    this.customId,
   }) : ex = ex ?? {},
        exerciseNames = exerciseNames ?? {};
 
@@ -163,7 +155,6 @@ class SessionLog {
     'done': done,
     'finishedAt': finishedAt,
     'title': title,
-    'customId': customId,
     'exerciseNames': exerciseNames,
     'ex': ex.map((k, v) => MapEntry(k, v.toJson())),
   };
@@ -171,7 +162,6 @@ class SessionLog {
     : done = j['done'] as bool? ?? false,
       finishedAt = j['finishedAt'] as String?,
       title = j['title'] as String?,
-      customId = j['customId'] as String?,
       exerciseNames = Map<String, String>.from(
         j['exerciseNames'] as Map? ?? {},
       ),
@@ -282,343 +272,6 @@ class AppSettings {
       weeklyGoal = j['weeklyGoal'] as int? ?? 0,
       title = j['title'] as String? ?? '',
       accent = normalizeAccent(j['accent']);
-}
-
-// ===================== SÉANCES PERSONNALISÉES =====================
-
-/// Modes d'exécution disponibles pour les séances personnalisées.
-class ExecMode {
-  final String id;
-  final String label;
-  final String desc;
-  final List<String> fields; // paramètres à afficher dans l'éditeur
-  const ExecMode(this.id, this.label, this.desc, this.fields);
-}
-
-const execModes = <ExecMode>[
-  ExecMode(
-    'classic',
-    'Classique',
-    'Séries × répétitions, repos entre les séries.',
-    ['series', 'reps'],
-  ),
-  ExecMode(
-    'myo',
-    'Myo-reps',
-    'Série d\u2019activation proche de l\u2019échec, puis mini-séries avec micro-repos.',
-    ['actReps', 'miniReps', 'minis', 'intra'],
-  ),
-  ExecMode(
-    'cluster',
-    'Cluster',
-    'Chaque série est découpée en mini-blocs séparés de quelques secondes.',
-    ['series', 'miniReps', 'minis', 'intra'],
-  ),
-  ExecMode(
-    'emom',
-    'EMOM',
-    'Un bloc de travail au top de chaque intervalle (Every Minute On the Minute).',
-    ['rounds', 'interval', 'reps'],
-  ),
-  ExecMode(
-    'amrap',
-    'AMRAP',
-    'Un maximum de travail dans la durée fixée (As Many Reps As Possible).',
-    ['duree'],
-  ),
-  ExecMode(
-    'iso',
-    'Isométrie',
-    'Tenues statiques chronométrées (holds, gainage, overcoming iso).',
-    ['series', 'hold'],
-  ),
-  ExecMode(
-    'hiit',
-    'Intervalles',
-    'Alternance effort/repos chronométrée (HIIT, Tabata).',
-    ['rounds', 'work', 'restI'],
-  ),
-  ExecMode(
-    'pyramide',
-    'Pyramide',
-    'Répétitions croissantes ou décroissantes, ex. 12-10-8-6.',
-    ['pyr'],
-  ),
-  ExecMode(
-    'tabata',
-    'Tabata',
-    'Huit intervalles de 20 s d\u2019effort et 10 s de repos, soit 4 minutes.',
-    ['rounds', 'work', 'restI'],
-  ),
-  ExecMode(
-    'deathby',
-    'Death by',
-    'Une rep de plus à chaque minute, jusqu\u2019à ne plus tenir l\u2019intervalle.',
-    ['startReps', 'step', 'interval', 'rounds'],
-  ),
-  ExecMode(
-    'maxreps',
-    'Séries au max',
-    'Chaque série jusqu\u2019à l\u2019échec technique, repos fixe entre les séries.',
-    ['series'],
-  ),
-  ExecMode(
-    'maxhold',
-    'Tenues au max',
-    'Tenues jusqu\u2019au lâcher (dead-hang, L-sit, planche), chronométrées.',
-    ['series'],
-  ),
-  ExecMode(
-    'tempo',
-    'Tempo',
-    'Séries × reps avec cadence imposée, ex. 3-1-1-0 (descente, bas, montée, haut).',
-    ['series', 'reps', 'tempo'],
-  ),
-  ExecMode(
-    'dropset',
-    'Drop set',
-    'Série proche de l\u2019échec puis paliers immédiats à charge ou difficulté réduite.',
-    ['series', 'reps', 'drops'],
-  ),
-  ExecMode(
-    'density',
-    'Densité',
-    'Un maximum de séries de N reps dans la durée fixée, repos libre.',
-    ['duree', 'reps'],
-  ),
-];
-
-/// Valeurs par défaut propres à un mode (prioritaires sur celles du champ).
-const modeDefaults = <String, Map<String, int>>{
-  'tabata': {'rounds': 8, 'work': 20, 'restI': 10},
-  'deathby': {'startReps': 1, 'step': 1, 'interval': 60, 'rounds': 20},
-  'density': {'duree': 10, 'reps': 5},
-  'dropset': {'series': 3, 'reps': 8, 'drops': 2},
-  'maxreps': {'series': 3},
-  'maxhold': {'series': 3},
-  'tempo': {'series': 4, 'reps': 6},
-};
-
-ExecMode modeById(String id) =>
-    execModes.firstWhere((m) => m.id == id, orElse: () => execModes.first);
-
-int _uidCounter = 0;
-String _newUid() =>
-    '${KalisClock.realNow().microsecondsSinceEpoch.toRadixString(36)}-${_uidCounter++}';
-
-class CustomExercise {
-  String
-  uid; // stable : les logs y restent rattachés même après réordonnancement
-  String name;
-  String mode; // id ExecMode
-  Map<String, dynamic> p; // paramètres du mode
-  double? kg;
-  int? rest; // s
-  String note;
-  CustomExercise({
-    String? uid,
-    required this.name,
-    this.mode = 'classic',
-    Map<String, dynamic>? p,
-    this.kg,
-    this.rest,
-    this.note = '',
-  }) : uid = uid ?? _newUid(),
-       p = p ?? {};
-
-  Map<String, dynamic> toJson() => {
-    'uid': uid,
-    'name': name,
-    'mode': mode,
-    'p': p,
-    'kg': kg,
-    'rest': rest,
-    'note': note,
-  };
-  CustomExercise.fromJson(Map<String, dynamic> j)
-    : uid = j['uid'] as String? ?? _newUid(),
-      name = j['name'] as String,
-      mode = j['mode'] as String? ?? 'classic',
-      p = Map<String, dynamic>.from(j['p'] as Map? ?? {}),
-      kg = j['kg'] == null ? null : (j['kg'] as num).toDouble(),
-      rest = j['rest'] as int?,
-      note = j['note'] as String? ?? '';
-
-  int _pi(String k, int d) => ((p[k] as num?)?.toInt() ?? d).clamp(
-    k == 'restI' || k == 'intra' ? 0 : 1,
-    3600,
-  );
-  String _ps(String k, String d) {
-    final v = p[k];
-    return v is String && v.trim().isNotEmpty ? v : d;
-  }
-
-  /// Libellé « Séries × Reps » selon le mode.
-  String setsText() {
-    switch (mode) {
-      case 'myo':
-        return '1×${_pi('actReps', 12)} puis ${_pi('minis', 4)}×(${_pi('miniReps', 4)}) · ${_pi('intra', 15)} s intra';
-      case 'cluster':
-        return '${_pi('series', 4)}×(${_pi('minis', 3)}×${_pi('miniReps', 2)}) · ${_pi('intra', 20)} s intra';
-      case 'emom':
-        return 'EMOM ${_pi('rounds', 10)}×${_pi('interval', 60)} s · ${_pi('reps', 5)} reps';
-      case 'amrap':
-        return 'AMRAP ${_pi('duree', 8)} min';
-      case 'iso':
-        return '${_pi('series', 3)}×${_pi('hold', 30)} s';
-      case 'hiit':
-        return '${_pi('rounds', 8)}× (${_pi('work', 30)} s effort / ${_pi('restI', 30)} s repos)';
-      case 'pyramide':
-        return _ps('pyr', '12-10-8-6');
-      case 'tabata':
-        return '${_pi('rounds', 8)}× (${_pi('work', 20)} s effort / ${_pi('restI', 10)} s repos)';
-      case 'deathby':
-        return 'EMOM ${_pi('rounds', 20)}×${_pi('interval', 60)} s · Death by ${_pi('startReps', 1)} + ${_pi('step', 1)} / min';
-      case 'maxreps':
-        return '${_pi('series', 3)}×MAX';
-      case 'maxhold':
-        return '${_pi('series', 3)}×MAX tenue';
-      case 'tempo':
-        return '${_pi('series', 4)}×${_pi('reps', 6)} · tempo ${_ps('tempo', '3-1-1-0')}';
-      case 'dropset':
-        return '${_pi('series', 3)}×(${_pi('reps', 8)} + ${_pi('drops', 2)} palier${_pi('drops', 2) > 1 ? 's' : ''})';
-      case 'density':
-        return 'Densité ${_pi('duree', 10)} min · séries de ${_pi('reps', 5)}';
-      default:
-        return '${_pi('series', 4)}×${_pi('reps', 8)}';
-    }
-  }
-
-  int forcedSets() {
-    switch (mode) {
-      case 'myo':
-        return 1 + _pi('minis', 4);
-      case 'cluster':
-        return _pi('series', 4);
-      case 'emom':
-      case 'amrap':
-      case 'hiit':
-        return 1;
-      case 'iso':
-        return _pi('series', 3);
-      case 'pyramide':
-        return _ps('pyr', '12-10-8-6').split(RegExp(r'[-/ ]+')).length;
-      case 'tabata':
-      case 'deathby':
-      case 'density':
-        return 1;
-      case 'maxreps':
-      case 'maxhold':
-        return _pi('series', 3);
-      case 'tempo':
-        return _pi('series', 4);
-      case 'dropset':
-        return _pi('series', 3) * (1 + _pi('drops', 2));
-      default:
-        return _pi('series', 4);
-    }
-  }
-
-  Map<String, dynamic>? timerSpec() {
-    switch (mode) {
-      case 'emom':
-        return {
-          'type': 'emom',
-          'rounds': _pi('rounds', 10),
-          'interval': _pi('interval', 60),
-        };
-      case 'amrap':
-        return {'type': 'amrap', 'sec': _pi('duree', 8) * 60};
-      case 'hiit':
-        return {
-          'type': 'hiit',
-          'rounds': _pi('rounds', 8),
-          'work': _pi('work', 30),
-          'rest': _pi('restI', 30),
-        };
-      case 'iso':
-        return {'type': 'hold', 'sec': _pi('hold', 30)};
-      case 'cluster':
-        return {'type': 'hold', 'sec': _pi('intra', 20)};
-      case 'tabata':
-        return {
-          'type': 'hiit',
-          'rounds': _pi('rounds', 8),
-          'work': _pi('work', 20),
-          'rest': _pi('restI', 10),
-        };
-      case 'deathby':
-        return {
-          'type': 'emom',
-          'rounds': _pi('rounds', 20),
-          'interval': _pi('interval', 60),
-        };
-      case 'density':
-        return {'type': 'amrap', 'sec': _pi('duree', 10) * 60};
-    }
-    return null;
-  }
-
-  Exercise toExercise(int index) {
-    final m = modeById(mode);
-    // « Tenues au max » force la saisie chronométrée ; « Tempo » affiche la
-    // cadence comme le programme.
-    final tempo = mode == 'maxhold'
-        ? 'Isométrie'
-        : mode == 'tempo'
-        ? _ps('tempo', '3-1-1-0')
-        : '';
-    return Exercise.manual(
-      id: 'CU-$uid',
-      name: name,
-      setsText: setsText(),
-      intensity: mode == 'classic' ? '' : m.label,
-      kg: kg,
-      rest: rest == null ? '' : '$rest s',
-      restSec: rest,
-      tempo: tempo,
-      cue: note.isEmpty ? m.desc : note,
-      forcedSets: forcedSets(),
-      timer: timerSpec(),
-    );
-  }
-}
-
-class CustomSession {
-  String id; // numérique unique (clé de journal S0-J<id>)
-  String name;
-  List<CustomExercise> items;
-  CustomSession({
-    required this.id,
-    required this.name,
-    List<CustomExercise>? items,
-  }) : items = items ?? [];
-
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'items': items.map((e) => e.toJson()).toList(),
-  };
-  CustomSession.fromJson(Map<String, dynamic> j)
-    : id = j['id'] as String,
-      name = j['name'] as String,
-      items = ((j['items'] as List?) ?? [])
-          .map((e) => CustomExercise.fromJson(e as Map<String, dynamic>))
-          .toList();
-
-  /// Adaptateur vers le runner de séance existant (semaine 0 = perso).
-  WeekPlan toWeekPlan() {
-    final exs = <Exercise>[];
-    for (var i = 0; i < items.length; i++) {
-      exs.add(items[i].toExercise(i));
-    }
-    return WeekPlan.manual(
-      n: 0,
-      block: name,
-      color: const Color(0xFF4FA3C7),
-      days: [DayPlan.manual(j: int.parse(id), title: name, exercises: exs)],
-    );
-  }
 }
 
 /// Nature de la saisie d'un exercice, déduite des données.
@@ -734,8 +387,6 @@ class AppStore extends ChangeNotifier {
   final List<Map<String, dynamic>> dbExercises = []; // base embarquée
   final List<Map<String, dynamic>> userExercises =
       []; // ajoutés par l'utilisateur
-  final List<CustomSession> customSessions = [];
-  final List<Wod> wods = [];
 
   /// Koach (L7) : options, pesées, décisions et saisies de l'utilisateur,
   /// persistées ; estimations et propositions recalculées depuis le
@@ -758,14 +409,16 @@ class AppStore extends ChangeNotifier {
   final Map<String, Object?> _adaptCache = {};
   String _adaptCacheRev = '';
 
-  /// L12 : motivation et progression visible (section `motiv`, écrite
-  /// seulement si elle sert). Contrat : docs/CONTRAT_L12.md.
-  MotivData motiv = MotivData();
+  /// G2 (D1.1, D1.2) : données retirées (WOD, séances manuelles, crédits,
+  /// L12) lues au démarrage et pas encore copiées. Tant qu'elles sont là,
+  /// chaque écriture du document les garde telles quelles : rien n'est
+  /// supprimé sans copie complète relue (voir [_secureRetiredData]).
+  RetiredData _retiredPending = RetiredData.empty;
 
-  /// Entrées de motivation illisibles ignorées au dernier démarrage.
-  int motivLoadIssues = 0;
-  final Map<String, Object?> _motivCache = {};
-  String _motivCacheRev = '';
+  /// La copie de sécurité G2 a échoué à ce lancement : les écrans retirés
+  /// restent masqués, les données restent dans le document, nouvel essai au
+  /// lancement suivant.
+  bool retiredCopyFailed = false;
 
   /// Annotations du programme pour Koach (asset généré, lecture seule).
   /// Vide si l'asset est illisible : Koach reste alors indisponible.
@@ -822,19 +475,15 @@ class AppStore extends ChangeNotifier {
   static const _kPilotage = 'pilotage_v1';
   static const _kLogs = 'logs_v1';
   static const _kSettings = 'settings_v1';
-  static const _kCustom = 'custom_sessions_v1';
   static const _kUserEx = 'user_exercises_v1';
-  static const _kWodsLegacy =
-      'wods_v1'; // ancien format (catalogue entier dupliqué)
-  static const _kWodsUser = 'wods_user_v2'; // WODs créés par l'utilisateur
-  static const _kWodsDel = 'wods_del_v2'; // ids de WODs préchargés supprimés
-  static const _kWodsEdit =
-      'wods_edit_v2'; // id préchargé → définition modifiée
-  static const _kWodResults = 'wod_results_v2'; // id → résultats (compressé)
-  static const _kSeedV = 'wods_seed_v';
   static const _kLastLevel = 'level_seen';
-  static const _kUnlocked = 'unlocked_wods_v1';
-  static const _kCreditsV = 'credits_v';
+
+  /// G2 : copie complète des données d'avant la suppression des WOD et des
+  /// séances manuelles (document au format d'export de 6.0.x, compressé) et
+  /// sa fiche (date, empreinte, contenu supprimé, annonce vue). Clés de la
+  /// session active : la session de test a les siennes. Hors sauvegarde.
+  static const kRetiredCopyKey = 'g2_copie_avant_suppression_v1';
+  static const kRetiredNoticeKey = 'g2_annonce_suppression_v1';
 
   /// Clés qu'écrivait une installation antérieure au document unique (ou
   /// une copie de secours) : preuve d'une installation existante. Les clés
@@ -846,14 +495,17 @@ class AppStore extends ChangeNotifier {
     _kPilotage,
     _kLogs,
     _kSettings,
-    _kCustom,
+    // Clés des séances manuelles et des WOD d'avant le document unique :
+    // jamais lues ni effacées depuis G2, elles prouvent encore une
+    // installation existante.
+    'custom_sessions_v1',
     _kUserEx,
-    _kWodsLegacy,
-    _kWodsUser,
-    _kWodsDel,
-    _kWodsEdit,
-    _kWodResults,
-    _kUnlocked,
+    'wods_v1',
+    'wods_user_v2',
+    'wods_del_v2',
+    'wods_edit_v2',
+    'wod_results_v2',
+    'unlocked_wods_v1',
     _kLastLevel,
   };
 
@@ -873,16 +525,6 @@ class AppStore extends ChangeNotifier {
       out[a.ref] = a.refLoad;
     }
   }
-
-  /// WODs déverrouillés : id → crédits payés (0 = offert par la migration).
-  final Map<String, int> unlockedWods = {};
-
-  /// Droits « coût 0 » antérieurs aux crédits v2, conservés sans donner
-  /// accès, en attente d'arbitrage (KT-014) : id → origine.
-  final Map<String, String> legacyGrants = {};
-
-  /// Achats en cours : id → prix de l'offre acceptée, réservé sur le solde.
-  final Map<String, int> _purchases = {};
 
   Future<void> init() async {
     _baseProgramJson =
@@ -911,10 +553,6 @@ class AppStore extends ChangeNotifier {
     // gardent leur nom, leurs groupes et leur matériel v1 (clés de
     // l'historique, des records et de STATS) ; les 120 ajouts suivent.
     content = await ContentIndex.load();
-    // L12 (KT-066) : chaînes de progression du pack (fichier léger).
-    try {
-      await ChainBook.load();
-    } catch (_) {}
     for (final e in content.entries) {
       dbExercises.add(e.toLegacy());
     }
@@ -922,9 +560,12 @@ class AppStore extends ChangeNotifier {
     if (saved != null) {
       Map<String, dynamic>? raw;
       _applyBackup(_parseBackup(_unpack(saved)!, rawMap: (m) => raw = m));
-      _rankDifficulty();
-      _restoreActiveWod(raw?['activeWod']);
       _initialized = true;
+      // G2 : données retirées encore présentes → copie complète relue, puis
+      // seulement suppression (sinon elles restent, nouvel essai au
+      // prochain lancement).
+      final document = raw;
+      if (document != null) await _secureRetiredData(document);
       // L10 : dernière semaine du cycle en cours → cycle suivant généré.
       if (ProgramStore(this).programGenerated) {
         unawaited(
@@ -977,263 +618,18 @@ class AppStore extends ChangeNotifier {
     }
     themeMode.value = settings.theme;
     accentMode.value = settings.accent;
-    final sc = _prefs.getString(_kCustom);
-    if (sc != null) {
-      for (final e in jsonDecode(sc) as List) {
-        customSessions.add(CustomSession.fromJson(e as Map<String, dynamic>));
-      }
-    }
-    await _loadWods();
+    // G2 : séances manuelles et WOD de ces anciennes clés ignorés ; les clés
+    // restent en place, intactes (aucune donnée effacée).
+    logs.removeWhere((k, _) => isManualSessionKey(k));
     _lastLevel = _prefs.getInt(_kLastLevel) ?? level;
-    final su2 = _prefs.getString(_kUnlocked);
-    if (su2 != null) {
-      (jsonDecode(su2) as Map<String, dynamic>).forEach(
-        (k, v) => unlockedWods[k] = (v as num).toInt(),
-      );
-    }
-    if ((_prefs.getInt(_kCreditsV) ?? 0) < 2) {
-      // v2 : tous les WODs préchargés se gagnent. Règle KT-014 : un accès
-      // « coût 0 » de l'ancienne migration reste acquis, gratuitement, si le
-      // WOD a au moins un résultat enregistré (droit établi par l'usage) ;
-      // sinon il est archivé dans `legacyGrants`, sans accès. Les
-      // déverrouillages payés en crédits restent acquis.
-      final used = {
-        for (final w in wods)
-          if (w.results.isNotEmpty) w.id,
-      };
-      for (final id in [
-        for (final e in unlockedWods.entries)
-          if (e.value == 0 && !used.contains(e.key)) e.key,
-      ]) {
-        unlockedWods.remove(id);
-        legacyGrants[id] = 'credits_v1';
-      }
-      await _prefs.setInt(_kCreditsV, 2);
-    }
-    _rankDifficulty();
     _initialized = true;
     // Migration vers une seule écriture atomique. Les anciennes clés restent
     // disponibles pour récupérer les données si la migration est interrompue.
     await flush();
   }
 
-  // ---------- Crédits de déverrouillage ----------
-
-  /// Prix de base par palier : niveaux 1-3 → 1 crédit (Standard), 4-6 → 2
-  /// (Avancé), 7-8 → 3 (Élite), 9-10 → 4 (Légende).
-  /// Les WOD personnels des anciennes sauvegardes restent possédés.
-  int basePrice(Wod w) {
-    if (!isCatalog(w)) return 0;
-    if (w.level <= 3) return 1;
-    if (w.level <= 6) return 2;
-    if (w.level <= 8) return 3;
-    return 4;
-  }
-
-  /// Prix affiché : prix de base moins la vitrine de la semaine (−1) et
-  /// moins un essai terminé (−1), jamais sous 1 crédit. Le prix payé est
-  /// figé à l'achat : une remise passée ne change pas un solde.
-  int wodCost(Wod w) {
-    if (!isCatalog(w)) return 0;
-    var price = basePrice(w);
-    if (unlocked(w)) return price;
-    if (weeklyIds.contains(w.id)) price -= 1;
-    if (triedAndDone(w)) price -= 1;
-    return max(1, price);
-  }
-
-  /// Remise en cours sur un WOD verrouillé (0 = plein tarif).
-  int discountOf(Wod w) => unlocked(w) ? 0 : basePrice(w) - wodCost(w);
-
-  /// Un WOD essayé et terminé (essai du jour) reste verrouillé mais garde
-  /// ses résultats et coûte 1 crédit de moins.
-  bool triedAndDone(Wod w) => w.results.any((r) => r.completed);
-
-  /// Crédits manquants pour un WOD verrouillé (0 = abordable).
-  int missingFor(Wod w) => max(0, wodCost(w) - credits);
-
-  /// Barème par niveau (voir [Progression.creditsForLevel]).
-  int creditsForLevel(int l) => Progression.creditsForLevel(l);
-
-  /// Crédits gagnés selon le journal actuel : barème du niveau + crédits
-  /// dérivés (chapitres bouclés, boss vaincus, semaines complètes).
-  int get creditsFromJournal => creditsForLevel(level) + game.bonusCredits;
-
-  /// Registre des gains de crédits déjà attribués (KT-005, option C,
-  /// registre par gain approuvé le 25/09/2026) : identifiant du gain →
-  /// crédits. Un gain n'est payé qu'une fois et n'est jamais repris ;
-  /// `carry:*` conserve un surplus historique non attribuable (migration).
-  final Map<String, int> creditGrants = {};
-
-  static final _grantKey = RegExp(
-    r'^(?:level:[1-9]\d{0,3}|chapter:[\w-]{1,32}|boss:[\w-]{1,32}|week:\d{4}-\d{2}-\d{2}|carry:[\w-]{1,32})$',
-  );
-
-  /// Gains que le journal actuel justifie : chaque palier de niveau atteint,
-  /// chapitre bouclé, boss vaincu et semaine complète (par son lundi).
-  Map<String, int> get journalGrants {
-    final out = <String, int>{};
-    for (var n = 1; n <= level; n++) {
-      out['level:$n'] =
-          creditsForLevel(n) - (n == 1 ? 0 : creditsForLevel(n - 1));
-    }
-    final g = game;
-    for (final c in g.chapters) {
-      if (c.complete) out['chapter:${c.key}'] = GameState.creditsPerChapter;
-    }
-    for (final b in g.bosses) {
-      if (b.defeated) out['boss:${b.id}'] = GameState.creditsPerBoss;
-    }
-    for (final w in progression.weeks.values) {
-      if (w.sessions + w.wods >= 3) {
-        out['week:${_dayString(w.monday)}'] = GameState.creditsPerFullWeek;
-      }
-    }
-    return out;
-  }
-
-  /// Crédits gagnés : gains enregistrés + gains nouveaux du journal pas
-  /// encore enregistrés. Corriger ou supprimer une performance fait varier
-  /// l'XP et le niveau, jamais ce total ; refaire une performance supprimée
-  /// ne repaie pas un gain déjà enregistré, une activité nouvelle oui.
-  int get creditsEarned {
-    var total = creditGrants.values.fold(0, (a, b) => a + b);
-    journalGrants.forEach((id, amount) {
-      if (!creditGrants.containsKey(id)) total += amount;
-    });
-    return total;
-  }
-
-  /// Enregistre les gains nouveaux (appelé à chaque écriture acceptée).
-  void _recordGrants() {
-    journalGrants.forEach(
-      (id, amount) => creditGrants.putIfAbsent(id, () => amount),
-    );
-  }
-
-  /// Registre tel qu'il sera écrit : gains enregistrés, puis gains nouveaux
-  /// du journal. Un export donne le même document avant et après
-  /// l'écriture suivante.
-  Map<String, int> _grantsSnapshot() {
-    final out = Map<String, int>.of(creditGrants);
-    journalGrants.forEach((id, amount) => out.putIfAbsent(id, () => amount));
-    return out;
-  }
-
-  /// Migration d'un état sans registre (avant L3) : les gains justifiés par
-  /// le journal, plus l'éventuel surplus du plus haut L2 (`creditsEarnedMax`),
-  /// conservé tel quel. Aucun crédit créé ni retiré.
-  void _migrateGrants(int? earnedMax) {
-    creditGrants
-      ..clear()
-      ..addAll(journalGrants);
-    final known = creditGrants.values.fold(0, (a, b) => a + b);
-    if (earnedMax != null && earnedMax > known) {
-      creditGrants['carry:l2'] = earnedMax - known;
-    }
-  }
-
-  /// Isolement des tests qui vident le journal entre deux cas : sans cela,
-  /// le registre garde les gains du cas précédent.
-  @visibleForTesting
-  void debugResetEarnedCredits() => creditGrants.clear();
-
-  /// Achats enregistrés + achats en cours (réservés jusqu'à leur résultat).
-  int get creditsSpent {
-    var total = unlockedWods.values.fold(0, (a, b) => a + b);
-    _purchases.forEach((id, cost) {
-      if (!unlockedWods.containsKey(id)) total += cost;
-    });
-    return total;
-  }
-
-  /// Solde réel : peut être négatif si les dépenses dépassent les gains
-  /// enregistrés (ancienne sauvegarde, ancien calcul). Le déficit est
-  /// affiché, jamais masqué ; aucun achat possible tant qu'il n'est pas
-  /// comblé par de nouveaux gains (arbitrage du 25/09/2026).
-  int get credits => creditsEarned - creditsSpent;
-
-  /// Un achat de ce WOD attend le résultat de son écriture.
-  bool purchasePending(Wod w) => _purchases.containsKey(w.id);
-
-  /// Achat au prix de l'offre affichée [acceptedCost] (KT-002). Le droit
-  /// n'est annoncé qu'après l'écriture acceptée ; en cas d'échec, seul ce
-  /// droit est retiré de la mémoire, les autres modifications sont gardées.
-  Future<PurchaseResult> purchaseWod(Wod w, {int? acceptedCost}) async {
-    if (unlocked(w)) return const PurchaseResult(PurchaseStatus.alreadyOwned);
-    if (_purchases.containsKey(w.id)) {
-      return const PurchaseResult(PurchaseStatus.pending);
-    }
-    final cost = wodCost(w);
-    if (acceptedCost != null && acceptedCost != cost) {
-      return PurchaseResult(PurchaseStatus.priceChanged, cost: cost);
-    }
-    if (credits < cost) {
-      return PurchaseResult(PurchaseStatus.insufficientCredits, cost: cost);
-    }
-    _purchases[w.id] = cost;
-    notifyListeners();
-    return _serialize(() async {
-      // Un import a pu changer les droits ou le solde pendant l'attente.
-      _purchases.remove(w.id);
-      if (unlockedWods.containsKey(w.id)) {
-        notifyListeners();
-        return const PurchaseResult(PurchaseStatus.alreadyOwned);
-      }
-      if (credits < cost) {
-        notifyListeners();
-        return PurchaseResult(PurchaseStatus.insufficientCredits, cost: cost);
-      }
-      _purchases[w.id] = cost;
-      unlockedWods[w.id] = cost;
-      _changeSeq++;
-      final ok = _initialized && await _commitState();
-      _purchases.remove(w.id);
-      if (!ok) {
-        if (unlockedWods[w.id] == cost) unlockedWods.remove(w.id);
-        notifyListeners();
-        return PurchaseResult(PurchaseStatus.failed, cost: cost);
-      }
-      _dataRevision++;
-      if (wishlist.remove(w.id)) _persist();
-      notifyListeners();
-      return PurchaseResult(PurchaseStatus.success, cost: cost);
-    });
-  }
-
-  // ---------- Liste d'envies ----------
-  /// Ids de WODs mis de côté ; le moins cher tient lieu de prochain objectif.
-  final Set<String> wishlist = {};
-
-  bool wished(Wod w) => wishlist.contains(w.id);
-
-  void toggleWish(Wod w) {
-    if (!wishlist.remove(w.id)) wishlist.add(w.id);
-    _persist();
-    notifyListeners();
-  }
-
-  /// WODs de la liste encore verrouillés, du moins cher au plus cher.
-  List<Wod> get wishedWods {
-    final out =
-        [
-          for (final w in wods)
-            if (wishlist.contains(w.id) && !unlocked(w)) w,
-        ]..sort((a, b) {
-          final c = wodCost(a).compareTo(wodCost(b));
-          if (c != 0) return c;
-          final l = a.level.compareTo(b.level);
-          return l != 0 ? l : a.name.compareTo(b.name);
-        });
-    return out;
-  }
-
-  /// Prochain objectif : le WOD souhaité le moins cher, ou null.
-  Wod? get wishTarget => wishedWods.isEmpty ? null : wishedWods.first;
-
-  // ---------- Vitrine : sélections déterministes ----------
-  /// Horloge de la vitrine (remplaçable dans les tests) : les sélections du
-  /// jour et de la semaine ne dépendent que de la date et du journal.
+  // ---------- Horloge ----------
+  /// Horloge du magasin (remplaçable dans les tests).
   DateTime Function() storeClock = KalisClock.now;
 
   /// Horloge réelle (non remplacée par un test) : les chronos peuvent alors
@@ -1241,720 +637,6 @@ class AppStore extends ChangeNotifier {
   bool get realClock =>
       identical(storeClock, KalisClock.now) ||
       identical(storeClock, DateTime.now);
-
-  static int _fnv(String s) {
-    var h = 0x811C9DC5;
-    for (final c in s.codeUnits) {
-      h ^= c;
-      h = (h * 0x01000193) & 0xFFFFFFFF;
-    }
-    return h;
-  }
-
-  String get _dayKey => civilDay(storeClock()).toIso8601String();
-
-  /// Niveau de WOD « à ta mesure » : niveau global de la feuille de
-  /// personnage (1-10, même échelle que la difficulté du catalogue).
-  int get targetWodLevel => game.sheet.powerLevel.clamp(1, 10);
-
-  /// Sélection déterministe parmi les WODs verrouillés du catalogue : les
-  /// candidats préférés d'abord, puis les autres ; à l'intérieur, par [rank]
-  /// croissant (0 par défaut) puis par empreinte de « sel|id ».
-  List<Wod> _pick(
-    String salt,
-    int count, {
-    required bool Function(Wod) prefer,
-    int Function(Wod)? rank,
-    Set<String> exclude = const {},
-    bool distinctTypes = false,
-  }) {
-    final pool = [
-      for (final w in wods)
-        if (isCatalog(w) && !unlocked(w) && !exclude.contains(w.id)) w,
-    ];
-    final keys = {for (final w in pool) w.id: _fnv('$salt|${w.id}')};
-    final rankOf = rank;
-    int byKey(Wod a, Wod b) {
-      if (rankOf != null) {
-        final r = rankOf(a).compareTo(rankOf(b));
-        if (r != 0) return r;
-      }
-      return keys[a.id]!.compareTo(keys[b.id]!);
-    }
-
-    final preferred = pool.where(prefer).toList()..sort(byKey);
-    final rest = pool.where((w) => !prefer(w)).toList()..sort(byKey);
-    final out = <Wod>[];
-    final types = <String>{};
-    for (final w in preferred.followedBy(rest)) {
-      if (distinctTypes && !types.add(w.type)) continue;
-      out.add(w);
-      if (out.length == count) break;
-    }
-    return out;
-  }
-
-  // Essai du jour et vitrine : état explicite, sauvegardé (KT-004). Une
-  // sélection n'est remplacée qu'à une date strictement postérieure : une
-  // navigation, un achat, un niveau ou un recul d'horloge ne la relancent pas.
-  String? _trialDay;
-  String? _trialId;
-  String? _weekOf;
-  List<String> _weeklyIdsStored = const [];
-
-  static String _dayString(DateTime civil) =>
-      civil.toIso8601String().substring(0, 10);
-
-  String get _today => _dayString(civilDay(storeClock()));
-
-  /// Sélection de l'essai d'un jour (règles approuvées) : WOD du catalogue
-  /// verrouillé, hors vitrine, jamais tenté ; à ton niveau ±1, sinon ±2,
-  /// sinon tout le catalogue ; aucun candidat → pas d'essai ce jour-là.
-  String? _selectTrial(String day) {
-    final t = targetWodLevel;
-    final exclude = {..._weeklyIdsStored};
-    for (final spread in const [1, 2, 99]) {
-      final pick = _pick(
-        'trial|$day',
-        1,
-        prefer: (w) => w.results.isEmpty && (w.level - t).abs() <= spread,
-        exclude: exclude,
-      ).where((w) => w.results.isEmpty && (w.level - t).abs() <= spread);
-      if (pick.isNotEmpty) return pick.first.id;
-    }
-    return null;
-  }
-
-  /// Essai du jour : fixé pour toute la journée civile locale, même si le
-  /// WOD est acheté, tenté ou si le niveau change. Jouable sans limite de
-  /// tentatives jusqu'à minuit (règle approuvée). Null : aucun candidat.
-  Wod? get trialWod {
-    _ensureSelection();
-    final id = _trialId;
-    if (id == null) return null;
-    final cached = _trialWodCache;
-    if (cached != null && cached.id == id) return cached;
-    for (final w in wods) {
-      if (w.id == id) return _trialWodCache = w;
-    }
-    return null;
-  }
-
-  Wod? _trialWodCache;
-
-  /// Établit, si la date locale est strictement postérieure, la vitrine de
-  /// la semaine puis l'essai du jour ; remplace dans la vitrine un WOD
-  /// acheté par le suivant. Toute nouvelle sélection est sauvegardée.
-  void _ensureSelection() {
-    _ensureWeekly();
-    final today = _today;
-    if (_trialDay == null || today.compareTo(_trialDay!) > 0) {
-      final migrating = _trialDay == null;
-      _trialDay = today;
-      _trialId =
-          (migrating ? _migratedTrial(today) : null) ?? _selectTrial(today);
-      _trialWodCache = null;
-      _saveSelection();
-    }
-  }
-
-  /// Migration sans sélection sauvegardée (état antérieur à L3) : un WOD
-  /// verrouillé déjà joué aujourd'hui était l'essai du jour ; il le reste.
-  /// Aucun autre historique d'essai n'est inventé.
-  String? _migratedTrial(String today) {
-    for (final w in wods) {
-      if (!isCatalog(w) || unlockedWods.containsKey(w.id)) continue;
-      final playedToday = w.results.any((r) {
-        final at = DateTime.tryParse(r.at);
-        return at != null && _dayString(civilDay(at)) == today;
-      });
-      if (playedToday) return w.id;
-    }
-    return null;
-  }
-
-  /// Aucun essai possible aujourd'hui (aucun WOD admissible).
-  bool get noTrialToday => trialWod == null;
-
-  bool isTrial(Wod w) {
-    _ensureSelection();
-    return _trialId == w.id;
-  }
-
-  /// Jouable maintenant : débloqué, ou essai du jour.
-  bool canRun(Wod w) => unlocked(w) || isTrial(w);
-
-  /// Vitrine de la semaine : trois WODs verrouillés de formats différents,
-  /// fixés du lundi au dimanche. Règle existante (README 2.5.0) : un WOD
-  /// acheté laisse sa place au suivant ; le remplaçant est lui aussi fixé.
-  List<Wod> get weeklyPicks {
-    _ensureWeekly();
-    return [
-      for (final id in _weeklyIdsStored)
-        for (final w in wods)
-          if (w.id == id) w,
-    ];
-  }
-
-  void _ensureWeekly() {
-    final week = _dayString(mondayOf(storeClock()));
-    if (_weekOf == null || week.compareTo(_weekOf!) > 0) {
-      _weekOf = week;
-      _weeklyIdsStored = [for (final w in _pickWeekly(week, const {})) w.id];
-      _saveSelection();
-    }
-    if (!_weeklyIdsStored.any(unlockedWods.containsKey)) return;
-    final kept = [
-      for (final id in _weeklyIdsStored)
-        if (!unlockedWods.containsKey(id)) id,
-    ];
-    final replacements = _pickWeekly(
-      _weekOf!,
-      {..._weeklyIdsStored, if (_trialId != null) _trialId!},
-      count: _weeklyIdsStored.length - kept.length,
-      avoidTypes: {
-        for (final w in wods)
-          if (kept.contains(w.id)) w.type,
-      },
-    );
-    _weeklyIdsStored = [...kept, for (final w in replacements) w.id];
-    _saveSelection();
-  }
-
-  List<Wod> _pickWeekly(
-    String week,
-    Set<String> exclude, {
-    int count = 3,
-    Set<String> avoidTypes = const {},
-  }) {
-    final t = targetWodLevel;
-    final picks = _pick(
-      'weekly|$week',
-      count + avoidTypes.length,
-      prefer: (w) => w.level >= t - 1 && w.level <= t + 2,
-      exclude: exclude,
-      distinctTypes: true,
-    );
-    final preferred = [
-      for (final w in picks)
-        if (!avoidTypes.contains(w.type)) w,
-    ];
-    return [
-      ...preferred,
-      for (final w in picks)
-        if (avoidTypes.contains(w.type)) w,
-    ].take(count).toList();
-  }
-
-  Set<String> get weeklyIds {
-    _ensureWeekly();
-    return _weeklyIdsStored.toSet();
-  }
-
-  /// Une sélection établie (à la première lecture du jour ou de la
-  /// semaine) est sauvegardée aussitôt.
-  void _saveSelection() {
-    if (_initialized) unawaited(_writeSnapshot());
-  }
-
-  // ---------- Tentatives de WOD (KT-003) ----------
-  /// Tentatives en cours, en mémoire : le droit de terminer est attaché à
-  /// une tentative autorisée à son lancement, pas à l'heure de validation.
-  /// Il ne survit pas à la fermeture de l'écran ni au processus (reprise
-  /// générale : L4b).
-  final Map<String, ({String wodId, DateTime startedAt})> _attempts = {};
-
-  /// Démarre une tentative si le WOD est jouable maintenant. Un seul WOD
-  /// chronométré à la fois (décision du 26/09/2026) : si une autre tentative
-  /// est en cours, rien ne démarre sans [replace] (qui l'abandonne ; ses
-  /// anciens résultats restent).
-  String? startAttempt(Wod w, {bool replace = false}) {
-    if (!canRun(w)) return null;
-    final other = activeWod;
-    if (other != null) {
-      if (!replace) return null;
-      abandonAttempt(other.attempt);
-    }
-    final id = _newUid();
-    _attempts[id] = (wodId: w.id, startedAt: storeClock());
-    activeWod = ActiveWod(
-      attempt: id,
-      wodId: w.id,
-      definition: _fnv(_defJson(w)),
-      startedAt: storeClock(),
-      savedAt: storeClock(),
-      ms: 0,
-    );
-    _persist();
-    return id;
-  }
-
-  // ---------- Chrono WOD en cours (KT-018) ----------
-  /// Tentative et dernier point sûr de son chrono, gardés dans le document
-  /// local : retrouvés après destruction du processus, arrêt forcé ou
-  /// redémarrage. Remis **en pause** au temps enregistré (décision du
-  /// 26/09/2026) ; le temps hors de l'application n'est pas compté.
-  ActiveWod? activeWod;
-
-  /// Un chrono en cours n'a pas pu être relu au démarrage : il est ignoré,
-  /// le reste des données est chargé normalement.
-  bool activeWodUnreadable = false;
-
-  /// Change à chaque remplacement des données (import, effacement) : un
-  /// écran ouvert sur l'ancien état ne peut plus écrire de point sûr.
-  int dataEpoch = 0;
-
-  /// Enregistre un point sûr (démarrage, pause, round, phase, fin, puis
-  /// toutes les 15 s). Ignoré si la tentative n'est plus ouverte ou si les
-  /// données ont été remplacées depuis [epoch].
-  void checkpointWod(String attempt, Map<String, dynamic> point, int epoch) {
-    final current = activeWod;
-    if (epoch != dataEpoch ||
-        current == null ||
-        current.attempt != attempt ||
-        !_attempts.containsKey(attempt)) {
-      return;
-    }
-    activeWod = current.withPoint(point, storeClock());
-    _persist();
-  }
-
-  /// Le WOD a-t-il la même définition qu'au lancement de la tentative ?
-  bool sameDefinition(ActiveWod a) {
-    for (final w in wods) {
-      if (w.id == a.wodId) return _fnv(_defJson(w)) == a.definition;
-    }
-    return false;
-  }
-
-  void _restoreActiveWod(Object? raw) {
-    activeWod = null;
-    if (raw == null) return;
-    try {
-      final a = ActiveWod.fromJson(raw as Map<String, dynamic>);
-      if (!wods.any((w) => w.id == a.wodId)) {
-        throw const FormatException('WOD absent.');
-      }
-      activeWod = a;
-      _attempts[a.attempt] = (wodId: a.wodId, startedAt: a.startedAt);
-    } catch (_) {
-      activeWodUnreadable = true;
-    }
-  }
-
-  /// Terminer : WOD jouable, ou tentative autorisée encore ouverte.
-  bool canFinish(Wod w, String? attempt) =>
-      canRun(w) || (attempt != null && _attempts[attempt]?.wodId == w.id);
-
-  /// Abandon explicite (sortie confirmée de l'écran) : la tentative ne peut
-  /// plus être validée et son chrono n'est plus repris. Les résultats déjà
-  /// enregistrés ne sont pas touchés.
-  void abandonAttempt(String? attempt) {
-    if (attempt == null) return;
-    _attempts.remove(attempt);
-    if (activeWod?.attempt == attempt) {
-      activeWod = null;
-      _persist();
-    }
-  }
-
-  /// Validation d'un score : un seul résultat par tentative ; succès annoncé
-  /// seulement si l'écriture est acceptée. En cas d'échec, le résultat reste
-  /// en mémoire (rien n'est perdu) et [retrySave] le réessaie.
-  Future<ResultSave> recordWodResult(
-    Wod w,
-    WodResult r, {
-    String? attempt,
-  }) async {
-    if (attempt != null && w.results.any((x) => x.attempt == attempt)) {
-      return await retrySave() ? ResultSave.saved : ResultSave.unsaved;
-    }
-    if (!canFinish(w, attempt)) return ResultSave.denied;
-    r.attempt = attempt;
-    // Même écriture : le résultat remplace le chrono en cours.
-    if (attempt != null && activeWod?.attempt == attempt) activeWod = null;
-    addWodResult(w, r);
-    _attempts.remove(attempt);
-    await flush();
-    return hasUnsavedChanges ? ResultSave.unsaved : ResultSave.saved;
-  }
-
-  String? _recoKey;
-  List<Wod> _reco = const [];
-
-  /// « À ta mesure » : WODs verrouillés à ton niveau (±1), hors essai et
-  /// vitrine, renouvelés chaque jour.
-  List<Wod> recommended({int count = 8}) {
-    final key = '$_dayKey|$count|${unlockedWods.length}';
-    if (_recoKey != key) {
-      final t = targetWodLevel;
-      final trial = trialWod?.id;
-      _reco = _pick(
-        'reco|$_dayKey',
-        count,
-        prefer: (w) => (w.level - t).abs() <= 1,
-        exclude: {...weeklyIds, if (trial != null) trial},
-      );
-      _recoKey = key;
-    }
-    return _reco;
-  }
-
-  /// Secondes avant minuit (fin de l'essai du jour).
-  Duration get untilMidnight {
-    final now = storeClock();
-    final midnight = DateTime(now.year, now.month, now.day + 1);
-    return midnight.difference(now);
-  }
-
-  /// Jours entiers avant le prochain lundi (changement de vitrine).
-  int get daysUntilNewWeek {
-    final now = storeClock();
-    return 8 - now.weekday;
-  }
-
-  // ---------- Aperçu d'un WOD : volume, charge de travail, muscles ----------
-  static final _splitRe = RegExp(r'\s*(?:\+|·|(?<!\d),(?!\d)|\s/\s| et )\s*');
-  static final _partRe = RegExp(
-    r'''^(\d+(?:[.,]\d+)?)\s*(km|min|m|s|"|'|″|′)?(?![A-Za-zÀ-ÿ])\s*(.*)$''',
-  );
-  static final _ladderRe = RegExp(r'^(\d+(?:-\d+){2,})\s+(.*)$');
-
-  List<int> _scheme(String text) {
-    final nums = _numRe.allMatches(text).map((m) => int.parse(m[0]!)).toList();
-    if (text.contains('/') || nums.isEmpty) return const [];
-    if (text.contains('…') || text.contains('→') || text.contains('...')) {
-      if (nums.length < 2) return const [];
-      final step = nums.length > 2
-          ? nums[1] - nums[0]
-          : (nums.last >= nums.first ? 1 : -1);
-      if (step == 0 || (nums.last - nums.first) * step < 0) return const [];
-      final count = (nums.last - nums.first).abs() ~/ step.abs() + 1;
-      return List.generate(
-        count > 1000 ? 1000 : count,
-        (i) => nums.first + i * step,
-      );
-    }
-    return nums;
-  }
-
-  /// Analyse le mouvement, sans compter les numéros de minute, charges,
-  /// annotations par côté ou temps de repos comme des répétitions.
-  List<({int reps, int meters, String text})> _parseLine(Wod w, String line) {
-    var text = line.trim().replaceAll('–', '-').replaceAll('−', '-');
-    final shared = RegExp(
-      r'^(\d+)\s+rounds?[^:]*:\s*(.*)$',
-      caseSensitive: false,
-    ).firstMatch(text);
-    if (shared != null) {
-      final factor = int.parse(shared[1]!);
-      return [
-        for (final p in _parseLine(w, shared[2]!))
-          (reps: p.reps * factor, meters: p.meters * factor, text: p.text),
-      ];
-    }
-    text = text.replaceFirst(
-      RegExp(
-        r'^(?:min\b[^:]*|cash in|cash out|finisher|amrap\s+\d+\s*min)\s*:\s*',
-        caseSensitive: false,
-      ),
-      '',
-    );
-    final block = RegExp(r'^(\d+)\s*[×x]\s*\((.*?)\)(.*)$').firstMatch(text);
-    if (block != null) {
-      final factor = int.parse(block[1]!);
-      return [
-        for (final p in _parseLine(w, block[2]!))
-          (reps: p.reps * factor, meters: p.meters * factor, text: p.text),
-        ..._parseLine(w, block[3]!),
-      ];
-    }
-    final ladder = _ladderRe.firstMatch(text);
-    if (ladder != null) {
-      return [
-        (
-          reps: _scheme(ladder[1]!).fold(0, (a, b) => a + b),
-          meters: 0,
-          text: ladder[2]!,
-        ),
-      ];
-    }
-    final out = <({int reps, int meters, String text})>[];
-    for (final raw in text.split(_splitRe)) {
-      final part = raw.trim();
-      if (part.isEmpty || _restRe.hasMatch(part.toLowerCase())) continue;
-      final m = _partRe.firstMatch(part);
-      if (m != null) {
-        final n = double.parse(m[1]!.replaceAll(',', '.'));
-        final unit = m[2];
-        final move = (m[3] ?? '').trim();
-        if (unit == 'm' || unit == 'km') {
-          final repetitions = _scheme(w.scheme).length;
-          out.add((
-            reps: 0,
-            meters:
-                (n * (unit == 'km' ? 1000 : 1)).round() * max(1, repetitions),
-            text: move.isEmpty ? 'run' : move,
-          ));
-        } else if (unit == null &&
-            move.isNotEmpty &&
-            !_restRe.hasMatch(move.toLowerCase())) {
-          out.add((reps: n.round(), meters: 0, text: move));
-        }
-        continue;
-      }
-      if (_maxRe.hasMatch(part.toLowerCase())) {
-        out.add((
-          reps: 15,
-          meters: 0,
-          text: part.replaceAll(_maxStripRe, '').trim(),
-        ));
-      } else if (w.scheme.isNotEmpty) {
-        final sum = _scheme(w.scheme).fold(0, (a, b) => a + b);
-        if (sum > 0) out.add((reps: sum, meters: 0, text: part));
-      }
-    }
-    return out;
-  }
-
-  // ---------- Score historique de classement du catalogue ----------
-  // Points par répétition selon le type de mouvement (poids de corps, barre,
-  // skills, implements), majorés par le lest, l'enchaînement de mouvements qui
-  // sollicitent la même chaîne, les contraintes (unbroken), le format (rounds,
-  // repos, AMRAP, EMOM) et les distances. Conservé pour les niveaux et crédits ;
-  // les volumes et durées présentés à l'utilisateur viennent de TrainingEstimator.
-  static final _moves = <(RegExp, double, String, bool)>[
-    // (motif, points par rep ou par 100 m, catégorie, poids de corps)
-    (RegExp(r'muscle.?up|\bmu\b'), 4.5, 'pull', true),
-    (RegExp(r'hspu|handstand'), 3.2, 'push', true),
-    (RegExp(r'wall walk'), 3.5, 'push', true),
-    (RegExp(r'dragon'), 3.0, 'core', true),
-    (RegExp(r'pistol'), 2.2, 'legs', true),
-    (RegExp(r'front lever|planche'), 5.0, 'pull', true),
-    (RegExp(r'burpee.{0,12}(box|over|broad|plate)'), 2.2, 'meta', true),
-    (RegExp(r'devil press'), 2.5, 'meta', false),
-    (RegExp(r'burpee'), 1.7, 'meta', true),
-    (RegExp(r'snatch|clean|thruster'), 2.0, 'meta', false),
-    (RegExp(r'toes.?to.?bar|t2b'), 1.5, 'core', true),
-    (RegExp(r'rows? barre|ring row|row(s)? aux anneaux'), 0.9, 'pull', true),
-    (RegExp(r'pull.?up|chin.?up|traction'), 1.7, 'pull', true),
-    (RegExp(r'\bdip'), 1.4, 'push', true),
-    (RegExp(r'archer|diamond|pike|d[ée]clin'), 1.3, 'push', true),
-    (RegExp(r'push.?up|pompe'), 1.0, 'push', true),
-    (RegExp(r'wall.?ball'), 1.1, 'meta', false),
-    (RegExp(r'kettlebell|kb swing|swing'), 0.9, 'meta', false),
-    (RegExp(r'goblet'), 1.0, 'legs', false),
-    (RegExp(r'sandbag lunge'), 1.2, 'legs', false),
-    (RegExp(r'box jump|squat jump|jumping lunge|saut'), 0.9, 'legs', true),
-    (RegExp(r'lunge|fente|step.?up|step.?over'), 0.5, 'legs', true),
-    (RegExp(r'squat'), 0.5, 'legs', true),
-    (RegExp(r'double.?under'), 0.25, 'meta', true),
-    (
-      RegExp(r'mountain climber|jumping jack|plank|shoulder tap'),
-      0.4,
-      'core',
-      true,
-    ),
-    (RegExp(r'sit.?up|v.?up|hollow|leg raise|crunch|abdo'), 0.5, 'core', true),
-    (RegExp(r'farmer|carry'), 12.0, 'carry', false),
-    (RegExp(r'\bcal\b'), 1.0, 'erg', false),
-    (RegExp(r'\brun\b|course|sprint|footing'), 7.5, 'erg', true),
-    (RegExp(r'\brow\b|rameur'), 6.0, 'erg', false),
-    (RegExp(r'ski'), 6.0, 'erg', false),
-    (RegExp(r'bike|erg\b|v[ée]lo'), 2.0, 'erg', false),
-  ];
-
-  /// Secondes par répétition (ou par 100 m) — durée estimée et rounds d'AMRAP.
-  static final _secs = <(RegExp, double)>[
-    (RegExp(r'muscle.?up|\bmu\b|front lever|planche'), 5.0),
-    (RegExp(r'hspu|handstand|wall walk|dragon'), 4.0),
-    (RegExp(r'burpee|devil'), 4.0),
-    (RegExp(r'pull.?up|chin.?up|traction|toes|t2b|pistol'), 3.0),
-    (RegExp(r'wall.?ball|snatch|clean|thruster'), 3.0),
-    (RegExp(r'\bdip|archer|diamond|pike|goblet|sandbag'), 2.5),
-    (
-      RegExp(r'push.?up|pompe|box jump|squat jump|jumping|swing|kettlebell'),
-      2.0,
-    ),
-    (RegExp(r'double.?under'), 0.5),
-    (RegExp(r'\bcal\b'), 4.0),
-    (RegExp(r'farmer|carry'), 40.0),
-    (RegExp(r'\brun\b|course|sprint|footing|\brow\b|rameur|ski'), 25.0),
-    (RegExp(r'bike|erg\b|v[ée]lo'), 12.0),
-  ];
-
-  /// (points par unité, catégorie, poids de corps) pour un texte de mouvement.
-  (double, String, bool) _movePoints(String text) {
-    final l = text.toLowerCase();
-    if (RegExp(r'^cal(?:ories)?\b').hasMatch(l)) return (1.0, 'erg', false);
-    for (final (re, pts, cat, bw) in _moves) {
-      if (re.hasMatch(l)) return (pts, cat, bw);
-    }
-    return (0.8, 'meta', true);
-  }
-
-  double _moveSeconds(String text) {
-    final l = text.toLowerCase();
-    for (final (re, sec) in _secs) {
-      if (re.hasMatch(l)) return sec;
-    }
-    return 1.5; // squats, fentes, sit-ups, gainage…
-  }
-
-  static final _kgRe = RegExp(r'(\d+(?:[.,]\d+)?)\s*kg');
-  static final _unbrokenRe = RegExp(r'unbroken|sans pause|enchaîn');
-  static final _rangeRe = RegExp(r'min\s*(\d+)\s*-\s*(\d+)');
-  static final _rotRe = RegExp(r'^min\s*\d+\s*,');
-  static final _restRe = RegExp(r'^(rest|repos)');
-  static final _maxRe = RegExp(r'\bmax\b');
-  static final _maxStripRe = RegExp(r'max( de)?', caseSensitive: false);
-  static final _numRe = RegExp(r'\d+');
-
-  double _lineSeconds(
-    Wod w,
-    String line, [
-    List<({int reps, int meters, String text})>? parsed,
-  ]) {
-    var t = 0.0;
-    for (final p in parsed ?? _parseLine(w, line)) {
-      final sec = _moveSeconds(p.text);
-      t += p.meters > 0
-          ? p.meters / 100 * (sec >= 12 ? sec : 25)
-          : p.reps * sec;
-    }
-
-    return t + 5; // transition
-  }
-
-  /// Points d'une ligne (un round) : lest, enchaînement, contraintes, multiplicateur « 3 × (…) ».
-  double _linePoints(
-    Wod w,
-    String line,
-    String? prevCat,
-    void Function(String) setPrevCat, [
-    List<({int reps, int meters, String text})>? parsed,
-  ]) {
-    var total = 0.0;
-    final parts = parsed ?? _parseLine(w, line);
-    var cat = prevCat;
-    for (final p in parts) {
-      final (pts, category, bw) = _movePoints(p.text);
-      var v = p.meters > 0 ? p.meters / 100 * pts : p.reps * pts;
-      if (p.meters > 0 && category != 'erg' && category != 'carry') {
-        v = p.meters / 20 * pts; // burpees broad jump, fentes en mètres
-      }
-      final kg = _kgRe.firstMatch(p.text.toLowerCase());
-      if (kg != null && bw) {
-        v *=
-            1 +
-            double.parse(kg.group(1)!.replaceAll(',', '.')) /
-                40; // lest sur un mouvement au poids de corps
-      }
-      if (cat != null && cat == category && category != 'erg') {
-        v *= 1.15; // même chaîne enchaînée
-      }
-      cat = category;
-      total += v;
-    }
-    if (parts.length >= 3) total *= 1.10; // complexe enchaîné sans pause
-    if (_unbrokenRe.hasMatch(line.toLowerCase())) total *= 1.2;
-
-    setPrevCat(cat ?? '');
-    return total;
-  }
-
-  ({int points, int minutes, String level}) wodStats(Wod w) {
-    final cached = _statsCache[w.id];
-    final known = _statsDefinitions[w.id];
-    // L6 : comparaison champ à champ (voir [_sameDefinition]) au lieu de
-    // deux encodages JSON par appel.
-    final same = known != null && _sameDefinition(known, w);
-    final legacy = cached != null && same ? cached : _computeStats(w);
-    final estimate = wodEstimate(w);
-    final st = (
-      points: legacy.points,
-      minutes: max(1, (estimate.elapsed.midpoint / 60).ceil()),
-      level: legacy.level,
-    );
-    _statsCache[w.id] = st;
-    if (!same) _statsDefinitions[w.id] = _definitionCopy(w);
-    return st;
-  }
-
-  ({int points, int minutes, String level}) _computeStats(Wod w) {
-    String? prev;
-    final perLine = <double>[];
-    var roundSec = 0.0;
-    for (final line in w.lines) {
-      final parsed = _parseLine(w, line);
-      perLine.add(
-        _linePoints(w, line, prev, (c) => prev = c.isEmpty ? null : c, parsed),
-      );
-      roundSec += _lineSeconds(w, line, parsed);
-    }
-    final roundPts = perLine.fold(0.0, (a, b) => a + b);
-    double total;
-    int minutes;
-    if (w.type == 'amrap') {
-      final rounds = max(1.0, w.minutes * 60 / max(20.0, roundSec + 10));
-      total = roundPts * rounds * 1.1;
-      minutes = w.minutes;
-    } else if (w.type == 'emom') {
-      final ranged = <double>[];
-      var anyRange = false, rotation = false;
-      for (var i = 0; i < w.lines.length; i++) {
-        final l = w.lines[i].toLowerCase();
-        final m = _rangeRe.firstMatch(l);
-        if (m != null) {
-          anyRange = true;
-          ranged.add(
-            perLine[i] * (int.parse(m.group(2)!) - int.parse(m.group(1)!) + 1),
-          );
-        } else {
-          if (_rotRe.hasMatch(l) || l.contains('altern')) rotation = true;
-          ranged.add(perLine[i]);
-        }
-      }
-      if (anyRange) {
-        total = ranged.fold(0.0, (a, b) => a + b);
-      } else if (rotation) {
-        total = 0;
-        for (var i = 0; i < perLine.length; i++) {
-          final visits =
-              w.rounds ~/ perLine.length +
-              (i < w.rounds % perLine.length ? 1 : 0);
-          total += perLine[i] * visits;
-        }
-      } else {
-        total = roundPts * w.rounds; // tout à chaque intervalle
-      }
-      total *= 1.15; // horloge fixe, aucun repos choisi
-      minutes = ((w.rounds * w.interval) / 60).round();
-    } else {
-      final r = (w.type == 'rounds' && w.rounds > 0) ? w.rounds : 1;
-      total = roundPts * r * (w.scheme.isNotEmpty ? 1.1 : 1.0);
-      if (r > 1) {
-        total *= w.restSec == 0 ? 1.08 : (w.restSec >= 90 ? 0.95 : 1.0);
-      }
-      minutes = ((roundSec * r + (r - 1) * w.restSec) / 60).round().clamp(
-        1,
-        240,
-      );
-      if (w.minutes > 0 && minutes > w.minutes) minutes = w.minutes;
-    }
-    final pts = total.round();
-    final lvl = pts < 200
-        ? 'Légère'
-        : pts < 400
-        ? 'Modérée'
-        : pts < 700
-        ? 'Élevée'
-        : 'Très élevée';
-    return (points: pts, minutes: minutes, level: lvl);
-  }
-
-  /// Sollicitation musculaire d'un WOD (mêmes clés que la carte hebdomadaire).
-  Map<String, double> wodMuscles(Wod w) => plannedMuscles(wodEstimate(w));
 
   // ---------- Progression (XP, niveaux, déverrouillage) ----------
   int _lastLevel = 1;
@@ -1967,7 +649,6 @@ class AppStore extends ChangeNotifier {
     if (_progression == null || _progressionDay != day) {
       _progression = Progression.calculate(
         logs: logs,
-        catalog: wods,
         program: program,
         now: now,
       );
@@ -1980,7 +661,6 @@ class AppStore extends ChangeNotifier {
   void notifyListeners() {
     _progression = null;
     _game = null;
-    _recoKey = null;
     super.notifyListeners();
   }
 
@@ -1999,7 +679,6 @@ class AppStore extends ChangeNotifier {
         program: program,
         logs: logs,
         refs: values,
-        wods: wods,
         isDone: isDone,
         now: KalisClock.now(),
         manualWeeklyGoal: settings.weeklyGoal,
@@ -2064,230 +743,16 @@ class AppStore extends ChangeNotifier {
   ({int inLevel, int need}) get levelProgress =>
       (inLevel: progression.inLevel, need: progression.need);
 
-  /// Possédé : hors catalogue (WOD personnel) ou acheté avec des crédits
-  /// dont l'écriture a été acceptée.
-  bool unlocked(Wod w) =>
-      !isCatalog(w) ||
-      (unlockedWods.containsKey(w.id) && !_purchases.containsKey(w.id));
-
-  /// Si le niveau a monté depuis la dernière vérification : (ancien, nouveau,
-  /// crédits gagnés), sinon null. À appeler après une séance ou un score.
-  ({int from, int to, int credits})? consumeLevelUp() {
+  /// Si le niveau a monté depuis la dernière vérification : (ancien,
+  /// nouveau), sinon null. À appeler après une séance.
+  ({int from, int to})? consumeLevelUp() {
     final now = level;
     if (now <= _lastLevel) return null;
     final from = _lastLevel;
     _lastLevel = now;
     _persist();
-    return (
-      from: from,
-      to: now,
-      credits: creditsForLevel(now) - creditsForLevel(from),
-    );
+    return (from: from, to: now);
   }
-
-  // ---------- WODs ----------
-  // Le catalogue préchargé vit dans le code ; on ne persiste que les WODs créés,
-  // les suppressions, les modifications d'un préchargé et les résultats.
-  /// Catalogue complet : sélection (préchargés) + première série générée
-  /// (jusqu'à 500) + deuxième série générée (500 de plus, ids « genx… »).
-  List<Wod> catalogWods() {
-    final seeds = allSeedWods();
-    return [
-      ...seeds,
-      ...generateWods(generatedCount(seeds.length)),
-      ...generateWodsV2(generatedCountV2),
-    ];
-  }
-
-  late final Map<String, Wod> _seedDefaults = {
-    for (final w in catalogWods()) w.id: w,
-  };
-
-  /// Définition comparable (sans résultats ni niveau, qui est recalculé).
-  static Map<String, dynamic> _definition(Wod w) => {
-    'id': w.id,
-    'name': w.name,
-    'type': w.type,
-    'rounds': w.rounds,
-    'restSec': w.restSec,
-    'minutes': w.minutes,
-    'interval': w.interval,
-    'scheme': w.scheme,
-    'lines': w.lines,
-    'notes': w.notes,
-    'source': w.source,
-  };
-  static String _defJson(Wod w) => jsonEncode(_definition(w));
-
-  /// Même définition, sans rien encoder : équivalent exact de
-  /// `_defJson(a) == _defJson(b)`, les champs de [_definition] étant des
-  /// textes, des entiers et une liste de textes (égalité JSON = égalité de
-  /// valeur). L6 (KT-023) : la sauvegarde compare le millier de WOD du
-  /// catalogue à leur version d'origine à chaque écriture ; elle encodait
-  /// chacun en JSON.
-  static bool _sameDefinition(Wod a, Wod b) =>
-      a.id == b.id &&
-      a.name == b.name &&
-      a.type == b.type &&
-      a.rounds == b.rounds &&
-      a.restSec == b.restSec &&
-      a.minutes == b.minutes &&
-      a.interval == b.interval &&
-      a.scheme == b.scheme &&
-      a.notes == b.notes &&
-      a.source == b.source &&
-      listEquals(a.lines, b.lines);
-
-  /// Copie de la seule définition (sans résultats, niveau ni format), pour
-  /// détecter plus tard une modification sans conserver de JSON.
-  static Wod _definitionCopy(Wod w) => Wod(
-    id: w.id,
-    name: w.name,
-    type: w.type,
-    rounds: w.rounds,
-    restSec: w.restSec,
-    minutes: w.minutes,
-    interval: w.interval,
-    scheme: w.scheme,
-    lines: List<String>.of(w.lines),
-    notes: w.notes,
-    source: w.source,
-  );
-
-  bool isCatalog(Wod w) => _seedDefaults.containsKey(w.id);
-  bool isGenerated(Wod w) => w.id.startsWith('gen');
-
-  Future<void> _loadWods() async {
-    wods.clear();
-    final legacy = _prefs.getString(_kWodsLegacy);
-    if (legacy != null) {
-      await _migrateLegacyWods(legacy);
-    }
-    final deleted =
-        ((jsonDecode(_prefs.getString(_kWodsDel) ?? '[]') as List).map(
-          (e) => e.toString(),
-        )).toSet();
-    final edits =
-        jsonDecode(_prefs.getString(_kWodsEdit) ?? '{}')
-            as Map<String, dynamic>;
-    final results =
-        jsonDecode(_unpack(_prefs.getString(_kWodResults)) ?? '{}')
-            as Map<String, dynamic>;
-    for (final seed in _seedDefaults.values) {
-      if (deleted.contains(seed.id)) continue;
-      final w = edits.containsKey(seed.id)
-          ? Wod.fromJson(edits[seed.id] as Map<String, dynamic>)
-          : Wod.fromJson(seed.toJson());
-      w.results = _resultsOf(results, w.id);
-      wods.add(w);
-    }
-    for (final e in jsonDecode(_prefs.getString(_kWodsUser) ?? '[]') as List) {
-      final w = Wod.fromJson(e as Map<String, dynamic>);
-      w.results = _resultsOf(results, w.id);
-      wods.insert(0, w);
-    }
-    await _prefs.setInt(_kSeedV, 4);
-  }
-
-  /// Classement du catalogue (déciles), disponible avant tout déverrouillage.
-  void rankCatalog() {
-    _rankDifficulty();
-    notifyListeners();
-  }
-
-  // ---------- Difficulté automatique (déciles du catalogue) ----------
-  List<double> _levelCuts = const [];
-  final Map<String, Wod> _statsDefinitions = {};
-  final Map<String, _EstimateEntry> _wodEstimates = {};
-  final Map<String, ({int points, int minutes, String level})> _statsCache = {};
-
-  double difficultyScore(Wod w) => _computeStats(w).points.toDouble();
-
-  /// Classe tout le catalogue par déciles de score → niveau 1-10, et applique le
-  /// même barème aux WODs de l'utilisateur.
-  void _rankDifficulty() {
-    // L6 : le score d'un WOD ne dépend que de sa définition. Celui de chaque
-    // WOD préchargé est calculé une fois et réutilisé pour son exemplaire du
-    // catalogue tant que la définition est identique (il était recalculé).
-    final seedScores = <String, double>{
-      for (final w in _seedDefaults.values)
-        w.id: _computeStats(w).points.toDouble(),
-    };
-    final scores = seedScores.values.toList()..sort();
-    if (scores.length >= 10) {
-      _levelCuts = [
-        for (var k = 1; k < 10; k++) scores[(scores.length * k / 10).floor()],
-      ];
-    }
-    for (final w in wods) {
-      final seed = _seedDefaults[w.id];
-      final known = seed != null && _sameDefinition(seed, w)
-          ? seedScores[w.id]
-          : null;
-      w.level = _levelForScore(w, known ?? difficultyScore(w));
-    }
-  }
-
-  int levelFor(Wod w) => _levelForScore(w, difficultyScore(w));
-
-  int _levelForScore(Wod w, double sc) {
-    if (_levelCuts.isEmpty) return w.level;
-    var lvl = 1;
-    for (final c in _levelCuts) {
-      if (sc >= c) lvl++;
-    }
-    return lvl.clamp(1, 10);
-  }
-
-  List<WodResult> _resultsOf(Map<String, dynamic> all, String id) =>
-      ((all[id] as List?) ?? [])
-          .map((r) => WodResult.fromJson(r as Map<String, dynamic>))
-          .toList();
-
-  /// Ancien format : liste complète (catalogue + perso + résultats) → nouveau format.
-  Future<void> _migrateLegacyWods(String raw) async {
-    final old = (jsonDecode(raw) as List)
-        .map((e) => Wod.fromJson(e as Map<String, dynamic>))
-        .toList();
-    final present = old.map((w) => w.id).toSet();
-    final known = [
-      for (var k = 1; k <= 30; k++) 'seed$k',
-    ]; // fournées 1 et 2 uniquement
-    final deleted = [
-      for (final id in known)
-        if (!present.contains(id)) id,
-    ];
-    final user = <Map<String, dynamic>>[];
-    final edits = <String, dynamic>{};
-    final results = <String, dynamic>{};
-    for (final w in old) {
-      if (w.results.isNotEmpty) {
-        results[w.id] = w.results.map((r) => r.toJson()).toList();
-      }
-      final seed = _seedDefaults[w.id];
-      if (seed == null) {
-        user.add(_definition(w));
-      } else {
-        if (w.level == 1 && seed.level != 1) {
-          w.level = seed.level; // niveaux de la fournée 2
-        }
-        if (_defJson(w) != _defJson(seed)) {
-          edits[w.id] = _definition(w);
-        }
-      }
-    }
-    await _prefs.setString(_kWodsDel, jsonEncode(deleted));
-    await _prefs.setString(_kWodsEdit, jsonEncode(edits));
-    await _prefs.setString(_kWodsUser, jsonEncode(user));
-    await _prefs.setString(_kWodResults, _pack(jsonEncode(results)));
-  }
-
-  void _saveWods() {
-    _persist();
-    notifyListeners();
-  }
-
-  void _saveWodResults() => _persist();
 
   // ---------- Compression des gros blobs (gzip + base64) ----------
   static String _pack(String s) =>
@@ -2305,50 +770,6 @@ class AppStore extends ChangeNotifier {
         data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes),
       ),
     );
-  }
-
-  /// Données de test et compatibilité des anciennes prescriptions sauvegardées.
-  /// Aucun écran de création ou de modification n’expose cette opération.
-  @visibleForTesting
-  void upsertWod(Wod w) {
-    _trialWodCache = null;
-    _statsCache.remove(w.id);
-    _wodEstimates.remove(w.id);
-    final i = wods.indexWhere((x) => x.id == w.id);
-    if (i >= 0) {
-      wods[i] = w;
-    } else {
-      wods.insert(0, w);
-    }
-    w.level = levelFor(w);
-    _saveWods();
-  }
-
-  void addWodResult(Wod w, WodResult r) {
-    final before = progression;
-    final creditsBefore = credits;
-    r.prescription ??= w.prescriptionKey;
-    w.results.add(r);
-    _saveWodResults();
-    notifyListeners();
-    final after = progression;
-    if (after.totalXp <= before.totalXp) return;
-    _pendingReward = RewardSummary.build(
-      before: before,
-      after: after,
-      heading: r.completed ? 'WOD terminé' : 'Tentative enregistrée',
-      title: w.name,
-      creditsBefore: creditsBefore,
-      creditsAfter: credits,
-      baseXp: 80,
-      baseLabel: 'Tentative WOD',
-    );
-  }
-
-  void deleteWodResult(Wod w, WodResult r) {
-    w.results.remove(r);
-    _saveWodResults();
-    notifyListeners();
   }
 
   // ---------- Réglages ----------
@@ -2393,47 +814,6 @@ class AppStore extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ---------- Séances personnalisées ----------
-  void _saveCustom() {
-    _persist();
-    notifyListeners();
-  }
-
-  String newSessionId() {
-    var id = KalisClock.realNow().microsecondsSinceEpoch;
-    while (customSessions.any((s) => s.id == '$id')) {
-      id++;
-    }
-    return '$id';
-  }
-
-  void upsertSession(CustomSession s) {
-    final i = customSessions.indexWhere((x) => x.id == s.id);
-    if (i >= 0) {
-      customSessions[i] = s;
-    } else {
-      customSessions.add(s);
-    }
-    _saveCustom();
-  }
-
-  void deleteSession(CustomSession s) {
-    customSessions.removeWhere((x) => x.id == s.id);
-    logs.removeWhere(
-      (k, v) => k == 'S0-J${s.id}' || k.startsWith('S0-J${s.id}@'),
-    );
-    _saveCustom();
-    saveLogs(immediate: true);
-  }
-
-  void duplicateSession(CustomSession s) {
-    final copy = CustomSession.fromJson(s.toJson());
-    copy.id = newSessionId();
-    copy.name = '${s.name} (copie)';
-    customSessions.add(copy);
-    _saveCustom();
-  }
-
   // ---------- Sauvegarde : un document, une écriture atomique ----------
   _BackupData _currentBackup() => _BackupData(
     values: values,
@@ -2442,37 +822,20 @@ class AppStore extends ChangeNotifier {
     startOrigin: startOrigin,
     logs: logs,
     settings: settings,
-    custom: customSessions,
     userExercises: userExercises,
-    wods: wods,
-    unlocked: unlockedWods,
-    legacyGrants: legacyGrants,
     lastLevel: _lastLevel,
-    earnedMax: creditsEarned,
-    creditGrants: _grantsSnapshot(),
-    trialDay: _trialDay,
-    trialId: _trialId,
-    weekOf: _weekOf,
-    weeklyIds: _weeklyIdsStored,
-    wishlist: wishlist.toList(),
     koach: koach,
     profile: profile,
     programInstance: programInstance,
     adapt: adapt,
-    motiv: motiv,
   );
 
+  /// Format 3 sans les sections retirées par G2 (`custom`, `catalog`,
+  /// `unlocked`, crédits, vitrine, envies, `motiv` : voir
+  /// retired_data.dart). Les versions 6.0.x ne relisent pas ce document
+  /// (catalogue de WOD absent) ; la copie d'avant G2 sert à revenir en
+  /// arrière.
   Map<String, dynamic> _backupJson(_BackupData data) {
-    final edits = <String, dynamic>{};
-    final user = <Map<String, dynamic>>[];
-    final present = data.wods.map((w) => w.id).toSet();
-    for (final w in data.wods) {
-      if (!_seedDefaults.containsKey(w.id)) {
-        user.add(_definition(w));
-      } else if (!_sameDefinition(w, _seedDefaults[w.id]!)) {
-        edits[w.id] = _definition(w);
-      }
-    }
     return {
       'kalisTrack': 1,
       'format': 3,
@@ -2489,31 +852,8 @@ class AppStore extends ChangeNotifier {
             },
       'logs': data.logs.map((k, v) => MapEntry(k, v.toJson())),
       'settings': data.settings.toJson(),
-      'custom': data.custom.map((s) => s.toJson()).toList(),
       'userExercises': data.userExercises,
-      'catalog': {
-        'deleted': [
-          for (final id in _seedDefaults.keys)
-            if (!present.contains(id)) id,
-        ],
-        'edits': edits,
-        'user': user,
-        'results': {
-          for (final w in data.wods)
-            if (w.results.isNotEmpty)
-              w.id: w.results.map((r) => r.toJson()).toList(),
-        },
-      },
-      'unlocked': data.unlocked,
-      if (data.legacyGrants.isNotEmpty) 'legacyGrants': data.legacyGrants,
       'lastLevel': data.lastLevel,
-      if (data.earnedMax != null) 'creditsEarnedMax': data.earnedMax,
-      if (data.creditGrants != null) 'creditGrants': data.creditGrants,
-      if (data.trialDay != null)
-        'trialOfDay': {'day': data.trialDay, 'wod': data.trialId},
-      if (data.weekOf != null)
-        'weeklyShowcase': {'week': data.weekOf, 'ids': data.weeklyIds},
-      'wishlist': data.wishlist,
       // L7 : section écrite seulement si Koach a servi (export identique à
       // 2.5.9 sinon) ; ignorée par les versions antérieures.
       if (!data.koach.pristine) 'koach': data.koach.toJson(),
@@ -2527,21 +867,145 @@ class AppStore extends ChangeNotifier {
       // L11 : adaptations écrites seulement si elles servent (export
       // identique à 4.0.0 sinon) ; ignorées par les versions antérieures.
       if (!data.adapt.pristine) 'adapt': data.adapt.toJson(),
-      // L12 : motivation écrite seulement si elle sert (export identique à
-      // 4.1.0 sinon) ; ignorée par les versions antérieures.
-      if (!data.motiv.pristine) 'motiv': data.motiv.toJson(),
     };
   }
 
   String exportAll() => jsonEncode(_backupJson(_currentBackup()));
 
-  /// Document local : la sauvegarde exportée plus le chrono WOD en cours
-  /// (KT-018), qui reste propre à cet appareil (jamais exporté ni importé).
+  /// Document local : la sauvegarde exportée, plus (G2) les données
+  /// retirées tant que leur copie n'est pas faite : elles restent écrites
+  /// telles quelles, jamais perdues par une écriture ordinaire.
   String _stateDocument() {
     final m = _backupJson(_currentBackup());
-    final active = activeWod;
-    if (active != null) m['activeWod'] = active.toJson();
+    _retiredPending.restoreInto(m);
     return jsonEncode(m);
+  }
+
+  // ---------- G2 : copie avant suppression (D1.1) ----------
+
+  /// Copie complète au format d'export de 6.0.x : le document lu au
+  /// démarrage, tel quel (chrono WOD local retiré, date de la copie
+  /// ajoutée ; champs de session de test comme un export). 6.0.x l'importe.
+  static String retiredCopyText(
+    Map<String, dynamic> document, {
+    required DateTime at,
+    bool devSession = false,
+    int offsetDays = 0,
+  }) {
+    final copy = Map<String, dynamic>.of(document)..remove('activeWod');
+    copy['exportedAt'] = at.toIso8601String();
+    if (devSession) {
+      copy['sessionDeTest'] = true;
+      copy['decalageJours'] = offsetDays;
+    }
+    return jsonEncode(copy);
+  }
+
+  /// Données retirées présentes dans [document] (document lu au démarrage) :
+  /// - sans donnée de l'utilisateur (catalogue vierge, vitrine…) : retirées
+  ///   à la prochaine écriture, sans copie ni annonce ;
+  /// - sinon : copie écrite dans le stockage de l'application, relue et
+  ///   vérifiée (texte identique, empreinte, contenu identique au document,
+  ///   lecture comme un import), fiche écrite, puis seulement le document
+  ///   est réécrit sans elles. Au moindre échec : rien n'est supprimé, les
+  ///   écrans restent masqués, nouvel essai au lancement suivant.
+  Future<void> _secureRetiredData(Map<String, dynamic> document) async {
+    final retired = RetiredData.of(document);
+    if (retired.isEmpty) return;
+    if (!retired.summary.hasUserData) {
+      await flush();
+      return;
+    }
+    _retiredPending = retired;
+    retiredCopyFailed = true;
+    final at = KalisClock.now();
+    try {
+      final text = retiredCopyText(
+        document,
+        at: at,
+        devSession: SessionSpace.isDev,
+        offsetDays: KalisClock.offsetDays,
+      );
+      final packed = _pack(text);
+      final hook = debugRetiredCopyHook;
+      final written = hook != null
+          ? await hook(packed)
+          : await _prefs.setString(kRetiredCopyKey, packed);
+      if (!written) return;
+      final back = _unpack(_prefs.getString(kRetiredCopyKey));
+      if (back == null || back != text || fnv1a32(back) != fnv1a32(text)) {
+        return;
+      }
+      final reread = jsonDecode(back) as Map<String, dynamic>;
+      final expected = Map<String, dynamic>.of(document)..remove('activeWod');
+      for (final k in ['exportedAt', 'sessionDeTest', 'decalageJours']) {
+        reread.remove(k);
+        expected.remove(k);
+      }
+      if (!jsonDeepEquals(reread, expected) ||
+          RetiredData.of(reread).summary.toJson().toString() !=
+              retired.summary.toJson().toString()) {
+        return;
+      }
+      // Import à blanc : la copie se relit comme une sauvegarde.
+      _parseBackup(back);
+      final notice = RetiredNotice(
+        at: at,
+        bytes: utf8.encode(text).length,
+        checksum: fnv1a32(text),
+        summary: retired.summary,
+      );
+      if (!await _prefs.setString(
+        kRetiredNoticeKey,
+        jsonEncode(notice.toJson()),
+      )) {
+        return;
+      }
+    } catch (_) {
+      return;
+    }
+    // Copie confirmée : le document est réécrit sans les données retirées.
+    _retiredPending = RetiredData.empty;
+    retiredCopyFailed = false;
+    await flush();
+  }
+
+  /// Injection d'un échec d'écriture de la copie G2 (tests uniquement).
+  @visibleForTesting
+  static Future<bool> Function(String packed)? debugRetiredCopyHook;
+
+  /// Fiche de la copie G2 (null : aucune copie dans cette session).
+  RetiredNotice? get retiredNotice {
+    try {
+      final raw = _prefs.getString(kRetiredNoticeKey);
+      return raw == null ? null : RetiredNotice.fromJson(jsonDecode(raw));
+    } catch (_) {
+      // Fiche illisible, ou magasin pas encore chargé.
+      return null;
+    }
+  }
+
+  /// Texte de la copie G2 (null : absente ou illisible).
+  String? get retiredCopy {
+    try {
+      final text = _unpack(_prefs.getString(kRetiredCopyKey));
+      final notice = retiredNotice;
+      if (text == null || notice == null) return null;
+      return fnv1a32(text) == notice.checksum ? text : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// L'annonce de la suppression a été lue (bouton « Compris »).
+  Future<void> markRetiredNoticeSeen() async {
+    final notice = retiredNotice;
+    if (notice == null || notice.seen) return;
+    notice.seen = true;
+    try {
+      await _prefs.setString(kRetiredNoticeKey, jsonEncode(notice.toJson()));
+    } catch (_) {}
+    notifyListeners();
   }
 
   String exportCompact() => _pack(exportAll());
@@ -2630,6 +1094,8 @@ class AppStore extends ChangeNotifier {
     final nextLogs = (m['logs'] as Map<String, dynamic>).map(
       (k, v) => MapEntry(k, SessionLog.fromJson(v as Map<String, dynamic>)),
     );
+    // G2 : séances manuelles (semaine 0) retirées, ignorées à la lecture.
+    nextLogs.removeWhere((k, _) => isManualSessionKey(k));
     final nextSettings = AppSettings.fromJson(
       m['settings'] as Map<String, dynamic>,
     );
@@ -2644,45 +1110,6 @@ class AppStore extends ChangeNotifier {
         nextSettings.defaultRest > 3600) {
       throw const FormatException('Réglages invalides.');
     }
-    final nextCustom = ((m['custom'] as List?) ?? [])
-        .map((e) => CustomSession.fromJson(e as Map<String, dynamic>))
-        .toList();
-    final ids = <String>{};
-    for (final session in nextCustom) {
-      if (int.tryParse(session.id) == null ||
-          !ids.add(session.id) ||
-          session.name.trim().isEmpty ||
-          session.items.length > 1000) {
-        throw const FormatException('Séance personnalisée invalide.');
-      }
-      final exerciseIds = <String>{};
-      for (final ex in session.items) {
-        if (ex.name.trim().isEmpty ||
-            !exerciseIds.add(ex.uid) ||
-            !execModes.any((m) => m.id == ex.mode) ||
-            (ex.kg != null && (!ex.kg!.isFinite || ex.kg!.abs() > 10000)) ||
-            (ex.rest != null && (ex.rest! < 0 || ex.rest! > 86400))) {
-          throw const FormatException('Exercice personnalisé invalide.');
-        }
-        for (final entry in ex.p.entries) {
-          if (entry.key == 'pyr') {
-            if (entry.value is! String ||
-                !RegExp(
-                  r'^\d+(?:[-/ ]+\d+)*$',
-                ).hasMatch((entry.value as String).trim())) {
-              throw const FormatException('Pyramide invalide.');
-            }
-          } else if (entry.value is! num ||
-              !(entry.value as num).isFinite ||
-              (entry.value as num) <
-                  (['intra', 'restI'].contains(entry.key) ? 0 : 1) ||
-              (entry.value as num) > 3600 ||
-              (entry.value as num) % 1 != 0) {
-            throw const FormatException('Paramètre de séance invalide.');
-          }
-        }
-      }
-    }
     final nextUser = ((m['userExercises'] as List?) ?? [])
         .map((e) => Map<String, dynamic>.from(e as Map))
         .toList();
@@ -2692,77 +1119,6 @@ class AppStore extends ChangeNotifier {
           ex['g'] is! String ||
           ex['eq'] is! String) {
         throw const FormatException('Base d’exercices invalide.');
-      }
-    }
-    final nextWods = <Wod>[];
-    if (m['format'] == 3) {
-      final catalog = m['catalog'] as Map<String, dynamic>;
-      final deleted = (catalog['deleted'] as List).cast<String>().toSet();
-      final edits = catalog['edits'] as Map<String, dynamic>;
-      final results = catalog['results'] as Map<String, dynamic>;
-      for (final seed in _seedDefaults.values) {
-        if (deleted.contains(seed.id)) continue;
-        final w = Wod.fromJson(
-          (edits[seed.id] as Map<String, dynamic>?) ?? seed.toJson(),
-        );
-        if (w.id != seed.id) {
-          throw const FormatException('Identifiant de WOD incohérent.');
-        }
-        w.results = _resultsOf(results, w.id);
-        nextWods.add(w);
-      }
-      for (final e in catalog['user'] as List) {
-        final w = Wod.fromJson(e as Map<String, dynamic>);
-        w.results = _resultsOf(results, w.id);
-        nextWods.add(w);
-      }
-    } else {
-      nextWods.addAll(
-        ((m['wods'] as List?) ??
-                _seedDefaults.values.map((w) => w.toJson()).toList())
-            .map((e) => Wod.fromJson(e as Map<String, dynamic>)),
-      );
-    }
-    final wodIds = <String>{};
-    for (final w in nextWods) {
-      if (!wodIds.add(w.id) ||
-          w.id.isEmpty ||
-          w.name.trim().isEmpty ||
-          !wodTypes.containsKey(w.type) ||
-          w.rounds < 0 ||
-          w.rounds > 3600 ||
-          w.interval <= 0 ||
-          w.interval > 86400 ||
-          w.minutes < 0 ||
-          w.minutes > 1440 ||
-          w.restSec < 0 ||
-          w.restSec > 86400 ||
-          (w.type == 'emom' && w.rounds == 0) ||
-          (w.type == 'amrap' && w.minutes == 0)) {
-        throw const FormatException('WOD invalide.');
-      }
-      // Format structuré : seulement cohérent avec le type (L3b).
-      if (w.format != null && !w.format!.validFor(w.type)) {
-        throw const FormatException('Format de WOD invalide.');
-      }
-      for (final r in w.results) {
-        final blocks = r.intervals;
-        if ((r.attempt?.length ?? 0) > 64 ||
-            DateTime.tryParse(r.at) == null ||
-            (r.seconds ?? 0) < 0 ||
-            (r.rounds ?? 0) < 0 ||
-            (r.reps ?? 0) < 0 ||
-            // Règle de score : inconnue = fichier d'une autre version.
-            (r.scoring != null && ScoreRule.byId(r.scoring) == null) ||
-            (blocks != null &&
-                (blocks.length > 20 ||
-                    blocks.any(
-                      (b) =>
-                          b.length > 50 ||
-                          b.any((v) => v != null && (v < 0 || v > 999)),
-                    )))) {
-          throw const FormatException('Résultat invalide.');
-        }
       }
     }
     for (final entry in nextLogs.entries) {
@@ -2838,96 +1194,6 @@ class AppStore extends ChangeNotifier {
       strict: limits != null,
       issues: adaptIssues,
     );
-    // L12 : motivation. Import strict ; démarrage tolérant.
-    final motivIssues = <String>[];
-    final nextMotiv = MotivData.fromJson(
-      m['motiv'],
-      strict: limits != null,
-      issues: motivIssues,
-    );
-    final nextUnlocked = <String, int>{};
-    final nextLegacy = <String, String>{};
-    (m['legacyGrants'] as Map<String, dynamic>? ?? {}).forEach((k, v) {
-      if (v is! String || k.isEmpty) {
-        throw const FormatException('Droits anciens invalides.');
-      }
-      nextLegacy[k] = v;
-    });
-    final format = (m['format'] ?? 1) as int;
-    final used = {
-      for (final w in nextWods)
-        if (w.results.isNotEmpty) w.id,
-    };
-    (m['unlocked'] as Map<String, dynamic>? ?? {}).forEach((k, v) {
-      if (v is! int || v < 0) throw const FormatException('Crédits invalides.');
-      // Formats 1-2 (avant les crédits v2) : un coût 0 d'un WOD du catalogue
-      // vient de l'ancienne migration. Même règle qu'au démarrage (KT-014) :
-      // acquis s'il a été joué, sinon archivé sans accès.
-      if (limits != null &&
-          format < 3 &&
-          v == 0 &&
-          _seedDefaults.containsKey(k) &&
-          !used.contains(k)) {
-        nextLegacy[k] = 'import_format_$format';
-        return;
-      }
-      nextUnlocked[k] = v;
-    });
-    final nextWishlist = <String>[];
-    for (final id in (m['wishlist'] as List?) ?? const []) {
-      if (id is! String) {
-        throw const FormatException('Liste d’envies invalide.');
-      }
-      if (!nextWishlist.contains(id)) nextWishlist.add(id);
-    }
-    final earnedMax = m['creditsEarnedMax'];
-    if (earnedMax != null &&
-        (earnedMax is! int || earnedMax < 0 || earnedMax > 1000000)) {
-      throw const FormatException('Crédits gagnés invalides.');
-    }
-    Map<String, int>? grants;
-    final rawGrants = m['creditGrants'];
-    if (rawGrants != null) {
-      if (rawGrants is! Map) throw const FormatException('Registre invalide.');
-      grants = {};
-      rawGrants.forEach((k, v) {
-        if (k is! String ||
-            !_grantKey.hasMatch(k) ||
-            v is! int ||
-            v < 0 ||
-            v > 1000000) {
-          throw const FormatException('Registre de crédits invalide.');
-        }
-        grants![k] = v;
-      });
-    }
-    final dayRe = RegExp(r'^\d{4}-\d{2}-\d{2}$');
-    String? trialDay, trialId, weekOf;
-    var weekly = <String>[];
-    final trial = m['trialOfDay'];
-    if (trial != null) {
-      if (trial is! Map ||
-          trial['day'] is! String ||
-          !dayRe.hasMatch(trial['day'] as String) ||
-          (trial['wod'] != null && trial['wod'] is! String)) {
-        throw const FormatException('Essai du jour invalide.');
-      }
-      trialDay = trial['day'] as String;
-      trialId = trial['wod'] as String?;
-    }
-    final showcase = m['weeklyShowcase'];
-    if (showcase != null) {
-      if (showcase is! Map ||
-          showcase['week'] is! String ||
-          !dayRe.hasMatch(showcase['week'] as String) ||
-          showcase['ids'] is! List ||
-          (showcase['ids'] as List).length > 3 ||
-          (showcase['ids'] as List).any((e) => e is! String)) {
-        throw const FormatException('Vitrine invalide.');
-      }
-      weekOf = showcase['week'] as String;
-      weekly = (showcase['ids'] as List).cast<String>();
-    }
     return _BackupData(
       values: nextValues,
       refStatus: nextStatus,
@@ -2935,19 +1201,8 @@ class AppStore extends ChangeNotifier {
       startOrigin: nextOrigin,
       logs: nextLogs,
       settings: nextSettings,
-      custom: nextCustom,
       userExercises: nextUser,
-      wods: nextWods,
-      unlocked: nextUnlocked,
-      legacyGrants: nextLegacy,
       lastLevel: m['lastLevel'] as int?,
-      earnedMax: earnedMax,
-      creditGrants: grants,
-      trialDay: trialDay,
-      trialId: trialId,
-      weekOf: weekOf,
-      weeklyIds: weekly,
-      wishlist: nextWishlist,
       koach: nextKoach,
       koachIssues: koachIssues.length,
       profile: nextProfile,
@@ -2956,8 +1211,7 @@ class AppStore extends ChangeNotifier {
       programIssues: programIssues.length,
       adapt: nextAdapt,
       adaptIssues: adaptIssues.length,
-      motiv: nextMotiv,
-      motivIssues: motivIssues.length,
+      retired: RetiredData.of(m).summary,
     );
   }
 
@@ -2986,6 +1240,8 @@ class AppStore extends ChangeNotifier {
     if (sets > limits.maxSets) {
       throw const ImportLimitException('Trop de séries.');
     }
+    // G2 : sections retirées, ignorées à la lecture mais encore bornées
+    // (un fichier de 6.0.x est lu en entier avant d'être validé).
     cap(m['custom'], limits.maxEntries, 'séances perso');
     cap(m['userExercises'], limits.maxEntries, 'exercices perso');
     cap(m['unlocked'], limits.maxEntries, 'droits WOD');
@@ -3027,24 +1283,9 @@ class AppStore extends ChangeNotifier {
       ..clear()
       ..addAll(data.logs);
     settings = data.settings;
-    customSessions
-      ..clear()
-      ..addAll(data.custom);
     userExercises
       ..clear()
       ..addAll(data.userExercises);
-    wods
-      ..clear()
-      ..addAll(data.wods);
-    unlockedWods
-      ..clear()
-      ..addAll(data.unlocked);
-    legacyGrants
-      ..clear()
-      ..addAll(data.legacyGrants);
-    wishlist
-      ..clear()
-      ..addAll(data.wishlist);
     koach = data.koach;
     koachLoadIssues = data.koachIssues;
     profile = data.profile;
@@ -3053,50 +1294,21 @@ class AppStore extends ChangeNotifier {
     adaptLoadIssues = data.adaptIssues;
     _adaptCache.clear();
     _adaptCacheRev = '';
-    motiv = data.motiv;
-    motivLoadIssues = data.motivIssues;
-    _motivCache.clear();
-    _motivCacheRev = '';
     koachSkipped.clear();
     _koachStash.clear();
     _koachCache = null;
     _koachCacheRevision = -1;
     _allEx = null;
     _muscleIndex = null;
-    _statsCache.clear();
-    _wodEstimates.clear();
-    _statsDefinitions.clear();
     pilotageEpoch++;
     themeMode.value = settings.theme;
     accentMode.value = settings.accent;
     _lastLevel = data.lastLevel ?? level;
-    _trialDay = data.trialDay;
-    _trialId = data.trialId;
-    _trialWodCache = null;
-    _weekOf = data.weekOf;
-    _weeklyIdsStored = List.of(data.weeklyIds);
-    _attempts.clear();
-    // Import, effacement : l'état remplacé n'a plus de chrono en cours, et
-    // les écrans encore ouverts sur l'ancien état ne peuvent plus l'écrire.
-    activeWod = null;
-    dataEpoch++;
-    // Registre : calculé sur un catalogue classé (les XP de WOD dépendent
-    // du niveau des WODs), donc après classement et sans progression mise
-    // en cache avant celui-ci.
-    _rankDifficulty();
+    // G2 : un état remplacé (import, effacement) n'a plus de données
+    // retirées en attente ; l'ancien reste dans la copie de récupération.
+    _retiredPending = RetiredData.empty;
+    retiredCopyFailed = false;
     _progression = null;
-    final grants = data.creditGrants;
-    if (grants == null) {
-      // Registre absent (état antérieur à L3) : migration explicite.
-      _migrateGrants(data.earnedMax);
-    } else {
-      creditGrants
-        ..clear()
-        ..addAll(grants);
-      // Gains justifiés par le journal mais absents du registre : ils
-      // comptaient déjà dans les crédits gagnés ; on les inscrit.
-      _recordGrants();
-    }
   }
 
   /// Import compatible avec l'API historique : `true` si tout est appliqué.
@@ -3142,13 +1354,9 @@ class AppStore extends ChangeNotifier {
           meta: meta,
           progression: Progression.calculate(
             logs: data.logs,
-            catalog: data.wods,
             program: program,
             now: KalisClock.now(),
           ),
-          customWods: data.wods
-              .where((w) => !_seedDefaults.containsKey(w.id))
-              .length,
           localRevision: _dataRevision,
         ),
       );
@@ -3188,7 +1396,6 @@ class AppStore extends ChangeNotifier {
         return ImportStatus.writeFailed;
       }
       _applyBackup(data);
-      _rankDifficulty();
       // Aucune cérémonie de niveau ni bilan pour des acquis déjà présents
       // dans la sauvegarde restaurée.
       _lastLevel = max(_lastLevel, level);
@@ -3245,10 +1452,8 @@ class AppStore extends ChangeNotifier {
         return const EraseResult(EraseStatus.failed);
       }
       _applyBackup(fresh);
-      _rankDifficulty();
       _lastLevel = 1;
       _pendingReward = null;
-      _purchases.clear();
       _dataRevision++;
       _acceptedSeq = _changeSeq;
       final remaining = <String>[];
@@ -3272,8 +1477,8 @@ class AppStore extends ChangeNotifier {
     });
   }
 
-  /// État d'une installation neuve : références du programme, catalogue
-  /// embarqué d'origine, aucun journal, aucun droit, réglages par défaut.
+  /// État d'une installation neuve : aucune référence, aucun journal,
+  /// réglages par défaut.
   _BackupData _freshData() {
     // État d'installation neuve (L2b) : programme non démarré, références
     // non renseignées (KT-006/007).
@@ -3284,12 +1489,8 @@ class AppStore extends ChangeNotifier {
       startOrigin: '',
       logs: {},
       settings: AppSettings(),
-      custom: [],
       userExercises: [],
-      wods: [for (final w in _seedDefaults.values) Wod.fromJson(w.toJson())],
-      unlocked: {},
       lastLevel: 1,
-      creditGrants: {},
     );
   }
 
@@ -3330,7 +1531,9 @@ class AppStore extends ChangeNotifier {
       {
         'at': KalisClock.now().toIso8601String(),
         'reason': reason,
-        'state': _pack(exportAll()),
+        // G2 : document local complet (données retirées encore en attente
+        // de copie comprises).
+        'state': _pack(_stateDocument()),
       },
       ...copies.take(_recoveryLimit - 1),
     ];
@@ -3400,8 +1603,6 @@ class AppStore extends ChangeNotifier {
 
   Future<bool> _commitState() async {
     final seq = _changeSeq;
-    // Les gains nouveaux du journal sont acquis (KT-005, registre par gain).
-    _recordGrants();
     final ok = await _writeRaw(_pack(_stateDocument()));
     if (ok) {
       if (seq > _acceptedSeq) _acceptedSeq = seq;
@@ -3789,26 +1990,6 @@ class AppStore extends ChangeNotifier {
     return out;
   }
 
-  TrainingEstimate wodEstimate(Wod w) {
-    // Le calcul ne dépend que de la prescription et de ses résultats.
-    // L6 (KT-023) : mêmes champs que la clé JSON d'origine
-    // (`prescriptionKey` + résultats), comparés sans rien encoder ; la
-    // clé était reconstruite à chaque affichage d'une tuile ou filtre.
-    final cached = _wodEstimates[w.id];
-    if (cached != null && cached.matches(w)) return cached.value;
-    final estimate = TrainingEstimator.wod(w);
-    // Une entrée par WOD : borne au moins égale au nombre de WOD, sinon un
-    // passage sur tout le catalogue (tri ou filtre par durée) évinçait
-    // chaque entrée avant sa réutilisation dès 25 WOD personnels.
-    final bound = max(1024, wods.length + 64);
-    while (_wodEstimates.length >= bound) {
-      _wodEstimates.remove(_wodEstimates.keys.first);
-    }
-    _wodEstimates.remove(w.id);
-    _wodEstimates[w.id] = _EstimateEntry(w, estimate);
-    return estimate;
-  }
-
   Map<String, double> plannedMuscles(TrainingEstimate estimate) {
     final out = <String, double>{};
     for (final name in plannedNames(estimate).keys) {
@@ -4029,8 +2210,7 @@ class AppStore extends ChangeNotifier {
     return out;
   }
 
-  /// 5.5.3 : exercices de la semaine (nom → séries validées, tours de WOD
-  /// à 0,5), base des groupes (`weeklyMuscles`) et de la zone ciblée sur le
+  /// 5.5.3 : exercices de la semaine (nom → séries validées), base des groupes (`weeklyMuscles`) et de la zone ciblée sur le
   /// mannequin (`targetedRegionIntensities`).
   Map<String, double> weeklyNames([DateTime? at]) {
     final now = at ?? KalisClock.now();
@@ -4057,14 +2237,6 @@ class AppStore extends ChangeNotifier {
           }
           fallback ??= program.legacyDateFor(week, day);
         }
-      } else if (week == 0) {
-        for (final cs in customSessions.where(
-          (c) => c.id == (sl.customId ?? '$day'),
-        )) {
-          for (final ex in cs.items) {
-            names.putIfAbsent('CU-${ex.uid}', () => ex.name);
-          }
-        }
       }
       for (final ex in sl.ex.entries) {
         final name = names[ex.key];
@@ -4077,25 +2249,6 @@ class AppStore extends ChangeNotifier {
             )
             .length;
         if (n > 0) add(name, n.toDouble());
-      }
-    }
-    for (final w in wods) {
-      for (final r in w.results) {
-        if (!inWeek(DateTime.tryParse(r.at)) ||
-            (!r.completed && (r.rounds ?? 0) == 0)) {
-          continue;
-        }
-        final rounds = w.type == 'rounds' && w.rounds > 0
-            ? (r.rounds ?? w.rounds).clamp(1, w.rounds)
-            : (r.rounds ?? 1).clamp(1, 3600);
-        for (final line in w.lines) {
-          for (final part in TrainingEstimator.parseLine(
-            line,
-            repScheme: w.scheme,
-          ).movements) {
-            add(part.name, 0.5 * rounds);
-          }
-        }
       }
     }
     return out;
@@ -4301,7 +2454,6 @@ class AppStore extends ChangeNotifier {
   ExerciseLog exLog(int week, int j, Exercise e) {
     final s = sessionLog(week, j);
     s.exerciseNames[e.id] = e.name;
-    if (week == 0) s.customId = '$j';
     return s.ex.putIfAbsent(e.id, () {
       // L7 (D28) : adaptations de structure acceptées pour la semaine.
       final n = KoachStore(this).koachOn && week >= 1
@@ -4409,7 +2561,6 @@ class AppStore extends ChangeNotifier {
     final s = sessionLog(week, j);
     final wasDone = s.done;
     final before = progression;
-    final creditsBefore = credits;
     final goal = game.sessionGoal;
     s.done = done;
     // Une séance rouverte pour correction garde sa date de fin d'origine :
@@ -4419,10 +2570,9 @@ class AppStore extends ChangeNotifier {
     if (title != null) s.title = title;
     saveLogs(immediate: true);
     if (!done || wasDone) return;
-    final training = week == 0
-        ? s.ex.isNotEmpty
-        : (program.weeks.any((w) => w.n == week) &&
-              (program.week(week).day(j)?.exercises.isNotEmpty ?? false));
+    final training =
+        program.weeks.any((w) => w.n == week) &&
+        (program.week(week).day(j)?.exercises.isNotEmpty ?? false);
     if (!training) return;
     var total = 0, ok = 0;
     for (final ex in s.ex.values) {
@@ -4436,10 +2586,8 @@ class AppStore extends ChangeNotifier {
       after: after,
       heading: 'Séance validée',
       title: title ?? s.title ?? sessionKey(week, j),
-      creditsBefore: creditsBefore,
-      creditsAfter: credits,
-      baseXp: week == 0 ? 60 : 100,
-      baseLabel: week == 0 ? 'Séance personnelle' : 'Journée du programme',
+      baseXp: 100,
+      baseLabel: 'Journée du programme',
       records: sessionRecords(sessionKey(week, j)),
       goalReached: total == 0 ? null : ok / total >= goal - 1e-9,
     );
@@ -4490,32 +2638,18 @@ class AppStore extends ChangeNotifier {
     );
   }
 
-  /// Séances à reprendre, la plus récente d'abord. Une séance perso dont le
-  /// modèle a été supprimé n'est pas proposée (son journal reste intact).
+  /// Séances du programme à reprendre, la plus récente d'abord.
   List<SessionResume> get sessionsInProgress {
     final out = <SessionResume>[];
     for (final entry in logs.entries) {
       final match = RegExp(r'^S(\d+)-J(\d+)$').firstMatch(entry.key);
       if (match == null || !inProgress(entry.key)) continue;
       final n = int.parse(match[1]!), j = int.parse(match[2]!);
-      WeekPlan? week;
-      DayPlan? day;
-      String title;
-      if (n == 0) {
-        final session = customSessions
-            .where((c) => int.tryParse(c.id) == j)
-            .firstOrNull;
-        if (session == null || session.items.isEmpty) continue;
-        week = session.toWeekPlan();
-        day = week.days.first;
-        title = session.name;
-      } else {
-        if (n > program.weeks.length) continue;
-        week = program.week(n);
-        day = week.day(j);
-        if (day == null || day.exercises.isEmpty) continue;
-        title = 'S$n · J$j — ${day.title}';
-      }
+      if (n == 0 || n > program.weeks.length) continue;
+      final week = program.week(n);
+      final day = week.day(j);
+      if (day == null || day.exercises.isEmpty) continue;
+      final title = 'S$n · J$j — ${day.title}';
       var done = 0, total = 0;
       DateTime? last;
       for (final e in entry.value.ex.values) {
@@ -4576,22 +2710,13 @@ class AppStore extends ChangeNotifier {
   // ---------- Correction depuis l'historique ----------
 
   /// Séance à rouvrir pour corriger une entrée terminée du journal : journée
-  /// d'entraînement du programme, ou séance perso qui existe encore. Null pour
-  /// une archive (clé « …@uid »), un jour de repos ou une séance supprimée :
-  /// seule la suppression reste alors proposée.
+  /// d'entraînement du programme. Null pour une archive (clé « …@uid ») ou
+  /// un jour de repos : seule la suppression reste alors proposée.
   ({WeekPlan week, DayPlan day})? correctionPlan(String key) {
     if (logs[key]?.done != true) return null;
     final match = RegExp(r'^S(\d+)-J(\d+)$').firstMatch(key);
     if (match == null) return null;
     final n = int.parse(match[1]!), j = int.parse(match[2]!);
-    if (n == 0) {
-      for (final session in customSessions) {
-        if (int.tryParse(session.id) != j || session.items.isEmpty) continue;
-        final plan = session.toWeekPlan();
-        return (week: plan, day: plan.days.first);
-      }
-      return null;
-    }
     for (final week in program.weeks) {
       if (week.n != n) continue;
       final day = week.day(j);
@@ -4636,20 +2761,6 @@ class AppStore extends ChangeNotifier {
     (n, w) => n + w.days.where((d) => isDone(w.n, d.j)).length,
   );
 
-  void restartCustomSession(CustomSession session) {
-    final key = 'S0-J${session.id}';
-    final previous = logs[key];
-    if (previous != null && previous.done) {
-      previous.customId = session.id;
-      for (final ex in session.items) {
-        previous.exerciseNames.putIfAbsent('CU-${ex.uid}', () => ex.name);
-      }
-      logs['$key@${_newUid()}'] = previous;
-    }
-    logs.remove(key);
-    saveLogs(immediate: true);
-  }
-
   @override
   void dispose() {
     _saveT?.cancel();
@@ -4674,22 +2785,18 @@ class ImportPreview {
   /// Date d'export enregistrée dans le fichier (null : non enregistrée).
   final DateTime? exportedAt;
   final String? appVersion;
-  final int programSessions, customSessionsDone, archivedSessions;
-  final int customTemplates, userExercises, wodResults, customWods;
-  final int wodsUnlocked, creditsPaid, legacyGrants, wishlist;
+  final int programSessions, archivedSessions, userExercises;
   final int level, xp;
-  final int? creditsEarnedMax;
 
-  /// Crédits gagnés enregistrés dans le registre (null : sauvegarde
-  /// antérieure à L3, registre reconstruit à l'import).
-  final int? creditsGranted;
+  /// G2 : données du fichier qui ne sont plus importées (WOD, séances
+  /// manuelles, crédits, motivation L12) ; vide pour un fichier récent.
+  final RetiredSummary ignored;
 
   ImportPreview._({
     required _BackupData data,
     required String encoded,
     required Map<String, dynamic> meta,
     required Progression progression,
-    required this.customWods,
     required this.localRevision,
   }) : _data = data,
        _encoded = encoded,
@@ -4700,27 +2807,15 @@ class ImportPreview {
        appVersion = meta['appVersion'] is String
            ? meta['appVersion'] as String
            : null,
-       programSessions = data.logs.entries
-           .where((e) => e.value.done && !e.key.startsWith('S0-'))
-           .length,
-       customSessionsDone = data.logs.entries
-           .where((e) => e.value.done && e.key.startsWith('S0-'))
-           .length,
+       programSessions = data.logs.values.where((l) => l.done).length,
        archivedSessions = data.logs.keys.where((k) => k.contains('@')).length,
-       customTemplates = data.custom.length,
        userExercises = data.userExercises.length,
-       wodResults = data.wods.fold(0, (n, w) => n + w.results.length),
-       wodsUnlocked = data.unlocked.length,
-       creditsPaid = data.unlocked.values.fold(0, (a, b) => a + b),
-       legacyGrants = data.legacyGrants.length,
-       wishlist = data.wishlist.length,
-       creditsEarnedMax = data.earnedMax,
-       creditsGranted = data.creditGrants?.values.fold<int>(0, (a, b) => a + b),
+       ignored = data.retired,
        level = progression.level,
        xp = progression.totalXp;
 
   /// Séances terminées au total.
-  int get sessionsDone => programSessions + customSessionsDone;
+  int get sessionsDone => programSessions;
 
   /// Départ du programme contenu dans le fichier (null : non démarré).
   DateTime? get programStart => _data.start;
@@ -4754,17 +2849,8 @@ class _BackupData {
   final String startOrigin;
   final Map<String, SessionLog> logs;
   final AppSettings settings;
-  final List<CustomSession> custom;
   final List<Map<String, dynamic>> userExercises;
-  final List<Wod> wods;
-  final Map<String, int> unlocked;
-  final Map<String, String> legacyGrants;
   final int? lastLevel;
-  final int? earnedMax;
-  final Map<String, int>? creditGrants;
-  final String? trialDay, trialId, weekOf;
-  final List<String> weeklyIds;
-  final List<String> wishlist;
 
   /// L7 : décisions Koach (neuves si la section est absente).
   final KoachData koach;
@@ -4782,9 +2868,8 @@ class _BackupData {
   final AdaptData adapt;
   final int adaptIssues;
 
-  /// L12 : motivation (neuve si la section est absente).
-  final MotivData motiv;
-  final int motivIssues;
+  /// G2 : données retirées présentes dans le document lu (ignorées).
+  final RetiredSummary retired;
   _BackupData({
     required this.values,
     required this.refStatus,
@@ -4792,19 +2877,8 @@ class _BackupData {
     required this.startOrigin,
     required this.logs,
     required this.settings,
-    required this.custom,
     required this.userExercises,
-    required this.wods,
-    required this.unlocked,
-    this.legacyGrants = const {},
     this.lastLevel,
-    this.earnedMax,
-    this.creditGrants,
-    this.trialDay,
-    this.trialId,
-    this.weekOf,
-    this.weeklyIds = const [],
-    this.wishlist = const [],
     KoachData? koach,
     this.koachIssues = 0,
     this.profile,
@@ -4813,11 +2887,9 @@ class _BackupData {
     this.programIssues = 0,
     AdaptData? adapt,
     this.adaptIssues = 0,
-    MotivData? motiv,
-    this.motivIssues = 0,
+    this.retired = const RetiredSummary(),
   }) : koach = koach ?? KoachData(),
-       adapt = adapt ?? AdaptData(),
-       motiv = motiv ?? MotivData();
+       adapt = adapt ?? AdaptData();
 }
 
 /// Séance à reprendre (bandeau de l'accueil).
@@ -4836,111 +2908,6 @@ class SessionResume {
     required this.total,
     required this.last,
   });
-}
-
-/// Tentative WOD en cours et son dernier point sûr (KT-018). Aucun repère
-/// d'horloge n'est gardé : seulement du temps déjà compté.
-class ActiveWod {
-  final String attempt, wodId;
-
-  /// Empreinte de la définition du WOD au lancement : un WOD modifié depuis
-  /// ne reprend pas son chrono (seul le score reste possible).
-  final int definition;
-  final DateTime startedAt, savedAt;
-  final int ms;
-  final List<int> laps;
-  final int round;
-  final int? restEndMs;
-  final bool capHit, finished;
-  const ActiveWod({
-    required this.attempt,
-    required this.wodId,
-    required this.definition,
-    required this.startedAt,
-    required this.savedAt,
-    required this.ms,
-    this.laps = const [],
-    this.round = 0,
-    this.restEndMs,
-    this.capHit = false,
-    this.finished = false,
-  });
-
-  ActiveWod withPoint(Map<String, dynamic> p, DateTime at) => ActiveWod(
-    attempt: attempt,
-    wodId: wodId,
-    definition: definition,
-    startedAt: startedAt,
-    savedAt: at,
-    ms: p['ms'] as int,
-    laps: List<int>.of(p['laps'] as List<int>),
-    round: p['round'] as int,
-    restEndMs: p['restEndMs'] as int?,
-    capHit: p['capHit'] as bool,
-    finished: p['finished'] as bool,
-  );
-
-  Map<String, dynamic> toJson() => {
-    'v': 1,
-    'attempt': attempt,
-    'wod': wodId,
-    'definition': definition,
-    'startedAt': startedAt.toIso8601String(),
-    'savedAt': savedAt.toIso8601String(),
-    'ms': ms,
-    'laps': laps,
-    'round': round,
-    if (restEndMs != null) 'restEndMs': restEndMs,
-    'capHit': capHit,
-    'finished': finished,
-  };
-
-  /// Lecture stricte et bornée : toute incohérence lève FormatException.
-  factory ActiveWod.fromJson(Map<String, dynamic> j) {
-    const day = 86400 * 1000;
-    int whole(Object? v, {int max = day}) {
-      if (v is! int || v < 0 || v > max) {
-        throw const FormatException('Chrono en cours invalide.');
-      }
-      return v;
-    }
-
-    DateTime date(Object? v) {
-      final d = v is String ? DateTime.tryParse(v) : null;
-      if (d == null) throw const FormatException('Date invalide.');
-      return d;
-    }
-
-    final attempt = j['attempt'], wod = j['wod'];
-    if (j['v'] != 1 ||
-        attempt is! String ||
-        attempt.isEmpty ||
-        attempt.length > 64 ||
-        wod is! String ||
-        wod.isEmpty ||
-        j['definition'] is! int ||
-        j['laps'] is! List ||
-        (j['laps'] as List).length > 1000 ||
-        j['capHit'] is! bool ||
-        j['finished'] is! bool) {
-      throw const FormatException('Chrono en cours invalide.');
-    }
-    final ms = whole(j['ms']);
-    final laps = [for (final l in j['laps'] as List) whole(l, max: 86400)];
-    return ActiveWod(
-      attempt: attempt,
-      wodId: wod,
-      definition: j['definition'] as int,
-      startedAt: date(j['startedAt']),
-      savedAt: date(j['savedAt']),
-      ms: ms,
-      laps: laps,
-      round: whole(j['round'], max: 100000),
-      restEndMs: j['restEndMs'] == null ? null : whole(j['restEndMs']),
-      capHit: j['capHit'] as bool,
-      finished: j['finished'] as bool,
-    );
-  }
 }
 
 /// « 2026-09-28 » : date civile, sans heure ni fuseau.
@@ -4964,90 +2931,7 @@ DateTime? parseCivilDate(Object? raw) {
   return date.year == y && date.month == mo && date.day == d ? date : null;
 }
 
-/// Solde négatif affiché tel quel (KT-005) : jamais masqué par un zéro.
-String creditDeficitLabel(int balance) =>
-    'déficit de ${-balance} crédit${-balance > 1 ? 's' : ''}';
-
 /// Singleton global — simple et suffisant pour cette app.
 /// Magasin de la session active. G1 : remplacé par un magasin neuf au
 /// redémarrage logique (session de test, session_host.dart).
 AppStore store = AppStore();
-
-/// Entrée du cache des estimations WOD (L6, KT-023) : copie des champs
-/// qui composaient la clé JSON d'origine (`Wod.prescriptionKey` et tous
-/// les champs exportés des résultats), comparés champ à champ. Même
-/// validité que l'ancienne clé, sans l'encoder à chaque lecture.
-class _EstimateEntry {
-  final String type, scheme, notes;
-  final int rounds, restSec, minutes, interval;
-  final List<String> lines;
-  final List<WodResult> results;
-  final TrainingEstimate value;
-
-  _EstimateEntry(Wod w, this.value)
-    : type = w.type,
-      scheme = w.scheme,
-      notes = w.notes,
-      rounds = w.rounds,
-      restSec = w.restSec,
-      minutes = w.minutes,
-      interval = w.interval,
-      lines = List<String>.of(w.lines),
-      results = [for (final r in w.results) _copy(r)];
-
-  static WodResult _copy(WodResult r) => WodResult(
-    at: r.at,
-    score: r.score,
-    seconds: r.seconds,
-    rounds: r.rounds,
-    reps: r.reps,
-    notes: r.notes,
-    completed: r.completed,
-    prescription: r.prescription,
-    attempt: r.attempt,
-    scoring: r.scoring,
-    intervals: r.intervals == null
-        ? null
-        : [for (final block in r.intervals!) List<int?>.of(block)],
-  );
-
-  static bool _sameResult(WodResult a, WodResult b) {
-    if (a.at != b.at ||
-        a.score != b.score ||
-        a.seconds != b.seconds ||
-        a.rounds != b.rounds ||
-        a.reps != b.reps ||
-        a.notes != b.notes ||
-        a.completed != b.completed ||
-        a.prescription != b.prescription ||
-        a.attempt != b.attempt ||
-        a.scoring != b.scoring) {
-      return false;
-    }
-    final x = a.intervals, y = b.intervals;
-    if (x == null || y == null) return x == null && y == null;
-    if (x.length != y.length) return false;
-    for (var i = 0; i < x.length; i++) {
-      if (!listEquals(x[i], y[i])) return false;
-    }
-    return true;
-  }
-
-  bool matches(Wod w) {
-    if (w.type != type ||
-        w.rounds != rounds ||
-        w.restSec != restSec ||
-        w.minutes != minutes ||
-        w.interval != interval ||
-        w.scheme != scheme ||
-        w.notes != notes ||
-        !listEquals(w.lines, lines) ||
-        w.results.length != results.length) {
-      return false;
-    }
-    for (var i = 0; i < results.length; i++) {
-      if (!_sameResult(w.results[i], results[i])) return false;
-    }
-    return true;
-  }
-}

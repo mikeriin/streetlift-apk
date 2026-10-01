@@ -1,5 +1,4 @@
-// Recherche plein texte tolérante, partagée par le catalogue de WODs et le
-// sélecteur d'exercices : minuscules, sans accents, plusieurs termes (tous
+// Recherche plein texte tolérante du sélecteur d'exercices : minuscules, sans accents, plusieurs termes (tous
 // requis), synonymes français / anglais des mouvements, préfixes et classement
 // par pertinence. Aucune donnée persistée : tout se recalcule à la volée.
 

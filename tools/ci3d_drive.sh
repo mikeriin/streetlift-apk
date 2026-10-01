@@ -52,12 +52,27 @@ cible() {
     ${4:+--keep-app-running} \
     -d emulator-5554 > "$out/drive-$1${2:+-$2}.log" 2>&1
 }
-# G1 (6.0.0) : mode dev, cible du lot, en deux lancements de l'application
+# G2 (dev6.1.0) : suppression des WOD, des séances perso et de L12, cible
+# du lot, en deux parties : a = sombre, b = clair (annonce et copie,
+# accueil, Arsenal, STATS, Réglages › Sauvegardes).
+code_g2=0
+for part in a b; do
+  cible retrait_g2_test "$part"
+  c=$?
+  [ "$c" -ne 0 ] && code_g2=$c
+  tail -n 30 "$out/drive-retrait_g2_test-$part.log"
+done
+# Cibles des lots précédents (G1, M8, M7b, M7) : CI3D_TOUT=1.
+code_g1=0
+code_m8=0
+code_m7b=0
+code_m7=0
+if [ "${CI3D_TOUT:-0}" = "1" ]; then
+# G1 (6.0.0) : mode dev, en deux lancements de l'application
 # (b = redémarrage à froid de a, application arrêtée entre les deux) :
 # a = sombre (5 appuis, installation neuve, outils, voyage d'une semaine),
 # b = clair (toujours en session de test, appui long annulé puis 3 s,
 # retour à la session personnelle identique).
-code_g1=0
 for part in a b; do
   garder=""
   [ "$part" = a ] && garder=garder
@@ -66,13 +81,8 @@ for part in a b; do
   [ "$c" -ne 0 ] && code_g1=$c
   tail -n 30 "$out/drive-mode_dev_g1_test-$part.log"
 done
-# Cibles des lots précédents (M8, M7b, M7) : CI3D_TOUT=1.
-code_m8=0
-code_m7b=0
-code_m7=0
-if [ "${CI3D_TOUT:-0}" = "1" ]; then
 # M8 (5.9.0) : carte 2D des 15 groupes musculaires, cible du lot, en deux
-# parties : a = sombre, b = clair (Anatomie, fiches, STATS, accueil, WOD).
+# parties : a = sombre, b = clair (Anatomie, fiches, STATS, accueil).
 # Les cibles 3D d'écrans passés à la carte 2D (M3, M4, M4b, M4c, M56, M6b,
 # M6c) sont retirées : ces écrans n'ont plus de 3D.
 code_m8=0
@@ -135,7 +145,7 @@ kill "$logcat_pid" 2>/dev/null || true
 grep -o 'Impeller rendering backend ([^)]*)' "$out/logcat-complet.txt" | sort | uniq -c > "$out/impeller.txt" || true
 grep -iE 'flutter|impeller|vulkan|gles|AndroidRuntime|FATAL|swiftshader|angle|lowmemorykiller|DEBUG|libc|tombstone|ActivityManager' "$out/logcat-complet.txt" | tail -n 3000 > "$out/logcat.txt" || true
 rm -f "$out/logcat-complet.txt"
-echo "code_g1=$code_g1 code_m8=$code_m8 code_m7b=$code_m7b code_m7=$code_m7" > "$out/drive-code.txt"
+echo "code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7b=$code_m7b code_m7=$code_m7" > "$out/drive-code.txt"
 echo "code=$code" >> "$out/drive-code.txt"
 echo "code_mesure=$code_mesure" >> "$out/drive-code.txt"
-[ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7b" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]
+[ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7b" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]

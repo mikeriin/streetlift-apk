@@ -1,27 +1,13 @@
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
-import 'filter_menu.dart';
 import 'session_history.dart';
 import 'store.dart';
 import 'ui.dart';
-import 'wod_formats.dart';
 import 'stats_data.dart';
 import 'stats_widgets.dart';
 
 class StatsHistory extends StatefulWidget {
   const StatsHistory({super.key});
-
-  /// M4c : catégorie « Type » du menu « Filtres » (aucune case : tout).
-  static const categories = [
-    FilterCategory(
-      id: 'type',
-      label: 'Type',
-      options: [FilterOption('1', 'Séances'), FilterOption('2', 'WOD')],
-    ),
-  ];
-
-  /// Filtres gardés pendant la session (changements d'onglet compris).
-  static FilterSelection session = const FilterSelection();
   @override
   State<StatsHistory> createState() => _StatsHistoryState();
 }
@@ -39,14 +25,7 @@ class _StatsHistoryState extends State<StatsHistory> {
     final query = _search.text.trim().toLowerCase();
     final all = statsHistory(store);
     final entries = all
-        .where(
-          (e) =>
-              StatsHistory.session.matches(
-                'type',
-                (k) => (k == '2') == e.isWod,
-              ) &&
-              (query.isEmpty || e.searchText.contains(query)),
-        )
+        .where((e) => query.isEmpty || e.searchText.contains(query))
         .toList();
     return KList(
       key: const PageStorageKey('stats-history-scroll'),
@@ -61,7 +40,7 @@ class _StatsHistoryState extends State<StatsHistory> {
           controller: _search,
           decoration: InputDecoration(
             labelText: 'Rechercher dans l’historique',
-            hintText: 'Séance, WOD ou note',
+            hintText: 'Séance ou note',
             prefixIcon: const Icon(Icons.search_rounded),
             suffixIcon: query.isEmpty
                 ? null
@@ -77,13 +56,6 @@ class _StatsHistoryState extends State<StatsHistory> {
           onChanged: (_) => setState(() {}),
           textInputAction: TextInputAction.search,
         ),
-        FilterMenu(
-          key: const ValueKey('history-filter-menu'),
-          keyPrefix: 'history',
-          categories: StatsHistory.categories,
-          value: StatsHistory.session,
-          onChanged: (v) => setState(() => StatsHistory.session = v),
-        ),
         Text(
           '${entries.length} résultat${entries.length > 1 ? 's' : ''}',
           style: Theme.of(context).textTheme.bodySmall,
@@ -93,8 +65,8 @@ class _StatsHistoryState extends State<StatsHistory> {
             icon: Icons.history_rounded,
             title: all.isEmpty ? 'Ton histoire commence ici' : 'Aucun résultat',
             message: all.isEmpty
-                ? 'Tes séances terminées et tes tentatives WOD apparaîtront ici, avec leurs notes.'
-                : 'Essaie un autre mot ou un autre filtre.',
+                ? 'Tes séances terminées apparaîtront ici, avec leurs notes.'
+                : 'Essaie un autre mot.',
           ),
         for (final entry in entries) StatsHistoryTile(entry),
       ],
@@ -104,73 +76,34 @@ class _StatsHistoryState extends State<StatsHistory> {
 
 class StatsHistoryTile extends StatelessWidget {
   final StatsHistoryEntry entry;
-  final bool record;
-  const StatsHistoryTile(this.entry, {super.key, this.record = false});
+  const StatsHistoryTile(this.entry, {super.key});
   @override
   Widget build(BuildContext context) {
     final date = entry.at;
     final when = date == null
         ? 'Date non renseignée'
         : '${statsDate(date)}/${date.year} · ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
-    final noteCount =
-        entry.session?.ex.values
-            .where((e) => e.note.trim().isNotEmpty)
-            .length ??
-        0;
-    final detail = entry.isWod
-        ? '${entry.result!.completed ? 'WOD terminé' : 'Tentative WOD'} · ${entry.result!.score}'
-        : 'Séance terminée${noteCount == 0 ? '' : ' · $noteCount note${noteCount > 1 ? 's' : ''}'}';
+    final noteCount = entry.session.ex.values
+        .where((e) => e.note.trim().isNotEmpty)
+        .length;
+    final detail =
+        'Séance terminée${noteCount == 0 ? '' : ' · $noteCount note${noteCount > 1 ? 's' : ''}'}';
     return KCard(
       key: ValueKey('stats-log-${entry.id}'),
       padding: EdgeInsets.zero,
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        leading: record
-            ? CircleAvatar(
-                backgroundColor: SL.action,
-                foregroundColor: SL.onActionSoft,
-                child: const Icon(Icons.emoji_events_outlined),
-              )
-            : Icon(
-                entry.isWod ? Icons.bolt_rounded : Icons.task_alt_rounded,
-                color: entry.result?.completed == false ? SL.dim : SL.success,
-              ),
+        leading: Icon(Icons.task_alt_rounded, color: SL.success),
         title: Text(entry.title),
         subtitle: Text('$when\n$detail'),
         trailing: const Icon(Icons.chevron_right_rounded, size: 20),
-        onTap: () {
-          if (!entry.isWod) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => SessionHistoryScreen(
-                  log: entry.session!,
-                  sessionKey: entry.id,
-                ),
-              ),
-            );
-          } else {
-            final result = entry.result!;
-            statsSheet(context, entry.title, [
-              Text(when, style: Theme.of(context).textTheme.bodySmall),
-              KBadge(
-                result.completed ? 'Terminé' : 'Tentative inachevée',
-                color: result.completed ? SL.success : SL.dim,
-              ),
-              Text(
-                result.score,
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              for (final line in resultDetails(entry.wod!, result)) Text(line),
-              const KSection('Notes'),
-              Text(
-                result.notes.trim().isEmpty
-                    ? 'Aucune note pour ce résultat.'
-                    : result.notes,
-              ),
-            ]);
-          }
-        },
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) =>
+                SessionHistoryScreen(log: entry.session, sessionKey: entry.id),
+          ),
+        ),
       ),
     );
   }

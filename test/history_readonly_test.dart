@@ -128,12 +128,12 @@ void main() {
   }
 
   testWidgets(
-    'archive perso : nom et valeurs conservés sans inventer une prescription ou des unités',
+    'archive : nom et valeurs conservés sans inventer une prescription ou des unités',
     (tester) async {
+      // Exercice absent du programme (archive d'une version antérieure).
       final log = SessionLog(
         done: true,
-        title: 'Ancien WOD',
-        customId: 'old',
+        title: 'Ancienne séance',
         exerciseNames: {'deleted': 'Mon exercice archivé'},
         ex: {
           'deleted': ExerciseLog(

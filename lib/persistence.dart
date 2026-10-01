@@ -1,53 +1,17 @@
-// Contrats de sauvegarde L2 : résultats d'achat et d'import, limites d'import
+// Contrats de sauvegarde L2 : résultats d'écriture et d'import, limites d'import
 // et décompression bornée. Aucun stockage ici : le store garde sa clé unique.
 
 import 'dart:convert';
 import 'dart:io' show gzip;
 import 'dart:typed_data';
 
-/// Résultat d'un achat de WOD, connu seulement après l'écriture (KT-002).
-enum PurchaseStatus {
-  /// Débit et droit enregistrés : l'écriture a été acceptée.
-  success,
-
-  /// Déjà possédé : aucun débit.
-  alreadyOwned,
-
-  /// Un achat du même WOD est déjà en cours : aucun second débit.
-  pending,
-
-  /// Solde insuffisant au moment de l'achat : aucun débit.
-  insufficientCredits,
-
-  /// Le prix a changé depuis l'offre affichée : aucun débit.
-  priceChanged,
-
-  /// Écriture refusée : aucun débit, droit non accordé.
-  failed,
-}
-
-class PurchaseResult {
-  final PurchaseStatus status;
-
-  /// Prix de l'offre au moment de la décision (payé si [status] = success).
-  final int? cost;
-  const PurchaseResult(this.status, {this.cost});
-
-  /// Le WOD est possédé à l'issue de l'opération.
-  bool get owned =>
-      status == PurchaseStatus.success || status == PurchaseStatus.alreadyOwned;
-}
-
-/// Validation d'un score de WOD (KT-003).
+/// Fin de séance (KT-018) : succès annoncé seulement après l'écriture.
 enum ResultSave {
   /// Résultat enregistré et écriture acceptée.
   saved,
 
   /// Résultat gardé en mémoire mais écriture refusée : à réessayer.
   unsaved,
-
-  /// Ni WOD jouable, ni tentative autorisée ouverte : rien d'enregistré.
-  denied,
 }
 
 /// Résultat d'un import (KT-013 / KT-015).

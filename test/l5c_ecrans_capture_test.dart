@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:streetlift_tracker/builder_screen.dart';
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/pilotage_screen.dart';
 import 'package:streetlift_tracker/program_start.dart';
@@ -20,10 +19,6 @@ import 'package:streetlift_tracker/settings_screen.dart';
 import 'package:streetlift_tracker/stats_navigation.dart';
 import 'package:streetlift_tracker/stats_screen.dart';
 import 'package:streetlift_tracker/store.dart';
-import 'package:streetlift_tracker/wod_catalog.dart';
-import 'package:streetlift_tracker/wod_models.dart';
-import 'package:streetlift_tracker/wod_preview.dart';
-import 'package:streetlift_tracker/wod_screen.dart';
 
 import 'support/capture_support.dart';
 
@@ -59,14 +54,6 @@ void main() {
         }
       }
     }
-    final wod = Wod(
-      id: 'capture_wod',
-      name: 'Push & Pull',
-      type: 'amrap',
-      minutes: 12,
-      lines: ['5 tractions', '10 pompes', '15 squats'],
-    );
-    store.upsertWod(wod);
     store.notifyListeners();
     await loadCaptureFonts();
     tester.view.devicePixelRatio = 1;
@@ -106,13 +93,6 @@ void main() {
       await precacheCaptureImages(tester);
     }
 
-    // WOD du catalogue non acquis, le plus cher (crédits insuffisants si
-    // possible ; sinon fiche d'achat).
-    final catalog = [
-      for (final w in store.wods)
-        if (store.isCatalog(w) && !store.unlocked(w)) w,
-    ]..sort((a, b) => store.wodCost(b).compareTo(store.wodCost(a)));
-    final locked = catalog.first.id;
     final pages = <String, Widget>{
       'stats_apercu': const StatsScreen(),
       'stats_parcours': const StatsScreen(initialSection: StatsSection.journey),
@@ -127,13 +107,6 @@ void main() {
         week: store.program.week(11),
         day: store.program.week(11).day(1),
       ),
-      'editeur_seance': SessionEditor(
-        session: CustomSession(id: 'capture_session', name: 'Haut du corps'),
-      ),
-      'catalogue_wod': const WodCatalogScreen(),
-      'fiche_wod_acquis': WodPreviewScreen(wodId: wod.id),
-      'fiche_wod_verrouille': WodPreviewScreen(wodId: locked),
-      'chrono_wod': WodRunScreen(wodId: wod.id),
       'references': const PilotageScreen(),
       'depart_programme': ProgramStartScreen(
         initialDate: DateTime(2026, 7, 13),

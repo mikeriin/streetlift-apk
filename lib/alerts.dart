@@ -1,4 +1,4 @@
-// Alertes sonores et haptiques partagées (fin de repos, fin de WOD, time cap).
+// Alertes sonores et haptiques partagées (fin de repos, fin de chrono).
 // SystemSound.alert est muet sur Android : on joue nos propres sons embarqués.
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/services.dart';
@@ -26,7 +26,7 @@ void alertBeep() {
   if (store.settings.vibration) _vibrate();
 }
 
-/// Alarme longue : fin d'AMRAP / EMOM / WOD, time cap.
+/// Alarme longue : fin d'AMRAP / EMOM.
 void alertAlarm() {
   if (store.settings.sound) _play('sounds/alarm.wav');
   if (store.settings.vibration) _vibrate();

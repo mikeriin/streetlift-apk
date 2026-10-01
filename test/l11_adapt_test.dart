@@ -300,18 +300,6 @@ void main() {
       // Une séance sautée puis faite ensuite : la suite part de la dernière.
       expect(slideProposal(planned, {0, 2}, 104), (3, 1));
     });
-
-    test('séance d\'entretien : sans matériel, sans saut, 5 types', () {
-      final c = L10Data.load().catalog;
-      for (var level = 0; level <= 4; level++) {
-        final list = maintenanceExercises(c, level);
-        expect(list.length, 5);
-        for (final e in list) {
-          expect(e.materiel.every(kNoEquipment.contains), isTrue);
-          expect(e.impact, isFalse);
-        }
-      }
-    });
   });
 
   group('KT-061 assiduité', () {

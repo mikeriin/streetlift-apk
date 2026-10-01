@@ -3,7 +3,8 @@
 // recherche et filtres sur les nouveaux champs, fiches et mentions à 320 px
 // et 200 %. Fixture : l'ancienne base embarquée jusqu'en 3.1.0
 // (test/fixtures/l9b/exercises_db_v1.json.gz, 505 entrées réelles) et un
-// historique complet des 40 semaines + 60 séances personnelles (l2_fixtures).
+// historique complet des 40 semaines (l2_fixtures ; séances personnelles
+// retirées en G2).
 import 'dart:convert';
 import 'dart:io';
 
@@ -130,37 +131,34 @@ void main() {
       }
     });
 
-    test(
-      'historique complet et séances perso : aucune perte au rechargement',
-      () async {
-        SharedPreferences.setMockInitialValues({});
-        final app = AppStore()..storeClock = () => DateTime(2026, 9, 27, 10);
-        await app.init();
-        final data = filledBackup(app);
-        expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
-        await app.flush();
-        final before = jsonDecode(app.exportAll()) as Map<String, dynamic>;
-        final weekly = app.weeklyMuscles(DateTime(2026, 8, 20));
-        app.dispose();
+    test('historique complet : aucune perte au rechargement', () async {
+      SharedPreferences.setMockInitialValues({});
+      final app = AppStore()..storeClock = () => DateTime(2026, 9, 27, 10);
+      await app.init();
+      final data = filledBackup(app);
+      expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
+      await app.flush();
+      final before = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+      final weekly = app.weeklyMuscles(DateTime(2026, 8, 20));
+      app.dispose();
 
-        final next = AppStore()..storeClock = () => DateTime(2026, 9, 27, 10);
-        await next.init();
-        final after = jsonDecode(next.exportAll()) as Map<String, dynamic>;
-        for (final k in const ['logs', 'custom', 'userExercises']) {
-          expect(after[k], before[k], reason: k);
+      final next = AppStore()..storeClock = () => DateTime(2026, 9, 27, 10);
+      await next.init();
+      final after = jsonDecode(next.exportAll()) as Map<String, dynamic>;
+      for (final k in const ['logs', 'userExercises']) {
+        expect(after[k], before[k], reason: k);
+      }
+      expect(next.weeklyMuscles(DateTime(2026, 8, 20)), weekly);
+      // Chaque exercice saisi reste rattaché à la base (ou reste personnel).
+      var resolved = 0;
+      for (final log in next.logs.values) {
+        for (final name in log.exerciseNames.values) {
+          if (next.exerciseIdFor(name) != null) resolved++;
         }
-        expect(next.weeklyMuscles(DateTime(2026, 8, 20)), weekly);
-        // Chaque exercice saisi reste rattaché à la base (ou reste personnel).
-        var resolved = 0;
-        for (final log in next.logs.values) {
-          for (final name in log.exerciseNames.values) {
-            if (next.exerciseIdFor(name) != null) resolved++;
-          }
-        }
-        expect(resolved, greaterThan(1000));
-        next.dispose();
-      },
-    );
+      }
+      expect(resolved, greaterThan(1000));
+      next.dispose();
+    });
   });
 
   group('recherche et filtres (KT-082)', () {

@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:streetlift_tracker/search.dart';
-import 'package:streetlift_tracker/wod_generator.dart';
 
 void main() {
   test('normalisation : accents, casse, ponctuation, tirets conservés', () {
@@ -53,30 +52,5 @@ void main() {
     expect(builds, 1);
     index.doc('a', 'k2', build);
     expect(builds, 2);
-  });
-
-  test('deuxième série : 500 WODs distincts, ids et noms uniques', () {
-    final v2 = generateWodsV2(generatedCountV2);
-    expect(v2.length, 500);
-    expect(v2.map((w) => w.id).toSet().length, 500);
-    expect(v2.map((w) => w.name).toSet().length, 500);
-    expect(v2.every((w) => w.id.startsWith('genx')), isTrue);
-    expect(v2.every((w) => w.lines.isNotEmpty && w.name.isNotEmpty), isTrue);
-    expect(
-      v2.map((w) => w.type).toSet(),
-      containsAll(['fortime', 'rounds', 'amrap', 'emom', 'routine']),
-    );
-    // Déterminisme : deux appels produisent la même série.
-    final again = generateWodsV2(generatedCountV2);
-    expect(
-      again.map((w) => '${w.id}|${w.name}').toList(),
-      v2.map((w) => '${w.id}|${w.name}').toList(),
-    );
-  });
-
-  test('première série inchangée : ids gen0… et même premier WOD', () {
-    final v1 = generateWods(10);
-    expect(v1.first.id, 'gen0');
-    expect(v1.first.name, 'Sentinelle 01');
   });
 }

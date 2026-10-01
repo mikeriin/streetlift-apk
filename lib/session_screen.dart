@@ -2363,7 +2363,7 @@ class _FinishPageState extends State<_FinishPage> {
             Text(
               log.done
                   ? 'XP et bonus ajoutés à ta progression'
-                  : '+${week.n == 0 ? 60 : 100} XP de base + bonus éventuels',
+                  : '+100 XP de base + bonus éventuels',
               style: TextStyle(
                 color: SL.accent,
                 fontSize: 12.5,

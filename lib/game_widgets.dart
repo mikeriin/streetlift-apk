@@ -467,10 +467,7 @@ class CharacterCard extends StoreWidget {
                 color: SL.onBrandSoft,
                 icon: Icons.shield_outlined,
               ),
-              KBadge(
-                '${p.earnedBadges} badges · ${store.credits >= 0 ? '${store.credits} crédits' : creditDeficitLabel(store.credits)}',
-                color: SL.onBrandSoft,
-              ),
+              KBadge('${p.earnedBadges} badges', color: SL.onBrandSoft),
             ],
           ),
         ],
@@ -555,10 +552,7 @@ void showCharacterSheet(BuildContext context) {
       description: '${p.inLevel} sur ${p.need} XP',
     ),
     Text(
-      '${p.remaining} XP avant le niveau ${p.level + 1} et +${p.nextCredits} crédit${p.nextCredits > 1 ? 's' : ''} WOD.',
-    ),
-    Text(
-      '${store.credits >= 0 ? '${store.credits} crédits disponibles' : creditDeficitLabel(store.credits)} · ${p.totalXp} XP cumulés',
+      '${p.remaining} XP avant le niveau ${p.level + 1} · ${p.totalXp} XP cumulés.',
     ),
     const KSection('Attributs'),
     Center(child: AttributeRadar(sheet: g.sheet, size: 170)),
@@ -592,7 +586,7 @@ void showCharacterSheet(BuildContext context) {
         ),
     ],
     const Text(
-      'Les attributs se recalculent depuis tes références Pilotage, ton journal et tes WODs. Ils décrivent ton parcours, pas une norme.',
+      'Les attributs se recalculent depuis tes références Pilotage et ton journal. Ils décrivent ton parcours, pas une norme.',
     ),
     const KSection('Tes rangs'),
     for (final rank in progressRanks)
@@ -615,9 +609,6 @@ void showCharacterSheet(BuildContext context) {
     const KSection('Origine de tes XP'),
     for (final entry in <String, int>{
       'Programme': p.programXp,
-      'Séances personnelles': p.customXp,
-      'Tentatives WOD': p.wodXp,
-      'Références et records WOD': p.recordXp,
       'Objectifs hebdomadaires': p.weeklyXp,
       'Badges': p.badgeXp,
     }.entries)
@@ -1151,8 +1142,8 @@ void showChapter(BuildContext context, Chapter c) {
     ),
     Text(
       c.complete
-          ? 'Chapitre bouclé : titre « ${c.title} » obtenu et +${GameState.creditsPerChapter} crédits WOD.'
-          : 'À 75 % des journées d\u2019entraînement validées, le chapitre est bouclé : titre « ${c.title} » et +${GameState.creditsPerChapter} crédits WOD. Les imprévus ne bloquent pas la campagne.',
+          ? 'Chapitre bouclé : titre « ${c.title} » obtenu.'
+          : 'À 75 % des journées d\u2019entraînement validées, le chapitre est bouclé : titre « ${c.title} ». Les imprévus ne bloquent pas la campagne.',
     ),
   ]);
 }
@@ -1255,8 +1246,8 @@ void showBoss(BuildContext context, Boss boss) {
       ),
     Text(
       boss.defeated
-          ? 'Boss vaincu : titre « ${boss.title} » et +${GameState.creditsPerBoss} crédits WOD.'
-          : 'Un seul test lourd par jour, en tête de séance. Le deload qui précède fait partie du combat : arrive reposé. Récompense : titre « ${boss.title} » et +${GameState.creditsPerBoss} crédits WOD.',
+          ? 'Boss vaincu : titre « ${boss.title} ».'
+          : 'Un seul test lourd par jour, en tête de séance. Le deload qui précède fait partie du combat : arrive reposé. Récompense : titre « ${boss.title} ».',
     ),
   ]);
 }
@@ -1365,7 +1356,7 @@ void showCampaign(BuildContext context) {
   final g = store.game;
   statsSheet(context, 'Campagne', [
     const Text(
-      'Un chapitre par bloc du programme, bouclé à 75 % des journées d\u2019entraînement : titre et +${GameState.creditsPerChapter} crédits WOD. Les semaines de tests sont les boss (+${GameState.creditsPerBoss} crédits) ; quatre saisons de dix semaines rythment le tout. Rien n\u2019est remis à zéro.',
+      'Un chapitre par bloc du programme, bouclé à 75 % des journées d\u2019entraînement : un titre à la clé. Les semaines de tests sont les boss ; quatre saisons de dix semaines rythment le tout. Rien n\u2019est remis à zéro.',
     ),
     const KSection('Chapitres'),
     const CampaignStrip(),
@@ -1445,11 +1436,7 @@ class SelfCompareCard extends StoreWidget {
             spacing: 18,
             runSpacing: 10,
             children: [
-              delta(
-                'entraînements',
-                c.current.sessions + c.current.wods,
-                c.sessionsDelta,
-              ),
+              delta('entraînements', c.current.sessions, c.sessionsDelta),
               delta('séries', c.current.sets, c.setsDelta),
               delta('jours actifs', c.current.activeDays.length, c.daysDelta),
             ],

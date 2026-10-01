@@ -1,5 +1,5 @@
 // Muscles ciblés par des exercices : semaine de STATS, séance du jour
-// (accueil), aperçu d'un WOD.
+// (accueil).
 //
 // M4 → M56 correction 3 (5.5.3) : la **zone ciblée** plutôt que le groupe
 // entier. Quand un exercice a une fiche du pack, ce sont ses muscles
@@ -66,7 +66,7 @@ Map<String, double> targetedMapIntensities(
 }
 
 /// Carte 2D des muscles ciblés par des exercices (M8) : semaine de STATS
-/// (séries validées), séance du jour, aperçu d'un WOD. [names] : exercices
+/// (séries validées), séance du jour. [names] : exercices
 /// (nom → poids) ; [groups] : les mêmes par groupe (en attendant les
 /// fiches).
 class TargetedMuscleMap extends StatefulWidget {

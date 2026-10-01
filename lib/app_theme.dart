@@ -152,7 +152,7 @@ class KAccentSpec {
 /// #D96968) : mêmes contrastes, à quelques centièmes près.
 class KPalette {
   /// Rouge Kalis (couleur du logo), aussi utilisé par les rôles fixes
-  /// (alertes, chronos, rangs, données, couvertures WOD) quelle que soit la
+  /// (alertes, chronos, rangs, données) quelle que soit la
   /// couleur dominante choisie.
   static const burgundy = Color(0xFF5E1615);
   static const actionRed = Color(0xFF9E2A28);

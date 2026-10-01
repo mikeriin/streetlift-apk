@@ -3,7 +3,6 @@
 import 'dart:math' as math;
 
 import 'models.dart';
-import 'wod_models.dart';
 
 class Span {
   final double low, high;
@@ -31,15 +30,12 @@ class MovementVolume {
 class TrainingEstimate {
   Span work = Span.zero, rest = Span.zero, transitions = Span.zero;
   Span? clock;
-  Span? observed;
-  int historyCount = 0;
   double sets = 0;
-  int capSeconds = 0;
   bool partial = false, projected = false;
   final List<String> notes = [];
   final List<MovementVolume> movements = [];
   final List<({String title, TrainingEstimate estimate})> details = [];
-  Span get elapsed => observed ?? clock ?? work + rest + transitions;
+  Span get elapsed => clock ?? work + rest + transitions;
   Span volume(String unit) => movements
       .where((m) => m.unit == unit)
       .fold(Span.zero, (s, m) => s + m.amount);
@@ -50,7 +46,7 @@ class TrainingEstimate {
       movements.any((m) => m.unit == 'rep' && (m.kg ?? 0) > 0);
   String get durationLabel {
     if (elapsed.high <= 0) return partial ? 'À préciser' : '—';
-    if (partial && clock == null && observed == null) {
+    if (partial && clock == null) {
       if (elapsed.low < 60) return '≥ ${elapsed.low.floor()} s';
       return '≥ ${math.max(1, (elapsed.low / 60).floor())} min';
     }
@@ -260,15 +256,10 @@ class TrainingEstimator {
       final seconds =
           timer?['interval'] as int? ?? int.tryParse(custom?[2] ?? '') ?? 60;
       final reps = RegExp(r'(\d+)\s*reps').firstMatch(text);
-      return wod(
-        Wod(
-          id: e.id,
-          name: e.name,
-          type: 'emom',
-          rounds: rounds,
-          interval: seconds,
-          lines: ['${reps?[1] ?? ''} ${e.name}${kg == null ? '' : ' $kg kg'}'],
-        ),
+      return emom(
+        ['${reps?[1] ?? ''} ${e.name}${kg == null ? '' : ' $kg kg'}'],
+        rounds: rounds,
+        interval: seconds,
       );
     }
     if (text.startsWith('amrap') || timer?['type'] == 'amrap') {
@@ -658,227 +649,87 @@ class TrainingEstimator {
     return out;
   }
 
-  static TrainingEstimate wod(Wod w, {bool useHistory = true}) {
+  /// EMOM d'un exercice du programme : [lines] à refaire au début de chaque
+  /// intervalle de [interval] secondes, [rounds] fois (même calcul qu'avant
+  /// G2, qui l'a sorti de l'estimation des WOD).
+  static TrainingEstimate emom(
+    List<String> lines, {
+    required int rounds,
+    required int interval,
+  }) {
     final out = TrainingEstimate();
-    final parsed = [
-      for (final line in w.lines) parseLine(line, repScheme: w.scheme),
-    ];
-    final reciprocal = RegExp(
-      r'^(\d+)/(\d+)\s*→\s*(\d+)/(\d+)$',
-    ).firstMatch(normalize(w.scheme));
-    if (reciprocal != null &&
-        parsed.isNotEmpty &&
-        parsed.first.movements.length == 2) {
-      final first = parsed.first.movements;
-      final a = number(reciprocal[1]!), b = number(reciprocal[2]!);
-      final c = number(reciprocal[3]!), d = number(reciprocal[4]!);
-      if ((a - c).abs() == (b - d).abs()) {
-        parsed.clear();
-        final turns = (a - c).abs() + 1;
-        for (var i = 0; i < 2; i++) {
-          final m = MovementVolume(
-            first[i].name,
-            'rep',
-            Span.exact((i == 0 ? a + c : b + d) * turns / 2),
-            kg: first[i].kg,
-          );
-          parsed.add(
-            TrainingEstimate()
-              ..movements.add(m)
-              ..work = workOf(m)
-              ..sets = turns,
-          );
+    final parsed = [for (final line in lines) parseLine(line)];
+    final outside = <int>{
+      for (var i = 0; i < lines.length; i++)
+        if (RegExp(
+          r'^(?:cash[ -]in|cash[ -]out|finisher)\s*:',
+          caseSensitive: false,
+        ).hasMatch(lines[i].trim()))
+          i,
+    };
+    final labelled = lines.any(
+      (l) => RegExp(r'^min\s*\d', caseSensitive: false).hasMatch(l),
+    );
+    for (var slot = 1; slot <= rounds; slot++) {
+      final visit = TrainingEstimate();
+      for (var i = 0; i < parsed.length; i++) {
+        if (!outside.contains(i) &&
+            (!labelled || _visits(lines[i], slot, interval))) {
+          visit.add(parsed[i]);
         }
-        out.notes.add('Échelle croisée : tous les paliers sont comptés.');
       }
-    }
-    final round = TrainingEstimate();
-    for (final p in parsed) {
-      round.add(p);
-    }
-    final activeLines = parsed.where((p) => p.movements.isNotEmpty).length;
-    round.transitions =
-        round.transitions +
-        const Span(3, 8).times(math.max(0, activeLines - 1).toDouble());
-    if (w.type == 'amrap') {
-      if (round.rest.high == 0 &&
-          w.restSec == 0 &&
-          round.volume('rep').high > 0) {
-        _recoveryAllowance(round);
-      }
-      out.add(_amrap(round, (w.minutes * 60).toDouble(), restSec: w.restSec));
-      out.clock = Span.exact((w.minutes * 60).toDouble());
-    } else if (w.type == 'emom') {
-      final outside = <int>{
-        for (var i = 0; i < w.lines.length; i++)
-          if (RegExp(
-            r'^(?:cash[ -]in|cash[ -]out|finisher)\s*:',
-            caseSensitive: false,
-          ).hasMatch(w.lines[i].trim()))
-            i,
-      };
-      final labelled = w.lines.any(
-        (l) => RegExp(r'^min\s*\d', caseSensitive: false).hasMatch(l),
-      );
-      for (var slot = 1; slot <= w.rounds; slot++) {
-        final visit = TrainingEstimate();
-        for (var i = 0; i < parsed.length; i++) {
-          if (!outside.contains(i) &&
-              (!labelled || _visits(w.lines[i], slot, w.interval))) {
-            visit.add(parsed[i]);
-          }
-        }
-        final k = math.max(0, visit.movements.length - 1);
-        visit.transitions =
-            visit.transitions + const Span(3, 8).times(k.toDouble());
-        final required = visit.elapsed;
-        if (required.high > w.interval) {
-          out.notes.add(
-            'Le travail prévu peut dépasser un intervalle de ${w.interval} s.',
-          );
-        }
-        out.movements.addAll(visit.movements);
-        out.sets += visit.sets;
-        out.partial |= visit.partial;
-        out.notes.addAll(visit.notes);
-        // Effort bounded by the interval, with the remaining time as recovery.
-        final effort = math.min(w.interval.toDouble(), visit.work.midpoint);
-        final transition = math.min(
-          math.max(0.0, w.interval - effort),
-          visit.transitions.midpoint,
-        );
-        out.work = out.work + Span.exact(effort);
-        out.transitions = out.transitions + Span.exact(transition);
-        out.rest = out.rest + Span.exact(w.interval - effort - transition);
-      }
-      out.clock = Span.exact((w.rounds * w.interval).toDouble());
-      out.notes.add(
-        'EMOM : volume prescrit ; récupération incluse dans les intervalles.',
-      );
-      if (outside.isNotEmpty) {
-        final extra = TrainingEstimate();
-        for (final i in outside) {
-          extra.add(parsed[i]);
-        }
-        extra.transitions =
-            extra.transitions +
-            const Span(3, 8).times(outside.length.toDouble());
-        out.add(extra);
-        out.clock = out.clock! + extra.elapsed;
+      final k = math.max(0, visit.movements.length - 1);
+      visit.transitions =
+          visit.transitions + const Span(3, 8).times(k.toDouble());
+      final required = visit.elapsed;
+      if (required.high > interval) {
         out.notes.add(
-          'Cash in / cash out : comptés une seule fois, en dehors des intervalles.',
+          'Le travail prévu peut dépasser un intervalle de $interval s.',
         );
       }
-    } else {
-      final n = w.type == 'rounds' ? math.max(1, w.rounds) : 1;
-      out.add(round, factor: n.toDouble());
-      out.rest =
-          out.rest + Span.exact((math.max(0, n - 1) * w.restSec).toDouble());
-      if (w.type == 'routine' && w.restSec > 0 && round.rest.high == 0) {
-        out.rest =
-            out.rest +
-            Span.exact((math.max(0, activeLines - 1) * w.restSec).toDouble());
-      }
-      if (n > 1 && w.restSec == 0) {
-        out.transitions =
-            out.transitions + const Span(3, 8).times((n - 1).toDouble());
-      }
-      out.capSeconds = w.minutes * 60;
-      if (w.type == 'routine' &&
-          parsed.isNotEmpty &&
-          w.lines.any((l) => normalize(l).startsWith('amrap')) &&
-          parsed.every(
-            (p) => p.clock != null || (p.movements.isEmpty && p.rest.high > 0),
-          )) {
-        // AMRAP blocks already carry their elapsed time; no transitions outside their clocks.
-        out.transitions = Span.exact(
-          parsed.fold(0.0, (a, p) => a + p.transitions.midpoint),
-        );
-        out.clock = out.work + out.rest + out.transitions;
-      }
-      final between = RegExp(
-        r'(\d+)\s*m\s+(.*?)\s+entre chaque (?:round|tour)',
-        caseSensitive: false,
-      ).firstMatch(w.notes);
-      if (between != null) {
-        final count = math.max(0, scheme(w.scheme).length - 1);
-        final additional = parseLine(
-          '${number(between[1]!) * count} m ${between[2]!}',
-        );
-        out.add(additional);
-        out.notes.add('Distance entre les tours incluse depuis la consigne.');
-      }
-      if (out.clock == null &&
-          out.rest.high == 0 &&
-          out.volume('rep').high > 0) {
-        _recoveryAllowance(out);
-      }
+      out.movements.addAll(visit.movements);
+      out.sets += visit.sets;
+      out.partial |= visit.partial;
+      out.notes.addAll(visit.notes);
+      // Effort bounded by the interval, with the remaining time as recovery.
+      final effort = math.min(interval.toDouble(), visit.work.midpoint);
+      final transition = math.min(
+        math.max(0.0, interval - effort),
+        visit.transitions.midpoint,
+      );
+      out.work = out.work + Span.exact(effort);
+      out.transitions = out.transitions + Span.exact(transition);
+      out.rest = out.rest + Span.exact(interval - effort - transition);
     }
-    final vest = RegExp(
-      r'(?:lesté|gilet lesté)\s*\+?\s*(\d+(?:[.,]\d+)?)\s*kg',
-      caseSensitive: false,
-    ).firstMatch(w.notes);
-    if (vest != null) {
-      final kg = number(vest[1]!);
-      for (var i = 0; i < out.movements.length; i++) {
-        final m = out.movements[i];
-        if (m.kg == null) {
-          out.movements[i] = MovementVolume(m.name, m.unit, m.amount, kg: kg);
-        }
+    out.clock = Span.exact((rounds * interval).toDouble());
+    out.notes.add(
+      'EMOM : volume prescrit ; récupération incluse dans les intervalles.',
+    );
+    if (outside.isNotEmpty) {
+      final extra = TrainingEstimate();
+      for (final i in outside) {
+        extra.add(parsed[i]);
       }
-      out.notes.add('Lest global de $kg kg repris de la consigne.');
+      extra.transitions =
+          extra.transitions + const Span(3, 8).times(outside.length.toDouble());
+      out.add(extra);
+      out.clock = out.clock! + extra.elapsed;
+      out.notes.add(
+        'Cash in / cash out : comptés une seule fois, en dehors des intervalles.',
+      );
     }
     if (RegExp(
       r'pénalité|à partager|binôme|au choix',
       caseSensitive: false,
-    ).hasMatch(w.notes + w.lines.join(' '))) {
+    ).hasMatch(lines.join(' '))) {
       out.notes.add(
         'Options, pénalités ou partage en équipe : estimation du volume écrit, à adapter.',
       );
-      if (normalize(w.notes).contains('pénalité')) out.partial = true;
     }
-    for (var i = 0; i < parsed.length && i < w.lines.length; i++) {
-      out.details.add((title: w.lines[i], estimate: parsed[i]));
-    }
-    if (useHistory && out.clock == null && w.timed) {
-      final prescription = w.prescriptionKey;
-      final matching =
-          w.results
-              .where(
-                (r) =>
-                    r.completed &&
-                    r.prescription == prescription &&
-                    (r.seconds ?? 0) > 0 &&
-                    (w.type != 'rounds' || (r.rounds ?? 0) >= w.rounds),
-              )
-              .toList()
-            ..sort((a, b) => b.at.compareTo(a.at));
-      final seconds =
-          matching.take(5).map((r) => r.seconds!.toDouble()).toList()..sort();
-      if (seconds.length >= 3) {
-        final middle = seconds.length ~/ 2;
-        final median = seconds.length.isOdd
-            ? seconds[middle]
-            : (seconds[middle - 1] + seconds[middle]) / 2;
-        out.observed = Span(
-          math.min(seconds.first, median * .85),
-          math.max(seconds.last, median * 1.15),
-        );
-        out.historyCount = seconds.length;
-        out.notes.add(
-          'Temps ajusté avec ${seconds.length} résultats complets de cette prescription ; marge minimale ±15 %.',
-        );
-      }
+    for (var i = 0; i < parsed.length && i < lines.length; i++) {
+      out.details.add((title: lines[i], estimate: parsed[i]));
     }
     return out;
-  }
-
-  static void _recoveryAllowance(TrainingEstimate estimate) {
-    estimate.rest =
-        estimate.rest + Span(estimate.work.low * .10, estimate.work.high * .35);
-    estimate.notes.add(
-      'Pauses libres estimées à 10–35 % du temps d’effort ; à ajuster selon ton rythme.',
-    );
   }
 
   static bool _visits(String line, int slot, int interval) {

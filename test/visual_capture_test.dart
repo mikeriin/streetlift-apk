@@ -8,7 +8,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/main.dart';
-import 'package:streetlift_tracker/builder_screen.dart';
 import 'package:streetlift_tracker/progression_screen.dart';
 import 'package:streetlift_tracker/stats_screen.dart';
 import 'package:streetlift_tracker/stats_navigation.dart';
@@ -17,10 +16,6 @@ import 'package:streetlift_tracker/session_history.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/settings_screen.dart';
 import 'package:streetlift_tracker/store.dart';
-import 'package:streetlift_tracker/wod_catalog.dart';
-import 'package:streetlift_tracker/wod_models.dart';
-import 'package:streetlift_tracker/wod_preview.dart';
-import 'package:streetlift_tracker/wod_screen.dart';
 
 void main() {
   const capture = bool.fromEnvironment('KALIS_CAPTURE');
@@ -156,31 +151,6 @@ void main() {
           }
         }
       }
-      store.upsertWod(
-        Wod(
-          id: 'capture-stats-wod',
-          name: 'Push & Pull',
-          type: 'amrap',
-          minutes: 12,
-          lines: ['5 tractions', '10 pompes', '15 squats'],
-          results: [
-            WodResult(
-              at: monday.subtract(const Duration(days: 3)).toIso8601String(),
-              score: '5 tours + 8',
-              rounds: 5,
-              reps: 8,
-              notes: 'Rythme régulier.',
-            ),
-            WodResult(
-              at: now.subtract(const Duration(minutes: 5)).toIso8601String(),
-              score: '6 tours + 4',
-              rounds: 6,
-              reps: 4,
-              notes: 'Un tour de plus, technique propre.',
-            ),
-          ],
-        ),
-      );
       store.sessionLog(11, 1).done = true;
       store.sessionLog(11, 2).done = true;
       store.notifyListeners();
@@ -227,36 +197,12 @@ void main() {
         }
         final week = store.program.week(11);
         final day = week.day(1)!;
-        final wod = Wod(
-          id: 'visual_wod',
-          name: 'Push & Pull',
-          type: 'amrap',
-          minutes: 12,
-          lines: ['5 tractions', '10 pompes', '15 squats'],
-        );
-        store.upsertWod(wod);
         final pages = <String, Widget>{
           'seance': SessionScreen(week: week, day: day),
           'historique': SessionHistoryScreen(
             log: store.sessionLog(11, 1),
             sessionKey: '11-1',
           ),
-          'editeur': SessionEditor(
-            session: CustomSession(id: 'visual_session', name: 'Haut du corps'),
-          ),
-          'catalogue': const WodCatalogScreen(),
-          'apercu_wod': WodPreviewScreen(wodId: wod.id),
-          'achat_wod': WodPreviewScreen(
-            wodId: store.wods
-                .firstWhere(
-                  (w) =>
-                      store.isCatalog(w) &&
-                      !store.unlocked(w) &&
-                      store.wodCost(w) <= store.credits,
-                )
-                .id,
-          ),
-          'chrono_wod': WodRunScreen(wodId: wod.id),
           'progression': const ProgressionScreen(),
           'chronometres': const SettingsScreen(section: 2),
           'references': const PilotageScreen(),

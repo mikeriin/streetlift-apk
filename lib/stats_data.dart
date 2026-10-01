@@ -1,23 +1,17 @@
 import 'store.dart';
-import 'wod_models.dart';
 
-/// Vue en lecture seule : toutes les séances terminées et toutes les tentatives WOD.
+/// Vue en lecture seule : toutes les séances terminées.
 class StatsHistoryEntry {
   final String id, title, searchText;
   final DateTime? at;
-  final SessionLog? session;
-  final Wod? wod;
-  final WodResult? result;
+  final SessionLog session;
   const StatsHistoryEntry({
     required this.id,
     required this.title,
     required this.searchText,
+    required this.session,
     this.at,
-    this.session,
-    this.wod,
-    this.result,
   });
-  bool get isWod => result != null;
 }
 
 List<StatsHistoryEntry> statsHistory(AppStore source) {
@@ -35,22 +29,6 @@ List<StatsHistoryEntry> statsHistory(AppStore source) {
         session: log,
       ),
     );
-  }
-  for (final wod in source.wods) {
-    for (var i = 0; i < wod.results.length; i++) {
-      final result = wod.results[i];
-      entries.add(
-        StatsHistoryEntry(
-          id: 'wod:${wod.id}:$i',
-          title: wod.name,
-          searchText: '${wod.name} ${result.score} ${result.notes}'
-              .toLowerCase(),
-          at: DateTime.tryParse(result.at)?.toLocal(),
-          wod: wod,
-          result: result,
-        ),
-      );
-    }
   }
   entries.sort((a, b) {
     if (a.at == null && b.at != null) return 1;

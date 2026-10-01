@@ -218,17 +218,6 @@ void main() {
       expect(app.undoSlide(e), isTrue);
       expect(app.program.dateFor(3, 2), DateTime(2026, 8, 25));
     });
-
-    test('vacances : séance d\'entretien ajoutée aux séances perso', () async {
-      app.startPause('vacation');
-      final catalog = await app.adaptCatalog();
-      final name = app.addMaintenanceSession(catalog);
-      final s = app.customSessions.singleWhere((c) => c.name == name);
-      expect(s.items.length, 5);
-      // Deuxième appel : pas de doublon.
-      app.addMaintenanceSession(catalog);
-      expect(app.customSessions.where((c) => c.name == name).length, 1);
-    });
   });
 
   group('KT-058 et KT-059 dans le store', () {

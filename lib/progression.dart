@@ -1,8 +1,6 @@
 import 'dart:math' as math;
 import 'models.dart';
 import 'store.dart' show SessionLog;
-import 'wod_formats.dart';
-import 'wod_models.dart';
 
 // Ces rangs expriment la progression dans l'application, pas une mesure physique.
 class ProgressRank {
@@ -67,9 +65,6 @@ const progressionBadges = [
     600,
     'Terminer 100 séances d’entraînement',
   ),
-  BadgeDefinition('wod1', 'Premier WOD', 'wods', 1, 40, 'Terminer 1 WOD'),
-  BadgeDefinition('wod10', 'Au défi', 'wods', 10, 120, 'Terminer 10 WODs'),
-  BadgeDefinition('wod50', 'Endurant', 'wods', 50, 300, 'Terminer 50 WODs'),
   BadgeDefinition(
     'sets100',
     'Fondations',
@@ -93,38 +88,6 @@ const progressionBadges = [
     2000,
     600,
     'Valider 2 000 séries',
-  ),
-  BadgeDefinition(
-    'variety5',
-    'Explorateur',
-    'variety',
-    5,
-    100,
-    'Terminer 5 WODs différents',
-  ),
-  BadgeDefinition(
-    'variety20',
-    'Polyvalent',
-    'variety',
-    20,
-    240,
-    'Terminer 20 WODs différents',
-  ),
-  BadgeDefinition(
-    'record1',
-    'Un cran plus loin',
-    'records',
-    1,
-    75,
-    'Améliorer un record WOD existant',
-  ),
-  BadgeDefinition(
-    'record10',
-    'Progression continue',
-    'records',
-    10,
-    250,
-    'Améliorer 10 records WOD',
   ),
   BadgeDefinition(
     'streak4',
@@ -178,7 +141,7 @@ DateTime mondayOf(DateTime date) {
 class TrainingWeek {
   final DateTime monday;
   final Set<DateTime> activeDays = {};
-  int sets = 0, wods = 0, sessions = 0;
+  int sets = 0, sessions = 0;
   TrainingWeek(this.monday);
   List<WeeklyMission> get missions => [
     WeeklyMission(
@@ -205,22 +168,14 @@ class TrainingWeek {
       20,
       50,
     ),
-    WeeklyMission(
-      'wod1',
-      'Relever un défi',
-      '1 WOD terminé dans la semaine',
-      wods,
-      1,
-      40,
-    ),
   ];
   int get bonusXp =>
       missions.where((m) => m.complete).fold(0, (sum, m) => sum + m.xp);
 }
 
 class Progression {
-  final int programXp, customXp, wodXp, recordXp, weeklyXp, badgeXp;
-  final int sessions, wods, sets, records, variety;
+  final int programXp, weeklyXp, badgeXp;
+  final int sessions, sets;
   final int currentStreak, bestStreak, activeWeeks;
   final TrainingWeek week;
   final List<TrainingWeek> recentWeeks;
@@ -232,16 +187,10 @@ class Progression {
   final Map<DateTime, TrainingWeek> weeks;
   const Progression({
     required this.programXp,
-    required this.customXp,
-    required this.wodXp,
-    required this.recordXp,
     required this.weeklyXp,
     required this.badgeXp,
     required this.sessions,
-    required this.wods,
     required this.sets,
-    required this.records,
-    required this.variety,
     required this.currentStreak,
     required this.bestStreak,
     required this.activeWeeks,
@@ -252,7 +201,7 @@ class Progression {
     this.weeks = const {},
   });
 
-  int get activityXp => programXp + customXp + wodXp + recordXp;
+  int get activityXp => programXp;
   int get totalXp => activityXp + weeklyXp + badgeXp;
   static int needFor(int level) => 150 + 50 * (level - 1);
   static int xpAtLevel(int level) => 25 * (level - 1) * (level + 4);
@@ -276,19 +225,13 @@ class Progression {
     return null;
   }
 
-  /// Crédits WOD acquis par le niveau (barème 2.5.0) : 3 offerts au niveau 1,
-  /// +2 par niveau gagné, +3 supplémentaires tous les 5 niveaux. Un solde
-  /// déjà acquis ne baisse jamais : l'ancien barème (1 par niveau) est
-  /// strictement inférieur à tout niveau.
-  static int creditsForLevel(int level) => 1 + 2 * level + 3 * (level ~/ 5);
-  int get nextCredits => creditsForLevel(level + 1) - creditsForLevel(level);
   int get earnedBadges => badges.where((b) => b.earned).length;
 
   /// Récompenses dérivées du journal : aucun bouton ne peut les réclamer deux
-  /// fois. Les mêmes données importées produisent les mêmes XP.
+  /// fois. Les mêmes données importées produisent les mêmes XP. G2 : seules
+  /// les journées du programme comptent (WOD et séances manuelles retirés).
   factory Progression.calculate({
     required Map<String, SessionLog> logs,
-    required List<Wod> catalog,
     required Program program,
     required DateTime now,
   }) {
@@ -300,9 +243,8 @@ class Progression {
       return parsed == null || parsed.isAfter(now) ? null : parsed;
     }
 
-    var programXp = 0, customXp = 0, wodXp = 0, recordXp = 0;
-    var sessions = 0, completedWods = 0, sets = 0, records = 0;
-    final varieties = <String>{};
+    var programXp = 0;
+    var sessions = 0, sets = 0;
     DateTime? lastActivity;
     void active(DateTime at) {
       bucket(at).activeDays.add(civilDay(at));
@@ -311,18 +253,11 @@ class Progression {
 
     for (final entry in logs.entries) {
       final log = entry.value;
-      final custom = entry.key.startsWith('S0-');
-      if (log.done) {
-        if (custom) {
-          customXp += 60;
-        } else {
-          programXp += 100;
-        }
-      }
+      if (log.done) programXp += 100;
       final match = RegExp(r'^S(\d+)-J(\d+)').firstMatch(entry.key);
       DayPlan? plan;
       DateTime? fallback;
-      if (!custom && match != null) {
+      if (match != null) {
         final week = int.parse(match[1]!);
         final day = int.parse(match[2]!);
         if (week >= 1 && week <= program.weeks.length && day >= 1 && day <= 7) {
@@ -337,9 +272,7 @@ class Progression {
       final at = log.finishedAt == null
           ? (fallback != null && !fallback.isAfter(now) ? fallback : null)
           : parsePast(log.finishedAt);
-      final training = custom
-          ? log.ex.isNotEmpty
-          : plan?.exercises.isNotEmpty == true;
+      final training = plan?.exercises.isNotEmpty == true;
       if (log.done && training && at != null) {
         sessions++;
         bucket(at).sessions++;
@@ -353,53 +286,6 @@ class Progression {
           if (set.completedAt != null && completed == null) continue;
           sets++;
           if (completed != null) bucket(completed).sets++;
-        }
-      }
-    }
-    for (final wod in catalog) {
-      // Le barème de base existant est conservé, y compris pour une tentative.
-      wodXp += 80 * wod.results.length;
-      final results = [...wod.results]
-        ..sort((a, b) {
-          final atA = DateTime.tryParse(a.at);
-          final atB = DateTime.tryParse(b.at);
-          if (atA == null || atB == null) return a.at.compareTo(b.at);
-          return atA.compareTo(atB);
-        });
-      // Records par groupe de comparaison (L3b) : résultats lus sous la même
-      // règle de score. Les anciens résultats d'une règle qui a changé gardent
-      // l'ancienne lecture : leur XP de record est inchangée.
-      final best = <String, WodResult>{};
-      final format = structuredFormat(wod);
-      for (final result in results) {
-        final at = parsePast(result.at);
-        if (result.completed && at != null) {
-          completedWods++;
-          varieties.add(wod.id);
-          bucket(at).wods++;
-          active(at);
-        }
-        final group = recordGroup(wod, result);
-        if (group == null) continue;
-        final legacy = group == 'legacy';
-        final rule = legacy ? null : ScoreRule.byId(group)!;
-        final valid = legacy
-            ? legacyValid(wod, result)
-            : result.completed && performance(rule!, result, format) != null;
-        if (!valid) continue;
-        final current = best[group];
-        if (current == null) {
-          best[group] = result;
-          recordXp +=
-              40; // Première référence : compatible avec l'ancien bonus.
-        } else if (legacy
-            ? legacyBeats(wod, result, current)
-            : beats(rule!, result, current, format)) {
-          best[group] = result;
-          if (at != null) {
-            recordXp += 40;
-            records++;
-          }
         }
       }
     }
@@ -432,28 +318,15 @@ class Progression {
       currentStreak++;
       cursor = cursor.subtract(const Duration(days: 7));
     }
-    final metrics = {
-      'sessions': sessions,
-      'wods': completedWods,
-      'sets': sets,
-      'variety': varieties.length,
-      'records': records,
-      'streak': bestStreak,
-    };
+    final metrics = {'sessions': sessions, 'sets': sets, 'streak': bestStreak};
     final badges = [
       for (final badge in progressionBadges)
         BadgeProgress(badge, metrics[badge.metric]!),
     ];
     return Progression(
       programXp: programXp,
-      customXp: customXp,
-      wodXp: wodXp,
-      recordXp: recordXp,
       sessions: sessions,
-      wods: completedWods,
       sets: sets,
-      records: records,
-      variety: varieties.length,
       weeklyXp: weeks.values.fold(0, (sum, w) => sum + w.bonusXp),
       badgeXp: badges
           .where((b) => b.earned)

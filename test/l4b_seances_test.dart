@@ -1,15 +1,14 @@
 // L4b — Séances et reprise : KT-009 (validation des saisies) et KT-018
 // (chronos, reprise après interruption, fin de séance, notifications).
 // Décisions du 26/09/2026 : valeur obligatoire pour valider une série ;
-// repos non relancé après destruction ; WOD repris en pause au dernier point
-// sûr ; plusieurs brouillons possibles, un seul WOD chronométré à la fois.
+// repos non relancé après destruction ; plusieurs brouillons possibles.
+// (G2 : les WOD et leur chrono repris ont été retirés de l'application.)
 //
 // Horloges contrôlées (murale + monotone injectées), stockage simulé,
 // données synthétiques. « Relance » = nouvelle instance du store sur le même
 // stockage simulé : ce n'est ni une destruction Android, ni un redémarrage.
 
 import 'dart:convert';
-import 'dart:io' show gzip;
 
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter/material.dart';
@@ -24,10 +23,6 @@ import 'package:streetlift_tracker/session_history.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/set_validation.dart';
 import 'package:streetlift_tracker/store.dart';
-import 'package:streetlift_tracker/timers.dart';
-import 'package:streetlift_tracker/wod_formats.dart';
-import 'package:streetlift_tracker/wod_models.dart';
-import 'package:streetlift_tracker/wod_screen.dart';
 
 const _key = 'kalis_state_v3';
 
@@ -48,15 +43,6 @@ const _key = 'kalis_state_v3';
   }
   throw StateError('aucune journée en reps');
 }
-
-/// Document d'état stocké (compressé ou non).
-Map<String, dynamic> _stored(String raw) =>
-    jsonDecode(
-          raw.startsWith('gz:')
-              ? utf8.decode(gzip.decode(base64Decode(raw.substring(3))))
-              : raw,
-        )
-        as Map<String, dynamic>;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -293,7 +279,6 @@ void main() {
       final log = app.exLog(w.n, d.j, ex);
       log.sets[0].reps = '8';
       app.toggleSet(log, 0, app.logSpec(ex));
-      final credits = app.credits;
       final results = await Future.wait([
         app.finishSession(w.n, d.j, title: 'S${w.n} · J${d.j}'),
         app.finishSession(w.n, d.j, title: 'S${w.n} · J${d.j}'),
@@ -306,10 +291,7 @@ void main() {
       expect(finished, now.toIso8601String());
       expect(await app.finishSession(w.n, d.j), ResultSave.saved);
       expect(app.consumeReward(), isNull);
-      expect(app.credits, greaterThanOrEqualTo(credits));
-      final grants = Map.of(app.creditGrants);
       await app.finishSession(w.n, d.j);
-      expect(app.creditGrants, grants);
       expect(app.xp, xp);
       expect(app.logs[app.sessionKey(w.n, d.j)]!.finishedAt, finished);
     });
@@ -343,7 +325,6 @@ void main() {
         final after = await relaunch();
         expect(after.isDone(w.n, d.j), isTrue);
         expect(after.xp, app.xp);
-        expect(after.credits, app.credits);
         expect(after.consumeReward(), isNull);
         expect(await after.finishSession(w.n, d.j), ResultSave.saved);
         expect(after.consumeReward(), isNull);
@@ -379,34 +360,18 @@ void main() {
     );
 
     test(
-      'séance perso répétée : ancienne occurrence archivée, jamais écrasée',
+      'ancienne sauvegarde : importée, aucune séance en cours synthétisée',
       () async {
-        final session = CustomSession(
-          id: app.newSessionId(),
-          name: 'Perso test',
-          items: [CustomExercise(uid: 'a1', name: 'Tractions')],
-        );
-        app.upsertSession(session);
-        final plan = session.toWeekPlan();
-        final day = plan.days.first;
-        final ex = day.exercises.first;
-        final log = app.exLog(0, day.j, ex);
-        log.sets[0].reps = '10';
-        app.toggleSet(log, 0, app.logSpec(ex));
-        expect(await app.finishSession(0, day.j), ResultSave.saved);
-        app.consumeReward();
-        final first = jsonEncode(app.logs['S0-J${session.id}']!.toJson());
-        app.restartCustomSession(session);
-        session.items.first.name = 'Tractions modifiées';
-        app.upsertSession(session);
-        final archives = app.logs.keys.where(
-          (k) => k.startsWith('S0-J${session.id}@'),
-        );
-        expect(archives, hasLength(1));
-        expect(jsonEncode(app.logs[archives.single]!.toJson()), first);
-        expect(app.logs.containsKey('S0-J${session.id}'), isFalse);
-        final again = app.exLog(0, day.j, ex);
-        expect(again.sets.every((s) => !s.done), isTrue);
+        final (w, d) = _repsDay(app);
+        final old = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+        old['logs'] = {
+          app.sessionKey(w.n, d.j): SessionLog(
+            done: true,
+            finishedAt: '2026-08-01T18:00:00.000',
+          ).toJson(),
+        };
+        expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
+        expect(app.sessionsInProgress, isEmpty);
       },
     );
   });
@@ -436,11 +401,11 @@ void main() {
       fakeAsync((async) {
         var wall = DateTime(2026, 9, 26, 12);
         var mono = 0;
-        final c = WodClock(now: () => wall, mono: () => mono);
-        c.startStopwatch();
+        final c = TimerCtl(now: () => wall, mono: () => mono);
+        c.stopwatch('MAX');
         wall = wall.add(const Duration(minutes: 5)); // monotone arrêtée
         mono += 1000000;
-        async.elapse(const Duration(milliseconds: 200));
+        async.elapse(const Duration(seconds: 1));
         expect(c.elapsed, 300);
         c.dispose();
       });
@@ -464,77 +429,6 @@ void main() {
       });
     });
 
-    test('pauses répétées et frontière de phase exacte', () {
-      fakeAsync((async) {
-        var wall = DateTime(2026, 9, 26, 12);
-        final c = WodClock(now: () => wall);
-        c.startPhases(const [
-          WodPhase(PhaseKind.work, 20),
-          WodPhase(PhaseKind.rest, 10),
-          WodPhase(PhaseKind.work, 20),
-        ]);
-        for (var i = 0; i < 4; i++) {
-          wall = wall.add(const Duration(seconds: 4));
-          async.elapse(const Duration(milliseconds: 200));
-          c.toggle(); // pause
-          wall = wall.add(const Duration(minutes: 3));
-          async.elapse(const Duration(milliseconds: 200));
-          c.toggle(); // reprise
-        }
-        expect(c.phaseIndex, 0);
-        wall = wall.add(const Duration(milliseconds: 3999));
-        async.elapse(const Duration(milliseconds: 200));
-        expect(c.phaseIndex, 0);
-        wall = wall.add(const Duration(milliseconds: 1));
-        async.elapse(const Duration(milliseconds: 200));
-        expect(c.phaseIndex, 1);
-        expect(c.beeps, 1);
-        c.dispose();
-      });
-    });
-
-    test(
-      'point sûr : reprise en pause, absence non comptée, aucune alerte',
-      () {
-        fakeAsync((async) {
-          var wall = DateTime(2026, 9, 26, 12);
-          final c = WodClock(now: () => wall);
-          const phases = [
-            WodPhase(PhaseKind.work, 20),
-            WodPhase(PhaseKind.rest, 10),
-            WodPhase(PhaseKind.work, 20),
-          ];
-          c.startPhases(phases);
-          wall = wall.add(const Duration(seconds: 25));
-          async.elapse(const Duration(milliseconds: 200));
-          final point = c.checkpoint();
-          expect(point['ms'], 25000);
-          expect(point.keys, isNot(contains('startedAt')));
-          c.dispose();
-          // Nouveau processus, 2 h plus tard, horloge monotone repartie de 0 :
-          // aucun repère ancien n'est réutilisé.
-          wall = wall.add(const Duration(hours: 2));
-          final d = WodClock(now: () => wall, mono: () => 0);
-          d.startPhases(phases);
-          d.resumePaused(ms: point['ms'] as int);
-          expect(d.running, isFalse);
-          expect(d.started, isTrue);
-          expect(d.phaseIndex, 1);
-          expect(d.phaseRemaining, 5);
-          expect(d.beeps + d.alarms, 0);
-          wall = wall.add(const Duration(seconds: 3));
-          async.elapse(const Duration(seconds: 1));
-          expect(d.phaseRemaining, 5); // en pause
-          d.toggle();
-          wall = wall.add(const Duration(seconds: 5));
-          async.elapse(const Duration(milliseconds: 200));
-          expect(d.phaseIndex, 2);
-          expect(d.beeps, 1);
-          d.dispose();
-        });
-      },
-    );
-
     test('chrono de tenue terminé : la série n’est pas validée', () {
       fakeAsync((async) {
         var wall = DateTime(2026, 9, 26, 12);
@@ -548,173 +442,6 @@ void main() {
         c.dispose();
       });
     });
-  });
-
-  // ===================================================================
-  group('F/G. WOD en cours : persistance, import, minuit', () {
-    late AppStore app;
-    var now = DateTime(2026, 9, 26, 23, 50);
-    final others = <AppStore>[];
-
-    setUp(() async {
-      SharedPreferences.setMockInitialValues({});
-      now = DateTime(2026, 9, 26, 23, 50);
-      app = AppStore()..storeClock = () => now;
-      await app.init();
-    });
-    tearDown(() async {
-      await app.flush();
-      app.dispose();
-      for (final o in others) {
-        o.dispose();
-      }
-      others.clear();
-    });
-
-    Future<AppStore> relaunch() async {
-      final next = AppStore()..storeClock = () => now;
-      await next.init();
-      others.add(next);
-      return next;
-    }
-
-    test(
-      'essai lancé avant minuit, relance simulée, fini après minuit',
-      () async {
-        final trial = app.trialWod!;
-        final attempt = app.startAttempt(trial)!;
-        app.checkpointWod(attempt, {
-          'ms': 400000,
-          'laps': <int>[120, 250],
-          'round': 2,
-          'capHit': false,
-          'finished': false,
-        }, app.dataEpoch);
-        await app.flush();
-        now = DateTime(2026, 9, 27, 0, 20);
-        final next = await relaunch();
-        final w = next.wods.firstWhere((x) => x.id == trial.id);
-        expect(next.activeWod?.attempt, attempt);
-        expect(next.activeWod?.ms, 400000);
-        expect(next.activeWod?.laps, [120, 250]);
-        expect(next.canFinish(w, attempt), isTrue); // droit de finir gardé
-        final before = w.results.length;
-        final r = WodResult(
-          at: now.toIso8601String(),
-          score: '6:40',
-          seconds: 400,
-        );
-        expect(
-          await next.recordWodResult(w, r, attempt: attempt),
-          ResultSave.saved,
-        );
-        expect(next.activeWod, isNull);
-        expect(
-          await next.recordWodResult(
-            w,
-            WodResult(at: now.toIso8601String(), score: '6:40', seconds: 400),
-            attempt: attempt,
-          ),
-          ResultSave.saved,
-        );
-        expect(w.results.length, before + 1); // une tentative, un résultat
-        expect(next.unlocked(w), isFalse); // aucune acquisition
-        final again = await relaunch();
-        expect(again.activeWod, isNull);
-      },
-    );
-
-    test('un seul WOD chronométré à la fois ; abandon explicite', () async {
-      final a = app.wods.firstWhere(app.isCatalog);
-      final b = app.wods.where(app.isCatalog).skip(1).first;
-      app.unlockedWods[a.id] = 0;
-      app.unlockedWods[b.id] = 0;
-      final first = app.startAttempt(a)!;
-      expect(app.startAttempt(b), isNull);
-      expect(app.activeWod?.attempt, first);
-      final second = app.startAttempt(b, replace: true)!;
-      expect(app.activeWod?.attempt, second);
-      expect(app.canFinish(a, first), isTrue); // débloqué : toujours jouable
-      app.abandonAttempt(second);
-      expect(app.activeWod, isNull);
-    });
-
-    test(
-      'export sans chrono ; import et effacement l’annulent ; point obsolète ignoré',
-      () async {
-        final w = app.wods.firstWhere(app.isCatalog);
-        app.unlockedWods[w.id] = 0;
-        final attempt = app.startAttempt(w)!;
-        final epoch = app.dataEpoch;
-        await app.flush();
-        final state = _stored(
-          (await SharedPreferences.getInstance()).getString(_key)!,
-        );
-        expect(state['activeWod']?['attempt'], attempt);
-        final exported = jsonDecode(app.exportAll()) as Map<String, dynamic>;
-        expect(exported.containsKey('activeWod'), isFalse);
-        // Un fichier contenant quand même un chrono : ignoré à l'import.
-        exported['activeWod'] = state['activeWod'];
-        expect(
-          await app.importBackup(jsonEncode(exported)),
-          ImportStatus.success,
-        );
-        expect(app.activeWod, isNull);
-        expect(app.canFinish(w, attempt), isTrue); // débloqué dans le fichier
-        app.checkpointWod(attempt, {
-          'ms': 5000,
-          'laps': <int>[],
-          'round': 0,
-          'capHit': false,
-          'finished': false,
-        }, epoch);
-        expect(app.activeWod, isNull); // écran de l'ancien état : ignoré
-        final other = app.startAttempt(w)!;
-        expect(app.activeWod?.attempt, other);
-        expect((await app.eraseAllData()).status, EraseStatus.success);
-        expect(app.activeWod, isNull);
-        final next = await relaunch();
-        expect(next.activeWod, isNull);
-      },
-    );
-
-    test('chrono illisible : ignoré, le reste des données chargé', () async {
-      final (w, d) = _repsDay(app);
-      final ex = d.exercises.first;
-      final log = app.exLog(w.n, d.j, ex);
-      log.sets[0].reps = '8';
-      app.toggleSet(log, 0, app.logSpec(ex));
-      await app.flush();
-      final prefs = await SharedPreferences.getInstance();
-      final raw = prefs.getString(_key)!;
-      final m = _stored(raw);
-      m['activeWod'] = {'v': 1, 'attempt': 'x', 'wod': 'inconnu', 'ms': -5};
-      await prefs.setString(_key, jsonEncode(m));
-      final next = await relaunch();
-      expect(next.activeWod, isNull);
-      expect(next.activeWodUnreadable, isTrue);
-      expect(
-        next.logs[next.sessionKey(w.n, d.j)]!.ex[ex.id]!.sets[0].done,
-        isTrue,
-      );
-    });
-
-    test(
-      'ancienne sauvegarde sans chrono : importée, rien de synthétisé',
-      () async {
-        final (w, d) = _repsDay(app);
-        final old = jsonDecode(app.exportAll()) as Map<String, dynamic>;
-        old['logs'] = {
-          app.sessionKey(w.n, d.j): SessionLog(
-            done: true,
-            finishedAt: '2026-08-01T18:00:00.000',
-          ).toJson(),
-        };
-        expect(await app.importBackup(jsonEncode(old)), ImportStatus.success);
-        expect(app.activeWod, isNull);
-        expect(app.sessionsInProgress, isEmpty);
-      },
-    );
   });
 
   // ===================================================================
@@ -991,78 +718,6 @@ void main() {
         expect(after, saved);
       },
     );
-
-    testWidgets('WOD retrouvé en pause au dernier point sûr (Tabata)', (
-      tester,
-    ) async {
-      phone(tester, const Size(320, 640));
-      final w = store.wods.firstWhere((x) => x.id == 'genx100');
-      store.unlockedWods[w.id] = 0;
-      w.results.clear();
-      // Point sûr d'une tentative interrompue : 25 s (repos, intervalle 1).
-      final attempt = store.startAttempt(w)!;
-      store.checkpointWod(attempt, {
-        'ms': 25000,
-        'laps': <int>[],
-        'round': 0,
-        'capHit': false,
-        'finished': false,
-      }, store.dataEpoch);
-      final nav = GlobalKey<NavigatorState>();
-      await tester.pumpWidget(
-        MaterialApp(
-          navigatorKey: nav,
-          theme: buildTheme(true),
-          locale: const Locale('fr'),
-          supportedLocales: const [Locale('fr')],
-          localizationsDelegates: GlobalMaterialLocalizations.delegates,
-          home: const Scaffold(body: SizedBox()),
-        ),
-      );
-      nav.currentState!.push(
-        MaterialPageRoute<void>(builder: (_) => WodRunScreen(wodId: w.id)),
-      );
-      await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('wod-restored')), findsOneWidget);
-      expect(
-        find.textContaining('Chrono retrouvé en pause à 0:25'),
-        findsOneWidget,
-      );
-      expect(
-        tester.widget<Text>(find.byKey(const ValueKey('wod-phase'))).data,
-        'REPOS',
-      );
-      expect(
-        tester.widget<Text>(find.byKey(const ValueKey('wod-clock'))).data,
-        '0:05',
-      );
-      expect(find.text('Reprendre'), findsOneWidget);
-      now = now.add(const Duration(minutes: 30));
-      await tester.pump(const Duration(seconds: 1));
-      expect(
-        tester.widget<Text>(find.byKey(const ValueKey('wod-clock'))).data,
-        '0:05',
-      );
-      await tester.tap(find.text('Reprendre'));
-      now = now.add(const Duration(seconds: 5));
-      await tester.pump(const Duration(milliseconds: 250));
-      expect(
-        tester.widget<Text>(find.byKey(const ValueKey('wod-phase'))).data,
-        'EFFORT',
-      );
-      expect(find.byKey(const ValueKey('wod-restored')), findsNothing);
-      expect(store.activeWod?.attempt, attempt);
-      expect(store.activeWod!.ms, greaterThanOrEqualTo(25000));
-      // Sortie confirmée : abandon explicite, plus de reprise.
-      await nav.currentState!.maybePop();
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Quitter'));
-      await tester.pumpAndSettle();
-      expect(find.byType(WodRunScreen), findsNothing);
-      expect(store.activeWod, isNull);
-      await tester.pumpWidget(const SizedBox());
-      expect(w.results, isEmpty);
-    });
 
     for (final (size, scale, dark) in [
       (const Size(320, 720), 1.3, false),

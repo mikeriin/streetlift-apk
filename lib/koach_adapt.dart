@@ -684,42 +684,6 @@ const kLightenVolume = .80;
 /// Séances 20 % plus courtes (assiduité < 60 %).
 const kShorterFactor = .80;
 
-// ============================== séances d'entretien (vacances, KT-060)
-
-/// Matériel toujours disponible en vacances (sans matériel).
-const kNoEquipment = {'aucun', 'sol_degage', 'mur', 'support_stable'};
-
-/// Séance d'entretien de 20 minutes sans matériel : un exercice par type
-/// (poussée, squat, fente, charnière, gainage), difficulté la plus proche
-/// de la cible du niveau, sans saut. Déterministe.
-List<GenExercise> maintenanceExercises(GenCatalog catalog, int level) {
-  final target = const [2, 3, 4, 5, 5][level.clamp(0, 4)];
-  const types = [
-    'poussee_horizontale',
-    'squat',
-    'fente',
-    'charniere_hanche',
-    'gainage_anti_extension',
-  ];
-  final out = <GenExercise>[];
-  for (final t in types) {
-    GenExercise? best;
-    for (final e in catalog.all) {
-      if (e.type != t || !e.usable || e.impact) continue;
-      if (!e.materiel.every(kNoEquipment.contains)) continue;
-      if (best == null) {
-        best = e;
-        continue;
-      }
-      final a = (e.difficulty - target).abs(),
-          b = (best.difficulty - target).abs();
-      if (a < b || (a == b && e.id.compareTo(best.id) < 0)) best = e;
-    }
-    if (best != null) out.add(best);
-  }
-  return out;
-}
-
 // ======================================================== données
 
 /// Pause en cours (vacances ou maladie).

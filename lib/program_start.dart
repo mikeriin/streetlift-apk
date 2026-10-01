@@ -302,7 +302,7 @@ class _ProgramStartScreenState extends State<ProgramStartScreen> {
                     const SizedBox(height: 4),
                     Text(
                       'Tes séances faites gardent leur semaine, leur jour et leur date réelle. '
-                      'Crédits, droits WOD, résultats et références ne changent pas. '
+                      'Tes références ne changent pas. '
                       'Les rappels sont replanifiés sur les nouvelles dates.',
                       style: dim,
                     ),

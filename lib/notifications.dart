@@ -5,7 +5,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 import 'device.dart';
-import 'motivation.dart' show reminderAllowed;
 import 'store.dart';
 
 const reminderChannel = 'kalis_daily'; // Conserve les choix Android existants.
@@ -19,6 +18,11 @@ class PlannedReminder {
   const PlannedReminder(this.id, this.title, this.body, this.payload, this.at);
   String get signature => '$title|$body|$payload|${at.millisecondsSinceEpoch}';
 }
+
+/// Règle des rappels (L12, KT-070), gardée par G2 : un rappel seulement un
+/// jour d'entraînement prévu, jamais un jour de repos ni pendant une pause.
+bool reminderAllowed({required bool trainingDay, bool paused = false}) =>
+    trainingDay && !paused;
 
 /// Dates civiles dans le fuseau du téléphone. Au plus 280 alarmes, même sans
 /// rouvrir l'app chaque semaine. Le repli DateTime utilise le fuseau système.
@@ -34,7 +38,7 @@ List<PlannedReminder> planReminders(
   final result = <PlannedReminder>[];
   for (final week in app.program.weeks) {
     for (final day in week.days) {
-      // L12 (KT-070) : uniquement les jours d'entraînement prévus, jamais un
+      // KT-070 : uniquement les jours d'entraînement prévus, jamais un
       // jour de repos (l'ancien réglage « Ignorer les jours de repos » n'a
       // plus d'effet).
       if (app.isDone(week.n, day.j) ||
@@ -284,10 +288,7 @@ class NotificationService {
   void _onStoreChange() {
     final s = app.settings;
     final done =
-        app.logs.entries
-            .where((e) => e.value.done && !e.key.startsWith('S0-'))
-            .map((e) => e.key)
-            .toList()
+        app.logs.entries.where((e) => e.value.done).map((e) => e.key).toList()
           ..sort();
     // Le départ fait partie de la signature : le changer replanifie les
     // mêmes identifiants S·J (pas de doublon), sans attendre un autre signal.

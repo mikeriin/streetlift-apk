@@ -83,7 +83,7 @@ class StatsLevelCard extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         Text(
-          '${progress.earnedBadges} badges · ${store.credits >= 0 ? '${store.credits} crédits WOD' : creditDeficitLabel(store.credits)}',
+          '${progress.earnedBadges} badges',
           style: TextStyle(color: SL.onBrandSoft, fontSize: 11),
         ),
       ],
@@ -104,10 +104,7 @@ void showStatsLevel(BuildContext context) {
       description: '${p.inLevel} sur ${p.need} XP',
     ),
     Text(
-      '${p.remaining} XP avant le niveau ${p.level + 1} et +${p.nextCredits} crédit${p.nextCredits > 1 ? 's' : ''} WOD.',
-    ),
-    Text(
-      '${store.credits >= 0 ? '${store.credits} crédits disponibles' : creditDeficitLabel(store.credits)} · ${p.totalXp} XP cumulés',
+      '${p.remaining} XP avant le niveau ${p.level + 1} · ${p.totalXp} XP cumulés.',
     ),
     const KSection('Tes rangs'),
     for (final rank in progressRanks)
@@ -129,9 +126,6 @@ void showStatsLevel(BuildContext context) {
     const KSection('Origine de tes XP'),
     for (final entry in <String, int>{
       'Programme': p.programXp,
-      'Séances personnelles': p.customXp,
-      'Tentatives WOD': p.wodXp,
-      'Références et records WOD': p.recordXp,
       'Objectifs hebdomadaires': p.weeklyXp,
       'Badges': p.badgeXp,
     }.entries)
@@ -277,7 +271,7 @@ class _StatsProgressionState extends State<StatsProgression> {
     }
     return Expanded(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: index == 1 ? 4 : 0),
+        padding: const EdgeInsets.symmetric(horizontal: 4),
         child: button,
       ),
     );
@@ -288,12 +282,7 @@ class _StatsProgressionState extends State<StatsProgression> {
     final p = store.progression;
     final groups = switch (_branch) {
       0 => const {'sessions': 'Séances', 'sets': 'Séries'},
-      1 => const {'streak': 'Semaines régulières'},
-      _ => const {
-        'wods': 'WOD terminés',
-        'variety': 'Exploration',
-        'records': 'Records WOD',
-      },
+      _ => const {'streak': 'Semaines régulières'},
     };
     return KList(
       key: const PageStorageKey('stats-journey-scroll'),
@@ -347,7 +336,7 @@ class _StatsProgressionState extends State<StatsProgression> {
             if (MediaQuery.textScalerOf(context).scale(10) <= 15)
               SizedBox(
                 height: 24,
-                child: CustomPaint(painter: _TreeFork(SL.line, 3)),
+                child: CustomPaint(painter: _TreeFork(SL.line, 2)),
               )
             else
               const SizedBox(height: 12),
@@ -363,7 +352,6 @@ class _StatsProgressionState extends State<StatsProgression> {
                 for (final (index, label, icon) in [
                   (0, 'Pratique', Icons.fitness_center_rounded),
                   (1, 'Rythme', Icons.event_repeat_rounded),
-                  (2, 'Défis', Icons.bolt_rounded),
                 ])
                   _branchButton(
                     context,
@@ -633,7 +621,7 @@ void showStatsRules(BuildContext context) => showModalBottomSheet<void>(
         ),
         const SizedBox(height: 8),
         const Text(
-          'Le barème de base est conservé : 100 XP pour une journée du programme validée, 60 XP pour une séance personnelle et 80 XP par tentative WOD enregistrée. Une première performance WOD valide rapporte 40 XP, puis chaque amélioration stricte de ce record rapporte 40 XP supplémentaires. Une égalité ou un WOD inachevé ne rapporte pas de bonus de record.',
+          'Le barème de base est conservé : 100 XP pour une journée du programme validée.',
         ),
         const SizedBox(height: 14),
         const Text(
@@ -643,13 +631,10 @@ void showStatsRules(BuildContext context) => showModalBottomSheet<void>(
         const Text(
           'Une semaine avec 2 jours actifs prolonge la série de régularité. La semaine en cours peut encore être complétée : elle ne casse pas la série avant le lundi suivant. Aucun entraînement quotidien n’est exigé.',
         ),
+
         const SizedBox(height: 14),
         const Text(
-          'Chaque niveau donne 2 crédits WOD, et 3 de plus tous les 5 niveaux (3 offerts au départ). Chapitre bouclé : +3, boss vaincu : +5, semaine complète : +1. Les WODs déjà débloqués restent accessibles.',
-        ),
-        const SizedBox(height: 14),
-        const Text(
-          'Les XP sont recalculés depuis tes données : supprimer un résultat ou une séance retire les XP et bonus associés. Réimporter la même sauvegarde ne double aucune récompense. Les anciennes séances sans date utilisent, si possible, la date prévue du programme ; une séance personnelle sans date ne compte pas pour les bonus de régularité.',
+          'Les XP sont recalculés depuis tes données : supprimer une séance retire les XP et bonus associés. Réimporter la même sauvegarde ne double aucune récompense. Les anciennes séances sans date utilisent, si possible, la date prévue du programme.',
         ),
         const SizedBox(height: 16),
         FilledButton(
