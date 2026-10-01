@@ -2,8 +2,10 @@
 // exporte le formatage officiel et un relevé de mise au point dans ci-out.
 import 'dart:io';
 
+import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart';
 import 'package:kalis_plan/report.dart';
+import 'package:kalis_plan/testing.dart';
 import 'package:test/test.dart';
 
 import 'support.dart';
@@ -31,6 +33,80 @@ void main() {
         target.writeAsStringSync(f.readAsStringSync());
       }
     }
+  });
+
+  test('diagnostic des graines en échec', () {
+    final catalog = loadCatalog();
+    final inspector = PlanInspector(catalog);
+    final out = Directory('../../out-packages/kalis_plan/dev')
+      ..createSync(recursive: true);
+    final b = StringBuffer();
+    String days(Pass1Plan p) => p.days
+        .map(
+          (d) =>
+              'j${d.dayIndex}(${d.minutesBudget}min ${d.weekday}): '
+              '${d.slots.map((s) => '${s.slotId}=${s.exerciseId}${s.locked ? '*' : ''}').join(', ')}',
+        )
+        .join('\n    ');
+    for (final seed in <int>[7402, 7546, 681, 3859, 1458, 1496]) {
+      try {
+        final request = randomRequest(catalog, seed);
+        final engine = KalisPlan();
+        b.writeln('== graine $seed : ${profileLine(request.profile)}');
+        b.writeln('  matériel ${request.profile.equipment}');
+        b.writeln('  ${inspector.explainProfile(request)}');
+        final p1 = engine.createPass1(catalog, request);
+        b.writeln('  passe 1 :\n    ${days(p1)}');
+        b.writeln('  violations ${inspector.hardViolations(request, p1)}');
+        final slots = <(int, PlanSlot)>[
+          for (final d in p1.days)
+            for (final s in d.slots) (d.dayIndex, s),
+        ];
+        if (slots.isEmpty) {
+          continue;
+        }
+        final (_, slot) = slots[fnv1a32('$seed:revue') % slots.length];
+        final kind = ReviewKind.values[seed % ReviewKind.values.length];
+        b.writeln('  action ${kind.code} sur ${slot.slotId}');
+        if (kind == ReviewKind.remove) {
+          final trace = engine.reviewTraced(
+            catalog,
+            ReviewRequest(
+              request: request,
+              current: p1,
+              action: ReviewAction(kind: kind, slotId: slot.slotId),
+            ),
+          );
+          final next = request.copyWith(
+            profile: trace.profile,
+            locks: trace.result.locks,
+          );
+          b.writeln('  référence :\n    ${days(trace.reference)}');
+          b.writeln('  résultat :\n    ${days(trace.result.plan)}');
+          for (final (name, plan) in <(String, Pass1Plan)>[
+            ('référence', trace.reference),
+            ('résultat', trace.result.plan),
+          ]) {
+            final score = inspector.scoreOf(next, plan);
+            b.writeln(
+              '  $name : objectif '
+              '${inspector.objective(next, plan, reference: trace.reference)} '
+              'sans pénalité ${inspector.objective(next, plan)} '
+              'changements ${PlanInspector.changesBetween(trace.reference, plan)} '
+              'note ${score.total} '
+              '${score.components.map((c) => '${c.code.substring(0, 4)} ${c.value.toStringAsFixed(3)}').join(' ')}',
+            );
+          }
+          b.writeln(
+            '  violations de la référence '
+            '${inspector.hardViolations(next, trace.reference)}',
+          );
+        }
+      } on Object catch (e, st) {
+        b.writeln('  ERREUR $e\n${st.toString().split('\n').take(8).join('\n')}');
+      }
+    }
+    File('${out.path}/graines.txt').writeAsStringSync(b.toString());
   });
 
   test('relevé de mise au point', () {

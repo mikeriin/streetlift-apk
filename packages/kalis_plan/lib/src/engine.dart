@@ -425,15 +425,36 @@ final class KalisPlan implements PlanEngine {
             ),
         ],
       );
+      // La note est relue pour le profil mis à jour (l'exercice est
+      // désormais « su ») : elle reste celle que `PlanInspector` recalcule.
+      final known = applyProfileDelta(base.profile, delta);
+      final ctx = PlanContext.build(
+        ContextInputs(
+          catalog: catalog,
+          profile: known,
+          startDate: plan.startDate,
+          seed: 0,
+          locks: locks,
+          adaptation: base.adaptation,
+          forcedIds: <String>{
+            for (final day in plan.days)
+              for (final s in day.slots) s.exerciseId,
+          },
+          volumeScale: adaptationVolumeScale(base.adaptation),
+          params: params,
+        ),
+      );
+      final scorer = Scorer(ctx)..evaluate(stateFromPlan(ctx, plan));
+      final rescored = plan.copyWith(score: planScoreOf(scorer));
       return ReviewTrace(
         result: ReviewResult(
-          plan: plan,
+          plan: rescored,
           diff: const PlanDiff(changes: <PlanChange>[]),
           locks: locks,
           profileDelta: delta,
         ),
-        reference: plan,
-        profile: applyProfileDelta(base.profile, delta),
+        reference: rescored,
+        profile: known,
       );
     }
 

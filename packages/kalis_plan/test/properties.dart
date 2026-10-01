@@ -342,15 +342,34 @@ List<String> checkSeed(Catalog catalog, int seed) {
       for (final k in after.keys)
         if (!before.containsKey(k)) k,
     };
-    final described = <String>{
-      for (final c in result.diff.changes)
-        if (c.slotId != null &&
-            (c.kind == ChangeKind.exerciseAdded ||
-                c.kind == ChangeKind.exerciseRemoved ||
-                c.kind == ChangeKind.exerciseReplaced ||
-                c.kind == ChangeKind.exerciseMoved))
-          c.slotId!,
-    };
+    final described = <String>{};
+    for (final c in result.diff.changes) {
+      final id = c.slotId;
+      if (id == null) {
+        continue;
+      }
+      switch (c.kind) {
+        case ChangeKind.exerciseAdded:
+        case ChangeKind.exerciseRemoved:
+        case ChangeKind.exerciseReplaced:
+          described.add(id);
+        case ChangeKind.exerciseMoved:
+          // Un déplacement décrit deux emplacements : le nouveau, et
+          // celui du jour d'origine qui portait l'exercice.
+          described.add(id);
+          for (final s in p1.days[c.fromDayIndex!].slots) {
+            if (s.exerciseId == c.toExerciseId &&
+                !after.containsKey(s.slotId)) {
+              described.add(s.slotId);
+            }
+          }
+        case ChangeKind.orderChanged:
+        case ChangeKind.prescriptionChanged:
+        case ChangeKind.dayAdded:
+        case ChangeKind.dayRemoved:
+          break;
+      }
+    }
     if (changed.length != described.length ||
         !changed.containsAll(described)) {
       fail(
