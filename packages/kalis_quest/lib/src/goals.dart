@@ -417,7 +417,9 @@ final class GoalKeeper {
     CivilDate? suggestedDate;
     double? suggestedTarget;
     final reasons = <Reason>[];
-    if (achievedDay == null && metric != GoalMetric.skillUnlocked) {
+    if (achievedDay == null &&
+        metric != GoalMetric.skillUnlocked &&
+        w.today >= created) {
       judged = true;
       final oriented = <(int, double)>[
         for (final (day, value) in raw) (day, sign * value),
@@ -602,7 +604,7 @@ final class GoalKeeper {
     var overdue = false;
     CivilDate? suggestedDate;
     final reasons = <Reason>[];
-    if (achievedDay == null) {
+    if (achievedDay == null && w.today >= created) {
       final thisMonday = mondayOf(w.today);
       var sum = 0.0;
       var n = 0;
@@ -677,7 +679,7 @@ final class GoalKeeper {
         ],
         prediction: prediction,
         baseline: 0,
-        overdue: achievedDay == null ? overdue : null,
+        overdue: achievedDay == null && w.today >= created ? overdue : null,
         suggestedDate: suggestedDate,
         reasons: reasons.isEmpty ? null : reasons,
       ),

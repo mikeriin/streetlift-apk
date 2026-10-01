@@ -573,12 +573,30 @@ String casesMarkdown(
     'Document généré par `casesMarkdown` (`lib/report.dart`) : les '
     '${journals.length} journaux types de `kalis_core` '
     '(`test/fixtures/journals.json.gz`) passés au moteur, sans bloc ni '
-    'résumé d\'adaptation. Le registre démarre la veille de la première '
+    'résumé d\'adaptation, objectifs du profil ramenés au premier jour du '
+    'journal. Le registre démarre la veille de la première '
     'séance ; le moteur est appelé chaque dimanche, puis le lendemain de la '
     'dernière séance.',
   );
   for (final j in journals) {
-    final profile = profiles.firstWhere((p) => p.key == j.profileKey).profile;
+    final fixture = profiles.firstWhere((p) => p.key == j.profileKey).profile;
+    // Les objectifs des profils types sont datés d'après les journaux :
+    // ils sont ramenés au premier jour du journal, échéance décalée
+    // d'autant, pour que le journal les fasse avancer.
+    final first = j.log.sessions.isEmpty
+        ? fixture.createdOn
+        : j.log.sessions.first.date;
+    final profile = fixture.copyWith(
+      goals: <Goal>[
+        for (final g in fixture.goals)
+          g.copyWith(
+            createdOn: first,
+            targetDate: g.targetDate == null
+                ? null
+                : first.addDays(g.createdOn.daysUntil(g.targetDate!)),
+          ),
+      ],
+    );
     final o = evaluateFixture(engine, catalog, profile, j.log);
     final bySource = <String, int>{};
     for (final e in o.state.xp) {
@@ -641,7 +659,7 @@ String casesMarkdown(
         '${<String>[for (final m in g.milestones) '${m.fraction}${m.reachedOn == null ? '' : ' ✓'}'].join(' · ')}'
         '${g.achievedOn == null ? '' : ', atteint le ${g.achievedOn}'}'
         '${p == null ? '' : ', prédiction ${p.expectedOn} (${p.earliestOn} – ${p.latestOn}, ${p.method}, confiance ${p.confidence})'}'
-        '${g.overdue == true ? ', en retard${g.suggestedDate == null ? '' : ' → date proposée ${g.suggestedDate}'}${g.suggestedTarget == null ? '' : ' ou cible proposée ${_num(g.suggestedTarget)}'}' : ''}.',
+        '${g.overdue == true ? ', en retard${g.suggestedDate == null ? '' : ' ; date proposée ${g.suggestedDate}'}${g.suggestedTarget == null ? '' : ' ; cible proposée ${_num(g.suggestedTarget)}'}' : ''}.',
       );
     }
     final open = <String>[

@@ -7,7 +7,7 @@ library;
 final class QuestParams {
   /// Paramètres ; les valeurs par défaut sont celles de la livraison.
   const QuestParams({
-    this.levelScale = 33,
+    this.levelScale = 32,
     this.sessionXp = 100,
     this.comboMin = 3,
     this.comboBonusCap = 10,
@@ -86,8 +86,8 @@ final class QuestParams {
     this.gradeAccuracyWeight = 30,
     this.gradeRecordWeight = 10,
     this.gradeS = 90,
-    this.gradeA = 75,
-    this.gradeB = 55,
+    this.gradeA = 70,
+    this.gradeB = 50,
     this.startBonusPerSession = 0,
     this.startBonusCap = 0,
     this.startBonusDays = 28,
