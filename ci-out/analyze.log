@@ -1,0 +1,7 @@
+Analyzing streetlift-apk...                                     
+
+  error • The method 'toJson' can't be unconditionally invoked because the receiver can be 'null'. Try making the call conditional (using '?.') or adding a null check to the target ('!') • lib/plan/plan_creation.dart:239:96 • unchecked_use_of_nullable_value
+   info • Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation • lib/plan/plan_screens.dart:871:11 • prefer_const_constructors
+  error • The name 'weekdayName' is defined in the libraries 'package:streetlift_tracker/athlete_profile.dart' and 'package:streetlift_tracker/plan/plan_texts.dart'. Try using 'as prefix' for one of the import directives, or hiding the name from all but one of the imports • lib/plan_store.dart:493:39 • ambiguous_import
+
+3 issues found. (ran in 14.4s)
