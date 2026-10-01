@@ -296,7 +296,10 @@ void main() {
     await tap(tester, 'zone-knee', ms: 1200);
     await tap(tester, 'limitation-side-left', ms: 400);
     await tap(tester, 'limitation-save', ms: 1200);
-    await scrollTo(tester, find.byKey(const ValueKey('flow-body-map')));
+    await scrollTo(
+      tester,
+      find.byKey(const ValueKey('flow-limitation-knee|left')),
+    );
     await wait(tester, 1500);
     await shot('11_sante_carte');
     await tap(tester, 'flow-next-health');
@@ -352,7 +355,7 @@ void main() {
     );
     await wait(tester, 1800);
     releve['reglages_profil'] = find
-        .byKey(const ValueKey('profile-rubric-goals'))
+        .byKey(const ValueKey('profile-rubric-identity'))
         .evaluate()
         .isNotEmpty;
     await shot('18_reglages_profil');

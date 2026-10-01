@@ -121,11 +121,10 @@ String dosageInWords(TrainingDiscipline d, int pct) {
   final label = kDisciplineLabels[d]!.toLowerCase();
   if (pct >= 100) return 'Toutes tes séances en $label';
   if (pct <= 0) return 'Aucune séance en $label';
-  final n = (100 / pct).round();
-  if (n <= 1) return 'Presque toutes tes séances en $label';
   if (pct > 50) {
     return 'Environ ${(pct / 10).round()} séances sur 10 en $label';
   }
+  final n = (100 / pct).round();
   return 'Environ 1 séance sur $n en $label';
 }
 
