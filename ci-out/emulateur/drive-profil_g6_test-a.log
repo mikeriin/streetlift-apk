@@ -1,0 +1,426 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             82.7s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,972ms
+W/eetlift_tracker( 4229): Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+W/eetlift_tracker( 4229): Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+W/eetlift_tracker( 4229): Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+W/eetlift_tracker( 4229): Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+D/AccessibilityBridge( 4229): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 4229): Width is zero. 0,0
+W/HWUI    ( 4229): Unknown dataspace 0
+W/eetlift_tracker( 4229): Verification of androidx.window.layout.adapter.WindowBackend androidx.window.layout.WindowInfoTracker$Companion$extensionBackend$2.invoke() took 124.432ms (538.45 bytecodes/s) (4296B approximate peak alloc)
+I/WindowExtensionsImpl( 4229): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 4229): Width is zero. 0,0
+D/FlutterJNI( 4229): Sending viewport metrics to the engine.
+W/HWUI    ( 4229): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 4229): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 4229): mapper 4.x is not supported
+I/eetlift_tracker( 4229): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4229): Skipped 152 frames!  The application may be doing too much work on its main thread.
+D/ProfileInstaller( 4229): Installing profile for fr.tchoupi.streetlift_tracker
+D/FlutterJNI( 4229): Sending viewport metrics to the engine.
+I/eetlift_tracker( 4229): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:40559/oMK3560pdaE=/
+VMServiceFlutterDriver: Isolate found with number: 1482987656369943
+VMServiceFlutterDriver: Isolate 1482987656369943 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4229): 00:00 +0: G6 a (sombre, rouge) : refaire son profil proposé, création complète en session de test
+VMServiceFlutterDriver: Connected to Flutter application.
+D/EGL_emulation( 4229): app_time_stats: avg=644.84ms min=266.36ms max=1023.33ms count=2
+D/EGL_emulation( 4229): app_time_stats: avg=1650.84ms min=1650.84ms max=1650.84ms count=1
+D/EGL_emulation( 4229): app_time_stats: avg=141.39ms min=8.81ms max=332.60ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=1249.97ms min=1249.97ms max=1249.97ms count=1
+D/EGL_emulation( 4229): app_time_stats: avg=508.56ms min=151.20ms max=1364.89ms count=4
+D/EGL_emulation( 4229): app_time_stats: avg=8261.75ms min=302.73ms max=16220.77ms count=2
+D/EGL_emulation( 4229): app_time_stats: avg=126.88ms min=15.46ms max=259.06ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=111.80ms min=11.79ms max=210.10ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=109.28ms min=35.36ms max=129.59ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=101.42ms min=8.74ms max=233.55ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=117.38ms min=71.65ms max=143.12ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=86.02ms min=8.52ms max=117.59ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=103.71ms min=19.49ms max=219.75ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=100.45ms min=9.06ms max=165.08ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=303.51ms min=108.32ms max=679.12ms count=4
+D/EGL_emulation( 4229): app_time_stats: avg=178.38ms min=157.54ms max=220.83ms count=6
+D/EGL_emulation( 4229): app_time_stats: avg=182.12ms min=158.81ms max=218.07ms count=6
+D/EGL_emulation( 4229): app_time_stats: avg=168.10ms min=154.89ms max=198.79ms count=6
+D/EGL_emulation( 4229): app_time_stats: avg=188.35ms min=173.39ms max=207.41ms count=6
+W/WindowOnBackDispatcher( 4229): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4229): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4229): app_time_stats: avg=157.82ms min=12.49ms max=265.08ms count=6
+D/EGL_emulation( 4229): app_time_stats: avg=131.07ms min=120.79ms max=141.20ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=127.40ms min=13.51ms max=229.84ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=108.00ms min=12.74ms max=166.52ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=119.53ms min=98.84ms max=238.60ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=98.42ms min=12.71ms max=157.35ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=144.20ms min=30.30ms max=232.63ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=129.66ms min=20.65ms max=265.40ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=134.78ms min=110.06ms max=148.07ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=154.99ms min=135.69ms max=197.76ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=296.65ms min=11.50ms max=876.95ms count=4
+D/EGL_emulation( 4229): app_time_stats: avg=147.18ms min=18.87ms max=248.75ms count=7
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:41721bf0: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4229): showSoftInput() view=io.flutter.embedding.android.FlutterView{b1917e8 VFE...... .F....ID 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:b83d6b4: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4229): showSoftInput() view=io.flutter.embedding.android.FlutterView{b1917e8 VFE...... .F....ID 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+D/EGL_emulation( 4229): app_time_stats: avg=165.62ms min=5.16ms max=622.97ms count=9
+I/AssistStructure( 4229): Flattened final assist data: 440 bytes, containing 1 windows, 3 views
+D/EGL_emulation( 4229): app_time_stats: avg=186.83ms min=129.01ms max=370.95ms count=6
+D/EGL_emulation( 4229): app_time_stats: avg=143.44ms min=10.30ms max=261.16ms count=7
+D/InputConnectionAdaptor( 4229): The input method toggled cursor monitoring on
+D/EGL_emulation( 4229): app_time_stats: avg=157.13ms min=16.03ms max=365.01ms count=8
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:9129855c: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4229): showSoftInput() view=io.flutter.embedding.android.FlutterView{b1917e8 VFE...... .F...... 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:65d47bd3: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4229): showSoftInput() view=io.flutter.embedding.android.FlutterView{b1917e8 VFE...... .F...... 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/AssistStructure( 4229): Flattened final assist data: 440 bytes, containing 1 windows, 3 views
+D/InsetsController( 4229): show(ime(), fromIme=true)
+D/EGL_emulation( 4229): app_time_stats: avg=117.11ms min=2.12ms max=202.97ms count=7
+W/InteractionJankMonitor( 4229): Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=fr.tchoupi.streetlift_tracker
+D/FlutterJNI( 4229): Sending viewport metrics to the engine.
+D/EGL_emulation( 4229): app_time_stats: avg=28776.70ms min=5163.07ms max=52390.33ms count=2
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:b83d6b4: onShown
+D/FlutterJNI( 4229): Sending viewport metrics to the engine.
+D/FlutterJNI( 4229): Sending viewport metrics to the engine.
+D/EGL_emulation( 4229): app_time_stats: avg=179.37ms min=100.79ms max=338.03ms count=6
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:8440537e: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4229): showSoftInput() view=io.flutter.embedding.android.FlutterView{b1917e8 VFE...... .F...... 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:b0285caf: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4229): showSoftInput() view=io.flutter.embedding.android.FlutterView{b1917e8 VFE...... .F...... 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/AssistStructure( 4229): Flattened final assist data: 440 bytes, containing 1 windows, 3 views
+D/EGL_emulation( 4229): app_time_stats: avg=161.63ms min=69.31ms max=278.49ms count=7
+W/RemoteInputConnectionImpl( 4229): requestCursorUpdates on inactive InputConnection
+W/RemoteInputConnectionImpl( 4229): getSurroundingText on inactive InputConnection
+W/RemoteInputConnectionImpl( 4229): requestCursorUpdates on inactive InputConnection
+W/RemoteInputConnectionImpl( 4229): requestCursorUpdates on inactive InputConnection
+D/InsetsController( 4229): show(ime(), fromIme=true)
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:65d47bd3: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+D/EGL_emulation( 4229): app_time_stats: avg=209.07ms min=53.00ms max=369.85ms count=5
+D/InputConnectionAdaptor( 4229): The input method toggled cursor monitoring on
+D/InputConnectionAdaptor( 4229): The input method toggled cursor monitoring off
+D/InputConnectionAdaptor( 4229): The input method toggled cursor monitoring on
+D/InsetsController( 4229): show(ime(), fromIme=true)
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:8440537e: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+D/InsetsController( 4229): show(ime(), fromIme=true)
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:b0285caf: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+D/FlutterJNI( 4229): Sending viewport metrics to the engine.
+W/FrameTracker( 4229): Missed SF frame:UNKNOWN: 80, 26147, 0, CUJ=J<IME_INSETS_SHOW_ANIMATION::0@1@fr.tchoupi.streetlift_tracker>
+D/EGL_emulation( 4229): app_time_stats: avg=262.46ms min=146.99ms max=367.38ms count=4
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:81618ff2: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4229): showSoftInput() view=io.flutter.embedding.android.FlutterView{b1917e8 VFE...... .F...... 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:40197162: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4229): showSoftInput() view=io.flutter.embedding.android.FlutterView{b1917e8 VFE...... .F...... 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/AssistStructure( 4229): Flattened final assist data: 440 bytes, containing 1 windows, 3 views
+D/InputConnectionAdaptor( 4229): The input method toggled cursor monitoring on
+D/InputConnectionAdaptor( 4229): The input method toggled cursor monitoring off
+D/InputConnectionAdaptor( 4229): The input method toggled cursor monitoring on
+D/InsetsController( 4229): show(ime(), fromIme=true)
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:81618ff2: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+D/InsetsController( 4229): show(ime(), fromIme=true)
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:40197162: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+D/EGL_emulation( 4229): app_time_stats: avg=184.40ms min=12.15ms max=358.04ms count=6
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:cafa1535: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+D/InputConnectionAdaptor( 4229): The input method toggled cursor monitoring off
+D/InsetsController( 4229): hide(ime(), fromIme=true)
+D/FlutterJNI( 4229): Sending viewport metrics to the engine.
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:e95e302a: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT_ON_ANIMATION_STATE_CHANGED fromUser false
+I/ImeTracker( 4229): fr.tchoupi.streetlift_tracker:cafa1535: onHidden
+D/FlutterJNI( 4229): Sending viewport metrics to the engine.
+D/FlutterJNI( 4229): Sending viewport metrics to the engine.
+D/EGL_emulation( 4229): app_time_stats: avg=2834.22ms min=230.22ms max=5438.23ms count=2
+D/EGL_emulation( 4229): app_time_stats: avg=207.99ms min=133.36ms max=347.79ms count=5
+D/EGL_emulation( 4229): app_time_stats: avg=131.02ms min=96.33ms max=238.90ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=152.86ms min=130.45ms max=173.88ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=124.21ms min=12.93ms max=207.02ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=103.34ms min=12.14ms max=193.62ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=128.62ms min=96.48ms max=262.89ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=100.80ms min=15.02ms max=132.87ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=135.35ms min=100.75ms max=223.85ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=99.31ms min=3.66ms max=124.59ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=119.16ms min=19.53ms max=241.12ms count=9
+E/FrameTracker( 4229): force finish cuj, time out: J<IME_INSETS_HIDE_ANIMATION::1@1@fr.tchoupi.streetlift_tracker>
+D/EGL_emulation( 4229): app_time_stats: avg=98.21ms min=23.79ms max=135.33ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=117.41ms min=5.03ms max=205.20ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=138.26ms min=30.75ms max=243.16ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=100.71ms min=4.04ms max=153.48ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=89.91ms min=3.05ms max=227.81ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=138.15ms min=12.90ms max=257.60ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=104.85ms min=19.78ms max=198.98ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=156.64ms min=95.16ms max=316.16ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=128.11ms min=114.30ms max=160.14ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=122.41ms min=14.19ms max=228.57ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=95.34ms min=14.50ms max=154.29ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=139.29ms min=100.20ms max=225.54ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=151.50ms min=132.11ms max=191.78ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=112.02ms min=13.01ms max=143.89ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=125.46ms min=21.85ms max=215.26ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=126.05ms min=93.79ms max=190.92ms count=7
+I/eetlift_tracker( 4229): Background concurrent mark compact GC freed 1706KB AllocSpace bytes, 14(728KB) LOS objects, 49% free, 2676KB/5353KB, paused 63us,45.870ms total 385.918ms
+W/eetlift_tracker( 4229): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 4229): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+D/EGL_emulation( 4229): app_time_stats: avg=133.98ms min=121.46ms max=145.29ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=120.54ms min=106.30ms max=139.38ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=92.09ms min=3.22ms max=129.28ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=111.93ms min=4.38ms max=234.07ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=112.99ms min=21.07ms max=255.14ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=119.98ms min=13.48ms max=240.35ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=127.29ms min=24.14ms max=231.51ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=141.73ms min=28.31ms max=253.90ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=110.57ms min=44.76ms max=159.32ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=115.56ms min=25.33ms max=232.83ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=137.97ms min=119.92ms max=164.97ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=106.03ms min=25.75ms max=124.27ms count=10
+D/EGL_emulation( 4229): app_time_stats: avg=136.78ms min=119.60ms max=169.03ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=102.82ms min=3.31ms max=222.53ms count=10
+D/EGL_emulation( 4229): app_time_stats: avg=109.67ms min=103.62ms max=122.71ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=152.66ms min=123.23ms max=226.33ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=119.25ms min=28.18ms max=216.17ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=147.70ms min=19.70ms max=257.90ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=139.96ms min=110.17ms max=170.08ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=119.38ms min=25.15ms max=234.04ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=101.00ms min=28.32ms max=127.96ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=124.98ms min=22.84ms max=234.51ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=110.51ms min=19.03ms max=169.81ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=119.12ms min=10.25ms max=218.07ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=95.34ms min=12.99ms max=128.21ms count=10
+D/EGL_emulation( 4229): app_time_stats: avg=133.65ms min=102.90ms max=235.90ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=116.81ms min=4.67ms max=186.96ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=109.10ms min=12.00ms max=231.12ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=105.30ms min=13.21ms max=133.80ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=105.14ms min=86.96ms max=113.83ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=138.75ms min=118.74ms max=213.59ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=108.58ms min=11.11ms max=215.11ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=98.98ms min=22.59ms max=132.61ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=155.30ms min=132.22ms max=225.36ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=144.67ms min=137.39ms max=157.52ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=106.66ms min=5.39ms max=223.20ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=109.36ms min=19.68ms max=145.23ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=120.95ms min=18.71ms max=237.12ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=169.58ms min=106.34ms max=383.59ms count=6
+D/EGL_emulation( 4229): app_time_stats: avg=101.63ms min=9.33ms max=148.21ms count=10
+D/EGL_emulation( 4229): app_time_stats: avg=129.11ms min=102.66ms max=237.72ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=128.85ms min=12.95ms max=212.73ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=89.62ms min=12.81ms max=137.51ms count=10
+D/EGL_emulation( 4229): app_time_stats: avg=114.95ms min=17.39ms max=234.69ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=143.85ms min=17.12ms max=243.88ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=95.65ms min=16.07ms max=124.21ms count=10
+D/EGL_emulation( 4229): app_time_stats: avg=122.48ms min=91.52ms max=257.38ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=144.92ms min=129.71ms max=161.37ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=121.33ms min=12.37ms max=224.51ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=94.45ms min=9.70ms max=133.62ms count=10
+D/EGL_emulation( 4229): app_time_stats: avg=139.91ms min=16.60ms max=262.24ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=111.82ms min=90.06ms max=139.36ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=107.72ms min=12.58ms max=228.37ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=124.15ms min=28.19ms max=221.71ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=110.89ms min=14.55ms max=227.98ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=109.00ms min=16.52ms max=211.53ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=122.97ms min=24.30ms max=240.22ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=128.42ms min=114.38ms max=139.58ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=130.01ms min=15.93ms max=237.47ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=107.09ms min=10.25ms max=205.55ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=125.43ms min=90.09ms max=246.95ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=110.33ms min=22.72ms max=145.49ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=134.80ms min=26.72ms max=242.45ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=157.79ms min=120.70ms max=289.73ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=105.04ms min=26.52ms max=140.41ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=127.53ms min=90.56ms max=208.87ms count=7
+E/AccessibilityBridge( 4229): transform has not been initialized for id = 572
+I/AccessibilityBridge( 4229): Semantics tree:SemanticsNode id=0 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4229): Semantics tree:  +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:  +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4229): Semantics tree:  +-- rect.ltrb=(0.0, 0.0, 540.0, 960.0)
+I/AccessibilityBridge( 4229): Semantics tree:  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:  SemanticsNode id=45 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4229): Semantics tree:    +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:    +-- textDirection=LTR
+I/AccessibilityBridge( 4229): Semantics tree:    +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4229): Semantics tree:    +-- transform=[1.5, 0.0, 0.0, 0.0, 0.0, 1.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:    SemanticsNode id=556 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4229): Semantics tree:      +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:      +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4229): Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4229): Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:      SemanticsNode id=557 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4229): Semantics tree:        +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:        +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4229): Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4229): Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:        SemanticsNode id=558 identifier=null label=Boîte de dialogue actions=0 flags=6144
+I/AccessibilityBridge( 4229): Semantics tree:          +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:          +-- textDirection=LTR
+I/AccessibilityBridge( 4229): Semantics tree:          +-- rect.ltrb=(0.0, 0.0, 360.0, 604.0)
+I/AccessibilityBridge( 4229): Semantics tree:          +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 36.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:          SemanticsNode id=559 identifier=null label=Ignorer actions=1 flags=8
+I/AccessibilityBridge( 4229): Semantics tree:            +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:            +-- textDirection=LTR
+I/AccessibilityBridge( 4229): Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 48.0, 48.0)
+I/AccessibilityBridge( 4229): Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 156.0, 207.83067, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:          SemanticsNode id=560 identifier=null label=null actions=0 flags=262144
+I/AccessibilityBridge( 4229): Semantics tree:            +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:            +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4229): Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 360.0, 348.16934)
+I/AccessibilityBridge( 4229): Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 255.83067, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:            SemanticsNode id=561 identifier=null label=Genou actions=0 flags=0
+I/AccessibilityBridge( 4229): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4229): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 26.0)
+I/AccessibilityBridge( 4229): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:            SemanticsNode id=562 identifier=null label=Articulation suivie : genou actions=0 flags=0
+I/AccessibilityBridge( 4229): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4229): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 18.0)
+I/AccessibilityBridge( 4229): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 26.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:            SemanticsNode id=563 identifier=null label=Côté actions=0 flags=0
+I/AccessibilityBridge( 4229): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4229): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 24.0)
+I/AccessibilityBridge( 4229): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 56.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:            SemanticsNode id=564 identifier=null label=Gauche actions=4194305 flags=270532808
+I/AccessibilityBridge( 4229): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4229): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 76.06543, 48.0)
+I/AccessibilityBridge( 4229): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 86.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:            SemanticsNode id=565 identifier=null label=Droite actions=4194305 flags=270532808
+I/AccessibilityBridge( 4229): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4229): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 66.90019, 48.0)
+I/AccessibilityBridge( 4229): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 100.06543, 86.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:            SemanticsNode id=566 identifier=null label=Des deux côtés actions=4194305 flags=270532812
+I/AccessibilityBridge( 4229): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4229): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 140.93701, 48.0)
+I/AccessibilityBridge( 4229): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 174.96562, 86.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:            SemanticsNode id=567 identifier=null label=Gêne actuelle : 3/10 actions=0 flags=0
+I/AccessibilityBridge( 4229): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4229): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 20.0)
+I/AccessibilityBridge( 4229): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 146.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:            SemanticsNode id=568 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4229): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:              +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4229): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 48.0)
+I/AccessibilityBridge( 4229): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 166.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:              SemanticsNode id=569 identifier=null label=3/10 actions=4194496 flags=10485952
+I/AccessibilityBridge( 4229): Semantics tree:                +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:                +-- textDirection=LTR
+I/AccessibilityBridge( 4229): Semantics tree:                +-- rect.ltrb=(84.8, 0.0, 132.8, 48.0)
+I/AccessibilityBridge( 4229): Semantics tree:                +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:              SemanticsNode id=572 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4229): Semantics tree:                +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:                +-- textDirection=null
+I/AccessibilityBridge( 4229): Semantics tree:                +-- rect.ltrb=(0.0, 0.0, 0.0, 0.0)
+I/AccessibilityBridge( 4229): Semantics tree:                +-- transform=null
+I/AccessibilityBridge( 4229): Semantics tree:            SemanticsNode id=570 identifier=null label=0 : aucune gêne aujourd’hui · 10 : la pire imaginable. Une douleur forte ou qui dure mérite l’avis d’un professionnel de santé. actions=0 flags=0
+I/AccessibilityBridge( 4229): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4229): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 54.0)
+I/AccessibilityBridge( 4229): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 214.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:            SemanticsNode id=571 identifier=null label=Enregistrer actions=4194305 flags=2097352
+I/AccessibilityBridge( 4229): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4229): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 48.0)
+I/AccessibilityBridge( 4229): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 280.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:    SemanticsNode id=554 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4229): Semantics tree:      +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:      +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4229): Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4229): Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:      SemanticsNode id=555 identifier=null label=Fond actions=262145 flags=0
+I/AccessibilityBridge( 4229): Semantics tree:        +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:        +-- textDirection=LTR
+I/AccessibilityBridge( 4229): Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 360.0, 240.0)
+I/AccessibilityBridge( 4229): Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4229): Semantics tree:  SemanticsNode id=43 identifier=null label=Session de test active actions=2 flags=8
+I/AccessibilityBridge( 4229): Semantics tree:    +-- headingLevel=0
+I/AccessibilityBridge( 4229): Semantics tree:    +-- textDirection=LTR
+I/AccessibilityBridge( 4229): Semantics tree:    +-- rect.ltrb=(0.0, 0.0, 24.0, 56.0)
+I/AccessibilityBridge( 4229): Semantics tree:    +-- transform=[1.5, 0.0, 0.0, 0.0, 0.0, 1.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 504.0, 569.4, 0.0, 1.0]
+D/EGL_emulation( 4229): app_time_stats: avg=118.31ms min=26.70ms max=221.78ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=149.90ms min=133.33ms max=174.52ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=138.78ms min=126.90ms max=146.74ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=109.17ms min=34.25ms max=154.05ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=135.30ms min=59.13ms max=247.07ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=95.62ms min=20.59ms max=119.33ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=119.70ms min=20.08ms max=220.98ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=104.12ms min=23.95ms max=133.41ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=158.41ms min=24.79ms max=381.45ms count=6
+D/EGL_emulation( 4229): app_time_stats: avg=104.38ms min=14.54ms max=214.36ms count=10
+W/eetlift_tracker( 4229): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 4229): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+D/EGL_emulation( 4229): app_time_stats: avg=112.20ms min=101.42ms max=124.07ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=111.77ms min=99.33ms max=119.91ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=104.43ms min=96.85ms max=116.32ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=112.23ms min=17.90ms max=242.99ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=110.80ms min=17.96ms max=148.79ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=108.81ms min=81.66ms max=121.83ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=106.19ms min=14.68ms max=245.98ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=120.42ms min=96.85ms max=210.58ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=101.26ms min=9.50ms max=218.26ms count=10
+D/EGL_emulation( 4229): app_time_stats: avg=122.83ms min=93.34ms max=208.57ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=116.75ms min=12.28ms max=247.60ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=109.98ms min=11.57ms max=270.66ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=123.25ms min=14.40ms max=199.54ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=117.59ms min=17.25ms max=242.01ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=148.16ms min=130.55ms max=184.35ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=120.40ms min=13.73ms max=203.63ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=124.37ms min=16.77ms max=227.36ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=101.24ms min=11.50ms max=136.12ms count=10
+D/EGL_emulation( 4229): app_time_stats: avg=120.63ms min=18.76ms max=216.10ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=117.57ms min=13.06ms max=238.46ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=100.79ms min=11.09ms max=126.96ms count=10
+D/EGL_emulation( 4229): app_time_stats: avg=126.61ms min=96.00ms max=207.39ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=106.26ms min=27.35ms max=138.12ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=119.16ms min=17.33ms max=246.05ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=103.11ms min=13.99ms max=203.15ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=92.83ms min=13.11ms max=237.11ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=145.63ms min=105.14ms max=245.80ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=104.56ms min=12.49ms max=214.88ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=118.62ms min=14.77ms max=221.11ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=109.02ms min=16.98ms max=228.43ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=127.99ms min=91.86ms max=240.62ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=100.95ms min=14.46ms max=235.78ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=109.63ms min=99.86ms max=122.09ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=121.88ms min=102.07ms max=207.01ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=105.82ms min=16.30ms max=153.82ms count=10
+D/EGL_emulation( 4229): app_time_stats: avg=106.32ms min=93.11ms max=126.02ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=131.67ms min=52.43ms max=236.50ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=117.09ms min=93.89ms max=219.54ms count=7
+W/WindowOnBackDispatcher( 4229): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4229): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4229): app_time_stats: avg=117.23ms min=89.79ms max=229.77ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=107.39ms min=99.04ms max=115.52ms count=9
+D/EGL_emulation( 4229): app_time_stats: avg=112.16ms min=97.27ms max=129.06ms count=8
+D/EGL_emulation( 4229): app_time_stats: avg=135.10ms min=89.68ms max=263.56ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=154.13ms min=71.30ms max=242.17ms count=6
+D/EGL_emulation( 4229): app_time_stats: avg=110.91ms min=94.58ms max=158.66ms count=7
+W/WindowOnBackDispatcher( 4229): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4229): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4229): app_time_stats: avg=101.09ms min=81.77ms max=123.82ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=115.63ms min=91.47ms max=202.44ms count=6
+D/EGL_emulation( 4229): app_time_stats: avg=173.24ms min=94.22ms max=215.11ms count=6
+D/EGL_emulation( 4229): app_time_stats: avg=232.59ms min=178.67ms max=288.26ms count=5
+D/EGL_emulation( 4229): app_time_stats: avg=219.65ms min=197.27ms max=242.20ms count=5
+D/EGL_emulation( 4229): app_time_stats: avg=215.28ms min=6.73ms max=355.71ms count=5
+D/EGL_emulation( 4229): app_time_stats: avg=172.25ms min=101.37ms max=197.19ms count=6
+D/EGL_emulation( 4229): app_time_stats: avg=167.59ms min=108.51ms max=188.75ms count=5
+D/EGL_emulation( 4229): app_time_stats: avg=178.76ms min=149.51ms max=198.35ms count=6
+D/EGL_emulation( 4229): app_time_stats: avg=144.95ms min=57.00ms max=214.18ms count=7
+D/EGL_emulation( 4229): app_time_stats: avg=168.90ms min=53.26ms max=223.77ms count=6
+D/EGL_emulation( 4229): app_time_stats: avg=182.80ms min=162.57ms max=210.05ms count=6
+I/flutter ( 4229): 03:53 +1: (tearDownAll)
+I/flutter ( 4229): 03:53 +2: All tests passed!
+All tests passed.
