@@ -1,0 +1,5 @@
+Analyzing streetlift-apk...                                     
+
+   info • Statements in an if should be enclosed in a block. Try wrapping the statement in a block • lib/plan_store.dart:444:7 • curly_braces_in_flow_control_structures
+
+1 issue found. (ran in 17.1s)
