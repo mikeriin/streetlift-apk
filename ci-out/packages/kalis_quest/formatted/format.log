@@ -1,0 +1,23 @@
+Formatted bin/kalis_quest_cli.dart
+Formatted lib/kalis_quest.dart
+Formatted lib/report.dart
+Formatted lib/src/engine.dart
+Formatted lib/src/extras.dart
+Formatted lib/src/goals.dart
+Formatted lib/src/ledger.dart
+Formatted lib/src/numeric.dart
+Formatted lib/src/params.dart
+Formatted lib/src/progress.dart
+Formatted lib/src/quests.dart
+Formatted lib/src/sim/generator.dart
+Formatted lib/src/sim/runner.dart
+Formatted lib/src/standards.dart
+Formatted test/docs_test.dart
+Formatted test/engine_test.dart
+Formatted test/goals_test.dart
+Formatted test/properties.dart
+Formatted test/purity_test.dart
+Formatted test/units_test.dart
+Formatted test/zz_dev_test.dart
+Formatted 39 files (21 changed) in 0.19 seconds.
+
