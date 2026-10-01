@@ -367,17 +367,15 @@ class ContentIndex {
   static const catalogAsset = 'assets/catalog/catalog_v1.json.gz';
   static const correspondenceAsset = 'assets/catalog/correspondance.json';
 
-  static Future<ContentIndex>? _shared;
+  static ContentIndex? _shared;
 
   /// Base chargée une fois par processus (assets embarqués, instance non
   /// modifiable) : un nouveau magasin (session de test, tests) la reprend
-  /// sans relire 2 Mo de JSON. Un autre [bundle] est toujours relu.
-  static Future<ContentIndex> load([AssetBundle? bundle]) {
+  /// sans relire 2 Mo de JSON. Seul un chargement terminé est gardé. Un
+  /// autre [bundle] est toujours relu.
+  static Future<ContentIndex> load([AssetBundle? bundle]) async {
     if (bundle != null && !identical(bundle, rootBundle)) return _load(bundle);
-    return _shared ??= _load(rootBundle).catchError((Object e) {
-      _shared = null;
-      throw e;
-    });
+    return _shared ??= await _load(rootBundle);
   }
 
   static Future<ContentIndex> _load(AssetBundle b) async {

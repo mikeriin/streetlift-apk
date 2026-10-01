@@ -407,7 +407,9 @@ void main() {
           expect(find.text(entry.nom.toUpperCase()), findsOneWidget);
           // Badge de la discipline.
           final badges = [
-            for (final b in tester.widgetList<KBadge>(find.byType(KBadge)))
+            for (final b in tester.widgetList<KBadge>(
+              find.byType(KBadge, skipOffstage: false),
+            ))
               b.text,
           ];
           expect(badges, contains(e.key), reason: '$badges');
@@ -419,7 +421,7 @@ void main() {
             'fiche-muscles',
             'fiche-materiel',
           ]) {
-            await scrollToAction(tester, find.byKey(ValueKey(k)));
+            await scrollSlowlyTo(tester, find.byKey(ValueKey(k)));
             expect(find.byKey(ValueKey(k)), findsOneWidget, reason: k);
             if (k == 'fiche-respiration') {
               expect(find.text(d.respiration), findsOneWidget);

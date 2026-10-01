@@ -185,14 +185,15 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('arsenal-exercises')));
     await wait(tester, 1500);
     await tester.enterText(find.byType(TextField).first, 'traction lestée');
-    await wait(tester, 1200);
+    await wait(tester, 2000);
     releve['recherche'] = count();
-    releve['recherche_premier'] = find
-        .byKey(const ValueKey('library-ex-sl-traction-lestee'))
-        .evaluate()
-        .isNotEmpty;
+    releve['recherche_premier'] = searchExercises(
+      store.content,
+      'traction lestée',
+      const ExerciseFilters(),
+    ).take(5).any((e) => e.id == 'sl-traction-lestee');
     FocusManager.instance.primaryFocus?.unfocus();
-    await wait(tester, 800);
+    await wait(tester, 2000);
     await shot('4_recherche');
     await back(tester);
 

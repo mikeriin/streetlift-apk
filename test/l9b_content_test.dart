@@ -461,16 +461,12 @@ void main() {
               expect(find.byType(ExerciseMannequin), findsNothing);
               expect(find.text('MUSCLE-UP BARRE STRICT'), findsOneWidget);
               // Défilement réel : liste des muscles, puis variantes en bas
-              // (G3 : par la respiration, juste au-dessus, pour ne pas
-              // dépasser l'en-tête d'un geste lancé sur une fiche longue).
-              await scrollToAction(
-                tester,
-                find.byKey(const ValueKey('fiche-respiration')),
-              );
-              await scrollToAction(tester, find.text('MUSCLES'));
-              await scrollToAction(tester, find.byType(MuscleMap2D));
+              // (G3 : gestes lents, pour ne pas dépasser l'en-tête d'un
+              // geste lancé sur une fiche longue).
+              await scrollSlowlyTo(tester, find.text('MUSCLES'));
+              await scrollSlowlyTo(tester, find.byType(MuscleMap2D));
               expect(tester.takeException(), null);
-              await scrollToAction(tester, find.text('VARIANTES'));
+              await scrollSlowlyTo(tester, find.text('VARIANTES'));
               expect(tester.takeException(), null);
             },
           );
@@ -495,11 +491,7 @@ void main() {
       // tête sans animation.
       expect(find.textContaining('Démonstration indisponible'), findsNothing);
       expect(find.byType(ExerciseMannequin), findsNothing);
-      await scrollToAction(
-        tester,
-        find.byKey(const ValueKey('fiche-respiration')),
-      );
-      await scrollToAction(tester, find.text('MUSCLES'));
+      await scrollSlowlyTo(tester, find.text('MUSCLES'));
       expect(tester.takeException(), null);
     });
 
