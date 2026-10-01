@@ -68,6 +68,7 @@ void main() {
           'violations ${inspector.hardViolations(request, p1)}',
         );
         log.writeln(profileCaseLines(catalog, c, 0).join('\n'));
+        times.writeln(inspector.whatIfAdd(request, p1).join('\n'));
       } on Object catch (e, s) {
         final trace = s.toString().split('\n').take(8).join('\n');
         times.writeln('${fixture.key} : ERREUR $e\n$trace');

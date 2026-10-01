@@ -182,7 +182,7 @@ final class PlanParams {
     this.maxSlotsPerDay = 12,
     this.minutesPerWorkSlot = 8,
     this.maxWorkSlotsPerDay = 8,
-    this.timeUseTarget = 0.75,
+    this.timeUseTarget = 0.9,
     this.secondsPerRep = 3,
     this.transitionSeconds = 45,
     this.recoveryHours = 48,

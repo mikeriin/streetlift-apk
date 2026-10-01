@@ -1116,8 +1116,7 @@ PlanContext _build(ContextInputs inputs) {
       if (t.kind == SlotKind.accessory) {
         affinity = 20;
       } else if (e.discipline == CatalogDiscipline.musculation &&
-          (t.kind == SlotKind.power ||
-              (t.kind == SlotKind.compound && free))) {
+          (t.kind == SlotKind.power || (t.kind == SlotKind.compound && free))) {
         affinity = 90;
       } else if (e.discipline == CatalogDiscipline.streetWorkout ||
           e.discipline == CatalogDiscipline.calisthenicsDynamic) {
@@ -1154,8 +1153,7 @@ PlanContext _build(ContextInputs inputs) {
       } else if (target.pattern == e.pattern) {
         final cosine = target.muscleCosine(e);
         s = cosine >= 0.7 ? 50 : (cosine >= 0.4 ? 30 : 0);
-        if (isLoadAdjustable(target.loadType) !=
-            isLoadAdjustable(e.loadType)) {
+        if (isLoadAdjustable(target.loadType) != isLoadAdjustable(e.loadType)) {
           // Un exercice sans charge réglable sert peu un objectif de
           // charge, et inversement.
           s ~/= 2;
@@ -1384,7 +1382,11 @@ PlanContext _build(ContextInputs inputs) {
 
     // Adéquation : mouvement de base de sa famille, ni trop facile ni
     // assisté sans besoin.
-    final canonical = e.depth == 0 ? 1.0 : (e.depth == 1 ? 0.7 : 0.5);
+    // Mouvement de base : racine de sa chaîne (ou proche), et chaîne
+    // fournie — neuf variantes et plus valent 1, un exercice seul 0,5.
+    final depthFactor = e.depth == 0 ? 1.0 : (e.depth == 1 ? 0.7 : 0.5);
+    final size = t.familySize > 8 ? 8 : t.familySize;
+    final canonical = depthFactor * (0.5 + 0.5 * (size - 1) / 7);
     var challenge = 1.0;
     if (t.kind.isResistance && !scheme.loaded) {
       challenge = margin <= 2

@@ -10,6 +10,7 @@ import 'context.dart';
 import 'params.dart';
 import 'pass2.dart';
 import 'score.dart';
+import 'sets.dart';
 import 'state.dart';
 import 'traits.dart';
 
@@ -439,6 +440,76 @@ final class PlanInspector {
           }
         case LockKind.keepDay:
           break;
+      }
+    }
+    return out;
+  }
+
+  /// Pour chaque jour de [plan], les [top] ajouts qui changeraient le plus
+  /// la note (en mieux d'abord), avec les composantes qui bougent : répond
+  /// à « pourquoi pas un exercice de plus ? » (inspecteur du mode dev).
+  List<String> whatIfAdd(PlanRequest request, Pass1Plan plan, {int top = 3}) {
+    final ctx = PlanContext.build(
+      ContextInputs(
+        catalog: catalog,
+        profile: request.profile,
+        startDate: plan.startDate,
+        seed: 0,
+        locks: request.locks,
+        adaptation: request.adaptation,
+        volumeScale: adaptationVolumeScale(request.adaptation),
+        params: params,
+      ),
+    );
+    final scorer = Scorer(ctx);
+    final state = stateFromPlan(ctx, plan);
+    final base = scorer.evaluate(state);
+    final before = List<double>.of(scorer.components);
+    final out = <String>[];
+    for (var d = 0; d < ctx.dayCount; d++) {
+      final found = <(double, String)>[];
+      var blockedByTime = 0;
+      for (final e in ctx.pool) {
+        if (!e.selectable ||
+            !e.feasibleOn(d) ||
+            state.dayHas(d, e.index) ||
+            state.count[d] >= state.capacity) {
+          continue;
+        }
+        final at = state.add(d, e.index, ctx.defaultSets(e, d), -1);
+        if (normalizeDay(ctx, state, d)) {
+          final value = scorer.evaluate(state);
+          final moved = <String>[];
+          for (var k = 0; k < before.length; k++) {
+            final delta = scorer.components[k] - before[k];
+            if (delta.abs() >= 0.002) {
+              moved.add(
+                '${ScoreWeights.codes[k]} '
+                '${delta >= 0 ? '+' : ''}${delta.toStringAsFixed(3)}',
+              );
+            }
+          }
+          found.add((
+            value - base,
+            '${e.id} (${e.kind.name}) '
+                '${(value - base).toStringAsFixed(4)} : ${moved.join(', ')}',
+          ));
+        } else {
+          blockedByTime++;
+        }
+        state.removeAt(d, at);
+        normalizeDay(ctx, state, d);
+      }
+      found.sort((a, b) {
+        final by = b.$1.compareTo(a.$1);
+        return by != 0 ? by : a.$2.compareTo(b.$2);
+      });
+      out.add(
+        'jour $d : ${found.length} ajouts possibles, '
+        '$blockedByTime hors temps',
+      );
+      for (final (_, line) in found.take(top)) {
+        out.add('  $line');
       }
     }
     return out;

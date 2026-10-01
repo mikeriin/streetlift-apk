@@ -322,6 +322,7 @@ final class ExerciseTraits {
     required this.technical,
     required this.mainEquipment,
     required this.intervalMeters,
+    required this.familySize,
   });
 
   /// Rang dans `Catalog.exercises`.
@@ -363,6 +364,11 @@ final class ExerciseTraits {
   /// Distance d'une répétition lue dans l'identifiant (`…-400m`), ou 0.
   final int intervalMeters;
 
+  /// Taille de la chaîne de variantes de l'exercice (racine comprise) :
+  /// un mouvement de base a beaucoup de variantes, un exercice d'appoint
+  /// est seul dans sa chaîne.
+  final int familySize;
+
   /// Crédit du groupe [group], en demi-séries.
   int creditOf(MuscleGroup group) => groupCredits[group.index];
 }
@@ -380,10 +386,15 @@ final class CatalogTraits {
     final groupOfIndex = <MuscleGroup?>[
       for (final name in catalog.muscles) muscleGroupOf[name],
     ];
+    final sizes = <String, int>{};
+    for (final e in catalog.exercises) {
+      sizes.update(e.rootId, (n) => n + 1, ifAbsent: () => 1);
+    }
     final all = <ExerciseTraits>[];
     final byId = <String, ExerciseTraits>{};
     for (var i = 0; i < catalog.exercises.length; i++) {
-      final t = _traitsOf(i, catalog.exercises[i], groupOfIndex);
+      final e = catalog.exercises[i];
+      final t = _traitsOf(i, e, groupOfIndex, sizes[e.rootId]!);
       all.add(t);
       byId[t.exercise.id] = t;
     }
@@ -425,6 +436,7 @@ ExerciseTraits _traitsOf(
   int index,
   CatalogExercise e,
   List<MuscleGroup?> groupOfIndex,
+  int familySize,
 ) {
   final credits = List<int>.filled(MuscleGroup.values.length, 0);
   for (var i = 0; i < e.muscleIndices.length; i++) {
@@ -497,6 +509,7 @@ ExerciseTraits _traitsOf(
         p == MovementPattern.gymnastiqueCrossfit,
     mainEquipment: mainEquipment,
     intervalMeters: meters == null ? 0 : int.parse(meters.group(1)!),
+    familySize: familySize,
   );
 }
 
@@ -574,7 +587,15 @@ SlotKind slotKindOf(CatalogExercise e) {
   if (_corePatterns.contains(p)) {
     return SlotKind.core;
   }
-  return e.articularity == Articularity.multiJoint
+  // Un polyarticulaire des familles d'isolation, du cou ou des portés
+  // (rotation d'épaule, rowing menton, porté) reste un exercice d'appoint.
+  final f = e.family;
+  final base =
+      f == MovementFamily.poussee ||
+      f == MovementFamily.tirage ||
+      f == MovementFamily.jambesGenou ||
+      f == MovementFamily.jambesHanche;
+  return base && e.articularity == Articularity.multiJoint
       ? SlotKind.compound
       : SlotKind.accessory;
 }
