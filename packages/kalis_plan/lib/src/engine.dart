@@ -1197,9 +1197,7 @@ final class KalisPlan implements PlanEngine {
       throw ArgumentError.value(day, 'dayIndex', 'jour inconnu');
     }
 
-    final ctx = PlanContext.build(
-      restructureInputs(catalog, request, params),
-    );
+    final ctx = PlanContext.build(restructureInputs(catalog, request, params));
     final lockedSlots = <String>{};
     final frozen = <int>{};
     for (final l in request.locks) {

@@ -314,7 +314,7 @@ final class PlanInspector {
       _violations(
         contextFor(request, plan),
         request.profile,
-        locks,
+        request.locks,
         plan,
         null,
       );
@@ -343,7 +343,7 @@ final class PlanInspector {
       ),
     );
     final frozen = <int>{
-      for (final l in locks)
+      for (final l in request.locks)
         if (l.kind == LockKind.keepDay && l.dayIndex != null) l.dayIndex!,
     };
     final days = <int>{
@@ -353,7 +353,7 @@ final class PlanInspector {
                 d == request.dayIndex))
           d,
     };
-    return _violations(ctx, request.profile, locks, plan, days);
+    return _violations(ctx, request.profile, request.locks, plan, days);
   }
 
   List<String> _violations(
