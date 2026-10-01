@@ -55,16 +55,18 @@ void main() {
       }
     });
 
-    test('une variante directe est plus proche qu\'un exercice sans rapport',
-        () {
-      final pushUp = catalog.exercise('sw-pompe');
-      final knee = catalog.exercise('sw-pompe-genoux');
-      final squat = catalog.exercise('mu-air-squat');
-      expect(
-        planSimilarity(pushUp, knee),
-        greaterThan(planSimilarity(pushUp, squat)),
-      );
-    });
+    test(
+      'une variante directe est plus proche qu\'un exercice sans rapport',
+      () {
+        final pushUp = catalog.exercise('sw-pompe');
+        final knee = catalog.exercise('sw-pompe-genoux');
+        final squat = catalog.exercise('mu-air-squat');
+        expect(
+          planSimilarity(pushUp, knee),
+          greaterThan(planSimilarity(pushUp, squat)),
+        );
+      },
+    );
   });
 
   group('identifiants d\'emplacement', () {

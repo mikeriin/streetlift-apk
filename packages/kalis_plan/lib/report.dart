@@ -9,6 +9,7 @@ library;
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_core/testing.dart';
 
+import 'src/context.dart';
 import 'src/engine.dart';
 import 'src/hash.dart';
 import 'src/inspect.dart';
@@ -481,4 +482,292 @@ Map<String, double> defaultWeights() {
     for (var i = 0; i < ScoreWeights.codes.length; i++)
       ScoreWeights.codes[i]: values[i],
   };
+}
+
+// ------------------------------------------------------- non-ressemblance
+
+/// Indice de Jaccard de deux ensembles (0 si les deux sont vides).
+double jaccard(Set<String> a, Set<String> b) {
+  if (a.isEmpty && b.isEmpty) {
+    return 0;
+  }
+  var common = 0;
+  for (final x in a) {
+    if (b.contains(x)) {
+      common++;
+    }
+  }
+  return common / (a.length + b.length - common);
+}
+
+/// Exercices d'un programme de passe 1.
+Set<String> planExerciseIds(Pass1Plan plan) => <String>{
+  for (final d in plan.days)
+    for (final s in d.slots) s.exerciseId,
+};
+
+/// Ressemblance maximale tolérée entre la semaine type d'un programme
+/// généré et une semaine du programme du propriétaire (indice de Jaccard
+/// des exercices). C'est le premier décile de la ressemblance du programme
+/// du propriétaire avec lui-même, d'un bloc à l'autre : un programme
+/// généré doit lui ressembler moins que neuf fois sur dix ses propres blocs
+/// ne se ressemblent (`docs/NON_RESSEMBLANCE.md`).
+const double ownerWeekResemblanceLimit = 0.30;
+
+/// Programme personnel du propriétaire (`owner_program_v33.json.gz` de
+/// kalis_core), lu pour le seul test de non-ressemblance : aucun moteur ne
+/// s'en sert (D4.1).
+final class OwnerProgram {
+  OwnerProgram._(
+    this.weeks,
+    this.weekBlocks,
+    this.sessions,
+    this.mains,
+    this.accessories,
+  );
+
+  /// Lit le fichier normalisé de kalis_core.
+  factory OwnerProgram.fromJson(Map<String, Object?> json) {
+    final weeks = <Set<String>>[];
+    final blocks = <String>[];
+    final sessions = <Set<String>>[];
+    final mains = <String>{};
+    final others = <String>{};
+    for (final w in json['weeks']! as List<Object?>) {
+      final week = w! as Map<String, Object?>;
+      final ids = <String>{};
+      for (final d in week['days']! as List<Object?>) {
+        final day = d! as Map<String, Object?>;
+        final session = <String>{};
+        for (final x in (day['exercises'] as List<Object?>?) ?? const []) {
+          final exercise = x! as Map<String, Object?>;
+          final id = exercise['catalogId'];
+          if (id is! String) {
+            continue;
+          }
+          session.add(id);
+          if (exercise['main'] == true) {
+            mains.add(id);
+          } else {
+            others.add(id);
+          }
+        }
+        if (session.isNotEmpty) {
+          sessions.add(session);
+          ids.addAll(session);
+        }
+      }
+      if (ids.isNotEmpty) {
+        weeks.add(ids);
+        blocks.add('${week['blockKey']}');
+      }
+    }
+    return OwnerProgram._(
+      weeks,
+      blocks,
+      sessions,
+      mains,
+      others.difference(mains),
+    );
+  }
+
+  /// Exercices de chaque semaine (semaines sans correspondance omises).
+  final List<Set<String>> weeks;
+
+  /// Bloc de chaque semaine de [weeks].
+  final List<String> weekBlocks;
+
+  /// Exercices de chaque séance.
+  final List<Set<String>> sessions;
+
+  /// Mouvements principaux.
+  final Set<String> mains;
+
+  /// Accessoires : exercices jamais marqués « principal ».
+  final Set<String> accessories;
+
+  /// Tous les exercices.
+  Set<String> get exerciseIds => <String>{...mains, ...accessories};
+
+  /// Plus forte ressemblance de [ids] avec une semaine du programme.
+  double weekResemblance(Set<String> ids) {
+    var best = 0.0;
+    for (final w in weeks) {
+      final j = jaccard(ids, w);
+      if (j > best) {
+        best = j;
+      }
+    }
+    return best;
+  }
+
+  /// Plus forte ressemblance de [ids] avec une séance du programme.
+  double sessionResemblance(Set<String> ids) {
+    var best = 0.0;
+    for (final s in sessions) {
+      final j = jaccard(ids, s);
+      if (j > best) {
+        best = j;
+      }
+    }
+    return best;
+  }
+
+  /// Ressemblances entre deux semaines de blocs différents, triées.
+  List<double> crossBlockResemblances() {
+    final out = <double>[];
+    for (var i = 0; i < weeks.length; i++) {
+      for (var j = i + 1; j < weeks.length; j++) {
+        if (weekBlocks[i] != weekBlocks[j]) {
+          out.add(jaccard(weeks[i], weeks[j]));
+        }
+      }
+    }
+    out.sort();
+    return out;
+  }
+}
+
+/// Vrai si le profil ne pratique aucune discipline « street »
+/// (streetlifting, street workout, calisthénie).
+bool isStreetFree(AthleteProfile profile) {
+  bool street(TrainingDiscipline d) =>
+      d == TrainingDiscipline.streetlifting ||
+      d == TrainingDiscipline.streetWorkout ||
+      d == TrainingDiscipline.calisthenics;
+  if (street(profile.disciplines.primary)) {
+    return false;
+  }
+  for (final s in profile.disciplines.secondaries) {
+    if (s.pct > 0 && street(s.discipline)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+/// Accessoire du propriétaire comparé à ses pairs de la même catégorie.
+final class AccessoryFinding {
+  /// Constat.
+  const AccessoryFinding({
+    required this.exerciseId,
+    required this.category,
+    required this.admissible,
+    required this.rate,
+    required this.bestPeerId,
+    required this.bestPeerRate,
+    required this.overRepresented,
+  });
+
+  /// Accessoire du propriétaire.
+  final String exerciseId;
+
+  /// Catégorie de la base.
+  final String category;
+
+  /// Nombre de profils pour lesquels il était admissible.
+  final int admissible;
+
+  /// Part de ces profils dont le programme le contient.
+  final double rate;
+
+  /// Exercice hors programme du propriétaire le plus souvent choisi de la
+  /// même catégorie, ou `null`.
+  final String? bestPeerId;
+
+  /// Sa part.
+  final double bestPeerRate;
+
+  /// Sur-représenté (voir [InclusionStudy.findings]).
+  final bool overRepresented;
+
+  /// Objet JSON (rapports).
+  Map<String, Object?> toJson() => <String, Object?>{
+    'exerciseId': exerciseId,
+    'category': category,
+    'admissible': admissible,
+    'rate': (rate * 10000).round() / 10000,
+    'bestPeerId': bestPeerId,
+    'bestPeerRate': (bestPeerRate * 10000).round() / 10000,
+    'overRepresented': overRepresented,
+  };
+}
+
+/// Fréquence de chaque exercice dans les programmes d'une population, par
+/// rapport au nombre de profils pour lesquels il était admissible.
+final class InclusionStudy {
+  /// Profils pour lesquels l'exercice était choisissable.
+  final Map<String, int> admissible = <String, int>{};
+
+  /// Programmes qui contiennent l'exercice.
+  final Map<String, int> included = <String, int>{};
+
+  /// Nombre de programmes comptés.
+  int plans = 0;
+
+  /// Compte le programme [plan] du profil de [request].
+  void add(PlanInspector inspector, PlanRequest request, Pass1Plan plan) {
+    final PlanContext ctx = inspector.contextFor(request, plan);
+    plans++;
+    for (final e in ctx.pool) {
+      if (e.selectable && !e.fallback) {
+        admissible.update(e.id, (n) => n + 1, ifAbsent: () => 1);
+      }
+    }
+    for (final id in planExerciseIds(plan)) {
+      included.update(id, (n) => n + 1, ifAbsent: () => 1);
+    }
+  }
+
+  /// Part des profils (pour lesquels [id] était admissible) dont le
+  /// programme contient [id], ou `null` sous [minAdmissible] profils.
+  double? rate(String id, {int minAdmissible = 30}) {
+    final n = admissible[id] ?? 0;
+    return n < minAdmissible ? null : (included[id] ?? 0) / n;
+  }
+
+  /// Chaque accessoire du propriétaire face au pair le plus choisi de sa
+  /// catégorie. Sur-représenté : choisi pour plus de 5 % des profils où il
+  /// est admissible ET plus de deux fois plus souvent que ce meilleur pair.
+  List<AccessoryFinding> findings(
+    Catalog catalog,
+    OwnerProgram owner, {
+    int minAdmissible = 30,
+  }) {
+    final ownerIds = owner.exerciseIds;
+    final out = <AccessoryFinding>[];
+    final accessories = owner.accessories.toList()..sort();
+    for (final id in accessories) {
+      final e = catalog.find(id);
+      final r = rate(id, minAdmissible: minAdmissible);
+      if (e == null || r == null) {
+        continue;
+      }
+      String? bestPeer;
+      var bestRate = 0.0;
+      for (final peer in catalog.byCategory(e.category)) {
+        if (ownerIds.contains(peer.id)) {
+          continue;
+        }
+        final pr = rate(peer.id, minAdmissible: minAdmissible);
+        if (pr != null &&
+            (pr > bestRate || (pr == bestRate && bestPeer == null))) {
+          bestRate = pr;
+          bestPeer = peer.id;
+        }
+      }
+      out.add(
+        AccessoryFinding(
+          exerciseId: id,
+          category: e.category,
+          admissible: admissible[id] ?? 0,
+          rate: r,
+          bestPeerId: bestPeer,
+          bestPeerRate: bestRate,
+          overRepresented: r > 0.05 && r > 2 * bestRate,
+        ),
+      );
+    }
+    return out;
+  }
 }

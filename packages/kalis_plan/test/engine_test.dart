@@ -93,8 +93,11 @@ void main() {
           final request = requestFor(fixture.profile, seed: seed);
           final other = engine.createPass1(catalog, request);
           final label = '${fixture.key}, graine $seed';
-          expect(inspector.hardViolations(request, other), isEmpty,
-              reason: label);
+          expect(
+            inspector.hardViolations(request, other),
+            isEmpty,
+            reason: label,
+          );
           expect(other.validate(), isEmpty, reason: label);
           expect(
             other.score.total,

@@ -1161,423 +1161,438 @@ PlanContext _build(ContextInputs inputs) {
   // séance de repli — mobilité et marche d'abord, puis tout exercice
   // admissible — plutôt qu'une séance vide.
   var fallbackDays = 0;
-  for (var round = 0; round < 3; round++) {
-  if (round > 0) {
-    var covered = 0;
-    for (final entry in pool) {
-      if (entry.selectable) {
-        covered |= entry.dayMask;
+  // Manche 3 : les exercices imposés (déjà au programme, verrouillés)
+  // restés hors du vivier, gardés comme non choisissables.
+  for (var round = 0; round < 4; round++) {
+    final repli = round == 1 || round == 2;
+    if (repli) {
+      var covered = 0;
+      for (final entry in pool) {
+        if (entry.selectable) {
+          covered |= entry.dayMask;
+        }
       }
-    }
-    fallbackDays = ((1 << days.length) - 1) & ~covered;
-    if (fallbackDays == 0) {
-      break;
-    }
-  }
-  for (final t in traits.all) {
-    final e = t.exercise;
-    final isForced = forced.contains(e.id);
-    String? rejection;
-    if (round > 0 &&
-        (indexById.containsKey(e.id) ||
-            rejections[e.id] != Rejections.discipline ||
-            (round == 1 &&
-                t.kind != SlotKind.mobility &&
-                e.pattern != MovementPattern.marche))) {
-      continue;
-    }
-
-    // Classe de discipline.
-    DisciplineClass? cls;
-    var affinity = 0;
-    for (final c in DisciplineClass.values) {
-      final target = targets[c.index];
-      if (target <= 0) {
+      fallbackDays = ((1 << days.length) - 1) & ~covered;
+      if (fallbackDays == 0) {
         continue;
       }
-      final a = disciplineAffinity[c.index][e.discipline.index];
-      if (a > affinity ||
-          (a == affinity && a > 0 && target > targets[cls!.index])) {
-        affinity = a;
-        cls = c;
+    }
+    for (final t in traits.all) {
+      final e = t.exercise;
+      final isForced = forced.contains(e.id);
+      String? rejection;
+      if (repli &&
+          (indexById.containsKey(e.id) ||
+              rejections[e.id] != Rejections.discipline ||
+              (round == 1 &&
+                  t.kind != SlotKind.mobility &&
+                  e.pattern != MovementPattern.marche))) {
+        continue;
       }
-    }
-    if (cls == DisciplineClass.crossfit &&
-        e.discipline != CatalogDiscipline.crossfit) {
-      // Le CrossFit puise sa force dans les barres, les haltères et les
-      // kettlebells, sa gymnastique dans le street workout et la
-      // calisthénie dynamique ; l'isolation n'est qu'un appoint.
-      final free =
-          e.loadType == LoadType.barbell ||
-          e.loadType == LoadType.dumbbells ||
-          e.loadType == LoadType.kettlebell;
-      if (t.kind == SlotKind.accessory) {
-        affinity = 20;
-      } else if (e.discipline == CatalogDiscipline.musculation &&
-          (t.kind == SlotKind.power || (t.kind == SlotKind.compound && free))) {
-        affinity = 90;
-      } else if (e.discipline == CatalogDiscipline.streetWorkout ||
-          e.discipline == CatalogDiscipline.calisthenicsDynamic) {
-        affinity = 70;
+      if (round == 3 && (!isForced || indexById.containsKey(e.id))) {
+        continue;
       }
-    }
-    if (round > 0) {
-      cls = t.kind == SlotKind.mobility
-          ? DisciplineClass.mobility
-          : (t.kind.isCardio
-                ? DisciplineClass.cardio
-                : DisciplineClass.generalFitness);
-      affinity = fallbackAffinity;
-    }
-    if (affinity <= 0) {
-      rejection = Rejections.discipline;
-    } else if (excluded.contains(e.id)) {
-      rejection = Rejections.excluded;
-    }
 
-    // Soutien des objectifs.
-    var goalLift = false;
-    var bestSupport = 0;
-    final support = List<int>.filled(goals.length, 0);
-    for (var j = 0; j < goals.length; j++) {
-      final target = goals[j].exercise;
-      var s = 0;
-      if (target.id == e.id) {
-        s = 100;
-        final metric = goals[j].goal?.metric;
-        if (goals[j].goal == null || metric == GoalMetric.oneRmKg) {
-          goalLift = true;
-        }
-      } else if (target.rootId == e.rootId) {
-        // Palier de la même chaîne : d'autant plus utile qu'il est proche
-        // de l'exercice visé.
-        var gap = (target.difficulty - e.difficulty).abs();
-        if (gap > 5) {
-          gap = 5;
-        }
-        s = 90 - 6 * gap;
-      } else if (target.pattern == e.pattern) {
-        final cosine = target.muscleCosine(e);
-        s = cosine >= 0.7 ? 50 : (cosine >= 0.4 ? 30 : 0);
-        if (isLoadAdjustable(target.loadType) != isLoadAdjustable(e.loadType)) {
-          // Un exercice sans charge réglable sert peu un objectif de
-          // charge, et inversement.
-          s ~/= 2;
-        }
-      }
-      support[j] = s;
-      if (s > bestSupport) {
-        bestSupport = s;
-      }
-    }
-
-    // Niveau, prérequis.
-    final group = t.ability;
-    final a = ability[group]!;
-    final known = knownIds.contains(e.id);
-    final wanted = known || liked.contains(e.id) || bestSupport >= 60;
-    if (rejection == null && !known && e.difficulty > a) {
-      rejection = Rejections.level;
-    }
-    if (rejection == null) {
-      for (final p in e.prerequisites) {
-        if (cannotIds.contains(p)) {
-          rejection = Rejections.prerequisite;
-        }
-      }
-      for (final c in cannotIds) {
-        if (c == e.id) {
+      // Classe de discipline.
+      DisciplineClass? cls;
+      var affinity = 0;
+      for (final c in DisciplineClass.values) {
+        final target = targets[c.index];
+        if (target <= 0) {
           continue;
         }
-        final harder = catalog.find(c);
-        if (harder != null &&
-            harder.rootId == e.rootId &&
-            e.difficulty >= harder.difficulty &&
-            _descendsFrom(catalog, e, c)) {
-          rejection = Rejections.prerequisite;
+        final a = disciplineAffinity[c.index][e.discipline.index];
+        if (a > affinity ||
+            (a == affinity && a > 0 && target > targets[cls!.index])) {
+          affinity = a;
+          cls = c;
         }
       }
-    }
-
-    // Exercices réservés : l'haltérophilie ne se programme d'office qu'en
-    // CrossFit, la souplesse avancée qu'avec une vraie part de mobilité ou
-    // de calisthénie — sauf exercice connu, aimé ou lié à un objectif.
-    if (rejection == null && !wanted) {
-      final explosive =
-          e.pattern == MovementPattern.halterophilie ||
-          e.pattern == MovementPattern.pliometrie ||
-          e.pattern == MovementPattern.balistique;
-      if (explosive && !crossfitWanted) {
-        rejection = Rejections.reserved;
+      if (cls == DisciplineClass.crossfit &&
+          e.discipline != CatalogDiscipline.crossfit) {
+        // Le CrossFit puise sa force dans les barres, les haltères et les
+        // kettlebells, sa gymnastique dans le street workout et la
+        // calisthénie dynamique ; l'isolation n'est qu'un appoint.
+        final free =
+            e.loadType == LoadType.barbell ||
+            e.loadType == LoadType.dumbbells ||
+            e.loadType == LoadType.kettlebell;
+        if (t.kind == SlotKind.accessory) {
+          affinity = 20;
+        } else if (e.discipline == CatalogDiscipline.musculation &&
+            (t.kind == SlotKind.power ||
+                (t.kind == SlotKind.compound && free))) {
+          affinity = 90;
+        } else if (e.discipline == CatalogDiscipline.streetWorkout ||
+            e.discipline == CatalogDiscipline.calisthenicsDynamic) {
+          affinity = 70;
+        }
       }
-      if (e.pattern == MovementPattern.souplesse && !flexibilityWanted) {
-        rejection = Rejections.reserved;
+      if (repli) {
+        cls = t.kind == SlotKind.mobility
+            ? DisciplineClass.mobility
+            : (t.kind.isCardio
+                  ? DisciplineClass.cardio
+                  : DisciplineClass.generalFitness);
+        affinity = fallbackAffinity;
       }
-      // Le travail direct du cou ne se programme pas d'office.
-      if (e.family == MovementFamily.cou) {
-        rejection = Rejections.reserved;
+      if (affinity <= 0) {
+        rejection = Rejections.discipline;
+      } else if (excluded.contains(e.id)) {
+        rejection = Rejections.excluded;
       }
-    }
 
-    // Trop facile : un polyarticulaire ou une figure sans charge réglable,
-    // trois paliers sous le niveau du groupe (ou assisté, deux paliers
-    // sous ce niveau), n'entraîne plus — sauf exercice connu, aimé ou
-    // exercice même d'un objectif.
-    if (rejection == null &&
-        !(known || liked.contains(e.id) || bestSupport == 100)) {
-      final below = a - e.difficulty;
-      final unloaded =
-          (t.kind == SlotKind.compound || t.kind.isSkill) &&
-          !isLoadAdjustable(e.loadType);
-      if ((unloaded && below >= 3) ||
-          (e.assisted && t.kind.isResistance && below >= 2)) {
-        rejection = Rejections.tooEasy;
+      // Soutien des objectifs.
+      var goalLift = false;
+      var bestSupport = 0;
+      final support = List<int>.filled(goals.length, 0);
+      for (var j = 0; j < goals.length; j++) {
+        final target = goals[j].exercise;
+        var s = 0;
+        if (target.id == e.id) {
+          s = 100;
+          final metric = goals[j].goal?.metric;
+          if (goals[j].goal == null || metric == GoalMetric.oneRmKg) {
+            goalLift = true;
+          }
+        } else if (target.rootId == e.rootId) {
+          // Palier de la même chaîne : d'autant plus utile qu'il est proche
+          // de l'exercice visé.
+          var gap = (target.difficulty - e.difficulty).abs();
+          if (gap > 5) {
+            gap = 5;
+          }
+          s = 90 - 6 * gap;
+        } else if (target.pattern == e.pattern) {
+          final cosine = target.muscleCosine(e);
+          s = cosine >= 0.7 ? 50 : (cosine >= 0.4 ? 30 : 0);
+          if (isLoadAdjustable(target.loadType) !=
+              isLoadAdjustable(e.loadType)) {
+            // Un exercice sans charge réglable sert peu un objectif de
+            // charge, et inversement.
+            s ~/= 2;
+          }
+        }
+        support[j] = s;
+        if (s > bestSupport) {
+          bestSupport = s;
+        }
       }
-    }
 
-    // Prudence.
-    if (rejection == null && cautious && (t.impact || e.systemicFatigue >= 5)) {
-      rejection = Rejections.cautious;
-    }
+      // Niveau, prérequis.
+      final group = t.ability;
+      final a = ability[group]!;
+      final known = knownIds.contains(e.id);
+      final wanted = known || liked.contains(e.id) || bestSupport >= 60;
+      if (rejection == null && !known && e.difficulty > a) {
+        rejection = Rejections.level;
+      }
+      if (rejection == null) {
+        for (final p in e.prerequisites) {
+          if (cannotIds.contains(p)) {
+            rejection = Rejections.prerequisite;
+          }
+        }
+        for (final c in cannotIds) {
+          if (c == e.id) {
+            continue;
+          }
+          final harder = catalog.find(c);
+          if (harder != null &&
+              harder.rootId == e.rootId &&
+              e.difficulty >= harder.difficulty &&
+              _descendsFrom(catalog, e, c)) {
+            rejection = Rejections.prerequisite;
+          }
+        }
+      }
 
-    // Articulations et zones limitées.
-    var penalty = 0.0;
-    for (final limit in limits) {
-      var level = 0.0;
-      final joint = limit.joint;
-      if (joint != null) {
-        final stress = e.stressOn(joint);
-        level = stress == JointStress.high
+      // Exercices réservés : l'haltérophilie ne se programme d'office qu'en
+      // CrossFit, la souplesse avancée qu'avec une vraie part de mobilité ou
+      // de calisthénie — sauf exercice connu, aimé ou lié à un objectif.
+      if (rejection == null && !wanted) {
+        final explosive =
+            e.pattern == MovementPattern.halterophilie ||
+            e.pattern == MovementPattern.pliometrie ||
+            e.pattern == MovementPattern.balistique;
+        if (explosive && !crossfitWanted) {
+          rejection = Rejections.reserved;
+        }
+        if (e.pattern == MovementPattern.souplesse && !flexibilityWanted) {
+          rejection = Rejections.reserved;
+        }
+        // Le travail direct du cou ne se programme pas d'office.
+        if (e.family == MovementFamily.cou) {
+          rejection = Rejections.reserved;
+        }
+      }
+
+      // Trop facile : un polyarticulaire ou une figure sans charge réglable,
+      // trois paliers sous le niveau du groupe (ou assisté, deux paliers
+      // sous ce niveau), n'entraîne plus — sauf exercice connu, aimé ou
+      // exercice même d'un objectif.
+      if (rejection == null &&
+          !(known || liked.contains(e.id) || bestSupport == 100)) {
+        final below = a - e.difficulty;
+        final unloaded =
+            (t.kind == SlotKind.compound || t.kind.isSkill) &&
+            !isLoadAdjustable(e.loadType);
+        if ((unloaded && below >= 3) ||
+            (e.assisted && t.kind.isResistance && below >= 2)) {
+          rejection = Rejections.tooEasy;
+        }
+      }
+
+      // Prudence.
+      if (rejection == null &&
+          cautious &&
+          (t.impact || e.systemicFatigue >= 5)) {
+        rejection = Rejections.cautious;
+      }
+
+      // Articulations et zones limitées.
+      var penalty = 0.0;
+      for (final limit in limits) {
+        var level = 0.0;
+        final joint = limit.joint;
+        if (joint != null) {
+          final stress = e.stressOn(joint);
+          level = stress == JointStress.high
+              ? 1.0
+              : (stress == JointStress.moderate ? 0.5 : 0.0);
+        }
+        for (final g in limit.groups) {
+          final credit = t.groupCredits[g.index] / 2;
+          if (credit > level) {
+            level = credit;
+          }
+        }
+        if ((level >= 1 && limit.discomfort >= params.hardJointDiscomfort) ||
+            (level >= 0.5 &&
+                limit.discomfort >= params.severeJointDiscomfort)) {
+          rejection ??= Rejections.joint;
+        }
+        final p = level * limit.discomfort / 10;
+        if (p > penalty) {
+          penalty = p;
+        }
+      }
+      if (rejection != null && !isForced) {
+        if (round == 0) {
+          rejections[e.id] = rejection;
+        }
+        continue;
+      }
+
+      // Prescription de référence.
+      final margin = known && e.difficulty > a ? 0 : a - e.difficulty;
+      final resolvedClass = cls ?? primaryClass;
+      final strengthFocus =
+          resolvedClass == DisciplineClass.streetlifting ||
+          resolvedClass == DisciplineClass.crossfit ||
+          strengthGoalRoots.contains(e.rootId);
+      final scheme = schemeFor(
+        t,
+        SchemeInputs(
+          level: levelOfAbility(a),
+          margin: margin,
+          strengthFocus: strengthFocus,
+          goalLift: goalLift,
+          cautious: cautious,
+          senior: senior,
+          maxReps: maxRepsOf[e.id],
+          maxHoldSeconds: maxHoldOf[e.id],
+        ),
+        params,
+      );
+
+      // Jours faisables : matériel, lieu, durée minimale.
+      final needsWarmup =
+          t.kind.isResistance ||
+          t.kind == SlotKind.conditioning ||
+          t.kind == SlotKind.cardioHard;
+      var mask = 0;
+      var equipped = false;
+      for (final day in days) {
+        final place = day.place;
+        final placeOk = place == null
+            ? e.places.any(profile.places.contains)
+            : e.places.contains(place);
+        if (!placeOk || !e.feasibleWith(day.equipment)) {
+          continue;
+        }
+        equipped = true;
+        final least =
+            scheme.secondsFor(scheme.minSets) +
+            (needsWarmup ? day.warmupSeconds : 0);
+        if (least <= day.seconds) {
+          mask |= 1 << day.index;
+        }
+      }
+      if (repli) {
+        mask &= fallbackDays;
+      }
+      if (rejection == null && mask == 0) {
+        rejection = equipped ? Rejections.time : Rejections.equipment;
+      }
+      final why = rejection;
+      final selectable = why == null;
+      if (why != null) {
+        if (round == 0) {
+          rejections[e.id] = why;
+        }
+        // Un exercice imposé écarté pour sa seule discipline attend les
+        // manches de repli : il y redevient peut-être choisissable.
+        if (!isForced ||
+            repli ||
+            (round == 0 && why == Rejections.discipline)) {
+          continue;
+        }
+      } else if (repli) {
+        rejections.remove(e.id);
+      }
+
+      final groupsOut = <int>[];
+      final valuesOut = <int>[];
+      if (t.kind.isResistance) {
+        for (final g in MuscleGroup.values) {
+          final credit = t.groupCredits[g.index];
+          if (credit <= 0) {
+            continue;
+          }
+          // Les muscles secondaires ne comptent (pour une demi-série) que
+          // dans les mouvements polyarticulaires, où ils sont de vrais
+          // synergistes ; un gainage ou une isolation ne crédite que ses
+          // muscles principaux.
+          if (credit < 2 &&
+              (t.kind == SlotKind.core || t.kind == SlotKind.accessory)) {
+            continue;
+          }
+          groupsOut.add(g.index);
+          valuesOut.add(credit);
+        }
+      }
+      var push = 0;
+      var pull = 0;
+      var knee = 0;
+      var hip = 0;
+      var cover = 0;
+      switch (t.balance) {
+        case BalanceClass.pushHorizontal:
+          push = 2;
+          cover = 1;
+        case BalanceClass.pushVertical:
+          push = 2;
+          cover = 2;
+        case BalanceClass.pullHorizontal:
+          pull = 2;
+          cover = 4;
+        case BalanceClass.pullVertical:
+          pull = 2;
+          cover = 8;
+        case BalanceClass.pullThenPush:
+          push = 1;
+          pull = 1;
+          cover = 8;
+        case BalanceClass.knee:
+          knee = 2;
+          cover = 16;
+        case BalanceClass.hip:
+          hip = 2;
+          cover = 32;
+        case BalanceClass.core:
+          cover = 64;
+        case BalanceClass.none:
+          break;
+      }
+      if (selectable) {
+        coverable |= cover;
+        if (liked.contains(e.id)) {
+          likedInPool++;
+        }
+        if (known) {
+          knownInPool++;
+        }
+        for (var j = 0; j < goals.length; j++) {
+          if (support[j] == 100) {
+            exactSelectable[j] = true;
+          }
+          if (support[j] > goalBest[j]) {
+            goalBest[j] = support[j];
+          }
+        }
+        for (var k = 0; k < groupsOut.length; k++) {
+          if (valuesOut[k] == 2) {
+            trainable.add(groupsOut[k]);
+          }
+        }
+      }
+
+      // Adéquation : mouvement de base de sa famille, ni trop facile ni
+      // assisté sans besoin.
+      // Mouvement de base : racine de sa chaîne (ou proche), et chaîne
+      // fournie — neuf variantes et plus valent 1, un exercice seul 0,5.
+      final depthFactor = e.depth == 0 ? 1.0 : (e.depth == 1 ? 0.7 : 0.5);
+      final size = t.familySize > 8 ? 8 : t.familySize;
+      final canonical = depthFactor * (0.5 + 0.5 * (size - 1) / 7);
+      var challenge = 1.0;
+      if (t.kind.isResistance && !scheme.loaded) {
+        challenge = margin <= 2
             ? 1.0
-            : (stress == JointStress.moderate ? 0.5 : 0.0);
-      }
-      for (final g in limit.groups) {
-        final credit = t.groupCredits[g.index] / 2;
-        if (credit > level) {
-          level = credit;
+            : (margin == 3 ? 0.7 : (margin == 4 ? 0.4 : 0.2));
+        if (e.assisted && margin >= 2) {
+          challenge *= 0.5;
         }
       }
-      if ((level >= 1 && limit.discomfort >= params.hardJointDiscomfort) ||
-          (level >= 0.5 && limit.discomfort >= params.severeJointDiscomfort)) {
-        rejection ??= Rejections.joint;
-      }
-      final p = level * limit.discomfort / 10;
-      if (p > penalty) {
-        penalty = p;
-      }
-    }
-    if (rejection != null && !isForced) {
-      if (round == 0) {
-        rejections[e.id] = rejection;
-      }
-      continue;
-    }
 
-    // Prescription de référence.
-    final margin = known && e.difficulty > a ? 0 : a - e.difficulty;
-    final resolvedClass = cls ?? primaryClass;
-    final strengthFocus =
-        resolvedClass == DisciplineClass.streetlifting ||
-        resolvedClass == DisciplineClass.crossfit ||
-        strengthGoalRoots.contains(e.rootId);
-    final scheme = schemeFor(
-      t,
-      SchemeInputs(
+      final root = rootIndex.putIfAbsent(e.rootId, () => rootIndex.length);
+      final hash = fnvMix(fnv1a32(e.id), inputs.seed);
+      final entry = PoolEntry._(
+        index: pool.length,
+        traits: t,
+        cls: resolvedClass,
+        affinity: affinity,
+        scheme: scheme,
+        dayMask: mask,
+        selectable: selectable,
+        goalSupport: List<int>.unmodifiable(support),
+        liked: liked.contains(e.id),
+        known: known,
+        novel: t.technical && !known && e.difficulty >= a - 1,
+        jointPenalty: penalty > 1 ? 1 : penalty,
+        fit: 0.4 * canonical + 0.4 * challenge + (known ? 0.2 : 0.0),
+        fallback: repli,
+        staple:
+            t.kind == SlotKind.compound ||
+                t.kind == SlotKind.power ||
+                t.kind.isSkill
+            ? (goalLift || bestSupport >= 80 ? 1.0 : canonical)
+            : 0.0,
+        prioritySkill: t.kind.isSkill && (known || bestSupport >= 60),
+        rootIndex: root,
+        creditGroups: List<int>.unmodifiable(groupsOut),
+        creditValues: List<int>.unmodifiable(valuesOut),
+        heavyWeight: t.kind.isSkill
+            ? 1
+            : (t.kind.isResistance && t.kind != SlotKind.core ? 2 : 0),
+        pushUnits: push,
+        pullUnits: pull,
+        kneeUnits: knee,
+        hipUnits: hip,
+        coverBits: cover,
+        needsWarmup: needsWarmup,
         level: levelOfAbility(a),
         margin: margin,
-        strengthFocus: strengthFocus,
         goalLift: goalLift,
-        cautious: cautious,
-        senior: senior,
-        maxReps: maxRepsOf[e.id],
-        maxHoldSeconds: maxHoldOf[e.id],
-      ),
-      params,
-    );
-
-    // Jours faisables : matériel, lieu, durée minimale.
-    final needsWarmup =
-        t.kind.isResistance ||
-        t.kind == SlotKind.conditioning ||
-        t.kind == SlotKind.cardioHard;
-    var mask = 0;
-    var equipped = false;
-    for (final day in days) {
-      final place = day.place;
-      final placeOk = place == null
-          ? e.places.any(profile.places.contains)
-          : e.places.contains(place);
-      if (!placeOk || !e.feasibleWith(day.equipment)) {
-        continue;
-      }
-      equipped = true;
-      final least =
-          scheme.secondsFor(scheme.minSets) +
-          (needsWarmup ? day.warmupSeconds : 0);
-      if (least <= day.seconds) {
-        mask |= 1 << day.index;
-      }
+        oneRmTotalKg: oneRmOf[e.id],
+        oneRmEstimated: oneRmEstimated.contains(e.id),
+        knownMaxReps: maxRepsOf[e.id],
+        knownMaxHoldSeconds: maxHoldOf[e.id],
+        tieBreak: hash / 4294967296.0,
+      );
+      indexById[e.id] = entry.index;
+      pool.add(entry);
     }
-    if (round > 0) {
-      mask &= fallbackDays;
-    }
-    if (rejection == null && mask == 0) {
-      rejection = equipped ? Rejections.time : Rejections.equipment;
-    }
-    final why = rejection;
-    final selectable = why == null;
-    if (why != null) {
-      if (round == 0) {
-        rejections[e.id] = why;
-      }
-      if (!isForced) {
-        continue;
-      }
-    } else if (round > 0) {
-      rejections.remove(e.id);
-    }
-
-    final groupsOut = <int>[];
-    final valuesOut = <int>[];
-    if (t.kind.isResistance) {
-      for (final g in MuscleGroup.values) {
-        final credit = t.groupCredits[g.index];
-        if (credit <= 0) {
-          continue;
-        }
-        // Les muscles secondaires ne comptent (pour une demi-série) que
-        // dans les mouvements polyarticulaires, où ils sont de vrais
-        // synergistes ; un gainage ou une isolation ne crédite que ses
-        // muscles principaux.
-        if (credit < 2 &&
-            (t.kind == SlotKind.core || t.kind == SlotKind.accessory)) {
-          continue;
-        }
-        groupsOut.add(g.index);
-        valuesOut.add(credit);
-      }
-    }
-    var push = 0;
-    var pull = 0;
-    var knee = 0;
-    var hip = 0;
-    var cover = 0;
-    switch (t.balance) {
-      case BalanceClass.pushHorizontal:
-        push = 2;
-        cover = 1;
-      case BalanceClass.pushVertical:
-        push = 2;
-        cover = 2;
-      case BalanceClass.pullHorizontal:
-        pull = 2;
-        cover = 4;
-      case BalanceClass.pullVertical:
-        pull = 2;
-        cover = 8;
-      case BalanceClass.pullThenPush:
-        push = 1;
-        pull = 1;
-        cover = 8;
-      case BalanceClass.knee:
-        knee = 2;
-        cover = 16;
-      case BalanceClass.hip:
-        hip = 2;
-        cover = 32;
-      case BalanceClass.core:
-        cover = 64;
-      case BalanceClass.none:
-        break;
-    }
-    if (selectable) {
-      coverable |= cover;
-      if (liked.contains(e.id)) {
-        likedInPool++;
-      }
-      if (known) {
-        knownInPool++;
-      }
-      for (var j = 0; j < goals.length; j++) {
-        if (support[j] == 100) {
-          exactSelectable[j] = true;
-        }
-        if (support[j] > goalBest[j]) {
-          goalBest[j] = support[j];
-        }
-      }
-      for (var k = 0; k < groupsOut.length; k++) {
-        if (valuesOut[k] == 2) {
-          trainable.add(groupsOut[k]);
-        }
-      }
-    }
-
-    // Adéquation : mouvement de base de sa famille, ni trop facile ni
-    // assisté sans besoin.
-    // Mouvement de base : racine de sa chaîne (ou proche), et chaîne
-    // fournie — neuf variantes et plus valent 1, un exercice seul 0,5.
-    final depthFactor = e.depth == 0 ? 1.0 : (e.depth == 1 ? 0.7 : 0.5);
-    final size = t.familySize > 8 ? 8 : t.familySize;
-    final canonical = depthFactor * (0.5 + 0.5 * (size - 1) / 7);
-    var challenge = 1.0;
-    if (t.kind.isResistance && !scheme.loaded) {
-      challenge = margin <= 2
-          ? 1.0
-          : (margin == 3 ? 0.7 : (margin == 4 ? 0.4 : 0.2));
-      if (e.assisted && margin >= 2) {
-        challenge *= 0.5;
-      }
-    }
-
-    final root = rootIndex.putIfAbsent(e.rootId, () => rootIndex.length);
-    final hash = fnvMix(fnv1a32(e.id), inputs.seed);
-    final entry = PoolEntry._(
-      index: pool.length,
-      traits: t,
-      cls: resolvedClass,
-      affinity: affinity,
-      scheme: scheme,
-      dayMask: mask,
-      selectable: selectable,
-      goalSupport: List<int>.unmodifiable(support),
-      liked: liked.contains(e.id),
-      known: known,
-      novel: t.technical && !known && e.difficulty >= a - 1,
-      jointPenalty: penalty > 1 ? 1 : penalty,
-      fit: 0.4 * canonical + 0.4 * challenge + (known ? 0.2 : 0.0),
-      fallback: round > 0,
-      staple:
-          t.kind == SlotKind.compound ||
-              t.kind == SlotKind.power ||
-              t.kind.isSkill
-          ? (goalLift || bestSupport >= 80 ? 1.0 : canonical)
-          : 0.0,
-      prioritySkill: t.kind.isSkill && (known || bestSupport >= 60),
-      rootIndex: root,
-      creditGroups: List<int>.unmodifiable(groupsOut),
-      creditValues: List<int>.unmodifiable(valuesOut),
-      heavyWeight: t.kind.isSkill
-          ? 1
-          : (t.kind.isResistance && t.kind != SlotKind.core ? 2 : 0),
-      pushUnits: push,
-      pullUnits: pull,
-      kneeUnits: knee,
-      hipUnits: hip,
-      coverBits: cover,
-      needsWarmup: needsWarmup,
-      level: levelOfAbility(a),
-      margin: margin,
-      goalLift: goalLift,
-      oneRmTotalKg: oneRmOf[e.id],
-      oneRmEstimated: oneRmEstimated.contains(e.id),
-      knownMaxReps: maxRepsOf[e.id],
-      knownMaxHoldSeconds: maxHoldOf[e.id],
-      tieBreak: hash / 4294967296.0,
-    );
-    indexById[e.id] = entry.index;
-    pool.add(entry);
-  }
   }
 
   // Bandes de volume.

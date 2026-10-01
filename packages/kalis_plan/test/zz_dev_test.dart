@@ -103,7 +103,9 @@ void main() {
           );
         }
       } on Object catch (e, st) {
-        b.writeln('  ERREUR $e\n${st.toString().split('\n').take(8).join('\n')}');
+        b.writeln(
+          '  ERREUR $e\n${st.toString().split('\n').take(8).join('\n')}',
+        );
       }
     }
     File('${out.path}/graines.txt').writeAsStringSync(b.toString());

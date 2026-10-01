@@ -162,7 +162,8 @@ void _checkPass2(
           fail('$where — repos $rest');
         }
         final load = item.startLoadKg;
-        if (load != null && load <= 0) {
+        // (0 kg de lest est une charge : le poids du corps seul.)
+        if (load != null && load < 0) {
           fail('$where — charge $load');
         }
         final pct = item.percentOfOneRm;
@@ -373,8 +374,7 @@ List<String> checkSeed(Catalog catalog, int seed) {
           break;
       }
     }
-    if (changed.length != described.length ||
-        !changed.containsAll(described)) {
+    if (changed.length != described.length || !changed.containsAll(described)) {
       fail(
         '$label : diff ${described.toList()..sort()} pour '
         '${changed.toList()..sort()}',
@@ -546,8 +546,8 @@ List<String> checkSeed(Catalog catalog, int seed) {
     final weeks = block.pass2.weeks.length;
     final from = 1 + (h >> 4) % (weeks - 1);
     final day = (h >> 8) % current.days.length;
-    final victim = current.days[day].slots[(h >> 12) %
-        current.days[day].slots.length];
+    final victim =
+        current.days[day].slots[(h >> 12) % current.days[day].slots.length];
     final reasons = <Reason>[
       switch ((h >> 16) % 4) {
         0 => Reason(
@@ -652,28 +652,24 @@ void propertyShard(int shard) {
       from < first + profilesPerShard;
       from += profilesPerChunk
     ) {
-      test(
-        'profils $from à ${from + profilesPerChunk - 1}',
-        () {
-          final failures = <String>[];
-          for (var seed = from; seed < from + profilesPerChunk; seed++) {
-            try {
-              failures.addAll(checkSeed(catalog, seed));
-            } on Object catch (e, s) {
-              final trace = s.toString().split('\n').take(6).join('\n');
-              failures.add('profil $seed — exception $e\n$trace');
-            }
+      test('profils $from à ${from + profilesPerChunk - 1}', () {
+        final failures = <String>[];
+        for (var seed = from; seed < from + profilesPerChunk; seed++) {
+          try {
+            failures.addAll(checkSeed(catalog, seed));
+          } on Object catch (e, s) {
+            final trace = s.toString().split('\n').take(6).join('\n');
+            failures.add('profil $seed — exception $e\n$trace');
           }
-          expect(
-            failures,
-            isEmpty,
-            reason:
-                '${failures.length} manquement(s) :\n'
-                '${failures.take(12).join('\n')}',
-          );
-        },
-        timeout: const Timeout(Duration(minutes: 30)),
-      );
+        }
+        expect(
+          failures,
+          isEmpty,
+          reason:
+              '${failures.length} manquement(s) :\n'
+              '${failures.take(12).join('\n')}',
+        );
+      }, timeout: const Timeout(Duration(minutes: 30)));
     }
   });
 }
