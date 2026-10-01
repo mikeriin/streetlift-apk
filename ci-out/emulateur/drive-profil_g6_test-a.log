@@ -1,0 +1,176 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             63.1s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...           3.1s
+W/eetlift_tracker( 3708): Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+W/eetlift_tracker( 3708): Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+W/eetlift_tracker( 3708): Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+W/eetlift_tracker( 3708): Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+D/AccessibilityBridge( 3708): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 3708): Width is zero. 0,0
+W/HWUI    ( 3708): Unknown dataspace 0
+I/WindowExtensionsImpl( 3708): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 3708): Width is zero. 0,0
+D/FlutterJNI( 3708): Sending viewport metrics to the engine.
+W/HWUI    ( 3708): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 3708): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 3708): mapper 4.x is not supported
+I/Choreographer( 3708): Skipped 105 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 3708): Sending viewport metrics to the engine.
+D/ProfileInstaller( 3708): Installing profile for fr.tchoupi.streetlift_tracker
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:42295/ws3noKVWYs4=/
+VMServiceFlutterDriver: Isolate found with number: 1722980509424871
+VMServiceFlutterDriver: Isolate 1722980509424871 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 3708): 00:00 +0: G6 a (sombre, rouge) : refaire son profil proposé, création complète en session de test
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 3708): Skipped 50 frames!  The application may be doing too much work on its main thread.
+I/eetlift_tracker( 3708): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 3708): Skipped 41 frames!  The application may be doing too much work on its main thread.
+I/HWUI    ( 3708): Davey! duration=780ms; Flags=1, FrameTimelineVsyncId=8544, IntendedVsync=119310783407, Vsync=119994116713, InputEventId=0, HandleInputStart=120004967282, AnimationStart=120004973514, PerformTraversalsStart=120004975566, DrawStart=120010198694, FrameDeadline=119327450073, FrameInterval=120001167838, FrameStartTime=16666666, SyncQueued=120019304192, SyncStart=120022128698, IssueDrawCommandsStart=120025627624, SwapBuffers=120070599518, FrameCompleted=120094369463, DequeueBufferDuration=12342815, QueueBufferDuration=1863212, GpuCompleted=120094369463, SwapBuffersCompleted=120089412028, DisplayPresentTime=0, CommandSubmissionCompleted=120070599518, 
+D/EGL_emulation( 3708): app_time_stats: avg=1258.98ms min=508.57ms max=2009.38ms count=2
+D/EGL_emulation( 3708): app_time_stats: avg=186.22ms min=17.89ms max=444.79ms count=6
+D/EGL_emulation( 3708): app_time_stats: avg=2605.31ms min=2605.31ms max=2605.31ms count=1
+D/EGL_emulation( 3708): app_time_stats: avg=647.83ms min=138.55ms max=1157.11ms count=2
+I/eetlift_tracker( 3708): Background concurrent mark compact GC freed 2056KB AllocSpace bytes, 13(580KB) LOS objects, 49% free, 2608KB/5217KB, paused 149us,2.235ms total 284.235ms
+D/EGL_emulation( 3708): app_time_stats: avg=12935.82ms min=12935.82ms max=12935.82ms count=1
+D/EGL_emulation( 3708): app_time_stats: avg=127.52ms min=9.49ms max=242.46ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=139.05ms min=16.85ms max=261.91ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=90.99ms min=3.00ms max=193.66ms count=11
+D/EGL_emulation( 3708): app_time_stats: avg=94.76ms min=1.66ms max=177.54ms count=10
+D/EGL_emulation( 3708): app_time_stats: avg=79.52ms min=8.13ms max=157.99ms count=11
+D/EGL_emulation( 3708): app_time_stats: avg=87.96ms min=2.12ms max=211.35ms count=10
+D/EGL_emulation( 3708): app_time_stats: avg=109.80ms min=92.32ms max=146.08ms count=10
+D/EGL_emulation( 3708): app_time_stats: avg=104.78ms min=2.92ms max=193.52ms count=10
+D/EGL_emulation( 3708): app_time_stats: avg=137.22ms min=9.29ms max=293.24ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=263.18ms min=2.95ms max=1670.27ms count=10
+D/EGL_emulation( 3708): app_time_stats: avg=185.03ms min=120.92ms max=250.50ms count=6
+D/EGL_emulation( 3708): app_time_stats: avg=166.39ms min=144.05ms max=189.76ms count=7
+D/EGL_emulation( 3708): app_time_stats: avg=171.12ms min=154.30ms max=220.50ms count=7
+D/EGL_emulation( 3708): app_time_stats: avg=160.30ms min=135.03ms max=181.29ms count=7
+D/EGL_emulation( 3708): app_time_stats: avg=170.79ms min=144.23ms max=208.39ms count=6
+D/EGL_emulation( 3708): app_time_stats: avg=340.66ms min=105.14ms max=598.93ms count=4
+W/WindowOnBackDispatcher( 3708): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 3708): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 3708): app_time_stats: avg=186.11ms min=116.32ms max=438.52ms count=6
+D/EGL_emulation( 3708): app_time_stats: avg=111.91ms min=15.67ms max=207.72ms count=9
+D/EGL_emulation( 3708): app_time_stats: avg=106.07ms min=6.59ms max=191.51ms count=9
+D/EGL_emulation( 3708): app_time_stats: avg=104.45ms min=11.61ms max=152.20ms count=10
+D/EGL_emulation( 3708): app_time_stats: avg=107.36ms min=29.43ms max=175.66ms count=10
+D/EGL_emulation( 3708): app_time_stats: avg=107.90ms min=4.87ms max=159.78ms count=9
+D/EGL_emulation( 3708): app_time_stats: avg=106.73ms min=25.10ms max=200.64ms count=10
+D/EGL_emulation( 3708): app_time_stats: avg=103.26ms min=29.00ms max=153.31ms count=9
+D/EGL_emulation( 3708): app_time_stats: avg=134.87ms min=98.15ms max=265.30ms count=9
+D/EGL_emulation( 3708): app_time_stats: avg=113.30ms min=25.85ms max=137.98ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=305.59ms min=104.09ms max=1113.47ms count=6
+D/EGL_emulation( 3708): app_time_stats: avg=135.55ms min=32.40ms max=262.68ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=137.38ms min=10.62ms max=456.37ms count=7
+D/EGL_emulation( 3708): app_time_stats: avg=144.96ms min=31.63ms max=269.40ms count=7
+D/EGL_emulation( 3708): app_time_stats: avg=141.09ms min=103.62ms max=189.20ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=137.41ms min=105.92ms max=177.80ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=135.00ms min=105.70ms max=197.66ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=131.37ms min=116.72ms max=181.73ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=111.35ms min=12.15ms max=232.61ms count=9
+D/EGL_emulation( 3708): app_time_stats: avg=155.72ms min=105.50ms max=216.40ms count=7
+D/EGL_emulation( 3708): app_time_stats: avg=115.20ms min=20.29ms max=173.23ms count=9
+D/EGL_emulation( 3708): app_time_stats: avg=112.50ms min=13.60ms max=142.43ms count=9
+D/EGL_emulation( 3708): app_time_stats: avg=150.86ms min=116.57ms max=229.08ms count=7
+D/EGL_emulation( 3708): app_time_stats: avg=138.05ms min=103.19ms max=190.90ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=144.86ms min=92.92ms max=193.60ms count=7
+D/EGL_emulation( 3708): app_time_stats: avg=146.33ms min=46.88ms max=195.57ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=135.20ms min=41.49ms max=204.94ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=141.82ms min=123.63ms max=156.04ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=130.37ms min=101.36ms max=157.88ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=144.73ms min=97.97ms max=214.65ms count=7
+D/EGL_emulation( 3708): app_time_stats: avg=164.70ms min=38.82ms max=417.37ms count=6
+D/EGL_emulation( 3708): app_time_stats: avg=125.48ms min=37.75ms max=189.85ms count=7
+D/EGL_emulation( 3708): app_time_stats: avg=125.99ms min=38.21ms max=256.20ms count=7
+D/EGL_emulation( 3708): app_time_stats: avg=135.09ms min=113.65ms max=165.64ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=126.34ms min=107.85ms max=156.76ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=116.82ms min=11.76ms max=156.17ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=142.07ms min=115.65ms max=167.06ms count=8
+D/EGL_emulation( 3708): app_time_stats: avg=113.61ms min=56.77ms max=143.74ms count=9
+D/EGL_emulation( 3708): app_time_stats: avg=147.81ms min=104.62ms max=278.55ms count=7
+D/EGL_emulation( 3708): app_time_stats: avg=104.72ms min=19.50ms max=162.36ms count=9
+D/EGL_emulation( 3708): app_time_stats: avg=147.76ms min=118.83ms max=174.42ms count=7
+I/flutter ( 3708): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 3708): The following StateError was thrown running a test:
+I/flutter ( 3708): Bad state: No element
+I/flutter ( 3708): 
+I/flutter ( 3708): When the exception was thrown, this was the stack:
+I/flutter ( 3708): #0      Iterable.first (dart:core/iterable.dart:663:7)
+I/flutter ( 3708): #1      _FirstFinderMixin.filter (package:flutter_test/src/finders.dart:1383:28)
+I/flutter ( 3708): #3      _AncestorFinderMixin.allCandidates (package:flutter_test/src/finders.dart:1857:49)
+I/flutter ( 3708): #4      FinderBase.evaluate (package:flutter_test/src/finders.dart:1030:76)
+I/flutter ( 3708): #5      WidgetController.widgetList (package:flutter_test/src/controller.dart:848:19)
+I/flutter ( 3708): #6      WidgetController._maybeViewOf (package:flutter_test/src/controller.dart:795:34)
+I/flutter ( 3708): #7      WidgetController.tap (package:flutter_test/src/controller.dart:1078:31)
+I/flutter ( 3708): #8      main.tap (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/profil_g6_test.dart:114:18)
+I/flutter ( 3708): <asynchronous suspension>
+I/flutter ( 3708): #9      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/profil_g6_test.dart:205:5)
+I/flutter ( 3708): <asynchronous suspension>
+I/flutter ( 3708): #10     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 3708): <asynchronous suspension>
+I/flutter ( 3708): #11     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 3708): <asynchronous suspension>
+I/flutter ( 3708): #12     TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 3708): <asynchronous suspension>
+I/flutter ( 3708): (elided one frame from dart:async-patch)
+I/flutter ( 3708): 
+I/flutter ( 3708): The test description was:
+I/flutter ( 3708):   G6 a (sombre, rouge) : refaire son profil proposé, création complète en session de test
+I/flutter ( 3708): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 3708): 01:29 +0: G6 a (sombre, rouge) : refaire son profil proposé, création complète en session de test [E]
+I/flutter ( 3708):   Test failed. See exception logs above.
+I/flutter ( 3708):   The test description was: G6 a (sombre, rouge) : refaire son profil proposé, création complète en session de test
+I/flutter ( 3708):   
+I/flutter ( 3708): 01:29 +0 -1: (tearDownAll)
+I/flutter ( 3708): 01:29 +1 -1: Some tests failed.
+Failure Details:
+Failure in method: G6 a (sombre, rouge) : refaire son profil proposé, création complète en session de test
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.first (dart:core/iterable.dart:663:7)
+#1      _FirstFinderMixin.filter (package:flutter_test/src/finders.dart:1383:28)
+#3      _AncestorFinderMixin.allCandidates (package:flutter_test/src/finders.dart:1857:49)
+#4      FinderBase.evaluate (package:flutter_test/src/finders.dart:1030:76)
+#5      WidgetController.widgetList (package:flutter_test/src/controller.dart:848:19)
+#6      WidgetController._maybeViewOf (package:flutter_test/src/controller.dart:795:34)
+#7      WidgetController.tap (package:flutter_test/src/controller.dart:1078:31)
+#8      main.tap (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/profil_g6_test.dart:114:18)
+<asynchronous suspension>
+#9      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/profil_g6_test.dart:205:5)
+<asynchronous suspension>
+#10     testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#11     TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#12     TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+(elided one frame from dart:async-patch)
+
+The test description was:
+  G6 a (sombre, rouge) : refaire son profil proposé, création
+  complète en session de test
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+

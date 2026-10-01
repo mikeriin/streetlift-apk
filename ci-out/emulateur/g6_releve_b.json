@@ -1,0 +1,10 @@
+{
+  "partie": "b",
+  "theme": "clair",
+  "couleur_dominante": "violet",
+  "perso_proposition": true,
+  "perso_proposition_koach": 1,
+  "perso_accueil": true,
+  "dev_actif": true,
+  "dev_creation": true
+}
