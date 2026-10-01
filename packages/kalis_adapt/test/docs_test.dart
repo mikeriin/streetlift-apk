@@ -44,7 +44,7 @@ void main() {
       final policies = athlete['policies']! as Map<String, Object?>;
       for (final name in reportPolicies) {
         final metrics = policies[name]! as Map<String, Object?>;
-        expect(metrics['runs'], campaign['seeds'], reason: '$name');
+        expect(metrics['runs'], campaign['seeds'], reason: name);
       }
     }
   });
