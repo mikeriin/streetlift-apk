@@ -3,6 +3,8 @@
 // Aucune illustration : icônes existantes et texte. Contrat :
 // docs/CONTRAT_L8.md.
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'app_theme.dart';
@@ -94,7 +96,8 @@ class ProfileFlow extends StatefulWidget {
   State<ProfileFlow> createState() => _ProfileFlowState();
 }
 
-class _ProfileFlowState extends State<ProfileFlow> {
+class _ProfileFlowState extends State<ProfileFlow>
+    with WidgetsBindingObserver {
   int _step = 0;
   bool _minor = false;
 
@@ -164,10 +167,127 @@ class _ProfileFlowState extends State<ProfileFlow> {
     _tone = p.stringValue('tone') ?? 'kind';
     _modeTouched = p.fields.containsKey('autonomy');
     if (_editing) _step = 1;
+    if (!_editing) _restoreDraft();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  // G1 correction 1 : fermer l'application pendant le démarrage ne fait plus
+  // recommencer à la première question. Le brouillon (étape et réponses)
+  // est gardé à chaque étape et quand l'application passe en arrière-plan,
+  // jamais pour un âge de moins de 18 ans (L13), puis effacé à
+  // l'enregistrement du profil.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.detached) {
+      _saveDraft();
+    }
+  }
+
+  Map<String, dynamic> _draft() => {
+    'v': 1,
+    'migration': widget.migration,
+    'step': _step,
+    'year': _year.text,
+    'weight': _weight.text,
+    'adult18': _adult18,
+    'primary': _primary,
+    'secondary': _secondary,
+    'goalWeight': _goalWeight,
+    'eventDate': _eventDate == null ? null : profileDay(_eventDate!),
+    'targets': {for (final e in _targets.entries) e.key: e.value.text},
+    'days': _days.toList()..sort(),
+    'minutes': _minutes,
+    'places': {for (final e in _places.entries) e.key: e.value.toList()},
+    'dayPlace': {for (final e in _dayPlace.entries) '${e.key}': e.value},
+    'bench': _bench,
+    'consent': _consent,
+    'answers': _answers,
+    'injuries': [for (final i in _injuries) i.toJson()],
+    'autonomy': _autonomy,
+    'tone': _tone,
+    'modeTouched': _modeTouched,
+  };
+
+  void _saveDraft() {
+    if (_editing) return;
+    if (_minor || _isMinor) {
+      unawaited(store.saveProfileFlowDraft(null));
+      return;
+    }
+    unawaited(store.saveProfileFlowDraft(_draft()));
+  }
+
+  void _restoreDraft() {
+    final d = store.profileFlowDraft;
+    if (d == null || d['migration'] != widget.migration) return;
+    try {
+      _year.text = d['year'] as String? ?? '';
+      _weight.text = d['weight'] as String? ?? '';
+      _adult18 = d['adult18'] as bool?;
+      _primary = d['primary'] as String? ?? _primary;
+      _secondary = d['secondary'] as String?;
+      _goalWeight = d['goalWeight'] as int? ?? _goalWeight;
+      final ev = d['eventDate'] as String?;
+      _eventDate = ev == null ? null : DateTime.tryParse(ev);
+      for (final c in _targets.values) {
+        c.dispose();
+      }
+      _targets
+        ..clear()
+        ..addAll({
+          for (final e in (d['targets'] as Map? ?? const {}).entries)
+            e.key as String: TextEditingController(text: e.value as String),
+        });
+      _days
+        ..clear()
+        ..addAll((d['days'] as List? ?? const []).cast<int>());
+      _minutes = d['minutes'] as int?;
+      _places
+        ..clear()
+        ..addAll({
+          for (final e in (d['places'] as Map? ?? const {}).entries)
+            e.key as String: {...(e.value as List).cast<String>()},
+        });
+      _dayPlace
+        ..clear()
+        ..addAll({
+          for (final e in (d['dayPlace'] as Map? ?? const {}).entries)
+            int.parse(e.key as String): e.value as String,
+        });
+      _bench
+        ..clear()
+        ..addAll((d['bench'] as Map? ?? const {}).cast<String, int>());
+      _consent = d['consent'] as String?;
+      _answers
+        ..clear()
+        ..addAll((d['answers'] as Map? ?? const {}).cast<String, bool>());
+      _injuries
+        ..clear()
+        ..addAll([
+          for (final i in d['injuries'] as List? ?? const [])
+            Injury(
+              (i as Map)['zone'] as String,
+              i['level'] as int,
+              i['since'] as String,
+              i['at'] as String,
+            ),
+        ]);
+      _autonomy = d['autonomy'] as String? ?? _autonomy;
+      _tone = d['tone'] as String? ?? _tone;
+      _modeTouched = d['modeTouched'] as bool? ?? false;
+      final step = d['step'] as int? ?? 0;
+      _step = step.clamp(0, kFlowSteps.length - 1);
+    } catch (_) {
+      // Brouillon illisible : démarrage depuis le début.
+      _step = 0;
+    }
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _year.dispose();
     _weight.dispose();
     for (final c in _targets.values) {
@@ -265,6 +385,7 @@ class _ProfileFlowState extends State<ProfileFlow> {
       return;
     }
     setState(() => _step++);
+    _saveDraft();
   }
 
   void _back() {
@@ -272,6 +393,7 @@ class _ProfileFlowState extends State<ProfileFlow> {
       setState(() => _minor = false);
     } else if (_step > (_editing ? 1 : 0)) {
       setState(() => _step--);
+      _saveDraft();
     } else if (_editing) {
       Navigator.of(context).maybePop();
     }
@@ -378,6 +500,7 @@ class _ProfileFlowState extends State<ProfileFlow> {
 
   void _save() {
     final p = _build();
+    if (!_editing) unawaited(store.saveProfileFlowDraft(null));
     final w = _weightValue;
     final before = store.currentBodyweight;
     store.saveProfile(p);

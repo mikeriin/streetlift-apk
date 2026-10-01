@@ -1,4 +1,8 @@
-# Kalis Track 6.0.0 — Mode dev (pipeline « Génération et progression »)
+# Kalis Track 6.0.1 — Mode dev (pipeline « Génération et progression »)
+
+## 6.0.1 — Démarrage repris après fermeture (lot G1, correction 1)
+
+- Retour du propriétaire (01/10/2026) : fermer entièrement l'application pendant le démarrage faisait recommencer à la toute première question. Le brouillon du démarrage (étape et réponses) est désormais gardé à chaque étape et au passage en arrière-plan, puis repris à la réouverture ; il est propre à la session (personnelle ou de test), hors sauvegarde, effacé à l'enregistrement du profil et par « Supprimer les données », et jamais gardé pour un âge de moins de 18 ans.
 
 ## 6.0.0 — Mode dev, session de test isolée (lot G1)
 

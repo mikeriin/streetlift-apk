@@ -1,8 +1,14 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : G1 (mode dev, pipeline « Génération et progression »), version 6.0.0 ; précédent : 5.10.1 (M8 correction 3)**  
-**Date : 30 septembre 2026, Europe/Paris — version : 6.0.0+94 (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : G1 correction 1 (démarrage repris après fermeture), version 6.0.1 ; précédent : 6.0.0 (G1)**  
+**Date : 1er octobre 2026, Europe/Paris — version : 6.0.1+95 (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## G1.C1 — Correction 1 (version 6.0.1)
+
+| Retour | Correction |
+| --- | --- |
+| « Fermer entièrement l'app pendant [le démarrage] fait recommencer à la toute première question. » | Brouillon du démarrage (`profile_flow_draft_v1`, clé de la session active, hors sauvegarde) gardé à chaque étape et au passage en arrière-plan, repris à la réouverture, effacé à l'enregistrement du profil ; jamais pour un âge de moins de 18 ans. Test Dart `g1c1_brouillon_profil_test.dart`. |
 
 ## G1 — Mode dev, CI des paquets, build dev (version 6.0.0)
 
