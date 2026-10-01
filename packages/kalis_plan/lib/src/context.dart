@@ -1569,7 +1569,9 @@ PlanContext _build(ContextInputs inputs) {
     final reachable = trainable.contains(g.index);
     final low = g.major && reachable ? (baseLow * scale * 2).round() : 0;
     bandLow.add(low);
-    bandHigh.add(high < 2 ? 2 : high);
+    // Jamais moins de cinq séries : la dose d'un seul exercice ne doit pas
+    // déjà dépasser la bande d'un programme court.
+    bandHigh.add(high < 10 ? 10 : high);
     groupWeight.add(
       !reachable
           ? 0
