@@ -125,6 +125,8 @@ final class SetRow {
     required this.targetLow,
     required this.targetHigh,
     required this.reachable,
+    required this.steps,
+    required this.calibrating,
   });
 
   /// Semaine de la simulation (0 = première).
@@ -182,10 +184,17 @@ final class SetRow {
   /// matériel de l'athlète (voir `SimAthlete.reachable`).
   final bool reachable;
 
-  /// Hausse relative de la charge totale par rapport à la première série
-  /// de la séance précédente de l'exercice (première série seulement),
-  /// sinon `null`.
+  /// Hausse relative de la charge totale par rapport à la plus forte
+  /// charge de la séance précédente de l'exercice (première série
+  /// seulement), sinon `null`.
   final double? rise;
+
+  /// Crans de la grille entre cette plus forte charge et la charge de la
+  /// série (première série seulement, 0 sans hausse).
+  final int steps;
+
+  /// La politique a déclaré l'exercice en calibrage.
+  final bool calibrating;
 }
 
 /// Estimation d'un exercice après une séance, face à la vérité.
@@ -201,7 +210,11 @@ final class EstimateRow {
     required this.relSd,
     required this.operational,
     required this.truthOperational,
+    required this.main,
   });
+
+  /// Mouvement principal.
+  final bool main;
 
   /// Semaine de la simulation.
   final int week;
@@ -332,7 +345,7 @@ SimRun simulate({
   final run = SimRun(spec.key, policy.name, seed);
   final sessions = <SessionRecord>[];
   final exerciseSessions = <String, int>{};
-  final lastFirstLoad = <String, double>{};
+  final lastMaxLoad = <String, double>{};
   final decisions = <ProposalDecision>[];
   Map<String, Object?>? reviewState;
   AdaptationSummary? summary;
@@ -487,6 +500,7 @@ SimRun simulate({
         final role = context.roleOf(item.slotId);
         final rest = item.restSeconds ?? 90;
         var performed = 0;
+        double? sessionMax;
         for (var i = 0; i < item.sets; i++) {
           final target = policy.nextSet(context, item, i, done);
           if (target == null) {
@@ -546,13 +560,21 @@ SimRun simulate({
             ),
           );
           double? rise;
+          var steps = 0;
           if (i == 0 && load != null) {
-            final before = lastFirstLoad[item.exerciseId];
+            final before = lastMaxLoad[item.exerciseId];
             if (before != null) {
               final bw = truth.info.fraction * athlete.bodyWeightKg;
               rise = (load + bw) / (before + bw) - 1;
+              var kg = before;
+              while (kg < load - 1e-9 && steps < 50) {
+                kg = truth.info.grid.next(kg, up: true);
+                steps++;
+              }
             }
-            lastFirstLoad[item.exerciseId] = load;
+          }
+          if (load != null && (sessionMax == null || load > sessionMax)) {
+            sessionMax = load;
           }
           run.sets.add(
             SetRow(
@@ -574,6 +596,8 @@ SimRun simulate({
               rise: rise,
               targetLow: low,
               targetHigh: high,
+              steps: steps,
+              calibrating: item.toCalibrate,
               reachable: athlete.reachable(
                 truth,
                 basisLow ?? basisHigh ?? low,
@@ -585,6 +609,9 @@ SimRun simulate({
           performed++;
         }
         athlete.endExercise(truth);
+        if (sessionMax != null) {
+          lastMaxLoad[item.exerciseId] = sessionMax;
+        }
         if (performed > 0) {
           exerciseSessions[item.exerciseId] = count + 1;
           trained.add((truth, item));
@@ -645,6 +672,7 @@ SimRun simulate({
             truthOperational: loaded
                 ? truth.capacity * truth.share(n)
                 : truth.capacity,
+            main: context.roleOf(item.slotId) == SlotRole.main,
           ),
         );
       }

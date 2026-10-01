@@ -97,8 +97,8 @@ final class AdaptParams {
     this.transferNeighbours = 3,
     this.detrainFromDays = 21,
     this.detrainPerWeek = 0.01,
-    this.plateauProbability = 0.8,
-    this.plateauMinWeeks = 3,
+    this.plateauProbability = 0.9,
+    this.plateauMinWeeks = 4,
     this.plateauMinSessions = 4,
     this.volumeMinWeeks = 2,
     this.swapMinWeeks = 4,
@@ -110,6 +110,7 @@ final class AdaptParams {
     this.confidenceSession = 0.8,
     this.confidenceBlock = 0.85,
     this.refusalQuietDays = 28,
+    this.swapQuietDays = 21,
     this.deloadReadiness = 0.4,
     this.deloadSessions = 2,
     this.adherenceLow = 0.6,
@@ -463,6 +464,9 @@ final class AdaptParams {
 
   /// Jours pendant lesquels une proposition refusée n'est pas refaite.
   final int refusalQuietDays;
+
+  /// Jours sans nouvel échange d'exercice après un échange appliqué.
+  final int swapQuietDays;
 
   /// Forme du jour sous laquelle une séance compte pour une décharge.
   final double deloadReadiness;

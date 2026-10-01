@@ -203,6 +203,7 @@ Map<String, Object?> _quantiles(List<double> values) {
   return <String, Object?>{
     'median': r(at(0.5)),
     'p95': r(at(0.95)),
+    'p99': r(at(0.99)),
     'max': r(sorted.isEmpty ? 0 : sorted.last),
     'n': sorted.length,
   };
@@ -213,6 +214,17 @@ Map<String, Object?> _timings(Catalog catalog, int weeks) {
   final spec = athleteOf(key);
   final profile = _profileOf(spec.profileKey);
   final program = SimProgram(catalog, KalisPlan(), profile);
+  // Première simulation non mesurée : le code est compilé à la volée sur
+  // la machine de contrôle, d'avance sur téléphone.
+  simulate(
+    catalog: catalog,
+    spec: spec,
+    profile: profile,
+    seed: 0,
+    policy: _TimedPolicy(KalisAdapt()),
+    program: program,
+    weeks: weeks,
+  );
   final engine = KalisAdapt();
   final policy = _TimedPolicy(engine);
   final run = simulate(

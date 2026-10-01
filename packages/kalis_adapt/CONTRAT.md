@@ -346,7 +346,7 @@ termes.
 | Décharge anticipée | forme du jour sous 0,4 deux séances de suite, ou performances sous l'attendu (−3 %) avec forme sous 0,6 | 1 − forme récente |
 | Volume + 1 série | pente du groupe musculaire ≤ 0 avec une probabilité ≥ 0,7, performances normales, forme ≥ 0,6, assiduité ≥ 80 %, sous le haut de la bande de `kalis_plan` | probabilité × semaines / 4 |
 | Volume − 1 série | performances du groupe sous l'attendu (−2 %) avec forme sous 0,6 | probabilité que l'écart soit réel |
-| Échange d'exercice | plateau (pente ≤ 0, probabilité ≥ 0,8, 4 séances sur 3 semaines) d'un exercice non principal, exercice sauté 3 fois, ou charge minimale trop lourde | probabilité |
+| Échange d'exercice | plateau (pente ≤ 0 avec une probabilité ≥ 0,9, au moins 4 séances sur 4 semaines) d'un exercice non principal, exercice sauté 3 fois, ou charge minimale trop lourde ; pas de nouvel échange dans les 21 jours qui suivent un échange appliqué | probabilité |
 | Épargner une zone | douleur au-dessus du seuil deux séances de suite | 0,9 |
 | Restructurer une séance | temps insuffisant 3 fois sur les 4 dernières séances de ce jour | part des séances concernées |
 | Restructurer le bloc | moins de 60 % des séances faites sur trois semaines | test binomial contre 75 % |
@@ -402,7 +402,7 @@ du modèle).
 | `painThreshold`, `painHard`, `painSevere`, `painRirBonus`, `painClearDays` | 3 ; 4 ; 7 ; 1 ; 14 | règle santé L13 ; seuils de `kalis_plan` ; R — surveillance de la douleur, Silbernagel et al. 2007 (douleur tolérée jusqu'à 5/10 si elle retombe, sans hausse) |
 | `transferShare`, `transferMinSimilarity`, `transferNeighbours` | 0,43 ; 0,6 ; 3 | R — Spitz et al. 2023 (gain transféré ≈ 43 % du gain spécifique) |
 | `detrainFromDays`, `detrainPerWeek` | 21 ; 1 % | R — McMaster et al. 2013 (force gardée jusqu'à 3 semaines), Bosquet et al. 2013 |
-| `plateauProbability`, `plateauMinWeeks`, `plateauMinSessions` | 0,8 ; 3 ; 4 | H |
+| `plateauProbability`, `plateauMinWeeks`, `plateauMinSessions`, `swapQuietDays` | 0,9 ; 4 ; 4 ; 21 | M — à 0,8 sur 3 semaines, un athlète avancé (pente vraie presque nulle) recevait 6 échanges en 24 semaines (§ 6) |
 | `volumeMinWeeks`, `swapMinWeeks`, `sessionRestructureMinWeeks`, `blockRestructureMinWeeks` | 2 ; 4 ; 4 ; 8 | décision D5.7 |
 | `confidenceLoads` … `confidenceBlock` | 0,5 ; 0,65 ; 0,75 ; 0,8 ; 0,85 | H — croissants avec la portée (D5.7) |
 | `refusalQuietDays`, `deloadReadiness`, `deloadSessions`, `adherenceLow`, `skipTimes`, `timeShortTimes` | 28 ; 0,4 ; 2 ; 0,6 ; 3 ; 3 | H |

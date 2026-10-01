@@ -82,6 +82,7 @@ final class Metrics {
     final aggravations = <double>[];
     final capacity = <int, List<double>>{};
     final operational = <int, List<double>>{};
+    final mainOperational = <int, List<double>>{};
     final byRank = <int, List<double>>{};
     final byWeek = <int, List<double>>{};
     var covered = 0;
@@ -122,11 +123,17 @@ final class Metrics {
           near++;
         }
         final rise = s.rise;
-        if (rise != null && s.main && rise > maxMainRise) {
-          maxMainRise = rise;
-        }
-        if (rise != null && s.main && rise > 0.10 + 1e-9) {
-          mainRisesOverTen++;
+        if (rise != null && s.main && !s.calibrating) {
+          if (rise > maxMainRise) {
+            maxMainRise = rise;
+          }
+          if (rise > 0.10 + 1e-9) {
+            if (s.steps > 1) {
+              mainRisesOverTen++;
+            } else {
+              mainSingleStepsOverTen++;
+            }
+          }
         }
         if (s.plannedFailure) {
           continue;
@@ -199,6 +206,7 @@ final class Metrics {
       // Estimation.
       final capacityRun = <int, List<double>>{};
       final operationalRun = <int, List<double>>{};
+      final mainRun = <int, List<double>>{};
       final rankRun = <int, List<double>>{};
       for (final e in run.estimates) {
         if (e.truth <= 0 || e.truthOperational <= 0) {
@@ -213,6 +221,11 @@ final class Metrics {
           operationalRun
               .putIfAbsent(e.exerciseSession, () => <double>[])
               .add(operationalError);
+          if (e.main) {
+            mainRun
+                .putIfAbsent(e.exerciseSession, () => <double>[])
+                .add(operationalError);
+          }
         }
         if (e.exerciseSession <= convergenceRanks) {
           rankRun
@@ -234,6 +247,7 @@ final class Metrics {
 
       fold(capacityRun, capacity);
       fold(operationalRun, operational);
+      fold(mainRun, mainOperational);
       fold(rankRun, byRank);
       if (run.gain.isNotEmpty) {
         gains.add(_mean(run.gain.values.toList()));
@@ -266,6 +280,10 @@ final class Metrics {
       if (c != null && o != null) {
         capacityError[rank] = Stat.of(c);
         operationalError[rank] = Stat.of(o);
+      }
+      final mo = mainOperational[rank];
+      if (mo != null) {
+        mainOperationalError[rank] = Stat.of(mo);
       }
     }
     for (var rank = 1; rank <= convergenceRanks; rank++) {
@@ -347,6 +365,9 @@ final class Metrics {
   /// milieu de plage au RIR visé) aux mêmes rangs.
   final Map<int, Stat> operationalError = <int, Stat>{};
 
+  /// La même erreur opérationnelle, mouvements principaux seulement.
+  final Map<int, Stat> mainOperationalError = <int, Stat>{};
+
   /// Erreur opérationnelle moyenne par rang de séance (1 à 20).
   final List<double?> convergence = <double?>[];
 
@@ -358,11 +379,17 @@ final class Metrics {
   late final double? coverage95;
 
   /// Plus forte hausse de charge totale d'une séance à l'autre sur un
-  /// mouvement principal, après calibrage.
+  /// mouvement principal (par rapport à la plus forte charge de la séance
+  /// précédente), hors calibrage.
   double maxMainRise = 0;
 
-  /// Nombre de ces hausses au-dessus de 10 %.
+  /// Hausses de plus de 10 % faites de plus d'un cran de la grille (ce que
+  /// l'invariant I1 interdit).
   int mainRisesOverTen = 0;
+
+  /// Hausses de plus de 10 % faites d'un seul cran (le plus petit cran du
+  /// matériel dépasse 10 %).
+  int mainSingleStepsOverTen = 0;
 
   /// Objet JSON des mesures.
   Map<String, Object?> toJson() => <String, Object?>{
@@ -389,6 +416,10 @@ final class Metrics {
     'operationalError': <String, Object?>{
       for (final e in operationalError.entries) '${e.key}': e.value.toJson(),
     },
+    'mainOperationalError': <String, Object?>{
+      for (final e in mainOperationalError.entries)
+        '${e.key}': e.value.toJson(),
+    },
     'convergence': <Object?>[
       for (final v in convergence) v == null ? null : roundTo(v, 5),
     ],
@@ -398,6 +429,7 @@ final class Metrics {
     'coverage95': coverage95 == null ? null : roundTo(coverage95!, 4),
     'maxMainRise': roundTo(maxMainRise, 4),
     'mainRisesOverTen': mainRisesOverTen,
+    'mainSingleStepsOverTen': mainSingleStepsOverTen,
   };
 }
 

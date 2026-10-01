@@ -191,19 +191,48 @@ String campaignMarkdown(Map<String, Object?> campaign) {
   }
   out.addAll(<String>[
     '',
+    '### Mouvements principaux seulement',
+    '',
+    'L\'ancien moteur L7 n\'estimait que les mouvements principaux, à '
+        'partir d\'un niveau déclaré : la comparaison se fait sur eux.',
+    '',
+    '| Athlète | Politique | Opér. S1 | Opér. S3 | Opér. S6 | Opér. S12 |',
+    '| --- | --- | --- | --- | --- | --- |',
+  ]);
+  for (final a in athletes) {
+    final athlete = _map(a);
+    final policies = _map(athlete['policies']);
+    for (final name in reportPolicies) {
+      final op = _map(_map(policies[name])['mainOperationalError']);
+      if (op.isEmpty) {
+        continue;
+      }
+      out.add(
+        '| ${athlete['key']} | $name | ${_pct(_mean(op['1']))} | '
+        '${_pct(_mean(op['3']))} | ${_pct(_mean(op['6']))} | '
+        '${_pct(_mean(op['12']))} |',
+      );
+    }
+  }
+  out.addAll(<String>[
+    '',
     '## 3. Stabilité et sécurité',
     '',
     'Changements : changements de charge de première série par '
         'simulation, après calibrage. Inversions : part de ces changements '
         'qui défont le précédent. Hausse max : plus forte hausse de charge '
-        'totale d\'une séance à l\'autre sur un mouvement principal, après '
-        'calibrage (un seul cran de grille peut dépasser 10 % quand le plus '
-        'petit cran du matériel est plus grand). Aggravations : hausses de '
-        'charge sur une zone signalée douloureuse.',
+        'totale d\'un mouvement principal par rapport à la plus forte '
+        'charge de sa séance précédente, hors calibrage déclaré. Hausses '
+        '> 10 % : celles qui franchissent plus d\'un cran de la grille (ce '
+        'que l\'invariant I1 interdit à `kalis_adapt`), et celles d\'un '
+        'seul cran (le plus petit cran du matériel dépasse 10 %), sur '
+        'toutes les simulations. Aggravations : hausses de charge sur une '
+        'zone signalée douloureuse, par simulation.',
     '',
     '| Athlète | Politique | Changements | Inversions | Hausse max '
-        '(principal) | Hausses > 10 % | Séances ajustées | Aggravations |',
-    '| --- | --- | --- | --- | --- | --- | --- | --- |',
+        '(principal) | Hausses > 10 %, plusieurs crans | Hausses > 10 %, un '
+        'cran | Séances ajustées | Aggravations |',
+    '| --- | --- | --- | --- | --- | --- | --- | --- | --- |',
   ]);
   for (final a in athletes) {
     final athlete = _map(a);
@@ -216,7 +245,7 @@ String campaignMarkdown(Map<String, Object?> campaign) {
       out.add(
         '| ${athlete['key']} | $name | ${_num(_mean(m['loadMoves']), 1)} | '
         '${_pct(_mean(m['reversalRate']))} | ${_pct(m['maxMainRise'])} | '
-        '${m['mainRisesOverTen']} | '
+        '${m['mainRisesOverTen']} | ${m['mainSingleStepsOverTen']} | '
         '${_pct(_mean(m['sessionsAdjustedShare']))} | '
         '${_num(_mean(m['painAggravations']))} |',
       );
@@ -293,17 +322,21 @@ String campaignMarkdown(Map<String, Object?> campaign) {
       'Mesurés par le simulateur sur la machine de contrôle (le moteur n\'a '
           'pas d\'horloge), sur ${timings['sessions']} séances et '
           '${timings['advices']} conseils de l\'athlète '
-          '`${timings['athlete']}`. « À froid » : premier appel, tout le '
-          'journal rejoué (${timings['coldSessions']} séances).',
+          '`${timings['athlete']}`, après une première simulation non '
+          'mesurée (le code est alors compilé, comme il l\'est d\'avance '
+          'sur téléphone). « À froid » : instance neuve, tout le journal '
+          'rejoué (${timings['coldSessions']} séances). Machine : '
+          '${timings['machine']} — pas un téléphone.',
       '',
-      '| Opération | Médiane | 95ᵉ centile | Maximum | Cible |',
-      '| --- | --- | --- | --- | --- |',
+      '| Opération | Médiane | 95ᵉ centile | 99ᵉ centile | Maximum | '
+          'Cible |',
+      '| --- | --- | --- | --- | --- | --- |',
     ]);
     void row(String label, String key, String target) {
       final t = _map(timings[key]);
       out.add(
         '| $label | ${_num(t['median'], 2)} ms | ${_num(t['p95'], 2)} ms | '
-        '${_num(t['max'], 2)} ms | $target |',
+        '${_num(t['p99'], 2)} ms | ${_num(t['max'], 2)} ms | $target |',
       );
     }
 

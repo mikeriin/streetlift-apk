@@ -908,10 +908,19 @@ AdaptReview buildReview(
 
   final refused = <String, int>{};
   final settled = <String>{};
+  int? lastSwapDay;
   for (final decision in input.decisions ?? const <ProposalDecision>[]) {
     final id = decision.proposalId;
     final cut = id.lastIndexOf('@');
     final family = cut < 0 ? id : id.substring(0, cut);
+    if (family.startsWith('swap:') &&
+        (decision.status == ProposalStatus.autoApplied ||
+            decision.status == ProposalStatus.accepted)) {
+      final when = decision.date.dayNumber;
+      if (lastSwapDay == null || when > lastSwapDay) {
+        lastSwapDay = when;
+      }
+    }
     if (decision.status == ProposalStatus.refused ||
         decision.status == ProposalStatus.undone) {
       final when = decision.date.dayNumber;
@@ -949,6 +958,10 @@ AdaptReview buildReview(
       withheld = 'refused';
     } else if (settled.contains(id)) {
       withheld = 'settled';
+    } else if (c.kind == ProposalKind.exerciseSwap &&
+        lastSwapDay != null &&
+        day - lastSwapDay < p.swapQuietDays) {
+      withheld = 'recent_swap';
     }
     if (withheld == null && c.diff == null) {
       // Restructuration demandée au moteur statique (D5.1).
