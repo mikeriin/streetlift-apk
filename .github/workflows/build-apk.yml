@@ -5,7 +5,10 @@ name: Build APK et AAB
 
 on:
   push:
-    branches: ["**"]
+    # Branches de piste du pipeline GP (01/10/2026) : jamais de build signé
+    # (elles ne contiennent que des paquets ; l'application en récupère les
+    # dossiers packages/<paquet> par étiquette). Sur main : branches: ["**"].
+    branches-ignore: ["moteurs", "koach", "claude/ci-gp-moteurs", "claude/ci-gp-koach"]
     paths:
       - lib/**
       - assets/**
