@@ -248,22 +248,25 @@ void main() {
         .evaluate()
         .isNotEmpty;
     await shot('8_bulle_pourquoi');
-    // Transition : retour en haut (Koach en grand visible), une pose de la
-    // première rangée.
+    // Transition : galerie rouverte (en haut, Koach en grand visible), une
+    // pose de la première rangée.
+    await back(tester);
+    await gallery(tester);
     final stage = find.byKey(const ValueKey('koach-gallery-stage'));
-    await scrollTo(tester, stage, up: true);
-    await scrollTo(tester, find.byKey(const ValueKey('koach-pose-progress_chart')));
-    final before = tester.state<KoachViewState>(stage).transitions;
-    await tester.tap(find.byKey(const ValueKey('koach-pose-progress_chart')));
+    KoachViewState? stageState() => stage.evaluate().isEmpty
+        ? null
+        : tester.state<KoachViewState>(stage);
+    final chart = find.byKey(const ValueKey('koach-pose-progress_chart'));
+    await scrollTo(tester, chart);
+    final before = stageState()?.transitions ?? -1;
+    await tester.tap(chart);
     await tester.pump(const Duration(milliseconds: 90));
     releve['transition_en_cours'] =
-        tester.state<KoachViewState>(stage).transitions == before + 1;
+        before >= 0 && stageState()?.transitions == before + 1;
     await wait(tester, 600);
     await scrollTo(tester, stage, up: true);
     await shot('9_galerie_transition');
-    releve['respiration'] =
-        stage.evaluate().isNotEmpty &&
-        tester.state<KoachViewState>(stage).breathing;
+    releve['respiration'] = stageState()?.breathing ?? false;
 
     // « Réduire les animations » : poses fixes.
     tester.platformDispatcher.accessibilityFeaturesTestValue =
@@ -273,14 +276,11 @@ void main() {
       find.text('Animations réduites : Koach reste immobile.'),
     );
     await scrollTo(tester, find.byKey(const ValueKey('koach-pose-anatomy')));
-    final n = tester.state<KoachViewState>(stage).transitions;
+    final n = stageState()?.transitions ?? -1;
     await tester.tap(find.byKey(const ValueKey('koach-pose-anatomy')));
     await until(tester, find.text('Montre l’anatomie'));
-    releve['reduit_transition'] =
-        tester.state<KoachViewState>(stage).transitions != n;
-    releve['reduit_respiration'] = tester
-        .state<KoachViewState>(stage)
-        .breathing;
+    releve['reduit_transition'] = n < 0 || stageState()?.transitions != n;
+    releve['reduit_respiration'] = stageState()?.breathing ?? true;
     await scrollTo(tester, stage, up: true);
     await wait(tester, 600);
     await shot('10_animations_reduites');

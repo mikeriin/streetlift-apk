@@ -60,6 +60,18 @@ code_g5=0
 for part in a b; do
   cible koach_g5_test "$part" dev
   c=$?
+  # Premier lancement après le démarrage de l'émulateur : le service du
+  # pilote disparaît parfois avant le premier relevé (essais G5 1, 2, 5) ;
+  # adb relancé, second essai (comme M8).
+  if [ "$c" -ne 0 ] && [ ! -f "$out/g5_releve_$part.json" ]; then
+    echo "G5 $part sans relevé (code $c) : adb relancé, second essai."
+    cp "$out/drive-koach_g5_test-$part.log" "$out/drive-g5-$part-essai1.log"
+    adb kill-server || true
+    adb start-server || true
+    timeout 60 adb wait-for-device || true
+    cible koach_g5_test "$part" dev
+    c=$?
+  fi
   [ "$c" -ne 0 ] && code_g5=$c
   tail -n 30 "$out/drive-koach_g5_test-$part.log"
 done
