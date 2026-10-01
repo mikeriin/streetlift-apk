@@ -65,4 +65,4 @@ Entrées du propriétaire (`inputs/`) :
 
 | Lot | Prérequis | Tâche | Étiquette | Commit koach | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
-| GK | — | Opus | kalis_koach-v0.1.0 | — | — | à faire |
+| GK | — | Opus | kalis_koach-v0.1.0 | — | — | en cours depuis 2026-10-01 06:50 UTC |
