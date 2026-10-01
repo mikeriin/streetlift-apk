@@ -1,0 +1,140 @@
+== kalis_adapt
+Resolving dependencies...
+Downloading packages...
++ _fe_analyzer_shared 108.0.0
++ analyzer 14.4.0
++ args 2.7.0
++ async 2.13.1
++ boolean_selector 2.1.2
++ cli_config 0.2.0
++ collection 1.19.1
++ convert 3.1.2
++ coverage 1.15.1
++ crypto 3.0.7
++ file 7.0.1
++ frontend_server_client 4.0.0
++ glob 2.2.0
++ http_multi_server 3.2.2
++ http_parser 4.1.2
++ io 1.1.0
++ kalis_core 0.2.0 from path ../kalis_core
++ kalis_plan 0.1.0 from path ../kalis_plan
++ lints 4.0.0 (6.1.0 available)
++ logging 1.3.0
++ matcher 0.12.20
++ meta 1.19.0
++ mime 2.1.0
++ node_preamble 2.0.2
++ package_config 3.0.0
++ path 1.9.1
++ pool 1.5.3
++ pub_semver 2.2.1
++ shelf 1.4.2
++ shelf_packages_handler 3.0.2
++ shelf_static 1.1.3
++ shelf_web_socket 3.0.0
++ source_map_stack_trace 2.1.2
++ source_maps 0.10.14
++ source_span 1.10.2
++ stack_trace 1.12.2
++ stream_channel 2.1.4
++ string_scanner 1.4.1
++ term_glyph 1.2.2
++ test 1.32.0
++ test_api 0.7.14
++ test_core 0.6.20
++ typed_data 1.4.0
++ vm_service 15.3.0
++ watcher 1.2.1
++ web 1.1.1
++ web_socket 1.0.1
++ web_socket_channel 3.0.3
++ webkit_inspection_protocol 1.2.1
++ yaml 3.1.4
+Changed 50 dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Changed test/zz_dev_test.dart
+Formatted 38 files (1 changed) in 0.20 seconds.
+formatage : échec
+Analyzing kalis_adapt...
+
+warning - lib/src/model.dart:1596:11 - The value of the local variable 'p' isn't used. Try removing the variable or using it. - unused_local_variable
+
+1 issue found.
+analyse : échec
+00:00 +0: loading test/zz_dev_test.dart
+00:00 +0: test/zz_dev_test.dart: export des sources formatées
+00:00 +1: test/zz_dev_test.dart: traces
+00:00 +2: test/zz_dev_test.dart: traces
+00:00 +3: test/zz_dev_test.dart: traces
+00:00 +4: test/zz_dev_test.dart: traces
+00:00 +5: test/zz_dev_test.dart: traces
+00:00 +6: test/zz_dev_test.dart: traces
+00:00 +7: test/zz_dev_test.dart: traces
+00:00 +8: test/zz_dev_test.dart: traces
+00:00 +9: test/zz_dev_test.dart: traces
+00:00 +10: test/zz_dev_test.dart: traces
+00:00 +11: test/zz_dev_test.dart: traces
+00:00 +12: test/zz_dev_test.dart: traces
+00:00 +13: test/zz_dev_test.dart: traces
+00:00 +14: test/zz_dev_test.dart: traces
+00:00 +15: test/zz_dev_test.dart: traces
+00:00 +16: test/zz_dev_test.dart: traces
+00:00 +17: test/zz_dev_test.dart: traces
+00:00 +18: test/zz_dev_test.dart: traces
+00:00 +19: test/zz_dev_test.dart: traces
+00:00 +20: test/zz_dev_test.dart: traces
+00:00 +21: test/zz_dev_test.dart: traces
+00:00 +22: test/zz_dev_test.dart: traces
+00:00 +23: test/zz_dev_test.dart: traces
+00:00 +24: test/zz_dev_test.dart: traces
+00:00 +25: test/zz_dev_test.dart: traces
+00:01 +26: test/zz_dev_test.dart: traces
+00:01 +27: test/zz_dev_test.dart: traces
+00:01 +28: test/zz_dev_test.dart: traces
+00:04 +29: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:05 +30: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:06 +31: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:07 +32: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:07 +33: test/smoke_test.dart: notes_paresseuses : 8 semaines en boucle complète
+00:08 +34: test/properties_0_test.dart: journaux aléatoires 160 à 319
+00:08 +35: test/properties_0_test.dart: journaux aléatoires 160 à 319
+00:08 +36: test/properties_0_test.dart: journaux aléatoires 160 à 319
+00:08 +37: test/properties_0_test.dart: journaux aléatoires 160 à 319
+00:08 +38: test/smoke_test.dart: douleur_et_lieu : 8 semaines en boucle complète
+00:08 +39: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +40: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +41: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +42: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +43: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +44: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +45: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +46: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +47: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +48: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +49: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +50: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +51: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +52: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +53: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +54: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +55: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +56: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +57: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:09 +58: test/properties_0_test.dart: journaux aléatoires 480 à 639
+00:09 +59: test/properties_0_test.dart: journaux aléatoires 640 à 799
+00:10 +60: test/properties_0_test.dart: journaux aléatoires 800 à 959
+00:10 +61: test/properties_0_test.dart: journaux aléatoires 960 à 1119
+00:11 +62: test/properties_0_test.dart: journaux aléatoires 1120 à 1279
+00:11 +63: All tests passed!
+  notes_paresseuses : fait (9 s)
+  debutant_salle : fait (10 s)
+  irregulier : fait (12 s)
+  intermediaire_salle : fait (12 s)
+  calisthenie_parc : fait (13 s)
+  maison_halteres : fait (15 s)
+  avance_street : fait (18 s)
+  douleur_et_lieu : fait (18 s)
+kalis_adapt 0.1.0 : rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_adapt (19 s).
+durée : 44 s
