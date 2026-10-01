@@ -401,6 +401,73 @@ final class Planner {
     return at;
   }
 
+  /// Amorce : place d'abord un exercice pour chaque schéma de base que le
+  /// vivier permet et que le programme ne couvre pas encore (genou, tirage,
+  /// poussée, hanche, tronc), au jour où il sert le mieux la note — même
+  /// s'il la fait d'abord baisser : l'équilibre des schémas ne se juge
+  /// qu'une fois les deux côtés présents. Un exercice par tranche de dix
+  /// minutes de renforcement au plus ; la suite de la recherche peut le
+  /// retirer.
+  void _seedPatterns(PlanState state) {
+    final ctx = context;
+    if (ctx.resistanceShare <= 0) {
+      return;
+    }
+    var minutes = 0;
+    for (final d in ctx.days) {
+      minutes += d.minutes;
+    }
+    var seeds = (minutes * ctx.resistanceShare / 10).floor();
+    const order = <int>[16, 8, 1, 32, 4, 2, 64];
+    for (final bit in order) {
+      if (seeds <= 0) {
+        break;
+      }
+      if (ctx.coverableBits & bit == 0) {
+        continue;
+      }
+      objective(state);
+      if (scorer.coveredBits & bit != 0) {
+        continue;
+      }
+      final candidates = <int>[
+        for (final index in _selectable)
+          if (ctx.pool[index].coverBits & bit != 0 && !banned.contains(index))
+            index,
+      ];
+      candidates.sort((a, b) {
+        final by = _merit(ctx.pool[b]).compareTo(_merit(ctx.pool[a]));
+        return by != 0 ? by : ctx.pool[a].id.compareTo(ctx.pool[b].id);
+      });
+      final best = _bestAdditions(
+        state,
+        candidates.length > 8 ? candidates.sublist(0, 8) : candidates,
+        1,
+        0,
+      );
+      if (best.isNotEmpty) {
+        final (_, d, index) = best.first;
+        if (place(state, d, index, unnamedSlot) >= 0) {
+          seeds--;
+        }
+      }
+    }
+  }
+
+  double _merit(PoolEntry e) {
+    var support = 0;
+    for (final s in e.goalSupport) {
+      if (s > support) {
+        support = s;
+      }
+    }
+    return (e.liked ? 1.0 : 0.0) +
+        support / 100 +
+        e.fit +
+        e.affinity / 200 +
+        1e-3 * e.tieBreak;
+  }
+
   /// Construction gloutonne avec anticipation : ajoute l'exercice qui
   /// améliore le plus la note, en regardant un ajout plus loin pour les
   /// meilleurs candidats ; s'arrête quand plus aucun ajout n'améliore.
@@ -408,6 +475,7 @@ final class Planner {
   void construct(PlanState state) {
     final ctx = context;
     final width = ctx.params.lookaheadWidth;
+    _seedPatterns(state);
     for (var step = 0; step < 160; step++) {
       var empty = 0;
       for (var d = 0; d < ctx.dayCount; d++) {

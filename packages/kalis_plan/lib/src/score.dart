@@ -13,6 +13,14 @@ import 'traits.dart';
 /// Bits des six schémas de base (hors tronc) dans `PoolEntry.coverBits`.
 const int basePatternBits = 63;
 
+/// Écart moyen de fatigue entre séances toléré sans pénalité.
+const double fatigueTolerance = 0.3;
+
+/// Séries fictives ajoutées aux deux termes d'un rapport d'équilibre : un
+/// premier exercice de poussée ou de jambes ne fait pas s'effondrer la note
+/// avant que son pendant soit placé.
+const int balancePriorHalfSets = 4;
+
 /// Bit du tronc dans `PoolEntry.coverBits`.
 const int coreBit = 64;
 
@@ -43,6 +51,9 @@ final class Scorer {
       _goalSum = Int32List(context.goals.length),
       _goalExact = Int32List(context.goals.length),
       _dayMobility = Int32List(64),
+      _groupStamp = Int32List(MuscleGroup.values.length),
+      _groupDays = Int32List(MuscleGroup.values.length),
+      _dayWod = Float64List(context.dayCount),
       _weekSeen = Int32List(context.pool.length),
       _rootDay = Int32List(context.rootCount),
       _patternStamp = Int32List(64),
@@ -65,6 +76,9 @@ final class Scorer {
   final Int32List _goalSum;
   final Int32List _goalExact;
   final Int32List _dayMobility;
+  final Int32List _groupStamp;
+  final Int32List _groupDays;
+  final Float64List _dayWod;
   final Int32List _weekSeen;
   final Int32List _rootDay;
   final Int32List _patternStamp;
@@ -158,6 +172,7 @@ final class Scorer {
     _classTime.fillRange(0, _classTime.length, 0);
     _goalSum.fillRange(0, _goalSum.length, 0);
     _goalExact.fillRange(0, _goalExact.length, 0);
+    _groupDays.fillRange(0, groups, 0);
     _stamp++;
     final stamp = _stamp;
 
@@ -183,7 +198,6 @@ final class Scorer {
     var slots = 0;
     var hardCardio = 0;
     var easyCardio = 0;
-    var wodDays = 0;
     var mobilitySlots = 0;
     var regionMask = 0;
     var sfrSum = 0.0;
@@ -199,6 +213,7 @@ final class Scorer {
       var fatigue = 0;
       var warm = false;
       var conditioning = 0;
+      var coreSlots = 0;
       var coreHere = false;
       var strengthHere = false;
       var skillHere = false;
@@ -226,8 +241,15 @@ final class Scorer {
         for (var k = 0; k < cg.length; k++) {
           final v = cv[k];
           _volume[cg[k]] += credited * v;
-          if (v == 2 && e.heavyWeight > 0) {
-            _heavy[d * groups + cg[k]] += credited * e.heavyWeight;
+          if (v == 2) {
+            final g = cg[k];
+            if (e.heavyWeight > 0) {
+              _heavy[d * groups + g] += credited * e.heavyWeight;
+            }
+            if (_groupStamp[g] != dayStamp) {
+              _groupStamp[g] = dayStamp;
+              _groupDays[g]++;
+            }
           }
         }
         push += count * e.pushUnits;
@@ -322,8 +344,12 @@ final class Scorer {
           case SlotKind.compound:
             strengthHere = true;
           case SlotKind.accessory:
-          case SlotKind.core:
             break;
+          case SlotKind.core:
+            coreSlots++;
+            if (coreSlots > 2) {
+              patternExcess++;
+            }
         }
         final sfr = e.traits.stimulusFatigue;
         if (sfr >= 0) {
@@ -334,9 +360,8 @@ final class Scorer {
       slotTime += t;
       _dayTime[d] = warm ? t + days[d].warmupSeconds : t;
       _dayFatigue[d] = fatigue / days[d].seconds;
-      if (conditioning >= 2 && strengthHere) {
-        wodDays++;
-      }
+      final piece = conditioning >= 3 ? 1.0 : conditioning / 3;
+      _dayWod[d] = 0.5 * piece + (strengthHere ? 0.5 : 0.0);
       if (cardioHere > 2) {
         cardioStack += cardioHere - 2;
       }
@@ -397,7 +422,15 @@ final class Scorer {
       deviation += x < 0 ? -x : x;
     }
     deviation /= dayCount;
-    var balance = mean <= 0 ? 1.0 : 1 - deviation / mean;
+    // Un écart moyen de 30 % entre les séances est sans conséquence
+    // (alternance de jours durs et légers) ; au-delà, la note baisse.
+    var balance = 1.0;
+    if (mean > 0) {
+      final spread = deviation / mean - fatigueTolerance;
+      if (spread > 0) {
+        balance = 1 - spread / (1 - fatigueTolerance);
+      }
+    }
     if (balance < 0) {
       balance = 0;
     }
@@ -447,6 +480,8 @@ final class Scorer {
     } else {
       var sum = 0.0;
       var weights = 0.0;
+      var twice = 0.0;
+      var trained = 0.0;
       for (var g = 0; g < groups; g++) {
         final v = _volume[g];
         final low = ctx.bandLow[g];
@@ -462,10 +497,21 @@ final class Scorer {
         } else {
           s = 1;
         }
-        sum += ctx.groupWeight[g] * s;
-        weights += ctx.groupWeight[g];
+        final weight = ctx.groupWeight[g];
+        sum += weight * s;
+        weights += weight;
+        if (low > 0 && _groupDays[g] > 0) {
+          trained += weight;
+          if (_groupDays[g] >= 2 || dayCount < 2) {
+            twice += weight;
+          }
+        }
       }
-      c[5] = weights <= 0 ? 1 : sum / weights;
+      // Bande de volume (70 %) et fréquence : un groupe travaillé l'est au
+      // moins deux jours par semaine (30 %).
+      final band = weights <= 0 ? 1.0 : sum / weights;
+      final frequency = trained <= 0 ? 1.0 : twice / trained;
+      c[5] = 0.7 * band + 0.3 * frequency;
     }
 
     // Qualité : équilibre des schémas.
@@ -475,14 +521,18 @@ final class Scorer {
       final coverable = ctx.coverableBits;
       var pullPush = 1.0;
       if (push > 0 && coverable & 12 != 0) {
-        pullPush = pull / (params.pullToPushRatio * push);
+        pullPush =
+            (pull + balancePriorHalfSets) /
+            (params.pullToPushRatio * push + balancePriorHalfSets);
         if (pullPush > 1) {
           pullPush = 1;
         }
       }
       var hipKnee = 1.0;
       if (knee > 0 && coverable & 32 != 0) {
-        hipKnee = hip / (params.hipToKneeRatio * knee);
+        hipKnee =
+            (hip + balancePriorHalfSets) /
+            (params.hipToKneeRatio * knee + balancePriorHalfSets);
         if (hipKnee > 1) {
           hipKnee = 1;
         }
@@ -558,14 +608,27 @@ final class Scorer {
           }
           sub = 0.5 * presence + 0.5 * frequency;
         case DisciplineClass.crossfit:
+          // Une séance de CrossFit : une partie de force ou de technique,
+          // puis une pièce de conditionnement d'environ trois mouvements.
           var wanted = (target * dayCount).round();
           if (wanted < 1) {
             wanted = 1;
           }
-          sub = wodDays / wanted;
-          if (sub > 1) {
-            sub = 1;
+          var sum = 0.0;
+          for (var rank = 0; rank < wanted; rank++) {
+            var best = -1;
+            for (var d = 0; d < dayCount; d++) {
+              if (_dayWod[d] >= 0 && (best < 0 || _dayWod[d] > _dayWod[best])) {
+                best = d;
+              }
+            }
+            if (best < 0) {
+              break;
+            }
+            sum += _dayWod[best];
+            _dayWod[best] = -1;
           }
+          sub = sum / wanted;
         case DisciplineClass.mobility:
           if (mobilitySlots == 0) {
             sub = 0.5;
@@ -623,7 +686,7 @@ final class Scorer {
     final knownShare = ctx.knownCount == 0
         ? 1.0
         : (knownSeen >= ctx.knownCount ? 1.0 : knownSeen / ctx.knownCount);
-    c[12] = 0.6 * likedShare + 0.4 * knownShare;
+    c[12] = 0.5 * likedShare + 0.5 * knownShare;
 
     // Qualité : nouveautés techniques.
     final extra = novelSeen - ctx.noveltyAllowance;

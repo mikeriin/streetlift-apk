@@ -11,8 +11,8 @@ library;
 final class ScoreWeights {
   /// Poids par défaut.
   const ScoreWeights({
-    this.recovery = 0.6,
-    this.fatigueBalance = 0.2,
+    this.recovery = 0.65,
+    this.fatigueBalance = 0.15,
     this.jointLoad = 0.2,
     this.goalSpecificity = 0.16,
     this.disciplineDosage = 0.12,
@@ -22,9 +22,9 @@ final class ScoreWeights {
     this.timeUse = 0.08,
     this.variety = 0.06,
     this.exerciseFit = 0.10,
-    this.stimulusFatigue = 0.04,
-    this.preferences = 0.05,
-    this.novelty = 0.03,
+    this.stimulusFatigue = 0.03,
+    this.preferences = 0.07,
+    this.novelty = 0.02,
   });
 
   /// Sécurité : même muscle sollicité lourdement à moins de 48 h.

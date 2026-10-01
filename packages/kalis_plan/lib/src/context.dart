@@ -552,7 +552,7 @@ final class PlanContext {
   /// Nombre d'exercices aimés présents dans le vivier (plafonné à 4).
   final int likedCount;
 
-  /// Nombre d'exercices sus présents dans le vivier (plafonné à 3).
+  /// Nombre d'exercices sus présents dans le vivier (plafonné à 6).
   final int knownCount;
 
   /// Vrai si le vivier contient une figure prioritaire.
@@ -712,7 +712,7 @@ int abilityFromPerformance({
           rank++;
         }
       }
-      const byRank = <int>[3, 5, 7, 9];
+      const byRank = <int>[3, 4, 6, 8];
       final fromRatio = byRank[rank];
       return fromRatio > d ? fromRatio : d;
   }
@@ -1105,10 +1105,24 @@ PlanContext _build(ContextInputs inputs) {
       }
     }
     if (cls == DisciplineClass.crossfit &&
-        e.discipline != CatalogDiscipline.crossfit &&
-        t.kind == SlotKind.accessory) {
-      // L'isolation n'est pas du CrossFit : simple appoint.
-      affinity = 20;
+        e.discipline != CatalogDiscipline.crossfit) {
+      // Le CrossFit puise sa force dans les barres, les haltères et les
+      // kettlebells, sa gymnastique dans le street workout et la
+      // calisthénie dynamique ; l'isolation n'est qu'un appoint.
+      final free =
+          e.loadType == LoadType.barbell ||
+          e.loadType == LoadType.dumbbells ||
+          e.loadType == LoadType.kettlebell;
+      if (t.kind == SlotKind.accessory) {
+        affinity = 20;
+      } else if (e.discipline == CatalogDiscipline.musculation &&
+          (t.kind == SlotKind.power ||
+              (t.kind == SlotKind.compound && free))) {
+        affinity = 90;
+      } else if (e.discipline == CatalogDiscipline.streetWorkout ||
+          e.discipline == CatalogDiscipline.calisthenicsDynamic) {
+        affinity = 70;
+      }
     }
     if (affinity <= 0) {
       rejection = Rejections.discipline;
@@ -1140,6 +1154,12 @@ PlanContext _build(ContextInputs inputs) {
       } else if (target.pattern == e.pattern) {
         final cosine = target.muscleCosine(e);
         s = cosine >= 0.7 ? 50 : (cosine >= 0.4 ? 30 : 0);
+        if (isLoadAdjustable(target.loadType) !=
+            isLoadAdjustable(e.loadType)) {
+          // Un exercice sans charge réglable sert peu un objectif de
+          // charge, et inversement.
+          s ~/= 2;
+        }
       }
       support[j] = s;
       if (s > bestSupport) {
@@ -1192,15 +1212,15 @@ PlanContext _build(ContextInputs inputs) {
     }
 
     // Trop facile : un polyarticulaire ou une figure sans charge réglable,
-    // quatre paliers sous le niveau du groupe (ou assisté, deux paliers
-    // sous ce niveau), n'entraîne plus — sauf exercice connu, aimé ou lié
-    // à un objectif.
+    // trois paliers sous le niveau du groupe (ou assisté, deux paliers
+    // sous ce niveau), n'entraîne plus — sauf exercice connu, aimé ou
+    // exercice même d'un objectif.
     if (rejection == null &&
-        !wanted &&
+        !(known || liked.contains(e.id) || bestSupport == 100) &&
         (t.kind == SlotKind.compound || t.kind.isSkill) &&
         !isLoadAdjustable(e.loadType)) {
       final below = a - e.difficulty;
-      if (below >= 4 || (e.assisted && below >= 2)) {
+      if (below >= 3 || (e.assisted && below >= 2)) {
         rejection = Rejections.tooEasy;
       }
     }
@@ -1494,7 +1514,7 @@ PlanContext _build(ContextInputs inputs) {
     requiredIds: Set<String>.unmodifiable(required),
     excludedIds: Set<String>.unmodifiable(excluded),
     likedCount: likedInPool > 4 ? 4 : likedInPool,
-    knownCount: knownInPool > 3 ? 3 : knownInPool,
+    knownCount: knownInPool > 6 ? 6 : knownInPool,
     hasPrioritySkill: pool.any((e) => e.selectable && e.prioritySkill),
     goalExactSelectable: List<bool>.unmodifiable(exactSelectable),
     rejections: Map<String, String>.unmodifiable(rejections),
