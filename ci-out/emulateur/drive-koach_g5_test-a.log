@@ -1,0 +1,70 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             87.3s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...           5.7s
+W/eetlift_tracker( 4179): Accessing hidden method Landroid/view/accessibility/AccessibilityNodeInfo;->getSourceNodeId()J (unsupported,test-api, reflection, allowed)
+W/eetlift_tracker( 4179): Accessing hidden method Landroid/view/accessibility/AccessibilityRecord;->getSourceNodeId()J (unsupported, reflection, allowed)
+W/eetlift_tracker( 4179): Accessing hidden field Landroid/view/accessibility/AccessibilityNodeInfo;->mChildNodeIds:Landroid/util/LongArray; (unsupported, reflection, allowed)
+W/eetlift_tracker( 4179): Accessing hidden method Landroid/util/LongArray;->get(I)J (unsupported, reflection, allowed)
+D/AccessibilityBridge( 4179): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 4179): Width is zero. 0,0
+W/HWUI    ( 4179): Unknown dataspace 0
+I/WindowExtensionsImpl( 4179): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 4179): Width is zero. 0,0
+D/FlutterJNI( 4179): Sending viewport metrics to the engine.
+W/HWUI    ( 4179): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 4179): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 4179): mapper 4.x is not supported
+I/eetlift_tracker( 4179): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4179): Skipped 152 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4179): Sending viewport metrics to the engine.
+D/ProfileInstaller( 4179): Installing profile for fr.tchoupi.streetlift_tracker
+I/eetlift_tracker( 4179): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:40681/6BW7Va2qYq4=/
+VMServiceFlutterDriver: Isolate found with number: 5972993686486731
+VMServiceFlutterDriver: Isolate 5972993686486731 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4179): 00:00 +0: G5 a (sombre, rouge) : Koach 2D, galerie, flammes, session de test
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 4179): Skipped 32 frames!  The application may be doing too much work on its main thread.
+I/Choreographer( 4179): Skipped 55 frames!  The application may be doing too much work on its main thread.
+I/HWUI    ( 4179): Davey! duration=997ms; Flags=1, FrameTimelineVsyncId=8856, IntendedVsync=145033861608, Vsync=145950528238, InputEventId=0, HandleInputStart=145963667953, AnimationStart=145963670757, PerformTraversalsStart=145963831605, DrawStart=145971017466, FrameDeadline=145050528274, FrameInterval=145957902776, FrameStartTime=16666666, SyncQueued=145971811812, SyncStart=145974433294, IssueDrawCommandsStart=145975300127, SwapBuffers=146005003540, FrameCompleted=146034016878, DequeueBufferDuration=12290419, QueueBufferDuration=230331, GpuCompleted=146034016878, SwapBuffersCompleted=146024889397, DisplayPresentTime=72904454231359566, CommandSubmissionCompleted=146005003540, 
+D/EGL_emulation( 4179): app_time_stats: avg=2084.89ms min=1695.38ms max=2474.40ms count=2
+D/EGL_emulation( 4179): app_time_stats: avg=170.20ms min=1.27ms max=365.11ms count=7
+I/eetlift_tracker( 4179): Background concurrent mark compact GC freed 2131KB AllocSpace bytes, 11(476KB) LOS objects, 49% free, 2592KB/5185KB, paused 68us,1.729ms total 396.378ms
+D/EGL_emulation( 4179): app_time_stats: avg=3583.99ms min=3583.99ms max=3583.99ms count=1
+D/EGL_emulation( 4179): app_time_stats: avg=1094.02ms min=423.85ms max=1764.18ms count=2
+D/EGL_emulation( 4179): app_time_stats: avg=1739.18ms min=1739.18ms max=1739.18ms count=1
+Unhandled exception:
+DriverError: Failed to fulfill RequestData due to remote error
+Original error: ext.flutter.driver: (112) Service has disappeared
+Original stack trace:
+#0      new _OutstandingRequest (package:vm_service/src/vm_service.dart:265:34)
+#1      VmService._call.<anonymous closure> (package:vm_service/src/vm_service.dart:1921:25)
+#2      VmService._call (package:vm_service/src/vm_service.dart:1933:8)
+#3      VmService.callServiceExtension (package:vm_service/src/vm_service.dart:1872:14)
+#4      VMServiceFlutterDriver.sendCommand (package:flutter_driver/src/driver/vmservice_driver.dart:327:12)
+#5      FlutterDriver.requestData (package:flutter_driver/src/driver/driver.dart:585:13)
+#6      integrationDriver (package:integration_test/integration_test_driver.dart:71:42)
+<asynchronous suspension>
+
+
+#0      VMServiceFlutterDriver.sendCommand (package:flutter_driver/src/driver/vmservice_driver.dart:340:7)
+<asynchronous suspension>
+#1      FlutterDriver.requestData (package:flutter_driver/src/driver/driver.dart:585:7)
+<asynchronous suspension>
+#2      integrationDriver (package:integration_test/integration_test_driver.dart:71:29)
+<asynchronous suspension>
