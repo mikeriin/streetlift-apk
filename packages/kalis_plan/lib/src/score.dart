@@ -782,10 +782,10 @@ final class Scorer {
     // plus de travail utile à ajouter : des séances plus courtes que le
     // temps disponible ne coûtent alors plus rien — pourvu qu'elles
     // restent équilibrées entre elles.
-    final mean = used / dayCount;
+    final filled = used / dayCount;
     final full = saturation * saturation;
     final even = most <= 0 ? 0.0 : least / most;
-    c[8] = 0.5 * (mean + (1 - mean) * full) + 0.5 * even;
+    c[8] = 0.5 * (filled + (1 - filled) * full) + 0.5 * even;
 
     // Qualité : variété.
     var redundancy =
