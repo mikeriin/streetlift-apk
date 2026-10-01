@@ -1,0 +1,19 @@
+name: kalis_plan
+description: >-
+  Moteur statique de Kalis Track : création du programme par optimisation
+  sous contraintes (passe 1 : exercices par séance ; passe 2 : séries,
+  répétitions, flammes, repos, charges), revue, variantes, blocs glissants
+  et restructuration. Dart pur, sans Flutter, sans stockage, sans horloge.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: '>=3.10.0 <4.0.0'
+
+dependencies:
+  kalis_core:
+    path: ../kalis_core
+
+dev_dependencies:
+  lints: ^4.0.0
+  test: ^1.25.0
