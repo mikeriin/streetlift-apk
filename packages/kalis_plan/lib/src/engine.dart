@@ -785,6 +785,7 @@ final class KalisPlan implements PlanEngine {
         tried++;
         state.exercise[day][at] = c.entry.index;
         state.sets[day][at] = ctx.defaultSets(c.entry, day);
+        planner.scorer.shrinkToFit(state, day, at);
         final value = planner.objective(state) + 0.02 * c.similarity;
         if (value > bestValue) {
           bestValue = value;
@@ -800,6 +801,7 @@ final class KalisPlan implements PlanEngine {
     }
     state.exercise[day][at] = picked.index;
     state.sets[day][at] = ctx.defaultSets(picked, day);
+    planner.scorer.shrinkToFit(state, day, at);
     return picked;
   }
 
@@ -1070,7 +1072,7 @@ final class KalisPlan implements PlanEngine {
             e.kind == SlotKind.conditioning;
         if (!free(d, i) ||
             !assistance ||
-            Scorer.repeatAllowed(e) && e.kind != SlotKind.mobility ||
+            planner.scorer.repeatAllowed(e) && e.kind != SlotKind.mobility ||
             reasons.containsKey(slotId)) {
           continue;
         }

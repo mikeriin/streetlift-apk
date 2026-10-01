@@ -70,6 +70,36 @@ const List<List<int>> disciplineAffinity = <List<int>>[
 /// streetlifting.
 const String competitionCategory = 'Mouvement de compétition';
 
+/// Pourquoi un exercice n'est pas admissible pour un profil.
+abstract final class Rejections {
+  /// Hors des disciplines du profil.
+  static const String discipline = 'discipline';
+
+  /// Détesté, non su, écarté par un verrou ou mal toléré.
+  static const String excluded = 'excluded';
+
+  /// Trop difficile pour le niveau du groupe de mouvements.
+  static const String level = 'level';
+
+  /// Un palier précédent n'est pas acquis.
+  static const String prerequisite = 'prerequisite';
+
+  /// Exercice réservé (haltérophilie hors CrossFit, souplesse avancée).
+  static const String reserved = 'reserved';
+
+  /// Écarté par la prudence (impact, fatigue maximale).
+  static const String cautious = 'cautious';
+
+  /// Contrainte sur une articulation ou une zone limitée.
+  static const String joint = 'joint';
+
+  /// Matériel ou lieu absent tous les jours.
+  static const String equipment = 'equipment';
+
+  /// Ne tient dans le temps d'aucun jour.
+  static const String time = 'time';
+}
+
 /// Jour d'entraînement.
 final class DayInfo {
   /// Jour de rang [index].
@@ -153,8 +183,10 @@ final class PoolEntry {
     required this.selectable,
     required this.goalSupport,
     required this.liked,
+    required this.known,
     required this.novel,
     required this.jointPenalty,
+    required this.fit,
     required this.rootIndex,
     required this.creditGroups,
     required this.creditValues,
@@ -203,11 +235,18 @@ final class PoolEntry {
   /// Exercice aimé.
   final bool liked;
 
+  /// Exercice que l'utilisateur sait faire (niveau déclaré ou validé).
+  final bool known;
+
   /// Nouveauté technique.
   final bool novel;
 
   /// Contrainte sur les zones limitées, de 0 à 1.
   final double jointPenalty;
+
+  /// Adéquation de l'exercice, de 0 à 1 : mouvement de base de sa famille
+  /// (racine `variante_de`), ni trop facile ni assisté sans besoin.
+  final double fit;
 
   /// Rang dense de la racine `variante_de` dans le vivier.
   final int rootIndex;
@@ -420,6 +459,9 @@ final class PlanContext {
     required this.requiredIds,
     required this.excludedIds,
     required this.likedCount,
+    required this.knownCount,
+    required this.goalExactSelectable,
+    required this.rejections,
     required this.noveltyAllowance,
     required this.rootCount,
     required this.coverableBits,
@@ -499,6 +541,16 @@ final class PlanContext {
 
   /// Nombre d'exercices aimés présents dans le vivier (plafonné à 4).
   final int likedCount;
+
+  /// Nombre d'exercices sus présents dans le vivier (plafonné à 3).
+  final int knownCount;
+
+  /// Pour chaque objectif : l'exercice visé lui-même est admissible.
+  final List<bool> goalExactSelectable;
+
+  /// Pourquoi un exercice du catalogue n'est pas admissible (identifiant →
+  /// code de [Rejections]) ; un exercice absent de la table est admissible.
+  final Map<String, String> rejections;
 
   /// Nouveautés techniques admises à la fois.
   final int noveltyAllowance;
@@ -622,7 +674,9 @@ int abilityFromPerformance({
       }
       return _clampAbility(d + 3);
     case LevelMeasure.timeSeconds:
-      return _clampAbility(d + 1);
+      // Qui connaît son temps sur une distance s'entraîne déjà de façon
+      // structurée : au moins le niveau des séances fractionnées.
+      return _clampAbility(d + 2 < 5 ? 5 : d + 2);
     case LevelMeasure.oneRmKg:
       final thresholds = _ratioThresholds(e);
       if (thresholds == null || bodyWeightKg == null || bodyWeightKg <= 0) {
@@ -766,6 +820,7 @@ PlanContext _build(ContextInputs inputs) {
   final maxHoldOf = <String, int>{};
   final oneRmOf = <String, double>{};
   final oneRmEstimated = <String>{};
+  final capOf = <AbilityGroup, int>{};
   void learn(
     CatalogExercise e,
     LevelMeasure measure,
@@ -783,14 +838,22 @@ PlanContext _build(ContextInputs inputs) {
       group: group,
       cannot: () => notYet = true,
     );
+    if (notYet) {
+      // Pas une répétition : l'exercice n'est pas acquis, et le groupe ne
+      // dépasse pas le palier juste en dessous tant que rien d'autre ne
+      // dit mieux.
+      cannotIds.add(e.id);
+      final cap = e.difficulty - 1;
+      final previousCap = capOf[group];
+      if (previousCap == null || cap < previousCap) {
+        capOf[group] = cap;
+      }
+      return;
+    }
     declaredValues.add(a);
     final previous = declaredAbility[group];
     if (previous == null || a > previous) {
       declaredAbility[group] = a;
-    }
-    if (notYet) {
-      cannotIds.add(e.id);
-      return;
     }
     switch (measure) {
       case LevelMeasure.maxReps:
@@ -874,6 +937,10 @@ PlanContext _build(ContextInputs inputs) {
         a = a > 4 ? 4 : a;
       } else if (g == AbilityGroup.power || g == AbilityGroup.core) {
         a = a > 6 ? 6 : a;
+      }
+      final cap = capOf[g];
+      if (cap != null && cap < a) {
+        a = cap;
       }
     }
     if (cautious) {
@@ -994,11 +1061,20 @@ PlanContext _build(ContextInputs inputs) {
   final pool = <PoolEntry>[];
   final indexById = <String, int>{};
   final rootIndex = <String, int>{};
+  final rejections = <String, String>{};
+  final exactSelectable = List<bool>.filled(goals.length, false);
+  final trainable = <int>{};
   var coverable = 0;
   var likedInPool = 0;
+  var knownInPool = 0;
+  final crossfitWanted = targets[DisciplineClass.crossfit.index] > 0;
+  final flexibilityWanted =
+      targets[DisciplineClass.mobility.index] >= 0.3 ||
+      targets[DisciplineClass.calisthenics.index] > 0;
   for (final t in traits.all) {
     final e = t.exercise;
     final isForced = forced.contains(e.id);
+    String? rejection;
 
     // Classe de discipline.
     DisciplineClass? cls;
@@ -1015,38 +1091,94 @@ PlanContext _build(ContextInputs inputs) {
         cls = c;
       }
     }
-    var admissible = affinity > 0 && !excluded.contains(e.id);
+    if (cls == DisciplineClass.crossfit &&
+        e.discipline != CatalogDiscipline.crossfit &&
+        t.kind == SlotKind.accessory) {
+      // L'isolation n'est pas du CrossFit : simple appoint.
+      affinity = 20;
+    }
+    if (affinity <= 0) {
+      rejection = Rejections.discipline;
+    } else if (excluded.contains(e.id)) {
+      rejection = Rejections.excluded;
+    }
+
+    // Soutien des objectifs.
+    var goalLift = false;
+    var bestSupport = 0;
+    final support = List<int>.filled(goals.length, 0);
+    for (var j = 0; j < goals.length; j++) {
+      final target = goals[j].exercise;
+      var s = 0;
+      if (target.id == e.id) {
+        s = 100;
+        final metric = goals[j].goal?.metric;
+        if (goals[j].goal == null || metric == GoalMetric.oneRmKg) {
+          goalLift = true;
+        }
+      } else if (target.rootId == e.rootId) {
+        // Palier de la même chaîne : d'autant plus utile qu'il est proche
+        // de l'exercice visé.
+        var gap = (target.difficulty - e.difficulty).abs();
+        if (gap > 5) {
+          gap = 5;
+        }
+        s = 90 - 6 * gap;
+      } else if (target.pattern == e.pattern) {
+        final cosine = target.muscleCosine(e);
+        s = cosine >= 0.7 ? 50 : (cosine >= 0.4 ? 30 : 0);
+      }
+      support[j] = s;
+      if (s > bestSupport) {
+        bestSupport = s;
+      }
+    }
 
     // Niveau, prérequis.
     final group = t.ability;
     final a = ability[group]!;
     final known = knownIds.contains(e.id);
-    if (admissible && !known && e.difficulty > a) {
-      admissible = false;
+    final wanted = known || liked.contains(e.id) || bestSupport >= 60;
+    if (rejection == null && !known && e.difficulty > a) {
+      rejection = Rejections.level;
     }
-    if (admissible) {
+    if (rejection == null) {
       for (final p in e.prerequisites) {
         if (cannotIds.contains(p)) {
-          admissible = false;
+          rejection = Rejections.prerequisite;
         }
       }
       for (final c in cannotIds) {
         if (c == e.id) {
           continue;
         }
-        final root = catalog.find(c);
-        if (root != null &&
-            root.rootId == e.rootId &&
-            e.difficulty >= root.difficulty &&
+        final harder = catalog.find(c);
+        if (harder != null &&
+            harder.rootId == e.rootId &&
+            e.difficulty >= harder.difficulty &&
             _descendsFrom(catalog, e, c)) {
-          admissible = false;
+          rejection = Rejections.prerequisite;
         }
       }
     }
 
+    // Exercices réservés : l'haltérophilie ne se programme d'office qu'en
+    // CrossFit, la souplesse avancée qu'avec une vraie part de mobilité ou
+    // de calisthénie — sauf exercice connu, aimé ou lié à un objectif.
+    if (rejection == null && !wanted) {
+      if (e.pattern == MovementPattern.halterophilie && !crossfitWanted) {
+        rejection = Rejections.reserved;
+      }
+      if (e.pattern == MovementPattern.souplesse && !flexibilityWanted) {
+        rejection = Rejections.reserved;
+      }
+    }
+
     // Prudence.
-    if (admissible && cautious && (t.impact || e.systemicFatigue >= 5)) {
-      admissible = false;
+    if (rejection == null &&
+        cautious &&
+        (t.impact || e.systemicFatigue >= 5)) {
+      rejection = Rejections.cautious;
     }
 
     // Articulations et zones limitées.
@@ -1066,42 +1198,23 @@ PlanContext _build(ContextInputs inputs) {
           level = credit;
         }
       }
-      if (level >= 1 && limit.discomfort >= params.hardJointDiscomfort) {
-        admissible = false;
-      }
-      if (level >= 0.5 && limit.discomfort >= params.severeJointDiscomfort) {
-        admissible = false;
+      if ((level >= 1 && limit.discomfort >= params.hardJointDiscomfort) ||
+          (level >= 0.5 &&
+              limit.discomfort >= params.severeJointDiscomfort)) {
+        rejection ??= Rejections.joint;
       }
       final p = level * limit.discomfort / 10;
       if (p > penalty) {
         penalty = p;
       }
     }
-    if (!admissible && !isForced) {
+    if (rejection != null && !isForced) {
+      rejections[e.id] = rejection;
       continue;
     }
 
     // Prescription de référence.
     final margin = known && e.difficulty > a ? 0 : a - e.difficulty;
-    var goalLift = false;
-    final support = List<int>.filled(goals.length, 0);
-    for (var j = 0; j < goals.length; j++) {
-      final target = goals[j].exercise;
-      var s = 0;
-      if (target.id == e.id) {
-        s = 100;
-        final metric = goals[j].goal?.metric;
-        if (goals[j].goal == null || metric == GoalMetric.oneRmKg) {
-          goalLift = true;
-        }
-      } else if (target.rootId == e.rootId) {
-        s = (target.difficulty - e.difficulty).abs() <= 2 ? 80 : 70;
-      } else if (target.pattern == e.pattern) {
-        final cosine = target.muscleCosine(e);
-        s = cosine >= 0.7 ? 50 : (cosine >= 0.4 ? 30 : 0);
-      }
-      support[j] = s;
-    }
     final resolvedClass = cls ?? primaryClass;
     final strengthFocus =
         resolvedClass == DisciplineClass.streetlifting ||
@@ -1128,6 +1241,7 @@ PlanContext _build(ContextInputs inputs) {
         t.kind == SlotKind.conditioning ||
         t.kind == SlotKind.cardioHard;
     var mask = 0;
+    var equipped = false;
     for (final day in days) {
       final place = day.place;
       final placeOk = place == null
@@ -1136,6 +1250,7 @@ PlanContext _build(ContextInputs inputs) {
       if (!placeOk || !e.feasibleWith(day.equipment)) {
         continue;
       }
+      equipped = true;
       final least =
           scheme.secondsFor(scheme.minSets) +
           (needsWarmup ? day.warmupSeconds : 0);
@@ -1143,9 +1258,16 @@ PlanContext _build(ContextInputs inputs) {
         mask |= 1 << day.index;
       }
     }
-    final selectable = admissible && mask != 0;
-    if (!selectable && !isForced) {
-      continue;
+    if (rejection == null && mask == 0) {
+      rejection = equipped ? Rejections.time : Rejections.equipment;
+    }
+    final why = rejection;
+    final selectable = why == null;
+    if (why != null) {
+      rejections[e.id] = why;
+      if (!isForced) {
+        continue;
+      }
     }
 
     final groupsOut = <int>[];
@@ -1197,7 +1319,34 @@ PlanContext _build(ContextInputs inputs) {
       if (liked.contains(e.id)) {
         likedInPool++;
       }
+      if (known) {
+        knownInPool++;
+      }
+      for (var j = 0; j < goals.length; j++) {
+        if (support[j] == 100) {
+          exactSelectable[j] = true;
+        }
+      }
+      for (var k = 0; k < groupsOut.length; k++) {
+        if (valuesOut[k] == 2) {
+          trainable.add(groupsOut[k]);
+        }
+      }
     }
+
+    // Adéquation : mouvement de base de sa famille, ni trop facile ni
+    // assisté sans besoin.
+    final canonical = e.depth == 0 ? 1.0 : (e.depth == 1 ? 0.7 : 0.5);
+    var challenge = 1.0;
+    if (t.kind.isResistance && !scheme.loaded) {
+      challenge = margin <= 2
+          ? 1.0
+          : (margin == 3 ? 0.7 : (margin == 4 ? 0.4 : 0.2));
+      if (e.assisted && margin >= 2) {
+        challenge *= 0.5;
+      }
+    }
+
     final root = rootIndex.putIfAbsent(e.rootId, () => rootIndex.length);
     final hash = fnvMix(fnv1a32(e.id), inputs.seed);
     final entry = PoolEntry._(
@@ -1210,8 +1359,10 @@ PlanContext _build(ContextInputs inputs) {
       selectable: selectable,
       goalSupport: List<int>.unmodifiable(support),
       liked: liked.contains(e.id),
+      known: known,
       novel: t.technical && !known && e.difficulty >= a - 1,
       jointPenalty: penalty > 1 ? 1 : penalty,
+      fit: 0.5 * canonical + 0.5 * challenge,
       rootIndex: root,
       creditGroups: List<int>.unmodifiable(groupsOut),
       creditValues: List<int>.unmodifiable(valuesOut),
@@ -1275,11 +1426,18 @@ PlanContext _build(ContextInputs inputs) {
   final groupWeight = <double>[];
   for (final g in MuscleGroup.values) {
     final high = (baseHigh * scale * 2).round();
-    final low = g.major ? (baseLow * scale * 2).round() : 0;
+    // Un groupe qu'aucun exercice admissible ne travaille directement
+    // (matériel, niveau) n'a ni plancher ni poids : il ne peut pas compter.
+    final reachable = trainable.contains(g.index);
+    final low = g.major && reachable ? (baseLow * scale * 2).round() : 0;
     bandLow.add(low);
     bandHigh.add(high < 2 ? 2 : high);
     groupWeight.add(
-      g.major ? g.weight * (priority.contains(g.index) ? 1.5 : 1) : 0.25,
+      !reachable
+          ? 0
+          : (g.major
+                ? g.weight * (priority.contains(g.index) ? 1.5 : 1)
+                : 0.25),
     );
   }
 
@@ -1307,6 +1465,9 @@ PlanContext _build(ContextInputs inputs) {
     requiredIds: Set<String>.unmodifiable(required),
     excludedIds: Set<String>.unmodifiable(excluded),
     likedCount: likedInPool > 4 ? 4 : likedInPool,
+    knownCount: knownInPool > 3 ? 3 : knownInPool,
+    goalExactSelectable: List<bool>.unmodifiable(exactSelectable),
+    rejections: Map<String, String>.unmodifiable(rejections),
     noveltyAllowance: globalLevel == 0 ? 2 : 3,
     rootCount: rootIndex.length,
     coverableBits: coverable,

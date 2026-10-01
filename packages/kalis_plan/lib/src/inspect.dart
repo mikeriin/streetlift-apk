@@ -195,6 +195,65 @@ final class PlanInspector {
     );
   }
 
+  /// Ce que le moteur retient du profil de [request] : niveau par groupe
+  /// de mouvements, niveau global, prudence, dosage visé, taille du vivier
+  /// (inspecteur du mode dev).
+  Map<String, Object?> explainProfile(PlanRequest request) {
+    final ctx = PlanContext.build(
+      ContextInputs(
+        catalog: catalog,
+        profile: request.profile,
+        startDate: request.startDate,
+        seed: 0,
+        locks: request.locks,
+        adaptation: request.adaptation,
+        volumeScale: adaptationVolumeScale(request.adaptation),
+        params: params,
+      ),
+    );
+    final byKind = <String, int>{};
+    for (final e in ctx.pool) {
+      byKind.update(e.kind.name, (n) => n + 1, ifAbsent: () => 1);
+    }
+    final rejected = <String, int>{};
+    for (final code in ctx.rejections.values) {
+      rejected.update(code, (n) => n + 1, ifAbsent: () => 1);
+    }
+    return <String, Object?>{
+      'ability': <String, int>{
+        for (final g in AbilityGroup.values) g.name: ctx.ability[g]!,
+      },
+      'globalLevel': ctx.globalLevel,
+      'cautious': ctx.cautious,
+      'targets': <String, double>{
+        for (final c in DisciplineClass.values)
+          if (ctx.targets[c.index] > 0) c.name: _round(ctx.targets[c.index]),
+      },
+      'pool': ctx.pool.length,
+      'poolByKind': byKind,
+      'rejected': rejected,
+      'goals': <String>[for (final g in ctx.goals) g.exercise.id],
+    };
+  }
+
+  /// Pourquoi l'exercice [exerciseId] n'est pas admissible pour [request]
+  /// (code de `Rejections`), ou `null` s'il l'est.
+  String? rejectionOf(PlanRequest request, String exerciseId) {
+    final ctx = PlanContext.build(
+      ContextInputs(
+        catalog: catalog,
+        profile: request.profile,
+        startDate: request.startDate,
+        seed: 0,
+        locks: request.locks,
+        adaptation: request.adaptation,
+        volumeScale: adaptationVolumeScale(request.adaptation),
+        params: params,
+      ),
+    );
+    return ctx.rejections[exerciseId];
+  }
+
   /// Note de [plan] pour [request].
   PlanScore scoreOf(PlanRequest request, Pass1Plan plan) {
     final ctx = contextFor(request, plan);

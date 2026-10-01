@@ -369,7 +369,9 @@ Scheme schemeFor(ExerciseTraits t, SchemeInputs i, PlanParams params) {
   }
 
   // Plage d'un exercice au poids du corps : moitié à trois quarts du
-  // maximum connu, sinon selon la marge entre le niveau et la difficulté.
+  // maximum connu ; sinon selon la marge entre le niveau et la difficulté
+  // pour un polyarticulaire, et une plage haute pour l'assistance et le
+  // tronc (peu chargés, loin du maximum de force).
   (int, int) bodyweightRange() {
     final max = i.maxReps;
     if (max != null && max >= 2) {
@@ -382,6 +384,9 @@ Scheme schemeFor(ExerciseTraits t, SchemeInputs i, PlanParams params) {
         high = 30;
       }
       return (low > high ? high : low, high);
+    }
+    if (t.kind != SlotKind.compound || e.loadType != LoadType.bodyweight) {
+      return i.margin >= 1 ? (10, 15) : (8, 12);
     }
     if (i.margin >= 3) {
       return (12, 20);

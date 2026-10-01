@@ -40,6 +40,8 @@ final class Scorer {
       _dayFatigue = Float64List(context.dayCount),
       _classTime = Int32List(DisciplineClass.values.length),
       _goalSum = Int32List(context.goals.length),
+      _goalExact = Int32List(context.goals.length),
+      _dayMobility = Int32List(64),
       _weekSeen = Int32List(context.pool.length),
       _rootDay = Int32List(context.rootCount),
       _patternStamp = Int32List(64),
@@ -60,6 +62,8 @@ final class Scorer {
   final Float64List _dayFatigue;
   final Int32List _classTime;
   final Int32List _goalSum;
+  final Int32List _goalExact;
+  final Int32List _dayMobility;
   final Int32List _weekSeen;
   final Int32List _rootDay;
   final Int32List _patternStamp;
@@ -131,16 +135,32 @@ final class Scorer {
     return warm ? t + context.days[day].warmupSeconds : t;
   }
 
+  /// Réduit les séries de l'emplacement de rang [at] du jour [day], jusqu'à
+  /// son minimum, tant que la séance dépasse son temps. Rend vrai si la
+  /// séance tient.
+  bool shrinkToFit(PlanState state, int day, int at) {
+    final limit = context.days[day].seconds;
+    final least = context.pool[state.exercise[day][at]].scheme.minSets;
+    while (timeOfDay(state, day) > limit) {
+      if (state.sets[day][at] <= least) {
+        return false;
+      }
+      state.sets[day][at]--;
+    }
+    return true;
+  }
+
   /// Vrai si une copie supplémentaire de [entry] dans la semaine n'est pas
-  /// une redondance : pratique d'une figure, mouvement de force répété,
-  /// cardio, mobilité, travail d'un objectif.
-  static bool repeatAllowed(PoolEntry entry) {
+  /// une redondance : pratique d'une figure, cardio, mobilité, travail d'un
+  /// objectif, et polyarticulaire répété quand la semaine compte au plus
+  /// trois séances (séances « corps entier » qui reprennent les mêmes bases).
+  bool repeatAllowed(PoolEntry entry) {
     final kind = entry.kind;
-    if (kind == SlotKind.compound ||
-        kind.isSkill ||
+    if (kind.isSkill ||
         kind.isCardio ||
         kind == SlotKind.mobility ||
-        entry.goalLift) {
+        entry.goalLift ||
+        (kind == SlotKind.compound && context.dayCount <= 3)) {
       return true;
     }
     for (final s in entry.goalSupport) {
@@ -151,8 +171,9 @@ final class Scorer {
     return false;
   }
 
-  /// Note de [state]. Rend l'objectif de la recherche : le palier de
-  /// sécurité domine (priorité lexicographique), la note globale départage.
+  /// Note de [state]. Rend l'objectif de la recherche : la note globale plus
+  /// `safetyPriority` fois la note de sécurité (la sécurité d'abord, sans
+  /// marche d'escalier qui bloquerait la recherche).
   double evaluate(PlanState state) {
     final ctx = context;
     final params = ctx.params;
@@ -164,6 +185,7 @@ final class Scorer {
     _heavy.fillRange(0, dayCount * groups, 0);
     _classTime.fillRange(0, _classTime.length, 0);
     _goalSum.fillRange(0, _goalSum.length, 0);
+    _goalExact.fillRange(0, _goalExact.length, 0);
     _stamp++;
     final stamp = _stamp;
 
@@ -177,7 +199,11 @@ final class Scorer {
     var cover = 0;
     var coreDays = 0;
     var likedSeen = 0;
+    var knownSeen = 0;
     var novelSeen = 0;
+    var fitSum = 0.0;
+    var relevantMobility = 0;
+    var cardioStack = 0;
     var duplicates = 0;
     var sameRoot = 0;
     var patternExcess = 0;
@@ -201,6 +227,10 @@ final class Scorer {
       var warm = false;
       var conditioning = 0;
       var coreHere = false;
+      var strengthHere = false;
+      var cardioHere = 0;
+      var regions = 0;
+      var mobilityHere = 0;
       for (var i = 0; i < n; i++) {
         final e = pool[ex[i]];
         final count = sets[i];
@@ -212,6 +242,7 @@ final class Scorer {
         affinityTime += seconds * e.affinity;
         fatigue += seconds * exercise.systemicFatigue;
         jointTime += seconds * e.jointPenalty;
+        fitSum += e.fit;
         if (e.needsWarmup) {
           warm = true;
         }
@@ -235,7 +266,11 @@ final class Scorer {
         }
         final support = e.goalSupport;
         for (var j = 0; j < support.length; j++) {
-          _goalSum[j] += support[j];
+          final v = support[j];
+          _goalSum[j] += v;
+          if (v == 100) {
+            _goalExact[j]++;
+          }
         }
         if (_weekSeen[e.index] == stamp) {
           if (!repeatAllowed(e)) {
@@ -245,6 +280,9 @@ final class Scorer {
           _weekSeen[e.index] = stamp;
           if (e.liked) {
             likedSeen++;
+          }
+          if (e.known) {
+            knownSeen++;
           }
           if (e.novel) {
             novelSeen++;
@@ -257,6 +295,14 @@ final class Scorer {
           _rootDay[root] = dayStamp;
         }
         final kind = e.kind;
+        if (kind == SlotKind.mobility) {
+          if (mobilityHere < _dayMobility.length) {
+            _dayMobility[mobilityHere] = e.traits.regionMask;
+          }
+          mobilityHere++;
+        } else {
+          regions |= e.traits.regionMask;
+        }
         if (kind != SlotKind.mobility) {
           final p = exercise.pattern.index;
           if (_patternStamp[p] != dayStamp) {
@@ -272,8 +318,10 @@ final class Scorer {
         switch (kind) {
           case SlotKind.cardioHard:
             hardCardio++;
+            cardioHere++;
           case SlotKind.cardioEasy:
             easyCardio++;
+            cardioHere++;
           case SlotKind.conditioning:
             conditioning++;
           case SlotKind.mobility:
@@ -294,6 +342,7 @@ final class Scorer {
             }
           case SlotKind.power:
           case SlotKind.compound:
+            strengthHere = true;
           case SlotKind.accessory:
           case SlotKind.core:
             break;
@@ -307,8 +356,21 @@ final class Scorer {
       slotTime += t;
       _dayTime[d] = warm ? t + days[d].warmupSeconds : t;
       _dayFatigue[d] = fatigue / days[d].seconds;
-      if (conditioning >= 2) {
+      if (conditioning >= 2 && strengthHere) {
         wodDays++;
+      }
+      if (cardioHere > 2) {
+        cardioStack += cardioHere - 2;
+      }
+      // Mobilité en rapport avec le travail du jour (échauffement des
+      // articulations sollicitées, étirement des muscles travaillés).
+      final listed = mobilityHere < _dayMobility.length
+          ? mobilityHere
+          : _dayMobility.length;
+      for (var m = 0; m < listed; m++) {
+        if (regions == 0 || _dayMobility[m] & regions != 0) {
+          relevantMobility++;
+        }
       }
       if (coreHere) {
         coreDays++;
@@ -372,8 +434,14 @@ final class Scorer {
       var weights = 0.0;
       final need = ctx.goalExposureTarget * 100;
       for (var j = 0; j < goals.length; j++) {
-        final covered = _goalSum[j] / need;
-        sum += goals[j].weight * (covered > 1 ? 1 : covered);
+        var covered = _goalSum[j] / need;
+        if (covered > 1) {
+          covered = 1;
+        }
+        if (ctx.goalExactSelectable[j]) {
+          covered = 0.5 * covered + (_goalExact[j] > 0 ? 0.5 : 0.0);
+        }
+        sum += goals[j].weight * covered;
         weights += goals[j].weight;
       }
       c[3] = sum / weights;
@@ -416,7 +484,7 @@ final class Scorer {
         sum += ctx.groupWeight[g] * s;
         weights += ctx.groupWeight[g];
       }
-      c[5] = sum / weights;
+      c[5] = weights <= 0 ? 1 : sum / weights;
     }
 
     // Qualité : équilibre des schémas.
@@ -475,7 +543,10 @@ final class Scorer {
               }
             }
             final gap = hardCardio - wanted;
-            sub = 1 - (gap < 0 ? -gap : gap) / n;
+            sub = 1 - (gap < 0 ? -gap : gap) / n - cardioStack / n;
+            if (sub < 0) {
+              sub = 0;
+            }
           }
         case DisciplineClass.calisthenics:
           if (skillFamilies == 0) {
@@ -511,7 +582,11 @@ final class Scorer {
             if (wanted > 9) {
               wanted = 9;
             }
-            sub = _popCount(regionMask) / wanted;
+            var coverage = _popCount(regionMask) / wanted;
+            if (coverage > 1) {
+              coverage = 1;
+            }
+            sub = 0.6 * coverage + 0.4 * relevantMobility / mobilitySlots;
             if (sub > 1) {
               sub = 1;
             }
@@ -536,28 +611,31 @@ final class Scorer {
     c[8] = used / dayCount;
 
     // Qualité : variété.
-    var redundancy = slots == 0
-        ? 0.0
-        : (sameRoot + 0.5 * patternExcess + 0.5 * duplicates) / slots;
+    var redundancy =
+        (sameRoot + 0.5 * patternExcess + 0.5 * duplicates) / (2 * dayCount);
     if (redundancy > 1) {
       redundancy = 1;
     }
     c[9] = 1 - redundancy;
 
-    // Qualité : rapport stimulus / fatigue.
-    c[10] = sfrTime == 0 ? 1.0 : sfrSum / sfrTime;
+    // Qualité : exercices adaptés.
+    c[10] = slots == 0 ? 1.0 : fitSum / slots;
 
-    // Qualité : préférences.
-    if (ctx.likedCount == 0) {
-      c[11] = 1;
-    } else {
-      final share = likedSeen / ctx.likedCount;
-      c[11] = share > 1 ? 1 : share;
-    }
+    // Qualité : rapport stimulus / fatigue.
+    c[11] = sfrTime == 0 ? 1.0 : sfrSum / sfrTime;
+
+    // Qualité : préférences (exercices aimés, exercices sus).
+    final likedShare = ctx.likedCount == 0
+        ? 1.0
+        : (likedSeen >= ctx.likedCount ? 1.0 : likedSeen / ctx.likedCount);
+    final knownShare = ctx.knownCount == 0
+        ? 1.0
+        : (knownSeen >= ctx.knownCount ? 1.0 : knownSeen / ctx.knownCount);
+    c[12] = 0.6 * likedShare + 0.4 * knownShare;
 
     // Qualité : nouveautés techniques.
     final extra = novelSeen - ctx.noveltyAllowance;
-    c[12] = extra <= 0 ? 1.0 : 1 - extra / novelSeen;
+    c[13] = extra <= 0 ? 1.0 : 1 - extra / novelSeen;
 
     final s =
         (w.recovery * c[0] + w.fatigueBalance * c[1] + w.jointLoad * c[2]) /
@@ -570,14 +648,15 @@ final class Scorer {
             w.disciplineStructure * c[7] +
             w.timeUse * c[8] +
             w.variety * c[9] +
-            w.stimulusFatigue * c[10] +
-            w.preferences * c[11] +
-            w.novelty * c[12]) /
+            w.exerciseFit * c[10] +
+            w.stimulusFatigue * c[11] +
+            w.preferences * c[12] +
+            w.novelty * c[13]) /
         w.qualitySum;
     safety = s;
     quality = q;
     total = params.safetyShare * s + (1 - params.safetyShare) * q;
     safetyBucket = (s / params.safetyStep + 1e-9).floor();
-    return safetyBucket * 2.0 + total;
+    return params.safetyPriority * s + total;
   }
 }

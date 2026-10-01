@@ -70,7 +70,7 @@ List<VariantCandidate> admissibleReplacements(
     }
     state.exercise[day][at] = e.index;
     state.sets[day][at] = ctx.defaultSets(e, day);
-    final fits = scorer.timeOfDay(state, day) <= ctx.days[day].seconds;
+    final fits = scorer.shrinkToFit(state, day, at);
     state.exercise[day][at] = old;
     state.sets[day][at] = oldSets;
     if (!fits) {

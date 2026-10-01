@@ -369,7 +369,7 @@ final class Planner {
           continue;
         }
         final at = state.add(d, index, ctx.defaultSets(e, d), unnamedSlot);
-        if (_fits(state, d)) {
+        if (scorer.shrinkToFit(state, d, at)) {
           final value = objective(state) + 1e-7 * e.tieBreak;
           var pos = best.length;
           while (pos > 0 && best[pos - 1].$1 < value) {
@@ -386,6 +386,19 @@ final class Planner {
       }
     }
     return best;
+  }
+
+  /// Ajoute [index] au jour [day] avec ses séries par défaut, réduites au
+  /// besoin pour tenir dans le temps. Rend le rang de l'emplacement, ou −1
+  /// (état inchangé) s'il ne tient pas.
+  int place(PlanState state, int day, int index, int identity) {
+    final e = context.pool[index];
+    final at = state.add(day, index, context.defaultSets(e, day), identity);
+    if (!scorer.shrinkToFit(state, day, at)) {
+      state.removeAt(day, at);
+      return -1;
+    }
+    return at;
   }
 
   /// Construction gloutonne avec anticipation : ajoute l'exercice qui
@@ -414,22 +427,21 @@ final class Planner {
             break;
           }
           final (_, d, index) = all.first;
-          state.add(d, index, ctx.defaultSets(ctx.pool[index], d), unnamedSlot);
+          place(state, d, index, unnamedSlot);
           continue;
         }
         break;
       }
       var chosen = first.first;
+      var chosenAhead = first.first.$1;
       if (first.length > 1 && empty == 0) {
         var bestValue = double.negativeInfinity;
         for (final candidate in first) {
           final (value, d, index) = candidate;
-          final at = state.add(
-            d,
-            index,
-            ctx.defaultSets(ctx.pool[index], d),
-            unnamedSlot,
-          );
+          final at = place(state, d, index, unnamedSlot);
+          if (at < 0) {
+            continue;
+          }
           final next = _bestAdditions(state, shortlist, 1, 0);
           state.removeAt(d, at);
           final ahead = next.isEmpty || next.first.$1 < value
@@ -438,14 +450,17 @@ final class Planner {
           if (ahead > bestValue + 1e-12) {
             bestValue = ahead;
             chosen = candidate;
+            chosenAhead = ahead;
           }
         }
       }
-      final (value, d, index) = chosen;
-      if (empty == 0 && value <= base + 1e-9) {
+      final (_, d, index) = chosen;
+      if (empty == 0 && chosenAhead <= base + 1e-9) {
         break;
       }
-      state.add(d, index, ctx.defaultSets(ctx.pool[index], d), unnamedSlot);
+      if (place(state, d, index, unnamedSlot) < 0) {
+        break;
+      }
     }
   }
 
@@ -511,7 +526,7 @@ final class Planner {
       _saveA.save(state, d);
       state.exercise[d][at] = candidate;
       state.sets[d][at] = ctx.defaultSets(e, d);
-      if (!_fits(state, d)) {
+      if (!scorer.shrinkToFit(state, d, at)) {
         _saveA.restore(state);
         return false;
       }
@@ -528,8 +543,7 @@ final class Planner {
         return false;
       }
       _saveA.save(state, d);
-      state.add(d, candidate, ctx.defaultSets(e, d), unnamedSlot);
-      if (!_fits(state, d)) {
+      if (place(state, d, candidate, unnamedSlot) < 0) {
         _saveA.restore(state);
         return false;
       }
@@ -563,8 +577,7 @@ final class Planner {
     _saveA.save(state, d);
     _saveB.save(state, to);
     state.removeAt(d, at);
-    state.add(to, moved, ctx.defaultSets(e, to), unnamedSlot);
-    if (!_fits(state, to)) {
+    if (place(state, to, moved, unnamedSlot) < 0) {
       _saveA.restore(state);
       _saveB.restore(state);
       return false;
@@ -573,8 +586,7 @@ final class Planner {
   }
 
   /// Recuit simulé de [iterations] coups ; [state] finit sur le meilleur
-  /// état rencontré. Un coup qui fait perdre un palier de sécurité n'est
-  /// jamais accepté (la perte vaut au moins un point entier d'objectif).
+  /// état rencontré.
   void anneal(PlanState state, int iterations) {
     if (iterations <= 0) {
       return;
@@ -635,6 +647,7 @@ final class Planner {
           final oldSets = state.sets[d][at];
           final wasWork = ctx.pool[old].kind != SlotKind.mobility;
           var bestIndex = -1;
+          var bestSets = 0;
           var bestValue = current;
           for (final candidate in ctx.neighbours(old)) {
             final e = ctx.pool[candidate];
@@ -650,11 +663,12 @@ final class Planner {
             }
             state.exercise[d][at] = candidate;
             state.sets[d][at] = ctx.defaultSets(e, d);
-            if (_fits(state, d)) {
+            if (scorer.shrinkToFit(state, d, at)) {
               final value = objective(state);
               if (value > bestValue + 1e-9) {
                 bestValue = value;
                 bestIndex = candidate;
+                bestSets = state.sets[d][at];
               }
             }
             state.exercise[d][at] = old;
@@ -662,9 +676,35 @@ final class Planner {
           }
           if (bestIndex >= 0) {
             state.exercise[d][at] = bestIndex;
-            state.sets[d][at] = ctx.defaultSets(ctx.pool[bestIndex], d);
+            state.sets[d][at] = bestSets;
             current = bestValue;
             improved = true;
+          }
+        }
+      }
+      // Durées continues (cardio, routines) : une tranche de plus tant que
+      // la note s'améliore et que la séance tient.
+      for (var d = 0; d < ctx.dayCount; d++) {
+        if (!_dayOpen(d)) {
+          continue;
+        }
+        for (var at = 0; at < state.count[d]; at++) {
+          final scheme = ctx.pool[state.exercise[d][at]].scheme;
+          if (!scheme.continuous || _isLocked(state, d, at)) {
+            continue;
+          }
+          while (state.sets[d][at] < scheme.maxSets) {
+            state.sets[d][at]++;
+            final value = _fits(state, d)
+                ? objective(state)
+                : double.negativeInfinity;
+            if (value > current + 1e-9) {
+              current = value;
+              improved = true;
+            } else {
+              state.sets[d][at]--;
+              break;
+            }
           }
         }
       }

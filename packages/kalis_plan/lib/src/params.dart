@@ -11,19 +11,20 @@ library;
 final class ScoreWeights {
   /// Poids par défaut.
   const ScoreWeights({
-    this.recovery = 0.5,
-    this.fatigueBalance = 0.3,
+    this.recovery = 0.6,
+    this.fatigueBalance = 0.2,
     this.jointLoad = 0.2,
-    this.goalSpecificity = 0.16,
-    this.disciplineDosage = 0.14,
-    this.muscleVolume = 0.14,
-    this.patternBalance = 0.12,
+    this.goalSpecificity = 0.15,
+    this.disciplineDosage = 0.13,
+    this.muscleVolume = 0.13,
+    this.patternBalance = 0.11,
     this.disciplineStructure = 0.10,
     this.timeUse = 0.10,
     this.variety = 0.08,
-    this.stimulusFatigue = 0.06,
+    this.exerciseFit = 0.06,
+    this.stimulusFatigue = 0.05,
     this.preferences = 0.05,
-    this.novelty = 0.05,
+    this.novelty = 0.04,
   });
 
   /// Sécurité : même muscle sollicité lourdement à moins de 48 h.
@@ -59,6 +60,10 @@ final class ScoreWeights {
   /// Qualité : pas de redondance dans une séance ni dans la semaine.
   final double variety;
 
+  /// Qualité : exercices adaptés (mouvement de base de sa famille, ni trop
+  /// facile ni assisté sans besoin).
+  final double exerciseFit;
+
   /// Qualité : rapport stimulus / fatigue des exercices.
   final double stimulusFatigue;
 
@@ -80,6 +85,7 @@ final class ScoreWeights {
       disciplineStructure +
       timeUse +
       variety +
+      exerciseFit +
       stimulusFatigue +
       preferences +
       novelty;
@@ -96,6 +102,7 @@ final class ScoreWeights {
     'discipline_structure',
     'time_use',
     'variety',
+    'exercise_fit',
     'stimulus_fatigue',
     'preferences',
     'novelty',
@@ -116,6 +123,7 @@ final class ScoreWeights {
     disciplineStructure,
     timeUse,
     variety,
+    exerciseFit,
     stimulusFatigue,
     preferences,
     novelty,
@@ -142,9 +150,10 @@ final class ScoreWeights {
       disciplineStructure: v[7],
       timeUse: v[8],
       variety: v[9],
-      stimulusFatigue: v[10],
-      preferences: v[11],
-      novelty: v[12],
+      exerciseFit: v[10],
+      stimulusFatigue: v[11],
+      preferences: v[12],
+      novelty: v[13],
     );
   }
 }
@@ -157,6 +166,7 @@ final class PlanParams {
     this.weights = const ScoreWeights(),
     this.safetyStep = 0.05,
     this.safetyShare = 0.3,
+    this.safetyPriority = 1.0,
     this.changePenalty = 0.01,
     this.alternativeTolerance = 0.03,
     this.alternativeMinDistance = 1 / 3,
@@ -209,6 +219,11 @@ final class PlanParams {
 
   /// Part de la note de sécurité dans la note globale affichée.
   final double safetyShare;
+
+  /// Poids ajouté à la note de sécurité dans l'objectif de la recherche
+  /// (en plus de sa part dans la note globale) : la sécurité y pèse
+  /// `(safetyShare + safetyPriority) / (1 − safetyShare)` fois la qualité.
+  final double safetyPriority;
 
   /// Pénalité par emplacement modifié lors d'une régénération (D4.6).
   final double changePenalty;
@@ -340,6 +355,7 @@ final class PlanParams {
       weights: weights,
       safetyStep: safetyStep,
       safetyShare: safetyShare,
+      safetyPriority: safetyPriority,
       changePenalty: changePenalty,
       alternativeTolerance: alternativeTolerance,
       alternativeMinDistance: alternativeMinDistance,
@@ -388,6 +404,7 @@ final class PlanParams {
       weights: weights,
       safetyStep: safetyStep,
       safetyShare: safetyShare,
+      safetyPriority: safetyPriority,
       changePenalty: changePenalty,
       alternativeTolerance: alternativeTolerance,
       alternativeMinDistance: alternativeMinDistance,

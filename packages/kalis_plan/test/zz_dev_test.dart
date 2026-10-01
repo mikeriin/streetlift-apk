@@ -50,6 +50,17 @@ void main() {
         final t1 = watch.elapsedMicroseconds;
         final c = runProfileCase(catalog, engine, fixture);
         watch.stop();
+        times.writeln('  ${inspector.explainProfile(request)}');
+        for (final id in <String>[
+          'cs-planche-tuck',
+          'sl-muscle-up-leste',
+          'sl-squat-competition',
+          'mu-air-squat',
+          'ca-sortie-longue',
+          'mu-developpe-couche-barre',
+        ]) {
+          times.writeln('  $id : ${inspector.rejectionOf(request, id)}');
+        }
         times.writeln(
           '${fixture.key} : passe 1 ${(t1 / 1000).toStringAsFixed(1)} ms ; '
           'cas complet ${watch.elapsedMilliseconds} ms ; '

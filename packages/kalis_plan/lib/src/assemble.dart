@@ -211,7 +211,10 @@ List<OrderedSlot> orderedDay(PlanContext ctx, PlanState state, int day) {
         role = SlotRole.skill;
       case SlotKind.power:
       case SlotKind.compound:
-        if (e.goalLift || !mainGiven) {
+        final explosive =
+            e.exercise.pattern == MovementPattern.pliometrie ||
+            e.exercise.pattern == MovementPattern.balistique;
+        if (e.goalLift || (!mainGiven && !explosive)) {
           role = SlotRole.main;
           mainGiven = true;
         } else {

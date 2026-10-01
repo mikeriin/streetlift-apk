@@ -344,7 +344,8 @@ final class ExerciseTraits {
   /// secondaire (demi-série), 0 sinon. Les stabilisateurs ne comptent pas.
   final List<int> groupCredits;
 
-  /// Régions de mobilité couvertes (bits de `MobilityRegion.index`).
+  /// Régions du corps concernées (bits de `MobilityRegion.index`) : muscles
+  /// étirés d'un exercice de mobilité, muscles principaux sinon.
   final int regionMask;
 
   /// Rapport stimulus / fatigue, de 0 à 1, ou −1 hors renforcement.
@@ -439,15 +440,13 @@ ExerciseTraits _traitsOf(
   }
   final kind = slotKindOf(e);
   var mask = 0;
-  if (kind == SlotKind.mobility) {
-    final names = e.stretchedMuscles.isEmpty
-        ? e.primaryMuscles
-        : e.stretchedMuscles;
-    for (final name in names) {
-      final region = _regionOfMuscle[name];
-      if (region != null) {
-        mask |= 1 << region.index;
-      }
+  final regionNames = kind == SlotKind.mobility && e.stretchedMuscles.isNotEmpty
+      ? e.stretchedMuscles
+      : e.primaryMuscles;
+  for (final name in regionNames) {
+    final region = _regionOfMuscle[name];
+    if (region != null) {
+      mask |= 1 << region.index;
     }
   }
   var sfr = -1.0;
