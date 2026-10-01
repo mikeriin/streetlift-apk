@@ -34,7 +34,7 @@ Note globale, part du temps disponible utilisée, erreur de dosage (points de po
 | `elite_calisthenie_6x90` | 0.943 | 62 % | 3.0 | 56 % | 6/6 | 42 | 0 |
 | `streetlifting_debutant_3x60` | 0.965 | 97 % | 0.5 | 80 % | 6/6 | 19 | 0 |
 | `forme_generale_exterieur_3x40` | 0.950 | 98 % | 0.0 | 93 % | 4/6 | 15 | 0 |
-| `senior_72_mobilite_marche_4x30` | 0.974 | 94 % | 0.0 | 100 % | 0/0 | 25 | 0 |
+| `senior_72_mobilite_marche_4x30` | 0.974 | 94 % | 0.1 | 100 % | 0/0 | 25 | 0 |
 | `femme_60_musculation_salle_2x45` | 0.955 | 99 % | 0.1 | 62 % | 6/6 | 14 | 0 |
 | `homme_40_cardio_musculation_50_50` | 0.971 | 98 % | 0.0 | 87 % | 6/6 | 15 | 0 |
 | `trois_disciplines_70_20_10` | 0.971 | 99 % | 1.6 | 96 % | 6/6 | 27 | 0 |
@@ -43,7 +43,7 @@ Note globale, part du temps disponible utilisée, erreur de dosage (points de po
 | `objectif_habitude_seul` | 0.937 | 99 % | 0.9 | 93 % | 4/6 | 12 | 0 |
 | `objectif_figure_front_lever` | 0.962 | 81 % | 0.4 | 80 % | 6/6 | 20 | 0 |
 | `semi_marathon` | 0.960 | 100 % | 2.1 | 100 % | 4/4 | 19 | 0 |
-| `prudent_sante_musculation` | 0.953 | 96 % | 0.9 | 76 % | 6/6 | 10 | 0 |
+| `prudent_sante_musculation` | 0.952 | 98 % | 1.8 | 89 % | 5/6 | 10 | 0 |
 | `tres_grand_lourd` | 0.972 | 100 % | 0.8 | 76 % | 6/6 | 16 | 0 |
 | `petite_legere` | 0.961 | 97 % | 0.0 | 87 % | 6/6 | 24 | 0 |
 | `sept_jours_courts_7x20` | 0.947 | 99 % | 7.5 | 93 % | 5/6 | 29 | 0 |
@@ -55,14 +55,14 @@ Par profil type : médiane de trois exécutions, moteur neuf à chaque fois, apr
 
 | Opération | Médiane | 95e centile | Maximum |
 | --- | --- | --- | --- |
-| Passe 1 (création) | 47.2 | 86.9 | 91.8 |
-| Passe 2 | 1.1 | 2.8 | 3.8 |
-| Génération complète (passes 1 + 2) | 48.3 | 88.5 | 94.8 |
-| Régénération après une action de revue | 7.0 | 12.2 | 16.8 |
-| Variantes d'un exercice | 1.0 | 1.6 | 1.7 |
-| Autre proposition | 19.3 | 35.0 | 47.9 |
-| Bloc suivant | 7.9 | 16.8 | 20.6 |
-| Restructuration de la fin du bloc | 7.4 | 15.6 | 19.4 |
+| Passe 1 (création) | 56.1 | 107.0 | 115.6 |
+| Passe 2 | 1.3 | 3.5 | 4.9 |
+| Génération complète (passes 1 + 2) | 57.4 | 109.1 | 117.6 |
+| Régénération après une action de revue | 8.5 | 14.8 | 20.9 |
+| Variantes d'un exercice | 1.1 | 2.4 | 3.6 |
+| Autre proposition | 23.6 | 44.2 | 59.8 |
+| Bloc suivant | 9.8 | 20.4 | 25.1 |
+| Restructuration de la fin du bloc | 9.3 | 19.6 | 23.3 |
 
 ## 3. Population de 1000 profils aléatoires
 
@@ -71,24 +71,24 @@ Programmes avec une contrainte dure violée : **0** ; programmes invalides au se
 | Mesure | Moyenne | 5e centile | Médiane | 95e centile | Minimum | Maximum |
 | --- | --- | --- | --- | --- | --- | --- |
 | Note globale | 0.925 | 0.861 | 0.932 | 0.968 | 0.734 | 0.977 |
-| Temps utilisé (%) | 89.3 | 56.6 | 95.5 | 99.7 | 24.9 | 100.0 |
-| Groupes dans leur bande (%) | 81.5 | 53.3 | 84.4 | 100.0 | 17.8 | 100.0 |
-| Erreur de dosage (points) | 9.5 | 0.0 | 1.7 | 39.0 | 0.0 | 100.0 |
-| Schémas de base couverts (%) | 91.9 | 50.0 | 100.0 | 100.0 | 0.0 | 100.0 |
-| Passe 1 (ms) | 46.549 | 13.400 | 42.300 | 92.400 | 2.800 | 207.000 |
-| Régénération en revue (ms) | 6.971 | 1.900 | 6.400 | 14.100 | 0.500 | 31.000 |
+| Temps utilisé (%) | 89.1 | 56.6 | 95.4 | 99.7 | 24.9 | 100.0 |
+| Groupes dans leur bande (%) | 81.6 | 53.3 | 84.4 | 100.0 | 17.8 | 100.0 |
+| Erreur de dosage (points) | 9.4 | 0.0 | 1.7 | 40.0 | 0.0 | 100.0 |
+| Schémas de base couverts (%) | 91.8 | 50.0 | 100.0 | 100.0 | 0.0 | 100.0 |
+| Passe 1 (ms) | 55.735 | 15.500 | 50.500 | 112.900 | 3.100 | 253.900 |
+| Régénération en revue (ms) | 8.254 | 2.200 | 7.600 | 16.800 | 0.500 | 42.200 |
 
 Diff minimal — changements d'exercice hors de l'emplacement visé, par action de revue :
 
 | Action | Moyenne | Sans aucun autre changement | Maximum |
 | --- | --- | --- | --- |
-| `cannot_do` | 0.65 | 73 % | 12 |
-| `dislike` | 0.55 | 78 % | 12 |
-| `remove` | 0.50 | 58 % | 5 |
+| `cannot_do` | 0.61 | 75 % | 12 |
+| `dislike` | 0.53 | 80 % | 12 |
+| `remove` | 0.50 | 59 % | 5 |
 
 ## 4. « Autre proposition »
 
-Graines 1 à 7 de chaque profil type (280 propositions). Note rapportée à celle de la meilleure : minimum 0.9811, médiane 0.9986 (plancher du contrat : 0.97). Part d'exercices absents de chacune des propositions déjà montrées : médiane 42 %, minimum 0 % ; **91 %** des propositions atteignent le tiers visé. Programmes distincts parmi les huit premiers : 8.0 en moyenne, 8 au minimum.
+Graines 1 à 7 de chaque profil type (280 propositions). Note rapportée à celle de la meilleure : minimum 0.9811, médiane 0.9985 (plancher du contrat : 0.97). Part d'exercices absents de chacune des propositions déjà montrées : médiane 42 %, minimum 0 % ; **92 %** des propositions atteignent le tiers visé. Programmes distincts parmi les huit premiers : 8.0 en moyenne, 8 au minimum.
 
 ## 5. Convergence de la recherche
 
@@ -96,13 +96,13 @@ Objectif moyen (sécurité + note globale, de 0 à 2) des 40 profils types selon
 
 | Effort | Coups de recuit | Objectif moyen | Temps moyen (ms) | Profils améliorés | Profils dégradés |
 | --- | --- | --- | --- | --- | --- |
-| × 0.0 | 0 | 1.95196 | 15.6 | — | — |
-| × 0.0625 | 750 | 1.95300 | 20.4 | — | — |
-| × 0.125 | 1500 | 1.95441 | 22.8 | — | — |
-| × 0.25 | 3000 | 1.95499 | 28.0 | — | — |
-| × 0.5 | 6000 | 1.95640 | 34.7 | — | — |
-| × 1.0 | 12000 | 1.95717 | 47.4 | — | — |
-| × 2.0 | 24000 | 1.95763 | 72.2 | 21 | 17 |
+| × 0.0 | 0 | 1.95196 | 18.6 | — | — |
+| × 0.0625 | 750 | 1.95301 | 25.7 | — | — |
+| × 0.125 | 1500 | 1.95442 | 27.2 | — | — |
+| × 0.25 | 3000 | 1.95516 | 33.5 | — | — |
+| × 0.5 | 6000 | 1.95628 | 43.3 | — | — |
+| × 1.0 | 12000 | 1.95715 | 57.1 | — | — |
+| × 2.0 | 24000 | 1.95751 | 88.1 | 21 | 17 |
 
 ## 6. Sensibilité aux poids de la note
 
@@ -110,24 +110,24 @@ Chaque poids multiplié par 0,8 puis 1,2, les autres inchangés : recouvrement m
 
 | Poids | Jaccard × 0,8 | Identiques | Regret | Jaccard × 1,2 | Identiques | Regret |
 | --- | --- | --- | --- | --- | --- | --- |
-| `recovery` | 0.47 | 5 | 0.0004 | 0.42 | 2 | 0.0004 |
-| `fatigue_balance` | 0.42 | 2 | 0.0005 | 0.46 | 4 | 0.0006 |
-| `joint_load` | 0.53 | 8 | 0.0002 | 0.47 | 5 | 0.0009 |
-| `goal_specificity` | 0.41 | 3 | 0.0000 | 0.41 | 2 | -0.0001 |
-| `discipline_dosage` | 0.44 | 2 | 0.0002 | 0.44 | 2 | 0.0001 |
-| `muscle_volume` | 0.43 | 3 | 0.0003 | 0.42 | 2 | 0.0001 |
-| `pattern_balance` | 0.42 | 2 | 0.0001 | 0.44 | 3 | -0.0000 |
-| `discipline_structure` | 0.44 | 2 | 0.0003 | 0.43 | 2 | 0.0001 |
-| `time_use` | 0.43 | 3 | 0.0003 | 0.42 | 2 | 0.0005 |
-| `variety` | 0.43 | 3 | 0.0002 | 0.42 | 2 | 0.0004 |
-| `exercise_fit` | 0.44 | 1 | 0.0001 | 0.44 | 2 | 0.0006 |
-| `stimulus_fatigue` | 0.43 | 1 | 0.0006 | 0.43 | 2 | 0.0009 |
-| `preferences` | 0.39 | 2 | 0.0007 | 0.44 | 3 | 0.0003 |
-| `novelty` | 0.43 | 2 | 0.0002 | 0.40 | 1 | 0.0006 |
+| `recovery` | 0.47 | 5 | 0.0004 | 0.41 | 2 | 0.0003 |
+| `fatigue_balance` | 0.42 | 2 | 0.0006 | 0.46 | 4 | 0.0006 |
+| `joint_load` | 0.52 | 8 | 0.0002 | 0.47 | 5 | 0.0008 |
+| `goal_specificity` | 0.41 | 3 | -0.0000 | 0.41 | 2 | 0.0000 |
+| `discipline_dosage` | 0.44 | 2 | 0.0003 | 0.43 | 2 | 0.0001 |
+| `muscle_volume` | 0.42 | 3 | 0.0005 | 0.41 | 2 | 0.0000 |
+| `pattern_balance` | 0.41 | 2 | 0.0000 | 0.42 | 3 | 0.0001 |
+| `discipline_structure` | 0.43 | 2 | 0.0002 | 0.43 | 2 | 0.0000 |
+| `time_use` | 0.42 | 3 | 0.0002 | 0.41 | 2 | 0.0006 |
+| `variety` | 0.43 | 3 | 0.0001 | 0.41 | 2 | 0.0004 |
+| `exercise_fit` | 0.43 | 1 | 0.0000 | 0.44 | 2 | 0.0005 |
+| `stimulus_fatigue` | 0.41 | 1 | 0.0006 | 0.41 | 2 | 0.0009 |
+| `preferences` | 0.39 | 2 | 0.0007 | 0.43 | 3 | 0.0004 |
+| `novelty` | 0.43 | 2 | 0.0001 | 0.42 | 1 | 0.0006 |
 
 ## 7. Séries créditées par minute de renforcement
 
-Séries fractionnaires créditées aux groupes majeurs par minute de renforcement, sur les profils types qui en comportent (37) : moyenne 0.94, médiane 0.97, de 0.66 à 1.17. Paramètre `creditsPerMinute` : 0.9.
+Séries fractionnaires créditées aux groupes majeurs par minute de renforcement, sur les profils types qui en comportent (37) : moyenne 0.94, médiane 0.97, de 0.66 à 1.20. Paramètre `creditsPerMinute` : 0.9.
 
 ## 8. Non-ressemblance au programme du propriétaire
 
@@ -137,28 +137,28 @@ Programme du propriétaire : 40 semaines, 45 exercices du catalogue, dont 36 acc
 | --- | --- | --- | --- |
 | Profils types — propriétaire (graines 0 à 3) | 4 | 0.151 | 0.154 |
 | Profils types — street (graines 0 à 3) | 52 | 0.067 | 0.167 |
-| Profils types — sans street (graines 0 à 3) | 104 | 0.067 | 0.196 |
+| Profils types — sans street (graines 0 à 3) | 104 | 0.065 | 0.196 |
 | Population aléatoire | 1000 | 0.038 | 0.227 |
 
-Séance par séance (profils types, graines 0 à 3) : ressemblance maximale avec une séance du propriétaire, médiane 0.08, maximum 0.40.
+Séance par séance (profils types, graines 0 à 3) : ressemblance maximale avec une séance du propriétaire, médiane 0.09, maximum 0.40.
 
 Accessoires du propriétaire chez les 328 profils aléatoires sans discipline street : part des profils (où l'exercice est admissible) dont le programme le contient, face à l'exercice hors programme du propriétaire le plus choisi de la même catégorie. Sur-représenté = plus de 5 % et plus du double de ce pair. Accessoires propres au propriétaire (exercices des disciplines street de la base) sur-représentés : **0** ; accessoires du fonds commun de la musculation au-dessus de la même règle : 1 (`mu-mollets-debout-machine`).
 
 | Accessoire du propriétaire | Propre | Catégorie | Admissible | Choisi | Meilleur pair | Choisi |
 | --- | --- | --- | --- | --- | --- | --- |
-| `sw-traction-scapulaire` | oui | Préparation scapulaire | 205 | 4.9 % | `mu-halo-kettlebell` | 8.3 % |
-| `mo-routine-mobilite-epaules-poignets` | non | Mobilité articulaire | 144 | 56.9 % | `mo-wall-slides` | 57.0 % |
-| `mu-rowing-poulie-assis-triangle` | non | Tirage horizontal | 148 | 35.8 % | `sw-row-australien` | 49.3 % |
-| `mu-mollets-debout-machine` | non | Mollets et cheville | 138 | 21.0 % | `mu-mollets-poids-du-corps-marche` | 5.6 % |
-| `mu-leg-curl-couche` | non | Flexion de genou (ischio-jambiers) | 141 | 20.6 % | `mu-nordic-hamstring-curl` | 25.4 % |
-| `mu-fente-marchee-halteres` | non | Fente / unilatéral jambes | 104 | 19.2 % | `cf-fente-overhead-disque` | 36.8 % |
-| `mu-developpe-militaire-barre-debout` | non | Poussée verticale | 87 | 17.2 % | `mu-developpe-halteres-assis` | 20.5 % |
-| `mu-developpe-couche-barre` | non | Poussée horizontale | 122 | 14.8 % | `sw-pompe-t` | 37.3 % |
-| `mu-rowing-barre-pronation` | non | Tirage horizontal | 105 | 14.3 % | `sw-row-australien` | 49.3 % |
-| `mu-elevation-laterale-halteres` | non | Isolation épaules | 151 | 13.9 % | `mu-elevation-laterale-buste-appuye-banc-incline` | 17.7 % |
-| `ca-marche-recuperation` | non | Marche et portage | 242 | 13.6 % | `ca-marche-rapide` | 23.1 % |
-| `mu-y-raise-banc-incline` | non | Préparation scapulaire | 135 | 11.9 % | `mu-halo-kettlebell` | 8.3 % |
-| `mu-pallof-press-debout` | non | Gainage anti-rotation | 141 | 9.9 % | `mu-bird-dog` | 14.7 % |
-| `mu-rowing-haltere-unilateral-banc` | non | Tirage horizontal | 141 | 7.8 % | `sw-row-australien` | 49.3 % |
-| `mu-hollow-body-hold` | non | Gainage anti-extension | 156 | 7.7 % | `mu-planche-rkc` | 37.4 % |
+| `sw-traction-scapulaire` | oui | Préparation scapulaire | 205 | 4.9 % | `mu-halo-kettlebell` | 9.6 % |
+| `mo-routine-mobilite-epaules-poignets` | non | Mobilité articulaire | 144 | 54.9 % | `mo-wall-slides` | 54.3 % |
+| `mu-rowing-poulie-assis-triangle` | non | Tirage horizontal | 148 | 33.8 % | `sw-row-australien` | 56.5 % |
+| `mu-leg-curl-couche` | non | Flexion de genou (ischio-jambiers) | 141 | 22.7 % | `mu-nordic-hamstring-curl` | 25.4 % |
+| `mu-developpe-militaire-barre-debout` | non | Poussée verticale | 87 | 18.4 % | `mu-developpe-halteres-assis` | 18.9 % |
+| `mu-fente-marchee-halteres` | non | Fente / unilatéral jambes | 104 | 18.3 % | `cf-fente-overhead-disque` | 28.9 % |
+| `mu-mollets-debout-machine` | non | Mollets et cheville | 138 | 18.1 % | `mu-mollets-poids-du-corps-marche` | 4.9 % |
+| `ca-marche-recuperation` | non | Marche et portage | 242 | 17.4 % | `ca-marche-rapide` | 24.0 % |
+| `mu-elevation-laterale-halteres` | non | Isolation épaules | 151 | 15.2 % | `mu-elevation-laterale-buste-appuye-banc-incline` | 16.2 % |
+| `mu-y-raise-banc-incline` | non | Préparation scapulaire | 135 | 13.3 % | `mu-halo-kettlebell` | 9.6 % |
+| `mu-developpe-couche-barre` | non | Poussée horizontale | 122 | 12.3 % | `mu-developpe-couche-halteres` | 35.3 % |
+| `mu-rowing-barre-pronation` | non | Tirage horizontal | 105 | 10.5 % | `sw-row-australien` | 56.5 % |
+| `mu-pallof-press-debout` | non | Gainage anti-rotation | 141 | 9.9 % | `mu-bird-dog` | 13.8 % |
+| `mu-hollow-body-hold` | non | Gainage anti-extension | 156 | 8.3 % | `mu-planche-rkc` | 40.6 % |
+| `mu-rowing-haltere-unilateral-banc` | non | Tirage horizontal | 141 | 7.1 % | `sw-row-australien` | 56.5 % |
 

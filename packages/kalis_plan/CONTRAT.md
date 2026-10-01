@@ -167,7 +167,7 @@ diversité que pour « Autre proposition » (§ 3.7).
    manque et 6 toutes classes confondues, classés par besoin : dosage, volume, schémas, objectifs, goûts),
    l'ajout qui améliore le plus l'objectif, en regardant un ajout plus loin pour les 3 meilleurs ; arrêt
    quand plus aucun ajout n'améliore. Une séance vide est remplie d'abord.
-3. **Recuit simulé** (Kirkpatrick et al. 1983) : 3 000 coups — remplacer (55 %), ajouter, au besoin en
+3. **Recuit simulé** (Kirkpatrick et al. 1983) : 12 000 coups — remplacer (55 %), ajouter, au besoin en
    retirant un ou deux exercices pour faire de la place (15 %), retirer (15 %), déplacer vers un autre jour
    (15 %) — acceptés s'ils améliorent, sinon avec la probabilité `exp(Δ / température)`, la température
    décroissant de 0,02 à 0,0004 ; on garde le meilleur état rencontré.
@@ -179,9 +179,9 @@ Le hasard vient d'une suite xorshift32 (Marsaglia 2003) dont la graine est un ha
 les candidats sont triés par valeur puis par identifiant, et les égalités restantes sont départagées par
 le hachage FNV-1a de l'identifiant de l'exercice : le résultat ne dépend d'aucun ordre d'itération.
 
-**Convergence mesurée** (`docs/MESURES.md`, § 5). L'objectif moyen des 40 profils types passe de 1,9509
-(glouton seul) à 1,9553 à 3 000 coups ; au-delà, doubler l'effort améliore certains profils et en dégrade
-d'autres, pour un gain moyen inférieur à 0,002 sur une échelle de 0 à 2. Le recuit ne garantit pas
+**Convergence mesurée** (`docs/MESURES.md`, § 5). L'objectif moyen des 40 profils types passe de 1,9520
+(glouton seul) à 1,9552 à 3 000 coups et 1,9572 à 12 000 coups, l'effort retenu ; doubler encore l'effort
+améliore 21 profils et en dégrade 17, pour un gain moyen de 0,0004 sur une échelle de 0 à 2. Le recuit ne garantit pas
 l'optimum : le programme rendu est le meilleur **trouvé**.
 
 **Sensibilité mesurée** (§ 6 du relevé). Multiplier un poids par 0,8 ou 1,2 change une bonne part des
@@ -196,8 +196,8 @@ subit un recuit avec une pénalité de ressemblance aux propositions déjà mont
 n'est retenue que si elle garde le niveau de sécurité de la meilleure et une note à moins de 3 % de la
 sienne ; parmi trois essais de pénalité décroissante, on garde le premier qui atteint un tiers d'exercices
 non verrouillés absents de chacune des propositions montrées, sinon le plus différent. Mesuré sur les
-profils types : note toujours au-dessus de 97 % de la meilleure ; le tiers est atteint pour neuf
-propositions sur dix (les viviers étroits — mobilité seule, marche — n'ont pas assez d'exercices).
+profils types : note toujours au-dessus de 97 % de la meilleure (minimum mesuré : 98,1 %) ; le tiers est atteint
+pour 92 % des propositions (les viviers étroits — mobilité seule, marche — n'ont pas assez d'exercices).
 
 ## 4. Revue, variantes, diff minimal
 
@@ -212,7 +212,8 @@ et le note comme aimé.
 500 coups de recuit, descente) sous une pénalité de 0,01 par emplacement changé, puis chaque changement
 dont l'annulation ne ferait pas baisser l'objectif est annulé. Garantie testée : l'objectif pénalisé du
 résultat n'est jamais inférieur à celui de l'action seule ; ce qui est verrouillé ne bouge pas. Mesuré
-(`docs/MESURES.md`, § 3) : sept actions `cannot_do` sur dix ne changent rien d'autre.
+(`docs/MESURES.md`, § 3) : trois actions `cannot_do` sur quatre et quatre actions `dislike` sur cinq ne changent rien d'autre ;
+après un `remove`, six fois sur dix.
 
 `ReviewResult.diff` décrit exactement les emplacements dont l'exercice a changé (`exercise_replaced`,
 `exercise_added`, `exercise_removed`, `exercise_moved`) et les séances réordonnées (`order_changed`), avec
@@ -327,7 +328,7 @@ il est alors justifié par une mesure ou signalé comme tel au registre (§ 10).
 | Expositions d'un objectif | 2 par semaine | Référence : même source (force) ; dose minimale d'une série lourde par semaine (Androulakis-Korakakis et al. 2020). |
 | Séries par exercice | 2 à 5 | Référence : Ralston et al. 2017, Rhea et al. 2003 ; ACSM 2009. |
 | RIR visé (3 → 1 selon le niveau et la famille) | — | Référence : échelle RIR (Zourdos et al. 2016 ; Helms et al. 2016) ; estimation des répétitions restantes sous-estimée d'environ une répétition (Halperin et al. 2022) — d'où un RIR d'au moins 3 pour un débutant. |
-| Crédits par minute de renforcement | 0,9 | Mesure : 0,90 en moyenne sur les profils types (`docs/MESURES.md`, § 7). |
+| Crédits par minute de renforcement | 0,9 | Mesure : 0,94 en moyenne, 0,97 en médiane sur les profils types (`docs/MESURES.md`, § 7). |
 
 ### 7.2 Charges, plages, repos, ordre
 
@@ -364,7 +365,7 @@ il est alors justifié par une mesure ou signalé comme tel au registre (§ 10).
 
 | Paramètre | Valeur | Source |
 | --- | --- | --- |
-| Coups de recuit (création, autre proposition, revue) | 3 000, 3 000, 500 | Mesure : convergence (`docs/MESURES.md`, § 5) et temps (§ 2). |
+| Coups de recuit (création, autre proposition, revue) | 12 000, 6 000, 500 | Mesure : convergence (`docs/MESURES.md`, § 5) et temps (§ 2). |
 | Températures | 0,02 → 0,0004 | Hypothèse : de l'ordre d'un échange d'exercice (0,01) à celui d'un départage. |
 | Liste courte, anticipation, voisins | 6, 3, 12 | Hypothèse ; temps mesurés. |
 | Pénalité de changement | 0,01 par emplacement | Mesure : diff minimal (`docs/MESURES.md`, § 3). |

@@ -511,7 +511,7 @@ Set<String> planExerciseIds(Pass1Plan plan) => <String>{
 /// des exercices). C'est le premier décile de la ressemblance du programme
 /// du propriétaire avec lui-même, d'un bloc à l'autre : un programme
 /// généré doit lui ressembler moins que neuf fois sur dix ses propres blocs
-/// ne se ressemblent (`docs/NON_RESSEMBLANCE.md`).
+/// ne se ressemblent (`docs/VALIDATION.md`, § 4).
 const double ownerWeekResemblanceLimit = 0.30;
 
 /// Programme personnel du propriétaire (`owner_program_v33.json.gz` de

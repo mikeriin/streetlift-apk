@@ -49,7 +49,7 @@ Temps : séances au-delà du temps donné / séances, puis part du temps utilis�
 | `elite_calisthenie_6x90` | calisthenics, mobility | 0/6 · 43 % | 0/6 · 62 % | 4.4 | 3.0 | 1 / 0 | 1 / 9 | 16 / 24 | 37 / 24 | 4 / 8 | 3 / 3 |
 | `streetlifting_debutant_3x60` | calisthenics | 0/3 · 94 % | 0/3 · 97 % | 3.8 | 0.0 | 1 / 0 | 0 / 0 | 16 / 9 | 18 / 16 | 8 / 12 | 8 / 10 |
 | `forme_generale_exterieur_3x40` | cardio | 3/3 · 100 % | 0/3 · 98 % | — | — | 2 / 0 | 9 / 0 | 10 / 10 | 3 / 3 | 6 / 6 | 2 / 3 |
-| `senior_72_mobilite_marche_4x30` | cardio, mobility | 3/4 · 100 % | 0/4 · 94 % | 74.4 | 0.0 | 6 / 0 | 14 / 0 | 4 / 6 | 0 / 0 | 4 / 8 | 0 / 0 |
+| `senior_72_mobilite_marche_4x30` | cardio, mobility | 3/4 · 100 % | 0/4 · 94 % | 74.4 | 0.1 | 6 / 0 | 14 / 0 | 4 / 6 | 0 / 0 | 4 / 8 | 0 / 0 |
 | `femme_60_musculation_salle_2x45` | mobility | 2/2 · 100 % | 0/2 · 99 % | 15.2 | 0.1 | 2 / 0 | 6 / 0 | 8 / 8 | 6 / 6 | 5 / 6 | 3 / 3 |
 | `homme_40_cardio_musculation_50_50` | cardio | 0/4 · 93 % | 0/4 · 98 % | 50.0 | 0.0 | 1 / 0 | 1 / 0 | 8 / 23 | 9 / 6 | 4 / 8 | 3 / 3 |
 | `trois_disciplines_70_20_10` | cardio, mobility | 1/3 · 85 % | 0/3 · 99 % | 26.1 | 1.6 | 1 / 0 | 0 / 0 | 15 / 14 | 12 / 9 | 9 / 12 | 6 / 6 |
@@ -58,7 +58,7 @@ Temps : séances au-delà du temps donné / séances, puis part du temps utilis�
 | `objectif_habitude_seul` | — | 3/3 · 100 % | 0/3 · 99 % | — | — | 8 / 0 | 10 / 0 | 2 / 6 | 3 / 3 | 2 / 6 | 2 / 3 |
 | `objectif_figure_front_lever` | calisthenics | 0/4 · 91 % | 0/4 · 81 % | 3.9 | 0.0 | 1 / 0 | 1 / 4 | 18 / 10 | 26 / 20 | 4 / 12 | 3 / 3 |
 | `semi_marathon` | cardio, mobility | 0/4 · 79 % | 0/4 · 100 % | 80.0 | 2.1 | 1 / 0 | 8 / 0 | 12 / 21 | 0 / 5 | 4 / 8 | 2 / 2 |
-| `prudent_sante_musculation` | cardio | 0/2 · 93 % | 0/2 · 96 % | 40.0 | 0.9 | 2 / 0 | 6 / 0 | 8 / 10 | 6 / 6 | 4 / 7 | 2 / 3 |
+| `prudent_sante_musculation` | cardio | 0/2 · 93 % | 0/2 · 98 % | 40.0 | 1.8 | 2 / 0 | 5 / 0 | 8 / 10 | 6 / 6 | 4 / 7 | 2 / 3 |
 | `tres_grand_lourd` | cardio | 0/3 · 92 % | 0/3 · 100 % | 30.0 | 0.8 | 1 / 0 | 0 / 0 | 14 / 17 | 10 / 9 | 10 / 12 | 7 / 6 |
 | `petite_legere` | mobility | 2/3 · 99 % | 0/3 · 97 % | 25.4 | 0.0 | 1 / 0 | 3 / 0 | 16 / 10 | 10 / 9 | 6 / 8 | 3 / 4 |
 | `sept_jours_courts_7x20` | cardio, mobility | 3/7 · 100 % | 0/7 · 99 % | — | — | 7 / 0 | 9 / 0 | 2 / 14 | 4 / 4 | 1 / 10 | 2 / 2 |

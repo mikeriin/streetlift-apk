@@ -1361,7 +1361,8 @@ PlanContext _build(ContextInputs inputs) {
           cautious &&
           (t.impact ||
               e.systemicFatigue >= 5 ||
-              (t.kind.isCardio && e.stressOn(Joint.ankle) != JointStress.low))) {
+              (t.kind.isCardio &&
+                  e.stressOn(Joint.ankle) != JointStress.low))) {
         rejection = Rejections.cautious;
       }
 

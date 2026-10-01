@@ -1639,11 +1639,11 @@ Profil : cardio 100 % — lundi 30 min, mercredi 30 min, samedi 30 min — lieux
 Note 0.976 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 1.00 · pattern_balance 1.00 · discipline_structure 1.00 · time_use 1.00 · variety 1.00 · exercise_fit 0.66 · stimulus_fatigue 1.00 · preferences 1.00 · novelty 1.00.
 
 - **lundi** (30 min, estimé 30 min) — `cardio.endurance`
-  - Footing en endurance fondamentale — conditioning `ca-footing-endurance-fondamentale`
+  - Vélo en endurance — conditioning `ca-velo-endurance`
 - **mercredi** (30 min, estimé 30 min) — `cardio.endurance`
-  - Footing en endurance fondamentale — conditioning `ca-footing-endurance-fondamentale`
+  - Vélo en endurance — conditioning `ca-velo-endurance`
 - **samedi** (30 min, estimé 30 min) — `cardio.endurance`
-  - Footing en endurance fondamentale — conditioning `ca-footing-endurance-fondamentale`
+  - Vélo en endurance — conditioning `ca-velo-endurance`
 
 Dosage : cardio 100 % (visé 100 %) — erreur 0.0 points.
 
@@ -1653,12 +1653,12 @@ Volume hebdomadaire (séries fractionnaires [bande]) : chest 0 [0-5], delt_anter
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Footing en endurance fondamentale (`d0.1`) :
-  - `exercise_replaced` jour 0 : Footing en endurance fondamentale → Vélo de récupération très léger (plan.user_cannot_do, plan.variant_easier)
+- « Je ne sais pas faire » sur Vélo en endurance (`d0.1`) :
+  - `exercise_replaced` jour 0 : Vélo en endurance → Vélo de récupération très léger (plan.user_cannot_do, plan.variant_easier)
   - `exercise_added` jour 1 → Marche de récupération (plan.reoptimized)
-  - `exercise_removed` jour 1 : Footing en endurance fondamentale (plan.reoptimized)
+  - `exercise_removed` jour 1 : Vélo en endurance (plan.reoptimized)
   - `exercise_added` jour 2 → Marche de récupération (plan.reoptimized)
-  - `exercise_removed` jour 2 : Footing en endurance fondamentale (plan.reoptimized)
+  - `exercise_removed` jour 2 : Vélo en endurance (plan.reoptimized)
 - Remplacement par Marche rapide (`d2.2`) :
   - `exercise_replaced` jour 2 : Marche de récupération → Marche rapide (plan.user_replaced)
 
@@ -2515,37 +2515,37 @@ Profil : mobility 60 % + cardio 40 % — lundi 30 min, mercredi 30 min, vendredi
 
 Note 0.974 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 1.00 · pattern_balance 1.00 · discipline_structure 1.00 · time_use 1.00 · variety 1.00 · exercise_fit 0.63 · stimulus_fatigue 1.00 · preferences 1.00 · novelty 1.00.
 
-- **lundi** (30 min, estimé 29 min) — `cardio.endurance`
-  - Marche sur les talons — warmup `mo-marche-talons`
-  - Marche rapide — conditioning `ca-marche-rapide`
+- **lundi** (30 min, estimé 27 min) — `mobility`
+  - Mobilité hanches 90/90 passive — mobility `mo-90-90-passif`
+  - Étirement chaîne postérieure en flexion avant debout — mobility `mo-chaine-posterieure-flexion-avant-debout`
+  - Mobilisation cheville genou au mur — mobility `mo-cheville-genou-mur`
+  - Cohérence cardiaque — mobility `mo-coherence-cardiaque`
+  - Étirement pectoral au cadre de porte — mobility `mo-etirement-pectoral-cadre-porte`
+  - Étirement des orteils en extension agenouillé — mobility `mo-extension-orteils-agenouille`
+  - Marche sur les talons — mobility `mo-marche-talons`
+  - Respiration crocodile — mobility `mo-respiration-crocodile`
+  - Wall slides dos au mur — mobility `mo-wall-slides`
+- **mercredi** (30 min, estimé 28 min) — `cardio.endurance`
+  - Marche de récupération — conditioning `ca-marche-recuperation`
   - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
-  - Étirement des gastrocnémiens au mur jambe tendue — cooldown `mo-etirement-gastrocnemiens-mur`
-- **mercredi** (30 min, estimé 28 min) — `mobility`
+- **vendredi** (30 min, estimé 30 min) — `mobility`
   - Mobilité hanches 90/90 passive — mobility `mo-90-90-passif`
   - Bascules en appui doigts vers l'avant — mobility `mo-bascules-appui-doigts-avant`
   - Étirement chaîne postérieure en flexion avant debout — mobility `mo-chaine-posterieure-flexion-avant-debout`
-  - Dislocations d'épaules au bâton — mobility `mo-dislocations-epaules-baton`
-  - Étirement des gastrocnémiens au mur jambe tendue — mobility `mo-etirement-gastrocnemiens-mur`
-  - Marche sur les talons — mobility `mo-marche-talons`
-  - Pigeon au sol — mobility `mo-pigeon-sol`
-  - Rétraction du menton — mobility `mo-retraction-menton`
-  - Squat profond tenu — mobility `mo-squat-profond-tenu`
-  - Wall slides dos au mur — mobility `mo-wall-slides`
-- **vendredi** (30 min, estimé 27 min) — `cardio.endurance`
-  - Mobilisation cheville genou au mur — warmup `mo-cheville-genou-mur`
-  - Marche de récupération — conditioning `ca-marche-recuperation`
-- **dimanche** (30 min, estimé 28 min) — `mobility`
-  - Mobilité hanches 90/90 passive — mobility `mo-90-90-passif`
   - Mobilisation cheville genou au mur — mobility `mo-cheville-genou-mur`
-  - Cohérence cardiaque — mobility `mo-coherence-cardiaque`
-  - Étirement du biceps au mur — mobility `mo-etirement-biceps-mur`
   - Étirement des fléchisseurs du poignet bras tendu — mobility `mo-etirement-flechisseurs-poignet-bras-tendu`
   - Étirement des gastrocnémiens au mur jambe tendue — mobility `mo-etirement-gastrocnemiens-mur`
-  - Thread the needle — mobility `mo-thread-the-needle`
+  - Mobilité douce du cou en trois plans — mobility `mo-mobilite-cou-trois-plans`
+  - Respiration crocodile — mobility `mo-respiration-crocodile`
+  - Rotation interne active de hanche en quadrupédie — mobility `mo-rotation-interne-hanche-quadrupedie`
   - Wall slides dos au mur — mobility `mo-wall-slides`
-  - World's greatest stretch — mobility `mo-worlds-greatest-stretch`
+- **dimanche** (30 min, estimé 28 min) — `cardio.endurance`
+  - Marche de récupération — conditioning `ca-marche-recuperation`
+  - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
+  - Étirement chaîne postérieure en flexion avant debout — cooldown `mo-chaine-posterieure-flexion-avant-debout`
+  - Cobra (extension du rachis au sol) — cooldown `mo-cobra`
 
-Dosage : cardio 40 % (visé 40 %), mobility 60 % (visé 60 %) — erreur 0.0 points.
+Dosage : cardio 40 % (visé 40 %), mobility 60 % (visé 60 %) — erreur 0.1 points.
 
 Volume hebdomadaire (séries fractionnaires [bande]) : chest 0 [0-5], delt_anterior 0 [0-5], delt_middle 0 [0-5], delt_posterior 0 [0-5], lats 0 [0-5], upper_back 0 [0-5], biceps 0 [0-5], triceps 0 [0-5], abs 0 [0-5], lower_back 0 [0-5], glutes 0 [0-5], quads 0 [0-5], hamstrings 0 [0-5], calves 0 [0-5]. Groupes majeurs dans leur bande : 100 %.
 
@@ -2553,12 +2553,12 @@ Volume hebdomadaire (séries fractionnaires [bande]) : chest 0 [0-5], delt_anter
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Mobilisation cheville genou au mur (`d3.2`) :
-  - `exercise_removed` jour 2 : Mobilisation cheville genou au mur (plan.reoptimized)
-  - `exercise_replaced` jour 3 : Mobilisation cheville genou au mur → CARs de cheville (plan.user_cannot_do, plan.variant_easier)
-- Remplacement par Inchworm (chenille) (`d1.2`) :
-  - `exercise_replaced` jour 1 : Bascules en appui doigts vers l'avant → Inchworm (chenille) (plan.user_replaced)
-  - `order_changed` jour 1 (plan.reoptimized)
+- « Je ne sais pas faire » sur Mobilité douce du cou en trois plans (`d2.7`) :
+  - `exercise_replaced` jour 2 : Mobilité douce du cou en trois plans → Rétraction du menton (plan.user_cannot_do, plan.variant_easier)
+  - `order_changed` jour 2 (plan.reoptimized)
+- Remplacement par CARs de cheville (`d2.4`) :
+  - `exercise_replaced` jour 2 : Mobilisation cheville genou au mur → CARs de cheville (plan.user_replaced)
+  - `order_changed` jour 2 (plan.reoptimized)
 
 ### Passe 2
 
@@ -2566,45 +2566,46 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Marche sur les talons | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
-| Marche rapide | 13-15 min | 18-20 min | 18-20 min | 18-20 min |
 | Mobilité hanches 90/90 passive | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
-| Étirement des gastrocnémiens au mur jambe tendue | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Étirement chaîne postérieure en flexion avant debout | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Mobilisation cheville genou au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| Cohérence cardiaque | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s |
+| Étirement pectoral au cadre de porte | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Étirement des orteils en extension agenouillé | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Marche sur les talons | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Respiration crocodile | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s |
+| Wall slides dos au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
 
 mercredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
+| Marche de récupération | 18-20 min | 22-25 min | 22-25 min | 22-25 min |
 | Mobilité hanches 90/90 passive | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
-| Étirement chaîne postérieure en flexion avant debout | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
-| Dislocations d'épaules au bâton | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| Étirement des gastrocnémiens au mur jambe tendue | 2×30-45 s · 10s | 3×30-45 s · 10s | 3×30-45 s · 10s | 3×30-45 s · 10s |
-| Inchworm (chenille) | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| Marche sur les talons | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
-| Pigeon au sol | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
-| Rétraction du menton | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| Squat profond tenu | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
-| Wall slides dos au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
 
 vendredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Marche de récupération | 22-25 min | 22-25 min | 27-30 min | 27-30 min |
+| Mobilité hanches 90/90 passive | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Bascules en appui doigts vers l'avant | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| CARs de cheville | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| Étirement chaîne postérieure en flexion avant debout | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Étirement des fléchisseurs du poignet bras tendu | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Étirement des gastrocnémiens au mur jambe tendue | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Respiration crocodile | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s |
+| Rétraction du menton | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| Rotation interne active de hanche en quadrupédie | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| Wall slides dos au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
 
 dimanche :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
+| Marche de récupération | 13-15 min | 18-20 min | 18-20 min | 18-20 min |
 | Mobilité hanches 90/90 passive | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
-| CARs de cheville | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| Cohérence cardiaque | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s |
-| Étirement du biceps au mur | 2×30-45 s · 10s | 3×30-45 s · 10s | 3×30-45 s · 10s | 3×30-45 s · 10s |
-| Étirement des fléchisseurs du poignet bras tendu | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
-| Étirement des gastrocnémiens au mur jambe tendue | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
-| Thread the needle | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
-| Wall slides dos au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| World's greatest stretch | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| Étirement chaîne postérieure en flexion avant debout | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Cobra (extension du rachis au sol) | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
 
 ## 28. `femme_60_musculation_salle_2x45`
 
@@ -3262,33 +3263,33 @@ Profil : musculation 60 % + cardio 40 % — lundi 45 min, jeudi 45 min — lieux
 
 ### Passe 1
 
-Note 0.953 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.99 · muscle_volume 0.80 · pattern_balance 1.00 · discipline_structure 0.97 · time_use 1.00 · variety 1.00 · exercise_fit 0.68 · stimulus_fatigue 0.83 · preferences 1.00 · novelty 1.00.
+Note 0.952 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.98 · muscle_volume 0.84 · pattern_balance 0.94 · discipline_structure 0.95 · time_use 1.00 · variety 1.00 · exercise_fit 0.69 · stimulus_fatigue 0.89 · preferences 1.00 · novelty 1.00.
 
-- **lundi** (45 min, estimé 43 min) — `strength.full_body`
-  - Air squat — main `mu-air-squat`
-  - Rowing inversé à la Smith machine — secondary `mu-rowing-inverse-smith-machine`
-  - Pompe classique — secondary `sw-pompe`
-  - Gainage ventral sur les coudes — core `mu-gainage-ventral-coudes`
-  - Vélo en endurance — conditioning `ca-velo-endurance`
-- **jeudi** (45 min, estimé 44 min) — `strength.upper`
-  - Tirage vertical poulie prise large pronation — main `mu-tirage-vertical-prise-large-pronation`
-  - Dips assistés à l'élastique — secondary `sw-dips-assistes-elastique`
+- **lundi** (45 min, estimé 45 min) — `strength.upper`
+  - Row australien — main `sw-row-australien`
+  - Développé couché Smith machine — secondary `mu-developpe-couche-smith`
   - Reverse hyper sur banc — accessory `mu-reverse-hyper-banc`
-  - Mountain climbers — core `mu-mountain-climbers`
+  - Gainage latéral sur le coude — core `mu-gainage-lateral-coude`
   - Vélo en endurance — conditioning `ca-velo-endurance`
+- **jeudi** (45 min, estimé 44 min) — `strength.full_body`
+  - Fente arrière au poids du corps — main `mu-fente-arriere-poids-du-corps`
+  - Row australien — secondary `sw-row-australien`
+  - Dips assistés pieds sur box — secondary `sw-dips-assistes-pieds`
+  - Gainage ventral sur les coudes — core `mu-gainage-ventral-coudes`
+  - Rameur en endurance — conditioning `ca-rameur-endurance`
 
-Dosage : musculation 61 % (visé 60 %), cardio 39 % (visé 40 %) — erreur 0.9 points.
+Dosage : musculation 62 % (visé 60 %), cardio 38 % (visé 40 %) — erreur 1.8 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 6 [2.5-6], delt_anterior 6 [2.5-6], delt_middle 0 [2.5-6], delt_posterior 3 [2.5-6], lats 6 [2.5-6], upper_back 4.5 [2.5-6], biceps 3 [2.5-6], triceps 6 [2.5-6], abs 4 [2.5-6], lower_back 1 [2.5-6], glutes 5 [2.5-6], quads 5 [2.5-6], hamstrings 1 [2.5-6], calves 1.5 [2.5-6]. Groupes majeurs dans leur bande : 76 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 6 [2.5-6], delt_anterior 6 [2.5-6], delt_middle 0 [2.5-6], delt_posterior 6 [2.5-6], lats 6 [2.5-6], upper_back 6 [2.5-6], biceps 3 [2.5-6], triceps 6 [2.5-6], abs 4 [2.5-6], lower_back 3 [2.5-6], glutes 5 [2.5-6], quads 4.5 [2.5-6], hamstrings 2.5 [2.5-6], calves 0 [2.5-6]. Groupes majeurs dans leur bande : 89 %.
 
-Équilibre : tirage 6 / poussée 6 séries ; chaîne postérieure 2 / genou 3 ; schémas de base 6/6.
+Équilibre : tirage 6 / poussée 6 séries ; chaîne postérieure 2 / genou 3 ; schémas de base 5/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Gainage ventral sur les coudes (`d0.4`) :
-  - `exercise_replaced` jour 0 : Gainage ventral sur les coudes → Pallof press à genoux (plan.user_cannot_do, plan.variant_easier)
-- Remplacement par Tirage vertical à l'élastique (`d1.1`) :
-  - `exercise_replaced` jour 1 : Tirage vertical poulie prise large pronation → Tirage vertical à l'élastique (plan.user_replaced)
+- « Je ne sais pas faire » sur Gainage latéral sur le coude (`d0.4`) :
+  - `exercise_replaced` jour 0 : Gainage latéral sur le coude → Gainage latéral sur les genoux (plan.user_cannot_do, plan.variant_easier)
+- Remplacement par Fente arrière aux haltères (`d1.1`) :
+  - `exercise_replaced` jour 1 : Fente arrière au poids du corps → Fente arrière aux haltères (plan.user_replaced)
 
 ### Passe 2
 
@@ -3296,21 +3297,21 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Air squat | 2×3-8 · 3 fl. · 90s | 3×3-8 · 3 fl. · 90s | 3×3-8 · 4 fl. · 90s | 3×3-8 · 5 fl. · 90s |
-| Rowing inversé à la Smith machine | 2×3-8 · 3 fl. · 90s | 3×3-8 · 3 fl. · 90s | 3×3-8 · 4 fl. · 90s | 3×3-8 · 5 fl. · 90s |
-| Pompe classique | 2×3-8 · 3 fl. · 90s | 3×3-8 · 3 fl. · 90s | 3×3-8 · 4 fl. · 90s | 3×3-8 · 5 fl. · 90s |
-| Pallof press à genoux | CALIBRAGE 2×10-15 · 3 fl. · 60s | 2×10-15 · 3 fl. · 60s | 2×10-15 · 4 fl. · 60s | 2×10-15 · 5 fl. · 60s |
+| Row australien | 2×3-8 · 3 fl. · 90s | 3×3-8 · 3 fl. · 90s | 3×3-8 · 4 fl. · 90s | 3×3-8 · 5 fl. · 90s |
+| Développé couché Smith machine | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
+| Reverse hyper sur banc | 2×8-12 · 3 fl. · 75s | 2×8-12 · 3 fl. · 75s | 2×8-12 · 4 fl. · 75s | 2×8-12 · 5 fl. · 75s |
+| Gainage latéral sur les genoux | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
 | Vélo en endurance | 9-10 min | 13-15 min | 13-15 min | 13-15 min |
 
 jeudi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Tirage vertical à l'élastique | 2×8-12 · 3 fl. · 90s | 3×8-12 · 3 fl. · 90s | 3×8-12 · 4 fl. · 90s | 3×8-12 · 5 fl. · 90s |
-| Dips assistés à l'élastique | 2×3-8 · 3 fl. · 90s | 3×3-8 · 3 fl. · 90s | 3×3-8 · 4 fl. · 90s | 3×3-8 · 5 fl. · 90s |
-| Reverse hyper sur banc | 2×8-12 · 3 fl. · 75s | 3×8-12 · 3 fl. · 75s | 3×8-12 · 4 fl. · 75s | 3×8-12 · 5 fl. · 75s |
-| Mountain climbers | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
-| Vélo en endurance | 9-10 min | 13-15 min | 13-15 min | 13-15 min |
+| Fente arrière aux haltères | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
+| Row australien | 2×3-8 · 3 fl. · 90s | 3×3-8 · 3 fl. · 90s | 3×3-8 · 4 fl. · 90s | 3×3-8 · 5 fl. · 90s |
+| Dips assistés pieds sur box | 2×3-8 · 3 fl. · 90s | 3×3-8 · 3 fl. · 90s | 3×3-8 · 4 fl. · 90s | 3×3-8 · 5 fl. · 90s |
+| Gainage ventral sur les coudes | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
+| Rameur en endurance | 9-10 min | 9-10 min | 9-10 min | 9-10 min |
 
 ## 37. `tres_grand_lourd`
 
