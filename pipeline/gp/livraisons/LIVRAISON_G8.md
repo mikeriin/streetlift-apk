@@ -98,4 +98,4 @@ prolongé, charge de référence, portée des échanges. Le reste est écrit com
 
 ## Suite
 
-G11 (`kalis_quest`) : voir `ETAT_GP.md` (lancement tenté une fois par ce lot, sinon par le pilotage).
+G11 (`kalis_quest`) : lancé par ce lot sur la tâche Fable B le 01/10/2026.
