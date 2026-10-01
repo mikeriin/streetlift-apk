@@ -31,7 +31,7 @@ Entrées du propriétaire (`inputs/`) :
 | --- | --- | --- | --- |
 | kalis_core | kalis_core-v0.1.0 → branche fixe `etiquettes/kalis_core-v0.1.0` (commit 5327294 ; push d'étiquette refusé par le proxy, 403) | GC | 01/10/2026 |
 | kalis_plan | kalis_plan-v0.1.0 → branche fixe `etiquettes/kalis_plan-v0.1.0` (commit bbdb497) | G4 | 01/10/2026 |
-| kalis_adapt | — | G8 | — |
+| kalis_adapt | kalis_adapt-v0.1.0 → branche fixe `etiquettes/kalis_adapt-v0.1.0` (commit 78c131a) ; avec kalis_core-v0.2.0 → branche fixe `etiquettes/kalis_core-v0.2.0` (même commit, évolution additive) | G8 | 01/10/2026 |
 | kalis_quest | — | G11 | — |
 | kalis_koach | kalis_koach-v0.1.0 (4fa2777 ; étiquette créée par le propriétaire + branche fixe `etiquettes/kalis_koach-v0.1.0`) | GK | 01/10/2026 |
 
@@ -60,7 +60,7 @@ Entrées du propriétaire (`inputs/`) :
 | --- | --- | --- | --- | --- | --- | --- |
 | GC | — | Fable A | kalis_core-v0.1.0 (branche fixe `etiquettes/kalis_core-v0.1.0` : push d'étiquette refusé, 403) | 5327294 | 01/10/2026 | livré (run 36833295632 vert) ; G4 lancé par le pilotage le 01/10/2026 à 09:00 UTC |
 | G4 | GC | Fable B | kalis_plan-v0.1.0 (branche fixe `etiquettes/kalis_plan-v0.1.0`) | bbdb497 | 01/10/2026 | livré (run 36877967988 vert) ; G8 lancé par G4 sur la tâche Fable A le 01/10/2026 |
-| G8 | G4 | Fable A | kalis_adapt-v0.1.0 | — | — | en cours depuis 2026-10-01 14:58 UTC |
+| G8 | G4 | Fable A | kalis_adapt-v0.1.0 (branche fixe `etiquettes/kalis_adapt-v0.1.0`) ; kalis_core-v0.2.0 (additif, branche fixe `etiquettes/kalis_core-v0.2.0`) | 78c131a | 01/10/2026 | livré (run 36921102890 vert) |
 | G11 | G8 | Fable B | kalis_quest-v0.1.0 | — | — | à faire |
 
 ## Piste K — koach (automatique)
