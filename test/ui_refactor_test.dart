@@ -5,18 +5,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/arsenal_screen.dart';
-import 'package:streetlift_tracker/builder_screen.dart';
 import 'package:streetlift_tracker/home_screen.dart';
+import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/pilotage_screen.dart';
 import 'package:streetlift_tracker/records_screen.dart';
 import 'package:streetlift_tracker/session_history.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/settings_screen.dart';
 import 'package:streetlift_tracker/store.dart';
-import 'package:streetlift_tracker/wod_catalog.dart';
-import 'package:streetlift_tracker/wod_models.dart';
-import 'package:streetlift_tracker/wod_preview.dart';
-import 'package:streetlift_tracker/wod_screen.dart';
 
 import 'phone_test_support.dart' show swipePage;
 
@@ -39,6 +35,33 @@ void small(WidgetTester tester, {Size size = const Size(320, 720)}) {
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
+}
+
+/// Séance d'un seul jour construite à la main (semaine 0), pour éprouver le
+/// runner hors programme : les séances manuelles ont disparu en G2.
+WeekPlan manualWeek(int j, String name, List<Exercise> exercises) =>
+    WeekPlan.manual(
+      n: 0,
+      block: name,
+      color: const Color(0xFF4FA3C7),
+      days: [DayPlan.manual(j: j, title: name, exercises: exercises)],
+    );
+
+Exercise manualExercise(
+  String id,
+  String name,
+  String sets, {
+  double? kg,
+  int? hold,
+}) {
+  return Exercise.manual(
+    id: id,
+    name: name,
+    setsText: sets,
+    kg: kg,
+    forcedSets: 1,
+    timer: hold == null ? null : {'type': 'hold', 'sec': hold},
+  );
 }
 
 void main() {
@@ -96,15 +119,10 @@ void main() {
     'cartes, notes et saisies survivent aux boutons et au sélecteur d’exercices',
     (tester) async {
       small(tester);
-      final custom = CustomSession(
-        id: '993',
-        name: 'Deux exercices',
-        items: [
-          CustomExercise(name: 'Pompes', p: {'series': 1, 'reps': 8}),
-          CustomExercise(name: 'Squat', p: {'series': 1, 'reps': 10}),
-        ],
-      );
-      final week = custom.toWeekPlan();
+      final week = manualWeek(993, 'Deux exercices', [
+        manualExercise('CU-993-0', 'Pompes', '1×8'),
+        manualExercise('CU-993-1', 'Squat', '1×10'),
+      ]);
       final day = week.days.single;
       await tester.pumpWidget(page(SessionScreen(week: week, day: day)));
       await tester.pumpAndSettle();
@@ -151,14 +169,10 @@ void main() {
     tester,
   ) async {
     small(tester);
-    final week = CustomSession(
-      id: '995',
-      name: 'Enchaînement',
-      items: [
-        CustomExercise(name: 'Dips', p: {'series': 1, 'reps': 8}),
-        CustomExercise(name: 'Pompes enchaînées', p: {'series': 1, 'reps': 10}),
-      ],
-    ).toWeekPlan();
+    final week = manualWeek(995, 'Enchaînement', [
+      manualExercise('CU-995-0', 'Dips', '1×8'),
+      manualExercise('CU-995-1', 'Pompes enchaînées', '1×10'),
+    ]);
     final day = week.days.single;
     expect(store.groups(day).single.length, 2);
     await tester.pumpWidget(page(SessionScreen(week: week, day: day)));
@@ -197,101 +211,45 @@ void main() {
     await tester.pumpAndSettle();
   });
 
-  testWidgets(
-    'les séances et éditeurs suivent une rotation et une grande largeur',
-    (tester) async {
-      small(tester, size: const Size(640, 360));
-      final custom = CustomSession(
-        id: '996',
-        name: 'Rotation',
-        items: [
-          CustomExercise(
-            name: 'Gainage',
-            mode: 'iso',
-            p: {'series': 1, 'hold': 60},
-          ),
-        ],
+  testWidgets('les séances suivent une rotation et une grande largeur', (
+    tester,
+  ) async {
+    small(tester, size: const Size(640, 360));
+    final week = manualWeek(996, 'Rotation', [
+      manualExercise('CU-996-0', 'Gainage', '1×60 s', hold: 60),
+    ]);
+    for (final size in [const Size(640, 360), const Size(1024, 768)]) {
+      tester.view.physicalSize = size;
+      await tester.pumpWidget(
+        page(SessionScreen(week: week, day: week.days.single)),
       );
-      final week = custom.toWeekPlan();
-      for (final size in [const Size(640, 360), const Size(1024, 768)]) {
-        tester.view.physicalSize = size;
-        for (final screen in [
-          SessionScreen(week: week, day: week.days.single),
-          SessionEditor(session: custom),
-          const WodCatalogScreen(),
-          WodPreviewScreen(wodId: store.wods.first.id),
-        ]) {
-          await tester.pumpWidget(page(screen));
-          await tester.pumpAndSettle();
-          expect(
-            tester.takeException(),
-            null,
-            reason: '${screen.runtimeType} à $size',
-          );
-          await tester.pumpWidget(const SizedBox());
-          await tester.pumpAndSettle();
-        }
-      }
-    },
-  );
-
-  testWidgets(
-    'un WOD verrouillé garde ses mouvements visibles au-dessus du message de crédits',
-    (tester) async {
-      small(tester);
-      final wod = store.wods.firstWhere(
-        (w) => !store.unlocked(w) && store.wodCost(w) > store.credits,
-      );
-      await tester.pumpWidget(page(WodPreviewScreen(wodId: wod.id)));
       await tester.pumpAndSettle();
-      expect(find.text('MOUVEMENTS').hitTestable(), findsOneWidget);
-      expect(tester.getSize(find.byType(ListView)).height, greaterThan(400));
-      expect(find.textContaining('Il te manque'), findsOneWidget);
-      expect(tester.takeException(), null);
+      expect(tester.takeException(), null, reason: 'séance à $size');
       await tester.pumpWidget(const SizedBox());
       await tester.pumpAndSettle();
-    },
-  );
+    }
+  });
 
   for (final dark in [true, false]) {
     testWidgets('écrans et formulaires à 320 px, texte 130 %, thème $dark', (
       tester,
     ) async {
       small(tester);
-      final custom = CustomSession(
-        id: '991',
-        name: 'Force personnelle',
-        items: [
-          CustomExercise(
-            name: 'Tractions',
-            p: {'series': 1, 'reps': 6},
-            kg: 12.5,
-          ),
-        ],
-      );
-      final week = custom.toWeekPlan();
+      final week = manualWeek(991, 'Force personnelle', [
+        manualExercise('CU-991-0', 'Tractions', '1×6', kg: 12.5),
+      ]);
       final day = week.days.single;
       final log = store.exLog(week.n, day.j, day.exercises.first)
         ..showKg = true
         ..showRir = true
         ..showV = true;
       log.note = 'Test des notes';
-      final wod = Wod(
-        id: 'ui_wod',
-        name: 'WOD de vérification',
-        lines: ['10 push-ups', '20 air squats'],
-      );
-      store.upsertWod(wod);
       for (final screen in <Widget>[
         const RootNav(),
         const ArsenalScreen(),
         const PilotageScreen(),
         const SettingsScreen(),
         const RecordsScreen(),
-        SessionEditor(session: custom),
-        const WodCatalogScreen(),
-        WodPreviewScreen(wodId: wod.id),
-        WodRunScreen(wodId: wod.id),
         SessionScreen(week: week, day: day),
         SessionHistoryScreen(log: store.sessionLog(week.n, day.j)),
       ]) {
@@ -441,39 +399,6 @@ void main() {
     expect(find.text('Colle le texte exporté ici'), findsOneWidget);
     await tester.tap(find.text('Annuler'));
     await tester.pumpAndSettle();
-    expect(tester.takeException(), null);
-    await tester.pumpWidget(const SizedBox());
-    await tester.pumpAndSettle();
-  });
-
-  testWidgets('recherche et paramètres restent utilisables avec le clavier', (
-    tester,
-  ) async {
-    small(tester);
-    await tester.pumpWidget(
-      page(
-        SessionEditor(
-          session: CustomSession(id: '994', name: 'Création'),
-        ),
-      ),
-    );
-    await tester.tap(find.text('Exercice'));
-    await tester.pumpAndSettle();
-    await tester.enterText(
-      find.byType(TextField).last,
-      'ui recherche impossible',
-    );
-    await tester.pumpAndSettle();
-    expect(find.byTooltip('Effacer la recherche'), findsOneWidget);
-    tester.view.viewInsets = const FakeViewPadding(bottom: 280);
-    addTearDown(tester.view.resetViewInsets);
-    await tester.pumpAndSettle();
-    expect(tester.takeException(), null);
-    await tester.tap(find.byTooltip('Effacer la recherche'));
-    await tester.pumpAndSettle();
-    await tester.tap(find.byType(ListTile).first);
-    await tester.pumpAndSettle();
-    expect(find.text('Valider'), findsOneWidget);
     expect(tester.takeException(), null);
     await tester.pumpWidget(const SizedBox());
     await tester.pumpAndSettle();

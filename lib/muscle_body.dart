@@ -1,7 +1,7 @@
 // Carte des groupes musculaires — illustrations anatomiques historiques
 // (face / dos de 3.1.0, profil ajouté par la refonte muscles et animations) :
 // image de base grise + un calque de teinte par groupe (assets/muscles/*.png),
-// coloré selon l'intensité avec un halo doux. STATS, accueil et WOD gardent
+// coloré selon l'intensité avec un halo doux. STATS et accueil gardent
 // le rendu 3.1.0 (face + dos) ; la fiche exercice ajoute le profil.
 import 'dart:ui' as ui;
 

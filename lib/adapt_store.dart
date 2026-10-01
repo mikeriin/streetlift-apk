@@ -492,26 +492,7 @@ extension AdaptStore on AppStore {
       final base = _adaptDayPlan(week, j);
       return base == null ? null : _shorterPlan(week, base);
     }
-    // L12 (KT-071) : parcours d'habitude des débutants, séances ramenées à
-    // 20 minutes (ou moins selon les disponibilités) les 4 premières
-    // semaines ; désactivable dans Motivation et progression.
-    final habit = MotivStore(this).motivHabitMinutesFor(week, j);
-    if (habit == null) return null;
-    final base = _adaptDayPlan(week, j);
-    return base == null ? null : _minutesPlan(week, base, habit);
-  }
-
-  /// Compression automatique à [minutes] (parcours d'habitude).
-  Map<String, dynamic>? _minutesPlan(int week, DayPlan base, int minutes) {
-    final key = sessionKey(week, base.j);
-    return _adaptCached('habit|$key|$minutes', () {
-      final plan = compressSession(
-        _cItems(week, base),
-        minutes,
-        started: _adaptStarted(key),
-      );
-      return plan.unchanged ? null : plan.toJson();
-    });
+    return null;
   }
 
   /// Éléments de compression d'une séance (séries validées comprises).
@@ -929,32 +910,6 @@ extension AdaptStore on AppStore {
     } else {
       _adaptSave();
     }
-  }
-
-  /// Séance d'entretien de vacances (2 × 20 min, sans matériel) ajoutée aux
-  /// séances perso. Renvoie son nom.
-  String addMaintenanceSession(GenCatalog c) {
-    const name = 'Entretien vacances (20 min, sans matériel)';
-    final existing = customSessions.where((s) => s.name == name);
-    if (existing.isNotEmpty) return name;
-    final items = <CustomExercise>[
-      for (final e in maintenanceExercises(c, adaptLevel))
-        e.measure == 'temps'
-            ? CustomExercise(
-                name: e.name,
-                mode: 'iso',
-                p: {'series': 3, 'hold': 30},
-                rest: 45,
-              )
-            : CustomExercise(
-                name: e.name,
-                mode: 'classic',
-                p: {'series': 3, 'reps': adaptLevel <= 1 ? 8 : 12},
-                rest: 45,
-              ),
-    ];
-    upsertSession(CustomSession(id: newSessionId(), name: name, items: items));
-    return name;
   }
 
   // ------------------------------------------------ assiduité (KT-061)

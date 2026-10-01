@@ -61,6 +61,21 @@ vide ou absent.
   regardées avec l'outil Read avant livraison), limitée à ses écrans, clair
   et sombre, délai 5 min par test.
 
+### G2 (dev6.1.0)
+
+- Cible émulateur par défaut : `integration_test/retrait_g2_test.dart`,
+  parties `a` (sombre) et `b` (clair), sans le drapeau du mode dev :
+  document d'état d'un utilisateur de 6.0.x (WOD, séances perso, crédits,
+  L12) → annonce et copie, accueil, Arsenal, STATS, Réglages › Sauvegardes.
+  Relevés `emulateur/g2_releve_<partie>.json`, captures
+  `emulateur/g2_*_<thème>.png`. G1 passe sous `CI3D_TOUT=1`.
+- Tests Dart du mode dev : `test/g1_mode_dev_test.dart` et
+  `test/g2_mode_dev_test.dart` (libellé « dev6.1.0 », copie propre à
+  chaque session).
+- Nommage (D0.9) : `build-apk.yml` passe `--build-name=dev<version du
+  pubspec>` à l'APK seulement ; `verify_android_artifacts.py --dev-apk`
+  attend ce `versionName` dans l'APK et la version nue dans l'AAB.
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant

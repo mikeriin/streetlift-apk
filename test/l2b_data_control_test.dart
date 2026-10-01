@@ -109,10 +109,12 @@ void main() {
       return gate;
     }
 
+    /// Utilisateur venu de 6.0.x : WOD, séances perso, droits anciens et
+    /// envies du fichier ignorés depuis G2.
     Future<void> seed(AppStore a) async {
-      final data = filledBackup(a);
-      data['legacyGrants'] = {legacyIds(a).free: 'credits_v1'};
-      data['wishlist'] = [a.wods.firstWhere(a.isCatalog).id];
+      final data = filledLegacyBackup(a);
+      data['legacyGrants'] = {'seed9': 'credits_v1'};
+      data['wishlist'] = ['seed1'];
       expect(await a.importBackup(jsonEncode(data)), ImportStatus.success);
     }
 
@@ -127,8 +129,6 @@ void main() {
         expect(meta['exportedAt'], at.toIso8601String());
         expect(meta['appVersion'], '2.5.3');
         final source = business(app.exportAll());
-        final rights = Map<String, int>.of(app.unlockedWods);
-        final credits = app.credits;
         // État de test distinct : autre stockage simulé, autre instance.
         SharedPreferences.setMockInitialValues({});
         final other = await relaunch();
@@ -142,15 +142,11 @@ void main() {
           preview.sessionsDone,
           app.logs.values.where((l) => l.done).length,
         );
-        expect(preview.archivedSessions, 20);
-        expect(preview.wodResults, 300);
-        expect(preview.wodsUnlocked, 30);
-        expect(preview.legacyGrants, 1);
+        // G2 : l'export ne contient plus aucune donnée retirée.
+        expect(preview.ignored.hasUserData, isFalse);
         expect(preview.level, app.level);
         expect(await other.applyImport(preview), ImportStatus.success);
         expect(business(other.exportAll()), source);
-        expect(other.unlockedWods, rights);
-        expect(other.credits, credits);
         final again = await relaunch();
         expect(business(again.exportAll()), source);
       },
@@ -161,7 +157,7 @@ void main() {
       final before = app.exportAll();
       final stored = await disk();
       final revision = app.dataRevision;
-      final old = formatV2(app, {});
+      final old = formatV2();
       final checked = app.previewImport(jsonEncode(old));
       expect(checked.preview!.format, 2);
       expect(checked.preview!.exportedAt, isNull);
@@ -174,16 +170,15 @@ void main() {
 
     test('formats historiques et sauvegarde L2 acceptés', () async {
       for (final data in [
-        formatV1(app),
-        formatV2(app, {}),
-        backupOf(app)
-          ..remove('creditGrants')
-          ..['creditsEarnedMax'] = 9,
+        formatV1(),
+        formatV2(),
+        // Sauvegarde L2 : plus haut de crédits, ignoré depuis G2.
+        backupOf(app)..['creditsEarnedMax'] = 9,
       ]) {
         final preview = app.previewImport(jsonEncode(data)).preview!;
         expect(await app.applyImport(preview), ImportStatus.success);
       }
-      expect(app.creditsEarned, greaterThanOrEqualTo(9));
+      expect(backupOf(app).containsKey('creditsEarnedMax'), isFalse);
       final compact = gzText(app.exportAll());
       expect(app.previewImport(compact).preview, isNotNull);
     });
@@ -210,7 +205,7 @@ void main() {
       () async {
         final data = backupOf(app)..['pilotage'] = {'B4': 91};
         final preview = app.previewImport(jsonEncode(data)).preview!;
-        app.toggleWish(app.wods.firstWhere(app.isCatalog));
+        app.addUserExercise('Planche lestée', 'Épaules', 'Lest');
         final changed = app.exportAll();
         expect(await app.applyImport(preview), ImportStatus.conflict);
         expect(app.exportAll(), changed);
@@ -238,7 +233,7 @@ void main() {
       expect(_decode((await disk())!), app.exportAll());
     });
 
-    test('restauration : ni cérémonie, ni bilan, ni nouveau débit', () async {
+    test('restauration : ni cérémonie, ni bilan', () async {
       for (final week in app.program.weeks) {
         for (final day in week.days) {
           if (app.level >= 2) break;
@@ -248,22 +243,15 @@ void main() {
       }
       app.consumeLevelUp();
       app.consumeReward();
-      final w = app.wods.firstWhere(
-        (w) => app.isCatalog(w) && app.wodCost(w) <= app.credits,
-      );
-      expect((await app.purchaseWod(w)).status, PurchaseStatus.success);
       final file = app.exportForFile(appVersion: 'test');
-      final spent = app.creditsSpent;
-      final credits = app.credits;
+      final level = app.level;
       expect((await app.eraseAllData()).status, EraseStatus.success);
       expect(app.level, 1);
       final preview = app.previewImport(file).preview!;
       expect(await app.applyImport(preview), ImportStatus.success);
+      expect(app.level, level);
       expect(app.consumeLevelUp(), isNull);
       expect(app.consumeReward(), isNull);
-      expect(app.creditsSpent, spent);
-      expect(app.credits, credits);
-      expect(app.unlocked(w), isTrue);
     });
 
     test('suppression : tout est retiré, aucune résurrection', () async {
@@ -283,17 +271,11 @@ void main() {
       expect(result.status, EraseStatus.success);
       expect(app.storedKeys, {_key});
       expect(app.logs, isEmpty);
-      expect(app.unlockedWods, isEmpty);
-      expect(app.legacyGrants, isEmpty);
-      expect(app.wishlist, isEmpty);
-      expect(app.customSessions, isEmpty);
-      expect(app.credits, 3);
       expect(app.level, 1);
       expect(app.recoveryCopies, isEmpty);
       final next = await relaunch();
       expect(next.logs, isEmpty);
       expect(next.isDone(9, 1), isFalse);
-      expect(next.unlockedWods, isEmpty);
       // L4 (KT-006/007) : l'état d'installation n'a ni départ ni références ;
       // les valeurs embarquées ne sont plus présentées comme les siennes.
       expect(next.values, isEmpty);
@@ -598,7 +580,7 @@ void main() {
       files.serve(jsonEncode(other));
       await start(tester, (c) => importBackupFile(c, appVersion: 'test'));
       expect(find.byType(ImportPreviewDialog), findsOneWidget);
-      store.toggleWish(store.wods.firstWhere(store.isCatalog));
+      store.addUserExercise('Planche lestée', 'Épaules', 'Lest');
       await tapVisible(
         tester,
         find.text(

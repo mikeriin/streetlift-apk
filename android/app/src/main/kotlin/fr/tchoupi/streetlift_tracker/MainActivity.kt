@@ -293,14 +293,21 @@ class MainActivity : FlutterActivity() {
                 }
                 // G1 : export JSON de la session de test (mode dev), fichier
                 // temporaire unique du cache servi par ShareProvider.
+                // G2 : même chemin pour la copie d'avant la suppression des
+                // WOD (« file » = « copie »), dans son propre fichier.
                 if (call.method == "shareJson") {
                     val bytes = call.argument<ByteArray>("bytes")
                     if (bytes == null || bytes.isEmpty() || bytes.size > 16 * 1024 * 1024) {
                         result.success("error")
                         return@setMethodCallHandler
                     }
+                    val copy = call.argument<String>("file") == "copie"
                     try {
-                        val file = ShareProvider.write(this, bytes, ShareProvider.JSON_NAME)
+                        val file = ShareProvider.write(
+                            this,
+                            bytes,
+                            if (copy) ShareProvider.COPY_NAME else ShareProvider.JSON_NAME,
+                        )
                         val uri = ShareProvider.uriFor(this, file)
                         val send = Intent(Intent.ACTION_SEND)
                             .setType("application/json")
@@ -308,7 +315,10 @@ class MainActivity : FlutterActivity() {
                             .putExtra(Intent.EXTRA_SUBJECT, call.argument<String>("name") ?: "")
                             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         send.clipData = ClipData.newRawUri("", uri)
-                        val chooser = Intent.createChooser(send, "Exporter la session de test")
+                        val chooser = Intent.createChooser(
+                            send,
+                            if (copy) "Partager la copie" else "Exporter la session de test",
+                        )
                             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         startActivity(chooser)
                         result.success("shared")
@@ -324,34 +334,7 @@ class MainActivity : FlutterActivity() {
                     result.success("cleared")
                     return@setMethodCallHandler
                 }
-                if (call.method != "shareImage") {
-                    result.notImplemented()
-                    return@setMethodCallHandler
-                }
-                val bytes = call.argument<ByteArray>("bytes")
-                val text = call.argument<String>("text") ?: ""
-                if (bytes == null || bytes.isEmpty() || bytes.size > 8 * 1024 * 1024) {
-                    result.success("error")
-                    return@setMethodCallHandler
-                }
-                try {
-                    val file = ShareProvider.write(this, bytes)
-                    val uri = ShareProvider.uriFor(this, file)
-                    val send = Intent(Intent.ACTION_SEND)
-                        .setType("image/png")
-                        .putExtra(Intent.EXTRA_STREAM, uri)
-                        .putExtra(Intent.EXTRA_TEXT, text)
-                        .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    send.clipData = ClipData.newRawUri("", uri)
-                    val chooser = Intent.createChooser(send, "Partager ma progression")
-                        .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    startActivity(chooser)
-                    result.success("shared")
-                } catch (_: ActivityNotFoundException) {
-                    result.success("unavailable")
-                } catch (_: Exception) {
-                    result.success("error")
-                }
+                result.notImplemented()
             }
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "kalis_track/device")
             .setMethodCallHandler { call, result ->

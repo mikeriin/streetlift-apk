@@ -3,7 +3,7 @@
 // par jour, séries, coefficients, règles R1-R6), les volumes calculés pour
 // des maxima explicites, le recalcul pendant une séance après modification
 // de la feuille Pilotage, la lecture d'un journal contenant un identifiant
-// supprimé, et la cohérence semaine complète / XP / crédits (L3).
+// supprimé, et la cohérence semaine complète / XP (G2 : plus de crédits).
 // LC1b (suite de KT-037, 26/09/2026) : S11·J6 au format du J6 du Bloc 2,
 // squat endurance de S11 conservé (`tools/lc1b_s11_j6.py`) ; S12·J6 inchangé.
 // Données synthétiques et stockage simulé uniquement.
@@ -722,10 +722,9 @@ void main() {
     });
 
     test(
-      'semaine S12 entièrement faite : XP, semaine complète, crédits (L3)',
+      'semaine S12 entièrement faite : XP et semaine complète',
       () async {
         final xp = app.progression.programXp;
-        final grants = Map.of(app.creditGrants);
         // Dates passées (la semaine réelle S12 est à venir) : la règle dépend
         // du nombre de journées faites, pas du nombre d'exercices.
         for (var j = 1; j <= 6; j++) {
@@ -745,11 +744,11 @@ void main() {
         app.saveLogs(immediate: true);
         await app.flush();
         expect(app.progression.programXp - xp, 600);
-        expect(app.journalGrants.containsKey('week:2026-09-14'), isTrue);
-        expect(app.creditGrants['week:2026-09-14'], 1);
-        for (final id in grants.keys) {
-          expect(app.creditGrants[id], grants[id]);
-        }
+        // Semaine complète : au moins trois entraînements dans la semaine
+        // civile du lundi 14/09.
+        final week = app.progression.weeks[DateTime.utc(2026, 9, 14)];
+        expect(week, isNotNull);
+        expect(week!.sessions, greaterThanOrEqualTo(3));
       },
     );
   });

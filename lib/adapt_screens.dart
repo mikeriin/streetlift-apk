@@ -835,24 +835,6 @@ class _PauseCard extends StatelessWidget {
                   },
                   child: const Text('Je reprends'),
                 ),
-                if (vacation)
-                  OutlinedButton(
-                    key: const ValueKey('adapt-maintenance'),
-                    onPressed: () async {
-                      final messenger = ScaffoldMessenger.of(context);
-                      final c = await _catalog(context);
-                      if (c == null) return;
-                      final name = store.addMaintenanceSession(c);
-                      messenger.showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            '« $name » est dans tes séances perso.',
-                          ),
-                        ),
-                      );
-                    },
-                    child: const Text('Séance d’entretien'),
-                  ),
               ],
             ),
           ],

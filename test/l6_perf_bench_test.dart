@@ -7,9 +7,11 @@
 // les durées comparent deux versions du code sur la même machine et les
 // mêmes données, elles ne sont PAS des durées sur téléphone.
 //
-// Le fichier n'utilise que des API publiques présentes dans la base 3.0.2 et
-// dans la candidate L6 : le même banc tourne sur les deux arbres, en
-// alternance, dans un même job CI (voir tools/perf_compare.py).
+// Le fichier n'utilise que des API publiques de l'application : le même banc
+// tourne sur deux arbres, en alternance, dans un même job CI (voir
+// tools/perf_compare.py). Depuis G2 (WOD, séances manuelles et crédits
+// retirés ; `Progression.calculate` sans catalogue), la base comparée doit
+// être une version 6.1 ou ultérieure.
 //
 // Sortie : une ligne JSON par mesure (valeurs brutes en ms), écrite dans
 // KALIS_PERF_OUT (fichier) et préfixée « KALIS_PERF » dans la sortie.
@@ -25,7 +27,6 @@ import 'package:streetlift_tracker/progression.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/stats_data.dart';
 import 'package:streetlift_tracker/store.dart';
-import 'package:streetlift_tracker/wod_catalog.dart';
 
 import 'support/perf_fixtures.dart';
 
@@ -77,7 +78,6 @@ Future<void> _measure(
   Future<double> Function() once, {
   int warm = _warm,
   int n = _n,
-  Map<String, Object?> extra = const {},
 }) async {
   try {
     for (var i = 0; i < warm; i++) {
@@ -94,7 +94,6 @@ Future<void> _measure(
       'unit': 'ms',
       'warmup': warm,
       'values': values,
-      ...extra,
     });
   } catch (error, stack) {
     _failures.add('$scenario/$profile: $error');
@@ -198,15 +197,14 @@ void main() {
 
     // Empreinte des résultats métier : identique sur la base et la
     // candidate si les optimisations ne changent aucun résultat (export,
-    // XP, niveau, crédits, niveaux des WOD, estimations, historique STATS,
-    // carte musculaire). Hachage FNV-1a 64 bits, sans dépendance.
+    // XP, niveau, historique STATS, carte musculaire, records). Hachage
+    // FNV-1a 64 bits, sans dépendance.
     test('empreinte des résultats métier', () async {
       for (final profile in perfProfiles) {
         final app = await _loaded(profile);
         final now = DateTime(2026, 9, 26, 12);
         final p = Progression.calculate(
           logs: app.logs,
-          catalog: app.wods,
           program: app.program,
           now: now,
         );
@@ -214,16 +212,6 @@ void main() {
           'export': _fnv(app.exportAll()),
           'xp': p.totalXp,
           'level': app.level,
-          'credits': app.credits,
-          'wodLevels': _fnv(
-            [for (final w in app.wods) '${w.id}:${w.level}'].join(','),
-          ),
-          'estimates': _fnv(
-            [
-              for (final w in app.wods)
-                '${w.id}:${app.wodEstimate(w).durationLabel}:${app.wodStats(w)}',
-            ].join(','),
-          ),
           'history': _fnv(
             [
               for (final e in statsHistory(app)) '${e.id}|${e.title}|${e.at}',
@@ -236,7 +224,6 @@ void main() {
                 '${e.key}:${e.value.bestE1rm}:${e.value.bestReps}',
             ].join(','),
           ),
-          'recommended': _fnv(app.recommended().map((w) => w.id).join(',')),
         };
         _emit({
           'scenario': 'digest',
@@ -249,7 +236,7 @@ void main() {
       }
     });
 
-    test('démarrage : lecture du stockage, migrations, catalogue', () async {
+    test('démarrage : lecture du stockage, migrations', () async {
       for (final profile in perfProfiles) {
         await _measure('store.init', profile, () async {
           final stored = _stored[profile];
@@ -266,67 +253,6 @@ void main() {
       }
     });
 
-    test('catalogue : génération et estimations', () async {
-      final app = await _loaded('long');
-      await _measure('catalog.generate', '-', () async {
-        final sw = Stopwatch()..start();
-        final list = app.catalogWods();
-        sw.stop();
-        expect(list, isNotEmpty);
-        return _ms(sw);
-      }, extra: {'wods': app.catalogWods().length});
-      await _measure('catalog.rank', 'long', () async {
-        final sw = Stopwatch()..start();
-        app.rankCatalog();
-        sw.stop();
-        return _ms(sw);
-      });
-      // Estimations de tout le catalogue : deux passages successifs (le
-      // second devrait profiter du cache s'il couvre tout le catalogue).
-      await _measure('catalog.estimate.pass2', 'long', () async {
-        for (final w in app.wods) {
-          app.wodEstimate(w);
-        }
-        final sw = Stopwatch()..start();
-        for (final w in app.wods) {
-          app.wodEstimate(w);
-        }
-        sw.stop();
-        return _ms(sw);
-      }, extra: {'wods': app.wods.length});
-      final heavy = await _loaded('charge');
-      await _measure('catalog.estimate.pass2', 'charge', () async {
-        for (final w in heavy.wods) {
-          heavy.wodEstimate(w);
-        }
-        final sw = Stopwatch()..start();
-        for (final w in heavy.wods) {
-          heavy.wodEstimate(w);
-        }
-        sw.stop();
-        return _ms(sw);
-      }, extra: {'wods': heavy.wods.length});
-      await _close(heavy);
-      await _measure('catalog.wodStats.all', 'long', () async {
-        final sw = Stopwatch()..start();
-        for (final w in app.wods) {
-          app.wodStats(w);
-        }
-        sw.stop();
-        return _ms(sw);
-      });
-      await _measure('catalog.recommended', 'long', () async {
-        app.notifyListeners();
-        final sw = Stopwatch()..start();
-        app.recommended();
-        app.trialWod;
-        app.weeklyIds;
-        sw.stop();
-        return _ms(sw);
-      });
-      await _close(app);
-    });
-
     test('STATS : dérivés recalculés après une modification', () async {
       for (final profile in perfProfiles) {
         final app = await _loaded(profile);
@@ -341,7 +267,6 @@ void main() {
           app.notifyListeners();
           final sw = Stopwatch()..start();
           app.game;
-          app.credits;
           sw.stop();
           return _ms(sw);
         });
@@ -407,7 +332,6 @@ void main() {
             final sw = Stopwatch()..start();
             app.toggleSet(log, 0, spec);
             app.game;
-            app.credits;
             await app.flush();
             sw.stop();
             return _ms(sw);
@@ -589,67 +513,6 @@ void main() {
             },
           });
 
-          // Catalogue WOD complet : ouverture, recherche, filtre, défilement.
-          await _measure('ui.catalog.open', profile, () async {
-            appNavigator.currentState!.push(
-              MaterialPageRoute<void>(builder: (_) => const WodCatalogScreen()),
-            );
-            final t = await timedPump();
-            await tester.pumpAndSettle();
-            appNavigator.currentState!.pop();
-            await tester.pumpAndSettle();
-            return t;
-          }, n: 5);
-          appNavigator.currentState!.push(
-            MaterialPageRoute<void>(builder: (_) => const WodCatalogScreen()),
-          );
-          await tester.pumpAndSettle();
-          final search = find.byType(TextField).first;
-          await _measure('ui.catalog.search', profile, () async {
-            await tester.enterText(search, 'burpee');
-            final t = await timedPump();
-            await tester.enterText(search, '');
-            await tester.pump();
-            return t;
-          }, n: 5);
-          // M4c : « < 15 min » est une case du menu « Filtres » (Durée).
-          await tester.tap(find.byKey(const ValueKey('wod-filters')));
-          await tester.pumpAndSettle();
-          final duree = find.byKey(const ValueKey('wod-filter-cat-duree'));
-          await tester.ensureVisible(duree.first);
-          await tester.pumpAndSettle();
-          await tester.tap(duree.first);
-          await tester.pumpAndSettle();
-          final chip = find.byKey(const ValueKey('wod-filter-du:short'));
-          if (chip.evaluate().isNotEmpty) {
-            await tester.ensureVisible(chip.first);
-            await tester.pumpAndSettle();
-            await _measure('ui.catalog.filterShort', profile, () async {
-              await tester.tap(chip.first);
-              final t = await timedPump();
-              await tester.tap(chip.first);
-              await tester.pump();
-              return t;
-            }, n: 5);
-          }
-          await tester.tapAt(const Offset(5, 5));
-          await tester.pumpAndSettle();
-          await _measure('ui.catalog.scroll60', profile, () async {
-            final list = find.byType(Scrollable).first;
-            final sw = Stopwatch()..start();
-            await tester.fling(list, const Offset(0, -3000), 4000);
-            for (var i = 0; i < 60; i++) {
-              await tester.pump(const Duration(milliseconds: 16));
-            }
-            sw.stop();
-            await tester.pumpAndSettle();
-            await tester.fling(list, const Offset(0, 6000), 8000);
-            await tester.pumpAndSettle();
-            return _ms(sw);
-          }, n: 5);
-          appNavigator.currentState!.pop();
-          await tester.pumpAndSettle();
-
           // Changement de dominante et de mode (écran PROGRAMME, onglets
           // visités) : un aller-retour mesuré frame par frame.
           await _measure('ui.appearance.switch', profile, () async {
@@ -666,12 +529,6 @@ void main() {
           // grandeur seulement, le ramasse-miettes n'est pas forcé.
           final rssBefore = ProcessInfo.currentRss;
           for (var i = 0; i < 10; i++) {
-            appNavigator.currentState!.push(
-              MaterialPageRoute<void>(builder: (_) => const WodCatalogScreen()),
-            );
-            await tester.pumpAndSettle();
-            appNavigator.currentState!.pop();
-            await tester.pumpAndSettle();
             appNavigator.currentState!.push(
               MaterialPageRoute<void>(
                 builder: (_) => SessionScreen(week: week, day: day),
@@ -707,7 +564,6 @@ void main() {
       final app = await _loaded(profile);
       final p = Progression.calculate(
         logs: app.logs,
-        catalog: app.wods,
         program: app.program,
         now: DateTime(2026, 9, 26, 12),
       );

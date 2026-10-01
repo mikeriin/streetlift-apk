@@ -180,6 +180,11 @@ def compare_native(apk, aab, apk_native, aab_native, dev_apk):
             'dev_mode_code': 'présent dans l’APK, absent de l’AAB'}
 
 
+def apk_version_name(version, dev_apk):
+    """versionName attendu dans l'APK : « dev » + version pour le build de dev."""
+    return f'dev{version}' if dev_apk else version
+
+
 def check(args):
     args.output.mkdir(parents=True, exist_ok=True)
     expected = expected_certificate(ROOT)
@@ -195,7 +200,10 @@ def check(args):
     xml_aab = run([*bundletool, 'dump', 'manifest', f'--bundle={args.aab}', '--module=base'])
     (args.output / 'apk-manifest.xml').write_text(xml_apk)
     (args.output / 'aab-manifest.xml').write_text(xml_aab)
-    apk_manifest = manifest_info(xml_apk, args.build_number, version)
+    # G2 (D0.9) : l'APK de développement s'affiche « devX.Y.Z », l'AAB garde
+    # « X.Y.Z » ; même versionCode.
+    apk_version = apk_version_name(version, getattr(args, 'dev_apk', False))
+    apk_manifest = manifest_info(xml_apk, args.build_number, apk_version)
     aab_manifest = manifest_info(xml_aab, args.build_number, version)
     require(apk_manifest['permissions'] == aab_manifest['permissions'], 'Permissions APK/AAB différentes.')
     config = run([*bundletool, 'dump', 'config', f'--bundle={args.aab}'])

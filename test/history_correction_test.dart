@@ -121,11 +121,11 @@ void main() {
     expect(store.logs[key], same(restarted));
   });
 
-  test('archive, repos ou séance perso disparue : suppression seule', () {
-    store.logs['S0-J999'] = SessionLog(done: true);
-    store.logs['S0-J999@old'] = SessionLog(done: true);
-    expect(store.correctionPlan('S0-J999'), isNull);
-    expect(store.correctionPlan('S0-J999@old'), isNull);
+  test('archive, repos ou séance hors programme : suppression seule', () {
+    store.logs['S99-J1'] = SessionLog(done: true);
+    store.logs['S8-J4@old'] = SessionLog(done: true);
+    expect(store.correctionPlan('S99-J1'), isNull);
+    expect(store.correctionPlan('S8-J4@old'), isNull);
     expect(store.correctionPlan('S8-J4'), isNull);
     String? rest;
     for (final week in store.program.weeks) {
@@ -137,22 +137,6 @@ void main() {
       store.logs[rest] = SessionLog(done: true);
       expect(store.correctionPlan(rest), isNull);
     }
-  });
-
-  test('une séance perso existante peut être rouverte', () {
-    final session = CustomSession(
-      id: store.newSessionId(),
-      name: 'Tractions',
-      items: [CustomExercise(name: 'Tractions')],
-    );
-    store.upsertSession(session);
-    addTearDown(() => store.deleteSession(session));
-    final key = 'S0-J${session.id}';
-    store.logs[key] = SessionLog(done: true, customId: session.id);
-    final plan = store.correctionPlan(key);
-    expect(plan?.week.n, 0);
-    expect(plan?.day.j, int.parse(session.id));
-    expect(plan?.day.exercises.single.name, 'Tractions');
   });
 
   testWidgets('le bilan rouvre la séance modifiable', (tester) async {
@@ -220,8 +204,7 @@ void main() {
   testWidgets('une archive se supprime sans correction', (tester) async {
     final log = SessionLog(
       done: true,
-      title: 'Ancien WOD',
-      customId: '999',
+      title: 'Ancienne séance',
       exerciseNames: {'old': 'Mon exercice archivé'},
       ex: {
         'old': ExerciseLog(
@@ -233,8 +216,8 @@ void main() {
         ),
       },
     );
-    store.logs['S0-J999@old'] = log;
-    await open(tester, log, sessionKey: 'S0-J999@old');
+    store.logs['S8-J4@old'] = log;
+    await open(tester, log, sessionKey: 'S8-J4@old');
     await tester.tap(find.byTooltip('Options de l’historique'));
     await tester.pumpAndSettle();
     final item = tester.widget<PopupMenuItem<String>>(

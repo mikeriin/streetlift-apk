@@ -654,18 +654,10 @@ void main() {
     });
 
     test(
-      'D2 : séances perso et WOD ignorés ; cache du store = rejeu complet',
+      'D2 : séances du programme seules ; cache du store = rejeu complet',
       () async {
+        // G2 : plus de séances perso ni de WOD à écarter.
         app.enableKoach();
-        app.logs['S0-J1'] = SessionLog(
-          done: true,
-          finishedAt: '2026-07-21T18:00:00.000',
-          ex: {
-            pull: ExerciseLog(
-              sets: [SetEntry(kg: '50', reps: '6', effort: 3, done: true)],
-            ),
-          },
-        );
         await twoStrongSessions();
         final keys = [
           for (final s in app.koachInput()['sessions'] as List)

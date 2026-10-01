@@ -3,13 +3,12 @@
 //
 // Pourquoi : un widget `const` placé sous un `ListenableBuilder` n'est jamais
 // reconstruit par son parent (Flutter retrouve la même instance et saute la
-// mise à jour). La pastille de niveau de l'accueil, les crédits de l'Arsenal
-// et les cartes « jeu » de l'Aperçu restaient ainsi figés jusqu'au redémarrage
+// mise à jour). La pastille de niveau de l'accueil et les cartes « jeu » de l'Aperçu restaient ainsi figés jusqu'au redémarrage
 // de l'application. L'abonnement vit dans l'élément lui-même : aucun widget
 // n'est ajouté à l'arbre, et il est retiré au démontage.
 //
 // L6 (KT-023) — zones masquées. Les quatre onglets visités restent montés
-// (IndexedStack) et une séance ou un WOD se superpose aux onglets : sans
+// (IndexedStack) et une séance se superpose aux onglets : sans
 // précaution, chaque notification du store (une frappe dans une série en
 // est une) reconstruisait aussi PROGRAMME, STATS, ARSENAL et RÉGLAGES,
 // invisibles. Une zone masquée (`TickerMode` désactivé : onglet non affiché

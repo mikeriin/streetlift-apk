@@ -60,8 +60,8 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
       }
     }
     _key = key;
-    // Seul le programme embarqué est immuable. Un modèle perso actuel ne
-    // décrit pas forcément les exercices d'une ancienne séance archivée.
+    // Seul le programme embarqué est immuable : une séance archivée garde
+    // ses propres noms d'exercices.
     final match = RegExp(r'^S([1-9]\d*)-J([1-7])$').firstMatch(key ?? '');
     if (week == null && match != null) {
       final n = int.parse(match[1]!);
@@ -234,7 +234,7 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
       builder: (ctx) => AlertDialog(
         title: const Text('Supprimer de l’historique ?'),
         content: Text(
-          '$_head — séries, notes et statut « fait » seront effacés. L’XP et les bonus de cette séance sont retirés ; les WODs déjà débloqués restent acquis.',
+          '$_head — séries, notes et statut « fait » seront effacés. L’XP et les bonus de cette séance sont retirés.',
         ),
         actions: [
           TextButton(

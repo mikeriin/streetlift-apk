@@ -113,7 +113,6 @@ void main() {
     test('objectif hebdo adaptatif : entre 2 et les journées du programme', () {
       final p = Progression.calculate(
         logs: {},
-        catalog: [],
         program: app.program,
         now: DateTime(2026, 9, 22, 12),
       );
@@ -127,7 +126,7 @@ void main() {
     });
 
     test(
-      'campagne : 6 chapitres, 4 boss, 4 saisons, crédits dérivés à zéro',
+      'campagne : 6 chapitres, 4 boss, 4 saisons, aucun titre au départ',
       () {
         final g = app.game;
         expect(g.chapters.map((c) => c.key), [
@@ -144,9 +143,9 @@ void main() {
         expect(g.seasons.length, 4);
         expect(g.seasons.first.firstWeek, 1);
         expect(g.seasons.last.lastWeek, 40);
-        expect(g.bonusCredits, 0);
         expect(g.titles.where((t) => t.earned), isEmpty);
-        expect(app.credits, Progression.creditsForLevel(app.level));
+        // G2 : le titre « Touche-à-tout » (formats de WOD) n'existe plus.
+        expect(g.titles.map((t) => t.id), isNot(contains('explorer')));
         for (final a in g.sheet.attributes) {
           expect(a.score, inInclusiveRange(0, 100));
           expect(a.level, inInclusiveRange(1, 10));
@@ -157,7 +156,7 @@ void main() {
       },
     );
 
-    test('un boss vaincu et un chapitre bouclé donnent titres et crédits', () {
+    test('un boss vaincu et un chapitre bouclé donnent des titres', () {
       final boss = app.game.bosses.first;
       for (final (week, day) in boss.tests) {
         app.sessionLog(week, day)
@@ -177,22 +176,6 @@ void main() {
       final g = app.game;
       expect(g.bosses.first.defeated, isTrue);
       expect(g.chapters[1].complete, isTrue);
-      // +3 par chapitre, +5 par boss, +1 par semaine à trois entraînements.
-      final fullWeeks = app.progression.weeks.values
-          .where((w) => w.sessions + w.wods >= 3)
-          .length;
-      expect(fullWeeks, greaterThanOrEqualTo(1));
-      expect(g.fullWeeks, fullWeeks);
-      expect(g.chapterCredits, GameState.creditsPerChapter);
-      expect(g.bossCredits, GameState.creditsPerBoss);
-      expect(
-        g.bonusCredits,
-        GameState.creditsPerChapter + GameState.creditsPerBoss + fullWeeks,
-      );
-      expect(
-        app.credits,
-        Progression.creditsForLevel(app.level) + g.bonusCredits,
-      );
       final earned = g.earnedTitles.map((t) => t.name).toList();
       expect(earned, containsAll(['Testé au feu', 'Forgeron']));
       expect(app.displayTitle, app.progression.rank.title);
@@ -216,8 +199,6 @@ void main() {
         after: after,
         heading: 'Séance validée',
         title: 'S8 · J1',
-        creditsBefore: 1,
-        creditsAfter: 1,
         baseXp: 100,
         goalReached: true,
       );

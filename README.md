@@ -1,4 +1,13 @@
-# Kalis Track 6.0.1 — Mode dev (pipeline « Génération et progression »)
+# Kalis Track dev6.1.0 — Recentrage sur le programme (pipeline « Génération et progression »)
+
+## dev6.1.0 — WOD, séances perso et « Mes progrès » retirés (lot G2)
+
+- **Recentrage sur ton programme** (décisions du propriétaire D1.1 et D1.2) : l'onglet WOD (catalogue, générateur, aperçu, chrono, boutique, essai du jour, vitrine, liste d'envies), le **créateur de séances perso** et les séances perso enregistrées, les **crédits WOD** (gains et achats), **« Mes progrès »** et tout L12 (victoires, chaînes de figures, étapes et bilans, célébrations, parcours d'habitude, image de partage, ton de Koach par message) sont retirés. L'Arsenal garde les **Exercices** et l'**Anatomie** ; la barre de navigation garde ses quatre onglets.
+- **Copie avant toute suppression** : au premier lancement (session personnelle comme session de test), si tu as des WOD, des séances perso, des crédits ou des données « Motivation », l'application écrit d'abord une **copie complète** de tes données (format d'export de 6.0.x, importable par la version précédente) dans son stockage, la **relit et la vérifie** (texte, empreinte, contenu, lecture comme une sauvegarde), puis seulement supprime. Un écran l'annonce une fois : ce qui est supprimé, où est la copie, **« Partager la copie »** (menu Android) et « Enregistrer dans un fichier » ; la copie reste dans **Réglages › Sauvegardes**. Si la copie échoue, rien n'est supprimé (écrans seulement masqués) et l'application réessaie au lancement suivant.
+- **Ce qui ne change pas** : ton programme, l'historique de ses séances, tes records, tes références, tes réglages, ton profil. **Ton niveau peut baisser** : les WOD et les séances perso ne rapportent plus d'XP (le système de niveaux sera refait en G12). Badges, défis et titres propres aux WOD retirés.
+- **Anciennes sauvegardes** (5.10.1, 6.0.x) : elles s'importent toujours ; leurs WOD, séances perso, crédits et données « Motivation » sont ignorés, et l'aperçu le dit avant de confirmer.
+- **Version « devX.Y.Z »** (D0.9) : l'APK de développement s'affiche « dev6.1.0 » (Réglages › À propos, exports, `versionName`) ; l'AAB du Play Store garde « 6.1.0 » ; même `versionCode`.
+- Règle des rappels conservée (jamais un jour de repos), déplacée dans `lib/notifications.dart`. Tests : `test/g2_retrait_test.dart`, `test/g2_mode_dev_test.dart`, `tools/tests/test_g2_retrait.py`, `integration_test/retrait_g2_test.dart`.
 
 ## 6.0.1 — Démarrage repris après fermeture (lot G1, correction 1)
 

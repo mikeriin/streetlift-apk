@@ -5,8 +5,6 @@ import 'muscle_body.dart';
 import 'pilotage_screen.dart';
 import 'store.dart';
 import 'ui.dart';
-import 'stats_data.dart';
-import 'stats_history.dart';
 import 'stats_mannequin.dart';
 import 'stats_widgets.dart';
 
@@ -20,8 +18,6 @@ class StatsPerformance extends StatelessWidget {
       0,
       (n, week) => n + week.days.length,
     );
-    final records = store.wods.where((w) => w.best() != null).toList()
-      ..sort((a, b) => a.name.compareTo(b.name));
     return KList(
       key: const PageStorageKey('stats-performance-scroll'),
       children: [
@@ -109,7 +105,7 @@ class StatsPerformance extends StatelessWidget {
             _Unknown(rep.name),
         const KSection(
           'Muscles sollicités',
-          subtitle: 'Cette semaine · séries et WOD enregistrés',
+          subtitle: 'Cette semaine · séries validées',
         ),
         KCard(
           child: Column(
@@ -135,8 +131,7 @@ class StatsPerformance extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   'Séries validées cette semaine, pondérées : 1 pour le '
-                  'groupe principal de l’exercice, 0,6 pour les autres ; '
-                  'WOD : 0,5 par tour et par mouvement.',
+                  'groupe principal de l’exercice, 0,6 pour les autres.',
                   key: const ValueKey('stats-muscles-unite'),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
@@ -144,29 +139,6 @@ class StatsPerformance extends StatelessWidget {
             ],
           ),
         ),
-        const KSection(
-          'Tes records WOD',
-          subtitle: 'Meilleurs résultats terminés, selon le format',
-        ),
-        if (records.isEmpty)
-          const KEmpty(
-            icon: Icons.emoji_events_outlined,
-            title: 'Ton premier record t’attend',
-            message:
-                'Enregistre un résultat WOD terminé pour retrouver ici ta référence.',
-          ),
-        for (final wod in records)
-          StatsHistoryTile(
-            StatsHistoryEntry(
-              id: 'best-${wod.id}',
-              title: wod.name,
-              searchText: wod.name.toLowerCase(),
-              at: DateTime.tryParse(wod.best()!.at)?.toLocal(),
-              wod: wod,
-              result: wod.best(),
-            ),
-            record: true,
-          ),
       ],
     );
   }

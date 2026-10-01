@@ -2,9 +2,9 @@
 // 1. L'écran de récompenses s'affiche et s'anime quel que soit l'écran qui a
 //    ouvert la séance (une séance ouverte par un rappel ne le montrait pas),
 //    et son décompte attend que la séance soit refermée.
-// 2. La pastille de niveau, le solde de crédits et les cartes « jeu » suivent
-//    un passage de niveau sans redémarrer l'application (instances `const`
-//    jamais reconstruites auparavant).
+// 2. La pastille de niveau et les cartes « jeu » suivent un passage de niveau
+//    sans redémarrer l'application (instances `const` jamais reconstruites
+//    auparavant). G2 : plus de solde de crédits WOD.
 import 'dart:async';
 import 'phone_test_support.dart';
 
@@ -13,7 +13,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
-import 'package:streetlift_tracker/arsenal_screen.dart';
 import 'package:streetlift_tracker/game.dart';
 import 'package:streetlift_tracker/game_widgets.dart';
 import 'package:streetlift_tracker/home_screen.dart';
@@ -77,8 +76,6 @@ const _reward = RewardSummary(
   xpAfter: 240,
   levelBefore: 1,
   levelAfter: 2,
-  creditsBefore: 1,
-  creditsAfter: 2,
   rankBefore: 'Recrue',
   rankAfter: 'Recrue',
   lines: [
@@ -101,10 +98,6 @@ void main() {
   });
   setUp(() {
     store.logs.clear();
-    // Journal vidé = nouvel utilisateur : les crédits gagnés, jamais repris
-    // (KT-005, option C), repartent aussi du journal.
-    store.debugResetEarnedCredits();
-    store.unlockedWods.clear();
     store.consumeReward();
     store.notifyListeners();
   });
@@ -124,24 +117,6 @@ void main() {
     expect(store.level, greaterThan(start));
     expect(pill().level, store.level);
     expect(pill().progress, closeTo(progress.inLevel / progress.need, 1e-9));
-    expect(tester.takeException(), isNull);
-    await tester.pumpWidget(const SizedBox());
-    await tester.pumpAndSettle();
-  });
-
-  testWidgets('le solde de crédits de l’Arsenal suit un passage de niveau', (
-    tester,
-  ) async {
-    String label(int credits) => '$credits crédit${credits > 1 ? 's' : ''} WOD';
-    await tester.pumpWidget(page(const ArsenalScreen()));
-    await tester.pumpAndSettle();
-    final before = store.credits;
-    expect(find.text(label(before)), findsOneWidget);
-    gainLevel();
-    await tester.pump();
-    expect(store.credits, greaterThan(before));
-    expect(find.text(label(store.credits)), findsOneWidget);
-    expect(find.text(label(before)), findsNothing);
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox());
     await tester.pumpAndSettle();
@@ -191,15 +166,11 @@ void main() {
     'décompte lancé après la fermeture de la séance',
     (tester) async {
       phone(tester);
-      final custom = CustomSession(
-        id: '9101',
-        name: 'Séance test',
-        items: [
-          CustomExercise(name: 'Pompes', p: {'series': 1, 'reps': 8}),
-        ],
+      // G2 : plus de séance manuelle, journée d'entraînement du programme.
+      final week = store.program.weeks.firstWhere(
+        (w) => w.days.any((d) => d.exercises.isNotEmpty),
       );
-      final week = custom.toWeekPlan();
-      final day = week.days.single;
+      final day = week.days.firstWhere((d) => d.exercises.isNotEmpty);
       await tester.pumpWidget(
         page(
           Builder(
@@ -222,7 +193,11 @@ void main() {
       );
       await tester.tap(find.text('Ouvrir'));
       await tester.pumpAndSettle();
-      await swipePage(tester);
+      // Le bilan est la dernière page : accès par le sélecteur d'exercices.
+      await tester.tap(find.text('Exercices'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Bilan de séance').last);
+      await tester.pumpAndSettle();
       await scrollToAction(tester, find.text('Terminer la séance'));
       await tester.tap(find.text('Terminer la séance'));
       // Deux images : la première image d'une page poussée est hors scène
@@ -234,7 +209,9 @@ void main() {
       final reward = tester
           .widget<RewardScreen>(find.byType(RewardScreen))
           .reward;
-      expect(reward.xpGained, greaterThanOrEqualTo(60));
+      // Journée du programme : 100 XP de base (60 pour l'ancienne séance
+      // manuelle).
+      expect(reward.xpGained, greaterThanOrEqualTo(100));
       expect(store.consumeReward(), isNull);
       expect(meter(tester), '+0 XP');
 

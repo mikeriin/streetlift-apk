@@ -6,14 +6,13 @@
 // Comme les XP, rien n'est persisté ici : tout se recalcule depuis les
 // données, une sauvegarde réimportée donne exactement le même état. Le barème
 // d'XP (progression.dart) n'est pas modifié ; les mécaniques ajoutées
-// récompensent en titres, en crédits WOD dérivés et en visibilité.
+// récompensent en titres et en visibilité (G2 : plus de crédits WOD).
 import 'dart:math' as math;
 
 import 'models.dart';
 import 'progression.dart';
 import 'search.dart' show normalizeText;
 import 'store.dart' show SessionLog;
-import 'wod_models.dart';
 
 // ---------------------------------------------------------------------------
 // Records personnels (par nom d'exercice)
@@ -209,7 +208,6 @@ class CharacterSheet {
     required Map<String, SessionLog> logs,
     required Progression progression,
     required StreakInfo streak,
-    required List<Wod> wods,
   }) {
     // Poids du corps non renseigné : aucun rapport de force calculé (pas de
     // poids arbitraire, KT-007). Formules inchangées quand il est connu.
@@ -278,7 +276,7 @@ class CharacterSheet {
         ? 'Calcul partiel : ${force.length} référence${force.length > 1 ? 's' : ''} de force sur 4.'
         : null;
 
-    // --- Endurance : maxima de répétitions au poids de corps + WODs terminés.
+    // --- Endurance : maxima de répétitions au poids de corps.
     final endurance = <int>[];
     void reps(String ref, List<(num, int)> points) {
       final v = refs[ref];
@@ -315,15 +313,11 @@ class CharacterSheet {
     ]);
     reps('B20', [(0, 0), (5, 10), (15, 40), (25, 65), (40, 90), (50, 100)]);
     final enduranceNote = endurance.isEmpty
-        ? 'Maxima en répétitions non renseignés (Références) : seuls les WODs terminés comptent.'
+        ? 'Indisponible : maxima en répétitions non renseignés (Références).'
         : endurance.length < 5
         ? 'Calcul partiel : ${endurance.length} maximum${endurance.length > 1 ? 's' : ''} sur 5.'
         : null;
-    var enduranceScore = endurance.isEmpty ? 0 : _mean(endurance);
-    enduranceScore = math.min(
-      100,
-      enduranceScore + math.min(10, progression.wods ~/ 5),
-    );
+    final enduranceScore = endurance.isEmpty ? 0 : _mean(endurance);
 
     // --- Technique : familles de skills travaillées + niveau au muscle-up.
     final families = <String>{};
@@ -349,11 +343,6 @@ class CharacterSheet {
           ? 20
           : 12;
     }
-    final types = <String>{};
-    for (final w in wods) {
-      if (w.results.any((r) => r.completed)) types.add(w.type);
-    }
-    technique += math.min(8, 2 * types.length);
     final techniqueScore = math.min(100, technique);
 
     // --- Régularité : série (boucliers compris), semaines récentes validées,
@@ -380,14 +369,14 @@ class CharacterSheet {
         'endurance',
         'Endurance',
         enduranceScore,
-        'Maxima de répétitions au poids de corps et WODs terminés.',
+        'Maxima de répétitions au poids de corps (références Pilotage).',
         note: enduranceNote,
       ),
       GameAttribute(
         'technique',
         'Technique',
         techniqueScore,
-        'Familles de skills travaillées en séance, niveau au muscle-up, formats de WOD terminés.',
+        'Familles de skills travaillées en séance et niveau au muscle-up.',
       ),
       GameAttribute(
         'regularite',
@@ -775,8 +764,7 @@ class SelfCompare {
   final TrainingWeek current, previous;
   final TrainingWeek? best;
   const SelfCompare({required this.current, required this.previous, this.best});
-  int get sessionsDelta =>
-      (current.sessions + current.wods) - (previous.sessions + previous.wods);
+  int get sessionsDelta => current.sessions - previous.sessions;
   int get setsDelta => current.sets - previous.sets;
   int get daysDelta => current.activeDays.length - previous.activeDays.length;
 }
@@ -818,9 +806,6 @@ class GameState {
   final SelfCompare compare;
   final bool deloadWeek;
   final int programWeek;
-
-  /// Semaines comptant au moins trois entraînements (séances ou WODs).
-  final int fullWeeks;
   const GameState({
     required this.sheet,
     required this.streak,
@@ -833,26 +818,12 @@ class GameState {
     required this.compare,
     required this.deloadWeek,
     required this.programWeek,
-    this.fullWeeks = 0,
   });
 
   Chapter? get currentChapter => chapters.where((c) => c.current).firstOrNull;
   Season? get currentSeason => seasons.where((s) => s.current).firstOrNull;
   Boss? get nextBoss => bosses.where((b) => !b.defeated).firstOrNull;
   List<GameTitle> get earnedTitles => titles.where((t) => t.earned).toList();
-
-  /// Crédits WOD dérivés du journal (barème 2.5.0) : +3 par chapitre bouclé,
-  /// +5 par boss vaincu, +1 par semaine complète (trois entraînements).
-  /// Jamais retirés : une semaine manquée ne coûte rien.
-  static const creditsPerChapter = 3,
-      creditsPerBoss = 5,
-      creditsPerFullWeek = 1;
-  int get chapterCredits =>
-      creditsPerChapter * chapters.where((c) => c.complete).length;
-  int get bossCredits =>
-      creditsPerBoss * bosses.where((b) => b.defeated).length;
-  int get weekCredits => creditsPerFullWeek * fullWeeks;
-  int get bonusCredits => chapterCredits + bossCredits + weekCredits;
 
   /// Étoiles de prestige au-delà du rang Légende (niveau 60) : une par
   /// tranche de dix niveaux.
@@ -863,7 +834,6 @@ class GameState {
     required Program program,
     required Map<String, SessionLog> logs,
     required Map<String, double> refs,
-    required List<Wod> wods,
     required bool Function(int week, int day) isDone,
     required DateTime now,
     int manualWeeklyGoal = 0,
@@ -878,28 +848,11 @@ class GameState {
       logs: logs,
       progression: progression,
       streak: streak,
-      wods: wods,
     );
     final chapters = computeChapters(program, isDone, week);
     final bosses = computeBosses(program, isDone);
     final seasons = computeSeasons(program, isDone, week);
-    final formats = <String>{};
     final season = seasons.where((s) => s.current).firstOrNull;
-    if (season != null) {
-      final from = program.dateFor(season.firstWeek, 1);
-      final to = program.dateFor(season.lastWeek + 1, 1);
-      for (final w in wods) {
-        for (final r in w.results) {
-          final at = DateTime.tryParse(r.at);
-          if (r.completed &&
-              at != null &&
-              !at.isBefore(from) &&
-              at.isBefore(to)) {
-            formats.add(w.type);
-          }
-        }
-      }
-    }
     final deloadDone = <bool>[];
     if (season != null) {
       for (var n = season.firstWeek; n <= season.lastWeek && n < week; n++) {
@@ -925,12 +878,6 @@ class GameState {
           s.complete,
         ),
       GameTitle(
-        'explorer',
-        'Touche-à-tout',
-        'Trois formats de WOD dans la saison',
-        formats.length >= 3,
-      ),
-      GameTitle(
         'guardian',
         'Gardien du repos',
         'Chaque semaine de deload de la saison honorée',
@@ -951,15 +898,11 @@ class GameState {
       if (w.monday == progression.week.monday) continue;
       if (best == null || w.sets > best.sets) best = w;
     }
-    final fullWeeks = progression.weeks.values
-        .where((w) => w.sessions + w.wods >= 3)
-        .length;
     return GameState(
       sheet: sheet,
       streak: streak,
       weekly: WeeklyGoal.compute(progression, programDays, manualWeeklyGoal),
       sessionGoal: sessionGoalFraction(logs),
-      fullWeeks: fullWeeks,
       chapters: chapters,
       bosses: bosses,
       seasons: seasons,
@@ -978,24 +921,19 @@ class GameState {
 }
 
 // ---------------------------------------------------------------------------
-// Bilan de récompenses (fin de séance, score de WOD)
+// Bilan de récompenses (fin de séance)
 // ---------------------------------------------------------------------------
 
 class RewardLine {
   final String label;
   final int xp;
-  final String kind; // base | badge | mission | streak | record | goal | credit
+  final String kind; // base | badge | mission | streak | record | goal
   const RewardLine(this.label, this.xp, this.kind);
 }
 
 class RewardSummary {
   final String heading, title;
-  final int xpBefore,
-      xpAfter,
-      levelBefore,
-      levelAfter,
-      creditsBefore,
-      creditsAfter;
+  final int xpBefore, xpAfter, levelBefore, levelAfter;
   final String rankBefore, rankAfter;
   final List<RewardLine> lines;
   final List<RecordHit> records;
@@ -1007,8 +945,6 @@ class RewardSummary {
     required this.xpAfter,
     required this.levelBefore,
     required this.levelAfter,
-    required this.creditsBefore,
-    required this.creditsAfter,
     required this.rankBefore,
     required this.rankAfter,
     required this.lines,
@@ -1018,15 +954,12 @@ class RewardSummary {
   int get xpGained => xpAfter - xpBefore;
   bool get levelUp => levelAfter > levelBefore;
   bool get promotion => rankAfter != rankBefore;
-  int get creditsGained => creditsAfter - creditsBefore;
 
   static RewardSummary build({
     required Progression before,
     required Progression after,
     required String heading,
     required String title,
-    required int creditsBefore,
-    required int creditsAfter,
     int baseXp = 0,
     String baseLabel = 'Séance',
     List<RecordHit> records = const [],
@@ -1058,10 +991,6 @@ class RewardSummary {
         lines.add(RewardLine('Défi « ${m.title} »', m.xp, 'mission'));
       }
     }
-    final recordXp = after.recordXp - before.recordXp;
-    if (recordXp > 0) {
-      lines.add(RewardLine('Record WOD amélioré', recordXp, 'record'));
-    }
     if (after.currentStreak > before.currentStreak) {
       lines.add(
         RewardLine(
@@ -1077,15 +1006,6 @@ class RewardSummary {
     if (goalReached == true) {
       lines.add(const RewardLine('Objectif de séance atteint', 0, 'goal'));
     }
-    if (creditsAfter > creditsBefore) {
-      lines.add(
-        RewardLine(
-          '+${creditsAfter - creditsBefore} crédit${creditsAfter - creditsBefore > 1 ? 's' : ''} WOD',
-          0,
-          'credit',
-        ),
-      );
-    }
     return RewardSummary(
       heading: heading,
       title: title,
@@ -1093,8 +1013,6 @@ class RewardSummary {
       xpAfter: after.totalXp,
       levelBefore: before.level,
       levelAfter: after.level,
-      creditsBefore: creditsBefore,
-      creditsAfter: creditsAfter,
       rankBefore: before.rank.title,
       rankAfter: after.rank.title,
       lines: lines,

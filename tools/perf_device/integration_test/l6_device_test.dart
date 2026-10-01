@@ -22,7 +22,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/store.dart';
-import 'package:streetlift_tracker/wod_catalog.dart';
 
 import '../test/support/perf_fixtures.dart';
 
@@ -148,23 +147,6 @@ void main() {
       stopwatch['session.keystroke.$profile'] = keystroke;
       stopwatch['session.popFirstFrame.$profile'] = popFirst;
 
-      // Catalogue WOD complet : défilement rapide.
-      appNavigator.currentState!.push(
-        MaterialPageRoute<void>(builder: (_) => const WodCatalogScreen()),
-      );
-      await tester.pumpAndSettle();
-      await binding.watchPerformance(() async {
-        for (var i = 0; i < 3; i++) {
-          await tester.fling(
-            find.byType(Scrollable).first,
-            const Offset(0, -2500),
-            5000,
-          );
-          await tester.pumpAndSettle();
-        }
-      }, reportKey: 'frames.catalogScroll.$profile');
-      appNavigator.currentState!.pop();
-      await tester.pumpAndSettle();
     }
     await store.flush();
     await tester.pumpWidget(const SizedBox());

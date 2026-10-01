@@ -200,7 +200,7 @@ Future<ImportStatus?> confirmAndImport(
     if (status == ImportStatus.success) await rescheduleReminders();
     _say(messenger, switch (status) {
       ImportStatus.success =>
-        'Import réussi : ${preview.sessionsDone} séances, ${preview.wodResults} résultats de WOD, ${preview.wodsUnlocked} WODs débloqués. Tes données précédentes restent en copie de secours interne.',
+        'Import réussi : ${preview.sessionsDone} séances${preview.ignored.hasUserData ? ' ; WOD, séances perso et crédits du fichier ignorés' : ''}. Tes données précédentes restent en copie de secours interne.',
       ImportStatus.writeFailed =>
         'Import impossible : écriture refusée par le téléphone. Les données actuelles sont conservées.',
       ImportStatus.tooLarge => 'Sauvegarde trop volumineuse : rien n’a changé.',
@@ -334,26 +334,10 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
           ),
           _Line(
             'Séances terminées',
-            '${p.sessionsDone} (programme ${p.programSessions}, perso ${p.customSessionsDone}, dont ${p.archivedSessions} répétées)',
-          ),
-          _Line('Résultats de WOD', '${p.wodResults}'),
-          _Line(
-            'WODs débloqués',
-            '${p.wodsUnlocked} (${p.creditsPaid} crédits payés)'
-                '${p.legacyGrants == 0 ? '' : ' · ${p.legacyGrants} droits anciens archivés'}',
+            '${p.sessionsDone}${p.archivedSessions == 0 ? '' : ' (dont ${p.archivedSessions} répétées)'}',
           ),
           _Line('Niveau calculé', 'niveau ${p.level} · ${p.xp} XP'),
-          _Line(
-            'Crédits gagnés',
-            p.creditsGranted == null
-                ? 'non enregistrés dans ce fichier : recalculés depuis son journal'
-                : '${p.creditsGranted} (registre du fichier)',
-          ),
-          _Line(
-            'Séances perso',
-            '${p.customTemplates} modèles · ${p.userExercises} exercices ajoutés',
-          ),
-          _Line('Liste d’envies', '${p.wishlist}'),
+          _Line('Exercices ajoutés', '${p.userExercises}'),
           _Line('Départ du programme', switch ((
             p.programStart,
             p.startOrigin,
@@ -368,6 +352,19 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
             '${p.referencesSet} renseignées'
                 '${p.referencesHistoric == 0 ? '' : ' · ${p.referencesHistoric} à vérifier'}',
           ),
+          // G2 (D1.1) : un fichier d'avant dev6.1.0 peut contenir des WOD,
+          // des séances perso, des crédits ou des données « Motivation » :
+          // ils ne sont plus importés, et c'est dit avant de confirmer.
+          if (p.ignored.hasUserData) ...[
+            const SizedBox(height: 4),
+            Text(
+              'Non importé (fonctions retirées) : '
+              '${p.ignored.lines.join(', ')}. Ces données restent dans le '
+              'fichier.',
+              key: const ValueKey('import-ignored'),
+              style: TextStyle(color: SL.dim),
+            ),
+          ],
           // L7 : les réponses aux questionnaires (données de santé
           // potentielles) sont nommées avant l'import.
           if (p.koachPresent)
@@ -381,7 +378,6 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
           Text('Sur ce téléphone', style: heading),
           const SizedBox(height: 8),
           _Line('Séances terminées', '$done'),
-          _Line('WODs débloqués', '${store.unlockedWods.length}'),
           _Line(
             'Départ du programme',
             store.program.start == null
@@ -390,7 +386,7 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
           ),
           const SizedBox(height: 12),
           Text(
-            'L’import remplace toutes tes données actuelles : journal, séances perso, références, résultats, crédits, WODs débloqués, liste d’envies, réglages et données Koach. Aucune fusion.',
+            'L’import remplace toutes tes données actuelles : journal, références, réglages, profil et données Koach. Aucune fusion.',
             style: TextStyle(color: SL.danger, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 8),
@@ -483,23 +479,15 @@ class _EraseDataDialogState extends State<EraseDataDialog> {
           Text('Supprimé de ce téléphone', style: heading),
           const SizedBox(height: 6),
           const _Bullet(
-            'le journal : séances du programme et perso, séries, notes, dates',
+            'le journal : séances du programme, séries, notes, dates',
           ),
-          const _Bullet(
-            'les modèles de séances perso et les exercices ajoutés',
-          ),
+          const _Bullet('les exercices ajoutés'),
           const _Bullet(
             'les références Pilotage (poids de corps, 1RM, max) : retour aux valeurs du programme',
           ),
-          const _Bullet('les résultats de WOD et les WODs modifiés ou créés'),
+          const _Bullet('les réglages (thème, sons, rappels)'),
           const _Bullet(
-            'les crédits gagnés, les WODs débloqués et les droits anciens archivés',
-          ),
-          const _Bullet(
-            'la liste d’envies et les réglages (thème, sons, rappels)',
-          ),
-          const _Bullet(
-            'les copies de secours internes et les anciennes données de migration',
+            'les copies de secours internes (dont la copie d’avant la suppression des WOD) et les anciennes données de migration',
           ),
           const _Bullet('les rappels programmés par l’application'),
           const SizedBox(height: 10),
@@ -512,7 +500,7 @@ class _EraseDataDialogState extends State<EraseDataDialog> {
           const _Bullet(
             'les autorisations système (notifications, alarmes) : elles se gèrent dans les réglages Android',
           ),
-          const _Bullet('le programme et le catalogue de WODs intégrés'),
+          const _Bullet('le programme intégré'),
           const SizedBox(height: 10),
           const Text(
             'L’application demande à Android d’effacer ses données : un effacement physique irrécupérable n’est pas garanti.',

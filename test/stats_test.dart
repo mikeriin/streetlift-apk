@@ -5,14 +5,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/pilotage_screen.dart';
-import 'package:streetlift_tracker/filter_menu.dart';
 import 'package:streetlift_tracker/session_history.dart';
 import 'package:streetlift_tracker/stats_data.dart';
-import 'package:streetlift_tracker/stats_history.dart';
 import 'package:streetlift_tracker/stats_navigation.dart';
 import 'package:streetlift_tracker/stats_screen.dart';
 import 'package:streetlift_tracker/store.dart';
-import 'package:streetlift_tracker/wod_models.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -26,9 +23,7 @@ void main() {
       ..autoTimer = false;
   });
   setUp(() {
-    StatsHistory.session = const FilterSelection();
     store.logs.clear();
-    store.wods.removeWhere((w) => w.id.startsWith('stats-fixture'));
     store.notifyListeners();
   });
 
@@ -62,25 +57,6 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  /// M4c : cases du menu « Filtres » de l'historique, puis menu fermé.
-  Future<void> historyFilters(WidgetTester tester, List<String> keys) async {
-    final button = find.byKey(const ValueKey('history-filters'));
-    await tester.ensureVisible(button);
-    await tester.pumpAndSettle();
-    await tester.tap(button);
-    await tester.pumpAndSettle();
-    for (final k in keys) {
-      final item = find.byKey(ValueKey('history-filter-$k')).first;
-      await tester.ensureVisible(item);
-      await tester.pumpAndSettle();
-      await tester.tap(item);
-      await tester.pumpAndSettle();
-    }
-    await tester.tapAt(const Offset(5, 5));
-    await tester.pumpAndSettle();
-    expect(find.byKey(ValueKey('history-filter-${keys.first}')), findsNothing);
-  }
-
   Future<void> section(WidgetTester tester, int index) async {
     final tab = find.byKey(ValueKey('stats-section-$index'));
     await tester.ensureVisible(tab);
@@ -90,14 +66,10 @@ void main() {
 
   String fingerprint() => jsonEncode({
     'logs': store.logs.map((key, value) => MapEntry(key, value.toJson())),
-    'results': {
-      for (final w in store.wods.where((w) => w.results.isNotEmpty))
-        w.id: w.results.map((r) => r.toJson()).toList(),
-    },
   });
 
   test(
-    'le journal fusionne séances et WOD sans supprimer les dates manquantes',
+    'le journal liste les séances terminées sans supprimer les dates manquantes',
     () {
       final now = DateTime.now();
       store.logs['S8-J1'] = SessionLog(done: true, title: 'Ancienne séance');
@@ -107,27 +79,14 @@ void main() {
         finishedAt: now.toIso8601String(),
       );
       store.logs['S8-J3'] = SessionLog(done: false, title: 'En cours');
-      final wod = Wod(
-        id: 'stats-fixture-history',
-        name: 'Test WOD',
-        results: [
-          WodResult(
-            at: now.subtract(const Duration(days: 1)).toIso8601String(),
-            score: '8:40',
-            completed: false,
-          ),
-        ],
-      );
-      store.wods.add(wod);
       final before = fingerprint();
       final history = statsHistory(store);
       expect(history.map((e) => e.title), [
         'Séance récente',
-        'Test WOD',
         'Ancienne séance',
       ]);
       expect(history.last.at, isNull);
-      expect(history[1].result, same(wod.results.first));
+      expect(history.first.session, same(store.logs['S8-J2']));
       expect(fingerprint(), before);
     },
   );
@@ -149,7 +108,7 @@ void main() {
   });
 
   testWidgets(
-    'recherche, filtre et rubrique STATS survivent aux changements d’onglet',
+    'recherche et rubrique STATS survivent aux changements d’onglet',
     (tester) async {
       store.logs['S8-J1'] = SessionLog(
         done: true,
@@ -164,7 +123,7 @@ void main() {
         find.byKey(const ValueKey('stats-history-search')),
         'Tractions',
       );
-      await historyFilters(tester, ['1']);
+      await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('nav-2')));
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('nav-1')));
@@ -178,17 +137,15 @@ void main() {
             .text,
         'Tractions',
       );
-      // M4c : filtre actif montré en puce sous le bouton « Filtres ».
-      expect(find.byKey(const ValueKey('history-chip-1')), findsOneWidget);
-      expect(StatsHistory.session.of('type'), {'1'});
-      expect(find.text('Filtres · 1'), findsOneWidget);
+      // G2 : plus de menu « Filtres » dans l'historique.
+      expect(find.byKey(const ValueKey('history-filters')), findsNothing);
       expect(find.text('Tractions du matin'), findsOneWidget);
       expect(tester.takeException(), null);
       await tester.pumpWidget(const SizedBox());
     },
   );
 
-  testWidgets('historique : filtres WOD, notes et lecture seule des séances', (
+  testWidgets('historique : notes et lecture seule des séances', (
     tester,
   ) async {
     final now = DateTime.now();
@@ -202,35 +159,11 @@ void main() {
       ..kg = '12.5'
       ..reps = '7'
       ..done = true;
-    store.wods.add(
-      Wod(
-        id: 'stats-fixture-notes',
-        name: 'WOD témoin',
-        results: [
-          WodResult(
-            at: now.toIso8601String(),
-            score: '7 tours',
-            rounds: 7,
-            notes: 'Allure régulière',
-          ),
-        ],
-      ),
-    );
     final before = fingerprint();
     await open(
       tester,
       const StatsScreen(initialSection: StatsSection.history, standalone: true),
     );
-    await historyFilters(tester, ['2']);
-    expect(find.text('Séance témoin'), findsNothing);
-    await tester.tap(find.text('WOD témoin'));
-    await tester.pumpAndSettle();
-    expect(find.text('Allure régulière'), findsOneWidget);
-    Navigator.of(tester.element(find.text('Allure régulière'))).pop();
-    await tester.pumpAndSettle();
-    // Séances seules : WOD décoché, Séances coché.
-    await historyFilters(tester, ['2', '1']);
-    expect(find.text('WOD témoin'), findsNothing);
     await tester.tap(find.text('Séance témoin'));
     await tester.pumpAndSettle();
     expect(find.byType(SessionHistoryScreen), findsOneWidget);

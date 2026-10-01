@@ -12,23 +12,24 @@ import java.io.File
 import java.io.FileNotFoundException
 
 /**
- * L12 (KT-071) : sert en lecture seule l'unique image de partage de
- * progression (cache de l'application), le temps du partage. Non exporté ;
- * accès accordé à l'application choisie par l'utilisateur via
- * FLAG_GRANT_READ_URI_PERMISSION. Aucune autre donnée n'est accessible.
- * G1 : sert aussi l'unique export JSON de la session de test (mode dev),
- * supprimé avec la session de test.
+ * Sert en lecture seule, le temps d'un partage, un fichier JSON unique du
+ * cache de l'application. Non exporté ; accès accordé à l'application
+ * choisie par l'utilisateur via FLAG_GRANT_READ_URI_PERMISSION. Aucune autre
+ * donnée n'est accessible.
+ * G1 : export de la session de test (mode dev), supprimé avec la session.
+ * G2 : copie des données d'avant la suppression des WOD et des séances perso.
+ * (L'image de partage de L12 a été retirée avec L12 par G2.)
  */
 class ShareProvider : ContentProvider() {
     companion object {
         private const val DIR = "partage"
-        private const val NAME = "kalis_progression.png"
         const val JSON_NAME = "kalis_session_de_test.json"
-        private val NAMES = setOf(NAME, JSON_NAME)
+        const val COPY_NAME = "kalis_copie_avant_suppression.json"
+        private val NAMES = setOf(JSON_NAME, COPY_NAME)
 
         fun authority(context: Context) = context.packageName + ".partage"
 
-        fun write(context: Context, bytes: ByteArray, name: String = NAME): File {
+        fun write(context: Context, bytes: ByteArray, name: String): File {
             require(name in NAMES)
             val dir = File(context.cacheDir, DIR)
             if (!dir.isDirectory && !dir.mkdirs()) throw FileNotFoundException()
@@ -57,11 +58,8 @@ class ShareProvider : ContentProvider() {
 
     override fun onCreate(): Boolean = true
 
-    override fun getType(uri: Uri): String? = when {
-        fileFor(uri) == null -> null
-        uri.lastPathSegment == JSON_NAME -> "application/json"
-        else -> "image/png"
-    }
+    override fun getType(uri: Uri): String? =
+        if (fileFor(uri) == null) null else "application/json"
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor {
         if (mode != "r") throw SecurityException("Lecture seule")

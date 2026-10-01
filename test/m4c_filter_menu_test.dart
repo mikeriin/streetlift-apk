@@ -1,20 +1,18 @@
 // M4c : filtres normalisés. Composant commun `FilterMenu` (union dans une
 // catégorie, intersection entre catégories, compteur, réinitialisation,
-// puces, catégories repliables, accessibilité, thèmes et couleurs) et un
-// écran par famille : bibliothèque d'exercices, catalogue WOD, choix
-// d'exercice (l'historique de STATS : test/stats_test.dart ; l'Anatomie :
-// test/m4b_anatomie_test.dart).
+// puces, catégories repliables, accessibilité, thèmes et couleurs) et la
+// bibliothèque d'exercices (l'Anatomie : test/m4b_anatomie_test.dart). G2 :
+// catalogue WOD, choix d'exercice des séances manuelles et filtres de
+// l'historique STATS retirés.
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
-import 'package:streetlift_tracker/builder_screen.dart';
 import 'package:streetlift_tracker/content_pack.dart';
 import 'package:streetlift_tracker/exercise_screens.dart';
 import 'package:streetlift_tracker/filter_menu.dart';
 import 'package:streetlift_tracker/store.dart';
-import 'package:streetlift_tracker/wod_catalog.dart';
 
 import 'phone_test_support.dart';
 
@@ -353,91 +351,6 @@ void main() {
       expect(find.text('Filtres · 3'), findsOneWidget);
       expect(countIn(tester.widget<Text>(counter).data!), hard);
       ExerciseLibraryScreen.session = const FilterSelection();
-      expect(tester.takeException(), isNull);
-    });
-
-    testWidgets('catalogue WOD : filtres par catégorie, vitrine masquée', (
-      tester,
-    ) async {
-      phone(tester);
-      WodCatalogScreen.session = const FilterSelection();
-      await tester.pumpWidget(_app(const WodCatalogScreen()));
-      await tester.pumpAndSettle();
-      int total() => int.parse(
-        RegExp(r'WODs · (\d+)')
-            .firstMatch(
-              tester.widget<Text>(find.textContaining('WODs · ')).data!,
-            )!
-            .group(1)!,
-      );
-      final all = total();
-      await openMenu(tester, 'wod');
-      await tapItem(tester, 'wod-filter-cat-format');
-      await tapItem(tester, 'wod-filter-ty:amrap');
-      final amrap = total();
-      await tapItem(tester, 'wod-filter-ty:emom');
-      final amrapOrEmom = total();
-      expect(amrap, lessThan(all));
-      expect(amrapOrEmom, greaterThan(amrap));
-      await tapItem(tester, 'wod-filter-cat-duree');
-      await tapItem(tester, 'wod-filter-du:short');
-      expect(total(), lessThanOrEqualTo(amrapOrEmom));
-      expect(find.text('Filtres · 3'), findsOneWidget);
-      await tester.tapAt(const Offset(5, 5));
-      await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('wod-chip-ty:amrap')), findsOneWidget);
-      expect(find.byKey(const ValueKey('wod-chip-du:short')), findsOneWidget);
-      // Réinitialiser (puces) : catalogue complet.
-      await tester.tap(find.byKey(const ValueKey('wod-chips-reset')));
-      await tester.pumpAndSettle();
-      expect(total(), all);
-      expect(find.text('Filtres · 0'), findsOneWidget);
-      WodCatalogScreen.session = const FilterSelection();
-      expect(tester.takeException(), isNull);
-    });
-
-    testWidgets('choix d’exercice : groupe et matériel', (tester) async {
-      phone(tester);
-      exercisePickerFilters = const FilterSelection();
-      await tester.pumpWidget(
-        _app(
-          Scaffold(
-            body: Builder(
-              builder: (context) => Center(
-                child: FilledButton(
-                  onPressed: () => pickExercise(context),
-                  child: const Text('Choisir'),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-      await tester.tap(find.text('Choisir'));
-      await tester.pumpAndSettle();
-      final counter = find.textContaining(RegExp(r'^\d+ exercices?'));
-      final all = countIn(tester.widget<Text>(counter).data!);
-      await openMenu(tester, 'picker');
-      final groups = find.byWidgetPredicate(
-        (w) =>
-            w is CheckboxListTile &&
-            w.key is ValueKey<String> &&
-            (w.key! as ValueKey<String>).value.startsWith('picker-filter-g:'),
-      );
-      expect(groups, findsWidgets);
-      final first =
-          (tester.widget(groups.first).key! as ValueKey<String>).value;
-      await tapItem(tester, first);
-      final one = countIn(tester.widget<Text>(counter).data!);
-      expect(one, lessThan(all));
-      expect(find.text('Filtres · 1'), findsOneWidget);
-      await tester.tapAt(const Offset(5, 5));
-      await tester.pumpAndSettle();
-      expect(
-        find.byKey(ValueKey(first.replaceFirst('filter', 'chip'))),
-        findsOneWidget,
-      );
-      exercisePickerFilters = const FilterSelection();
       expect(tester.takeException(), isNull);
     });
   });

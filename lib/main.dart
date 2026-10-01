@@ -25,6 +25,7 @@ import 'stats_screen.dart';
 import 'stats_navigation.dart';
 import 'settings_screen.dart';
 import 'profile_screens.dart';
+import 'retired_notice_screen.dart';
 import 'store.dart';
 
 Future<void> main() async {
@@ -296,6 +297,14 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
     store.themeMode.addListener(_onTheme);
     store.accentMode.addListener(_onTheme);
     store.persistenceError.addListener(_onPersistenceError);
+    // G2 (D1.1) : annonce de la suppression des WOD et des séances perso,
+    // une fois, dès que l'accueil est affiché.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final navigator = appNavigator.currentState;
+      if (mounted && navigator != null) {
+        unawaited(showRetiredNoticeIfNeeded(navigator));
+      }
+    });
   }
 
   @override

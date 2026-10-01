@@ -62,7 +62,8 @@ void main() {
               matching: find.byType(Scrollable),
             )
             .first;
-        for (var branch = 0; branch < 3; branch++) {
+        // G2 : deux branches (Pratique, Rythme), plus de branche « Défis ».
+        for (var branch = 0; branch < 2; branch++) {
           tester.state<ScrollableState>(scroll).position.jumpTo(0);
           await tester.pumpAndSettle();
           await tester.ensureVisible(

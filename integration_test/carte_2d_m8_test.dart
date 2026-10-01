@@ -5,7 +5,8 @@
 //     --dart-define=M6B_PART=a -d emulator-5554
 // a = thème sombre, b = thème clair. Écrans : Anatomie (aucun groupe, tous,
 // Dorsaux + toucher), section « Muscles » de deux fiches (traction, back
-// squat), STATS (semaine type), accueil (carte du jour), aperçu de WOD.
+// squat), STATS (semaine type), accueil (carte du jour). G2 : l'aperçu de
+// WOD est retiré avec les WOD.
 // Relevé `m8_releve_<partie>.json` : part de la figure, part en couleur
 // dominante, part en gris, démarcation entre la carte et son support,
 // couleur lue au centre d'un groupe travaillé, aucune vue 3D sur ces
@@ -30,7 +31,6 @@ import 'package:streetlift_tracker/stats_navigation.dart';
 import 'package:streetlift_tracker/stats_performance.dart';
 import 'package:streetlift_tracker/stats_screen.dart';
 import 'package:streetlift_tracker/store.dart';
-import 'package:streetlift_tracker/wod_preview.dart';
 
 final _root = GlobalKey();
 const _ratio = 1.5;
@@ -317,7 +317,7 @@ void main() {
     }
   }, timeout: _limit);
 
-  testWidgets('STATS, accueil et WOD ($_theme)', (tester) async {
+  testWidgets('STATS et accueil ($_theme)', (tester) async {
     final out = <String, Object?>{};
     _fillWeek();
     await pumpHome(
@@ -362,30 +362,13 @@ void main() {
     };
     await shot('accueil_$_theme');
 
-    final wod = store.wods.firstWhere((w) => store.isCatalog(w));
-    await pumpHome(
-      tester,
-      WodPreviewScreen(key: const ValueKey('m8-wod'), wodId: wod.id),
-    );
-    final wodMap = find.byKey(const ValueKey('wod-muscle-map'));
-    await tester.scrollUntilVisible(
-      wodMap,
-      300,
-      scrollable: find.byType(Scrollable).first,
-    );
-    await Scrollable.ensureVisible(tester.element(wodMap), alignment: .1);
-    await wait(tester);
-    out['wod'] = {'id': wod.id, ...await check(tester, wodMap)};
-    await shot('wod_$_theme');
     out['vues_3d'] = find.byType(Mannequin3D).evaluate().length;
     store.storeClock = DateTime.now;
-    releve['stats_accueil_wod'] = out;
+    releve['stats_accueil'] = out;
     record();
     expect(out['vues_3d'], 0);
     expect((out['stats']! as Map)['couleur'] as double, greaterThan(.02));
     expect((out['accueil']! as Map)['cartes'] as int, greaterThan(0));
-    for (final k in ['stats', 'wod']) {
-      expect((out[k]! as Map)['demarcation'] as double, lessThan(2), reason: k);
-    }
+    expect((out['stats']! as Map)['demarcation'] as double, lessThan(2));
   }, timeout: _limit);
 }

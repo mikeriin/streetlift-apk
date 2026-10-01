@@ -42,7 +42,6 @@ extension ProfileStore on AppStore {
       logs.isEmpty &&
       program.start == null &&
       values.isEmpty &&
-      customSessions.isEmpty &&
       koach.pristine;
 
   /// Installation existante sans profil : écran de confirmation (KT-043).

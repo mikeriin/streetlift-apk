@@ -21,7 +21,6 @@ import 'package:streetlift_tracker/progression.dart';
 import 'package:streetlift_tracker/session_screen.dart';
 import 'package:streetlift_tracker/program_start.dart';
 import 'package:streetlift_tracker/store.dart';
-import 'package:streetlift_tracker/wod_models.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -252,7 +251,7 @@ void main() {
     );
 
     test(
-      'état 2.5.7 : semaine, dates, références, séances, crédits conservés ; migration idempotente',
+      'état 2.5.7 : semaine, dates, références, séances conservées ; migration idempotente',
       () async {
         final legacy = await legacyState();
         final app = await launch({_key: jsonEncode(legacy)});
@@ -271,13 +270,7 @@ void main() {
         expect(app.logs['S1-J1']!.finishedAt, '2026-07-13T18:10:00.000');
         expect(app.logs['S1-J2']!.finishedAt, isNull);
         expect(app.logs['S6-J4']!.finishedAt, '2026-08-20T19:00:00.000');
-        final before = (
-          xp: app.xp,
-          level: app.level,
-          credits: app.credits,
-          grants: Map.of(app.creditGrants),
-          unlocked: Map.of(app.unlockedWods),
-        );
+        final before = (xp: app.xp, level: app.level);
         // Deuxième lancement : aucun changement supplémentaire.
         await app.flush();
         final stored = (await SharedPreferences.getInstance()).getString(_key);
@@ -287,9 +280,6 @@ void main() {
         expect(again.refStatus, app.refStatus);
         expect(again.xp, before.xp);
         expect(again.level, before.level);
-        expect(again.credits, before.credits);
-        expect(again.creditGrants, before.grants);
-        expect(again.unlockedWods, before.unlocked);
         await again.flush();
         expect((await SharedPreferences.getInstance()).getString(_key), stored);
       },
@@ -334,8 +324,7 @@ void main() {
       () async {
         final app = await launch({});
         final logs = app.logs.length;
-        final xp = app.xp, credits = app.credits;
-        final grants = Map.of(app.creditGrants);
+        final xp = app.xp;
         final result = await app.configureStart(
           DateTime(2026, 10, 1, 21, 45), // jeudi, heure ignorée
           references: {'B4': 72.5, 'B8': null},
@@ -348,8 +337,6 @@ void main() {
         expect(app.program.beforeStart(_today), isTrue);
         expect(app.logs.length, logs);
         expect(app.xp, xp);
-        expect(app.credits, credits);
-        expect(app.creditGrants, grants);
         expect(app.hasUnsavedChanges, isFalse);
         final again = await relaunch();
         expect(again.program.start, DateTime(2026, 10, 1));
@@ -448,14 +435,9 @@ void main() {
         final before = (
           xp: app.xp,
           level: app.level,
-          credits: app.credits,
-          grants: Map.of(app.creditGrants),
-          unlocked: Map.of(app.unlockedWods),
           values: Map.of(app.values),
           status: Map.of(app.refStatus),
           weeks: app.progression.weeks.keys.toList(),
-          trial: app.trialWod?.id,
-          weekly: [for (final w in app.weeklyPicks) w.id],
         );
         expect(
           await app.configureStart(DateTime(2026, 9, 21)),
@@ -470,66 +452,16 @@ void main() {
         expect(app.isDone(6, 4), isTrue);
         expect(app.xp, before.xp);
         expect(app.level, before.level);
-        expect(app.credits, before.credits);
-        expect(app.creditGrants, before.grants);
-        expect(app.unlockedWods, before.unlocked);
         expect(app.values, before.values);
         expect(app.refStatus, before.status); // toujours « à vérifier »
         expect(app.progression.weeks.keys.toList(), before.weeks);
-        expect(app.trialWod?.id, before.trial);
-        expect([for (final w in app.weeklyPicks) w.id], before.weekly);
         // Séance sans date : même semaine civile qu'avant le changement.
         final p = Progression.calculate(
           logs: app.logs,
-          catalog: app.wods,
           program: app.program,
           now: _today,
         );
         expect(p.totalXp, before.xp);
-      },
-    );
-  });
-
-  group('Résultats L3b', () {
-    test(
-      'résultats WOD (règle de score, intervalles) intacts après migration, relance et changement de départ',
-      () async {
-        final app = await launch({
-          'settings_v1': jsonEncode(AppSettings().toJson()),
-        });
-        final w = app.wods.firstWhere(app.isCatalog);
-        app.addWodResult(
-          w,
-          WodResult(
-            at: '2026-09-20T10:00:00.000',
-            score: '12:34',
-            seconds: 754,
-            scoring: 'tabata/1',
-            intervals: [
-              [10, null, 8],
-            ],
-          ),
-        );
-        await app.flush();
-        String results(AppStore a) => jsonEncode([
-          for (final x in a.wods)
-            if (x.results.isNotEmpty)
-              {x.id: x.results.map((r) => r.toJson()).toList()},
-        ]);
-        final before = results(app);
-        final again = await relaunch();
-        expect(results(again), before);
-        expect(
-          await again.configureStart(DateTime(2026, 9, 28)),
-          StartSave.saved,
-        );
-        expect(results(again), before);
-        final target = await launch({});
-        expect(
-          await target.importBackup(again.exportAll()),
-          ImportStatus.success,
-        );
-        expect(results(target), before);
       },
     );
   });
@@ -1000,9 +932,6 @@ void main() {
             'provenanceB4': a.refProvenance('B4'),
             'xp': a.xp,
             'niveau': a.level,
-            'credits': a.credits,
-            'gains': a.creditGrants.values.fold<int>(0, (x, y) => x + y),
-            'droitsWod': a.unlockedWods.length,
             'rappels': plan.length,
             'premierRappel': plan.isEmpty
                 ? null
@@ -1040,9 +969,6 @@ void main() {
           'provenanceB4',
           'xp',
           'niveau',
-          'credits',
-          'gains',
-          'droitsWod',
         ]) {
           expect(b[k], a[k], reason: k);
         }

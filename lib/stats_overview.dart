@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
 import 'game_widgets.dart';
-import 'motivation_screens.dart' show ProgressScreen;
 import 'progression.dart';
 import 'store.dart';
 import 'ui.dart';
@@ -59,7 +58,7 @@ class StatsOverview extends StatelessWidget {
         StatsGrid(
           children: [
             StatsMetric(
-              '${p.week.sessions + p.week.wods}',
+              '${p.week.sessions}',
               'Entraînements terminés',
               Icons.fitness_center_rounded,
             ),
@@ -91,7 +90,7 @@ class StatsOverview extends StatelessWidget {
           icon: Icons.account_tree_rounded,
           title: 'Arbre de progression',
           subtitle:
-              '${p.earnedBadges} badges obtenus · pratique, rythme et défis',
+              '${p.earnedBadges} badges obtenus · pratique et rythme',
           onTap: () => onSection(StatsSection.journey),
         ),
         const KSection(
@@ -111,37 +110,30 @@ class StatsOverview extends StatelessWidget {
               'Séances terminées',
               Icons.task_alt_rounded,
             ),
-            StatsMetric('${p.wods}', 'WOD terminés', Icons.bolt_rounded),
             StatsMetric('${p.sets}', 'Séries au total', Icons.layers_outlined),
             StatsMetric(
-              '${p.records}',
-              'Records WOD améliorés',
-              Icons.emoji_events_outlined,
+              '${p.activeWeeks}',
+              'Semaines validées',
+              Icons.event_available_rounded,
+            ),
+            StatsMetric(
+              '${p.bestStreak}',
+              'Meilleure série (semaines)',
+              Icons.local_fire_department_rounded,
             ),
           ],
         ),
         KMenuTile(
           icon: Icons.insights_rounded,
           title: 'Performances et références',
-          subtitle: 'Force, endurance, muscles et records WOD',
+          subtitle: 'Force, endurance, muscles et records',
           onTap: () => onSection(StatsSection.performance),
         ),
         KMenuTile(
           icon: Icons.history_rounded,
           title: 'Tout ton historique',
-          subtitle: 'Séances, résultats WOD et notes',
+          subtitle: 'Séances et notes',
           onTap: () => onSection(StatsSection.history),
-        ),
-        // L12 (KT-065) : victoires, figures, étapes franchies, partage.
-        KMenuTile(
-          key: const ValueKey('stats-motiv-progress'),
-          icon: Icons.emoji_events_outlined,
-          title: 'Mes progrès',
-          subtitle: 'Victoires, figures, étapes franchies et partage',
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute<void>(builder: (_) => const ProgressScreen()),
-          ),
         ),
       ],
     );
@@ -169,7 +161,7 @@ class _ActivityCard extends StatelessWidget {
           ),
           title: Text('Semaine du ${statsDate(week.monday)}'),
           subtitle: Text(
-            '${week.activeDays.length} jours actifs · ${week.sessions} séances · ${week.wods} WOD · ${week.sets} séries',
+            '${week.activeDays.length} jours actifs · ${week.sessions} séances · ${week.sets} séries',
           ),
         ),
     ]),

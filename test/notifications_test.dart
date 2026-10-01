@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/notifications.dart';
@@ -6,6 +8,20 @@ import 'package:streetlift_tracker/store.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 import 'support/fake_notifications.dart';
+
+// Repères du Pilotage d'un départ configuré (repris de l'ancien
+// test/l12_store_test.dart, retiré avec L12 en G2).
+const _refs = <String, double?>{
+  'B4': 71.5,
+  'B8': 60,
+  'B9': 80,
+  'B10': 20,
+  'B11': 140,
+  'B17': 20,
+  'B18': 30,
+  'B19': 50,
+  'B20': 30,
+};
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -224,4 +240,43 @@ void main() {
       expect(backend.pending.contains(r.id), false);
     },
   );
+
+  // Règle KT-070, conservée après le retrait de L12 (G2) : reprise de
+  // test/l12_motivation_test.dart et test/l12_store_test.dart.
+  test('rappels : uniquement un jour d\'entraînement prévu, hors pause '
+      '(KT-070)', () {
+    expect(reminderAllowed(trainingDay: true), isTrue);
+    expect(reminderAllowed(trainingDay: false), isFalse);
+    expect(reminderAllowed(trainingDay: true, paused: true), isFalse);
+  });
+
+  group('rappels (KT-070)', () {
+    test(
+      'jamais un jour de repos, même avec un ancien réglage contraire',
+      () async {
+        final clock = DateTime(2026, 8, 24, 10);
+        SharedPreferences.setMockInitialValues({
+          'settings_v1': jsonEncode({
+            ...AppSettings().toJson(),
+            'notifOn': true,
+            'notifSkipRest': false,
+          }),
+        });
+        final other = AppStore()..storeClock = () => clock;
+        await other.init();
+        addTearDown(other.dispose);
+        other.settings
+          ..notifOn = true
+          ..notifSkipRest = false;
+        await other.configureStart(DateTime(2026, 8, 10), references: _refs);
+        final plan = planReminders(other, clock);
+        expect(plan, isNotEmpty);
+        for (final r in plan) {
+          final m = RegExp(r'S(\d+)-J(\d+)').firstMatch(r.payload)!;
+          final d = other.program.week(int.parse(m[1]!)).day(int.parse(m[2]!))!;
+          expect(d.exercises, isNotEmpty, reason: r.payload);
+        }
+      },
+    );
+  });
 }

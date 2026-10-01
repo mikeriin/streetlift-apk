@@ -1,8 +1,21 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : G1 correction 1 (démarrage repris après fermeture), version 6.0.1 ; précédent : 6.0.0 (G1)**  
-**Date : 1er octobre 2026, Europe/Paris — version : 6.0.1+95 (versionCode réel fixé par la CI de build)**  
-**Statut : contrôlé en CI (branche temporaire `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+**Passe actuelle : G2 (WOD, séances perso et L12 retirés), version dev6.1.0 ; précédent : 6.0.1 (G1 correction 1)**  
+**Date : 1er octobre 2026, Europe/Paris — version : 6.1.0+96, affichée « dev6.1.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## G2 — Suppression des WOD, des séances manuelles et de L12 (version dev6.1.0)
+
+| Exigence | Réalisation |
+| --- | --- |
+| Copie avant suppression (D1.1) | `lib/retired_data.dart` repère les données retirées (`custom`, `catalog`, `wods`, `unlocked`, `legacyGrants`, `creditsEarnedMax`, `creditGrants`, `trialOfDay`, `weeklyShowcase`, `wishlist`, `motiv`, journal `S0-…`). Au démarrage, `AppStore._secureRetiredData` écrit le document de 6.0.x tel quel (chrono WOD local retiré, `exportedAt` ajouté) sous `g2_copie_avant_suppression_v1` (session active), le relit (texte identique, empreinte FNV-1a, contenu identique, lecture comme une sauvegarde), écrit sa fiche `g2_annonce_suppression_v1`, puis réécrit le document sans les données retirées. Échec : rien supprimé, données gardées à chaque écriture, nouvel essai au lancement suivant. Catalogue jamais utilisé : retiré sans copie. |
+| Écran d'annonce | `lib/retired_notice_screen.dart` : ce qui est supprimé, ce qui ne change pas, copie vérifiée (date, taille), « Partager la copie » (menu Android, `ShareProvider`), « Enregistrer dans un fichier » (sélecteur système), « Compris » ; une fois au premier lancement, puis Réglages › Sauvegardes. |
+| WOD retirés | 7 fichiers `wod_*.dart`, crédits et droits (KT-005, KT-014), essai du jour, vitrine, envies, chrono WOD et reprise, estimation des WOD (seul l'EMOM des exercices du programme reste : `TrainingEstimator.emom`), badges/défis/titres WOD, historique et records WOD de STATS, `tools/wod_catalog_snapshot.dart`. |
+| Séances manuelles retirées | `builder_screen.dart`, modèles et journal `S0-…` (XP compris), séance d'entretien de vacances (L11), `SessionLog.customId`. |
+| L12 retiré | `motivation.dart`, `motiv_store.dart`, `motivation_screens.dart`, STATS › Mes progrès et mode « victoires », Réglages › Motivation et progression, carte de l'accueil, parcours d'habitude, image de partage (`shareImage`, PNG de `ShareProvider`). Règle des rappels conservée (`reminderAllowed`, `lib/notifications.dart`). |
+| Navigation | Quatre onglets inchangés (Arsenal, Stats, Programme, Réglages) ; Arsenal = Exercices + Anatomie. |
+| Nommage devX.Y.Z (D0.9) | `kAppVersion` = « dev6.1.0 » (APK, `KALIS_DEV`) ou « 6.1.0 » (AAB) ; `build-apk.yml` : `--build-name=dev<version>` pour l'APK seul ; `verify_android_artifacts.py` exige ces `versionName`. |
+| Contrôles | Tests Dart `g2_retrait_test.dart`, `g2_mode_dev_test.dart` (build de dev), Python `test_g2_retrait.py`, émulateur `retrait_g2_test` (a sombre, b clair). Tests des fonctions retirées supprimés (voir `pipeline/gp/livraisons/LIVRAISON_G2.md`). |
 
 ## G1.C1 — Correction 1 (version 6.0.1)
 

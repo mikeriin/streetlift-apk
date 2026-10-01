@@ -78,11 +78,7 @@ class EstimateView extends StatelessWidget {
           children: [
             _metric(
               e.durationLabel,
-              e.observed != null
-                  ? 'Selon tes résultats'
-                  : e.clock == null
-                  ? 'Temps estimé'
-                  : 'Durée prévue',
+              e.clock == null ? 'Temps estimé' : 'Durée prévue',
             ),
             if (e.sets > 0)
               _metric(
@@ -105,14 +101,6 @@ class EstimateView extends StatelessWidget {
             ),
           ),
         const SizedBox(height: 12),
-        if (e.observed != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Text(
-              'Détail théorique ci-dessous. Le temps total est ajusté avec tes ${e.historyCount} derniers résultats complets, à prescription identique.',
-              style: TextStyle(color: SL.dim, fontSize: 12),
-            ),
-          ),
         for (final row in [
           ('Effort', e.work),
           ('Repos', e.rest),
@@ -139,14 +127,6 @@ class EstimateView extends StatelessWidget {
                 ],
               ),
             ),
-        if (e.capSeconds > 0)
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: Text(
-              'Limite du chrono : ${TrainingEstimate.formatSeconds(e.capSeconds.toDouble())}. Le volume indiqué reste celui du WOD complet.',
-              style: TextStyle(color: SL.accent, fontSize: 12),
-            ),
-          ),
         const SizedBox(height: 12),
         Text(
           'Volume prévu. Cadence estimée quand aucun tempo n’est précisé. Le tonnage compte uniquement les charges externes connues, sans le poids du corps.',

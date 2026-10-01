@@ -8,7 +8,6 @@ import 'engine3d.dart';
 import 'exercise_screens.dart';
 import 'koach_screens.dart';
 import 'mannequin_3d.dart';
-import 'motivation_screens.dart' show MotivSettingsScreen;
 import 'ui.dart';
 import 'wellbeing_screens.dart';
 import 'notification_settings.dart';
@@ -16,11 +15,17 @@ import 'pilotage_screen.dart';
 import 'program_start.dart';
 import 'program_screens.dart';
 import 'profile_screens.dart';
+import 'retired_notice_screen.dart';
 import 'store.dart';
 import 'store_widget.dart';
 import 'dev/dev_flags.dart';
 
-const kAppVersion = '6.0.1';
+/// Version de l'application (pubspec sans le numéro de build).
+const kVersion = '6.1.0';
+
+/// Version affichée (D0.9) : « dev6.1.0 » dans le build de développement
+/// (APK du propriétaire), « 6.1.0 » dans l'AAB du Play Store.
+const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;
 
 class SettingsScreen extends StatelessWidget {
   final int? section;
@@ -180,7 +185,7 @@ class SettingsScreen extends StatelessWidget {
           const _Sec('Progression et jeu'),
           _Sw(
             'Célébrations',
-            'Écran de récompenses après une séance ou un WOD, records en direct, cérémonie de niveau',
+            'Écran de récompenses après une séance, records en direct, cérémonie de niveau',
             s.celebrations,
             (v) {
               s.celebrations = v;
@@ -205,7 +210,7 @@ class SettingsScreen extends StatelessWidget {
           const _Sec('Pendant la séance'),
           _Sw(
             'Garder l\u2019écran allumé',
-            'Pendant l\u2019exécution d\u2019une séance ou d\u2019un WOD',
+            'Pendant l\u2019exécution d\u2019une séance',
             s.wakelock,
             (v) {
               s.wakelock = v;
@@ -229,7 +234,7 @@ class SettingsScreen extends StatelessWidget {
             color: SL.accent,
             title: 'Exporter une sauvegarde',
             subtitle:
-                'Fichier à l’emplacement de ton choix : pilotage, journal, séances, WODs, crédits, réglages, Koach, profil (données de santé comprises si tu en as saisi). Non chiffré.',
+                'Fichier à l’emplacement de ton choix : pilotage, journal, réglages, Koach, profil (données de santé comprises si tu en as saisi). Non chiffré.',
             onTap: () => exportBackupFile(context, appVersion: kAppVersion),
           ),
           _Action(
@@ -279,6 +284,23 @@ class SettingsScreen extends StatelessWidget {
             subtitle: 'Depuis un texte copié : même aperçu, même confirmation',
             onTap: () => _import(context),
           ),
+          // G2 (D1.1) : copie faite avant la suppression des WOD et des
+          // séances perso, gardée dans l'application.
+          if (store.retiredNotice != null)
+            _Action(
+              key: const ValueKey('settings-retired-copy'),
+              icon: Icons.inventory_2_outlined,
+              color: SL.accent,
+              title: 'Copie d’avant la suppression des WOD',
+              subtitle:
+                  'Toutes tes données d’avant cette mise à jour (WOD, séances perso, crédits) : à partager ou enregistrer',
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (_) => const RetiredNoticeScreen(fromSettings: true),
+                ),
+              ),
+            ),
           const _Tile(
             title: 'Sauvegarde Android',
             subtitle:
@@ -340,21 +362,6 @@ class SettingsScreen extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute<void>(builder: (_) => const AdaptScreen()),
-            ),
-          ),
-          // L12 : motivation et progression visible (KT-065 à KT-071).
-          _Action(
-            key: const ValueKey('settings-motiv'),
-            icon: Icons.emoji_events_outlined,
-            color: SL.accent,
-            title: 'Motivation et progression',
-            subtitle:
-                'Ton ${const {'kind': 'bienveillant', 'demanding': 'exigeant', 'neutral': 'neutre'}[store.koachTone]} · progrès, figures, bilans',
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute<void>(
-                builder: (_) => const MotivSettingsScreen(),
-              ),
             ),
           ),
           _Action(
@@ -534,7 +541,7 @@ class SettingsScreen extends StatelessWidget {
           _Tile(
             title: 'Kalis Track $kAppVersion',
             subtitle:
-                'Programme streetlifting v3.3 · ${store.allExercises.length} exercices · ${execModes.length} modes · ${store.wods.length} WODs',
+                'Programme streetlifting v3.3 · ${store.allExercises.length} exercices',
           ),
           // G1 (D2.4) : visible seulement dans un build de développement.
           if (kDevBuild)

@@ -354,38 +354,30 @@ void main() {
       expect((await relaunch()).settings.accent, 'rouge');
     });
 
-    test(
-      'changer de couleur ne touche ni XP, ni crédits, ni droits, ni dates',
-      () async {
-        for (final week in app.program.weeks.take(2)) {
-          for (final day in week.days) {
-            if (day.exercises.isNotEmpty) {
-              app.markSessionDone(week.n, day.j, true);
-            }
+    test('changer de couleur ne touche ni XP, ni niveau, ni dates', () async {
+      for (final week in app.program.weeks.take(2)) {
+        for (final day in week.days) {
+          if (day.exercises.isNotEmpty) {
+            app.markSessionDone(week.n, day.j, true);
           }
         }
-        await app.flush();
-        final xp = app.levelProgress.inLevel, level = app.level;
-        final credits = app.credits, earned = app.creditsEarned;
-        final unlocked = Map.of(app.unlockedWods);
-        final start = app.program.start;
-        final logs = jsonEncode((jsonDecode(app.exportAll()) as Map)['logs']);
-        for (final id in kAccentIds) {
-          app.settings.accent = id;
-          app.saveSettings();
-        }
-        await app.flush();
-        final next = await relaunch();
-        for (final a in [app, next]) {
-          expect(a.level, level);
-          expect(a.levelProgress.inLevel, xp);
-          expect(a.credits, credits);
-          expect(a.creditsEarned, earned);
-          expect(a.unlockedWods, unlocked);
-          expect(a.program.start, start);
-          expect(jsonEncode((jsonDecode(a.exportAll()) as Map)['logs']), logs);
-        }
-      },
-    );
+      }
+      await app.flush();
+      final xp = app.levelProgress.inLevel, level = app.level;
+      final start = app.program.start;
+      final logs = jsonEncode((jsonDecode(app.exportAll()) as Map)['logs']);
+      for (final id in kAccentIds) {
+        app.settings.accent = id;
+        app.saveSettings();
+      }
+      await app.flush();
+      final next = await relaunch();
+      for (final a in [app, next]) {
+        expect(a.level, level);
+        expect(a.levelProgress.inLevel, xp);
+        expect(a.program.start, start);
+        expect(jsonEncode((jsonDecode(a.exportAll()) as Map)['logs']), logs);
+      }
+    });
   });
 }
