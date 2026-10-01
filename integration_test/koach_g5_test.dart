@@ -202,7 +202,10 @@ void main() {
     }
     releve['galerie'] = find.byType(KoachGalleryScreen).evaluate().isNotEmpty;
     await shot('4_galerie_haut');
-    await scrollTo(tester, find.byKey(const ValueKey('koach-pose-explain_board')));
+    await scrollTo(
+      tester,
+      find.byKey(const ValueKey('koach-pose-explain_board')),
+    );
     await wait(tester, 800);
     await shot('5_galerie_poses_1');
     await scrollTo(tester, find.byKey(const ValueKey('koach-pose-present')));
@@ -219,7 +222,11 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('flame-pick-9')));
     await wait(tester, 600);
     releve['selecteur'] =
-        (find.byKey(const ValueKey('flame-pick-caption')).evaluate().first.widget
+        (find
+                    .byKey(const ValueKey('flame-pick-caption'))
+                    .evaluate()
+                    .first
+                    .widget
                 as Text)
             .data;
     await shot('7_flammes');
@@ -234,7 +241,11 @@ void main() {
         .isNotEmpty;
     await shot('8_bulle_pourquoi');
     // Transition : une pose choisie en haut de la galerie.
-    await scrollTo(tester, find.byKey(const ValueKey('koach-pose-flag')), up: true);
+    await scrollTo(
+      tester,
+      find.byKey(const ValueKey('koach-pose-flag')),
+      up: true,
+    );
     await tester.tap(find.byKey(const ValueKey('koach-pose-flag')));
     await tester.pump(const Duration(milliseconds: 90));
     final stage = find.byKey(const ValueKey('koach-gallery-stage'));

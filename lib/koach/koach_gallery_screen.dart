@@ -196,8 +196,7 @@ class KoachGalleryScreenState extends State<KoachGalleryScreen> {
   Widget _grid(BuildContext context) => LayoutBuilder(
     builder: (context, c) {
       final columns = c.maxWidth >= 520 ? 6 : (c.maxWidth >= 300 ? 4 : 3);
-      final cell = ((c.maxWidth - (columns - 1) * 6) / columns)
-          .floorToDouble();
+      final cell = ((c.maxWidth - (columns - 1) * 6) / columns).floorToDouble();
       return Wrap(
         key: const ValueKey('koach-gallery-grid'),
         spacing: 6,

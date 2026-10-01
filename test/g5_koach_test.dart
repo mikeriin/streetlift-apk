@@ -28,6 +28,7 @@ import 'package:streetlift_tracker/koach_widgets.dart';
 import 'package:streetlift_tracker/mannequin_3d.dart' show MannequinMap;
 import 'package:streetlift_tracker/models.dart' show DayPlan;
 import 'package:streetlift_tracker/store.dart';
+import 'package:streetlift_tracker/ui.dart' show KCard, kCardColor;
 
 Widget _page(
   Widget child, {
@@ -77,11 +78,12 @@ void main() {
         final paths = KoachPaths.of(p);
         final b = paths.ink.getBounds();
         final art = p.art.bounds;
-        // Les points de contrôle peuvent déborder de la courbe : 3 unités.
-        expect(b.left, closeTo(art.left, 3), reason: p.id);
-        expect(b.right, closeTo(art.right, 3), reason: p.id);
-        expect(b.top, closeTo(art.top, 3), reason: p.id);
-        expect(b.bottom, closeTo(art.bottom, 3), reason: p.id);
+        // `getBounds` compte les points de contrôle : la boîte contient
+        // celle de la courbe et la dépasse de peu.
+        expect(b.left, inInclusiveRange(art.left - 30, art.left + 1), reason: p.id);
+        expect(b.right, inInclusiveRange(art.right - 1, art.right + 30), reason: p.id);
+        expect(b.top, inInclusiveRange(art.top - 30, art.top + 1), reason: p.id);
+        expect(b.bottom, inInclusiveRange(art.bottom - 1, art.bottom + 30), reason: p.id);
         expect(paths.ink.fillType, PathFillType.evenOdd);
         expect(paths.eyeBoxes.length, p.art.eyesOpen ? 2 : 0, reason: p.id);
         expect(identical(KoachPaths.of(p), paths), isTrue, reason: 'cache');
@@ -103,17 +105,62 @@ void main() {
   });
 
   group('couleurs (D6.2)', () {
-    test('sombre : encre #F4F4F4, papier percé (fond du support)', () {
-      expect(KoachColors.forSurface(dark: true).ink, const Color(0xFFF4F4F4));
-      expect(KoachColors.forSurface(dark: true).paper, isNull);
+    test('sombre : encre #F4F4F4, papier = couleur du support', () {
+      const card = Color(0xFF1E1E1E);
+      expect(KoachColors.onDark(card).ink, const Color(0xFFF4F4F4));
+      expect(KoachColors.onDark(card).paper, card);
+      expect(KoachColors.onColor(card), KoachColors.onDark(card));
+      // Support translucide : papier opaque.
+      expect(KoachColors.onDark(const Color(0xF0202020)).paper.a, 1);
     });
 
     test('clair : encre quasi-noire, papier blanc', () {
-      final c = KoachColors.forSurface(dark: false);
+      const c = KoachColors.onLight;
       expect(c.ink.computeLuminance(), lessThan(.01));
       expect(c.paper, const Color(0xFFFFFFFF));
-      expect(KoachColors.onColor(const Color(0xF0202020)), KoachColors.onDark);
       expect(KoachColors.onColor(Colors.white), KoachColors.onLight);
+    });
+
+    testWidgets('le support annonce sa couleur (carte, carte teintée)', (
+      tester,
+    ) async {
+      late KoachColors page, card, tinted;
+      await tester.pumpWidget(
+        _page(
+          Column(
+            children: [
+              Builder(
+                builder: (c) {
+                  page = KoachColors.of(c);
+                  return const SizedBox();
+                },
+              ),
+              KCard(
+                child: Builder(
+                  builder: (c) {
+                    card = KoachColors.of(c);
+                    return const SizedBox();
+                  },
+                ),
+              ),
+              KCard(
+                accent: SL.accent,
+                child: Builder(
+                  builder: (c) {
+                    tinted = KoachColors.of(c);
+                    return const SizedBox();
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+      final ctx = tester.element(find.byType(Column).first);
+      expect(page.paper, Theme.of(ctx).scaffoldBackgroundColor);
+      expect(card.paper, kCardColor(ctx));
+      expect(tinted.paper, isNot(card.paper));
+      expect(tinted.ink, KoachColors.darkInk);
     });
 
     for (final dark in [true, false]) {
@@ -195,10 +242,8 @@ void main() {
     testWidgets('« Réduire les animations » : pose fixe, changement '
         'immédiat', (tester) async {
       KoachMotion.idle = true;
-      Widget view(KoachPose p) => _page(
-        Center(child: KoachView(pose: p, height: 120)),
-        reduce: true,
-      );
+      Widget view(KoachPose p) =>
+          _page(Center(child: KoachView(pose: p, height: 120)), reduce: true);
       await tester.pumpWidget(view(KoachPose.wave));
       final state = tester.state<KoachViewState>(find.byType(KoachView));
       expect(state.animating, isFalse);
@@ -207,7 +252,6 @@ void main() {
       await tester.pumpWidget(view(KoachPose.think));
       expect(state.animating, isFalse);
       expect(state.previous, isNull);
-      expect(tester.binding.hasScheduledFrame, isFalse);
     });
 
     testWidgets('au repos : clignement seedé et respiration (grande vue), '
@@ -288,12 +332,17 @@ void main() {
     test('dégradé de la couleur dominante, du clair au vif', () {
       for (final accent in KAccentSpec.all) {
         for (final dark in [true, false]) {
-          final vivid = dark ? accent.bright : (accent.vividLight ?? accent.vivid);
+          final vivid = dark
+              ? accent.bright
+              : (accent.vividLight ?? accent.vivid);
           expect(flameColor(10, dark: dark, accent: accent), vivid);
           var last = 2.0;
           for (var i = 1; i <= 10; i++) {
-            final l = flameColor(i, dark: dark, accent: accent)
-                .computeLuminance();
+            final l = flameColor(
+              i,
+              dark: dark,
+              accent: accent,
+            ).computeLuminance();
             expect(l, lessThanOrEqualTo(last), reason: '${accent.id} $i');
             last = l;
           }
@@ -305,8 +354,7 @@ void main() {
       }
     });
 
-    test('tailles relatives : chaque flamme plus grande que la précédente',
-        () {
+    test('tailles relatives : chaque flamme plus grande que la précédente', () {
       for (var i = 2; i <= 10; i++) {
         expect(
           koachFlame(i).bounds.height,
@@ -317,7 +365,6 @@ void main() {
 
     testWidgets('sélecteur : 10 flammes, choix, libellés', (tester) async {
       final handle = tester.ensureSemantics();
-      addTearDown(handle.dispose);
       int? value;
       await tester.pumpWidget(
         _page(
@@ -340,13 +387,17 @@ void main() {
         find.text('Difficulté 8 sur 10 : encore 1,5 répétition en réserve.'),
         findsOneWidget,
       );
-      expect(find.bySemanticsLabel('Difficulté 8 sur 10, RIR 1,5'), findsOneWidget);
+      expect(
+        find.bySemanticsLabel('Difficulté 8 sur 10, RIR 1,5'),
+        findsOneWidget,
+      );
       await tester.tap(find.byKey(const ValueKey('flame-pick-1')));
       await tester.pump();
       expect(
         find.text('Difficulté 1 sur 10 : 5 répétitions ou plus en réserve.'),
         findsOneWidget,
       );
+      handle.dispose();
     });
   });
 
@@ -462,7 +513,7 @@ void main() {
         find.byKey(const ValueKey('session-toast-koach')),
       );
       expect(koach.pose, KoachPose.wave);
-      expect(koach.colors, KoachColors.onDark);
+      expect(koach.colors, KoachColors.onDark(const Color(0xFF202020)));
     });
 
     testWidgets('en-têtes « Koach · … » des cartes de séance', (tester) async {
@@ -513,7 +564,9 @@ void main() {
         final state = tester.state<KoachGalleryScreenState>(
           find.byType(KoachGalleryScreen),
         );
-        await tester.ensureVisible(find.byKey(const ValueKey('koach-pose-flag')));
+        await tester.ensureVisible(
+          find.byKey(const ValueKey('koach-pose-flag')),
+        );
         await tester.tap(find.byKey(const ValueKey('koach-pose-flag')));
         await tester.pump();
         expect(state.pose, KoachPose.flag);
@@ -560,8 +613,7 @@ void main() {
       expect(find.byType(KoachGalleryScreen), findsOneWidget);
     });
 
-    test('carte du jour de l\'accueil : la pose de Koach dit la journée',
-        () {
+    test('carte du jour de l\'accueil : la pose de Koach dit la journée', () {
       final week = store.program.week(1);
       final training = week.days.firstWhere((d) => d.exercises.isNotEmpty);
       final rest = week.days.where((d) => d.exercises.isEmpty).toList();

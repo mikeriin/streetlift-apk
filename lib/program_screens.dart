@@ -434,57 +434,57 @@ class ProgramHomeCard extends StatelessWidget {
       child: KoachSays(
         pose: changed ? KoachPose.think : KoachPose.settings,
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            changed
-                ? 'Ton profil a changé : ton programme peut être adapté à '
-                      'partir d’aujourd’hui.'
-                : 'Ton programme a été mis à jour. Tu peux revenir à la '
-                      'version précédente pendant 7 jours.',
-          ),
-          const SizedBox(height: 8),
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              if (changed)
-                FilledButton(
-                  key: const ValueKey('program-home-preview'),
-                  onPressed: () =>
-                      openProgramProposal(context, reason: 'profile'),
-                  child: const Text('Voir ce qui change'),
-                ),
-              if (undo)
-                OutlinedButton(
-                  key: const ValueKey('program-home-undo'),
-                  onPressed: () {
-                    final ok = store.undoProgram();
-                    showKoachToast(
-                      context,
-                      ok
-                          ? 'Version précédente du programme rétablie.'
-                          : 'Annulation impossible : une séance du nouveau programme est déjà commencée.',
-                      pose: ok ? KoachPose.thumbsUp : KoachPose.oops,
-                    );
-                  },
-                  child: const Text('Revenir à la version précédente'),
-                ),
-              if (!inScreen)
-                TextButton(
-                  key: const ValueKey('program-home-open'),
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (_) => const ProgramScreen(),
-                    ),
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              changed
+                  ? 'Ton profil a changé : ton programme peut être adapté à '
+                        'partir d’aujourd’hui.'
+                  : 'Ton programme a été mis à jour. Tu peux revenir à la '
+                        'version précédente pendant 7 jours.',
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                if (changed)
+                  FilledButton(
+                    key: const ValueKey('program-home-preview'),
+                    onPressed: () =>
+                        openProgramProposal(context, reason: 'profile'),
+                    child: const Text('Voir ce qui change'),
                   ),
-                  child: const Text('Mon programme'),
-                ),
-            ],
-          ),
-        ],
-      ),
+                if (undo)
+                  OutlinedButton(
+                    key: const ValueKey('program-home-undo'),
+                    onPressed: () {
+                      final ok = store.undoProgram();
+                      showKoachToast(
+                        context,
+                        ok
+                            ? 'Version précédente du programme rétablie.'
+                            : 'Annulation impossible : une séance du nouveau programme est déjà commencée.',
+                        pose: ok ? KoachPose.thumbsUp : KoachPose.oops,
+                      );
+                    },
+                    child: const Text('Revenir à la version précédente'),
+                  ),
+                if (!inScreen)
+                  TextButton(
+                    key: const ValueKey('program-home-open'),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (_) => const ProgramScreen(),
+                      ),
+                    ),
+                    child: const Text('Mon programme'),
+                  ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

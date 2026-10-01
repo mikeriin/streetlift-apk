@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
 import 'dev/dev_widgets.dart' show HeaderLogo;
+import 'koach/koach_view.dart' show KoachSurface;
 
 /// Règles partagées par tous les écrans : espacements, surfaces et actions.
 class KSpace {
@@ -126,15 +127,16 @@ class KCard extends StatelessWidget {
     final c = Theme.of(context).colorScheme;
     final dark = Theme.of(context).brightness == Brightness.dark;
     final highlighted = accent != null || color != null;
+    final fill =
+        color ??
+        (accent == null
+            ? c.surfaceContainerLow
+            : Color.alphaBlend(
+                accent!.withValues(alpha: .05),
+                c.surfaceContainerLow,
+              ));
     return Material(
-      color:
-          color ??
-          (accent == null
-              ? c.surfaceContainerLow
-              : Color.alphaBlend(
-                  accent!.withValues(alpha: .05),
-                  c.surfaceContainerLow,
-                )),
+      color: fill,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(radius ?? KSpace.radius),
         side: outline != null
@@ -147,7 +149,11 @@ class KCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         onLongPress: onLongPress,
-        child: Padding(padding: padding, child: child),
+        // G5 : Koach posé sur la carte prend sa couleur pour papier.
+        child: KoachSurface(
+          color: fill,
+          child: Padding(padding: padding, child: child),
+        ),
       ),
     );
   }

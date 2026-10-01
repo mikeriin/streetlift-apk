@@ -3,9 +3,9 @@
 //
 // - Couleurs inversées selon le thème (D6.2, CONTRAT.md de kalis_koach § 2) :
 //   thème sombre, encre = texte clair #F4F4F4 et papier = fond du support
-//   (le papier et les yeux sont « percés » dans un calque : ils laissent
-//   voir exactement le support, carte teintée comprise) ; thème clair, encre
-//   quasi-noire #141414 et papier blanc. Aucun contour, aucun effet.
+//   (annoncé par le support, [KoachSurface] : carte, carte teintée, feuille ;
+//   la page sinon) ; thème clair, encre quasi-noire #141414 et papier blanc.
+//   Aucun contour, aucun effet.
 // - Micro-animations (D6.3) : rebond d'entrée, transition entre deux poses
 //   (fondu + écrasement puis étirement, 200 ms), clignement des yeux ouverts
 //   (intervalle irrégulier seedé), respiration lente et légère (grandes
@@ -56,15 +56,28 @@ abstract final class KoachMotion {
   static const breathMinHeight = 64.0;
 }
 
+/// Couleur du support sous Koach (carte, feuille…), annoncée par le
+/// support lui-même ([KCard] la donne) ; par défaut, la page.
+class KoachSurface extends InheritedWidget {
+  final Color color;
+  const KoachSurface({super.key, required this.color, required super.child});
+
+  static Color? maybeOf(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<KoachSurface>()?.color;
+
+  @override
+  bool updateShouldNotify(KoachSurface old) => old.color != color;
+}
+
 /// Couleurs de Koach sur un support (D6.2).
 @immutable
 class KoachColors {
   /// Encre (silhouette).
   final Color ink;
 
-  /// Papier (K, yeux, traits intérieurs) ; `null` = percé : laisse voir le
-  /// support (thème sombre).
-  final Color? paper;
+  /// Papier (K, yeux, traits intérieurs) : blanc sur support clair, couleur
+  /// du support sur support sombre.
+  final Color paper;
   const KoachColors(this.ink, this.paper);
 
   /// Encre du thème sombre (texte clair de l'application).
@@ -73,23 +86,28 @@ class KoachColors {
   /// Encre du thème clair (quasi-noir des planches de contrôle).
   static const lightInk = Color(0xFF141414);
 
-  /// Support sombre : Koach blanc, yeux et K de la couleur du support.
-  static const onDark = KoachColors(darkInk, null);
-
   /// Support clair : Koach noir, yeux et K blancs.
   static const onLight = KoachColors(lightInk, Color(0xFFFFFFFF));
 
-  /// Couleurs pour un support sombre ou clair.
-  static KoachColors forSurface({required bool dark}) =>
-      dark ? onDark : onLight;
+  /// Support sombre [surface] : Koach blanc, yeux et K de la couleur du
+  /// support (opaque).
+  static KoachColors onDark(Color surface) =>
+      KoachColors(darkInk, surface.withValues(alpha: 1));
 
-  /// Couleurs pour un support de couleur [surface] (bulle, message court).
+  /// Couleurs pour un support de couleur [surface] (bulle, message court,
+  /// carte de la couleur dominante).
   static KoachColors onColor(Color surface) =>
-      forSurface(dark: surface.computeLuminance() < .4);
+      surface.computeLuminance() < .4 ? onDark(surface) : onLight;
 
-  /// Couleurs du thème courant.
-  static KoachColors of(BuildContext context) =>
-      forSurface(dark: Theme.of(context).brightness == Brightness.dark);
+  /// Couleurs du thème courant, sur le support annoncé ([KoachSurface]) ou
+  /// la page.
+  static KoachColors of(BuildContext context) {
+    final theme = Theme.of(context);
+    if (theme.brightness != Brightness.dark) return onLight;
+    return onDark(
+      KoachSurface.maybeOf(context) ?? theme.scaffoldBackgroundColor,
+    );
+  }
 
   @override
   bool operator ==(Object other) =>
@@ -109,8 +127,14 @@ class _PathSink implements KoachPathSink {
   void lineTo(double x, double y) => path.lineTo(x, y);
 
   @override
-  void cubicTo(double x1, double y1, double x2, double y2, double x, double y) =>
-      path.cubicTo(x1, y1, x2, y2, x, y);
+  void cubicTo(
+    double x1,
+    double y1,
+    double x2,
+    double y2,
+    double x,
+    double y,
+  ) => path.cubicTo(x1, y1, x2, y2, x, y);
 
   @override
   void close() => path.close();
@@ -289,8 +313,9 @@ class KoachViewState extends State<KoachView>
   bool _motion = false, _reduce = false, _resumed = true;
   bool _breathing = false, _started = false;
 
-  /// Animations actives (tests) : rebond, transition ou clignement en cours.
-  bool get animating => _ticker.isActive;
+  /// Images produites (tests) : rebond, transition ou clignement en cours,
+  /// hors écran exclu (ticker muet).
+  bool get animating => _ticker.isTicking;
 
   /// Prochain clignement programmé (tests).
   bool get blinkScheduled => _blinkTimer?.isActive ?? false;
@@ -300,7 +325,6 @@ class KoachViewState extends State<KoachView>
 
   /// Pose précédente pendant une transition (tests).
   KoachPose? get previous => _previous;
-
 
   @override
   void initState() {
@@ -467,9 +491,7 @@ class KoachViewState extends State<KoachView>
         if (_idleOn) {
           // Un clignement sur cinq est double.
           _scheduleBlink(
-            _rng.nextDouble() < .2
-                ? const Duration(milliseconds: 120)
-                : null,
+            _rng.nextDouble() < .2 ? const Duration(milliseconds: 120) : null,
           );
         }
       }
@@ -592,15 +614,17 @@ class KoachPainter extends CustomPainter {
     canvas.save();
     // Échelle autour de l'origine : milieu des yeux, ligne des pieds.
     canvas.scale(sx, sy);
-    // Calque propre : le papier percé ne laisse voir que le support.
-    canvas.saveLayer(
-      paths.bounds.inflate(8),
-      Paint()..color = Color.fromRGBO(0, 0, 0, alpha.clamp(0.0, 1.0)),
-    );
+    // Calque seulement pendant un fondu (rebond, transition) : papier opaque,
+    // aucun mode de fusion particulier.
+    final layer = alpha < 1;
+    if (layer) {
+      canvas.saveLayer(
+        paths.bounds.inflate(8),
+        Paint()..color = Color.fromRGBO(0, 0, 0, alpha.clamp(0.0, 1.0)),
+      );
+    }
     canvas.drawPath(paths.ink, Paint()..color = colors.ink);
-    final paper = colors.paper == null
-        ? (Paint()..blendMode = BlendMode.clear)
-        : (Paint()..color = colors.paper!);
+    final paper = Paint()..color = colors.paper;
     canvas.drawPath(paths.paper, paper);
     if (open >= 1 || paths.eyeBoxes.isEmpty) {
       canvas.drawPath(paths.eyes, paper);
@@ -617,7 +641,7 @@ class KoachPainter extends CustomPainter {
         canvas.restore();
       }
     }
-    canvas.restore();
+    if (layer) canvas.restore();
     canvas.restore();
   }
 

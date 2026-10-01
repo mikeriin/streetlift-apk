@@ -341,32 +341,32 @@ class KoachProposalCard extends StatelessWidget {
         pose: KoachPose.choice,
         koachHeight: 48,
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            store.koachProposalText(p),
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: 4),
-          Text(store.koachProposalReason(p), style: _dimSmall()),
-          const SizedBox(height: 10),
-          KActionRow(
-            minButtonWidth: 120,
-            children: [
-              FilledButton(
-                key: ValueKey('koach-accept-${p['id']}'),
-                onPressed: () => store.acceptKoachProposal(p),
-                child: const Text('Accepter'),
-              ),
-              OutlinedButton(
-                key: ValueKey('koach-refuse-${p['id']}'),
-                onPressed: () => store.refuseKoachProposal(p),
-                child: const Text('Refuser'),
-              ),
-            ],
-          ),
-        ],
-      ),
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              store.koachProposalText(p),
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 4),
+            Text(store.koachProposalReason(p), style: _dimSmall()),
+            const SizedBox(height: 10),
+            KActionRow(
+              minButtonWidth: 120,
+              children: [
+                FilledButton(
+                  key: ValueKey('koach-accept-${p['id']}'),
+                  onPressed: () => store.acceptKoachProposal(p),
+                  child: const Text('Accepter'),
+                ),
+                OutlinedButton(
+                  key: ValueKey('koach-refuse-${p['id']}'),
+                  onPressed: () => store.refuseKoachProposal(p),
+                  child: const Text('Refuser'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -408,34 +408,34 @@ class KoachStructureCard extends StatelessWidget {
         pose: KoachPose.analyze,
         koachHeight: 48,
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            koachStructureText(p),
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            '${koachStructureReason(p)} Le programme d’origine n’est pas '
-            'modifié : l’adaptation s’annule à tout moment.',
-            style: _dimSmall(),
-          ),
-          const SizedBox(height: 10),
-          KActionRow(
-            minButtonWidth: 120,
-            children: [
-              FilledButton(
-                onPressed: () => store.acceptKoachStructure(p),
-                child: const Text('Accepter'),
-              ),
-              OutlinedButton(
-                onPressed: () => store.refuseKoachStructure(p),
-                child: const Text('Refuser'),
-              ),
-            ],
-          ),
-        ],
-      ),
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              koachStructureText(p),
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              '${koachStructureReason(p)} Le programme d’origine n’est pas '
+              'modifié : l’adaptation s’annule à tout moment.',
+              style: _dimSmall(),
+            ),
+            const SizedBox(height: 10),
+            KActionRow(
+              minButtonWidth: 120,
+              children: [
+                FilledButton(
+                  onPressed: () => store.acceptKoachStructure(p),
+                  child: const Text('Accepter'),
+                ),
+                OutlinedButton(
+                  onPressed: () => store.refuseKoachStructure(p),
+                  child: const Text('Refuser'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

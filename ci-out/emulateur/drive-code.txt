@@ -1,3 +1,0 @@
-code_g5=124 code_g3=0 code_g2=0 code_g1=0 code_m8=0 code_m7=0
-code=0
-code_mesure=0

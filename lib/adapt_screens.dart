@@ -756,32 +756,35 @@ class AdaptHomeCard extends StatelessWidget {
                   _ => KoachPose.choice,
                 },
                 child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(p.title, style: Theme.of(context).textTheme.titleMedium),
-                  const SizedBox(height: 4),
-                  Text(p.text),
-                  const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      for (final (i, a) in p.actions.indexed)
-                        i == 0 && a.$1 != 'dismiss'
-                            ? FilledButton(
-                                key: ValueKey('adapt-action-${a.$1}'),
-                                onPressed: () => _run(context, p, a.$1),
-                                child: Text(a.$2),
-                              )
-                            : OutlinedButton(
-                                key: ValueKey('adapt-action-${a.$1}'),
-                                onPressed: () => _run(context, p, a.$1),
-                                child: Text(a.$2),
-                              ),
-                    ],
-                  ),
-                ],
-              ),
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      p.title,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(p.text),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        for (final (i, a) in p.actions.indexed)
+                          i == 0 && a.$1 != 'dismiss'
+                              ? FilledButton(
+                                  key: ValueKey('adapt-action-${a.$1}'),
+                                  onPressed: () => _run(context, p, a.$1),
+                                  child: Text(a.$2),
+                                )
+                              : OutlinedButton(
+                                  key: ValueKey('adapt-action-${a.$1}'),
+                                  onPressed: () => _run(context, p, a.$1),
+                                  child: Text(a.$2),
+                                ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -808,9 +811,29 @@ class AdaptHomeCard extends StatelessWidget {
   }
 }
 
+/// G5 : Koach à côté du contenu sur l'accueil ; dans l'écran
+/// « Adaptation au quotidien » (réglages), le contenu seul.
+class _MaybeKoachSays extends StatelessWidget {
+  final bool on;
+  final KoachPose pose;
+  final Widget child;
+  const _MaybeKoachSays({
+    required this.on,
+    required this.pose,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) =>
+      on ? KoachSays(pose: pose, child: child) : child;
+}
+
 class _PauseCard extends StatelessWidget {
   final AdaptPause pause;
-  const _PauseCard({required this.pause});
+
+  /// Koach dit la pause (accueil) ; faux dans les réglages.
+  final bool koach;
+  const _PauseCard({required this.pause, this.koach = true});
 
   @override
   Widget build(BuildContext context) {
@@ -820,7 +843,8 @@ class _PauseCard extends StatelessWidget {
       child: KCard(
         key: const ValueKey('adapt-pause-card'),
         accent: SL.accent,
-        child: KoachSays(
+        child: _MaybeKoachSays(
+          on: koach,
           pose: vacation ? KoachPose.love : KoachPose.heart,
           child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -971,7 +995,7 @@ class AdaptScreen extends StatelessWidget {
                 ],
               )
             else
-              _PauseCard(pause: pause),
+              _PauseCard(pause: pause, koach: false),
             const KSection('Durée et charge'),
             SwitchListTile(
               key: const ValueKey('adapt-shorter'),

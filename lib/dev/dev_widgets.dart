@@ -80,12 +80,13 @@ class DevActions {
   );
 
   /// Supprime la session de test et revient à la session personnelle.
-  static Future<void> delete() => SessionHost.restart(() async {
-    final remaining = await DevSession.destroy();
-    if (remaining.isNotEmpty) {
-      throw 'suppression incomplète (${remaining.length} clés)';
-    }
-  },
+  static Future<void> delete() => SessionHost.restart(
+    () async {
+      final remaining = await DevSession.destroy();
+      if (remaining.isNotEmpty) {
+        throw 'suppression incomplète (${remaining.length} clés)';
+      }
+    },
     message: 'Session de test supprimée',
     detail: 'Retour à ta session personnelle.',
     koach: KoachPose.wave,
@@ -356,6 +357,9 @@ class SessionToast extends StatelessWidget {
 
   static const _background = Color(0xF0202020);
 
+  /// Papier de Koach : le fond du message, opaque.
+  static const _opaque = Color(0xFF202020);
+
   @override
   Widget build(BuildContext context) => MediaQuery.fromView(
     view: View.of(context),
@@ -395,7 +399,7 @@ class SessionToast extends StatelessWidget {
                         pose: pose,
                         height: 48,
                         width: 44,
-                        colors: KoachColors.onDark,
+                        colors: KoachColors.onDark(_opaque),
                       ),
                       const SizedBox(width: 10),
                       Flexible(

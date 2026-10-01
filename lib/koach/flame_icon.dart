@@ -174,9 +174,7 @@ class FlamePicker extends StatelessWidget {
                                 i,
                                 size: h,
                                 semantics: false,
-                                color: v != null && i > v
-                                    ? SL.dot
-                                    : null,
+                                color: v != null && i > v ? SL.dot : null,
                               ),
                               const SizedBox(height: 2),
                               Text(

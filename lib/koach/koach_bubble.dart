@@ -136,9 +136,7 @@ class KoachBubbleState extends State<KoachBubble> {
       frame: widget.frame,
       seed: widget.seed,
       // Largeur fixe : la bulle ne bouge pas quand Koach change de pose.
-      width: widget.frame == KoachFrame.pose
-          ? widget.koachHeight * .9
-          : null,
+      width: widget.frame == KoachFrame.pose ? widget.koachHeight * .9 : null,
     );
     final koachLeft = side == KoachSide.right;
     final bubble = _bubble(context, koachLeft);
@@ -274,12 +272,7 @@ class KoachHeader extends StatelessWidget {
   final String text;
   final KoachPose pose;
   final Color? color;
-  const KoachHeader(
-    this.text, {
-    super.key,
-    required this.pose,
-    this.color,
-  });
+  const KoachHeader(this.text, {super.key, required this.pose, this.color});
 
   @override
   Widget build(BuildContext context) => Row(
@@ -319,7 +312,11 @@ Future<T?> showKoachSheet<T>(
   isScrollControlled: true,
   useSafeArea: true,
   showDragHandle: true,
-  builder: (context) => SingleChildScrollView(
+  builder: (context) => KoachSurface(
+    color:
+        Theme.of(context).bottomSheetTheme.backgroundColor ??
+        Theme.of(context).colorScheme.surfaceContainerLow,
+    child: SingleChildScrollView(
     key: const ValueKey('koach-sheet'),
     padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
     child: Column(
@@ -349,6 +346,7 @@ Future<T?> showKoachSheet<T>(
         ),
       ],
     ),
+  ),
   ),
 );
 
