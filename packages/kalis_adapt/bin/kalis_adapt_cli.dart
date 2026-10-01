@@ -72,6 +72,7 @@ Map<String, Object?> _athleteCampaign(
       KalisAdaptPolicy(KalisAdapt()),
       DoubleProgressionPolicy(),
       L7Policy(profile.bodyWeightKg ?? 72),
+      OraclePolicy(),
     ];
     for (final policy in policies) {
       final run = simulate(

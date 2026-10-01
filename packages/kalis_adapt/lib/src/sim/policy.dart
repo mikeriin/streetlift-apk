@@ -383,3 +383,119 @@ final class DoubleProgressionPolicy implements SimPolicy {
   @override
   SimEstimate? estimate(SessionContext c, String exerciseId, double n) => null;
 }
+
+/// Oracle : une politique qui connaît la vérité de l'athlète (capacité du
+/// jour, fatigue des séries faites) et choisit, sur la grille du matériel
+/// et dans la plage du bloc, la charge et les répétitions qui laissent le
+/// RIR visé. Aucun moteur ne peut faire mieux : son écart au RIR visé est
+/// le plancher qu'imposent la grille, l'arrondi des répétitions et la
+/// plage, sans aucune erreur d'estimation.
+final class OraclePolicy implements SimPolicy {
+  final Map<String, double> _load = <String, double>{};
+
+  @override
+  String get name => 'oracle';
+
+  @override
+  SessionPlan plan(SessionContext c) {
+    _load.clear();
+    return SessionPlan(
+      date: c.date,
+      blockId: c.block.pass1.blockId,
+      weekIndex: c.weekIndex,
+      dayIndex: c.dayIndex,
+      items: c.prescription.items,
+      adjustments: const <SessionAdjustment>[],
+      confidence: 1,
+      reasons: const <Reason>[],
+    );
+  }
+
+  @override
+  SetTarget? nextSet(
+    SessionContext c,
+    ExercisePrescription item,
+    int index,
+    List<SetRecord> done,
+  ) {
+    final base = targetOfItem(item, index);
+    final truth = c.athlete.truthOf(item.exerciseId);
+    final flames = base.flames;
+    if (truth == null || flames == null) {
+      return base;
+    }
+    final rir = Flames.toRir(flames);
+    final hold = truth.mode == CapacityMode.hold;
+    final low = (hold ? item.secondsLow : item.repsLow) ?? 1;
+    final high = (hold ? item.secondsHigh : item.repsHigh) ?? low;
+    int clip(double value, int top) {
+      final rounded = value.round();
+      return rounded < 1 ? 1 : (rounded > top ? top : rounded);
+    }
+
+    switch (truth.mode) {
+      case CapacityMode.hold:
+        final capacity = c.athlete.capacityNow(truth, null);
+        final seconds = clip(
+          capacity * (1 - truth.holdShare * (rir > 6 ? 6 : rir)),
+          high + high ~/ 2,
+        );
+        return SetTarget(
+          secondsLow: seconds,
+          secondsHigh: seconds,
+          flames: flames,
+        );
+      case CapacityMode.reps:
+        final reps = clip(
+          c.athlete.capacityNow(truth, null) - rir,
+          SimAthlete.extendedTop(high),
+        );
+        return SetTarget(repsLow: reps, repsHigh: reps, flames: flames);
+      case CapacityMode.loaded:
+        final grid = truth.info.grid;
+        var kg = _load[item.slotId];
+        if (kg == null) {
+          // Charge de la grille dont les répétitions au RIR visé tombent
+          // le plus près du milieu de la plage.
+          final mid = (low + high) / 2;
+          var best = grid.minimum;
+          var bestGap = double.infinity;
+          var candidate = grid.minimum;
+          for (var i = 0; i < 2000; i++) {
+            final reps = c.athlete.capacityNow(truth, candidate) - rir;
+            final gap = (reps - mid).abs();
+            if (gap < bestGap) {
+              best = candidate;
+              bestGap = gap;
+            }
+            if (reps < low - 2) {
+              break;
+            }
+            final next = grid.next(candidate, up: true);
+            if (next <= candidate) {
+              break;
+            }
+            candidate = next;
+          }
+          kg = best;
+          _load[item.slotId] = kg;
+        }
+        final reps = clip(
+          c.athlete.capacityNow(truth, kg) - rir,
+          SimAthlete.extendedTop(high),
+        );
+        return SetTarget(
+          repsLow: reps,
+          repsHigh: reps,
+          loadKg: kg,
+          flames: flames,
+        );
+    }
+  }
+
+  @override
+  void finish(SessionContext c, SessionRecord record) {}
+
+  @override
+  SimEstimate? estimate(SessionContext c, String exerciseId, double n) => null;
+}

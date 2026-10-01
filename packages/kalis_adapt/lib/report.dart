@@ -50,6 +50,7 @@ const List<String> reportPolicies = <String>[
   'kalis_adapt',
   'double_progression',
   'L7/L11',
+  'oracle',
 ];
 
 /// Tableaux Markdown des mesures [campaign] (l'objet écrit dans
@@ -67,7 +68,7 @@ String campaignMarkdown(Map<String, Object?> campaign) {
         '<dossier>` (moteur ${campaign['engineVersion']}) à partir de '
         '`docs/data/campagne.json` : ${athletes.length} athlètes simulés × '
         '$weeks semaines × $seeds graines × ${reportPolicies.length} '
-        'politiques à programme égal, puis $loopSeeds graines par athlète en '
+        'politiques (dont l\'oracle) à programme égal, puis $loopSeeds graines par athlète en '
         'boucle complète. Lecture et limites : `VALIDATION.md`.',
     '',
     'Chaque valeur est la moyenne des graines ; « ± » donne la demi-largeur '
@@ -85,6 +86,9 @@ String campaignMarkdown(Map<String, Object?> campaign) {
         '« Atteignable » en donne la part, « toutes séries » l\'écart sans '
         'ce tri. Biais > 0 : séries plus faciles que visé. Quasi-échec : série finie à moins de 0,5 '
         'répétition de l\'échec quand la cible en laissait au moins 2. '
+        '« oracle » n\'est pas un moteur : c\'est la politique qui connaît '
+        'la vérité de l\'athlète ; son écart est le plancher qu\'imposent la '
+        'grille des charges, l\'arrondi des répétitions et la plage. '
         'Gain : progression moyenne de la capacité vraie par semaine, entre '
         'la première et la dernière séance de chaque exercice suivi au moins '
         'trois semaines.',

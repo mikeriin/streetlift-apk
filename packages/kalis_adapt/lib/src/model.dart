@@ -1571,15 +1571,13 @@ final class SessionRun {
     final spec = run.spec;
     final low = amount < spec.low ? amount : spec.low;
     var high = amount > spec.high ? amount : spec.high;
-    if (run.info.mode != CapacityMode.loaded) {
-      // Sans charge, les répétitions sont le seul réglage : jusqu'au haut
-      // de plage étendu.
-      final wide = run.info.mode == CapacityMode.hold
-          ? spec.high + spec.high ~/ 2
-          : (2 * spec.high > 30 ? 30 : 2 * spec.high);
-      if (wide > high) {
-        high = wide;
-      }
+    // Jusqu'au haut de plage étendu : la série s'arrête au ressenti, et
+    // c'est le nombre atteint qui dira si la charge suivante est possible.
+    final wide = run.info.mode == CapacityMode.hold
+        ? spec.high + spec.high ~/ 2
+        : (2 * spec.high > 30 ? 30 : 2 * spec.high);
+    if (wide > high) {
+      high = wide;
     }
     return SetPlan(
       loadKg: kg,
