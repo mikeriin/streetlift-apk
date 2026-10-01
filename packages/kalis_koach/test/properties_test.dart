@@ -3,6 +3,21 @@ import 'dart:math';
 import 'package:kalis_koach/kalis_koach.dart';
 import 'package:test/test.dart';
 
+/// Valeurs possibles de chaque paramètre, par nature (nombres, noms,
+/// valeurs avec unité), des plus courtes aux plus longues réalistes.
+const Map<String, List<String>> _values = {
+  'remaining': ['1', '12'],
+  'field': ['ton âge', 'ton matériel disponible'],
+  'weeks': ['4', '40'],
+  'exercise': ['Dips', 'Tractions australiennes pronation'],
+  'replacement': ['Pompes', 'Rowing inversé aux anneaux'],
+  'minutes': ['5', '120'],
+  'done': ['0', '24'],
+  'planned': ['1', '30'],
+  'value': ['5 kg', '22 répétitions'],
+  'feature': ['les quêtes', 'les objectifs personnels'],
+};
+
 const List<String> _paramNames = [
   'remaining',
   'field',
@@ -14,17 +29,6 @@ const List<String> _paramNames = [
   'planned',
   'value',
   'feature',
-];
-
-const List<String> _values = [
-  '1',
-  '40',
-  'Pompes',
-  'Tractions australiennes pronation',
-  'Rowing inversé aux anneaux',
-  'ton matériel disponible',
-  '22 répétitions',
-  'les objectifs personnels',
 ];
 
 /// Tests de propriétés : 10 000 demandes aléatoires (graine fixe) — chaque
@@ -41,7 +45,7 @@ void main() {
     for (var n = 0; n < 10000; n++) {
       final event = events[rnd.nextInt(events.length)];
       final params = <String, String>{
-        for (final p in _paramNames) p: _values[rnd.nextInt(_values.length)],
+        for (final p in _paramNames) p: _values[p]![rnd.nextInt(_values[p]!.length)],
       };
       final cue = KoachCue(
         event,
