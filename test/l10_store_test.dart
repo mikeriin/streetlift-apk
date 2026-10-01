@@ -118,8 +118,8 @@ void main() {
       expect(
         [for (final e in app.program.week(2).day(1)!.exercises) e.name],
         [
-          for (final e in ((weeks[1]['days'] as List)[0] as Map)['exercises']
-              as List)
+          for (final e
+              in ((weeks[1]['days'] as List)[0] as Map)['exercises'] as List)
             (e as Map)['name'],
         ],
       );

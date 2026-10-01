@@ -31,8 +31,9 @@ import 'phone_test_support.dart';
 Map<String, AthleteProfile> _fixtures() {
   final raw =
       jsonDecode(
-            File('packages/kalis_core/test/fixtures/profiles.json')
-                .readAsStringSync(),
+            File(
+              'packages/kalis_core/test/fixtures/profiles.json',
+            ).readAsStringSync(),
           )
           as Map<String, Object?>;
   return {for (final f in readProfileFixtures(raw)) f.key: f.profile};
@@ -78,44 +79,93 @@ void main() {
           startDate: CivilDate(2026, 10, 5),
           locks: const [],
         );
-        _roundTrip(req, (v) => v.toJson(), PlanRequest.fromJson, (v) => v.validate());
+        _roundTrip(
+          req,
+          (v) => v.toJson(),
+          PlanRequest.fromJson,
+          (v) => v.validate(),
+        );
         final p1 = engine.createPass1(catalog, req);
-        _roundTrip(p1, (v) => v.toJson(), Pass1Plan.fromJson, (v) => v.validate());
+        _roundTrip(
+          p1,
+          (v) => v.toJson(),
+          Pass1Plan.fromJson,
+          (v) => v.validate(),
+        );
         final slot = p1.days.first.slots.first.slotId;
         final vreq = VariantsRequest(request: req, current: p1, slotId: slot);
-        _roundTrip(vreq, (v) => v.toJson(), VariantsRequest.fromJson, (v) => v.validate());
+        _roundTrip(
+          vreq,
+          (v) => v.toJson(),
+          VariantsRequest.fromJson,
+          (v) => v.validate(),
+        );
         final vs = engine.variants(catalog, vreq);
-        _roundTrip(vs, (v) => v.toJson(), VariantSet.fromJson, (v) => v.validate());
+        _roundTrip(
+          vs,
+          (v) => v.toJson(),
+          VariantSet.fromJson,
+          (v) => v.validate(),
+        );
         final rreq = ReviewRequest(
           request: req,
           current: p1,
           action: ReviewAction(kind: ReviewKind.cannotDo, slotId: slot),
         );
-        _roundTrip(rreq, (v) => v.toJson(), ReviewRequest.fromJson, (v) => v.validate());
+        _roundTrip(
+          rreq,
+          (v) => v.toJson(),
+          ReviewRequest.fromJson,
+          (v) => v.validate(),
+        );
         final rr = engine.review(catalog, rreq);
-        _roundTrip(rr, (v) => v.toJson(), ReviewResult.fromJson, (v) => v.validate());
+        _roundTrip(
+          rr,
+          (v) => v.toJson(),
+          ReviewResult.fromJson,
+          (v) => v.validate(),
+        );
         final p2req = Pass2Request(request: req, pass1: rr.plan);
-        _roundTrip(p2req, (v) => v.toJson(), Pass2Request.fromJson, (v) => v.validate());
+        _roundTrip(
+          p2req,
+          (v) => v.toJson(),
+          Pass2Request.fromJson,
+          (v) => v.validate(),
+        );
         final p2 = engine.createPass2(catalog, p2req);
-        _roundTrip(p2, (v) => v.toJson(), Pass2Plan.fromJson, (v) => v.validate());
+        _roundTrip(
+          p2,
+          (v) => v.toJson(),
+          Pass2Plan.fromJson,
+          (v) => v.validate(),
+        );
         final block = ProgramBlock(pass1: rr.plan, pass2: p2);
-        _roundTrip(block, (v) => v.toJson(), ProgramBlock.fromJson, (v) => v.validate());
-        expect(catalog.checkExerciseIds([
-          for (final d in p1.days)
-            for (final s in d.slots) s.exerciseId,
-        ]), isEmpty);
+        _roundTrip(
+          block,
+          (v) => v.toJson(),
+          ProgramBlock.fromJson,
+          (v) => v.validate(),
+        );
+        expect(
+          catalog.checkExerciseIds([
+            for (final d in p1.days)
+              for (final s in d.slots) s.exerciseId,
+          ]),
+          isEmpty,
+        );
       }
     });
   });
 
   group('création', () {
-    PlanCreation creation([String key = 'homme_25_musculation_debutant_3x60']) =>
-        PlanCreation(
-          catalog: catalog,
-          profile: fixtures[key]!,
-          startDate: CivilDate(2026, 10, 5),
-          journalOn: true,
-        )..start();
+    PlanCreation creation([
+      String key = 'homme_25_musculation_debutant_3x60',
+    ]) => PlanCreation(
+      catalog: catalog,
+      profile: fixtures[key]!,
+      startDate: CivilDate(2026, 10, 5),
+      journalOn: true,
+    )..start();
 
     test('propositions : graine = rang, autre proposition différente, retour '
         'possible ; même profil, même programme', () {
@@ -184,7 +234,10 @@ void main() {
       final undone = c.undo();
       expect(undone, same(step));
       expect(identical(c.plan, before), isTrue);
-      expect(c.profile.cannotDoExerciseIds ?? const [], isNot(contains(b.exerciseId)));
+      expect(
+        c.profile.cannotDoExerciseIds ?? const [],
+        isNot(contains(b.exerciseId)),
+      );
       final d2 = c.plan.days[1].slots.first;
       c.act(
         ReviewAction(kind: ReviewKind.dislike, slotId: d2.slotId),
@@ -196,21 +249,14 @@ void main() {
         ReviewAction(kind: ReviewKind.remove, slotId: kept.slotId),
         label: 'Retirer',
       );
-      expect(
-        c.plan.days[1].slots.any((s) => s.slotId == kept.slotId),
-        isFalse,
-      );
+      expect(c.plan.days[1].slots.any((s) => s.slotId == kept.slotId), isFalse);
       final add = catalog.exercises.firstWhere(
         (e) =>
             !c.plan.days.first.slots.any((s) => s.exerciseId == e.id) &&
             e.id.startsWith('mu-'),
       );
       c.act(
-        ReviewAction(
-          kind: ReviewKind.add,
-          dayIndex: 0,
-          exerciseId: add.id,
-        ),
+        ReviewAction(kind: ReviewKind.add, dayIndex: 0, exerciseId: add.id),
         label: 'Ajouter',
       );
       expect(
@@ -233,9 +279,17 @@ void main() {
           .expand((w) => w.days)
           .expand((d) => d.items)
           .firstWhere(
-            (i) => i.targetFlames != null && i.kind == null && i.repsLow != null,
+            (i) =>
+                i.targetFlames != null && i.kind == null && i.repsLow != null,
           );
-      expect(c.setAdjust(effort.slotId, const PlanAdjust(setsDelta: 1), cautious: false), isNull);
+      expect(
+        c.setAdjust(
+          effort.slotId,
+          const PlanAdjust(setsDelta: 1),
+          cautious: false,
+        ),
+        isNull,
+      );
       expect(c.adjust[effort.slotId]!.setsDelta, 1);
       final refused = c.setAdjust(
         effort.slotId,
@@ -245,11 +299,19 @@ void main() {
       expect(refused, contains('une série de plus'));
       expect(c.adjust[effort.slotId]!.setsDelta, 1);
       expect(
-        c.setAdjust(effort.slotId, const PlanAdjust(restDelta: -45), cautious: false),
+        c.setAdjust(
+          effort.slotId,
+          const PlanAdjust(restDelta: -45),
+          cautious: false,
+        ),
         contains('30 s'),
       );
       expect(
-        c.setAdjust(effort.slotId, const PlanAdjust(repsShift: 3), cautious: false),
+        c.setAdjust(
+          effort.slotId,
+          const PlanAdjust(repsShift: 3),
+          cautious: false,
+        ),
         isNotNull,
       );
       final cautious = c.setAdjust(
@@ -260,10 +322,9 @@ void main() {
       if (effort.sets >= 3) expect(cautious, contains('prudent'));
       final e = c.entry('2026-10-01T10:00:00');
       final w = adjustedDays(e, 1);
-      final item = w.expand((d) => d.items).firstWhere(
-        (i) => i.slotId == effort.slotId,
-        orElse: () => effort,
-      );
+      final item = w
+          .expand((d) => d.items)
+          .firstWhere((i) => i.slotId == effort.slotId, orElse: () => effort);
       if (item.kind == null && item.setTargets == null) {
         final raw = p2.weeks[1].days
             .expand((d) => d.items)
@@ -309,48 +370,54 @@ void main() {
       return c;
     }
 
-    test('installation neuve : le programme validé devient l’instance active '
-        '(accueil, calendrier, séances), sauvegardé, relu à l’identique', () async {
-      app.seedSampleAthleteProfile();
-      expect(app.program.start, isNull);
-      final s = PlanStore(app).planStartFor();
-      expect(s.firstWeek, 1);
-      expect(s.replacing, isFalse);
-      expect(s.start, CivilDate(2026, 10, 1));
-      final c = validated(app);
-      PlanStore(app).applyPlanCreation(c);
-      expect(PlanStore(app).programPlanned, isTrue);
-      expect(app.program.start, DateTime(2026, 10, 1));
-      expect(app.program.weeks, hasLength(c.plan.weeks));
-      // J1 = jeudi 1er octobre ; le lundi est J5, le mercredi J7.
-      final firstDay = c.plan.days.first;
-      expect(planJ(firstDay.weekday, 4), greaterThanOrEqualTo(1));
-      final day = app.program.week(1).day(planJ(firstDay.weekday, 4))!;
-      final items = c.pass2!.weeks.first.days.first.items;
-      expect(day.exercises, hasLength(items.length));
-      expect(
-        day.exercises.first.name,
-        catalog.find(items.first.exerciseId)!.name,
-      );
-      expect(app.program.week(1).block, startsWith('Bloc 1'));
-      final exported = app.exportAll();
-      final doc = jsonDecode(exported) as Map<String, dynamic>;
-      expect(doc['planProgram'], isA<Map>());
-      expect(doc.containsKey('programInstance'), isFalse);
-      final next = await relaunch();
-      expect(next.exportAll(), exported);
-      expect(next.program.weeks.length, app.program.weeks.length);
-      // Profil : ce que la revue a appris.
-      expect(
-        next.athlete!.profile.knownExerciseIds,
-        contains(c.plan.days.first.slots.first.exerciseId),
-      );
-      // Import strict d'une section invalide : refusé ; démarrage tolérant.
-      final broken = jsonDecode(exported) as Map<String, dynamic>;
-      (broken['planProgram'] as Map)['firstWeek'] = 0;
-      expect(await next.importAll(jsonEncode(broken)), isFalse);
-      expect(() => PlanProgram.fromJson(broken['planProgram']), throwsFormatException);
-    });
+    test(
+      'installation neuve : le programme validé devient l’instance active '
+      '(accueil, calendrier, séances), sauvegardé, relu à l’identique',
+      () async {
+        app.seedSampleAthleteProfile();
+        expect(app.program.start, isNull);
+        final s = PlanStore(app).planStartFor();
+        expect(s.firstWeek, 1);
+        expect(s.replacing, isFalse);
+        expect(s.start, CivilDate(2026, 10, 1));
+        final c = validated(app);
+        PlanStore(app).applyPlanCreation(c);
+        expect(PlanStore(app).programPlanned, isTrue);
+        expect(app.program.start, DateTime(2026, 10, 1));
+        expect(app.program.weeks, hasLength(c.plan.weeks));
+        // J1 = jeudi 1er octobre ; le lundi est J5, le mercredi J7.
+        final firstDay = c.plan.days.first;
+        expect(planJ(firstDay.weekday, 4), greaterThanOrEqualTo(1));
+        final day = app.program.week(1).day(planJ(firstDay.weekday, 4))!;
+        final items = c.pass2!.weeks.first.days.first.items;
+        expect(day.exercises, hasLength(items.length));
+        expect(
+          day.exercises.first.name,
+          catalog.find(items.first.exerciseId)!.name,
+        );
+        expect(app.program.week(1).block, startsWith('Bloc 1'));
+        final exported = app.exportAll();
+        final doc = jsonDecode(exported) as Map<String, dynamic>;
+        expect(doc['planProgram'], isA<Map>());
+        expect(doc.containsKey('programInstance'), isFalse);
+        final next = await relaunch();
+        expect(next.exportAll(), exported);
+        expect(next.program.weeks.length, app.program.weeks.length);
+        // Profil : ce que la revue a appris.
+        expect(
+          next.athlete!.profile.knownExerciseIds,
+          contains(c.plan.days.first.slots.first.exerciseId),
+        );
+        // Import strict d'une section invalide : refusé ; démarrage tolérant.
+        final broken = jsonDecode(exported) as Map<String, dynamic>;
+        (broken['planProgram'] as Map)['firstWeek'] = 0;
+        expect(await next.importAll(jsonEncode(broken)), isFalse);
+        expect(
+          () => PlanProgram.fromJson(broken['planProgram']),
+          throwsFormatException,
+        );
+      },
+    );
 
     test('programme du propriétaire : semaines passées gardées, nouveau '
         'programme à la semaine suivante, retour pendant 7 jours, refusé '
@@ -406,7 +473,11 @@ void main() {
       expect(app.program.start, DateTime(2026, 7, 13));
       // Nouveau programme puis une séance saisie : retour refusé.
       PlanStore(app).applyPlanCreation(validated(app));
-      final j = app.program.week(13).days.firstWhere((d) => d.exercises.isNotEmpty).j;
+      final j = app.program
+          .week(13)
+          .days
+          .firstWhere((d) => d.exercises.isNotEmpty)
+          .j;
       final doc = jsonDecode(app.exportAll()) as Map<String, dynamic>;
       (doc['logs'] as Map)['S13-J$j'] = {
         'done': true,
@@ -440,13 +511,20 @@ void main() {
       for (final w in [3, 4, 5]) {
         for (final d in app.program.week(w).days) {
           if (d.exercises.isEmpty) continue;
-          expect(PlanStore(app).isResume(w, d.j), isTrue, reason: 'S$w-J${d.j}');
+          expect(
+            PlanStore(app).isResume(w, d.j),
+            isTrue,
+            reason: 'S$w-J${d.j}',
+          );
           expect(app.isDone(w, d.j), isFalse);
         }
       }
       // Les séances saisies restent réelles ; la séance choisie n'est pas
       // marquée.
-      final logged = app.program.week(1).days.firstWhere((d) => d.exercises.isNotEmpty);
+      final logged = app.program
+          .week(1)
+          .days
+          .firstWhere((d) => d.exercises.isNotEmpty);
       expect(PlanStore(app).isResume(1, logged.j), isFalse);
       expect(PlanStore(app).isResume(6, 1), isFalse);
       expect(app.progression.totalXp, xp);
@@ -519,7 +597,10 @@ void main() {
       expect(state.c!.index, 1);
       await tap(tester, 'plan-previous');
       expect(state.c!.index, 0);
-      await scrollToAction(tester, find.byKey(const ValueKey('plan-week-overview')));
+      await scrollToAction(
+        tester,
+        find.byKey(const ValueKey('plan-week-overview')),
+      );
       await tap(tester, 'plan-review');
       expect(find.byKey(const ValueKey('plan-review-pages')), findsOneWidget);
       await tap(tester, 'plan-can-do');

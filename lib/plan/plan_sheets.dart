@@ -27,7 +27,7 @@ String planReason(kc.Reason r) => reasonText(
 
 String planDayLabel(kc.Pass1Plan plan, int dayIndex) {
   for (final d in plan.days) {
-    if (d.dayIndex == dayIndex) return weekdayName(d.weekday);
+    if (d.dayIndex == dayIndex) return weekdayLabel(d.weekday);
   }
   return 'Jour ${dayIndex + 1}';
 }
@@ -43,10 +43,8 @@ Future<T?> _sheet<T>(BuildContext context, WidgetBuilder builder) =>
       isScrollControlled: true,
       useSafeArea: true,
       showDragHandle: true,
-      builder: (context) => KoachSurface(
-        color: _sheetColor(context),
-        child: builder(context),
-      ),
+      builder: (context) =>
+          KoachSurface(color: _sheetColor(context), child: builder(context)),
     );
 
 // ------------------------------------------------------------- variantes
@@ -67,11 +65,8 @@ Future<String?> showVariantsSheet(
   required bool cannotDo,
 }) => _sheet<String>(
   context,
-  (context) => _VariantsSheet(
-    set: set,
-    exerciseName: exerciseName,
-    cannotDo: cannotDo,
-  ),
+  (context) =>
+      _VariantsSheet(set: set, exerciseName: exerciseName, cannotDo: cannotDo),
 );
 
 class _VariantsSheet extends StatefulWidget {
@@ -218,7 +213,11 @@ class _AddSheetState extends State<_AddSheet> {
           for (final s in d.slots) s.exerciseId,
     };
     final all = [
-      for (final e in searchExercises(store.content, _q, const ExerciseFilters()))
+      for (final e in searchExercises(
+        store.content,
+        _q,
+        const ExerciseFilters(),
+      ))
         if (!present.contains(e.id)) e,
     ];
     return ListView(
@@ -240,7 +239,7 @@ class _AddSheetState extends State<_AddSheet> {
             for (final d in widget.plan.days)
               ChoiceChip(
                 key: ValueKey('add-day-${d.dayIndex}'),
-                label: Text(weekdayName(d.weekday)),
+                label: Text(weekdayLabel(d.weekday)),
                 selected: _day == d.dayIndex,
                 onSelected: (_) => setState(() => _day = d.dayIndex),
               ),
@@ -270,9 +269,8 @@ class _AddSheetState extends State<_AddSheet> {
             title: Text(e.nom),
             subtitle: Text('${e.discipline} · difficulté ${e.difficulte}/10'),
             trailing: const Icon(Icons.add_circle_outline),
-            onTap: () => Navigator.of(
-              context,
-            ).pop((dayIndex: _day, exerciseId: e.id)),
+            onTap: () =>
+                Navigator.of(context).pop((dayIndex: _day, exerciseId: e.id)),
           ),
         if (all.length > _shown)
           TextButton(
@@ -342,10 +340,7 @@ String stepHeadline(PlanStep s) {
 
 /// Feuille du diff : vrai si l'utilisateur annule le changement.
 Future<bool> showStepSheet(BuildContext context, PlanStep step) async {
-  final r = await _sheet<bool>(
-    context,
-    (context) => _StepSheet(step: step),
-  );
+  final r = await _sheet<bool>(context, (context) => _StepSheet(step: step));
   return r == true;
 }
 
@@ -367,7 +362,9 @@ class _StepSheet extends StatelessWidget {
       children: [
         KoachBubble(
           key: const ValueKey('step-koach'),
-          pose: step.sideEffects.isEmpty ? KoachPose.thumbsUp : KoachPose.explainBoard,
+          pose: step.sideEffects.isEmpty
+              ? KoachPose.thumbsUp
+              : KoachPose.explainBoard,
           koachHeight: 96,
           text: stepHeadline(step),
           why: why == null
@@ -445,40 +442,50 @@ class _AdjustSheet extends StatefulWidget {
 class _AdjustSheetState extends State<_AdjustSheet> {
   String? _refusal;
 
-  PlanAdjust get _cur => widget.c.adjust[widget.item.slotId] ?? const PlanAdjust();
+  PlanAdjust get _cur =>
+      widget.c.adjust[widget.item.slotId] ?? const PlanAdjust();
 
   void _try(PlanAdjust next) {
-    final r = widget.c.setAdjust(widget.item.slotId, next, cautious: widget.cautious);
+    final r = widget.c.setAdjust(
+      widget.item.slotId,
+      next,
+      cautious: widget.cautious,
+    );
     setState(() => _refusal = r);
   }
 
-  Widget _row(String label, String value, String key, VoidCallback minus, VoidCallback plus) =>
-      Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(label, style: TextStyle(color: SL.dim)),
-                Text(value, style: Theme.of(context).textTheme.titleMedium),
-              ],
-            ),
-          ),
-          IconButton.outlined(
-            key: ValueKey('adjust-$key-minus'),
-            tooltip: '$label : moins',
-            onPressed: minus,
-            icon: const Icon(Icons.remove),
-          ),
-          const SizedBox(width: 8),
-          IconButton.outlined(
-            key: ValueKey('adjust-$key-plus'),
-            tooltip: '$label : plus',
-            onPressed: plus,
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      );
+  Widget _row(
+    String label,
+    String value,
+    String key,
+    VoidCallback minus,
+    VoidCallback plus,
+  ) => Row(
+    children: [
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(label, style: TextStyle(color: SL.dim)),
+            Text(value, style: Theme.of(context).textTheme.titleMedium),
+          ],
+        ),
+      ),
+      IconButton.outlined(
+        key: ValueKey('adjust-$key-minus'),
+        tooltip: '$label : moins',
+        onPressed: minus,
+        icon: const Icon(Icons.remove),
+      ),
+      const SizedBox(width: 8),
+      IconButton.outlined(
+        key: ValueKey('adjust-$key-plus'),
+        tooltip: '$label : plus',
+        onPressed: plus,
+        icon: const Icon(Icons.add),
+      ),
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -495,7 +502,9 @@ class _AdjustSheetState extends State<_AdjustSheet> {
       if (p.repsLow != null)
         _row(
           'Répétitions',
-          p.repsLow == p.repsHigh ? '${p.repsLow}' : '${p.repsLow}-${p.repsHigh}',
+          p.repsLow == p.repsHigh
+              ? '${p.repsLow}'
+              : '${p.repsLow}-${p.repsHigh}',
           'reps',
           () => _try(a.copyWith(repsShift: a.repsShift - 1)),
           () => _try(a.copyWith(repsShift: a.repsShift + 1)),
@@ -514,7 +523,10 @@ class _AdjustSheetState extends State<_AdjustSheet> {
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
       shrinkWrap: true,
       children: [
-        Text(planName(widget.item.exerciseId), style: Theme.of(context).textTheme.titleLarge),
+        Text(
+          planName(widget.item.exerciseId),
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         const SizedBox(height: 4),
         Text(
           'Réglage pour tout le bloc (les semaines de test gardent leur épreuve).',

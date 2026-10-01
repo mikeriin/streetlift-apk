@@ -27,7 +27,6 @@ import 'models.dart';
 import 'persistence.dart';
 import 'plan/plan_creation.dart';
 import 'plan/plan_program.dart';
-import 'plan/plan_texts.dart' show weekdayName;
 import 'profile.dart';
 import 'legacy_pack.dart';
 import 'program_instance.dart';

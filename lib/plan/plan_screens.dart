@@ -66,7 +66,8 @@ class PlanCreationScreen extends StatefulWidget {
 }
 
 class PlanCreationScreenState extends State<PlanCreationScreen> {
-  late final PlanCreation? c = widget.creation ?? PlanStore(store).newPlanCreation();
+  late final PlanCreation? c =
+      widget.creation ?? PlanStore(store).newPlanCreation();
   _Stage _stage = _Stage.pass1;
   bool _busy = false;
   String? _error;
@@ -101,7 +102,8 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
     try {
       r = fn();
     } catch (e) {
-      _error = 'Je n’ai pas pu faire ce changement. Réessaie ou choisis '
+      _error =
+          'Je n’ai pas pu faire ce changement. Réessaie ou choisis '
           'autre chose.';
     }
     if (mounted) setState(() => _busy = false);
@@ -139,7 +141,8 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
     final leave = await showKoachSheet<bool>(
       context,
       pose: KoachPose.please,
-      text: 'Tu quittes la création ? Ton programme n’est pas encore créé : '
+      text:
+          'Tu quittes la création ? Ton programme n’est pas encore créé : '
           'rien n’est enregistré.',
       actions: [
         KoachBubbleAction(
@@ -279,7 +282,8 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
         context,
         pose: KoachPose.choice,
         title: 'Remplacer ton programme ?',
-        text: 'Ton nouveau programme remplace l’actuel $when. Ton '
+        text:
+            'Ton nouveau programme remplace l’actuel $when. Ton '
             'historique ne change pas. Tu pourras revenir à l’ancien pendant '
             '7 jours, tant que tu n’as saisi aucune séance du nouveau.',
         actions: [
@@ -324,7 +328,8 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
               child: const KoachBubble(
                 pose: KoachPose.oops,
                 koachHeight: 110,
-                text: 'Il me faut d’abord ton profil (Réglages › Profil) pour '
+                text:
+                    'Il me faut d’abord ton profil (Réglages › Profil) pour '
                     'créer ton programme.',
               ),
             ),
@@ -368,7 +373,9 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
               if (_busy || !creation.started)
                 Positioned.fill(
                   child: ColoredBox(
-                    color: Theme.of(context).scaffoldBackgroundColor.withValues(alpha: .85),
+                    color: Theme.of(
+                      context,
+                    ).scaffoldBackgroundColor.withValues(alpha: .85),
                     child: Center(
                       child: KoachSurface(
                         color: SL.bg,
@@ -416,7 +423,7 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${weekdayName(d.weekday)} · ${d.minutesBudget} min',
+            '${weekdayLabel(d.weekday)} · ${d.minutesBudget} min',
             style: Theme.of(context).textTheme.titleMedium,
           ),
           Text(focusLabel(d.focus), style: TextStyle(color: SL.accent)),
@@ -429,8 +436,7 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
                 children: [
                   Text('›  ', style: dim),
                   Expanded(child: Text(planName(s.exerciseId))),
-                  if (!compact)
-                    Text(kRoleLabels[s.role] ?? '', style: dim),
+                  if (!compact) Text(kRoleLabels[s.role] ?? '', style: dim),
                   if (s.locked)
                     Padding(
                       padding: const EdgeInsets.only(left: 6),
@@ -531,11 +537,13 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
           key: const ValueKey('plan-pass1-koach'),
           pose: KoachPose.checklist,
           koachHeight: 110,
-          text: 'Voici ton bloc de ${plan.weeks} semaines : '
+          text:
+              'Voici ton bloc de ${plan.weeks} semaines : '
               '${plan.days.length} séance${plan.days.length > 1 ? 's' : ''} '
               'par semaine. Pour l’instant, juste les exercices : on règle les '
               'séries ensuite.',
-          why: 'Je choisis chaque exercice selon tes disciplines, ton niveau, '
+          why:
+              'Je choisis chaque exercice selon tes disciplines, ton niveau, '
               'ton matériel et ton temps, en laissant au moins 48 h entre '
               'deux séances lourdes des mêmes muscles. « Autre proposition » '
               'te montre un autre programme presque aussi bien noté.',
@@ -566,9 +574,7 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
             TextButton.icon(
               key: const ValueKey('plan-previous'),
               icon: const Icon(Icons.undo),
-              label: Text(
-                'Proposition précédente (${creation.index}/$n)',
-              ),
+              label: Text('Proposition précédente (${creation.index}/$n)'),
               onPressed: creation.previousProposal,
             ),
         ],
@@ -680,7 +686,7 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                '${weekdayName(day.weekday)} · ${focusLabel(day.focus)} · '
+                '${weekdayLabel(day.weekday)} · ${focusLabel(day.focus)} · '
                 '${kRoleLabels[slot.role] ?? ''}',
                 style: TextStyle(color: SL.accent),
               ),
@@ -791,7 +797,8 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
           key: const ValueKey('plan-recap-koach'),
           pose: KoachPose.thumbsUp,
           koachHeight: 110,
-          text: 'Récapitulatif : $total exercices sur ${plan.days.length} '
+          text:
+              'Récapitulatif : $total exercices sur ${plan.days.length} '
               'séances${changes == 0 ? '' : ', $changes changement${changes > 1 ? 's' : ''} de ta part'}. '
               'Si tout te va, je règle les séries et les charges.',
         ),
@@ -815,7 +822,9 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
   // ----------------------------------------------------------- passe 2
 
   String _blockLogic(kc.Pass2Plan p) {
-    final kinds = [for (final w in p.weeks) kWeekKindLabels[w.kind]!.toLowerCase()];
+    final kinds = [
+      for (final w in p.weeks) kWeekKindLabels[w.kind]!.toLowerCase(),
+    ];
     final parts = <String>[];
     for (var i = 0; i < kinds.length; i++) {
       parts.add('S${i + 1} ${kinds[i]}');
@@ -848,7 +857,8 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
           pose: KoachPose.explainBoard,
           koachHeight: 120,
           text: _blockLogic(p2),
-          why: 'Première semaine plus légère pour apprendre les gestes, '
+          why:
+              'Première semaine plus légère pour apprendre les gestes, '
               'puis les séries montent doucement. Les charges de départ sont '
               'prudentes ; tu peux régler séries, répétitions et repos en '
               'touchant un exercice, dans les limites que je garde pour toi.',
@@ -868,9 +878,9 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
         ),
         Text(kWeekKindHints[week.kind]!, style: dim),
         if (calibrate)
-          KoachSays(
+          const KoachSays(
             pose: KoachPose.analyze,
-            child: const Text(
+            child: Text(
               '« À calibrer » : je n’invente pas de charge. Les 2-3 premières '
               'séances, je cale tes charges avec tes flammes.',
             ),
@@ -915,11 +925,18 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
                                 Expanded(
                                   child: Text(
                                     planName(it.exerciseId),
-                                    style: const TextStyle(fontWeight: FontWeight.w600),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
-                                if (creation.adjust[it.slotId]?.isEmpty == false)
-                                  KBadge('Ajusté', icon: Icons.tune, color: SL.accent),
+                                if (creation.adjust[it.slotId]?.isEmpty ==
+                                    false)
+                                  KBadge(
+                                    'Ajusté',
+                                    icon: Icons.tune,
+                                    color: SL.accent,
+                                  ),
                                 const Icon(Icons.tune, size: 18),
                               ],
                             ),
@@ -929,13 +946,26 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
                               crossAxisAlignment: WrapCrossAlignment.center,
                               children: [
                                 Text(prescriptionLabel(it)),
-                                if (it.targetFlames != null) TargetFlames(it.targetFlames!),
-                                Text('repos ${restLabel(it.restSeconds)}', style: dim),
-                                if (loadLabel(it) != null) Text(loadLabel(it)!, style: dim),
+                                if (it.targetFlames != null)
+                                  TargetFlames(it.targetFlames!),
+                                Text(
+                                  'repos ${restLabel(it.restSeconds)}',
+                                  style: dim,
+                                ),
+                                if (loadLabel(it) != null)
+                                  Text(loadLabel(it)!, style: dim),
                                 if (it.toCalibrate)
-                                  KBadge('À calibrer', icon: Icons.tune, color: SL.dim),
+                                  KBadge(
+                                    'À calibrer',
+                                    icon: Icons.tune,
+                                    color: SL.dim,
+                                  ),
                                 if (it.kind == kc.SetKind.test)
-                                  KBadge('Test', icon: Icons.flag_outlined, color: SL.accent),
+                                  KBadge(
+                                    'Test',
+                                    icon: Icons.flag_outlined,
+                                    color: SL.accent,
+                                  ),
                               ],
                             ),
                           ],

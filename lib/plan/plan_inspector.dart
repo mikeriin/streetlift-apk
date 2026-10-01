@@ -10,7 +10,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:kalis_core/kalis_core.dart' as kc;
-import 'package:kalis_plan/kalis_plan.dart' show PlanInspector, kalisPlanVersion;
+import 'package:kalis_plan/kalis_plan.dart'
+    show PlanInspector, kalisPlanVersion;
 
 import '../app_theme.dart';
 import '../dev/dev_session.dart' show DevShare;
@@ -43,8 +44,7 @@ class _PlanInspectorScreenState extends State<PlanInspectorScreen> {
   final Map<String, double> _contribution = {};
 
   kc.Pass1Plan get _plan => widget.creation?.plan ?? widget.plan!;
-  kc.PlanRequest get _request =>
-      widget.creation?.request() ?? widget.request!;
+  kc.PlanRequest get _request => widget.creation?.request() ?? widget.request!;
   kc.Catalog? get _catalog => widget.creation?.catalog ?? _storeCatalog;
   kc.Catalog? get _storeCatalog => store.content.catalog;
 
@@ -149,7 +149,10 @@ class _PlanInspectorScreenState extends State<PlanInspectorScreen> {
                     Row(
                       children: [
                         Expanded(child: Text(kScoreLabels[c.code] ?? c.code)),
-                        Text('${_num(c.value)} × ${_num(c.weight)}', style: dim),
+                        Text(
+                          '${_num(c.value)} × ${_num(c.weight)}',
+                          style: dim,
+                        ),
                       ],
                     ),
                 ],
@@ -162,13 +165,17 @@ class _PlanInspectorScreenState extends State<PlanInspectorScreen> {
               style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
             ),
           ),
-          KSection('Contraintes dures (${violations.length} violation${violations.length > 1 ? 's' : ''})'),
+          KSection(
+            'Contraintes dures (${violations.length} violation${violations.length > 1 ? 's' : ''})',
+          ),
           KCard(
             child: Text(
               violations.isEmpty
                   ? 'Aucune contrainte dure violée.'
                   : violations.join('\n'),
-              style: TextStyle(color: violations.isEmpty ? SL.success : SL.danger),
+              style: TextStyle(
+                color: violations.isEmpty ? SL.success : SL.danger,
+              ),
             ),
           ),
           const KSection('Exercices'),
@@ -180,7 +187,7 @@ class _PlanInspectorScreenState extends State<PlanInspectorScreen> {
                   tilePadding: EdgeInsets.zero,
                   title: Text(planName(s.exerciseId)),
                   subtitle: Text(
-                    '${s.slotId} · ${weekdayName(d.weekday)} · ${s.role.code}'
+                    '${s.slotId} · ${weekdayLabel(d.weekday)} · ${s.role.code}'
                     '${s.locked ? ' · verrouillé' : ''} · difficulté '
                     '${catalog.find(s.exerciseId)?.difficulty ?? '?'}',
                     style: dim,

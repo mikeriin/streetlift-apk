@@ -28,13 +28,13 @@ const _templateExplain =
     'Le programme de 40 semaines du créateur de Kalis Track (v3.3, révisions '
     'LC1 comprises), repris à l’identique : blocs, décharges et tests.';
 
-Future<void> _openPosition(BuildContext context) => Navigator.of(context).push(
-  MaterialPageRoute<void>(builder: (_) => const ProgramPositionScreen()),
-);
+Future<void> _openPosition(BuildContext context) => Navigator.of(
+  context,
+).push(MaterialPageRoute<void>(builder: (_) => const ProgramPositionScreen()));
 
-Future<void> _openNextBlock(BuildContext context) => Navigator.of(context).push(
-  MaterialPageRoute<void>(builder: (_) => const NextBlockScreen()),
-);
+Future<void> _openNextBlock(BuildContext context) => Navigator.of(
+  context,
+).push(MaterialPageRoute<void>(builder: (_) => const NextBlockScreen()));
 
 class ProgramScreen extends StatelessWidget {
   const ProgramScreen({super.key});
@@ -65,7 +65,7 @@ class ProgramScreen extends StatelessWidget {
                 Text(
                   'Bloc ${plan.blocks.length} · ${last.pass1.weeks} semaines · '
                   '${last.pass1.days.length} séances par semaine '
-                  '(${[for (final d in last.pass1.days) weekdayName(d.weekday).toLowerCase()].join(', ')}).',
+                  '(${[for (final d in last.pass1.days) weekdayLabel(d.weekday).toLowerCase()].join(', ')}).',
                 ),
                 const SizedBox(height: 4),
                 Text(

@@ -1,3 +1,0 @@
-kalis_core=success
-kalis_koach=success
-kalis_plan=success

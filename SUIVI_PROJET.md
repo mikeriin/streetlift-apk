@@ -4,6 +4,13 @@
 **Date : 1er octobre 2026, Europe/Paris — version : 6.4.1+100, affichée « dev6.4.1 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
 
+## G7 — Création du programme en deux passes (version dev6.5.0)
+
+- Intégration de `kalis_plan` 0.1.0 (branche fixe `etiquettes/kalis_plan-v0.1.0`) et `kalis_core` 0.1.0 ; dépendance `path:` ; tests de contrat (requêtes et réponses sérialisées, relues, égales, valides).
+- Écrans : passe 1, revue, variantes, ajout, diff de Koach et annulation, récapitulatif, passe 2 et ajustements bornés, validation ; « Où j'en suis » ; fin de bloc ; Réglages › Mon programme ; inspecteur et journal du moteur (session de test).
+- Données : sections `planProgram` (v1) et `programResume` (v1), facultatives ; séances « reprise » transmises au journal des moteurs (`resume: true`).
+- Retrait du générateur L10 ; instances L10 et programme du propriétaire compatibles. Décisions : DECISIONS_GP.md, section G7.
+
 ## G6.C1 — Correction 1 (version dev6.4.1)
 
 | Demande du propriétaire | Réalisation |

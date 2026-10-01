@@ -45,10 +45,9 @@ void main() {
       expect(PlanStore(dev).programPlanned, isTrue);
       final journal = jsonDecode(PlanStore(dev).planJournalText!) as Map;
       expect(journal['kind'], 'kalis_plan_journal');
-      expect(
-        [for (final e in journal['entries'] as List) (e as Map)['op']],
-        containsAll(['createPass1', 'review', 'createPass2']),
-      );
+      expect([
+        for (final e in journal['entries'] as List) (e as Map)['op'],
+      ], containsAll(['createPass1', 'review', 'createPass2']));
       expect(jsonEncode(KalisPrefs(raw, dev: false).snapshot()), before);
       dev.dispose();
 

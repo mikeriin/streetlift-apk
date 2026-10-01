@@ -657,10 +657,7 @@ void main() {
       final seen = await runFlow(tester);
       expect(seen, kAthleteSteps.toSet());
       expect(find.byKey(const ValueKey('flow-done')), findsOneWidget);
-      expect(
-        find.textContaining('Ton profil est prêt'),
-        findsOneWidget,
-      );
+      expect(find.textContaining('Ton profil est prêt'), findsOneWidget);
       final p = store.athleteProfile!;
       expect(p.validate(), isEmpty);
       expect(store.content.catalog!.checkProfile(p), isEmpty);

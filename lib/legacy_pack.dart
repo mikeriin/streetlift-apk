@@ -44,7 +44,6 @@ DateTime? parseCivil(Object? v) {
 int civilDayIndex(DateTime d) =>
     DateTime.utc(d.year, d.month, d.day).millisecondsSinceEpoch ~/ 86400000;
 
-
 // ---------------------------------------------------------- vocabulaires
 
 /// Mouvements de référence du niveau (KT-051).
@@ -181,7 +180,6 @@ Set<String> packEquipment(String place, List<String> equipment) {
 final RegExp _impactRe = RegExp(
   r'saut|sauté|jump|pliom|explosi|clap|burpee|sprint|bondiss|pogo|skater|navette|shuttle|kipping|double-under',
 );
-
 
 // ---------------------------------------------------------------- données
 

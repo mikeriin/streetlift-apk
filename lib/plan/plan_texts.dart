@@ -8,21 +8,14 @@
 import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:kalis_plan/kalis_plan.dart' show DisciplineClass;
 
-import '../athlete_profile.dart' show kDisciplineLabels, kZoneLabels;
+import '../athlete_profile.dart'
+    show kDisciplineLabels, kZoneLabels, weekdayName;
 
-/// Jours de la semaine (ISO : 1 = lundi).
-const kWeekdayNames = [
-  'Lundi',
-  'Mardi',
-  'Mercredi',
-  'Jeudi',
-  'Vendredi',
-  'Samedi',
-  'Dimanche',
-];
-
-String weekdayName(int isoWeekday) =>
-    kWeekdayNames[(isoWeekday - 1).clamp(0, 6)];
+/// Jour de la semaine avec majuscule (ISO : 1 = lundi).
+String weekdayLabel(int isoWeekday) {
+  final n = weekdayName(isoWeekday.clamp(1, 7));
+  return '${n[0].toUpperCase()}${n.substring(1)}';
+}
 
 /// Thème d'une séance (`FocusCodes` de kalis_plan).
 const kFocusLabels = <String, String>{
@@ -135,7 +128,11 @@ String jointLabel(String code) {
 
 /// Lieu (`Place.code`).
 String placeLabel(String code) =>
-    const {'salle': 'la salle', 'maison': 'la maison', 'exterieur': 'dehors'}[code] ??
+    const {
+      'salle': 'la salle',
+      'maison': 'la maison',
+      'exterieur': 'dehors',
+    }[code] ??
     'ton lieu';
 
 /// Composantes de la note (`PlanScore.components`).
@@ -350,9 +347,13 @@ String? loadLabel(kc.ExercisePrescription p) {
   }
   final t = kg == kg.roundToDouble()
       ? kg.toInt().toString()
-      : kg.toStringAsFixed(2).replaceAll(RegExp(r'0+$'), '').replaceAll('.', ',');
+      : kg
+            .toStringAsFixed(2)
+            .replaceAll(RegExp(r'0+$'), '')
+            .replaceAll('.', ',');
   return switch (p.loadBasis) {
-    kc.LoadBasis.bodyweightPlusExternal => kg == 0 ? 'poids du corps' : '+ $t kg de lest',
+    kc.LoadBasis.bodyweightPlusExternal =>
+      kg == 0 ? 'poids du corps' : '+ $t kg de lest',
     kc.LoadBasis.bodyweight => 'poids du corps',
     _ => '$t kg',
   };

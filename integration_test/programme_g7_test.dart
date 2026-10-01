@@ -328,7 +328,9 @@ void main() {
       find.byKey(const ValueKey('step-sheet')),
     );
     await tap(tester, 'step-ok', ms: 1000);
-    releve['changements'] = state.c!.steps.where((s) => s.changes.isNotEmpty).length;
+    releve['changements'] = state.c!.steps
+        .where((s) => s.changes.isNotEmpty)
+        .length;
     releve['verrous'] = state.c!.locks.length;
     await tap(tester, 'plan-review-recap', ms: 1200);
     await top(tester);

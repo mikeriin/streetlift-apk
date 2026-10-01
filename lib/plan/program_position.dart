@@ -69,7 +69,8 @@ class _ProgramPositionScreenState extends State<ProgramPositionScreen> {
         if (d.exercises.isEmpty) continue;
         if ((w.n - 1) * 7 + d.j - 1 >= at) continue;
         final l = store.logs[store.sessionKey(w.n, d.j)];
-        final logged = l != null &&
+        final logged =
+            l != null &&
             (l.done || l.ex.values.any((x) => x.sets.any((s) => s.done)));
         if (!logged) n++;
       }
@@ -110,9 +111,11 @@ class _ProgramPositionScreenState extends State<ProgramPositionScreen> {
               key: ValueKey('position-koach'),
               pose: KoachPose.direction,
               koachHeight: 110,
-              text: 'Dis-moi où tu en es dans ton programme : la séance '
+              text:
+                  'Dis-moi où tu en es dans ton programme : la séance '
                   'choisie devient celle d’aujourd’hui.',
-              why: 'Utile après un changement de téléphone ou une sauvegarde '
+              why:
+                  'Utile après un changement de téléphone ou une sauvegarde '
                   'restaurée. Les séances d’avant que tu n’as pas saisies '
                   'sont marquées « reprise » : elles ne comptent ni en XP, ni '
                   'dans tes statistiques, ni dans ta série, ni pour tes '
@@ -228,7 +231,8 @@ class _NextBlockScreenState extends State<NextBlockScreen> {
               child: const KoachBubble(
                 pose: KoachPose.oops,
                 koachHeight: 100,
-                text: 'Je n’arrive pas à préparer le bloc suivant pour '
+                text:
+                    'Je n’arrive pas à préparer le bloc suivant pour '
                     'l’instant.',
               ),
             ),
@@ -250,10 +254,12 @@ class _NextBlockScreenState extends State<NextBlockScreen> {
               key: const ValueKey('next-block-koach'),
               pose: KoachPose.progressChart,
               koachHeight: 110,
-              text: 'Ton bloc se termine. Je te propose le suivant : '
+              text:
+                  'Ton bloc se termine. Je te propose le suivant : '
                   '${block.pass1.weeks} semaines, '
                   '${changes.isEmpty ? 'mêmes exercices' : '${changes.length} changement${changes.length > 1 ? 's' : ''}'}.',
-              why: 'Je garde tes mouvements principaux, je fais tourner une '
+              why:
+                  'Je garde tes mouvements principaux, je fais tourner une '
                   'partie des exercices de complément et je fais progresser '
                   'ce que tu maîtrises.',
             ),
@@ -276,7 +282,9 @@ class _NextBlockScreenState extends State<NextBlockScreen> {
             spacing: 8,
             children: [
               for (final w in block.pass2.weeks)
-                Chip(label: Text('S${w.weekIndex + 1} ${kWeekKindLabels[w.kind]}')),
+                Chip(
+                  label: Text('S${w.weekIndex + 1} ${kWeekKindLabels[w.kind]}'),
+                ),
             ],
           ),
           FilledButton(
@@ -295,5 +303,5 @@ class _NextBlockScreenState extends State<NextBlockScreen> {
 
 /// Raccourci : jour civil lisible « lundi 05/10 ».
 String civilShort(kc.CivilDate d) =>
-    '${weekdayName(d.weekday).toLowerCase()} '
+    '${weekdayLabel(d.weekday).toLowerCase()} '
     '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}';

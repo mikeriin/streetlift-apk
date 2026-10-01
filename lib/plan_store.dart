@@ -53,7 +53,9 @@ extension PlanStore on AppStore {
 
   /// La création est possible : profil v2 et base chargée.
   bool get planCanCreate =>
-      athlete != null && content.catalog != null && AthleteProfileStore(this).athleteProfileForEngines != null;
+      athlete != null &&
+      content.catalog != null &&
+      AthleteProfileStore(this).athleteProfileForEngines != null;
 
   // ------------------------------------------------------------ départ
 
@@ -123,7 +125,8 @@ extension PlanStore on AppStore {
     if (plan != null) {
       return planWeeks(
         plan,
-        startWeekday: program.start?.weekday ??
+        startWeekday:
+            program.start?.weekday ??
             plan.blocks.first.block.pass1.startDate.weekday,
         labels: planLabels,
       );
@@ -405,12 +408,7 @@ extension PlanStore on AppStore {
         for (final dp in wk.days)
           (week: wk.n, j: dp.j, training: dp.exercises.isNotEmpty),
     ];
-    final keys = resumeKeysFor(
-      days: days,
-      week: w,
-      day: d,
-      logged: _loggedAt,
-    );
+    final keys = resumeKeysFor(days: days, week: w, day: d, logged: _loggedAt);
     programResume = ProgramResume(
       at: _planAt,
       week: w,
@@ -442,7 +440,8 @@ extension PlanStore on AppStore {
       null,
       (a, b) => a == null || b.isAfter(a) ? b : a,
     );
-    if (ref == null) return Program.civilIndex(today) - Program.civilIndex(start) >= 14;
+    if (ref == null)
+      return Program.civilIndex(today) - Program.civilIndex(start) >= 14;
     return Program.civilIndex(today) - Program.civilIndex(ref) >= 14;
   }
 
@@ -490,4 +489,4 @@ extension PlanStore on AppStore {
 }
 
 /// Jour de la semaine en toutes lettres d'un jour civil (« lundi »).
-String planDayName(kc.CivilDate d) => weekdayName(d.weekday).toLowerCase();
+String planDayName(kc.CivilDate d) => weekdayName(d.weekday);

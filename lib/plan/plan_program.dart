@@ -33,7 +33,11 @@ class PlanAdjust {
   final int setsDelta;
   final int repsShift;
   final int restDelta;
-  const PlanAdjust({this.setsDelta = 0, this.repsShift = 0, this.restDelta = 0});
+  const PlanAdjust({
+    this.setsDelta = 0,
+    this.repsShift = 0,
+    this.restDelta = 0,
+  });
 
   bool get isEmpty => setsDelta == 0 && repsShift == 0 && restDelta == 0;
 
@@ -84,7 +88,9 @@ class PlanAdjust {
       out = out.copyWith(repsLow: lo, repsHigh: hi);
     }
     if (restDelta != 0 && p.restSeconds != null) {
-      out = out.copyWith(restSeconds: (p.restSeconds! + restDelta).clamp(0, 900));
+      out = out.copyWith(
+        restSeconds: (p.restSeconds! + restDelta).clamp(0, 900),
+      );
     }
     return out;
   }
@@ -445,7 +451,8 @@ Map<String, dynamic> planWeekJson({
     final exercises = <Map<String, dynamic>>[];
     for (final p in hit.items!.items) {
       final rest = p.restSeconds;
-      final why = mainReason(p.reasons) ??
+      final why =
+          mainReason(p.reasons) ??
           mainReason([
             for (final s in hit.day.slots)
               if (s.slotId == p.slotId) ...s.reasons,
@@ -458,8 +465,7 @@ Map<String, dynamic> planWeekJson({
         'intensity': flames == null
             ? ''
             : 'Difficulté visée $flames/10 · RIR ${_rir(flames)}',
-        'load': p.startLoadKg != null &&
-                p.loadBasis != kc.LoadBasis.bodyweight
+        'load': p.startLoadKg != null && p.loadBasis != kc.LoadBasis.bodyweight
             ? {'type': 'fixed', 'kg': p.startLoadKg}
             : {'type': 'none'},
         'rest': restLabel(rest),
@@ -470,7 +476,11 @@ Map<String, dynamic> planWeekJson({
         'prevention': false,
         'why': why == null
             ? ''
-            : reasonText(why, exerciseName: labels.name, goalLabel: labels.goal),
+            : reasonText(
+                why,
+                exerciseName: labels.name,
+                goalLabel: labels.goal,
+              ),
         'role': (roles[p.slotId] ?? kc.SlotRole.accessory).code,
         'catalogId': p.exerciseId,
         'slotId': p.slotId,
@@ -503,7 +513,9 @@ Map<String, dynamic> planWeekJson({
 
 String _rir(int flames) {
   final r = kc.Flames.toRir(flames);
-  final t = r == r.roundToDouble() ? r.toInt().toString() : '$r'.replaceAll('.', ',');
+  final t = r == r.roundToDouble()
+      ? r.toInt().toString()
+      : '$r'.replaceAll('.', ',');
   return flames == kc.Flames.min ? '$t et plus' : t;
 }
 
@@ -743,7 +755,9 @@ class ProgramResume {
         at is! String ||
         keys is! List ||
         keys.length > 4000 ||
-        keys.any((k) => k is! String || !RegExp(r'^S\d+-J[1-7]$').hasMatch(k))) {
+        keys.any(
+          (k) => k is! String || !RegExp(r'^S\d+-J[1-7]$').hasMatch(k),
+        )) {
       throw const FormatException('Reprise invalide.');
     }
     final ps = raw['previousStart'];

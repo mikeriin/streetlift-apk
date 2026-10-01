@@ -116,7 +116,12 @@ class PlanCreation extends ChangeNotifier {
     if (started) return;
     final req = request();
     proposals.add(
-      _timed('createPass1', req.toJson, () => engine.createPass1(catalog, req), (p) => p.toJson()),
+      _timed(
+        'createPass1',
+        req.toJson,
+        () => engine.createPass1(catalog, req),
+        (p) => p.toJson(),
+      ),
     );
     index = 0;
     notifyListeners();
@@ -136,7 +141,12 @@ class PlanCreation extends ChangeNotifier {
         locks: locks,
       );
       proposals.add(
-        _timed('createPass1', req.toJson, () => engine.createPass1(catalog, req), (p) => p.toJson()),
+        _timed(
+          'createPass1',
+          req.toJson,
+          () => engine.createPass1(catalog, req),
+          (p) => p.toJson(),
+        ),
       );
       index = proposals.length - 1;
     }
@@ -151,13 +161,31 @@ class PlanCreation extends ChangeNotifier {
 
   /// Variantes d'un emplacement (3 ciblées + toutes).
   kc.VariantSet variants(String slotId) {
-    final req = kc.VariantsRequest(request: request(), current: plan, slotId: slotId);
-    return _timed('variants', req.toJson, () => engine.variants(catalog, req), (v) => v.toJson());
+    final req = kc.VariantsRequest(
+      request: request(),
+      current: plan,
+      slotId: slotId,
+    );
+    return _timed(
+      'variants',
+      req.toJson,
+      () => engine.variants(catalog, req),
+      (v) => v.toJson(),
+    );
   }
 
   kc.ReviewResult _review(kc.ReviewAction action) {
-    final req = kc.ReviewRequest(request: request(), current: plan, action: action);
-    final res = _timed('review', req.toJson, () => engine.review(catalog, req), (r) => r.toJson());
+    final req = kc.ReviewRequest(
+      request: request(),
+      current: plan,
+      action: action,
+    );
+    final res = _timed(
+      'review',
+      req.toJson,
+      () => engine.review(catalog, req),
+      (r) => r.toJson(),
+    );
     _profile = applyProfileDelta(_profile, res.profileDelta);
     locks = res.locks;
     _reviewed = res.plan;
@@ -223,8 +251,7 @@ class PlanCreation extends ChangeNotifier {
         : s.before;
     _profile = s.profileBefore;
     locks = s.locksBefore;
-    if (s.slotId != null &&
-        !steps.any((x) => x.slotId == s.slotId)) {
+    if (s.slotId != null && !steps.any((x) => x.slotId == s.slotId)) {
       decided.remove(s.slotId);
     }
     pass2 = null;
@@ -236,10 +263,16 @@ class PlanCreation extends ChangeNotifier {
   /// Passe 2 (D4.7) sur la passe 1 validée.
   kc.Pass2Plan createPass2() {
     final req = kc.Pass2Request(request: request(), pass1: plan);
-    pass2 = _timed('createPass2', req.toJson, () => engine.createPass2(catalog, req), (p) => p.toJson());
+    final p2 = _timed(
+      'createPass2',
+      req.toJson,
+      () => engine.createPass2(catalog, req),
+      (kc.Pass2Plan p) => p.toJson(),
+    );
+    pass2 = p2;
     adjust.clear();
     notifyListeners();
-    return pass2!;
+    return p2;
   }
 
   /// Bloc validé, prêt à stocker.
