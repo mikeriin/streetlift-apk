@@ -548,6 +548,7 @@ AdviceRequest arbitraryAdviceRequest(Random r) {
     session: arbitrarySessionPlan(r),
     done: arbList(r, 0, 3, () => arbitrarySetRecord(r)),
     slotId: arbString(r, 1, 12),
+    healthCheck: r.nextBool() ? null : arbitraryHealthCheck(r),
   );
 }
 

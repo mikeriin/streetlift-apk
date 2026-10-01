@@ -206,6 +206,38 @@ abstract final class ReasonCodes {
 
   /// Prédiction de date mise à jour.
   static const String questPredictionUpdated = 'quest.prediction_updated';
+
+  /// Notes presque toujours confirmées telles quelles : elles pèsent moins, la
+  /// performance réelle pèse davantage.
+  static const String adaptRatingsUninformative = 'adapt.ratings_uninformative';
+
+  /// Série repère : dernière série ouverte, autant de répétitions que possible
+  /// en gardant la réserve indiquée.
+  static const String adaptBenchmarkSet = 'adapt.benchmark_set';
+
+  /// Lieu du jour différent du lieu prévu : exercice remplacé par un équivalent
+  /// faisable sur place.
+  static const String adaptPlaceChanged = 'adapt.place_changed';
+
+  /// Charge non augmentée (échec non prévu, douleur, bilan bas, plafond de
+  /// hausse).
+  static const String adaptLoadHeld = 'adapt.load_held';
+
+  /// Plus petit incrément de charge trop grand : la progression passe par les
+  /// répétitions.
+  static const String adaptIncrementCoarse = 'adapt.increment_coarse';
+
+  /// Forme du jour estimée (bilan santé, fatigue modélisée, séries déjà
+  /// faites).
+  static const String adaptReadiness = 'adapt.readiness';
+
+  /// Volume hebdomadaire d'un groupe musculaire ajusté d'après la réponse
+  /// observée.
+  static const String adaptVolumeResponse = 'adapt.volume_response';
+
+  /// Plus petite charge disponible encore trop lourde pour cet exercice : il
+  /// est remplacé ou retiré de la séance.
+  static const String adaptLoadFloor = 'adapt.load_floor';
 }
 
 /// Registre des codes de raison et de leurs paramètres typés.
@@ -411,5 +443,31 @@ const List<ReasonSpec> reasonRegistry = <ReasonSpec>[
   }),
   ReasonSpec(ReasonCodes.questPredictionUpdated, <String, ReasonParamType>{
     'goalId': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.adaptRatingsUninformative, <String, ReasonParamType>{
+    'confirmRate': ReasonParamType.number,
+    'sets': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.adaptBenchmarkSet, <String, ReasonParamType>{
+    'rir': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.adaptPlaceChanged, <String, ReasonParamType>{
+    'place': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.adaptLoadHeld, <String, ReasonParamType>{
+    'cause': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.adaptIncrementCoarse, <String, ReasonParamType>{
+    'stepKg': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.adaptReadiness, <String, ReasonParamType>{
+    'readiness': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.adaptVolumeResponse, <String, ReasonParamType>{
+    'muscle': ReasonParamType.text,
+    'weeklySets': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.adaptLoadFloor, <String, ReasonParamType>{
+    'minKg': ReasonParamType.number,
   }),
 ];
