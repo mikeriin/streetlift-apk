@@ -142,14 +142,16 @@ void main() {
 
     test('un objectif antidaté ne paie pas les jalons atteints avant que le '
         'moteur l\'ait vu', () {
+      final none = base.copyWith(goals: const <Goal>[]);
       final start = run(
         engine,
-        base,
+        none,
         const <SessionRecord>[],
         emptyState,
         monday,
       ).state;
-      final before = run(engine, base, rising(4), start, monday.addDays(21));
+      final before = run(engine, none, rising(4), start, monday.addDays(21));
+      expect(xpOf(before.state, XpSource.milestone), 0);
       final o = run(
         engine,
         base.copyWith(goals: <Goal>[performance(75)]),

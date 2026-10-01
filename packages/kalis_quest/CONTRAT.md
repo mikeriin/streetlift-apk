@@ -12,10 +12,12 @@ l'utilisateur, aucun stockage. Deux appels identiques rendent un résultat ident
 moteur ne produit aucun texte : des codes de raison du registre de `kalis_core`, des identifiants du
 catalogue, des nombres.
 
-Dépendances : `kalis_core` (types, catalogue, raisons) et `kalis_adapt`, dont il reprend sans les
-recopier la lecture du catalogue (`ExerciseBook` : mode de capacité, fraction du poids du corps, zones
-sollicitées), la règle des records, la courbe répétitions ↔ charge, les seuils de douleur, la rétention
-et l'amortissement de la tendance (`AdaptParams.standard`). Aucune ligne de l'ancien système de
+Dépendances : `kalis_core` (types, catalogue, raisons) et `kalis_adapt`, dont il utilise directement la
+lecture du catalogue (`ExerciseBook` : mode de capacité, fraction du poids du corps, zones sollicitées,
+exercice écarté par une douleur) et les constantes (`AdaptParams.standard` : courbe répétitions ↔
+charge, seuils de douleur, rétention, amortissement de la tendance). La règle des records est réécrite
+ici (il faut la chronologie, que `kalis_adapt` ne rend pas) et testée égale à celle de `kalis_adapt`
+sur les journaux types. Aucune ligne de l'ancien système de
 progression de l'application n'est reprise.
 
 ## 2. API
@@ -27,7 +29,8 @@ progression de l'application n'est reprise.
 **État** (`QuestState`, à stocker tel quel et à repasser à l'appel suivant) : registre d'XP et registre de
 Krédits en ajout seul, quêtes en cours et récentes (35 jours), `lastEvaluatedOn`, et `data`, objet opaque
 versionné (jour de démarrage, dernier jour clos, compteur de coffres, série, semaines closes, meilleure
-valeur des attributs, meilleur rang, compteurs). Un état vide démarre le registre le jour de l'appel.
+valeur des attributs, meilleur rang, dernier record payé par exercice, jour où chaque objectif a été vu
+pour la première fois, compteurs). Un état vide démarre le registre le jour de l'appel.
 
 **Quand appeler** : à l'ouverture de l'application et après chaque séance. Le moteur traite tous les jours
 écoulés depuis le dernier appel ; il n'a pas besoin d'être appelé chaque jour (§ 9, P5).
@@ -84,12 +87,18 @@ performance n'est pas un record, et les rangs acquis sont là dès le premier jo
   compté en séries (Baz-Valle et coll., 2021 : le nombre de séries proches de l'échec est une mesure
   adéquate du volume).
 - **Réalisation** = séries de travail faites / séries prévues, au plus 1. Séries prévues :
-  `plannedWorkSets` s'il est renseigné ; sinon, pour une séance terminée, la moitié des séries du bloc
-  (une séance allégée par le bilan santé et faite en entier vaut une séance complète) ou, sans bloc, les
-  séries faites ; sinon, pour une séance inachevée, les séries du bloc ou 8.
+  `plannedWorkSets` s'il est renseigné. Sinon la référence est la séance du bloc que la séance désigne
+  (`programRef`) ; pour une séance libre, la séance du bloc prévue ce jour-là ; à défaut, les séries
+  habituelles (médiane des 8 dernières séances d'entraînement, à partir de 3 séances). Une séance
+  terminée est rapportée à la moitié de cette référence (une séance allégée par le bilan santé et faite
+  en entier vaut une séance complète), une séance inachevée à la référence entière (à défaut, 8). Sans
+  aucune référence, une séance terminée est rapportée aux séries faites.
 - **Qualité** = moyenne, sur les séries prévues, de la qualité de chaque série : 1 si la note est à la
-  cible, au-dessus, ou jusqu'à 1 flamme en dessous ; 0,125 de moins par flamme supplémentaire sous la
-  cible, plancher 0,5 ; 0,7 pour une série sans note alors qu'une cible existe ; 1 sans cible de flammes.
+  cible, au-dessus, ou jusqu'à 2 flammes en dessous ; 0,1 de moins par flamme supplémentaire sous la
+  cible, plancher 0,7 ; 0,7 pour une série sans note alors qu'une cible existe ; 1 sans cible de
+  flammes. La tolérance de 2 flammes (une répétition en réserve) est l'erreur ordinaire d'estimation
+  des répétitions en réserve (Halperin et coll., 2022) : une note honnête un peu basse ne coûte rien, et
+  noter plus haut que le ressenti ne rapporte presque rien (au plus 30 % d'une série).
   L'intensité est donc celle des flammes **rapportée à la cible du jour** : aller plus dur que prescrit
   ne rapporte rien de plus, une semaine de décharge ou une séance allégée rapporte autant qu'une semaine
   dure. C'est voulu : la proximité de l'échec n'améliore pas la force (Robinson et coll., 2024) et
@@ -103,8 +112,14 @@ ni pour la réalisation, ni pour la qualité, ni pour le combo, ni pour un recor
 civile, seules les premières séances, jusqu'au nombre de séances prévues au calendrier (jours du bloc,
 sinon disponibilités du profil), sont récompensées ; les suivantes reçoivent une écriture à 0 XP
 (`quest.xp_capped`, portée `week`) et ne donnent ni record payé, ni coffre, ni note, ni avancement de
-quête. Une séance en plus peut donc remplacer une séance manquée, jamais s'y ajouter : l'XP d'effort
-d'une semaine ne dépasse pas `séances prévues × 110`.
+quête ; leurs performances ne comptent ni pour les rangs, ni pour les objectifs. Une séance en plus peut
+donc remplacer une séance manquée, jamais s'y ajouter.
+
+**Séance écourtée** (réalisation sous 0,5) : payée pour ce qui est fait (`quest.xp_capped`, portée
+`partial`), sans note ni coffre, et sans prendre la place d'une séance prévue : une séance abandonnée
+après l'échauffement n'empêche pas de faire la séance du jour suivant. Dans tous les cas, l'XP d'effort
+d'une semaine ne dépasse pas `séances prévues × 110` (portée `week_xp` quand ce plafond rogne une
+séance).
 
 **Séance de récupération** : une séance hors programme faite seulement de mobilité, de récupération ou de
 marche ne reçoit pas d'XP d'effort et ne prend la place d'aucune séance prévue ; elle compte pour les
@@ -114,7 +129,10 @@ quêtes de mobilité et l'attribut Mobilité.
 exercice que la règle de `kalis_adapt` écarte pour cette douleur (contrainte forte ou travail direct de
 la zone à partir de 4/10, contrainte moyenne à partir de 7/10), la séance est « faite malgré la
 douleur » : écriture à 0 XP (`quest.no_reward_pain`), ni record payé, ni coffre, ni note, ni combo, ni
-avancement de quête ; pour la série de semaines elle est neutre (ni faite, ni manquée). La même douleur,
+avancement de quête ; ses performances ne comptent ni pour les rangs, ni pour les attributs, ni pour les
+objectifs (le record reste connu : c'est un fait). Elle ne compte pas parmi les séances faites de la
+semaine, qui garde toutes ses séances prévues ; si la semaine n'est pas réussie sans elle, elle est en
+pause, pas manquée (§ 8). La même douleur,
 zone épargnée — ce que `kalis_adapt` prescrit —, donne la récompense entière. Une douleur signalée
 pendant ou après la séance ne retire rien : la signaler ne doit rien coûter, sinon elle ne le serait
 plus.
@@ -122,11 +140,14 @@ plus.
 ### 4.3 Régularité
 
 À la clôture de chaque semaine :
-`XP = arrondi(faites / prévues × (60 + 40 × jours de repos gardés / jours de repos prévus))`
+`XP = arrondi(prévues / calendrier × faites / prévues × (60 + 40 × repos gardés / repos prévus))`
 
-- **Prévues** : jours prévus au calendrier dans la semaine, hors jours de pause déclarée, moins les
-  séances neutralisées par la douleur. **Faites** : séances récompensées dont la réalisation atteint
-  0,5, au plus les prévues ; le jour de la semaine n'importe pas (une séance déplacée compte).
+- **Calendrier** : jours prévus dans la semaine (jours du bloc, sinon disponibilités). **Prévues** : les
+  mêmes, hors jours de pause déclarée ; une semaine en partie en pause paie donc au prorata.
+  **Faites** : séances que le registre a réglées et comptées dans cette semaine (réalisation d'au moins
+  0,5, ni douloureuses, ni en plus), au plus les prévues ; le jour de la semaine n'importe pas (une
+  séance déplacée avant d'être faite compte). Le registre fait foi : une séance supprimée, ou dont la
+  date est changée après son règlement, reste comptée dans sa semaine d'origine et nulle part ailleurs.
 - **Jours de repos gardés** : jours sans séance d'entraînement, au plus les jours de repos prévus. Qui
   s'entraîne tous les jours perd cette part : le repos est récompensé, jamais puni.
 - Semaine sans séance prévue (pause, pas de programme) : aucune écriture.
@@ -139,16 +160,20 @@ Mêmes records que `kalis_adapt` (meilleures répétitions, meilleure tenue, mei
 série de 10 répétitions au plus notée 8 flammes ou plus), plus le temps équivalent sur 5 km et la plus
 longue distance des séries de course. Par séance et par (exercice, nature), seule la meilleure valeur
 compte. Un record paie `10 + 4 × gain en %`, au plus 30 XP, au plus 40 XP de records par séance, s'il
-gagne au moins 0,5 % et s'il est établi dans le volume prévu ; le premier record payé d'une séance donne
-3 Krédits. Une première fois (aucune valeur avant) n'est pas un record : elle donne un événement, pas
+gagne au moins 0,5 % et s'il est établi dans le volume prévu d'une séance récompensée ; le gain est
+mesuré depuis le dernier record payé (une séance supprimée puis refaite ne paie pas deux fois) ; le
+premier record payé d'une séance donne 3 Krédits. Une première fois (aucune valeur avant) n'est pas un record : elle donne un événement, pas
 d'XP.
 
 ### 4.5 Jalons d'objectif
 
 Quatre jalons par objectif (§ 7). XP `30, 30, 30, 100` et Krédits `5, 5, 5, 25`, multipliés par
 l'ambition de l'objectif : `écart relatif entre départ et cible / 10 %`, borné à [0,2 ; 1] (habitude :
-`semaines / 8`). Ne paient pas : un objectif déjà atteint à sa création, un objectif de performance de
-moins de 14 jours. Plafond : 200 XP de jalons par semaine civile.
+`semaines / 8` ; compétence à débloquer : 0,5). Ne paient pas : un objectif déjà atteint à sa création ;
+un objectif de performance de moins de 14 jours ; un jalon atteint avant que le moteur ait vu l'objectif
+(objectif antidaté) ; les objectifs en double — un seul objectif paie par grandeur (exercice et mesure)
+et un seul objectif d'habitude, le premier de la liste du profil. Plafond : 100 XP de jalons par semaine
+civile, les Krédits suivant la même proportion.
 
 ### 4.6 Quêtes
 
@@ -174,8 +199,9 @@ Seize mouvements de référence, six rangs (Bronze, Argent, Or, Platine, Diamant
 sexe et poids de corps : tables dans `docs/STANDARDS.md`, méthode et sources dans
 `docs/STANDARDS_SOURCES.md`. `MovementRank.score` est en **points de rang** : 1 = Bronze … 6 = Élite, la
 partie décimale mesure l'avancement vers le rang suivant ; `nextTierAt` est l'entier suivant. Le rang
-vient de la meilleure performance connue (historique compris) et **ne redescend jamais** (le meilleur
-rang atteint est gardé dans l'état). Un passage de rang donne un événement `rank_up`. Les valeurs
+vient de la meilleure performance qui compte (historique compris) — faite dans le volume prévu d'une
+séance ni douloureuse ni en plus du programme — et **ne redescend jamais** (le meilleur rang atteint
+est gardé dans l'état). Un passage de rang donne un événement `rank_up`. Les valeurs
 lisibles (kg, répétitions, secondes, seuil suivant) sont dans `extras.ranks`, l'héritage des variantes
 dans `extras.rankOf`.
 
@@ -200,7 +226,8 @@ deux meilleurs, ou 85 % du seul disponible.
 **Difficulté démontrée** : 6 points par niveau de difficulté du catalogue (1 à 10) de l'exercice le plus
 dur pratiqué avec succès à dose suffisante (3 répétitions ou 5 secondes ; cardio : 10 répétitions,
 5 minutes ou 1 km), diminués par la rétention ; au plus 60. Elle donne un attribut à qui ne pratique
-aucun mouvement de référence. Une figure est maîtrisée à 2 secondes de tenue ou 3 répétitions.
+aucun mouvement de référence. Une figure est maîtrisée à 2 secondes de tenue ou 3 répétitions. Une
+séance faite malgré une douleur ne nourrit aucun attribut.
 
 ## 6. Quêtes
 
@@ -219,20 +246,24 @@ que du journal antérieur à ce jour.
 **Adaptées à l'utilisateur, jamais impossibles** : « séries dans la cible » demande 60 % de ses séries
 habituelles (médiane des 8 dernières séances), au moins 3, au plus les séries à cible de flammes
 prévues ce jour-là ; le combo demandé est son combo habituel ; les cibles hebdomadaires valent une de
-plus que son habitude des quatre dernières semaines, sans jamais dépasser le programme. La quête de
-point faible prend à tour de rôle l'un des trois attributs les plus bas pour lesquels une action
-existe.
+plus que son habitude des quatre dernières semaines, sans jamais dépasser le programme. Une séance qui
+met toutes ses séries prévues dans la cible remplit `daily.in_target` et `daily.combo`, même si la
+cible de la quête dépassait le programme du jour (séance allégée). La quête de point faible prend à
+tour de rôle l'un des trois attributs les plus bas pour lesquels une action existe. La quête
+`koach.lagging_exercise` ne propose jamais un exercice qui sollicite une zone douloureuse suivie par
+`kalis_adapt` : l'éviter est peut-être la bonne décision.
 
 **Repos** : un jour de repos ou de pause ne propose que les modèles `rest.*` ; aucune quête ne demande
 plus de séances ou de séries que le programme. Quand le résumé d'adaptation signale une douleur
 persistante (3 séances de suite au-dessus du seuil, règle santé L13), les quêtes de performance
-(`daily.in_target`, `daily.combo`, `koach.accuracy`) ne sont plus proposées.
+(`daily.in_target`, `daily.combo`, `koach.accuracy`, `koach.lagging_exercise`) ne sont plus proposées.
 
 **Déclaratives** : les quêtes `rest.*` se déclarent (`QuestInput.claims`) le jour même ; `rest.mobility`
 est aussi lue dans le journal (300 secondes de mobilité). Une quête d'entraînement ne se déclare pas.
 
-**Avancement** : lu dans les séances récompensées de la fenêtre de la quête. Une séance faite malgré une
-douleur ou au-delà du programme ne fait avancer aucune quête. Une quête échue expire sans événement ;
+**Avancement** : lu dans les séances récompensées de la fenêtre de la quête, dans la semaine où le
+registre les a réglées. Une séance faite malgré une douleur ou au-delà du programme ne fait avancer
+aucune quête ; une séance écourtée fait avancer les quêtes de séries, pas les quêtes de séances. Une quête échue expire sans événement ;
 une quête terminée le reste.
 
 ## 7. Objectifs (D3.8)
@@ -240,8 +271,10 @@ une quête terminée le reste.
 **Performance** (`one_rm_kg`, `max_reps`, `max_hold_seconds`, `skill_unlocked`, `time_seconds`,
 `distance_meters`) : la valeur suit les mêmes observations que les records (charge externe pour un 1RM ;
 répétitions à une charge donnée par la courbe de `kalis_adapt` ; temps et distance par la formule de
-Riegel). `baseline` : meilleure valeur à la création (sans mesure, la première ensuite). `fraction` :
-part de l'écart parcourue.
+Riegel). `baseline` : meilleure valeur connue à la création, faits bruts compris ; sans mesure, la
+première mesure qui suit sert de départ (elle ne paie donc aucun jalon) ; une compétence jamais réussie
+part de 0. Après la création, seules comptent les performances faites dans le volume prévu d'une
+séance ni douloureuse ni en plus du programme. `fraction` : part de l'écart parcourue.
 
 **Habitude** : séances faites depuis la création, au plus `sessionsPerWeek` par semaine civile ; cible
 `sessionsPerWeek × weeks`.
@@ -265,7 +298,10 @@ n'est jamais atteint. `confidence` est la probabilité d'atteindre la cible à l
 
 **Retard** (`overdue`) : la médiane dépasse l'échéance, ou la cible est hors d'atteinte. Le moteur
 propose alors la première date où la probabilité atteint 60 % (`suggestedDate`) et la cible atteinte à
-60 % à l'échéance (`suggestedTarget`), avec la raison `quest.goal_late`.
+60 % à l'échéance (`suggestedTarget`), avec la raison `quest.goal_late`. Quand la tendance ne donne ni
+l'une ni l'autre (pas de tendance, tendance nulle ou négative), il propose une cible à mi-chemin si
+l'échéance est à venir, sinon la même cible 8 semaines plus tard : un objectif en retard a toujours une
+proposition.
 
 **Suggestions** (`suggestedGoals`) : pour les deux exercices les mieux suivis par `kalis_adapt` (au moins
 12 séries, tendance positive, pas déjà d'objectif), échéance à 8 semaines, cible = valeur atteinte avec
@@ -282,7 +318,7 @@ Sans résumé d'adaptation : aucune suggestion.
 | Record (`record`) | type, valeur, valeur précédente ; un par (exercice, nature) et par séance |
 | Première fois (`first_time`) | exercice jamais fait avant ; 3 au plus par séance |
 | Coffre (`chest`) | à chaque séance récompensée et faite : probabilité 15 %, garantie à la 8ᵉ séance sans coffre, 2 au plus par semaine civile ; contenu 10, 20, 50 ou 100 Krédits (60 %, 30 %, 9 %, 1 %) ; tirage déterminé par la graine et l'identifiant de la séance ; aucun achat, aucune perte |
-| Série de semaines (`week_streak`) | semaine réussie : faites × 4 ≥ prévues × 3 ; semaine sans séance prévue, ou touchée par une pause déclarée et non réussie : en pause, la série ne bouge pas ; sinon la série en cours repart de 0, la meilleure série est gardée ; aucun événement ne signale une semaine non réussie |
+| Série de semaines (`week_streak`) | semaine réussie : faites × 4 ≥ prévues × 3 ; semaine sans séance prévue, ou non réussie et touchée par une pause déclarée ou par une séance faite malgré une douleur : en pause, la série ne bouge pas (`quest.streak_paused`) ; sinon la série en cours repart de 0, la meilleure série est gardée ; aucun événement ne signale une semaine non réussie |
 | Flamme | taille 0 à 10 selon la série (`extras.streak.flameSize`) |
 | Fantôme (`ghost`) | par exercice, dernière et meilleure séance, série par série (`extras.ghost`) ; événement quand la séance fait mieux que la dernière fois |
 | Note de séance (`session_grade`) | score = 60 × réalisation + 30 × justesse des flammes + 10 si un record ; S ≥ 90, A ≥ 70, B ≥ 50, C sinon ; séance allégée faite en entier = réalisation complète |
@@ -300,8 +336,9 @@ Sur 10 240 journaux aléatoires (`test/properties.dart`) et dans les scénarios 
   reste.
 - **P2 — déterminisme.** Même suite d'appels, même résultat à l'octet près.
 - **P3 — export et import.** L'état relu depuis son JSON donne la même suite.
-- **P4 — garde-fous.** XP d'effort ≤ 110 par séance et ≤ séances prévues × 110 par semaine ; 0 XP et
-  aucune récompense pour une séance faite malgré une douleur ; un jour de repos ou de pause ne propose
+- **P4 — garde-fous.** XP d'effort ≤ 110 par séance et ≤ séances prévues × 110 par semaine, séances
+  comptées ≤ séances prévues ; XP de jalons ≤ 100 par semaine ; 0 XP et aucune récompense pour une séance
+  faite malgré une douleur ; un jour de repos ou de pause ne propose
   que de la récupération ; aucune quête ne demande plus que le programme.
 - **P5 — cadence.** À entrées constantes (profil, bloc, graine) et séances terminées le jour même,
   appeler le moteur chaque jour ou une seule fois à la fin donne les mêmes registres, les mêmes quêtes
@@ -324,14 +361,14 @@ relire).
 | Courbe des niveaux | `32 × n^0,875` | mesuré : calée pour que les deux archétypes de repère (3 et 4 séances par semaine) soient en moyenne au niveau 10 en 3 semaines, 25 en 3 à 4 mois, 50 en 1 an, 100 en 3 ans et demi (`docs/VALIDATION.md`) |
 | XP d'une séance | 100 (+ 10 de combo) | choix raisonné : unité de compte |
 | Volume compté en séries | — | référence : Baz-Valle et coll., 2021 |
-| Qualité relative à la cible, sans prime à l'échec | 1 jusqu'à −1 flamme, −0,125 par flamme, plancher 0,5 | référence pour le principe (Robinson 2024, Refalo 2023, Grgic 2022) ; valeurs : choix raisonné |
+| Qualité relative à la cible, sans prime à l'échec | 1 jusqu'à −2 flammes, −0,1 par flamme, plancher 0,7 | référence pour le principe (Robinson 2024, Refalo 2023, Grgic 2022) et pour la tolérance (Halperin 2022) ; pente et plancher : choix raisonné, pour qu'une note gonflée ne rapporte presque rien |
 | Série sans note | 0,7 | choix raisonné : la note sert à `kalis_adapt` |
 | Tolérance « dans la cible » | ±1 flamme | choix raisonné (une demi-répétition en réserve ; Zourdos et coll., 2016 : l'estimation du RIR est fiable près de l'échec) |
 | Régularité | 60 + 40 XP par semaine | choix raisonné ; part du repos : Meeusen et coll., 2013 (au moins un jour de repos par semaine, prévention du surentraînement) |
 | Semaine réussie | 3/4 des séances | décision du propriétaire (lot G11) |
 | Pause sans perte | — | décision du propriétaire ; Silverman et Barasch, 2023 (une série réparable démotive moins) ; Sharif et Shu, 2017 (une réserve de secours augmente la persévérance) |
 | Records | 10 + 4 par %, ≤ 30, ≤ 40 par séance | choix raisonné |
-| Jalons | 30, 30, 30, 100 ; ≤ 200 par semaine | choix raisonné ; principe : Locke et Latham, 2002 (objectifs précis et difficiles) ; Bandura et Schunk, 1981 |
+| Jalons | 30, 30, 30, 100 ; ≤ 100 par semaine ; compétence 0,5 | choix raisonné ; principe : Locke et Latham, 2002 (objectifs précis et difficiles) ; Bandura et Schunk, 1981 |
 | Quêtes | 10 / 5 / 40 / 30 / 100 / 60 XP | mesuré : les quêtes pèsent environ un quart à un tiers de l'XP, l'entraînement réel le reste (`docs/RYTHME.md`, § 3) |
 | Coffres | 15 %, garantie à 8, 2 par semaine | choix raisonné ; taux variable : Ferster et Skinner, 1957 ; ni achat ni perte : Zendle et Cairns, 2018 (ce sont les coffres payants qui sont liés au jeu problématique) ; mesuré : un coffre toutes les 4,5 à 5 séances |
 | Note de séance | 60 / 30 / 10 ; S 90, A 70, B 50 | choix raisonné ; distribution mesurée dans `docs/RYTHME.md`, § 5 |
@@ -353,7 +390,15 @@ relire).
   quêtes faites, régularité) le déplaceront. La courbe a un seul paramètre d'échelle à recaler.
 - **`plannedWorkSets` absent** : une séance terminée de plus de la moitié des séries du bloc est comptée
   complète ; sans bloc, toute séance terminée l'est.
-- **Séance modifiée après son règlement** : son XP ne change plus (ni à la hausse ni à la baisse).
+- **Séance modifiée après son règlement** : son XP ne change plus (ni à la hausse ni à la baisse) ; si sa
+  date change de semaine, elle reste comptée dans sa semaine d'origine.
+- **Tout est déclaré.** Le journal est saisi par l'utilisateur : rien n'empêche de saisir des séries non
+  faites. Les plafonds bornent ce que cela rapporte (au plus le programme), ils ne le détectent pas. De
+  même, noter « à la cible » plutôt que son ressenti rapporte au plus 30 % d'une série et le combo.
+- **Plafond et disponibilités** : sans bloc, le plafond de la semaine suit les jours de disponibilité du
+  profil ; les augmenter augmente le plafond (et les séances attendues pour la série de semaines).
+- **Objectifs** : supprimer un objectif puis en créer un autre sur le même exercice paie de nouveaux
+  jalons ; le plafond de 100 XP par semaine borne ce gain.
 - **Séance laissée inachevée** : réglée le lendemain pour ce qui est fait ; les quêtes de son jour sont
   encore ouvertes à ce moment-là.
 - **Quêtes déclaratives** : sur l'honneur (5 XP, 2 par jour au plus).
@@ -365,7 +410,9 @@ relire).
   la difficulté du catalogue plafonne à 60. Endurance et Puissance mêlent performance et pratique.
 - **Rangs** : voir `docs/STANDARDS_SOURCES.md`, § 5 (pas d'âge, figures sans sexe ni poids).
 - **Prédiction** : loi normale et tendance amortie ; l'intervalle n'est calé que sur des trajectoires
-  simulées de même forme. Sans `kalis_adapt`, il faut 3 semaines de mesures.
+  simulées de même forme (la couverture mesurée dit que le calcul est cohérent, pas que la forme est
+  vraie). Sans `kalis_adapt`, il faut 3 semaines de mesures. Les objectifs de compétence n'ont pas de
+  prédiction.
 - **Objectif suggéré** : seulement avec le résumé d'adaptation.
 - **Registres** : environ 700 à 1 000 écritures d'XP par an ; ils ne sont jamais compactés.
 - **Quêtes passées** : gardées 35 jours dans l'état ; au-delà, seuls leurs gains restent au registre.
@@ -402,6 +449,9 @@ relire).
   secondaire).
 - Gardner E. S., McKenzie E. (1985). Forecasting trends in time series. *Management Science*, 31(10),
   1237-1246 (référence non revérifiée en ligne).
+- Halperin I., Malleron T., Har-Nir I. et coll. (2022). Accuracy in predicting repetitions to task
+  failure in resistance exercise: a scoping review and exploratory meta-analysis. *Sports Medicine*,
+  52(2), 377-390 (référence non revérifiée en ligne).
 - Grgic J., Schoenfeld B. J., Orazem J., Sabol F. (2022). Effects of resistance training performed to
   repetition failure or non-failure on muscular strength and hypertrophy. *Journal of Sport and Health
   Science*, 11(2), 202-211.

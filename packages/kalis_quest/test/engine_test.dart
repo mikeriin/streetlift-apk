@@ -305,14 +305,14 @@ void main() {
       final withGoal = profile.copyWith(goals: <Goal>[goal]);
       final clean = sessionOf('a', monday, <SetRecord>[
         for (var i = 0; i < 4; i++)
-          setOf(excluded, i, load: 40, reps: 8, flames: 9, target: 9),
+          setOf(excluded, i, load: 40, reps: 5, flames: 9, target: 9),
       ], planned: 4);
       final painful = sessionOf(
         'b',
         wednesday,
         <SetRecord>[
           for (var i = 0; i < 4; i++)
-            setOf(excluded, i, load: 40, reps: 14, flames: 9, target: 9),
+            setOf(excluded, i, load: 40, reps: 8, flames: 9, target: 9),
         ],
         planned: 4,
         health: pain,
