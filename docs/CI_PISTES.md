@@ -43,3 +43,5 @@ dernières ne touchent jamais `lib/` : elles construisent des paquets Dart purs
 Durées : délai du job 90 min. Un simulateur long découpe son rapport (graines
 moins nombreuses en CI, campagne complète décrite et lancée en local dans la
 session si nécessaire, résultats commités dans `docs/` du paquet).
+
+Mise en place contrôlée par la conversation de pilotage le 01/10/2026 (premier run de `ci-paquets.yml` : « aucun paquet »).
