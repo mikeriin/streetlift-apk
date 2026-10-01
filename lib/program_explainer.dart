@@ -159,9 +159,12 @@ class ProgramPendingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => KScreen(
-    appBar: AppBar(
-      automaticallyImplyLeading: false,
-      title: const Text('TON PROGRAMME'),
+    // En-tête de l'accueil : logo (et gestes du mode dev) gardés.
+    appBar: KTopBar(
+      leading: Text(
+        'TON PROGRAMME',
+        style: Theme.of(context).textTheme.titleLarge,
+      ),
     ),
     body: KList(
       key: const ValueKey('program-pending'),

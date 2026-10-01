@@ -367,9 +367,9 @@ void main() {
         expect(app.profile!.fields, isEmpty);
         // Pesée du poids déclaré.
         expect(app.currentBodyweight, 61.5);
-      // Koach actif par défaut, « Koach adapte la structure » aussi.
-      expect(app.koach.enabled, isTrue);
-      expect(app.koach.structure, isTrue);
+        // Koach actif par défaut, « Koach adapte la structure » aussi.
+        expect(app.koach.enabled, isTrue);
+        expect(app.koach.structure, isTrue);
         final json = backupOf(app);
         expect(json['athleteProfile']['v'], 1);
         expect(json['athleteProfile']['profile']['schemaVersion'], 2);
@@ -852,7 +852,10 @@ void main() {
           .length;
       expect(shown, greaterThan(8));
       await tap(tester, 'flow-pref-more');
-      await type(tester, 'flow-pref-search', 'traction lestée de compétition');
+      final search = find.byKey(const ValueKey('flow-pref-search'));
+      await scrollToAction(tester, search, up: true);
+      await tester.enterText(search, 'traction lestée de compétition');
+      await tester.pumpAndSettle();
       await tap(tester, 'flow-like-sl-traction-lestee');
       expect(flow(tester).draft.liked, contains('sl-traction-lestee'));
     });

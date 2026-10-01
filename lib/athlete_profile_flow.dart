@@ -1182,9 +1182,10 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  for (final w in {...const [4, 6, 8, 12, 16, 24, 52], weeks}
-                      .toList()
-                    ..sort())
+                  for (final w in {
+                    ...const [4, 6, 8, 12, 16, 24, 52],
+                    weeks,
+                  }.toList()..sort())
                     ChoiceChip(
                       key: ValueKey('goal-weeks-$w'),
                       label: Text('$w semaines'),
@@ -2443,7 +2444,9 @@ class _ExercisePickerPageState extends State<ExercisePickerPage> {
             TextButton(
               key: const ValueKey('picker-more'),
               onPressed: () => setState(() => _shown += 40),
-              child: Text('Afficher plus (${all.length - list.length} restants)'),
+              child: Text(
+                'Afficher plus (${all.length - list.length} restants)',
+              ),
             ),
         ],
       ),
