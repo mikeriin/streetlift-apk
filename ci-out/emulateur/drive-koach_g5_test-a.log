@@ -1,0 +1,67 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             95.0s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...           3.9s
+D/AccessibilityBridge( 4143): Setting not found: accessibility_display_inversion_enabled, using default: 0
+D/FlutterRenderer( 4143): Width is zero. 0,0
+W/HWUI    ( 4143): Unknown dataspace 0
+I/WindowExtensionsImpl( 4143): Initializing Window Extensions, vendor API level=6, activity embedding enabled=true
+D/FlutterRenderer( 4143): Width is zero. 0,0
+D/FlutterJNI( 4143): Sending viewport metrics to the engine.
+W/HWUI    ( 4143): Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+W/HWUI    ( 4143): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+I/Gralloc4( 4143): mapper 4.x is not supported
+I/eetlift_tracker( 4143): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4143): Skipped 140 frames!  The application may be doing too much work on its main thread.
+D/ProfileInstaller( 4143): Installing profile for fr.tchoupi.streetlift_tracker
+D/FlutterJNI( 4143): Sending viewport metrics to the engine.
+I/eetlift_tracker( 4143): Compiler allocated 5417KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:42749/ZLW7-HqRVeM=/
+VMServiceFlutterDriver: Isolate found with number: 6083817035315887
+VMServiceFlutterDriver: Isolate 6083817035315887 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4143): 00:00 +0: G5 a (sombre, rouge) : Koach 2D, galerie, flammes, session de test
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 4143): Skipped 70 frames!  The application may be doing too much work on its main thread.
+I/Choreographer( 4143): Skipped 37 frames!  The application may be doing too much work on its main thread.
+D/EGL_emulation( 4143): app_time_stats: avg=568.96ms min=3.85ms max=944.88ms count=4
+D/EGL_emulation( 4143): app_time_stats: avg=166.17ms min=19.64ms max=248.67ms count=6
+D/SharedPreferencesImpl( 4143): Time required to fsync /data/user/0/fr.tchoupi.streetlift_tracker/shared_prefs/FlutterSharedPreferences.xml: [<1: 0, <2: 0, <4: 0, <8: 0, <16: 1, <32: 0, <64: 0, <128: 0, <256: 2, <512: 1, <1024: 0, <2048: 0, <4096: 0, <8192: 0, <16384: 0, >=16384: 0]
+D/EGL_emulation( 4143): app_time_stats: avg=288.10ms min=245.63ms max=342.01ms count=3
+D/EGL_emulation( 4143): app_time_stats: avg=2484.15ms min=2484.15ms max=2484.15ms count=1
+D/EGL_emulation( 4143): app_time_stats: avg=622.87ms min=447.79ms max=797.94ms count=2
+D/EGL_emulation( 4143): app_time_stats: avg=1282.34ms min=1282.34ms max=1282.34ms count=1
+Unhandled exception:
+DriverError: Failed to fulfill RequestData due to remote error
+Original error: ext.flutter.driver: (112) Service has disappeared
+Original stack trace:
+#0      new _OutstandingRequest (package:vm_service/src/vm_service.dart:265:34)
+#1      VmService._call.<anonymous closure> (package:vm_service/src/vm_service.dart:1921:25)
+#2      VmService._call (package:vm_service/src/vm_service.dart:1933:8)
+#3      VmService.callServiceExtension (package:vm_service/src/vm_service.dart:1872:14)
+#4      VMServiceFlutterDriver.sendCommand (package:flutter_driver/src/driver/vmservice_driver.dart:327:12)
+#5      FlutterDriver.requestData (package:flutter_driver/src/driver/driver.dart:585:13)
+#6      integrationDriver (package:integration_test/integration_test_driver.dart:71:42)
+<asynchronous suspension>
+
+
+#0      VMServiceFlutterDriver.sendCommand (package:flutter_driver/src/driver/vmservice_driver.dart:340:7)
+<asynchronous suspension>
+#1      FlutterDriver.requestData (package:flutter_driver/src/driver/driver.dart:585:7)
+<asynchronous suspension>
+#2      integrationDriver (package:integration_test/integration_test_driver.dart:71:29)
+<asynchronous suspension>
+D/EGL_emulation( 4143): app_time_stats: avg=15311.78ms min=15311.78ms max=15311.78ms count=1
