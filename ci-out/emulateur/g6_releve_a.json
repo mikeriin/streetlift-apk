@@ -1,0 +1,33 @@
+{
+  "partie": "a",
+  "theme": "sombre",
+  "couleur_dominante": "rouge",
+  "perso_proposition": true,
+  "perso_proposition_koach": 1,
+  "perso_accueil": true,
+  "dev_actif": true,
+  "dev_creation": true,
+  "discipline_koachs": 3,
+  "objectifs_proposes": true,
+  "recap": true,
+  "texte_200_exception": "null",
+  "duree_parcours_s": 151,
+  "attente_programme": true,
+  "profil_valide": true,
+  "profil_catalogue": true,
+  "profil_objectifs": 2,
+  "profil_jours": [
+    1,
+    3,
+    6
+  ],
+  "profil_genes": 1,
+  "profil_sante": "standard",
+  "programme_en_attente": true,
+  "programme_embarque_cache": true,
+  "explication": true,
+  "reglages_profil": true,
+  "retour_perso": true,
+  "perso_intacte": true,
+  "perso_sans_profil_v2": true
+}

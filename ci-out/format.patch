@@ -1,0 +1,66 @@
+diff --git a/lib/athlete_profile_flow.dart b/lib/athlete_profile_flow.dart
+index d148e58..67aaee3 100644
+--- a/lib/athlete_profile_flow.dart
++++ b/lib/athlete_profile_flow.dart
+@@ -1182,9 +1182,10 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
+                 spacing: 8,
+                 runSpacing: 8,
+                 children: [
+-                  for (final w in {...const [4, 6, 8, 12, 16, 24, 52], weeks}
+-                      .toList()
+-                    ..sort())
++                  for (final w in {
++                    ...const [4, 6, 8, 12, 16, 24, 52],
++                    weeks,
++                  }.toList()..sort())
+                     ChoiceChip(
+                       key: ValueKey('goal-weeks-$w'),
+                       label: Text('$w semaines'),
+@@ -2443,7 +2444,9 @@ class _ExercisePickerPageState extends State<ExercisePickerPage> {
+             TextButton(
+               key: const ValueKey('picker-more'),
+               onPressed: () => setState(() => _shown += 40),
+-              child: Text('Afficher plus (${all.length - list.length} restants)'),
++              child: Text(
++                'Afficher plus (${all.length - list.length} restants)',
++              ),
+             ),
+         ],
+       ),
+diff --git a/test/g2_retrait_test.dart b/test/g2_retrait_test.dart
+index ff009bc..84d6dda 100644
+--- a/test/g2_retrait_test.dart
++++ b/test/g2_retrait_test.dart
+@@ -436,8 +436,11 @@ void main() {
+     });
+   });
+ 
+-  test('version affichée : « 6.4.1 » hors build de développement (G6 correction 1)', () {
+-    expect(kVersion, '6.4.1');
+-    expect(kAppVersion, '6.4.1');
+-  });
++  test(
++    'version affichée : « 6.4.1 » hors build de développement (G6 correction 1)',
++    () {
++      expect(kVersion, '6.4.1');
++      expect(kAppVersion, '6.4.1');
++    },
++  );
+ }
+diff --git a/test/g6_profil_test.dart b/test/g6_profil_test.dart
+index 47d223d..f3f041f 100644
+--- a/test/g6_profil_test.dart
++++ b/test/g6_profil_test.dart
+@@ -367,9 +367,9 @@ void main() {
+         expect(app.profile!.fields, isEmpty);
+         // Pesée du poids déclaré.
+         expect(app.currentBodyweight, 61.5);
+-      // Koach actif par défaut, « Koach adapte la structure » aussi.
+-      expect(app.koach.enabled, isTrue);
+-      expect(app.koach.structure, isTrue);
++        // Koach actif par défaut, « Koach adapte la structure » aussi.
++        expect(app.koach.enabled, isTrue);
++        expect(app.koach.structure, isTrue);
+         final json = backupOf(app);
+         expect(json['athleteProfile']['v'], 1);
+         expect(json['athleteProfile']['profile']['schemaVersion'], 2);
