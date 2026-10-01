@@ -1,0 +1,8270 @@
+{
+ "engineVersion": "0.1.0",
+ "catalogVersion": "1.1.0",
+ "rulesVersion": "1.1.0",
+ "fixtures": 40,
+ "population": 1000,
+ "profiles": {
+  "debutant_forme_generale_maison_2x30": {
+   "score": 0.9481,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9578,
+    "muscle_volume": 0.8615,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9741,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.5486,
+    "stimulus_fatigue": 0.8777,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     29.683,
+     29.667
+    ],
+    "dayBudget": [
+     30,
+     30
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.989,
+    "classShare": {
+     "cardio": 0.375,
+     "mobility": 0.108,
+     "generalFitness": 0.517
+    },
+    "classTarget": {
+     "cardio": 0.35,
+     "mobility": 0.15,
+     "generalFitness": 0.5
+    },
+    "dosageError": 0.042,
+    "groupSets": {
+     "chest": 5.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 0.0,
+     "delt_posterior": 0.0,
+     "lats": 0.0,
+     "upper_back": 0.0,
+     "biceps": 0.0,
+     "triceps": 5.0,
+     "abs": 3.0,
+     "lower_back": 3.0,
+     "glutes": 3.0,
+     "quads": 3.0,
+     "hamstrings": 2.0,
+     "calves": 1.5,
+     "forearms": 0.0,
+     "adductors": 1.5,
+     "upper_traps": 0.0
+    },
+    "bandLow": {
+     "chest": 1.5,
+     "delt_anterior": 1.5,
+     "delt_middle": 0.0,
+     "delt_posterior": 0.0,
+     "lats": 0.0,
+     "upper_back": 0.0,
+     "biceps": 0.0,
+     "triceps": 1.5,
+     "abs": 1.5,
+     "lower_back": 1.5,
+     "glutes": 1.5,
+     "quads": 1.5,
+     "hamstrings": 1.5,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 5.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 5.0,
+     "delt_posterior": 5.0,
+     "lats": 5.0,
+     "upper_back": 5.0,
+     "biceps": 5.0,
+     "triceps": 5.0,
+     "abs": 5.0,
+     "lower_back": 5.0,
+     "glutes": 5.0,
+     "quads": 5.0,
+     "hamstrings": 5.0,
+     "calves": 5.0,
+     "forearms": 5.0,
+     "adductors": 5.0,
+     "upper_traps": 5.0
+    },
+    "inBandShare": 1.0,
+    "pullSets": 0.0,
+    "pushSets": 5.0,
+    "hipSets": 2.0,
+    "kneeSets": 3.0,
+    "coveredPatterns": 3,
+    "coverablePatterns": 3,
+    "slots": 11,
+    "distinctExercises": 10,
+    "resistanceMinutes": 27.6,
+    "majorCredits": 30.5,
+    "score": {
+     "total": 0.9481227892699711,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9577788191190253,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.8615384615384615,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9741330834114339,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.5486147186147184,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.8777173913043478,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.1053
+  },
+  "femme_45_musculation_salle_4x60": {
+   "score": 0.9718,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.999,
+    "muscle_volume": 0.9823,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9875,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.7066,
+    "stimulus_fatigue": 0.7669,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     59.317,
+     59.767,
+     59.733,
+     59.367
+    ],
+    "dayBudget": [
+     60,
+     60,
+     60,
+     60
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.992,
+    "classShare": {
+     "musculation": 0.801,
+     "mobility": 0.199
+    },
+    "classTarget": {
+     "musculation": 0.8,
+     "mobility": 0.2
+    },
+    "dosageError": 0.001,
+    "groupSets": {
+     "chest": 10.5,
+     "delt_anterior": 12.0,
+     "delt_middle": 9.0,
+     "delt_posterior": 11.5,
+     "lats": 13.0,
+     "upper_back": 14.5,
+     "biceps": 8.0,
+     "triceps": 10.5,
+     "abs": 10.5,
+     "lower_back": 8.0,
+     "glutes": 16.0,
+     "quads": 10.0,
+     "hamstrings": 9.0,
+     "calves": 3.5,
+     "forearms": 0.0,
+     "adductors": 7.0,
+     "upper_traps": 4.5
+    },
+    "bandLow": {
+     "chest": 8.0,
+     "delt_anterior": 8.0,
+     "delt_middle": 8.0,
+     "delt_posterior": 8.0,
+     "lats": 8.0,
+     "upper_back": 8.0,
+     "biceps": 8.0,
+     "triceps": 8.0,
+     "abs": 8.0,
+     "lower_back": 8.0,
+     "glutes": 8.0,
+     "quads": 8.0,
+     "hamstrings": 8.0,
+     "calves": 8.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 16.0,
+     "delt_anterior": 16.0,
+     "delt_middle": 16.0,
+     "delt_posterior": 16.0,
+     "lats": 16.0,
+     "upper_back": 16.0,
+     "biceps": 16.0,
+     "triceps": 16.0,
+     "abs": 16.0,
+     "lower_back": 16.0,
+     "glutes": 16.0,
+     "quads": 16.0,
+     "hamstrings": 16.0,
+     "calves": 16.0,
+     "forearms": 16.0,
+     "adductors": 16.0,
+     "upper_traps": 16.0
+    },
+    "inBandShare": 0.956,
+    "pullSets": 16.0,
+    "pushSets": 12.0,
+    "hipSets": 12.0,
+    "kneeSets": 8.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 34,
+    "distinctExercises": 27,
+    "resistanceMinutes": 174.75,
+    "majorCredits": 146.0,
+    "score": {
+     "total": 0.9718767085700974,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9990680620273471,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9848557692307691,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9857000993048659,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.7066386554621851,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.7697043395326657,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.1053
+  },
+  "coureur_cardio_3x45": {
+   "score": 0.9284,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9855,
+    "muscle_volume": 0.6434,
+    "pattern_balance": 0.93,
+    "discipline_structure": 0.9635,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.5753,
+    "stimulus_fatigue": 0.8919,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     44.95,
+     44.883,
+     74.367
+    ],
+    "dayBudget": [
+     45,
+     45,
+     75
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.996,
+    "classShare": {
+     "musculation": 0.214,
+     "cardio": 0.691,
+     "mobility": 0.095
+    },
+    "classTarget": {
+     "musculation": 0.2,
+     "cardio": 0.7,
+     "mobility": 0.1
+    },
+    "dosageError": 0.014,
+    "groupSets": {
+     "chest": 2.0,
+     "delt_anterior": 2.0,
+     "delt_middle": 1.0,
+     "delt_posterior": 2.0,
+     "lats": 2.0,
+     "upper_back": 2.0,
+     "biceps": 0.0,
+     "triceps": 2.0,
+     "abs": 5.0,
+     "lower_back": 1.0,
+     "glutes": 2.0,
+     "quads": 2.0,
+     "hamstrings": 2.0,
+     "calves": 1.0,
+     "forearms": 0.0,
+     "adductors": 1.0,
+     "upper_traps": 0.0
+    },
+    "bandLow": {
+     "chest": 2.0,
+     "delt_anterior": 2.0,
+     "delt_middle": 2.0,
+     "delt_posterior": 2.0,
+     "lats": 2.0,
+     "upper_back": 2.0,
+     "biceps": 2.0,
+     "triceps": 2.0,
+     "abs": 2.0,
+     "lower_back": 2.0,
+     "glutes": 2.0,
+     "quads": 2.0,
+     "hamstrings": 2.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 5.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 5.0,
+     "delt_posterior": 5.0,
+     "lats": 5.0,
+     "upper_back": 5.0,
+     "biceps": 5.0,
+     "triceps": 5.0,
+     "abs": 5.0,
+     "lower_back": 5.0,
+     "glutes": 5.0,
+     "quads": 5.0,
+     "hamstrings": 5.0,
+     "calves": 5.0,
+     "forearms": 5.0,
+     "adductors": 5.0,
+     "upper_traps": 5.0
+    },
+    "inBandShare": 0.822,
+    "pullSets": 2.0,
+    "pushSets": 2.0,
+    "hipSets": 2.0,
+    "kneeSets": 2.0,
+    "coveredPatterns": 4,
+    "coverablePatterns": 5,
+    "slots": 19,
+    "distinctExercises": 16,
+    "resistanceMinutes": 32.983,
+    "majorCredits": 26.0,
+    "score": {
+     "total": 0.9303827211395359,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9861003026372676,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.6433797909407665,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 0.9299999999999999,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.963579766536965,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.5995031055900621,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.9052551793835271,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0
+  },
+  "crossfit_5x60": {
+   "score": 0.9526,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9958,
+    "muscle_volume": 0.9896,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.8398,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.6344,
+    "stimulus_fatigue": 0.7685,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     59.967,
+     59.883,
+     57.9,
+     56.4,
+     59.617
+    ],
+    "dayBudget": [
+     60,
+     60,
+     60,
+     60,
+     60
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.979,
+    "classShare": {
+     "crossfit": 0.8,
+     "mobility": 0.2
+    },
+    "classTarget": {
+     "crossfit": 0.8,
+     "mobility": 0.2
+    },
+    "dosageError": 0.0,
+    "groupSets": {
+     "chest": 13.5,
+     "delt_anterior": 11.0,
+     "delt_middle": 13.5,
+     "delt_posterior": 9.5,
+     "lats": 11.0,
+     "upper_back": 8.5,
+     "biceps": 7.5,
+     "triceps": 15.0,
+     "abs": 7.5,
+     "lower_back": 7.5,
+     "glutes": 16.0,
+     "quads": 12.5,
+     "hamstrings": 12.0,
+     "calves": 5.5,
+     "forearms": 0.0,
+     "adductors": 6.0,
+     "upper_traps": 12.0
+    },
+    "bandLow": {
+     "chest": 7.5,
+     "delt_anterior": 7.5,
+     "delt_middle": 7.5,
+     "delt_posterior": 7.5,
+     "lats": 7.5,
+     "upper_back": 7.5,
+     "biceps": 7.5,
+     "triceps": 7.5,
+     "abs": 7.5,
+     "lower_back": 7.5,
+     "glutes": 7.5,
+     "quads": 7.5,
+     "hamstrings": 7.5,
+     "calves": 7.5,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 15.5,
+     "delt_anterior": 15.5,
+     "delt_middle": 15.5,
+     "delt_posterior": 15.5,
+     "lats": 15.5,
+     "upper_back": 15.5,
+     "biceps": 15.5,
+     "triceps": 15.5,
+     "abs": 15.5,
+     "lower_back": 15.5,
+     "glutes": 15.5,
+     "quads": 15.5,
+     "hamstrings": 15.5,
+     "calves": 15.5,
+     "forearms": 15.5,
+     "adductors": 15.5,
+     "upper_traps": 15.5
+    },
+    "inBandShare": 0.867,
+    "pullSets": 12.5,
+    "pushSets": 11.5,
+    "hipSets": 3.0,
+    "kneeSets": 3.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 44,
+    "distinctExercises": 39,
+    "resistanceMinutes": 151.85,
+    "majorCredits": 150.5,
+    "score": {
+     "total": 0.9530285136941383,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9999255860101699,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9896452617827354,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.8403668901518191,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6344155844155845,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.7685483969316699,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0417
+  },
+  "calisthenie_figures_4x75": {
+   "score": 0.9522,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9988,
+    "muscle_volume": 0.8933,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.8773,
+    "time_use": 0.9756,
+    "variety": 1.0,
+    "exercise_fit": 0.7051,
+    "stimulus_fatigue": 0.7777,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     63.9,
+     62.983,
+     63.917,
+     62.9
+    ],
+    "dayBudget": [
+     75,
+     75,
+     75,
+     75
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.846,
+    "classShare": {
+     "calisthenics": 0.799,
+     "mobility": 0.201
+    },
+    "classTarget": {
+     "calisthenics": 0.8,
+     "mobility": 0.2
+    },
+    "dosageError": 0.001,
+    "groupSets": {
+     "chest": 15.5,
+     "delt_anterior": 16.0,
+     "delt_middle": 6.0,
+     "delt_posterior": 12.5,
+     "lats": 17.0,
+     "upper_back": 14.5,
+     "biceps": 8.5,
+     "triceps": 14.0,
+     "abs": 13.0,
+     "lower_back": 9.0,
+     "glutes": 8.0,
+     "quads": 10.0,
+     "hamstrings": 1.5,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 1.5,
+     "upper_traps": 6.0
+    },
+    "bandLow": {
+     "chest": 8.0,
+     "delt_anterior": 8.0,
+     "delt_middle": 8.0,
+     "delt_posterior": 8.0,
+     "lats": 8.0,
+     "upper_back": 8.0,
+     "biceps": 8.0,
+     "triceps": 8.0,
+     "abs": 8.0,
+     "lower_back": 8.0,
+     "glutes": 8.0,
+     "quads": 8.0,
+     "hamstrings": 8.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 16.0,
+     "delt_anterior": 16.0,
+     "delt_middle": 16.0,
+     "delt_posterior": 16.0,
+     "lats": 16.0,
+     "upper_back": 16.0,
+     "biceps": 16.0,
+     "triceps": 16.0,
+     "abs": 16.0,
+     "lower_back": 16.0,
+     "glutes": 16.0,
+     "quads": 16.0,
+     "hamstrings": 16.0,
+     "calves": 16.0,
+     "forearms": 16.0,
+     "adductors": 16.0,
+     "upper_traps": 16.0
+    },
+    "inBandShare": 0.756,
+    "pullSets": 27.0,
+    "pushSets": 24.0,
+    "hipSets": 3.0,
+    "kneeSets": 3.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 37,
+    "distinctExercises": 23,
+    "resistanceMinutes": 186.7,
+    "majorCredits": 145.5,
+    "score": {
+     "total": 0.9522939637114112,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9988874625588361,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.8932931726907629,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.87748324062188,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 0.9762155663552161,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.7050965250965252,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.7777430617548453,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0625
+  },
+  "street_streetlifting_4x90": {
+   "score": 0.9564,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 0.992,
+    "discipline_dosage": 0.9909,
+    "muscle_volume": 0.929,
+    "pattern_balance": 0.9905,
+    "discipline_structure": 0.93,
+    "time_use": 0.9849,
+    "variety": 1.0,
+    "exercise_fit": 0.7092,
+    "stimulus_fatigue": 0.6562,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     83.633,
+     82.6,
+     81.267,
+     81.283
+    ],
+    "dayBudget": [
+     90,
+     90,
+     90,
+     90
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.913,
+    "classShare": {
+     "streetWorkout": 0.25,
+     "streetlifting": 0.602,
+     "calisthenics": 0.148
+    },
+    "classTarget": {
+     "streetWorkout": 0.25,
+     "streetlifting": 0.6,
+     "calisthenics": 0.15
+    },
+    "dosageError": 0.002,
+    "groupSets": {
+     "chest": 20.0,
+     "delt_anterior": 18.0,
+     "delt_middle": 13.0,
+     "delt_posterior": 13.5,
+     "lats": 22.0,
+     "upper_back": 15.0,
+     "biceps": 12.5,
+     "triceps": 20.0,
+     "abs": 20.0,
+     "lower_back": 15.0,
+     "glutes": 17.5,
+     "quads": 19.0,
+     "hamstrings": 12.5,
+     "calves": 3.5,
+     "forearms": 4.0,
+     "adductors": 11.5,
+     "upper_traps": 10.5
+    },
+    "bandLow": {
+     "chest": 12.0,
+     "delt_anterior": 12.0,
+     "delt_middle": 12.0,
+     "delt_posterior": 12.0,
+     "lats": 12.0,
+     "upper_back": 12.0,
+     "biceps": 12.0,
+     "triceps": 12.0,
+     "abs": 12.0,
+     "lower_back": 12.0,
+     "glutes": 12.0,
+     "quads": 12.0,
+     "hamstrings": 12.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 20.0,
+     "delt_anterior": 20.0,
+     "delt_middle": 20.0,
+     "delt_posterior": 20.0,
+     "lats": 20.0,
+     "upper_back": 20.0,
+     "biceps": 20.0,
+     "triceps": 20.0,
+     "abs": 20.0,
+     "lower_back": 20.0,
+     "glutes": 20.0,
+     "quads": 20.0,
+     "hamstrings": 20.0,
+     "calves": 20.0,
+     "forearms": 20.0,
+     "adductors": 20.0,
+     "upper_traps": 20.0
+    },
+    "inBandShare": 0.911,
+    "pullSets": 26.0,
+    "pushSets": 26.0,
+    "hipSets": 9.0,
+    "kneeSets": 12.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 28,
+    "distinctExercises": 27,
+    "resistanceMinutes": 308.783,
+    "majorCredits": 221.5,
+    "score": {
+     "total": 0.9610289801296199,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 0.992,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9975684136665407,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9824999999999999,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9283977438333243,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6845408163265307,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.6523046353860841,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.1351
+  },
+  "street_sets_reps_4x60": {
+   "score": 0.9427,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9962,
+    "muscle_volume": 0.9089,
+    "pattern_balance": 0.9939,
+    "discipline_structure": 0.9264,
+    "time_use": 0.8924,
+    "variety": 0.875,
+    "exercise_fit": 0.6427,
+    "stimulus_fatigue": 0.744,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     49.6,
+     50.2,
+     49.95,
+     49.25
+    ],
+    "dayBudget": [
+     60,
+     60,
+     60,
+     60
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.829,
+    "classShare": {
+     "streetWorkout": 0.593,
+     "streetlifting": 0.203,
+     "calisthenics": 0.204
+    },
+    "classTarget": {
+     "streetWorkout": 0.6,
+     "streetlifting": 0.2,
+     "calisthenics": 0.2
+    },
+    "dosageError": 0.007,
+    "groupSets": {
+     "chest": 20.0,
+     "delt_anterior": 16.5,
+     "delt_middle": 7.0,
+     "delt_posterior": 6.0,
+     "lats": 16.5,
+     "upper_back": 13.0,
+     "biceps": 12.5,
+     "triceps": 15.0,
+     "abs": 16.0,
+     "lower_back": 0.0,
+     "glutes": 13.0,
+     "quads": 13.0,
+     "hamstrings": 9.0,
+     "calves": 3.0,
+     "forearms": 0.0,
+     "adductors": 6.5,
+     "upper_traps": 2.0
+    },
+    "bandLow": {
+     "chest": 12.0,
+     "delt_anterior": 12.0,
+     "delt_middle": 12.0,
+     "delt_posterior": 12.0,
+     "lats": 12.0,
+     "upper_back": 12.0,
+     "biceps": 12.0,
+     "triceps": 12.0,
+     "abs": 12.0,
+     "lower_back": 12.0,
+     "glutes": 12.0,
+     "quads": 12.0,
+     "hamstrings": 12.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 20.0,
+     "delt_anterior": 20.0,
+     "delt_middle": 20.0,
+     "delt_posterior": 20.0,
+     "lats": 20.0,
+     "upper_back": 20.0,
+     "biceps": 20.0,
+     "triceps": 20.0,
+     "abs": 20.0,
+     "lower_back": 20.0,
+     "glutes": 20.0,
+     "quads": 20.0,
+     "hamstrings": 20.0,
+     "calves": 20.0,
+     "forearms": 20.0,
+     "adductors": 20.0,
+     "upper_traps": 20.0
+    },
+    "inBandShare": 0.733,
+    "pullSets": 20.5,
+    "pushSets": 14.5,
+    "hipSets": 7.0,
+    "kneeSets": 10.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 19,
+    "distinctExercises": 17,
+    "resistanceMinutes": 179.0,
+    "majorCredits": 160.5,
+    "score": {
+     "total": 0.9475063187843076,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9930167597765364,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9161458333333332,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9261638733705773,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 0.9656493394909944,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 0.875,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6427142857142856,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.7407732552983949,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.1667
+  },
+  "street_calisthenie_5x60": {
+   "score": 0.9619,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9947,
+    "muscle_volume": 0.9621,
+    "pattern_balance": 0.9939,
+    "discipline_structure": 0.9287,
+    "time_use": 0.98,
+    "variety": 1.0,
+    "exercise_fit": 0.6795,
+    "stimulus_fatigue": 0.8308,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     51.6,
+     53.083,
+     51.783,
+     52.7,
+     52.317
+    ],
+    "dayBudget": [
+     60,
+     60,
+     60,
+     60,
+     60
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.872,
+    "classShare": {
+     "streetWorkout": 0.405,
+     "calisthenics": 0.595
+    },
+    "classTarget": {
+     "streetWorkout": 0.4,
+     "calisthenics": 0.6
+    },
+    "dosageError": 0.005,
+    "groupSets": {
+     "chest": 15.5,
+     "delt_anterior": 19.0,
+     "delt_middle": 8.5,
+     "delt_posterior": 9.5,
+     "lats": 16.5,
+     "upper_back": 15.5,
+     "biceps": 14.0,
+     "triceps": 15.0,
+     "abs": 13.5,
+     "lower_back": 7.0,
+     "glutes": 14.0,
+     "quads": 16.0,
+     "hamstrings": 7.5,
+     "calves": 3.0,
+     "forearms": 0.0,
+     "adductors": 6.0,
+     "upper_traps": 7.0
+    },
+    "bandLow": {
+     "chest": 8.0,
+     "delt_anterior": 8.0,
+     "delt_middle": 8.0,
+     "delt_posterior": 8.0,
+     "lats": 8.0,
+     "upper_back": 8.0,
+     "biceps": 8.0,
+     "triceps": 8.0,
+     "abs": 8.0,
+     "lower_back": 8.0,
+     "glutes": 8.0,
+     "quads": 8.0,
+     "hamstrings": 8.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 16.0,
+     "delt_anterior": 16.0,
+     "delt_middle": 16.0,
+     "delt_posterior": 16.0,
+     "lats": 16.0,
+     "upper_back": 16.0,
+     "biceps": 16.0,
+     "triceps": 16.0,
+     "abs": 16.0,
+     "lower_back": 16.0,
+     "glutes": 16.0,
+     "quads": 16.0,
+     "hamstrings": 16.0,
+     "calves": 16.0,
+     "forearms": 16.0,
+     "adductors": 16.0,
+     "upper_traps": 16.0
+    },
+    "inBandShare": 0.733,
+    "pullSets": 30.0,
+    "pushSets": 24.0,
+    "hipSets": 6.0,
+    "kneeSets": 9.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 28,
+    "distinctExercises": 25,
+    "resistanceMinutes": 236.483,
+    "majorCredits": 174.5,
+    "score": {
+     "total": 0.9620547679230356,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9951088871661146,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9729381443298968,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 0.9939393939393939,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9264279371344,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 0.979914659041111,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6713945578231293,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.833346757548604,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0286
+  },
+  "blessure_epaule_musculation_3x60": {
+   "score": 0.9585,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 0.9298,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 1.0,
+    "muscle_volume": 0.9107,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9829,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.6916,
+    "stimulus_fatigue": 0.6893,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     59.45,
+     59.25,
+     59.75
+    ],
+    "dayBudget": [
+     60,
+     60,
+     60
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.991,
+    "classShare": {
+     "musculation": 1.0
+    },
+    "classTarget": {
+     "musculation": 1.0
+    },
+    "dosageError": 0.0,
+    "groupSets": {
+     "chest": 7.5,
+     "delt_anterior": 6.0,
+     "delt_middle": 0.0,
+     "delt_posterior": 4.0,
+     "lats": 8.0,
+     "upper_back": 9.5,
+     "biceps": 16.0,
+     "triceps": 9.0,
+     "abs": 9.0,
+     "lower_back": 11.0,
+     "glutes": 16.0,
+     "quads": 10.0,
+     "hamstrings": 9.0,
+     "calves": 5.0,
+     "forearms": 0.0,
+     "adductors": 11.5,
+     "upper_traps": 0.0
+    },
+    "bandLow": {
+     "chest": 8.0,
+     "delt_anterior": 8.0,
+     "delt_middle": 8.0,
+     "delt_posterior": 8.0,
+     "lats": 8.0,
+     "upper_back": 8.0,
+     "biceps": 8.0,
+     "triceps": 8.0,
+     "abs": 8.0,
+     "lower_back": 8.0,
+     "glutes": 8.0,
+     "quads": 8.0,
+     "hamstrings": 8.0,
+     "calves": 8.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 16.0,
+     "delt_anterior": 16.0,
+     "delt_middle": 16.0,
+     "delt_posterior": 16.0,
+     "lats": 16.0,
+     "upper_back": 16.0,
+     "biceps": 16.0,
+     "triceps": 16.0,
+     "abs": 16.0,
+     "lower_back": 16.0,
+     "glutes": 16.0,
+     "quads": 16.0,
+     "hamstrings": 16.0,
+     "calves": 16.0,
+     "forearms": 16.0,
+     "adductors": 16.0,
+     "upper_traps": 16.0
+    },
+    "inBandShare": 0.689,
+    "pullSets": 8.0,
+    "pushSets": 6.0,
+    "hipSets": 9.0,
+    "kneeSets": 7.0,
+    "coveredPatterns": 5,
+    "coverablePatterns": 5,
+    "slots": 21,
+    "distinctExercises": 20,
+    "resistanceMinutes": 163.45,
+    "majorCredits": 120.0,
+    "score": {
+     "total": 0.9580221236531729,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 0.9340165188130927,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 1.0,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9124999999999999,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9829305598042215,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6815873015873014,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.6806107882125013,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.1071
+  },
+  "minimal_1x20": {
+   "score": 0.9128,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.65,
+    "muscle_volume": 1.0,
+    "pattern_balance": 0.7667,
+    "discipline_structure": 0.8754,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.6095,
+    "stimulus_fatigue": 0.9097,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     19.75
+    ],
+    "dayBudget": [
+     20
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.988,
+    "classShare": {
+     "cardio": 0.0,
+     "mobility": 0.289,
+     "generalFitness": 0.711
+    },
+    "classTarget": {
+     "cardio": 0.35,
+     "mobility": 0.15,
+     "generalFitness": 0.5
+    },
+    "dosageError": 0.35,
+    "groupSets": {
+     "chest": 2.0,
+     "delt_anterior": 2.0,
+     "delt_middle": 0.0,
+     "delt_posterior": 0.0,
+     "lats": 0.0,
+     "upper_back": 0.0,
+     "biceps": 0.0,
+     "triceps": 2.0,
+     "abs": 2.0,
+     "lower_back": 2.0,
+     "glutes": 2.0,
+     "quads": 2.0,
+     "hamstrings": 0.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandLow": {
+     "chest": 0.5,
+     "delt_anterior": 0.5,
+     "delt_middle": 0.0,
+     "delt_posterior": 0.0,
+     "lats": 0.0,
+     "upper_back": 0.0,
+     "biceps": 0.0,
+     "triceps": 0.5,
+     "abs": 0.5,
+     "lower_back": 0.5,
+     "glutes": 0.5,
+     "quads": 0.5,
+     "hamstrings": 0.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 5.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 5.0,
+     "delt_posterior": 5.0,
+     "lats": 5.0,
+     "upper_back": 5.0,
+     "biceps": 5.0,
+     "triceps": 5.0,
+     "abs": 5.0,
+     "lower_back": 5.0,
+     "glutes": 5.0,
+     "quads": 5.0,
+     "hamstrings": 5.0,
+     "calves": 5.0,
+     "forearms": 5.0,
+     "adductors": 5.0,
+     "upper_traps": 5.0
+    },
+    "inBandShare": 1.0,
+    "pullSets": 0.0,
+    "pushSets": 2.0,
+    "hipSets": 0.0,
+    "kneeSets": 0.0,
+    "coveredPatterns": 1,
+    "coverablePatterns": 3,
+    "slots": 5,
+    "distinctExercises": 5,
+    "resistanceMinutes": 12.617,
+    "majorCredits": 14.0,
+    "score": {
+     "total": 0.9129797818482892,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.65,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 1.0,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 0.7666666666666667,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.8769600938967136,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6095238095238095,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.9097313958608542,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0667
+  },
+  "six_jours_musculation_avance_6x75": {
+   "score": 0.9669,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 1.0,
+    "muscle_volume": 0.9907,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.968,
+    "time_use": 0.9485,
+    "variety": 1.0,
+    "exercise_fit": 0.711,
+    "stimulus_fatigue": 0.7115,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     66.0,
+     67.25,
+     67.05,
+     67.0,
+     65.75,
+     66.6
+    ],
+    "dayBudget": [
+     75,
+     75,
+     75,
+     75,
+     75,
+     75
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.888,
+    "classShare": {
+     "musculation": 1.0
+    },
+    "classTarget": {
+     "musculation": 1.0
+    },
+    "dosageError": 0.0,
+    "groupSets": {
+     "chest": 20.0,
+     "delt_anterior": 19.0,
+     "delt_middle": 18.0,
+     "delt_posterior": 19.5,
+     "lats": 20.0,
+     "upper_back": 19.5,
+     "biceps": 20.5,
+     "triceps": 19.0,
+     "abs": 20.0,
+     "lower_back": 16.0,
+     "glutes": 20.0,
+     "quads": 14.0,
+     "hamstrings": 14.0,
+     "calves": 13.0,
+     "forearms": 0.0,
+     "adductors": 17.0,
+     "upper_traps": 7.0
+    },
+    "bandLow": {
+     "chest": 12.0,
+     "delt_anterior": 12.0,
+     "delt_middle": 12.0,
+     "delt_posterior": 12.0,
+     "lats": 12.0,
+     "upper_back": 12.0,
+     "biceps": 12.0,
+     "triceps": 12.0,
+     "abs": 12.0,
+     "lower_back": 12.0,
+     "glutes": 12.0,
+     "quads": 12.0,
+     "hamstrings": 12.0,
+     "calves": 12.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 20.0,
+     "delt_anterior": 20.0,
+     "delt_middle": 20.0,
+     "delt_posterior": 20.0,
+     "lats": 20.0,
+     "upper_back": 20.0,
+     "biceps": 20.0,
+     "triceps": 20.0,
+     "abs": 20.0,
+     "lower_back": 20.0,
+     "glutes": 20.0,
+     "quads": 20.0,
+     "hamstrings": 20.0,
+     "calves": 20.0,
+     "forearms": 20.0,
+     "adductors": 20.0,
+     "upper_traps": 20.0
+    },
+    "inBandShare": 0.933,
+    "pullSets": 26.0,
+    "pushSets": 26.0,
+    "hipSets": 12.0,
+    "kneeSets": 8.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 37,
+    "distinctExercises": 36,
+    "resistanceMinutes": 369.65,
+    "majorCredits": 252.5,
+    "score": {
+     "total": 0.9693672414132304,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 1.0,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.998,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9682437698466375,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 0.9873907768907921,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.7055598455598459,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.712584727294588,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.1613
+  },
+  "senior_65_forme_generale_3x40": {
+   "score": 0.9351,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 0.9911,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9698,
+    "muscle_volume": 0.7754,
+    "pattern_balance": 0.9417,
+    "discipline_structure": 0.9152,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.6352,
+    "stimulus_fatigue": 0.7587,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     39.967,
+     39.467,
+     39.8
+    ],
+    "dayBudget": [
+     40,
+     40,
+     40
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.994,
+    "classShare": {
+     "cardio": 0.192,
+     "mobility": 0.478,
+     "generalFitness": 0.33
+    },
+    "classTarget": {
+     "cardio": 0.21,
+     "mobility": 0.49,
+     "generalFitness": 0.3
+    },
+    "dosageError": 0.03,
+    "groupSets": {
+     "chest": 3.0,
+     "delt_anterior": 3.0,
+     "delt_middle": 0.0,
+     "delt_posterior": 0.0,
+     "lats": 5.0,
+     "upper_back": 1.5,
+     "biceps": 1.5,
+     "triceps": 3.0,
+     "abs": 3.0,
+     "lower_back": 2.0,
+     "glutes": 5.0,
+     "quads": 4.0,
+     "hamstrings": 0.0,
+     "calves": 1.5,
+     "forearms": 0.0,
+     "adductors": 1.5,
+     "upper_traps": 0.0
+    },
+    "bandLow": {
+     "chest": 1.5,
+     "delt_anterior": 1.5,
+     "delt_middle": 1.5,
+     "delt_posterior": 1.5,
+     "lats": 1.5,
+     "upper_back": 1.5,
+     "biceps": 1.5,
+     "triceps": 1.5,
+     "abs": 1.5,
+     "lower_back": 1.5,
+     "glutes": 1.5,
+     "quads": 1.5,
+     "hamstrings": 0.0,
+     "calves": 1.5,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 5.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 5.0,
+     "delt_posterior": 5.0,
+     "lats": 5.0,
+     "upper_back": 5.0,
+     "biceps": 5.0,
+     "triceps": 5.0,
+     "abs": 5.0,
+     "lower_back": 5.0,
+     "glutes": 5.0,
+     "quads": 5.0,
+     "hamstrings": 5.0,
+     "calves": 5.0,
+     "forearms": 5.0,
+     "adductors": 5.0,
+     "upper_traps": 5.0
+    },
+    "inBandShare": 0.867,
+    "pullSets": 5.0,
+    "pushSets": 3.0,
+    "hipSets": 2.0,
+    "kneeSets": 3.0,
+    "coveredPatterns": 5,
+    "coverablePatterns": 6,
+    "slots": 22,
+    "distinctExercises": 18,
+    "resistanceMinutes": 34.417,
+    "majorCredits": 32.5,
+    "score": {
+     "total": 0.9350645174140755,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 0.9911496642149025,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.969811320754717,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.7754025044722718,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 0.9416666666666667,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9151572327044024,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.635194805194805,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.7586602098466505,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0357
+  },
+  "proprietaire_streetlifting_avance": {
+   "score": 0.9309,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 0.933,
+    "goal_specificity": 0.8394,
+    "discipline_dosage": 0.9981,
+    "muscle_volume": 0.9823,
+    "pattern_balance": 0.9926,
+    "discipline_structure": 0.8984,
+    "time_use": 0.9856,
+    "variety": 1.0,
+    "exercise_fit": 0.6213,
+    "stimulus_fatigue": 0.6367,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     88.6,
+     82.7,
+     74.1,
+     81.967,
+     82.85
+    ],
+    "dayBudget": [
+     90,
+     90,
+     75,
+     90,
+     90
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.945,
+    "classShare": {
+     "streetWorkout": 0.2,
+     "streetlifting": 0.7,
+     "calisthenics": 0.1
+    },
+    "classTarget": {
+     "streetWorkout": 0.2,
+     "streetlifting": 0.7,
+     "calisthenics": 0.1
+    },
+    "dosageError": 0.0,
+    "groupSets": {
+     "chest": 20.0,
+     "delt_anterior": 18.0,
+     "delt_middle": 15.0,
+     "delt_posterior": 16.5,
+     "lats": 19.0,
+     "upper_back": 18.5,
+     "biceps": 13.5,
+     "triceps": 19.5,
+     "abs": 21.0,
+     "lower_back": 12.0,
+     "glutes": 20.0,
+     "quads": 20.0,
+     "hamstrings": 16.0,
+     "calves": 4.0,
+     "forearms": 6.0,
+     "adductors": 14.0,
+     "upper_traps": 8.5
+    },
+    "bandLow": {
+     "chest": 12.0,
+     "delt_anterior": 12.0,
+     "delt_middle": 12.0,
+     "delt_posterior": 12.0,
+     "lats": 12.0,
+     "upper_back": 12.0,
+     "biceps": 12.0,
+     "triceps": 12.0,
+     "abs": 12.0,
+     "lower_back": 12.0,
+     "glutes": 12.0,
+     "quads": 12.0,
+     "hamstrings": 12.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 20.0,
+     "delt_anterior": 20.0,
+     "delt_middle": 20.0,
+     "delt_posterior": 20.0,
+     "lats": 20.0,
+     "upper_back": 20.0,
+     "biceps": 20.0,
+     "triceps": 20.0,
+     "abs": 20.0,
+     "lower_back": 20.0,
+     "glutes": 20.0,
+     "quads": 20.0,
+     "hamstrings": 20.0,
+     "calves": 20.0,
+     "forearms": 20.0,
+     "adductors": 20.0,
+     "upper_traps": 20.0
+    },
+    "inBandShare": 0.933,
+    "pullSets": 26.0,
+    "pushSets": 20.0,
+    "hipSets": 12.0,
+    "kneeSets": 16.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 39,
+    "distinctExercises": 37,
+    "resistanceMinutes": 385.217,
+    "majorCredits": 233.0,
+    "score": {
+     "total": 0.9332608539798253,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 0.9373512741747069,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 0.839375,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9997447324016787,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.996283185840708,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.8939287414009434,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6184493284493287,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.6403315594398534,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.1304
+  },
+  "homme_25_musculation_debutant_3x60": {
+   "score": 0.9734,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 1.0,
+    "muscle_volume": 0.9733,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9921,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.7378,
+    "stimulus_fatigue": 0.7504,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     58.3,
+     58.45,
+     59.7
+    ],
+    "dayBudget": [
+     60,
+     60,
+     60
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.98,
+    "classShare": {
+     "musculation": 1.0
+    },
+    "classTarget": {
+     "musculation": 1.0
+    },
+    "dosageError": 0.0,
+    "groupSets": {
+     "chest": 12.5,
+     "delt_anterior": 11.0,
+     "delt_middle": 9.5,
+     "delt_posterior": 10.0,
+     "lats": 9.0,
+     "upper_back": 11.5,
+     "biceps": 6.5,
+     "triceps": 9.5,
+     "abs": 9.0,
+     "lower_back": 15.0,
+     "glutes": 15.0,
+     "quads": 12.0,
+     "hamstrings": 9.0,
+     "calves": 3.0,
+     "forearms": 0.0,
+     "adductors": 9.0,
+     "upper_traps": 1.5
+    },
+    "bandLow": {
+     "chest": 8.0,
+     "delt_anterior": 8.0,
+     "delt_middle": 8.0,
+     "delt_posterior": 8.0,
+     "lats": 8.0,
+     "upper_back": 8.0,
+     "biceps": 8.0,
+     "triceps": 8.0,
+     "abs": 8.0,
+     "lower_back": 8.0,
+     "glutes": 8.0,
+     "quads": 8.0,
+     "hamstrings": 8.0,
+     "calves": 8.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 16.0,
+     "delt_anterior": 16.0,
+     "delt_middle": 16.0,
+     "delt_posterior": 16.0,
+     "lats": 16.0,
+     "upper_back": 16.0,
+     "biceps": 16.0,
+     "triceps": 16.0,
+     "abs": 16.0,
+     "lower_back": 16.0,
+     "glutes": 16.0,
+     "quads": 16.0,
+     "hamstrings": 16.0,
+     "calves": 16.0,
+     "forearms": 16.0,
+     "adductors": 16.0,
+     "upper_traps": 16.0
+    },
+    "inBandShare": 0.889,
+    "pullSets": 16.0,
+    "pushSets": 13.0,
+    "hipSets": 9.0,
+    "kneeSets": 6.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 18,
+    "distinctExercises": 14,
+    "resistanceMinutes": 161.45,
+    "majorCredits": 142.5,
+    "score": {
+     "total": 0.9736901335122672,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 1.0,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9758333333333333,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9921957262310312,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.7377777777777778,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.7543098998657997,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.1905
+  },
+  "femme_30_street_workout_parc_3x45": {
+   "score": 0.9618,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9996,
+    "muscle_volume": 0.9427,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.918,
+    "time_use": 0.9957,
+    "variety": 1.0,
+    "exercise_fit": 0.6848,
+    "stimulus_fatigue": 0.854,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     41.15,
+     41.2,
+     41.4
+    ],
+    "dayBudget": [
+     45,
+     45,
+     45
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.917,
+    "classShare": {
+     "streetWorkout": 0.802,
+     "mobility": 0.198
+    },
+    "classTarget": {
+     "streetWorkout": 0.8,
+     "mobility": 0.2
+    },
+    "dosageError": 0.002,
+    "groupSets": {
+     "chest": 9.0,
+     "delt_anterior": 9.0,
+     "delt_middle": 0.0,
+     "delt_posterior": 6.0,
+     "lats": 10.5,
+     "upper_back": 9.0,
+     "biceps": 6.0,
+     "triceps": 9.0,
+     "abs": 8.0,
+     "lower_back": 4.0,
+     "glutes": 10.0,
+     "quads": 8.0,
+     "hamstrings": 0.0,
+     "calves": 1.5,
+     "forearms": 3.0,
+     "adductors": 1.5,
+     "upper_traps": 0.0
+    },
+    "bandLow": {
+     "chest": 4.0,
+     "delt_anterior": 4.0,
+     "delt_middle": 4.0,
+     "delt_posterior": 4.0,
+     "lats": 4.0,
+     "upper_back": 4.0,
+     "biceps": 4.0,
+     "triceps": 4.0,
+     "abs": 4.0,
+     "lower_back": 4.0,
+     "glutes": 4.0,
+     "quads": 4.0,
+     "hamstrings": 0.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 10.0,
+     "delt_anterior": 10.0,
+     "delt_middle": 10.0,
+     "delt_posterior": 10.0,
+     "lats": 10.0,
+     "upper_back": 10.0,
+     "biceps": 10.0,
+     "triceps": 10.0,
+     "abs": 10.0,
+     "lower_back": 10.0,
+     "glutes": 10.0,
+     "quads": 10.0,
+     "hamstrings": 10.0,
+     "calves": 10.0,
+     "forearms": 10.0,
+     "adductors": 10.0,
+     "upper_traps": 10.0
+    },
+    "inBandShare": 0.844,
+    "pullSets": 12.0,
+    "pushSets": 9.0,
+    "hipSets": 2.0,
+    "kneeSets": 3.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 25,
+    "distinctExercises": 22,
+    "resistanceMinutes": 87.2,
+    "majorCredits": 90.0,
+    "score": {
+     "total": 0.9618031055317491,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9981609195402299,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9427272727272726,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9188659003831419,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6847999999999997,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.8468399592252804,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0313
+  },
+  "mobilite_seule_5x20": {
+   "score": 0.9752,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 1.0,
+    "muscle_volume": 1.0,
+    "pattern_balance": 1.0,
+    "discipline_structure": 1.0,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.6464,
+    "stimulus_fatigue": 1.0,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     18.0,
+     18.933,
+     18.2,
+     18.4,
+     18.233
+    ],
+    "dayBudget": [
+     20,
+     20,
+     20,
+     20,
+     20
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.918,
+    "classShare": {
+     "mobility": 1.0
+    },
+    "classTarget": {
+     "mobility": 1.0
+    },
+    "dosageError": 0.0,
+    "groupSets": {
+     "chest": 0.0,
+     "delt_anterior": 0.0,
+     "delt_middle": 0.0,
+     "delt_posterior": 0.0,
+     "lats": 0.0,
+     "upper_back": 0.0,
+     "biceps": 0.0,
+     "triceps": 0.0,
+     "abs": 0.0,
+     "lower_back": 0.0,
+     "glutes": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandLow": {
+     "chest": 0.0,
+     "delt_anterior": 0.0,
+     "delt_middle": 0.0,
+     "delt_posterior": 0.0,
+     "lats": 0.0,
+     "upper_back": 0.0,
+     "biceps": 0.0,
+     "triceps": 0.0,
+     "abs": 0.0,
+     "lower_back": 0.0,
+     "glutes": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 5.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 5.0,
+     "delt_posterior": 5.0,
+     "lats": 5.0,
+     "upper_back": 5.0,
+     "biceps": 5.0,
+     "triceps": 5.0,
+     "abs": 5.0,
+     "lower_back": 5.0,
+     "glutes": 5.0,
+     "quads": 5.0,
+     "hamstrings": 5.0,
+     "calves": 5.0,
+     "forearms": 5.0,
+     "adductors": 5.0,
+     "upper_traps": 5.0
+    },
+    "inBandShare": 1.0,
+    "pullSets": 0.0,
+    "pushSets": 0.0,
+    "hipSets": 0.0,
+    "kneeSets": 0.0,
+    "coveredPatterns": 0,
+    "coverablePatterns": 0,
+    "slots": 33,
+    "distinctExercises": 18,
+    "resistanceMinutes": 0.0,
+    "majorCredits": 0.0,
+    "score": {
+     "total": 0.9752484848484848,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 1.0,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 1.0,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 1.0,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6464069264069267,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 1.0,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0313
+  },
+  "cardio_debutant_marche_3x30": {
+   "score": 0.976,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 1.0,
+    "muscle_volume": 1.0,
+    "pattern_balance": 1.0,
+    "discipline_structure": 1.0,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.6571,
+    "stimulus_fatigue": 1.0,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     30.0,
+     30.0,
+     30.0
+    ],
+    "dayBudget": [
+     30,
+     30,
+     30
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 1.0,
+    "classShare": {
+     "cardio": 1.0
+    },
+    "classTarget": {
+     "cardio": 1.0
+    },
+    "dosageError": 0.0,
+    "groupSets": {
+     "chest": 0.0,
+     "delt_anterior": 0.0,
+     "delt_middle": 0.0,
+     "delt_posterior": 0.0,
+     "lats": 0.0,
+     "upper_back": 0.0,
+     "biceps": 0.0,
+     "triceps": 0.0,
+     "abs": 0.0,
+     "lower_back": 0.0,
+     "glutes": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandLow": {
+     "chest": 0.0,
+     "delt_anterior": 0.0,
+     "delt_middle": 0.0,
+     "delt_posterior": 0.0,
+     "lats": 0.0,
+     "upper_back": 0.0,
+     "biceps": 0.0,
+     "triceps": 0.0,
+     "abs": 0.0,
+     "lower_back": 0.0,
+     "glutes": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 5.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 5.0,
+     "delt_posterior": 5.0,
+     "lats": 5.0,
+     "upper_back": 5.0,
+     "biceps": 5.0,
+     "triceps": 5.0,
+     "abs": 5.0,
+     "lower_back": 5.0,
+     "glutes": 5.0,
+     "quads": 5.0,
+     "hamstrings": 5.0,
+     "calves": 5.0,
+     "forearms": 5.0,
+     "adductors": 5.0,
+     "upper_traps": 5.0
+    },
+    "inBandShare": 1.0,
+    "pullSets": 0.0,
+    "pushSets": 0.0,
+    "hipSets": 0.0,
+    "kneeSets": 0.0,
+    "coveredPatterns": 0,
+    "coverablePatterns": 0,
+    "slots": 3,
+    "distinctExercises": 1,
+    "resistanceMinutes": 0.0,
+    "majorCredits": 0.0,
+    "score": {
+     "total": 0.976,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 1.0,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 1.0,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 1.0,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6571428571428571,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 1.0,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0
+  },
+  "homme_50_reprise_genou_3x45": {
+   "score": 0.9628,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 0.9841,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9581,
+    "muscle_volume": 0.9227,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9613,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.7497,
+    "stimulus_fatigue": 0.7666,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     44.25,
+     43.75,
+     43.25
+    ],
+    "dayBudget": [
+     45,
+     45,
+     45
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.972,
+    "classShare": {
+     "musculation": 0.742,
+     "cardio": 0.258
+    },
+    "classTarget": {
+     "musculation": 0.7,
+     "cardio": 0.3
+    },
+    "dosageError": 0.042,
+    "groupSets": {
+     "chest": 7.5,
+     "delt_anterior": 9.0,
+     "delt_middle": 6.0,
+     "delt_posterior": 7.5,
+     "lats": 9.0,
+     "upper_back": 9.0,
+     "biceps": 4.5,
+     "triceps": 7.5,
+     "abs": 6.0,
+     "lower_back": 1.5,
+     "glutes": 6.0,
+     "quads": 6.0,
+     "hamstrings": 3.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 6.0,
+     "upper_traps": 1.5
+    },
+    "bandLow": {
+     "chest": 5.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 5.0,
+     "delt_posterior": 5.0,
+     "lats": 5.0,
+     "upper_back": 5.0,
+     "biceps": 5.0,
+     "triceps": 5.0,
+     "abs": 5.0,
+     "lower_back": 5.0,
+     "glutes": 5.0,
+     "quads": 5.0,
+     "hamstrings": 5.0,
+     "calves": 5.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 10.0,
+     "delt_anterior": 10.0,
+     "delt_middle": 10.0,
+     "delt_posterior": 10.0,
+     "lats": 10.0,
+     "upper_back": 10.0,
+     "biceps": 10.0,
+     "triceps": 10.0,
+     "abs": 10.0,
+     "lower_back": 10.0,
+     "glutes": 10.0,
+     "quads": 10.0,
+     "hamstrings": 10.0,
+     "calves": 10.0,
+     "forearms": 10.0,
+     "adductors": 10.0,
+     "upper_traps": 10.0
+    },
+    "inBandShare": 0.756,
+    "pullSets": 9.0,
+    "pushSets": 9.0,
+    "hipSets": 3.0,
+    "kneeSets": 3.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 12,
+    "distinctExercises": 11,
+    "resistanceMinutes": 86.25,
+    "majorCredits": 82.5,
+    "score": {
+     "total": 0.9628114263494802,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 0.9840860215053764,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9580645161290322,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9227083333333332,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9612903225806452,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.7496703296703298,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.7665700483091787,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.1
+  },
+  "lombalgie_musculation_3x50": {
+   "score": 0.9623,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 0.949,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9968,
+    "muscle_volume": 0.9338,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9745,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.6722,
+    "stimulus_fatigue": 0.8387,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     48.983,
+     49.75,
+     49.533
+    ],
+    "dayBudget": [
+     50,
+     50,
+     50
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.988,
+    "classShare": {
+     "musculation": 0.799,
+     "mobility": 0.201
+    },
+    "classTarget": {
+     "musculation": 0.8,
+     "mobility": 0.2
+    },
+    "dosageError": 0.001,
+    "groupSets": {
+     "chest": 12.0,
+     "delt_anterior": 9.0,
+     "delt_middle": 5.0,
+     "delt_posterior": 5.0,
+     "lats": 9.0,
+     "upper_back": 10.5,
+     "biceps": 7.5,
+     "triceps": 9.0,
+     "abs": 6.0,
+     "lower_back": 1.5,
+     "glutes": 9.0,
+     "quads": 6.0,
+     "hamstrings": 7.5,
+     "calves": 3.0,
+     "forearms": 0.0,
+     "adductors": 4.5,
+     "upper_traps": 2.0
+    },
+    "bandLow": {
+     "chest": 6.5,
+     "delt_anterior": 6.5,
+     "delt_middle": 6.5,
+     "delt_posterior": 6.5,
+     "lats": 6.5,
+     "upper_back": 6.5,
+     "biceps": 6.5,
+     "triceps": 6.5,
+     "abs": 6.5,
+     "lower_back": 6.5,
+     "glutes": 6.5,
+     "quads": 6.5,
+     "hamstrings": 6.5,
+     "calves": 6.5,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 13.0,
+     "delt_anterior": 13.0,
+     "delt_middle": 13.0,
+     "delt_posterior": 13.0,
+     "lats": 13.0,
+     "upper_back": 13.0,
+     "biceps": 13.0,
+     "triceps": 13.0,
+     "abs": 13.0,
+     "lower_back": 13.0,
+     "glutes": 13.0,
+     "quads": 13.0,
+     "hamstrings": 13.0,
+     "calves": 13.0,
+     "forearms": 13.0,
+     "adductors": 13.0,
+     "upper_traps": 13.0
+    },
+    "inBandShare": 0.622,
+    "pullSets": 9.0,
+    "pushSets": 9.0,
+    "hipSets": 6.0,
+    "kneeSets": 6.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 24,
+    "distinctExercises": 21,
+    "resistanceMinutes": 106.5,
+    "majorCredits": 100.0,
+    "score": {
+     "total": 0.9625054582868056,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 0.9492558779389695,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9991495747873936,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9338141025641025,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9746200878216886,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6722222222222222,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.8387063119457485,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.1176
+  },
+  "poignet_calisthenie_3x60": {
+   "score": 0.9525,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 0.9238,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 1.0,
+    "muscle_volume": 0.9261,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.8555,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.7313,
+    "stimulus_fatigue": 0.8223,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     57.683,
+     57.433,
+     59.25
+    ],
+    "dayBudget": [
+     60,
+     60,
+     60
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.969,
+    "classShare": {
+     "calisthenics": 1.0
+    },
+    "classTarget": {
+     "calisthenics": 1.0
+    },
+    "dosageError": 0.0,
+    "groupSets": {
+     "chest": 16.0,
+     "delt_anterior": 14.0,
+     "delt_middle": 4.5,
+     "delt_posterior": 5.5,
+     "lats": 17.0,
+     "upper_back": 13.5,
+     "biceps": 10.0,
+     "triceps": 15.0,
+     "abs": 16.0,
+     "lower_back": 0.0,
+     "glutes": 10.0,
+     "quads": 16.0,
+     "hamstrings": 9.5,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 3.5,
+     "upper_traps": 1.5
+    },
+    "bandLow": {
+     "chest": 8.0,
+     "delt_anterior": 8.0,
+     "delt_middle": 8.0,
+     "delt_posterior": 8.0,
+     "lats": 8.0,
+     "upper_back": 8.0,
+     "biceps": 8.0,
+     "triceps": 8.0,
+     "abs": 8.0,
+     "lower_back": 8.0,
+     "glutes": 8.0,
+     "quads": 8.0,
+     "hamstrings": 8.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 16.0,
+     "delt_anterior": 16.0,
+     "delt_middle": 16.0,
+     "delt_posterior": 16.0,
+     "lats": 16.0,
+     "upper_back": 16.0,
+     "biceps": 16.0,
+     "triceps": 16.0,
+     "abs": 16.0,
+     "lower_back": 16.0,
+     "glutes": 16.0,
+     "quads": 16.0,
+     "hamstrings": 16.0,
+     "calves": 16.0,
+     "forearms": 16.0,
+     "adductors": 16.0,
+     "upper_traps": 16.0
+    },
+    "inBandShare": 0.733,
+    "pullSets": 17.0,
+    "pushSets": 13.0,
+    "hipSets": 6.0,
+    "kneeSets": 7.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 19,
+    "distinctExercises": 14,
+    "resistanceMinutes": 159.367,
+    "majorCredits": 147.0,
+    "score": {
+     "total": 0.9524117793385367,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 0.9250993516000836,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 1.0,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9261111111111111,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.8545806316670153,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.7312781954887216,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.8178147296009667,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0417
+  },
+  "femme_22_calisthenie_debutante_maison": {
+   "score": 0.9428,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.999,
+    "muscle_volume": 0.9548,
+    "pattern_balance": 0.9417,
+    "discipline_structure": 0.7774,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.6499,
+    "stimulus_fatigue": 0.8618,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     42.683,
+     44.667,
+     43.25
+    ],
+    "dayBudget": [
+     45,
+     45,
+     45
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.967,
+    "classShare": {
+     "calisthenics": 0.699,
+     "mobility": 0.301
+    },
+    "classTarget": {
+     "calisthenics": 0.7,
+     "mobility": 0.3
+    },
+    "dosageError": 0.001,
+    "groupSets": {
+     "chest": 7.0,
+     "delt_anterior": 8.0,
+     "delt_middle": 5.0,
+     "delt_posterior": 0.0,
+     "lats": 10.0,
+     "upper_back": 4.5,
+     "biceps": 5.0,
+     "triceps": 8.5,
+     "abs": 6.0,
+     "lower_back": 4.0,
+     "glutes": 8.5,
+     "quads": 6.5,
+     "hamstrings": 0.0,
+     "calves": 1.5,
+     "forearms": 2.0,
+     "adductors": 1.5,
+     "upper_traps": 1.5
+    },
+    "bandLow": {
+     "chest": 4.0,
+     "delt_anterior": 4.0,
+     "delt_middle": 4.0,
+     "delt_posterior": 4.0,
+     "lats": 4.0,
+     "upper_back": 4.0,
+     "biceps": 4.0,
+     "triceps": 4.0,
+     "abs": 4.0,
+     "lower_back": 4.0,
+     "glutes": 4.0,
+     "quads": 4.0,
+     "hamstrings": 0.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 10.0,
+     "delt_anterior": 10.0,
+     "delt_middle": 10.0,
+     "delt_posterior": 10.0,
+     "lats": 10.0,
+     "upper_back": 10.0,
+     "biceps": 10.0,
+     "triceps": 10.0,
+     "abs": 10.0,
+     "lower_back": 10.0,
+     "glutes": 10.0,
+     "quads": 10.0,
+     "hamstrings": 10.0,
+     "calves": 10.0,
+     "forearms": 10.0,
+     "adductors": 10.0,
+     "upper_traps": 10.0
+    },
+    "inBandShare": 0.933,
+    "pullSets": 9.0,
+    "pushSets": 9.0,
+    "hipSets": 2.0,
+    "kneeSets": 3.0,
+    "coveredPatterns": 5,
+    "coverablePatterns": 6,
+    "slots": 27,
+    "distinctExercises": 23,
+    "resistanceMinutes": 80.8,
+    "majorCredits": 74.5,
+    "score": {
+     "total": 0.9428164949949474,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9989619377162631,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9548387096774194,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 0.9416666666666667,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.7774059533315588,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6499470899470898,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.8618330583058305,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0
+  },
+  "homme_35_crossfit_maison_kettlebell": {
+   "score": 0.9471,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.999,
+    "muscle_volume": 0.8979,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.8604,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.6181,
+    "stimulus_fatigue": 0.8183,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     37.783,
+     39.317,
+     36.967,
+     39.967
+    ],
+    "dayBudget": [
+     40,
+     40,
+     40,
+     40
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.963,
+    "classShare": {
+     "crossfit": 0.702,
+     "cardio": 0.298
+    },
+    "classTarget": {
+     "crossfit": 0.7,
+     "cardio": 0.3
+    },
+    "dosageError": 0.002,
+    "groupSets": {
+     "chest": 7.5,
+     "delt_anterior": 6.0,
+     "delt_middle": 3.0,
+     "delt_posterior": 3.5,
+     "lats": 7.0,
+     "upper_back": 7.0,
+     "biceps": 3.5,
+     "triceps": 6.0,
+     "abs": 7.5,
+     "lower_back": 4.0,
+     "glutes": 7.0,
+     "quads": 6.0,
+     "hamstrings": 3.5,
+     "calves": 4.0,
+     "forearms": 0.0,
+     "adductors": 3.5,
+     "upper_traps": 1.5
+    },
+    "bandLow": {
+     "chest": 3.5,
+     "delt_anterior": 3.5,
+     "delt_middle": 3.5,
+     "delt_posterior": 3.5,
+     "lats": 3.5,
+     "upper_back": 3.5,
+     "biceps": 3.5,
+     "triceps": 3.5,
+     "abs": 3.5,
+     "lower_back": 3.5,
+     "glutes": 3.5,
+     "quads": 3.5,
+     "hamstrings": 3.5,
+     "calves": 3.5,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 7.0,
+     "delt_anterior": 7.0,
+     "delt_middle": 7.0,
+     "delt_posterior": 7.0,
+     "lats": 7.0,
+     "upper_back": 7.0,
+     "biceps": 7.0,
+     "triceps": 7.0,
+     "abs": 7.0,
+     "lower_back": 7.0,
+     "glutes": 7.0,
+     "quads": 7.0,
+     "hamstrings": 7.0,
+     "calves": 7.0,
+     "forearms": 7.0,
+     "adductors": 7.0,
+     "upper_traps": 7.0
+    },
+    "inBandShare": 0.778,
+    "pullSets": 7.0,
+    "pushSets": 6.0,
+    "hipSets": 3.0,
+    "kneeSets": 2.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 18,
+    "distinctExercises": 17,
+    "resistanceMinutes": 70.533,
+    "majorCredits": 75.5,
+    "score": {
+     "total": 0.9483610497095116,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9984332255657796,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9229166666666666,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.8617770593274199,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6079197994987467,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.8075771896660365,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.037
+  },
+  "musculation_maison_halteres_4x45": {
+   "score": 0.9588,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 1.0,
+    "muscle_volume": 0.984,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.8983,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.6672,
+    "stimulus_fatigue": 0.6876,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     43.25,
+     44.667,
+     43.217,
+     44.083
+    ],
+    "dayBudget": [
+     45,
+     45,
+     45,
+     45
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.973,
+    "classShare": {
+     "musculation": 1.0
+    },
+    "classTarget": {
+     "musculation": 1.0
+    },
+    "dosageError": 0.0,
+    "groupSets": {
+     "chest": 7.5,
+     "delt_anterior": 9.0,
+     "delt_middle": 7.0,
+     "delt_posterior": 3.5,
+     "lats": 10.0,
+     "upper_back": 10.0,
+     "biceps": 10.0,
+     "triceps": 10.5,
+     "abs": 10.0,
+     "lower_back": 9.5,
+     "glutes": 10.0,
+     "quads": 5.0,
+     "hamstrings": 6.5,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 3.0,
+     "upper_traps": 3.5
+    },
+    "bandLow": {
+     "chest": 4.0,
+     "delt_anterior": 4.0,
+     "delt_middle": 4.0,
+     "delt_posterior": 4.0,
+     "lats": 4.0,
+     "upper_back": 4.0,
+     "biceps": 4.0,
+     "triceps": 4.0,
+     "abs": 4.0,
+     "lower_back": 4.0,
+     "glutes": 4.0,
+     "quads": 4.0,
+     "hamstrings": 4.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 10.0,
+     "delt_anterior": 10.0,
+     "delt_middle": 10.0,
+     "delt_posterior": 10.0,
+     "lats": 10.0,
+     "upper_back": 10.0,
+     "biceps": 10.0,
+     "triceps": 10.0,
+     "abs": 10.0,
+     "lower_back": 10.0,
+     "glutes": 10.0,
+     "quads": 10.0,
+     "hamstrings": 10.0,
+     "calves": 10.0,
+     "forearms": 10.0,
+     "adductors": 10.0,
+     "upper_traps": 10.0
+    },
+    "inBandShare": 0.867,
+    "pullSets": 10.0,
+    "pushSets": 9.0,
+    "hipSets": 5.0,
+    "kneeSets": 5.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 23,
+    "distinctExercises": 23,
+    "resistanceMinutes": 155.217,
+    "majorCredits": 108.5,
+    "score": {
+     "total": 0.9593351551905782,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 1.0,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9897282608695652,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.8986848261263058,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6672049689440993,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.6867866900509444,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.087
+  },
+  "elite_calisthenie_6x90": {
+   "score": 0.934,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9937,
+    "muscle_volume": 0.9537,
+    "pattern_balance": 0.9668,
+    "discipline_structure": 0.8402,
+    "time_use": 0.8953,
+    "variety": 0.9167,
+    "exercise_fit": 0.5951,
+    "stimulus_fatigue": 0.7207,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     53.417,
+     53.15,
+     53.167,
+     53.65,
+     53.9,
+     53.6
+    ],
+    "dayBudget": [
+     90,
+     90,
+     90,
+     90,
+     90,
+     90
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.594,
+    "classShare": {
+     "calisthenics": 0.896,
+     "mobility": 0.104
+    },
+    "classTarget": {
+     "calisthenics": 0.9,
+     "mobility": 0.1
+    },
+    "dosageError": 0.004,
+    "groupSets": {
+     "chest": 19.0,
+     "delt_anterior": 19.5,
+     "delt_middle": 12.0,
+     "delt_posterior": 10.5,
+     "lats": 20.0,
+     "upper_back": 16.5,
+     "biceps": 13.0,
+     "triceps": 24.0,
+     "abs": 21.0,
+     "lower_back": 13.0,
+     "glutes": 14.0,
+     "quads": 16.0,
+     "hamstrings": 9.0,
+     "calves": 0.0,
+     "forearms": 4.0,
+     "adductors": 2.0,
+     "upper_traps": 7.5
+    },
+    "bandLow": {
+     "chest": 12.0,
+     "delt_anterior": 12.0,
+     "delt_middle": 12.0,
+     "delt_posterior": 12.0,
+     "lats": 12.0,
+     "upper_back": 12.0,
+     "biceps": 12.0,
+     "triceps": 12.0,
+     "abs": 12.0,
+     "lower_back": 12.0,
+     "glutes": 12.0,
+     "quads": 12.0,
+     "hamstrings": 12.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 20.0,
+     "delt_anterior": 20.0,
+     "delt_middle": 20.0,
+     "delt_posterior": 20.0,
+     "lats": 20.0,
+     "upper_back": 20.0,
+     "biceps": 20.0,
+     "triceps": 20.0,
+     "abs": 20.0,
+     "lower_back": 20.0,
+     "glutes": 20.0,
+     "quads": 20.0,
+     "hamstrings": 20.0,
+     "calves": 20.0,
+     "forearms": 20.0,
+     "adductors": 20.0,
+     "upper_traps": 20.0
+    },
+    "inBandShare": 0.711,
+    "pullSets": 27.0,
+    "pushSets": 27.0,
+    "hipSets": 7.0,
+    "kneeSets": 4.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 37,
+    "distinctExercises": 30,
+    "resistanceMinutes": 260.75,
+    "majorCredits": 207.5,
+    "score": {
+     "total": 0.937752291871369,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9964074944135678,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9589285714285714,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.8339717839600381,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 0.9201585891207162,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 0.9166666666666666,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.5951020408163264,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.7185144602210757,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0
+  },
+  "streetlifting_debutant_3x60": {
+   "score": 0.9623,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9737,
+    "muscle_volume": 0.9515,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9451,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.732,
+    "stimulus_fatigue": 0.652,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     59.183,
+     59.25,
+     59.1
+    ],
+    "dayBudget": [
+     60,
+     60,
+     60
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.986,
+    "classShare": {
+     "streetWorkout": 0.402,
+     "streetlifting": 0.478,
+     "calisthenics": 0.12
+    },
+    "classTarget": {
+     "streetWorkout": 0.4,
+     "streetlifting": 0.5,
+     "calisthenics": 0.1
+    },
+    "dosageError": 0.022,
+    "groupSets": {
+     "chest": 16.0,
+     "delt_anterior": 13.5,
+     "delt_middle": 3.0,
+     "delt_posterior": 7.0,
+     "lats": 17.0,
+     "upper_back": 11.0,
+     "biceps": 12.5,
+     "triceps": 14.0,
+     "abs": 12.0,
+     "lower_back": 8.0,
+     "glutes": 13.0,
+     "quads": 16.0,
+     "hamstrings": 10.5,
+     "calves": 2.5,
+     "forearms": 0.0,
+     "adductors": 9.0,
+     "upper_traps": 2.0
+    },
+    "bandLow": {
+     "chest": 8.0,
+     "delt_anterior": 8.0,
+     "delt_middle": 8.0,
+     "delt_posterior": 8.0,
+     "lats": 8.0,
+     "upper_back": 8.0,
+     "biceps": 8.0,
+     "triceps": 8.0,
+     "abs": 8.0,
+     "lower_back": 8.0,
+     "glutes": 8.0,
+     "quads": 8.0,
+     "hamstrings": 8.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 16.0,
+     "delt_anterior": 16.0,
+     "delt_middle": 16.0,
+     "delt_posterior": 16.0,
+     "lats": 16.0,
+     "upper_back": 16.0,
+     "biceps": 16.0,
+     "triceps": 16.0,
+     "abs": 16.0,
+     "lower_back": 16.0,
+     "glutes": 16.0,
+     "quads": 16.0,
+     "hamstrings": 16.0,
+     "calves": 16.0,
+     "forearms": 16.0,
+     "adductors": 16.0,
+     "upper_traps": 16.0
+    },
+    "inBandShare": 0.778,
+    "pullSets": 19.0,
+    "pushSets": 17.0,
+    "hipSets": 8.0,
+    "kneeSets": 8.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 18,
+    "distinctExercises": 14,
+    "resistanceMinutes": 162.533,
+    "majorCredits": 156.0,
+    "score": {
+     "total": 0.9637393127335703,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9776456111566858,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9581521739130434,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9417623735302161,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.7426984126984126,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.6595570139458573,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.087
+  },
+  "forme_generale_exterieur_3x40": {
+   "score": 0.9484,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9581,
+    "muscle_volume": 0.825,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9804,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.593,
+    "stimulus_fatigue": 0.8611,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     39.1,
+     39.967,
+     39.933
+    ],
+    "dayBudget": [
+     40,
+     40,
+     40
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.992,
+    "classShare": {
+     "cardio": 0.502,
+     "mobility": 0.108,
+     "generalFitness": 0.389
+    },
+    "classTarget": {
+     "cardio": 0.545,
+     "mobility": 0.105,
+     "generalFitness": 0.35
+    },
+    "dosageError": 0.043,
+    "groupSets": {
+     "chest": 3.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 2.0,
+     "delt_posterior": 2.0,
+     "lats": 5.0,
+     "upper_back": 4.5,
+     "biceps": 2.5,
+     "triceps": 4.0,
+     "abs": 3.0,
+     "lower_back": 3.0,
+     "glutes": 4.0,
+     "quads": 3.5,
+     "hamstrings": 1.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 2.0,
+     "upper_traps": 1.0
+    },
+    "bandLow": {
+     "chest": 2.0,
+     "delt_anterior": 2.0,
+     "delt_middle": 2.0,
+     "delt_posterior": 2.0,
+     "lats": 2.0,
+     "upper_back": 2.0,
+     "biceps": 2.0,
+     "triceps": 2.0,
+     "abs": 2.0,
+     "lower_back": 2.0,
+     "glutes": 2.0,
+     "quads": 2.0,
+     "hamstrings": 0.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 5.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 5.0,
+     "delt_posterior": 5.0,
+     "lats": 5.0,
+     "upper_back": 5.0,
+     "biceps": 5.0,
+     "triceps": 5.0,
+     "abs": 5.0,
+     "lower_back": 5.0,
+     "glutes": 5.0,
+     "quads": 5.0,
+     "hamstrings": 5.0,
+     "calves": 5.0,
+     "forearms": 5.0,
+     "adductors": 5.0,
+     "upper_traps": 5.0
+    },
+    "inBandShare": 1.0,
+    "pullSets": 5.0,
+    "pushSets": 5.0,
+    "hipSets": 2.0,
+    "kneeSets": 2.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 19,
+    "distinctExercises": 13,
+    "resistanceMinutes": 40.5,
+    "majorCredits": 42.5,
+    "score": {
+     "total": 0.9496672587719297,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9574038461538461,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.825,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9805288461538462,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6110025062656641,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.8611111111111112,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0435
+  },
+  "senior_72_mobilite_marche_4x30": {
+   "score": 0.9735,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9998,
+    "muscle_volume": 1.0,
+    "pattern_balance": 1.0,
+    "discipline_structure": 1.0,
+    "time_use": 0.9961,
+    "variety": 1.0,
+    "exercise_fit": 0.6253,
+    "stimulus_fatigue": 1.0,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     28.35,
+     30.0,
+     26.833,
+     27.25
+    ],
+    "dayBudget": [
+     30,
+     30,
+     30,
+     30
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.937,
+    "classShare": {
+     "cardio": 0.4,
+     "mobility": 0.6
+    },
+    "classTarget": {
+     "cardio": 0.4,
+     "mobility": 0.6
+    },
+    "dosageError": 0.0,
+    "groupSets": {
+     "chest": 0.0,
+     "delt_anterior": 0.0,
+     "delt_middle": 0.0,
+     "delt_posterior": 0.0,
+     "lats": 0.0,
+     "upper_back": 0.0,
+     "biceps": 0.0,
+     "triceps": 0.0,
+     "abs": 0.0,
+     "lower_back": 0.0,
+     "glutes": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandLow": {
+     "chest": 0.0,
+     "delt_anterior": 0.0,
+     "delt_middle": 0.0,
+     "delt_posterior": 0.0,
+     "lats": 0.0,
+     "upper_back": 0.0,
+     "biceps": 0.0,
+     "triceps": 0.0,
+     "abs": 0.0,
+     "lower_back": 0.0,
+     "glutes": 0.0,
+     "quads": 0.0,
+     "hamstrings": 0.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 5.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 5.0,
+     "delt_posterior": 5.0,
+     "lats": 5.0,
+     "upper_back": 5.0,
+     "biceps": 5.0,
+     "triceps": 5.0,
+     "abs": 5.0,
+     "lower_back": 5.0,
+     "glutes": 5.0,
+     "quads": 5.0,
+     "hamstrings": 5.0,
+     "calves": 5.0,
+     "forearms": 5.0,
+     "adductors": 5.0,
+     "upper_traps": 5.0
+    },
+    "inBandShare": 1.0,
+    "pullSets": 0.0,
+    "pushSets": 0.0,
+    "hipSets": 0.0,
+    "kneeSets": 0.0,
+    "coveredPatterns": 0,
+    "coverablePatterns": 0,
+    "slots": 25,
+    "distinctExercises": 17,
+    "resistanceMinutes": 0.0,
+    "majorCredits": 0.0,
+    "score": {
+     "total": 0.9735332584692304,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.999762822413282,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 1.0,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 1.0,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 0.996141975308642,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.625274725274725,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 1.0,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.037
+  },
+  "femme_60_musculation_salle_2x45": {
+   "score": 0.9582,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9942,
+    "muscle_volume": 0.8334,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9671,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.7138,
+    "stimulus_fatigue": 0.8082,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     44.267,
+     44.167
+    ],
+    "dayBudget": [
+     45,
+     45
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.983,
+    "classShare": {
+     "musculation": 0.806,
+     "mobility": 0.194
+    },
+    "classTarget": {
+     "musculation": 0.8,
+     "mobility": 0.2
+    },
+    "dosageError": 0.006,
+    "groupSets": {
+     "chest": 6.0,
+     "delt_anterior": 6.0,
+     "delt_middle": 1.5,
+     "delt_posterior": 3.0,
+     "lats": 6.0,
+     "upper_back": 6.0,
+     "biceps": 3.0,
+     "triceps": 6.0,
+     "abs": 7.5,
+     "lower_back": 6.0,
+     "glutes": 6.0,
+     "quads": 6.0,
+     "hamstrings": 4.5,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 4.5,
+     "upper_traps": 0.0
+    },
+    "bandLow": {
+     "chest": 4.0,
+     "delt_anterior": 4.0,
+     "delt_middle": 4.0,
+     "delt_posterior": 4.0,
+     "lats": 4.0,
+     "upper_back": 4.0,
+     "biceps": 4.0,
+     "triceps": 4.0,
+     "abs": 4.0,
+     "lower_back": 4.0,
+     "glutes": 4.0,
+     "quads": 4.0,
+     "hamstrings": 4.0,
+     "calves": 4.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 7.5,
+     "delt_anterior": 7.5,
+     "delt_middle": 7.5,
+     "delt_posterior": 7.5,
+     "lats": 7.5,
+     "upper_back": 7.5,
+     "biceps": 7.5,
+     "triceps": 7.5,
+     "abs": 7.5,
+     "lower_back": 7.5,
+     "glutes": 7.5,
+     "quads": 7.5,
+     "hamstrings": 7.5,
+     "calves": 7.5,
+     "forearms": 7.5,
+     "adductors": 7.5,
+     "upper_traps": 7.5
+    },
+    "inBandShare": 0.756,
+    "pullSets": 6.0,
+    "pushSets": 6.0,
+    "hipSets": 3.0,
+    "kneeSets": 3.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 13,
+    "distinctExercises": 13,
+    "resistanceMinutes": 63.2,
+    "majorCredits": 67.5,
+    "score": {
+     "total": 0.9582369232010628,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9942201444963876,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.8333792892156863,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9671058223544411,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.7138461538461539,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.8082366385372715,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0435
+  },
+  "homme_40_cardio_musculation_50_50": {
+   "score": 0.9668,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9927,
+    "muscle_volume": 0.939,
+    "pattern_balance": 0.9875,
+    "discipline_structure": 0.9855,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.7243,
+    "stimulus_fatigue": 0.7224,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     49.25,
+     49.083,
+     49.5,
+     47.583
+    ],
+    "dayBudget": [
+     50,
+     50,
+     50,
+     50
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.977,
+    "classShare": {
+     "musculation": 0.505,
+     "cardio": 0.495
+    },
+    "classTarget": {
+     "musculation": 0.5,
+     "cardio": 0.5
+    },
+    "dosageError": 0.005,
+    "groupSets": {
+     "chest": 9.5,
+     "delt_anterior": 8.0,
+     "delt_middle": 3.0,
+     "delt_posterior": 6.0,
+     "lats": 9.0,
+     "upper_back": 9.0,
+     "biceps": 4.5,
+     "triceps": 8.0,
+     "abs": 5.0,
+     "lower_back": 5.5,
+     "glutes": 6.0,
+     "quads": 6.0,
+     "hamstrings": 5.0,
+     "calves": 1.5,
+     "forearms": 0.0,
+     "adductors": 4.5,
+     "upper_traps": 1.5
+    },
+    "bandLow": {
+     "chest": 5.5,
+     "delt_anterior": 5.5,
+     "delt_middle": 5.5,
+     "delt_posterior": 5.5,
+     "lats": 5.5,
+     "upper_back": 5.5,
+     "biceps": 5.5,
+     "triceps": 5.5,
+     "abs": 5.5,
+     "lower_back": 5.5,
+     "glutes": 5.5,
+     "quads": 5.5,
+     "hamstrings": 5.5,
+     "calves": 5.5,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 10.5,
+     "delt_anterior": 10.5,
+     "delt_middle": 10.5,
+     "delt_posterior": 10.5,
+     "lats": 10.5,
+     "upper_back": 10.5,
+     "biceps": 10.5,
+     "triceps": 10.5,
+     "abs": 10.5,
+     "lower_back": 10.5,
+     "glutes": 10.5,
+     "quads": 10.5,
+     "hamstrings": 10.5,
+     "calves": 10.5,
+     "forearms": 10.5,
+     "adductors": 10.5,
+     "upper_traps": 10.5
+    },
+    "inBandShare": 0.667,
+    "pullSets": 12.0,
+    "pushSets": 8.0,
+    "hipSets": 5.0,
+    "kneeSets": 3.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 17,
+    "distinctExercises": 14,
+    "resistanceMinutes": 88.667,
+    "majorCredits": 86.0,
+    "score": {
+     "total": 0.9673993598158104,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9945368171021378,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9416666666666664,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9854965501640086,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.712781954887218,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.7278508771929825,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.087
+  },
+  "trois_disciplines_70_20_10": {
+   "score": 0.9678,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.986,
+    "muscle_volume": 0.9621,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9785,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.6871,
+    "stimulus_fatigue": 0.8199,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     59.433,
+     43.3,
+     89.65
+    ],
+    "dayBudget": [
+     60,
+     45,
+     90
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.983,
+    "classShare": {
+     "musculation": 0.698,
+     "cardio": 0.113,
+     "mobility": 0.189
+    },
+    "classTarget": {
+     "musculation": 0.7,
+     "cardio": 0.1,
+     "mobility": 0.2
+    },
+    "dosageError": 0.013,
+    "groupSets": {
+     "chest": 7.5,
+     "delt_anterior": 9.0,
+     "delt_middle": 7.0,
+     "delt_posterior": 6.0,
+     "lats": 12.0,
+     "upper_back": 10.5,
+     "biceps": 6.0,
+     "triceps": 7.5,
+     "abs": 9.0,
+     "lower_back": 9.0,
+     "glutes": 12.0,
+     "quads": 9.0,
+     "hamstrings": 7.5,
+     "calves": 4.5,
+     "forearms": 0.0,
+     "adductors": 7.5,
+     "upper_traps": 5.5
+    },
+    "bandLow": {
+     "chest": 7.5,
+     "delt_anterior": 7.5,
+     "delt_middle": 7.5,
+     "delt_posterior": 7.5,
+     "lats": 7.5,
+     "upper_back": 7.5,
+     "biceps": 7.5,
+     "triceps": 7.5,
+     "abs": 7.5,
+     "lower_back": 7.5,
+     "glutes": 7.5,
+     "quads": 7.5,
+     "hamstrings": 7.5,
+     "calves": 7.5,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 14.5,
+     "delt_anterior": 14.5,
+     "delt_middle": 14.5,
+     "delt_posterior": 14.5,
+     "lats": 14.5,
+     "upper_back": 14.5,
+     "biceps": 14.5,
+     "triceps": 14.5,
+     "abs": 14.5,
+     "lower_back": 14.5,
+     "glutes": 14.5,
+     "quads": 14.5,
+     "hamstrings": 14.5,
+     "calves": 14.5,
+     "forearms": 14.5,
+     "adductors": 14.5,
+     "upper_traps": 14.5
+    },
+    "inBandShare": 0.756,
+    "pullSets": 12.0,
+    "pushSets": 9.0,
+    "hipSets": 6.0,
+    "kneeSets": 6.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 27,
+    "distinctExercises": 23,
+    "resistanceMinutes": 123.8,
+    "majorCredits": 116.5,
+    "score": {
+     "total": 0.9685137635502263,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9872498355726769,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9679166666666668,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9786194368755676,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6870899470899472,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.8227988691437803,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0968
+  },
+  "niveaux_inconnus_sans_poids": {
+   "score": 0.9661,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 1.0,
+    "muscle_volume": 0.9085,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.988,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.6968,
+    "stimulus_fatigue": 0.8209,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     58.433,
+     58.783
+    ],
+    "dayBudget": [
+     60,
+     60
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.977,
+    "classShare": {
+     "musculation": 1.0
+    },
+    "classTarget": {
+     "musculation": 1.0
+    },
+    "dosageError": 0.0,
+    "groupSets": {
+     "chest": 8.0,
+     "delt_anterior": 9.0,
+     "delt_middle": 6.5,
+     "delt_posterior": 7.5,
+     "lats": 9.0,
+     "upper_back": 10.5,
+     "biceps": 6.0,
+     "triceps": 7.5,
+     "abs": 4.0,
+     "lower_back": 5.5,
+     "glutes": 6.0,
+     "quads": 4.5,
+     "hamstrings": 4.5,
+     "calves": 4.0,
+     "forearms": 0.0,
+     "adductors": 4.5,
+     "upper_traps": 1.5
+    },
+    "bandLow": {
+     "chest": 4.0,
+     "delt_anterior": 4.0,
+     "delt_middle": 4.0,
+     "delt_posterior": 4.0,
+     "lats": 4.0,
+     "upper_back": 4.0,
+     "biceps": 4.0,
+     "triceps": 4.0,
+     "abs": 4.0,
+     "lower_back": 4.0,
+     "glutes": 4.0,
+     "quads": 4.0,
+     "hamstrings": 4.0,
+     "calves": 4.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 10.0,
+     "delt_anterior": 10.0,
+     "delt_middle": 10.0,
+     "delt_posterior": 10.0,
+     "lats": 10.0,
+     "upper_back": 10.0,
+     "biceps": 10.0,
+     "triceps": 10.0,
+     "abs": 10.0,
+     "lower_back": 10.0,
+     "glutes": 10.0,
+     "quads": 10.0,
+     "hamstrings": 10.0,
+     "calves": 10.0,
+     "forearms": 10.0,
+     "adductors": 10.0,
+     "upper_traps": 10.0
+    },
+    "inBandShare": 0.911,
+    "pullSets": 12.0,
+    "pushSets": 11.0,
+    "hipSets": 3.0,
+    "kneeSets": 3.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 15,
+    "distinctExercises": 14,
+    "resistanceMinutes": 107.217,
+    "majorCredits": 92.5,
+    "score": {
+     "total": 0.9661430721799056,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 1.0,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9084523809523809,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9879682885123582,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6967619047619047,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.8208974558267269,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.087
+  },
+  "sans_objectif_mode_libre": {
+   "score": 0.9693,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9962,
+    "muscle_volume": 0.9717,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9733,
+    "time_use": 0.9439,
+    "variety": 1.0,
+    "exercise_fit": 0.74,
+    "stimulus_fatigue": 0.8044,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     46.5,
+     45.55,
+     46.617
+    ],
+    "dayBudget": [
+     60,
+     60,
+     60
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.77,
+    "classShare": {
+     "musculation": 0.396,
+     "streetWorkout": 0.604
+    },
+    "classTarget": {
+     "musculation": 0.4,
+     "streetWorkout": 0.6
+    },
+    "dosageError": 0.004,
+    "groupSets": {
+     "chest": 10.5,
+     "delt_anterior": 11.0,
+     "delt_middle": 8.0,
+     "delt_posterior": 12.0,
+     "lats": 15.0,
+     "upper_back": 16.0,
+     "biceps": 9.0,
+     "triceps": 8.5,
+     "abs": 7.5,
+     "lower_back": 6.0,
+     "glutes": 12.0,
+     "quads": 9.0,
+     "hamstrings": 9.0,
+     "calves": 3.0,
+     "forearms": 0.0,
+     "adductors": 7.5,
+     "upper_traps": 5.0
+    },
+    "bandLow": {
+     "chest": 8.0,
+     "delt_anterior": 8.0,
+     "delt_middle": 8.0,
+     "delt_posterior": 8.0,
+     "lats": 8.0,
+     "upper_back": 8.0,
+     "biceps": 8.0,
+     "triceps": 8.0,
+     "abs": 8.0,
+     "lower_back": 8.0,
+     "glutes": 8.0,
+     "quads": 8.0,
+     "hamstrings": 8.0,
+     "calves": 8.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 16.0,
+     "delt_anterior": 16.0,
+     "delt_middle": 16.0,
+     "delt_posterior": 16.0,
+     "lats": 16.0,
+     "upper_back": 16.0,
+     "biceps": 16.0,
+     "triceps": 16.0,
+     "abs": 16.0,
+     "lower_back": 16.0,
+     "glutes": 16.0,
+     "quads": 16.0,
+     "hamstrings": 16.0,
+     "calves": 16.0,
+     "forearms": 16.0,
+     "adductors": 16.0,
+     "upper_traps": 16.0
+    },
+    "inBandShare": 0.844,
+    "pullSets": 18.0,
+    "pushSets": 13.0,
+    "hipSets": 6.0,
+    "kneeSets": 6.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 16,
+    "distinctExercises": 12,
+    "resistanceMinutes": 123.667,
+    "majorCredits": 136.5,
+    "score": {
+     "total": 0.9692505598455077,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9962264150943396,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9717447916666666,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9733490566037736,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 0.9439174054285417,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.7399999999999999,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.8044474393530997,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0455
+  },
+  "objectif_habitude_seul": {
+   "score": 0.9369,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9475,
+    "muscle_volume": 0.7829,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9349,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.5827,
+    "stimulus_fatigue": 0.7706,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     28.933,
+     29.25,
+     29.8
+    ],
+    "dayBudget": [
+     30,
+     30,
+     30
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.978,
+    "classShare": {
+     "cardio": 0.305,
+     "mobility": 0.15,
+     "generalFitness": 0.545
+    },
+    "classTarget": {
+     "cardio": 0.35,
+     "mobility": 0.15,
+     "generalFitness": 0.5
+    },
+    "dosageError": 0.045,
+    "groupSets": {
+     "chest": 3.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 2.0,
+     "delt_posterior": 0.0,
+     "lats": 5.0,
+     "upper_back": 2.5,
+     "biceps": 1.5,
+     "triceps": 4.0,
+     "abs": 3.0,
+     "lower_back": 3.0,
+     "glutes": 5.0,
+     "quads": 3.0,
+     "hamstrings": 1.5,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 1.5,
+     "upper_traps": 1.0
+    },
+    "bandLow": {
+     "chest": 2.0,
+     "delt_anterior": 2.0,
+     "delt_middle": 2.0,
+     "delt_posterior": 2.0,
+     "lats": 2.0,
+     "upper_back": 2.0,
+     "biceps": 2.0,
+     "triceps": 2.0,
+     "abs": 2.0,
+     "lower_back": 2.0,
+     "glutes": 2.0,
+     "quads": 2.0,
+     "hamstrings": 2.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 5.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 5.0,
+     "delt_posterior": 5.0,
+     "lats": 5.0,
+     "upper_back": 5.0,
+     "biceps": 5.0,
+     "triceps": 5.0,
+     "abs": 5.0,
+     "lower_back": 5.0,
+     "glutes": 5.0,
+     "quads": 5.0,
+     "hamstrings": 5.0,
+     "calves": 5.0,
+     "forearms": 5.0,
+     "adductors": 5.0,
+     "upper_traps": 5.0
+    },
+    "inBandShare": 0.778,
+    "pullSets": 5.0,
+    "pushSets": 5.0,
+    "hipSets": 2.0,
+    "kneeSets": 3.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 13,
+    "distinctExercises": 13,
+    "resistanceMinutes": 44.65,
+    "majorCredits": 38.5,
+    "score": {
+     "total": 0.9376028588450427,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9549400284610693,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.7828898050974512,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9352688554584265,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.5826530612244899,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.7706233669279582,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0435
+  },
+  "objectif_figure_front_lever": {
+   "score": 0.9513,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9952,
+    "muscle_volume": 0.9178,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9595,
+    "time_use": 0.8751,
+    "variety": 1.0,
+    "exercise_fit": 0.7121,
+    "stimulus_fatigue": 0.7786,
+    "preferences": 1.0,
+    "novelty": 0.6
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     50.233,
+     48.567,
+     49.417,
+     48.25
+    ],
+    "dayBudget": [
+     60,
+     60,
+     60,
+     60
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.819,
+    "classShare": {
+     "streetWorkout": 0.397,
+     "calisthenics": 0.603
+    },
+    "classTarget": {
+     "streetWorkout": 0.4,
+     "calisthenics": 0.6
+    },
+    "dosageError": 0.003,
+    "groupSets": {
+     "chest": 16.0,
+     "delt_anterior": 16.0,
+     "delt_middle": 9.5,
+     "delt_posterior": 11.0,
+     "lats": 18.0,
+     "upper_back": 15.5,
+     "biceps": 7.5,
+     "triceps": 17.5,
+     "abs": 13.5,
+     "lower_back": 8.0,
+     "glutes": 8.0,
+     "quads": 10.0,
+     "hamstrings": 1.5,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 1.5,
+     "upper_traps": 6.5
+    },
+    "bandLow": {
+     "chest": 8.0,
+     "delt_anterior": 8.0,
+     "delt_middle": 8.0,
+     "delt_posterior": 8.0,
+     "lats": 8.0,
+     "upper_back": 8.0,
+     "biceps": 8.0,
+     "triceps": 8.0,
+     "abs": 8.0,
+     "lower_back": 8.0,
+     "glutes": 8.0,
+     "quads": 8.0,
+     "hamstrings": 8.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 16.0,
+     "delt_anterior": 16.0,
+     "delt_middle": 16.0,
+     "delt_posterior": 16.0,
+     "lats": 16.0,
+     "upper_back": 16.0,
+     "biceps": 16.0,
+     "triceps": 16.0,
+     "abs": 16.0,
+     "lower_back": 16.0,
+     "glutes": 16.0,
+     "quads": 16.0,
+     "hamstrings": 16.0,
+     "calves": 16.0,
+     "forearms": 16.0,
+     "adductors": 16.0,
+     "upper_traps": 16.0
+    },
+    "inBandShare": 0.689,
+    "pullSets": 26.0,
+    "pushSets": 22.0,
+    "hipSets": 3.0,
+    "kneeSets": 3.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 20,
+    "distinctExercises": 16,
+    "resistanceMinutes": 176.467,
+    "majorCredits": 152.0,
+    "score": {
+     "total": 0.9544681909063291,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9972421609369096,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.922222222222222,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9532489610880241,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 0.9564536593249282,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6925595238095238,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.7797244259748982,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 0.6,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.08
+  },
+  "semi_marathon": {
+   "score": 0.9489,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9599,
+    "muscle_volume": 0.7473,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9743,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.7297,
+    "stimulus_fatigue": 0.7599,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     60.0,
+     59.867,
+     45.0,
+     110.45
+    ],
+    "dayBudget": [
+     60,
+     60,
+     45,
+     120
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.98,
+    "classShare": {
+     "musculation": 0.116,
+     "cardio": 0.79,
+     "mobility": 0.095
+    },
+    "classTarget": {
+     "musculation": 0.1,
+     "cardio": 0.8,
+     "mobility": 0.1
+    },
+    "dosageError": 0.016,
+    "groupSets": {
+     "chest": 5.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 1.0,
+     "delt_posterior": 0.0,
+     "lats": 0.0,
+     "upper_back": 1.0,
+     "biceps": 0.0,
+     "triceps": 5.0,
+     "abs": 5.0,
+     "lower_back": 1.5,
+     "glutes": 2.0,
+     "quads": 2.0,
+     "hamstrings": 2.0,
+     "calves": 1.0,
+     "forearms": 0.0,
+     "adductors": 2.0,
+     "upper_traps": 1.0
+    },
+    "bandLow": {
+     "chest": 1.5,
+     "delt_anterior": 1.5,
+     "delt_middle": 0.0,
+     "delt_posterior": 0.0,
+     "lats": 0.0,
+     "upper_back": 0.0,
+     "biceps": 0.0,
+     "triceps": 1.5,
+     "abs": 1.5,
+     "lower_back": 1.5,
+     "glutes": 1.5,
+     "quads": 1.5,
+     "hamstrings": 1.5,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 5.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 5.0,
+     "delt_posterior": 5.0,
+     "lats": 5.0,
+     "upper_back": 5.0,
+     "biceps": 5.0,
+     "triceps": 5.0,
+     "abs": 5.0,
+     "lower_back": 5.0,
+     "glutes": 5.0,
+     "quads": 5.0,
+     "hamstrings": 5.0,
+     "calves": 5.0,
+     "forearms": 5.0,
+     "adductors": 5.0,
+     "upper_traps": 5.0
+    },
+    "inBandShare": 1.0,
+    "pullSets": 0.0,
+    "pushSets": 5.0,
+    "hipSets": 2.0,
+    "kneeSets": 2.0,
+    "coveredPatterns": 4,
+    "coverablePatterns": 4,
+    "slots": 19,
+    "distinctExercises": 16,
+    "resistanceMinutes": 30.7,
+    "majorCredits": 30.5,
+    "score": {
+     "total": 0.9570175556911953,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9842892141466172,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.8285714285714285,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9759542056661851,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.7095873015873017,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.7820304017372421,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0
+  },
+  "prudent_sante_musculation": {
+   "score": 0.9505,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.978,
+    "muscle_volume": 0.8317,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9623,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.6185,
+    "stimulus_fatigue": 0.8501,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     44.95,
+     44.417
+    ],
+    "dayBudget": [
+     45,
+     45
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.993,
+    "classShare": {
+     "musculation": 0.622,
+     "cardio": 0.378
+    },
+    "classTarget": {
+     "musculation": 0.6,
+     "cardio": 0.4
+    },
+    "dosageError": 0.022,
+    "groupSets": {
+     "chest": 5.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 0.0,
+     "delt_posterior": 2.5,
+     "lats": 5.0,
+     "upper_back": 5.0,
+     "biceps": 2.5,
+     "triceps": 5.0,
+     "abs": 4.0,
+     "lower_back": 0.0,
+     "glutes": 5.0,
+     "quads": 5.0,
+     "hamstrings": 1.5,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 1.5,
+     "upper_traps": 0.0
+    },
+    "bandLow": {
+     "chest": 2.5,
+     "delt_anterior": 2.5,
+     "delt_middle": 2.5,
+     "delt_posterior": 2.5,
+     "lats": 2.5,
+     "upper_back": 2.5,
+     "biceps": 2.5,
+     "triceps": 2.5,
+     "abs": 2.5,
+     "lower_back": 2.5,
+     "glutes": 2.5,
+     "quads": 2.5,
+     "hamstrings": 2.5,
+     "calves": 2.5,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 6.0,
+     "delt_anterior": 6.0,
+     "delt_middle": 6.0,
+     "delt_posterior": 6.0,
+     "lats": 6.0,
+     "upper_back": 6.0,
+     "biceps": 6.0,
+     "triceps": 6.0,
+     "abs": 6.0,
+     "lower_back": 6.0,
+     "glutes": 6.0,
+     "quads": 6.0,
+     "hamstrings": 6.0,
+     "calves": 6.0,
+     "forearms": 6.0,
+     "adductors": 6.0,
+     "upper_traps": 6.0
+    },
+    "inBandShare": 0.756,
+    "pullSets": 5.0,
+    "pushSets": 5.0,
+    "hipSets": 2.0,
+    "kneeSets": 3.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 10,
+    "distinctExercises": 10,
+    "resistanceMinutes": 49.367,
+    "majorCredits": 45.5,
+    "score": {
+     "total": 0.9504687287776863,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9779924401511969,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.8317261904761903,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9623177536449271,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6184761904761905,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.8500900292595094,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0222
+  },
+  "tres_grand_lourd": {
+   "score": 0.9688,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.994,
+    "muscle_volume": 0.9383,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9834,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.7213,
+    "stimulus_fatigue": 0.791,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     59.7,
+     59.85,
+     59.35
+    ],
+    "dayBudget": [
+     60,
+     60,
+     60
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.994,
+    "classShare": {
+     "musculation": 0.7,
+     "cardio": 0.3
+    },
+    "classTarget": {
+     "musculation": 0.7,
+     "cardio": 0.3
+    },
+    "dosageError": 0.0,
+    "groupSets": {
+     "chest": 9.0,
+     "delt_anterior": 6.0,
+     "delt_middle": 6.0,
+     "delt_posterior": 8.0,
+     "lats": 9.0,
+     "upper_back": 11.0,
+     "biceps": 4.5,
+     "triceps": 6.0,
+     "abs": 6.0,
+     "lower_back": 3.0,
+     "glutes": 12.0,
+     "quads": 6.0,
+     "hamstrings": 9.0,
+     "calves": 3.0,
+     "forearms": 0.0,
+     "adductors": 6.0,
+     "upper_traps": 3.0
+    },
+    "bandLow": {
+     "chest": 6.5,
+     "delt_anterior": 6.5,
+     "delt_middle": 6.5,
+     "delt_posterior": 6.5,
+     "lats": 6.5,
+     "upper_back": 6.5,
+     "biceps": 6.5,
+     "triceps": 6.5,
+     "abs": 6.5,
+     "lower_back": 6.5,
+     "glutes": 6.5,
+     "quads": 6.5,
+     "hamstrings": 6.5,
+     "calves": 6.5,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 13.5,
+     "delt_anterior": 13.5,
+     "delt_middle": 13.5,
+     "delt_posterior": 13.5,
+     "lats": 13.5,
+     "upper_back": 13.5,
+     "biceps": 13.5,
+     "triceps": 13.5,
+     "abs": 13.5,
+     "lower_back": 13.5,
+     "glutes": 13.5,
+     "quads": 13.5,
+     "hamstrings": 13.5,
+     "calves": 13.5,
+     "forearms": 13.5,
+     "adductors": 13.5,
+     "upper_traps": 13.5
+    },
+    "inBandShare": 0.511,
+    "pullSets": 9.0,
+    "pushSets": 9.0,
+    "hipSets": 9.0,
+    "kneeSets": 6.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 19,
+    "distinctExercises": 18,
+    "resistanceMinutes": 114.65,
+    "majorCredits": 98.5,
+    "score": {
+     "total": 0.9692635521927064,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9995118974984747,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.9383012820512822,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9835265405735205,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.7212857142857143,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.7910306730629452,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.1154
+  },
+  "petite_legere": {
+   "score": 0.9579,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9988,
+    "muscle_volume": 0.8889,
+    "pattern_balance": 1.0,
+    "discipline_structure": 0.9315,
+    "time_use": 0.9983,
+    "variety": 1.0,
+    "exercise_fit": 0.672,
+    "stimulus_fatigue": 0.8629,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     43.1,
+     40.383,
+     42.867
+    ],
+    "dayBudget": [
+     45,
+     45,
+     45
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.936,
+    "classShare": {
+     "streetWorkout": 0.699,
+     "mobility": 0.301
+    },
+    "classTarget": {
+     "streetWorkout": 0.7,
+     "mobility": 0.3
+    },
+    "dosageError": 0.001,
+    "groupSets": {
+     "chest": 9.5,
+     "delt_anterior": 7.0,
+     "delt_middle": 1.5,
+     "delt_posterior": 7.5,
+     "lats": 10.5,
+     "upper_back": 10.0,
+     "biceps": 5.5,
+     "triceps": 9.0,
+     "abs": 8.0,
+     "lower_back": 0.0,
+     "glutes": 6.0,
+     "quads": 9.0,
+     "hamstrings": 1.5,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 1.5,
+     "upper_traps": 1.5
+    },
+    "bandLow": {
+     "chest": 5.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 5.0,
+     "delt_posterior": 5.0,
+     "lats": 5.0,
+     "upper_back": 5.0,
+     "biceps": 5.0,
+     "triceps": 5.0,
+     "abs": 5.0,
+     "lower_back": 5.0,
+     "glutes": 5.0,
+     "quads": 5.0,
+     "hamstrings": 5.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 10.0,
+     "delt_anterior": 10.0,
+     "delt_middle": 10.0,
+     "delt_posterior": 10.0,
+     "lats": 10.0,
+     "upper_back": 10.0,
+     "biceps": 10.0,
+     "triceps": 10.0,
+     "abs": 10.0,
+     "lower_back": 10.0,
+     "glutes": 10.0,
+     "quads": 10.0,
+     "hamstrings": 10.0,
+     "calves": 10.0,
+     "forearms": 10.0,
+     "adductors": 10.0,
+     "upper_traps": 10.0
+    },
+    "inBandShare": 0.711,
+    "pullSets": 11.0,
+    "pushSets": 8.0,
+    "hipSets": 2.0,
+    "kneeSets": 3.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 23,
+    "distinctExercises": 21,
+    "resistanceMinutes": 77.817,
+    "majorCredits": 85.0,
+    "score": {
+     "total": 0.9579272564261494,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9988474779224668,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.8889130434782608,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9314990270917527,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 0.9982776862904879,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.6720496894409936,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.8629256800171343,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.1034
+  },
+  "sept_jours_courts_7x20": {
+   "score": 0.936,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9301,
+    "muscle_volume": 0.854,
+    "pattern_balance": 0.9417,
+    "discipline_structure": 0.9432,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.563,
+    "stimulus_fatigue": 0.7299,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     20.0,
+     18.033,
+     19.533,
+     19.833,
+     19.367,
+     19.983,
+     18.15
+    ],
+    "dayBudget": [
+     20,
+     20,
+     20,
+     20,
+     20,
+     20,
+     20
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.964,
+    "classShare": {
+     "cardio": 0.305,
+     "mobility": 0.375,
+     "generalFitness": 0.32
+    },
+    "classTarget": {
+     "cardio": 0.375,
+     "mobility": 0.375,
+     "generalFitness": 0.25
+    },
+    "dosageError": 0.07,
+    "groupSets": {
+     "chest": 4.0,
+     "delt_anterior": 4.0,
+     "delt_middle": 0.0,
+     "delt_posterior": 1.0,
+     "lats": 4.0,
+     "upper_back": 3.0,
+     "biceps": 2.0,
+     "triceps": 4.0,
+     "abs": 3.0,
+     "lower_back": 1.0,
+     "glutes": 4.0,
+     "quads": 3.0,
+     "hamstrings": 3.0,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 3.0,
+     "upper_traps": 0.0
+    },
+    "bandLow": {
+     "chest": 1.5,
+     "delt_anterior": 1.5,
+     "delt_middle": 1.5,
+     "delt_posterior": 1.5,
+     "lats": 1.5,
+     "upper_back": 1.5,
+     "biceps": 1.5,
+     "triceps": 1.5,
+     "abs": 1.5,
+     "lower_back": 1.5,
+     "glutes": 1.5,
+     "quads": 1.5,
+     "hamstrings": 1.5,
+     "calves": 0.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 5.0,
+     "delt_anterior": 5.0,
+     "delt_middle": 5.0,
+     "delt_posterior": 5.0,
+     "lats": 5.0,
+     "upper_back": 5.0,
+     "biceps": 5.0,
+     "triceps": 5.0,
+     "abs": 5.0,
+     "lower_back": 5.0,
+     "glutes": 5.0,
+     "quads": 5.0,
+     "hamstrings": 5.0,
+     "calves": 5.0,
+     "forearms": 5.0,
+     "adductors": 5.0,
+     "upper_traps": 5.0
+    },
+    "inBandShare": 0.822,
+    "pullSets": 4.0,
+    "pushSets": 4.0,
+    "hipSets": 2.0,
+    "kneeSets": 2.0,
+    "coveredPatterns": 5,
+    "coverablePatterns": 6,
+    "slots": 31,
+    "distinctExercises": 25,
+    "resistanceMinutes": 39.3,
+    "majorCredits": 36.0,
+    "score": {
+     "total": 0.935954849657366,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9301261187957689,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.8539855072463767,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 0.9416666666666667,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9432219176908911,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.5629800307219661,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.729926491376873,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.0588
+  },
+  "materiel_complet_gouts_marques": {
+   "score": 0.9695,
+   "components": {
+    "recovery": 1.0,
+    "fatigue_balance": 1.0,
+    "joint_load": 1.0,
+    "goal_specificity": 1.0,
+    "discipline_dosage": 0.9953,
+    "muscle_volume": 0.9782,
+    "pattern_balance": 0.9875,
+    "discipline_structure": 0.9699,
+    "time_use": 1.0,
+    "variety": 1.0,
+    "exercise_fit": 0.714,
+    "stimulus_fatigue": 0.7871,
+    "preferences": 1.0,
+    "novelty": 1.0
+   },
+   "violations": [],
+   "metrics": {
+    "dayMinutes": [
+     58.0,
+     59.25,
+     59.25,
+     54.467
+    ],
+    "dayBudget": [
+     60,
+     60,
+     60,
+     60
+    ],
+    "overBudgetDays": 0,
+    "timeUse": 0.962,
+    "classShare": {
+     "musculation": 0.601,
+     "streetWorkout": 0.202,
+     "cardio": 0.197
+    },
+    "classTarget": {
+     "musculation": 0.6,
+     "streetWorkout": 0.2,
+     "cardio": 0.2
+    },
+    "dosageError": 0.003,
+    "groupSets": {
+     "chest": 14.5,
+     "delt_anterior": 9.0,
+     "delt_middle": 9.0,
+     "delt_posterior": 9.0,
+     "lats": 11.5,
+     "upper_back": 16.0,
+     "biceps": 9.0,
+     "triceps": 8.5,
+     "abs": 14.0,
+     "lower_back": 8.5,
+     "glutes": 14.0,
+     "quads": 14.0,
+     "hamstrings": 8.0,
+     "calves": 8.5,
+     "forearms": 0.0,
+     "adductors": 4.0,
+     "upper_traps": 3.0
+    },
+    "bandLow": {
+     "chest": 8.0,
+     "delt_anterior": 8.0,
+     "delt_middle": 8.0,
+     "delt_posterior": 8.0,
+     "lats": 8.0,
+     "upper_back": 8.0,
+     "biceps": 8.0,
+     "triceps": 8.0,
+     "abs": 8.0,
+     "lower_back": 8.0,
+     "glutes": 8.0,
+     "quads": 8.0,
+     "hamstrings": 8.0,
+     "calves": 8.0,
+     "forearms": 0.0,
+     "adductors": 0.0,
+     "upper_traps": 0.0
+    },
+    "bandHigh": {
+     "chest": 16.0,
+     "delt_anterior": 16.0,
+     "delt_middle": 16.0,
+     "delt_posterior": 16.0,
+     "lats": 16.0,
+     "upper_back": 16.0,
+     "biceps": 16.0,
+     "triceps": 16.0,
+     "abs": 16.0,
+     "lower_back": 16.0,
+     "glutes": 16.0,
+     "quads": 16.0,
+     "hamstrings": 16.0,
+     "calves": 16.0,
+     "forearms": 16.0,
+     "adductors": 16.0,
+     "upper_traps": 16.0
+    },
+    "inBandShare": 1.0,
+    "pullSets": 15.0,
+    "pushSets": 13.0,
+    "hipSets": 5.0,
+    "kneeSets": 3.0,
+    "coveredPatterns": 6,
+    "coverablePatterns": 6,
+    "slots": 26,
+    "distinctExercises": 24,
+    "resistanceMinutes": 169.467,
+    "majorCredits": 153.5,
+    "score": {
+     "total": 0.9701610581175086,
+     "components": [
+      {
+       "code": "recovery",
+       "value": 1.0,
+       "weight": 0.65
+      },
+      {
+       "code": "fatigue_balance",
+       "value": 1.0,
+       "weight": 0.15
+      },
+      {
+       "code": "joint_load",
+       "value": 1.0,
+       "weight": 0.2
+      },
+      {
+       "code": "goal_specificity",
+       "value": 1.0,
+       "weight": 0.16
+      },
+      {
+       "code": "discipline_dosage",
+       "value": 0.9967135408437352,
+       "weight": 0.12
+      },
+      {
+       "code": "muscle_volume",
+       "value": 0.98,
+       "weight": 0.12
+      },
+      {
+       "code": "pattern_balance",
+       "value": 1.0,
+       "weight": 0.1
+      },
+      {
+       "code": "discipline_structure",
+       "value": 0.9700917545087241,
+       "weight": 0.14
+      },
+      {
+       "code": "time_use",
+       "value": 1.0,
+       "weight": 0.08
+      },
+      {
+       "code": "variety",
+       "value": 1.0,
+       "weight": 0.06
+      },
+      {
+       "code": "exercise_fit",
+       "value": 0.7051648351648355,
+       "weight": 0.1
+      },
+      {
+       "code": "stimulus_fatigue",
+       "value": 0.7945995372972162,
+       "weight": 0.03
+      },
+      {
+       "code": "preferences",
+       "value": 1.0,
+       "weight": 0.07
+      },
+      {
+       "code": "novelty",
+       "value": 1.0,
+       "weight": 0.02
+      }
+     ]
+    }
+   },
+   "ownerWeekResemblance": 0.1321
+  }
+ },
+ "timingsFixturesMs": {
+  "createPass1": {
+   "n": 40,
+   "mean": 25.4,
+   "min": 1.7,
+   "p05": 6.0,
+   "p50": 22.2,
+   "p95": 59.5,
+   "p99": 77.2,
+   "max": 77.2
+  },
+  "createPass2": {
+   "n": 40,
+   "mean": 1.3,
+   "min": 0.4,
+   "p05": 0.6,
+   "p50": 1.1,
+   "p95": 3.0,
+   "p99": 3.3,
+   "max": 3.3
+  },
+  "full": {
+   "n": 40,
+   "mean": 26.7,
+   "min": 2.1,
+   "p05": 6.6,
+   "p50": 23.5,
+   "p95": 62.5,
+   "p99": 79.0,
+   "max": 79.0
+  },
+  "review": {
+   "n": 40,
+   "mean": 7.3,
+   "min": 0.9,
+   "p05": 2.6,
+   "p50": 7.5,
+   "p95": 12.2,
+   "p99": 13.6,
+   "max": 13.6
+  },
+  "variants": {
+   "n": 40,
+   "mean": 1.1,
+   "min": 0.4,
+   "p05": 0.6,
+   "p50": 1.0,
+   "p95": 1.7,
+   "p99": 1.9,
+   "max": 1.9
+  },
+  "alternative": {
+   "n": 40,
+   "mean": 16.1,
+   "min": 1.2,
+   "p05": 3.9,
+   "p50": 12.6,
+   "p95": 31.4,
+   "p99": 81.3,
+   "max": 81.3
+  },
+  "nextBlock": {
+   "n": 40,
+   "mean": 8.8,
+   "min": 0.8,
+   "p05": 4.1,
+   "p50": 7.8,
+   "p95": 16.2,
+   "p99": 19.5,
+   "max": 19.5
+  },
+  "restructure": {
+   "n": 40,
+   "mean": 8.1,
+   "min": 0.9,
+   "p05": 3.9,
+   "p50": 7.3,
+   "p95": 17.0,
+   "p99": 18.0,
+   "max": 18.0
+  }
+ },
+ "population_stats": {
+  "hardViolationPlans": 0,
+  "invalidPlans": 0,
+  "fallbackPlans": 2,
+  "score": {
+   "n": 1000,
+   "mean": 0.9214,
+   "min": 0.7444,
+   "p05": 0.8525,
+   "p50": 0.9275,
+   "p95": 0.9662,
+   "p99": 0.9749,
+   "max": 0.9768
+  },
+  "timeUse": {
+   "n": 1000,
+   "mean": 0.8862,
+   "min": 0.2162,
+   "p05": 0.5449,
+   "p50": 0.951,
+   "p95": 0.9967,
+   "p99": 1.0,
+   "max": 1.0
+  },
+  "inBandShare": {
+   "n": 1000,
+   "mean": 0.7779,
+   "min": 0.2222,
+   "p05": 0.4667,
+   "p50": 0.8,
+   "p95": 1.0,
+   "p99": 1.0,
+   "max": 1.0
+  },
+  "dosageError": {
+   "n": 1000,
+   "mean": 0.087,
+   "min": 0.0,
+   "p05": 0.0,
+   "p50": 0.0155,
+   "p95": 0.3584,
+   "p99": 0.5381,
+   "max": 1.0
+  },
+  "patternCoverage": {
+   "n": 906,
+   "mean": 0.9179,
+   "min": 0.0,
+   "p05": 0.4,
+   "p50": 1.0,
+   "p95": 1.0,
+   "p99": 1.0,
+   "max": 1.0
+  },
+  "componentMeans": {
+   "recovery": 1.0,
+   "fatigue_balance": 1.0,
+   "joint_load": 0.9935,
+   "goal_specificity": 0.9712,
+   "discipline_dosage": 0.9017,
+   "muscle_volume": 0.8878,
+   "pattern_balance": 0.9508,
+   "discipline_structure": 0.8502,
+   "time_use": 0.9398,
+   "variety": 0.9835,
+   "exercise_fit": 0.5999,
+   "stimulus_fatigue": 0.796,
+   "preferences": 0.9454,
+   "novelty": 0.989
+  },
+  "createPass1Ms": {
+   "n": 1000,
+   "mean": 25.1,
+   "min": 0.9,
+   "p05": 3.7,
+   "p50": 18.8,
+   "p95": 62.0,
+   "p99": 122.9,
+   "max": 159.7
+  },
+  "reviewMs": {
+   "n": 1000,
+   "mean": 7.3,
+   "min": 0.5,
+   "p05": 2.1,
+   "p50": 6.7,
+   "p95": 14.8,
+   "p99": 21.5,
+   "max": 25.5
+  },
+  "collateralChanges": {
+   "cannot_do": {
+    "mean": 0.64,
+    "zeroShare": 0.698,
+    "max": 12.0
+   },
+   "dislike": {
+    "mean": 0.6,
+    "zeroShare": 0.778,
+    "max": 12.0
+   },
+   "remove": {
+    "mean": 0.55,
+    "zeroShare": 0.538,
+    "max": 7.0
+   }
+  }
+ },
+ "alternatives": {
+  "proposals": 280,
+  "scoreRatio": {
+   "n": 280,
+   "mean": 0.9997,
+   "min": 0.9859,
+   "p05": 0.9918,
+   "p50": 0.9995,
+   "p95": 1.007,
+   "p99": 1.0144,
+   "max": 1.0194
+  },
+  "distanceToShown": {
+   "n": 280,
+   "mean": 0.4255,
+   "min": 0.0,
+   "p05": 0.2727,
+   "p50": 0.4167,
+   "p95": 0.5833,
+   "p99": 0.6923,
+   "max": 0.75
+  },
+  "reachedThirdShare": 0.893,
+  "distinctOfEight": {
+   "n": 40,
+   "mean": 8.0,
+   "min": 8.0,
+   "p05": 8.0,
+   "p50": 8.0,
+   "p95": 8.0,
+   "p99": 8.0,
+   "max": 8.0
+  }
+ },
+ "convergence": {
+  "rows": [
+   {
+    "effort": 0.0,
+    "annealIterations": 0,
+    "meanObjective": 1.95086,
+    "meanMs": 17.1
+   },
+   {
+    "effort": 0.25,
+    "annealIterations": 375,
+    "meanObjective": 1.95233,
+    "meanMs": 18.5
+   },
+   {
+    "effort": 0.5,
+    "annealIterations": 750,
+    "meanObjective": 1.95315,
+    "meanMs": 21.8
+   },
+   {
+    "effort": 1.0,
+    "annealIterations": 1500,
+    "meanObjective": 1.95349,
+    "meanMs": 24.9
+   },
+   {
+    "effort": 2.0,
+    "annealIterations": 3000,
+    "meanObjective": 1.95529,
+    "meanMs": 28.1,
+    "profilesImproved": 25
+   },
+   {
+    "effort": 4.0,
+    "annealIterations": 6000,
+    "meanObjective": 1.95529,
+    "meanMs": 35.9,
+    "profilesImproved": 26
+   }
+  ],
+  "referenceObjective": 1.95349
+ },
+ "sensitivity": {
+  "recovery": {
+   "x0.8": {
+    "meanJaccard": 0.599,
+    "identicalPlans": 15
+   },
+   "x1.2": {
+    "meanJaccard": 0.66,
+    "identicalPlans": 18
+   }
+  },
+  "fatigue_balance": {
+   "x0.8": {
+    "meanJaccard": 0.568,
+    "identicalPlans": 12
+   },
+   "x1.2": {
+    "meanJaccard": 0.582,
+    "identicalPlans": 13
+   }
+  },
+  "joint_load": {
+   "x0.8": {
+    "meanJaccard": 0.701,
+    "identicalPlans": 22
+   },
+   "x1.2": {
+    "meanJaccard": 0.737,
+    "identicalPlans": 23
+   }
+  },
+  "goal_specificity": {
+   "x0.8": {
+    "meanJaccard": 0.497,
+    "identicalPlans": 9
+   },
+   "x1.2": {
+    "meanJaccard": 0.494,
+    "identicalPlans": 9
+   }
+  },
+  "discipline_dosage": {
+   "x0.8": {
+    "meanJaccard": 0.452,
+    "identicalPlans": 5
+   },
+   "x1.2": {
+    "meanJaccard": 0.461,
+    "identicalPlans": 6
+   }
+  },
+  "muscle_volume": {
+   "x0.8": {
+    "meanJaccard": 0.438,
+    "identicalPlans": 4
+   },
+   "x1.2": {
+    "meanJaccard": 0.454,
+    "identicalPlans": 5
+   }
+  },
+  "pattern_balance": {
+   "x0.8": {
+    "meanJaccard": 0.513,
+    "identicalPlans": 9
+   },
+   "x1.2": {
+    "meanJaccard": 0.503,
+    "identicalPlans": 8
+   }
+  },
+  "discipline_structure": {
+   "x0.8": {
+    "meanJaccard": 0.487,
+    "identicalPlans": 6
+   },
+   "x1.2": {
+    "meanJaccard": 0.484,
+    "identicalPlans": 7
+   }
+  },
+  "time_use": {
+   "x0.8": {
+    "meanJaccard": 0.47,
+    "identicalPlans": 4
+   },
+   "x1.2": {
+    "meanJaccard": 0.457,
+    "identicalPlans": 5
+   }
+  },
+  "variety": {
+   "x0.8": {
+    "meanJaccard": 0.505,
+    "identicalPlans": 9
+   },
+   "x1.2": {
+    "meanJaccard": 0.509,
+    "identicalPlans": 8
+   }
+  },
+  "exercise_fit": {
+   "x0.8": {
+    "meanJaccard": 0.47,
+    "identicalPlans": 4
+   },
+   "x1.2": {
+    "meanJaccard": 0.47,
+    "identicalPlans": 6
+   }
+  },
+  "stimulus_fatigue": {
+   "x0.8": {
+    "meanJaccard": 0.539,
+    "identicalPlans": 9
+   },
+   "x1.2": {
+    "meanJaccard": 0.524,
+    "identicalPlans": 7
+   }
+  },
+  "preferences": {
+   "x0.8": {
+    "meanJaccard": 0.573,
+    "identicalPlans": 12
+   },
+   "x1.2": {
+    "meanJaccard": 0.49,
+    "identicalPlans": 8
+   }
+  },
+  "novelty": {
+   "x0.8": {
+    "meanJaccard": 0.737,
+    "identicalPlans": 23
+   },
+   "x1.2": {
+    "meanJaccard": 0.718,
+    "identicalPlans": 23
+   }
+  }
+ },
+ "creditsPerMinute": {
+  "parameter": 0.9,
+  "measured": {
+   "n": 37,
+   "mean": 0.906,
+   "min": 0.605,
+   "p05": 0.699,
+   "p50": 0.922,
+   "p95": 1.104,
+   "p99": 1.11,
+   "max": 1.11
+  }
+ },
+ "ownerResemblance": {
+  "limit": 0.3,
+  "ownerWeeks": 40,
+  "ownerExercises": 45,
+  "ownerAccessories": 36,
+  "selfCrossBlock": {
+   "n": 655,
+   "mean": 0.6631,
+   "min": 0.2093,
+   "p05": 0.2143,
+   "p50": 0.5952,
+   "p95": 1.0,
+   "p99": 1.0,
+   "max": 1.0
+  },
+  "selfCrossBlockP10": 0.3023,
+  "fixtures": {
+   "propriétaire": {
+    "n": 4,
+    "mean": 0.1469,
+    "min": 0.1111,
+    "p05": 0.1111,
+    "p50": 0.1731,
+    "p95": 0.1731,
+    "p99": 0.1731,
+    "max": 0.1731
+   },
+   "street": {
+    "n": 52,
+    "mean": 0.0733,
+    "min": 0.0,
+    "p05": 0.0,
+    "p50": 0.0741,
+    "p95": 0.1481,
+    "p99": 0.1667,
+    "max": 0.1667
+   },
+   "sans street": {
+    "n": 104,
+    "mean": 0.0715,
+    "min": 0.0,
+    "p05": 0.0,
+    "p50": 0.0714,
+    "p95": 0.15,
+    "p99": 0.1905,
+    "max": 0.2097
+   }
+  },
+  "population": {
+   "n": 1000,
+   "mean": 0.0425,
+   "min": 0.0,
+   "p05": 0.0,
+   "p50": 0.04,
+   "p95": 0.1,
+   "p99": 0.1379,
+   "max": 0.2222
+  },
+  "sessionMax": {
+   "n": 572,
+   "mean": 0.0776,
+   "min": 0.0,
+   "p05": 0.0,
+   "p50": 0.0909,
+   "p95": 0.2,
+   "p99": 0.2857,
+   "max": 0.4
+  },
+  "streetFreePlans": 328,
+  "accessoryFindings": [
+   {
+    "exerciseId": "mo-routine-mobilite-epaules-poignets",
+    "category": "Mobilité articulaire",
+    "admissible": 144,
+    "rate": 0.3889,
+    "bestPeerId": "mo-wall-slides",
+    "bestPeerRate": 0.4946,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-rowing-poulie-assis-triangle",
+    "category": "Tirage horizontal",
+    "admissible": 148,
+    "rate": 0.3243,
+    "bestPeerId": "sw-row-australien",
+    "bestPeerRate": 0.5507,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-mollets-debout-machine",
+    "category": "Mollets et cheville",
+    "admissible": 138,
+    "rate": 0.2754,
+    "bestPeerId": "mu-mollets-unilateral-haltere",
+    "bestPeerRate": 0.129,
+    "overRepresented": true
+   },
+   {
+    "exerciseId": "mu-face-pull-corde",
+    "category": "Tirage horizontal",
+    "admissible": 140,
+    "rate": 0.2571,
+    "bestPeerId": "sw-row-australien",
+    "bestPeerRate": 0.5507,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-elevation-laterale-halteres",
+    "category": "Isolation épaules",
+    "admissible": 151,
+    "rate": 0.1854,
+    "bestPeerId": "mu-lu-raise",
+    "bestPeerRate": 0.2451,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-fente-marchee-halteres",
+    "category": "Fente / unilatéral jambes",
+    "admissible": 104,
+    "rate": 0.1635,
+    "bestPeerId": "cf-fente-overhead-disque",
+    "bestPeerRate": 0.2895,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-leg-curl-couche",
+    "category": "Flexion de genou (ischio-jambiers)",
+    "admissible": 141,
+    "rate": 0.1631,
+    "bestPeerId": "mu-nordic-hamstring-curl",
+    "bestPeerRate": 0.2985,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-developpe-militaire-barre-debout",
+    "category": "Poussée verticale",
+    "admissible": 87,
+    "rate": 0.1494,
+    "bestPeerId": "sw-pompe-pike",
+    "bestPeerRate": 0.2581,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "ca-marche-recuperation",
+    "category": "Marche et portage",
+    "admissible": 242,
+    "rate": 0.1446,
+    "bestPeerId": "ca-marche-tapis-incline",
+    "bestPeerRate": 0.1867,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-developpe-couche-barre",
+    "category": "Poussée horizontale",
+    "admissible": 122,
+    "rate": 0.123,
+    "bestPeerId": "mu-developpe-couche-halteres",
+    "bestPeerRate": 0.3684,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-pallof-press-debout",
+    "category": "Gainage anti-rotation",
+    "admissible": 141,
+    "rate": 0.078,
+    "bestPeerId": "mu-bird-dog",
+    "bestPeerRate": 0.1422,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-rowing-barre-pronation",
+    "category": "Tirage horizontal",
+    "admissible": 105,
+    "rate": 0.0762,
+    "bestPeerId": "sw-row-australien",
+    "bestPeerRate": 0.5507,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-y-raise-banc-incline",
+    "category": "Préparation scapulaire",
+    "admissible": 135,
+    "rate": 0.0741,
+    "bestPeerId": "mu-halo-kettlebell",
+    "bestPeerRate": 0.1338,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-rowing-haltere-unilateral-banc",
+    "category": "Tirage horizontal",
+    "admissible": 141,
+    "rate": 0.0638,
+    "bestPeerId": "sw-row-australien",
+    "bestPeerRate": 0.5507,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-hollow-body-hold",
+    "category": "Gainage anti-extension",
+    "admissible": 156,
+    "rate": 0.0513,
+    "bestPeerId": "mu-planche-rkc",
+    "bestPeerRate": 0.3161,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "sw-traction-scapulaire",
+    "category": "Préparation scapulaire",
+    "admissible": 205,
+    "rate": 0.0439,
+    "bestPeerId": "mu-halo-kettlebell",
+    "bestPeerRate": 0.1338,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-hip-thrust-barre",
+    "category": "Extension de hanche",
+    "admissible": 98,
+    "rate": 0.0408,
+    "bestPeerId": "mu-reverse-hyper-machine",
+    "bestPeerRate": 0.2348,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-souleve-de-terre-roumain-barre",
+    "category": "Charnière de hanche",
+    "admissible": 104,
+    "rate": 0.0385,
+    "bestPeerId": "mu-souleve-de-terre-conventionnel",
+    "bestPeerRate": 0.371,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-pushdown-corde",
+    "category": "Isolation triceps",
+    "admissible": 147,
+    "rate": 0.034,
+    "bestPeerId": "mu-extension-croisee-couche-haltere",
+    "bestPeerRate": 0.0707,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-tirage-vertical-prise-neutre",
+    "category": "Tirage vertical",
+    "admissible": 147,
+    "rate": 0.034,
+    "bestPeerId": "mu-tirage-vertical-prise-large-pronation",
+    "bestPeerRate": 0.4459,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-roue-abdominale-genoux",
+    "category": "Gainage anti-extension",
+    "admissible": 96,
+    "rate": 0.0208,
+    "bestPeerId": "mu-planche-rkc",
+    "bestPeerRate": 0.3161,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-curl-marteau-halteres",
+    "category": "Isolation biceps",
+    "admissible": 155,
+    "rate": 0.0194,
+    "bestPeerId": "mu-curl-barre-droite-triche",
+    "bestPeerRate": 0.1667,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-rotation-externe-haltere-couche",
+    "category": "Isolation épaules",
+    "admissible": 151,
+    "rate": 0.0132,
+    "bestPeerId": "mu-lu-raise",
+    "bestPeerRate": 0.2451,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-curl-barre-ez",
+    "category": "Isolation biceps",
+    "admissible": 139,
+    "rate": 0.0,
+    "bestPeerId": "mu-curl-barre-droite-triche",
+    "bestPeerRate": 0.1667,
+    "overRepresented": false
+   },
+   {
+    "exerciseId": "mu-squat-pause",
+    "category": "Squat / dominante genou",
+    "admissible": 52,
+    "rate": 0.0,
+    "bestPeerId": "sw-pistol-squat",
+    "bestPeerRate": 0.5577,
+    "overRepresented": false
+   }
+  ],
+  "overRepresented": [
+   "mu-mollets-debout-machine"
+  ]
+ },
+ "reportSeconds": 92
+}
