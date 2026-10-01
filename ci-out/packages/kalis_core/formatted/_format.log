@@ -1,0 +1,13 @@
+Formatted lib/src/generated/adapt.g.dart
+Formatted lib/src/generated/common.g.dart
+Formatted lib/src/generated/journal.g.dart
+Formatted lib/src/generated/plan.g.dart
+Formatted lib/src/generated/profile.g.dart
+Formatted lib/src/generated/quest.g.dart
+Formatted lib/src/generated/reason_codes.g.dart
+Formatted lib/src/testing/arbitrary.g.dart
+Formatted test/fixtures_test.dart
+Formatted test/validation_test.dart
+Formatted test/zz_format_export_test.dart
+Formatted 35 files (11 changed) in 0.28 seconds.
+
