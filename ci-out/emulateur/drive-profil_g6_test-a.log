@@ -1,0 +1,470 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             86.2s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...           3.6s
+I/Choreographer( 4099): Skipped 175 frames!  The application may be doing too much work on its main thread.
+D/ProfileInstaller( 4099): Installing profile for fr.tchoupi.streetlift_tracker
+D/FlutterJNI( 4099): Sending viewport metrics to the engine.
+I/eetlift_tracker( 4099): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:34841/dEqj6GW3jlA=/
+VMServiceFlutterDriver: Isolate found with number: 2503691131149323
+VMServiceFlutterDriver: Isolate 2503691131149323 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/Choreographer( 4099): Skipped 58 frames!  The application may be doing too much work on its main thread.
+I/flutter ( 4099): 00:00 +0: G6 a (sombre, rouge) : refaire son profil proposé, création complète en session de test
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 4099): Skipped 48 frames!  The application may be doing too much work on its main thread.
+D/EGL_emulation( 4099): app_time_stats: avg=1198.11ms min=529.39ms max=1866.83ms count=2
+D/EGL_emulation( 4099): app_time_stats: avg=143.12ms min=7.88ms max=385.89ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=357.01ms min=117.92ms max=500.57ms count=3
+D/EGL_emulation( 4099): app_time_stats: avg=1740.81ms min=1740.81ms max=1740.81ms count=1
+I/eetlift_tracker( 4099): Background concurrent mark compact GC freed 2167KB AllocSpace bytes, 13(580KB) LOS objects, 49% free, 2612KB/5225KB, paused 59us,5.552ms total 51.105ms
+D/EGL_emulation( 4099): app_time_stats: avg=644.75ms min=234.16ms max=1055.34ms count=2
+D/EGL_emulation( 4099): app_time_stats: avg=8035.35ms min=250.05ms max=15820.66ms count=2
+D/EGL_emulation( 4099): app_time_stats: avg=130.38ms min=10.53ms max=236.51ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=98.77ms min=9.84ms max=135.86ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=115.56ms min=10.10ms max=234.80ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=111.10ms min=10.63ms max=221.82ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=122.53ms min=38.38ms max=243.38ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=114.99ms min=11.10ms max=214.98ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=112.48ms min=10.75ms max=228.82ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=124.69ms min=4.52ms max=279.17ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=231.80ms min=9.80ms max=836.87ms count=6
+D/EGL_emulation( 4099): app_time_stats: avg=208.64ms min=183.81ms max=268.35ms count=5
+D/EGL_emulation( 4099): app_time_stats: avg=126.65ms min=78.38ms max=198.85ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=154.44ms min=81.40ms max=207.36ms count=6
+D/EGL_emulation( 4099): app_time_stats: avg=174.81ms min=127.54ms max=266.66ms count=5
+W/WindowOnBackDispatcher( 4099): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4099): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4099): app_time_stats: avg=227.53ms min=121.06ms max=342.22ms count=5
+D/EGL_emulation( 4099): app_time_stats: avg=127.56ms min=26.88ms max=191.51ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=127.16ms min=4.95ms max=243.81ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=125.49ms min=15.48ms max=214.27ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=126.94ms min=19.30ms max=233.95ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=108.70ms min=17.84ms max=126.37ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=121.10ms min=102.06ms max=142.29ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=117.45ms min=20.50ms max=219.59ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=139.01ms min=28.22ms max=240.76ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=132.91ms min=19.23ms max=254.83ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=136.01ms min=113.25ms max=167.19ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=266.01ms min=126.08ms max=570.56ms count=4
+D/EGL_emulation( 4099): app_time_stats: avg=131.14ms min=115.61ms max=149.62ms count=8
+I/ImeTracker( 4099): fr.tchoupi.streetlift_tracker:7cd82976: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4099): showSoftInput() view=io.flutter.embedding.android.FlutterView{25d034 VFE...... .F....ID 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/ImeTracker( 4099): fr.tchoupi.streetlift_tracker:4c819bd4: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4099): showSoftInput() view=io.flutter.embedding.android.FlutterView{25d034 VFE...... .F....ID 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/AssistStructure( 4099): Flattened final assist data: 440 bytes, containing 1 windows, 3 views
+D/EGL_emulation( 4099): app_time_stats: avg=267.13ms min=17.57ms max=922.05ms count=5
+D/EGL_emulation( 4099): app_time_stats: avg=169.96ms min=21.16ms max=239.08ms count=6
+D/EGL_emulation( 4099): app_time_stats: avg=138.01ms min=18.29ms max=255.12ms count=8
+D/InputConnectionAdaptor( 4099): The input method toggled cursor monitoring on
+D/EGL_emulation( 4099): app_time_stats: avg=138.12ms min=12.25ms max=211.20ms count=7
+I/ImeTracker( 4099): fr.tchoupi.streetlift_tracker:513111bd: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4099): showSoftInput() view=io.flutter.embedding.android.FlutterView{25d034 VFE...... .F...... 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/ImeTracker( 4099): fr.tchoupi.streetlift_tracker:6943a646: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4099): showSoftInput() view=io.flutter.embedding.android.FlutterView{25d034 VFE...... .F...... 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+D/EGL_emulation( 4099): app_time_stats: avg=128.24ms min=15.23ms max=281.59ms count=8
+I/AssistStructure( 4099): Flattened final assist data: 440 bytes, containing 1 windows, 3 views
+D/InsetsController( 4099): show(ime(), fromIme=true)
+W/InteractionJankMonitor( 4099): Initializing without READ_DEVICE_CONFIG permission. enabled=true, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=fr.tchoupi.streetlift_tracker
+D/FlutterJNI( 4099): Sending viewport metrics to the engine.
+D/EGL_emulation( 4099): app_time_stats: avg=29246.68ms min=5650.00ms max=52843.35ms count=2
+I/ImeTracker( 4099): fr.tchoupi.streetlift_tracker:4c819bd4: onShown
+D/FlutterJNI( 4099): Sending viewport metrics to the engine.
+D/FlutterJNI( 4099): Sending viewport metrics to the engine.
+I/HWUI    ( 4099): Davey! duration=700ms; Flags=0, FrameTimelineVsyncId=22716, IntendedVsync=208630726860, Vsync=209064060176, InputEventId=0, HandleInputStart=209073812002, AnimationStart=209073813625, PerformTraversalsStart=209073814206, DrawStart=209195101602, FrameDeadline=208647393526, FrameInterval=209073636996, FrameStartTime=16666666, SyncQueued=209195245831, SyncStart=209195572800, IssueDrawCommandsStart=209195597637, SwapBuffers=209214905824, FrameCompleted=209331805540, DequeueBufferDuration=4809, QueueBufferDuration=6184027, GpuCompleted=209331805540, SwapBuffersCompleted=209222185163, DisplayPresentTime=0, CommandSubmissionCompleted=209214905824, 
+D/EGL_emulation( 4099): app_time_stats: avg=519.84ms min=466.48ms max=573.20ms count=2
+I/ImeTracker( 4099): fr.tchoupi.streetlift_tracker:26697410: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4099): showSoftInput() view=io.flutter.embedding.android.FlutterView{25d034 VFE...... .F...... 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/ImeTracker( 4099): fr.tchoupi.streetlift_tracker:cb74ada0: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4099): showSoftInput() view=io.flutter.embedding.android.FlutterView{25d034 VFE...... .F...... 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/AssistStructure( 4099): Flattened final assist data: 440 bytes, containing 1 windows, 3 views
+D/EGL_emulation( 4099): app_time_stats: avg=115.95ms min=9.01ms max=179.87ms count=9
+W/RemoteInputConnectionImpl( 4099): requestCursorUpdates on inactive InputConnection
+D/EGL_emulation( 4099): app_time_stats: avg=257.94ms min=168.16ms max=507.34ms count=4
+W/RemoteInputConnectionImpl( 4099): getSurroundingText on inactive InputConnection
+W/RemoteInputConnectionImpl( 4099): requestCursorUpdates on inactive InputConnection
+W/RemoteInputConnectionImpl( 4099): requestCursorUpdates on inactive InputConnection
+D/InsetsController( 4099): show(ime(), fromIme=true)
+I/ImeTracker( 4099): fr.tchoupi.streetlift_tracker:6943a646: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+D/InputConnectionAdaptor( 4099): The input method toggled cursor monitoring on
+D/InputConnectionAdaptor( 4099): The input method toggled cursor monitoring off
+D/InputConnectionAdaptor( 4099): The input method toggled cursor monitoring on
+D/InsetsController( 4099): show(ime(), fromIme=true)
+I/ImeTracker( 4099): fr.tchoupi.streetlift_tracker:26697410: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+D/InsetsController( 4099): show(ime(), fromIme=true)
+I/ImeTracker( 4099): fr.tchoupi.streetlift_tracker:cb74ada0: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+D/FlutterJNI( 4099): Sending viewport metrics to the engine.
+D/EGL_emulation( 4099): app_time_stats: avg=331.23ms min=185.04ms max=509.67ms count=3
+I/ImeTracker( 4099): fr.tchoupi.streetlift_tracker:ae781fbe: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4099): showSoftInput() view=io.flutter.embedding.android.FlutterView{25d034 VFE...... .F...... 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+I/ImeTracker( 4099): fr.tchoupi.streetlift_tracker:143bcb31: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false
+D/InputMethodManager( 4099): showSoftInput() view=io.flutter.embedding.android.FlutterView{25d034 VFE...... .F...... 0,0-540,960 #1 aid=1073741824} flags=0 reason=SHOW_SOFT_INPUT
+D/InputConnectionAdaptor( 4099): The input method toggled cursor monitoring on
+D/InputConnectionAdaptor( 4099): The input method toggled cursor monitoring off
+D/InputConnectionAdaptor( 4099): The input method toggled cursor monitoring on
+D/InsetsController( 4099): show(ime(), fromIme=true)
+I/ImeTracker( 4099): fr.tchoupi.streetlift_tracker:143bcb31: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+D/EGL_emulation( 4099): app_time_stats: avg=209.42ms min=13.10ms max=402.06ms count=5
+I/ImeTracker( 4099): fr.tchoupi.streetlift_tracker:f9e15733: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+D/InputConnectionAdaptor( 4099): The input method toggled cursor monitoring off
+D/InsetsController( 4099): hide(ime(), fromIme=true)
+D/FlutterJNI( 4099): Sending viewport metrics to the engine.
+D/EGL_emulation( 4099): app_time_stats: avg=2795.88ms min=239.34ms max=5352.43ms count=2
+I/ImeTracker( 4099): fr.tchoupi.streetlift_tracker:d91f3a88: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT_ON_ANIMATION_STATE_CHANGED fromUser false
+I/ImeTracker( 4099): fr.tchoupi.streetlift_tracker:f9e15733: onHidden
+D/FlutterJNI( 4099): Sending viewport metrics to the engine.
+D/FlutterJNI( 4099): Sending viewport metrics to the engine.
+D/EGL_emulation( 4099): app_time_stats: avg=193.26ms min=139.60ms max=310.55ms count=6
+D/EGL_emulation( 4099): app_time_stats: avg=123.32ms min=17.11ms max=367.34ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=142.09ms min=10.70ms max=228.27ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=140.07ms min=23.32ms max=192.35ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=142.64ms min=17.91ms max=276.22ms count=7
+E/FrameTracker( 4099): force finish cuj, time out: J<IME_INSETS_SHOW_ANIMATION::0@1@fr.tchoupi.streetlift_tracker>
+D/EGL_emulation( 4099): app_time_stats: avg=126.09ms min=14.52ms max=212.58ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=147.95ms min=35.74ms max=268.39ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=109.26ms min=4.84ms max=198.86ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=141.68ms min=12.62ms max=261.29ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=130.08ms min=14.07ms max=218.85ms count=9
+E/FrameTracker( 4099): force finish cuj, time out: J<IME_INSETS_HIDE_ANIMATION::1@1@fr.tchoupi.streetlift_tracker>
+D/EGL_emulation( 4099): app_time_stats: avg=131.16ms min=20.01ms max=226.79ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=125.01ms min=27.64ms max=249.68ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=109.77ms min=13.29ms max=210.57ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=101.49ms min=18.70ms max=222.83ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=111.62ms min=20.46ms max=216.18ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=126.52ms min=112.94ms max=168.00ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=127.52ms min=15.76ms max=220.27ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=121.70ms min=15.14ms max=211.02ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=129.55ms min=11.81ms max=357.51ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=119.52ms min=11.24ms max=177.80ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=130.54ms min=111.38ms max=155.89ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=125.10ms min=91.76ms max=148.48ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=129.16ms min=19.28ms max=265.05ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=131.82ms min=6.19ms max=227.66ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=130.22ms min=118.36ms max=154.90ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=114.57ms min=24.71ms max=151.59ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=113.25ms min=9.06ms max=188.42ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=100.39ms min=17.04ms max=134.60ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=125.46ms min=11.98ms max=208.41ms count=8
+W/eetlift_tracker( 4099): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 4099): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+D/EGL_emulation( 4099): app_time_stats: avg=130.47ms min=113.46ms max=149.72ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=117.01ms min=19.72ms max=250.28ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=115.99ms min=15.24ms max=148.35ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=139.41ms min=100.91ms max=261.69ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=103.74ms min=17.26ms max=205.47ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=103.70ms min=86.87ms max=122.82ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=97.99ms min=16.19ms max=200.99ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=118.41ms min=7.28ms max=191.63ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=118.45ms min=24.89ms max=207.17ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=139.58ms min=21.23ms max=222.65ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=101.10ms min=24.49ms max=142.57ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=113.72ms min=8.99ms max=242.31ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=103.78ms min=63.24ms max=135.25ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=142.65ms min=114.48ms max=199.26ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=112.54ms min=18.97ms max=134.20ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=113.58ms min=15.70ms max=137.71ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=119.09ms min=15.34ms max=152.14ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=128.85ms min=96.17ms max=160.70ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=109.79ms min=17.36ms max=212.73ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=102.75ms min=11.06ms max=207.54ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=121.47ms min=92.33ms max=232.98ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=99.47ms min=7.40ms max=121.61ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=126.35ms min=98.48ms max=240.05ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=104.66ms min=12.60ms max=230.82ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=97.63ms min=11.75ms max=225.15ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=117.66ms min=16.81ms max=236.95ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=113.95ms min=14.31ms max=218.26ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=116.62ms min=17.56ms max=202.56ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=96.39ms min=24.81ms max=137.57ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=130.85ms min=98.17ms max=208.06ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=102.74ms min=17.60ms max=141.55ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=134.66ms min=108.92ms max=167.49ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=114.08ms min=12.28ms max=211.54ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=98.90ms min=12.17ms max=133.66ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=147.30ms min=22.02ms max=261.41ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=123.96ms min=115.53ms max=140.21ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=86.47ms min=9.77ms max=213.95ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=121.04ms min=12.82ms max=205.57ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=101.73ms min=2.66ms max=196.58ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=162.82ms min=94.53ms max=289.23ms count=6
+D/EGL_emulation( 4099): app_time_stats: avg=112.47ms min=8.04ms max=268.26ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=112.29ms min=16.58ms max=239.21ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=105.98ms min=20.77ms max=149.70ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=100.79ms min=11.37ms max=225.74ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=126.48ms min=15.70ms max=249.98ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=111.51ms min=10.03ms max=199.97ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=99.04ms min=19.64ms max=122.77ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=123.35ms min=27.64ms max=233.05ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=100.23ms min=12.81ms max=142.87ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=135.53ms min=16.58ms max=239.32ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=103.69ms min=13.47ms max=195.91ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=97.40ms min=10.67ms max=159.38ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=108.06ms min=19.60ms max=220.44ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=108.99ms min=24.61ms max=187.08ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=112.10ms min=39.88ms max=207.29ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=105.53ms min=17.43ms max=213.17ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=117.72ms min=21.69ms max=230.92ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=130.99ms min=24.76ms max=222.91ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=102.81ms min=26.72ms max=144.24ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=108.38ms min=92.66ms max=122.43ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=106.47ms min=30.66ms max=205.05ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=100.56ms min=85.07ms max=110.75ms count=9
+E/AccessibilityBridge( 4099): transform has not been initialized for id = 572
+I/AccessibilityBridge( 4099): Semantics tree:SemanticsNode id=0 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4099): Semantics tree:  +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:  +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4099): Semantics tree:  +-- rect.ltrb=(0.0, 0.0, 540.0, 960.0)
+I/AccessibilityBridge( 4099): Semantics tree:  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:  SemanticsNode id=45 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4099): Semantics tree:    +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:    +-- textDirection=LTR
+I/AccessibilityBridge( 4099): Semantics tree:    +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4099): Semantics tree:    +-- transform=[1.5, 0.0, 0.0, 0.0, 0.0, 1.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:    SemanticsNode id=556 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4099): Semantics tree:      +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:      +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4099): Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4099): Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:      SemanticsNode id=557 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4099): Semantics tree:        +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:        +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4099): Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4099): Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:        SemanticsNode id=558 identifier=null label=Boîte de dialogue actions=0 flags=6144
+I/AccessibilityBridge( 4099): Semantics tree:          +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:          +-- textDirection=LTR
+I/AccessibilityBridge( 4099): Semantics tree:          +-- rect.ltrb=(0.0, 0.0, 360.0, 604.0)
+I/AccessibilityBridge( 4099): Semantics tree:          +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 36.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:          SemanticsNode id=559 identifier=null label=Ignorer actions=1 flags=8
+I/AccessibilityBridge( 4099): Semantics tree:            +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:            +-- textDirection=LTR
+I/AccessibilityBridge( 4099): Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 48.0, 48.0)
+I/AccessibilityBridge( 4099): Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 156.0, 207.83067, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:          SemanticsNode id=560 identifier=null label=null actions=0 flags=262144
+I/AccessibilityBridge( 4099): Semantics tree:            +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:            +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4099): Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 360.0, 348.16934)
+I/AccessibilityBridge( 4099): Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 255.83067, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:            SemanticsNode id=561 identifier=null label=Genou actions=0 flags=0
+I/AccessibilityBridge( 4099): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4099): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 26.0)
+I/AccessibilityBridge( 4099): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:            SemanticsNode id=562 identifier=null label=Articulation suivie : genou actions=0 flags=0
+I/AccessibilityBridge( 4099): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4099): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 18.0)
+I/AccessibilityBridge( 4099): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 26.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:            SemanticsNode id=563 identifier=null label=Côté actions=0 flags=0
+I/AccessibilityBridge( 4099): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4099): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 24.0)
+I/AccessibilityBridge( 4099): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 56.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:            SemanticsNode id=564 identifier=null label=Gauche actions=4194305 flags=270532808
+I/AccessibilityBridge( 4099): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4099): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 76.06543, 48.0)
+I/AccessibilityBridge( 4099): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 86.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:            SemanticsNode id=565 identifier=null label=Droite actions=4194305 flags=270532808
+I/AccessibilityBridge( 4099): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4099): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 66.90019, 48.0)
+I/AccessibilityBridge( 4099): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 100.06543, 86.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:            SemanticsNode id=566 identifier=null label=Des deux côtés actions=4194305 flags=270532812
+I/AccessibilityBridge( 4099): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4099): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 140.93701, 48.0)
+I/AccessibilityBridge( 4099): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 174.96562, 86.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:            SemanticsNode id=567 identifier=null label=Gêne actuelle : 3/10 actions=0 flags=0
+I/AccessibilityBridge( 4099): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4099): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 20.0)
+I/AccessibilityBridge( 4099): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 146.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:            SemanticsNode id=568 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4099): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:              +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4099): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 48.0)
+I/AccessibilityBridge( 4099): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 166.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:              SemanticsNode id=569 identifier=null label=3/10 actions=4194496 flags=10485952
+I/AccessibilityBridge( 4099): Semantics tree:                +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:                +-- textDirection=LTR
+I/AccessibilityBridge( 4099): Semantics tree:                +-- rect.ltrb=(84.8, 0.0, 132.8, 48.0)
+I/AccessibilityBridge( 4099): Semantics tree:                +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:              SemanticsNode id=572 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4099): Semantics tree:                +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:                +-- textDirection=null
+I/AccessibilityBridge( 4099): Semantics tree:                +-- rect.ltrb=(0.0, 0.0, 0.0, 0.0)
+I/AccessibilityBridge( 4099): Semantics tree:                +-- transform=null
+I/AccessibilityBridge( 4099): Semantics tree:            SemanticsNode id=570 identifier=null label=0 : aucune gêne aujourd’hui · 10 : la pire imaginable. Une douleur forte ou qui dure mérite l’avis d’un professionnel de santé. actions=0 flags=0
+I/AccessibilityBridge( 4099): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4099): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 54.0)
+I/AccessibilityBridge( 4099): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 214.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:            SemanticsNode id=571 identifier=null label=Enregistrer actions=4194305 flags=2097352
+I/AccessibilityBridge( 4099): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4099): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 48.0)
+I/AccessibilityBridge( 4099): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 280.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:    SemanticsNode id=554 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4099): Semantics tree:      +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:      +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4099): Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4099): Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:      SemanticsNode id=555 identifier=null label=Fond actions=262145 flags=0
+I/AccessibilityBridge( 4099): Semantics tree:        +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:        +-- textDirection=LTR
+I/AccessibilityBridge( 4099): Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 360.0, 240.0)
+I/AccessibilityBridge( 4099): Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4099): Semantics tree:  SemanticsNode id=43 identifier=null label=Session de test active actions=2 flags=8
+I/AccessibilityBridge( 4099): Semantics tree:    +-- headingLevel=0
+I/AccessibilityBridge( 4099): Semantics tree:    +-- textDirection=LTR
+I/AccessibilityBridge( 4099): Semantics tree:    +-- rect.ltrb=(0.0, 0.0, 24.0, 56.0)
+I/AccessibilityBridge( 4099): Semantics tree:    +-- transform=[1.5, 0.0, 0.0, 0.0, 0.0, 1.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 504.0, 569.4, 0.0, 1.0]
+D/EGL_emulation( 4099): app_time_stats: avg=152.67ms min=119.84ms max=225.53ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=127.64ms min=24.99ms max=225.76ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=116.39ms min=31.18ms max=143.19ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=131.90ms min=88.98ms max=236.79ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=105.29ms min=17.03ms max=192.92ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=156.86ms min=125.81ms max=241.45ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=124.05ms min=26.89ms max=230.71ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=130.19ms min=47.21ms max=232.27ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=109.48ms min=18.18ms max=219.23ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=104.53ms min=21.24ms max=221.00ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=106.07ms min=20.45ms max=209.57ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=129.48ms min=26.61ms max=281.88ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=116.02ms min=15.73ms max=224.09ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=110.56ms min=14.50ms max=186.84ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=115.04ms min=26.34ms max=242.34ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=130.75ms min=90.96ms max=215.73ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=135.25ms min=27.94ms max=203.09ms count=8
+I/eetlift_tracker( 4099): Background concurrent mark compact GC freed 2065KB AllocSpace bytes, 10(520KB) LOS objects, 49% free, 2733KB/5466KB, paused 98us,10.879ms total 118.970ms
+D/EGL_emulation( 4099): app_time_stats: avg=98.88ms min=13.09ms max=124.90ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=99.69ms min=61.42ms max=115.31ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=133.71ms min=101.25ms max=226.87ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=106.00ms min=13.81ms max=197.24ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=107.20ms min=20.03ms max=186.27ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=98.31ms min=36.98ms max=137.55ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=106.66ms min=15.72ms max=203.18ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=100.64ms min=68.47ms max=117.62ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=111.87ms min=87.95ms max=205.48ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=113.38ms min=12.39ms max=236.43ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=92.49ms min=12.39ms max=109.85ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=108.96ms min=15.75ms max=234.97ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=121.20ms min=21.15ms max=247.02ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=103.08ms min=3.72ms max=190.45ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=124.67ms min=13.80ms max=234.70ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=120.13ms min=22.64ms max=240.16ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=95.78ms min=17.30ms max=129.27ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=105.84ms min=14.32ms max=235.53ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=111.29ms min=62.58ms max=206.74ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=105.00ms min=14.75ms max=231.53ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=101.85ms min=13.91ms max=193.39ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=127.46ms min=12.66ms max=235.86ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=108.34ms min=21.65ms max=236.64ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=107.86ms min=19.93ms max=201.78ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=102.36ms min=91.96ms max=112.13ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=106.56ms min=96.14ms max=126.93ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=104.56ms min=91.03ms max=121.83ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=108.45ms min=83.86ms max=147.56ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=99.57ms min=13.31ms max=210.03ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=97.53ms min=4.01ms max=208.37ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=115.71ms min=95.86ms max=206.22ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=97.46ms min=15.50ms max=114.91ms count=10
+D/EGL_emulation( 4099): app_time_stats: avg=103.38ms min=85.90ms max=125.78ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=99.36ms min=91.65ms max=108.30ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=103.99ms min=86.16ms max=113.16ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=107.48ms min=8.16ms max=221.62ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=141.37ms min=58.51ms max=251.92ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=182.49ms min=156.84ms max=201.22ms count=6
+D/EGL_emulation( 4099): app_time_stats: avg=170.81ms min=158.17ms max=200.34ms count=6
+W/WindowOnBackDispatcher( 4099): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4099): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4099): app_time_stats: avg=125.97ms min=15.05ms max=182.44ms count=8
+D/EGL_emulation( 4099): app_time_stats: avg=90.10ms min=12.99ms max=137.80ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=103.11ms min=94.00ms max=119.05ms count=9
+D/EGL_emulation( 4099): app_time_stats: avg=114.27ms min=85.21ms max=217.33ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=117.55ms min=66.63ms max=202.17ms count=7
+W/WindowOnBackDispatcher( 4099): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4099): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4099): app_time_stats: avg=134.66ms min=91.57ms max=199.81ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=124.28ms min=87.72ms max=197.95ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=175.04ms min=92.70ms max=282.15ms count=5
+D/EGL_emulation( 4099): app_time_stats: avg=157.28ms min=99.99ms max=222.72ms count=6
+D/EGL_emulation( 4099): app_time_stats: avg=140.57ms min=96.10ms max=215.45ms count=6
+D/EGL_emulation( 4099): app_time_stats: avg=179.01ms min=93.17ms max=394.32ms count=5
+D/EGL_emulation( 4099): app_time_stats: avg=232.16ms min=117.89ms max=400.33ms count=5
+D/EGL_emulation( 4099): app_time_stats: avg=155.90ms min=59.63ms max=196.35ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=145.16ms min=106.58ms max=190.58ms count=5
+D/EGL_emulation( 4099): app_time_stats: avg=145.53ms min=75.61ms max=201.74ms count=7
+D/EGL_emulation( 4099): app_time_stats: avg=235.69ms min=129.44ms max=398.21ms count=5
+D/EGL_emulation( 4099): app_time_stats: avg=214.31ms min=75.74ms max=401.07ms count=5
+D/EGL_emulation( 4099): app_time_stats: avg=137.80ms min=69.41ms max=180.59ms count=6
+I/flutter ( 4099): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4099): The following TestFailure was thrown running a test:
+I/flutter ( 4099): Expected: true
+I/flutter ( 4099):   Actual: <false>
+I/flutter ( 4099): 
+I/flutter ( 4099): When the exception was thrown, this was the stack:
+I/flutter ( 4099): #4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/profil_g6_test.dart:387:5)
+I/flutter ( 4099): <asynchronous suspension>
+I/flutter ( 4099): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4099): <asynchronous suspension>
+I/flutter ( 4099): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4099): <asynchronous suspension>
+I/flutter ( 4099): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4099): <asynchronous suspension>
+I/flutter ( 4099): 
+I/flutter ( 4099): This was caught by the test expectation on the following line:
+I/flutter ( 4099):   file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/profil_g6_test.dart line 387
+I/flutter ( 4099): The test description was:
+I/flutter ( 4099):   G6 a (sombre, rouge) : refaire son profil proposé, création complète en session de test
+I/flutter ( 4099): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4099): 04:04 +0: G6 a (sombre, rouge) : refaire son profil proposé, création complète en session de test [E]
+I/flutter ( 4099):   Test failed. See exception logs above.
+I/flutter ( 4099):   The test description was: G6 a (sombre, rouge) : refaire son profil proposé, création complète en session de test
+I/flutter ( 4099):   
+I/flutter ( 4099): 04:04 +0 -1: (tearDownAll)
+I/flutter ( 4099): 04:04 +1 -1: Some tests failed.
+D/EGL_emulation( 4099): app_time_stats: avg=319.83ms min=96.57ms max=680.66ms count=3
+Failure Details:
+Failure in method: G6 a (sombre, rouge) : refaire son profil proposé, création complète en session de test
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: true
+  Actual: <false>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/profil_g6_test.dart:387:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/profil_g6_test.dart line 387
+The test description was:
+  G6 a (sombre, rouge) : refaire son profil proposé, création
+  complète en session de test
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+
