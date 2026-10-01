@@ -1,0 +1,630 @@
+diff --git a/integration_test/koach_g5_test.dart b/integration_test/koach_g5_test.dart
+index 2943f93..f14d861 100644
+--- a/integration_test/koach_g5_test.dart
++++ b/integration_test/koach_g5_test.dart
+@@ -202,7 +202,10 @@ void main() {
+     }
+     releve['galerie'] = find.byType(KoachGalleryScreen).evaluate().isNotEmpty;
+     await shot('4_galerie_haut');
+-    await scrollTo(tester, find.byKey(const ValueKey('koach-pose-explain_board')));
++    await scrollTo(
++      tester,
++      find.byKey(const ValueKey('koach-pose-explain_board')),
++    );
+     await wait(tester, 800);
+     await shot('5_galerie_poses_1');
+     await scrollTo(tester, find.byKey(const ValueKey('koach-pose-present')));
+@@ -219,7 +222,11 @@ void main() {
+     await tester.tap(find.byKey(const ValueKey('flame-pick-9')));
+     await wait(tester, 600);
+     releve['selecteur'] =
+-        (find.byKey(const ValueKey('flame-pick-caption')).evaluate().first.widget
++        (find
++                    .byKey(const ValueKey('flame-pick-caption'))
++                    .evaluate()
++                    .first
++                    .widget
+                 as Text)
+             .data;
+     await shot('7_flammes');
+@@ -234,7 +241,11 @@ void main() {
+         .isNotEmpty;
+     await shot('8_bulle_pourquoi');
+     // Transition : une pose choisie en haut de la galerie.
+-    await scrollTo(tester, find.byKey(const ValueKey('koach-pose-flag')), up: true);
++    await scrollTo(
++      tester,
++      find.byKey(const ValueKey('koach-pose-flag')),
++      up: true,
++    );
+     await tester.tap(find.byKey(const ValueKey('koach-pose-flag')));
+     await tester.pump(const Duration(milliseconds: 90));
+     final stage = find.byKey(const ValueKey('koach-gallery-stage'));
+diff --git a/lib/adapt_screens.dart b/lib/adapt_screens.dart
+index 08bdfd2..bcc9545 100644
+--- a/lib/adapt_screens.dart
++++ b/lib/adapt_screens.dart
+@@ -756,32 +756,35 @@ class AdaptHomeCard extends StatelessWidget {
+                   _ => KoachPose.choice,
+                 },
+                 child: Column(
+-                crossAxisAlignment: CrossAxisAlignment.stretch,
+-                children: [
+-                  Text(p.title, style: Theme.of(context).textTheme.titleMedium),
+-                  const SizedBox(height: 4),
+-                  Text(p.text),
+-                  const SizedBox(height: 8),
+-                  Wrap(
+-                    spacing: 8,
+-                    runSpacing: 8,
+-                    children: [
+-                      for (final (i, a) in p.actions.indexed)
+-                        i == 0 && a.$1 != 'dismiss'
+-                            ? FilledButton(
+-                                key: ValueKey('adapt-action-${a.$1}'),
+-                                onPressed: () => _run(context, p, a.$1),
+-                                child: Text(a.$2),
+-                              )
+-                            : OutlinedButton(
+-                                key: ValueKey('adapt-action-${a.$1}'),
+-                                onPressed: () => _run(context, p, a.$1),
+-                                child: Text(a.$2),
+-                              ),
+-                    ],
+-                  ),
+-                ],
+-              ),
++                  crossAxisAlignment: CrossAxisAlignment.stretch,
++                  children: [
++                    Text(
++                      p.title,
++                      style: Theme.of(context).textTheme.titleMedium,
++                    ),
++                    const SizedBox(height: 4),
++                    Text(p.text),
++                    const SizedBox(height: 8),
++                    Wrap(
++                      spacing: 8,
++                      runSpacing: 8,
++                      children: [
++                        for (final (i, a) in p.actions.indexed)
++                          i == 0 && a.$1 != 'dismiss'
++                              ? FilledButton(
++                                  key: ValueKey('adapt-action-${a.$1}'),
++                                  onPressed: () => _run(context, p, a.$1),
++                                  child: Text(a.$2),
++                                )
++                              : OutlinedButton(
++                                  key: ValueKey('adapt-action-${a.$1}'),
++                                  onPressed: () => _run(context, p, a.$1),
++                                  child: Text(a.$2),
++                                ),
++                      ],
++                    ),
++                  ],
++                ),
+               ),
+             ),
+           ),
+@@ -823,44 +826,44 @@ class _PauseCard extends StatelessWidget {
+         child: KoachSays(
+           pose: vacation ? KoachPose.love : KoachPose.heart,
+           child: Column(
+-          crossAxisAlignment: CrossAxisAlignment.stretch,
+-          children: [
+-            Text(
+-              vacation ? 'Vacances : programme en pause' : 'Pause maladie',
+-              style: Theme.of(context).textTheme.titleMedium,
+-            ),
+-            const SizedBox(height: 4),
+-            Text(
+-              vacation
+-                  ? 'Ton calendrier est en pause depuis le '
+-                        '${_date(pause.from)}. Si tu en as envie : 2 séances '
+-                        'd’entretien de 20 minutes sans matériel par semaine, '
+-                        'facultatives.'
+-                  : 'Repose-toi. Au retour, la première semaine sera plus '
+-                        'légère (volume −30 %). Si les symptômes persistent, '
+-                        'parles-en à un professionnel de santé.',
+-            ),
+-            const SizedBox(height: 8),
+-            Wrap(
+-              spacing: 8,
+-              runSpacing: 8,
+-              children: [
+-                FilledButton(
+-                  key: const ValueKey('adapt-pause-end'),
+-                  onPressed: () {
+-                    store.endPause();
+-                    showKoachToast(
+-                      context,
+-                      'Bon retour ! Le programme reprend aujourd’hui.',
+-                      pose: KoachPose.wave,
+-                    );
+-                  },
+-                  child: const Text('Je reprends'),
+-                ),
+-              ],
+-            ),
+-          ],
+-        ),
++            crossAxisAlignment: CrossAxisAlignment.stretch,
++            children: [
++              Text(
++                vacation ? 'Vacances : programme en pause' : 'Pause maladie',
++                style: Theme.of(context).textTheme.titleMedium,
++              ),
++              const SizedBox(height: 4),
++              Text(
++                vacation
++                    ? 'Ton calendrier est en pause depuis le '
++                          '${_date(pause.from)}. Si tu en as envie : 2 séances '
++                          'd’entretien de 20 minutes sans matériel par semaine, '
++                          'facultatives.'
++                    : 'Repose-toi. Au retour, la première semaine sera plus '
++                          'légère (volume −30 %). Si les symptômes persistent, '
++                          'parles-en à un professionnel de santé.',
++              ),
++              const SizedBox(height: 8),
++              Wrap(
++                spacing: 8,
++                runSpacing: 8,
++                children: [
++                  FilledButton(
++                    key: const ValueKey('adapt-pause-end'),
++                    onPressed: () {
++                      store.endPause();
++                      showKoachToast(
++                        context,
++                        'Bon retour ! Le programme reprend aujourd’hui.',
++                        pose: KoachPose.wave,
++                      );
++                    },
++                    child: const Text('Je reprends'),
++                  ),
++                ],
++              ),
++            ],
++          ),
+         ),
+       ),
+     );
+diff --git a/lib/dev/dev_widgets.dart b/lib/dev/dev_widgets.dart
+index 0215c79..c4e385e 100644
+--- a/lib/dev/dev_widgets.dart
++++ b/lib/dev/dev_widgets.dart
+@@ -80,12 +80,13 @@ class DevActions {
+   );
+ 
+   /// Supprime la session de test et revient à la session personnelle.
+-  static Future<void> delete() => SessionHost.restart(() async {
+-    final remaining = await DevSession.destroy();
+-    if (remaining.isNotEmpty) {
+-      throw 'suppression incomplète (${remaining.length} clés)';
+-    }
+-  },
++  static Future<void> delete() => SessionHost.restart(
++    () async {
++      final remaining = await DevSession.destroy();
++      if (remaining.isNotEmpty) {
++        throw 'suppression incomplète (${remaining.length} clés)';
++      }
++    },
+     message: 'Session de test supprimée',
+     detail: 'Retour à ta session personnelle.',
+     koach: KoachPose.wave,
+diff --git a/lib/koach/flame_icon.dart b/lib/koach/flame_icon.dart
+index 3c1e045..93786a2 100644
+--- a/lib/koach/flame_icon.dart
++++ b/lib/koach/flame_icon.dart
+@@ -174,9 +174,7 @@ class FlamePicker extends StatelessWidget {
+                                 i,
+                                 size: h,
+                                 semantics: false,
+-                                color: v != null && i > v
+-                                    ? SL.dot
+-                                    : null,
++                                color: v != null && i > v ? SL.dot : null,
+                               ),
+                               const SizedBox(height: 2),
+                               Text(
+diff --git a/lib/koach/koach_bubble.dart b/lib/koach/koach_bubble.dart
+index 094f5b9..285e0b9 100644
+--- a/lib/koach/koach_bubble.dart
++++ b/lib/koach/koach_bubble.dart
+@@ -136,9 +136,7 @@ class KoachBubbleState extends State<KoachBubble> {
+       frame: widget.frame,
+       seed: widget.seed,
+       // Largeur fixe : la bulle ne bouge pas quand Koach change de pose.
+-      width: widget.frame == KoachFrame.pose
+-          ? widget.koachHeight * .9
+-          : null,
++      width: widget.frame == KoachFrame.pose ? widget.koachHeight * .9 : null,
+     );
+     final koachLeft = side == KoachSide.right;
+     final bubble = _bubble(context, koachLeft);
+@@ -274,12 +272,7 @@ class KoachHeader extends StatelessWidget {
+   final String text;
+   final KoachPose pose;
+   final Color? color;
+-  const KoachHeader(
+-    this.text, {
+-    super.key,
+-    required this.pose,
+-    this.color,
+-  });
++  const KoachHeader(this.text, {super.key, required this.pose, this.color});
+ 
+   @override
+   Widget build(BuildContext context) => Row(
+diff --git a/lib/koach/koach_gallery_screen.dart b/lib/koach/koach_gallery_screen.dart
+index 84d2b1c..10e86ab 100644
+--- a/lib/koach/koach_gallery_screen.dart
++++ b/lib/koach/koach_gallery_screen.dart
+@@ -196,8 +196,7 @@ class KoachGalleryScreenState extends State<KoachGalleryScreen> {
+   Widget _grid(BuildContext context) => LayoutBuilder(
+     builder: (context, c) {
+       final columns = c.maxWidth >= 520 ? 6 : (c.maxWidth >= 300 ? 4 : 3);
+-      final cell = ((c.maxWidth - (columns - 1) * 6) / columns)
+-          .floorToDouble();
++      final cell = ((c.maxWidth - (columns - 1) * 6) / columns).floorToDouble();
+       return Wrap(
+         key: const ValueKey('koach-gallery-grid'),
+         spacing: 6,
+diff --git a/lib/koach/koach_view.dart b/lib/koach/koach_view.dart
+index 0328b30..500ccde 100644
+--- a/lib/koach/koach_view.dart
++++ b/lib/koach/koach_view.dart
+@@ -109,8 +109,14 @@ class _PathSink implements KoachPathSink {
+   void lineTo(double x, double y) => path.lineTo(x, y);
+ 
+   @override
+-  void cubicTo(double x1, double y1, double x2, double y2, double x, double y) =>
+-      path.cubicTo(x1, y1, x2, y2, x, y);
++  void cubicTo(
++    double x1,
++    double y1,
++    double x2,
++    double y2,
++    double x,
++    double y,
++  ) => path.cubicTo(x1, y1, x2, y2, x, y);
+ 
+   @override
+   void close() => path.close();
+@@ -301,7 +307,6 @@ class KoachViewState extends State<KoachView>
+   /// Pose précédente pendant une transition (tests).
+   KoachPose? get previous => _previous;
+ 
+-
+   @override
+   void initState() {
+     super.initState();
+@@ -467,9 +472,7 @@ class KoachViewState extends State<KoachView>
+         if (_idleOn) {
+           // Un clignement sur cinq est double.
+           _scheduleBlink(
+-            _rng.nextDouble() < .2
+-                ? const Duration(milliseconds: 120)
+-                : null,
++            _rng.nextDouble() < .2 ? const Duration(milliseconds: 120) : null,
+           );
+         }
+       }
+diff --git a/lib/koach_screens.dart b/lib/koach_screens.dart
+index c40d6ac..b100094 100644
+--- a/lib/koach_screens.dart
++++ b/lib/koach_screens.dart
+@@ -341,32 +341,32 @@ class KoachProposalCard extends StatelessWidget {
+         pose: KoachPose.choice,
+         koachHeight: 48,
+         child: Column(
+-        crossAxisAlignment: CrossAxisAlignment.stretch,
+-        children: [
+-          Text(
+-            store.koachProposalText(p),
+-            style: Theme.of(context).textTheme.titleMedium,
+-          ),
+-          const SizedBox(height: 4),
+-          Text(store.koachProposalReason(p), style: _dimSmall()),
+-          const SizedBox(height: 10),
+-          KActionRow(
+-            minButtonWidth: 120,
+-            children: [
+-              FilledButton(
+-                key: ValueKey('koach-accept-${p['id']}'),
+-                onPressed: () => store.acceptKoachProposal(p),
+-                child: const Text('Accepter'),
+-              ),
+-              OutlinedButton(
+-                key: ValueKey('koach-refuse-${p['id']}'),
+-                onPressed: () => store.refuseKoachProposal(p),
+-                child: const Text('Refuser'),
+-              ),
+-            ],
+-          ),
+-        ],
+-      ),
++          crossAxisAlignment: CrossAxisAlignment.stretch,
++          children: [
++            Text(
++              store.koachProposalText(p),
++              style: Theme.of(context).textTheme.titleMedium,
++            ),
++            const SizedBox(height: 4),
++            Text(store.koachProposalReason(p), style: _dimSmall()),
++            const SizedBox(height: 10),
++            KActionRow(
++              minButtonWidth: 120,
++              children: [
++                FilledButton(
++                  key: ValueKey('koach-accept-${p['id']}'),
++                  onPressed: () => store.acceptKoachProposal(p),
++                  child: const Text('Accepter'),
++                ),
++                OutlinedButton(
++                  key: ValueKey('koach-refuse-${p['id']}'),
++                  onPressed: () => store.refuseKoachProposal(p),
++                  child: const Text('Refuser'),
++                ),
++              ],
++            ),
++          ],
++        ),
+       ),
+     );
+   }
+@@ -408,34 +408,34 @@ class KoachStructureCard extends StatelessWidget {
+         pose: KoachPose.analyze,
+         koachHeight: 48,
+         child: Column(
+-        crossAxisAlignment: CrossAxisAlignment.stretch,
+-        children: [
+-          Text(
+-            koachStructureText(p),
+-            style: Theme.of(context).textTheme.titleMedium,
+-          ),
+-          const SizedBox(height: 4),
+-          Text(
+-            '${koachStructureReason(p)} Le programme d’origine n’est pas '
+-            'modifié : l’adaptation s’annule à tout moment.',
+-            style: _dimSmall(),
+-          ),
+-          const SizedBox(height: 10),
+-          KActionRow(
+-            minButtonWidth: 120,
+-            children: [
+-              FilledButton(
+-                onPressed: () => store.acceptKoachStructure(p),
+-                child: const Text('Accepter'),
+-              ),
+-              OutlinedButton(
+-                onPressed: () => store.refuseKoachStructure(p),
+-                child: const Text('Refuser'),
+-              ),
+-            ],
+-          ),
+-        ],
+-      ),
++          crossAxisAlignment: CrossAxisAlignment.stretch,
++          children: [
++            Text(
++              koachStructureText(p),
++              style: Theme.of(context).textTheme.titleMedium,
++            ),
++            const SizedBox(height: 4),
++            Text(
++              '${koachStructureReason(p)} Le programme d’origine n’est pas '
++              'modifié : l’adaptation s’annule à tout moment.',
++              style: _dimSmall(),
++            ),
++            const SizedBox(height: 10),
++            KActionRow(
++              minButtonWidth: 120,
++              children: [
++                FilledButton(
++                  onPressed: () => store.acceptKoachStructure(p),
++                  child: const Text('Accepter'),
++                ),
++                OutlinedButton(
++                  onPressed: () => store.refuseKoachStructure(p),
++                  child: const Text('Refuser'),
++                ),
++              ],
++            ),
++          ],
++        ),
+       ),
+     );
+   }
+diff --git a/lib/program_screens.dart b/lib/program_screens.dart
+index ca653d4..a27a1cd 100644
+--- a/lib/program_screens.dart
++++ b/lib/program_screens.dart
+@@ -434,57 +434,57 @@ class ProgramHomeCard extends StatelessWidget {
+       child: KoachSays(
+         pose: changed ? KoachPose.think : KoachPose.settings,
+         child: Column(
+-        crossAxisAlignment: CrossAxisAlignment.stretch,
+-        children: [
+-          Text(
+-            changed
+-                ? 'Ton profil a changé : ton programme peut être adapté à '
+-                      'partir d’aujourd’hui.'
+-                : 'Ton programme a été mis à jour. Tu peux revenir à la '
+-                      'version précédente pendant 7 jours.',
+-          ),
+-          const SizedBox(height: 8),
+-          Wrap(
+-            spacing: 8,
+-            runSpacing: 8,
+-            children: [
+-              if (changed)
+-                FilledButton(
+-                  key: const ValueKey('program-home-preview'),
+-                  onPressed: () =>
+-                      openProgramProposal(context, reason: 'profile'),
+-                  child: const Text('Voir ce qui change'),
+-                ),
+-              if (undo)
+-                OutlinedButton(
+-                  key: const ValueKey('program-home-undo'),
+-                  onPressed: () {
+-                    final ok = store.undoProgram();
+-                    showKoachToast(
++          crossAxisAlignment: CrossAxisAlignment.stretch,
++          children: [
++            Text(
++              changed
++                  ? 'Ton profil a changé : ton programme peut être adapté à '
++                        'partir d’aujourd’hui.'
++                  : 'Ton programme a été mis à jour. Tu peux revenir à la '
++                        'version précédente pendant 7 jours.',
++            ),
++            const SizedBox(height: 8),
++            Wrap(
++              spacing: 8,
++              runSpacing: 8,
++              children: [
++                if (changed)
++                  FilledButton(
++                    key: const ValueKey('program-home-preview'),
++                    onPressed: () =>
++                        openProgramProposal(context, reason: 'profile'),
++                    child: const Text('Voir ce qui change'),
++                  ),
++                if (undo)
++                  OutlinedButton(
++                    key: const ValueKey('program-home-undo'),
++                    onPressed: () {
++                      final ok = store.undoProgram();
++                      showKoachToast(
++                        context,
++                        ok
++                            ? 'Version précédente du programme rétablie.'
++                            : 'Annulation impossible : une séance du nouveau programme est déjà commencée.',
++                        pose: ok ? KoachPose.thumbsUp : KoachPose.oops,
++                      );
++                    },
++                    child: const Text('Revenir à la version précédente'),
++                  ),
++                if (!inScreen)
++                  TextButton(
++                    key: const ValueKey('program-home-open'),
++                    onPressed: () => Navigator.push(
+                       context,
+-                      ok
+-                          ? 'Version précédente du programme rétablie.'
+-                          : 'Annulation impossible : une séance du nouveau programme est déjà commencée.',
+-                      pose: ok ? KoachPose.thumbsUp : KoachPose.oops,
+-                    );
+-                  },
+-                  child: const Text('Revenir à la version précédente'),
+-                ),
+-              if (!inScreen)
+-                TextButton(
+-                  key: const ValueKey('program-home-open'),
+-                  onPressed: () => Navigator.push(
+-                    context,
+-                    MaterialPageRoute<void>(
+-                      builder: (_) => const ProgramScreen(),
++                      MaterialPageRoute<void>(
++                        builder: (_) => const ProgramScreen(),
++                      ),
+                     ),
++                    child: const Text('Mon programme'),
+                   ),
+-                  child: const Text('Mon programme'),
+-                ),
+-            ],
+-          ),
+-        ],
+-      ),
++              ],
++            ),
++          ],
++        ),
+       ),
+     );
+   }
+diff --git a/test/g5_koach_test.dart b/test/g5_koach_test.dart
+index e8011a4..b7e56eb 100644
+--- a/test/g5_koach_test.dart
++++ b/test/g5_koach_test.dart
+@@ -195,10 +195,8 @@ void main() {
+     testWidgets('« Réduire les animations » : pose fixe, changement '
+         'immédiat', (tester) async {
+       KoachMotion.idle = true;
+-      Widget view(KoachPose p) => _page(
+-        Center(child: KoachView(pose: p, height: 120)),
+-        reduce: true,
+-      );
++      Widget view(KoachPose p) =>
++          _page(Center(child: KoachView(pose: p, height: 120)), reduce: true);
+       await tester.pumpWidget(view(KoachPose.wave));
+       final state = tester.state<KoachViewState>(find.byType(KoachView));
+       expect(state.animating, isFalse);
+@@ -288,12 +286,17 @@ void main() {
+     test('dégradé de la couleur dominante, du clair au vif', () {
+       for (final accent in KAccentSpec.all) {
+         for (final dark in [true, false]) {
+-          final vivid = dark ? accent.bright : (accent.vividLight ?? accent.vivid);
++          final vivid = dark
++              ? accent.bright
++              : (accent.vividLight ?? accent.vivid);
+           expect(flameColor(10, dark: dark, accent: accent), vivid);
+           var last = 2.0;
+           for (var i = 1; i <= 10; i++) {
+-            final l = flameColor(i, dark: dark, accent: accent)
+-                .computeLuminance();
++            final l = flameColor(
++              i,
++              dark: dark,
++              accent: accent,
++            ).computeLuminance();
+             expect(l, lessThanOrEqualTo(last), reason: '${accent.id} $i');
+             last = l;
+           }
+@@ -305,8 +308,7 @@ void main() {
+       }
+     });
+ 
+-    test('tailles relatives : chaque flamme plus grande que la précédente',
+-        () {
++    test('tailles relatives : chaque flamme plus grande que la précédente', () {
+       for (var i = 2; i <= 10; i++) {
+         expect(
+           koachFlame(i).bounds.height,
+@@ -340,7 +342,10 @@ void main() {
+         find.text('Difficulté 8 sur 10 : encore 1,5 répétition en réserve.'),
+         findsOneWidget,
+       );
+-      expect(find.bySemanticsLabel('Difficulté 8 sur 10, RIR 1,5'), findsOneWidget);
++      expect(
++        find.bySemanticsLabel('Difficulté 8 sur 10, RIR 1,5'),
++        findsOneWidget,
++      );
+       await tester.tap(find.byKey(const ValueKey('flame-pick-1')));
+       await tester.pump();
+       expect(
+@@ -513,7 +518,9 @@ void main() {
+         final state = tester.state<KoachGalleryScreenState>(
+           find.byType(KoachGalleryScreen),
+         );
+-        await tester.ensureVisible(find.byKey(const ValueKey('koach-pose-flag')));
++        await tester.ensureVisible(
++          find.byKey(const ValueKey('koach-pose-flag')),
++        );
+         await tester.tap(find.byKey(const ValueKey('koach-pose-flag')));
+         await tester.pump();
+         expect(state.pose, KoachPose.flag);
+@@ -560,8 +567,7 @@ void main() {
+       expect(find.byType(KoachGalleryScreen), findsOneWidget);
+     });
+ 
+-    test('carte du jour de l\'accueil : la pose de Koach dit la journée',
+-        () {
++    test('carte du jour de l\'accueil : la pose de Koach dit la journée', () {
+       final week = store.program.week(1);
+       final training = week.days.firstWhere((d) => d.exercises.isNotEmpty);
+       final rest = week.days.where((d) => d.exercises.isEmpty).toList();
