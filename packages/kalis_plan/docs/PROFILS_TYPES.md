@@ -72,66 +72,62 @@ Profil : musculation 80 % + mobility 20 % — lundi 60 min, mardi 60 min, jeudi 
 
 ### Passe 1
 
-Note 0.971 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 0.99 · pattern_balance 1.00 · discipline_structure 0.99 · time_use 1.00 · variety 1.00 · exercise_fit 0.68 · stimulus_fatigue 0.76 · preferences 1.00 · novelty 1.00.
+Note 0.971 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 0.99 · pattern_balance 1.00 · discipline_structure 0.99 · time_use 1.00 · variety 1.00 · exercise_fit 0.70 · stimulus_fatigue 0.73 · preferences 1.00 · novelty 1.00.
 
-- **lundi** (60 min, estimé 56 min) — `strength.full_body`
-  - Bascules en appui doigts vers l'avant — warmup `mo-bascules-appui-doigts-avant`
-  - Air squat — main `mu-air-squat`
-  - Tirage vertical poulie prise large pronation — secondary `mu-tirage-vertical-prise-large-pronation`
-  - Pont fessier pieds surélevés — accessory `mu-pont-fessier-pieds-sureleves`
-  - Curl biceps à la barre droite — accessory `mu-curl-barre-droite`
-  - T raise sur banc incliné — accessory `mu-t-raise-banc-incline`
-  - Hyperextension 45° accent dos — core `mu-hyperextension-45-dos`
-  - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
-  - Étirement chaîne postérieure en flexion avant debout — cooldown `mo-chaine-posterieure-flexion-avant-debout`
-  - Étirement des fléchisseurs de hanche en semi-agenouillé — cooldown `mo-flechisseurs-hanche-semi-agenouille`
-  - Routine d'auto-massage au rouleau (membres inférieurs et dos) — cooldown `mo-foam-roller-routine`
-- **mardi** (60 min, estimé 57 min) — `strength.push`
-  - Inchworm (chenille) — warmup `mo-inchworm`
-  - Développé couché barre — main `mu-developpe-couche-barre`
-  - Développé épaules à la Smith machine assis — secondary `mu-developpe-epaules-smith-assis`
-  - Barre au front à la barre EZ — accessory `mu-barre-au-front-ez`
-  - Lu raise — accessory `mu-lu-raise`
-  - Planche RKC — core `mu-planche-rkc`
-  - Étirement chaîne postérieure en flexion avant debout — cooldown `mo-chaine-posterieure-flexion-avant-debout`
-  - Étirement pectoral au cadre de porte — cooldown `mo-etirement-pectoral-cadre-porte`
-  - Routine d'auto-massage au rouleau (membres inférieurs et dos) — cooldown `mo-foam-roller-routine`
-  - Respiration crocodile — cooldown `mo-respiration-crocodile`
-- **jeudi** (60 min, estimé 60 min) — `strength.lower`
-  - Back squat barre basse — main `mu-back-squat-barre-basse`
-  - Soulevé de terre conventionnel — secondary `mu-souleve-de-terre-conventionnel`
-  - Pompe en T — secondary `sw-pompe-t`
-  - Hip thrust à la barre — accessory `mu-hip-thrust-barre`
-  - Élévation latérale haltères — accessory `mu-elevation-laterale-halteres`
-  - Halo kettlebell — accessory `mu-halo-kettlebell`
-  - Woodchop à la poulie haut vers bas — core `mu-woodchop-haut-bas`
-  - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
-  - Étirement du trapèze supérieur — cooldown `mo-etirement-trapeze-superieur`
-  - Routine d'auto-massage au rouleau (membres inférieurs et dos) — cooldown `mo-foam-roller-routine`
-- **samedi** (60 min, estimé 59 min) — `strength.full_body`
-  - Back squat barre haute — main `mu-back-squat-barre-haute`
-  - Rowing poulie basse assis au triangle — secondary `mu-rowing-poulie-assis-triangle`
-  - Tirage vertical poulie prise serrée supination — secondary `mu-tirage-vertical-prise-serree-supination`
-  - Band pull-apart — accessory `mu-band-pull-apart`
-  - Curl biceps aux haltères simultané — accessory `mu-curl-halteres-simultane`
-  - Étirement du biceps au mur — cooldown `mo-etirement-biceps-mur`
+- **lundi** (60 min, estimé 58 min) — `strength.push`
+  - Lift-off en rotation externe 90/90 allongé ventral — warmup `mo-lift-off-rotation-externe-90-90`
+  - Routine mobilité épaules et poignets — warmup `mo-routine-mobilite-epaules-poignets`
+  - Table inversée — warmup `mo-table-inversee`
+  - Développé couché haltères — main `mu-developpe-couche-halteres`
+  - Porté en rack kettlebell — accessory `mu-rack-carry`
+  - Extension nuque à l'haltère à deux mains — accessory `mu-extension-nuque-haltere-deux-mains`
+  - Face pull à l'élastique — accessory `mu-face-pull-elastique`
+  - Pallof press debout — core `mu-pallof-press-debout`
+  - Étirement des gastrocnémiens au mur jambe tendue — cooldown `mo-etirement-gastrocnemiens-mur`
   - Routine d'auto-massage au rouleau (membres inférieurs et dos) — cooldown `mo-foam-roller-routine`
   - Pigeon au sol — cooldown `mo-pigeon-sol`
+- **mardi** (60 min, estimé 57 min) — `strength.full_body`
+  - Rétraction du menton — warmup `mo-retraction-menton`
+  - Back squat barre haute — main `mu-back-squat-barre-haute`
+  - Rowing menton à la poulie — accessory `mu-rowing-menton-poulie`
+  - Tirage bras tendus poulie haute à la barre — accessory `mu-tirage-bras-tendus-poulie-barre`
+  - Planche RKC — core `mu-planche-rkc`
+  - V-up — core `mu-v-up`
+  - Étirement des fléchisseurs de hanche en semi-agenouillé — cooldown `mo-flechisseurs-hanche-semi-agenouille`
+  - Routine d'auto-massage au rouleau (membres inférieurs et dos) — cooldown `mo-foam-roller-routine`
+  - Étirement ischio-jambiers allongé à l'élastique — cooldown `mo-ischio-allonge-elastique`
+  - Sleeper stretch — cooldown `mo-sleeper-stretch`
+- **jeudi** (60 min, estimé 60 min) — `strength.full_body`
+  - Soulevé de terre conventionnel — main `mu-souleve-de-terre-conventionnel`
+  - Fente marchée aux haltères — secondary `mu-fente-marchee-halteres`
+  - Rowing inversé à la Smith machine — secondary `mu-rowing-inverse-smith-machine`
+  - Tirage vertical poulie prise large pronation — secondary `mu-tirage-vertical-prise-large-pronation`
+  - Hip thrust à la barre — accessory `mu-hip-thrust-barre`
+  - Y raise sur banc incliné — accessory `mu-y-raise-banc-incline`
+  - Woodchop à la poulie haut vers bas — core `mu-woodchop-haut-bas`
+  - Frog stretch (grenouille) — cooldown `mo-frog-stretch`
+  - Routine d'auto-massage au rouleau (membres inférieurs et dos) — cooldown `mo-foam-roller-routine`
+- **samedi** (60 min, estimé 58 min) — `strength.full_body`
+  - Back squat barre haute — main `mu-back-squat-barre-haute`
+  - Développé couché barre — secondary `mu-developpe-couche-barre`
+  - Row australien — secondary `sw-row-australien`
+  - Développé épaules à la Smith machine assis — secondary `mu-developpe-epaules-smith-assis`
+  - Pont fessier pieds surélevés — accessory `mu-pont-fessier-pieds-sureleves`
+  - Routine d'auto-massage au rouleau (membres inférieurs et dos) — cooldown `mo-foam-roller-routine`
+  - Ouverture d'épaules en extension mains sur banc — cooldown `mo-ouverture-epaules-extension-banc`
 
 Dosage : musculation 80 % (visé 80 %), mobility 20 % (visé 20 %) — erreur 0.0 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 9 [8-16], delt_anterior 13.5 [8-16], delt_middle 12.5 [8-16], delt_posterior 8 [8-16], lats 9 [8-16], upper_back 12.5 [8-16], biceps 10 [8-16], triceps 11.5 [8-16], abs 8.5 [8-16], lower_back 8.5 [8-16], glutes 16 [8-16], quads 12 [8-16], hamstrings 8.5 [8-16], calves 5.5 [8-16]. Groupes majeurs dans leur bande : 96 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 8.5 [8-16], delt_anterior 13 [8-16], delt_middle 9 [8-16], delt_posterior 10 [8-16], lats 11 [8-16], upper_back 14 [8-16], biceps 8.5 [8-16], triceps 11.5 [8-16], abs 15 [8-16], lower_back 8 [8-16], glutes 16 [8-16], quads 11.5 [8-16], hamstrings 9 [8-16], calves 5 [8-16]. Groupes majeurs dans leur bande : 96 %.
 
-Équilibre : tirage 9 / poussée 9 séries ; chaîne postérieure 8 / genou 10 ; schémas de base 6/6.
+Équilibre : tirage 11 / poussée 9 séries ; chaîne postérieure 9 / genou 11 ; schémas de base 6/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Tirage vertical poulie prise large pronation (`d0.3`) :
-  - `exercise_replaced` jour 0 : Tirage vertical poulie prise large pronation → Tirage vertical poulie à genoux (plan.user_cannot_do, plan.variant_easier)
-  - `exercise_added` jour 3 → Rowing buste penché à la Smith machine (plan.reoptimized)
-  - `exercise_removed` jour 3 : Tirage vertical poulie prise serrée supination (plan.reoptimized)
-- Remplacement par Développé couché pieds sur le banc (`d1.2`) :
-  - `exercise_replaced` jour 1 : Développé couché barre → Développé couché pieds sur le banc (plan.user_replaced)
+- « Je ne sais pas faire » sur Woodchop à la poulie haut vers bas (`d2.7`) :
+  - `exercise_replaced` jour 2 : Woodchop à la poulie haut vers bas → Rotation du tronc à la poulie assis (plan.user_cannot_do, plan.variant_easier)
+- Remplacement par Développé couché haltères prise neutre (`d0.4`) :
+  - `exercise_replaced` jour 0 : Développé couché haltères → Développé couché haltères prise neutre (plan.user_replaced)
 
 ### Passe 2
 
@@ -139,60 +135,58 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (test) |
 | --- | --- | --- | --- | --- | --- |
-| Bascules en appui doigts vers l'avant | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
-| Air squat | 2×10-15 · 5 fl. · 90s | 3×10-15 · 5 fl. · 90s | 3×10-15 · 6 fl. · 90s | 3×10-15 · 7 fl. · 90s | 2×10-15 · 3 fl. · 90s |
-| Tirage vertical poulie à genoux | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM | 2×8-12 · 1 fl. · 120s |
-| Pont fessier pieds surélevés | 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Curl biceps à la barre droite | CALIBRAGE 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s | 1×10-15 · 1 fl. · 75s |
-| T raise sur banc incliné | CALIBRAGE 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s | 1×10-15 · 1 fl. · 75s |
-| Hyperextension 45° accent dos | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
-| Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
-| Étirement chaîne postérieure en flexion avant debout | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
-| Étirement des fléchisseurs de hanche en semi-agenouillé | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Lift-off en rotation externe 90/90 allongé ventral | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
+| Routine mobilité épaules et poignets | 4-5 min | 4-5 min | 4-5 min | 4-5 min | 4-5 min |
+| Table inversée | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
+| Développé couché haltères prise neutre | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Porté en rack kettlebell | 2×30 m · 4 fl. · 90s | 3×30 m · 4 fl. · 90s | 3×30 m · 5 fl. · 90s | 3×30 m · 6 fl. · 90s | 2×30 m · 2 fl. · 90s |
+| Extension nuque à l'haltère à deux mains | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Face pull à l'élastique | 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s | 1×10-15 · 1 fl. · 75s |
+| Pallof press debout | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
+| Étirement des gastrocnémiens au mur jambe tendue | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 | Routine d'auto-massage au rouleau (membres inférieurs et dos) | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s |
+| Pigeon au sol | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 
 mardi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (test) |
 | --- | --- | --- | --- | --- | --- |
-| Inchworm (chenille) | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
-| Développé couché pieds sur le banc | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Développé épaules à la Smith machine assis | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Barre au front à la barre EZ | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Lu raise | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Planche RKC | 3×10-20 s · 4 fl. · 60s | 4×10-20 s · 4 fl. · 60s | 4×10-20 s · 5 fl. · 60s | 4×10-20 s · 6 fl. · 60s | 2×10-20 s · 2 fl. · 60s |
-| Étirement chaîne postérieure en flexion avant debout | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
-| Étirement pectoral au cadre de porte | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Rétraction du menton | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
+| Back squat barre haute | 3×3-6 · 4 fl. · 180s · 32.5 kg | 4×3-6 · 4 fl. · 180s · 32.5 kg | 4×3-6 · 5 fl. · 180s · 32.5 kg | 4×2-5 · 6 fl. · 180s · 35 kg | TEST 3×1-3 · 9 fl. · 240s [3@40 5fl. / 1@45 7fl. / 1@47.5 9fl.] |
+| Rowing menton à la poulie | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Tirage bras tendus poulie haute à la barre | CALIBRAGE 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s | 1×10-15 · 1 fl. · 75s |
+| Planche RKC | 2×10-20 s · 4 fl. · 60s | 3×10-20 s · 4 fl. · 60s | 3×10-20 s · 5 fl. · 60s | 3×10-20 s · 6 fl. · 60s | 2×10-20 s · 2 fl. · 60s |
+| V-up | 2×8-12 · 4 fl. · 60s | 3×8-12 · 4 fl. · 60s | 3×8-12 · 5 fl. · 60s | 3×8-12 · 6 fl. · 60s | 2×8-12 · 2 fl. · 60s |
+| Étirement des fléchisseurs de hanche en semi-agenouillé | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 | Routine d'auto-massage au rouleau (membres inférieurs et dos) | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s |
-| Respiration crocodile | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s |
+| Étirement ischio-jambiers allongé à l'élastique | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Sleeper stretch | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 
 jeudi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (test) |
 | --- | --- | --- | --- | --- | --- |
-| Back squat barre basse | CALIBRAGE 2×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 5 fl. · 150s · 73 % 1RM | 3×5-8 · 6 fl. · 150s · 74 % 1RM | 2×5-8 · 2 fl. · 150s · 71 % 1RM |
 | Soulevé de terre conventionnel | 2×6-10 · 5 fl. · 120s · 42.5 kg | 3×6-10 · 5 fl. · 120s · 42.5 kg | 3×6-10 · 6 fl. · 120s · 42.5 kg | 3×6-10 · 7 fl. · 120s · 45 kg | 2×6-10 · 3 fl. · 120s · 42.5 kg |
-| Pompe en T | 2×3-8 · 5 fl. · 90s | 3×3-8 · 5 fl. · 90s | 3×3-8 · 6 fl. · 90s | 3×3-8 · 7 fl. · 90s | 2×3-8 · 3 fl. · 90s |
-| Hip thrust à la barre | CALIBRAGE 2×10-15 · 5 fl. · 75s | 2×10-15 · 5 fl. · 75s | 2×10-15 · 6 fl. · 75s | 2×10-15 · 7 fl. · 75s | 1×10-15 · 3 fl. · 75s |
-| Élévation latérale haltères | CALIBRAGE 2×10-15 · 5 fl. · 75s | 2×10-15 · 5 fl. · 75s | 2×10-15 · 6 fl. · 75s | 2×10-15 · 7 fl. · 75s | 1×10-15 · 3 fl. · 75s |
-| Halo kettlebell | CALIBRAGE 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s | 1×10-15 · 1 fl. · 75s |
-| Woodchop à la poulie haut vers bas | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
-| Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
-| Étirement du trapèze supérieur | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Fente marchée aux haltères | 2×20 m · 4 fl. · 90s | 3×20 m · 4 fl. · 90s | 3×20 m · 5 fl. · 90s | 3×20 m · 6 fl. · 90s | 2×20 m · 2 fl. · 90s |
+| Rowing inversé à la Smith machine | 2×6-12 · 3 fl. · 90s | 3×6-12 · 3 fl. · 90s | 3×6-12 · 4 fl. · 90s | 3×6-12 · 5 fl. · 90s | 2×6-12 · 1 fl. · 90s |
+| Tirage vertical poulie prise large pronation | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM | 2×8-12 · 1 fl. · 120s |
+| Hip thrust à la barre | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Y raise sur banc incliné | CALIBRAGE 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s | 1×10-15 · 1 fl. · 75s |
+| Rotation du tronc à la poulie assis | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
+| Frog stretch (grenouille) | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 | Routine d'auto-massage au rouleau (membres inférieurs et dos) | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s |
 
 samedi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (test) |
 | --- | --- | --- | --- | --- | --- |
-| Back squat barre haute | 3×3-6 · 4 fl. · 180s · 32.5 kg | 4×3-6 · 4 fl. · 180s · 32.5 kg | 4×3-6 · 5 fl. · 180s · 32.5 kg | 4×2-5 · 6 fl. · 180s · 35 kg | TEST 3×1-3 · 9 fl. · 240s [3@40 5fl. / 1@45 7fl. / 1@47.5 9fl.] |
-| Rowing poulie basse assis au triangle | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM | 2×8-12 · 1 fl. · 120s |
-| Rowing buste penché à la Smith machine | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM | 2×8-12 · 1 fl. · 120s |
-| Band pull-apart | 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s | 1×10-15 · 1 fl. · 75s |
-| Curl biceps aux haltères simultané | CALIBRAGE 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s | 1×10-15 · 1 fl. · 75s |
-| Étirement du biceps au mur | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Back squat barre haute | 3×3-6 · 4 fl. · 180s · 32.5 kg | 4×3-6 · 4 fl. · 180s · 32.5 kg | 4×3-6 · 5 fl. · 180s · 32.5 kg | 4×2-5 · 6 fl. · 180s · 35 kg | 2×3-6 · 2 fl. · 180s · 32.5 kg |
+| Développé couché barre | 2×6-10 · 5 fl. · 120s · 20 kg | 3×6-10 · 5 fl. · 120s · 20 kg | 3×6-10 · 6 fl. · 120s · 20 kg | 3×6-10 · 7 fl. · 120s · 20 kg | 2×6-10 · 3 fl. · 120s · 20 kg |
+| Row australien | 2×6-12 · 3 fl. · 90s | 3×6-12 · 3 fl. · 90s | 3×6-12 · 4 fl. · 90s | 3×6-12 · 5 fl. · 90s | 2×6-12 · 1 fl. · 90s |
+| Développé épaules à la Smith machine assis | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Pont fessier pieds surélevés | 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
 | Routine d'auto-massage au rouleau (membres inférieurs et dos) | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s |
-| Pigeon au sol | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Ouverture d'épaules en extension mains sur banc | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 
 ## 3. `coureur_cardio_3x45`
 
@@ -202,38 +196,37 @@ Profil : cardio 70 % + musculation 20 % + mobility 10 % — mardi 45 min (maison
 
 ### Passe 1
 
-Note 0.933 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.96 · muscle_volume 0.68 · pattern_balance 0.93 · discipline_structure 0.95 · time_use 1.00 · variety 1.00 · exercise_fit 0.68 · stimulus_fatigue 0.80 · preferences 1.00 · novelty 1.00.
+Note 0.928 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.92 · muscle_volume 0.63 · pattern_balance 0.93 · discipline_structure 0.95 · time_use 1.00 · variety 1.00 · exercise_fit 0.70 · stimulus_fatigue 0.90 · preferences 1.00 · novelty 1.00.
 
-- **mardi** (45 min, estimé 43 min) — `strength.full_body`
-  - Routine mobilité épaules et poignets — warmup `mo-routine-mobilite-epaules-poignets`
-  - Pompe pike — main `sw-pompe-pike`
-  - Air squat — secondary `mu-air-squat`
+- **mardi** (45 min, estimé 44 min) — `strength.full_body`
+  - Rotation interne active de hanche en quadrupédie — warmup `mo-rotation-interne-hanche-quadrupedie`
+  - Air squat — main `mu-air-squat`
+  - Nordic hamstring curl assisté à l'élastique — accessory `mu-nordic-hamstring-curl-assiste`
   - Tirage bras tendus à l'élastique — accessory `mu-tirage-bras-tendus-elastique`
-  - Superman dynamique — core `mu-superman`
+  - Gainage latéral sur le coude — core `mu-gainage-lateral-coude`
+  - Étirement chaîne postérieure en flexion avant debout — cooldown `mo-chaine-posterieure-flexion-avant-debout`
+  - Respiration crocodile — cooldown `mo-respiration-crocodile`
+- **jeudi** (45 min, estimé 44 min) — `cardio.endurance`
+  - Mobilisation cheville genou au mur — warmup `mo-cheville-genou-mur`
+  - Footing en endurance fondamentale — conditioning `ca-footing-endurance-fondamentale`
   - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
-  - Étirement des fléchisseurs de hanche en semi-agenouillé — cooldown `mo-flechisseurs-hanche-semi-agenouille`
-- **jeudi** (45 min, estimé 45 min) — `cardio.intervals`
-  - Marche sur les talons — warmup `mo-marche-talons`
+- **dimanche** (75 min, estimé 71 min) — `cardio.endurance`
   - Footing en endurance fondamentale — conditioning `ca-footing-endurance-fondamentale`
-  - Fractionné en côtes longues — conditioning `ca-cotes-longues`
-  - Pont fessier au sol — accessory `mu-pont-fessier-sol`
-  - Mountain climbers — core `mu-mountain-climbers`
-  - Étirement des gastrocnémiens au mur jambe tendue — cooldown `mo-etirement-gastrocnemiens-mur`
-- **dimanche** (75 min, estimé 75 min) — `cardio.endurance`
-  - Footing en endurance fondamentale — conditioning `ca-footing-endurance-fondamentale`
+  - Pompe pike — main `sw-pompe-pike`
+  - Bird dog — core `mu-bird-dog`
 
-Dosage : musculation 24 % (visé 20 %), cardio 66 % (visé 70 %), mobility 10 % (visé 10 %) — erreur 4.0 points.
+Dosage : musculation 27 % (visé 20 %), cardio 63 % (visé 70 %), mobility 9 % (visé 10 %) — erreur 7.4 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 3 [2-5], delt_anterior 3 [2-5], delt_middle 1.5 [2-5], delt_posterior 2 [2-5], lats 4 [2-5], upper_back 3.5 [2-5], biceps 0 [2-5], triceps 5 [2-5], abs 2 [2-5], lower_back 3 [2-5], glutes 4 [2-5], quads 4 [2-5], hamstrings 1 [2-5], calves 1 [0-5]. Groupes majeurs dans leur bande : 78 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 3 [2-5], delt_anterior 3 [2-5], delt_middle 1.5 [2-5], delt_posterior 1.5 [2-5], lats 3 [2-5], upper_back 3 [2-5], biceps 0 [2-5], triceps 4.5 [2-5], abs 3 [2-5], lower_back 5 [2-5], glutes 5 [2-5], quads 3 [2-5], hamstrings 3 [2-5], calves 3 [0-5]. Groupes majeurs dans leur bande : 80 %.
 
-Équilibre : tirage 4 / poussée 3 séries ; chaîne postérieure 2 / genou 2 ; schémas de base 4/5.
+Équilibre : tirage 3 / poussée 3 séries ; chaîne postérieure 3 / genou 3 ; schémas de base 4/5.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Fractionné en côtes longues (`d1.3`) :
-  - `exercise_replaced` jour 1 : Fractionné en côtes longues → Course en 30/30 (plan.user_cannot_do, plan.variant_easier)
-- Remplacement par Wrist push-ups (`d0.1`) :
-  - `exercise_replaced` jour 0 : Routine mobilité épaules et poignets → Wrist push-ups (plan.user_replaced)
+- « Je ne sais pas faire » sur Tirage bras tendus à l'élastique (`d0.4`) :
+  - `exercise_replaced` jour 0 : Tirage bras tendus à l'élastique → Face pull à l'élastique (plan.user_cannot_do, plan.variant_easier)
+- Remplacement par Demi-grand écart (half split) (`d0.6`) :
+  - `exercise_replaced` jour 0 : Étirement chaîne postérieure en flexion avant debout → Demi-grand écart (half split) (plan.user_replaced)
 
 ### Passe 2
 
@@ -241,30 +234,29 @@ mardi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (test) |
 | --- | --- | --- | --- | --- | --- |
-| Wrist push-ups | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
-| Pompe pike | 2×6-12 · 5 fl. · 90s | 3×6-12 · 5 fl. · 90s | 3×6-12 · 6 fl. · 90s | 3×6-12 · 7 fl. · 90s | 2×6-12 · 3 fl. · 90s |
-| Air squat | 2×15-22 · 5 fl. · 90s | 2×15-22 · 5 fl. · 90s | 2×15-22 · 6 fl. · 90s | 2×15-22 · 7 fl. · 90s | 1×15-22 · 3 fl. · 90s |
-| Tirage bras tendus à l'élastique | 3×10-15 · 5 fl. · 75s | 4×10-15 · 5 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Superman dynamique | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
-| Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
-| Étirement des fléchisseurs de hanche en semi-agenouillé | 3×20-30 s · 10s | 4×20-30 s · 10s | 4×20-30 s · 10s | 4×20-30 s · 10s | 2×20-30 s · 10s |
+| Rotation interne active de hanche en quadrupédie | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
+| Air squat | 2×15-22 · 5 fl. · 90s | 3×15-22 · 5 fl. · 90s | 3×15-22 · 6 fl. · 90s | 3×15-22 · 7 fl. · 90s | 2×15-22 · 3 fl. · 90s |
+| Nordic hamstring curl assisté à l'élastique | 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Face pull à l'élastique | 2×10-15 · 5 fl. · 75s | 2×10-15 · 5 fl. · 75s | 2×10-15 · 6 fl. · 75s | 2×10-15 · 7 fl. · 75s | 1×10-15 · 3 fl. · 75s |
+| Gainage latéral sur le coude | 2×20-40 s · 4 fl. · 60s | 3×20-40 s · 4 fl. · 60s | 3×20-40 s · 5 fl. · 60s | 3×20-40 s · 6 fl. · 60s | 2×20-40 s · 2 fl. · 60s |
+| Demi-grand écart (half split) | 2×20-30 s · 10s | 3×20-30 s · 10s | 3×20-30 s · 10s | 3×20-30 s · 10s | 2×20-30 s · 10s |
+| Respiration crocodile | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s |
 
 jeudi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (test) |
 | --- | --- | --- | --- | --- | --- |
-| Marche sur les talons | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
-| Footing en endurance fondamentale | 9-10 min | 9-10 min | 9-10 min | 9-10 min | TEST 1×10000 m |
-| Course en 30/30 | 10×30 s · 30s | 12×30 s · 30s | 12×30 s · 30s | 13×30 s · 30s | 8×30 s · 30s |
-| Pont fessier au sol | 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Mountain climbers | 2×20-40 s · 4 fl. · 60s | 2×20-40 s · 4 fl. · 60s | 2×20-40 s · 5 fl. · 60s | 2×20-40 s · 6 fl. · 60s | 1×20-40 s · 2 fl. · 60s |
-| Étirement des gastrocnémiens au mur jambe tendue | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Mobilisation cheville genou au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
+| Footing en endurance fondamentale | 27-30 min | 31-35 min | 36-40 min | 36-40 min | TEST 1×10000 m |
+| Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 
 dimanche :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (test) |
 | --- | --- | --- | --- | --- | --- |
-| Footing en endurance fondamentale | 49-55 min | 63-70 min | 63-70 min | 67-75 min | 40-45 min |
+| Footing en endurance fondamentale | 40-45 min | 49-55 min | 49-55 min | 54-60 min | 31-35 min |
+| Pompe pike | 2×6-12 · 5 fl. · 90s | 2×6-12 · 5 fl. · 90s | 2×6-12 · 6 fl. · 90s | 2×6-12 · 7 fl. · 90s | 1×6-12 · 3 fl. · 90s |
+| Bird dog | 2×10-15 · 4 fl. · 60s | 2×10-15 · 4 fl. · 60s | 2×10-15 · 5 fl. · 60s | 2×10-15 · 6 fl. · 60s | 1×10-15 · 2 fl. · 60s |
 
 ## 4. `crossfit_5x60`
 
@@ -274,74 +266,73 @@ Profil : crossfit 80 % + mobility 20 % — lundi 60 min, mardi 60 min, mercredi 
 
 ### Passe 1
 
-Note 0.956 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 1.00 · pattern_balance 1.00 · discipline_structure 0.88 · time_use 1.00 · variety 1.00 · exercise_fit 0.62 · stimulus_fatigue 0.75 · preferences 1.00 · novelty 1.00.
+Note 0.958 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 0.97 · pattern_balance 1.00 · discipline_structure 0.90 · time_use 1.00 · variety 1.00 · exercise_fit 0.66 · stimulus_fatigue 0.73 · preferences 1.00 · novelty 1.00.
 
-- **lundi** (60 min, estimé 60 min) — `strength.pull`
+- **lundi** (60 min, estimé 58 min) — `strength.upper`
   - Muscle-up sauté — skill `cd-muscle-up-saute`
-  - Handstand shoulder taps au mur — skill `cd-shoulder-taps-mur`
   - Épaulé-jeté — main `mu-epaule-jete`
-  - Soulevé de terre conventionnel — secondary `mu-souleve-de-terre-conventionnel`
+  - HSPU au mur amplitude réduite sur coussin — secondary `cd-hspu-mur-amplitude-reduite`
   - Traction pronation — secondary `sw-traction-pronation`
-  - Row australien aux anneaux — secondary `sw-row-australien-anneaux`
-  - Thruster à la barre — conditioning `cf-thruster-barre`
   - Traction kipping — conditioning `cf-traction-kipping`
-  - Respiration crocodile — cooldown `mo-respiration-crocodile`
-- **mardi** (60 min, estimé 59 min) — `mobility`
-  - Lift-off en rotation externe 90/90 allongé ventral — warmup `mo-lift-off-rotation-externe-90-90`
-  - Bascules en appui doigts vers l'avant — warmup `mo-bascules-appui-doigts-avant`
-  - Wall slides dos au mur — warmup `mo-wall-slides`
-  - Lu raise — accessory `mu-lu-raise`
-  - Curl biceps à la barre droite — accessory `mu-curl-barre-droite`
-  - Pogo jumps — conditioning `cf-pogo-jumps`
+  - Demi-burpee — conditioning `cf-demi-burpee`
+  - Sit-up AbMat en papillon — conditioning `cf-sit-up-abmat`
+- **mardi** (60 min, estimé 55 min) — `mobility`
+  - Rotation interne active de hanche en quadrupédie — warmup `mo-rotation-interne-hanche-quadrupedie`
+  - Hollow body hold — core `mu-hollow-body-hold`
+  - Planche RKC — core `mu-planche-rkc`
+  - Burpee Navy SEAL — conditioning `cf-burpee-navy-seal`
   - Rameur en sprint — conditioning `ca-rameur-sprint`
+  - Étirement adducteurs debout en fente latérale — cooldown `mo-adducteurs-fente-laterale`
   - Étirement du biceps au mur — cooldown `mo-etirement-biceps-mur`
-  - Étirement des gastrocnémiens au mur jambe tendue — cooldown `mo-etirement-gastrocnemiens-mur`
+  - Étirement pectoral au cadre de porte — cooldown `mo-etirement-pectoral-cadre-porte`
   - Étirement des fléchisseurs de hanche en semi-agenouillé — cooldown `mo-flechisseurs-hanche-semi-agenouille`
   - Pigeon au sol — cooldown `mo-pigeon-sol`
-- **mercredi** (60 min, estimé 58 min) — `strength.push`
+  - Respiration crocodile — cooldown `mo-respiration-crocodile`
+- **mercredi** (60 min, estimé 60 min) — `strength.push`
   - Lift-off en rotation externe 90/90 allongé ventral — warmup `mo-lift-off-rotation-externe-90-90`
+  - Mobilisation cheville genou au mur — warmup `mo-cheville-genou-mur`
   - Muscle-up sauté — skill `cd-muscle-up-saute`
-  - Soulevé de terre jambes tendues — main `mu-souleve-de-terre-jambes-tendues`
-  - Développé militaire kettlebell — secondary `mu-developpe-kettlebell`
-  - Burpee latéral par-dessus la barre — conditioning `cf-burpee-lateral-barre`
-  - Plank jacks — conditioning `cf-plank-jacks`
-  - Sit-up AbMat en papillon — conditioning `cf-sit-up-abmat`
-  - Pigeon au sol — cooldown `mo-pigeon-sol`
-- **vendredi** (60 min, estimé 60 min) — `strength.full_body`
-  - Mobilité douce du cou en trois plans — warmup `mo-mobilite-cou-trois-plans`
-  - Back squat barre haute — main `mu-back-squat-barre-haute`
-  - Rowing barre prise large vers la poitrine — secondary `mu-rowing-barre-prise-large-dos-haut`
-  - Goblet squat — secondary `mu-goblet-squat`
-  - Windshield wiper suspendu genoux fléchis — core `sw-windshield-wiper-tuck`
+  - Soulevé de terre kettlebell — main `mu-souleve-de-terre-kettlebell`
+  - Pompe prise large — secondary `sw-pompe-large`
+  - Burpee avec tuck jump — conditioning `cf-burpee-tuck-jump`
+  - Wall ball — conditioning `cf-wall-ball`
+  - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
+  - Étirement des gastrocnémiens au mur jambe tendue — cooldown `mo-etirement-gastrocnemiens-mur`
+  - Étirement pectoral au cadre de porte — cooldown `mo-etirement-pectoral-cadre-porte`
+  - Étirement des fléchisseurs de hanche en semi-agenouillé — cooldown `mo-flechisseurs-hanche-semi-agenouille`
+- **vendredi** (60 min, estimé 56 min) — `strength.lower`
+  - Épaulé haltère unilatéral — main `mu-epaule-haltere-unilateral`
+  - Back squat barre haute — secondary `mu-back-squat-barre-haute`
+  - V-up — core `mu-v-up`
+  - Fente marchée overhead au disque — conditioning `cf-fente-overhead-disque`
   - Box step-over — conditioning `cf-box-step-over`
   - Burpee — conditioning `cf-burpee`
-  - Étirement du biceps au mur — cooldown `mo-etirement-biceps-mur`
-  - Pigeon au sol — cooldown `mo-pigeon-sol`
-- **samedi** (60 min, estimé 59 min) — `strength.upper`
-  - Lift-off en rotation externe 90/90 allongé ventral — warmup `mo-lift-off-rotation-externe-90-90`
+  - Étirement de l'élévateur de la scapula — cooldown `mo-etirement-elevateur-scapula`
+  - Étirement des fléchisseurs de hanche en semi-agenouillé — cooldown `mo-flechisseurs-hanche-semi-agenouille`
+- **samedi** (60 min, estimé 60 min) — `strength.pull`
+  - Mobilisation cheville genou au mur — warmup `mo-cheville-genou-mur`
   - Muscle-up sauté — skill `cd-muscle-up-saute`
-  - Traction aux anneaux — main `sw-traction-anneaux`
-  - Pompe en T — secondary `sw-pompe-t`
-  - Planche RKC — core `mu-planche-rkc`
-  - Devil press — conditioning `cf-devil-press`
-  - Burpee Navy SEAL — conditioning `cf-burpee-navy-seal`
-  - Montée de corde en J-hook — conditioning `cf-montee-corde-j-hook`
-  - Étirement de la capsule postérieure bras croisé — cooldown `mo-etirement-capsule-posterieure-bras-croise`
-  - Étirement ischio-jambiers assis unilatéral — cooldown `mo-ischio-assis-unilateral`
-  - Pigeon au sol — cooldown `mo-pigeon-sol`
+  - Rowing barre buste penché prise supination — main `mu-rowing-barre-supination`
+  - Porté au-dessus de la tête (overhead carry) — accessory `mu-overhead-carry`
+  - Gainage ventral lesté — core `mu-gainage-ventral-leste`
+  - Burpee avec traction — conditioning `cf-burpee-traction`
+  - Thruster à la barre — conditioning `cf-thruster-barre`
+  - Saut en étoile — conditioning `cf-saut-etoile`
+  - Étirement pectoral au cadre de porte — cooldown `mo-etirement-pectoral-cadre-porte`
 
 Dosage : crossfit 80 % (visé 80 %), mobility 20 % (visé 20 %) — erreur 0.0 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 11 [7.5-15.5], delt_anterior 12 [7.5-15.5], delt_middle 8 [7.5-15.5], delt_posterior 9 [7.5-15.5], lats 15.5 [7.5-15.5], upper_back 13.5 [7.5-15.5], biceps 13 [7.5-15.5], triceps 13.5 [7.5-15.5], abs 7.5 [7.5-15.5], lower_back 7.5 [7.5-15.5], glutes 15.5 [7.5-15.5], quads 12.5 [7.5-15.5], hamstrings 7 [7.5-15.5], calves 8 [7.5-15.5]. Groupes majeurs dans leur bande : 91 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 11 [7.5-15.5], delt_anterior 15 [7.5-15.5], delt_middle 7.5 [7.5-15.5], delt_posterior 4 [7.5-15.5], lats 14 [7.5-15.5], upper_back 8.5 [7.5-15.5], biceps 8.5 [7.5-15.5], triceps 15 [7.5-15.5], abs 13.5 [7.5-15.5], lower_back 7.5 [7.5-15.5], glutes 15 [7.5-15.5], quads 13.5 [7.5-15.5], hamstrings 9 [7.5-15.5], calves 7.5 [7.5-15.5]. Groupes majeurs dans leur bande : 93 %.
 
-Équilibre : tirage 17 / poussée 13 séries ; chaîne postérieure 5 / genou 6 ; schémas de base 6/6.
+Équilibre : tirage 14 / poussée 12 séries ; chaîne postérieure 3 / genou 3 ; schémas de base 6/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Box step-over (`d3.6`) :
-  - `exercise_replaced` jour 3 : Box step-over → Épaulé au médecine-ball (plan.user_cannot_do, plan.variant_easier)
-- Remplacement par Transition de muscle-up sur box (`d2.2`) :
-  - `exercise_replaced` jour 2 : Muscle-up sauté → Transition de muscle-up sur box (plan.user_replaced)
+- « Je ne sais pas faire » sur Mobilisation cheville genou au mur (`d2.2`) :
+  - `exercise_replaced` jour 2 : Mobilisation cheville genou au mur → CARs de cheville (plan.user_cannot_do, plan.variant_easier)
+  - `exercise_removed` jour 4 : Mobilisation cheville genou au mur (plan.reoptimized)
+- Remplacement par Hollow rocks (`d1.2`) :
+  - `exercise_replaced` jour 1 : Hollow body hold → Hollow rocks (plan.user_replaced)
 
 ### Passe 2
 
@@ -349,74 +340,71 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (test) |
 | --- | --- | --- | --- | --- | --- |
-| Muscle-up sauté | 2×2-5 · 4 fl. · 150s | 2×2-5 · 4 fl. · 150s | 2×2-5 · 5 fl. · 150s | 2×2-5 · 6 fl. · 150s | 1×2-5 · 2 fl. · 150s |
-| Handstand shoulder taps au mur | 2×2-5 · 4 fl. · 150s | 2×2-5 · 4 fl. · 150s | 2×2-5 · 5 fl. · 150s | 2×2-5 · 6 fl. · 150s | 1×2-5 · 2 fl. · 150s |
-| Épaulé-jeté | 2×2-3 · 3 fl. · 150s · 40 kg | 3×2-3 · 3 fl. · 150s · 40 kg | 3×2-3 · 4 fl. · 150s · 40 kg | 3×2-3 · 5 fl. · 150s · 40 kg | 2×2-3 · 1 fl. · 150s · 37.5 kg |
-| Soulevé de terre conventionnel | CALIBRAGE 2×5-8 · 4 fl. · 150s · 72 % 1RM | 2×5-8 · 4 fl. · 150s · 72 % 1RM | 2×5-8 · 5 fl. · 150s · 73 % 1RM | 2×5-8 · 6 fl. · 150s · 74 % 1RM | 1×5-8 · 2 fl. · 150s · 71 % 1RM |
-| Traction pronation | 2×3-4 · 5 fl. · 90s | 3×3-4 · 5 fl. · 90s | 3×3-4 · 6 fl. · 90s | 3×3-4 · 7 fl. · 90s | 2×3-4 · 3 fl. · 90s |
-| Row australien aux anneaux | 2×10-15 · 5 fl. · 90s | 3×10-15 · 5 fl. · 90s | 3×10-15 · 6 fl. · 90s | 3×10-15 · 7 fl. · 90s | 2×10-15 · 3 fl. · 90s |
-| Thruster à la barre | 3×8-12 · 15s · rounds wod-d0 | 4×8-12 · 15s · rounds wod-d0 | 4×8-12 · 15s · rounds wod-d0 | 4×8-12 · 15s · rounds wod-d0 | 2×8-12 · 15s · rounds wod-d0 |
-| Traction kipping | 2×8-12 · 15s · rounds wod-d0 | 3×8-12 · 15s · rounds wod-d0 | 3×8-12 · 15s · rounds wod-d0 | 3×8-12 · 15s · rounds wod-d0 | 2×8-12 · 15s · rounds wod-d0 |
-| Respiration crocodile | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s |
+| Muscle-up sauté | 3×2-5 · 4 fl. · 150s | 4×2-5 · 4 fl. · 150s | 4×2-5 · 5 fl. · 150s | 4×2-5 · 6 fl. · 150s | 2×2-5 · 2 fl. · 150s |
+| Épaulé-jeté | 4×2-3 · 3 fl. · 150s · 40 kg | 5×2-3 · 3 fl. · 150s · 40 kg | 5×2-3 · 4 fl. · 150s · 40 kg | 5×2-3 · 5 fl. · 150s · 40 kg | 3×2-3 · 1 fl. · 150s · 37.5 kg |
+| HSPU au mur amplitude réduite sur coussin | 2×6-12 · 5 fl. · 90s | 3×6-12 · 5 fl. · 90s | 3×6-12 · 6 fl. · 90s | 3×6-12 · 7 fl. · 90s | 2×6-12 · 3 fl. · 90s |
+| Traction pronation | 3×3-4 · 5 fl. · 90s | 4×3-4 · 5 fl. · 90s | 4×3-4 · 6 fl. · 90s | 4×3-4 · 7 fl. · 90s | 2×3-4 · 3 fl. · 90s |
+| Traction kipping | 3×8-12 · 15s · rounds wod-d0 | 4×8-12 · 15s · rounds wod-d0 | 4×8-12 · 15s · rounds wod-d0 | 4×8-12 · 15s · rounds wod-d0 | 2×8-12 · 15s · rounds wod-d0 |
+| Demi-burpee | 3×8-12 · 15s · rounds wod-d0 | 4×8-12 · 15s · rounds wod-d0 | 4×8-12 · 15s · rounds wod-d0 | 4×8-12 · 15s · rounds wod-d0 | 2×8-12 · 15s · rounds wod-d0 |
+| Sit-up AbMat en papillon | 3×8-12 · 15s · rounds wod-d0 | 4×8-12 · 15s · rounds wod-d0 | 4×8-12 · 15s · rounds wod-d0 | 4×8-12 · 15s · rounds wod-d0 | 2×8-12 · 15s · rounds wod-d0 |
 
 mardi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (test) |
 | --- | --- | --- | --- | --- | --- |
-| Lift-off en rotation externe 90/90 allongé ventral | 2×8-12 · 10s | 3×8-12 · 10s | 3×8-12 · 10s | 3×8-12 · 10s | 2×8-12 · 10s |
-| Bascules en appui doigts vers l'avant | 2×8-12 · 10s | 3×8-12 · 10s | 3×8-12 · 10s | 3×8-12 · 10s | 2×8-12 · 10s |
-| Wall slides dos au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
-| Lu raise | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Curl biceps à la barre droite | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Pogo jumps | 4×30-40 s · 15s | 5×30-40 s · 15s | 5×30-40 s · 15s | 5×30-40 s · 15s | 3×30-40 s · 15s |
-| Rameur en sprint | 5×15-20 s · 100s | 5×15-20 s · 100s | 6×15-20 s · 100s | 6×15-20 s · 100s | 4×15-20 s · 100s |
+| Rotation interne active de hanche en quadrupédie | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
+| Hollow rocks | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
+| Planche RKC | 2×10-20 s · 4 fl. · 60s | 3×10-20 s · 4 fl. · 60s | 3×10-20 s · 5 fl. · 60s | 3×10-20 s · 6 fl. · 60s | 2×10-20 s · 2 fl. · 60s |
+| Burpee Navy SEAL | 3×8-12 · 15s | 4×8-12 · 15s | 4×8-12 · 15s | 4×8-12 · 15s | 2×8-12 · 15s |
+| Rameur en sprint | 4×15-20 s · 100s | 5×15-20 s · 100s | 5×15-20 s · 100s | 5×15-20 s · 100s | 3×15-20 s · 100s |
+| Étirement adducteurs debout en fente latérale | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 | Étirement du biceps au mur | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
-| Étirement des gastrocnémiens au mur jambe tendue | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Étirement pectoral au cadre de porte | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 | Étirement des fléchisseurs de hanche en semi-agenouillé | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 | Pigeon au sol | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Respiration crocodile | 2×120-180 s · 15s | 2×120-180 s · 15s | 2×120-180 s · 15s | 2×120-180 s · 15s | 1×120-180 s · 15s |
 
 mercredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (test) |
 | --- | --- | --- | --- | --- | --- |
 | Lift-off en rotation externe 90/90 allongé ventral | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
-| Transition de muscle-up sur box | 3×2-5 · 4 fl. · 150s | 4×2-5 · 4 fl. · 150s | 4×2-5 · 5 fl. · 150s | 4×2-5 · 6 fl. · 150s | 2×2-5 · 2 fl. · 150s |
-| Soulevé de terre jambes tendues | CALIBRAGE 2×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 5 fl. · 150s · 73 % 1RM | 3×5-8 · 6 fl. · 150s · 74 % 1RM | 2×5-8 · 2 fl. · 150s · 71 % 1RM |
-| Développé militaire kettlebell | CALIBRAGE 2×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 5 fl. · 150s · 73 % 1RM | 3×5-8 · 6 fl. · 150s · 74 % 1RM | 2×5-8 · 2 fl. · 150s · 71 % 1RM |
-| Burpee latéral par-dessus la barre | 3×8-12 · 15s · rounds wod-d2 | 4×8-12 · 15s · rounds wod-d2 | 4×8-12 · 15s · rounds wod-d2 | 4×8-12 · 15s · rounds wod-d2 | 2×8-12 · 15s · rounds wod-d2 |
-| Plank jacks | 4×30-40 s · 15s · rounds wod-d2 | 5×30-40 s · 15s · rounds wod-d2 | 5×30-40 s · 15s · rounds wod-d2 | 5×30-40 s · 15s · rounds wod-d2 | 3×30-40 s · 15s · rounds wod-d2 |
-| Sit-up AbMat en papillon | 3×8-12 · 15s · rounds wod-d2 | 4×8-12 · 15s · rounds wod-d2 | 4×8-12 · 15s · rounds wod-d2 | 4×8-12 · 15s · rounds wod-d2 | 2×8-12 · 15s · rounds wod-d2 |
-| Pigeon au sol | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| CARs de cheville | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
+| Muscle-up sauté | 3×2-5 · 4 fl. · 150s | 4×2-5 · 4 fl. · 150s | 4×2-5 · 5 fl. · 150s | 4×2-5 · 6 fl. · 150s | 2×2-5 · 2 fl. · 150s |
+| Soulevé de terre kettlebell | CALIBRAGE 2×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 5 fl. · 150s · 73 % 1RM | 3×5-8 · 6 fl. · 150s · 74 % 1RM | 2×5-8 · 2 fl. · 150s · 71 % 1RM |
+| Pompe prise large | 2×10-15 · 5 fl. · 90s | 3×10-15 · 5 fl. · 90s | 3×10-15 · 6 fl. · 90s | 3×10-15 · 7 fl. · 90s | 2×10-15 · 3 fl. · 90s |
+| Burpee avec tuck jump | 3×8-12 · 15s · rounds wod-d2 | 4×8-12 · 15s · rounds wod-d2 | 4×8-12 · 15s · rounds wod-d2 | 4×8-12 · 15s · rounds wod-d2 | 2×8-12 · 15s · rounds wod-d2 |
+| Wall ball | 3×8-12 · 15s · rounds wod-d2 | 4×8-12 · 15s · rounds wod-d2 | 4×8-12 · 15s · rounds wod-d2 | 4×8-12 · 15s · rounds wod-d2 | 2×8-12 · 15s · rounds wod-d2 |
+| Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Étirement des gastrocnémiens au mur jambe tendue | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Étirement pectoral au cadre de porte | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Étirement des fléchisseurs de hanche en semi-agenouillé | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 
 vendredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (test) |
 | --- | --- | --- | --- | --- | --- |
-| Mobilité douce du cou en trois plans | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
+| Épaulé haltère unilatéral | CALIBRAGE 4×2-3 · 3 fl. · 150s · 81 % 1RM | 5×2-3 · 3 fl. · 150s · 81 % 1RM | 5×2-3 · 4 fl. · 150s · 82 % 1RM | 5×2-3 · 5 fl. · 150s · 83 % 1RM | 3×2-3 · 1 fl. · 150s · 79 % 1RM |
 | Back squat barre haute | 2×5-8 · 4 fl. · 150s · 50 kg | 3×5-8 · 4 fl. · 150s · 50 kg | 3×5-8 · 5 fl. · 150s · 52.5 kg | 3×5-8 · 6 fl. · 150s · 52.5 kg | 2×5-8 · 2 fl. · 150s · 50 kg |
-| Rowing barre prise large vers la poitrine | CALIBRAGE 2×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 5 fl. · 150s · 73 % 1RM | 3×5-8 · 6 fl. · 150s · 74 % 1RM | 2×5-8 · 2 fl. · 150s · 71 % 1RM |
-| Goblet squat | CALIBRAGE 2×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 5 fl. · 150s · 73 % 1RM | 3×5-8 · 6 fl. · 150s · 74 % 1RM | 2×5-8 · 2 fl. · 150s · 71 % 1RM |
-| Windshield wiper suspendu genoux fléchis | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
-| Épaulé au médecine-ball | 3×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 2×8-12 · 15s · rounds wod-d3 |
+| V-up | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
+| Fente marchée overhead au disque | 3×20 m · 15s · rounds wod-d3 | 4×20 m · 15s · rounds wod-d3 | 4×20 m · 15s · rounds wod-d3 | 4×20 m · 15s · rounds wod-d3 | 2×20 m · 15s · rounds wod-d3 |
+| Box step-over | 3×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 2×8-12 · 15s · rounds wod-d3 |
 | Burpee | 3×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 2×8-12 · 15s · rounds wod-d3 |
-| Étirement du biceps au mur | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
-| Pigeon au sol | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Étirement de l'élévateur de la scapula | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Étirement des fléchisseurs de hanche en semi-agenouillé | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 
 samedi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (test) |
 | --- | --- | --- | --- | --- | --- |
-| Lift-off en rotation externe 90/90 allongé ventral | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
 | Muscle-up sauté | 3×2-5 · 4 fl. · 150s | 4×2-5 · 4 fl. · 150s | 4×2-5 · 5 fl. · 150s | 4×2-5 · 6 fl. · 150s | 2×2-5 · 2 fl. · 150s |
-| Traction aux anneaux | 2×3-8 · 5 fl. · 90s | 3×3-8 · 5 fl. · 90s | 3×3-8 · 6 fl. · 90s | 3×3-8 · 7 fl. · 90s | 2×3-8 · 3 fl. · 90s |
-| Pompe en T | 2×6-12 · 5 fl. · 90s | 3×6-12 · 5 fl. · 90s | 3×6-12 · 6 fl. · 90s | 3×6-12 · 7 fl. · 90s | 2×6-12 · 3 fl. · 90s |
-| Planche RKC | 2×10-20 s · 4 fl. · 60s | 3×10-20 s · 4 fl. · 60s | 3×10-20 s · 5 fl. · 60s | 3×10-20 s · 6 fl. · 60s | 2×10-20 s · 2 fl. · 60s |
-| Devil press | 3×8-12 · 15s · rounds wod-d4 | 4×8-12 · 15s · rounds wod-d4 | 4×8-12 · 15s · rounds wod-d4 | 4×8-12 · 15s · rounds wod-d4 | 2×8-12 · 15s · rounds wod-d4 |
-| Burpee Navy SEAL | 3×8-12 · 15s · rounds wod-d4 | 4×8-12 · 15s · rounds wod-d4 | 4×8-12 · 15s · rounds wod-d4 | 4×8-12 · 15s · rounds wod-d4 | 2×8-12 · 15s · rounds wod-d4 |
-| Montée de corde en J-hook | 3×8-12 · 15s · rounds wod-d4 | 4×8-12 · 15s · rounds wod-d4 | 4×8-12 · 15s · rounds wod-d4 | 4×8-12 · 15s · rounds wod-d4 | 2×8-12 · 15s · rounds wod-d4 |
-| Étirement de la capsule postérieure bras croisé | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
-| Étirement ischio-jambiers assis unilatéral | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
-| Pigeon au sol | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Rowing barre buste penché prise supination | CALIBRAGE 3×5-8 · 4 fl. · 150s · 72 % 1RM | 4×5-8 · 4 fl. · 150s · 72 % 1RM | 4×5-8 · 5 fl. · 150s · 73 % 1RM | 4×5-8 · 6 fl. · 150s · 74 % 1RM | 2×5-8 · 2 fl. · 150s · 71 % 1RM |
+| Porté au-dessus de la tête (overhead carry) | 2×30 m · 5 fl. · 90s | 3×30 m · 5 fl. · 90s | 3×30 m · 6 fl. · 90s | 3×30 m · 7 fl. · 90s | 2×30 m · 3 fl. · 90s |
+| Gainage ventral lesté | 2×10-20 s · 4 fl. · 60s | 3×10-20 s · 4 fl. · 60s | 3×10-20 s · 5 fl. · 60s | 3×10-20 s · 6 fl. · 60s | 2×10-20 s · 2 fl. · 60s |
+| Burpee avec traction | 3×8-12 · 15s · rounds wod-d4 | 4×8-12 · 15s · rounds wod-d4 | 4×8-12 · 15s · rounds wod-d4 | 4×8-12 · 15s · rounds wod-d4 | 2×8-12 · 15s · rounds wod-d4 |
+| Thruster à la barre | 3×8-12 · 15s · rounds wod-d4 | 4×8-12 · 15s · rounds wod-d4 | 4×8-12 · 15s · rounds wod-d4 | 4×8-12 · 15s · rounds wod-d4 | 2×8-12 · 15s · rounds wod-d4 |
+| Saut en étoile | 4×8-12 · 15s · rounds wod-d4 | 5×8-12 · 15s · rounds wod-d4 | 5×8-12 · 15s · rounds wod-d4 | 5×8-12 · 15s · rounds wod-d4 | 3×8-12 · 15s · rounds wod-d4 |
+| Étirement pectoral au cadre de porte | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 
 ## 5. `calisthenie_figures_4x75`
 
@@ -872,46 +860,45 @@ Profil : musculation 100 % — lundi 60 min, mercredi 60 min, vendredi 60 min �
 
 ### Passe 1
 
-Note 0.963 — recovery 1.00 · fatigue_balance 1.00 · joint_load 0.93 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 0.97 · pattern_balance 1.00 · discipline_structure 0.97 · time_use 1.00 · variety 1.00 · exercise_fit 0.68 · stimulus_fatigue 0.75 · preferences 1.00 · novelty 1.00.
+Note 0.967 — recovery 1.00 · fatigue_balance 1.00 · joint_load 0.94 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 0.99 · pattern_balance 1.00 · discipline_structure 0.97 · time_use 1.00 · variety 1.00 · exercise_fit 0.71 · stimulus_fatigue 0.74 · preferences 1.00 · novelty 1.00.
 
-- **lundi** (60 min, estimé 59 min) — `strength.lower`
-  - Soulevé de terre jambes tendues — main `mu-souleve-de-terre-jambes-tendues`
-  - Développé couché barre — secondary `mu-developpe-couche-barre`
-  - Fente marchée aux haltères — secondary `mu-fente-marchee-halteres`
-  - Presse à cuisses pieds bas — secondary `mu-presse-cuisses-pieds-bas`
-  - Face pull à l'élastique — accessory `mu-face-pull-elastique`
-  - Y raise sur banc incliné — accessory `mu-y-raise-banc-incline`
-  - Woodchop à la poulie haut vers bas — core `mu-woodchop-haut-bas`
-- **mercredi** (60 min, estimé 59 min) — `strength.full_body`
+- **lundi** (60 min, estimé 60 min) — `strength.full_body`
   - Back squat barre haute — main `mu-back-squat-barre-haute`
+  - Soulevé de terre jambes tendues — secondary `mu-souleve-de-terre-jambes-tendues`
   - Pompe classique — secondary `sw-pompe`
   - Curl biceps à la barre droite — accessory `mu-curl-barre-droite`
-  - Leg curl debout unilatéral — accessory `mu-leg-curl-debout-unilateral`
-  - Tirage bras tendus poulie haute à la barre — accessory `mu-tirage-bras-tendus-poulie-barre`
+  - Curl biceps aux haltères simultané — accessory `mu-curl-halteres-simultane`
+  - Pushdown à la corde — accessory `mu-pushdown-corde`
+  - T raise sur banc incliné — accessory `mu-t-raise-banc-incline`
+- **mercredi** (60 min, estimé 59 min) — `strength.full_body`
+  - Soulevé de terre conventionnel — main `mu-souleve-de-terre-conventionnel`
+  - Développé couché barre — secondary `mu-developpe-couche-barre`
+  - Tirage vertical poulie prise serrée supination — secondary `mu-tirage-vertical-prise-serree-supination`
+  - Curl biceps à la poulie basse (barre) — accessory `mu-curl-poulie-basse-barre`
+  - Y raise sur banc incliné — accessory `mu-y-raise-banc-incline`
+  - Traction scapulaire — accessory `sw-traction-scapulaire`
+  - Pallof press debout — core `mu-pallof-press-debout`
+- **vendredi** (60 min, estimé 59 min) — `strength.lower`
+  - Back squat barre haute — main `mu-back-squat-barre-haute`
+  - Belt squat — secondary `mu-belt-squat`
+  - Row australien — secondary `sw-row-australien`
+  - Halo kettlebell — accessory `mu-halo-kettlebell`
+  - Leg curl couché — accessory `mu-leg-curl-couche`
   - Flexion latérale à l'haltère — core `mu-flexion-laterale-haltere`
   - Sit-up — core `mu-sit-up`
-- **vendredi** (60 min, estimé 59 min) — `strength.full_body`
-  - Soulevé de terre conventionnel — main `mu-souleve-de-terre-conventionnel`
-  - Soulevé de terre jambes tendues — secondary `mu-souleve-de-terre-jambes-tendues`
-  - Traction pronation — secondary `sw-traction-pronation`
-  - Barre au front à la barre EZ — accessory `mu-barre-au-front-ez`
-  - Rowing menton haltères — accessory `mu-rowing-menton-halteres`
-  - T raise sur banc incliné — accessory `mu-t-raise-banc-incline`
-  - Traction scapulaire — accessory `sw-traction-scapulaire`
 
 Dosage : musculation 100 % (visé 100 %) — erreur 0.0 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 8 [8-16], delt_anterior 8 [8-16], delt_middle 9.5 [8-16], delt_posterior 11.5 [8-16], lats 9 [8-16], upper_back 16 [8-16], biceps 7.5 [8-16], triceps 9.5 [8-16], abs 9 [8-16], lower_back 13.5 [8-16], glutes 16.5 [8-16], quads 12 [8-16], hamstrings 14.5 [8-16], calves 8 [8-16]. Groupes majeurs dans leur bande : 84 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 7.5 [8-16], delt_anterior 10.5 [8-16], delt_middle 8 [8-16], delt_posterior 10 [8-16], lats 9 [8-16], upper_back 16 [8-16], biceps 13.5 [8-16], triceps 10.5 [8-16], abs 9 [8-16], lower_back 12 [8-16], glutes 15 [8-16], quads 12 [8-16], hamstrings 9 [8-16], calves 7.5 [8-16]. Groupes majeurs dans leur bande : 87 %.
 
-Équilibre : tirage 6 / poussée 5 séries ; chaîne postérieure 13 / genou 9 ; schémas de base 5/5.
+Équilibre : tirage 6 / poussée 6 séries ; chaîne postérieure 9 / genou 9 ; schémas de base 5/5.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Fente marchée aux haltères (`d0.3`) :
-  - `exercise_replaced` jour 0 : Fente marchée aux haltères → Fente arrière aux haltères (plan.user_cannot_do, plan.variant_easier)
-  - `order_changed` jour 0 (plan.reoptimized)
-- Remplacement par W raise sur banc incliné (`d2.6`) :
-  - `exercise_replaced` jour 2 : T raise sur banc incliné → W raise sur banc incliné (plan.user_replaced)
+- « Je ne sais pas faire » sur Pompe classique (`d0.3`) :
+  - `exercise_replaced` jour 0 : Pompe classique → Presse pectorale convergente assise (plan.user_cannot_do, plan.variant_easier)
+- Remplacement par Heel touch (`d2.6`) :
+  - `exercise_replaced` jour 2 : Flexion latérale à l'haltère → Heel touch (plan.user_replaced)
 
 ### Passe 2
 
@@ -919,37 +906,37 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
+| Back squat barre haute | 2×6-10 · 5 fl. · 120s · 67.5 kg | 3×6-10 · 5 fl. · 120s · 67.5 kg | 3×6-10 · 6 fl. · 120s · 67.5 kg | 3×6-10 · 7 fl. · 120s · 70 kg | 2×6-10 · 3 fl. · 120s · 67.5 kg |
 | Soulevé de terre jambes tendues | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Développé couché barre | 2×6-10 · 5 fl. · 120s · 50 kg | 3×6-10 · 5 fl. · 120s · 50 kg | 3×6-10 · 6 fl. · 120s · 50 kg | 3×6-10 · 7 fl. · 120s · 50 kg | 2×6-10 · 3 fl. · 120s · 47.5 kg |
-| Presse à cuisses pieds bas | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Fente arrière aux haltères | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Face pull à l'élastique | 2×10-15 · 5 fl. · 75s | 2×10-15 · 5 fl. · 75s | 2×10-15 · 6 fl. · 75s | 2×10-15 · 7 fl. · 75s | 1×10-15 · 3 fl. · 75s |
-| Y raise sur banc incliné | CALIBRAGE 2×10-15 · 5 fl. · 75s | 2×10-15 · 5 fl. · 75s | 2×10-15 · 6 fl. · 75s | 2×10-15 · 7 fl. · 75s | 1×10-15 · 3 fl. · 75s |
-| Woodchop à la poulie haut vers bas | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
+| Presse pectorale convergente assise | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Curl biceps à la barre droite | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Curl biceps aux haltères simultané | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Pushdown à la corde | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| T raise sur banc incliné | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
 
 mercredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Back squat barre haute | 2×6-10 · 5 fl. · 120s · 67.5 kg | 3×6-10 · 5 fl. · 120s · 67.5 kg | 3×6-10 · 6 fl. · 120s · 67.5 kg | 3×6-10 · 7 fl. · 120s · 70 kg | 2×6-10 · 3 fl. · 120s · 67.5 kg |
-| Pompe classique | 2×10-15 · 5 fl. · 90s | 3×10-15 · 5 fl. · 90s | 3×10-15 · 6 fl. · 90s | 3×10-15 · 7 fl. · 90s | 2×10-15 · 3 fl. · 90s |
-| Curl biceps à la barre droite | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Leg curl debout unilatéral | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Tirage bras tendus poulie haute à la barre | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Flexion latérale à l'haltère | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
-| Sit-up | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
+| Soulevé de terre conventionnel | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Développé couché barre | 2×6-10 · 5 fl. · 120s · 50 kg | 3×6-10 · 5 fl. · 120s · 50 kg | 3×6-10 · 6 fl. · 120s · 50 kg | 3×6-10 · 7 fl. · 120s · 50 kg | 2×6-10 · 3 fl. · 120s · 47.5 kg |
+| Tirage vertical poulie prise serrée supination | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Curl biceps à la poulie basse (barre) | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Y raise sur banc incliné | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Traction scapulaire | 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Pallof press debout | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
 
 vendredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Soulevé de terre conventionnel | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Soulevé de terre jambes tendues | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Traction pronation | 2×3-8 · 5 fl. · 90s | 3×3-8 · 5 fl. · 90s | 3×3-8 · 6 fl. · 90s | 3×3-8 · 7 fl. · 90s | 2×3-8 · 3 fl. · 90s |
-| Barre au front à la barre EZ | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Rowing menton haltères | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| W raise sur banc incliné | CALIBRAGE 3×10-15 · 5 fl. · 75s | 4×10-15 · 5 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Traction scapulaire | 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Back squat barre haute | 2×6-10 · 5 fl. · 120s · 67.5 kg | 3×6-10 · 5 fl. · 120s · 67.5 kg | 3×6-10 · 6 fl. · 120s · 67.5 kg | 3×6-10 · 7 fl. · 120s · 70 kg | 2×6-10 · 3 fl. · 120s · 67.5 kg |
+| Belt squat | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Row australien | 2×10-15 · 5 fl. · 90s | 3×10-15 · 5 fl. · 90s | 3×10-15 · 6 fl. · 90s | 3×10-15 · 7 fl. · 90s | 2×10-15 · 3 fl. · 90s |
+| Halo kettlebell | CALIBRAGE 3×10-15 · 5 fl. · 75s | 4×10-15 · 5 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Leg curl couché | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Heel touch | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
+| Sit-up | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
 
 ## 10. `minimal_1x20`
 
@@ -1004,63 +991,63 @@ Profil : musculation 100 % — lundi 75 min, mardi 75 min, mercredi 75 min, jeud
 
 ### Passe 1
 
-Note 0.967 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 0.99 · pattern_balance 1.00 · discipline_structure 0.98 · time_use 0.95 · variety 1.00 · exercise_fit 0.71 · stimulus_fatigue 0.67 · preferences 1.00 · novelty 1.00.
+Note 0.967 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 0.98 · pattern_balance 1.00 · discipline_structure 0.98 · time_use 0.96 · variety 1.00 · exercise_fit 0.71 · stimulus_fatigue 0.69 · preferences 1.00 · novelty 1.00.
 
-- **lundi** (75 min, estimé 64 min) — `strength.full_body`
-  - Développé couché barre — main `mu-developpe-couche-barre`
-  - Fente avant aux haltères — secondary `mu-fente-avant-halteres`
-  - Reverse hyper à la machine — accessory `mu-reverse-hyper-machine`
-  - Élévation frontale haltères — accessory `mu-elevation-frontale-halteres`
-  - Planche RKC — core `mu-planche-rkc`
-  - V-up — core `mu-v-up`
-- **mardi** (75 min, estimé 63 min) — `strength.pull`
-  - Rowing poulie basse assis au triangle — main `mu-rowing-poulie-assis-triangle`
-  - Tirage vertical poulie au triangle — secondary `mu-tirage-vertical-triangle`
-  - Mollets unilatéral debout à l'haltère — accessory `mu-mollets-unilateral-haltere`
-  - Curl biceps aux haltères simultané — accessory `mu-curl-halteres-simultane`
-  - Élévation latérale buste appuyé sur banc incliné — accessory `mu-elevation-laterale-buste-appuye-banc-incline`
-  - Extension lombaire à la machine — core `mu-extension-lombaire-machine`
-  - Woodchop à la poulie haut vers bas — core `mu-woodchop-haut-bas`
-- **mercredi** (75 min, estimé 63 min) — `strength.full_body`
-  - Développé couché barre — main `mu-developpe-couche-barre`
-  - Presse à cuisses pieds bas — secondary `mu-presse-cuisses-pieds-bas`
-  - Copenhagen plank dynamique — accessory `mu-copenhagen-plank-dynamique`
-  - Inclinaison radiale au levier — accessory `mu-inclinaison-radiale-levier`
-  - Hollow body hold — core `mu-hollow-body-hold`
-- **jeudi** (75 min, estimé 63 min) — `strength.pull`
-  - Soulevé de terre kettlebell — main `mu-souleve-de-terre-kettlebell`
-  - Face pull à la poulie corde — secondary `mu-face-pull-corde`
-  - Rowing poulie basse assis prise supination — secondary `mu-rowing-poulie-assis-supination`
-  - Tirage vertical poulie prise large pronation — secondary `mu-tirage-vertical-prise-large-pronation`
-  - Pull-over barre EZ bras fléchis — accessory `mu-pull-over-barre-ez`
-  - Curl biceps à la barre droite — accessory `mu-curl-barre-droite`
-- **vendredi** (75 min, estimé 64 min) — `strength.push`
-  - Développé couché barre — main `mu-developpe-couche-barre`
-  - Développé militaire barre debout — secondary `mu-developpe-militaire-barre-debout`
-  - Développé épaules à la machine — secondary `mu-developpe-epaules-machine`
-  - Élévation latérale à la poulie câble derrière le dos — accessory `mu-elevation-laterale-poulie-derriere-dos`
-  - Mollets debout à la machine — accessory `mu-mollets-debout-machine`
-- **samedi** (75 min, estimé 64 min) — `strength.lower`
-  - Back squat barre haute — main `mu-back-squat-barre-haute`
-  - Soulevé de terre conventionnel — secondary `mu-souleve-de-terre-conventionnel`
-  - Nordic hamstring curl complet — accessory `mu-nordic-hamstring-curl`
-  - Curl biceps à la poulie basse (barre) — accessory `mu-curl-poulie-basse-barre`
-  - Oiseau haltères buste penché — accessory `mu-oiseau-halteres`
+- **lundi** (75 min, estimé 62 min) — `strength.full_body`
+  - Développé décliné Smith machine — main `mu-developpe-decline-smith`
+  - Développé couché haltères — secondary `mu-developpe-couche-halteres`
+  - Back squat barre basse — secondary `mu-back-squat-barre-basse`
+  - Barre au front à la barre EZ — accessory `mu-barre-au-front-ez`
   - Leg curl couché — accessory `mu-leg-curl-couche`
+  - V-up — core `mu-v-up`
+- **mardi** (75 min, estimé 62 min) — `strength.pull`
+  - Rowing poulie basse assis prise supination — main `mu-rowing-poulie-assis-supination`
+  - Tirage vertical poulie prise large pronation — secondary `mu-tirage-vertical-prise-large-pronation`
+  - Rowing buste penché à la Smith machine — secondary `mu-rowing-smith-machine`
+  - Oiseau haltères buste penché — accessory `mu-oiseau-halteres`
+  - Roue abdominale à genoux — core `mu-roue-abdominale-genoux`
+  - Woodchop à la poulie haut vers bas — core `mu-woodchop-haut-bas`
+- **mercredi** (75 min, estimé 61 min) — `strength.push`
+  - Développé militaire barre debout — main `mu-developpe-militaire-barre-debout`
+  - Développé haltères assis — secondary `mu-developpe-halteres-assis`
+  - Élévation latérale lean-away haltère — accessory `mu-elevation-laterale-lean-away`
+  - Curl concentré à l'haltère — accessory `mu-curl-concentre`
+  - Mollets debout à la machine — accessory `mu-mollets-debout-machine`
+  - Extension lombaire à la machine — core `mu-extension-lombaire-machine`
+- **jeudi** (75 min, estimé 61 min) — `strength.full_body`
+  - Squat de compétition — main `sl-squat-competition`
+  - Soulevé de terre conventionnel — secondary `mu-souleve-de-terre-conventionnel`
+  - Face pull à la poulie corde — secondary `mu-face-pull-corde`
+  - Rotation externe à la poulie coude au corps — accessory `mu-rotation-externe-poulie`
+  - Planche RKC — core `mu-planche-rkc`
   - Sit-up sur banc décliné — core `mu-sit-up-decline`
+- **vendredi** (75 min, estimé 62 min) — `strength.upper`
+  - Développé couché barre — main `mu-developpe-couche-barre`
+  - Tirage vertical poulie prise serrée supination — secondary `mu-tirage-vertical-prise-serree-supination`
+  - Curl biceps à la barre droite — accessory `mu-curl-barre-droite`
+  - Pull-over haltère allongé sur banc — accessory `mu-pull-over-haltere`
+  - Hollow body hold — core `mu-hollow-body-hold`
+  - Pallof press debout — core `mu-pallof-press-debout`
+- **samedi** (75 min, estimé 62 min) — `strength.lower`
+  - Back squat barre haute — main `mu-back-squat-barre-haute`
+  - Soulevé de terre kettlebell — secondary `mu-souleve-de-terre-kettlebell`
+  - Mollets unilatéral debout à l'haltère — accessory `mu-mollets-unilateral-haltere`
+  - Élévation latérale haltères — accessory `mu-elevation-laterale-halteres`
+  - Rotation externe haltère couché sur le côté — accessory `mu-rotation-externe-haltere-couche`
+  - Gainage ventral lesté — core `mu-gainage-ventral-leste`
 
 Dosage : musculation 100 % (visé 100 %) — erreur 0.0 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 18 [12-20], delt_anterior 20 [12-20], delt_middle 19 [12-20], delt_posterior 15.5 [12-20], lats 19 [12-20], upper_back 19.5 [12-20], biceps 20.5 [12-20], triceps 14.5 [12-20], abs 17 [12-20], lower_back 14 [12-20], glutes 20 [12-20], quads 17.5 [12-20], hamstrings 16 [12-20], calves 13 [12-20]. Groupes majeurs dans leur bande : 93 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 20 [12-20], delt_anterior 20 [12-20], delt_middle 17.5 [12-20], delt_posterior 14.5 [12-20], lats 20 [12-20], upper_back 20 [12-20], biceps 18.5 [12-20], triceps 19.5 [12-20], abs 24 [12-20], lower_back 13 [12-20], glutes 20 [12-20], quads 18 [12-20], hamstrings 15 [12-20], calves 15.5 [12-20]. Groupes majeurs dans leur bande : 93 %.
 
-Équilibre : tirage 23 / poussée 23 séries ; chaîne postérieure 16 / genou 12 ; schémas de base 6/6.
+Équilibre : tirage 24 / poussée 21 séries ; chaîne postérieure 11 / genou 12 ; schémas de base 6/6.
 
 ### Revue simulée
 
 - « Je ne sais pas faire » sur V-up (`d0.6`) :
   - `exercise_replaced` jour 0 : V-up → Tuck-up (plan.user_cannot_do, plan.variant_easier)
-- Remplacement par Chaise contre le mur (`d2.2`) :
-  - `exercise_replaced` jour 2 : Presse à cuisses pieds bas → Chaise contre le mur (plan.user_replaced)
+- Remplacement par Élévation latérale à la poulie unilatérale (`d2.3`) :
+  - `exercise_replaced` jour 2 : Élévation latérale lean-away haltère → Élévation latérale à la poulie unilatérale (plan.user_replaced)
 
 ### Passe 2
 
@@ -1068,67 +1055,67 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (build) | S6 (test) |
 | --- | --- | --- | --- | --- | --- | --- |
-| Développé couché barre | 4×3-6 · 5 fl. · 180s · 90 kg | 4×3-6 · 5 fl. · 180s · 90 kg | 5×3-6 · 5 fl. · 180s · 90 kg | 5×3-6 · 6 fl. · 180s · 90 kg | 5×2-5 · 7 fl. · 180s · 92.5 kg | TEST 3×1-3 · 9 fl. · 240s [3@102.5 5fl. / 1@115 7fl. / 1@122.5 9fl.] |
-| Fente avant aux haltères | CALIBRAGE 3×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 6 fl. · 120s · 71 % 1RM | 4×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Reverse hyper à la machine | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
-| Élévation frontale haltères | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
-| Planche RKC | 2×20-40 s · 4 fl. · 60s | 3×20-40 s · 4 fl. · 60s | 3×20-40 s · 4 fl. · 60s | 3×20-40 s · 5 fl. · 60s | 3×20-40 s · 6 fl. · 60s | 2×20-40 s · 2 fl. · 60s |
+| Développé décliné Smith machine | CALIBRAGE 3×5-8 · 5 fl. · 150s · 73 % 1RM | 4×5-8 · 5 fl. · 150s · 73 % 1RM | 4×5-8 · 5 fl. · 150s · 73 % 1RM | 4×5-8 · 6 fl. · 150s · 74 % 1RM | 4×5-8 · 7 fl. · 150s · 75 % 1RM | 2×5-8 · 3 fl. · 150s · 71 % 1RM |
+| Développé couché haltères | CALIBRAGE 3×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 6 fl. · 120s · 71 % 1RM | 4×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Back squat barre basse | CALIBRAGE 3×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 6 fl. · 120s · 71 % 1RM | 4×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Barre au front à la barre EZ | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
+| Leg curl couché | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
 | Tuck-up | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
 
 mardi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (build) | S6 (test) |
 | --- | --- | --- | --- | --- | --- | --- |
-| Rowing poulie basse assis au triangle | CALIBRAGE 3×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 6 fl. · 120s · 71 % 1RM | 4×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Tirage vertical poulie au triangle | CALIBRAGE 3×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 6 fl. · 120s · 71 % 1RM | 4×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Mollets unilatéral debout à l'haltère | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
-| Curl biceps aux haltères simultané | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
-| Élévation latérale buste appuyé sur banc incliné | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
-| Extension lombaire à la machine | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
+| Rowing poulie basse assis prise supination | CALIBRAGE 3×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 6 fl. · 120s · 71 % 1RM | 4×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Tirage vertical poulie prise large pronation | CALIBRAGE 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 5×6-10 · 5 fl. · 120s · 70 % 1RM | 5×6-10 · 6 fl. · 120s · 71 % 1RM | 5×6-10 · 7 fl. · 120s · 71 % 1RM | 3×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Rowing buste penché à la Smith machine | CALIBRAGE 3×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 6 fl. · 120s · 71 % 1RM | 4×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Oiseau haltères buste penché | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
+| Roue abdominale à genoux | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
 | Woodchop à la poulie haut vers bas | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
 
 mercredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (build) | S6 (test) |
 | --- | --- | --- | --- | --- | --- | --- |
-| Développé couché barre | 4×3-6 · 5 fl. · 180s · 90 kg | 4×3-6 · 5 fl. · 180s · 90 kg | 5×3-6 · 5 fl. · 180s · 90 kg | 5×3-6 · 6 fl. · 180s · 90 kg | 5×2-5 · 7 fl. · 180s · 92.5 kg | 3×3-6 · 3 fl. · 180s · 87.5 kg |
-| Chaise contre le mur | 3×20-40 s · 5 fl. · 60s | 4×20-40 s · 5 fl. · 60s | 4×20-40 s · 5 fl. · 60s | 4×20-40 s · 6 fl. · 60s | 4×20-40 s · 7 fl. · 60s | 2×20-40 s · 3 fl. · 60s |
-| Copenhagen plank dynamique | 3×10-15 · 5 fl. · 75s | 4×10-15 · 5 fl. · 75s | 4×10-15 · 5 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Inclinaison radiale au levier | CALIBRAGE 3×10-15 · 6 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 4×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
-| Hollow body hold | 3×20-40 s · 4 fl. · 60s | 4×20-40 s · 4 fl. · 60s | 4×20-40 s · 4 fl. · 60s | 4×20-40 s · 5 fl. · 60s | 4×20-40 s · 6 fl. · 60s | 2×20-40 s · 2 fl. · 60s |
+| Développé militaire barre debout | 3×6-10 · 5 fl. · 120s · 50 kg | 4×6-10 · 5 fl. · 120s · 50 kg | 4×6-10 · 5 fl. · 120s · 50 kg | 4×6-10 · 6 fl. · 120s · 50 kg | 4×6-10 · 7 fl. · 120s · 50 kg | 2×6-10 · 3 fl. · 120s · 47.5 kg |
+| Développé haltères assis | CALIBRAGE 3×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 6 fl. · 120s · 71 % 1RM | 4×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Élévation latérale à la poulie unilatérale | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
+| Curl concentré à l'haltère | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
+| Mollets debout à la machine | CALIBRAGE 3×10-15 · 6 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 4×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
+| Extension lombaire à la machine | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
 
 jeudi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (build) | S6 (test) |
 | --- | --- | --- | --- | --- | --- | --- |
-| Soulevé de terre kettlebell | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Squat de compétition | CALIBRAGE 3×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 6 fl. · 120s · 71 % 1RM | 4×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Soulevé de terre conventionnel | 3×6-10 · 5 fl. · 120s · 130 kg | 4×6-10 · 5 fl. · 120s · 130 kg | 4×6-10 · 5 fl. · 120s · 130 kg | 4×6-10 · 6 fl. · 120s · 132.5 kg | 4×6-10 · 7 fl. · 120s · 135 kg | 2×6-10 · 3 fl. · 120s · 127.5 kg |
 | Face pull à la poulie corde | CALIBRAGE 3×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 6 fl. · 120s · 71 % 1RM | 4×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Rowing poulie basse assis prise supination | CALIBRAGE 3×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 6 fl. · 120s · 71 % 1RM | 4×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Tirage vertical poulie prise large pronation | CALIBRAGE 3×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 6 fl. · 120s · 71 % 1RM | 4×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Pull-over barre EZ bras fléchis | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
-| Curl biceps à la barre droite | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
+| Rotation externe à la poulie coude au corps | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
+| Planche RKC | 2×20-40 s · 4 fl. · 60s | 3×20-40 s · 4 fl. · 60s | 3×20-40 s · 4 fl. · 60s | 3×20-40 s · 5 fl. · 60s | 3×20-40 s · 6 fl. · 60s | 2×20-40 s · 2 fl. · 60s |
+| Sit-up sur banc décliné | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
 
 vendredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (build) | S6 (test) |
 | --- | --- | --- | --- | --- | --- | --- |
-| Développé couché barre | 4×3-6 · 5 fl. · 180s · 90 kg | 4×3-6 · 5 fl. · 180s · 90 kg | 5×3-6 · 5 fl. · 180s · 90 kg | 5×3-6 · 6 fl. · 180s · 90 kg | 5×2-5 · 7 fl. · 180s · 92.5 kg | 3×3-6 · 3 fl. · 180s · 87.5 kg |
-| Développé militaire barre debout | 3×6-10 · 5 fl. · 120s · 50 kg | 4×6-10 · 5 fl. · 120s · 50 kg | 4×6-10 · 5 fl. · 120s · 50 kg | 4×6-10 · 6 fl. · 120s · 50 kg | 4×6-10 · 7 fl. · 120s · 50 kg | 2×6-10 · 3 fl. · 120s · 47.5 kg |
-| Développé épaules à la machine | CALIBRAGE 3×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 6 fl. · 120s · 71 % 1RM | 4×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Élévation latérale à la poulie câble derrière le dos | CALIBRAGE 3×10-15 · 6 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 4×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
-| Mollets debout à la machine | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
+| Développé couché barre | 4×3-6 · 5 fl. · 180s · 90 kg | 4×3-6 · 5 fl. · 180s · 90 kg | 5×3-6 · 5 fl. · 180s · 90 kg | 5×3-6 · 6 fl. · 180s · 90 kg | 5×2-5 · 7 fl. · 180s · 92.5 kg | TEST 3×1-3 · 9 fl. · 240s [3@102.5 5fl. / 1@115 7fl. / 1@122.5 9fl.] |
+| Tirage vertical poulie prise serrée supination | CALIBRAGE 3×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 6 fl. · 120s · 71 % 1RM | 4×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Curl biceps à la barre droite | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
+| Pull-over haltère allongé sur banc | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
+| Hollow body hold | 2×20-40 s · 4 fl. · 60s | 3×20-40 s · 4 fl. · 60s | 3×20-40 s · 4 fl. · 60s | 3×20-40 s · 5 fl. · 60s | 3×20-40 s · 6 fl. · 60s | 2×20-40 s · 2 fl. · 60s |
+| Pallof press debout | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
 
 samedi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (build) | S6 (test) |
 | --- | --- | --- | --- | --- | --- | --- |
 | Back squat barre haute | 3×6-10 · 5 fl. · 120s · 105 kg | 4×6-10 · 5 fl. · 120s · 105 kg | 4×6-10 · 5 fl. · 120s · 105 kg | 4×6-10 · 6 fl. · 120s · 107.5 kg | 4×6-10 · 7 fl. · 120s · 107.5 kg | 2×6-10 · 3 fl. · 120s · 102.5 kg |
-| Soulevé de terre conventionnel | 3×6-10 · 5 fl. · 120s · 130 kg | 4×6-10 · 5 fl. · 120s · 130 kg | 4×6-10 · 5 fl. · 120s · 130 kg | 4×6-10 · 6 fl. · 120s · 132.5 kg | 4×6-10 · 7 fl. · 120s · 135 kg | 2×6-10 · 3 fl. · 120s · 127.5 kg |
-| Nordic hamstring curl complet | 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Curl biceps à la poulie basse (barre) | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
-| Oiseau haltères buste penché | CALIBRAGE 3×10-15 · 6 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 4×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
-| Leg curl couché | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
-| Sit-up sur banc décliné | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
+| Soulevé de terre kettlebell | CALIBRAGE 3×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 6 fl. · 120s · 71 % 1RM | 4×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Mollets unilatéral debout à l'haltère | CALIBRAGE 3×10-15 · 6 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 4×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
+| Élévation latérale haltères | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
+| Rotation externe haltère couché sur le côté | CALIBRAGE 2×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 3×10-15 · 8 fl. · 75s | 2×10-15 · 4 fl. · 75s |
+| Gainage ventral lesté | 2×20-40 s · 4 fl. · 60s | 3×20-40 s · 4 fl. · 60s | 3×20-40 s · 4 fl. · 60s | 3×20-40 s · 5 fl. · 60s | 3×20-40 s · 6 fl. · 60s | 2×20-40 s · 2 fl. · 60s |
 
 ## 12. `senior_65_forme_generale_3x40`
 
@@ -1138,49 +1125,48 @@ Profil : general_fitness 60 % + mobility 40 % — lundi 40 min, mercredi 40 min,
 
 ### Passe 1
 
-Note 0.933 — recovery 1.00 · fatigue_balance 1.00 · joint_load 0.99 · goal_specificity 1.00 · discipline_dosage 0.98 · muscle_volume 0.79 · pattern_balance 0.88 · discipline_structure 0.91 · time_use 1.00 · variety 1.00 · exercise_fit 0.62 · stimulus_fatigue 0.82 · preferences 1.00 · novelty 1.00.
+Note 0.934 — recovery 1.00 · fatigue_balance 1.00 · joint_load 0.99 · goal_specificity 1.00 · discipline_dosage 0.96 · muscle_volume 0.81 · pattern_balance 0.88 · discipline_structure 0.92 · time_use 1.00 · variety 1.00 · exercise_fit 0.64 · stimulus_fatigue 0.80 · preferences 1.00 · novelty 1.00.
 
-- **lundi** (40 min, estimé 40 min) — `strength.upper`
-  - Mobilisation cheville genou au mur — warmup `mo-cheville-genou-mur`
-  - Rowing assis à l'élastique — main `mu-rowing-elastique-assis`
-  - Pompe contre le mur — secondary `sw-pompe-murale`
-  - Marche rapide — conditioning `ca-marche-rapide`
-  - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
-  - Étirement chaîne postérieure en flexion avant debout — cooldown `mo-chaine-posterieure-flexion-avant-debout`
-  - Étirement des gastrocnémiens au mur jambe tendue — cooldown `mo-etirement-gastrocnemiens-mur`
-- **mercredi** (40 min, estimé 40 min) — `mobility`
-  - Mobilisation cheville genou au mur — warmup `mo-cheville-genou-mur`
-  - Mobilité douce du cou en trois plans — warmup `mo-mobilite-cou-trois-plans`
-  - Routine mobilité épaules et poignets — warmup `mo-routine-mobilite-epaules-poignets`
-  - Pont fessier au sol — accessory `mu-pont-fessier-sol`
+- **lundi** (40 min, estimé 40 min) — `cardio.endurance`
+  - Rétraction du menton — warmup `mo-retraction-menton`
   - Face pull à l'élastique — accessory `mu-face-pull-elastique`
   - Gainage latéral sur le coude — core `mu-gainage-lateral-coude`
   - Marche rapide — conditioning `ca-marche-rapide`
-  - Étirement du biceps au mur — cooldown `mo-etirement-biceps-mur`
-- **vendredi** (40 min, estimé 40 min) — `mobility`
-  - Open book — warmup `mo-open-book`
-  - Routine mobilité épaules et poignets — warmup `mo-routine-mobilite-epaules-poignets`
-  - Air squat — main `mu-air-squat`
-  - Gainage latéral sur les genoux — core `mu-gainage-lateral-genoux`
+  - Étirement pectoral au cadre de porte — cooldown `mo-etirement-pectoral-cadre-porte`
+- **mercredi** (40 min, estimé 40 min) — `mobility`
+  - Mobilisation cheville genou au mur — warmup `mo-cheville-genou-mur`
+  - Squat profond tenu — warmup `mo-squat-profond-tenu`
+  - Wall slides dos au mur — warmup `mo-wall-slides`
+  - Rowing assis à l'élastique — main `mu-rowing-elastique-assis`
+  - Air squat — secondary `mu-air-squat`
   - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
+  - Étirement chaîne postérieure en flexion avant debout — cooldown `mo-chaine-posterieure-flexion-avant-debout`
+  - Étirement en chiot (ouverture d'épaules au sol) — cooldown `mo-etirement-chiot`
+  - Étirement en rotation externe assisté au bâton — cooldown `mo-rotation-externe-assistee-baton`
+  - Thread the needle — cooldown `mo-thread-the-needle`
+- **vendredi** (40 min, estimé 39 min) — `mobility`
+  - Pompe contre le mur — main `sw-pompe-murale`
+  - Pont fessier au sol — accessory `mu-pont-fessier-sol`
+  - Mountain climbers — core `mu-mountain-climbers`
   - Étirement adducteurs debout en fente latérale — cooldown `mo-adducteurs-fente-laterale`
+  - Étirement pectoral au cadre de porte — cooldown `mo-etirement-pectoral-cadre-porte`
   - Étirement des fléchisseurs de hanche en semi-agenouillé — cooldown `mo-flechisseurs-hanche-semi-agenouille`
+  - Étirement ischio-jambiers assis unilatéral — cooldown `mo-ischio-assis-unilateral`
   - Pigeon au sol — cooldown `mo-pigeon-sol`
-  - Respiration crocodile — cooldown `mo-respiration-crocodile`
 
-Dosage : cardio 19 % (visé 21 %), mobility 49 % (visé 49 %), generalFitness 32 % (visé 30 %) — erreur 1.8 points.
+Dosage : cardio 19 % (visé 21 %), mobility 46 % (visé 49 %), generalFitness 34 % (visé 30 %) — erreur 4.3 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 3 [1.5-5], delt_anterior 3 [1.5-5], delt_middle 1 [1.5-5], delt_posterior 3.5 [1.5-5], lats 3 [1.5-5], upper_back 5 [1.5-5], biceps 2.5 [1.5-5], triceps 3 [1.5-5], abs 2 [1.5-5], lower_back 2 [1.5-5], glutes 5 [1.5-5], quads 3 [1.5-5], hamstrings 1 [0-5], calves 1.5 [1.5-5]. Groupes majeurs dans leur bande : 93 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 3 [1.5-5], delt_anterior 3 [1.5-5], delt_middle 1 [1.5-5], delt_posterior 3.5 [1.5-5], lats 3 [1.5-5], upper_back 5 [1.5-5], biceps 2.5 [1.5-5], triceps 3 [1.5-5], abs 4 [1.5-5], lower_back 2 [1.5-5], glutes 5 [1.5-5], quads 5 [1.5-5], hamstrings 1 [0-5], calves 1.5 [1.5-5]. Groupes majeurs dans leur bande : 93 %.
 
 Équilibre : tirage 3 / poussée 3 séries ; chaîne postérieure 2 / genou 3 ; schémas de base 4/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Routine mobilité épaules et poignets (`d2.2`) :
-  - `exercise_removed` jour 1 : Routine mobilité épaules et poignets (plan.reoptimized)
-  - `exercise_replaced` jour 2 : Routine mobilité épaules et poignets → Wrist push-ups (plan.user_cannot_do, plan.variant_easier)
-- Remplacement par Tirage vertical à l'élastique (`d0.2`) :
-  - `exercise_replaced` jour 0 : Rowing assis à l'élastique → Tirage vertical à l'élastique (plan.user_replaced)
+- « Je ne sais pas faire » sur Squat profond tenu (`d1.2`) :
+  - `exercise_replaced` jour 1 : Squat profond tenu → Papillon assis (plan.user_cannot_do, plan.variant_easier)
+  - `order_changed` jour 1 (plan.reoptimized)
+- Remplacement par Band pull-apart (`d0.2`) :
+  - `exercise_replaced` jour 0 : Face pull à l'élastique → Band pull-apart (plan.user_replaced)
 
 ### Passe 2
 
@@ -1188,39 +1174,39 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Mobilisation cheville genou au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| Tirage vertical à l'élastique | 2×8-12 · 3 fl. · 90s | 3×8-12 · 3 fl. · 90s | 3×8-12 · 4 fl. · 90s | 3×8-12 · 5 fl. · 90s |
-| Pompe contre le mur | 2×4-6 · 3 fl. · 90s | 3×4-6 · 3 fl. · 90s | 3×4-6 · 4 fl. · 90s | 3×4-6 · 5 fl. · 90s |
-| Marche rapide | 9-10 min | 9-10 min | 9-10 min | 9-10 min |
-| Mobilité hanches 90/90 passive | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
-| Étirement chaîne postérieure en flexion avant debout | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
-| Étirement des gastrocnémiens au mur jambe tendue | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Rétraction du menton | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| Band pull-apart | 2×8-12 · 3 fl. · 75s | 2×8-12 · 3 fl. · 75s | 2×8-12 · 4 fl. · 75s | 2×8-12 · 5 fl. · 75s |
+| Gainage latéral sur le coude | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
+| Marche rapide | 13-15 min | 18-20 min | 18-20 min | 18-20 min |
+| Étirement pectoral au cadre de porte | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
 
 mercredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Mobilisation cheville genou au mur | 2×8-12 · 10s | 3×8-12 · 10s | 3×8-12 · 10s | 3×8-12 · 10s |
-| Mobilité douce du cou en trois plans | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| Pont fessier au sol | 2×8-12 · 3 fl. · 75s | 2×8-12 · 3 fl. · 75s | 2×8-12 · 4 fl. · 75s | 2×8-12 · 5 fl. · 75s |
-| Face pull à l'élastique | 2×8-12 · 3 fl. · 75s | 3×8-12 · 3 fl. · 75s | 3×8-12 · 4 fl. · 75s | 3×8-12 · 5 fl. · 75s |
-| Gainage latéral sur le coude | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
-| Marche rapide | 9-10 min | 9-10 min | 9-10 min | 9-10 min |
-| Étirement du biceps au mur | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Mobilisation cheville genou au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| Wall slides dos au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| Rowing assis à l'élastique | 2×8-12 · 3 fl. · 90s | 3×8-12 · 3 fl. · 90s | 3×8-12 · 4 fl. · 90s | 3×8-12 · 5 fl. · 90s |
+| Air squat | 2×4-6 · 3 fl. · 90s | 3×4-6 · 3 fl. · 90s | 3×4-6 · 4 fl. · 90s | 3×4-6 · 5 fl. · 90s |
+| Mobilité hanches 90/90 passive | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Étirement chaîne postérieure en flexion avant debout | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Étirement en chiot (ouverture d'épaules au sol) | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Papillon assis | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Étirement en rotation externe assisté au bâton | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Thread the needle | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
 
 vendredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Open book | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| Wrist push-ups | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| Air squat | 2×4-6 · 3 fl. · 90s | 3×4-6 · 3 fl. · 90s | 3×4-6 · 4 fl. · 90s | 3×4-6 · 5 fl. · 90s |
-| Gainage latéral sur les genoux | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
-| Mobilité hanches 90/90 passive | 2×30-45 s · 10s | 3×30-45 s · 10s | 3×30-45 s · 10s | 3×30-45 s · 10s |
+| Pompe contre le mur | 2×4-6 · 3 fl. · 90s | 3×4-6 · 3 fl. · 90s | 3×4-6 · 4 fl. · 90s | 3×4-6 · 5 fl. · 90s |
+| Pont fessier au sol | 2×8-12 · 3 fl. · 75s | 2×8-12 · 3 fl. · 75s | 2×8-12 · 4 fl. · 75s | 2×8-12 · 5 fl. · 75s |
+| Mountain climbers | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
 | Étirement adducteurs debout en fente latérale | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Étirement pectoral au cadre de porte | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
 | Étirement des fléchisseurs de hanche en semi-agenouillé | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
+| Étirement ischio-jambiers assis unilatéral | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
 | Pigeon au sol | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s | 2×30-45 s · 10s |
-| Respiration crocodile | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s |
 
 ## 13. `proprietaire_streetlifting_avance`
 
@@ -1359,45 +1345,44 @@ Profil : musculation 100 % — lundi 60 min, mercredi 60 min, vendredi 60 min �
 
 ### Passe 1
 
-Note 0.973 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 0.99 · pattern_balance 1.00 · discipline_structure 0.97 · time_use 1.00 · variety 1.00 · exercise_fit 0.72 · stimulus_fatigue 0.81 · preferences 1.00 · novelty 1.00.
+Note 0.973 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 0.98 · pattern_balance 0.99 · discipline_structure 0.98 · time_use 1.00 · variety 1.00 · exercise_fit 0.73 · stimulus_fatigue 0.80 · preferences 1.00 · novelty 1.00.
 
-- **lundi** (60 min, estimé 59 min) — `strength.upper`
-  - Développé couché barre — main `mu-developpe-couche-barre`
-  - Rowing inversé à la Smith machine — secondary `mu-rowing-inverse-smith-machine`
+- **lundi** (60 min, estimé 58 min) — `strength.pull`
+  - Pompe classique — main `sw-pompe`
+  - Presse à cuisses 45° — secondary `mu-presse-cuisses-45`
+  - Face pull à la poulie corde — secondary `mu-face-pull-corde`
+  - Tirage vertical poulie prise large pronation — secondary `mu-tirage-vertical-prise-large-pronation`
+  - Rowing menton à la poulie — accessory `mu-rowing-menton-poulie`
+  - Tirage bras tendus poulie haute à la barre — accessory `mu-tirage-bras-tendus-poulie-barre`
+  - Gainage ventral sur les coudes — core `mu-gainage-ventral-coudes`
+- **mercredi** (60 min, estimé 59 min) — `strength.upper`
+  - Développé couché Smith machine — main `mu-developpe-couche-smith`
   - Tirage vertical poulie prise large pronation — secondary `mu-tirage-vertical-prise-large-pronation`
   - Row australien — secondary `sw-row-australien`
-  - Lu raise — accessory `mu-lu-raise`
-  - Leg curl couché — accessory `mu-leg-curl-couche`
-- **mercredi** (60 min, estimé 60 min) — `strength.full_body`
-  - Développé couché Smith machine — main `mu-developpe-couche-smith`
-  - Back squat barre haute — secondary `mu-back-squat-barre-haute`
-  - Row australien — secondary `sw-row-australien`
-  - Pont fessier pieds surélevés — accessory `mu-pont-fessier-pieds-sureleves`
-  - Élévation latérale haltères — accessory `mu-elevation-laterale-halteres`
+  - Reverse hyper à la machine — accessory `mu-reverse-hyper-machine`
+  - Mollets unilatéral debout à l'haltère — accessory `mu-mollets-unilateral-haltere`
   - Gainage latéral sur le coude — core `mu-gainage-lateral-coude`
-  - Sit-up — core `mu-sit-up`
-- **vendredi** (60 min, estimé 60 min) — `strength.full_body`
-  - Pompe classique — main `sw-pompe`
+- **vendredi** (60 min, estimé 60 min) — `strength.push`
+  - Développé couché barre — main `mu-developpe-couche-barre`
   - Soulevé de terre conventionnel — secondary `mu-souleve-de-terre-conventionnel`
-  - Fente avant aux haltères — secondary `mu-fente-avant-halteres`
-  - Rowing poulie basse assis au triangle — secondary `mu-rowing-poulie-assis-triangle`
-  - Développé épaules à la Smith machine assis — secondary `mu-developpe-epaules-smith-assis`
-  - Gainage latéral bras tendu — core `mu-gainage-lateral-bras-tendu`
+  - Développé haltères assis — secondary `mu-developpe-halteres-assis`
+  - Mollets debout à la machine — accessory `mu-mollets-debout-machine`
+  - Turkish get-up — core `mu-turkish-get-up`
 
 Dosage : musculation 100 % (visé 100 %) — erreur 0.0 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 9.5 [8-16], delt_anterior 14 [8-16], delt_middle 9 [8-16], delt_posterior 10.5 [8-16], lats 15 [8-16], upper_back 15 [8-16], biceps 7.5 [8-16], triceps 9.5 [8-16], abs 10 [8-16], lower_back 11.5 [8-16], glutes 12 [8-16], quads 9 [8-16], hamstrings 9 [8-16], calves 6 [8-16]. Groupes majeurs dans leur bande : 89 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 11 [8-16], delt_anterior 12.5 [8-16], delt_middle 7.5 [8-16], delt_posterior 10.5 [8-16], lats 12 [8-16], upper_back 12 [8-16], biceps 7.5 [8-16], triceps 11 [8-16], abs 9 [8-16], lower_back 7.5 [8-16], glutes 12 [8-16], quads 9 [8-16], hamstrings 7.5 [8-16], calves 8 [8-16]. Groupes majeurs dans leur bande : 73 %.
 
-Équilibre : tirage 15 / poussée 13 séries ; chaîne postérieure 9 / genou 6 ; schémas de base 6/6.
+Équilibre : tirage 15 / poussée 13 séries ; chaîne postérieure 6 / genou 3 ; schémas de base 6/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Row australien (`d1.3`) :
-  - `exercise_removed` jour 0 : Row australien (plan.reoptimized)
-  - `exercise_replaced` jour 1 : Row australien → Rowing buste penché à la Smith machine (plan.user_cannot_do, plan.variant_easier)
-- Remplacement par Tirage vertical à l'élastique (`d0.3`) :
-  - `exercise_replaced` jour 0 : Tirage vertical poulie prise large pronation → Tirage vertical à l'élastique (plan.user_replaced)
-  - `order_changed` jour 0 (plan.reoptimized)
+- « Je ne sais pas faire » sur Développé couché Smith machine (`d1.1`) :
+  - `exercise_replaced` jour 1 : Développé couché Smith machine → Développé couché avec pause (plan.user_cannot_do, plan.variant_easier)
+  - `exercise_added` jour 2 → Larsen press (plan.reoptimized)
+  - `exercise_removed` jour 2 : Développé couché barre (plan.reoptimized)
+- Remplacement par Rowing poulie basse assis prise large pronation (`d0.3`) :
+  - `exercise_replaced` jour 0 : Face pull à la poulie corde → Rowing poulie basse assis prise large pronation (plan.user_replaced)
 
 ### Passe 2
 
@@ -1405,34 +1390,34 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (test) |
 | --- | --- | --- | --- | --- | --- |
-| Développé couché barre | CALIBRAGE 3×3-6 · 4 fl. · 180s · 76 % 1RM | 4×3-6 · 4 fl. · 180s · 76 % 1RM | 4×3-6 · 5 fl. · 180s · 77 % 1RM | 4×2-5 · 6 fl. · 180s · 80 % 1RM | TEST 3×1-3 · 9 fl. · 240s [3 5fl. / 1 7fl. / 1 9fl.] |
-| Tirage vertical à l'élastique | 3×10-15 · 5 fl. · 90s | 4×10-15 · 5 fl. · 90s | 4×10-15 · 6 fl. · 90s | 4×10-15 · 7 fl. · 90s | 2×10-15 · 3 fl. · 90s |
-| Rowing inversé à la Smith machine | 3×10-15 · 5 fl. · 90s | 4×10-15 · 5 fl. · 90s | 4×10-15 · 6 fl. · 90s | 4×10-15 · 7 fl. · 90s | 2×10-15 · 3 fl. · 90s |
-| Lu raise | CALIBRAGE 3×10-15 · 5 fl. · 75s | 4×10-15 · 5 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Leg curl couché | CALIBRAGE 3×10-15 · 5 fl. · 75s | 4×10-15 · 5 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Pompe classique | 2×5-7 · 5 fl. · 90s | 3×5-7 · 5 fl. · 90s | 3×5-7 · 6 fl. · 90s | 3×5-7 · 7 fl. · 90s | 2×5-7 · 3 fl. · 90s |
+| Presse à cuisses 45° | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Rowing poulie basse assis prise large pronation | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Tirage vertical poulie prise large pronation | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Rowing menton à la poulie | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Tirage bras tendus poulie haute à la barre | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Gainage ventral sur les coudes | 2×20-40 s · 4 fl. · 60s | 3×20-40 s · 4 fl. · 60s | 3×20-40 s · 5 fl. · 60s | 3×20-40 s · 6 fl. · 60s | 2×20-40 s · 2 fl. · 60s |
 
 mercredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (test) |
 | --- | --- | --- | --- | --- | --- |
-| Développé couché Smith machine | CALIBRAGE 2×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 5 fl. · 150s · 73 % 1RM | 3×5-8 · 6 fl. · 150s · 74 % 1RM | 2×5-8 · 2 fl. · 150s · 71 % 1RM |
-| Back squat barre haute | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Rowing buste penché à la Smith machine | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Pont fessier pieds surélevés | 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Élévation latérale haltères | CALIBRAGE 2×10-15 · 5 fl. · 75s | 2×10-15 · 5 fl. · 75s | 2×10-15 · 6 fl. · 75s | 2×10-15 · 7 fl. · 75s | 1×10-15 · 3 fl. · 75s |
+| Développé couché avec pause | CALIBRAGE 2×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 5 fl. · 150s · 73 % 1RM | 3×5-8 · 6 fl. · 150s · 74 % 1RM | TEST 1×1-16 · 10 fl. · 180s |
+| Tirage vertical poulie prise large pronation | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Row australien | 2×10-15 · 5 fl. · 90s | 3×10-15 · 5 fl. · 90s | 3×10-15 · 6 fl. · 90s | 3×10-15 · 7 fl. · 90s | 2×10-15 · 3 fl. · 90s |
+| Reverse hyper à la machine | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Mollets unilatéral debout à l'haltère | CALIBRAGE 3×10-15 · 5 fl. · 75s | 4×10-15 · 5 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
 | Gainage latéral sur le coude | 2×20-40 s · 4 fl. · 60s | 3×20-40 s · 4 fl. · 60s | 3×20-40 s · 5 fl. · 60s | 3×20-40 s · 6 fl. · 60s | 2×20-40 s · 2 fl. · 60s |
-| Sit-up | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
 
 vendredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (test) |
 | --- | --- | --- | --- | --- | --- |
-| Pompe classique | 2×5-7 · 5 fl. · 90s | 3×5-7 · 5 fl. · 90s | 3×5-7 · 6 fl. · 90s | 3×5-7 · 7 fl. · 90s | 2×5-7 · 3 fl. · 90s |
+| Larsen press | CALIBRAGE 2×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 5 fl. · 150s · 73 % 1RM | 3×5-8 · 6 fl. · 150s · 74 % 1RM | 2×5-8 · 2 fl. · 150s · 71 % 1RM |
 | Soulevé de terre conventionnel | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Fente avant aux haltères | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Rowing poulie basse assis au triangle | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Développé épaules à la Smith machine assis | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Gainage latéral bras tendu | 3×20-40 s · 4 fl. · 60s | 4×20-40 s · 4 fl. · 60s | 4×20-40 s · 5 fl. · 60s | 4×20-40 s · 6 fl. · 60s | 2×20-40 s · 2 fl. · 60s |
+| Développé haltères assis | CALIBRAGE 3×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 5 fl. · 120s · 70 % 1RM | 4×6-10 · 6 fl. · 120s · 71 % 1RM | 4×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Mollets debout à la machine | CALIBRAGE 3×10-15 · 5 fl. · 75s | 4×10-15 · 5 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Turkish get-up | CALIBRAGE 2×2-4 · 3 fl. · 90s · 79 % 1RM | 3×2-4 · 3 fl. · 90s · 79 % 1RM | 3×2-4 · 4 fl. · 90s · 80 % 1RM | 3×2-4 · 5 fl. · 90s · 81 % 1RM | 2×2-4 · 1 fl. · 90s · 77 % 1RM |
 
 ## 15. `femme_30_street_workout_parc_3x45`
 
@@ -1720,38 +1705,36 @@ Profil : musculation 70 % + cardio 30 % — mardi 45 min, jeudi 45 min, samedi 4
 
 ### Passe 1
 
-Note 0.961 — recovery 1.00 · fatigue_balance 1.00 · joint_load 0.98 · goal_specificity 1.00 · discipline_dosage 0.95 · muscle_volume 0.93 · pattern_balance 0.99 · discipline_structure 0.97 · time_use 1.00 · variety 1.00 · exercise_fit 0.73 · stimulus_fatigue 0.73 · preferences 1.00 · novelty 1.00.
+Note 0.960 — recovery 1.00 · fatigue_balance 1.00 · joint_load 0.98 · goal_specificity 1.00 · discipline_dosage 0.96 · muscle_volume 0.93 · pattern_balance 1.00 · discipline_structure 1.00 · time_use 1.00 · variety 1.00 · exercise_fit 0.66 · stimulus_fatigue 0.75 · preferences 1.00 · novelty 1.00.
 
-- **mardi** (45 min, estimé 45 min) — `strength.upper`
-  - Soulevé de terre jambes tendues — main `mu-souleve-de-terre-jambes-tendues`
-  - Dips aux barres parallèles — secondary `sw-dips-barres-paralleles`
-  - Rowing poulie basse assis au triangle — secondary `mu-rowing-poulie-assis-triangle`
-  - Tirage vertical poulie prise large pronation — secondary `mu-tirage-vertical-prise-large-pronation`
-  - Mountain climbers — core `mu-mountain-climbers`
-- **jeudi** (45 min, estimé 44 min) — `strength.full_body`
-  - Soulevé de terre jambes tendues — main `mu-souleve-de-terre-jambes-tendues`
-  - Presse à cuisses 45° — secondary `mu-presse-cuisses-45`
-  - Rowing poulie basse assis au triangle — secondary `mu-rowing-poulie-assis-triangle`
-  - Élévation latérale haltères — accessory `mu-elevation-laterale-halteres`
-  - Planche RKC — core `mu-planche-rkc`
-- **samedi** (45 min, estimé 44 min) — `cardio.endurance`
+- **mardi** (45 min, estimé 44 min) — `cardio.endurance`
+  - Tirage vertical poulie prise large pronation — main `mu-tirage-vertical-prise-large-pronation`
+  - Marche de récupération — conditioning `ca-marche-recuperation`
+- **jeudi** (45 min, estimé 45 min) — `strength.full_body`
   - Développé couché barre — main `mu-developpe-couche-barre`
-  - Marche sur tapis incliné — conditioning `ca-marche-tapis-incline`
+  - Rowing inversé à la Smith machine pieds surélevés — secondary `mu-rowing-inverse-smith-pieds-sureleves`
+  - Presse à cuisses 45° — secondary `mu-presse-cuisses-45`
+  - Élévation latérale buste appuyé sur banc incliné — accessory `mu-elevation-laterale-buste-appuye-banc-incline`
+  - Flexion latérale à l'haltère — core `mu-flexion-laterale-haltere`
+- **samedi** (45 min, estimé 43 min) — `strength.upper`
+  - Soulevé de terre jambes tendues — main `mu-souleve-de-terre-jambes-tendues`
+  - Développé couché barre — secondary `mu-developpe-couche-barre`
+  - Développé haltères assis — secondary `mu-developpe-halteres-assis`
+  - Rowing inversé à la Smith machine — secondary `mu-rowing-inverse-smith-machine`
+  - Turkish get-up — core `mu-turkish-get-up`
 
-Dosage : musculation 75 % (visé 70 %), cardio 25 % (visé 30 %) — erreur 4.7 points.
+Dosage : musculation 74 % (visé 70 %), cardio 26 % (visé 30 %) — erreur 4.4 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 6 [5-10], delt_anterior 7.5 [5-10], delt_middle 3 [5-10], delt_posterior 4.5 [5-10], lats 9 [5-10], upper_back 9 [5-10], biceps 4.5 [5-10], triceps 6 [5-10], abs 6 [5-10], lower_back 6 [5-10], glutes 9 [5-10], quads 6 [5-10], hamstrings 7.5 [5-10], calves 3 [5-10]. Groupes majeurs dans leur bande : 76 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 6 [5-10], delt_anterior 7 [5-10], delt_middle 5 [5-10], delt_posterior 6 [5-10], lats 9 [5-10], upper_back 10 [5-10], biceps 4.5 [5-10], triceps 6 [5-10], abs 5 [5-10], lower_back 6 [5-10], glutes 8 [5-10], quads 5 [5-10], hamstrings 4.5 [5-10], calves 1.5 [5-10]. Groupes majeurs dans leur bande : 80 %.
 
-Équilibre : tirage 9 / poussée 6 séries ; chaîne postérieure 6 / genou 3 ; schémas de base 6/6.
+Équilibre : tirage 9 / poussée 7 séries ; chaîne postérieure 3 / genou 3 ; schémas de base 6/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Soulevé de terre jambes tendues (`d1.1`) :
-  - `exercise_removed` jour 0 : Soulevé de terre jambes tendues (plan.reoptimized)
-  - `exercise_replaced` jour 1 : Soulevé de terre jambes tendues → Soulevé de terre roumain aux haltères (plan.user_cannot_do, plan.variant_easier)
-- Remplacement par Développé couché pieds sur le banc (`d2.1`) :
-  - `exercise_added` jour 0 → Développé couché barre (plan.reoptimized)
-  - `exercise_replaced` jour 2 : Développé couché barre → Développé couché pieds sur le banc (plan.user_replaced)
+- « Je ne sais pas faire » sur Élévation latérale buste appuyé sur banc incliné (`d1.4`) :
+  - `exercise_replaced` jour 1 : Élévation latérale buste appuyé sur banc incliné → Élévation latérale à la machine (plan.user_cannot_do, plan.variant_easier)
+- Remplacement par Tirage vertical à l'élastique (`d0.1`) :
+  - `exercise_replaced` jour 0 : Tirage vertical poulie prise large pronation → Tirage vertical à l'élastique (plan.user_replaced)
 
 ### Passe 2
 
@@ -1759,28 +1742,28 @@ mardi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Développé couché barre | 2×6-10 · 5 fl. · 120s · 37.5 kg | 3×6-10 · 5 fl. · 120s · 37.5 kg | 3×6-10 · 6 fl. · 120s · 37.5 kg | 3×6-10 · 7 fl. · 120s · 37.5 kg | 2×6-10 · 3 fl. · 120s · 35 kg |
-| Dips aux barres parallèles | 2×3-8 · 5 fl. · 90s | 3×3-8 · 5 fl. · 90s | 3×3-8 · 6 fl. · 90s | 3×3-8 · 7 fl. · 90s | 2×3-8 · 3 fl. · 90s |
-| Rowing poulie basse assis au triangle | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Tirage vertical poulie prise large pronation | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Mountain climbers | 2×20-40 s · 4 fl. · 60s | 3×20-40 s · 4 fl. · 60s | 3×20-40 s · 5 fl. · 60s | 3×20-40 s · 6 fl. · 60s | 2×20-40 s · 2 fl. · 60s |
+| Tirage vertical à l'élastique | 2×10-15 · 5 fl. · 90s | 3×10-15 · 5 fl. · 90s | 3×10-15 · 6 fl. · 90s | 3×10-15 · 7 fl. · 90s | 2×10-15 · 3 fl. · 90s |
+| Marche de récupération | 22-25 min | 22-25 min | 27-30 min | 27-30 min | 18-20 min |
 
 jeudi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Soulevé de terre roumain aux haltères | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Développé couché barre | 2×6-10 · 5 fl. · 120s · 37.5 kg | 3×6-10 · 5 fl. · 120s · 37.5 kg | 3×6-10 · 6 fl. · 120s · 37.5 kg | 3×6-10 · 7 fl. · 120s · 37.5 kg | 2×6-10 · 3 fl. · 120s · 35 kg |
+| Rowing inversé à la Smith machine pieds surélevés | 2×3-8 · 5 fl. · 90s | 3×3-8 · 5 fl. · 90s | 3×3-8 · 6 fl. · 90s | 3×3-8 · 7 fl. · 90s | 2×3-8 · 3 fl. · 90s |
 | Presse à cuisses 45° | 2×6-10 · 5 fl. · 120s · 75 kg | 3×6-10 · 5 fl. · 120s · 75 kg | 3×6-10 · 6 fl. · 120s · 75 kg | 3×6-10 · 7 fl. · 120s · 75 kg | 2×6-10 · 3 fl. · 120s · 70 kg |
-| Rowing poulie basse assis au triangle | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Élévation latérale haltères | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Planche RKC | 2×10-20 s · 4 fl. · 60s | 3×10-20 s · 4 fl. · 60s | 3×10-20 s · 5 fl. · 60s | 3×10-20 s · 6 fl. · 60s | 2×10-20 s · 2 fl. · 60s |
+| Élévation latérale à la machine | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Flexion latérale à l'haltère | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
 
 samedi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Développé couché pieds sur le banc | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Marche sur tapis incliné | 22-25 min | 22-25 min | 27-30 min | 27-30 min | 18-20 min |
+| Soulevé de terre jambes tendues | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Développé couché barre | 2×6-10 · 5 fl. · 120s · 37.5 kg | 2×6-10 · 5 fl. · 120s · 37.5 kg | 2×6-10 · 6 fl. · 120s · 37.5 kg | 2×6-10 · 7 fl. · 120s · 37.5 kg | 1×6-10 · 3 fl. · 120s · 35 kg |
+| Développé haltères assis | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 2×6-10 · 5 fl. · 120s · 70 % 1RM | 2×6-10 · 6 fl. · 120s · 71 % 1RM | 2×6-10 · 7 fl. · 120s · 71 % 1RM | 1×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Rowing inversé à la Smith machine | 2×10-15 · 5 fl. · 90s | 3×10-15 · 5 fl. · 90s | 3×10-15 · 6 fl. · 90s | 3×10-15 · 7 fl. · 90s | 2×10-15 · 3 fl. · 90s |
+| Turkish get-up | CALIBRAGE 2×2-4 · 3 fl. · 90s · 79 % 1RM | 2×2-4 · 3 fl. · 90s · 79 % 1RM | 2×2-4 · 4 fl. · 90s · 80 % 1RM | 2×2-4 · 5 fl. · 90s · 81 % 1RM | 1×2-4 · 1 fl. · 90s · 77 % 1RM |
 
 ## 19. `lombalgie_musculation_3x50`
 
@@ -1790,47 +1773,50 @@ Profil : musculation 80 % + mobility 20 % — lundi 50 min, mercredi 50 min, ven
 
 ### Passe 1
 
-Note 0.966 — recovery 1.00 · fatigue_balance 1.00 · joint_load 0.96 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 0.96 · pattern_balance 1.00 · discipline_structure 0.99 · time_use 1.00 · variety 1.00 · exercise_fit 0.69 · stimulus_fatigue 0.75 · preferences 1.00 · novelty 1.00.
+Note 0.961 — recovery 1.00 · fatigue_balance 1.00 · joint_load 0.96 · goal_specificity 1.00 · discipline_dosage 0.99 · muscle_volume 0.95 · pattern_balance 1.00 · discipline_structure 0.97 · time_use 1.00 · variety 1.00 · exercise_fit 0.65 · stimulus_fatigue 0.80 · preferences 1.00 · novelty 1.00.
 
-- **lundi** (50 min, estimé 49 min) — `strength.full_body`
-  - Routine mobilité épaules et poignets — warmup `mo-routine-mobilite-epaules-poignets`
-  - Dips aux barres parallèles — main `sw-dips-barres-paralleles`
-  - Tirage vertical poulie prise large pronation — secondary `mu-tirage-vertical-prise-large-pronation`
-  - Copenhagen plank — accessory `mu-copenhagen-plank`
-  - W raise sur banc incliné — accessory `mu-w-raise-banc-incline`
-  - Leg curl couché — accessory `mu-leg-curl-couche`
-  - Hollow body hold — core `mu-hollow-body-hold`
-  - Routine d'auto-massage au rouleau (membres inférieurs et dos) — cooldown `mo-foam-roller-routine`
+- **lundi** (50 min, estimé 50 min) — `strength.upper`
+  - Rocking des adducteurs en quadrupédie — warmup `mo-adducteurs-rocking`
+  - CARs de hanche — warmup `mo-cars-hanche`
+  - Wall slides dos au mur — warmup `mo-wall-slides`
+  - Développé couché haltères — main `mu-developpe-couche-halteres`
+  - Tirage vertical poulie prise serrée supination — secondary `mu-tirage-vertical-prise-serree-supination`
+  - Reverse hyper à la machine — accessory `mu-reverse-hyper-machine`
+  - Élévation latérale buste appuyé sur banc incliné — accessory `mu-elevation-laterale-buste-appuye-banc-incline`
+  - V-up — core `mu-v-up`
+  - Étirement adducteurs debout en fente latérale — cooldown `mo-adducteurs-fente-laterale`
+  - Pigeon au sol — cooldown `mo-pigeon-sol`
 - **mercredi** (50 min, estimé 49 min) — `strength.full_body`
-  - Fente arrière à la barre — main `mu-fente-arriere-barre`
-  - Développé couché haltères — secondary `mu-developpe-couche-halteres`
-  - Nordic hamstring curl assisté à l'élastique — accessory `mu-nordic-hamstring-curl-assiste`
-  - Tirage bras tendus poulie haute à la barre — accessory `mu-tirage-bras-tendus-poulie-barre`
-  - Y raise sur banc incliné — accessory `mu-y-raise-banc-incline`
-  - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
+  - CARs d'épaule — warmup `mo-cars-epaule`
+  - Rétraction du menton — warmup `mo-retraction-menton`
+  - Traction pronation — main `sw-traction-pronation`
+  - Air squat — secondary `mu-air-squat`
+  - Drag curl à la barre — accessory `mu-drag-curl-barre`
+  - Lu raise — accessory `mu-lu-raise`
+  - Leg curl couché — accessory `mu-leg-curl-couche`
   - Routine d'auto-massage au rouleau (membres inférieurs et dos) — cooldown `mo-foam-roller-routine`
-- **vendredi** (50 min, estimé 50 min) — `strength.full_body`
-  - Routine mobilité épaules et poignets — warmup `mo-routine-mobilite-epaules-poignets`
+  - Pigeon au sol — cooldown `mo-pigeon-sol`
+- **vendredi** (50 min, estimé 50 min) — `strength.upper`
   - Back squat barre haute — main `mu-back-squat-barre-haute`
+  - Dips aux barres parallèles — secondary `sw-dips-barres-paralleles`
+  - Pompe en T — secondary `sw-pompe-t`
   - Tirage vertical poulie prise large pronation — secondary `mu-tirage-vertical-prise-large-pronation`
-  - Rowing menton haltères — accessory `mu-rowing-menton-halteres`
+  - Tirage bras tendus à l'élastique — accessory `mu-tirage-bras-tendus-elastique`
   - Planche RKC — core `mu-planche-rkc`
-  - Étirement de la capsule postérieure bras croisé — cooldown `mo-etirement-capsule-posterieure-bras-croise`
-  - Routine d'auto-massage au rouleau (membres inférieurs et dos) — cooldown `mo-foam-roller-routine`
-  - Respiration crocodile — cooldown `mo-respiration-crocodile`
+  - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
 
-Dosage : musculation 80 % (visé 80 %), mobility 20 % (visé 20 %) — erreur 0.0 points.
+Dosage : musculation 81 % (visé 80 %), mobility 19 % (visé 20 %) — erreur 1.2 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 7.5 [6.5-13], delt_anterior 9 [6.5-13], delt_middle 6 [6.5-13], delt_posterior 7 [6.5-13], lats 9 [6.5-13], upper_back 11 [6.5-13], biceps 4.5 [6.5-13], triceps 7.5 [6.5-13], abs 7.5 [6.5-13], lower_back 4.5 [6.5-13], glutes 6 [6.5-13], quads 6 [6.5-13], hamstrings 7.5 [6.5-13], calves 4.5 [6.5-13]. Groupes majeurs dans leur bande : 60 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 12 [6.5-13], delt_anterior 10.5 [6.5-13], delt_middle 6.5 [6.5-13], delt_posterior 7 [6.5-13], lats 12 [6.5-13], upper_back 10 [6.5-13], biceps 9 [6.5-13], triceps 10.5 [6.5-13], abs 6.5 [6.5-13], lower_back 2.5 [6.5-13], glutes 8 [6.5-13], quads 6 [6.5-13], hamstrings 5 [6.5-13], calves 4.5 [6.5-13]. Groupes majeurs dans leur bande : 73 %.
 
-Équilibre : tirage 9 / poussée 6 séries ; chaîne postérieure 6 / genou 6 ; schémas de base 6/6.
+Équilibre : tirage 12 / poussée 9 séries ; chaîne postérieure 5 / genou 6 ; schémas de base 6/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Copenhagen plank (`d0.4`) :
-  - `exercise_replaced` jour 0 : Copenhagen plank → Copenhagen plank levier court sur le genou (plan.user_cannot_do, plan.variant_easier)
-- Remplacement par T raise sur banc incliné (`d0.5`) :
-  - `exercise_replaced` jour 0 : W raise sur banc incliné → T raise sur banc incliné (plan.user_replaced)
+- « Je ne sais pas faire » sur Leg curl couché (`d1.7`) :
+  - `exercise_replaced` jour 1 : Leg curl couché → Nordic hamstring curl assisté à l'élastique (plan.user_cannot_do, plan.variant_easier)
+- Remplacement par Pigeon sur banc ou box (`d2.7`) :
+  - `exercise_replaced` jour 2 : Mobilité hanches 90/90 passive → Pigeon sur banc ou box (plan.user_replaced)
 
 ### Passe 2
 
@@ -1838,39 +1824,42 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Routine mobilité épaules et poignets | 4-5 min | 4-5 min | 4-5 min | 4-5 min | 4-5 min |
-| Dips aux barres parallèles | 2×3-8 · 5 fl. · 90s | 3×3-8 · 5 fl. · 90s | 3×3-8 · 6 fl. · 90s | 3×3-8 · 7 fl. · 90s | 2×3-8 · 3 fl. · 90s |
-| Tirage vertical poulie prise large pronation | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Copenhagen plank levier court sur le genou | 2×20-40 s · 4 fl. · 60s | 2×20-40 s · 4 fl. · 60s | 2×20-40 s · 5 fl. · 60s | 2×20-40 s · 6 fl. · 60s | 1×20-40 s · 2 fl. · 60s |
-| T raise sur banc incliné | CALIBRAGE 2×10-15 · 5 fl. · 75s | 2×10-15 · 5 fl. · 75s | 2×10-15 · 6 fl. · 75s | 2×10-15 · 7 fl. · 75s | 1×10-15 · 3 fl. · 75s |
-| Leg curl couché | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Hollow body hold | 2×10-20 s · 4 fl. · 60s | 3×10-20 s · 4 fl. · 60s | 3×10-20 s · 5 fl. · 60s | 3×10-20 s · 6 fl. · 60s | 2×10-20 s · 2 fl. · 60s |
-| Routine d'auto-massage au rouleau (membres inférieurs et dos) | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s |
+| Rocking des adducteurs en quadrupédie | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
+| CARs de hanche | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
+| Wall slides dos au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
+| Développé couché haltères | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Tirage vertical poulie prise serrée supination | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Reverse hyper à la machine | CALIBRAGE 2×10-15 · 5 fl. · 75s | 2×10-15 · 5 fl. · 75s | 2×10-15 · 6 fl. · 75s | 2×10-15 · 7 fl. · 75s | 1×10-15 · 3 fl. · 75s |
+| Élévation latérale buste appuyé sur banc incliné | CALIBRAGE 2×10-15 · 5 fl. · 75s | 2×10-15 · 5 fl. · 75s | 2×10-15 · 6 fl. · 75s | 2×10-15 · 7 fl. · 75s | 1×10-15 · 3 fl. · 75s |
+| V-up | 2×8-12 · 4 fl. · 60s | 2×8-12 · 4 fl. · 60s | 2×8-12 · 5 fl. · 60s | 2×8-12 · 6 fl. · 60s | 1×8-12 · 2 fl. · 60s |
+| Étirement adducteurs debout en fente latérale | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Pigeon au sol | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 
 mercredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Fente arrière à la barre | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Développé couché haltères | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| CARs d'épaule | 2×8-12 · 10s | 3×8-12 · 10s | 3×8-12 · 10s | 3×8-12 · 10s | 2×8-12 · 10s |
+| Rétraction du menton | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
+| Traction pronation | 2×3-8 · 5 fl. · 90s | 3×3-8 · 5 fl. · 90s | 3×3-8 · 6 fl. · 90s | 3×3-8 · 7 fl. · 90s | 2×3-8 · 3 fl. · 90s |
+| Air squat | 2×10-15 · 5 fl. · 90s | 3×10-15 · 5 fl. · 90s | 3×10-15 · 6 fl. · 90s | 3×10-15 · 7 fl. · 90s | 2×10-15 · 3 fl. · 90s |
+| Drag curl à la barre | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Lu raise | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
 | Nordic hamstring curl assisté à l'élastique | 2×8-12 · 5 fl. · 75s | 3×8-12 · 5 fl. · 75s | 3×8-12 · 6 fl. · 75s | 3×8-12 · 7 fl. · 75s | 2×8-12 · 3 fl. · 75s |
-| Tirage bras tendus poulie haute à la barre | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Y raise sur banc incliné | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 | Routine d'auto-massage au rouleau (membres inférieurs et dos) | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s |
+| Pigeon au sol | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 
 vendredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Routine mobilité épaules et poignets | 4-5 min | 4-5 min | 4-5 min | 4-5 min | 4-5 min |
 | Back squat barre haute | 2×6-10 · 5 fl. · 120s · 32.5 kg | 3×6-10 · 5 fl. · 120s · 32.5 kg | 3×6-10 · 6 fl. · 120s · 32.5 kg | 3×6-10 · 7 fl. · 120s · 35 kg | 2×6-10 · 3 fl. · 120s · 32.5 kg |
+| Dips aux barres parallèles | 2×3-8 · 5 fl. · 90s | 3×3-8 · 5 fl. · 90s | 3×3-8 · 6 fl. · 90s | 3×3-8 · 7 fl. · 90s | 2×3-8 · 3 fl. · 90s |
+| Pompe en T | 2×3-8 · 5 fl. · 90s | 3×3-8 · 5 fl. · 90s | 3×3-8 · 6 fl. · 90s | 3×3-8 · 7 fl. · 90s | 2×3-8 · 3 fl. · 90s |
 | Tirage vertical poulie prise large pronation | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Rowing menton haltères | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Tirage bras tendus à l'élastique | 2×10-15 · 5 fl. · 75s | 2×10-15 · 5 fl. · 75s | 2×10-15 · 6 fl. · 75s | 2×10-15 · 7 fl. · 75s | 1×10-15 · 3 fl. · 75s |
 | Planche RKC | 2×10-20 s · 4 fl. · 60s | 3×10-20 s · 4 fl. · 60s | 3×10-20 s · 5 fl. · 60s | 3×10-20 s · 6 fl. · 60s | 2×10-20 s · 2 fl. · 60s |
-| Étirement de la capsule postérieure bras croisé | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
-| Routine d'auto-massage au rouleau (membres inférieurs et dos) | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s |
-| Respiration crocodile | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s |
+| Pigeon sur banc ou box | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 
 ## 20. `poignet_calisthenie_3x60`
 
@@ -2062,43 +2051,43 @@ Profil : crossfit 70 % + cardio 30 % — lundi 40 min, mardi 40 min, jeudi 40 mi
 
 ### Passe 1
 
-Note 0.945 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.99 · muscle_volume 0.88 · pattern_balance 1.00 · discipline_structure 0.83 · time_use 1.00 · variety 1.00 · exercise_fit 0.67 · stimulus_fatigue 0.84 · preferences 1.00 · novelty 1.00.
+Note 0.948 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.99 · muscle_volume 0.91 · pattern_balance 1.00 · discipline_structure 0.87 · time_use 0.99 · variety 1.00 · exercise_fit 0.63 · stimulus_fatigue 0.76 · preferences 1.00 · novelty 1.00.
 
 - **lundi** (40 min, estimé 40 min) — `cardio.endurance`
-  - Marche rapide — conditioning `ca-marche-rapide`
-- **mardi** (40 min, estimé 37 min) — `strength.full_body`
-  - HSPU au mur amplitude réduite sur coussin — main `cd-hspu-mur-amplitude-reduite`
+  - Marche de récupération — conditioning `ca-marche-recuperation`
+- **mardi** (40 min, estimé 36 min) — `strength.full_body`
+  - Traction prise mixte — main `sw-traction-prise-mixte`
   - Soulevé de terre kettlebell — secondary `mu-souleve-de-terre-kettlebell`
-  - Windshield wiper suspendu genoux fléchis — core `sw-windshield-wiper-tuck`
-  - Box jump-over — conditioning `cf-box-jump-over`
-  - Traction kipping — conditioning `cf-traction-kipping`
-- **jeudi** (40 min, estimé 38 min) — `strength.pull`
-  - Tenue menton au-dessus de la barre supination — skill `cs-tenue-menton-barre-supination`
-  - Cossack squat — main `mu-cossack-squat`
-  - Traction pronation — secondary `sw-traction-pronation`
-  - Pompe prise large — secondary `sw-pompe-large`
   - Burpee — conditioning `cf-burpee`
-- **samedi** (40 min, estimé 36 min) — `strength.upper`
-  - Transition de muscle-up sur box — skill `cd-transition-muscle-up-box`
+  - Squat jacks — conditioning `cf-squat-jacks`
+  - Pogo jumps — conditioning `cf-pogo-jumps`
+- **jeudi** (40 min, estimé 39 min) — `strength.upper`
+  - Back lever tuck avancé — skill `cs-back-lever-tuck-avance`
   - Saut en longueur sans élan — secondary `mu-broad-jump`
+  - Développé kettlebell bottoms-up — main `mu-bottoms-up-press-kettlebell`
+  - Traction pronation — secondary `sw-traction-pronation`
+  - Knees-to-elbows — core `sw-knees-to-elbows`
+- **samedi** (40 min, estimé 37 min) — `strength.full_body`
+  - Cossack squat — main `mu-cossack-squat`
+  - Pompe en T — secondary `sw-pompe-t`
   - V-up — core `mu-v-up`
-  - Burpee Navy SEAL — conditioning `cf-burpee-navy-seal`
-  - Tuck jumps — conditioning `cf-tuck-jumps`
+  - Burpee avec tuck jump — conditioning `cf-burpee-tuck-jump`
+  - Saut en étoile — conditioning `cf-saut-etoile`
+  - Traction kipping — conditioning `cf-traction-kipping`
 
-Dosage : crossfit 71 % (visé 70 %), cardio 29 % (visé 30 %) — erreur 0.5 points.
+Dosage : crossfit 71 % (visé 70 %), cardio 29 % (visé 30 %) — erreur 0.7 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 6.5 [3.5-7], delt_anterior 7 [3.5-7], delt_middle 3 [3.5-7], delt_posterior 2.5 [3.5-7], lats 7 [3.5-7], upper_back 4 [3.5-7], biceps 4.5 [3.5-7], triceps 6.5 [3.5-7], abs 6 [3.5-7], lower_back 2.5 [3.5-7], glutes 7 [3.5-7], quads 5.5 [3.5-7], hamstrings 5 [3.5-7], calves 3 [3.5-7]. Groupes majeurs dans leur bande : 78 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 7 [3.5-7], delt_anterior 7 [3.5-7], delt_middle 3 [3.5-7], delt_posterior 1.5 [3.5-7], lats 6.5 [3.5-7], upper_back 5 [3.5-7], biceps 5.5 [3.5-7], triceps 6 [3.5-7], abs 6.5 [3.5-7], lower_back 2.5 [3.5-7], glutes 8 [3.5-7], quads 6.5 [3.5-7], hamstrings 5 [3.5-7], calves 3.5 [3.5-7]. Groupes majeurs dans leur bande : 73 %.
 
-Équilibre : tirage 9 / poussée 8 séries ; chaîne postérieure 3 / genou 2 ; schémas de base 6/6.
+Équilibre : tirage 8 / poussée 6 séries ; chaîne postérieure 3 / genou 3 ; schémas de base 6/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Box jump-over (`d1.4`) :
-  - `exercise_replaced` jour 1 : Box jump-over → Box jump (plan.user_cannot_do, plan.variant_easier)
-  - `order_changed` jour 1 (plan.reoptimized)
-- Remplacement par Pompe sur le bout des doigts (`d2.4`) :
-  - `exercise_replaced` jour 2 : Pompe prise large → Pompe sur le bout des doigts (plan.user_replaced)
-  - `order_changed` jour 2 (plan.reoptimized)
+- « Je ne sais pas faire » sur Cossack squat (`d3.1`) :
+  - `exercise_replaced` jour 3 : Cossack squat → Goblet squat (plan.user_cannot_do, plan.variant_easier)
+  - `order_changed` jour 3 (plan.reoptimized)
+- Remplacement par Burpee box jump-over (`d3.4`) :
+  - `exercise_replaced` jour 3 : Burpee avec tuck jump → Burpee box jump-over (plan.user_replaced)
 
 ### Passe 2
 
@@ -2106,37 +2095,38 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Marche rapide | 27-30 min | 31-35 min | 36-40 min | 36-40 min | 22-25 min |
+| Marche de récupération | 27-30 min | 31-35 min | 36-40 min | 36-40 min | 22-25 min |
 
 mardi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Box jump | 2×5-8 · 3 fl. · 90s | 2×5-8 · 3 fl. · 90s | 2×5-8 · 4 fl. · 90s | 2×5-8 · 5 fl. · 90s | 1×5-8 · 1 fl. · 90s |
-| HSPU au mur amplitude réduite sur coussin | 2×6-12 · 5 fl. · 90s | 3×6-12 · 5 fl. · 90s | 3×6-12 · 6 fl. · 90s | 3×6-12 · 7 fl. · 90s | 2×6-12 · 3 fl. · 90s |
+| Traction prise mixte | 2×6-12 · 5 fl. · 90s | 3×6-12 · 5 fl. · 90s | 3×6-12 · 6 fl. · 90s | 3×6-12 · 7 fl. · 90s | 2×6-12 · 3 fl. · 90s |
 | Soulevé de terre kettlebell | CALIBRAGE 2×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 5 fl. · 150s · 73 % 1RM | 3×5-8 · 6 fl. · 150s · 74 % 1RM | 2×5-8 · 2 fl. · 150s · 71 % 1RM |
-| Windshield wiper suspendu genoux fléchis | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
-| Traction kipping | 3×8-12 · 15s | 4×8-12 · 15s | 4×8-12 · 15s | 4×8-12 · 15s | 2×8-12 · 15s |
+| Burpee | 4×8-12 · 15s · rounds wod-d1 | 5×8-12 · 15s · rounds wod-d1 | 5×8-12 · 15s · rounds wod-d1 | 5×8-12 · 15s · rounds wod-d1 | 3×8-12 · 15s · rounds wod-d1 |
+| Squat jacks | 3×30-40 s · 15s · rounds wod-d1 | 4×30-40 s · 15s · rounds wod-d1 | 4×30-40 s · 15s · rounds wod-d1 | 4×30-40 s · 15s · rounds wod-d1 | 2×30-40 s · 15s · rounds wod-d1 |
+| Pogo jumps | 3×30-40 s · 15s · rounds wod-d1 | 4×30-40 s · 15s · rounds wod-d1 | 4×30-40 s · 15s · rounds wod-d1 | 4×30-40 s · 15s · rounds wod-d1 | 2×30-40 s · 15s · rounds wod-d1 |
 
 jeudi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Tenue menton au-dessus de la barre supination | 3×10-20 s · 4 fl. · 120s | 4×10-20 s · 4 fl. · 120s | 4×10-20 s · 5 fl. · 120s | 4×10-20 s · 6 fl. · 120s | 2×10-20 s · 2 fl. · 120s |
-| Cossack squat | 2×6-12 · 5 fl. · 90s | 2×6-12 · 5 fl. · 90s | 2×6-12 · 6 fl. · 90s | 2×6-12 · 7 fl. · 90s | 1×6-12 · 3 fl. · 90s |
-| Pompe sur le bout des doigts | 2×6-12 · 5 fl. · 90s | 3×6-12 · 5 fl. · 90s | 3×6-12 · 6 fl. · 90s | 3×6-12 · 7 fl. · 90s | 2×6-12 · 3 fl. · 90s |
+| Back lever tuck avancé | 2×5-10 s · 4 fl. · 120s | 2×5-10 s · 4 fl. · 120s | 2×5-10 s · 5 fl. · 120s | 2×5-10 s · 6 fl. · 120s | 1×5-10 s · 2 fl. · 120s |
+| Saut en longueur sans élan | 2×5-8 · 3 fl. · 90s | 3×5-8 · 3 fl. · 90s | 3×5-8 · 4 fl. · 90s | 3×5-8 · 5 fl. · 90s | 2×5-8 · 1 fl. · 90s |
+| Développé kettlebell bottoms-up | CALIBRAGE 2×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 4 fl. · 150s · 72 % 1RM | 3×5-8 · 5 fl. · 150s · 73 % 1RM | 3×5-8 · 6 fl. · 150s · 74 % 1RM | 2×5-8 · 2 fl. · 150s · 71 % 1RM |
 | Traction pronation | 2×4-6 · 5 fl. · 90s | 3×4-6 · 5 fl. · 90s | 3×4-6 · 6 fl. · 90s | 3×4-6 · 7 fl. · 90s | 2×4-6 · 3 fl. · 90s |
-| Burpee | 3×8-12 · 15s | 4×8-12 · 15s | 4×8-12 · 15s | 4×8-12 · 15s | 2×8-12 · 15s |
+| Knees-to-elbows | 2×10-15 · 4 fl. · 60s | 2×10-15 · 4 fl. · 60s | 2×10-15 · 5 fl. · 60s | 2×10-15 · 6 fl. · 60s | 1×10-15 · 2 fl. · 60s |
 
 samedi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Transition de muscle-up sur box | 3×2-5 · 4 fl. · 150s | 4×2-5 · 4 fl. · 150s | 4×2-5 · 5 fl. · 150s | 4×2-5 · 6 fl. · 150s | 2×2-5 · 2 fl. · 150s |
-| Saut en longueur sans élan | 2×5-8 · 3 fl. · 90s | 3×5-8 · 3 fl. · 90s | 3×5-8 · 4 fl. · 90s | 3×5-8 · 5 fl. · 90s | 2×5-8 · 1 fl. · 90s |
+| Pompe en T | 2×6-12 · 5 fl. · 90s | 3×6-12 · 5 fl. · 90s | 3×6-12 · 6 fl. · 90s | 3×6-12 · 7 fl. · 90s | 2×6-12 · 3 fl. · 90s |
+| Goblet squat | CALIBRAGE 2×5-8 · 4 fl. · 150s · 72 % 1RM | 2×5-8 · 4 fl. · 150s · 72 % 1RM | 2×5-8 · 5 fl. · 150s · 73 % 1RM | 2×5-8 · 6 fl. · 150s · 74 % 1RM | 1×5-8 · 2 fl. · 150s · 71 % 1RM |
 | V-up | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
-| Burpee Navy SEAL | 3×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 2×8-12 · 15s · rounds wod-d3 |
-| Tuck jumps | 3×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 2×8-12 · 15s · rounds wod-d3 |
+| Burpee box jump-over | 3×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 2×8-12 · 15s · rounds wod-d3 |
+| Saut en étoile | 3×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 2×8-12 · 15s · rounds wod-d3 |
+| Traction kipping | 3×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 4×8-12 · 15s · rounds wod-d3 | 2×8-12 · 15s · rounds wod-d3 |
 
 ## 23. `musculation_maison_halteres_4x45`
 
@@ -2146,46 +2136,46 @@ Profil : musculation 100 % — lundi 45 min, mardi 45 min, jeudi 45 min, vendred
 
 ### Passe 1
 
-Note 0.959 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 1.00 · pattern_balance 0.97 · discipline_structure 0.91 · time_use 0.97 · variety 1.00 · exercise_fit 0.67 · stimulus_fatigue 0.73 · preferences 1.00 · novelty 1.00.
+Note 0.959 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 0.99 · pattern_balance 0.94 · discipline_structure 0.93 · time_use 1.00 · variety 1.00 · exercise_fit 0.69 · stimulus_fatigue 0.69 · preferences 1.00 · novelty 1.00.
 
-- **lundi** (45 min, estimé 39 min) — `strength.upper`
-  - Pompe classique — main `sw-pompe`
-  - Band pull-apart — accessory `mu-band-pull-apart`
-  - Élévation latérale haltères — accessory `mu-elevation-laterale-halteres`
-  - Pull-over haltère allongé sur banc — accessory `mu-pull-over-haltere`
-  - Gainage latéral sur le coude — core `mu-gainage-lateral-coude`
-  - Mountain climbers — core `mu-mountain-climbers`
-- **mardi** (45 min, estimé 40 min) — `strength.lower`
-  - Fente arrière aux haltères — main `mu-fente-arriere-halteres`
-  - Fente latérale — secondary `mu-fente-laterale`
-  - Pont fessier unilatéral — accessory `mu-pont-fessier-unilateral`
+- **lundi** (45 min, estimé 43 min) — `strength.push`
+  - Développé couché haltères — main `mu-developpe-couche-halteres`
   - Curl concentré à l'haltère — accessory `mu-curl-concentre`
-- **jeudi** (45 min, estimé 39 min) — `strength.push`
-  - Développé haltère unilatéral debout — main `mu-developpe-haltere-unilateral-debout`
-  - Développé couché haltères — secondary `mu-developpe-couche-halteres`
-  - Supination au levier — accessory `mu-supination-levier`
-  - Gainage latéral sur les genoux — core `mu-gainage-lateral-genoux`
-- **vendredi** (45 min, estimé 39 min) — `strength.pull`
-  - Rowing assis à l'élastique — main `mu-rowing-elastique-assis`
+  - Élévation latérale haltères — accessory `mu-elevation-laterale-halteres`
+  - Rotation interne haltère couché sur le côté — accessory `mu-rotation-interne-haltere-couche`
+  - Dead bug — core `mu-dead-bug`
+- **mardi** (45 min, estimé 41 min) — `strength.full_body`
+  - Split squat aux haltères — main `mu-split-squat`
   - Tirage vertical à l'élastique — secondary `mu-tirage-vertical-elastique`
-  - Pont fessier au sol — accessory `mu-pont-fessier-sol`
-  - Face pull à l'élastique — accessory `mu-face-pull-elastique`
-  - Arch hold — core `mu-arch-hold`
+  - Pont fessier pieds surélevés — accessory `mu-pont-fessier-pieds-sureleves`
+  - Band pull-apart — accessory `mu-band-pull-apart`
+  - Gainage latéral sur le coude — core `mu-gainage-lateral-coude`
   - Sit-up — core `mu-sit-up`
+- **jeudi** (45 min, estimé 44 min) — `strength.push`
+  - Pompe classique — main `sw-pompe`
+  - Extension triceps couchée croisée à l'haltère — accessory `mu-extension-croisee-couche-haltere`
+  - Lu raise — accessory `mu-lu-raise`
+  - Curl biceps aux haltères simultané — accessory `mu-curl-halteres-simultane`
+  - Oiseau haltères buste penché — accessory `mu-oiseau-halteres`
+  - Gainage latéral bras tendu — core `mu-gainage-lateral-bras-tendu`
+- **vendredi** (45 min, estimé 41 min) — `strength.full_body`
+  - Fente arrière aux haltères — main `mu-fente-arriere-halteres`
+  - Rowing haltère unilatéral appui sur banc — secondary `mu-rowing-haltere-unilateral-banc`
+  - Soulevé de terre roumain aux haltères — secondary `mu-souleve-de-terre-roumain-halteres`
+  - Gainage ventral sur les coudes — core `mu-gainage-ventral-coudes`
 
 Dosage : musculation 100 % (visé 100 %) — erreur 0.0 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 9 [4-10], delt_anterior 10.5 [4-10], delt_middle 7 [4-10], delt_posterior 5.5 [4-10], lats 9 [4-10], upper_back 10 [4-10], biceps 9 [4-10], triceps 9 [4-10], abs 10 [4-10], lower_back 7 [4-10], glutes 10 [4-10], quads 8 [4-10], hamstrings 5 [4-10], calves 0 [0-10]. Groupes majeurs dans leur bande : 96 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 7.5 [4-10], delt_anterior 9 [4-10], delt_middle 7.5 [4-10], delt_posterior 6.5 [4-10], lats 7.5 [4-10], upper_back 9.5 [4-10], biceps 8 [4-10], triceps 9 [4-10], abs 10 [4-10], lower_back 5.5 [4-10], glutes 11 [4-10], quads 6 [4-10], hamstrings 6.5 [4-10], calves 1 [0-10]. Groupes majeurs dans leur bande : 91 %.
 
-Équilibre : tirage 9 / poussée 9 séries ; chaîne postérieure 4 / genou 6 ; schémas de base 6/6.
+Équilibre : tirage 6 / poussée 6 séries ; chaîne postérieure 5 / genou 6 ; schémas de base 5/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Band pull-apart (`d0.2`) :
-  - `exercise_replaced` jour 0 : Band pull-apart → Face pull à l'élastique (plan.user_cannot_do, plan.variant_easier)
-  - `order_changed` jour 0 (plan.reoptimized)
-- Remplacement par Pompe prise large (`d0.1`) :
-  - `exercise_replaced` jour 0 : Pompe classique → Pompe prise large (plan.user_replaced)
+- « Je ne sais pas faire » sur Band pull-apart (`d1.4`) :
+  - `exercise_replaced` jour 1 : Band pull-apart → Face pull à l'élastique (plan.user_cannot_do, plan.variant_easier)
+- Remplacement par Dead bug touche-talon (`d0.5`) :
+  - `exercise_replaced` jour 0 : Dead bug → Dead bug touche-talon (plan.user_replaced)
 
 ### Passe 2
 
@@ -2193,41 +2183,42 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Pompe prise large | 2×10-15 · 5 fl. · 90s | 3×10-15 · 5 fl. · 90s | 3×10-15 · 6 fl. · 90s | 3×10-15 · 7 fl. · 90s |
-| Élévation latérale haltères | CALIBRAGE 3×10-15 · 5 fl. · 75s | 4×10-15 · 5 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s |
-| Face pull à l'élastique | 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
-| Pull-over haltère allongé sur banc | CALIBRAGE 2×10-15 · 3 fl. · 75s | 3×10-15 · 3 fl. · 75s | 3×10-15 · 4 fl. · 75s | 3×10-15 · 5 fl. · 75s |
-| Gainage latéral sur le coude | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
-| Mountain climbers | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
+| Développé couché haltères | 2×6-10 · 5 fl. · 120s · 16 kg | 3×6-10 · 5 fl. · 120s · 16 kg | 3×6-10 · 6 fl. · 120s · 16 kg | 3×6-10 · 7 fl. · 120s · 16 kg |
+| Curl concentré à l'haltère | CALIBRAGE 2×10-15 · 3 fl. · 75s | 3×10-15 · 3 fl. · 75s | 3×10-15 · 4 fl. · 75s | 3×10-15 · 5 fl. · 75s |
+| Élévation latérale haltères | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s |
+| Rotation interne haltère couché sur le côté | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s |
+| Dead bug touche-talon | 2×10-15 · 3 fl. · 60s | 2×10-15 · 3 fl. · 60s | 2×10-15 · 4 fl. · 60s | 2×10-15 · 5 fl. · 60s |
 
 mardi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Fente arrière aux haltères | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
-| Fente latérale | 2×6-12 · 3 fl. · 90s | 3×6-12 · 3 fl. · 90s | 3×6-12 · 4 fl. · 90s | 3×6-12 · 5 fl. · 90s |
-| Pont fessier unilatéral | 2×8-12 · 3 fl. · 75s | 2×8-12 · 3 fl. · 75s | 2×8-12 · 4 fl. · 75s | 2×8-12 · 5 fl. · 75s |
-| Curl concentré à l'haltère | CALIBRAGE 2×10-15 · 3 fl. · 75s | 3×10-15 · 3 fl. · 75s | 3×10-15 · 4 fl. · 75s | 3×10-15 · 5 fl. · 75s |
+| Split squat aux haltères | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
+| Tirage vertical à l'élastique | 2×10-15 · 3 fl. · 90s | 3×10-15 · 3 fl. · 90s | 3×10-15 · 4 fl. · 90s | 3×10-15 · 5 fl. · 90s |
+| Pont fessier pieds surélevés | 2×8-12 · 3 fl. · 75s | 2×8-12 · 3 fl. · 75s | 2×8-12 · 4 fl. · 75s | 2×8-12 · 5 fl. · 75s |
+| Face pull à l'élastique | 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
+| Gainage latéral sur le coude | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
+| Sit-up | 2×10-15 · 3 fl. · 60s | 2×10-15 · 3 fl. · 60s | 2×10-15 · 4 fl. · 60s | 2×10-15 · 5 fl. · 60s |
 
 jeudi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Développé haltère unilatéral debout | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM |
-| Développé couché haltères | 2×6-10 · 5 fl. · 120s · 16 kg | 3×6-10 · 5 fl. · 120s · 16 kg | 3×6-10 · 6 fl. · 120s · 16 kg | 3×6-10 · 7 fl. · 120s · 16 kg |
-| Supination au levier | CALIBRAGE 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
-| Gainage latéral sur les genoux | 2×20-40 s · 3 fl. · 60s | 3×20-40 s · 3 fl. · 60s | 3×20-40 s · 4 fl. · 60s | 3×20-40 s · 5 fl. · 60s |
+| Pompe classique | 2×12-18 · 5 fl. · 90s | 3×12-18 · 5 fl. · 90s | 3×12-18 · 6 fl. · 90s | 3×12-18 · 7 fl. · 90s |
+| Extension triceps couchée croisée à l'haltère | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s |
+| Lu raise | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s |
+| Curl biceps aux haltères simultané | CALIBRAGE 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
+| Oiseau haltères buste penché | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s |
+| Gainage latéral bras tendu | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
 
 vendredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Rowing assis à l'élastique | 2×10-15 · 3 fl. · 90s | 3×10-15 · 3 fl. · 90s | 3×10-15 · 4 fl. · 90s | 3×10-15 · 5 fl. · 90s |
-| Tirage vertical à l'élastique | 2×10-15 · 3 fl. · 90s | 3×10-15 · 3 fl. · 90s | 3×10-15 · 4 fl. · 90s | 3×10-15 · 5 fl. · 90s |
-| Pont fessier au sol | 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
-| Face pull à l'élastique | 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
-| Arch hold | 2×10-20 s · 3 fl. · 60s | 3×10-20 s · 3 fl. · 60s | 3×10-20 s · 4 fl. · 60s | 3×10-20 s · 5 fl. · 60s |
-| Sit-up | 2×10-15 · 3 fl. · 60s | 3×10-15 · 3 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s |
+| Fente arrière aux haltères | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
+| Rowing haltère unilatéral appui sur banc | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
+| Soulevé de terre roumain aux haltères | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
+| Gainage ventral sur les coudes | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
 
 ## 24. `elite_calisthenie_6x90`
 
@@ -2468,41 +2459,41 @@ Profil : general_fitness 70 % + cardio 30 % — mardi 40 min, jeudi 40 min, dima
 
 ### Passe 1
 
-Note 0.951 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.94 · muscle_volume 0.89 · pattern_balance 0.94 · discipline_structure 0.98 · time_use 1.00 · variety 1.00 · exercise_fit 0.62 · stimulus_fatigue 0.92 · preferences 1.00 · novelty 1.00.
+Note 0.948 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.98 · muscle_volume 0.81 · pattern_balance 0.88 · discipline_structure 0.98 · time_use 1.00 · variety 1.00 · exercise_fit 0.69 · stimulus_fatigue 0.89 · preferences 1.00 · novelty 1.00.
 
-- **mardi** (40 min, estimé 40 min) — `cardio.endurance`
-  - Footing en endurance fondamentale — conditioning `ca-footing-endurance-fondamentale`
-  - Marche de récupération — conditioning `ca-marche-recuperation`
-- **jeudi** (40 min, estimé 40 min) — `strength.upper`
-  - Lift-off en rotation externe 90/90 allongé ventral — warmup `mo-lift-off-rotation-externe-90-90`
-  - Wall slides dos au mur — warmup `mo-wall-slides`
-  - Pas chassés latéraux (éducatif de course) — conditioning `ca-educatif-pas-chasses`
-  - Pompe classique — main `sw-pompe`
-  - Traction assistée pieds au sol — secondary `sw-traction-assistee-pieds-au-sol`
-  - Pont fessier au sol — accessory `mu-pont-fessier-sol`
-  - Face pull à l'élastique — accessory `mu-face-pull-elastique`
-  - Gainage latéral sur le coude — core `mu-gainage-lateral-coude`
-- **dimanche** (40 min, estimé 39 min) — `strength.full_body`
+- **mardi** (40 min, estimé 37 min) — `strength.full_body`
   - Air squat — main `mu-air-squat`
   - Pompe classique — secondary `sw-pompe`
-  - Row australien — secondary `sw-row-australien`
-  - Sit-up — core `mu-sit-up`
+  - Gainage latéral sur le coude — core `mu-gainage-lateral-coude`
+  - Corde à sauter sauts simples — conditioning `ca-corde-sauts-simples`
   - Footing en endurance fondamentale — conditioning `ca-footing-endurance-fondamentale`
+- **jeudi** (40 min, estimé 40 min) — `strength.full_body`
+  - Wall slides dos au mur — warmup `mo-wall-slides`
+  - Row australien — main `sw-row-australien`
+  - Pont fessier au sol — accessory `mu-pont-fessier-sol`
+  - Gainage latéral bras tendu — core `mu-gainage-lateral-bras-tendu`
+  - Corde à sauter sauts simples — conditioning `ca-corde-sauts-simples`
   - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
-  - Respiration crocodile — cooldown `mo-respiration-crocodile`
+  - Étirement de la capsule postérieure bras croisé — cooldown `mo-etirement-capsule-posterieure-bras-croise`
+  - Étirement des gastrocnémiens au mur jambe tendue — cooldown `mo-etirement-gastrocnemiens-mur`
+- **dimanche** (40 min, estimé 40 min) — `cardio.endurance`
+  - Face pull à l'élastique — accessory `mu-face-pull-elastique`
+  - Footing en endurance fondamentale — conditioning `ca-footing-endurance-fondamentale`
 
-Dosage : cardio 48 % (visé 55 %), mobility 11 % (visé 11 %), generalFitness 41 % (visé 35 %) — erreur 6.5 points.
+Dosage : cardio 54 % (visé 55 %), mobility 10 % (visé 11 %), generalFitness 35 % (visé 35 %) — erreur 0.1 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 5 [2-5], delt_anterior 5 [2-5], delt_middle 1 [2-5], delt_posterior 4 [2-5], lats 5 [2-5], upper_back 5.5 [2-5], biceps 3.5 [2-5], triceps 5 [2-5], abs 4 [2-5], lower_back 2 [2-5], glutes 4 [2-5], quads 3.5 [2-5], hamstrings 1 [0-5], calves 1 [0-5]. Groupes majeurs dans leur bande : 84 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 3 [2-5], delt_anterior 3 [2-5], delt_middle 1 [2-5], delt_posterior 5 [2-5], lats 3 [2-5], upper_back 5 [2-5], biceps 2.5 [2-5], triceps 3 [2-5], abs 4 [2-5], lower_back 4 [2-5], glutes 4 [2-5], quads 2 [2-5], hamstrings 1 [0-5], calves 1 [0-5]. Groupes majeurs dans leur bande : 93 %.
 
-Équilibre : tirage 5 / poussée 5 séries ; chaîne postérieure 2 / genou 2 ; schémas de base 5/6.
+Équilibre : tirage 3 / poussée 3 séries ; chaîne postérieure 2 / genou 2 ; schémas de base 4/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Traction assistée pieds au sol (`d1.5`) :
-  - `exercise_replaced` jour 1 : Traction assistée pieds au sol → Row australien genoux fléchis pieds à plat (plan.user_cannot_do, plan.variant_easier)
-- Remplacement par Marche rapide (`d0.1`) :
-  - `exercise_replaced` jour 0 : Footing en endurance fondamentale → Marche rapide (plan.user_replaced)
+- « Je ne sais pas faire » sur Gainage latéral sur le coude (`d0.3`) :
+  - `exercise_replaced` jour 0 : Gainage latéral sur le coude → Gainage latéral sur les genoux (plan.user_cannot_do, plan.variant_easier)
+  - `exercise_added` jour 1 → Mountain climbers (plan.reoptimized)
+  - `exercise_removed` jour 1 : Gainage latéral bras tendu (plan.reoptimized)
+- Remplacement par Corde à sauter en pas alternés (`d0.4`) :
+  - `exercise_replaced` jour 0 : Corde à sauter sauts simples → Corde à sauter en pas alternés (plan.user_replaced)
 
 ### Passe 2
 
@@ -2510,33 +2501,31 @@ mardi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Marche rapide | 13-15 min | 18-20 min | 18-20 min | 18-20 min |
-| Marche de récupération | 13-15 min | 18-20 min | 18-20 min | 18-20 min |
+| Air squat | 2×6-12 · 3 fl. · 90s | 3×6-12 · 3 fl. · 90s | 3×6-12 · 4 fl. · 90s | 3×6-12 · 5 fl. · 90s |
+| Pompe classique | 2×3-4 · 3 fl. · 90s | 3×3-4 · 3 fl. · 90s | 3×3-4 · 4 fl. · 90s | 3×3-4 · 5 fl. · 90s |
+| Gainage latéral sur les genoux | 1×20-40 s · 3 fl. · 60s | 1×20-40 s · 3 fl. · 60s | 1×20-40 s · 4 fl. · 60s | 1×20-40 s · 5 fl. · 60s |
+| Corde à sauter en pas alternés | 4×45-60 s · 30s | 5×45-60 s · 30s | 5×45-60 s · 30s | 5×45-60 s · 30s |
+| Footing en endurance fondamentale | 9-10 min | 9-10 min | 9-10 min | 9-10 min |
 
 jeudi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Lift-off en rotation externe 90/90 allongé ventral | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
 | Wall slides dos au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| Pas chassés latéraux (éducatif de course) | 3×30 m · 30s | 4×30 m · 30s | 4×30 m · 30s | 4×30 m · 30s |
-| Pompe classique | 2×3-4 · 3 fl. · 90s | 2×3-4 · 3 fl. · 90s | 2×3-4 · 4 fl. · 90s | 2×3-4 · 5 fl. · 90s |
-| Row australien genoux fléchis pieds à plat | 2×10-15 · 3 fl. · 90s | 2×10-15 · 3 fl. · 90s | 2×10-15 · 4 fl. · 90s | 2×10-15 · 5 fl. · 90s |
+| Row australien | 2×6-12 · 3 fl. · 90s | 3×6-12 · 3 fl. · 90s | 3×6-12 · 4 fl. · 90s | 3×6-12 · 5 fl. · 90s |
 | Pont fessier au sol | 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
-| Face pull à l'élastique | 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
-| Gainage latéral sur le coude | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
+| Mountain climbers | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
+| Corde à sauter sauts simples | 4×45-60 s · 30s | 5×45-60 s · 30s | 5×45-60 s · 30s | 5×45-60 s · 30s |
+| Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 3×20-30 s · 10s | 3×20-30 s · 10s | 3×20-30 s · 10s |
+| Étirement de la capsule postérieure bras croisé | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
+| Étirement des gastrocnémiens au mur jambe tendue | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
 
 dimanche :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Air squat | 2×6-12 · 3 fl. · 90s | 2×6-12 · 3 fl. · 90s | 2×6-12 · 4 fl. · 90s | 2×6-12 · 5 fl. · 90s |
-| Pompe classique | 2×3-4 · 3 fl. · 90s | 2×3-4 · 3 fl. · 90s | 2×3-4 · 4 fl. · 90s | 2×3-4 · 5 fl. · 90s |
-| Row australien | 2×6-12 · 3 fl. · 90s | 2×6-12 · 3 fl. · 90s | 2×6-12 · 4 fl. · 90s | 2×6-12 · 5 fl. · 90s |
-| Sit-up | 2×10-15 · 3 fl. · 60s | 2×10-15 · 3 fl. · 60s | 2×10-15 · 4 fl. · 60s | 2×10-15 · 5 fl. · 60s |
-| Footing en endurance fondamentale | 9-10 min | 9-10 min | 9-10 min | 9-10 min |
-| Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
-| Respiration crocodile | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s |
+| Face pull à l'élastique | 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
+| Footing en endurance fondamentale | 22-25 min | 22-25 min | 27-30 min | 27-30 min |
 
 ## 27. `senior_72_mobilite_marche_4x30`
 
@@ -2649,37 +2638,37 @@ Profil : musculation 80 % + mobility 20 % — mardi 45 min, vendredi 45 min — 
 
 ### Passe 1
 
-Note 0.954 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.99 · muscle_volume 0.78 · pattern_balance 1.00 · discipline_structure 0.98 · time_use 1.00 · variety 1.00 · exercise_fit 0.71 · stimulus_fatigue 0.77 · preferences 1.00 · novelty 1.00.
+Note 0.951 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 0.81 · pattern_balance 0.94 · discipline_structure 0.99 · time_use 1.00 · variety 1.00 · exercise_fit 0.68 · stimulus_fatigue 0.76 · preferences 1.00 · novelty 1.00.
 
-- **mardi** (45 min, estimé 45 min) — `strength.full_body`
+- **mardi** (45 min, estimé 44 min) — `strength.full_body`
   - Développé couché haltères — main `mu-developpe-couche-halteres`
   - Presse à cuisses 45° — secondary `mu-presse-cuisses-45`
-  - Rowing poulie basse assis au triangle — secondary `mu-rowing-poulie-assis-triangle`
-  - Woodchop à la poulie haut vers bas — core `mu-woodchop-haut-bas`
-  - Étirement de la capsule postérieure bras croisé — cooldown `mo-etirement-capsule-posterieure-bras-croise`
-  - Étirement des fléchisseurs de hanche en semi-agenouillé — cooldown `mo-flechisseurs-hanche-semi-agenouille`
-- **vendredi** (45 min, estimé 45 min) — `strength.full_body`
-  - Wall slides dos au mur — warmup `mo-wall-slides`
-  - Soulevé de terre conventionnel — main `mu-souleve-de-terre-conventionnel`
-  - Pompe pike — secondary `sw-pompe-pike`
-  - Tirage vertical poulie prise large pronation — secondary `mu-tirage-vertical-prise-large-pronation`
-  - Pallof press debout — core `mu-pallof-press-debout`
-  - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
+  - Tirage haut à la machine convergente — secondary `mu-tirage-haut-machine-convergente`
+  - Heel touch — core `mu-heel-touch`
   - Routine d'auto-massage au rouleau (membres inférieurs et dos) — cooldown `mo-foam-roller-routine`
-  - Ouverture d'épaules en extension mains sur banc — cooldown `mo-ouverture-epaules-extension-banc`
+  - Pigeon au sol — cooldown `mo-pigeon-sol`
+- **vendredi** (45 min, estimé 44 min) — `strength.full_body`
+  - Routine mobilité épaules et poignets — warmup `mo-routine-mobilite-epaules-poignets`
+  - Wall slides dos au mur — warmup `mo-wall-slides`
+  - Développé couché haltères — main `mu-developpe-couche-halteres`
+  - Rowing inversé à la Smith machine — secondary `mu-rowing-inverse-smith-machine`
+  - Reverse hyper sur banc — accessory `mu-reverse-hyper-banc`
+  - Relevé de jambes tendues suspendu — core `sw-releve-jambes-tendues-suspendu`
+  - Étirement ischio-jambiers allongé à l'élastique — cooldown `mo-ischio-allonge-elastique`
 
-Dosage : musculation 81 % (visé 80 %), mobility 19 % (visé 20 %) — erreur 1.1 points.
+Dosage : musculation 80 % (visé 80 %), mobility 20 % (visé 20 %) — erreur 0.3 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 6 [4-7.5], delt_anterior 6 [4-7.5], delt_middle 1.5 [4-7.5], delt_posterior 3 [4-7.5], lats 6 [4-7.5], upper_back 6 [4-7.5], biceps 3 [4-7.5], triceps 6 [4-7.5], abs 6 [4-7.5], lower_back 3 [4-7.5], glutes 6 [4-7.5], quads 6 [4-7.5], hamstrings 4.5 [4-7.5], calves 0 [4-7.5]. Groupes majeurs dans leur bande : 71 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 6 [4-7.5], delt_anterior 6 [4-7.5], delt_middle 0 [4-7.5], delt_posterior 3 [4-7.5], lats 6 [4-7.5], upper_back 6 [4-7.5], biceps 3 [4-7.5], triceps 6 [4-7.5], abs 6 [4-7.5], lower_back 1.5 [4-7.5], glutes 6 [4-7.5], quads 6 [4-7.5], hamstrings 3 [4-7.5], calves 0 [4-7.5]. Groupes majeurs dans leur bande : 62 %.
 
-Équilibre : tirage 6 / poussée 6 séries ; chaîne postérieure 3 / genou 3 ; schémas de base 6/6.
+Équilibre : tirage 6 / poussée 6 séries ; chaîne postérieure 3 / genou 3 ; schémas de base 5/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Routine d'auto-massage au rouleau (membres inférieurs et dos) (`d1.7`) :
-  - `exercise_replaced` jour 1 : Routine d'auto-massage au rouleau (membres inférieurs et dos) → Étirement chaîne postérieure en flexion avant debout (plan.user_cannot_do, plan.variant_easier)
-- Remplacement par Glissé des avant-bras face au mur (`d1.1`) :
-  - `exercise_replaced` jour 1 : Wall slides dos au mur → Glissé des avant-bras face au mur (plan.user_replaced)
+- « Je ne sais pas faire » sur Wall slides dos au mur (`d1.2`) :
+  - `exercise_replaced` jour 1 : Wall slides dos au mur → CARs d'épaule (plan.user_cannot_do, plan.variant_easier)
+  - `order_changed` jour 1 (plan.reoptimized)
+- Remplacement par Développé couché haltères prise neutre (`d1.3`) :
+  - `exercise_replaced` jour 1 : Développé couché haltères → Développé couché haltères prise neutre (plan.user_replaced)
 
 ### Passe 2
 
@@ -2689,23 +2678,22 @@ mardi :
 | --- | --- | --- | --- | --- | --- |
 | Développé couché haltères | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
 | Presse à cuisses 45° | 2×6-10 · 5 fl. · 120s · 35 kg | 3×6-10 · 5 fl. · 120s · 35 kg | 3×6-10 · 6 fl. · 120s · 35 kg | 3×6-10 · 7 fl. · 120s · 35 kg | 2×6-10 · 3 fl. · 120s · 35 kg |
-| Rowing poulie basse assis au triangle | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Woodchop à la poulie haut vers bas | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
-| Étirement de la capsule postérieure bras croisé | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
-| Étirement des fléchisseurs de hanche en semi-agenouillé | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Tirage haut à la machine convergente | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Heel touch | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
+| Routine d'auto-massage au rouleau (membres inférieurs et dos) | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s |
+| Pigeon au sol | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 
 vendredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Glissé des avant-bras face au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
-| Soulevé de terre conventionnel | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Pompe pike | 2×3-8 · 5 fl. · 90s | 3×3-8 · 5 fl. · 90s | 3×3-8 · 6 fl. · 90s | 3×3-8 · 7 fl. · 90s | 2×3-8 · 3 fl. · 90s |
-| Tirage vertical poulie prise large pronation | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Pallof press debout | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
-| Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
-| Étirement chaîne postérieure en flexion avant debout | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
-| Ouverture d'épaules en extension mains sur banc | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| CARs d'épaule | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
+| Routine mobilité épaules et poignets | 4-5 min | 4-5 min | 4-5 min | 4-5 min | 4-5 min |
+| Développé couché haltères prise neutre | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Rowing inversé à la Smith machine | 2×10-15 · 5 fl. · 90s | 3×10-15 · 5 fl. · 90s | 3×10-15 · 6 fl. · 90s | 3×10-15 · 7 fl. · 90s | 2×10-15 · 3 fl. · 90s |
+| Reverse hyper sur banc | 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Relevé de jambes tendues suspendu | 2×8-12 · 4 fl. · 60s | 3×8-12 · 4 fl. · 60s | 3×8-12 · 5 fl. · 60s | 3×8-12 · 6 fl. · 60s | 2×8-12 · 2 fl. · 60s |
+| Étirement ischio-jambiers allongé à l'élastique | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 
 ## 29. `homme_40_cardio_musculation_50_50`
 
@@ -2715,45 +2703,43 @@ Profil : cardio 50 % + musculation 50 % — lundi 50 min, mercredi 50 min, vendr
 
 ### Passe 1
 
-Note 0.973 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.99 · muscle_volume 0.97 · pattern_balance 0.99 · discipline_structure 0.99 · time_use 1.00 · variety 1.00 · exercise_fit 0.75 · stimulus_fatigue 0.77 · preferences 1.00 · novelty 1.00.
+Note 0.971 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 0.98 · pattern_balance 0.99 · discipline_structure 0.98 · time_use 1.00 · variety 1.00 · exercise_fit 0.71 · stimulus_fatigue 0.81 · preferences 1.00 · novelty 1.00.
 
-- **lundi** (50 min, estimé 49 min) — `cardio.endurance`
-  - Footing en endurance fondamentale — conditioning `ca-footing-endurance-fondamentale`
-  - Back squat barre haute — main `mu-back-squat-barre-haute`
+- **lundi** (50 min, estimé 48 min) — `strength.pull`
+  - Course à allure seuil (tempo run) — conditioning `ca-course-seuil-tempo`
+  - Rowing poulie basse assis au triangle — main `mu-rowing-poulie-assis-triangle`
+  - Rowing buste penché à la Smith machine — secondary `mu-rowing-smith-machine`
   - Planche RKC — core `mu-planche-rkc`
-- **mercredi** (50 min, estimé 49 min) — `cardio.endurance`
-  - Footing en endurance fondamentale — conditioning `ca-footing-endurance-fondamentale`
-  - Développé militaire kettlebell — main `mu-developpe-kettlebell`
-  - Tirage vertical poulie prise large pronation — secondary `mu-tirage-vertical-prise-large-pronation`
-- **vendredi** (50 min, estimé 49 min) — `strength.full_body`
-  - Fartlek — conditioning `ca-fartlek`
-  - Soulevé de terre conventionnel — main `mu-souleve-de-terre-conventionnel`
+- **mercredi** (50 min, estimé 50 min) — `strength.full_body`
+  - Éducatif de course talons-fesses — conditioning `ca-educatif-talons-fesses`
+  - Soulevé de terre jambes tendues — main `mu-souleve-de-terre-jambes-tendues`
   - Développé couché barre — secondary `mu-developpe-couche-barre`
-  - Face pull à la poulie corde — secondary `mu-face-pull-corde`
-- **dimanche** (50 min, estimé 50 min) — `strength.full_body`
+  - Air squat — secondary `mu-air-squat`
+  - Tirage haut à la machine convergente — secondary `mu-tirage-haut-machine-convergente`
+  - Rowing menton à la poulie — accessory `mu-rowing-menton-poulie`
+- **vendredi** (50 min, estimé 50 min) — `cardio.endurance`
   - Footing en endurance fondamentale — conditioning `ca-footing-endurance-fondamentale`
-  - Face pull à l'élastique — accessory `mu-face-pull-elastique`
-  - Pull-over haltère allongé sur banc — accessory `mu-pull-over-haltere`
-  - Leg curl couché — accessory `mu-leg-curl-couche`
-  - Gainage latéral sur le coude — core `mu-gainage-lateral-coude`
+- **dimanche** (50 min, estimé 49 min) — `strength.full_body`
+  - Corde à sauter sauts simples — conditioning `ca-corde-sauts-simples`
+  - Footing en endurance fondamentale — conditioning `ca-footing-endurance-fondamentale`
+  - Soulevé de terre conventionnel — main `mu-souleve-de-terre-conventionnel`
+  - Dips aux barres parallèles — secondary `sw-dips-barres-paralleles`
+  - Élévation latérale à la poulie câble derrière le dos — accessory `mu-elevation-laterale-poulie-derriere-dos`
+  - V-up — core `mu-v-up`
 
-Dosage : musculation 51 % (visé 50 %), cardio 49 % (visé 50 %) — erreur 1.3 points.
+Dosage : musculation 50 % (visé 50 %), cardio 50 % (visé 50 %) — erreur 0.0 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 7.5 [5.5-10.5], delt_anterior 6 [5.5-10.5], delt_middle 5 [5.5-10.5], delt_posterior 8.5 [5.5-10.5], lats 6 [5.5-10.5], upper_back 10 [5.5-10.5], biceps 5 [5.5-10.5], triceps 7.5 [5.5-10.5], abs 6 [5.5-10.5], lower_back 7.5 [5.5-10.5], glutes 6 [5.5-10.5], quads 6 [5.5-10.5], hamstrings 6 [5.5-10.5], calves 3 [5.5-10.5]. Groupes majeurs dans leur bande : 82 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 6 [5.5-10.5], delt_anterior 7.5 [5.5-10.5], delt_middle 5 [5.5-10.5], delt_posterior 5.5 [5.5-10.5], lats 9 [5.5-10.5], upper_back 10.5 [5.5-10.5], biceps 6 [5.5-10.5], triceps 6 [5.5-10.5], abs 6 [5.5-10.5], lower_back 6 [5.5-10.5], glutes 9 [5.5-10.5], quads 6 [5.5-10.5], hamstrings 6 [5.5-10.5], calves 3 [5.5-10.5]. Groupes majeurs dans leur bande : 89 %.
 
 Équilibre : tirage 9 / poussée 6 séries ; chaîne postérieure 6 / genou 3 ; schémas de base 6/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Footing en endurance fondamentale (`d0.1`) :
-  - `exercise_replaced` jour 0 : Footing en endurance fondamentale → Vélo de récupération très léger (plan.user_cannot_do, plan.variant_easier)
-  - `exercise_added` jour 1 → Fractionné long 1000 m (plan.reoptimized)
-  - `exercise_removed` jour 1 : Footing en endurance fondamentale (plan.reoptimized)
-  - `exercise_replaced` jour 2 : Fartlek → Marche de récupération (plan.reoptimized)
-  - `exercise_added` jour 3 → Corde à sauter sauts simples (plan.reoptimized)
-  - `exercise_removed` jour 3 : Footing en endurance fondamentale (plan.reoptimized)
-- Remplacement par Rowing poulie basse assis prise large pronation (`d2.4`) :
-  - `exercise_replaced` jour 2 : Face pull à la poulie corde → Rowing poulie basse assis prise large pronation (plan.user_replaced)
+- « Je ne sais pas faire » sur Corde à sauter sauts simples (`d3.1`) :
+  - `exercise_replaced` jour 3 : Corde à sauter sauts simples → Vélo de récupération très léger (plan.user_cannot_do, plan.variant_easier)
+  - `order_changed` jour 3 (plan.reoptimized)
+- Remplacement par Tirage vertical machine convergente (`d1.5`) :
+  - `exercise_replaced` jour 1 : Tirage haut à la machine convergente → Tirage vertical machine convergente (plan.user_replaced)
 
 ### Passe 2
 
@@ -2761,36 +2747,38 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Vélo de récupération très léger | 22-25 min | 22-25 min | 27-30 min | 27-30 min | 18-20 min |
-| Back squat barre haute | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Planche RKC | 2×10-20 s · 4 fl. · 60s | 3×10-20 s · 4 fl. · 60s | 3×10-20 s · 5 fl. · 60s | 3×10-20 s · 6 fl. · 60s | 2×10-20 s · 2 fl. · 60s |
+| Course à allure seuil (tempo run) | 13-15 min | 18-20 min | 18-20 min | 18-20 min | 9-10 min |
+| Rowing poulie basse assis au triangle | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Rowing buste penché à la Smith machine | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Planche RKC | 3×10-20 s · 4 fl. · 60s | 4×10-20 s · 4 fl. · 60s | 4×10-20 s · 5 fl. · 60s | 4×10-20 s · 6 fl. · 60s | 2×10-20 s · 2 fl. · 60s |
 
 mercredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Fractionné long 1000 m | 2×1000 m · 180s | 3×1000 m · 180s | 3×1000 m · 180s | 3×1000 m · 180s | 2×1000 m · 180s |
-| Développé militaire kettlebell | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Tirage vertical poulie prise large pronation | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Éducatif de course talons-fesses | 2×30 m · 30s | 3×30 m · 30s | 3×30 m · 30s | 3×30 m · 30s | 2×30 m · 30s |
+| Soulevé de terre jambes tendues | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Développé couché barre | 2×6-10 · 5 fl. · 120s · 42.5 kg | 3×6-10 · 5 fl. · 120s · 42.5 kg | 3×6-10 · 6 fl. · 120s · 42.5 kg | 3×6-10 · 7 fl. · 120s · 45 kg | 2×6-10 · 3 fl. · 120s · 42.5 kg |
+| Air squat | 2×10-15 · 5 fl. · 90s | 3×10-15 · 5 fl. · 90s | 3×10-15 · 6 fl. · 90s | 3×10-15 · 7 fl. · 90s | 2×10-15 · 3 fl. · 90s |
+| Tirage vertical machine convergente | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Rowing menton à la poulie | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
 
 vendredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Marche de récupération | 9-10 min | 13-15 min | 13-15 min | 13-15 min | 9-10 min |
-| Soulevé de terre conventionnel | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Développé couché barre | 2×6-10 · 5 fl. · 120s · 42.5 kg | 3×6-10 · 5 fl. · 120s · 42.5 kg | 3×6-10 · 6 fl. · 120s · 42.5 kg | 3×6-10 · 7 fl. · 120s · 45 kg | 2×6-10 · 3 fl. · 120s · 42.5 kg |
-| Rowing poulie basse assis prise large pronation | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Footing en endurance fondamentale | 36-40 min | 40-45 min | 45-50 min | 45-50 min | 27-30 min |
 
 dimanche :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Corde à sauter sauts simples | 7×45-60 s · 30s | 8×45-60 s · 30s | 9×45-60 s · 30s | 9×45-60 s · 30s | 5×45-60 s · 30s |
-| Face pull à l'élastique | 3×10-15 · 5 fl. · 75s | 4×10-15 · 5 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Pull-over haltère allongé sur banc | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Leg curl couché | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Gainage latéral sur le coude | 2×20-40 s · 4 fl. · 60s | 3×20-40 s · 4 fl. · 60s | 3×20-40 s · 5 fl. · 60s | 3×20-40 s · 6 fl. · 60s | 2×20-40 s · 2 fl. · 60s |
+| Footing en endurance fondamentale | 9-10 min | 9-10 min | 9-10 min | 9-10 min | 4-5 min |
+| Vélo de récupération très léger | 9-10 min | 9-10 min | 9-10 min | 9-10 min | 4-5 min |
+| Soulevé de terre conventionnel | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Dips aux barres parallèles | 2×3-8 · 5 fl. · 90s | 3×3-8 · 5 fl. · 90s | 3×3-8 · 6 fl. · 90s | 3×3-8 · 7 fl. · 90s | 2×3-8 · 3 fl. · 90s |
+| Élévation latérale à la poulie câble derrière le dos | CALIBRAGE 2×10-15 · 5 fl. · 75s | 2×10-15 · 5 fl. · 75s | 2×10-15 · 6 fl. · 75s | 2×10-15 · 7 fl. · 75s | 1×10-15 · 3 fl. · 75s |
+| V-up | 2×8-12 · 4 fl. · 60s | 2×8-12 · 4 fl. · 60s | 2×8-12 · 5 fl. · 60s | 2×8-12 · 6 fl. · 60s | 1×8-12 · 2 fl. · 60s |
 
 ## 30. `trois_disciplines_70_20_10`
 
@@ -2800,53 +2788,53 @@ Profil : musculation 70 % + mobility 20 % + cardio 10 % — lundi 60 min, mercre
 
 ### Passe 1
 
-Note 0.969 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.98 · muscle_volume 0.99 · pattern_balance 1.00 · discipline_structure 0.97 · time_use 1.00 · variety 1.00 · exercise_fit 0.68 · stimulus_fatigue 0.84 · preferences 1.00 · novelty 1.00.
+Note 0.970 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.99 · muscle_volume 0.99 · pattern_balance 1.00 · discipline_structure 0.97 · time_use 1.00 · variety 1.00 · exercise_fit 0.70 · stimulus_fatigue 0.82 · preferences 1.00 · novelty 1.00.
 
-- **lundi** (60 min, estimé 59 min) — `strength.full_body`
-  - CARs de hanche — warmup `mo-cars-hanche`
-  - Routine mobilité épaules et poignets — warmup `mo-routine-mobilite-epaules-poignets`
-  - Soulevé de terre jambes tendues — main `mu-souleve-de-terre-jambes-tendues`
-  - Développé couché haltères — secondary `mu-developpe-couche-halteres`
-  - Rowing inversé à la Smith machine — secondary `mu-rowing-inverse-smith-machine`
-  - Y raise sur banc incliné — accessory `mu-y-raise-banc-incline`
-  - V-up — core `mu-v-up`
-  - Étirement des fléchisseurs de hanche en semi-agenouillé — cooldown `mo-flechisseurs-hanche-semi-agenouille`
+- **lundi** (60 min, estimé 60 min) — `strength.full_body`
+  - Rotation interne active de hanche en quadrupédie — warmup `mo-rotation-interne-hanche-quadrupedie`
+  - Row australien — main `sw-row-australien`
+  - Dips machine assise — secondary `mu-dips-machine-assise`
+  - Pont fessier pieds surélevés — accessory `mu-pont-fessier-pieds-sureleves`
+  - Lu raise — accessory `mu-lu-raise`
+  - Curl biceps aux haltères simultané — accessory `mu-curl-halteres-simultane`
+  - Gainage latéral sur le coude — core `mu-gainage-lateral-coude`
+  - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
   - Routine d'auto-massage au rouleau (membres inférieurs et dos) — cooldown `mo-foam-roller-routine`
-  - Pigeon au sol — cooldown `mo-pigeon-sol`
 - **mercredi** (45 min, estimé 45 min) — `strength.full_body`
   - Routine mobilité épaules et poignets — warmup `mo-routine-mobilite-epaules-poignets`
-  - Wall slides dos au mur — warmup `mo-wall-slides`
-  - Soulevé de terre conventionnel — main `mu-souleve-de-terre-conventionnel`
+  - Fente marchée aux haltères — main `mu-fente-marchee-halteres`
   - Rowing poulie basse assis au triangle — secondary `mu-rowing-poulie-assis-triangle`
-  - Planche RKC — core `mu-planche-rkc`
-  - Woodchop à la poulie haut vers bas — core `mu-woodchop-haut-bas`
-  - Étirement ischio-jambiers allongé à l'élastique — cooldown `mo-ischio-allonge-elastique`
-- **samedi** (90 min, estimé 89 min) — `strength.full_body`
-  - Back squat barre haute — main `mu-back-squat-barre-haute`
-  - Pistol squat debout sur banc — secondary `sw-pistol-squat-banc`
-  - Rowing poulie basse assis au triangle — secondary `mu-rowing-poulie-assis-triangle`
-  - Tirage vertical poulie prise large pronation — secondary `mu-tirage-vertical-prise-large-pronation`
-  - Développé couché Smith machine — secondary `mu-developpe-couche-smith`
-  - Développé épaules à la Smith machine assis — secondary `mu-developpe-epaules-smith-assis`
-  - Rowing menton haltères — accessory `mu-rowing-menton-halteres`
-  - Rameur en endurance — conditioning `ca-rameur-endurance`
-  - Étirement du trapèze supérieur — cooldown `mo-etirement-trapeze-superieur`
+  - Pompe classique — secondary `sw-pompe`
+  - Oiseau haltères buste penché — accessory `mu-oiseau-halteres`
+  - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
   - Routine d'auto-massage au rouleau (membres inférieurs et dos) — cooldown `mo-foam-roller-routine`
-  - Pigeon au sol — cooldown `mo-pigeon-sol`
+- **samedi** (90 min, estimé 90 min) — `strength.full_body`
+  - Rétraction du menton — warmup `mo-retraction-menton`
+  - Routine mobilité épaules et poignets — warmup `mo-routine-mobilite-epaules-poignets`
+  - Back squat barre haute — main `mu-back-squat-barre-haute`
+  - Soulevé de terre conventionnel — secondary `mu-souleve-de-terre-conventionnel`
+  - Tirage vertical poulie prise serrée supination — secondary `mu-tirage-vertical-prise-serree-supination`
+  - Porté au-dessus de la tête (overhead carry) — accessory `mu-overhead-carry`
+  - Élévation latérale haltères — accessory `mu-elevation-laterale-halteres`
+  - Sit-up — core `mu-sit-up`
+  - Marche de récupération — conditioning `ca-marche-recuperation`
+  - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
+  - Étirement des gastrocnémiens au mur jambe tendue — cooldown `mo-etirement-gastrocnemiens-mur`
+  - Routine d'auto-massage au rouleau (membres inférieurs et dos) — cooldown `mo-foam-roller-routine`
 
-Dosage : musculation 72 % (visé 70 %), cardio 8 % (visé 10 %), mobility 20 % (visé 20 %) — erreur 1.9 points.
+Dosage : musculation 70 % (visé 70 %), cardio 11 % (visé 10 %), mobility 19 % (visé 20 %) — erreur 1.2 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 7.5 [7.5-14.5], delt_anterior 12 [7.5-14.5], delt_middle 9 [7.5-14.5], delt_posterior 7.5 [7.5-14.5], lats 12 [7.5-14.5], upper_back 13.5 [7.5-14.5], biceps 7.5 [7.5-14.5], triceps 7.5 [7.5-14.5], abs 9 [7.5-14.5], lower_back 7.5 [7.5-14.5], glutes 12 [7.5-14.5], quads 9 [7.5-14.5], hamstrings 7.5 [7.5-14.5], calves 4.5 [7.5-14.5]. Groupes majeurs dans leur bande : 96 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 8 [7.5-14.5], delt_anterior 10.5 [7.5-14.5], delt_middle 10.5 [7.5-14.5], delt_posterior 7.5 [7.5-14.5], lats 10 [7.5-14.5], upper_back 12.5 [7.5-14.5], biceps 10 [7.5-14.5], triceps 7.5 [7.5-14.5], abs 7.5 [7.5-14.5], lower_back 9 [7.5-14.5], glutes 12 [7.5-14.5], quads 9 [7.5-14.5], hamstrings 7.5 [7.5-14.5], calves 4.5 [7.5-14.5]. Groupes majeurs dans leur bande : 96 %.
 
-Équilibre : tirage 12 / poussée 9 séries ; chaîne postérieure 6 / genou 6 ; schémas de base 6/6.
+Équilibre : tirage 10 / poussée 6 séries ; chaîne postérieure 6 / genou 6 ; schémas de base 6/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Pistol squat debout sur banc (`d2.2`) :
-  - `exercise_replaced` jour 2 : Pistol squat debout sur banc → Presse à cuisses pieds hauts (plan.user_cannot_do, plan.variant_easier)
-- Remplacement par Développé couché barre (`d2.5`) :
-  - `exercise_replaced` jour 2 : Développé couché Smith machine → Développé couché barre (plan.user_replaced)
+- « Je ne sais pas faire » sur Back squat barre haute (`d2.3`) :
+  - `exercise_replaced` jour 2 : Back squat barre haute → Squat à la Smith machine (plan.user_cannot_do, plan.variant_easier)
   - `order_changed` jour 2 (plan.reoptimized)
+- Remplacement par Porté en rack kettlebell (`d2.6`) :
+  - `exercise_replaced` jour 2 : Porté au-dessus de la tête (overhead carry) → Porté en rack kettlebell (plan.user_replaced)
 
 ### Passe 2
 
@@ -2854,44 +2842,44 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| CARs de hanche | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
-| Routine mobilité épaules et poignets | 4-5 min | 4-5 min | 4-5 min | 4-5 min | 4-5 min |
-| Soulevé de terre jambes tendues | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Développé couché haltères | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Rowing inversé à la Smith machine | 2×10-15 · 5 fl. · 90s | 3×10-15 · 5 fl. · 90s | 3×10-15 · 6 fl. · 90s | 3×10-15 · 7 fl. · 90s | 2×10-15 · 3 fl. · 90s |
-| Y raise sur banc incliné | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| V-up | 2×8-12 · 4 fl. · 60s | 3×8-12 · 4 fl. · 60s | 3×8-12 · 5 fl. · 60s | 3×8-12 · 6 fl. · 60s | 2×8-12 · 2 fl. · 60s |
-| Étirement des fléchisseurs de hanche en semi-agenouillé | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Rotation interne active de hanche en quadrupédie | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
+| Row australien | 2×10-15 · 5 fl. · 90s | 3×10-15 · 5 fl. · 90s | 3×10-15 · 6 fl. · 90s | 3×10-15 · 7 fl. · 90s | 2×10-15 · 3 fl. · 90s |
+| Dips machine assise | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Pont fessier pieds surélevés | 3×10-15 · 5 fl. · 75s | 4×10-15 · 5 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Lu raise | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Curl biceps aux haltères simultané | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Gainage latéral sur le coude | 2×20-40 s · 4 fl. · 60s | 3×20-40 s · 4 fl. · 60s | 3×20-40 s · 5 fl. · 60s | 3×20-40 s · 6 fl. · 60s | 2×20-40 s · 2 fl. · 60s |
+| Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 | Routine d'auto-massage au rouleau (membres inférieurs et dos) | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s |
-| Pigeon au sol | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
 
 mercredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
 | Routine mobilité épaules et poignets | 4-5 min | 4-5 min | 4-5 min | 4-5 min | 4-5 min |
-| Wall slides dos au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 1×8-12 · 10s |
-| Soulevé de terre conventionnel | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Fente marchée aux haltères | 2×20 m · 4 fl. · 90s | 3×20 m · 4 fl. · 90s | 3×20 m · 5 fl. · 90s | 3×20 m · 6 fl. · 90s | 2×20 m · 2 fl. · 90s |
 | Rowing poulie basse assis au triangle | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Planche RKC | 2×10-20 s · 4 fl. · 60s | 3×10-20 s · 4 fl. · 60s | 3×10-20 s · 5 fl. · 60s | 3×10-20 s · 6 fl. · 60s | 2×10-20 s · 2 fl. · 60s |
-| Woodchop à la poulie haut vers bas | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
-| Étirement ischio-jambiers allongé à l'élastique | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Pompe classique | 2×10-15 · 5 fl. · 90s | 3×10-15 · 5 fl. · 90s | 3×10-15 · 6 fl. · 90s | 3×10-15 · 7 fl. · 90s | 2×10-15 · 3 fl. · 90s |
+| Oiseau haltères buste penché | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Routine d'auto-massage au rouleau (membres inférieurs et dos) | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s |
 
 samedi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Back squat barre haute | 2×6-10 · 5 fl. · 120s · 55 kg | 3×6-10 · 5 fl. · 120s · 55 kg | 3×6-10 · 6 fl. · 120s · 55 kg | 3×6-10 · 7 fl. · 120s · 57.5 kg | 2×6-10 · 3 fl. · 120s · 55 kg |
-| Développé couché barre | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Presse à cuisses pieds hauts | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Rowing poulie basse assis au triangle | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Tirage vertical poulie prise large pronation | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Développé épaules à la Smith machine assis | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Rowing menton haltères | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Rameur en endurance | 9-10 min | 9-10 min | 9-10 min | 9-10 min | 4-5 min |
-| Étirement du trapèze supérieur | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
-| Routine d'auto-massage au rouleau (membres inférieurs et dos) | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s | 1×60-90 s · 15s |
-| Pigeon au sol | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Rétraction du menton | 2×8-12 · 10s | 3×8-12 · 10s | 3×8-12 · 10s | 3×8-12 · 10s | 2×8-12 · 10s |
+| Routine mobilité épaules et poignets | 4-5 min | 4-5 min | 4-5 min | 4-5 min | 4-5 min |
+| Soulevé de terre conventionnel | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Squat à la Smith machine | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Tirage vertical poulie prise serrée supination | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Porté en rack kettlebell | 2×30 m · 4 fl. · 90s | 3×30 m · 4 fl. · 90s | 3×30 m · 5 fl. · 90s | 3×30 m · 6 fl. · 90s | 2×30 m · 2 fl. · 90s |
+| Élévation latérale haltères | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Sit-up | 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
+| Marche de récupération | 13-15 min | 18-20 min | 18-20 min | 18-20 min | 9-10 min |
+| Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Étirement des gastrocnémiens au mur jambe tendue | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 1×20-30 s · 10s |
+| Routine d'auto-massage au rouleau (membres inférieurs et dos) | 2×60-90 s · 15s | 2×60-90 s · 15s | 2×60-90 s · 15s | 2×60-90 s · 15s | 1×60-90 s · 15s |
 
 ## 31. `niveaux_inconnus_sans_poids`
 
@@ -2901,40 +2889,40 @@ Profil : musculation 100 % — mardi 60 min, jeudi 60 min — lieux salle — n�
 
 ### Passe 1
 
-Note 0.970 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 0.96 · pattern_balance 1.00 · discipline_structure 0.99 · time_use 1.00 · variety 1.00 · exercise_fit 0.69 · stimulus_fatigue 0.84 · preferences 1.00 · novelty 1.00.
+Note 0.973 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 1.00 · muscle_volume 0.96 · pattern_balance 1.00 · discipline_structure 1.00 · time_use 1.00 · variety 1.00 · exercise_fit 0.72 · stimulus_fatigue 0.79 · preferences 1.00 · novelty 1.00.
 
-- **mardi** (60 min, estimé 58 min) — `strength.full_body`
-  - Soulevé de terre kettlebell — main `mu-souleve-de-terre-kettlebell`
+- **mardi** (60 min, estimé 59 min) — `strength.full_body`
+  - Développé couché haltères — main `mu-developpe-couche-halteres`
+  - Développé haltères assis — secondary `mu-developpe-halteres-assis`
+  - Soulevé de terre kettlebell — secondary `mu-souleve-de-terre-kettlebell`
   - Presse à cuisses 45° — secondary `mu-presse-cuisses-45`
-  - Tirage vertical poulie prise large pronation — secondary `mu-tirage-vertical-prise-large-pronation`
-  - Row australien — secondary `sw-row-australien`
-  - Développé couché Smith machine — secondary `mu-developpe-couche-smith`
-  - Mollets debout à la machine — accessory `mu-mollets-debout-machine`
+  - Rowing poulie basse assis au triangle — secondary `mu-rowing-poulie-assis-triangle`
   - Gainage latéral sur le coude — core `mu-gainage-lateral-coude`
-- **jeudi** (60 min, estimé 58 min) — `strength.upper`
-  - Développé épaules à l'élastique debout — main `mu-developpe-epaules-elastique-debout`
-  - Air squat — secondary `mu-air-squat`
-  - Face pull à la poulie corde — secondary `mu-face-pull-corde`
+- **jeudi** (60 min, estimé 58 min) — `strength.full_body`
+  - Air squat — main `mu-air-squat`
+  - Rowing poulie basse assis au triangle — secondary `mu-rowing-poulie-assis-triangle`
   - Tirage vertical poulie prise large pronation — secondary `mu-tirage-vertical-prise-large-pronation`
   - Développé couché Smith machine — secondary `mu-developpe-couche-smith`
+  - Élévation latérale haltères — accessory `mu-elevation-laterale-halteres`
   - Leg curl couché — accessory `mu-leg-curl-couche`
-  - Gainage latéral sur les genoux — core `mu-gainage-lateral-genoux`
+  - Mollets debout à la machine — accessory `mu-mollets-debout-machine`
+  - Gainage ventral sur les coudes — core `mu-gainage-ventral-coudes`
 
 Dosage : musculation 100 % (visé 100 %) — erreur 0.0 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 6 [4-10], delt_anterior 9 [4-10], delt_middle 4.5 [4-10], delt_posterior 9 [4-10], lats 9 [4-10], upper_back 10.5 [4-10], biceps 6 [4-10], triceps 7.5 [4-10], abs 5 [4-10], lower_back 6.5 [4-10], glutes 9 [4-10], quads 7.5 [4-10], hamstrings 6.5 [4-10], calves 4.5 [4-10]. Groupes majeurs dans leur bande : 91 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 7.5 [4-10], delt_anterior 10 [4-10], delt_middle 5 [4-10], delt_posterior 4.5 [4-10], lats 9 [4-10], upper_back 9 [4-10], biceps 4.5 [4-10], triceps 7.5 [4-10], abs 5 [4-10], lower_back 4.5 [4-10], glutes 9 [4-10], quads 7.5 [4-10], hamstrings 6.5 [4-10], calves 4.5 [4-10]. Groupes majeurs dans leur bande : 100 %.
 
-Équilibre : tirage 12 / poussée 9 séries ; chaîne postérieure 5 / genou 6 ; schémas de base 6/6.
+Équilibre : tirage 9 / poussée 9 séries ; chaîne postérieure 5 / genou 6 ; schémas de base 6/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Développé couché Smith machine (`d0.5`) :
-  - `exercise_replaced` jour 0 : Développé couché Smith machine → Développé couché haltères (plan.user_cannot_do, plan.variant_easier)
+- « Je ne sais pas faire » sur Rowing poulie basse assis au triangle (`d0.5`) :
+  - `exercise_replaced` jour 0 : Développé haltères assis → Y raise sur banc incliné (plan.reoptimized)
+  - `exercise_replaced` jour 0 : Rowing poulie basse assis au triangle → Rowing buste penché à la Smith machine (plan.user_cannot_do, plan.variant_easier)
   - `order_changed` jour 0 (plan.reoptimized)
-  - `exercise_added` jour 1 → Développé couché haltères (plan.reoptimized)
-  - `exercise_removed` jour 1 : Développé couché Smith machine (plan.reoptimized)
-- Remplacement par Presse à cuisses pieds hauts (`d0.2`) :
-  - `exercise_replaced` jour 0 : Presse à cuisses 45° → Presse à cuisses pieds hauts (plan.user_replaced)
+  - `exercise_removed` jour 1 : Rowing poulie basse assis au triangle (plan.reoptimized)
+- Remplacement par Leg curl assis (`d1.6`) :
+  - `exercise_replaced` jour 1 : Leg curl couché → Leg curl assis (plan.user_replaced)
 
 ### Passe 2
 
@@ -2944,23 +2932,22 @@ mardi :
 | --- | --- | --- | --- | --- |
 | Développé couché haltères | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
 | Soulevé de terre kettlebell | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
-| Presse à cuisses pieds hauts | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
-| Tirage vertical poulie prise large pronation | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
-| Row australien | 2×3-8 · 3 fl. · 90s | 3×3-8 · 3 fl. · 90s | 3×3-8 · 4 fl. · 90s | 3×3-8 · 5 fl. · 90s |
-| Mollets debout à la machine | CALIBRAGE 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
-| Gainage latéral sur le coude | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
+| Presse à cuisses 45° | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
+| Rowing buste penché à la Smith machine | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
+| Y raise sur banc incliné | CALIBRAGE 2×10-15 · 3 fl. · 75s | 3×10-15 · 3 fl. · 75s | 3×10-15 · 4 fl. · 75s | 3×10-15 · 5 fl. · 75s |
+| Gainage latéral sur le coude | 2×10-20 s · 3 fl. · 60s | 3×10-20 s · 3 fl. · 60s | 3×10-20 s · 4 fl. · 60s | 3×10-20 s · 5 fl. · 60s |
 
 jeudi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Développé couché haltères | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
-| Développé épaules à l'élastique debout | 2×8-12 · 3 fl. · 90s | 3×8-12 · 3 fl. · 90s | 3×8-12 · 4 fl. · 90s | 3×8-12 · 5 fl. · 90s |
 | Air squat | 2×3-8 · 3 fl. · 90s | 3×3-8 · 3 fl. · 90s | 3×3-8 · 4 fl. · 90s | 3×3-8 · 5 fl. · 90s |
-| Face pull à la poulie corde | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
 | Tirage vertical poulie prise large pronation | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
-| Leg curl couché | CALIBRAGE 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
-| Gainage latéral sur les genoux | 2×10-20 s · 3 fl. · 60s | 3×10-20 s · 3 fl. · 60s | 3×10-20 s · 4 fl. · 60s | 3×10-20 s · 5 fl. · 60s |
+| Développé couché Smith machine | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
+| Élévation latérale haltères | CALIBRAGE 2×10-15 · 3 fl. · 75s | 3×10-15 · 3 fl. · 75s | 3×10-15 · 4 fl. · 75s | 3×10-15 · 5 fl. · 75s |
+| Leg curl assis | CALIBRAGE 2×10-15 · 3 fl. · 75s | 3×10-15 · 3 fl. · 75s | 3×10-15 · 4 fl. · 75s | 3×10-15 · 5 fl. · 75s |
+| Mollets debout à la machine | CALIBRAGE 2×10-15 · 3 fl. · 75s | 3×10-15 · 3 fl. · 75s | 3×10-15 · 4 fl. · 75s | 3×10-15 · 5 fl. · 75s |
+| Gainage ventral sur les coudes | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
 
 ## 32. `sans_objectif_mode_libre`
 
@@ -3054,36 +3041,39 @@ Profil : general_fitness 100 % — lundi 30 min, mercredi 30 min, vendredi 30 mi
 
 ### Passe 1
 
-Note 0.939 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.96 · muscle_volume 0.80 · pattern_balance 0.94 · discipline_structure 0.94 · time_use 1.00 · variety 1.00 · exercise_fit 0.61 · stimulus_fatigue 0.81 · preferences 1.00 · novelty 1.00.
+Note 0.936 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.97 · muscle_volume 0.80 · pattern_balance 0.88 · discipline_structure 0.92 · time_use 1.00 · variety 1.00 · exercise_fit 0.64 · stimulus_fatigue 0.80 · preferences 1.00 · novelty 1.00.
 
-- **lundi** (30 min, estimé 30 min) — `cardio.endurance`
-  - Marche de récupération — conditioning `ca-marche-recuperation`
-- **mercredi** (30 min, estimé 30 min) — `strength.full_body`
-  - Tirage vertical à l'élastique — main `mu-tirage-vertical-elastique`
-  - Fente latérale — secondary `mu-fente-laterale`
-  - Rowing menton haltères — accessory `mu-rowing-menton-halteres`
-  - Gainage latéral sur le coude — core `mu-gainage-lateral-coude`
-  - Étirement ischio-jambiers allongé à l'élastique — cooldown `mo-ischio-allonge-elastique`
-- **vendredi** (30 min, estimé 30 min) — `strength.upper`
+- **lundi** (30 min, estimé 29 min) — `strength.full_body`
+  - Squat profond tenu — warmup `mo-squat-profond-tenu`
+  - Wall slides dos au mur — warmup `mo-wall-slides`
   - Pompe classique — main `sw-pompe`
   - Pont fessier au sol — accessory `mu-pont-fessier-sol`
-  - Tirage bras tendus à l'élastique — accessory `mu-tirage-bras-tendus-elastique`
-  - Gainage latéral bras tendu — core `mu-gainage-lateral-bras-tendu`
-  - Étirement des fléchisseurs de hanche en semi-agenouillé — cooldown `mo-flechisseurs-hanche-semi-agenouille`
-  - Pigeon au sol — cooldown `mo-pigeon-sol`
+  - Face pull à l'élastique — accessory `mu-face-pull-elastique`
+  - Mountain climbers — core `mu-mountain-climbers`
+  - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
+- **mercredi** (30 min, estimé 29 min) — `cardio.endurance`
+  - Marche sur les talons — warmup `mo-marche-talons`
+  - Fente arrière au poids du corps — main `mu-fente-arriere-poids-du-corps`
+  - Marche rapide — conditioning `ca-marche-rapide`
+- **vendredi** (30 min, estimé 28 min) — `strength.pull`
+  - Rowing assis à l'élastique — main `mu-rowing-elastique-assis`
+  - Gainage latéral sur le coude — core `mu-gainage-lateral-coude`
+  - Marche de récupération — conditioning `ca-marche-recuperation`
+  - Sleeper stretch — cooldown `mo-sleeper-stretch`
 
-Dosage : cardio 36 % (visé 35 %), mobility 11 % (visé 15 %), generalFitness 53 % (visé 50 %) — erreur 3.9 points.
+Dosage : cardio 32 % (visé 35 %), mobility 15 % (visé 15 %), generalFitness 52 % (visé 50 %) — erreur 2.5 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 3 [2-5], delt_anterior 4 [2-5], delt_middle 2 [2-5], delt_posterior 1 [2-5], lats 5 [2-5], upper_back 2.5 [2-5], biceps 2.5 [2-5], triceps 4 [2-5], abs 3 [2-5], lower_back 3 [2-5], glutes 5 [2-5], quads 3 [2-5], hamstrings 2.5 [2-5], calves 0 [0-5]. Groupes majeurs dans leur bande : 93 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 3 [2-5], delt_anterior 3 [2-5], delt_middle 1 [2-5], delt_posterior 3.5 [2-5], lats 3 [2-5], upper_back 5 [2-5], biceps 2.5 [2-5], triceps 3 [2-5], abs 4 [2-5], lower_back 2 [2-5], glutes 5 [2-5], quads 5 [2-5], hamstrings 2.5 [2-5], calves 0 [0-5]. Groupes majeurs dans leur bande : 93 %.
 
-Équilibre : tirage 5 / poussée 3 séries ; chaîne postérieure 2 / genou 3 ; schémas de base 5/6.
+Équilibre : tirage 3 / poussée 3 séries ; chaîne postérieure 2 / genou 3 ; schémas de base 4/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Gainage latéral bras tendu (`d2.4`) :
-  - `exercise_replaced` jour 2 : Gainage latéral bras tendu → Gainage latéral sur les genoux (plan.user_cannot_do, plan.variant_easier)
-- Remplacement par Étirement ischio-jambiers assis unilatéral (`d1.5`) :
-  - `exercise_replaced` jour 1 : Étirement ischio-jambiers allongé à l'élastique → Étirement ischio-jambiers assis unilatéral (plan.user_replaced)
+- « Je ne sais pas faire » sur Wall slides dos au mur (`d0.2`) :
+  - `exercise_replaced` jour 0 : Wall slides dos au mur → CARs d'épaule (plan.user_cannot_do, plan.variant_easier)
+  - `order_changed` jour 0 (plan.reoptimized)
+- Remplacement par Fente arrière aux haltères (`d1.2`) :
+  - `exercise_replaced` jour 1 : Fente arrière au poids du corps → Fente arrière aux haltères (plan.user_replaced)
 
 ### Passe 2
 
@@ -3091,28 +3081,30 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Marche de récupération | 22-25 min | 22-25 min | 27-30 min | 27-30 min |
+| CARs d'épaule | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| Squat profond tenu | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
+| Pompe classique | 2×6-12 · 3 fl. · 90s | 3×6-12 · 3 fl. · 90s | 3×6-12 · 4 fl. · 90s | 3×6-12 · 5 fl. · 90s |
+| Pont fessier au sol | 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
+| Face pull à l'élastique | 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
+| Mountain climbers | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
+| Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
 
 mercredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Tirage vertical à l'élastique | 2×10-15 · 3 fl. · 90s | 3×10-15 · 3 fl. · 90s | 3×10-15 · 4 fl. · 90s | 3×10-15 · 5 fl. · 90s |
-| Fente latérale | 2×6-12 · 3 fl. · 90s | 3×6-12 · 3 fl. · 90s | 3×6-12 · 4 fl. · 90s | 3×6-12 · 5 fl. · 90s |
-| Rowing menton haltères | CALIBRAGE 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
-| Gainage latéral sur le coude | 1×10-20 s · 3 fl. · 60s | 1×10-20 s · 3 fl. · 60s | 1×10-20 s · 4 fl. · 60s | 1×10-20 s · 5 fl. · 60s |
-| Étirement ischio-jambiers assis unilatéral | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
+| Marche sur les talons | 2×20-30 s · 10s | 3×20-30 s · 10s | 3×20-30 s · 10s | 3×20-30 s · 10s |
+| Fente arrière aux haltères | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
+| Marche rapide | 9-10 min | 9-10 min | 9-10 min | 9-10 min |
 
 vendredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Pompe classique | 2×6-12 · 3 fl. · 90s | 3×6-12 · 3 fl. · 90s | 3×6-12 · 4 fl. · 90s | 3×6-12 · 5 fl. · 90s |
-| Pont fessier au sol | 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
-| Tirage bras tendus à l'élastique | 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
-| Gainage latéral sur les genoux | 1×20-40 s · 3 fl. · 60s | 1×20-40 s · 3 fl. · 60s | 1×20-40 s · 4 fl. · 60s | 1×20-40 s · 5 fl. · 60s |
-| Étirement des fléchisseurs de hanche en semi-agenouillé | 2×20-30 s · 10s | 3×20-30 s · 10s | 3×20-30 s · 10s | 3×20-30 s · 10s |
-| Pigeon au sol | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
+| Rowing assis à l'élastique | 2×10-15 · 3 fl. · 90s | 3×10-15 · 3 fl. · 90s | 3×10-15 · 4 fl. · 90s | 3×10-15 · 5 fl. · 90s |
+| Gainage latéral sur le coude | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
+| Marche de récupération | 9-10 min | 9-10 min | 9-10 min | 9-10 min |
+| Sleeper stretch | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
 
 ## 34. `objectif_figure_front_lever`
 
@@ -3307,35 +3299,32 @@ Profil : musculation 60 % + cardio 40 % — lundi 45 min, jeudi 45 min — lieux
 
 ### Passe 1
 
-Note 0.948 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.92 · muscle_volume 0.83 · pattern_balance 1.00 · discipline_structure 0.98 · time_use 1.00 · variety 1.00 · exercise_fit 0.62 · stimulus_fatigue 0.85 · preferences 1.00 · novelty 1.00.
+Note 0.943 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.93 · muscle_volume 0.75 · pattern_balance 0.94 · discipline_structure 0.98 · time_use 1.00 · variety 1.00 · exercise_fit 0.67 · stimulus_fatigue 0.88 · preferences 1.00 · novelty 1.00.
 
-- **lundi** (45 min, estimé 42 min) — `strength.full_body`
-  - Tirage vertical poulie prise large pronation — main `mu-tirage-vertical-prise-large-pronation`
-  - Reverse hyper sur banc — accessory `mu-reverse-hyper-banc`
-  - Y raise sur banc incliné — accessory `mu-y-raise-banc-incline`
-  - Mountain climbers — core `mu-mountain-climbers`
-  - Rameur en endurance — conditioning `ca-rameur-endurance`
-- **jeudi** (45 min, estimé 45 min) — `strength.push`
-  - Développé épaules à l'élastique debout — main `mu-developpe-epaules-elastique-debout`
-  - Fente latérale — secondary `mu-fente-laterale`
-  - Rowing poulie basse assis au triangle — secondary `mu-rowing-poulie-assis-triangle`
+- **lundi** (45 min, estimé 43 min) — `strength.full_body`
+  - Soulevé de terre kettlebell — main `mu-souleve-de-terre-kettlebell`
+  - Air squat — secondary `mu-air-squat`
   - Pompe classique — secondary `sw-pompe`
-  - Sit-up — core `mu-sit-up`
+  - Rowing menton haltères — accessory `mu-rowing-menton-halteres`
+  - Tirage bras tendus poulie haute à la barre — accessory `mu-tirage-bras-tendus-poulie-barre`
+  - Gainage latéral bras tendu — core `mu-gainage-lateral-bras-tendu`
+- **jeudi** (45 min, estimé 44 min) — `cardio.endurance`
+  - Tirage vertical poulie prise large pronation — main `mu-tirage-vertical-prise-large-pronation`
+  - Gainage latéral sur le coude — core `mu-gainage-lateral-coude`
   - Vélo en endurance — conditioning `ca-velo-endurance`
 
-Dosage : musculation 68 % (visé 60 %), cardio 32 % (visé 40 %) — erreur 7.6 points.
+Dosage : musculation 67 % (visé 60 %), cardio 33 % (visé 40 %) — erreur 7.4 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 3 [2.5-6], delt_anterior 6 [2.5-6], delt_middle 4 [2.5-6], delt_posterior 3.5 [2.5-6], lats 5 [2.5-6], upper_back 6.5 [2.5-6], biceps 2.5 [2.5-6], triceps 4 [2.5-6], abs 4 [2.5-6], lower_back 1 [2.5-6], glutes 5 [2.5-6], quads 5 [2.5-6], hamstrings 2.5 [2.5-6], calves 0 [2.5-6]. Groupes majeurs dans leur bande : 82 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 4 [2.5-6], delt_anterior 4.5 [2.5-6], delt_middle 3 [2.5-6], delt_posterior 2.5 [2.5-6], lats 5 [2.5-6], upper_back 2.5 [2.5-6], biceps 3 [2.5-6], triceps 4 [2.5-6], abs 4 [2.5-6], lower_back 5.5 [2.5-6], glutes 6 [2.5-6], quads 4.5 [2.5-6], hamstrings 3 [2.5-6], calves 1.5 [2.5-6]. Groupes majeurs dans leur bande : 96 %.
 
-Équilibre : tirage 5 / poussée 5 séries ; chaîne postérieure 2 / genou 3 ; schémas de base 6/6.
+Équilibre : tirage 5 / poussée 3 séries ; chaîne postérieure 3 / genou 3 ; schémas de base 5/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Sit-up (`d1.5`) :
-  - `exercise_replaced` jour 1 : Sit-up → Crunch à la machine (plan.user_cannot_do, plan.variant_easier)
-- Remplacement par Step-up latéral (`d1.2`) :
-  - `exercise_replaced` jour 1 : Fente latérale → Step-up latéral (plan.user_replaced)
-  - `order_changed` jour 1 (plan.reoptimized)
+- « Je ne sais pas faire » sur Air squat (`d0.2`) :
+  - `exercise_replaced` jour 0 : Air squat → Belt squat (plan.user_cannot_do, plan.variant_easier)
+- Remplacement par Soulevé de terre roumain aux haltères (`d0.1`) :
+  - `exercise_replaced` jour 0 : Soulevé de terre kettlebell → Soulevé de terre roumain aux haltères (plan.user_replaced)
 
 ### Passe 2
 
@@ -3343,22 +3332,20 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Tirage vertical poulie prise large pronation | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
-| Reverse hyper sur banc | 2×8-12 · 3 fl. · 75s | 3×8-12 · 3 fl. · 75s | 3×8-12 · 4 fl. · 75s | 3×8-12 · 5 fl. · 75s |
-| Y raise sur banc incliné | CALIBRAGE 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
-| Mountain climbers | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
-| Rameur en endurance | 9-10 min | 13-15 min | 13-15 min | 13-15 min |
+| Soulevé de terre roumain aux haltères | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
+| Belt squat | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
+| Pompe classique | 2×3-8 · 3 fl. · 90s | 3×3-8 · 3 fl. · 90s | 3×3-8 · 4 fl. · 90s | 3×3-8 · 5 fl. · 90s |
+| Rowing menton haltères | CALIBRAGE 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
+| Tirage bras tendus poulie haute à la barre | CALIBRAGE 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
+| Gainage latéral bras tendu | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
 
 jeudi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Développé épaules à l'élastique debout | 2×8-12 · 3 fl. · 90s | 2×8-12 · 3 fl. · 90s | 2×8-12 · 4 fl. · 90s | 2×8-12 · 5 fl. · 90s |
-| Rowing poulie basse assis au triangle | CALIBRAGE 2×8-12 · 3 fl. · 120s | 2×8-12 · 3 fl. · 120s | 2×8-12 · 4 fl. · 120s | 2×8-12 · 5 fl. · 120s · 67 % 1RM |
-| Step-up latéral | 2×3-8 · 3 fl. · 90s | 2×3-8 · 3 fl. · 90s | 2×3-8 · 4 fl. · 90s | 2×3-8 · 5 fl. · 90s |
-| Pompe classique | 2×3-8 · 3 fl. · 90s | 3×3-8 · 3 fl. · 90s | 3×3-8 · 4 fl. · 90s | 3×3-8 · 5 fl. · 90s |
-| Crunch à la machine | CALIBRAGE 2×10-15 · 3 fl. · 60s | 2×10-15 · 3 fl. · 60s | 2×10-15 · 4 fl. · 60s | 2×10-15 · 5 fl. · 60s |
-| Vélo en endurance | 9-10 min | 9-10 min | 9-10 min | 9-10 min |
+| Tirage vertical poulie prise large pronation | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM |
+| Gainage latéral sur le coude | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 3 fl. · 60s | 2×10-20 s · 4 fl. · 60s | 2×10-20 s · 5 fl. · 60s |
+| Vélo en endurance | 18-20 min | 22-25 min | 22-25 min | 22-25 min |
 
 ## 37. `tres_grand_lourd`
 
@@ -3368,39 +3355,41 @@ Profil : musculation 70 % + cardio 30 % — lundi 60 min, mercredi 60 min, vendr
 
 ### Passe 1
 
-Note 0.970 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.99 · muscle_volume 0.97 · pattern_balance 1.00 · discipline_structure 0.98 · time_use 1.00 · variety 1.00 · exercise_fit 0.71 · stimulus_fatigue 0.79 · preferences 1.00 · novelty 1.00.
+Note 0.967 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.99 · muscle_volume 0.94 · pattern_balance 1.00 · discipline_structure 0.98 · time_use 1.00 · variety 1.00 · exercise_fit 0.71 · stimulus_fatigue 0.79 · preferences 1.00 · novelty 1.00.
 
-- **lundi** (60 min, estimé 59 min) — `cardio.endurance`
-  - Soulevé de terre conventionnel — main `mu-souleve-de-terre-conventionnel`
-  - Vélo en endurance — conditioning `ca-velo-endurance`
-- **mercredi** (60 min, estimé 57 min) — `strength.upper`
+- **lundi** (60 min, estimé 60 min) — `strength.full_body`
   - Back squat barre haute — main `mu-back-squat-barre-haute`
-  - Rowing poulie basse assis au triangle — secondary `mu-rowing-poulie-assis-triangle`
-  - Tirage vertical poulie prise large pronation — secondary `mu-tirage-vertical-prise-large-pronation`
-  - Développé couché Smith machine — secondary `mu-developpe-couche-smith`
-  - Élévation latérale buste appuyé sur banc incliné — accessory `mu-elevation-laterale-buste-appuye-banc-incline`
-  - Woodchop à la poulie haut vers bas — core `mu-woodchop-haut-bas`
-- **vendredi** (60 min, estimé 56 min) — `strength.full_body`
-  - Soulevé de terre jambes tendues — main `mu-souleve-de-terre-jambes-tendues`
-  - Fente marchée aux haltères — secondary `mu-fente-marchee-halteres`
-  - Développé couché haltères — secondary `mu-developpe-couche-halteres`
-  - Développé haltères assis — secondary `mu-developpe-halteres-assis`
-  - Rowing poulie basse assis au triangle — secondary `mu-rowing-poulie-assis-triangle`
+  - Dips aux barres parallèles — secondary `sw-dips-barres-paralleles`
+  - Rowing poulie basse assis prise large pronation — secondary `mu-rowing-poulie-assis-prise-large`
+  - Reverse hyper sur banc — accessory `mu-reverse-hyper-banc`
+  - Élévation latérale haltères — accessory `mu-elevation-laterale-halteres`
+  - Pallof press debout — core `mu-pallof-press-debout`
   - V-up — core `mu-v-up`
+- **mercredi** (60 min, estimé 59 min) — `cardio.endurance`
+  - Tirage vertical poulie prise large pronation — main `mu-tirage-vertical-prise-large-pronation`
+  - Développé couché Smith machine — secondary `mu-developpe-couche-smith`
+  - Vélo en endurance — conditioning `ca-velo-endurance`
+- **vendredi** (60 min, estimé 60 min) — `strength.full_body`
+  - Back squat barre basse — main `mu-back-squat-barre-basse`
+  - Row australien — secondary `sw-row-australien`
+  - Hip thrust à la barre — accessory `mu-hip-thrust-barre`
+  - Lu raise — accessory `mu-lu-raise`
+  - Élévation frontale haltères — accessory `mu-elevation-frontale-halteres`
+  - Woodchop à la poulie haut vers bas — core `mu-woodchop-haut-bas`
+  - Vélo en endurance — conditioning `ca-velo-endurance`
 
-Dosage : musculation 71 % (visé 70 %), cardio 29 % (visé 30 %) — erreur 1.5 points.
+Dosage : musculation 72 % (visé 70 %), cardio 28 % (visé 30 %) — erreur 2.4 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 7.5 [6.5-13.5], delt_anterior 9 [6.5-13.5], delt_middle 7 [6.5-13.5], delt_posterior 6.5 [6.5-13.5], lats 9 [6.5-13.5], upper_back 11 [6.5-13.5], biceps 4.5 [6.5-13.5], triceps 7.5 [6.5-13.5], abs 7 [6.5-13.5], lower_back 7.5 [6.5-13.5], glutes 12 [6.5-13.5], quads 9 [6.5-13.5], hamstrings 7.5 [6.5-13.5], calves 4.5 [6.5-13.5]. Groupes majeurs dans leur bande : 89 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 7.5 [6.5-13.5], delt_anterior 12.5 [6.5-13.5], delt_middle 7 [6.5-13.5], delt_posterior 8.5 [6.5-13.5], lats 8 [6.5-13.5], upper_back 12 [6.5-13.5], biceps 6.5 [6.5-13.5], triceps 6 [6.5-13.5], abs 9 [6.5-13.5], lower_back 5 [6.5-13.5], glutes 13 [6.5-13.5], quads 7.5 [6.5-13.5], hamstrings 5 [6.5-13.5], calves 3 [6.5-13.5]. Groupes majeurs dans leur bande : 76 %.
 
-Équilibre : tirage 9 / poussée 9 séries ; chaîne postérieure 6 / genou 6 ; schémas de base 6/6.
+Équilibre : tirage 10 / poussée 6 séries ; chaîne postérieure 7 / genou 6 ; schémas de base 6/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Soulevé de terre jambes tendues (`d2.1`) :
-  - `exercise_replaced` jour 2 : Soulevé de terre jambes tendues → Soulevé de terre roumain aux haltères (plan.user_cannot_do, plan.variant_easier)
-  - `order_changed` jour 2 (plan.reoptimized)
-- Remplacement par Élévation latérale à l'élastique (`d1.5`) :
-  - `exercise_replaced` jour 1 : Élévation latérale buste appuyé sur banc incliné → Élévation latérale à l'élastique (plan.user_replaced)
+- « Je ne sais pas faire » sur Woodchop à la poulie haut vers bas (`d2.6`) :
+  - `exercise_replaced` jour 2 : Woodchop à la poulie haut vers bas → Rotation du tronc à la poulie assis (plan.user_cannot_do, plan.variant_easier)
+- Remplacement par Row australien aux barres parallèles (`d2.2`) :
+  - `exercise_replaced` jour 2 : Row australien → Row australien aux barres parallèles (plan.user_replaced)
 
 ### Passe 2
 
@@ -3408,30 +3397,33 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Soulevé de terre conventionnel | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Vélo en endurance | 31-35 min | 36-40 min | 40-45 min | 40-45 min | 22-25 min |
+| Back squat barre haute | 2×6-10 · 5 fl. · 120s · 87.5 kg | 3×6-10 · 5 fl. · 120s · 87.5 kg | 3×6-10 · 6 fl. · 120s · 87.5 kg | 3×6-10 · 7 fl. · 120s · 90 kg | 2×6-10 · 3 fl. · 120s · 85 kg |
+| Dips aux barres parallèles | 2×3-8 · 5 fl. · 90s | 3×3-8 · 5 fl. · 90s | 3×3-8 · 6 fl. · 90s | 3×3-8 · 7 fl. · 90s | 2×3-8 · 3 fl. · 90s |
+| Rowing poulie basse assis prise large pronation | CALIBRAGE 3×8-12 · 3 fl. · 120s | 4×8-12 · 3 fl. · 120s | 4×8-12 · 4 fl. · 120s | 4×8-12 · 5 fl. · 120s · 67 % 1RM | 2×8-12 · 1 fl. · 120s |
+| Reverse hyper sur banc | 3×10-15 · 5 fl. · 75s | 4×10-15 · 5 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Élévation latérale haltères | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Pallof press debout | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
+| V-up | 2×8-12 · 4 fl. · 60s | 3×8-12 · 4 fl. · 60s | 3×8-12 · 5 fl. · 60s | 3×8-12 · 6 fl. · 60s | 2×8-12 · 2 fl. · 60s |
 
 mercredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Back squat barre haute | 2×6-10 · 5 fl. · 120s · 87.5 kg | 3×6-10 · 5 fl. · 120s · 87.5 kg | 3×6-10 · 6 fl. · 120s · 87.5 kg | 3×6-10 · 7 fl. · 120s · 90 kg | 2×6-10 · 3 fl. · 120s · 85 kg |
-| Rowing poulie basse assis au triangle | CALIBRAGE 3×8-12 · 3 fl. · 120s | 4×8-12 · 3 fl. · 120s | 4×8-12 · 4 fl. · 120s | 4×8-12 · 5 fl. · 120s · 67 % 1RM | 2×8-12 · 1 fl. · 120s |
 | Tirage vertical poulie prise large pronation | CALIBRAGE 2×8-12 · 3 fl. · 120s | 3×8-12 · 3 fl. · 120s | 3×8-12 · 4 fl. · 120s | 3×8-12 · 5 fl. · 120s · 67 % 1RM | 2×8-12 · 1 fl. · 120s |
 | Développé couché Smith machine | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Élévation latérale à l'élastique | 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
-| Woodchop à la poulie haut vers bas | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
+| Vélo en endurance | 22-25 min | 27-30 min | 31-35 min | 31-35 min | 18-20 min |
 
 vendredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) | S5 (deload) |
 | --- | --- | --- | --- | --- | --- |
-| Fente marchée aux haltères | 2×20 m · 4 fl. · 90s | 3×20 m · 4 fl. · 90s | 3×20 m · 5 fl. · 90s | 3×20 m · 6 fl. · 90s | 2×20 m · 2 fl. · 90s |
-| Développé couché haltères | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Développé haltères assis | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Soulevé de terre roumain aux haltères | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
-| Rowing poulie basse assis au triangle | CALIBRAGE 3×8-12 · 3 fl. · 120s | 4×8-12 · 3 fl. · 120s | 4×8-12 · 4 fl. · 120s | 4×8-12 · 5 fl. · 120s · 67 % 1RM | 2×8-12 · 1 fl. · 120s |
-| V-up | 3×8-12 · 4 fl. · 60s | 4×8-12 · 4 fl. · 60s | 4×8-12 · 5 fl. · 60s | 4×8-12 · 6 fl. · 60s | 2×8-12 · 2 fl. · 60s |
+| Back squat barre basse | CALIBRAGE 2×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 5 fl. · 120s · 70 % 1RM | 3×6-10 · 6 fl. · 120s · 71 % 1RM | 3×6-10 · 7 fl. · 120s · 71 % 1RM | 2×6-10 · 3 fl. · 120s · 68 % 1RM |
+| Row australien aux barres parallèles | 2×6-12 · 3 fl. · 90s | 3×6-12 · 3 fl. · 90s | 3×6-12 · 4 fl. · 90s | 3×6-12 · 5 fl. · 90s | 2×6-12 · 1 fl. · 90s |
+| Hip thrust à la barre | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Lu raise | CALIBRAGE 3×10-15 · 5 fl. · 75s | 4×10-15 · 5 fl. · 75s | 4×10-15 · 6 fl. · 75s | 4×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Élévation frontale haltères | CALIBRAGE 2×10-15 · 5 fl. · 75s | 3×10-15 · 5 fl. · 75s | 3×10-15 · 6 fl. · 75s | 3×10-15 · 7 fl. · 75s | 2×10-15 · 3 fl. · 75s |
+| Rotation du tronc à la poulie assis | CALIBRAGE 2×10-15 · 4 fl. · 60s | 3×10-15 · 4 fl. · 60s | 3×10-15 · 5 fl. · 60s | 3×10-15 · 6 fl. · 60s | 2×10-15 · 2 fl. · 60s |
+| Vélo en endurance | 9-10 min | 9-10 min | 9-10 min | 9-10 min | 4-5 min |
 
 ## 38. `petite_legere`
 
@@ -3529,58 +3521,61 @@ Profil : general_fitness 50 % + mobility 30 % + cardio 20 % — lundi 20 min, ma
 
 ### Passe 1
 
-Note 0.944 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.92 · muscle_volume 0.90 · pattern_balance 0.94 · discipline_structure 0.97 · time_use 1.00 · variety 0.96 · exercise_fit 0.59 · stimulus_fatigue 0.82 · preferences 1.00 · novelty 1.00.
+Note 0.943 — recovery 1.00 · fatigue_balance 1.00 · joint_load 1.00 · goal_specificity 1.00 · discipline_dosage 0.88 · muscle_volume 0.95 · pattern_balance 0.94 · discipline_structure 0.95 · time_use 1.00 · variety 1.00 · exercise_fit 0.56 · stimulus_fatigue 0.83 · preferences 1.00 · novelty 1.00.
 
-- **lundi** (20 min, estimé 20 min) — `strength.full_body`
+- **lundi** (20 min, estimé 18 min) — `strength.full_body`
+  - Tirage vertical à l'élastique — main `mu-tirage-vertical-elastique`
+  - Pont fessier au sol — accessory `mu-pont-fessier-sol`
+  - Gainage latéral bras tendu — core `mu-gainage-lateral-bras-tendu`
+  - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
+- **mardi** (20 min, estimé 20 min) — `mobility`
   - Lift-off en rotation externe 90/90 allongé ventral — warmup `mo-lift-off-rotation-externe-90-90`
-  - Fente latérale — main `mu-fente-laterale`
-  - Pompe classique — secondary `sw-pompe`
-  - Pigeon au sol — cooldown `mo-pigeon-sol`
-- **mardi** (20 min, estimé 20 min) — `cardio.endurance`
-  - Marche rapide — conditioning `ca-marche-rapide`
-- **mercredi** (20 min, estimé 20 min) — `mobility`
-  - Lift-off en rotation externe 90/90 allongé ventral — warmup `mo-lift-off-rotation-externe-90-90`
-  - Table inversée — warmup `mo-table-inversee`
+  - Rétraction du menton — warmup `mo-retraction-menton`
   - Wall slides dos au mur — warmup `mo-wall-slides`
-  - Tirage bras tendus à l'élastique — accessory `mu-tirage-bras-tendus-elastique`
-  - Mountain climbers — core `mu-mountain-climbers`
-  - Pigeon au sol — cooldown `mo-pigeon-sol`
-- **jeudi** (20 min, estimé 20 min) — `mobility`
-  - Mobilisation cheville genou au mur — warmup `mo-cheville-genou-mur`
-  - Mobilité douce du cou en trois plans — warmup `mo-mobilite-cou-trois-plans`
+  - Rowing menton haltères — accessory `mu-rowing-menton-halteres`
+  - Corde à sauter sauts simples — conditioning `ca-corde-sauts-simples`
+- **mercredi** (20 min, estimé 20 min) — `strength.upper`
   - World's greatest stretch — warmup `mo-worlds-greatest-stretch`
   - Pompe classique — main `sw-pompe`
-  - Corde à sauter sauts simples — conditioning `ca-corde-sauts-simples`
+  - Tirage bras tendus à l'élastique — accessory `mu-tirage-bras-tendus-elastique`
+  - Soupir physiologique — cooldown `mo-soupir-physiologique`
+- **jeudi** (20 min, estimé 19 min) — `mobility`
+  - CARs de hanche — warmup `mo-cars-hanche`
+  - Squat profond tenu — warmup `mo-squat-profond-tenu`
+  - Table inversée — warmup `mo-table-inversee`
+  - Fente latérale — main `mu-fente-laterale`
+  - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
   - Étirement chaîne postérieure en flexion avant debout — cooldown `mo-chaine-posterieure-flexion-avant-debout`
-- **vendredi** (20 min, estimé 20 min) — `strength.lower`
-  - Pont fessier au sol — accessory `mu-pont-fessier-sol`
-  - Rowing menton haltères — accessory `mu-rowing-menton-halteres`
+- **vendredi** (20 min, estimé 20 min) — `cardio.endurance`
+  - Marche rapide — conditioning `ca-marche-rapide`
+- **samedi** (20 min, estimé 20 min) — `mobility`
+  - Table inversée — warmup `mo-table-inversee`
+  - Gainage latéral sur le coude — core `mu-gainage-lateral-coude`
+  - Mountain climbers — core `mu-mountain-climbers`
+  - Corde à sauter sauts simples — conditioning `ca-corde-sauts-simples`
   - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
-  - Étirement des fléchisseurs de hanche en semi-agenouillé — cooldown `mo-flechisseurs-hanche-semi-agenouille`
-  - Pigeon au sol — cooldown `mo-pigeon-sol`
-- **samedi** (20 min, estimé 19 min) — `cardio.endurance`
-  - Mobilisation cheville genou au mur — warmup `mo-cheville-genou-mur`
-  - Marche de récupération — conditioning `ca-marche-recuperation`
-  - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
-- **dimanche** (20 min, estimé 20 min) — `strength.pull`
-  - Tirage vertical à l'élastique — main `mu-tirage-vertical-elastique`
-  - Sit-up — core `mu-sit-up`
-  - Mobilité hanches 90/90 passive — cooldown `mo-90-90-passif`
-  - Étirement des fléchisseurs de hanche en semi-agenouillé — cooldown `mo-flechisseurs-hanche-semi-agenouille`
-  - Pigeon au sol — cooldown `mo-pigeon-sol`
+  - Étirement chaîne postérieure en flexion avant debout — cooldown `mo-chaine-posterieure-flexion-avant-debout`
+  - Étirement des gastrocnémiens au mur jambe tendue — cooldown `mo-etirement-gastrocnemiens-mur`
+- **dimanche** (20 min, estimé 20 min) — `mobility`
+  - Cercles de bras — warmup `mo-cercles-bras`
+  - Marche sur les talons — warmup `mo-marche-talons`
+  - Wall slides dos au mur — warmup `mo-wall-slides`
+  - Pompe contre le mur — main `sw-pompe-murale`
+  - Corde à sauter sauts simples — conditioning `ca-corde-sauts-simples`
+  - Étirement en chiot (ouverture d'épaules au sol) — cooldown `mo-etirement-chiot`
 
-Dosage : cardio 30 % (visé 38 %), mobility 37 % (visé 38 %), generalFitness 33 % (visé 25 %) — erreur 7.7 points.
+Dosage : cardio 25 % (visé 38 %), mobility 38 % (visé 38 %), generalFitness 37 % (visé 25 %) — erreur 12.4 points.
 
-Volume hebdomadaire (séries fractionnaires [bande]) : chest 4 [1.5-5], delt_anterior 5 [1.5-5], delt_middle 2 [1.5-5], delt_posterior 1 [1.5-5], lats 4 [1.5-5], upper_back 2 [1.5-5], biceps 2 [1.5-5], triceps 5 [1.5-5], abs 3 [1.5-5], lower_back 0 [1.5-5], glutes 4 [1.5-5], quads 3 [1.5-5], hamstrings 2 [1.5-5], calves 0 [0-5]. Groupes majeurs dans leur bande : 89 %.
+Volume hebdomadaire (séries fractionnaires [bande]) : chest 4 [1.5-5], delt_anterior 5 [1.5-5], delt_middle 2 [1.5-5], delt_posterior 1.5 [1.5-5], lats 5 [1.5-5], upper_back 2.5 [1.5-5], biceps 2 [1.5-5], triceps 5.5 [1.5-5], abs 4 [1.5-5], lower_back 3 [1.5-5], glutes 4 [1.5-5], quads 3 [1.5-5], hamstrings 2 [1.5-5], calves 0 [0-5]. Groupes majeurs dans leur bande : 93 %.
 
-Équilibre : tirage 4 / poussée 4 séries ; chaîne postérieure 2 / genou 2 ; schémas de base 5/6.
+Équilibre : tirage 5 / poussée 4 séries ; chaîne postérieure 2 / genou 2 ; schémas de base 5/6.
 
 ### Revue simulée
 
-- « Je ne sais pas faire » sur Marche de récupération (`d5.2`) :
-  - `exercise_replaced` jour 5 : Marche de récupération → Marche rapide (plan.user_cannot_do, plan.variant_easier)
-- Remplacement par Pont fessier unilatéral (`d4.1`) :
-  - `exercise_replaced` jour 4 : Pont fessier au sol → Pont fessier unilatéral (plan.user_replaced)
+- « Je ne sais pas faire » sur Gainage latéral bras tendu (`d0.3`) :
+  - `exercise_replaced` jour 0 : Gainage latéral bras tendu → Gainage latéral sur les genoux (plan.user_cannot_do, plan.variant_easier)
+- Remplacement par Rotation interne active de hanche en quadrupédie (`d3.1`) :
+  - `exercise_replaced` jour 3 : CARs de hanche → Rotation interne active de hanche en quadrupédie (plan.user_replaced)
 
 ### Passe 2
 
@@ -3588,66 +3583,69 @@ lundi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Lift-off en rotation externe 90/90 allongé ventral | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| Fente latérale | 2×6-12 · 3 fl. · 90s | 2×6-12 · 3 fl. · 90s | 2×6-12 · 4 fl. · 90s | 2×6-12 · 5 fl. · 90s |
-| Pompe classique | 2×6-12 · 3 fl. · 90s | 2×6-12 · 3 fl. · 90s | 2×6-12 · 4 fl. · 90s | 2×6-12 · 5 fl. · 90s |
-| Pigeon au sol | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
+| Tirage vertical à l'élastique | 2×10-15 · 3 fl. · 90s | 2×10-15 · 3 fl. · 90s | 2×10-15 · 4 fl. · 90s | 2×10-15 · 5 fl. · 90s |
+| Pont fessier au sol | 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
+| Gainage latéral sur les genoux | 2×20-40 s · 3 fl. · 60s | 2×20-40 s · 3 fl. · 60s | 2×20-40 s · 4 fl. · 60s | 2×20-40 s · 5 fl. · 60s |
+| Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
 
 mardi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Marche rapide | 13-15 min | 18-20 min | 18-20 min | 18-20 min |
+| Lift-off en rotation externe 90/90 allongé ventral | 2×8-12 · 10s | 3×8-12 · 10s | 3×8-12 · 10s | 3×8-12 · 10s |
+| Rétraction du menton | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| Wall slides dos au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| Rowing menton haltères | CALIBRAGE 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
+| Corde à sauter sauts simples | 2×45-60 s · 30s | 2×45-60 s · 30s | 2×45-60 s · 30s | 2×45-60 s · 30s |
 
 mercredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Lift-off en rotation externe 90/90 allongé ventral | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| Table inversée | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| Wall slides dos au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| Tirage bras tendus à l'élastique | 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
-| Mountain climbers | 1×10-20 s · 3 fl. · 60s | 1×10-20 s · 3 fl. · 60s | 1×10-20 s · 4 fl. · 60s | 1×10-20 s · 5 fl. · 60s |
-| Pigeon au sol | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
+| World's greatest stretch | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| Pompe classique | 2×6-12 · 3 fl. · 90s | 2×6-12 · 3 fl. · 90s | 2×6-12 · 4 fl. · 90s | 2×6-12 · 5 fl. · 90s |
+| Tirage bras tendus à l'élastique | 2×10-15 · 3 fl. · 75s | 3×10-15 · 3 fl. · 75s | 3×10-15 · 4 fl. · 75s | 3×10-15 · 5 fl. · 75s |
+| Soupir physiologique | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s | 1×120-180 s · 15s |
 
 jeudi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Mobilisation cheville genou au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| Mobilité douce du cou en trois plans | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| World's greatest stretch | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| Pompe classique | 2×6-12 · 3 fl. · 90s | 2×6-12 · 3 fl. · 90s | 2×6-12 · 4 fl. · 90s | 2×6-12 · 5 fl. · 90s |
-| Corde à sauter sauts simples | 2×45-60 s · 30s | 2×45-60 s · 30s | 2×45-60 s · 30s | 2×45-60 s · 30s |
+| Rotation interne active de hanche en quadrupédie | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| Squat profond tenu | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
+| Table inversée | 1×8-12 · 10s | 1×8-12 · 10s | 1×8-12 · 10s | 1×8-12 · 10s |
+| Fente latérale | 2×6-12 · 3 fl. · 90s | 2×6-12 · 3 fl. · 90s | 2×6-12 · 4 fl. · 90s | 2×6-12 · 5 fl. · 90s |
+| Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
 | Étirement chaîne postérieure en flexion avant debout | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
 
 vendredi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Pont fessier unilatéral | 2×8-12 · 3 fl. · 75s | 2×8-12 · 3 fl. · 75s | 2×8-12 · 4 fl. · 75s | 2×8-12 · 5 fl. · 75s |
-| Rowing menton haltères | CALIBRAGE 2×10-15 · 3 fl. · 75s | 2×10-15 · 3 fl. · 75s | 2×10-15 · 4 fl. · 75s | 2×10-15 · 5 fl. · 75s |
-| Mobilité hanches 90/90 passive | 1×20-30 s · 10s | 1×20-30 s · 10s | 1×20-30 s · 10s | 1×20-30 s · 10s |
-| Étirement des fléchisseurs de hanche en semi-agenouillé | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
-| Pigeon au sol | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
+| Marche rapide | 13-15 min | 18-20 min | 18-20 min | 18-20 min |
 
 samedi :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Mobilisation cheville genou au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
-| Marche rapide | 9-10 min | 13-15 min | 13-15 min | 13-15 min |
+| Table inversée | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| Gainage latéral sur le coude | 1×10-20 s · 3 fl. · 60s | 1×10-20 s · 3 fl. · 60s | 1×10-20 s · 4 fl. · 60s | 1×10-20 s · 5 fl. · 60s |
+| Mountain climbers | 1×10-20 s · 3 fl. · 60s | 1×10-20 s · 3 fl. · 60s | 1×10-20 s · 4 fl. · 60s | 1×10-20 s · 5 fl. · 60s |
+| Corde à sauter sauts simples | 2×45-60 s · 30s | 2×45-60 s · 30s | 2×45-60 s · 30s | 2×45-60 s · 30s |
 | Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
+| Étirement chaîne postérieure en flexion avant debout | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
+| Étirement des gastrocnémiens au mur jambe tendue | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
 
 dimanche :
 
 | Exercice | S1 (intro) | S2 (build) | S3 (build) | S4 (build) |
 | --- | --- | --- | --- | --- |
-| Tirage vertical à l'élastique | 2×10-15 · 3 fl. · 90s | 2×10-15 · 3 fl. · 90s | 2×10-15 · 4 fl. · 90s | 2×10-15 · 5 fl. · 90s |
-| Sit-up | 2×10-15 · 3 fl. · 60s | 2×10-15 · 3 fl. · 60s | 2×10-15 · 4 fl. · 60s | 2×10-15 · 5 fl. · 60s |
-| Mobilité hanches 90/90 passive | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
-| Étirement des fléchisseurs de hanche en semi-agenouillé | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
-| Pigeon au sol | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
+| Cercles de bras | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| Marche sur les talons | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
+| Wall slides dos au mur | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s | 2×8-12 · 10s |
+| Pompe contre le mur | 2×10-15 · 3 fl. · 90s | 2×10-15 · 3 fl. · 90s | 2×10-15 · 4 fl. · 90s | 2×10-15 · 5 fl. · 90s |
+| Corde à sauter sauts simples | 2×45-60 s · 30s | 2×45-60 s · 30s | 2×45-60 s · 30s | 2×45-60 s · 30s |
+| Étirement en chiot (ouverture d'épaules au sol) | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s | 2×20-30 s · 10s |
 
 ## 40. `materiel_complet_gouts_marques`
 

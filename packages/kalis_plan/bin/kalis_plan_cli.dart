@@ -617,7 +617,7 @@ void main(List<String> args) {
     ..writeln();
 
   // --------------------------------------------------------- 5. convergence
-  const efforts = <double>[0, 0.25, 0.5, 1, 2, 4];
+  const efforts = <double>[0, 0.0625, 0.125, 0.25, 0.5, 1, 2];
   final convergence = <List<Object?>>[];
   final convergenceJson = <Object?>[];
   double? reference;

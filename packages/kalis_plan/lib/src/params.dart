@@ -159,7 +159,7 @@ final class ScoreWeights {
 }
 
 /// Paramètres du moteur. [PlanParams.standard] est le réglage livré ; les
-/// autres réglages ne servent qu'aux mesures (`docs/SENSIBILITE.md`).
+/// autres réglages ne servent qu'aux mesures (`docs/MESURES.md`).
 final class PlanParams {
   /// Réglage par défaut.
   const PlanParams({
@@ -171,9 +171,9 @@ final class PlanParams {
     this.alternativeTolerance = 0.03,
     this.alternativeMinDistance = 1 / 3,
     this.alternativeHistory = 8,
-    this.annealIterations = 3000,
+    this.annealIterations = 12000,
     this.reviewIterations = 500,
-    this.alternativeIterations = 3000,
+    this.alternativeIterations = 6000,
     this.annealStartTemperature = 0.02,
     this.annealEndTemperature = 0.0004,
     this.shortlistPerClass = 6,
