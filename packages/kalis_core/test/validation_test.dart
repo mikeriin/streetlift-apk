@@ -584,7 +584,10 @@ void main() {
                 dayIndex: 0,
                 items: <ExercisePrescription>[
                   basePrescription.copyWith(exerciseId: 'sw-pompe-diamant'),
-                  basePrescription.copyWith(slotId: 'w2-test', kind: SetKind.test),
+                  basePrescription.copyWith(
+                    slotId: 'w2-test',
+                    kind: SetKind.test,
+                  ),
                 ],
               ),
             ],
@@ -599,7 +602,10 @@ void main() {
             days: const <DayPrescription>[
               DayPrescription(
                 dayIndex: 0,
-                items: <ExercisePrescription>[basePrescription, basePrescription],
+                items: <ExercisePrescription>[
+                  basePrescription,
+                  basePrescription,
+                ],
               ),
             ],
           ),
@@ -608,8 +614,9 @@ void main() {
           weeks[3],
         ],
       );
-      expect(codesOf(block.copyWith(pass2: twice).validate()),
-          <String>['duplicate']);
+      expect(codesOf(block.copyWith(pass2: twice).validate()), <String>[
+        'duplicate',
+      ]);
       final elsewhere = basePass2().copyWith(
         weeks: <WeekPrescription>[
           weeks[0].copyWith(
@@ -625,8 +632,9 @@ void main() {
           weeks[3],
         ],
       );
-      expect(codesOf(block.copyWith(pass2: elsewhere).validate()),
-          <String>['unknown_day']);
+      expect(codesOf(block.copyWith(pass2: elsewhere).validate()), <String>[
+        'unknown_day',
+      ]);
       final misnumbered = basePass2();
       expect(
         codesOf(
@@ -736,11 +744,16 @@ void main() {
         SetTarget(repsLow: 5, repsHigh: 5, loadKg: 70, flames: 7),
         SetTarget(repsLow: 3, repsHigh: 5, loadKg: 75, flames: 8),
       ];
-      expect(basePrescription.copyWith(setTargets: targets).validate(), isEmpty);
       expect(
-        codesOf(basePrescription
-            .copyWith(setTargets: targets.sublist(0, 2))
-            .validate()),
+        basePrescription.copyWith(setTargets: targets).validate(),
+        isEmpty,
+      );
+      expect(
+        codesOf(
+          basePrescription
+              .copyWith(setTargets: targets.sublist(0, 2))
+              .validate(),
+        ),
         <String>['set_count'],
       );
       expect(
@@ -778,26 +791,41 @@ void main() {
       );
       expect(placed.validate(), isEmpty);
       expect(
-        codesOf(placed.copyWith(
-          availability: const <DaySlot>[
-            DaySlot(weekday: 1, minutes: 60, place: Place.home),
-          ],
-        ).validate()),
+        codesOf(
+          placed
+              .copyWith(
+                availability: const <DaySlot>[
+                  DaySlot(weekday: 1, minutes: 60, place: Place.home),
+                ],
+              )
+              .validate(),
+        ),
         <String>['unknown_place'],
       );
       expect(
-        codesOf(placed.copyWith(
-          equipmentByPlace: const <PlaceEquipment>[
-            PlaceEquipment(place: Place.gym, equipment: <String>['kettlebell']),
-          ],
-        ).validate()),
+        codesOf(
+          placed
+              .copyWith(
+                equipmentByPlace: const <PlaceEquipment>[
+                  PlaceEquipment(
+                    place: Place.gym,
+                    equipment: <String>['kettlebell'],
+                  ),
+                ],
+              )
+              .validate(),
+        ),
         <String>['not_in_equipment'],
       );
       expect(
-        codesOf(p.copyWith(
-          knownExerciseIds: const <String>['sw-pompe'],
-          cannotDoExerciseIds: const <String>['sw-pompe'],
-        ).validate()),
+        codesOf(
+          p
+              .copyWith(
+                knownExerciseIds: const <String>['sw-pompe'],
+                cannotDoExerciseIds: const <String>['sw-pompe'],
+              )
+              .validate(),
+        ),
         <String>['known_and_cannot'],
       );
       expect(
@@ -816,12 +844,17 @@ void main() {
       final goal = baseProfile().goals[0];
       expect(
         goal
-            .copyWith(metric: GoalMetric.maxReps, targetValue: 38.0, loadKg: 70.0)
+            .copyWith(
+              metric: GoalMetric.maxReps,
+              targetValue: 38.0,
+              loadKg: 70.0,
+            )
             .validate(),
         isEmpty,
       );
-      expect(codesOf(goal.copyWith(loadKg: 70.0).validate()),
-          <String>['unexpected_field']);
+      expect(codesOf(goal.copyWith(loadKg: 70.0).validate()), <String>[
+        'unexpected_field',
+      ]);
       expect(
         codesOf(goal.copyWith(metric: GoalMetric.distanceMeters).validate()),
         <String>['missing_field'],
@@ -854,8 +887,11 @@ void main() {
       expect(a, b);
       expect(a.hashCode, b.hashCode);
       expect(a.toJson().toString(), b.toJson().toString());
-      expect((a.toJson()['params']! as Map<String, Object?>).keys,
-          <String>['capacity', 'exerciseId', 'standardError']);
+      expect((a.toJson()['params']! as Map<String, Object?>).keys, <String>[
+        'capacity',
+        'exerciseId',
+        'standardError',
+      ]);
       // Un entier et un décimal ne s'écrivent pas pareil : ils ne sont pas égaux.
       final c = a.copyWith(
         params: <String, Object?>{...a.params, 'standardError': 2},

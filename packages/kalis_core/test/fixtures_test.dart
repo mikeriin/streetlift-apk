@@ -280,10 +280,14 @@ void main() {
             if (s.healthCheck != null) s.healthCheck!,
       ];
       expect(checks.where((c) => c.pains == null), isNotEmpty);
-      expect(checks.where((c) => c.pains != null && c.pains!.isEmpty),
-          isNotEmpty);
-      expect(checks.where((c) => c.pains != null && c.pains!.isNotEmpty),
-          isNotEmpty);
+      expect(
+        checks.where((c) => c.pains != null && c.pains!.isEmpty),
+        isNotEmpty,
+      );
+      expect(
+        checks.where((c) => c.pains != null && c.pains!.isNotEmpty),
+        isNotEmpty,
+      );
     });
   });
 
@@ -403,10 +407,12 @@ void main() {
                 ((ex[key]! as Map<String, Object?>)['sets']! as List<Object?>)
                     .cast<Map<String, Object?>>();
             for (final s in sets.where((s) => s['done'] == true)) {
-            if (double.tryParse((s['reps']! as String).replaceAll(',', '.')) ==
-                null) {
-              continue; // série sans mesure : écartée (règle C8)
-            }
+              if (double.tryParse(
+                    (s['reps']! as String).replaceAll(',', '.'),
+                  ) ==
+                  null) {
+                continue; // série sans mesure : écartée (règle C8)
+              }
               final effort = s['effort'] as num?;
               final rir =
                   effort?.toDouble() ??
