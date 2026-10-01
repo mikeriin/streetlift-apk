@@ -563,9 +563,11 @@ final class Scorer {
         if (v < low) {
           s = v / low;
         } else if (v > high) {
+          // Sans plancher à zéro : un groupe déjà trop chargé ne devient
+          // pas un remplissage gratuit.
           s = 1 - 2 * (v - high) / high;
-          if (s < 0) {
-            s = 0;
+          if (s < -1) {
+            s = -1;
           }
         } else {
           s = 1;
@@ -585,7 +587,10 @@ final class Scorer {
       }
       // Bande de volume (70 %) et fréquence : un groupe travaillé l'est au
       // moins deux jours par semaine (30 %).
-      final band = weights <= 0 ? 1.0 : sum / weights;
+      var band = weights <= 0 ? 1.0 : sum / weights;
+      if (band < 0) {
+        band = 0;
+      }
       final frequency = trained <= 0 ? 1.0 : twice / trained;
       c[5] = 0.7 * band + 0.3 * frequency;
       saturation = weights <= 0 ? 0.0 : filled / weights;
