@@ -66,7 +66,7 @@ void main() {
     expect(perFrame, lessThan(4000));
   });
 
-  testWidgets('liste la plus longue : 625 exercices, défilement', (
+  testWidgets('liste la plus longue : 1 039 exercices (G3), défilement', (
     tester,
   ) async {
     SharedPreferences.setMockInitialValues({});

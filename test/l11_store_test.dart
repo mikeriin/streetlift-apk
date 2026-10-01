@@ -288,7 +288,9 @@ void main() {
       final d = app.sessionDay(3, base);
       final sub = d.exercises.firstWhere((e) => e.id.startsWith(original!.id));
       expect(sub.id, '${original.id}~${to.id}');
-      expect(sub.name, to.name);
+      // G3 : le substitut porte le nom de la base v1.1.
+      expect(sub.name, app.adaptCatalogName(to));
+      expect(app.content.idFor(sub.name), isNotNull);
       expect(sub.cue, contains('calibrage'));
       final before = signature(app, 3, 1);
       final next = await relaunch();

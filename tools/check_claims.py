@@ -95,6 +95,26 @@ def dart_strings(text):
 CORRECTED_AT_DISPLAY = {
     'Ischios : assurance anti-blessure sur le squat lourd.',
 }
+# G3 : textes de la base d'exercices v1.1 (asset copié octet pour octet du
+# paquet kalis_core) reformulés à l'affichage par `kCatalogWording`
+# (lib/content_pack.dart).
+CORRECTED_AT_DISPLAY |= {
+    "Option de choix en cas de douleur antérieure de l'épaule, la rotation externe relative soulage l'articulation",
+    "Tends complètement les coudes au retour pour soulager le biceps",
+    "Barre EZ possible pour soulager les poignets",
+    "Avec la corde, écarte les mains en montant pour ouvrir les coudes et soulager l'épaule",
+    "Version assise, buste penché sur les cuisses, possible pour soulager le bas du dos",
+    "La prise neutre et l'indépendance des bras soulagent coudes et poignets par rapport à la barre et autorisent une flexion plus profonde",
+    "Charge nettement inférieure au wrist curl, barre EZ légère conseillée pour soulager les poignets",
+    "Travail isolé de chaque côté, adapté à la rééducation et aux tempos excentriques lents (4 à 5 s)",
+    "Résistance souvent plus faible et courbe plus régulière qu'à 45° : bonne option débutant, en rééducation ou pour des séries longues",
+    "Poignets douloureux en extension forte → surcharge des extenseurs, à soulager sur parallettes",
+    "Descente précipitée pour soulager les abdominaux → perte de contrôle et brûlures",
+    "Mains tournées vers l'extérieur à 45° ou doigts vers l'arrière pour soulager le tendon du biceps",
+    "Parallettes à 15 à 20 cm du mur, écartement d'épaules, prise neutre qui soulage les poignets",
+    "Pratiqué au sol ou sur parallettes pour soulager les poignets",
+    "Parallettes au niveau des hanches, prise neutre qui soulage l'extension du poignet",
+}
 
 
 def json_strings(value, path=''):

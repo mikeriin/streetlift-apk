@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:streetlift_tracker/content_pack.dart';
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/muscle_body.dart';
 import 'package:streetlift_tracker/muscle_map_2d.dart';
@@ -42,8 +41,6 @@ void fillWeek(AppStore app) {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  late ContentLibrary lib;
-
   setUpAll(() async {
     SharedPreferences.setMockInitialValues({});
     await store.init();
@@ -52,7 +49,6 @@ void main() {
       ..vibration = false
       ..wakelock = false
       ..autoTimer = false;
-    lib = await ContentLibrary.load();
   });
 
   setUp(() {
@@ -94,7 +90,7 @@ void main() {
     test('semaine vide : aucun groupe en couleur', () {
       expect(mapIntensitiesFromWeights(byGroup(store.weeklyMuscles())), {});
       expect(mapIntensitiesFromWeights(const {'dos': 0}), {});
-      expect(targetedMapIntensities(lib, const {}, const {}), {});
+      expect(targetedMapIntensities(store.content, const {}, const {}), {});
     });
 
     test('chaque groupe de l’application a sa place sur la carte', () {
@@ -110,13 +106,13 @@ void main() {
       fillWeek(store);
       final names = store.weeklyNames();
       expect(names, isNotEmpty);
-      final got = targetedMapIntensities(lib, names, store.weeklyMuscles());
+      final got = targetedMapIntensities(store.content, names, store.weeklyMuscles());
       expect(got, isNotEmpty);
       expect(got.values.reduce((a, b) => a > b ? a : b), 1.0);
       for (final v in got.values) {
         expect(v, inInclusiveRange(kMapMinIntensity, 1.0));
       }
-      expect(got, mapIntensitiesFromWeights(targetedMuscles(lib, names)));
+      expect(got, mapIntensitiesFromWeights(targetedMuscles(store.content, names)));
     });
   });
 
@@ -171,7 +167,7 @@ void main() {
         expect(map.views, MapView.values);
         expect(
           map.intensities,
-          targetedMapIntensities(lib, store.weeklyNames(), weekly),
+          targetedMapIntensities(store.content, store.weeklyNames(), weekly),
         );
         expect(map.intensities, isNotEmpty);
         // Légende chiffrée : chaque groupe travaillé avec sa valeur.

@@ -99,7 +99,7 @@ jobs:
           python3 -m unittest discover -s tools/tests -v 2>&1 | tee validation-output/python-tests.log
           TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded 2>&1 | tee validation-output/flutter-tests.log
           # G1 : tests du mode dev, compilés avec le drapeau du build de développement.
-          TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded --dart-define=KALIS_DEV=true test/g1_mode_dev_test.dart test/g2_mode_dev_test.dart 2>&1 | tee validation-output/flutter-tests-dev.log
+          TZ=Europe/Paris flutter test --no-pub --timeout 60s --reporter expanded --dart-define=KALIS_DEV=true test/g1_mode_dev_test.dart test/g2_mode_dev_test.dart test/g3_mode_dev_test.dart 2>&1 | tee validation-output/flutter-tests-dev.log
       - name: Générer les icônes
         run: dart run flutter_launcher_icons
       - name: Prouver le refus réel des releases sans secrets valides

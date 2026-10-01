@@ -302,10 +302,11 @@ class _SwapSheetState extends State<_SwapSheet> {
                 key: ValueKey('adapt-swap-${c.id}'),
                 contentPadding: EdgeInsets.zero,
                 leading: CircleAvatar(child: Text('${i + 1}')),
-                title: Text(c.name),
+                // G3 : exercice de la base v1.1 correspondant.
+                title: Text(store.adaptCatalogName(c)),
                 subtitle: Text(
-                  'Difficulté ${c.difficulty}/10'
-                  '${c.materiel.isEmpty || c.materiel.every((m) => m == 'aucun') ? ' · sans matériel' : ''}',
+                  'Difficulté ${store.adaptCatalogEntry(c)?.difficulte ?? c.difficulty}/10'
+                  '${(store.adaptCatalogEntry(c)?.materiel ?? c.materiel).every((m) => m.startsWith('aucun')) ? ' · sans matériel' : ''}',
                 ),
                 onTap: () {
                   store.applySwap(

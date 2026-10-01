@@ -9,7 +9,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/app_theme.dart';
-import 'package:streetlift_tracker/content_pack.dart';
 import 'package:streetlift_tracker/exercise_screens.dart';
 import 'package:streetlift_tracker/filter_menu.dart';
 import 'package:streetlift_tracker/store.dart';
@@ -283,7 +282,6 @@ void main() {
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
       await store.init();
-      await ContentLibrary.load();
     });
 
     Future<void> openMenu(WidgetTester tester, String prefix) async {
@@ -314,20 +312,21 @@ void main() {
       final counter = find.textContaining(RegExp(r'^\d+ exercices?$'));
       final all = countIn(tester.widget<Text>(counter).data!);
       await openMenu(tester, 'library');
-      // Menu long : seule la première catégorie est dépliée.
+      // Menu long : seule la première catégorie est dépliée (G3 :
+      // discipline de la base v1.1).
       expect(
-        find.byKey(const ValueKey('library-filter-type:tirage_vertical')),
+        find.byKey(const ValueKey('library-filter-disc:Street workout')),
         findsWidgets,
       );
-      expect(find.byKey(const ValueKey('library-filter-niv:1')), findsNothing);
-      await tapItem(tester, 'library-filter-type:tirage_vertical');
-      final vertical = countIn(tester.widget<Text>(counter).data!);
-      await tapItem(tester, 'library-filter-type:tirage_horizontal');
+      expect(find.byKey(const ValueKey('library-filter-dif:1')), findsNothing);
+      await tapItem(tester, 'library-filter-disc:Street workout');
+      final street = countIn(tester.widget<Text>(counter).data!);
+      await tapItem(tester, 'library-filter-disc:Streetlifting');
       final both = countIn(tester.widget<Text>(counter).data!);
-      expect(vertical, lessThan(all));
-      expect(both, greaterThan(vertical));
-      await tapItem(tester, 'library-filter-cat-niveau');
-      await tapItem(tester, 'library-filter-niv:3');
+      expect(street, lessThan(all));
+      expect(both, greaterThan(street));
+      await tapItem(tester, 'library-filter-cat-difficulte');
+      await tapItem(tester, 'library-filter-dif:3');
       final hard = countIn(tester.widget<Text>(counter).data!);
       expect(hard, lessThan(both));
       expect(
@@ -336,8 +335,8 @@ void main() {
           store.content,
           '',
           const ExerciseFilters(
-            types: {'tirage_vertical', 'tirage_horizontal'},
-            niveaux: {3},
+            disciplines: {'Street workout', 'Streetlifting'},
+            difficultes: {3},
           ),
         ).length,
       );

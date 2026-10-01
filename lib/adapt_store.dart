@@ -657,7 +657,8 @@ extension AdaptStore on AppStore {
 
   /// Exercice du pack correspondant à un exercice de séance.
   GenExercise? adaptPackOf(Exercise e, GenCatalog c) {
-    final id = e.exId ?? content.idFor(e.name);
+    // G3 : le moteur L11 garde ses données (pack 2.0.0) jusqu'à G10.
+    final id = e.exId ?? legacyPack.idFor(e.name);
     return (id == null ? null : c.byId[id]) ??
         c.byId[c.idForName(splitName(e.name).$1) ?? ''];
   }
@@ -701,15 +702,33 @@ extension AdaptStore on AppStore {
     final pack = adaptPackOf(e, c);
     if (pack == null) return const [];
     final key = e.id.split('~').first;
-    return swapCandidates(
+    final ranked = swapCandidates(
       c,
       pack,
       equipment: adaptEquipment(place: place),
       motive: motive,
       disliked: adaptDisliked(c),
       exclude: {if (key != e.id) e.id.split('~').last},
+      count: 12,
     );
+    // G3 : seulement des exercices de la base v1.1 (un par exercice v1.1,
+    // l'original exclu), dans l'ordre du moteur L11.
+    if (content.legacyIds.isEmpty) return ranked.take(3).toList();
+    final seen = <String>{?content.legacyIds[pack.id]};
+    return [
+      for (final x in ranked)
+        if (content.legacyIds[x.id] case final String id when seen.add(id)) x,
+    ].take(3).toList();
   }
+
+  /// G3 : exercice de la base v1.1 d'un exercice du moteur L11 (pack 2.0.0).
+  ExerciseEntry? adaptCatalogEntry(GenExercise e) {
+    final id = content.legacyIds[e.id];
+    return id == null ? null : content.byId[id];
+  }
+
+  /// Nom affiché et enregistré d'un substitut : celui de la base v1.1.
+  String adaptCatalogName(GenExercise e) => adaptCatalogEntry(e)?.nom ?? e.name;
 
   /// Remplace un exercice de la séance (avant sa première série).
   void applySwap(
@@ -732,7 +751,7 @@ extension AdaptStore on AppStore {
       final swaps = (o['swaps'] as Map?)?.cast<String, dynamic>() ?? {};
       swaps[original.id.split('~').first] = {
         'to': to.id,
-        'name': to.name,
+        'name': adaptCatalogName(to),
         'motive': motive,
         if (kg != null) 'kg': kg,
       };

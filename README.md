@@ -1,4 +1,14 @@
-# Kalis Track dev6.1.0 — Recentrage sur le programme (pipeline « Génération et progression »)
+# Kalis Track dev6.2.0 — Recentrage sur le programme (pipeline « Génération et progression »)
+
+## dev6.2.0 — Base d'exercices v1.1 dans l'application (lot G3)
+
+- **Nouvelle base d'exercices** (D4.10) : Arsenal › Exercices montre la base v1.1 du propriétaire, **1 039 exercices en 8 disciplines** (Musculation, Street workout, Streetlifting, Calisthénie statique et dynamique, CrossFit / WOD, Cardio, Mobilité), à la place du pack 2.0.0 (625 exercices). Elle vient du paquet `kalis_core` (étiquette `kalis_core-v0.1.0`), qui la charge et la contrôle ; l'application n'en garde qu'une copie identique octet pour octet (`assets/catalog/catalog_v1.json.gz`).
+- **Recherche et filtres** : nom, alias, muscle, matériel, discipline ; filtres Discipline, Type de mouvement, Niveau, Lieu, Matériel, Difficulté (plusieurs choix par filtre).
+- **Fiches** : discipline, niveau, difficulté, type de charge, points clés, erreurs fréquentes, respiration, muscles (carte 2D par rôle, muscles profonds en texte), matériel et lieux, paliers conseillés, « Variante de » et variantes navigables. Quinze phrases de la base sont reformulées à l'affichage (« ménager » plutôt que « soulager », « reprise progressive » plutôt que « rééducation ») : aucune allégation de soin (règles L13).
+- **Historique conservé** : rien de ce que tu as saisi n'est réécrit. Les anciens noms (programme de 40 semaines, ancienne base) sont reliés aux exercices de la base v1.1 par une **table de correspondance relue** (`assets/catalog/correspondance.json`, rapport `docs/G3_CORRESPONDANCE.md`) : 78 intitulés du programme sur 79 (le bilan de phase n'est pas un exercice), 615 anciens exercices sur 625. Séances, records et STATS sont identiques à avant (comparaison chiffrée, `test/g3_historique_test.dart`).
+- **Journal au format des moteurs** : conversion de l'ancien journal vers celui de `kalis_core` (règles C1 à C12, `lib/journal_adapter.dart`), prête pour le moteur dynamique (G9) ; l'ancien journal reste la source.
+- Session de test : même base. Échange d'exercice (L11) : propositions affichées et enregistrées sous les noms de la base v1.1. Version « dev6.2.0 ».
+
 
 ## dev6.1.0 — WOD, séances perso et « Mes progrès » retirés (lot G2)
 

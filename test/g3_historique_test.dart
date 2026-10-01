@@ -12,7 +12,7 @@
 //
 // Le relevé de référence `test/fixtures/g3_historique_avant.json` a été
 // produit par ce même test sur `main` avant G3 (dev6.1.0, e5cf07f ; run CI
-// noté dans le fichier). Sans ce fichier, le test écrit le relevé dans le
+// 36847477371, noté dans le fichier). Sans ce fichier, le test écrit le relevé dans le
 // journal (entre G3-RELEVE-DEBUT et G3-RELEVE-FIN) et ne compare rien.
 import 'dart:convert';
 import 'dart:io';
