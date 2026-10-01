@@ -84,7 +84,11 @@ abstract final class Rejections {
   /// Un palier précédent n'est pas acquis.
   static const String prerequisite = 'prerequisite';
 
-  /// Exercice réservé (haltérophilie hors CrossFit, souplesse avancée).
+  /// Trop facile pour le niveau du groupe de mouvements.
+  static const String tooEasy = 'too_easy';
+
+  /// Exercice réservé (haltérophilie, pliométrie et balistique hors
+  /// CrossFit, souplesse avancée).
   static const String reserved = 'reserved';
 
   /// Écarté par la prudence (impact, fatigue maximale).
@@ -187,6 +191,7 @@ final class PoolEntry {
     required this.novel,
     required this.jointPenalty,
     required this.fit,
+    required this.prioritySkill,
     required this.rootIndex,
     required this.creditGroups,
     required this.creditValues,
@@ -245,8 +250,12 @@ final class PoolEntry {
   final double jointPenalty;
 
   /// Adéquation de l'exercice, de 0 à 1 : mouvement de base de sa famille
-  /// (racine `variante_de`), ni trop facile ni assisté sans besoin.
+  /// (racine `variante_de`), ni trop facile ni assisté sans besoin, connu
+  /// de l'utilisateur.
   final double fit;
+
+  /// Figure prioritaire : connue de l'utilisateur ou palier d'un objectif.
+  final bool prioritySkill;
 
   /// Rang dense de la racine `variante_de` dans le vivier.
   final int rootIndex;
@@ -460,6 +469,7 @@ final class PlanContext {
     required this.excludedIds,
     required this.likedCount,
     required this.knownCount,
+    required this.hasPrioritySkill,
     required this.goalExactSelectable,
     required this.rejections,
     required this.noveltyAllowance,
@@ -544,6 +554,9 @@ final class PlanContext {
 
   /// Nombre d'exercices sus présents dans le vivier (plafonné à 3).
   final int knownCount;
+
+  /// Vrai si le vivier contient une figure prioritaire.
+  final bool hasPrioritySkill;
 
   /// Pour chaque objectif : l'exercice visé lui-même est admissible.
   final List<bool> goalExactSelectable;
@@ -1166,7 +1179,11 @@ PlanContext _build(ContextInputs inputs) {
     // CrossFit, la souplesse avancée qu'avec une vraie part de mobilité ou
     // de calisthénie — sauf exercice connu, aimé ou lié à un objectif.
     if (rejection == null && !wanted) {
-      if (e.pattern == MovementPattern.halterophilie && !crossfitWanted) {
+      final explosive =
+          e.pattern == MovementPattern.halterophilie ||
+          e.pattern == MovementPattern.pliometrie ||
+          e.pattern == MovementPattern.balistique;
+      if (explosive && !crossfitWanted) {
         rejection = Rejections.reserved;
       }
       if (e.pattern == MovementPattern.souplesse && !flexibilityWanted) {
@@ -1174,10 +1191,22 @@ PlanContext _build(ContextInputs inputs) {
       }
     }
 
-    // Prudence.
+    // Trop facile : un polyarticulaire ou une figure sans charge réglable,
+    // quatre paliers sous le niveau du groupe (ou assisté, deux paliers
+    // sous ce niveau), n'entraîne plus — sauf exercice connu, aimé ou lié
+    // à un objectif.
     if (rejection == null &&
-        cautious &&
-        (t.impact || e.systemicFatigue >= 5)) {
+        !wanted &&
+        (t.kind == SlotKind.compound || t.kind.isSkill) &&
+        !isLoadAdjustable(e.loadType)) {
+      final below = a - e.difficulty;
+      if (below >= 4 || (e.assisted && below >= 2)) {
+        rejection = Rejections.tooEasy;
+      }
+    }
+
+    // Prudence.
+    if (rejection == null && cautious && (t.impact || e.systemicFatigue >= 5)) {
       rejection = Rejections.cautious;
     }
 
@@ -1199,8 +1228,7 @@ PlanContext _build(ContextInputs inputs) {
         }
       }
       if ((level >= 1 && limit.discomfort >= params.hardJointDiscomfort) ||
-          (level >= 0.5 &&
-              limit.discomfort >= params.severeJointDiscomfort)) {
+          (level >= 0.5 && limit.discomfort >= params.severeJointDiscomfort)) {
         rejection ??= Rejections.joint;
       }
       final p = level * limit.discomfort / 10;
@@ -1362,7 +1390,8 @@ PlanContext _build(ContextInputs inputs) {
       known: known,
       novel: t.technical && !known && e.difficulty >= a - 1,
       jointPenalty: penalty > 1 ? 1 : penalty,
-      fit: 0.5 * canonical + 0.5 * challenge,
+      fit: 0.4 * canonical + 0.4 * challenge + (known ? 0.2 : 0.0),
+      prioritySkill: t.kind.isSkill && (known || bestSupport >= 60),
       rootIndex: root,
       creditGroups: List<int>.unmodifiable(groupsOut),
       creditValues: List<int>.unmodifiable(valuesOut),
@@ -1466,6 +1495,7 @@ PlanContext _build(ContextInputs inputs) {
     excludedIds: Set<String>.unmodifiable(excluded),
     likedCount: likedInPool > 4 ? 4 : likedInPool,
     knownCount: knownInPool > 3 ? 3 : knownInPool,
+    hasPrioritySkill: pool.any((e) => e.selectable && e.prioritySkill),
     goalExactSelectable: List<bool>.unmodifiable(exactSelectable),
     rejections: Map<String, String>.unmodifiable(rejections),
     noveltyAllowance: globalLevel == 0 ? 2 : 3,

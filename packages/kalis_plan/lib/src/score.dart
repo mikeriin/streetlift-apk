@@ -176,6 +176,7 @@ final class Scorer {
     var fitSum = 0.0;
     var relevantMobility = 0;
     var cardioStack = 0;
+    var skillDays = 0;
     var duplicates = 0;
     var sameRoot = 0;
     var patternExcess = 0;
@@ -200,6 +201,7 @@ final class Scorer {
       var conditioning = 0;
       var coreHere = false;
       var strengthHere = false;
+      var skillHere = false;
       var cardioHere = 0;
       var regions = 0;
       var mobilityHere = 0;
@@ -301,6 +303,10 @@ final class Scorer {
             regionMask |= e.traits.regionMask;
           case SlotKind.skillStatic:
           case SlotKind.skillDynamic:
+            skillHere = true;
+            if (ctx.hasPrioritySkill && !e.prioritySkill) {
+              break;
+            }
             if (_skillWeek[root] != stamp) {
               _skillWeek[root] = stamp;
               _skillDays[root] = 0;
@@ -333,6 +339,9 @@ final class Scorer {
       }
       if (cardioHere > 2) {
         cardioStack += cardioHere - 2;
+      }
+      if (skillHere) {
+        skillDays++;
       }
       // Mobilité en rapport avec le travail du jour (échauffement des
       // articulations sollicitées, étirement des muscles travaillés).
@@ -521,9 +530,19 @@ final class Scorer {
             }
           }
         case DisciplineClass.calisthenics:
-          if (skillFamilies == 0) {
-            sub = 0.3;
-          } else {
+          // Pratique fréquente et courte : une figure à chaque séance de
+          // calisthénie, et chaque figure prioritaire (connue, ou palier
+          // d'un objectif) travaillée trois jours par semaine.
+          var wantedSkillDays = (target * dayCount).round();
+          if (wantedSkillDays < 1) {
+            wantedSkillDays = 1;
+          }
+          var presence = skillDays / wantedSkillDays;
+          if (presence > 1) {
+            presence = 1;
+          }
+          var frequency = 0.0;
+          if (skillFamilies > 0) {
             final wantedDays = dayCount < params.skillPracticeDays
                 ? dayCount
                 : params.skillPracticeDays;
@@ -532,11 +551,12 @@ final class Scorer {
               final practiced = _skillDays[_skillTouched[f]] / wantedDays;
               sum += practiced > 1 ? 1 : practiced;
             }
-            sub = sum / skillFamilies;
+            frequency = sum / skillFamilies;
             if (skillFamilies > 3) {
-              sub *= 3 / skillFamilies;
+              frequency *= 3 / skillFamilies;
             }
           }
+          sub = 0.5 * presence + 0.5 * frequency;
         case DisciplineClass.crossfit:
           var wanted = (target * dayCount).round();
           if (wanted < 1) {
