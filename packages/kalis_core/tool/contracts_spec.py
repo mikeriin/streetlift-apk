@@ -5,9 +5,12 @@ Source unique des types d'échange : `gen_contracts.py` en tire le code Dart
 propriétés, le registre des codes de raison et les tableaux de CONTRAT.md.
 
 Règle d'évolution (PIPELINE_GP.md §0) : après la livraison 0.1.0, ce fichier
-n'évolue que de façon additive — nouveaux types, nouvelles valeurs d'enum en
-fin de liste, nouveaux champs **optionnels** (suffixe `?`). Rien n'est retiré
-ni renommé sans décision du propriétaire.
+n'évolue que de façon additive — nouveaux types, nouveaux champs
+**optionnels** (suffixe `?`), nouvelles énumérations. Rien n'est retiré ni
+renommé sans décision du propriétaire. Depuis 0.4.0, les énumérations
+d'avant 0.4.0 sont fermées (aucune valeur ajoutée : un `switch` exhaustif des
+moteurs 0.1 ne compilerait plus) ; celles de 0.4.0 sont ouvertes (valeurs
+nouvelles en fin de liste : leurs lecteurs prévoient un cas par défaut).
 
 Notation des types de champ : int, double, bool, string, date (jour civil
 AAAA-MM-JJ), json (objet JSON libre), enum:Nom, obj:Nom ; préfixe `list:` ;
@@ -970,9 +973,22 @@ def _add(type_name: str, fields: list[Field]) -> None:
 ENUMS += [
     # ---- profil v3 ----
     E("TrainingAge", ["under_6_months", "months_6_to_24", "years_2_to_5", "over_5_years"],
-      "Ancienneté d'entraînement régulier, sans compter les arrêts longs (0.4.0, ordre croissant)."),
-    E("TrainingGap", ["none", "under_3_weeks", "weeks_3_to_10", "over_10_weeks"],
-      "Interruption en cours au moment de répondre (0.4.0) : aucune (entraînement régulier), moins de 3 semaines, 3 à 10 semaines, plus de 10 semaines."),
+      "Ancienneté de pratique régulière de la discipline principale, sans compter les arrêts longs (0.4.0, ordre croissant)."),
+    E("TrainingGap", ["none", "reduced", "under_3_weeks", "weeks_3_to_10", "weeks_10_to_26", "months_6_to_24",
+                      "over_2_years"],
+      "Interruption en cours au moment de répondre (0.4.0) : aucune (entraînement régulier), entraînement allégé depuis quelques semaines, arrêt de moins de 3 semaines, de 3 à 10 semaines, de 10 semaines à 6 mois, de 6 mois à 2 ans, de plus de 2 ans."),
+    E("HardSetsBand", ["under_5", "sets_5_to_9", "sets_10_to_14", "sets_15_to_20", "over_20"],
+      "Séries dures par semaine sur un mouvement (à 3 répétitions ou moins de l'échec) (0.4.0, ordre croissant)."),
+    E("CurrentPhase", ["volume", "heavy", "post_peak", "unstructured"],
+      "Ce que l'utilisateur fait en ce moment (0.4.0) : du volume, du lourd, il sort d'un pic ou d'une compétition, sans structure."),
+    E("TrainingEmphasis", ["muscle", "strength", "both"],
+      "Ce que l'utilisateur cherche surtout en musculation (0.4.0) : du muscle, de la force, les deux."),
+    E("RunVolumeBand", ["none", "under_10_km", "km_10_to_20", "km_20_to_35", "km_35_to_50", "over_50_km"],
+      "Distance courue par semaine, en moyenne sur les 4 dernières semaines (0.4.0, ordre croissant)."),
+    E("LongRunBand", ["under_30_min", "min_30_to_60", "min_60_to_90", "over_90_min"],
+      "Durée de la plus longue sortie récente (0.4.0, ordre croissant)."),
+    E("StepTenure", ["under_1_month", "months_1_to_3", "months_3_to_6", "over_6_months"],
+      "Temps passé à l'étape actuelle d'une figure (0.4.0, ordre croissant)."),
     E("SleepBand", ["under_6_hours", "hours_6_to_7", "hours_7_plus"],
       "Durée habituelle de sommeil par nuit (0.4.0). Valeur HABITUELLE : la nuit précédente est dans le bilan de séance (`HealthCheck.sleepHours`)."),
     E("StressBand", ["low", "moderate", "high"],
@@ -989,10 +1005,11 @@ ENUMS += [
     E("ConstraintSince", ["under_6_weeks", "weeks_6_to_12", "months_3_to_12", "over_12_months", "past_resolved"],
       "Ancienneté d'une gêne déclarée (0.4.0) ; `past_resolved` : antécédent ancien, sans gêne actuelle."),
     E("AggravatingMovement", ["pull_bent_arm", "hang_straight_arm", "push_support", "straight_arm_support", "overhead",
-                              "knee_flexion", "hip_hinge", "wrist_extension_grip", "rings", "running_jumping"],
-      "Famille de mouvements qui réveille une gêne (0.4.0) : tirage bras fléchis ; suspension ou tirage bras tendus ; poussée en appui (dips, pompes) ; appui bras tendus (planche, équilibre) ; au-dessus de la tête ; flexion de genou (squat, fente) ; charnière de hanche ; prise ou poignet en extension ; anneaux ; course ou sauts."),
-    E("BenchmarkKind", ["load_reps", "max_reps", "max_hold", "time_trial", "distance_trial"],
-      "Nature d'un test ou d'un record (0.4.0) : charge × répétitions (1 répétition = maximum), répétitions max, maintien max, temps sur une distance, distance en une durée."),
+                              "knee_flexion", "hip_hinge", "wrist_extension_grip", "rings", "running_jumping",
+                              "deep_shoulder_extension", "axial_loading", "elbow_lockout", "explosive_pull"],
+      "Famille de mouvements qui réveille une gêne (0.4.0) : tirage bras fléchis ; suspension ou tirage bras tendus ; poussée en appui (pompes, haut du dips) ; appui bras tendus (planche, équilibre) ; au-dessus de la tête ; flexion de genou (squat, fente) ; charnière de hanche ; prise ou poignet en extension ; anneaux ; course ou sauts ; épaule en extension profonde (bas du dips, transition du muscle-up, back lever) ; charge sur le dos (barre lourde) ; coude tendu à fond sous charge ; tirage explosif."),
+    E("BenchmarkKind", ["load_reps", "max_reps", "max_hold", "time_trial", "distance_trial", "reps_for_time"],
+      "Nature d'un test ou d'un record (0.4.0) : charge × répétitions (1 répétition = maximum), répétitions max, maintien max, temps sur une distance, distance en une durée, volume imposé au meilleur temps."),
     E("BenchmarkSource", ["declared", "guided_test", "competition", "training_set"],
       "Origine d'un test ou d'un record (0.4.0) : déclaré par l'utilisateur, test guidé, compétition, série d'entraînement retenue par le moteur."),
     E("EventKind", ["strength_competition", "reps_competition", "freestyle_competition", "race", "other_competition",
@@ -1012,23 +1029,32 @@ ENUMS += [
     # ---- prescriptions avancées ----
     E("SetTechniqueKind", ["standard", "top_set_backoff", "cluster", "rest_pause", "myo_reps", "drop_set",
                            "isometric_hold", "accentuated_eccentric", "contrast", "wave", "amrap", "emom",
-                           "density", "ladder", "pyramid", "skill_practice"],
-      "Technique de série (0.4.0) : normale, série de tête puis séries allégées, clusters, rest-pause, myo-reps, dégressive, isométrie ou maintien, excentrique accentuée, contraste, vagues, AMRAP, EMOM, densité, échelle, pyramide, pratique de figure."),
-    E("SetRole", ["straight", "top", "back_off", "activation", "mini", "drop", "wave", "test", "attempt"],
-      "Rôle d'une série dans une technique (0.4.0) : normale, série de tête, série allégée, série d'activation, mini-série, palier de dégressive, palier de vague, test, tentative de compétition."),
-    E("IntensityBasis", ["percent_one_rm", "percent_benchmark", "rir", "hold_fraction", "progression_step",
-                         "speed_fraction", "heart_rate_fraction"],
-      "Ce que désigne une intensité (0.4.0) : part du 1RM de charge totale ; part d'un test de référence ; répétitions en réserve ; part du maintien max ; étape d'une progression de figure ; part d'une vitesse de référence ; part de la fréquence cardiaque maximale."),
+                           "density", "ladder", "pyramid", "skill_practice", "for_time"],
+      "Technique de série (0.4.0) : normale, série de tête puis séries allégées, clusters, rest-pause, myo-reps, dégressive, isométrie ou maintien, excentrique accentuée, contraste, vagues, AMRAP, EMOM, densité, échelle, pyramide, pratique de figure, volume imposé au meilleur temps."),
+    E("SetRole", ["straight", "top", "back_off", "wave", "test", "attempt", "warmup", "rung",
+                  "interval"],
+      "Rôle d'une série dans une technique (0.4.0) : normale, série de tête, série allégée, palier de vague, test, tentative de compétition, montée d'échauffement, marche d'échelle ou de pyramide, intervalle."),
+    E("IntensityBasis", ["percent_one_rm", "percent_benchmark", "rir", "speed_fraction", "bodyweight_fraction",
+                         "absolute_speed"],
+      "Ce que désigne une intensité (0.4.0) : part du 1RM de charge totale ; part d'un test de référence (répétitions max, maintien max…) ; répétitions en réserve ; part d'une vitesse de référence ; lest en part du poids de corps ; vitesse en mètres par seconde."),
     E("AutoregulationKind", ["backoff_from_top_set", "load_from_rir", "stop_at_rir", "stop_on_rep_drop",
-                             "hold_from_best", "last_set_amrap"],
-      "Règle d'autorégulation portée par une prescription (0.4.0) : séries allégées calculées sur la série de tête RÉALISÉE ; charge corrigée quand le RIR sort de sa plage ; arrêt des séries quand le RIR passe sous un plancher ; arrêt quand les répétitions chutent ; durée de maintien tirée du meilleur maintien du jour ; dernière série ouverte."),
+                             "hold_from_best", "last_set_amrap", "stop_on_quality_drop"],
+      "Règle d'autorégulation portée par une prescription (0.4.0) : séries allégées calculées sur la série de tête RÉALISÉE ; charge corrigée quand le RIR sort de sa plage ; arrêt des séries quand le RIR passe sous un plancher ; arrêt quand les répétitions chutent ; durée de maintien tirée du meilleur maintien du jour ; dernière série ouverte ; arrêt quand la propreté passe sous un plancher."),
+    E("RestMode", ["passive", "walk", "jog"],
+      "Nature de la récupération entre deux séries ou deux répétitions de course (0.4.0) : arrêt, marche, trot."),
+    E("GroupFormat", ["superset", "circuit", "rounds_for_time", "amrap", "emom", "chipper", "intervals"],
+      "Format d'un groupe d'exercices enchaînés (0.4.0) : superset, circuit (tours, repos entre les tours), tours au meilleur temps, maximum de tours en un temps, un passage par intervalle, suite imposée faite une fois au meilleur temps, intervalles (effort, récupération)."),
+    E("AttemptFailure", ["strength", "technique", "judging"],
+      "Cause d'une tentative manquée (0.4.0) : force, technique, décision d'arbitre."),
+    E("EventObjective", ["secure_total", "max_total", "record"],
+      "Objectif du jour d'une compétition de force (0.4.0) : assurer un total, viser le plus gros total, tenter un record."),
     E("TestKind", ["amrap_estimate", "rep_max", "one_rm", "max_reps", "max_hold", "time_trial", "distance_trial",
                    "attempt_simulation"],
       "Série ou séance de test (0.4.0) : série d'estimation sous-maximale (répétitions + RIR), xRM, maximum sur une répétition, répétitions max, maintien max, temps sur une distance, distance en une durée, simulation de tentatives."),
     # ---- périodisation ----
-    E("PhaseKind", ["accumulation", "intensification", "realization", "taper", "competition", "transition", "test",
-                    "deload"],
-      "Phase d'un plan de saison (0.4.0)."),
+    E("SeasonPhaseKind", ["accumulation", "intensification", "realization", "taper", "competition", "transition",
+                          "test", "deload", "maintenance", "reintroduction"],
+      "Phase d'un plan de saison (0.4.0) ; `reintroduction` : reprise progressive après une coupure."),
     E("WeekIntent", ["intro", "accumulation", "intensification", "realization", "deload", "taper", "test",
                      "competition", "transition", "maintenance"],
       "Intention d'une semaine (0.4.0) ; complète `WeekKind`, qui reste renseigné."),
@@ -1048,9 +1074,20 @@ TYPES += [
         F("sessionsPerWeek", "int", "Séances par semaine.", min=1, max=14),
         F("minutesPerSession", "int", "Durée habituelle d'une séance, en minutes.", min=10, max=600),
         F("weekdays", "list:int?", "Jours ISO habituels (1 = lundi … 7 = dimanche), s'ils sont fixes.", max_len=7),
-        F("regions", "list:enum:BodyRegion?", "Régions sollicitées, quand le sport ne le dit pas (`other`, `other_strength`).", max_len=5),
+        F("regions", "list:enum:BodyRegion?", "Régions sollicitées, quand le sport ne suffit pas à le dire (tous sauf course, vélo, natation, escalade).", max_len=5),
         F("hard", "bool?", "Séances intenses (fractionné, matchs, combats)."),
+        F("mainSport", "bool?", "C'est le sport principal de l'utilisateur : le programme passe après lui."),
     ], custom=True, invariants=["`weekdays` : jours de 1 à 7, distincts ; `regions` distinctes."]),
+    Type("RecentTraining", "profile", "Ce que l'utilisateur fait aujourd'hui sur un mouvement ou une figure (0.4.0) : sert à caler le premier bloc sur sa charge réelle.", [
+        F("exerciseId", "string", "Mouvement ou figure.", **EXID),
+        F("sessionsPerWeek", "int", "Séances par semaine où il est travaillé (0 : pas en ce moment).", min=0, max=14),
+        F("hardSets", "enum:HardSetsBand?", "Séries dures par semaine sur ce mouvement."),
+    ]),
+    Type("EnduranceBase", "profile", "Volume de course actuel (0.4.0) : sert à caler le premier bloc d'un coureur.", [
+        F("weeklyVolume", "enum:RunVolumeBand", "Distance par semaine, en moyenne sur les 4 dernières semaines."),
+        F("sessionsPerWeek", "int", "Sorties par semaine.", min=0, max=14),
+        F("longRun", "enum:LongRunBand?", "Plus longue sortie récente."),
+    ]),
     Type("Benchmark", "profile", "Test ou record sur un exercice (0.4.0) : valeur exacte, datée, avec son origine. Convention de charge : EXTERNE, comme l'utilisateur la lit (lest seul pour un exercice lesté).", [
         F("exerciseId", "string", "Exercice.", **EXID),
         F("kind", "enum:BenchmarkKind", "Nature."),
@@ -1060,16 +1097,18 @@ TYPES += [
         F("reps", "int?", "Répétitions réalisées.", min=1, max=1000),
         F("rir", "double?", "Répétitions en réserve déclarées à la fin de la série (0 : série au maximum ; absent : inconnu).", min=0, max=10),
         F("seconds", "int?", "Durée, en secondes (maintien, temps réalisé, durée imposée).", min=1, max=86400),
-        F("distanceMeters", "double?", "Distance, en mètres.", min=0),
+        F("distanceMeters", "double?", "Distance, en mètres.", min=1),
         F("bodyWeightKg", "double?", "Poids de corps le jour du test, en kg (exercices au poids du corps ou lestés).", min=25, max=300),
         F("protocolId", "string?", "Protocole de test guidé suivi (`docs/PARCOURS_V3.md`, § tests guidés).", min_len=1, max_len=40),
+        F("competitionStandard", "bool?", "Fait au standard de compétition (amplitude complète, arrêts marqués) ; absent : inconnu. Les tentatives ne se fondent que sur des records au standard."),
     ], variants=("kind", {
         "load_reps": (["externalLoadKg", "reps"], ["rir"]),
         "max_reps": (["reps"], ["externalLoadKg", "seconds"]),
         "max_hold": (["seconds"], ["externalLoadKg"]),
         "time_trial": (["distanceMeters", "seconds"], []),
         "distance_trial": (["distanceMeters", "seconds"], []),
-    }), invariants=["`load_reps` : charge externe et répétitions (1 répétition, RIR 0 = maximum mesuré) ; `max_reps` : répétitions (charge externe si l'épreuve est lestée, durée si elle est limitée en temps) ; `max_hold` : secondes ; `time_trial`, `distance_trial` : distance et durée."]),
+        "reps_for_time": (["reps", "seconds"], ["externalLoadKg"]),
+    }), invariants=["`load_reps` : charge externe et répétitions (1 répétition, RIR 0 = maximum mesuré) ; `max_reps` : répétitions (charge externe si l'épreuve est lestée, durée si elle est limitée en temps) ; `max_hold` : secondes ; `time_trial`, `distance_trial` : distance et durée ; `reps_for_time` : répétitions imposées et temps réalisé."]),
     Type("WeakPoint", "profile", "Point faible déclaré sur un mouvement (0.4.0). Sert à choisir les exercices d'assistance ; ce n'est pas une douleur (voir `Limitation`).", [
         F("exerciseId", "string", "Mouvement concerné.", **EXID),
         F("kind", "enum:WeakPointKind", "Où ça bloque."),
@@ -1088,6 +1127,8 @@ TYPES += [
         F("seconds", "int?", "Durée imposée d'un maintien, en secondes.", min=1, max=3600),
         F("externalLoadKg", "double?", "Lest imposé, en kg.", min=-300, max=1000),
         F("unbroken", "bool?", "Série indivisible (aucun repos pendant le poste)."),
+        F("timeLimitSeconds", "int?", "Limite de temps propre au poste, en secondes.", min=1, max=14400),
+        F("restAfterSeconds", "int?", "Repos imposé après le poste, en secondes.", min=0, max=3600),
     ], custom=True, invariants=["`reps` et `seconds` ne sont pas renseignés ensemble."]),
     Type("SeasonEvent", "season", "Échéance de la saison (0.4.0) : compétition ou test daté. Les formats varient d'un organisateur à l'autre : rien n'est figé (mouvements, tentatives, postes et temps sont des données).", [
         F("id", "string", "Identifiant stable de l'échéance.", min_len=1),
@@ -1103,19 +1144,28 @@ TYPES += [
         F("stations", "list:obj:EventStation?", "Postes, dans l'ordre (épreuve de répétitions).", min_len=1, max_len=40),
         F("rounds", "int?", "Nombre de tours de la suite de postes.", min=1, max=50),
         F("timeLimitSeconds", "int?", "Limite de temps, en secondes.", min=10, max=14400),
-        F("distanceMeters", "double?", "Distance de la course, en mètres.", min=0),
+        F("distanceMeters", "double?", "Distance de la course, en mètres.", min=1),
         F("targetSeconds", "int?", "Temps visé, en secondes.", min=1, max=86400),
         F("goalIds", "list:string?", "Objectifs du profil que sert cette échéance."),
+        F("dateApproximate", "bool?", "La date n'est pas encore fixée au jour près : `date` est une estimation."),
+        F("plannedBodyWeightKg", "double?", "Poids de corps prévu le jour de l'échéance, en kg.", min=25, max=300),
+        F("formatKnown", "bool?", "false : le format de l'épreuve ne sera connu que le jour même (préparation générale)."),
+        F("heats", "int?", "Nombre de passages prévus dans la journée (manches, tours d'un tableau à élimination).", min=1, max=20),
+        F("restBetweenHeatsSeconds", "int?", "Repos attendu entre deux passages, en secondes.", min=0, max=14400),
+        F("elements", "list:string?", "Figures ou éléments prévus (freestyle).", max_len=40, **EXID),
+        F("bestSeconds", "int?", "Meilleur temps déjà réalisé sur cette épreuve, en secondes.", min=1, max=86400),
+        F("bestTotalReps", "int?", "Meilleur total de répétitions déjà réalisé sur cette épreuve.", min=0, max=100000),
+        F("bestDate", "date?", "Jour de cette meilleure performance."),
     ], variants=("kind", {
-        "strength_competition": (["lifts"], ["timeLimitSeconds"]),
-        "reps_competition": (["mode", "stations"], ["rounds", "timeLimitSeconds", "targetSeconds"]),
-        "freestyle_competition": ([], ["timeLimitSeconds"]),
-        "race": (["distanceMeters"], ["targetSeconds", "timeLimitSeconds"]),
-        "other_competition": ([], ["lifts", "mode", "stations", "rounds", "timeLimitSeconds", "distanceMeters", "targetSeconds"]),
-        "personal_test": ([], ["lifts", "mode", "stations", "rounds", "timeLimitSeconds", "distanceMeters", "targetSeconds"]),
+        "strength_competition": (["lifts"], ["timeLimitSeconds", "heats", "restBetweenHeatsSeconds"]),
+        "reps_competition": (["mode"], ["stations", "rounds", "timeLimitSeconds", "targetSeconds", "formatKnown", "heats", "restBetweenHeatsSeconds", "bestSeconds", "bestTotalReps"]),
+        "freestyle_competition": ([], ["timeLimitSeconds", "heats", "restBetweenHeatsSeconds", "elements", "formatKnown"]),
+        "race": (["distanceMeters"], ["targetSeconds", "timeLimitSeconds", "bestSeconds"]),
+        "other_competition": ([], ["lifts", "mode", "stations", "rounds", "timeLimitSeconds", "distanceMeters", "targetSeconds", "formatKnown", "heats", "restBetweenHeatsSeconds", "elements", "bestSeconds", "bestTotalReps"]),
+        "personal_test": ([], ["lifts", "mode", "stations", "rounds", "timeLimitSeconds", "distanceMeters", "targetSeconds", "elements", "bestSeconds", "bestTotalReps"]),
     }), custom=True, invariants=[
-        "Compétition de force : `lifts` ; compétition de répétitions : `mode` et `stations` ; course : `distanceMeters`.",
-        "Mouvements de `lifts` distincts ; `stations` renseigné ⇒ `mode` renseigné.",
+        "Compétition de force : `lifts` ; compétition de répétitions : `mode` (et `stations` quand le format est connu) ; course : `distanceMeters`.",
+        "Mouvements de `lifts` distincts ; `stations` renseigné ⇒ `mode` renseigné ; `goalIds` sans doublon.",
     ]),
     Type("Specialization", "season", "Spécialisation (0.4.0) : priorité donnée à un mouvement, une figure, un groupe musculaire ou un schéma, et sort du reste.", [
         F("kind", "enum:SpecializationKind", "Nature de la cible."),
@@ -1137,6 +1187,7 @@ TYPES += [
         F("bestHoldSeconds", "int?", "Meilleur maintien propre sur l'étape actuelle, en secondes.", min=0, max=3600),
         F("bestReps", "int?", "Meilleur nombre de répétitions propres sur l'étape actuelle.", min=0, max=1000),
         F("assessedOn", "date?", "Jour de cette mesure."),
+        F("atStepSince", "enum:StepTenure?", "Depuis quand l'utilisateur en est à cette étape (initialise `SkillProgress.weeksAtStep`)."),
     ]),
     Type("StepCriterion", "season", "Critère de passage d'une étape de figure (0.4.0). Paramétrable : les valeurs sont un usage d'entraîneur, pas une norme.", [
         F("holdSeconds", "int?", "Maintien exigé par série, en secondes.", min=1, max=600),
@@ -1164,16 +1215,23 @@ TYPES += [
         F("bestReps", "int?", "Meilleur nombre de répétitions propres sur l'étape.", min=0, max=1000),
         F("reasons", "list:obj:Reason", "Pourquoi."),
     ]),
+    Type("PhaseOverride", "season", "Phase propre à un mouvement, quand elle diffère de la phase générale (0.4.0) : un mouvement peut rester en accumulation pendant que les autres s'intensifient.", [
+        F("exerciseId", "string", "Mouvement ou figure.", **EXID),
+        F("kind", "enum:SeasonPhaseKind", "Phase de ce mouvement."),
+        F("volumeFactor", "double?", "Volume visé pour ce mouvement, rapporté à sa pointe.", min=0, max=2),
+        F("intensityFactor", "double?", "Intensité visée pour ce mouvement, rapportée à sa pointe.", min=0, max=2),
+    ]),
     Type("SeasonPhase", "season", "Phase d'un plan de saison (0.4.0).", [
         F("index", "int", "Rang de la phase (0 = première).", min=0),
-        F("kind", "enum:PhaseKind", "Nature."),
+        F("kind", "enum:SeasonPhaseKind", "Nature."),
         F("startDate", "date", "Premier jour de la phase."),
         F("weeks", "int", "Durée, en semaines.", min=1, max=26),
         F("eventId", "string?", "Échéance que prépare la phase."),
         F("volumeFactor", "double?", "Volume visé, rapporté au volume de pointe de la saison (1 = pointe).", min=0, max=2),
         F("intensityFactor", "double?", "Intensité moyenne visée, rapportée à celle de la phase la plus intense (1 = pointe).", min=0, max=2),
         F("reasons", "list:obj:Reason", "Pourquoi."),
-    ]),
+        F("overrides", "list:obj:PhaseOverride?", "Mouvements dont la phase diffère de la phase générale.", max_len=20),
+    ], custom=True, invariants=["Mouvements de `overrides` distincts."]),
     Type("SeasonPlan", "season", "Plan de saison (0.4.0) : squelette de phases au-dessus des blocs de 4 à 6 semaines (D4.8 inchangé : les blocs restent générés au fil de l'eau).", [
         F("schemaVersion", "int", "Version du schéma (1).", min=1),
         F("createdOn", "date", "Jour de création ou de dernière révision."),
@@ -1181,9 +1239,9 @@ TYPES += [
         F("eventIds", "list:string", "Échéances du profil prises en compte (`SeasonEvent.id`)."),
         F("phases", "list:obj:SeasonPhase", "Phases, dans l'ordre.", min_len=1, max_len=60),
         F("reasons", "list:obj:Reason", "Logique de la saison."),
-    ], schema_version=1, custom=True, invariants=["`index` = rang dans `phases` ; les phases se suivent sans trou ni chevauchement (chacune commence 7 × `weeks` jours après la précédente)."]),
+    ], schema_version=1, custom=True, invariants=["`index` = rang dans `phases` ; les phases se suivent sans trou ni chevauchement (chacune commence 7 × `weeks` jours après la précédente) ; `eventIds` sans doublon ; l'`eventId` d'une phase est dans `eventIds`."]),
     Type("BlockIntent", "season", "Intention d'un bloc (0.4.0) : sa place dans la saison.", [
-        F("phase", "enum:PhaseKind", "Phase que réalise le bloc."),
+        F("phase", "enum:SeasonPhaseKind", "Phase que réalise le bloc."),
         F("seasonPhaseIndex", "int?", "Rang de la phase dans le plan de saison.", min=0),
         F("eventId", "string?", "Échéance préparée."),
         F("weeksToEvent", "int?", "Semaines entre le début du bloc et l'échéance.", min=0, max=104),
@@ -1201,25 +1259,34 @@ TYPES += [
         F("index", "int", "Rang de la tentative (0 = ouverture).", min=0, max=3),
         F("loadKg", "double", "Charge externe tentée, en kg.", min=-300, max=1000),
         F("success", "bool", "Tentative validée."),
-    ]),
+        F("failure", "enum:AttemptFailure?", "Cause de l'échec, si elle est connue."),
+    ], custom=True, invariants=["`failure` seulement pour une tentative manquée (`success` faux)."]),
     Type("AttemptSuggestion", "season", "Tentative proposée (0.4.0).", [
         F("index", "int", "Rang de la tentative (0 = ouverture).", min=0, max=3),
         F("loadKg", "double", "Charge externe proposée, en kg.", min=-300, max=1000),
         F("successProbability", "double?", "Probabilité de réussite estimée, de 0 à 1.", min=0, max=1),
         F("reasons", "list:obj:Reason", "Pourquoi."),
     ]),
+    Type("WarmupStep", "season", "Marche de la montée d'échauffement avant une tentative ou un test (0.4.0).", [
+        F("loadKg", "double", "Charge externe, en kg.", min=-300, max=1000),
+        F("reps", "int", "Répétitions.", min=1, max=50),
+        F("restSeconds", "int?", "Repos après la marche, en secondes.", min=0, max=900),
+    ]),
     Type("LiftAttempts", "season", "Tentatives proposées pour un mouvement (0.4.0).", [
         F("exerciseId", "string", "Mouvement.", **EXID),
         F("estimateKg", "double?", "Maximum du jour estimé, en kg de charge externe.", min=-300, max=1000),
         F("standardErrorKg", "double?", "Écart-type de cette estimation, en kg.", min=0),
         F("attempts", "list:obj:AttemptSuggestion", "Tentatives restantes, dans l'ordre.", max_len=4),
-    ], custom=True, invariants=["Charges proposées croissantes au sens large (une charge ne baisse jamais)."]),
+        F("warmup", "list:obj:WarmupStep?", "Montée d'échauffement proposée avant l'ouverture.", max_len=12),
+    ], custom=True, invariants=["Charges proposées croissantes au sens large (une charge ne baisse jamais) ; rangs strictement croissants."]),
     Type("PacingSegment", "season", "Stratégie de rythme sur un poste d'une épreuve de répétitions (0.4.0).", [
         F("exerciseId", "string", "Exercice.", **EXID),
         F("setReps", "list:int", "Répétitions prévues par série, dans l'ordre.", max_len=60),
         F("restSeconds", "int?", "Repos prévu entre les séries, en secondes.", min=0, max=900),
         F("targetSeconds", "int?", "Temps visé sur ce poste, en secondes.", min=1, max=14400),
-    ]),
+        F("stationIndex", "int?", "Rang du poste dans l'épreuve (0 = premier), quand un exercice y revient plusieurs fois.", min=0, max=39),
+        F("round", "int?", "Tour concerné (0 = premier) ; absent : tous les tours.", min=0, max=49),
+    ], custom=True, invariants=["Répétitions de `setReps` de 1 à 1 000."]),
     Type("EventDayRequest", "season", "Requête du jour d'une échéance (0.4.0).", [
         F("schemaVersion", "int", "Version du schéma (1).", min=1),
         F("input", "obj:AdaptInput", "Profil, bloc, journal, « aujourd'hui », état."),
@@ -1227,6 +1294,8 @@ TYPES += [
         F("bodyWeightKg", "double?", "Poids de corps du jour (pesée), en kg.", min=25, max=300),
         F("done", "list:obj:AttemptResult", "Tentatives déjà faites, dans l'ordre."),
         F("healthCheck", "obj:HealthCheck?", "Bilan santé du jour (une réponse absente n'est jamais remplacée)."),
+        F("objective", "enum:EventObjective?", "Objectif du jour (compétition de force)."),
+        F("targetTotalKg", "double?", "Total visé, en kg de charge externe.", min=0, max=5000),
     ], schema_version=1),
     Type("EventDayPlan", "season", "Plan du jour d'une échéance (0.4.0) : tentatives d'une compétition de force, ou objectif et rythme d'une épreuve de répétitions.", [
         F("schemaVersion", "int", "Version du schéma (1).", min=1),
@@ -1264,8 +1333,6 @@ TYPES += [
         F("miniSets", "int?", "Mini-séries par série (clusters) ; plafond de mini-séries (rest-pause, myo-reps).", min=1, max=20),
         F("miniSetReps", "int?", "Répétitions par mini-série.", min=1, max=30),
         F("intraRestSeconds", "int?", "Repos entre deux mini-séries, en secondes.", min=1, max=120),
-        F("activationRepsLow", "int?", "Bas de la plage de la série d'activation (myo-reps).", min=1, max=100),
-        F("activationRepsHigh", "int?", "Haut de la plage de la série d'activation (myo-reps).", min=1, max=100),
         F("totalRepsTarget", "int?", "Répétitions totales visées (rest-pause, densité).", min=1, max=1000),
         F("drops", "int?", "Nombre de baisses de charge (dégressive).", min=1, max=6),
         F("dropPct", "double?", "Baisse de charge à chaque palier, en part de la charge précédente.", min=0.05, max=0.6),
@@ -1279,7 +1346,6 @@ TYPES += [
         F("durationSeconds", "int?", "Durée du bloc, en secondes (AMRAP, densité).", min=10, max=7200),
         F("intervalSeconds", "int?", "Durée d'un intervalle, en secondes (EMOM).", min=10, max=900),
         F("intervals", "int?", "Nombre d'intervalles (EMOM).", min=1, max=120),
-        F("repsPerInterval", "int?", "Répétitions par intervalle (EMOM).", min=1, max=100),
         F("ladderStart", "int?", "Première marche de l'échelle, en répétitions.", min=1, max=100),
         F("ladderStep", "int?", "Pas de l'échelle, en répétitions.", min=1, max=20),
         F("ladderTop", "int?", "Dernière marche de l'échelle, en répétitions.", min=1, max=100),
@@ -1287,60 +1353,96 @@ TYPES += [
         F("pyramidReps", "list:int?", "Répétitions de chaque palier de la pyramide, dans l'ordre (ex. 10, 8, 6, 4, 2).", min_len=2, max_len=20),
         F("qualityFloor", "int?", "Propreté minimale (1 à 5) : la pratique s'arrête dès qu'un essai passe dessous.", min=1, max=5),
         F("maxAttempts", "int?", "Plafond d'essais (pratique de figure).", min=1, max=30),
+        F("totalSecondsTarget", "int?", "Temps total de maintien à accumuler, en secondes (maintien, pratique de figure).", min=1, max=3600),
+        F("lastSetOnly", "bool?", "La technique ne s'applique qu'à la dernière série ; les autres sont normales."),
     ], variants=("kind", {
         "standard": ([], []),
         "top_set_backoff": (["backoffSets", "backoffDropPct"], ["backoffRepsLow", "backoffRepsHigh"]),
         "cluster": (["miniSets", "miniSetReps", "intraRestSeconds"], []),
         "rest_pause": (["intraRestSeconds"], ["miniSets", "totalRepsTarget"]),
-        "myo_reps": (["miniSetReps", "intraRestSeconds"], ["miniSets", "activationRepsLow", "activationRepsHigh"]),
+        "myo_reps": (["miniSetReps", "intraRestSeconds"], ["miniSets"]),
         "drop_set": (["drops", "dropPct"], []),
-        "isometric_hold": ([], []),
+        "isometric_hold": ([], ["qualityFloor", "totalSecondsTarget"]),
         "accentuated_eccentric": ([], ["eccentricLoadPct", "eccentricOnly"]),
         "contrast": (["pairedSlotId"], ["pairedRestSeconds"]),
         "wave": (["waves", "waveReps"], ["waveStepPct"]),
         "amrap": ([], ["durationSeconds"]),
-        "emom": (["intervalSeconds", "intervals"], ["repsPerInterval"]),
+        "emom": (["intervalSeconds", "intervals"], []),
         "density": (["durationSeconds"], ["totalRepsTarget"]),
         "ladder": (["ladderStart", "ladderStep", "ladderTop"], ["ladderCount"]),
         "pyramid": (["pyramidReps"], []),
-        "skill_practice": ([], ["qualityFloor", "maxAttempts"]),
+        "skill_practice": ([], ["qualityFloor", "maxAttempts", "durationSeconds", "totalSecondsTarget"]),
+        "for_time": (["totalRepsTarget"], ["durationSeconds"]),
     }), custom=True, invariants=[
         "Chaque technique porte exactement ses paramètres (tableau de CONTRAT.md §12) : un paramètre d'une autre technique est une violation.",
-        "Plages basses ≤ plages hautes, renseignées ensemble ; `ladderStart` ≤ `ladderTop` ; répétitions de `waveReps` et de `pyramidReps` de 1 à 100.",
+        "Plages basses ≤ plages hautes, renseignées ensemble ; `ladderStart` ≤ `ladderTop`, écart multiple de `ladderStep` ; répétitions de `waveReps` et de `pyramidReps` de 1 à 100 ; `lastSetOnly` jamais avec `standard`.",
     ]),
-    Type("IntensityTarget", "plan", "Intensité visée, exprimée autrement qu'en flammes (0.4.0). `ExercisePrescription.percentOfOneRm` et `targetFlames` restent valables ; ce type ajoute les intensités relatives à un test, au maintien max, à une étape de figure, à une vitesse.", [
+    Type("IntensityTarget", "plan", "Intensité visée, en plage ou relative à un test (0.4.0). `ExercisePrescription.percentOfOneRm` et `targetFlames` restent les valeurs simples ; ce type ajoute les plages, les intensités relatives à un test (répétitions max, maintien max), à une vitesse, au poids de corps, et le plafond d'effort.", [
         F("basis", "enum:IntensityBasis", "Ce que désigne `value`."),
-        F("value", "double?", "Valeur visée (ou bas de la plage) : part de 0 à 1,5 pour les bases en part ; répétitions en réserve pour `rir`.", min=0, max=10),
-        F("valueHigh", "double?", "Haut de la plage, même unité.", min=0, max=10),
+        F("value", "double", "Valeur visée (ou bas de la plage) : part de 0 à 1,5 pour les bases en part ; répétitions en réserve pour `rir` ; mètres par seconde pour `absolute_speed`.", min=0, max=15),
+        F("valueHigh", "double?", "Haut de la plage, même unité.", min=0, max=15),
         F("referenceExerciseId", "string?", "Exercice du test de référence, s'il diffère de l'exercice prescrit.", **EXID),
-        F("referenceKind", "enum:BenchmarkKind?", "Nature du test de référence (`percent_benchmark` : part des répétitions max, du maintien max…)."),
-        F("stepExerciseId", "string?", "Étape de progression visée (`progression_step`).", **EXID),
+        F("referenceKind", "enum:BenchmarkKind?", "Nature du test de référence (`percent_benchmark` : part des répétitions max, du maintien max… ; `speed_fraction` : test de course)."),
+        F("eventId", "string?", "Échéance dont l'allure visée sert de référence (`speed_fraction` : part de l'allure cible de la course).", min_len=1),
         F("rirCap", "double?", "Plafond d'effort : ne jamais finir une série avec moins de répétitions en réserve que cette valeur ; la charge est abaissée sinon.", min=0, max=10),
     ], variants=("basis", {
-        "percent_one_rm": (["value"], ["valueHigh", "referenceExerciseId"]),
-        "percent_benchmark": (["value", "referenceKind"], ["valueHigh", "referenceExerciseId"]),
-        "rir": (["value"], ["valueHigh"]),
-        "hold_fraction": (["value"], ["valueHigh", "referenceExerciseId"]),
-        "progression_step": (["stepExerciseId"], []),
-        "speed_fraction": (["value"], ["valueHigh", "referenceKind", "referenceExerciseId"]),
-        "heart_rate_fraction": (["value"], ["valueHigh"]),
-    }), custom=True, invariants=["`value` ≤ `valueHigh` ; bases en part : `value` et `valueHigh` ≤ 1,5."]),
+        "percent_one_rm": ([], ["referenceExerciseId"]),
+        "percent_benchmark": (["referenceKind"], ["referenceExerciseId"]),
+        "rir": ([], []),
+        "speed_fraction": ([], ["referenceKind", "referenceExerciseId", "eventId"]),
+        "bodyweight_fraction": ([], []),
+        "absolute_speed": ([], []),
+    }), custom=True, invariants=["`value` ≤ `valueHigh` ; bases en part (`percent_one_rm`, `percent_benchmark`, `speed_fraction`, `bodyweight_fraction`) : `value` et `valueHigh` ≤ 1,5 ; `rir` : ≤ 10 ; `absolute_speed` : ≤ 15 m/s."]),
     Type("AutoregulationRule", "plan", "Règle d'autorégulation portée par une prescription (0.4.0) : le moteur dynamique l'exécute pendant la séance.", [
         F("kind", "enum:AutoregulationKind", "Règle."),
-        F("pct", "double?", "Part : baisse appliquée à la série de tête réalisée (`backoff_from_top_set`), part du meilleur maintien du jour (`hold_from_best`), pas de correction de charge par répétition d'écart (`load_from_rir`).", min=0, max=1),
+        F("pct", "double?", "Part : baisse appliquée à la série de tête réalisée (`backoff_from_top_set` ; absente : celle de `technique.backoffDropPct`), part du meilleur maintien du jour (`hold_from_best`), pas de correction de charge par répétition d'écart (`load_from_rir`).", min=0, max=1),
         F("rirFloor", "double?", "Plancher de répétitions en réserve.", min=0, max=10),
         F("rirCeiling", "double?", "Plafond de répétitions en réserve.", min=0, max=10),
         F("minSets", "int?", "Nombre minimal de séries.", min=0, max=20),
         F("maxSets", "int?", "Nombre maximal de séries.", min=1, max=30),
         F("repDrop", "int?", "Chute de répétitions, par rapport à la première série, qui arrête l'exercice.", min=1, max=50),
+        F("qualityFloor", "int?", "Propreté minimale (1 à 5) : l'exercice s'arrête dès qu'une série passe dessous.", min=1, max=5),
     ], variants=("kind", {
-        "backoff_from_top_set": (["pct"], ["rirCeiling", "minSets", "maxSets"]),
+        "backoff_from_top_set": ([], ["pct", "rirCeiling", "minSets", "maxSets"]),
         "load_from_rir": (["rirFloor", "rirCeiling"], ["pct"]),
         "stop_at_rir": (["rirFloor"], ["minSets", "maxSets"]),
         "stop_on_rep_drop": (["repDrop"], ["minSets", "maxSets"]),
         "hold_from_best": (["pct"], []),
         "last_set_amrap": ([], ["rirFloor"]),
+        "stop_on_quality_drop": (["qualityFloor"], ["minSets", "maxSets"]),
     }), custom=True, invariants=["`rirFloor` ≤ `rirCeiling` ; `minSets` ≤ `maxSets`."]),
+    Type("GroupSpec", "plan", "Groupe d'exercices enchaînés dans une séance (0.4.0) : ses membres portent le même `groupId`. Quand un groupe est décrit ici, il prime sur le texte libre `ExercisePrescription.format`.", [
+        F("groupId", "string", "Identifiant du groupe (celui de `ExercisePrescription.groupId`).", min_len=1),
+        F("format", "enum:GroupFormat", "Format."),
+        F("rounds", "int?", "Nombre de tours.", min=1, max=100),
+        F("durationSeconds", "int?", "Durée du bloc, en secondes (AMRAP, EMOM).", min=10, max=14400),
+        F("timeCapSeconds", "int?", "Limite de temps, en secondes (tours ou suite au meilleur temps).", min=10, max=14400),
+        F("intervalSeconds", "int?", "Durée d'un intervalle, en secondes (EMOM, intervalles).", min=5, max=3600),
+        F("restBetweenRoundsSeconds", "int?", "Repos entre deux tours, en secondes.", min=0, max=3600),
+        F("targetSeconds", "int?", "Temps visé, en secondes.", min=1, max=14400),
+        F("eventId", "string?", "Échéance dont ce groupe répète l'épreuve.", min_len=1),
+    ], variants=("format", {
+        "superset": ([], ["rounds", "restBetweenRoundsSeconds"]),
+        "circuit": (["rounds"], ["restBetweenRoundsSeconds"]),
+        "rounds_for_time": (["rounds"], ["timeCapSeconds", "targetSeconds", "restBetweenRoundsSeconds"]),
+        "amrap": (["durationSeconds"], []),
+        "emom": (["intervalSeconds", "durationSeconds"], []),
+        "chipper": ([], ["timeCapSeconds", "targetSeconds"]),
+        "intervals": (["rounds", "intervalSeconds"], ["restBetweenRoundsSeconds"]),
+    }), invariants=["Chaque format porte exactement ses paramètres ; `eventId` est libre. Dans une séance (`DayPrescription.groups`, `SessionPlan.groups`) : `groupId` distincts, et chaque groupe a au moins un membre (une prescription qui porte son `groupId`)."]),
+    Type("GroupResult", "journal", "Résultat d'un groupe d'exercices enchaînés (0.4.0) : temps total, tours, répétitions en plus.", [
+        F("groupId", "string", "Groupe (`GroupSpec.groupId`).", min_len=1),
+        F("completed", "bool", "Le groupe a été fait en entier (dans la limite de temps, s'il y en a une)."),
+        F("elapsedSeconds", "int?", "Temps total, en secondes.", min=0, max=86400),
+        F("rounds", "int?", "Tours complets.", min=0, max=1000),
+        F("extraReps", "int?", "Répétitions faites dans le tour entamé.", min=0, max=10000),
+    ]),
+    Type("SetPart", "journal", "Partie d'une série (0.4.0) : mini-série d'un cluster, d'un rest-pause ou de myo-reps, palier d'une dégressive, passage d'un bloc de densité. La série reste UNE ligne du journal (`SetRecord`), dont `reps` est le total.", [
+        F("reps", "int?", "Répétitions de la partie.", min=0, max=1000),
+        F("seconds", "int?", "Durée de la partie, en secondes.", min=0, max=86400),
+        F("externalLoadKg", "double?", "Charge externe de la partie, si elle diffère de celle de la série (dégressive).", min=-300, max=1000),
+        F("restBeforeSeconds", "int?", "Repos pris avant la partie, en secondes.", min=0, max=3600),
+    ], custom=True, invariants=["Au moins `reps` ou `seconds`. Quand toutes les parties d'une série ont des répétitions, leur somme est le `reps` de la série (`SetRecord`)."]),
     Type("TestSpec", "plan", "Série ou exercice de test (0.4.0), porté par une prescription dont `kind` vaut `test`.", [
         F("kind", "enum:TestKind", "Nature du test."),
         F("protocolId", "string?", "Protocole de test guidé (`docs/PARCOURS_V3.md`, § tests guidés).", min_len=1, max_len=40),
@@ -1353,10 +1455,11 @@ TYPES += [
 # ---- champs optionnels ajoutés aux types existants (0.4.0) ----
 _add("Limitation", [
     F("since", "enum:ConstraintSince?", "Depuis quand (0.4.0). Une gêne décrit une contrainte d'entraînement, jamais un diagnostic."),
-    F("aggravatedBy", "list:enum:AggravatingMovement?", "Familles de mouvements qui la réveillent (0.4.0).", max_len=10),
+    F("aggravatedBy", "list:enum:AggravatingMovement?", "Familles de mouvements qui la réveillent (0.4.0).", max_len=14),
+    F("effortDiscomfort", "int?", "Gêne au plus fort pendant l'effort, de 0 à 10 (0.4.0) ; `discomfort` reste la gêne du moment.", min=0, max=10),
 ])
 _add("AthleteProfile", [
-    F("trainingAge", "enum:TrainingAge?", "Ancienneté d'entraînement régulier (schéma 3)."),
+    F("trainingAge", "enum:TrainingAge?", "Ancienneté de pratique régulière de la discipline principale (schéma 3)."),
     F("trainingGap", "enum:TrainingGap?", "Interruption en cours au moment de répondre (schéma 3) ; ensuite, les coupures se lisent dans le journal."),
     F("sleep", "enum:SleepBand?", "Durée habituelle de sommeil (schéma 3)."),
     F("stress", "enum:StressBand?", "Stress habituel de la vie hors entraînement (schéma 3)."),
@@ -1365,10 +1468,15 @@ _add("AthleteProfile", [
     F("bodyWeightGoal", "enum:BodyWeightGoal?", "Évolution voulue du poids de corps en ce moment (schéma 3)."),
     F("benchmarks", "list:obj:Benchmark?", "Tests et records connus (schéma 3). Absent : question non posée ou passée.", max_len=200),
     F("events", "list:obj:SeasonEvent?", "Compétitions et tests datés (schéma 3). Absent : question non posée ou passée ; liste vide : aucune échéance.", max_len=20),
-    F("skills", "list:obj:SkillState?", "Figures visées et étape actuelle (schéma 3).", max_len=30),
+    F("skills", "list:obj:SkillState?", "Figures visées et étape actuelle, par ordre de priorité (schéma 3).", max_len=30),
     F("weakPoints", "list:obj:WeakPoint?", "Points faibles déclarés (schéma 3).", max_len=30),
     F("specialization", "obj:Specialization?", "Priorité voulue par l'utilisateur (schéma 3)."),
-    F("lifestyleUpdatedOn", "date?", "Jour de la dernière réponse aux questions de récupération et de vie (sommeil, stress, métier, autres sports, poids) (schéma 3) : elles se redemandent de temps en temps."),
+    F("recentTraining", "list:obj:RecentTraining?", "Charge d'entraînement actuelle par mouvement ou figure (schéma 3).", max_len=12),
+    F("currentPhase", "enum:CurrentPhase?", "Ce que l'utilisateur fait en ce moment (schéma 3)."),
+    F("emphasis", "enum:TrainingEmphasis?", "Ce qu'il cherche surtout en musculation (schéma 3)."),
+    F("enduranceBase", "obj:EnduranceBase?", "Volume de course actuel (schéma 3)."),
+    F("targetBodyWeightKg", "double?", "Poids de corps visé, en kg, quand `bodyWeightGoal` vaut `lose` ou `gain` (schéma 3).", min=25, max=300),
+    F("lifestyleUpdatedOn", "date?", "Jour de la dernière réponse aux questions de récupération et de vie (sommeil, stress, métier, autres sports, poids, charge actuelle) (schéma 3) : elles se redemandent de temps en temps."),
 ])
 _add("SetTarget", [
     F("role", "enum:SetRole?", "Rôle de la série dans la technique (0.4.0)."),
@@ -1378,7 +1486,7 @@ _add("SetTarget", [
 _add("SetRecord", [
     F("technique", "enum:SetTechniqueKind?", "Technique de la série (0.4.0)."),
     F("role", "enum:SetRole?", "Rôle de la série dans la technique (0.4.0)."),
-    F("miniSetIndex", "int?", "Rang de la mini-série dans la série (0 = première) (0.4.0) : les mini-séries d'un cluster, d'un rest-pause, d'une dégressive partagent le même `setIndex`.", min=0, max=99),
+    F("parts", "list:obj:SetPart?", "Détail de la série (0.4.0) : mini-séries d'un cluster, d'un rest-pause, de myo-reps, paliers d'une dégressive, passages d'un bloc de densité. La série reste une seule ligne ; `reps` (ou `seconds`) en est le total.", min_len=1, max_len=120),
     F("restBeforeSeconds", "int?", "Repos pris avant la série, en secondes (0.4.0).", min=0, max=3600),
     F("elapsedSeconds", "int?", "Temps écoulé depuis le début du bloc chronométré, en secondes (AMRAP, EMOM, densité, épreuve pour le temps) (0.4.0).", min=0, max=86400),
     F("rounds", "int?", "Tours complets réalisés (AMRAP, circuit) (0.4.0).", min=0, max=1000),
@@ -1387,18 +1495,22 @@ _add("SetRecord", [
 ])
 _add("SessionRecord", [
     F("eventId", "string?", "Échéance du profil dont cette séance est le jour (0.4.0).", min_len=1),
+    F("groupResults", "list:obj:GroupResult?", "Résultats des groupes d'exercices enchaînés (0.4.0).", max_len=20),
 ])
 _add("ExercisePrescription", [
     F("technique", "obj:SetTechnique?", "Technique de série (0.4.0) ; absente : séries normales."),
     F("tempo", "obj:Tempo?", "Tempo des répétitions (0.4.0)."),
-    F("intensity", "obj:IntensityTarget?", "Intensité relative à un test, au maintien max, à une étape, à une vitesse ; plafond de RIR (0.4.0)."),
+    F("intensity", "obj:IntensityTarget?", "Intensité en plage, relative à un test (répétitions max, maintien max, course), à une vitesse ou au poids de corps ; plafond de RIR (0.4.0)."),
     F("autoregulation", "list:obj:AutoregulationRule?", "Règles d'autorégulation que le moteur dynamique exécute (0.4.0).", max_len=3),
     F("test", "obj:TestSpec?", "Description du test, quand `kind` vaut `test` (0.4.0)."),
     F("dayStress", "enum:DayStress?", "Ondulation : jour lourd, moyen ou léger pour ce mouvement (0.4.0)."),
     F("skillTargetId", "string?", "Figure visée dont cet exercice est une étape (0.4.0).", **EXID),
+    F("unbroken", "bool?", "Série indivisible : aucun repos pendant la série (0.4.0)."),
+    F("restMode", "enum:RestMode?", "Nature de la récupération (course) (0.4.0)."),
 ])
 _add("DayPrescription", [
     F("stress", "enum:DayStress?", "Ondulation : séance lourde, moyenne ou légère (0.4.0)."),
+    F("groups", "list:obj:GroupSpec?", "Groupes d'exercices enchaînés de la séance (0.4.0).", max_len=20),
 ])
 _add("WeekPrescription", [
     F("intent", "enum:WeekIntent?", "Intention de la semaine (0.4.0) ; `kind` reste renseigné."),
@@ -1416,9 +1528,10 @@ _add("AdaptInput", [
     F("season", "obj:SeasonPlan?", "Plan de saison en cours (0.4.0)."),
 ])
 _add("SessionPlan", [
-    F("phase", "enum:PhaseKind?", "Phase en cours (0.4.0)."),
+    F("phase", "enum:SeasonPhaseKind?", "Phase en cours (0.4.0)."),
     F("weekIntent", "enum:WeekIntent?", "Intention de la semaine (0.4.0)."),
     F("eventId", "string?", "Échéance dont c'est le jour (0.4.0).", min_len=1),
+    F("groups", "list:obj:GroupSpec?", "Groupes d'exercices enchaînés de la séance (0.4.0).", max_len=20),
 ])
 _add("IntraSessionAdvice", [
     F("miniSetsLeft", "int?", "Mini-séries conseillées encore à faire dans la série en cours (0.4.0).", min=0, max=50),
@@ -1450,11 +1563,18 @@ _TYPE_BY_NAME["AthleteProfile"].schema_version = 3
 _TYPE_BY_NAME["AthleteProfile"].doc = "Profil d'athlète (D3). Schéma 3 depuis 0.4.0 : le schéma 2 reste lu tel quel ; les champs du schéma 3 sont tous optionnels."
 _TYPE_BY_NAME["AthleteProfile"].fields[0].doc = "Version du schéma (2 ou 3)."
 _TYPE_BY_NAME["AthleteProfile"].invariants.append(
-    "Un champ du schéma 3 renseigné ⇒ `schemaVersion` ≥ 3 ; identifiants d'`events` distincts ; figures visées de `skills` distinctes ; un seul test par (exercice, nature, origine, jour) dans `benchmarks`.")
+    "Un champ du schéma 3 renseigné ⇒ `schemaVersion` ≥ 3 ; identifiants d'`events` distincts ; figures visées de `skills` distinctes ; mouvements de `recentTraining` distincts ; les `goalIds` d'une échéance sont des objectifs du profil ; `targetBodyWeightKg` seulement avec `bodyWeightGoal` `lose` ou `gain` ; `weakPoints` distincts (mouvement et nature) ; `lifestyleUpdatedOn` ≥ `createdOn`.")
+for _name, _inv in (
+        ("SetRecord", "(0.4.0) Quand toutes les `parts` ont des répétitions, leur somme vaut `reps`."),
+        ("SessionRecord", "(0.4.0) Un résultat au plus par groupe (`groupResults` : `groupId` distincts)."),
+        ("DayPrescription", "(0.4.0) `groups` : `groupId` distincts ; chaque groupe a au moins un membre parmi `items`."),
+        ("SessionPlan", "(0.4.0) `groups` : `groupId` distincts ; chaque groupe a au moins un membre parmi `items`.")):
+    _TYPE_BY_NAME[_name].custom = True
+    _TYPE_BY_NAME[_name].invariants.append(_inv)
 _TYPE_BY_NAME["Limitation"].custom = True
 _TYPE_BY_NAME["Limitation"].invariants.append("`aggravatedBy` sans doublon.")
 _TYPE_BY_NAME["ExercisePrescription"].invariants.append(
-    "(0.4.0) `test` renseigné ⇒ `kind` vaut `test` ; série de tête et séries allégées : `technique.backoffSets` < `sets`.")
+    "(0.4.0) `test` renseigné ⇒ `kind` vaut `test`. `sets` est toujours le nombre de lignes de journal attendues : série de tête et séries allégées (`backoffSets` < `sets`), paliers de vagues (`waves` × longueur de `waveReps`), de pyramide (longueur de `pyramidReps`), marches d'échelle (`ladderCount` × nombre de marches), intervalles d'un EMOM (`intervals`), 1 pour un bloc de densité ou de volume au temps. `sets` restant borné à 20, une technique de plus de 20 lignes (EMOM long, grande échelle) s'écrit comme un groupe (`GroupSpec`). La plage de répétitions est celle d'une ligne : un cluster de `miniSets` × `miniSetReps` y est compris ; vagues, pyramide, échelle : leurs bornes. Deux écritures de la même intensité doivent s'accorder : `percentOfOneRm` dans la plage de `intensity` (`percent_one_rm`), RIR de `targetFlames` dans celle de `intensity` (`rir`), `pct` d'une règle `backoff_from_top_set` égal à `technique.backoffDropPct`.")
 
 REASONS += [
     # ---- plan, ajoutés en 0.4.0 (lot CQ, évolution additive) ----
@@ -1467,6 +1587,8 @@ REASONS += [
     ("plan.specialization", {"target": "string", "weeks": "int"}, "Spécialisation : priorité donnée à une cible pendant tant de semaines."),
     ("plan.maintenance_volume", {"muscle": "string", "weeklySets": "double"}, "Volume d'entretien du reste pendant une spécialisation ou un affûtage."),
     ("plan.skill_step", {"exerciseId": "exercise", "stepIndex": "int"}, "Étape de la progression d'une figure."),
+    ("plan.skill_plateau", {"exerciseId": "exercise"}, "Figure bloquée à la même étape depuis longtemps : la méthode change (autre variante, autre dosage)."),
+    ("plan.recent_load", {"exerciseId": "exercise", "sessions": "int"}, "Premier bloc calé sur la charge d'entraînement actuelle déclarée."),
     ("plan.test_scheduled", {"testKind": "string"}, "Test programmé (série d'estimation, maximum, maintien, course)."),
     ("plan.benchmark_used", {"exerciseId": "exercise", "source": "string"}, "Charge ou durée calculée d'après un test ou un record du profil."),
     ("plan.percent_based", {"pct": "double"}, "Charge donnée en part du maximum."),

@@ -16,6 +16,7 @@ Déterministe ; aucune horloge.
 from __future__ import annotations
 
 import argparse
+import datetime
 import json
 import sys
 from pathlib import Path
@@ -28,6 +29,7 @@ import spec_validate  # noqa: E402
 
 PKG = Path(__file__).resolve().parents[1]
 TODAY_YEAR = 2026  # année de création des profils types (gen_fixtures.JOUR0)
+UNE_SEMAINE_APRES = (datetime.date.fromisoformat(gf.JOUR0) + datetime.timedelta(days=8)).isoformat()
 
 
 # ------------------------------------------------------------ conditions ----
@@ -79,9 +81,20 @@ def evaluate(cond: dict, profile: dict, today_year: int) -> bool:
     raise ValueError(f"opération inconnue : {op}")
 
 
-def visible(profile: dict, today_year: int = TODAY_YEAR, since: int | None = None) -> list[dict]:
+def deferred(q: dict, profile: dict, today_year: int = TODAY_YEAR) -> bool:
+    return "deferWhen" in q and evaluate(q["deferWhen"], profile, today_year)
+
+
+def visible(profile: dict, today_year: int = TODAY_YEAR, since: int | None = None,
+            include_deferred: bool = False) -> list[dict]:
+    """Questions posées à la création (ou, avec `include_deferred`, toutes celles du profil)."""
     return [q for q in ps.QUESTIONS
-            if evaluate(q["when"], profile, today_year) and (since is None or q["since"] >= since)]
+            if evaluate(q["when"], profile, today_year) and (since is None or q["since"] >= since)
+            and (include_deferred or not deferred(q, profile, today_year))]
+
+
+def deferred_questions(profile: dict, today_year: int = TODAY_YEAR) -> list[dict]:
+    return [q for q in ps.QUESTIONS if evaluate(q["when"], profile, today_year) and deferred(q, profile, today_year)]
 
 
 def eligible_tests(profile: dict, today_year: int = TODAY_YEAR) -> list[str]:
@@ -90,19 +103,41 @@ def eligible_tests(profile: dict, today_year: int = TODAY_YEAR) -> list[str]:
 
 # --------------------------------------------------------- profils types ----
 
+_SPEC_TYPES = {t.name: t for t in spec.TYPES}
+
+
+def ordonner(type_name: str, obj: dict) -> dict:
+    """Objet réécrit dans l'ordre des champs du contrat, à tous les niveaux
+    (celui de `toJson()` : un profil type se relit et se réécrit à l'octet près)."""
+    out = {}
+    for f in _SPEC_TYPES[type_name].fields:
+        if f.name not in obj:
+            continue
+        v = obj[f.name]
+        text = f.type.rstrip("?")
+        is_list = text.startswith("list:")
+        if is_list:
+            text = text[5:]
+        kind, _, name = text.partition(":")
+        if kind == "obj":
+            v = [ordonner(name, x) for x in v] if is_list else ordonner(name, v)
+        out[f.name] = v
+    inconnus = set(obj) - set(out)
+    assert not inconnus, f"{type_name} : champs inconnus {inconnus}"
+    return out
+
+
 def _v3(base: dict, **fields) -> dict:
     p = dict(base["profile"])
     p["schemaVersion"] = 3
-    # Les champs du schéma 3 suivent ceux du schéma 2, dans l'ordre du contrat.
-    order = [f.name for f in next(t for t in spec.TYPES if t.name == "AthleteProfile").fields]
     p.update(fields)
-    p = {k: p[k] for k in order if k in p}
-    return {"key": base["key"], "description": base["description"], "profile": p}
+    return {"key": base["key"], "description": base["description"], "profile": ordonner("AthleteProfile", p)}
 
 
 def bench(ex, kind, source="declared", **kw):
     b = {"exerciseId": ex, "kind": kind, "source": source}
-    for k in ("date", "externalLoadKg", "reps", "rir", "seconds", "distanceMeters", "bodyWeightKg", "protocolId"):
+    for k in ("date", "externalLoadKg", "reps", "rir", "seconds", "distanceMeters", "bodyWeightKg", "protocolId",
+              "competitionStandard"):
         if k in kw:
             v = kw[k]
             b[k] = float(v) if k in ("externalLoadKg", "rir", "distanceMeters", "bodyWeightKg") else v
@@ -123,17 +158,17 @@ def profils_v3() -> list[dict]:
     out = []
 
     out.append(_v3(
-        P("v3_debutant_forme_generale", "Débutant complet, forme générale, 2 × 30 min à la maison sans matériel.",
+        P("v3_debutant_forme_generale", "Débutant complet, forme générale, 2 × 30 min à la maison sans matériel ; questions de récupération répondues après la première semaine.",
           sex="male", birth=1994, height=178, weight=82, disciplines=gf.mix("general_fitness", 80, ("mobility", 20)),
           days=[(2, 30), (5, 30)], places=["home"], equipment=gf.SANS, experience="beginner",
           levels=[lvl("sw-pompe", "max_reps", 5, 10), lvl("mu-air-squat", "max_reps", 15, 25),
                   lvl("mu-gainage-ventral-coudes", "max_hold_seconds")],
           goals=[habit("g1", 2, 8)]),
-        trainingAge="under_6_months", sleep="hours_6_to_7", stress="moderate", occupationalLoad="seated",
-        otherSports=[], lifestyleUpdatedOn=gf.JOUR0))
+        sleep="hours_6_to_7", stress="moderate", occupationalLoad="seated",
+        otherSports=[], lifestyleUpdatedOn=UNE_SEMAINE_APRES))
 
     genou = lim("knee", "left", 2)
-    genou.update(since="over_12_months", aggravatedBy=["knee_flexion", "running_jumping"])
+    genou.update(since="over_12_months", aggravatedBy=["knee_flexion", "running_jumping"], effortDiscomfort=4)
     out.append(_v3(
         P("v3_intermediaire_musculation", "Femme de 34 ans, musculation en salle depuis 3 ans, 4 × 60 min, un footing par semaine.",
           sex="female", birth=1992, height=166, weight=64, disciplines=gf.mix("musculation", 80, ("mobility", 20)),
@@ -146,13 +181,15 @@ def profils_v3() -> list[dict]:
         trainingAge="years_2_to_5", trainingGap="none", sleep="hours_7_plus", stress="moderate",
         occupationalLoad="on_feet",
         otherSports=[{"kind": "running", "sessionsPerWeek": 1, "minutesPerSession": 40, "weekdays": [7]}],
-        bodyWeightGoal="lose",
+        bodyWeightGoal="lose", targetBodyWeightKg=61.0,
         benchmarks=[bench("mu-back-squat-barre-haute", "load_reps", externalLoadKg=70, reps=5, rir=1, date="2026-09-20"),
                     bench("mu-developpe-couche-barre", "load_reps", externalLoadKg=50, reps=1, rir=0, date="2026-08-30")],
-        events=[], lifestyleUpdatedOn=gf.JOUR0))
+        events=[], emphasis="muscle",
+        specialization={"kind": "muscle", "muscle": "grand fessier", "maintenance": "maintain"},
+        lifestyleUpdatedOn=gf.JOUR0))
 
     coude = lim("elbow", "both", 2)
-    coude.update(since="months_3_to_12", aggravatedBy=["straight_arm_support", "pull_bent_arm"])
+    coude.update(since="months_3_to_12", aggravatedBy=["straight_arm_support", "elbow_lockout"], effortDiscomfort=3)
     out.append(_v3(
         P("v3_competiteur_elite_streetlifting", "Compétiteur élite de streetlifting (catégorie −73 kg), mode street 70/15/15, 5 séances, compétition principale dans 28 semaines.",
           sex="male", birth=1999, height=174, weight=72.4, street_mode=gf.street("streetlifting", 70, 15, 15),
@@ -170,15 +207,16 @@ def profils_v3() -> list[dict]:
         trainingAge="over_5_years", trainingGap="none", sleep="hours_6_to_7", stress="low", occupationalLoad="on_feet",
         otherSports=[], bodyWeightGoal="maintain",
         benchmarks=[
-            bench("sl-traction-lestee", "load_reps", "competition", externalLoadKg=75, reps=1, rir=0, date="2026-06-06", bodyWeightKg=72.8),
-            bench("sl-dips-leste", "load_reps", "competition", externalLoadKg=105, reps=1, rir=0, date="2026-06-06", bodyWeightKg=72.8),
-            bench("sl-muscle-up-leste", "load_reps", "competition", externalLoadKg=25, reps=1, rir=0, date="2026-06-06", bodyWeightKg=72.8),
-            bench("sl-squat-competition", "load_reps", "competition", externalLoadKg=180, reps=1, rir=0, date="2026-06-06"),
+            bench("sl-traction-lestee", "load_reps", "competition", externalLoadKg=75, reps=1, rir=0, date="2026-06-06", bodyWeightKg=72.8, competitionStandard=True),
+            bench("sl-dips-leste", "load_reps", "competition", externalLoadKg=105, reps=1, rir=0, date="2026-06-06", bodyWeightKg=72.8, competitionStandard=True),
+            bench("sl-muscle-up-leste", "load_reps", "competition", externalLoadKg=25, reps=1, rir=0, date="2026-06-06", bodyWeightKg=72.8, competitionStandard=True),
+            bench("sl-squat-competition", "load_reps", "competition", externalLoadKg=180, reps=1, rir=0, date="2026-06-06", competitionStandard=True),
             bench("sw-traction-pronation", "max_reps", reps=34, date="2026-09-12", bodyWeightKg=72.5),
         ],
         events=[
             {"id": "e1", "kind": "strength_competition", "priority": "main", "date": "2027-04-17",
              "name": "Championnat national", "ruleset": "final_rep_all4", "weightClassKg": 73.0,
+             "plannedBodyWeightKg": 72.8,
              "lifts": [lift("sl-muscle-up-leste", best=25, target=30), lift("sl-traction-lestee", best=75, target=82.5),
                        lift("sl-dips-leste", best=105, target=112.5), lift("sl-squat-competition", inc=2.5, best=180, target=190)],
              "goalIds": ["g1", "g2", "g3", "g4"]},
@@ -187,10 +225,16 @@ def profils_v3() -> list[dict]:
              "lifts": [lift("sl-traction-lestee", best=75), lift("sl-dips-leste", best=105)]},
         ],
         skills=[{"targetExerciseId": "cs-front-lever", "currentExerciseId": "cs-front-lever-straddle",
-                 "bestHoldSeconds": 8, "assessedOn": "2026-09-25"}],
+                 "bestHoldSeconds": 8, "assessedOn": "2026-09-25", "atStepSince": "months_3_to_6"}],
         weakPoints=[{"exerciseId": "sl-dips-leste", "kind": "bottom"},
                     {"exerciseId": "sl-muscle-up-leste", "kind": "transition"}],
         specialization={"kind": "exercise", "exerciseId": "sl-muscle-up-leste", "weeks": 8, "maintenance": "maintain"},
+        recentTraining=[{"exerciseId": "sl-traction-lestee", "sessionsPerWeek": 2, "hardSets": "sets_10_to_14"},
+                        {"exerciseId": "sl-dips-leste", "sessionsPerWeek": 2, "hardSets": "sets_10_to_14"},
+                        {"exerciseId": "sl-muscle-up-leste", "sessionsPerWeek": 2, "hardSets": "sets_5_to_9"},
+                        {"exerciseId": "sl-squat-competition", "sessionsPerWeek": 2, "hardSets": "sets_5_to_9"},
+                        {"exerciseId": "cs-front-lever", "sessionsPerWeek": 1}],
+        currentPhase="volume",
         lifestyleUpdatedOn=gf.JOUR0))
 
     out.append(_v3(
@@ -207,7 +251,9 @@ def profils_v3() -> list[dict]:
         bodyWeightGoal="no_goal",
         benchmarks=[bench("ca-footing-endurance-fondamentale", "time_trial", distanceMeters=5000, seconds=1560, date="2026-09-06")],
         events=[{"id": "e1", "kind": "race", "priority": "main", "date": "2027-03-14", "name": "10 km de printemps",
-                 "distanceMeters": 10000.0, "targetSeconds": 2880, "goalIds": ["g1"]}],
+                 "distanceMeters": 10000.0, "targetSeconds": 2880, "goalIds": ["g1"], "bestSeconds": 3210}],
+        emphasis="strength",
+        enduranceBase={"weeklyVolume": "km_20_to_35", "sessionsPerWeek": 3, "longRun": "min_60_to_90"},
         lifestyleUpdatedOn=gf.JOUR0))
 
     out.append(_v3(
@@ -225,15 +271,21 @@ def profils_v3() -> list[dict]:
         benchmarks=[bench("sw-traction-pronation", "max_reps", reps=28, date="2026-09-18", bodyWeightKg=66),
                     bench("cd-muscle-up-barre-strict", "max_reps", reps=11, date="2026-09-18", bodyWeightKg=66)],
         events=[{"id": "e1", "kind": "reps_competition", "priority": "main", "date": "2027-05-22", "name": "Coupe d'endurance",
-                 "mode": "for_time", "rounds": 2, "timeLimitSeconds": 600,
+                 "mode": "for_time", "rounds": 2, "timeLimitSeconds": 600, "heats": 4, "restBetweenHeatsSeconds": 900,
+                 "bestSeconds": 512, "bestDate": "2026-05-23",
                  "stations": [{"exerciseId": "cd-muscle-up-barre-strict", "reps": 5, "unbroken": True},
                               {"exerciseId": "sw-dips-barres-paralleles", "reps": 30},
                               {"exerciseId": "sw-traction-pronation", "reps": 30},
                               {"exerciseId": "sw-pompe", "reps": 30},
                               {"exerciseId": "mu-air-squat", "reps": 20, "externalLoadKg": 20.0}],
                  "goalIds": ["g1"]}],
-        skills=[{"targetExerciseId": "cs-back-lever", "currentExerciseId": "cs-back-lever-straddle", "bestHoldSeconds": 6}],
+        skills=[{"targetExerciseId": "cs-back-lever", "currentExerciseId": "cs-back-lever-straddle", "bestHoldSeconds": 6,
+                 "atStepSince": "over_6_months"}],
         weakPoints=[{"exerciseId": "sw-dips-barres-paralleles", "kind": "late_set_fatigue"}],
+        recentTraining=[{"exerciseId": "sw-traction-pronation", "sessionsPerWeek": 3, "hardSets": "sets_15_to_20"},
+                        {"exerciseId": "sw-dips-barres-paralleles", "sessionsPerWeek": 3, "hardSets": "sets_15_to_20"},
+                        {"exerciseId": "cd-muscle-up-barre-strict", "sessionsPerWeek": 2, "hardSets": "sets_5_to_9"}],
+        currentPhase="unstructured",
         lifestyleUpdatedOn=gf.JOUR0))
     return out
 
@@ -248,6 +300,7 @@ def fixtures() -> dict:
                 "questionIds": [q["id"] for q in vis],
                 "questions": len(vis),
                 "newQuestions": sum(1 for q in vis if q["since"] >= 3),
+                "deferredIds": [q["id"] for q in deferred_questions(p["profile"])],
                 "testIds": eligible_tests(p["profile"]),
             },
         })
@@ -270,10 +323,14 @@ def controle(fx: dict) -> list[str]:
                 err.append(f"{q['id']} : champ {f} inconnu du profil")
         if q["required"] and (q["skip"] or q["unknown"]):
             err.append(f"{q['id']} : obligatoire et passable")
+        if q["since"] >= 3 and not ("factor" in q and "effect" in q):
+            err.append(f"{q['id']} : question du schéma 3 sans justification")
+        if "deferWhen" in q and (q["required"] or "requiredWhen" in q):
+            err.append(f"{q['id']} : une question reportée n'est pas obligatoire")
     # Les options des questions à choix du schéma 3 sont exactement les codes de leur enum.
     lie = {"training_age": "TrainingAge", "training_gap": "TrainingGap", "sleep": "SleepBand", "stress": "StressBand",
            "body_weight_goal": "BodyWeightGoal", "experience_level": "ExperienceLevel", "sex": "Sex",
-           "guidance_mode": "GuidanceMode", "places": "Place"}
+           "guidance_mode": "GuidanceMode", "places": "Place", "emphasis": "TrainingEmphasis"}
     par_id = {q["id"]: q for q in ps.QUESTIONS}
     for qid, enum in lie.items():
         codes = [o["code"] for o in par_id[qid]["options"]]
@@ -284,7 +341,10 @@ def controle(fx: dict) -> list[str]:
     sous = {"benchmarks": {"kind": "BenchmarkKind"}, "events": {"kind": "EventKind", "priority": "EventPriority", "mode": "RepsEventMode"},
             "specialization": {"kind": "SpecializationKind", "maintenance": "MaintenancePolicy"},
             "weak_points": {"kind": "WeakPointKind"}, "outside_load": {"kind": "OtherSportKind", "regions": "BodyRegion"},
-            "limitations": {"since": "ConstraintSince", "aggravatedBy": "AggravatingMovement"}}
+            "limitations": {"since": "ConstraintSince", "aggravatedBy": "AggravatingMovement"},
+            "recent_training": {"hardSets": "HardSetsBand", "currentPhase": "CurrentPhase"},
+            "skills": {"atStepSince": "StepTenure"},
+            "running_base": {"weeklyVolume": "RunVolumeBand", "longRun": "LongRunBand"}}
     for qid, table in sous.items():
         for it in par_id[qid]["items"]:
             if it["field"] in table:
@@ -301,6 +361,9 @@ def controle(fx: dict) -> list[str]:
             if l["exerciseId"] not in gf.EX:
                 err.append(f"{preset['code']} : exercice {l['exerciseId']} inconnu")
     for p in fx["profiles"]:
+        if p["profile"] != ordonner("AthleteProfile", p["profile"]) or \
+                json.dumps(p["profile"]) != json.dumps(ordonner("AthleteProfile", p["profile"])):
+            err.append(f"{p['key']} : clés hors de l'ordre du contrat")
         err += spec_validate.validate("AthleteProfile", p["profile"], p["key"])
         for i in spec_validate.exercise_ids("AthleteProfile", p["profile"], set()):
             if i not in gf.EX:
@@ -316,11 +379,6 @@ def controle(fx: dict) -> list[str]:
 def parcours_json() -> dict:
     return {"schema": 1, "version": ps.VERSION, "scales": ps.SCALES, "screens": ps.SCREENS,
             "questions": ps.QUESTIONS, "rulesetPresets": ps.RULESET_PRESETS, "tests": ps.TESTS}
-
-
-QUI = {
-    "always": "tous",
-}
 
 
 def qui(cond: dict) -> str:
@@ -371,6 +429,13 @@ def doc(fx: dict) -> str:
       "saisie. L'application ne code aucune condition : elle appelle "
       "`ProfileQuestionnaire.visibleQuestions(profilJson, todayYear: …)` après chaque réponse. Une réponse absente rend la "
       "condition fausse : **sans réponse, on montre le parcours le plus court**.\n"
+      "- **Questions reportées** (`deferWhen`) : une question dont la condition de report est vraie n'est **pas posée à la "
+      "création** ; l'application la propose après la première semaine (carte discrète de Koach, une fois). "
+      "`visibleQuestions` ne la rend pas ; `deferredQuestions(profilJson, todayYear: …)` la rend ; "
+      "`visibleQuestions(…, includeDeferred: true)` rend tout (Réglages › Profil). Un débutant ne voit ainsi à la création "
+      "**aucune question du schéma 3**.\n"
+      "- **Obligatoire sous condition** (`requiredWhen`) : `isRequired(question, profilJson, todayYear: …)` dit si la "
+      "réponse est exigée pour ce profil (le poids de corps pour les disciplines au poids du corps).\n"
       "- **« Passer »** (`skip`) : le champ reste absent du profil — jamais de valeur par défaut (D5.8). "
       "**« Je ne sais pas »** (`unknown`) : même effet, et un test guidé sera proposé (§ 5).\n"
       "- **Liste vide ≠ champ absent** : `otherSports: []` = « aucun autre sport » ; `events: []` = « aucune échéance » ; "
@@ -378,28 +443,42 @@ def doc(fx: dict) -> str:
       "- **Santé** : la règle L13 et son questionnaire sont inchangés. Les gênes sont des **contraintes d'entraînement** "
       "(zone, côté, gêne perçue, depuis quand, mouvements qui la réveillent), jamais un diagnostic ; elles ne sont écrites "
       "qu'avec l'accord santé (G6, KT-042).\n"
-      "- **Valeurs habituelles, pas valeurs du jour** : sommeil, stress et charge hors programme du profil sont des "
-      "habitudes ; la nuit dernière, le stress et les douleurs du jour restent dans le bilan de séance (D5.8-D5.9). Aucun "
-      "doublon : le bilan de séance n'est pas modifié.\n\n")
+      "- **Valeurs de départ, pas valeurs du jour** : sommeil, stress et charge hors programme du profil sont des "
+      "habitudes déclarées, qui servent de **valeur de départ** tant que le journal n'en dit pas plus ; la nuit dernière, "
+      "le stress et les douleurs du jour restent dans le bilan de séance (D5.8-D5.9), qui prime dès qu'il est rempli. "
+      "Aucun doublon : le bilan de séance n'est pas modifié.\n"
+      "- **Ordre** : les records (`benchmarks`) sont demandés AVANT les fourchettes (`movement_levels`), qui ne portent "
+      "alors que sur les mouvements sans record ; les points faibles, après les records, sur les mouvements saisis.\n"
+      "- **Remarques des relecteurs** (« débutant pressé », « coach d'élite », relecture du contrat) : chacune est "
+      "traitée — changée ou expliquée — dans [`RELECTURES_CQ.md`](RELECTURES_CQ.md).\n\n")
 
     w("## 2. Nombre de questions vues par profil type\n\n"
-      "Convention : une question = une entrée de `questions` visible (un champ, ou un éditeur de liste compté une fois, "
-      "quel que soit le nombre d'éléments saisis). Les écrans d'accueil et de récapitulatif ne posent pas de question. "
-      "« Nouvelles » = questions du schéma 3. Profils : `test/fixtures/profiles_v3.json` ; les mêmes nombres sont "
-      "vérifiés en Dart (`test/questionnaire_test.dart`) — CU les revérifie dans l'application.\n\n"
-      "| Profil type | Questions vues | dont nouvelles (schéma 3) | Nouvelles questions vues |\n| --- | ---: | ---: | --- |\n")
+      "Convention : une question = une entrée de `questions` visible **à la création** (un champ, ou un éditeur de liste "
+      "compté une fois, quel que soit le nombre d'éléments saisis). Les écrans d'accueil et de récapitulatif ne posent "
+      "pas de question. « Nouvelles » = questions du schéma 3. « Reportées » = proposées après la première semaine, non "
+      "comptées. Profils : `test/fixtures/profiles_v3.json` ; les mêmes nombres sont contrôlés par les tests Dart "
+      "(`test/questionnaire_test.dart`) et Python (`tools/catalog/tests/test_contracts.py`) — CU les revérifie dans "
+      "l'application.\n\n"
+      "| Profil type | Questions à la création | dont nouvelles (schéma 3) | Nouvelles questions vues | Reportées |\n"
+      "| --- | ---: | ---: | --- | --- |\n")
     par_id = {q["id"]: q for q in ps.QUESTIONS}
     for p in fx["profiles"]:
         e = p["expected"]
         nouvelles = [i for i in e["questionIds"] if par_id[i]["since"] >= 3]
         w(f"| `{p['key']}` — {p['description']} | {e['questions']} | {e['newQuestions']} | "
-          f"{', '.join('`' + i + '`' for i in nouvelles)} |\n")
+          f"{', '.join('`' + i + '`' for i in nouvelles) or '—'} | "
+          f"{', '.join('`' + i + '`' for i in e['deferredIds']) or '—'} |\n")
     total_v2 = sum(1 for q in ps.QUESTIONS if q["since"] == 2)
-    w(f"\nRepère : le parcours G6 (schéma 2) posait {total_v2} questions à tout le monde. Le parcours v3 en pose **moins "
-      "de schéma 2 à un débutant** (les exercices aimés ou détestés lui sont demandés pendant la revue du programme, D4.5) "
-      "et lui ajoute 4 questions à un seul appui. Parcours le plus court possible à information égale : chaque question du "
-      "schéma 3 retenue change une décision du moteur (colonne « Ce que ça change ») ; celles qui n'en changent aucune sont "
-      "écartées dans `PROFIL_V3.md`.\n\n")
+    total_v3 = len(ps.QUESTIONS) - total_v2
+    vide = visible({})
+    w(f"\nRepère : le parcours compte {len(ps.QUESTIONS)} questions en tout — les {total_v2} du schéma 2 (parcours G6, "
+      f"posées alors à tout le monde) et {total_v3} du schéma 3, toutes conditionnelles ou passables. Un profil encore "
+      f"vide voit {len(vide)} questions (le parcours le plus court). **Un débutant voit {len(vide)} questions à la création, "
+      "une de moins qu'avec le parcours G6** (les exercices aimés ou détestés lui sont demandés pendant la revue du "
+      "programme, D4.5), **et aucune question nouvelle** : ses trois questions de récupération, à un seul appui chacune, "
+      "sont reportées après la première semaine. Parcours le plus court possible à information égale : chaque question "
+      "du schéma 3 retenue change une décision du moteur (ligne « Ce que ça change ») ; celles qui n'en changent aucune "
+      "sont écartées dans `PROFIL_V3.md`.\n\n")
 
     w("## 3. Écrans et questions, dans l'ordre\n\n")
     for s in ps.SCREENS:
@@ -417,8 +496,9 @@ def doc(fx: dict) -> str:
             extra = [x for x, on in (("« Passer »", q["skip"]), ("« Je ne sais pas »", q["unknown"])) if on]
             if extra:
                 forme += " ; " + ", ".join(extra)
+            oblig = "oui" if q["required"] else ("si " + qui(q["requiredWhen"]) if "requiredWhen" in q else "non")
             w(f"| `{q['id']}` | {q['text']} | {forme} | {', '.join('`' + f + '`' for f in q['fields'])} | {qui(q['when'])} | "
-              f"{'oui' if q['required'] else 'non'} | {q['since']} |\n")
+              f"{oblig} | {q['since']} |\n")
         w("\n")
         for q in qs:
             details = []
@@ -429,6 +509,8 @@ def doc(fx: dict) -> str:
                     f"{o['label']}" + (f" ({o['hint']})" if "hint" in o else "") + f" → `{o['code']}`" for o in q["options"]))
             if "validation" in q:
                 details.append("Validation : " + q["validation"])
+            if "deferWhen" in q:
+                details.append("Reportée après la première semaine si : " + qui(q["deferWhen"]) + ".")
             if "effect" in q:
                 details.append("Ce que ça change : " + q["effect"])
             if "note" in q:
@@ -462,7 +544,8 @@ def doc(fx: dict) -> str:
         if "lifts" in r:
             contenu = " ; ".join(f"`{l['exerciseId']}` × {l['attempts']} tentatives (saut ≥ {l['minIncrementKg']} kg)" for l in r["lifts"])
         else:
-            contenu = f"{r['mode']}, {r['timeLimitSeconds']} s : " + ", ".join(f"`{s['exerciseId']}`" for s in r["stations"])
+            contenu = f"{r['mode']} : " + ", ".join(
+                f"`{s['exerciseId']}`" + (f" ({s['timeLimitSeconds']} s)" if "timeLimitSeconds" in s else "") for s in r["stations"])
         if "weightClassesKg" in r:
             c = r["weightClassesKg"]
             contenu += f" ; catégories femmes {', '.join(str(x) for x in c['female'])} kg et plus ; hommes {', '.join(str(x) for x in c['male'])} kg et plus"
@@ -471,25 +554,33 @@ def doc(fx: dict) -> str:
       "lestées en 2 minutes (ISF Multirep) ; total de répétitions sur trois exercices lestés (WSWCF « Power ») ; volume "
       "imposé au poids du corps contre la montre (WSWCF « Strength ») ; duel à élimination sur une routine imposée "
       "différente à chaque tour, avec pyramides, maintiens et séries indivisibles (Calisthenics Cup 2025). D'où un type "
-      "d'épreuve générique : mode, suite ordonnée de postes (exercice, répétitions ou durée, lest, série indivisible), "
-      "tours, limite de temps.\n\n")
+      "d'épreuve générique : mode, suite ordonnée de postes (exercice, répétitions ou durée, lest, série indivisible, "
+      "limite de temps et repos imposé du poste), tours, limite de temps, nombre de passages dans la journée ; format "
+      "annoncé le jour même : `formatKnown: false`, sans postes (préparation générale). État de la vérification : pages "
+      "des organisateurs lues le 02/10/2026 à travers un outil de résumé (`PROFIL_V3.md`, § 6).\n\n")
 
     w("## 5. Tests guidés\n\n"
       "Quand une capacité est inconnue (« Je ne sais pas », ou aucun record pour un mouvement dont le programme a besoin), "
       "l'application propose un test guidé. **À la création du profil : uniquement des déclarations, aucun test physique.** "
       "Les tests sous-maximaux se font **dans la première séance** (le moteur les prescrit comme séries de rôle `test`, "
       "`ExercisePrescription.test`) ; les tests maximaux et de course, **plus tard**, après 3 à 4 séances de "
-      "familiarisation. Les valeurs des deux à trois premières séances sont « provisoires » : l'apprentissage du geste fait "
-      "monter un maximum de 5 à 10 % sans gain de force réel.\n\n"
+      "familiarisation. Les valeurs des deux à trois premières séances sont « provisoires » : chez un pratiquant qui "
+      "découvre le test, l'apprentissage du geste fait monter le maximum mesuré d'une séance à l'autre sans gain de force "
+      "réel (ordre de grandeur de 5 à 10 % d'après `ploutzsnyder2001`, très petits effectifs, chiffres lus sur un résumé "
+      "secondaire : repère, pas une règle).\n\n"
       "Le résultat d'un test est un `Benchmark` (`source: guided_test`, `protocolId`) que l'application ajoute à "
       "`AthleteProfile.benchmarks` (ou que le moteur dynamique rend dans `AdaptReview.testResults`). Conversions : "
       "`lib/src/estimation.dart`. `ProfileQuestionnaire.eligibleTests(profilJson, todayYear: …)` rend les protocoles "
-      "permis pour un profil.\n\n")
+      "**permis** pour un profil ; un test n'est **proposé** que pour un mouvement du programme dont la capacité est "
+      "inconnue, avec le matériel du profil, et quand son prérequis par mouvement (ligne « Prérequis ») est tenu d'après "
+      "les niveaux et les records déclarés — ce tri par mouvement est fait par l'application (CU) et les moteurs. "
+      "Un débutant, ou un profil dont le questionnaire santé n'est pas « standard », n'a que `t8_sans_test`.\n\n")
     for t in ps.TESTS:
         w(f"### `{t['id']}` — {t['title']}\n\n")
         w(f"- **Pour qui** : {t['forWhom']}\n")
         w(f"- **Quand** : {'à la création (déclaratif)' if t['stage'] == 'creation' else 'première séance' if t['stage'] == 'first_session' else 'plus tard (après familiarisation)'}"
           f" ; permis si : {qui(t['eligible'])}.\n")
+        w(f"- **Prérequis** : {t['requires']}\n")
         w("- **Sécurité** : " + " ".join(t["safety"]) + "\n")
         w("- **Déroulé** :\n")
         for i, s in enumerate(t["steps"], 1):
@@ -509,7 +600,7 @@ def doc(fx: dict) -> str:
       "aucun champ perdu, aucun inventé — toutes les réponses du schéma 3 restent absentes tant que l'utilisateur ne les a "
       "pas données. Le programme en cours n'est pas régénéré ; le programme importé du propriétaire ne l'est jamais (D5.10).\n"
       "- **« Compléter mon profil »** : montrer les seules questions du schéma 3 visibles pour ce profil — "
-      "`visibleQuestions(profilJson, todayYear: …, since: 3)` — dans l'ordre du § 3. Invitation discrète de Koach, une "
+      "`visibleQuestions(profilJson, todayYear: …, since: 3, includeDeferred: true)` — dans l'ordre du § 3. Invitation discrète de Koach, une "
       "seule fois. L'application retient elle-même (hors du profil) quelles questions ont été passées, pour ne pas les "
       "reproposer d'office.\n"
       "- **Édition** : chaque réponse du schéma 3 est modifiable depuis Réglages › Profil, rubrique par rubrique, comme "
@@ -519,6 +610,8 @@ def doc(fx: dict) -> str:
       "champ du schéma 3 doit être au schéma 3 (`schema3_field` sinon).\n"
       "- **Sauvegarde, export, import** : le profil se sérialise en entier par `toJson()` ; les champs du schéma 3 y sont, "
       "rien d'autre à ajouter. Un profil au schéma 2 relu par `fromJson` se réécrit à l'identique.\n"
+      "- **Application en 0.3.0** : elle refuse un profil au schéma 3 (violation `above_max` sur `schemaVersion`). Ne migrer un profil qu'une fois "
+      "l'application passée à `kalis_core` 0.4.0 ; une sauvegarde au schéma 3 ne se relit pas sur une version antérieure.\n"
       "- **Moteurs actuels** : `kalis_plan` 0.1.0 et `kalis_adapt` 0.1.0 lisent un profil au schéma 3 sans changement (ils "
       "ignorent les champs nouveaux) ; les moteurs calibrés (CP1, CA1) les liront.\n")
     return "".join(o)

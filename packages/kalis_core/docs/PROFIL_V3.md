@@ -8,6 +8,9 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
 
 ## 0. Méthode et limites
 
+- **Relectures.** Ce document et le parcours ont été relus par trois relecteurs indépendants (contrat et code ;
+  « débutant pressé » ; « coach d'élite »). Chaque remarque est traitée — changée ou expliquée — dans
+  [`RELECTURES_CQ.md`](RELECTURES_CQ.md) ; les corrections de fond sont reprises ici.
 - **Recherche documentaire du 02/10/2026**, par six recherches indépendantes (sommeil et stress ; âge, sexe,
   ancienneté ; énergie et autres sports ; blessures ; tests ; compétition et techniques). Chaque référence a été
   recherchée sur le site de la revue, un dépôt universitaire, Crossref ou PubMed.
@@ -33,41 +36,50 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
    champs obligatoires du schéma 2.
 3. **Valeur habituelle** (profil) et **valeur du jour** (bilan de séance, D5.8-D5.9) ne font jamais doublon : le
    profil porte l'habitude (sommeil habituel, stress des dernières semaines, métier) ; le bilan de séance porte la
-   nuit dernière, le stress et les douleurs du jour.
-4. **Santé** : la règle L13 tient. Aucune réponse du questionnaire santé n'est copiée dans le profil. Les antécédents
+   nuit dernière, le stress et les douleurs du jour. L'habitude déclarée est une **valeur de départ** : dès que les
+   bilans de séance existent, ce sont eux qui renseignent le moteur dynamique ; la réponse du profil ne sert alors
+   plus qu'au premier bloc et aux semaines sans bilan.
+4. **Rien de nouveau n'est demandé à un débutant à la création.** Les questions de récupération (sommeil, stress,
+   charge hors programme) lui sont proposées après la première semaine ; les autres questions du schéma 3 ne le
+   concernent pas. Son programme de départ est prudent par construction (D4.7) : ces réponses n'y changeraient rien
+   la première semaine.
+5. **Santé** : la règle L13 tient. Aucune réponse du questionnaire santé n'est copiée dans le profil. Les antécédents
    utiles à la programmation sont des **contraintes d'entraînement** (zone, côté, gêne perçue, depuis quand,
    mouvements qui la réveillent), jamais un diagnostic. Aucun score de risque de blessure n'est calculé : les tests
    de dépistage ne prédisent pas la blessure d'un individu (`bahr2016`).
-5. Une réponse absente reste absente (D5.8) : aucune valeur par défaut n'est écrite dans le profil.
+6. Une réponse absente reste absente (D5.8) : aucune valeur par défaut n'est écrite dans le profil.
 
 ## 2. Synthèse des verdicts
 
 | Facteur (clé) | Verdict | À qui | Forme | Preuve | Champ |
 | --- | --- | --- | --- | --- | --- |
-| Ancienneté d'entraînement (`anciennete`) | **posée** | tous | 4 tranches | forte | `trainingAge` (+ `experience`, schéma 2) |
-| Interruption récente (`interruption`) | **posée** une fois, puis **déduite** du journal | ancienneté ≥ 6 mois | 4 choix | modérée | `trainingGap` |
+| Ancienneté dans la discipline (`anciennete`) | **posée** | niveau ≥ intermédiaire (un débutant l'a déjà dit par son niveau) | 4 tranches | forte | `trainingAge` (+ `experience`, schéma 2) |
+| Interruption récente (`interruption`) | **posée** une fois, puis **déduite** du journal | ancienneté ≥ 6 mois | 7 choix | modérée | `trainingGap` |
+| Charge d'entraînement actuelle (`charge_actuelle`) | **posée**, facultative, puis **déduite** du journal | niveau ≥ avancé | éditeur court (3 à 4 lignes) + 1 choix | usage d'entraîneur | `recentTraining`, `currentPhase` |
 | Tests et records (`tests_records`) | **posée** ; sinon **mesurée** par test guidé | niveau ≥ intermédiaire | éditeur de liste | forte (mesure) | `benchmarks` |
-| Figures : étape actuelle (`figures`) | **posée** | calisthénie au programme | éditeur de liste | indirecte (tendon) | `skills` |
-| Compétition et échéances (`competition`) | **posée** | niveau ≥ intermédiaire, ou objectif de performance | éditeur de liste | forte (affûtage, périodisation) | `events` |
-| Spécialisation (`specialisation`) | **posée**, facultative | niveau ≥ avancé | 1 cible | usage | `specialization` |
+| Figures : étape actuelle (`figures`) | **posée** | calisthénie, streetlifting ou CrossFit au programme | éditeur de liste | indirecte (tendon) | `skills` (dont `atStepSince`) |
+| Orientation en musculation (`orientation`) | **posée** | musculation au programme | 3 choix | modérée (dose-réponse) | `emphasis` |
+| Compétition et échéances (`competition`) | **posée** | niveau ≥ intermédiaire, objectif de performance, ou cardio au programme | éditeur de liste | forte (affûtage, périodisation) | `events` |
+| Spécialisation (`specialisation`) | **posée**, facultative | niveau ≥ avancé ; dès l'intermédiaire en musculation | 1 cible | usage | `specialization` |
 | Points faibles (`points_faibles`) | **posée**, facultative | niveau ≥ avancé, discipline de force | éditeur de liste | faible | `weakPoints` |
-| Sommeil habituel (`sommeil`) | **posée** | tous | 3 tranches | forte en aigu, faible en habituel | `sleep` |
-| Stress habituel (`stress`) | **posée** | tous | 3 niveaux | modérée (blessure), faible à modérée (récupération) | `stress` |
-| Charge hors programme : métier, autre sport (`charge_hors_programme`) | **posée** (une question) | tous | choix multiples + éditeur | modérée à forte (autre sport) ; absente (métier) | `occupationalLoad`, `otherSports` |
-| Évolution du poids (`bilan_energetique`) | **posée** | niveau ≥ intermédiaire, ou mode street | 4 choix | modérée | `bodyWeightGoal` |
-| Antécédents et zones sensibles (`antecedents`) | **posée** (schéma 2), **précisée** | tous | éditeur de liste | forte (principe) | `limitations` + `since`, `aggravatedBy` |
-| Poids de corps (`poids_de_corps`) | **posée** (schéma 2), expliquée | tous | nombre | forte (mécanique) | `bodyWeightKg` |
+| Volume de course actuel (`base_endurance`) | **posée**, puis **déduite** du journal | cardio au programme, ou course en échéance | 3 choix | usage d'entraîneur | `enduranceBase` |
+| Sommeil habituel (`sommeil`) | **posée** comme valeur de départ | tous ; après la première semaine pour un débutant | 3 tranches | forte en aigu, faible en habituel | `sleep` |
+| Stress habituel (`stress`) | **posée** comme valeur de départ | tous ; après la première semaine pour un débutant | 3 niveaux | modérée (blessure), faible à modérée (récupération) | `stress` |
+| Charge hors programme : métier, autre sport (`charge_hors_programme`) | **posée** (une question) | tous ; après la première semaine pour un débutant | choix multiples + éditeur | modérée à forte (autre sport) ; absente (métier) | `occupationalLoad`, `otherSports` |
+| Évolution du poids (`bilan_energetique`) | **posée** | niveau ≥ intermédiaire, ou discipline au poids du corps | 4 choix (+ poids visé, facultatif) | modérée | `bodyWeightGoal`, `targetBodyWeightKg` |
+| Antécédents et zones sensibles (`antecedents`) | **posée** (schéma 2), **précisée** | tous | éditeur de liste | forte (principe) | `limitations` + `since`, `aggravatedBy`, `effortDiscomfort` |
+| Poids de corps (`poids_de_corps`) | **posée** (schéma 2), expliquée ; **obligatoire** pour les disciplines au poids du corps | tous | nombre | forte (mécanique) | `bodyWeightKg` |
 | Âge (`age`) | **posée** (schéma 2) | tous | année | modérée | `birthYear` |
 | Sexe (`sexe`) | **posée** (schéma 2), sans effet sur le programme | tous | 3 choix | forte (absence d'effet) | `sex` |
 | Taille (`taille`) | gardée (champ obligatoire du schéma 2), **sans effet** | tous | nombre | faible | `heightCm` |
 | Qualité du sommeil, sommeil de la veille | **déduite** du bilan de séance | — | — | faible | `HealthCheck` |
 | Travail de nuit, horaires décalés | **déduite** du sommeil | — | — | aucune étude directe | — |
-| Moment d'entraînement dans la journée | **écartée** | — | — | absence d'effet sur les gains | — |
+| Moment d'entraînement dans la journée | **écartée** (heure de passage en compétition : point ouvert) | — | — | absence d'effet sur les gains | — |
 | Fatigabilité selon le sexe | **déduite** des séries réalisées | — | — | dépend de la tâche | — |
 | Cycle menstruel, contraception | **écartée** | — | — | effet trivial ou nul | — |
 | Longueur des segments | **écartée** | — | — | faible, non actionnable | — |
 | Asymétrie gauche / droite | **déduite** des séries unilatérales | — | — | faible | — |
-| Mobilité limitante | **déduite** (tests, revue du programme) | — | — | pas de preuve de prédiction | — |
+| Mobilité limitante | **déduite** (revue du programme, premières séances) ; auto-contrôles par figure : point ouvert | — | — | usage d'entraîneur | — |
 | Hyperlaxité | **écartée** | — | — | faible, auto-déclaration peu fiable | — |
 | Nombre de pas, activité quotidienne | **écartée** | — | — | aucune directe | — |
 | Protéines, alcool, tabac, médicaments | **écartée** | — | — | hors périmètre (ni conseil nutritionnel ni médical) | — |
@@ -89,8 +101,12 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
 - **Ce que ça change.** Volume et intensité de départ ; vitesse de progression attendue ; besoin de périodisation
   (blocs, ondulation) ; prérequis des techniques avancées et des figures en bras tendus (le tendon s'adapte en mois,
   voir `figures`).
-- **Verdict : posée à tous**, 4 tranches (moins de 6 mois ; 6 mois à 2 ans ; 2 à 5 ans ; plus de 5 ans), en plus du
-  niveau déclaré du schéma 2 (`experience`), qui ouvre les questions avancées. Ensuite **déduite** des performances
+- **Verdict : posée à partir du niveau intermédiaire**, 4 tranches (moins de 6 mois ; 6 mois à 2 ans ; 2 à 5 ans ;
+  plus de 5 ans), en plus du niveau déclaré du schéma 2 (`experience`), qui ouvre les questions avancées. Un débutant
+  (« je découvre, ou je reprends de zéro ») l'a déjà dit : la question ne lui est pas posée. **L'ancienneté demandée
+  est celle de la discipline principale**, pas de l'entraînement en général : un haltérophile de huit ans qui commence
+  la planche a zéro mois de bras tendus ; pour chaque figure, l'ancienneté à l'étape est demandée à part
+  (`SkillState.atStepSince`, voir `figures`). Ensuite **déduite** des performances
   rapportées au poids de corps et de la vitesse de progression (moteur dynamique). Les tranches sont un choix
   raisonné : la littérature ne donne pas de seuil en mois ; « 6 mois » sépare le pratiquant qui ne sait pas encore
   estimer sa réserve (`steele2017`) et « 2 ans » la fin du plateau à dose minimale (`steele2023`).
@@ -102,12 +118,33 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
   d'arrêt sans conséquence sur les gains à 6 mois (`ogasawara2013`, 14 débutants). Dix semaines d'arrêt sont
   rattrapées en 5 semaines environ (`halonen2024`). La raideur du tendon gagnée en 3 mois est perdue en un mois
   d'arrêt (`kubo2012`).
-- **Ce que ça change.** Reprise progressive après plus de 3 semaines ; figures et mouvements à forte contrainte
-  tendineuse repris une étape en dessous après un mois d'arrêt. **Aucune grandeur de charge de reprise n'est
+- **Ce que ça change.** Reprise progressive après plus de 3 semaines, d'autant plus longue que l'arrêt l'a été ;
+  figures et mouvements à forte contrainte tendineuse repris une étape en dessous après un mois d'arrêt — **choix
+  raisonné** : `kubo2012` porte sur le tendon d'Achille de sujets non entraînés, en isométrie ; sa transposition au
+  coude et à l'épaule d'un pratiquant de figures est une analogie. **Aucune grandeur de charge de reprise n'est
   justifiable** (aucun essai ne compare des charges de reprise) : choix raisonné, laissé aux moteurs.
 - **Verdict : posée une fois**, à qui a au moins 6 mois d'ancienneté (un débutant n'a rien à reprendre) : régulier ;
-  arrêt de moins de 3 semaines ; de 3 à 10 semaines ; de plus de 10 semaines (bornes : `ogasawara2013`,
-  `halonen2024`). Ensuite **déduite** du journal (dates des séances, `TrainingLog.breaks`).
+  en allégé depuis quelques semaines ; arrêt de moins de 3 semaines ; de 3 à 10 semaines ; de 10 semaines à 6 mois ;
+  de 6 mois à 2 ans ; de plus de 2 ans. Les bornes de 3 et 10 semaines viennent de `ogasawara2013` et de
+  `halonen2024` ; au-delà de 10 semaines, aucune étude lue ne distingue les durées : les bornes de 6 mois et de 2 ans
+  sont un choix raisonné (un arrêt de trois mois et un arrêt de trois ans ne se reprennent pas de la même façon), et
+  « en allégé » distingue celui qui a continué à dose réduite de celui qui a arrêté. Ensuite **déduite** du journal
+  (dates des séances, `TrainingLog.breaks`).
+
+### `charge_actuelle` — Charge d'entraînement actuelle
+
+- **Effet.** Aucune référence vérifiée ne chiffre l'effet d'un écart entre le volume habituel et le volume du premier
+  bloc d'un nouveau programme ; les rapports de charge aiguë sur chronique sont contestés (`impellizzeri2020`) et ne
+  sont pas utilisés. C'est un **usage d'entraîneur**, solidement admis : un premier bloc très en dessous de ce que
+  l'athlète fait déjà est une décharge involontaire, très au-dessus, un saut de charge. Pour les figures, la
+  fréquence actuelle dit aussi l'exposition des coudes et des épaules aux bras tendus (voir `figures`).
+- **Ce que ça change.** Volume et fréquence du premier bloc, par mouvement ; rien ensuite : le journal remplace ces
+  réponses dès les premières semaines.
+- **Verdict : posée, facultative, à partir du niveau avancé** — avant, démarrer prudemment et laisser le moteur
+  dynamique apprendre la tolérance suffit. Par mouvement principal ou figure (3 à 4 lignes pré-remplies) : séances
+  par semaine et, facultativement, tranche de séries dures par semaine ; une fois pour tout l'écran : la phase en
+  cours (volume, lourd, sortie de pic, sans structure). Des tranches, pas des chiffres exacts : personne ne compte
+  ses séries à l'unité.
 
 ### `tests_records` — Tests et records
 
@@ -117,9 +154,12 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
 - **Ce que ça change.** Charges exprimées en part du maximum dès le premier bloc ; tests programmés seulement là où
   une valeur manque ou date ; tentatives du jour J.
 - **Verdict : posée** à partir du niveau intermédiaire (valeur exacte, nature, date, origine, réserve éventuelle), en
-  plus des fourchettes du schéma 2 (D3.5), qui restent la réponse du débutant. « Je ne sais pas » : aucun record
+  plus des fourchettes du schéma 2 (D3.5), qui restent la réponse du débutant ; les records sont demandés **avant**
+  les fourchettes, qui ne portent alors que sur les mouvements sans record. « Je ne sais pas » : aucun record
   n'est écrit, un **test guidé** est proposé (§ 5). Convention de charge : externe (lest seul pour un exercice lesté),
-  comme dans tout le profil.
+  comme dans tout le profil. Un record peut être marqué **au standard de compétition** (amplitude complète, arrêts
+  marqués ; `competitionStandard`) : seuls ceux-là fondent le choix des tentatives ; un record de plus de 6 mois est
+  gardé, mais retesté avant qu'on s'y fie (choix raisonné).
 
 ### `figures` — Figures : cible et étape actuelle
 
@@ -133,8 +173,23 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
 - **Ce que ça change.** Étape de départ de chaque progression ; durée de maintien prescrite ; critère de passage à
   l'étape suivante (paramétrable : `StepCriterion`, dont une durée minimale à l'étape, adossée au délai d'adaptation
   du tendon) ; régression un mauvais jour.
-- **Verdict : posée** à qui a de la calisthénie au programme : figure visée, étape actuelle (choisie dans la chaîne
-  `variante_de` du catalogue), meilleur maintien ou meilleur nombre de répétitions propres.
+- **Verdict : posée** à qui a de la calisthénie, du streetlifting ou du CrossFit au programme : figure visée, étape
+  actuelle (choisie dans la chaîne `variante_de` du catalogue), meilleur maintien ou meilleur nombre de répétitions
+  propres, et **depuis quand il en est à cette étape** (4 tranches, `atStepSince`) : c'est l'état de départ du
+  critère de passage (durée minimale à l'étape) ; plus de 6 mois à la même étape signale un plateau, pour lequel la
+  méthode change (`plan.skill_plateau`). Le délai d'adaptation du tendon qui fonde ces durées est une preuve
+  **indirecte** (tendon d'Achille, `kubo2012`) : choix raisonné.
+
+### `orientation` — En musculation : muscle, force, ou les deux
+
+- **Effet.** La dose-réponse n'est pas la même pour la force et pour l'hypertrophie : rendements décroissants du
+  volume bien plus marqués pour la force (`pelland2026`), intensité optimale plus haute chez l'entraîné pour la force
+  (`rhea2003`). Les plages de répétitions et la proximité de l'échec propres à chaque orientation ne sont pas fixées
+  ici (aucune référence vérifiée dans ce lot) : elles relèvent du référentiel du lot CR.
+- **Pourquoi une question.** Un objectif du profil est une performance chiffrée datée ou une habitude (D3.8) ;
+  « prendre du muscle » ne s'y exprime pas, et ne se déduit de rien d'autre.
+- **Verdict : posée** à qui a de la musculation au programme, un seul appui (du muscle, de la force, les deux).
+  Avec `specialization` (ouverte dès le niveau intermédiaire en musculation, pour nommer une zone à développer).
 
 ### `competition` — Compétition et échéances
 
@@ -143,7 +198,10 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
   28 jours, intensité gardée à au moins 85 % du 1RM, arrêt complet de 2 à 7 jours sans perte (`travis2020`) ;
   pratiques de champions : volume −50 à −59 %, dernière séance 3 à 4 jours avant (`pritchard2016`, `grgic2017`).
   Tentatives d'élite en force athlétique : ouverture à environ 91 % de la troisième barre visée, puis +5 % et +3 %
-  (`travis2021`). **Aucune donnée propre au streetlifting** : la transposition est une hypothèse.
+  (`travis2021`). **Aucune donnée propre au streetlifting** : la transposition est une hypothèse. **Épreuves de
+  répétitions et freestyle** : l'affûtage de force athlétique (intensité d'au moins 85 %, volume réduit de moitié)
+  ne se transpose pas tel quel — en endurance de force, c'est la densité spécifique qu'on garde, et l'affûtage est
+  plus court ; aucune référence vérifiée : **usage d'entraîneur**, à régler par les moteurs et à mesurer au banc.
 - **Formats.** Streetlifting : 3 tentatives par mouvement, charge jamais décroissante, saut minimal de 1,25 kg
   (2,5 kg au squat), 1 à 4 mouvements selon le format (règlements Final Rep et ISF, pages lues le 02/10/2026). Sets &
   reps : **aucun règlement unifié** — maximum de répétitions en temps limité, total de répétitions lestées, volume
@@ -151,16 +209,24 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
   tentatives, postes, tours, temps), sans format figé (`PARCOURS_V3.md` § 4).
 - **Ce que ça change.** Plan de saison (phases, affûtage, pic de forme), travail spécifique des épreuves, tentatives
   et rythme le jour J.
-- **Verdict : posée** à partir du niveau intermédiaire, ou dès qu'un objectif de performance daté existe : nature,
-  date, priorité (principale, secondaire, préparation), format ; plusieurs échéances par saison.
+- **Verdict : posée** à partir du niveau intermédiaire, dès qu'un objectif de performance daté existe, ou quand le
+  cardio est au programme (une course se prépare à tout niveau) : nature, date (ou mois, si la date n'est pas fixée),
+  priorité (principale, secondaire, préparation), format ; plusieurs échéances par saison. Pour un format annoncé le
+  jour même, l'échéance se déclare sans postes (`formatKnown: false`) : préparation générale. Pour une épreuve déjà
+  disputée, le meilleur résultat (temps ou total de répétitions) se saisit dans l'échéance.
 
 ### `specialisation` — Priorité à un mouvement, une figure, un muscle
 
-- **Effet.** Une dose très réduite suffit à entretenir, et même à faire progresser lentement, la force d'un
-  pratiquant entraîné : une série de 6 à 12 répétitions à 70-85 % du 1RM, 2 à 3 fois par semaine (`androulakis2020`).
-  C'est ce qui rend une spécialisation possible (concentrer le volume sur une cible, entretenir le reste).
-- **Verdict : posée, facultative**, à partir du niveau avancé (décision C1.3 du propriétaire). Avant, la priorité se
-  **déduit** du premier objectif du profil.
+- **Effet.** Une dose très réduite suffit à **faire progresser** lentement le 1RM d'hommes entraînés : une série de
+  6 à 12 répétitions à 70-85 % du 1RM, 2 à 3 fois par semaine (`androulakis2020`). Cette revue porte sur la dose
+  minimale pour progresser, pas sur l'entretien, et pas sur des compétiteurs d'élite : qu'une dose réduite
+  **entretienne** le reste pendant qu'on concentre le volume sur une cible en est une conséquence plausible, pas un
+  résultat lu. Les travaux qui portent directement sur l'entretien à dose réduite n'ont pas pu être vérifiés dans ce
+  lot et ne sont pas cités. Niveau de preuve retenu : **usage d'entraîneur**.
+- **Verdict : posée, facultative**, à partir du niveau avancé (décision C1.3 du propriétaire), et dès le niveau
+  intermédiaire en musculation (« une zone à développer en priorité ? »). Avant, la priorité se **déduit** du premier
+  objectif du profil. S'il existe une échéance principale, le plan de saison prime : la priorité n'est servie que
+  loin de l'échéance, et le reste est entretenu.
 
 ### `points_faibles` — Points faibles
 
@@ -185,10 +251,13 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
 - **Ce que ça change.** Jamais de baisse de charge. Sous 6 h : prudence sur le volume proche de l'échec et sur le
   cardio intense, pilotage à l'effort perçu. **Aucune grandeur chiffrée n'est justifiable** ; aucune promesse sur les
   blessures.
-- **Verdict : posée à tous**, une question, 3 tranches (moins de 6 h ; 6 à 7 h ; 7 h ou plus — seuils de
-  `craven2022` et de `walsh2021`). Preuve forte en aigu, faible en habituel : gardée parce qu'elle coûte un appui et
-  qu'elle distingue le petit dormeur chronique, que le bilan du jour ne voit que les jours où il se sent mal. La
-  **qualité** du sommeil et la nuit de la veille sont dans le bilan de séance : pas de doublon.
+- **Verdict : posée à tous comme valeur de départ**, une question, 3 tranches (moins de 6 h ; 6 à 7 h ; plus de
+  7 h, 7 h juste compris — seuils de `craven2022` et de `walsh2021`) ; pour un débutant, après la première semaine.
+  Preuve forte en aigu, faible en habituel. À strictement parler, la règle (c) du § 1 la condamnerait (le bilan de
+  séance finit par dire la même chose) : elle est gardée parce qu'elle coûte un appui, qu'elle règle le premier bloc
+  avant tout bilan, et qu'elle distingue le petit dormeur chronique, que le bilan du jour ne voit que les jours où
+  il se sent mal — **dès que les bilans existent, ce sont eux qui font foi**. La **qualité** du sommeil et la nuit
+  de la veille sont dans le bilan de séance : pas de doublon.
 
 ### `stress` — Stress habituel
 
@@ -201,8 +270,9 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
   **aucune grandeur d'ajustement publiée**.
 - **Ce que ça change (choix raisonné).** Stress élevé : séances lourdes d'un même groupe plus espacées, pas de hausse
   de volume, décharge avancée.
-- **Verdict : posée à tous**, 3 niveaux, sur les dernières semaines ; **redemandée** de temps en temps
-  (`lifestyleUpdatedOn`), car elle change. Le stress du jour reste dans le bilan de séance.
+- **Verdict : posée à tous comme valeur de départ**, 3 niveaux, sur les dernières semaines (pour un débutant, après
+  la première semaine) ; **redemandée** de temps en temps (`lifestyleUpdatedOn`), car elle change. Le stress du jour
+  reste dans le bilan de séance, qui fait foi dès qu'il existe.
 
 ### `charge_hors_programme` — Métier physique et autres sports
 
@@ -210,17 +280,35 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
   l'hypertrophie (SMD −0,01), mais réduit la force explosive (SMD −0,28), surtout quand les deux sont dans la même
   séance (`schumann2022`, 43 études). Chez les sujets entraînés, la force du bas du corps souffre quand force et
   endurance sont dans la même séance (ES −0,66) et pas en séances séparées (ES −0,10) (`petre2021`). L'interférence
-  est locale (bas du corps) (`huiberts2024`). Elle croît avec la fréquence et la durée de l'endurance (`wilson2012`).
+  est locale (bas du corps) (`huiberts2024`). Elle croît avec la fréquence et la durée de l'endurance, et y est
+  significative avec la course, pas avec le vélo (`wilson2012`) — différence qui n'est pas retrouvée d'une
+  méta-analyse à l'autre : la nature du sport sert au **placement** (quelles régions sont fatiguées), pas à un
+  coefficient différent.
   Sports collectifs, de combat, escalade : aucune méta-analyse ; raisonnement par analogie.
 - **Métier physique : aucune preuve directe.** Les travaux sur le « paradoxe de l'activité physique » portent sur la
   mortalité (`coenen2018`), pas sur la récupération ni sur les gains. Gardé comme **choix raisonné** : c'est une
   charge quotidienne réelle, et la réponse ne coûte rien de plus (même question).
 - **Ce que ça change.** Un ajustement de **placement**, pas un coefficient de volume : séances lourdes ou explosives
   des mêmes régions à distance des autres sports. Aucun seuil de rapport de charge aiguë sur chronique n'est utilisé
-  (contesté : `impellizzeri2020`). Métier physique : départ prudent.
+  (contesté : `impellizzeri2020`). Si l'autre sport est le sport principal de la personne (`mainSport`), pas de
+  séance lourde des régions concernées la veille. Métier physique : départ prudent.
 - **Verdict : posée à tous, en une seule question** à choix multiples (assis ; debout ou en mouvement ; métier
   physique ; autre sport régulier) ; « autre sport » ouvre un éditeur (sport, séances par semaine, durée, jours,
-  intensité). Le nombre de pas est **écarté** (aucune donnée directe).
+  intensité, sport principal ou non, régions sollicitées). Pour un débutant, après la première semaine. Le nombre
+  de pas est **écarté** (aucune donnée directe).
+
+### `base_endurance` — Volume de course actuel
+
+- **Effet.** Aucune référence vérifiée dans ce lot ne chiffre une règle de progression du volume de course ; les
+  rapports de charge aiguë sur chronique ne sont pas utilisés (`impellizzeri2020`). **Usage d'entraîneur** : le
+  premier bloc de course repart de ce qui est fait ces dernières semaines, pas de ce qui serait possible. Le volume
+  dit aussi la confiance à accorder à une prédiction de temps : la formule de `riegel1981` suppose un coureur
+  entraîné pour la distance visée (§ 5).
+- **Ce que ça change.** Distance hebdomadaire et sortie longue du premier bloc ; incertitude des allures prédites.
+- **Verdict : posée** à qui a le cardio au programme ou une course en échéance : volume hebdomadaire des quatre
+  dernières semaines (6 tranches), nombre de sorties, plus longue sortie récente (4 tranches). Ensuite **déduite** du
+  journal. La fréquence cardiaque maximale n'est pas demandée : les allures se donnent en part d'une vitesse mesurée
+  ou à l'effort perçu ; les prescriptions à la fréquence cardiaque sont laissées au lot CP2 (point ouvert).
 
 ### `bilan_energetique` — Évolution voulue du poids de corps
 
@@ -234,8 +322,11 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
   charges gardées ; pour les mouvements au poids du corps et lestés, la charge totale change avec le poids. Surplus
   ou maintien : aucun changement de programme. **Aucun conseil alimentaire** n'est donné ; le rythme réel se lit
   dans les pesées.
-- **Verdict : posée** à partir du niveau intermédiaire et à tout utilisateur du mode street (catégories de poids,
-  lest) : baisser, garder, monter, pas d'objectif.
+- **Verdict : posée** à partir du niveau intermédiaire et à tout pratiquant d'une discipline au poids du corps (mode
+  street, streetlifting, street workout, calisthénie : catégories de poids, lest) : baisser, garder, monter, pas
+  d'objectif ; « baisser » ou « monter » propose un poids visé, facultatif (`targetBodyWeightKg`). Pour une
+  compétition à catégories, le poids prévu le jour J se saisit dans l'échéance (`plannedBodyWeightKg`) ; **aucune
+  question sur la méthode**, aucun conseil.
 
 ### `antecedents` — Antécédents et zones sensibles
 
@@ -249,29 +340,43 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
   pourcentage de réduction de charge n'est publié.** Les seuils de douleur de l'application (D5.9, G8) restent ceux
   qui sont en place, plus bas que le modèle clinique : choix raisonné hors soin.
 - **Ce que ça change.** Mouvements qui chargent la zone : départ une variante en dessous, progression plus lente, pas
-  de test maximal tant que la gêne est d'au moins 4/10 ; fenêtre de vigilance de 12 mois (durée démontrée).
-- **Verdict : posée à tous** (schéma 2 : zone, côté, gêne de 0 à 10), **précisée** en schéma 3 par deux champs
-  facultatifs : depuis quand, et **quels mouvements la réveillent** — l'information la plus utile, qui désigne
-  directement ce qu'il faut régresser sans interpréter une structure anatomique.
+  de test maximal tant que la gêne (au repos ou à l'effort) est d'au moins 4/10 ; fenêtre de vigilance de 12 mois —
+  **choix raisonné**, par analogie avec `hagglund2006` (blessures du membre inférieur au football, saison suivante) :
+  la durée n'est pas démontrée pour le coude ou l'épaule d'un pratiquant de force.
+- **Verdict : posée à tous** (schéma 2 : zone, côté, gêne de 0 à 10), **précisée** en schéma 3 par trois champs
+  facultatifs : depuis quand ; **quels mouvements la réveillent** — l'information la plus utile, qui désigne
+  directement ce qu'il faut régresser sans interpréter une structure anatomique ; et **la gêne à l'effort**
+  (`effortDiscomfort`) : une gêne de tendon est souvent nulle au repos et nette sous charge, et c'est la valeur à
+  l'effort qui décide des tests maximaux. Une gêne de plus de 5/10, une douleur la nuit, une perte de force ou une
+  aggravation sur deux semaines : Koach oriente vers un professionnel de santé, sans interpréter (règle L13).
 
 ### `poids_de_corps`, `age`, `sexe`, `taille` — Questions du schéma 2
 
 - **`poids_de_corps`** : c'est la charge des exercices au poids du corps (pompe : environ 70 % du poids,
-  `CONTRAT.md` § 2) et la base de la charge totale d'une traction ou d'un dips lesté. **Gardée**, mieux expliquée.
+  `CONTRAT.md` § 2) et la base de la charge totale d'une traction ou d'un dips lesté. **Gardée**, mieux expliquée,
+  et **obligatoire** pour les disciplines au poids du corps (mode street, streetlifting, street workout,
+  calisthénie) : sans lui, ni charge totale, ni pourcentage, ni test lesté.
 - **`age`** : gain de masse maigre un peu plus faible avec l'âge après 50 ans (β = −0,03 ; `peterson2011`) ; perte
   plus forte à l'arrêt après 65 ans (`bosquet2013`). La récupération plus lente **n'est pas démontrée** (courbatures
   plutôt plus fortes chez les jeunes : `fernandes2025`) : aucune réduction de volume ni allongement du repos sur le
   seul critère de l'âge. Sert à la prudence des tests (pas de maximum direct après 65 ans sans expérience : 19 % de
   blessures chez des septuagénaires non entraînés, `pollock1991`).
 - **`sexe`** : gains relatifs de taille musculaire identiques (`refalo2025`) ; pas de différence d'hypertrophie ni
-  de force du bas du corps (`roberts2020`). **Aucun effet sur le programme** ; sert aux repères de rang (D7.5).
+  de force du bas du corps, mais des gains **relatifs** de force du haut du corps plus grands chez les femmes
+  (ES −0,60 ; les auteurs évoquent un possible effet de la courte durée des études et du statut non entraîné)
+  (`roberts2020`). **Aucun effet sur le programme** (mêmes volumes relatifs) ; l'effet relève des **attentes de
+  progression** sur les tractions et les dips, et le sexe sert aux repères de rang (D7.5).
 - **`taille`** : corrélations modestes avec la performance entre compétiteurs, aucune étude d'intervention. **Aucun
   effet sur le programme** ; gardée parce que le champ est obligatoire dans le schéma 2 (le rendre facultatif serait
-  une rupture de contrat, à décider par le propriétaire).
+  une rupture de contrat). **Recommandation au propriétaire** (les deux relecteurs du parcours l'ont demandée) :
+  rendre la taille facultative ou la retirer à la prochaine évolution non additive du contrat.
 
 ## 4. Facteurs écartés ou déduits
 
-- **Moment de la journée** : gains de force et de masse identiques matin ou soir (`grgic2019`). Écarté.
+- **Moment de la journée** : gains de force et de masse identiques matin ou soir (`grgic2019`). Écarté au profil.
+  Pour un compétiteur, placer les séances lourdes des dernières semaines à l'heure de passage est un usage
+  d'entraîneur (aucune référence vérifiée ici) : l'heure de passage n'est pas dans l'échéance en 0.4.0 — point
+  ouvert pour CP1.
 - **Travail de nuit, horaires décalés** : aucune étude directe sur l'entraînement de force ; l'effet plausible passe
   par le sommeil, déjà demandé. Déduit.
 - **Cycle menstruel** : effet trivial (ES −0,06 ; `mcnulty2020`) ; « prématuré » de conclure à une influence
@@ -281,8 +386,13 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
 - **Asymétrie** : preuve faible et limitée au membre inférieur (`helme2021`) ; déduite des séries unilatérales.
 - **Hyperlaxité** : association avec les blessures d'épaule (OR 3,25, qualité de preuve faible ; `liaghat2021`),
   auto-déclaration peu fiable sans test ; un épisode de luxation relève des antécédents. Écartée.
-- **Mobilité limitante** : pas de preuve qu'elle prédise la blessure ; se constate à la revue du programme (« je ne
-  sais pas faire », D4.5). Déduite.
+- **Mobilité limitante** : la question n'est pas la blessure (aucun dépistage ne la prédit, `bahr2016`) mais
+  l'accès à une position (équilibre aligné, squat au standard, L-sit, planche sur les poignets). En 0.4.0 elle se
+  constate à la revue du programme (« je ne sais pas faire », D4.5) et aux premières séances : **déduite**. Le
+  relecteur « coach d'élite » propose des auto-contrôles par figure (« dos au mur, bras tendus au-dessus de la tête :
+  tes bras touchent le mur sans cambrer ? ») : usage d'entraîneur pertinent, non retenu dans ce lot (aucun protocole
+  d'auto-contrôle vérifié, et une question de plus par figure) — **point ouvert** pour CP1, qui dira s'il en a
+  besoin pour choisir l'étape de départ.
 - **Protéines** : effet réel mais petit (+0,30 kg de masse maigre ; `morton2018`), non actionnable sans conseil
   nutritionnel. **Alcool, tabac, médicaments** : hors périmètre. Écartés.
 - **Faible disponibilité énergétique (REDs)** : diagnostic clinique (`mountjoy2023`). Écartée.
@@ -317,7 +427,17 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
 - **Course.** Tests en durée ou en distance fixe : validité de 0,78 à 0,79 pour estimer le VO2max
   (`mayorgavega2016`, `cooper1968`) — on utilise directement la vitesse mesurée. Contre-la-montre de 5 km : erreur
   typique de 2,0 % (`laursen2007`). Prédiction entre distances : `T2 = T1 × (D2 / D1)^1,06` (`riegel1981`), bien
-  calibrée jusqu'au semi-marathon, trop optimiste au marathon (`vickers2016`).
+  calibrée jusqu'au semi-marathon, trop optimiste au marathon (`vickers2016`). Elle suppose un volume de course
+  suffisant pour la distance visée : à faible volume hebdomadaire (`base_endurance`), la prédiction d'une distance
+  plus longue est « provisoire », avec une incertitude élargie (au moins ±4 % : estimation de ce lot, aucune grandeur
+  publiée pour le 10 km).
+- **Épreuves de répétitions.** Maximum en temps limité et séries maximales répétées (protocoles `t9`, `t10`) :
+  usage d'entraîneur, aucune étude de fiabilité lue ; seule la fiabilité du nombre de répétitions à charge donnée
+  est documentée (`mitter2022`).
+- **Qui peut tester.** Aucun test guidé pour un débutant ni pour un profil dont le questionnaire santé n'est pas
+  « standard » : calage au fil des séances. Chaque protocole a un prérequis par mouvement (par exemple 8 répétitions
+  strictes au poids du corps avant une série lestée ; 5 muscle-ups stricts avant un maximum de muscle-up lesté) :
+  usage d'entraîneur.
 - **Quand.** Le 1RM d'un débutant monte par simple apprentissage (3 à 4 séances pour le stabiliser chez la jeune
   adulte, davantage chez la personne âgée ; `ploutzsnyder2001`, très petits effectifs) : déclarations à la création,
   tests sous-maximaux à la première séance, valeurs « provisoires » les deux à trois premières séances.
@@ -326,14 +446,20 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
 
 Le profil ne fixe aucune règle chiffrée de programmation : il porte les réponses. Pour les lots CP1 et CA1 :
 
+0. **Ordre de priorité des sources** : le journal et les bilans de séance priment sur les déclarations du profil dès
+   qu'ils existent (charge actuelle, volume de course, sommeil, stress, interruption) ; le plan de saison prime sur
+   la spécialisation ; près d'une échéance principale (phases de réalisation et d'affûtage), la phase prime aussi sur
+   le dosage des disciplines secondaires ; une gêne à l'effort prime sur la gêne au repos.
 1. **Preuve chiffrée disponible** (à reprendre du référentiel du lot CR) : affûtage (`bosquet2007`, `travis2020`),
    périodisation selon le niveau (`moesgaard2022`), dose-réponse du volume (`pelland2026`, `bazvalle2022`),
    séparation des séances chez les entraînés (`petre2021`), tentatives (`travis2021`), estimation du 1RM (§ 5).
 2. **Direction démontrée, grandeur non publiée** (sommeil court, stress élevé, déficit énergétique, antécédent,
    reprise) : l'ajustement est un **choix raisonné**, à écrire comme tel, à garder modeste et à mesurer au banc.
-3. **Aucune preuve directe** (métier physique, points faibles, critères de passage des figures) : usage
+3. **Aucune preuve directe** (métier physique, points faibles, critères de passage des figures, charge actuelle,
+   volume de course, affûtage des épreuves de répétitions et des figures, entretien pendant une spécialisation) : usage
    d'entraîneur, à dire comme tel ; jamais présenté à l'utilisateur comme « démontré ».
-4. **Jamais** : baisser les charges pour un sommeil court ; réduire le volume d'un senior sur le seul critère de
+4. **Jamais** : déplacer un mouvement de compétition ou son travail d'assistance parce qu'un autre exercice est
+   « aimé » (les préférences départagent des exercices équivalents, rien de plus) ; baisser les charges pour un sommeil court ; réduire le volume d'un senior sur le seul critère de
    l'âge ; programmer selon le cycle menstruel ; promettre une réduction du risque de blessure ; calculer un score
    de risque ; inventer une valeur pour une réponse absente.
 

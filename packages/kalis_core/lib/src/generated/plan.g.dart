@@ -1282,8 +1282,20 @@ final class VariantSet {
 /// Invariant : Une seule famille de mesure : répétitions, temps, distance ou
 /// calories ; bornes basses ≤ bornes hautes, renseignées ensemble ;
 /// `setTargets`, s'il est présent, a `sets` éléments.
-/// Invariant : (0.4.0) `test` renseigné ⇒ `kind` vaut `test` ; série de tête
-/// et séries allégées : `technique.backoffSets` < `sets`.
+/// Invariant : (0.4.0) `test` renseigné ⇒ `kind` vaut `test`. `sets` est
+/// toujours le nombre de lignes de journal attendues : série de tête et
+/// séries allégées (`backoffSets` < `sets`), paliers de vagues (`waves` ×
+/// longueur de `waveReps`), de pyramide (longueur de `pyramidReps`), marches
+/// d'échelle (`ladderCount` × nombre de marches), intervalles d'un EMOM
+/// (`intervals`), 1 pour un bloc de densité ou de volume au temps. `sets`
+/// restant borné à 20, une technique de plus de 20 lignes (EMOM long, grande
+/// échelle) s'écrit comme un groupe (`GroupSpec`). La plage de répétitions
+/// est celle d'une ligne : un cluster de `miniSets` × `miniSetReps` y est
+/// compris ; vagues, pyramide, échelle : leurs bornes. Deux écritures de la
+/// même intensité doivent s'accorder : `percentOfOneRm` dans la plage de
+/// `intensity` (`percent_one_rm`), RIR de `targetFlames` dans celle de
+/// `intensity` (`rir`), `pct` d'une règle `backoff_from_top_set` égal à
+/// `technique.backoffDropPct`.
 final class ExercisePrescription {
   const ExercisePrescription({
     required this.slotId,
@@ -1313,6 +1325,8 @@ final class ExercisePrescription {
     this.test,
     this.dayStress,
     this.skillTargetId,
+    this.unbroken,
+    this.restMode,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1346,6 +1360,8 @@ final class ExercisePrescription {
       test: jsonObjOrNull(json, 'test', TestSpec.fromJson),
       dayStress: jsonEnumOrNull(json, 'dayStress', DayStress.fromCode),
       skillTargetId: jsonStringOrNull(json, 'skillTargetId'),
+      unbroken: jsonBoolOrNull(json, 'unbroken'),
+      restMode: jsonEnumOrNull(json, 'restMode', RestMode.fromCode),
     );
   }
 
@@ -1422,8 +1438,8 @@ final class ExercisePrescription {
   /// Tempo des répétitions (0.4.0).
   final Tempo? tempo;
 
-  /// Intensité relative à un test, au maintien max, à une étape, à une vitesse
-  /// ; plafond de RIR (0.4.0).
+  /// Intensité en plage, relative à un test (répétitions max, maintien max,
+  /// course), à une vitesse ou au poids de corps ; plafond de RIR (0.4.0).
   final IntensityTarget? intensity;
 
   /// Règles d'autorégulation que le moteur dynamique exécute (0.4.0).
@@ -1437,6 +1453,12 @@ final class ExercisePrescription {
 
   /// Figure visée dont cet exercice est une étape (0.4.0).
   final String? skillTargetId;
+
+  /// Série indivisible : aucun repos pendant la série (0.4.0).
+  final bool? unbroken;
+
+  /// Nature de la récupération (course) (0.4.0).
+  final RestMode? restMode;
 
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
@@ -1468,6 +1490,8 @@ final class ExercisePrescription {
       if (test case final v?) 'test': v.toJson(),
       if (dayStress case final v?) 'dayStress': v.code,
       if (skillTargetId case final v?) 'skillTargetId': v,
+      if (unbroken case final v?) 'unbroken': v,
+      if (restMode case final v?) 'restMode': v.code,
     };
   }
 
@@ -1500,6 +1524,8 @@ final class ExercisePrescription {
     Object? test = unset,
     Object? dayStress = unset,
     Object? skillTargetId = unset,
+    Object? unbroken = unset,
+    Object? restMode = unset,
   }) {
     return ExercisePrescription(
       slotId: slotId ?? this.slotId,
@@ -1529,6 +1555,8 @@ final class ExercisePrescription {
       test: identical(test, unset) ? this.test : test as TestSpec?,
       dayStress: identical(dayStress, unset) ? this.dayStress : dayStress as DayStress?,
       skillTargetId: identical(skillTargetId, unset) ? this.skillTargetId : skillTargetId as String?,
+      unbroken: identical(unbroken, unset) ? this.unbroken : unbroken as bool?,
+      restMode: identical(restMode, unset) ? this.restMode : restMode as RestMode?,
     );
   }
 
@@ -1580,22 +1608,26 @@ final class ExercisePrescription {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is ExercisePrescription && slotId == other.slotId && exerciseId == other.exerciseId && sets == other.sets && repsLow == other.repsLow && repsHigh == other.repsHigh && secondsLow == other.secondsLow && secondsHigh == other.secondsHigh && distanceMeters == other.distanceMeters && calories == other.calories && targetFlames == other.targetFlames && restSeconds == other.restSeconds && startLoadKg == other.startLoadKg && percentOfOneRm == other.percentOfOneRm && toCalibrate == other.toCalibrate && loadBasis == other.loadBasis && jsonDeepEquals(setTargets, other.setTargets) && groupId == other.groupId && format == other.format && kind == other.kind && jsonListEquals(reasons, other.reasons) && technique == other.technique && tempo == other.tempo && intensity == other.intensity && jsonDeepEquals(autoregulation, other.autoregulation) && test == other.test && dayStress == other.dayStress && skillTargetId == other.skillTargetId;
+    return identical(this, other) || other is ExercisePrescription && slotId == other.slotId && exerciseId == other.exerciseId && sets == other.sets && repsLow == other.repsLow && repsHigh == other.repsHigh && secondsLow == other.secondsLow && secondsHigh == other.secondsHigh && distanceMeters == other.distanceMeters && calories == other.calories && targetFlames == other.targetFlames && restSeconds == other.restSeconds && startLoadKg == other.startLoadKg && percentOfOneRm == other.percentOfOneRm && toCalibrate == other.toCalibrate && loadBasis == other.loadBasis && jsonDeepEquals(setTargets, other.setTargets) && groupId == other.groupId && format == other.format && kind == other.kind && jsonListEquals(reasons, other.reasons) && technique == other.technique && tempo == other.tempo && intensity == other.intensity && jsonDeepEquals(autoregulation, other.autoregulation) && test == other.test && dayStress == other.dayStress && skillTargetId == other.skillTargetId && unbroken == other.unbroken && restMode == other.restMode;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[slotId, exerciseId, sets, repsLow, repsHigh, secondsLow, secondsHigh, distanceMeters, calories, targetFlames, restSeconds, startLoadKg, percentOfOneRm, toCalibrate, loadBasis, jsonDeepHash(setTargets), groupId, format, kind, Object.hashAll(reasons), technique, tempo, intensity, jsonDeepHash(autoregulation), test, dayStress, skillTargetId]);
+  int get hashCode => Object.hashAll(<Object?>[slotId, exerciseId, sets, repsLow, repsHigh, secondsLow, secondsHigh, distanceMeters, calories, targetFlames, restSeconds, startLoadKg, percentOfOneRm, toCalibrate, loadBasis, jsonDeepHash(setTargets), groupId, format, kind, Object.hashAll(reasons), technique, tempo, intensity, jsonDeepHash(autoregulation), test, dayStress, skillTargetId, unbroken, restMode]);
 
   @override
   String toString() => 'ExercisePrescription(${toJson()})';
 }
 
 /// Prescriptions d'une séance.
+///
+/// Invariant : (0.4.0) `groups` : `groupId` distincts ; chaque groupe a au
+/// moins un membre parmi `items`.
 final class DayPrescription {
   const DayPrescription({
     required this.dayIndex,
     required this.items,
     this.stress,
+    this.groups,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1605,6 +1637,7 @@ final class DayPrescription {
       dayIndex: jsonInt(json, 'dayIndex'),
       items: jsonList(json, 'items', (v) => ExercisePrescription.fromJson(jsonAsObject(v, 'items'))),
       stress: jsonEnumOrNull(json, 'stress', DayStress.fromCode),
+      groups: jsonListOrNull(json, 'groups', (v) => GroupSpec.fromJson(jsonAsObject(v, 'groups'))),
     );
   }
 
@@ -1617,12 +1650,16 @@ final class DayPrescription {
   /// Ondulation : séance lourde, moyenne ou légère (0.4.0).
   final DayStress? stress;
 
+  /// Groupes d'exercices enchaînés de la séance (0.4.0).
+  final List<GroupSpec>? groups;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
       'dayIndex': dayIndex,
       'items': [for (final e in items) e.toJson()],
       if (stress case final v?) 'stress': v.code,
+      if (groups case final v?) 'groups': [for (final e in v) e.toJson()],
     };
   }
 
@@ -1631,11 +1668,13 @@ final class DayPrescription {
     int? dayIndex,
     List<ExercisePrescription>? items,
     Object? stress = unset,
+    Object? groups = unset,
   }) {
     return DayPrescription(
       dayIndex: dayIndex ?? this.dayIndex,
       items: items ?? this.items,
       stress: identical(stress, unset) ? this.stress : stress as DayStress?,
+      groups: identical(groups, unset) ? this.groups : groups as List<GroupSpec>?,
     );
   }
 
@@ -1650,20 +1689,23 @@ final class DayPrescription {
   void collectViolations(String path, List<Violation> out) {
     checkRange(out, '$path.dayIndex', dayIndex, 0, null);
     for (var i = 0; i < items.length; i++) { items[i].collectViolations('$path.items[$i]', out); }
+    if (groups case final v?) { checkLength(out, '$path.groups', v.length, null, 20); for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.groups[$i]', out); } }
+    _validateDayPrescription(this, path, out);
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
     for (final e in items) { e.collectExerciseIds(out); }
+    for (final e in groups ?? const <GroupSpec>[]) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is DayPrescription && dayIndex == other.dayIndex && jsonListEquals(items, other.items) && stress == other.stress;
+    return identical(this, other) || other is DayPrescription && dayIndex == other.dayIndex && jsonListEquals(items, other.items) && stress == other.stress && jsonDeepEquals(groups, other.groups);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[dayIndex, Object.hashAll(items), stress]);
+  int get hashCode => Object.hashAll(<Object?>[dayIndex, Object.hashAll(items), stress, jsonDeepHash(groups)]);
 
   @override
   String toString() => 'DayPrescription(${toJson()})';
@@ -2843,8 +2885,9 @@ final class Tempo {
 /// Invariant : Chaque technique porte exactement ses paramètres (tableau de
 /// CONTRAT.md §12) : un paramètre d'une autre technique est une violation.
 /// Invariant : Plages basses ≤ plages hautes, renseignées ensemble ;
-/// `ladderStart` ≤ `ladderTop` ; répétitions de `waveReps` et de
-/// `pyramidReps` de 1 à 100.
+/// `ladderStart` ≤ `ladderTop`, écart multiple de `ladderStep` ; répétitions
+/// de `waveReps` et de `pyramidReps` de 1 à 100 ; `lastSetOnly` jamais avec
+/// `standard`.
 final class SetTechnique {
   const SetTechnique({
     required this.kind,
@@ -2855,8 +2898,6 @@ final class SetTechnique {
     this.miniSets,
     this.miniSetReps,
     this.intraRestSeconds,
-    this.activationRepsLow,
-    this.activationRepsHigh,
     this.totalRepsTarget,
     this.drops,
     this.dropPct,
@@ -2870,7 +2911,6 @@ final class SetTechnique {
     this.durationSeconds,
     this.intervalSeconds,
     this.intervals,
-    this.repsPerInterval,
     this.ladderStart,
     this.ladderStep,
     this.ladderTop,
@@ -2878,6 +2918,8 @@ final class SetTechnique {
     this.pyramidReps,
     this.qualityFloor,
     this.maxAttempts,
+    this.totalSecondsTarget,
+    this.lastSetOnly,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -2892,8 +2934,6 @@ final class SetTechnique {
       miniSets: jsonIntOrNull(json, 'miniSets'),
       miniSetReps: jsonIntOrNull(json, 'miniSetReps'),
       intraRestSeconds: jsonIntOrNull(json, 'intraRestSeconds'),
-      activationRepsLow: jsonIntOrNull(json, 'activationRepsLow'),
-      activationRepsHigh: jsonIntOrNull(json, 'activationRepsHigh'),
       totalRepsTarget: jsonIntOrNull(json, 'totalRepsTarget'),
       drops: jsonIntOrNull(json, 'drops'),
       dropPct: jsonDoubleOrNull(json, 'dropPct'),
@@ -2907,7 +2947,6 @@ final class SetTechnique {
       durationSeconds: jsonIntOrNull(json, 'durationSeconds'),
       intervalSeconds: jsonIntOrNull(json, 'intervalSeconds'),
       intervals: jsonIntOrNull(json, 'intervals'),
-      repsPerInterval: jsonIntOrNull(json, 'repsPerInterval'),
       ladderStart: jsonIntOrNull(json, 'ladderStart'),
       ladderStep: jsonIntOrNull(json, 'ladderStep'),
       ladderTop: jsonIntOrNull(json, 'ladderTop'),
@@ -2915,6 +2954,8 @@ final class SetTechnique {
       pyramidReps: jsonListOrNull(json, 'pyramidReps', (v) => jsonAsInt(v, 'pyramidReps')),
       qualityFloor: jsonIntOrNull(json, 'qualityFloor'),
       maxAttempts: jsonIntOrNull(json, 'maxAttempts'),
+      totalSecondsTarget: jsonIntOrNull(json, 'totalSecondsTarget'),
+      lastSetOnly: jsonBoolOrNull(json, 'lastSetOnly'),
     );
   }
 
@@ -2943,12 +2984,6 @@ final class SetTechnique {
 
   /// Repos entre deux mini-séries, en secondes.
   final int? intraRestSeconds;
-
-  /// Bas de la plage de la série d'activation (myo-reps).
-  final int? activationRepsLow;
-
-  /// Haut de la plage de la série d'activation (myo-reps).
-  final int? activationRepsHigh;
 
   /// Répétitions totales visées (rest-pause, densité).
   final int? totalRepsTarget;
@@ -2990,9 +3025,6 @@ final class SetTechnique {
   /// Nombre d'intervalles (EMOM).
   final int? intervals;
 
-  /// Répétitions par intervalle (EMOM).
-  final int? repsPerInterval;
-
   /// Première marche de l'échelle, en répétitions.
   final int? ladderStart;
 
@@ -3016,6 +3048,14 @@ final class SetTechnique {
   /// Plafond d'essais (pratique de figure).
   final int? maxAttempts;
 
+  /// Temps total de maintien à accumuler, en secondes (maintien, pratique de
+  /// figure).
+  final int? totalSecondsTarget;
+
+  /// La technique ne s'applique qu'à la dernière série ; les autres sont
+  /// normales.
+  final bool? lastSetOnly;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -3027,8 +3067,6 @@ final class SetTechnique {
       if (miniSets case final v?) 'miniSets': v,
       if (miniSetReps case final v?) 'miniSetReps': v,
       if (intraRestSeconds case final v?) 'intraRestSeconds': v,
-      if (activationRepsLow case final v?) 'activationRepsLow': v,
-      if (activationRepsHigh case final v?) 'activationRepsHigh': v,
       if (totalRepsTarget case final v?) 'totalRepsTarget': v,
       if (drops case final v?) 'drops': v,
       if (dropPct case final v?) 'dropPct': v,
@@ -3042,7 +3080,6 @@ final class SetTechnique {
       if (durationSeconds case final v?) 'durationSeconds': v,
       if (intervalSeconds case final v?) 'intervalSeconds': v,
       if (intervals case final v?) 'intervals': v,
-      if (repsPerInterval case final v?) 'repsPerInterval': v,
       if (ladderStart case final v?) 'ladderStart': v,
       if (ladderStep case final v?) 'ladderStep': v,
       if (ladderTop case final v?) 'ladderTop': v,
@@ -3050,6 +3087,8 @@ final class SetTechnique {
       if (pyramidReps case final v?) 'pyramidReps': [for (final e in v) e],
       if (qualityFloor case final v?) 'qualityFloor': v,
       if (maxAttempts case final v?) 'maxAttempts': v,
+      if (totalSecondsTarget case final v?) 'totalSecondsTarget': v,
+      if (lastSetOnly case final v?) 'lastSetOnly': v,
     };
   }
 
@@ -3063,8 +3102,6 @@ final class SetTechnique {
     Object? miniSets = unset,
     Object? miniSetReps = unset,
     Object? intraRestSeconds = unset,
-    Object? activationRepsLow = unset,
-    Object? activationRepsHigh = unset,
     Object? totalRepsTarget = unset,
     Object? drops = unset,
     Object? dropPct = unset,
@@ -3078,7 +3115,6 @@ final class SetTechnique {
     Object? durationSeconds = unset,
     Object? intervalSeconds = unset,
     Object? intervals = unset,
-    Object? repsPerInterval = unset,
     Object? ladderStart = unset,
     Object? ladderStep = unset,
     Object? ladderTop = unset,
@@ -3086,6 +3122,8 @@ final class SetTechnique {
     Object? pyramidReps = unset,
     Object? qualityFloor = unset,
     Object? maxAttempts = unset,
+    Object? totalSecondsTarget = unset,
+    Object? lastSetOnly = unset,
   }) {
     return SetTechnique(
       kind: kind ?? this.kind,
@@ -3096,8 +3134,6 @@ final class SetTechnique {
       miniSets: identical(miniSets, unset) ? this.miniSets : miniSets as int?,
       miniSetReps: identical(miniSetReps, unset) ? this.miniSetReps : miniSetReps as int?,
       intraRestSeconds: identical(intraRestSeconds, unset) ? this.intraRestSeconds : intraRestSeconds as int?,
-      activationRepsLow: identical(activationRepsLow, unset) ? this.activationRepsLow : activationRepsLow as int?,
-      activationRepsHigh: identical(activationRepsHigh, unset) ? this.activationRepsHigh : activationRepsHigh as int?,
       totalRepsTarget: identical(totalRepsTarget, unset) ? this.totalRepsTarget : totalRepsTarget as int?,
       drops: identical(drops, unset) ? this.drops : drops as int?,
       dropPct: identical(dropPct, unset) ? this.dropPct : dropPct as double?,
@@ -3111,7 +3147,6 @@ final class SetTechnique {
       durationSeconds: identical(durationSeconds, unset) ? this.durationSeconds : durationSeconds as int?,
       intervalSeconds: identical(intervalSeconds, unset) ? this.intervalSeconds : intervalSeconds as int?,
       intervals: identical(intervals, unset) ? this.intervals : intervals as int?,
-      repsPerInterval: identical(repsPerInterval, unset) ? this.repsPerInterval : repsPerInterval as int?,
       ladderStart: identical(ladderStart, unset) ? this.ladderStart : ladderStart as int?,
       ladderStep: identical(ladderStep, unset) ? this.ladderStep : ladderStep as int?,
       ladderTop: identical(ladderTop, unset) ? this.ladderTop : ladderTop as int?,
@@ -3119,6 +3154,8 @@ final class SetTechnique {
       pyramidReps: identical(pyramidReps, unset) ? this.pyramidReps : pyramidReps as List<int>?,
       qualityFloor: identical(qualityFloor, unset) ? this.qualityFloor : qualityFloor as int?,
       maxAttempts: identical(maxAttempts, unset) ? this.maxAttempts : maxAttempts as int?,
+      totalSecondsTarget: identical(totalSecondsTarget, unset) ? this.totalSecondsTarget : totalSecondsTarget as int?,
+      lastSetOnly: identical(lastSetOnly, unset) ? this.lastSetOnly : lastSetOnly as bool?,
     );
   }
 
@@ -3138,8 +3175,6 @@ final class SetTechnique {
     if (miniSets case final v?) { checkRange(out, '$path.miniSets', v, 1, 20); }
     if (miniSetReps case final v?) { checkRange(out, '$path.miniSetReps', v, 1, 30); }
     if (intraRestSeconds case final v?) { checkRange(out, '$path.intraRestSeconds', v, 1, 120); }
-    if (activationRepsLow case final v?) { checkRange(out, '$path.activationRepsLow', v, 1, 100); }
-    if (activationRepsHigh case final v?) { checkRange(out, '$path.activationRepsHigh', v, 1, 100); }
     if (totalRepsTarget case final v?) { checkRange(out, '$path.totalRepsTarget', v, 1, 1000); }
     if (drops case final v?) { checkRange(out, '$path.drops', v, 1, 6); }
     if (dropPct case final v?) { checkRange(out, '$path.dropPct', v, 0.05, 0.6); }
@@ -3152,7 +3187,6 @@ final class SetTechnique {
     if (durationSeconds case final v?) { checkRange(out, '$path.durationSeconds', v, 10, 7200); }
     if (intervalSeconds case final v?) { checkRange(out, '$path.intervalSeconds', v, 10, 900); }
     if (intervals case final v?) { checkRange(out, '$path.intervals', v, 1, 120); }
-    if (repsPerInterval case final v?) { checkRange(out, '$path.repsPerInterval', v, 1, 100); }
     if (ladderStart case final v?) { checkRange(out, '$path.ladderStart', v, 1, 100); }
     if (ladderStep case final v?) { checkRange(out, '$path.ladderStep', v, 1, 20); }
     if (ladderTop case final v?) { checkRange(out, '$path.ladderTop', v, 1, 100); }
@@ -3160,7 +3194,8 @@ final class SetTechnique {
     if (pyramidReps case final v?) { checkLength(out, '$path.pyramidReps', v.length, 2, 20); }
     if (qualityFloor case final v?) { checkRange(out, '$path.qualityFloor', v, 1, 5); }
     if (maxAttempts case final v?) { checkRange(out, '$path.maxAttempts', v, 1, 30); }
-    checkVariant(out, path, kind.code, <String, Object?>{'backoffSets': backoffSets, 'backoffDropPct': backoffDropPct, 'backoffRepsLow': backoffRepsLow, 'backoffRepsHigh': backoffRepsHigh, 'miniSets': miniSets, 'miniSetReps': miniSetReps, 'intraRestSeconds': intraRestSeconds, 'activationRepsLow': activationRepsLow, 'activationRepsHigh': activationRepsHigh, 'totalRepsTarget': totalRepsTarget, 'drops': drops, 'dropPct': dropPct, 'eccentricLoadPct': eccentricLoadPct, 'eccentricOnly': eccentricOnly, 'pairedSlotId': pairedSlotId, 'pairedRestSeconds': pairedRestSeconds, 'waves': waves, 'waveReps': waveReps, 'waveStepPct': waveStepPct, 'durationSeconds': durationSeconds, 'intervalSeconds': intervalSeconds, 'intervals': intervals, 'repsPerInterval': repsPerInterval, 'ladderStart': ladderStart, 'ladderStep': ladderStep, 'ladderTop': ladderTop, 'ladderCount': ladderCount, 'pyramidReps': pyramidReps, 'qualityFloor': qualityFloor, 'maxAttempts': maxAttempts, }, const <String, List<String>>{'standard': <String>[], 'top_set_backoff': <String>['backoffSets', 'backoffDropPct'], 'cluster': <String>['miniSets', 'miniSetReps', 'intraRestSeconds'], 'rest_pause': <String>['intraRestSeconds'], 'myo_reps': <String>['miniSetReps', 'intraRestSeconds'], 'drop_set': <String>['drops', 'dropPct'], 'isometric_hold': <String>[], 'accentuated_eccentric': <String>[], 'contrast': <String>['pairedSlotId'], 'wave': <String>['waves', 'waveReps'], 'amrap': <String>[], 'emom': <String>['intervalSeconds', 'intervals'], 'density': <String>['durationSeconds'], 'ladder': <String>['ladderStart', 'ladderStep', 'ladderTop'], 'pyramid': <String>['pyramidReps'], 'skill_practice': <String>[], }, const <String, List<String>>{'standard': <String>[], 'top_set_backoff': <String>['backoffRepsLow', 'backoffRepsHigh'], 'cluster': <String>[], 'rest_pause': <String>['miniSets', 'totalRepsTarget'], 'myo_reps': <String>['miniSets', 'activationRepsLow', 'activationRepsHigh'], 'drop_set': <String>[], 'isometric_hold': <String>[], 'accentuated_eccentric': <String>['eccentricLoadPct', 'eccentricOnly'], 'contrast': <String>['pairedRestSeconds'], 'wave': <String>['waveStepPct'], 'amrap': <String>['durationSeconds'], 'emom': <String>['repsPerInterval'], 'density': <String>['totalRepsTarget'], 'ladder': <String>['ladderCount'], 'pyramid': <String>[], 'skill_practice': <String>['qualityFloor', 'maxAttempts'], });
+    if (totalSecondsTarget case final v?) { checkRange(out, '$path.totalSecondsTarget', v, 1, 3600); }
+    checkVariant(out, path, kind.code, <String, Object?>{'backoffSets': backoffSets, 'backoffDropPct': backoffDropPct, 'backoffRepsLow': backoffRepsLow, 'backoffRepsHigh': backoffRepsHigh, 'miniSets': miniSets, 'miniSetReps': miniSetReps, 'intraRestSeconds': intraRestSeconds, 'totalRepsTarget': totalRepsTarget, 'drops': drops, 'dropPct': dropPct, 'eccentricLoadPct': eccentricLoadPct, 'eccentricOnly': eccentricOnly, 'pairedSlotId': pairedSlotId, 'pairedRestSeconds': pairedRestSeconds, 'waves': waves, 'waveReps': waveReps, 'waveStepPct': waveStepPct, 'durationSeconds': durationSeconds, 'intervalSeconds': intervalSeconds, 'intervals': intervals, 'ladderStart': ladderStart, 'ladderStep': ladderStep, 'ladderTop': ladderTop, 'ladderCount': ladderCount, 'pyramidReps': pyramidReps, 'qualityFloor': qualityFloor, 'maxAttempts': maxAttempts, 'totalSecondsTarget': totalSecondsTarget, }, const <String, List<String>>{'standard': <String>[], 'top_set_backoff': <String>['backoffSets', 'backoffDropPct'], 'cluster': <String>['miniSets', 'miniSetReps', 'intraRestSeconds'], 'rest_pause': <String>['intraRestSeconds'], 'myo_reps': <String>['miniSetReps', 'intraRestSeconds'], 'drop_set': <String>['drops', 'dropPct'], 'isometric_hold': <String>[], 'accentuated_eccentric': <String>[], 'contrast': <String>['pairedSlotId'], 'wave': <String>['waves', 'waveReps'], 'amrap': <String>[], 'emom': <String>['intervalSeconds', 'intervals'], 'density': <String>['durationSeconds'], 'ladder': <String>['ladderStart', 'ladderStep', 'ladderTop'], 'pyramid': <String>['pyramidReps'], 'skill_practice': <String>[], 'for_time': <String>['totalRepsTarget'], }, const <String, List<String>>{'standard': <String>[], 'top_set_backoff': <String>['backoffRepsLow', 'backoffRepsHigh'], 'cluster': <String>[], 'rest_pause': <String>['miniSets', 'totalRepsTarget'], 'myo_reps': <String>['miniSets'], 'drop_set': <String>[], 'isometric_hold': <String>['qualityFloor', 'totalSecondsTarget'], 'accentuated_eccentric': <String>['eccentricLoadPct', 'eccentricOnly'], 'contrast': <String>['pairedRestSeconds'], 'wave': <String>['waveStepPct'], 'amrap': <String>['durationSeconds'], 'emom': <String>[], 'density': <String>['totalRepsTarget'], 'ladder': <String>['ladderCount'], 'pyramid': <String>[], 'skill_practice': <String>['qualityFloor', 'maxAttempts', 'durationSeconds', 'totalSecondsTarget'], 'for_time': <String>['durationSeconds'], });
     _validateSetTechnique(this, path, out);
   }
 
@@ -3170,31 +3205,33 @@ final class SetTechnique {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is SetTechnique && kind == other.kind && backoffSets == other.backoffSets && backoffDropPct == other.backoffDropPct && backoffRepsLow == other.backoffRepsLow && backoffRepsHigh == other.backoffRepsHigh && miniSets == other.miniSets && miniSetReps == other.miniSetReps && intraRestSeconds == other.intraRestSeconds && activationRepsLow == other.activationRepsLow && activationRepsHigh == other.activationRepsHigh && totalRepsTarget == other.totalRepsTarget && drops == other.drops && dropPct == other.dropPct && eccentricLoadPct == other.eccentricLoadPct && eccentricOnly == other.eccentricOnly && pairedSlotId == other.pairedSlotId && pairedRestSeconds == other.pairedRestSeconds && waves == other.waves && jsonDeepEquals(waveReps, other.waveReps) && waveStepPct == other.waveStepPct && durationSeconds == other.durationSeconds && intervalSeconds == other.intervalSeconds && intervals == other.intervals && repsPerInterval == other.repsPerInterval && ladderStart == other.ladderStart && ladderStep == other.ladderStep && ladderTop == other.ladderTop && ladderCount == other.ladderCount && jsonDeepEquals(pyramidReps, other.pyramidReps) && qualityFloor == other.qualityFloor && maxAttempts == other.maxAttempts;
+    return identical(this, other) || other is SetTechnique && kind == other.kind && backoffSets == other.backoffSets && backoffDropPct == other.backoffDropPct && backoffRepsLow == other.backoffRepsLow && backoffRepsHigh == other.backoffRepsHigh && miniSets == other.miniSets && miniSetReps == other.miniSetReps && intraRestSeconds == other.intraRestSeconds && totalRepsTarget == other.totalRepsTarget && drops == other.drops && dropPct == other.dropPct && eccentricLoadPct == other.eccentricLoadPct && eccentricOnly == other.eccentricOnly && pairedSlotId == other.pairedSlotId && pairedRestSeconds == other.pairedRestSeconds && waves == other.waves && jsonDeepEquals(waveReps, other.waveReps) && waveStepPct == other.waveStepPct && durationSeconds == other.durationSeconds && intervalSeconds == other.intervalSeconds && intervals == other.intervals && ladderStart == other.ladderStart && ladderStep == other.ladderStep && ladderTop == other.ladderTop && ladderCount == other.ladderCount && jsonDeepEquals(pyramidReps, other.pyramidReps) && qualityFloor == other.qualityFloor && maxAttempts == other.maxAttempts && totalSecondsTarget == other.totalSecondsTarget && lastSetOnly == other.lastSetOnly;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[kind, backoffSets, backoffDropPct, backoffRepsLow, backoffRepsHigh, miniSets, miniSetReps, intraRestSeconds, activationRepsLow, activationRepsHigh, totalRepsTarget, drops, dropPct, eccentricLoadPct, eccentricOnly, pairedSlotId, pairedRestSeconds, waves, jsonDeepHash(waveReps), waveStepPct, durationSeconds, intervalSeconds, intervals, repsPerInterval, ladderStart, ladderStep, ladderTop, ladderCount, jsonDeepHash(pyramidReps), qualityFloor, maxAttempts]);
+  int get hashCode => Object.hashAll(<Object?>[kind, backoffSets, backoffDropPct, backoffRepsLow, backoffRepsHigh, miniSets, miniSetReps, intraRestSeconds, totalRepsTarget, drops, dropPct, eccentricLoadPct, eccentricOnly, pairedSlotId, pairedRestSeconds, waves, jsonDeepHash(waveReps), waveStepPct, durationSeconds, intervalSeconds, intervals, ladderStart, ladderStep, ladderTop, ladderCount, jsonDeepHash(pyramidReps), qualityFloor, maxAttempts, totalSecondsTarget, lastSetOnly]);
 
   @override
   String toString() => 'SetTechnique(${toJson()})';
 }
 
-/// Intensité visée, exprimée autrement qu'en flammes (0.4.0).
-/// `ExercisePrescription.percentOfOneRm` et `targetFlames` restent valables ;
-/// ce type ajoute les intensités relatives à un test, au maintien max, à une
-/// étape de figure, à une vitesse.
+/// Intensité visée, en plage ou relative à un test (0.4.0).
+/// `ExercisePrescription.percentOfOneRm` et `targetFlames` restent les
+/// valeurs simples ; ce type ajoute les plages, les intensités relatives à un
+/// test (répétitions max, maintien max), à une vitesse, au poids de corps, et
+/// le plafond d'effort.
 ///
-/// Invariant : `value` ≤ `valueHigh` ; bases en part : `value` et `valueHigh`
-/// ≤ 1,5.
+/// Invariant : `value` ≤ `valueHigh` ; bases en part (`percent_one_rm`,
+/// `percent_benchmark`, `speed_fraction`, `bodyweight_fraction`) : `value` et
+/// `valueHigh` ≤ 1,5 ; `rir` : ≤ 10 ; `absolute_speed` : ≤ 15 m/s.
 final class IntensityTarget {
   const IntensityTarget({
     required this.basis,
-    this.value,
+    required this.value,
     this.valueHigh,
     this.referenceExerciseId,
     this.referenceKind,
-    this.stepExerciseId,
+    this.eventId,
     this.rirCap,
   });
 
@@ -3203,11 +3240,11 @@ final class IntensityTarget {
   factory IntensityTarget.fromJson(Map<String, Object?> json) {
     return IntensityTarget(
       basis: jsonEnum(json, 'basis', IntensityBasis.fromCode),
-      value: jsonDoubleOrNull(json, 'value'),
+      value: jsonDouble(json, 'value'),
       valueHigh: jsonDoubleOrNull(json, 'valueHigh'),
       referenceExerciseId: jsonStringOrNull(json, 'referenceExerciseId'),
       referenceKind: jsonEnumOrNull(json, 'referenceKind', BenchmarkKind.fromCode),
-      stepExerciseId: jsonStringOrNull(json, 'stepExerciseId'),
+      eventId: jsonStringOrNull(json, 'eventId'),
       rirCap: jsonDoubleOrNull(json, 'rirCap'),
     );
   }
@@ -3216,8 +3253,9 @@ final class IntensityTarget {
   final IntensityBasis basis;
 
   /// Valeur visée (ou bas de la plage) : part de 0 à 1,5 pour les bases en part
-  /// ; répétitions en réserve pour `rir`.
-  final double? value;
+  /// ; répétitions en réserve pour `rir` ; mètres par seconde pour
+  /// `absolute_speed`.
+  final double value;
 
   /// Haut de la plage, même unité.
   final double? valueHigh;
@@ -3226,11 +3264,12 @@ final class IntensityTarget {
   final String? referenceExerciseId;
 
   /// Nature du test de référence (`percent_benchmark` : part des répétitions
-  /// max, du maintien max…).
+  /// max, du maintien max… ; `speed_fraction` : test de course).
   final BenchmarkKind? referenceKind;
 
-  /// Étape de progression visée (`progression_step`).
-  final String? stepExerciseId;
+  /// Échéance dont l'allure visée sert de référence (`speed_fraction` : part de
+  /// l'allure cible de la course).
+  final String? eventId;
 
   /// Plafond d'effort : ne jamais finir une série avec moins de répétitions en
   /// réserve que cette valeur ; la charge est abaissée sinon.
@@ -3240,11 +3279,11 @@ final class IntensityTarget {
   Map<String, Object?> toJson() {
     return <String, Object?>{
       'basis': basis.code,
-      if (value case final v?) 'value': v,
+      'value': value,
       if (valueHigh case final v?) 'valueHigh': v,
       if (referenceExerciseId case final v?) 'referenceExerciseId': v,
       if (referenceKind case final v?) 'referenceKind': v.code,
-      if (stepExerciseId case final v?) 'stepExerciseId': v,
+      if (eventId case final v?) 'eventId': v,
       if (rirCap case final v?) 'rirCap': v,
     };
   }
@@ -3252,20 +3291,20 @@ final class IntensityTarget {
   /// Copie modifiée ; un champ optionnel peut être remis à `null`.
   IntensityTarget copyWith({
     IntensityBasis? basis,
-    Object? value = unset,
+    double? value,
     Object? valueHigh = unset,
     Object? referenceExerciseId = unset,
     Object? referenceKind = unset,
-    Object? stepExerciseId = unset,
+    Object? eventId = unset,
     Object? rirCap = unset,
   }) {
     return IntensityTarget(
       basis: basis ?? this.basis,
-      value: identical(value, unset) ? this.value : value as double?,
+      value: value ?? this.value,
       valueHigh: identical(valueHigh, unset) ? this.valueHigh : valueHigh as double?,
       referenceExerciseId: identical(referenceExerciseId, unset) ? this.referenceExerciseId : referenceExerciseId as String?,
       referenceKind: identical(referenceKind, unset) ? this.referenceKind : referenceKind as BenchmarkKind?,
-      stepExerciseId: identical(stepExerciseId, unset) ? this.stepExerciseId : stepExerciseId as String?,
+      eventId: identical(eventId, unset) ? this.eventId : eventId as String?,
       rirCap: identical(rirCap, unset) ? this.rirCap : rirCap as double?,
     );
   }
@@ -3279,28 +3318,27 @@ final class IntensityTarget {
 
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
-    if (value case final v?) { checkRange(out, '$path.value', v, 0, 10); }
-    if (valueHigh case final v?) { checkRange(out, '$path.valueHigh', v, 0, 10); }
+    checkRange(out, '$path.value', value, 0, 15);
+    if (valueHigh case final v?) { checkRange(out, '$path.valueHigh', v, 0, 15); }
     if (referenceExerciseId case final v?) { checkLength(out, '$path.referenceExerciseId', v.length, 1, null); }
-    if (stepExerciseId case final v?) { checkLength(out, '$path.stepExerciseId', v.length, 1, null); }
+    if (eventId case final v?) { checkLength(out, '$path.eventId', v.length, 1, null); }
     if (rirCap case final v?) { checkRange(out, '$path.rirCap', v, 0, 10); }
-    checkVariant(out, path, basis.code, <String, Object?>{'value': value, 'valueHigh': valueHigh, 'referenceExerciseId': referenceExerciseId, 'referenceKind': referenceKind, 'stepExerciseId': stepExerciseId, }, const <String, List<String>>{'percent_one_rm': <String>['value'], 'percent_benchmark': <String>['value', 'referenceKind'], 'rir': <String>['value'], 'hold_fraction': <String>['value'], 'progression_step': <String>['stepExerciseId'], 'speed_fraction': <String>['value'], 'heart_rate_fraction': <String>['value'], }, const <String, List<String>>{'percent_one_rm': <String>['valueHigh', 'referenceExerciseId'], 'percent_benchmark': <String>['valueHigh', 'referenceExerciseId'], 'rir': <String>['valueHigh'], 'hold_fraction': <String>['valueHigh', 'referenceExerciseId'], 'progression_step': <String>[], 'speed_fraction': <String>['valueHigh', 'referenceKind', 'referenceExerciseId'], 'heart_rate_fraction': <String>['valueHigh'], });
+    checkVariant(out, path, basis.code, <String, Object?>{'referenceExerciseId': referenceExerciseId, 'referenceKind': referenceKind, 'eventId': eventId, }, const <String, List<String>>{'percent_one_rm': <String>[], 'percent_benchmark': <String>['referenceKind'], 'rir': <String>[], 'speed_fraction': <String>[], 'bodyweight_fraction': <String>[], 'absolute_speed': <String>[], }, const <String, List<String>>{'percent_one_rm': <String>['referenceExerciseId'], 'percent_benchmark': <String>['referenceExerciseId'], 'rir': <String>[], 'speed_fraction': <String>['referenceKind', 'referenceExerciseId', 'eventId'], 'bodyweight_fraction': <String>[], 'absolute_speed': <String>[], });
     _validateIntensityTarget(this, path, out);
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
     if (referenceExerciseId case final v?) { out.add(v); }
-    if (stepExerciseId case final v?) { out.add(v); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is IntensityTarget && basis == other.basis && value == other.value && valueHigh == other.valueHigh && referenceExerciseId == other.referenceExerciseId && referenceKind == other.referenceKind && stepExerciseId == other.stepExerciseId && rirCap == other.rirCap;
+    return identical(this, other) || other is IntensityTarget && basis == other.basis && value == other.value && valueHigh == other.valueHigh && referenceExerciseId == other.referenceExerciseId && referenceKind == other.referenceKind && eventId == other.eventId && rirCap == other.rirCap;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[basis, value, valueHigh, referenceExerciseId, referenceKind, stepExerciseId, rirCap]);
+  int get hashCode => Object.hashAll(<Object?>[basis, value, valueHigh, referenceExerciseId, referenceKind, eventId, rirCap]);
 
   @override
   String toString() => 'IntensityTarget(${toJson()})';
@@ -3319,6 +3357,7 @@ final class AutoregulationRule {
     this.minSets,
     this.maxSets,
     this.repDrop,
+    this.qualityFloor,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -3332,6 +3371,7 @@ final class AutoregulationRule {
       minSets: jsonIntOrNull(json, 'minSets'),
       maxSets: jsonIntOrNull(json, 'maxSets'),
       repDrop: jsonIntOrNull(json, 'repDrop'),
+      qualityFloor: jsonIntOrNull(json, 'qualityFloor'),
     );
   }
 
@@ -3339,9 +3379,9 @@ final class AutoregulationRule {
   final AutoregulationKind kind;
 
   /// Part : baisse appliquée à la série de tête réalisée
-  /// (`backoff_from_top_set`), part du meilleur maintien du jour
-  /// (`hold_from_best`), pas de correction de charge par répétition d'écart
-  /// (`load_from_rir`).
+  /// (`backoff_from_top_set` ; absente : celle de `technique.backoffDropPct`),
+  /// part du meilleur maintien du jour (`hold_from_best`), pas de correction de
+  /// charge par répétition d'écart (`load_from_rir`).
   final double? pct;
 
   /// Plancher de répétitions en réserve.
@@ -3360,6 +3400,10 @@ final class AutoregulationRule {
   /// l'exercice.
   final int? repDrop;
 
+  /// Propreté minimale (1 à 5) : l'exercice s'arrête dès qu'une série passe
+  /// dessous.
+  final int? qualityFloor;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -3370,6 +3414,7 @@ final class AutoregulationRule {
       if (minSets case final v?) 'minSets': v,
       if (maxSets case final v?) 'maxSets': v,
       if (repDrop case final v?) 'repDrop': v,
+      if (qualityFloor case final v?) 'qualityFloor': v,
     };
   }
 
@@ -3382,6 +3427,7 @@ final class AutoregulationRule {
     Object? minSets = unset,
     Object? maxSets = unset,
     Object? repDrop = unset,
+    Object? qualityFloor = unset,
   }) {
     return AutoregulationRule(
       kind: kind ?? this.kind,
@@ -3391,6 +3437,7 @@ final class AutoregulationRule {
       minSets: identical(minSets, unset) ? this.minSets : minSets as int?,
       maxSets: identical(maxSets, unset) ? this.maxSets : maxSets as int?,
       repDrop: identical(repDrop, unset) ? this.repDrop : repDrop as int?,
+      qualityFloor: identical(qualityFloor, unset) ? this.qualityFloor : qualityFloor as int?,
     );
   }
 
@@ -3409,7 +3456,8 @@ final class AutoregulationRule {
     if (minSets case final v?) { checkRange(out, '$path.minSets', v, 0, 20); }
     if (maxSets case final v?) { checkRange(out, '$path.maxSets', v, 1, 30); }
     if (repDrop case final v?) { checkRange(out, '$path.repDrop', v, 1, 50); }
-    checkVariant(out, path, kind.code, <String, Object?>{'pct': pct, 'rirFloor': rirFloor, 'rirCeiling': rirCeiling, 'minSets': minSets, 'maxSets': maxSets, 'repDrop': repDrop, }, const <String, List<String>>{'backoff_from_top_set': <String>['pct'], 'load_from_rir': <String>['rirFloor', 'rirCeiling'], 'stop_at_rir': <String>['rirFloor'], 'stop_on_rep_drop': <String>['repDrop'], 'hold_from_best': <String>['pct'], 'last_set_amrap': <String>[], }, const <String, List<String>>{'backoff_from_top_set': <String>['rirCeiling', 'minSets', 'maxSets'], 'load_from_rir': <String>['pct'], 'stop_at_rir': <String>['minSets', 'maxSets'], 'stop_on_rep_drop': <String>['minSets', 'maxSets'], 'hold_from_best': <String>[], 'last_set_amrap': <String>['rirFloor'], });
+    if (qualityFloor case final v?) { checkRange(out, '$path.qualityFloor', v, 1, 5); }
+    checkVariant(out, path, kind.code, <String, Object?>{'pct': pct, 'rirFloor': rirFloor, 'rirCeiling': rirCeiling, 'minSets': minSets, 'maxSets': maxSets, 'repDrop': repDrop, 'qualityFloor': qualityFloor, }, const <String, List<String>>{'backoff_from_top_set': <String>[], 'load_from_rir': <String>['rirFloor', 'rirCeiling'], 'stop_at_rir': <String>['rirFloor'], 'stop_on_rep_drop': <String>['repDrop'], 'hold_from_best': <String>['pct'], 'last_set_amrap': <String>[], 'stop_on_quality_drop': <String>['qualityFloor'], }, const <String, List<String>>{'backoff_from_top_set': <String>['pct', 'rirCeiling', 'minSets', 'maxSets'], 'load_from_rir': <String>['pct'], 'stop_at_rir': <String>['minSets', 'maxSets'], 'stop_on_rep_drop': <String>['minSets', 'maxSets'], 'hold_from_best': <String>[], 'last_set_amrap': <String>['rirFloor'], 'stop_on_quality_drop': <String>['minSets', 'maxSets'], });
     _validateAutoregulationRule(this, path, out);
   }
 
@@ -3419,14 +3467,154 @@ final class AutoregulationRule {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is AutoregulationRule && kind == other.kind && pct == other.pct && rirFloor == other.rirFloor && rirCeiling == other.rirCeiling && minSets == other.minSets && maxSets == other.maxSets && repDrop == other.repDrop;
+    return identical(this, other) || other is AutoregulationRule && kind == other.kind && pct == other.pct && rirFloor == other.rirFloor && rirCeiling == other.rirCeiling && minSets == other.minSets && maxSets == other.maxSets && repDrop == other.repDrop && qualityFloor == other.qualityFloor;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[kind, pct, rirFloor, rirCeiling, minSets, maxSets, repDrop]);
+  int get hashCode => Object.hashAll(<Object?>[kind, pct, rirFloor, rirCeiling, minSets, maxSets, repDrop, qualityFloor]);
 
   @override
   String toString() => 'AutoregulationRule(${toJson()})';
+}
+
+/// Groupe d'exercices enchaînés dans une séance (0.4.0) : ses membres portent
+/// le même `groupId`. Quand un groupe est décrit ici, il prime sur le texte
+/// libre `ExercisePrescription.format`.
+///
+/// Invariant : Chaque format porte exactement ses paramètres ; `eventId` est
+/// libre. Dans une séance (`DayPrescription.groups`, `SessionPlan.groups`) :
+/// `groupId` distincts, et chaque groupe a au moins un membre (une
+/// prescription qui porte son `groupId`).
+final class GroupSpec {
+  const GroupSpec({
+    required this.groupId,
+    required this.format,
+    this.rounds,
+    this.durationSeconds,
+    this.timeCapSeconds,
+    this.intervalSeconds,
+    this.restBetweenRoundsSeconds,
+    this.targetSeconds,
+    this.eventId,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory GroupSpec.fromJson(Map<String, Object?> json) {
+    return GroupSpec(
+      groupId: jsonString(json, 'groupId'),
+      format: jsonEnum(json, 'format', GroupFormat.fromCode),
+      rounds: jsonIntOrNull(json, 'rounds'),
+      durationSeconds: jsonIntOrNull(json, 'durationSeconds'),
+      timeCapSeconds: jsonIntOrNull(json, 'timeCapSeconds'),
+      intervalSeconds: jsonIntOrNull(json, 'intervalSeconds'),
+      restBetweenRoundsSeconds: jsonIntOrNull(json, 'restBetweenRoundsSeconds'),
+      targetSeconds: jsonIntOrNull(json, 'targetSeconds'),
+      eventId: jsonStringOrNull(json, 'eventId'),
+    );
+  }
+
+  /// Identifiant du groupe (celui de `ExercisePrescription.groupId`).
+  final String groupId;
+
+  /// Format.
+  final GroupFormat format;
+
+  /// Nombre de tours.
+  final int? rounds;
+
+  /// Durée du bloc, en secondes (AMRAP, EMOM).
+  final int? durationSeconds;
+
+  /// Limite de temps, en secondes (tours ou suite au meilleur temps).
+  final int? timeCapSeconds;
+
+  /// Durée d'un intervalle, en secondes (EMOM, intervalles).
+  final int? intervalSeconds;
+
+  /// Repos entre deux tours, en secondes.
+  final int? restBetweenRoundsSeconds;
+
+  /// Temps visé, en secondes.
+  final int? targetSeconds;
+
+  /// Échéance dont ce groupe répète l'épreuve.
+  final String? eventId;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'groupId': groupId,
+      'format': format.code,
+      if (rounds case final v?) 'rounds': v,
+      if (durationSeconds case final v?) 'durationSeconds': v,
+      if (timeCapSeconds case final v?) 'timeCapSeconds': v,
+      if (intervalSeconds case final v?) 'intervalSeconds': v,
+      if (restBetweenRoundsSeconds case final v?) 'restBetweenRoundsSeconds': v,
+      if (targetSeconds case final v?) 'targetSeconds': v,
+      if (eventId case final v?) 'eventId': v,
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  GroupSpec copyWith({
+    String? groupId,
+    GroupFormat? format,
+    Object? rounds = unset,
+    Object? durationSeconds = unset,
+    Object? timeCapSeconds = unset,
+    Object? intervalSeconds = unset,
+    Object? restBetweenRoundsSeconds = unset,
+    Object? targetSeconds = unset,
+    Object? eventId = unset,
+  }) {
+    return GroupSpec(
+      groupId: groupId ?? this.groupId,
+      format: format ?? this.format,
+      rounds: identical(rounds, unset) ? this.rounds : rounds as int?,
+      durationSeconds: identical(durationSeconds, unset) ? this.durationSeconds : durationSeconds as int?,
+      timeCapSeconds: identical(timeCapSeconds, unset) ? this.timeCapSeconds : timeCapSeconds as int?,
+      intervalSeconds: identical(intervalSeconds, unset) ? this.intervalSeconds : intervalSeconds as int?,
+      restBetweenRoundsSeconds: identical(restBetweenRoundsSeconds, unset) ? this.restBetweenRoundsSeconds : restBetweenRoundsSeconds as int?,
+      targetSeconds: identical(targetSeconds, unset) ? this.targetSeconds : targetSeconds as int?,
+      eventId: identical(eventId, unset) ? this.eventId : eventId as String?,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkLength(out, '$path.groupId', groupId.length, 1, null);
+    if (rounds case final v?) { checkRange(out, '$path.rounds', v, 1, 100); }
+    if (durationSeconds case final v?) { checkRange(out, '$path.durationSeconds', v, 10, 14400); }
+    if (timeCapSeconds case final v?) { checkRange(out, '$path.timeCapSeconds', v, 10, 14400); }
+    if (intervalSeconds case final v?) { checkRange(out, '$path.intervalSeconds', v, 5, 3600); }
+    if (restBetweenRoundsSeconds case final v?) { checkRange(out, '$path.restBetweenRoundsSeconds', v, 0, 3600); }
+    if (targetSeconds case final v?) { checkRange(out, '$path.targetSeconds', v, 1, 14400); }
+    if (eventId case final v?) { checkLength(out, '$path.eventId', v.length, 1, null); }
+    checkVariant(out, path, format.code, <String, Object?>{'rounds': rounds, 'durationSeconds': durationSeconds, 'timeCapSeconds': timeCapSeconds, 'intervalSeconds': intervalSeconds, 'restBetweenRoundsSeconds': restBetweenRoundsSeconds, 'targetSeconds': targetSeconds, }, const <String, List<String>>{'superset': <String>[], 'circuit': <String>['rounds'], 'rounds_for_time': <String>['rounds'], 'amrap': <String>['durationSeconds'], 'emom': <String>['intervalSeconds', 'durationSeconds'], 'chipper': <String>[], 'intervals': <String>['rounds', 'intervalSeconds'], }, const <String, List<String>>{'superset': <String>['rounds', 'restBetweenRoundsSeconds'], 'circuit': <String>['restBetweenRoundsSeconds'], 'rounds_for_time': <String>['timeCapSeconds', 'targetSeconds', 'restBetweenRoundsSeconds'], 'amrap': <String>[], 'emom': <String>[], 'chipper': <String>['timeCapSeconds', 'targetSeconds'], 'intervals': <String>['restBetweenRoundsSeconds'], });
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is GroupSpec && groupId == other.groupId && format == other.format && rounds == other.rounds && durationSeconds == other.durationSeconds && timeCapSeconds == other.timeCapSeconds && intervalSeconds == other.intervalSeconds && restBetweenRoundsSeconds == other.restBetweenRoundsSeconds && targetSeconds == other.targetSeconds && eventId == other.eventId;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[groupId, format, rounds, durationSeconds, timeCapSeconds, intervalSeconds, restBetweenRoundsSeconds, targetSeconds, eventId]);
+
+  @override
+  String toString() => 'GroupSpec(${toJson()})';
 }
 
 /// Série ou exercice de test (0.4.0), porté par une prescription dont `kind`

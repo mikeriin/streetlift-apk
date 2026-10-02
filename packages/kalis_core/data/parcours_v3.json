@@ -20,7 +20,7 @@
    "id": "accueil",
    "title": "Bienvenue",
    "since": 2,
-   "koach": "Salut ! Quelques questions et je te prépare un programme à ta mesure.",
+   "koach": "Salut ! Quelques minutes de questions et je te prépare un programme à ta mesure.",
    "note": "Accueil de Koach et avertissement santé L13 (inchangés)."
   },
   {
@@ -37,21 +37,21 @@
   },
   {
    "id": "dosage",
-   "title": "Le dosage",
+   "title": "Le reste du programme",
    "since": 2,
-   "koach": "Un peu d'autre chose à côté ?"
+   "koach": "Choisis une ou deux autres activités à ajouter, et la place que tu leur donnes."
   },
   {
    "id": "experience",
    "title": "Ton expérience",
    "since": 2,
-   "koach": "Dis-moi d'où tu pars : je règle le volume et le rythme là-dessus."
+   "koach": "Dis-moi d'où tu pars : je règle la difficulté dessus."
   },
   {
    "id": "niveaux",
-   "title": "Ton niveau",
+   "title": "Ce que tu sais faire",
    "since": 2,
-   "koach": "Une fourchette me suffit. Si tu ne sais pas, on mesurera ensemble."
+   "koach": "Donne-moi une idée, même vague. Si tu ne sais pas, pas d'examen : on verra tranquillement pendant tes premières séances."
   },
   {
    "id": "objectifs",
@@ -75,14 +75,14 @@
    "id": "recuperation",
    "title": "Ta récupération",
    "since": 3,
-   "koach": "Ton corps récupère aussi en dehors des séances. Trois questions rapides.",
-   "note": "Nouvel écran (schéma 3). Les trois premières questions tiennent sur un écran ; chacune a « Passer »."
+   "koach": "Ton corps récupère aussi en dehors des séances. Quelques questions rapides.",
+   "note": "Nouvel écran (schéma 3). Les trois premières questions tiennent sur un écran ; chacune a « Passer ». Pour un débutant, cet écran n'est pas montré à la création : ses questions sont proposées après la première semaine (`deferWhen`)."
   },
   {
    "id": "sante",
    "title": "Ta santé",
    "since": 2,
-   "koach": "Une zone à ménager ? Je la protège.",
+   "koach": "Parlons de ta santé : ce que tu me dis ici me sert à te protéger.",
    "note": "Questionnaire santé L13 inchangé ; les gênes sont des contraintes d'entraînement, jamais un diagnostic."
   },
   {
@@ -95,7 +95,7 @@
    "id": "mode",
    "title": "Assisté ou libre",
    "since": 2,
-   "koach": "Je décide, ou je propose ?"
+   "koach": "Si une séance se passe mal ou trop bien, j'adapte la suite. Tu préfères que je le fasse tout seul, ou que je te demande ?"
   },
   {
    "id": "recap",
@@ -151,8 +151,9 @@
      "label": "Je préfère ne pas le dire"
     }
    ],
+   "koach": "Ça ne change pas ton programme : ça sert aux repères de classement et aux catégories de compétition.",
    "factor": "sexe",
-   "effect": "Aucun effet sur le programme (gains relatifs identiques) ; sert aux repères de rang."
+   "effect": "Aucun effet sur le programme (mêmes volumes relatifs) ; sert aux repères de rang et aux catégories de compétition. « Je préfère ne pas le dire » : l'éditeur d'échéance propose les catégories des deux listes."
   },
   {
    "id": "birth_year",
@@ -169,6 +170,7 @@
    "when": {
     "op": "always"
    },
+   "koach": "Il faut avoir 18 ans. Ton âge me sert aussi à rester prudent sur les tests.",
    "factor": "age",
    "effect": "Prudence des tests (pas de maximum direct après 65 ans sans expérience) ; attentes de progression.",
    "validation": "18 ans et plus (règle L13)."
@@ -178,7 +180,7 @@
    "screen": "toi",
    "since": 2,
    "kind": "number",
-   "text": "Ta taille ?",
+   "text": "Ta taille, en cm ?",
    "fields": [
     "heightCm"
    ],
@@ -197,7 +199,7 @@
    "screen": "toi",
    "since": 2,
    "kind": "number",
-   "text": "Ton poids ?",
+   "text": "Ton poids, en kg ?",
    "fields": [
     "bodyWeightKg"
    ],
@@ -207,10 +209,42 @@
    "when": {
     "op": "always"
    },
-   "koach": "C'est ta charge sur les tractions, les dips, les pompes : avec lui, je calcule juste.",
+   "requiredWhen": {
+    "op": "any",
+    "of": [
+     {
+      "op": "present",
+      "path": "streetMode"
+     },
+     {
+      "op": "any",
+      "of": [
+       {
+        "op": "in",
+        "path": "disciplines.primary",
+        "values": [
+         "streetlifting",
+         "street_workout",
+         "calisthenics"
+        ]
+       },
+       {
+        "op": "in",
+        "path": "disciplines.secondaries[*].discipline",
+        "values": [
+         "streetlifting",
+         "street_workout",
+         "calisthenics"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "koach": "Aux pompes ou aux tractions, c'est ton propre poids que tu soulèves. Si je le connais, je dose mieux. Personne d'autre ne le voit.",
    "factor": "poids_de_corps",
    "effect": "Charge totale des exercices au poids du corps ou lestés, force relative, catégories de poids.",
-   "note": "En mode street ou en calisthénie, Koach explique que sans le poids les charges lestées ne peuvent pas être calculées ; la question reste passable.",
+   "note": "Obligatoire en mode street, en streetlifting, en street workout et en calisthénie (`requiredWhen`) : sans lui, ni charge totale, ni pourcentage, ni test lesté. Passable ailleurs, avec un bouton « Passer » aussi visible que « Valider ».",
    "validation": "25 à 300 kg."
   },
   {
@@ -218,7 +252,7 @@
    "screen": "discipline",
    "since": 2,
    "kind": "group",
-   "text": "Ta discipline principale (ou le mode street)",
+   "text": "Tu veux faire quoi, surtout ?",
    "fields": [
     "disciplines.primary",
     "streetMode"
@@ -229,7 +263,7 @@
    "when": {
     "op": "always"
    },
-   "note": "8 disciplines (D3.1) ou mode street : principale parmi streetlifting, sets & reps, calisthénie (D3.3)."
+   "note": "8 disciplines (D3.1) ou mode street : principale parmi streetlifting, sets & reps, calisthénie (D3.3). Une ligne d'explication en mots courants sous chaque choix (« Calisthénie : des exercices avec le poids de ton corps », « Musculation : des charges, en salle ou à la maison »…). Le mode street est rangé à part, sous « Je pratique déjà le street workout ». Dernier choix : « Je ne sais pas, choisis pour moi », qui sélectionne la forme générale (`general_fitness`) — une réponse est bien écrite, modifiable ensuite."
   },
   {
    "id": "secondaries",
@@ -254,7 +288,7 @@
    "screen": "experience",
    "since": 2,
    "kind": "choice",
-   "text": "Ton niveau aujourd'hui ?",
+   "text": "Globalement, tu te situes où ?",
    "fields": [
     "experience"
    ],
@@ -268,12 +302,12 @@
     {
      "code": "beginner",
      "label": "Débutant",
-     "hint": "Je découvre, ou je reprends de zéro"
+     "hint": "Je découvre, ou presque"
     },
     {
      "code": "intermediate",
      "label": "Intermédiaire",
-     "hint": "Je m'entraîne régulièrement et je connais les mouvements de base"
+     "hint": "Je connais les mouvements de base et je me suis entraîné régulièrement, même si j'ai arrêté un moment"
     },
     {
      "code": "advanced",
@@ -283,19 +317,19 @@
     {
      "code": "elite",
      "label": "Élite",
-     "hint": "Je fais de la compétition à bon niveau"
+     "hint": "Je fais de la compétition au niveau national ou au-dessus"
     }
    ],
    "factor": "anciennete",
    "effect": "Ouvre les questions avancées (tests, compétition, points faibles) et borne les techniques servies.",
-   "note": "Passée : le parcours reste celui d'un débutant (le plus court)."
+   "note": "Un ancien pratiquant qui reprend après un long arrêt ne se dit pas débutant : il choisit son niveau d'avant, et la question `training_gap` dit depuis quand il a arrêté (ses tendons, eux, repartent de plus bas). Passée : le parcours reste celui d'un débutant (le plus court). Le moteur recale ensuite le niveau sur les performances (force rapportée au poids de corps) : le dire au récapitulatif."
   },
   {
    "id": "training_age",
    "screen": "experience",
    "since": 3,
    "kind": "choice",
-   "text": "Depuis combien de temps tu t'entraînes régulièrement ?",
+   "text": "Depuis combien de temps tu pratiques régulièrement ta discipline principale ?",
    "fields": [
     "trainingAge"
    ],
@@ -303,7 +337,10 @@
    "skip": true,
    "unknown": false,
    "when": {
-    "op": "always"
+    "op": "at_least",
+    "path": "experience",
+    "scale": "experience",
+    "value": "intermediate"
    },
    "options": [
     {
@@ -323,9 +360,10 @@
      "label": "Plus de 5 ans"
     }
    ],
-   "koach": "Sans compter les longues coupures.",
+   "koach": "Ne compte pas les périodes où tu as arrêté plusieurs mois.",
    "factor": "anciennete",
-   "effect": "Volume et intensité de départ, vitesse de progression attendue, besoin de périodisation, prérequis des techniques avancées et des figures en bras tendus."
+   "effect": "Volume et intensité de départ, vitesse de progression attendue, besoin de périodisation, prérequis des techniques avancées et des figures en bras tendus.",
+   "note": "L'ancienneté est celle de la discipline principale (un haltérophile qui commence la planche est récent en bras tendus). Non posée à un débutant : « je découvre » le dit déjà."
   },
   {
    "id": "training_gap",
@@ -351,6 +389,10 @@
      "label": "Oui, régulièrement"
     },
     {
+     "code": "reduced",
+     "label": "Oui, mais en allégé depuis quelques semaines"
+    },
+    {
      "code": "under_3_weeks",
      "label": "J'ai arrêté depuis moins de 3 semaines"
     },
@@ -359,37 +401,142 @@
      "label": "J'ai arrêté depuis 3 à 10 semaines"
     },
     {
-     "code": "over_10_weeks",
-     "label": "J'ai arrêté depuis plus de 10 semaines"
+     "code": "weeks_10_to_26",
+     "label": "J'ai arrêté depuis 10 semaines à 6 mois"
+    },
+    {
+     "code": "months_6_to_24",
+     "label": "J'ai arrêté depuis 6 mois à 2 ans"
+    },
+    {
+     "code": "over_2_years",
+     "label": "J'ai arrêté depuis plus de 2 ans"
     }
    ],
    "factor": "interruption",
-   "effect": "Reprise progressive après un arrêt de plus de 3 semaines ; figures à forte contrainte tendineuse reprises une étape en dessous après un mois d'arrêt.",
+   "effect": "Reprise progressive après un arrêt de plus de 3 semaines, d'autant plus longue que l'arrêt l'a été ; figures à forte contrainte tendineuse reprises une étape en dessous après un mois d'arrêt.",
    "note": "Posée une fois, à la création ; ensuite les coupures se lisent dans le journal (`TrainingLog.breaks`, dates des séances)."
   },
   {
-   "id": "movement_levels",
-   "screen": "niveaux",
-   "since": 2,
+   "id": "recent_training",
+   "screen": "experience",
+   "since": 3,
    "kind": "group",
-   "text": "Ton niveau sur quelques mouvements",
+   "text": "En ce moment, tu fais quoi ?",
    "fields": [
-    "movementLevels"
+    "recentTraining",
+    "currentPhase"
    ],
    "required": false,
-   "skip": false,
-   "unknown": true,
+   "skip": true,
+   "unknown": false,
    "when": {
-    "op": "always"
+    "op": "at_least",
+    "path": "experience",
+    "scale": "experience",
+    "value": "advanced"
    },
-   "note": "Fourchettes par mouvement (D3.5), « Je ne sais pas » toujours possible. Débutant : 4 mouvements au plus ; sinon 9 au plus, choisis selon les disciplines."
+   "koach": "Je cale ton premier bloc sur ce que tu fais vraiment aujourd'hui : ni semaine trop facile, ni marche trop haute.",
+   "factor": "charge_actuelle",
+   "effect": "Volume et fréquence du premier bloc par mouvement (ni décharge involontaire, ni saut de charge) ; exposition actuelle des coudes et des épaules aux bras tendus.",
+   "items": [
+    {
+     "field": "exerciseId",
+     "text": "Mouvement ou figure",
+     "kind": "exercise",
+     "required": true,
+     "note": "3 à 4 lignes pré-remplies : mouvements de compétition ou principaux de la discipline, figures de `skills`."
+    },
+    {
+     "field": "sessionsPerWeek",
+     "text": "Combien de fois par semaine tu le travailles ?",
+     "kind": "choice",
+     "required": true,
+     "options": [
+      {
+       "code": "0",
+       "label": "Pas en ce moment"
+      },
+      {
+       "code": "1",
+       "label": "1"
+      },
+      {
+       "code": "2",
+       "label": "2"
+      },
+      {
+       "code": "3",
+       "label": "3"
+      },
+      {
+       "code": "4",
+       "label": "4 ou plus"
+      }
+     ]
+    },
+    {
+     "field": "hardSets",
+     "text": "Combien de séries dures par semaine (à 3 répétitions ou moins de l'échec) ?",
+     "kind": "choice",
+     "required": false,
+     "options": [
+      {
+       "code": "under_5",
+       "label": "Moins de 5"
+      },
+      {
+       "code": "sets_5_to_9",
+       "label": "5 à 9"
+      },
+      {
+       "code": "sets_10_to_14",
+       "label": "10 à 14"
+      },
+      {
+       "code": "sets_15_to_20",
+       "label": "15 à 20"
+      },
+      {
+       "code": "over_20",
+       "label": "Plus de 20"
+      }
+     ]
+    },
+    {
+     "field": "currentPhase",
+     "text": "En ce moment, tu es plutôt…",
+     "kind": "choice",
+     "required": false,
+     "options": [
+      {
+       "code": "volume",
+       "label": "En volume"
+      },
+      {
+       "code": "heavy",
+       "label": "En lourd"
+      },
+      {
+       "code": "post_peak",
+       "label": "Je sors d'un pic ou d'une compétition"
+      },
+      {
+       "code": "unstructured",
+       "label": "Sans structure"
+      }
+     ],
+     "note": "Une seule fois pour tout l'écran : écrit `currentPhase`."
+    }
+   ],
+   "note": "« 4 ou plus » écrit 4. Ces réponses datent : elles portent `lifestyleUpdatedOn`, et le journal les remplace dès les premières semaines."
   },
   {
    "id": "benchmarks",
    "screen": "niveaux",
    "since": 3,
    "kind": "group",
-   "text": "Tu connais tes records précis ?",
+   "text": "Tes meilleures performances récentes",
    "fields": [
     "benchmarks"
    ],
@@ -402,7 +549,7 @@
     "scale": "experience",
     "value": "intermediate"
    },
-   "koach": "Un chiffre exact vaut mieux qu'une fourchette : je calcule tes charges dessus. Sinon, on fera un test ensemble.",
+   "koach": "Un chiffre exact et récent (3 derniers mois de préférence) vaut mieux qu'une fourchette : je calcule tes charges dessus. Sinon, on fera un test ensemble.",
    "factor": "tests_records",
    "effect": "Charges en part du maximum dès le premier bloc, choix des tentatives, séries de test seulement là où il manque une valeur.",
    "items": [
@@ -438,6 +585,10 @@
       {
        "code": "distance_trial",
        "label": "Une distance en un temps donné"
+      },
+      {
+       "code": "reps_for_time",
+       "label": "Un volume imposé, le plus vite possible"
       }
      ]
     },
@@ -495,7 +646,7 @@
      "text": "C'était quand ?",
      "kind": "date",
      "required": false,
-     "note": "Un record de plus de 6 mois est gardé, mais le moteur le reteste avant de s'y fier."
+     "note": "Raccourcis de saisie : « ce mois-ci », « il y a 1 à 3 mois », ou une date. Sans date, ou à plus de 6 mois : le record est gardé, mais le moteur le reteste avant de s'y fier. Aucune date n'est inventée : un record plus ancien se saisit avec son mois."
     },
     {
      "field": "source",
@@ -518,10 +669,44 @@
      "text": "Ton poids ce jour-là ?",
      "kind": "number",
      "required": false,
-     "note": "Seulement pour un exercice au poids du corps ou lesté."
+     "note": "Seulement pour un exercice au poids du corps ou lesté ; pré-rempli avec le poids du profil, à confirmer."
+    },
+    {
+     "field": "competitionStandard",
+     "text": "C'était au standard de compétition (amplitude complète, arrêts marqués) ?",
+     "kind": "choice",
+     "required": false,
+     "options": [
+      {
+       "code": "true",
+       "label": "Oui"
+      },
+      {
+       "code": "false",
+       "label": "Non"
+      }
+     ],
+     "note": "Seulement en streetlifting ou si une compétition de force est déclarée ; « Je ne sais pas » laisse le champ absent. Les tentatives ne se fondent que sur des records au standard."
     }
    ],
-   "note": "« Je ne sais pas » : aucun record n'est écrit ; les tests guidés sont proposés à la première séance (§ tests guidés). Liste vide = aucun record connu."
+   "note": "Placée AVANT les fourchettes : les fourchettes (`movement_levels`) ne sont ensuite demandées que pour les mouvements sans record. « Je ne sais pas » : aucun record n'est écrit ; les tests guidés sont proposés (§ tests guidés). Liste vide = aucun record connu. Une barre unique « avec de la réserve » sert aux charges d'entraînement, pas au choix des tentatives."
+  },
+  {
+   "id": "movement_levels",
+   "screen": "niveaux",
+   "since": 2,
+   "kind": "group",
+   "text": "Ce que tu fais aujourd'hui sur quelques mouvements",
+   "fields": [
+    "movementLevels"
+   ],
+   "required": false,
+   "skip": false,
+   "unknown": true,
+   "when": {
+    "op": "always"
+   },
+   "note": "Fourchettes par mouvement (D3.5). Un seul bouton « Je ne sais pas, on verra ensemble » pour tout l'écran, en haut. Débutant : 4 mouvements au plus ; sinon 9 au plus, choisis selon les disciplines, sans ceux qui ont déjà un record."
   },
   {
    "id": "skills",
@@ -545,14 +730,18 @@
         "op": "in",
         "path": "disciplines.primary",
         "values": [
-         "calisthenics"
+         "calisthenics",
+         "streetlifting",
+         "crossfit"
         ]
        },
        {
         "op": "in",
         "path": "disciplines.secondaries[*].discipline",
         "values": [
-         "calisthenics"
+         "calisthenics",
+         "streetlifting",
+         "crossfit"
         ]
        }
       ]
@@ -580,7 +769,7 @@
      "text": "Où en es-tu ?",
      "kind": "exercise",
      "required": true,
-     "note": "Choix parmi les étapes de la chaîne `variante_de` de la figure, de la plus facile à la figure elle-même."
+     "note": "Choix parmi les étapes de la chaîne `variante_de` de la figure, dans l'ordre de la base, puis la figure elle-même."
     },
     {
      "field": "bestHoldSeconds",
@@ -593,8 +782,34 @@
      "text": "Ou ton meilleur nombre de répétitions propres ?",
      "kind": "number",
      "required": false
+    },
+    {
+     "field": "atStepSince",
+     "text": "Depuis quand tu en es là ?",
+     "kind": "choice",
+     "required": false,
+     "options": [
+      {
+       "code": "under_1_month",
+       "label": "Moins d'un mois"
+      },
+      {
+       "code": "months_1_to_3",
+       "label": "1 à 3 mois"
+      },
+      {
+       "code": "months_3_to_6",
+       "label": "3 à 6 mois"
+      },
+      {
+       "code": "over_6_months",
+       "label": "Plus de 6 mois"
+      }
+     ],
+     "note": "Évite de te faire repartir de zéro sur une étape que tu tiens depuis longtemps ; plus de 6 mois : la méthode change."
     }
-   ]
+   ],
+   "note": "L'ordre de la liste est l'ordre de priorité (« fais glisser la plus importante en haut »). Étapes proposées : `Catalog.progressionCandidates` (variantes de la figure dans l'ordre de la base, puis la figure). Posée aussi en streetlifting et en CrossFit (muscle-up, équilibre, L-sit proposés d'abord)."
   },
   {
    "id": "goals",
@@ -611,14 +826,63 @@
    "when": {
     "op": "always"
    },
-   "note": "Performance chiffrée datée, habitude, ou « Laisse Koach proposer » (D3.8) ; le premier est le principal."
+   "note": "« Laisse Koach proposer » (D3.8) en premier, présélectionné pour un débutant : l'écran se valide en un appui. Puis « M'entraîner régulièrement » (habitude) et « J'ai un chiffre en tête (ex. 10 pompes) » (performance chiffrée datée). Le premier objectif est le principal."
+  },
+  {
+   "id": "emphasis",
+   "screen": "objectifs",
+   "since": 3,
+   "kind": "choice",
+   "text": "En musculation, tu cherches surtout…",
+   "fields": [
+    "emphasis"
+   ],
+   "required": false,
+   "skip": true,
+   "unknown": false,
+   "when": {
+    "op": "any",
+    "of": [
+     {
+      "op": "in",
+      "path": "disciplines.primary",
+      "values": [
+       "musculation"
+      ]
+     },
+     {
+      "op": "in",
+      "path": "disciplines.secondaries[*].discipline",
+      "values": [
+       "musculation"
+      ]
+     }
+    ]
+   },
+   "options": [
+    {
+     "code": "muscle",
+     "label": "Du muscle"
+    },
+    {
+     "code": "strength",
+     "label": "De la force"
+    },
+    {
+     "code": "both",
+     "label": "Les deux"
+    }
+   ],
+   "factor": "orientation",
+   "effect": "Plages de répétitions, proximité de l'échec et répartition du volume des séances de musculation.",
+   "note": "Un objectif du profil est une performance chiffrée ou une habitude : « prendre du muscle » se dit ici. À partir du niveau intermédiaire, la question suivante (`specialization`) permet de nommer une zone à développer en priorité."
   },
   {
    "id": "events",
    "screen": "objectifs",
    "since": 3,
    "kind": "group",
-   "text": "Une compétition ou un test daté en vue ?",
+   "text": "Une date en vue (compétition, course, test) ?",
    "fields": [
     "events"
    ],
@@ -639,6 +903,25 @@
       "path": "goals[*].kind",
       "values": [
        "performance"
+      ]
+     },
+     {
+      "op": "any",
+      "of": [
+       {
+        "op": "in",
+        "path": "disciplines.primary",
+        "values": [
+         "cardio"
+        ]
+       },
+       {
+        "op": "in",
+        "path": "disciplines.secondaries[*].discipline",
+        "values": [
+         "cardio"
+        ]
+       }
       ]
      }
     ]
@@ -683,7 +966,8 @@
      "field": "date",
      "text": "Quel jour ?",
      "kind": "date",
-     "required": true
+     "required": true,
+     "note": "Date pas encore fixée : choisir un mois, `dateApproximate: true` et le 15 du mois."
     },
     {
      "field": "priority",
@@ -723,7 +1007,14 @@
      "text": "Ta catégorie de poids ?",
      "kind": "number",
      "required": false,
-     "note": "Compétition de force ; « plus de … » coche `openWeightClass`."
+     "note": "Compétition de force ; « plus de … » coche `openWeightClass`. Les préréglages listent les catégories des deux sexes quand le sexe n'est pas renseigné."
+    },
+    {
+     "field": "plannedBodyWeightKg",
+     "text": "Tu comptes peser combien ce jour-là ?",
+     "kind": "number",
+     "required": false,
+     "note": "Compétition à catégories de poids (force, répétitions lestées) ; pré-rempli avec le poids du profil. Aucune question sur la méthode."
     },
     {
      "field": "lifts",
@@ -762,7 +1053,21 @@
      "text": "Les exercices, dans l'ordre",
      "kind": "list",
      "required": false,
-     "note": "Compétition de répétitions : exercice, répétitions ou durée imposées, lest, série indivisible. « Je ne connais pas encore le format » : liste d'une épreuve générique que l'utilisateur complétera."
+     "note": "Compétition de répétitions : exercice, répétitions ou durée imposées, lest, série indivisible, limite de temps et repos imposé du poste. « Le format sera annoncé le jour même » : `formatKnown: false`, aucune liste (préparation générale)."
+    },
+    {
+     "field": "heats",
+     "text": "Combien de passages dans la journée ?",
+     "kind": "number",
+     "required": false,
+     "note": "Tableau à élimination, manches ; avec le repos attendu entre deux passages (`restBetweenHeatsSeconds`)."
+    },
+    {
+     "field": "bestSeconds|bestTotalReps",
+     "text": "Tu l'as déjà fait ? Ton meilleur résultat",
+     "kind": "duration",
+     "required": false,
+     "note": "Épreuve de répétitions, test perso, course : meilleur temps ou meilleur total de répétitions, et sa date (`bestDate`)."
     },
     {
      "field": "distanceMeters",
@@ -776,6 +1081,13 @@
      "text": "Ton temps visé ?",
      "kind": "duration",
      "required": false
+    },
+    {
+     "field": "elements",
+     "text": "Les figures que tu veux présenter",
+     "kind": "list",
+     "required": false,
+     "note": "Freestyle."
     }
    ],
    "note": "Réponse « Non » : liste vide (aucune échéance). Passée : champ absent. Plusieurs échéances possibles ; une seule `main` conseillée par saison."
@@ -793,10 +1105,45 @@
    "skip": true,
    "unknown": false,
    "when": {
-    "op": "at_least",
-    "path": "experience",
-    "scale": "experience",
-    "value": "advanced"
+    "op": "any",
+    "of": [
+     {
+      "op": "at_least",
+      "path": "experience",
+      "scale": "experience",
+      "value": "advanced"
+     },
+     {
+      "op": "all",
+      "of": [
+       {
+        "op": "at_least",
+        "path": "experience",
+        "scale": "experience",
+        "value": "intermediate"
+       },
+       {
+        "op": "any",
+        "of": [
+         {
+          "op": "in",
+          "path": "disciplines.primary",
+          "values": [
+           "musculation"
+          ]
+         },
+         {
+          "op": "in",
+          "path": "disciplines.secondaries[*].discipline",
+          "values": [
+           "musculation"
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    ]
    },
    "koach": "Je peux lui donner la priorité pendant quelques semaines et entretenir le reste.",
    "factor": "specialisation",
@@ -873,7 +1220,8 @@
       }
      ]
     }
-   ]
+   ],
+   "note": "Une seule cible. S'il existe une échéance principale, la question devient « Lequel de tes mouvements de compétition est le plus en retard ? », le reste est forcément entretenu (`maintain`) et la priorité n'est servie que loin de l'échéance (phase d'accumulation) : le plan de saison prime. En musculation, dès le niveau intermédiaire, elle se présente comme « Une zone à développer en priorité ? » (groupe musculaire)."
   },
   {
    "id": "weak_points",
@@ -984,7 +1332,139 @@
      ]
     }
    ],
-   "note": "Une douleur n'est pas un point faible : elle se déclare à l'écran Santé."
+   "note": "Posée après les records, sur les mouvements saisis. Les réponses sont filtrées et libellées par mouvement (traction : « au départ, bras tendus », « à mi-hauteur », « en haut, le menton ne passe pas », « la prise lâche » ; muscle-up : « tirage pas assez haut », « transition », « sortie en dips ») ; les codes ne changent pas. Une douleur n'est pas un point faible : elle se déclare à l'écran Santé."
+  },
+  {
+   "id": "running_base",
+   "screen": "objectifs",
+   "since": 3,
+   "kind": "group",
+   "text": "Ces 4 dernières semaines, tu cours combien ?",
+   "fields": [
+    "enduranceBase"
+   ],
+   "required": false,
+   "skip": true,
+   "unknown": false,
+   "when": {
+    "op": "any",
+    "of": [
+     {
+      "op": "any",
+      "of": [
+       {
+        "op": "in",
+        "path": "disciplines.primary",
+        "values": [
+         "cardio"
+        ]
+       },
+       {
+        "op": "in",
+        "path": "disciplines.secondaries[*].discipline",
+        "values": [
+         "cardio"
+        ]
+       }
+      ]
+     },
+     {
+      "op": "in",
+      "path": "events[*].kind",
+      "values": [
+       "race"
+      ]
+     }
+    ]
+   },
+   "factor": "base_endurance",
+   "effect": "Distance hebdomadaire et sortie longue du premier bloc de course : on repart de ce qui est fait, pas de ce qui est possible.",
+   "items": [
+    {
+     "field": "weeklyVolume",
+     "text": "Par semaine, en tout",
+     "kind": "choice",
+     "required": true,
+     "options": [
+      {
+       "code": "none",
+       "label": "Je ne cours pas encore"
+      },
+      {
+       "code": "under_10_km",
+       "label": "Moins de 10 km"
+      },
+      {
+       "code": "km_10_to_20",
+       "label": "10 à 20 km"
+      },
+      {
+       "code": "km_20_to_35",
+       "label": "20 à 35 km"
+      },
+      {
+       "code": "km_35_to_50",
+       "label": "35 à 50 km"
+      },
+      {
+       "code": "over_50_km",
+       "label": "Plus de 50 km"
+      }
+     ]
+    },
+    {
+     "field": "sessionsPerWeek",
+     "text": "Combien de sorties par semaine ?",
+     "kind": "choice",
+     "required": true,
+     "options": [
+      {
+       "code": "0",
+       "label": "Aucune"
+      },
+      {
+       "code": "1",
+       "label": "1"
+      },
+      {
+       "code": "2",
+       "label": "2"
+      },
+      {
+       "code": "3",
+       "label": "3"
+      },
+      {
+       "code": "4",
+       "label": "4 ou plus"
+      }
+     ]
+    },
+    {
+     "field": "longRun",
+     "text": "Ta plus longue sortie récente ?",
+     "kind": "choice",
+     "required": false,
+     "options": [
+      {
+       "code": "under_30_min",
+       "label": "Moins de 30 min"
+      },
+      {
+       "code": "min_30_to_60",
+       "label": "30 à 60 min"
+      },
+      {
+       "code": "min_60_to_90",
+       "label": "60 à 90 min"
+      },
+      {
+       "code": "over_90_min",
+       "label": "Plus de 90 min"
+      }
+     ]
+    }
+   ]
   },
   {
    "id": "availability",
@@ -1049,7 +1529,7 @@
    "when": {
     "op": "always"
    },
-   "note": "Vocabulaire de la base, regroupé, préréglages, matériel par lieu (G6)."
+   "note": "Vocabulaire de la base, regroupé, préréglages, matériel par lieu (G6). Premier bouton : « Rien du tout », qui valide l'écran en un appui (liste vide)."
   },
   {
    "id": "sleep",
@@ -1066,6 +1546,15 @@
    "when": {
     "op": "always"
    },
+   "deferWhen": {
+    "op": "not",
+    "of": {
+     "op": "at_least",
+     "path": "experience",
+     "scale": "experience",
+     "value": "intermediate"
+    }
+   },
    "options": [
     {
      "code": "under_6_hours",
@@ -1073,23 +1562,24 @@
     },
     {
      "code": "hours_6_to_7",
-     "label": "6 à 7 h"
+     "label": "Entre 6 et 7 h"
     },
     {
      "code": "hours_7_plus",
-     "label": "7 h ou plus"
+     "label": "Plus de 7 h"
     }
    ],
+   "koach": "Si tu dors peu, je dose plus doucement.",
    "factor": "sommeil",
    "effect": "Moins de 6 h : volume proche de l'échec et cardio intense dosés avec prudence, jamais de baisse de charge ; aucune promesse sur les blessures.",
-   "note": "Valeur HABITUELLE. La nuit dernière se dit dans le bilan de séance (D5.8) : pas de doublon."
+   "note": "Valeur HABITUELLE, qui sert de valeur de départ. La nuit dernière se dit dans le bilan de séance (D5.8) : pas de doublon. « Plus de 7 h » comprend 7 h juste."
   },
   {
    "id": "stress",
    "screen": "recuperation",
    "since": 3,
    "kind": "choice",
-   "text": "En ce moment, ta vie hors entraînement est…",
+   "text": "En ce moment, tu es stressé ?",
    "fields": [
     "stress"
    ],
@@ -1099,20 +1589,30 @@
    "when": {
     "op": "always"
    },
+   "deferWhen": {
+    "op": "not",
+    "of": {
+     "op": "at_least",
+     "path": "experience",
+     "scale": "experience",
+     "value": "intermediate"
+    }
+   },
    "options": [
     {
      "code": "low",
-     "label": "Plutôt tranquille"
+     "label": "Pas vraiment"
     },
     {
      "code": "moderate",
-     "label": "Chargée, mais ça va"
+     "label": "Un peu"
     },
     {
      "code": "high",
-     "label": "Très stressante"
+     "label": "Beaucoup"
     }
    ],
+   "koach": "Si tu es très stressé, j'espace un peu plus les séances dures.",
    "factor": "stress",
    "effect": "Stress élevé : séances lourdes d'un même groupe plus espacées, pas de hausse de volume, décharge avancée.",
    "note": "Valeur des dernières semaines ; redemandée de temps en temps (`lifestyleUpdatedOn`). Le stress du jour reste dans le bilan de séance."
@@ -1122,7 +1622,7 @@
    "screen": "recuperation",
    "since": 3,
    "kind": "composite",
-   "text": "En dehors de ce programme, ton corps travaille déjà ?",
+   "text": "Tes journées, c'est plutôt…",
    "fields": [
     "occupationalLoad",
     "otherSports"
@@ -1133,22 +1633,31 @@
    "when": {
     "op": "always"
    },
+   "deferWhen": {
+    "op": "not",
+    "of": {
+     "op": "at_least",
+     "path": "experience",
+     "scale": "experience",
+     "value": "intermediate"
+    }
+   },
    "options": [
     {
      "code": "seated",
-     "label": "Non : je suis surtout assis"
+     "label": "Surtout assis"
     },
     {
      "code": "on_feet",
-     "label": "Je suis debout ou je marche toute la journée"
+     "label": "Debout ou en mouvement (ou un peu des deux)"
     },
     {
      "code": "heavy",
-     "label": "J'ai un métier physique (je porte, je soulève)"
+     "label": "Physiques : je porte, je soulève"
     },
     {
      "code": "other_sport",
-     "label": "Je fais un autre sport régulièrement"
+     "label": "Et je fais déjà un autre sport, en dehors de ce programme"
     }
    ],
    "factor": "charge_hors_programme",
@@ -1237,6 +1746,23 @@
      ]
     },
     {
+     "field": "mainSport",
+     "text": "C'est ton sport principal ?",
+     "kind": "choice",
+     "required": false,
+     "options": [
+      {
+       "code": "true",
+       "label": "Oui"
+      },
+      {
+       "code": "false",
+       "label": "Non"
+      }
+     ],
+     "note": "Si oui : pas de séance lourde des régions concernées la veille de ce sport."
+    },
+    {
      "field": "regions",
      "text": "Ça fait surtout travailler…",
      "kind": "multi",
@@ -1263,10 +1789,10 @@
        "label": "Tout le corps"
       }
      ],
-     "note": "Seulement pour « Autre sport de force » et « Autre »."
+     "note": "Pour tous les sports sauf course, vélo, natation et escalade (régions connues) ; sport de combat pré-coché « tout le corps », corrigeable."
     }
    ],
-   "note": "Une seule question, plusieurs réponses possibles : une des trois premières écrit `occupationalLoad` (la première est exclusive des deux suivantes) ; « un autre sport » ouvre sur place l'éditeur d'`otherSports` ; sans cette réponse, `otherSports` est écrit vide (aucun). Passée : les deux champs restent absents."
+   "note": "Une seule question : l'une des trois premières réponses (exclusives entre elles) écrit `occupationalLoad` ; la quatrième s'y ajoute et ouvre sur place l'éditeur d'`otherSports` ; sans elle, `otherSports` est écrit vide (aucun). Les codes des réponses ne sont pas des codes du contrat, sauf les trois premiers. Passée : les deux champs restent absents. « Autre sport » n'est pas une discipline du programme : c'est ce que tu fais déjà ailleurs."
   },
   {
    "id": "body_weight_goal",
@@ -1275,7 +1801,8 @@
    "kind": "choice",
    "text": "Ton poids, en ce moment, tu veux…",
    "fields": [
-    "bodyWeightGoal"
+    "bodyWeightGoal",
+    "targetBodyWeightKg"
    ],
    "required": false,
    "skip": true,
@@ -1290,8 +1817,36 @@
       "value": "intermediate"
      },
      {
-      "op": "present",
-      "path": "streetMode"
+      "op": "any",
+      "of": [
+       {
+        "op": "present",
+        "path": "streetMode"
+       },
+       {
+        "op": "any",
+        "of": [
+         {
+          "op": "in",
+          "path": "disciplines.primary",
+          "values": [
+           "streetlifting",
+           "street_workout",
+           "calisthenics"
+          ]
+         },
+         {
+          "op": "in",
+          "path": "disciplines.secondaries[*].discipline",
+          "values": [
+           "streetlifting",
+           "street_workout",
+           "calisthenics"
+          ]
+         }
+        ]
+       }
+      ]
      }
     ]
    },
@@ -1315,7 +1870,7 @@
    ],
    "factor": "bilan_energetique",
    "effect": "En perte de poids : attentes réglées (la force peut monter, pas le muscle), volume gardé, tests moins fréquents ; lest et charge totale recalculés quand le poids change.",
-   "note": "Aucun conseil alimentaire n'est donné. Le rythme réel se lit dans les pesées."
+   "note": "« Baisser » ou « monter » propose « Jusqu'à combien ? » (`targetBodyWeightKg`, facultatif). Aucun conseil alimentaire n'est donné. Le rythme réel se lit dans les pesées."
   },
   {
    "id": "health_screening",
@@ -1332,14 +1887,14 @@
    "when": {
     "op": "always"
    },
-   "note": "Questionnaire L13 inchangé ; seule sa référence est dans le profil (aucune réponse copiée)."
+   "note": "Questionnaire L13 inchangé ; seule sa référence est dans le profil (aucune réponse copiée). Koach annonce sa taille avant de commencer (le nombre de questions oui / non du questionnaire du lot G6) : c'est un questionnaire entier, compté ici pour une question."
   },
   {
    "id": "limitations",
    "screen": "sante",
    "since": 2,
    "kind": "group",
-   "text": "Une zone à ménager ?",
+   "text": "Tu as mal quelque part, ou une ancienne blessure ?",
    "fields": [
     "limitations"
    ],
@@ -1349,7 +1904,7 @@
    "when": {
     "op": "always"
    },
-   "koach": "Une ancienne blessure, une articulation sensible : dis-moi ce qui la réveille, je la protège.",
+   "koach": "Une ancienne blessure, une articulation sensible : dis-moi ce qui la réveille, je la protège. Je ne pose aucun diagnostic.",
    "factor": "antecedents",
    "effect": "Mouvements qui chargent la zone : départ une variante en dessous, progression plus lente, pas de test maximal tant que la gêne est d'au moins 4/10.",
    "items": [
@@ -1369,7 +1924,15 @@
      "field": "discomfort",
      "text": "La gêne en ce moment, de 0 à 10 ?",
      "kind": "slider",
-     "required": true
+     "required": true,
+     "note": "« C'est ancien, je ne sens plus rien » écrit 0 sans montrer le curseur."
+    },
+    {
+     "field": "effortDiscomfort",
+     "text": "Quand elle se réveille pendant l'effort, elle monte à combien ?",
+     "kind": "slider",
+     "required": false,
+     "note": "Schéma 3. Une tendinopathie est à 0 au repos et à 6 sous charge : c'est cette valeur qui décide des tests maximaux."
     },
     {
      "field": "since",
@@ -1408,35 +1971,35 @@
      "options": [
       {
        "code": "pull_bent_arm",
-       "label": "Tirer bras fléchis (tractions, rowing)"
+       "label": "Tirer vers moi en pliant les bras (tractions)"
       },
       {
        "code": "hang_straight_arm",
-       "label": "Être suspendu ou tirer bras tendus"
+       "label": "Rester suspendu, bras tendus"
       },
       {
        "code": "push_support",
-       "label": "Pousser en appui (dips, pompes)"
+       "label": "Pousser (pompes, haut du dips)"
       },
       {
        "code": "straight_arm_support",
-       "label": "L'appui bras tendus (planche, équilibre)"
+       "label": "M'appuyer sur les mains, bras tendus (équilibre, planche)"
       },
       {
        "code": "overhead",
-       "label": "Les bras au-dessus de la tête"
+       "label": "Lever les bras au-dessus de la tête"
       },
       {
        "code": "knee_flexion",
-       "label": "Plier les genoux (squat, fentes)"
+       "label": "M'accroupir, plier les genoux"
       },
       {
        "code": "hip_hinge",
-       "label": "Se pencher en avant avec une charge"
+       "label": "Me pencher en avant avec une charge"
       },
       {
        "code": "wrist_extension_grip",
-       "label": "La prise, ou le poignet en extension"
+       "label": "Serrer fort, ou le poignet plié vers l'arrière"
       },
       {
        "code": "rings",
@@ -1445,12 +2008,28 @@
       {
        "code": "running_jumping",
        "label": "Courir ou sauter"
+      },
+      {
+       "code": "deep_shoulder_extension",
+       "label": "Le bas du dips, la transition du muscle-up, le back lever"
+      },
+      {
+       "code": "axial_loading",
+       "label": "Une barre lourde sur le dos"
+      },
+      {
+       "code": "elbow_lockout",
+       "label": "Tendre le coude à fond sous charge"
+      },
+      {
+       "code": "explosive_pull",
+       "label": "Tirer fort et vite"
       }
      ],
-     "note": "Schéma 3."
+     "note": "Schéma 3. « Je ne sais pas » laisse le champ absent. Un débutant ne voit que les six premières réponses et « Courir ou sauter »."
     }
    ],
-   "note": "Donnée de santé : écrite seulement avec l'accord santé (G6, KT-042). Une gêne de plus de 5/10, une douleur la nuit, une perte de force ou une aggravation sur deux semaines : Koach oriente vers un professionnel de santé, sans interpréter (règle L13)."
+   "note": "Premier bouton : « Non, rien », en un appui. Côté : « les deux / au milieu » pour le dos. La carte du corps n'a ni bras ni avant-bras (énumération d'avant 0.4.0, fermée) : libeller « Coude / avant-bras » et « Épaule / bras ». Donnée de santé : écrite seulement avec l'accord santé (G6, KT-042). Une gêne de plus de 5/10, une douleur la nuit, une perte de force ou une aggravation sur deux semaines : Koach oriente vers un professionnel de santé, sans interpréter (règle L13)."
   },
   {
    "id": "preferences",
@@ -1471,14 +2050,14 @@
     "scale": "experience",
     "value": "intermediate"
    },
-   "note": "Schéma 3 : masquée pour un débutant, qui dira « je n'aime pas » pendant la revue du programme (D4.5) ; toujours accessible dans Réglages › Profil."
+   "note": "Schéma 3 : masquée pour un débutant, qui dira « je n'aime pas » pendant la revue du programme (D4.5) ; toujours accessible dans Réglages › Profil. Un exercice aimé ne déplace jamais un mouvement de compétition ni son travail d'assistance (règle pour les moteurs, `PROFIL_V3.md` § 6)."
   },
   {
    "id": "guidance_mode",
    "screen": "mode",
    "since": 2,
    "kind": "choice",
-   "text": "Assisté ou libre ?",
+   "text": "Quand ton programme doit bouger, on fait comment ?",
    "fields": [
     "guidanceMode"
    ],
@@ -1491,13 +2070,14 @@
    "options": [
     {
      "code": "assisted",
-     "label": "Assisté : Koach applique ses ajustements"
+     "label": "Assisté : Koach change ton programme tout seul et te dit pourquoi"
     },
     {
      "code": "free",
-     "label": "Libre : Koach propose, tu décides"
+     "label": "Libre : Koach te propose le changement, c'est toi qui décides"
     }
-   ]
+   ],
+   "note": "Décision D3.7 : la question reste à la création. Modifiable à tout moment dans les réglages."
   }
  ],
  "rulesetPresets": [
@@ -1605,13 +2185,14 @@
    "label": "ISF — Multirep (maximum de répétitions lestées)",
    "kind": "reps_competition",
    "mode": "max_reps_in_time",
-   "timeLimitSeconds": 120,
    "stations": [
     {
-     "exerciseId": "sl-traction-lestee"
+     "exerciseId": "sl-traction-lestee",
+     "timeLimitSeconds": 120
     },
     {
-     "exerciseId": "sl-dips-leste"
+     "exerciseId": "sl-dips-leste",
+     "timeLimitSeconds": 120
     }
    ],
    "source": "https://streetlifting.ru/docs/isf-rules/faq",
@@ -1626,13 +2207,25 @@
    "testKind": "amrap_estimate",
    "stage": "first_session",
    "eligible": {
-    "op": "in",
-    "path": "healthScreening.outcome",
-    "values": [
-     "standard"
+    "op": "all",
+    "of": [
+     {
+      "op": "in",
+      "path": "healthScreening.outcome",
+      "values": [
+       "standard"
+      ]
+     },
+     {
+      "op": "at_least",
+      "path": "experience",
+      "scale": "experience",
+      "value": "intermediate"
+     }
     ]
    },
-   "forWhom": "Toute personne qui sait exécuter le mouvement ; test par défaut pour un mouvement chargé dont le maximum est inconnu.",
+   "forWhom": "Pratiquant qui sait exécuter le mouvement ; test par défaut pour un mouvement chargé dont le maximum est inconnu.",
+   "requires": "Le mouvement est au programme et le matériel est dans le profil.",
    "safety": [
     "Barres de sécurité ou pareur au squat et au développé couché.",
     "Arrêt dès que la technique se dégrade."
@@ -1650,9 +2243,9 @@
    "conversion": {
     "formula": "brzycki",
     "function": "estimateOneRm",
-    "text": "r = répétitions + réserve déclarée ; 1RM = charge × 36 / (37 − r). Refusé au-delà de r = 10."
+    "text": "r = répétitions + réserve déclarée ; 1RM = charge × 36 / (37 − r), sur la charge de la barre (squat, développé, soulevé de terre : jamais le poids du corps). Refusé au-delà de r = 10."
    },
-   "uncertainty": "±5 % (série au maximum, 2 à 6 répétitions) ; ±7,5 % (réserve déclarée, ou 7 à 10 répétitions) ; ±10 % et valeur « provisoire » avant 6 mois de pratique.",
+   "uncertainty": "±5 % (série au maximum, jusqu'à 6 répétitions) ; ±7,5 % (réserve déclarée, ou 7 à 10 répétitions) ; ±10 % et valeur « provisoire » avant 6 mois de pratique. Calcul de ce lot à partir de la variabilité publiée, pas un chiffre publié.",
    "refs": [
     "brzycki1993",
     "nuzzo2024",
@@ -1672,10 +2265,21 @@
     "op": "all",
     "of": [
      {
-      "op": "in",
-      "path": "healthScreening.outcome",
-      "values": [
-       "standard"
+      "op": "all",
+      "of": [
+       {
+        "op": "in",
+        "path": "healthScreening.outcome",
+        "values": [
+         "standard"
+        ]
+       },
+       {
+        "op": "at_least",
+        "path": "experience",
+        "scale": "experience",
+        "value": "intermediate"
+       }
       ]
      },
      {
@@ -1684,14 +2288,16 @@
      }
     ]
    },
-   "forWhom": "Personne capable d'au moins 8 répétitions strictes au poids du corps. Pas pour le muscle-up lesté (mouvement technique : aucune estimation par équation).",
+   "forWhom": "Pratiquant capable d'au moins 8 répétitions strictes au poids du corps. Pas pour le muscle-up lesté (mouvement technique : aucune estimation par équation).",
+   "requires": "Au moins 8 répétitions strictes au poids du corps sur le mouvement (niveau ou record déclaré) ; ceinture de lest et disques au profil.",
    "safety": [
     "Ceinture de lest fermée, descente contrôlée, pas de lâcher en bas des dips.",
     "Épaules et coudes échauffés."
    ],
    "steps": [
     "Pesée du jour.",
-    "5 répétitions au poids du corps, 3 répétitions à la moitié du lest visé, 1 répétition au lest visé moins 5 kg.",
+    "Montée : 5 répétitions au poids du corps, puis 3 répétitions à la moitié du lest visé, puis 1 répétition au lest visé moins 5 kg.",
+    "Lest visé supérieur à 40 % du poids de corps : montée en quatre marches — poids du corps × 5, 40 % du lest visé × 3, 65 % × 2, 85 % × 1.",
     "Repos de 3 minutes.",
     "Série test visant 3 à 6 répétitions, arrêtée avec 1 répétition sous le pied."
    ],
@@ -1701,9 +2307,9 @@
    "conversion": {
     "formula": "brzycki_total",
     "function": "estimateOneRm + externalFromTotal",
-    "text": "Charge totale = lest + fraction du poids du corps × poids du jour ; 1RM total par Brzycki ; lest maximal = 1RM total − fraction × poids."
+    "text": "Charge totale = lest + fraction du poids du corps × poids du jour ; 1RM total par Brzycki ; lest maximal = 1RM total − fraction × poids. Seulement pour les exercices qui ont une fraction du poids du corps au catalogue."
    },
-   "uncertainty": "±5 à ±7,5 % de la charge TOTALE, soit souvent ±15 à ±20 % du lest : la fourchette est affichée en kilos de lest. Extrapolation : aucune étude ne valide l'équation sur ces mouvements.",
+   "uncertainty": "±5 à ±7,5 % de la charge TOTALE, soit souvent ±15 à ±20 % du lest : la fourchette est affichée en kilos de lest. Extrapolation : aucune étude ne valide l'équation sur ces mouvements. Ne sert pas au choix des tentatives.",
    "refs": [
     "brzycki1993",
     "ortega2021",
@@ -1721,17 +2327,22 @@
     "op": "all",
     "of": [
      {
-      "op": "in",
-      "path": "healthScreening.outcome",
-      "values": [
-       "standard"
+      "op": "all",
+      "of": [
+       {
+        "op": "in",
+        "path": "healthScreening.outcome",
+        "values": [
+         "standard"
+        ]
+       },
+       {
+        "op": "at_least",
+        "path": "experience",
+        "scale": "experience",
+        "value": "intermediate"
+       }
       ]
-     },
-     {
-      "op": "at_least",
-      "path": "experience",
-      "scale": "experience",
-      "value": "intermediate"
      },
      {
       "op": "at_least",
@@ -1760,19 +2371,21 @@
     ]
    },
    "forWhom": "Pratiquant confirmé du mouvement (plus de 6 mois), questionnaire santé sans réserve ; jamais après 65 ans sans au moins 2 ans de pratique. Seul test proposé pour le muscle-up lesté.",
+   "requires": "Aucune gêne d'au moins 4/10 (au repos ou à l'effort) sur une zone que le mouvement charge. Muscle-up lesté : au moins 5 muscle-ups stricts au poids du corps, et aucune gêne au coude, à l'épaule ou au sternum.",
    "safety": [
     "Pareur ou sécurités ; ceinture fermée.",
-    "5 essais au plus ; aucune tentative après un échec technique.",
-    "Jamais sur une zone dont la gêne est d'au moins 4/10."
+    "Un échec technique (forme perdue, amplitude manquée) arrête le test ; après un échec de force, une seule reprise plus légère.",
+    "Muscle-up lesté : tout échec arrête le test ; 4 essais lourds au plus."
    ],
    "steps": [
     "5 à 10 répétitions légères ; repos 1 minute.",
-    "+5 à 10 % × 3 à 5 répétitions ; repos 2 minutes.",
-    "+5 à 10 % × 2 à 3 répétitions ; repos 2 à 4 minutes.",
-    "Essais d'une répétition : +5 à 10 % après une réussite, −2,5 à 5 % après un échec ; repos 2 à 4 minutes entre les essais."
+    "Charge plus lourde × 3 à 5 répétitions ; repos 2 minutes.",
+    "Charge plus lourde × 2 à 3 répétitions ; repos 2 à 4 minutes.",
+    "Essais d'une répétition, repos de 2 à 4 minutes entre deux essais. Barre (squat, développé) : +5 à 10 % après une réussite, −2,5 à 5 % après un échec de force.",
+    "Mouvements lestés : les sauts se comptent en kilos de LEST, pas en pourcentage — +5 kg, puis +2,5 kg, puis +1,25 kg à l'approche du maximum."
    ],
    "stop": [
-    "Échec, défaut technique, ou 5 essais.",
+    "Échec technique, deuxième échec de force, ou 5 essais.",
     "Le maximum est trouvé en 3 à 5 essais."
    ],
    "conversion": {
@@ -1789,18 +2402,30 @@
   },
   {
    "id": "t4_reps_max",
-   "title": "Répétitions max au poids du corps (traction, dips, pompes)",
+   "title": "Répétitions max au poids du corps (traction, dips, pompes, muscle-up)",
    "benchmarkKind": "max_reps",
    "testKind": "max_reps",
    "stage": "first_session",
    "eligible": {
-    "op": "in",
-    "path": "healthScreening.outcome",
-    "values": [
-     "standard"
+    "op": "all",
+    "of": [
+     {
+      "op": "in",
+      "path": "healthScreening.outcome",
+      "values": [
+       "standard"
+      ]
+     },
+     {
+      "op": "at_least",
+      "path": "experience",
+      "scale": "experience",
+      "value": "intermediate"
+     }
     ]
    },
-   "forWhom": "Tous ; qui ne fait aucune répétition passe sur une variante plus facile ou sur un maintien (test suivant).",
+   "forWhom": "Pratiquant qui fait déjà plusieurs répétitions strictes ; qui n'en fait aucune travaille une variante plus facile, sans test.",
+   "requires": "Le mouvement est au programme.",
    "safety": [
     "Échauffement ; une seule série test par mouvement et par séance."
    ],
@@ -1810,14 +2435,13 @@
     "Série maximale, amplitude complète, sans élan."
    ],
    "stop": [
-    "Première répétition hors amplitude, ou pause de plus de 3 secondes.",
-    "Débutant : arrêt quand la technique se dégrade, sans aller à l'échec."
+    "Première répétition hors amplitude, ou pause de plus de 3 secondes."
    ],
    "conversion": {
     "formula": "none",
-    "text": "Valeur brute. Aucune conversion en maximum lesté au-delà de 10 répétitions."
+    "text": "Valeur brute. Aucune conversion en maximum lesté au-delà de 10 répétitions. Muscle-up : moins de 5 répétitions strictes, pas de lest (usage d'entraîneur)."
    },
-   "uncertainty": "±1 répétition jusqu'à 10, ±2 au-delà (traction, dips) ; pompes : un écart de moins de 4 à 5 répétitions entre deux tests ne prouve pas un changement.",
+   "uncertainty": "±1 répétition jusqu'à 10, ±2 au-delà pour la traction et les dips (estimation de ce lot : aucune étude de fiabilité lue pour ces mouvements) ; pompes : un écart de moins de 4 à 5 répétitions entre deux tests ne prouve pas un changement.",
    "refs": [
     "kardor2023",
     "sanchezmoreno2017",
@@ -1831,13 +2455,25 @@
    "testKind": "max_hold",
    "stage": "first_session",
    "eligible": {
-    "op": "in",
-    "path": "healthScreening.outcome",
-    "values": [
-     "standard"
+    "op": "all",
+    "of": [
+     {
+      "op": "in",
+      "path": "healthScreening.outcome",
+      "values": [
+       "standard"
+      ]
+     },
+     {
+      "op": "at_least",
+      "path": "experience",
+      "scale": "experience",
+      "value": "intermediate"
+     }
     ]
    },
-   "forWhom": "Tous, sur l'étape de progression tenue proprement au moins 5 secondes.",
+   "forWhom": "Sur l'étape de progression tenue proprement au moins 5 secondes.",
+   "requires": "L'étape est au programme ; équilibre : au mur tant que la sortie n'est pas acquise.",
    "safety": [
     "Poignets et épaules échauffés ; sortie contrôlée.",
     "Tapis sous les figures en appui renversé ou en suspension."
@@ -1845,7 +2481,8 @@
    "steps": [
     "2 maintiens courts d'échauffement (environ un tiers du temps attendu).",
     "Repos de 2 à 3 minutes.",
-    "Un seul maintien maximal chronométré."
+    "Maintien long (gainage, suspension) : un seul maintien maximal chronométré.",
+    "Maintien court de figure (moins de 15 secondes attendues) : 3 essais, 2 à 3 minutes de repos ; on garde le meilleur essai propre."
    ],
    "stop": [
     "Perte de la forme (hanches qui tombent, bras qui fléchissent), pas la chute."
@@ -1854,7 +2491,7 @@
     "formula": "none",
     "text": "Valeur brute. Les durées de travail en sont une part (60 à 70 % : usage d'entraîneur, réglé par les moteurs)."
    },
-   "uncertainty": "±5 à 10 % pour un maintien long (gainage) ; ±1 à 2 secondes pour un maintien court de figure (estimation : aucune étude de fiabilité sur les figures).",
+   "uncertainty": "±5 à 10 % pour un maintien long (gainage) ; ±1 à 2 secondes pour un maintien court de figure, soit jusqu'à ±25 % sur 6 secondes (estimation : aucune étude de fiabilité sur les figures).",
    "refs": [
     "rodriguezperea2025",
     "martinezromero2020",
@@ -1868,13 +2505,25 @@
    "testKind": "distance_trial",
    "stage": "later",
    "eligible": {
-    "op": "in",
-    "path": "healthScreening.outcome",
-    "values": [
-     "standard"
+    "op": "all",
+    "of": [
+     {
+      "op": "in",
+      "path": "healthScreening.outcome",
+      "values": [
+       "standard"
+      ]
+     },
+     {
+      "op": "at_least",
+      "path": "experience",
+      "scale": "experience",
+      "value": "intermediate"
+     }
     ]
    },
    "forWhom": "Personne capable de courir 10 minutes sans s'arrêter.",
+   "requires": "La course est au programme.",
    "safety": [
     "Terrain plat, pas de forte chaleur.",
     "Échauffement de 10 à 15 minutes et 3 accélérations.",
@@ -1899,7 +2548,7 @@
   },
   {
    "id": "t7_course_chrono",
-   "title": "Course : contre-la-montre de 3 ou 5 km",
+   "title": "Course : contre-la-montre de 5 km (3 km pour les moins aguerris)",
    "benchmarkKind": "time_trial",
    "testKind": "time_trial",
    "stage": "later",
@@ -1921,13 +2570,14 @@
      }
     ]
    },
-   "forWhom": "Coureur régulier (30 minutes en continu) ; 3 km pour les moins aguerris.",
+   "forWhom": "Coureur régulier (30 minutes en continu).",
+   "requires": "La course est au programme.",
    "safety": [
     "Comme le test de 6 minutes.",
     "Échauffement de 15 minutes."
    ],
    "steps": [
-    "Distance fixe au meilleur temps, à allure régulière."
+    "Distance fixe au meilleur temps, à allure régulière. Le 5 km est préféré pour prédire un 10 km."
    ],
    "stop": [
     "Distance terminée."
@@ -1935,9 +2585,9 @@
    "conversion": {
     "formula": "riegel",
     "function": "riegelSeconds",
-    "text": "Temps prédit sur une autre distance = temps × (distance voulue / distance du test)^1,06, jusqu'au semi-marathon."
+    "text": "Temps prédit sur une autre distance = temps × (distance voulue / distance du test)^1,06, jusqu'au semi-marathon. Prédiction « provisoire » : elle suppose un volume de course suffisant pour la distance visée."
    },
-   "uncertainty": "±2 à 3 % sur le temps du test (coureurs entraînés), davantage chez un coureur qui gère mal son allure ; au-delà du semi-marathon la formule est trop optimiste : aucune prédiction.",
+   "uncertainty": "±2 à 3 % sur le temps du test (coureurs entraînés), davantage chez un coureur qui gère mal son allure ; prédiction d'une distance plus longue : au moins ±4 % à faible volume hebdomadaire (estimation) ; au-delà du semi-marathon la formule est trop optimiste : aucune prédiction.",
    "refs": [
     "laursen2007",
     "riegel1981",
@@ -1953,16 +2603,28 @@
    "eligible": {
     "op": "not",
     "of": {
-     "op": "in",
-     "path": "healthScreening.outcome",
-     "values": [
-      "standard"
+     "op": "all",
+     "of": [
+      {
+       "op": "in",
+       "path": "healthScreening.outcome",
+       "values": [
+        "standard"
+       ]
+      },
+      {
+       "op": "at_least",
+       "path": "experience",
+       "scale": "experience",
+       "value": "intermediate"
+      }
      ]
     }
    },
-   "forWhom": "Questionnaire santé en mode prudent ou sans réponse ; débutant complet qui ne veut pas de test.",
+   "forWhom": "Débutant (ou niveau non renseigné) ; questionnaire santé en mode prudent ou sans réponse.",
+   "requires": "Rien.",
    "safety": [
-    "Aucun effort maximal."
+    "Aucun effort maximal, aucun examen."
    ],
    "steps": [
     "Charges de départ prudentes choisies par le moteur (D4.7).",
@@ -1974,9 +2636,181 @@
     "formula": "none",
     "text": "Aucune valeur n'est écrite dans le profil ; les estimations du moteur dynamique font foi."
    },
-   "uncertainty": "Valeur « non mesurée » ; un premier test est proposé après 3 à 4 séances de familiarisation si le questionnaire santé le permet.",
+   "uncertainty": "Valeur « non mesurée » ; les valeurs des deux à trois premières séances sont provisoires (apprentissage du geste).",
    "refs": [
     "ploutzsnyder2001"
+   ]
+  },
+  {
+   "id": "t9_reps_temps",
+   "title": "Épreuves de répétitions : maximum en temps limité",
+   "benchmarkKind": "max_reps",
+   "testKind": "max_reps",
+   "stage": "later",
+   "eligible": {
+    "op": "all",
+    "of": [
+     {
+      "op": "all",
+      "of": [
+       {
+        "op": "in",
+        "path": "healthScreening.outcome",
+        "values": [
+         "standard"
+        ]
+       },
+       {
+        "op": "at_least",
+        "path": "experience",
+        "scale": "experience",
+        "value": "intermediate"
+       }
+      ]
+     },
+     {
+      "op": "any",
+      "of": [
+       {
+        "op": "min_number",
+        "path": "streetMode.setsRepsPct",
+        "value": 1
+       },
+       {
+        "op": "any",
+        "of": [
+         {
+          "op": "in",
+          "path": "disciplines.primary",
+          "values": [
+           "street_workout"
+          ]
+         },
+         {
+          "op": "in",
+          "path": "disciplines.secondaries[*].discipline",
+          "values": [
+           "street_workout"
+          ]
+         }
+        ]
+       },
+       {
+        "op": "in",
+        "path": "events[*].kind",
+        "values": [
+         "reps_competition"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "forWhom": "Pratiquant de sets & reps ou compétiteur d'une épreuve de répétitions, après familiarisation.",
+   "requires": "Au moins 10 répétitions strictes d'une traite sur le mouvement.",
+   "safety": [
+    "Échauffement complet ; amplitude jugée comme en compétition.",
+    "Arrêt si la technique se dégrade ou si une douleur apparaît."
+   ],
+   "steps": [
+    "Maximum de répétitions en 2 minutes (ou dans la durée de l'épreuve visée), pauses libres.",
+    "Noter le total et le découpage (répétitions de chaque série, repos pris)."
+   ],
+   "stop": [
+    "Fin du chronomètre."
+   ],
+   "conversion": {
+    "formula": "none",
+    "text": "Valeur brute : `Benchmark` de nature `max_reps` avec `seconds` ; le découpage se lit dans le journal (`SetRecord.parts`)."
+   },
+   "uncertainty": "Non connue : usage d'entraîneur, aucune étude de fiabilité lue. Un écart de moins de 2 à 3 répétitions entre deux tests ne prouve pas un changement (estimation).",
+   "refs": [
+    "mitter2022"
+   ]
+  },
+  {
+   "id": "t10_series_repetees",
+   "title": "Épreuves de répétitions : trois séries maximales",
+   "benchmarkKind": "max_reps",
+   "testKind": "max_reps",
+   "stage": "later",
+   "eligible": {
+    "op": "all",
+    "of": [
+     {
+      "op": "all",
+      "of": [
+       {
+        "op": "in",
+        "path": "healthScreening.outcome",
+        "values": [
+         "standard"
+        ]
+       },
+       {
+        "op": "at_least",
+        "path": "experience",
+        "scale": "experience",
+        "value": "intermediate"
+       }
+      ]
+     },
+     {
+      "op": "any",
+      "of": [
+       {
+        "op": "min_number",
+        "path": "streetMode.setsRepsPct",
+        "value": 1
+       },
+       {
+        "op": "any",
+        "of": [
+         {
+          "op": "in",
+          "path": "disciplines.primary",
+          "values": [
+           "street_workout"
+          ]
+         },
+         {
+          "op": "in",
+          "path": "disciplines.secondaries[*].discipline",
+          "values": [
+           "street_workout"
+          ]
+         }
+        ]
+       },
+       {
+        "op": "in",
+        "path": "events[*].kind",
+        "values": [
+         "reps_competition"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "forWhom": "Pratiquant de sets & reps ou compétiteur d'une épreuve de répétitions, après familiarisation.",
+   "requires": "Au moins 10 répétitions strictes d'une traite sur le mouvement.",
+   "safety": [
+    "Comme le test précédent."
+   ],
+   "steps": [
+    "3 séries maximales du même mouvement, 90 secondes de repos entre les séries."
+   ],
+   "stop": [
+    "Fin de la troisième série."
+   ],
+   "conversion": {
+    "formula": "none",
+    "text": "La première série est le maximum (`max_reps`) ; la chute de la première à la troisième série dit comment découper et espacer les séries (réglage des moteurs)."
+   },
+   "uncertainty": "Non connue : usage d'entraîneur, aucune étude de fiabilité lue.",
+   "refs": [
+    "mitter2022"
    ]
   }
  ]

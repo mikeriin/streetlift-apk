@@ -84,7 +84,7 @@ abstract interface class QuestEngine {
 
 /// Plan de saison (0.4.0) : squelette de phases (accumulation,
 /// intensification, réalisation, affûtage, compétition, transition, test,
-/// décharge) au-dessus des blocs de 4 à 6 semaines. Les blocs restent
+/// décharge, entretien, reprise) au-dessus des blocs de 4 à 6 semaines. Les blocs restent
 /// générés au fil de l'eau par [PlanEngine] (D4.8) ; le plan de saison leur
 /// est passé dans `PlanRequest.season` et `NextBlockRequest.season`.
 ///

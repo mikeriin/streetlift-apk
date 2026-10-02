@@ -426,6 +426,8 @@ final class SetTarget {
 ///
 /// Invariant : Au moins une mesure parmi `reps`, `seconds`, `distanceMeters`,
 /// `calories`.
+/// Invariant : (0.4.0) Quand toutes les `parts` ont des répétitions, leur
+/// somme vaut `reps`.
 final class SetRecord {
   const SetRecord({
     required this.exerciseId,
@@ -445,7 +447,7 @@ final class SetRecord {
     this.target,
     this.technique,
     this.role,
-    this.miniSetIndex,
+    this.parts,
     this.restBeforeSeconds,
     this.elapsedSeconds,
     this.rounds,
@@ -474,7 +476,7 @@ final class SetRecord {
       target: jsonObjOrNull(json, 'target', SetTarget.fromJson),
       technique: jsonEnumOrNull(json, 'technique', SetTechniqueKind.fromCode),
       role: jsonEnumOrNull(json, 'role', SetRole.fromCode),
-      miniSetIndex: jsonIntOrNull(json, 'miniSetIndex'),
+      parts: jsonListOrNull(json, 'parts', (v) => SetPart.fromJson(jsonAsObject(v, 'parts'))),
       restBeforeSeconds: jsonIntOrNull(json, 'restBeforeSeconds'),
       elapsedSeconds: jsonIntOrNull(json, 'elapsedSeconds'),
       rounds: jsonIntOrNull(json, 'rounds'),
@@ -538,10 +540,10 @@ final class SetRecord {
   /// Rôle de la série dans la technique (0.4.0).
   final SetRole? role;
 
-  /// Rang de la mini-série dans la série (0 = première) (0.4.0) : les
-  /// mini-séries d'un cluster, d'un rest-pause, d'une dégressive partagent le
-  /// même `setIndex`.
-  final int? miniSetIndex;
+  /// Détail de la série (0.4.0) : mini-séries d'un cluster, d'un rest-pause, de
+  /// myo-reps, paliers d'une dégressive, passages d'un bloc de densité. La
+  /// série reste une seule ligne ; `reps` (ou `seconds`) en est le total.
+  final List<SetPart>? parts;
 
   /// Repos pris avant la série, en secondes (0.4.0).
   final int? restBeforeSeconds;
@@ -580,7 +582,7 @@ final class SetRecord {
       if (target case final v?) 'target': v.toJson(),
       if (technique case final v?) 'technique': v.code,
       if (role case final v?) 'role': v.code,
-      if (miniSetIndex case final v?) 'miniSetIndex': v,
+      if (parts case final v?) 'parts': [for (final e in v) e.toJson()],
       if (restBeforeSeconds case final v?) 'restBeforeSeconds': v,
       if (elapsedSeconds case final v?) 'elapsedSeconds': v,
       if (rounds case final v?) 'rounds': v,
@@ -608,7 +610,7 @@ final class SetRecord {
     Object? target = unset,
     Object? technique = unset,
     Object? role = unset,
-    Object? miniSetIndex = unset,
+    Object? parts = unset,
     Object? restBeforeSeconds = unset,
     Object? elapsedSeconds = unset,
     Object? rounds = unset,
@@ -633,7 +635,7 @@ final class SetRecord {
       target: identical(target, unset) ? this.target : target as SetTarget?,
       technique: identical(technique, unset) ? this.technique : technique as SetTechniqueKind?,
       role: identical(role, unset) ? this.role : role as SetRole?,
-      miniSetIndex: identical(miniSetIndex, unset) ? this.miniSetIndex : miniSetIndex as int?,
+      parts: identical(parts, unset) ? this.parts : parts as List<SetPart>?,
       restBeforeSeconds: identical(restBeforeSeconds, unset) ? this.restBeforeSeconds : restBeforeSeconds as int?,
       elapsedSeconds: identical(elapsedSeconds, unset) ? this.elapsedSeconds : elapsedSeconds as int?,
       rounds: identical(rounds, unset) ? this.rounds : rounds as int?,
@@ -661,7 +663,7 @@ final class SetRecord {
     if (calories case final v?) { checkRange(out, '$path.calories', v, 0, null); }
     if (flames case final v?) { checkRange(out, '$path.flames', v, 1, 10); }
     if (target case final v?) { v.collectViolations('$path.target', out); }
-    if (miniSetIndex case final v?) { checkRange(out, '$path.miniSetIndex', v, 0, 99); }
+    if (parts case final v?) { checkLength(out, '$path.parts', v.length, 1, 120); for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.parts[$i]', out); } }
     if (restBeforeSeconds case final v?) { checkRange(out, '$path.restBeforeSeconds', v, 0, 3600); }
     if (elapsedSeconds case final v?) { checkRange(out, '$path.elapsedSeconds', v, 0, 86400); }
     if (rounds case final v?) { checkRange(out, '$path.rounds', v, 0, 1000); }
@@ -674,15 +676,16 @@ final class SetRecord {
   void collectExerciseIds(Set<String> out) {
     out.add(exerciseId);
     target?.collectExerciseIds(out);
+    for (final e in parts ?? const <SetPart>[]) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is SetRecord && exerciseId == other.exerciseId && exerciseOrder == other.exerciseOrder && setIndex == other.setIndex && kind == other.kind && externalLoadKg == other.externalLoadKg && reps == other.reps && seconds == other.seconds && distanceMeters == other.distanceMeters && calories == other.calories && flames == other.flames && success == other.success && excluded == other.excluded && slotId == other.slotId && side == other.side && target == other.target && technique == other.technique && role == other.role && miniSetIndex == other.miniSetIndex && restBeforeSeconds == other.restBeforeSeconds && elapsedSeconds == other.elapsedSeconds && rounds == other.rounds && quality == other.quality && attemptIndex == other.attemptIndex;
+    return identical(this, other) || other is SetRecord && exerciseId == other.exerciseId && exerciseOrder == other.exerciseOrder && setIndex == other.setIndex && kind == other.kind && externalLoadKg == other.externalLoadKg && reps == other.reps && seconds == other.seconds && distanceMeters == other.distanceMeters && calories == other.calories && flames == other.flames && success == other.success && excluded == other.excluded && slotId == other.slotId && side == other.side && target == other.target && technique == other.technique && role == other.role && jsonDeepEquals(parts, other.parts) && restBeforeSeconds == other.restBeforeSeconds && elapsedSeconds == other.elapsedSeconds && rounds == other.rounds && quality == other.quality && attemptIndex == other.attemptIndex;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[exerciseId, exerciseOrder, setIndex, kind, externalLoadKg, reps, seconds, distanceMeters, calories, flames, success, excluded, slotId, side, target, technique, role, miniSetIndex, restBeforeSeconds, elapsedSeconds, rounds, quality, attemptIndex]);
+  int get hashCode => Object.hashAll(<Object?>[exerciseId, exerciseOrder, setIndex, kind, externalLoadKg, reps, seconds, distanceMeters, calories, flames, success, excluded, slotId, side, target, technique, role, jsonDeepHash(parts), restBeforeSeconds, elapsedSeconds, rounds, quality, attemptIndex]);
 
   @override
   String toString() => 'SetRecord(${toJson()})';
@@ -848,6 +851,9 @@ final class ProgramRef {
 }
 
 /// Séance du journal. Dates en jours civils.
+///
+/// Invariant : (0.4.0) Un résultat au plus par groupe (`groupResults` :
+/// `groupId` distincts).
 final class SessionRecord {
   const SessionRecord({
     required this.id,
@@ -864,6 +870,7 @@ final class SessionRecord {
     required this.pains,
     this.plannedWorkSets,
     this.eventId,
+    this.groupResults,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -884,6 +891,7 @@ final class SessionRecord {
       pains: jsonList(json, 'pains', (v) => PainReport.fromJson(jsonAsObject(v, 'pains'))),
       plannedWorkSets: jsonIntOrNull(json, 'plannedWorkSets'),
       eventId: jsonStringOrNull(json, 'eventId'),
+      groupResults: jsonListOrNull(json, 'groupResults', (v) => GroupResult.fromJson(jsonAsObject(v, 'groupResults'))),
     );
   }
 
@@ -934,6 +942,9 @@ final class SessionRecord {
   /// Échéance du profil dont cette séance est le jour (0.4.0).
   final String? eventId;
 
+  /// Résultats des groupes d'exercices enchaînés (0.4.0).
+  final List<GroupResult>? groupResults;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -951,6 +962,7 @@ final class SessionRecord {
       'pains': [for (final e in pains) e.toJson()],
       if (plannedWorkSets case final v?) 'plannedWorkSets': v,
       if (eventId case final v?) 'eventId': v,
+      if (groupResults case final v?) 'groupResults': [for (final e in v) e.toJson()],
     };
   }
 
@@ -970,6 +982,7 @@ final class SessionRecord {
     List<PainReport>? pains,
     Object? plannedWorkSets = unset,
     Object? eventId = unset,
+    Object? groupResults = unset,
   }) {
     return SessionRecord(
       id: id ?? this.id,
@@ -986,6 +999,7 @@ final class SessionRecord {
       pains: pains ?? this.pains,
       plannedWorkSets: identical(plannedWorkSets, unset) ? this.plannedWorkSets : plannedWorkSets as int?,
       eventId: identical(eventId, unset) ? this.eventId : eventId as String?,
+      groupResults: identical(groupResults, unset) ? this.groupResults : groupResults as List<GroupResult>?,
     );
   }
 
@@ -1007,6 +1021,8 @@ final class SessionRecord {
     for (var i = 0; i < pains.length; i++) { pains[i].collectViolations('$path.pains[$i]', out); }
     if (plannedWorkSets case final v?) { checkRange(out, '$path.plannedWorkSets', v, 0, 500); }
     if (eventId case final v?) { checkLength(out, '$path.eventId', v.length, 1, null); }
+    if (groupResults case final v?) { checkLength(out, '$path.groupResults', v.length, null, 20); for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.groupResults[$i]', out); } }
+    _validateSessionRecord(this, path, out);
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -1015,15 +1031,16 @@ final class SessionRecord {
     healthCheck?.collectExerciseIds(out);
     for (final e in sets) { e.collectExerciseIds(out); }
     for (final e in pains) { e.collectExerciseIds(out); }
+    for (final e in groupResults ?? const <GroupResult>[]) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is SessionRecord && id == other.id && date == other.date && origin == other.origin && programRef == other.programRef && resume == other.resume && completed == other.completed && durationMinutes == other.durationMinutes && bodyWeightKg == other.bodyWeightKg && place == other.place && healthCheck == other.healthCheck && jsonListEquals(sets, other.sets) && jsonListEquals(pains, other.pains) && plannedWorkSets == other.plannedWorkSets && eventId == other.eventId;
+    return identical(this, other) || other is SessionRecord && id == other.id && date == other.date && origin == other.origin && programRef == other.programRef && resume == other.resume && completed == other.completed && durationMinutes == other.durationMinutes && bodyWeightKg == other.bodyWeightKg && place == other.place && healthCheck == other.healthCheck && jsonListEquals(sets, other.sets) && jsonListEquals(pains, other.pains) && plannedWorkSets == other.plannedWorkSets && eventId == other.eventId && jsonDeepEquals(groupResults, other.groupResults);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[id, date, origin, programRef, resume, completed, durationMinutes, bodyWeightKg, place, healthCheck, Object.hashAll(sets), Object.hashAll(pains), plannedWorkSets, eventId]);
+  int get hashCode => Object.hashAll(<Object?>[id, date, origin, programRef, resume, completed, durationMinutes, bodyWeightKg, place, healthCheck, Object.hashAll(sets), Object.hashAll(pains), plannedWorkSets, eventId, jsonDeepHash(groupResults)]);
 
   @override
   String toString() => 'SessionRecord(${toJson()})';
@@ -1115,4 +1132,197 @@ final class TrainingLog {
 
   @override
   String toString() => 'TrainingLog(${toJson()})';
+}
+
+/// Résultat d'un groupe d'exercices enchaînés (0.4.0) : temps total, tours,
+/// répétitions en plus.
+final class GroupResult {
+  const GroupResult({
+    required this.groupId,
+    required this.completed,
+    this.elapsedSeconds,
+    this.rounds,
+    this.extraReps,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory GroupResult.fromJson(Map<String, Object?> json) {
+    return GroupResult(
+      groupId: jsonString(json, 'groupId'),
+      completed: jsonBool(json, 'completed'),
+      elapsedSeconds: jsonIntOrNull(json, 'elapsedSeconds'),
+      rounds: jsonIntOrNull(json, 'rounds'),
+      extraReps: jsonIntOrNull(json, 'extraReps'),
+    );
+  }
+
+  /// Groupe (`GroupSpec.groupId`).
+  final String groupId;
+
+  /// Le groupe a été fait en entier (dans la limite de temps, s'il y en a une).
+  final bool completed;
+
+  /// Temps total, en secondes.
+  final int? elapsedSeconds;
+
+  /// Tours complets.
+  final int? rounds;
+
+  /// Répétitions faites dans le tour entamé.
+  final int? extraReps;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'groupId': groupId,
+      'completed': completed,
+      if (elapsedSeconds case final v?) 'elapsedSeconds': v,
+      if (rounds case final v?) 'rounds': v,
+      if (extraReps case final v?) 'extraReps': v,
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  GroupResult copyWith({
+    String? groupId,
+    bool? completed,
+    Object? elapsedSeconds = unset,
+    Object? rounds = unset,
+    Object? extraReps = unset,
+  }) {
+    return GroupResult(
+      groupId: groupId ?? this.groupId,
+      completed: completed ?? this.completed,
+      elapsedSeconds: identical(elapsedSeconds, unset) ? this.elapsedSeconds : elapsedSeconds as int?,
+      rounds: identical(rounds, unset) ? this.rounds : rounds as int?,
+      extraReps: identical(extraReps, unset) ? this.extraReps : extraReps as int?,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkLength(out, '$path.groupId', groupId.length, 1, null);
+    if (elapsedSeconds case final v?) { checkRange(out, '$path.elapsedSeconds', v, 0, 86400); }
+    if (rounds case final v?) { checkRange(out, '$path.rounds', v, 0, 1000); }
+    if (extraReps case final v?) { checkRange(out, '$path.extraReps', v, 0, 10000); }
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is GroupResult && groupId == other.groupId && completed == other.completed && elapsedSeconds == other.elapsedSeconds && rounds == other.rounds && extraReps == other.extraReps;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[groupId, completed, elapsedSeconds, rounds, extraReps]);
+
+  @override
+  String toString() => 'GroupResult(${toJson()})';
+}
+
+/// Partie d'une série (0.4.0) : mini-série d'un cluster, d'un rest-pause ou
+/// de myo-reps, palier d'une dégressive, passage d'un bloc de densité. La
+/// série reste UNE ligne du journal (`SetRecord`), dont `reps` est le total.
+///
+/// Invariant : Au moins `reps` ou `seconds`. Quand toutes les parties d'une
+/// série ont des répétitions, leur somme est le `reps` de la série
+/// (`SetRecord`).
+final class SetPart {
+  const SetPart({
+    this.reps,
+    this.seconds,
+    this.externalLoadKg,
+    this.restBeforeSeconds,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory SetPart.fromJson(Map<String, Object?> json) {
+    return SetPart(
+      reps: jsonIntOrNull(json, 'reps'),
+      seconds: jsonIntOrNull(json, 'seconds'),
+      externalLoadKg: jsonDoubleOrNull(json, 'externalLoadKg'),
+      restBeforeSeconds: jsonIntOrNull(json, 'restBeforeSeconds'),
+    );
+  }
+
+  /// Répétitions de la partie.
+  final int? reps;
+
+  /// Durée de la partie, en secondes.
+  final int? seconds;
+
+  /// Charge externe de la partie, si elle diffère de celle de la série
+  /// (dégressive).
+  final double? externalLoadKg;
+
+  /// Repos pris avant la partie, en secondes.
+  final int? restBeforeSeconds;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      if (reps case final v?) 'reps': v,
+      if (seconds case final v?) 'seconds': v,
+      if (externalLoadKg case final v?) 'externalLoadKg': v,
+      if (restBeforeSeconds case final v?) 'restBeforeSeconds': v,
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  SetPart copyWith({
+    Object? reps = unset,
+    Object? seconds = unset,
+    Object? externalLoadKg = unset,
+    Object? restBeforeSeconds = unset,
+  }) {
+    return SetPart(
+      reps: identical(reps, unset) ? this.reps : reps as int?,
+      seconds: identical(seconds, unset) ? this.seconds : seconds as int?,
+      externalLoadKg: identical(externalLoadKg, unset) ? this.externalLoadKg : externalLoadKg as double?,
+      restBeforeSeconds: identical(restBeforeSeconds, unset) ? this.restBeforeSeconds : restBeforeSeconds as int?,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    if (reps case final v?) { checkRange(out, '$path.reps', v, 0, 1000); }
+    if (seconds case final v?) { checkRange(out, '$path.seconds', v, 0, 86400); }
+    if (externalLoadKg case final v?) { checkRange(out, '$path.externalLoadKg', v, -300, 1000); }
+    if (restBeforeSeconds case final v?) { checkRange(out, '$path.restBeforeSeconds', v, 0, 3600); }
+    _validateSetPart(this, path, out);
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is SetPart && reps == other.reps && seconds == other.seconds && externalLoadKg == other.externalLoadKg && restBeforeSeconds == other.restBeforeSeconds;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[reps, seconds, externalLoadKg, restBeforeSeconds]);
+
+  @override
+  String toString() => 'SetPart(${toJson()})';
 }

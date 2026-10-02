@@ -110,6 +110,8 @@ final class EventStation {
     this.seconds,
     this.externalLoadKg,
     this.unbroken,
+    this.timeLimitSeconds,
+    this.restAfterSeconds,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -121,6 +123,8 @@ final class EventStation {
       seconds: jsonIntOrNull(json, 'seconds'),
       externalLoadKg: jsonDoubleOrNull(json, 'externalLoadKg'),
       unbroken: jsonBoolOrNull(json, 'unbroken'),
+      timeLimitSeconds: jsonIntOrNull(json, 'timeLimitSeconds'),
+      restAfterSeconds: jsonIntOrNull(json, 'restAfterSeconds'),
     );
   }
 
@@ -139,6 +143,12 @@ final class EventStation {
   /// Série indivisible (aucun repos pendant le poste).
   final bool? unbroken;
 
+  /// Limite de temps propre au poste, en secondes.
+  final int? timeLimitSeconds;
+
+  /// Repos imposé après le poste, en secondes.
+  final int? restAfterSeconds;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -147,6 +157,8 @@ final class EventStation {
       if (seconds case final v?) 'seconds': v,
       if (externalLoadKg case final v?) 'externalLoadKg': v,
       if (unbroken case final v?) 'unbroken': v,
+      if (timeLimitSeconds case final v?) 'timeLimitSeconds': v,
+      if (restAfterSeconds case final v?) 'restAfterSeconds': v,
     };
   }
 
@@ -157,6 +169,8 @@ final class EventStation {
     Object? seconds = unset,
     Object? externalLoadKg = unset,
     Object? unbroken = unset,
+    Object? timeLimitSeconds = unset,
+    Object? restAfterSeconds = unset,
   }) {
     return EventStation(
       exerciseId: exerciseId ?? this.exerciseId,
@@ -164,6 +178,8 @@ final class EventStation {
       seconds: identical(seconds, unset) ? this.seconds : seconds as int?,
       externalLoadKg: identical(externalLoadKg, unset) ? this.externalLoadKg : externalLoadKg as double?,
       unbroken: identical(unbroken, unset) ? this.unbroken : unbroken as bool?,
+      timeLimitSeconds: identical(timeLimitSeconds, unset) ? this.timeLimitSeconds : timeLimitSeconds as int?,
+      restAfterSeconds: identical(restAfterSeconds, unset) ? this.restAfterSeconds : restAfterSeconds as int?,
     );
   }
 
@@ -180,6 +196,8 @@ final class EventStation {
     if (reps case final v?) { checkRange(out, '$path.reps', v, 1, 1000); }
     if (seconds case final v?) { checkRange(out, '$path.seconds', v, 1, 3600); }
     if (externalLoadKg case final v?) { checkRange(out, '$path.externalLoadKg', v, -300, 1000); }
+    if (timeLimitSeconds case final v?) { checkRange(out, '$path.timeLimitSeconds', v, 1, 14400); }
+    if (restAfterSeconds case final v?) { checkRange(out, '$path.restAfterSeconds', v, 0, 3600); }
     _validateEventStation(this, path, out);
   }
 
@@ -190,11 +208,11 @@ final class EventStation {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is EventStation && exerciseId == other.exerciseId && reps == other.reps && seconds == other.seconds && externalLoadKg == other.externalLoadKg && unbroken == other.unbroken;
+    return identical(this, other) || other is EventStation && exerciseId == other.exerciseId && reps == other.reps && seconds == other.seconds && externalLoadKg == other.externalLoadKg && unbroken == other.unbroken && timeLimitSeconds == other.timeLimitSeconds && restAfterSeconds == other.restAfterSeconds;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[exerciseId, reps, seconds, externalLoadKg, unbroken]);
+  int get hashCode => Object.hashAll(<Object?>[exerciseId, reps, seconds, externalLoadKg, unbroken, timeLimitSeconds, restAfterSeconds]);
 
   @override
   String toString() => 'EventStation(${toJson()})';
@@ -205,9 +223,10 @@ final class EventStation {
 /// tentatives, postes et temps sont des données).
 ///
 /// Invariant : Compétition de force : `lifts` ; compétition de répétitions :
-/// `mode` et `stations` ; course : `distanceMeters`.
+/// `mode` (et `stations` quand le format est connu) ; course :
+/// `distanceMeters`.
 /// Invariant : Mouvements de `lifts` distincts ; `stations` renseigné ⇒
-/// `mode` renseigné.
+/// `mode` renseigné ; `goalIds` sans doublon.
 final class SeasonEvent {
   const SeasonEvent({
     required this.id,
@@ -226,6 +245,15 @@ final class SeasonEvent {
     this.distanceMeters,
     this.targetSeconds,
     this.goalIds,
+    this.dateApproximate,
+    this.plannedBodyWeightKg,
+    this.formatKnown,
+    this.heats,
+    this.restBetweenHeatsSeconds,
+    this.elements,
+    this.bestSeconds,
+    this.bestTotalReps,
+    this.bestDate,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -248,6 +276,15 @@ final class SeasonEvent {
       distanceMeters: jsonDoubleOrNull(json, 'distanceMeters'),
       targetSeconds: jsonIntOrNull(json, 'targetSeconds'),
       goalIds: jsonListOrNull(json, 'goalIds', (v) => jsonAsString(v, 'goalIds')),
+      dateApproximate: jsonBoolOrNull(json, 'dateApproximate'),
+      plannedBodyWeightKg: jsonDoubleOrNull(json, 'plannedBodyWeightKg'),
+      formatKnown: jsonBoolOrNull(json, 'formatKnown'),
+      heats: jsonIntOrNull(json, 'heats'),
+      restBetweenHeatsSeconds: jsonIntOrNull(json, 'restBetweenHeatsSeconds'),
+      elements: jsonListOrNull(json, 'elements', (v) => jsonAsString(v, 'elements')),
+      bestSeconds: jsonIntOrNull(json, 'bestSeconds'),
+      bestTotalReps: jsonIntOrNull(json, 'bestTotalReps'),
+      bestDate: jsonDateOrNull(json, 'bestDate'),
     );
   }
 
@@ -300,6 +337,35 @@ final class SeasonEvent {
   /// Objectifs du profil que sert cette échéance.
   final List<String>? goalIds;
 
+  /// La date n'est pas encore fixée au jour près : `date` est une estimation.
+  final bool? dateApproximate;
+
+  /// Poids de corps prévu le jour de l'échéance, en kg.
+  final double? plannedBodyWeightKg;
+
+  /// false : le format de l'épreuve ne sera connu que le jour même (préparation
+  /// générale).
+  final bool? formatKnown;
+
+  /// Nombre de passages prévus dans la journée (manches, tours d'un tableau à
+  /// élimination).
+  final int? heats;
+
+  /// Repos attendu entre deux passages, en secondes.
+  final int? restBetweenHeatsSeconds;
+
+  /// Figures ou éléments prévus (freestyle).
+  final List<String>? elements;
+
+  /// Meilleur temps déjà réalisé sur cette épreuve, en secondes.
+  final int? bestSeconds;
+
+  /// Meilleur total de répétitions déjà réalisé sur cette épreuve.
+  final int? bestTotalReps;
+
+  /// Jour de cette meilleure performance.
+  final CivilDate? bestDate;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -319,6 +385,15 @@ final class SeasonEvent {
       if (distanceMeters case final v?) 'distanceMeters': v,
       if (targetSeconds case final v?) 'targetSeconds': v,
       if (goalIds case final v?) 'goalIds': [for (final e in v) e],
+      if (dateApproximate case final v?) 'dateApproximate': v,
+      if (plannedBodyWeightKg case final v?) 'plannedBodyWeightKg': v,
+      if (formatKnown case final v?) 'formatKnown': v,
+      if (heats case final v?) 'heats': v,
+      if (restBetweenHeatsSeconds case final v?) 'restBetweenHeatsSeconds': v,
+      if (elements case final v?) 'elements': [for (final e in v) e],
+      if (bestSeconds case final v?) 'bestSeconds': v,
+      if (bestTotalReps case final v?) 'bestTotalReps': v,
+      if (bestDate case final v?) 'bestDate': v.iso,
     };
   }
 
@@ -340,6 +415,15 @@ final class SeasonEvent {
     Object? distanceMeters = unset,
     Object? targetSeconds = unset,
     Object? goalIds = unset,
+    Object? dateApproximate = unset,
+    Object? plannedBodyWeightKg = unset,
+    Object? formatKnown = unset,
+    Object? heats = unset,
+    Object? restBetweenHeatsSeconds = unset,
+    Object? elements = unset,
+    Object? bestSeconds = unset,
+    Object? bestTotalReps = unset,
+    Object? bestDate = unset,
   }) {
     return SeasonEvent(
       id: id ?? this.id,
@@ -358,6 +442,15 @@ final class SeasonEvent {
       distanceMeters: identical(distanceMeters, unset) ? this.distanceMeters : distanceMeters as double?,
       targetSeconds: identical(targetSeconds, unset) ? this.targetSeconds : targetSeconds as int?,
       goalIds: identical(goalIds, unset) ? this.goalIds : goalIds as List<String>?,
+      dateApproximate: identical(dateApproximate, unset) ? this.dateApproximate : dateApproximate as bool?,
+      plannedBodyWeightKg: identical(plannedBodyWeightKg, unset) ? this.plannedBodyWeightKg : plannedBodyWeightKg as double?,
+      formatKnown: identical(formatKnown, unset) ? this.formatKnown : formatKnown as bool?,
+      heats: identical(heats, unset) ? this.heats : heats as int?,
+      restBetweenHeatsSeconds: identical(restBetweenHeatsSeconds, unset) ? this.restBetweenHeatsSeconds : restBetweenHeatsSeconds as int?,
+      elements: identical(elements, unset) ? this.elements : elements as List<String>?,
+      bestSeconds: identical(bestSeconds, unset) ? this.bestSeconds : bestSeconds as int?,
+      bestTotalReps: identical(bestTotalReps, unset) ? this.bestTotalReps : bestTotalReps as int?,
+      bestDate: identical(bestDate, unset) ? this.bestDate : bestDate as CivilDate?,
     );
   }
 
@@ -378,10 +471,16 @@ final class SeasonEvent {
     if (stations case final v?) { checkLength(out, '$path.stations', v.length, 1, 40); for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.stations[$i]', out); } }
     if (rounds case final v?) { checkRange(out, '$path.rounds', v, 1, 50); }
     if (timeLimitSeconds case final v?) { checkRange(out, '$path.timeLimitSeconds', v, 10, 14400); }
-    if (distanceMeters case final v?) { checkRange(out, '$path.distanceMeters', v, 0, null); }
+    if (distanceMeters case final v?) { checkRange(out, '$path.distanceMeters', v, 1, null); }
     if (targetSeconds case final v?) { checkRange(out, '$path.targetSeconds', v, 1, 86400); }
     if (goalIds case final v?) { for (var i = 0; i < v.length; i++) { checkLength(out, '$path.goalIds[$i]', v[i].length, 1, null); } }
-    checkVariant(out, path, kind.code, <String, Object?>{'lifts': lifts, 'mode': mode, 'stations': stations, 'rounds': rounds, 'timeLimitSeconds': timeLimitSeconds, 'distanceMeters': distanceMeters, 'targetSeconds': targetSeconds, }, const <String, List<String>>{'strength_competition': <String>['lifts'], 'reps_competition': <String>['mode', 'stations'], 'freestyle_competition': <String>[], 'race': <String>['distanceMeters'], 'other_competition': <String>[], 'personal_test': <String>[], }, const <String, List<String>>{'strength_competition': <String>['timeLimitSeconds'], 'reps_competition': <String>['rounds', 'timeLimitSeconds', 'targetSeconds'], 'freestyle_competition': <String>['timeLimitSeconds'], 'race': <String>['targetSeconds', 'timeLimitSeconds'], 'other_competition': <String>['lifts', 'mode', 'stations', 'rounds', 'timeLimitSeconds', 'distanceMeters', 'targetSeconds'], 'personal_test': <String>['lifts', 'mode', 'stations', 'rounds', 'timeLimitSeconds', 'distanceMeters', 'targetSeconds'], });
+    if (plannedBodyWeightKg case final v?) { checkRange(out, '$path.plannedBodyWeightKg', v, 25, 300); }
+    if (heats case final v?) { checkRange(out, '$path.heats', v, 1, 20); }
+    if (restBetweenHeatsSeconds case final v?) { checkRange(out, '$path.restBetweenHeatsSeconds', v, 0, 14400); }
+    if (elements case final v?) { checkLength(out, '$path.elements', v.length, null, 40); for (var i = 0; i < v.length; i++) { checkLength(out, '$path.elements[$i]', v[i].length, 1, null); } }
+    if (bestSeconds case final v?) { checkRange(out, '$path.bestSeconds', v, 1, 86400); }
+    if (bestTotalReps case final v?) { checkRange(out, '$path.bestTotalReps', v, 0, 100000); }
+    checkVariant(out, path, kind.code, <String, Object?>{'lifts': lifts, 'mode': mode, 'stations': stations, 'rounds': rounds, 'timeLimitSeconds': timeLimitSeconds, 'distanceMeters': distanceMeters, 'targetSeconds': targetSeconds, 'formatKnown': formatKnown, 'heats': heats, 'restBetweenHeatsSeconds': restBetweenHeatsSeconds, 'elements': elements, 'bestSeconds': bestSeconds, 'bestTotalReps': bestTotalReps, }, const <String, List<String>>{'strength_competition': <String>['lifts'], 'reps_competition': <String>['mode'], 'freestyle_competition': <String>[], 'race': <String>['distanceMeters'], 'other_competition': <String>[], 'personal_test': <String>[], }, const <String, List<String>>{'strength_competition': <String>['timeLimitSeconds', 'heats', 'restBetweenHeatsSeconds'], 'reps_competition': <String>['stations', 'rounds', 'timeLimitSeconds', 'targetSeconds', 'formatKnown', 'heats', 'restBetweenHeatsSeconds', 'bestSeconds', 'bestTotalReps'], 'freestyle_competition': <String>['timeLimitSeconds', 'heats', 'restBetweenHeatsSeconds', 'elements', 'formatKnown'], 'race': <String>['targetSeconds', 'timeLimitSeconds', 'bestSeconds'], 'other_competition': <String>['lifts', 'mode', 'stations', 'rounds', 'timeLimitSeconds', 'distanceMeters', 'targetSeconds', 'formatKnown', 'heats', 'restBetweenHeatsSeconds', 'elements', 'bestSeconds', 'bestTotalReps'], 'personal_test': <String>['lifts', 'mode', 'stations', 'rounds', 'timeLimitSeconds', 'distanceMeters', 'targetSeconds', 'elements', 'bestSeconds', 'bestTotalReps'], });
     _validateSeasonEvent(this, path, out);
   }
 
@@ -389,15 +488,16 @@ final class SeasonEvent {
   void collectExerciseIds(Set<String> out) {
     for (final e in lifts ?? const <CompetitionLift>[]) { e.collectExerciseIds(out); }
     for (final e in stations ?? const <EventStation>[]) { e.collectExerciseIds(out); }
+    if (elements case final v?) { out.addAll(v); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is SeasonEvent && id == other.id && kind == other.kind && priority == other.priority && date == other.date && name == other.name && ruleset == other.ruleset && weightClassKg == other.weightClassKg && openWeightClass == other.openWeightClass && jsonDeepEquals(lifts, other.lifts) && mode == other.mode && jsonDeepEquals(stations, other.stations) && rounds == other.rounds && timeLimitSeconds == other.timeLimitSeconds && distanceMeters == other.distanceMeters && targetSeconds == other.targetSeconds && jsonDeepEquals(goalIds, other.goalIds);
+    return identical(this, other) || other is SeasonEvent && id == other.id && kind == other.kind && priority == other.priority && date == other.date && name == other.name && ruleset == other.ruleset && weightClassKg == other.weightClassKg && openWeightClass == other.openWeightClass && jsonDeepEquals(lifts, other.lifts) && mode == other.mode && jsonDeepEquals(stations, other.stations) && rounds == other.rounds && timeLimitSeconds == other.timeLimitSeconds && distanceMeters == other.distanceMeters && targetSeconds == other.targetSeconds && jsonDeepEquals(goalIds, other.goalIds) && dateApproximate == other.dateApproximate && plannedBodyWeightKg == other.plannedBodyWeightKg && formatKnown == other.formatKnown && heats == other.heats && restBetweenHeatsSeconds == other.restBetweenHeatsSeconds && jsonDeepEquals(elements, other.elements) && bestSeconds == other.bestSeconds && bestTotalReps == other.bestTotalReps && bestDate == other.bestDate;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[id, kind, priority, date, name, ruleset, weightClassKg, openWeightClass, jsonDeepHash(lifts), mode, jsonDeepHash(stations), rounds, timeLimitSeconds, distanceMeters, targetSeconds, jsonDeepHash(goalIds)]);
+  int get hashCode => Object.hashAll(<Object?>[id, kind, priority, date, name, ruleset, weightClassKg, openWeightClass, jsonDeepHash(lifts), mode, jsonDeepHash(stations), rounds, timeLimitSeconds, distanceMeters, targetSeconds, jsonDeepHash(goalIds), dateApproximate, plannedBodyWeightKg, formatKnown, heats, restBetweenHeatsSeconds, jsonDeepHash(elements), bestSeconds, bestTotalReps, bestDate]);
 
   @override
   String toString() => 'SeasonEvent(${toJson()})';
@@ -530,6 +630,7 @@ final class SkillState {
     this.bestHoldSeconds,
     this.bestReps,
     this.assessedOn,
+    this.atStepSince,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -541,6 +642,7 @@ final class SkillState {
       bestHoldSeconds: jsonIntOrNull(json, 'bestHoldSeconds'),
       bestReps: jsonIntOrNull(json, 'bestReps'),
       assessedOn: jsonDateOrNull(json, 'assessedOn'),
+      atStepSince: jsonEnumOrNull(json, 'atStepSince', StepTenure.fromCode),
     );
   }
 
@@ -559,6 +661,10 @@ final class SkillState {
   /// Jour de cette mesure.
   final CivilDate? assessedOn;
 
+  /// Depuis quand l'utilisateur en est à cette étape (initialise
+  /// `SkillProgress.weeksAtStep`).
+  final StepTenure? atStepSince;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -567,6 +673,7 @@ final class SkillState {
       if (bestHoldSeconds case final v?) 'bestHoldSeconds': v,
       if (bestReps case final v?) 'bestReps': v,
       if (assessedOn case final v?) 'assessedOn': v.iso,
+      if (atStepSince case final v?) 'atStepSince': v.code,
     };
   }
 
@@ -577,6 +684,7 @@ final class SkillState {
     Object? bestHoldSeconds = unset,
     Object? bestReps = unset,
     Object? assessedOn = unset,
+    Object? atStepSince = unset,
   }) {
     return SkillState(
       targetExerciseId: targetExerciseId ?? this.targetExerciseId,
@@ -584,6 +692,7 @@ final class SkillState {
       bestHoldSeconds: identical(bestHoldSeconds, unset) ? this.bestHoldSeconds : bestHoldSeconds as int?,
       bestReps: identical(bestReps, unset) ? this.bestReps : bestReps as int?,
       assessedOn: identical(assessedOn, unset) ? this.assessedOn : assessedOn as CivilDate?,
+      atStepSince: identical(atStepSince, unset) ? this.atStepSince : atStepSince as StepTenure?,
     );
   }
 
@@ -610,11 +719,11 @@ final class SkillState {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is SkillState && targetExerciseId == other.targetExerciseId && currentExerciseId == other.currentExerciseId && bestHoldSeconds == other.bestHoldSeconds && bestReps == other.bestReps && assessedOn == other.assessedOn;
+    return identical(this, other) || other is SkillState && targetExerciseId == other.targetExerciseId && currentExerciseId == other.currentExerciseId && bestHoldSeconds == other.bestHoldSeconds && bestReps == other.bestReps && assessedOn == other.assessedOn && atStepSince == other.atStepSince;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[targetExerciseId, currentExerciseId, bestHoldSeconds, bestReps, assessedOn]);
+  int get hashCode => Object.hashAll(<Object?>[targetExerciseId, currentExerciseId, bestHoldSeconds, bestReps, assessedOn, atStepSince]);
 
   @override
   String toString() => 'SkillState(${toJson()})';
@@ -1006,7 +1115,99 @@ final class SkillProgress {
   String toString() => 'SkillProgress(${toJson()})';
 }
 
+/// Phase propre à un mouvement, quand elle diffère de la phase générale
+/// (0.4.0) : un mouvement peut rester en accumulation pendant que les autres
+/// s'intensifient.
+final class PhaseOverride {
+  const PhaseOverride({
+    required this.exerciseId,
+    required this.kind,
+    this.volumeFactor,
+    this.intensityFactor,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory PhaseOverride.fromJson(Map<String, Object?> json) {
+    return PhaseOverride(
+      exerciseId: jsonString(json, 'exerciseId'),
+      kind: jsonEnum(json, 'kind', SeasonPhaseKind.fromCode),
+      volumeFactor: jsonDoubleOrNull(json, 'volumeFactor'),
+      intensityFactor: jsonDoubleOrNull(json, 'intensityFactor'),
+    );
+  }
+
+  /// Mouvement ou figure.
+  final String exerciseId;
+
+  /// Phase de ce mouvement.
+  final SeasonPhaseKind kind;
+
+  /// Volume visé pour ce mouvement, rapporté à sa pointe.
+  final double? volumeFactor;
+
+  /// Intensité visée pour ce mouvement, rapportée à sa pointe.
+  final double? intensityFactor;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'exerciseId': exerciseId,
+      'kind': kind.code,
+      if (volumeFactor case final v?) 'volumeFactor': v,
+      if (intensityFactor case final v?) 'intensityFactor': v,
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  PhaseOverride copyWith({
+    String? exerciseId,
+    SeasonPhaseKind? kind,
+    Object? volumeFactor = unset,
+    Object? intensityFactor = unset,
+  }) {
+    return PhaseOverride(
+      exerciseId: exerciseId ?? this.exerciseId,
+      kind: kind ?? this.kind,
+      volumeFactor: identical(volumeFactor, unset) ? this.volumeFactor : volumeFactor as double?,
+      intensityFactor: identical(intensityFactor, unset) ? this.intensityFactor : intensityFactor as double?,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkLength(out, '$path.exerciseId', exerciseId.length, 1, null);
+    if (volumeFactor case final v?) { checkRange(out, '$path.volumeFactor', v, 0, 2); }
+    if (intensityFactor case final v?) { checkRange(out, '$path.intensityFactor', v, 0, 2); }
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+    out.add(exerciseId);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is PhaseOverride && exerciseId == other.exerciseId && kind == other.kind && volumeFactor == other.volumeFactor && intensityFactor == other.intensityFactor;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[exerciseId, kind, volumeFactor, intensityFactor]);
+
+  @override
+  String toString() => 'PhaseOverride(${toJson()})';
+}
+
 /// Phase d'un plan de saison (0.4.0).
+///
+/// Invariant : Mouvements de `overrides` distincts.
 final class SeasonPhase {
   const SeasonPhase({
     required this.index,
@@ -1017,6 +1218,7 @@ final class SeasonPhase {
     this.volumeFactor,
     this.intensityFactor,
     required this.reasons,
+    this.overrides,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1024,13 +1226,14 @@ final class SeasonPhase {
   factory SeasonPhase.fromJson(Map<String, Object?> json) {
     return SeasonPhase(
       index: jsonInt(json, 'index'),
-      kind: jsonEnum(json, 'kind', PhaseKind.fromCode),
+      kind: jsonEnum(json, 'kind', SeasonPhaseKind.fromCode),
       startDate: jsonDate(json, 'startDate'),
       weeks: jsonInt(json, 'weeks'),
       eventId: jsonStringOrNull(json, 'eventId'),
       volumeFactor: jsonDoubleOrNull(json, 'volumeFactor'),
       intensityFactor: jsonDoubleOrNull(json, 'intensityFactor'),
       reasons: jsonList(json, 'reasons', (v) => Reason.fromJson(jsonAsObject(v, 'reasons'))),
+      overrides: jsonListOrNull(json, 'overrides', (v) => PhaseOverride.fromJson(jsonAsObject(v, 'overrides'))),
     );
   }
 
@@ -1038,7 +1241,7 @@ final class SeasonPhase {
   final int index;
 
   /// Nature.
-  final PhaseKind kind;
+  final SeasonPhaseKind kind;
 
   /// Premier jour de la phase.
   final CivilDate startDate;
@@ -1059,6 +1262,9 @@ final class SeasonPhase {
   /// Pourquoi.
   final List<Reason> reasons;
 
+  /// Mouvements dont la phase diffère de la phase générale.
+  final List<PhaseOverride>? overrides;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -1070,19 +1276,21 @@ final class SeasonPhase {
       if (volumeFactor case final v?) 'volumeFactor': v,
       if (intensityFactor case final v?) 'intensityFactor': v,
       'reasons': [for (final e in reasons) e.toJson()],
+      if (overrides case final v?) 'overrides': [for (final e in v) e.toJson()],
     };
   }
 
   /// Copie modifiée ; un champ optionnel peut être remis à `null`.
   SeasonPhase copyWith({
     int? index,
-    PhaseKind? kind,
+    SeasonPhaseKind? kind,
     CivilDate? startDate,
     int? weeks,
     Object? eventId = unset,
     Object? volumeFactor = unset,
     Object? intensityFactor = unset,
     List<Reason>? reasons,
+    Object? overrides = unset,
   }) {
     return SeasonPhase(
       index: index ?? this.index,
@@ -1093,6 +1301,7 @@ final class SeasonPhase {
       volumeFactor: identical(volumeFactor, unset) ? this.volumeFactor : volumeFactor as double?,
       intensityFactor: identical(intensityFactor, unset) ? this.intensityFactor : intensityFactor as double?,
       reasons: reasons ?? this.reasons,
+      overrides: identical(overrides, unset) ? this.overrides : overrides as List<PhaseOverride>?,
     );
   }
 
@@ -1110,20 +1319,23 @@ final class SeasonPhase {
     if (volumeFactor case final v?) { checkRange(out, '$path.volumeFactor', v, 0, 2); }
     if (intensityFactor case final v?) { checkRange(out, '$path.intensityFactor', v, 0, 2); }
     for (var i = 0; i < reasons.length; i++) { reasons[i].collectViolations('$path.reasons[$i]', out); }
+    if (overrides case final v?) { checkLength(out, '$path.overrides', v.length, null, 20); for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.overrides[$i]', out); } }
+    _validateSeasonPhase(this, path, out);
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
     for (final e in reasons) { e.collectExerciseIds(out); }
+    for (final e in overrides ?? const <PhaseOverride>[]) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is SeasonPhase && index == other.index && kind == other.kind && startDate == other.startDate && weeks == other.weeks && eventId == other.eventId && volumeFactor == other.volumeFactor && intensityFactor == other.intensityFactor && jsonListEquals(reasons, other.reasons);
+    return identical(this, other) || other is SeasonPhase && index == other.index && kind == other.kind && startDate == other.startDate && weeks == other.weeks && eventId == other.eventId && volumeFactor == other.volumeFactor && intensityFactor == other.intensityFactor && jsonListEquals(reasons, other.reasons) && jsonDeepEquals(overrides, other.overrides);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[index, kind, startDate, weeks, eventId, volumeFactor, intensityFactor, Object.hashAll(reasons)]);
+  int get hashCode => Object.hashAll(<Object?>[index, kind, startDate, weeks, eventId, volumeFactor, intensityFactor, Object.hashAll(reasons), jsonDeepHash(overrides)]);
 
   @override
   String toString() => 'SeasonPhase(${toJson()})';
@@ -1133,7 +1345,8 @@ final class SeasonPhase {
 /// semaines (D4.8 inchangé : les blocs restent générés au fil de l'eau).
 ///
 /// Invariant : `index` = rang dans `phases` ; les phases se suivent sans trou
-/// ni chevauchement (chacune commence 7 × `weeks` jours après la précédente).
+/// ni chevauchement (chacune commence 7 × `weeks` jours après la précédente)
+/// ; `eventIds` sans doublon ; l'`eventId` d'une phase est dans `eventIds`.
 final class SeasonPlan {
   const SeasonPlan({
     this.schemaVersion = currentSchemaVersion,
@@ -1259,7 +1472,7 @@ final class BlockIntent {
   /// Les champs inconnus sont ignorés (évolution additive).
   factory BlockIntent.fromJson(Map<String, Object?> json) {
     return BlockIntent(
-      phase: jsonEnum(json, 'phase', PhaseKind.fromCode),
+      phase: jsonEnum(json, 'phase', SeasonPhaseKind.fromCode),
       seasonPhaseIndex: jsonIntOrNull(json, 'seasonPhaseIndex'),
       eventId: jsonStringOrNull(json, 'eventId'),
       weeksToEvent: jsonIntOrNull(json, 'weeksToEvent'),
@@ -1269,7 +1482,7 @@ final class BlockIntent {
   }
 
   /// Phase que réalise le bloc.
-  final PhaseKind phase;
+  final SeasonPhaseKind phase;
 
   /// Rang de la phase dans le plan de saison.
   final int? seasonPhaseIndex;
@@ -1300,7 +1513,7 @@ final class BlockIntent {
 
   /// Copie modifiée ; un champ optionnel peut être remis à `null`.
   BlockIntent copyWith({
-    PhaseKind? phase,
+    SeasonPhaseKind? phase,
     Object? seasonPhaseIndex = unset,
     Object? eventId = unset,
     Object? weeksToEvent = unset,
@@ -1441,12 +1654,16 @@ final class VolumeTolerance {
 }
 
 /// Tentative déjà faite le jour d'une compétition (0.4.0).
+///
+/// Invariant : `failure` seulement pour une tentative manquée (`success`
+/// faux).
 final class AttemptResult {
   const AttemptResult({
     required this.exerciseId,
     required this.index,
     required this.loadKg,
     required this.success,
+    this.failure,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1457,6 +1674,7 @@ final class AttemptResult {
       index: jsonInt(json, 'index'),
       loadKg: jsonDouble(json, 'loadKg'),
       success: jsonBool(json, 'success'),
+      failure: jsonEnumOrNull(json, 'failure', AttemptFailure.fromCode),
     );
   }
 
@@ -1472,6 +1690,9 @@ final class AttemptResult {
   /// Tentative validée.
   final bool success;
 
+  /// Cause de l'échec, si elle est connue.
+  final AttemptFailure? failure;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -1479,6 +1700,7 @@ final class AttemptResult {
       'index': index,
       'loadKg': loadKg,
       'success': success,
+      if (failure case final v?) 'failure': v.code,
     };
   }
 
@@ -1488,12 +1710,14 @@ final class AttemptResult {
     int? index,
     double? loadKg,
     bool? success,
+    Object? failure = unset,
   }) {
     return AttemptResult(
       exerciseId: exerciseId ?? this.exerciseId,
       index: index ?? this.index,
       loadKg: loadKg ?? this.loadKg,
       success: success ?? this.success,
+      failure: identical(failure, unset) ? this.failure : failure as AttemptFailure?,
     );
   }
 
@@ -1509,6 +1733,7 @@ final class AttemptResult {
     checkLength(out, '$path.exerciseId', exerciseId.length, 1, null);
     checkRange(out, '$path.index', index, 0, 3);
     checkRange(out, '$path.loadKg', loadKg, -300, 1000);
+    _validateAttemptResult(this, path, out);
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -1518,11 +1743,11 @@ final class AttemptResult {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is AttemptResult && exerciseId == other.exerciseId && index == other.index && loadKg == other.loadKg && success == other.success;
+    return identical(this, other) || other is AttemptResult && exerciseId == other.exerciseId && index == other.index && loadKg == other.loadKg && success == other.success && failure == other.failure;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[exerciseId, index, loadKg, success]);
+  int get hashCode => Object.hashAll(<Object?>[exerciseId, index, loadKg, success, failure]);
 
   @override
   String toString() => 'AttemptResult(${toJson()})';
@@ -1617,16 +1842,96 @@ final class AttemptSuggestion {
   String toString() => 'AttemptSuggestion(${toJson()})';
 }
 
+/// Marche de la montée d'échauffement avant une tentative ou un test (0.4.0).
+final class WarmupStep {
+  const WarmupStep({
+    required this.loadKg,
+    required this.reps,
+    this.restSeconds,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory WarmupStep.fromJson(Map<String, Object?> json) {
+    return WarmupStep(
+      loadKg: jsonDouble(json, 'loadKg'),
+      reps: jsonInt(json, 'reps'),
+      restSeconds: jsonIntOrNull(json, 'restSeconds'),
+    );
+  }
+
+  /// Charge externe, en kg.
+  final double loadKg;
+
+  /// Répétitions.
+  final int reps;
+
+  /// Repos après la marche, en secondes.
+  final int? restSeconds;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'loadKg': loadKg,
+      'reps': reps,
+      if (restSeconds case final v?) 'restSeconds': v,
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  WarmupStep copyWith({
+    double? loadKg,
+    int? reps,
+    Object? restSeconds = unset,
+  }) {
+    return WarmupStep(
+      loadKg: loadKg ?? this.loadKg,
+      reps: reps ?? this.reps,
+      restSeconds: identical(restSeconds, unset) ? this.restSeconds : restSeconds as int?,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkRange(out, '$path.loadKg', loadKg, -300, 1000);
+    checkRange(out, '$path.reps', reps, 1, 50);
+    if (restSeconds case final v?) { checkRange(out, '$path.restSeconds', v, 0, 900); }
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is WarmupStep && loadKg == other.loadKg && reps == other.reps && restSeconds == other.restSeconds;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[loadKg, reps, restSeconds]);
+
+  @override
+  String toString() => 'WarmupStep(${toJson()})';
+}
+
 /// Tentatives proposées pour un mouvement (0.4.0).
 ///
 /// Invariant : Charges proposées croissantes au sens large (une charge ne
-/// baisse jamais).
+/// baisse jamais) ; rangs strictement croissants.
 final class LiftAttempts {
   const LiftAttempts({
     required this.exerciseId,
     this.estimateKg,
     this.standardErrorKg,
     required this.attempts,
+    this.warmup,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1637,6 +1942,7 @@ final class LiftAttempts {
       estimateKg: jsonDoubleOrNull(json, 'estimateKg'),
       standardErrorKg: jsonDoubleOrNull(json, 'standardErrorKg'),
       attempts: jsonList(json, 'attempts', (v) => AttemptSuggestion.fromJson(jsonAsObject(v, 'attempts'))),
+      warmup: jsonListOrNull(json, 'warmup', (v) => WarmupStep.fromJson(jsonAsObject(v, 'warmup'))),
     );
   }
 
@@ -1652,6 +1958,9 @@ final class LiftAttempts {
   /// Tentatives restantes, dans l'ordre.
   final List<AttemptSuggestion> attempts;
 
+  /// Montée d'échauffement proposée avant l'ouverture.
+  final List<WarmupStep>? warmup;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -1659,6 +1968,7 @@ final class LiftAttempts {
       if (estimateKg case final v?) 'estimateKg': v,
       if (standardErrorKg case final v?) 'standardErrorKg': v,
       'attempts': [for (final e in attempts) e.toJson()],
+      if (warmup case final v?) 'warmup': [for (final e in v) e.toJson()],
     };
   }
 
@@ -1668,12 +1978,14 @@ final class LiftAttempts {
     Object? estimateKg = unset,
     Object? standardErrorKg = unset,
     List<AttemptSuggestion>? attempts,
+    Object? warmup = unset,
   }) {
     return LiftAttempts(
       exerciseId: exerciseId ?? this.exerciseId,
       estimateKg: identical(estimateKg, unset) ? this.estimateKg : estimateKg as double?,
       standardErrorKg: identical(standardErrorKg, unset) ? this.standardErrorKg : standardErrorKg as double?,
       attempts: attempts ?? this.attempts,
+      warmup: identical(warmup, unset) ? this.warmup : warmup as List<WarmupStep>?,
     );
   }
 
@@ -1691,6 +2003,7 @@ final class LiftAttempts {
     if (standardErrorKg case final v?) { checkRange(out, '$path.standardErrorKg', v, 0, null); }
     checkLength(out, '$path.attempts', attempts.length, null, 4);
     for (var i = 0; i < attempts.length; i++) { attempts[i].collectViolations('$path.attempts[$i]', out); }
+    if (warmup case final v?) { checkLength(out, '$path.warmup', v.length, null, 12); for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.warmup[$i]', out); } }
     _validateLiftAttempts(this, path, out);
   }
 
@@ -1698,27 +2011,32 @@ final class LiftAttempts {
   void collectExerciseIds(Set<String> out) {
     out.add(exerciseId);
     for (final e in attempts) { e.collectExerciseIds(out); }
+    for (final e in warmup ?? const <WarmupStep>[]) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is LiftAttempts && exerciseId == other.exerciseId && estimateKg == other.estimateKg && standardErrorKg == other.standardErrorKg && jsonListEquals(attempts, other.attempts);
+    return identical(this, other) || other is LiftAttempts && exerciseId == other.exerciseId && estimateKg == other.estimateKg && standardErrorKg == other.standardErrorKg && jsonListEquals(attempts, other.attempts) && jsonDeepEquals(warmup, other.warmup);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[exerciseId, estimateKg, standardErrorKg, Object.hashAll(attempts)]);
+  int get hashCode => Object.hashAll(<Object?>[exerciseId, estimateKg, standardErrorKg, Object.hashAll(attempts), jsonDeepHash(warmup)]);
 
   @override
   String toString() => 'LiftAttempts(${toJson()})';
 }
 
 /// Stratégie de rythme sur un poste d'une épreuve de répétitions (0.4.0).
+///
+/// Invariant : Répétitions de `setReps` de 1 à 1 000.
 final class PacingSegment {
   const PacingSegment({
     required this.exerciseId,
     required this.setReps,
     this.restSeconds,
     this.targetSeconds,
+    this.stationIndex,
+    this.round,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1729,6 +2047,8 @@ final class PacingSegment {
       setReps: jsonList(json, 'setReps', (v) => jsonAsInt(v, 'setReps')),
       restSeconds: jsonIntOrNull(json, 'restSeconds'),
       targetSeconds: jsonIntOrNull(json, 'targetSeconds'),
+      stationIndex: jsonIntOrNull(json, 'stationIndex'),
+      round: jsonIntOrNull(json, 'round'),
     );
   }
 
@@ -1744,6 +2064,13 @@ final class PacingSegment {
   /// Temps visé sur ce poste, en secondes.
   final int? targetSeconds;
 
+  /// Rang du poste dans l'épreuve (0 = premier), quand un exercice y revient
+  /// plusieurs fois.
+  final int? stationIndex;
+
+  /// Tour concerné (0 = premier) ; absent : tous les tours.
+  final int? round;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -1751,6 +2078,8 @@ final class PacingSegment {
       'setReps': [for (final e in setReps) e],
       if (restSeconds case final v?) 'restSeconds': v,
       if (targetSeconds case final v?) 'targetSeconds': v,
+      if (stationIndex case final v?) 'stationIndex': v,
+      if (round case final v?) 'round': v,
     };
   }
 
@@ -1760,12 +2089,16 @@ final class PacingSegment {
     List<int>? setReps,
     Object? restSeconds = unset,
     Object? targetSeconds = unset,
+    Object? stationIndex = unset,
+    Object? round = unset,
   }) {
     return PacingSegment(
       exerciseId: exerciseId ?? this.exerciseId,
       setReps: setReps ?? this.setReps,
       restSeconds: identical(restSeconds, unset) ? this.restSeconds : restSeconds as int?,
       targetSeconds: identical(targetSeconds, unset) ? this.targetSeconds : targetSeconds as int?,
+      stationIndex: identical(stationIndex, unset) ? this.stationIndex : stationIndex as int?,
+      round: identical(round, unset) ? this.round : round as int?,
     );
   }
 
@@ -1782,6 +2115,9 @@ final class PacingSegment {
     checkLength(out, '$path.setReps', setReps.length, null, 60);
     if (restSeconds case final v?) { checkRange(out, '$path.restSeconds', v, 0, 900); }
     if (targetSeconds case final v?) { checkRange(out, '$path.targetSeconds', v, 1, 14400); }
+    if (stationIndex case final v?) { checkRange(out, '$path.stationIndex', v, 0, 39); }
+    if (round case final v?) { checkRange(out, '$path.round', v, 0, 49); }
+    _validatePacingSegment(this, path, out);
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -1791,11 +2127,11 @@ final class PacingSegment {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is PacingSegment && exerciseId == other.exerciseId && jsonListEquals(setReps, other.setReps) && restSeconds == other.restSeconds && targetSeconds == other.targetSeconds;
+    return identical(this, other) || other is PacingSegment && exerciseId == other.exerciseId && jsonListEquals(setReps, other.setReps) && restSeconds == other.restSeconds && targetSeconds == other.targetSeconds && stationIndex == other.stationIndex && round == other.round;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[exerciseId, Object.hashAll(setReps), restSeconds, targetSeconds]);
+  int get hashCode => Object.hashAll(<Object?>[exerciseId, Object.hashAll(setReps), restSeconds, targetSeconds, stationIndex, round]);
 
   @override
   String toString() => 'PacingSegment(${toJson()})';
@@ -1810,6 +2146,8 @@ final class EventDayRequest {
     this.bodyWeightKg,
     required this.done,
     this.healthCheck,
+    this.objective,
+    this.targetTotalKg,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1822,6 +2160,8 @@ final class EventDayRequest {
       bodyWeightKg: jsonDoubleOrNull(json, 'bodyWeightKg'),
       done: jsonList(json, 'done', (v) => AttemptResult.fromJson(jsonAsObject(v, 'done'))),
       healthCheck: jsonObjOrNull(json, 'healthCheck', HealthCheck.fromJson),
+      objective: jsonEnumOrNull(json, 'objective', EventObjective.fromCode),
+      targetTotalKg: jsonDoubleOrNull(json, 'targetTotalKg'),
     );
   }
 
@@ -1846,6 +2186,12 @@ final class EventDayRequest {
   /// Bilan santé du jour (une réponse absente n'est jamais remplacée).
   final HealthCheck? healthCheck;
 
+  /// Objectif du jour (compétition de force).
+  final EventObjective? objective;
+
+  /// Total visé, en kg de charge externe.
+  final double? targetTotalKg;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -1855,6 +2201,8 @@ final class EventDayRequest {
       if (bodyWeightKg case final v?) 'bodyWeightKg': v,
       'done': [for (final e in done) e.toJson()],
       if (healthCheck case final v?) 'healthCheck': v.toJson(),
+      if (objective case final v?) 'objective': v.code,
+      if (targetTotalKg case final v?) 'targetTotalKg': v,
     };
   }
 
@@ -1866,6 +2214,8 @@ final class EventDayRequest {
     Object? bodyWeightKg = unset,
     List<AttemptResult>? done,
     Object? healthCheck = unset,
+    Object? objective = unset,
+    Object? targetTotalKg = unset,
   }) {
     return EventDayRequest(
       schemaVersion: schemaVersion ?? this.schemaVersion,
@@ -1874,6 +2224,8 @@ final class EventDayRequest {
       bodyWeightKg: identical(bodyWeightKg, unset) ? this.bodyWeightKg : bodyWeightKg as double?,
       done: done ?? this.done,
       healthCheck: identical(healthCheck, unset) ? this.healthCheck : healthCheck as HealthCheck?,
+      objective: identical(objective, unset) ? this.objective : objective as EventObjective?,
+      targetTotalKg: identical(targetTotalKg, unset) ? this.targetTotalKg : targetTotalKg as double?,
     );
   }
 
@@ -1892,6 +2244,7 @@ final class EventDayRequest {
     if (bodyWeightKg case final v?) { checkRange(out, '$path.bodyWeightKg', v, 25, 300); }
     for (var i = 0; i < done.length; i++) { done[i].collectViolations('$path.done[$i]', out); }
     if (healthCheck case final v?) { v.collectViolations('$path.healthCheck', out); }
+    if (targetTotalKg case final v?) { checkRange(out, '$path.targetTotalKg', v, 0, 5000); }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -1903,11 +2256,11 @@ final class EventDayRequest {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is EventDayRequest && schemaVersion == other.schemaVersion && input == other.input && eventId == other.eventId && bodyWeightKg == other.bodyWeightKg && jsonListEquals(done, other.done) && healthCheck == other.healthCheck;
+    return identical(this, other) || other is EventDayRequest && schemaVersion == other.schemaVersion && input == other.input && eventId == other.eventId && bodyWeightKg == other.bodyWeightKg && jsonListEquals(done, other.done) && healthCheck == other.healthCheck && objective == other.objective && targetTotalKg == other.targetTotalKg;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[schemaVersion, input, eventId, bodyWeightKg, Object.hashAll(done), healthCheck]);
+  int get hashCode => Object.hashAll(<Object?>[schemaVersion, input, eventId, bodyWeightKg, Object.hashAll(done), healthCheck, objective, targetTotalKg]);
 
   @override
   String toString() => 'EventDayRequest(${toJson()})';

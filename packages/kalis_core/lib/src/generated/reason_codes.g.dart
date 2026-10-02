@@ -322,6 +322,13 @@ abstract final class ReasonCodes {
   /// Étape de la progression d'une figure.
   static const String planSkillStep = 'plan.skill_step';
 
+  /// Figure bloquée à la même étape depuis longtemps : la méthode change (autre
+  /// variante, autre dosage).
+  static const String planSkillPlateau = 'plan.skill_plateau';
+
+  /// Premier bloc calé sur la charge d'entraînement actuelle déclarée.
+  static const String planRecentLoad = 'plan.recent_load';
+
   /// Test programmé (série d'estimation, maximum, maintien, course).
   static const String planTestScheduled = 'plan.test_scheduled';
 
@@ -515,6 +522,8 @@ const List<ReasonSpec> reasonRegistry = <ReasonSpec>[
   ReasonSpec(ReasonCodes.planSpecialization, <String, ReasonParamType>{'target': ReasonParamType.text, 'weeks': ReasonParamType.integer}),
   ReasonSpec(ReasonCodes.planMaintenanceVolume, <String, ReasonParamType>{'muscle': ReasonParamType.text, 'weeklySets': ReasonParamType.number}),
   ReasonSpec(ReasonCodes.planSkillStep, <String, ReasonParamType>{'exerciseId': ReasonParamType.exerciseId, 'stepIndex': ReasonParamType.integer}),
+  ReasonSpec(ReasonCodes.planSkillPlateau, <String, ReasonParamType>{'exerciseId': ReasonParamType.exerciseId}),
+  ReasonSpec(ReasonCodes.planRecentLoad, <String, ReasonParamType>{'exerciseId': ReasonParamType.exerciseId, 'sessions': ReasonParamType.integer}),
   ReasonSpec(ReasonCodes.planTestScheduled, <String, ReasonParamType>{'testKind': ReasonParamType.text}),
   ReasonSpec(ReasonCodes.planBenchmarkUsed, <String, ReasonParamType>{'exerciseId': ReasonParamType.exerciseId, 'source': ReasonParamType.text}),
   ReasonSpec(ReasonCodes.planPercentBased, <String, ReasonParamType>{'pct': ReasonParamType.number}),

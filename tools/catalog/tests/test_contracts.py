@@ -152,7 +152,7 @@ def test_variantes_coherentes():
             assert not set(requis) & set(permis), (t.name, code)
             for n in requis + permis:
                 assert noms[n].type.endswith("?"), (t.name, n)
-    assert vus == 6
+    assert vus == 7
 
 
 def test_validateur_structurel_variantes_et_schema():
@@ -176,13 +176,27 @@ def test_parcours_nombre_de_questions():
     par_cle = {p["key"]: p["expected"] for p in fx["profiles"]}
     debutant = par_cle["v3_debutant_forme_generale"]
     elite = par_cle["v3_competiteur_elite_streetlifting"]
-    assert debutant["questions"] == 20 and debutant["newQuestions"] == 4
-    assert elite["questions"] == 28 and elite["newQuestions"] == 11
-    assert par_cle["v3_intermediaire_musculation"]["questions"] == 25
-    assert debutant["questions"] < par_cle["v3_coureuse_10km"]["questions"] <= elite["questions"]
+    # Débutant : aucune question nouvelle à la création, trois reportées après la première semaine.
+    assert debutant["questions"] == 16 and debutant["newQuestions"] == 0
+    assert debutant["deferredIds"] == ["sleep", "stress", "outside_load"]
+    assert debutant["testIds"] == ["t8_sans_test"]
+    assert elite["questions"] == 29 and elite["newQuestions"] == 12 and elite["deferredIds"] == []
+    assert par_cle["v3_intermediaire_musculation"]["questions"] == 27
+    assert par_cle["v3_coureuse_10km"]["questions"] == 28
+    assert par_cle["v3_sets_reps_avance"]["questions"] == 29
+    assert "t8_sans_test" not in elite["testIds"] and "t3_max_direct" in elite["testIds"]
+    # Le parcours v3 d'un débutant est plus court que le parcours G6 (17 questions du schéma 2).
+    assert sum(1 for q in parcours_spec.QUESTIONS if q["since"] == 2) == 17
     # Un brouillon vide voit le parcours le plus court ; rien ne lève.
-    assert len(gen_parcours.visible({})) == 20
+    assert len(gen_parcours.visible({})) == 16
+    assert len(gen_parcours.visible({}, include_deferred=True)) == 19
     assert gen_parcours.eligible_tests({}) == ["t8_sans_test"]
+    # Le poids de corps devient obligatoire pour les disciplines au poids du corps.
+    poids = next(q for q in parcours_spec.QUESTIONS if q["id"] == "body_weight")
+    assert not gen_parcours.evaluate(poids["requiredWhen"], debutant_profil := fx["profiles"][0]["profile"], 2026)
+    assert gen_parcours.evaluate(poids["requiredWhen"], fx["profiles"][2]["profile"], 2026)
+    # Chaque test guidé dit son prérequis par mouvement.
+    assert all(t["requires"] for t in parcours_spec.TESTS) and len(parcours_spec.TESTS) == 10
     # Chaque question du schéma 3 est justifiée par un facteur de la revue.
     doc = (RACINE / "packages/kalis_core/docs/PROFIL_V3.md").read_text(encoding="utf-8")
     for q in parcours_spec.QUESTIONS:

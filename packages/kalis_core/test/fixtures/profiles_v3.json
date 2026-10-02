@@ -4,7 +4,7 @@
  "profiles": [
   {
    "key": "v3_debutant_forme_generale",
-   "description": "Débutant complet, forme générale, 2 × 30 min à la maison sans matériel.",
+   "description": "Débutant complet, forme générale, 2 × 30 min à la maison sans matériel ; questions de récupération répondues après la première semaine.",
    "profile": {
     "schemaVersion": 3,
     "sex": "male",
@@ -81,12 +81,11 @@
     },
     "createdOn": "2026-10-01",
     "updatedOn": "2026-10-01",
-    "trainingAge": "under_6_months",
     "sleep": "hours_6_to_7",
     "stress": "moderate",
     "occupationalLoad": "seated",
     "otherSports": [],
-    "lifestyleUpdatedOn": "2026-10-01"
+    "lifestyleUpdatedOn": "2026-10-09"
    },
    "expected": {
     "questionIds": [
@@ -98,27 +97,24 @@
      "discipline",
      "secondaries",
      "experience_level",
-     "training_age",
      "movement_levels",
      "goals",
      "availability",
      "places",
      "equipment",
-     "sleep",
-     "stress",
-     "outside_load",
      "health_screening",
      "limitations",
      "guidance_mode"
     ],
-    "questions": 20,
-    "newQuestions": 4,
+    "questions": 16,
+    "newQuestions": 0,
+    "deferredIds": [
+     "sleep",
+     "stress",
+     "outside_load"
+    ],
     "testIds": [
-     "t1_serie_lourde",
-     "t2_leste",
-     "t4_reps_max",
-     "t5_maintien_max",
-     "t6_course_6min"
+     "t8_sans_test"
     ]
    }
   },
@@ -284,7 +280,8 @@
       "aggravatedBy": [
        "knee_flexion",
        "running_jumping"
-      ]
+      ],
+      "effortDiscomfort": 4
      }
     ],
     "likedExerciseIds": [
@@ -339,6 +336,13 @@
      }
     ],
     "events": [],
+    "specialization": {
+     "kind": "muscle",
+     "muscle": "grand fessier",
+     "maintenance": "maintain"
+    },
+    "emphasis": "muscle",
+    "targetBodyWeightKg": 61.0,
     "lifestyleUpdatedOn": "2026-10-01"
    },
    "expected": {
@@ -353,10 +357,12 @@
      "experience_level",
      "training_age",
      "training_gap",
-     "movement_levels",
      "benchmarks",
+     "movement_levels",
      "goals",
+     "emphasis",
      "events",
+     "specialization",
      "availability",
      "places",
      "equipment",
@@ -369,8 +375,9 @@
      "preferences",
      "guidance_mode"
     ],
-    "questions": 25,
-    "newQuestions": 8,
+    "questions": 27,
+    "newQuestions": 10,
+    "deferredIds": [],
     "testIds": [
      "t1_serie_lourde",
      "t2_leste",
@@ -564,8 +571,9 @@
       "since": "months_3_to_12",
       "aggravatedBy": [
        "straight_arm_support",
-       "pull_bent_arm"
-      ]
+       "elbow_lockout"
+      ],
+      "effortDiscomfort": 3
      }
     ],
     "likedExerciseIds": [],
@@ -599,7 +607,8 @@
       "externalLoadKg": 75.0,
       "reps": 1,
       "rir": 0.0,
-      "bodyWeightKg": 72.8
+      "bodyWeightKg": 72.8,
+      "competitionStandard": true
      },
      {
       "exerciseId": "sl-dips-leste",
@@ -609,7 +618,8 @@
       "externalLoadKg": 105.0,
       "reps": 1,
       "rir": 0.0,
-      "bodyWeightKg": 72.8
+      "bodyWeightKg": 72.8,
+      "competitionStandard": true
      },
      {
       "exerciseId": "sl-muscle-up-leste",
@@ -619,7 +629,8 @@
       "externalLoadKg": 25.0,
       "reps": 1,
       "rir": 0.0,
-      "bodyWeightKg": 72.8
+      "bodyWeightKg": 72.8,
+      "competitionStandard": true
      },
      {
       "exerciseId": "sl-squat-competition",
@@ -628,7 +639,8 @@
       "date": "2026-06-06",
       "externalLoadKg": 180.0,
       "reps": 1,
-      "rir": 0.0
+      "rir": 0.0,
+      "competitionStandard": true
      },
      {
       "exerciseId": "sw-traction-pronation",
@@ -683,7 +695,8 @@
        "g2",
        "g3",
        "g4"
-      ]
+      ],
+      "plannedBodyWeightKg": 72.8
      },
      {
       "id": "e2",
@@ -714,7 +727,8 @@
       "targetExerciseId": "cs-front-lever",
       "currentExerciseId": "cs-front-lever-straddle",
       "bestHoldSeconds": 8,
-      "assessedOn": "2026-09-25"
+      "assessedOn": "2026-09-25",
+      "atStepSince": "months_3_to_6"
      }
     ],
     "weakPoints": [
@@ -733,6 +747,33 @@
      "weeks": 8,
      "maintenance": "maintain"
     },
+    "recentTraining": [
+     {
+      "exerciseId": "sl-traction-lestee",
+      "sessionsPerWeek": 2,
+      "hardSets": "sets_10_to_14"
+     },
+     {
+      "exerciseId": "sl-dips-leste",
+      "sessionsPerWeek": 2,
+      "hardSets": "sets_10_to_14"
+     },
+     {
+      "exerciseId": "sl-muscle-up-leste",
+      "sessionsPerWeek": 2,
+      "hardSets": "sets_5_to_9"
+     },
+     {
+      "exerciseId": "sl-squat-competition",
+      "sessionsPerWeek": 2,
+      "hardSets": "sets_5_to_9"
+     },
+     {
+      "exerciseId": "cs-front-lever",
+      "sessionsPerWeek": 1
+     }
+    ],
+    "currentPhase": "volume",
     "lifestyleUpdatedOn": "2026-10-01"
    },
    "expected": {
@@ -747,8 +788,9 @@
      "experience_level",
      "training_age",
      "training_gap",
-     "movement_levels",
+     "recent_training",
      "benchmarks",
+     "movement_levels",
      "skills",
      "goals",
      "events",
@@ -766,8 +808,9 @@
      "preferences",
      "guidance_mode"
     ],
-    "questions": 28,
-    "newQuestions": 11,
+    "questions": 29,
+    "newQuestions": 12,
+    "deferredIds": [],
     "testIds": [
      "t1_serie_lourde",
      "t2_leste",
@@ -775,7 +818,9 @@
      "t4_reps_max",
      "t5_maintien_max",
      "t6_course_6min",
-     "t7_course_chrono"
+     "t7_course_chrono",
+     "t9_reps_temps",
+     "t10_series_repetees"
     ]
    }
   },
@@ -904,9 +949,16 @@
       "targetSeconds": 2880,
       "goalIds": [
        "g1"
-      ]
+      ],
+      "bestSeconds": 3210
      }
     ],
+    "emphasis": "strength",
+    "enduranceBase": {
+     "weeklyVolume": "km_20_to_35",
+     "sessionsPerWeek": 3,
+     "longRun": "min_60_to_90"
+    },
     "lifestyleUpdatedOn": "2026-10-01"
    },
    "expected": {
@@ -921,10 +973,13 @@
      "experience_level",
      "training_age",
      "training_gap",
-     "movement_levels",
      "benchmarks",
+     "movement_levels",
      "goals",
+     "emphasis",
      "events",
+     "specialization",
+     "running_base",
      "availability",
      "places",
      "equipment",
@@ -937,8 +992,9 @@
      "preferences",
      "guidance_mode"
     ],
-    "questions": 25,
-    "newQuestions": 8,
+    "questions": 28,
+    "newQuestions": 11,
+    "deferredIds": [],
     "testIds": [
      "t1_serie_lourde",
      "t2_leste",
@@ -1128,8 +1184,6 @@
       "date": "2027-05-22",
       "name": "Coupe d'endurance",
       "mode": "for_time",
-      "rounds": 2,
-      "timeLimitSeconds": 600,
       "stations": [
        {
         "exerciseId": "cd-muscle-up-barre-strict",
@@ -1154,16 +1208,23 @@
         "externalLoadKg": 20.0
        }
       ],
+      "rounds": 2,
+      "timeLimitSeconds": 600,
       "goalIds": [
        "g1"
-      ]
+      ],
+      "heats": 4,
+      "restBetweenHeatsSeconds": 900,
+      "bestSeconds": 512,
+      "bestDate": "2026-05-23"
      }
     ],
     "skills": [
      {
       "targetExerciseId": "cs-back-lever",
       "currentExerciseId": "cs-back-lever-straddle",
-      "bestHoldSeconds": 6
+      "bestHoldSeconds": 6,
+      "atStepSince": "over_6_months"
      }
     ],
     "weakPoints": [
@@ -1172,6 +1233,24 @@
       "kind": "late_set_fatigue"
      }
     ],
+    "recentTraining": [
+     {
+      "exerciseId": "sw-traction-pronation",
+      "sessionsPerWeek": 3,
+      "hardSets": "sets_15_to_20"
+     },
+     {
+      "exerciseId": "sw-dips-barres-paralleles",
+      "sessionsPerWeek": 3,
+      "hardSets": "sets_15_to_20"
+     },
+     {
+      "exerciseId": "cd-muscle-up-barre-strict",
+      "sessionsPerWeek": 2,
+      "hardSets": "sets_5_to_9"
+     }
+    ],
+    "currentPhase": "unstructured",
     "lifestyleUpdatedOn": "2026-10-01"
    },
    "expected": {
@@ -1186,8 +1265,9 @@
      "experience_level",
      "training_age",
      "training_gap",
-     "movement_levels",
+     "recent_training",
      "benchmarks",
+     "movement_levels",
      "skills",
      "goals",
      "events",
@@ -1205,8 +1285,9 @@
      "preferences",
      "guidance_mode"
     ],
-    "questions": 28,
-    "newQuestions": 11,
+    "questions": 29,
+    "newQuestions": 12,
+    "deferredIds": [],
     "testIds": [
      "t1_serie_lourde",
      "t2_leste",
@@ -1214,7 +1295,9 @@
      "t4_reps_max",
      "t5_maintien_max",
      "t6_course_6min",
-     "t7_course_chrono"
+     "t7_course_chrono",
+     "t9_reps_temps",
+     "t10_series_repetees"
     ]
    }
   }

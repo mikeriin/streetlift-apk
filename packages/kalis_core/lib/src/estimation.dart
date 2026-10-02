@@ -37,8 +37,9 @@ final class OneRmEstimate {
 /// Incertitude (choix raisonné adossé à Nuzzo et al. 2024, Halperin et al.
 /// 2022 et Grgic et al. 2020) : 4 % pour un maximum mesuré (1 répétition,
 /// réserve nulle) ; 5 % pour une série au maximum de 2 à 6 répétitions ;
-/// 7,5 % avec une réserve déclarée ou de 7 à 10 répétitions ; 10 % si
-/// [novice] (moins de six mois de pratique : la réserve est mal estimée).
+/// 7,5 % avec une réserve déclarée ou de 7 à 10 répétitions ; 10 % pour
+/// une série de plusieurs répétitions ou avec réserve d'un [novice] (moins
+/// de six mois de pratique : la réserve et l'échec sont mal estimés).
 OneRmEstimate? estimateOneRm({
   required double loadKg,
   required int reps,
@@ -57,12 +58,12 @@ OneRmEstimate? estimateOneRm({
   }
   final value = effective <= 1 ? loadKg : loadKg * 36 / (37 - effective);
   final double error;
-  if (novice) {
+  if (reps == 1 && rir == 0) {
+    error = 0.04;
+  } else if (novice) {
     error = 0.10;
   } else if (rir > 0 || effective > 6) {
     error = 0.075;
-  } else if (reps == 1) {
-    error = 0.04;
   } else {
     error = 0.05;
   }
@@ -111,10 +112,18 @@ double? riegelSeconds({
   if (targetMeters > 21097.5) {
     return null;
   }
-  final predicted = seconds * _pow(targetMeters / meters, 1.06);
   const low = 3.5 * 60;
   const high = 230.0 * 60;
-  if (seconds < low || seconds > high || predicted < low || predicted > high) {
+  if (seconds < low || seconds > high) {
+    return null;
+  }
+  final ratio = targetMeters / meters;
+  // Hors de ces bornes, l'effort prédit sort de toute façon du domaine.
+  if (!ratio.isFinite || ratio < 1e-3 || ratio > 1e3) {
+    return null;
+  }
+  final predicted = seconds * _pow(ratio, 1.06);
+  if (predicted < low || predicted > high) {
     return null;
   }
   return predicted;

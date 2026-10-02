@@ -1,6 +1,6 @@
 # Codes de raison ajoutés en 0.4.0 — textes courts de Koach
 
-Les moteurs ne produisent aucun texte : des codes et des paramètres. Voici, pour les 36 codes ajoutés par le lot CQ, un texte court proposé (français, tutoiement, sans promesse de résultat ni allégation médicale, règles L13), à intégrer par l'application avec les textes de `kalis_koach` (lots CU et CI). Données : [`data/reason_texts_fr_0_4.json`](../data/reason_texts_fr_0_4.json). Un paramètre entre accolades est remplacé par sa valeur ; quand c'est un code (phase, technique, cause, facteur), l'application l'affiche avec son libellé français. Un paramètre non utilisé par le texte reste disponible pour « Pourquoi ? ».
+Les moteurs ne produisent aucun texte : des codes et des paramètres. Voici, pour les 38 codes ajoutés par le lot CQ, un texte court proposé (français, tutoiement, sans promesse de résultat ni allégation médicale, règles L13), à intégrer par l'application avec les textes de `kalis_koach` (lots CU et CI). Données : [`data/reason_texts_fr_0_4.json`](../data/reason_texts_fr_0_4.json). Un paramètre entre accolades est remplacé par sa valeur ; quand c'est un code (phase, technique, cause, facteur), l'application l'affiche avec son libellé français. Un paramètre non utilisé par le texte reste disponible pour « Pourquoi ? ».
 
 | Code | Texte de Koach | Paramètres | Sens |
 | --- | --- | --- | --- |
@@ -13,6 +13,8 @@ Les moteurs ne produisent aucun texte : des codes et des paramètres. Voici, pou
 | `plan.specialization` | Priorité à ta cible pendant {weeks} semaines ; le reste est entretenu. | `target`, `weeks` | Spécialisation : priorité donnée à une cible pendant tant de semaines. |
 | `plan.maintenance_volume` | Volume d'entretien pour ce groupe : juste ce qu'il faut pour ne rien perdre. | `muscle`, `weeklySets` | Volume d'entretien du reste pendant une spécialisation ou un affûtage. |
 | `plan.skill_step` | C'est ton étape actuelle sur cette figure. | `exerciseId`, `stepIndex` | Étape de la progression d'une figure. |
+| `plan.skill_plateau` | Tu es à cette étape depuis longtemps : je change d'approche sur cette figure. | `exerciseId` | Figure bloquée à la même étape depuis longtemps : la méthode change (autre variante, autre dosage). |
+| `plan.recent_load` | Premier bloc calé sur ce que tu fais en ce moment : ni trop facile, ni marche trop haute. | `exerciseId`, `sessions` | Premier bloc calé sur la charge d'entraînement actuelle déclarée. |
 | `plan.test_scheduled` | Un test est prévu : il me dira où tu en es vraiment. | `testKind` | Test programmé (série d'estimation, maximum, maintien, course). |
 | `plan.benchmark_used` | Charge calculée d'après ton test ou ton record. | `exerciseId`, `source` | Charge ou durée calculée d'après un test ou un record du profil. |
 | `plan.percent_based` | Charge réglée sur une part de ton maximum. | `pct` | Charge donnée en part du maximum. |
@@ -43,9 +45,9 @@ Les moteurs ne produisent aucun texte : des codes et des paramètres. Voici, pou
 
 Libellés français des codes passés en paramètre :
 
-- phases (`phase`) : `accumulation` accumulation, `intensification` intensification, `realization` réalisation, `taper` affûtage, `competition` compétition, `transition` transition, `test` test, `deload` décharge ;
+- phases (`phase`) : `accumulation` accumulation, `intensification` intensification, `realization` réalisation, `taper` affûtage, `competition` compétition, `transition` transition, `test` test, `deload` décharge, `maintenance` entretien, `reintroduction` reprise progressive ;
 - ondulation (`stress`) : `heavy` lourd, `medium` moyen, `light` léger ;
-- techniques (`technique`) : `top_set_backoff` série de tête puis séries allégées, `cluster` clusters, `rest_pause` rest-pause, `myo_reps` myo-reps, `drop_set` série dégressive, `isometric_hold` maintien, `accentuated_eccentric` descente accentuée, `contrast` contraste, `wave` vagues, `amrap` maximum de répétitions, `emom` une série par minute, `density` densité, `ladder` échelle, `pyramid` pyramide, `skill_practice` pratique de figure ;
+- techniques (`technique`) : `top_set_backoff` série de tête puis séries allégées, `cluster` clusters, `rest_pause` rest-pause, `myo_reps` myo-reps, `drop_set` série dégressive, `isometric_hold` maintien, `accentuated_eccentric` descente accentuée, `contrast` contraste, `wave` vagues, `amrap` maximum de répétitions, `emom` une série par minute, `density` densité, `ladder` échelle, `pyramid` pyramide, `skill_practice` pratique de figure, `for_time` contre la montre ;
 - facteurs de récupération (`factor`) : `sleep` sommeil, `stress` stress, `occupational_load` métier physique, `energy_deficit` perte de poids en cours, `other_sport` autre sport ;
 - causes d'une technique gardée pour plus tard (`cause`) : `training_age` ancienneté, `level` niveau, `no_benchmark` pas encore de test, `recovery` récupération, `constraint` zone à ménager, `phase` phase en cours ;
 - causes d'une tentative prudente (`cause`) : `uncertainty` estimation incertaine, `previous_miss` échec précédent, `readiness` forme du jour, `weigh_in` pesée ;

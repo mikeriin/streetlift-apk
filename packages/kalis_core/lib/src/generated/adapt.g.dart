@@ -1133,6 +1133,9 @@ final class SessionAdjustment {
 }
 
 /// Prescription de la séance du jour, ajustée.
+///
+/// Invariant : (0.4.0) `groups` : `groupId` distincts ; chaque groupe a au
+/// moins un membre parmi `items`.
 final class SessionPlan {
   const SessionPlan({
     this.schemaVersion = currentSchemaVersion,
@@ -1147,6 +1150,7 @@ final class SessionPlan {
     this.phase,
     this.weekIntent,
     this.eventId,
+    this.groups,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1162,9 +1166,10 @@ final class SessionPlan {
       adjustments: jsonList(json, 'adjustments', (v) => SessionAdjustment.fromJson(jsonAsObject(v, 'adjustments'))),
       confidence: jsonDouble(json, 'confidence'),
       reasons: jsonList(json, 'reasons', (v) => Reason.fromJson(jsonAsObject(v, 'reasons'))),
-      phase: jsonEnumOrNull(json, 'phase', PhaseKind.fromCode),
+      phase: jsonEnumOrNull(json, 'phase', SeasonPhaseKind.fromCode),
       weekIntent: jsonEnumOrNull(json, 'weekIntent', WeekIntent.fromCode),
       eventId: jsonStringOrNull(json, 'eventId'),
+      groups: jsonListOrNull(json, 'groups', (v) => GroupSpec.fromJson(jsonAsObject(v, 'groups'))),
     );
   }
 
@@ -1199,13 +1204,16 @@ final class SessionPlan {
   final List<Reason> reasons;
 
   /// Phase en cours (0.4.0).
-  final PhaseKind? phase;
+  final SeasonPhaseKind? phase;
 
   /// Intention de la semaine (0.4.0).
   final WeekIntent? weekIntent;
 
   /// Échéance dont c'est le jour (0.4.0).
   final String? eventId;
+
+  /// Groupes d'exercices enchaînés de la séance (0.4.0).
+  final List<GroupSpec>? groups;
 
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
@@ -1222,6 +1230,7 @@ final class SessionPlan {
       if (phase case final v?) 'phase': v.code,
       if (weekIntent case final v?) 'weekIntent': v.code,
       if (eventId case final v?) 'eventId': v,
+      if (groups case final v?) 'groups': [for (final e in v) e.toJson()],
     };
   }
 
@@ -1239,6 +1248,7 @@ final class SessionPlan {
     Object? phase = unset,
     Object? weekIntent = unset,
     Object? eventId = unset,
+    Object? groups = unset,
   }) {
     return SessionPlan(
       schemaVersion: schemaVersion ?? this.schemaVersion,
@@ -1250,9 +1260,10 @@ final class SessionPlan {
       adjustments: adjustments ?? this.adjustments,
       confidence: confidence ?? this.confidence,
       reasons: reasons ?? this.reasons,
-      phase: identical(phase, unset) ? this.phase : phase as PhaseKind?,
+      phase: identical(phase, unset) ? this.phase : phase as SeasonPhaseKind?,
       weekIntent: identical(weekIntent, unset) ? this.weekIntent : weekIntent as WeekIntent?,
       eventId: identical(eventId, unset) ? this.eventId : eventId as String?,
+      groups: identical(groups, unset) ? this.groups : groups as List<GroupSpec>?,
     );
   }
 
@@ -1274,6 +1285,8 @@ final class SessionPlan {
     checkRange(out, '$path.confidence', confidence, 0, 1);
     for (var i = 0; i < reasons.length; i++) { reasons[i].collectViolations('$path.reasons[$i]', out); }
     if (eventId case final v?) { checkLength(out, '$path.eventId', v.length, 1, null); }
+    if (groups case final v?) { checkLength(out, '$path.groups', v.length, null, 20); for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.groups[$i]', out); } }
+    _validateSessionPlan(this, path, out);
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -1281,15 +1294,16 @@ final class SessionPlan {
     for (final e in items) { e.collectExerciseIds(out); }
     for (final e in adjustments) { e.collectExerciseIds(out); }
     for (final e in reasons) { e.collectExerciseIds(out); }
+    for (final e in groups ?? const <GroupSpec>[]) { e.collectExerciseIds(out); }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is SessionPlan && schemaVersion == other.schemaVersion && date == other.date && blockId == other.blockId && weekIndex == other.weekIndex && dayIndex == other.dayIndex && jsonListEquals(items, other.items) && jsonListEquals(adjustments, other.adjustments) && confidence == other.confidence && jsonListEquals(reasons, other.reasons) && phase == other.phase && weekIntent == other.weekIntent && eventId == other.eventId;
+    return identical(this, other) || other is SessionPlan && schemaVersion == other.schemaVersion && date == other.date && blockId == other.blockId && weekIndex == other.weekIndex && dayIndex == other.dayIndex && jsonListEquals(items, other.items) && jsonListEquals(adjustments, other.adjustments) && confidence == other.confidence && jsonListEquals(reasons, other.reasons) && phase == other.phase && weekIntent == other.weekIntent && eventId == other.eventId && jsonDeepEquals(groups, other.groups);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[schemaVersion, date, blockId, weekIndex, dayIndex, Object.hashAll(items), Object.hashAll(adjustments), confidence, Object.hashAll(reasons), phase, weekIntent, eventId]);
+  int get hashCode => Object.hashAll(<Object?>[schemaVersion, date, blockId, weekIndex, dayIndex, Object.hashAll(items), Object.hashAll(adjustments), confidence, Object.hashAll(reasons), phase, weekIntent, eventId, jsonDeepHash(groups)]);
 
   @override
   String toString() => 'SessionPlan(${toJson()})';

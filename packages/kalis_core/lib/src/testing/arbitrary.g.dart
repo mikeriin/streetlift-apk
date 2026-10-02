@@ -109,6 +109,7 @@ Limitation arbitraryLimitation(Random r) {
     discomfort: arbInt(r, 0, 10),
     since: r.nextBool() ? null : arbEnum(r, ConstraintSince.values),
     aggravatedBy: r.nextBool() ? null : arbList(r, 0, 4, () => arbEnum(r, AggravatingMovement.values)),
+    effortDiscomfort: r.nextBool() ? null : arbInt(r, 0, 10),
   );
 }
 
@@ -161,6 +162,11 @@ AthleteProfile arbitraryAthleteProfile(Random r) {
     skills: r.nextBool() ? null : arbList(r, 0, 4, () => arbitrarySkillState(r)),
     weakPoints: r.nextBool() ? null : arbList(r, 0, 4, () => arbitraryWeakPoint(r)),
     specialization: r.nextBool() ? null : arbitrarySpecialization(r),
+    recentTraining: r.nextBool() ? null : arbList(r, 0, 4, () => arbitraryRecentTraining(r)),
+    currentPhase: r.nextBool() ? null : arbEnum(r, CurrentPhase.values),
+    emphasis: r.nextBool() ? null : arbEnum(r, TrainingEmphasis.values),
+    enduranceBase: r.nextBool() ? null : arbitraryEnduranceBase(r),
+    targetBodyWeightKg: r.nextBool() ? null : arbDouble(r, 25.0, 300.0),
     lifestyleUpdatedOn: r.nextBool() ? null : arbDate(r),
   );
 }
@@ -232,7 +238,7 @@ SetRecord arbitrarySetRecord(Random r) {
     target: r.nextBool() ? null : arbitrarySetTarget(r),
     technique: r.nextBool() ? null : arbEnum(r, SetTechniqueKind.values),
     role: r.nextBool() ? null : arbEnum(r, SetRole.values),
-    miniSetIndex: r.nextBool() ? null : arbInt(r, 0, 99),
+    parts: r.nextBool() ? null : arbList(r, 1, 4, () => arbitrarySetPart(r)),
     restBeforeSeconds: r.nextBool() ? null : arbInt(r, 0, 3600),
     elapsedSeconds: r.nextBool() ? null : arbInt(r, 0, 86400),
     rounds: r.nextBool() ? null : arbInt(r, 0, 1000),
@@ -276,6 +282,7 @@ SessionRecord arbitrarySessionRecord(Random r) {
     pains: arbList(r, 0, 3, () => arbitraryPainReport(r)),
     plannedWorkSets: r.nextBool() ? null : arbInt(r, 0, 500),
     eventId: r.nextBool() ? null : arbString(r, 1, 12),
+    groupResults: r.nextBool() ? null : arbList(r, 0, 4, () => arbitraryGroupResult(r)),
   );
 }
 
@@ -458,6 +465,8 @@ ExercisePrescription arbitraryExercisePrescription(Random r) {
     test: r.nextBool() ? null : arbitraryTestSpec(r),
     dayStress: r.nextBool() ? null : arbEnum(r, DayStress.values),
     skillTargetId: r.nextBool() ? null : arbId(r),
+    unbroken: r.nextBool() ? null : r.nextBool(),
+    restMode: r.nextBool() ? null : arbEnum(r, RestMode.values),
   );
 }
 
@@ -467,6 +476,7 @@ DayPrescription arbitraryDayPrescription(Random r) {
     dayIndex: arbInt(r, 0, 1000),
     items: arbList(r, 0, 3, () => arbitraryExercisePrescription(r)),
     stress: r.nextBool() ? null : arbEnum(r, DayStress.values),
+    groups: r.nextBool() ? null : arbList(r, 0, 4, () => arbitraryGroupSpec(r)),
   );
 }
 
@@ -637,9 +647,10 @@ SessionPlan arbitrarySessionPlan(Random r) {
     adjustments: arbList(r, 0, 3, () => arbitrarySessionAdjustment(r)),
     confidence: arbDouble(r, 0.0, 1.0),
     reasons: arbList(r, 0, 3, () => arbitraryReason(r)),
-    phase: r.nextBool() ? null : arbEnum(r, PhaseKind.values),
+    phase: r.nextBool() ? null : arbEnum(r, SeasonPhaseKind.values),
     weekIntent: r.nextBool() ? null : arbEnum(r, WeekIntent.values),
     eventId: r.nextBool() ? null : arbString(r, 1, 12),
+    groups: r.nextBool() ? null : arbList(r, 0, 4, () => arbitraryGroupSpec(r)),
   );
 }
 
@@ -979,6 +990,25 @@ OtherSport arbitraryOtherSport(Random r) {
     weekdays: r.nextBool() ? null : arbList(r, 0, 7, () => arbInt(r, 0, 1000)),
     regions: r.nextBool() ? null : arbList(r, 0, 5, () => arbEnum(r, BodyRegion.values)),
     hard: r.nextBool() ? null : r.nextBool(),
+    mainSport: r.nextBool() ? null : r.nextBool(),
+  );
+}
+
+/// Valeur aléatoire de [RecentTraining].
+RecentTraining arbitraryRecentTraining(Random r) {
+  return RecentTraining(
+    exerciseId: arbId(r),
+    sessionsPerWeek: arbInt(r, 0, 14),
+    hardSets: r.nextBool() ? null : arbEnum(r, HardSetsBand.values),
+  );
+}
+
+/// Valeur aléatoire de [EnduranceBase].
+EnduranceBase arbitraryEnduranceBase(Random r) {
+  return EnduranceBase(
+    weeklyVolume: arbEnum(r, RunVolumeBand.values),
+    sessionsPerWeek: arbInt(r, 0, 14),
+    longRun: r.nextBool() ? null : arbEnum(r, LongRunBand.values),
   );
 }
 
@@ -993,9 +1023,10 @@ Benchmark arbitraryBenchmark(Random r) {
     reps: r.nextBool() ? null : arbInt(r, 1, 1000),
     rir: r.nextBool() ? null : arbDouble(r, 0.0, 10.0),
     seconds: r.nextBool() ? null : arbInt(r, 1, 86400),
-    distanceMeters: r.nextBool() ? null : arbDouble(r, 0.0, 2000.0),
+    distanceMeters: r.nextBool() ? null : arbDouble(r, 1.0, 2001.0),
     bodyWeightKg: r.nextBool() ? null : arbDouble(r, 25.0, 300.0),
     protocolId: r.nextBool() ? null : arbString(r, 1, 40),
+    competitionStandard: r.nextBool() ? null : r.nextBool(),
   );
 }
 
@@ -1026,6 +1057,8 @@ EventStation arbitraryEventStation(Random r) {
     seconds: r.nextBool() ? null : arbInt(r, 1, 3600),
     externalLoadKg: r.nextBool() ? null : arbDouble(r, -300.0, 1000.0),
     unbroken: r.nextBool() ? null : r.nextBool(),
+    timeLimitSeconds: r.nextBool() ? null : arbInt(r, 1, 14400),
+    restAfterSeconds: r.nextBool() ? null : arbInt(r, 0, 3600),
   );
 }
 
@@ -1045,9 +1078,18 @@ SeasonEvent arbitrarySeasonEvent(Random r) {
     stations: r.nextBool() ? null : arbList(r, 1, 4, () => arbitraryEventStation(r)),
     rounds: r.nextBool() ? null : arbInt(r, 1, 50),
     timeLimitSeconds: r.nextBool() ? null : arbInt(r, 10, 14400),
-    distanceMeters: r.nextBool() ? null : arbDouble(r, 0.0, 2000.0),
+    distanceMeters: r.nextBool() ? null : arbDouble(r, 1.0, 2001.0),
     targetSeconds: r.nextBool() ? null : arbInt(r, 1, 86400),
     goalIds: r.nextBool() ? null : arbList(r, 0, 3, () => arbString(r, 0, 12)),
+    dateApproximate: r.nextBool() ? null : r.nextBool(),
+    plannedBodyWeightKg: r.nextBool() ? null : arbDouble(r, 25.0, 300.0),
+    formatKnown: r.nextBool() ? null : r.nextBool(),
+    heats: r.nextBool() ? null : arbInt(r, 1, 20),
+    restBetweenHeatsSeconds: r.nextBool() ? null : arbInt(r, 0, 14400),
+    elements: r.nextBool() ? null : arbList(r, 0, 4, () => arbId(r)),
+    bestSeconds: r.nextBool() ? null : arbInt(r, 1, 86400),
+    bestTotalReps: r.nextBool() ? null : arbInt(r, 0, 100000),
+    bestDate: r.nextBool() ? null : arbDate(r),
   );
 }
 
@@ -1072,6 +1114,7 @@ SkillState arbitrarySkillState(Random r) {
     bestHoldSeconds: r.nextBool() ? null : arbInt(r, 0, 3600),
     bestReps: r.nextBool() ? null : arbInt(r, 0, 1000),
     assessedOn: r.nextBool() ? null : arbDate(r),
+    atStepSince: r.nextBool() ? null : arbEnum(r, StepTenure.values),
   );
 }
 
@@ -1117,17 +1160,28 @@ SkillProgress arbitrarySkillProgress(Random r) {
   );
 }
 
+/// Valeur aléatoire de [PhaseOverride].
+PhaseOverride arbitraryPhaseOverride(Random r) {
+  return PhaseOverride(
+    exerciseId: arbId(r),
+    kind: arbEnum(r, SeasonPhaseKind.values),
+    volumeFactor: r.nextBool() ? null : arbDouble(r, 0.0, 2.0),
+    intensityFactor: r.nextBool() ? null : arbDouble(r, 0.0, 2.0),
+  );
+}
+
 /// Valeur aléatoire de [SeasonPhase].
 SeasonPhase arbitrarySeasonPhase(Random r) {
   return SeasonPhase(
     index: arbInt(r, 0, 1000),
-    kind: arbEnum(r, PhaseKind.values),
+    kind: arbEnum(r, SeasonPhaseKind.values),
     startDate: arbDate(r),
     weeks: arbInt(r, 1, 26),
     eventId: r.nextBool() ? null : arbString(r, 0, 12),
     volumeFactor: r.nextBool() ? null : arbDouble(r, 0.0, 2.0),
     intensityFactor: r.nextBool() ? null : arbDouble(r, 0.0, 2.0),
     reasons: arbList(r, 0, 3, () => arbitraryReason(r)),
+    overrides: r.nextBool() ? null : arbList(r, 0, 4, () => arbitraryPhaseOverride(r)),
   );
 }
 
@@ -1146,7 +1200,7 @@ SeasonPlan arbitrarySeasonPlan(Random r) {
 /// Valeur aléatoire de [BlockIntent].
 BlockIntent arbitraryBlockIntent(Random r) {
   return BlockIntent(
-    phase: arbEnum(r, PhaseKind.values),
+    phase: arbEnum(r, SeasonPhaseKind.values),
     seasonPhaseIndex: r.nextBool() ? null : arbInt(r, 0, 1000),
     eventId: r.nextBool() ? null : arbString(r, 0, 12),
     weeksToEvent: r.nextBool() ? null : arbInt(r, 0, 104),
@@ -1172,6 +1226,7 @@ AttemptResult arbitraryAttemptResult(Random r) {
     index: arbInt(r, 0, 3),
     loadKg: arbDouble(r, -300.0, 1000.0),
     success: r.nextBool(),
+    failure: r.nextBool() ? null : arbEnum(r, AttemptFailure.values),
   );
 }
 
@@ -1185,6 +1240,15 @@ AttemptSuggestion arbitraryAttemptSuggestion(Random r) {
   );
 }
 
+/// Valeur aléatoire de [WarmupStep].
+WarmupStep arbitraryWarmupStep(Random r) {
+  return WarmupStep(
+    loadKg: arbDouble(r, -300.0, 1000.0),
+    reps: arbInt(r, 1, 50),
+    restSeconds: r.nextBool() ? null : arbInt(r, 0, 900),
+  );
+}
+
 /// Valeur aléatoire de [LiftAttempts].
 LiftAttempts arbitraryLiftAttempts(Random r) {
   return LiftAttempts(
@@ -1192,6 +1256,7 @@ LiftAttempts arbitraryLiftAttempts(Random r) {
     estimateKg: r.nextBool() ? null : arbDouble(r, -300.0, 1000.0),
     standardErrorKg: r.nextBool() ? null : arbDouble(r, 0.0, 2000.0),
     attempts: arbList(r, 0, 4, () => arbitraryAttemptSuggestion(r)),
+    warmup: r.nextBool() ? null : arbList(r, 0, 4, () => arbitraryWarmupStep(r)),
   );
 }
 
@@ -1202,6 +1267,8 @@ PacingSegment arbitraryPacingSegment(Random r) {
     setReps: arbList(r, 0, 4, () => arbInt(r, 0, 1000)),
     restSeconds: r.nextBool() ? null : arbInt(r, 0, 900),
     targetSeconds: r.nextBool() ? null : arbInt(r, 1, 14400),
+    stationIndex: r.nextBool() ? null : arbInt(r, 0, 39),
+    round: r.nextBool() ? null : arbInt(r, 0, 49),
   );
 }
 
@@ -1214,6 +1281,8 @@ EventDayRequest arbitraryEventDayRequest(Random r) {
     bodyWeightKg: r.nextBool() ? null : arbDouble(r, 25.0, 300.0),
     done: arbList(r, 0, 3, () => arbitraryAttemptResult(r)),
     healthCheck: r.nextBool() ? null : arbitraryHealthCheck(r),
+    objective: r.nextBool() ? null : arbEnum(r, EventObjective.values),
+    targetTotalKg: r.nextBool() ? null : arbDouble(r, 0.0, 5000.0),
   );
 }
 
@@ -1266,8 +1335,6 @@ SetTechnique arbitrarySetTechnique(Random r) {
     miniSets: r.nextBool() ? null : arbInt(r, 1, 20),
     miniSetReps: r.nextBool() ? null : arbInt(r, 1, 30),
     intraRestSeconds: r.nextBool() ? null : arbInt(r, 1, 120),
-    activationRepsLow: r.nextBool() ? null : arbInt(r, 1, 100),
-    activationRepsHigh: r.nextBool() ? null : arbInt(r, 1, 100),
     totalRepsTarget: r.nextBool() ? null : arbInt(r, 1, 1000),
     drops: r.nextBool() ? null : arbInt(r, 1, 6),
     dropPct: r.nextBool() ? null : arbDouble(r, 0.05, 0.6),
@@ -1281,7 +1348,6 @@ SetTechnique arbitrarySetTechnique(Random r) {
     durationSeconds: r.nextBool() ? null : arbInt(r, 10, 7200),
     intervalSeconds: r.nextBool() ? null : arbInt(r, 10, 900),
     intervals: r.nextBool() ? null : arbInt(r, 1, 120),
-    repsPerInterval: r.nextBool() ? null : arbInt(r, 1, 100),
     ladderStart: r.nextBool() ? null : arbInt(r, 1, 100),
     ladderStep: r.nextBool() ? null : arbInt(r, 1, 20),
     ladderTop: r.nextBool() ? null : arbInt(r, 1, 100),
@@ -1289,6 +1355,8 @@ SetTechnique arbitrarySetTechnique(Random r) {
     pyramidReps: r.nextBool() ? null : arbList(r, 2, 4, () => arbInt(r, 0, 1000)),
     qualityFloor: r.nextBool() ? null : arbInt(r, 1, 5),
     maxAttempts: r.nextBool() ? null : arbInt(r, 1, 30),
+    totalSecondsTarget: r.nextBool() ? null : arbInt(r, 1, 3600),
+    lastSetOnly: r.nextBool() ? null : r.nextBool(),
   );
 }
 
@@ -1296,11 +1364,11 @@ SetTechnique arbitrarySetTechnique(Random r) {
 IntensityTarget arbitraryIntensityTarget(Random r) {
   return IntensityTarget(
     basis: arbEnum(r, IntensityBasis.values),
-    value: r.nextBool() ? null : arbDouble(r, 0.0, 10.0),
-    valueHigh: r.nextBool() ? null : arbDouble(r, 0.0, 10.0),
+    value: arbDouble(r, 0.0, 15.0),
+    valueHigh: r.nextBool() ? null : arbDouble(r, 0.0, 15.0),
     referenceExerciseId: r.nextBool() ? null : arbId(r),
     referenceKind: r.nextBool() ? null : arbEnum(r, BenchmarkKind.values),
-    stepExerciseId: r.nextBool() ? null : arbId(r),
+    eventId: r.nextBool() ? null : arbString(r, 1, 12),
     rirCap: r.nextBool() ? null : arbDouble(r, 0.0, 10.0),
   );
 }
@@ -1315,6 +1383,43 @@ AutoregulationRule arbitraryAutoregulationRule(Random r) {
     minSets: r.nextBool() ? null : arbInt(r, 0, 20),
     maxSets: r.nextBool() ? null : arbInt(r, 1, 30),
     repDrop: r.nextBool() ? null : arbInt(r, 1, 50),
+    qualityFloor: r.nextBool() ? null : arbInt(r, 1, 5),
+  );
+}
+
+/// Valeur aléatoire de [GroupSpec].
+GroupSpec arbitraryGroupSpec(Random r) {
+  return GroupSpec(
+    groupId: arbString(r, 1, 12),
+    format: arbEnum(r, GroupFormat.values),
+    rounds: r.nextBool() ? null : arbInt(r, 1, 100),
+    durationSeconds: r.nextBool() ? null : arbInt(r, 10, 14400),
+    timeCapSeconds: r.nextBool() ? null : arbInt(r, 10, 14400),
+    intervalSeconds: r.nextBool() ? null : arbInt(r, 5, 3600),
+    restBetweenRoundsSeconds: r.nextBool() ? null : arbInt(r, 0, 3600),
+    targetSeconds: r.nextBool() ? null : arbInt(r, 1, 14400),
+    eventId: r.nextBool() ? null : arbString(r, 1, 12),
+  );
+}
+
+/// Valeur aléatoire de [GroupResult].
+GroupResult arbitraryGroupResult(Random r) {
+  return GroupResult(
+    groupId: arbString(r, 1, 12),
+    completed: r.nextBool(),
+    elapsedSeconds: r.nextBool() ? null : arbInt(r, 0, 86400),
+    rounds: r.nextBool() ? null : arbInt(r, 0, 1000),
+    extraReps: r.nextBool() ? null : arbInt(r, 0, 10000),
+  );
+}
+
+/// Valeur aléatoire de [SetPart].
+SetPart arbitrarySetPart(Random r) {
+  return SetPart(
+    reps: r.nextBool() ? null : arbInt(r, 0, 1000),
+    seconds: r.nextBool() ? null : arbInt(r, 0, 86400),
+    externalLoadKg: r.nextBool() ? null : arbDouble(r, -300.0, 1000.0),
+    restBeforeSeconds: r.nextBool() ? null : arbInt(r, 0, 3600),
   );
 }
 
@@ -1406,6 +1511,8 @@ final List<ContractCodec<Object>> contractCodecs = <ContractCodec<Object>>[
   ContractCodec<Pass2Request>('Pass2Request', arbitraryPass2Request, (v) => v.toJson(), Pass2Request.fromJson, (v) => v.validate()),
   ContractCodec<BlockProposal>('BlockProposal', arbitraryBlockProposal, (v) => v.toJson(), BlockProposal.fromJson, (v) => v.validate()),
   ContractCodec<OtherSport>('OtherSport', arbitraryOtherSport, (v) => v.toJson(), OtherSport.fromJson, (v) => v.validate()),
+  ContractCodec<RecentTraining>('RecentTraining', arbitraryRecentTraining, (v) => v.toJson(), RecentTraining.fromJson, (v) => v.validate()),
+  ContractCodec<EnduranceBase>('EnduranceBase', arbitraryEnduranceBase, (v) => v.toJson(), EnduranceBase.fromJson, (v) => v.validate()),
   ContractCodec<Benchmark>('Benchmark', arbitraryBenchmark, (v) => v.toJson(), Benchmark.fromJson, (v) => v.validate()),
   ContractCodec<WeakPoint>('WeakPoint', arbitraryWeakPoint, (v) => v.toJson(), WeakPoint.fromJson, (v) => v.validate()),
   ContractCodec<CompetitionLift>('CompetitionLift', arbitraryCompetitionLift, (v) => v.toJson(), CompetitionLift.fromJson, (v) => v.validate()),
@@ -1417,12 +1524,14 @@ final List<ContractCodec<Object>> contractCodecs = <ContractCodec<Object>>[
   ContractCodec<SkillStep>('SkillStep', arbitrarySkillStep, (v) => v.toJson(), SkillStep.fromJson, (v) => v.validate()),
   ContractCodec<SkillLadder>('SkillLadder', arbitrarySkillLadder, (v) => v.toJson(), SkillLadder.fromJson, (v) => v.validate()),
   ContractCodec<SkillProgress>('SkillProgress', arbitrarySkillProgress, (v) => v.toJson(), SkillProgress.fromJson, (v) => v.validate()),
+  ContractCodec<PhaseOverride>('PhaseOverride', arbitraryPhaseOverride, (v) => v.toJson(), PhaseOverride.fromJson, (v) => v.validate()),
   ContractCodec<SeasonPhase>('SeasonPhase', arbitrarySeasonPhase, (v) => v.toJson(), SeasonPhase.fromJson, (v) => v.validate()),
   ContractCodec<SeasonPlan>('SeasonPlan', arbitrarySeasonPlan, (v) => v.toJson(), SeasonPlan.fromJson, (v) => v.validate()),
   ContractCodec<BlockIntent>('BlockIntent', arbitraryBlockIntent, (v) => v.toJson(), BlockIntent.fromJson, (v) => v.validate()),
   ContractCodec<VolumeTolerance>('VolumeTolerance', arbitraryVolumeTolerance, (v) => v.toJson(), VolumeTolerance.fromJson, (v) => v.validate()),
   ContractCodec<AttemptResult>('AttemptResult', arbitraryAttemptResult, (v) => v.toJson(), AttemptResult.fromJson, (v) => v.validate()),
   ContractCodec<AttemptSuggestion>('AttemptSuggestion', arbitraryAttemptSuggestion, (v) => v.toJson(), AttemptSuggestion.fromJson, (v) => v.validate()),
+  ContractCodec<WarmupStep>('WarmupStep', arbitraryWarmupStep, (v) => v.toJson(), WarmupStep.fromJson, (v) => v.validate()),
   ContractCodec<LiftAttempts>('LiftAttempts', arbitraryLiftAttempts, (v) => v.toJson(), LiftAttempts.fromJson, (v) => v.validate()),
   ContractCodec<PacingSegment>('PacingSegment', arbitraryPacingSegment, (v) => v.toJson(), PacingSegment.fromJson, (v) => v.validate()),
   ContractCodec<EventDayRequest>('EventDayRequest', arbitraryEventDayRequest, (v) => v.toJson(), EventDayRequest.fromJson, (v) => v.validate()),
@@ -1432,6 +1541,9 @@ final List<ContractCodec<Object>> contractCodecs = <ContractCodec<Object>>[
   ContractCodec<SetTechnique>('SetTechnique', arbitrarySetTechnique, (v) => v.toJson(), SetTechnique.fromJson, (v) => v.validate()),
   ContractCodec<IntensityTarget>('IntensityTarget', arbitraryIntensityTarget, (v) => v.toJson(), IntensityTarget.fromJson, (v) => v.validate()),
   ContractCodec<AutoregulationRule>('AutoregulationRule', arbitraryAutoregulationRule, (v) => v.toJson(), AutoregulationRule.fromJson, (v) => v.validate()),
+  ContractCodec<GroupSpec>('GroupSpec', arbitraryGroupSpec, (v) => v.toJson(), GroupSpec.fromJson, (v) => v.validate()),
+  ContractCodec<GroupResult>('GroupResult', arbitraryGroupResult, (v) => v.toJson(), GroupResult.fromJson, (v) => v.validate()),
+  ContractCodec<SetPart>('SetPart', arbitrarySetPart, (v) => v.toJson(), SetPart.fromJson, (v) => v.validate()),
   ContractCodec<TestSpec>('TestSpec', arbitraryTestSpec, (v) => v.toJson(), TestSpec.fromJson, (v) => v.validate()),
 ];
 

@@ -1368,8 +1368,8 @@ enum BreakReason {
   }
 }
 
-/// Ancienneté d'entraînement régulier, sans compter les arrêts longs (0.4.0,
-/// ordre croissant).
+/// Ancienneté de pratique régulière de la discipline principale, sans compter
+/// les arrêts longs (0.4.0, ordre croissant).
 enum TrainingAge {
   under6Months('under_6_months'),
   months6To24('months_6_to_24'),
@@ -1393,12 +1393,17 @@ enum TrainingAge {
 }
 
 /// Interruption en cours au moment de répondre (0.4.0) : aucune (entraînement
-/// régulier), moins de 3 semaines, 3 à 10 semaines, plus de 10 semaines.
+/// régulier), entraînement allégé depuis quelques semaines, arrêt de moins de
+/// 3 semaines, de 3 à 10 semaines, de 10 semaines à 6 mois, de 6 mois à 2
+/// ans, de plus de 2 ans.
 enum TrainingGap {
   none('none'),
+  reduced('reduced'),
   under3Weeks('under_3_weeks'),
   weeks3To10('weeks_3_to_10'),
-  over10Weeks('over_10_weeks');
+  weeks10To26('weeks_10_to_26'),
+  months6To24('months_6_to_24'),
+  over2Years('over_2_years');
 
   const TrainingGap(this.code);
 
@@ -1413,6 +1418,150 @@ enum TrainingGap {
       }
     }
     throw FormatException('TrainingGap : code inconnu', code);
+  }
+}
+
+/// Séries dures par semaine sur un mouvement (à 3 répétitions ou moins de
+/// l'échec) (0.4.0, ordre croissant).
+enum HardSetsBand {
+  under5('under_5'),
+  sets5To9('sets_5_to_9'),
+  sets10To14('sets_10_to_14'),
+  sets15To20('sets_15_to_20'),
+  over20('over_20');
+
+  const HardSetsBand(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static HardSetsBand fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('HardSetsBand : code inconnu', code);
+  }
+}
+
+/// Ce que l'utilisateur fait en ce moment (0.4.0) : du volume, du lourd, il
+/// sort d'un pic ou d'une compétition, sans structure.
+enum CurrentPhase {
+  volume('volume'),
+  heavy('heavy'),
+  postPeak('post_peak'),
+  unstructured('unstructured');
+
+  const CurrentPhase(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static CurrentPhase fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('CurrentPhase : code inconnu', code);
+  }
+}
+
+/// Ce que l'utilisateur cherche surtout en musculation (0.4.0) : du muscle,
+/// de la force, les deux.
+enum TrainingEmphasis {
+  muscle('muscle'),
+  strength('strength'),
+  both('both');
+
+  const TrainingEmphasis(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static TrainingEmphasis fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('TrainingEmphasis : code inconnu', code);
+  }
+}
+
+/// Distance courue par semaine, en moyenne sur les 4 dernières semaines
+/// (0.4.0, ordre croissant).
+enum RunVolumeBand {
+  none('none'),
+  under10Km('under_10_km'),
+  km10To20('km_10_to_20'),
+  km20To35('km_20_to_35'),
+  km35To50('km_35_to_50'),
+  over50Km('over_50_km');
+
+  const RunVolumeBand(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static RunVolumeBand fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('RunVolumeBand : code inconnu', code);
+  }
+}
+
+/// Durée de la plus longue sortie récente (0.4.0, ordre croissant).
+enum LongRunBand {
+  under30Min('under_30_min'),
+  min30To60('min_30_to_60'),
+  min60To90('min_60_to_90'),
+  over90Min('over_90_min');
+
+  const LongRunBand(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static LongRunBand fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('LongRunBand : code inconnu', code);
+  }
+}
+
+/// Temps passé à l'étape actuelle d'une figure (0.4.0, ordre croissant).
+enum StepTenure {
+  under1Month('under_1_month'),
+  months1To3('months_1_to_3'),
+  months3To6('months_3_to_6'),
+  over6Months('over_6_months');
+
+  const StepTenure(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static StepTenure fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('StepTenure : code inconnu', code);
   }
 }
 
@@ -1589,10 +1738,12 @@ enum ConstraintSince {
 }
 
 /// Famille de mouvements qui réveille une gêne (0.4.0) : tirage bras fléchis
-/// ; suspension ou tirage bras tendus ; poussée en appui (dips, pompes) ;
-/// appui bras tendus (planche, équilibre) ; au-dessus de la tête ; flexion de
-/// genou (squat, fente) ; charnière de hanche ; prise ou poignet en extension
-/// ; anneaux ; course ou sauts.
+/// ; suspension ou tirage bras tendus ; poussée en appui (pompes, haut du
+/// dips) ; appui bras tendus (planche, équilibre) ; au-dessus de la tête ;
+/// flexion de genou (squat, fente) ; charnière de hanche ; prise ou poignet
+/// en extension ; anneaux ; course ou sauts ; épaule en extension profonde
+/// (bas du dips, transition du muscle-up, back lever) ; charge sur le dos
+/// (barre lourde) ; coude tendu à fond sous charge ; tirage explosif.
 enum AggravatingMovement {
   pullBentArm('pull_bent_arm'),
   hangStraightArm('hang_straight_arm'),
@@ -1603,7 +1754,11 @@ enum AggravatingMovement {
   hipHinge('hip_hinge'),
   wristExtensionGrip('wrist_extension_grip'),
   rings('rings'),
-  runningJumping('running_jumping');
+  runningJumping('running_jumping'),
+  deepShoulderExtension('deep_shoulder_extension'),
+  axialLoading('axial_loading'),
+  elbowLockout('elbow_lockout'),
+  explosivePull('explosive_pull');
 
   const AggravatingMovement(this.code);
 
@@ -1623,13 +1778,14 @@ enum AggravatingMovement {
 
 /// Nature d'un test ou d'un record (0.4.0) : charge × répétitions (1
 /// répétition = maximum), répétitions max, maintien max, temps sur une
-/// distance, distance en une durée.
+/// distance, distance en une durée, volume imposé au meilleur temps.
 enum BenchmarkKind {
   loadReps('load_reps'),
   maxReps('max_reps'),
   maxHold('max_hold'),
   timeTrial('time_trial'),
-  distanceTrial('distance_trial');
+  distanceTrial('distance_trial'),
+  repsForTime('reps_for_time');
 
   const BenchmarkKind(this.code);
 
@@ -1827,7 +1983,7 @@ enum MaintenancePolicy {
 /// Technique de série (0.4.0) : normale, série de tête puis séries allégées,
 /// clusters, rest-pause, myo-reps, dégressive, isométrie ou maintien,
 /// excentrique accentuée, contraste, vagues, AMRAP, EMOM, densité, échelle,
-/// pyramide, pratique de figure.
+/// pyramide, pratique de figure, volume imposé au meilleur temps.
 enum SetTechniqueKind {
   standard('standard'),
   topSetBackoff('top_set_backoff'),
@@ -1844,7 +2000,8 @@ enum SetTechniqueKind {
   density('density'),
   ladder('ladder'),
   pyramid('pyramid'),
-  skillPractice('skill_practice');
+  skillPractice('skill_practice'),
+  forTime('for_time');
 
   const SetTechniqueKind(this.code);
 
@@ -1863,18 +2020,18 @@ enum SetTechniqueKind {
 }
 
 /// Rôle d'une série dans une technique (0.4.0) : normale, série de tête,
-/// série allégée, série d'activation, mini-série, palier de dégressive,
-/// palier de vague, test, tentative de compétition.
+/// série allégée, palier de vague, test, tentative de compétition, montée
+/// d'échauffement, marche d'échelle ou de pyramide, intervalle.
 enum SetRole {
   straight('straight'),
   top('top'),
   backOff('back_off'),
-  activation('activation'),
-  mini('mini'),
-  drop('drop'),
   wave('wave'),
   test('test'),
-  attempt('attempt');
+  attempt('attempt'),
+  warmup('warmup'),
+  rung('rung'),
+  interval('interval');
 
   const SetRole(this.code);
 
@@ -1893,17 +2050,16 @@ enum SetRole {
 }
 
 /// Ce que désigne une intensité (0.4.0) : part du 1RM de charge totale ; part
-/// d'un test de référence ; répétitions en réserve ; part du maintien max ;
-/// étape d'une progression de figure ; part d'une vitesse de référence ; part
-/// de la fréquence cardiaque maximale.
+/// d'un test de référence (répétitions max, maintien max…) ; répétitions en
+/// réserve ; part d'une vitesse de référence ; lest en part du poids de corps
+/// ; vitesse en mètres par seconde.
 enum IntensityBasis {
   percentOneRm('percent_one_rm'),
   percentBenchmark('percent_benchmark'),
   rir('rir'),
-  holdFraction('hold_fraction'),
-  progressionStep('progression_step'),
   speedFraction('speed_fraction'),
-  heartRateFraction('heart_rate_fraction');
+  bodyweightFraction('bodyweight_fraction'),
+  absoluteSpeed('absolute_speed');
 
   const IntensityBasis(this.code);
 
@@ -1925,14 +2081,16 @@ enum IntensityBasis {
 /// allégées calculées sur la série de tête RÉALISÉE ; charge corrigée quand
 /// le RIR sort de sa plage ; arrêt des séries quand le RIR passe sous un
 /// plancher ; arrêt quand les répétitions chutent ; durée de maintien tirée
-/// du meilleur maintien du jour ; dernière série ouverte.
+/// du meilleur maintien du jour ; dernière série ouverte ; arrêt quand la
+/// propreté passe sous un plancher.
 enum AutoregulationKind {
   backoffFromTopSet('backoff_from_top_set'),
   loadFromRir('load_from_rir'),
   stopAtRir('stop_at_rir'),
   stopOnRepDrop('stop_on_rep_drop'),
   holdFromBest('hold_from_best'),
-  lastSetAmrap('last_set_amrap');
+  lastSetAmrap('last_set_amrap'),
+  stopOnQualityDrop('stop_on_quality_drop');
 
   const AutoregulationKind(this.code);
 
@@ -1947,6 +2105,104 @@ enum AutoregulationKind {
       }
     }
     throw FormatException('AutoregulationKind : code inconnu', code);
+  }
+}
+
+/// Nature de la récupération entre deux séries ou deux répétitions de course
+/// (0.4.0) : arrêt, marche, trot.
+enum RestMode {
+  passive('passive'),
+  walk('walk'),
+  jog('jog');
+
+  const RestMode(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static RestMode fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('RestMode : code inconnu', code);
+  }
+}
+
+/// Format d'un groupe d'exercices enchaînés (0.4.0) : superset, circuit
+/// (tours, repos entre les tours), tours au meilleur temps, maximum de tours
+/// en un temps, un passage par intervalle, suite imposée faite une fois au
+/// meilleur temps, intervalles (effort, récupération).
+enum GroupFormat {
+  superset('superset'),
+  circuit('circuit'),
+  roundsForTime('rounds_for_time'),
+  amrap('amrap'),
+  emom('emom'),
+  chipper('chipper'),
+  intervals('intervals');
+
+  const GroupFormat(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static GroupFormat fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('GroupFormat : code inconnu', code);
+  }
+}
+
+/// Cause d'une tentative manquée (0.4.0) : force, technique, décision
+/// d'arbitre.
+enum AttemptFailure {
+  strength('strength'),
+  technique('technique'),
+  judging('judging');
+
+  const AttemptFailure(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static AttemptFailure fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('AttemptFailure : code inconnu', code);
+  }
+}
+
+/// Objectif du jour d'une compétition de force (0.4.0) : assurer un total,
+/// viser le plus gros total, tenter un record.
+enum EventObjective {
+  secureTotal('secure_total'),
+  maxTotal('max_total'),
+  record('record');
+
+  const EventObjective(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static EventObjective fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('EventObjective : code inconnu', code);
   }
 }
 
@@ -1980,8 +2236,9 @@ enum TestKind {
   }
 }
 
-/// Phase d'un plan de saison (0.4.0).
-enum PhaseKind {
+/// Phase d'un plan de saison (0.4.0) ; `reintroduction` : reprise progressive
+/// après une coupure.
+enum SeasonPhaseKind {
   accumulation('accumulation'),
   intensification('intensification'),
   realization('realization'),
@@ -1989,21 +2246,23 @@ enum PhaseKind {
   competition('competition'),
   transition('transition'),
   test('test'),
-  deload('deload');
+  deload('deload'),
+  maintenance('maintenance'),
+  reintroduction('reintroduction');
 
-  const PhaseKind(this.code);
+  const SeasonPhaseKind(this.code);
 
   /// Code stable utilisé dans le JSON.
   final String code;
 
   /// Valeur d'un code ; [FormatException] si le code est inconnu.
-  static PhaseKind fromCode(String code) {
+  static SeasonPhaseKind fromCode(String code) {
     for (final v in values) {
       if (v.code == code) {
         return v;
       }
     }
-    throw FormatException('PhaseKind : code inconnu', code);
+    throw FormatException('SeasonPhaseKind : code inconnu', code);
   }
 }
 

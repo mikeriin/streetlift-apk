@@ -82,33 +82,93 @@ pour les tests d'intégration et le simulateur du mode dev.
 
 Récupère le paquet : `git fetch origin 'refs/heads/etiquettes/*:refs/remotes/origin/etiquettes/*'` puis
 `git checkout origin/etiquettes/kalis_core-v0.4.0 -- packages/kalis_core`. `kalis_plan` 0.1.0, `kalis_adapt`
-0.1.0 et `kalis_quest` 0.1.0 fonctionnent sans changement avec 0.4.0 (aucune valeur d'enum ajoutée aux
-énumérations existantes : aucun `switch` de l'application n'est à compléter).
+0.1.0 et `kalis_quest` 0.1.0 n'ont pas à changer avec 0.4.0 (aucune valeur d'enum ajoutée aux
+énumérations d'avant 0.4.0 : aucun `switch` existant de l'application n'est à compléter).
 
+- **Énumérations de 0.4.0 : toujours un cas par défaut.** Elles sont ouvertes (CONTRAT.md § 1) : une
+  version mineure pourra leur ajouter des valeurs. Un `switch` sur `SetTechniqueKind`, `SeasonPhaseKind`,
+  `GroupFormat`… porte donc un `default` (ou un `_ =>`).
+- **Nom à connaître** : la phase de saison s'appelle `SeasonPhaseKind`, pas `PhaseKind` (l'application a
+  déjà un `PhaseKind`).
 - **Tout est dans [`docs/PARCOURS_V3.md`](docs/PARCOURS_V3.md)** : écrans, ordre, textes, réponses,
-  validations, conditions d'apparition, tests guidés, utilisateurs existants.
-- **Parcours** : déclare l'asset `packages/kalis_core/data/parcours_v3.json`, puis
-  `final parcours = ProfileQuestionnaire.fromJson(jsonDecode(texte) as Map<String, Object?>);`. Après
-  chaque réponse : `parcours.visibleQuestions(brouillonJson, todayYear: annee)` rend les questions à
-  montrer, dans l'ordre (`since: 3` pour « Compléter mon profil »). Le brouillon est le JSON du profil en
-  cours de saisie (il peut être incomplet). L'application ne code aucune condition.
+  validations, conditions d'apparition, questions reportées, tests guidés, utilisateurs existants.
+- **Parcours** : déclare l'asset `packages/kalis_core/data/parcours_v3.json`, puis lis-le une fois. Le
+  brouillon est le JSON du profil en cours de saisie (il peut être incomplet). L'application ne code
+  aucune condition : elle redemande la liste après chaque réponse.
+
+  ```dart
+  final parcours = ProfileQuestionnaire.fromJson(jsonDecode(texte) as Map<String, Object?>);
+
+  // Création du profil : les questions reportées ne sont pas rendues.
+  final List<ProfileQuestion> aPoser = parcours.visibleQuestions(brouillonJson, todayYear: annee);
+
+  // Réponse obligatoire pour ce profil ? (`required`, ou `requiredWhen` vraie :
+  // le poids de corps pour les disciplines au poids du corps).
+  final bool obligatoire = parcours.isRequired(aPoser.first, brouillonJson, todayYear: annee);
+  ```
+
+- **Questions reportées** : une question dont la condition `deferWhen` est vraie n'est pas posée à la
+  création ; propose-la après la première semaine (carte discrète de Koach, une fois). Un débutant ne
+  voit ainsi aucune question du schéma 3 à la création.
+
+  ```dart
+  final Map<String, Object?> profilJson = profile.toJson();
+
+  // Après la première semaine : les questions reportées pour ce profil.
+  final List<ProfileQuestion> reportees = parcours.deferredQuestions(profilJson, todayYear: annee);
+
+  // « Compléter mon profil » d'un utilisateur existant : les questions du schéma 3, reportées comprises.
+  final List<ProfileQuestion> aCompleter =
+      parcours.visibleQuestions(profilJson, todayYear: annee, since: 3, includeDeferred: true);
+
+  // Réglages › Profil : tout le parcours visible, reportées comprises.
+  final List<ProfileQuestion> toutes =
+      parcours.visibleQuestions(profilJson, todayYear: annee, includeDeferred: true);
+
+  // Une question donnée est-elle reportée pour ce profil ?
+  final bool plusTard = parcours.isDeferred(toutes.first, profilJson, todayYear: annee);
+  ```
+
+  `visibleQuestions` prend `since` (2 par défaut : tout le parcours ; 3 : les seules questions du
+  schéma 3) et `includeDeferred` (`false` par défaut). `deferredQuestions` ne prend que le profil et
+  `todayYear`.
 - **Écrire une réponse** : par `copyWith` sur le profil (les champs du schéma 3 sont optionnels) ;
-  « Passer » et « Je ne sais pas » laissent le champ absent ; « aucun autre sport » s'écrit
-  `otherSports: const []` ; « aucune échéance », `events: const []`.
+  « Passer » et « Je ne sais pas » laissent le champ absent. « Aucun autre sport » et « aucune échéance »
+  s'écrivent par une **liste constante typée** :
+
+  ```dart
+  profile = profile.copyWith(otherSports: const <OtherSport>[]);
+  profile = profile.copyWith(events: const <SeasonEvent>[]);
+  ```
+
+  Un `const []` non typé est une `List<dynamic>` : `copyWith` le transtype en `List<OtherSport>?` et
+  lève une erreur de transtypage à l'exécution. La règle vaut pour toute liste passée à `copyWith`
+  (`const <Benchmark>[]`, `const <SkillState>[]`…).
 - **Utilisateurs existants** : `profile.toSchema3()` (seul `schemaVersion` change). Le programme en
   cours n'est pas régénéré ; le programme importé du propriétaire ne l'est jamais (D5.10).
+- **Ne migrer qu'après la mise à jour** : une application restée en `kalis_core` 0.3.0 **refuse un
+  profil au schéma 3** (`validate()` rend une violation sur `schemaVersion`). Ne passe un profil au
+  schéma 3 qu'une fois l'application livrée avec `kalis_core` 0.4.0 ; une sauvegarde au schéma 3 ne se
+  relit pas sur une version antérieure. Attention : `AthleteProfile()` construit sans `schemaVersion`
+  écrit déjà le schéma 3.
 - **Avant d'enregistrer** : `profile.validate()` et `catalog.checkProfile(profile)` vides.
 - **Figures** : `catalog.progressionCandidates(figureId)` donne les étapes à proposer pour « Où en
-  es-tu ? ».
-- **Tests guidés** : `parcours.eligibleTests(profilJson, todayYear: annee)` ; un résultat s'écrit comme
-  un `Benchmark` (`source: BenchmarkSource.guidedTest`, `protocolId`) ajouté à `profile.benchmarks`.
+  es-tu ? ». Ce n'est qu'une aide à la saisie : l'étape choisie n'est pas contrôlée par le catalogue.
+- **Tests guidés** : `parcours.eligibleTests(profilJson, todayYear: annee)` (10 protocoles, `t1` à `t10` ;
+  un débutant n'a que `t8_sans_test`) ; un résultat s'écrit comme un `Benchmark`
+  (`source: BenchmarkSource.guidedTest`, `protocolId`) ajouté à `profile.benchmarks`. Plusieurs records
+  peuvent porter sur le même exercice.
   Conversions : `estimateOneRm(loadKg: chargeTotale, reps: r, rir: reserve)` puis
   `externalFromTotal(...)` pour un exercice lesté (la fraction du poids du corps est
   `CatalogExercise.bodyweightFraction`) ; `riegelSeconds(...)`, `trialSpeed(...)` pour la course.
-  Affiche toujours la fourchette (`lowKg` à `highKg`), pas une valeur seule.
+  `estimateOneRm` et `riegelSeconds` rendent `null` hors de leur domaine. Affiche toujours la fourchette
+  (`lowKg` à `highKg`), pas une valeur seule.
+- **Journal** : une série reste une `SetRecord`, même découpée ; les mini-séries et les paliers vont dans
+  `SetRecord.parts` (CONTRAT.md § 12). Les moteurs 0.1 n'émettent aucune technique avancée.
 - **Tests à écrire dans l'application** : nombre de questions vues pour chaque profil de
-  `test/fixtures/profiles_v3.json` (`expected.questionIds`), chaque condition d'apparition, migration du
-  schéma 2 vers le schéma 3, aller-retour de sauvegarde, création d'un programme avec les moteurs actuels
-  pour chaque profil type.
-- **Textes de Koach des nouveaux codes de raison** : `docs/RAISONS_0_4.md` (utiles au lot CI ; les
-  moteurs 0.1 ne les émettent pas).
+  `test/fixtures/profiles_v3.json` (`expected.questionIds` à la création, `expected.deferredIds` pour les
+  questions reportées, `expected.testIds` pour les tests guidés), chaque condition d'apparition,
+  migration du schéma 2 vers le schéma 3, aller-retour de sauvegarde, création d'un programme avec les
+  moteurs actuels pour chaque profil type.
+- **Textes de Koach des nouveaux codes de raison** : `docs/RAISONS_0_4.md` (38 textes, utiles au lot CI ;
+  les moteurs 0.1 ne les émettent pas).

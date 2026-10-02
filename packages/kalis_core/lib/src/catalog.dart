@@ -669,30 +669,17 @@ final class Catalog {
   }
 
   /// Violations d'un profil au regard du catalogue : exercices et matériel
-  /// inconnus (en plus de `profile.validate()`). Schéma 3 (0.4.0) : l'étape
-  /// actuelle d'une figure appartient à la progression de la figure visée
-  /// ([progressionCandidates]) ; le groupe musculaire d'une spécialisation
-  /// est dans le vocabulaire `muscles`.
+  /// inconnus (en plus de `profile.validate()`). Schéma 3 (0.4.0) : le
+  /// groupe musculaire d'une spécialisation est dans le vocabulaire
+  /// `muscles`. L'étape actuelle d'une figure n'est pas contrôlée : une
+  /// échelle (`SkillLadder`) peut passer par un exercice d'une autre famille.
   List<Violation> checkProfile(AthleteProfile profile) {
     final ids = <String>{};
     profile.collectExerciseIds(ids);
-    final skills = profile.skills ?? const <SkillState>[];
     final muscle = profile.specialization?.muscle;
     return <Violation>[
       ...checkExerciseIds(ids),
       ...checkEquipment(profile.equipment),
-      for (var i = 0; i < skills.length; i++)
-        if (contains(skills[i].targetExerciseId) &&
-            contains(skills[i].currentExerciseId) &&
-            !isProgressionStep(
-              skills[i].currentExerciseId,
-              skills[i].targetExerciseId,
-            ))
-          Violation(
-            '\$.skills[$i].currentExerciseId',
-            'skill_step_outside_progression',
-            skills[i].currentExerciseId,
-          ),
       if (muscle != null && !muscles.contains(muscle))
         Violation(r'$.specialization.muscle', 'unknown_muscle', muscle),
     ];

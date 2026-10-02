@@ -81,6 +81,23 @@
    "meaning": "Étape de la progression d'une figure."
   },
   {
+   "code": "plan.skill_plateau",
+   "fr": "Tu es à cette étape depuis longtemps : je change d'approche sur cette figure.",
+   "params": [
+    "exerciseId"
+   ],
+   "meaning": "Figure bloquée à la même étape depuis longtemps : la méthode change (autre variante, autre dosage)."
+  },
+  {
+   "code": "plan.recent_load",
+   "fr": "Premier bloc calé sur ce que tu fais en ce moment : ni trop facile, ni marche trop haute.",
+   "params": [
+    "exerciseId",
+    "sessions"
+   ],
+   "meaning": "Premier bloc calé sur la charge d'entraînement actuelle déclarée."
+  },
+  {
    "code": "plan.test_scheduled",
    "fr": "Un test est prévu : il me dira où tu en es vraiment.",
    "params": [

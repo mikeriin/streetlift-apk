@@ -156,8 +156,18 @@ extension AthleteProfileSchema on AthleteProfile {
       if (skills != null) 'skills',
       if (weakPoints != null) 'weakPoints',
       if (specialization != null) 'specialization',
+      if (recentTraining != null) 'recentTraining',
+      if (currentPhase != null) 'currentPhase',
+      if (emphasis != null) 'emphasis',
+      if (enduranceBase != null) 'enduranceBase',
+      if (targetBodyWeightKg != null) 'targetBodyWeightKg',
       if (lifestyleUpdatedOn != null) 'lifestyleUpdatedOn',
-      if (limitations.any((l) => l.since != null || l.aggravatedBy != null))
+      if (limitations.any(
+        (l) =>
+            l.since != null ||
+            l.aggravatedBy != null ||
+            l.effortDiscomfort != null,
+      ))
         'limitations',
     ];
   }

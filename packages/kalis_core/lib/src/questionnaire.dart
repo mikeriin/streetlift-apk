@@ -19,7 +19,8 @@ final class QuestionOption {
   /// Réponse de code [code], affichée [label].
   const QuestionOption(this.code, this.label, this.hint);
 
-  /// Code écrit dans le profil (code d'enum du contrat).
+  /// Code de la réponse : le code d'enum écrit dans le profil, sauf pour une
+  /// question `composite`, dont la note dit ce que chaque réponse écrit.
   final String code;
 
   /// Texte affiché.
@@ -42,6 +43,8 @@ final class ProfileQuestion {
       skip = jsonBool(json, 'skip'),
       unknown = jsonBool(json, 'unknown'),
       when = jsonObject(json, 'when'),
+      deferWhen = jsonObjectOrNull(json, 'deferWhen'),
+      requiredWhen = jsonObjectOrNull(json, 'requiredWhen'),
       options =
           jsonListOrNull(json, 'options', (v) {
             final o = jsonAsObject(v, 'options');
@@ -89,6 +92,15 @@ final class ProfileQuestion {
   /// Condition d'apparition.
   final Map<String, Object?> when;
 
+  /// Condition de report, ou `null` : quand elle est vraie, la question
+  /// n'est pas posée à la création du profil mais proposée plus tard (après
+  /// la première semaine), par « Compléter mon profil ».
+  final Map<String, Object?>? deferWhen;
+
+  /// Condition qui rend la réponse obligatoire, ou `null` (une question
+  /// [required] l'est toujours).
+  final Map<String, Object?>? requiredWhen;
+
   /// Réponses possibles (vide pour les autres formes).
   final List<QuestionOption> options;
 }
@@ -101,6 +113,7 @@ final class GuidedTest {
       stage = jsonString(json, 'stage'),
       benchmarkKind = jsonStringOrNull(json, 'benchmarkKind'),
       testKind = jsonStringOrNull(json, 'testKind'),
+      requires = jsonString(json, 'requires'),
       eligible = jsonObject(json, 'eligible');
 
   /// Objet JSON complet (pour qui, sécurité, déroulé, arrêt, conversion,
@@ -122,7 +135,12 @@ final class GuidedTest {
   /// Code de `TestKind` de la série de test, ou `null` (aucun test).
   final String? testKind;
 
-  /// Condition pour proposer le test.
+  /// Prérequis par mouvement, en clair (niveau ou record déclaré, matériel) :
+  /// [eligible] dit si le test est permis pour le profil ; c'est ce prérequis
+  /// qui dit s'il peut être proposé pour un mouvement donné.
+  final String requires;
+
+  /// Condition pour que le test soit permis pour un profil.
   final Map<String, Object?> eligible;
 }
 
@@ -162,6 +180,14 @@ final class ProfileQuestionnaire {
     );
     for (final q in questions) {
       _checkCondition(q.when, scales);
+      final deferWhen = q.deferWhen;
+      if (deferWhen != null) {
+        _checkCondition(deferWhen, scales);
+      }
+      final requiredWhen = q.requiredWhen;
+      if (requiredWhen != null) {
+        _checkCondition(requiredWhen, scales);
+      }
     }
     for (final t in tests) {
       _checkCondition(t.eligible, scales);
@@ -219,17 +245,62 @@ final class ProfileQuestionnaire {
   ///
   /// [todayYear] : année du jour, fournie par l'application. [since] : 2
   /// pour tout le parcours, 3 pour les seules questions du schéma 3
-  /// (« Compléter mon profil » d'un utilisateur existant).
+  /// (« Compléter mon profil » d'un utilisateur existant). [includeDeferred] :
+  /// `false` à la création du profil (les questions reportées n'y sont pas
+  /// posées), `true` pour « Compléter mon profil » et pour l'édition.
   List<ProfileQuestion> visibleQuestions(
     Map<String, Object?> profile, {
     required int todayYear,
     int since = 2,
+    bool includeDeferred = false,
   }) {
     return <ProfileQuestion>[
       for (final q in questions)
-        if (q.since >= since && evaluate(q.when, profile, todayYear: todayYear))
+        if (q.since >= since &&
+            evaluate(q.when, profile, todayYear: todayYear) &&
+            (includeDeferred || !isDeferred(q, profile, todayYear: todayYear)))
           q,
     ];
+  }
+
+  /// Questions reportées pour le profil [profile] : visibles, mais à poser
+  /// après la première semaine plutôt qu'à la création.
+  List<ProfileQuestion> deferredQuestions(
+    Map<String, Object?> profile, {
+    required int todayYear,
+  }) {
+    return <ProfileQuestion>[
+      for (final q in questions)
+        if (evaluate(q.when, profile, todayYear: todayYear) &&
+            isDeferred(q, profile, todayYear: todayYear))
+          q,
+    ];
+  }
+
+  /// Vrai si la question [question] est reportée pour le profil [profile].
+  bool isDeferred(
+    ProfileQuestion question,
+    Map<String, Object?> profile, {
+    required int todayYear,
+  }) {
+    final condition = question.deferWhen;
+    return condition != null &&
+        evaluate(condition, profile, todayYear: todayYear);
+  }
+
+  /// Vrai si la réponse à [question] est obligatoire pour le profil
+  /// [profile].
+  bool isRequired(
+    ProfileQuestion question,
+    Map<String, Object?> profile, {
+    required int todayYear,
+  }) {
+    if (question.required) {
+      return true;
+    }
+    final condition = question.requiredWhen;
+    return condition != null &&
+        evaluate(condition, profile, todayYear: todayYear);
   }
 
   /// Tests guidés permis pour le profil [profile].
@@ -284,8 +355,16 @@ final class ProfileQuestionnaire {
         }
         return false;
       case 'at_least':
-        final scale = scales[jsonString(condition, 'scale')]!;
-        final rank = scale.indexOf(jsonString(condition, 'value'));
+        final scaleName = jsonString(condition, 'scale');
+        final scale = scales[scaleName];
+        if (scale == null) {
+          throw FormatException('Parcours : échelle inconnue', scaleName);
+        }
+        final floor = jsonString(condition, 'value');
+        final rank = scale.indexOf(floor);
+        if (rank < 0) {
+          throw FormatException('Parcours : valeur hors échelle', floor);
+        }
         for (final v in _valuesAt(profile, jsonString(condition, 'path'))) {
           if (v is String && scale.contains(v) && scale.indexOf(v) >= rank) {
             return true;
@@ -368,9 +447,13 @@ final class ProfileQuestionnaire {
         jsonList(condition, 'values', (v) => v);
       case 'at_least':
         jsonString(condition, 'path');
-        final scale = scales[jsonString(condition, 'scale')];
+        final scaleName = jsonString(condition, 'scale');
+        final scale = scales[scaleName];
         if (scale == null || !scale.contains(jsonString(condition, 'value'))) {
-          throw FormatException('Parcours : échelle ou valeur inconnue', op);
+          throw FormatException(
+            'Parcours : échelle ou valeur inconnue',
+            scaleName,
+          );
         }
       case 'min_number':
         jsonString(condition, 'path');

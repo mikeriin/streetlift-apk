@@ -761,6 +761,7 @@ final class Limitation {
     required this.discomfort,
     this.since,
     this.aggravatedBy,
+    this.effortDiscomfort,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -773,6 +774,7 @@ final class Limitation {
       discomfort: jsonInt(json, 'discomfort'),
       since: jsonEnumOrNull(json, 'since', ConstraintSince.fromCode),
       aggravatedBy: jsonListOrNull(json, 'aggravatedBy', (v) => AggravatingMovement.fromCode(jsonAsString(v, 'aggravatedBy'))),
+      effortDiscomfort: jsonIntOrNull(json, 'effortDiscomfort'),
     );
   }
 
@@ -795,6 +797,10 @@ final class Limitation {
   /// Familles de mouvements qui la réveillent (0.4.0).
   final List<AggravatingMovement>? aggravatedBy;
 
+  /// Gêne au plus fort pendant l'effort, de 0 à 10 (0.4.0) ; `discomfort` reste
+  /// la gêne du moment.
+  final int? effortDiscomfort;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -804,6 +810,7 @@ final class Limitation {
       'discomfort': discomfort,
       if (since case final v?) 'since': v.code,
       if (aggravatedBy case final v?) 'aggravatedBy': [for (final e in v) e.code],
+      if (effortDiscomfort case final v?) 'effortDiscomfort': v,
     };
   }
 
@@ -815,6 +822,7 @@ final class Limitation {
     int? discomfort,
     Object? since = unset,
     Object? aggravatedBy = unset,
+    Object? effortDiscomfort = unset,
   }) {
     return Limitation(
       zone: zone ?? this.zone,
@@ -823,6 +831,7 @@ final class Limitation {
       discomfort: discomfort ?? this.discomfort,
       since: identical(since, unset) ? this.since : since as ConstraintSince?,
       aggravatedBy: identical(aggravatedBy, unset) ? this.aggravatedBy : aggravatedBy as List<AggravatingMovement>?,
+      effortDiscomfort: identical(effortDiscomfort, unset) ? this.effortDiscomfort : effortDiscomfort as int?,
     );
   }
 
@@ -836,7 +845,8 @@ final class Limitation {
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
     checkRange(out, '$path.discomfort', discomfort, 0, 10);
-    if (aggravatedBy case final v?) { checkLength(out, '$path.aggravatedBy', v.length, null, 10); }
+    if (aggravatedBy case final v?) { checkLength(out, '$path.aggravatedBy', v.length, null, 14); }
+    if (effortDiscomfort case final v?) { checkRange(out, '$path.effortDiscomfort', v, 0, 10); }
     _validateLimitation(this, path, out);
   }
 
@@ -846,11 +856,11 @@ final class Limitation {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is Limitation && zone == other.zone && side == other.side && joint == other.joint && discomfort == other.discomfort && since == other.since && jsonDeepEquals(aggravatedBy, other.aggravatedBy);
+    return identical(this, other) || other is Limitation && zone == other.zone && side == other.side && joint == other.joint && discomfort == other.discomfort && since == other.since && jsonDeepEquals(aggravatedBy, other.aggravatedBy) && effortDiscomfort == other.effortDiscomfort;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[zone, side, joint, discomfort, since, jsonDeepHash(aggravatedBy)]);
+  int get hashCode => Object.hashAll(<Object?>[zone, side, joint, discomfort, since, jsonDeepHash(aggravatedBy), effortDiscomfort]);
 
   @override
   String toString() => 'Limitation(${toJson()})';
@@ -947,7 +957,10 @@ final class HealthScreeningRef {
 /// pas su = ∅.
 /// Invariant : Un champ du schéma 3 renseigné ⇒ `schemaVersion` ≥ 3 ;
 /// identifiants d'`events` distincts ; figures visées de `skills` distinctes
-/// ; un seul test par (exercice, nature, origine, jour) dans `benchmarks`.
+/// ; mouvements de `recentTraining` distincts ; les `goalIds` d'une échéance
+/// sont des objectifs du profil ; `targetBodyWeightKg` seulement avec
+/// `bodyWeightGoal` `lose` ou `gain` ; `weakPoints` distincts (mouvement et
+/// nature) ; `lifestyleUpdatedOn` ≥ `createdOn`.
 final class AthleteProfile {
   const AthleteProfile({
     this.schemaVersion = currentSchemaVersion,
@@ -987,6 +1000,11 @@ final class AthleteProfile {
     this.skills,
     this.weakPoints,
     this.specialization,
+    this.recentTraining,
+    this.currentPhase,
+    this.emphasis,
+    this.enduranceBase,
+    this.targetBodyWeightKg,
     this.lifestyleUpdatedOn,
   });
 
@@ -1031,6 +1049,11 @@ final class AthleteProfile {
       skills: jsonListOrNull(json, 'skills', (v) => SkillState.fromJson(jsonAsObject(v, 'skills'))),
       weakPoints: jsonListOrNull(json, 'weakPoints', (v) => WeakPoint.fromJson(jsonAsObject(v, 'weakPoints'))),
       specialization: jsonObjOrNull(json, 'specialization', Specialization.fromJson),
+      recentTraining: jsonListOrNull(json, 'recentTraining', (v) => RecentTraining.fromJson(jsonAsObject(v, 'recentTraining'))),
+      currentPhase: jsonEnumOrNull(json, 'currentPhase', CurrentPhase.fromCode),
+      emphasis: jsonEnumOrNull(json, 'emphasis', TrainingEmphasis.fromCode),
+      enduranceBase: jsonObjOrNull(json, 'enduranceBase', EnduranceBase.fromJson),
+      targetBodyWeightKg: jsonDoubleOrNull(json, 'targetBodyWeightKg'),
       lifestyleUpdatedOn: jsonDateOrNull(json, 'lifestyleUpdatedOn'),
     );
   }
@@ -1115,7 +1138,7 @@ final class AthleteProfile {
   /// Jour de dernière modification.
   final CivilDate updatedOn;
 
-  /// Ancienneté d'entraînement régulier (schéma 3).
+  /// Ancienneté de pratique régulière de la discipline principale (schéma 3).
   final TrainingAge? trainingAge;
 
   /// Interruption en cours au moment de répondre (schéma 3) ; ensuite, les
@@ -1145,7 +1168,7 @@ final class AthleteProfile {
   /// passée ; liste vide : aucune échéance.
   final List<SeasonEvent>? events;
 
-  /// Figures visées et étape actuelle (schéma 3).
+  /// Figures visées et étape actuelle, par ordre de priorité (schéma 3).
   final List<SkillState>? skills;
 
   /// Points faibles déclarés (schéma 3).
@@ -1154,9 +1177,25 @@ final class AthleteProfile {
   /// Priorité voulue par l'utilisateur (schéma 3).
   final Specialization? specialization;
 
+  /// Charge d'entraînement actuelle par mouvement ou figure (schéma 3).
+  final List<RecentTraining>? recentTraining;
+
+  /// Ce que l'utilisateur fait en ce moment (schéma 3).
+  final CurrentPhase? currentPhase;
+
+  /// Ce qu'il cherche surtout en musculation (schéma 3).
+  final TrainingEmphasis? emphasis;
+
+  /// Volume de course actuel (schéma 3).
+  final EnduranceBase? enduranceBase;
+
+  /// Poids de corps visé, en kg, quand `bodyWeightGoal` vaut `lose` ou `gain`
+  /// (schéma 3).
+  final double? targetBodyWeightKg;
+
   /// Jour de la dernière réponse aux questions de récupération et de vie
-  /// (sommeil, stress, métier, autres sports, poids) (schéma 3) : elles se
-  /// redemandent de temps en temps.
+  /// (sommeil, stress, métier, autres sports, poids, charge actuelle) (schéma
+  /// 3) : elles se redemandent de temps en temps.
   final CivilDate? lifestyleUpdatedOn;
 
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
@@ -1199,6 +1238,11 @@ final class AthleteProfile {
       if (skills case final v?) 'skills': [for (final e in v) e.toJson()],
       if (weakPoints case final v?) 'weakPoints': [for (final e in v) e.toJson()],
       if (specialization case final v?) 'specialization': v.toJson(),
+      if (recentTraining case final v?) 'recentTraining': [for (final e in v) e.toJson()],
+      if (currentPhase case final v?) 'currentPhase': v.code,
+      if (emphasis case final v?) 'emphasis': v.code,
+      if (enduranceBase case final v?) 'enduranceBase': v.toJson(),
+      if (targetBodyWeightKg case final v?) 'targetBodyWeightKg': v,
       if (lifestyleUpdatedOn case final v?) 'lifestyleUpdatedOn': v.iso,
     };
   }
@@ -1242,6 +1286,11 @@ final class AthleteProfile {
     Object? skills = unset,
     Object? weakPoints = unset,
     Object? specialization = unset,
+    Object? recentTraining = unset,
+    Object? currentPhase = unset,
+    Object? emphasis = unset,
+    Object? enduranceBase = unset,
+    Object? targetBodyWeightKg = unset,
     Object? lifestyleUpdatedOn = unset,
   }) {
     return AthleteProfile(
@@ -1282,6 +1331,11 @@ final class AthleteProfile {
       skills: identical(skills, unset) ? this.skills : skills as List<SkillState>?,
       weakPoints: identical(weakPoints, unset) ? this.weakPoints : weakPoints as List<WeakPoint>?,
       specialization: identical(specialization, unset) ? this.specialization : specialization as Specialization?,
+      recentTraining: identical(recentTraining, unset) ? this.recentTraining : recentTraining as List<RecentTraining>?,
+      currentPhase: identical(currentPhase, unset) ? this.currentPhase : currentPhase as CurrentPhase?,
+      emphasis: identical(emphasis, unset) ? this.emphasis : emphasis as TrainingEmphasis?,
+      enduranceBase: identical(enduranceBase, unset) ? this.enduranceBase : enduranceBase as EnduranceBase?,
+      targetBodyWeightKg: identical(targetBodyWeightKg, unset) ? this.targetBodyWeightKg : targetBodyWeightKg as double?,
       lifestyleUpdatedOn: identical(lifestyleUpdatedOn, unset) ? this.lifestyleUpdatedOn : lifestyleUpdatedOn as CivilDate?,
     );
   }
@@ -1322,6 +1376,9 @@ final class AthleteProfile {
     if (skills case final v?) { checkLength(out, '$path.skills', v.length, null, 30); for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.skills[$i]', out); } }
     if (weakPoints case final v?) { checkLength(out, '$path.weakPoints', v.length, null, 30); for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.weakPoints[$i]', out); } }
     if (specialization case final v?) { v.collectViolations('$path.specialization', out); }
+    if (recentTraining case final v?) { checkLength(out, '$path.recentTraining', v.length, null, 12); for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.recentTraining[$i]', out); } }
+    if (enduranceBase case final v?) { v.collectViolations('$path.enduranceBase', out); }
+    if (targetBodyWeightKg case final v?) { checkRange(out, '$path.targetBodyWeightKg', v, 25, 300); }
     _validateAthleteProfile(this, path, out);
   }
 
@@ -1346,15 +1403,17 @@ final class AthleteProfile {
     for (final e in skills ?? const <SkillState>[]) { e.collectExerciseIds(out); }
     for (final e in weakPoints ?? const <WeakPoint>[]) { e.collectExerciseIds(out); }
     specialization?.collectExerciseIds(out);
+    for (final e in recentTraining ?? const <RecentTraining>[]) { e.collectExerciseIds(out); }
+    enduranceBase?.collectExerciseIds(out);
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is AthleteProfile && schemaVersion == other.schemaVersion && displayName == other.displayName && sex == other.sex && birthYear == other.birthYear && heightCm == other.heightCm && bodyWeightKg == other.bodyWeightKg && disciplines == other.disciplines && streetMode == other.streetMode && jsonListEquals(movementLevels, other.movementLevels) && jsonListEquals(goals, other.goals) && jsonListEquals(availability, other.availability) && jsonListEquals(places, other.places) && jsonListEquals(equipment, other.equipment) && jsonDeepEquals(equipmentByPlace, other.equipmentByPlace) && jsonListEquals(loadIncrements, other.loadIncrements) && jsonListEquals(limitations, other.limitations) && jsonListEquals(likedExerciseIds, other.likedExerciseIds) && jsonListEquals(dislikedExerciseIds, other.dislikedExerciseIds) && jsonDeepEquals(knownExerciseIds, other.knownExerciseIds) && jsonDeepEquals(cannotDoExerciseIds, other.cannotDoExerciseIds) && experience == other.experience && guidanceMode == other.guidanceMode && healthScreening == other.healthScreening && createdOn == other.createdOn && updatedOn == other.updatedOn && trainingAge == other.trainingAge && trainingGap == other.trainingGap && sleep == other.sleep && stress == other.stress && occupationalLoad == other.occupationalLoad && jsonDeepEquals(otherSports, other.otherSports) && bodyWeightGoal == other.bodyWeightGoal && jsonDeepEquals(benchmarks, other.benchmarks) && jsonDeepEquals(events, other.events) && jsonDeepEquals(skills, other.skills) && jsonDeepEquals(weakPoints, other.weakPoints) && specialization == other.specialization && lifestyleUpdatedOn == other.lifestyleUpdatedOn;
+    return identical(this, other) || other is AthleteProfile && schemaVersion == other.schemaVersion && displayName == other.displayName && sex == other.sex && birthYear == other.birthYear && heightCm == other.heightCm && bodyWeightKg == other.bodyWeightKg && disciplines == other.disciplines && streetMode == other.streetMode && jsonListEquals(movementLevels, other.movementLevels) && jsonListEquals(goals, other.goals) && jsonListEquals(availability, other.availability) && jsonListEquals(places, other.places) && jsonListEquals(equipment, other.equipment) && jsonDeepEquals(equipmentByPlace, other.equipmentByPlace) && jsonListEquals(loadIncrements, other.loadIncrements) && jsonListEquals(limitations, other.limitations) && jsonListEquals(likedExerciseIds, other.likedExerciseIds) && jsonListEquals(dislikedExerciseIds, other.dislikedExerciseIds) && jsonDeepEquals(knownExerciseIds, other.knownExerciseIds) && jsonDeepEquals(cannotDoExerciseIds, other.cannotDoExerciseIds) && experience == other.experience && guidanceMode == other.guidanceMode && healthScreening == other.healthScreening && createdOn == other.createdOn && updatedOn == other.updatedOn && trainingAge == other.trainingAge && trainingGap == other.trainingGap && sleep == other.sleep && stress == other.stress && occupationalLoad == other.occupationalLoad && jsonDeepEquals(otherSports, other.otherSports) && bodyWeightGoal == other.bodyWeightGoal && jsonDeepEquals(benchmarks, other.benchmarks) && jsonDeepEquals(events, other.events) && jsonDeepEquals(skills, other.skills) && jsonDeepEquals(weakPoints, other.weakPoints) && specialization == other.specialization && jsonDeepEquals(recentTraining, other.recentTraining) && currentPhase == other.currentPhase && emphasis == other.emphasis && enduranceBase == other.enduranceBase && targetBodyWeightKg == other.targetBodyWeightKg && lifestyleUpdatedOn == other.lifestyleUpdatedOn;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[schemaVersion, displayName, sex, birthYear, heightCm, bodyWeightKg, disciplines, streetMode, Object.hashAll(movementLevels), Object.hashAll(goals), Object.hashAll(availability), Object.hashAll(places), Object.hashAll(equipment), jsonDeepHash(equipmentByPlace), Object.hashAll(loadIncrements), Object.hashAll(limitations), Object.hashAll(likedExerciseIds), Object.hashAll(dislikedExerciseIds), jsonDeepHash(knownExerciseIds), jsonDeepHash(cannotDoExerciseIds), experience, guidanceMode, healthScreening, createdOn, updatedOn, trainingAge, trainingGap, sleep, stress, occupationalLoad, jsonDeepHash(otherSports), bodyWeightGoal, jsonDeepHash(benchmarks), jsonDeepHash(events), jsonDeepHash(skills), jsonDeepHash(weakPoints), specialization, lifestyleUpdatedOn]);
+  int get hashCode => Object.hashAll(<Object?>[schemaVersion, displayName, sex, birthYear, heightCm, bodyWeightKg, disciplines, streetMode, Object.hashAll(movementLevels), Object.hashAll(goals), Object.hashAll(availability), Object.hashAll(places), Object.hashAll(equipment), jsonDeepHash(equipmentByPlace), Object.hashAll(loadIncrements), Object.hashAll(limitations), Object.hashAll(likedExerciseIds), Object.hashAll(dislikedExerciseIds), jsonDeepHash(knownExerciseIds), jsonDeepHash(cannotDoExerciseIds), experience, guidanceMode, healthScreening, createdOn, updatedOn, trainingAge, trainingGap, sleep, stress, occupationalLoad, jsonDeepHash(otherSports), bodyWeightGoal, jsonDeepHash(benchmarks), jsonDeepHash(events), jsonDeepHash(skills), jsonDeepHash(weakPoints), specialization, jsonDeepHash(recentTraining), currentPhase, emphasis, enduranceBase, targetBodyWeightKg, lifestyleUpdatedOn]);
 
   @override
   String toString() => 'AthleteProfile(${toJson()})';
@@ -1372,6 +1431,7 @@ final class OtherSport {
     this.weekdays,
     this.regions,
     this.hard,
+    this.mainSport,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1384,6 +1444,7 @@ final class OtherSport {
       weekdays: jsonListOrNull(json, 'weekdays', (v) => jsonAsInt(v, 'weekdays')),
       regions: jsonListOrNull(json, 'regions', (v) => BodyRegion.fromCode(jsonAsString(v, 'regions'))),
       hard: jsonBoolOrNull(json, 'hard'),
+      mainSport: jsonBoolOrNull(json, 'mainSport'),
     );
   }
 
@@ -1399,12 +1460,15 @@ final class OtherSport {
   /// Jours ISO habituels (1 = lundi … 7 = dimanche), s'ils sont fixes.
   final List<int>? weekdays;
 
-  /// Régions sollicitées, quand le sport ne le dit pas (`other`,
-  /// `other_strength`).
+  /// Régions sollicitées, quand le sport ne suffit pas à le dire (tous sauf
+  /// course, vélo, natation, escalade).
   final List<BodyRegion>? regions;
 
   /// Séances intenses (fractionné, matchs, combats).
   final bool? hard;
+
+  /// C'est le sport principal de l'utilisateur : le programme passe après lui.
+  final bool? mainSport;
 
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
@@ -1415,6 +1479,7 @@ final class OtherSport {
       if (weekdays case final v?) 'weekdays': [for (final e in v) e],
       if (regions case final v?) 'regions': [for (final e in v) e.code],
       if (hard case final v?) 'hard': v,
+      if (mainSport case final v?) 'mainSport': v,
     };
   }
 
@@ -1426,6 +1491,7 @@ final class OtherSport {
     Object? weekdays = unset,
     Object? regions = unset,
     Object? hard = unset,
+    Object? mainSport = unset,
   }) {
     return OtherSport(
       kind: kind ?? this.kind,
@@ -1434,6 +1500,7 @@ final class OtherSport {
       weekdays: identical(weekdays, unset) ? this.weekdays : weekdays as List<int>?,
       regions: identical(regions, unset) ? this.regions : regions as List<BodyRegion>?,
       hard: identical(hard, unset) ? this.hard : hard as bool?,
+      mainSport: identical(mainSport, unset) ? this.mainSport : mainSport as bool?,
     );
   }
 
@@ -1459,14 +1526,172 @@ final class OtherSport {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is OtherSport && kind == other.kind && sessionsPerWeek == other.sessionsPerWeek && minutesPerSession == other.minutesPerSession && jsonDeepEquals(weekdays, other.weekdays) && jsonDeepEquals(regions, other.regions) && hard == other.hard;
+    return identical(this, other) || other is OtherSport && kind == other.kind && sessionsPerWeek == other.sessionsPerWeek && minutesPerSession == other.minutesPerSession && jsonDeepEquals(weekdays, other.weekdays) && jsonDeepEquals(regions, other.regions) && hard == other.hard && mainSport == other.mainSport;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[kind, sessionsPerWeek, minutesPerSession, jsonDeepHash(weekdays), jsonDeepHash(regions), hard]);
+  int get hashCode => Object.hashAll(<Object?>[kind, sessionsPerWeek, minutesPerSession, jsonDeepHash(weekdays), jsonDeepHash(regions), hard, mainSport]);
 
   @override
   String toString() => 'OtherSport(${toJson()})';
+}
+
+/// Ce que l'utilisateur fait aujourd'hui sur un mouvement ou une figure
+/// (0.4.0) : sert à caler le premier bloc sur sa charge réelle.
+final class RecentTraining {
+  const RecentTraining({
+    required this.exerciseId,
+    required this.sessionsPerWeek,
+    this.hardSets,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory RecentTraining.fromJson(Map<String, Object?> json) {
+    return RecentTraining(
+      exerciseId: jsonString(json, 'exerciseId'),
+      sessionsPerWeek: jsonInt(json, 'sessionsPerWeek'),
+      hardSets: jsonEnumOrNull(json, 'hardSets', HardSetsBand.fromCode),
+    );
+  }
+
+  /// Mouvement ou figure.
+  final String exerciseId;
+
+  /// Séances par semaine où il est travaillé (0 : pas en ce moment).
+  final int sessionsPerWeek;
+
+  /// Séries dures par semaine sur ce mouvement.
+  final HardSetsBand? hardSets;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'exerciseId': exerciseId,
+      'sessionsPerWeek': sessionsPerWeek,
+      if (hardSets case final v?) 'hardSets': v.code,
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  RecentTraining copyWith({
+    String? exerciseId,
+    int? sessionsPerWeek,
+    Object? hardSets = unset,
+  }) {
+    return RecentTraining(
+      exerciseId: exerciseId ?? this.exerciseId,
+      sessionsPerWeek: sessionsPerWeek ?? this.sessionsPerWeek,
+      hardSets: identical(hardSets, unset) ? this.hardSets : hardSets as HardSetsBand?,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkLength(out, '$path.exerciseId', exerciseId.length, 1, null);
+    checkRange(out, '$path.sessionsPerWeek', sessionsPerWeek, 0, 14);
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+    out.add(exerciseId);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is RecentTraining && exerciseId == other.exerciseId && sessionsPerWeek == other.sessionsPerWeek && hardSets == other.hardSets;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[exerciseId, sessionsPerWeek, hardSets]);
+
+  @override
+  String toString() => 'RecentTraining(${toJson()})';
+}
+
+/// Volume de course actuel (0.4.0) : sert à caler le premier bloc d'un
+/// coureur.
+final class EnduranceBase {
+  const EnduranceBase({
+    required this.weeklyVolume,
+    required this.sessionsPerWeek,
+    this.longRun,
+  });
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory EnduranceBase.fromJson(Map<String, Object?> json) {
+    return EnduranceBase(
+      weeklyVolume: jsonEnum(json, 'weeklyVolume', RunVolumeBand.fromCode),
+      sessionsPerWeek: jsonInt(json, 'sessionsPerWeek'),
+      longRun: jsonEnumOrNull(json, 'longRun', LongRunBand.fromCode),
+    );
+  }
+
+  /// Distance par semaine, en moyenne sur les 4 dernières semaines.
+  final RunVolumeBand weeklyVolume;
+
+  /// Sorties par semaine.
+  final int sessionsPerWeek;
+
+  /// Plus longue sortie récente.
+  final LongRunBand? longRun;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{
+      'weeklyVolume': weeklyVolume.code,
+      'sessionsPerWeek': sessionsPerWeek,
+      if (longRun case final v?) 'longRun': v.code,
+    };
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  EnduranceBase copyWith({
+    RunVolumeBand? weeklyVolume,
+    int? sessionsPerWeek,
+    Object? longRun = unset,
+  }) {
+    return EnduranceBase(
+      weeklyVolume: weeklyVolume ?? this.weeklyVolume,
+      sessionsPerWeek: sessionsPerWeek ?? this.sessionsPerWeek,
+      longRun: identical(longRun, unset) ? this.longRun : longRun as LongRunBand?,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkRange(out, '$path.sessionsPerWeek', sessionsPerWeek, 0, 14);
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is EnduranceBase && weeklyVolume == other.weeklyVolume && sessionsPerWeek == other.sessionsPerWeek && longRun == other.longRun;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[weeklyVolume, sessionsPerWeek, longRun]);
+
+  @override
+  String toString() => 'EnduranceBase(${toJson()})';
 }
 
 /// Test ou record sur un exercice (0.4.0) : valeur exacte, datée, avec son
@@ -1476,7 +1701,8 @@ final class OtherSport {
 /// Invariant : `load_reps` : charge externe et répétitions (1 répétition, RIR
 /// 0 = maximum mesuré) ; `max_reps` : répétitions (charge externe si
 /// l'épreuve est lestée, durée si elle est limitée en temps) ; `max_hold` :
-/// secondes ; `time_trial`, `distance_trial` : distance et durée.
+/// secondes ; `time_trial`, `distance_trial` : distance et durée ;
+/// `reps_for_time` : répétitions imposées et temps réalisé.
 final class Benchmark {
   const Benchmark({
     required this.exerciseId,
@@ -1490,6 +1716,7 @@ final class Benchmark {
     this.distanceMeters,
     this.bodyWeightKg,
     this.protocolId,
+    this.competitionStandard,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1507,6 +1734,7 @@ final class Benchmark {
       distanceMeters: jsonDoubleOrNull(json, 'distanceMeters'),
       bodyWeightKg: jsonDoubleOrNull(json, 'bodyWeightKg'),
       protocolId: jsonStringOrNull(json, 'protocolId'),
+      competitionStandard: jsonBoolOrNull(json, 'competitionStandard'),
     );
   }
 
@@ -1545,6 +1773,11 @@ final class Benchmark {
   /// Protocole de test guidé suivi (`docs/PARCOURS_V3.md`, § tests guidés).
   final String? protocolId;
 
+  /// Fait au standard de compétition (amplitude complète, arrêts marqués) ;
+  /// absent : inconnu. Les tentatives ne se fondent que sur des records au
+  /// standard.
+  final bool? competitionStandard;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -1559,6 +1792,7 @@ final class Benchmark {
       if (distanceMeters case final v?) 'distanceMeters': v,
       if (bodyWeightKg case final v?) 'bodyWeightKg': v,
       if (protocolId case final v?) 'protocolId': v,
+      if (competitionStandard case final v?) 'competitionStandard': v,
     };
   }
 
@@ -1575,6 +1809,7 @@ final class Benchmark {
     Object? distanceMeters = unset,
     Object? bodyWeightKg = unset,
     Object? protocolId = unset,
+    Object? competitionStandard = unset,
   }) {
     return Benchmark(
       exerciseId: exerciseId ?? this.exerciseId,
@@ -1588,6 +1823,7 @@ final class Benchmark {
       distanceMeters: identical(distanceMeters, unset) ? this.distanceMeters : distanceMeters as double?,
       bodyWeightKg: identical(bodyWeightKg, unset) ? this.bodyWeightKg : bodyWeightKg as double?,
       protocolId: identical(protocolId, unset) ? this.protocolId : protocolId as String?,
+      competitionStandard: identical(competitionStandard, unset) ? this.competitionStandard : competitionStandard as bool?,
     );
   }
 
@@ -1605,10 +1841,10 @@ final class Benchmark {
     if (reps case final v?) { checkRange(out, '$path.reps', v, 1, 1000); }
     if (rir case final v?) { checkRange(out, '$path.rir', v, 0, 10); }
     if (seconds case final v?) { checkRange(out, '$path.seconds', v, 1, 86400); }
-    if (distanceMeters case final v?) { checkRange(out, '$path.distanceMeters', v, 0, null); }
+    if (distanceMeters case final v?) { checkRange(out, '$path.distanceMeters', v, 1, null); }
     if (bodyWeightKg case final v?) { checkRange(out, '$path.bodyWeightKg', v, 25, 300); }
     if (protocolId case final v?) { checkLength(out, '$path.protocolId', v.length, 1, 40); }
-    checkVariant(out, path, kind.code, <String, Object?>{'externalLoadKg': externalLoadKg, 'reps': reps, 'rir': rir, 'seconds': seconds, 'distanceMeters': distanceMeters, }, const <String, List<String>>{'load_reps': <String>['externalLoadKg', 'reps'], 'max_reps': <String>['reps'], 'max_hold': <String>['seconds'], 'time_trial': <String>['distanceMeters', 'seconds'], 'distance_trial': <String>['distanceMeters', 'seconds'], }, const <String, List<String>>{'load_reps': <String>['rir'], 'max_reps': <String>['externalLoadKg', 'seconds'], 'max_hold': <String>['externalLoadKg'], 'time_trial': <String>[], 'distance_trial': <String>[], });
+    checkVariant(out, path, kind.code, <String, Object?>{'externalLoadKg': externalLoadKg, 'reps': reps, 'rir': rir, 'seconds': seconds, 'distanceMeters': distanceMeters, }, const <String, List<String>>{'load_reps': <String>['externalLoadKg', 'reps'], 'max_reps': <String>['reps'], 'max_hold': <String>['seconds'], 'time_trial': <String>['distanceMeters', 'seconds'], 'distance_trial': <String>['distanceMeters', 'seconds'], 'reps_for_time': <String>['reps', 'seconds'], }, const <String, List<String>>{'load_reps': <String>['rir'], 'max_reps': <String>['externalLoadKg', 'seconds'], 'max_hold': <String>['externalLoadKg'], 'time_trial': <String>[], 'distance_trial': <String>[], 'reps_for_time': <String>['externalLoadKg'], });
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -1618,11 +1854,11 @@ final class Benchmark {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is Benchmark && exerciseId == other.exerciseId && kind == other.kind && source == other.source && date == other.date && externalLoadKg == other.externalLoadKg && reps == other.reps && rir == other.rir && seconds == other.seconds && distanceMeters == other.distanceMeters && bodyWeightKg == other.bodyWeightKg && protocolId == other.protocolId;
+    return identical(this, other) || other is Benchmark && exerciseId == other.exerciseId && kind == other.kind && source == other.source && date == other.date && externalLoadKg == other.externalLoadKg && reps == other.reps && rir == other.rir && seconds == other.seconds && distanceMeters == other.distanceMeters && bodyWeightKg == other.bodyWeightKg && protocolId == other.protocolId && competitionStandard == other.competitionStandard;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[exerciseId, kind, source, date, externalLoadKg, reps, rir, seconds, distanceMeters, bodyWeightKg, protocolId]);
+  int get hashCode => Object.hashAll(<Object?>[exerciseId, kind, source, date, externalLoadKg, reps, rir, seconds, distanceMeters, bodyWeightKg, protocolId, competitionStandard]);
 
   @override
   String toString() => 'Benchmark(${toJson()})';
