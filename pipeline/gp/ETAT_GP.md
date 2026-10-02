@@ -49,7 +49,7 @@ Entrées du propriétaire (`inputs/`) :
 | G7 | G6, G4 | dev6.5.0 (6.5.0+101) | c349883 | 36931083902 | 01/10/2026 | validé (02/10/2026, 07:23) |
 | G9 | G7, G8 | dev6.6.0 (6.6.0+102) | 642468d | 36980042502 | 02/10/2026 | à valider |
 | G9 correction 1 | — | dev6.6.1 (6.6.1+103) | 99e4b89 | 37001536807 | 02/10/2026 | à valider |
-| G9 correction 2 | — | — | — | — | — | en cours depuis 2026-10-02 11:55 UTC (flamme du curseur posée sur sa base) |
+| G9 correction 2 | — | dev6.6.2 (6.6.2+104) | 97a8705 | 37012282440 | 02/10/2026 | à valider |
 | G10 | G9 | — | — | — | — | à faire |
 | G12 | G10, G11 | — | — | — | — | à faire |
 | G13 | G12 | — | — | — | — | à faire |

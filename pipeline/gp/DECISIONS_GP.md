@@ -331,3 +331,9 @@ Source : conversation de pilotage du 30/09/2026 (22:00-23:10, heure de Paris), q
 - **Conseil après correction** : seulement pour la dernière série validée d'un exercice servi par le moteur ; le dernier conseil est retiré s'il visait la première série non validée qui suit, puis recalculé (`adaptReviseAfterSet`, `SessionAdapt.withoutLastAdvice`). Aucun changement de format de sauvegarde.
 - **Alignement** : `FlameIcon(centered: true)` centre la flamme sur les bornes de son propre dessin ; la taille relative des flammes (D5.5) est gardée. Lignes résumées : colonne fixe flamme (22 px) + nombre (24 px).
 - **Tests** : en test de widgets la police est à chasse fixe (1 em par caractère) ; « Je ne sais pas » est souple (2 lignes) pour tenir à 320 px et texte 200 %.
+
+### G9 correction 2 — Flamme du curseur posée sur sa base, toutes les séries résumées (02/10/2026, Opus 5.5)
+
+- **Lancement** : deux corrections du propriétaire données directement dans la session (la seconde pendant le passage) ; un seul passage de correction, version dev6.6.2.
+- **Ancrage de la flamme** : point d'ancrage = centre de la base arrondie, pris à une demi-largeur au-dessus du bas du dessin (les 10 flammes ont une base ronde de la largeur du dessin) ; ce point est posé au centre de la boîte de la flamme, elle-même centrée sur la position de la ligne. Seule la flamme de la ligne est concernée ; les lignes résumées gardent la flamme centrée sur le texte (correction 1).
+- **Séries résumées pour tous les exercices** : même règle que les exercices notés (dernière série validée ouverte, les autres en une ligne, toutes en relecture), sans colonne de flamme visible ; texte « N min » pour une durée. Exercice d'archive inconnu du programme : valeurs saisies telles quelles jointes par « · », sans unité inventée (règle des tests d'historique).
