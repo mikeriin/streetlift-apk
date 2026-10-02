@@ -337,9 +337,11 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.byTooltip('Valider la série 5'));
       await tester.pumpAndSettle();
-      // G9 (D5.4) : la note en flammes est demandée à la validation.
-      expect(find.byKey(const ValueKey('flame-sheet')), findsOneWidget);
-      await tester.tap(find.byKey(const ValueKey('flame-pick-7')));
+      // G9 correction 1 : la ligne des flammes s'ouvre sous la série.
+      expect(find.byKey(const ValueKey('flame-track-5')), findsOneWidget);
+      await tester.ensureVisible(find.byKey(const ValueKey('flame-pos-7')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('flame-pos-7')));
       await tester.pumpAndSettle();
       expect(log.sets.last.done, isTrue);
       expect(tester.takeException(), null);

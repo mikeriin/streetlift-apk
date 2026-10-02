@@ -103,21 +103,26 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Valider la série 1').first);
     await tester.pumpAndSettle();
-    // G9 (D5.3, D5.4) : la fiche de difficulté L7 est remplacée par le
-    // sélecteur des 10 flammes, pré-rempli avec la cible (RIR 3 → 5).
-    expect(find.text('Série 1 · difficulté'), findsOneWidget);
+    // G9 correction 1 : la coche valide la série avec la flamme visée
+    // (RIR 3 → 5) ; la ligne des 10 positions s'ouvre sous la série.
+    final log = store.logs['S3-J1']!.ex[mu]!;
+    expect(log.sets[0].done, isTrue);
+    expect(log.sets[0].flames, 5);
+    expect(find.byKey(const ValueKey('flame-track-1')), findsOneWidget);
     for (var f = 1; f <= 10; f++) {
-      expect(find.byKey(ValueKey('flame-pick-$f')), findsOneWidget);
+      expect(find.byKey(ValueKey('flame-pos-$f')), findsOneWidget);
     }
     expect(find.text('5 flammes · RIR 3'), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('flame-pick-1')));
+    await tester.ensureVisible(find.byKey(const ValueKey('flame-pos-1')));
     await tester.pumpAndSettle();
-    final log = store.logs['S3-J1']!.ex[mu]!;
+    await tester.tap(find.byKey(const ValueKey('flame-pos-1')));
+    await tester.pumpAndSettle();
     expect(log.sets[0].done, isTrue);
     expect(log.sets[0].flames, 1);
     expect(log.sets[0].effort, 5);
+    expect(find.text('1 flamme · RIR 5 et plus'), findsOneWidget);
     expect(
-      find.bySemanticsLabel(RegExp(r'^Série 1 : 1 flamme · RIR 5 et plus')),
+      find.bySemanticsLabel(RegExp(r'^Difficulté de la série 1')),
       findsOneWidget,
     );
     // Facile pour Soutenu visé : suggestion pour les séries restantes.
@@ -138,40 +143,41 @@ void main() {
     await tester.runAsync(() => store.flush());
   });
 
-  testWidgets('fiche fermée sans choix : la série reste non validée ; '
-      '« Garder ma charge » retenu', (tester) async {
+  testWidgets('coche : série validée avec la flamme visée ; '
+      '« Garder ma charge » retenu ; série écartée', (tester) async {
     phone(tester, const Size(390, 844));
     store.enableKoach();
     await tester.pumpWidget(page(SessionScreen(week: w3, day: d1)));
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Valider la série 1').first);
     await tester.pumpAndSettle();
-    // Feuille des flammes fermée sans choix (G9).
-    await tester.tapAt(const Offset(10, 10));
-    await tester.pumpAndSettle();
     final log = store.logs['S3-J1']!.ex[mu]!;
-    expect(log.sets[0].done, isFalse);
-    await tester.tap(find.byTooltip('Valider la série 1').first);
+    expect(log.sets[0].done, isTrue);
+    expect(log.sets[0].flames, 5);
+    await tester.ensureVisible(find.byKey(const ValueKey('flame-pos-3')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('flame-pick-3')));
+    await tester.tap(find.byKey(const ValueKey('flame-pos-3')));
     await tester.pumpAndSettle();
+    expect(log.sets[0].flames, 3);
     await scrollToAction(tester, find.byKey(const ValueKey('koach-keep')));
     await tester.tap(find.byKey(const ValueKey('koach-keep')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('koach-suggestion')), findsNothing);
     expect(log.koach, contains('charge gardée'));
     expect(store.koach.decisions.last.status, 'refused');
-    // Série écartée (D11) depuis la ligne Koach de la série validée.
-    await scrollToAction(tester, find.byKey(const ValueKey('flame-line-1')));
-    await tester.tap(find.byKey(const ValueKey('flame-line-1')));
+    // Série écartée (D11) depuis le menu de la ligne des flammes.
+    await scrollToAction(tester, find.byKey(const ValueKey('flame-menu')));
+    await tester.tap(find.byKey(const ValueKey('flame-menu')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('flame-exclude')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('flame-confirm')));
-    await tester.pumpAndSettle();
     expect(log.sets[0].excluded, isTrue);
     expect(log.sets[0].done, isTrue);
-    expect(find.textContaining('série écartée'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('flame-menu')));
+    await tester.pumpAndSettle();
+    expect(find.text('Réintégrer la série'), findsOneWidget);
+    await tester.tapAt(const Offset(10, 10));
+    await tester.pumpAndSettle();
     await tester.pumpWidget(const SizedBox());
     await tester.runAsync(() => store.flush());
   });
@@ -403,12 +409,9 @@ void main() {
         await scrollToAction(tester, find.byTooltip('Valider la série 1'));
         await tester.tap(find.byTooltip('Valider la série 1').first);
         await tester.pumpAndSettle();
-        // Texte agrandi : la fiche défile jusqu'au 6e bouton.
-        await scrollToAction(
-          tester,
-          find.byKey(const ValueKey('flame-pick-1')),
-        );
-        await tester.tap(find.byKey(const ValueKey('flame-pick-1')));
+        // Texte agrandi : la ligne des flammes sous la série.
+        await scrollToAction(tester, find.byKey(const ValueKey('flame-pos-1')));
+        await tester.tap(find.byKey(const ValueKey('flame-pos-1')));
         await tester.pumpAndSettle();
         await scrollToAction(tester, find.byKey(const ValueKey('koach-apply')));
         expect(tester.takeException(), isNull);

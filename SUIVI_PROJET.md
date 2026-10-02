@@ -1,8 +1,17 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : G9, version dev6.6.0 ; précédent : dev6.5.0 (G7)**  
-**Date : 2 octobre 2026, Europe/Paris — version : 6.6.0+102, affichée « dev6.6.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : G9 correction 1, version dev6.6.1 ; précédent : dev6.6.0 (G9)**  
+**Date : 2 octobre 2026, Europe/Paris — version : 6.6.1+103, affichée « dev6.6.1 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## G9 correction 1 — Flammes sous la série, séries résumées (version dev6.6.1)
+
+Corrections du propriétaire (02/10/2026) : flamme mal alignée avec le texte ; pas de fenêtre pour la note mais une ligne sous la série (9 points et la flamme à sa place, petite transition) ; série n − 2 résumée en une ligne au fil de la séance, toutes résumées en fin de séance.
+
+- `lib/adapt/flame_track.dart` (remplace `flame_sheet.dart`) : `FlameTrack` (ligne des 10 positions, toucher / glisser, transition animée, « Je ne sais pas », menu « Écarter la série ») et `SetSummaryLine` (série en une ligne). `FlameIcon(centered: true)` : flamme centrée sur son dessin.
+- Séance : la coche valide la série avec la flamme visée (choix du propriétaire : « coche = validée ») ; ligne ouverte sous la dernière série validée, les autres résumées ; exercice fini et lecture : toutes résumées. Corriger la dernière note d'un exercice servi par le moteur retire son conseil et le recalcule (`adaptReviseAfterSet`).
+- Fin de séance (résumé de Koach) : section « Tes séries », une ligne par série (choix du propriétaire : dans la séance et dans le résumé).
+- Tests : `test/g9_seance_test.dart` (ligne des flammes, glisser, alignement, séries résumées, conseil recalculé), `l7_koach_screens_test`, `l4b_seances_test`, `ui_refactor_test` adaptés ; émulateur : captures `08_series` (séries résumées) et `12_fin_series`.
 
 ## G9 — Séance : flammes, bilan santé, charges par kalis_adapt (version dev6.6.0)
 

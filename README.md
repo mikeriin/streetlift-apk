@@ -1,4 +1,10 @@
-# Kalis Track dev6.6.0 — Recentrage sur le programme (pipeline « Génération et progression »)
+# Kalis Track dev6.6.1 — Recentrage sur le programme (pipeline « Génération et progression »)
+
+## dev6.6.1 — Flammes sous la série, séries résumées (G9, correction 1)
+
+- **Flammes sous la série, sans fenêtre** : la coche valide la série avec la flamme visée déjà placée ; sous la série, une ligne horizontale porte 9 points et la flamme à sa place. Toucher un point ou glisser le long de la ligne déplace la flamme (transition animée) ; « Je ne sais pas » discret ; « … » : écarter la série (incident). En séance servie par le moteur, corriger la note de la dernière série recalcule le conseil de Koach pour la suivante.
+- **Flamme alignée avec le texte** : centrée sur son dessin dans les lignes (taille relative gardée).
+- **Séries résumées en une ligne** au fil de la séance : la dernière série validée reste ouverte, les précédentes (n − 2 et avant) passent en une ligne (« 2  16,25 kg × 8 reps  🔥 7 flammes ») ; un appui la rouvre. Exercice terminé, séance relue : toutes les séries en une ligne. Fin de séance : Koach liste toutes les séries de la séance, une ligne chacune (« Tes séries »). Version « dev6.6.1 ».
 
 ## dev6.6.0 — La séance avec Koach : bilan, flammes, charges du moteur (lot G9)
 

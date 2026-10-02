@@ -70,12 +70,18 @@ class FlameIcon extends StatelessWidget {
   /// Faux : décorative (le libellé est porté ailleurs).
   final bool semantics;
 
+  /// G9 correction 1 : la flamme est centrée verticalement sur son propre
+  /// dessin (alignée avec le texte d'une ligne) au lieu d'être posée sur la
+  /// ligne de base commune ; sa taille relative est gardée.
+  final bool centered;
+
   const FlameIcon(
     this.level, {
     super.key,
     this.size = 28,
     this.color,
     this.semantics = true,
+    this.centered = false,
   }) : assert(level >= 1 && level <= 10);
 
   /// Largeur pour une hauteur [size].
@@ -87,7 +93,11 @@ class FlameIcon extends StatelessWidget {
     final dark = Theme.of(context).brightness == Brightness.dark;
     final paint = CustomPaint(
       size: Size(widthFor(size), size),
-      painter: _FlamePainter(level, color ?? flameColor(level, dark: dark)),
+      painter: _FlamePainter(
+        level,
+        color ?? flameColor(level, dark: dark),
+        centered: centered,
+      ),
     );
     return semantics
         ? Semantics(image: true, label: flameSemanticLabel(level), child: paint)
@@ -98,17 +108,27 @@ class FlameIcon extends StatelessWidget {
 class _FlamePainter extends CustomPainter {
   final int level;
   final Color color;
-  _FlamePainter(this.level, this.color);
+  final bool centered;
+  _FlamePainter(this.level, this.color, {this.centered = false});
 
   @override
   void paint(Canvas canvas, Size size) {
     final r = _flameFrame;
     final s = math.min(size.width / r.width, size.height / r.height);
     canvas.save();
-    canvas.translate(
-      (size.width - r.width * s) / 2 - r.left * s,
-      size.height - r.bottom * s,
-    );
+    if (centered) {
+      // Centre du dessin de cette flamme au centre de la boîte.
+      final b = _flamePath(level).getBounds();
+      canvas.translate(
+        size.width / 2 - b.center.dx * s,
+        size.height / 2 - b.center.dy * s,
+      );
+    } else {
+      canvas.translate(
+        (size.width - r.width * s) / 2 - r.left * s,
+        size.height - r.bottom * s,
+      );
+    }
     canvas.scale(s);
     canvas.drawPath(_flamePath(level), Paint()..color = color);
     canvas.restore();
@@ -116,7 +136,7 @@ class _FlamePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_FlamePainter old) =>
-      old.level != level || old.color != color;
+      old.level != level || old.color != color || old.centered != centered;
 }
 
 /// Sélecteur de difficulté : 10 flammes de taille croissante (D5.3, D5.4).

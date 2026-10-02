@@ -144,6 +144,11 @@ vide ou absent.
   G7 passe sous `CI3D_TOUT=1`. APK de test précompilé sur la cible G9.
 - Tests Dart du lot : `test/g9_seance_test.dart` (magasin, journal des
   moteurs, bilan, modes, conseil, sauvegarde, écrans).
+- G9 correction 1 (dev6.6.1) : même cible ; la note se donne sur la ligne
+  des flammes sous la série (`flame-track-<n>`, positions `flame-pos-<i>`),
+  séries 1 à 3 validées puis capture `08_series` (séries résumées en une
+  ligne, `set-summary-<n>`), fin de séance et capture `12_fin_series`
+  (« Tes séries »).
 
 ### Mode dev dans les tests d'intégration
 

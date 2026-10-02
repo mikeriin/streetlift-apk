@@ -525,8 +525,11 @@ void main() {
       expect(find.textContaining('Reps : nombre entier'), findsNothing);
       await tester.tap(find.byTooltip('Valider la série 1').first);
       await tester.pumpAndSettle();
-      // G9 (D5.4) : la note en flammes est demandée à la validation.
-      await tester.tap(find.byKey(const ValueKey('flame-pick-7')));
+      // G9 correction 1 : validée avec la flamme visée, corrigée sur la
+      // ligne ouverte sous la série.
+      await tester.ensureVisible(find.byKey(const ValueKey('flame-pos-7')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('flame-pos-7')));
       await tester.pumpAndSettle();
       expect(store.exLog(w.n, d.j, ex).sets[0].done, isTrue);
       expect(store.exLog(w.n, d.j, ex).sets[0].flames, 7);
