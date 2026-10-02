@@ -47,7 +47,7 @@ void main() {
                   'd$d:w${rv.week} blk=${rv.place.blockId} bw=${rv.input.block.pass1.weeks} '
                   'start=${rv.input.block.pass1.startDate.iso} obs=${sm.weeksObserved} '
                   'pl=${sm.sessionsPlanned}/${sm.sessionsCompleted} un=${sm.unlockLevel.code} '
-                  'rd=${sm.fatigue.readiness} n=${rv.review.proposals.length} '
+                  'rd=${sm.fatigue?.readiness} n=${rv.review.proposals.length} '
                   'logS=${rv.input.log.sessions.length}',
                 );
               },
