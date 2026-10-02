@@ -223,11 +223,18 @@ honnêtes ne déclenchaient aucun de ces cas), et le gain du jumeau tricheur est
 
 ## 9. Temps de calcul
 
-VM Dart de la machine de contrôle (pas un téléphone), journal de 895 séances sur 3 ans : calcul complet
-depuis un état vide en 52 ms (médiane ; 71 ms au plus dans la campagne, 61 à 123 ms dans le test), appel
-du lendemain en 9 ms. Budget : 200 ms. Un téléphone d'entrée de gamme est plusieurs fois plus lent ; la
-marge (un facteur 4 sur le calcul complet, qui n'a lieu qu'après une perte de l'état) est à vérifier à
-l'intégration (lot G12).
+VM Dart de la machine de contrôle (pas un téléphone), journal de 895 séances sur 3 ans.
+
+- Campagne (machine au repos) : calcul complet depuis un état vide en 52 à 67 ms en médiane selon le
+  passage (71 à 81 ms au plus) ; appel du lendemain en 9 à 11 ms.
+- Test `timing_test.dart` (pendant que les autres tests tournent en parallèle) : médiane de 78 à 108 ms
+  selon le passage ; la plus lente des mesures isolées a pris 192 ms. Le test juge la médiane de cinq
+  mesures.
+
+Budget : 200 ms. La marge est donc d'un facteur 3 au repos et faible sous charge. Un téléphone d'entrée
+de gamme est plusieurs fois plus lent : **le budget n'est pas acquis sur téléphone**. Le calcul complet
+n'a lieu qu'après une perte de l'état (l'appel courant coûte dix fois moins) ; s'il dépasse le budget à
+l'intégration (lot G12), il faudra le sortir du fil d'affichage.
 
 ## 10. Ce qui reste à faire trancher ou à mesurer
 

@@ -349,7 +349,8 @@ Sur 10 240 journaux aléatoires (`test/properties.dart`) et dans les scénarios 
   du registre.
 - **Aucun message culpabilisant** : aucun événement ni aucune écriture pour une quête échue, une semaine
   non réussie ou une série qui repart.
-- **Temps** : calcul complet depuis 3 ans de journal ≤ 200 ms (`test/timing_test.dart`, `docs/RYTHME.md`).
+- **Temps** : calcul complet depuis 3 ans de journal ≤ 200 ms en médiane sur la machine de contrôle
+  (`test/timing_test.dart`, `docs/RYTHME.md`) ; non mesuré sur téléphone (`docs/VALIDATION.md`, § 9).
 
 ## 10. Paramètres
 
