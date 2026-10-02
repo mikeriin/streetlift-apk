@@ -1,0 +1,229 @@
+test_elf_accepts_aligned_and_whole_load_relro (test_android_validation.ArtifactTests.test_elf_accepts_aligned_and_whole_load_relro) ... ok
+test_elf_rejects_4k_truncated_wrong_abi_and_relro_internal_4k_boundary (test_android_validation.ArtifactTests.test_elf_rejects_4k_truncated_wrong_abi_and_relro_internal_4k_boundary) ... ok
+test_external_failure_does_not_leak_output_and_commands_receive_no_secrets (test_android_validation.ArtifactTests.test_external_failure_does_not_leak_output_and_commands_receive_no_secrets) ... ok
+test_final_manifest_identity_version_sdk_and_debug_are_enforced (test_android_validation.ArtifactTests.test_final_manifest_identity_version_sdk_and_debug_are_enforced) ... ok
+test_unsigned_aab_rejected_by_real_java_verifier (test_android_validation.ArtifactTests.test_unsigned_aab_rejected_by_real_java_verifier) ... ok
+test_each_case_uses_only_missing_or_synthetic_values_and_correct_target (test_android_validation.ReleaseRefusalTests.test_each_case_uses_only_missing_or_synthetic_values_and_correct_target) ... ok
+test_unrelated_error_and_success_do_not_count_as_expected_refusal (test_android_validation.ReleaseRefusalTests.test_unrelated_error_and_success_do_not_count_as_expected_refusal) ... ok
+test_atlas_generated_from_pack (test_content_pack.ContentPackTest.test_atlas_generated_from_pack) ... ok
+test_demo_status_consistent (test_content_pack.ContentPackTest.test_demo_status_consistent) ... ok
+test_pack_version_and_fingerprint (test_content_pack.ContentPackTest.test_pack_version_and_fingerprint) ... ok
+test_parity_fixture (test_content_pack.ContentPackTest.test_parity_fixture) ... ok
+test_program_titles_mapped (test_content_pack.ContentPackTest.test_program_titles_mapped) ... ok
+test_v1_entries_unchanged (test_content_pack.ContentPackTest.test_v1_entries_unchanged) ... ok
+test_apk_has_dev_flag_and_aab_does_not (test_g1_dev_build.BuildWorkflowTest.test_apk_has_dev_flag_and_aab_does_not) ... ok
+test_ci_packages_job (test_g1_dev_build.BuildWorkflowTest.test_ci_packages_job) ... ok
+test_packages_trigger_and_dev_tests (test_g1_dev_build.BuildWorkflowTest.test_packages_trigger_and_dev_tests) ... ok
+test_app_time_goes_through_clock (test_g1_dev_build.DevCodeTest.test_app_time_goes_through_clock) ... ok
+test_flag_is_compile_time_constant (test_g1_dev_build.DevCodeTest.test_flag_is_compile_time_constant) ... ok
+test_storage_goes_through_session_view (test_g1_dev_build.DevCodeTest.test_storage_goes_through_session_view) ... ok
+test_dev_apk_rules (test_g1_dev_build.NativeComparisonTest.test_dev_apk_rules) ... ok
+test_apk_is_named_dev_and_aab_is_not (test_g2_retrait.DevNamingTest.test_apk_is_named_dev_and_aab_is_not) ... ok
+test_app_label_follows_pubspec_and_dev_flag (test_g2_retrait.DevNamingTest.test_app_label_follows_pubspec_and_dev_flag) ... ok
+test_artifact_check_expects_dev_name_for_apk_only (test_g2_retrait.DevNamingTest.test_artifact_check_expects_dev_name_for_apk_only) ... ok
+test_version_variable_comes_from_pubspec (test_g2_retrait.DevNamingTest.test_version_variable_comes_from_pubspec) ... ok
+test_l12_share_image_removed (test_g2_retrait.RetiredFeaturesTest.test_l12_share_image_removed) ... ok
+test_no_dead_reference_left (test_g2_retrait.RetiredFeaturesTest.test_no_dead_reference_left) ... ok
+test_pubspec_no_longer_describes_wod (test_g2_retrait.RetiredFeaturesTest.test_pubspec_no_longer_describes_wod) ... ok
+test_retired_files_are_gone (test_g2_retrait.RetiredFeaturesTest.test_retired_files_are_gone) ... ok
+test_asset_is_byte_copy_of_package (test_g3_catalogue.CatalogueG3Test.test_asset_is_byte_copy_of_package) ... ok
+test_every_old_exercise_is_reviewed_once (test_g3_catalogue.CatalogueG3Test.test_every_old_exercise_is_reviewed_once) ... ok
+test_generated_files_are_up_to_date (test_g3_catalogue.CatalogueG3Test.test_generated_files_are_up_to_date) ... ok
+test_normalisation (test_g3_catalogue.CatalogueG3Test.test_normalisation) ... ok
+test_owner_program_labels_mapped (test_g3_catalogue.CatalogueG3Test.test_owner_program_labels_mapped) ... ok
+test_targets_exist (test_g3_catalogue.CatalogueG3Test.test_targets_exist) ... ok
+test_categories_weeks_and_equipment (test_koach_reference.KoachAnnotationTests.test_categories_weeks_and_equipment) ... ok
+test_curve_prior_and_incoherent_singles_excluded (test_koach_reference.KoachAnnotationTests.test_curve_prior_and_incoherent_singles_excluded) ... ok
+test_programme_asset_untouched (test_koach_reference.KoachAnnotationTests.test_programme_asset_untouched) ... ok
+test_rir_target_equals_label_on_every_exercise (test_koach_reference.KoachAnnotationTests.test_rir_target_equals_label_on_every_exercise) ... ok
+test_shipped_annotations_are_current (test_koach_reference.KoachAnnotationTests.test_shipped_annotations_are_current) ... ok
+test_d24_examples_from_the_request (test_koach_reference.KoachReferenceTests.test_d24_examples_from_the_request) ... ok
+test_fixtures_expected_outputs_are_current (test_koach_reference.KoachReferenceTests.test_fixtures_expected_outputs_are_current) ... ok
+test_incremental_cache_equals_full_replay (test_koach_reference.KoachReferenceTests.test_incremental_cache_equals_full_replay) ... ok
+test_incremental_cache_follows_context_changes (test_koach_reference.KoachReferenceTests.test_incremental_cache_follows_context_changes) ... ok
+test_pain_carried_to_next_bilan_and_lb_steps (test_koach_reference.KoachReferenceTests.test_pain_carried_to_next_bilan_and_lb_steps) ... ok
+test_simulation_criteria (test_koach_reference.KoachReferenceTests.test_simulation_criteria) ... ok
+test_adjacent_dart_literals_are_judged_as_one_sentence (test_l13_compliance.ClaimsTests.test_adjacent_dart_literals_are_judged_as_one_sentence) ... ok
+test_application_texts_have_no_forbidden_claim (test_l13_compliance.ClaimsTests.test_application_texts_have_no_forbidden_claim) ... ok
+test_each_forbidden_term_is_detected (test_l13_compliance.ClaimsTests.test_each_forbidden_term_is_detected) ... ok
+test_negations_and_referrals_are_allowed (test_l13_compliance.ClaimsTests.test_negations_and_referrals_are_allowed) ... ok
+test_feature_graphic_file_is_1024x500_rgb_without_alpha (test_l13_compliance.PolicyAndStoreTests.test_feature_graphic_file_is_1024x500_rgb_without_alpha) ... ok
+test_feature_graphic_is_regenerated_identically_on_bordeaux (test_l13_compliance.PolicyAndStoreTests.test_feature_graphic_is_regenerated_identically_on_bordeaux) ... skipped 'Pillow absent : régénération non rejouée'
+test_privacy_policy_is_bundled_and_dated (test_l13_compliance.PolicyAndStoreTests.test_privacy_policy_is_bundled_and_dated) ... ok
+test_cli_second_run_fails_without_writing (test_lc1_revision.Lc1RevisionTests.test_cli_second_run_fails_without_writing) ... ok
+test_new_ids_are_unique_sequential_and_never_reused (test_lc1_revision.Lc1RevisionTests.test_new_ids_are_unique_sequential_and_never_reused) ... ok
+test_second_run_is_refused_clearly (test_lc1_revision.Lc1RevisionTests.test_second_run_is_refused_clearly) ... ok
+test_shipped_asset_is_the_expected_revision (test_lc1_revision.Lc1RevisionTests.test_shipped_asset_is_the_expected_revision) ... ok
+test_unexpected_input_is_refused (test_lc1_revision.Lc1RevisionTests.test_unexpected_input_is_refused) ... ok
+test_weeks_outside_block_2_and_pilotage_unchanged (test_lc1_revision.Lc1RevisionTests.test_weeks_outside_block_2_and_pilotage_unchanged) ... ok
+test_cli_applies_once_then_refuses_without_writing (test_lc1b_s11_j6.Lc1bTests.test_cli_applies_once_then_refuses_without_writing) ... ok
+test_ids_removed_new_and_total (test_lc1b_s11_j6.Lc1bTests.test_ids_removed_new_and_total) ... ok
+test_input_is_lc1_output_and_shipped_is_expected_output (test_lc1b_s11_j6.Lc1bTests.test_input_is_lc1_output_and_shipped_is_expected_output) ... ok
+test_only_s11_j6_changes (test_lc1b_s11_j6.Lc1bTests.test_only_s11_j6_changes) ... ok
+test_revision_reproduces_shipped_asset (test_lc1b_s11_j6.Lc1bTests.test_revision_reproduces_shipped_asset) ... ok
+test_s11_j6_content (test_lc1b_s11_j6.Lc1bTests.test_s11_j6_content) ... ok
+test_second_run_is_refused_clearly (test_lc1b_s11_j6.Lc1bTests.test_second_run_is_refused_clearly) ... ok
+test_unexpected_input_is_refused (test_lc1b_s11_j6.Lc1bTests.test_unexpected_input_is_refused) ... ok
+test_carte_de_l_ecorche (test_m2_anatomy.EcorcheSourceTest.test_carte_de_l_ecorche) ... ok
+test_etiquettes (test_m2_anatomy.EcorcheSourceTest.test_etiquettes) ... ok
+test_aires_des_zones (test_m2_anatomy.M6cCharacterTest.test_aires_des_zones) ... ok
+test_aucune_zone_sans_groupe (test_m2_anatomy.M6cCharacterTest.test_aucune_zone_sans_groupe) ... ok
+test_budget_de_triangles (test_m2_anatomy.M6cCharacterTest.test_budget_de_triangles) ... ok
+test_credits (test_m2_anatomy.M6cCharacterTest.test_credits) ... ok
+test_fit_mesure (test_m2_anatomy.M6cCharacterTest.test_fit_mesure) ... ok
+test_muscles_du_pack (test_m2_anatomy.M6cCharacterTest.test_muscles_du_pack) ... ok
+test_noeuds_et_zones (test_m2_anatomy.M6cCharacterTest.test_noeuds_et_zones) ... ok
+test_noms_francais (test_m2_anatomy.M6cCharacterTest.test_noms_francais) ... ok
+test_pubspec (test_m2_anatomy.M6cCharacterTest.test_pubspec) ... ok
+test_rapport (test_m2_anatomy.M6cCharacterTest.test_rapport) ... ok
+test_repere_et_hauteur (test_m2_anatomy.M6cCharacterTest.test_repere_et_hauteur) ... ok
+test_ressources_chiffrees (test_m2_anatomy.M6cCharacterTest.test_ressources_chiffrees) ... ok
+test_squelette_mixamo (test_m2_anatomy.M6cCharacterTest.test_squelette_mixamo) ... ok
+test_symetrie (test_m2_anatomy.M6cCharacterTest.test_symetrie) ... ok
+test_aller_retour (test_m6c_secure_assets.SecureAssetsTest.test_aller_retour) ... ok
+test_arbre_sans_clair (test_m6c_secure_assets.SecureAssetsTest.test_arbre_sans_clair) ... ok
+test_cle_absente (test_m6c_secure_assets.SecureAssetsTest.test_cle_absente) ... ok
+test_manifeste (test_m6c_secure_assets.SecureAssetsTest.test_manifeste) ... ok
+test_modele_en_clair_refuse (test_m6c_secure_assets.TreeRefusesClearModelsTest.test_modele_en_clair_refuse) ... ok
+test_ressource_chiffree_budget_a_part (test_m6c_secure_assets.TreeRefusesClearModelsTest.test_ressource_chiffree_budget_a_part) ... ok
+test_derive_retiree (test_m7_animations.ImportTest.test_derive_retiree) ... skipped 'numpy requis (fabrication des clips)'
+test_fichier_valide (test_m7_animations.ImportTest.test_fichier_valide)
+FBX valide : squelette accepté, rotations retrouvées, clip ≤ 5 Ko ... skipped 'numpy requis (fabrication des clips)'
+test_phases_detectees (test_m7_animations.ImportTest.test_phases_detectees) ... skipped 'numpy requis (fabrication des clips)'
+test_prefixe_mixamorig1 (test_m7_animations.ImportTest.test_prefixe_mixamorig1) ... skipped 'numpy requis (fabrication des clips)'
+test_reechantillonnage (test_m7_animations.ImportTest.test_reechantillonnage) ... skipped 'numpy requis (fabrication des clips)'
+test_squelette_incompatible (test_m7_animations.ImportTest.test_squelette_incompatible) ... skipped 'numpy requis (fabrication des clips)'
+test_matrice_aller_retour (test_m7_animations.QuaternionTest.test_matrice_aller_retour) ... skipped 'numpy requis (fabrication des clips)'
+test_trois_plus_petites (test_m7_animations.QuaternionTest.test_trois_plus_petites) ... skipped 'numpy requis (fabrication des clips)'
+test_animation_de_test (test_m7_animations.RegistreTest.test_animation_de_test) ... ok
+test_documentation (test_m7_animations.RegistreTest.test_documentation) ... ok
+test_mannequin_animable (test_m7_animations.RegistreTest.test_mannequin_animable) ... ok
+test_nom_inconnu (test_m7_animations.RegistreTest.test_nom_inconnu) ... ok
+test_registre_et_clips (test_m7_animations.RegistreTest.test_registre_et_clips) ... ok
+test_assets_declares (test_m8_carte_2d.CarteTest.test_assets_declares) ... ok
+test_corrections_des_roles_appliquees (test_m8_carte_2d.CarteTest.test_corrections_des_roles_appliquees) ... ok
+test_en_tetes (test_m8_carte_2d.CarteTest.test_en_tetes) ... ok
+test_etiquettes (test_m8_carte_2d.CarteTest.test_etiquettes) ... skipped 'numpy et Pillow requis (pixels)'
+test_fabrication_reproductible (test_m8_carte_2d.CarteTest.test_fabrication_reproductible) ... skipped 'numpy et Pillow requis (pixels)'
+test_muscles_du_pack (test_m8_carte_2d.CarteTest.test_muscles_du_pack) ... ok
+test_regions_et_groupes (test_m8_carte_2d.CarteTest.test_regions_et_groupes) ... ok
+test_table_generee (test_m8_carte_2d.CarteTest.test_table_generee) ... ok
+test_table_generee_identique_au_script (test_m8_carte_2d.CarteTest.test_table_generee_identique_au_script) ... skipped 'numpy et Pillow requis (pixels)'
+test_vues_cote_dart (test_m8_carte_2d.CarteTest.test_vues_cote_dart) ... ok
+test_ecart_franc_et_constant_amelioration (test_perf_compare.PerfCompareTest.test_ecart_franc_et_constant_amelioration) ... ok
+test_echec_et_empreinte_differente_signales (test_perf_compare.PerfCompareTest.test_echec_et_empreinte_differente_signales) ... ok
+test_manche_contraire_pas_de_conclusion (test_perf_compare.PerfCompareTest.test_manche_contraire_pas_de_conclusion) ... ok
+test_meme_code_aucune_conclusion (test_perf_compare.PerfCompareTest.test_meme_code_aucune_conclusion) ... ok
+test_peu_d_observations_non_concluant (test_perf_compare.PerfCompareTest.test_peu_d_observations_non_concluant) ... ok
+test_gabarits_decoupes (test_refonte_muscles.RefonteMusclesTest.test_gabarits_decoupes) ... ok
+test_illustrations_et_calques (test_refonte_muscles.RefonteMusclesTest.test_illustrations_et_calques) ... ok
+test_outils_relancables_presents (test_refonte_muscles.RefonteMusclesTest.test_outils_relancables_presents) ... ok
+test_claimed_success_requires_exact_reference_certificate (test_release_security.ApkCertificateTests.test_claimed_success_requires_exact_reference_certificate) ... ok
+test_exact_verified_identity_accepted_without_echoing_stderr (test_release_security.ApkCertificateTests.test_exact_verified_identity_accepted_without_echoing_stderr) ... ok
+test_failure_statuses_remain_failures_and_never_echo_tool_output (test_release_security.ApkCertificateTests.test_failure_statuses_remain_failures_and_never_echo_tool_output) ... ok
+test_invalid_reference_rejected_before_starting_java (test_release_security.ApkCertificateTests.test_invalid_reference_rejected_before_starting_java) ... ok
+test_java_missing_and_timeout_are_sanitized_explicit_failures (test_release_security.ApkCertificateTests.test_java_missing_and_timeout_are_sanitized_explicit_failures) ... ok
+test_malformed_failure_protocol_never_echoes_untrusted_values (test_release_security.ApkCertificateTests.test_malformed_failure_protocol_never_echoes_untrusted_values) ... ok
+test_mismatch_diagnostic_contains_only_validated_public_digests (test_release_security.ApkCertificateTests.test_mismatch_diagnostic_contains_only_validated_public_digests) ... ok
+test_missing_apk_helper_or_selected_jar_prevents_subprocess (test_release_security.ApkCertificateTests.test_missing_apk_helper_or_selected_jar_prevents_subprocess) ... ok
+test_missing_duplicate_truncated_and_untrusted_protocol_rejected (test_release_security.ApkCertificateTests.test_missing_duplicate_truncated_and_untrusted_protocol_rejected) ... ok
+test_protocol_status_and_exit_code_must_agree (test_release_security.ApkCertificateTests.test_protocol_status_and_exit_code_must_agree) ... ok
+test_subprocess_uses_selected_jar_absolute_paths_and_no_signing_secrets (test_release_security.ApkCertificateTests.test_subprocess_uses_selected_jar_absolute_paths_and_no_signing_secrets) ... ok
+test_external_archive_rejects_traversal_secret_and_wrong_root (test_release_security.PackagingTests.test_external_archive_rejects_traversal_secret_and_wrong_root) ... ok
+test_private_content_and_plaintext_passwords_rejected_without_echo (test_release_security.PackagingTests.test_private_content_and_plaintext_passwords_rejected_without_echo) ... ok
+test_rejected_delivery_preserves_previous_archive (test_release_security.PackagingTests.test_rejected_delivery_preserves_previous_archive) ... ok
+test_secrets_artifacts_caches_excluded_public_reference_and_wrapper_preserved (test_release_security.PackagingTests.test_secrets_artifacts_caches_excluded_public_reference_and_wrapper_preserved) ... ok
+test_symlink_refused (test_release_security.PackagingTests.test_symlink_refused) ... ok
+test_each_secret_required_and_invalid_base64_rejected (test_release_security.SigningTests.test_each_secret_required_and_invalid_base64_rejected) ... ok
+test_invalid_secret_keeps_existing_copy_and_removes_temporary (test_release_security.SigningTests.test_invalid_secret_keeps_existing_copy_and_removes_temporary) ... ok
+test_keytool_errors_never_echo_external_output (test_release_security.SigningTests.test_keytool_errors_never_echo_external_output) ... ok
+test_other_certificate_and_certificate_without_private_key_rejected (test_release_security.SigningTests.test_other_certificate_and_certificate_without_private_key_rejected) ... ok
+test_restoration_creates_directories_and_private_file (test_release_security.SigningTests.test_restoration_creates_directories_and_private_file) ... ok
+test_stale_file_and_symlink_are_rejected (test_release_security.SigningTests.test_stale_file_and_symlink_are_rejected) ... ok
+test_any_other_difference_refused (test_repository_tree.CompareWithZipTests.test_any_other_difference_refused) ... ok
+test_identical_except_admitted_repository_files (test_repository_tree.CompareWithZipTests.test_identical_except_admitted_repository_files) ... ok
+test_zip_entry_outside_project_folder_refused (test_repository_tree.CompareWithZipTests.test_zip_entry_outside_project_folder_refused) ... ok
+test_gitignore_covers_every_refused_local_file (test_repository_tree.RepositoryTests.test_gitignore_covers_every_refused_local_file) ... ok
+test_public_signing_reference_and_wrapper_stay_tracked (test_repository_tree.RepositoryTests.test_public_signing_reference_and_wrapper_stay_tracked) ... ok
+test_repository_structure (test_repository_tree.RepositoryTests.test_repository_structure) ... ok
+test_tracked_tree_has_no_secret (test_repository_tree.RepositoryTests.test_tracked_tree_has_no_secret) ... ok
+test_clean_tree_accepted_file_by_file (test_repository_tree.TreeCheckTests.test_clean_tree_accepted_file_by_file) ... ok
+test_renamed_private_container_and_plaintext_password_rejected_without_echo (test_repository_tree.TreeCheckTests.test_renamed_private_container_and_plaintext_password_rejected_without_echo) ... ok
+test_symlink_rejected (test_repository_tree.TreeCheckTests.test_symlink_rejected) ... ok
+test_tracked_secret_artifact_cache_or_zip_rejected (test_repository_tree.TreeCheckTests.test_tracked_secret_artifact_cache_or_zip_rejected) ... ok
+test_untracked_local_files_are_not_part_of_the_tree (test_repository_tree.TreeCheckTests.test_untracked_local_files_are_not_part_of_the_tree) ... ok
+test_pack_is_reproducible_and_preserves_sources (test_tools.ToolsTests.test_pack_is_reproducible_and_preserves_sources) ... ok
+test_rest_ranges_and_mixed_units (test_tools.ToolsTests.test_rest_ranges_and_mixed_units) ... ok
+test_rounding_matches_excel_half_away_from_zero (test_tools.ToolsTests.test_rounding_matches_excel_half_away_from_zero) ... ok
+test_shipped_assets_and_android_identity (test_tools.ToolsTests.test_shipped_assets_and_android_identity) ... ok
+
+----------------------------------------------------------------------
+Ran 157 tests in 13.675s
+
+OK (skipped=12)
+OK : apk-absents, refus Gradle attendu observé.
+OK : aab-absents, refus Gradle attendu observé.
+OK : apk-sans-mot-de-passe, refus Gradle attendu observé.
+OK : aab-sans-conteneur, refus Gradle attendu observé.
+OK : apk-base64-invalide, refus Gradle attendu observé.
+# Banc hôte L6 — synthèse
+
+Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
+
+Fichiers : base-r1.jsonl, base-r2.jsonl, cand-r1.jsonl, cand-r2.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s | p | ms | 18 | 10.4 [10.0–10.8] | 18 | 5.4 [5.0–5.8] | 0.519 | amélioration |
+# Banc hôte L6 — synthèse
+
+Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
+
+Fichiers : base-r1.jsonl, cand-r1.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s | p | ms | 9 | 1.0 [1.0–1.0] | 0 | nan [nan–nan] |  | non mesuré |
+
+## Résultats métier (empreintes base / candidate)
+
+| Profil | Champ | Verdict (base / candidate) |
+| --- | --- | --- |
+| long | export | DIFFÉRENT (a / b) |
+
+## Mesures en échec
+
+- cand-r1.jsonl x/p : boom
+# Banc hôte L6 — synthèse
+
+Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
+
+Fichiers : base-r1.jsonl, base-r2.jsonl, cand-r1.jsonl, cand-r2.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s | p | ms | 18 | 7.0 [4.0–10.0] | 18 | 4.75 [4.5–5.0] | 0.679 | gain non démontré |
+# Banc hôte L6 — synthèse
+
+Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
+
+Fichiers : base-r1.jsonl, base-r2.jsonl, cand-r1.jsonl, cand-r2.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s | p | ms | 18 | 11.0 [10.0–12.0] | 18 | 11.0 [10.0–12.0] | 1.0 | gain non démontré |
+# Banc hôte L6 — synthèse
+
+Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
+
+Fichiers : base-r1.jsonl, cand-r1.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s | p | ms | 2 | 10.5 [10.0–11.0] | 2 | 1.05 [1.0–1.1] | 0.1 | non concluant (n < 8) |
+programme_v33.json: 13 -> 33 octets
+programme_v33.json: 13 -> 33 octets
+OK : 40 semaines, 280 jours, 1812 exercices du programme, 625 exercices de la base.
+OK : arbre du dépôt contrôlé fichier par fichier, 883 fichiers, 60609454 octets.
+OK : arbre suivi sans secret, 883 fichiers contrôlés un par un (60609454 octets).
+OK : 5 ressources chiffrées, aucun clair suivi.
