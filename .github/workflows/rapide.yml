@@ -1,0 +1,129 @@
+# G10 : contrôle rapide (formatage, analyse, tests choisis) sur
+# claude/ci-g10-rapide. Branche de mise au point du lot G10 seulement : le
+# contrôle complet reste claude/ci-3d (docs/CI_GP.md).
+name: CI rapide G10
+
+on:
+  push:
+    branches: ["claude/ci-g10-rapide"]
+    paths-ignore:
+      - "ci-rapide/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ci-g10-rapide
+  cancel-in-progress: true
+
+jobs:
+  rapide:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - name: Déchiffrer les ressources sous licence
+        env:
+          KT_ASSETS_KEY: ${{ secrets.KT_ASSETS_KEY }}
+        run: python3 tools/secure_assets.py decrypt
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.47.5"
+          channel: stable
+          cache: true
+      - name: Dépendances
+        id: pub
+        run: |
+          mkdir -p out
+          flutter pub get > out/pub-get.log 2>&1 || { tail -40 out/pub-get.log; exit 1; }
+          cp pubspec.lock out/pubspec.lock
+      - name: Formatage
+        id: format
+        continue-on-error: true
+        run: |
+          if ! dart format --output=none --set-exit-if-changed lib test integration_test test_driver > out/format.log 2>&1; then
+            dart format lib test integration_test test_driver > /dev/null 2>&1 || true
+            git diff -- lib test integration_test test_driver > out/format.patch
+            git checkout -q -- lib test integration_test test_driver
+            exit 1
+          fi
+      - name: Analyse
+        id: analyze
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          flutter analyze --no-pub 2>&1 | tee out/analyze.log
+      - name: Analyse des tests d'intégration
+        id: analyze_it
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          flutter pub add 'dev:integration_test:{"sdk":"flutter"}' > out/pub-add.log 2>&1
+          flutter analyze --no-pub integration_test test_driver 2>&1 | tee out/analyze-it.log
+          git checkout -q -- pubspec.yaml pubspec.lock
+          flutter pub get > /dev/null 2>&1
+      - name: Tests Dart choisis
+        id: dart
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          files=$(grep -v '^#' ci-rapide-tests.txt | grep -v '^dev:' | tr '\n' ' ')
+          if [ "$files" = "ALL " ] || [ "$files" = "ALL" ]; then files=""; fi
+          if [ -n "$(echo $files)" ] || grep -qx ALL ci-rapide-tests.txt; then
+            TZ=Europe/Paris flutter test --no-pub --timeout 90s --reporter expanded $files > out/flutter-tests.log 2>&1 || {
+              grep -E -B2 -A30 'EXCEPTION CAUGHT|\[E\]$' out/flutter-tests.log > out/flutter-failures.log || true
+              tail -n 8 out/flutter-tests.log; exit 1; }
+          fi
+          tail -n 5 out/flutter-tests.log || true
+      - name: Tests Dart du mode dev choisis
+        id: dartdev
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          files=$(grep '^dev:' ci-rapide-tests.txt | sed 's/^dev://' | tr '\n' ' ')
+          if [ -n "$(echo $files)" ]; then
+            TZ=Europe/Paris flutter test --no-pub --timeout 90s --reporter expanded --dart-define=KALIS_DEV=true $files > out/flutter-tests-dev.log 2>&1 || {
+              grep -E -B2 -A30 'EXCEPTION CAUGHT|\[E\]$' out/flutter-tests-dev.log > out/flutter-failures-dev.log || true
+              tail -n 8 out/flutter-tests-dev.log; exit 1; }
+          fi
+      - name: Paquets kalis_adapt (si demandé)
+        id: packages
+        continue-on-error: true
+        run: |
+          if grep -qx 'packages' ci-rapide-tests.txt; then
+            set -o pipefail
+            for p in packages/*/; do
+              (cd "$p" && dart pub get > /dev/null && dart analyze --fatal-infos && dart test) > "out/pkg-$(basename $p).log" 2>&1 || exit 1
+            done
+          fi
+      - name: Python
+        id: python
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          python3 -m unittest discover -s tools/tests > out/python-tests.log 2>&1
+          python3 tools/verify_project.py >> out/python-tests.log 2>&1
+      - name: Publier
+        if: always()
+        run: |
+          {
+            echo "run=${{ github.run_id }}"
+            echo "commit=${{ github.sha }}"
+            echo "pub=${{ steps.pub.outcome }}"
+            echo "format=${{ steps.format.outcome }}"
+            echo "analyze=${{ steps.analyze.outcome }}"
+            echo "analyze_it=${{ steps.analyze_it.outcome }}"
+            echo "dart=${{ steps.dart.outcome }}"
+            echo "dart_dev=${{ steps.dartdev.outcome }}"
+            echo "packages=${{ steps.packages.outcome }}"
+            echo "python=${{ steps.python.outcome }}"
+          } > out/resultat.txt
+          rm -rf ci-rapide && mkdir -p ci-rapide && cp -r out/. ci-rapide/
+          git config user.name "CI rapide"
+          git config user.email "ci@example.invalid"
+          git add -f ci-rapide
+          git commit -q -m "CI rapide : résultats du run ${{ github.run_id }}"
+          git push -q origin HEAD:claude/ci-g10-rapide || echo "publication refusée (un essai plus récent a été poussé)"

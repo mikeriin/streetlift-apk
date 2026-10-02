@@ -1,0 +1,856 @@
+{
+ "version": "5.10.0",
+ "source": "Relecture biomécanique (30/09/2026, M8 correction 2) : erreurs nettes seulement, par gabarit de famille recopié ; littérature citée dans « why ».",
+ "corrections": [
+  {
+   "id": "chin-up-leste",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "test-1rm-traction-lestee",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "test-max-tractions-pdc",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-a-la-serviette",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-aux-anneaux",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-aux-anneaux-prise-neutre",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-commando",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-excentrique-lestee",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-explosive",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-haute-explosive-high-pull-up",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-lestee",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-lestee-cluster",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-lestee-elastique-accommodante",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-lestee-lourde",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-lestee-pause",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-lestee-singles-lourds",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-lestee-tempo",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-negative-lente",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-pause-haute",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-poitrine-barre",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-prise-large",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-prise-mixte",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-prise-neutre",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-prise-serree",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-pronation",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-sternum",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-supination",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "traction-tempo-3-s-excentrique",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "tractions-explosives-poitrine-barre",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "tractions-pdc",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Shoulder extension from full flexion recruits the sterno-costal pec substantially (Youdas 2010: ~45-55% MVIC pull-up/chin-up; Dickie 2017 review); currently absent from all roles."
+  },
+  {
+   "id": "tirage-vertical-supination",
+   "role": "primaires",
+   "add": [],
+   "remove": [],
+   "move_to": {
+    "biceps_chef_long": "primaires",
+    "biceps_chef_court": "primaires"
+   },
+   "why": "Supinated vertical pull: biceps is a prime mover (as in traction-supination/chin-up, where it is primary); inconsistent with the bodyweight version."
+  },
+  {
+   "id": "scapular-pull-ups",
+   "role": "secondaires",
+   "add": [],
+   "remove": [],
+   "move_to": {
+    "dentele_anterieur": "stabilisateurs"
+   },
+   "why": "Scapular depression/downward rotation from a hang: serratus (protractor/upward rotator) is not a mover here; at most it keeps the scapula on the thorax."
+  },
+  {
+   "id": "scapular-pull-ups-lestes",
+   "role": "secondaires",
+   "add": [],
+   "remove": [],
+   "move_to": {
+    "dentele_anterieur": "stabilisateurs"
+   },
+   "why": "Scapular depression/downward rotation from a hang: serratus (protractor/upward rotator) is not a mover here; at most it keeps the scapula on the thorax."
+  },
+  {
+   "id": "suspension-active-active-hang",
+   "role": "secondaires",
+   "add": [],
+   "remove": [],
+   "move_to": {
+    "dentele_anterieur": "stabilisateurs"
+   },
+   "why": "Scapular depression/downward rotation from a hang: serratus (protractor/upward rotator) is not a mover here; at most it keeps the scapula on the thorax."
+  },
+  {
+   "id": "traction-assistee-elastique",
+   "role": "secondaires",
+   "add": [],
+   "remove": [],
+   "move_to": {
+    "dentele_anterieur": "stabilisateurs"
+   },
+   "why": "Scapular depression/downward rotation from a hang: serratus (protractor/upward rotator) is not a mover here; at most it keeps the scapula on the thorax."
+  },
+  {
+   "id": "handstand-push-ups-mur",
+   "role": "secondaires",
+   "add": [],
+   "remove": [],
+   "move_to": {
+    "deltoide_posterieur": "stabilisateurs"
+   },
+   "why": "Overhead pressing: posterior deltoid EMG is low (it is not a flexor/abductor); showing it as secondary mover is misleading."
+  },
+  {
+   "id": "hspu-freestanding-progression",
+   "role": "secondaires",
+   "add": [],
+   "remove": [],
+   "move_to": {
+    "deltoide_posterieur": "stabilisateurs"
+   },
+   "why": "Overhead pressing: posterior deltoid EMG is low (it is not a flexor/abductor); showing it as secondary mover is misleading."
+  },
+  {
+   "id": "hspu-kipping",
+   "role": "secondaires",
+   "add": [],
+   "remove": [],
+   "move_to": {
+    "deltoide_posterieur": "stabilisateurs"
+   },
+   "why": "Overhead pressing: posterior deltoid EMG is low (it is not a flexor/abductor); showing it as secondary mover is misleading."
+  },
+  {
+   "id": "hspu-negatives-mur",
+   "role": "secondaires",
+   "add": [],
+   "remove": [],
+   "move_to": {
+    "deltoide_posterieur": "stabilisateurs"
+   },
+   "why": "Overhead pressing: posterior deltoid EMG is low (it is not a flexor/abductor); showing it as secondary mover is misleading."
+  },
+  {
+   "id": "hspu-stricts-en-deficit",
+   "role": "secondaires",
+   "add": [],
+   "remove": [],
+   "move_to": {
+    "deltoide_posterieur": "stabilisateurs"
+   },
+   "why": "Overhead pressing: posterior deltoid EMG is low (it is not a flexor/abductor); showing it as secondary mover is misleading."
+  },
+  {
+   "id": "frog-stand-crow",
+   "role": "primaires",
+   "add": [
+    "dentele_anterieur"
+   ],
+   "remove": [
+    "deltoide_moyen",
+    "trapeze_superieur"
+   ],
+   "move_to": {},
+   "why": "Crow/frog stand is a bent-arm, shoulder-flexed support with protraction (serratus, pecs, anterior delt, triceps); it shares the handstand profile by mistake - no overhead elevation, so upper trap/middle delt are not primary. Also add grand_pectoral_sterno_costal + grand_pectoral_claviculaire to secondaires."
+  },
+  {
+   "id": "frog-stand-crow",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal",
+    "grand_pectoral_claviculaire"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Horizontal-adduction/flexion support of the bent-arm balance; pecs absent from all roles."
+  },
+  {
+   "id": "planche-advanced-tuck",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Straight-arm planche/lean demands a large shoulder-flexion + horizontal-adduction moment; sterno-costal pec is a major contributor, currently absent from every role (only claviculaire listed)."
+  },
+  {
+   "id": "planche-complete",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Straight-arm planche/lean demands a large shoulder-flexion + horizontal-adduction moment; sterno-costal pec is a major contributor, currently absent from every role (only claviculaire listed)."
+  },
+  {
+   "id": "planche-lean",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Straight-arm planche/lean demands a large shoulder-flexion + horizontal-adduction moment; sterno-costal pec is a major contributor, currently absent from every role (only claviculaire listed)."
+  },
+  {
+   "id": "planche-lean-a-l-elastique",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Straight-arm planche/lean demands a large shoulder-flexion + horizontal-adduction moment; sterno-costal pec is a major contributor, currently absent from every role (only claviculaire listed)."
+  },
+  {
+   "id": "planche-straddle",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Straight-arm planche/lean demands a large shoulder-flexion + horizontal-adduction moment; sterno-costal pec is a major contributor, currently absent from every role (only claviculaire listed)."
+  },
+  {
+   "id": "tuck-planche",
+   "role": "secondaires",
+   "add": [
+    "grand_pectoral_sterno_costal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Straight-arm planche/lean demands a large shoulder-flexion + horizontal-adduction moment; sterno-costal pec is a major contributor, currently absent from every role (only claviculaire listed)."
+  },
+  {
+   "id": "support-hold-anneaux-barres",
+   "role": "secondaires",
+   "add": [
+    "grand_dorsal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Top support is a scapular/shoulder depression hold; latissimus is a main depressor (and is listed primary in L-sit, secondary-level elsewhere) but is missing here."
+  },
+  {
+   "id": "support-hold-aux-barres",
+   "role": "secondaires",
+   "add": [
+    "grand_dorsal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Top support is a scapular/shoulder depression hold; latissimus is a main depressor (and is listed primary in L-sit, secondary-level elsewhere) but is missing here."
+  },
+  {
+   "id": "support-hold-leste",
+   "role": "secondaires",
+   "add": [
+    "grand_dorsal"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Top support is a scapular/shoulder depression hold; latissimus is a main depressor (and is listed primary in L-sit, secondary-level elsewhere) but is missing here."
+  },
+  {
+   "id": "l-sit-tuck-tenue",
+   "role": "secondaires",
+   "add": [],
+   "remove": [
+    "brachial"
+   ],
+   "move_to": {},
+   "why": "Elbows are locked in extension in the support; brachialis (pure elbow flexor) has no role - likely copy error."
+  },
+  {
+   "id": "l-sit-genoux-flechis-au-sol",
+   "role": "secondaires",
+   "add": [],
+   "remove": [
+    "brachial"
+   ],
+   "move_to": {},
+   "why": "Elbows are locked in extension in the support; brachialis (pure elbow flexor) has no role - likely copy error."
+  },
+  {
+   "id": "barre-au-front-ez",
+   "role": "secondaires",
+   "add": [],
+   "remove": [],
+   "move_to": {
+    "grand_pectoral_sterno_costal": "stabilisateurs",
+    "deltoide_anterieur": "stabilisateurs"
+   },
+   "why": "Skull-crusher: only the elbow moves, shoulder is held static; pec and anterior delt do not act as movers (fine as secondaries for JM/Tate press, not here)."
+  },
+  {
+   "id": "extension-triceps-couche-barre-ez",
+   "role": "secondaires",
+   "add": [],
+   "remove": [],
+   "move_to": {
+    "grand_pectoral_sterno_costal": "stabilisateurs",
+    "deltoide_anterieur": "stabilisateurs"
+   },
+   "why": "Skull-crusher: only the elbow moves, shoulder is held static; pec and anterior delt do not act as movers (fine as secondaries for JM/Tate press, not here)."
+  },
+  {
+   "id": "kettlebell-clean",
+   "role": "primaires",
+   "add": [],
+   "remove": [],
+   "move_to": {
+    "triceps_chef_long": "stabilisateurs",
+    "triceps_chef_lateral": "stabilisateurs",
+    "triceps_chef_medial": "stabilisateurs",
+    "deltoide_anterieur": "secondaires"
+   },
+   "why": "A clean without press is a hip-hinge pull to rack; triceps are not movers. NB: fiche points_cles include 'Développé sans cambrer' (copied from clean-et-press) - fix content too."
+  },
+  {
+   "id": "kettlebell-windmill",
+   "role": "primaires",
+   "add": [],
+   "remove": [],
+   "move_to": {
+    "supra_epineux": "stabilisateurs",
+    "infra_epineux": "stabilisateurs",
+    "petit_rond": "stabilisateurs",
+    "sous_scapulaire": "stabilisateurs",
+    "deltoide_moyen": "secondaires"
+   },
+   "why": "Windmill: the overhead arm is isometric; the movers are the hip hinge (glutes/hamstrings) and lateral trunk (obliques/QL). Rotator cuff = stabiliser, not primary."
+  },
+  {
+   "id": "hip-thrust",
+   "role": "secondaires",
+   "add": [],
+   "remove": [
+    "droit_femoral"
+   ],
+   "move_to": {},
+   "why": "Rectus femoris is a hip flexor (antagonist to the thrust); EMG low (Contreras 2015). Vasti can stay as secondaries."
+  },
+  {
+   "id": "hip-thrust-barre-lourd",
+   "role": "secondaires",
+   "add": [],
+   "remove": [
+    "droit_femoral"
+   ],
+   "move_to": {},
+   "why": "Rectus femoris is a hip flexor (antagonist to the thrust); EMG low (Contreras 2015). Vasti can stay as secondaries."
+  },
+  {
+   "id": "hip-thrust-une-jambe-epaules-sur-une-chaise",
+   "role": "secondaires",
+   "add": [],
+   "remove": [
+    "droit_femoral"
+   ],
+   "move_to": {},
+   "why": "Rectus femoris is a hip flexor (antagonist to the thrust); EMG low (Contreras 2015). Vasti can stay as secondaries."
+  },
+  {
+   "id": "hip-thrust-une-jambe-leste",
+   "role": "secondaires",
+   "add": [],
+   "remove": [
+    "droit_femoral"
+   ],
+   "move_to": {},
+   "why": "Rectus femoris is a hip flexor (antagonist to the thrust); EMG low (Contreras 2015). Vasti can stay as secondaries."
+  },
+  {
+   "id": "hip-thrust-unilateral",
+   "role": "secondaires",
+   "add": [],
+   "remove": [
+    "droit_femoral"
+   ],
+   "move_to": {},
+   "why": "Rectus femoris is a hip flexor (antagonist to the thrust); EMG low (Contreras 2015). Vasti can stay as secondaries."
+  },
+  {
+   "id": "squat-zercher",
+   "role": "stabilisateurs",
+   "add": [
+    "biceps_chef_long",
+    "biceps_chef_court",
+    "brachial"
+   ],
+   "remove": [],
+   "move_to": {},
+   "why": "Zercher: bar in the elbow crease, elbow flexors work hard isometrically. NB: points_cles are cloned from back squat ('Barre sur le haut du dos') - wrong content."
+  },
+  {
+   "id": "pompes",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  },
+  {
+   "id": "pompes-aux-anneaux",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  },
+  {
+   "id": "pompes-aux-anneaux-rto",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  },
+  {
+   "id": "pompes-avec-touchers-d-epaules",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  },
+  {
+   "id": "pompes-deficit-poignees",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  },
+  {
+   "id": "pompes-elastique",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  },
+  {
+   "id": "pompes-hindu",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  },
+  {
+   "id": "pompes-lestees",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  },
+  {
+   "id": "pompes-lestees-lest-ajoute",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  },
+  {
+   "id": "pompes-lestees-lourdes",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  },
+  {
+   "id": "pompes-pause-au-sol",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  },
+  {
+   "id": "pompes-pdc",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  },
+  {
+   "id": "pompes-prise-large",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  },
+  {
+   "id": "pompes-spiderman",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  },
+  {
+   "id": "pompes-sur-les-poings",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  },
+  {
+   "id": "pompes-tempo",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  },
+  {
+   "id": "test-max-pompes-pdc",
+   "role": "stabilisateurs",
+   "add": [
+    "grand_fessier"
+   ],
+   "remove": [
+    "moyen_fessier"
+   ],
+   "move_to": {},
+   "why": "Plank line in a push-up is held by gluteus maximus (posterior pelvic tilt/anti-extension); gluteus medius has no specific role in a bilateral push-up (keep it only for one-arm variants)."
+  }
+ ]
+}

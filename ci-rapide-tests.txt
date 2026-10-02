@@ -1,0 +1,2 @@
+ALL
+dev:test/g7_mode_dev_test.dart
