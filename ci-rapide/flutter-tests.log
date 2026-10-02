@@ -1,0 +1,82 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart
+00:00 +0: diag 10-1 assisted intermediaire_salle 3 1
+DIAG assisted intermediaire_salle/3 wk=1 end=2026-10-08 00:00:00.000 ann=0 pend=0 done=3 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:00 +1: diag 10-1 assisted intermediaire_salle 3 2
+DIAG assisted intermediaire_salle/3 wk=2 end=2026-10-15 00:00:00.000 ann=0 pend=0 done=6 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:01 +2: diag 10-1 assisted intermediaire_salle 3 3
+DIAG assisted intermediaire_salle/3 wk=3 end=2026-10-22 00:00:00.000 ann=0 pend=0 done=9 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:01 +3: diag 10-1 assisted intermediaire_salle 3 4
+DIAG assisted intermediaire_salle/3 wk=4 end=2026-10-29 00:00:00.000 ann=0 pend=0 done=12 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:01 +4: diag 10-1 assisted intermediaire_salle 3 5
+DIAG assisted intermediaire_salle/3 wk=5 end=2026-11-05 00:00:00.000 ann=0 pend=0 done=15 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:01 +5: diag 10-1 assisted douleur_et_lieu 3 1
+DIAG assisted douleur_et_lieu/3 wk=1 end=2026-10-08 00:00:00.000 ann=0 pend=0 done=3 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:02 +6: diag 10-1 assisted douleur_et_lieu 3 2
+DIAG assisted douleur_et_lieu/3 wk=2 end=2026-10-15 00:00:00.000 ann=0 pend=0 done=6 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:02 +7: diag 10-1 assisted douleur_et_lieu 3 3
+DIAG assisted douleur_et_lieu/3 wk=3 end=2026-10-22 00:00:00.000 ann=0 pend=0 done=9 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:02 +8: diag 10-1 assisted douleur_et_lieu 3 4
+DIAG assisted douleur_et_lieu/3 wk=4 end=2026-10-29 00:00:00.000 ann=0 pend=0 done=12 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:02 +9: diag 10-1 assisted douleur_et_lieu 3 5
+DIAG assisted douleur_et_lieu/3 wk=5 end=2026-11-05 00:00:00.000 ann=0 pend=0 done=15 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:02 +10: diag 10-1 assisted calisthenie_parc 3 1
+DIAG assisted calisthenie_parc/3 wk=1 end=2026-10-08 00:00:00.000 ann=0 pend=0 done=3 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:02 +11: diag 10-1 assisted calisthenie_parc 3 2
+DIAG assisted calisthenie_parc/3 wk=2 end=2026-10-15 00:00:00.000 ann=0 pend=0 done=6 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:03 +12: diag 10-1 assisted calisthenie_parc 3 3
+DIAG assisted calisthenie_parc/3 wk=3 end=2026-10-22 00:00:00.000 ann=0 pend=0 done=9 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:03 +13: diag 10-1 assisted calisthenie_parc 3 4
+DIAG assisted calisthenie_parc/3 wk=4 end=2026-10-29 00:00:00.000 ann=0 pend=0 done=12 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:03 +14: diag 10-1 assisted calisthenie_parc 3 5
+DIAG assisted calisthenie_parc/3 wk=5 end=2026-11-05 00:00:00.000 ann=0 pend=0 done=15 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:03 +15: diag 10-1 assisted avance_street 3 1
+DIAG assisted avance_street/3 wk=1 end=2026-10-08 00:00:00.000 ann=0 pend=0 done=3 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:03 +16: diag 10-1 assisted avance_street 3 2
+DIAG assisted avance_street/3 wk=2 end=2026-10-15 00:00:00.000 ann=0 pend=0 done=6 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:03 +17: diag 10-1 assisted avance_street 3 3
+DIAG assisted avance_street/3 wk=3 end=2026-10-22 00:00:00.000 ann=0 pend=0 done=9 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:03 +18: diag 10-1 assisted avance_street 3 4
+DIAG assisted avance_street/3 wk=4 end=2026-10-29 00:00:00.000 ann=0 pend=0 done=12 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:04 +19: diag 10-1 assisted avance_street 3 5
+DIAG assisted avance_street/3 wk=5 end=2026-11-05 00:00:00.000 ann=0 pend=0 done=15 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:04 +20: diag 10-1 free intermediaire_salle 3 1
+DIAG free intermediaire_salle/3 wk=1 end=2026-10-08 00:00:00.000 ann=0 pend=0 done=3 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:04 +21: diag 10-1 free intermediaire_salle 3 2
+DIAG free intermediaire_salle/3 wk=2 end=2026-10-15 00:00:00.000 ann=0 pend=0 done=6 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:04 +22: diag 10-1 free intermediaire_salle 3 3
+DIAG free intermediaire_salle/3 wk=3 end=2026-10-22 00:00:00.000 ann=0 pend=0 done=9 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:04 +23: diag 10-1 free intermediaire_salle 3 4
+DIAG free intermediaire_salle/3 wk=4 end=2026-10-29 00:00:00.000 ann=0 pend=0 done=12 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:04 +24: diag 10-1 free intermediaire_salle 3 5
+DIAG free intermediaire_salle/3 wk=5 end=2026-11-05 00:00:00.000 ann=0 pend=0 done=15 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:05 +25: diag 10-1 free douleur_et_lieu 3 1
+DIAG free douleur_et_lieu/3 wk=1 end=2026-10-08 00:00:00.000 ann=0 pend=0 done=3 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:05 +26: diag 10-1 free douleur_et_lieu 3 2
+DIAG free douleur_et_lieu/3 wk=2 end=2026-10-15 00:00:00.000 ann=0 pend=0 done=6 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:05 +27: diag 10-1 free douleur_et_lieu 3 3
+DIAG free douleur_et_lieu/3 wk=3 end=2026-10-22 00:00:00.000 ann=0 pend=0 done=9 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:05 +28: diag 10-1 free douleur_et_lieu 3 4
+DIAG free douleur_et_lieu/3 wk=4 end=2026-10-29 00:00:00.000 ann=0 pend=0 done=12 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:05 +29: diag 10-1 free douleur_et_lieu 3 5
+DIAG free douleur_et_lieu/3 wk=5 end=2026-11-05 00:00:00.000 ann=0 pend=0 done=15 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:05 +30: diag 10-1 free calisthenie_parc 3 1
+DIAG free calisthenie_parc/3 wk=1 end=2026-10-08 00:00:00.000 ann=0 pend=0 done=3 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:05 +31: diag 10-1 free calisthenie_parc 3 2
+DIAG free calisthenie_parc/3 wk=2 end=2026-10-15 00:00:00.000 ann=0 pend=0 done=6 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:06 +32: diag 10-1 free calisthenie_parc 3 3
+DIAG free calisthenie_parc/3 wk=3 end=2026-10-22 00:00:00.000 ann=0 pend=0 done=9 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:06 +33: diag 10-1 free calisthenie_parc 3 4
+DIAG free calisthenie_parc/3 wk=4 end=2026-10-29 00:00:00.000 ann=0 pend=0 done=12 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:06 +34: diag 10-1 free calisthenie_parc 3 5
+DIAG free calisthenie_parc/3 wk=5 end=2026-11-05 00:00:00.000 ann=0 pend=0 done=15 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:06 +35: diag 10-1 free avance_street 3 1
+DIAG free avance_street/3 wk=1 end=2026-10-08 00:00:00.000 ann=0 pend=0 done=3 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:06 +36: diag 10-1 free avance_street 3 2
+DIAG free avance_street/3 wk=2 end=2026-10-15 00:00:00.000 ann=0 pend=0 done=6 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:06 +37: diag 10-1 free avance_street 3 3
+DIAG free avance_street/3 wk=3 end=2026-10-22 00:00:00.000 ann=0 pend=0 done=9 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:06 +38: diag 10-1 free avance_street 3 4
+DIAG free avance_street/3 wk=4 end=2026-10-29 00:00:00.000 ann=0 pend=0 done=12 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:07 +39: diag 10-1 free avance_street 3 5
+DIAG free avance_street/3 wk=5 end=2026-11-05 00:00:00.000 ann=0 pend=0 done=15 blocks=0 pw=5 start=2026-10-01 00:00:00.000 entries=[] err=null
+00:07 +40: All tests passed!
