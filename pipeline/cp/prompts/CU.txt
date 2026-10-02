@@ -1,0 +1,25 @@
+LOT CU — PARCOURS DE CRÉATION V3 DANS L'APPLICATION
+Modèle : Opus 5.5, effort élevé (voie App). Validation : **propriétaire**.
+Prérequis : CQ livré (`etiquettes/kalis_core-v0.4.0`). Branche : `main` ; contrôle : `claude/ci-3d` (`docs/CI_GP.md`). Base : `main` dev6.7.0 (9f6b80b) — G12 a été annulé (DECISIONS_GP.md D0.14) : vérifie que `main` n'a rien reçu de G12 ; si c'est le cas, notifie un blocage et arrête-toi.
+Décisions : DECISIONS_CP.md (C1.4, C1.6, section CQ), DECISIONS_GP.md D3 (profil, écran de création G6), D0.9 (versions), règle santé L13. Règles : PIPELINE_CP.md §0-§7 ; pour tout ce qui touche à `main`, PIPELINE_GP.md comme pour la piste A.
+
+OBJECTIF
+L'utilisateur répond, à la création de son programme, aux questions du profil v3 qui comptent **pour lui** — peu de questions pour un débutant, celles de la compétition pour un compétiteur, tests et records pour un athlète avancé — exactement comme CQ les a définies (`packages/kalis_core/docs/PARCOURS_V3.md`). Les moteurs actuels (`kalis_plan` 0.1, `kalis_adapt` 0.1) continuent de fonctionner ; les moteurs calibrés liront ces réponses au lot CI.
+
+1. PAQUETS
+- Récupère `packages/kalis_core` depuis `etiquettes/kalis_core-v0.4.0` comme les lots GP l'ont fait (commentaire dans `pubspec.yaml`), sans toucher aux autres paquets ; vérifie que `kalis_plan` 0.1.0, `kalis_adapt` 0.1.0 et `kalis_koach` fonctionnent avec (CQ l'a vérifié côté paquets ; vérifie-le dans l'application) ; régénère `pubspec.lock` si nécessaire (`flutter pub get --enforce-lockfile` en CI).
+
+2. PARCOURS
+- Implémente l'arbre de questions adaptatif de `PARCOURS_V3.md` dans le parcours de création existant (G6) : conditions d'apparition, textes, réponses « je ne sais pas » / « passer », validations, ordre et écrans suggérés par CQ. Garde le style, les composants et le ton de l'application ; lisible sur téléphone ; aucun écran surchargé.
+- **Tests guidés** définis par CQ : proposés quand une capacité est inconnue (à la création ou à la première séance, selon `PARCOURS_V3.md`), avec consignes de sécurité ; résultats convertis en valeurs du profil.
+- **Utilisateurs existants** : migration du profil v2 vers v3 sans perte ni invention (une réponse absente reste absente) ; une entrée « Compléter mon profil » (et une invitation discrète, une seule fois) leur permet de répondre aux nouvelles questions. Le programme en cours n'est pas régénéré ; le programme importé du propriétaire ne l'est jamais (D5.10).
+- Édition du profil : les nouvelles réponses sont modifiables depuis le profil.
+- Santé : la règle L13 et son questionnaire sont inchangés ; les antécédents demandés par le parcours sont des contraintes d'entraînement (CQ), jamais un diagnostic.
+- Sauvegarde, export et import des données (s'ils existent) incluent les nouveaux champs.
+
+3. CONTRÔLES
+- Tests : chaque condition d'apparition, nombre de questions vues pour les profils types de `PARCOURS_V3.md` (débutant, intermédiaire, compétiteur élite street, autre discipline), migration v2 → v3, aller-retour de sauvegarde, création d'un programme avec les moteurs actuels pour chaque profil type.
+- Build signé réussi (`build-apk.yml`), version **dev6.8.0** (ou suivante, PIPELINE_GP.md §7.1).
+
+FIN DE LOT
+`main` (dev6.8.0), build signé réussi. `LIVRAISON_CU.md` (pipeline et projet claude.ai) : ce qui change pour l'utilisateur, nombre de questions par profil type, **à tester** (parcours débutant, parcours compétiteur, compléter mon profil), limites. `ETAT_CP.md` (ta ligne : « à valider ») ; page de suivi (partie Calibrage) ; notification « Kalis Track CU prêt à tester — dev6.8.0. À tester : nouveau parcours de création. Page : <lien> » ; arrête-toi.

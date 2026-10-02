@@ -1,0 +1,26 @@
+LOT CX — CROISEMENT STREET : `kalis_plan` 0.2 ↔ `kalis_adapt` 0.2 SUR DES SAISONS ENTIÈRES
+Modèle : Fable 5.1, effort maximal (voie A). Validation : **propriétaire** (page de relecture).
+Prérequis : CP1 et CA1 livrés (s'ils sont « livré — seuil non atteint », vérifie dans `DECISIONS_CP.md` que le propriétaire a décidé de continuer ; sinon « en attente du propriétaire », notification, arrêt). Branche : `moteurs` (`packages/kalis_plan`, `packages/kalis_adapt`, `packages/kalis_bench`) ; contrôle : `claude/ci-cp-a`. La voie B est au repos pendant ce lot.
+Décisions : DECISIONS_CP.md (toutes les sections précédentes). Règles : PIPELINE_CP.md §1-§7.
+
+OBJECTIF
+Les deux moteurs ensemble conduisent une saison street entière comme un coach d'élite : création du plan de saison, séances, ajustements, tests, blocs suivants (`nextBlock` à partir des résumés d'adaptation), affûtage, jour de compétition — **≥ 9/10 pour chaque école du panel et chaque profil street, sur les saisons complètes, 0 violation de sécurité** — puis le propriétaire relit et valide.
+
+1. AVANT TOUT
+- Lis toutes les notes et tous les commentaires du propriétaire sur la page de relecture (manches 0 et CP1, ArtifactData) : chacun est traité (corrigé, ou expliqué dans ta livraison).
+- Lis `LIVRAISON_CP1.md`, `LIVRAISON_CA1.md` (ce qui reste pour CX) et les écarts restants.
+
+2. CROISEMENT
+- Mode `croisement` du banc : `kalis_plan` 0.2 crée le plan de saison et les blocs, `kalis_adapt` 0.2 conduit les séances sur les athlètes simulés (tous les modèles de vérité de CA1), les résumés d'adaptation nourrissent `nextBlock`, les tests mettent à jour les maxima, l'affûtage mène à l'échéance, le jour de compétition produit les tentatives.
+- Tous les profils street × saison complète (≥ 16 semaines, jusqu'à l'échéance et une semaine après) × ≥ 100 graines par modèle de vérité. Scénarios imposés : séances manquées, semaine de maladie, douleur à un coude ou une épaule, changement de lieu (parc seulement), échéance avancée de 2 semaines, deuxième échéance dans la saison.
+- Mesures : progression, performance le jour J comparée au maximum atteignable, tentatives réussies, échecs non voulus, cohérence entre le plan et ce que l'évolution en fait (rien de défait d'un bloc à l'autre sans raison), stabilité ; comparaison au couple 0.1.
+- Corrige dans les deux paquets (versions 0.2.x, branches fixes `etiquettes/kalis_plan-v0.2.x` et `etiquettes/kalis_adapt-v0.2.x`) ; `kalis_core` seulement selon PIPELINE_CP.md §0.
+
+3. CALIBRAGE
+- Panel sur les **saisons** (export lisible : plan de saison, blocs successifs, séances clés, décisions du moteur et raisons, résultat le jour J) : 4 écoles × profils street, en aveugle ; au plus 6 boucles ; consignées dans `packages/kalis_bench/docs/CALIBRAGE_CX.md`.
+
+4. PAGE DE RELECTURE — manche « street complet (CX, <date>) »
+- Pour chaque profil street choisi (débutant complet, intermédiaire, sets & reps compétiteur, streetlifting compétiteur, élite figures, et deux profils à contraintes) : la saison (phases, échéance), chaque bloc, des semaines types, et une trajectoire simulée commentée (« voilà ce que le moteur a fait quand… »). Lisible sur téléphone ; notation et commentaires comme les manches précédentes.
+
+FIN DE LOT
+Commits « Kalis Track moteurs (CX) : kalis_plan 0.2.x, kalis_adapt 0.2.x » sur `moteurs`, contrôle vert, branches fixes. `LIVRAISON_CX.md` (pipeline et projet claude.ai) : mesures du croisement, notes du panel par école et par profil, notes du propriétaire traitées, limites. `ETAT_CP.md` (ta ligne : « à valider ») ; page de suivi ; notification « Kalis Track CX : programmes prêts à relire (street). Page de relecture : <lien> » ; arrête-toi. Corrections du propriétaire : passage « Corrections du propriétaire pour CX » (PIPELINE_CP.md §1).

@@ -1,0 +1,29 @@
+LOT CP2 — `kalis_plan` 0.3.0 : MUSCULATION, FORCE, CARDIO, MOBILITÉ, CROSSFIT AU NIVEAU D'UN COACH
+Modèle : Fable 5.1, effort maximal (voie A). Validation : automatique (seuil PIPELINE_CP.md §2).
+Prérequis : CX validé par le propriétaire. Branche : `moteurs` (`packages/kalis_plan`, adaptateur du banc si besoin) ; contrôle : `claude/ci-cp-a`. Le lot CA2 (voie B) fait évoluer `kalis_adapt` en même temps : ne touche pas `packages/kalis_adapt`.
+Décisions : DECISIONS_CP.md (toutes les sections précédentes, surtout CX). Règles : PIPELINE_CP.md §1-§7.
+
+OBJECTIF
+Faire pour les autres disciplines ce que CP1 et CX ont fait pour le street : **≥ 9/10 pour chaque école du panel et chaque profil non street du banc, 0 violation de sécurité**, et le street **inchangé ou meilleur** (re-noté en fin de lot : toujours ≥ 9/10 partout).
+
+0. AVANT DE CODER
+- Lis le référentiel (thème l et ce qui s'applique des autres), `BASELINE_0_1.md` (défauts des autres disciplines), `LIVRAISON_CX.md`, toutes les notes du propriétaire (ArtifactData ; elles priment).
+
+1. CE QUE LE MOTEUR DOIT SAVOIR FAIRE (règles chiffrées tirées du référentiel)
+- **Musculation et esthétique** : volumes par muscle selon le niveau, répartition, choix d'exercices (longueur musculaire, profils de résistance), techniques d'intensification servies avec leurs prérequis, spécialisation de groupes en retard, périodisation adaptée (blocs, décharges).
+- **Force (powerlifting et force générale)** : mêmes exigences que le streetlifting de CP1 (saison, ondulation, top sets, tests, affûtage, compétition) pour squat, développé couché, soulevé de terre.
+- **Course et cardio** : plan d'allure (zones, polarisation), progression du kilométrage bornée, sortie longue le jour le plus long, séances de qualité dosées, affûtage avant une course, tests.
+- **Mobilité** : progressions mesurables (amplitude, maintiens), fréquence, place dans la semaine.
+- **CrossFit** : formats codifiés (AMRAP, EMOM, pour le temps, tours chronométrés), équilibre des modalités, force + conditionnement, échelles de difficulté.
+- **Hybrides** (street + course, force + endurance…) : interférence modélisée (ordre, espacement, volume), priorités du profil.
+- Limites de 0.1 restantes (`CONTRAT.md` §9 : CrossFit, cardio, interférence, petits groupes, très peu de temps) traitées.
+- Inchangé : non-ressemblance, déterminisme, budgets, API additive, programme du propriétaire jamais régénéré.
+
+2. CALIBRAGE ET VALIDATION
+- Boucle banc → panel (4 écoles × profils non street, en aveugle) → corrections du moteur ; au plus 6 boucles (`docs/CALIBRAGE_CP2.md`) ; puis une passe complète du panel sur les profils street (non-régression).
+- Invariants (propriétés ≥ 10 000 profils) : ceux de CP1 + progression du kilométrage bornée, interférence respectée.
+- Relecture indépendante (sous-agent) du code et du contrat.
+- Page de relecture : manche « autres disciplines (CP2, <date>) ».
+
+FIN DE LOT
+Commit « Kalis Track moteurs (CP2) : kalis_plan 0.3.0 », contrôle vert sur `claude/ci-cp-a`, branche fixe `etiquettes/kalis_plan-v0.3.0`. `LIVRAISON_CP2.md` (pipeline et projet claude.ai). `ETAT_CP.md` (ta ligne) ; page de suivi ; notification (PIPELINE_CP.md §5) ; arrête-toi.

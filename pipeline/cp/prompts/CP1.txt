@@ -1,0 +1,40 @@
+LOT CP1 — `kalis_plan` 0.2.0 : LE STREET AU NIVEAU D'UN COACH D'ÉLITE
+Modèle : Fable 5.1, effort maximal (voie A). Validation : automatique (seuil PIPELINE_CP.md §2).
+Prérequis : CR livré (`kalis_bench` 0.1.0), CQ livré (`kalis_core` 0.4.0). Branche de travail : `moteurs` (`packages/kalis_plan`, et l'adaptateur de profils de `packages/kalis_bench`) ; contrôle : `claude/ci-cp-a`. Le lot CA1 (voie B) fait évoluer `kalis_adapt` en même temps : ne touche pas `packages/kalis_adapt`.
+Décisions : DECISIONS_CP.md (C0-C2, sections CR et CQ), DECISIONS_GP.md D4 (création), D5.10. Règles : PIPELINE_CP.md §1-§7.
+
+OBJECTIF
+Pour tout profil street (streetlifting, sets & reps, calisthénie et figures), du débutant complet à l'élite compétiteur, le programme créé doit être celui qu'un excellent coach personnel écrirait pour cette personne : **≥ 9/10 pour chacune des quatre écoles du panel et chacun des profils street du banc, 0 violation de sécurité**.
+
+0. AVANT DE CODER
+- Lis `kalis_bench` : `REFERENTIEL.md`, `MESURES_REFERENCES.md`, `PANEL.md`, `BASELINE_0_1.md` (liste priorisée des défauts), les attentes de coach des profils street ; le contrat de `kalis_core` 0.4.0 et `PARCOURS_V3.md`.
+- Lis toutes les notes et tous les commentaires du propriétaire sur la page de relecture (outil ArtifactData, lien dans `ETAT_CP.md`) : ils **priment** sur le panel ; chacun sera traité (corrigé, ou expliqué dans ta livraison).
+- Branche l'adaptateur de profils du banc sur le profil v3.
+
+1. CE QUE LE MOTEUR DOIT SAVOIR FAIRE (chaque règle chiffrée vient du référentiel ; ce qui n'est qu'un choix raisonné est dit comme tel dans `CONTRAT.md`)
+- **Plan de saison** jusqu'à l'échéance (ou cycle sans échéance) : phases, intention de chaque bloc, semaines de décharge, de test, d'affûtage ; blocs de 4 à 6 semaines générés au fil de l'eau (D4.8) dans ce squelette ; plusieurs échéances.
+- **Variation** : ondulation dans la semaine par mouvement principal (jours lourd / moyen / léger), progression d'une semaine à l'autre dans le bloc (vagues, montée d'intensité, baisse de volume en réalisation) ; fin de la « semaine type unique » quand le profil en tire profit (un débutant peut garder une semaine stable : c'est un choix de coach).
+- **Force lestée** : intensités en % du 1RM (charge totale) avec plafond de RIR, top set + back-off, fréquences des mouvements de compétition, variantes ciblées sur les points faibles (profil v3), accessoires qui servent la performance ; choix du mouvement principal par l'objectif et l'échéance, pas par l'ordre de fatigue.
+- **Sets & reps** : méthodes d'endurance de force (densité, EMOM, échelles, sous-maximal fréquent, séries à l'échec dosées), spécificité du format de l'épreuve, tests.
+- **Figures** : objectif de figure, étape de progression, pratique fréquente de qualité, isométrie et excentriques, critères de passage d'étape, montée prudente de la charge des tendons ; cohabitation avec la force.
+- **Techniques d'intensification** : servies seulement quand leurs prérequis sont remplis (ancienneté, niveau, récupération, phase du bloc) et quand elles servent l'objectif.
+- **Spécialisation** : réallocation du volume vers la priorité, volume d'entretien du reste, durée.
+- **Volume** : bandes par muscle et par niveau tirées du référentiel (remplacent le plafond de 20 séries et le comptage à moitié des séries de pratique s'ils ne sont pas justifiés) ; tolérance modulée par les facteurs du profil v3 retenus par CQ (âge, sommeil, travail physique, autres sports, antécédents…).
+- **Organisation de la semaine** : découpage planifié quand il sert (haut / bas, thèmes, jours lourds séparés), sinon la règle des 48 h ; séances dans le temps donné (durées estimées réalistes : échauffements spécifiques, montées en charge, repos réels des séries lourdes).
+- **Débutants et « monsieur tout le monde »** : simple, peu d'exercices, progression linéaire, apprentissage technique, régressions des mouvements au poids du corps, aucune technique avancée ; les tests guidés de CQ quand une capacité est inconnue.
+- **Notes de coach** courtes par séance et par bloc (pourquoi ce bloc, sur quoi se concentrer), en codes de raison + paramètres (Koach).
+- Limites de 0.1 à traiter (`CONTRAT.md` §9) : semaine type unique, ondulation, mouvement principal, découpage ; le reste si le banc le demande.
+- Inchangé : non-ressemblance (Jaccard < 0,30) avec le programme du propriétaire **et** avec les références ; déterminisme ; budgets (création ≤ 1 s, régénération ≤ 300 ms) ; verrous et diff minimal de la revue ; API additive ; les profils non street ne régressent pas (critères calculables du banc au moins aussi bons qu'en 0.1).
+
+2. CALIBRAGE (PIPELINE_CP.md §2)
+- Boucle : banc complet (profils street) → panel (4 écoles × tous les profils street, en aveugle) → corrections du **moteur** → nouvelle boucle. Au plus 6 boucles. Jamais de modification des grilles, des profils types ou des attentes de coach.
+- Chaque boucle est consignée (`packages/kalis_plan/docs/CALIBRAGE_CP1.md`) : notes école × profil, points perdus, corrections faites, effet mesuré.
+- Si une demande du panel contredit le référentiel ou une note du propriétaire, le propriétaire puis le référentiel l'emportent ; consigne-le.
+
+3. VALIDATION ET RELECTURE
+- Invariants de 0.1 conservés et nouveaux invariants testés (propriétés sur ≥ 10 000 profils aléatoires) : aucune technique sans ses prérequis ; affûtage aligné sur l'échéance ; montée de charge et de volume bornée ; aucun exercice contre-indiqué ; séances dans le temps donné.
+- Relecture indépendante (sous-agent) du code et du contrat avant livraison.
+- Page de relecture : ajoute la manche « kalis_plan 0.2 — street (CP1, <date>) » (mêmes profils que la manche 0 + les profils compétiteurs et figures), sans effacer les manches précédentes.
+
+FIN DE LOT
+Commit « Kalis Track moteurs (CP1) : kalis_plan 0.2.0 » sur `moteurs` (rebase avant push), contrôle vert sur `claude/ci-cp-a`, branche fixe `etiquettes/kalis_plan-v0.2.0` (et `etiquettes/kalis_bench-v0.1.1` si le banc a changé). `LIVRAISON_CP1.md` (pipeline et projet claude.ai) : banc avant / après, notes du panel par école et par profil, notes du propriétaire traitées, limites, ce qui reste pour CX. `ETAT_CP.md` (ta ligne : « livré » ou « livré — seuil non atteint (<profils>) ») ; page de suivi ; notification (PIPELINE_CP.md §5) ; arrête-toi.

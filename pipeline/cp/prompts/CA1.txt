@@ -1,0 +1,39 @@
+LOT CA1 — `kalis_adapt` 0.2.0 : FAIRE ÉVOLUER UN ATHLÈTE STREET COMME UN COACH D'ÉLITE
+Modèle : Fable 5.1, effort maximal (voie B). Validation : automatique (seuil PIPELINE_CP.md §2).
+Prérequis : CR livré (`kalis_bench` 0.1.0), CQ livré (`kalis_core` 0.4.0). Branche de travail : `moteurs` (`packages/kalis_adapt` ; dans `packages/kalis_bench`, seulement des ajouts pour les trajectoires) ; contrôle : `claude/ci-cp-b`. Le lot CP1 (voie A) fait évoluer `kalis_plan` en même temps : ne touche pas `packages/kalis_plan`.
+Décisions : DECISIONS_CP.md (C0-C2, sections CR et CQ), DECISIONS_GP.md D5 (suivi : flammes, déblocages, modes, bilan santé, programme importé). Règles : PIPELINE_CP.md §1-§7.
+
+OBJECTIF
+Séance après séance et bloc après bloc, le moteur d'évolution doit conduire chaque athlète street (débutant complet à élite compétiteur) comme le ferait un excellent coach personnel qui le suit : **≥ 9/10 pour chacune des quatre écoles du panel et chacun des profils street du banc, sur les trajectoires simulées, 0 violation de sécurité**, et mesurablement meilleur que `kalis_adapt` 0.1.0.
+
+0. AVANT DE CODER
+- Lis `kalis_bench` (`REFERENTIEL.md`, `PANEL.md`, `BASELINE_0_1.md`), le contrat de `kalis_core` 0.4.0 (prescriptions avancées, périodisation, spécialisation, figures, compétition, profil v3), `packages/kalis_adapt/CONTRAT.md` §8 (limites connues).
+- Lis toutes les notes du propriétaire sur la page de relecture (ArtifactData) : elles priment ; chacune est traitée.
+- Programmes d'entrée : `kalis_plan` 0.2.0 n'existe peut-être pas encore. Construis des **programmes de test** conformes au contrat 0.4.0 (toutes les techniques, phases, tests, affûtage, figures, spécialisation) pour les profils street du banc ; si `etiquettes/kalis_plan-v0.2.0` existe déjà quand tu calibres, ajoute ses programmes. Le croisement réel est le lot CX.
+
+1. CE QUE LE MOTEUR DOIT SAVOIR FAIRE (règles chiffrées tirées du référentiel ; choix raisonnés dits comme tels dans `CONTRAT.md`)
+- **Exécuter chaque prescription avancée** : top set + back-off (back-off calculé sur la top set **réalisée**), clusters, rest-pause, myo-reps, dégressives, maintiens (capacité en secondes, minuteur), excentriques, EMOM, densité, échelles, AMRAP ; % du 1RM avec plafond de RIR → charge autorégulée ; journalisation (champs 0.4.0).
+- **Tests** : séries de test et semaines de test → estimation des maxima avec leur incertitude, résumé pour `kalis_plan.nextBlock`.
+- **Figures** : suivi de l'étape de progression ; passage à l'étape suivante selon les critères du contrat ; régression un mauvais jour ; charge des tendons surveillée.
+- **Périodisation** : chaque ajustement respecte l'intention de la phase (en affûtage, jamais de volume ajouté et l'intensité est gardée ; en accumulation, le volume peut monter dans la tolérance apprise ; décharge et test respectés) ; échéance proche → décisions prudentes.
+- **Jour de compétition** (streetlifting) : choix des tentatives proposé (ouverture, deuxième, troisième) selon les maxima estimés et leur incertitude ; sets & reps : objectif de répétitions et stratégie de rythme si le contrat le permet.
+- **Récupération et vie** : valeurs habituelles du profil v3 (sommeil, stress, travail physique, autres sports, antécédents) + bilan du jour (D5.8-D5.9, aucune réponse inventée) → tolérance ; zones à antécédent : montées plus prudentes.
+- **Limites de 0.1 à traiter** (`CONTRAT.md` §8) : biais de note individuel non appris (4), lest léger qui presque double (12 : progression du lest bornée comme un coach le ferait), douleur de 5 à 6/10 (11 : conduite du référentiel), séries enchaînées (8) si le banc le demande ; les autres si le banc le demande.
+- **Programme importé du propriétaire** (D5.10) : toujours suivi tel qu'il est, jamais régénéré ; les nouvelles fonctions (tests, tentatives) s'y appliquent si elles n'en changent pas la structure.
+- Les programmes `kalis_plan` 0.1 restent servis sans régression (l'application les utilise jusqu'au lot CI).
+
+2. SIMULATION PLUS HONNÊTE
+- Le simulateur actuel partage trop d'hypothèses avec le moteur (`CONTRAT.md` §8, limite 14). Ajoute au moins **deux modèles de vérité indépendants** (formes de courbe, bruit de note, réponse à la dose, adaptation des tendons, effet de l'affûtage différents, tirés du référentiel) ; les mesures et le panel portent sur tous.
+- Profils street du banc × ≥ 16 semaines (jusqu'à l'échéance quand il y en a une) × ≥ 100 graines par modèle de vérité.
+- Mesures : écart au RIR visé, échecs non voulus, progression simulée, performance le jour de l'échéance comparée au maximum atteignable, tentatives réussies, stabilité des charges, respect des déblocages ; comparaison à `kalis_adapt` 0.1.0 et à une politique de coach simple (autorégulation RPE classique) : meilleur en exactitude et en sécurité, au moins égal en progression, sinon l'écart est expliqué.
+
+3. CALIBRAGE (PIPELINE_CP.md §2)
+- Boucle : simulations → export lisible des trajectoires (semaine par semaine : charges, performances, décisions du moteur et leurs raisons) → panel (4 écoles × profils street, en aveugle) → corrections du **moteur** → nouvelle boucle. Au plus 6 boucles ; consignées dans `packages/kalis_adapt/docs/CALIBRAGE_CA1.md`. Jamais de modification des grilles, des profils types ou des modèles de vérité pour atteindre le seuil.
+
+4. VALIDATION ET RELECTURE
+- Invariants de 0.1 conservés (dont +10 % hors calibrage, aucune hausse après un échec non prévu, douleur, déblocages) et nouveaux invariants (affûtage sans volume ajouté, technique jamais servie sans prérequis, tentatives croissantes et bornées par l'estimation) : propriétés sur ≥ 10 000 journaux aléatoires.
+- Budgets : décision de séance ≤ 50 ms, mise à jour après une série ≤ 5 ms (VM Dart, CI).
+- Relecture indépendante (sous-agent) du code et du contrat avant livraison.
+
+FIN DE LOT
+Commit « Kalis Track moteurs (CA1) : kalis_adapt 0.2.0 » sur `moteurs` (rebase avant push), contrôle vert sur `claude/ci-cp-b`, branche fixe `etiquettes/kalis_adapt-v0.2.0`. `LIVRAISON_CA1.md` (pipeline et projet claude.ai) : mesures avant / après par modèle de vérité, notes du panel par école et par profil, notes du propriétaire traitées, limites, ce qui reste pour CX. `ETAT_CP.md` (ta ligne) ; page de suivi ; notification (PIPELINE_CP.md §5) ; arrête-toi.

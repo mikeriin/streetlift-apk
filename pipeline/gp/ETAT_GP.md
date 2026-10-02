@@ -2,6 +2,7 @@
 
 Créé le 30/09/2026 par la conversation de pilotage (questionnaire du propriétaire : `DECISIONS_GP.md`).
 Remplace le pipeline « Mannequin 3D » (clos le 30/09/2026, `pipeline/3d/ETAT_3D.md`).
+**En pause depuis le 02/10/2026 (21:35)** au profit du pipeline « Calibrage des programmes » (`pipeline/cp/ETAT_CP.md`) ; reprise de G12 à G15 à la décision du propriétaire.
 **Pistes parallèles depuis le 01/10/2026** (D0.10) : A — application, M — moteurs, K — koach (PIPELINE_GP.md §0 et §8).
 
 ## Tâches planifiées (lot indiqué dans le message « Lot : <LOT> »)

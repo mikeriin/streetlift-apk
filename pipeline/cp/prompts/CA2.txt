@@ -1,0 +1,28 @@
+LOT CA2 — `kalis_adapt` 0.3.0 : FAIRE ÉVOLUER TOUTES LES DISCIPLINES
+Modèle : Fable 5.1, effort maximal (voie B). Validation : automatique (seuil PIPELINE_CP.md §2).
+Prérequis : CX validé par le propriétaire. Branche : `moteurs` (`packages/kalis_adapt` ; ajouts de trajectoires dans `packages/kalis_bench`) ; contrôle : `claude/ci-cp-b`. Le lot CP2 (voie A) fait évoluer `kalis_plan` en même temps : ne touche pas `packages/kalis_plan`.
+Décisions : DECISIONS_CP.md (toutes les sections précédentes, surtout CX). Règles : PIPELINE_CP.md §1-§7.
+
+OBJECTIF
+Le moteur d'évolution conduit aussi bien un pratiquant de musculation, de force, de course, de mobilité ou de CrossFit, et un profil hybride, qu'un athlète street : **≥ 9/10 pour chaque école et chaque profil non street du banc sur les trajectoires simulées, 0 violation de sécurité**, street inchangé ou meilleur (re-noté en fin de lot).
+
+0. AVANT DE CODER
+- Lis le référentiel, `BASELINE_0_1.md`, `LIVRAISON_CX.md`, toutes les notes du propriétaire (ArtifactData ; elles priment).
+- Programmes d'entrée : programmes de test conformes au contrat pour chaque discipline ; ceux de `kalis_plan` 0.3.0 si l'étiquette existe déjà quand tu calibres. Le croisement final est le lot CY.
+
+1. CE QUE LE MOTEUR DOIT SAVOIR FAIRE
+- **Exercices non modélisés en 0.1** (`CONTRAT.md` §8, limite 6) : cardio (allures, durées, distances, ressenti), conditionnement (tours, temps, charges des pièces CrossFit, mise à l'échelle), mobilité (maintiens, amplitudes déclarées) : capacité, fatigue et décisions propres à chacun.
+- **Course** : progression du kilométrage et des allures bornée, réaction aux mauvais jours (raccourcir avant d'accélérer), affûtage avant une course, tests.
+- **CrossFit** : choix de l'échelle du jour, suivi des repères (benchmarks), équilibre force / conditionnement.
+- **Hybrides** : fatigue croisée force / endurance dans le modèle forme-fatigue, ordre des séances respecté.
+- Tout ce que CA1 a construit pour le street s'applique à la force et à la musculation (top sets, tests, affûtage, techniques).
+- Simulation : modèles de vérité indépendants étendus aux nouvelles disciplines (≥ 2 par discipline), profils × ≥ 16 semaines × ≥ 100 graines ; comparaison à 0.2 et à une politique de coach simple par discipline.
+
+2. CALIBRAGE ET VALIDATION
+- Boucle simulations → export lisible des trajectoires → panel (4 écoles × profils non street) → corrections ; au plus 6 boucles (`docs/CALIBRAGE_CA2.md`) ; puis non-régression street (panel complet).
+- Invariants (propriétés ≥ 10 000 journaux) : ceux de CA1 + kilométrage borné, aucune hausse d'allure après un mauvais jour non prévu.
+- Budgets : décision de séance ≤ 50 ms, mise à jour ≤ 5 ms.
+- Relecture indépendante (sous-agent).
+
+FIN DE LOT
+Commit « Kalis Track moteurs (CA2) : kalis_adapt 0.3.0 », contrôle vert sur `claude/ci-cp-b`, branche fixe `etiquettes/kalis_adapt-v0.3.0`. `LIVRAISON_CA2.md` (pipeline et projet claude.ai). `ETAT_CP.md` (ta ligne) ; page de suivi ; notification (PIPELINE_CP.md §5) ; arrête-toi.

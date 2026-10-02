@@ -1,0 +1,17 @@
+LOT CY — CROISEMENT FINAL : `kalis_plan` 0.3 ↔ `kalis_adapt` 0.3, TOUTES DISCIPLINES
+Modèle : Fable 5.1, effort maximal (voie A). Validation : **propriétaire** (page de relecture).
+Prérequis : CP2 et CA2 livrés (s'ils sont « livré — seuil non atteint », vérifie dans `DECISIONS_CP.md` que le propriétaire a décidé de continuer). Branche : `moteurs` (`packages/kalis_plan`, `packages/kalis_adapt`, `packages/kalis_bench`) ; contrôle : `claude/ci-cp-a`. La voie B est au repos pendant ce lot.
+Décisions : DECISIONS_CP.md (toutes les sections). Règles : PIPELINE_CP.md §1-§7.
+
+OBJECTIF
+Les deux moteurs calibrés conduisent ensemble une saison entière pour **chaque profil du banc** (street et autres disciplines, hybrides compris) : **≥ 9/10 pour chaque école et chaque profil, 0 violation de sécurité**, budgets tenus — la version qui sera intégrée dans l'application (lot CI).
+
+1. Lis toutes les notes du propriétaire (toutes les manches, ArtifactData) : chacune est traitée ; lis les « ce qui reste » de CP2 et CA2.
+2. Croisement comme CX, étendu à tous les profils (mêmes scénarios imposés, plus : changement de discipline principale en cours de saison, ajout d'une course à un profil street hybride) ; ≥ 100 graines par modèle de vérité ; mesures et comparaison au couple 0.1 et au couple 0.2 (street).
+3. Corrections dans les deux paquets (0.3.x, branches fixes) ; panel sur les saisons, au plus 6 boucles (`packages/kalis_bench/docs/CALIBRAGE_CY.md`).
+4. Contrôle final : invariants de tous les lots, budgets sur tout le banc, déterminisme, rétrocompatibilité des JSON (programmes et états 0.1 et 0.2 relus), programme importé du propriétaire suivi à l'identique.
+5. Notes pour l'intégration (`packages/kalis_plan/docs/INTEGRATION_CI.md` et `packages/kalis_adapt/docs/INTEGRATION_CI.md`) : ce que l'application doit afficher, journaliser et minuter pour chaque nouvelle prescription, les nouveaux codes de raison, la migration des programmes en cours.
+6. Page de relecture : manche finale « toutes disciplines (CY, <date>) » (street et autres, saisons et trajectoires commentées), avec en tête un tableau de l'évolution des notes du propriétaire et du panel depuis la manche 0.
+
+FIN DE LOT
+Commits « Kalis Track moteurs (CY) : kalis_plan 0.3.x, kalis_adapt 0.3.x », contrôle vert, branches fixes. `LIVRAISON_CY.md` (pipeline et projet claude.ai) : bilan du calibrage depuis la manche 0 (banc, panel, notes du propriétaire), limites, consignes pour CI. `ETAT_CP.md` (ta ligne : « à valider ») ; page de suivi ; notification « Kalis Track CY : programmes prêts à relire (toutes disciplines). Page de relecture : <lien> » ; arrête-toi.

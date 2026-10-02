@@ -1,0 +1,21 @@
+LOT CI — INTÉGRATION DES MOTEURS CALIBRÉS DANS L'APPLICATION
+Modèle : Opus 5.5, effort élevé (voie App). Validation : **propriétaire**.
+Prérequis : CY validé, CU validé. Branche : `main` ; contrôle : `claude/ci-3d` (`docs/CI_GP.md`).
+Décisions : DECISIONS_CP.md (toutes les sections, surtout CY), DECISIONS_GP.md D5 (suivi, modes, flammes, programme importé), D0.9. Règles : PIPELINE_CP.md §0-§7 ; PIPELINE_GP.md comme pour la piste A.
+
+OBJECTIF
+L'utilisateur reçoit et vit, dans l'application, les programmes calibrés : plan de saison, blocs qui changent semaine après semaine, prescriptions avancées guidées pendant la séance, tests, affûtage, jour de compétition — sans que l'application devienne compliquée pour un débutant (il ne voit que ce que son programme contient).
+
+1. PAQUETS : récupère `kalis_core`, `kalis_plan`, `kalis_adapt` aux dernières étiquettes livrées par CY (et `kalis_quest`, `kalis_koach` inchangés s'ils fonctionnent avec ; sinon blocage notifié) ; `pubspec.lock` régénéré.
+2. SUIVRE `INTEGRATION_CI.md` (des deux paquets) :
+- **Séance** : chaque nouvelle prescription guidée et journalisée (top set puis back-off calculé en direct, clusters et rest-pause avec leurs mini-repos, myo-reps, dégressives, maintiens avec minuteur, excentriques avec tempo, EMOM et densité avec minuteur, AMRAP et séries de test) ; flammes et conseils entre les séries comme aujourd'hui.
+- **Programme** : vue de la saison (phases, échéance et compte à rebours, semaines de décharge, de test, d'affûtage), bloc en cours semaine par semaine, notes de coach.
+- **Tests et compétition** : séances de test guidées, mise à jour des maxima, jour de compétition (tentatives proposées pour le streetlifting) si le moteur le fournit.
+- **Koach** : textes courts pour les nouveaux codes de raison, dans le ton existant.
+- **Migration** : programmes 0.1 en cours conservés jusqu'à la fin de leur bloc, puis proposition de passer au moteur calibré (jamais imposée en cours de bloc) ; le programme importé du propriétaire n'est jamais régénéré (D5.10) et reste suivi à l'identique ; états opaques des moteurs relus ou réinitialisés proprement.
+- Modes assisté / libre (D5.6) respectés pour toutes les nouvelles propositions.
+3. Si tout ne tient pas dans un lot avec la qualité exigée : livre une partie cohérente et utilisable (priorité : séance > programme > tests et compétition > Koach), liste précisément le reste dans ta livraison et dans ta section de `DECISIONS_CP.md` ; le propriétaire décidera d'un lot complémentaire.
+4. CONTRÔLES : tests de chaque prescription (journalisation, minuteurs), migration, création et suivi d'un programme pour un profil débutant, un compétiteur street et un profil d'une autre discipline ; build signé réussi ; version devX.Y.Z suivante (PIPELINE_GP.md §7.1).
+
+FIN DE LOT
+`main`, build signé réussi. `LIVRAISON_CI.md` (pipeline et projet claude.ai) : ce qui change, **à tester** (une séance avec top set + back-off, un maintien chronométré, la vue saison, un test), limites. `ETAT_CP.md` (ta ligne : « à valider ») ; page de suivi ; notification « Kalis Track CI prêt à tester — devX.Y.Z. À tester : moteurs calibrés. Page : <lien> » ; arrête-toi.
