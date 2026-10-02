@@ -349,7 +349,11 @@ final class LevelState {
 
 /// Attribut façon RPG (D7.5).
 final class AttributeScore {
-  const AttributeScore({required this.attribute, required this.value});
+  const AttributeScore({
+    required this.attribute,
+    required this.value,
+    this.best,
+  });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
   /// Les champs inconnus sont ignorés (évolution additive).
@@ -357,6 +361,7 @@ final class AttributeScore {
     return AttributeScore(
       attribute: jsonEnum(json, 'attribute', AthleteAttribute.fromCode),
       value: jsonDouble(json, 'value'),
+      best: jsonDoubleOrNull(json, 'best'),
     );
   }
 
@@ -366,16 +371,29 @@ final class AttributeScore {
   /// Valeur, de 0 à 100.
   final double value;
 
+  /// Meilleure valeur atteinte, de 0 à 100 (0.3.0) : elle ne baisse jamais,
+  /// alors que `value` reflète le niveau actuel.
+  final double? best;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
-    return <String, Object?>{'attribute': attribute.code, 'value': value};
+    return <String, Object?>{
+      'attribute': attribute.code,
+      'value': value,
+      if (best case final v?) 'best': v,
+    };
   }
 
   /// Copie modifiée ; un champ optionnel peut être remis à `null`.
-  AttributeScore copyWith({AthleteAttribute? attribute, double? value}) {
+  AttributeScore copyWith({
+    AthleteAttribute? attribute,
+    double? value,
+    Object? best = unset,
+  }) {
     return AttributeScore(
       attribute: attribute ?? this.attribute,
       value: value ?? this.value,
+      best: identical(best, unset) ? this.best : best as double?,
     );
   }
 
@@ -389,6 +407,9 @@ final class AttributeScore {
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
     checkRange(out, '$path.value', value, 0, 100);
+    if (best case final v?) {
+      checkRange(out, '$path.best', v, 0, 100);
+    }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -399,11 +420,12 @@ final class AttributeScore {
     return identical(this, other) ||
         other is AttributeScore &&
             attribute == other.attribute &&
-            value == other.value;
+            value == other.value &&
+            best == other.best;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[attribute, value]);
+  int get hashCode => Object.hashAll(<Object?>[attribute, value, best]);
 
   @override
   String toString() => 'AttributeScore(${toJson()})';
@@ -884,6 +906,11 @@ final class GoalProgress {
     this.achievedOn,
     required this.milestones,
     this.prediction,
+    this.baseline,
+    this.overdue,
+    this.suggestedDate,
+    this.suggestedTarget,
+    this.reasons,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -901,6 +928,15 @@ final class GoalProgress {
         (v) => Milestone.fromJson(jsonAsObject(v, 'milestones')),
       ),
       prediction: jsonObjOrNull(json, 'prediction', Prediction.fromJson),
+      baseline: jsonDoubleOrNull(json, 'baseline'),
+      overdue: jsonBoolOrNull(json, 'overdue'),
+      suggestedDate: jsonDateOrNull(json, 'suggestedDate'),
+      suggestedTarget: jsonDoubleOrNull(json, 'suggestedTarget'),
+      reasons: jsonListOrNull(
+        json,
+        'reasons',
+        (v) => Reason.fromJson(jsonAsObject(v, 'reasons')),
+      ),
     );
   }
 
@@ -926,6 +962,23 @@ final class GoalProgress {
   /// Prédiction.
   final Prediction? prediction;
 
+  /// Valeur de départ, mesurée à la création de l'objectif, même unité (0.3.0).
+  final double? baseline;
+
+  /// Vrai si l'objectif est en retard : la date prédite dépasse l'échéance, ou
+  /// la cible est hors d'atteinte au rythme actuel (0.3.0).
+  final bool? overdue;
+
+  /// Échéance proposée pour un objectif en retard, cible inchangée (0.3.0).
+  final CivilDate? suggestedDate;
+
+  /// Cible proposée pour un objectif en retard, échéance inchangée, même unité
+  /// (0.3.0).
+  final double? suggestedTarget;
+
+  /// Pourquoi (prédiction mise à jour, retard) (0.3.0).
+  final List<Reason>? reasons;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -936,6 +989,11 @@ final class GoalProgress {
       if (achievedOn case final v?) 'achievedOn': v.iso,
       'milestones': [for (final e in milestones) e.toJson()],
       if (prediction case final v?) 'prediction': v.toJson(),
+      if (baseline case final v?) 'baseline': v,
+      if (overdue case final v?) 'overdue': v,
+      if (suggestedDate case final v?) 'suggestedDate': v.iso,
+      if (suggestedTarget case final v?) 'suggestedTarget': v,
+      if (reasons case final v?) 'reasons': [for (final e in v) e.toJson()],
     };
   }
 
@@ -948,6 +1006,11 @@ final class GoalProgress {
     Object? achievedOn = unset,
     List<Milestone>? milestones,
     Object? prediction = unset,
+    Object? baseline = unset,
+    Object? overdue = unset,
+    Object? suggestedDate = unset,
+    Object? suggestedTarget = unset,
+    Object? reasons = unset,
   }) {
     return GoalProgress(
       goalId: goalId ?? this.goalId,
@@ -961,6 +1024,19 @@ final class GoalProgress {
       prediction: identical(prediction, unset)
           ? this.prediction
           : prediction as Prediction?,
+      baseline: identical(baseline, unset)
+          ? this.baseline
+          : baseline as double?,
+      overdue: identical(overdue, unset) ? this.overdue : overdue as bool?,
+      suggestedDate: identical(suggestedDate, unset)
+          ? this.suggestedDate
+          : suggestedDate as CivilDate?,
+      suggestedTarget: identical(suggestedTarget, unset)
+          ? this.suggestedTarget
+          : suggestedTarget as double?,
+      reasons: identical(reasons, unset)
+          ? this.reasons
+          : reasons as List<Reason>?,
     );
   }
 
@@ -983,6 +1059,17 @@ final class GoalProgress {
     if (prediction case final v?) {
       v.collectViolations('$path.prediction', out);
     }
+    if (baseline case final v?) {
+      checkRange(out, '$path.baseline', v, null, null);
+    }
+    if (suggestedTarget case final v?) {
+      checkRange(out, '$path.suggestedTarget', v, 0, null);
+    }
+    if (reasons case final v?) {
+      for (var i = 0; i < v.length; i++) {
+        v[i].collectViolations('$path.reasons[$i]', out);
+      }
+    }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -991,6 +1078,9 @@ final class GoalProgress {
       e.collectExerciseIds(out);
     }
     prediction?.collectExerciseIds(out);
+    for (final e in reasons ?? const <Reason>[]) {
+      e.collectExerciseIds(out);
+    }
   }
 
   @override
@@ -1003,7 +1093,12 @@ final class GoalProgress {
             fraction == other.fraction &&
             achievedOn == other.achievedOn &&
             jsonListEquals(milestones, other.milestones) &&
-            prediction == other.prediction;
+            prediction == other.prediction &&
+            baseline == other.baseline &&
+            overdue == other.overdue &&
+            suggestedDate == other.suggestedDate &&
+            suggestedTarget == other.suggestedTarget &&
+            jsonDeepEquals(reasons, other.reasons);
   }
 
   @override
@@ -1015,6 +1110,11 @@ final class GoalProgress {
     achievedOn,
     Object.hashAll(milestones),
     prediction,
+    baseline,
+    overdue,
+    suggestedDate,
+    suggestedTarget,
+    jsonDeepHash(reasons),
   ]);
 
   @override
@@ -1393,6 +1493,67 @@ final class QuestState {
   String toString() => 'QuestState(${toJson()})';
 }
 
+/// Déclaration de l'utilisateur : une quête déclarative (récupération d'un
+/// jour de repos : sommeil, hydratation, marche légère…) est faite (0.3.0).
+final class QuestClaim {
+  const QuestClaim({required this.questId, required this.date});
+
+  /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
+  /// Les champs inconnus sont ignorés (évolution additive).
+  factory QuestClaim.fromJson(Map<String, Object?> json) {
+    return QuestClaim(
+      questId: jsonString(json, 'questId'),
+      date: jsonDate(json, 'date'),
+    );
+  }
+
+  /// Quête déclarée faite.
+  final String questId;
+
+  /// Jour de la déclaration.
+  final CivilDate date;
+
+  /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
+  Map<String, Object?> toJson() {
+    return <String, Object?>{'questId': questId, 'date': date.iso};
+  }
+
+  /// Copie modifiée ; un champ optionnel peut être remis à `null`.
+  QuestClaim copyWith({String? questId, CivilDate? date}) {
+    return QuestClaim(
+      questId: questId ?? this.questId,
+      date: date ?? this.date,
+    );
+  }
+
+  /// Violations des invariants du contrat (liste vide = valeur valide).
+  List<Violation> validate() {
+    final out = <Violation>[];
+    collectViolations(r'$', out);
+    return out;
+  }
+
+  /// Ajoute à [out] les violations de cette valeur, située à [path].
+  void collectViolations(String path, List<Violation> out) {
+    checkLength(out, '$path.questId', questId.length, 1, null);
+  }
+
+  /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
+  void collectExerciseIds(Set<String> out) {}
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is QuestClaim && questId == other.questId && date == other.date;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(<Object?>[questId, date]);
+
+  @override
+  String toString() => 'QuestClaim(${toJson()})';
+}
+
 /// Entrée du moteur de leveling.
 final class QuestInput {
   const QuestInput({
@@ -1404,6 +1565,7 @@ final class QuestInput {
     required this.state,
     required this.today,
     this.seed,
+    this.claims,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1418,6 +1580,11 @@ final class QuestInput {
       state: jsonObj(json, 'state', QuestState.fromJson),
       today: jsonDate(json, 'today'),
       seed: jsonIntOrNull(json, 'seed'),
+      claims: jsonListOrNull(
+        json,
+        'claims',
+        (v) => QuestClaim.fromJson(jsonAsObject(v, 'claims')),
+      ),
     );
   }
 
@@ -1449,6 +1616,11 @@ final class QuestInput {
   /// moteur la combine à la date.
   final int? seed;
 
+  /// Quêtes déclaratives que l'utilisateur dit avoir faites depuis le dernier
+  /// appel (0.3.0). Une déclaration déjà prise en compte peut être redonnée
+  /// sans effet.
+  final List<QuestClaim>? claims;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -1460,6 +1632,7 @@ final class QuestInput {
       'state': state.toJson(),
       'today': today.iso,
       if (seed case final v?) 'seed': v,
+      if (claims case final v?) 'claims': [for (final e in v) e.toJson()],
     };
   }
 
@@ -1473,6 +1646,7 @@ final class QuestInput {
     QuestState? state,
     CivilDate? today,
     Object? seed = unset,
+    Object? claims = unset,
   }) {
     return QuestInput(
       schemaVersion: schemaVersion ?? this.schemaVersion,
@@ -1485,6 +1659,9 @@ final class QuestInput {
       state: state ?? this.state,
       today: today ?? this.today,
       seed: identical(seed, unset) ? this.seed : seed as int?,
+      claims: identical(claims, unset)
+          ? this.claims
+          : claims as List<QuestClaim>?,
     );
   }
 
@@ -1516,6 +1693,11 @@ final class QuestInput {
     if (seed case final v?) {
       checkRange(out, '$path.seed', v, 0, null);
     }
+    if (claims case final v?) {
+      for (var i = 0; i < v.length; i++) {
+        v[i].collectViolations('$path.claims[$i]', out);
+      }
+    }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -1525,6 +1707,9 @@ final class QuestInput {
     block?.collectExerciseIds(out);
     adaptation?.collectExerciseIds(out);
     state.collectExerciseIds(out);
+    for (final e in claims ?? const <QuestClaim>[]) {
+      e.collectExerciseIds(out);
+    }
   }
 
   @override
@@ -1538,7 +1723,8 @@ final class QuestInput {
             adaptation == other.adaptation &&
             state == other.state &&
             today == other.today &&
-            seed == other.seed;
+            seed == other.seed &&
+            jsonDeepEquals(claims, other.claims);
   }
 
   @override
@@ -1551,6 +1737,7 @@ final class QuestInput {
     state,
     today,
     seed,
+    jsonDeepHash(claims),
   ]);
 
   @override
