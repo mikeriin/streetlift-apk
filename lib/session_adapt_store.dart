@@ -165,7 +165,10 @@ extension SessionAdaptStore on AppStore {
   /// Bloc de `kalis_plan` avec les ajustements de la passe 2.
   kc.ProgramBlock _adaptPlanBlock(int index) {
     final plan = planProgram!;
-    return _g9Memo('plan|${identityHashCode(plan)}|$index', () {
+    final sig =
+        'plan|${identityHashCode(plan)}|${plan.updatedAt}|'
+        '${plan.blocks.length}|${plan.blocks[index].validatedAt}|$index';
+    return _g9Memo(sig, () {
       final e = plan.blocks[index];
       final weeks = [
         for (var w = 0; w < e.block.pass2.weeks.length; w++)
@@ -199,6 +202,8 @@ extension SessionAdaptStore on AppStore {
       chunk,
       identityHashCode(program),
       identityHashCode(planProgram),
+      planProgram?.updatedAt ?? '-',
+      program.weeks.length,
       program.start?.toIso8601String() ?? '-',
       identityHashCode(koachProgram),
       identityHashCode(book),
@@ -221,7 +226,8 @@ extension SessionAdaptStore on AppStore {
     final first = chunk * 52 + 1;
     final last = math.min(first + 51, _importedLastWeek);
     if (last < first) return null;
-    final weeks = <(int, kc.WeekKind, Map<int, List<kc.ExercisePrescription>>)>[];
+    final weeks =
+        <(int, kc.WeekKind, Map<int, List<kc.ExercisePrescription>>)>[];
     final js = <int>{};
     final slotExercise = <String, String>{};
     final slotRole = <String, kc.SlotRole>{};
@@ -398,7 +404,8 @@ extension SessionAdaptStore on AppStore {
         if (bw == null || rm == null || rm + info.fraction * bw <= 0) {
           v = -1;
         } else {
-          v = (pct * (rm + bw) - bw + info.fraction * bw) /
+          v =
+              (pct * (rm + bw) - bw + info.fraction * bw) /
               (rm + info.fraction * bw);
         }
       }
@@ -443,7 +450,7 @@ extension SessionAdaptStore on AppStore {
         secondsLow: sl,
         secondsHigh: sh,
         targetFlames: flames,
-        restSeconds: rest == null ? null : rest.clamp(0, 900),
+        restSeconds: rest?.clamp(0, 900),
         startLoadKg: start,
         percentOfOneRm: share,
         toCalibrate: false,
@@ -461,11 +468,21 @@ extension SessionAdaptStore on AppStore {
   SessionAdapt? sessionAdaptOf(String key) {
     final raw = logs[key]?.adapt;
     if (raw == null) return null;
-    try {
-      return SessionAdapt.fromJson(raw);
-    } on FormatException {
-      return null;
+    // Lecture gardée tant que le JSON est le même objet (chaque écriture
+    // en crée un nouveau).
+    final hit = _g9Cache['sa|$key'];
+    if (hit is (Map<String, dynamic>, SessionAdapt?) && identical(hit.$1, raw)) {
+      return hit.$2;
     }
+    SessionAdapt? parsed;
+    try {
+      parsed = SessionAdapt.fromJson(raw);
+    } on FormatException {
+      parsed = null;
+    }
+    if (_g9Cache.length > 64) _g9Cache.clear();
+    _g9Cache['sa|$key'] = (raw, parsed);
+    return parsed;
   }
 
   SessionAdapt? sessionAdapt(int week, int j) =>
@@ -630,14 +647,23 @@ extension SessionAdaptStore on AppStore {
         plan: plan,
       );
       sessionLog(week, base.j).adapt = a.toJson().cast<String, dynamic>();
-      saveLogs(affectsProgression: false);
+      // Appelé pendant la construction de l'écran de séance : écriture
+      // différée, sans prévenir les écouteurs.
+      _dataRevision++;
+      _saveT?.cancel();
+      _saveT = Timer(const Duration(milliseconds: 600), _flushLogs);
       return a;
     } catch (_) {
       return null;
     }
   }
 
-  void _adaptStore(int week, DayPlan base, SessionAdapt before, SessionAdapt a) {
+  void _adaptStore(
+    int week,
+    DayPlan base,
+    SessionAdapt before,
+    SessionAdapt a,
+  ) {
     final key = sessionKey(week, base.j);
     final log = sessionLog(week, base.j);
     log.adapt = a.toJson().cast<String, dynamic>();
@@ -793,14 +819,14 @@ extension SessionAdaptStore on AppStore {
       final it = _adaptItem(a, slot);
       if (it == null) {
         if (slot != null && blockSlots.containsKey(slot)) {
-          final started =
-              log?.ex[e.id]?.sets.any((s) => s.done) ?? false;
+          final started = log?.ex[e.id]?.sets.any((s) => s.done) ?? false;
           if (!started) continue; // retiré par l'ajustement
         }
         out.add(e);
         continue;
       }
-      final swapped = blockSlots[slot]?.exerciseId != null &&
+      final swapped =
+          blockSlots[slot]?.exerciseId != null &&
           blockSlots[slot]!.exerciseId != it.exerciseId &&
           (e.catalogId ?? content.idFor(e.name)) != it.exerciseId;
       final id = swapped ? '${e.id}~${it.exerciseId}' : e.id;
@@ -859,14 +885,19 @@ extension SessionAdaptStore on AppStore {
     if (a == null || !e.engine) return;
     final it = _adaptItem(a, e.slotId);
     if (it == null) return;
-    final loaded = it.loadBasis != kc.LoadBasis.bodyweight &&
+    final loaded =
+        it.loadBasis != kc.LoadBasis.bodyweight &&
         it.loadBasis != kc.LoadBasis.unloaded;
-    final test = it.kind == kc.SetKind.test &&
+    final test =
+        it.kind == kc.SetKind.test &&
         ((it.repsHigh ?? 0) >= 100 || (it.secondsHigh ?? 0) >= 300);
     for (var i = 0; i < log.sets.length; i++) {
       final s = log.sets[i];
       if (s.done) continue;
-      final t = _goalTexts(adviceGoal(it, i, a.advice[e.id] ?? const []), loaded);
+      final t = _goalTexts(
+        adviceGoal(it, i, a.advice[e.id] ?? const []),
+        loaded,
+      );
       if (s.kg.isEmpty && t.kg.isNotEmpty) s.kg = t.kg;
       if (s.reps.isEmpty && t.value.isNotEmpty && !test) s.reps = t.value;
     }
@@ -896,7 +927,8 @@ extension SessionAdaptStore on AppStore {
       while (x.sets.length < itB.sets) {
         x.addSet();
       }
-      final loaded = itB.loadBasis != kc.LoadBasis.bodyweight &&
+      final loaded =
+          itB.loadBasis != kc.LoadBasis.bodyweight &&
           itB.loadBasis != kc.LoadBasis.unloaded;
       for (var i = 0; i < x.sets.length; i++) {
         final s = x.sets[i];

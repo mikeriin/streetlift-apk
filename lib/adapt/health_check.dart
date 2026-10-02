@@ -75,9 +75,7 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
     var check = kc.HealthCheck(overall: overall);
     if (feelIsLow(overall)) {
       final detail = await Navigator.of(context).push<kc.HealthCheck>(
-        MaterialPageRoute(
-          builder: (_) => HealthDetailScreen(initial: check),
-        ),
+        MaterialPageRoute(builder: (_) => HealthDetailScreen(initial: check)),
       );
       if (!mounted) return;
       if (detail != null) check = detail;
@@ -87,12 +85,7 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
 
   void _apply(kc.HealthCheck? check, {bool skipped = false}) {
     setState(() => _busy = true);
-    final a = store.adaptAnswer(
-      _w,
-      widget.base,
-      check,
-      skipped: skipped,
-    );
+    final a = store.adaptAnswer(_w, widget.base, check, skipped: skipped);
     setState(() {
       _busy = false;
       _redo = false;
@@ -148,24 +141,29 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
     const SizedBox(height: 12),
     LayoutBuilder(
       builder: (context, c) {
-        final wide = c.maxWidth >= 360 &&
+        // Cinq tuiles côte à côte ; écran étroit ou grand texte : une
+        // tuile par ligne, Koach à gauche du libellé.
+        final wide =
+            c.maxWidth / 5 >= 58 &&
             MediaQuery.textScalerOf(context).scale(10) <= 13;
         final tiles = [
           for (var n = 1; n <= 5; n++)
             _FeelTile(
               key: ValueKey('feel-$n'),
               level: n,
+              horizontal: !wide,
               onTap: _busy ? null : () => _answer(n),
             ),
         ];
         return wide
             ? Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  for (final t in tiles) Expanded(child: t),
-                ],
+                children: [for (final t in tiles) Expanded(child: t)],
               )
-            : Column(children: tiles);
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: tiles,
+              );
       },
     ),
     const SizedBox(height: 8),
@@ -179,9 +177,27 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
   ];
 
   List<Widget> _answered(SessionAdapt a) {
-    final lines = a.check == null ? const <String>[] : healthCheckLines(a.check!);
+    final lines = a.check == null
+        ? const <String>[]
+        : healthCheckLines(a.check!);
     final zones = store.adaptPainReferralZones;
     return [
+      // Ce qui change d'abord : la carte de Koach, puis le bilan.
+      if (a.base != null) ...[_adjustmentCard(a), const SizedBox(height: 12)],
+      if (zones.isNotEmpty) ...[
+        KCard(
+          key: const ValueKey('health-referral'),
+          accent: SL.accent,
+          child: KoachSays(
+            pose: koachPose(KoachUsage.care),
+            child: Text(
+              '${zones.join(', ')} : $kPainReferral',
+              style: const TextStyle(fontWeight: FontWeight.w600),
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+      ],
       KCard(
         key: const ValueKey('health-summary'),
         child: Column(
@@ -193,7 +209,10 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
             ),
             const SizedBox(height: 8),
             if (lines.isEmpty)
-              Text('Bilan passé : séance prévue.', style: TextStyle(color: SL.dim))
+              Text(
+                'Bilan passé : séance prévue.',
+                style: TextStyle(color: SL.dim),
+              )
             else
               for (final l in lines)
                 Padding(
@@ -222,24 +241,6 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
           ],
         ),
       ),
-      if (a.base != null) ...[
-        const SizedBox(height: 12),
-        _adjustmentCard(a),
-      ],
-      if (zones.isNotEmpty) ...[
-        const SizedBox(height: 12),
-        KCard(
-          key: const ValueKey('health-referral'),
-          accent: SL.accent,
-          child: KoachSays(
-            pose: koachPose(KoachUsage.care),
-            child: Text(
-              '${zones.join(', ')} : $kPainReferral',
-              style: const TextStyle(fontWeight: FontWeight.w600),
-            ),
-          ),
-        ),
-      ],
       if (a.base == null) ...[
         const SizedBox(height: 16),
         FilledButton.icon(
@@ -255,108 +256,125 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
     ];
   }
 
+  /// Carte de Koach : ce que l'ajustement du bilan change (6 lignes au
+  /// plus), et les choix du mode (assisté : appliqué, « Annuler » ; libre :
+  /// « Accepter » / « Garder ma séance »).
   Widget _adjustmentCard(SessionAdapt a) {
-    final lines = sessionDiffLines(
-      a.base!,
-      a.plan,
-      store.adaptExerciseName,
-    );
-    final list = lines.isEmpty
-        ? 'Charges et cibles un peu plus prudentes.'
-        : lines.map((l) => '• $l').join('\n');
-    final String text;
-    final List<KoachBubbleAction> actions;
-    final KoachPose pose;
-    switch (a.choice) {
-      case 'applied':
-        pose = koachPose(KoachUsage.adjustment);
-        text = 'J’ai adapté ta séance à ton bilan :\n$list';
-        actions = [
-          KoachBubbleAction(
-            'C’est parti',
-            widget.onStart,
-            primary: true,
-            key: const ValueKey('adjust-go'),
+    final all = sessionDiffLines(a.base!, a.plan, store.adaptExerciseName);
+    final shown = all.isEmpty
+        ? const ['Charges et cibles un peu plus prudentes.']
+        : all.take(6).toList();
+    final more = all.length - shown.length;
+    final (KoachPose pose, String head, List<(String, String, VoidCallback)> actions, bool list) =
+        switch (a.choice) {
+          'applied' => (
+            koachPose(KoachUsage.adjustment),
+            'J’ai adapté ta séance à ton bilan :',
+            <(String, String, VoidCallback)>[
+              ('adjust-go', 'C’est parti', widget.onStart),
+              ('adjust-undo', 'Annuler', () => _choose('undone')),
+            ],
+            true,
           ),
-          KoachBubbleAction(
-            'Annuler',
-            () => _choose('undone'),
-            key: const ValueKey('adjust-undo'),
+          'undone' => (
+            koachPose(KoachUsage.cancel),
+            'D’accord, tu gardes ta séance prévue.',
+            <(String, String, VoidCallback)>[
+              ('adjust-go', 'C’est parti', widget.onStart),
+              ('adjust-redo', 'Rétablir l’ajustement', () => _choose('applied')),
+            ],
+            false,
           ),
-        ];
-      case 'undone':
-        pose = koachPose(KoachUsage.cancel);
-        text = 'D’accord, tu gardes ta séance prévue.';
-        actions = [
-          KoachBubbleAction(
-            'C’est parti',
-            widget.onStart,
-            primary: true,
-            key: const ValueKey('adjust-go'),
+          'pending' => (
+            koachPose(KoachUsage.proposal),
+            'Vu ton bilan, je te propose :',
+            <(String, String, VoidCallback)>[
+              ('adjust-accept', 'Accepter', () => _choose('accepted')),
+              ('adjust-keep', 'Garder ma séance', () => _choose('kept')),
+            ],
+            true,
           ),
-          KoachBubbleAction(
-            'Rétablir l’ajustement',
-            () => _choose('applied'),
-            key: const ValueKey('adjust-redo'),
+          'accepted' => (
+            koachPose(KoachUsage.confirmation),
+            'C’est noté, séance adaptée :',
+            <(String, String, VoidCallback)>[
+              ('adjust-go', 'C’est parti', widget.onStart),
+              ('adjust-keep', 'Garder ma séance', () => _choose('kept')),
+            ],
+            true,
           ),
-        ];
-      case 'pending':
-        pose = koachPose(KoachUsage.proposal);
-        text = 'Vu ton bilan, je te propose :\n$list';
-        actions = [
-          KoachBubbleAction(
-            'Accepter',
-            () => _choose('accepted'),
-            primary: true,
-            key: const ValueKey('adjust-accept'),
+          _ => (
+            koachPose(KoachUsage.confirmation),
+            'Tu gardes ta séance prévue.',
+            <(String, String, VoidCallback)>[
+              ('adjust-go', 'C’est parti', widget.onStart),
+              (
+                'adjust-accept',
+                'Accepter l’ajustement',
+                () => _choose('accepted'),
+              ),
+            ],
+            false,
           ),
-          KoachBubbleAction(
-            'Garder ma séance',
-            () => _choose('kept'),
-            key: const ValueKey('adjust-keep'),
-          ),
-        ];
-      case 'accepted':
-        pose = koachPose(KoachUsage.confirmation);
-        text = 'C’est noté, séance adaptée :\n$list';
-        actions = [
-          KoachBubbleAction(
-            'C’est parti',
-            widget.onStart,
-            primary: true,
-            key: const ValueKey('adjust-go'),
-          ),
-          KoachBubbleAction(
-            'Garder ma séance',
-            () => _choose('kept'),
-            key: const ValueKey('adjust-keep'),
-          ),
-        ];
-      default:
-        pose = koachPose(KoachUsage.confirmation);
-        text = 'Tu gardes ta séance prévue.';
-        actions = [
-          KoachBubbleAction(
-            'C’est parti',
-            widget.onStart,
-            primary: true,
-            key: const ValueKey('adjust-go'),
-          ),
-          KoachBubbleAction(
-            'Accepter l’ajustement',
-            () => _choose('accepted'),
-            key: const ValueKey('adjust-accept'),
-          ),
-        ];
-    }
+        };
     return KCard(
       key: ValueKey('health-adjust-${a.choice}'),
-      child: KoachBubble(
+      child: KoachSays(
         pose: pose,
-        text: text,
-        why: kHealthWhy,
-        koachHeight: 88,
-        actions: actions,
+        koachHeight: 64,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(head, style: const TextStyle(fontWeight: FontWeight.w700)),
+            if (list) ...[
+              const SizedBox(height: 4),
+              for (final l in shown)
+                Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Text('• $l'),
+                ),
+              if (more > 0)
+                Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Text(
+                    '… et $more autre${more > 1 ? 's' : ''} '
+                    'changement${more > 1 ? 's' : ''}.',
+                    style: TextStyle(color: SL.dim),
+                  ),
+                ),
+            ],
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                for (var i = 0; i < actions.length; i++)
+                  i == 0
+                      ? FilledButton(
+                          key: ValueKey(actions[i].$1),
+                          onPressed: actions[i].$3,
+                          child: Text(actions[i].$2),
+                        )
+                      : TextButton(
+                          key: ValueKey(actions[i].$1),
+                          onPressed: actions[i].$3,
+                          child: Text(actions[i].$2),
+                        ),
+                TextButton(
+                  key: const ValueKey('adjust-why'),
+                  onPressed: () => showKoachSheet<void>(
+                    context,
+                    pose: KoachPose.explainBoard,
+                    title: 'Pourquoi ?',
+                    text: kHealthWhy,
+                  ),
+                  child: const Text('Pourquoi ?'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -365,7 +383,15 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
 class _FeelTile extends StatelessWidget {
   final int level;
   final VoidCallback? onTap;
-  const _FeelTile({super.key, required this.level, required this.onTap});
+
+  /// Koach à gauche du libellé (une tuile par ligne).
+  final bool horizontal;
+  const _FeelTile({
+    super.key,
+    required this.level,
+    required this.onTap,
+    this.horizontal = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -385,19 +411,50 @@ class _FeelTile extends StatelessWidget {
             child: KoachSurface(
               color: SL.card,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 6),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    KoachView(pose: kFeelPoses[level]!, height: 56, width: 52),
-                    const SizedBox(height: 6),
-                    Text(
-                      label,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                  ],
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 6,
                 ),
+                child: horizontal
+                    ? Row(
+                        children: [
+                          KoachView(
+                            pose: kFeelPoses[level]!,
+                            height: 44,
+                            width: 40,
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              label,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          KoachView(
+                            pose: kFeelPoses[level]!,
+                            height: 48,
+                            width: 44,
+                          ),
+                          const SizedBox(height: 6),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              label,
+                              maxLines: 1,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
               ),
             ),
           ),
@@ -486,7 +543,10 @@ class _HealthDetailScreenState extends State<HealthDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(kZoneLabels[zone]!, style: Theme.of(ctx).textTheme.titleLarge),
+              Text(
+                kZoneLabels[zone]!,
+                style: Theme.of(ctx).textTheme.titleLarge,
+              ),
               const SizedBox(height: 12),
               Wrap(
                 spacing: 8,

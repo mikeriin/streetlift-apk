@@ -100,9 +100,8 @@ class _FlameSheetState extends State<_FlameSheet> {
     _excluded = widget.excluded;
   }
 
-  void _pick(int f) => Navigator.of(
-    context,
-  ).pop(FlameChoice(flames: f, excluded: _excluded));
+  void _pick(int f) =>
+      Navigator.of(context).pop(FlameChoice(flames: f, excluded: _excluded));
 
   void _dragTo(Offset global) {
     final box = _rowKey.currentContext?.findRenderObject() as RenderBox?;

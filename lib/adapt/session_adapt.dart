@@ -312,7 +312,8 @@ class SessionAdapt {
     }
     final p = m['place'];
     final choice = m['choice'];
-    if (choice != null && (choice is! String || !kAdaptChoices.contains(choice))) {
+    if (choice != null &&
+        (choice is! String || !kAdaptChoices.contains(choice))) {
       throw const FormatException('Séance du moteur : suite.');
     }
     final advice = <String, List<AdviceStep>>{};
@@ -326,7 +327,9 @@ class SessionAdapt {
         if (e.key is! String || list is! List || list.length > 200) {
           throw const FormatException('Séance du moteur : conseils.');
         }
-        advice[e.key as String] = [for (final x in list) AdviceStep.fromJson(x)];
+        advice[e.key as String] = [
+          for (final x in list) AdviceStep.fromJson(x),
+        ];
       }
     }
     return SessionAdapt(

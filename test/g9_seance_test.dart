@@ -562,6 +562,8 @@ void main() {
       expect(a.check!.toJson(), {'overall': 2, 'sleepQuality': 1});
       if (a.base != null) {
         expect(find.byKey(const ValueKey('adjust-undo')), findsOneWidget);
+        await tester.ensureVisible(find.byKey(const ValueKey('adjust-go')));
+        await tester.pumpAndSettle();
         await tester.tap(find.byKey(const ValueKey('adjust-go')));
         await tester.pumpAndSettle();
       }

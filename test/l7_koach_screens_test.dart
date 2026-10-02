@@ -103,19 +103,21 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Valider la série 1').first);
     await tester.pumpAndSettle();
+    // G9 (D5.3, D5.4) : la fiche de difficulté L7 est remplacée par le
+    // sélecteur des 10 flammes, pré-rempli avec la cible (RIR 3 → 5).
     expect(find.text('Série 1 · difficulté'), findsOneWidget);
-    for (var r = 0; r <= 5; r++) {
-      expect(find.byKey(ValueKey('effort-$r')), findsOneWidget);
+    for (var f = 1; f <= 10; f++) {
+      expect(find.byKey(ValueKey('flame-pick-$f')), findsOneWidget);
     }
-    expect(find.text('Très dur'), findsOneWidget);
-    expect(find.text('encore 1'), findsOneWidget);
-    await tester.tap(find.byKey(const ValueKey('effort-5')));
+    expect(find.text('5 flammes · RIR 3'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('flame-pick-1')));
     await tester.pumpAndSettle();
     final log = store.logs['S3-J1']!.ex[mu]!;
     expect(log.sets[0].done, isTrue);
+    expect(log.sets[0].flames, 1);
     expect(log.sets[0].effort, 5);
     expect(
-      find.bySemanticsLabel(RegExp(r'^Série 1 : Facile · encore 5 ou plus')),
+      find.bySemanticsLabel(RegExp(r'^Série 1 : 1 flamme · RIR 5 et plus')),
       findsOneWidget,
     );
     // Facile pour Soutenu visé : suggestion pour les séries restantes.
@@ -144,13 +146,14 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Valider la série 1').first);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Annuler').last);
+    // Feuille des flammes fermée sans choix (G9).
+    await tester.tapAt(const Offset(10, 10));
     await tester.pumpAndSettle();
     final log = store.logs['S3-J1']!.ex[mu]!;
     expect(log.sets[0].done, isFalse);
     await tester.tap(find.byTooltip('Valider la série 1').first);
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('effort-4')));
+    await tester.tap(find.byKey(const ValueKey('flame-pick-3')));
     await tester.pumpAndSettle();
     await scrollToAction(tester, find.byKey(const ValueKey('koach-keep')));
     await tester.tap(find.byKey(const ValueKey('koach-keep')));
@@ -159,10 +162,12 @@ void main() {
     expect(log.koach, contains('charge gardée'));
     expect(store.koach.decisions.last.status, 'refused');
     // Série écartée (D11) depuis la ligne Koach de la série validée.
-    await scrollToAction(tester, find.byKey(const ValueKey('koach-set-1')));
-    await tester.tap(find.byKey(const ValueKey('koach-set-1')));
+    await scrollToAction(tester, find.byKey(const ValueKey('flame-line-1')));
+    await tester.tap(find.byKey(const ValueKey('flame-line-1')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('effort-exclude')));
+    await tester.tap(find.byKey(const ValueKey('flame-exclude')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('flame-confirm')));
     await tester.pumpAndSettle();
     expect(log.sets[0].excluded, isTrue);
     expect(log.sets[0].done, isTrue);
@@ -399,8 +404,8 @@ void main() {
         await tester.tap(find.byTooltip('Valider la série 1').first);
         await tester.pumpAndSettle();
         // Texte agrandi : la fiche défile jusqu'au 6e bouton.
-        await scrollToAction(tester, find.byKey(const ValueKey('effort-5')));
-        await tester.tap(find.byKey(const ValueKey('effort-5')));
+        await scrollToAction(tester, find.byKey(const ValueKey('flame-pick-1')));
+        await tester.tap(find.byKey(const ValueKey('flame-pick-1')));
         await tester.pumpAndSettle();
         await scrollToAction(tester, find.byKey(const ValueKey('koach-apply')));
         expect(tester.takeException(), isNull);

@@ -83,9 +83,8 @@ String _zone(Object? code) {
 
 num? _num(Object? v) => v is num ? v : null;
 
-String _dec(double v) => v == v.roundToDouble()
-    ? v.toInt().toString()
-    : '$v'.replaceAll('.', ',');
+String _dec(double v) =>
+    v == v.roundToDouble() ? v.toInt().toString() : '$v'.replaceAll('.', ',');
 
 /// Raison `adapt.*` d'une décision du moteur, en français (null : raison
 /// interne, rien à dire à l'utilisateur).

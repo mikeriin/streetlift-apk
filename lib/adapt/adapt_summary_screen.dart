@@ -21,6 +21,17 @@ String _goalText(SetGoal g) {
   ].join(' × ');
 }
 
+/// « (aujourd'hui : 60 kg × 8) » quand la cible du jour était une valeur
+/// unique et différente.
+String _todayText(AdaptExerciseSummary e) {
+  final t = e.today, n = e.next;
+  if (t == null || n == null) return '';
+  if (t.low != null && t.high != null && t.low != t.high) return '';
+  final a = _goalText(t);
+  if (a.isEmpty || a == _goalText(n)) return '';
+  return ' (aujourd’hui : $a)';
+}
+
 /// Résumé de Koach en fin de séance.
 class AdaptSummaryScreen extends StatefulWidget {
   final WeekPlan week;
@@ -86,14 +97,10 @@ class _AdaptSummaryScreenState extends State<AdaptSummaryScreen> {
             ),
           ),
           if (calibrating.isNotEmpty)
-            _section(
-              'summary-calibration',
-              'Calibrage',
-              [
-                for (final e in calibrating)
-                  '${e.name} : je cale encore la charge sur ce que tu fais.',
-              ],
-            ),
+            _section('summary-calibration', 'Calibrage', [
+              for (final e in calibrating)
+                '${e.name} : je cale encore la charge sur ce que tu fais.',
+            ]),
           if (s != null && s.exercises.isNotEmpty)
             _section(
               'summary-progress',
@@ -110,15 +117,11 @@ class _AdaptSummaryScreenState extends State<AdaptSummaryScreen> {
                     ],
             ),
           if (next.isNotEmpty)
-            _section(
-              'summary-next',
-              'La prochaine fois',
-              [
-                for (final e in next)
-                  '${e.name} : ${_goalText(e.next!)}'
-                      '${e.today == null || _goalText(e.today!) == _goalText(e.next!) ? '' : ' (aujourd’hui : ${_goalText(e.today!)})'}.',
-              ],
-            ),
+            _section('summary-next', 'La prochaine fois', [
+              for (final e in next)
+                '${e.name} : ${_goalText(e.next!)}'
+                    '${_todayText(e)}.',
+            ]),
           if (s != null && s.painReferralZones.isNotEmpty)
             KCard(
               key: const ValueKey('summary-referral'),
@@ -152,10 +155,7 @@ class _AdaptSummaryScreenState extends State<AdaptSummaryScreen> {
         Text(title, style: Theme.of(context).textTheme.titleMedium),
         const SizedBox(height: 6),
         for (final l in lines)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4),
-            child: Text(l),
-          ),
+          Padding(padding: const EdgeInsets.only(bottom: 4), child: Text(l)),
       ],
     ),
   );

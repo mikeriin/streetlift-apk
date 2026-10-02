@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kalis_core/kalis_core.dart' as kc
+import 'package:kalis_core/kalis_core.dart'
+    as kc
     show Flames, IntraSessionAction, Place;
 import 'package:kalis_koach/kalis_koach.dart' show KoachUsage;
 import 'device.dart';
@@ -128,9 +129,8 @@ class _SessionScreenState extends State<SessionScreen> {
     return store.sessionDay(widget.week.n, widget.day);
   }
 
-  List<List<Exercise>> _groups() => adaptOn
-      ? store.groups(_day)
-      : store.sessionGroups(widget.week.n, _day);
+  List<List<Exercise>> _groups() =>
+      adaptOn ? store.groups(_day) : store.sessionGroups(widget.week.n, _day);
 
   /// Séance adaptée (compression, échange, lieu, bilan) : pages recalculées.
   void _adapted(bool changed) {
@@ -251,9 +251,13 @@ class _SessionScreenState extends State<SessionScreen> {
             if (koachPage)
               ListTile(
                 leading: Icon(
-                  adaptOn ? Icons.favorite_outline : Icons.auto_awesome_outlined,
+                  adaptOn
+                      ? Icons.favorite_outline
+                      : Icons.auto_awesome_outlined,
                 ),
-                title: Text(adaptOn ? 'Bilan du jour' : 'Koach · séance du jour'),
+                title: Text(
+                  adaptOn ? 'Bilan du jour' : 'Koach · séance du jour',
+                ),
                 selected: page == 0,
                 onTap: () => Navigator.pop(context, 0),
               ),
@@ -1112,8 +1116,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               Expanded(
                 child: Text(
                   [
-                    if (it.toCalibrate) 'Calibrage',
-                    ...lines.take(it.toCalibrate ? 1 : 2),
+                    if (it.toCalibrate &&
+                        !lines.any((l) => l.startsWith('Calibrage')))
+                      'Calibrage',
+                    ...lines.take(2),
                   ].join(' · '),
                   style: TextStyle(color: SL.dim, fontSize: 12.5),
                 ),
@@ -1197,9 +1203,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     if (choice == null || !mounted) return;
     s.flames = choice.flames;
     s.flamesUnknown = choice.unknown;
-    final rir = choice.flames == null
-        ? null
-        : kc.Flames.toRir(choice.flames!);
+    final rir = choice.flames == null ? null : kc.Flames.toRir(choice.flames!);
     if (rir != s.effort) {
       store.setEffort(log, i, rir);
     } else {
@@ -1661,7 +1665,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                   ],
                 ),
                 // L8 (KT-041) : consigne du mode prudent.
-                if (!readOnly && store.cautionNote(ex) != null)
+                // G9 : exercice servi par le moteur, la prudence est dans
+                // ses cibles (pas de seconde règle de charge).
+                if (!readOnly && !ex.engine && store.cautionNote(ex) != null)
                   Padding(
                     padding: const EdgeInsets.only(top: 6),
                     child: Row(
@@ -1694,8 +1700,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       style: TextStyle(color: SL.dim, fontSize: 12.5),
                     ),
                 ],
-                if (!readOnly && widget.adapt && ex.engine)
-                  ..._adaptNotes(ex),
+                if (!readOnly && widget.adapt && ex.engine) ..._adaptNotes(ex),
                 if (!readOnly &&
                     !widget.adapt &&
                     store.koachOn &&
