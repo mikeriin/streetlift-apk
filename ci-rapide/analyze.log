@@ -1,7 +1,0 @@
-Analyzing streetlift-apk...                                     
-
-warning • Unused import: '../athlete_profile.dart'. Try removing the import directive • lib/dev/dev_simulator.dart:29:8 • unused_import
-   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • lib/evolution_store.dart:396:5 • prefer_const_declarations
-  error • The name 'PlanBlockEntry' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a type named 'PlanBlockEntry' • lib/plan/evolution_widgets.dart:23:55 • non_type_as_type_argument
-
-3 issues found. (ran in 18.5s)

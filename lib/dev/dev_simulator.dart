@@ -26,7 +26,6 @@ import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
 import '../adapt/adapt_texts.dart' show adaptKgField;
 import '../app_theme.dart';
-import '../athlete_profile.dart' show civilOf;
 import '../kalis_clock.dart';
 import '../koach/koach_bubble.dart';
 import '../models.dart';
@@ -89,7 +88,8 @@ Future<DevSimResult> runDevSimulation(
   if (catalog == null || profile == null) {
     return DevSimResult(
       end: start,
-      error: 'Il faut un profil (et la base d’exercices) dans la session de '
+      error:
+          'Il faut un profil (et la base d’exercices) dans la session de '
           'test.',
     );
   }
@@ -136,7 +136,9 @@ Future<DevSimResult> runDevSimulation(
       }
       // Séance manquée : coupure, puis au hasard (taux de l'athlète).
       final breakFrom = spec.breakFromDay;
-      if (breakFrom != null && d >= breakFrom && d < breakFrom + spec.breakDays) {
+      if (breakFrom != null &&
+          d >= breakFrom &&
+          d < breakFrom + spec.breakDays) {
         missed++;
         continue;
       }
@@ -279,7 +281,8 @@ bool _session(
         // Exercice que le moteur ne modélise pas (mobilité, cardio…) :
         // fait comme prescrit.
         if (s.reps.isEmpty) {
-          final planned = g?.prefill ??
+          final planned =
+              g?.prefill ??
               app.plannedReps(e, spec2, log.sets.length)[i] ??
               spec2.seconds ??
               1;
@@ -307,9 +310,9 @@ bool _session(
 
 Future<void> openDevSimulator(BuildContext context) {
   if (!kDevBuild || !SessionSpace.isDev) return Future.value();
-  return Navigator.of(context).push(
-    MaterialPageRoute<void>(builder: (_) => const DevSimulatorScreen()),
-  );
+  return Navigator.of(
+    context,
+  ).push(MaterialPageRoute<void>(builder: (_) => const DevSimulatorScreen()));
 }
 
 /// Outils de test › Simulateur de séances.
@@ -428,7 +431,9 @@ class _DevSimulatorScreenState extends State<DevSimulatorScreen> {
           ),
           Row(
             children: [
-              const Expanded(child: Text('Graine (même graine = même session)')),
+              const Expanded(
+                child: Text('Graine (même graine = même session)'),
+              ),
               IconButton(
                 tooltip: 'Graine précédente',
                 onPressed: _running || _seed <= 1
@@ -452,7 +457,9 @@ class _DevSimulatorScreenState extends State<DevSimulatorScreen> {
                 'Mode libre : sinon elles restent en attente sur l’accueil.',
               ),
               value: _acceptAll,
-              onChanged: _running ? null : (v) => setState(() => _acceptAll = v),
+              onChanged: _running
+                  ? null
+                  : (v) => setState(() => _acceptAll = v),
             ),
           if (_running) ...[
             LinearProgressIndicator(

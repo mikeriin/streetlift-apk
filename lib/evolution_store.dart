@@ -152,8 +152,18 @@ extension EvolutionStore on AppStore {
       week: w,
       ms: sw.elapsedMilliseconds,
     );
+    return evolutionReceive(place, review.proposals);
+  }
+
+  /// Propositions [proposals] du moteur pour le bloc de [place] : nouvelles
+  /// propositions appliquées (mode assisté) ou en attente (mode libre) ;
+  /// celles en attente que le moteur ne fait plus sont retirées. Vrai si
+  /// l'évolution a changé. (Appelé par [evolutionRefresh] ; public pour les
+  /// tests.)
+  bool evolutionReceive(AdaptPlace place, List<kc.Proposal> proposals) {
+    final mode = SessionAdaptStore(this).adaptMode;
     final today = _evoToday.iso;
-    final offered = {for (final p in review.proposals) p.id};
+    final offered = {for (final p in proposals) p.id};
     final out = <EvolutionEntry>[];
     var changed = false;
     for (final e in planEvolution.entries) {
@@ -166,8 +176,10 @@ extension EvolutionStore on AppStore {
       }
       out.add(e);
     }
-    for (final p in review.proposals) {
-      final i = out.indexWhere((e) => e.id == p.id && e.blockId == place.blockId);
+    for (final p in proposals) {
+      final i = out.indexWhere(
+        (e) => e.id == p.id && e.blockId == place.blockId,
+      );
       final auto = mode == 'assisted' && p.autoApplicable;
       if (i < 0) {
         out.add(
@@ -180,7 +192,9 @@ extension EvolutionStore on AppStore {
           ),
         );
         changed = true;
-      } else if (out[i].status == EvoStatus.pending) {
+      } else if (out[i].status == EvoStatus.pending &&
+          (auto ||
+              !kc.jsonDeepEquals(out[i].proposal.toJson(), p.toJson()))) {
         // Toujours proposée : la plus récente (bloc et diff à jour) ;
         // appliquée si le mode est passé à assisté.
         out[i] = out[i].copyWith(
@@ -393,7 +407,7 @@ extension EvolutionStore on AppStore {
         : (imported ? weeks ~/ 6 : r.place.block.pass1.blockIndex);
     const p = ka.AdaptParams.standard;
     final level = s?.unlockLevel ?? ka.unlockLevelFor(weeks, blocks, p);
-    final order = kc.UnlockLevel.values;
+    const order = kc.UnlockLevel.values;
     final next = level.index + 1 < order.length ? order[level.index + 1] : null;
     var w = 0, b = 0;
     switch (next) {

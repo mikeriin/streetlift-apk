@@ -1,6 +1,13 @@
-ALL
+test/g10_evolution_test.dart
+test/g10_diag_test.dart
+test/g10_seance_sans_moteur_test.dart
+test/g10_charges_consigne_test.dart
+test/g9_seance_test.dart
+test/g7_plan_test.dart
+test/g6_profil_test.dart
+test/g5_koach_test.dart
+test/l13_safety_test.dart
+test/l13_screens_test.dart
+test/l10_store_test.dart
 dev:test/g1_mode_dev_test.dart
-dev:test/g2_mode_dev_test.dart
-dev:test/g3_mode_dev_test.dart
-dev:test/g6_mode_dev_test.dart
 dev:test/g7_mode_dev_test.dart

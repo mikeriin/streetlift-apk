@@ -176,7 +176,10 @@ class _EngineInspectorScreenState extends State<EngineInspectorScreen> {
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(flex: 4, child: Text(k, style: TextStyle(color: SL.dim))),
+        Expanded(
+          flex: 4,
+          child: Text(k, style: TextStyle(color: SL.dim)),
+        ),
         const SizedBox(width: 8),
         Expanded(flex: 5, child: Text(v)),
       ],
@@ -244,8 +247,7 @@ class _EngineInspectorScreenState extends State<EngineInspectorScreen> {
                   _kv('Forme / fatigue', '${_n(f.fitness)} / ${_n(f.fatigue)}'),
                 ],
                 _kv('Temps de la revue', '${r.ms} ms'),
-                for (final x in s.reasons)
-                  Text(_reasonLine(x), style: mono),
+                for (final x in s.reasons) Text(_reasonLine(x), style: mono),
               ],
             ),
           ),

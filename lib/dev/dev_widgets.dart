@@ -29,8 +29,7 @@ import '../store.dart';
 import 'dev_flags.dart';
 import 'dev_session.dart';
 import 'dev_simulator.dart' show DevSimulatorScreen;
-import 'engine_inspector.dart'
-    show EngineInspectorScreen, shareEngineJournal;
+import 'engine_inspector.dart' show EngineInspectorScreen, shareEngineJournal;
 
 /// Couleur du logo : rose vif pendant la session de test.
 Color devLogoColor(Color normal) =>

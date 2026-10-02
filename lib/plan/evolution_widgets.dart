@@ -13,6 +13,7 @@ import '../koach/koach_view.dart' show KoachSurface;
 import '../store.dart';
 import '../ui.dart';
 import 'evolution_texts.dart';
+import 'plan_program.dart' show PlanBlockEntry;
 import 'plan_sheets.dart' show changeLine, planName, planReason;
 import 'plan_texts.dart';
 
@@ -356,10 +357,9 @@ class EvolutionSessionCard extends StatelessWidget {
 
 // ----------------------------------------------------------- écran
 
-Future<void> openEvolutionScreen(BuildContext context) =>
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (_) => const EvolutionScreen()),
-    );
+Future<void> openEvolutionScreen(BuildContext context) => Navigator.of(
+  context,
+).push(MaterialPageRoute<void>(builder: (_) => const EvolutionScreen()));
 
 /// Ce que Koach sait déjà ajuster (D5.7), et ce qu'il débloquera.
 class EvolutionUnlockCard extends StatelessWidget {

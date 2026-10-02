@@ -386,8 +386,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       for (final d in w.days) card(d),
                       // G10 : propositions de Koach (évolution du
                       // programme), après les journées.
-                      if (EvolutionHomeCard.visible)
-                        const EvolutionHomeCard(),
+                      if (EvolutionHomeCard.visible) const EvolutionHomeCard(),
                       // G7 : Où j'en suis, fin de bloc, retour à l'ancien
                       // programme ; après les journées (la semaine entière
                       // reste visible, L5).
