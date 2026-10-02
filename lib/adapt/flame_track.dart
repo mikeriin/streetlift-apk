@@ -319,24 +319,31 @@ class _FlameTrackState extends State<FlameTrack> {
                     style: TextStyle(color: SL.dim, fontSize: 11.5),
                   ),
                 ),
-                // « Je ne sais pas », discret, au centre sous la ligne.
-                TextButton(
-                  key: const ValueKey('flame-unknown'),
-                  style: TextButton.styleFrom(
-                    minimumSize: const Size(44, 36),
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    visualDensity: VisualDensity.compact,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  onPressed: widget.unknown ? null : widget.onUnknown,
-                  child: Text(
-                    'Je ne sais pas',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: widget.unknown ? SL.faint : SL.dim,
-                      fontSize: 12.5,
-                      decoration: TextDecoration.underline,
-                      decorationColor: SL.faint,
+                // « Je ne sais pas », discret, au centre sous la ligne ; texte
+                // agrandi sur écran étroit : sur deux lignes au lieu de
+                // déborder.
+                Flexible(
+                  flex: 2,
+                  child: TextButton(
+                    key: const ValueKey('flame-unknown'),
+                    style: TextButton.styleFrom(
+                      minimumSize: const Size(44, 36),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      visualDensity: VisualDensity.compact,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
+                    onPressed: widget.unknown ? null : widget.onUnknown,
+                    child: Text(
+                      'Je ne sais pas',
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: widget.unknown ? SL.faint : SL.dim,
+                        fontSize: 12.5,
+                        decoration: TextDecoration.underline,
+                        decorationColor: SL.faint,
+                      ),
                     ),
                   ),
                 ),
@@ -434,9 +441,13 @@ class SetSummaryLine extends StatelessWidget {
                   ),
                 ),
                 if (excluded) ...[
-                  Text(
-                    'écartée',
-                    style: TextStyle(color: SL.dim, fontSize: 12.5),
+                  Flexible(
+                    child: Text(
+                      'écartée',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: SL.dim, fontSize: 12.5),
+                    ),
                   ),
                   const SizedBox(width: 6),
                 ],
