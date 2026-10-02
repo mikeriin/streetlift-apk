@@ -45,20 +45,46 @@ index 384ece5..c34c953 100644
            ),
          ),
        ),
+diff --git a/lib/adapt/health_check.dart b/lib/adapt/health_check.dart
+index 2ec8fa2..033230e 100644
+--- a/lib/adapt/health_check.dart
++++ b/lib/adapt/health_check.dart
+@@ -88,9 +88,7 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
+     if (low) {
+       final initial = check;
+       final detail = await Navigator.of(context).push<kc.HealthCheck>(
+-        MaterialPageRoute(
+-          builder: (_) => HealthDetailScreen(initial: initial),
+-        ),
++        MaterialPageRoute(builder: (_) => HealthDetailScreen(initial: initial)),
+       );
+       if (!mounted) return;
+       if (detail != null) check = detail;
 diff --git a/lib/session_adapt_store.dart b/lib/session_adapt_store.dart
-index 00c4a8b..4d23140 100644
+index 1fbcce2..c2102e8 100644
 --- a/lib/session_adapt_store.dart
 +++ b/lib/session_adapt_store.dart
-@@ -514,7 +514,8 @@ extension SessionAdaptStore on AppStore {
-       for (final x in e.value.ex.values) {
-         for (final s in x.sets) {
-           if (s.done) {
--            n = (n * 31 +
-+            n =
-+                (n * 31 +
-                     Object.hash(s.kg, s.reps, s.flames, s.excluded, s.effort)) &
-                 0x3fffffff;
-           }
+@@ -96,9 +96,7 @@ extension SessionAdaptStore on AppStore {
+   String adaptExerciseName(String id) => _adaptNameOf(id);
+ 
+   /// Le moteur peut servir les séances : profil v2 et base chargée.
+-  bool get adaptAvailable =>
+-      content.catalog != null &&
+-      adaptProfile != null;
++  bool get adaptAvailable => content.catalog != null && adaptProfile != null;
+ 
+   /// Mode du profil (D3.7, D5.6).
+   String get adaptMode {
+@@ -585,8 +583,7 @@ extension SessionAdaptStore on AppStore {
+       testOf: (w, j, key) {
+         final a = sessionAdaptOf(sessionKey(w, j));
+         if (a == null) return false;
+-        return _adaptItem(a, adaptSlotOf(w, j, key))?.kind ==
+-            kc.SetKind.test;
++        return _adaptItem(a, adaptSlotOf(w, j, key))?.kind == kc.SetKind.test;
+       },
+       session: (w, j, key) {
+         final a = sessionAdaptOf(key);
 diff --git a/lib/session_screen.dart b/lib/session_screen.dart
 index 69ffe1a..bd107dd 100644
 --- a/lib/session_screen.dart
@@ -75,3 +101,21 @@ index 69ffe1a..bd107dd 100644
      }
      if (lines.isEmpty && !it.toCalibrate) return const [];
      return [
+diff --git a/test/g9_seance_test.dart b/test/g9_seance_test.dart
+index fc180d4..9f99394 100644
+--- a/test/g9_seance_test.dart
++++ b/test/g9_seance_test.dart
+@@ -308,10 +308,9 @@ void main() {
+         const kc.HealthCheck(overall: 1, minutesAvailable: 20),
+       )!;
+       expect(a.check!.toJson(), {'overall': 1, 'minutesAvailable': 20});
+-      expect(
+-        SessionAdaptStore.factsOf(a.check!)!.toJson(),
+-        {'minutesAvailable': 20},
+-      );
++      expect(SessionAdaptStore.factsOf(a.check!)!.toJson(), {
++        'minutesAvailable': 20,
++      });
+       expect(
+         SessionAdaptStore.factsOf(const kc.HealthCheck(overall: 2)),
+         isNull,

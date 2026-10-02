@@ -52,13 +52,13 @@ Downloading packages...
 Changed 48 dependencies!
 1 package has newer versions incompatible with dependency constraints.
 Try `dart pub outdated` for more information.
-Formatted 15 files (0 changed) in 0.84 seconds.
+Formatted 15 files (0 changed) in 0.51 seconds.
 Analyzing kalis_koach...
 No issues found!
 00:00 +0: loading test/art_test.dart
 00:00 +0: test/art_test.dart: catalogue des poses 36 poses, identifiants uniques et alignés sur les dessins
-00:00 +1: test/properties_test.dart: 10 000 demandes aléatoires seedées
-00:00 +2: test/properties_test.dart: 10 000 demandes aléatoires seedées
+00:00 +1: test/art_test.dart: catalogue des poses 12 poses par planche, cases distinctes
+00:00 +2: test/art_test.dart: catalogue des poses yeux : calque présent si et seulement si yeux ouverts
 00:00 +3: test/properties_test.dart: 10 000 demandes aléatoires seedées
 00:00 +4: test/properties_test.dart: 10 000 demandes aléatoires seedées
 00:00 +5: test/properties_test.dart: 10 000 demandes aléatoires seedées
@@ -73,13 +73,13 @@ No issues found!
 00:00 +14: test/properties_test.dart: 10 000 demandes aléatoires seedées
 00:00 +15: test/properties_test.dart: 10 000 demandes aléatoires seedées
 00:00 +16: test/properties_test.dart: 10 000 demandes aléatoires seedées
-00:00 +17: test/properties_test.dart: 10 000 demandes aléatoires seedées
-00:00 +18: test/properties_test.dart: 10 000 demandes aléatoires seedées
-00:00 +19: test/properties_test.dart: 10 000 demandes aléatoires seedées
-00:00 +20: test/lines_test.dart: couverture table des raisons : exemples attendus présents
-00:00 +21: test/properties_test.dart: toutes les variantes sont atteintes
-00:00 +22: test/properties_test.dart: toutes les variantes sont atteintes
-00:00 +23: test/properties_test.dart: toutes les variantes sont atteintes
+00:00 +17: test/lines_test.dart: couverture une seule règle par événement
+00:00 +18: test/properties_test.dart: toutes les variantes sont atteintes
+00:00 +19: test/properties_test.dart: toutes les variantes sont atteintes
+00:00 +20: test/properties_test.dart: toutes les variantes sont atteintes
+00:00 +21: test/lines_test.dart: couverture table des raisons : exemples attendus présents
+00:00 +22: test/lines_test.dart: couverture table des raisons extensible
+00:00 +23: test/lines_test.dart: paramètres chaque message n’utilise que les paramètres déclarés
 00:00 +24: test/lines_test.dart: paramètres paramètre manquant refusé
 00:00 +25: test/lines_test.dart: textes longueur des bulles, explications et libellés
 00:00 +26: test/lines_test.dart: textes aucune allégation médicale ni promesse de résultat
@@ -93,4 +93,4 @@ No issues found!
 00:00 +34: test/lines_test.dart: flammes 10 flammes croissantes, base commune
 00:00 +35: test/lines_test.dart: flammes teinte et libellé
 00:00 +36: All tests passed!
-Rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_koach : 36 poses, 10 flammes, 28 événements, 3.77 µs par réplique.
+Rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_koach : 36 poses, 10 flammes, 28 événements, 2.65 µs par réplique.
