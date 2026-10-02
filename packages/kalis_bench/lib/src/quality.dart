@@ -203,9 +203,9 @@ List<QualityMeasure> qualityMeasures(
       means[g.code] = _r(mean);
       counted++;
       if (mean < floor - 1e-9) {
-        under.add(g.code);
+        under.add(muscleLabel(g));
       } else if (mean > ceiling + 1e-9) {
-        over.add(g.code);
+        over.add(muscleLabel(g));
       } else {
         inBand++;
       }
@@ -361,10 +361,9 @@ List<QualityMeasure> qualityMeasures(
         'progression_planifiee',
         score,
         'Sur $slots mouvements principaux, secondaires ou figures du '
-            'premier bloc : $loadOrReps montent en charge, en répétitions '
-            'ou en durée entre la première et la dernière semaine de '
-            'montée ; $setsOrEffort ne montent qu\'en séries ou en '
-            'effort.',
+            'premier bloc — en charge, en répétitions ou en durée entre la '
+            'première et la dernière semaine de montée : $loadOrReps ; '
+            'seulement en séries ou en effort : $setsOrEffort.',
         <String, Object?>{
           'slots': slots,
           'loadOrReps': loadOrReps,
@@ -539,7 +538,7 @@ List<QualityMeasure> qualityMeasures(
         'affutage_aligne',
         (dropScore + testScore + frequencyScore) / 3,
         'Semaine de l\'échéance (semaine ${at + 1}) : nature '
-            '${weeks[at].kind.code}, volume ${(drop * 100).round()} % sous '
+            '${weekKindName(weeks[at].kind)}, volume ${(drop * 100).round()} % sous '
             'le pic des six semaines précédentes ; épreuve la plus proche : '
             '${nearestTest < 0 ? 'aucune' : 'semaine ${nearestTest + 1}'}.',
         <String, Object?>{

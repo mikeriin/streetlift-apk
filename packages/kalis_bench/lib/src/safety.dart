@@ -350,7 +350,7 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
             Finding(
               code: 'volume_trop_vite',
               message:
-                  '${g.code} : ${sets.toStringAsFixed(1)} séries dures en '
+                  '${muscleLabel(g)} : ${sets.toStringAsFixed(1)} séries dures en '
                   'semaine ${w.index + 1}, pour '
                   '${limit.toStringAsFixed(1)} admises au vu des trois '
                   'semaines précédentes.',
@@ -374,7 +374,7 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
         Finding(
           code: 'plafond_volume',
           message:
-              '${g.code} : $above semaine(s) au-dessus du plafond du niveau '
+              '${muscleLabel(g)} : $above semaine(s) au-dessus du plafond du niveau '
               '${profile.level.label} (${ceiling.toStringAsFixed(0)} séries '
               'dures), jusqu\'à ${highest.toStringAsFixed(1)}.',
           week: firstAbove,
@@ -539,7 +539,7 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
             Finding(
               code: 'contre_indication',
               message:
-                  '${i.exercise.name} : $why sur ${joint.code} '
+                  '${i.exercise.name} : $why sur ${jointLabel(joint)} '
                   '(${injury.label}, gêne ${injury.discomfort}/10).',
               week: w.index,
               dayIndex: i.dayIndex,
@@ -561,7 +561,7 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
           Finding(
             code: 'tendon_figures',
             message:
-                'Tenues bras tendus (${family.name}) $days jours en '
+                'Tenues bras tendus (${family.label}) $days jours en '
                 'semaine ${w.index + 1} (au plus $maxDays au niveau '
                 '${profile.level.label}).',
             week: w.index,
@@ -595,7 +595,7 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
           Finding(
             code: 'tendon_figures',
             message:
-                'Tenues bras tendus (${family.name}) : '
+                'Tenues bras tendus (${family.label}) : '
                 '${seconds.round()} s en semaine ${w.index + 1}, pour '
                 '${limit.round()} s admises au vu des trois semaines '
                 'précédentes.',

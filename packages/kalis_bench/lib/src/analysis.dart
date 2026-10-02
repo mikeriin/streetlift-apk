@@ -47,6 +47,46 @@ double runSpeedOf(BenchProfile profile) {
 /// Plus grand RIR d'une série « dure » (référentiel, R1 : 0 à 4 RIR).
 const double hardSetMaxRir = 4;
 
+/// Nom français du groupe musculaire [g].
+String muscleLabel(MuscleGroup g) => switch (g) {
+  MuscleGroup.chest => 'pectoraux',
+  MuscleGroup.deltAnterior => 'deltoïde antérieur',
+  MuscleGroup.deltMiddle => 'deltoïde moyen',
+  MuscleGroup.deltPosterior => 'deltoïde postérieur',
+  MuscleGroup.lats => 'grand dorsal',
+  MuscleGroup.upperBack => 'haut du dos',
+  MuscleGroup.biceps => 'biceps',
+  MuscleGroup.triceps => 'triceps',
+  MuscleGroup.abs => 'abdominaux',
+  MuscleGroup.lowerBack => 'lombaires',
+  MuscleGroup.glutes => 'fessiers',
+  MuscleGroup.quads => 'quadriceps',
+  MuscleGroup.hamstrings => 'ischio-jambiers',
+  MuscleGroup.calves => 'mollets',
+  MuscleGroup.forearms => 'avant-bras',
+  MuscleGroup.adductors => 'adducteurs',
+  MuscleGroup.upperTraps => 'trapèzes supérieurs',
+};
+
+/// Nom français de l'articulation [j].
+String jointLabel(Joint j) => switch (j) {
+  Joint.shoulder => 'épaule',
+  Joint.elbow => 'coude',
+  Joint.wrist => 'poignet',
+  Joint.lumbar => 'lombaires',
+  Joint.knee => 'genou',
+  Joint.hip => 'hanche',
+  Joint.ankle => 'cheville',
+};
+
+/// Nom français de la nature de semaine [kind].
+String weekKindName(WeekKind kind) => switch (kind) {
+  WeekKind.intro => 'introduction',
+  WeekKind.build => 'montée',
+  WeekKind.deload => 'décharge',
+  WeekKind.test => 'test',
+};
+
 /// Famille de tenue bras tendus (même maillon tendineux).
 enum StraightArmFamily {
   /// Poussée bras tendus : planche et ses paliers.
@@ -56,7 +96,14 @@ enum StraightArmFamily {
   pull,
 
   /// Figures mixtes : drapeau.
-  mixed,
+  mixed;
+
+  /// Nom français.
+  String get label => switch (this) {
+    StraightArmFamily.push => 'poussée, type planche',
+    StraightArmFamily.pull => 'tirage, type front lever',
+    StraightArmFamily.mixed => 'mixtes, type drapeau',
+  };
 }
 
 /// Exercice prescrit, lu avec le catalogue.

@@ -160,7 +160,7 @@ CheckResult evaluateCheck(
       return result(
         tested > 0,
         '$tested épreuve(s) sur les mouvements visés la semaine de '
-        "l'échéance (nature : ${week.kind.code})",
+        "l'échéance (nature : ${weekKindName(week.kind)})",
       );
 
     case 'relief_every':
@@ -499,7 +499,7 @@ CheckResult evaluateCheck(
       final count = weeks.where((w) => w.kind == kind).length;
       return result(
         count >= (benchIntOrNull(p, 'min') ?? 1),
-        '$count semaine(s) de nature ${kind.code}',
+        '$count semaine(s) de nature ${weekKindName(kind)}',
       );
   }
   throw FormatException("type d'attente inconnu", check.type);
