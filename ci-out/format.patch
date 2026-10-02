@@ -1,0 +1,77 @@
+diff --git a/lib/adapt/flame_sheet.dart b/lib/adapt/flame_sheet.dart
+index 384ece5..c34c953 100644
+--- a/lib/adapt/flame_sheet.dart
++++ b/lib/adapt/flame_sheet.dart
+@@ -318,25 +318,25 @@ class FlameSetLine extends StatelessWidget {
+           child: Padding(
+             padding: const EdgeInsets.fromLTRB(32, 2, 4, 2),
+             child: Row(
+-            children: [
+-              if (f != null)
+-                FlameIcon(f, size: 18, semantics: false)
+-              else
+-                Icon(Icons.help_outline, size: 16, color: SL.dim),
+-              const SizedBox(width: 6),
+-              Expanded(
+-                child: Text(
+-                  label,
+-                  style: TextStyle(
+-                    color: SL.dim,
+-                    fontSize: 12.5,
+-                    decoration: excluded ? TextDecoration.lineThrough : null,
++              children: [
++                if (f != null)
++                  FlameIcon(f, size: 18, semantics: false)
++                else
++                  Icon(Icons.help_outline, size: 16, color: SL.dim),
++                const SizedBox(width: 6),
++                Expanded(
++                  child: Text(
++                    label,
++                    style: TextStyle(
++                      color: SL.dim,
++                      fontSize: 12.5,
++                      decoration: excluded ? TextDecoration.lineThrough : null,
++                    ),
+                   ),
+                 ),
+-              ),
+-              if (onTap != null) Icon(Icons.edit, size: 14, color: SL.dim),
+-            ],
+-          ),
++                if (onTap != null) Icon(Icons.edit, size: 14, color: SL.dim),
++              ],
++            ),
+           ),
+         ),
+       ),
+diff --git a/lib/session_adapt_store.dart b/lib/session_adapt_store.dart
+index 00c4a8b..4d23140 100644
+--- a/lib/session_adapt_store.dart
++++ b/lib/session_adapt_store.dart
+@@ -514,7 +514,8 @@ extension SessionAdaptStore on AppStore {
+       for (final x in e.value.ex.values) {
+         for (final s in x.sets) {
+           if (s.done) {
+-            n = (n * 31 +
++            n =
++                (n * 31 +
+                     Object.hash(s.kg, s.reps, s.flames, s.excluded, s.effort)) &
+                 0x3fffffff;
+           }
+diff --git a/lib/session_screen.dart b/lib/session_screen.dart
+index 69ffe1a..bd107dd 100644
+--- a/lib/session_screen.dart
++++ b/lib/session_screen.dart
+@@ -1093,7 +1093,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
+       }
+     }
+     if (it.toCalibrate && !lines.any((l) => l.startsWith('Calibrage'))) {
+-      lines.insert(0, 'Calibrage : je cale la charge sur tes premières séances.');
++      lines.insert(
++        0,
++        'Calibrage : je cale la charge sur tes premières séances.',
++      );
+     }
+     if (lines.isEmpty && !it.toCalibrate) return const [];
+     return [
