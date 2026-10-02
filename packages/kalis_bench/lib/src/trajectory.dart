@@ -8,6 +8,7 @@ import 'package:kalis_adapt/kalis_adapt.dart';
 import 'package:kalis_adapt/simulation.dart';
 import 'package:kalis_core/kalis_core.dart';
 
+import 'analysis.dart';
 import 'profile.dart';
 import 'program.dart';
 
@@ -17,9 +18,9 @@ import 'program.dart';
 /// raisonné (la moitié de l'avancé).
 const List<double> defaultWeeklyGain = <double>[0.012, 0.004, 0.0015, 0.0008];
 
-/// Hausse de la charge totale au-delà de laquelle une séance compte comme
-/// un pic de charge (R5-P22 : 10 %).
-const double loadSpikeRise = 0.10;
+/// Diviseur de la formule d'Epley (1RM estimé = charge × (1 + reps ÷ 30)),
+/// utilisée seulement pour comparer deux séries d'un même exercice.
+const double epleyDivisor = 30;
 
 /// Athlète simulé du profil [p] : niveau et gain par défaut, puis les
 /// réglages de `simulation` (champs de `AthleteSpec`).
@@ -228,29 +229,13 @@ Trajectory simulateTrajectory(
     }
   }
 
-  // Mesures.
+  // Mesures : celles de la campagne de validation de `kalis_adapt`
+  // (classe `Metrics`), calculées sur cette seule simulation.
+  final m = Metrics(<SimRun>[run]);
   var work = 0;
-  var failed = 0;
-  var gapSum = 0.0;
-  var spikes = 0;
-  var maxRise = 0.0;
   for (final s in run.sets) {
-    if (s.weekKind == WeekKind.test) {
-      continue;
-    }
-    work++;
-    if (s.failed && !s.plannedFailure) {
-      failed++;
-    }
-    gapSum += (s.trueRir - s.wantRir).abs();
-    final rise = s.rise;
-    if (rise != null) {
-      if (rise > maxRise) {
-        maxRise = rise;
-      }
-      if (rise > loadSpikeRise) {
-        spikes++;
-      }
+    if (s.weekKind != WeekKind.test) {
+      work++;
     }
   }
   final gains = <String, Object?>{};
@@ -264,31 +249,52 @@ Trajectory simulateTrajectory(
       gainCount++;
     }
   }
-  // Performance le jour de l'échéance : capacité vraie de la dernière
-  // semaine rapportée à la plus haute capacité vraie de la trajectoire.
-  final eventRatio = <String, Object?>{};
+  // Performance à l'échéance : meilleure série de la semaine de
+  // l'échéance sur chaque exercice visé, rapportée à la meilleure série
+  // des semaines précédentes (1RM estimé de charge totale pour un exercice
+  // chargé, répétitions ou secondes sinon). `null` quand l'exercice n'est
+  // pas fait cette semaine-là.
+  final bodyWeight = bench.bodyWeightKg ?? defaultBodyWeightKg;
+  final eventPerformance = <String, Object?>{};
   var ratioSum = 0.0;
   var ratioCount = 0;
+  var eventTargets = 0;
   final event = bench.mainEvent;
   if (event != null) {
+    final at = event.weeksOut - 1;
     for (final t in event.targets) {
-      double? atEvent;
-      var best = 0.0;
-      for (final e in run.estimates) {
-        if (e.exerciseId != t.exerciseId) {
+      eventTargets++;
+      final fraction =
+          catalog.find(t.exerciseId)?.bodyweightFraction?.value ?? 0;
+      double scoreOf(SetRow s) {
+        if (s.mode != CapacityMode.loaded) {
+          return s.amount.toDouble();
+        }
+        final total = (s.loadKg ?? 0) + fraction * bodyWeight;
+        return total * (1 + s.amount / epleyDivisor);
+      }
+
+      var atEvent = 0.0;
+      var before = 0.0;
+      for (final s in run.sets) {
+        if (s.exerciseId != t.exerciseId || s.amount <= 0 || s.failed) {
           continue;
         }
-        if (e.truth > best) {
-          best = e.truth;
-        }
-        if (e.week <= event.weeksOut - 1) {
-          atEvent = e.truth;
+        final score = scoreOf(s);
+        if (s.week == at) {
+          if (score > atEvent) {
+            atEvent = score;
+          }
+        } else if (s.week < at && score > before) {
+          before = score;
         }
       }
-      if (atEvent != null && best > 0) {
-        eventRatio[t.exerciseId] = _r(atEvent / best);
-        ratioSum += atEvent / best;
+      if (atEvent > 0 && before > 0) {
+        eventPerformance[t.exerciseId] = _r(atEvent / before);
+        ratioSum += atEvent / before;
         ratioCount++;
+      } else {
+        eventPerformance[t.exerciseId] = null;
       }
     }
   }
@@ -302,18 +308,22 @@ Trajectory simulateTrajectory(
     'sessionsDone': run.sessionsDone,
     'sessionsAdjusted': run.sessionsAdjusted,
     'workSets': work,
-    'unwantedFailureRate': work == 0 ? 0 : _r(failed / work),
-    'meanRirGap': work == 0 ? 0 : _r(gapSum / work),
-    'loadSpikes': spikes,
-    'maxLoadRise': _r(maxRise),
+    'unwantedFailureRate': _r(m.failRate.mean),
+    'nearFailureRate': _r(m.nearFailureRate.mean),
+    'rirGapReachable': _r(m.rirMae.mean),
+    'rirGapAll': _r(m.rirMaeAll.mean),
+    'reachableShare': _r(m.reachableShare.mean),
+    'maxMainLoadRise': _r(m.maxMainRise),
+    'mainRisesOverTenPercent': m.mainRisesOverTen,
+    'mainSingleStepsOverTenPercent': m.mainSingleStepsOverTen,
     'weeklyGainPercent': gains,
     'meanWeeklyGainPercent': gainCount == 0
         ? null
         : _r(gainSum / gainCount * 100),
-    'eventCapacityRatio': eventRatio,
-    'meanEventCapacityRatio': ratioCount == 0
-        ? null
-        : _r(ratioSum / ratioCount),
+    'eventPerformance': eventPerformance,
+    'eventTargets': eventTargets,
+    'eventTargetsTested': ratioCount,
+    'meanEventPerformance': ratioCount == 0 ? null : _r(ratioSum / ratioCount),
     'unlockWeek': <String, Object?>{
       for (final e in run.unlockWeek.entries) e.key.code: e.value + 1,
     },

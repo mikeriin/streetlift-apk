@@ -74,7 +74,9 @@ const double lateSpecificShare = 0.40;
 /// Seuil de ressemblance au programme du propriétaire (indice de Jaccard).
 const double resemblanceLimit = 0.30;
 
-final RegExp _ownerScheme = RegExp(r'(\d+)\s*[×x]\s*(\d+)(?:\s*[-–à]\s*(\d+))?');
+final RegExp _ownerScheme = RegExp(
+  r'(\d+)\s*[×x]\s*(\d+)(?:\s*[-–à]\s*(\d+))?',
+);
 
 /// Couples « exercice | schéma » de chaque semaine du programme du
 /// propriétaire (objet JSON de `owner_program_v33.json.gz`).
@@ -353,9 +355,7 @@ List<QualityMeasure> qualityMeasures(
         setsOrEffort++;
       }
     }
-    final score = slots == 0
-        ? null
-        : (loadOrReps + 0.5 * setsOrEffort) / slots;
+    final score = slots == 0 ? null : (loadOrReps + 0.5 * setsOrEffort) / slots;
     out.add(
       QualityMeasure(
         'progression_planifiee',

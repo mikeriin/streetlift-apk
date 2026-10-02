@@ -81,10 +81,11 @@ MuscleGroup _group(String code) {
   throw FormatException('groupe musculaire inconnu', code);
 }
 
-Set<MovementPattern> _patterns(Map<String, Object?> params) => <MovementPattern>{
-  for (final code in benchStrings(params, 'patterns'))
-    MovementPattern.fromCode(code),
-};
+Set<MovementPattern> _patterns(Map<String, Object?> params) =>
+    <MovementPattern>{
+      for (final code in benchStrings(params, 'patterns'))
+        MovementPattern.fromCode(code),
+    };
 
 String _f(double v) => v.toStringAsFixed(1);
 
@@ -300,12 +301,13 @@ CheckResult evaluateCheck(
       final found = <String>{
         for (final w in weeks)
           for (final i in w.items)
-            if (i.p.format != null && formats.contains(i.p.format))
-              i.p.format!,
+            if (i.p.format != null && formats.contains(i.p.format)) i.p.format!,
       };
       return result(
         found.isNotEmpty,
-        found.isEmpty ? 'aucun de ces formats' : 'formats : ${found.join(', ')}',
+        found.isEmpty
+            ? 'aucun de ces formats'
+            : 'formats : ${found.join(', ')}',
       );
 
     case 'load_prescribed':

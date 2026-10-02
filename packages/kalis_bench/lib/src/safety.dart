@@ -91,6 +91,10 @@ abstract final class SafetyLimits {
   /// +2 séries »).
   static const double volumeRiseSets = 2;
 
+  /// Part de la pleine charge à laquelle démarre une semaine allégée ou
+  /// de reprise (R5-P7, R5-P22 : 50 à 60 % ; la borne large est retenue).
+  static const double rampShare = 0.5;
+
   /// Plafond de séries dures fractionnées par groupe et par semaine
   /// (R1-P1 : 12, 20, 25, 30).
   static const List<double> weeklyCeiling = <double>[12, 20, 25, 30];
@@ -203,8 +207,7 @@ bool isHighRisk(CatalogExercise e) {
     default:
       break;
   }
-  if (e.equipment.contains('anneaux') &&
-      e.family == MovementFamily.poussee) {
+  if (e.equipment.contains('anneaux') && e.family == MovementFamily.poussee) {
     return true;
   }
   return e.loadType == LoadType.barbell &&
@@ -224,6 +227,61 @@ bool isModerateRisk(CatalogExercise e) {
       e.loadType == LoadType.addedWeight ||
       (e.loadType == LoadType.barbell &&
           e.articularity == Articularity.multiJoint);
+}
+
+/// Schémas écartés chez le débutant dont l'indice de masse corporelle
+/// atteint [SafetyLimits.impactBmi] (R5-P9).
+const Set<MovementPattern> heavyImpactPatterns = <MovementPattern>{
+  MovementPattern.pliometrie,
+  MovementPattern.cordeASauter,
+  MovementPattern.balistique,
+  MovementPattern.halterophilie,
+};
+
+/// Plus haute valeur admise en semaine [index] pour la grandeur [series]
+/// (une valeur par semaine de [weeks]).
+///
+/// Règle de montée : la référence est le plus haut des trois semaines
+/// précédentes parmi les semaines de charge (ni introduction, ni décharge,
+/// ni test) ; la limite est `référence × (1 + rise) + tolerance`. Quand les
+/// trois semaines précédentes sont toutes allégées, on admet en plus le
+/// retour à la pleine charge : jusqu'à `référence allégée ÷ rampShare`
+/// (R5-P7, R5-P22 : une charge nouvelle ou reprise démarre à 50 à 60 % de
+/// la cible et la rejoint en deux semaines).
+double rampLimit(
+  List<WeekView> weeks,
+  List<double> series,
+  int index, {
+  required double rise,
+  required double tolerance,
+}) {
+  var loaded = 0.0;
+  var light = 0.0;
+  var anyLoaded = false;
+  for (var k = index - 3; k < index; k++) {
+    if (k < 0) {
+      continue;
+    }
+    if (weeks[k].isLight) {
+      if (series[k] > light) {
+        light = series[k];
+      }
+    } else {
+      anyLoaded = true;
+      if (series[k] > loaded) {
+        loaded = series[k];
+      }
+    }
+  }
+  if (anyLoaded) {
+    // Une semaine allégée plus haute qu'une semaine de charge sert aussi
+    // de référence (elle a été tolérée).
+    final reference = loaded > light ? loaded : light;
+    return reference * (1 + rise) + tolerance;
+  }
+  final stepped = light * (1 + rise) + tolerance;
+  final resumed = light / SafetyLimits.rampShare;
+  return stepped > resumed ? stepped : resumed;
 }
 
 /// Constats de sécurité du programme lu [view] pour le profil [profile].
@@ -273,29 +331,28 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
     if (!g.major) {
       continue;
     }
+    final series = <double>[for (final w in weeks) w.groupSets(g)];
+    var above = 0;
+    var highest = 0.0;
+    int? firstAbove;
     for (final w in weeks) {
-      final sets = w.groupSets(g);
-      var reference = 0.0;
-      for (var k = w.index - 3; k < w.index; k++) {
-        if (k >= 0) {
-          final s = weeks[k].groupSets(g);
-          if (s > reference) {
-            reference = s;
-          }
-        }
-      }
+      final sets = series[w.index];
       if (w.index > 0) {
-        final limit =
-            reference * (1 + SafetyLimits.volumeRise) +
-            SafetyLimits.volumeRiseSets;
+        final limit = rampLimit(
+          weeks,
+          series,
+          w.index,
+          rise: SafetyLimits.volumeRise,
+          tolerance: SafetyLimits.volumeRiseSets,
+        );
         if (sets > limit + 1e-9) {
           out.add(
             Finding(
               code: 'volume_trop_vite',
               message:
                   '${g.code} : ${sets.toStringAsFixed(1)} séries dures en '
-                  'semaine ${w.index + 1}, contre '
-                  '${reference.toStringAsFixed(1)} au plus les trois '
+                  'semaine ${w.index + 1}, pour '
+                  '${limit.toStringAsFixed(1)} admises au vu des trois '
                   'semaines précédentes.',
               week: w.index,
               value: sets,
@@ -305,19 +362,26 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
         }
       }
       if (sets > ceiling + 1e-9) {
-        out.add(
-          Finding(
-            code: 'plafond_volume',
-            message:
-                '${g.code} : ${sets.toStringAsFixed(1)} séries dures en '
-                'semaine ${w.index + 1} (plafond du niveau '
-                '${profile.level.label} : ${ceiling.toStringAsFixed(0)}).',
-            week: w.index,
-            value: sets,
-            limit: ceiling,
-          ),
-        );
+        above++;
+        firstAbove ??= w.index;
+        if (sets > highest) {
+          highest = sets;
+        }
       }
+    }
+    if (above > 0) {
+      out.add(
+        Finding(
+          code: 'plafond_volume',
+          message:
+              '${g.code} : $above semaine(s) au-dessus du plafond du niveau '
+              '${profile.level.label} (${ceiling.toStringAsFixed(0)} séries '
+              'dures), jusqu\'à ${highest.toStringAsFixed(1)}.',
+          week: firstAbove,
+          value: highest,
+          limit: ceiling,
+        ),
+      );
     }
   }
   if (profile.level == BenchLevel.elite) {
@@ -509,27 +573,31 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
       if (w.index == 0) {
         continue;
       }
+      final held = <double>[
+        for (final x in weeks) x.straightArmSeconds(family),
+      ];
       var reference = 0.0;
       for (var k = w.index - 3; k < w.index; k++) {
-        if (k >= 0) {
-          final s = weeks[k].straightArmSeconds(family);
-          if (s > reference) {
-            reference = s;
-          }
+        if (k >= 0 && held[k] > reference) {
+          reference = held[k];
         }
       }
-      final seconds = w.straightArmSeconds(family);
-      final limit =
-          reference * (1 + SafetyLimits.straightArmRise) +
-          SafetyLimits.straightArmRiseSeconds;
+      final seconds = held[w.index];
+      final limit = rampLimit(
+        weeks,
+        held,
+        w.index,
+        rise: SafetyLimits.straightArmRise,
+        tolerance: SafetyLimits.straightArmRiseSeconds,
+      );
       if (reference > 0 && seconds > limit + 1e-9) {
         out.add(
           Finding(
             code: 'tendon_figures',
             message:
                 'Tenues bras tendus (${family.name}) : '
-                '${seconds.round()} s en semaine ${w.index + 1}, contre '
-                '${reference.round()} s au plus les trois semaines '
+                '${seconds.round()} s en semaine ${w.index + 1}, pour '
+                '${limit.round()} s admises au vu des trois semaines '
                 'précédentes.',
             week: w.index,
             value: seconds,
@@ -773,7 +841,13 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
     final flagged = <String>{};
     for (final w in weeks) {
       for (final i in w.items) {
-        if (i.traits.impact && flagged.add(i.exercise.id)) {
+        // R5-P9 : chez le débutant en surpoids, seuls les sauts, la corde,
+        // le balistique et l'haltérophilie sont écartés ; pour un senior
+        // ou un profil prudent, tout exercice à impact l'est.
+        final risky = (age >= SafetyLimits.impactAge || cautious)
+            ? i.traits.impact
+            : heavyImpactPatterns.contains(i.exercise.pattern);
+        if (risky && flagged.add(i.exercise.id)) {
           out.add(
             Finding(
               code: 'impact_deconseille',

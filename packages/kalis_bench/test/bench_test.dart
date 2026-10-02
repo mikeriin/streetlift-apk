@@ -88,7 +88,10 @@ void main() {
     expect(text, contains(' × '));
     expect(text, contains('rép. en réserve'));
     // Ni identifiant d'exercice, ni code de raison, ni code de rôle.
-    expect(RegExp(r'\b(sl|sw|cs|cd|mu|cf|ca|mo)-[a-z]').hasMatch(text), isFalse);
+    expect(
+      RegExp(r'\b(sl|sw|cs|cd|mu|cf|ca|mo)-[a-z]').hasMatch(text),
+      isFalse,
+    );
     expect(text.contains('plan.'), isFalse);
     expect(text.contains('strength.'), isFalse);
     final json = programJson(view);
@@ -110,7 +113,10 @@ void main() {
     expect(text, contains('# Trajectoire simulée'));
     expect(text, contains('## Semaine par semaine'));
     expect(text, contains('## Décisions du moteur'));
-    expect(RegExp(r'\b(sl|sw|cs|cd|mu|cf|ca|mo)-[a-z]').hasMatch(text), isFalse);
+    expect(
+      RegExp(r'\b(sl|sw|cs|cd|mu|cf|ca|mo)-[a-z]').hasMatch(text),
+      isFalse,
+    );
   }, timeout: const Timeout(Duration(minutes: 10)));
 
   test('athlète simulé : niveau, gain par défaut, réglages du profil', () {

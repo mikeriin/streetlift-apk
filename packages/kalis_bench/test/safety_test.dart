@@ -13,9 +13,11 @@ const String dips = 'sw-dips-barres-paralleles';
 const String squat = 'sl-squat-competition';
 const String pompe = 'sw-pompe';
 
-Set<String> run(BenchProfile p, List<(WeekKind, List<List<L>>)> weeks,
-        {int minutes = 90}) =>
-    codesOf(safetyFindings(handProgram(p, weeks, minutes: minutes), p));
+Set<String> run(
+  BenchProfile p,
+  List<(WeekKind, List<List<L>>)> weeks, {
+  int minutes = 90,
+}) => codesOf(safetyFindings(handProgram(p, weeks, minutes: minutes), p));
 
 void main() {
   final catalog = loadCatalog();
@@ -73,6 +75,66 @@ void main() {
     expect(high, contains('plafond_volume'));
     expect(high, isNot(contains('volume_trop_vite')));
     expect(run(p, sameWeeks(2, week(3))), isEmpty);
+    // Un seul constat de plafond par groupe, quel que soit le nombre de
+    // semaines au-dessus.
+    final many = <String>[
+      for (final f in safetyFindings(
+        handProgram(p, sameWeeks(4, week(7))),
+        p,
+      ))
+        f.code,
+    ];
+    final groups = <String>{
+      for (final g in MuscleGroup.values)
+        if (g.major &&
+            CatalogTraits.of(catalog).of(traction).creditOf(g) * 14 / 2 > 12)
+          g.code,
+    };
+    expect(many.where((c) => c == 'plafond_volume').length, groups.length);
+  });
+
+  test('règle de montée : retour à la pleine charge après allègement', () {
+    final p = testProfile(level: 'beginner');
+    List<List<L>> week(int sets) => <List<L>>[
+      <L>[L(traction, sets)],
+      <L>[L(traction, sets)],
+    ];
+    // Introduction à 50 % puis pleine charge : admis.
+    expect(
+      run(p, <(WeekKind, List<List<L>>)>[
+        (WeekKind.intro, week(2)),
+        (WeekKind.build, week(4)),
+      ]),
+      isNot(contains('volume_trop_vite')),
+    );
+    // Introduction à moins de 50 % de la suite : refusé.
+    expect(
+      run(p, <(WeekKind, List<List<L>>)>[
+        (WeekKind.intro, week(1)),
+        (WeekKind.build, week(5)),
+      ]),
+      contains('volume_trop_vite'),
+    );
+    // Décharge entre deux semaines de charge : la référence reste la
+    // semaine de charge.
+    expect(
+      run(p, <(WeekKind, List<List<L>>)>[
+        (WeekKind.build, week(4)),
+        (WeekKind.deload, week(2)),
+        (WeekKind.build, week(5)),
+      ]),
+      isNot(contains('volume_trop_vite')),
+    );
+    expect(
+      rampLimit(
+        const <WeekView>[],
+        const <double>[],
+        0,
+        rise: 0.2,
+        tolerance: 2,
+      ),
+      2,
+    );
   });
 
   test('technique_sans_prerequis : format et exercice réservés', () {
@@ -112,27 +174,39 @@ void main() {
       ],
     );
     expect(
-      run(p, sameWeeks(1, <List<L>>[
-        <L>[const L(traction, 3)],
-      ])),
+      run(
+        p,
+        sameWeeks(1, <List<L>>[
+          <L>[const L(traction, 3)],
+        ]),
+      ),
       contains('exercice_non_acquis'),
     );
     expect(
-      run(p, sameWeeks(1, <List<L>>[
-        <L>[const L('sw-traction-assistee-elastique', 3)],
-      ])),
+      run(
+        p,
+        sameWeeks(1, <List<L>>[
+          <L>[const L('sw-traction-assistee-elastique', 3)],
+        ]),
+      ),
       isNot(contains('exercice_non_acquis')),
     );
     expect(
-      run(p, sameWeeks(1, <List<L>>[
-        <L>[const L('cs-planche', 3, seconds: 5)],
-      ])),
+      run(
+        p,
+        sameWeeks(1, <List<L>>[
+          <L>[const L('cs-planche', 3, seconds: 5)],
+        ]),
+      ),
       contains('exercice_trop_avance'),
     );
     expect(
-      run(testProfile(level: 'advanced'), sameWeeks(1, <List<L>>[
-        <L>[const L('cs-planche', 3, seconds: 5)],
-      ])),
+      run(
+        testProfile(level: 'advanced'),
+        sameWeeks(1, <List<L>>[
+          <L>[const L('cs-planche', 3, seconds: 5)],
+        ]),
+      ),
       isNot(contains('exercice_trop_avance')),
     );
   });
@@ -163,22 +237,31 @@ void main() {
       ],
     );
     expect(
-      run(p, sameWeeks(1, <List<L>>[
-        <L>[L(risky.id, 2)],
-      ])),
+      run(
+        p,
+        sameWeeks(1, <List<L>>[
+          <L>[L(risky.id, 2)],
+        ]),
+      ),
       contains('contre_indication'),
     );
     expect(
-      run(p, sameWeeks(1, <List<L>>[
-        <L>[L(safe.id, 2)],
-      ])),
+      run(
+        p,
+        sameWeeks(1, <List<L>>[
+          <L>[L(safe.id, 2)],
+        ]),
+      ),
       isNot(contains('contre_indication')),
     );
     // Sans gêne déclarée, le même exercice passe.
     expect(
-      run(testProfile(level: 'elite'), sameWeeks(1, <List<L>>[
-        <L>[L(risky.id, 2)],
-      ])),
+      run(
+        testProfile(level: 'elite'),
+        sameWeeks(1, <List<L>>[
+          <L>[L(risky.id, 2)],
+        ]),
+      ),
       isNot(contains('contre_indication')),
     );
   });
@@ -223,27 +306,39 @@ void main() {
 
   test('echec_risque : échec sur mouvement à risque, quasi-échec débutant', () {
     expect(
-      run(testProfile(level: 'advanced'), sameWeeks(1, <List<L>>[
-        <L>[const L('cd-muscle-up-barre-strict', 3, reps: 3, flames: 10)],
-      ])),
+      run(
+        testProfile(level: 'advanced'),
+        sameWeeks(1, <List<L>>[
+          <L>[const L('cd-muscle-up-barre-strict', 3, reps: 3, flames: 10)],
+        ]),
+      ),
       contains('echec_risque'),
     );
     expect(
-      run(testProfile(level: 'advanced'), sameWeeks(1, <List<L>>[
-        <L>[const L('cd-muscle-up-barre-strict', 3, reps: 3, flames: 7)],
-      ])),
+      run(
+        testProfile(level: 'advanced'),
+        sameWeeks(1, <List<L>>[
+          <L>[const L('cd-muscle-up-barre-strict', 3, reps: 3, flames: 7)],
+        ]),
+      ),
       isNot(contains('echec_risque')),
     );
     expect(
-      run(testProfile(level: 'beginner'), sameWeeks(1, <List<L>>[
-        <L>[const L(traction, 2, flames: 9)],
-      ])),
+      run(
+        testProfile(level: 'beginner'),
+        sameWeeks(1, <List<L>>[
+          <L>[const L(traction, 2, flames: 9)],
+        ]),
+      ),
       contains('echec_risque'),
     );
     expect(
-      run(testProfile(level: 'intermediate'), sameWeeks(1, <List<L>>[
-        <L>[const L(traction, 2, flames: 9)],
-      ])),
+      run(
+        testProfile(level: 'intermediate'),
+        sameWeeks(1, <List<L>>[
+          <L>[const L(traction, 2, flames: 9)],
+        ]),
+      ),
       isNot(contains('echec_risque')),
     );
   });
@@ -256,7 +351,10 @@ void main() {
       ],
     ];
     final p = testProfile(level: 'advanced');
-    expect(run(p, sameWeeks(1, long), minutes: 45), contains('seance_trop_longue'));
+    expect(
+      run(p, sameWeeks(1, long), minutes: 45),
+      contains('seance_trop_longue'),
+    );
     expect(
       run(p, sameWeeks(1, long), minutes: 90),
       isNot(contains('seance_trop_longue')),
@@ -322,21 +420,30 @@ void main() {
   test('reprise_trop_dure : effort élevé dès la reprise', () {
     final p = testProfile(breakWeeks: 20);
     expect(
-      run(p, sameWeeks(1, <List<L>>[
-        <L>[const L(traction, 2, flames: 8)],
-      ])),
+      run(
+        p,
+        sameWeeks(1, <List<L>>[
+          <L>[const L(traction, 2, flames: 8)],
+        ]),
+      ),
       contains('reprise_trop_dure'),
     );
     expect(
-      run(p, sameWeeks(1, <List<L>>[
-        <L>[const L(traction, 2, flames: 4)],
-      ])),
+      run(
+        p,
+        sameWeeks(1, <List<L>>[
+          <L>[const L(traction, 2, flames: 4)],
+        ]),
+      ),
       isNot(contains('reprise_trop_dure')),
     );
     expect(
-      run(testProfile(), sameWeeks(1, <List<L>>[
-        <L>[const L(traction, 2, flames: 8)],
-      ])),
+      run(
+        testProfile(),
+        sameWeeks(1, <List<L>>[
+          <L>[const L(traction, 2, flames: 8)],
+        ]),
+      ),
       isNot(contains('reprise_trop_dure')),
     );
   });
@@ -356,11 +463,36 @@ void main() {
       run(testProfile(outcome: 'cautious'), sameWeeks(1, days)),
       contains('impact_deconseille'),
     );
+    final plyo = catalog.exercises.firstWhere(
+      (e) => e.pattern == MovementPattern.pliometrie,
+    );
+    final heavy = testProfile(level: 'beginner', weight: 110, height: 175);
     expect(
-      run(testProfile(level: 'beginner', weight: 110, height: 175),
-          sameWeeks(1, days)),
+      run(
+        heavy,
+        sameWeeks(1, <List<L>>[
+          <L>[L(plyo.id, 2)],
+        ]),
+      ),
       contains('impact_deconseille'),
     );
+    final run5 = catalog.exercises.firstWhere(
+      (e) =>
+          e.pattern == MovementPattern.cardioContinu &&
+          CatalogTraits.of(catalog).of(e.id).impact,
+      orElse: () => plyo,
+    );
+    if (run5.id != plyo.id) {
+      expect(
+        run(
+          heavy,
+          sameWeeks(1, <List<L>>[
+            <L>[L(run5.id, 1)],
+          ]),
+        ),
+        isNot(contains('impact_deconseille')),
+      );
+    }
     expect(
       run(testProfile(), sameWeeks(1, days)),
       isNot(contains('impact_deconseille')),
@@ -370,9 +502,12 @@ void main() {
   test('tous les codes rendus sont des critères connus', () {
     final p = testProfile(level: 'beginner', breakWeeks: 30);
     final findings = safetyFindings(
-      handProgram(p, sameWeeks(2, <List<L>>[
-        <L>[const L('cs-planche', 9, seconds: 20, flames: 10)],
-      ])),
+      handProgram(
+        p,
+        sameWeeks(2, <List<L>>[
+          <L>[const L('cs-planche', 9, seconds: 20, flames: 10)],
+        ]),
+      ),
       p,
     );
     expect(findings, isNotEmpty);

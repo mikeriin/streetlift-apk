@@ -16,7 +16,9 @@ import 'common.dart';
 void main(List<String> args) {
   final outPath = option(args, '--rapport');
   if (outPath == null) {
-    stderr.writeln('usage : dart run bin/kalis_bench_cli.dart --rapport <dossier>');
+    stderr.writeln(
+      'usage : dart run bin/kalis_bench_cli.dart --rapport <dossier>',
+    );
     exitCode = 64;
     return;
   }

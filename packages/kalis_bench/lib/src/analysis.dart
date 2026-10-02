@@ -6,6 +6,7 @@ library;
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart';
 
+import 'profile.dart';
 import 'program.dart';
 
 /// Poids de corps pris quand le profil ne le donne pas, en kg.
@@ -16,6 +17,32 @@ const double secondsPerRep = 3;
 
 /// Secondes de transition entre deux exercices.
 const double transitionSeconds = 45;
+
+/// Allure de course prise sans record de course, en m/s (course lente).
+const double defaultRunMetersPerSecond = 2.5;
+
+/// Part de l'allure du record prise pour estimer la durée d'une distance
+/// (une sortie d'entraînement est plus lente que le record).
+const double trainingPaceShare = 0.9;
+
+/// Allure de course du profil [profile] : celle de son meilleur record
+/// chronométré sur une distance, ramenée à [trainingPaceShare], sinon
+/// [defaultRunMetersPerSecond].
+double runSpeedOf(BenchProfile profile) {
+  var best = 0.0;
+  for (final r in profile.records) {
+    final meters = r.distanceMeters;
+    if (r.measure == LevelMeasure.timeSeconds &&
+        meters != null &&
+        r.value > 0) {
+      final speed = meters / r.value;
+      if (speed > best) {
+        best = speed;
+      }
+    }
+  }
+  return best > 0 ? best * trainingPaceShare : defaultRunMetersPerSecond;
+}
 
 /// Plus grand RIR d'une série « dure » (référentiel, R1 : 0 à 4 RIR).
 const double hardSetMaxRir = 4;
@@ -150,9 +177,8 @@ final class ItemView {
   }
 
   /// Secondes de tenue cumulées (séries × haut de plage), 0 hors tenue.
-  double get holdSeconds => isTimed && isResistance
-      ? p.sets * secondsHigh.toDouble()
-      : 0;
+  double get holdSeconds =>
+      isTimed && isResistance ? p.sets * secondsHigh.toDouble() : 0;
 
   /// Durée estimée de l'exercice, en secondes : transition, puis séries ×
   /// (effort + repos), sans repos après la dernière série.
@@ -164,9 +190,7 @@ final class ItemView {
     } else if (isTimed) {
       effort = secondsHigh.toDouble() * (isResistance ? sides : 1);
     } else if (p.distanceMeters != null) {
-      // Allure prudente : 2,5 m/s (course lente), sans effet sur la
-      // sécurité (les distances sont rares dans les disciplines street).
-      effort = p.distanceMeters! / 2.5;
+      effort = p.distanceMeters! / runMetersPerSecond;
     } else if (p.calories != null) {
       effort = p.calories! * 6;
     } else {
@@ -324,7 +348,9 @@ final class WeekView {
   /// Vrai pour une semaine allégée par nature (introduction, décharge,
   /// test).
   bool get isLight =>
-      kind == WeekKind.intro || kind == WeekKind.deload || kind == WeekKind.test;
+      kind == WeekKind.intro ||
+      kind == WeekKind.deload ||
+      kind == WeekKind.test;
 }
 
 /// Programme lu : ses semaines jusqu'à l'horizon.
@@ -368,6 +394,7 @@ final class ProgramView {
   static List<WeekView> _read(Catalog catalog, BenchProgram program) {
     final traits = CatalogTraits.of(catalog);
     final bodyWeight = program.profile.bodyWeightKg ?? defaultBodyWeightKg;
+    final runSpeed = runSpeedOf(program.bench);
     final out = <WeekView>[];
     var global = 0;
     for (var b = 0; b < program.blocks.length; b++) {
@@ -400,6 +427,7 @@ final class ProgramView {
                     traits: traits.of(item.exerciseId),
                     role: roles[item.slotId],
                     bodyWeightKg: bodyWeight,
+                    runMetersPerSecond: runSpeed,
                   ),
               ],
             ),

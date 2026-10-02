@@ -146,12 +146,12 @@
   {
    "exerciseId": "sw-traction-pronation",
    "measure": "max_reps",
-   "value": 30
+   "value": 34
   },
   {
    "exerciseId": "sw-dips-barres-paralleles",
    "measure": "max_reps",
-   "value": 55
+   "value": 80
   }
  ],
  "events": [

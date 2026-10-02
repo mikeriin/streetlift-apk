@@ -613,7 +613,7 @@ add(
              rec(D_LEST, "one_rm_kg", 125, testedWeeksAgo=5),
              rec(MU_LEST, "one_rm_kg", 35, testedWeeksAgo=5),
              rec(SQUAT_SL, "one_rm_kg", 190, testedWeeksAgo=5),
-             rec(TRACTION, "max_reps", 30), rec(DIPS, "max_reps", 55)],
+             rec(TRACTION, "max_reps", 34), rec(DIPS, "max_reps", 80)],
     events=[{"id": "e1", "kind": "competition", "label": "championnat de "
              "streetlifting", "weeksOut": 12, "priority": "A",
              "format": "streetlifting", "targets": [

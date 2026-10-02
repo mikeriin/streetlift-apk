@@ -37,7 +37,8 @@ void main() {
   ];
   final others = <CatalogExercise>[
     for (final e in catalog.exercises)
-      if (!traits.of(e.id).kind.isResistance && e.unit == MeasureUnit.seconds) e,
+      if (!traits.of(e.id).kind.isResistance && e.unit == MeasureUnit.seconds)
+        e,
   ];
 
   L line(SeededRandom r) {
@@ -145,11 +146,7 @@ void main() {
       for (final q in quality) {
         final s = q.score;
         if (s != null) {
-          expect(
-            s,
-            inInclusiveRange(0, 1),
-            reason: 'graine $seed, ${q.code}',
-          );
+          expect(s, inInclusiveRange(0, 1), reason: 'graine $seed, ${q.code}');
         }
       }
       if (seed % 10 == 0) {

@@ -29,11 +29,13 @@ final class AdaptedProfile {
 
 /// Nom français de chaque information perdue par l'adaptation.
 const Map<String, String> lostFieldLabels = <String, String>{
-  'records_exact': 'valeur exacte des records (le profil v2 lit une '
+  'records_exact':
+      'valeur exacte des records (le profil v2 lit une '
       'fourchette : la valeur est donnée comme bas et haut)',
   'records_date': 'ancienneté des tests',
   'training_age': "ancienneté d'entraînement en mois",
-  'event_kind': "nature de l'échéance (compétition ou test), priorité et "
+  'event_kind':
+      "nature de l'échéance (compétition ou test), priorité et "
       "format de l'épreuve : seul un objectif daté par mouvement est "
       'transmis',
   'weak_points': 'points faibles',

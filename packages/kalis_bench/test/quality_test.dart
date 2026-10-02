@@ -31,12 +31,17 @@ Map<String, Object?> event(int weeksOut) => <String, Object?>{
 void main() {
   test('chaque critère de qualité est rendu une fois, note entre 0 et 1', () {
     final p = testProfile();
-    final view = handProgram(p, sameWeeks(4, <List<L>>[
-      <L>[const L(traction, 4), const L(dips, 4)],
-      <L>[const L(traction, 4), const L(pompe, 4)],
-    ]));
+    final view = handProgram(
+      p,
+      sameWeeks(4, <List<L>>[
+        <L>[const L(traction, 4), const L(dips, 4)],
+        <L>[const L(traction, 4), const L(pompe, 4)],
+      ]),
+    );
     final all = qualityMeasures(view, p);
-    expect(<String>[for (final q in all) q.code], qualityCriteria.keys.toList());
+    expect(<String>[
+      for (final q in all) q.code,
+    ], qualityCriteria.keys.toList());
     for (final q in all) {
       final s = q.score;
       if (s != null) {
@@ -48,16 +53,22 @@ void main() {
 
   test('equilibre_poussee_tirage : tirage seul, puis équilibré', () {
     final p = testProfile();
-    final pullOnly = handProgram(p, sameWeeks(2, <List<L>>[
-      <L>[const L(traction, 4)],
-    ]));
+    final pullOnly = handProgram(
+      p,
+      sameWeeks(2, <List<L>>[
+        <L>[const L(traction, 4)],
+      ]),
+    );
     expect(
       measure(qualityMeasures(pullOnly, p), 'equilibre_poussee_tirage').score,
       0,
     );
-    final balanced = handProgram(p, sameWeeks(2, <List<L>>[
-      <L>[const L(traction, 4), const L(dips, 4)],
-    ]));
+    final balanced = handProgram(
+      p,
+      sameWeeks(2, <List<L>>[
+        <L>[const L(traction, 4), const L(dips, 4)],
+      ]),
+    );
     expect(
       measure(qualityMeasures(balanced, p), 'equilibre_poussee_tirage').score,
       1,
@@ -85,7 +96,10 @@ void main() {
   test('affutage_aligne : test et allègement la semaine de l\'échéance', () {
     final p = testProfile(events: <Map<String, Object?>>[event(6)]);
     List<List<L>> week(int sets, {SetKind? kind}) => <List<L>>[
-      <L>[L(tractionLestee, sets, reps: 3, load: 40, kind: kind), L(dips, sets)],
+      <L>[
+        L(tractionLestee, sets, reps: 3, load: 40, kind: kind),
+        L(dips, sets),
+      ],
       <L>[L(tractionLestee, sets, reps: 3, load: 40), L(dips, sets)],
     ];
     final flat = handProgram(p, sameWeeks(6, week(4)));
@@ -93,7 +107,10 @@ void main() {
       ...sameWeeks(5, week(4)),
       (WeekKind.test, week(2, kind: SetKind.test)),
     ]);
-    final flatScore = measure(qualityMeasures(flat, p), 'affutage_aligne').score!;
+    final flatScore = measure(
+      qualityMeasures(flat, p),
+      'affutage_aligne',
+    ).score!;
     final taperedScore = measure(
       qualityMeasures(tapered, p),
       'affutage_aligne',
@@ -104,9 +121,12 @@ void main() {
 
   test('couples exercice × schéma et indice de Jaccard', () {
     final p = testProfile();
-    final view = handProgram(p, sameWeeks(1, <List<L>>[
-      <L>[const L(traction, 4, reps: 8), const L(dips, 3, reps: 10)],
-    ]));
+    final view = handProgram(
+      p,
+      sameWeeks(1, <List<L>>[
+        <L>[const L(traction, 4, reps: 8), const L(dips, 3, reps: 10)],
+      ]),
+    );
     final pairs = programWeekPairs(view);
     expect(pairs.single, <String>{'$traction|4x8-8', '$dips|3x10-10'});
     expect(maxPairResemblance(pairs, pairs), 1);
@@ -125,9 +145,12 @@ void main() {
     expect(ownerPairs, isNotEmpty);
     expect(ownerPairs.first.first, contains('|'));
     final p = testProfile();
-    final view = handProgram(p, sameWeeks(1, <List<L>>[
-      <L>[const L(traction, 4)],
-    ]));
+    final view = handProgram(
+      p,
+      sameWeeks(1, <List<L>>[
+        <L>[const L(traction, 4)],
+      ]),
+    );
     final q = measure(
       qualityMeasures(view, p, owner: inputs.owner, ownerPairs: ownerPairs),
       'non_ressemblance_proprietaire',
@@ -138,7 +161,12 @@ void main() {
 
   test('attentes de coach : tenue et non tenue', () {
     Map<String, Object?> c(String id, String type, Map<String, Object?> more) =>
-        <String, Object?>{'id': id, 'type': type, 'label': 'attente $id', ...more};
+        <String, Object?>{
+          'id': id,
+          'type': type,
+          'label': 'attente $id',
+          ...more,
+        };
     final p = testProfile(
       events: <Map<String, Object?>>[event(4)],
       checks: <Map<String, Object?>>[
@@ -168,10 +196,13 @@ void main() {
         }),
       ],
     );
-    final view = handProgram(p, sameWeeks(4, <List<L>>[
-      <L>[const L(traction, 4, rest: 60), const L(dips, 3)],
-      <L>[const L(traction, 4, rest: 60)],
-    ]));
+    final view = handProgram(
+      p,
+      sameWeeks(4, <List<L>>[
+        <L>[const L(traction, 4, rest: 60), const L(dips, 3)],
+        <L>[const L(traction, 4, rest: 60)],
+      ]),
+    );
     final results = <String, bool>{
       for (final r in evaluateChecks(view, p)) r.check.id: r.ok,
     };
@@ -195,9 +226,12 @@ void main() {
         <String, Object?>{'id': 'x', 'type': 'inconnu', 'label': 'x'},
       ],
     );
-    final view = handProgram(p, sameWeeks(1, <List<L>>[
-      <L>[const L(traction, 3)],
-    ]));
+    final view = handProgram(
+      p,
+      sameWeeks(1, <List<L>>[
+        <L>[const L(traction, 3)],
+      ]),
+    );
     expect(() => evaluateChecks(view, p), throwsFormatException);
   });
 }

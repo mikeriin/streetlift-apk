@@ -142,6 +142,10 @@ String loadText(ItemView i) {
       case LoadBasis.unloaded:
         parts.add('${_num(load)} kg');
     }
+  } else if ((p.setTargets ?? const <SetTarget>[]).any(
+    (t) => t.loadKg != null,
+  )) {
+    parts.add('voir les séries');
   } else {
     switch (p.loadBasis) {
       case LoadBasis.bodyweight:
@@ -174,9 +178,7 @@ String effortText(ItemView i) {
   if (flames >= Flames.failure) {
     return 'effort maximal (10/10)';
   }
-  final text = rir == rir.roundToDouble()
-      ? rir.toStringAsFixed(0)
-      : _num(rir);
+  final text = rir == rir.roundToDouble() ? rir.toStringAsFixed(0) : _num(rir);
   return '$text rép. en réserve ($flames/10)';
 }
 
@@ -214,7 +216,9 @@ String notesText(ItemView i, Catalog catalog) {
       }
       final load = t.loadKg;
       if (load != null) {
-        b.write(' à ${load >= 0 && p.loadBasis == LoadBasis.bodyweightPlusExternal ? '+' : ''}${_num(load)} kg');
+        b.write(
+          ' à ${load >= 0 && p.loadBasis == LoadBasis.bodyweightPlusExternal ? '+' : ''}${_num(load)} kg',
+        );
       }
       final flames = t.flames;
       if (flames != null) {
@@ -233,10 +237,26 @@ String _sexLabel(String? code) => switch (code) {
   _ => 'sexe non précisé',
 };
 
-String _measureText(LevelMeasure measure, double value, Catalog catalog) =>
+String _oneRmText(String exerciseId, double? value, Catalog catalog) {
+  if (value == null) {
+    return '1RM';
+  }
+  final weighted =
+      catalog.find(exerciseId)?.loadType == LoadType.addedWeight;
+  return weighted
+      ? '1RM avec +${_num(value)} kg de lest'
+      : '1RM ${_num(value)} kg';
+}
+
+String _measureText(
+  String exerciseId,
+  LevelMeasure measure,
+  double value,
+  Catalog catalog,
+) =>
     switch (measure) {
       LevelMeasure.maxReps => '${_num(value)} répétitions au maximum',
-      LevelMeasure.oneRmKg => '1RM ${_num(value)} kg (charge ajoutée)',
+      LevelMeasure.oneRmKg => _oneRmText(exerciseId, value, catalog),
       LevelMeasure.maxHoldSeconds => 'tenue maximale ${_num(value)} s',
       LevelMeasure.timeSeconds => 'temps ${_duration(value.round())}',
     };
@@ -245,7 +265,7 @@ String _targetText(BenchTarget t, Catalog catalog) {
   final name = catalog.find(t.exerciseId)?.name ?? t.exerciseId;
   final value = t.targetValue;
   return switch (t.metric) {
-    GoalMetric.oneRmKg => '$name : 1RM ${value == null ? '' : '${_num(value)} kg'}',
+    GoalMetric.oneRmKg => '$name : ${_oneRmText(t.exerciseId, value, catalog)}',
     GoalMetric.maxReps =>
       '$name : ${value == null ? '' : _num(value)} répétitions'
           '${t.loadKg == null ? '' : ' à ${_num(t.loadKg!)} kg'}',
@@ -321,7 +341,7 @@ List<String> profileLines(BenchProfile p, Catalog catalog) {
     for (final r in p.records) {
       final name = catalog.find(r.exerciseId)?.name ?? r.exerciseId;
       out.add(
-        '  - $name : ${_measureText(r.measure, r.value, catalog)}'
+        '  - $name : ${_measureText(r.exerciseId, r.measure, r.value, catalog)}'
         '${r.testedWeeksAgo == null ? '' : ' (test il y a ${r.testedWeeksAgo} sem.)'}',
       );
     }
@@ -429,7 +449,9 @@ String programMarkdown(ProgramView view) {
       'en réserve ou moins.',
     )
     ..writeln()
-    ..writeln(_row(<String>['Semaine', 'Bloc', 'Nature', 'Séances', 'Séries dures']))
+    ..writeln(
+      _row(<String>['Semaine', 'Bloc', 'Nature', 'Séances', 'Séries dures']),
+    )
     ..writeln(_row(<String>['---', '---', '---', '---', '---']));
   final event = p.mainEvent;
   for (final w in view.weeks) {
@@ -567,13 +589,23 @@ String trajectoryMarkdown(Trajectory t, Catalog catalog) {
       '(${m['sessionsAdjusted']} ajustées le jour même).',
     )
     ..writeln(
-      '- Séries de travail : ${m['workSets']} ; échecs non voulus : '
-      '${_percent(m['unwantedFailureRate'])} ; écart moyen entre l\'effort '
-      'visé et l\'effort réel : ${m['meanRirGap']} répétition en réserve.',
+      '- Séries de travail : ${m['workSets']} ; échecs non voulus (après '
+      'les trois premières séances de chaque exercice) : '
+      '${_percent(m['unwantedFailureRate'])} ; séries finies au bord de '
+      'l\'échec alors que la cible laissait au moins 2 répétitions : '
+      '${_percent(m['nearFailureRate'])}.',
     )
     ..writeln(
-      '- Hausses de charge de plus de 10 % d\'une séance à l\'autre : '
-      '${m['loadSpikes']} (plus forte : ${_percent(m['maxLoadRise'])}).',
+      '- Écart moyen entre l\'effort visé et l\'effort réel : '
+      '${m['rirGapReachable']} répétition en réserve sur les séries dont '
+      'la cible est atteignable (${_percent(m['reachableShare'])} des '
+      'séries), ${m['rirGapAll']} sur toutes.',
+    )
+    ..writeln(
+      '- Plus forte hausse de charge d\'une séance à l\'autre sur un '
+      'mouvement principal : ${_percent(m['maxMainLoadRise'])} ; hausses '
+      'de plus de 10 % faites de plusieurs crans : '
+      '${m['mainRisesOverTenPercent']}.',
     );
   final gain = m['meanWeeklyGainPercent'];
   if (gain != null) {
@@ -582,11 +614,16 @@ String trajectoryMarkdown(Trajectory t, Catalog catalog) {
       'semaine.',
     );
   }
-  final ratio = m['meanEventCapacityRatio'];
-  if (ratio != null) {
+  if ((m['eventTargets'] as int? ?? 0) > 0) {
+    final ratio = m['meanEventPerformance'];
     b.writeln(
-      '- Capacité réelle la semaine de l\'échéance : ${_percent(ratio)} de '
-      'la plus haute capacité atteinte pendant le cycle.',
+      ratio == null
+          ? '- Échéance : aucun des mouvements visés n\'est fait la '
+                'semaine de l\'échéance.'
+          : '- Échéance : ${m['eventTargetsTested']} mouvement(s) visé(s) '
+                'sur ${m['eventTargets']} faits la semaine de l\'échéance ; '
+                'meilleure série à ${_percent(ratio)} de la meilleure des '
+                'semaines précédentes.',
     );
   }
   final proposals = m['proposalsApplied'];
