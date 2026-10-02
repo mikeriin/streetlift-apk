@@ -105,15 +105,9 @@ class SettingsScreen extends StatelessWidget {
             },
           ),
           const _Sec('Saisie des séries'),
-          _Sw(
-            'Colonne RIR / RPE par défaut',
-            'Ajustable avec le menu Colonnes sous chaque exercice',
-            s.trackRir,
-            (v) {
-              s.trackRir = v;
-              save();
-            },
-          ),
+          // G9 (D5.4) : la note en flammes, à chaque série, remplace la
+          // colonne RIR / RPE (réglages `trackRir` et `rpe` gardés dans les
+          // données pour les anciennes sauvegardes, sans effet).
           _Sw(
             'Colonne vitesse (m/s) sur les lifts',
             'Pour suivre la vitesse de tes répétitions',
@@ -123,10 +117,6 @@ class SettingsScreen extends StatelessWidget {
               save();
             },
           ),
-          _Sw('Échelle RPE au lieu de RIR', null, s.rpe, (v) {
-            s.rpe = v;
-            save();
-          }),
           _Sw('Pré-remplir charge suggérée et reps prévues', null, s.prefill, (
             v,
           ) {

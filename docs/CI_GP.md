@@ -110,6 +110,23 @@ vide ou absent.
   (ci-3d.yml et build-apk.yml).
 - Tests Dart du lot : `test/g6_profil_test.dart` (modèle, magasin, écrans).
 
+### G7 (dev6.5.0)
+
+- Cible émulateur par défaut : `integration_test/programme_g7_test.dart`, build
+  de développement, parties `a` (sombre, rouge Kalis) et `b` (clair,
+  violet) : session personnelle (Réglages › Mon programme, Où j'en suis sans
+  valider) ; session de test (5 appuis) → création du profil, création du
+  programme (passe 1, autre proposition, revue avec variantes et diff de
+  Koach, récapitulatif, passe 2, ajustement refusé, validation), accueil ;
+  suppression de la session de test, session personnelle identique clé par
+  clé. Relevés `emulateur/g7_releve_<partie>.json`, captures
+  `emulateur/g7_*_<thème>.png`. G6 passe sous `CI3D_TOUT=1`.
+- APK de test précompilé sur la cible G7.
+- Tests Dart du mode dev : `test/g7_mode_dev_test.dart` ajouté à la commande
+  (ci-3d.yml et build-apk.yml). Tests Dart du lot : `test/g7_plan_test.dart`.
+- La tâche `packages` contrôle aussi `packages/kalis_plan` (10 240 profils,
+  quelques minutes).
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant

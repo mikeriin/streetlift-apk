@@ -116,6 +116,15 @@ class Exercise {
   final int? forcedSets;
   final Map<String, dynamic>? timer; // {type: emom|amrap|hiit, ...}
 
+  /// G7 : identifiant de la base v1.1 et emplacement du bloc (programme
+  /// créé par kalis_plan) ; null pour le programme embarqué.
+  final String? catalogId;
+  final String? slotId;
+
+  /// G9 : exercice de la séance prescrite par `kalis_adapt` (séries,
+  /// charges et cibles du moteur ; Koach L7 et L11 ne s'y appliquent pas).
+  final bool engine;
+
   Exercise.manual({
     required this.id,
     required this.name,
@@ -134,7 +143,38 @@ class Exercise {
        prevention = false,
        why = '',
        role = '',
-       exId = null;
+       exId = null,
+       catalogId = null,
+       slotId = null,
+       engine = false;
+
+  /// G9 : exercice prescrit par `kalis_adapt` pour la séance du jour, à
+  /// partir de l'exercice du programme [base] (même identifiant de journal,
+  /// ou `<id>~<catalogue>` pour un remplaçant).
+  Exercise.engine(
+    Exercise base, {
+    required this.id,
+    required this.name,
+    required String setsText,
+    required int setCount,
+    required this.intensity,
+    double? kg,
+    required this.rest,
+    required this.restSec,
+    required this.cue,
+    required this.why,
+    required this.catalogId,
+    required this.slotId,
+  }) : sets = SetsSpec.text(setsText),
+       load = LoadSpec.fixed(kg),
+       tempo = base.tempo,
+       main = base.main,
+       prevention = base.prevention,
+       role = base.role,
+       exId = base.exId,
+       forcedSets = setCount,
+       timer = null,
+       engine = true;
 
   /// L11 : copie adaptée pour une séance (séries réduites, exercice
   /// échangé). Sans argument : identique à [base].
@@ -163,7 +203,10 @@ class Exercise {
        role = role ?? base.role,
        exId = exId ?? base.exId,
        forcedSets = base.forcedSets,
-       timer = base.timer;
+       timer = base.timer,
+       catalogId = base.catalogId,
+       slotId = base.slotId,
+       engine = base.engine;
 
   Exercise.fromJson(Map<String, dynamic> j)
     : id = j['id'] as String,
@@ -181,7 +224,10 @@ class Exercise {
       role = j['role'] as String? ?? '',
       exId = j['exId'] as String?,
       forcedSets = null,
-      timer = null;
+      timer = null,
+      catalogId = j['catalogId'] as String?,
+      slotId = j['slotId'] as String?,
+      engine = false;
 
   /// Format intervalle type « 8× (30 s effort / 30 s repos) ».
   ({int rounds, int work, int rest})? get interval {

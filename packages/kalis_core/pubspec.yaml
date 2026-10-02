@@ -4,7 +4,7 @@ description: >-
   d'exercices compilé, profil d'athlète v2, journal de séances, échelle des
   flammes, interfaces et types d'échange de kalis_plan, kalis_adapt et
   kalis_quest. Dart pur, sans Flutter, sans stockage, sans horloge.
-version: 0.1.0
+version: 0.3.0
 publish_to: none
 
 environment:

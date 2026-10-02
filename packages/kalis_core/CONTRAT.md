@@ -1,6 +1,6 @@
 # kalis_core — contrat
 
-Version 0.1.0 (lot GC, 01/10/2026). Ce paquet fixe **tout ce que les moteurs et l'application
+Version 0.3.0 (lot GC, 01/10/2026 ; évolutions additives des lots G8 et G11 : `CHANGELOG.md`). Ce paquet fixe **tout ce que les moteurs et l'application
 échangent**. Référence exhaustive des types, champ par champ : [`docs/TYPES.md`](docs/TYPES.md)
 (généré depuis `tool/contracts_spec.py`, source unique des types).
 
@@ -200,7 +200,7 @@ leveling depuis tout le journal ≤ 200 ms — mesurés par chaque moteur ; le c
 
 ## 7. Codes de raison
 
-Registre `reasonRegistry` (67 codes : `plan.*`, `adapt.*`, `quest.*`), constantes `ReasonCodes`, table
+Registre `reasonRegistry` (92 codes : `plan.*`, `adapt.*`, `quest.*`), constantes `ReasonCodes`, table
 dans `docs/TYPES.md`. Un `Reason` valide a un code du registre et exactement les paramètres déclarés,
 du bon type (entier, nombre, texte court, booléen, identifiant d'exercice). Un moteur qui a besoin d'un
 nouveau code l'ajoute ici (évolution additive).
@@ -221,7 +221,8 @@ fichiers et valeurs aléatoires seedées de chaque type (`contractCodecs`, `arbi
 - Les prérequis d'un exercice non lesté restent dans sa famille `variante_de` : le squat de
   compétition, par exemple, ne renvoie pas vers le back squat de musculation.
 - `QuestOutcome.extras` (récapitulatif hebdomadaire, comparaisons, fantôme) est un objet libre que
-  `kalis_quest` documentera ; il pourra être typé plus tard par des champs optionnels.
+  `kalis_quest` documente (`packages/kalis_quest/docs/EXTRAS.md`) ; il pourra être typé plus tard par des
+  champs optionnels.
 - Contraintes articulaires et coûts de fatigue : échelles ordinales de bon sens, sans valeur médicale.
 - `lieux` suppose une salle complète, un parc de street workout et un domicile sans gros matériel.
 - La proximité ne tient compte ni du matériel ni des contraintes articulaires (à `kalis_plan` de le faire).
