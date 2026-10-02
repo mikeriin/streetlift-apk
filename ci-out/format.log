@@ -1,0 +1,8 @@
+Changed lib/adapt/adapt_summary_screen.dart
+Changed lib/adapt/flame_track.dart
+Changed lib/session_screen.dart
+Changed test/g2_retrait_test.dart
+Changed test/g9_seance_test.dart
+Changed test/l7_koach_screens_test.dart
+Changed integration_test/seance_g9_test.dart
+Formatted 218 files (7 changed) in 1.44 seconds.
