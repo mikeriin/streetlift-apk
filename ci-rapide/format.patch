@@ -1,0 +1,60 @@
+diff --git a/lib/evolution_store.dart b/lib/evolution_store.dart
+index dd4dcc1..16fc0af 100644
+--- a/lib/evolution_store.dart
++++ b/lib/evolution_store.dart
+@@ -245,10 +245,7 @@ extension EvolutionStore on AppStore {
+     final moved = next.inEffect && !e.inEffect;
+     _evoCommit([
+       for (final x in planEvolution.entries)
+-        if (!same(x))
+-          x
+-        else if (!moved)
+-          next,
++        if (!same(x)) x else if (!moved) next,
+       if (moved) next,
+     ]);
+   }
+diff --git a/lib/plan/plan_screens.dart b/lib/plan/plan_screens.dart
+index 52ef122..87f0f0d 100644
+--- a/lib/plan/plan_screens.dart
++++ b/lib/plan/plan_screens.dart
+@@ -616,7 +616,11 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
+             'Ton bloc se termine. Voici le suivant : ${plan.weeks} semaines, '
+             '${plan.days.length} séance${plan.days.length > 1 ? 's' : ''} par '
+             'semaine.$done '
+-            '${fresh == 0 ? 'Aucun nouvel exercice à passer en revue.' : fresh == 1 ? 'Un nouvel exercice à passer en revue.' : '$fresh nouveaux exercices à passer en revue.'}',
++            '${fresh == 0
++                ? 'Aucun nouvel exercice à passer en revue.'
++                : fresh == 1
++                ? 'Un nouvel exercice à passer en revue.'
++                : '$fresh nouveaux exercices à passer en revue.'}',
+         why:
+             'Je garde tes mouvements principaux, je fais tourner une partie '
+             'des exercices de complément et je passe à une variante plus '
+diff --git a/test/g10_evolution_test.dart b/test/g10_evolution_test.dart
+index e537935..393af29 100644
+--- a/test/g10_evolution_test.dart
++++ b/test/g10_evolution_test.dart
+@@ -604,7 +604,10 @@ void main() {
+       others.add(next);
+       expect(next.evolutionLoadIssues, 1);
+       expect(next.planEvolution.isEmpty, isTrue);
+-      expect(next.evolutionReceive(_place(next, 1), [_deload(_place(next, 1), 2)]), isFalse);
++      expect(
++        next.evolutionReceive(_place(next, 1), [_deload(_place(next, 1), 2)]),
++        isFalse,
++      );
+       expect(next.evolutionRefresh(force: true), isFalse);
+       final out = jsonDecode(next.exportAll()) as Map<String, dynamic>;
+       expect(jsonEncode(out['planEvolution']), jsonEncode(bad));
+@@ -749,7 +752,9 @@ void main() {
+         expect(find.byKey(ValueKey('evo-accept-${evoKey(e)}')), findsOneWidget);
+         expect(find.byKey(ValueKey('evo-refuse-${evoKey(e)}')), findsOneWidget);
+         expect(find.byKey(ValueKey('evo-later-${evoKey(e)}')), findsOneWidget);
+-        await tester.ensureVisible(find.byKey(ValueKey('evo-details-${evoKey(e)}')));
++        await tester.ensureVisible(
++          find.byKey(ValueKey('evo-details-${evoKey(e)}')),
++        );
+         await tester.tap(find.byKey(ValueKey('evo-details-${evoKey(e)}')));
+         await tester.pumpAndSettle();
+         expect(find.byKey(const ValueKey('evo-sheet')), findsOneWidget);
