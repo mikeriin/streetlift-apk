@@ -77,3 +77,38 @@ final pass2 = plan.createPass2(catalog, Pass2Request(request: request, pass1: af
 `package:kalis_core/testing.dart` donne les profils types et les journaux
 (`readProfileFixtures`, `readJournalFixtures` sur `packages/kalis_core/test/fixtures/`) : sers-t'en
 pour les tests d'intégration et le simulateur du mode dev.
+
+## 6. Profil v3 et parcours de création (0.4.0, lot CU)
+
+Récupère le paquet : `git fetch origin 'refs/heads/etiquettes/*:refs/remotes/origin/etiquettes/*'` puis
+`git checkout origin/etiquettes/kalis_core-v0.4.0 -- packages/kalis_core`. `kalis_plan` 0.1.0, `kalis_adapt`
+0.1.0 et `kalis_quest` 0.1.0 fonctionnent sans changement avec 0.4.0 (aucune valeur d'enum ajoutée aux
+énumérations existantes : aucun `switch` de l'application n'est à compléter).
+
+- **Tout est dans [`docs/PARCOURS_V3.md`](docs/PARCOURS_V3.md)** : écrans, ordre, textes, réponses,
+  validations, conditions d'apparition, tests guidés, utilisateurs existants.
+- **Parcours** : déclare l'asset `packages/kalis_core/data/parcours_v3.json`, puis
+  `final parcours = ProfileQuestionnaire.fromJson(jsonDecode(texte) as Map<String, Object?>);`. Après
+  chaque réponse : `parcours.visibleQuestions(brouillonJson, todayYear: annee)` rend les questions à
+  montrer, dans l'ordre (`since: 3` pour « Compléter mon profil »). Le brouillon est le JSON du profil en
+  cours de saisie (il peut être incomplet). L'application ne code aucune condition.
+- **Écrire une réponse** : par `copyWith` sur le profil (les champs du schéma 3 sont optionnels) ;
+  « Passer » et « Je ne sais pas » laissent le champ absent ; « aucun autre sport » s'écrit
+  `otherSports: const []` ; « aucune échéance », `events: const []`.
+- **Utilisateurs existants** : `profile.toSchema3()` (seul `schemaVersion` change). Le programme en
+  cours n'est pas régénéré ; le programme importé du propriétaire ne l'est jamais (D5.10).
+- **Avant d'enregistrer** : `profile.validate()` et `catalog.checkProfile(profile)` vides.
+- **Figures** : `catalog.progressionCandidates(figureId)` donne les étapes à proposer pour « Où en
+  es-tu ? ».
+- **Tests guidés** : `parcours.eligibleTests(profilJson, todayYear: annee)` ; un résultat s'écrit comme
+  un `Benchmark` (`source: BenchmarkSource.guidedTest`, `protocolId`) ajouté à `profile.benchmarks`.
+  Conversions : `estimateOneRm(loadKg: chargeTotale, reps: r, rir: reserve)` puis
+  `externalFromTotal(...)` pour un exercice lesté (la fraction du poids du corps est
+  `CatalogExercise.bodyweightFraction`) ; `riegelSeconds(...)`, `trialSpeed(...)` pour la course.
+  Affiche toujours la fourchette (`lowKg` à `highKg`), pas une valeur seule.
+- **Tests à écrire dans l'application** : nombre de questions vues pour chaque profil de
+  `test/fixtures/profiles_v3.json` (`expected.questionIds`), chaque condition d'apparition, migration du
+  schéma 2 vers le schéma 3, aller-retour de sauvegarde, création d'un programme avec les moteurs actuels
+  pour chaque profil type.
+- **Textes de Koach des nouveaux codes de raison** : `docs/RAISONS_0_4.md` (utiles au lot CI ; les
+  moteurs 0.1 ne les émettent pas).

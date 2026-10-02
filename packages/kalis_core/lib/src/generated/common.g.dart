@@ -7,7 +7,10 @@ part of '../contracts.dart';
 /// Invariant : `code` figure au registre ; `params` contient exactement les
 /// paramètres déclarés, du bon type.
 final class Reason {
-  const Reason({required this.code, required this.params});
+  const Reason({
+    required this.code,
+    required this.params,
+  });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
   /// Les champs inconnus sont ignorés (évolution additive).
@@ -27,12 +30,21 @@ final class Reason {
 
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
-    return <String, Object?>{'code': code, 'params': jsonCanonical(params)};
+    return <String, Object?>{
+      'code': code,
+      'params': jsonCanonical(params),
+    };
   }
 
   /// Copie modifiée ; un champ optionnel peut être remis à `null`.
-  Reason copyWith({String? code, Map<String, Object?>? params}) {
-    return Reason(code: code ?? this.code, params: params ?? this.params);
+  Reason copyWith({
+    String? code,
+    Map<String, Object?>? params,
+  }) {
+    return Reason(
+      code: code ?? this.code,
+      params: params ?? this.params,
+    );
   }
 
   /// Violations des invariants du contrat (liste vide = valeur valide).
@@ -56,10 +68,7 @@ final class Reason {
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is Reason &&
-            code == other.code &&
-            jsonDeepEquals(params, other.params);
+    return identical(this, other) || other is Reason && code == other.code && jsonDeepEquals(params, other.params);
   }
 
   @override

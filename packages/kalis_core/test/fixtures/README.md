@@ -1,12 +1,14 @@
 # Jeux de données communs (kalis_core)
 
-Fichiers générés par `tool/gen_fixtures.py` (déterministe, graines fixes) — ne pas modifier à la main.
+Fichiers générés par `tool/gen_fixtures.py`, `tool/gen_parcours.py` et `tool/gen_contracts.py` (déterministes, graines fixes) — ne pas modifier à la main.
 Les autres paquets les lisent par chemin relatif (`../kalis_core/test/fixtures/…`) depuis leurs tests et
 leurs simulateurs, avec les lecteurs de `package:kalis_core/testing.dart`.
 
 | Fichier | Contenu | Lecture |
 | --- | --- | --- |
 | `profiles.json` | 40 profils types (`AthleteProfile` v2) : `key`, `description`, `profile` | `readProfileFixtures` |
+| `profiles_v3.json` | 5 profils types au schéma 3 (débutant, intermédiaire, compétiteur élite de streetlifting, coureuse, sets & reps avancé) : `key`, `description`, `profile`, et `expected` (questions du parcours vues, tests guidés permis) ; généré par `tool/gen_parcours.py` | `readProfileFixtures` (`expected` : JSON brut) |
+| `variants.json` | Types à variantes : objet minimal, valeurs d'essai et règles par variante ; généré par `tool/gen_contracts.py` | JSON brut (`test/advanced_test.dart`) |
 | `journals.json.gz` | 12 journaux synthétiques de 4 à 24 semaines (`TrainingLog`) : `key`, `profileKey`, `weeks`, `description`, `truth`, `log` | `readJournalFixtures` (après `gzip.decode`) |
 | `owner_program_v33.json.gz` | Programme personnel du propriétaire, normalisé, **lecture seule** | JSON brut |
 | `legacy_journal.json` | Journal au format actuel de l'application (`before`), sa conversion (`after`, `TrainingLog`) et le rapport de conversion (`report`) | JSON brut ; règles dans `docs/CONVERSION_JOURNAL.md` |

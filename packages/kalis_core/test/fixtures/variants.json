@@ -1,0 +1,490 @@
+{
+ "schema": 1,
+ "types": [
+  {
+   "type": "Benchmark",
+   "discriminator": "kind",
+   "base": {
+    "exerciseId": "x",
+    "source": "declared"
+   },
+   "samples": {
+    "externalLoadKg": 0,
+    "reps": 1,
+    "rir": 0,
+    "seconds": 1,
+    "distanceMeters": 0
+   },
+   "rules": {
+    "load_reps": {
+     "required": [
+      "externalLoadKg",
+      "reps"
+     ],
+     "allowed": [
+      "rir"
+     ]
+    },
+    "max_reps": {
+     "required": [
+      "reps"
+     ],
+     "allowed": [
+      "externalLoadKg",
+      "seconds"
+     ]
+    },
+    "max_hold": {
+     "required": [
+      "seconds"
+     ],
+     "allowed": [
+      "externalLoadKg"
+     ]
+    },
+    "time_trial": {
+     "required": [
+      "distanceMeters",
+      "seconds"
+     ],
+     "allowed": []
+    },
+    "distance_trial": {
+     "required": [
+      "distanceMeters",
+      "seconds"
+     ],
+     "allowed": []
+    }
+   }
+  },
+  {
+   "type": "SeasonEvent",
+   "discriminator": "kind",
+   "base": {
+    "id": "x",
+    "priority": "main",
+    "date": "2026-10-01"
+   },
+   "samples": {
+    "lifts": [
+     {
+      "exerciseId": "x",
+      "attempts": 1
+     }
+    ],
+    "mode": "max_reps",
+    "stations": [
+     {
+      "exerciseId": "x"
+     }
+    ],
+    "rounds": 1,
+    "timeLimitSeconds": 10,
+    "distanceMeters": 0,
+    "targetSeconds": 1
+   },
+   "rules": {
+    "strength_competition": {
+     "required": [
+      "lifts"
+     ],
+     "allowed": [
+      "timeLimitSeconds"
+     ]
+    },
+    "reps_competition": {
+     "required": [
+      "mode",
+      "stations"
+     ],
+     "allowed": [
+      "rounds",
+      "timeLimitSeconds",
+      "targetSeconds"
+     ]
+    },
+    "freestyle_competition": {
+     "required": [],
+     "allowed": [
+      "timeLimitSeconds"
+     ]
+    },
+    "race": {
+     "required": [
+      "distanceMeters"
+     ],
+     "allowed": [
+      "targetSeconds",
+      "timeLimitSeconds"
+     ]
+    },
+    "other_competition": {
+     "required": [],
+     "allowed": [
+      "lifts",
+      "mode",
+      "stations",
+      "rounds",
+      "timeLimitSeconds",
+      "distanceMeters",
+      "targetSeconds"
+     ]
+    },
+    "personal_test": {
+     "required": [],
+     "allowed": [
+      "lifts",
+      "mode",
+      "stations",
+      "rounds",
+      "timeLimitSeconds",
+      "distanceMeters",
+      "targetSeconds"
+     ]
+    }
+   }
+  },
+  {
+   "type": "Specialization",
+   "discriminator": "kind",
+   "base": {},
+   "samples": {
+    "exerciseId": "x",
+    "muscle": "x",
+    "pattern": "adducteurs_abducteurs"
+   },
+   "rules": {
+    "exercise": {
+     "required": [
+      "exerciseId"
+     ],
+     "allowed": []
+    },
+    "skill": {
+     "required": [
+      "exerciseId"
+     ],
+     "allowed": []
+    },
+    "muscle": {
+     "required": [
+      "muscle"
+     ],
+     "allowed": []
+    },
+    "pattern": {
+     "required": [
+      "pattern"
+     ],
+     "allowed": []
+    }
+   }
+  },
+  {
+   "type": "SetTechnique",
+   "discriminator": "kind",
+   "base": {},
+   "samples": {
+    "backoffSets": 1,
+    "backoffDropPct": 0,
+    "backoffRepsLow": 1,
+    "backoffRepsHigh": 1,
+    "miniSets": 1,
+    "miniSetReps": 1,
+    "intraRestSeconds": 1,
+    "activationRepsLow": 1,
+    "activationRepsHigh": 1,
+    "totalRepsTarget": 1,
+    "drops": 1,
+    "dropPct": 0.05,
+    "eccentricLoadPct": 0,
+    "eccentricOnly": false,
+    "pairedSlotId": "x",
+    "pairedRestSeconds": 0,
+    "waves": 1,
+    "waveReps": [
+     1
+    ],
+    "waveStepPct": 0,
+    "durationSeconds": 10,
+    "intervalSeconds": 10,
+    "intervals": 1,
+    "repsPerInterval": 1,
+    "ladderStart": 1,
+    "ladderStep": 1,
+    "ladderTop": 1,
+    "ladderCount": 1,
+    "pyramidReps": [
+     1,
+     1
+    ],
+    "qualityFloor": 1,
+    "maxAttempts": 1
+   },
+   "rules": {
+    "standard": {
+     "required": [],
+     "allowed": []
+    },
+    "top_set_backoff": {
+     "required": [
+      "backoffSets",
+      "backoffDropPct"
+     ],
+     "allowed": [
+      "backoffRepsLow",
+      "backoffRepsHigh"
+     ]
+    },
+    "cluster": {
+     "required": [
+      "miniSets",
+      "miniSetReps",
+      "intraRestSeconds"
+     ],
+     "allowed": []
+    },
+    "rest_pause": {
+     "required": [
+      "intraRestSeconds"
+     ],
+     "allowed": [
+      "miniSets",
+      "totalRepsTarget"
+     ]
+    },
+    "myo_reps": {
+     "required": [
+      "miniSetReps",
+      "intraRestSeconds"
+     ],
+     "allowed": [
+      "miniSets",
+      "activationRepsLow",
+      "activationRepsHigh"
+     ]
+    },
+    "drop_set": {
+     "required": [
+      "drops",
+      "dropPct"
+     ],
+     "allowed": []
+    },
+    "isometric_hold": {
+     "required": [],
+     "allowed": []
+    },
+    "accentuated_eccentric": {
+     "required": [],
+     "allowed": [
+      "eccentricLoadPct",
+      "eccentricOnly"
+     ]
+    },
+    "contrast": {
+     "required": [
+      "pairedSlotId"
+     ],
+     "allowed": [
+      "pairedRestSeconds"
+     ]
+    },
+    "wave": {
+     "required": [
+      "waves",
+      "waveReps"
+     ],
+     "allowed": [
+      "waveStepPct"
+     ]
+    },
+    "amrap": {
+     "required": [],
+     "allowed": [
+      "durationSeconds"
+     ]
+    },
+    "emom": {
+     "required": [
+      "intervalSeconds",
+      "intervals"
+     ],
+     "allowed": [
+      "repsPerInterval"
+     ]
+    },
+    "density": {
+     "required": [
+      "durationSeconds"
+     ],
+     "allowed": [
+      "totalRepsTarget"
+     ]
+    },
+    "ladder": {
+     "required": [
+      "ladderStart",
+      "ladderStep",
+      "ladderTop"
+     ],
+     "allowed": [
+      "ladderCount"
+     ]
+    },
+    "pyramid": {
+     "required": [
+      "pyramidReps"
+     ],
+     "allowed": []
+    },
+    "skill_practice": {
+     "required": [],
+     "allowed": [
+      "qualityFloor",
+      "maxAttempts"
+     ]
+    }
+   }
+  },
+  {
+   "type": "IntensityTarget",
+   "discriminator": "basis",
+   "base": {},
+   "samples": {
+    "value": 0,
+    "valueHigh": 0,
+    "referenceExerciseId": "x",
+    "referenceKind": "load_reps",
+    "stepExerciseId": "x"
+   },
+   "rules": {
+    "percent_one_rm": {
+     "required": [
+      "value"
+     ],
+     "allowed": [
+      "valueHigh",
+      "referenceExerciseId"
+     ]
+    },
+    "percent_benchmark": {
+     "required": [
+      "value",
+      "referenceKind"
+     ],
+     "allowed": [
+      "valueHigh",
+      "referenceExerciseId"
+     ]
+    },
+    "rir": {
+     "required": [
+      "value"
+     ],
+     "allowed": [
+      "valueHigh"
+     ]
+    },
+    "hold_fraction": {
+     "required": [
+      "value"
+     ],
+     "allowed": [
+      "valueHigh",
+      "referenceExerciseId"
+     ]
+    },
+    "progression_step": {
+     "required": [
+      "stepExerciseId"
+     ],
+     "allowed": []
+    },
+    "speed_fraction": {
+     "required": [
+      "value"
+     ],
+     "allowed": [
+      "valueHigh",
+      "referenceKind",
+      "referenceExerciseId"
+     ]
+    },
+    "heart_rate_fraction": {
+     "required": [
+      "value"
+     ],
+     "allowed": [
+      "valueHigh"
+     ]
+    }
+   }
+  },
+  {
+   "type": "AutoregulationRule",
+   "discriminator": "kind",
+   "base": {},
+   "samples": {
+    "pct": 0,
+    "rirFloor": 0,
+    "rirCeiling": 0,
+    "minSets": 0,
+    "maxSets": 1,
+    "repDrop": 1
+   },
+   "rules": {
+    "backoff_from_top_set": {
+     "required": [
+      "pct"
+     ],
+     "allowed": [
+      "rirCeiling",
+      "minSets",
+      "maxSets"
+     ]
+    },
+    "load_from_rir": {
+     "required": [
+      "rirFloor",
+      "rirCeiling"
+     ],
+     "allowed": [
+      "pct"
+     ]
+    },
+    "stop_at_rir": {
+     "required": [
+      "rirFloor"
+     ],
+     "allowed": [
+      "minSets",
+      "maxSets"
+     ]
+    },
+    "stop_on_rep_drop": {
+     "required": [
+      "repDrop"
+     ],
+     "allowed": [
+      "minSets",
+      "maxSets"
+     ]
+    },
+    "hold_from_best": {
+     "required": [
+      "pct"
+     ],
+     "allowed": []
+    },
+    "last_set_amrap": {
+     "required": [],
+     "allowed": [
+      "rirFloor"
+     ]
+    }
+   }
+  }
+ ]
+}

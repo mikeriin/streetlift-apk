@@ -243,6 +243,50 @@ void _validateAthleteProfile(
       );
     }
   }
+  // Schéma 3 (0.4.0) : un champ du schéma 3 n'existe pas dans un profil 2.
+  if (v.schemaVersion < 3) {
+    for (final name in v.schema3FieldsPresent) {
+      out.add(Violation('$path.$name', 'schema3_field', 'schemaVersion 2'));
+    }
+  }
+  final events = v.events;
+  if (events != null) {
+    checkDistinct(out, '$path.events', events.map((e) => e.id));
+  }
+  final skills = v.skills;
+  if (skills != null) {
+    checkDistinct(out, '$path.skills', skills.map((s) => s.targetExerciseId));
+  }
+  final benchmarks = v.benchmarks;
+  if (benchmarks != null) {
+    checkDistinct(
+      out,
+      '$path.benchmarks',
+      benchmarks.map(
+        (b) =>
+            '${b.exerciseId}|${b.kind.code}|${b.source.code}|'
+            '${b.date?.iso ?? ''}',
+      ),
+    );
+  }
+  final weakPoints = v.weakPoints;
+  if (weakPoints != null) {
+    checkDistinct(
+      out,
+      '$path.weakPoints',
+      weakPoints.map((w) => '${w.exerciseId}|${w.kind.code}'),
+    );
+  }
+  final lifestyle = v.lifestyleUpdatedOn;
+  if (lifestyle != null && lifestyle < v.createdOn) {
+    out.add(
+      Violation(
+        '$path.lifestyleUpdatedOn',
+        'date_before_creation',
+        lifestyle.iso,
+      ),
+    );
+  }
 }
 
 void _validateSetTarget(SetTarget v, String path, List<Violation> out) {
@@ -393,6 +437,21 @@ void _validateExercisePrescription(
       ),
     );
   }
+  // 0.4.0 : un test se déclare sur une prescription de rôle « test » ; les
+  // séries allégées sont comptées dans `sets`, avec la série de tête.
+  if (v.test != null && v.kind != SetKind.test) {
+    out.add(Violation('$path.test', 'unexpected_field', 'kind ≠ test'));
+  }
+  final backoffSets = v.technique?.backoffSets;
+  if (backoffSets != null && backoffSets >= v.sets) {
+    out.add(
+      Violation(
+        '$path.technique.backoffSets',
+        'set_count',
+        '$backoffSets séries allégées pour ${v.sets} séries',
+      ),
+    );
+  }
 }
 
 void _validatePass2Plan(Pass2Plan v, String path, List<Violation> out) {
@@ -478,5 +537,212 @@ void _validateRestructureRequest(
 ) {
   if (v.scope == RestructureScope.session && v.dayIndex == null) {
     out.add(Violation('$path.dayIndex', 'missing_field', 'scope session'));
+  }
+}
+
+// ---------------------------------------------------------------------------
+// 0.4.0 (lot CQ) : profil v3, saison, compétition, figures, prescriptions
+// avancées. Les champs obligatoires ou interdits selon la variante sont
+// contrôlés par le code généré (`checkVariant`) ; ici, les invariants
+// croisés restants.
+// ---------------------------------------------------------------------------
+
+void _orderedPair(
+  List<Violation> out,
+  String path,
+  String name,
+  num? low,
+  num? high,
+) {
+  if ((low == null) != (high == null)) {
+    out.add(Violation(path, 'range_incomplete', name));
+  } else if (low != null && high != null && low > high) {
+    out.add(Violation(path, 'range_inverted', '$name : $low > $high'));
+  }
+}
+
+void _validateLimitation(Limitation v, String path, List<Violation> out) {
+  final aggravatedBy = v.aggravatedBy;
+  if (aggravatedBy != null) {
+    checkDistinct(out, '$path.aggravatedBy', aggravatedBy);
+  }
+}
+
+void _validateOtherSport(OtherSport v, String path, List<Violation> out) {
+  final weekdays = v.weekdays;
+  if (weekdays != null) {
+    checkDistinct(out, '$path.weekdays', weekdays);
+    for (var i = 0; i < weekdays.length; i++) {
+      checkRange(out, '$path.weekdays[$i]', weekdays[i], 1, 7);
+    }
+  }
+  final regions = v.regions;
+  if (regions != null) {
+    checkDistinct(out, '$path.regions', regions);
+  }
+}
+
+void _validateEventStation(EventStation v, String path, List<Violation> out) {
+  if (v.reps != null && v.seconds != null) {
+    out.add(Violation(path, 'measure_count', 'reps et seconds'));
+  }
+}
+
+void _validateSeasonEvent(SeasonEvent v, String path, List<Violation> out) {
+  final lifts = v.lifts;
+  if (lifts != null) {
+    checkDistinct(out, '$path.lifts', lifts.map((l) => l.exerciseId));
+  }
+  if (v.stations != null && v.mode == null) {
+    out.add(Violation('$path.mode', 'missing_field', 'stations'));
+  }
+  final goalIds = v.goalIds;
+  if (goalIds != null) {
+    checkDistinct(out, '$path.goalIds', goalIds);
+  }
+}
+
+void _validateStepCriterion(StepCriterion v, String path, List<Violation> out) {
+  if (v.holdSeconds == null && v.reps == null) {
+    out.add(Violation(path, 'no_measure', 'holdSeconds ou reps'));
+  }
+}
+
+void _validateSkillLadder(SkillLadder v, String path, List<Violation> out) {
+  checkDistinct(out, '$path.steps', v.steps.map((s) => s.exerciseId));
+  if (v.steps.isNotEmpty && v.steps.last.exerciseId != v.targetExerciseId) {
+    out.add(
+      Violation('$path.steps', 'last_step_not_target', v.targetExerciseId),
+    );
+  }
+}
+
+void _validateSeasonPlan(SeasonPlan v, String path, List<Violation> out) {
+  checkDistinct(out, '$path.eventIds', v.eventIds);
+  for (var i = 0; i < v.phases.length; i++) {
+    final phase = v.phases[i];
+    if (phase.index != i) {
+      out.add(
+        Violation(
+          '$path.phases[$i].index',
+          'index_mismatch',
+          '${phase.index} ≠ $i',
+        ),
+      );
+    }
+    if (i > 0) {
+      final previous = v.phases[i - 1];
+      final expected = previous.startDate.addDays(7 * previous.weeks);
+      if (phase.startDate != expected) {
+        out.add(
+          Violation(
+            '$path.phases[$i].startDate',
+            'phases_not_contiguous',
+            '${phase.startDate.iso} ≠ ${expected.iso}',
+          ),
+        );
+      }
+    }
+  }
+}
+
+void _validateVolumeTolerance(
+  VolumeTolerance v,
+  String path,
+  List<Violation> out,
+) {
+  if (v.weeklySetsLow > v.weeklySetsHigh) {
+    out.add(
+      Violation(
+        path,
+        'range_inverted',
+        '${v.weeklySetsLow} > ${v.weeklySetsHigh}',
+      ),
+    );
+  }
+}
+
+void _validateLiftAttempts(LiftAttempts v, String path, List<Violation> out) {
+  for (var i = 1; i < v.attempts.length; i++) {
+    if (v.attempts[i].loadKg < v.attempts[i - 1].loadKg) {
+      out.add(
+        Violation(
+          '$path.attempts[$i].loadKg',
+          'attempt_decreasing',
+          '${v.attempts[i].loadKg} < ${v.attempts[i - 1].loadKg}',
+        ),
+      );
+    }
+    if (v.attempts[i].index <= v.attempts[i - 1].index) {
+      out.add(Violation('$path.attempts[$i].index', 'index_mismatch', ''));
+    }
+  }
+}
+
+void _validateSetTechnique(SetTechnique v, String path, List<Violation> out) {
+  _orderedPair(out, path, 'backoffReps', v.backoffRepsLow, v.backoffRepsHigh);
+  _orderedPair(
+    out,
+    path,
+    'activationReps',
+    v.activationRepsLow,
+    v.activationRepsHigh,
+  );
+  final start = v.ladderStart;
+  final top = v.ladderTop;
+  if (start != null && top != null && start > top) {
+    out.add(Violation(path, 'range_inverted', 'ladder : $start > $top'));
+  }
+  void repsList(String name, List<int>? reps) {
+    if (reps == null) {
+      return;
+    }
+    for (var i = 0; i < reps.length; i++) {
+      checkRange(out, '$path.$name[$i]', reps[i], 1, 100);
+    }
+  }
+
+  repsList('waveReps', v.waveReps);
+  repsList('pyramidReps', v.pyramidReps);
+}
+
+void _validateIntensityTarget(
+  IntensityTarget v,
+  String path,
+  List<Violation> out,
+) {
+  final value = v.value;
+  final high = v.valueHigh;
+  if (value != null && high != null && value > high) {
+    out.add(Violation(path, 'range_inverted', 'value : $value > $high'));
+  }
+  if (high != null && value == null) {
+    out.add(Violation(path, 'range_incomplete', 'value'));
+  }
+  if (v.basis != IntensityBasis.rir) {
+    // Bases exprimées en part : de 0 à 1,5.
+    if (value != null) {
+      checkRange(out, '$path.value', value, 0, 1.5);
+    }
+    if (high != null) {
+      checkRange(out, '$path.valueHigh', high, 0, 1.5);
+    }
+  }
+}
+
+void _validateAutoregulationRule(
+  AutoregulationRule v,
+  String path,
+  List<Violation> out,
+) {
+  final floor = v.rirFloor;
+  final ceiling = v.rirCeiling;
+  if (floor != null && ceiling != null && floor > ceiling) {
+    out.add(Violation(path, 'range_inverted', 'rir : $floor > $ceiling'));
+  }
+  final minSets = v.minSets;
+  final maxSets = v.maxSets;
+  if (minSets != null && maxSets != null && minSets > maxSets) {
+    out.add(Violation(path, 'range_inverted', 'sets : $minSets > $maxSets'));
   }
 }

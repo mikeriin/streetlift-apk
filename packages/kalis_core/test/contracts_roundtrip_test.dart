@@ -17,7 +17,7 @@ void main() {
       contractCodecs.map((c) => c.name).toSet().length,
       contractCodecs.length,
     );
-    expect(contractCodecs.length, greaterThanOrEqualTo(60));
+    expect(contractCodecs.length, greaterThanOrEqualTo(100));
   });
 
   for (var index = 0; index < contractCodecs.length; index++) {
@@ -66,9 +66,11 @@ void main() {
 
   test('un type racine écrit sa version de schéma', () {
     final r = Random(1);
-    expect(arbitraryAthleteProfile(r).toJson()['schemaVersion'], 2);
+    expect(arbitraryAthleteProfile(r).toJson()['schemaVersion'], 3);
     expect(arbitraryTrainingLog(r).toJson()['schemaVersion'], 1);
-    expect(AthleteProfile.currentSchemaVersion, 2);
+    expect(AthleteProfile.currentSchemaVersion, 3);
+    expect(SeasonPlan.currentSchemaVersion, 1);
+    expect(EventDayPlan.currentSchemaVersion, 1);
     expect(TrainingLog.currentSchemaVersion, 1);
     expect(Pass1Plan.currentSchemaVersion, 1);
     expect(Pass2Plan.currentSchemaVersion, 1);

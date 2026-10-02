@@ -97,3 +97,114 @@ def test_jeux_de_donnees_complets():
     assert len(journaux) == 12
     assert min(j["weeks"] for j in journaux) == 4 and max(j["weeks"] for j in journaux) == 24
     assert gen_fixtures.construire() == sorties  # déterministe
+
+
+# --- 0.4.0 (lot CQ) : additivité, variantes, parcours de questions ----------
+
+def test_parcours_a_jour():
+    r = _run("gen_parcours.py")
+    assert r.returncode == 0, r.stdout + r.stderr
+
+
+def test_evolution_additive_depuis_0_3_0():
+    """Rien de retiré, de renommé ni de changé par rapport au contrat 0.3.0 ;
+    tout champ ajouté est optionnel et placé en fin de type ; aucune valeur
+    n'est ajoutée à une énumération existante ; les codes de raison existants
+    gardent leur rang et leurs paramètres."""
+    avant = json.loads((TOOL / "contract_surface_0_3_0.json").read_text(encoding="utf-8"))
+    enums = {e.name: e for e in spec.ENUMS}
+    for nom, codes in avant["enums"].items():
+        assert nom in enums, nom
+        assert [c for _, c in enums[nom].values] == codes, nom
+        assert [i for i, _ in enums[nom].values] == avant["enumIdentifiers"][nom], nom
+    types = {t.name: t for t in spec.TYPES}
+    for nom, ancien in avant["types"].items():
+        assert nom in types, nom
+        t = types[nom]
+        assert t.module == ancien["module"], nom
+        champs = [{"name": f.name, "type": f.type, "min": f.min, "max": f.max, "minLen": f.min_len,
+                   "maxLen": f.max_len, "ref": f.ref} for f in t.fields]
+        n = len(ancien["fields"])
+        assert champs[:n] == ancien["fields"], nom
+        for f in t.fields[n:]:
+            assert f.type.endswith("?"), f"{nom}.{f.name} : un champ ajouté est optionnel"
+        if nom == "AthleteProfile":
+            assert (ancien["schemaVersion"], t.schema_version) == (2, 3)
+            assert t.fields[0].min == 2  # le schéma 2 reste valide
+        else:
+            assert t.schema_version == ancien["schemaVersion"], nom
+    assert [[c, p] for c, p, _ in spec.REASONS[:len(avant["reasons"])]] == avant["reasons"]
+    assert len(spec.REASONS) > len(avant["reasons"])
+
+
+def test_variantes_coherentes():
+    enums = {e.name: [c for _, c in e.values] for e in spec.ENUMS}
+    vus = 0
+    for t in spec.TYPES:
+        if not t.variants:
+            continue
+        vus += 1
+        disc, regles = t.variants
+        champ = next(f for f in t.fields if f.name == disc)
+        assert list(regles) == enums[champ.type.split(":")[1]], t.name
+        noms = {f.name: f for f in t.fields}
+        for code, (requis, permis) in regles.items():
+            assert not set(requis) & set(permis), (t.name, code)
+            for n in requis + permis:
+                assert noms[n].type.endswith("?"), (t.name, n)
+    assert vus == 6
+
+
+def test_validateur_structurel_variantes_et_schema():
+    ok = {"exerciseId": "sl-dips-leste", "kind": "load_reps", "source": "declared", "externalLoadKg": 40.0, "reps": 3}
+    assert spec_validate.validate("Benchmark", ok) == []
+    assert spec_validate.validate("Benchmark", {k: v for k, v in ok.items() if k != "reps"})
+    assert spec_validate.validate("Benchmark", {**ok, "seconds": 10})
+    profils = json.loads((RACINE / "packages/kalis_core/test/fixtures/profiles.json").read_text(encoding="utf-8"))["profiles"]
+    p2 = profils[0]["profile"]
+    assert p2["schemaVersion"] == 2 and spec_validate.validate("AthleteProfile", p2) == []
+    assert spec_validate.validate("AthleteProfile", {**p2, "schemaVersion": 3}) == []
+    assert spec_validate.validate("AthleteProfile", {**p2, "schemaVersion": 1})
+    assert spec_validate.validate("AthleteProfile", {**p2, "schemaVersion": 4})
+
+
+def test_parcours_nombre_de_questions():
+    import gen_parcours
+    import parcours_spec
+    fx = gen_parcours.fixtures()
+    assert gen_parcours.controle(fx) == []
+    par_cle = {p["key"]: p["expected"] for p in fx["profiles"]}
+    debutant = par_cle["v3_debutant_forme_generale"]
+    elite = par_cle["v3_competiteur_elite_streetlifting"]
+    assert debutant["questions"] == 20 and debutant["newQuestions"] == 4
+    assert elite["questions"] == 28 and elite["newQuestions"] == 11
+    assert par_cle["v3_intermediaire_musculation"]["questions"] == 25
+    assert debutant["questions"] < par_cle["v3_coureuse_10km"]["questions"] <= elite["questions"]
+    # Un brouillon vide voit le parcours le plus court ; rien ne lève.
+    assert len(gen_parcours.visible({})) == 20
+    assert gen_parcours.eligible_tests({}) == ["t8_sans_test"]
+    # Chaque question du schéma 3 est justifiée par un facteur de la revue.
+    doc = (RACINE / "packages/kalis_core/docs/PROFIL_V3.md").read_text(encoding="utf-8")
+    for q in parcours_spec.QUESTIONS:
+        if q["since"] >= 3:
+            assert "factor" in q and "effect" in q, q["id"]
+            assert f"`{q['factor']}`" in doc, q["factor"]
+    # Chaque référence d'un test guidé est dans la bibliographie de la revue.
+    for t in parcours_spec.TESTS:
+        for ref in t["refs"]:
+            assert f"`{ref}`" in doc, ref
+
+
+def test_textes_des_raisons_0_4_0():
+    """Chaque code de raison ajouté en 0.4.0 a un texte court de Koach, dont
+    les paramètres entre accolades sont ceux du registre."""
+    import re
+    data = json.loads((RACINE / "packages/kalis_core/data/reason_texts_fr_0_4.json").read_text(encoding="utf-8"))
+    avant = json.loads((TOOL / "contract_surface_0_3_0.json").read_text(encoding="utf-8"))
+    nouveaux = spec.REASONS[len(avant["reasons"]):]
+    assert [t["code"] for t in data["texts"]] == [c for c, _, _ in nouveaux]
+    for t, (code, params, _) in zip(data["texts"], nouveaux):
+        assert 0 < len(t["fr"]) <= 110, code
+        assert set(re.findall(r"\{(\w+)\}", t["fr"])) <= set(params), code
+        assert t["params"] == list(params), code
+        assert re.match(r"^(plan|adapt)\.[a-z][a-z0-9_]*$", code)

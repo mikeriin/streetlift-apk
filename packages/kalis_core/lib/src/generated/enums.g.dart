@@ -1367,3 +1367,745 @@ enum BreakReason {
     throw FormatException('BreakReason : code inconnu', code);
   }
 }
+
+/// Ancienneté d'entraînement régulier, sans compter les arrêts longs (0.4.0,
+/// ordre croissant).
+enum TrainingAge {
+  under6Months('under_6_months'),
+  months6To24('months_6_to_24'),
+  years2To5('years_2_to_5'),
+  over5Years('over_5_years');
+
+  const TrainingAge(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static TrainingAge fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('TrainingAge : code inconnu', code);
+  }
+}
+
+/// Interruption en cours au moment de répondre (0.4.0) : aucune (entraînement
+/// régulier), moins de 3 semaines, 3 à 10 semaines, plus de 10 semaines.
+enum TrainingGap {
+  none('none'),
+  under3Weeks('under_3_weeks'),
+  weeks3To10('weeks_3_to_10'),
+  over10Weeks('over_10_weeks');
+
+  const TrainingGap(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static TrainingGap fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('TrainingGap : code inconnu', code);
+  }
+}
+
+/// Durée habituelle de sommeil par nuit (0.4.0). Valeur HABITUELLE : la nuit
+/// précédente est dans le bilan de séance (`HealthCheck.sleepHours`).
+enum SleepBand {
+  under6Hours('under_6_hours'),
+  hours6To7('hours_6_to_7'),
+  hours7Plus('hours_7_plus');
+
+  const SleepBand(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static SleepBand fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('SleepBand : code inconnu', code);
+  }
+}
+
+/// Stress habituel de la vie hors entraînement, ces dernières semaines
+/// (0.4.0). Le stress du jour est dans le bilan de séance
+/// (`HealthCheck.stress`).
+enum StressBand {
+  low('low'),
+  moderate('moderate'),
+  high('high');
+
+  const StressBand(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static StressBand fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('StressBand : code inconnu', code);
+  }
+}
+
+/// Charge physique habituelle du métier ou des journées (0.4.0) : assis,
+/// debout ou en mouvement, travail physique lourd (port de charges).
+enum OccupationalLoad {
+  seated('seated'),
+  onFeet('on_feet'),
+  heavy('heavy');
+
+  const OccupationalLoad(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static OccupationalLoad fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('OccupationalLoad : code inconnu', code);
+  }
+}
+
+/// Évolution voulue du poids de corps en ce moment (0.4.0).
+enum BodyWeightGoal {
+  lose('lose'),
+  maintain('maintain'),
+  gain('gain'),
+  noGoal('no_goal');
+
+  const BodyWeightGoal(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static BodyWeightGoal fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('BodyWeightGoal : code inconnu', code);
+  }
+}
+
+/// Autre sport pratiqué régulièrement en plus du programme (0.4.0).
+enum OtherSportKind {
+  running('running'),
+  cycling('cycling'),
+  swimming('swimming'),
+  otherEndurance('other_endurance'),
+  teamSport('team_sport'),
+  combatSport('combat_sport'),
+  climbing('climbing'),
+  racketSport('racket_sport'),
+  otherStrength('other_strength'),
+  other('other');
+
+  const OtherSportKind(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static OtherSportKind fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('OtherSportKind : code inconnu', code);
+  }
+}
+
+/// Grande région sollicitée (0.4.0) : jambes, tirage du haut du corps,
+/// poussée du haut du corps, tronc, tout le corps.
+enum BodyRegion {
+  lowerBody('lower_body'),
+  upperPull('upper_pull'),
+  upperPush('upper_push'),
+  trunk('trunk'),
+  wholeBody('whole_body');
+
+  const BodyRegion(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static BodyRegion fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('BodyRegion : code inconnu', code);
+  }
+}
+
+/// Ancienneté d'une gêne déclarée (0.4.0) ; `past_resolved` : antécédent
+/// ancien, sans gêne actuelle.
+enum ConstraintSince {
+  under6Weeks('under_6_weeks'),
+  weeks6To12('weeks_6_to_12'),
+  months3To12('months_3_to_12'),
+  over12Months('over_12_months'),
+  pastResolved('past_resolved');
+
+  const ConstraintSince(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static ConstraintSince fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('ConstraintSince : code inconnu', code);
+  }
+}
+
+/// Famille de mouvements qui réveille une gêne (0.4.0) : tirage bras fléchis
+/// ; suspension ou tirage bras tendus ; poussée en appui (dips, pompes) ;
+/// appui bras tendus (planche, équilibre) ; au-dessus de la tête ; flexion de
+/// genou (squat, fente) ; charnière de hanche ; prise ou poignet en extension
+/// ; anneaux ; course ou sauts.
+enum AggravatingMovement {
+  pullBentArm('pull_bent_arm'),
+  hangStraightArm('hang_straight_arm'),
+  pushSupport('push_support'),
+  straightArmSupport('straight_arm_support'),
+  overhead('overhead'),
+  kneeFlexion('knee_flexion'),
+  hipHinge('hip_hinge'),
+  wristExtensionGrip('wrist_extension_grip'),
+  rings('rings'),
+  runningJumping('running_jumping');
+
+  const AggravatingMovement(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static AggravatingMovement fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('AggravatingMovement : code inconnu', code);
+  }
+}
+
+/// Nature d'un test ou d'un record (0.4.0) : charge × répétitions (1
+/// répétition = maximum), répétitions max, maintien max, temps sur une
+/// distance, distance en une durée.
+enum BenchmarkKind {
+  loadReps('load_reps'),
+  maxReps('max_reps'),
+  maxHold('max_hold'),
+  timeTrial('time_trial'),
+  distanceTrial('distance_trial');
+
+  const BenchmarkKind(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static BenchmarkKind fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('BenchmarkKind : code inconnu', code);
+  }
+}
+
+/// Origine d'un test ou d'un record (0.4.0) : déclaré par l'utilisateur, test
+/// guidé, compétition, série d'entraînement retenue par le moteur.
+enum BenchmarkSource {
+  declared('declared'),
+  guidedTest('guided_test'),
+  competition('competition'),
+  trainingSet('training_set');
+
+  const BenchmarkSource(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static BenchmarkSource fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('BenchmarkSource : code inconnu', code);
+  }
+}
+
+/// Nature d'une échéance (0.4.0) : compétition de force à tentatives
+/// (streetlifting), compétition de répétitions (sets & reps, endurance de
+/// force), freestyle jugé, course, autre compétition, test personnel daté.
+enum EventKind {
+  strengthCompetition('strength_competition'),
+  repsCompetition('reps_competition'),
+  freestyleCompetition('freestyle_competition'),
+  race('race'),
+  otherCompetition('other_competition'),
+  personalTest('personal_test');
+
+  const EventKind(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static EventKind fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('EventKind : code inconnu', code);
+  }
+}
+
+/// Priorité d'une échéance dans la saison (0.4.0) : principale (pic de
+/// forme), secondaire, préparation (faite sans affûtage).
+enum EventPriority {
+  main('main'),
+  secondary('secondary'),
+  preparation('preparation');
+
+  const EventPriority(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static EventPriority fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('EventPriority : code inconnu', code);
+  }
+}
+
+/// Format d'une épreuve de répétitions (0.4.0) : maximum de répétitions,
+/// maximum en un temps limité, volume imposé au meilleur temps, maintien le
+/// plus long.
+enum RepsEventMode {
+  maxReps('max_reps'),
+  maxRepsInTime('max_reps_in_time'),
+  forTime('for_time'),
+  maxHold('max_hold');
+
+  const RepsEventMode(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static RepsEventMode fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('RepsEventMode : code inconnu', code);
+  }
+}
+
+/// Point faible exprimé simplement (0.4.0) : bas du mouvement, milieu, fin
+/// (verrouillage), départ arrêté, transition (muscle-up), prise, fatigue en
+/// fin de série, équilibre, mobilité, vitesse.
+enum WeakPointKind {
+  bottom('bottom'),
+  midRange('mid_range'),
+  lockout('lockout'),
+  deadStart('dead_start'),
+  transition('transition'),
+  grip('grip'),
+  lateSetFatigue('late_set_fatigue'),
+  balance('balance'),
+  mobility('mobility'),
+  speed('speed');
+
+  const WeakPointKind(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static WeakPointKind fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('WeakPointKind : code inconnu', code);
+  }
+}
+
+/// Cible d'une spécialisation (0.4.0) : un mouvement, une figure, un groupe
+/// musculaire, un schéma de mouvement.
+enum SpecializationKind {
+  exercise('exercise'),
+  skill('skill'),
+  muscle('muscle'),
+  pattern('pattern');
+
+  const SpecializationKind(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static SpecializationKind fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('SpecializationKind : code inconnu', code);
+  }
+}
+
+/// Sort du reste pendant une spécialisation (0.4.0) : entretenu à volume
+/// réduit, dose minimale, mis en pause (hors objectifs).
+enum MaintenancePolicy {
+  maintain('maintain'),
+  minimal('minimal'),
+  pause('pause');
+
+  const MaintenancePolicy(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static MaintenancePolicy fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('MaintenancePolicy : code inconnu', code);
+  }
+}
+
+/// Technique de série (0.4.0) : normale, série de tête puis séries allégées,
+/// clusters, rest-pause, myo-reps, dégressive, isométrie ou maintien,
+/// excentrique accentuée, contraste, vagues, AMRAP, EMOM, densité, échelle,
+/// pyramide, pratique de figure.
+enum SetTechniqueKind {
+  standard('standard'),
+  topSetBackoff('top_set_backoff'),
+  cluster('cluster'),
+  restPause('rest_pause'),
+  myoReps('myo_reps'),
+  dropSet('drop_set'),
+  isometricHold('isometric_hold'),
+  accentuatedEccentric('accentuated_eccentric'),
+  contrast('contrast'),
+  wave('wave'),
+  amrap('amrap'),
+  emom('emom'),
+  density('density'),
+  ladder('ladder'),
+  pyramid('pyramid'),
+  skillPractice('skill_practice');
+
+  const SetTechniqueKind(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static SetTechniqueKind fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('SetTechniqueKind : code inconnu', code);
+  }
+}
+
+/// Rôle d'une série dans une technique (0.4.0) : normale, série de tête,
+/// série allégée, série d'activation, mini-série, palier de dégressive,
+/// palier de vague, test, tentative de compétition.
+enum SetRole {
+  straight('straight'),
+  top('top'),
+  backOff('back_off'),
+  activation('activation'),
+  mini('mini'),
+  drop('drop'),
+  wave('wave'),
+  test('test'),
+  attempt('attempt');
+
+  const SetRole(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static SetRole fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('SetRole : code inconnu', code);
+  }
+}
+
+/// Ce que désigne une intensité (0.4.0) : part du 1RM de charge totale ; part
+/// d'un test de référence ; répétitions en réserve ; part du maintien max ;
+/// étape d'une progression de figure ; part d'une vitesse de référence ; part
+/// de la fréquence cardiaque maximale.
+enum IntensityBasis {
+  percentOneRm('percent_one_rm'),
+  percentBenchmark('percent_benchmark'),
+  rir('rir'),
+  holdFraction('hold_fraction'),
+  progressionStep('progression_step'),
+  speedFraction('speed_fraction'),
+  heartRateFraction('heart_rate_fraction');
+
+  const IntensityBasis(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static IntensityBasis fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('IntensityBasis : code inconnu', code);
+  }
+}
+
+/// Règle d'autorégulation portée par une prescription (0.4.0) : séries
+/// allégées calculées sur la série de tête RÉALISÉE ; charge corrigée quand
+/// le RIR sort de sa plage ; arrêt des séries quand le RIR passe sous un
+/// plancher ; arrêt quand les répétitions chutent ; durée de maintien tirée
+/// du meilleur maintien du jour ; dernière série ouverte.
+enum AutoregulationKind {
+  backoffFromTopSet('backoff_from_top_set'),
+  loadFromRir('load_from_rir'),
+  stopAtRir('stop_at_rir'),
+  stopOnRepDrop('stop_on_rep_drop'),
+  holdFromBest('hold_from_best'),
+  lastSetAmrap('last_set_amrap');
+
+  const AutoregulationKind(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static AutoregulationKind fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('AutoregulationKind : code inconnu', code);
+  }
+}
+
+/// Série ou séance de test (0.4.0) : série d'estimation sous-maximale
+/// (répétitions + RIR), xRM, maximum sur une répétition, répétitions max,
+/// maintien max, temps sur une distance, distance en une durée, simulation de
+/// tentatives.
+enum TestKind {
+  amrapEstimate('amrap_estimate'),
+  repMax('rep_max'),
+  oneRm('one_rm'),
+  maxReps('max_reps'),
+  maxHold('max_hold'),
+  timeTrial('time_trial'),
+  distanceTrial('distance_trial'),
+  attemptSimulation('attempt_simulation');
+
+  const TestKind(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static TestKind fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('TestKind : code inconnu', code);
+  }
+}
+
+/// Phase d'un plan de saison (0.4.0).
+enum PhaseKind {
+  accumulation('accumulation'),
+  intensification('intensification'),
+  realization('realization'),
+  taper('taper'),
+  competition('competition'),
+  transition('transition'),
+  test('test'),
+  deload('deload');
+
+  const PhaseKind(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static PhaseKind fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('PhaseKind : code inconnu', code);
+  }
+}
+
+/// Intention d'une semaine (0.4.0) ; complète `WeekKind`, qui reste
+/// renseigné.
+enum WeekIntent {
+  intro('intro'),
+  accumulation('accumulation'),
+  intensification('intensification'),
+  realization('realization'),
+  deload('deload'),
+  taper('taper'),
+  test('test'),
+  competition('competition'),
+  transition('transition'),
+  maintenance('maintenance');
+
+  const WeekIntent(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static WeekIntent fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('WeekIntent : code inconnu', code);
+  }
+}
+
+/// Ondulation dans la semaine (0.4.0) : jour lourd, moyen ou léger, pour une
+/// séance ou pour un mouvement.
+enum DayStress {
+  heavy('heavy'),
+  medium('medium'),
+  light('light');
+
+  const DayStress(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static DayStress fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('DayStress : code inconnu', code);
+  }
+}
+
+/// Modèle d'ondulation d'un bloc (0.4.0) : aucune, d'une semaine à l'autre,
+/// d'un jour à l'autre.
+enum UndulationModel {
+  none('none'),
+  weekly('weekly'),
+  daily('daily');
+
+  const UndulationModel(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static UndulationModel fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('UndulationModel : code inconnu', code);
+  }
+}
+
+/// Précision d'une proposition du moteur dynamique (0.4.0) ; complète
+/// `ProposalKind`, qui reste renseigné.
+enum ProposalDetail {
+  skillStepUp('skill_step_up'),
+  skillStepDown('skill_step_down'),
+  techniqueChange('technique_change'),
+  testScheduled('test_scheduled'),
+  taperAdjust('taper_adjust'),
+  specialization('specialization'),
+  seasonUpdate('season_update');
+
+  const ProposalDetail(this.code);
+
+  /// Code stable utilisé dans le JSON.
+  final String code;
+
+  /// Valeur d'un code ; [FormatException] si le code est inconnu.
+  static ProposalDetail fromCode(String code) {
+    for (final v in values) {
+      if (v.code == code) {
+        return v;
+      }
+    }
+    throw FormatException('ProposalDetail : code inconnu', code);
+  }
+}
