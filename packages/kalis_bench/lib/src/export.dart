@@ -241,8 +241,7 @@ String _oneRmText(String exerciseId, double? value, Catalog catalog) {
   if (value == null) {
     return '1RM';
   }
-  final weighted =
-      catalog.find(exerciseId)?.loadType == LoadType.addedWeight;
+  final weighted = catalog.find(exerciseId)?.loadType == LoadType.addedWeight;
   return weighted
       ? '1RM avec +${_num(value)} kg de lest'
       : '1RM ${_num(value)} kg';
@@ -253,13 +252,12 @@ String _measureText(
   LevelMeasure measure,
   double value,
   Catalog catalog,
-) =>
-    switch (measure) {
-      LevelMeasure.maxReps => '${_num(value)} répétitions au maximum',
-      LevelMeasure.oneRmKg => _oneRmText(exerciseId, value, catalog),
-      LevelMeasure.maxHoldSeconds => 'tenue maximale ${_num(value)} s',
-      LevelMeasure.timeSeconds => 'temps ${_duration(value.round())}',
-    };
+) => switch (measure) {
+  LevelMeasure.maxReps => '${_num(value)} répétitions au maximum',
+  LevelMeasure.oneRmKg => _oneRmText(exerciseId, value, catalog),
+  LevelMeasure.maxHoldSeconds => 'tenue maximale ${_num(value)} s',
+  LevelMeasure.timeSeconds => 'temps ${_duration(value.round())}',
+};
 
 String _targetText(BenchTarget t, Catalog catalog) {
   final name = catalog.find(t.exerciseId)?.name ?? t.exerciseId;

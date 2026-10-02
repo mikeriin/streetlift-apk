@@ -78,10 +78,7 @@ void main() {
     // Un seul constat de plafond par groupe, quel que soit le nombre de
     // semaines au-dessus.
     final many = <String>[
-      for (final f in safetyFindings(
-        handProgram(p, sameWeeks(4, week(7))),
-        p,
-      ))
+      for (final f in safetyFindings(handProgram(p, sameWeeks(4, week(7))), p))
         f.code,
     ];
     final groups = <String>{

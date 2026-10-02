@@ -71,7 +71,11 @@ final class ItemView {
     required this.traits,
     required this.role,
     required this.bodyWeightKg,
+    this.runMetersPerSecond = defaultRunMetersPerSecond,
   });
+
+  /// Allure de course de l'athlète, en m/s (durée des distances).
+  final double runMetersPerSecond;
 
   /// Rang global de la semaine (0 = première du programme).
   final int week;
