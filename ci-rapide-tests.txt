@@ -1,1 +1,1 @@
-test/g10_evolution_test.dart
+test/g10_diag_test.dart

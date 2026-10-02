@@ -81,9 +81,11 @@ extension EvolutionStore on AppStore {
     );
   }
 
-  /// Semaine (S) d'aujourd'hui dans le programme, null hors programme.
+  /// Semaine (S) d'aujourd'hui dans le programme ; après sa fin (bloc
+  /// suivant pas encore validé), la dernière ; null avant son départ.
   int? get _evoWeek {
     final now = storeClock();
+    if (program.afterEnd(now)) return program.weeks.length;
     if (!program.containsDate(now)) return null;
     return program.weekFor(now);
   }
