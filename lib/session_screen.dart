@@ -30,11 +30,6 @@ import 'models.dart';
 import 'rewards.dart' show checkLevelUp;
 import 'store.dart';
 import 'estimate_view.dart';
-import 'adapt_screens.dart';
-import 'koach_engine.dart' as ke show KSuggestion;
-import 'koach_screens.dart' show KoachReviewScreen;
-import 'koach_day_card.dart';
-import 'koach_widgets.dart';
 import 'pilotage_screen.dart';
 import 'set_validation.dart' show checkSet;
 
@@ -94,13 +89,9 @@ class _SessionScreenState extends State<SessionScreen> {
   int page = 0;
   Route<dynamic>? _route;
 
-  /// M56 correction 1 (demande du propriétaire) : la carte « Koach · séance
-  /// du jour » a sa propre page, avant l'exercice 1, quand Koach a quelque
-  /// chose à dire à l'ouverture de la séance (questionnaire, jour de
-  /// fatigue, adaptation) ; décidé une fois à l'ouverture, les pages ne
-  /// bougent plus ensuite. Sans page Koach, une indication qui apparaît en
-  /// cours de séance (adaptation) s'affiche comme avant en tête de
-  /// l'exercice 1.
+  /// Page « Bilan du jour » avant l'exercice 1 (G9) : seulement dans une
+  /// séance servie par le moteur dynamique (G10 : la page « Koach · séance
+  /// du jour » de L7/L11 est retirée).
   late final bool koachPage;
   int get koachPages => koachPage ? 1 : 0;
 
@@ -117,22 +108,19 @@ class _SessionScreenState extends State<SessionScreen> {
   /// flammes et conseils) ; décidé une fois à l'ouverture.
   late final bool adaptOn;
 
-  /// L11 : journée telle qu'elle sera faite (compression, échanges,
-  /// reprise) ; identique au programme sans adaptation. G9 : journée
-  /// servie par le moteur dynamique.
+  /// G9 : journée servie par le moteur dynamique ; sinon celle du
+  /// programme.
   DayPlan get _day {
     if (adaptOn) {
       final a = store.sessionAdapt(widget.week.n, widget.day.j);
       if (a != null) return store.adaptDay(widget.week.n, widget.day, a);
-      return widget.day;
     }
-    return store.sessionDay(widget.week.n, widget.day);
+    return widget.day;
   }
 
-  List<List<Exercise>> _groups() =>
-      adaptOn ? store.groups(_day) : store.sessionGroups(widget.week.n, _day);
+  List<List<Exercise>> _groups() => store.groups(_day);
 
-  /// Séance adaptée (compression, échange, lieu, bilan) : pages recalculées.
+  /// Séance adaptée (bilan, temps, lieu) : pages recalculées.
   void _adapted(bool changed) {
     if (!changed || !mounted) return;
     setState(() {
@@ -147,10 +135,7 @@ class _SessionScreenState extends State<SessionScreen> {
     super.initState();
     adaptOn = store.adaptOpen(widget.week.n, widget.day) != null;
     groups = _groups();
-    koachPage =
-        adaptOn ||
-        (widget.week.n >= 1 &&
-            !KoachDayContent.of(widget.week.n, widget.day, _day).isEmpty);
+    koachPage = adaptOn;
     // Reprise : même occurrence (même clé de journal), ouverte sur
     // l'exercice en cours (une séance entamée saute la page Koach). Le
     // repos n'est pas relancé (décision 26/09).
@@ -250,14 +235,8 @@ class _SessionScreenState extends State<SessionScreen> {
             ),
             if (koachPage)
               ListTile(
-                leading: Icon(
-                  adaptOn
-                      ? Icons.favorite_outline
-                      : Icons.auto_awesome_outlined,
-                ),
-                title: Text(
-                  adaptOn ? 'Bilan du jour' : 'Koach · séance du jour',
-                ),
+                leading: const Icon(Icons.favorite_outline),
+                title: const Text('Bilan du jour'),
                 selected: page == 0,
                 onTap: () => Navigator.pop(context, 0),
               ),
@@ -377,16 +356,6 @@ class _SessionScreenState extends State<SessionScreen> {
                 _adaptPlace();
                 return;
               }
-              // L11 (KT-058, KT-059) : séance recomposée ou adaptée.
-              if (value == 'compress') {
-                showCompressSheet(context, w.n, widget.day).then(_adapted);
-              }
-              if (value == 'swap') {
-                pickAndSwap(context, w.n, widget.day).then(_adapted);
-              }
-              if (value == 'place') {
-                showPlaceSheet(context, w.n, widget.day).then(_adapted);
-              }
               // Report d'un test (S2, S12…) dans la feuille Pilotage sans
               // quitter la séance : même écran que depuis STATS.
               // L13 (KT-073) : douleur ou signal d'alerte pendant la séance.
@@ -414,16 +383,13 @@ class _SessionScreenState extends State<SessionScreen> {
                   value: 'bilan',
                   child: Text('Bilan du jour'),
                 ),
-              if (w.n >= 1 && !restDay) ...[
+              // G10 : seulement dans une séance servie par le moteur (les
+              // adaptations de L11 sont retirées).
+              if (adaptOn && w.n >= 1 && !restDay) ...[
                 const PopupMenuItem(
                   value: 'compress',
                   child: Text('J’ai seulement… minutes'),
                 ),
-                if (!adaptOn)
-                  const PopupMenuItem(
-                    value: 'swap',
-                    child: Text('Échanger un exercice'),
-                  ),
                 const PopupMenuItem(
                   value: 'place',
                   child: Text('Je m’entraîne ailleurs'),
@@ -465,9 +431,7 @@ class _SessionScreenState extends State<SessionScreen> {
                               page == bilanPage
                                   ? 'Bilan de séance'
                                   : exerciseIndex < 0
-                                  ? (adaptOn
-                                        ? 'Bilan du jour'
-                                        : 'Koach · séance du jour')
+                                  ? 'Bilan du jour'
                                   : '${groups[exerciseIndex].length > 1 ? 'Enchaînement' : 'Exercice'} ${exerciseIndex + 1} / $nPages',
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
@@ -503,21 +467,13 @@ class _SessionScreenState extends State<SessionScreen> {
                       setState(() => page = i);
                     },
                     itemCount: bilanPage + 1,
-                    itemBuilder: (_, i) => i < koachPages && adaptOn
+                    itemBuilder: (_, i) => i < koachPages
                         ? HealthCheckPage(
                             key: const ValueKey('session-health-page'),
                             week: w,
                             base: widget.day,
                             onChanged: () => _adapted(true),
                             onStart: () => _go(koachPages),
-                          )
-                        : i < koachPages
-                        ? _KoachPage(
-                            key: const ValueKey('session-koach-page'),
-                            week: w,
-                            day: _day,
-                            baseDay: widget.day,
-                            onChanged: () => setState(() {}),
                           )
                         : i < bilanPage
                         ? SessionExercisePage(
@@ -529,7 +485,6 @@ class _SessionScreenState extends State<SessionScreen> {
                             exs: groups[i - koachPages],
                             timer: ctl,
                             baseDay: widget.day,
-                            koachCard: !koachPage,
                             adapt: adaptOn,
                             onSessionChanged: () => setState(() {}),
                           )
@@ -549,44 +504,6 @@ class _SessionScreenState extends State<SessionScreen> {
       // bouton « Exercices » et les points restent pour se repérer.
     );
   }
-}
-
-/// M56 correction 1 : page « Koach · séance du jour », avant l'exercice 1.
-class _KoachPage extends StatelessWidget {
-  final WeekPlan week;
-  final DayPlan day, baseDay;
-  final VoidCallback onChanged;
-  const _KoachPage({
-    super.key,
-    required this.week,
-    required this.day,
-    required this.baseDay,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) => ListView(
-    key: const PageStorageKey('koach-page-scroll'),
-    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-    padding: const EdgeInsets.fromLTRB(KSpace.page, 2, KSpace.page, 10),
-    children: [
-      KoachDayCard(week: week.n, base: baseDay, day: day, onChanged: onChanged),
-      ListenableBuilder(
-        listenable: store,
-        builder: (context, _) =>
-            KoachDayContent.of(week.n, baseDay, day).isEmpty
-            ? KCard(
-                key: const ValueKey('session-koach-empty'),
-                child: Text(
-                  'Koach n’a plus rien à signaler pour cette séance. '
-                  'Suivant : premier exercice.',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              )
-            : const SizedBox.shrink(),
-      ),
-    ],
-  );
 }
 
 class SessionProgressDots extends StatelessWidget {
@@ -642,17 +559,13 @@ class SessionExercisePage extends StatefulWidget {
   final SessionLog? history;
   final Set<String> unresolvedIds;
 
-  /// M6 : séance du programme avant adaptation (carte « Koach · séance du
-  /// jour ») et rappel quand une action de la carte change les séries.
+  /// Séance du programme avant l'ajustement du moteur, et rappel quand la
+  /// séance change.
   final DayPlan? baseDay;
   final VoidCallback? onSessionChanged;
 
-  /// Carte « Koach · séance du jour » en tête de la première page (quand la
-  /// séance n'a pas de page Koach à part).
-  final bool koachCard;
-
   /// G9 : séance servie par `kalis_adapt` (charges et cibles du moteur,
-  /// conseils après chaque série ; Koach L7 et L11 hors jeu).
+  /// conseils après chaque série).
   final bool adapt;
   bool get readOnly => history != null;
   const SessionExercisePage({
@@ -665,7 +578,6 @@ class SessionExercisePage extends StatefulWidget {
     this.unresolvedIds = const {},
     this.baseDay,
     this.onSessionChanged,
-    this.koachCard = true,
     this.adapt = false,
   });
 
@@ -720,7 +632,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
 
   String _labels() => [
     for (final e in widget.exs)
-      '${store.setsLabel(e)}|${store.loadLabel(e, week: widget.week.n, day: widget.day.j, koach: !widget.adapt)}',
+      '${store.setsLabel(e)}|${store.loadLabel(e, week: widget.week.n, day: widget.day.j)}',
   ].join('\n');
 
   void _onStore() {
@@ -784,12 +696,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       }
     }
     if (sp.kind == 'duration' || sp.kind == 'interval') return;
-    final kg = store.sessionLoad(
-      widget.week.n,
-      ex,
-      day: widget.day.j,
-      koach: !widget.adapt,
-    );
+    final kg = store.sessionLoad(widget.week.n, ex, day: widget.day.j);
     if (kg != null && kg > 0) {
       final t = store.kgFieldText(kg);
       for (final s in log.sets) {
@@ -921,14 +828,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     }
     // Validation métier (store) : la coche n'est acceptée qu'avec une saisie
     // valide ; sinon le texte reste tel quel et le champ est nommé.
-    final legacyKoach = !widget.adapt && !s.flamesUnknown;
-    final check = store.toggleSet(
-      log,
-      i,
-      sp,
-      exercise: legacyKoach ? ex : null,
-      week: widget.week.n,
-    );
+    final check = store.toggleSet(log, i, sp);
     setState(() {
       if (check.ok) {
         _issues.remove((k, i));
@@ -951,8 +851,6 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         ex,
       );
       adviceRest = _adaptAdvice(k, i);
-    } else if (s.done) {
-      _koachAuto(k);
     }
     if (s.done) _celebrateRecord(ex, s);
     if (!s.done || !store.settings.autoTimer) return;
@@ -1234,160 +1132,6 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     setState(() {});
   }
 
-  /// L11 (KT-063) : mode Guidé, suggestion et jour de fatigue appliqués
-  /// d'office après la série, avec un message et « Annuler ».
-  void _koachAuto(int k) {
-    if (widget.adapt) return;
-    if (widget.readOnly || widget.week.n < 1 || !store.koachOn) return;
-    final w = widget.week.n, j = widget.day.j;
-    final ex = widget.exs[k];
-    final log = logs[k];
-    final sug = store.koachAutoApply(w, j, ex, log);
-    final messenger = ScaffoldMessenger.of(context);
-    if (sug != null) {
-      setState(() => epoch++);
-      messenger
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          SnackBar(
-            duration: const Duration(seconds: 6),
-            content: Text(
-              'Koach : ${store.koachLoadText(ex, sug.kg)} pour les séries '
-              'restantes (${store.koachReason(ex, log, sug)}).',
-            ),
-            action: SnackBarAction(
-              label: 'Annuler',
-              onPressed: () {
-                store.undoKoachSuggestion(w, j, ex, log, sug);
-                if (mounted) setState(() => epoch++);
-              },
-            ),
-          ),
-        );
-    }
-    _koachAutoFatigue();
-  }
-
-  bool _fatigueChecked = false;
-
-  void _koachAutoFatigue() {
-    if (widget.readOnly || widget.week.n < 1 || !store.koachOn) return;
-    final w = widget.week.n, j = widget.day.j;
-    final exercises = widget.day.exercises;
-    final cut = store.koachAutoFatigue(w, j, exercises);
-    if (cut.isEmpty || !mounted) return;
-    final n = cut.values.fold<int>(0, (a, b) => a + b);
-    setState(() => epoch++);
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          duration: const Duration(seconds: 6),
-          content: Text(
-            'Koach : jour de fatigue probable, $n série${n > 1 ? 's' : ''} '
-            'en moins aujourd’hui, charges maintenues.',
-          ),
-          action: SnackBarAction(
-            label: 'Annuler',
-            onPressed: () {
-              store.undoKoachFatigue(w, j, exercises, cut);
-              if (mounted) setState(() => epoch++);
-            },
-          ),
-        ),
-      );
-  }
-
-  void _koachApply(int k, ke.KSuggestion sug) {
-    store.applyKoachSuggestion(
-      widget.week.n,
-      widget.day.j,
-      widget.exs[k],
-      logs[k],
-      sug,
-    );
-    setState(() => epoch++);
-  }
-
-  void _koachKeep(int k, ke.KSuggestion sug) {
-    store.refuseKoachSuggestion(
-      widget.week.n,
-      widget.day.j,
-      widget.exs[k],
-      logs[k],
-      sug,
-    );
-    setState(() {});
-  }
-
-  void _koachDetails(int k, ke.KSuggestion sug) {
-    final ex = widget.exs[k];
-    final a = store.koachAnnotation(ex)!;
-    showKoachDetails(
-      context,
-      title: 'Koach · ${store.splitName(ex.name).$1}',
-      lines: [
-        store.koachReason(ex, logs[k], sug),
-        koachRuleText(sug),
-        store.koachEstimateText(a.movement!),
-        'Masse soulevée : poids du corps + lest (muscle-up, traction, dip) '
-            'ou barre (squat). « Garder ma charge » est retenu pour la séance.',
-      ],
-    );
-  }
-
-  /// Cartes Koach d'un mouvement principal : incertitude, suggestion.
-  List<Widget> _koachCards(int k) {
-    final ex = widget.exs[k];
-    final log = logs[k];
-    if (widget.adapt) return const []; // G9 : le moteur dynamique décide
-    if (!store.koachOn || !store.koachStrength(ex)) return const [];
-    final movement = store.koachAnnotation(ex)!.movement!;
-    final sug = log.sets.any((s) => !s.done)
-        ? store.koachSuggestion(widget.week.n, widget.day.j, ex, log)
-        : null;
-    // L11 (KT-063) : Guidé → rien à valider (hausse modérée non
-    // montrée) ; Expert → suggestion visible sans bouton.
-    final action = sug == null ? 'none' : store.koachSuggestionAction(sug);
-    return [
-      if (store.koachUncertain(movement)) const KoachCalibrationNote(),
-      if (sug != null && action != 'none')
-        KoachSuggestionCard(
-          load: store.koachLoadText(ex, sug.kg),
-          from: store.koachLoadText(ex, sug.from),
-          reason: store.koachReason(ex, log, sug),
-          onApply: () => _koachApply(k, sug),
-          onKeep: () => _koachKeep(k, sug),
-          onDetails: () => _koachDetails(k, sug),
-          actions: action != 'info',
-        ),
-    ];
-  }
-
-  /// Mode Guidé (L11, KT-063) : jour de fatigue appliqué d'office, une fois
-  /// par page. M6 : l'affichage (questionnaire, proposition) est passé dans
-  /// la carte « Koach · séance du jour » de l'en-tête ; cette application
-  /// automatique reste ici, inchangée.
-  void _koachGuidedFatigue() {
-    if (widget.adapt) return;
-    if (widget.readOnly || !store.koachOn || widget.week.n < 1) return;
-    if (_fatigueChecked || store.autonomyMode != 'guided') return;
-    final w = widget.week.n, j = widget.day.j;
-    final level = store.koachFatigueLevel(w, j, widget.day.exercises);
-    final cut = level > 0
-        ? store
-              .koachFatigueCut(w, j, widget.day.exercises, level)
-              .values
-              .fold<int>(0, (a, b) => a + b)
-        : 0;
-    if (cut > 0) {
-      _fatigueChecked = true;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) _koachAutoFatigue();
-      });
-    }
-  }
-
   void _reusePrevious(int k, ExerciseLog prev) {
     if (widget.readOnly) return;
     final log = logs[k];
@@ -1446,44 +1190,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     );
   }
 
-  /// Page du premier exercice de la séance.
-  bool get _firstPage =>
-      widget.day.exercises.isNotEmpty &&
-      widget.exs.first.id == widget.day.exercises.first.id;
-
   @override
   Widget build(BuildContext context) => ListView(
     key: PageStorageKey('exercise-scroll-${widget.exs.first.id}'),
     keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
     padding: const EdgeInsets.fromLTRB(KSpace.page, 2, KSpace.page, 10),
     children: [
-      // M56 : carte « Koach · séance du jour » (questionnaire, jour de
-      // fatigue, adaptation de la séance) en tête de l'exercice 1 seulement
-      // quand la séance n'a pas de page Koach à part (correction 1) ; les
-      // indications propres à un exercice restent dans son bloc.
-      if (!widget.readOnly &&
-          !widget.adapt &&
-          widget.koachCard &&
-          widget.week.n >= 1 &&
-          _firstPage)
-        KoachDayCard(
-          week: widget.week.n,
-          base: widget.baseDay ?? widget.day,
-          day: widget.day,
-          onChanged: () {
-            if (mounted) setState(() => epoch++);
-            widget.onSessionChanged?.call();
-          },
-        ),
-      // Koach (L7) : mode Guidé, jour de fatigue appliqué d'office.
-      if (!widget.readOnly && !widget.adapt && store.koachOn)
-        ListenableBuilder(
-          listenable: store,
-          builder: (context, _) {
-            _koachGuidedFatigue();
-            return const SizedBox.shrink();
-          },
-        ),
       for (var k = 0; k < widget.exs.length; k++) ...[
         if (k > 0) const SizedBox(height: 12),
         _block(k),
@@ -1534,12 +1246,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         .toSet();
     final loadLabel = readOnly
         ? (recordedLoads.length == 1 ? '${recordedLoads.single} kg' : '—')
-        : store.loadLabel(
-            ex,
-            week: widget.week.n,
-            day: widget.day.j,
-            koach: !widget.adapt,
-          );
+        : store.loadLabel(ex, week: widget.week.n, day: widget.day.j);
     final showBigLoad =
         (readOnly || !noLoad) &&
         loadLabel != '—' &&
@@ -1722,45 +1429,6 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                     ),
                 ],
                 if (!readOnly && widget.adapt && ex.engine) ..._adaptNotes(ex),
-                if (!readOnly &&
-                    !widget.adapt &&
-                    store.koachOn &&
-                    store.koachReliefFor(ex) != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 6),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Koach : allègement en cours (charges −20 %, '
-                            'isométries 5 × 30-45 s)',
-                            key: ValueKey('koach-relief-${ex.id}'),
-                            style: TextStyle(color: SL.dim, fontSize: 12.5),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            store.liftKoachPainRelief(
-                              store.koachReliefFor(ex)!,
-                            );
-                            setState(() {});
-                          },
-                          child: const Text('Lever'),
-                        ),
-                      ],
-                    ),
-                  ),
-                if (!readOnly &&
-                    !widget.adapt &&
-                    store.koachOn &&
-                    store.koachAdaptationsFor(widget.week.n, ex).isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 6),
-                    child: Text(
-                      'Koach : ${store.koachAdaptationText(widget.week.n, ex)}',
-                      style: TextStyle(color: SL.dim, fontSize: 12.5),
-                    ),
-                  ),
                 if (prev != null) ...[
                   const SizedBox(height: 6),
                   InkWell(
@@ -1913,7 +1581,6 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             ],
           if (!readOnly && widget.adapt)
             if (_adaptPendingCard(k) case final card?) card,
-          if (!readOnly) ..._koachCards(k),
           if (readOnly && log.sets.isEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
@@ -2383,10 +2050,7 @@ class _SetRowState extends State<_SetRow> {
               ),
               if (widget.showRir && !compact) ...[
                 _gap,
-                _f(rir, (t) {
-                  e.rir = t;
-                  store.koachRirEdited(e);
-                }, flex: 2),
+                _f(rir, (t) => e.rir = t, flex: 2),
               ],
               if (widget.showV && !compact) ...[_gap, _f(v, (t) => e.v = t)],
               _gap,
@@ -2487,10 +2151,11 @@ class _SetRowState extends State<_SetRow> {
               children: [
                 const SizedBox(width: _wLabel + 6),
                 if (widget.showRir)
-                  _f(rir, (t) {
-                    e.rir = t;
-                    store.koachRirEdited(e);
-                  }, label: widget.readOnly ? 'Effort' : store.effortLabel),
+                  _f(
+                    rir,
+                    (t) => e.rir = t,
+                    label: widget.readOnly ? 'Effort' : store.effortLabel,
+                  ),
                 if (widget.showRir && widget.showV) _gap,
                 if (widget.showV) _f(v, (t) => e.v = t, label: 'Vitesse (m/s)'),
                 SizedBox(
@@ -2712,29 +2377,6 @@ class _FinishPageState extends State<_FinishPage> {
       if (!nav.mounted) return;
       checkLevelUp(nav.context, after: closing);
       return;
-    }
-    // L11 (KT-063) : mode Guidé, baisses de sécurité acceptées d'office.
-    final auto = week.n >= 1
-        ? store.koachAutoSafety(key)
-        : <Map<String, dynamic>>[];
-    // Koach (D5 b) : douleur facultative et propositions, avant le bilan.
-    if (auto.isNotEmpty || KoachReviewScreen.hasContent(week.n, day.j)) {
-      await closing;
-      if (!nav.mounted) return;
-      await nav.push(
-        MaterialPageRoute<void>(
-          builder: (_) =>
-              KoachReviewScreen(week: week.n, day: day.j, autoApplied: auto),
-        ),
-      );
-      if (!nav.mounted) return;
-    }
-    // L11 (KT-064) : difficulté globale (débutant, novice ; Guidé, Assisté).
-    if (store.adaptAsksDifficulty(key)) {
-      await closing;
-      if (!nav.mounted) return;
-      await showSessionDifficulty(nav.context, key);
-      if (!nav.mounted) return;
     }
     checkLevelUp(nav.context, after: closing);
   }

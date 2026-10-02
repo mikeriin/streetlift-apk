@@ -83,6 +83,13 @@ def verify(root=ROOT, signing=False):
     assert not (root / 'assets/program_models.json').exists(), 'Modèles L10 encore présents'
     assert 'program_models.json' not in (root / 'pubspec.yaml').read_text(encoding='utf-8'), 'Modèles L10 encore déclarés'
     assert 'kalis_plan' in (root / 'pubspec.yaml').read_text(encoding='utf-8'), 'kalis_plan non déclaré'
+    # G10 (D1.4) : Koach L7 et l'adaptation au quotidien L11 retirés (le
+    # moteur dynamique kalis_adapt les remplace) ; leurs sections de
+    # sauvegarde restent lues (koach_data.dart, legacy_adapt_data.dart).
+    for old in ('koach_engine', 'koach_program', 'koach_store', 'koach_screens', 'koach_widgets',
+                'koach_day_card', 'koach_adapt', 'adapt_store', 'adapt_screens'):
+        assert not (root / f'lib/{old}.dart').exists(), f'{old}.dart encore présent (L7/L11)'
+    assert (root / 'lib/legacy_adapt_data.dart').is_file(), 'Lecture de la section adapt absente'
     for path in (root / 'android/app/src/main/res').rglob('*.xml'):
         ET.parse(path)
     manifest = ET.parse(root / 'android/app/src/main/AndroidManifest.xml')

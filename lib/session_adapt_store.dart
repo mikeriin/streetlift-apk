@@ -233,7 +233,7 @@ extension SessionAdaptStore on AppStore {
       planProgram?.updatedAt ?? '-',
       program.weeks.length,
       program.start?.toIso8601String() ?? '-',
-      identityHashCode(koachProgram),
+      identityHashCode(weekKinds),
       identityHashCode(book),
       for (final e in values.entries) '${e.key}=${e.value}',
     ].join('|');
@@ -280,9 +280,9 @@ extension SessionAdaptStore on AppStore {
           js.add(d.j);
         }
       }
-      final kind = koachProgram.isDeload(n)
+      final kind = weekKinds.isDeload(n)
           ? kc.WeekKind.deload
-          : koachProgram.isTest(n)
+          : weekKinds.isTest(n)
           ? kc.WeekKind.test
           : w.blockKey == 'P0'
           ? kc.WeekKind.intro
@@ -452,7 +452,7 @@ extension SessionAdaptStore on AppStore {
     };
     double? start;
     if (loaded && basis != kc.LoadBasis.bodyweight) {
-      final kg = loadFor(e, koach: false);
+      final kg = loadFor(e);
       if (kg != null && kg >= 0 && kg <= 1000) {
         start = (kg * 100).roundToDouble() / 100;
         if (basis == kc.LoadBasis.external && start <= 0) start = null;

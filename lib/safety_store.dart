@@ -5,6 +5,17 @@
 // Règles pures : lib/wellbeing.dart. Contrat : docs/CONTRAT_L13.md.
 part of 'store.dart';
 
+/// Mouvements des anciens questionnaires de Koach L7 (douleur par
+/// mouvement principal, lue en lecture seule depuis G10).
+const koachMovementNames = {
+  'mu': 'Muscle-up lesté',
+  'pull': 'Traction lestée',
+  'dip': 'Dip lesté',
+  'squat': 'Back squat',
+};
+
+String koachMovementName(String key) => koachMovementNames[key] ?? key;
+
 extension SafetyStore on AppStore {
   /// Douleurs notées pour [movement] (0-10), de la séance terminée la plus
   /// ancienne à la plus récente ; séances sans note exclues.

@@ -1,42 +1,12 @@
 // L10 (KT-050 à KT-057) puis G7 — programme en place côté magasin.
 //
 // G7 retire le générateur L10 (D1.4) : `kalis_plan` crée désormais le
-// programme (plan_store.dart). Restent ici : le catalogue de l'ancien pack
-// (L11 jusqu'à son retrait en G10) et la lecture des instances L10
-// existantes (« generated »), affichées telles quelles. Sans instance, le
+// programme (plan_store.dart). Reste ici la lecture des instances L10
+// existantes (« generated »), affichées telles quelles (G10 retire le
+// catalogue de l'ancien pack qui servait à L11). Sans instance, le
 // programme embarqué reste exactement celui de 3.2.0 : modèle « Expert
 // streetlifting » implicite.
 part of 'store.dart';
-
-/// Catalogue de l'ancien pack (L11), chargé une fois à la demande.
-class ProgramAssets {
-  final GenCatalog catalog;
-  const ProgramAssets(this.catalog);
-
-  static Future<ProgramAssets>? _pending;
-  static ProgramAssets? loaded;
-
-  static Future<ProgramAssets> load([AssetBundle? bundle]) =>
-      _pending ??= _load(bundle ?? rootBundle).catchError((Object e) {
-        _pending = null;
-        throw e;
-      });
-
-  static Future<ProgramAssets> _load(AssetBundle b) async {
-    Future<Map<String, dynamic>> gz(String asset) async {
-      final bytes = await b.load(asset);
-      return jsonDecode(utf8.decode(gzip.decode(bytes.buffer.asUint8List())))
-          as Map<String, dynamic>;
-    }
-
-    final catalog = GenCatalog.fromContent(
-      index: await gz('assets/content/index.json.gz'),
-      details: await gz('assets/content/details.json.gz'),
-      progressions: await gz('assets/content/progressions.json.gz'),
-    );
-    return loaded = ProgramAssets(catalog);
-  }
-}
 
 extension ProgramStore on AppStore {
   /// Un programme L10 (« generated ») est en place.

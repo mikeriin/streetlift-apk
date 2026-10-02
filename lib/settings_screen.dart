@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'adapt_screens.dart';
 import 'app_theme.dart';
 import 'data_control.dart';
 import 'engine3d.dart';
 import 'exercise_screens.dart';
-import 'koach_screens.dart';
 import 'mannequin_3d.dart';
 import 'ui.dart';
 import 'wellbeing_screens.dart';
@@ -342,20 +340,6 @@ class SettingsScreen extends StatelessWidget {
               MaterialPageRoute<void>(builder: (_) => const ProgramScreen()),
             ),
           ),
-          // L11 : adaptation au jour le jour (KT-058 à KT-064).
-          _Action(
-            key: const ValueKey('settings-adapt'),
-            icon: Icons.tune_rounded,
-            color: SL.accent,
-            title: 'Adaptation au quotidien',
-            subtitle:
-                'Mode ${const {'guided': 'Guidé', 'assisted': 'Assisté', 'expert': 'Expert'}[store.autonomyMode]}'
-                '${store.adapt.pause == null ? '' : ' · en pause'} · vacances, maladie',
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute<void>(builder: (_) => const AdaptScreen()),
-            ),
-          ),
           _Action(
             key: const ValueKey('settings-program-start'),
             icon: Icons.event_rounded,
@@ -385,150 +369,45 @@ class SettingsScreen extends StatelessWidget {
               MaterialPageRoute<void>(builder: (_) => const PilotageScreen()),
             ),
           ),
-          // Koach (L7, KT-033, KT-036) : désactivé tant que l'utilisateur ne
-          // l'a pas activé (D6) ; questionnaires après information (D14).
+          // G10 (D1.4) : Koach L7 et l'adaptation au quotidien L11 sont
+          // remplacés par le moteur dynamique (Mon programme) ; leurs
+          // données restent dans la sauvegarde, en lecture seule.
           const _Sec('Koach'),
-          if (!store.koachProgram.available)
+          if (!store.koach.pristine || !store.adapt.pristine)
             const _Tile(
-              title: 'Koach indisponible',
+              key: ValueKey('settings-legacy-koach'),
+              title: 'Ancien Koach et adaptations au quotidien',
               subtitle:
-                  'Annotations du programme illisibles : l’application '
-                  'fonctionne sans Koach.',
-            )
-          else ...[
-            _Sw(
-              'Koach',
-              store.koach.enabled
-                  ? 'Actif : estimations et propositions de charge à partir '
-                        'de tes séries du programme'
-                  : 'Désactivé : l’application fonctionne comme avant',
-              store.koach.enabled,
-              (v) async {
-                if (v) {
-                  await showKoachActivation(context);
-                } else {
-                  store.disableKoach();
-                }
-              },
+                  'Remplacés par Koach et ton programme (Mon programme : '
+                  'mode assisté ou libre, historique des changements). Tes '
+                  'anciennes décisions restent dans ta sauvegarde, sans être '
+                  'modifiées.',
             ),
-            // Entrées illisibles ignorées au démarrage : signalées ici même
-            // si Koach a été désactivé par la lecture (contrat §3.4).
-            if (store.koachLoadIssues > 0)
-              _Tile(
-                title: 'Données Koach partiellement relues',
-                subtitle:
-                    '${store.koachLoadIssues} entrée(s) illisible(s) ignorée(s) '
-                    'à l’ouverture ; le reste est chargé. Ton export de '
-                    'sauvegarde contient les données relues.',
-              ),
-            if (store.koach.enabled) ...[
-              _Tile(
-                title: 'Difficulté des séries',
-                subtitle: store.koach.advanced
-                    ? 'Avancée : RIR ou RPE saisi dans la colonne '
-                          '(RIR = 10 − RPE)'
-                    : 'Simple : six niveaux, d’Échec à Facile',
-                below: SegmentedButton<bool>(
-                  expandedInsets: EdgeInsets.zero,
-                  showSelectedIcon: false,
-                  segments: const [
-                    ButtonSegment(value: false, label: Text('Simple')),
-                    ButtonSegment(value: true, label: Text('Avancée')),
-                  ],
-                  selected: {store.koach.advanced},
-                  onSelectionChanged: (sel) =>
-                      store.setKoachAdvanced(sel.single),
-                ),
-              ),
-              _Sw(
-                'Questionnaires (facultatif)',
-                'Sommeil et forme avant la séance, douleur au bilan',
-                store.koach.questionnaires == 'on',
-                (v) async {
-                  if (v) {
-                    await showKoachQuestionnaireInfo(context);
-                  } else {
-                    store.setKoachQuestionnaires(false);
-                  }
-                },
-              ),
-              _Sw(
-                'Koach adapte la structure',
-                'Propose ±1 série par mouvement ou une décharge anticipée '
-                    'pour la semaine suivante (désactivé par défaut)',
-                store.koach.structure,
-                store.setKoachStructure,
-              ),
-              _Action(
-                key: const ValueKey('settings-koach-screen'),
-                icon: Icons.insights_rounded,
-                color: SL.accent,
-                title: 'Écran Koach',
-                subtitle: 'Estimations, objectifs, propositions et historique',
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(builder: (_) => const KoachScreen()),
-                ),
-              ),
-              _Action(
-                icon: Icons.flag_circle_outlined,
-                color: SL.accent,
-                title: 'Objectifs',
-                subtitle: 'Étape et objectif final par mouvement',
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (_) => const KoachObjectivesScreen(),
-                  ),
-                ),
-              ),
-              _Action(
-                icon: Icons.hardware_outlined,
-                color: SL.accent,
-                title: 'Matériel',
-                subtitle:
-                    'Incréments : haltères, lest, barre, poulies, machines',
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (_) => const KoachEquipmentScreen(),
-                  ),
-                ),
-              ),
-            ],
-            // Données existantes : consultables et supprimables même Koach
-            // désactivé (KT-036).
-            if (store.koach.enabled || store.koach.weighIns.isNotEmpty)
-              _Action(
-                icon: Icons.monitor_weight_outlined,
-                color: SL.accent,
-                title: 'Pesées',
-                subtitle: 'Poids du corps daté, rappel chaque semaine',
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (_) => const KoachWeighInsScreen(),
-                  ),
-                ),
-              ),
-            if (store.koach.answers.isNotEmpty)
-              _Action(
-                icon: Icons.delete_sweep_outlined,
-                color: SL.accent,
-                title: 'Supprimer mes réponses aux questionnaires',
-                subtitle:
-                    '${store.koach.answers.length} séance(s) : sommeil, '
-                    'forme et douleur',
-                onTap: () => _clearAnswers(context),
-              ),
-            const _Tile(
-              title: 'Confidentialité',
+          if (store.koachLoadIssues > 0)
+            _Tile(
+              title: 'Données Koach partiellement relues',
               subtitle:
-                  'Tout est calculé et conservé sur ce téléphone, sans compte '
-                  'ni connexion. Les données Koach figurent dans l’export et '
-                  'sont effacées avec les données de l’application.',
+                  '${store.koachLoadIssues} entrée(s) illisible(s) ignorée(s) '
+                  'à l’ouverture ; le reste est chargé. Ton export de '
+                  'sauvegarde contient les données relues.',
             ),
-          ],
+          if (store.koach.answers.isNotEmpty)
+            _Action(
+              icon: Icons.delete_sweep_outlined,
+              color: SL.accent,
+              title: 'Supprimer mes réponses aux anciens questionnaires',
+              subtitle:
+                  '${store.koach.answers.length} séance(s) : sommeil, '
+                  'forme et douleur',
+              onTap: () => _clearAnswers(context),
+            ),
+          const _Tile(
+            title: 'Confidentialité',
+            subtitle:
+                'Tout est calculé et conservé sur ce téléphone, sans compte '
+                'ni connexion. Les données de Koach figurent dans l’export et '
+                'sont effacées avec les données de l’application.',
+          ),
           const _Sec('À propos'),
           _Tile(
             title: 'Kalis Track $kAppVersion',

@@ -236,9 +236,6 @@ extension PlanStore on AppStore {
 
   void _planChanged() {
     _progression = null;
-    _koachCache = null;
-    _koachCacheRevision = -1;
-    _koachAuxRevision++;
     _allEx = null;
     _muscleIndex = null;
     pilotageEpoch++;

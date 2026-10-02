@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'adapt_screens.dart';
 import 'muscle_map_2d.dart' show MapView;
 import 'app_theme.dart';
 import 'estimate_view.dart';
 import 'koach/koach_home_card.dart';
 import 'koach/koach_view.dart';
-import 'koach_widgets.dart' show KoachWeighInBanner;
 import 'levelup.dart';
 import 'models.dart';
 import 'session_history.dart';
@@ -370,15 +368,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       if (ProgramStartBanner.visible(store.program, now))
                         ProgramStartBanner(now: now, padding: EdgeInsets.zero),
                       if (ResumeBanner.visible) const ResumeBanner(),
-                      if (store.koachWeighInDue) const KoachWeighInBanner(),
-                      // L11 (KT-060) : pause en cours, en tête.
-                      if (store.adapt.pause != null)
-                        const AdaptHomeCard(pauseOnly: true),
                       for (final d in w.days) card(d),
-                      // L11 (KT-060 à KT-064) : plan qui glisse, assiduité,
-                      // plateau, prudence ; après les journées.
-                      if (store.adaptProposals.isNotEmpty)
-                        const AdaptHomeCard(proposalsOnly: true),
                       // G7 : Où j'en suis, fin de bloc, retour à l'ancien
                       // programme ; après les journées (la semaine entière
                       // reste visible, L5).

@@ -74,6 +74,15 @@ UserProfile _profile({int birthYear = 1990}) {
   return p;
 }
 
+
+/// Réponses des anciens questionnaires de Koach L7 (lecture seule depuis
+/// G10) : semées directement dans les données, comme une sauvegarde de
+/// 6.x les contient.
+void _legacyPain(AppStore app, String key, String movement, int value) {
+  app.koach.answers.putIfAbsent(key, SessionAnswers.new).pain[movement] =
+      value;
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final now = DateTime(2026, 9, 27, 12);
@@ -159,7 +168,7 @@ void main() {
     var t = DateTime(2026, 9, 1, 18);
     for (final key in ['S3-J1', 'S3-J3', 'S4-J1']) {
       store.logs[key] = SessionLog(done: true, finishedAt: t.toIso8601String());
-      store.setKoachPain(key, 'dip', 5);
+      _legacyPain(store, key, 'dip', 5);
       t = t.add(const Duration(days: 2));
     }
     await tester.pumpWidget(page(const SafetyScreen()));

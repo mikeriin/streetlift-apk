@@ -41,6 +41,15 @@ UserProfile _profile({
 
 Map<String, bool> _allNo() => {for (final q in kHealthQuestions) q.id: false};
 
+
+/// Réponses des anciens questionnaires de Koach L7 (lecture seule depuis
+/// G10) : semées directement dans les données, comme une sauvegarde de
+/// 6.x les contient.
+void _legacyPain(AppStore app, String key, String movement, int value) {
+  app.koach.answers.putIfAbsent(key, SessionAnswers.new).pain[movement] =
+      value;
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final now = DateTime(2026, 9, 27, 12);
@@ -235,18 +244,18 @@ void main() {
       done('S4-J1', '2026-09-08T18:00:00.000');
       done('S4-J3', '2026-09-10T18:00:00.000');
       // Saisies dans le désordre : l'ordre suit les dates de fin.
-      app.setKoachPain('S4-J1', 'pull', 6);
-      app.setKoachPain('S3-J1', 'pull', 2);
-      app.setKoachPain('S3-J3', 'pull', 5);
+      _legacyPain(app, 'S4-J1', 'pull', 6);
+      _legacyPain(app, 'S3-J1', 'pull', 2);
+      _legacyPain(app, 'S3-J3', 'pull', 5);
       expect(app.painHistory('pull'), [2, 5, 6]);
       expect(app.painNeedsReferralFor('pull'), isFalse);
-      app.setKoachPain('S4-J3', 'pull', 4);
+      _legacyPain(app, 'S4-J3', 'pull', 4);
       expect(app.painHistory('pull'), [2, 5, 6, 4]);
       expect(app.painNeedsReferralFor('pull'), isTrue);
       expect(app.painReferralMovements, ['pull']);
       // Une séance sans douleur interrompt la série.
       done('S5-J1', '2026-09-15T18:00:00.000');
-      app.setKoachPain('S5-J1', 'pull', 1);
+      _legacyPain(app, 'S5-J1', 'pull', 1);
       expect(app.painNeedsReferralFor('pull'), isFalse);
       expect(app.painReferralMovements, isEmpty);
     });
@@ -292,8 +301,8 @@ void main() {
       p.setField('stress', 'high', _at);
       app.saveProfile(p);
       done('S3-J1', '2026-09-01T18:00:00.000');
-      app.setKoachPain('S3-J1', 'dip', 7);
-      app.setKoachAnswers('S3-J1', sleep: 6.0);
+      _legacyPain(app, 'S3-J1', 'dip', 7);
+      app.koach.answers.putIfAbsent('S3-J1', SessionAnswers.new).sleep = 6.0;
       // Export : tout est présent (portabilité).
       final exported = backupOf(app);
       final profileJson = jsonEncode(exported['profile']);
