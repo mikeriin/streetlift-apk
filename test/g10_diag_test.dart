@@ -12,7 +12,7 @@ void main() {
   for (final st in starts) {
     for (final mode in kc.GuidanceMode.values) {
       for (final key in ['intermediaire_salle', 'douleur_et_lieu', 'calisthenie_parc', 'avance_street']) {
-        for (final seed in [3]) { for (final wk in [1, 2, 3, 4, 5]) {
+        for (final seed in [3]) { for (final wk in [6, 7, 8]) {
           test('diag ${st.month}-${st.day} ${mode.code} $key $seed $wk', () async {
             SharedPreferences.setMockInitialValues({});
             final s = AppStore()..storeClock = () => st.add(const Duration(hours: 9));
