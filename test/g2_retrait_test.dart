@@ -437,10 +437,10 @@ void main() {
   });
 
   test(
-    'version affichée : « 6.6.1 » hors build de développement (G9 correction 1)',
+    'version affichée : « 6.6.2 » hors build de développement (G9 correction 2)',
     () {
-      expect(kVersion, '6.6.1');
-      expect(kAppVersion, '6.6.1');
+      expect(kVersion, '6.6.2');
+      expect(kAppVersion, '6.6.2');
     },
   );
 }

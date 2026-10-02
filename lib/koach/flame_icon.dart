@@ -75,6 +75,11 @@ class FlameIcon extends StatelessWidget {
   /// ligne de base commune ; sa taille relative est gardée.
   final bool centered;
 
+  /// G9 correction 2 : le centre de la base arrondie de la flamme (et non
+  /// le centre du dessin) est posé au centre de la boîte : sur la ligne des
+  /// flammes, la flamme s'élève au-dessus de sa position.
+  final bool onBase;
+
   const FlameIcon(
     this.level, {
     super.key,
@@ -82,6 +87,7 @@ class FlameIcon extends StatelessWidget {
     this.color,
     this.semantics = true,
     this.centered = false,
+    this.onBase = false,
   }) : assert(level >= 1 && level <= 10);
 
   /// Largeur pour une hauteur [size].
@@ -97,6 +103,7 @@ class FlameIcon extends StatelessWidget {
         level,
         color ?? flameColor(level, dark: dark),
         centered: centered,
+        onBase: onBase,
       ),
     );
     return semantics
@@ -109,14 +116,27 @@ class _FlamePainter extends CustomPainter {
   final int level;
   final Color color;
   final bool centered;
-  _FlamePainter(this.level, this.color, {this.centered = false});
+  final bool onBase;
+  _FlamePainter(
+    this.level,
+    this.color, {
+    this.centered = false,
+    this.onBase = false,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
     final r = _flameFrame;
     final s = math.min(size.width / r.width, size.height / r.height);
     canvas.save();
-    if (centered) {
+    if (onBase) {
+      // Centre de la base arrondie : demi-largeur au-dessus du bas du dessin.
+      final b = _flamePath(level).getBounds();
+      canvas.translate(
+        size.width / 2 - b.center.dx * s,
+        size.height / 2 - (b.bottom - b.width / 2) * s,
+      );
+    } else if (centered) {
       // Centre du dessin de cette flamme au centre de la boîte.
       final b = _flamePath(level).getBounds();
       canvas.translate(
@@ -136,7 +156,10 @@ class _FlamePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_FlamePainter old) =>
-      old.level != level || old.color != color || old.centered != centered;
+      old.level != level ||
+      old.color != color ||
+      old.centered != centered ||
+      old.onBase != onBase;
 }
 
 /// Sélecteur de difficulté : 10 flammes de taille croissante (D5.3, D5.4).

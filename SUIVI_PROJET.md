@@ -1,8 +1,16 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : G9 correction 1, version dev6.6.1 ; précédent : dev6.6.0 (G9)**  
-**Date : 2 octobre 2026, Europe/Paris — version : 6.6.1+103, affichée « dev6.6.1 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : G9 correction 2, version dev6.6.2 ; précédent : dev6.6.1 (G9 correction 1)**  
+**Date : 2 octobre 2026, Europe/Paris — version : 6.6.2+104, affichée « dev6.6.2 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## G9 correction 2 — Flamme du curseur posée sur sa base (version dev6.6.2)
+
+Correction du propriétaire (02/10/2026) : sur la ligne des flammes, la flamme doit être un peu plus haute ; son point d'ancrage est le centre de la base de la flamme, pas le centre du dessin.
+
+- `FlameIcon(onBase: true)` : le centre de la base arrondie (demi-largeur au-dessus du bas du dessin) est posé au centre de la boîte ; utilisé pour la flamme de la ligne (`flame-thumb`), l'agrandissement de la transition part de ce point. Lignes résumées inchangées (flamme centrée sur le texte).
+- Exercices sans flammes résumés comme les autres (seconde demande du propriétaire, même passage) : même règle de série ouverte ; « 12 min » pour une durée.
+- Test : `test/g9_seance_test.dart` (flamme de la ligne posée sur sa base, texte des lignes résumées pour chaque type de saisie).
 
 ## G9 correction 1 — Flammes sous la série, séries résumées (version dev6.6.1)
 

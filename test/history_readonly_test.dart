@@ -151,9 +151,10 @@ void main() {
       final before = jsonEncode(log.toJson());
       await open(tester, log, sessionKey: 'archive-old');
       expect(find.text('MON EXERCICE ARCHIVÉ'), findsOneWidget);
-      expect(find.text('VALEUR'), findsOneWidget);
-      expect(find.text('17'), findsOneWidget);
-      expect(find.text('0.42'), findsOneWidget);
+      // G9 correction 2 : série en une ligne, valeurs telles quelles, sans
+      // unité inventée.
+      expect(find.text('17 · 0.42'), findsOneWidget);
+      expect(find.textContaining('reps'), findsNothing);
       expect(find.text('REPS'), findsNothing);
       expect(find.byType(TextField), findsNothing);
       expect(store.logs, isEmpty);
@@ -184,8 +185,8 @@ void main() {
       },
     );
     await open(tester, log, sessionKey: store.sessionKey(week.n, day.j));
-    expect(find.text('S'), findsOneWidget);
-    expect(find.text('32'), findsOneWidget);
+    // G9 correction 2 : série en une ligne, en secondes.
+    expect(find.text('32 s'), findsOneWidget);
     expect(find.byTooltip('Compte à rebours'), findsNothing);
     expect(find.byIcon(Icons.hourglass_bottom), findsNothing);
     expect(find.textContaining('Lancer'), findsNothing);

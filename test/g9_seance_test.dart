@@ -721,6 +721,13 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.text('7 flammes · RIR 2'), findsOneWidget);
         expect(find.byKey(const ValueKey('flame-thumb-7')), findsOneWidget);
+        // G9 correction 2 : la flamme est posée par le centre de sa base.
+        expect(
+          tester
+              .widget<FlameIcon>(find.byKey(const ValueKey('flame-thumb-7')))
+              .onBase,
+          isTrue,
+        );
         // 10 positions : 9 points visibles et la flamme.
         for (var i = 1; i <= 10; i++) {
           expect(find.byKey(ValueKey('flame-pos-$i')), findsOneWidget);
@@ -761,6 +768,29 @@ void main() {
         expect(excluded, isTrue);
         expect(tester.takeException(), isNull);
       }
+    });
+
+    test('ligne résumée : tous les types de saisie (correction 2 : aussi '
+        'sans flammes)', () {
+      SetEntry e(String kg, String reps) => SetEntry()
+        ..kg = kg
+        ..reps = reps
+        ..done = true;
+      expect(
+        setDoneText(e('16.25', '8'), const LogSpec('reps')),
+        '16,25 kg × 8 reps',
+      );
+      expect(setDoneText(e('', '1'), const LogSpec('reps')), '1 rep');
+      expect(setDoneText(e('', '30'), const LogSpec('hold')), '30 s');
+      expect(
+        setDoneText(e('', '12'), const LogSpec('duration', seconds: 720)),
+        '12 min',
+      );
+      expect(setDoneText(e('0', ''), const LogSpec('reps')), '');
+      expect(
+        setDoneText(e('', '17'), const LogSpec('reps'), units: false),
+        '17',
+      );
     });
 
     testWidgets('ligne résumée : flamme alignée avec le texte', (tester) async {
