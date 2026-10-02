@@ -1,1 +1,4 @@
-test/g10_diag_test.dart
+ALL
+dev:test/g1_mode_dev_test.dart
+dev:test/g7_mode_dev_test.dart
+dev:test/g10_mode_dev_test.dart
