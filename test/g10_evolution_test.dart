@@ -476,11 +476,13 @@ void main() {
       clock = clock.subtract(const Duration(days: 1));
       // Accepter : appliqué.
       app.evolutionAccept(app.planEvolution.entries.first);
-      expect(app.planEvolution.entries.first.status, EvoStatus.accepted);
+      // Une proposition acceptée passe en dernier (ordre des couches).
+      expect(app.planEvolution.entries.last.id, v.id);
+      expect(app.planEvolution.entries.last.status, EvoStatus.accepted);
       expect(_shown(app, 2), isNot(w2));
       // Refuser : transmis au moteur (ne repropose pas avant son délai).
-      app.evolutionRefuse(app.planEvolution.entries.last);
-      expect(app.planEvolution.entries.last.status, EvoStatus.refused);
+      app.evolutionRefuse(app.planEvolution.entries.first);
+      expect(app.planEvolution.entries.first.status, EvoStatus.refused);
       final decisions = {
         for (final d in app.planEvolution.decisions) d.proposalId: d.status,
       };
@@ -489,7 +491,7 @@ void main() {
         dl.id: kc.ProposalStatus.refused,
       });
       // Le bloc d'une proposition refusée n'est pas gardé.
-      expect(app.planEvolution.entries.last.proposal.block, isNull);
+      expect(app.planEvolution.entries.first.proposal.block, isNull);
       // La revue suivante transmet les décisions au moteur.
       clock = DateTime(2026, 10, 2, 9);
       app.evolutionRefresh(force: true);
@@ -592,6 +594,7 @@ void main() {
       _program(app, kc.GuidanceMode.assisted);
       final place = _place(app, 1);
       app.evolutionReceive(place, [_volume(place, 1)]);
+      await app.flush();
       final doc = jsonDecode(app.exportAll()) as Map<String, dynamic>;
       final bad = jsonDecode(jsonEncode(doc['planEvolution'])) as Map;
       ((bad['entries'] as List).first as Map)['status'] = 'inconnu';
@@ -604,7 +607,10 @@ void main() {
       others.add(next);
       expect(next.evolutionLoadIssues, 1);
       expect(next.planEvolution.isEmpty, isTrue);
-      expect(next.evolutionReceive(_place(next, 1), [_deload(_place(next, 1), 2)]), isFalse);
+      expect(
+        next.evolutionReceive(_place(next, 1), [_deload(_place(next, 1), 2)]),
+        isFalse,
+      );
       expect(next.evolutionRefresh(force: true), isFalse);
       final out = jsonDecode(next.exportAll()) as Map<String, dynamic>;
       expect(jsonEncode(out['planEvolution']), jsonEncode(bad));
@@ -749,7 +755,9 @@ void main() {
         expect(find.byKey(ValueKey('evo-accept-${evoKey(e)}')), findsOneWidget);
         expect(find.byKey(ValueKey('evo-refuse-${evoKey(e)}')), findsOneWidget);
         expect(find.byKey(ValueKey('evo-later-${evoKey(e)}')), findsOneWidget);
-        await tester.ensureVisible(find.byKey(ValueKey('evo-details-${evoKey(e)}')));
+        await tester.ensureVisible(
+          find.byKey(ValueKey('evo-details-${evoKey(e)}')),
+        );
         await tester.tap(find.byKey(ValueKey('evo-details-${evoKey(e)}')));
         await tester.pumpAndSettle();
         expect(find.byKey(const ValueKey('evo-sheet')), findsOneWidget);

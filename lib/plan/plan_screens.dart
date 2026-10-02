@@ -616,7 +616,11 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
             'Ton bloc se termine. Voici le suivant : ${plan.weeks} semaines, '
             '${plan.days.length} séance${plan.days.length > 1 ? 's' : ''} par '
             'semaine.$done '
-            '${fresh == 0 ? 'Aucun nouvel exercice à passer en revue.' : fresh == 1 ? 'Un nouvel exercice à passer en revue.' : '$fresh nouveaux exercices à passer en revue.'}',
+            '${fresh == 0
+                ? 'Aucun nouvel exercice à passer en revue.'
+                : fresh == 1
+                ? 'Un nouvel exercice à passer en revue.'
+                : '$fresh nouveaux exercices à passer en revue.'}',
         why:
             'Je garde tes mouvements principaux, je fais tourner une partie '
             'des exercices de complément et je passe à une variante plus '

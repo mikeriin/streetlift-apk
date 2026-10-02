@@ -1,4 +1,1 @@
 test/g10_evolution_test.dart
-test/g7_plan_test.dart
-test/g6_profil_test.dart
-dev:test/g10_mode_dev_test.dart

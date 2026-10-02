@@ -245,10 +245,7 @@ extension EvolutionStore on AppStore {
     final moved = next.inEffect && !e.inEffect;
     _evoCommit([
       for (final x in planEvolution.entries)
-        if (!same(x))
-          x
-        else if (!moved)
-          next,
+        if (!same(x)) x else if (!moved) next,
       if (moved) next,
     ]);
   }
