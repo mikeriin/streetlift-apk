@@ -344,6 +344,16 @@ void main() {
           ((w.key! as ValueKey<String>).value.startsWith('evo-history-') ||
               (w.key! as ValueKey<String>).value.startsWith('evo-pending-')),
     );
+    // Liste construite à la demande : descendre jusqu'à l'historique.
+    await scrollTo(tester, find.text('Historique des changements'));
+    await scrollTo(
+      tester,
+      find.byWidgetPredicate(
+        (w) =>
+            w.key is ValueKey<String> &&
+            (w.key! as ValueKey<String>).value.startsWith('evo-history-'),
+      ),
+    );
     releve['historique'] = hist.evaluate().length;
     if (hist.evaluate().isNotEmpty) {
       await scrollTo(tester, hist.first);
