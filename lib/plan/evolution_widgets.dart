@@ -45,7 +45,12 @@ String evolutionHeadlineOf(EvolutionEntry e) => evolutionHeadline(
   e,
   exerciseName: planName,
   dayName: (d) => _dayName(e.blockId, d),
+  currentWeek: store.evolutionCurrentWeek(e.blockId),
 );
+
+/// Clé d'une proposition (l'identifiant du moteur n'est unique que dans
+/// son bloc).
+String evoKey(EvolutionEntry e) => '${e.blockId}|${e.id}';
 
 /// « Pourquoi ? » : raisons et confiance du moteur, en mots simples.
 String evolutionWhy(EvolutionEntry e) {
@@ -116,20 +121,20 @@ List<KoachBubbleAction> evolutionActions(
             done('C’est noté, ton programme est à jour.');
           },
           primary: true,
-          key: ValueKey('evo-accept-${e.id}'),
+          key: ValueKey('evo-accept-${evoKey(e)}'),
         ),
       )
       ..add(
         KoachBubbleAction('Refuser', () {
           store.evolutionRefuse(e);
           done('D’accord, je garde ton programme tel quel.');
-        }, key: ValueKey('evo-refuse-${e.id}')),
+        }, key: ValueKey('evo-refuse-${evoKey(e)}')),
       )
       ..add(
         KoachBubbleAction('Plus tard', () {
           store.evolutionLater(e);
           done('Je t’en reparle demain.', pose: KoachPose.wave);
-        }, key: ValueKey('evo-later-${e.id}')),
+        }, key: ValueKey('evo-later-${evoKey(e)}')),
       );
   } else if (e.inEffect) {
     if (!e.seen) {
@@ -141,7 +146,7 @@ List<KoachBubbleAction> evolutionActions(
             if (pop) Navigator.of(context).pop();
           },
           primary: true,
-          key: ValueKey('evo-seen-${e.id}'),
+          key: ValueKey('evo-seen-${evoKey(e)}'),
         ),
       );
     }
@@ -155,7 +160,7 @@ List<KoachBubbleAction> evolutionActions(
                 : 'Trop tard pour annuler : la séance concernée a commencé.',
             pose: ok ? KoachPose.thumbsUp : KoachPose.oops,
           );
-        }, key: ValueKey('evo-undo-${e.id}')),
+        }, key: ValueKey('evo-undo-${evoKey(e)}')),
       );
     }
   }
@@ -164,7 +169,7 @@ List<KoachBubbleAction> evolutionActions(
       KoachBubbleAction(
         'Voir le changement',
         () => showEvolutionSheet(context, e),
-        key: ValueKey('evo-details-${e.id}'),
+        key: ValueKey('evo-details-${evoKey(e)}'),
       ),
     );
   }
@@ -279,7 +284,7 @@ class EvolutionHomeCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           KoachBubble(
-            key: ValueKey('evo-home-${e.id}'),
+            key: ValueKey('evo-home-${evoKey(e)}'),
             pose: evolutionPose(
               e.proposal.kind,
               pending: e.status == EvoStatus.pending,
@@ -328,7 +333,8 @@ class EvolutionSessionCard extends StatelessWidget {
           children: [
             Text(
               items.length == 1
-                  ? 'Cette séance change : ${evolutionAction(e, exerciseName: planName, dayName: (d) => _dayName(e.blockId, d))}.'
+                  ? 'Ce qui change dans cette séance : '
+                        '${evolutionAction(e, exerciseName: planName, dayName: (d) => _dayName(e.blockId, d))}.'
                   : 'Cette séance change (${items.length} changements).',
             ),
             const SizedBox(height: 6),
@@ -338,7 +344,7 @@ class EvolutionSessionCard extends StatelessWidget {
               children: [
                 for (final x in items)
                   TextButton(
-                    key: ValueKey('evo-session-see-${x.id}'),
+                    key: ValueKey('evo-session-see-${evoKey(x)}'),
                     onPressed: () => showEvolutionSheet(context, x),
                     child: Text(
                       items.length == 1
@@ -520,7 +526,7 @@ class _EvolutionScreenState extends State<EvolutionScreen> {
               const KSection('Propositions en attente'),
               for (final e in pending)
                 KCard(
-                  key: ValueKey('evo-pending-${e.id}'),
+                  key: ValueKey('evo-pending-${evoKey(e)}'),
                   child: KoachBubble(
                     pose: evolutionPose(e.proposal.kind, pending: true),
                     koachHeight: 72,
@@ -540,7 +546,7 @@ class _EvolutionScreenState extends State<EvolutionScreen> {
               ),
             for (final e in history)
               KCard(
-                key: ValueKey('evo-history-${e.id}'),
+                key: ValueKey('evo-history-${evoKey(e)}'),
                 onTap: () => showEvolutionSheet(context, e),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -566,10 +572,12 @@ class _EvolutionScreenState extends State<EvolutionScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      evolutionAction(
-                        e,
-                        exerciseName: planName,
-                        dayName: (d) => _dayName(e.blockId, d),
+                      capitalized(
+                        evolutionAction(
+                          e,
+                          exerciseName: planName,
+                          dayName: (d) => _dayName(e.blockId, d),
+                        ),
                       ),
                     ),
                     for (final r in evolutionReasons(
@@ -585,7 +593,7 @@ class _EvolutionScreenState extends State<EvolutionScreen> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: TextButton(
-                          key: ValueKey('evo-history-undo-${e.id}'),
+                          key: ValueKey('evo-history-undo-${evoKey(e)}'),
                           onPressed: () {
                             final ok = store.evolutionUndo(e);
                             showKoachToast(

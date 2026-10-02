@@ -107,6 +107,8 @@ Future<DevSimResult> runDevSimulation(
   app.storeClock = () => t;
   var done = 0, missed = 0, sets = 0, proposals = 0, accepted = 0;
   var blocks = 0;
+  var last = start;
+  String? error;
   final before = app.planEvolution.entries.length;
   try {
     for (var d = 0; d < total; d++) {
@@ -124,6 +126,7 @@ Future<DevSimResult> runDevSimulation(
       }
       onProgress?.call(d, total);
       if (!app.program.containsDate(date)) break;
+      last = date;
       final week = app.program.weekFor(date);
       final j = app.program.dayFor(date);
       final base = app.program.week(week).day(j);
@@ -166,11 +169,13 @@ Future<DevSimResult> runDevSimulation(
       // Laisse respirer l'interface (barre de progression).
       await Future<void>.delayed(Duration.zero);
     }
+  } catch (e) {
+    error = 'Simulation interrompue : $e';
   } finally {
     app.storeClock = clock;
+    await app.flush();
   }
   proposals = app.planEvolution.entries.length - before;
-  await app.flush();
   onProgress?.call(total, total);
   return DevSimResult(
     days: total,
@@ -180,7 +185,10 @@ Future<DevSimResult> runDevSimulation(
     proposals: proposals < 0 ? 0 : proposals,
     accepted: accepted,
     blocksAdded: blocks,
-    end: DateTime(start.year, start.month, start.day + total),
+    // Lendemain du dernier jour simulé : « aujourd'hui » après la
+    // simulation.
+    end: DateTime(last.year, last.month, last.day + 1),
+    error: error,
   );
 }
 

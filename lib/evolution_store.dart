@@ -119,6 +119,9 @@ extension EvolutionStore on AppStore {
   /// revue par état (jour, journal, bloc, décisions, mode). Vrai si
   /// l'évolution a changé.
   bool evolutionRefresh({bool force = false}) {
+    // Section illisible au démarrage : gardée telle quelle, rien n'est
+    // écrit par-dessus (aucune perte).
+    if (_evoRaw != null) return false;
     if (!SessionAdaptStore(this).adaptAvailable) return false;
     final w = _evoWeek;
     final place = evolutionPlace;
@@ -162,6 +165,7 @@ extension EvolutionStore on AppStore {
   /// l'évolution a changé. (Appelé par [evolutionRefresh] ; public pour les
   /// tests.)
   bool evolutionReceive(AdaptPlace place, List<kc.Proposal> proposals) {
+    if (_evoRaw != null) return false;
     final mode = SessionAdaptStore(this).adaptMode;
     final today = _evoToday.iso;
     final offered = {for (final p in proposals) p.id};
@@ -197,13 +201,21 @@ extension EvolutionStore on AppStore {
           (auto || !kc.jsonDeepEquals(out[i].proposal.toJson(), p.toJson()))) {
         // Toujours proposée : la plus récente (bloc et diff à jour) ;
         // appliquée si le mode est passé à assisté.
-        out[i] = out[i].copyWith(
+        final next = out[i].copyWith(
           proposal: p,
           status: auto ? EvoStatus.applied : null,
           decidedOn: auto ? today : null,
           mode: auto ? mode : null,
           clearLater: auto,
         );
+        if (auto) {
+          // Couches dans l'ordre où elles sont appliquées.
+          out
+            ..removeAt(i)
+            ..add(next);
+        } else {
+          out[i] = next;
+        }
         changed = true;
       }
     }
@@ -225,13 +237,26 @@ extension EvolutionStore on AppStore {
   }
 
   void _evoSet(EvolutionEntry e, EvolutionEntry next) {
+    if (_evoRaw != null) return;
+    bool same(EvolutionEntry x) =>
+        identical(x, e) || (x.id == e.id && x.blockId == e.blockId);
+    // Une proposition qui entre en place passe en dernier : les couches
+    // s'appliquent dans l'ordre des décisions.
+    final moved = next.inEffect && !e.inEffect;
     _evoCommit([
       for (final x in planEvolution.entries)
-        if (identical(x, e) || (x.id == e.id && x.blockId == e.blockId))
-          next
-        else
-          x,
+        if (!same(x))
+          x
+        else if (!moved)
+          next,
+      if (moved) next,
     ]);
+  }
+
+  /// Semaine du bloc [blockId] en cours aujourd'hui (null : autre bloc).
+  int? evolutionCurrentWeek(String blockId) {
+    final p = evolutionPlace;
+    return p != null && p.blockId == blockId ? p.weekIndex : null;
   }
 
   /// Mode libre : « Accepter ».

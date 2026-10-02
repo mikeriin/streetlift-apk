@@ -587,6 +587,29 @@ void main() {
       expect(third.planEvolution.entries, hasLength(1));
     });
 
+    test('démarrage sur une section planEvolution illisible : gardée telle '
+        'quelle, aucune proposition écrite par-dessus', () async {
+      _program(app, kc.GuidanceMode.assisted);
+      final place = _place(app, 1);
+      app.evolutionReceive(place, [_volume(place, 1)]);
+      final doc = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+      final bad = jsonDecode(jsonEncode(doc['planEvolution'])) as Map;
+      ((bad['entries'] as List).first as Map)['status'] = 'inconnu';
+      doc['planEvolution'] = bad;
+      SharedPreferences.setMockInitialValues({
+        'kalis_state_v3': jsonEncode(doc),
+      });
+      final next = AppStore()..storeClock = () => clock;
+      await next.init();
+      others.add(next);
+      expect(next.evolutionLoadIssues, 1);
+      expect(next.planEvolution.isEmpty, isTrue);
+      expect(next.evolutionReceive(_place(next, 1), [_deload(_place(next, 1), 2)]), isFalse);
+      expect(next.evolutionRefresh(force: true), isFalse);
+      final out = jsonDecode(next.exportAll()) as Map<String, dynamic>;
+      expect(jsonEncode(out['planEvolution']), jsonEncode(bad));
+    });
+
     test('fin de bloc : bloc suivant passé en revue (nouveaux exercices '
         'seulement) puis validé ; propositions en place reprises', () async {
       _program(app, kc.GuidanceMode.assisted);
@@ -723,11 +746,11 @@ void main() {
         final e = store.planEvolution.entries.single;
         expect(find.byKey(const ValueKey('evo-home-card')), findsOneWidget);
         expect(find.textContaining('Je te propose'), findsOneWidget);
-        expect(find.byKey(ValueKey('evo-accept-${e.id}')), findsOneWidget);
-        expect(find.byKey(ValueKey('evo-refuse-${e.id}')), findsOneWidget);
-        expect(find.byKey(ValueKey('evo-later-${e.id}')), findsOneWidget);
-        await tester.ensureVisible(find.byKey(ValueKey('evo-details-${e.id}')));
-        await tester.tap(find.byKey(ValueKey('evo-details-${e.id}')));
+        expect(find.byKey(ValueKey('evo-accept-${evoKey(e)}')), findsOneWidget);
+        expect(find.byKey(ValueKey('evo-refuse-${evoKey(e)}')), findsOneWidget);
+        expect(find.byKey(ValueKey('evo-later-${evoKey(e)}')), findsOneWidget);
+        await tester.ensureVisible(find.byKey(ValueKey('evo-details-${evoKey(e)}')));
+        await tester.tap(find.byKey(ValueKey('evo-details-${evoKey(e)}')));
         await tester.pumpAndSettle();
         expect(find.byKey(const ValueKey('evo-sheet')), findsOneWidget);
         await tester.dragUntilVisible(
@@ -765,15 +788,15 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('evo-mode-switch')), findsOneWidget);
       expect(find.byKey(const ValueKey('evo-unlock')), findsOneWidget);
-      expect(find.byKey(ValueKey('evo-history-${e.id}')), findsOneWidget);
+      expect(find.byKey(ValueKey('evo-history-${evoKey(e)}')), findsOneWidget);
       expect(find.text('Appliqué (mode assisté)'), findsOneWidget);
       await tester.tap(find.text('Libre'));
       await tester.pumpAndSettle();
       expect(store.adaptMode, 'free');
       await tester.ensureVisible(
-        find.byKey(ValueKey('evo-history-undo-${e.id}')),
+        find.byKey(ValueKey('evo-history-undo-${evoKey(e)}')),
       );
-      await tester.tap(find.byKey(ValueKey('evo-history-undo-${e.id}')));
+      await tester.tap(find.byKey(ValueKey('evo-history-undo-${evoKey(e)}')));
       await tester.pumpAndSettle();
       expect(store.planEvolution.entries.single.status, EvoStatus.undone);
       expect(find.text('Annulé'), findsOneWidget);
