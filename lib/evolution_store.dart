@@ -157,7 +157,8 @@ extension EvolutionStore on AppStore {
 
   /// Propositions [proposals] du moteur pour le bloc de [place] : nouvelles
   /// propositions appliquées (mode assisté) ou en attente (mode libre) ;
-  /// celles en attente que le moteur ne fait plus sont retirées. Vrai si
+  /// celles en attente que le moteur ne fait plus (ou d'un autre bloc) sont
+  /// retirées. Vrai si
   /// l'évolution a changé. (Appelé par [evolutionRefresh] ; public pour les
   /// tests.)
   bool evolutionReceive(AdaptPlace place, List<kc.Proposal> proposals) {
@@ -167,10 +168,10 @@ extension EvolutionStore on AppStore {
     final out = <EvolutionEntry>[];
     var changed = false;
     for (final e in planEvolution.entries) {
-      if (e.blockId == place.blockId &&
-          e.status == EvoStatus.pending &&
-          !offered.contains(e.id)) {
-        // Le moteur ne la fait plus (semaine passée, données nouvelles).
+      if (e.status == EvoStatus.pending &&
+          (e.blockId != place.blockId || !offered.contains(e.id))) {
+        // Le moteur ne la fait plus (semaine passée, données nouvelles,
+        // autre bloc).
         changed = true;
         continue;
       }
@@ -193,8 +194,7 @@ extension EvolutionStore on AppStore {
         );
         changed = true;
       } else if (out[i].status == EvoStatus.pending &&
-          (auto ||
-              !kc.jsonDeepEquals(out[i].proposal.toJson(), p.toJson()))) {
+          (auto || !kc.jsonDeepEquals(out[i].proposal.toJson(), p.toJson()))) {
         // Toujours proposée : la plus récente (bloc et diff à jour) ;
         // appliquée si le mode est passé à assisté.
         out[i] = out[i].copyWith(

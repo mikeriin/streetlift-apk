@@ -46,7 +46,11 @@ AdaptPlace _place(AppStore app, int week) {
 
 /// Proposition de volume : une série de plus sur le premier exercice
 /// chargé de la semaine [weekIndex] du bloc.
-kc.Proposal _volume(AdaptPlace place, int weekIndex, {String day = '2026-10-01'}) {
+kc.Proposal _volume(
+  AdaptPlace place,
+  int weekIndex, {
+  String day = '2026-10-01',
+}) {
   final week = place.block.pass2.weeks[weekIndex];
   final d = week.days.first;
   final item = d.items.firstWhere((i) => i.setTargets == null);
@@ -69,14 +73,14 @@ kc.Proposal _volume(AdaptPlace place, int weekIndex, {String day = '2026-10-01'}
           fromPrescription: item,
           toPrescription: item.copyWith(sets: item.sets + 1),
           reasons: [
-            kc.Reason(code: 'adapt.volume_up', params: {'sets': 1}),
+            const kc.Reason(code: 'adapt.volume_up', params: {'sets': 1}),
           ],
         ),
       ],
     ),
     reasons: [
-      kc.Reason(code: 'adapt.volume_up', params: {'sets': 1}),
-      kc.Reason(
+      const kc.Reason(code: 'adapt.volume_up', params: {'sets': 1}),
+      const kc.Reason(
         code: 'adapt.volume_response',
         params: {'muscle': 'lats', 'weeklySets': 10.0},
       ),
@@ -115,7 +119,7 @@ kc.Proposal _deload(AdaptPlace place, int weekIndex) {
     diff: kc.PlanDiff(changes: changes),
     reasons: [
       kc.Reason(code: 'adapt.deload', params: {'weekIndex': weekIndex}),
-      kc.Reason(code: 'adapt.fatigue_high', params: {'readiness': .35}),
+      const kc.Reason(code: 'adapt.fatigue_high', params: {'readiness': .35}),
     ],
   );
 }
@@ -134,7 +138,8 @@ kc.Proposal _restructure(
     kc.ProposalKind.blockRestructure => kc.RestructureScope.block,
     _ => kc.RestructureScope.block,
   };
-  final free = kind == kc.ProposalKind.exerciseSwap ||
+  final free =
+      kind == kc.ProposalKind.exerciseSwap ||
           kind == kc.ProposalKind.painSparing
       ? {
           for (final s in pass1.days.first.slots)
@@ -154,10 +159,10 @@ kc.Proposal _restructure(
           : null,
       fromWeekIndex: fromWeek,
       reasons: [
-        kc.Reason(code: 'adapt.time_short', params: {
-          'minutesAvailable': 30,
-          'minutesPlanned': 60,
-        }),
+        const kc.Reason(
+          code: 'adapt.time_short',
+          params: {'minutesAvailable': 30, 'minutesPlanned': 60},
+        ),
       ],
       locks: [
         if (free != null)
@@ -207,17 +212,17 @@ kc.Proposal _restructure(
           },
         ),
       if (kind == kc.ProposalKind.painSparing)
-        kc.Reason(
+        const kc.Reason(
           code: 'adapt.pain_reported',
           params: {'zone': 'shoulder', 'intensity': 5},
         ),
       if (kind == kc.ProposalKind.sessionRestructure)
-        kc.Reason(code: 'adapt.time_short', params: {
-          'minutesAvailable': 30,
-          'minutesPlanned': 60,
-        }),
+        const kc.Reason(
+          code: 'adapt.time_short',
+          params: {'minutesAvailable': 30, 'minutesPlanned': 60},
+        ),
       if (kind == kc.ProposalKind.blockRestructure)
-        kc.Reason(
+        const kc.Reason(
           code: 'adapt.missed_sessions',
           params: {'missed': 5, 'planned': 9},
         ),
@@ -277,18 +282,21 @@ void main() {
       final back = PlanEvolution.fromJson(json);
       expect(jsonEncode(back.toJson()), jsonEncode(evo.toJson()));
       expect(back.entries.first.fromWeek, 2);
-      expect([for (final d in back.decisions) d.toJson()], [
-        {
-          'proposalId': 'deload:b@2',
-          'date': '2026-10-02',
-          'status': 'refused',
-        },
-        {
-          'proposalId': 'volume:x@2',
-          'date': '2026-10-01',
-          'status': 'auto_applied',
-        },
-      ]);
+      expect(
+        [for (final d in back.decisions) d.toJson()],
+        [
+          {
+            'proposalId': 'deload:b@2',
+            'date': '2026-10-02',
+            'status': 'refused',
+          },
+          {
+            'proposalId': 'volume:x@2',
+            'date': '2026-10-01',
+            'status': 'auto_applied',
+          },
+        ],
+      );
       expect(back.inEffect('b').map((e) => e.id), ['volume:x@2']);
       // Contrôle strict : suite inconnue, date invalide, doublon.
       for (final bad in [
@@ -335,10 +343,7 @@ void main() {
         ),
         'Encore un bloc terminé, et je pourrai réorganiser une séance.',
       );
-      expect(
-        unlockNextText(next: null, weeks: 0, blocks: 0),
-        isNull,
-      );
+      expect(unlockNextText(next: null, weeks: 0, blocks: 0), isNull);
       expect(confidenceWords(.9), 'Je suis très sûr de moi (90 %).');
       expect(confidenceWords(.4), 'Je suis encore peu sûr de moi (40 %).');
     });
@@ -406,16 +411,20 @@ void main() {
         p.diff!.changes.single.fromPrescription!.sets,
       );
       // Rien n'est reproposé : décision transmise au moteur.
-      expect(app.planEvolution.decisions.single.status,
-          kc.ProposalStatus.autoApplied);
+      expect(
+        app.planEvolution.decisions.single.status,
+        kc.ProposalStatus.autoApplied,
+      );
       // Annulation possible tant qu'aucune séance de la semaine 2 n'a
       // commencé.
       expect(app.evolutionCanUndo(e), isTrue);
       expect(app.evolutionUndo(e), isTrue);
       expect(app.planEvolution.entries.single.status, EvoStatus.undone);
       expect(_shown(app, 2), w2);
-      expect(app.planEvolution.decisions.single.status,
-          kc.ProposalStatus.undone);
+      expect(
+        app.planEvolution.decisions.single.status,
+        kc.ProposalStatus.undone,
+      );
     });
 
     test('annulation refusée une fois la séance concernée commencée, et '
@@ -453,9 +462,10 @@ void main() {
       final v = _volume(place, 1);
       final dl = _deload(place, 2);
       app.evolutionReceive(place, [v, dl]);
-      expect([
-        for (final e in app.planEvolution.entries) e.status,
-      ], [EvoStatus.pending, EvoStatus.pending]);
+      expect(
+        [for (final e in app.planEvolution.entries) e.status],
+        [EvoStatus.pending, EvoStatus.pending],
+      );
       expect(_shown(app, 2), w2);
       expect(app.planEvolution.decisions, isEmpty);
       // Plus tard : cachée jusqu'au lendemain.
@@ -485,10 +495,7 @@ void main() {
       app.evolutionRefresh(force: true);
       final input = app.lastEvolutionReview?.input;
       expect(input, isNotNull);
-      expect(
-        {for (final d in input!.decisions!) d.proposalId},
-        {v.id, dl.id},
-      );
+      expect({for (final d in input!.decisions!) d.proposalId}, {v.id, dl.id});
     });
 
     test('proposition en attente que le moteur ne fait plus : retirée ; '

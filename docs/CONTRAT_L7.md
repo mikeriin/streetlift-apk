@@ -1,5 +1,7 @@
 # Kalis Track — Contrat L7 : Koach, moteur d'autorégulation (KT-024 à KT-036)
 
+> **Retiré par G10 (dev6.7.0, D1.4)** : le moteur Koach L7 (`koach_engine.dart`, `koach_program.dart`, `koach_store.dart`), ses écrans (`koach_screens.dart`, `koach_widgets.dart`, `koach_day_card.dart`), sa référence Python (`tools/koach_reference.py`, `tools/koach_simulation.py`) et ses tests sont retirés : le moteur dynamique `kalis_adapt` sert les charges (G9) et propose les changements de structure (G10). La section `koach` de la sauvegarde reste lue et réécrite à l'identique (`lib/koach_data.dart`) : décisions passées en lecture seule ; pesées (profil) et réponses aux anciens questionnaires (journal des moteurs, règle L13) encore lues. Les annotations du programme (`assets/koach_program.json.gz`) restent pour la nature des semaines du programme importé. Ce document est gardé pour l'historique ; correspondance des fonctions : `pipeline/gp/livraisons/LIVRAISON_G10.md`.
+
 **Version : 3.0.0+61 — 26 septembre 2026, Europe/Paris.**
 Ce document sépare les **règles approuvées** (décisions D1-D37 du propriétaire du 26/09/2026), les **choix d'implémentation** faits dans ce cadre (modifiables), les **ajustements justifiés par simulation** et les **décisions manquantes**. Koach produit des **estimations d'entraînement**, pas des mesures ; il n'est pas validé scientifiquement par ce lot (§11).
 

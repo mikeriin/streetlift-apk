@@ -282,9 +282,11 @@ void main() {
     releve['sim_essais'] = tries;
     final end = sim!.end;
     final real = KalisClock.realNow();
-    final days = DateTime.utc(end.year, end.month, end.day)
-        .difference(DateTime.utc(real.year, real.month, real.day))
-        .inDays;
+    final days = DateTime.utc(
+      end.year,
+      end.month,
+      end.day,
+    ).difference(DateTime.utc(real.year, real.month, real.day)).inDays;
     await SessionHost.restart(
       () => DevSession.setOffsetDays(days),
       message: 'Simulation terminée',
@@ -415,7 +417,10 @@ void main() {
     expect(releve['perso_carte_evolution'], isTrue);
     expect(releve['perso_evolution'], isTrue);
     expect(releve['perso_deblocage'], isTrue);
-    expect(releve['perso_mode'], mode == kc.GuidanceMode.free ? 'free' : 'assisted');
+    expect(
+      releve['perso_mode'],
+      mode == kc.GuidanceMode.free ? 'free' : 'assisted',
+    );
     expect(releve['dev_actif'], isTrue);
     expect(releve['dev_programme'], isTrue);
     expect(releve['sim_seances'], greaterThan(10));

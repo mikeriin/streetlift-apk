@@ -81,8 +81,9 @@ void main() {
       dev.dispose();
     });
 
-    testWidgets('outils de test : simulateur, inspecteur, journal du moteur',
-        (tester) async {
+    testWidgets('outils de test : simulateur, inspecteur, journal du moteur', (
+      tester,
+    ) async {
       SharedPreferences.setMockInitialValues({});
       SessionSpace.devActive = true;
       DevSession.active.value = true;
