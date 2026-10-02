@@ -52,8 +52,8 @@ Entrées du propriétaire (`inputs/`) :
 | G9 correction 2 | — | dev6.6.2 (6.6.2+104) | 97a8705 | 37012282440 | 02/10/2026 | validé (02/10/2026, 17:04) |
 | G9 correction 3 | — | dev6.6.3 (6.6.3+105) | 111ce6d | 37022213889 | 02/10/2026 | validé (02/10/2026, 17:04) |
 | G10 | G9 | dev6.7.0 (6.7.0+106) | 9f6b80b | 37048733703 | 02/10/2026 | validé (02/10/2026, 21:03) |
-| G12 | G10, G11 | — | — | — | — | en cours depuis 2026-10-02 19:10 UTC |
-| G13 | G12 | — | — | — | — | à faire |
+| G12 | G10, G11 | — | — | — | — | **annulé par le propriétaire le 02/10/2026 à 21:35** (D0.14 : calibrage du créateur de programmes d'abord). Session G12 lancée à 19:10 UTC : ne publie rien sur `main`, ne livre rien, arrête-toi. À reprogrammer après le calibrage. |
+| G13 | G12 | — | — | — | — | **annulé par le propriétaire le 02/10/2026 à 21:35** (D0.14), à reprogrammer après le calibrage |
 | G14 | G13 | — | — | — | — | à faire |
 | G15 | G14 | — | — | — | — | à faire |
 
