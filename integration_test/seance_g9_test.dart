@@ -134,8 +134,9 @@ void main() {
     await wait(tester, 500);
   }
 
-  /// Valide la série [n] du premier exercice affiché : la feuille des
-  /// flammes s'ouvre ; [flame] null : « Valider » (flamme visée).
+  /// Valide la série [n] du premier exercice affiché : la coche la valide
+  /// avec la flamme visée, la ligne des flammes s'ouvre sous la série (G9
+  /// correction 1) ; [flame] : position touchée ensuite sur la ligne.
   Future<bool> validate(
     WidgetTester tester,
     int n, {
@@ -143,16 +144,17 @@ void main() {
     String? shotName,
   }) async {
     await tapF(tester, find.byTooltip('Valider la série $n'), ms: 900);
-    final sheet = await until(
+    final track = await until(
       tester,
-      find.byKey(const ValueKey('flame-sheet')),
+      find.byKey(ValueKey('flame-track-$n')),
     );
-    if (shotName != null) await shot(shotName);
-    if (!sheet) return false;
-    if (flame == null) {
-      await tap(tester, 'flame-confirm', ms: 1500);
-    } else {
-      await tap(tester, 'flame-pick-$flame', ms: 1500);
+    if (!track) return false;
+    if (flame != null) {
+      await tap(tester, 'flame-pos-$flame', ms: 1500);
+    }
+    if (shotName != null) {
+      await scrollTo(tester, find.byKey(ValueKey('flame-track-$n')));
+      await shot(shotName);
     }
     return true;
   }
@@ -286,7 +288,8 @@ void main() {
     await wait(tester, 800);
     await shot('05_exercice');
 
-    // Série 1 : sélecteur des flammes (pré-rempli), notée 10 flammes.
+    // Série 1 : ligne des flammes sous la série (flamme visée placée),
+    // corrigée à 10 flammes.
     releve['flammes'] = await validate(
       tester,
       1,
@@ -315,8 +318,26 @@ void main() {
     )?.hideCurrentSnackBar();
     await wait(tester, 600);
     releve['serie2'] = await validate(tester, 2);
+    // Série 3 validée : séries 1 et 2 résumées en une ligne (n − 2).
+    if (find.byTooltip('Valider la série 3').evaluate().isNotEmpty) {
+      releve['serie3'] = await validate(tester, 3);
+    }
+    releve['series_resumees'] = [
+      for (final n in ['1', '2', '3'])
+        if (find.byKey(ValueKey('set-summary-$n')).evaluate().isNotEmpty) n,
+    ];
+    await scrollTo(tester, find.byKey(const ValueKey('set-summary-1')));
     await shot('08_series');
     releve['fin_seance'] = await finish(tester, '09_fin_seance');
+    releve['fin_series'] = find
+        .byKey(const ValueKey('summary-sets'))
+        .evaluate()
+        .isNotEmpty;
+    if (releve['fin_series'] == true) {
+      await scrollTo(tester, find.byKey(const ValueKey('summary-sets')));
+      await shot('12_fin_series');
+      await top(tester);
+    }
     releve['fin_sections'] = [
       for (final k in [
         'summary-calibration',
@@ -414,6 +435,8 @@ void main() {
     expect(releve['bilan_detail'], isTrue);
     expect(releve['flammes'], isTrue);
     expect(releve['serie1_flammes'], 10);
+    expect(releve['series_resumees'], contains('1'));
+    expect(releve['fin_series'], isTrue);
     expect(releve['fin_seance'], isTrue);
     expect(releve['perso_seance_faite'], isTrue);
     expect(releve['dev_actif'], isTrue);

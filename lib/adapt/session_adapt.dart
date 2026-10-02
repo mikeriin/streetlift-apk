@@ -221,6 +221,19 @@ class SessionAdapt {
     return copyWith(advice: next);
   }
 
+  /// Retire le dernier conseil de [exerciseKey] (G9 correction 1 : la note
+  /// de la série qui l'a produit a changé, il est recalculé).
+  SessionAdapt withoutLastAdvice(String exerciseKey) {
+    final list = advice[exerciseKey];
+    if (list == null || list.isEmpty) return this;
+    final next = {
+      for (final e in advice.entries) e.key: [...e.value],
+    };
+    final l = next[exerciseKey]!..removeLast();
+    if (l.isEmpty) next.remove(exerciseKey);
+    return copyWith(advice: next);
+  }
+
   /// Change la suite du dernier conseil de [exerciseKey].
   SessionAdapt withLastAdviceStatus(String exerciseKey, String status) {
     final list = advice[exerciseKey];

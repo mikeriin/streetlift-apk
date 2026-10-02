@@ -12,6 +12,7 @@ import '../models.dart';
 import '../store.dart';
 import '../ui.dart';
 import 'adapt_texts.dart';
+import 'flame_track.dart';
 
 String _goalText(SetGoal g) {
   final amount = adaptAmount(g.low, g.high, seconds: g.seconds);
@@ -122,6 +123,29 @@ class _AdaptSummaryScreenState extends State<AdaptSummaryScreen> {
                 '${e.name} : ${_goalText(e.next!)}'
                     '${_todayText(e)}.',
             ]),
+          if (_sets() case final sets? when sets.isNotEmpty)
+            KCard(
+              key: const ValueKey('summary-sets'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Tes séries',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  for (final (i, (name, lines)) in sets.indexed) ...[
+                    Padding(
+                      padding: EdgeInsets.only(top: i == 0 ? 6 : 12, bottom: 2),
+                      child: Text(
+                        name,
+                        style: const TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                    ...lines,
+                  ],
+                ],
+              ),
+            ),
           if (s != null && s.painReferralZones.isNotEmpty)
             KCard(
               key: const ValueKey('summary-referral'),
@@ -145,6 +169,34 @@ class _AdaptSummaryScreenState extends State<AdaptSummaryScreen> {
         ],
       ),
     );
+  }
+
+  /// G9 correction 1 : toutes les séries de la séance, une ligne chacune.
+  List<(String, List<Widget>)>? _sets() {
+    final w = widget.week.n, j = widget.base.j;
+    final log = store.logs[store.sessionKey(w, j)];
+    if (log == null) return null;
+    final a = store.sessionAdapt(w, j);
+    final day = a == null ? widget.base : store.adaptDay(w, widget.base, a);
+    return [
+      for (final e in day.exercises)
+        if (log.ex[e.id] case final x?
+            when x.sets.any((s) => s.done))
+          (
+            store.splitName(e.name).$1,
+            [
+              for (var i = 0; i < x.sets.length; i++)
+                if (x.sets[i].done)
+                  SetSummaryLine(
+                    setLabel: store.setLabel(store.logSpec(e), i),
+                    done: setDoneText(x.sets[i], store.logSpec(e)),
+                    flames: setFlamesOf(x.sets[i]),
+                    unknown: x.sets[i].flamesUnknown,
+                    excluded: x.sets[i].excluded,
+                  ),
+            ],
+          ),
+    ];
   }
 
   Widget _section(String key, String title, List<String> lines) => KCard(

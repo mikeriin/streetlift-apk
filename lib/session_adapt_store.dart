@@ -1154,6 +1154,36 @@ extension SessionAdaptStore on AppStore {
     }
   }
 
+  /// G9 correction 1 : la note de la série [index] de [e], dernière validée,
+  /// a été corrigée sous la série. Le conseil qu'elle avait produit (pour la
+  /// première série non validée qui suit) est retiré, puis recalculé avec
+  /// la nouvelle note.
+  ({kc.IntraSessionAdvice advice, AdviceStep? step})? adaptReviseAfterSet(
+    int week,
+    DayPlan day,
+    Exercise e,
+    int index,
+  ) {
+    final a = sessionAdapt(week, day.j);
+    if (a == null || !e.engine) return null;
+    final log = logs[sessionKey(week, day.j)]?.ex[e.id];
+    if (log == null || index >= log.sets.length || !log.sets[index].done) {
+      return null;
+    }
+    var next = -1;
+    for (var i = index + 1; i < log.sets.length; i++) {
+      if (!log.sets[i].done) {
+        next = i;
+        break;
+      }
+    }
+    final l = a.advice[e.id];
+    if (l != null && l.isNotEmpty && next >= 0 && l.last.from == next) {
+      _adaptStore(week, day, a, a.withoutLastAdvice(e.id));
+    }
+    return adaptAfterSet(week, day, e, index);
+  }
+
   /// Conseil en attente ou appliqué de [e] : `undone` (annuler),
   /// `accepted`, `kept` (mode libre).
   void adaptAdviceDecision(int week, DayPlan day, Exercise e, String status) {

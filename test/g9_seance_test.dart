@@ -15,9 +15,10 @@ import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/adapt/adapt_summary_screen.dart';
 import 'package:streetlift_tracker/adapt/adapt_texts.dart';
-import 'package:streetlift_tracker/adapt/flame_sheet.dart';
+import 'package:streetlift_tracker/adapt/flame_track.dart';
 import 'package:streetlift_tracker/adapt/health_check.dart';
 import 'package:streetlift_tracker/app_theme.dart';
+import 'package:streetlift_tracker/koach/flame_icon.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/journal_adapter.dart';
 import 'package:streetlift_tracker/models.dart';
@@ -616,69 +617,182 @@ void main() {
         await tester.tap(find.byKey(const ValueKey('adjust-go')));
         await tester.pumpAndSettle();
       }
-      // Premier exercice : valider une série ouvre les flammes.
+      // Premier exercice : la coche valide la série avec la flamme visée,
+      // la ligne des flammes s'ouvre sous la série (G9 correction 1).
       final served = store.adaptDay(12, day, store.sessionAdapt(12, 1)!);
       final first = served.exercises.first;
       final button = find.byTooltip('Valider la série 1').first;
+      final introBefore = store.flamesIntroSeen;
       await tester.ensureVisible(button);
       await tester.tap(button);
       await tester.pumpAndSettle();
-      expect(find.byKey(const ValueKey('flame-sheet')), findsOneWidget);
-      // Fermée sans choix : la série reste non validée.
-      await tester.tapAt(const Offset(10, 10));
-      await tester.pumpAndSettle();
       final log = store.logs['S12-J1']!.ex[first.id]!;
-      expect(log.sets[0].done, isFalse);
-      await tester.tap(button);
-      await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const ValueKey('flame-pick-8')));
-      await tester.pumpAndSettle();
       expect(log.sets[0].done, isTrue);
+      expect(log.sets[0].flames, isNotNull);
+      expect(find.byKey(const ValueKey('flame-sheet')), findsNothing);
+      expect(find.byKey(const ValueKey('flame-track-1')), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('flame-intro')),
+        introBefore ? findsNothing : findsOneWidget,
+      );
+      expect(store.flamesIntroSeen, isTrue);
+      // Corrigée sur la ligne : 8 flammes ; le conseil de la série est
+      // recalculé (jamais deux conseils pour la même série).
+      await tester.ensureVisible(find.byKey(const ValueKey('flame-pos-8')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('flame-pos-8')));
+      await tester.pumpAndSettle();
       expect(log.sets[0].flames, 8);
       expect(log.sets[0].effort, 1.5);
-      expect(find.byKey(const ValueKey('flame-line-1')), findsWidgets);
+      expect(find.byKey(const ValueKey('flame-thumb-8')), findsOneWidget);
+      final advice = store.sessionAdapt(12, 1)!.advice[first.id] ?? const [];
+      expect(advice.length, lessThanOrEqualTo(1));
+      // « Je ne sais pas » puis une flamme de nouveau.
+      await tester.tap(find.byKey(const ValueKey('flame-unknown')));
+      await tester.pumpAndSettle();
+      expect(log.sets[0].flames, isNull);
+      expect(log.sets[0].flamesUnknown, isTrue);
+      expect(find.text('Sans note'), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('flame-pos-6')));
+      await tester.pumpAndSettle();
+      expect(log.sets[0].flames, 6);
+      expect(log.sets[0].flamesUnknown, isFalse);
+      // Série 2 validée : la série 1 passe en une ligne, la 2 s'ouvre.
+      final b2 = find.byTooltip('Valider la série 2').first;
+      await tester.ensureVisible(b2);
+      await tester.pumpAndSettle();
+      await tester.tap(b2);
+      await tester.pumpAndSettle();
+      expect(log.sets[1].done, isTrue);
+      expect(find.byKey(const ValueKey('set-summary-1')), findsOneWidget);
+      expect(find.byKey(const ValueKey('flame-track-1')), findsNothing);
+      expect(find.byKey(const ValueKey('flame-track-2')), findsOneWidget);
+      expect(find.byKey(const ValueKey('flame-intro')), findsNothing);
+      // Un appui sur la ligne résumée la rouvre.
+      await tester.tap(find.byKey(const ValueKey('set-summary-1')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('flame-track-1')), findsOneWidget);
+      expect(find.byKey(const ValueKey('set-summary-2')), findsOneWidget);
+      expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
       await tester.runAsync(() => store.flush());
     });
 
-    testWidgets('sélecteur de flammes : pré-rempli, « Je ne sais pas », '
-        'clair et sombre, grand texte', (tester) async {
+    testWidgets('ligne des flammes : 9 points et la flamme, toucher, '
+        'glisser, « Je ne sais pas », écarter, clair et sombre', (
+      tester,
+    ) async {
       phone(tester);
       for (final dark in [true, false]) {
-        FlameChoice? got;
+        int? v = 7;
+        var unknown = false, excluded = false;
         await tester.pumpWidget(
           page(
-            Builder(
-              builder: (context) => Center(
-                child: TextButton(
-                  onPressed: () async => got = await showFlameSheet(
-                    context,
-                    title: 'Série 1 · difficulté',
-                    target: 7,
-                    intro: true,
+            Scaffold(
+              body: StatefulBuilder(
+                builder: (context, set) => Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      FlameTrack(
+                        setLabel: '1',
+                        value: v,
+                        unknown: unknown,
+                        excluded: excluded,
+                        intro: true,
+                        onChanged: (f) => set(() {
+                          v = f;
+                          unknown = false;
+                        }),
+                        onUnknown: () => set(() {
+                          v = null;
+                          unknown = true;
+                        }),
+                        onToggleExcluded: () => set(() => excluded = !excluded),
+                      ),
+                    ],
                   ),
-                  child: const Text('ouvrir'),
                 ),
               ),
             ),
             dark: dark,
           ),
         );
-        await tester.tap(find.text('ouvrir'));
         await tester.pumpAndSettle();
-        expect(find.byKey(const ValueKey('flame-intro')), findsOneWidget);
         expect(find.text('7 flammes · RIR 2'), findsOneWidget);
-        await tester.tap(find.byKey(const ValueKey('flame-confirm')));
+        expect(find.byKey(const ValueKey('flame-thumb-7')), findsOneWidget);
+        // 10 positions : 9 points visibles et la flamme.
+        for (var i = 1; i <= 10; i++) {
+          expect(find.byKey(ValueKey('flame-pos-$i')), findsOneWidget);
+        }
+        // La flamme est centrée sur sa position.
+        expect(
+          tester.getCenter(find.byKey(const ValueKey('flame-thumb'))).dx,
+          moreOrLessEquals(
+            tester.getCenter(find.byKey(const ValueKey('flame-pos-7'))).dx,
+            epsilon: .5,
+          ),
+        );
+        await tester.tap(find.byKey(const ValueKey('flame-pos-3')));
         await tester.pumpAndSettle();
-        expect(got!.flames, 7);
-        await tester.tap(find.text('ouvrir'));
+        expect(v, 3);
+        // Glisser de 2 à 9 : la flamme suit, validée au lâcher.
+        final from = tester.getCenter(find.byKey(const ValueKey('flame-pos-2')));
+        final to = tester.getCenter(find.byKey(const ValueKey('flame-pos-9')));
+        await tester.timedDragFrom(
+          from,
+          Offset(to.dx - from.dx, 0),
+          const Duration(milliseconds: 400),
+        );
         await tester.pumpAndSettle();
+        expect(v, 9);
+        expect(find.text('9 flammes · RIR 0,5'), findsOneWidget);
         await tester.tap(find.byKey(const ValueKey('flame-unknown')));
         await tester.pumpAndSettle();
-        expect(got!.flames, isNull);
-        expect(got!.unknown, isTrue);
+        expect(v, isNull);
+        expect(unknown, isTrue);
+        expect(find.byKey(const ValueKey('flame-thumb')), findsNothing);
+        await tester.tap(find.byKey(const ValueKey('flame-menu')));
+        await tester.pumpAndSettle();
+        await tester.tap(find.byKey(const ValueKey('flame-exclude')));
+        await tester.pumpAndSettle();
+        expect(excluded, isTrue);
         expect(tester.takeException(), isNull);
       }
+    });
+
+    testWidgets('ligne résumée : flamme alignée avec le texte', (
+      tester,
+    ) async {
+      phone(tester);
+      final semantics = tester.ensureSemantics();
+      for (final f in [1, 5, 10]) {
+        await tester.pumpWidget(
+          page(
+            Scaffold(
+              body: Center(
+                child: SetSummaryLine(
+                  setLabel: '2',
+                  done: '16,25 kg × 8',
+                  flames: f,
+                  onTap: () {},
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        final flame = tester.getCenter(find.byType(FlameIcon));
+        final text = tester.getCenter(find.text(flameShortText(f)));
+        final done = tester.getCenter(find.text('16,25 kg × 8'));
+        expect(flame.dy, moreOrLessEquals(text.dy, epsilon: 1));
+        expect(flame.dy, moreOrLessEquals(done.dy, epsilon: 1));
+        expect(
+          find.bySemanticsLabel(RegExp('^Série 2 : 16,25 kg × 8, ')),
+          findsOneWidget,
+        );
+      }
+      semantics.dispose();
     });
 
     testWidgets('résumé de fin de séance : Koach, calibrage, progrès, '

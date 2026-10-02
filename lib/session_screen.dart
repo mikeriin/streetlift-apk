@@ -10,7 +10,7 @@ import 'device.dart';
 
 import 'adapt/adapt_summary_screen.dart';
 import 'adapt/adapt_texts.dart';
-import 'adapt/flame_sheet.dart';
+import 'adapt/flame_track.dart';
 import 'adapt/health_check.dart';
 import 'koach/koach_bubble.dart'
     show
@@ -830,6 +830,26 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   /// Problème de saisie affiché sous une série (KT-009) : (exercice, série).
   final Map<(int, int), SetCheck> _issues = {};
 
+  /// G9 correction 1 : série validée ouverte (ligne des flammes) par
+  /// exercice ; les autres séries validées sont résumées en une ligne. -1 :
+  /// aucune. Absente : la dernière validée tant que l'exercice n'est pas
+  /// fini (série n − 1 ouverte, n − 2 et avant résumées).
+  final Map<int, int> _openSet = {};
+
+  /// Première notation en flammes : l'échelle expliquée sous cette série.
+  (int, int)? _introAt;
+
+  int _openOf(int k) {
+    final o = _openSet[k];
+    if (o != null) return o;
+    final sets = logs[k].sets;
+    if (!sets.any((s) => !s.done)) return -1;
+    for (var i = sets.length - 1; i >= 0; i--) {
+      if (sets[i].done) return i;
+    }
+    return -1;
+  }
+
   // ---- Flammes (G9, D5.3-D5.5) ----
 
   /// La série se note en flammes : répétitions ou tenues, hors
@@ -869,13 +889,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
 
   /// Note d'une série enregistrée (flammes, sinon ancienne difficulté ou
   /// RIR convertis comme le journal du moteur, règle C9).
-  static int? flamesOf(SetEntry s) {
-    if (s.flames != null) return s.flames;
-    if (s.flamesUnknown) return null;
-    final rir = s.effort ?? double.tryParse(s.rir.trim().replaceAll(',', '.'));
-    if (rir == null || rir < 0) return null;
-    return kc.Flames.fromRir(rir);
-  }
+  static int? flamesOf(SetEntry s) => setFlamesOf(s);
 
   Future<void> _checkSet(int k, int i) async {
     if (widget.readOnly) return;
@@ -883,8 +897,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final sp = specs[k];
     final log = logs[k];
     final s = log.sets[i];
-    // G9 : saisie valide d'abord, puis la note en flammes (obligatoire,
-    // pré-remplie avec la cible). Feuille fermée : rien ne change.
+    // G9 correction 1 : saisie valide d'abord ; la coche valide la série
+    // avec la flamme visée déjà placée sur la ligne ouverte sous la série,
+    // où elle se corrige.
+    var noted = false;
     if (!s.done) {
       final pre = checkSet(sp, s, rpe: store.settings.rpe);
       if (!pre.ok) {
@@ -893,22 +909,16 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         return;
       }
       if (_needsFlames(ex, sp)) {
-        final intro = !store.flamesIntroSeen;
-        final target = _targetFlames(ex, sp, i);
-        final choice = await showFlameSheet(
-          context,
-          title: 'Série ${store.setLabel(sp, i)} · difficulté',
-          target: target,
-          current: s.flames ?? target,
-          intro: intro,
-        );
-        if (!mounted || choice == null) return;
-        if (intro) unawaited(store.markFlamesIntroSeen());
-        s.flames = choice.flames;
-        s.flamesUnknown = choice.unknown;
-        s.effort = choice.flames == null
-            ? null
-            : kc.Flames.toRir(choice.flames!);
+        noted = true;
+        _introAt = null;
+        if (!store.flamesIntroSeen) {
+          _introAt = (k, i);
+          unawaited(store.markFlamesIntroSeen());
+        }
+        if (s.flames == null && !s.flamesUnknown) {
+          s.flames = _targetFlames(ex, sp, i);
+        }
+        s.effort = s.flames == null ? null : kc.Flames.toRir(s.flames!);
       }
     }
     // Validation métier (store) : la coche n'est acceptée qu'avec une saisie
@@ -924,6 +934,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     setState(() {
       if (check.ok) {
         _issues.remove((k, i));
+        if (s.done && noted) _openSet[k] = i;
+        if (!s.done && _openSet[k] == i) _openSet.remove(k);
       } else {
         _issues[(k, i)] = check;
       }
@@ -967,9 +979,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
   /// assisté : appliqué aux séries suivantes, message de Koach et
   /// « Annuler » ; mode libre : proposition dans la carte de l'exercice.
   /// Renvoie le repos conseillé quand il diffère du repos prévu.
-  int? _adaptAdvice(int k, int i) {
+  int? _adaptAdvice(int k, int i, {bool revise = false}) {
     final ex = widget.exs[k];
-    final r = store.adaptAfterSet(widget.week.n, widget.day, ex, i);
+    final r = revise
+        ? store.adaptReviseAfterSet(widget.week.n, widget.day, ex, i)
+        : store.adaptAfterSet(widget.week.n, widget.day, ex, i);
     if (r == null) return null;
     final seconds = specs[k].kind == 'hold' || specs[k].kind == 'holdMax';
     final text = adviceText(r.advice, seconds: seconds);
@@ -1193,30 +1207,32 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     });
   }
 
-  // ---- Koach (L7) ----
-  /// Fiche d'une série validée : note en flammes (G9, remplace la
-  /// difficulté L7), série écartée (D11).
-  Future<void> _editEffort(int k, int i) async {
+  // ---- Flammes sous la série (G9 correction 1) ----
+  /// Note de la série validée [i] changée sur sa ligne : [flames] (null avec
+  /// [unknown] : « Je ne sais pas »). Dernière série validée d'un exercice
+  /// servi par le moteur : son conseil est recalculé.
+  void _setFlames(int k, int i, int? flames, {bool unknown = false}) {
     final log = logs[k];
     final s = log.sets[i];
-    final choice = await showFlameSheet(
-      context,
-      title: 'Série ${store.setLabel(specs[k], i)}',
-      target: _targetFlames(widget.exs[k], specs[k], i),
-      current: flamesOf(s),
-      editing: true,
-      excluded: s.excluded,
-    );
-    if (choice == null || !mounted) return;
-    s.flames = choice.flames;
-    s.flamesUnknown = choice.unknown;
-    final rir = choice.flames == null ? null : kc.Flames.toRir(choice.flames!);
+    if (!s.done) return;
+    s.flames = flames;
+    s.flamesUnknown = unknown;
+    final rir = flames == null ? null : kc.Flames.toRir(flames);
     if (rir != s.effort) {
       store.setEffort(log, i, rir);
     } else {
       store.saveLogs(affectsProgression: false);
     }
-    if (choice.excluded != s.excluded) store.toggleExcluded(log, i);
+    final ex = widget.exs[k];
+    final latest = !log.sets.skip(i + 1).any((x) => x.done);
+    setState(() {});
+    if (widget.adapt && ex.engine && latest) {
+      _adaptAdvice(k, i, revise: true);
+    }
+  }
+
+  void _toggleExcluded(int k, int i) {
+    store.toggleExcluded(logs[k], i);
     setState(() {});
   }
 
@@ -1822,7 +1838,14 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               () => widget.timer.single('INTRA', sp.intra!, prepare: false),
             ),
           // ----- Logger : en-tête de colonnes + lignes -----
-          _HeaderRow(
+          // G9 correction 1 : sans ligne de saisie visible (toutes les
+          // séries résumées), pas d'en-tête de colonnes.
+          if (!flameSets ||
+              [
+                for (var i = 0; i < log.sets.length; i++)
+                  !log.sets[i].done || (!readOnly && i == _openOf(k)),
+              ].any((x) => x))
+            _HeaderRow(
             spec: sp,
             showKg: showKg,
             showRir: showRir,
@@ -1831,53 +1854,66 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             valueLabel: unresolved ? 'VALEUR' : null,
             effortLabel: readOnly ? 'EFFORT' : null,
           ),
-          for (var i = 0; i < log.sets.length; i++) ...[
-            _SetRow(
-              key: ValueKey('${ex.id}-$i-$epoch'),
-              label: store.setLabel(sp, i),
-              entry: log.sets[i],
-              spec: sp,
-              showKg: showKg,
-              showRir: showRir,
-              showV: showV,
-              readOnly: readOnly,
-              issue: _issues[(k, i)],
-              onEdited: readOnly ? null : () => _edited(k, i),
-              onCheck: readOnly ? null : () => _checkSet(k, i),
-              onLongPressLabel: !readOnly && flameSets && log.sets[i].done
-                  ? () => _editEffort(k, i)
-                  : null,
-              onTimer: readOnly
-                  ? null
-                  : sp.kind == 'hold'
-                  ? () => widget.timer.single(
-                      'TENUE',
-                      int.tryParse(log.sets[i].reps) ?? sp.seconds ?? 30,
-                    )
-                  : sp.kind == 'holdMax'
-                  ? () => widget.timer.stopwatch('MAX')
-                  : sp.kind == 'duration'
-                  ? () => widget.timer.single(
-                      'DURÉE',
-                      (int.tryParse(log.sets[i].reps) ?? (sp.seconds! ~/ 60)) *
-                          60,
-                    )
-                  : null,
-            ),
+          for (var i = 0; i < log.sets.length; i++)
+            // G9 correction 1 : séries validées résumées en une ligne, sauf
+            // la série ouverte (la dernière validée) ; toutes résumées en
+            // lecture (fin de séance, historique).
             if (flameSets &&
                 log.sets[i].done &&
-                (!readOnly ||
-                    flamesOf(log.sets[i]) != null ||
-                    log.sets[i].flamesUnknown ||
-                    log.sets[i].excluded))
-              FlameSetLine(
+                (readOnly || i != _openOf(k)))
+              SetSummaryLine(
                 setLabel: store.setLabel(sp, i),
+                done: setDoneText(log.sets[i], sp),
                 flames: flamesOf(log.sets[i]),
                 unknown: log.sets[i].flamesUnknown,
                 excluded: log.sets[i].excluded,
-                onTap: readOnly ? null : () => _editEffort(k, i),
+                onTap: readOnly ? null : () => setState(() => _openSet[k] = i),
+              )
+            else ...[
+              _SetRow(
+                key: ValueKey('${ex.id}-$i-$epoch'),
+                label: store.setLabel(sp, i),
+                entry: log.sets[i],
+                spec: sp,
+                showKg: showKg,
+                showRir: showRir,
+                showV: showV,
+                readOnly: readOnly,
+                issue: _issues[(k, i)],
+                onEdited: readOnly ? null : () => _edited(k, i),
+                onCheck: readOnly ? null : () => _checkSet(k, i),
+                onLongPressLabel: !readOnly && flameSets && log.sets[i].done
+                    ? () => setState(() => _openSet[k] = i)
+                    : null,
+                onTimer: readOnly
+                    ? null
+                    : sp.kind == 'hold'
+                    ? () => widget.timer.single(
+                        'TENUE',
+                        int.tryParse(log.sets[i].reps) ?? sp.seconds ?? 30,
+                      )
+                    : sp.kind == 'holdMax'
+                    ? () => widget.timer.stopwatch('MAX')
+                    : sp.kind == 'duration'
+                    ? () => widget.timer.single(
+                        'DURÉE',
+                        (int.tryParse(log.sets[i].reps) ?? (sp.seconds! ~/ 60)) *
+                            60,
+                      )
+                    : null,
               ),
-          ],
+              if (flameSets && log.sets[i].done && !readOnly)
+                FlameTrack(
+                  setLabel: store.setLabel(sp, i),
+                  value: flamesOf(log.sets[i]),
+                  unknown: log.sets[i].flamesUnknown,
+                  excluded: log.sets[i].excluded,
+                  intro: _introAt == (k, i),
+                  onChanged: (f) => _setFlames(k, i, f),
+                  onUnknown: () => _setFlames(k, i, null, unknown: true),
+                  onToggleExcluded: () => _toggleExcluded(k, i),
+                ),
+            ],
           if (!readOnly && widget.adapt)
             if (_adaptPendingCard(k) case final card?) card,
           if (!readOnly) ..._koachCards(k),
