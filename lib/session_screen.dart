@@ -1093,7 +1093,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       }
     }
     if (it.toCalibrate && !lines.any((l) => l.startsWith('Calibrage'))) {
-      lines.insert(0, 'Calibrage : je cale la charge sur tes premières séances.');
+      lines.insert(
+        0,
+        'Calibrage : je cale la charge sur tes premières séances.',
+      );
     }
     if (lines.isEmpty && !it.toCalibrate) return const [];
     return [

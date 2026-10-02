@@ -96,9 +96,7 @@ extension SessionAdaptStore on AppStore {
   String adaptExerciseName(String id) => _adaptNameOf(id);
 
   /// Le moteur peut servir les séances : profil v2 et base chargée.
-  bool get adaptAvailable =>
-      content.catalog != null &&
-      adaptProfile != null;
+  bool get adaptAvailable => content.catalog != null && adaptProfile != null;
 
   /// Mode du profil (D3.7, D5.6).
   String get adaptMode {
@@ -585,8 +583,7 @@ extension SessionAdaptStore on AppStore {
       testOf: (w, j, key) {
         final a = sessionAdaptOf(sessionKey(w, j));
         if (a == null) return false;
-        return _adaptItem(a, adaptSlotOf(w, j, key))?.kind ==
-            kc.SetKind.test;
+        return _adaptItem(a, adaptSlotOf(w, j, key))?.kind == kc.SetKind.test;
       },
       session: (w, j, key) {
         final a = sessionAdaptOf(key);

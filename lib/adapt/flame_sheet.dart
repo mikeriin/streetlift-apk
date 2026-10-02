@@ -318,25 +318,25 @@ class FlameSetLine extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(32, 2, 4, 2),
             child: Row(
-            children: [
-              if (f != null)
-                FlameIcon(f, size: 18, semantics: false)
-              else
-                Icon(Icons.help_outline, size: 16, color: SL.dim),
-              const SizedBox(width: 6),
-              Expanded(
-                child: Text(
-                  label,
-                  style: TextStyle(
-                    color: SL.dim,
-                    fontSize: 12.5,
-                    decoration: excluded ? TextDecoration.lineThrough : null,
+              children: [
+                if (f != null)
+                  FlameIcon(f, size: 18, semantics: false)
+                else
+                  Icon(Icons.help_outline, size: 16, color: SL.dim),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    label,
+                    style: TextStyle(
+                      color: SL.dim,
+                      fontSize: 12.5,
+                      decoration: excluded ? TextDecoration.lineThrough : null,
+                    ),
                   ),
                 ),
-              ),
-              if (onTap != null) Icon(Icons.edit, size: 14, color: SL.dim),
-            ],
-          ),
+                if (onTap != null) Icon(Icons.edit, size: 14, color: SL.dim),
+              ],
+            ),
           ),
         ),
       ),

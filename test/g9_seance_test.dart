@@ -308,10 +308,9 @@ void main() {
         const kc.HealthCheck(overall: 1, minutesAvailable: 20),
       )!;
       expect(a.check!.toJson(), {'overall': 1, 'minutesAvailable': 20});
-      expect(
-        SessionAdaptStore.factsOf(a.check!)!.toJson(),
-        {'minutesAvailable': 20},
-      );
+      expect(SessionAdaptStore.factsOf(a.check!)!.toJson(), {
+        'minutesAvailable': 20,
+      });
       expect(
         SessionAdaptStore.factsOf(const kc.HealthCheck(overall: 2)),
         isNull,

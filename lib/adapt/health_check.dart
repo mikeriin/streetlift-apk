@@ -88,9 +88,7 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
     if (low) {
       final initial = check;
       final detail = await Navigator.of(context).push<kc.HealthCheck>(
-        MaterialPageRoute(
-          builder: (_) => HealthDetailScreen(initial: initial),
-        ),
+        MaterialPageRoute(builder: (_) => HealthDetailScreen(initial: initial)),
       );
       if (!mounted) return;
       if (detail != null) check = detail;
