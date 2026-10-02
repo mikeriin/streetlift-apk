@@ -1,0 +1,17 @@
+test/g12_progression_test.dart
+test/reward_flow_test.dart
+test/records_test.dart
+test/stats_test.dart
+test/progression_screens_test.dart
+test/level_fill_test.dart
+test/l2b_data_control_test.dart
+test/l4b_seances_test.dart
+test/l4_depart_test.dart
+test/l2_persistence_test.dart
+test/l5c_couleur_test.dart
+test/g2_retrait_test.dart
+test/g3_historique_test.dart
+test/g6_profil_test.dart
+test/g10_seance_sans_moteur_test.dart
+test/history_correction_test.dart
+dev:test/g12_mode_dev_test.dart
