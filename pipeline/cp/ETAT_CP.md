@@ -20,7 +20,7 @@ Tous les lots sont lancés par la conversation de pilotage d'après ce fichier (
 
 ## Entrées du propriétaire
 
-- Références (`inputs/references/`, privées) : **en attente** — le propriétaire envoie des programmes de champions (sets & reps, actuels et anciens) et dira « c'est tout ».
+- Références : **reçues — liste complète** (02/10/2026, 22:20 : six programmes de deux coachs de street workout, DECISIONS_CP.md C2) ; **chiffrées** sur la branche orpheline `cp-references` (dépôt public ; clé seulement dans les messages de lancement).
 
 ## Base de départ
 
@@ -38,7 +38,7 @@ Chaque lot ne modifie que sa ligne (PIPELINE_CP.md §1).
 
 | Lot | Voie | Prérequis | Livré | Panel (min) | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
-| CR | A | références reçues | — | — | — | en attente du propriétaire (références) |
+| CR | A | références reçues | — | — | — | à faire |
 | CQ | B | — | — | — | — | en cours depuis 2026-10-02 20:03 UTC |
 | CP1 | A | CR, CQ | — | — | — | en attente de CR, CQ |
 | CA1 | B | CR, CQ | — | — | — | en attente de CR, CQ |

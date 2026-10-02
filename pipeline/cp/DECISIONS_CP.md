@@ -26,8 +26,9 @@ Ces décisions **font foi** pour tous les lots CP. Les décisions du pipeline GP
 
 ## C2. Programmes de référence (02/10/2026, 21:46)
 
-- **C2.1** Le propriétaire transmet des programmes de champions actuels et anciens de sets & reps (et éventuellement d'autres) ; ils sont rangés dans `pipeline/cp/inputs/references/` par la conversation de pilotage. Le lot CR démarre quand le propriétaire a dit « c'est tout ».
-- **C2.2** Usage : extraire des principes chiffrés et comparer ; **jamais** recopiés, publiés ou cités nommément dans l'application, la page de suivi ou la page de relecture (PIPELINE_CP.md §2).
+- **C2.1** Le propriétaire a transmis le 02/10/2026 à 22:20 six programmes de deux coachs de street workout français (sets & reps : préparations de championnat de France intermédiaire et élite, programmes de tractions, de force et d'endurance), avec ce message : « Voici tous les programmes que j'ai » — la liste est complète (équivaut à « c'est tout »). Noms et inventaire : seulement dans l'archive chiffrée (C2.3).
+- **C2.2** Usage : extraire des principes chiffrés et comparer ; **jamais** recopiés, publiés ou nommés dans l'application, la page de suivi, la page de relecture ou le dépôt (PIPELINE_CP.md §2).
+- **C2.3** Le dépôt `mikeriin/streetlift-apk` est **public** et ces programmes sont payants et protégés (mentions de copyright) : la conversation de pilotage les a stockés **chiffrés** (GnuPG symétrique AES-256) sur la branche orpheline `cp-references` (commit e9d1818f, `references.tar.gpg`, SHA-256 b27b0105…e8bacbc0). Les deux plus gros documents (images seules, 35 et 60 Mo) y sont rendus en pages JPEG lisibles, avec le texte extrait quand il existe. La clé n'est donnée que dans le message de lancement des lots (CR, puis les lots moteurs qui comparent aux références) ; elle n'est écrite nulle part dans le dépôt.
 
 ## Sections des lots
 
