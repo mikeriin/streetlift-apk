@@ -1,0 +1,129 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag debutant_salle 1
+DIAG debutant_salle/1 ms=552 done=24 missed=0 sets=437 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:01 +1: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag debutant_salle 2
+00:01 +2: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag debutant_salle 2
+00:01 +3: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag debutant_salle 2
+DIAG debutant_salle/2 ms=403 done=23 missed=1 sets=422 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:01 +4: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin mode assisté : volume appliqué d’office, annoncé, programme affiché et bloc du moteur à jour à partir de la semaine visée ; semaines d’avant intactes ; annulation jusqu’à la séance concernée
+00:01 +5: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag debutant_salle 3
+DIAG debutant_salle/3 ms=371 done=23 missed=1 sets=408 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[deload:applied@3] err=null
+00:02 +6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin annulation refusée une fois la séance concernée commencée, et seulement pour le dernier changement du bloc
+00:02 +7: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag debutant_salle 4
+00:02 +8: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag debutant_salle 4
+00:02 +9: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag debutant_salle 4
+DIAG debutant_salle/4 ms=307 done=21 missed=3 sets=401 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:02 +10: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin exercise_swap (assisted) : restructuration de kalis_plan appliquée d’office à partir de la semaine visée, semaines d’avant intactes, annulable
+00:02 +11: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag debutant_salle 5
+00:02 +12: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag debutant_salle 5
+DIAG debutant_salle/5 ms=201 done=21 missed=3 sets=378 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:02 +13: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin session_restructure (assisted) : restructuration de kalis_plan appliquée d’office à partir de la semaine visée, semaines d’avant intactes, annulable
+00:02 +14: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag debutant_salle 6
+00:02 +15: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag debutant_salle 6
+DIAG debutant_salle/6 ms=190 done=21 missed=3 sets=381 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:02 +16: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin exercise_swap (free) : restructuration de kalis_plan appliquée une fois acceptée à partir de la semaine visée, semaines d’avant intactes, annulable
+00:03 +17: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag intermediaire_salle 1
+00:03 +18: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag intermediaire_salle 1
+00:03 +19: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag intermediaire_salle 1
+00:03 +20: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag intermediaire_salle 1
+DIAG intermediaire_salle/1 ms=306 done=24 missed=0 sets=444 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:03 +21: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin sauvegarde : section planEvolution exportée, relue au démarrage et à l’import ; section invalide refusée à l’import, gardée telle quelle au démarrage
+00:03 +22: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag intermediaire_salle 2
+00:03 +23: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag intermediaire_salle 2
+DIAG intermediaire_salle/2 ms=257 done=23 missed=1 sets=422 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:03 +24: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin simulateur : même graine, même session ; séances faites, notées en flammes, revue du moteur
+00:03 +24: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag intermediaire_salle 3
+DIAG intermediaire_salle/3 ms=230 done=23 missed=1 sets=408 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[volume:applied@3] err=null
+DIAG intermediaire_salle   proposal {id: volume:lower_back:down:kp-b1-2026-11-05@3, kind: volume, utility: 0.314, progress: 0.214, risk: 0.0, fatigue: -0.1, adherence: 0.0, threshold: 0.65}
+00:03 +25: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin simulateur : même graine, même session ; séances faites, notées en flammes, revue du moteur
+00:04 +26: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag intermediaire_salle 4
+DIAG intermediaire_salle/4 ms=285 done=21 missed=3 sets=405 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:04 +27: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin déblocage visible (D5.7) : charges dès la première séance, volume dans 2 semaines
+00:04 +28: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag intermediaire_salle 5
+DIAG intermediaire_salle/5 ms=160 done=21 missed=3 sets=380 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:04 +29: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans carte de l’accueil (sombre) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?, ce qui change ; 320 px et texte à 200 %
+00:04 +29: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag intermediaire_salle 6
+DIAG intermediaire_salle/6 ms=154 done=21 missed=3 sets=384 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:04 +30: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans carte de l’accueil (sombre) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?, ce qui change ; 320 px et texte à 200 %
+00:04 +30: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag avance_street 1
+DIAG avance_street/1 ms=213 done=24 missed=0 sets=442 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:04 +31: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans carte de l’accueil (sombre) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?, ce qui change ; 320 px et texte à 200 %
+00:04 +32: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag avance_street 2
+00:05 +33: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag avance_street 2
+DIAG avance_street/2 ms=229 done=24 missed=0 sets=432 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:05 +34: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans écran Évolution : mode modifiable, déblocage, historique avec raisons ; annulation
+00:05 +35: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag avance_street 3
+DIAG avance_street/3 ms=198 done=24 missed=0 sets=430 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[volume:applied@3] err=null
+DIAG avance_street   proposal {id: volume:hamstrings:down:kp-b1-2026-11-05@3, kind: volume, utility: 0.306, progress: 0.206, risk: 0.0, fatigue: -0.1, adherence: 0.0, threshold: 0.65}
+00:05 +36: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag avance_street 4
+DIAG avance_street/4 ms=180 done=23 missed=1 sets=427 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:05 +37: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag avance_street 5
+DIAG avance_street/5 ms=158 done=22 missed=2 sets=402 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:05 +38: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag avance_street 6
+DIAG avance_street/6 ms=191 done=23 missed=1 sets=430 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:06 +39: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag notes_paresseuses 1
+DIAG notes_paresseuses/1 ms=167 done=24 missed=0 sets=444 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:06 +40: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag notes_paresseuses 2
+DIAG notes_paresseuses/2 ms=163 done=23 missed=1 sets=427 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:06 +41: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag notes_paresseuses 3
+DIAG notes_paresseuses/3 ms=176 done=23 missed=1 sets=408 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:06 +42: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag notes_paresseuses 4
+DIAG notes_paresseuses/4 ms=154 done=21 missed=3 sets=405 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:06 +43: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag notes_paresseuses 5
+DIAG notes_paresseuses/5 ms=129 done=21 missed=3 sets=380 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:07 +44: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag notes_paresseuses 6
+DIAG notes_paresseuses/6 ms=135 done=21 missed=3 sets=384 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:07 +45: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag irregulier 1
+DIAG irregulier/1 ms=126 done=19 missed=5 sets=352 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+DIAG irregulier   proposal_withheld {id: block:kp-b1-2026-11-05@3, kind: block_restructure, utility: 0.5, progress: 0.3, risk: 0.0, fatigue: 0.0, adherence: -0.2, threshold: 0.85, withheld: unlock}
+00:07 +46: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag irregulier 2
+DIAG irregulier/2 ms=128 done=18 missed=6 sets=335 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:07 +47: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag irregulier 3
+DIAG irregulier/3 ms=102 done=18 missed=6 sets=340 blocks=1 unlock=session_restructure weeksObs=8 pending=0 entries=[] err=null
+DIAG irregulier   proposal_withheld {id: block:kp-b1-2026-11-05@3, kind: block_restructure, utility: 0.5, progress: 0.3, risk: 0.0, fatigue: 0.0, adherence: -0.2, threshold: 0.85, withheld: unlock}
+00:07 +48: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag irregulier 4
+DIAG irregulier/4 ms=106 done=16 missed=8 sets=312 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:07 +49: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag irregulier 5
+DIAG irregulier/5 ms=79 done=14 missed=10 sets=237 blocks=1 unlock=session_restructure weeksObs=8 pending=0 entries=[] err=null
+00:08 +50: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag irregulier 6
+DIAG irregulier/6 ms=107 done=16 missed=8 sets=293 blocks=1 unlock=session_restructure weeksObs=8 pending=0 entries=[] err=null
+DIAG irregulier   proposal_withheld {id: block:kp-b1-2026-11-05@3, kind: block_restructure, utility: 0.5, progress: 0.3, risk: 0.0, fatigue: 0.0, adherence: -0.2, threshold: 0.85, withheld: unlock}
+00:08 +51: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag maison_halteres 1
+DIAG maison_halteres/1 ms=184 done=24 missed=0 sets=437 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:08 +52: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag maison_halteres 2
+DIAG maison_halteres/2 ms=144 done=22 missed=2 sets=403 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:08 +53: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag maison_halteres 3
+DIAG maison_halteres/3 ms=164 done=23 missed=1 sets=408 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[deload:applied@3] err=null
+00:08 +54: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag maison_halteres 4
+DIAG maison_halteres/4 ms=132 done=20 missed=4 sets=383 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:09 +55: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag maison_halteres 5
+DIAG maison_halteres/5 ms=106 done=17 missed=7 sets=298 blocks=1 unlock=session_restructure weeksObs=8 pending=0 entries=[] err=null
+00:09 +56: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag maison_halteres 6
+DIAG maison_halteres/6 ms=110 done=19 missed=5 sets=351 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:09 +57: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag calisthenie_parc 1
+DIAG calisthenie_parc/1 ms=183 done=24 missed=0 sets=444 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:09 +58: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag calisthenie_parc 2
+DIAG calisthenie_parc/2 ms=177 done=23 missed=1 sets=422 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[volume:applied@3] err=null
+DIAG calisthenie_parc   proposal_withheld {id: volume:lower_back:up:kp-b1-2026-11-05@3, kind: volume, utility: 0.121, progress: 0.21, risk: 0.0, fatigue: 0.039, adherence: 0.05, threshold: 0.65, withheld: settled}
+00:09 +59: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag calisthenie_parc 3
+DIAG calisthenie_parc/3 ms=180 done=23 missed=1 sets=407 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[volume:applied@2, volume:applied@3] err=null
+00:10 +60: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag calisthenie_parc 4
+DIAG calisthenie_parc/4 ms=143 done=21 missed=3 sets=405 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:10 +61: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag calisthenie_parc 5
+DIAG calisthenie_parc/5 ms=128 done=21 missed=3 sets=380 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:10 +62: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag calisthenie_parc 6
+DIAG calisthenie_parc/6 ms=136 done=21 missed=3 sets=384 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:10 +63: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag douleur_et_lieu 1
+DIAG douleur_et_lieu/1 ms=182 done=24 missed=0 sets=444 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:10 +64: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag douleur_et_lieu 2
+DIAG douleur_et_lieu/2 ms=170 done=23 missed=1 sets=422 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:11 +65: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag douleur_et_lieu 3
+DIAG douleur_et_lieu/3 ms=171 done=23 missed=1 sets=408 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[volume:applied@3] err=null
+DIAG douleur_et_lieu   proposal {id: volume:lower_back:down:kp-b1-2026-11-05@3, kind: volume, utility: 0.314, progress: 0.214, risk: 0.0, fatigue: -0.1, adherence: 0.0, threshold: 0.65}
+00:11 +66: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag douleur_et_lieu 4
+DIAG douleur_et_lieu/4 ms=135 done=21 missed=3 sets=405 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:11 +67: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag douleur_et_lieu 5
+DIAG douleur_et_lieu/5 ms=126 done=21 missed=3 sets=380 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:11 +68: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag douleur_et_lieu 6
+DIAG douleur_et_lieu/6 ms=151 done=21 missed=3 sets=384 blocks=1 unlock=session_restructure weeksObs=9 pending=0 entries=[] err=null
+00:11 +69: All tests passed!
