@@ -247,6 +247,7 @@ SessionRecord arbitrarySessionRecord(Random r) {
     healthCheck: r.nextBool() ? null : arbitraryHealthCheck(r),
     sets: arbList(r, 0, 3, () => arbitrarySetRecord(r)),
     pains: arbList(r, 0, 3, () => arbitraryPainReport(r)),
+    plannedWorkSets: r.nextBool() ? null : arbInt(r, 0, 500),
   );
 }
 
@@ -548,6 +549,7 @@ AdviceRequest arbitraryAdviceRequest(Random r) {
     session: arbitrarySessionPlan(r),
     done: arbList(r, 0, 3, () => arbitrarySetRecord(r)),
     slotId: arbString(r, 1, 12),
+    healthCheck: r.nextBool() ? null : arbitraryHealthCheck(r),
   );
 }
 
@@ -698,6 +700,7 @@ AttributeScore arbitraryAttributeScore(Random r) {
   return AttributeScore(
     attribute: arbEnum(r, AthleteAttribute.values),
     value: arbDouble(r, 0.0, 100.0),
+    best: r.nextBool() ? null : arbDouble(r, 0.0, 100.0),
   );
 }
 
@@ -758,6 +761,11 @@ GoalProgress arbitraryGoalProgress(Random r) {
     achievedOn: r.nextBool() ? null : arbDate(r),
     milestones: arbList(r, 0, 3, () => arbitraryMilestone(r)),
     prediction: r.nextBool() ? null : arbitraryPrediction(r),
+    baseline: r.nextBool() ? null : arbDouble(r, -1000.0, 1000.0),
+    overdue: r.nextBool() ? null : r.nextBool(),
+    suggestedDate: r.nextBool() ? null : arbDate(r),
+    suggestedTarget: r.nextBool() ? null : arbDouble(r, 0.0, 2000.0),
+    reasons: r.nextBool() ? null : arbList(r, 0, 3, () => arbitraryReason(r)),
   );
 }
 
@@ -791,6 +799,11 @@ QuestState arbitraryQuestState(Random r) {
   );
 }
 
+/// Valeur aléatoire de [QuestClaim].
+QuestClaim arbitraryQuestClaim(Random r) {
+  return QuestClaim(questId: arbString(r, 1, 12), date: arbDate(r));
+}
+
 /// Valeur aléatoire de [QuestInput].
 QuestInput arbitraryQuestInput(Random r) {
   return QuestInput(
@@ -802,6 +815,9 @@ QuestInput arbitraryQuestInput(Random r) {
     state: arbitraryQuestState(r),
     today: arbDate(r),
     seed: r.nextBool() ? null : arbInt(r, 0, 1000),
+    claims: r.nextBool()
+        ? null
+        : arbList(r, 0, 3, () => arbitraryQuestClaim(r)),
   );
 }
 
@@ -1355,6 +1371,13 @@ final List<ContractCodec<Object>> contractCodecs = <ContractCodec<Object>>[
     arbitraryQuestState,
     (v) => v.toJson(),
     QuestState.fromJson,
+    (v) => v.validate(),
+  ),
+  ContractCodec<QuestClaim>(
+    'QuestClaim',
+    arbitraryQuestClaim,
+    (v) => v.toJson(),
+    QuestClaim.fromJson,
     (v) => v.validate(),
   ),
   ContractCodec<QuestInput>(

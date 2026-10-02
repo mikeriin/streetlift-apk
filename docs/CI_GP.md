@@ -127,6 +127,24 @@ vide ou absent.
 - La tâche `packages` contrôle aussi `packages/kalis_plan` (10 240 profils,
   quelques minutes).
 
+### G9 (dev6.6.0)
+
+- Cible émulateur par défaut : `integration_test/seance_g9_test.dart`, build
+  de développement, parties `a` (sombre, rouge Kalis) et `b` (clair,
+  violet) : session personnelle semée avec une copie du programme du
+  propriétaire (départ il y a 11 semaines, journal synthétique des semaines
+  1 à 11, profil v2 en mode assisté) → séance du jour servie par
+  kalis_adapt : bilan (« Comment tu te sens ? »), réponse basse → détail
+  (sommeil, énergie, douleur à l'épaule), ajustement de Koach, sélecteur
+  des flammes, série à 10 flammes → conseil pour la série suivante, fin de
+  séance et résumé ; session de test (5 appuis) → profil et programme
+  généré semés, séance complète servie par le moteur ; suppression de la
+  session de test, session personnelle identique clé par clé. Relevés
+  `emulateur/g9_releve_<partie>.json`, captures `emulateur/g9_*_<thème>.png`.
+  G7 passe sous `CI3D_TOUT=1`. APK de test précompilé sur la cible G9.
+- Tests Dart du lot : `test/g9_seance_test.dart` (magasin, journal des
+  moteurs, bilan, modes, conseil, sauvegarde, écrans).
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant

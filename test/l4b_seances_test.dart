@@ -524,8 +524,12 @@ void main() {
       await tester.pump();
       expect(find.textContaining('Reps : nombre entier'), findsNothing);
       await tester.tap(find.byTooltip('Valider la série 1').first);
-      await tester.pump();
+      await tester.pumpAndSettle();
+      // G9 (D5.4) : la note en flammes est demandée à la validation.
+      await tester.tap(find.byKey(const ValueKey('flame-pick-7')));
+      await tester.pumpAndSettle();
       expect(store.exLog(w.n, d.j, ex).sets[0].done, isTrue);
+      expect(store.exLog(w.n, d.j, ex).sets[0].flames, 7);
       // Modifiée après la coche avec une valeur invalide : non validée.
       await tester.enterText(reps, '8,5');
       await tester.pump();

@@ -292,9 +292,13 @@ extension PlanStore on AppStore {
     return o >= (plan.totalWeeks - 1) * 7;
   }
 
-  /// Résumé d'adaptation du bloc en cours, d'après le journal seul (le
-  /// moteur dynamique le fournira en G9) : séances prévues et faites.
+  /// Résumé d'adaptation du bloc en cours : celui de `kalis_adapt` (G9,
+  /// revue du bloc avec tout le journal) ; à défaut (profil ou base
+  /// absents, erreur du moteur), d'après le journal seul : séances prévues
+  /// et faites.
   kc.AdaptationSummary _planSummary() {
+    final engine = _planEngineSummary();
+    if (engine != null) return engine;
     final plan = planProgram!;
     var planned = 0, completed = 0;
     final first = plan.blockFirstWeek(plan.blocks.length - 1);
@@ -319,6 +323,30 @@ extension PlanStore on AppStore {
       avoidedExerciseIds: const [],
       reasons: const [],
     );
+  }
+
+  kc.AdaptationSummary? _planEngineSummary() {
+    final plan = planProgram!;
+    final profile = AthleteProfileStore(this).athleteProfileForEngines;
+    final catalog = content.catalog;
+    if (profile == null || catalog == null) return null;
+    try {
+      return kalisAdaptEngine
+          .review(
+            catalog,
+            kc.AdaptInput(
+              profile: profile,
+              block: SessionAdaptStore(
+                this,
+              )._adaptPlanBlock(plan.blocks.length - 1),
+              log: SessionAdaptStore(this).adaptTrainingLog(),
+              today: civilOf(_planToday),
+            ),
+          )
+          .summary;
+    } catch (_) {
+      return null;
+    }
   }
 
   /// Bloc suivant proposé par le moteur (null : impossible).

@@ -21,10 +21,10 @@ import 'store_widget.dart';
 import 'dev/dev_flags.dart';
 
 /// Version de l'application (pubspec sans le numéro de build).
-const kVersion = '6.5.0';
+const kVersion = '6.6.0';
 
-/// Version affichée (D0.9) : « dev6.5.0 » dans le build de développement
-/// (APK du propriétaire), « 6.5.0 » dans l’AAB du Play Store.
+/// Version affichée (D0.9) : « dev6.6.0 » dans le build de développement
+/// (APK du propriétaire), « 6.6.0 » dans l’AAB du Play Store.
 const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;
 
 class SettingsScreen extends StatelessWidget {
@@ -105,15 +105,9 @@ class SettingsScreen extends StatelessWidget {
             },
           ),
           const _Sec('Saisie des séries'),
-          _Sw(
-            'Colonne RIR / RPE par défaut',
-            'Ajustable avec le menu Colonnes sous chaque exercice',
-            s.trackRir,
-            (v) {
-              s.trackRir = v;
-              save();
-            },
-          ),
+          // G9 (D5.4) : la note en flammes, à chaque série, remplace la
+          // colonne RIR / RPE (réglages `trackRir` et `rpe` gardés dans les
+          // données pour les anciennes sauvegardes, sans effet).
           _Sw(
             'Colonne vitesse (m/s) sur les lifts',
             'Pour suivre la vitesse de tes répétitions',
@@ -123,10 +117,6 @@ class SettingsScreen extends StatelessWidget {
               save();
             },
           ),
-          _Sw('Échelle RPE au lieu de RIR', null, s.rpe, (v) {
-            s.rpe = v;
-            save();
-          }),
           _Sw('Pré-remplir charge suggérée et reps prévues', null, s.prefill, (
             v,
           ) {

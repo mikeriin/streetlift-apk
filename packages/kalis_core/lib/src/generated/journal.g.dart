@@ -947,6 +947,7 @@ final class SessionRecord {
     this.healthCheck,
     required this.sets,
     required this.pains,
+    this.plannedWorkSets,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -973,6 +974,7 @@ final class SessionRecord {
         'pains',
         (v) => PainReport.fromJson(jsonAsObject(v, 'pains')),
       ),
+      plannedWorkSets: jsonIntOrNull(json, 'plannedWorkSets'),
     );
   }
 
@@ -1013,6 +1015,13 @@ final class SessionRecord {
   /// Douleurs signalées pendant ou après la séance.
   final List<PainReport> pains;
 
+  /// Nombre de séries de travail prescrites pour cette séance, telle qu'elle a
+  /// été affichée (après l'ajustement du bilan santé, de la douleur, du lieu et
+  /// du temps du jour) (0.3.0). Sert à `kalis_quest` pour rapporter l'effort au
+  /// programme : une séance allégée et faite en entier vaut une séance
+  /// complète.
+  final int? plannedWorkSets;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -1028,6 +1037,7 @@ final class SessionRecord {
       if (healthCheck case final v?) 'healthCheck': v.toJson(),
       'sets': [for (final e in sets) e.toJson()],
       'pains': [for (final e in pains) e.toJson()],
+      if (plannedWorkSets case final v?) 'plannedWorkSets': v,
     };
   }
 
@@ -1045,6 +1055,7 @@ final class SessionRecord {
     Object? healthCheck = unset,
     List<SetRecord>? sets,
     List<PainReport>? pains,
+    Object? plannedWorkSets = unset,
   }) {
     return SessionRecord(
       id: id ?? this.id,
@@ -1067,6 +1078,9 @@ final class SessionRecord {
           : healthCheck as HealthCheck?,
       sets: sets ?? this.sets,
       pains: pains ?? this.pains,
+      plannedWorkSets: identical(plannedWorkSets, unset)
+          ? this.plannedWorkSets
+          : plannedWorkSets as int?,
     );
   }
 
@@ -1098,6 +1112,9 @@ final class SessionRecord {
     for (var i = 0; i < pains.length; i++) {
       pains[i].collectViolations('$path.pains[$i]', out);
     }
+    if (plannedWorkSets case final v?) {
+      checkRange(out, '$path.plannedWorkSets', v, 0, 500);
+    }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -1127,7 +1144,8 @@ final class SessionRecord {
             place == other.place &&
             healthCheck == other.healthCheck &&
             jsonListEquals(sets, other.sets) &&
-            jsonListEquals(pains, other.pains);
+            jsonListEquals(pains, other.pains) &&
+            plannedWorkSets == other.plannedWorkSets;
   }
 
   @override
@@ -1144,6 +1162,7 @@ final class SessionRecord {
     healthCheck,
     Object.hashAll(sets),
     Object.hashAll(pains),
+    plannedWorkSets,
   ]);
 
   @override

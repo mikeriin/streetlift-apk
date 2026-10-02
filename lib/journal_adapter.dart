@@ -61,12 +61,36 @@ String _civil(DateTime d) =>
 /// - [dayOrder] : identifiants des exercices d'une journée du programme,
 ///   dans l'ordre (C5) ;
 /// - [legacyDate] : date d'origine d'une journée sans départ enregistré (C3).
+///
+/// G9 (moteur dynamique, facultatifs ; sans eux la conversion est celle de
+/// G3) :
+/// - [skip] : séance laissée hors du journal (la séance en cours) ;
+/// - [session] : champs de la séance fournis par l'application (place
+///   dans le bloc `programRef`, bilan santé, lieu, séries prévues), qui
+///   remplacent ceux des règles C3 et C11 ;
+/// - [slotOf] : emplacement du bloc d'un exercice du journal ;
+/// - [targetOf] : cible affichée de la série de rang [index] (rang dans le
+///   journal, séries non validées comprises). Avec une cible, une série
+///   réussie atteint au moins le bas de sa plage (C10) ;
+/// - [testOf] : les séries de l'exercice sont celles d'un test.
+/// La note `flames` (G9, flammes de 1 à 10) passe avant `effort` et `rir`.
 ({TrainingLog log, JournalConversionReport report}) convertLegacyJournal(
   Map<String, dynamic> doc, {
   required String? Function(String name) exerciseId,
   required bool Function(String id) usesSeconds,
   required List<String> Function(int week, int day) dayOrder,
   required DateTime Function(int week, int day) legacyDate,
+  bool Function(String key)? skip,
+  Map<String, Object?>? Function(int week, int day, String key)? session,
+  String? Function(int week, int day, String exerciseKey)? slotOf,
+  bool Function(int week, int day, String exerciseKey)? testOf,
+  Map<String, Object?>? Function(
+    int week,
+    int day,
+    String exerciseKey,
+    int index,
+  )?
+  targetOf,
 }) {
   final report = JournalConversionReport();
   final logs = (doc['logs'] as Map?)?.cast<String, dynamic>() ?? const {};
@@ -84,6 +108,7 @@ String _civil(DateTime d) =>
       report.manualSessionsDropped++; // C2
       continue;
     }
+    if (skip != null && skip(entry.key)) continue;
     final w = int.parse(m[1]!), j = int.parse(m[2]!);
     final s = (entry.value as Map).cast<String, dynamic>();
     final finished = s['finishedAt'];
@@ -124,6 +149,8 @@ String _civil(DateTime d) =>
         for (final x in all)
           if (x['done'] == true) x,
       ];
+      final slot = slotOf?.call(w, j, k);
+      final test = testOf?.call(w, j, k) ?? false;
       report.setsNotDone += all.length - done.length;
       final id = name.isEmpty ? null : exerciseId(name);
       if (id == null) {
@@ -139,6 +166,7 @@ String _civil(DateTime d) =>
       final before = sets.length;
       var setIndex = 0;
       for (final x in done) {
+        final position = all.indexOf(x);
         final value = _number(x['reps']);
         if (value == null || value < 0) {
           report.setsWithoutMeasure++; // C8
@@ -149,15 +177,26 @@ String _civil(DateTime d) =>
           'exerciseId': id,
           'exerciseOrder': exerciseOrder,
           'setIndex': setIndex++,
-          'kind': 'work',
+          'kind': test ? 'test' : 'work',
         };
         final kg = _number(x['kg']);
         if (kg != null) rec['externalLoadKg'] = kg; // C7
         rec[seconds ? 'seconds' : 'reps'] = measure; // C8
-        final rir = _number(x['effort']) ?? _number(x['rir']);
-        if (rir != null && rir >= 0) rec['flames'] = Flames.fromRir(rir); // C9
-        rec['success'] = measure > 0; // C10
+        final flames = x['flames'];
+        if (flames is int && flames >= Flames.min && flames <= Flames.max) {
+          rec['flames'] = flames; // G9
+        } else if (x['flamesUnknown'] != true) {
+          final rir = _number(x['effort']) ?? _number(x['rir']);
+          if (rir != null && rir >= 0) {
+            rec['flames'] = Flames.fromRir(rir); // C9
+          }
+        }
+        final target = targetOf?.call(w, j, k, position);
+        final low = target?[seconds ? 'secondsLow' : 'repsLow'];
+        rec['success'] = measure > 0 && (low is! int || measure >= low); // C10
         rec['excluded'] = x['excluded'] == true;
+        if (slot != null) rec['slotId'] = slot;
+        if (target != null && target.isNotEmpty) rec['target'] = target;
         sets.add(rec);
         report.setsConverted++;
       }
@@ -193,6 +232,9 @@ String _civil(DateTime d) =>
       }
       if (check.isNotEmpty) out['healthCheck'] = check;
     }
+    final extra = session?.call(w, j, entry.key);
+    // G9 : une valeur nulle retire le champ (séance hors de tout bloc).
+    extra?.forEach((k, v) => v == null ? out.remove(k) : out[k] = v);
     out['sets'] = sets;
     out['pains'] = const <Object?>[];
     sessions.add(out);

@@ -9,8 +9,12 @@ import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show AssetBundle, rootBundle;
 import 'package:kalis_core/kalis_core.dart' show TrainingLog;
+import 'package:kalis_adapt/kalis_adapt.dart' as ka;
 import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:kalis_plan/kalis_plan.dart' as kp;
+
+import 'adapt/adapt_texts.dart';
+import 'adapt/session_adapt.dart';
 
 import 'athlete_profile.dart';
 import 'content_pack.dart';
@@ -27,6 +31,7 @@ import 'models.dart';
 import 'persistence.dart';
 import 'plan/plan_creation.dart';
 import 'plan/plan_program.dart';
+import 'plan/plan_texts.dart' as pt;
 import 'profile.dart';
 import 'legacy_pack.dart';
 import 'program_instance.dart';
@@ -37,6 +42,7 @@ import 'search.dart' show normalizeText;
 import 'set_validation.dart';
 import 'wellbeing.dart';
 
+export 'adapt/session_adapt.dart';
 export 'koach_data.dart';
 export 'koach_program.dart';
 export 'persistence.dart';
@@ -51,6 +57,7 @@ part 'plan_store.dart';
 part 'profile_store.dart';
 part 'program_store.dart';
 part 'safety_store.dart';
+part 'session_adapt_store.dart';
 
 class SetEntry {
   String kg;
@@ -66,6 +73,12 @@ class SetEntry {
 
   /// Koach (L7, D11) : série écartée (incident), gardée au journal.
   bool excluded;
+
+  /// G9 (D5.3, D5.4) : note de la série en flammes (1 à 10), donnée à la
+  /// validation. Absente avec [flamesUnknown] : « Je ne sais pas » (le
+  /// moteur la traite comme une série sans note).
+  int? flames;
+  bool flamesUnknown;
   SetEntry({
     this.kg = '',
     this.reps = '',
@@ -75,6 +88,8 @@ class SetEntry {
     this.completedAt,
     this.effort,
     this.excluded = false,
+    this.flames,
+    this.flamesUnknown = false,
   });
 
   Map<String, dynamic> toJson() => {
@@ -86,6 +101,8 @@ class SetEntry {
     'completedAt': completedAt,
     if (effort != null) 'effort': effort,
     if (excluded) 'excluded': true,
+    if (flames != null) 'flames': flames,
+    if (flamesUnknown) 'flamesUnknown': true,
   };
   SetEntry.fromJson(Map<String, dynamic> j)
     : kg = j['kg'] as String? ?? '',
@@ -95,7 +112,9 @@ class SetEntry {
       done = j['done'] as bool? ?? false,
       completedAt = j['completedAt'] as String?,
       effort = (j['effort'] as num?)?.toDouble(),
-      excluded = j['excluded'] as bool? ?? false;
+      excluded = j['excluded'] as bool? ?? false,
+      flames = j['flames'] is int ? j['flames'] as int : null,
+      flamesUnknown = j['flamesUnknown'] == true;
 }
 
 class ExerciseLog {
@@ -153,12 +172,19 @@ class SessionLog {
   String? title; // libellé lisible (ex. « S8 · J1 »)
   Map<String, ExerciseLog> ex;
   Map<String, String> exerciseNames;
+
+  /// G9 : séance servie par `kalis_adapt` (bilan santé, séance prescrite,
+  /// conseils pendant la séance), JSON au schéma de [SessionAdapt]
+  /// (lib/adapt/session_adapt.dart, version 1). Facultatif ; gardé tel quel
+  /// s'il est illisible.
+  Map<String, dynamic>? adapt;
   SessionLog({
     this.done = false,
     this.finishedAt,
     this.title,
     Map<String, ExerciseLog>? ex,
     Map<String, String>? exerciseNames,
+    this.adapt,
   }) : ex = ex ?? {},
        exerciseNames = exerciseNames ?? {};
 
@@ -168,6 +194,7 @@ class SessionLog {
     'title': title,
     'exerciseNames': exerciseNames,
     'ex': ex.map((k, v) => MapEntry(k, v.toJson())),
+    if (adapt != null) 'adapt': adapt,
   };
   SessionLog.fromJson(Map<String, dynamic> j)
     : done = j['done'] as bool? ?? false,
@@ -178,7 +205,10 @@ class SessionLog {
       ),
       ex = ((j['ex'] as Map<String, dynamic>?) ?? {}).map(
         (k, v) => MapEntry(k, ExerciseLog.fromJson(v as Map<String, dynamic>)),
-      );
+      ),
+      adapt = j['adapt'] is Map
+          ? (j['adapt'] as Map).cast<String, dynamic>()
+          : null;
 }
 
 // ===================== RÉGLAGES =====================
@@ -335,6 +365,10 @@ class AppStore extends ChangeNotifier {
 
   /// G7 (D4.9) : « Où j'en suis » (section `programResume`).
   ProgramResume? programResume;
+
+  /// G9 : calculs du moteur dynamique gardés (bloc importé, journal
+  /// présenté au moteur), clés de signature ; jamais sauvegardés.
+  final Map<String, Object?> _g9Cache = {};
 
   /// Programme à afficher selon l'instance ; le départ est conservé.
   void _materializeProgram(DateTime? start) {
@@ -1255,7 +1289,21 @@ class AppStore extends ChangeNotifier {
             }
             set.effort = null;
           }
+          // G9 : note en flammes de 1 à 10.
+          final flames = set.flames;
+          if (flames != null && (flames < 1 || flames > 10)) {
+            if (limits != null) {
+              throw const FormatException('Note de série invalide.');
+            }
+            set.flames = null;
+          }
         }
+      }
+      // G9 : séance servie par le moteur dynamique (contrôle strict à
+      // l'import ; au démarrage, une section illisible est gardée telle
+      // quelle et ignorée).
+      if (log.adapt != null && limits != null) {
+        SessionAdapt.fromJson(log.adapt!);
       }
     }
     // L7 : décisions Koach. Import (fichier externe) : toute valeur hors
@@ -1979,12 +2027,19 @@ class AppStore extends ChangeNotifier {
   double _round(double x, double step) => (x / step).round() * step;
 
   /// Charge suggérée en kg, ou null si non applicable.
-  double? loadFor(Exercise e) {
+  ///
+  /// [koach] faux (G9) : la consigne du programme seule, sans Koach L7
+  /// (charge de départ d'un bloc importé pour `kalis_adapt`).
+  double? loadFor(Exercise e, {bool koach = true}) {
     final s = e.load;
+    // G9 : exercice servi par kalis_adapt, charge du moteur.
+    if (e.engine) return s.kg;
     // Référence non renseignée : aucune charge inventée (KT-007).
     if (loadNeedsReference(e)) return null;
     // L7 : Koach actif, grille du matériel (D23) et allègement (D26).
-    if (KoachStore(this).koachOn) return KoachStore(this).koachLoadFor(e);
+    if (koach && KoachStore(this).koachOn) {
+      return KoachStore(this).koachLoadFor(e);
+    }
     switch (s.type) {
       case 'fixed':
         return s.kg;
@@ -2011,8 +2066,13 @@ class AppStore extends ChangeNotifier {
 
   /// Charge prescrite pour la semaine [week] du programme : [loadFor],
   /// plus, Koach actif, les adaptations acceptées de la semaine (D28).
-  double? sessionLoad(int week, Exercise e, {int? day}) {
+  ///
+  /// [koach] faux (G9, séance servie par kalis_adapt) : la consigne du
+  /// programme seule, sans Koach L7 ni adaptation L11.
+  double? sessionLoad(int week, Exercise e, {int? day, bool koach = true}) {
+    if (e.engine) return e.load.kg; // G9 : charge du moteur
     if (loadNeedsReference(e)) return null;
+    if (!koach) return loadFor(e, koach: false);
     final kg = KoachStore(this).koachOn && week >= 1
         ? KoachStore(this).koachLoadFor(e, week: week)
         : loadFor(e);
@@ -2030,8 +2090,10 @@ class AppStore extends ChangeNotifier {
   }
 
   /// [week] : charge de la séance de cette semaine ([sessionLoad]).
-  String loadLabel(Exercise e, {int? week, int? day}) {
-    final kg = week == null ? loadFor(e) : sessionLoad(week, e, day: day);
+  String loadLabel(Exercise e, {int? week, int? day, bool koach = true}) {
+    final kg = week == null
+        ? loadFor(e, koach: koach)
+        : sessionLoad(week, e, day: day, koach: koach);
     if (kg == null && loadNeedsReference(e)) return 'à renseigner';
     if (kg == null) return '—';
     if (kg <= 0) return 'PdC';
@@ -2414,6 +2476,17 @@ class AppStore extends ChangeNotifier {
 
   // ---------- Nature de la saisie ----------
   LogSpec logSpec(Exercise e) {
+    // G9 : séance servie par kalis_adapt (libellés de adaptSetsText).
+    if (e.engine) {
+      final t = setsLabel(e).toLowerCase().trim();
+      if (t.endsWith('max s')) return const LogSpec('holdMax');
+      if (t.endsWith('max')) return const LogSpec('repsMax');
+      final h = RegExp(r'^\d+\s*×\s*(\d+)(?:-(\d+))?\s*s$').firstMatch(t);
+      if (h != null) {
+        return LogSpec('hold', seconds: int.parse(h.group(2) ?? h.group(1)!));
+      }
+      return const LogSpec('reps');
+    }
     final low = setsLabel(e).toLowerCase().trim();
     final nm = e.name.toLowerCase();
     final tp = e.tempo.toLowerCase();
@@ -2614,7 +2687,8 @@ class AppStore extends ChangeNotifier {
     s.exerciseNames[e.id] = e.name;
     return s.ex.putIfAbsent(e.id, () {
       // L7 (D28) : adaptations de structure acceptées pour la semaine.
-      final n = KoachStore(this).koachOn && week >= 1
+      // G9 : un exercice servi par kalis_adapt garde les séries du moteur.
+      final n = !e.engine && KoachStore(this).koachOn && week >= 1
           ? KoachStore(this).koachSetCount(week, e)
           : setCount(e);
       return ExerciseLog(sets: List.generate(n, (_) => SetEntry()));

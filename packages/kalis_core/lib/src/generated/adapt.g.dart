@@ -865,6 +865,7 @@ final class AdviceRequest {
     required this.session,
     required this.done,
     required this.slotId,
+    this.healthCheck,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -880,6 +881,7 @@ final class AdviceRequest {
         (v) => SetRecord.fromJson(jsonAsObject(v, 'done')),
       ),
       slotId: jsonString(json, 'slotId'),
+      healthCheck: jsonObjOrNull(json, 'healthCheck', HealthCheck.fromJson),
     );
   }
 
@@ -901,6 +903,10 @@ final class AdviceRequest {
   /// Emplacement de l'exercice dont on demande la série suivante.
   final String slotId;
 
+  /// Bilan santé du jour, tel qu'il a été donné à `prescribeSession` (0.2.0 ;
+  /// une réponse absente n'est jamais remplacée).
+  final HealthCheck? healthCheck;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -909,6 +915,7 @@ final class AdviceRequest {
       'session': session.toJson(),
       'done': [for (final e in done) e.toJson()],
       'slotId': slotId,
+      if (healthCheck case final v?) 'healthCheck': v.toJson(),
     };
   }
 
@@ -919,6 +926,7 @@ final class AdviceRequest {
     SessionPlan? session,
     List<SetRecord>? done,
     String? slotId,
+    Object? healthCheck = unset,
   }) {
     return AdviceRequest(
       schemaVersion: schemaVersion ?? this.schemaVersion,
@@ -926,6 +934,9 @@ final class AdviceRequest {
       session: session ?? this.session,
       done: done ?? this.done,
       slotId: slotId ?? this.slotId,
+      healthCheck: identical(healthCheck, unset)
+          ? this.healthCheck
+          : healthCheck as HealthCheck?,
     );
   }
 
@@ -951,6 +962,9 @@ final class AdviceRequest {
       done[i].collectViolations('$path.done[$i]', out);
     }
     checkLength(out, '$path.slotId', slotId.length, 1, null);
+    if (healthCheck case final v?) {
+      v.collectViolations('$path.healthCheck', out);
+    }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -960,6 +974,7 @@ final class AdviceRequest {
     for (final e in done) {
       e.collectExerciseIds(out);
     }
+    healthCheck?.collectExerciseIds(out);
   }
 
   @override
@@ -970,7 +985,8 @@ final class AdviceRequest {
             input == other.input &&
             session == other.session &&
             jsonListEquals(done, other.done) &&
-            slotId == other.slotId;
+            slotId == other.slotId &&
+            healthCheck == other.healthCheck;
   }
 
   @override
@@ -980,6 +996,7 @@ final class AdviceRequest {
     session,
     Object.hashAll(done),
     slotId,
+    healthCheck,
   ]);
 
   @override

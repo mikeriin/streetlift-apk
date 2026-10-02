@@ -206,6 +206,95 @@ abstract final class ReasonCodes {
 
   /// Prédiction de date mise à jour.
   static const String questPredictionUpdated = 'quest.prediction_updated';
+
+  /// Notes presque toujours confirmées telles quelles : elles pèsent moins, la
+  /// performance réelle pèse davantage.
+  static const String adaptRatingsUninformative = 'adapt.ratings_uninformative';
+
+  /// Série repère : dernière série ouverte, autant de répétitions que possible
+  /// en gardant la réserve indiquée.
+  static const String adaptBenchmarkSet = 'adapt.benchmark_set';
+
+  /// Lieu du jour différent du lieu prévu : exercice remplacé par un équivalent
+  /// faisable sur place.
+  static const String adaptPlaceChanged = 'adapt.place_changed';
+
+  /// Charge non augmentée (échec non prévu, douleur, bilan bas, plafond de
+  /// hausse).
+  static const String adaptLoadHeld = 'adapt.load_held';
+
+  /// Plus petit incrément de charge trop grand : la progression passe par les
+  /// répétitions.
+  static const String adaptIncrementCoarse = 'adapt.increment_coarse';
+
+  /// Forme du jour estimée (bilan santé, fatigue modélisée, séries déjà
+  /// faites).
+  static const String adaptReadiness = 'adapt.readiness';
+
+  /// Volume hebdomadaire d'un groupe musculaire ajusté d'après la réponse
+  /// observée.
+  static const String adaptVolumeResponse = 'adapt.volume_response';
+
+  /// Plus petite charge disponible encore trop lourde pour cet exercice : il
+  /// est remplacé ou retiré de la séance.
+  static const String adaptLoadFloor = 'adapt.load_floor';
+
+  /// Séance faite malgré une douleur déclarée avant la séance : aucune
+  /// récompense (ni XP, ni coffre, ni note, ni quête).
+  static const String questNoRewardPain = 'quest.no_reward_pain';
+
+  /// Gain d'XP borné par un plafond (`session`, `week`, `records`).
+  static const String questXpCapped = 'quest.xp_capped';
+
+  /// Combo : séries consécutives dans la cible, bonus plafonné.
+  static const String questCombo = 'quest.combo';
+
+  /// Composantes de la note de séance : réalisation, justesse des flammes,
+  /// records.
+  static const String questSessionGrade = 'quest.session_grade';
+
+  /// Quête du jour, adaptée au jour (`training`, `rest`, `break`).
+  static const String questDaily = 'quest.daily';
+
+  /// Quête de la semaine, bornée par les séances prévues.
+  static const String questWeekly = 'quest.weekly';
+
+  /// Boss de campagne : séance de test ou dernière séance du bloc.
+  static const String questCampaignBoss = 'quest.campaign_boss';
+
+  /// Quête Koach : exercice du programme le plus souvent écourté ou sauté.
+  static const String questLaggingExercise = 'quest.lagging_exercise';
+
+  /// Quête Koach : jour de la semaine le moins régulier.
+  static const String questWeekdayFocus = 'quest.weekday_focus';
+
+  /// Part de l'XP de régularité due aux jours de repos respectés.
+  static const String questXpRest = 'quest.xp_rest';
+
+  /// Série de semaines réussies (jalon ou longueur atteinte).
+  static const String questStreak = 'quest.streak';
+
+  /// Semaine en pause : la série ne bouge pas. `cause` : motif de la pause
+  /// déclarée (`vacation`, `illness`, `injury`, `other`) ou `pain` (séance
+  /// faite malgré une douleur).
+  static const String questStreakPaused = 'quest.streak_paused';
+
+  /// Coffre surprise (tirage, ou garantie après une série de séances sans
+  /// coffre).
+  static const String questChest = 'quest.chest';
+
+  /// Objectif en retard : une date ou une cible ajustée est proposée.
+  static const String questGoalLate = 'quest.goal_late';
+
+  /// Première fois sur un exercice.
+  static const String questFirstTime = 'quest.first_time';
+
+  /// Fantôme battu : mieux que la dernière fois (`last`) ou que la meilleure
+  /// fois (`best`).
+  static const String questGhostBeaten = 'quest.ghost_beaten';
+
+  /// Bonus de départ plafonné (désactivé par défaut).
+  static const String questStartBonus = 'quest.start_bonus';
 }
 
 /// Registre des codes de raison et de leurs paramètres typés.
@@ -411,5 +500,88 @@ const List<ReasonSpec> reasonRegistry = <ReasonSpec>[
   }),
   ReasonSpec(ReasonCodes.questPredictionUpdated, <String, ReasonParamType>{
     'goalId': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.adaptRatingsUninformative, <String, ReasonParamType>{
+    'confirmRate': ReasonParamType.number,
+    'sets': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.adaptBenchmarkSet, <String, ReasonParamType>{
+    'rir': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.adaptPlaceChanged, <String, ReasonParamType>{
+    'place': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.adaptLoadHeld, <String, ReasonParamType>{
+    'cause': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.adaptIncrementCoarse, <String, ReasonParamType>{
+    'stepKg': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.adaptReadiness, <String, ReasonParamType>{
+    'readiness': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.adaptVolumeResponse, <String, ReasonParamType>{
+    'muscle': ReasonParamType.text,
+    'weeklySets': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.adaptLoadFloor, <String, ReasonParamType>{
+    'minKg': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.questNoRewardPain, <String, ReasonParamType>{
+    'zone': ReasonParamType.text,
+    'intensity': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.questXpCapped, <String, ReasonParamType>{
+    'scope': ReasonParamType.text,
+    'cap': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.questCombo, <String, ReasonParamType>{
+    'length': ReasonParamType.integer,
+    'bonus': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.questSessionGrade, <String, ReasonParamType>{
+    'completion': ReasonParamType.number,
+    'accuracy': ReasonParamType.number,
+    'records': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.questDaily, <String, ReasonParamType>{
+    'dayKind': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.questWeekly, <String, ReasonParamType>{
+    'planned': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.questCampaignBoss, <String, ReasonParamType>{
+    'blockIndex': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.questLaggingExercise, <String, ReasonParamType>{
+    'exerciseId': ReasonParamType.exerciseId,
+  }),
+  ReasonSpec(ReasonCodes.questWeekdayFocus, <String, ReasonParamType>{
+    'weekday': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.questXpRest, <String, ReasonParamType>{
+    'days': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.questStreak, <String, ReasonParamType>{
+    'weeks': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.questStreakPaused, <String, ReasonParamType>{
+    'cause': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.questChest, <String, ReasonParamType>{
+    'guaranteed': ReasonParamType.flag,
+  }),
+  ReasonSpec(ReasonCodes.questGoalLate, <String, ReasonParamType>{
+    'goalId': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.questFirstTime, <String, ReasonParamType>{
+    'exerciseId': ReasonParamType.exerciseId,
+  }),
+  ReasonSpec(ReasonCodes.questGhostBeaten, <String, ReasonParamType>{
+    'exerciseId': ReasonParamType.exerciseId,
+    'reference': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.questStartBonus, <String, ReasonParamType>{
+    'sessions': ReasonParamType.integer,
   }),
 ];

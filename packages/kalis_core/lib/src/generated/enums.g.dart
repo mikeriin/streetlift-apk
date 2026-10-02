@@ -1265,14 +1265,21 @@ enum KreditSource {
   }
 }
 
-/// Événement de plaisir (D8.1).
+/// Événement de plaisir (D8.1). Les cinq derniers sont ajoutés en 0.3.0
+/// (première fois, passage de niveau, nouveau rang, jalon d'objectif, quête
+/// terminée).
 enum DelightKind {
   record('record'),
   chest('chest'),
   weekStreak('week_streak'),
   sessionGrade('session_grade'),
   combo('combo'),
-  ghost('ghost');
+  ghost('ghost'),
+  firstTime('first_time'),
+  levelUp('level_up'),
+  rankUp('rank_up'),
+  goalMilestone('goal_milestone'),
+  questCompleted('quest_completed');
 
   const DelightKind(this.code);
 
