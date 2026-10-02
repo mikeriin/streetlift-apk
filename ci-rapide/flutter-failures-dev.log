@@ -1,0 +1,23 @@
+      tp.paint(canvas, Offset(x, y));
+                                 ^
+00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_mode_dev_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/g12_mode_dev_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/g12_mode_dev_test.dart: lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+      _progression = null;
+      ^^^^^^^^^^^^
+  lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+      final adaptStore = SessionAdaptStore(this);
+                         ^^^^^^^^^^^^^^^^^
+  lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                ^
+  lib/quest/quest_widgets.dart:289:34: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                   ^
+  .
+00:00 +0 -1: Some tests failed.
+
+Failing tests:
+  /home/runner/work/streetlift-apk/streetlift-apk/test/g12_mode_dev_test.dart: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_mode_dev_test.dart

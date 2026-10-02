@@ -1,0 +1,473 @@
+diff --git a/lib/data_control.dart b/lib/data_control.dart
+index d017cbf..8d6a977 100644
+--- a/lib/data_control.dart
++++ b/lib/data_control.dart
+@@ -338,7 +338,9 @@ class _ImportPreviewDialogState extends State<ImportPreviewDialog> {
+           ),
+           _Line(
+             'Progression',
+-            p.xp == 0 ? 'niveau 1 (aucun gain)' : 'niveau ${p.level} · ${p.xp} XP',
++            p.xp == 0
++                ? 'niveau 1 (aucun gain)'
++                : 'niveau ${p.level} · ${p.xp} XP',
+           ),
+           _Line('Exercices ajoutés', '${p.userExercises}'),
+           _Line('Départ du programme', switch ((
+diff --git a/lib/quest/progression_view.dart b/lib/quest/progression_view.dart
+index 895937d..bb8ab1e 100644
+--- a/lib/quest/progression_view.dart
++++ b/lib/quest/progression_view.dart
+@@ -45,7 +45,10 @@ void showProgressionRules(BuildContext context) => showModalBottomSheet<void>(
+     child: Column(
+       crossAxisAlignment: CrossAxisAlignment.stretch,
+       children: [
+-        Text('Comment progresser', style: Theme.of(context).textTheme.titleLarge),
++        Text(
++          'Comment progresser',
++          style: Theme.of(context).textTheme.titleLarge,
++        ),
+         const SizedBox(height: 10),
+         const Text(
+           'Une séance faite comme prévue rapporte jusqu’à 100 XP (plus un '
+@@ -110,9 +113,8 @@ kc.CivilDate? _parseDay(Object? v) {
+   }
+ }
+ 
+-void _push(BuildContext context, Widget page) => Navigator.of(
+-  context,
+-).push(MaterialPageRoute<void>(builder: (_) => page));
++void _push(BuildContext context, Widget page) =>
++    Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page));
+ 
+ /// Message de Koach quand le moteur ne peut pas tourner.
+ class _Unavailable extends StatelessWidget {
+@@ -252,10 +254,7 @@ class ProgressionView extends StatelessWidget {
+     ];
+     if (list.isEmpty) {
+       return [
+-        Text(
+-          'Pas de quête aujourd’hui.',
+-          style: TextStyle(color: SL.dim),
+-        ),
++        Text('Pas de quête aujourd’hui.', style: TextStyle(color: SL.dim)),
+       ];
+     }
+     return [
+@@ -339,14 +338,11 @@ class _LevelCard extends StoreWidget {
+           ),
+           const SizedBox(height: 10),
+           KProgressBar(
+-            value: l.xpForNextLevel == 0
+-                ? 0
+-                : l.xpIntoLevel / l.xpForNextLevel,
++            value: l.xpForNextLevel == 0 ? 0 : l.xpIntoLevel / l.xpForNextLevel,
+             height: 8,
+             color: SL.accent,
+             semanticsLabel: 'XP du niveau',
+-            semanticsValue:
+-                '${l.xpIntoLevel} sur ${l.xpForNextLevel} XP',
++            semanticsValue: '${l.xpIntoLevel} sur ${l.xpForNextLevel} XP',
+           ),
+           const SizedBox(height: 8),
+           Text(
+@@ -463,12 +459,13 @@ class QuestsScreen extends StatelessWidget {
+         ];
+         final recent = [
+           for (final q in o.state.quests.reversed)
+-            if (q.status == kc.QuestStatus.completed && !active.contains(q))
+-              q,
++            if (q.status == kc.QuestStatus.completed && !active.contains(q)) q,
+         ].take(10).toList();
+         Widget card(kc.Quest q) => QuestCard(
+           q,
+-          onClaim: store.questClaimable(q) ? () => store.questClaim(q.id) : null,
++          onClaim: store.questClaimable(q)
++              ? () => store.questClaim(q.id)
++              : null,
+         );
+         return KList(
+           key: const ValueKey('quests-screen'),
+@@ -501,10 +498,7 @@ class QuestsScreen extends StatelessWidget {
+                 for (final q in of(k)) card(q),
+               ],
+             if (active.isEmpty)
+-              Text(
+-                'Pas de quête en cours.',
+-                style: TextStyle(color: SL.dim),
+-              ),
++              Text('Pas de quête en cours.', style: TextStyle(color: SL.dim)),
+             if (recent.isNotEmpty) ...[
+               const KSection('Réussies récemment'),
+               for (final q in recent) QuestCard(q),
+@@ -599,11 +593,17 @@ class _AttributeRow extends StatelessWidget {
+                 style: TextStyle(color: SL.dim),
+               ),
+               const SizedBox(height: 14),
+-              Text('D’où vient la valeur', style: Theme.of(ctx).textTheme.titleSmall),
++              Text(
++                'D’où vient la valeur',
++                style: Theme.of(ctx).textTheme.titleSmall,
++              ),
+               const SizedBox(height: 4),
+               Text(attributeSource(attribute)),
+               const SizedBox(height: 14),
+-              Text('Comment la faire monter', style: Theme.of(ctx).textTheme.titleSmall),
++              Text(
++                'Comment la faire monter',
++                style: Theme.of(ctx).textTheme.titleSmall,
++              ),
+               const SizedBox(height: 4),
+               Text(attributeHow(attribute)),
+             ],
+@@ -732,7 +732,8 @@ class _RankRow extends StatelessWidget {
+       if (value is num) {
+         final d = measure == 'run' ? value - nextValue : nextValue - value;
+         if (d > 0) {
+-          gap = 'Encore ${rankValueText(measure == 'run' ? 'hold' : measure, d)}'
++          gap =
++              'Encore ${rankValueText(measure == 'run' ? 'hold' : measure, d)}'
+               '${measure == 'run' ? ' de moins sur 5 km' : ''} pour '
+               '${tierLabel(next)} (${rankValueText(measure, nextValue)}).';
+         }
+@@ -838,7 +839,8 @@ class StandardsScreen extends StatelessWidget {
+                       )
+                   else
+                     ...() {
+-                      final f = book?.find(m.id)?.fraction ??
++                      final f =
++                          book?.find(m.id)?.fraction ??
+                           kq.Standards.defaultFraction;
+                       final t = kq.Standards.thresholds(m, sex, bw, f);
+                       return [
+@@ -945,7 +947,11 @@ class _GoalCard extends StatelessWidget {
+   final kc.Goal goal;
+   final bool main;
+   final kc.CivilDate today;
+-  const _GoalCard({required this.goal, required this.main, required this.today});
++  const _GoalCard({
++    required this.goal,
++    required this.main,
++    required this.today,
++  });
+ 
+   @override
+   Widget build(BuildContext context) {
+@@ -1123,7 +1129,10 @@ class KreditsScreen extends StatelessWidget {
+             ),
+             const KSection('Historique'),
+             if (entries.isEmpty)
+-              Text('Aucun Krédit pour l’instant.', style: TextStyle(color: SL.dim)),
++              Text(
++                'Aucun Krédit pour l’instant.',
++                style: TextStyle(color: SL.dim),
++              ),
+             for (final e in entries)
+               ListTile(
+                 contentPadding: EdgeInsets.zero,
+diff --git a/lib/quest/quest_texts.dart b/lib/quest/quest_texts.dart
+index e4b5a82..60812de 100644
+--- a/lib/quest/quest_texts.dart
++++ b/lib/quest/quest_texts.dart
+@@ -192,7 +192,9 @@ kc.MovementRankTier? nextTier(kc.MovementRankTier t) {
+ /// Valeur lisible d'une mesure de rang (`load`, `reps`, `hold`, `run`).
+ String rankValueText(String measure, num v) => switch (measure) {
+   'load' =>
+-    v < 0 ? '${numText((-v * 10).round() / 10)} kg d’aide' : '${numText((v * 10).round() / 10)} kg',
++    v < 0
++        ? '${numText((-v * 10).round() / 10)} kg d’aide'
++        : '${numText((v * 10).round() / 10)} kg',
+   'reps' => plural(v.round(), 'répétition'),
+   'hold' => durationText(v),
+   'run' => '${durationText(v)} sur 5 km',
+@@ -376,7 +378,10 @@ String? eventText(kc.DelightEvent e) {
+       return 'Mieux que la dernière fois : ${questExercise(e.exerciseId)}';
+     case kc.DelightKind.weekStreak:
+       final n = e.streakWeeks ?? 0;
+-      return n > 0 ? 'Série : ${plural(n, 'semaine')} réussie' '${n > 1 ? 's' : ''}' : null;
++      return n > 0
++          ? 'Série : ${plural(n, 'semaine')} réussie'
++                '${n > 1 ? 's' : ''}'
++          : null;
+     case kc.DelightKind.levelUp:
+       final prestige = param('quest.prestige', 'prestige');
+       if (prestige is int) return 'Prestige $prestige !';
+diff --git a/lib/quest_store.dart b/lib/quest_store.dart
+index 4e814dc..5039405 100644
+--- a/lib/quest_store.dart
++++ b/lib/quest_store.dart
+@@ -194,7 +194,13 @@ class QuestMark {
+   final int xp, kredits, events;
+   final kc.LevelState level;
+   final String? sessionId;
+-  const QuestMark(this.xp, this.kredits, this.events, this.level, this.sessionId);
++  const QuestMark(
++    this.xp,
++    this.kredits,
++    this.events,
++    this.level,
++    this.sessionId,
++  );
+ }
+ 
+ extension QuestStore on AppStore {
+@@ -236,7 +242,9 @@ extension QuestStore on AppStore {
+       _questRevision,
+     ].join('|');
+     if (key == _questKey && _questOutcome != null) return _questOutcome;
+-    final data = questData ?? QuestData(state: QuestData.emptyState, seed: _newQuestSeed());
++    final data =
++        questData ??
++        QuestData(state: QuestData.emptyState, seed: _newQuestSeed());
+     final input = kc.QuestInput(
+       profile: profile,
+       log: log,
+@@ -336,7 +344,11 @@ extension QuestStore on AppStore {
+     final paidQuests = <String>{};
+     for (final e in d.state.xp.skip(mark.xp)) {
+       if (e.amount > 0) {
+-        bySource.update(e.source, (v) => v + e.amount, ifAbsent: () => e.amount);
++        bySource.update(
++          e.source,
++          (v) => v + e.amount,
++          ifAbsent: () => e.amount,
++        );
+       }
+       if (e.source == kc.XpSource.quest && e.refId != null) {
+         paidQuests.add(e.refId!);
+@@ -413,8 +425,7 @@ extension QuestStore on AppStore {
+   // ------------------------------------------------------ Koach (D6.4)
+ 
+   /// Koach a déjà présenté la nouveauté [code].
+-  bool questIntroSeen(String code) =>
+-      questData?.intros.contains(code) ?? false;
++  bool questIntroSeen(String code) => questData?.intros.contains(code) ?? false;
+ 
+   void markQuestIntro(String code) {
+     final d = questData;
+@@ -546,9 +557,7 @@ extension QuestStore on AppStore {
+         kc.Reason(code: 'quest.xp_quest', params: {'questId': id}),
+       ],
+     );
+-    questData = d.copyWith(
+-      state: d.state.copyWith(xp: [...d.state.xp, entry]),
+-    );
++    questData = d.copyWith(state: d.state.copyWith(xp: [...d.state.xp, entry]));
+     _questRevision++;
+     _persist();
+     final gains = questGainsSince(mark);
+diff --git a/lib/stats_overview.dart b/lib/stats_overview.dart
+index 0677138..a9de3ce 100644
+--- a/lib/stats_overview.dart
++++ b/lib/stats_overview.dart
+@@ -35,9 +35,7 @@ class StatsOverview extends StatelessWidget {
+           ),
+         ),
+         const QuestResetNotice(),
+-        _ProgressionSummary(
+-          onTap: () => onSection(StatsSection.progression),
+-        ),
++        _ProgressionSummary(onTap: () => onSection(StatsSection.progression)),
+         KSection(
+           'Cette semaine',
+           subtitle:
+diff --git a/lib/store.dart b/lib/store.dart
+index afe7d95..22fb86b 100644
+--- a/lib/store.dart
++++ b/lib/store.dart
+@@ -608,6 +608,7 @@ class AppStore extends ChangeNotifier {
+   static const _kLogs = 'logs_v1';
+   static const _kSettings = 'settings_v1';
+   static const _kUserEx = 'user_exercises_v1';
++
+   /// Ancien niveau vu (système retiré en G12) : plus lu ni écrit ; la clé
+   /// prouve encore une installation existante.
+   static const _kLastLevel = 'level_seen';
+diff --git a/test/g12_mode_dev_test.dart b/test/g12_mode_dev_test.dart
+index cf88e54..865c4f4 100644
+--- a/test/g12_mode_dev_test.dart
++++ b/test/g12_mode_dev_test.dart
+@@ -77,7 +77,10 @@ void main() {
+       ];
+       expect(daily, isNotEmpty);
+       final done = dev.devCompleteDailyQuests()!;
+-      expect(done.quests.map((q) => q.id).toSet(), daily.map((q) => q.id).toSet());
++      expect(
++        done.quests.map((q) => q.id).toSet(),
++        daily.map((q) => q.id).toSet(),
++      );
+       for (final q in dev.quest!.state.quests) {
+         if (daily.any((d) => d.id == q.id)) {
+           expect(q.status, kc.QuestStatus.completed);
+diff --git a/test/g12_progression_test.dart b/test/g12_progression_test.dart
+index a7ac8e9..a7f6fb6 100644
+--- a/test/g12_progression_test.dart
++++ b/test/g12_progression_test.dart
+@@ -151,34 +151,37 @@ void main() {
+       );
+     });
+ 
+-    test('export et import : progression identique, relance identique', () async {
+-      await _ownerState(app);
+-      _profile(app);
+-      _doDay(app, 12, 1);
+-      await app.finishSession(12, 1, title: 'S12 · J1');
+-      app.consumeGains();
+-      await app.flush();
+-      final file = app.exportForFile(
+-        appVersion: 'test',
+-        at: DateTime(2026, 9, 28, 10),
+-      );
+-      final state = jsonEncode(app.questData!.toJson());
+-      SharedPreferences.setMockInitialValues({});
+-      final other = AppStore()..storeClock = () => clock;
+-      await other.init();
+-      final preview = other.previewImport(file).preview!;
+-      expect(preview.xp, app.questLevel.totalXp);
+-      expect(preview.level, app.questLevel.level);
+-      expect(await other.applyImport(preview), ImportStatus.success);
+-      expect(jsonEncode(other.questData!.toJson()), state);
+-      expect(
+-        jsonEncode(other.quest!.level.toJson()),
+-        jsonEncode(app.quest!.level.toJson()),
+-      );
+-      expect(other.consumeGains(), isNull);
+-      expect(other.exportAll(), app.exportAll());
+-      other.dispose();
+-    });
++    test(
++      'export et import : progression identique, relance identique',
++      () async {
++        await _ownerState(app);
++        _profile(app);
++        _doDay(app, 12, 1);
++        await app.finishSession(12, 1, title: 'S12 · J1');
++        app.consumeGains();
++        await app.flush();
++        final file = app.exportForFile(
++          appVersion: 'test',
++          at: DateTime(2026, 9, 28, 10),
++        );
++        final state = jsonEncode(app.questData!.toJson());
++        SharedPreferences.setMockInitialValues({});
++        final other = AppStore()..storeClock = () => clock;
++        await other.init();
++        final preview = other.previewImport(file).preview!;
++        expect(preview.xp, app.questLevel.totalXp);
++        expect(preview.level, app.questLevel.level);
++        expect(await other.applyImport(preview), ImportStatus.success);
++        expect(jsonEncode(other.questData!.toJson()), state);
++        expect(
++          jsonEncode(other.quest!.level.toJson()),
++          jsonEncode(app.quest!.level.toJson()),
++        );
++        expect(other.consumeGains(), isNull);
++        expect(other.exportAll(), app.exportAll());
++        other.dispose();
++      },
++    );
+ 
+     test('section questState : import strict, démarrage tolérant', () async {
+       await _ownerState(app);
+@@ -273,26 +276,29 @@ void main() {
+       expect(app.goalProgressOf(added.id), isNotNull);
+     });
+ 
+-    test('quête de récupération déclarée faite : payée par le moteur', () async {
+-      await _ownerState(app);
+-      _profile(app);
+-      kc.Quest? claimable;
+-      for (var d = 0; d < 8 && claimable == null; d++) {
+-        clock = DateTime(2026, 9, 28 + d, 9);
+-        for (final q in app.quest!.state.quests) {
+-          if (app.questClaimable(q)) claimable = q;
++    test(
++      'quête de récupération déclarée faite : payée par le moteur',
++      () async {
++        await _ownerState(app);
++        _profile(app);
++        kc.Quest? claimable;
++        for (var d = 0; d < 8 && claimable == null; d++) {
++          clock = DateTime(2026, 9, 28 + d, 9);
++          for (final q in app.quest!.state.quests) {
++            if (app.questClaimable(q)) claimable = q;
++          }
+         }
+-      }
+-      expect(claimable, isNotNull, reason: 'aucun jour de repos en 8 jours');
+-      final before = app.questLevel.totalXp;
+-      app.questClaim(claimable!.id);
+-      final done = app.quest!.state.quests.firstWhere(
+-        (q) => q.id == claimable!.id,
+-      );
+-      expect(done.status, kc.QuestStatus.completed);
+-      expect(app.questLevel.totalXp, before + claimable.rewardXp);
+-      expect(app.questClaimable(done), isFalse);
+-    });
++        expect(claimable, isNotNull, reason: 'aucun jour de repos en 8 jours');
++        final before = app.questLevel.totalXp;
++        app.questClaim(claimable!.id);
++        final done = app.quest!.state.quests.firstWhere(
++          (q) => q.id == claimable!.id,
++        );
++        expect(done.status, kc.QuestStatus.completed);
++        expect(app.questLevel.totalXp, before + claimable.rewardXp);
++        expect(app.questClaimable(done), isFalse);
++      },
++    );
+ 
+     test('outils de test absents hors session de test', () async {
+       await _ownerState(app);
+@@ -397,7 +403,10 @@ void main() {
+             scale: scale,
+             width: width,
+           );
+-          expect(find.byKey(const ValueKey('progression-level')), findsOneWidget);
++          expect(
++            find.byKey(const ValueKey('progression-level')),
++            findsOneWidget,
++          );
+           await scrollAll(tester);
+           for (final s in const <Widget>[
+             QuestsScreen(),
+diff --git a/test/l4_depart_test.dart b/test/l4_depart_test.dart
+index 57cd5b5..5a0190a 100644
+--- a/test/l4_depart_test.dart
++++ b/test/l4_depart_test.dart
+@@ -270,7 +270,10 @@ void main() {
+         expect(app.logs['S1-J1']!.finishedAt, '2026-07-13T18:10:00.000');
+         expect(app.logs['S1-J2']!.finishedAt, isNull);
+         expect(app.logs['S6-J4']!.finishedAt, '2026-08-20T19:00:00.000');
+-        final before = (xp: app.questLevel.totalXp, level: app.questLevel.level);
++        final before = (
++          xp: app.questLevel.totalXp,
++          level: app.questLevel.level,
++        );
+         // Deuxième lancement : aucun changement supplémentaire.
+         await app.flush();
+         final stored = (await SharedPreferences.getInstance()).getString(_key);
+diff --git a/test/l4b_seances_test.dart b/test/l4b_seances_test.dart
+index f957202..b085461 100644
+--- a/test/l4b_seances_test.dart
++++ b/test/l4b_seances_test.dart
+@@ -628,10 +628,7 @@ void main() {
+       await tester.pumpAndSettle();
+       expect(find.byType(SessionScreen), findsNothing);
+       expect(store.isDone(w.n, d.j), isTrue);
+-      expect(
+-        store.consumeGains(),
+-        isNull,
+-      ); // déjà présenté (réglage : bandeau)
++      expect(store.consumeGains(), isNull); // déjà présenté (réglage : bandeau)
+       await tester.pumpWidget(const SizedBox());
+     });
+ 
+diff --git a/test/records_test.dart b/test/records_test.dart
+index c3d2259..43476b5 100644
+--- a/test/records_test.dart
++++ b/test/records_test.dart
+@@ -47,5 +47,4 @@ void main() {
+       expect(all[normalizeText('Dips lestés')]!.bestKg, 40);
+     },
+   );
+-
+ }

@@ -1,0 +1,774 @@
+      tp.paint(canvas, Offset(x, y));
+                                 ^
+00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart: lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+      _progression = null;
+      ^^^^^^^^^^^^
+  lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+      final adaptStore = SessionAdaptStore(this);
+                         ^^^^^^^^^^^^^^^^^
+  lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                ^
+  lib/quest/quest_widgets.dart:289:34: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                   ^
+  .
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+--
+    final adaptStore = SessionAdaptStore(this);
+                       ^^^^^^^^^^^^^^^^^
+00:00 +0 -2: loading /home/runner/work/streetlift-apk/streetlift-apk/test/reward_flow_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/reward_flow_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/reward_flow_test.dart: lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                ^
+  lib/quest/quest_widgets.dart:289:34: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                   ^
+  lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+      _progression = null;
+      ^^^^^^^^^^^^
+  lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+      final adaptStore = SessionAdaptStore(this);
+                         ^^^^^^^^^^^^^^^^^
+  .
+00:00 +0 -2: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+    _progression = null;
+    ^^^^^^^^^^^^
+lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+    final adaptStore = SessionAdaptStore(this);
+                       ^^^^^^^^^^^^^^^^^
+00:00 +0 -3: loading /home/runner/work/streetlift-apk/streetlift-apk/test/records_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/records_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/records_test.dart: lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+      _progression = null;
+      ^^^^^^^^^^^^
+  lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+      final adaptStore = SessionAdaptStore(this);
+                         ^^^^^^^^^^^^^^^^^
+  .
+00:00 +0 -3: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+    _progression = null;
+    ^^^^^^^^^^^^
+lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+    final adaptStore = SessionAdaptStore(this);
+                       ^^^^^^^^^^^^^^^^^
+lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+      tp.paint(canvas, Offset(x, y));
+                              ^
+--
+      tp.paint(canvas, Offset(x, y));
+                                 ^
+00:00 +0 -4: loading /home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/stats_test.dart: lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+      _progression = null;
+      ^^^^^^^^^^^^
+  lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+      final adaptStore = SessionAdaptStore(this);
+                         ^^^^^^^^^^^^^^^^^
+  lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                ^
+  lib/quest/quest_widgets.dart:289:34: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                   ^
+  .
+00:00 +0 -4: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+    _progression = null;
+    ^^^^^^^^^^^^
+lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+    final adaptStore = SessionAdaptStore(this);
+                       ^^^^^^^^^^^^^^^^^
+lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+      tp.paint(canvas, Offset(x, y));
+                              ^
+--
+      tp.paint(canvas, Offset(x, y));
+                                 ^
+00:00 +0 -5: loading /home/runner/work/streetlift-apk/streetlift-apk/test/progression_screens_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/progression_screens_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/progression_screens_test.dart: lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+      _progression = null;
+      ^^^^^^^^^^^^
+  lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+      final adaptStore = SessionAdaptStore(this);
+                         ^^^^^^^^^^^^^^^^^
+  lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                ^
+  lib/quest/quest_widgets.dart:289:34: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                   ^
+  .
+00:00 +0 -5: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+      tp.paint(canvas, Offset(x, y));
+                              ^
+lib/quest/quest_widgets.dart:289:34: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+      tp.paint(canvas, Offset(x, y));
+                                 ^
+lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+    _progression = null;
+    ^^^^^^^^^^^^
+--
+    final adaptStore = SessionAdaptStore(this);
+                       ^^^^^^^^^^^^^^^^^
+00:00 +0 -6: loading /home/runner/work/streetlift-apk/streetlift-apk/test/level_fill_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/level_fill_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/level_fill_test.dart: lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                ^
+  lib/quest/quest_widgets.dart:289:34: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                   ^
+  lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+      _progression = null;
+      ^^^^^^^^^^^^
+  lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+      final adaptStore = SessionAdaptStore(this);
+                         ^^^^^^^^^^^^^^^^^
+  .
+00:00 +0 -6: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+test/l2b_data_control_test.dart:148:35: Error: The getter 'level' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'level'.
+        expect(preview.level, app.level);
+                                  ^^^^^
+test/l2b_data_control_test.dart:290:18: Error: The getter 'level' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'level'.
+      expect(app.level, 1);
+                 ^^^^^
+lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+--
+      tp.paint(canvas, Offset(x, y));
+                                 ^
+00:00 +0 -7: loading /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: test/l2b_data_control_test.dart:148:35: Error: The getter 'level' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'level'.
+          expect(preview.level, app.level);
+                                    ^^^^^
+  test/l2b_data_control_test.dart:290:18: Error: The getter 'level' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'level'.
+        expect(app.level, 1);
+                   ^^^^^
+  lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+      _progression = null;
+      ^^^^^^^^^^^^
+  lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+      final adaptStore = SessionAdaptStore(this);
+                         ^^^^^^^^^^^^^^^^^
+  lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                ^
+  lib/quest/quest_widgets.dart:289:34: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                   ^
+  .
+00:00 +0 -7: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+test/l4b_seances_test.dart:227:18: Error: The getter 'progression' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'progression'.
+      expect(app.progression.sets, 0);
+                 ^^^^^^^^^^^
+test/l4b_seances_test.dart:232:18: Error: The getter 'progression' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'progression'.
+      expect(app.progression.sets, 1);
+                 ^^^^^^^^^^^
+lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+--
+      tp.paint(canvas, Offset(x, y));
+                                 ^
+00:00 +0 -8: loading /home/runner/work/streetlift-apk/streetlift-apk/test/l4b_seances_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/l4b_seances_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/l4b_seances_test.dart: test/l4b_seances_test.dart:227:18: Error: The getter 'progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'progression'.
+        expect(app.progression.sets, 0);
+                   ^^^^^^^^^^^
+  test/l4b_seances_test.dart:232:18: Error: The getter 'progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'progression'.
+        expect(app.progression.sets, 1);
+                   ^^^^^^^^^^^
+  lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+      _progression = null;
+      ^^^^^^^^^^^^
+  lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+      final adaptStore = SessionAdaptStore(this);
+                         ^^^^^^^^^^^^^^^^^
+  lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                ^
+  lib/quest/quest_widgets.dart:289:34: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                   ^
+  .
+00:00 +0 -8: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+test/l4_depart_test.dart:692:20: Error: The getter 'game' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'game'.
+        expect(app.game.sheet.force.available, isFalse);
+                   ^^^^
+test/l4_depart_test.dart:693:20: Error: The getter 'game' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'game'.
+        expect(app.game.sheet.force.note, startsWith('Indisponible'));
+                   ^^^^
+test/l4_depart_test.dart:695:15: Error: The getter 'game' isn't defined for the type 'AppStore'.
+--
+      tp.paint(canvas, Offset(x, y));
+                                 ^
+00:00 +0 -9: loading /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: test/l4_depart_test.dart:692:20: Error: The getter 'game' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'game'.
+          expect(app.game.sheet.force.available, isFalse);
+                     ^^^^
+  test/l4_depart_test.dart:693:20: Error: The getter 'game' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'game'.
+          expect(app.game.sheet.force.note, startsWith('Indisponible'));
+                     ^^^^
+  test/l4_depart_test.dart:695:15: Error: The getter 'game' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'game'.
+            app.game.sheet.endurance.note,
+                ^^^^
+  test/l4_depart_test.dart:700:15: Error: The getter 'game' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'game'.
+            app.game.sheet.force.available,
+                ^^^^
+  test/l4_depart_test.dart:704:27: Error: The getter 'game' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'game'.
+          final force = app.game.sheet.force;
+                            ^^^^
+  test/l4_depart_test.dart:711:15: Error: The getter 'game' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'game'.
+            app.game.sheet.endurance.note,
+--
+                                   ^
+  .
+00:00 +0 -9: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+    _progression = null;
+    ^^^^^^^^^^^^
+lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+    final adaptStore = SessionAdaptStore(this);
+                       ^^^^^^^^^^^^^^^^^
+00:00 +0 -10: loading /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+      _progression = null;
+      ^^^^^^^^^^^^
+  lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+      final adaptStore = SessionAdaptStore(this);
+                         ^^^^^^^^^^^^^^^^^
+  .
+00:00 +0 -10: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+    _progression = null;
+    ^^^^^^^^^^^^
+lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+    final adaptStore = SessionAdaptStore(this);
+                       ^^^^^^^^^^^^^^^^^
+00:00 +0 -11: loading /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_couleur_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/l5c_couleur_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/l5c_couleur_test.dart: lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+      _progression = null;
+      ^^^^^^^^^^^^
+  lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+      final adaptStore = SessionAdaptStore(this);
+                         ^^^^^^^^^^^^^^^^^
+  .
+00:00 +0 -11: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+test/g2_retrait_test.dart:343:18: Error: The getter 'progression' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'progression'.
+      expect(app.progression.programXp, 100 * done);
+                 ^^^^^^^^^^^
+test/g2_retrait_test.dart:344:18: Error: The getter 'progression' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing getter, or defining a getter or field named 'progression'.
+      expect(app.progression.sessions, done);
+                 ^^^^^^^^^^^
+lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+--
+      tp.paint(canvas, Offset(x, y));
+                                 ^
+00:00 +0 -12: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g2_retrait_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/g2_retrait_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/g2_retrait_test.dart: test/g2_retrait_test.dart:343:18: Error: The getter 'progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'progression'.
+        expect(app.progression.programXp, 100 * done);
+                   ^^^^^^^^^^^
+  test/g2_retrait_test.dart:344:18: Error: The getter 'progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'progression'.
+        expect(app.progression.sessions, done);
+                   ^^^^^^^^^^^
+  lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+      _progression = null;
+      ^^^^^^^^^^^^
+  lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+      final adaptStore = SessionAdaptStore(this);
+                         ^^^^^^^^^^^^^^^^^
+  lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                ^
+  lib/quest/quest_widgets.dart:289:34: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                   ^
+  .
+00:00 +0 -12: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+    _progression = null;
+    ^^^^^^^^^^^^
+lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+    final adaptStore = SessionAdaptStore(this);
+                       ^^^^^^^^^^^^^^^^^
+00:00 +0 -13: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g3_historique_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/g3_historique_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/g3_historique_test.dart: lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+      _progression = null;
+      ^^^^^^^^^^^^
+  lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+      final adaptStore = SessionAdaptStore(this);
+                         ^^^^^^^^^^^^^^^^^
+  .
+00:00 +0 -13: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+    _progression = null;
+    ^^^^^^^^^^^^
+lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+    final adaptStore = SessionAdaptStore(this);
+                       ^^^^^^^^^^^^^^^^^
+lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+      tp.paint(canvas, Offset(x, y));
+                              ^
+--
+      tp.paint(canvas, Offset(x, y));
+                                 ^
+00:00 +0 -14: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+      _progression = null;
+      ^^^^^^^^^^^^
+  lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+      final adaptStore = SessionAdaptStore(this);
+                         ^^^^^^^^^^^^^^^^^
+  lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                ^
+  lib/quest/quest_widgets.dart:289:34: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                   ^
+  .
+00:00 +0 -14: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+    _progression = null;
+    ^^^^^^^^^^^^
+lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+    final adaptStore = SessionAdaptStore(this);
+                       ^^^^^^^^^^^^^^^^^
+lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+      tp.paint(canvas, Offset(x, y));
+                              ^
+--
+      tp.paint(canvas, Offset(x, y));
+                                 ^
+00:00 +0 -15: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g10_seance_sans_moteur_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/g10_seance_sans_moteur_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/g10_seance_sans_moteur_test.dart: lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+      _progression = null;
+      ^^^^^^^^^^^^
+  lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+      final adaptStore = SessionAdaptStore(this);
+                         ^^^^^^^^^^^^^^^^^
+  lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                ^
+  lib/quest/quest_widgets.dart:289:34: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                   ^
+  .
+00:00 +0 -15: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart [E]
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+ - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+    _progression = null;
+    ^^^^^^^^^^^^
+lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+    final adaptStore = SessionAdaptStore(this);
+                       ^^^^^^^^^^^^^^^^^
+lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+      tp.paint(canvas, Offset(x, y));
+                              ^
+--
+      tp.paint(canvas, Offset(x, y));
+                                 ^
+00:00 +0 -16: loading /home/runner/work/streetlift-apk/streetlift-apk/test/history_correction_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/history_correction_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/history_correction_test.dart: lib/plan_store.dart:238:5: Error: The setter '_progression' isn't defined for the type 'AppStore'.
+   - 'AppStore' is from 'package:streetlift_tracker/store.dart' ('lib/store.dart').
+  Try correcting the name to the name of an existing setter, or defining a setter or field named '_progression'.
+      _progression = null;
+      ^^^^^^^^^^^^
+  lib/quest_store.dart:222:24: Error: Explicit extension application cannot be used as an expression.
+      final adaptStore = SessionAdaptStore(this);
+                         ^^^^^^^^^^^^^^^^^
+  lib/quest/quest_widgets.dart:289:31: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                ^
+  lib/quest/quest_widgets.dart:289:34: Error: The argument type 'num' can't be assigned to the parameter type 'double'.
+        tp.paint(canvas, Offset(x, y));
+                                   ^
+  .
+00:00 +0 -16: Some tests failed.
+
+Failing tests:
+  /home/runner/work/streetlift-apk/streetlift-apk/test/g10_seance_sans_moteur_test.dart: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g10_seance_sans_moteur_test.dart
+  /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g12_progression_test.dart
+  /home/runner/work/streetlift-apk/streetlift-apk/test/g2_retrait_test.dart: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g2_retrait_test.dart
+  /home/runner/work/streetlift-apk/streetlift-apk/test/g3_historique_test.dart: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g3_historique_test.dart
+  ... and 12 more

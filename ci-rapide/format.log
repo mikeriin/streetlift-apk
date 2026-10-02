@@ -1,0 +1,12 @@
+Changed lib/data_control.dart
+Changed lib/quest/progression_view.dart
+Changed lib/quest/quest_texts.dart
+Changed lib/quest_store.dart
+Changed lib/stats_overview.dart
+Changed lib/store.dart
+Changed test/g12_mode_dev_test.dart
+Changed test/g12_progression_test.dart
+Changed test/l4_depart_test.dart
+Changed test/l4b_seances_test.dart
+Changed test/records_test.dart
+Formatted 212 files (11 changed) in 1.33 seconds.
