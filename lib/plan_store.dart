@@ -331,14 +331,15 @@ extension PlanStore on AppStore {
     final catalog = content.catalog;
     if (profile == null || catalog == null) return null;
     try {
-      final adapt = SessionAdaptStore(this);
       return kalisAdaptEngine
           .review(
             catalog,
             kc.AdaptInput(
               profile: profile,
-              block: adapt._adaptPlanBlock(plan.blocks.length - 1),
-              log: adapt.adaptTrainingLog(),
+              block: SessionAdaptStore(
+                this,
+              )._adaptPlanBlock(plan.blocks.length - 1),
+              log: SessionAdaptStore(this).adaptTrainingLog(),
               today: civilOf(_planToday),
             ),
           )
