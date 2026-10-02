@@ -8,12 +8,12 @@ import 'package:streetlift_tracker/store.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final starts = [DateTime(2026, 10, 1), DateTime(2026, 10, 5), DateTime(2026, 11, 2)];
+  final starts = [DateTime(2026, 10, 1)];
   for (final st in starts) {
     for (final mode in kc.GuidanceMode.values) {
       for (final key in ['intermediaire_salle', 'douleur_et_lieu', 'calisthenie_parc', 'avance_street']) {
-        for (final seed in [2, 3]) {
-          test('diag ${st.month}-${st.day} ${mode.code} $key $seed', () async {
+        for (final seed in [3]) { for (final wk in [1, 2, 3, 4, 5]) {
+          test('diag ${st.month}-${st.day} ${mode.code} $key $seed $wk', () async {
             SharedPreferences.setMockInitialValues({});
             final s = AppStore()..storeClock = () => st.add(const Duration(hours: 9));
             await s.init();
@@ -31,9 +31,9 @@ void main() {
             final r = await runDevSimulation(
               s,
               athleteKey: key,
-              weeks: 8,
+              weeks: wk,
               seed: seed,
-              acceptAll: mode == kc.GuidanceMode.free,
+              acceptAll: false,
               onProgress: (d, tot) {
                 if (d ~/ 7 == lastW) return;
                 lastW = d ~/ 7;
@@ -52,16 +52,18 @@ void main() {
                 );
               },
             );
+            s.storeClock = () => DateTime(r.end.year, r.end.month, r.end.day, 9);
+            s.evolutionRefresh();
             // ignore: avoid_print
             print(
-              'DIAG ${st.month}-${st.day} ${mode.code} $key/$seed done=${r.sessionsDone} blocks=${r.blocksAdded} '
+              'DIAG ${mode.code} $key/$seed wk=$wk end=${r.end} ann=${s.evolutionAnnounced.length} pend=${s.evolutionPending.length} done=${r.sessionsDone} blocks=${r.blocksAdded} '
               'pw=${s.program.weeks.length} start=${s.program.start} '
               'entries=${[for (final e in s.planEvolution.entries) '${e.proposal.kind.code}:${e.status}@${e.fromWeek}']} '
-              'err=${r.error}\n  ${lines.join('\n  ')}',
+              'err=${r.error}',
             );
             s.dispose();
           });
-        }
+        }}
       }
     }
   }
