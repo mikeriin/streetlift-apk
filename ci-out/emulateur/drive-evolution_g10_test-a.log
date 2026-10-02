@@ -1,0 +1,188 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             71.1s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...           3.1s
+I/Choreographer( 4026): Skipped 115 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4026): Sending viewport metrics to the engine.
+I/eetlift_tracker( 4026): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+D/ProfileInstaller( 4026): Installing profile for fr.tchoupi.streetlift_tracker
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:38363/MzxYr3tFHy4=/
+VMServiceFlutterDriver: Isolate found with number: 3295070770387971
+VMServiceFlutterDriver: Isolate 3295070770387971 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4026): 00:00 +0: G10 a (sombre, rouge, assisted) : évolution du programme, simulateur, propositions, inspecteur
+VMServiceFlutterDriver: Connected to Flutter application.
+I/Choreographer( 4026): Skipped 38 frames!  The application may be doing too much work on its main thread.
+I/Choreographer( 4026): Skipped 40 frames!  The application may be doing too much work on its main thread.
+I/HWUI    ( 4026): Davey! duration=735ms; Flags=1, FrameTimelineVsyncId=9321, IntendedVsync=127199701798, Vsync=127866368438, InputEventId=0, HandleInputStart=127875157040, AnimationStart=127875158292, PerformTraversalsStart=127875158723, DrawStart=127878641129, FrameDeadline=127216368464, FrameInterval=127874832577, FrameStartTime=16666666, SyncQueued=127881981734, SyncStart=127897002818, IssueDrawCommandsStart=127899886383, SwapBuffers=127925696069, FrameCompleted=127949885548, DequeueBufferDuration=3564649, QueueBufferDuration=6578352, GpuCompleted=127949885548, SwapBuffersCompleted=127939867980, DisplayPresentTime=0, CommandSubmissionCompleted=127925696069, 
+D/EGL_emulation( 4026): app_time_stats: avg=378.97ms min=6.28ms max=1280.66ms count=5
+D/EGL_emulation( 4026): app_time_stats: avg=1801.76ms min=897.36ms max=2706.16ms count=2
+D/EGL_emulation( 4026): app_time_stats: avg=350.26ms min=5.75ms max=1163.40ms count=4
+I/eetlift_tracker( 4026): Background concurrent mark compact GC freed 2011KB AllocSpace bytes, 9(372KB) LOS objects, 49% free, 2592KB/5185KB, paused 39us,1.416ms total 340.216ms
+D/EGL_emulation( 4026): app_time_stats: avg=2697.64ms min=2697.64ms max=2697.64ms count=1
+D/EGL_emulation( 4026): app_time_stats: avg=1128.09ms min=341.31ms max=1914.88ms count=2
+D/EGL_emulation( 4026): app_time_stats: avg=14859.14ms min=14859.14ms max=14859.14ms count=1
+D/EGL_emulation( 4026): app_time_stats: avg=121.39ms min=59.29ms max=201.52ms count=8
+D/EGL_emulation( 4026): app_time_stats: avg=127.63ms min=93.10ms max=144.75ms count=7
+D/EGL_emulation( 4026): app_time_stats: avg=134.85ms min=94.97ms max=148.14ms count=8
+D/EGL_emulation( 4026): app_time_stats: avg=129.51ms min=57.60ms max=170.28ms count=8
+W/WindowOnBackDispatcher( 4026): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4026): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4026): app_time_stats: avg=151.75ms min=83.39ms max=208.78ms count=6
+D/EGL_emulation( 4026): app_time_stats: avg=96.78ms min=22.86ms max=132.97ms count=10
+D/EGL_emulation( 4026): app_time_stats: avg=112.15ms min=92.54ms max=119.05ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=117.67ms min=12.26ms max=226.34ms count=10
+D/EGL_emulation( 4026): app_time_stats: avg=102.72ms min=11.28ms max=160.06ms count=10
+D/EGL_emulation( 4026): app_time_stats: avg=112.27ms min=82.69ms max=116.97ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=93.34ms min=10.81ms max=169.43ms count=11
+D/EGL_emulation( 4026): app_time_stats: avg=80.96ms min=12.42ms max=156.74ms count=12
+D/EGL_emulation( 4026): app_time_stats: avg=94.54ms min=79.47ms max=107.94ms count=10
+D/EGL_emulation( 4026): app_time_stats: avg=82.89ms min=10.59ms max=187.19ms count=11
+D/EGL_emulation( 4026): app_time_stats: avg=149.62ms min=122.13ms max=196.82ms count=7
+D/EGL_emulation( 4026): app_time_stats: avg=142.84ms min=125.06ms max=167.84ms count=7
+D/EGL_emulation( 4026): app_time_stats: avg=117.13ms min=41.84ms max=146.82ms count=9
+W/WindowOnBackDispatcher( 4026): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4026): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4026): app_time_stats: avg=124.44ms min=51.38ms max=179.51ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=77.59ms min=23.42ms max=92.11ms count=12
+D/EGL_emulation( 4026): app_time_stats: avg=81.75ms min=9.55ms max=145.09ms count=11
+D/EGL_emulation( 4026): app_time_stats: avg=82.46ms min=2.82ms max=204.89ms count=11
+D/EGL_emulation( 4026): app_time_stats: avg=87.23ms min=12.34ms max=182.50ms count=11
+D/EGL_emulation( 4026): app_time_stats: avg=68.72ms min=14.16ms max=82.97ms count=13
+D/EGL_emulation( 4026): app_time_stats: avg=81.53ms min=9.10ms max=167.05ms count=12
+D/EGL_emulation( 4026): app_time_stats: avg=103.92ms min=16.86ms max=256.18ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=80.45ms min=13.86ms max=132.39ms count=12
+D/EGL_emulation( 4026): app_time_stats: avg=66.88ms min=3.80ms max=79.90ms count=12
+D/EGL_emulation( 4026): app_time_stats: avg=72.79ms min=3.29ms max=95.50ms count=12
+D/EGL_emulation( 4026): app_time_stats: avg=70.38ms min=7.57ms max=83.12ms count=12
+D/EGL_emulation( 4026): app_time_stats: avg=73.28ms min=4.73ms max=152.98ms count=12
+D/EGL_emulation( 4026): app_time_stats: avg=105.04ms min=18.41ms max=321.17ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=82.69ms min=10.86ms max=174.23ms count=11
+D/EGL_emulation( 4026): app_time_stats: avg=84.53ms min=8.17ms max=178.37ms count=11
+D/EGL_emulation( 4026): app_time_stats: avg=86.17ms min=5.35ms max=170.22ms count=10
+D/EGL_emulation( 4026): app_time_stats: avg=108.97ms min=71.56ms max=116.98ms count=10
+D/EGL_emulation( 4026): app_time_stats: avg=88.84ms min=2.97ms max=148.61ms count=10
+D/EGL_emulation( 4026): app_time_stats: avg=78.55ms min=1.91ms max=165.96ms count=12
+D/EGL_emulation( 4026): app_time_stats: avg=81.86ms min=2.33ms max=173.29ms count=12
+D/EGL_emulation( 4026): app_time_stats: avg=95.34ms min=7.70ms max=186.83ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=109.48ms min=18.60ms max=199.51ms count=10
+D/EGL_emulation( 4026): app_time_stats: avg=85.26ms min=10.39ms max=153.82ms count=11
+D/EGL_emulation( 4026): app_time_stats: avg=80.02ms min=4.15ms max=164.06ms count=12
+D/EGL_emulation( 4026): app_time_stats: avg=213.95ms min=146.86ms max=382.08ms count=5
+D/EGL_emulation( 4026): app_time_stats: avg=184.40ms min=13.52ms max=531.00ms count=6
+D/EGL_emulation( 4026): app_time_stats: avg=126.83ms min=65.28ms max=165.17ms count=7
+D/EGL_emulation( 4026): app_time_stats: avg=112.38ms min=43.55ms max=147.39ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=121.21ms min=62.07ms max=147.46ms count=8
+D/EGL_emulation( 4026): app_time_stats: avg=74.78ms min=4.60ms max=142.37ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=102.40ms min=74.96ms max=167.17ms count=8
+D/EGL_emulation( 4026): app_time_stats: avg=80.52ms min=43.58ms max=151.85ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=87.30ms min=70.58ms max=154.47ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=114.76ms min=48.53ms max=197.41ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=92.11ms min=48.60ms max=155.84ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=119.84ms min=53.87ms max=170.64ms count=8
+W/WindowOnBackDispatcher( 4026): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4026): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4026): app_time_stats: avg=93.08ms min=58.25ms max=164.80ms count=8
+D/EGL_emulation( 4026): app_time_stats: avg=94.53ms min=60.00ms max=157.94ms count=7
+D/EGL_emulation( 4026): app_time_stats: avg=115.30ms min=72.56ms max=177.85ms count=8
+D/EGL_emulation( 4026): app_time_stats: avg=100.08ms min=52.37ms max=169.71ms count=8
+W/WindowOnBackDispatcher( 4026): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4026): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4026): app_time_stats: avg=87.09ms min=70.63ms max=119.03ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=94.50ms min=61.47ms max=155.83ms count=11
+D/EGL_emulation( 4026): app_time_stats: avg=98.96ms min=13.20ms max=157.29ms count=10
+D/EGL_emulation( 4026): app_time_stats: avg=78.28ms min=12.16ms max=158.12ms count=12
+D/EGL_emulation( 4026): app_time_stats: avg=72.31ms min=2.03ms max=152.68ms count=12
+D/EGL_emulation( 4026): app_time_stats: avg=102.21ms min=37.89ms max=186.01ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=133.84ms min=85.45ms max=177.78ms count=8
+W/WindowOnBackDispatcher( 4026): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4026): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4026): app_time_stats: avg=131.54ms min=107.76ms max=162.91ms count=8
+D/EGL_emulation( 4026): app_time_stats: avg=113.12ms min=17.84ms max=177.55ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=115.35ms min=98.89ms max=124.10ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=119.72ms min=114.65ms max=143.98ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=118.69ms min=45.49ms max=166.33ms count=8
+D/EGL_emulation( 4026): app_time_stats: avg=89.58ms min=76.36ms max=158.01ms count=8
+W/WindowOnBackDispatcher( 4026): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4026): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4026): app_time_stats: avg=120.13ms min=43.78ms max=166.59ms count=8
+D/EGL_emulation( 4026): app_time_stats: avg=149.03ms min=140.45ms max=165.50ms count=7
+D/EGL_emulation( 4026): app_time_stats: avg=113.77ms min=74.84ms max=159.35ms count=8
+D/EGL_emulation( 4026): app_time_stats: avg=127.38ms min=63.20ms max=187.98ms count=7
+D/EGL_emulation( 4026): app_time_stats: avg=109.84ms min=69.23ms max=163.90ms count=7
+D/EGL_emulation( 4026): app_time_stats: avg=158.43ms min=130.24ms max=179.30ms count=7
+D/EGL_emulation( 4026): app_time_stats: avg=110.28ms min=52.14ms max=172.80ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=155.32ms min=98.04ms max=216.91ms count=7
+D/EGL_emulation( 4026): app_time_stats: avg=144.12ms min=126.49ms max=162.93ms count=8
+D/EGL_emulation( 4026): app_time_stats: avg=114.67ms min=45.18ms max=169.45ms count=9
+D/EGL_emulation( 4026): app_time_stats: avg=92.97ms min=3.40ms max=156.37ms count=9
+I/flutter ( 4026): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4026): The following TestFailure was thrown running a test:
+I/flutter ( 4026): Expected: a value greater than <0>
+I/flutter ( 4026):   Actual: <0>
+I/flutter ( 4026):    Which: is not a value greater than <0>
+I/flutter ( 4026): 
+I/flutter ( 4026): When the exception was thrown, this was the stack:
+I/flutter ( 4026): #4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/evolution_g10_test.dart:438:5)
+I/flutter ( 4026): <asynchronous suspension>
+I/flutter ( 4026): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4026): <asynchronous suspension>
+I/flutter ( 4026): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4026): <asynchronous suspension>
+I/flutter ( 4026): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4026): <asynchronous suspension>
+I/flutter ( 4026): 
+I/flutter ( 4026): This was caught by the test expectation on the following line:
+I/flutter ( 4026):   file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/evolution_g10_test.dart line 438
+I/flutter ( 4026): The test description was:
+I/flutter ( 4026):   G10 a (sombre, rouge, assisted) : évolution du programme, simulateur, propositions, inspecteur
+I/flutter ( 4026): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4026): 01:56 +0: G10 a (sombre, rouge, assisted) : évolution du programme, simulateur, propositions, inspecteur [E]
+I/flutter ( 4026):   Test failed. See exception logs above.
+I/flutter ( 4026):   The test description was: G10 a (sombre, rouge, assisted) : évolution du programme, simulateur, propositions, inspecteur
+I/flutter ( 4026):   
+I/flutter ( 4026): 01:56 +0 -1: (tearDownAll)
+I/flutter ( 4026): 01:56 +1 -1: Some tests failed.
+D/EGL_emulation( 4026): app_time_stats: avg=181.87ms min=122.25ms max=472.27ms count=7
+Failure Details:
+Failure in method: G10 a (sombre, rouge, assisted) : évolution du programme, simulateur, propositions, inspecteur
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: a value greater than <0>
+  Actual: <0>
+   Which: is not a value greater than <0>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/evolution_g10_test.dart:438:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/evolution_g10_test.dart line 438
+The test description was:
+  G10 a (sombre, rouge, assisted) : évolution du programme,
+  simulateur, propositions, inspecteur
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+
