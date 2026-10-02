@@ -1,8 +1,14 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : G9 correction 2, version dev6.6.2 ; précédent : dev6.6.1 (G9 correction 1)**  
-**Date : 2 octobre 2026, Europe/Paris — version : 6.6.2+104, affichée « dev6.6.2 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : G9 correction 3, version dev6.6.3 ; précédent : dev6.6.2 (G9 correction 2)**  
+**Date : 2 octobre 2026, Europe/Paris — version : 6.6.3+105, affichée « dev6.6.3 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## G9 correction 3 — Un mot par flamme (version dev6.6.3)
+
+Demande du propriétaire (02/10/2026) : 10 mots pour les 10 flammes, affichés aussi dans le résumé des séries au lieu du chiffre ; modification rapide, sans passage par la CI d'émulateur (build signé directement, qui rejoue formatage, analyse et tests).
+
+- `kFlameWords` / `flameWord` / `flameTrackText` (`lib/adapt/flame_track.dart`) : Léger, Facile, Tranquille, Modéré, Soutenu, Appuyé, Dur, Intense, Limite, Échec. Ligne des flammes : « Dur · RIR 2 » ; lignes résumées : le mot à la place du chiffre ; libellé d'accessibilité : mot puis flammes et RIR.
 
 ## G9 correction 2 — Flamme du curseur posée sur sa base (version dev6.6.2)
 

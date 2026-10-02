@@ -14,6 +14,26 @@ import '../app_theme.dart';
 import '../koach/flame_icon.dart';
 import '../store.dart' show LogSpec, SetEntry;
 
+/// G9 correction 3 : un mot par flamme, du plus léger (1) à l'échec (10).
+const kFlameWords = <String>[
+  'Léger',
+  'Facile',
+  'Tranquille',
+  'Modéré',
+  'Soutenu',
+  'Appuyé',
+  'Dur',
+  'Intense',
+  'Limite',
+  'Échec',
+];
+
+/// Mot de la flamme [f] (1 à 10).
+String flameWord(int f) => kFlameWords[f.clamp(1, 10) - 1];
+
+/// « Dur · RIR 2 », « Échec · RIR 0 » : note affichée sur la ligne.
+String flameTrackText(int f) => '${flameWord(f)} · RIR ${flameRirText(f)}';
+
 /// « 7 flammes · RIR 2 », « 10 flammes · échec (RIR 0) ».
 String flameValueText(int f) {
   if (f == Flames.failure) return '10 flammes · échec (RIR 0)';
@@ -132,7 +152,7 @@ class _FlameTrackState extends State<FlameTrack> {
         ? 'Sans note'
         : v == null
         ? 'Note ta série'
-        : flameValueText(v);
+        : flameTrackText(v);
     final text = Theme.of(context).textTheme;
     return Padding(
       key: ValueKey('flame-track-${widget.setLabel}'),
@@ -405,7 +425,10 @@ class SetSummaryLine extends StatelessWidget {
     final f = flames;
     final spoken = [
       if (done.isNotEmpty) done,
-      if (f != null) flameValueText(f) else if (unknown) 'sans note',
+      if (f != null)
+        '${flameWord(f)}, ${flameValueText(f)}'
+      else if (unknown)
+        'sans note',
       if (excluded) 'série écartée',
     ].join(', ');
     final style = TextStyle(
@@ -472,18 +495,19 @@ class SetSummaryLine extends StatelessWidget {
                       ? Icon(Icons.help_outline, size: 16, color: SL.dim)
                       : null,
                 ),
+                const SizedBox(width: 4),
                 SizedBox(
-                  width: 24,
+                  width: 80,
                   child: Text(
-                    f != null ? '$f' : '',
+                    f != null ? flameWord(f) : '',
                     key: ValueKey('set-summary-flames-$setLabel'),
-                    textAlign: TextAlign.end,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: SL.text,
                       fontWeight: FontWeight.w700,
                       fontSize: 14,
                       height: 1.2,
-                      fontFeatures: const [FontFeature.tabularFigures()],
                     ),
                   ),
                 ),

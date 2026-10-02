@@ -112,7 +112,7 @@ void main() {
     for (var f = 1; f <= 10; f++) {
       expect(find.byKey(ValueKey('flame-pos-$f')), findsOneWidget);
     }
-    expect(find.text('5 flammes · RIR 3'), findsOneWidget);
+    expect(find.text('Soutenu · RIR 3'), findsOneWidget);
     await tester.ensureVisible(find.byKey(const ValueKey('flame-pos-1')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('flame-pos-1')));
@@ -120,7 +120,7 @@ void main() {
     expect(log.sets[0].done, isTrue);
     expect(log.sets[0].flames, 1);
     expect(log.sets[0].effort, 5);
-    expect(find.text('1 flamme · RIR 5 et plus'), findsOneWidget);
+    expect(find.text('Léger · RIR 5 et plus'), findsOneWidget);
     expect(
       find.bySemanticsLabel(RegExp(r'^Difficulté de la série 1')),
       findsOneWidget,
