@@ -20,12 +20,6 @@ String flameValueText(int f) {
   return '$f flamme${f > 1 ? 's' : ''} · RIR ${flameRirText(f)}';
 }
 
-/// « 7 flammes », « 10 · échec » : version courte des lignes résumées.
-String flameShortText(int f) {
-  if (f == Flames.failure) return '10 flammes · échec';
-  return '$f flamme${f > 1 ? 's' : ''}';
-}
-
 /// Note d'une série enregistrée : flammes, sinon ancienne difficulté ou RIR
 /// convertis comme le journal du moteur (règle C9).
 int? setFlamesOf(SetEntry s) {
@@ -53,10 +47,12 @@ String setDoneText(SetEntry s, LogSpec sp) {
       : seconds
       ? '${dec(reps)} s'
       : '${dec(reps)} rep${reps == '1' ? '' : 's'}';
-  return [
+  final load = [
     if (kg.isNotEmpty && kg != '0') '${dec(kg)} kg',
     if (amount.isNotEmpty) amount,
   ].join(' × ');
+  final v = s.v.trim();
+  return v.isEmpty ? load : '$load · ${dec(v)} m/s';
 }
 
 /// Ligne de notation sous une série validée.
@@ -157,22 +153,6 @@ class _FlameTrackState extends State<FlameTrack> {
                   ),
                 ),
               ),
-              TextButton(
-                key: const ValueKey('flame-unknown'),
-                style: TextButton.styleFrom(
-                  minimumSize: const Size(44, 40),
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  visualDensity: VisualDensity.compact,
-                ),
-                onPressed: widget.unknown ? null : widget.onUnknown,
-                child: Text(
-                  'Je ne sais pas',
-                  style: TextStyle(
-                    color: widget.unknown ? SL.faint : SL.dim,
-                    fontSize: 12.5,
-                  ),
-                ),
-              ),
               PopupMenuButton<String>(
                 key: const ValueKey('flame-menu'),
                 tooltip: 'Plus d’options pour la série ${widget.setLabel}',
@@ -226,10 +206,8 @@ class _FlameTrackState extends State<FlameTrack> {
                     HapticFeedback.selectionClick();
                     _commit(_at(d.localPosition.dx, w));
                   },
-                  onHorizontalDragStart: (d) =>
-                      _dragTo(d.localPosition.dx, w),
-                  onHorizontalDragUpdate: (d) =>
-                      _dragTo(d.localPosition.dx, w),
+                  onHorizontalDragStart: (d) => _dragTo(d.localPosition.dx, w),
+                  onHorizontalDragUpdate: (d) => _dragTo(d.localPosition.dx, w),
                   onHorizontalDragEnd: (_) {
                     final f = _drag;
                     if (f != null) _commit(f);
@@ -335,14 +313,39 @@ class _FlameTrackState extends State<FlameTrack> {
             padding: const EdgeInsets.symmetric(horizontal: 6),
             child: Row(
               children: [
-                Text(
-                  '1 · facile',
-                  style: TextStyle(color: SL.dim, fontSize: 11.5),
+                Expanded(
+                  child: Text(
+                    '1 · facile',
+                    style: TextStyle(color: SL.dim, fontSize: 11.5),
+                  ),
                 ),
-                const Spacer(),
-                Text(
-                  'échec · 10',
-                  style: TextStyle(color: SL.dim, fontSize: 11.5),
+                // « Je ne sais pas », discret, au centre sous la ligne.
+                TextButton(
+                  key: const ValueKey('flame-unknown'),
+                  style: TextButton.styleFrom(
+                    minimumSize: const Size(44, 36),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    visualDensity: VisualDensity.compact,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  onPressed: widget.unknown ? null : widget.onUnknown,
+                  child: Text(
+                    'Je ne sais pas',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: widget.unknown ? SL.faint : SL.dim,
+                      fontSize: 12.5,
+                      decoration: TextDecoration.underline,
+                      decorationColor: SL.faint,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    'échec · 10',
+                    textAlign: TextAlign.end,
+                    style: TextStyle(color: SL.dim, fontSize: 11.5),
+                  ),
                 ),
               ],
             ),
@@ -383,11 +386,6 @@ class SetSummaryLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final f = flames;
-    final note = f != null
-        ? flameShortText(f)
-        : unknown
-        ? 'sans note'
-        : '';
     final spoken = [
       if (done.isNotEmpty) done,
       if (f != null) flameValueText(f) else if (unknown) 'sans note',
@@ -435,29 +433,39 @@ class SetSummaryLine extends StatelessWidget {
                     style: style,
                   ),
                 ),
-                if (f != null)
-                  FlameIcon(f, size: 20, semantics: false, centered: true)
-                else if (unknown)
-                  Icon(Icons.help_outline, size: 16, color: SL.dim),
-                if (note.isNotEmpty) ...[
-                  const SizedBox(width: 6),
-                  Text(
-                    note,
-                    style: TextStyle(
-                      color: SL.dim,
-                      fontSize: 13,
-                      height: 1.2,
-                      decoration: excluded ? TextDecoration.lineThrough : null,
-                    ),
-                  ),
-                ],
                 if (excluded) ...[
-                  const SizedBox(width: 6),
                   Text(
                     'écartée',
                     style: TextStyle(color: SL.dim, fontSize: 12.5),
                   ),
+                  const SizedBox(width: 6),
                 ],
+                // Colonne fixe : la flamme et sa note, alignées d'une ligne
+                // à l'autre et centrées sur le texte.
+                SizedBox(
+                  width: 22,
+                  height: 22,
+                  child: f != null
+                      ? FlameIcon(f, size: 22, semantics: false, centered: true)
+                      : unknown
+                      ? Icon(Icons.help_outline, size: 16, color: SL.dim)
+                      : null,
+                ),
+                SizedBox(
+                  width: 24,
+                  child: Text(
+                    f != null ? '$f' : '',
+                    key: ValueKey('set-summary-flames-$setLabel'),
+                    textAlign: TextAlign.end,
+                    style: TextStyle(
+                      color: SL.text,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      height: 1.2,
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                    ),
+                  ),
+                ),
                 if (onTap != null) ...[
                   const SizedBox(width: 4),
                   Icon(Icons.expand_more, size: 18, color: SL.dim),

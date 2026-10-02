@@ -180,8 +180,7 @@ class _AdaptSummaryScreenState extends State<AdaptSummaryScreen> {
     final day = a == null ? widget.base : store.adaptDay(w, widget.base, a);
     return [
       for (final e in day.exercises)
-        if (log.ex[e.id] case final x?
-            when x.sets.any((s) => s.done))
+        if (log.ex[e.id] case final x? when x.sets.any((s) => s.done))
           (
             store.splitName(e.name).$1,
             [

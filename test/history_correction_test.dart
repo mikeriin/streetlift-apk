@@ -156,6 +156,13 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(SessionHistoryScreen), findsNothing);
     expect(find.byType(SessionScreen), findsOneWidget);
+    // G9 correction 1 : exercice fini, séries résumées en une ligne ; un
+    // appui rouvre la série et ses champs.
+    final line = find.byKey(const ValueKey('set-summary-1'));
+    if (line.evaluate().isNotEmpty) {
+      await tester.tap(line.first);
+      await tester.pumpAndSettle();
+    }
     expect(find.byType(EditableText), findsWidgets);
     expect(store.isDone(8, 4), isFalse);
     expect(log.finishedAt, _finished);

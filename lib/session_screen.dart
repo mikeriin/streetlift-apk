@@ -1846,21 +1846,19 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                   !log.sets[i].done || (!readOnly && i == _openOf(k)),
               ].any((x) => x))
             _HeaderRow(
-            spec: sp,
-            showKg: showKg,
-            showRir: showRir,
-            showV: showV,
-            hasTimer: !readOnly && sp.timed,
-            valueLabel: unresolved ? 'VALEUR' : null,
-            effortLabel: readOnly ? 'EFFORT' : null,
-          ),
+              spec: sp,
+              showKg: showKg,
+              showRir: showRir,
+              showV: showV,
+              hasTimer: !readOnly && sp.timed,
+              valueLabel: unresolved ? 'VALEUR' : null,
+              effortLabel: readOnly ? 'EFFORT' : null,
+            ),
           for (var i = 0; i < log.sets.length; i++)
             // G9 correction 1 : séries validées résumées en une ligne, sauf
             // la série ouverte (la dernière validée) ; toutes résumées en
             // lecture (fin de séance, historique).
-            if (flameSets &&
-                log.sets[i].done &&
-                (readOnly || i != _openOf(k)))
+            if (flameSets && log.sets[i].done && (readOnly || i != _openOf(k)))
               SetSummaryLine(
                 setLabel: store.setLabel(sp, i),
                 done: setDoneText(log.sets[i], sp),
@@ -1897,7 +1895,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                     : sp.kind == 'duration'
                     ? () => widget.timer.single(
                         'DURÉE',
-                        (int.tryParse(log.sets[i].reps) ?? (sp.seconds! ~/ 60)) *
+                        (int.tryParse(log.sets[i].reps) ??
+                                (sp.seconds! ~/ 60)) *
                             60,
                       )
                     : null,

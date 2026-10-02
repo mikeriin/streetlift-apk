@@ -144,10 +144,7 @@ void main() {
     String? shotName,
   }) async {
     await tapF(tester, find.byTooltip('Valider la série $n'), ms: 900);
-    final track = await until(
-      tester,
-      find.byKey(ValueKey('flame-track-$n')),
-    );
+    final track = await until(tester, find.byKey(ValueKey('flame-track-$n')));
     if (!track) return false;
     if (flame != null) {
       await tap(tester, 'flame-pos-$flame', ms: 1500);

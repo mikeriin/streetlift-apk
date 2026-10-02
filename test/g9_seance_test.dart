@@ -737,7 +737,9 @@ void main() {
         await tester.pumpAndSettle();
         expect(v, 3);
         // Glisser de 2 à 9 : la flamme suit, validée au lâcher.
-        final from = tester.getCenter(find.byKey(const ValueKey('flame-pos-2')));
+        final from = tester.getCenter(
+          find.byKey(const ValueKey('flame-pos-2')),
+        );
         final to = tester.getCenter(find.byKey(const ValueKey('flame-pos-9')));
         await tester.timedDragFrom(
           from,
@@ -746,7 +748,7 @@ void main() {
         );
         await tester.pumpAndSettle();
         expect(v, 9);
-        expect(find.text('9 flammes · RIR 0,5'), findsOneWidget);
+        expect(find.text(flameValueText(9)), findsOneWidget);
         await tester.tap(find.byKey(const ValueKey('flame-unknown')));
         await tester.pumpAndSettle();
         expect(v, isNull);
@@ -761,9 +763,7 @@ void main() {
       }
     });
 
-    testWidgets('ligne résumée : flamme alignée avec le texte', (
-      tester,
-    ) async {
+    testWidgets('ligne résumée : flamme alignée avec le texte', (tester) async {
       phone(tester);
       final semantics = tester.ensureSemantics();
       for (final f in [1, 5, 10]) {
@@ -783,7 +783,10 @@ void main() {
         );
         await tester.pumpAndSettle();
         final flame = tester.getCenter(find.byType(FlameIcon));
-        final text = tester.getCenter(find.text(flameShortText(f)));
+        final text = tester.getCenter(
+          find.byKey(const ValueKey('set-summary-flames-2')),
+        );
+        expect(find.text('$f'), findsWidgets);
         final done = tester.getCenter(find.text('16,25 kg × 8'));
         expect(flame.dy, moreOrLessEquals(text.dy, epsilon: 1));
         expect(flame.dy, moreOrLessEquals(done.dy, epsilon: 1));

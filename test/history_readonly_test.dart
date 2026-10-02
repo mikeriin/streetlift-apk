@@ -97,16 +97,18 @@ void main() {
         expect(find.byType(EditableText), findsNothing);
         expect(find.byTooltip('Ajouter une série'), findsNothing);
         expect(find.byTooltip('Colonnes'), findsNothing);
-        expect(find.text('12,5'), findsOneWidget);
-        expect(find.text('0.55'), findsOneWidget);
+        // G9 correction 1 : séance relue, séries validées en une ligne
+        // (charge, répétitions, vitesse et flammes).
+        expect(find.text('12,5 kg × 7 reps · 0,55 m/s'), findsOneWidget);
         expect(find.text('Note intacte'), findsOneWidget);
         expect(
           find.text('–'),
           findsWidgets,
         ); // les blancs ne sont pas préremplis
         // Toucher une valeur ou la coche ne peut pas changer la saisie.
-        await tester.tap(find.text('12,5'));
-        await tester.tap(find.byIcon(Icons.check).first);
+        await tester.tap(find.text('12,5 kg × 7 reps · 0,55 m/s'));
+        final check = find.byIcon(Icons.check);
+        if (check.evaluate().isNotEmpty) await tester.tap(check.first);
         await swipePage(tester);
         await tester.tap(find.text('Exercices'));
         await tester.pumpAndSettle();

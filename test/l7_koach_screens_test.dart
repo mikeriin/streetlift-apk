@@ -410,10 +410,7 @@ void main() {
         await tester.tap(find.byTooltip('Valider la série 1').first);
         await tester.pumpAndSettle();
         // Texte agrandi : la ligne des flammes sous la série.
-        await scrollToAction(
-          tester,
-          find.byKey(const ValueKey('flame-pos-1')),
-        );
+        await scrollToAction(tester, find.byKey(const ValueKey('flame-pos-1')));
         await tester.tap(find.byKey(const ValueKey('flame-pos-1')));
         await tester.pumpAndSettle();
         await scrollToAction(tester, find.byKey(const ValueKey('koach-apply')));
