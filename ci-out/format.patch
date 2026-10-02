@@ -1,0 +1,16 @@
+diff --git a/test/g9_seance_test.dart b/test/g9_seance_test.dart
+index 78f569f..5f6960c 100644
+--- a/test/g9_seance_test.dart
++++ b/test/g9_seance_test.dart
+@@ -776,7 +776,10 @@ void main() {
+         ..kg = kg
+         ..reps = reps
+         ..done = true;
+-      expect(setDoneText(e('16.25', '8'), const LogSpec('reps')), '16,25 kg × 8 reps');
++      expect(
++        setDoneText(e('16.25', '8'), const LogSpec('reps')),
++        '16,25 kg × 8 reps',
++      );
+       expect(setDoneText(e('', '1'), const LogSpec('reps')), '1 rep');
+       expect(setDoneText(e('', '30'), const LogSpec('hold')), '30 s');
+       expect(

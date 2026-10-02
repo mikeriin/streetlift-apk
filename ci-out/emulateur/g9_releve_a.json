@@ -5,7 +5,7 @@
   "perso_accueil": true,
   "perso_jour": "S12-J1",
   "bilan": true,
-  "ouverture_ms": 650,
+  "ouverture_ms": 2870,
   "seance_moteur": true,
   "bloc": "legacy-programme-v33",
   "bilan_detail": true,

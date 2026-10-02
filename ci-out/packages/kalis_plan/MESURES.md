@@ -55,14 +55,14 @@ Par profil type : médiane de trois exécutions, moteur neuf à chaque fois, apr
 
 | Opération | Médiane | 95e centile | Maximum |
 | --- | --- | --- | --- |
-| Passe 1 (création) | 37.1 | 66.1 | 69.8 |
-| Passe 2 | 0.9 | 1.9 | 2.6 |
-| Génération complète (passes 1 + 2) | 38.1 | 67.3 | 71.0 |
-| Régénération après une action de revue | 5.5 | 9.8 | 12.4 |
-| Variantes d'un exercice | 0.8 | 1.3 | 2.4 |
-| Autre proposition | 14.3 | 25.2 | 34.1 |
-| Bloc suivant | 6.5 | 12.7 | 15.2 |
-| Restructuration de la fin du bloc | 5.7 | 11.9 | 14.1 |
+| Passe 1 (création) | 38.9 | 73.0 | 75.7 |
+| Passe 2 | 1.0 | 2.5 | 3.2 |
+| Génération complète (passes 1 + 2) | 39.9 | 74.3 | 78.5 |
+| Régénération après une action de revue | 6.0 | 10.3 | 14.0 |
+| Variantes d'un exercice | 0.9 | 1.5 | 2.5 |
+| Autre proposition | 16.1 | 29.6 | 40.5 |
+| Bloc suivant | 6.9 | 14.2 | 17.6 |
+| Restructuration de la fin du bloc | 6.4 | 13.6 | 15.9 |
 
 ## 3. Population de 1000 profils aléatoires
 
@@ -75,8 +75,8 @@ Programmes avec une contrainte dure violée : **0** ; programmes invalides au se
 | Groupes dans leur bande (%) | 81.9 | 53.3 | 84.4 | 100.0 | 17.8 | 100.0 |
 | Erreur de dosage (points) | 9.6 | 0.0 | 1.7 | 40.4 | 0.0 | 100.0 |
 | Schémas de base couverts (%) | 92.1 | 50.0 | 100.0 | 100.0 | 0.0 | 100.0 |
-| Passe 1 (ms) | 35.595 | 10.400 | 32.600 | 70.300 | 2.300 | 152.200 |
-| Régénération en revue (ms) | 5.289 | 1.500 | 5.000 | 10.200 | 0.300 | 21.900 |
+| Passe 1 (ms) | 37.430 | 10.600 | 33.700 | 75.600 | 2.300 | 174.900 |
+| Régénération en revue (ms) | 5.656 | 1.500 | 5.200 | 11.400 | 0.400 | 24.800 |
 
 Diff minimal — changements d'exercice hors de l'emplacement visé, par action de revue :
 
@@ -96,13 +96,13 @@ Objectif moyen (sécurité + note globale, de 0 à 2) des 40 profils types selon
 
 | Effort | Coups de recuit | Objectif moyen | Temps moyen (ms) | Profils améliorés | Profils dégradés |
 | --- | --- | --- | --- | --- | --- |
-| × 0.0 | 0 | 1.95196 | 10.8 | — | — |
-| × 0.0625 | 750 | 1.95301 | 15.0 | — | — |
-| × 0.125 | 1500 | 1.95442 | 17.1 | — | — |
-| × 0.25 | 3000 | 1.95516 | 21.1 | — | — |
-| × 0.5 | 6000 | 1.95628 | 26.6 | — | — |
-| × 1.0 | 12000 | 1.95715 | 36.6 | — | — |
-| × 2.0 | 24000 | 1.95751 | 55.8 | 21 | 17 |
+| × 0.0 | 0 | 1.95196 | 12.9 | — | — |
+| × 0.0625 | 750 | 1.95301 | 16.5 | — | — |
+| × 0.125 | 1500 | 1.95442 | 18.4 | — | — |
+| × 0.25 | 3000 | 1.95516 | 22.6 | — | — |
+| × 0.5 | 6000 | 1.95628 | 28.4 | — | — |
+| × 1.0 | 12000 | 1.95715 | 38.9 | — | — |
+| × 2.0 | 24000 | 1.95751 | 59.8 | 21 | 17 |
 
 ## 6. Sensibilité aux poids de la note
 

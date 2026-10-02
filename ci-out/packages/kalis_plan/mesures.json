@@ -7547,83 +7547,83 @@
  "timingsFixturesMs": {
   "createPass1": {
    "n": 40,
-   "mean": 36.9,
-   "min": 6.4,
-   "p05": 15.0,
-   "p50": 37.1,
-   "p95": 66.1,
-   "p99": 69.8,
-   "max": 69.8
+   "mean": 40.2,
+   "min": 6.2,
+   "p05": 15.6,
+   "p50": 38.9,
+   "p95": 73.0,
+   "p99": 75.7,
+   "max": 75.7
   },
   "createPass2": {
    "n": 40,
-   "mean": 0.9,
+   "mean": 1.2,
    "min": 0.3,
-   "p05": 0.4,
-   "p50": 0.9,
-   "p95": 1.9,
-   "p99": 2.6,
-   "max": 2.6
+   "p05": 0.5,
+   "p50": 1.0,
+   "p95": 2.5,
+   "p99": 3.2,
+   "max": 3.2
   },
   "full": {
    "n": 40,
-   "mean": 37.8,
-   "min": 6.7,
-   "p05": 15.5,
-   "p50": 38.1,
-   "p95": 67.3,
-   "p99": 71.0,
-   "max": 71.0
+   "mean": 41.4,
+   "min": 6.5,
+   "p05": 16.3,
+   "p50": 39.9,
+   "p95": 74.3,
+   "p99": 78.5,
+   "max": 78.5
   },
   "review": {
    "n": 40,
-   "mean": 5.7,
-   "min": 0.6,
+   "mean": 6.0,
+   "min": 0.7,
    "p05": 2.2,
-   "p50": 5.5,
-   "p95": 9.8,
-   "p99": 12.4,
-   "max": 12.4
+   "p50": 6.0,
+   "p95": 10.3,
+   "p99": 14.0,
+   "max": 14.0
   },
   "variants": {
    "n": 40,
    "mean": 0.9,
-   "min": 0.3,
+   "min": 0.4,
    "p05": 0.4,
-   "p50": 0.8,
-   "p95": 1.3,
-   "p99": 2.4,
-   "max": 2.4
+   "p50": 0.9,
+   "p95": 1.5,
+   "p99": 2.5,
+   "max": 2.5
   },
   "alternative": {
    "n": 40,
-   "mean": 15.9,
-   "min": 3.4,
-   "p05": 7.6,
-   "p50": 14.3,
-   "p95": 25.2,
-   "p99": 34.1,
-   "max": 34.1
+   "mean": 18.0,
+   "min": 3.2,
+   "p05": 7.9,
+   "p50": 16.1,
+   "p95": 29.6,
+   "p99": 40.5,
+   "max": 40.5
   },
   "nextBlock": {
    "n": 40,
-   "mean": 6.6,
+   "mean": 7.3,
    "min": 0.6,
-   "p05": 3.0,
-   "p50": 6.5,
-   "p95": 12.7,
-   "p99": 15.2,
-   "max": 15.2
+   "p05": 3.1,
+   "p50": 6.9,
+   "p95": 14.2,
+   "p99": 17.6,
+   "max": 17.6
   },
   "restructure": {
    "n": 40,
-   "mean": 6.1,
+   "mean": 6.6,
    "min": 0.7,
    "p05": 2.4,
-   "p50": 5.7,
-   "p95": 11.9,
-   "p99": 14.1,
-   "max": 14.1
+   "p50": 6.4,
+   "p95": 13.6,
+   "p99": 15.9,
+   "max": 15.9
   }
  },
  "population_stats": {
@@ -7698,23 +7698,23 @@
   },
   "createPass1Ms": {
    "n": 1000,
-   "mean": 35.6,
+   "mean": 37.4,
    "min": 2.3,
-   "p05": 10.4,
-   "p50": 32.6,
-   "p95": 70.3,
-   "p99": 95.4,
-   "max": 152.2
+   "p05": 10.6,
+   "p50": 33.7,
+   "p95": 75.6,
+   "p99": 100.2,
+   "max": 174.9
   },
   "reviewMs": {
    "n": 1000,
-   "mean": 5.3,
-   "min": 0.3,
+   "mean": 5.7,
+   "min": 0.4,
    "p05": 1.5,
-   "p50": 5.0,
-   "p95": 10.2,
-   "p99": 13.5,
-   "max": 21.9
+   "p50": 5.2,
+   "p95": 11.4,
+   "p99": 15.5,
+   "max": 24.8
   },
   "collateralChanges": {
    "cannot_do": {
@@ -7774,43 +7774,43 @@
     "effort": 0.0,
     "annealIterations": 0,
     "meanObjective": 1.95196,
-    "meanMs": 10.8
+    "meanMs": 12.9
    },
    {
     "effort": 0.0625,
     "annealIterations": 750,
     "meanObjective": 1.95301,
-    "meanMs": 15.0
+    "meanMs": 16.5
    },
    {
     "effort": 0.125,
     "annealIterations": 1500,
     "meanObjective": 1.95442,
-    "meanMs": 17.1
+    "meanMs": 18.4
    },
    {
     "effort": 0.25,
     "annealIterations": 3000,
     "meanObjective": 1.95516,
-    "meanMs": 21.2
+    "meanMs": 22.6
    },
    {
     "effort": 0.5,
     "annealIterations": 6000,
     "meanObjective": 1.95628,
-    "meanMs": 26.6
+    "meanMs": 28.4
    },
    {
     "effort": 1.0,
     "annealIterations": 12000,
     "meanObjective": 1.95715,
-    "meanMs": 36.6
+    "meanMs": 38.9
    },
    {
     "effort": 2.0,
     "annealIterations": 24000,
     "meanObjective": 1.95751,
-    "meanMs": 55.8,
+    "meanMs": 59.8,
     "profilesImproved": 21,
     "profilesWorse": 17
    }
@@ -8326,5 +8326,5 @@
   ],
   "overRepresentedOwnerSpecific": []
  },
- "reportSeconds": 122
+ "reportSeconds": 131
 }
