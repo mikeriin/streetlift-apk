@@ -297,7 +297,7 @@ class _FlameTrackState extends State<FlameTrack> {
                                   key: ValueKey('flame-thumb-$v'),
                                   size: flame,
                                   semantics: false,
-                                  centered: true,
+                                  onBase: true,
                                 ),
                               ),
                             ),

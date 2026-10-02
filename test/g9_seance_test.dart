@@ -721,6 +721,13 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.text('7 flammes · RIR 2'), findsOneWidget);
         expect(find.byKey(const ValueKey('flame-thumb-7')), findsOneWidget);
+        // G9 correction 2 : la flamme est posée par le centre de sa base.
+        expect(
+          tester
+              .widget<FlameIcon>(find.byKey(const ValueKey('flame-thumb-7')))
+              .onBase,
+          isTrue,
+        );
         // 10 positions : 9 points visibles et la flamme.
         for (var i = 1; i <= 10; i++) {
           expect(find.byKey(ValueKey('flame-pos-$i')), findsOneWidget);
