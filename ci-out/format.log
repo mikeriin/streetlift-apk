@@ -1,6 +1,0 @@
-Changed lib/adapt/health_check.dart
-Changed lib/session_adapt_store.dart
-Changed test/g9_seance_test.dart
-Changed test/l7_koach_screens_test.dart
-Changed integration_test/seance_g9_test.dart
-Formatted 218 files (5 changed) in 0.91 seconds.

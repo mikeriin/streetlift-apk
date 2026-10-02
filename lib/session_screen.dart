@@ -1084,7 +1084,16 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final lines = <String>[];
     for (final r in it.reasons) {
       final t = adaptReasonText(r, exerciseName: store.adaptExerciseName);
-      if (t != null && !lines.contains(t)) lines.add(t);
+      if (t == null || lines.contains(t)) continue;
+      // Calibrage d'abord : c'est ce qui explique la charge du jour.
+      if (r.code == 'adapt.calibration') {
+        lines.insert(0, t);
+      } else {
+        lines.add(t);
+      }
+    }
+    if (it.toCalibrate && !lines.any((l) => l.startsWith('Calibrage'))) {
+      lines.insert(0, 'Calibrage : je cale la charge sur tes premières séances.');
     }
     if (lines.isEmpty && !it.toCalibrate) return const [];
     return [
@@ -1115,12 +1124,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
-                  [
-                    if (it.toCalibrate &&
-                        !lines.any((l) => l.startsWith('Calibrage')))
-                      'Calibrage',
-                    ...lines.take(2),
-                  ].join(' · '),
+                  lines.take(2).join(' · '),
                   style: TextStyle(color: SL.dim, fontSize: 12.5),
                 ),
               ),

@@ -1,4 +1,14 @@
-# Kalis Track dev6.5.0 — Recentrage sur le programme (pipeline « Génération et progression »)
+# Kalis Track dev6.6.0 — Recentrage sur le programme (pipeline « Génération et progression »)
+
+## dev6.6.0 — La séance avec Koach : bilan, flammes, charges du moteur (lot G9)
+
+- **Charges du jour par le moteur dynamique** `kalis_adapt` (étiquette `kalis_adapt-v0.1.0`, avec `kalis_core` 0.3.0) : chaque séance affiche les charges, répétitions et flammes visées calculées à partir de ton journal (et plus par Koach L7). Les 2-3 premières séances d'un exercice : mention « Calibrage », Koach explique.
+- **Bilan santé en début de séance** : Koach demande « Comment tu te sens ? » (5 niveaux). Réponse moyenne ou haute → la séance ; réponse basse → détail facultatif sur un seul écran (sommeil, énergie, humeur, courbatures, douleur par zone sur la carte et de 0 à 10, stress, motivation, temps disponible, alimentation, hydratation). « Passer » partout ; ce que tu ne réponds pas ne compte pas. L'ajustement est appliqué en mode assisté (Koach dit ce qu'il a changé, « Annuler ») ou proposé en mode libre (« Accepter » / « Garder ma séance »). Douleur : la zone est épargnée ; au-delà de 3/10 sur plus de 2 séances de suite, Koach conseille l'avis d'un professionnel de santé (règle L13).
+- **Flammes à chaque série** : à la validation, le sélecteur des 10 flammes s'ouvre, pré-rempli avec la flamme visée : un appui confirme, un appui sur une autre flamme corrige, glisser change la flamme ; « Je ne sais pas » valide sans note. Il remplace la saisie du RIR partout ; les anciennes séances s'affichent en flammes.
+- **Après chaque série**, le moteur ajuste la série suivante (charge ou répétitions) : appliqué avec un message de Koach et « Annuler » (assisté), ou proposé (libre).
+- **Fin de séance** : Koach résume ce qui a été calibré, ce qui a progressé (capacité estimée) et ce qui changera la prochaine fois.
+- **Programme du propriétaire** (D5.10) : même séance, même structure ; charges et suggestions par `kalis_adapt` à partir de ses consignes. « J'ai seulement… minutes » et « Je m'entraîne ailleurs » passent par le moteur. Tests : `test/g9_seance_test.dart`, `integration_test/seance_g9_test.dart`. Version « dev6.6.0 ».
+
 
 ## dev6.5.0 — Création du programme avec Koach (lot G7)
 

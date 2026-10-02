@@ -265,58 +265,58 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
         ? const ['Charges et cibles un peu plus prudentes.']
         : all.take(6).toList();
     final more = all.length - shown.length;
-    final (KoachPose pose, String head, List<(String, String, VoidCallback)> actions, bool list) =
-        switch (a.choice) {
-          'applied' => (
-            koachPose(KoachUsage.adjustment),
-            'J’ai adapté ta séance à ton bilan :',
-            <(String, String, VoidCallback)>[
-              ('adjust-go', 'C’est parti', widget.onStart),
-              ('adjust-undo', 'Annuler', () => _choose('undone')),
-            ],
-            true,
-          ),
-          'undone' => (
-            koachPose(KoachUsage.cancel),
-            'D’accord, tu gardes ta séance prévue.',
-            <(String, String, VoidCallback)>[
-              ('adjust-go', 'C’est parti', widget.onStart),
-              ('adjust-redo', 'Rétablir l’ajustement', () => _choose('applied')),
-            ],
-            false,
-          ),
-          'pending' => (
-            koachPose(KoachUsage.proposal),
-            'Vu ton bilan, je te propose :',
-            <(String, String, VoidCallback)>[
-              ('adjust-accept', 'Accepter', () => _choose('accepted')),
-              ('adjust-keep', 'Garder ma séance', () => _choose('kept')),
-            ],
-            true,
-          ),
-          'accepted' => (
-            koachPose(KoachUsage.confirmation),
-            'C’est noté, séance adaptée :',
-            <(String, String, VoidCallback)>[
-              ('adjust-go', 'C’est parti', widget.onStart),
-              ('adjust-keep', 'Garder ma séance', () => _choose('kept')),
-            ],
-            true,
-          ),
-          _ => (
-            koachPose(KoachUsage.confirmation),
-            'Tu gardes ta séance prévue.',
-            <(String, String, VoidCallback)>[
-              ('adjust-go', 'C’est parti', widget.onStart),
-              (
-                'adjust-accept',
-                'Accepter l’ajustement',
-                () => _choose('accepted'),
-              ),
-            ],
-            false,
-          ),
-        };
+    final (
+      KoachPose pose,
+      String head,
+      List<(String, String, VoidCallback)> actions,
+      bool list,
+    ) = switch (a.choice) {
+      'applied' => (
+        koachPose(KoachUsage.adjustment),
+        'J’ai adapté ta séance à ton bilan :',
+        <(String, String, VoidCallback)>[
+          ('adjust-go', 'C’est parti', widget.onStart),
+          ('adjust-undo', 'Annuler', () => _choose('undone')),
+        ],
+        true,
+      ),
+      'undone' => (
+        koachPose(KoachUsage.cancel),
+        'D’accord, tu gardes ta séance prévue.',
+        <(String, String, VoidCallback)>[
+          ('adjust-go', 'C’est parti', widget.onStart),
+          ('adjust-redo', 'Rétablir l’ajustement', () => _choose('applied')),
+        ],
+        false,
+      ),
+      'pending' => (
+        koachPose(KoachUsage.proposal),
+        'Vu ton bilan, je te propose :',
+        <(String, String, VoidCallback)>[
+          ('adjust-accept', 'Accepter', () => _choose('accepted')),
+          ('adjust-keep', 'Garder ma séance', () => _choose('kept')),
+        ],
+        true,
+      ),
+      'accepted' => (
+        koachPose(KoachUsage.confirmation),
+        'C’est noté, séance adaptée :',
+        <(String, String, VoidCallback)>[
+          ('adjust-go', 'C’est parti', widget.onStart),
+          ('adjust-keep', 'Garder ma séance', () => _choose('kept')),
+        ],
+        true,
+      ),
+      _ => (
+        koachPose(KoachUsage.confirmation),
+        'Tu gardes ta séance prévue.',
+        <(String, String, VoidCallback)>[
+          ('adjust-go', 'C’est parti', widget.onStart),
+          ('adjust-accept', 'Accepter l’ajustement', () => _choose('accepted')),
+        ],
+        false,
+      ),
+    };
     return KCard(
       key: ValueKey('health-adjust-${a.choice}'),
       child: KoachSays(
@@ -411,9 +411,9 @@ class _FeelTile extends StatelessWidget {
             child: KoachSurface(
               color: SL.card,
               child: Padding(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   vertical: 10,
-                  horizontal: 6,
+                  horizontal: horizontal ? 12 : 2,
                 ),
                 child: horizontal
                     ? Row(
@@ -443,12 +443,14 @@ class _FeelTile extends StatelessWidget {
                             width: 44,
                           ),
                           const SizedBox(height: 6),
+                          // Même taille pour les cinq libellés.
                           FittedBox(
                             fit: BoxFit.scaleDown,
                             child: Text(
                               label,
                               maxLines: 1,
                               style: const TextStyle(
+                                fontSize: 11.5,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),

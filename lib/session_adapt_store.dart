@@ -471,7 +471,8 @@ extension SessionAdaptStore on AppStore {
     // Lecture gardée tant que le JSON est le même objet (chaque écriture
     // en crée un nouveau).
     final hit = _g9Cache['sa|$key'];
-    if (hit is (Map<String, dynamic>, SessionAdapt?) && identical(hit.$1, raw)) {
+    if (hit is (Map<String, dynamic>, SessionAdapt?) &&
+        identical(hit.$1, raw)) {
       return hit.$2;
     }
     SessionAdapt? parsed;
@@ -512,12 +513,16 @@ extension SessionAdaptStore on AppStore {
       var n = 0;
       for (final x in e.value.ex.values) {
         for (final s in x.sets) {
-          if (s.done) n += 1 + (s.flames ?? 0) * 11 + (s.excluded ? 7 : 0);
+          if (s.done) {
+            n = (n * 31 +
+                    Object.hash(s.kg, s.reps, s.flames, s.excluded, s.effort)) &
+                0x3fffffff;
+          }
         }
       }
       sig.write(
         '|${e.key}:${e.value.done}:${e.value.finishedAt}:$n:'
-        '${e.value.adapt?.length}',
+        '${e.value.adapt == null ? '-' : identityHashCode(e.value.adapt)}',
       );
     }
     sig.write('|${programResume?.keys.length}|${koach.answers.length}');

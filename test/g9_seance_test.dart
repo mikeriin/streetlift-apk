@@ -95,7 +95,10 @@ void main() {
         for (final w in app.program.weeks)
           [
             for (final d in w.days)
-              [for (final e in d.exercises) '${e.id}|${e.name}|${app.setsLabel(e)}'],
+              [
+                for (final e in d.exercises)
+                  '${e.id}|${e.name}|${app.setsLabel(e)}',
+              ],
           ],
       ];
       final place = app.adaptPlaceOf(12, 1)!;
@@ -138,7 +141,10 @@ void main() {
         for (final w in app.program.weeks)
           [
             for (final d in w.days)
-              [for (final e in d.exercises) '${e.id}|${e.name}|${app.setsLabel(e)}'],
+              [
+                for (final e in d.exercises)
+                  '${e.id}|${e.name}|${app.setsLabel(e)}',
+              ],
           ],
       ], before);
       // La séance prescrite est figée : relue telle quelle après relance.
@@ -214,56 +220,61 @@ void main() {
       expect(out.sessions.single.programRef!.blockId, kLegacyProgramBlockId);
     });
 
-    test('bilan (D5.8) : réponses partielles gardées telles quelles, aucune '
-        'valeur injectée ; mode assisté : ajustement appliqué, annulable',
-        () async {
-      await _ownerState(app);
-      _saveProfile(app, kc.GuidanceMode.assisted);
-      final day = app.program.week(12).day(1)!;
-      app.adaptOpen(12, day);
-      final a = app.adaptAnswer(
-        12,
-        day,
-        const kc.HealthCheck(overall: 1, sleepQuality: 1, energy: 1),
-      )!;
-      expect(a.asked, isTrue);
-      expect(a.check!.toJson(), {'overall': 1, 'sleepQuality': 1, 'energy': 1});
-      expect(a.base, isNotNull, reason: 'un bilan très bas change la séance');
-      expect(a.choice, 'applied');
-      expect(a.adjusted, isTrue);
-      expect(identical(a.active, a.plan), isTrue);
-      expect(
-        sessionDiffLines(a.base!, a.plan, app.adaptExerciseName),
-        isNotEmpty,
-      );
-      final undone = app.adaptChoose(12, day, 'undone')!;
-      expect(undone.adjusted, isFalse);
-      expect(
-        jsonEncode(undone.active.toJson()),
-        jsonEncode(undone.base!.toJson()),
-      );
-      expect(undone.activeCheck, isNull);
-      // Le bilan est au journal tel qu'il a été donné (séance terminée).
-      final served = app.adaptDay(12, day, undone);
-      final e = served.exercises.firstWhere((x) => x.engine);
-      final log = app.exLog(12, 1, e);
-      app.adaptPrefill(12, 1, e, log);
-      if (log.sets[0].reps.isEmpty) log.sets[0].reps = '3';
-      log.sets[0].flames = 7;
-      expect(app.toggleSet(log, 0, app.logSpec(e)).ok, isTrue);
-      app.markSessionDone(12, 1, true);
-      final s = app
-          .adaptTrainingLog()
-          .sessions
-          .firstWhere((x) => x.id == 'legacy-S12-J1');
-      expect(s.healthCheck!.toJson(), {
-        'overall': 1,
-        'sleepQuality': 1,
-        'energy': 1,
-      });
-      expect(s.programRef!.blockId, kLegacyProgramBlockId);
-      expect(s.plannedWorkSets, plannedWorkSetsOf(undone.active));
-    });
+    test(
+      'bilan (D5.8) : réponses partielles gardées telles quelles, aucune '
+      'valeur injectée ; mode assisté : ajustement appliqué, annulable',
+      () async {
+        await _ownerState(app);
+        _saveProfile(app, kc.GuidanceMode.assisted);
+        final day = app.program.week(12).day(1)!;
+        app.adaptOpen(12, day);
+        final a = app.adaptAnswer(
+          12,
+          day,
+          const kc.HealthCheck(overall: 1, sleepQuality: 1, energy: 1),
+        )!;
+        expect(a.asked, isTrue);
+        expect(a.check!.toJson(), {
+          'overall': 1,
+          'sleepQuality': 1,
+          'energy': 1,
+        });
+        expect(a.base, isNotNull, reason: 'un bilan très bas change la séance');
+        expect(a.choice, 'applied');
+        expect(a.adjusted, isTrue);
+        expect(identical(a.active, a.plan), isTrue);
+        expect(
+          sessionDiffLines(a.base!, a.plan, app.adaptExerciseName),
+          isNotEmpty,
+        );
+        final undone = app.adaptChoose(12, day, 'undone')!;
+        expect(undone.adjusted, isFalse);
+        expect(
+          jsonEncode(undone.active.toJson()),
+          jsonEncode(undone.base!.toJson()),
+        );
+        expect(undone.activeCheck, isNull);
+        // Le bilan est au journal tel qu'il a été donné (séance terminée).
+        final served = app.adaptDay(12, day, undone);
+        final e = served.exercises.firstWhere((x) => x.engine);
+        final log = app.exLog(12, 1, e);
+        app.adaptPrefill(12, 1, e, log);
+        if (log.sets[0].reps.isEmpty) log.sets[0].reps = '3';
+        log.sets[0].flames = 7;
+        expect(app.toggleSet(log, 0, app.logSpec(e)).ok, isTrue);
+        app.markSessionDone(12, 1, true);
+        final s = app.adaptTrainingLog().sessions.firstWhere(
+          (x) => x.id == 'legacy-S12-J1',
+        );
+        expect(s.healthCheck!.toJson(), {
+          'overall': 1,
+          'sleepQuality': 1,
+          'energy': 1,
+        });
+        expect(s.programRef!.blockId, kLegacyProgramBlockId);
+        expect(s.plannedWorkSets, plannedWorkSetsOf(undone.active));
+      },
+    );
 
     test('bilan passé : aucun bilan, séance prévue ; un bilan sans réponse '
         'vaut l’absence de bilan', () async {
@@ -275,7 +286,10 @@ void main() {
       expect(skipped.asked, isTrue);
       expect(skipped.check, isNull);
       expect(skipped.base, isNull);
-      expect(jsonEncode(skipped.plan.toJson()), jsonEncode(first.plan.toJson()));
+      expect(
+        jsonEncode(skipped.plan.toJson()),
+        jsonEncode(first.plan.toJson()),
+      );
       final empty = app.adaptAnswer(12, day, const kc.HealthCheck())!;
       expect(empty.check, isNull);
       expect(empty.base, isNull);
@@ -352,10 +366,7 @@ void main() {
       log.sets[0]
         ..reps = '1'
         ..flames = 10;
-      expect(
-        app.toggleSet(log, 0, app.logSpec(e)).ok,
-        isTrue,
-      );
+      expect(app.toggleSet(log, 0, app.logSpec(e)).ok, isTrue);
       final r = app.adaptAfterSet(12, day, e, 0)!;
       expect(r.advice.action, isNot(kc.IntraSessionAction.loadUp));
       if (r.step != null) {
@@ -427,9 +438,10 @@ void main() {
       expect(await next.importAll(jsonEncode(broken)), isFalse);
       final badFlames = jsonDecode(exported) as Map<String, dynamic>;
       (((((badFlames['logs'] as Map)['S12-J1'] as Map)['ex'] as Map)[e.id]
-                  as Map)['sets']
-              as List)
-          .first['flames'] = 11;
+                      as Map)['sets']
+                  as List)
+              .first['flames'] =
+          11;
       expect(await next.importAll(jsonEncode(badFlames)), isFalse);
     });
 
@@ -637,9 +649,7 @@ void main() {
       phone(tester);
       final week = store.program.week(12);
       final day = week.day(1)!;
-      await tester.pumpWidget(
-        page(AdaptSummaryScreen(week: week, base: day)),
-      );
+      await tester.pumpWidget(page(AdaptSummaryScreen(week: week, base: day)));
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('adapt-summary')), findsOneWidget);
       expect(find.byKey(const ValueKey('summary-done')), findsOneWidget);

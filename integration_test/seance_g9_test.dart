@@ -143,7 +143,10 @@ void main() {
     String? shotName,
   }) async {
     await tapF(tester, find.byTooltip('Valider la série $n'), ms: 900);
-    final sheet = await until(tester, find.byKey(const ValueKey('flame-sheet')));
+    final sheet = await until(
+      tester,
+      find.byKey(const ValueKey('flame-sheet')),
+    );
     if (shotName != null) await shot(shotName);
     if (!sheet) return false;
     if (flame == null) {
@@ -181,7 +184,9 @@ void main() {
     seed.saveSettings();
     final real = DateTime.now();
     final today = DateTime(real.year, real.month, real.day);
-    await seed.configureStart(DateTime(today.year, today.month, today.day - 77));
+    await seed.configureStart(
+      DateTime(today.year, today.month, today.day - 77),
+    );
     // Journal synthétique des semaines 1 à 11 (fixture, aucune donnée réelle).
     for (final w in seed.program.weeks.take(11)) {
       for (final d in w.days) {
@@ -272,7 +277,10 @@ void main() {
     await shot('04_ajustement_bilan');
     if (find.byKey(const ValueKey('adjust-go')).evaluate().isNotEmpty) {
       await tap(tester, 'adjust-go', ms: 1500);
-    } else if (find.byKey(const ValueKey('bilan-start')).evaluate().isNotEmpty) {
+    } else if (find
+        .byKey(const ValueKey('bilan-start'))
+        .evaluate()
+        .isNotEmpty) {
       await tap(tester, 'bilan-start', ms: 1500);
     }
     await wait(tester, 800);
@@ -310,7 +318,11 @@ void main() {
     await shot('08_series');
     releve['fin_seance'] = await finish(tester, '09_fin_seance');
     releve['fin_sections'] = [
-      for (final k in ['summary-calibration', 'summary-progress', 'summary-next'])
+      for (final k in [
+        'summary-calibration',
+        'summary-progress',
+        'summary-next',
+      ])
         if (find.byKey(ValueKey(k)).evaluate().isNotEmpty) k,
     ];
     releve['perso_seance_faite'] = store.isDone(12, day.j);

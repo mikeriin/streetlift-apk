@@ -304,16 +304,20 @@ class FlameSetLine extends StatelessWidget {
       if (excluded) 'série écartée',
     ].join(' · ');
     return Semantics(
+      container: true,
       button: onTap != null,
-      label: 'Série $setLabel : $label',
+      label: 'Série $setLabel : $label${onTap == null ? '' : '. Modifier'}',
       excludeSemantics: true,
+      onTap: onTap,
       child: InkWell(
         key: ValueKey('flame-line-$setLabel'),
         borderRadius: BorderRadius.circular(12),
         onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(32, 2, 4, 4),
-          child: Row(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: onTap == null ? 24 : 44),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(32, 2, 4, 2),
+            child: Row(
             children: [
               if (f != null)
                 FlameIcon(f, size: 18, semantics: false)
@@ -332,6 +336,7 @@ class FlameSetLine extends StatelessWidget {
               ),
               if (onTap != null) Icon(Icons.edit, size: 14, color: SL.dim),
             ],
+          ),
           ),
         ),
       ),

@@ -1,8 +1,15 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : G6 correction 1, version dev6.4.1 ; précédent : dev6.4.0 (G6)**  
-**Date : 1er octobre 2026, Europe/Paris — version : 6.4.1+100, affichée « dev6.4.1 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : G9, version dev6.6.0 ; précédent : dev6.5.0 (G7)**  
+**Date : 2 octobre 2026, Europe/Paris — version : 6.6.0+102, affichée « dev6.6.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## G9 — Séance : flammes, bilan santé, charges par kalis_adapt (version dev6.6.0)
+
+- Intégration de `kalis_adapt` 0.1.0 (branche fixe `etiquettes/kalis_adapt-v0.1.0`) et `kalis_core` 0.3.0 ; `kalis_plan` inchangé ; dépendances `path:` ; tests de contrat (journal présenté au moteur, séance prescrite, conseil).
+- Séance : page « Bilan du jour » (5 niveaux, détail si bas), ajustement assisté / libre, flammes obligatoires à chaque série (pré-remplies), conseil après chaque série, résumé de fin de séance. Programme du propriétaire porté tel quel dans un bloc importé (D5.10).
+- Données : champ `adapt` (v1, facultatif) de chaque séance servie ; `flames` / `flamesUnknown` de chaque série ; colonne RIR / RPE et ses réglages retirés.
+- Décisions : DECISIONS_GP.md, section G9.
 
 ## G7 — Création du programme en deux passes (version dev6.5.0)
 

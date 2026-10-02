@@ -404,7 +404,10 @@ void main() {
         await tester.tap(find.byTooltip('Valider la série 1').first);
         await tester.pumpAndSettle();
         // Texte agrandi : la fiche défile jusqu'au 6e bouton.
-        await scrollToAction(tester, find.byKey(const ValueKey('flame-pick-1')));
+        await scrollToAction(
+          tester,
+          find.byKey(const ValueKey('flame-pick-1')),
+        );
         await tester.tap(find.byKey(const ValueKey('flame-pick-1')));
         await tester.pumpAndSettle();
         await scrollToAction(tester, find.byKey(const ValueKey('koach-apply')));
