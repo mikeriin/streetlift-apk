@@ -1,0 +1,40 @@
+diff --git a/test/g10_diag_test.dart b/test/g10_diag_test.dart
+index 929e2d0..8a19ca7 100644
+--- a/test/g10_diag_test.dart
++++ b/test/g10_diag_test.dart
+@@ -8,18 +8,31 @@ import 'package:streetlift_tracker/store.dart';
+ 
+ void main() {
+   TestWidgetsFlutterBinding.ensureInitialized();
+-  final starts = [DateTime(2026, 10, 1), DateTime(2026, 10, 5), DateTime(2026, 11, 2)];
++  final starts = [
++    DateTime(2026, 10, 1),
++    DateTime(2026, 10, 5),
++    DateTime(2026, 11, 2),
++  ];
+   for (final st in starts) {
+     for (final mode in kc.GuidanceMode.values) {
+-      for (final key in ['intermediaire_salle', 'douleur_et_lieu', 'calisthenie_parc', 'avance_street']) {
++      for (final key in [
++        'intermediaire_salle',
++        'douleur_et_lieu',
++        'calisthenie_parc',
++        'avance_street',
++      ]) {
+         for (final seed in [2, 3]) {
+           test('diag ${st.month}-${st.day} ${mode.code} $key $seed', () async {
+             SharedPreferences.setMockInitialValues({});
+-            final s = AppStore()..storeClock = () => st.add(const Duration(hours: 9));
++            final s = AppStore()
++              ..storeClock = () => st.add(const Duration(hours: 9));
+             await s.init();
+             s.saveAthleteProfile(
+               ProfileDraft.of(
+-                sampleAthleteProfile(on: kc.CivilDate(st.year, st.month, st.day), guidance: mode),
++                sampleAthleteProfile(
++                  on: kc.CivilDate(st.year, st.month, st.day),
++                  guidance: mode,
++                ),
+               )..consent = 'refused',
+             );
+             final c = PlanStore(s).newPlanCreation(journal: false)!;
