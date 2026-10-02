@@ -1,0 +1,16 @@
+diff --git a/integration_test/evolution_g10_test.dart b/integration_test/evolution_g10_test.dart
+index b5ffb4b..2773c1e 100644
+--- a/integration_test/evolution_g10_test.dart
++++ b/integration_test/evolution_g10_test.dart
+@@ -323,10 +323,7 @@ void main() {
+         ).pop();
+         await wait(tester, 800);
+       }
+-      final accept = find.descendant(
+-        of: card,
+-        matching: find.text('Accepter'),
+-      );
++      final accept = find.descendant(of: card, matching: find.text('Accepter'));
+       if (mode == kc.GuidanceMode.free && accept.evaluate().isNotEmpty) {
+         await tapF(tester, accept, ms: 1500);
+         releve['accepte'] = store.planEvolution.entries
