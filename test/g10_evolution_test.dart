@@ -723,6 +723,11 @@ void main() {
         await tester.tap(find.byKey(ValueKey('evo-details-${e.id}')));
         await tester.pumpAndSettle();
         expect(find.byKey(const ValueKey('evo-sheet')), findsOneWidget);
+        await tester.dragUntilVisible(
+          find.textContaining('→'),
+          find.byKey(const ValueKey('evo-sheet')),
+          const Offset(0, -200),
+        );
         expect(find.textContaining('→'), findsWidgets);
         expect(tester.takeException(), isNull);
       });

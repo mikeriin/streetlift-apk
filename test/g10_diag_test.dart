@@ -9,7 +9,8 @@ import 'package:streetlift_tracker/store.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   for (final key in kSimAthleteLabels.keys) {
-    test('diag $key', () async {
+   for (final seed in [1, 2, 3, 4, 5, 6]) {
+    test('diag $key $seed', () async {
       SharedPreferences.setMockInitialValues({});
       final s = AppStore()..storeClock = () => DateTime(2026, 10, 1, 9);
       await s.init();
@@ -17,7 +18,7 @@ void main() {
         ProfileDraft.of(
           sampleAthleteProfile(
             on: kc.CivilDate(2026, 10, 1),
-            guidance: kc.GuidanceMode.free,
+            guidance: kc.GuidanceMode.assisted,
           ),
         )..consent = 'refused',
       );
@@ -29,8 +30,8 @@ void main() {
       final r = await runDevSimulation(
         s,
         athleteKey: key,
-        weeks: 12,
-        seed: 1,
+        weeks: 8,
+        seed: seed,
       );
       sw.stop();
       final kinds = [
@@ -39,7 +40,7 @@ void main() {
       ];
       // ignore: avoid_print
       print(
-        'DIAG $key ms=${sw.elapsedMilliseconds} done=${r.sessionsDone} '
+        'DIAG $key/$seed ms=${sw.elapsedMilliseconds} done=${r.sessionsDone} '
         'missed=${r.sessionsMissed} sets=${r.sets} blocks=${r.blocksAdded} '
         'unlock=${s.evolutionUnlock.level.code} '
         'weeksObs=${s.evolutionUnlock.weeksObserved} '
@@ -55,5 +56,6 @@ void main() {
       }
       s.dispose();
     }, timeout: const Timeout(Duration(minutes: 8)));
+   }
   }
 }
