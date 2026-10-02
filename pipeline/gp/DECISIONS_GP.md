@@ -337,3 +337,8 @@ Source : conversation de pilotage du 30/09/2026 (22:00-23:10, heure de Paris), q
 - **Lancement** : deux corrections du propriétaire données directement dans la session (la seconde pendant le passage) ; un seul passage de correction, version dev6.6.2.
 - **Ancrage de la flamme** : point d'ancrage = centre de la base arrondie, pris à une demi-largeur au-dessus du bas du dessin (les 10 flammes ont une base ronde de la largeur du dessin) ; ce point est posé au centre de la boîte de la flamme, elle-même centrée sur la position de la ligne. Seule la flamme de la ligne est concernée ; les lignes résumées gardent la flamme centrée sur le texte (correction 1).
 - **Séries résumées pour tous les exercices** : même règle que les exercices notés (dernière série validée ouverte, les autres en une ligne, toutes en relecture), sans colonne de flamme visible ; texte « N min » pour une durée. Exercice d'archive inconnu du programme : valeurs saisies telles quelles jointes par « · », sans unité inventée (règle des tests d'historique).
+
+### G9 correction 3 — Un mot par flamme (02/10/2026, Opus 5.5)
+
+- **Mots** (monotones, un mot chacun) : Léger, Facile, Tranquille, Modéré, Soutenu, Appuyé, Dur, Intense, Limite, Échec ; affichés sur la ligne (« mot · RIR ») et à la place du chiffre dans les séries résumées (colonne de 80 px, coupée par « … » si le texte est très agrandi).
+- **Passage** : demandé « sans test, build direct » ; le push direct sur main a été refusé (règle « jamais de sources non vérifiées sur main ») : CI `claude/ci-3d` (run 37019042515, verte) puis build signé.
