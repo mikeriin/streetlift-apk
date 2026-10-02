@@ -1859,7 +1859,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             if (log.sets[i].done && (readOnly || i != _openOf(k)))
               SetSummaryLine(
                 setLabel: store.setLabel(sp, i),
-                done: setDoneText(log.sets[i], sp),
+                done: setDoneText(log.sets[i], sp, units: !unresolved),
                 flames: flamesOf(log.sets[i]),
                 unknown: log.sets[i].flamesUnknown,
                 excluded: log.sets[i].excluded,

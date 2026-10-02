@@ -37,10 +37,18 @@ const kFlamesIntro =
     'visée est déjà placée : touche ou glisse pour corriger.';
 
 /// « 16,25 kg × 8 reps », « 30 s », « 12 reps » : ce qui a été fait.
-String setDoneText(SetEntry s, LogSpec sp) {
+/// [units] faux (exercice d'archive inconnu du programme) : les valeurs
+/// saisies telles quelles, sans unité inventée (« 17 · 0.42 »).
+String setDoneText(SetEntry s, LogSpec sp, {bool units = true}) {
   String dec(String v) => v.trim().replaceAll('.', ',');
   final kg = s.kg.trim();
   final reps = s.reps.trim();
+  if (!units) {
+    return [
+      for (final x in [kg, reps, s.v.trim()])
+        if (x.isNotEmpty) x,
+    ].join(' · ');
+  }
   final seconds = sp.kind == 'hold' || sp.kind == 'holdMax';
   final amount = reps.isEmpty
       ? ''

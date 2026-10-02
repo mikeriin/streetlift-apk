@@ -776,7 +776,10 @@ void main() {
         ..kg = kg
         ..reps = reps
         ..done = true;
-      expect(setDoneText(e('16.25', '8'), const LogSpec('reps')), '16,25 kg × 8 reps');
+      expect(
+        setDoneText(e('16.25', '8'), const LogSpec('reps')),
+        '16,25 kg × 8 reps',
+      );
       expect(setDoneText(e('', '1'), const LogSpec('reps')), '1 rep');
       expect(setDoneText(e('', '30'), const LogSpec('hold')), '30 s');
       expect(
@@ -784,6 +787,10 @@ void main() {
         '12 min',
       );
       expect(setDoneText(e('0', ''), const LogSpec('reps')), '');
+      expect(
+        setDoneText(e('', '17'), const LogSpec('reps'), units: false),
+        '17',
+      );
     });
 
     testWidgets('ligne résumée : flamme alignée avec le texte', (tester) async {

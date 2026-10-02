@@ -877,8 +877,9 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.text('TIRAGE VERTICAL PRISE NEUTRE'), findsOneWidget);
-      expect(find.text('65'), findsNWidgets(2));
-      expect(find.text('9'), findsOneWidget);
+      // G9 correction 2 : séries en une ligne en relecture.
+      expect(find.textContaining('65'), findsNWidgets(2));
+      expect(find.textContaining(RegExp(r'(^|\D)9($|\D)')), findsOneWidget);
       expect(store.logs['S12-J1']!.toJson().toString(), before);
       expect(tester.takeException(), isNull);
       await tester.pumpWidget(const SizedBox());
