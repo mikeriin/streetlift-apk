@@ -367,9 +367,10 @@ void main() {
         expect(app.profile!.fields, isEmpty);
         // Pesée du poids déclaré.
         expect(app.currentBodyweight, 61.5);
-        // Koach actif par défaut, « Koach adapte la structure » aussi.
-        expect(app.koach.enabled, isTrue);
-        expect(app.koach.structure, isTrue);
+        // G10 : Koach L7 retiré, plus activé à l'enregistrement du profil
+        // (G6 correction 1, retiré avec L7).
+        expect(app.koach.enabled, isFalse);
+        expect(app.koach.structure, isFalse);
         final json = backupOf(app);
         expect(json['athleteProfile']['v'], 1);
         expect(json['athleteProfile']['profile']['schemaVersion'], 2);
@@ -527,11 +528,12 @@ void main() {
         expect(after.remove('athleteProfile'), isNotNull);
         final legacyAfter = after.remove('profile') as Map;
         final legacyBefore = before.remove('profile') as Map;
-        // Koach (jamais activé) : actif par défaut, structure adaptée.
+        // Section de l'ancien Koach : pesée du poids déclaré seulement (G10 :
+        // Koach L7 n'est plus activé à l'enregistrement du profil).
         after.remove('koach');
         before.remove('koach');
-        expect(app.koach.enabled, isTrue);
-        expect(app.koach.structure, isTrue);
+        expect(app.koach.enabled, isFalse);
+        expect(app.koach.structure, isFalse);
         expect(
           after,
           before,

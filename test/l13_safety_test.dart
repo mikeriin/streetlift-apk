@@ -41,13 +41,11 @@ UserProfile _profile({
 
 Map<String, bool> _allNo() => {for (final q in kHealthQuestions) q.id: false};
 
-
 /// Réponses des anciens questionnaires de Koach L7 (lecture seule depuis
 /// G10) : semées directement dans les données, comme une sauvegarde de
 /// 6.x les contient.
 void _legacyPain(AppStore app, String key, String movement, int value) {
-  app.koach.answers.putIfAbsent(key, SessionAnswers.new).pain[movement] =
-      value;
+  app.koach.answers.putIfAbsent(key, SessionAnswers.new).pain[movement] = value;
 }
 
 void main() {

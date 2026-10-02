@@ -29,10 +29,10 @@ import 'mannequin_clip.dart' show ClipRegistry;
 import 'models.dart';
 import 'persistence.dart';
 import 'plan/plan_creation.dart';
+import 'plan/plan_evolution.dart';
 import 'plan/plan_program.dart';
 import 'plan/plan_texts.dart' as pt;
 import 'profile.dart';
-import 'legacy_pack.dart';
 import 'program_instance.dart';
 import 'training_estimate.dart';
 import 'progression.dart';
@@ -42,6 +42,7 @@ import 'set_validation.dart';
 import 'wellbeing.dart';
 
 export 'adapt/session_adapt.dart';
+export 'plan/plan_evolution.dart';
 export 'koach_data.dart';
 export 'legacy_adapt_data.dart';
 export 'legacy_week_kinds.dart';
@@ -51,6 +52,7 @@ export 'set_validation.dart' show SetCheck, SetField;
 export 'wellbeing.dart';
 
 part 'athlete_profile_store.dart';
+part 'evolution_store.dart';
 part 'plan_store.dart';
 part 'profile_store.dart';
 part 'program_store.dart';
@@ -376,6 +378,20 @@ class AppStore extends ChangeNotifier {
   /// G7 (D4.9) : « Où j'en suis » (section `programResume`).
   ProgramResume? programResume;
 
+  /// G10 : propositions du moteur dynamique et suites données (section
+  /// `planEvolution`) ; illisible au démarrage : gardée telle quelle
+  /// ([_evoRaw]) et réécrite à l'identique.
+  PlanEvolution planEvolution = PlanEvolution.empty;
+  Map<String, dynamic>? _evoRaw;
+  int evolutionLoadIssues = 0;
+
+  /// Révision de l'évolution (clés des calculs gardés).
+  int _evoRevision = 0;
+  String _evoRefreshKey = '';
+
+  /// Dernière revue du moteur dynamique (jamais sauvegardée).
+  EvolutionReview? lastEvolutionReview;
+
   /// G9 : calculs du moteur dynamique gardés (bloc importé, journal
   /// présenté au moteur), clés de signature ; jamais sauvegardés.
   final Map<String, Object?> _g9Cache = {};
@@ -391,6 +407,7 @@ class AppStore extends ChangeNotifier {
           plan,
           startWeekday: weekday,
           labels: PlanStore(this).planLabels,
+          view: EvolutionStore(this)._evoWeekEntry,
         );
         program = Program.fromJson({
           'meta': {
@@ -940,6 +957,8 @@ class AppStore extends ChangeNotifier {
     planProgram: planProgram,
     planRaw: _planRaw,
     programResume: programResume,
+    planEvolution: planEvolution,
+    evolutionRaw: _evoRaw,
     adapt: adapt,
   );
 
@@ -992,6 +1011,13 @@ class AppStore extends ChangeNotifier {
         'planProgram': data.planRaw,
       if (data.programResume != null)
         'programResume': data.programResume!.toJson(),
+      // G10 : propositions du moteur dynamique et suites données, écrites
+      // seulement s'il y en a ; ignorées par les versions antérieures
+      // (section versionnée, facultative).
+      if (!data.planEvolution.isEmpty)
+        'planEvolution': data.planEvolution.toJson()
+      else if (data.evolutionRaw != null)
+        'planEvolution': data.evolutionRaw,
       // L11 : adaptations écrites seulement si elles servent (export
       // identique à 4.0.0 sinon) ; ignorées par les versions antérieures.
       if (!data.adapt.pristine) 'adapt': data.adapt.toJson(),
@@ -1376,6 +1402,25 @@ class AppStore extends ChangeNotifier {
         }
       }
     }
+    // G10 : évolution du programme. Import strict ; démarrage tolérant
+    // (section illisible gardée telle quelle, jamais perdue).
+    var nextEvolution = PlanEvolution.empty;
+    Map<String, dynamic>? evolutionRaw;
+    var evolutionIssues = 0;
+    final rawEvolution = m['planEvolution'];
+    if (rawEvolution != null) {
+      try {
+        nextEvolution = PlanEvolution.fromJson(rawEvolution);
+      } catch (_) {
+        if (limits != null) {
+          throw const FormatException('Évolution du programme illisible.');
+        }
+        evolutionIssues = 1;
+        if (rawEvolution is Map) {
+          evolutionRaw = Map<String, dynamic>.from(rawEvolution);
+        }
+      }
+    }
     // L11 : adaptations. Import strict ; démarrage tolérant.
     final adaptIssues = <String>[];
     final nextAdapt = AdaptData.fromJson(
@@ -1405,6 +1450,9 @@ class AppStore extends ChangeNotifier {
       planRaw: planRaw,
       planIssues: planIssues,
       programResume: nextResume,
+      planEvolution: nextEvolution,
+      evolutionRaw: evolutionRaw,
+      evolutionIssues: evolutionIssues,
       adapt: nextAdapt,
       adaptIssues: adaptIssues.length,
       retired: RetiredData.of(m).summary,
@@ -1477,6 +1525,12 @@ class AppStore extends ChangeNotifier {
     _planRaw = data.planRaw;
     planLoadIssues = data.planIssues;
     programResume = data.programResume;
+    planEvolution = data.planEvolution;
+    _evoRaw = data.evolutionRaw;
+    evolutionLoadIssues = data.evolutionIssues;
+    _evoRevision++;
+    _evoRefreshKey = '';
+    lastEvolutionReview = null;
     // Libellés des objectifs du programme : profil de la sauvegarde.
     athlete = data.athlete;
     _materializeProgram(data.start);
@@ -3084,6 +3138,12 @@ class _BackupData {
   final int planIssues;
   final ProgramResume? programResume;
 
+  /// G10 : évolution du programme (vide si absente ; illisible :
+  /// [evolutionRaw]).
+  final PlanEvolution planEvolution;
+  final Map<String, dynamic>? evolutionRaw;
+  final int evolutionIssues;
+
   /// L11 : adaptations (neuves si la section est absente).
   final AdaptData adapt;
   final int adaptIssues;
@@ -3112,6 +3172,9 @@ class _BackupData {
     this.planRaw,
     this.planIssues = 0,
     this.programResume,
+    this.planEvolution = PlanEvolution.empty,
+    this.evolutionRaw,
+    this.evolutionIssues = 0,
     AdaptData? adapt,
     this.adaptIssues = 0,
     this.retired = const RetiredSummary(),

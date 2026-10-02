@@ -8,7 +8,6 @@
 // est retiré par G7 : `kalis_plan` le remplace.
 import 'dart:convert';
 
-
 // ------------------------------------------------------------------ outils
 
 /// Hachage FNV-1a 32 bits : départage déterministe, indépendant de l'ordre

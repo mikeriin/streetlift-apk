@@ -338,6 +338,7 @@ extension PlanStore on AppStore {
               )._adaptPlanBlock(plan.blocks.length - 1),
               log: SessionAdaptStore(this).adaptTrainingLog(),
               today: civilOf(_planToday),
+              decisions: planEvolution.decisions,
             ),
           )
           .summary;
@@ -363,7 +364,9 @@ extension PlanStore on AppStore {
       profile: profile,
       seed: last.seed,
       startDate: civilOf(d),
-      previous: last.block,
+      // G10 : le bloc tel qu'il a été fait (ajustements de la passe 2 et
+      // propositions du moteur dynamique en place).
+      previous: SessionAdaptStore(this)._adaptPlanBlock(plan.blocks.length - 1),
       adaptation: _planSummary(),
       locks: const [],
     );
@@ -374,25 +377,39 @@ extension PlanStore on AppStore {
     }
   }
 
-  /// Ajoute le bloc suivant validé.
-  void applyNextBlock(kc.BlockProposal p, int seed) {
+  /// G10 (D4.8) : bloc suivant à passer en revue (nouveaux exercices) puis
+  /// à valider, comme à la création (G7). Null : impossible.
+  PlanCreation? newNextBlockCreation({bool? journal}) {
+    final p = proposeNextBlock();
+    final profile = AthleteProfileStore(this).athleteProfileForEngines;
+    final catalog = content.catalog;
+    if (p == null || profile == null || catalog == null) return null;
+    return PlanCreation.next(
+      catalog: catalog,
+      profile: profile,
+      startDate: p.request.startDate,
+      previous: p.request.previous,
+      adaptation: p.request.adaptation,
+      proposal: p.proposal,
+      seed: p.request.seed,
+      journalOn: journal ?? SessionSpace.isDev,
+    );
+  }
+
+  /// Ajoute le bloc suivant validé ([c] : passe 2 faite) ; le profil
+  /// apprend ce que la revue a dit.
+  void applyNextBlockCreation(PlanCreation c) {
     final plan = planProgram;
-    if (plan == null) return;
+    if (plan == null || c.pass2 == null) return;
     final at = _planAt;
+    _planProfileLearned(c.profile);
     planProgram = plan.copyWith(
       updatedAt: at,
-      blocks: [
-        ...plan.blocks,
-        PlanBlockEntry(
-          block: p.block,
-          seed: seed,
-          locks: const [],
-          validatedAt: at,
-        ),
-      ],
+      blocks: [...plan.blocks, c.entry(at)],
       clearPrevious: true,
     );
     _materializeProgram(program.start);
+    if (c.journalOn) unawaited(savePlanJournal(c));
     _planChanged();
   }
 

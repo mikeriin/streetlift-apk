@@ -2363,7 +2363,6 @@ class _FinishPageState extends State<_FinishPage> {
     // (accueil, Arsenal, notification de rappel). Son décompte attend que la
     // séance soit refermée et sauvegardée.
     nav.pop();
-    final key = store.sessionKey(week.n, day.j);
     // G9 : séance servie par kalis_adapt → résumé de Koach (calibrage,
     // progrès, prochaine fois) ; L7 et L11 ne s'appliquent pas.
     if (widget.adapt) {

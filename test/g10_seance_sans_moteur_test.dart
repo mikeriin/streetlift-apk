@@ -170,7 +170,9 @@ void main() {
   });
 
   testWidgets('menu de séance sans moteur : ni « J’ai seulement… », ni '
-      '« Échanger un exercice », ni « Je m’entraîne ailleurs »', (tester) async {
+      '« Échanger un exercice », ni « Je m’entraîne ailleurs »', (
+    tester,
+  ) async {
     phone(tester, const Size(390, 844));
     await tester.pumpWidget(page(SessionScreen(week: w3, day: d1)));
     await tester.pumpAndSettle();

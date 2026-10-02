@@ -25,10 +25,12 @@ import '../main.dart' show appNavigator;
 import '../program_start.dart' show longCivilDate;
 import '../session_host.dart';
 import '../settings_screen.dart' show kAppVersion;
-import '../program_screens.dart' show ProgramScreen;
 import '../store.dart';
 import 'dev_flags.dart';
 import 'dev_session.dart';
+import 'dev_simulator.dart' show DevSimulatorScreen;
+import 'engine_inspector.dart'
+    show EngineInspectorScreen, shareEngineJournal;
 
 /// Couleur du logo : rose vif pendant la session de test.
 Color devLogoColor(Color normal) =>
@@ -615,12 +617,24 @@ class DevToolsSheet extends StatelessWidget {
               label: const Text('Exporter la session de test (JSON)'),
             ),
             const SizedBox(height: 8),
-            const ListTile(
-              enabled: false,
+            ListTile(
+              key: const ValueKey('dev-simulator'),
               contentPadding: EdgeInsets.zero,
-              leading: Icon(Icons.fast_forward_outlined),
-              title: Text('Simulateur de séances'),
-              subtitle: Text('Arrive avec le lot G10'),
+              leading: const Icon(Icons.fast_forward_outlined),
+              title: const Text('Simulateur de séances'),
+              subtitle: const Text(
+                'Un athlète simulé fait N semaines de séances ; les '
+                'propositions de Koach arrivent comme en vrai',
+              ),
+              onTap: () {
+                final nav = Navigator.of(context);
+                nav.pop();
+                nav.push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => const DevSimulatorScreen(),
+                  ),
+                );
+              },
             ),
             ListTile(
               key: const ValueKey('dev-inspector'),
@@ -628,18 +642,26 @@ class DevToolsSheet extends StatelessWidget {
               leading: const Icon(Icons.manage_search),
               title: const Text('Inspecteur du moteur'),
               subtitle: const Text(
-                'Création du programme : Mon programme › Outils de test '
-                '(et l’icône loupe pendant la création)',
+                'Moteur dynamique : capacités, fatigue, forme du jour, règles, '
+                'confiance, déblocage, propositions. Création : Mon '
+                'programme › Outils de test',
               ),
               onTap: () {
                 final nav = Navigator.of(context);
                 nav.pop();
                 nav.push(
                   MaterialPageRoute<void>(
-                    builder: (_) => const ProgramScreen(),
+                    builder: (_) => const EngineInspectorScreen(),
                   ),
                 );
               },
+            ),
+            ListTile(
+              key: const ValueKey('dev-engine-journal'),
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.ios_share),
+              title: const Text('Exporter le journal du moteur (JSON)'),
+              onTap: () => shareEngineJournal(context),
             ),
             const SizedBox(height: 8),
             TextButton.icon(

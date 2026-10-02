@@ -530,7 +530,6 @@ void main() {
       expect(koach.pose, KoachPose.wave);
       expect(koach.colors, KoachColors.onDark(const Color(0xFF202020)));
     });
-
   });
 
   group('écrans', () {

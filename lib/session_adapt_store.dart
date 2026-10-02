@@ -187,22 +187,26 @@ extension SessionAdaptStore on AppStore {
     if (built == null) return null;
     final day = built.dayOfJ[j];
     if (day == null) return null;
-    return AdaptPlace(built.block, week - 1 - chunk * 52, day, true);
+    // G10 : propositions en place sur le bloc importé (le programme affiché
+    // ne change pas ; la séance servie, si).
+    final block = _g9Memo(
+      'evolved|${identityHashCode(built.block)}|$_evoRevision',
+      () => EvolutionStore(this).evolveBlock(built.block),
+    );
+    return AdaptPlace(block, week - 1 - chunk * 52, day, true);
   }
 
-  /// Bloc de `kalis_plan` avec les ajustements de la passe 2.
+  /// Bloc de `kalis_plan` avec les ajustements de la passe 2 et (G10) les
+  /// propositions du moteur dynamique en place.
   kc.ProgramBlock _adaptPlanBlock(int index) {
     final plan = planProgram!;
     final sig =
         'plan|${identityHashCode(plan)}|${plan.updatedAt}|'
-        '${plan.blocks.length}|${plan.blocks[index].validatedAt}|$index';
+        '${plan.blocks.length}|${plan.blocks[index].validatedAt}|$index|'
+        '$_evoRevision';
     return _g9Memo(sig, () {
       final e = plan.blocks[index];
-      final weeks = [
-        for (var w = 0; w < e.block.pass2.weeks.length; w++)
-          e.block.pass2.weeks[w].copyWith(days: adjustedDays(e, w)),
-      ];
-      return e.block.copyWith(pass2: e.block.pass2.copyWith(weeks: weeks));
+      return EvolutionStore(this).evolveBlock(adjustedBlock(e));
     });
   }
 
