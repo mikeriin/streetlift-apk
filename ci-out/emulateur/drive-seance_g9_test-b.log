@@ -1,0 +1,239 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             33.0s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...          886ms
+I/Choreographer( 4703): Skipped 45 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4703): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:43783/FjYInaGDed0=/
+VMServiceFlutterDriver: Isolate found with number: 5029431211474219
+VMServiceFlutterDriver: Isolate 5029431211474219 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4703): 00:00 +0: G9 b (clair, violet) : séance servie par kalis_adapt (programme du propriétaire, puis session de test)
+VMServiceFlutterDriver: Connected to Flutter application.
+D/EGL_emulation( 4703): app_time_stats: avg=208.17ms min=45.62ms max=545.95ms count=6
+D/ProfileInstaller( 4703): Installing profile for fr.tchoupi.streetlift_tracker
+D/FlutterJNI( 4703): Sending viewport metrics to the engine.
+D/EGL_emulation( 4703): app_time_stats: avg=252.60ms min=69.37ms max=686.29ms count=4
+D/EGL_emulation( 4703): app_time_stats: avg=118.23ms min=65.53ms max=160.74ms count=8
+D/EGL_emulation( 4703): app_time_stats: avg=373.94ms min=113.61ms max=892.17ms count=3
+D/EGL_emulation( 4703): app_time_stats: avg=9424.62ms min=9424.62ms max=9424.62ms count=1
+D/EGL_emulation( 4703): app_time_stats: avg=77.84ms min=48.40ms max=117.59ms count=11
+D/EGL_emulation( 4703): app_time_stats: avg=116.72ms min=115.75ms max=117.64ms count=9
+D/EGL_emulation( 4703): app_time_stats: avg=116.60ms min=115.88ms max=117.02ms count=9
+W/WindowOnBackDispatcher( 4703): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4703): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4703): app_time_stats: avg=91.92ms min=3.35ms max=341.51ms count=11
+D/EGL_emulation( 4703): app_time_stats: avg=54.85ms min=6.83ms max=123.96ms count=16
+D/EGL_emulation( 4703): app_time_stats: avg=63.06ms min=6.68ms max=226.16ms count=17
+D/EGL_emulation( 4703): app_time_stats: avg=63.07ms min=11.39ms max=98.12ms count=14
+D/EGL_emulation( 4703): app_time_stats: avg=64.49ms min=9.84ms max=125.24ms count=15
+D/EGL_emulation( 4703): app_time_stats: avg=46.93ms min=2.08ms max=76.09ms count=16
+D/EGL_emulation( 4703): app_time_stats: avg=63.26ms min=5.68ms max=116.72ms count=15
+D/EGL_emulation( 4703): app_time_stats: avg=59.86ms min=13.82ms max=116.09ms count=16
+D/EGL_emulation( 4703): app_time_stats: avg=58.43ms min=12.78ms max=116.04ms count=15
+D/EGL_emulation( 4703): app_time_stats: avg=62.58ms min=10.43ms max=95.39ms count=16
+E/AccessibilityBridge( 4703): transform has not been initialized for id = 157
+I/AccessibilityBridge( 4703): Semantics tree:SemanticsNode id=0 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4703): Semantics tree:  +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:  +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4703): Semantics tree:  +-- rect.ltrb=(0.0, 0.0, 540.0, 960.0)
+I/AccessibilityBridge( 4703): Semantics tree:  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:  SemanticsNode id=3 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4703): Semantics tree:    +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:    +-- textDirection=LTR
+I/AccessibilityBridge( 4703): Semantics tree:    +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4703): Semantics tree:    +-- transform=[1.5, 0.0, 0.0, 0.0, 0.0, 1.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:    SemanticsNode id=143 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4703): Semantics tree:      +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:      +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4703): Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4703): Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:      SemanticsNode id=144 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4703): Semantics tree:        +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:        +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4703): Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4703): Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:        SemanticsNode id=145 identifier=null label=Boîte de dialogue actions=0 flags=6144
+I/AccessibilityBridge( 4703): Semantics tree:          +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:          +-- textDirection=LTR
+I/AccessibilityBridge( 4703): Semantics tree:          +-- rect.ltrb=(0.0, 0.0, 360.0, 612.0)
+I/AccessibilityBridge( 4703): Semantics tree:          +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 28.0, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:          SemanticsNode id=146 identifier=null label=Ignorer actions=1 flags=8
+I/AccessibilityBridge( 4703): Semantics tree:            +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:            +-- textDirection=LTR
+I/AccessibilityBridge( 4703): Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 48.0, 48.0)
+I/AccessibilityBridge( 4703): Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 156.0, 346.1089, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:          SemanticsNode id=147 identifier=null label=null actions=0 flags=262144
+I/AccessibilityBridge( 4703): Semantics tree:            +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:            +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4703): Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 360.0, 217.89111)
+I/AccessibilityBridge( 4703): Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 394.1089, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:            SemanticsNode id=148 identifier=null label=Épaule actions=0 flags=0
+I/AccessibilityBridge( 4703): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4703): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 26.0)
+I/AccessibilityBridge( 4703): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:            SemanticsNode id=149 identifier=null label=Gauche actions=4194305 flags=270532808
+I/AccessibilityBridge( 4703): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4703): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 76.06543, 48.0)
+I/AccessibilityBridge( 4703): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 38.0, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:            SemanticsNode id=150 identifier=null label=Droite actions=4194305 flags=270532808
+I/AccessibilityBridge( 4703): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4703): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 66.90019, 48.0)
+I/AccessibilityBridge( 4703): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 100.06543, 38.0, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:            SemanticsNode id=151 identifier=null label=Des deux côtés actions=4194305 flags=270532812
+I/AccessibilityBridge( 4703): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4703): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 140.93701, 48.0)
+I/AccessibilityBridge( 4703): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 174.96562, 38.0, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:            SemanticsNode id=152 identifier=null label=Douleur aujourd’hui : 4/10 actions=0 flags=0
+I/AccessibilityBridge( 4703): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4703): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 20.0)
+I/AccessibilityBridge( 4703): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 98.0, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:            SemanticsNode id=153 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4703): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:              +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4703): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 48.0)
+I/AccessibilityBridge( 4703): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 118.0, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:              SemanticsNode id=154 identifier=null label=4/10 actions=4194496 flags=10485952
+I/AccessibilityBridge( 4703): Semantics tree:                +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:                +-- textDirection=LTR
+I/AccessibilityBridge( 4703): Semantics tree:                +-- rect.ltrb=(112.4, 0.0, 160.4, 48.0)
+I/AccessibilityBridge( 4703): Semantics tree:                +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:              SemanticsNode id=157 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4703): Semantics tree:                +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:                +-- textDirection=null
+I/AccessibilityBridge( 4703): Semantics tree:                +-- rect.ltrb=(0.0, 0.0, 0.0, 0.0)
+I/AccessibilityBridge( 4703): Semantics tree:                +-- transform=null
+I/AccessibilityBridge( 4703): Semantics tree:            SemanticsNode id=155 identifier=null label=0 : aucune · 10 : la pire imaginable. Au-dessus de 3/10, j’épargne la zone. Une douleur forte ou qui dure mérite l’avis d’un professionnel de santé. actions=0 flags=0
+I/AccessibilityBridge( 4703): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4703): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 51.891113)
+I/AccessibilityBridge( 4703): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 166.0, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:            SemanticsNode id=156 identifier=null label=Enregistrer actions=4194305 flags=2105544
+I/AccessibilityBridge( 4703): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4703): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 48.0)
+I/AccessibilityBridge( 4703): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 232.0, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:    SemanticsNode id=141 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4703): Semantics tree:      +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:      +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4703): Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4703): Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4703): Semantics tree:      SemanticsNode id=142 identifier=null label=Fond actions=262145 flags=0
+I/AccessibilityBridge( 4703): Semantics tree:        +-- headingLevel=0
+I/AccessibilityBridge( 4703): Semantics tree:        +-- textDirection=LTR
+I/AccessibilityBridge( 4703): Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 360.0, 288.0)
+I/AccessibilityBridge( 4703): Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+D/EGL_emulation( 4703): app_time_stats: avg=72.67ms min=9.54ms max=116.45ms count=13
+D/EGL_emulation( 4703): app_time_stats: avg=64.37ms min=19.90ms max=117.05ms count=13
+D/EGL_emulation( 4703): app_time_stats: avg=86.87ms min=18.29ms max=117.29ms count=12
+D/EGL_emulation( 4703): app_time_stats: avg=77.30ms min=7.72ms max=130.94ms count=13
+D/EGL_emulation( 4703): app_time_stats: avg=111.84ms min=63.27ms max=166.58ms count=9
+D/EGL_emulation( 4703): app_time_stats: avg=56.82ms min=6.31ms max=119.65ms count=16
+D/EGL_emulation( 4703): app_time_stats: avg=51.13ms min=2.13ms max=105.34ms count=17
+D/EGL_emulation( 4703): app_time_stats: avg=48.89ms min=2.04ms max=106.24ms count=16
+D/EGL_emulation( 4703): app_time_stats: avg=47.27ms min=2.16ms max=93.47ms count=17
+D/EGL_emulation( 4703): app_time_stats: avg=58.61ms min=5.16ms max=113.59ms count=16
+D/EGL_emulation( 4703): app_time_stats: avg=68.14ms min=9.96ms max=219.57ms count=14
+D/EGL_emulation( 4703): app_time_stats: avg=116.67ms min=115.62ms max=117.25ms count=9
+D/EGL_emulation( 4703): app_time_stats: avg=95.32ms min=9.01ms max=118.06ms count=11
+D/EGL_emulation( 4703): app_time_stats: avg=68.85ms min=11.27ms max=138.42ms count=14
+D/EGL_emulation( 4703): app_time_stats: avg=60.41ms min=10.67ms max=116.81ms count=14
+D/EGL_emulation( 4703): app_time_stats: avg=72.56ms min=12.73ms max=140.55ms count=13
+D/EGL_emulation( 4703): app_time_stats: avg=73.34ms min=14.21ms max=116.71ms count=14
+D/EGL_emulation( 4703): app_time_stats: avg=64.96ms min=9.54ms max=117.01ms count=15
+D/EGL_emulation( 4703): app_time_stats: avg=57.11ms min=9.64ms max=99.67ms count=16
+D/EGL_emulation( 4703): app_time_stats: avg=57.45ms min=10.13ms max=107.62ms count=16
+D/EGL_emulation( 4703): app_time_stats: avg=65.19ms min=10.55ms max=116.80ms count=14
+D/EGL_emulation( 4703): app_time_stats: avg=63.83ms min=9.99ms max=117.80ms count=15
+D/EGL_emulation( 4703): app_time_stats: avg=73.75ms min=11.79ms max=183.60ms count=13
+D/EGL_emulation( 4703): app_time_stats: avg=78.42ms min=10.68ms max=117.01ms count=13
+D/EGL_emulation( 4703): app_time_stats: avg=66.23ms min=12.34ms max=136.76ms count=15
+D/EGL_emulation( 4703): app_time_stats: avg=88.60ms min=2.83ms max=124.80ms count=11
+D/EGL_emulation( 4703): app_time_stats: avg=76.44ms min=2.70ms max=117.70ms count=13
+W/WindowOnBackDispatcher( 4703): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4703): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4703): app_time_stats: avg=95.06ms min=2.74ms max=146.82ms count=10
+D/EGL_emulation( 4703): app_time_stats: avg=51.90ms min=9.09ms max=102.16ms count=17
+D/EGL_emulation( 4703): app_time_stats: avg=53.59ms min=7.82ms max=123.03ms count=16
+D/EGL_emulation( 4703): app_time_stats: avg=52.89ms min=8.73ms max=102.76ms count=18
+D/EGL_emulation( 4703): app_time_stats: avg=54.34ms min=12.18ms max=124.53ms count=15
+D/EGL_emulation( 4703): app_time_stats: avg=47.92ms min=9.07ms max=67.13ms count=18
+D/EGL_emulation( 4703): app_time_stats: avg=51.84ms min=2.01ms max=118.96ms count=15
+D/EGL_emulation( 4703): app_time_stats: avg=47.28ms min=7.14ms max=67.97ms count=17
+D/EGL_emulation( 4703): app_time_stats: avg=51.90ms min=7.38ms max=108.59ms count=16
+W/eetlift_tracker( 4703): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 4703): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+D/EGL_emulation( 4703): app_time_stats: avg=91.83ms min=40.03ms max=139.07ms count=9
+D/EGL_emulation( 4703): app_time_stats: avg=78.19ms min=6.06ms max=168.78ms count=11
+D/EGL_emulation( 4703): app_time_stats: avg=103.57ms min=87.82ms max=116.87ms count=10
+D/EGL_emulation( 4703): app_time_stats: avg=78.48ms min=43.55ms max=116.99ms count=11
+D/EGL_emulation( 4703): app_time_stats: avg=85.09ms min=44.87ms max=116.71ms count=11
+D/EGL_emulation( 4703): app_time_stats: avg=65.19ms min=49.92ms max=123.27ms count=11
+W/WindowOnBackDispatcher( 4703): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4703): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/FlutterJNI( 4703): Sending viewport metrics to the engine.
+D/EGL_emulation( 4703): app_time_stats: avg=68.39ms min=6.22ms max=201.39ms count=13
+D/EGL_emulation( 4703): app_time_stats: avg=55.21ms min=15.23ms max=124.38ms count=15
+D/EGL_emulation( 4703): app_time_stats: avg=49.45ms min=7.26ms max=59.12ms count=16
+D/EGL_emulation( 4703): app_time_stats: avg=54.54ms min=10.77ms max=110.71ms count=17
+D/EGL_emulation( 4703): app_time_stats: avg=55.24ms min=13.52ms max=109.17ms count=16
+D/FlutterJNI( 4703): Sending viewport metrics to the engine.
+D/EGL_emulation( 4703): app_time_stats: avg=114.98ms min=45.53ms max=454.11ms count=9
+D/EGL_emulation( 4703): app_time_stats: avg=67.78ms min=4.68ms max=125.42ms count=12
+D/EGL_emulation( 4703): app_time_stats: avg=57.10ms min=9.23ms max=105.25ms count=15
+D/EGL_emulation( 4703): app_time_stats: avg=61.12ms min=11.44ms max=142.91ms count=15
+D/EGL_emulation( 4703): app_time_stats: avg=89.41ms min=8.62ms max=133.69ms count=12
+D/EGL_emulation( 4703): app_time_stats: avg=116.65ms min=116.23ms max=117.10ms count=9
+D/EGL_emulation( 4703): app_time_stats: avg=116.58ms min=116.29ms max=116.86ms count=9
+D/EGL_emulation( 4703): app_time_stats: avg=103.88ms min=58.84ms max=117.04ms count=10
+D/EGL_emulation( 4703): app_time_stats: avg=75.43ms min=9.04ms max=200.01ms count=15
+D/EGL_emulation( 4703): app_time_stats: avg=89.85ms min=19.66ms max=154.23ms count=12
+D/EGL_emulation( 4703): app_time_stats: avg=78.09ms min=15.46ms max=119.67ms count=13
+D/EGL_emulation( 4703): app_time_stats: avg=76.49ms min=31.41ms max=117.11ms count=12
+D/EGL_emulation( 4703): app_time_stats: avg=83.20ms min=6.52ms max=116.82ms count=13
+D/EGL_emulation( 4703): app_time_stats: avg=111.76ms min=72.89ms max=122.85ms count=9
+D/EGL_emulation( 4703): app_time_stats: avg=71.12ms min=11.59ms max=103.95ms count=13
+D/EGL_emulation( 4703): app_time_stats: avg=51.83ms min=8.64ms max=96.52ms count=17
+D/EGL_emulation( 4703): app_time_stats: avg=48.48ms min=3.02ms max=120.81ms count=16
+D/EGL_emulation( 4703): app_time_stats: avg=51.12ms min=8.74ms max=109.14ms count=17
+D/EGL_emulation( 4703): app_time_stats: avg=50.15ms min=3.37ms max=115.18ms count=17
+D/EGL_emulation( 4703): app_time_stats: avg=67.50ms min=13.47ms max=112.46ms count=13
+D/EGL_emulation( 4703): app_time_stats: avg=69.93ms min=9.52ms max=128.83ms count=13
+D/EGL_emulation( 4703): app_time_stats: avg=85.04ms min=27.88ms max=144.05ms count=12
+D/EGL_emulation( 4703): app_time_stats: avg=65.60ms min=18.26ms max=94.82ms count=13
+D/EGL_emulation( 4703): app_time_stats: avg=67.30ms min=9.42ms max=142.97ms count=15
+D/EGL_emulation( 4703): app_time_stats: avg=62.87ms min=6.70ms max=147.64ms count=13
+D/EGL_emulation( 4703): app_time_stats: avg=62.01ms min=7.67ms max=125.39ms count=15
+D/EGL_emulation( 4703): app_time_stats: avg=56.06ms min=4.66ms max=145.19ms count=16
+D/EGL_emulation( 4703): app_time_stats: avg=58.51ms min=27.09ms max=97.35ms count=14
+D/EGL_emulation( 4703): app_time_stats: avg=56.37ms min=13.14ms max=100.12ms count=16
+D/EGL_emulation( 4703): app_time_stats: avg=79.84ms min=51.42ms max=115.37ms count=12
+I/eetlift_tracker( 4703): Background concurrent mark compact GC freed 1206KB AllocSpace bytes, 28(1312KB) LOS objects, 49% free, 2620KB/5241KB, paused 44us,4.587ms total 119.983ms
+W/eetlift_tracker( 4703): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 4703): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+D/EGL_emulation( 4703): app_time_stats: avg=119.36ms min=24.50ms max=285.34ms count=8
+D/EGL_emulation( 4703): app_time_stats: avg=118.63ms min=59.13ms max=176.17ms count=9
+D/EGL_emulation( 4703): app_time_stats: avg=94.44ms min=2.26ms max=144.00ms count=11
+D/EGL_emulation( 4703): app_time_stats: avg=104.06ms min=49.74ms max=162.78ms count=11
+D/EGL_emulation( 4703): app_time_stats: avg=104.20ms min=59.19ms max=122.63ms count=10
+I/flutter ( 4703): 01:53 +1: (tearDownAll)
+I/flutter ( 4703): 01:53 +2: All tests passed!
+All tests passed.
