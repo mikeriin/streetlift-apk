@@ -1,0 +1,678 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             40.0s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,647ms
+D/FlutterRenderer( 4945): Width is zero. 0,0
+D/FlutterJNI( 4945): Sending viewport metrics to the engine.
+I/Gralloc4( 4945): mapper 4.x is not supported
+I/Choreographer( 4945): Skipped 68 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4945): Sending viewport metrics to the engine.
+I/eetlift_tracker( 4945): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:40485/ptz7wiFCFbQ=/
+VMServiceFlutterDriver: Isolate found with number: 6166470139389703
+VMServiceFlutterDriver: Isolate 6166470139389703 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4945): 00:00 +0: G9 b (clair, violet) : séance servie par kalis_adapt (programme du propriétaire, puis session de test)
+VMServiceFlutterDriver: Connected to Flutter application.
+D/EGL_emulation( 4945): app_time_stats: avg=1135.63ms min=219.90ms max=2051.36ms count=2
+D/ProfileInstaller( 4945): Installing profile for fr.tchoupi.streetlift_tracker
+D/FlutterJNI( 4945): Sending viewport metrics to the engine.
+D/EGL_emulation( 4945): app_time_stats: avg=363.22ms min=104.92ms max=1274.82ms count=6
+D/EGL_emulation( 4945): app_time_stats: avg=421.28ms min=144.41ms max=821.94ms count=4
+D/EGL_emulation( 4945): app_time_stats: avg=11742.75ms min=11742.75ms max=11742.75ms count=1
+D/EGL_emulation( 4945): app_time_stats: avg=115.55ms min=54.67ms max=217.06ms count=7
+D/EGL_emulation( 4945): app_time_stats: avg=90.89ms min=51.67ms max=171.06ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=122.44ms min=49.25ms max=188.75ms count=8
+D/EGL_emulation( 4945): app_time_stats: avg=140.25ms min=118.53ms max=234.65ms count=8
+I/flutter ( 4945): ══╡ EXCEPTION CAUGHT BY FOUNDATION LIBRARY ╞════════════════════════════════════════════════════════
+I/flutter ( 4945): The following assertion was thrown while dispatching notifications for AppStore:
+I/flutter ( 4945): setState() or markNeedsBuild() called during build.
+I/flutter ( 4945): This ListenableBuilder widget cannot be marked as needing to build because the framework is already
+I/flutter ( 4945): in the process of building widgets. A widget can be marked as needing to be built during the build
+I/flutter ( 4945): phase only if one of its ancestors is currently building. This exception is allowed because the
+I/flutter ( 4945): framework builds parent widgets before children, which means a dirty descendant will always be
+I/flutter ( 4945): built. Otherwise, the framework might not visit this widget during this build phase.
+I/flutter ( 4945): The widget on which setState() or markNeedsBuild() was called was:
+I/flutter ( 4945):   ListenableBuilder
+I/flutter ( 4945): The widget which was currently being built when the offending call was made was:
+I/flutter ( 4945):   Builder
+I/flutter ( 4945): 
+I/flutter ( 4945): When the exception was thrown, this was the stack:
+I/flutter ( 4945): #0      Element.markNeedsBuild.<anonymous closure> (package:flutter/src/widgets/framework.dart:5386:9)
+I/flutter ( 4945): #1      Element.markNeedsBuild (package:flutter/src/widgets/framework.dart:5398:6)
+I/flutter ( 4945): #2      State.setState (package:flutter/src/widgets/framework.dart:1221:15)
+I/flutter ( 4945): #3      _AnimatedState._handleChange (package:flutter/src/widgets/transitions.dart:133:5)
+I/flutter ( 4945): #4      ChangeNotifier.notifyListeners (package:flutter/src/foundation/change_notifier.dart:435:24)
+I/flutter ( 4945): #5      AppStore.saveLogs (package:streetlift_tracker/store.dart:2714:13)
+I/flutter ( 4945): #6      SessionAdaptStore.adaptOpen (package:streetlift_tracker/session_adapt_store.dart:633:7)
+I/flutter ( 4945): #7      _SessionScreenState.initState (package:streetlift_tracker/session_screen.dart:148:21)
+I/flutter ( 4945): #8      StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5963:55)
+I/flutter ( 4945): #9      ComponentElement.mount (package:flutter/src/widgets/framework.dart:5806:5)
+I/flutter ( 4945): ...     Normal element mounting (182 frames)
+I/flutter ( 4945): #191    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4600:20)
+I/flutter ( 4945): #192    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7277:36)
+I/flutter ( 4945): #193    Element.updateChild (package:flutter/src/widgets/framework.dart:4072:18)
+I/flutter ( 4945): #194    Element.updateChildren (package:flutter/src/widgets/framework.dart:4268:32)
+I/flutter ( 4945): #195    MultiChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7308:17)
+I/flutter ( 4945): #196    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #197    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #198    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #199    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #200    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+I/flutter ( 4945): #201    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #202    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #203    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #204    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #205    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #206    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #207    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #208    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #209    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+I/flutter ( 4945): #210    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #211    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #212    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #213    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #214    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+I/flutter ( 4945): #215    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #216    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #217    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #218    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #219    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+I/flutter ( 4945): #220    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #221    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #222    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #223    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #224    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+I/flutter ( 4945): #225    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #226    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #227    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #228    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #229    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+I/flutter ( 4945): #230    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #231    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+I/flutter ( 4945): #232    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #233    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+I/flutter ( 4945): #234    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #235    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #236    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #237    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #238    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #239    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #240    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #241    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #242    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #243    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #244    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #245    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #246    BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2763:15)
+I/flutter ( 4945): #247    BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2820:11)
+I/flutter ( 4945): #248    BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3124:18)
+I/flutter ( 4945): #249    WidgetsBinding.drawFrame (package:flutter/src/widgets/binding.dart:1571:21)
+I/flutter ( 4945): #250    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+I/flutter ( 4945): #251    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+I/flutter ( 4945): #252    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+I/flutter ( 4945): #253    LiveTestWidgetsFlutterBinding.handleDrawFrame (package:flutter_test/src/binding.dart:2812:13)
+I/flutter ( 4945): #254    SchedulerBinding._handleDrawFrame (package:flutter/src/scheduler/binding.dart:1198:5)
+I/flutter ( 4945): #258    _invoke (dart:ui/hooks.dart:443:10)
+I/flutter ( 4945): #259    PlatformDispatcher._drawFrame (dart:ui/platform_dispatcher.dart:450:5)
+I/flutter ( 4945): #260    _drawFrame (dart:ui/hooks.dart:413:31)
+I/flutter ( 4945): (elided 3 frames from dart:async)
+I/flutter ( 4945): 
+I/flutter ( 4945): The AppStore sending notification was:
+I/flutter ( 4945):   Instance of 'AppStore'
+I/flutter ( 4945): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4945): ══╡ EXCEPTION CAUGHT BY FOUNDATION LIBRARY ╞════════════════════════════════════════════════════════
+I/flutter ( 4945): The following assertion was thrown while dispatching notifications for AppStore:
+I/flutter ( 4945): setState() or markNeedsBuild() called during build.
+I/flutter ( 4945): This StoreBuilder widget cannot be marked as needing to build because the framework is already in
+I/flutter ( 4945): the process of building widgets. A widget can be marked as needing to be built during the build
+I/flutter ( 4945): phase only if one of its ancestors is currently building. This exception is allowed because the
+I/flutter ( 4945): framework builds parent widgets before children, which means a dirty descendant will always be
+I/flutter ( 4945): built. Otherwise, the framework might not visit this widget during this build phase.
+I/flutter ( 4945): The widget on which setState() or markNeedsBuild() was called was:
+I/flutter ( 4945):   StoreBuilder
+I/flutter ( 4945): The widget which was currently being built when the offending call was made was:
+I/flutter ( 4945):   Builder
+I/flutter ( 4945): 
+I/flutter ( 4945): When the exception was thrown, this was the stack:
+I/flutter ( 4945): #0      Element.markNeedsBuild.<anonymous closure> (package:flutter/src/widgets/framework.dart:5386:9)
+I/flutter ( 4945): #1      Element.markNeedsBuild (package:flutter/src/widgets/framework.dart:5398:6)
+I/flutter ( 4945): #2      State.setState (package:flutter/src/widgets/framework.dart:1221:15)
+I/flutter ( 4945): #3      _StoreBuilderState._deferral.<anonymous closure> (package:streetlift_tracker/store_widget.dart:110:18)
+I/flutter ( 4945): #4      _Deferral.onStore (package:streetlift_tracker/store_widget.dart:76:14)
+I/flutter ( 4945): #5      ChangeNotifier.notifyListeners (package:flutter/src/foundation/change_notifier.dart:435:24)
+I/flutter ( 4945): #6      AppStore.saveLogs (package:streetlift_tracker/store.dart:2714:13)
+I/flutter ( 4945): #7      SessionAdaptStore.adaptOpen (package:streetlift_tracker/session_adapt_store.dart:633:7)
+I/flutter ( 4945): #8      _SessionScreenState.initState (package:streetlift_tracker/session_screen.dart:148:21)
+I/flutter ( 4945): #9      StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5963:55)
+I/flutter ( 4945): #10     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5806:5)
+I/flutter ( 4945): ...     Normal element mounting (182 frames)
+I/flutter ( 4945): #192    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4600:20)
+I/flutter ( 4945): #193    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7277:36)
+I/flutter ( 4945): #194    Element.updateChild (package:flutter/src/widgets/framework.dart:4072:18)
+I/flutter ( 4945): #195    Element.updateChildren (package:flutter/src/widgets/framework.dart:4268:32)
+I/flutter ( 4945): #196    MultiChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7308:17)
+I/flutter ( 4945): #197    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #198    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #199    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #200    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #201    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+I/flutter ( 4945): #202    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #203    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #204    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #205    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #206    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #207    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #208    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #209    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #210    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+I/flutter ( 4945): #211    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #212    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #213    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #214    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #215    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+I/flutter ( 4945): #216    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #217    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #218    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #219    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #220    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+I/flutter ( 4945): #221    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #222    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #223    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+D/EGL_emulation( 4945): app_time_stats: avg=273.92ms min=126.14ms max=673.74ms count=4
+W/WindowOnBackDispatcher( 4945): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4945): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+I/flutter ( 4945): #224    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #225    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+I/flutter ( 4945): #226    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #227    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #228    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #229    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #230    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+I/flutter ( 4945): #231    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #232    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+I/flutter ( 4945): #233    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #234    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+I/flutter ( 4945): #235    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #236    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #237    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #238    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #239    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #240    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #241    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #242    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #243    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #244    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #245    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #246    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #247    BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2763:15)
+I/flutter ( 4945): #248    BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2820:11)
+I/flutter ( 4945): #249    BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3124:18)
+I/flutter ( 4945): #250    WidgetsBinding.drawFrame (package:flutter/src/widgets/binding.dart:1571:21)
+I/flutter ( 4945): #251    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+I/flutter ( 4945): #252    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+I/flutter ( 4945): #253    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+I/flutter ( 4945): #254    LiveTestWidgetsFlutterBinding.handleDrawFrame (package:flutter_test/src/binding.dart:2812:13)
+I/flutter ( 4945): #255    SchedulerBinding._handleDrawFrame (package:flutter/src/scheduler/binding.dart:1198:5)
+I/flutter ( 4945): #259    _invoke (dart:ui/hooks.dart:443:10)
+I/flutter ( 4945): #260    PlatformDispatcher._drawFrame (dart:ui/platform_dispatcher.dart:450:5)
+I/flutter ( 4945): #261    _drawFrame (dart:ui/hooks.dart:413:31)
+I/flutter ( 4945): (elided 3 frames from dart:async)
+I/flutter ( 4945): 
+I/flutter ( 4945): The AppStore sending notification was:
+I/flutter ( 4945):   Instance of 'AppStore'
+I/flutter ( 4945): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4945): ══╡ EXCEPTION CAUGHT BY FOUNDATION LIBRARY ╞════════════════════════════════════════════════════════
+I/flutter ( 4945): The following assertion was thrown while dispatching notifications for AppStore:
+I/flutter ( 4945): setState() or markNeedsBuild() called during build.
+I/flutter ( 4945): This LevelPill widget cannot be marked as needing to build because the framework is already in the
+I/flutter ( 4945): process of building widgets. A widget can be marked as needing to be built during the build phase
+I/flutter ( 4945): only if one of its ancestors is currently building. This exception is allowed because the framework
+I/flutter ( 4945): builds parent widgets before children, which means a dirty descendant will always be built.
+I/flutter ( 4945): Otherwise, the framework might not visit this widget during this build phase.
+I/flutter ( 4945): The widget on which setState() or markNeedsBuild() was called was:
+I/flutter ( 4945):   LevelPill
+I/flutter ( 4945): The widget which was currently being built when the offending call was made was:
+I/flutter ( 4945):   Builder
+I/flutter ( 4945): 
+I/flutter ( 4945): When the exception was thrown, this was the stack:
+I/flutter ( 4945): #0      Element.markNeedsBuild.<anonymous closure> (package:flutter/src/widgets/framework.dart:5386:9)
+I/flutter ( 4945): #1      Element.markNeedsBuild (package:flutter/src/widgets/framework.dart:5398:6)
+I/flutter ( 4945): #2      _Deferral.onStore (package:streetlift_tracker/store_widget.dart:76:14)
+I/flutter ( 4945): #3      ChangeNotifier.notifyListeners (package:flutter/src/foundation/change_notifier.dart:435:24)
+I/flutter ( 4945): #4      AppStore.saveLogs (package:streetlift_tracker/store.dart:2714:13)
+I/flutter ( 4945): #5      SessionAdaptStore.adaptOpen (package:streetlift_tracker/session_adapt_store.dart:633:7)
+I/flutter ( 4945): #6      _SessionScreenState.initState (package:streetlift_tracker/session_screen.dart:148:21)
+I/flutter ( 4945): #7      StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5963:55)
+I/flutter ( 4945): #8      ComponentElement.mount (package:flutter/src/widgets/framework.dart:5806:5)
+I/flutter ( 4945): ...     Normal element mounting (182 frames)
+I/flutter ( 4945): #190    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4600:20)
+I/flutter ( 4945): #191    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7277:36)
+I/flutter ( 4945): #192    Element.updateChild (package:flutter/src/widgets/framework.dart:4072:18)
+I/flutter ( 4945): #193    Element.updateChildren (package:flutter/src/widgets/framework.dart:4268:32)
+I/flutter ( 4945): #194    MultiChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7308:17)
+I/flutter ( 4945): #195    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #196    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #197    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #198    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #199    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+I/flutter ( 4945): #200    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #201    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #202    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #203    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #204    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #205    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #206    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #207    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #208    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+I/flutter ( 4945): #209    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #210    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #211    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #212    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #213    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+I/flutter ( 4945): #214    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #215    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #216    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #217    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #218    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+I/flutter ( 4945): #219    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #220    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #221    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #222    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #223    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+I/flutter ( 4945): #224    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #225    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #226    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #227    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #228    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+I/flutter ( 4945): #229    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #230    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+I/flutter ( 4945): #231    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #232    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+I/flutter ( 4945): #233    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #234    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #235    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #236    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #237    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #238    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #239    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #240    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #241    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #242    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #243    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #244    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #245    BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2763:15)
+I/flutter ( 4945): #246    BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2820:11)
+I/flutter ( 4945): #247    BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3124:18)
+I/flutter ( 4945): #248    WidgetsBinding.drawFrame (package:flutter/src/widgets/binding.dart:1571:21)
+I/flutter ( 4945): #249    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+I/flutter ( 4945): #250    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+I/flutter ( 4945): #251    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+I/flutter ( 4945): #252    LiveTestWidgetsFlutterBinding.handleDrawFrame (package:flutter_test/src/binding.dart:2812:13)
+I/flutter ( 4945): #253    SchedulerBinding._handleDrawFrame (package:flutter/src/scheduler/binding.dart:1198:5)
+I/flutter ( 4945): #257    _invoke (dart:ui/hooks.dart:443:10)
+I/flutter ( 4945): #258    PlatformDispatcher._drawFrame (dart:ui/platform_dispatcher.dart:450:5)
+I/flutter ( 4945): #259    _drawFrame (dart:ui/hooks.dart:413:31)
+I/flutter ( 4945): (elided 3 frames from dart:async)
+I/flutter ( 4945): 
+I/flutter ( 4945): The AppStore sending notification was:
+I/flutter ( 4945):   Instance of 'AppStore'
+I/flutter ( 4945): ════════════════════════════════════════════════════════════════════════════════════════════════════
+D/EGL_emulation( 4945): app_time_stats: avg=115.74ms min=6.60ms max=315.61ms count=8
+D/EGL_emulation( 4945): app_time_stats: avg=86.58ms min=6.98ms max=166.19ms count=12
+D/EGL_emulation( 4945): app_time_stats: avg=83.40ms min=6.10ms max=184.55ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=122.07ms min=8.37ms max=424.11ms count=8
+D/EGL_emulation( 4945): app_time_stats: avg=115.07ms min=9.58ms max=197.72ms count=10
+I/eetlift_tracker( 4945): Background concurrent mark compact GC freed 2280KB AllocSpace bytes, 18(732KB) LOS objects, 49% free, 2644KB/5289KB, paused 110us,3.353ms total 172.630ms
+D/EGL_emulation( 4945): app_time_stats: avg=81.81ms min=22.27ms max=144.22ms count=12
+D/EGL_emulation( 4945): app_time_stats: avg=108.24ms min=20.02ms max=170.20ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=114.15ms min=11.38ms max=182.14ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=127.26ms min=91.58ms max=161.81ms count=8
+D/EGL_emulation( 4945): app_time_stats: avg=100.91ms min=16.28ms max=176.27ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=95.19ms min=9.80ms max=188.04ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=118.70ms min=106.25ms max=152.83ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=106.35ms min=9.99ms max=183.73ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=97.57ms min=12.40ms max=173.42ms count=10
+E/AccessibilityBridge( 4945): transform has not been initialized for id = 157
+I/AccessibilityBridge( 4945): Semantics tree:SemanticsNode id=0 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4945): Semantics tree:  +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:  +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4945): Semantics tree:  +-- rect.ltrb=(0.0, 0.0, 540.0, 960.0)
+I/AccessibilityBridge( 4945): Semantics tree:  +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:  SemanticsNode id=3 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4945): Semantics tree:    +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:    +-- textDirection=LTR
+I/AccessibilityBridge( 4945): Semantics tree:    +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4945): Semantics tree:    +-- transform=[1.5, 0.0, 0.0, 0.0, 0.0, 1.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:    SemanticsNode id=143 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4945): Semantics tree:      +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:      +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4945): Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4945): Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:      SemanticsNode id=144 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4945): Semantics tree:        +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:        +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4945): Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4945): Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:        SemanticsNode id=145 identifier=null label=Boîte de dialogue actions=0 flags=6144
+I/AccessibilityBridge( 4945): Semantics tree:          +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:          +-- textDirection=LTR
+I/AccessibilityBridge( 4945): Semantics tree:          +-- rect.ltrb=(0.0, 0.0, 360.0, 612.0)
+I/AccessibilityBridge( 4945): Semantics tree:          +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 28.0, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:          SemanticsNode id=146 identifier=null label=Ignorer actions=1 flags=8
+I/AccessibilityBridge( 4945): Semantics tree:            +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:            +-- textDirection=LTR
+I/AccessibilityBridge( 4945): Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 48.0, 48.0)
+I/AccessibilityBridge( 4945): Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 156.0, 263.371, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:          SemanticsNode id=147 identifier=null label=null actions=0 flags=262144
+I/AccessibilityBridge( 4945): Semantics tree:            +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:            +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4945): Semantics tree:            +-- rect.ltrb=(0.0, 0.0, 360.0, 300.629)
+I/AccessibilityBridge( 4945): Semantics tree:            +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 311.371, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:            SemanticsNode id=148 identifier=null label=Épaule actions=0 flags=0
+I/AccessibilityBridge( 4945): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4945): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 26.0)
+I/AccessibilityBridge( 4945): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:            SemanticsNode id=149 identifier=null label=Gauche actions=4194305 flags=270532808
+I/AccessibilityBridge( 4945): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4945): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 76.06543, 48.0)
+I/AccessibilityBridge( 4945): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 38.0, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:            SemanticsNode id=150 identifier=null label=Droite actions=4194305 flags=270532808
+I/AccessibilityBridge( 4945): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4945): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 66.90019, 48.0)
+I/AccessibilityBridge( 4945): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 100.06543, 38.0, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:            SemanticsNode id=151 identifier=null label=Des deux côtés actions=4194305 flags=270532812
+I/AccessibilityBridge( 4945): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4945): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 140.93701, 48.0)
+I/AccessibilityBridge( 4945): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 174.96562, 38.0, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:            SemanticsNode id=152 identifier=null label=Douleur aujourd’hui : 4/10 actions=0 flags=0
+I/AccessibilityBridge( 4945): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4945): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 20.0)
+I/AccessibilityBridge( 4945): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 98.0, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:            SemanticsNode id=153 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4945): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:              +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4945): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 48.0)
+I/AccessibilityBridge( 4945): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 118.0, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:              SemanticsNode id=154 identifier=null label=4/10 actions=4194496 flags=10485952
+I/AccessibilityBridge( 4945): Semantics tree:                +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:                +-- textDirection=LTR
+I/AccessibilityBridge( 4945): Semantics tree:                +-- rect.ltrb=(112.4, 0.0, 160.4, 48.0)
+I/AccessibilityBridge( 4945): Semantics tree:                +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:              SemanticsNode id=157 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4945): Semantics tree:                +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:                +-- textDirection=null
+I/AccessibilityBridge( 4945): Semantics tree:                +-- rect.ltrb=(0.0, 0.0, 0.0, 0.0)
+I/AccessibilityBridge( 4945): Semantics tree:                +-- transform=null
+I/AccessibilityBridge( 4945): Semantics tree:            SemanticsNode id=155 identifier=null label=0 : aucune · 10 : la pire imaginable. Au-dessus de 3/10, j’épargne la zone. Une douleur forte ou qui dure mérite l’avis d’un professionnel de santé. actions=0 flags=0
+I/AccessibilityBridge( 4945): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4945): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 54.0)
+I/AccessibilityBridge( 4945): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 166.0, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:            SemanticsNode id=156 identifier=null label=Enregistrer actions=4194305 flags=2097352
+I/AccessibilityBridge( 4945): Semantics tree:              +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:              +-- textDirection=LTR
+I/AccessibilityBridge( 4945): Semantics tree:              +-- rect.ltrb=(0.0, 0.0, 328.0, 48.0)
+I/AccessibilityBridge( 4945): Semantics tree:              +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 16.0, 232.0, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:    SemanticsNode id=141 identifier=null label=null actions=0 flags=0
+I/AccessibilityBridge( 4945): Semantics tree:      +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:      +-- textDirection=UNKNOWN
+I/AccessibilityBridge( 4945): Semantics tree:      +-- rect.ltrb=(0.0, 0.0, 360.0, 640.0)
+I/AccessibilityBridge( 4945): Semantics tree:      +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+I/AccessibilityBridge( 4945): Semantics tree:      SemanticsNode id=142 identifier=null label=Fond actions=262145 flags=0
+I/AccessibilityBridge( 4945): Semantics tree:        +-- headingLevel=0
+I/AccessibilityBridge( 4945): Semantics tree:        +-- textDirection=LTR
+I/AccessibilityBridge( 4945): Semantics tree:        +-- rect.ltrb=(0.0, 0.0, 360.0, 288.0)
+I/AccessibilityBridge( 4945): Semantics tree:        +-- transform=[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+D/EGL_emulation( 4945): app_time_stats: avg=137.22ms min=110.07ms max=195.07ms count=8
+D/EGL_emulation( 4945): app_time_stats: avg=113.00ms min=97.79ms max=128.43ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=125.70ms min=15.39ms max=251.57ms count=8
+D/EGL_emulation( 4945): app_time_stats: avg=115.77ms min=79.32ms max=200.03ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=133.44ms min=95.29ms max=262.71ms count=8
+D/EGL_emulation( 4945): app_time_stats: avg=148.02ms min=35.15ms max=318.08ms count=7
+D/EGL_emulation( 4945): app_time_stats: avg=86.41ms min=8.08ms max=184.43ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=99.14ms min=10.65ms max=171.01ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=88.36ms min=11.08ms max=156.79ms count=12
+D/EGL_emulation( 4945): app_time_stats: avg=105.35ms min=33.56ms max=181.37ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=80.91ms min=5.79ms max=138.26ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=111.01ms min=12.21ms max=235.74ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=115.98ms min=24.21ms max=238.17ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=99.47ms min=16.03ms max=118.16ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=112.59ms min=16.24ms max=369.21ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=135.60ms min=99.38ms max=314.33ms count=8
+D/EGL_emulation( 4945): app_time_stats: avg=119.21ms min=111.42ms max=128.30ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=124.09ms min=114.05ms max=186.42ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=124.57ms min=11.56ms max=223.51ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=130.15ms min=89.26ms max=202.90ms count=7
+D/EGL_emulation( 4945): app_time_stats: avg=131.56ms min=22.75ms max=195.16ms count=8
+D/EGL_emulation( 4945): app_time_stats: avg=139.59ms min=30.76ms max=296.91ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=98.60ms min=15.42ms max=182.20ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=107.47ms min=22.41ms max=166.05ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=101.04ms min=19.14ms max=184.51ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=104.01ms min=11.79ms max=180.15ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=97.96ms min=27.26ms max=162.09ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=112.17ms min=22.21ms max=220.00ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=116.83ms min=21.22ms max=178.43ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=95.34ms min=24.07ms max=149.63ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=148.15ms min=96.79ms max=263.19ms count=7
+D/EGL_emulation( 4945): app_time_stats: avg=120.22ms min=104.18ms max=164.30ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=86.87ms min=24.58ms max=117.45ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=134.83ms min=30.73ms max=204.74ms count=8
+D/EGL_emulation( 4945): app_time_stats: avg=102.42ms min=14.52ms max=198.18ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=126.46ms min=88.90ms max=203.26ms count=8
+W/WindowOnBackDispatcher( 4945): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4945): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4945): app_time_stats: avg=203.98ms min=150.03ms max=267.14ms count=5
+D/EGL_emulation( 4945): app_time_stats: avg=98.71ms min=7.40ms max=194.28ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=90.89ms min=5.06ms max=165.80ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=92.93ms min=7.31ms max=200.97ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=83.01ms min=6.86ms max=173.01ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=94.41ms min=4.23ms max=221.68ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=86.51ms min=12.34ms max=168.80ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=83.64ms min=14.81ms max=181.47ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=126.35ms min=16.04ms max=198.91ms count=8
+I/eetlift_tracker( 4945): Background concurrent mark compact GC freed 1425KB AllocSpace bytes, 34(1120KB) LOS objects, 49% free, 2664KB/5329KB, paused 59us,1.853ms total 169.215ms
+W/eetlift_tracker( 4945): ApkAssets: Deleting an ApkAssets object '<empty> and /product/app/talkback/talkback.apk' with 1 weak references
+W/eetlift_tracker( 4945): ApkAssets: Deleting an ApkAssets object '/vendor/overlay/EmulatorTalkBackOverlay/EmulatorTalkBackOverlay.apk' with 1 weak references
+D/EGL_emulation( 4945): app_time_stats: avg=136.48ms min=72.44ms max=191.62ms count=7
+D/EGL_emulation( 4945): app_time_stats: avg=124.29ms min=73.49ms max=215.06ms count=7
+D/EGL_emulation( 4945): app_time_stats: avg=126.27ms min=61.69ms max=170.02ms count=7
+D/EGL_emulation( 4945): app_time_stats: avg=117.84ms min=57.25ms max=152.54ms count=8
+D/EGL_emulation( 4945): app_time_stats: avg=132.29ms min=53.08ms max=165.44ms count=8
+D/EGL_emulation( 4945): app_time_stats: avg=156.31ms min=138.39ms max=236.39ms count=7
+D/EGL_emulation( 4945): app_time_stats: avg=155.91ms min=131.04ms max=181.07ms count=7
+W/WindowOnBackDispatcher( 4945): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4945): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/FlutterJNI( 4945): Sending viewport metrics to the engine.
+D/EGL_emulation( 4945): app_time_stats: avg=135.01ms min=14.64ms max=283.70ms count=7
+D/EGL_emulation( 4945): app_time_stats: avg=103.99ms min=91.19ms max=112.25ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=91.43ms min=8.17ms max=170.85ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=95.24ms min=12.08ms max=206.73ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=84.72ms min=15.06ms max=175.39ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=89.20ms min=4.27ms max=170.59ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=128.68ms min=12.61ms max=587.70ms count=11
+D/FlutterJNI( 4945): Sending viewport metrics to the engine.
+D/EGL_emulation( 4945): app_time_stats: avg=154.88ms min=13.54ms max=358.43ms count=7
+D/EGL_emulation( 4945): app_time_stats: avg=99.56ms min=9.91ms max=212.61ms count=9
+I/flutter ( 4945): ══╡ EXCEPTION CAUGHT BY FOUNDATION LIBRARY ╞════════════════════════════════════════════════════════
+I/flutter ( 4945): The following assertion was thrown while dispatching notifications for AppStore:
+I/flutter ( 4945): setState() or markNeedsBuild() called during build.
+I/flutter ( 4945): This ListenableBuilder widget cannot be marked as needing to build because the framework is already
+I/flutter ( 4945): in the process of building widgets. A widget can be marked as needing to be built during the build
+I/flutter ( 4945): phase only if one of its ancestors is currently building. This exception is allowed because the
+I/flutter ( 4945): framework builds parent widgets before children, which means a dirty descendant will always be
+I/flutter ( 4945): built. Otherwise, the framework might not visit this widget during this build phase.
+I/flutter ( 4945): The widget on which setState() or markNeedsBuild() was called was:
+I/flutter ( 4945):   ListenableBuilder
+I/flutter ( 4945): The widget which was currently being built when the offending call was made was:
+I/flutter ( 4945):   Builder
+I/flutter ( 4945): 
+I/flutter ( 4945): When the exception was thrown, this was the stack:
+I/flutter ( 4945): #0      Element.markNeedsBuild.<anonymous closure> (package:flutter/src/widgets/framework.dart:5386:9)
+I/flutter ( 4945): #1      Element.markNeedsBuild (package:flutter/src/widgets/framework.dart:5398:6)
+I/flutter ( 4945): #2      State.setState (package:flutter/src/widgets/framework.dart:1221:15)
+I/flutter ( 4945): #3      _AnimatedState._handleChange (package:flutter/src/widgets/transitions.dart:133:5)
+I/flutter ( 4945): #4      ChangeNotifier.notifyListeners (package:flutter/src/foundation/change_notifier.dart:435:24)
+I/flutter ( 4945): #5      AppStore.saveLogs (package:streetlift_tracker/store.dart:2714:13)
+I/flutter ( 4945): #6      SessionAdaptStore.adaptOpen (package:streetlift_tracker/session_adapt_store.dart:633:7)
+I/flutter ( 4945): #7      _SessionScreenState.initState (package:streetlift_tracker/session_screen.dart:148:21)
+I/flutter ( 4945): #8      StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5963:55)
+I/flutter ( 4945): #9      ComponentElement.mount (package:flutter/src/widgets/framework.dart:5806:5)
+I/flutter ( 4945): ...     Normal element mounting (182 frames)
+I/flutter ( 4945): #191    Element.inflateWidget (package:flutter/src/widgets/framework.dart:4600:20)
+I/flutter ( 4945): #192    MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7277:36)
+I/flutter ( 4945): #193    Element.updateChild (package:flutter/src/widgets/framework.dart:4072:18)
+I/flutter ( 4945): #194    Element.updateChildren (package:flutter/src/widgets/framework.dart:4268:32)
+I/flutter ( 4945): #195    MultiChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7308:17)
+I/flutter ( 4945): #196    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #197    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #198    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #199    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #200    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+I/flutter ( 4945): #201    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #202    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #203    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #204    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #205    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #206    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #207    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #208    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #209    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+I/flutter ( 4945): #210    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #211    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #212    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #213    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #214    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+I/flutter ( 4945): #215    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #216    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #217    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #218    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #219    _InheritedNotifierElement.update (package:flutter/src/widgets/inherited_notifier.dart:108:11)
+I/flutter ( 4945): #220    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #221    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #222    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #223    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #224    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+I/flutter ( 4945): #225    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #226    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #227    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #228    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #229    StatefulElement.update (package:flutter/src/widgets/framework.dart:6020:5)
+I/flutter ( 4945): #230    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #231    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+I/flutter ( 4945): #232    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #233    SingleChildRenderObjectElement.update (package:flutter/src/widgets/framework.dart:7135:14)
+I/flutter ( 4945): #234    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #235    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #236    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #237    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #238    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #239    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #240    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #241    ProxyElement.update (package:flutter/src/widgets/framework.dart:6162:5)
+I/flutter ( 4945): #242    Element.updateChild (package:flutter/src/widgets/framework.dart:4050:15)
+I/flutter ( 4945): #243    ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5854:16)
+I/flutter ( 4945): #244    StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5995:11)
+I/flutter ( 4945): #245    Element.rebuild (package:flutter/src/widgets/framework.dart:5542:7)
+I/flutter ( 4945): #246    BuildScope._tryRebuild (package:flutter/src/widgets/framework.dart:2763:15)
+I/flutter ( 4945): #247    BuildScope._flushDirtyElements (package:flutter/src/widgets/framework.dart:2820:11)
+I/flutter ( 4945): #248    BuildOwner.buildScope (package:flutter/src/widgets/framework.dart:3124:18)
+I/flutter ( 4945): #249    WidgetsBinding.drawFrame (package:flutter/src/widgets/binding.dart:1571:21)
+I/flutter ( 4945): #250    RendererBinding._handlePersistentFrameCallback (package:flutter/src/rendering/binding.dart:558:5)
+I/flutter ( 4945): #251    SchedulerBinding._invokeFrameCallback (package:flutter/src/scheduler/binding.dart:1430:15)
+I/flutter ( 4945): #252    SchedulerBinding.handleDrawFrame (package:flutter/src/scheduler/binding.dart:1345:9)
+I/flutter ( 4945): #253    LiveTestWidgetsFlutterBinding.handleDrawFrame (package:flutter_test/src/binding.dart:2812:13)
+I/flutter ( 4945): #254    SchedulerBinding._handleDrawFrame (package:flutter/src/scheduler/binding.dart:1198:5)
+I/flutter ( 4945): #258    _invoke (dart:ui/hooks.dart:443:10)
+I/flutter ( 4945): #259    PlatformDispatcher._drawFrame (dart:ui/platform_dispatcher.dart:450:5)
+I/flutter ( 4945): #260    _drawFrame (dart:ui/hooks.dart:413:31)
+I/flutter ( 4945): (elided 3 frames from dart:async)
+I/flutter ( 4945): 
+I/flutter ( 4945): The AppStore sending notification was:
+I/flutter ( 4945):   Instance of 'AppStore'
+I/flutter ( 4945): ════════════════════════════════════════════════════════════════════════════════════════════════════
+D/EGL_emulation( 4945): app_time_stats: avg=94.88ms min=10.13ms max=194.20ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=112.17ms min=15.35ms max=232.48ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=108.51ms min=12.23ms max=169.94ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=118.53ms min=107.72ms max=132.30ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=118.35ms min=113.06ms max=127.55ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=116.67ms min=112.06ms max=119.52ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=137.42ms min=98.59ms max=287.57ms count=8
+D/EGL_emulation( 4945): app_time_stats: avg=95.80ms min=15.93ms max=173.78ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=112.41ms min=93.67ms max=168.80ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=103.35ms min=10.15ms max=150.26ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=118.29ms min=11.53ms max=354.54ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=106.32ms min=22.34ms max=171.66ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=110.83ms min=43.89ms max=176.18ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=111.73ms min=16.25ms max=245.19ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=143.92ms min=95.54ms max=211.09ms count=7
+D/EGL_emulation( 4945): app_time_stats: avg=99.08ms min=7.28ms max=169.80ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=109.35ms min=96.18ms max=135.17ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=111.00ms min=30.34ms max=152.65ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=108.57ms min=17.01ms max=170.47ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=102.32ms min=10.96ms max=185.60ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=72.89ms min=1.46ms max=113.19ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=86.35ms min=24.32ms max=164.82ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=85.89ms min=11.49ms max=168.42ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=95.56ms min=14.68ms max=182.59ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=92.96ms min=8.62ms max=178.51ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=94.74ms min=7.28ms max=184.71ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=105.40ms min=14.99ms max=215.39ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=89.40ms min=11.43ms max=168.10ms count=11
+D/EGL_emulation( 4945): app_time_stats: avg=90.30ms min=9.27ms max=175.88ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=104.84ms min=12.28ms max=172.15ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=97.32ms min=3.54ms max=193.84ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=104.09ms min=20.21ms max=177.49ms count=9
+D/EGL_emulation( 4945): app_time_stats: avg=106.49ms min=11.41ms max=178.86ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=93.80ms min=13.18ms max=208.67ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=98.04ms min=16.31ms max=164.25ms count=10
+D/EGL_emulation( 4945): app_time_stats: avg=130.94ms min=21.93ms max=224.47ms count=8
+D/EGL_emulation( 4945): app_time_stats: avg=166.95ms min=97.40ms max=325.04ms count=6
+D/EGL_emulation( 4945): app_time_stats: avg=136.90ms min=62.23ms max=240.08ms count=7
+D/EGL_emulation( 4945): app_time_stats: avg=126.22ms min=32.39ms max=202.71ms count=7
+D/EGL_emulation( 4945): app_time_stats: avg=146.93ms min=131.14ms max=172.41ms count=7
+D/EGL_emulation( 4945): app_time_stats: avg=125.31ms min=55.64ms max=186.87ms count=8
+D/EGL_emulation( 4945): app_time_stats: avg=96.42ms min=62.49ms max=175.78ms count=8
+D/EGL_emulation( 4945): app_time_stats: avg=148.67ms min=131.84ms max=178.58ms count=7
+I/flutter ( 4945): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4945): The following message was thrown:
+I/flutter ( 4945): Multiple exceptions (4) were detected during the running of the current test, and at least one was
+I/flutter ( 4945): unexpected.
+I/flutter ( 4945): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4945): 02:31 +0: G9 b (clair, violet) : séance servie par kalis_adapt (programme du propriétaire, puis session de test) [E]
+I/flutter ( 4945):   Test failed. See exception logs above.
+I/flutter ( 4945):   The test description was: G9 b (clair, violet) : séance servie par kalis_adapt (programme du propriétaire, puis session de test)
+I/flutter ( 4945):   
+I/flutter ( 4945): 02:31 +0 -1: (tearDownAll)
+I/flutter ( 4945): 02:31 +1 -1: Some tests failed.
+Failure Details:
+Failure in method: G9 b (clair, violet) : séance servie par kalis_adapt (programme du propriétaire, puis session de test)
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following message was thrown:
+Multiple exceptions (4) were detected during the running of the
+current test, and at least one was unexpected.
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+
+D/EGL_emulation( 4945): app_time_stats: avg=148.55ms min=120.09ms max=178.71ms count=7

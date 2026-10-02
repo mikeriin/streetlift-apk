@@ -11,24 +11,10 @@ Alternatively, use the flag "--android-skip-build-dependency-validation" to bypa
 Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
 If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
 
-lib/plan_store.dart:334:21: Error: Explicit extension application cannot be used as an expression.
-      final adapt = SessionAdaptStore(this);
-                    ^^^^^^^^^^^^^^^^^
-Target kernel_snapshot_program failed: Exception
-
-
-FAILURE: Build failed with an exception.
-
-* What went wrong:
-Execution failed for task ':app:compileFlutterBuildDebug'.
-> Process 'command '/opt/hostedtoolcache/flutter/stable-3.47.5-x64/flutter/bin/flutter'' finished with non-zero exit value 1
-
-* Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights.
-> Get more help at https://help.gradle.org.
-
-BUILD FAILED in 2m 7s
-Running Gradle task 'assembleDebug'...                            127.5s
-Gradle task assembleDebug failed with exit code 1
+Running Gradle task 'assembleDebug'...                            247.6s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+total 97548
+drwxr-xr-x 2 runner runner     4096 Oct  2 06:14 .
+drwxr-xr-x 5 runner runner     4096 Oct  2 06:14 ..
+-rw-r--r-- 1 runner runner 99876714 Oct  2 06:14 app-debug.apk
+-rw-r--r-- 1 runner runner       40 Oct  2 06:14 app-debug.apk.sha1

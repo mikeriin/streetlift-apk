@@ -1,6 +1,5 @@
 Analyzing streetlift-apk...                                     
 
-  error • An extension override can only be used to access instance members. Consider adding an access to an instance member • lib/plan_store.dart:334:21 • extension_override_without_access
    info • Use the null-aware operator '?.' rather than an explicit 'null' comparison. Try using '?.' • lib/session_adapt_store.dart:446:22 • prefer_null_aware_operators
 
-2 issues found. (ran in 13.7s)
+1 issue found. (ran in 19.7s)
