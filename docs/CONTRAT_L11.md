@@ -1,5 +1,7 @@
 # Contrat L11 — Koach étendu : adaptation au jour le jour (4.1.0)
 
+> **Retiré par G10 (dev6.7.0, D1.4)** : `lib/koach_adapt.dart`, `lib/adapt_store.dart`, `lib/adapt_screens.dart` et leurs tests sont retirés ; le moteur dynamique `kalis_adapt` remplace chaque fonction utile (temps disponible, autre lieu, douleur, reprise après une coupure, assiduité et restructuration, plateau et échange d'exercice) ou son retrait est justifié (pause vacances / maladie, échange d'exercice à la volée, difficulté globale de séance) : `pipeline/gp/livraisons/LIVRAISON_G10.md`. La section `adapt` de la sauvegarde reste lue et réécrite à l'identique (`lib/legacy_adapt_data.dart`, lecture seule). Ce document est gardé pour l'historique.
+
 **27 septembre 2026, lot exécuté par le pipeline automatisé (sans échange en direct).** Tickets KT-058 à KT-064. Code : `lib/koach_adapt.dart` (règles pures, sans horloge ni Flutter), `lib/adapt_store.dart` (branchement sur le store), `lib/adapt_screens.dart` (écrans). Tests : `test/l11_adapt_test.dart`, `test/l11_store_test.dart`, `test/l11_screens_test.dart`.
 
 Toutes les décisions de L7 (Koach) restent valables : validation, verrous, plafonds, rejeu déterministe. L11 n'écrit **aucune** valeur de pilotage en dehors des chemins de L7 (proposition acceptée, saisie) et du mode Guidé décrit au §7.

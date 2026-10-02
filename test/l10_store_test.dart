@@ -6,6 +6,7 @@
 // régénération, annulation, mode Guidé et cycle suivant sont retirés avec
 // le générateur (G7). Stockage simulé, horloge injectée.
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,9 +14,14 @@ import 'package:streetlift_tracker/program_instance.dart';
 import 'package:streetlift_tracker/store.dart';
 
 import 'l2_fixtures.dart';
-import 'support/l10_support.dart';
 
-Map<String, dynamic> _asset() => readGz('assets/programme_v33.json.gz');
+Map<String, dynamic> _asset() =>
+    jsonDecode(
+          utf8.decode(
+            gzip.decode(File('assets/programme_v33.json.gz').readAsBytesSync()),
+          ),
+        )
+        as Map<String, dynamic>;
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -86,7 +92,7 @@ void main() {
         expect(next.program.start, app.program.start);
         expect(next.exportAll(), before);
         expect(backupOf(next).containsKey('programInstance'), isFalse);
-        expect(next.koachProgram.available, isTrue);
+        expect(next.weekKinds.isDeload(7), isTrue);
       },
     );
 

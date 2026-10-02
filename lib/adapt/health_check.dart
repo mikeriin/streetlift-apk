@@ -22,6 +22,7 @@ import '../koach/koach_bubble.dart';
 import '../koach/koach_view.dart';
 import '../models.dart';
 import '../muscle_map_2d.dart';
+import '../plan/evolution_widgets.dart' show EvolutionSessionCard;
 import '../store.dart';
 import '../ui.dart';
 import 'adapt_texts.dart';
@@ -134,7 +135,12 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
       return ListView(
         key: const ValueKey('health-page'),
         padding: const EdgeInsets.fromLTRB(KSpace.page, 2, KSpace.page, 16),
-        children: !a.asked || _redo ? _question(a) : _answered(a),
+        children: [
+          // G10 : ce qui change dans cette séance (propositions de Koach
+          // appliquées ou acceptées), au début de la séance concernée.
+          EvolutionSessionCard(week: _w, j: widget.base.j),
+          ...(!a.asked || _redo ? _question(a) : _answered(a)),
+        ],
       );
     },
   );

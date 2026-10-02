@@ -16,6 +16,10 @@ import 'athlete_profile_screen.dart' show ProfileScreen;
 import 'dev/dev_flags.dart';
 import 'dev/dev_session.dart' show DevShare;
 import 'koach/koach_bubble.dart';
+import 'dev/engine_inspector.dart';
+import 'dev/dev_simulator.dart';
+import 'plan/evolution_texts.dart';
+import 'plan/evolution_widgets.dart';
 import 'plan/plan_inspector.dart';
 import 'plan/plan_screens.dart';
 import 'plan/plan_texts.dart';
@@ -32,9 +36,7 @@ Future<void> _openPosition(BuildContext context) => Navigator.of(
   context,
 ).push(MaterialPageRoute<void>(builder: (_) => const ProgramPositionScreen()));
 
-Future<void> _openNextBlock(BuildContext context) => Navigator.of(
-  context,
-).push(MaterialPageRoute<void>(builder: (_) => const NextBlockScreen()));
+Future<void> _openNextBlock(BuildContext context) => openNextBlock(context);
 
 class ProgramScreen extends StatelessWidget {
   const ProgramScreen({super.key});
@@ -109,6 +111,57 @@ class ProgramScreen extends StatelessWidget {
                   style: dim,
                 ),
               ],
+            ),
+          ),
+        );
+      }
+      // G10 (D5.6, D5.7) : évolution du programme — mode, déblocage,
+      // historique des changements.
+      if (store.athlete != null) {
+        final u = store.evolutionUnlock;
+        final n = store.evolutionHistory.length;
+        final pending = store.evolutionPending.length;
+        children.add(
+          KCard(
+            key: const ValueKey('program-evolution'),
+            onTap: () => openEvolutionScreen(context),
+            child: KoachSays(
+              pose: KoachPose.progressChart,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Évolution de ton programme',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Mode ${store.adaptMode == 'free' ? 'libre : je propose, tu décides' : 'assisté : j’applique et je t’explique'}.',
+                  ),
+                  Text(
+                    unlockNextText(
+                          next: u.next,
+                          weeks: u.weeksToNext,
+                          blocks: u.blocksToNext,
+                        ) ??
+                        'Tout est débloqué.',
+                    style: dim,
+                  ),
+                  Text(
+                    '${pending == 0 ? '' : '$pending proposition${pending > 1 ? 's' : ''} en attente · '}'
+                    '$n changement${n > 1 ? 's' : ''} dans l’historique',
+                    style: dim,
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton(
+                      key: const ValueKey('program-evolution-open'),
+                      onPressed: () => openEvolutionScreen(context),
+                      child: const Text('Mode, historique, déblocage'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -203,6 +256,24 @@ class ProgramScreen extends StatelessWidget {
       }
       if (kDevBuild && SessionSpace.isDev) {
         children.add(const KSection('Outils de test'));
+        // G10 (D2.5) : simulateur de séances, inspecteur et journal du
+        // moteur dynamique.
+        children.add(
+          OutlinedButton.icon(
+            key: const ValueKey('program-simulator'),
+            icon: const Icon(Icons.fast_forward_outlined),
+            label: const Text('Simulateur de séances'),
+            onPressed: () => openDevSimulator(context),
+          ),
+        );
+        children.add(
+          OutlinedButton.icon(
+            key: const ValueKey('program-adapt-inspector'),
+            icon: const Icon(Icons.insights_outlined),
+            label: const Text('Inspecteur du moteur dynamique'),
+            onPressed: () => openEngineInspector(context),
+          ),
+        );
         children.add(
           OutlinedButton.icon(
             key: const ValueKey('program-inspector'),

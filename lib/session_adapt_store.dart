@@ -187,22 +187,26 @@ extension SessionAdaptStore on AppStore {
     if (built == null) return null;
     final day = built.dayOfJ[j];
     if (day == null) return null;
-    return AdaptPlace(built.block, week - 1 - chunk * 52, day, true);
+    // G10 : propositions en place sur le bloc importé (le programme affiché
+    // ne change pas ; la séance servie, si).
+    final block = _g9Memo(
+      'evolved|${identityHashCode(built.block)}|$_evoRevision',
+      () => EvolutionStore(this).evolveBlock(built.block),
+    );
+    return AdaptPlace(block, week - 1 - chunk * 52, day, true);
   }
 
-  /// Bloc de `kalis_plan` avec les ajustements de la passe 2.
+  /// Bloc de `kalis_plan` avec les ajustements de la passe 2 et (G10) les
+  /// propositions du moteur dynamique en place.
   kc.ProgramBlock _adaptPlanBlock(int index) {
     final plan = planProgram!;
     final sig =
         'plan|${identityHashCode(plan)}|${plan.updatedAt}|'
-        '${plan.blocks.length}|${plan.blocks[index].validatedAt}|$index';
+        '${plan.blocks.length}|${plan.blocks[index].validatedAt}|$index|'
+        '$_evoRevision';
     return _g9Memo(sig, () {
       final e = plan.blocks[index];
-      final weeks = [
-        for (var w = 0; w < e.block.pass2.weeks.length; w++)
-          e.block.pass2.weeks[w].copyWith(days: adjustedDays(e, w)),
-      ];
-      return e.block.copyWith(pass2: e.block.pass2.copyWith(weeks: weeks));
+      return EvolutionStore(this).evolveBlock(adjustedBlock(e));
     });
   }
 
@@ -233,7 +237,7 @@ extension SessionAdaptStore on AppStore {
       planProgram?.updatedAt ?? '-',
       program.weeks.length,
       program.start?.toIso8601String() ?? '-',
-      identityHashCode(koachProgram),
+      identityHashCode(weekKinds),
       identityHashCode(book),
       for (final e in values.entries) '${e.key}=${e.value}',
     ].join('|');
@@ -280,9 +284,9 @@ extension SessionAdaptStore on AppStore {
           js.add(d.j);
         }
       }
-      final kind = koachProgram.isDeload(n)
+      final kind = weekKinds.isDeload(n)
           ? kc.WeekKind.deload
-          : koachProgram.isTest(n)
+          : weekKinds.isTest(n)
           ? kc.WeekKind.test
           : w.blockKey == 'P0'
           ? kc.WeekKind.intro
@@ -452,7 +456,7 @@ extension SessionAdaptStore on AppStore {
     };
     double? start;
     if (loaded && basis != kc.LoadBasis.bodyweight) {
-      final kg = loadFor(e, koach: false);
+      final kg = loadFor(e);
       if (kg != null && kg >= 0 && kg <= 1000) {
         start = (kg * 100).roundToDouble() / 100;
         if (basis == kc.LoadBasis.external && start <= 0) start = null;

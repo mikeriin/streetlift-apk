@@ -97,7 +97,6 @@ extension ProfileStore on AppStore {
   }
 
   void _profileSave() {
-    _koachAuxRevision++;
     pilotageEpoch++;
     _persist();
     notifyListeners();
@@ -168,4 +167,23 @@ extension ProfileStore on AppStore {
   /// Poids actuel (pesée la plus récente, sinon référence B4).
   double? get currentBodyweight =>
       koach.weighIns.isNotEmpty ? koach.weighIns.last.kg : values['B4'];
+
+  /// Pesée datée (profil, G6) ; la plus récente devient le poids de corps
+  /// des charges (référence B4). Pesées gardées dans la section `koach`
+  /// (format L7, inchangé).
+  void addWeighIn(DateTime date, double kg) {
+    if (!kg.isFinite || kg < 20 || kg > 400) return;
+    final day = civilDateString(date);
+    koach.weighIns
+      ..removeWhere((w) => w.date == day)
+      ..add(WeighIn(day, kg))
+      ..sort((a, b) => a.date.compareTo(b.date));
+    if (koach.weighIns.last.date == day) {
+      values['B4'] = kg;
+      refStatus['B4'] = 'set';
+      pilotageEpoch++;
+    }
+    _persist();
+    notifyListeners();
+  }
 }

@@ -1,8 +1,18 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : G9 correction 3, version dev6.6.3 ; précédent : dev6.6.2 (G9 correction 2)**  
-**Date : 2 octobre 2026, Europe/Paris — version : 6.6.3+105, affichée « dev6.6.3 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : G10, version dev6.7.0 ; précédent : dev6.6.3 (G9 correction 3)**  
+**Date : 2 octobre 2026, Europe/Paris — version : 6.7.0+106, affichée « dev6.7.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## G10 — Évolution du programme : propositions, modes, restructurations, outils dev (version dev6.7.0)
+
+- **Propositions** (D5.6, D5.7, D5.11) : revue de `kalis_adapt` sur le bloc de la semaine en cours (une par état du journal, à l'ouverture de l'accueil et des écrans d'évolution), décisions passées transmises au moteur. Section de sauvegarde `planEvolution` (v1, facultative) : proposition du moteur telle quelle et suite donnée ; une proposition appliquée est une **couche** posée sur son bloc à la lecture (blocs enregistrés jamais réécrits ; programme du propriétaire identique jour pour jour, la séance servie porte le changement). Semaines d'avant le changement affichées telles qu'elles étaient.
+- **Modes** : assisté (appliqué, annoncé par Koach, « Annuler » tant qu'aucune séance concernée n'est commencée et que c'est le dernier changement du bloc) ; libre (« Accepter », « Refuser » transmis au moteur, « Plus tard » jusqu'au lendemain ; proposition que le moteur ne fait plus retirée).
+- **Écrans** : carte de Koach sur l'accueil, carte au début de la séance concernée (page « Bilan du jour »), feuille « ce qui change » (diff, « Pourquoi ? »), Réglages › Mon programme (carte « Évolution ») et écran Évolution (mode, déblocage D5.7, historique).
+- **Fin de bloc** : `kalis_plan.nextBlock` sur le bloc tel qu'il a été fait (couches comprises) et le résumé de `kalis_adapt`, passé par la création G7 en mode « bloc suivant » : exercices déjà faits verrouillés, seuls les nouveaux passés en revue ; sans changement de revue, la passe 2 du moteur est gardée.
+- **Outils dev** (D2.5) : simulateur de séances (`lib/dev/dev_simulator.dart`, athlètes simulés de `kalis_adapt`, déterministe), inspecteur du moteur dynamique et export de son journal (`lib/dev/engine_inspector.dart`).
+- **Retraits** (D1.4) : Koach L7 et L11 (moteurs, écrans, tests, référence Python) ; sections `koach` et `adapt` relues et réécrites à l'identique (`koach_data.dart`, `legacy_adapt_data.dart`). Ce qu'il restait de L10 pour L11 (catalogue de l'ancien pack, progression de cycle) retiré. `assets/koach_program.json.gz` gardé (nature des semaines du bloc importé, `legacy_week_kinds.dart`). Tableau de correspondance : `pipeline/gp/livraisons/LIVRAISON_G10.md`.
+- Tests : `test/g10_evolution_test.dart`, `test/g10_mode_dev_test.dart`, `test/g10_seance_sans_moteur_test.dart`, `test/g10_charges_consigne_test.dart`, `tools/tests/test_koach_annotations.py` ; émulateur `integration_test/evolution_g10_test.dart`.
 
 ## G9 correction 3 — Un mot par flamme (version dev6.6.3)
 

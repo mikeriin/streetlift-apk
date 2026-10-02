@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'adapt_screens.dart';
 import 'muscle_map_2d.dart' show MapView;
 import 'app_theme.dart';
 import 'estimate_view.dart';
 import 'koach/koach_home_card.dart';
 import 'koach/koach_view.dart';
-import 'koach_widgets.dart' show KoachWeighInBanner;
 import 'levelup.dart';
 import 'models.dart';
 import 'session_history.dart';
 import 'session_screen.dart';
 import 'program_explainer.dart';
 import 'program_start.dart';
+import 'plan/evolution_widgets.dart' show EvolutionHomeCard;
 import 'program_screens.dart' show ProgramHomeCard;
 import 'resume_banner.dart';
 import 'stats_mannequin.dart';
@@ -75,6 +74,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool _evoScheduled = false;
+
+  void _scheduleEvolutionRefresh() {
+    if (_evoScheduled) return;
+    _evoScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _evoScheduled = false;
+      if (mounted) store.evolutionRefresh();
+    });
+  }
+
   late int week;
   DateTime get now => widget.referenceDate ?? KalisClock.now();
   @override
@@ -287,6 +297,9 @@ class _HomeScreenState extends State<HomeScreen> {
       // G6 correction 1 : nouveau profil sans programme → pas de programme
       // embarqué affiché, Koach annonce le programme à venir.
       if (programPendingFor(store)) return const ProgramPendingView();
+      // G10 : revue du moteur dynamique (une par état du journal) ; ses
+      // propositions apparaissent dans la carte de Koach ci-dessous.
+      _scheduleEvolutionRefresh();
       final w = store.program.week(week), current = store.program.weekFor(now);
       final colors = ProgrammeColors.of(context);
       final compactHeader = MediaQuery.textScalerOf(context).scale(10) <= 13;
@@ -370,15 +383,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       if (ProgramStartBanner.visible(store.program, now))
                         ProgramStartBanner(now: now, padding: EdgeInsets.zero),
                       if (ResumeBanner.visible) const ResumeBanner(),
-                      if (store.koachWeighInDue) const KoachWeighInBanner(),
-                      // L11 (KT-060) : pause en cours, en tête.
-                      if (store.adapt.pause != null)
-                        const AdaptHomeCard(pauseOnly: true),
                       for (final d in w.days) card(d),
-                      // L11 (KT-060 à KT-064) : plan qui glisse, assiduité,
-                      // plateau, prudence ; après les journées.
-                      if (store.adaptProposals.isNotEmpty)
-                        const AdaptHomeCard(proposalsOnly: true),
+                      // G10 : propositions de Koach (évolution du
+                      // programme), après les journées.
+                      if (EvolutionHomeCard.visible) const EvolutionHomeCard(),
                       // G7 : Où j'en suis, fin de bloc, retour à l'ancien
                       // programme ; après les journées (la semaine entière
                       // reste visible, L5).

@@ -73,16 +73,14 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
         }
       }
     }
-    // L11 : exercices échangés ou adaptés de la séance, retrouvés aussi.
-    // G9 : séance servie par kalis_adapt, exercices du moteur.
+    // G9 : séance servie par kalis_adapt, exercices du moteur. (Les
+    // exercices échangés par L11, retiré en G10, gardent leur nom
+    // enregistré.)
     final served = day != null && week != null
         ? store.sessionAdapt(week.n, day.j)
         : null;
-    final adapted = day != null && week != null
-        ? (served != null
-                  ? store.adaptDay(week.n, day, served)
-                  : store.sessionDay(week.n, day))
-              .exercises
+    final adapted = day != null && week != null && served != null
+        ? store.adaptDay(week.n, day, served).exercises
         : const <Exercise>[];
     final known = {
       for (final ex in day?.exercises ?? <Exercise>[]) ex.id: ex,
